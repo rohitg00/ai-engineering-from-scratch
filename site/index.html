@@ -20,7 +20,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header" id="header">
   <div class="header__inner">
     <a href="#" class="header__logo" aria-label="AI Engineering from Scratch">
@@ -46,46 +45,33 @@
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <canvas class="hero__canvas" id="neural-canvas" aria-hidden="true"></canvas>
   <div class="hero__inner">
     <div class="hero__badge">Open Source &middot; MIT License</div>
     <h1 class="hero__title">AI Engineering<br><span class="hero__accent">from Scratch</span></h1>
-    <p class="hero__sub">260+ hands-on lessons across 20 phases. From linear algebra to autonomous agent swarms. Build neural networks, transformers, and LLMs from first principles.</p>
-
-    <div class="hero__equation" aria-hidden="true">
-      <span class="eq eq--fade-1">y = &sigma;(Wx + b)</span>
-      <span class="eq eq--fade-2">&nabla;L = &part;L/&part;w</span>
-      <span class="eq eq--fade-3">softmax(QK&#7488;/&radic;d)V</span>
-    </div>
+    <p class="hero__sub">260+ hands-on lessons in Python, TypeScript, Rust, and Julia. From linear algebra to autonomous agent swarms, built from first principles.</p>
 
     <div class="hero__stats">
       <div class="stat">
-        <span class="stat__num" id="stat-lessons">--</span>
+        <span class="stat__num" id="stat-lessons" data-target="0">--</span>
         <span class="stat__label">Lessons</span>
       </div>
+      <div class="stat__divider"></div>
       <div class="stat">
-        <span class="stat__num" id="stat-phases">--</span>
+        <span class="stat__num" id="stat-phases" data-target="0">--</span>
         <span class="stat__label">Phases</span>
       </div>
+      <div class="stat__divider"></div>
       <div class="stat">
-        <span class="stat__num">4</span>
+        <span class="stat__num" data-target="4">4</span>
         <span class="stat__label">Languages</span>
       </div>
+      <div class="stat__divider"></div>
       <div class="stat">
-        <span class="stat__num" id="stat-complete">--</span>
+        <span class="stat__num" id="stat-complete" data-target="0">--</span>
         <span class="stat__label">Complete</span>
       </div>
-    </div>
-
-    <div class="hero__tech">
-      <span class="tech-pill">Python</span>
-      <span class="tech-pill">PyTorch</span>
-      <span class="tech-pill">NumPy</span>
-      <span class="tech-pill">Transformers</span>
-      <span class="tech-pill">TypeScript</span>
-      <span class="tech-pill">Rust</span>
     </div>
 
     <div class="hero__actions">
@@ -98,60 +84,38 @@
   </div>
 </section>
 
-<!-- JOURNEY STRIP -->
-<div class="journey-strip" aria-hidden="true">
-  <div class="journey-strip__track">
-    <span>Linear Algebra</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>ML Fundamentals</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Deep Learning</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>NLP</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Computer Vision</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Transformers</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>LLMs</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Fine-Tuning</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>RAG</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Agents</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Agent Swarms</span>
-    <span class="journey-strip__dot">&middot;</span>
-    <span>Linear Algebra</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>ML Fundamentals</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Deep Learning</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>NLP</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Computer Vision</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Transformers</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>LLMs</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Fine-Tuning</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>RAG</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Agents</span>
-    <span class="journey-strip__arrow">&rarr;</span>
-    <span>Agent Swarms</span>
+<div class="pathway" aria-label="Learning pathway">
+  <div class="pathway__inner">
+    <div class="pathway__item">
+      <span class="pathway__text">Math</span>
+    </div>
+    <svg class="pathway__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+    <div class="pathway__item">
+      <span class="pathway__text">ML</span>
+    </div>
+    <svg class="pathway__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+    <div class="pathway__item pathway__item--active">
+      <span class="pathway__text">Deep Learning</span>
+    </div>
+    <svg class="pathway__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+    <div class="pathway__item pathway__item--active">
+      <span class="pathway__text">Transformers</span>
+    </div>
+    <svg class="pathway__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+    <div class="pathway__item">
+      <span class="pathway__text">LLMs</span>
+    </div>
+    <svg class="pathway__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3l5 5-5 5"/></svg>
+    <div class="pathway__item">
+      <span class="pathway__text">Agents</span>
+    </div>
   </div>
 </div>
 
-<!-- DIFFERENTIATOR -->
 <section class="diff">
   <div class="diff__inner">
     <h2 class="section-title">Why This Course</h2>
-    <div class="diff__grid">
+    <div class="diff__grid fade-in">
       <div class="diff__card">
         <div class="diff__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -184,18 +148,15 @@
   </div>
 </section>
 
-<!-- PHASES -->
 <section class="phases" id="phases">
   <div class="phases__inner">
     <h2 class="section-title">The Journey</h2>
     <p class="section-sub">20 phases. Each builds on the last. Click any phase to explore its lessons.</p>
-
-    <div class="phases__grid" id="phases-grid">
+    <div class="phases__grid fade-in" id="phases-grid">
     </div>
   </div>
 </section>
 
-<!-- PHASE DETAIL MODAL -->
 <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
   <div class="modal__backdrop" id="modal-backdrop"></div>
   <div class="modal__content">
@@ -217,7 +178,6 @@
   </div>
 </div>
 
-<!-- ROADMAP -->
 <section class="roadmap" id="roadmap">
   <div class="roadmap__inner">
     <h2 class="section-title">Progress Roadmap</h2>
@@ -233,36 +193,40 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section class="how">
   <div class="how__inner">
     <h2 class="section-title">How Each Lesson Works</h2>
-    <div class="how__steps">
+    <div class="how__steps fade-in">
       <div class="how__step">
         <span class="how__num">01</span>
         <h3>Motto</h3>
         <p>One-line core idea that frames the lesson.</p>
       </div>
+      <div class="how__connector"></div>
       <div class="how__step">
         <span class="how__num">02</span>
         <h3>Problem</h3>
         <p>Why this matters. What problem does it solve.</p>
       </div>
+      <div class="how__connector"></div>
       <div class="how__step">
         <span class="how__num">03</span>
         <h3>Concept</h3>
         <p>Visual diagrams and intuition-first explanations.</p>
       </div>
+      <div class="how__connector"></div>
       <div class="how__step">
         <span class="how__num">04</span>
         <h3>Build It</h3>
         <p>Implement from scratch. No frameworks yet.</p>
       </div>
+      <div class="how__connector"></div>
       <div class="how__step">
         <span class="how__num">05</span>
         <h3>Use It</h3>
         <p>Same thing with real frameworks and tools.</p>
       </div>
+      <div class="how__connector"></div>
       <div class="how__step">
         <span class="how__num">06</span>
         <h3>Ship It</h3>
@@ -272,7 +236,6 @@
   </div>
 </section>
 
-<!-- GLOSSARY -->
 <section class="glossary" id="glossary">
   <div class="glossary__inner">
     <h2 class="section-title">Glossary</h2>
@@ -280,12 +243,11 @@
     <div class="glossary__search-wrap">
       <input type="text" id="glossary-search" class="glossary__search" placeholder="Search terms..." aria-label="Search glossary terms">
     </div>
-    <div class="glossary__grid" id="glossary-grid">
+    <div class="glossary__grid fade-in" id="glossary-grid">
     </div>
   </div>
 </section>
 
-<!-- GET STARTED -->
 <section class="cta">
   <div class="cta__inner">
     <h2>Start Learning</h2>
@@ -303,7 +265,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer__inner">
     <p>AI Engineering from Scratch &mdash; MIT License</p>
