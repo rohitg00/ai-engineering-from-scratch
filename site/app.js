@@ -259,26 +259,26 @@
 (function() {
   var viewer = document.querySelector('spline-viewer');
   if (!viewer) return;
+  var injected = false;
   function hideLogo() {
     var shadow = viewer.shadowRoot;
-    if (!shadow) return;
+    if (!shadow) return false;
+    if (!injected) {
+      var style = document.createElement('style');
+      style.textContent = '#logo, a[href*="spline"], div[id="logo"] { display: none !important; visibility: hidden !important; height: 0 !important; overflow: hidden !important; }';
+      shadow.appendChild(style);
+      injected = true;
+    }
     var logo = shadow.querySelector('#logo');
-    if (logo) { logo.style.display = 'none'; return; }
-    var links = shadow.querySelectorAll('a');
-    links.forEach(function(a) {
-      if (a.textContent.includes('Spline') || a.href && a.href.includes('spline')) {
-        a.style.display = 'none';
-      }
+    if (logo) logo.remove();
+    shadow.querySelectorAll('a').forEach(function(a) {
+      if (a.href && a.href.includes('spline')) a.remove();
     });
-    var divs = shadow.querySelectorAll('div');
-    divs.forEach(function(d) {
-      if (d.textContent.includes('Built with')) {
-        d.style.display = 'none';
-      }
+    shadow.querySelectorAll('div').forEach(function(d) {
+      if (d.textContent && d.textContent.includes('Built with')) d.remove();
     });
+    return true;
   }
-  var interval = setInterval(function() {
-    if (viewer.shadowRoot) { hideLogo(); clearInterval(interval); }
-  }, 500);
-  setTimeout(function() { clearInterval(interval); }, 10000);
+  var interval = setInterval(function() { hideLogo(); }, 1000);
+  setTimeout(function() { clearInterval(interval); }, 30000);
 })();
