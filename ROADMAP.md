@@ -73,23 +73,23 @@ Progress tracking for every phase and lesson.
 | 17 | Handling Imbalanced Data | ✅ | ~75 min |
 | 18 | Feature Selection | ✅ | ~75 min |
 
-## Phase 3: Deep Learning Core — 🚧 (~15 hours)
+## Phase 3: Deep Learning Core — ✅ (~15 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
 | 01 | The Perceptron — Where It All Started | ✅ | ~45 min |
-| 02 | Multi-Layer Networks & Forward Pass | ⬚ | ~75 min |
-| 03 | Backpropagation from Scratch | ⬚ | ~75 min |
-| 04 | Activation Functions — ReLU, Sigmoid, GELU & Why | ⬚ | ~45 min |
+| 02 | Multi-Layer Networks & Forward Pass | ✅ | ~75 min |
+| 03 | Backpropagation from Scratch | ✅ | ~75 min |
+| 04 | Activation Functions — ReLU, Sigmoid, GELU & Why | ✅ | ~45 min |
 | 05 | Loss Functions — MSE, Cross-Entropy, Contrastive | ✅ | ~45 min |
 | 06 | Optimizers — SGD, Momentum, Adam, AdamW | ✅ | ~75 min |
 | 07 | Regularization — Dropout, Weight Decay, BatchNorm | ✅ | ~75 min |
 | 08 | Weight Initialization & Training Stability | ✅ | ~45 min |
 | 09 | Learning Rate Schedules & Warmup | ✅ | ~45 min |
 | 10 | Build Your Own Mini Framework | ✅ | ~120 min |
-| 11 | Introduction to PyTorch | ⬚ | ~75 min |
-| 12 | Introduction to JAX | ⬚ | ~75 min |
-| 13 | Debugging Neural Networks | ⬚ | ~75 min |
+| 11 | Introduction to PyTorch | ✅ | ~75 min |
+| 12 | Introduction to JAX | ✅ | ~75 min |
+| 13 | Debugging Neural Networks | ✅ | ~75 min |
 
 ## Phase 4: Computer Vision — ⬚ (~19 hours)
 
@@ -221,28 +221,28 @@ Progress tracking for every phase and lesson.
 | 08 | DPO — Direct Preference Optimization | ✅ | ~75 min |
 | 09 | Constitutional AI & Self-Improvement | ⬚ | ~45 min |
 | 10 | Evaluation — Benchmarks, Evals, LM Harness | ✅ | ~75 min |
-| 11 | Quantization — INT8, GPTQ, AWQ, GGUF | ⬚ | ~75 min |
-| 12 | Inference Optimization | ⬚ | ~75 min |
+| 11 | Quantization — INT8, GPTQ, AWQ, GGUF | ✅ | ~75 min |
+| 12 | Inference Optimization | ✅ | ~75 min |
 | 13 | Building a Complete LLM Pipeline | ⬚ | ~120 min |
 | 14 | Open Models — Architecture Walkthroughs | ⬚ | ~45 min |
 
-## Phase 11: LLM Engineering — 🚧 (~15 hours)
+## Phase 11: LLM Engineering — ✅ (~15 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | Prompt Engineering — Techniques & Patterns | ⬚ | ~45 min |
-| 02 | Few-Shot, Chain-of-Thought, Tree-of-Thought | ⬚ | ~45 min |
+| 01 | Prompt Engineering — Techniques & Patterns | ✅ | ~45 min |
+| 02 | Few-Shot, Chain-of-Thought, Tree-of-Thought | ✅ | ~45 min |
 | 03 | Structured Outputs | ✅ | ~75 min |
-| 04 | Embeddings & Vector Representations | ⬚ | ~75 min |
+| 04 | Embeddings & Vector Representations | ✅ | ~75 min |
 | 05 | Context Engineering | ✅ | ~75 min |
 | 06 | RAG — Retrieval-Augmented Generation | ✅ | ~75 min |
 | 07 | Advanced RAG | ✅ | ~75 min |
-| 08 | Fine-Tuning with LoRA & QLoRA | ⬚ | ~75 min |
-| 09 | Function Calling & Tool Use | ⬚ | ~75 min |
-| 10 | Evaluation & Testing LLM Applications | ⬚ | ~45 min |
-| 11 | Caching, Rate Limiting & Cost Optimization | ⬚ | ~45 min |
-| 12 | Guardrails, Safety & Content Filtering | ⬚ | ~45 min |
-| 13 | Building a Production LLM Application | ⬚ | ~120 min |
+| 08 | Fine-Tuning with LoRA & QLoRA | ✅ | ~75 min |
+| 09 | Function Calling & Tool Use | ✅ | ~75 min |
+| 10 | Evaluation & Testing LLM Applications | ✅ | ~45 min |
+| 11 | Caching, Rate Limiting & Cost Optimization | ✅ | ~45 min |
+| 12 | Guardrails, Safety & Content Filtering | ✅ | ~45 min |
+| 13 | Building a Production LLM Application | ✅ | ~120 min |
 
 ## Phase 12: Multimodal AI — ⬚ (~11 hours)
 
@@ -330,13 +330,13 @@ Progress tracking for every phase and lesson.
 | 13 | DAG-Based Orchestration | ⬚ | ~75 min |
 | 14 | Build an Autonomous Agent Swarm | ⬚ | ~120 min |
 
-## Phase 17: Infrastructure & Production — ⬚ (~13 hours)
+## Phase 17: Infrastructure & Production — 🚧 (~13 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | Model Serving | ⬚ | ~75 min |
-| 02 | Docker for AI Workloads | ⬚ | ~75 min |
-| 03 | Kubernetes for AI | ⬚ | ~75 min |
+| 01 | Model Serving | ✅ | ~75 min |
+| 02 | Docker for AI Workloads | ✅ | ~75 min |
+| 03 | Kubernetes for AI | ✅ | ~75 min |
 | 04 | Edge Deployment | ⬚ | ~75 min |
 | 05 | Observability | ⬚ | ~45 min |
 | 06 | Cost Optimization | ⬚ | ~45 min |
@@ -369,6 +369,6 @@ Progress tracking for every phase and lesson.
 
 ---
 
-**Total: 20 phases, 260+ lessons | 68 complete | ~290 hours estimated**
+**Total: 20 phases, 260+ lessons | 96 complete | ~290 hours estimated**
 
 Want to help? Pick any ⬚ lesson and submit a PR. See [CONTRIBUTING.md](CONTRIBUTING.md).

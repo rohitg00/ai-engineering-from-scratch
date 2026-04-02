@@ -7,7 +7,7 @@
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
   <img src="https://img.shields.io/badge/Lessons-260+-D97757" alt="260+ Lessons">
   <img src="https://img.shields.io/badge/Phases-20-191A23" alt="20 Phases">
-  <img src="https://img.shields.io/badge/Complete-68-3D8B6E" alt="68 Complete">
+  <img src="https://img.shields.io/badge/Complete-96-3D8B6E" alt="96 Complete">
   <img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=social" alt="GitHub Stars">
 </p>
 
@@ -176,9 +176,9 @@ Other courses end with "congratulations, you learned X." Our lessons end with a 
 | 08 | [Weight Initialization & Training Stability](phases/03-deep-learning-core/08-weight-initialization/) | Build | Python |
 | 09 | [Learning Rate Schedules & Warmup](phases/03-deep-learning-core/09-learning-rate-schedules/) | Build | Python |
 | 10 | [Build Your Own Mini Framework](phases/03-deep-learning-core/10-mini-framework/) | Build | Python |
-| 11 | Introduction to PyTorch | Build | Python |
-| 12 | Introduction to JAX | Build | Python |
-| 13 | Debugging Neural Networks | Learn | Python |
+| 11 | [Introduction to PyTorch](phases/03-deep-learning-core/11-intro-to-pytorch/) | Build | Python |
+| 12 | [Introduction to JAX](phases/03-deep-learning-core/12-intro-to-jax/) | Build | Python |
+| 13 | [Debugging Neural Networks](phases/03-deep-learning-core/13-debugging-neural-networks/) | Build | Python |
 
 </details>
 
@@ -343,19 +343,19 @@ Other courses end with "congratulations, you learned X." Our lessons end with a 
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | Prompt Engineering: Techniques & Patterns | Build | Python |
-| 02 | Few-Shot, CoT, Tree-of-Thought | Build | Python |
+| 01 | [Prompt Engineering: Techniques & Patterns](phases/11-llm-engineering/01-prompt-engineering/) | Build | Python |
+| 02 | [Few-Shot, CoT, Tree-of-Thought](phases/11-llm-engineering/02-few-shot-cot/) | Build | Python |
 | 03 | [Structured Outputs](phases/11-llm-engineering/03-structured-outputs/) | Build | Python, TS |
-| 04 | Embeddings & Vector Representations | Build | Python |
+| 04 | [Embeddings & Vector Representations](phases/11-llm-engineering/04-embeddings/) | Build | Python |
 | 05 | [Context Engineering](phases/11-llm-engineering/05-context-engineering/) | Build | Python, TS |
-| 06 | [RAG -Retrieval-Augmented Generation](phases/11-llm-engineering/06-rag/) | Build | Python, TS |
-| 07 | [Advanced RAG -Chunking, Reranking](phases/11-llm-engineering/07-advanced-rag/) | Build | Python |
-| 08 | Fine-Tuning with LoRA & QLoRA | Build | Python |
-| 09 | Function Calling & Tool Use | Build | Python, TS |
-| 10 | Evaluation & Testing | Build | Python |
-| 11 | Caching, Rate Limiting & Cost | Build | Python, TS |
-| 12 | Guardrails & Safety | Build | Python |
-| 13 | Building a Production LLM App | Build | Python, TS |
+| 06 | [RAG: Retrieval-Augmented Generation](phases/11-llm-engineering/06-rag/) | Build | Python, TS |
+| 07 | [Advanced RAG: Chunking, Reranking](phases/11-llm-engineering/07-advanced-rag/) | Build | Python |
+| 08 | [Fine-Tuning with LoRA & QLoRA](phases/11-llm-engineering/08-fine-tuning-lora/) | Build | Python |
+| 09 | [Function Calling & Tool Use](phases/11-llm-engineering/09-function-calling/) | Build | Python |
+| 10 | [Evaluation & Testing](phases/11-llm-engineering/10-evaluation/) | Build | Python |
+| 11 | [Caching, Rate Limiting & Cost](phases/11-llm-engineering/11-caching-cost/) | Build | Python |
+| 12 | [Guardrails & Safety](phases/11-llm-engineering/12-guardrails/) | Build | Python |
+| 13 | [Building a Production LLM App](phases/11-llm-engineering/13-production-app/) | Build | Python |
 
 </details>
 
