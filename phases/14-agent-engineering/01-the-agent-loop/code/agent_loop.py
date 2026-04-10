@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 
 
@@ -41,10 +42,30 @@ TOOLS = {
 
 
 class SimpleAgent:
-    def __init__(self, tools, max_turns=10):
+    """Agent loop supporting multiple LLM providers.
+
+    Supports Anthropic, OpenAI, and MiniMax via the multi-provider
+    utility in utils/llm_provider.py. Provider is auto-detected from
+    available API keys, or can be set explicitly via LLM_PROVIDER env var.
+    """
+
+    def __init__(self, tools, max_turns=10, provider=None):
         self.tools = tools
         self.max_turns = max_turns
         self.messages = []
+        self.llm_client = None
+
+        # Try to initialize a real LLM client
+        try:
+            sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
+            from utils.llm_provider import get_llm_client
+            provider = provider or os.environ.get("LLM_PROVIDER")
+            self.llm_client = get_llm_client(provider)
+            print(f"  Using LLM: {self.llm_client.provider} ({self.llm_client.default_model})")
+        except ImportError:
+            print("  [LLM provider module not found — running in demo mode]")
+        except (KeyError, ValueError) as exc:
+            print(f"  [LLM configuration error: {exc} — running in demo mode]")
 
     def run(self, user_message):
         self.messages.append({"role": "user", "content": user_message})
@@ -81,12 +102,39 @@ class SimpleAgent:
         return "Max turns reached"
 
     def _call_llm(self):
-        print("  [LLM would be called here with messages + tool definitions]")
-        print(f"  [Messages so far: {len(self.messages)}]")
-        return "I'll list the files in the current directory."
+        if self.llm_client is None:
+            print("  [LLM would be called here with messages + tool definitions]")
+            print(f"  [Messages so far: {len(self.messages)}]")
+            return "I'll list the files in the current directory."
+
+        from utils.llm_provider import chat
+        tool_desc = "\n".join(
+            f"- {name}: {t['description']}" for name, t in self.tools.items()
+        )
+        system = (
+            "You are a helpful agent with access to these tools:\n"
+            f"{tool_desc}\n\n"
+            "To use a tool, respond with: TOOL_CALL: tool_name(arg=value)\n"
+            "When you have the final answer, respond normally without TOOL_CALL."
+        )
+        prompt = "\n".join(
+            f"{m['role']}: {m['content']}" for m in self.messages
+        )
+        return chat(self.llm_client, prompt, system=system)
 
     def _extract_tool_calls(self, response):
-        return []
+        import re
+        calls = []
+        for match in re.finditer(r"TOOL_CALL:\s*(\w+)\((.+?)\)", response):
+            name = match.group(1)
+            args_str = match.group(2)
+            args = {}
+            for pair in args_str.split(","):
+                if "=" in pair:
+                    k, v = pair.split("=", 1)
+                    args[k.strip()] = v.strip().strip("'\"")
+            calls.append({"name": name, "arguments": args})
+        return calls
 
 
 if __name__ == "__main__":
@@ -98,6 +146,9 @@ if __name__ == "__main__":
     print("  4. Result feeds back to the LLM")
     print("  5. Repeat until the LLM decides it's done\n")
 
+    print("Supported LLM providers: Anthropic, OpenAI, MiniMax")
+    print("Set LLM_PROVIDER env var or let it auto-detect from API keys.\n")
+
     print("Available tools:")
     for name, tool in TOOLS.items():
         print(f"  - {name}: {tool['description']}")
@@ -105,9 +156,7 @@ if __name__ == "__main__":
     print("\n--- Demo: Tool execution ---")
     print(f"\nlist_files('.'): \n{TOOLS['list_files']['execute']('.')}")
 
-    print("\n--- Demo: Agent loop (without LLM) ---")
+    print("\n--- Demo: Agent loop ---")
     agent = SimpleAgent(TOOLS)
     result = agent.run("List the files in the current directory")
     print(f"\nResult: {result}")
-
-    print("\nTo run with a real LLM, set ANTHROPIC_API_KEY and use agent_loop_real.py")

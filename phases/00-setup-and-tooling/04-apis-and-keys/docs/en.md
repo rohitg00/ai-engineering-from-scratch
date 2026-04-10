@@ -43,6 +43,7 @@ Never put API keys in code. Use environment variables.
 ```bash
 export ANTHROPIC_API_KEY="sk-ant-..."
 export OPENAI_API_KEY="sk-..."
+export MINIMAX_API_KEY="eyJ..."
 ```
 
 Or use a `.env` file (add it to `.gitignore`):
@@ -50,6 +51,7 @@ Or use a `.env` file (add it to `.gitignore`):
 ```
 ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
+MINIMAX_API_KEY=eyJ...
 ```
 
 ### Step 2: First API call (Python)
@@ -84,7 +86,30 @@ const response = await client.messages.create({
 console.log(response.content[0].text);
 ```
 
-### Step 4: Raw HTTP (no SDK)
+### Step 4: MiniMax API call (OpenAI-compatible)
+
+MiniMax provides an OpenAI-compatible endpoint, so you can use the `openai` SDK with a custom `base_url`. This pattern works for many providers.
+
+```python
+import os
+import openai
+
+client = openai.OpenAI(
+    api_key=os.environ["MINIMAX_API_KEY"],
+    base_url="https://api.minimax.io/v1",
+)
+
+response = client.chat.completions.create(
+    model="MiniMax-M2.7",
+    max_tokens=256,
+    temperature=0.7,
+    messages=[{"role": "user", "content": "What is a neural network in one sentence?"}],
+)
+
+print(response.choices[0].message.content)
+```
+
+### Step 5: Raw HTTP (no SDK)
 
 ```python
 import os
@@ -119,6 +144,7 @@ For this course:
 |-----|-----------------|-----------|
 | Anthropic (Claude) | Phases 11-16 (agents, tools) | $5 credit on signup |
 | OpenAI | Phase 11 (comparison) | $5 credit on signup |
+| MiniMax | Phases 11-16 (alternative LLM) | Free tier available |
 | Hugging Face | Phases 4-10 (models, datasets) | Free |
 
 You don't need all of them right now. Set them up when the lesson requires it.
@@ -133,6 +159,8 @@ This lesson produces:
 1. Get an Anthropic API key and make your first API call
 2. Try the raw HTTP version and compare the response format to the SDK version
 3. Intentionally use a wrong API key and read the error message
+4. Try calling MiniMax using the OpenAI SDK with a custom `base_url`
+5. Use `utils/llm_provider.py` to auto-detect and call whichever provider you have configured
 
 ## Key Terms
 
