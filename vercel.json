@@ -6,6 +6,7 @@
   "rewrites": [
     { "source": "/glossary", "destination": "/glossary.html" },
     { "source": "/catalog", "destination": "/catalog.html" },
-    { "source": "/path", "destination": "/prereqs.html" }
+    { "source": "/path", "destination": "/prereqs.html" },
+    { "source": "/roadmap", "destination": "/prereqs.html" }
   ]
 }

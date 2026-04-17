@@ -1350,26 +1350,14 @@
       gap: 16px;
     }
 
-    .continue-big-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+    .phase-finished {
       font-family: var(--font-heading);
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-size: 1.05rem;
+      font-weight: 600;
       color: #fff;
-      background: var(--accent);
-      padding: 16px 40px;
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-      text-decoration: none;
-      border: 2px solid var(--accent);
-      box-shadow: var(--shadow-hard-lg);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .continue-big-btn:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 8px 8px 0 var(--shadow-color);
+      background: var(--complete);
+      padding: 10px 20px;
+      border-radius: 8px;
     }
 
     .continue-links {
@@ -1452,10 +1440,6 @@
         width: 20px;
       }
 
-      .continue-big-btn {
-        font-size: 1.1rem;
-        padding: 14px 28px;
-      }
     }
 
     @media (max-width: 768px) {
@@ -1547,11 +1531,6 @@
         padding: 16px 8px;
       }
 
-      .continue-big-btn {
-        font-size: 1rem;
-        padding: 12px 20px;
-      }
-
       .continue-links {
         gap: 8px;
       }
@@ -1617,7 +1596,7 @@
       <nav class="header-nav">
         <a href="index.html#phases">Phases</a>
         <a href="catalog.html">Catalog</a>
-        <a href="prereqs.html">Path</a>
+        <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
       </nav>
@@ -2775,10 +2754,8 @@
         var html = '<div class="ai-panel-header"><div class="ai-panel-icon blue">\u{1F680}</div><div class="ai-panel-title">Continue Learning</div></div>';
         html += '<div class="continue-panel">';
 
-        if (next && next.path) {
-          html += '<a class="continue-big-btn" href="lesson.html?path=' + next.path + '">Next: ' + escapeHtml(next.lessonName) + ' \u2192</a>';
-        } else {
-          html += '<div class="continue-big-btn" style="background:var(--complete);border-color:var(--complete);">\u2705 You finished this phase!</div>';
+        if (!next || !next.path) {
+          html += '<div class="phase-finished">\u2705 You finished this phase!</div>';
         }
 
         html += '<div class="continue-links">';
