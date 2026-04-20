@@ -1,0 +1,3137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson - AI Engineering from Scratch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d18'/><text x='4' y='23' font-size='18' font-weight='bold' font-family='system-ui' fill='%23ff6b6b'>AI</text></svg>">
+  <meta name="description" content="AI Engineering from Scratch - Lesson Viewer">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260417e">
+  <style>
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 9999;
+      transition: width 0.05s linear;
+      width: 0%;
+    }
+
+    .lesson-layout {
+      display: flex;
+      padding-top: 64px;
+      min-height: 100vh;
+    }
+
+    .lesson-sidebar {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      bottom: 0;
+      width: 260px;
+      background: var(--bg-surface);
+      border-right: 2px dashed var(--border);
+      overflow-y: auto;
+      z-index: 50;
+      padding: 20px 0;
+      transition: transform 0.3s ease;
+    }
+
+    .lesson-sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 74px;
+      left: 10px;
+      z-index: 60;
+      background: var(--bg-surface);
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+    }
+
+    .lesson-sidebar-toggle:hover {
+      border-color: var(--accent);
+    }
+
+    .sidebar-phase-header {
+      padding: 8px 20px;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-lesson-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: background-color 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-lesson-link:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text);
+    }
+
+    .sidebar-lesson-link.active {
+      color: var(--accent);
+      background: rgba(255, 107, 107, 0.08);
+      border-left-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .sidebar-lesson-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .sidebar-lesson-dot.complete {
+      background: var(--complete);
+    }
+
+    .sidebar-lesson-dot.planned {
+      background: var(--planned);
+    }
+
+    .sidebar-phase-nav {
+      padding: 16px 20px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-phase-nav a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+
+    .sidebar-phase-nav a:hover {
+      color: var(--accent);
+    }
+
+    .lesson-main {
+      flex: 1;
+      margin-left: 260px;
+      display: flex;
+      justify-content: center;
+      padding: 40px 32px 80px;
+    }
+
+    .lesson-content {
+      max-width: 720px;
+      width: 100%;
+    }
+
+    .lesson-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .lesson-loading-text {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .lesson-error {
+      text-align: center;
+      padding: 80px 24px;
+    }
+
+    .lesson-error h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .lesson-error p {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .lesson-article h1 {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--accent);
+      position: relative;
+    }
+
+    .lesson-article h1::before {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: rotate(-0.3deg);
+    }
+
+    .lesson-article h1::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 5%;
+      right: 5%;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0.4;
+      transform: rotate(0.5deg);
+    }
+
+    .lesson-article h2 {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed var(--border);
+    }
+
+    .lesson-article h2.section-build {
+      border-left: 4px solid var(--secondary);
+      padding-left: 16px;
+      border-bottom: none;
+    }
+
+    .lesson-article h2.section-use {
+      border-left: 4px solid var(--complete);
+      padding-left: 16px;
+      border-bottom: none;
+    }
+
+    .lesson-article h2.section-ship {
+      border-left: 4px solid var(--accent);
+      padding-left: 16px;
+      border-bottom: none;
+    }
+
+    .lesson-article h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    .lesson-article p {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .lesson-article .motto {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      color: var(--text);
+      border-left: 4px solid var(--accent);
+      background: rgba(255, 107, 107, 0.06);
+      padding: 20px 24px;
+      margin: 24px 0 32px;
+      border-radius: 0 12px 12px 0;
+    }
+
+    [data-theme="light"] .lesson-article .motto {
+      background: rgba(255, 77, 77, 0.06);
+    }
+
+    .lesson-article .drop-cap::first-letter {
+      float: left;
+      font-family: var(--font-heading);
+      font-size: 3.5em;
+      line-height: 0.8;
+      padding-right: 8px;
+      padding-top: 4px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .lesson-article blockquote {
+      border-left: 3px solid var(--border);
+      padding: 12px 20px;
+      margin: 16px 0;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .lesson-article strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .lesson-article em {
+      font-style: italic;
+    }
+
+    .lesson-article a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent);
+      transition: border-color 0.2s;
+    }
+
+    .lesson-article a:hover {
+      border-bottom-style: solid;
+    }
+
+    .lesson-article hr {
+      border: none;
+      border-top: 2px dashed var(--border);
+      margin: 32px 0;
+    }
+
+    .lesson-article ul {
+      list-style: none;
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    .lesson-article ul li {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: var(--text);
+      position: relative;
+      padding-left: 8px;
+      margin-bottom: 4px;
+    }
+
+    .lesson-article ul li::before {
+      content: '';
+      position: absolute;
+      left: -16px;
+      top: 12px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .lesson-article ol {
+      list-style: none;
+      padding-left: 24px;
+      margin-bottom: 16px;
+      counter-reset: ol-counter;
+    }
+
+    .lesson-article ol li {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: var(--text);
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 4px;
+      counter-increment: ol-counter;
+    }
+
+    .lesson-article ol li::before {
+      content: counter(ol-counter);
+      position: absolute;
+      left: -20px;
+      top: 0;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    .lesson-article code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      color: var(--accent);
+    }
+
+    .lesson-article pre {
+      position: relative;
+      margin: 20px 0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .lesson-article pre code {
+      display: block;
+      background: #1a1a2e;
+      color: #e0ddd5;
+      padding: 20px 24px;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    [data-theme="light"] .lesson-article pre code {
+      background: #2d2b3d;
+      color: #e0ddd5;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .code-lang {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 12px;
+      background: rgba(255, 107, 107, 0.15);
+      color: var(--accent);
+      border-radius: 12px 0 8px 0;
+      z-index: 2;
+    }
+
+    .code-copy {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      z-index: 2;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .code-copy:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .syn-keyword { color: #6ba3ff; }
+    .syn-string { color: #5ab88f; }
+    .syn-number { color: #ff6b6b; }
+    .syn-comment { color: #6b6b8a; font-style: italic; }
+    .syn-function { color: #dfc47d; }
+    .syn-operator { color: #c594c5; }
+
+    .lesson-article .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border: 2px solid var(--border);
+    }
+
+    .lesson-article table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 1rem;
+    }
+
+    .lesson-article thead th {
+      background: #fff9c4;
+      color: #3d3d00;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 16px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      border-bottom: 2px dashed var(--border);
+    }
+
+    [data-theme="dark"] .lesson-article thead th {
+      background: #3d3a1a;
+      color: #fff9c4;
+    }
+
+    .lesson-article tbody td {
+      padding: 10px 16px;
+      border-bottom: 1px dashed var(--border);
+      color: var(--text);
+    }
+
+    .lesson-article tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    [data-theme="light"] .lesson-article tbody tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .lesson-article tbody tr:hover {
+      background: rgba(255, 107, 107, 0.04);
+    }
+
+    .lesson-article .key-terms-table .col-says {
+      font-family: var(--font-body);
+      font-style: italic;
+    }
+
+    .learning-objectives {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0 28px;
+    }
+
+    .learning-objectives-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: #818cf8;
+      margin: 0 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .learning-objectives ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .learning-objectives li {
+      margin-bottom: 6px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    [data-theme="light"] .learning-objectives {
+      background: rgba(99, 102, 241, 0.06);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    .lesson-meta-tag.time-tag {
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      color: #fbbf24;
+    }
+
+    .quiz-section {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 32px 0;
+    }
+
+    .quiz-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: #10b981;
+      margin: 0 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quiz-question {
+      margin-bottom: 20px;
+    }
+
+    .quiz-question:last-child {
+      margin-bottom: 0;
+    }
+
+    .quiz-question-text {
+      font-weight: 600;
+      color: var(--text-heading);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--text-body);
+      font-size: 0.95rem;
+    }
+
+    .quiz-option:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .quiz-option.correct {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+
+    .quiz-option.incorrect {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+      color: #ef4444;
+    }
+
+    .quiz-option.disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .quiz-option .quiz-marker {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    .quiz-option.correct .quiz-marker {
+      border-color: #10b981;
+      background: #10b981;
+      color: #fff;
+    }
+
+    .quiz-option.incorrect .quiz-marker {
+      border-color: #ef4444;
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .quiz-explanation {
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: rgba(16, 185, 129, 0.06);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: none;
+    }
+
+    .quiz-score {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: rgba(16, 185, 129, 0.1);
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      color: #10b981;
+      display: none;
+    }
+
+    .lab-challenge {
+      background: rgba(251, 146, 60, 0.06);
+      border: 2px dashed rgba(251, 146, 60, 0.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 28px 0;
+    }
+
+    .lab-challenge h2 {
+      font-family: var(--font-heading);
+      color: #fb923c !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 0 12px !important;
+    }
+
+    [data-theme="light"] .quiz-section {
+      background: rgba(16, 185, 129, 0.04);
+    }
+
+    [data-theme="light"] .lab-challenge {
+      background: rgba(251, 146, 60, 0.04);
+    }
+
+    .lesson-article .mermaid-container {
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mermaid-block {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .mermaid-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .mermaid-btn {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    }
+
+    .mermaid-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .mermaid-btn:active {
+      transform: scale(0.98);
+    }
+
+    .mermaid-render {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mermaid-source {
+      display: none;
+    }
+
+    .mermaid-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay-bg);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .mermaid-modal-overlay.open {
+      display: flex;
+    }
+
+    .mermaid-modal {
+      width: min(1100px, 96vw);
+      height: min(760px, 88vh);
+      background: var(--modal-bg);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow-hard-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mermaid-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-surface);
+    }
+
+    .mermaid-modal-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mermaid-modal-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .mermaid-modal-body {
+      flex: 1;
+      overflow: auto;
+      padding: 18px;
+      background: var(--bg);
+    }
+
+    .mermaid-modal-center {
+      min-height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mermaid-modal-body svg {
+      max-width: none;
+      height: auto;
+    }
+
+    .lesson-article .mermaid-container pre {
+      overflow: visible;
+      background: none;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .lesson-article .mermaid-container svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .lesson-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .lesson-meta-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+    }
+
+    .lesson-nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 16px;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 2px dashed var(--border);
+    }
+
+    .lesson-nav-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 16px 20px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      max-width: 48%;
+    }
+
+    .lesson-nav-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .lesson-nav-btn .nav-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .lesson-nav-btn .nav-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .lesson-nav-btn.next {
+      text-align: right;
+      margin-left: auto;
+    }
+
+    @media (max-width: 900px) {
+      .lesson-sidebar {
+        transform: translateX(-100%);
+      }
+
+      .lesson-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .lesson-sidebar-toggle {
+        display: flex;
+      }
+
+      .lesson-main {
+        margin-left: 0;
+        padding: 40px 20px 80px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .lesson-article h1 {
+        font-size: 1.8rem;
+      }
+
+      .lesson-article h2 {
+        font-size: 1.4rem;
+      }
+
+      .lesson-article p,
+      .lesson-article ul li,
+      .lesson-article ol li {
+        font-size: 1.05rem;
+      }
+
+      .lesson-article .motto {
+        font-size: 1.15rem;
+        padding: 16px 18px;
+      }
+
+      .lesson-article .drop-cap::first-letter {
+        font-size: 2.8em;
+      }
+
+      .lesson-nav-bottom {
+        flex-direction: column;
+      }
+
+      .lesson-nav-btn {
+        max-width: 100%;
+      }
+
+      .lesson-nav-btn.next {
+        text-align: left;
+      }
+    }
+
+    .ai-panels {
+      margin-top: 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .ai-panel {
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      padding: 32px 28px;
+      background: var(--bg-surface);
+      position: relative;
+      box-shadow: var(--shadow-hard);
+    }
+
+    .ai-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .ai-panel-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .ai-panel-icon.coral { background: rgba(255, 107, 107, 0.15); color: var(--accent); }
+    .ai-panel-icon.blue { background: rgba(107, 163, 255, 0.15); color: var(--secondary); }
+    .ai-panel-icon.green { background: rgba(90, 184, 143, 0.15); color: var(--complete); }
+
+    .ai-panel-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .ai-panel-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: -16px;
+      margin-bottom: 20px;
+    }
+
+    .output-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .output-card {
+      border: 2px solid var(--border);
+      border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+      padding: 20px;
+      background: var(--bg);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .output-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .output-card-name {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text);
+      word-break: break-all;
+      margin-bottom: 8px;
+    }
+
+    .output-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 10px;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      margin-bottom: 10px;
+    }
+
+    .output-badge.prompt { background: rgba(255, 107, 107, 0.15); color: var(--accent); border: 1px solid var(--accent); }
+    .output-badge.skill { background: rgba(107, 163, 255, 0.15); color: var(--secondary); border: 1px solid var(--secondary); }
+    .output-badge.other { background: rgba(90, 184, 143, 0.1); color: var(--complete); border: 1px solid var(--complete); }
+
+    .output-desc {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .output-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .output-btn {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 5px 12px;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .output-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .output-install-hint {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--code-bg);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      word-break: break-all;
+      display: none;
+    }
+
+    .output-install-hint.visible { display: block; }
+
+    .code-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .code-card {
+      background: #1a1a2e;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    [data-theme="light"] .code-card {
+      background: #2d2b3d;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .code-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 rgba(107, 163, 255, 0.4);
+    }
+
+    .code-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .code-lang-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .code-card-name {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #e0ddd5;
+      word-break: break-all;
+    }
+
+    .code-card-size {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: #6b6b8a;
+      margin-bottom: 12px;
+    }
+
+    .code-card-run {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #5ab88f;
+      background: rgba(90, 184, 143, 0.08);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      word-break: break-all;
+    }
+
+    .code-card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .code-card-btn {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 5px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #b0aec0;
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .code-card-btn:hover {
+      border-color: var(--secondary);
+      color: var(--secondary);
+    }
+
+    .quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quiz-question {
+      border: 2px solid var(--border);
+      border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+      padding: 20px;
+      background: var(--bg);
+    }
+
+    .quiz-question-text {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .quiz-question-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      background: transparent;
+      text-align: left;
+      width: 100%;
+    }
+
+    .quiz-option:hover:not(.selected):not(.disabled) {
+      border-color: var(--accent);
+      background: rgba(255, 107, 107, 0.04);
+    }
+
+    .quiz-option .opt-letter {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+
+    .quiz-option.selected.correct {
+      border-color: var(--complete);
+      background: rgba(90, 184, 143, 0.08);
+    }
+
+    .quiz-option.selected.correct .opt-letter {
+      border-color: var(--complete);
+      background: var(--complete);
+      color: #fff;
+    }
+
+    .quiz-option.selected.wrong {
+      border-color: var(--accent);
+      background: rgba(255, 107, 107, 0.08);
+    }
+
+    .quiz-option.selected.wrong .opt-letter {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .quiz-option.disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+
+    .quiz-option.disabled.is-answer {
+      opacity: 1;
+      border-color: var(--complete);
+      background: rgba(90, 184, 143, 0.06);
+    }
+
+    .quiz-explanation {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding: 12px 14px;
+      border-left: 3px solid var(--complete);
+      background: rgba(90, 184, 143, 0.04);
+      border-radius: 0 8px 8px 0;
+      display: none;
+    }
+
+    .quiz-explanation.visible { display: block; }
+
+    .quiz-score {
+      text-align: center;
+      padding: 24px;
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      background: var(--bg);
+      display: none;
+    }
+
+    .quiz-score.visible { display: block; }
+
+    .quiz-score-number {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .quiz-score-label {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .quiz-deeper {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--code-bg);
+      border-radius: 8px;
+    }
+
+    .quiz-deeper code {
+      color: var(--accent);
+    }
+
+    .learning-timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    .timeline-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 100px;
+      flex-shrink: 0;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .timeline-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 2px solid var(--border);
+      z-index: 2;
+      transition: transform 0.2s;
+    }
+
+    .timeline-item.current .timeline-dot {
+      width: 22px;
+      height: 22px;
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+    }
+
+    .timeline-item.prev .timeline-dot,
+    .timeline-item.done .timeline-dot {
+      background: var(--complete);
+      border-color: var(--complete);
+    }
+
+    .timeline-item:hover .timeline-dot {
+      transform: scale(1.2);
+    }
+
+    .timeline-line {
+      width: 40px;
+      height: 2px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .timeline-line.done { background: var(--complete); }
+    .timeline-line.active { background: var(--accent); }
+
+    .timeline-label {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 100px;
+      line-height: 1.3;
+    }
+
+    .timeline-item.current .timeline-label {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .phase-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      overflow: hidden;
+      margin: 16px 0 8px;
+    }
+
+    .phase-progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      transition: width 0.5s ease;
+    }
+
+    .phase-progress-text {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .phase-complete-callout {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--complete);
+      text-align: center;
+      margin-top: 12px;
+      padding: 12px;
+      border: 2px dashed var(--complete);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      display: none;
+    }
+
+    .phase-complete-callout.visible { display: block; }
+
+    .continue-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .phase-finished {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--complete);
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .continue-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .continue-link {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .continue-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .continue-callout {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--code-bg);
+      padding: 14px 20px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      max-width: 480px;
+    }
+
+    .continue-callout code {
+      color: var(--accent);
+    }
+
+    .panel-loading {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .panel-fallback {
+      text-align: center;
+      padding: 16px;
+    }
+
+    .panel-fallback a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 480px) {
+      .ai-panel {
+        padding: 20px 16px;
+      }
+
+      .output-cards,
+      .code-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .learning-timeline {
+        padding: 20px 10px;
+      }
+
+      .timeline-item {
+        min-width: 70px;
+      }
+
+      .timeline-line {
+        width: 20px;
+      }
+
+    }
+
+    @media (max-width: 768px) {
+      .lesson-main {
+        padding: 32px 16px 60px;
+      }
+
+      .lesson-article {
+        max-width: 100%;
+      }
+
+      .lesson-article h1 {
+        font-size: 2rem;
+      }
+
+      .lesson-article h2 {
+        font-size: 1.5rem;
+      }
+
+      .lesson-article h3 {
+        font-size: 1.2rem;
+      }
+
+      .lesson-article p,
+      .lesson-article ul li,
+      .lesson-article ol li {
+        font-size: 1.05rem;
+        line-height: 1.75;
+      }
+
+      .lesson-article pre code {
+        font-size: 0.8rem;
+        padding: 14px 12px;
+      }
+
+      .lesson-article table {
+        font-size: 0.85rem;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .lesson-article table th,
+      .lesson-article table td {
+        padding: 8px 10px;
+        white-space: nowrap;
+      }
+
+      .lesson-article .motto {
+        font-size: 1.1rem;
+        padding: 14px 16px;
+      }
+
+      .lesson-article .drop-cap::first-letter {
+        font-size: 3em;
+      }
+
+      .ai-panels {
+        margin-top: 40px;
+        gap: 32px;
+      }
+
+      .ai-panel {
+        padding: 20px 14px;
+        border-radius: 20px 8px 20px 8px / 8px 20px 8px 20px;
+      }
+
+      .ai-panel-title {
+        font-size: 1.2rem;
+      }
+
+      .output-cards,
+      .code-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz-options {
+        gap: 8px;
+      }
+
+      .quiz-option {
+        font-size: 0.9rem;
+        padding: 10px 14px;
+      }
+
+      .learning-timeline {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 16px 8px;
+      }
+
+      .continue-links {
+        gap: 8px;
+      }
+
+      .lesson-nav-bottom {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .lesson-nav-btn {
+        max-width: 100%;
+      }
+
+      .lesson-nav-btn.next {
+        text-align: left;
+      }
+
+      .lesson-progress {
+        font-size: 0.7rem;
+        padding: 6px 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .lesson-article h1 {
+        font-size: 1.6rem;
+      }
+
+      .lesson-main {
+        padding: 24px 10px 48px;
+      }
+
+      .ai-panel {
+        padding: 16px 10px;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      .lesson-article {
+        max-width: 800px;
+      }
+
+      .lesson-sidebar {
+        width: 300px;
+        min-width: 300px;
+      }
+
+      .lesson-main {
+        margin-left: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">&#9679;</span> AI from Scratch
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#phases">Phases</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="prereqs.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+        </a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-icon" id="themeIcon">&#9789;</span>
+      </button>
+    </div>
+  </header>
+
+  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+
+  <div class="mermaid-modal-overlay" id="mermaidModalOverlay" aria-hidden="true">
+    <div class="mermaid-modal" role="dialog" aria-modal="true" aria-label="Expanded diagram">
+      <div class="mermaid-modal-header">
+        <div class="mermaid-modal-title" id="mermaidModalTitle">Diagram</div>
+        <div class="mermaid-modal-actions">
+          <button class="mermaid-btn" type="button" id="mermaidModalClose">Close</button>
+        </div>
+      </div>
+      <div class="mermaid-modal-body" id="mermaidModalBody"><div class="mermaid-modal-center" id="mermaidModalCenter"></div></div>
+    </div>
+  </div>
+
+  <div class="lesson-layout">
+    <aside class="lesson-sidebar" id="lessonSidebar"></aside>
+    <main class="lesson-main">
+      <div class="lesson-content" id="lessonContent">
+        <div class="lesson-loading" id="lessonLoading">
+          <div class="spinner"></div>
+          <div class="lesson-loading-text">Loading lesson...</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="data.js?v=20260417e"></script>
+  <script src="progress.js?v=20260417e"></script>
+  <script src="header.js?v=20260417e" defer></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: document.documentElement.getAttribute('data-theme') === 'light' ? 'default' : 'dark',
+      fontFamily: 'Patrick Hand, cursive'
+    });
+    window._mermaidReady = mermaid;
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = localStorage.getItem('theme');
+      if (stored) {
+        root.setAttribute('data-theme', stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        root.setAttribute('data-theme', 'light');
+      }
+      updateThemeIcon();
+
+      function updateThemeIcon() {
+        var icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        var theme = root.getAttribute('data-theme');
+        icon.innerHTML = theme === 'light' ? '&#9728;' : '&#9789;';
+      }
+
+      var btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var current = root.getAttribute('data-theme');
+          var next = current === 'light' ? 'dark' : 'light';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          updateThemeIcon();
+          updateMermaidThemeAndRerender();
+        });
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var lessonPath = params.get('path');
+
+      if (!lessonPath) {
+        showError('No lesson path specified', 'Add ?path=phases/01-math-foundations/01-linear-algebra-intuition to the URL.');
+        return;
+      }
+
+      if (window.AIFSProgress) {
+        window.AIFSProgress.recordVisit(lessonPath);
+      }
+
+      var phaseMatch = lessonPath.match(/phases\/(\d+-[^/]+)/);
+      var lessonMatch = lessonPath.match(/phases\/\d+-[^/]+\/(\d+-[^/]+)/);
+      var currentPhaseSlug = phaseMatch ? phaseMatch[1] : null;
+      var currentLessonSlug = lessonMatch ? lessonMatch[1] : null;
+
+      var currentPhaseIndex = -1;
+      var currentLessonIndex = -1;
+      var flatLessons = [];
+
+      if (typeof PHASES !== 'undefined') {
+        for (var i = 0; i < PHASES.length; i++) {
+          var p = PHASES[i];
+          var pSlug = extractPhaseSlug(p, i);
+          for (var j = 0; j < p.lessons.length; j++) {
+            var l = p.lessons[j];
+            var lSlug = extractLessonSlug(l, j);
+            flatLessons.push({
+              phaseIndex: i,
+              lessonIndex: j,
+              phaseName: p.name,
+              phaseId: p.id,
+              phaseSlug: pSlug,
+              lessonName: l.name,
+              lessonSlug: lSlug,
+              status: l.status,
+              type: l.type,
+              lang: l.lang,
+              url: l.url,
+              path: 'phases/' + pSlug + '/' + lSlug,
+              isReadable: l.status === 'complete' || !!l.url
+            });
+            if (pSlug === currentPhaseSlug && lSlug === currentLessonSlug) {
+              currentPhaseIndex = i;
+              currentLessonIndex = flatLessons.length - 1;
+            }
+          }
+        }
+      }
+
+      buildSidebar();
+      initSidebarToggle();
+      initScrollProgress();
+      fetchLesson(lessonPath);
+
+      function extractPhaseSlug(phase, index) {
+        if (phase.url) {
+          var m = phase.url.match(/phases\/([^/]+)/);
+          if (m) return m[1];
+        }
+        if (phase.lessons && phase.lessons.length > 0 && phase.lessons[0].url) {
+          var m2 = phase.lessons[0].url.match(/phases\/([^/]+)/);
+          if (m2) return m2[1];
+        }
+        return String(phase.id).padStart(2, '0') + '-' + phase.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      function extractLessonSlug(lesson, index) {
+        if (lesson.url) {
+          var m = lesson.url.match(/phases\/[^/]+\/([^/]+)/);
+          if (m) return m[1].replace(/\/$/, '');
+        }
+        return String(index + 1).padStart(2, '0') + '-' + lesson.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      function buildSidebar() {
+        var sidebar = document.getElementById('lessonSidebar');
+        if (!sidebar || typeof PHASES === 'undefined') return;
+
+        var html = '';
+
+        var prevPhaseIdx = currentPhaseIndex > 0 ? currentPhaseIndex - 1 : -1;
+        var nextPhaseIdx = (currentPhaseIndex >= 0 && currentPhaseIndex < PHASES.length - 1) ? currentPhaseIndex + 1 : -1;
+
+        if (prevPhaseIdx >= 0 || nextPhaseIdx >= 0) {
+          html += '<div class="sidebar-phase-nav">';
+          if (prevPhaseIdx >= 0) {
+            var pp = PHASES[prevPhaseIdx];
+            var ppSlug = extractPhaseSlug(pp, prevPhaseIdx);
+            var ppFirstLesson = pp.lessons[0] ? extractLessonSlug(pp.lessons[0], 0) : '';
+            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
+          }
+          if (nextPhaseIdx >= 0) {
+            var np = PHASES[nextPhaseIdx];
+            var npSlug = extractPhaseSlug(np, nextPhaseIdx);
+            var npFirstLesson = np.lessons[0] ? extractLessonSlug(np.lessons[0], 0) : '';
+            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
+          }
+          html += '</div>';
+        }
+
+        if (currentPhaseIndex >= 0) {
+          var phase = PHASES[currentPhaseIndex];
+          html += '<div class="sidebar-phase-header">Phase ' + String(phase.id).padStart(2, '0') + ' &mdash; ' + escapeHtml(phase.name) + '</div>';
+          for (var k = 0; k < phase.lessons.length; k++) {
+            var les = phase.lessons[k];
+            var lesSlug = extractLessonSlug(les, k);
+            var pSlugCurrent = extractPhaseSlug(phase, currentPhaseIndex);
+            var isActive = lesSlug === currentLessonSlug;
+            var lesReadable = les.status === 'complete' || !!les.url;
+            if (lesReadable) {
+              html += '<a class="sidebar-lesson-link' + (isActive ? ' active' : '') + '" href="lesson.html?path=phases/' + pSlugCurrent + '/' + lesSlug + '">';
+            } else {
+              html += '<span class="sidebar-lesson-link disabled">';
+            }
+            html += '<span class="sidebar-lesson-dot ' + les.status + '"></span>';
+            html += escapeHtml(les.name);
+            html += lesReadable ? '</a>' : '</span>';
+          }
+        }
+
+        sidebar.innerHTML = html;
+      }
+
+      function initSidebarToggle() {
+        var toggle = document.getElementById('sidebarToggle');
+        var sidebar = document.getElementById('lessonSidebar');
+        if (!toggle || !sidebar) return;
+
+        toggle.addEventListener('click', function () {
+          sidebar.classList.toggle('open');
+        });
+
+        document.addEventListener('click', function (e) {
+          if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
+            if (!sidebar.contains(e.target) && e.target !== toggle) {
+              sidebar.classList.remove('open');
+            }
+          }
+        });
+      }
+
+      function initScrollProgress() {
+        var bar = document.getElementById('scrollProgress');
+        if (!bar) return;
+        window.addEventListener('scroll', function () {
+          var scrollTop = window.scrollY || document.documentElement.scrollTop;
+          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          bar.style.width = pct + '%';
+        }, { passive: true });
+      }
+
+      function fetchLesson(path) {
+        var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
+        var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
+        var lessonPromise = fetch(rawUrl).then(function (res) {
+          if (!res.ok) throw new Error('Not found');
+          return res.text();
+        });
+        var quizPromise = fetch(quizUrl).then(function (res) {
+          if (!res.ok) return null;
+          return res.json();
+        }).catch(function () { return null; });
+
+        Promise.all([lessonPromise, quizPromise])
+          .then(function (results) {
+            renderLesson(results[0]);
+            if (results[1]) renderQuiz(results[1]);
+          })
+          .catch(function () {
+            showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code>. It may not have been written yet.');
+          });
+      }
+
+      function showError(title, msg) {
+        var el = document.getElementById('lessonContent');
+        el.innerHTML = '<div class="lesson-error"><h2>' + title + '</h2><p>' + msg + '</p><a href="index.html" class="btn btn-primary">Back to Home</a></div>';
+      }
+
+      function renderLesson(md) {
+        var el = document.getElementById('lessonContent');
+        var html = parseMd(md);
+        html += '<div class="ai-panels" id="aiPanels"></div>';
+        html = addBottomNav(html);
+        el.innerHTML = '<article class="lesson-article">' + html + '</article>';
+
+        document.title = extractTitle(md) + ' - AI Engineering from Scratch';
+
+        initCodeCopy();
+        renderMermaidBlocks();
+        renderAIPanels();
+
+        document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            var target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      }
+
+      function extractTitle(md) {
+        var m = md.match(/^# (.+)/m);
+        return m ? m[1] : 'Lesson';
+      }
+
+      function parseMd(md) {
+        var lines = md.split('\n');
+        var out = '';
+        var inCodeBlock = false;
+        var codeLang = '';
+        var codeLines = [];
+        var inTable = false;
+        var tableRows = [];
+        var inList = false;
+        var listType = '';
+        var listItems = [];
+        var firstBlockquoteDone = false;
+        var firstParaAfterMottoDone = false;
+        var inBlockquote = false;
+        var blockquoteLines = [];
+        var mermaidBlocks = 0;
+        var inLabChallenge = false;
+
+        function flushLabChallenge() {
+          if (!inLabChallenge) return '';
+          inLabChallenge = false;
+          return '</div>';
+        }
+
+        function flushList() {
+          if (!inList) return '';
+          inList = false;
+          var tag = listType === 'ol' ? 'ol' : 'ul';
+          var h = '<' + tag + '>';
+          for (var li = 0; li < listItems.length; li++) {
+            h += '<li>' + inlineFormat(listItems[li]) + '</li>';
+          }
+          h += '</' + tag + '>';
+          listItems = [];
+          return h;
+        }
+
+        function flushTable() {
+          if (!inTable) return '';
+          inTable = false;
+          if (tableRows.length < 2) return '';
+          var headers = tableRows[0];
+          var isKeyTerms = false;
+          for (var th = 0; th < headers.length; th++) {
+            if (headers[th].toLowerCase().indexOf('what people say') >= 0 || headers[th].toLowerCase().indexOf('people say') >= 0) {
+              isKeyTerms = true;
+            }
+          }
+          var h = '<div class="table-wrap' + (isKeyTerms ? ' key-terms-table' : '') + '"><table><thead><tr>';
+          for (var ti = 0; ti < headers.length; ti++) {
+            h += '<th>' + inlineFormat(headers[ti].trim()) + '</th>';
+          }
+          h += '</tr></thead><tbody>';
+          for (var ri = 2; ri < tableRows.length; ri++) {
+            var cells = tableRows[ri];
+            h += '<tr>';
+            for (var ci = 0; ci < cells.length; ci++) {
+              var cls = '';
+              if (isKeyTerms) {
+                var headerLower = (headers[ci] || '').toLowerCase();
+                if (headerLower.indexOf('say') >= 0) cls = ' class="col-says"';
+              }
+              h += '<td' + cls + '>' + inlineFormat((cells[ci] || '').trim()) + '</td>';
+            }
+            h += '</tr>';
+          }
+          h += '</tbody></table></div>';
+          tableRows = [];
+          return h;
+        }
+
+        function flushBlockquote() {
+          if (!inBlockquote) return '';
+          inBlockquote = false;
+          var text = blockquoteLines.join(' ');
+          blockquoteLines = [];
+          if (!firstBlockquoteDone) {
+            firstBlockquoteDone = true;
+            return '<div class="motto">' + inlineFormat(text) + '</div>';
+          }
+          return '<blockquote><p>' + inlineFormat(text) + '</p></blockquote>';
+        }
+
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i];
+
+          if (inCodeBlock) {
+            if (line.match(/^```\s*$/)) {
+              inCodeBlock = false;
+              var raw = codeLines.join('\n');
+              if (codeLang === 'mermaid') {
+                mermaidBlocks++;
+                out += '<div class="mermaid-container">';
+                out += '<div class="mermaid-block" data-mermaid-index="' + mermaidBlocks + '">';
+                out += '<div class="mermaid-toolbar">';
+                out += '<button type="button" class="mermaid-btn mermaid-expand" data-mermaid-index="' + mermaidBlocks + '">Expand</button>';
+                out += '</div>';
+                out += '<pre class="mermaid mermaid-source" id="mermaid-' + mermaidBlocks + '">' + escapeHtml(raw) + '</pre>';
+                out += '<div class="mermaid-render" id="mermaid-render-' + mermaidBlocks + '"></div>';
+                out += '</div>';
+                out += '</div>';
+              } else {
+                out += renderCodeBlock(raw, codeLang);
+              }
+              codeLines = [];
+              codeLang = '';
+            } else {
+              codeLines.push(line);
+            }
+            continue;
+          }
+
+          var codeStart = line.match(/^```(\w*)/);
+          if (codeStart) {
+            out += flushList();
+            out += flushTable();
+            out += flushBlockquote();
+            inCodeBlock = true;
+            codeLang = codeStart[1] || '';
+            codeLines = [];
+            continue;
+          }
+
+          if (line.match(/^\|.+\|/)) {
+            out += flushList();
+            out += flushBlockquote();
+            if (!inTable) inTable = true;
+            var cells = line.split('|').slice(1, -1);
+            tableRows.push(cells.map(function (c) { return c.trim(); }));
+            continue;
+          } else if (inTable) {
+            out += flushTable();
+          }
+
+          if (line.match(/^>\s/)) {
+            out += flushList();
+            out += flushTable();
+            if (!inBlockquote) inBlockquote = true;
+            blockquoteLines.push(line.replace(/^>\s?/, ''));
+            continue;
+          } else if (inBlockquote) {
+            out += flushBlockquote();
+          }
+
+          var h1 = line.match(/^# (.+)/);
+          if (h1) {
+            out += flushList();
+            out += flushLabChallenge();
+            var slug = slugify(h1[1]);
+            out += '<h1 id="' + slug + '">' + inlineFormat(h1[1]) + '</h1>';
+            continue;
+          }
+
+          var h2 = line.match(/^## (.+)/);
+          if (h2) {
+            out += flushList();
+            var slug2 = slugify(h2[1]);
+            var sectionClass = '';
+            var txt = h2[1].toLowerCase();
+            if (txt.indexOf('build it') >= 0 || txt.indexOf('build ') === 0) sectionClass = ' section-build';
+            else if (txt.indexOf('use it') >= 0 || txt.indexOf('use ') === 0) sectionClass = ' section-use';
+            else if (txt.indexOf('ship it') >= 0 || txt.indexOf('ship ') === 0) sectionClass = ' section-ship';
+            if (txt.indexOf('learning objectives') >= 0) {
+              var objItems = [];
+              for (var lo = i + 1; lo < lines.length; lo++) {
+                var loLine = lines[lo];
+                if (loLine.match(/^[-*]\s+(.+)/)) {
+                  objItems.push(loLine.replace(/^[-*]\s+/, ''));
+                } else if (loLine.trim() === '') {
+                  continue;
+                } else {
+                  break;
+                }
+              }
+              out += '<div class="learning-objectives"><div class="learning-objectives-title">&#127919; Learning Objectives</div><ul>';
+              for (var oi = 0; oi < objItems.length; oi++) {
+                out += '<li>' + inlineFormat(objItems[oi]) + '</li>';
+              }
+              out += '</ul></div>';
+              i = lo - 1;
+              continue;
+            }
+            if (txt.indexOf('lab challenge') >= 0) {
+              out += flushLabChallenge();
+              inLabChallenge = true;
+              out += '<div class="lab-challenge">';
+              out += '<h2 id="' + slug2 + '">&#128171; Lab Challenge</h2>';
+              continue;
+            }
+            out += flushLabChallenge();
+            out += '<h2 id="' + slug2 + '" class="' + sectionClass + '">' + inlineFormat(h2[1]) + '</h2>';
+            continue;
+          }
+
+          var h3 = line.match(/^### (.+)/);
+          if (h3) {
+            out += flushList();
+            var slug3 = slugify(h3[1]);
+            out += '<h3 id="' + slug3 + '">' + inlineFormat(h3[1]) + '</h3>';
+            continue;
+          }
+
+          if (line.match(/^---+$/)) {
+            out += flushList();
+            out += '<hr>';
+            continue;
+          }
+
+          var ulMatch = line.match(/^[-*]\s+(.+)/);
+          if (ulMatch) {
+            out += flushTable();
+            out += flushBlockquote();
+            if (!inList || listType !== 'ul') {
+              out += flushList();
+              inList = true;
+              listType = 'ul';
+            }
+            listItems.push(ulMatch[1]);
+            continue;
+          }
+
+          var olMatch = line.match(/^\d+\.\s+(.+)/);
+          if (olMatch) {
+            out += flushTable();
+            out += flushBlockquote();
+            if (!inList || listType !== 'ol') {
+              out += flushList();
+              inList = true;
+              listType = 'ol';
+            }
+            listItems.push(olMatch[1]);
+            continue;
+          }
+
+          if (inList) {
+            out += flushList();
+          }
+
+          if (line.trim() === '') {
+            continue;
+          }
+
+          var paraClass = '';
+          if (firstBlockquoteDone && !firstParaAfterMottoDone) {
+            var isMetaLine = line.match(/^\*\*[^*]+\*\*\s*:/);
+            if (!isMetaLine) {
+              paraClass = ' class="drop-cap"';
+              firstParaAfterMottoDone = true;
+            }
+          }
+
+          var metaMatch = line.match(/^\*\*([^*]+)\*\*:\s*(.+)/);
+          if (metaMatch && !firstParaAfterMottoDone) {
+            out += '<div class="lesson-meta-tag"><strong>' + escapeHtml(metaMatch[1]) + ':</strong> ' + inlineFormat(metaMatch[2]) + '</div>';
+            continue;
+          }
+
+          out += '<p' + paraClass + '>' + inlineFormat(line) + '</p>';
+        }
+
+        out += flushList();
+        out += flushTable();
+        out += flushBlockquote();
+        out += flushLabChallenge();
+
+        return out;
+      }
+
+      function inlineFormat(text) {
+        text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, label, href) {
+          if (/^https?:\/\/|^mailto:/i.test(href)) {
+            return '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
+          }
+          return label;
+        });
+        return text;
+      }
+
+      function slugify(text) {
+        return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      }
+
+      function renderCodeBlock(code, lang) {
+        var highlighted = highlightSyntax(escapeHtml(code), lang);
+        var langLabel = lang ? '<span class="code-lang">' + escapeHtml(lang) + '</span>' : '';
+        return '<pre>' + langLabel + '<button class="code-copy" data-code="' + escapeAttr(code) + '">Copy</button><code>' + highlighted + '</code></pre>';
+      }
+
+      function highlightSyntax(code, lang) {
+        var keywords, commentPattern;
+
+        if (lang === 'python' || lang === 'py') {
+          keywords = /\b(def|class|return|if|elif|else|for|while|in|import|from|as|with|try|except|finally|raise|yield|lambda|not|and|or|is|None|True|False|print|self|pass|break|continue|assert|global)\b/g;
+          commentPattern = /(#[^\n]*)/g;
+        } else if (lang === 'julia') {
+          keywords = /\b(function|end|if|elseif|else|for|while|in|using|import|return|struct|mutable|abstract|type|module|export|let|const|begin|do|try|catch|finally|throw|true|false|nothing|println)\b/g;
+          commentPattern = /(#[^\n]*)/g;
+        } else if (lang === 'javascript' || lang === 'js' || lang === 'typescript' || lang === 'ts') {
+          keywords = /\b(function|const|let|var|return|if|else|for|while|class|new|this|import|export|from|async|await|try|catch|throw|typeof|instanceof|true|false|null|undefined|console)\b/g;
+          commentPattern = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g;
+        } else if (lang === 'rust') {
+          keywords = /\b(fn|let|mut|struct|enum|impl|trait|pub|use|mod|self|super|crate|return|if|else|for|while|loop|match|async|await|true|false|None|Some|Ok|Err|println)\b/g;
+          commentPattern = /(\/\/[^\n]*)/g;
+        } else {
+          keywords = /\b(function|def|class|return|if|else|for|while|import|from|const|let|var|true|false|null|None|print|println)\b/g;
+          commentPattern = /(#[^\n]*|\/\/[^\n]*)/g;
+        }
+
+        var tokens = [];
+        function stash(match) {
+          var id = '\x00TOK' + tokens.length + '\x00';
+          tokens.push(match);
+          return id;
+        }
+
+        code = code.replace(commentPattern, function (m) { return stash('<span class="syn-comment">' + m + '</span>'); });
+        code = code.replace(/(&quot;(?:[^&]|&(?!quot;))*?&quot;|&#39;(?:[^&]|&(?!#39;))*?&#39;|&quot;&quot;&quot;[\s\S]*?&quot;&quot;&quot;)/g, function (m) { return stash('<span class="syn-string">' + m + '</span>'); });
+        code = code.replace(/"([^"]*?)"/g, function (m) { return stash('<span class="syn-string">' + m + '</span>'); });
+
+        code = code.replace(keywords, '<span class="syn-keyword">$1</span>');
+        code = code.replace(/\b(\d+\.?\d*)\b/g, '<span class="syn-number">$1</span>');
+
+        for (var ti = 0; ti < tokens.length; ti++) {
+          code = code.replace('\x00TOK' + ti + '\x00', tokens[ti]);
+        }
+        return code;
+      }
+
+      function initCodeCopy() {
+        document.querySelectorAll('.code-copy').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var code = btn.getAttribute('data-code');
+            navigator.clipboard.writeText(code).then(function () {
+              btn.textContent = 'Copied!';
+              setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+            });
+          });
+        });
+      }
+
+      function renderMermaidBlocks() {
+        var check = setInterval(function () {
+          if (!window._mermaidReady) return;
+          clearInterval(check);
+          rerenderMermaidBlocks();
+          bindMermaidToolbar();
+          initMermaidModal();
+        }, 100);
+        setTimeout(function () { clearInterval(check); }, 10000);
+      }
+
+      function mermaidTheme() {
+        return document.documentElement.getAttribute('data-theme') === 'light' ? 'default' : 'dark';
+      }
+
+      function updateMermaidThemeAndRerender() {
+        if (!window._mermaidReady) return;
+        try {
+          window._mermaidReady.initialize({ startOnLoad: false, theme: mermaidTheme(), fontFamily: 'Patrick Hand, cursive' });
+        } catch (_) {}
+        rerenderMermaidBlocks();
+        rerenderMermaidModal();
+      }
+
+      function rerenderMermaidBlocks() {
+        if (!window._mermaidReady) return;
+        var sources = document.querySelectorAll('pre.mermaid.mermaid-source');
+        sources.forEach(function (pre) {
+          var idxMatch = pre.id && pre.id.match(/mermaid-(\d+)/);
+          var idx = idxMatch ? idxMatch[1] : null;
+          if (!idx) return;
+          var target = document.getElementById('mermaid-render-' + idx);
+          if (!target) return;
+          var def = pre.textContent;
+          target.innerHTML = '<div class="panel-loading">Rendering diagram...</div>';
+
+          var token = ++mermaidRenderSeq;
+          target._mermaidRenderToken = token;
+
+          window._mermaidReady.render('mermaid-' + idx + '-svg', def).then(function (result) {
+            if (target._mermaidRenderToken !== token) return;
+            target.innerHTML = result.svg;
+          }).catch(function () {
+            if (target._mermaidRenderToken !== token) return;
+            target.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Diagram could not be rendered.</p>';
+          });
+        });
+      }
+
+      function bindMermaidToolbar() {
+        document.querySelectorAll('.mermaid-expand').forEach(function (btn) {
+          if (btn._bound) return;
+          btn._bound = true;
+          btn.addEventListener('click', function () {
+            var idx = btn.getAttribute('data-mermaid-index');
+            openMermaidModal(idx, btn);
+          });
+        });
+      }
+
+      function initMermaidModal() {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var closeBtn = document.getElementById('mermaidModalClose');
+        if (!overlay || !closeBtn) return;
+        if (overlay._bound) return;
+        overlay._bound = true;
+
+        closeBtn.addEventListener('click', closeMermaidModal);
+        overlay.addEventListener('click', function (e) {
+          if (e.target === overlay) closeMermaidModal();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (!overlay.classList.contains('open')) return;
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            closeMermaidModal();
+            return;
+          }
+
+          if (e.key === 'Tab') {
+            var focusables = getMermaidModalFocusables();
+            if (!focusables.length) return;
+            var first = focusables[0];
+            var last = focusables[focusables.length - 1];
+            var active = document.activeElement;
+
+            if (e.shiftKey) {
+              if (active === first || active === overlay) {
+                e.preventDefault();
+                last.focus();
+              }
+            } else {
+              if (active === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }
+          }
+        });
+      }
+
+      var lastMermaidTrigger = null;
+      var openMermaidIndex = null;
+      var mermaidRenderSeq = 0;
+
+      function getMermaidModalFocusables() {
+        var modal = document.querySelector('#mermaidModalOverlay .mermaid-modal');
+        if (!modal) return [];
+        return Array.prototype.slice.call(modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+          .filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+      }
+
+      function openMermaidModal(idx, triggerEl) {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var body = document.getElementById('mermaidModalBody');
+        var center = document.getElementById('mermaidModalCenter');
+        var title = document.getElementById('mermaidModalTitle');
+        var closeBtn = document.getElementById('mermaidModalClose');
+        var pre = document.getElementById('mermaid-' + idx);
+        if (!overlay || !body || !center || !pre || !closeBtn) return;
+
+        lastMermaidTrigger = triggerEl || document.activeElement;
+        openMermaidIndex = idx;
+
+        if (title) title.textContent = 'Diagram';
+
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        closeBtn.focus();
+
+        rerenderMermaidModal();
+      }
+
+      function rerenderMermaidModal() {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var center = document.getElementById('mermaidModalCenter');
+        if (!overlay || !center) return;
+        if (!overlay.classList.contains('open')) return;
+        if (!openMermaidIndex) return;
+        if (!window._mermaidReady) return;
+
+        var pre = document.getElementById('mermaid-' + openMermaidIndex);
+        if (!pre) return;
+        var def = pre.textContent;
+
+        center.innerHTML = '<div class="panel-loading">Rendering diagram...</div>';
+        var token = ++mermaidRenderSeq;
+        center._mermaidRenderToken = token;
+
+        window._mermaidReady.render('mermaid-modal-svg', def).then(function (result) {
+          if (center._mermaidRenderToken !== token) return;
+          center.innerHTML = result.svg;
+        }).catch(function () {
+          if (center._mermaidRenderToken !== token) return;
+          center.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Diagram could not be rendered.</p>';
+        });
+      }
+
+      function closeMermaidModal() {
+        var overlay = document.getElementById('mermaidModalOverlay');
+        var center = document.getElementById('mermaidModalCenter');
+        if (!overlay) return;
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        if (center) center.innerHTML = '';
+        document.body.style.overflow = '';
+        openMermaidIndex = null;
+
+        if (lastMermaidTrigger && typeof lastMermaidTrigger.focus === 'function') {
+          lastMermaidTrigger.focus();
+        }
+      }
+
+      function renderQuiz(data) {
+        var questions = data.questions || data;
+        if (!questions || !questions.length) return;
+
+        var article = document.querySelector('.lesson-article');
+        if (!article) return;
+
+        var conceptH2 = article.querySelector('#the-concept, #concept');
+        var buildH2 = article.querySelector('#build-it, #build');
+        var keyTermsH2 = article.querySelector('#key-terms');
+
+        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check');
+        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz');
+
+        if (!preQuizHtml && !postQuizHtml) {
+          var allHtml = buildQuizHtml(questions, 'all', 'Quiz');
+          if (allHtml && keyTermsH2) {
+            keyTermsH2.insertAdjacentHTML('beforebegin', allHtml);
+          } else if (allHtml) {
+            article.insertAdjacentHTML('beforeend', allHtml);
+          }
+          restoreQuizAnswers();
+          return;
+        }
+
+        if (preQuizHtml && conceptH2) {
+          conceptH2.insertAdjacentHTML('beforebegin', preQuizHtml);
+        } else if (preQuizHtml && buildH2) {
+          buildH2.insertAdjacentHTML('beforebegin', preQuizHtml);
+        }
+
+        if (postQuizHtml && keyTermsH2) {
+          keyTermsH2.insertAdjacentHTML('beforebegin', postQuizHtml);
+        } else if (postQuizHtml) {
+          article.insertAdjacentHTML('beforeend', postQuizHtml);
+        }
+
+        restoreQuizAnswers();
+      }
+
+      function buildQuizHtml(questions, id, title) {
+        if (!questions.length) return '';
+        var html = '<div class="quiz-section" id="quiz-' + id + '">';
+        html += '<div class="quiz-title">&#9989; ' + escapeHtml(title) + '</div>';
+        for (var qi = 0; qi < questions.length; qi++) {
+          var q = questions[qi];
+          var qid = id + '-q' + qi;
+          html += '<div class="quiz-question" data-correct="' + q.correct + '" id="' + qid + '">';
+          html += '<div class="quiz-question-text">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
+          html += '<div class="quiz-options">';
+          for (var oi = 0; oi < q.options.length; oi++) {
+            html += '<div class="quiz-option" data-index="' + oi + '" onclick="handleQuizClick(this)">';
+            html += '<span class="quiz-marker"></span>';
+            html += '<span>' + escapeHtml(q.options[oi]) + '</span>';
+            html += '</div>';
+          }
+          html += '</div>';
+          if (q.explanation) {
+            html += '<div class="quiz-explanation" id="' + qid + '-exp">' + escapeHtml(q.explanation) + '</div>';
+          }
+          html += '</div>';
+        }
+        html += '<div class="quiz-score" id="quiz-' + id + '-score"></div>';
+        html += '</div>';
+        return html;
+      }
+
+      window.handleQuizClick = function (el) {
+        var questionDiv = el.closest('.quiz-question');
+        if (questionDiv.classList.contains('answered')) return;
+        applyQuizAnswer(questionDiv, parseInt(el.getAttribute('data-index')), true);
+      };
+
+      function applyQuizAnswer(questionDiv, chosen, persist) {
+        if (!questionDiv || isNaN(chosen)) return;
+        questionDiv.classList.add('answered');
+
+        var correct = parseInt(questionDiv.getAttribute('data-correct'));
+        var options = questionDiv.querySelectorAll('.quiz-option');
+
+        for (var i = 0; i < options.length; i++) {
+          options[i].classList.add('disabled');
+          if (i === correct) {
+            options[i].classList.add('correct');
+            var mc = options[i].querySelector('.quiz-marker');
+            if (mc) mc.textContent = '\u2713';
+          }
+        }
+        if (chosen !== correct) {
+          var picked = questionDiv.querySelector('.quiz-option[data-index="' + chosen + '"]');
+          if (picked) {
+            picked.classList.add('incorrect');
+            var mp = picked.querySelector('.quiz-marker');
+            if (mp) mp.textContent = '\u2717';
+          }
+        }
+
+        var exp = questionDiv.querySelector('.quiz-explanation');
+        if (exp) exp.style.display = 'block';
+
+        if (persist && window.AIFSProgress && lessonPath) {
+          window.AIFSProgress.recordAnswer(lessonPath, questionDiv.id, chosen, chosen === correct);
+        }
+
+        updateSectionScore(questionDiv.closest('.quiz-section'));
+        maybeMarkLessonComplete();
+      }
+
+      function updateSectionScore(section) {
+        if (!section) return;
+        var allQs = section.querySelectorAll('.quiz-question');
+        var answeredQs = section.querySelectorAll('.quiz-question.answered');
+        if (allQs.length !== answeredQs.length) return;
+        var correctCount = 0;
+        for (var j = 0; j < allQs.length; j++) {
+          if (!allQs[j].querySelector('.quiz-option.incorrect')) correctCount++;
+        }
+        var scoreEl = section.querySelector('.quiz-score');
+        if (scoreEl) {
+          scoreEl.textContent = correctCount + '/' + allQs.length + ' correct';
+          scoreEl.style.display = 'block';
+        }
+      }
+
+      function maybeMarkLessonComplete() {
+        if (!window.AIFSProgress || !lessonPath) return;
+        var sections = document.querySelectorAll('.quiz-section');
+        if (!sections.length) return;
+        for (var s = 0; s < sections.length; s++) {
+          var qs = sections[s].querySelectorAll('.quiz-question');
+          var answered = sections[s].querySelectorAll('.quiz-question.answered');
+          if (qs.length === 0 || qs.length !== answered.length) return;
+          if (sections[s].querySelector('.quiz-option.incorrect')) return;
+        }
+        window.AIFSProgress.markLessonComplete(lessonPath);
+      }
+
+      function restoreQuizAnswers() {
+        if (!window.AIFSProgress || !lessonPath) return;
+        var lp = window.AIFSProgress.getLessonProgress(lessonPath);
+        if (!lp || !lp.answers) return;
+        for (var qid in lp.answers) {
+          var q = document.getElementById(qid);
+          if (q && !q.classList.contains('answered')) {
+            applyQuizAnswer(q, lp.answers[qid].picked, false);
+          }
+        }
+      }
+
+      function addBottomNav(html) {
+        if (currentLessonIndex < 0) return html;
+
+        var prev = null;
+        for (var pi = currentLessonIndex - 1; pi >= 0; pi--) {
+          if (flatLessons[pi].isReadable) { prev = flatLessons[pi]; break; }
+        }
+        var next = null;
+        for (var ni = currentLessonIndex + 1; ni < flatLessons.length; ni++) {
+          if (flatLessons[ni].isReadable) { next = flatLessons[ni]; break; }
+        }
+
+        var nav = '<div class="lesson-nav-bottom">';
+        if (prev) {
+          nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + prev.path + '">';
+          nav += '<span class="nav-label">&larr; Previous</span>';
+          nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
+          nav += '</a>';
+        } else {
+          nav += '<div></div>';
+        }
+        if (next) {
+          nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + next.path + '">';
+          nav += '<span class="nav-label">Next &rarr;</span>';
+          nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
+          nav += '</a>';
+        }
+        nav += '</div>';
+        return html + nav;
+      }
+
+      function renderAIPanels() {
+        var container = document.getElementById('aiPanels');
+        if (!container || !lessonPath) return;
+
+        renderOutputsPanel(container);
+        renderCodePanel(container);
+        renderQuizPanel(container);
+        renderLearningPathPanel(container);
+        renderContinuePanel(container);
+      }
+
+      var ghApiCache = {};
+
+      function ghApiFetch(apiPath, cb) {
+        if (ghApiCache[apiPath]) {
+          cb(null, ghApiCache[apiPath]);
+          return;
+        }
+        fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath, {
+          headers: { 'Accept': 'application/vnd.github.v3+json' }
+        }).then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          return res.json();
+        }).then(function (data) {
+          ghApiCache[apiPath] = data;
+          cb(null, data);
+        }).catch(function (err) {
+          cb(err, null);
+        });
+      }
+
+      function classifyOutput(name) {
+        var lower = name.toLowerCase();
+        if (lower.indexOf('prompt') >= 0) return 'prompt';
+        if (lower.indexOf('skill') >= 0) return 'skill';
+        return 'other';
+      }
+
+      function langIcon(filename) {
+        var ext = filename.split('.').pop().toLowerCase();
+        var map = { py: '\u{1F40D}', python: '\u{1F40D}', ts: '\u{1F535}', js: '\u{1F7E1}', rust: '\u{1F9E0}', rs: '\u{1F9E0}', jl: '\u{1F7E2}', julia: '\u{1F7E2}', sh: '\u{1F4BB}', bash: '\u{1F4BB}' };
+        return map[ext] || '\u{1F4C4}';
+      }
+
+      function langCommand(filename) {
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext === 'py') return 'python';
+        if (ext === 'ts') return 'npx tsx';
+        if (ext === 'js') return 'node';
+        if (ext === 'rs') return 'cargo run --';
+        if (ext === 'jl') return 'julia';
+        if (ext === 'sh') return 'bash';
+        return 'run';
+      }
+
+      function formatSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        return (bytes / 1024).toFixed(1) + ' KB';
+      }
+
+      function extractFrontmatterDesc(content) {
+        var match = content.match(/^---[\s\S]*?description:\s*(.+?)[\r\n]/m);
+        if (match) return match[1].replace(/^["']|["']$/g, '').trim();
+        var firstLine = content.split('\n').find(function (l) { return l.trim() && !l.match(/^[#-]/) && !l.match(/^---/); });
+        return firstLine ? firstLine.trim().substring(0, 120) : '';
+      }
+
+      function renderOutputsPanel(container) {
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon coral">\u{1F4E6}</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
+        container.appendChild(panel);
+
+        ghApiFetch(lessonPath + '/outputs', function (err, data) {
+          var el = document.getElementById('outputsContent');
+          if (err || !data || !Array.isArray(data) || data.length === 0) {
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            return;
+          }
+
+          var html = '<div class="output-cards">';
+          data.forEach(function (file, idx) {
+            var type = classifyOutput(file.name);
+            var badgeClass = type;
+            var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
+            var installId = 'install-hint-' + idx;
+            var installHint = '';
+            if (type === 'prompt') {
+              installHint = 'Copy this prompt into Claude Code, ChatGPT, or any AI assistant';
+            } else if (type === 'skill') {
+              var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
+              installHint = 'npx skillkit install ' + skillName;
+            }
+
+            html += '<div class="output-card">';
+            html += '<div class="output-badge ' + badgeClass + '">' + badgeText + '</div>';
+            html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
+            html += '<div class="output-desc" id="desc-' + idx + '">Loading description...</div>';
+            html += '<div class="output-actions">';
+            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            if (installHint) {
+              html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
+            }
+            html += '</div>';
+            if (installHint) {
+              html += '<div class="output-install-hint" id="' + installId + '">' + escapeHtml(installHint) + '</div>';
+            }
+            html += '</div>';
+
+            fetch(file.download_url).then(function (r) { return r.text(); }).then(function (content) {
+              var descEl = document.getElementById('desc-' + idx);
+              if (descEl) {
+                var desc = extractFrontmatterDesc(content);
+                descEl.textContent = desc || file.name;
+              }
+            }).catch(function () {
+              var descEl = document.getElementById('desc-' + idx);
+              if (descEl) descEl.textContent = file.name;
+            });
+          });
+          html += '</div>';
+          el.innerHTML = html;
+        });
+      }
+
+      function renderCodePanel(container) {
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon blue">\u{1F4BB}</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
+        container.appendChild(panel);
+
+        ghApiFetch(lessonPath + '/code', function (err, data) {
+          var el = document.getElementById('codeContent');
+          if (err || !data || !Array.isArray(data) || data.length === 0) {
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            return;
+          }
+
+          var html = '<div class="code-cards">';
+          data.forEach(function (file) {
+            var icon = langIcon(file.name);
+            var cmd = langCommand(file.name);
+            var runCmd = cmd + ' ' + lessonPath + '/code/' + file.name;
+            html += '<div class="code-card">';
+            html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span></div>';
+            html += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
+            html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
+            html += '<div class="code-card-actions">';
+            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button>';
+            html += '</div>';
+            html += '</div>';
+          });
+          html += '</div>';
+          el.innerHTML = html;
+          el.querySelectorAll('.code-card-copy').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var command = btn.getAttribute('data-command');
+              navigator.clipboard.writeText(command).then(function () {
+                btn.textContent = 'Copied!';
+                setTimeout(function () { btn.textContent = 'Copy command'; }, 1500);
+              });
+            });
+          });
+        });
+      }
+
+      function getQuizQuestions() {
+        var pathLower = (lessonPath || '').toLowerCase();
+        var lessonName = '';
+        if (currentLessonIndex >= 0) lessonName = flatLessons[currentLessonIndex].lessonName;
+
+        if (pathLower.indexOf('math') >= 0 || pathLower.indexOf('linear-algebra') >= 0 || pathLower.indexOf('calculus') >= 0) {
+          return [
+            { q: 'What does a dot product measure between two vectors?', opts: ['Their sum', 'How aligned they are', 'Their cross product', 'The distance between them'], answer: 1, explain: 'The dot product measures the similarity or alignment between two vectors. When it is zero, the vectors are orthogonal.' },
+            { q: 'What does the gradient of a function point toward?', opts: ['The minimum', 'The steepest ascent', 'The nearest saddle point', 'A random direction'], answer: 1, explain: 'The gradient always points in the direction of steepest increase. Gradient descent moves opposite to the gradient to find minima.' },
+            { q: 'A matrix with shape (3, 5) multiplied by (5, 2) produces what shape?', opts: ['(3, 2)', '(5, 5)', '(3, 5)', '(2, 3)'], answer: 0, explain: 'Matrix multiplication: (m, n) x (n, p) = (m, p). So (3, 5) x (5, 2) = (3, 2).' }
+          ];
+        }
+
+        if (pathLower.indexOf('ml') >= 0 || pathLower.indexOf('regression') >= 0 || pathLower.indexOf('classification') >= 0 || pathLower.indexOf('supervised') >= 0) {
+          return [
+            { q: 'What is the purpose of a loss function in machine learning?', opts: ['To generate data', 'To measure how wrong predictions are', 'To select features', 'To split data'], answer: 1, explain: 'A loss function quantifies the difference between predicted and actual values. The optimizer minimizes this value during training.' },
+            { q: 'Why do we split data into train and test sets?', opts: ['To save memory', 'To evaluate generalization on unseen data', 'To make training faster', 'To reduce the dataset size'], answer: 1, explain: 'The test set acts as unseen data, revealing whether the model memorized training data or learned generalizable patterns.' },
+            { q: 'What does overfitting mean?', opts: ['The model is too simple', 'The model memorizes training data but fails on new data', 'The model trains too slowly', 'The loss is too low'], answer: 1, explain: 'Overfitting occurs when a model performs well on training data but poorly on new data because it learned noise rather than signal.' }
+          ];
+        }
+
+        if (pathLower.indexOf('deep-learning') >= 0 || pathLower.indexOf('neural') >= 0 || pathLower.indexOf('backprop') >= 0 || pathLower.indexOf('activation') >= 0) {
+          return [
+            { q: 'What does backpropagation compute?', opts: ['Forward predictions', 'The gradient of the loss with respect to each weight', 'The learning rate', 'New training data'], answer: 1, explain: 'Backpropagation uses the chain rule to compute how much each weight contributed to the error, then adjusts weights accordingly.' },
+            { q: 'Why do neural networks need non-linear activation functions?', opts: ['To speed up training', 'Without them, stacking layers is equivalent to a single linear layer', 'To reduce memory usage', 'To normalize outputs'], answer: 1, explain: 'Without non-linearities, any composition of linear layers collapses to a single linear transformation. Activations like ReLU let the network learn complex patterns.' },
+            { q: 'What does the learning rate control?', opts: ['How many epochs to train', 'The size of each weight update step', 'The number of layers', 'The batch size'], answer: 1, explain: 'The learning rate scales the gradient update. Too large causes divergence, too small causes slow or stuck training.' }
+          ];
+        }
+
+        if (pathLower.indexOf('llm') >= 0 || pathLower.indexOf('transformer') >= 0 || pathLower.indexOf('attention') >= 0 || pathLower.indexOf('tokeniz') >= 0 || pathLower.indexOf('fine-tun') >= 0) {
+          return [
+            { q: 'What does self-attention allow a transformer to do?', opts: ['Process tokens in order', 'Weight the importance of every token relative to every other token', 'Reduce vocabulary size', 'Compress the model'], answer: 1, explain: 'Self-attention computes pairwise relevance scores across all positions, allowing the model to relate distant tokens without recurrence.' },
+            { q: 'Why do LLMs use tokenizers instead of raw characters?', opts: ['Characters are too large', 'Tokens compress frequent patterns into single units, reducing sequence length', 'Tokenizers are faster to train', 'Characters cannot be embedded'], answer: 1, explain: 'Subword tokenizers like BPE balance vocabulary size against sequence length, making common words single tokens while handling rare words as pieces.' },
+            { q: 'What is the key difference between pre-training and fine-tuning?', opts: ['Pre-training uses labeled data', 'Pre-training learns general language; fine-tuning adapts to a specific task', 'Fine-tuning uses more data', 'There is no difference'], answer: 1, explain: 'Pre-training learns language patterns from massive unlabeled text. Fine-tuning takes that foundation and specializes it on smaller, task-specific data.' }
+          ];
+        }
+
+        if (pathLower.indexOf('rag') >= 0 || pathLower.indexOf('retrieval') >= 0 || pathLower.indexOf('embed') >= 0 || pathLower.indexOf('vector') >= 0) {
+          return [
+            { q: 'What is the core idea behind RAG?', opts: ['Training a larger model', 'Retrieving relevant context before generating a response', 'Using more GPUs', 'Reducing model size'], answer: 1, explain: 'RAG (Retrieval-Augmented Generation) grounds LLM responses in retrieved documents, reducing hallucination and enabling knowledge updates without retraining.' },
+            { q: 'What do embedding models produce?', opts: ['Text summaries', 'Dense vector representations of text', 'Token counts', 'Grammar corrections'], answer: 1, explain: 'Embedding models map text into fixed-dimensional vectors where semantic similarity corresponds to geometric proximity.' },
+            { q: 'Why use cosine similarity for comparing embeddings?', opts: ['It is the only metric', 'It measures angular similarity regardless of vector magnitude', 'It is faster than dot product', 'It works with integers only'], answer: 1, explain: 'Cosine similarity normalizes for magnitude, focusing on direction. Two texts about the same topic will have high cosine similarity regardless of length.' }
+          ];
+        }
+
+        if (pathLower.indexOf('agent') >= 0 || pathLower.indexOf('tool') >= 0 || pathLower.indexOf('mcp') >= 0) {
+          return [
+            { q: 'What distinguishes an AI agent from a simple chatbot?', opts: ['Agents are faster', 'Agents can take actions and use tools autonomously', 'Agents use bigger models', 'There is no difference'], answer: 1, explain: 'Agents have a loop: observe, decide, act. They can call tools, read files, search the web, and chain multiple steps to complete complex tasks.' },
+            { q: 'What is MCP (Model Context Protocol)?', opts: ['A model training format', 'A standardized protocol for connecting AI models to tools and data sources', 'A compression algorithm', 'A testing framework'], answer: 1, explain: 'MCP provides a universal interface between AI assistants and external tools/data, replacing one-off integrations with a standard protocol.' },
+            { q: 'Why is tool-use important for LLMs?', opts: ['It reduces cost', 'It lets LLMs access real-time information and take actions beyond text generation', 'It makes responses shorter', 'It removes hallucinations entirely'], answer: 1, explain: 'Tools extend LLMs beyond their training data cutoff, enabling real-time lookups, calculations, code execution, and interaction with external systems.' }
+          ];
+        }
+
+        if (pathLower.indexOf('eval') >= 0 || pathLower.indexOf('safety') >= 0 || pathLower.indexOf('alignment') >= 0 || pathLower.indexOf('deploy') >= 0) {
+          return [
+            { q: 'Why are evals critical for production AI systems?', opts: ['To save money', 'To measure performance objectively before and after changes', 'To make the model bigger', 'Evals are optional'], answer: 1, explain: 'Evals are the tests of AI engineering. Without them, you cannot know if a change improved or regressed quality. They should run on every code change.' },
+            { q: 'What does "alignment" mean in AI safety?', opts: ['Aligning text on screen', 'Ensuring AI systems act according to human intentions and values', 'Making models faster', 'Using the same training data'], answer: 1, explain: 'Alignment ensures that as AI systems become more capable, they remain helpful, honest, and harmless, acting in accordance with human goals.' },
+            { q: 'What is a guardrail in the context of deployed LLMs?', opts: ['A physical barrier', 'A check that prevents harmful, off-topic, or policy-violating outputs', 'A backup model', 'A caching layer'], answer: 1, explain: 'Guardrails filter inputs and outputs at runtime, catching toxicity, prompt injection, PII leaks, and other risks before they reach the user.' }
+          ];
+        }
+
+        return [
+          { q: 'What does "from scratch" mean in this course?', opts: ['Using no computer', 'Building each concept by implementing it yourself, not just reading theory', 'Starting from assembly language', 'Only using pen and paper'], answer: 1, explain: 'This course follows a Build-Use-Ship methodology: first understand by building it, then apply it, then ship it as a real artifact.' },
+          { q: 'Why does this course combine math, ML, and engineering?', opts: ['To make it longer', 'Because real AI engineering requires all three to build production systems', 'Math is just for fun', 'Engineering is optional'], answer: 1, explain: 'Production AI systems require mathematical foundations (for understanding), ML knowledge (for modeling), and engineering skills (for deployment and reliability).' },
+          { q: 'What is the "Ship" step in the Build-Use-Ship framework?', opts: ['Mailing physical goods', 'Creating a reusable artifact like a prompt, skill, or tool from what you learned', 'Publishing a paper', 'Deleting your code'], answer: 2, explain: 'The Ship step turns your learning into something tangible: a prompt, skill file, MCP tool, or CLI utility that others (or future you) can use immediately.' }
+        ];
+      }
+
+      function renderQuizPanel(container) {
+        var questions = getQuizQuestions();
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+
+        var phase = '';
+        if (currentLessonIndex >= 0) {
+          var fl = flatLessons[currentLessonIndex];
+          phase = fl.phaseSlug || '';
+        }
+
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon green">\u{1F9E0}</div><div class="ai-panel-title">Test Your Understanding</div></div>';
+        html += '<div class="ai-panel-subtitle">Did you get it?</div>';
+        html += '<div class="quiz-container" id="quizContainer">';
+
+        var letters = ['A', 'B', 'C', 'D'];
+        questions.forEach(function (q, qi) {
+          html += '<div class="quiz-question" id="quiz-q-' + qi + '">';
+          html += '<div class="quiz-question-num">Question ' + (qi + 1) + ' of ' + questions.length + '</div>';
+          html += '<div class="quiz-question-text">' + escapeHtml(q.q) + '</div>';
+          html += '<div class="quiz-options">';
+          q.opts.forEach(function (opt, oi) {
+            html += '<button class="quiz-option" data-qi="' + qi + '" data-oi="' + oi + '" onclick="handleQuizAnswer(' + qi + ',' + oi + ')">';
+            html += '<span class="opt-letter">' + letters[oi] + '</span>';
+            html += '<span>' + escapeHtml(opt) + '</span>';
+            html += '</button>';
+          });
+          html += '</div>';
+          html += '<div class="quiz-explanation" id="quiz-explain-' + qi + '">' + escapeHtml(q.explain) + '</div>';
+          html += '</div>';
+        });
+
+        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
+        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude Code</div>';
+        html += '</div>';
+
+        panel.innerHTML = html;
+        container.appendChild(panel);
+
+        window._quizData = questions;
+        window._quizAnswered = 0;
+        window._quizCorrect = 0;
+      }
+
+      window.handleQuizAnswer = function (qi, oi) {
+        var questions = window._quizData;
+        if (!questions) return;
+
+        var qEl = document.getElementById('quiz-q-' + qi);
+        if (!qEl) return;
+        var opts = qEl.querySelectorAll('.quiz-option');
+        if (opts[0].classList.contains('disabled')) return;
+
+        var correct = questions[qi].answer;
+        opts.forEach(function (opt, i) {
+          opt.classList.add('disabled');
+          if (i === oi) {
+            opt.classList.add('selected');
+            opt.classList.add(i === correct ? 'correct' : 'wrong');
+          }
+          if (i === correct) {
+            opt.classList.add('is-answer');
+          }
+        });
+
+        var explain = document.getElementById('quiz-explain-' + qi);
+        if (explain) explain.classList.add('visible');
+
+        window._quizAnswered++;
+        if (oi === correct) window._quizCorrect++;
+
+        if (window._quizAnswered === questions.length) {
+          var scoreEl = document.getElementById('quizScore');
+          var scoreNum = document.getElementById('quizScoreNum');
+          if (scoreEl && scoreNum) {
+            scoreNum.textContent = window._quizCorrect + '/' + questions.length;
+            scoreEl.querySelector('.quiz-score-label').textContent =
+              window._quizCorrect === questions.length ? 'Perfect score!' :
+              window._quizCorrect >= 2 ? 'Great work!' : 'Keep studying!';
+            scoreEl.classList.add('visible');
+          }
+        }
+      };
+
+      function renderLearningPathPanel(container) {
+        if (currentLessonIndex < 0 || typeof PHASES === 'undefined') return;
+
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+
+        var current = flatLessons[currentLessonIndex];
+        var phaseIdx = current.phaseIndex;
+        var phase = PHASES[phaseIdx];
+        var lessonsInPhase = [];
+        var currentIdxInPhase = -1;
+
+        for (var i = 0; i < flatLessons.length; i++) {
+          if (flatLessons[i].phaseIndex === phaseIdx) {
+            if (i === currentLessonIndex) currentIdxInPhase = lessonsInPhase.length;
+            lessonsInPhase.push({ flat: flatLessons[i], flatIdx: i });
+          }
+        }
+
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon coral">\u{1F5FA}</div><div class="ai-panel-title">Learning Path</div></div>';
+        html += '<div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
+
+        html += '<div class="learning-timeline">';
+        lessonsInPhase.forEach(function (item, idx) {
+          var isCurrent = idx === currentIdxInPhase;
+          var isPrev = idx < currentIdxInPhase;
+          var cls = isCurrent ? 'current' : isPrev ? 'prev' : '';
+
+          if (idx > 0) {
+            var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
+            html += '<div class="timeline-line ' + lineCls + '"></div>';
+          }
+
+          if (item.flat.isReadable) {
+            html += '<a class="timeline-item ' + cls + '" href="lesson.html?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '">';
+          } else {
+            html += '<span class="timeline-item ' + cls + ' disabled" title="' + escapeAttr(item.flat.lessonName) + '">';
+          }
+          html += '<div class="timeline-dot"></div>';
+          html += '<div class="timeline-label">' + escapeHtml(item.flat.lessonName) + '</div>';
+          html += item.flat.isReadable ? '</a>' : '</span>';
+        });
+        html += '</div>';
+
+        var completedCount = currentIdxInPhase + 1;
+        var totalCount = lessonsInPhase.length;
+        var pct = Math.round((completedCount / totalCount) * 100);
+
+        html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="width:' + pct + '%"></div></div>';
+        html += '<div class="phase-progress-text">You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase</div>';
+
+        if (completedCount >= totalCount && phaseIdx < PHASES.length - 1) {
+          var nextPhase = PHASES[phaseIdx + 1];
+          html += '<div class="phase-complete-callout visible">Ready for Phase ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name) + '</div>';
+        }
+
+        panel.innerHTML = html;
+        container.appendChild(panel);
+      }
+
+      function renderContinuePanel(container) {
+        if (currentLessonIndex < 0) return;
+
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel';
+
+        var next = null;
+        for (var ci = currentLessonIndex + 1; ci < flatLessons.length; ci++) {
+          if (flatLessons[ci].isReadable) { next = flatLessons[ci]; break; }
+        }
+        var current = flatLessons[currentLessonIndex];
+        var phaseIdx = current.phaseIndex;
+        var phase = PHASES[phaseIdx];
+
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon blue">\u{1F680}</div><div class="ai-panel-title">Continue Learning</div></div>';
+        html += '<div class="continue-panel">';
+
+        if (!next || !next.path) {
+          html += '<div class="phase-finished">\u2705 You finished this phase!</div>';
+        }
+
+        html += '<div class="continue-links">';
+
+        var phaseSlug = extractPhaseSlug(phase, phaseIdx);
+        var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
+        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
+        html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
+        html += '</div>';
+
+        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude Code to see your full personalized learning path</div>';
+        html += '</div>';
+
+        panel.innerHTML = html;
+        container.appendChild(panel);
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function escapeAttr(str) {
+        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+    })();
+  </script>
+</body>
+</html>

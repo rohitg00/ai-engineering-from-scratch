@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can't you serve a production model by calling model.generate() in a loop?",
+      "options": ["model.generate() only works in Jupyter notebooks", "Sequential processing means each request waits for all previous ones to finish, making latency unacceptable under concurrent load", "model.generate() does not support streaming output", "Python's GIL prevents any concurrent execution"],
+      "correct": 1,
+      "explanation": "A naive loop processes one request at a time. With 100ms per request and 10 concurrent users, the last user waits 1 second. Under real traffic, this queue grows unbounded and the service becomes unusable."
+    },
+    {
+      "stage": "pre",
+      "question": "What is 'time to first token' (TTFT) and why does it matter?",
+      "options": ["The time to tokenize the input text", "The latency from when a user sends a request to when they see the first generated token, which determines perceived responsiveness", "The time to load the model into GPU memory", "The time to complete the full response"],
+      "correct": 1,
+      "explanation": "TTFT is the user-perceived latency before anything appears on screen. Even if the full response takes 5 seconds, a 200ms TTFT with streaming makes the system feel responsive. High TTFT makes users think the system is broken."
+    },
+    {
+      "stage": "post",
+      "question": "What is continuous batching and why is it better than static batching?",
+      "options": ["Continuous batching uses smaller batch sizes to reduce memory usage", "Continuous batching dynamically adds new requests and removes finished ones from the batch at each step, instead of waiting for the entire batch to finish before starting new requests", "Continuous batching splits the model across multiple GPUs", "Continuous batching processes requests in the order they arrive without any grouping"],
+      "correct": 1,
+      "explanation": "Static batching waits for all sequences in a batch to finish (wasting GPU cycles on padding). Continuous batching inserts new requests into free slots as sequences complete, keeping GPU utilization near 100%."
+    },
+    {
+      "stage": "post",
+      "question": "Why is GPU memory the primary bottleneck in model serving, not GPU compute?",
+      "options": ["Modern GPUs have more compute than memory bandwidth", "The KV cache for each active request consumes GPU memory proportional to sequence length, and serving many concurrent requests can exhaust VRAM before the compute units are fully utilized", "GPU compute is only used during model loading", "Memory is slower to access than compute units"],
+      "correct": 1,
+      "explanation": "Each concurrent request maintains a KV cache that grows with sequence length. A 7B model serving 32 concurrent requests with 4K context can use 16GB+ just for KV caches. You run out of memory long before you run out of FLOPs."
+    },
+    {
+      "stage": "post",
+      "question": "What metric should you optimize when you need to maximize the number of users served per GPU?",
+      "options": ["Time to first token (TTFT)", "Throughput (tokens per second across all concurrent requests), which measures how efficiently you utilize the GPU for serving many users simultaneously", "Individual request latency (P50)", "Model accuracy on a benchmark"],
+      "correct": 1,
+      "explanation": "Throughput measures total tokens generated per second across all requests. Techniques like continuous batching, PagedAttention, and quantization all increase throughput, letting one GPU serve more concurrent users."
+    }
+  ]
+}

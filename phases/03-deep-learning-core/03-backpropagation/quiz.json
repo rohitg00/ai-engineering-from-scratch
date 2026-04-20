@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the chain rule in the context of neural networks?",
+    "options": ["A rule for chaining layers together", "If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- multiply derivatives along the path", "A method for initializing weights", "A technique for batching data"],
+    "correct": 1,
+    "explanation": "The chain rule lets you compute the derivative of a composite function by multiplying the local derivatives at each step. Backpropagation applies this systematically through the computational graph.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why is backpropagation more efficient than computing each gradient independently?",
+    "options": ["It uses less memory", "It computes all gradients in a single backward pass instead of one forward pass per parameter", "It only works on small networks", "It avoids using the chain rule"],
+    "correct": 1,
+    "explanation": "Computing gradients independently requires one forward pass per parameter (millions of passes for a large network). Backpropagation computes all gradients in one backward pass by reusing intermediate values stored during the forward pass.",
+    "stage": "pre"
+  },
+  {
+    "question": "In the backward pass, why do we use '+=' instead of '=' when accumulating gradients?",
+    "options": ["It's a Python convention", "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths", "It prevents overflow", "It makes the code run faster"],
+    "correct": 1,
+    "explanation": "When a Value is used as input to multiple operations (e.g., x used in both x*w1 and x*w2), its total gradient is the sum of the gradients flowing back from each operation. Using += accumulates these correctly.",
+    "stage": "post"
+  },
+  {
+    "question": "What causes the vanishing gradient problem in deep sigmoid networks?",
+    "options": ["The learning rate is too small", "Sigmoid's derivative has a maximum of 0.25, so gradients shrink exponentially through layers", "The network has too many parameters", "The loss function is poorly chosen"],
+    "correct": 1,
+    "explanation": "The sigmoid derivative peaks at 0.25 (when z=0). Each layer multiplies the gradient by at most 0.25, so after 10 layers the gradient is at most 0.25^10 = ~0.000001 of the original signal.",
+    "stage": "post"
+  },
+  {
+    "question": "Why does topological sort matter in the backward pass?",
+    "options": ["It makes the code cleaner", "It ensures each node's gradient is fully accumulated before propagating to its children", "It speeds up the forward pass", "It reduces memory usage"],
+    "correct": 1,
+    "explanation": "Topological sort ensures we process nodes in the correct order: a node's gradient must be fully accumulated from all downstream paths before we propagate through it. Without this ordering, gradients would be incomplete.",
+    "stage": "post"
+  }
+]

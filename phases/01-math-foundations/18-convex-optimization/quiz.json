@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the defining property of a convex function?",
+      "options": [
+        "It has exactly one critical point",
+        "The line segment between any two points on its graph lies above or on the graph",
+        "Its derivative is always positive",
+        "It can only be defined on positive real numbers"
+      ],
+      "correct": 1,
+      "explanation": "A function is convex if for any two points x, y and any t in [0,1]: f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y). Geometrically, the chord between any two points on the graph never dips below the graph itself."
+    },
+    {
+      "stage": "pre",
+      "question": "Which of these ML problems has a convex loss landscape?",
+      "options": [
+        "Training a 3-layer neural network with ReLU activations",
+        "Logistic regression with cross-entropy loss",
+        "k-means clustering",
+        "Matrix factorization for recommendation"
+      ],
+      "correct": 1,
+      "explanation": "Logistic regression has a convex loss (log-loss is convex in the weights). Neural networks, k-means, and matrix factorization are all non-convex. For convex problems, any local minimum is the global minimum."
+    },
+    {
+      "stage": "post",
+      "question": "Newton's method converges to the minimum of f(x) = 5x^2 + 3x + 1 in how many steps?",
+      "options": [
+        "1 step (it is exact for quadratic functions)",
+        "About 10 steps",
+        "About 100 steps",
+        "It depends on the learning rate"
+      ],
+      "correct": 0,
+      "explanation": "Newton's method fits a local quadratic approximation and jumps to its minimum. For an actual quadratic function, the approximation is exact, so Newton's method converges in a single step regardless of the starting point."
+    },
+    {
+      "stage": "post",
+      "question": "In the KKT conditions, what does 'complementary slackness' (lambda_i * g_i(x) = 0) mean?",
+      "options": [
+        "All constraints must be active at the optimum",
+        "Either a constraint is active (g_i = 0) or its multiplier is zero (lambda_i = 0) — an inactive constraint has no effect",
+        "The gradients of all constraints must be orthogonal",
+        "The Lagrangian is always zero at the optimum"
+      ],
+      "correct": 1,
+      "explanation": "Complementary slackness means each constraint is either binding (g_i = 0, sitting on the boundary) or irrelevant (lambda_i = 0, not affecting the solution). In SVMs, this is why only support vectors (active constraints with lambda_i > 0) determine the decision boundary."
+    },
+    {
+      "stage": "post",
+      "question": "Why does SGD find good solutions in non-convex neural network landscapes despite the lack of convexity guarantees?",
+      "options": [
+        "Neural networks are secretly convex in high dimensions",
+        "SGD always finds the global minimum",
+        "In high dimensions, most critical points are saddle points (not bad local minima), and SGD noise helps escape them",
+        "The loss function is irrelevant to model performance"
+      ],
+      "correct": 2,
+      "explanation": "In high-dimensional parameter spaces, random critical points are overwhelmingly saddle points. The few local minima that exist tend to have loss values close to the global minimum. SGD's stochastic noise helps escape saddle points, and overparameterization smooths the landscape."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the difference between a probability mass function (PMF) and a probability density function (PDF)?",
+      "options": ["PMFs are used for continuous variables, PDFs for discrete variables", "PMFs give exact probabilities for discrete outcomes, while PDFs give densities for continuous variables that must be integrated over an interval to get probability", "There is no difference; they are the same concept with different names", "PMFs always sum to 0.5, PDFs integrate to 1"],
+      "correct": 1,
+      "explanation": "For discrete variables, the PMF gives P(X=k) directly. For continuous variables, the PDF f(x) is a density -- P(a<=X<=b) requires integrating f(x) from a to b. The density at a single point is not a probability."
+    },
+    {
+      "stage": "pre",
+      "question": "What does the Central Limit Theorem state?",
+      "options": ["All data follows a normal distribution", "The mean of many independent random samples converges to a normal distribution regardless of the source distribution", "Large datasets always have low variance", "The probability of rare events decreases as sample size increases"],
+      "correct": 1,
+      "explanation": "The CLT says that the average of many independent random variables approaches a Gaussian, no matter what the original distribution looks like. This explains why the normal distribution appears everywhere."
+    },
+    {
+      "stage": "post",
+      "question": "Why does softmax subtract the maximum logit before exponentiating (the 'softmax trick')?",
+      "options": ["To make all probabilities equal", "To prevent numerical overflow from exponentiating large numbers while producing mathematically identical results", "To normalize the logits to have mean zero", "To speed up the computation by reducing the number of exponentiations"],
+      "correct": 1,
+      "explanation": "exp(100) overflows to infinity. Subtracting max(logits) shifts all values so the largest is 0. exp(0)=1 is safe. The subtraction cancels out in the normalization, giving identical probabilities."
+    },
+    {
+      "stage": "post",
+      "question": "Cross-entropy loss for classification simplifies to -log(q(true_class)). What does this mean intuitively?",
+      "options": ["Multiply the predicted probabilities by the true labels", "Penalize the model based on how low its predicted probability is for the correct class -- lower prediction means higher loss", "Average the log probabilities across all classes", "Compute the entropy of the true distribution"],
+      "correct": 1,
+      "explanation": "If the model predicts 0.9 for the correct class, loss = -log(0.9) = 0.105 (low). If it predicts 0.01, loss = -log(0.01) = 4.6 (high). The loss punishes low confidence in the correct answer."
+    },
+    {
+      "stage": "post",
+      "question": "Why do language models work with log probabilities instead of raw probabilities?",
+      "options": ["Log probabilities are easier to interpret visually", "Multiplying many small probabilities causes numerical underflow to zero; log probabilities convert products to sums, avoiding this", "Log probabilities are required by the transformer architecture", "Raw probabilities cannot represent values less than 0.01"],
+      "correct": 1,
+      "explanation": "P(sentence) = P(word1) * P(word2) * ... quickly underflows to 0.0 with float64. Log P(sentence) = log P(word1) + log P(word2) + ... stays in a finite range. Products become sums."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What does RAG stand for and what problem does it solve?",
+    "options": ["Random Augmented Generation -- generating random outputs", "Retrieval-Augmented Generation -- giving LLMs access to external knowledge they weren't trained on", "Recurrent Attention Generation -- improving attention mechanisms", "Reduced Architecture Generation -- making models smaller"],
+    "correct": 1,
+    "explanation": "RAG retrieves relevant documents from an external knowledge base and adds them to the prompt. This gives the LLM access to up-to-date, domain-specific information without retraining.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why is RAG preferred over fine-tuning for most knowledge-grounded applications?",
+    "options": ["RAG produces better models", "RAG is cheaper, instantly updatable when documents change, and provides source attribution -- fine-tuning is expensive and becomes stale", "Fine-tuning doesn't work", "RAG uses less memory"],
+    "correct": 1,
+    "explanation": "Fine-tuning costs thousands of dollars, produces a static model that becomes stale as documents change, and offers no source attribution. RAG updates instantly (just update the document store), costs only embedding + storage, and can cite its sources.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the correct order of steps in a basic RAG pipeline?",
+    "options": ["Generate, retrieve, embed, chunk", "Chunk documents, embed chunks, store in vector DB, embed query, retrieve similar chunks, generate answer with context", "Embed query, generate answer, retrieve documents", "Store documents, query the LLM, add documents to response"],
+    "correct": 1,
+    "explanation": "Ingestion: chunk documents -> embed chunks -> store in vector DB. Query time: embed the user's query -> retrieve top-K similar chunks -> add chunks to prompt -> generate answer grounded in retrieved context.",
+    "stage": "post"
+  },
+  {
+    "question": "What is a common failure mode in basic RAG systems?",
+    "options": ["The LLM refuses to answer", "The retrieved chunks are semantically similar to the query but don't contain the actual answer (e.g., returning 'revenue strategy' when asked for 'Q3 revenue numbers')", "The vector database crashes", "The embeddings are too large"],
+    "correct": 1,
+    "explanation": "Semantic search finds text that 'sounds like' the query, not necessarily text that 'answers' it. A query about revenue might retrieve chunks discussing revenue strategy rather than the chunk containing the actual number.",
+    "stage": "post"
+  },
+  {
+    "question": "How do you evaluate RAG quality?",
+    "options": ["By checking if the LLM produces any output", "Using both retrieval metrics (did we find the right chunks?) and generation metrics (is the answer faithful to the retrieved context?)", "By measuring response time only", "By counting the number of retrieved documents"],
+    "correct": 1,
+    "explanation": "RAG evaluation has two parts: retrieval quality (precision/recall of retrieved chunks against ground truth) and generation quality (faithfulness to context, relevance to query, no hallucination beyond retrieved information).",
+    "stage": "post"
+  }
+]

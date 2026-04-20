@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does 'optimization' mean in the context of training a neural network?",
+      "options": ["Making the code run faster", "Finding the model weights that minimize the loss function", "Reducing the number of parameters in the model", "Choosing the best hardware for training"],
+      "correct": 1,
+      "explanation": "Training a neural network IS optimization. The loss function measures how wrong the model is, and optimization finds the weight values that make it as small as possible."
+    },
+    {
+      "stage": "pre",
+      "question": "What happens if the learning rate is too large during gradient descent?",
+      "options": ["Training converges faster to the global minimum", "The optimizer overshoots the minimum and the loss diverges (bounces or increases)", "The gradients become zero", "The model automatically reduces the learning rate"],
+      "correct": 1,
+      "explanation": "A learning rate that is too large causes each step to overshoot the valley, potentially bouncing between walls or diverging entirely. The loss increases instead of decreasing."
+    },
+    {
+      "stage": "post",
+      "question": "How does Adam differ from vanilla gradient descent?",
+      "options": ["Adam uses a fixed learning rate while GD uses adaptive rates", "Adam tracks running averages of gradients and squared gradients to give each weight its own adaptive learning rate", "Adam computes exact second derivatives while GD uses first derivatives", "Adam processes the full dataset per step while GD uses mini-batches"],
+      "correct": 1,
+      "explanation": "Adam maintains per-weight first moment (gradient direction) and second moment (gradient magnitude) estimates. Dividing by sqrt(second moment) gives small steps for weights with large gradients and large steps for weights with small gradients."
+    },
+    {
+      "stage": "post",
+      "question": "Why is the noise in mini-batch SGD considered beneficial rather than just a nuisance?",
+      "options": ["Noise reduces memory usage during training", "Noise helps the optimizer escape shallow local minima and saddle points that a noiseless optimizer would get stuck in", "Noise is not beneficial; it always slows convergence", "Noise makes the loss function convex"],
+      "correct": 1,
+      "explanation": "The stochastic noise from random mini-batches provides random perturbations that can push the optimizer out of shallow local minima and saddle points, leading to better generalization."
+    },
+    {
+      "stage": "post",
+      "question": "What does a cosine annealing learning rate schedule do?",
+      "options": ["Increases the learning rate throughout training following a cosine curve", "Starts with a high learning rate and smoothly decreases it following a cosine curve, with optional warmup", "Alternates the learning rate between two fixed values", "Sets the learning rate to the cosine of the current epoch number"],
+      "correct": 1,
+      "explanation": "Cosine annealing smoothly reduces the learning rate from lr_max to lr_min following a half-cosine curve. This provides large steps early for fast progress and small steps late for fine convergence."
+    }
+  ]
+}

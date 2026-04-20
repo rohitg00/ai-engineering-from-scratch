@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the limitation of basic top-k semantic search in RAG?",
+    "options": ["It's too slow", "It retrieves chunks that are semantically similar to the query but may not contain the actual answer, especially for ambiguous or multi-hop questions", "It can't handle large documents", "It requires GPU"],
+    "correct": 1,
+    "explanation": "Basic semantic search matches surface-level meaning. 'What was revenue last quarter?' retrieves chunks about 'revenue strategy' (semantically similar) instead of the chunk saying '$47.2M in Q3 2025' (which uses 'earnings').",
+    "stage": "pre"
+  },
+  {
+    "question": "What is hybrid search in the context of RAG?",
+    "options": ["Using two different LLMs", "Combining BM25 keyword matching with semantic vector search to capture both exact terms and meaning-based relevance", "Searching across multiple databases", "Using both CPU and GPU for search"],
+    "correct": 1,
+    "explanation": "BM25 catches exact keyword matches (e.g., '$47.2M' or 'Q3'). Semantic search catches meaning matches. Combining them with a reranker gives the best of both worlds: precision on specific terms plus recall on semantic variants.",
+    "stage": "pre"
+  },
+  {
+    "question": "What does a cross-encoder reranker do in an advanced RAG pipeline?",
+    "options": ["It generates the final answer", "It takes (query, document) pairs and scores their relevance with higher accuracy than embedding similarity, reordering the initial retrieval results", "It encodes documents into vectors", "It splits documents into chunks"],
+    "correct": 1,
+    "explanation": "Bi-encoder similarity (used for initial retrieval) is fast but approximate. A cross-encoder processes the full query-document pair together with cross-attention, giving much more accurate relevance scores for reranking the top candidates.",
+    "stage": "post"
+  },
+  {
+    "question": "What is the HyDE (Hypothetical Document Embedding) query transformation technique?",
+    "options": ["Hiding the query from the model", "Using the LLM to generate a hypothetical answer, then embedding that answer as the search query instead of the original question", "Encrypting the query for privacy", "Expanding abbreviations in the query"],
+    "correct": 1,
+    "explanation": "The original query 'What was Q3 revenue?' might not embed close to the answer chunk. HyDE asks the LLM to generate a hypothetical answer ('Q3 revenue was approximately...'), then uses that as the search query, which embeds closer to actual answer-containing chunks.",
+    "stage": "post"
+  },
+  {
+    "question": "Why does parent-child chunking improve RAG over flat chunking?",
+    "options": ["It's faster to index", "Small child chunks are used for precise retrieval, but the larger parent chunk is returned for context, preventing the 'lost context' problem", "It reduces the number of chunks", "It eliminates the need for embeddings"],
+    "correct": 1,
+    "explanation": "Small chunks (200 tokens) embed precisely but lack context. Large chunks (2000 tokens) have context but embed imprecisely. Parent-child uses small chunks for search accuracy but returns the parent chunk for generation context.",
+    "stage": "post"
+  }
+]

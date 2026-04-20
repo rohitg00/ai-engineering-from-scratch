@@ -1,0 +1,67 @@
+[
+  {
+    "id": "timeseries-pre-1",
+    "stage": "pre",
+    "question": "Why is a random train/test split invalid for time series data?",
+    "options": [
+      "Random splits make the dataset too small",
+      "Random splits leak future information into the training set, allowing the model to cheat",
+      "Time series data cannot be split at all",
+      "Random splits only work for classification problems"
+    ],
+    "correct": 1,
+    "explanation": "In a random split, future data points can end up in the training set while past points are in the test set. The model then uses future information to predict the past, giving falsely optimistic results."
+  },
+  {
+    "id": "timeseries-pre-2",
+    "stage": "pre",
+    "question": "What does it mean for a time series to be stationary?",
+    "options": [
+      "The values never change over time",
+      "Its statistical properties (mean, variance, autocorrelation) do not change over time",
+      "It has no seasonal patterns",
+      "It always trends upward"
+    ],
+    "correct": 1,
+    "explanation": "A stationary series has constant mean, variance, and autocorrelation structure over time. Most forecasting methods assume stationarity. Non-stationary series need differencing or detrending first."
+  },
+  {
+    "id": "timeseries-post-1",
+    "stage": "post",
+    "question": "What is the purpose of differencing a time series?",
+    "options": [
+      "To increase the number of data points",
+      "To remove trend and make the series stationary by modeling changes between consecutive values",
+      "To convert regression into classification",
+      "To normalize the values between 0 and 1"
+    ],
+    "correct": 1,
+    "explanation": "Differencing replaces each value with the change from the previous value: diff[t] = value[t] - value[t-1]. This removes trend, making the series closer to stationary."
+  },
+  {
+    "id": "timeseries-post-2",
+    "stage": "post",
+    "question": "Lag features convert a time series into a supervised learning problem. What is a lag-3 feature for predicting y[t]?",
+    "options": [
+      "The average of the next 3 values: (y[t+1] + y[t+2] + y[t+3]) / 3",
+      "The value 3 time steps ago: y[t-3]",
+      "The 3rd derivative of the series",
+      "The difference between the current value and 3 steps ahead"
+    ],
+    "correct": 1,
+    "explanation": "A lag-3 feature is y[t-3]: the value 3 time steps in the past. Using past values as input features lets standard ML models (regression, trees) make time series predictions without specialized algorithms."
+  },
+  {
+    "id": "timeseries-post-3",
+    "stage": "post",
+    "question": "Walk-forward validation splits time data into expanding or sliding windows. Why is this better than K-fold CV for time series?",
+    "options": [
+      "Walk-forward is faster to compute",
+      "Walk-forward respects temporal order, training only on past data and testing on future data, preventing lookahead bias",
+      "K-fold CV cannot be used on numeric data",
+      "Walk-forward uses more data for training"
+    ],
+    "correct": 1,
+    "explanation": "Walk-forward validation always trains on past data and tests on future data, mimicking real-world deployment. K-fold CV shuffles data, potentially training on future to predict past (temporal leakage)."
+  }
+]

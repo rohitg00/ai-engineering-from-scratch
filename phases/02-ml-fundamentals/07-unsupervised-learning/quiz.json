@@ -1,0 +1,67 @@
+[
+  {
+    "id": "unsupervised-pre-1",
+    "stage": "pre",
+    "question": "What distinguishes unsupervised learning from supervised learning?",
+    "options": [
+      "Unsupervised learning uses more data",
+      "Unsupervised learning has no labeled outputs -- the algorithm finds structure on its own",
+      "Unsupervised learning only works with text data",
+      "Unsupervised learning always produces better results"
+    ],
+    "correct": 1,
+    "explanation": "In unsupervised learning, there are no labels. The algorithm discovers patterns, groupings, or structure in the data without being told what the correct output should be."
+  },
+  {
+    "id": "unsupervised-pre-2",
+    "stage": "pre",
+    "question": "What does K-Means require you to specify before training?",
+    "options": [
+      "The exact cluster centers",
+      "The number of clusters K",
+      "The labels for each data point",
+      "The distance metric to use"
+    ],
+    "correct": 1,
+    "explanation": "K-Means requires the number of clusters K as input. It then iteratively assigns points to the nearest centroid and recomputes centroids until convergence."
+  },
+  {
+    "id": "unsupervised-post-1",
+    "stage": "post",
+    "question": "K-Means fails on two interlocking half-moon shapes but DBSCAN succeeds. Why?",
+    "options": [
+      "DBSCAN uses more data than K-Means",
+      "DBSCAN finds clusters based on density, so it can discover arbitrary shapes, while K-Means assumes spherical clusters",
+      "DBSCAN always outperforms K-Means on every dataset",
+      "K-Means cannot handle 2D data"
+    ],
+    "correct": 1,
+    "explanation": "K-Means assigns points to the nearest centroid, producing spherical (convex) clusters. DBSCAN grows clusters from dense regions, discovering any shape as long as the cluster is connected by density."
+  },
+  {
+    "id": "unsupervised-post-2",
+    "stage": "post",
+    "question": "What is the silhouette score measuring?",
+    "options": [
+      "The total number of clusters found",
+      "How similar each point is to its own cluster compared to the nearest other cluster",
+      "The speed of the clustering algorithm",
+      "The percentage of outliers in the data"
+    ],
+    "correct": 1,
+    "explanation": "Silhouette score = (b - a) / max(a, b), where a is mean intra-cluster distance and b is mean nearest-cluster distance. It ranges from -1 (wrong cluster) to +1 (well-clustered)."
+  },
+  {
+    "id": "unsupervised-post-3",
+    "stage": "post",
+    "question": "How does a Gaussian Mixture Model differ from K-Means in its cluster assignments?",
+    "options": [
+      "GMM uses hard assignments where each point belongs to exactly one cluster",
+      "GMM gives soft (probabilistic) assignments where each point has a probability of belonging to each cluster",
+      "GMM does not use centroids at all",
+      "GMM only works with one-dimensional data"
+    ],
+    "correct": 1,
+    "explanation": "K-Means assigns each point to exactly one cluster (hard). GMM computes the probability that each point belongs to each Gaussian component (soft), and can model elliptical, overlapping clusters."
+  }
+]

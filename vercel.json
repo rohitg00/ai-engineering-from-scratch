@@ -1,0 +1,12 @@
+{
+  "buildCommand": "node site/build.js",
+  "outputDirectory": "site",
+  "framework": null,
+  "installCommand": "echo skip",
+  "rewrites": [
+    { "source": "/glossary", "destination": "/glossary.html" },
+    { "source": "/catalog", "destination": "/catalog.html" },
+    { "source": "/path", "destination": "/prereqs.html" },
+    { "source": "/roadmap", "destination": "/prereqs.html" }
+  ]
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What does the loss function represent in neural network training?",
+    "options": ["The number of incorrect predictions", "A differentiable measure of how wrong the model's predictions are, which the optimizer minimizes", "The size of the training dataset", "The learning rate schedule"],
+    "correct": 1,
+    "explanation": "The loss function maps predictions and targets to a single scalar that the optimizer minimizes via gradient descent. It must be differentiable so gradients can be computed.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why is cross-entropy preferred over MSE for classification tasks?",
+    "options": ["Cross-entropy is faster to compute", "Cross-entropy punishes confident wrong predictions exponentially via -log(p), while MSE gives weak gradients near 0 and 1", "MSE only works for regression", "Cross-entropy doesn't require labels"],
+    "correct": 1,
+    "explanation": "When a model confidently predicts the wrong class (p near 0 for true class), -log(p) produces a huge loss and strong gradient. MSE produces weak gradients in the same situation because sigmoid is flat near 0 and 1.",
+    "stage": "pre"
+  },
+  {
+    "question": "What happens if you use MSE loss for binary classification?",
+    "options": ["Training diverges immediately", "The model can minimize loss by predicting 0.5 for everything, achieving MSE=0.25 without learning", "The model trains normally", "Gradients explode"],
+    "correct": 1,
+    "explanation": "With MSE on a balanced binary dataset, predicting 0.5 for every input gives MSE=0.25 -- the minimum achievable without discrimination. The model satisfies the loss without learning any useful patterns.",
+    "stage": "post"
+  },
+  {
+    "question": "What does label smoothing do and why is it useful?",
+    "options": ["It removes noisy labels from the dataset", "It replaces hard 0/1 targets with soft values like 0.1/0.9, preventing overconfident predictions and improving generalization", "It applies a moving average to the loss", "It smooths the learning rate schedule"],
+    "correct": 1,
+    "explanation": "Label smoothing changes targets from [0,0,1,0] to [0.025,0.025,0.925,0.025] (with alpha=0.1). This prevents the model from pushing logits to infinity to achieve hard targets, reducing overconfidence.",
+    "stage": "post"
+  },
+  {
+    "question": "In contrastive loss (InfoNCE), what role does the temperature parameter play?",
+    "options": ["It controls the learning rate", "It controls how sharp the similarity distribution is -- lower temperature means harder separation between positives and negatives", "It sets the number of negative samples", "It determines the embedding dimension"],
+    "correct": 1,
+    "explanation": "Temperature divides the similarity scores before softmax. Lower temperature (e.g., 0.07) creates a sharper distribution where the model must clearly separate positives from negatives. Higher temperature is more forgiving.",
+    "stage": "post"
+  }
+]

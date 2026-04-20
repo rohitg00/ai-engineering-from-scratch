@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the adjacency matrix A[i][j] = 1 represent?",
+      "options": [
+        "Node i has degree j",
+        "There is an edge from node i to node j",
+        "Node i and node j have the same label",
+        "The shortest path from i to j has length 1"
+      ],
+      "correct": 1,
+      "explanation": "The adjacency matrix is the core representation of a graph. A[i][j] = 1 means there is an edge connecting node i to node j. For undirected graphs, the matrix is symmetric (A[i][j] = A[j][i])."
+    },
+    {
+      "stage": "pre",
+      "question": "What data structure does BFS use and what does it find?",
+      "options": [
+        "Stack; finds connected components",
+        "Queue; finds shortest paths in unweighted graphs",
+        "Priority queue; finds minimum spanning tree",
+        "Hash map; finds duplicate nodes"
+      ],
+      "correct": 1,
+      "explanation": "BFS uses a queue (FIFO) to explore all neighbors at distance k before moving to distance k+1. This guarantees that the first time a node is discovered, it is via a shortest path from the source."
+    },
+    {
+      "stage": "post",
+      "question": "The graph Laplacian L = D - A of a connected graph has how many zero eigenvalues?",
+      "options": [
+        "Zero",
+        "Exactly one",
+        "Equal to the number of nodes",
+        "Equal to the number of edges"
+      ],
+      "correct": 1,
+      "explanation": "The number of zero eigenvalues of the Laplacian equals the number of connected components. A connected graph has exactly one connected component, so exactly one zero eigenvalue. A graph with k disconnected pieces has k zero eigenvalues."
+    },
+    {
+      "stage": "post",
+      "question": "In GNN message passing, what does h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)})) compute?",
+      "options": [
+        "The shortest path from v to all other nodes",
+        "A new feature vector for node v by aggregating neighbor features, transforming with learned weights, and applying a nonlinearity",
+        "The degree of node v at layer k+1",
+        "The PageRank score of node v"
+      ],
+      "correct": 1,
+      "explanation": "Each node collects features from its neighbors (mean aggregation), multiplies by a learned weight matrix W, and applies an activation function sigma. After k rounds, each node has information from its k-hop neighborhood."
+    },
+    {
+      "stage": "post",
+      "question": "How does spectral clustering use the Fiedler vector (eigenvector of the second-smallest eigenvalue of L)?",
+      "options": [
+        "Nodes with the largest Fiedler vector entries form one cluster",
+        "Nodes with positive Fiedler vector values go in one group, nodes with negative values go in the other",
+        "The Fiedler vector is used as edge weights",
+        "The Fiedler vector determines the number of clusters"
+      ],
+      "correct": 1,
+      "explanation": "The Fiedler vector encodes the smoothest non-trivial function on the graph. Nodes in the same tightly-connected cluster get similar values, while nodes separated by a bottleneck get values with opposite signs. The sign split partitions the graph into two clusters."
+    }
+  ]
+}

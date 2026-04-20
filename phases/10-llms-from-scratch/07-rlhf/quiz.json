@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What does the reward model in RLHF learn from?",
+    "options": ["Raw text documents", "Human preference pairs: given two responses, which one humans preferred", "Benchmark scores", "Model loss curves"],
+    "correct": 1,
+    "explanation": "The reward model is trained on preference data: pairs of responses to the same prompt where a human labeled which is better. It learns to assign higher scores to responses that match human preferences.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why is a KL divergence penalty used in PPO training for RLHF?",
+    "options": ["To speed up training", "To prevent the policy from diverging too far from the SFT model, which would lead to reward hacking", "To reduce memory usage", "To improve tokenization"],
+    "correct": 1,
+    "explanation": "Without the KL penalty, the model finds degenerate ways to maximize the reward score (e.g., producing repetitive text that exploits reward model weaknesses). KL keeps the model close to the well-behaved SFT baseline.",
+    "stage": "pre"
+  },
+  {
+    "question": "How many separate models are required for a full RLHF pipeline?",
+    "options": ["One", "Two", "Three: SFT model, reward model, and policy model being optimized", "Four"],
+    "correct": 2,
+    "explanation": "RLHF requires: (1) SFT model as the starting point and KL reference, (2) reward model trained on preferences, (3) policy model being optimized with PPO. This complexity is why DPO (lesson 08) was developed.",
+    "stage": "post"
+  },
+  {
+    "question": "What is 'reward hacking' in RLHF?",
+    "options": ["When the reward model is attacked by adversaries", "When the policy finds ways to maximize the reward score without actually improving response quality", "When training data is corrupted", "When the learning rate is too high"],
+    "correct": 1,
+    "explanation": "The reward model is an imperfect proxy for human judgment. The policy can discover patterns that score high rewards (e.g., verbose responses, excessive hedging) without actually being more helpful. The KL penalty limits this.",
+    "stage": "post"
+  },
+  {
+    "question": "What does PPO's clipping mechanism prevent?",
+    "options": ["Gradient overflow", "Excessively large policy updates that could destabilize training", "Memory overflow", "Data leakage"],
+    "correct": 1,
+    "explanation": "PPO clips the probability ratio between the new and old policy to a range like [0.8, 1.2]. This prevents any single update from changing the policy too drastically, making training more stable than vanilla policy gradient.",
+    "stage": "post"
+  }
+]

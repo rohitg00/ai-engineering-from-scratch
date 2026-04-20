@@ -1,0 +1,37 @@
+[
+  {
+    "question": "Why can't you simply load all pre-training data into memory?",
+    "options": ["Python doesn't support large arrays", "Pre-training corpora are terabytes in size, far exceeding available RAM, requiring streaming pipelines", "Loading data into memory is slower", "Memory is only needed for model weights"],
+    "correct": 1,
+    "explanation": "LLM pre-training data is typically 1-15 TB of text. Even with 256GB of RAM, you can't hold the full dataset. Streaming pipelines process data on-the-fly, loading only what's needed for the current batch.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why is data deduplication important for pre-training?",
+    "options": ["It saves disk space", "Duplicate documents cause the model to memorize specific text verbatim and waste training compute on repeated content", "It speeds up tokenization", "It reduces the vocabulary size"],
+    "correct": 1,
+    "explanation": "Near-duplicate content (boilerplate, scraped duplicates) causes the model to memorize rather than generalize. Deduplication reduces training compute waste and improves model quality by ensuring diverse training signal.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the purpose of creating fixed-length training sequences from variable-length documents?",
+    "options": ["It makes the text easier to read", "GPU training requires uniform tensor shapes, so documents must be packed or padded into fixed-length sequences", "Fixed-length sequences are more accurate", "It reduces the total number of tokens"],
+    "correct": 1,
+    "explanation": "GPUs process batches of tensors with identical shapes. Variable-length documents must be chunked into fixed-length sequences (e.g., 2048 or 4096 tokens) with proper attention masks at document boundaries.",
+    "stage": "post"
+  },
+  {
+    "question": "What happens if the data pipeline is slower than GPU training speed?",
+    "options": ["Training automatically slows down to match", "The GPU sits idle waiting for batches, wasting expensive compute time", "The model trains on the same batch repeatedly", "Nothing -- the pipeline runs asynchronously"],
+    "correct": 1,
+    "explanation": "If the dataloader can't serve batches fast enough, the GPU stalls between steps. On A100 clusters costing $30+/hour, pipeline bottlenecks directly waste money. Profiling pipeline throughput is essential.",
+    "stage": "post"
+  },
+  {
+    "question": "Why is data quality filtering (language detection, content filtering) applied before tokenization?",
+    "options": ["Tokenizers can't handle low-quality text", "Low-quality data (spam, boilerplate, toxic content) degrades model capabilities proportional to its share of training data", "Filtering after tokenization is impossible", "It reduces tokenization time"],
+    "correct": 1,
+    "explanation": "The model learns from whatever data it sees. If 10% of training data is spam or low-quality content, the model allocates 10% of its capacity to reproducing those patterns. Filtering early ensures only high-quality signal reaches the model.",
+    "stage": "post"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What three responsibilities does the Module abstraction have in a deep learning framework?",
+    "options": ["Load data, preprocess data, augment data", "forward() for computation, backward() for gradients, parameters() for trainable weights", "Compile, optimize, deploy", "Tokenize, embed, decode"],
+    "correct": 1,
+    "explanation": "Every Module implements forward() to compute output, backward() to propagate gradients, and parameters() to expose trainable weights. This uniform interface lets any module be composed with any other.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why does Sequential process modules in reverse order during the backward pass?",
+    "options": ["It's arbitrary -- either direction works", "Gradients flow from the loss backward through the network, so the last layer computes gradients first", "Reverse order uses less memory", "It prevents gradient explosion"],
+    "correct": 1,
+    "explanation": "The backward pass starts at the loss and propagates gradients toward the input. The last layer receives the loss gradient first, computes its local gradients, and passes them to the previous layer.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why is optimizer.zero_grad() a separate call instead of being done automatically?",
+    "options": ["It's a PyTorch design mistake", "It allows gradient accumulation across multiple batches before taking a single optimizer step", "It saves memory", "It makes debugging easier"],
+    "correct": 1,
+    "explanation": "Separating zero_grad from step enables gradient accumulation: you can run backward() multiple times (across mini-batches) and sum the gradients before calling step(). This simulates larger batch sizes.",
+    "stage": "post"
+  },
+  {
+    "question": "What is the correct order of operations in a training loop?",
+    "options": ["backward, forward, zero_grad, step", "forward, loss, zero_grad, backward, step", "zero_grad, forward, loss, backward, step", "forward, zero_grad, backward, loss, step"],
+    "correct": 2,
+    "explanation": "The standard pattern: zero_grad (clear old gradients), forward (compute predictions), loss (compute scalar loss), backward (compute gradients), step (update parameters). Getting this order wrong causes subtle bugs.",
+    "stage": "post"
+  },
+  {
+    "question": "What is the role of the DataLoader in the framework?",
+    "options": ["It trains the model", "It splits data into batches and optionally shuffles between epochs for mini-batch gradient descent", "It computes the loss function", "It initializes the weights"],
+    "correct": 1,
+    "explanation": "The DataLoader handles two practical concerns: batching (you can't fit all data in memory) and shuffling (random order prevents the model from memorizing data sequence).",
+    "stage": "post"
+  }
+]

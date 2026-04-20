@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What training objective does GPT use during pre-training?",
+    "options": ["Masked language modeling (predicting masked tokens)", "Next-token prediction: given previous tokens, predict the next one", "Sentence classification", "Image-text alignment"],
+    "correct": 1,
+    "explanation": "GPT is a causal (autoregressive) language model trained with next-token prediction. Given tokens [t1, t2, ..., tn], it learns to predict tn+1. The loss is cross-entropy between predicted and actual next tokens.",
+    "stage": "pre"
+  },
+  {
+    "question": "How many transformer layers, attention heads, and embedding dimensions does GPT-2 Small (124M) have?",
+    "options": ["6 layers, 6 heads, 512 dims", "12 layers, 12 heads, 768 dims", "24 layers, 16 heads, 1024 dims", "48 layers, 25 heads, 1600 dims"],
+    "correct": 1,
+    "explanation": "GPT-2 Small has 12 transformer layers, 12 attention heads per layer, and 768-dimensional embeddings. This architecture has 124 million parameters and can be trained on a single GPU in a few hours.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the role of the causal attention mask in GPT?",
+    "options": ["It prevents attention to padding tokens", "It prevents each token from attending to future tokens, ensuring the model can only use past context for predictions", "It masks out low-confidence attention scores", "It reduces memory usage during training"],
+    "correct": 1,
+    "explanation": "The causal mask is a triangular matrix that sets future positions to -infinity before softmax. Token at position 5 can attend to positions 1-5 but not 6+. This ensures the model generates tokens left-to-right.",
+    "stage": "post"
+  },
+  {
+    "question": "What does 'temperature' control during text generation?",
+    "options": ["The speed of generation", "The randomness of token selection: lower temperature makes outputs more deterministic, higher makes them more diverse", "The number of tokens generated", "The model's confidence threshold"],
+    "correct": 1,
+    "explanation": "Temperature divides logits before softmax. Temperature=0.1 makes the distribution very peaked (nearly deterministic). Temperature=1.0 is the training distribution. Temperature>1.0 flattens it, increasing randomness.",
+    "stage": "post"
+  },
+  {
+    "question": "Why does pre-training require significantly more compute than fine-tuning?",
+    "options": ["Pre-training uses larger batch sizes", "Pre-training processes trillions of tokens from scratch to learn general language patterns, while fine-tuning adjusts an already-capable model on thousands of examples", "Pre-training uses a different architecture", "Fine-tuning doesn't use gradients"],
+    "correct": 1,
+    "explanation": "Pre-training builds all language knowledge from random weights over trillions of tokens. Fine-tuning starts from these learned weights and adjusts them on a much smaller dataset (thousands to millions of examples).",
+    "stage": "post"
+  }
+]

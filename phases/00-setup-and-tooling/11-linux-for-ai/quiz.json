@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the '~' symbol represent in a Linux file path?",
+      "options": ["The root directory of the file system", "The current user's home directory", "The temporary files directory", "The directory where system programs are installed"],
+      "correct": 1,
+      "explanation": "The tilde (~) is a shortcut for the current user's home directory, typically /home/username on Linux. 'cd ~' takes you home from anywhere."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the purpose of 'sudo' before a command?",
+      "options": ["It speeds up the command execution", "It runs the command with root (administrator) privileges", "It runs the command in a sandboxed environment", "It logs the command output to a system file"],
+      "correct": 1,
+      "explanation": "sudo (superuser do) temporarily elevates your privileges to root level for a single command. Required for system-level operations like installing packages with apt."
+    },
+    {
+      "stage": "post",
+      "question": "You get 'Permission denied' when trying to run a shell script. What command fixes this?",
+      "options": ["sudo rm script.sh", "chmod +x script.sh", "chown root script.sh", "mv script.sh /usr/bin/"],
+      "correct": 1,
+      "explanation": "chmod +x adds execute permission to the file. Without the execute bit set, the shell refuses to run the script even if you own it."
+    },
+    {
+      "stage": "post",
+      "question": "On a remote GPU box, your training data fills the disk. Which command shows the largest directories consuming space?",
+      "options": ["ls -la /", "du -h --max-depth=1 / | sort -hr | head -20", "cat /proc/meminfo", "free -h"],
+      "correct": 1,
+      "explanation": "du -h shows disk usage per directory, --max-depth=1 limits to top-level directories, and sort -hr sorts by size in descending order. This reveals which directories are consuming the most space."
+    },
+    {
+      "stage": "post",
+      "question": "What is a key difference between the macOS and Linux versions of 'sed -i'?",
+      "options": ["Linux sed is faster than macOS sed", "macOS sed requires an empty string argument after -i ('sed -i \"\"'), while Linux does not", "Linux sed does not support regular expressions", "macOS sed cannot modify files in place"],
+      "correct": 1,
+      "explanation": "macOS uses BSD sed which requires 'sed -i \"\" pattern file', while Linux uses GNU sed which accepts 'sed -i pattern file'. This is a common gotcha when moving scripts between systems."
+    }
+  ]
+}

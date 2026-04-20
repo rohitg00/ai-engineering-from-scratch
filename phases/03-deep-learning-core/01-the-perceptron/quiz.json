@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What mathematical operation does a perceptron perform on its inputs before applying the activation function?",
+    "options": ["Matrix inversion", "Weighted sum plus bias", "Fourier transform", "Eigenvalue decomposition"],
+    "correct": 1,
+    "explanation": "A perceptron computes the dot product of inputs and weights, adds a bias term, then passes the result through a step function. This weighted sum plus bias is the core computation.",
+    "stage": "pre"
+  },
+  {
+    "question": "What does 'linearly separable' mean for a classification problem?",
+    "options": ["The data can be sorted in order", "A single straight line (or hyperplane) can perfectly separate the classes", "The features have a linear relationship with the label", "The data has only two dimensions"],
+    "correct": 1,
+    "explanation": "A dataset is linearly separable when you can draw a single hyperplane that perfectly divides the input space into the correct classes. AND and OR are linearly separable; XOR is not.",
+    "stage": "pre"
+  },
+  {
+    "question": "Why does a single perceptron fail to learn the XOR function?",
+    "options": ["The learning rate is too low", "XOR has too many inputs", "XOR is not linearly separable -- no single line can separate the classes", "The step function prevents gradient flow"],
+    "correct": 2,
+    "explanation": "XOR places [0,1] and [1,0] on one side and [0,0] and [1,1] on the other. No single straight line can separate these groups, so a single perceptron, which can only draw one linear boundary, cannot solve XOR.",
+    "stage": "post"
+  },
+  {
+    "question": "In the perceptron learning rule, what happens when the prediction matches the target?",
+    "options": ["Weights are doubled", "Weights are set to zero", "Nothing changes -- error is zero so the update is zero", "The learning rate is halved"],
+    "correct": 2,
+    "explanation": "The update rule is w_i = w_i + lr * error * x_i. When prediction equals target, error = 0, so all weight updates are zero. The perceptron only adjusts when it makes a mistake.",
+    "stage": "post"
+  },
+  {
+    "question": "How is XOR solved using multiple perceptrons?",
+    "options": ["By using a larger learning rate on a single perceptron", "By combining OR, NAND, and AND perceptrons in two layers", "By adding more inputs to a single perceptron", "By removing the bias term"],
+    "correct": 1,
+    "explanation": "XOR = (x1 OR x2) AND NOT(x1 AND x2). A hidden layer with an OR neuron and a NAND neuron feeds into an output AND neuron, creating a nonlinear decision boundary from linear components.",
+    "stage": "post"
+  }
+]

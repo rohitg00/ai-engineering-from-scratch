@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is containerizing AI workloads harder than containerizing web applications?",
+      "options": ["Docker does not support Python applications", "AI containers need GPU drivers, CUDA toolkit, large model weights (5-50GB), and specific library versions compiled for specific CUDA versions, creating a much more complex dependency chain", "AI applications cannot use network ports", "Docker images have a maximum size of 1GB"],
+      "correct": 1,
+      "explanation": "A web app needs Node.js and npm packages. An AI app needs Python, CUDA drivers, cuDNN, PyTorch compiled for a specific CUDA version, and gigabytes of model weights. One version mismatch breaks everything."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the purpose of the NVIDIA Container Toolkit?",
+      "options": ["It compresses model weights to fit in smaller containers", "It enables Docker containers to access host GPUs by providing the runtime hooks that expose GPU devices and drivers inside the container", "It converts PyTorch models to TensorRT format", "It monitors GPU temperature during training"],
+      "correct": 1,
+      "explanation": "The NVIDIA Container Toolkit (nvidia-docker) provides a container runtime that maps host GPU devices and driver libraries into the container, so applications inside see and use GPUs as if they were running on the host."
+    },
+    {
+      "stage": "post",
+      "question": "Why should you mount model weights as Docker volumes instead of baking them into the image?",
+      "options": ["Volumes are faster to read than image layers", "Model weights are 5-50GB; baking them into the image makes it enormous to build, push, and pull, while volumes let you download weights once and share them across containers", "Docker does not support files larger than 1GB in images", "Volumes automatically compress the weights"],
+      "correct": 1,
+      "explanation": "A 50GB image takes 30+ minutes to push/pull. With volume mounts, the image stays small (5-8GB for runtime), and weights are downloaded once to the host and mounted into any container that needs them."
+    },
+    {
+      "stage": "post",
+      "question": "What is the benefit of multi-stage Docker builds for AI applications?",
+      "options": ["Multi-stage builds run faster on GPUs", "They separate build dependencies (compilers, dev headers) from runtime dependencies, producing a final image that contains only what's needed to run inference", "They allow running multiple models in one container", "They enable building for multiple GPU architectures simultaneously"],
+      "correct": 1,
+      "explanation": "The build stage installs compilers and builds C extensions. The runtime stage copies only the compiled artifacts. This can reduce image size by 2-5GB by excluding gcc, build-essential, and development headers."
+    },
+    {
+      "stage": "post",
+      "question": "How do you verify that a Docker container has GPU access?",
+      "options": ["Check if the container has more than 8GB of RAM", "Run nvidia-smi inside the container; if it shows the GPU name, driver version, and CUDA version, the GPU is accessible", "Check if PyTorch is installed in the container", "Look for /dev/gpu0 in the container filesystem"],
+      "correct": 1,
+      "explanation": "nvidia-smi is the standard tool for verifying GPU access. Inside the container, run 'nvidia-smi' and confirm it shows the GPU. If it fails, the NVIDIA Container Toolkit is not configured or --gpus was not passed to docker run."
+    }
+  ]
+}

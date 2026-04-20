@@ -1,0 +1,37 @@
+[
+  {
+    "question": "Why does a basic BPE tokenizer break on multilingual or code input?",
+    "options": ["BPE is inherently monolingual", "Without proper Unicode handling, byte fallback, and pre-tokenization regex, it produces incorrect or inefficient token sequences", "Multilingual text can't be tokenized", "BPE only works on ASCII"],
+    "correct": 1,
+    "explanation": "A naive BPE implementation may not handle multi-byte Unicode characters, may merge across word boundaries incorrectly, and may not have byte-level fallback for characters outside the trained vocabulary.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the role of pre-tokenization regex in a production tokenizer?",
+    "options": ["It removes punctuation", "It splits text at word boundaries before BPE merges, preventing merges across spaces and word boundaries", "It compresses whitespace", "It converts text to lowercase"],
+    "correct": 1,
+    "explanation": "Pre-tokenization regex splits text into chunks (typically at word boundaries, numbers, and punctuation) so BPE merges only happen within chunks. Without this, BPE could merge 'end' with the space before the next word.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is a special token and why are tokenizers designed to handle them?",
+    "options": ["Tokens that appear frequently", "Reserved tokens like <|endoftext|> or [PAD] that control model behavior and must be encoded as single, specific IDs", "Tokens with the highest embedding values", "Tokens used only during evaluation"],
+    "correct": 1,
+    "explanation": "Special tokens serve structural purposes: marking document boundaries, padding sequences, indicating start/end of generation. They must be recognized and encoded as their exact IDs, not broken into subwords.",
+    "stage": "post"
+  },
+  {
+    "question": "How do you evaluate whether a custom tokenizer is good?",
+    "options": ["By checking if it can tokenize your name", "By measuring compression ratio (tokens per character) across diverse text and comparing to established tokenizers like tiktoken", "By counting the vocabulary size", "By measuring encoding speed only"],
+    "correct": 1,
+    "explanation": "Compression ratio (bytes per token or tokens per word) measures efficiency. A good tokenizer produces fewer tokens for the same text, which means more content fits in the context window. Compare across languages and domains.",
+    "stage": "post"
+  },
+  {
+    "question": "Why is byte-level BPE preferred over word-level tokenization for modern LLMs?",
+    "options": ["It's faster", "It can represent any input without unknown tokens while still learning efficient subword merges for common patterns", "It produces smaller vocabularies", "Word-level tokenization is more accurate"],
+    "correct": 1,
+    "explanation": "Word-level tokenizers can't handle unseen words (producing [UNK] tokens). Byte-level BPE starts from raw bytes (guaranteeing coverage of any input) and learns merges for common sequences, balancing coverage with efficiency.",
+    "stage": "post"
+  }
+]

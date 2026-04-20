@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roadmap - AI Engineering from Scratch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d18'/><text x='4' y='23' font-size='18' font-weight='bold' font-family='system-ui' fill='%23ff6b6b'>AI</text></svg>">
+  <meta name="description" content="Interactive prerequisite map for 260+ AI engineering lessons. See which phases depend on which, and plan your learning path.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260417e">
+  <style>
+    /* ===================================================
+       Learning Path — Page Styles
+    =================================================== */
+
+    .prereqs-page {
+      padding: 100px 0 80px;
+      min-height: 100vh;
+    }
+
+    .prereqs-header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .prereqs-header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 8px;
+    }
+
+    .prereqs-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* --- Controls bar --- */
+    .prereqs-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .prereqs-legend {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-dot.complete    { background: var(--complete); }
+    .legend-dot.in-progress { background: var(--accent); }
+    .legend-dot.planned     { background: var(--planned); }
+
+    .reset-btn {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 6px 14px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      display: none;
+    }
+
+    .reset-btn.visible { display: inline-block; }
+
+    .reset-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* --- Graph container --- */
+    .graph-wrap {
+      overflow-x: auto;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 0 24px;
+      margin: 0 -24px;
+      position: relative;
+    }
+
+    .graph-scroll-hint {
+      display: none;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+
+    .graph-container {
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .graph-svg { display: block; }
+
+    /* --- SVG Node styles --- */
+    .node-group { cursor: pointer; }
+
+    .node-rect {
+      fill: var(--bg-surface);
+      stroke: var(--border);
+      stroke-width: 2;
+      rx: 12;
+      transition: fill 0.25s, stroke 0.25s, filter 0.25s;
+    }
+
+    .node-group:hover .node-rect {
+      fill: var(--bg-surface-hover);
+      stroke: var(--accent);
+    }
+
+    .node-group.selected .node-rect {
+      stroke: var(--accent);
+      stroke-width: 3;
+      filter: drop-shadow(0 0 12px rgba(255, 107, 107, 0.4));
+    }
+
+    .node-group.ancestor .node-rect {
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      filter: drop-shadow(0 0 6px rgba(255, 107, 107, 0.25));
+    }
+
+    .node-group.descendant .node-rect {
+      stroke: var(--complete);
+      stroke-width: 2.5;
+      filter: drop-shadow(0 0 6px rgba(90, 184, 143, 0.25));
+    }
+
+    .node-group.dimmed .node-rect,
+    .node-group.dimmed .node-id,
+    .node-group.dimmed .node-name,
+    .node-group.dimmed .node-status-bar {
+      opacity: 0.25;
+    }
+
+    .node-status-bar { transition: opacity 0.25s; }
+
+    .node-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      fill: var(--accent);
+      transition: opacity 0.25s;
+    }
+
+    .node-name {
+      font-family: 'Kalam', cursive;
+      font-size: 12.5px;
+      font-weight: 700;
+      fill: var(--text);
+      transition: opacity 0.25s;
+    }
+
+    /* --- SVG Edge styles --- */
+    .edge-path {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 1.8;
+      opacity: 0.45;
+      transition: stroke 0.3s, opacity 0.3s, stroke-width 0.3s;
+    }
+
+    .edge-path.ancestor-edge   { stroke: var(--accent);   opacity: 0.9; stroke-width: 2.5; }
+    .edge-path.descendant-edge { stroke: var(--complete);  opacity: 0.7; stroke-width: 2.2; }
+    .edge-path.dimmed-edge     { opacity: 0.08; }
+
+    .edge-arrow {
+      fill: var(--border);
+      opacity: 0.45;
+      transition: fill 0.3s, opacity 0.3s;
+    }
+
+    .edge-arrow.ancestor-edge   { fill: var(--accent);   opacity: 0.9; }
+    .edge-arrow.descendant-edge { fill: var(--complete);  opacity: 0.7; }
+    .edge-arrow.dimmed-edge     { opacity: 0.08; }
+
+    /* --- Detail panel --- */
+    .detail-panel {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow-hard);
+      display: none;
+      animation: panelSlideIn 0.35s ease;
+    }
+
+    .detail-panel.open { display: block; }
+
+    @keyframes panelSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .detail-phase-num {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .detail-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .detail-status {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    }
+
+    .detail-status.complete    { background: rgba(90, 184, 143, 0.15); color: var(--complete); border: 1px solid var(--complete); }
+    .detail-status.in-progress { background: rgba(255, 107, 107, 0.15); color: var(--accent);   border: 1px solid var(--accent); }
+    .detail-status.planned     { background: rgba(128, 112, 96, 0.15);  color: var(--planned);  border: 1px solid var(--planned); }
+
+    .detail-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .detail-stats {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .detail-stats strong { color: var(--text); }
+
+    .detail-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .detail-section-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .detail-section-title .title-icon { margin-right: 4px; }
+
+    .detail-prereq-list,
+    .detail-unlock-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .detail-prereq-list li,
+    .detail-unlock-list li {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .detail-prereq-list li:hover,
+    .detail-unlock-list li:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .detail-prereq-list li .li-num,
+    .detail-unlock-list li .li-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 6px;
+    }
+
+    .detail-empty {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .detail-actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .detail-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 6px 14px;
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .detail-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translate(-1px, -1px);
+    }
+
+    .detail-link-read {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      font-weight: 700;
+    }
+
+    .detail-link-read:hover {
+      background: var(--accent-hover);
+      color: #fff;
+      border-color: var(--accent-hover);
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      .prereqs-page        { padding: 80px 0 48px; }
+      .graph-scroll-hint   { display: block; }
+      .detail-sections     { grid-template-columns: 1fr; gap: 14px; }
+      .detail-panel        { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">&#9679;</span> AI from Scratch
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#phases">Phases</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="prereqs.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+        </a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-icon" id="themeIcon">&#9789;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="prereqs-page">
+    <div class="container">
+      <div class="prereqs-header">
+        <h1>Roadmap</h1>
+        <p>Click any phase to see what you need to learn first &mdash; and what it unlocks next.</p>
+      </div>
+
+      <div class="prereqs-controls">
+        <div class="prereqs-legend">
+          <div class="legend-item"><span class="legend-dot complete"></span> Complete</div>
+          <div class="legend-item"><span class="legend-dot in-progress"></span> In Progress</div>
+          <div class="legend-item"><span class="legend-dot planned"></span> Planned</div>
+        </div>
+        <button class="reset-btn" id="resetBtn">&#10005; Clear selection</button>
+      </div>
+
+      <div class="graph-scroll-hint">&#8596; Scroll to explore the full graph</div>
+
+      <div class="graph-wrap">
+        <div class="graph-container" id="graphContainer">
+          <svg class="graph-svg" id="graphSvg"></svg>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="detailPanel"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>AI Engineering from Scratch &mdash; open source, free forever.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="glossary.html">Glossary</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js?v=20260417e"></script>
+  <script src="progress.js?v=20260417e"></script>
+  <script src="header.js?v=20260417e" defer></script>
+  <script>
+  (function () {
+    /* ===================================================
+       Theme Toggle — matches site-wide pattern
+    =================================================== */
+    var root   = document.documentElement;
+    var stored = localStorage.getItem('theme');
+    if (stored) {
+      root.setAttribute('data-theme', stored);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      root.setAttribute('data-theme', 'light');
+    }
+
+    function updateIcon() {
+      var icon = document.getElementById('themeIcon');
+      if (!icon) return;
+      icon.innerHTML = root.getAttribute('data-theme') === 'light' ? '&#9728;' : '&#9789;';
+    }
+
+    updateIcon();
+
+    document.addEventListener('DOMContentLoaded', function () {
+      updateIcon();
+      var btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          updateIcon();
+        });
+      }
+      buildGraph();
+    });
+
+    /* ===================================================
+       Prerequisite data.
+
+       To add a new phase, add its id and prerequisite
+       list here. Any phase present in PHASES (data.js)
+       but missing from this map will automatically
+       appear as a standalone node at the bottom of the
+       graph — no manual positioning needed.
+    =================================================== */
+    var PREREQS = {
+      0:  [],
+      1:  [0],
+      2:  [1],
+      3:  [2],
+      4:  [3],
+      5:  [3],
+      6:  [3],
+      7:  [3],
+      8:  [3, 7],
+      9:  [3],
+      10: [7],
+      11: [10],
+      12: [4, 6, 11],
+      13: [11],
+      14: [11, 13],
+      15: [14],
+      16: [15],
+      17: [11],
+      18: [10],
+      19: [14, 15, 16, 17]
+    };
+
+    /*
+     * Tier definitions control the visual layout.
+     * Each sub-array is one horizontal row; the order
+     * within a row controls left-to-right placement.
+     * Phases in PHASES but not in any tier are collected
+     * into an auto-generated row at the bottom.
+     */
+    var TIER_ORDER = [
+      [0],
+      [1],
+      [2],
+      [3],
+      [9, 5, 7, 4, 6],
+      [8, 10],
+      [18, 11],
+      [17, 13, 12],
+      [14],
+      [15, 16],
+      [19]
+    ];
+
+    /* ===================================================
+       Layout constants
+    =================================================== */
+    var NODE_W   = 168;
+    var NODE_H   = 56;
+    var TIER_GAP = 130;
+    var COL_GAP  = 40;
+    var PAD_X    = 100;
+    var PAD_Y    = 50;
+
+    /* ===================================================
+       Build lookups from PHASES (data.js)
+    =================================================== */
+    var PHASE_MAP   = {};
+    var allPhaseIds = {};
+    for (var i = 0; i < PHASES.length; i++) {
+      PHASE_MAP[PHASES[i].id] = PHASES[i];
+      allPhaseIds[PHASES[i].id] = true;
+    }
+
+    /* Ensure every phase in PHASES has a PREREQS entry */
+    for (var pid in allPhaseIds) {
+      if (!(pid in PREREQS)) PREREQS[pid] = [];
+    }
+
+    /* Build reverse map: parent → children */
+    var CHILDREN = {};
+    for (var pid in PREREQS) CHILDREN[pid] = [];
+    for (var pid in PREREQS) {
+      for (var i = 0; i < PREREQS[pid].length; i++) {
+        var parent = PREREQS[pid][i];
+        if (!CHILDREN[parent]) CHILDREN[parent] = [];
+        CHILDREN[parent].push(parseInt(pid));
+      }
+    }
+
+    /* ===================================================
+       Auto-compute node positions from TIER_ORDER
+    =================================================== */
+    var POSITIONS = {};
+
+    /* Collect phase IDs not yet in any tier */
+    var tieredIds = {};
+    for (var t = 0; t < TIER_ORDER.length; t++) {
+      for (var n = 0; n < TIER_ORDER[t].length; n++) {
+        tieredIds[TIER_ORDER[t][n]] = true;
+      }
+    }
+    var extraTier = [];
+    for (var pid in allPhaseIds) {
+      if (!tieredIds[pid]) extraTier.push(parseInt(pid));
+    }
+    if (extraTier.length) {
+      extraTier.sort(function (a, b) { return a - b; });
+      TIER_ORDER.push(extraTier);
+    }
+
+    /* Determine SVG dimensions from widest tier */
+    var maxPerTier = 1;
+    for (var t = 0; t < TIER_ORDER.length; t++) {
+      if (TIER_ORDER[t].length > maxPerTier) maxPerTier = TIER_ORDER[t].length;
+    }
+    var SVG_W = Math.max(960, maxPerTier * (NODE_W + COL_GAP) + PAD_X * 2);
+    var SVG_H = TIER_ORDER.length * TIER_GAP + PAD_Y * 2;
+
+    /* Place nodes — centred within each tier */
+    for (var t = 0; t < TIER_ORDER.length; t++) {
+      var tier  = TIER_ORDER[t];
+      var count = tier.length;
+      var totalW = count * NODE_W + (count - 1) * COL_GAP;
+      var startX = (SVG_W - totalW) / 2 + NODE_W / 2;
+      var y      = PAD_Y + t * TIER_GAP + NODE_H / 2;
+
+      for (var n = 0; n < count; n++) {
+        POSITIONS[tier[n]] = { x: startX + n * (NODE_W + COL_GAP), y: y };
+      }
+    }
+
+    /* ===================================================
+       Graph traversal helpers
+    =================================================== */
+    function getAncestors(id) {
+      var result = {};
+      var queue  = PREREQS[id] ? PREREQS[id].slice() : [];
+      while (queue.length) {
+        var p = queue.shift();
+        if (result[p]) continue;
+        result[p] = true;
+        if (PREREQS[p]) {
+          for (var i = 0; i < PREREQS[p].length; i++) queue.push(PREREQS[p][i]);
+        }
+      }
+      return result;
+    }
+
+    function getDescendants(id) {
+      var result = {};
+      var queue  = CHILDREN[id] ? CHILDREN[id].slice() : [];
+      while (queue.length) {
+        var c = queue.shift();
+        if (result[c]) continue;
+        result[c] = true;
+        if (CHILDREN[c]) {
+          for (var i = 0; i < CHILDREN[c].length; i++) queue.push(CHILDREN[c][i]);
+        }
+      }
+      return result;
+    }
+
+    /* ===================================================
+       SVG utility functions
+    =================================================== */
+    function svgEl(tag, attrs) {
+      var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      if (attrs) { for (var k in attrs) el.setAttribute(k, attrs[k]); }
+      return el;
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    /** Split a phase name into 1 or 2 lines for SVG text */
+    function splitName(name) {
+      if (name.length <= 20) return [name];
+      var mid = Math.ceil(name.length / 2);
+      var idx = name.lastIndexOf(' ', mid);
+      if (idx < 4) idx = name.indexOf(' ', mid);
+      if (idx === -1) return [name.substring(0, 20) + '\u2026'];
+      return [name.substring(0, idx), name.substring(idx + 1)];
+    }
+
+    /** Cubic bezier edge between two nodes */
+    function edgePath(fromId, toId) {
+      var fp = POSITIONS[fromId], tp = POSITIONS[toId];
+      if (!fp || !tp) return '';
+      var x1 = fp.x, y1 = fp.y + NODE_H / 2;
+      var x2 = tp.x, y2 = tp.y - NODE_H / 2;
+      var cpOff = Math.min((y2 - y1) * 0.4, 55);
+      return 'M' + x1 + ' ' + y1 +
+             'C' + x1 + ' ' + (y1 + cpOff) +
+             ' ' + x2 + ' ' + (y2 - cpOff) +
+             ' ' + x2 + ' ' + y2;
+    }
+
+    /** Arrow polygon at the target end of an edge */
+    function arrowPoints(toId) {
+      var tp = POSITIONS[toId];
+      if (!tp) return '0,0 0,0 0,0';
+      var x = tp.x, y = tp.y - NODE_H / 2, s = 5;
+      return (x - s) + ',' + (y - s * 1.6) + ' ' + x + ',' + y + ' ' + (x + s) + ',' + (y - s * 1.6);
+    }
+
+    function statusColor(status) {
+      if (status === 'complete')    return '#5ab88f';
+      if (status === 'in-progress') return '#ff6b6b';
+      return '#807060';
+    }
+
+    function lessonStats(phase) {
+      var done = 0;
+      var lessons = Array.isArray(phase.lessons) ? phase.lessons : [];
+      for (var j = 0; j < lessons.length; j++) {
+        if (lessons[j].status === 'complete') done++;
+      }
+      return { done: done, total: lessons.length };
+    }
+
+    /* ===================================================
+       Build and render the graph
+    =================================================== */
+    var selectedId   = null;
+    var nodeEls      = {};
+    var edgePathEls  = [];
+    var edgeArrowEls = [];
+
+    function buildGraph() {
+      var svg       = document.getElementById('graphSvg');
+      var container = document.getElementById('graphContainer');
+
+      svg.setAttribute('viewBox', '0 0 ' + SVG_W + ' ' + SVG_H);
+      svg.setAttribute('width', SVG_W);
+      svg.setAttribute('height', SVG_H);
+      container.style.width  = SVG_W + 'px';
+      container.style.height = SVG_H + 'px';
+
+      /* --- Edges (drawn first, behind nodes) --- */
+      var edgeGroup = svgEl('g', { class: 'edges-layer' });
+      svg.appendChild(edgeGroup);
+
+      for (var tid in PREREQS) {
+        var prereqs = PREREQS[tid];
+        for (var i = 0; i < prereqs.length; i++) {
+          var fid   = prereqs[i];
+          var pathD = edgePath(fid, parseInt(tid));
+          if (!pathD) continue;
+
+          edgePathEls.push(edgeGroup.appendChild(svgEl('path', {
+            class: 'edge-path', d: pathD,
+            'data-from': fid, 'data-to': tid
+          })));
+
+          edgeArrowEls.push(edgeGroup.appendChild(svgEl('polygon', {
+            class: 'edge-arrow', points: arrowPoints(parseInt(tid)),
+            'data-from': fid, 'data-to': tid
+          })));
+        }
+      }
+
+      /* --- Nodes --- */
+      var nodeGroup = svgEl('g', { class: 'nodes-layer' });
+      svg.appendChild(nodeGroup);
+
+      for (var nid in POSITIONS) {
+        var id    = parseInt(nid);
+        var pos   = POSITIONS[id];
+        var phase = PHASE_MAP[id];
+        if (!phase) continue;
+
+        var g = svgEl('g', {
+          class: 'node-group', 'data-id': id,
+          transform: 'translate(' + (pos.x - NODE_W / 2) + ',' + (pos.y - NODE_H / 2) + ')',
+          tabindex: '0',
+          role: 'button',
+          'aria-label': 'Select Phase ' + id + ': ' + phase.name
+        });
+
+        /* Background */
+        g.appendChild(svgEl('rect', { class: 'node-rect', width: NODE_W, height: NODE_H, rx: 12 }));
+
+        /* Status colour bar */
+        g.appendChild(svgEl('rect', {
+          class: 'node-status-bar',
+          x: 8, y: 0, width: NODE_W - 16, height: 3, rx: 1.5,
+          fill: statusColor(phase.status)
+        }));
+
+        /* Label content */
+        var lines = splitName(phase.name);
+        var stats = lessonStats(phase);
+
+        if (lines.length === 1) {
+          g.appendChild(svgEl('text', { class: 'node-id',   x: 12, y: 22, 'text-anchor': 'start' })).textContent = String(id).padStart(2, '0');
+          g.appendChild(svgEl('text', { class: 'node-name', x: 36, y: 22, 'text-anchor': 'start' })).textContent = lines[0];
+          g.appendChild(svgEl('text', { class: 'node-id',   x: NODE_W - 12, y: 46, 'text-anchor': 'end', style: 'font-size:9px;fill:var(--text-muted)' })).textContent = stats.done + '/' + stats.total;
+        } else {
+          g.appendChild(svgEl('text', { class: 'node-id',   x: 12, y: 18, 'text-anchor': 'start' })).textContent = String(id).padStart(2, '0');
+          g.appendChild(svgEl('text', { class: 'node-id',   x: NODE_W - 12, y: 18, 'text-anchor': 'end', style: 'font-size:9px;fill:var(--text-muted)' })).textContent = stats.done + '/' + stats.total;
+          g.appendChild(svgEl('text', { class: 'node-name', x: 12, y: 32, 'text-anchor': 'start' })).textContent = lines[0];
+          g.appendChild(svgEl('text', { class: 'node-name', x: 12, y: 47, 'text-anchor': 'start', style: 'font-size:11px' })).textContent = lines[1];
+        }
+
+        nodeGroup.appendChild(g);
+        nodeEls[id] = g;
+
+        (function (nodeId) {
+          g.addEventListener('click', function () { selectNode(nodeId); });
+          g.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              selectNode(nodeId);
+            }
+          });
+        })(id);
+      }
+
+      document.getElementById('resetBtn').addEventListener('click', clearSelection);
+    }
+
+    /* ===================================================
+       Selection logic
+    =================================================== */
+    function selectNode(id) {
+      selectedId = id;
+      var ancestors   = getAncestors(id);
+      var descendants = getDescendants(id);
+
+      /* Highlight nodes */
+      for (var nid in nodeEls) {
+        var n  = parseInt(nid);
+        var el = nodeEls[n];
+        el.classList.remove('selected', 'ancestor', 'descendant', 'dimmed');
+        if      (n === id)       el.classList.add('selected');
+        else if (ancestors[n])   el.classList.add('ancestor');
+        else if (descendants[n]) el.classList.add('descendant');
+        else                     el.classList.add('dimmed');
+      }
+
+      /* Highlight edges */
+      var aEdges = buildEdgeSet(id, ancestors,   true);
+      var dEdges = buildEdgeSet(id, descendants, false);
+
+      for (var i = 0; i < edgePathEls.length; i++) {
+        var ep  = edgePathEls[i], ea = edgeArrowEls[i];
+        var key = ep.getAttribute('data-from') + '-' + ep.getAttribute('data-to');
+        ep.classList.remove('ancestor-edge', 'descendant-edge', 'dimmed-edge');
+        ea.classList.remove('ancestor-edge', 'descendant-edge', 'dimmed-edge');
+
+        if      (aEdges[key]) { ep.classList.add('ancestor-edge');   ea.classList.add('ancestor-edge'); }
+        else if (dEdges[key]) { ep.classList.add('descendant-edge'); ea.classList.add('descendant-edge'); }
+        else                  { ep.classList.add('dimmed-edge');      ea.classList.add('dimmed-edge'); }
+      }
+
+      document.getElementById('resetBtn').classList.add('visible');
+      showDetail(id, ancestors, descendants);
+    }
+
+    /**
+     * Collect the set of edge keys (from-to) that belong
+     * to the ancestor or descendant subgraph.
+     */
+    function buildEdgeSet(id, group, isAncestor) {
+      var set = {};
+      if (isAncestor) {
+        if (PREREQS[id]) {
+          for (var i = 0; i < PREREQS[id].length; i++) set[PREREQS[id][i] + '-' + id] = true;
+        }
+        for (var a in group) {
+          if (!PREREQS[a]) continue;
+          for (var j = 0; j < PREREQS[a].length; j++) {
+            if (group[PREREQS[a][j]]) set[PREREQS[a][j] + '-' + a] = true;
+          }
+        }
+      } else {
+        if (CHILDREN[id]) {
+          for (var i = 0; i < CHILDREN[id].length; i++) set[id + '-' + CHILDREN[id][i]] = true;
+        }
+        for (var d in group) {
+          if (!CHILDREN[d]) continue;
+          for (var j = 0; j < CHILDREN[d].length; j++) {
+            if (group[CHILDREN[d][j]]) set[d + '-' + CHILDREN[d][j]] = true;
+          }
+        }
+      }
+      return set;
+    }
+
+    function clearSelection() {
+      selectedId = null;
+      for (var nid in nodeEls) nodeEls[nid].classList.remove('selected', 'ancestor', 'descendant', 'dimmed');
+      for (var i = 0; i < edgePathEls.length; i++) {
+        edgePathEls[i].classList.remove('ancestor-edge', 'descendant-edge', 'dimmed-edge');
+        edgeArrowEls[i].classList.remove('ancestor-edge', 'descendant-edge', 'dimmed-edge');
+      }
+      document.getElementById('resetBtn').classList.remove('visible');
+      document.getElementById('detailPanel').classList.remove('open');
+    }
+
+    function extractPhaseSlug(phase) {
+      if (phase.url) {
+        var m = phase.url.match(/phases\/([^/]+)/);
+        if (m) return m[1];
+      }
+      if (phase.lessons && phase.lessons.length > 0 && phase.lessons[0].url) {
+        var m2 = phase.lessons[0].url.match(/phases\/([^/]+)/);
+        if (m2) return m2[1];
+      }
+      return String(phase.id).padStart(2, '0') + '-' + phase.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+
+    /* ===================================================
+       Detail panel
+    =================================================== */
+    function showDetail(id, ancestors, descendants) {
+      var panel = document.getElementById('detailPanel');
+      var phase = PHASE_MAP[id];
+      if (!phase) return;
+
+      var stats = lessonStats(phase);
+
+      /* Prerequisites list */
+      var directPrereqs = PREREQS[id] || [];
+      var prereqHtml    = '';
+      if (directPrereqs.length) {
+        prereqHtml = '<ul class="detail-prereq-list">';
+        for (var i = 0; i < directPrereqs.length; i++) {
+          var ppid = directPrereqs[i];
+          var pn   = PHASE_MAP[ppid] ? PHASE_MAP[ppid].name : 'Phase ' + ppid;
+          prereqHtml += '<li data-goto="' + ppid + '" tabindex="0" role="button" aria-label="Go to Phase ' + ppid + ': ' + escapeHtml(pn) + '"><span class="li-num">' + String(ppid).padStart(2, '0') + '</span> ' + escapeHtml(pn) + '</li>';
+        }
+        prereqHtml += '</ul>';
+      } else {
+        prereqHtml = '<div class="detail-empty">None — this is a starting point!</div>';
+      }
+
+      /* Unlocks list */
+      var childIds   = CHILDREN[id] || [];
+      var unlockHtml = '';
+      if (childIds.length) {
+        unlockHtml = '<ul class="detail-unlock-list">';
+        for (var i = 0; i < childIds.length; i++) {
+          var cid = childIds[i];
+          var cn  = PHASE_MAP[cid] ? PHASE_MAP[cid].name : 'Phase ' + cid;
+          unlockHtml += '<li data-goto="' + cid + '" tabindex="0" role="button" aria-label="Go to Phase ' + cid + ': ' + escapeHtml(cn) + '"><span class="li-num">' + String(cid).padStart(2, '0') + '</span> ' + escapeHtml(cn) + '</li>';
+        }
+        unlockHtml += '</ul>';
+      } else {
+        unlockHtml = '<div class="detail-empty">Final destination — you made it!</div>';
+      }
+
+      /* Compute exact GitHub tree URL using standard slug logic */
+      var phaseGithubUrl = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/' + extractPhaseSlug(phase);
+
+      /* Find first readable lesson for Read button */
+      var readLink = '';
+      var lessonsArray = Array.isArray(phase.lessons) ? phase.lessons : [];
+      for (var li = 0; li < lessonsArray.length; li++) {
+        var lesson = lessonsArray[li];
+        if (!lesson.url) continue;
+        var pm = lesson.url.match(/(phases\/[^/]+\/[^/]+)\/?$/);
+        if (pm) {
+          readLink = 'lesson.html?path=' + encodeURI(pm[1]);
+          break;
+        }
+      }
+
+      var ancestorCount   = Object.keys(ancestors).length;
+      var descendantCount = Object.keys(descendants).length;
+
+      panel.innerHTML =
+        '<div class="detail-top">' +
+          '<span class="detail-phase-num">Phase ' + String(id).padStart(2, '0') + '</span>' +
+          '<span class="detail-status ' + phase.status + '">' + phase.status.replace('-', ' ') + '</span>' +
+        '</div>' +
+        '<div class="detail-title">' + escapeHtml(phase.name) + '</div>' +
+        '<div class="detail-desc">' + escapeHtml(phase.desc) + '</div>' +
+        '<div class="detail-stats">' +
+          '<strong>' + stats.done + '</strong> of <strong>' + stats.total + '</strong> lessons complete' +
+          ' &nbsp;·&nbsp; <strong>' + ancestorCount + '</strong> prerequisite phases' +
+          ' &nbsp;·&nbsp; <strong>' + descendantCount + '</strong> phases unlocked' +
+        '</div>' +
+        '<div class="detail-sections">' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--accent)">&#9664;</span> Prerequisites</div>' + prereqHtml + '</div>' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> Unlocks</div>' + unlockHtml + '</div>' +
+        '</div>' +
+        '<div class="detail-actions">' +
+          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">Read</a>' : '') +
+          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">View on GitHub</a>' +
+        '</div>';
+
+      panel.classList.add('open');
+
+      /* Clickable prereq/unlock items navigate the graph */
+      var clickables = panel.querySelectorAll('[data-goto]');
+      for (var i = 0; i < clickables.length; i++) {
+        (function (el) {
+          function triggerGoto() {
+            var gotoId = parseInt(el.getAttribute('data-goto'));
+            selectNode(gotoId);
+            var wrap = document.querySelector('.graph-wrap');
+            var pos  = POSITIONS[gotoId];
+            if (pos && wrap) wrap.scrollLeft = Math.max(0, pos.x - wrap.clientWidth / 2);
+          }
+          el.addEventListener('click', triggerGoto);
+          el.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              triggerGoto();
+            }
+          });
+        })(clickables[i]);
+      }
+
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  })();
+  </script>
+<script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "nb-pre-1",
+    "stage": "pre",
+    "question": "What is the 'naive' assumption in Naive Bayes?",
+    "options": [
+      "The prior probability of each class is equal",
+      "All features are conditionally independent given the class label",
+      "The data is normally distributed",
+      "The model has no parameters to learn"
+    ],
+    "correct": 1,
+    "explanation": "Naive Bayes assumes every feature is independent of every other feature, conditioned on the class. This is mathematically wrong (e.g., 'machine' and 'learning' co-occur) but works well in practice."
+  },
+  {
+    "id": "nb-pre-2",
+    "stage": "pre",
+    "question": "What does Laplace smoothing prevent in Naive Bayes?",
+    "options": [
+      "Overfitting to large datasets",
+      "Zero probabilities for words never seen in a class during training",
+      "Slow training on high-dimensional data",
+      "Class imbalance in the dataset"
+    ],
+    "correct": 1,
+    "explanation": "Without smoothing, a word that never appeared in 'spam' training emails would get P(word|spam) = 0, making the entire product zero regardless of other strong evidence. Laplace smoothing adds 1 to each count."
+  },
+  {
+    "id": "nb-post-1",
+    "stage": "post",
+    "question": "The naive independence assumption is clearly wrong for text. Why does Naive Bayes still classify well?",
+    "options": [
+      "It only works on very small vocabularies where independence holds",
+      "Classification only needs correct class rankings, not correct probability estimates, and the assumption introduces stable errors that affect all classes similarly",
+      "Modern implementations secretly remove the independence assumption",
+      "It only works when features are truly independent"
+    ],
+    "correct": 1,
+    "explanation": "NB needs to rank classes correctly, not estimate exact probabilities. The independence assumption is high bias but low variance, making it stable with limited data. Correlated features double-count evidence for the correct class too."
+  },
+  {
+    "id": "nb-post-2",
+    "stage": "post",
+    "question": "When should you use Multinomial NB versus Gaussian NB?",
+    "options": [
+      "Multinomial for regression, Gaussian for classification",
+      "Multinomial for word count/frequency features, Gaussian for continuous real-valued features",
+      "Multinomial for binary data, Gaussian for multi-class problems",
+      "They are interchangeable -- always use whichever is faster"
+    ],
+    "correct": 1,
+    "explanation": "Multinomial NB models feature counts (word frequencies in text). Gaussian NB assumes features follow normal distributions, suitable for continuous features like measurements or sensor readings."
+  },
+  {
+    "id": "nb-post-3",
+    "stage": "post",
+    "question": "An email contains 'free' twice and 'money' once. In Multinomial NB with log probabilities, how is the spam score computed?",
+    "options": [
+      "log P(spam) + log P(free|spam) + log P(money|spam)",
+      "log P(spam) + 2 * log P(free|spam) + 1 * log P(money|spam)",
+      "P(spam) * P(free|spam) * P(money|spam)",
+      "log P(spam) * 2 * log P(free|spam)"
+    ],
+    "correct": 1,
+    "explanation": "Multinomial NB multiplies the word likelihoods raised to their count. In log space: log P(spam) + 2*log P(free|spam) + 1*log P(money|spam). The word count acts as an exponent."
+  }
+]

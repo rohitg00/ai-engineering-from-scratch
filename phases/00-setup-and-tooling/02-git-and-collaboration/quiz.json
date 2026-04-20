@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does 'version control' primarily help you do?",
+      "options": ["Speed up code execution", "Track changes to files over time and collaborate with others", "Compress files to save disk space", "Automatically fix bugs in your code"],
+      "correct": 1,
+      "explanation": "Version control systems like git track every change made to files, allowing you to revert to previous states and collaborate with others on the same codebase."
+    },
+    {
+      "stage": "pre",
+      "question": "What is a 'repository' in the context of software development?",
+      "options": ["A cloud storage service like Google Drive", "A collection of files and their complete change history managed by version control", "A database for storing user data", "A package manager for installing libraries"],
+      "correct": 1,
+      "explanation": "A repository (repo) is a directory tracked by git that contains all project files along with the full history of changes made to those files."
+    },
+    {
+      "stage": "post",
+      "question": "What is the correct sequence for saving and backing up your work in git?",
+      "options": ["git push, git add, git commit", "git commit, git add, git push", "git add, git commit, git push", "git clone, git add, git push"],
+      "correct": 2,
+      "explanation": "First you stage changes with 'git add', then save a snapshot with 'git commit', then upload to the remote with 'git push'. This is the daily workflow."
+    },
+    {
+      "stage": "post",
+      "question": "What does 'git checkout -b experiment/new-optimizer' do?",
+      "options": ["Downloads a branch from GitHub called experiment/new-optimizer", "Creates a new branch named experiment/new-optimizer and switches to it", "Deletes the branch experiment/new-optimizer", "Reverts all files to match the experiment/new-optimizer branch"],
+      "correct": 1,
+      "explanation": "The '-b' flag creates a new branch with the given name and immediately switches to it, allowing you to experiment without affecting the main branch."
+    },
+    {
+      "stage": "post",
+      "question": "Why should you add '.pt', '.pth', and '.safetensors' to your .gitignore?",
+      "options": ["They are Python test files that should not be committed", "They are model checkpoint files that are too large for git and can be re-generated", "They contain sensitive API keys", "Git cannot track binary files of any kind"],
+      "correct": 1,
+      "explanation": "Model checkpoint files (.pt, .pth, .safetensors) are often gigabytes in size. Git is not designed for large binary files, so these should be excluded and re-generated or stored separately."
+    }
+  ]
+}

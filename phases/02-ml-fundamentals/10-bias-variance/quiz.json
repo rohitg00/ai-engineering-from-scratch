@@ -1,0 +1,67 @@
+[
+  {
+    "id": "biasvar-pre-1",
+    "stage": "pre",
+    "question": "A linear model is used to fit a clearly curved (quadratic) relationship. Which error component dominates?",
+    "options": [
+      "Variance: the model changes too much with different training data",
+      "Bias: the model is too rigid to capture the true nonlinear pattern",
+      "Irreducible noise: the data is too noisy",
+      "None: the model should fit perfectly"
+    ],
+    "correct": 1,
+    "explanation": "A linear model cannot capture a quadratic curve no matter how much data it sees. This systematic error from wrong model assumptions is bias. The model underfits."
+  },
+  {
+    "id": "biasvar-pre-2",
+    "stage": "pre",
+    "question": "The bias-variance decomposition of expected error has three terms. Which one cannot be reduced by any model?",
+    "options": [
+      "Bias squared",
+      "Variance",
+      "Irreducible noise (sigma squared)",
+      "All three can be reduced to zero"
+    ],
+    "correct": 2,
+    "explanation": "Irreducible noise comes from randomness in the data itself (measurement error, missing variables). No model can predict noise. Expected error = bias^2 + variance + irreducible noise."
+  },
+  {
+    "id": "biasvar-post-1",
+    "stage": "post",
+    "question": "Adding L2 regularization to a model increases bias and decreases variance. Why is this useful?",
+    "options": [
+      "It always improves both training and test accuracy",
+      "The reduction in variance can outweigh the increase in bias, lowering total error",
+      "L2 regularization eliminates irreducible noise",
+      "It makes the model faster to train"
+    ],
+    "correct": 1,
+    "explanation": "Regularization trades a small increase in bias for a larger decrease in variance. When a model is overfitting (high variance), this tradeoff reduces total error even though bias goes up slightly."
+  },
+  {
+    "id": "biasvar-post-2",
+    "stage": "post",
+    "question": "A model has training error = 2% and test error = 25%. What is the most likely diagnosis?",
+    "options": [
+      "High bias (underfitting): the model is too simple",
+      "High variance (overfitting): the model memorized training data and fails to generalize",
+      "High irreducible noise: the data is too noisy",
+      "The model is perfectly calibrated"
+    ],
+    "correct": 1,
+    "explanation": "Low training error + high test error + large gap = high variance (overfitting). The model fits training-specific noise. Remedies: regularize, reduce complexity, get more data."
+  },
+  {
+    "id": "biasvar-post-3",
+    "stage": "post",
+    "question": "You train the same model architecture on 50 different random training subsets and observe that predictions vary wildly between them. What does this indicate?",
+    "options": [
+      "High bias: the model consistently misses the true pattern",
+      "High variance: the model is sensitive to which specific training data it sees",
+      "High irreducible noise: the target variable is random",
+      "The learning rate is too high"
+    ],
+    "correct": 1,
+    "explanation": "Variance measures how much predictions change when trained on different data subsets. Wildly different predictions across subsets is the definition of high variance."
+  }
+]

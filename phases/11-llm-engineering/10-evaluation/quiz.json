@@ -1,0 +1,37 @@
+[
+  {
+    "question": "Why is manually reading a few LLM outputs not a reliable evaluation method?",
+    "options": ["It takes too long", "Small samples miss failure modes that only appear at scale, and human judgment is inconsistent across reviewers and sessions", "Manual review is too expensive", "LLM outputs are always correct"],
+    "correct": 1,
+    "explanation": "Reading 10 outputs shows you 10 points in a distribution. A prompt change might improve 90% of outputs but break 10% of edge cases. Without systematic evaluation, you'll miss the regression until users report it.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is regression testing in the context of LLM applications?",
+    "options": ["Testing linear regression models", "Running a fixed set of test cases after every change (prompt, model, parameters) to ensure quality hasn't degraded", "Testing on the training data", "Measuring model loss during training"],
+    "correct": 1,
+    "explanation": "Every prompt change, model swap, or temperature tweak changes the output distribution. Regression tests catch cases where a change that improves one area silently degrades another.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the LLM-as-judge evaluation approach?",
+    "options": ["Having the model evaluate its own training loss", "Using a strong LLM to score outputs against rubrics, replacing expensive human evaluation while scaling to thousands of test cases", "Using the model's confidence scores", "Comparing two models' parameter counts"],
+    "correct": 1,
+    "explanation": "LLM-as-judge sends (input, output, rubric) to a strong model (e.g., GPT-4) which scores the output. It's cheaper and faster than human evaluation, though it has known biases (e.g., preferring verbose responses).",
+    "stage": "post"
+  },
+  {
+    "question": "What makes a good evaluation dataset for an LLM application?",
+    "options": ["As many examples as possible", "Diverse inputs covering common cases, edge cases, adversarial inputs, and expected outputs with clear rubrics", "Only the hardest examples", "Random samples from the internet"],
+    "correct": 1,
+    "explanation": "A good eval set covers the distribution: happy path cases, edge cases (empty input, very long input), adversarial inputs (prompt injection), and ambiguous queries. Each example has a clear expected output or scoring rubric.",
+    "stage": "post"
+  },
+  {
+    "question": "How should you handle non-deterministic LLM outputs in evaluation?",
+    "options": ["Set temperature to 0 for all evaluations", "Run each test case multiple times and use aggregate metrics (pass rate, average score) to account for output variance", "Non-determinism doesn't affect evaluation", "Only evaluate the first output"],
+    "correct": 1,
+    "explanation": "Even at temperature 0, some providers introduce sampling variation. Running each test 3-5 times and measuring pass rate or average score gives a more reliable picture than a single run that might hit a lucky/unlucky sample.",
+    "stage": "post"
+  }
+]

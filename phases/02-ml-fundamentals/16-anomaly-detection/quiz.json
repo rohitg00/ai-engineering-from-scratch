@@ -1,0 +1,67 @@
+[
+  {
+    "id": "anomaly-pre-1",
+    "stage": "pre",
+    "question": "Why is anomaly detection typically framed as an unsupervised problem rather than classification?",
+    "options": [
+      "Anomaly detection does not require any data",
+      "Labeled anomalies are extremely rare, and novel anomaly types differ from previously seen ones",
+      "Supervised classification is always less accurate",
+      "Anomaly detection only works on time series data"
+    ],
+    "correct": 1,
+    "explanation": "Anomalies are rare (often <0.1% of data), so there are too few labeled examples to train a classifier. Also, future anomalies may be of types never seen before. Modeling 'normal' and flagging deviations handles both problems."
+  },
+  {
+    "id": "anomaly-pre-2",
+    "stage": "pre",
+    "question": "A temperature of 90F is normal in summer but anomalous in winter. What type of anomaly is this?",
+    "options": [
+      "Point anomaly",
+      "Contextual anomaly",
+      "Collective anomaly",
+      "Statistical anomaly"
+    ],
+    "correct": 1,
+    "explanation": "A contextual anomaly is a value that is unusual given its context (time, location). The value itself might be normal in a different context. Same data point, different interpretation based on surrounding conditions."
+  },
+  {
+    "id": "anomaly-post-1",
+    "stage": "post",
+    "question": "The Z-score method flags points more than 3 standard deviations from the mean. When does this approach fail?",
+    "options": [
+      "When the data is perfectly normally distributed",
+      "When the data is multimodal, skewed, or when outliers in the training data inflate the mean and std",
+      "When there are exactly 3 anomalies in the dataset",
+      "When the features are standardized"
+    ],
+    "correct": 1,
+    "explanation": "Z-score assumes a single Gaussian distribution. It fails on multimodal data (multiple clusters), skewed distributions, and when outliers in training data shift the mean/std, making real anomalies harder to detect."
+  },
+  {
+    "id": "anomaly-post-2",
+    "stage": "post",
+    "question": "How does Isolation Forest detect anomalies differently from distance-based methods?",
+    "options": [
+      "It uses neural networks instead of trees",
+      "It isolates points using random splits; anomalies require fewer splits to isolate because they are few and different",
+      "It computes distances to every other point in the dataset",
+      "It only works on text data"
+    ],
+    "correct": 1,
+    "explanation": "Isolation Forest randomly partitions data with tree splits. Anomalies, being rare and different, end up isolated (in their own leaf) with fewer splits. Short average path length = more anomalous."
+  },
+  {
+    "id": "anomaly-post-3",
+    "stage": "post",
+    "question": "You build both an unsupervised anomaly detector and a supervised fraud classifier. When should you prefer the unsupervised approach?",
+    "options": [
+      "Always -- unsupervised is always better for anomaly detection",
+      "When you need to detect novel fraud patterns that differ from historical labeled examples",
+      "When you have millions of labeled fraud examples",
+      "When you only care about precision, not recall"
+    ],
+    "correct": 1,
+    "explanation": "Supervised classifiers only catch fraud types present in training data. Unsupervised detectors flag any deviation from normal, catching novel fraud schemes. The tradeoff is higher false positive rate."
+  }
+]

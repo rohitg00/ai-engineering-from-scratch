@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson Catalog - AI Engineering from Scratch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d18'/><text x='4' y='23' font-size='18' font-weight='bold' font-family='system-ui' fill='%23ff6b6b'>AI</text></svg>">
+  <meta name="description" content="Full catalog of 260+ AI engineering lessons. Search, filter, and sort every lesson across all 20 phases.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260417e">
+  <style>
+    .catalog-page {
+      padding: 100px 0 80px;
+      min-height: 100vh;
+    }
+
+    .catalog-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .catalog-header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 8px;
+    }
+
+    .catalog-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .catalog-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .catalog-search {
+      flex: 1;
+      min-width: 200px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 12px 16px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .catalog-search::placeholder {
+      color: var(--text-muted);
+    }
+
+    .catalog-search:focus {
+      border-color: var(--accent);
+    }
+
+    .catalog-filter {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 12px 16px;
+      background: var(--bg-surface);
+      border: 2px solid var(--border);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .catalog-count {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .catalog-table-wrap {
+      overflow-x: auto;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-surface);
+    }
+
+    .catalog-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    .catalog-table th {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 2px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .catalog-table th:hover {
+      color: var(--accent);
+    }
+
+    .catalog-table th .sort-arrow {
+      font-size: 0.7rem;
+      margin-left: 4px;
+    }
+
+    .catalog-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .catalog-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .catalog-table tr:hover td {
+      background: var(--bg-surface-hover);
+    }
+
+    .catalog-table a {
+      color: var(--secondary);
+    }
+
+    .catalog-table a:hover {
+      color: var(--accent);
+    }
+
+    .catalog-status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    .catalog-status-dot.complete {
+      background: var(--complete);
+    }
+
+    .catalog-status-dot.planned {
+      background: var(--planned);
+    }
+
+    .catalog-lang {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .catalog-phase-label {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .catalog-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .catalog-page {
+        padding: 80px 0 48px;
+      }
+
+      .catalog-controls {
+        flex-direction: column;
+      }
+
+      .catalog-filter {
+        width: 100%;
+      }
+
+      .catalog-table {
+        font-size: 0.85rem;
+      }
+
+      .catalog-table th,
+      .catalog-table td {
+        padding: 8px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">&#9679;</span> AI from Scratch
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#phases">Phases</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="prereqs.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+        </a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-icon" id="themeIcon">&#9789;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="catalog-page">
+    <div class="container">
+      <div class="catalog-header">
+        <h1>Lesson Catalog</h1>
+        <p>Every lesson across all 20 phases. Search, filter, sort.</p>
+      </div>
+      <div class="catalog-controls">
+        <input type="text" class="catalog-search" id="catalogSearch" placeholder="Search lessons...">
+        <select class="catalog-filter" id="catalogPhase">
+          <option value="">All Phases</option>
+        </select>
+        <select class="catalog-filter" id="catalogStatus">
+          <option value="">All Status</option>
+          <option value="complete">Complete</option>
+          <option value="planned">Planned</option>
+        </select>
+      </div>
+      <div class="catalog-count" id="catalogCount"></div>
+      <div class="catalog-table-wrap">
+        <table class="catalog-table" id="catalogTable">
+          <thead>
+            <tr>
+              <th data-sort="phase">Phase <span class="sort-arrow"></span></th>
+              <th data-sort="name">Lesson <span class="sort-arrow"></span></th>
+              <th data-sort="type">Type <span class="sort-arrow"></span></th>
+              <th data-sort="lang">Language <span class="sort-arrow"></span></th>
+              <th data-sort="status">Status <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="catalogBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>AI Engineering from Scratch &mdash; open source, free forever.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="glossary.html">Glossary</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js?v=20260417e"></script>
+  <script src="progress.js?v=20260417e"></script>
+  <script src="header.js?v=20260417e" defer></script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = localStorage.getItem('theme');
+      if (stored) {
+        root.setAttribute('data-theme', stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        root.setAttribute('data-theme', 'light');
+      }
+
+      function updateIcon() {
+        var icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        icon.innerHTML = root.getAttribute('data-theme') === 'light' ? '&#9728;' : '&#9789;';
+      }
+
+      updateIcon();
+
+      document.addEventListener('DOMContentLoaded', function () {
+        updateIcon();
+
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+          btn.addEventListener('click', function () {
+            var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcon();
+          });
+        }
+
+        var allRows = [];
+        var phaseSelect = document.getElementById('catalogPhase');
+
+        for (var i = 0; i < PHASES.length; i++) {
+          var p = PHASES[i];
+          var opt = document.createElement('option');
+          opt.value = String(p.id);
+          opt.textContent = String(p.id).padStart(2, '0') + ' - ' + p.name;
+          phaseSelect.appendChild(opt);
+
+          for (var j = 0; j < p.lessons.length; j++) {
+            var l = p.lessons[j];
+            allRows.push({
+              phase: p.id,
+              phaseName: p.name,
+              name: l.name,
+              type: l.type,
+              lang: l.lang,
+              status: l.status,
+              url: l.url || ''
+            });
+          }
+        }
+
+        var searchInput = document.getElementById('catalogSearch');
+        var statusSelect = document.getElementById('catalogStatus');
+        var bodyEl = document.getElementById('catalogBody');
+        var countEl = document.getElementById('catalogCount');
+        var sortCol = 'phase';
+        var sortDir = 1;
+
+        function escapeHtml(str) {
+          var div = document.createElement('div');
+          div.textContent = str;
+          return div.innerHTML;
+        }
+
+        function render() {
+          var query = (searchInput.value || '').toLowerCase().trim();
+          var phaseFilter = phaseSelect.value;
+          var statusFilter = statusSelect.value;
+
+          var rows = allRows.filter(function (r) {
+            if (phaseFilter && String(r.phase) !== phaseFilter) return false;
+            if (statusFilter && r.status !== statusFilter) return false;
+            if (query) {
+              return r.name.toLowerCase().indexOf(query) !== -1 ||
+                r.phaseName.toLowerCase().indexOf(query) !== -1 ||
+                r.type.toLowerCase().indexOf(query) !== -1 ||
+                r.lang.toLowerCase().indexOf(query) !== -1;
+            }
+            return true;
+          });
+
+          rows.sort(function (a, b) {
+            var va, vb;
+            if (sortCol === 'phase') {
+              va = a.phase;
+              vb = b.phase;
+            } else if (sortCol === 'name') {
+              va = a.name.toLowerCase();
+              vb = b.name.toLowerCase();
+            } else if (sortCol === 'type') {
+              va = a.type.toLowerCase();
+              vb = b.type.toLowerCase();
+            } else if (sortCol === 'lang') {
+              va = a.lang.toLowerCase();
+              vb = b.lang.toLowerCase();
+            } else if (sortCol === 'status') {
+              va = a.status;
+              vb = b.status;
+            }
+            if (va < vb) return -1 * sortDir;
+            if (va > vb) return 1 * sortDir;
+            return 0;
+          });
+
+          countEl.textContent = rows.length + ' of ' + allRows.length + ' lessons';
+
+          if (rows.length === 0) {
+            bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">No lessons match your filters.</td></tr>';
+            return;
+          }
+
+          var html = '';
+          for (var i = 0; i < rows.length; i++) {
+            var r = rows[i];
+            html += '<tr>';
+            html += '<td><span class="catalog-phase-label">' + String(r.phase).padStart(2, '0') + '</span></td>';
+            if (r.url) {
+              html += '<td><a href="' + r.url + '" target="_blank" rel="noopener">' + escapeHtml(r.name) + '</a></td>';
+            } else {
+              html += '<td>' + escapeHtml(r.name) + '</td>';
+            }
+            html += '<td>' + escapeHtml(r.type) + '</td>';
+            html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
+            html += '<td><span class="catalog-status-dot ' + r.status + '"></span>' + r.status + '</td>';
+            html += '</tr>';
+          }
+          bodyEl.innerHTML = html;
+        }
+
+        searchInput.addEventListener('input', render);
+        phaseSelect.addEventListener('change', render);
+        statusSelect.addEventListener('change', render);
+
+        document.querySelectorAll('.catalog-table th[data-sort]').forEach(function (th) {
+          th.addEventListener('click', function () {
+            var col = th.getAttribute('data-sort');
+            if (sortCol === col) {
+              sortDir = sortDir * -1;
+            } else {
+              sortCol = col;
+              sortDir = 1;
+            }
+            document.querySelectorAll('.catalog-table th .sort-arrow').forEach(function (a) {
+              a.textContent = '';
+            });
+            th.querySelector('.sort-arrow').textContent = sortDir === 1 ? ' \u25B2' : ' \u25BC';
+            render();
+          });
+        });
+
+        render();
+      });
+    })();
+  </script>
+<script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
+</body>
+</html>

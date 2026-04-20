@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is scheduling GPU workloads on Kubernetes different from scheduling CPU workloads?",
+      "options": ["Kubernetes does not support GPU workloads", "GPUs are not fungible: a pod requiring an A100 cannot run on an L4, and GPU hours cost 10-50x more than CPU hours, making idle resources extremely expensive", "GPU workloads do not need resource limits", "Kubernetes automatically detects and allocates GPUs without any configuration"],
+      "correct": 1,
+      "explanation": "CPU cores are interchangeable, but GPU types are not. A model compiled for A100 may not fit on an L4's memory. The scheduler must match specific GPU types, and the cost of idle GPUs makes efficient scheduling critical."
+    },
+    {
+      "stage": "pre",
+      "question": "What is a 'cold start' in the context of model serving on Kubernetes?",
+      "options": ["Starting a Kubernetes cluster for the first time", "The delay when a new pod starts and must load a multi-gigabyte model into GPU memory before it can serve requests, often taking 3-5 minutes", "The time it takes to pull a Docker image from a registry", "Restarting a pod after a crash"],
+      "correct": 1,
+      "explanation": "Loading a 7B parameter model into GPU memory takes 3-5 minutes. During this time the pod is running but cannot serve requests. For autoscaling, this means new capacity is not available for minutes after a traffic spike begins."
+    },
+    {
+      "stage": "post",
+      "question": "Why should you autoscale GPU model servers based on request queue depth instead of CPU utilization?",
+      "options": ["CPU utilization is not available in Kubernetes", "GPU inference keeps CPU utilization low even when the GPU is saturated; queue depth directly measures demand that exceeds current capacity", "CPU-based scaling is more expensive", "Queue depth is easier to configure in Kubernetes"],
+      "correct": 1,
+      "explanation": "A model server can have 10% CPU utilization while the GPU is 100% busy and requests are queuing. CPU-based HPA would not scale up. Queue depth (pending requests) directly measures 'are users waiting?' and triggers scaling when they are."
+    },
+    {
+      "stage": "post",
+      "question": "What is a warm pool strategy for mitigating cold starts?",
+      "options": ["Running models on CPUs during low traffic periods", "Keeping pre-provisioned pods with models already loaded in GPU memory so they can immediately serve traffic when demand increases, instead of loading from scratch", "Caching model weights on the Kubernetes control plane", "Using smaller quantized models during scale-up events"],
+      "correct": 1,
+      "explanation": "A warm pool maintains idle pods with models pre-loaded in GPU memory. When traffic spikes, these pods are immediately available (0s cold start vs 3-5 minutes). The tradeoff is paying for idle GPU time."
+    },
+    {
+      "stage": "post",
+      "question": "What should a Kubernetes readiness probe check for a model serving pod?",
+      "options": ["Whether the pod's CPU utilization is below 50%", "Whether the model is fully loaded into GPU memory and the serving endpoint can successfully process an inference request", "Whether the Docker container has started", "Whether the pod has a network connection to the internet"],
+      "correct": 1,
+      "explanation": "A model server pod can be running (liveness) but not ready to serve (the model is still loading). The readiness probe should hit the inference endpoint with a test request. Until it returns 200, Kubernetes will not route traffic to that pod."
+    }
+  ]
+}

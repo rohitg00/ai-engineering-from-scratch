@@ -1,0 +1,37 @@
+[
+  {
+    "question": "Why is getting structured JSON output from LLMs challenging?",
+    "options": ["LLMs can't generate JSON", "LLMs generate free-form text token by token and can produce invalid JSON (missing brackets, wrong types, extra text) at any point", "JSON is too complex for LLMs", "LLMs only output plain text"],
+    "correct": 1,
+    "explanation": "LLMs generate tokens autoregressively. They might add a trailing comma, forget a closing bracket, include markdown formatting around JSON, or hallucinate extra fields. Each token is independent, so structural validity isn't guaranteed.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is constrained decoding?",
+    "options": ["Limiting the model's vocabulary size", "Restricting which tokens the model can generate at each step to ensure the output conforms to a grammar or schema", "Using a smaller model", "Compressing the output"],
+    "correct": 1,
+    "explanation": "Constrained decoding masks out invalid tokens at each generation step. After an opening brace, only valid JSON keys are allowed. After a colon, only valid value tokens. This guarantees structural validity at the token level.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the benefit of using Pydantic models for LLM output validation?",
+    "options": ["They make API calls faster", "They define typed schemas that automatically validate, parse, and reject malformed LLM outputs with clear error messages", "They reduce token usage", "They improve model accuracy"],
+    "correct": 1,
+    "explanation": "Pydantic enforces types, required fields, value constraints, and nested structures. When the LLM produces invalid output, Pydantic gives specific error messages that can be fed back to the model for self-correction.",
+    "stage": "post"
+  },
+  {
+    "question": "What should you do when the LLM returns invalid JSON despite instructions?",
+    "options": ["Switch to a different model", "Implement a retry loop that sends the validation error back to the model as context for a corrected attempt", "Manually fix the JSON", "Increase the temperature"],
+    "correct": 1,
+    "explanation": "A retry loop with error feedback works well: parse the output, catch validation errors, send the error message back as context ('Your output had this error: ... Please fix it'). Most models self-correct on the second attempt.",
+    "stage": "post"
+  },
+  {
+    "question": "When should you use the API's native JSON mode vs prompt-based JSON extraction?",
+    "options": ["Always use native JSON mode", "Use native mode for guaranteed structure; use prompt-based for complex extraction where you need the model to reason about what to extract", "Always use prompt-based extraction", "They produce identical results"],
+    "correct": 1,
+    "explanation": "Native JSON mode (OpenAI's response_format, Anthropic's tool_use) guarantees valid JSON structure. Prompt-based extraction is more flexible for complex reasoning about which fields to populate. Use native mode when structure matters most.",
+    "stage": "post"
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does 'entropy' measure in information theory?",
+      "options": ["The energy of a physical system", "The average surprise or uncertainty in a probability distribution", "The number of bits in a binary message", "The error rate of a communication channel"],
+      "correct": 1,
+      "explanation": "Entropy H(P) = -sum(p(x) * log(p(x))) measures the average amount of surprise across all outcomes. High entropy means high uncertainty (uniform distribution). Low entropy means the outcome is predictable."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the cross-entropy loss commonly used for in neural networks?",
+      "options": ["Regression tasks with continuous outputs", "Classification tasks, measuring how far predicted probabilities are from true labels", "Generating new data samples", "Regularizing model weights to prevent overfitting"],
+      "correct": 1,
+      "explanation": "Cross-entropy loss H(P,Q) = -sum(p(x)*log(q(x))) measures the difference between the true distribution (labels) and the model's predicted distribution. It is THE standard loss for classification."
+    },
+    {
+      "stage": "post",
+      "question": "Why is minimizing cross-entropy equivalent to minimizing KL divergence during training?",
+      "options": ["Because KL divergence is always zero during training", "Because cross-entropy = entropy + KL divergence, and the entropy of the true labels is constant, so minimizing cross-entropy minimizes KL divergence", "Because cross-entropy and KL divergence are the same formula", "Because the model's entropy equals zero at convergence"],
+      "correct": 1,
+      "explanation": "H(P,Q) = H(P) + D_KL(P||Q). Since the true distribution P doesn't change during training, H(P) is constant. Minimizing H(P,Q) is the same as minimizing D_KL(P||Q) -- pushing the model toward the true distribution."
+    },
+    {
+      "stage": "post",
+      "question": "A language model has perplexity 50 on a test set. What does this mean?",
+      "options": ["The model makes 50 errors per sentence", "On average, the model is as uncertain as if it were choosing uniformly from 50 possible next tokens at each step", "The model has 50 layers", "The model was trained for 50 epochs"],
+      "correct": 1,
+      "explanation": "Perplexity = e^(cross-entropy). A perplexity of 50 means the model's uncertainty at each token is equivalent to picking randomly from 50 equally likely options. Lower perplexity means better predictions."
+    },
+    {
+      "stage": "post",
+      "question": "How does mutual information differ from Pearson correlation for feature selection?",
+      "options": ["Mutual information is faster to compute", "Mutual information detects any statistical dependency (linear or nonlinear) while correlation only detects linear relationships", "Pearson correlation works for any data type while mutual information only works for continuous data", "They always give the same feature rankings"],
+      "correct": 1,
+      "explanation": "Mutual information I(X;Y) captures all statistical dependencies between variables, including nonlinear and non-monotonic ones. Pearson correlation only measures linear association, missing many important relationships."
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "ml-intro-pre-1",
+    "stage": "pre",
+    "question": "In supervised learning, what does the model receive during training?",
+    "options": [
+      "Only input data with no labels",
+      "Input-output pairs where the correct answer is provided",
+      "A reward signal for each action taken",
+      "A set of rules written by a human expert"
+    ],
+    "correct": 1,
+    "explanation": "Supervised learning trains on input-output pairs (labeled data). The model learns to map inputs to known correct outputs."
+  },
+  {
+    "id": "ml-intro-pre-2",
+    "stage": "pre",
+    "question": "What is the purpose of splitting data into training and test sets?",
+    "options": [
+      "To make training faster by using less data",
+      "To have backup data in case the training data is lost",
+      "To evaluate whether the model generalizes to data it has never seen during training",
+      "To balance the classes in the dataset"
+    ],
+    "correct": 2,
+    "explanation": "The test set measures generalization. If you evaluate on training data, you measure memorization, not learning."
+  },
+  {
+    "id": "ml-intro-post-1",
+    "stage": "post",
+    "question": "A model gets 98% accuracy on training data but 55% on test data. What is this an example of?",
+    "options": [
+      "Underfitting: the model is too simple",
+      "Overfitting: the model memorized training noise instead of learning general patterns",
+      "Data drift: the test distribution changed",
+      "Good generalization: the model learned the true patterns"
+    ],
+    "correct": 1,
+    "explanation": "A large gap between training accuracy (high) and test accuracy (low) is the hallmark of overfitting. The model memorized the training data."
+  },
+  {
+    "id": "ml-intro-post-2",
+    "stage": "post",
+    "question": "An e-commerce site wants to group customers into segments based on purchase behavior without any predefined labels. Which type of ML is this?",
+    "options": [
+      "Supervised learning (classification)",
+      "Supervised learning (regression)",
+      "Unsupervised learning (clustering)",
+      "Reinforcement learning"
+    ],
+    "correct": 2,
+    "explanation": "Finding natural groupings in data without predefined labels is clustering, which is a form of unsupervised learning."
+  },
+  {
+    "id": "ml-intro-post-3",
+    "stage": "post",
+    "question": "Which scenario is NOT a good use case for machine learning?",
+    "options": [
+      "Predicting customer churn from historical behavior data",
+      "Detecting fraudulent transactions in a stream of millions of payments",
+      "Converting temperatures from Celsius to Fahrenheit",
+      "Classifying images of skin lesions as benign or malignant"
+    ],
+    "correct": 2,
+    "explanation": "Celsius to Fahrenheit is a fixed formula (F = 9/5 * C + 32). Simple, well-defined rules do not need ML. ML adds complexity with no benefit."
+  }
+]

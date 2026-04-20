@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What problem does MCP (Model Context Protocol) solve for AI agents?",
+      "options": ["It provides a standard format for training data", "It gives agents a standard way to discover and use tools exposed by external servers, without hardcoding tool implementations", "It encrypts communication between agents", "It compresses large context windows to fit in smaller models"],
+      "correct": 1,
+      "explanation": "MCP standardizes tool access: a server exposes tools with JSON schemas, and any MCP-compatible agent can discover and call them. This decouples tool implementation from agent code."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the difference between MCP and A2A?",
+      "options": ["MCP is for Python agents and A2A is for JavaScript agents", "MCP connects agents to tools (agent-to-tool), while A2A connects agents to other agents (agent-to-agent) for task delegation", "MCP is synchronous and A2A is asynchronous", "MCP is open source and A2A is proprietary"],
+      "correct": 1,
+      "explanation": "MCP is the protocol for tool access (an agent calls a tool). A2A is the protocol for agent collaboration (an agent delegates a task to another agent). They solve different layers of the communication problem."
+    },
+    {
+      "stage": "post",
+      "question": "In A2A, what is an 'agent card' and why is it important?",
+      "options": ["A visual dashboard showing agent performance metrics", "A JSON document at a well-known URL that describes an agent's capabilities, skills, and endpoint, enabling other agents to discover and delegate tasks to it", "A security credential that authenticates an agent's identity", "A configuration file that sets the agent's system prompt"],
+      "correct": 1,
+      "explanation": "The agent card (hosted at /.well-known/agent.json) is how agents advertise themselves. It lists skills, supported input/output formats, and the task endpoint. Other agents read this card to decide whether and how to delegate work."
+    },
+    {
+      "stage": "post",
+      "question": "Why do multi-agent systems need structured communication protocols instead of just passing strings between agents?",
+      "options": ["Strings are too large to send over HTTP", "Structured protocols provide type safety, discoverability, error handling, and interoperability between agents built by different teams with different frameworks", "String parsing is computationally expensive for LLMs", "Structured protocols are required by all cloud providers"],
+      "correct": 1,
+      "explanation": "Without structured contracts, agents from different teams misinterpret each other's output, error handling is ad-hoc, and there is no way to discover what another agent can do. Protocols provide the shared language that makes multi-agent systems reliable."
+    },
+    {
+      "stage": "post",
+      "question": "How does ACP (Agent Communication Protocol) differ from A2A in its design goals?",
+      "options": ["ACP is faster than A2A for real-time applications", "ACP focuses on enterprise auditability with full message history and compliance tracking, while A2A focuses on lightweight task delegation", "ACP only works within a single organization while A2A works across organizations", "ACP uses WebSockets while A2A uses HTTP"],
+      "correct": 1,
+      "explanation": "ACP was designed for enterprise environments where every agent interaction must be auditable, traceable, and compliant. A2A is simpler and focuses on getting tasks done. ACP adds the governance layer that regulated industries require."
+    }
+  ]
+}
