@@ -9,10 +9,10 @@
     },
     {
       "stage": "pre",
-      "question": "You load an image with Pillow and get an array of shape (480, 640, 3). You pass it directly to a PyTorch CNN expecting (C, H, W). What goes wrong?",
-      "options": ["Nothing — PyTorch auto-detects the layout", "The first conv layer treats height as the channel axis, producing meaningless feature maps", "PyTorch raises a shape mismatch error before any computation runs", "Accuracy drops by a few percent but inference still works"],
-      "correct": 1,
-      "explanation": "Most layouts are silently wrong, not loudly wrong. A (H, W, C) tensor fed where (C, H, W) is expected makes the network treat the H axis as channels; the three R/G/B planes now live along the height dimension and the model produces garbage. Always transpose (or .permute(2, 0, 1)) before feeding PyTorch."
+      "question": "You load an image with Pillow and get an array of shape (480, 640, 3). You pass it as a batched tensor (1, 480, 640, 3) to a PyTorch Conv2d with in_channels=3. What happens?",
+      "options": ["Nothing — PyTorch auto-detects the layout", "The first conv layer treats height as the channel axis, producing meaningless feature maps", "PyTorch raises a RuntimeError: Conv2d expects NCHW, sees 480 channels where the weight expects 3, and refuses to run", "Accuracy drops by a few percent but inference still works"],
+      "correct": 2,
+      "explanation": "PyTorch Conv2d enforces strict channel-count checking against the weight tensor. A batched HWC input (1, 480, 640, 3) is interpreted as NCHW with C=480, which does not match the weight's expected 3 channels, and PyTorch raises RuntimeError before any computation. The loud failure is a feature — it forces you to fix the layout. You must permute to NCHW (`.permute(0, 3, 1, 2)`) before feeding PyTorch."
     },
     {
       "stage": "post",
