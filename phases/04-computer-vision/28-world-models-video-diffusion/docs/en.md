@@ -61,7 +61,7 @@ Resulting tokens:      (T / P_t) * (H / P_h) * (W / P_w) tokens
 Positional encoding is 3D: a rotary or learned embedding per (t, h, w) coordinate. Attention can be:
 
 - **Full joint** — all tokens attend to all tokens. O(N^2) with N tokens. Prohibitive for long videos.
-- **Divided** — alternate temporal attention (same spatial position, across time) and spatial attention (same timestep, across space). Used by TimeSformer and most video DiTs.
+- **Divided** — alternate temporal attention (same spatial position, across time: `(H*W) * T^2`) and spatial attention (same timestep, across space: `T * (H*W)^2`). Used by TimeSformer and most video DiTs.
 - **Window** — local windows in (t, h, w). Used by Video Swin.
 
 Every 2026 video diffusion model uses one of these three patterns plus AdaLN conditioning (Lesson 23) and rectified flow.

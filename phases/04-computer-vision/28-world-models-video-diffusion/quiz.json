@@ -10,9 +10,9 @@
     {
       "stage": "pre",
       "question": "Divided attention in a video transformer means what?",
-      "options": ["Half the tokens are masked", "Each block does a temporal attention (same spatial position, across frames) followed by a spatial attention (same frame, across positions); this reduces cost from O((T*H*W)^2) to O(T^2) + O((H*W)^2)", "Only half the layers run attention", "Attention is split across GPUs"],
+      "options": ["Half the tokens are masked", "Each block does a temporal attention (same spatial position, across frames) followed by a spatial attention (same frame, across positions); this factorises cost from O((T*H*W)^2) into O((H*W)*T^2) + O(T*(H*W)^2) — dramatically cheaper than the joint product", "Only half the layers run attention", "Attention is split across GPUs"],
       "correct": 1,
-      "explanation": "Full joint attention over spacetime tokens is prohibitive: for 150 frames at 60x45 token grid you'd be doing a 405,000^2 attention. Divided attention alternates temporal (300^2) and spatial (2700^2) attention, factoring the complexity. TimeSformer introduced this pattern; almost every 2026 video DiT (Sora, Wan, HunyuanVideo) uses a divided or window variant."
+      "explanation": "Full joint attention over spacetime tokens is prohibitive: for T=150 temporal tokens and a 60x45 spatial grid (2700 spatial tokens), the joint (T*H*W)^2 ≈ 1.6e11 pairs. Divided attention runs temporal attention at each spatial position (H*W * T^2 ≈ 6.1e7) and spatial attention at each timestep (T * (H*W)^2 ≈ 1.1e9) — multiple orders of magnitude less. TimeSformer introduced this pattern; almost every 2026 video DiT (Sora, Wan, HunyuanVideo) uses a divided or window variant."
     },
     {
       "stage": "post",

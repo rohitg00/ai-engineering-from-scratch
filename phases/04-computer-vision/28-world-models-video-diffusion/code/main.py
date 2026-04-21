@@ -1,4 +1,3 @@
-import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -69,11 +68,17 @@ def count_tokens(T, H, W, p_t=2, p_h=8, p_w=8):
 def main():
     print("[token count for 5s 360p video (150 frames, 480x360)]")
     tokens = count_tokens(150, 480, 360, p_t=2, p_h=8, p_w=8)
+    T_tok = 150 // 2
+    S_tok = (480 // 8) * (360 // 8)
     print(f"  tokens per clip: {tokens:,}")
     print(f"  attention pairs (joint): {tokens ** 2:,}")
-    print(f"  divided time: {(150 // 2) ** 2:,}")
-    print(f"  divided space: {((480 // 8) * (360 // 8)) ** 2:,}")
-    print(f"  divided total: {(150 // 2) ** 2 + ((480 // 8) * (360 // 8)) ** 2:,}")
+    # Divided temporal: T^2 attention at every spatial position.
+    # Divided spatial:  (H*W)^2 attention at every timestep.
+    divided_time = S_tok * T_tok ** 2
+    divided_space = T_tok * S_tok ** 2
+    print(f"  divided time total: {divided_time:,}")
+    print(f"  divided space total: {divided_space:,}")
+    print(f"  divided total: {divided_time + divided_space:,}")
 
     torch.manual_seed(0)
     vid = torch.randn(1, 4, 8, 16, 16)
