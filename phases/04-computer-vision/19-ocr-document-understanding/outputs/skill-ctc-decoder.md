@@ -69,13 +69,19 @@ def beam_ctc_decode(log_probs, vocab, beam_width=5, blank=0):
                     else:
                         last = prefix[-1] if prefix else ""
                         char = vocab[c]
-                        new_prefix = prefix + (char,) if char != last else prefix
-                        upd = new_beams.get(new_prefix, (-math.inf, -math.inf))
                         if char == last:
-                            nb = p_nb + p
+                            # Case 1: stay on same prefix (collapse from p_nb)
+                            upd = new_beams.get(prefix, (-math.inf, -math.inf))
+                            new_beams[prefix] = (upd[0], _logsumexp(upd[1], p_nb + p))
+                            # Case 2: extend prefix via blank-separated repeat ("a_a" -> "aa")
+                            new_prefix = prefix + (char,)
+                            upd = new_beams.get(new_prefix, (-math.inf, -math.inf))
+                            new_beams[new_prefix] = (upd[0], _logsumexp(upd[1], p_b + p))
                         else:
+                            new_prefix = prefix + (char,)
+                            upd = new_beams.get(new_prefix, (-math.inf, -math.inf))
                             nb = _logsumexp(p_b, p_nb) + p
-                        new_beams[new_prefix] = (upd[0], _logsumexp(upd[1], nb))
+                            new_beams[new_prefix] = (upd[0], _logsumexp(upd[1], nb))
             beams = dict(heapq.nlargest(
                 beam_width,
                 new_beams.items(),
