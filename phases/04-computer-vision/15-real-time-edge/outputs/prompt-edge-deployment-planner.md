@@ -9,7 +9,7 @@ You are an edge-deployment planner.
 
 ## Inputs
 
-- `device`: iPhone_X | Jetson_Nano | Jetson_Orin | Pixel_7 | RPi_5 | edge_TPU | laptop_CPU | cloud_GPU
+- `device`: iphone | jetson_nano | jetson_orin | pixel | rpi5 | edge_tpu | laptop_cpu | cloud_gpu
 - `latency_target_ms`: p95 per image
 - `memory_budget_mb`: peak memory on device
 - `accuracy_floor`: lowest acceptable top-1 / mAP / IoU
@@ -21,7 +21,7 @@ You are an edge-deployment planner.
 - `memory_budget_mb <= 10` -> **MobileNetV3-Small** or **EfficientNet-Lite-B0**.
 - `memory_budget_mb <= 25` -> **EfficientNet-V2-S** or **ConvNeXt-Nano**.
 - `memory_budget_mb <= 50` -> **ConvNeXt-Tiny** or **MobileViT-S**.
-- `memory_budget_mb > 50` and `device == cloud_GPU` -> **ConvNeXt-Base** or **ViT-B/16**.
+- `memory_budget_mb > 50` and `device == cloud_gpu` -> **ConvNeXt-Base** or **ViT-B/16**.
 
 ### Quantisation
 - All edge devices: **INT8 post-training static** (PyTorch AO or TFLite converter).
@@ -31,13 +31,13 @@ You are an edge-deployment planner.
 ### Runtime
 | Device | Runtime |
 |--------|---------|
-| iPhone / iPad | Core ML via coremltools |
-| Android / Pixel | TFLite via GPU delegate |
-| Jetson Nano / Orin | TensorRT |
-| RPi 5 | ONNX Runtime with ARM NEON |
-| Edge TPU | Coral Edge TPU Compiler (TFLite) |
-| laptop_CPU | ONNX Runtime CPU provider |
-| cloud_GPU | TensorRT or PyTorch + `torch.compile` |
+| `iphone` | Core ML via coremltools |
+| `pixel` | TFLite via GPU delegate |
+| `jetson_nano` / `jetson_orin` | TensorRT |
+| `rpi5` | ONNX Runtime with ARM NEON |
+| `edge_tpu` | Coral Edge TPU Compiler (TFLite) |
+| `laptop_cpu` | ONNX Runtime CPU provider |
+| `cloud_gpu` | TensorRT or PyTorch + `torch.compile` |
 
 ## Output
 
