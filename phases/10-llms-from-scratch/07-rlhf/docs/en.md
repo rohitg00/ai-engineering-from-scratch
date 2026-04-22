@@ -620,6 +620,16 @@ This lesson produces `outputs/prompt-reward-model-designer.md` -- a prompt for d
 | Preference pair | "Which is better, A or B?" | A training example consisting of (prompt, preferred_response, rejected_response) -- the fundamental unit of RLHF training data |
 | Reference model | "The frozen SFT checkpoint" | A copy of the SFT model whose weights never change -- used as the anchor for KL divergence computation |
 
+## Reference Implementations
+
+RLHF is the hardest subfield to implement correctly. Use these as your reference while debugging:
+
+- [HuggingFace TRL `PPOTrainer`](https://github.com/huggingface/trl/blob/main/trl/trainer/ppo_trainer.py) -- the reference PyTorch implementation of PPO for language models. Rollout collection, reward model scoring, value function head, advantage estimation with GAE, and the clipped objective. When your RLHF loop diverges, read this class line by line.
+- [mlabonne llm-course "Preference Alignment" section](https://github.com/mlabonne/llm-course#5-preference-alignment) -- the community survey that covers PPO vs DPO vs GRPO decision criteria. Pairs with mlabonne's "Fine-tune Llama 3 with ORPO" and "Abliteration" notebooks. The tooling map for actually running RLHF on consumer hardware.
+- [Rasbt LLMs-from-scratch Ch 7 `04_preference-tuning-with-dpo`](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch07/04_preference-tuning-with-dpo) -- DPO from scratch (covered formally in Lesson 08) shows why RLHF is frequently replaced by a simpler alternative. Read this to understand what PPO is actually computing.
+- [OpenAI `summarize-from-feedback`](https://github.com/openai/summarize-from-feedback) -- the Stiennon et al. 2020 reward-model + PPO reference code. Older but still the cleanest full-scale RLHF pipeline in the open.
+- [Anthropic hh-rlhf dataset](https://github.com/anthropics/hh-rlhf) -- the preference-pair dataset that trained Claude's early reward models. 160k helpful and harmless comparisons. Use it when prototyping.
+
 ## Further Reading
 
 - [Ouyang et al., 2022 -- "Training language models to follow instructions with human feedback" (InstructGPT)](https://arxiv.org/abs/2203.02155) -- the paper that made RLHF practical for large language models
