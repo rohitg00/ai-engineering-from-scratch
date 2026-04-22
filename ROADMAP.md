@@ -124,11 +124,11 @@ Progress tracking for every phase and lesson.
 | 27 | Multi-Object Tracking & Video Memory | ✅ | ~60 min |
 | 28 | World Models & Video Diffusion | ✅ | ~75 min |
 
-## Phase 5: NLP — Foundations to Advanced — ⬚ (~19 hours)
+## Phase 5: NLP — Foundations to Advanced — 🚧 (~19 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | Text Processing — Tokenization, Stemming, Lemmatization | ⬚ | ~45 min |
+| 01 | [Text Processing — Tokenization, Stemming, Lemmatization](phases/05-nlp-foundations-to-advanced/01-text-processing) | ✅ | ~45 min |
 | 02 | Bag of Words, TF-IDF & Text Representation | ⬚ | ~75 min |
 | 03 | Word Embeddings — Word2Vec from Scratch | ⬚ | ~75 min |
 | 04 | GloVe, FastText & Subword Embeddings | ⬚ | ~45 min |
