@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e8f1fb; stroke: #2471a3; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">four MARL regimes, same environment shape</text>
+
+  <rect x="40" y="60" width="200" height="170" class="box"/>
+  <text x="140" y="88" text-anchor="middle" class="label">independent PPO / Q</text>
+  <text x="60" y="115" class="content">each agent has its own</text>
+  <text x="60" y="135" class="content">policy and critic</text>
+  <text x="60" y="160" class="content">treats others as env</text>
+  <text x="140" y="195" text-anchor="middle" class="caption">simple, no coord signal</text>
+  <text x="140" y="215" text-anchor="middle" class="caption">fails on tight coupling</text>
+
+  <rect x="260" y="60" width="200" height="170" class="hot"/>
+  <text x="360" y="88" text-anchor="middle" class="label">CTDE (MAPPO/QMIX)</text>
+  <text x="280" y="115" class="content">decentralized actor:</text>
+  <text x="280" y="133" class="content">  pi_i(a_i | o_i)</text>
+  <text x="280" y="158" class="content">centralized critic:</text>
+  <text x="280" y="176" class="content">  Q(s, a_1, .., a_n)</text>
+  <text x="360" y="210" text-anchor="middle" class="caption">2026 cooperative default</text>
+
+  <rect x="480" y="60" width="200" height="170" class="cool"/>
+  <text x="580" y="88" text-anchor="middle" class="label">self-play</text>
+  <text x="500" y="115" class="content">single agent, two roles</text>
+  <text x="500" y="135" class="content">opponent = past snapshot</text>
+  <text x="500" y="160" class="content">symmetric gradients</text>
+  <text x="580" y="195" text-anchor="middle" class="caption">zero-sum games</text>
+  <text x="580" y="215" text-anchor="middle" class="caption">AlphaGo / AlphaZero</text>
+
+  <rect x="700" y="60" width="160" height="170" class="box"/>
+  <text x="780" y="88" text-anchor="middle" class="label">league play</text>
+  <text x="715" y="115" class="content">population of</text>
+  <text x="715" y="133" class="content">past + current</text>
+  <text x="715" y="153" class="content">policies; sample</text>
+  <text x="715" y="171" class="content">opponents</text>
+  <text x="780" y="210" text-anchor="middle" class="caption">AlphaStar</text>
+
+  <rect x="40" y="260" width="820" height="150" class="box"/>
+  <text x="450" y="285" text-anchor="middle" class="label">the core difficulty</text>
+  <text x="60" y="315" class="content">from agent i's view, the environment now includes pi_{-i}</text>
+  <text x="60" y="335" class="content">as pi_{-i} learns, the transition P(s' | s, a_i) is non-stationary</text>
+  <text x="60" y="355" class="content">Markov property breaks -&gt; tabular convergence proofs no longer apply</text>
+  <text x="60" y="378" class="caption">CTDE fixes this by conditioning the critic on the full joint action; self-play fixes it by structure</text>
+
+  <text x="450" y="445" text-anchor="middle" class="caption">add communication, language, or MCTS and you get StarCraft II / Dota 2 / multi-agent LLM systems</text>
+</svg>
