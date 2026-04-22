@@ -6,6 +6,7 @@
 **Languages:** Python
 **Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Phase 11 Lesson 09 (Function Calling)
 **Time:** ~45 minutes
+**Related:** Phase 11 · 14 (Model Context Protocol) — MCP's resource/tool boundaries interact with guardrails; untrusted resource content must be treated as data, not instructions. Phase 18 (Ethics, Safety, Alignment) goes deeper on policy and red-teaming.
 
 ## Learning Objectives
 
@@ -128,12 +129,19 @@ Each layer catches what the others miss. Length checks are free. Rate limits are
 
 | Tool | Type | Categories | Latency | Cost | Open Source |
 |---|---|---|---|---|---|
-| OpenAI Moderation | API | 11 categories | ~100ms | Free | No |
-| LlamaGuard 3 8B | Model | 13 categories | ~200ms | Self-hosted | Yes |
-| NeMo Guardrails | Framework | Custom | ~50ms + LLM | Free | Yes |
-| Guardrails AI | Library | 50+ validators | ~10-50ms | Free tier | Yes |
-| Presidio | Library | 28 PII types | ~10ms | Free | Yes |
+| OpenAI Moderation (`omni-moderation`) | API | 13 text + image categories | ~100ms | Free | No |
+| LlamaGuard 4 (2B / 8B) | Model | 14 MLCommons categories | ~150ms | Self-hosted | Yes |
+| NeMo Guardrails | Framework | Custom (Colang) | ~50ms + LLM | Free | Yes |
+| Guardrails AI | Library | 50+ validators on hub | ~10-50ms | Free tier + hosted | Yes |
+| LLM Guard (Protect AI) | Library | 20+ input/output scanners | ~10-100ms | Free | Yes |
+| Rebuff AI | Library + canary token service | Heuristic + vector + canary detection | ~20ms + lookup | Free | Yes |
+| Lakera Guard | API | Prompt injection, PII, toxicity | ~30ms | Paid SaaS | No |
+| Presidio | Library | 28 PII types, 50+ languages | ~10ms | Free | Yes |
 | Perspective API | API | 6 toxicity types | ~100ms | Free | No |
+
+**Rebuff AI** adds a canary-token pattern: inject a random token into the system prompt; if it leaks in output, you know a prompt-injection attack succeeded. Pair with heuristic + vector-similarity detection.
+
+**LLM Guard** bundles 20+ scanners (ban_topics, regex, secrets, prompt injection, token limits) in one Python library — the closest thing to a turnkey guardrail middleware in open-weight form.
 
 ### Defense-in-Depth
 
