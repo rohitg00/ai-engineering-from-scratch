@@ -2,11 +2,22 @@ import random
 import re
 
 
+SHORT_ALLOWLIST = {"ai", "ml", "nn", "s", "p", "pr"}
+
+
 def tokenize(text):
-    return [t for t in re.findall(r"[a-z]+", text.lower()) if len(t) > 2]
+    tokens = re.findall(r"[a-z0-9]+", text.lower())
+    return [t for t in tokens if len(t) > 2 or t.isdigit() or t in SHORT_ALLOWLIST]
 
 
 def collapsed_gibbs_lda(docs, n_topics, n_iters=200, alpha=0.1, beta=0.01, seed=0):
+    if not isinstance(n_topics, int) or n_topics <= 0:
+        raise ValueError(f"n_topics must be a positive int, got {n_topics!r}")
+    if alpha <= 0 or beta <= 0:
+        raise ValueError(f"alpha and beta must be positive, got alpha={alpha}, beta={beta}")
+    if not docs:
+        raise ValueError("docs must not be empty")
+
     rng = random.Random(seed)
     vocab = {}
     for doc in docs:
@@ -15,6 +26,8 @@ def collapsed_gibbs_lda(docs, n_topics, n_iters=200, alpha=0.1, beta=0.01, seed=
                 vocab[w] = len(vocab)
     V = len(vocab)
     D = len(docs)
+    if V == 0:
+        raise ValueError("docs produced an empty vocabulary (no tokens found)")
     indexed = [[vocab[w] for w in doc] for doc in docs]
 
     z = [[rng.randint(0, n_topics - 1) for _ in doc] for doc in indexed]

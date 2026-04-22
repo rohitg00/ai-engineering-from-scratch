@@ -89,18 +89,20 @@ topic_model = BERTopic(
 )
 
 topics, probs = topic_model.fit_transform(documents)
-print(topic_model.get_topic_info().head(20))
-for topic_id in topic_model.get_topic_info()["Topic"].tolist()[:5]:
+info = topic_model.get_topic_info()
+print(info.head(20))
+valid_topics = info[info["Topic"] != -1]["Topic"].tolist()
+for topic_id in valid_topics[:5]:
     print(f"topic {topic_id}: {topic_model.get_topic(topic_id)[:10]}")
 ```
 
-`min_topic_size` controls HDBSCAN's minimum cluster size; 15 is the default and good for corpora under 10,000 documents. For larger corpora, increase to 50 or 100.
+The filter on `Topic != -1` drops BERTopic's outlier bucket (documents HDBSCAN could not cluster). `min_topic_size` controls HDBSCAN's minimum cluster size; BERTopic's library default is 10. This example sets it to 15 explicitly for the lesson's scale. For corpora over 10,000 documents, increase to 50 or 100.
 
 ### Step 3: evaluation
 
 Both methods output topic words. The question is whether those words cohere.
 
-- **Topic coherence (c_v).** Measures how often the top-`k` words of a topic co-occur in a reference corpus within a sliding window. Higher is better. Use `gensim.models.CoherenceModel` with `coherence="c_v"`.
+- **Topic coherence (c_v).** Combines NPMI (normalized pointwise mutual information) of top-word pairs over sliding-window contexts, aggregates the scores into topic vectors, and compares those vectors via cosine similarity. Higher is better. Use `gensim.models.CoherenceModel` with `coherence="c_v"`.
 - **Topic diversity.** Fraction of unique words across all topics' top words. Higher is better (topics do not overlap).
 - **Qualitative inspection.** Read the top words of each topic. Do they name a real thing? Human judgment is still the last line of defense.
 
@@ -147,11 +149,11 @@ tags: [nlp, topic-modeling]
 Given a corpus description (document count, avg length, domain, language, compute budget), output:
 
 1. Algorithm. LDA / NMF / BERTopic / Top2Vec / FASTopic. One-sentence reason.
-2. Configuration. Number of topics (start at ~sqrt(n_docs)), `min_df` / `max_df` filters, embedding model for neural approaches.
+2. Configuration. Number of topics: `recommended = max(5, round(sqrt(n_docs)))`, clamped to 200 for corpora under 40,000 docs; permit >200 only when the corpus is genuinely large (>40k) and note the increased compute cost. `min_df` / `max_df` filters and embedding model for neural approaches also belong here.
 3. Evaluation. Topic coherence (c_v) via `gensim.models.CoherenceModel`, topic diversity, and a 20-sample human read.
-4. Failure mode to probe. For LDA, "junk topics" absorbing stopwords and frequent terms. For BERTopic, -1 outlier cluster swallowing ambiguous documents.
+4. Failure mode to probe. For LDA, "junk topics" absorbing stopwords and frequent terms. For BERTopic, the -1 outlier cluster swallowing ambiguous documents.
 
-Refuse BERTopic on documents longer than the embedding model's context window without a chunking strategy. Refuse LDA on very short text (tweets, reviews under 10 tokens) as coherence collapses. Flag any n_topics choice below 5 or above 200 as likely wrong for real data.
+Refuse BERTopic on documents longer than the embedding model's context window without a chunking strategy. Refuse LDA on very short text (tweets, reviews under 10 tokens) as coherence collapses. Flag any n_topics choice below 5 as likely wrong; flag >200 on corpora under 40k docs as likely over-splitting.
 ```
 
 ## Exercises
