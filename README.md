@@ -2,13 +2,9 @@
 
 <img src="assets/banner.svg" alt="AI Engineering from Scratch" width="100%">
 
-<br/>
-
 # 🧠 AI Engineering from Scratch
 
 ### *From linear algebra to autonomous agent swarms. learn AI **with** AI, then ship the tools.*
-
-<br/>
 
 <!-- Primary badges -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-A8E6CF?style=for-the-badge&labelColor=0D1117)](LICENSE)
@@ -28,8 +24,6 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=anthropic&logoColor=white)](#-ai-native-learning)
 [![MCP](https://img.shields.io/badge/MCP-000000?style=flat-square&logo=anthropic&logoColor=white)](#)
 
-<br/>
-
 ### 🧭 Quick Navigation
 
 [**🚀 Get Started**](#-getting-started) &nbsp;·&nbsp;
@@ -40,8 +34,6 @@
 [**🛣️ Roadmap**](ROADMAP.md) &nbsp;·&nbsp;
 [**🤝 Contribute**](CONTRIBUTING.md) &nbsp;·&nbsp;
 [**🌐 Website**](https://aiengineeringfromscratch.com)
-
-<br/>
 
 </div>
 
