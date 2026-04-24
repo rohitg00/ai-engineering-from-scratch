@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">5-layer agent-economy stack and the core mechanisms</text>
+
+  <rect x="40" y="60" width="420" height="220" class="box"/>
+  <text x="250" y="84" text-anchor="middle" class="head">the 5-layer stack</text>
+
+  <rect x="70" y="100" width="360" height="34" class="cool"/>
+  <text x="250" y="122" text-anchor="middle" class="step">5. Governance — Agentic DAOs</text>
+
+  <rect x="70" y="140" width="360" height="34" class="cold"/>
+  <text x="250" y="162" text-anchor="middle" class="step">4. Settlement — ERC-4337 account abstraction</text>
+
+  <rect x="70" y="180" width="360" height="34" class="dsk"/>
+  <text x="250" y="202" text-anchor="middle" class="step">3. Cognition — LLM + RAG + MCP</text>
+
+  <rect x="70" y="220" width="360" height="34" class="hot"/>
+  <text x="250" y="242" text-anchor="middle" class="step">2. Identity — W3C DIDs + reputation</text>
+
+  <rect x="70" y="260" width="360" height="34" class="box"/>
+  <text x="250" y="278" text-anchor="middle" class="step">1. DePIN — Bittensor · Akash · Render</text>
+
+  <rect x="500" y="60" width="420" height="220" class="cool"/>
+  <text x="710" y="84" text-anchor="middle" class="head">production networks (April 2026)</text>
+
+  <text x="530" y="114" class="step">Bittensor (TAO)</text>
+  <text x="530" y="132" class="small">subnets reward task-specific models; stake-weighted scoring</text>
+
+  <text x="530" y="160" class="step">Fetch.ai / ASI</text>
+  <text x="530" y="178" class="small">ASI-1 Mini LLM; FET token for agent-to-agent payment</text>
+
+  <text x="530" y="206" class="step">Gonka</text>
+  <text x="530" y="224" class="small">transformer proof-of-work; verifiable inference tasks</text>
+
+  <text x="530" y="252" class="step">LaMAS (AAMAS 2025)</text>
+  <text x="530" y="270" class="small">decentralized multi-agent system with Shapley attribution</text>
+
+  <rect x="40" y="310" width="880" height="190" class="box"/>
+  <text x="480" y="334" text-anchor="middle" class="head">three core mechanisms</text>
+
+  <text x="60" y="366" class="step">Shapley attribution</text>
+  <text x="230" y="366" class="small">fair credit allocation; sample N permutations for N&gt;6 agents</text>
+  <text x="230" y="384" class="small">axioms: efficiency, symmetry, linearity, null</text>
+
+  <text x="60" y="414" class="step">Second-price auction</text>
+  <text x="230" y="414" class="small">truthful under monotone aggregation (Google Research)</text>
+  <text x="230" y="432" class="small">winner picked by bid; pays second-highest</text>
+
+  <text x="60" y="462" class="step">Reputation capital</text>
+  <text x="230" y="462" class="small">DID-bound score with exp. decay; slashed on verification failure</text>
+  <text x="230" y="480" class="small">cheap to read (routing); expensive to forge (accumulation over time)</text>
+</svg>
