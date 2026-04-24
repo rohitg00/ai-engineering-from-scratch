@@ -27,7 +27,7 @@ class Platform:
 
 PLATFORMS = [
     Platform("Bedrock on-demand",    3.00, 15.00, 21.0, 1_200_000, 75, 180, 55, "A (Application Inference Profiles)"),
-    Platform("Azure OpenAI (PTU)",    2.50, 10.00, 32.0, 2_000_000, 50, 140, 38, "B (scopes + tags + PTU obj)"),
+    Platform("Azure OpenAI (PTU)",    2.50, 10.00, 10.0, 2_000_000, 50, 140, 38, "B (scopes + tags + PTU obj)"),
     Platform("Vertex AI Gemini",     1.25,  5.00, None,          0, 60, 160,  0, "B+ (BQ billing export)"),
 ]
 
@@ -45,7 +45,8 @@ def simulate(tokens_in_per_day: int, tokens_out_per_day: int, sla_ttft_ms: float
 
         if use_ptu and p.ptu_hourly is not None:
             total_tokens = tokens_in_per_day + tokens_out_per_day
-            ptu_count = max(1, (total_tokens + p.ptu_tokens_per_hour - 1) // p.ptu_tokens_per_hour)
+            daily_capacity_per_ptu = p.ptu_tokens_per_hour * 24
+            ptu_count = max(1, (total_tokens + daily_capacity_per_ptu - 1) // daily_capacity_per_ptu)
             cost_ptu = ptu_count * p.ptu_hourly * 24
             cost = min(cost_ondemand, cost_ptu)
             ttft_p50 = p.ttft_median_ptu_ms if cost == cost_ptu else p.ttft_median_ms
