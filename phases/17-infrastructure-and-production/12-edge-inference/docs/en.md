@@ -12,7 +12,7 @@
 - Explain why mobile LLM inference is memory-bandwidth-bound and compute is secondary.
 - Enumerate the four edge targets (Apple ANE, Qualcomm Hexagon, WebGPU/WebLLM, NVIDIA Jetson) and match each to a use case.
 - Name the 2026 WebGPU coverage gap (Firefox Android catching up) and the Safari iOS 26 landing.
-- Pick a quantization format per target (GGUF Q4 for ANE, QNN for Hexagon, WebGPU Q4 for browser, NVFP4 for Jetson Thor).
+- Pick a quantization format per target (Core ML INT4 + FP16 for ANE, QNN INT8/INT4 for Hexagon, WebGPU Q4 for browser, NVFP4 for Jetson Thor).
 
 ## The Problem
 
