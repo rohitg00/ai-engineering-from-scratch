@@ -229,6 +229,12 @@ def serve_stdio() -> None:
             msg = json.loads(line)
         except json.JSONDecodeError as e:
             sys.stderr.write(f"parse error: {e}\n")
+            sys.stdout.write(json.dumps({
+                "jsonrpc": "2.0",
+                "id": None,
+                "error": {"code": -32700, "message": "Parse error", "data": str(e)},
+            }) + "\n")
+            sys.stdout.flush()
             continue
         resp = dispatch(msg)
         if resp is not None:
