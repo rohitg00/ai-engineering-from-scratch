@@ -344,6 +344,35 @@ a:hover {
   margin-bottom: 20px;
 }
 
+.hero-search {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-search input[type="search"] {
+  flex: 1 1 320px;
+  min-width: 220px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: var(--bg-surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.hero-search input[type="search"]:focus {
+  border-color: var(--accent);
+}
+
 .hero-stars {
   text-align: center;
 }
