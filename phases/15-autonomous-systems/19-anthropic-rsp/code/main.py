@@ -84,16 +84,16 @@ def evaluate(m: CapabilityMeasurement) -> None:
           f"aar_outperform_share={m.aar_outperform_share:.2f}  "
           f"gaming_rate={m.eval_context_gaming_rate:.0%}")
     if crossed:
-        print(f"  AI R&D-4 threshold: CROSSED")
+        print("  AI R&D-4 threshold: CROSSED")
         for r in reasons:
             print(f"    - {r}")
         print("  required: affirmative case covering:")
         for section in affirmative_case_template(m):
             print(f"    {section}")
     else:
-        print(f"  AI R&D-4 threshold: not crossed")
+        print("  AI R&D-4 threshold: not crossed")
         if reasons:
-            print(f"  single trigger(s) observed (below threshold):")
+            print("  single trigger(s) observed (below threshold):")
             for r in reasons:
                 print(f"    - {r}")
 
