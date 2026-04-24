@@ -623,22 +623,39 @@ Other courses end with *"congratulations, you learned X."* Our lessons end with 
 </details>
 
 <details id="phase-17">
-<summary><b>⬛ Phase 17 — Infrastructure & Production</b> &nbsp;<code>11 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
+<summary><b>⬛ Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | Model Serving | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 |
-| 02 | Docker for AI Workloads | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 🦀 |
-| 03 | Kubernetes for AI | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 |
-| 04 | Edge Deployment: ONNX, WASM | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 🦀 |
-| 05 | Observability | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🟦 🦀 |
-| 06 | Cost Optimization | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🟦 |
-| 07 | CI/CD for ML | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 |
-| 08 | A/B Testing & Feature Flags | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 🟦 |
-| 09 | Data Pipelines | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 🦀 |
-| 10 | Security: Red Teaming, Defense | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 🟦 |
-| 11 | Build a Production AI Platform | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 🟦 🦀 |
+| 01 | Managed LLM Platforms — Bedrock, Azure OpenAI, Vertex AI | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 02 | Inference Platform Economics — Fireworks, Together, Baseten, Modal | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 03 | GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 04 | vLLM Serving Internals — PagedAttention, Continuous Batching, Chunked Prefill | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 05 | EAGLE-3 Speculative Decoding in Production | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 06 | SGLang and RadixAttention for Prefix-Heavy Workloads | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 07 | TensorRT-LLM on Blackwell with FP8 and NVFP4 | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 08 | Inference Metrics — TTFT, TPOT, ITL, Goodput, P99 | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 09 | Production Quantization — AWQ, GPTQ, GGUF, FP8, NVFP4 | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 10 | Cold Start Mitigation for Serverless LLMs | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 11 | Multi-Region LLM Serving and KV Cache Locality | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 12 | Edge Inference — ANE, Hexagon, WebGPU, Jetson | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 13 | LLM Observability Stack Selection | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 14 | Prompt Caching and Semantic Caching Economics | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 15 | Batch APIs — the 50% Discount as Industry Standard | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 16 | Model Routing as a Cost-Reduction Primitive | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 17 | Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 18 | vLLM Production Stack with LMCache KV Offloading | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 19 | AI Gateways — LiteLLM, Portkey, Kong, Bifrost | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 20 | Shadow, Canary, and Progressive Deployment | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 21 | A/B Testing LLM Features — GrowthBook and Statsig | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 22 | Load Testing LLM APIs — k6, LLMPerf, GenAI-Perf | ![Build](https://img.shields.io/badge/-Build-2ECC71?style=flat-square) | 🐍 |
+| 23 | SRE for AI — Multi-Agent Incident Response | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 24 | Chaos Engineering for LLM Production | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 25 | Security — Secrets, PII Scrubbing, Audit Logs | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 26 | Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001 | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 27 | FinOps for LLMs — Unit Economics and Multi-Tenant Attribution | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
+| 28 | Self-Hosted Serving Selection — llama.cpp, Ollama, TGI, vLLM, SGLang | ![Learn](https://img.shields.io/badge/-Learn-3498DB?style=flat-square) | 🐍 |
 
 </details>
 

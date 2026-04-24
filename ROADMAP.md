@@ -368,21 +368,38 @@ Progress tracking for every phase and lesson.
 | 13 | DAG-Based Orchestration | ⬚ | ~75 min |
 | 14 | Build an Autonomous Agent Swarm | ⬚ | ~120 min |
 
-## Phase 17: Infrastructure & Production — 🚧 (~13 hours)
+## Phase 17: Infrastructure & Production — ✅ (~32 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | Model Serving | ✅ | ~75 min |
-| 02 | Docker for AI Workloads | ✅ | ~75 min |
-| 03 | Kubernetes for AI | ✅ | ~75 min |
-| 04 | Edge Deployment | ⬚ | ~75 min |
-| 05 | Observability | ⬚ | ~45 min |
-| 06 | Cost Optimization | ⬚ | ~45 min |
-| 07 | CI/CD for ML | ⬚ | ~75 min |
-| 08 | A/B Testing & Feature Flags for AI | ⬚ | ~45 min |
-| 09 | Data Pipelines | ⬚ | ~75 min |
-| 10 | Security | ⬚ | ~45 min |
-| 11 | Build a Production AI Platform | ⬚ | ~120 min |
+| 01 | Managed LLM Platforms — Bedrock, Azure OpenAI, Vertex AI | ✅ | ~60 min |
+| 02 | Inference Platform Economics — Fireworks, Together, Baseten, Modal | ✅ | ~60 min |
+| 03 | GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler | ✅ | ~75 min |
+| 04 | vLLM Serving Internals — PagedAttention, Continuous Batching, Chunked Prefill | ✅ | ~75 min |
+| 05 | EAGLE-3 Speculative Decoding in Production | ✅ | ~60 min |
+| 06 | SGLang and RadixAttention for Prefix-Heavy Workloads | ✅ | ~60 min |
+| 07 | TensorRT-LLM on Blackwell with FP8 and NVFP4 | ✅ | ~75 min |
+| 08 | Inference Metrics — TTFT, TPOT, ITL, Goodput, P99 | ✅ | ~60 min |
+| 09 | Production Quantization — AWQ, GPTQ, GGUF, FP8, NVFP4 | ✅ | ~75 min |
+| 10 | Cold Start Mitigation for Serverless LLMs | ✅ | ~60 min |
+| 11 | Multi-Region LLM Serving and KV Cache Locality | ✅ | ~60 min |
+| 12 | Edge Inference — ANE, Hexagon, WebGPU, Jetson | ✅ | ~60 min |
+| 13 | LLM Observability Stack Selection | ✅ | ~60 min |
+| 14 | Prompt Caching and Semantic Caching Economics | ✅ | ~60 min |
+| 15 | Batch APIs — the 50% Discount as Industry Standard | ✅ | ~45 min |
+| 16 | Model Routing as a Cost-Reduction Primitive | ✅ | ~60 min |
+| 17 | Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d | ✅ | ~75 min |
+| 18 | vLLM Production Stack with LMCache KV Offloading | ✅ | ~60 min |
+| 19 | AI Gateways — LiteLLM, Portkey, Kong, Bifrost | ✅ | ~60 min |
+| 20 | Shadow, Canary, and Progressive Deployment | ✅ | ~60 min |
+| 21 | A/B Testing LLM Features — GrowthBook and Statsig | ✅ | ~60 min |
+| 22 | Load Testing LLM APIs — k6, LLMPerf, GenAI-Perf | ✅ | ~75 min |
+| 23 | SRE for AI — Multi-Agent Incident Response | ✅ | ~60 min |
+| 24 | Chaos Engineering for LLM Production | ✅ | ~60 min |
+| 25 | Security — Secrets, PII Scrubbing, Audit Logs | ✅ | ~60 min |
+| 26 | Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001 | ✅ | ~60 min |
+| 27 | FinOps for LLMs — Unit Economics and Multi-Tenant Attribution | ✅ | ~60 min |
+| 28 | Self-Hosted Serving Selection — llama.cpp, Ollama, TGI, vLLM, SGLang | ✅ | ~45 min |
 
 ## Phase 18: Ethics, Safety & Alignment — ⬚ (~5 hours)
 
@@ -407,6 +424,6 @@ Progress tracking for every phase and lesson.
 
 ---
 
-**Total: 20 phases, 300+ lessons | 191 complete | ~340 hours estimated**
+**Total: 20 phases, 300+ lessons | 216 complete | ~360 hours estimated**
 
 Want to help? Pick any ⬚ lesson and submit a PR. See [CONTRIBUTING.md](CONTRIBUTING.md).
