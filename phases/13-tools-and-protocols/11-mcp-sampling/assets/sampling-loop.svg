@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">server-hosted agent loop via sampling (no server API key)</text>
+
+  <rect x="40" y="60" width="260" height="440" class="cool"/>
+  <text x="170" y="82" text-anchor="middle" class="head">client (user's host)</text>
+  <text x="56" y="108" class="small">holds LLM credentials</text>
+  <text x="56" y="128" class="step">LLM provider</text>
+  <text x="56" y="146" class="small">(Claude, GPT, Gemini,</text>
+  <text x="56" y="162" class="small">local Ollama, ...)</text>
+  <text x="56" y="194" class="step">sampling handler</text>
+  <text x="56" y="212" class="small">runs LLM on server's</text>
+  <text x="56" y="228" class="small">request; returns completion</text>
+  <text x="56" y="260" class="step">safety</text>
+  <text x="56" y="278" class="small">- shows user the request</text>
+  <text x="56" y="294" class="small">- applies per-session rate</text>
+  <text x="56" y="310" class="small">- honors modelPreferences</text>
+  <text x="56" y="342" class="step">billing</text>
+  <text x="56" y="360" class="small">user pays for sampling</text>
+  <text x="56" y="376" class="small">calls via their own key</text>
+
+  <path d="M300,180 L420,180" class="edge" marker-end="url(#arrow)"/>
+  <text x="360" y="174" text-anchor="middle" class="small">tools/call summarize_repo</text>
+
+  <path d="M660,260 L300,260" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="254" text-anchor="middle" class="small">sampling/createMessage {pick files}</text>
+
+  <path d="M300,310 L660,310" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="304" text-anchor="middle" class="small">&lt;- completion {picked: [...]}</text>
+
+  <path d="M660,370 L300,370" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="364" text-anchor="middle" class="small">sampling/createMessage {summarize}</text>
+
+  <path d="M300,420 L660,420" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="414" text-anchor="middle" class="small">&lt;- completion {summary}</text>
+
+  <path d="M660,460 L420,460" class="edge" marker-end="url(#arrow)"/>
+  <text x="540" y="454" text-anchor="middle" class="small">tools/call result {summary}</text>
+
+  <rect x="660" y="60" width="260" height="440" class="cold"/>
+  <text x="790" y="82" text-anchor="middle" class="head">server (summarize_repo)</text>
+  <text x="676" y="108" class="small">NO LLM credentials</text>
+  <text x="676" y="128" class="step">algorithm</text>
+  <text x="676" y="146" class="small">1. walk file list</text>
+  <text x="676" y="162" class="small">2. ask client to pick</text>
+  <text x="676" y="178" class="small">3. read picked files</text>
+  <text x="676" y="194" class="small">4. ask client to summarize</text>
+  <text x="676" y="210" class="small">5. return result</text>
+  <text x="676" y="240" class="step">modelPreferences</text>
+  <text x="676" y="258" class="small">pick files: cost 0.5, int 0.2</text>
+  <text x="676" y="274" class="small">summarize  : cost 0.2, int 0.6</text>
+  <text x="676" y="306" class="step">guardrails</text>
+  <text x="676" y="324" class="small">- max_samples_per_tool</text>
+  <text x="676" y="340" class="small">- includeContext: "none"</text>
+  <text x="676" y="356" class="small">- no covert sampling</text>
+  <text x="676" y="388" class="step">SEP-1577 (drift-risk)</text>
+  <text x="676" y="406" class="small">tools[] inside sampling</text>
+  <text x="676" y="422" class="small">for server-hosted ReAct</text>
+  <text x="676" y="438" class="small">SDK shapes still settling</text>
+</svg>
