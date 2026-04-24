@@ -130,15 +130,26 @@ def run_adaptive(learner_id: str, inherent_ability: float,
                  cmap: dict[str, Concept], n_turns: int, rng: random.Random) -> LearnerState:
     state = LearnerState(learner_id=learner_id)
     p = BKTParams()
+    # last action taken by the tutor, threaded into the next turn so
+    # scaffold/hint actually reduce difficulty and celebration nudges mastery
+    last_action: str | None = None
     for _ in range(n_turns):
         concept = next_concept(state, cmap)
         if concept is None:
             break
         difficulty = 0.3 + 0.1 * len(cmap[concept].prereqs)
+        # apply the previous turn's action to *this* turn
+        if last_action == "scaffold_from_prereq":
+            difficulty -= 0.15    # easier retry from prereqs
+        elif last_action == "hint":
+            difficulty -= 0.08    # mild nudge
+        elif last_action == "celebrate_and_advance":
+            # celebration buoys confidence for one turn
+            state.mastery[concept] = min(1.0, state.mastery[concept] + 0.02)
         # effective knowledge = inherent + mastery
         ek = inherent_ability + state.mastery[concept] * 1.5
         correct = simulate_answer(ek, difficulty, rng)
-        action = socratic_policy(state, concept, correct)
+        last_action = socratic_policy(state, concept, correct)
         state.history.append((concept, correct))
         state.mastery[concept] = bkt_update(state.mastery[concept], correct, p)
     return state
@@ -178,8 +189,14 @@ def main() -> None:
 
     for i in range(n_learners):
         ability = rng.gauss(0.3, 0.4)
-        s1 = run_adaptive(f"adapt_{i}", ability, cmap, n_turns, random.Random(100 + i))
-        s2 = run_baseline(f"base_{i}", ability, cmap, n_turns, random.Random(200 + i))
+        # paired randomness: both arms consume the same latent RNG stream so
+        # the delta measures the policy difference, not seed noise
+        seed = 100 + i
+        r_adapt = random.Random(seed)
+        r_base = random.Random()
+        r_base.setstate(r_adapt.getstate())
+        s1 = run_adaptive(f"adapt_{i}", ability, cmap, n_turns, r_adapt)
+        s2 = run_baseline(f"base_{i}", ability, cmap, n_turns, r_base)
         adaptive_gains.append(mastery_sum(s1, cmap))
         baseline_gains.append(mastery_sum(s2, cmap))
 
