@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .vec { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .kv { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .graph { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .fuse { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Mem0 — three stores in parallel, fused on retrieval</text>
+
+  <rect x="40" y="50" width="200" height="46" class="box"/>
+  <text x="140" y="74" text-anchor="middle" class="head">add(text, user_id, metadata)</text>
+  <text x="140" y="90" text-anchor="middle" class="small">extract facts  write to all three</text>
+
+  <rect x="40" y="120" width="280" height="260" class="vec"/>
+  <text x="180" y="142" text-anchor="middle" class="head">vector store</text>
+  <text x="60" y="166" class="small">semantic similarity; top-k by cosine</text>
+  <text x="60" y="186" class="small">best for: "what did we discuss"</text>
+  <text x="60" y="206" class="small">worst for: exact fact lookup</text>
+  <rect x="60" y="220" width="240" height="60" class="box"/>
+  <text x="78" y="240" class="step">record: embedding(text), scope, user_id</text>
+  <text x="78" y="258" class="small">tags, importance, ts for fusion</text>
+  <text x="78" y="272" class="small">periodic re-embed on the top-used subset</text>
+  <rect x="60" y="290" width="240" height="76" class="box"/>
+  <text x="78" y="310" class="step">failure mode: embedding drift</text>
+  <text x="78" y="328" class="small">quality degrades as the corpus grows</text>
+  <text x="78" y="344" class="small">fix: schedule re-embed; monitor recall@k</text>
+  <text x="78" y="360" class="small">LoCoMo: 91.6 in the Mem0 paper</text>
+
+  <rect x="340" y="120" width="280" height="260" class="kv"/>
+  <text x="480" y="142" text-anchor="middle" class="head">KV store</text>
+  <text x="360" y="166" class="small">O(1) lookup on (user_id, type, entity)</text>
+  <text x="360" y="186" class="small">best for: "what's the user's phone"</text>
+  <text x="360" y="206" class="small">worst for: semantic / fuzzy match</text>
+  <rect x="360" y="220" width="240" height="60" class="box"/>
+  <text x="378" y="240" class="step">key = (user_id, fact_type, entity)</text>
+  <text x="378" y="258" class="small">value = record id</text>
+  <text x="378" y="272" class="small">audit fact_type set quarterly</text>
+  <rect x="360" y="290" width="240" height="76" class="box"/>
+  <text x="378" y="310" class="step">failure mode: schema creep</text>
+  <text x="378" y="328" class="small">every team invents a new fact_type</text>
+  <text x="378" y="344" class="small">fix: centralized type registry + review</text>
+  <text x="378" y="360" class="small">LongMemEval: 93.4 in the Mem0 paper</text>
+
+  <rect x="640" y="120" width="280" height="260" class="graph"/>
+  <text x="780" y="142" text-anchor="middle" class="head">graph store (Mem0g)</text>
+  <text x="660" y="166" class="small">typed edges; temporal validity</text>
+  <text x="660" y="186" class="small">best for: relationship reasoning</text>
+  <text x="660" y="206" class="small">worst for: unstructured prose</text>
+  <rect x="660" y="220" width="240" height="60" class="box"/>
+  <text x="678" y="240" class="step">(subject, relation, object, valid)</text>
+  <text x="678" y="258" class="small">conflict detector invalidates, not deletes</text>
+  <text x="678" y="272" class="small">temporal queries: valid-at-time subgraph</text>
+  <rect x="660" y="290" width="240" height="76" class="box"/>
+  <text x="678" y="310" class="step">failure mode: graph explosion</text>
+  <text x="678" y="328" class="small">noisy extractor adds 50 edges per message</text>
+  <text x="678" y="344" class="small">fix: cap edges per add; drop low-conf</text>
+  <text x="678" y="360" class="small">BEAM 1M: 64.1 in the Mem0 paper</text>
+
+  <rect x="80" y="400" width="800" height="110" class="fuse"/>
+  <text x="480" y="422" text-anchor="middle" class="head">fusion scoring  score = w_rel * relevance + w_imp * importance + w_rec * recency</text>
+  <text x="100" y="448" class="small">relevance: vector cosine, KV exact, graph path weight</text>
+  <text x="100" y="468" class="small">importance: tagged at write time, or learned from usage</text>
+  <text x="100" y="488" class="small">recency: exponential decay since last write or read</text>
+  <text x="500" y="448" class="small">tune weights per product:</text>
+  <text x="500" y="468" class="small">voice agent  recency heavy; compliance  importance heavy</text>
+  <text x="500" y="488" class="small">retrieval agent  relevance heavy; same extractor, different policy</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">scope: user / session / agent. every write picks one; retrieval queries weighted across scopes.</text>
+</svg>
