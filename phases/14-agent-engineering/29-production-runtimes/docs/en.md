@@ -92,11 +92,11 @@ Without OpenTelemetry GenAI spans (Lesson 23) plus a Langfuse/Phoenix/Opik backe
 
 Run it:
 
-```
+```bash
 python3 code/main.py
 ```
 
-Output: five traces showing each shape's behavior on the same task. Same agent logic, different outer shells.
+Output: five traces showing each shape's behavior on the same task. Same agent logic, different outer shells. Durable execution (the sixth shape) is intentionally covered in Lesson 13 with LangGraph checkpointing.
 
 ## Use It
 
