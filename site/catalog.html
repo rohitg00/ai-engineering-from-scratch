@@ -409,6 +409,8 @@
         var urlQuery = new URLSearchParams(window.location.search).get('q');
         if (urlQuery) {
           searchInput.value = urlQuery;
+          try { searchInput.setSelectionRange(urlQuery.length, urlQuery.length); } catch (_) {}
+          try { searchInput.focus({ preventScroll: true }); } catch (_) { searchInput.focus(); }
         }
 
         searchInput.addEventListener('input', render);

@@ -373,6 +373,11 @@ a:hover {
   border-color: var(--accent);
 }
 
+.hero-search input[type="search"]:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
 .hero-stars {
   text-align: center;
 }
