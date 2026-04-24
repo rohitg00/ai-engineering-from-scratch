@@ -67,7 +67,7 @@ Google integrates both in Search, Ads, and "About this image."
 
 ### EU AI Act Article 50
 
-Transparency Code for AI-generated content labeling (first draft December 2025, second March 2026, final June 2026). The regulatory layer that requires the technical layer. Deepfakes must be labeled.
+Transparency Code for AI-generated content labeling (first draft December 2025, second draft March 2026, expected final June 2026 per the [European Commission status page](https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content)). The Code remains in draft as of April 2026 and the timeline is subject to change. The regulatory layer that requires the technical layer. Deepfakes must be labeled.
 
 ### Where this fits in Phase 18
 
