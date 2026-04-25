@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .ram { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .disk { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .tool { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">MemGPT — virtual context as OS memory (Packer et al., 2023)</text>
+
+  <rect x="40" y="60" width="380" height="200" class="ram"/>
+  <text x="230" y="82" text-anchor="middle" class="head">main context  (RAM analog)</text>
+  <text x="60" y="108" class="small">fixed-size prompt window, always visible to the model</text>
+
+  <rect x="60" y="118" width="340" height="60" class="box"/>
+  <text x="80" y="138" class="step">[core] persona, user, task</text>
+  <text x="80" y="156" class="small">named sections pinned inside the prompt</text>
+  <text x="80" y="172" class="small">editable via core_memory_{append,replace}</text>
+
+  <rect x="60" y="186" width="340" height="60" class="box"/>
+  <text x="80" y="206" class="step">[messages] recent turns</text>
+  <text x="80" y="224" class="small">FIFO buffer; oldest turn evicts on cap</text>
+  <text x="80" y="240" class="small">evicted turns available via conversation_search</text>
+
+  <rect x="40" y="280" width="380" height="240" class="disk"/>
+  <text x="230" y="302" text-anchor="middle" class="head">archival memory  (disk analog)</text>
+  <text x="60" y="328" class="small">unbounded, searchable external store</text>
+
+  <rect x="60" y="340" width="340" height="60" class="box"/>
+  <text x="80" y="360" class="step">record: id, text, tags, session, turn</text>
+  <text x="80" y="378" class="small">written by archival_memory_insert</text>
+  <text x="80" y="394" class="small">retrieved by archival_memory_search(top_k)</text>
+
+  <rect x="60" y="408" width="340" height="60" class="box"/>
+  <text x="80" y="428" class="step">pluggable backend</text>
+  <text x="80" y="446" class="small">vector (semantic), KV (fact), graph (relation)</text>
+  <text x="80" y="462" class="small">Lesson 09 (Mem0) fuses all three</text>
+
+  <text x="230" y="496" text-anchor="middle" class="caption">citations (session_id, turn_id) travel with every write</text>
+
+  <rect x="440" y="60" width="500" height="460" class="box"/>
+  <text x="690" y="82" text-anchor="middle" class="head">the interrupt pattern — one turn</text>
+
+  <rect x="460" y="100" width="460" height="46" class="ram"/>
+  <text x="478" y="122" class="step">1. assistant "I need the user's current project"</text>
+  <text x="478" y="138" class="small">main context lacks the fact; cannot answer from window alone</text>
+
+  <rect x="460" y="154" width="460" height="46" class="tool"/>
+  <text x="478" y="176" class="step">2. tool call archival_memory_search("project for ava")</text>
+  <text x="478" y="192" class="small">memory tool issued; runtime services it like an OS syscall</text>
+
+  <rect x="460" y="208" width="460" height="46" class="disk"/>
+  <text x="478" y="230" class="step">3. archival returns record a001</text>
+  <text x="478" y="246" class="small">"ava is building a retrieval bot with 12 tools"</text>
+
+  <rect x="460" y="262" width="460" height="46" class="tool"/>
+  <text x="478" y="284" class="step">4. runtime splices observation into next assistant turn</text>
+  <text x="478" y="300" class="small">same shape as any tool observation in the ReAct loop</text>
+
+  <rect x="460" y="316" width="460" height="46" class="ram"/>
+  <text x="478" y="338" class="step">5. assistant answers citing a001</text>
+  <text x="478" y="354" class="small">retrieval traceable back to source record</text>
+
+  <rect x="460" y="370" width="460" height="46" class="box"/>
+  <text x="478" y="392" class="step">6. new fact emerges  archival_memory_insert</text>
+  <text x="478" y="408" class="small">write-back closes the loop for next session</text>
+
+  <rect x="460" y="424" width="460" height="46" class="box"/>
+  <text x="478" y="446" class="step">7. periodic consolidation (Letta sleep-time, Lesson 08)</text>
+  <text x="478" y="462" class="small">stale records dedupe, contradicted facts invalidate</text>
+
+  <line x1="420" y1="170" x2="460" y2="170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="230" x2="460" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="460" y1="390" x2="420" y2="390" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">Letta (2024) extends to three tiers. Mem0 (2025) swaps archival for vector+KV+graph. Pattern survives.</text>
+</svg>

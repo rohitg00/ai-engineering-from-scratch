@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .stage { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .upstream { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .latency { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Voice pipeline — Pipecat frame-based, LiveKit WebRTC transport</text>
+
+  <rect x="40" y="50" width="880" height="170" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">DOWNSTREAM  audio in, speech out</text>
+  <rect x="60" y="90" width="130" height="60" class="stage"/>
+  <text x="125" y="114" text-anchor="middle" class="step">VAD (Silero)</text>
+  <text x="125" y="132" text-anchor="middle" class="small">20-60ms</text>
+
+  <rect x="210" y="90" width="130" height="60" class="stage"/>
+  <text x="275" y="114" text-anchor="middle" class="step">STT</text>
+  <text x="275" y="132" text-anchor="middle" class="small">100-250ms partial</text>
+
+  <rect x="360" y="90" width="130" height="60" class="stage"/>
+  <text x="425" y="114" text-anchor="middle" class="step">LLM</text>
+  <text x="425" y="132" text-anchor="middle" class="small">150-400ms first token</text>
+
+  <rect x="510" y="90" width="130" height="60" class="stage"/>
+  <text x="575" y="114" text-anchor="middle" class="step">TTS</text>
+  <text x="575" y="132" text-anchor="middle" class="small">100-200ms first audio</text>
+
+  <rect x="660" y="90" width="130" height="60" class="stage"/>
+  <text x="725" y="114" text-anchor="middle" class="step">transport</text>
+  <text x="725" y="132" text-anchor="middle" class="small">30-80ms RTT</text>
+
+  <rect x="810" y="90" width="90" height="60" class="box"/>
+  <text x="855" y="120" text-anchor="middle" class="step">user</text>
+
+  <line x1="190" y1="120" x2="210" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="340" y1="120" x2="360" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="490" y1="120" x2="510" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="640" y1="120" x2="660" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="790" y1="120" x2="810" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <text x="480" y="180" text-anchor="middle" class="small">context alternates user/assistant; every stage can carry partial output</text>
+  <text x="480" y="200" text-anchor="middle" class="small">transports: Daily, LiveKit, SmallWebRTCTransport, FastAPI WebSocket, WhatsApp, SIP</text>
+
+  <rect x="40" y="240" width="880" height="120" class="upstream"/>
+  <text x="480" y="262" text-anchor="middle" class="head">UPSTREAM  cancel, metrics, barge-in</text>
+  <rect x="60" y="278" width="840" height="30" class="box"/>
+  <text x="78" y="298" class="step">transport detects interrupt  cancel frame propagates back: TTS  LLM  STT</text>
+  <rect x="60" y="312" width="840" height="30" class="box"/>
+  <text x="78" y="332" class="step">TTS drops pending audio; LLM cancels inference; STT resets for new turn</text>
+  <rect x="60" y="342" width="840" height="14" class="box"/>
+  <text x="78" y="354" class="step">without UPSTREAM: agent keeps talking over the user</text>
+
+  <rect x="40" y="380" width="880" height="130" class="latency"/>
+  <text x="480" y="402" text-anchor="middle" class="head">end-to-end latency budget</text>
+  <rect x="60" y="418" width="840" height="30" class="box"/>
+  <text x="78" y="438" class="step">premium stack: 450-600ms  (Vapi, Retell reported)</text>
+  <rect x="60" y="452" width="840" height="30" class="box"/>
+  <text x="78" y="472" class="step">common stack: 800-1200ms</text>
+  <rect x="60" y="486" width="840" height="20" class="box"/>
+  <text x="78" y="502" class="step">&gt; 1500ms feels broken. sum your chain before shipping.</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">LiveKit Agents: MultimodalAgent (direct audio) vs VoicePipelineAgent (cascade with text control).</text>
+</svg>

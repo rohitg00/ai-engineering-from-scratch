@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .agno { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .mastra { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .diff { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Agno vs Mastra — two production runtimes, two stacks</text>
+
+  <rect x="40" y="50" width="440" height="280" class="agno"/>
+  <text x="260" y="72" text-anchor="middle" class="head">Agno  Python, FastAPI, near-zero overhead</text>
+  <rect x="60" y="90" width="400" height="40" class="box"/>
+  <text x="78" y="112" class="step">target: ~2μs agent instantiation</text>
+  <text x="78" y="126" class="small">matters for thousands of short-lived agents per second</text>
+  <rect x="60" y="140" width="400" height="40" class="box"/>
+  <text x="78" y="162" class="step">target: ~3.75 KiB memory per agent</text>
+  <text x="78" y="176" class="small">stateless FastAPI handler per request</text>
+  <rect x="60" y="190" width="400" height="40" class="box"/>
+  <text x="78" y="212" class="step">~23 model providers, native multimodal</text>
+  <text x="78" y="226" class="small">text, image, audio, video, file</text>
+  <rect x="60" y="240" width="400" height="40" class="box"/>
+  <text x="78" y="262" class="step">"no graphs, chains, or convoluted patterns"</text>
+  <text x="78" y="276" class="small">philosophy: pure python, minimal framework surface</text>
+  <rect x="60" y="290" width="400" height="34" class="box"/>
+  <text x="78" y="312" class="step">session state in DB; agent is ephemeral</text>
+
+  <rect x="500" y="50" width="420" height="280" class="mastra"/>
+  <text x="710" y="72" text-anchor="middle" class="head">Mastra  TypeScript, Vercel AI SDK substrate</text>
+  <rect x="520" y="90" width="380" height="40" class="box"/>
+  <text x="538" y="112" class="step">three primitives: Agents, Tools (Zod), Workflows</text>
+  <text x="538" y="126" class="small">Zod-typed tools; compile-time safety</text>
+  <rect x="520" y="140" width="380" height="40" class="box"/>
+  <text x="538" y="162" class="step">Unified Model Router: 3,300+ models, 94 providers</text>
+  <text x="538" y="176" class="small">single client across the ecosystem (Mar 2026)</text>
+  <rect x="520" y="190" width="380" height="40" class="box"/>
+  <text x="538" y="212" class="step">composite storage: memory / workflows / obs</text>
+  <text x="538" y="226" class="small">ClickHouse recommended at observability scale</text>
+  <rect x="520" y="240" width="380" height="40" class="box"/>
+  <text x="538" y="262" class="step">server adapters: Express, Hono, Fastify, Koa</text>
+  <text x="538" y="276" class="small">first-class Next.js + Astro integration</text>
+  <rect x="520" y="290" width="380" height="34" class="box"/>
+  <text x="538" y="312" class="step">Mastra Studio at localhost:4111 for debugging</text>
+
+  <rect x="40" y="350" width="880" height="160" class="diff"/>
+  <text x="480" y="372" text-anchor="middle" class="head">choose by stack</text>
+  <rect x="60" y="388" width="840" height="36" class="box"/>
+  <text x="78" y="410" class="step">python backend + FastAPI + short-lived agents  Agno</text>
+  <rect x="60" y="430" width="840" height="36" class="box"/>
+  <text x="78" y="452" class="step">typescript backend + Next.js/Vercel + unified multi-provider  Mastra</text>
+  <rect x="60" y="472" width="840" height="36" class="box"/>
+  <text x="78" y="494" class="step">durable state, explicit graphs, long-horizon runs  LangGraph (Lesson 13)</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">performance targets matter when overhead is a bottleneck; often it is not.</text>
+</svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .primary { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .sleep { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .block { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Letta V1 — memory blocks plus sleep-time compute</text>
+
+  <rect x="40" y="50" width="420" height="220" class="primary"/>
+  <text x="250" y="72" text-anchor="middle" class="head">primary agent (on the critical path)</text>
+  <text x="60" y="96" class="small">responds to user; writes raw facts fast; no consolidation</text>
+
+  <rect x="60" y="108" width="380" height="46" class="box"/>
+  <text x="78" y="130" class="step">turn 1  user: "my name is ava, I live in Berlin"</text>
+  <text x="78" y="146" class="small">block_append human "name=ava city=Berlin"</text>
+
+  <rect x="60" y="162" width="380" height="46" class="box"/>
+  <text x="78" y="184" class="step">turn 2  user: "plan a curriculum for senior eng"</text>
+  <text x="78" y="200" class="small">block_append task "audience=senior eng"</text>
+
+  <rect x="60" y="208" width="380" height="46" class="box"/>
+  <text x="78" y="230" class="step">turn 3  user: "I moved to Lisbon"</text>
+  <text x="78" y="246" class="small">block_append human "city=Lisbon" — both cities now in block</text>
+
+  <rect x="500" y="50" width="420" height="220" class="sleep"/>
+  <text x="710" y="72" text-anchor="middle" class="head">sleep-time agent (off the critical path)</text>
+  <text x="520" y="96" class="small">runs between turns; stronger model allowed; no latency cost</text>
+
+  <rect x="520" y="108" width="380" height="46" class="box"/>
+  <text x="538" y="130" class="step">scan blocks  summarize if near_limit</text>
+  <text x="538" y="146" class="small">compact human block: drop duplicates, keep latest values</text>
+
+  <rect x="520" y="162" width="380" height="46" class="box"/>
+  <text x="538" y="184" class="step">reconcile archival  invalidate stale facts</text>
+  <text x="538" y="200" class="small">contradictions against core trigger invalidation, not delete</text>
+
+  <rect x="520" y="208" width="380" height="46" class="box"/>
+  <text x="538" y="230" class="step">write learned_context into shared blocks</text>
+  <text x="538" y="246" class="small">produces new stable facts for the next turn</text>
+
+  <rect x="40" y="290" width="880" height="220" class="block"/>
+  <text x="480" y="312" text-anchor="middle" class="head">three tiers of Letta memory</text>
+
+  <rect x="60" y="322" width="280" height="170" class="box"/>
+  <text x="200" y="342" text-anchor="middle" class="head">core (always visible)</text>
+  <text x="78" y="364" class="step">blocks: human, persona, task</text>
+  <text x="78" y="382" class="small">editable via block_{append,replace,rewrite}</text>
+  <text x="78" y="400" class="small">per-block character limit</text>
+  <text x="78" y="418" class="small">near_limit triggers sleep-time summarization</text>
+  <text x="78" y="438" class="small">Persona/Safety block writes need review</text>
+  <text x="78" y="458" class="small">versioned; diff surfaces in the trace</text>
+  <text x="78" y="478" class="small">pinned in the prompt every turn</text>
+
+  <rect x="350" y="322" width="280" height="170" class="box"/>
+  <text x="490" y="342" text-anchor="middle" class="head">recall (conversation)</text>
+  <text x="368" y="364" class="step">turn log, paginated</text>
+  <text x="368" y="382" class="small">auto-written each turn</text>
+  <text x="368" y="400" class="small">retrieval via conversation_search</text>
+  <text x="368" y="418" class="small">tail evicts on cap</text>
+  <text x="368" y="438" class="small">citation: session_id + turn_id</text>
+  <text x="368" y="458" class="small">primary reads; sleep-time summarizes</text>
+  <text x="368" y="478" class="small">lossy but always addressable</text>
+
+  <rect x="640" y="322" width="280" height="170" class="box"/>
+  <text x="780" y="342" text-anchor="middle" class="head">archival (external)</text>
+  <text x="658" y="364" class="step">vector + KV + graph (Lesson 09)</text>
+  <text x="658" y="382" class="small">archival_memory_{insert,search}</text>
+  <text x="658" y="400" class="small">invalidation, not deletion, for contradictions</text>
+  <text x="658" y="418" class="small">tags for scope: user/session/agent</text>
+  <text x="658" y="438" class="small">untrusted on retrieval (Lesson 27)</text>
+  <text x="658" y="458" class="small">sleep-time dedups on &gt;90% token overlap</text>
+  <text x="658" y="478" class="small">scales past context window</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">Letta V1 swaps send_message+heartbeat for native reasoning; loop shape unchanged.</text>
+</svg>

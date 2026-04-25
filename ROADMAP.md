@@ -327,25 +327,40 @@ Progress tracking for every phase and lesson.
 | 09 | Browser Automation & Web Agents | ⬚ | ~75 min |
 | 10 | Build a Complete Tool Ecosystem | ⬚ | ~120 min |
 
-## Phase 14: Agent Engineering — 🚧 (~17 hours)
+## Phase 14: Agent Engineering — ✅ (~32 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | The Agent Loop | ✅ | ~45 min |
-| 02 | Tool Dispatch & Registration | ⬚ | ~75 min |
-| 03 | Planning — TodoWrite, DAGs, Goal Decomposition | ⬚ | ~75 min |
-| 04 | Memory — Short-Term, Long-Term, Episodic | ⬚ | ~75 min |
-| 05 | Context Window Management | ⬚ | ~45 min |
-| 06 | Context Compression & Summarization | ⬚ | ~75 min |
-| 07 | Subagents — Isolated Context, Delegation | ⬚ | ~75 min |
-| 08 | Skills & Knowledge Loading | ⬚ | ~45 min |
-| 09 | Permissions, Sandboxing & Safety | ⬚ | ~45 min |
-| 10 | File-Based Task Systems | ⬚ | ~75 min |
-| 11 | Background Task Execution | ⬚ | ~75 min |
-| 12 | Error Recovery & Self-Healing | ⬚ | ~75 min |
-| 13 | Hooks — PreToolUse, PostToolUse, SessionStart | ⬚ | ~45 min |
-| 14 | Eval-Driven Agent Development | ⬚ | ~45 min |
-| 15 | Build a Complete AI Agent from Scratch | ⬚ | ~120 min |
+| 01 | The Agent Loop | ✅ | ~60 min |
+| 02 | ReWOO and Plan-and-Execute | ✅ | ~60 min |
+| 03 | Reflexion and Verbal Reinforcement Learning | ✅ | ~60 min |
+| 04 | Tree of Thoughts and LATS | ✅ | ~75 min |
+| 05 | Self-Refine and CRITIC | ✅ | ~60 min |
+| 06 | Tool Use and Function Calling | ✅ | ~60 min |
+| 07 | Memory — Virtual Context and MemGPT | ✅ | ~75 min |
+| 08 | Memory Blocks and Sleep-Time Compute (Letta) | ✅ | ~75 min |
+| 09 | Hybrid Memory — Vector + Graph + KV (Mem0) | ✅ | ~75 min |
+| 10 | Skill Libraries and Lifelong Learning (Voyager) | ✅ | ~75 min |
+| 11 | Planning with HTN and Evolutionary Search | ✅ | ~75 min |
+| 12 | Anthropic's Workflow Patterns | ✅ | ~60 min |
+| 13 | LangGraph — Stateful Graphs and Durable Execution | ✅ | ~75 min |
+| 14 | AutoGen v0.4 — Actor Model | ✅ | ~75 min |
+| 15 | CrewAI — Role-Based Crews and Flows | ✅ | ~60 min |
+| 16 | OpenAI Agents SDK — Handoffs, Guardrails, Tracing | ✅ | ~75 min |
+| 17 | Claude Agent SDK — Subagents and Session Store | ✅ | ~75 min |
+| 18 | Agno and Mastra — Production Runtimes | ✅ | ~45 min |
+| 19 | Benchmarks — SWE-bench, GAIA, AgentBench | ✅ | ~60 min |
+| 20 | Benchmarks — WebArena and OSWorld | ✅ | ~60 min |
+| 21 | Computer Use — Claude, OpenAI CUA, Gemini | ✅ | ~60 min |
+| 22 | Voice Agents — Pipecat and LiveKit | ✅ | ~60 min |
+| 23 | OpenTelemetry GenAI Semantic Conventions | ✅ | ~60 min |
+| 24 | Agent Observability — Langfuse, Phoenix, Opik | ✅ | ~45 min |
+| 25 | Multi-Agent Debate and Collaboration | ✅ | ~60 min |
+| 26 | Failure Modes — Why Agents Break | ✅ | ~60 min |
+| 27 | Prompt Injection and the PVE Defense | ✅ | ~75 min |
+| 28 | Orchestration Patterns — Supervisor, Swarm, Hierarchical | ✅ | ~60 min |
+| 29 | Production Runtimes — Queue, Event, Cron | ✅ | ~60 min |
+| 30 | Eval-Driven Agent Development | ✅ | ~60 min |
 
 ## Phase 15: Autonomous Systems — ⬚ (~11 hours)
 

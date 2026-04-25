@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .agent { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .guard { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .trace { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">OpenAI Agents SDK — Agent, Handoff, Guardrail, Session, Tracing</text>
+
+  <rect x="40" y="50" width="880" height="210" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">triage  handoff  specialist, wrapped in guardrails</text>
+
+  <rect x="60" y="90" width="160" height="60" class="guard"/>
+  <text x="140" y="114" text-anchor="middle" class="step">input guardrail</text>
+  <text x="140" y="132" text-anchor="middle" class="small">PII, policy, scope</text>
+
+  <rect x="240" y="90" width="160" height="60" class="agent"/>
+  <text x="320" y="114" text-anchor="middle" class="step">triage agent</text>
+  <text x="320" y="132" text-anchor="middle" class="small">picks handoff</text>
+
+  <rect x="420" y="60" width="160" height="60" class="agent"/>
+  <text x="500" y="84" text-anchor="middle" class="step">billing agent</text>
+  <text x="500" y="102" text-anchor="middle" class="small">refund_tool, invoice_tool</text>
+
+  <rect x="420" y="130" width="160" height="60" class="agent"/>
+  <text x="500" y="154" text-anchor="middle" class="step">support agent</text>
+  <text x="500" y="172" text-anchor="middle" class="small">bug_logger, status_check</text>
+
+  <rect x="600" y="90" width="160" height="60" class="guard"/>
+  <text x="680" y="114" text-anchor="middle" class="step">output guardrail</text>
+  <text x="680" y="132" text-anchor="middle" class="small">PII, length, policy</text>
+
+  <rect x="780" y="90" width="120" height="60" class="box"/>
+  <text x="840" y="120" text-anchor="middle" class="step">user</text>
+
+  <line x1="220" y1="120" x2="240" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="400" y1="120" x2="420" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="400" y1="120" x2="420" y2="160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="580" y1="90" x2="600" y2="110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="580" y1="160" x2="600" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="760" y1="120" x2="780" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="170" width="840" height="80" class="box"/>
+  <text x="80" y="192" class="step">handoff mechanics: tool name = transfer_to_&lt;agent_name&gt;</text>
+  <text x="80" y="210" class="small">model sees transfer_to_billing, transfer_to_support in its tool list</text>
+  <text x="80" y="226" class="small">runtime copies context (or collapses via nest_handoff_history beta) before target agent starts</text>
+  <text x="80" y="242" class="small">hop counter prevents bounce loops (triage  billing  triage  billing ...)</text>
+
+  <rect x="40" y="280" width="880" height="230" class="trace"/>
+  <text x="480" y="302" text-anchor="middle" class="head">span tree  tracing is on by default</text>
+
+  <rect x="60" y="318" width="840" height="30" class="box"/>
+  <text x="78" y="338" class="step">run  user_input="I need a refund..."</text>
+  <rect x="80" y="352" width="820" height="30" class="box"/>
+  <text x="98" y="372" class="step">  input_guardrail.pii_block  passed=True</text>
+  <rect x="80" y="386" width="820" height="30" class="box"/>
+  <text x="98" y="406" class="step">  agent.triage  hop=0</text>
+  <rect x="100" y="420" width="800" height="30" class="box"/>
+  <text x="118" y="440" class="step">    handoff.transfer_to_billing  from=triage to=billing</text>
+  <rect x="80" y="454" width="820" height="30" class="box"/>
+  <text x="98" y="474" class="step">  agent.billing  hop=1  llm_generation  "billing handled: ..."</text>
+  <rect x="80" y="488" width="820" height="20" class="box"/>
+  <text x="98" y="502" class="step">  output_guardrail.length_cap  passed=True</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">tracing built in; add_trace_processor fans to your backend. OTel GenAI maps straight to these spans.</text>
+</svg>

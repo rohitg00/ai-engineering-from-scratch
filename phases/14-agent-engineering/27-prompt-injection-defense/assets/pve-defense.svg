@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .attack { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .validator { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .defense { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Prompt injection defense — treat retrieved content as untrusted</text>
+
+  <rect x="40" y="50" width="880" height="160" class="attack"/>
+  <text x="480" y="72" text-anchor="middle" class="head">Greshake et al. 2023 — indirect prompt injection</text>
+  <rect x="60" y="88" width="840" height="24" class="box"/>
+  <text x="78" y="104" class="step">1. attacker controls retrievable content (web page, PDF, email, memory note)</text>
+  <rect x="60" y="116" width="840" height="24" class="box"/>
+  <text x="78" y="132" class="step">2. agent ingests  attacker instructions override developer prompt</text>
+  <rect x="60" y="144" width="840" height="24" class="box"/>
+  <text x="78" y="160" class="step">3. demonstrated exploits: data theft, worming, memory poisoning, ecosystem contamination</text>
+  <rect x="60" y="172" width="840" height="30" class="box"/>
+  <text x="78" y="192" class="step">claim: processing retrieved prompts = arbitrary code execution on the tool-use surface</text>
+
+  <rect x="40" y="230" width="440" height="280" class="validator"/>
+  <text x="260" y="252" text-anchor="middle" class="head">PVE pattern  Prompt, Validator, Executor</text>
+  <rect x="60" y="268" width="400" height="36" class="box"/>
+  <text x="78" y="290" class="step">1. main model proposes tool call</text>
+  <rect x="60" y="308" width="400" height="36" class="box"/>
+  <text x="78" y="330" class="step">2. cheap fast validator inspects arguments</text>
+  <rect x="60" y="348" width="400" height="36" class="box"/>
+  <text x="78" y="370" class="step">3. validator inspects retrieved content sources</text>
+  <rect x="60" y="388" width="400" height="36" class="box"/>
+  <text x="78" y="410" class="step">4. reject on injection marker or unsafe destination</text>
+  <rect x="60" y="428" width="400" height="36" class="box"/>
+  <text x="78" y="450" class="step">5. pass  executor runs; tell main model on reject</text>
+  <rect x="60" y="468" width="400" height="36" class="box"/>
+  <text x="78" y="490" class="step">cost: one extra inference per tool call</text>
+
+  <rect x="500" y="230" width="420" height="280" class="defense"/>
+  <text x="710" y="252" text-anchor="middle" class="head">six-control defense doctrine (2026)</text>
+  <rect x="520" y="268" width="380" height="36" class="box"/>
+  <text x="538" y="290" class="step">1. all retrieved content untrusted</text>
+  <rect x="520" y="308" width="380" height="36" class="box"/>
+  <text x="538" y="330" class="step">2. allowlist / blocklist navigation</text>
+  <rect x="520" y="348" width="380" height="36" class="box"/>
+  <text x="538" y="370" class="step">3. per-step safety evaluation (Gemini 2.5)</text>
+  <rect x="520" y="388" width="380" height="36" class="box"/>
+  <text x="538" y="410" class="step">4. guardrails on tool inputs + outputs</text>
+  <rect x="520" y="428" width="380" height="36" class="box"/>
+  <text x="538" y="450" class="step">5. human-in-the-loop on sensitive actions</text>
+  <rect x="520" y="468" width="380" height="36" class="box"/>
+  <text x="538" y="490" class="step">6. external content capture + span references</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">"only direct instructions from the user count as permission" — OpenAI CUA docs</text>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Tool use stack: schema -&gt; validation -&gt; dispatch -&gt; structured observation</text>
+
+  <rect x="40" y="60" width="880" height="80" class="box"/>
+  <text x="480" y="84" text-anchor="middle" class="head">tool catalog (as seen by the model)</text>
+  <text x="60" y="108" class="step">add(a int, b int)  --  Add two integers a and b. Use for any integer addition.</text>
+  <text x="60" y="124" class="step">multiply(a int, b int)  --  Multiply two integers. Prefer multiplication over looped addition.</text>
+
+  <rect x="40" y="160" width="280" height="360" class="box"/>
+  <text x="180" y="184" text-anchor="middle" class="head">argument validation</text>
+  <rect x="60" y="200" width="240" height="46" class="cool"/>
+  <text x="80" y="224" class="step">type coercion</text>
+  <text x="80" y="240" class="small">"5" -&gt; 5 if unambiguous</text>
+
+  <rect x="60" y="254" width="240" height="46" class="cold"/>
+  <text x="80" y="278" class="step">enum check</text>
+  <text x="80" y="294" class="small">status in {open,closed,pending}</text>
+
+  <rect x="60" y="308" width="240" height="46" class="hot"/>
+  <text x="80" y="332" class="step">required fields</text>
+  <text x="80" y="348" class="small">missing -&gt; structured error observation</text>
+
+  <rect x="60" y="362" width="240" height="46" class="dsk"/>
+  <text x="80" y="386" class="step">range / min / max</text>
+  <text x="80" y="402" class="small">numeric bounds checked</text>
+
+  <rect x="60" y="416" width="240" height="46" class="box"/>
+  <text x="80" y="440" class="step">sandbox policy</text>
+  <text x="80" y="456" class="small">per-tool timeout, fs surface, network</text>
+
+  <text x="60" y="484" class="small">never raise to the loop -- every failure</text>
+  <text x="60" y="500" class="small">becomes an observation the model reads</text>
+
+  <rect x="340" y="160" width="280" height="360" class="box"/>
+  <text x="480" y="184" text-anchor="middle" class="head">dispatch</text>
+  <rect x="360" y="200" width="240" height="140" class="cool"/>
+  <text x="480" y="224" text-anchor="middle" class="step">parallel tool calls</text>
+  <text x="380" y="248" class="small">assistant turn emits N tool_use blocks</text>
+  <text x="380" y="264" class="small">each has distinct tool_use_id</text>
+  <text x="380" y="280" class="small">runtime executes independents in parallel</text>
+  <text x="380" y="296" class="small">results correlated back by tool_use_id</text>
+  <text x="380" y="312" class="small">swap the id and routing goes wrong</text>
+  <text x="380" y="332" class="small">Anthropic, OpenAI, Bedrock all require it</text>
+
+  <rect x="360" y="350" width="240" height="160" class="cold"/>
+  <text x="480" y="374" text-anchor="middle" class="step">execution</text>
+  <text x="380" y="398" class="small">exceptions caught</text>
+  <text x="380" y="414" class="small">timeouts enforced</text>
+  <text x="380" y="430" class="small">results stringified with shape hints</text>
+  <text x="380" y="446" class="small">structured JSON preferred over prose</text>
+  <text x="380" y="462" class="small">circuit breaker on repeat failures</text>
+  <text x="380" y="478" class="small">span emitted (OTel GenAI tool_call)</text>
+  <text x="380" y="494" class="small">audit trail for post-mortems</text>
+
+  <rect x="640" y="160" width="280" height="360" class="box"/>
+  <text x="780" y="184" text-anchor="middle" class="head">BFCL V4 composition</text>
+  <rect x="660" y="200" width="240" height="44" class="cool"/>
+  <text x="780" y="226" text-anchor="middle" class="step">Agentic 40%</text>
+
+  <rect x="660" y="250" width="240" height="44" class="cold"/>
+  <text x="780" y="276" text-anchor="middle" class="step">Multi-turn 30%</text>
+
+  <rect x="660" y="300" width="240" height="44" class="hot"/>
+  <text x="780" y="326" text-anchor="middle" class="step">Live 10%</text>
+
+  <rect x="660" y="350" width="240" height="44" class="dsk"/>
+  <text x="780" y="376" text-anchor="middle" class="step">Non-Live 10%</text>
+
+  <rect x="660" y="400" width="240" height="44" class="box"/>
+  <text x="780" y="426" text-anchor="middle" class="step">Hallucination 10%</text>
+
+  <text x="660" y="456" class="small">single-turn solved; memory, dynamic</text>
+  <text x="660" y="472" class="small">decisions, long chains remain open</text>
+  <text x="660" y="496" class="small">gorilla.cs.berkeley.edu/leaderboard.html</text>
+</svg>
