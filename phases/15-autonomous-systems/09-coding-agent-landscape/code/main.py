@@ -31,11 +31,20 @@ TESTS = [
     ("cli.py", "VERSION == 'v1.0'"),
 ]
 
+# Per-path replacement the stub "model" applies when a test fails.
+# Centralizing the table avoids duplicating the if/elif chain across
+# both scaffolds and avoids UnboundLocalError if TESTS later grows.
+FIXES: dict[str, tuple[str, str]] = {
+    "app.py": ("a - b", "a + b"),
+    "util.py": ("s.upper()", "s.lower()"),
+    "cli.py": ("v0.0", "v1.0"),
+}
+
 
 def run_tests(repo: dict[str, str]) -> list[bool]:
     """Deterministic stub: simulate the test suite against the repo string."""
     results = []
-    for path, expr in TESTS:
+    for path, _expr in TESTS:
         src = repo.get(path, "")
         passed = False
         if path == "app.py":
@@ -46,6 +55,16 @@ def run_tests(repo: dict[str, str]) -> list[bool]:
             passed = "VERSION = 'v1.0'" in src
         results.append(passed)
     return results
+
+
+def _apply_fix(repo: dict[str, str], path: str) -> bool:
+    """Apply the per-path fix in place. Returns True iff a fix was applied."""
+    rule = FIXES.get(path)
+    if rule is None:
+        return False
+    old, new = rule
+    repo[path] = repo[path].replace(old, new)
+    return True
 
 
 # ---------- JSON tool-call scaffold: one action per turn ----------
@@ -59,18 +78,11 @@ class JsonScaffold:
         """Return one JSON action at a time, based on current failing test."""
         self.turns += 1
         results = run_tests(self.repo)
-        for (path, _), ok in zip(TESTS, results):
+        for (path, _), ok in zip(TESTS, results, strict=True):
             if ok:
                 continue
-            src = self.repo[path]
-            if path == "app.py":
-                new = src.replace("a - b", "a + b")
-            elif path == "util.py":
-                new = src.replace("s.upper()", "s.lower()")
-            elif path == "cli.py":
-                new = src.replace("v0.0", "v1.0")
-            self.repo[path] = new
-            return json.dumps({"tool": "edit", "path": path})
+            if _apply_fix(self.repo, path):
+                return json.dumps({"tool": "edit", "path": path})
         return json.dumps({"tool": "done"})
 
     def blast_radius(self) -> int:
@@ -102,18 +114,11 @@ class CodeActScaffold:
         # A single "snippet" action rewrites every failing file at once.
         snippet_lines = []
         results = run_tests(self.repo)
-        for (path, _), ok in zip(TESTS, results):
+        for (path, _), ok in zip(TESTS, results, strict=True):
             if ok:
                 continue
-            src = self.repo[path]
-            if path == "app.py":
-                new = src.replace("a - b", "a + b")
-            elif path == "util.py":
-                new = src.replace("s.upper()", "s.lower()")
-            elif path == "cli.py":
-                new = src.replace("v0.0", "v1.0")
-            self.repo[path] = new
-            snippet_lines.append(f"fs.write('{path}', ...)")
+            if _apply_fix(self.repo, path):
+                snippet_lines.append(f"fs.write('{path}', ...)")
         self.worst_touched = max(self.worst_touched, len(snippet_lines))
         if not snippet_lines:
             return "done()"
