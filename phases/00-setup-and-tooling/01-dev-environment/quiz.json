@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do AI projects need a separate virtual environment?",
+      "question": "Tại sao các dự án AI cần môi trường ảo riêng?",
       "options": [
-        "Virtual environments make code run faster",
-        "They isolate dependencies so different projects don't conflict",
-        "Python requires virtual environments to import packages",
-        "Virtual environments provide GPU access"
+        "Môi trường ảo giúp mã chạy nhanh hơn",
+        "Họ cô lập các phần phụ thuộc để các dự án khác nhau không xung đột",
+        "Python yêu cầu môi trường ảo để nhập gói",
+        "Môi trường ảo cung cấp quyền truy cập GPU"
       ],
       "correct": 1,
-      "explanation": "Virtual environments isolate package versions per project. Without them, upgrading PyTorch for one project can break another that depends on an older version."
+      "explanation": "Môi trường ảo tách biệt các phiên bản gói cho mỗi dự án. Nếu không có chúng, việc nâng cấp PyTorch cho một dự án có thể phá vỡ một dự án khác phụ thuộc vào phiên bản cũ hơn."
     },
     {
       "stage": "pre",
-      "question": "What does CUDA provide for AI workloads?",
+      "question": "CUDA cung cấp những gì cho khối lượng công việc AI?",
       "options": [
-        "A Python package manager for ML libraries",
-        "A web framework for deploying models",
-        "Parallel computing on NVIDIA GPUs for matrix operations",
-        "A container runtime for model serving"
+        "Trình quản lý gói Python cho thư viện ML",
+        "Một khung web để triển khai các mô hình",
+        "Tính toán song song trên GPU NVIDIA cho các hoạt động ma trận",
+        "Thời gian chạy vùng chứa để phân phát mô hình"
       ],
       "correct": 2,
-      "explanation": "CUDA is NVIDIA's parallel computing platform that lets you run matrix operations on thousands of GPU cores simultaneously. PyTorch and TensorFlow use it under the hood."
+      "explanation": "CUDA là nền tảng điện toán song song của NVIDIA cho phép bạn chạy các phép toán ma trận trên hàng nghìn lõi GPU cùng một lúc. PyTorch và TensorFlow sử dụng nó dưới mui xe."
     },
     {
       "stage": "post",
-      "question": "In the four-layer environment stack, which layer must be installed first?",
+      "question": "Trong ngăn xếp môi trường bốn lớp, lớp nào phải được cài đặt trước?",
       "options": [
-        "AI/ML Libraries (PyTorch, JAX)",
-        "Package Managers (pip, npm, cargo)",
-        "Language Runtimes (Python, Node.js)",
-        "System Foundation (OS, shell, GPU drivers)"
+        "Thư viện AI/ML (PyTorch, JAX)",
+        "Trình quản lý gói (pip, npm, Cargo)",
+        "Thời gian chạy ngôn ngữ (Python, Node.js)",
+        "Nền tảng hệ thống (OS, shell, trình điều khiển GPU)"
       ],
       "correct": 3,
-      "explanation": "You install bottom-up: system foundation first (OS, drivers), then package managers, then language runtimes, then AI libraries. Each layer depends on the one below."
+      "explanation": "Bạn cài đặt từ dưới lên: nền tảng hệ thống trước (HĐH, trình điều khiển), sau đó là trình quản lý gói, sau đó là thời gian chạy ngôn ngữ, sau đó là thư viện AI. Mỗi lớp phụ thuộc vào lớp bên dưới."
     },
     {
       "stage": "post",
-      "question": "What is the purpose of uv in a Python AI project?",
+      "question": "Mục đích của uv trong dự án AI Python là gì?",
       "options": [
-        "A GPU monitoring tool",
-        "An ultra-fast Python package installer and resolver",
-        "A neural network visualization library",
-        "A CUDA compiler for custom kernels"
+        "Công cụ giám sát GPU",
+        "Trình cài đặt và phân giải gói Python cực nhanh",
+        "Thư viện trực quan hóa mạng lưới thần kinh",
+        "Trình biên dịch CUDA cho hạt nhân tùy chỉnh"
       ],
       "correct": 1,
-      "explanation": "uv is a fast Python package installer written in Rust. It replaces pip with much faster dependency resolution and installation, often 10-100x faster."
+      "explanation": "uv là trình cài đặt gói Python nhanh được viết bằng Rust. Nó thay thế pip bằng độ phân giải và cài đặt phụ thuộc nhanh hơn nhiều, thường nhanh hơn 10-100 lần."
     },
     {
       "stage": "post",
-      "question": "How do you verify that PyTorch can access your GPU?",
+      "question": "Làm cách nào để xác minh rằng PyTorch có thể truy cập GPU của bạn?",
       "options": [
-        "import torch; print(torch.__version__)",
+        "ngọn đuốc nhập khẩu; in(đèn pin.__version__)",
         "nvidia-smi --query",
-        "import torch; print(torch.cuda.is_available())",
-        "python -c 'import gpu'"
+        "ngọn đuốc nhập khẩu; print(torch.cuda.is_available())",
+        "python -c 'nhập gpu'"
       ],
       "correct": 2,
-      "explanation": "torch.cuda.is_available() returns True if PyTorch can access CUDA GPUs. On Apple Silicon, use torch.backends.mps.is_available() for Metal Performance Shaders."
+      "explanation": "torch.cuda.is_available() trả về True nếu PyTorch có thể truy cập GPU CUDA. Trên Apple Silicon, hãy sử dụng torch.backends.mps.is_available() cho Trình tạo bóng hiệu suất kim loại."
     }
   ]
 }

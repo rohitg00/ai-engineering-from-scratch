@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tại sao việc chứa khối lượng công việc AI lại khó hơn việc chứa các ứng dụng web?",
+      "options": [
+        "Docker không hỗ trợ các ứng dụng Python",
+        "Bộ chứa AI cần trình điều khiển GPU, bộ công cụ CUDA, trọng lượng mô hình lớn (5-50GB) và các phiên bản thư viện cụ thể được biên dịch cho các phiên bản CUDA cụ thể, tạo ra chuỗi phụ thuộc phức tạp hơn nhiều",
+        "Ứng dụng AI không thể sử dụng cổng mạng",
+        "Hình ảnh Docker có kích thước tối đa 1GB"
+      ],
+      "correct": 1,
+      "explanation": "Một ứng dụng web cần các gói Node.js và npm. Ứng dụng AI cần Python, trình điều khiển CUDA, cuDNN, PyTorch được biên dịch cho một phiên bản CUDA cụ thể và trọng lượng mô hình hàng gigabyte. Một phiên bản không khớp sẽ phá vỡ mọi thứ."
+    },
+    {
+      "stage": "pre",
+      "question": "Mục đích của Bộ công cụ NVIDIA Container là gì?",
+      "options": [
+        "Nó nén trọng lượng mô hình để vừa với các thùng chứa nhỏ hơn",
+        "Nó cho phép các bộ chứa Docker truy cập GPU máy chủ bằng cách cung cấp các hook thời gian chạy để hiển thị các thiết bị GPU và trình điều khiển bên trong bộ chứa",
+        "Nó chuyển đổi các mô hình PyTorch sang định dạng TensorRT",
+        "Nó theo dõi nhiệt độ GPU trong quá trình đào tạo"
+      ],
+      "correct": 1,
+      "explanation": "Bộ công cụ bộ chứa NVIDIA (nvidia-docker) cung cấp thời gian chạy bộ chứa để ánh xạ các thiết bị GPU máy chủ và thư viện trình điều khiển vào bộ chứa, để các ứng dụng bên trong nhìn và sử dụng GPU như thể chúng đang chạy trên máy chủ."
+    },
+    {
+      "stage": "post",
+      "question": "Tại sao bạn nên gắn trọng lượng mô hình dưới dạng khối Docker thay vì đưa chúng vào hình ảnh?",
+      "options": [
+        "Các tập đọc nhanh hơn các lớp hình ảnh",
+        "Trọng lượng mô hình là 5-50GB; việc đưa chúng vào hình ảnh giúp việc xây dựng, đẩy và kéo trở nên khổng lồ, trong khi khối lượng cho phép bạn tải trọng lượng xuống một lần và chia sẻ chúng trên các vùng chứa",
+        "Docker không hỗ trợ các tệp hình ảnh lớn hơn 1GB",
+        "Khối lượng tự động nén trọng lượng"
+      ],
+      "correct": 1,
+      "explanation": "Hình ảnh 50 GB mất hơn 30 phút để đẩy/kéo. Với các giá treo âm lượng, hình ảnh vẫn có kích thước nhỏ (5-8GB trong thời gian chạy) và các trọng lượng được tải xuống một lần vào máy chủ và gắn vào bất kỳ vùng chứa nào cần chúng."
+    },
+    {
+      "stage": "post",
+      "question": "Lợi ích của việc xây dựng Docker nhiều giai đoạn cho các ứng dụng AI là gì?",
+      "options": [
+        "Bản dựng nhiều giai đoạn chạy nhanh hơn trên GPU",
+        "Chúng tách biệt các phần phụ thuộc của bản dựng (trình biên dịch, tiêu đề nhà phát triển) khỏi các phần phụ thuộc trong thời gian chạy, tạo ra hình ảnh cuối cùng chỉ chứa những gì cần thiết để chạy suy luận",
+        "Chúng cho phép chạy nhiều mô hình trong một vùng chứa",
+        "Chúng cho phép xây dựng đồng thời nhiều kiến ​​trúc GPU"
+      ],
+      "correct": 1,
+      "explanation": "Giai đoạn xây dựng sẽ cài đặt các trình biên dịch và xây dựng các phần mở rộng C. Giai đoạn thời gian chạy chỉ sao chép các tạo phẩm đã biên dịch. Điều này có thể giảm kích thước hình ảnh từ 2-5GB bằng cách loại trừ các tiêu đề gcc, build-essential và Development."
+    },
+    {
+      "stage": "post",
+      "question": "Làm cách nào để xác minh rằng vùng chứa Docker có quyền truy cập GPU?",
+      "options": [
+        "Kiểm tra xem container có RAM lớn hơn 8GB không",
+        "Chạy nvidia-smi bên trong vùng chứa; nếu nó hiển thị tên GPU, phiên bản trình điều khiển và phiên bản CUDA thì GPU có thể truy cập được",
+        "Kiểm tra xem PyTorch đã được cài đặt trong vùng chứa chưa",
+        "Tìm kiếm /dev/gpu0 trong hệ thống tệp vùng chứa"
+      ],
+      "correct": 1,
+      "explanation": "nvidia-smi là công cụ tiêu chuẩn để xác minh quyền truy cập GPU. Bên trong vùng chứa, chạy 'nvidia-smi' và xác nhận nó hiển thị GPU. Nếu thất bại, Bộ công cụ bộ chứa NVIDIA không được định cấu hình hoặc --gpus không được chuyển sang chạy docker."
+    }
+  ]
+}

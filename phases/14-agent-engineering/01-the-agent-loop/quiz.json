@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sự khác biệt cơ bản giữa LLM và tác nhân AI là gì?",
+      "options": [
+        "Đại lý sử dụng mô hình lớn hơn LLM độc lập",
+        "Một tác nhân bao bọc LLM trong một vòng lặp có thể thực hiện các hành động (gọi công cụ, đọc tệp, thực thi mã) và phản hồi kết quả",
+        "Đại lý được tinh chỉnh cho các nhiệm vụ cụ thể trong khi LLM có mục đích chung",
+        "Đại lý chạy cục bộ trong khi LLM chạy trên đám mây"
+      ],
+      "correct": 1,
+      "explanation": "Riêng LLM chỉ có thể tạo văn bản. Một tác nhân thêm một vòng lặp: LLM quyết định hành động nào sẽ thực hiện, hệ thống thực thi hành động đó và kết quả sẽ quay trở lại LLM. Chu trình quan sát-quyết định-hành động này là điều khiến các tác nhân có khả năng làm việc thực sự."
+    },
+    {
+      "stage": "pre",
+      "question": "'Gọi công cụ' là gì trong ngữ cảnh của API LLM?",
+      "options": [
+        "Sử dụng các công cụ dòng lệnh để xử lý trước dữ liệu trước khi gửi đến LLM",
+        "LLM đưa ra một yêu cầu có cấu trúc để gọi một hàm cụ thể bằng các đối số mà người gọi sẽ thực thi và trả về kết quả",
+        "Đào tạo mô hình về tài liệu công cụ để cải thiện phản hồi của nó",
+        "Chạy song song nhiều phiên bản LLM để tăng tốc độ suy luận"
+      ],
+      "correct": 1,
+      "explanation": "Gọi công cụ (hoặc gọi hàm) là một cách có cấu trúc để LLM nói 'Tôi muốn gọi hàm X với đối số Y.' Ứng dụng máy chủ thực sự thực thi chức năng và đưa kết quả trở lại cuộc trò chuyện."
+    },
+    {
+      "stage": "post",
+      "question": "Tại sao vòng lặp tác nhân cần giới hạn số lần lặp tối đa?",
+      "options": [
+        "Để giảm chi phí API bằng cách giới hạn số lượng lệnh gọi LLM",
+        "Để ngăn tác nhân chạy mãi nếu nó bị mắc kẹt trong một chu kỳ hành động lặp đi lặp lại hoặc không thể xác định khi nào nên dừng",
+        "Để đảm bảo đại lý tạo ra đầu ra trong một khoảng thời gian cố định",
+        "Để hạn chế cửa sổ ngữ cảnh bị tràn"
+      ],
+      "correct": 1,
+      "explanation": "Nếu không có bộ bảo vệ lặp lại tối đa, tác nhân có thể lặp vô thời hạn -- thử lại lệnh gọi công cụ không thành công, dao động giữa hai hành động hoặc không bao giờ quyết định dừng. Giới hạn là một cơ chế an toàn buộc phải chấm dứt."
+    },
+    {
+      "stage": "post",
+      "question": "Trong mẫu ReAct, bước 'Suy nghĩ' và 'Hành động' thể hiện điều gì?",
+      "options": [
+        "Suy nghĩ là lời nhắc của hệ thống và Hành động là thông báo của người dùng",
+        "Suy nghĩ là lý do LLM về việc cần làm tiếp theo; Hành động là công cụ mà nó quyết định thực hiện dựa trên lý do đó",
+        "Suy nghĩ xử lý dữ liệu đầu vào và Hành động định dạng đầu ra",
+        "Suy nghĩ là bước gắn kết và Hành động là bước tạo ra"
+      ],
+      "correct": 1,
+      "explanation": "ReAct (Lý luận + Diễn xuất) xen kẽ giữa các dấu vết lý luận rõ ràng ('Tôi cần tra cứu X vì...') và các hành động cụ thể ('gọi search_tool với truy vấn X'). Bước lý luận cải thiện chất lượng quyết định bằng cách làm cho LLM trình bày rõ ràng kế hoạch của mình."
+    },
+    {
+      "stage": "post",
+      "question": "Tác nhân nên xử lý lỗi thực thi công cụ như thế nào (ví dụ: không tìm thấy tệp)?",
+      "options": [
+        "Chấm dứt ngay vòng lặp tác nhân và trả lại lỗi cho người dùng",
+        "Trả lại thông báo lỗi cho LLM dưới dạng kết quả của công cụ để nó có thể giải thích về lỗi và thử một phương pháp thay thế",
+        "Âm thầm bỏ qua lỗi và tiếp tục bước tiếp theo",
+        "Thử lại lệnh gọi chính xác cùng một công cụ tối đa 10 lần"
+      ],
+      "correct": 1,
+      "explanation": "Việc cung cấp lỗi trở lại LLM cho phép nó điều chỉnh: thử đường dẫn tệp khác, sử dụng công cụ khác hoặc yêu cầu người dùng làm rõ. Khả năng tự sửa lỗi này là lợi thế cốt lõi của mẫu vòng lặp tác nhân."
+    }
+  ]
+}

@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the defining property of a convex function?",
+      "question": "Thuộc tính xác định của hàm lồi là gì?",
       "options": [
-        "It has exactly one critical point",
-        "The line segment between any two points on its graph lies above or on the graph",
-        "Its derivative is always positive",
-        "It can only be defined on positive real numbers"
+        "Nó có đúng một điểm tới hạn",
+        "Đoạn thẳng nối hai điểm bất kỳ trên đồ thị của nó nằm phía trên hoặc trên đồ thị",
+        "Đạo hàm của nó luôn dương",
+        "Nó chỉ có thể được xác định trên số thực dương"
       ],
       "correct": 1,
-      "explanation": "A function is convex if for any two points x, y and any t in [0,1]: f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y). Geometrically, the chord between any two points on the graph never dips below the graph itself."
+      "explanation": "Một hàm lồi nếu với hai điểm x, y và bất kỳ t nào trong [0,1]: f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y). Về mặt hình học, dây cung giữa hai điểm bất kỳ trên đồ thị không bao giờ giảm xuống dưới chính đồ thị đó."
     },
     {
       "stage": "pre",
-      "question": "Which of these ML problems has a convex loss landscape?",
+      "question": "Vấn đề ML nào sau đây có bối cảnh mất mát lồi?",
       "options": [
-        "Training a 3-layer neural network with ReLU activations",
-        "Logistic regression with cross-entropy loss",
-        "k-means clustering",
-        "Matrix factorization for recommendation"
+        "Huấn luyện mạng nơ-ron 3 lớp với kích hoạt ReLU",
+        "Hồi quy logistic với mất entropy chéo",
+        "k-nghĩa là phân cụm",
+        "Hệ số ma trận cho khuyến nghị"
       ],
       "correct": 1,
-      "explanation": "Logistic regression has a convex loss (log-loss is convex in the weights). Neural networks, k-means, and matrix factorization are all non-convex. For convex problems, any local minimum is the global minimum."
+      "explanation": "Hồi quy logistic có tổn thất lồi (log-loss là lồi theo trọng số). Mạng lưới thần kinh, phương tiện k và hệ số hóa ma trận đều không lồi. Đối với các bài toán lồi, mọi cực tiểu cục bộ đều là cực tiểu toàn cục."
     },
     {
       "stage": "post",
-      "question": "Newton's method converges to the minimum of f(x) = 5x^2 + 3x + 1 in how many steps?",
+      "question": "Phương pháp Newton hội tụ đến giá trị nhỏ nhất của f(x) = 5x^2 + 3x + 1 trong bao nhiêu bước?",
       "options": [
-        "1 step (it is exact for quadratic functions)",
-        "About 10 steps",
-        "About 100 steps",
-        "It depends on the learning rate"
+        "1 bước (chính xác cho hàm bậc hai)",
+        "Khoảng 10 bước",
+        "Khoảng 100 bước",
+        "Nó phụ thuộc vào tốc độ học tập"
       ],
       "correct": 0,
-      "explanation": "Newton's method fits a local quadratic approximation and jumps to its minimum. For an actual quadratic function, the approximation is exact, so Newton's method converges in a single step regardless of the starting point."
+      "explanation": "Phương pháp của Newton phù hợp với xấp xỉ bậc hai cục bộ và nhảy đến mức tối thiểu. Đối với một hàm bậc hai thực tế, phép tính gần đúng là chính xác, do đó phương pháp của Newton hội tụ trong một bước duy nhất bất kể điểm bắt đầu."
     },
     {
       "stage": "post",
-      "question": "In the KKT conditions, what does 'complementary slackness' (lambda_i * g_i(x) = 0) mean?",
+      "question": "Trong điều kiện KKT, 'độ chùng bổ sung' (lambda_i * g_i(x) = 0) nghĩa là gì?",
       "options": [
-        "All constraints must be active at the optimum",
-        "Either a constraint is active (g_i = 0) or its multiplier is zero (lambda_i = 0) — an inactive constraint has no effect",
-        "The gradients of all constraints must be orthogonal",
-        "The Lagrangian is always zero at the optimum"
+        "Tất cả các ràng buộc phải được kích hoạt ở mức tối ưu",
+        "Một ràng buộc đang hoạt động (g_i = 0) hoặc số nhân của nó bằng 0 (lambda_i = 0) — một ràng buộc không hoạt động không có hiệu lực",
+        "Độ dốc của tất cả các ràng buộc phải trực giao",
+        "Lagrangian luôn bằng 0 ở mức tối ưu"
       ],
       "correct": 1,
-      "explanation": "Complementary slackness means each constraint is either binding (g_i = 0, sitting on the boundary) or irrelevant (lambda_i = 0, not affecting the solution). In SVMs, this is why only support vectors (active constraints with lambda_i > 0) determine the decision boundary."
+      "explanation": "Độ lỏng bổ sung có nghĩa là mỗi ràng buộc có tính ràng buộc (g_i = 0, nằm trên ranh giới) hoặc không liên quan (lambda_i = 0, không ảnh hưởng đến lời giải). Trong SVM, đây là lý do tại sao chỉ các vectơ hỗ trợ (ràng buộc hoạt động với lambda_i > 0) mới xác định ranh giới quyết định."
     },
     {
       "stage": "post",
-      "question": "Why does SGD find good solutions in non-convex neural network landscapes despite the lack of convexity guarantees?",
+      "question": "Tại sao SGD tìm được giải pháp tốt trong bối cảnh mạng lưới thần kinh không lồi mặc dù thiếu sự đảm bảo về độ lồi?",
       "options": [
-        "Neural networks are secretly convex in high dimensions",
-        "SGD always finds the global minimum",
-        "In high dimensions, most critical points are saddle points (not bad local minima), and SGD noise helps escape them",
-        "The loss function is irrelevant to model performance"
+        "Mạng lưới thần kinh được bí mật lồi ở kích thước cao",
+        "SGD luôn tìm mức tối thiểu toàn cầu",
+        "Ở kích thước cao, hầu hết các điểm quan trọng là điểm yên ngựa (không phải là điểm cực tiểu cục bộ xấu) và tiếng ồn SGD giúp thoát khỏi chúng",
+        "Hàm mất không liên quan đến hiệu suất mô hình"
       ],
       "correct": 2,
-      "explanation": "In high-dimensional parameter spaces, random critical points are overwhelmingly saddle points. The few local minima that exist tend to have loss values close to the global minimum. SGD's stochastic noise helps escape saddle points, and overparameterization smooths the landscape."
+      "explanation": "Trong không gian tham số nhiều chiều, các điểm tới hạn ngẫu nhiên là các điểm yên ngựa áp đảo. Một số cực tiểu cục bộ tồn tại có xu hướng có giá trị tổn hao gần với mức tối thiểu toàn cục. Tiếng ồn ngẫu nhiên của SGD giúp thoát khỏi các điểm yên ngựa và việc tham số hóa quá mức sẽ làm mịn cảnh quan."
     }
   ]
 }

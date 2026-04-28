@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "In Bayes' theorem, what is the 'prior'?",
-      "options": ["The probability of the evidence", "Your belief about a hypothesis before observing any evidence", "The probability of the evidence given the hypothesis", "The final updated probability after seeing evidence"],
+      "question": "Trong định lý Bayes, 'trước' là gì?",
+      "options": [
+        "Xác suất của bằng chứng",
+        "Niềm tin của bạn về một giả thuyết trước khi quan sát bất kỳ bằng chứng nào",
+        "Xác suất của bằng chứng đưa ra giả thuyết",
+        "Xác suất cập nhật cuối cùng sau khi nhìn thấy bằng chứng"
+      ],
       "correct": 1,
-      "explanation": "The prior P(A) represents your initial belief about hypothesis A before seeing any data. It gets updated to the posterior P(A|B) after observing evidence B."
+      "explanation": "P(A) trước đó thể hiện niềm tin ban đầu của bạn về giả thuyết A trước khi xem bất kỳ dữ liệu nào. Nó được cập nhật lên P(A|B) sau khi quan sát bằng chứng B."
     },
     {
       "stage": "pre",
-      "question": "A rare disease affects 1 in 10,000 people. A 99% accurate test returns positive. What is the approximate probability you have the disease?",
-      "options": ["99%", "About 1%", "50%", "10%"],
+      "question": "Một căn bệnh hiếm gặp ảnh hưởng đến 1 trên 10.000 người. Kết quả xét nghiệm chính xác 99% cho kết quả dương tính. Xác suất gần đúng bạn mắc bệnh là bao nhiêu?",
+      "options": [
+        "99%",
+        "Khoảng 1%",
+        "50%",
+        "10%"
+      ],
       "correct": 1,
-      "explanation": "Despite 99% test accuracy, the disease is so rare (0.01%) that most positive results come from healthy people (false positives). Bayes' theorem gives P(sick|positive) = ~0.98%, not 99%."
+      "explanation": "Mặc dù độ chính xác của xét nghiệm là 99% nhưng căn bệnh này rất hiếm (0,01%) nên hầu hết các kết quả dương tính đều đến từ những người khỏe mạnh (dương tính giả). Định lý Bayes cho P(ốm|dương) = ~0,98%, không phải 99%."
     },
     {
       "stage": "post",
-      "question": "What is Laplace smoothing in a Naive Bayes classifier and why is it necessary?",
-      "options": ["It normalizes feature values to have zero mean and unit variance", "It adds a small count to every feature to prevent zero probabilities from unseen words, which would zero out the entire product", "It smooths the decision boundary between classes", "It reduces the dimensionality of the feature space"],
+      "question": "Làm mịn Laplace trong bộ phân loại Naive Bayes là gì và tại sao nó lại cần thiết?",
+      "options": [
+        "Nó bình thường hóa các giá trị đặc trưng để có giá trị trung bình bằng 0 và phương sai đơn vị",
+        "Nó thêm một số lượng nhỏ vào mỗi tính năng để tránh xác suất bằng 0 từ các từ không nhìn thấy, điều này sẽ loại bỏ toàn bộ sản phẩm",
+        "Nó làm mịn ranh giới quyết định giữa các lớp",
+        "Nó làm giảm tính chiều của không gian đặc trưng"
+      ],
       "correct": 1,
-      "explanation": "Without smoothing, a word never seen in spam training data gets P(word|spam)=0, making the entire product zero regardless of other strong spam indicators. Adding 1 to each count prevents this."
+      "explanation": "Nếu không làm mịn, một từ chưa từng thấy trong dữ liệu huấn luyện thư rác sẽ nhận được P(word|spam)=0, khiến toàn bộ sản phẩm bằng 0 bất kể các chỉ báo thư rác mạnh khác. Thêm 1 vào mỗi lần đếm sẽ ngăn chặn điều này."
     },
     {
       "stage": "post",
-      "question": "How does MAP (Maximum A Posteriori) estimation differ from MLE (Maximum Likelihood Estimation)?",
-      "options": ["MAP uses a larger dataset than MLE", "MAP incorporates a prior distribution over parameters, equivalent to adding regularization, while MLE only uses the likelihood", "MAP is faster to compute than MLE", "MLE always produces better results than MAP"],
+      "question": "Ước tính MAP (Tối đa A Posteriori) khác với MLE (Ước tính khả năng tối đa) như thế nào?",
+      "options": [
+        "MAP sử dụng tập dữ liệu lớn hơn MLE",
+        "MAP kết hợp phân phối trước trên các tham số, tương đương với việc thêm chính quy, trong khi MLE chỉ sử dụng khả năng",
+        "MAP tính toán nhanh hơn MLE",
+        "MLE luôn tạo ra kết quả tốt hơn MAP"
+      ],
       "correct": 1,
-      "explanation": "MAP maximizes P(data|params) * P(params) while MLE maximizes P(data|params) alone. The prior P(params) acts as regularization -- a Gaussian prior equals L2 regularization, a Laplace prior equals L1."
+      "explanation": "MAP tối đa hóa P(data|params) * P(params) trong khi MLE chỉ tối đa hóa P(data|params). P(params) trước đóng vai trò chính quy hóa - giá trị trước Gaussian bằng chính quy hóa L2, giá trị trước Laplace bằng L1."
     },
     {
       "stage": "post",
-      "question": "In sequential Bayesian updating, you start with Beta(1,1) and observe 7 heads and 3 tails. What is the posterior?",
-      "options": ["Beta(7, 3)", "Beta(8, 4)", "Beta(1.7, 1.3)", "Normal(0.7, 0.1)"],
+      "question": "Trong quá trình cập nhật Bayesian tuần tự, bạn bắt đầu với Beta(1,1) và quan sát 7 mặt ngửa và 3 mặt sấp. Hậu thế là gì?",
+      "options": [
+        "Beta(7, 3)",
+        "Beta(8, 4)",
+        "Beta(1.7, 1.3)",
+        "Bình thường(0,7, 0,1)"
+      ],
       "correct": 1,
-      "explanation": "The Beta-Binomial conjugate update adds successes to the first parameter and failures to the second: Beta(1+7, 1+3) = Beta(8, 4). The posterior mean is 8/12 = 0.667."
+      "explanation": "Bản cập nhật liên hợp Beta-Binomial thêm thành công vào tham số đầu tiên và thất bại vào tham số thứ hai: Beta(1+7, 1+3) = Beta(8, 4). Giá trị trung bình sau là 8/12 = 0,667."
     }
   ]
 }

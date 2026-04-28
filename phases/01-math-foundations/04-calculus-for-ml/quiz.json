@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the derivative of a function at a point tell you?",
-      "options": ["The value of the function at that point", "The rate of change (slope) of the function at that point", "The area under the function up to that point", "The maximum value the function can reach"],
+      "question": "Đạo hàm của hàm số tại một điểm cho bạn biết điều gì?",
+      "options": [
+        "Giá trị của hàm tại thời điểm đó",
+        "Tốc độ thay đổi (độ dốc) của hàm tại thời điểm đó",
+        "Diện tích thuộc hàm tính đến thời điểm đó",
+        "Giá trị lớn nhất mà hàm có thể đạt được"
+      ],
       "correct": 1,
-      "explanation": "The derivative f'(x) measures how much the output changes per unit change in input. Geometrically, it is the slope of the tangent line at that point."
+      "explanation": "Đạo hàm f'(x) đo lường mức độ thay đổi của đầu ra trên mỗi đơn vị thay đổi của đầu vào. Về mặt hình học, đó là độ dốc của đường tiếp tuyến tại điểm đó."
     },
     {
       "stage": "pre",
-      "question": "What is a gradient in the context of machine learning?",
-      "options": ["A measure of model accuracy", "A vector of all partial derivatives that points in the direction of steepest ascent", "The learning rate used during training", "The difference between predicted and actual values"],
+      "question": "Độ dốc trong bối cảnh học máy là gì?",
+      "options": [
+        "Thước đo độ chính xác của mô hình",
+        "Một vectơ của tất cả các đạo hàm riêng hướng về hướng đi lên dốc nhất",
+        "Tốc độ học tập được sử dụng trong quá trình đào tạo",
+        "Sự khác biệt giữa giá trị dự đoán và giá trị thực tế"
+      ],
       "correct": 1,
-      "explanation": "The gradient collects every partial derivative into one vector. It points in the direction that increases the function fastest. To minimize loss, you move opposite the gradient."
+      "explanation": "Độ dốc thu thập mọi đạo hàm riêng thành một vectơ. Nó chỉ theo hướng tăng hàm nhanh nhất. Để giảm thiểu tổn thất, bạn di chuyển ngược lại với gradient."
     },
     {
       "stage": "post",
-      "question": "In gradient descent, what does the update rule 'w = w - lr * dL/dw' accomplish?",
-      "options": ["It increases the loss to test model robustness", "It adjusts each weight in the direction that reduces the loss, scaled by the learning rate", "It resets the weight to its initial value minus the gradient", "It normalizes the weight to have magnitude 1"],
+      "question": "Trong quá trình giảm độ dốc, quy tắc cập nhật 'w = w - lr * dL/dw' thực hiện điều gì?",
+      "options": [
+        "Nó làm tăng tổn thất để kiểm tra độ bền của mô hình",
+        "Nó điều chỉnh từng trọng số theo hướng giảm tổn thất, được chia tỷ lệ theo tốc độ học",
+        "Nó đặt lại trọng số về giá trị ban đầu trừ đi độ dốc",
+        "Nó bình thường hóa trọng lượng để có cường độ 1"
+      ],
       "correct": 1,
-      "explanation": "dL/dw tells you which direction increases the loss. Subtracting it (times the learning rate) moves the weight in the direction that decreases the loss. This is repeated for every weight in the model."
+      "explanation": "dL/dw cho bạn biết hướng nào làm tăng tổn thất. Trừ nó (nhân với tốc độ học) sẽ di chuyển trọng số theo hướng giảm tổn thất. Điều này được lặp lại cho mọi trọng số trong mô hình."
     },
     {
       "stage": "post",
-      "question": "Why can't Newton's method (which uses the Hessian matrix) be directly applied to neural networks with millions of parameters?",
-      "options": ["Newton's method only works for convex functions", "The Hessian is an N x N matrix, requiring O(N^2) storage and O(N^3) computation per step, which is intractable for millions of parameters", "Newton's method requires analytical derivatives which cannot be computed for neural networks", "Newton's method converges too slowly for deep networks"],
+      "question": "Tại sao phương pháp của Newton (sử dụng ma trận Hessian) không thể áp dụng trực tiếp vào mạng nơ-ron với hàng triệu tham số?",
+      "options": [
+        "Phương pháp Newton chỉ áp dụng được với hàm lồi",
+        "Hessian là ma trận N x N, yêu cầu lưu trữ O(N^2) và tính toán O(N^3) mỗi bước, điều này khó có thể xử lý được đối với hàng triệu tham số",
+        "Phương pháp của Newton yêu cầu các đạo hàm phân tích không thể tính toán được cho mạng lưới thần kinh",
+        "Phương pháp của Newton hội tụ quá chậm đối với mạng sâu"
+      ],
       "correct": 1,
-      "explanation": "For N=1 million parameters, the Hessian has 1 trillion entries. Computing and inverting it is impossible. This is why we use first-order methods (SGD, Adam) that approximate second-order information cheaply."
+      "explanation": "Với N=1 triệu tham số, Hessian có 1 nghìn tỷ mục. Tính toán và đảo ngược nó là không thể. Đây là lý do tại sao chúng tôi sử dụng các phương pháp bậc nhất (SGD, Adam) để ước tính thông tin bậc hai với chi phí thấp."
     },
     {
       "stage": "post",
-      "question": "What is the numerical (central difference) approximation for f'(x)?",
-      "options": ["f(x+h) / h", "(f(x+h) - f(x)) / h", "(f(x+h) - f(x-h)) / (2*h)", "f(x) * h"],
+      "question": "Phép tính gần đúng bằng số (hiệu trung tâm) của f'(x) là gì?",
+      "options": [
+        "f(x+h) / h",
+        "(f(x+h) - f(x)) / h",
+        "(f(x+h) - f(x-h)) / (2*h)",
+        "f(x) * h"
+      ],
       "correct": 2,
-      "explanation": "The central difference (f(x+h) - f(x-h)) / (2h) is more accurate than the forward difference because it averages the slope on both sides of x, canceling out the leading error term."
+      "explanation": "Sai phân trung tâm (f(x+h) - f(x-h)) / (2h) chính xác hơn sai phân thuận vì nó tính trung bình độ dốc trên cả hai vế của x, loại bỏ số hạng sai số dẫn đầu."
     }
   ]
 }

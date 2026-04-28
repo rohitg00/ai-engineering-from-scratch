@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What advantage does SVD have over eigendecomposition?",
-      "options": ["SVD is always faster to compute", "SVD works on any matrix of any shape, while eigendecomposition requires square matrices with full eigenvector sets", "SVD produces smaller output matrices", "SVD does not require numerical computation"],
+      "question": "SVD có lợi thế gì so với phân tách riêng?",
+      "options": [
+        "SVD luôn tính toán nhanh hơn",
+        "SVD hoạt động trên mọi ma trận có hình dạng bất kỳ, trong khi việc phân tách riêng yêu cầu ma trận vuông với các bộ vectơ riêng đầy đủ",
+        "SVD tạo ra ma trận đầu ra nhỏ hơn",
+        "SVD không yêu cầu tính toán số"
+      ],
       "correct": 1,
-      "explanation": "Eigendecomposition only works on square matrices that have n linearly independent eigenvectors. SVD decomposes ANY m x n matrix into U * Sigma * V^T with no restrictions on shape or rank."
+      "explanation": "Phân tích riêng chỉ hoạt động trên các ma trận vuông có n vectơ riêng độc lập tuyến tính. SVD phân tách BẤT KỲ ma trận mxn nào thành U * Sigma * V^T mà không có hạn chế về hình dạng hoặc thứ hạng."
     },
     {
       "stage": "pre",
-      "question": "What does 'low-rank approximation' mean?",
-      "options": ["Removing rows with low values from a matrix", "Approximating a matrix by keeping only its most important components, producing a simpler matrix with fewer independent directions", "Converting a matrix to a lower precision data type", "Sorting the rows of a matrix by their magnitude"],
+      "question": "'Xấp xỉ thứ hạng thấp' nghĩa là gì?",
+      "options": [
+        "Xóa các hàng có giá trị thấp khỏi ma trận",
+        "Xấp xỉ một ma trận bằng cách chỉ giữ lại các thành phần quan trọng nhất của nó, tạo ra một ma trận đơn giản hơn với ít hướng độc lập hơn",
+        "Chuyển đổi ma trận thành kiểu dữ liệu có độ chính xác thấp hơn",
+        "Sắp xếp các hàng của ma trận theo độ lớn của chúng"
+      ],
       "correct": 1,
-      "explanation": "A rank-k approximation keeps only the top k singular values and their vectors, discarding the rest. The Eckart-Young theorem proves this is the BEST possible approximation of that rank."
+      "explanation": "Phép tính gần đúng hạng k chỉ giữ lại k giá trị số ít trên cùng và vectơ của chúng, loại bỏ phần còn lại. Định lý Eckart-Young chứng minh đây là phép tính gần đúng TỐT NHẤT có thể có của hạng đó."
     },
     {
       "stage": "post",
-      "question": "In SVD A = U * Sigma * V^T, what geometric operation does each factor represent?",
-      "options": ["U scales, Sigma rotates, V^T translates", "V^T rotates in input space, Sigma scales along principal axes, U rotates into output space", "U compresses, Sigma expands, V^T normalizes", "All three factors perform the same operation: rotation"],
+      "question": "Trong SVD A = U * Sigma * V^T, mỗi yếu tố đại diện cho phép toán hình học nào?",
+      "options": [
+        "Thang đo U, xoay Sigma, dịch V^T",
+        "V^T quay trong không gian đầu vào, Sigma chia tỷ lệ dọc theo trục chính, U quay trong không gian đầu ra",
+        "U nén, Sigma mở rộng, V^T bình thường hóa",
+        "Cả ba yếu tố đều thực hiện cùng một thao tác: xoay"
+      ],
       "correct": 1,
-      "explanation": "SVD reveals that every matrix performs: (1) V^T rotates inputs to align with principal directions, (2) Sigma stretches/compresses along each axis, (3) U rotates the result into the output space. Rotate, scale, rotate."
+      "explanation": "SVD tiết lộ rằng mọi ma trận đều thực hiện: (1) V^T xoay đầu vào để căn chỉnh theo hướng chính, (2) Sigma kéo dài/nén dọc theo mỗi trục, (3) U xoay kết quả vào không gian đầu ra. Xoay, chia tỷ lệ, xoay."
     },
     {
       "stage": "post",
-      "question": "Why does sklearn implement PCA using SVD instead of eigendecomposition of the covariance matrix?",
-      "options": ["SVD produces different results that are more accurate for ML", "SVD works directly on the data matrix without forming the covariance matrix, avoiding squaring the condition number and improving numerical stability", "SVD is easier to parallelize on GPUs", "SVD does not require centering the data"],
+      "question": "Tại sao sklearn triển khai PCA bằng SVD thay vì phân tách riêng của ma trận hiệp phương sai?",
+      "options": [
+        "SVD tạo ra các kết quả khác nhau chính xác hơn cho ML",
+        "SVD hoạt động trực tiếp trên ma trận dữ liệu mà không tạo ma trận hiệp phương sai, tránh bình phương số điều kiện và cải thiện độ ổn định số",
+        "SVD dễ dàng song song hóa hơn trên GPU",
+        "SVD không yêu cầu căn giữa dữ liệu"
+      ],
       "correct": 1,
-      "explanation": "Forming A^T*A squares the singular values (and condition number). If A has singular values [1000, 0.001], A^T*A has eigenvalues [10^6, 10^-6] -- 6 digits of precision lost. SVD avoids this by working directly on A."
+      "explanation": "Hình thành A^T*A bình phương các giá trị số ít (và số điều kiện). Nếu A có các giá trị số ít [1000, 0,001], thì A^T*A có giá trị riêng [10^6, 10^-6] -- mất 6 chữ số chính xác. SVD tránh điều này bằng cách làm việc trực tiếp trên A."
     },
     {
       "stage": "post",
-      "question": "How does truncated SVD enable recommendation systems to predict missing ratings?",
-      "options": ["It fills missing entries with the average rating", "It decomposes the ratings matrix into latent user and movie profiles; the dot product of a user profile with a movie profile predicts the missing rating", "It clusters similar users together and copies their ratings", "It trains a neural network on the observed ratings"],
+      "question": "SVD bị cắt bớt cho phép hệ thống đề xuất dự đoán xếp hạng bị thiếu như thế nào?",
+      "options": [
+        "Nó lấp đầy các mục còn thiếu với xếp hạng trung bình",
+        "Nó phân tách ma trận xếp hạng thành hồ sơ người dùng và phim tiềm ẩn; tích số chấm của hồ sơ người dùng với hồ sơ phim dự đoán xếp hạng bị thiếu",
+        "Nó tập hợp những người dùng tương tự lại với nhau và sao chép xếp hạng của họ",
+        "Nó đào tạo một mạng lưới thần kinh dựa trên xếp hạng được quan sát"
+      ],
       "correct": 1,
-      "explanation": "SVD decomposes the ratings matrix into user profiles (U), latent factor importance (Sigma), and movie profiles (V^T). The low-rank reconstruction fills in missing entries based on the latent factors (genre, era, style) that explain user preferences."
+      "explanation": "SVD phân tách ma trận xếp hạng thành hồ sơ người dùng (U), tầm quan trọng của yếu tố tiềm ẩn (Sigma) và hồ sơ phim (V^T). Việc xây dựng lại thứ hạng thấp sẽ lấp đầy các mục còn thiếu dựa trên các yếu tố tiềm ẩn (thể loại, thời đại, phong cách) giải thích sở thích của người dùng."
     }
   ]
 }

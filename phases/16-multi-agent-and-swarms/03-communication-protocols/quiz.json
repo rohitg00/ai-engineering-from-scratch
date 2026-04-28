@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What problem does MCP (Model Context Protocol) solve for AI agents?",
-      "options": ["It provides a standard format for training data", "It gives agents a standard way to discover and use tools exposed by external servers, without hardcoding tool implementations", "It encrypts communication between agents", "It compresses large context windows to fit in smaller models"],
+      "question": "MCP (Giao thức bối cảnh mô hình) giải quyết vấn đề gì cho các tác nhân AI?",
+      "options": [
+        "Nó cung cấp một định dạng chuẩn cho dữ liệu đào tạo",
+        "Nó cung cấp cho các tác nhân một cách tiêu chuẩn để khám phá và sử dụng các công cụ do máy chủ bên ngoài cung cấp mà không cần triển khai công cụ mã hóa cứng",
+        "Nó mã hóa thông tin liên lạc giữa các đại lý",
+        "Nó nén các cửa sổ ngữ cảnh lớn để phù hợp với các mô hình nhỏ hơn"
+      ],
       "correct": 1,
-      "explanation": "MCP standardizes tool access: a server exposes tools with JSON schemas, and any MCP-compatible agent can discover and call them. This decouples tool implementation from agent code."
+      "explanation": "MCP tiêu chuẩn hóa quyền truy cập công cụ: máy chủ hiển thị các công cụ có lược đồ JSON và bất kỳ tác nhân nào tương thích với MCP đều có thể khám phá và gọi chúng. Điều này tách việc triển khai công cụ khỏi mã tác nhân."
     },
     {
       "stage": "pre",
-      "question": "What is the difference between MCP and A2A?",
-      "options": ["MCP is for Python agents and A2A is for JavaScript agents", "MCP connects agents to tools (agent-to-tool), while A2A connects agents to other agents (agent-to-agent) for task delegation", "MCP is synchronous and A2A is asynchronous", "MCP is open source and A2A is proprietary"],
+      "question": "Sự khác biệt giữa MCP và A2A là gì?",
+      "options": [
+        "MCP dành cho tác nhân Python và A2A dành cho tác nhân JavaScript",
+        "MCP kết nối các tác nhân với các công cụ (agent-to-tool), trong khi A2A kết nối các tác nhân với các tác nhân khác (agent-to-agent) để ủy quyền nhiệm vụ",
+        "MCP đồng bộ và A2A không đồng bộ",
+        "MCP là nguồn mở và A2A là độc quyền"
+      ],
       "correct": 1,
-      "explanation": "MCP is the protocol for tool access (an agent calls a tool). A2A is the protocol for agent collaboration (an agent delegates a task to another agent). They solve different layers of the communication problem."
+      "explanation": "MCP là giao thức để truy cập công cụ (một tác nhân gọi một công cụ). A2A là giao thức cộng tác giữa tác nhân (một tác nhân ủy quyền một nhiệm vụ cho một tác nhân khác). Họ giải quyết các lớp khác nhau của vấn đề giao tiếp."
     },
     {
       "stage": "post",
-      "question": "In A2A, what is an 'agent card' and why is it important?",
-      "options": ["A visual dashboard showing agent performance metrics", "A JSON document at a well-known URL that describes an agent's capabilities, skills, and endpoint, enabling other agents to discover and delegate tasks to it", "A security credential that authenticates an agent's identity", "A configuration file that sets the agent's system prompt"],
+      "question": "Trong A2A, 'thẻ đại lý' là gì và tại sao nó lại quan trọng?",
+      "options": [
+        "Trang tổng quan trực quan hiển thị số liệu hiệu suất của tổng đài viên",
+        "Tài liệu JSON tại một URL phổ biến mô tả khả năng, kỹ năng và điểm cuối của tổng đài viên, cho phép các tổng đài viên khác khám phá và ủy quyền nhiệm vụ cho tổng đài viên đó",
+        "Thông tin xác thực bảo mật xác thực danh tính của tác nhân",
+        "Tệp cấu hình đặt lời nhắc hệ thống của tác nhân"
+      ],
       "correct": 1,
-      "explanation": "The agent card (hosted at /.well-known/agent.json) is how agents advertise themselves. It lists skills, supported input/output formats, and the task endpoint. Other agents read this card to decide whether and how to delegate work."
+      "explanation": "Thẻ đại lý (được lưu trữ tại /.well-known/agent.json) là cách các đại lý tự quảng cáo. Nó liệt kê các kỹ năng, định dạng đầu vào/đầu ra được hỗ trợ và điểm cuối của nhiệm vụ. Các đại lý khác đọc thẻ này để quyết định xem có nên ủy quyền công việc hay không và giao phó công việc như thế nào."
     },
     {
       "stage": "post",
-      "question": "Why do multi-agent systems need structured communication protocols instead of just passing strings between agents?",
-      "options": ["Strings are too large to send over HTTP", "Structured protocols provide type safety, discoverability, error handling, and interoperability between agents built by different teams with different frameworks", "String parsing is computationally expensive for LLMs", "Structured protocols are required by all cloud providers"],
+      "question": "Tại sao hệ thống đa tác nhân cần các giao thức truyền thông có cấu trúc thay vì chỉ truyền chuỗi giữa các tác nhân?",
+      "options": [
+        "Chuỗi quá lớn để gửi qua HTTP",
+        "Các giao thức có cấu trúc cung cấp sự an toàn về loại, khả năng phát hiện, xử lý lỗi và khả năng tương tác giữa các tác nhân được xây dựng bởi các nhóm khác nhau với các khung khác nhau",
+        "Phân tích chuỗi rất tốn kém về mặt tính toán đối với LLM",
+        "Các giao thức có cấu trúc được yêu cầu bởi tất cả các nhà cung cấp đám mây"
+      ],
       "correct": 1,
-      "explanation": "Without structured contracts, agents from different teams misinterpret each other's output, error handling is ad-hoc, and there is no way to discover what another agent can do. Protocols provide the shared language that makes multi-agent systems reliable."
+      "explanation": "Nếu không có hợp đồng có cấu trúc, các tổng đài viên từ các nhóm khác nhau sẽ hiểu sai kết quả đầu ra của nhau, việc xử lý lỗi là đặc biệt và không có cách nào để khám phá những gì một tổng đài viên khác có thể làm. Các giao thức cung cấp ngôn ngữ chung giúp hệ thống đa tác nhân trở nên đáng tin cậy."
     },
     {
       "stage": "post",
-      "question": "How does ACP (Agent Communication Protocol) differ from A2A in its design goals?",
-      "options": ["ACP is faster than A2A for real-time applications", "ACP focuses on enterprise auditability with full message history and compliance tracking, while A2A focuses on lightweight task delegation", "ACP only works within a single organization while A2A works across organizations", "ACP uses WebSockets while A2A uses HTTP"],
+      "question": "ACP (Giao thức truyền thông tác nhân) khác với A2A về mục tiêu thiết kế như thế nào?",
+      "options": [
+        "ACP nhanh hơn A2A cho các ứng dụng thời gian thực",
+        "ACP tập trung vào khả năng kiểm tra của doanh nghiệp với lịch sử thông báo đầy đủ và theo dõi tuân thủ, trong khi A2A tập trung vào phân công nhiệm vụ nhẹ",
+        "ACP chỉ hoạt động trong một tổ chức trong khi A2A hoạt động trên nhiều tổ chức",
+        "ACP sử dụng WebSockets trong khi A2A sử dụng HTTP"
+      ],
       "correct": 1,
-      "explanation": "ACP was designed for enterprise environments where every agent interaction must be auditable, traceable, and compliant. A2A is simpler and focuses on getting tasks done. ACP adds the governance layer that regulated industries require."
+      "explanation": "ACP được thiết kế cho môi trường doanh nghiệp nơi mọi tương tác của tác nhân phải có thể kiểm tra, theo dõi và tuân thủ. A2A đơn giản hơn và tập trung vào việc hoàn thành nhiệm vụ. ACP bổ sung lớp quản trị mà các ngành quản lý yêu cầu."
     }
   ]
 }
