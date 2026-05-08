@@ -30,3 +30,41 @@
 2. Одна фраза: что она делает.
 3. Где запускать: `PowerShell` / `Cursor bash` / `WSL` / `внутри репо` и т.п.
 4. Если команд несколько — нумерованный список, по одной команде на пункт.
+
+## Окружение и доступ к файлам
+
+Сессия Claude запускается в **Claude Desktop на Windows**. Проект живёт в
+**WSL Ubuntu** в Linux-ФС: `/home/<user>/ai-engineering-from-scratch`.
+Имя WSL-пользователя и имя дистрибутива зависят от машины — не хардкодить.
+
+Полная процедура настройки на новой машине: см. [`setup.md`](setup.md).
+
+### Как Claude обращается к файлам проекта
+
+| Операция | Способ |
+|---|---|
+| Прочитать / отредактировать / создать файл | UNC-путь `\\wsl$\<DISTRO>\home\<USER>\ai-engineering-from-scratch\…` через `Read` / `Edit` / `Write` |
+| Read-only shell-инспекция в WSL (`git status`, `ls`, `grep`, `cat`) | `wsl bash -c "cd ~/ai-engineering-from-scratch && <команда>"` |
+| Команды с побочными эффектами (commit, push, install, скрипты) | По Правилу 1 — выдать команду, не запускать |
+
+### Подводные камни
+
+- `wsl --cd <linux-path> <cmd>` из Git Bash на Windows **не работает**: Git Bash
+  транслирует Linux-путь в Windows-путь, и `wsl` получает мусор. Использовать
+  форму `wsl bash -c "cd ~/<path> && <cmd>"` с `cd` внутри quoted-строки.
+- Имя дистрибутива не всегда `Ubuntu` (бывает `Ubuntu-24.04`, `Debian` и т.п.).
+- При записи через UNC line endings сохраняются как есть. Файлы репо должны
+  оставаться с LF.
+
+### При старте на незнакомой машине
+
+В первой же команде получить параметры WSL:
+
+```
+wsl -l -q                                            # имя дистрибутива (первая строка = default)
+wsl bash -c "whoami"                                 # имя WSL-пользователя
+wsl bash -c "ls -d ~/ai-engineering-from-scratch"    # склонирован ли репо
+```
+
+Из этого собрать UNC `\\wsl$\<DISTRO>\home\<USER>\ai-engineering-from-scratch\…`
+и работать. Если репо не склонирован — идти в [`setup.md`](setup.md).
