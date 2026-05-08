@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lesson - AI Engineering from Scratch</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d18'/><text x='4' y='23' font-size='18' font-weight='bold' font-family='system-ui' fill='%23ff6b6b'>AI</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
   <meta name="description" content="AI Engineering from Scratch - Lesson Viewer">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260424a">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260508a">
   <style>
     .scroll-progress {
       position: fixed;
@@ -50,7 +50,7 @@
       z-index: 60;
       background: var(--bg-surface);
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       width: 40px;
       height: 40px;
       cursor: pointer;
@@ -421,7 +421,7 @@
       font-size: 0.88em;
       background: var(--code-bg);
       padding: 2px 6px;
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       color: var(--accent);
     }
 
@@ -497,7 +497,7 @@
     .lesson-article .table-wrap {
       overflow-x: auto;
       margin: 20px 0;
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       border: 2px solid var(--border);
     }
 
@@ -883,7 +883,7 @@
       font-size: 0.75rem;
       padding: 4px 12px;
       border: 1px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       color: var(--text-muted);
       background: var(--bg-surface);
     }
@@ -905,7 +905,7 @@
       padding: 16px 20px;
       background: var(--bg-surface);
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       text-decoration: none;
       transition: transform 0.2s, box-shadow 0.2s;
       max-width: 48%;
@@ -1001,7 +1001,7 @@
 
     .ai-panel {
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       padding: 32px 28px;
       background: var(--bg-surface);
       position: relative;
@@ -1053,7 +1053,7 @@
 
     .output-card {
       border: 2px solid var(--border);
-      border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+      border-radius: 0;
       padding: 20px;
       background: var(--bg);
       transition: transform 0.2s, box-shadow 0.2s;
@@ -1080,7 +1080,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       padding: 2px 10px;
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       margin-bottom: 10px;
     }
 
@@ -1106,7 +1106,7 @@
       font-family: var(--font-mono);
       font-size: 0.7rem;
       padding: 5px 12px;
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       text-decoration: none;
       border: 1px solid var(--border);
       color: var(--text-muted);
@@ -1226,7 +1226,7 @@
 
     .quiz-question {
       border: 2px solid var(--border);
-      border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+      border-radius: 0;
       padding: 20px;
       background: var(--bg);
     }
@@ -1343,7 +1343,7 @@
       text-align: center;
       padding: 24px;
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       background: var(--bg);
       display: none;
     }
@@ -1454,7 +1454,7 @@
       width: 100%;
       height: 8px;
       background: var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       overflow: hidden;
       margin: 16px 0 8px;
     }
@@ -1462,7 +1462,7 @@
     .phase-progress-fill {
       height: 100%;
       background: var(--accent);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       transition: width 0.5s ease;
     }
 
@@ -1481,7 +1481,7 @@
       margin-top: 12px;
       padding: 12px;
       border: 2px dashed var(--complete);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       display: none;
     }
 
@@ -1859,10 +1859,10 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <span class="logo-icon">&#9679;</span> AI from Scratch
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="index.html#phases">Phases</a>
+        <a href="index.html#contents">Contents</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
@@ -1872,8 +1872,8 @@
           <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
         </a>
       </nav>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="theme-icon" id="themeIcon">&#9789;</span>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="theme-icon" id="themeIcon">N</span>
       </button>
     </div>
   </header>
@@ -1932,7 +1932,7 @@
         var icon = document.getElementById('themeIcon');
         if (!icon) return;
         var theme = root.getAttribute('data-theme');
-        icon.innerHTML = theme === 'light' ? '&#9728;' : '&#9789;';
+        icon.textContent = theme === 'light' ? 'N' : 'D';
       }
 
       var btn = document.getElementById('themeToggle');
