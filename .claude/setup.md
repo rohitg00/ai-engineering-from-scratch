@@ -122,7 +122,7 @@ cd ~/ai-engineering-from-scratch && git checkout dev
    `/home/<твой WSL-юзер>/ai-engineering-from-scratch` → Enter →
    `Yes, I trust the authors`.
 
-### 7. Финальная проверка
+### 7. Финальная проверка WSL-клона
 
 В терминале нового Cursor-окна (он откроется в репо):
 
@@ -131,17 +131,51 @@ pwd && git status && git log --oneline -2
 ```
 - Ожидаем: путь `/home/<user>/ai-engineering-from-scratch`, ветка `dev`,
   `nothing to commit, working tree clean`, верхний коммит —
-  `chore(claude): add project working rules`.
+  `chore(claude): add project working rules` (или новее).
+
+### 8. Параллельный Windows-клон (anchor для Claude Desktop)
+
+Claude Desktop при создании локальной сессии требует выбрать папку и
+не работает с UNC-путями к WSL в этом диалоге. Поэтому держим **второй
+клон того же репо в Windows** — только как точку привязки сессии.
+
+В PowerShell (Windows):
+
+```powershell
+cd $env:USERPROFILE\Desktop
+git clone git@github.com:PavelEgorov-ru/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+git checkout dev
+```
+- **Где:** PowerShell или Cursor bash на Windows.
+- Использует SSH-ключ Windows (или HTTPS). Если ключ Windows ещё не привязан
+  к GitHub — добавить аналогично шагу 4, но на стороне Windows.
+
+В этом клоне **не работаем**. Все правки идут в WSL-клон. После пушей из
+WSL — синхронизация:
+
+```powershell
+git -C "$env:USERPROFILE\Desktop\ai-engineering-from-scratch" pull
+```
+- **Где:** PowerShell.
 
 ## Что после этого делает Claude
 
-- Читает `.claude/CLAUDE.md` (раздел «Окружение и доступ к файлам»).
-- Вычисляет имя дистрибутива и пользователя:
-  ```
-  wsl -l -q
-  wsl bash -c "whoami"
-  ```
-- Дальше обращается к файлам по UNC-пути
-  `\\wsl$\<DISTRO>\home\<USER>\ai-engineering-from-scratch\…`.
-- Команды с побочными эффектами выдаёт тебе для запуска в WSL-терминале
-  Cursor.
+- В Claude Desktop при создании сессии указывается **Windows-клон**
+  (`C:\Users\<USER>\Desktop\ai-engineering-from-scratch`) — UNC-путь к WSL
+  в диалоге выбрать нельзя.
+- Claude по умолчанию работает с Windows-клоном для чтения и инспекции
+  структуры.
+- Когда нужны актуальное состояние или правки, Claude переключается на
+  **WSL-клон**:
+  - имя дистрибутива и пользователя получает через
+    ```
+    wsl -l -q
+    wsl bash -c "whoami"
+    ```
+  - читает/правит файлы по UNC `\\wsl$\<DISTRO>\home\<USER>\ai-engineering-from-scratch\…`;
+  - shell-команды — `wsl bash -c "cd ~/ai-engineering-from-scratch && …"`.
+- Команды с побочными эффектами Claude выдаёт пользователю — тот запускает
+  их в WSL-терминале Cursor.
+
+Подробности — в `.claude/CLAUDE.md`, раздел «Окружение и доступ к файлам».
