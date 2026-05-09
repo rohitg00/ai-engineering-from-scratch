@@ -1,132 +1,112 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="AI Engineering from Scratch — reference manual banner">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#191A23;stop-opacity:1" />
-      <stop offset="40%" style="stop-color:#1E1F2A;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#191A23;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="coral" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#D97757;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#E08B6D;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="coralFade" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#D97757;stop-opacity:0.15" />
-      <stop offset="100%" style="stop-color:#D97757;stop-opacity:0" />
-    </linearGradient>
-    <linearGradient id="nodeGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#D97757;stop-opacity:0.6" />
-      <stop offset="100%" style="stop-color:#D97757;stop-opacity:0" />
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <filter id="softGlow">
-      <feGaussianBlur stdDeviation="8" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <pattern id="paper" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="0" cy="0" r="1" fill="#1a1a1a" fill-opacity="0.08"/>
+    </pattern>
+    <pattern id="paperRule" x="0" y="0" width="100" height="6" patternUnits="userSpaceOnUse">
+      <rect width="4" height="3" fill="#3553ff"/>
+      <rect x="8" y="3" width="6" height="3" fill="#3553ff" fill-opacity="0.35"/>
+    </pattern>
+    <style>
+      .face { fill: rgba(53, 83, 255, 0.06); }
+      .face-strong { fill: rgba(53, 83, 255, 0.18); }
+      .stroke-bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+      .display { font-family: 'VT323', ui-monospace, monospace; font-weight: 400; }
+      .serif { font-family: 'Source Serif 4', Georgia, serif; }
+    </style>
   </defs>
 
-  <rect width="1200" height="340" fill="url(#bg)"/>
+  <rect width="1280" height="420" fill="#fafaf5"/>
+  <rect width="1280" height="420" fill="url(#paper)"/>
 
-  <rect x="0" y="0" width="1200" height="340" fill="url(#coralFade)" opacity="0.3"/>
-
-  <g opacity="0.12">
-    <line x1="0" y1="68" x2="1200" y2="68" stroke="#32333F" stroke-width="0.5"/>
-    <line x1="0" y1="136" x2="1200" y2="136" stroke="#32333F" stroke-width="0.5"/>
-    <line x1="0" y1="204" x2="1200" y2="204" stroke="#32333F" stroke-width="0.5"/>
-    <line x1="0" y1="272" x2="1200" y2="272" stroke="#32333F" stroke-width="0.5"/>
-    <line x1="240" y1="0" x2="240" y2="340" stroke="#32333F" stroke-width="0.5"/>
-    <line x1="480" y1="0" x2="480" y2="340" stroke="#32333F" stroke-width="0.5"/>
-    <line x1="720" y1="0" x2="720" y2="340" stroke="#32333F" stroke-width="0.5"/>
-    <line x1="960" y1="0" x2="960" y2="340" stroke="#32333F" stroke-width="0.5"/>
+  <g class="mono" font-size="11" letter-spacing="2.4" fill="#3553ff">
+    <text x="56" y="44">FIG_000  —  REFERENCE MANUAL  V1.0</text>
+  </g>
+  <g class="mono" font-size="11" letter-spacing="2.4" fill="#7a7a78" text-anchor="end">
+    <text x="1224" y="44">© 2026  ·  OPEN SOURCE  ·  MIT LICENSE</text>
   </g>
 
-  <g opacity="0.25" filter="url(#softGlow)">
-    <line x1="60" y1="220" x2="140" y2="180" stroke="#D97757" stroke-width="1.2"/>
-    <line x1="140" y1="180" x2="200" y2="200" stroke="#D97757" stroke-width="1.2"/>
-    <line x1="200" y1="200" x2="260" y2="160" stroke="#D97757" stroke-width="1.2"/>
-    <line x1="260" y1="160" x2="340" y2="190" stroke="#D97757" stroke-width="1.2"/>
-    <circle cx="60" cy="220" r="3.5" fill="#D97757"/>
-    <circle cx="140" cy="180" r="4.5" fill="#D97757"/>
-    <circle cx="200" cy="200" r="3" fill="#E08B6D"/>
-    <circle cx="260" cy="160" r="5" fill="#D97757"/>
-    <circle cx="340" cy="190" r="3.5" fill="#E08B6D"/>
+  <line x1="56" y1="64" x2="1224" y2="64" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.4"/>
+
+  <g transform="translate(56, 110)">
+    <text class="display" x="0" y="58" font-size="68" letter-spacing="1.5" fill="#3553ff">AI ENGINEERING</text>
+    <text class="display" x="0" y="124" font-size="68" letter-spacing="1.5" fill="#1a1a1a">FROM SCRATCH.</text>
   </g>
 
-  <g opacity="0.25" filter="url(#softGlow)">
-    <line x1="860" y1="190" x2="920" y2="155" stroke="#D97757" stroke-width="1.2"/>
-    <line x1="920" y1="155" x2="980" y2="175" stroke="#D97757" stroke-width="1.2"/>
-    <line x1="980" y1="175" x2="1050" y2="145" stroke="#D97757" stroke-width="1.2"/>
-    <line x1="1050" y1="145" x2="1130" y2="170" stroke="#D97757" stroke-width="1.2"/>
-    <circle cx="860" cy="190" r="4" fill="#E08B6D"/>
-    <circle cx="920" cy="155" r="3.5" fill="#D97757"/>
-    <circle cx="980" cy="175" r="5" fill="#D97757"/>
-    <circle cx="1050" cy="145" r="3" fill="#E08B6D"/>
-    <circle cx="1130" cy="170" r="4" fill="#D97757"/>
+  <g class="serif" font-size="17" fill="#1a1a1a">
+    <text x="56" y="296">A reference manual for people who want to design and build AI systems from first principles.</text>
+  </g>
+  <g class="mono" font-size="11" letter-spacing="2.4" fill="#7a7a78">
+    <text x="56" y="324">20 PHASES  ·  280+ LESSONS  ·  PYTHON · TYPESCRIPT · RUST · JULIA</text>
   </g>
 
-  <g opacity="0.15">
-    <line x1="140" y1="180" x2="920" y2="155" stroke="#D97757" stroke-width="0.5" stroke-dasharray="4,8"/>
-    <line x1="260" y1="160" x2="1050" y2="145" stroke="#D97757" stroke-width="0.5" stroke-dasharray="4,8"/>
+  <line x1="780" y1="110" x2="780" y2="350" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.4" stroke-dasharray="3 3"/>
+
+  <g transform="translate(820, 130)">
+    <g class="mono" font-size="9" letter-spacing="2" fill="#3553ff">
+      <text x="0" y="-10">FIG_000.A  —  CURRICULUM STACK</text>
+    </g>
+
+    <g transform="translate(8, 32)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
+    </g>
+    <g transform="translate(14, 60)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
+    </g>
+    <g transform="translate(20, 88)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
+    </g>
+    <g transform="translate(26, 116)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
+    </g>
+    <g transform="translate(32, 144)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
+    </g>
+    <g transform="translate(38, 172)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
+    </g>
+    <g transform="translate(44, 200)">
+      <polygon class="face-strong" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 110,-26 200,-13 90,13"/>
+    </g>
+
+    <g class="stroke-bp" stroke-width="0.8" stroke-dasharray="3 3">
+      <line x1="208" y1="19" x2="278" y2="19"/>
+      <line x1="214" y1="47" x2="278" y2="47"/>
+      <line x1="220" y1="75" x2="278" y2="75"/>
+      <line x1="226" y1="103" x2="278" y2="103"/>
+      <line x1="232" y1="131" x2="278" y2="131"/>
+      <line x1="238" y1="159" x2="278" y2="159"/>
+      <line x1="244" y1="187" x2="278" y2="187"/>
+    </g>
+
+    <g class="mono" font-size="9" letter-spacing="1.6" fill="#3553ff">
+      <text x="288" y="22">SETUP &amp; TOOLING</text>
+      <text x="288" y="50">MATH FOUNDATIONS</text>
+      <text x="288" y="78">ML FUNDAMENTALS</text>
+      <text x="288" y="106">DEEP LEARNING · RL</text>
+      <text x="288" y="134">VISION · SPEECH · NLP</text>
+      <text x="288" y="162">LLMS · TRANSFORMERS</text>
+      <text x="288" y="190">AGENTS · SWARMS · PROD</text>
+    </g>
+    <g class="mono" font-size="8" letter-spacing="1.4" fill="#7a7a78">
+      <text x="288" y="33">PHASE 00</text>
+      <text x="288" y="61">PHASE 01</text>
+      <text x="288" y="89">PHASE 02</text>
+      <text x="288" y="117">PHASE 03 · 09</text>
+      <text x="288" y="145">PHASE 04 · 05 · 06</text>
+      <text x="288" y="173">PHASE 07 · 08 · 10 · 12</text>
+      <text x="288" y="201">PHASE 13–19</text>
+    </g>
   </g>
 
-  <g opacity="0.3">
-    <circle cx="90" cy="40" r="1.5" fill="#D97757"/>
-    <circle cx="250" cy="55" r="1" fill="#E08B6D"/>
-    <circle cx="420" cy="35" r="1.5" fill="#D97757"/>
-    <circle cx="580" cy="50" r="1" fill="#E08B6D"/>
-    <circle cx="780" cy="38" r="1.5" fill="#D97757"/>
-    <circle cx="950" cy="55" r="1" fill="#E08B6D"/>
-    <circle cx="1100" cy="42" r="1.5" fill="#D97757"/>
-    <circle cx="170" cy="305" r="1" fill="#E08B6D"/>
-    <circle cx="450" cy="315" r="1.5" fill="#D97757"/>
-    <circle cx="750" cy="308" r="1" fill="#E08B6D"/>
-    <circle cx="1020" cy="320" r="1.5" fill="#D97757"/>
-  </g>
-
-  <text x="600" y="95" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="52" font-weight="800" fill="#E8E6E3" text-anchor="middle" letter-spacing="-1.5">
-    AI Engineering
-  </text>
-  <text x="600" y="138" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="300" fill="#908F8B" text-anchor="middle" letter-spacing="8">
-    FROM SCRATCH
-  </text>
-
-  <rect x="400" y="152" width="400" height="2.5" rx="1.25" fill="url(#coral)" opacity="0.7"/>
-
-  <text x="600" y="190" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15" fill="#908F8B" text-anchor="middle" letter-spacing="1">
-    Learn it. Build it. Ship it for others.
-  </text>
-
-  <g>
-    <text x="600" y="228" font-family="'SF Mono', 'Fira Code', 'Cascadia Code', monospace" font-size="13" fill="#555460" text-anchor="middle" letter-spacing="0.5">
-      260+ lessons  &#183;  20 phases  &#183;  60 complete  &#183;  Math to Agent Swarms
-    </text>
-  </g>
-
-  <g transform="translate(365, 252)">
-    <rect x="0" y="0" width="82" height="28" rx="14" fill="rgba(217,119,87,0.1)" stroke="#D97757" stroke-width="1"/>
-    <text x="41" y="18" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#D97757" text-anchor="middle">Python</text>
-
-    <rect x="96" y="0" width="106" height="28" rx="14" fill="rgba(217,119,87,0.06)" stroke="#908F8B" stroke-width="0.8"/>
-    <text x="149" y="18" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#908F8B" text-anchor="middle">TypeScript</text>
-
-    <rect x="216" y="0" width="68" height="28" rx="14" fill="rgba(217,119,87,0.06)" stroke="#908F8B" stroke-width="0.8"/>
-    <text x="250" y="18" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#908F8B" text-anchor="middle">Rust</text>
-
-    <rect x="298" y="0" width="68" height="28" rx="14" fill="rgba(217,119,87,0.06)" stroke="#908F8B" stroke-width="0.8"/>
-    <text x="332" y="18" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" fill="#908F8B" text-anchor="middle">Julia</text>
-  </g>
-
-  <g opacity="0.08">
-    <text x="600" y="330" font-family="system-ui, sans-serif" font-size="10" fill="#E8E6E3" text-anchor="middle" letter-spacing="2">
-      OPEN SOURCE  &#183;  MIT LICENSE  &#183;  ROHITG00
-    </text>
-  </g>
+  <rect x="0" y="408" width="1280" height="6" fill="url(#paperRule)"/>
+  <line x1="0" y1="404" x2="1280" y2="404" stroke="#1a1a1a" stroke-opacity="0.16" stroke-width="0.8"/>
 </svg>

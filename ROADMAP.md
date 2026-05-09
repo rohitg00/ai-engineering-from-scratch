@@ -1,10 +1,12 @@
 # Roadmap
 
-Progress tracking for every phase and lesson.
+Status tracker for every phase and lesson. The status glyphs in this file feed
+the website (`site/build.js` parses them into `site/data.js`); do not change
+their shape.
 
-**Total estimated time: ~304 hours (at your own pace)**
+Total estimated time: ~304 hours, at your own pace.
 
-**Legend:** ✅ Complete | 🚧 In Progress | ⬚ Planned
+**Legend:** ✅ Complete &nbsp;·&nbsp; 🚧 In Progress &nbsp;·&nbsp; ⬚ Planned
 
 ## Phase 0: Setup & Tooling — ✅ (~14 hours)
 
