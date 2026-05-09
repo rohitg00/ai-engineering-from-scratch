@@ -1697,7 +1697,7 @@
 
         if (currentPhaseIndex >= 0) {
           var phase = PHASES[currentPhaseIndex];
-          html += '<div class="sidebar-phase-header">Phase ' + String(phase.id).padStart(2, '0') + ' &mdash; ' + escapeHtml(phase.name) + '</div>';
+          html += '<div class="sidebar-phase-header">Phase ' + String(phase.id).padStart(2, '0') + ' · ' + escapeHtml(phase.name) + '</div>';
           for (var k = 0; k < phase.lessons.length; k++) {
             var les = phase.lessons[k];
             var lesSlug = extractLessonSlug(les, k);
@@ -2737,8 +2737,8 @@
 
       function langIcon(filename) {
         var ext = filename.split('.').pop().toLowerCase();
-        var map = { py: '\u{1F40D}', python: '\u{1F40D}', ts: '\u{1F535}', js: '\u{1F7E1}', rust: '\u{1F9E0}', rs: '\u{1F9E0}', jl: '\u{1F7E2}', julia: '\u{1F7E2}', sh: '\u{1F4BB}', bash: '\u{1F4BB}' };
-        return map[ext] || '\u{1F4C4}';
+        var map = { py: 'PY', python: 'PY', ts: 'TS', js: 'JS', rust: 'RS', rs: 'RS', jl: 'JL', julia: 'JL', sh: 'SH', bash: 'SH' };
+        return map[ext] || '··';
       }
 
       function langCommand(filename) {
@@ -2767,7 +2767,7 @@
       function renderOutputsPanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon coral">\u{1F4E6}</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
         container.appendChild(panel);
 
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
@@ -2825,7 +2825,7 @@
       function renderCodePanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon blue">\u{1F4BB}</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
         container.appendChild(panel);
 
         ghApiFetch(lessonPath + '/code', function (err, data) {
@@ -2943,7 +2943,7 @@
           phase = fl.phaseSlug || '';
         }
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon green">\u{1F9E0}</div><div class="ai-panel-title">Test Your Understanding</div></div>';
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div>';
         html += '<div class="ai-panel-subtitle">Did you get it?</div>';
         html += '<div class="quiz-container" id="quizContainer">';
 
@@ -3035,7 +3035,7 @@
           }
         }
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon coral">\u{1F5FA}</div><div class="ai-panel-title">Learning Path</div></div>';
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Learning Path</div></div>';
         html += '<div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
 
         html += '<div class="learning-timeline">';
@@ -3090,7 +3090,7 @@
         var phaseIdx = current.phaseIndex;
         var phase = PHASES[phaseIdx];
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon blue">\u{1F680}</div><div class="ai-panel-title">Continue Learning</div></div>';
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Learning</div></div>';
         html += '<div class="continue-panel">';
 
         if (!next || !next.path) {

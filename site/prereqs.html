@@ -411,7 +411,7 @@
     <div class="container">
       <div class="prereqs-header">
         <h1>Roadmap</h1>
-        <p>Click any phase to see what you need to learn first &mdash; and what it unlocks next.</p>
+        <p>Click any phase to see its prerequisites and what it unlocks downstream.</p>
       </div>
 
       <div class="prereqs-controls">
@@ -437,7 +437,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>AI Engineering from Scratch &mdash; open source, free forever.</p>
+      <p>AI Engineering from Scratch · open source · free forever.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
@@ -925,7 +925,7 @@
         }
         prereqHtml += '</ul>';
       } else {
-        prereqHtml = '<div class="detail-empty">None — this is a starting point!</div>';
+        prereqHtml = '<div class="detail-empty">None. This is a starting point.</div>';
       }
 
       /* Unlocks list */
@@ -940,7 +940,7 @@
         }
         unlockHtml += '</ul>';
       } else {
-        unlockHtml = '<div class="detail-empty">Final destination — you made it!</div>';
+        unlockHtml = '<div class="detail-empty">Final destination. End of the curriculum.</div>';
       }
 
       /* Compute exact GitHub tree URL using standard slug logic */
