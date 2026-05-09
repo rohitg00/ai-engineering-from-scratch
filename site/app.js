@@ -89,32 +89,11 @@
     setBar('[data-bar="phases"]', phasePct);
     setBar('[data-bar="languages"]', 100);
     setBar('[data-bar="glossary"]', glossaryCount > 0 ? 100 : 0);
-
-    var legacyEls = document.querySelectorAll('.stat-number[data-target]');
-    for (var i = 0; i < legacyEls.length; i++) {
-      var key = legacyEls[i].getAttribute('data-target');
-      if (stats[key] !== undefined) {
-        animateCount(legacyEls[i], stats[key]);
-      }
-    }
   }
 
   function setText(selector, value) {
     var el = document.querySelector(selector);
     if (el) el.textContent = value;
-  }
-
-  function animateCount(el, target) {
-    var startTime = null;
-    var duration = 900;
-    function tick(ts) {
-      if (!startTime) startTime = ts;
-      var progress = Math.min((ts - startTime) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target);
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
   }
 
   function renderPhases() {
@@ -310,11 +289,13 @@
     var btn = document.getElementById('copyBtn');
     var code = document.getElementById('cloneCmd');
     if (!btn || !code) return;
+    var originalLabel = btn.textContent;
+    var revertTimer = null;
     btn.addEventListener('click', function () {
       navigator.clipboard.writeText(code.textContent).then(function () {
-        var prev = btn.textContent;
         btn.textContent = '✓';
-        setTimeout(function () { btn.textContent = prev || 'cp'; }, 1500);
+        if (revertTimer) clearTimeout(revertTimer);
+        revertTimer = setTimeout(function () { btn.textContent = originalLabel; }, 1500);
       });
     });
   }

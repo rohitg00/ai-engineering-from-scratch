@@ -1533,9 +1533,9 @@
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
   </div>
 
-  <script src="data.js?v=20260424a"></script>
-  <script src="progress.js?v=20260424a"></script>
-  <script src="header.js?v=20260424a" defer></script>
+  <script src="data.js?v=20260508a"></script>
+  <script src="progress.js?v=20260508a"></script>
+  <script src="header.js?v=20260508a" defer></script>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     mermaid.initialize({
@@ -1551,7 +1551,9 @@
       var stored = localStorage.getItem('theme');
       if (stored) {
         root.setAttribute('data-theme', stored);
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+      } else {
         root.setAttribute('data-theme', 'light');
       }
       updateThemeIcon();
