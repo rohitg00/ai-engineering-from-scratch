@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="FIG_005 — exploded view of multi-head attention block in a transformer encoder">
+  <defs>
+    <pattern id="paper" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="0" cy="0" r="1" fill="#1a1a1a" fill-opacity="0.06"/>
+    </pattern>
+    <style>
+      .mute { fill: #7a7a78; }
+      .bp { fill: #3553ff; }
+      .face { fill: rgba(53, 83, 255, 0.06); }
+      .face-strong { fill: rgba(53, 83, 255, 0.18); }
+      .stroke { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="800" fill="#fafaf5"/>
+  <rect width="1200" height="800" fill="url(#paper)"/>
+
+  <text class="mono bp" x="40" y="44" font-size="11" letter-spacing="2.4">FIG_005</text>
+  <text class="mono mute" x="1160" y="44" font-size="11" letter-spacing="2.4" text-anchor="end">PHASE 07 · LESSON 01 · MULTI-HEAD ATTENTION</text>
+  <line x1="40" y1="64" x2="1160" y2="64" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.35"/>
+
+  <!-- Stack of 4 heads, isometric exploded -->
+  <g transform="translate(160, 180)">
+    <!-- 4 heads stacked back-to-front, each with Q K V slots -->
+    <g transform="translate(0, 240)">
+      <polygon class="face-strong" points="0,0 320,-100 480,-50 160,50"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-100 480,-50 160,50"/>
+      <text class="mono bp" x="40" y="-30" font-size="11" letter-spacing="1.6">HEAD 4 · OUTPUT</text>
+    </g>
+    <g transform="translate(20, 180)">
+      <polygon class="face" points="0,0 320,-100 480,-50 160,50"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-100 480,-50 160,50"/>
+      <text class="mono bp" x="40" y="-30" font-size="11" letter-spacing="1.6">HEAD 3</text>
+    </g>
+    <g transform="translate(40, 120)">
+      <polygon class="face" points="0,0 320,-100 480,-50 160,50"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-100 480,-50 160,50"/>
+      <text class="mono bp" x="40" y="-30" font-size="11" letter-spacing="1.6">HEAD 2</text>
+    </g>
+    <g transform="translate(60, 60)">
+      <polygon class="face" points="0,0 320,-100 480,-50 160,50"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-100 480,-50 160,50"/>
+      <text class="mono bp" x="40" y="-30" font-size="11" letter-spacing="1.6">HEAD 1</text>
+    </g>
+
+    <!-- Q K V vectors on top head, drawn as 3 small parallelograms -->
+    <g transform="translate(80, 0)">
+      <g transform="translate(20, 10)">
+        <rect class="face-strong" x="0" y="0" width="60" height="20" transform="skewX(-22)"/>
+        <rect class="stroke" stroke-width="1" x="0" y="0" width="60" height="20" transform="skewX(-22)"/>
+        <text class="mono bp" x="20" y="-6" font-size="10" letter-spacing="1.4">Q</text>
+      </g>
+      <g transform="translate(120, 10)">
+        <rect class="face-strong" x="0" y="0" width="60" height="20" transform="skewX(-22)"/>
+        <rect class="stroke" stroke-width="1" x="0" y="0" width="60" height="20" transform="skewX(-22)"/>
+        <text class="mono bp" x="20" y="-6" font-size="10" letter-spacing="1.4">K</text>
+      </g>
+      <g transform="translate(220, 10)">
+        <rect class="face-strong" x="0" y="0" width="60" height="20" transform="skewX(-22)"/>
+        <rect class="stroke" stroke-width="1" x="0" y="0" width="60" height="20" transform="skewX(-22)"/>
+        <text class="mono bp" x="20" y="-6" font-size="10" letter-spacing="1.4">V</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- right-side leader lines + labels -->
+  <g class="stroke" stroke-width="0.8" stroke-dasharray="3 3">
+    <line x1="700" y1="160" x2="800" y2="120"/>
+    <line x1="720" y1="240" x2="800" y2="220"/>
+    <line x1="740" y1="320" x2="800" y2="320"/>
+    <line x1="760" y1="400" x2="800" y2="420"/>
+    <line x1="650" y1="200" x2="800" y2="540"/>
+    <line x1="650" y1="220" x2="800" y2="600"/>
+  </g>
+
+  <g class="mono bp" font-size="11" letter-spacing="1.6">
+    <text x="810" y="124">HEAD 1 · LOCAL SYNTAX</text>
+    <text x="810" y="224">HEAD 2 · NOUN-ADJ DEPS</text>
+    <text x="810" y="324">HEAD 3 · LONG-RANGE COREF</text>
+    <text x="810" y="424">HEAD 4 · OUTPUT POSITION</text>
+    <text x="810" y="544">EACH HEAD HAS ITS OWN W_Q, W_K, W_V</text>
+    <text x="810" y="604">CONCAT(HEADS) · W_O  →  D_MODEL DIM</text>
+  </g>
+  <g class="mono mute" font-size="9" letter-spacing="1.4">
+    <text x="810" y="138">attends to neighbors only</text>
+    <text x="810" y="238">attends from a noun back to its modifier</text>
+    <text x="810" y="338">attends across the sentence to track entities</text>
+    <text x="810" y="438">attends to the next-token slot</text>
+  </g>
+
+  <!-- math underneath -->
+  <g transform="translate(80, 660)">
+    <text class="mono ink" x="0" y="0" font-size="13" letter-spacing="0.6">Attention(Q, K, V) = softmax( Q · Kᵀ / √d_k ) · V</text>
+    <text class="mono mute" x="0" y="22" font-size="10" letter-spacing="1.4">PER HEAD · D_K = D_MODEL / N_HEADS</text>
+  </g>
+
+  <line x1="40" y1="740" x2="1160" y2="740" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.35"/>
+  <text class="mono mute" x="1160" y="768" font-size="10" letter-spacing="2" text-anchor="end">© FIG_005 · MULTI-HEAD ATTENTION · MIT</text>
+</svg>
