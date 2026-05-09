@@ -2108,8 +2108,11 @@
             out += flushList();
             out += flushBlockquote();
             if (!inTable) inTable = true;
-            var cells = line.split('|').slice(1, -1);
-            tableRows.push(cells.map(function (c) { return c.trim(); }));
+            // GFM tables allow `\|` to represent a literal pipe inside a cell.
+            // Split on unescaped pipes only, then unescape `\|` -> `|` before
+            // handing cells to inlineFormat.
+            var cells = line.split(/(?<!\\)\|/).slice(1, -1);
+            tableRows.push(cells.map(function (c) { return c.replace(/\\\|/g, '|').trim(); }));
             continue;
           } else if (inTable) {
             out += flushTable();
