@@ -908,6 +908,22 @@
       height: auto;
     }
 
+    .lesson-article .mermaid-render foreignObject p,
+    .lesson-article .mermaid-render foreignObject span,
+    .mermaid-modal-body foreignObject p,
+    .mermaid-modal-body foreignObject span {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      text-align: center;
+      text-transform: none;
+      margin: 0;
+      hyphens: none;
+      -webkit-hyphens: none;
+      color: var(--ink);
+    }
+
     .lesson-nav-bottom {
       display: flex;
       justify-content: space-between;
@@ -1557,7 +1573,17 @@
     mermaid.initialize({
       startOnLoad: false,
       theme: document.documentElement.getAttribute('data-theme') === 'light' ? 'default' : 'dark',
-      fontFamily: 'Patrick Hand, cursive'
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      themeVariables: {
+        fontSize: '13px'
+      },
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        nodeSpacing: 40,
+        rankSpacing: 50,
+        padding: 12
+      }
     });
     window._mermaidReady = mermaid;
   </script>
@@ -2343,12 +2369,21 @@
       }
 
       function renderMermaidBlocks() {
+        var fontsReady = (document.fonts && document.fonts.load)
+          ? Promise.all([
+              document.fonts.load('400 13px "JetBrains Mono"'),
+              document.fonts.load('500 13px "JetBrains Mono"'),
+              document.fonts.load('700 13px "JetBrains Mono"')
+            ]).catch(function () {})
+          : Promise.resolve();
         var check = setInterval(function () {
           if (!window._mermaidReady) return;
           clearInterval(check);
-          rerenderMermaidBlocks();
-          bindMermaidToolbar();
-          initMermaidModal();
+          fontsReady.then(function () {
+            rerenderMermaidBlocks();
+            bindMermaidToolbar();
+            initMermaidModal();
+          });
         }, 100);
         setTimeout(function () { clearInterval(check); }, 10000);
       }
@@ -2360,7 +2395,13 @@
       function updateMermaidThemeAndRerender() {
         if (!window._mermaidReady) return;
         try {
-          window._mermaidReady.initialize({ startOnLoad: false, theme: mermaidTheme(), fontFamily: 'Patrick Hand, cursive' });
+          window._mermaidReady.initialize({
+            startOnLoad: false,
+            theme: mermaidTheme(),
+            fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+            themeVariables: { fontSize: '13px' },
+            flowchart: { useMaxWidth: true, htmlLabels: true, nodeSpacing: 40, rankSpacing: 50, padding: 12 }
+          });
         } catch (_) {}
         rerenderMermaidBlocks();
         rerenderMermaidModal();
