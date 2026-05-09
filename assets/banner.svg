@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-label="AI Engineering from Scratch — reference manual banner">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="AI Engineering from Scratch — reference manual banner">
   <defs>
     <pattern id="paper" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
       <circle cx="0" cy="0" r="1" fill="#1a1a1a" fill-opacity="0.08"/>
@@ -17,88 +17,96 @@
     </style>
   </defs>
 
-  <rect width="1200" height="360" fill="#fafaf5"/>
-  <rect width="1200" height="360" fill="url(#paper)"/>
+  <rect width="1280" height="420" fill="#fafaf5"/>
+  <rect width="1280" height="420" fill="url(#paper)"/>
 
   <g class="mono" font-size="11" letter-spacing="2.4" fill="#3553ff">
-    <text x="48" y="44">FIG_000  —  REFERENCE MANUAL  V1.0</text>
+    <text x="56" y="44">FIG_000  —  REFERENCE MANUAL  V1.0</text>
   </g>
   <g class="mono" font-size="11" letter-spacing="2.4" fill="#7a7a78" text-anchor="end">
-    <text x="1152" y="44">© 2026  ·  OPEN SOURCE  ·  MIT LICENSE</text>
+    <text x="1224" y="44">© 2026  ·  OPEN SOURCE  ·  MIT LICENSE</text>
   </g>
 
-  <g transform="translate(48, 96)">
-    <text class="display" x="0" y="80" font-size="96" letter-spacing="2" fill="#3553ff">AI  ENGINEERING</text>
-    <text class="display" x="0" y="172" font-size="96" letter-spacing="2" fill="#1a1a1a">FROM  SCRATCH.</text>
+  <line x1="56" y1="64" x2="1224" y2="64" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.4"/>
+
+  <g transform="translate(56, 110)">
+    <text class="display" x="0" y="58" font-size="68" letter-spacing="1.5" fill="#3553ff">AI ENGINEERING</text>
+    <text class="display" x="0" y="124" font-size="68" letter-spacing="1.5" fill="#1a1a1a">FROM SCRATCH.</text>
   </g>
 
-  <g class="serif" font-size="16" fill="#1a1a1a">
-    <text x="48" y="296">A reference manual for people who want to design and build AI systems from first principles.</text>
+  <g class="serif" font-size="17" fill="#1a1a1a">
+    <text x="56" y="296">A reference manual for people who want to design and build AI systems from first principles.</text>
   </g>
-  <g class="mono" font-size="11" letter-spacing="2" fill="#7a7a78">
-    <text x="48" y="320">20 PHASES  ·  280+ LESSONS  ·  PYTHON · TYPESCRIPT · RUST · JULIA</text>
+  <g class="mono" font-size="11" letter-spacing="2.4" fill="#7a7a78">
+    <text x="56" y="324">20 PHASES  ·  280+ LESSONS  ·  PYTHON · TYPESCRIPT · RUST · JULIA</text>
   </g>
 
-  <g transform="translate(820, 100)">
+  <line x1="780" y1="110" x2="780" y2="350" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.4" stroke-dasharray="3 3"/>
+
+  <g transform="translate(820, 130)">
     <g class="mono" font-size="9" letter-spacing="2" fill="#3553ff">
-      <text x="0" y="-8">FIG_000.A  —  CURRICULUM STACK</text>
+      <text x="0" y="-10">FIG_000.A  —  CURRICULUM STACK</text>
     </g>
 
-    <g transform="translate(56, 168)">
-      <polygon class="face-strong" points="0,0 160,-46 280,-22 120,24"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 160,-46 280,-22 120,24"/>
-      <text class="mono" x="20" y="14" font-size="9" letter-spacing="1.6" fill="#3553ff">AGENTS · SWARMS · PRODUCTION</text>
+    <g transform="translate(8, 32)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
     </g>
-    <g transform="translate(48, 142)">
-      <polygon class="face" points="0,0 160,-46 280,-22 120,24"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 160,-46 280,-22 120,24"/>
-      <text class="mono" x="20" y="14" font-size="9" letter-spacing="1.6" fill="#3553ff">LLMS · TRANSFORMERS · MULTIMODAL</text>
+    <g transform="translate(14, 60)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
     </g>
-    <g transform="translate(40, 116)">
-      <polygon class="face" points="0,0 160,-46 280,-22 120,24"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 160,-46 280,-22 120,24"/>
-      <text class="mono" x="20" y="14" font-size="9" letter-spacing="1.6" fill="#3553ff">VISION · SPEECH · NLP</text>
+    <g transform="translate(20, 88)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
     </g>
-    <g transform="translate(32, 90)">
-      <polygon class="face" points="0,0 160,-46 280,-22 120,24"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 160,-46 280,-22 120,24"/>
-      <text class="mono" x="20" y="14" font-size="9" letter-spacing="1.6" fill="#3553ff">DEEP LEARNING · RL</text>
+    <g transform="translate(26, 116)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
     </g>
-    <g transform="translate(24, 64)">
-      <polygon class="face" points="0,0 160,-46 280,-22 120,24"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 160,-46 280,-22 120,24"/>
-      <text class="mono" x="20" y="14" font-size="9" letter-spacing="1.6" fill="#3553ff">ML FUNDAMENTALS</text>
+    <g transform="translate(32, 144)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
     </g>
-    <g transform="translate(16, 38)">
-      <polygon class="face" points="0,0 160,-46 280,-22 120,24"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 160,-46 280,-22 120,24"/>
-      <text class="mono" x="20" y="14" font-size="9" letter-spacing="1.6" fill="#3553ff">MATH FOUNDATIONS</text>
+    <g transform="translate(38, 172)">
+      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
     </g>
-    <g transform="translate(8, 12)">
-      <polygon class="face" points="0,0 160,-46 280,-22 120,24"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 160,-46 280,-22 120,24"/>
-      <text class="mono" x="20" y="14" font-size="9" letter-spacing="1.6" fill="#3553ff">SETUP &amp; TOOLING</text>
+    <g transform="translate(44, 200)">
+      <polygon class="face-strong" points="0,0 110,-26 200,-13 90,13"/>
+      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 110,-26 200,-13 90,13"/>
     </g>
 
     <g class="stroke-bp" stroke-width="0.8" stroke-dasharray="3 3">
-      <line x1="312" y1="-12" x2="372" y2="-12"/>
-      <line x1="304" y1="14" x2="372" y2="14"/>
-      <line x1="296" y1="40" x2="372" y2="40"/>
-      <line x1="288" y1="66" x2="372" y2="66"/>
-      <line x1="280" y1="92" x2="372" y2="92"/>
-      <line x1="272" y1="118" x2="372" y2="118"/>
-      <line x1="264" y1="144" x2="372" y2="144"/>
+      <line x1="208" y1="19" x2="278" y2="19"/>
+      <line x1="214" y1="47" x2="278" y2="47"/>
+      <line x1="220" y1="75" x2="278" y2="75"/>
+      <line x1="226" y1="103" x2="278" y2="103"/>
+      <line x1="232" y1="131" x2="278" y2="131"/>
+      <line x1="238" y1="159" x2="278" y2="159"/>
+      <line x1="244" y1="187" x2="278" y2="187"/>
     </g>
-    <g class="mono" font-size="9" letter-spacing="2" fill="#7a7a78">
-      <text x="382" y="-9">PHASE 00</text>
-      <text x="382" y="17">PHASE 01</text>
-      <text x="382" y="43">PHASE 02 · 03 · 09</text>
-      <text x="382" y="69">PHASE 04 · 05 · 06</text>
-      <text x="382" y="95">PHASE 07 · 08 · 12</text>
-      <text x="382" y="121">PHASE 10 · 11 · 13</text>
-      <text x="382" y="147">PHASE 14–19</text>
+
+    <g class="mono" font-size="9" letter-spacing="1.6" fill="#3553ff">
+      <text x="288" y="22">SETUP &amp; TOOLING</text>
+      <text x="288" y="50">MATH FOUNDATIONS</text>
+      <text x="288" y="78">ML FUNDAMENTALS</text>
+      <text x="288" y="106">DEEP LEARNING · RL</text>
+      <text x="288" y="134">VISION · SPEECH · NLP</text>
+      <text x="288" y="162">LLMS · TRANSFORMERS</text>
+      <text x="288" y="190">AGENTS · SWARMS · PROD</text>
+    </g>
+    <g class="mono" font-size="8" letter-spacing="1.4" fill="#7a7a78">
+      <text x="288" y="33">PHASE 00</text>
+      <text x="288" y="61">PHASE 01</text>
+      <text x="288" y="89">PHASE 02</text>
+      <text x="288" y="117">PHASE 03 · 09</text>
+      <text x="288" y="145">PHASE 04 · 05 · 06</text>
+      <text x="288" y="173">PHASE 07 · 08 · 10 · 12</text>
+      <text x="288" y="201">PHASE 13–19</text>
     </g>
   </g>
 
-  <rect x="0" y="354" width="1200" height="6" fill="url(#paperRule)"/>
+  <rect x="0" y="408" width="1280" height="6" fill="url(#paperRule)"/>
+  <line x1="0" y1="404" x2="1280" y2="404" stroke="#1a1a1a" stroke-opacity="0.16" stroke-width="0.8"/>
 </svg>

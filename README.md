@@ -10,7 +10,9 @@
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
 </p>
 
----
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
 
 > A reference manual for people who want to design and build AI systems from first principles.
 >
@@ -36,7 +38,49 @@ hallucinating tool calls.
 You don't need to be a researcher to read this. You just need to be curious and willing to write
 the code yourself.
 
-## How each lesson is built
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
+## The shape of the curriculum
+
+Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
+Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
+the top is breaking.
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
+flowchart TB
+  P0["Phase 0 — Setup &amp; Tooling"] --> P1["Phase 1 — Math Foundations"]
+  P1 --> P2["Phase 2 — ML Fundamentals"]
+  P2 --> P3["Phase 3 — Deep Learning Core"]
+  P3 --> P4["Phase 4 — Vision"]
+  P3 --> P5["Phase 5 — NLP"]
+  P3 --> P6["Phase 6 — Speech &amp; Audio"]
+  P3 --> P9["Phase 9 — RL"]
+  P5 --> P7["Phase 7 — Transformers"]
+  P7 --> P8["Phase 8 — GenAI"]
+  P7 --> P10["Phase 10 — LLMs from Scratch"]
+  P10 --> P11["Phase 11 — LLM Engineering"]
+  P10 --> P12["Phase 12 — Multimodal"]
+  P11 --> P13["Phase 13 — Tools &amp; Protocols"]
+  P13 --> P14["Phase 14 — Agent Engineering"]
+  P14 --> P15["Phase 15 — Autonomous Systems"]
+  P15 --> P16["Phase 16 — Multi-Agent &amp; Swarms"]
+  P14 --> P17["Phase 17 — Infrastructure &amp; Production"]
+  P15 --> P18["Phase 18 — Ethics &amp; Alignment"]
+  P16 --> P19["Phase 19 — Capstone Projects"]
+  P17 --> P19
+  P18 --> P19
+```
+
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
+## The shape of a lesson
+
+Each lesson lives in its own folder, with the same structure across the entire curriculum:
 
 ```
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
@@ -46,10 +90,19 @@ phases/<NN>-<phase-name>/<NN>-<lesson-name>/
 └── outputs/   prompts, skills, agents, or MCP servers this lesson produces
 ```
 
-Every lesson follows the same six beats: **motto**, **problem**, **concept**, **build it**,
-**use it**, **ship it**. The *Build It / Use It* split is the spine — you implement the algorithm
-from scratch first, then run the same thing through PyTorch, sklearn, or the production library.
-You understand what the framework is doing because you wrote the smaller version yourself.
+Every lesson follows six beats. The *Build It / Use It* split is the spine — you implement the
+algorithm from scratch first, then run the same thing through the production library. You
+understand what the framework is doing because you wrote the smaller version yourself.
+
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["MOTTO<br/><sub>one-line core idea</sub>"] --> Pr["PROBLEM<br/><sub>concrete pain</sub>"]
+  Pr --> C["CONCEPT<br/><sub>diagrams &amp; intuition</sub>"]
+  C --> B["BUILD IT<br/><sub>raw math, no frameworks</sub>"]
+  B --> U["USE IT<br/><sub>same thing in PyTorch / sklearn</sub>"]
+  U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
+```
 
 ## Getting started
 
@@ -66,7 +119,68 @@ Inside Claude Code, the bundled `/find-your-level` skill runs a 10-question quiz
 knowledge to a starting phase and produces a personalized path with hour estimates.
 `/check-understanding <phase>` quizzes you per phase once you finish it.
 
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
+## What you'll build
+
+A worked sample of what a single lesson produces. Phase 14, lesson 1: the agent loop.
+
+<table>
+<tr>
+<td valign="top" width="50%">
+
+**`code/agent_loop.py`** &nbsp; <sub><i>~120 lines, no deps</i></sub>
+
+```python
+def run(query, tools):
+    history = [user(query)]
+    for step in range(MAX_STEPS):
+        msg = llm(history)
+        if msg.tool_calls:
+            for call in msg.tool_calls:
+                result = tools[call.name](**call.args)
+                history.append(tool_result(call.id, result))
+            continue
+        return msg.content
+    raise StepLimitExceeded
+```
+
+</td>
+<td valign="top" width="50%">
+
+**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>installable Claude Code skill</i></sub>
+
+```markdown
 ---
+name: agent-loop
+description: ReAct-style loop for any tool list
+phase: 14
+lesson: 01
+---
+
+Implement a minimal agent loop that...
+```
+
+**`outputs/prompt-debug-agent.md`** &nbsp; <sub><i>copy-paste prompt</i></sub>
+
+```markdown
+You are an agent debugger. Given the trace
+of an agent run, identify the step where
+the agent went wrong and explain why...
+```
+
+</td>
+</tr>
+</table>
+
+Multiply by 280+. By the end you have a portfolio of installable skills, runnable agents, and
+copy-paste prompts that you actually understand because you built them.
+
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
 
 <a id="contents"></a>
 
@@ -668,7 +782,9 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
----
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
 
 ## The toolkit
 
