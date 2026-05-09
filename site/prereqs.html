@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Roadmap - AI Engineering from Scratch</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d18'/><text x='4' y='23' font-size='18' font-weight='bold' font-family='system-ui' fill='%23ff6b6b'>AI</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
   <meta name="description" content="Interactive prerequisite map for 299 AI engineering lessons. See which phases depend on which, and plan your learning path.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260424a">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260508a">
   <style>
     /* ===================================================
        Learning Path — Page Styles
@@ -81,7 +81,7 @@
       padding: 6px 14px;
       background: var(--bg-surface);
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       color: var(--text-muted);
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
@@ -174,10 +174,12 @@
     }
 
     .node-name {
-      font-family: 'Kalam', cursive;
-      font-size: 12.5px;
-      font-weight: 700;
-      fill: var(--text);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 400;
+      fill: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       transition: opacity 0.25s;
     }
 
@@ -210,7 +212,7 @@
       margin: 0 auto;
       background: var(--bg-surface);
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       padding: 28px 24px;
       box-shadow: var(--shadow-hard);
       display: none;
@@ -253,7 +255,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 3px 10px;
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
     }
 
     .detail-status.complete    { background: rgba(90, 184, 143, 0.15); color: var(--complete); border: 1px solid var(--complete); }
@@ -347,7 +349,7 @@
       font-size: 0.75rem;
       padding: 6px 14px;
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       color: var(--text-muted);
       text-decoration: none;
       transition: border-color 0.2s, color 0.2s, transform 0.2s;
@@ -386,10 +388,10 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <span class="logo-icon">&#9679;</span> AI from Scratch
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="index.html#phases">Phases</a>
+        <a href="index.html#contents">Contents</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
@@ -400,7 +402,7 @@
         </a>
       </nav>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="theme-icon" id="themeIcon">&#9789;</span>
+        <span class="theme-icon" id="themeIcon">N</span>
       </button>
     </div>
   </header>
@@ -446,9 +448,9 @@
     </div>
   </footer>
 
-  <script src="data.js?v=20260424a"></script>
-  <script src="progress.js?v=20260424a"></script>
-  <script src="header.js?v=20260424a" defer></script>
+  <script src="data.js?v=20260508a"></script>
+  <script src="progress.js?v=20260508a"></script>
+  <script src="header.js?v=20260508a" defer></script>
   <script>
   (function () {
     /* ===================================================
@@ -458,14 +460,16 @@
     var stored = localStorage.getItem('theme');
     if (stored) {
       root.setAttribute('data-theme', stored);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      root.setAttribute('data-theme', 'dark');
+    } else {
       root.setAttribute('data-theme', 'light');
     }
 
     function updateIcon() {
       var icon = document.getElementById('themeIcon');
       if (!icon) return;
-      icon.innerHTML = root.getAttribute('data-theme') === 'light' ? '&#9728;' : '&#9789;';
+      icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';
     }
 
     updateIcon();
