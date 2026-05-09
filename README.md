@@ -14,10 +14,16 @@
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-> A reference manual for people who want to design and build AI systems from first principles.
+> **84% of students already use AI tools. Only 18% feel prepared to use them
+> professionally.** This curriculum closes that gap.
 >
-> Twenty phases. 280+ lessons. Python, TypeScript, Rust, Julia. Every lesson produces something
-> reusable: prompts, skills, agents, MCP servers. Free, open source, MIT licensed.
+> A reference manual for people who want to design and build AI systems from first principles.
+> Twenty phases. 280+ lessons. ~320 hours. Python, TypeScript, Rust, Julia. Every lesson
+> produces something reusable: prompts, skills, agents, MCP servers. Free, open source,
+> MIT licensed.
+>
+> You don't just learn AI. You learn AI **with** AI. Then you build real things. Then you
+> ship tools others can use.
 
 ## Preface
 
@@ -106,32 +112,85 @@ flowchart LR
 
 ## Getting started
 
+Three ways in. Pick one.
+
+**Option A — read.** Open any completed lesson on
+[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) or expand a phase under
+[Contents](#contents). No setup, no cloning.
+
+**Option B — clone and run.**
+
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
 cd ai-engineering-from-scratch
+python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-Pick any completed lesson from [the website](https://aiengineeringfromscratch.com) or expand a
-phase below. If you already know some ML, skip the assessment forward — the table at the bottom
-maps backgrounds to starting phases.
+**Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude Code:
 
-Inside Claude Code, the bundled `/find-your-level` skill runs a 10-question quiz that maps your
-knowledge to a starting phase and produces a personalized path with hour estimates.
-`/check-understanding <phase>` quizzes you per phase once you finish it.
+```bash
+/find-your-level
+```
+
+Ten questions. Maps your knowledge to a starting phase, builds a personalized path with hour
+estimates. After each phase:
+
+```bash
+/check-understanding 3        # quiz yourself on phase 3
+ls phases/03-deep-learning-core/05-loss-functions/outputs/
+# ├── prompt-loss-function-selector.md
+# └── prompt-loss-debugger.md
+```
+
+### Prerequisites
+
+- You can write code (any language; Python helps).
+- You want to understand how AI **actually works**, not just call APIs.
+
+### Built-in Claude Code skills
+
+| Skill | What it does |
+|---|---|
+| [`/find-your-level`](.claude/skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
+| [`/check-understanding <phase>`](.claude/skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. |
 
 ```
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## What you'll build
+## Every lesson ships something
 
-A worked sample of what a single lesson produces. Phase 14, lesson 1: the agent loop.
+Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
+**reusable tool** you can install or paste into your daily workflow.
+
+<table>
+<tr>
+<th align="left" width="25%"><sub>FIG_001 · A</sub><br/><b>PROMPTS</b></th>
+<th align="left" width="25%"><sub>FIG_001 · B</sub><br/><b>SKILLS</b></th>
+<th align="left" width="25%"><sub>FIG_001 · C</sub><br/><b>AGENTS</b></th>
+<th align="left" width="25%"><sub>FIG_001 · D</sub><br/><b>MCP SERVERS</b></th>
+</tr>
+<tr>
+<td valign="top">Paste into any AI assistant for expert-level help on a narrow task.</td>
+<td valign="top">Drop into Claude Code, Cursor, Codex, or any agent that reads <code>SKILL.md</code>.</td>
+<td valign="top">Deploy as autonomous workers — you wrote the loop yourself in Phase 14.</td>
+<td valign="top">Plug into any MCP-compatible client. Built end-to-end in Phase 13.</td>
+</tr>
+</table>
+
+> Install the lot with [SkillKit](https://github.com/rohitg00/skillkit). Real tools, not
+> homework. By the end of the curriculum, you have a portfolio of 280+ artifacts you actually
+> understand because you built them.
+
+### FIG_002 · A worked sample
+
+Phase 14, lesson 1: the agent loop. ~120 lines of pure Python, no dependencies.
 
 <table>
 <tr>
 <td valign="top" width="50%">
 
-**`code/agent_loop.py`** &nbsp; <sub><i>~120 lines, no deps</i></sub>
+**`code/agent_loop.py`** &nbsp; <sub><i>build it</i></sub>
 
 ```python
 def run(query, tools):
@@ -150,7 +209,7 @@ def run(query, tools):
 </td>
 <td valign="top" width="50%">
 
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>installable Claude Code skill</i></sub>
+**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>ship it</i></sub>
 
 ```markdown
 ---
@@ -163,7 +222,7 @@ lesson: 01
 Implement a minimal agent loop that...
 ```
 
-**`outputs/prompt-debug-agent.md`** &nbsp; <sub><i>copy-paste prompt</i></sub>
+**`outputs/prompt-debug-agent.md`**
 
 ```markdown
 You are an agent debugger. Given the trace
@@ -174,9 +233,6 @@ the agent went wrong and explain why...
 </td>
 </tr>
 </table>
-
-Multiply by 280+. By the end you have a portfolio of installable skills, runnable agents, and
-copy-paste prompts that you actually understand because you built them.
 
 ```
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -811,16 +867,48 @@ Cursor, or any MCP-compatible agent. Real tools, not homework.
 | Know deep learning, want LLMs and agents | Phase 10 — LLMs from Scratch | ~100 hours |
 | Senior engineer, only want agent engineering | Phase 14 — Agent Engineering | ~60 hours |
 
-## Foundational papers covered
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
 
-- *Attention Is All You Need* — Vaswani et al., 2017 → Phase 7
-- *Language Models are Few-Shot Learners* (GPT-3) → Phase 10
-- *Denoising Diffusion Probabilistic Models* → Phase 8
-- *InstructGPT / RLHF* → Phase 10
-- *Direct Preference Optimization* → Phase 10
-- *Chain-of-Thought Prompting* → Phase 11
-- *ReAct: Reasoning + Acting in LLMs* → Phase 14
-- *Model Context Protocol* (Anthropic) → Phase 13
+## Why this matters now
+
+<table>
+<tr>
+<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>THE INDUSTRY SIGNAL</b></th>
+<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>FOUNDATIONAL PAPERS COVERED</b></th>
+</tr>
+<tr>
+<td valign="top">
+
+> *"The hottest new programming language is English."*<br/>
+> — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
+
+> *"Software engineering is being remade in front of our eyes."*<br/>
+> — **Boris Cherny**, creator of Claude Code
+
+> *"Models will keep getting better. The skill that compounds is **knowing what to build**."*<br/>
+> — Industry consensus, 2026
+
+</td>
+<td valign="top">
+
+- *Attention Is All You Need* — Vaswani et al., 2017 → [Phase 7](#phase-7)
+- *Language Models are Few-Shot Learners* (GPT-3) → [Phase 10](#phase-10)
+- *Denoising Diffusion Probabilistic Models* → [Phase 8](#phase-8)
+- *InstructGPT / RLHF* → [Phase 10](#phase-10)
+- *Direct Preference Optimization* → [Phase 10](#phase-10)
+- *Chain-of-Thought Prompting* → [Phase 11](#phase-11)
+- *ReAct: Reasoning + Acting in LLMs* → [Phase 14](#phase-14)
+- *Model Context Protocol* — Anthropic → [Phase 13](#phase-13)
+
+</td>
+</tr>
+</table>
+
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
 
 ## Contributing
 
@@ -833,9 +921,30 @@ Cursor, or any MCP-compatible agent. Real tools, not homework.
 | Glossary | [glossary/terms.md](glossary/terms.md) |
 | Code of conduct | [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) |
 
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
+## Star history
+
+<a href="https://star-history.com/#rohitg00/ai-engineering-from-scratch&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=rohitg00/ai-engineering-from-scratch&type=Date&theme=dark">
+    <img alt="Star history" src="https://api.star-history.com/svg?repos=rohitg00/ai-engineering-from-scratch&type=Date" width="100%">
+  </picture>
+</a>
+
+If this manual helped you, star the repo. It keeps the project alive.
+
 ## License
 
-MIT. Use it however you want — fork it, teach it, sell it, ship it. Attribution appreciated, not
-required.
+MIT. Use it however you want — fork it, teach it, sell it, ship it. Attribution appreciated,
+not required.
 
 Maintained by [Rohit Ghumare](https://github.com/rohitg00) and the community.
+
+<sub>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
+  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Report / Suggest</a>
+</sub>
