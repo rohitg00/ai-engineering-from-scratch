@@ -305,11 +305,15 @@
 
     .colophon-grid {
       display: grid;
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: 200px minmax(0, 1fr);
       gap: 48px;
       font-family: var(--font-body);
       font-size: 0.96rem;
       color: var(--ink-soft);
+    }
+
+    .colophon-grid > div {
+      min-width: 0;
     }
 
     .colophon-eyebrow {
@@ -321,7 +325,7 @@
     }
 
     .colophon-cmd {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 12px;
       margin-top: 16px;
@@ -331,35 +335,67 @@
       font-family: var(--font-mono);
       font-size: 0.85rem;
       color: var(--blueprint);
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .colophon-cmd code {
       white-space: nowrap;
     }
 
+    .colophon-cmd .copy-btn {
+      flex-shrink: 0;
+      position: sticky;
+      right: 0;
+      background: var(--code-bg);
+      padding-left: 8px;
+    }
+
     @media (max-width: 900px) {
+      .manual-masthead { padding: 80px 0 16px; }
+      .preface { padding: 32px 0; }
+      .stat-block { padding: 32px 0; }
+      .toc { padding: 32px 0 40px; }
+      .colophon { padding: 32px 0; }
+
+      .manual-meta-row { margin-bottom: 20px; }
+      .manual-tagline { margin: 20px 0 6px; font-size: 1rem; }
+      .manual-attribution { font-size: 0.9rem; }
+
       .preface-grid,
       .colophon-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 12px;
       }
 
       .preface-body {
         column-count: 1;
+        font-size: 0.98rem;
+        line-height: 1.65;
       }
 
+      .preface-body p:first-of-type::first-letter {
+        font-size: 3.2rem;
+      }
+
+      .stat-rows { gap: 8px; }
       .stat-row {
-        grid-template-columns: 140px 1fr 70px;
-        gap: 10px;
+        grid-template-columns: 160px minmax(0, 1fr) 92px;
+        gap: 12px;
         font-size: 0.82rem;
       }
-
-      .stat-row-bar {
-        font-size: 0.76rem;
-      }
+      .stat-block-title,
+      .toc-title { margin-bottom: 16px; }
+      .toc-subtitle { margin-bottom: 20px; }
 
       .toc-row {
-        grid-template-columns: 40px 1fr auto;
+        grid-template-columns: 36px 1fr auto;
+        padding: 11px 0;
+      }
+
+      .toc-row .toc-meta + .toc-meta {
+        display: none;
       }
 
       .toc-leader {
@@ -368,6 +404,87 @@
 
       .toc-name {
         font-size: 1.1rem;
+      }
+
+      .colophon-cmd {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .manual-masthead { padding: 72px 0 12px; }
+      .preface { padding: 24px 0; }
+      .stat-block { padding: 24px 0; }
+      .toc { padding: 24px 0 32px; }
+      .colophon { padding: 24px 0; }
+
+      .manual-title {
+        font-size: clamp(2.4rem, 14vw, 3.6rem);
+        line-height: 0.92;
+      }
+
+      .manual-meta-row {
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        margin-bottom: 16px;
+        gap: 8px;
+      }
+
+      .manual-tagline {
+        font-size: 0.96rem;
+        margin: 16px 0 4px;
+      }
+
+      .ascii-rule {
+        margin: 16px 0;
+      }
+
+      .preface-eyebrow,
+      .stat-block-title,
+      .toc-title,
+      .colophon-eyebrow { font-size: 0.7rem; }
+
+      .preface-body {
+        font-size: 0.94rem;
+        line-height: 1.6;
+        text-align: left;
+      }
+
+      .preface-body p:first-of-type::first-letter {
+        font-size: 2.8rem;
+        padding: 0.04em 0.1em 0 0;
+      }
+
+      .stat-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+        padding: 6px 0;
+      }
+
+      .stat-row-bar {
+        order: 3;
+      }
+
+      .stat-row-value {
+        order: 2;
+        text-align: left;
+      }
+
+      .toc-row {
+        grid-template-columns: 30px 1fr auto;
+        gap: 8px;
+        padding: 10px 0;
+      }
+
+      .toc-name {
+        font-size: 0.96rem;
+        white-space: normal;
+      }
+
+      .toc-num {
+        font-size: 0.7rem;
       }
     }
   </style>

@@ -153,6 +153,7 @@
 
     .lesson-main {
       flex: 1;
+      min-width: 0;
       margin-left: 240px;
       display: flex;
       justify-content: center;
@@ -162,6 +163,13 @@
     .lesson-content {
       max-width: 720px;
       width: 100%;
+      min-width: 0;
+    }
+
+    .lesson-article {
+      max-width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
 
     .lesson-loading {
@@ -1444,12 +1452,20 @@
     @media (max-width: 900px) {
       .lesson-sidebar { transform: translateX(-100%); }
       .lesson-sidebar.open { transform: translateX(0); }
-      .lesson-sidebar-toggle { display: flex; }
-      .lesson-main { margin-left: 0; padding: 40px 20px 80px; }
+      .lesson-sidebar-toggle {
+        display: flex;
+        top: 70px;
+        right: 12px;
+        left: auto;
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
+      }
+      .lesson-main { margin-left: 0; padding: 56px 20px 80px; }
     }
 
     @media (max-width: 768px) {
-      .lesson-main { padding: 32px 16px 60px; }
+      .lesson-main { padding: 56px 16px 60px; }
       .lesson-article { max-width: 100%; }
       .lesson-article p,
       .lesson-article ul li,

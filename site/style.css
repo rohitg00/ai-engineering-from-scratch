@@ -801,7 +801,35 @@ p.dropcap::first-letter {
 
   .header-inner {
     height: 56px;
-    padding: 0 16px;
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .header-nav {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .header-github {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
   }
 
   .container {
@@ -859,6 +887,36 @@ p.dropcap::first-letter {
 @media (max-width: 480px) {
   body {
     font-size: 16px;
+  }
+
+  .header-inner {
+    padding: 0 10px;
+    gap: 6px;
+  }
+
+  .logo {
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .logo-icon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .header-github {
+    padding: 3px 6px;
+    font-size: 0.65rem;
+  }
+
+  .header-github .star-count {
+    font-size: 0.7rem;
+  }
+
+  .theme-toggle {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
   }
 }
 
