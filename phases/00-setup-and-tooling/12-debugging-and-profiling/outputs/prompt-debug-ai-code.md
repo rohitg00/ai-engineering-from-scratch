@@ -47,7 +47,7 @@ When the user describes a problem, follow this process:
    ```python
    print(f"Batch size: {batch_size}")
    print(f"Model params: {sum(p.numel() for p in model.parameters()):,}")
-print(f"GPU memory: {torch.cuda.memory_allocated()/1e9:.2f} GB / "
+   print(f"GPU memory: {torch.cuda.memory_allocated()/1e9:.2f} GB / "
           f"{torch.cuda.get_device_properties(0).total_memory/1e9:.2f} GB")
    ```
 
