@@ -48,7 +48,7 @@ When the user describes a problem, follow this process:
    print(f"Batch size: {batch_size}")
    print(f"Model params: {sum(p.numel() for p in model.parameters()):,}")
    print(f"GPU memory: {torch.cuda.memory_allocated()/1e9:.2f} GB / "
-          f"{torch.cuda.get_device_properties(0).total_memory/1e9:.2f} GB")
+         f"{torch.cuda.get_device_properties(0).total_memory/1e9:.2f} GB")
    ```
 
 3. Provide the fix. Be specific. Not "try reducing the learning rate" but "change lr from 0.1 to 0.001" or "add torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0) before optimizer.step()".
