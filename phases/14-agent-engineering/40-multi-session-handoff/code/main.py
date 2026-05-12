@@ -86,24 +86,27 @@ def generate_handoff(snapshot: WorkbenchSnapshot) -> tuple[str, HandoffPayload]:
         feedback_tail=trim_feedback(snapshot.feedback),
     )
 
+    def _bullets(items: list[str]) -> list[str]:
+        return items or ["- none"]
+
     md_lines = [
         f"# Handoff: {payload.task_id}",
         "",
         f"**Summary.** {payload.summary}",
         "",
         "## Changed files",
-        *(f"- `{f}`" for f in payload.changed_files),
+        *_bullets([f"- `{f}`" for f in payload.changed_files]),
         "",
         "## Commands run",
-        *(f"- `{c}`" for c in payload.commands_run),
+        *_bullets([f"- `{c}`" for c in payload.commands_run]),
         "",
         "## Failed attempts",
-        *(f"- {f}" for f in payload.failed_attempts) or ["- none"],
+        *_bullets([f"- {f}" for f in payload.failed_attempts]),
         "",
         "## Open risks",
-        *(f"- [{r['severity']}] {r['detail']}" for r in payload.open_risks) or ["- none"],
+        *_bullets([f"- [{r['severity']}] {r['detail']}" for r in payload.open_risks]),
         "",
-        f"## Next action",
+        "## Next action",
         f"{payload.next_action}",
         "",
         "## Receipts",
