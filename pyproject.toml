@@ -1,0 +1,22 @@
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+extend-exclude = [".venv", "phases/*/code/*.ipynb"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors (PEP 8)
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes (unused imports, undefined names)
+    "I",    # isort (import order)
+    "UP",   # pyupgrade (modernize syntax to current Python)
+    "B",    # flake8-bugbear (likely bugs)
+    "SIM",  # flake8-simplify (idiomatic simplifications)
+]
+ignore = [
+    "E501",  # line too long — formatter сам нарежет
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
