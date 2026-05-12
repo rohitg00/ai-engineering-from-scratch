@@ -1,0 +1,46 @@
+{
+  "$id": "task_board.schema.json",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "goal",
+      "owner",
+      "acceptance",
+      "status"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^T-\\d{3,}$"
+      },
+      "goal": {
+        "type": "string"
+      },
+      "owner": {
+        "type": "string",
+        "enum": [
+          "builder",
+          "reviewer",
+          "human"
+        ]
+      },
+      "acceptance": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "todo",
+          "in_progress",
+          "done",
+          "blocked"
+        ]
+      }
+    }
+  }
+}

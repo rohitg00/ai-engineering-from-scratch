@@ -1,0 +1,45 @@
+{
+  "$id": "agent_state.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "active_task_id",
+    "touched_files",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "active_task_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "touched_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_action": {
+      "type": "string"
+    }
+  }
+}
