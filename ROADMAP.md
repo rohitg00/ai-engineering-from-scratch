@@ -4,7 +4,7 @@ Status tracker for every phase and lesson. The status glyphs in this file feed
 the website (`site/build.js` parses them into `site/data.js`); do not change
 their shape.
 
-Total estimated time: ~304 hours, at your own pace.
+Total estimated time: ~314 hours, at your own pace.
 
 **Legend:** ✅ Complete &nbsp;·&nbsp; 🚧 In Progress &nbsp;·&nbsp; ⬚ Planned
 
@@ -342,7 +342,7 @@ Total estimated time: ~304 hours, at your own pace.
 | 22 | [Skills and Agent SDKs](phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | ✅ | ~45 min |
 | 23 | [Capstone — Tool Ecosystem](phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | ✅ | ~120 min |
 
-## Phase 14: Agent Engineering — ✅ (~32 hours)
+## Phase 14: Agent Engineering — ✅ (~42 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
@@ -376,6 +376,18 @@ Total estimated time: ~304 hours, at your own pace.
 | 28 | Orchestration Patterns — Supervisor, Swarm, Hierarchical | ✅ | ~60 min |
 | 29 | Production Runtimes — Queue, Event, Cron | ✅ | ~60 min |
 | 30 | Eval-Driven Agent Development | ✅ | ~60 min |
+| 31 | Agent Workbench: Why Capable Models Still Fail | ✅ | ~45 min |
+| 32 | The Minimal Agent Workbench | ✅ | ~45 min |
+| 33 | Agent Instructions as Executable Constraints | ✅ | ~50 min |
+| 34 | Repo Memory and Durable State | ✅ | ~60 min |
+| 35 | Initialization Scripts for Agents | ✅ | ~45 min |
+| 36 | Scope Contracts and Task Boundaries | ✅ | ~50 min |
+| 37 | Runtime Feedback Loops | ✅ | ~50 min |
+| 38 | Verification Gates | ✅ | ~55 min |
+| 39 | Reviewer Agent: Separate Builder from Marker | ✅ | ~55 min |
+| 40 | Multi-Session Handoff | ✅ | ~50 min |
+| 41 | The Workbench on a Real Repo | ✅ | ~60 min |
+| 42 | Capstone: Ship a Reusable Agent Workbench Pack | ✅ | ~75 min |
 
 ## Phase 15: Autonomous Systems — ✅ (~20 hours)
 
