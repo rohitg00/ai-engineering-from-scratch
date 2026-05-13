@@ -61,16 +61,21 @@ def run_with_feedback(command: list[str], agent_note: str = "", timeout_s: float
             agent_note=agent_note,
             truncations={"stdout": cut_out, "stderr": cut_err},
         )
-    except subprocess.TimeoutExpired:
+    except subprocess.TimeoutExpired as exc:
+        partial_out = exc.stdout.decode(errors="replace") if isinstance(exc.stdout, bytes) else (exc.stdout or "")
+        partial_err = exc.stderr.decode(errors="replace") if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+        stdout, cut_out = deterministic_tail(partial_out)
+        stderr, cut_err = deterministic_tail(partial_err)
         record = FeedbackRecord(
             command=command,
-            stdout_tail="",
-            stderr_tail="",
+            stdout_tail=stdout,
+            stderr_tail=stderr,
             exit_code=None,
-            duration_ms=int(timeout_s * 1000),
+            duration_ms=int((time.time() - started) * 1000),
             started_at=started,
             agent_note=agent_note,
             error=f"timeout after {timeout_s}s",
+            truncations={"stdout": cut_out, "stderr": cut_err},
         )
     except FileNotFoundError as exc:
         record = FeedbackRecord(
