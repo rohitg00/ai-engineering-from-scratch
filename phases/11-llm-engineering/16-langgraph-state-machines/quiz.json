@@ -2,59 +2,64 @@
   "lesson": "phase-11/16-langgraph-state-machines",
   "questions": [
     {
-      "id": 1,
-      "prompt": "Why does the `messages` field in a LangGraph State TypedDict need `Annotated[list, add_messages]`?",
-      "choices": [
+      "stage": "post",
+      "question": "Why does the `messages` field in a LangGraph State TypedDict need `Annotated[list, add_messages]`?",
+      "options": [
         "It enables streaming of token deltas from the model.",
         "Without the reducer, node updates overwrite the list instead of appending, so every turn loses the prior history.",
         "It compresses the message list when checkpoints are written to disk.",
         "It converts plain dicts into LangChain message objects at runtime."
       ],
-      "answer": 1
+      "correct": 1,
+      "explanation": ""
     },
     {
-      "id": 2,
-      "prompt": "What is the difference between `interrupt_before=['tools']` and `interrupt_after=['tools']`?",
-      "choices": [
+      "stage": "post",
+      "question": "What is the difference between `interrupt_before=['tools']` and `interrupt_after=['tools']`?",
+      "options": [
         "No difference; they are aliases.",
         "`interrupt_before` pauses after the model emits tool_calls but before the tools execute; `interrupt_after` pauses after the tools have already run.",
         "`interrupt_before` runs the tool in a sandbox first; `interrupt_after` runs it in production.",
         "`interrupt_before` is for unit tests; `interrupt_after` is for production."
       ],
-      "answer": 1
+      "correct": 1,
+      "explanation": ""
     },
     {
-      "id": 3,
-      "prompt": "Given a thread's checkpoint history, how do you time-travel to a prior state and explore a different branch?",
-      "choices": [
+      "stage": "post",
+      "question": "Given a thread's checkpoint history, how do you time-travel to a prior state and explore a different branch?",
+      "options": [
         "Call `graph.reset(thread_id)` then `graph.invoke(new_input, config)`.",
         "Delete the checkpoint directory and reinvoke with the same thread_id.",
         "Invoke the graph with the desired prior `checkpoint_id` in the config; passing `None` as input replays from that checkpoint, passing a new value appends to it before resuming.",
         "Set `graph.rewind = True` and reinvoke."
       ],
-      "answer": 2
+      "correct": 2,
+      "explanation": ""
     },
     {
-      "id": 4,
-      "prompt": "In a four-node ReAct graph (agent, tools, conditional edge, static edge back to agent), where does the conditional edge live?",
-      "choices": [
+      "stage": "post",
+      "question": "In a four-node ReAct graph (agent, tools, conditional edge, static edge back to agent), where does the conditional edge live?",
+      "options": [
         "From `tools` back to `agent`, routing on whether tool output was empty.",
         "From `agent`, routing to `tools` if the last message has tool_calls and to `END` otherwise.",
         "From `START`, routing to either `agent` or `END` based on input length.",
         "There is no conditional edge; both are static."
       ],
-      "answer": 1
+      "correct": 1,
+      "explanation": ""
     },
     {
-      "id": 5,
-      "prompt": "When should you use `Send(node_name, state)` instead of a plain edge?",
-      "choices": [
+      "stage": "post",
+      "question": "When should you use `Send(node_name, state)` instead of a plain edge?",
+      "options": [
         "To retry a node after a failure.",
         "To defer a node until a timer expires.",
         "To dispatch N parallel executions of a target node whose outputs merge back through the state reducer.",
         "To invoke a node in a different process for isolation."
       ],
-      "answer": 2
+      "correct": 2,
+      "explanation": ""
     }
   ]
 }
