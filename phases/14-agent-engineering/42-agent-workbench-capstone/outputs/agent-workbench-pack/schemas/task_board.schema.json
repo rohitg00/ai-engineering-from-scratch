@@ -30,7 +30,8 @@
         "type": "array",
         "items": {
           "type": "string"
-        }
+        },
+        "minItems": 1
       },
       "status": {
         "type": "string",
