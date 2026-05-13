@@ -15,6 +15,7 @@ import hashlib
 import hmac
 import json
 import os
+import sys
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -24,9 +25,28 @@ OVERRIDES_PATH = HERE / "overrides.jsonl"
 COVERAGE_FLOOR_DEFAULT = 0.80
 COVERAGE_REGRESSION_DELTA = 0.01
 
-# Audit secret used to sign override entries. In production this would come from
-# a secrets manager or sealed environment, never a literal in source.
-_OVERRIDE_SECRET = os.environ.get("VERIFY_OVERRIDE_SECRET", "demo-override-secret-do-not-ship")
+# Audit secret used to sign override entries. In production read from a secrets
+# manager. Fail closed: only fall back to a demo secret when VERIFY_DEMO_MODE=1
+# is set explicitly, and shout about it so it cannot land in CI by accident.
+_OVERRIDE_SECRET_ENV = "VERIFY_OVERRIDE_SECRET"
+_DEMO_MODE_ENV = "VERIFY_DEMO_MODE"
+
+
+def _load_override_secret() -> str:
+    secret = os.environ.get(_OVERRIDE_SECRET_ENV)
+    if secret:
+        return secret
+    if os.environ.get(_DEMO_MODE_ENV) == "1":
+        print(
+            f"WARNING: {_OVERRIDE_SECRET_ENV} unset and {_DEMO_MODE_ENV}=1; "
+            "using insecure demo secret. Do not record real overrides in this mode.",
+            file=sys.stderr,
+        )
+        return "demo-override-secret-do-not-ship"
+    raise RuntimeError(
+        f"refused to start: {_OVERRIDE_SECRET_ENV} is unset. "
+        f"Set the env var, or pass {_DEMO_MODE_ENV}=1 to run the lesson demo only."
+    )
 
 
 @dataclass
@@ -145,7 +165,7 @@ def verify(
 
 def _sign(payload: dict[str, object]) -> str:
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
-    return hmac.new(_OVERRIDE_SECRET.encode(), canonical, hashlib.sha256).hexdigest()[:32]
+    return hmac.new(_load_override_secret().encode(), canonical, hashlib.sha256).hexdigest()[:32]
 
 
 def record_override(
@@ -224,15 +244,18 @@ def main() -> None:
             print(f"  [{f.severity}] {f.code}: {f.detail}")
         print()
 
-    # Demo a signed override on the off-scope warning from T-001 (after strict promotion).
-    entry = record_override(
-        task_id="T-001",
-        finding_code="scope.off_scope",
-        reason="reviewer approved README update for the new signup contract",
-        user_id="rohitg00",
-        head_commit="a1b2c3d",
-    )
-    print(f"override recorded: signature={entry['signature']} verified={verify_signature(entry)}")
+    # Demo a signed override on the off-scope warning that T-002 actually emits.
+    try:
+        entry = record_override(
+            task_id="T-002",
+            finding_code="scope.off_scope",
+            reason="reviewer approved README update for the new signup contract",
+            user_id="rohitg00",
+            head_commit="b2c3d4e",
+        )
+        print(f"override recorded: signature={entry['signature']} verified={verify_signature(entry)}")
+    except RuntimeError as exc:
+        print(f"override demo skipped: {exc}")
 
 
 if __name__ == "__main__":
