@@ -82,7 +82,8 @@ def parse_rules() -> list[Rule]:
         body = rest[0] if rest else ""
         cat_match = re.search(r"-\s*category:\s*(\S+)", body)
         check_match = re.search(r"-\s*check:\s*(\S+)", body)
-        desc = body.split("\n")[-1].strip() or body.strip().splitlines()[-1]
+        non_empty = [ln.strip() for ln in body.splitlines() if ln.strip()]
+        desc = non_empty[-1] if non_empty else ""
         if not cat_match or not check_match:
             continue
         rules.append(
