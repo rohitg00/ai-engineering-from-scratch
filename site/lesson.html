@@ -1785,19 +1785,28 @@
       function fetchLesson(path) {
         var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
         var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
-        var lessonPromise = fetch(rawUrl).then(function (res) {
-          if (!res.ok) throw new Error('Not found');
-          return res.text();
-        });
-        var quizPromise = fetch(quizUrl).then(function (res) {
-          if (!res.ok) return null;
-          return res.json();
-        }).catch(function () { return null; });
 
-        Promise.all([lessonPromise, quizPromise])
-          .then(function (results) {
-            renderLesson(results[0]);
-            if (results[1]) renderQuiz(results[1]);
+        fetch(rawUrl)
+          .then(function (res) {
+            if (!res.ok) throw new Error('fetch-failed');
+            return res.text();
+          })
+          .then(function (md) {
+            try {
+              renderLesson(md);
+            } catch (err) {
+              console.error('renderLesson failed', err);
+              showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
+              return;
+            }
+            fetch(quizUrl)
+              .then(function (res) { return res.ok ? res.json() : null; })
+              .catch(function () { return null; })
+              .then(function (data) {
+                if (!data) return;
+                try { renderQuiz(data); }
+                catch (err) { console.error('renderQuiz failed', err); }
+              });
           })
           .catch(function () {
             showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code>. It may not have been written yet.');
