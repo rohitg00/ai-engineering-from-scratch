@@ -162,9 +162,31 @@ def loop_can_advance(record: FeedbackRecord) -> bool:
 
 
 def load_all() -> list[FeedbackRecord]:
-    if not RECORD.exists():
-        return []
-    return [FeedbackRecord(**json.loads(line)) for line in RECORD.read_text().splitlines() if line.strip()]
+    """Read active + rotated files so parent-command lineage survives rotation."""
+    def _rotation_key(p: Path) -> int:
+        suffix = p.name[len(RECORD.name):]
+        if not suffix:
+            return 0  # active file
+        try:
+            return int(suffix.lstrip("."))
+        except ValueError:
+            return 99
+    paths = sorted(HERE.glob(RECORD.name + "*"), key=_rotation_key, reverse=True)
+    by_id: dict[str, FeedbackRecord] = {}
+    for path in paths:
+        try:
+            text = path.read_text()
+        except FileNotFoundError:
+            continue
+        for line in text.splitlines():
+            if not line.strip():
+                continue
+            try:
+                record = FeedbackRecord(**json.loads(line))
+            except (json.JSONDecodeError, TypeError):
+                continue
+            by_id[record.command_id] = record  # active file wins (last loaded)
+    return list(by_id.values())
 
 
 def retry_chain(command_id: str) -> list[FeedbackRecord]:
