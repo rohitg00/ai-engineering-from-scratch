@@ -1202,6 +1202,24 @@
       white-space: nowrap;
       overflow-x: auto;
       scrollbar-width: thin;
+      scrollbar-color: var(--rule-soft) transparent;
+    }
+
+    .code-card-run::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .code-card-run::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .code-card-run::-webkit-scrollbar-thumb {
+      background: var(--rule-soft);
+      border-radius: 3px;
+    }
+
+    .code-card-run::-webkit-scrollbar-thumb:hover {
+      background: var(--ink-mute);
     }
 
     .code-card-actions {
@@ -3127,11 +3145,9 @@
           var isPrev = idx < currentIdxInPhase;
           var cls = isCurrent ? 'current' : isPrev ? 'prev' : '';
 
-          if (vIdx > 0 || hiddenBefore === 0 && vIdx === 0 && idx > 0) {
-            if (vIdx > 0) {
-              var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
-              html += '<div class="timeline-line ' + lineCls + '"></div>';
-            }
+          if (vIdx > 0) {
+            var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
+            html += '<div class="timeline-line ' + lineCls + '"></div>';
           }
 
           if (item.flat.isReadable) {

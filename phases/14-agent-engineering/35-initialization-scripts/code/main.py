@@ -195,7 +195,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.write_lkg:
         try:
-            head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=HERE, text=True).strip()
+            head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=HERE, text=True, timeout=2.0).strip()
             LKG_PATH.write_text(json.dumps({"commit": head, "written_at": time.time()}, indent=2) + "\n")
             print(f"pinned LKG -> {head[:7]}")
             return 0
