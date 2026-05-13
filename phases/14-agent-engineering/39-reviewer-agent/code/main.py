@@ -91,12 +91,13 @@ SCORERS = [score_problem_fit, score_scope_discipline, score_assumptions, score_v
 def review(inputs: ReviewerInputs) -> ReviewReport:
     dims = [fn(inputs) for fn in SCORERS]
     total = sum(d.score for d in dims)
-    if total >= 7 and not any(d.score == 0 for d in dims):
-        verdict = "pass"
-    elif total >= 5:
-        verdict = "soft_fail"
-    else:
+    has_zero = any(d.score == 0 for d in dims)
+    if has_zero or total < 5:
         verdict = "hard_fail"
+    elif total >= 7:
+        verdict = "pass"
+    else:
+        verdict = "soft_fail"
     return ReviewReport(task_id=inputs.task_id, total=total, verdict=verdict, dimensions=dims)
 
 
