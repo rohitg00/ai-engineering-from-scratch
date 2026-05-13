@@ -8,6 +8,10 @@ The aesthetic is documented in the `blueprint-diagram` Claude Code skill, which 
 |---|---|---|---|---|---|
 | 000 | (curriculum stack — embedded in the README banner) | — | — | 2026-05-09 | hero, lives in `assets/banner.svg` not this dir |
 | 001 | exploded-view-floppy | — | — | 2026-05-09 | reference example for the skill, lives under `~/.claude/skills/blueprint-diagram/references/examples/` |
+| 001.A | prompts | — | — | 2026-05-13 | README "every lesson ships something" card — prompt artifact icon |
+| 001.B | skills | — | — | 2026-05-13 | README card — SKILL.md drop-in icon |
+| 001.C | agents | — | — | 2026-05-13 | README card — ReAct-style agent loop icon |
+| 001.D | mcp-servers | — | — | 2026-05-13 | README card — MCP server rack with tools/resources/prompts icon |
 | 002 | kernel-surface-gaussian | — | — | 2026-05-09 | reference example for the skill |
 | 003 | pixel-vector-bezier | — | — | 2026-05-09 | reference example for the skill |
 | 004 | gaussian-kernel-blur | 1 | 8 | 2026-05-09 | gaussian blur visualization for "Optimization: Gradient Descent Family" lesson |
