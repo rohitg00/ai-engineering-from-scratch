@@ -95,6 +95,18 @@ python3 code/main.py
 
 The script copies and pins the surfaces, writes the README, prints the pack tree, and exits zero. Re-running is idempotent.
 
+## Production patterns in the wild
+
+A pack is only valuable if it survives forks, updates, and an unfriendly upstream. Four patterns make that work.
+
+**`VERSION` is the contract, not the marketing.** Major bumps require a state migration. Minor bumps require a checker re-run. Patch bumps are doc-only. The installer writes `.workbench-version` into the target repo on every install; `lint_pack.py` refuses to ship if the target's lock disagrees with the pack's `VERSION`. This is how `npm`, `Cargo`, and `pyproject.toml` survive 10 years of churn; nothing about agents changes the rules.
+
+**Single source for cross-tool distribution.** Nx ships one `nx ai-setup` that lays down `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, `.github/copilot-instructions.md`, and an MCP server from a single config. The pack should do the same; the installer emits the symlinks (`ln -s AGENTS.md CLAUDE.md`) so a single source of truth fans out to every coding agent. Forking the pack to support one tool over another is a failure mode.
+
+**`uninstall.sh` that refuses on non-trivial state.** Uninstalling the pack must not delete the user's `agent_state.json`, `task_board.json`, or `outputs/`. The uninstaller removes the schemas, scripts, docs, and `AGENTS.md` (with `--keep-agents-md` opt-out) and refuses to proceed if state files have any uncommitted changes. State belongs to the user; the pack does not own it.
+
+**Skill-as-publishable. SkillKit-style distribution.** The pack ships as a SkillKit skill: `skillkit install agent-workbench-pack` lays it down across 32 AI agents from a single source. The pack repo is the source of truth; SkillKit is the distribution channel. Vendor lock-in collapses; the seven surfaces stay the same.
+
 ## Use It
 
 Three places the pack ships:
@@ -131,5 +143,12 @@ The pack is the recipe. Each install is a serving.
 
 - Phases 14 · 31 to 14 · 41 — every surface this pack bundles
 - [SkillKit](https://github.com/rohitg00/skillkit) — install this skill across 32 AI agents
-- Phase 14 · 30 — eval-driven agent development that consumes the pack's verification gate
+- [Nx Blog, Teach Your AI Agent How to Work in a Monorepo](https://nx.dev/blog/nx-ai-agent-skills) — single-source generator across six tools
+- [agents.md — the open spec](https://agents.md/) — what your pack's router must implement
+- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — reference implementation of a pack-equivalent
+- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) — Redis-backed reference with eval suite
+- [Augment Code, A good AGENTS.md is a model upgrade](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files) — pack docs quality bar
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+- [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps)
+- Phase 14 · 30 — eval-driven agent development that consumes the pack's verification gate
+- Phase 14 · 41 — the before/after benchmark this pack improves on
