@@ -60,6 +60,26 @@ Prompting tells the model what you want this turn. A workbench tells the model h
 
 A framework gives you a runtime (LangGraph, AutoGen, Agents SDK). A workbench gives the agent a place to work inside that runtime. You need both. This mini-track is about the second one.
 
+### Workbench versus "harness engineering"
+
+The discipline this lesson teaches has a longer name in circulation: **harness engineering**. The framing comes from three pieces written across late 2025 and 2026.
+
+> **Agent = Model + Harness. If you're not the model, you're the harness.** Addy Osmani
+
+> **A decent model with a great harness beats a great model with a bad harness.** Addy Osmani
+
+OpenAI's *Harness engineering: leveraging Codex in an agent-first world* and Anthropic's *Effective harnesses for long-running agents* + *Harness design for long-running application development* extend the same point. The harness is every piece of code, config, prompt, sandbox, hook, and observability hook around the model. The gap between model capability and observed performance is mostly a harness problem.
+
+Three ideas from that literature transfer one-for-one into the seven surfaces above.
+
+1. **The ratchet.** Every failure becomes a rule. When the agent does something wrong, the workbench grows a constraint that prevents the next instance. Rules are earned, not brainstormed. This lives in the instructions surface (Phase 14 · 33).
+2. **State outside the model.** Filesystem + git + a state file beat conversation history. The repo is the system of record. This is the state and repo-memory surfaces (Phase 14 · 32, 34).
+3. **Planner/builder/evaluator separation.** Self-evaluation is weak. Roles need different inputs and different postures. This is the reviewer surface (Phase 14 · 39).
+
+So why "workbench" and not "harness"? A harness is restraint. A workbench is a place where work happens. The mental model matters: you are not bridling a horse, you are setting up a table with the right tools, lighting, drawers, and a checklist taped to the wall. The work the model does still has to be good; the workbench makes it repeatable, reviewable, and resumable. Same engineering, friendlier vocabulary.
+
+When you hear "harness engineering" in the wild, translate: prompts and rules sit in the instructions surface, scaffolding sits in scope, guardrails sit in verification, hooks sit in feedback and review. The vocabulary diverges; the seven surfaces do not.
+
 ## Build It
 
 `code/main.py` runs a tiny repo task twice. First as prompt only, then with the seven surfaces wired in. Same model, same task. The script counts which surfaces were missing on the failed run and prints a failure-mode report.
@@ -110,8 +130,10 @@ Workbench engineering is the discipline of making those surfaces explicit and re
 
 ## Further Reading
 
-- [WalkingLabs, Learn Harness Engineering](https://walkinglabs.github.io/learn-harness-engineering/en/) — adjacent framing of the same problem, different vocabulary
+- [Addy Osmani, Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/) — `Agent = Model + Harness` and the ratchet pattern
 - [OpenAI, Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) — surface-level taxonomy from the Codex team
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — long-horizon agent surfaces
-- [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) — applied workbench design
+- [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) — applied harness design
+- [walkinglabs/awesome-harness-engineering](https://github.com/walkinglabs/awesome-harness-engineering) — curated reading list across context, evaluation, observability, and orchestration
+- [WalkingLabs, Learn Harness Engineering](https://walkinglabs.github.io/learn-harness-engineering/en/) — adjacent course, different vocabulary
 - Phase 14 · 26 — Failure Modes catalog this lesson maps surfaces against
