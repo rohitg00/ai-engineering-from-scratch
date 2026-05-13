@@ -84,7 +84,11 @@ def validate(value: Any, schema: dict[str, Any], path: str = "$") -> None:
         for key in schema.get("required", []):
             if key not in value:
                 raise SchemaError(f"{path}: missing required field {key!r}")
-        for key, sub in schema.get("properties", {}).items():
+        properties = schema.get("properties", {})
+        unexpected = sorted(set(value.keys()) - set(properties.keys()))
+        if unexpected:
+            raise SchemaError(f"{path}: unexpected fields {unexpected}")
+        for key, sub in properties.items():
             if key in value:
                 validate(value[key], sub, f"{path}.{key}")
     if isinstance(value, list) and "items" in schema:
@@ -111,12 +115,12 @@ class StateManager:
         self.state_path = state_path
         self.schema = schema
 
-    def load(self) -> dict[str, Any]:
+    def load(self) -> Any:
         raw = json.loads(self.state_path.read_text())
         validate(raw, self.schema)
         return raw
 
-    def commit(self, state: dict[str, Any]) -> None:
+    def commit(self, state: Any) -> None:
         validate(state, self.schema)
         atomic_write(self.state_path, json.dumps(state, indent=2) + "\n")
 
