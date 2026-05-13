@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Structured shell-command runner. See Phase 14 · 37."""
 
 from __future__ import annotations

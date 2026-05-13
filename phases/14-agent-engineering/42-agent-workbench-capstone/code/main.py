@@ -192,7 +192,8 @@ echo "next: edit task_board.json, set acceptance commands, run scripts/init_agen
 """
 
 
-INIT_AGENT_PY = '''"""Workbench init script. See Phase 14 · 35 for the from-scratch build."""
+INIT_AGENT_PY = '''#!/usr/bin/env python3
+"""Workbench init script. See Phase 14 · 35 for the from-scratch build."""
 
 from __future__ import annotations
 
@@ -267,7 +268,8 @@ if __name__ == "__main__":
 '''
 
 
-RUN_WITH_FEEDBACK_PY = '''"""Structured shell-command runner. See Phase 14 · 37."""
+RUN_WITH_FEEDBACK_PY = '''#!/usr/bin/env python3
+"""Structured shell-command runner. See Phase 14 · 37."""
 
 from __future__ import annotations
 
@@ -338,7 +340,8 @@ if __name__ == "__main__":
 '''
 
 
-VERIFY_AGENT_PY = '''"""Deterministic verification gate. See Phase 14 · 38."""
+VERIFY_AGENT_PY = '''#!/usr/bin/env python3
+"""Deterministic verification gate. See Phase 14 · 38."""
 
 from __future__ import annotations
 
@@ -362,15 +365,21 @@ def _load_jsonl(path: Path) -> list[dict]:
     return [json.loads(ln) for ln in path.read_text().splitlines() if ln.strip()]
 
 
+def _normalize_command(cmd) -> str:
+    if isinstance(cmd, list):
+        return " ".join(str(part) for part in cmd)
+    return str(cmd)
+
+
 def check_acceptance(accept: list[str], feedback: list[dict]) -> list[dict]:
     findings: list[dict] = []
-    commands_run = [str(r.get("command")) for r in feedback]
+    commands_run = [_normalize_command(r.get("command")) for r in feedback]
     accept_set = set(accept)
     for cmd in accept:
         if cmd not in commands_run:
             findings.append({"code": "acceptance.missing", "severity": "block", "detail": f"never ran: {cmd}"})
     for r in feedback:
-        cmd_str = str(r.get("command"))
+        cmd_str = _normalize_command(r.get("command"))
         if r.get("exit_code") is None:
             findings.append({"code": "feedback.null_exit", "severity": "block", "detail": f"missing exit for {cmd_str}"})
         elif r.get("exit_code") != 0 and cmd_str in accept_set:
@@ -424,7 +433,8 @@ if __name__ == "__main__":
 '''
 
 
-GENERATE_HANDOFF_PY = '''"""End-of-session handoff packet generator. See Phase 14 · 40."""
+GENERATE_HANDOFF_PY = '''#!/usr/bin/env python3
+"""End-of-session handoff packet generator. See Phase 14 · 40."""
 
 from __future__ import annotations
 

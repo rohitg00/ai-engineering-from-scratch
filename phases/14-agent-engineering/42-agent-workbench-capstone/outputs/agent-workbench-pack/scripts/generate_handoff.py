@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """End-of-session handoff packet generator. See Phase 14 · 40."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Workbench init script. See Phase 14 · 35 for the from-scratch build."""
 
 from __future__ import annotations
