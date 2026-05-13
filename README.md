@@ -120,7 +120,7 @@ cd ai-engineering-from-scratch
 python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-**Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude Code:
+**Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with SkillKit installed:
 
 ```bash
 /find-your-level
@@ -141,7 +141,7 @@ ls phases/03-deep-learning-core/05-loss-functions/outputs/
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
 
-### Built-in Claude Code skills
+### Built-in agent skills (SkillKit / Claude, Cursor, Codex, OpenClaw, Hermes)
 
 | Skill | What it does |
 |---|---|
@@ -166,7 +166,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </tr>
 <tr>
 <td valign="top">Paste into any AI assistant for expert-level help on a narrow task.</td>
-<td valign="top">Drop into Claude Code, Cursor, Codex, or any agent that reads <code>SKILL.md</code>.</td>
+<td valign="top">Drop into Claude, Cursor, Codex, OpenClaw, Hermes, Gemini, or any agent that reads <code>SKILL.md</code>.</td>
 <td valign="top">Deploy as autonomous workers — you wrote the loop yourself in Phase 14.</td>
 <td valign="top">Plug into any MCP-compatible client. Built end-to-end in Phase 13.</td>
 </tr>
@@ -860,8 +860,8 @@ outputs/
 └── mcp-servers/  MCP servers built during the course
 ```
 
-Install them with [SkillKit](https://github.com/rohitg00/skillkit). Plug them into Claude Code,
-Cursor, or any MCP-compatible agent. Real tools, not homework.
+Install them with [SkillKit](https://github.com/rohitg00/skillkit). Plug them into Claude, Cursor,
+Codex, OpenClaw, Hermes, Gemini, or any MCP-compatible agent. Real tools, not homework.
 
 ## Where to start
 

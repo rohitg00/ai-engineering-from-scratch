@@ -1067,6 +1067,7 @@
       color: var(--ink);
       word-break: break-all;
       margin-bottom: 10px;
+      text-transform: none;
     }
 
     .output-badge {
@@ -1093,10 +1094,14 @@
 
     .output-desc {
       font-family: var(--font-body);
-      font-size: 0.92rem;
+      font-size: 0.96rem;
       color: var(--ink-soft);
-      line-height: 1.55;
+      line-height: 1.5;
       margin-bottom: 12px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-variant: normal;
+      text-align: left;
     }
 
     .output-actions {
@@ -1174,6 +1179,7 @@
       font-size: 0.84rem;
       color: var(--ink);
       word-break: break-all;
+      text-transform: none;
     }
 
     .code-card-size {
@@ -1185,13 +1191,17 @@
 
     .code-card-run {
       font-family: var(--font-mono);
-      font-size: 0.74rem;
+      font-size: 0.78rem;
       color: var(--blueprint);
       background: var(--blueprint-tint);
-      padding: 8px 12px;
+      padding: 10px 12px;
       margin-bottom: 12px;
-      word-break: break-all;
       border: 1px solid var(--blueprint);
+      text-transform: none;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: thin;
     }
 
     .code-card-actions {
@@ -1254,19 +1264,28 @@
     }
 
     .timeline-label {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-family: var(--font-body);
+      font-size: 0.84rem;
+      letter-spacing: 0;
+      text-transform: none;
       color: var(--ink-mute);
       text-align: center;
-      max-width: 100px;
-      line-height: 1.3;
+      max-width: 120px;
+      line-height: 1.35;
     }
 
     .timeline-item.current .timeline-label {
       color: var(--blueprint);
       font-weight: 500;
+    }
+
+    .timeline-ellipsis {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--ink-mute);
+      letter-spacing: 0.04em;
+      padding: 0 8px;
+      white-space: nowrap;
     }
 
     .phase-progress-bar {
@@ -2835,7 +2854,7 @@
             var installId = 'install-hint-' + idx;
             var installHint = '';
             if (type === 'prompt') {
-              installHint = 'Copy this prompt into Claude Code, ChatGPT, or any AI assistant';
+              installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, ChatGPT, or any agent that reads prompts';
             } else if (type === 'skill') {
               var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
               installHint = 'npx skillkit install ' + skillName;
@@ -3015,7 +3034,7 @@
         });
 
         html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
-        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude Code</div>';
+        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with SkillKit installed</div>';
         html += '</div>';
 
         panel.innerHTML = html;
@@ -3088,15 +3107,31 @@
         var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Learning Path</div></div>';
         html += '<div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
 
+        // Window: 2 before current + current + 2 after, cap at 5 visible.
+        var windowSize = 5;
+        var startIdx = Math.max(0, currentIdxInPhase - 2);
+        var endIdx = Math.min(lessonsInPhase.length, startIdx + windowSize);
+        startIdx = Math.max(0, endIdx - windowSize);
+        var visible = lessonsInPhase.slice(startIdx, endIdx);
+        var hiddenBefore = startIdx;
+        var hiddenAfter = lessonsInPhase.length - endIdx;
+
         html += '<div class="learning-timeline">';
-        lessonsInPhase.forEach(function (item, idx) {
+        if (hiddenBefore > 0) {
+          html += '<span class="timeline-ellipsis" title="' + hiddenBefore + ' earlier lessons">&laquo; ' + hiddenBefore + '</span>';
+          html += '<div class="timeline-line done"></div>';
+        }
+        visible.forEach(function (item, vIdx) {
+          var idx = startIdx + vIdx;
           var isCurrent = idx === currentIdxInPhase;
           var isPrev = idx < currentIdxInPhase;
           var cls = isCurrent ? 'current' : isPrev ? 'prev' : '';
 
-          if (idx > 0) {
-            var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
-            html += '<div class="timeline-line ' + lineCls + '"></div>';
+          if (vIdx > 0 || hiddenBefore === 0 && vIdx === 0 && idx > 0) {
+            if (vIdx > 0) {
+              var lineCls = idx <= currentIdxInPhase ? (idx === currentIdxInPhase ? 'active' : 'done') : '';
+              html += '<div class="timeline-line ' + lineCls + '"></div>';
+            }
           }
 
           if (item.flat.isReadable) {
@@ -3108,6 +3143,10 @@
           html += '<div class="timeline-label">' + escapeHtml(item.flat.lessonName) + '</div>';
           html += item.flat.isReadable ? '</a>' : '</span>';
         });
+        if (hiddenAfter > 0) {
+          html += '<div class="timeline-line"></div>';
+          html += '<span class="timeline-ellipsis" title="' + hiddenAfter + ' later lessons">' + hiddenAfter + ' &raquo;</span>';
+        }
         html += '</div>';
 
         var completedCount = currentIdxInPhase + 1;
@@ -3155,7 +3194,7 @@
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 
-        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude Code to see your full personalized learning path</div>';
+        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with SkillKit installed for a personalized learning path</div>';
         html += '</div>';
 
         panel.innerHTML = html;
