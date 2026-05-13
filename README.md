@@ -166,7 +166,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </tr>
 <tr>
 <td valign="top">Paste into any AI assistant for expert-level help on a narrow task.</td>
-<td valign="top">Drop into Claude, Cursor, Codex, OpenClaw, Hermes, Gemini, or any agent that reads <code>SKILL.md</code>.</td>
+<td valign="top">Drop into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads <code>SKILL.md</code>.</td>
 <td valign="top">Deploy as autonomous workers — you wrote the loop yourself in Phase 14.</td>
 <td valign="top">Plug into any MCP-compatible client. Built end-to-end in Phase 13.</td>
 </tr>
@@ -861,7 +861,7 @@ outputs/
 ```
 
 Install them with [SkillKit](https://github.com/rohitg00/skillkit). Plug them into Claude, Cursor,
-Codex, OpenClaw, Hermes, Gemini, or any MCP-compatible agent. Real tools, not homework.
+Codex, OpenClaw, Hermes, or any MCP-compatible agent. Real tools, not homework.
 
 ## Where to start
 

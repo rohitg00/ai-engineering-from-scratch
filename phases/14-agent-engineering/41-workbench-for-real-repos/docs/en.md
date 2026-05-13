@@ -146,4 +146,3 @@ The numbers travel further than the explanation.
 - Phases 14 · 32 to 14 · 40 — the surfaces this lesson exercises end-to-end
 - Phase 14 · 19 — SWE-bench, GAIA, AgentBench as the macro benchmarks this lesson complements
 - Phase 14 · 30 — eval-driven agent development the same harness plugs into
-- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
