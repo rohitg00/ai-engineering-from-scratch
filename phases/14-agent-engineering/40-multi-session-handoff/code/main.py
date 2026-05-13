@@ -60,8 +60,13 @@ def derive_risks(snapshot: WorkbenchSnapshot) -> list[dict[str, str]]:
             risks.append({"severity": str(f.get("severity")), "detail": str(f.get("detail"))})
     for blocker in snapshot.state.get("blockers") or []:
         risks.append({"severity": "warn", "detail": f"open blocker: {blocker}"})
-    if int(snapshot.review.get("total", 10)) < 7:
-        risks.append({"severity": "warn", "detail": f"review total {snapshot.review.get('total')} below 7"})
+    raw_total = snapshot.review.get("total", 10)
+    try:
+        safe_total = int(raw_total)
+    except (TypeError, ValueError):
+        safe_total = 10
+    if safe_total < 7:
+        risks.append({"severity": "warn", "detail": f"review total {raw_total} below 7"})
     return risks
 
 
