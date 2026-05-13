@@ -60,25 +60,40 @@ Prompting tells the model what you want this turn. A workbench tells the model h
 
 A framework gives you a runtime (LangGraph, AutoGen, Agents SDK). A workbench gives the agent a place to work inside that runtime. You need both. This mini-track is about the second one.
 
-### Workbench versus "harness engineering"
+### Reasoning from primitives, not from vendor taxonomies
 
-The discipline this lesson teaches has a longer name in circulation: **harness engineering**. The framing comes from three pieces written across late 2025 and 2026.
+There is a lot of writing on "harness engineering" right now. Addy Osmani, OpenAI, Anthropic, LangChain, and the walkinglabs awesome list all carry useful pieces. They also disagree on the boundary of what a harness is, what is in scope, and which vocabulary to use. We do not need to pick a side. The seven surfaces are a UX layer; underneath every workbench is the same set of distributed-systems primitives that hold up any reliable backend.
 
-> **Agent = Model + Harness. If you're not the model, you're the harness.** Addy Osmani
+Strip the agent label off for a moment. An agent run is computation that crosses time, processes, and machines. To make that reliable you need the same primitives any production system needs.
 
-> **A decent model with a great harness beats a great model with a bad harness.** Addy Osmani
+| Primitive | What it is | What it carries for an agent |
+|-----------|------------|------------------------------|
+| Function | Typed handler. Pure where possible. Owns its inputs and outputs. | A tool call, a rule check, a verification step, a model invocation |
+| Worker | Long-lived process that owns one or more functions and a lifecycle | The builder, the reviewer, the verifier, an MCP server |
+| Trigger | Event source that invokes a function | Agent loop tick, HTTP request, queue message, cron, file change, hook |
+| Runtime | The boundary that decides what runs where, with what timeouts and resources | Claude Code's process, LangGraph's runtime, a worker container |
+| HTTP / RPC | The wire between caller and worker | Tool-call protocol, MCP request, model API |
+| Queue | Durable buffer between trigger and worker; back-pressure, retry, idempotency | The task board, the feedback log, the review inbox |
+| Session persistence | State that survives crashes, restarts, model swaps | `agent_state.json`, checkpoints, KV stores, the repo itself |
+| Authorization policy | Who can call what function with which scope | Allowed/forbidden files, approval boundaries, MCP capability lists |
 
-OpenAI's *Harness engineering: leveraging Codex in an agent-first world* and Anthropic's *Effective harnesses for long-running agents* + *Harness design for long-running application development* extend the same point. The harness is every piece of code, config, prompt, sandbox, hook, and observability hook around the model. The gap between model capability and observed performance is mostly a harness problem.
+Now map the seven workbench surfaces onto those primitives.
 
-Three ideas from that literature transfer one-for-one into the seven surfaces above.
+- **Instructions** — policy + function metadata. Rules are checks (functions). The router (`AGENTS.md`) is policy attached to the runtime's startup.
+- **State** — session persistence. A keyed store the runtime reads at every step. File, KV, or DB; the persistence semantics matter, the storage backend does not.
+- **Scope** — authorization policy per task. Allowed/forbidden globs are an ACL. Approvals required are a permission lattice.
+- **Feedback** — invocation log written into a queue. Every shell call is a record, durable, replayable.
+- **Verification** — a function. Deterministic over inputs. Triggered on task close. Fails closed.
+- **Review** — a separate worker with read-only authz on builder artifacts and write-only authz on review reports.
+- **Handoff** — a durable record emitted by a session-end trigger. The next session's startup trigger reads it.
 
-1. **The ratchet.** Every failure becomes a rule. When the agent does something wrong, the workbench grows a constraint that prevents the next instance. Rules are earned, not brainstormed. This lives in the instructions surface (Phase 14 · 33).
-2. **State outside the model.** Filesystem + git + a state file beat conversation history. The repo is the system of record. This is the state and repo-memory surfaces (Phase 14 · 32, 34).
-3. **Planner/builder/evaluator separation.** Self-evaluation is weak. Roles need different inputs and different postures. This is the reviewer surface (Phase 14 · 39).
+The agent loop itself is a worker that consumes events (user message, tool result, timer tick), calls functions (the model, then the tools the model picks), writes records (state, feedback), and emits triggers (verify, review, handoff). No mystery; the same shape as a job processor.
 
-So why "workbench" and not "harness"? A harness is restraint. A workbench is a place where work happens. The mental model matters: you are not bridling a horse, you are setting up a table with the right tools, lighting, drawers, and a checklist taped to the wall. The work the model does still has to be good; the workbench makes it repeatable, reviewable, and resumable. Same engineering, friendlier vocabulary.
+This matters because vendor writeups often skip the infrastructure layer. Read LangChain's *Anatomy of an Agent Harness*: it covers prompts, tools, sandboxes, orchestration, hooks. It does not mention queues, workers as a deployment unit, trigger semantics, session persistence as a separate concern, or authorization. Addy Osmani's *Agent Harness Engineering* lands the framing `Agent = Model + Harness` and the ratchet pattern, but stops short of saying what a harness is built out of. Anthropic and OpenAI go deepest on the surfaces but stay inside their own runtimes.
 
-When you hear "harness engineering" in the wild, translate: prompts and rules sit in the instructions surface, scaffolding sits in scope, guardrails sit in verification, hooks sit in feedback and review. The vocabulary diverges; the seven surfaces do not.
+You do not need to disagree with any of them to notice the gap. They are writing UX descriptions of a system that already exists. We are writing the system. When the system is built right, the seven surfaces fall out of the primitives. When it is built wrong, no amount of `AGENTS.md` polish fixes the missing queue.
+
+So when you hear "harness engineering" elsewhere, translate to primitives. Prompts and rules are policy and functions. Scaffolding is the runtime. Guardrails are authz + verification. Hooks are triggers. Memory is session persistence. The vocabulary changes; the engineering does not. The workbench is the agent-facing UX; the harness, in the sense that survives the next vendor reframe, is functions, workers, triggers, runtimes, queues, persistence, and policy wired together correctly.
 
 ## Build It
 
@@ -130,10 +145,13 @@ Workbench engineering is the discipline of making those surfaces explicit and re
 
 ## Further Reading
 
-- [Addy Osmani, Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/) — `Agent = Model + Harness` and the ratchet pattern
-- [OpenAI, Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) — surface-level taxonomy from the Codex team
-- [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — long-horizon agent surfaces
-- [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) — applied harness design
-- [walkinglabs/awesome-harness-engineering](https://github.com/walkinglabs/awesome-harness-engineering) — curated reading list across context, evaluation, observability, and orchestration
-- [WalkingLabs, Learn Harness Engineering](https://walkinglabs.github.io/learn-harness-engineering/en/) — adjacent course, different vocabulary
+Read these as data points, not as authorities. Each one is a partial taxonomy. Translate every concept back to a primitive (function, worker, trigger, runtime, queue, persistence, policy) before deciding whether to adopt it.
+
+- [Addy Osmani, Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/) — useful for the ratchet pattern and the model-vs-harness frame; thin on infrastructure
+- [LangChain, The Anatomy of an Agent Harness](https://www.langchain.com/blog/the-anatomy-of-an-agent-harness) — covers prompts, tools, hooks, orchestration; omits queues, deployment, authz
+- [OpenAI, Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) — Codex team's view of the surfaces around their runtime
+- [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — long-horizon surfaces inside a specific runtime
+- [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) — applied design notes
+- [walkinglabs/awesome-harness-engineering](https://github.com/walkinglabs/awesome-harness-engineering) — curated reading list across context, evaluation, observability, orchestration
 - Phase 14 · 26 — Failure Modes catalog this lesson maps surfaces against
+- Phase 14 · 29 — Production runtimes (queue, event, cron) where the primitives in this lesson live
