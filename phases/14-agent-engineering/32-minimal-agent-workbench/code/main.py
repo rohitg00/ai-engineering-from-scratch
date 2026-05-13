@@ -26,8 +26,9 @@ This repo runs with a workbench. Read these before acting:
 2. `task_board.json` — what is in flight, what is next.
 3. `docs/agent-rules.md` — startup, scope, definition of done (load on demand).
 
-Definition of done: the active task in state has `status == "done"` and the
-verification command listed in its acceptance has exited 0.
+Definition of done: the task referenced by `agent_state.active_task_id` has
+`status == "done"` on `task_board.json` and the verification command listed in
+its `acceptance` has exited 0.
 
 Verification command: `python3 -m pytest -x`
 """.lstrip()
@@ -102,7 +103,11 @@ def run_one_turn(state: AgentState, board: list[Task]) -> tuple[AgentState, list
         state.next_action = f"start work on {nxt.id}: {nxt.goal}"
         return state, board
 
-    active = next(t for t in board if t.id == state.active_task_id)
+    active = next((t for t in board if t.id == state.active_task_id), None)
+    if active is None:
+        state.active_task_id = None
+        state.next_action = f"active task missing from board; resetting and picking new work"
+        return state, board
     if "app.py" not in state.touched_files:
         state.touched_files.append("app.py")
         state.next_action = f"add test for {active.id} acceptance"
