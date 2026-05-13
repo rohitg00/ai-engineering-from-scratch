@@ -3,39 +3,64 @@
   "title": "Prompt Caching and Context Caching",
   "questions": [
     {
-      "q": "What discount does Anthropic apply to cache reads versus the base input rate?",
-      "choices": ["25% off", "50% off", "75% off", "90% off"],
-      "answer": 3
+      "stage": "post",
+      "question": "What discount does Anthropic apply to cache reads versus the base input rate?",
+      "options": [
+        "25% off",
+        "50% off",
+        "75% off",
+        "90% off"
+      ],
+      "correct": 3,
+      "explanation": ""
     },
     {
-      "q": "Why must dynamic timestamps go below the cache breakpoint, not above it?",
-      "choices": [
+      "stage": "post",
+      "question": "Why must dynamic timestamps go below the cache breakpoint, not above it?",
+      "options": [
         "Caches only hit when the prefix is byte-identical; a changing timestamp breaks the match for everything after it",
         "Timestamps confuse the tokenizer",
         "They cost more tokens than static text",
         "Anthropic explicitly rejects timestamps in cached blocks"
       ],
-      "answer": 0
+      "correct": 0,
+      "explanation": ""
     },
     {
-      "q": "OpenAI's prompt caching is configured how?",
-      "choices": [
+      "stage": "post",
+      "question": "OpenAI's prompt caching is configured how?",
+      "options": [
         "Explicit cache_control markers",
         "A CachedContent API you create and reference",
         "Automatic prefix matching with no configuration",
         "A system-level flag you toggle per project"
       ],
-      "answer": 2
+      "correct": 2,
+      "explanation": ""
     },
     {
-      "q": "For Anthropic, what write premium does the 1-hour extended TTL cost vs the 5-minute default?",
-      "choices": ["Same", "2x the write premium (50% over baseline)", "4x the write premium", "No write premium"],
-      "answer": 1
+      "stage": "post",
+      "question": "For Anthropic, what write premium does the 1-hour extended TTL cost vs the 5-minute default?",
+      "options": [
+        "Same",
+        "2x the write premium (50% over baseline)",
+        "4x the write premium",
+        "No write premium"
+      ],
+      "correct": 1,
+      "explanation": ""
     },
     {
-      "q": "How many reuses are needed to break even on Anthropic's 25% write premium?",
-      "choices": ["1", "2", "5", "10"],
-      "answer": 1
+      "stage": "post",
+      "question": "How many reuses are needed to break even on Anthropic's 25% write premium?",
+      "options": [
+        "1",
+        "2",
+        "5",
+        "10"
+      ],
+      "correct": 1,
+      "explanation": ""
     }
   ]
 }
