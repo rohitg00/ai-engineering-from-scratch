@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-416-3553ff?style=flat-square&labelColor=fafaf5" alt="416 lessons"></a>
+  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-428-3553ff?style=flat-square&labelColor=fafaf5" alt="428 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
@@ -17,7 +17,7 @@
 > **84% of students already use AI tools. Only 18% feel prepared to use them
 > professionally.** This curriculum closes that gap.
 >
-> 416 lessons. 20 phases. ~320 hours. Python, TypeScript, Rust, Julia. Every lesson ships
+> 428 lessons. 20 phases. ~320 hours. Python, TypeScript, Rust, Julia. Every lesson ships
 > a reusable artifact: a prompt, a skill, an agent, an MCP server. Free, open source, MIT.
 >
 > You don't just learn AI. You build it. End-to-end. By hand.
@@ -29,7 +29,7 @@ flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot 
 explain its loss curve. You hook a function to an agent but can't say what attention does
 inside the model that's calling it.
 
-This curriculum is the spine. 20 phases, 416 lessons, four languages: Python, TypeScript,
+This curriculum is the spine. 20 phases, 428 lessons, four languages: Python, TypeScript,
 Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
 gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
 PyTorch shows up, you already know what it's doing under the hood.
@@ -173,7 +173,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </table>
 
 > Install the lot with [SkillKit](https://github.com/rohitg00/skillkit). Real tools, not
-> homework. By the end of the curriculum, you have a portfolio of 416 artifacts you actually
+> homework. By the end of the curriculum, you have a portfolio of 428 artifacts you actually
 > understand because you built them.
 
 ### FIG_002 · A worked sample
@@ -627,7 +627,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-14">
-<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build agents from first principles — loop, memory, planning, frameworks, benchmarks, production.</em></summary>
+<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>42 lessons</code>&nbsp; <em>Build agents from first principles — loop, memory, planning, frameworks, benchmarks, production, workbench.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -662,6 +662,18 @@ Twenty phases. Click any phase to expand its lesson list.
 | 28 | [Orchestration Patterns — Supervisor, Swarm, Hierarchical](phases/14-agent-engineering/28-orchestration-patterns/) | Build | Python |
 | 29 | [Production Runtimes — Queue, Event, Cron](phases/14-agent-engineering/29-production-runtimes/) | Learn | Python |
 | 30 | [Eval-Driven Agent Development](phases/14-agent-engineering/30-eval-driven-agent-development/) | Build | Python |
+| 31 | [Agent Workbench: Why Capable Models Still Fail](phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Learn | Python |
+| 32 | [The Minimal Agent Workbench](phases/14-agent-engineering/32-minimal-agent-workbench/) | Build | Python |
+| 33 | [Agent Instructions as Executable Constraints](phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Build | Python |
+| 34 | [Repo Memory and Durable State](phases/14-agent-engineering/34-repo-memory-and-state/) | Build | Python |
+| 35 | [Initialization Scripts for Agents](phases/14-agent-engineering/35-initialization-scripts/) | Build | Python |
+| 36 | [Scope Contracts and Task Boundaries](phases/14-agent-engineering/36-scope-contracts/) | Build | Python |
+| 37 | [Runtime Feedback Loops](phases/14-agent-engineering/37-runtime-feedback-loops/) | Build | Python |
+| 38 | [Verification Gates](phases/14-agent-engineering/38-verification-gates/) | Build | Python |
+| 39 | [Reviewer Agent: Separate Builder from Marker](phases/14-agent-engineering/39-reviewer-agent/) | Build | Python |
+| 40 | [Multi-Session Handoff](phases/14-agent-engineering/40-multi-session-handoff/) | Build | Python |
+| 41 | [The Workbench on a Real Repo](phases/14-agent-engineering/41-workbench-for-real-repos/) | Build | Python |
+| 42 | [Capstone: Ship a Reusable Agent Workbench Pack](phases/14-agent-engineering/42-agent-workbench-capstone/) | Build | Python |
 
 </details>
 
