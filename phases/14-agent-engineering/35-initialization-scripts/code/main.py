@@ -14,11 +14,12 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
 import time
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -38,18 +39,15 @@ PROBE_BUDGET_SECONDS = 3.0
 LKG_FILE_DIFF_BUDGET = 50
 
 
+SHA_PATTERN = re.compile(r"^[0-9a-fA-F]{7,40}$")
+
+
 @dataclass
 class Probe:
     name: str
     status: str
     detail: str
     duration_ms: int = 0
-
-
-@dataclass
-class ProbeContext:
-    args: argparse.Namespace
-    findings: list[Probe] = field(default_factory=list)
 
 
 def _timed(probe_fn):
@@ -121,6 +119,8 @@ def probe_lkg_diff() -> Probe:
             return Probe("lkg_diff", "warn", "lkg file present but commit field empty")
     except json.JSONDecodeError as exc:
         return Probe("lkg_diff", "fail", f"lkg file unreadable: {exc}")
+    if not isinstance(baseline, str) or not SHA_PATTERN.match(baseline):
+        return Probe("lkg_diff", "warn", "lkg commit invalid; skipped")
     try:
         out = subprocess.run(
             ["git", "diff", "--name-only", baseline, "HEAD"],
@@ -156,9 +156,15 @@ def lock_is_fresh() -> bool:
         lock = json.loads(LOCK_PATH.read_text())
     except json.JSONDecodeError:
         return False
-    if lock.get("fingerprint") != _deps_fingerprint():
+    if not isinstance(lock, dict) or lock.get("fingerprint") != _deps_fingerprint():
         return False
-    age = time.time() - lock.get("written_at", 0)
+    written_at = lock.get("written_at", 0)
+    if not isinstance(written_at, (int, float)):
+        try:
+            written_at = float(written_at)
+        except (TypeError, ValueError):
+            return False
+    age = time.time() - written_at
     return age < LOCK_TTL_SECONDS
 
 
