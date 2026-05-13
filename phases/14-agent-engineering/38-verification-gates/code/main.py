@@ -42,17 +42,17 @@ class VerdictReport:
 def _acceptance_findings(art: Artifacts) -> list[Finding]:
     findings: list[Finding] = []
     commands_run = [str(rec.get("command")) for rec in art.feedback]
+    accept_set = set(art.acceptance_commands)
     for cmd in art.acceptance_commands:
-        if not any(cmd in c for c in commands_run):
+        if cmd not in commands_run:
             findings.append(Finding("acceptance.missing", "block", f"never ran: {cmd}"))
     for rec in art.feedback:
+        cmd_str = str(rec.get("command"))
         if rec.get("exit_code") is None:
-            findings.append(Finding("feedback.null_exit", "block", f"missing exit for {rec.get('command')}"))
-        elif rec.get("exit_code") != 0 and any(
-            ac in str(rec.get("command")) for ac in art.acceptance_commands
-        ):
+            findings.append(Finding("feedback.null_exit", "block", f"missing exit for {cmd_str}"))
+        elif rec.get("exit_code") != 0 and cmd_str in accept_set:
             findings.append(
-                Finding("acceptance.failed", "block", f"acceptance exit {rec.get('exit_code')} on {rec.get('command')}")
+                Finding("acceptance.failed", "block", f"acceptance exit {rec.get('exit_code')} on {cmd_str}")
             )
     return findings
 
