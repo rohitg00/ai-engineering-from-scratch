@@ -87,7 +87,7 @@ A practitioner running "specsmaxxing" (scope contracts in YAML before invoking t
 
 **Time and network budgets next to file budgets.** A `time_budget_minutes` field bounds the wall clock; the runtime refuses to continue past it without re-approval. A `network_egress` allowlist on hostnames prevents the agent from quietly hitting an external API that was not part of the task. These are scope dimensions too; the file globs are necessary, not sufficient.
 
-**Multi-contract merge semantics.** When two scope contracts apply (e.g., a project-wide contract plus a task-specific one), the standard merge is: union the `allowed_files` and intersect the `forbidden_files`; the most restrictive `time_budget_minutes` wins; `approvals_required` accumulates. State this in the contract schema so the merge is mechanical and reviewable.
+**Multi-contract merge semantics (least privilege).** When two scope contracts apply (e.g., a project-wide contract plus a task-specific one), the merge is: **intersect** `allowed_files` (both contracts must permit the path), **union** `forbidden_files` (either can prohibit), `time_budget_minutes` is the most restrictive (min), `approvals_required` accumulates. `network_egress` is `None` for no enforcement, `[]` for deny-all, `[...]` as an allowlist; under merge, `None` defers to the other side, two lists intersect, and deny-all stays deny-all. State this in the contract schema so the merge is mechanical and reviewable.
 
 ## Use It
 

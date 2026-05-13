@@ -29,7 +29,7 @@ class ScopeContract:
     rollback_plan: str
     approvals_required: list[str] = field(default_factory=list)
     time_budget_minutes: int | None = None
-    network_egress: list[str] = field(default_factory=list)
+    network_egress: list[str] | None = None  # None = no enforcement, [] = deny-all, [...] = allowlist
     violation_budget: int = 0
     docs_paths_soft: list[str] = field(default_factory=lambda: ["docs/**", "README.md", "**/*.md"])
 
@@ -69,24 +69,38 @@ def matches_any(path: str, patterns: list[str]) -> bool:
 
 
 def merge_contracts(parent: ScopeContract, child: ScopeContract) -> ScopeContract:
-    """Project-wide + task-specific merge with the canonical asymmetry.
+    """Least-privilege merge: intersect allowed, union forbidden, narrowest budgets.
 
-    union(allowed), union(forbidden) so the stricter forbid always wins, min of
-    time budgets, accumulated approvals, intersect of network egress allowlists.
+    allowed_files intersect (both contracts must permit a path),
+    forbidden_files union (either contract can prohibit a path),
+    time_budget_minutes min (most restrictive wins),
+    approvals_required accumulate,
+    network_egress: None means no enforcement, otherwise intersect; an empty
+    list means deny-all and stays deny-all under merge.
     """
     return ScopeContract(
         task_id=child.task_id,
         goal=child.goal or parent.goal,
-        allowed_files=sorted(set(parent.allowed_files) | set(child.allowed_files)),
+        allowed_files=sorted(set(parent.allowed_files) & set(child.allowed_files)),
         forbidden_files=sorted(set(parent.forbidden_files) | set(child.forbidden_files)),
         acceptance_criteria=list(dict.fromkeys(parent.acceptance_criteria + child.acceptance_criteria)),
         rollback_plan=child.rollback_plan or parent.rollback_plan,
         approvals_required=list(dict.fromkeys(parent.approvals_required + child.approvals_required)),
         time_budget_minutes=_min_optional(parent.time_budget_minutes, child.time_budget_minutes),
-        network_egress=sorted(set(parent.network_egress) & set(child.network_egress)) if (parent.network_egress and child.network_egress) else (parent.network_egress or child.network_egress),
+        network_egress=_merge_egress(parent.network_egress, child.network_egress),
         violation_budget=min(parent.violation_budget, child.violation_budget),
         docs_paths_soft=sorted(set(parent.docs_paths_soft) | set(child.docs_paths_soft)),
     )
+
+
+def _merge_egress(a: list[str] | None, b: list[str] | None) -> list[str] | None:
+    if a is None and b is None:
+        return None
+    if a is None:
+        return b
+    if b is None:
+        return a
+    return sorted(set(a) & set(b))
 
 
 def _min_optional(a: int | None, b: int | None) -> int | None:
@@ -125,7 +139,7 @@ def scope_check(contract: ScopeContract, run: RunSummary) -> ScopeReport:
     if contract.time_budget_minutes is not None and run.elapsed_minutes > contract.time_budget_minutes:
         findings.append(Finding("time.over_budget", "block",
                                 f"elapsed {run.elapsed_minutes:.1f}m > budget {contract.time_budget_minutes}m"))
-    if contract.network_egress and run.network_hosts:
+    if contract.network_egress is not None and run.network_hosts:
         bad_hosts = [h for h in run.network_hosts if h not in contract.network_egress]
         if bad_hosts:
             findings.append(Finding("network.unallowed_host", "block",
@@ -162,7 +176,7 @@ def main() -> None:
     project_wide = ScopeContract(
         task_id="P-PROJECT",
         goal="project-wide defaults",
-        allowed_files=["**/*.py"],
+        allowed_files=["app.py", "test_app.py", "lib/**/*.py"],
         forbidden_files=["scripts/release.sh", "config/prod.yaml"],
         acceptance_criteria=[],
         rollback_plan="revert and redeploy",
