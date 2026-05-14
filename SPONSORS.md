@@ -19,20 +19,43 @@ If you or your company want to support the curriculum, this page is the rate car
 GitHub Sponsors handles billing, receipts, and tax forms. 0% platform fee on personal
 sponsorships, up to 6% on organization sponsorships, per [GitHub's policy](https://docs.github.com/en/sponsors/receiving-sponsorships-through-github-sponsors/about-github-sponsors-for-open-source-contributors).
 
+## Reach
+
+These are real numbers, not pitch decks. Verified 2026-05-14 from the official analytics
+dashboard, screenshots available on request.
+
+| Window | Visitors | Page views | Growth |
+|---|---|---|---|
+| Last 7 days | 33,569 | 53,917 | +450% / +399% |
+| Last 30 days | 55,593 | 90,709 | +335% / +403% |
+
+- **GitHub stars:** 7,500+ and growing
+- **Top referrers (30d):** X / Twitter (18K), Google (7.1K), GitHub (5.3K), Instagram (1.2K),
+  Brave (505), LinkedIn (470)
+- **Top pages:** `/` (63K views), `/index.html` (15K), `/prereqs.html` (5.5K),
+  `/catalog.html` (4.9K), `/glossary.html` (2K)
+- **Cross-platform amplification:** Twitter/X is the #1 acquisition channel; Gold and
+  Platinum sponsors get co-amplified on the same channel via release-note threads.
+
+A sponsor placement at this scale is in the same range as a paid slot in a 50-100K monthly
+dev newsletter or a mid-tier independent dev blog.
+
 ## Tier ladder
 
 | Tier | $/mo | Min term | What you get |
 |------|------|----------|---|
 | **Backer** | $25 | month-to-month | Name in [BACKERS.md](BACKERS.md), Sponsors badge on your GitHub profile |
-| **Bronze** | $100 | 3 months | Text-only row in the README sponsor block, name in BACKERS.md |
-| **Silver** | $500 | 6 months | Small logo (max 120×40) in the README sponsor row, listed as one supported provider in API lessons where applicable |
-| **Gold** | $1,000 | 6 months | Medium logo (max 200×60) in README + dedicated row on the sponsor page of the curriculum site |
-| **Platinum** | $2,000 | 12 months, max 2 partners | Hero logo above the fold + one mention per quarter in release notes |
+| **Bronze** | $250 | 3 months | Text-only row in the README sponsor block, name in BACKERS.md, one launch-day tweet thanking the tier |
+| **Silver** | $750 | 6 months | Small logo (max 120×40) in the README sponsor row, listed as one supported provider in API lessons where applicable, quarterly thank-you in release notes |
+| **Gold** | $2,000 | 6 months | Medium logo (max 200×60) in README + dedicated row on the sponsor page of the curriculum site + one X / LinkedIn co-feature per quarter |
+| **Platinum** | $5,000 | 12 months, max 1 partner | Hero logo above the fold + named in every release-notes post for the term + one dedicated integration lesson under Phase 11 or Phase 14, written by the maintainer to the same editorial standard as the rest of the curriculum |
 
-Diamond and Title tiers ($5,000+/mo) are not offered. They make sense for repos with
-verified Fortune-500 enterprise dependency, which this curriculum does not yet have.
-Pricing here is calibrated against the public sponsor pages of comparable projects (see
-[Pricing anchors](#pricing-anchors) below).
+Diamond / Title tiers ($10,000+/mo) are not offered today. Reasonable to revisit once
+monthly visitors clear 250K or there is verified Fortune-500 enterprise dependency.
+
+Pricing is calibrated against the public sponsor pages of comparable open-source
+projects, the analytics above, and standard dev-blog sponsor rates at the 50-100K monthly
+visitor scale (see [Pricing anchors](#pricing-anchors) below).
 
 ## Hard rules
 
@@ -74,19 +97,25 @@ will end with a link back to this page.
 
 ## Pricing anchors
 
-The tier amounts above are anchored against public sponsor pages of comparable
-open-source projects (verified 2026-05):
+The tier amounts above are anchored against (a) public sponsor pages of comparable
+open-source projects, and (b) standard sponsor-slot rates for 50-100K monthly visitor dev
+publications. Verified 2026-05.
 
-- **$100 Bronze** is the universal floor: [Drupal AI Developer Assistant](https://opencollective.com/drupal-ai-initiative/projects/aidev),
+Comparable open-source rate cards:
+
+- **Open-source baseline** — [Drupal AI Developer Assistant](https://opencollective.com/drupal-ai-initiative/projects/aidev),
   [Babel](https://opencollective.com/babel), [Parcel](https://opencollective.com/parcel),
-  [Vue.js](https://opencollective.com/vuejs) all open here.
-- **$500 Silver** matches Babel Silver, Parcel Silver, and Drupal AI Gold.
-- **$1,000 Gold** matches Babel Gold and Parcel Gold; sits between Vue Gold ($500) and Vue
-  Platinum ($2,000).
-- **$2,000 Platinum** matches Babel Base Support (billed yearly at $24,000) and Vue
+  [Vue.js](https://opencollective.com/vuejs) all open Bronze at $100/mo with text-only
+  recognition. Bronze here sits at $250 because the curriculum carries the audience traffic
+  none of those repos individually carry.
+- **$750 Silver** sits above Babel Silver ($500) and Drupal AI Gold ($500); below Vue
+  Platinum ($2,000). Defensible at the curriculum's monthly traffic.
+- **$2,000 Gold** matches Babel Base Support (billed yearly at $24K = $2K/mo) and Vue
   Platinum.
-- **Diamond ($5,000+)** is skipped: only Vue at 207K stars charges this. At 7.5K stars,
-  pricing above $2K/mo loses bids.
+- **$5,000 Platinum** matches Vue Diamond. At 7.5K stars + 55K monthly visitors + the
+  current growth slope, the dedicated lesson + hero placement is what justifies the price.
+- **Diamond / Title ($10K+)** is skipped. Reasonable to revisit once monthly visitors
+  clear 250K.
 
 ## What sponsorship pays for
 
