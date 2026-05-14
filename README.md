@@ -931,6 +931,25 @@ Codex, OpenClaw, Hermes, or any MCP-compatible agent. Real tools, not homework.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
+## Sponsor the work
+
+Free, MIT-licensed, 428 lessons. The curriculum is maintained on sponsorship alone. Cash only.
+
+| Tier | $/mo | What you get |
+|------|------|---|
+| Backer | $25 | Name in BACKERS.md |
+| Bronze | $100 | Text-only row in README sponsor block |
+| Silver | $500 | Small logo in README, listed as one supported provider in API lessons |
+| Gold | $1,000 | Medium logo in README + sponsor page on the site |
+| Platinum | $2,000 | Hero logo above the fold, max 2 partners |
+
+Full rate card, hard rules, and pricing anchors: [SPONSORS.md](SPONSORS.md). Sign up via
+[GitHub Sponsors](https://github.com/sponsors/rohitg00).
+
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
 ## Star history
 
 <a href="https://star-history.com/#rohitg00/ai-engineering-from-scratch&Date">
