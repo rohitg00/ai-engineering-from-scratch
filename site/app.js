@@ -132,6 +132,24 @@
       html += '</div>';
     }
     grid.innerHTML = html;
+
+    // Re-apply per-row stagger delays for the freshly created rows.
+    initStaggerIndex();
+
+    // If the reveal observer has already initialised (body.js-anim is set),
+    // the IntersectionObserver is only watching the *original* rows it was
+    // given at startup. Re-rendering via innerHTML replaces those nodes with
+    // brand-new elements that are NOT being observed, so they would otherwise
+    // stay hidden forever under `body.js-anim .toc-row { opacity: 0 }`.
+    //
+    // Since the user has already seen the initial reveal animation, just mark
+    // the rebuilt rows as visible immediately (no second fade-in).
+    if (document.body.classList.contains('js-anim')) {
+      var newRows = grid.querySelectorAll('.toc-row');
+      for (var r = 0; r < newRows.length; r++) {
+        newRows[r].classList.add('in-view', 'visible');
+      }
+    }
   }
 
   function toRoman(num) {
