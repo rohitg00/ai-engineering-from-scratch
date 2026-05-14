@@ -931,6 +931,28 @@ Codex, OpenClaw, Hermes, or any MCP-compatible agent. Real tools, not homework.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
+## Sponsor the work
+
+Free, MIT-licensed, 428 lessons. The curriculum is maintained on sponsorship alone. Cash only.
+
+**Reach (verified 2026-05-14):** 55,593 monthly visitors · 90,709 page views · 7.5K stars ·
+Twitter/X is the #1 acquisition channel.
+
+| Tier | $/mo | What you get |
+|------|------|---|
+| Backer | $25 | Name in BACKERS.md |
+| Bronze | $250 | Text-only row in README sponsor block + launch-day tweet |
+| Silver | $750 | Small logo in README + listed as one supported provider in API lessons |
+| Gold | $2,000 | Medium logo in README + sponsor page + quarterly X / LinkedIn co-feature |
+| Platinum | $5,000 | Hero logo above the fold + one dedicated integration lesson, max 1 partner |
+
+Full rate card, hard rules, pricing anchors, and reach data: [SPONSORS.md](SPONSORS.md).
+Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
+
+```
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+
 ## Star history
 
 <a href="https://star-history.com/#rohitg00/ai-engineering-from-scratch&Date">
