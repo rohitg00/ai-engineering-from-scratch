@@ -2453,13 +2453,14 @@
         if (document.documentElement.getAttribute('data-theme') !== 'light' || !def) return def;
         return def.split('\n').map(function (line) {
           if (!/^\s*style\s+/i.test(line)) return line;
-          var lower = line.toLowerCase();
           var hadDarkFill = false;
           var out = line;
           Object.keys(MERMAID_DARK_FILLS).forEach(function (dark) {
-            if (lower.indexOf('fill:' + dark) === -1) return;
+            var escapeDark = dark.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            var fillRe = new RegExp('\\bfill:\\s*' + escapeDark + '\\b', 'i');
+            if (!fillRe.test(out)) return;
             hadDarkFill = true;
-            out = out.replace(new RegExp('fill:\\s*' + dark.replace('#', '#') + '\\b', 'gi'), 'fill:' + MERMAID_DARK_FILLS[dark]);
+            out = out.replace(fillRe, 'fill:' + MERMAID_DARK_FILLS[dark]);
           });
           if (hadDarkFill && /color:\s*#fff\b/i.test(out)) {
             out = out.replace(/color:\s*#fff\b/gi, 'color:#1a1a2e');
