@@ -1,0 +1,10 @@
+[project]
+name = "pyproject"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "numpy >=1.26"
+]
+[project.optional-dependencies]
+torch = ["torch>=2.3", "torchvision>=0.18"]
+llm = ["anthropic>=0.39", "openai>=1.50"]
