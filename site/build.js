@@ -119,7 +119,7 @@ function parseReadme(content, roadmapStatuses) {
     }
 
     // Skip table separator
-    if (inLessonTable && line.match(/^\|[\s:|-]+\|$/)) {
+    if (inLessonTable && line.match(/^[|:\s\-]+$/)) {
       continue;
     }
 
