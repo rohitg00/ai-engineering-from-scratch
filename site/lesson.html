@@ -2447,6 +2447,28 @@
         return document.documentElement.getAttribute('data-theme') === 'light' ? 'default' : 'dark';
       }
 
+      var MERMAID_DARK_FILLS = { '#1a1a2e': '#eef0f8', '#0f3460': '#d6e4f7', '#16213e': '#dce8f5' };
+
+      function prepareMermaidDef(def) {
+        if (document.documentElement.getAttribute('data-theme') !== 'light' || !def) return def;
+        return def.split('\n').map(function (line) {
+          if (!/^\s*style\s+/i.test(line)) return line;
+          var hadDarkFill = false;
+          var out = line;
+          Object.keys(MERMAID_DARK_FILLS).forEach(function (dark) {
+            var escapeDark = dark.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            var fillRe = new RegExp('\\bfill:\\s*' + escapeDark + '\\b', 'i');
+            if (!fillRe.test(out)) return;
+            hadDarkFill = true;
+            out = out.replace(fillRe, 'fill:' + MERMAID_DARK_FILLS[dark]);
+          });
+          if (hadDarkFill && /color:\s*#fff\b/i.test(out)) {
+            out = out.replace(/color:\s*#fff\b/gi, 'color:#1a1a2e');
+          }
+          return out;
+        }).join('\n');
+      }
+
       function updateMermaidThemeAndRerender() {
         if (!window._mermaidReady) return;
         try {
@@ -2471,7 +2493,7 @@
           if (!idx) return;
           var target = document.getElementById('mermaid-render-' + idx);
           if (!target) return;
-          var def = pre.textContent;
+          var def = prepareMermaidDef(pre.textContent);
           target.innerHTML = '<div class="panel-loading">Rendering diagram...</div>';
 
           var token = ++mermaidRenderSeq;
@@ -2583,7 +2605,7 @@
 
         var pre = document.getElementById('mermaid-' + openMermaidIndex);
         if (!pre) return;
-        var def = pre.textContent;
+        var def = prepareMermaidDef(pre.textContent);
 
         center.innerHTML = '<div class="panel-loading">Rendering diagram...</div>';
         var token = ++mermaidRenderSeq;
