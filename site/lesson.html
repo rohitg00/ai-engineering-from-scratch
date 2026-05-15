@@ -2613,7 +2613,6 @@
         window._mermaidReady.render('mermaid-modal-svg', def).then(function (result) {
           if (center._mermaidRenderToken !== token) return;
           center.innerHTML = result.svg;
-          fixMermaidLightModeContrast(center.querySelector('svg'));
         }).catch(function () {
           if (center._mermaidRenderToken !== token) return;
           center.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Diagram could not be rendered.</p>';
