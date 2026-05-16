@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What makes debugging AI/ML code fundamentally different from debugging a typical web application?",
-      "options": ["AI code uses different programming languages", "AI bugs often don't crash -- they silently produce incorrect results with no error messages", "AI code cannot be debugged with standard tools like print statements", "AI code always requires a GPU to debug"],
+      "question": "Điều gì làm cho việc gỡ lỗi mã AI/ML về cơ bản khác với việc gỡ lỗi một ứng dụng web thông thường?",
+      "options": [
+        "Mã AI sử dụng các ngôn ngữ lập trình khác nhau",
+        "Lỗi AI thường không gặp sự cố -- chúng âm thầm tạo ra kết quả không chính xác mà không có thông báo lỗi",
+        "Mã AI không thể được gỡ lỗi bằng các công cụ tiêu chuẩn như câu lệnh in",
+        "Mã AI luôn yêu cầu GPU để gỡ lỗi"
+      ],
       "correct": 1,
-      "explanation": "The worst AI bugs produce valid-looking output. A misconfigured training loop might run for hours without errors while the model learns nothing useful, unlike web apps that crash with stack traces."
+      "explanation": "Các lỗi AI tồi tệ nhất tạo ra kết quả có vẻ hợp lệ. Vòng lặp đào tạo bị định cấu hình sai có thể chạy hàng giờ mà không gặp lỗi trong khi mô hình không học được gì hữu ích, không giống như các ứng dụng web gặp sự cố do dấu vết ngăn xếp."
     },
     {
       "stage": "pre",
-      "question": "What does a profiler measure?",
-      "options": ["Whether the code produces correct output", "How much time and memory each part of the code consumes", "How many bugs exist in the codebase", "The code coverage of unit tests"],
+      "question": "Một hồ sơ đo lường những gì?",
+      "options": [
+        "Liệu mã có tạo ra đầu ra chính xác hay không",
+        "Mỗi phần của mã tiêu thụ bao nhiêu thời gian và bộ nhớ",
+        "Có bao nhiêu lỗi tồn tại trong codebase",
+        "Phạm vi mã của các bài kiểm tra đơn vị"
+      ],
       "correct": 1,
-      "explanation": "Profilers measure resource consumption -- execution time per function, memory allocation, and GPU utilization -- helping you find bottlenecks and optimize performance."
+      "explanation": "Trình phân tích đo lường mức tiêu thụ tài nguyên -- thời gian thực thi trên mỗi chức năng, phân bổ bộ nhớ và mức sử dụng GPU -- giúp bạn tìm ra các điểm nghẽn cổ chai và tối ưu hóa hiệu suất."
     },
     {
       "stage": "post",
-      "question": "Your model achieves 99% accuracy on the test set. What AI-specific bug should you suspect first?",
-      "options": ["The model has too many parameters", "Data leakage -- test samples may have leaked into the training set", "The learning rate is too high", "The batch size is too large"],
+      "question": "Mô hình của bạn đạt được độ chính xác 99% trên tập kiểm tra. Bạn nên nghi ngờ lỗi cụ thể nào của AI đầu tiên?",
+      "options": [
+        "Mô hình có quá nhiều thông số",
+        "Rò rỉ dữ liệu - mẫu thử nghiệm có thể đã bị rò rỉ vào tập huấn luyện",
+        "Tỷ lệ học tập quá cao",
+        "Kích thước lô quá lớn"
+      ],
       "correct": 1,
-      "explanation": "Suspiciously high accuracy often indicates data leakage -- overlap between training and test data, or features that contain the target label. Always check for train/test overlap."
+      "explanation": "Độ chính xác cao đáng ngờ thường cho thấy sự rò rỉ dữ liệu -- sự chồng chéo giữa dữ liệu huấn luyện và dữ liệu kiểm tra hoặc các tính năng có chứa nhãn mục tiêu. Luôn kiểm tra sự chồng chéo giữa đào tạo/kiểm tra."
     },
     {
       "stage": "post",
-      "question": "What is the most common finding when profiling a training loop's time breakdown?",
-      "options": ["The backward pass takes 90% of the time", "Data loading takes more time than the forward and backward passes combined", "Writing logs takes the most time", "GPU memory allocation is the bottleneck"],
+      "question": "Phát hiện phổ biến nhất khi lập hồ sơ phân tích thời gian của vòng lặp đào tạo là gì?",
+      "options": [
+        "Việc truyền ngược mất 90% thời gian",
+        "Việc tải dữ liệu mất nhiều thời gian hơn so với việc chuyển tiếp và chuyển ngược cộng lại",
+        "Viết nhật ký mất nhiều thời gian nhất",
+        "Phân bổ bộ nhớ GPU là nút cổ chai"
+      ],
       "correct": 1,
-      "explanation": "Data loading often takes 60%+ of training time when num_workers=0 in the DataLoader. The fix is setting num_workers > 0 to load data in parallel with GPU computation."
+      "explanation": "Quá trình tải dữ liệu thường mất hơn 60% thời gian đào tạo khi num_workers=0 trong DataLoader. Cách khắc phục là đặt num_workers > 0 để tải dữ liệu song song với tính toán GPU."
     },
     {
       "stage": "post",
-      "question": "You see NaN loss at step 500. Which approach will help you find the root cause?",
-      "options": ["Restart training from scratch with a different random seed", "Use detect_nan to check for NaN/Inf in gradients and add breakpoint() at the failure point", "Increase the batch size to stabilize gradients", "Switch from Adam to SGD optimizer"],
+      "question": "Bạn thấy mất NaN ở bước 500. Cách tiếp cận nào sẽ giúp bạn tìm ra nguyên nhân gốc rễ?",
+      "options": [
+        "Bắt đầu lại quá trình đào tạo từ đầu với một hạt giống ngẫu nhiên khác",
+        "Sử dụng detect_nan để kiểm tra NaN/Inf theo độ dốc và thêm breakpoint() tại điểm lỗi",
+        "Tăng kích thước lô để ổn định độ dốc",
+        "Chuyển từ trình tối ưu hóa Adam sang SGD"
+      ],
       "correct": 1,
-      "explanation": "First identify WHERE the NaN originates by checking gradients for each parameter. A conditional breakpoint at the NaN step lets you inspect tensor values interactively. Common causes: learning rate too high, log(0), or division by zero."
+      "explanation": "Trước tiên, hãy xác định NaN bắt nguồn từ đâu bằng cách kiểm tra độ dốc cho từng tham số. Điểm dừng có điều kiện ở bước NaN cho phép bạn kiểm tra các giá trị tensor một cách tương tác. Nguyên nhân phổ biến: tốc độ học quá cao, log(0) hoặc chia cho 0."
     }
   ]
 }

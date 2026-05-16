@@ -1,7 +1,10 @@
 import os
 import json
 import urllib.request
+from dotenv import load_dotenv
 
+# Tự động tải các biến môi trường từ file .env
+load_dotenv()
 
 def call_with_sdk():
     try:
@@ -12,7 +15,7 @@ def call_with_sdk():
 
     client = anthropic.Anthropic()
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-3-5-sonnet-latest",
         max_tokens=256,
         messages=[{"role": "user", "content": "What is a neural network in one sentence?"}]
     )

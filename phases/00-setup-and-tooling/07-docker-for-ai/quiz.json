@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the primary difference between a Docker container and a virtual machine?",
-      "options": ["Containers are slower but more secure than VMs", "Containers share the host OS kernel while VMs run their own full OS", "Containers can only run Linux while VMs support any OS", "There is no practical difference"],
+      "question": "Sự khác biệt chính giữa vùng chứa Docker và máy ảo là gì?",
+      "options": [
+        "Các container chậm hơn nhưng an toàn hơn VM",
+        "Các vùng chứa chia sẻ nhân hệ điều hành máy chủ trong khi máy ảo chạy hệ điều hành đầy đủ của riêng chúng",
+        "Các container chỉ có thể chạy Linux trong khi VM hỗ trợ bất kỳ hệ điều hành nào",
+        "Không có sự khác biệt thực tế"
+      ],
       "correct": 1,
-      "explanation": "Containers share the host kernel and isolate at the process level, making them start in seconds. VMs run a complete guest OS with its own kernel, requiring more resources and slower startup."
+      "explanation": "Các bộ chứa chia sẻ hạt nhân máy chủ và cách ly ở cấp quy trình, khiến chúng khởi động sau vài giây. Máy ảo chạy một hệ điều hành khách hoàn chỉnh với nhân riêng, yêu cầu nhiều tài nguyên hơn và khởi động chậm hơn."
     },
     {
       "stage": "pre",
-      "question": "What is a Dockerfile?",
-      "options": ["A configuration file for the Docker daemon", "A set of instructions for building a Docker image layer by layer", "A log file that records container activity", "A file that lists running containers"],
+      "question": "Dockerfile là gì?",
+      "options": [
+        "Tệp cấu hình cho daemon Docker",
+        "Bộ hướng dẫn xây dựng Docker image từng lớp",
+        "Tệp nhật ký ghi lại hoạt động của vùng chứa",
+        "Một tập tin liệt kê các container đang chạy"
+      ],
       "correct": 1,
-      "explanation": "A Dockerfile contains sequential instructions (FROM, RUN, COPY, etc.) that Docker executes to build an image. Each instruction creates a cached layer."
+      "explanation": "Dockerfile chứa các hướng dẫn tuần tự (TỪ, CHẠY, SAO CHÉP, v.v.) mà Docker thực thi để xây dựng hình ảnh. Mỗi lệnh tạo ra một lớp được lưu trong bộ nhớ đệm."
     },
     {
       "stage": "post",
-      "question": "Why are volume mounts critical for AI development with Docker?",
-      "options": ["Volumes make containers run faster by using host disk speed", "Volumes persist data (models, datasets, code) across container rebuilds so you don't re-download gigabytes each time", "Volumes are required for Python packages to install correctly", "Volumes allow multiple containers to share the same GPU"],
+      "question": "Tại sao việc gắn kết khối lượng lại quan trọng đối với việc phát triển AI với Docker?",
+      "options": [
+        "Ổ đĩa làm cho vùng chứa chạy nhanh hơn bằng cách sử dụng tốc độ ổ đĩa máy chủ",
+        "Khối lượng dữ liệu vẫn tồn tại (mô hình, bộ dữ liệu, mã) trong quá trình xây dựng lại vùng chứa để bạn không phải tải xuống lại hàng gigabyte mỗi lần",
+        "Cần có khối lượng để các gói Python cài đặt chính xác",
+        "Các tập cho phép nhiều vùng chứa chia sẻ cùng một GPU"
+      ],
       "correct": 1,
-      "explanation": "Without volumes, everything inside a container is lost when it stops. Volume mounts map host directories into the container, so model weights (14+ GB) and datasets survive rebuilds."
+      "explanation": "Không có khối lượng, mọi thứ bên trong vùng chứa sẽ bị mất khi nó dừng lại. Ổ đĩa gắn các thư mục máy chủ bản đồ vào vùng chứa, do đó trọng lượng mô hình (14+ GB) và tập dữ liệu vẫn tồn tại sau khi xây dựng lại."
     },
     {
       "stage": "post",
-      "question": "What does the NVIDIA Container Toolkit enable?",
-      "options": ["Installing CUDA drivers inside the container", "Exposing host GPUs to Docker containers via the --gpus flag", "Running NVIDIA GPU containers on AMD hardware", "Compiling CUDA code during the Docker build process"],
+      "question": "Bộ công cụ bộ chứa NVIDIA kích hoạt những gì?",
+      "options": [
+        "Cài đặt trình điều khiển CUDA bên trong vùng chứa",
+        "Hiển thị GPU máy chủ cho vùng chứa Docker thông qua cờ --gpus",
+        "Chạy bộ chứa GPU NVIDIA trên phần cứng AMD",
+        "Biên dịch mã CUDA trong quá trình xây dựng Docker"
+      ],
       "correct": 1,
-      "explanation": "The NVIDIA Container Toolkit is a runtime hook that exposes host GPUs to containers. The CUDA toolkit lives inside the container, but the GPU driver is shared from the host."
+      "explanation": "Bộ công cụ bộ chứa NVIDIA là một hook thời gian chạy hiển thị GPU máy chủ cho các bộ chứa. Bộ công cụ CUDA nằm bên trong vùng chứa nhưng trình điều khiển GPU được chia sẻ từ máy chủ."
     },
     {
       "stage": "post",
-      "question": "In a Docker Compose file for AI, how does the 'ai-dev' service reach the 'qdrant' vector database?",
-      "options": ["By using the host machine's IP address and port", "By using the service name 'qdrant' as the hostname, since Compose creates a shared network", "By mounting a shared volume between the two containers", "By configuring a VPN between the containers"],
+      "question": "Trong tệp Docker Compose dành cho AI, dịch vụ 'ai-dev' tiếp cận cơ sở dữ liệu vectơ 'qdrant' bằng cách nào?",
+      "options": [
+        "Bằng cách sử dụng địa chỉ IP và cổng của máy chủ",
+        "Bằng cách sử dụng tên dịch vụ 'qdrant' làm tên máy chủ vì Compose tạo mạng chia sẻ",
+        "Bằng cách gắn một ổ đĩa chung giữa hai vùng chứa",
+        "Bằng cách định cấu hình VPN giữa các vùng chứa"
+      ],
       "correct": 1,
-      "explanation": "Docker Compose automatically creates a shared network where services can reach each other by name. The ai-dev container connects to 'http://qdrant:6333' using the service name as hostname."
+      "explanation": "Docker Compose tự động tạo một mạng chia sẻ nơi các dịch vụ có thể liên hệ với nhau theo tên. Vùng chứa ai-dev kết nối với 'http://qdrant:6333' bằng tên dịch vụ làm tên máy chủ."
     }
   ]
 }

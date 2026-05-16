@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is an API key used for when calling an LLM service?",
-      "options": ["Encrypting the data sent to the server", "Authenticating your identity and authorizing requests", "Compressing requests to reduce bandwidth", "Selecting which programming language the server uses"],
+      "question": "Khóa API được sử dụng để làm gì khi gọi dịch vụ LLM?",
+      "options": [
+        "Mã hóa dữ liệu gửi đến máy chủ",
+        "Xác thực danh tính của bạn và cho phép các yêu cầu",
+        "Nén các yêu cầu để giảm băng thông",
+        "Chọn ngôn ngữ lập trình mà máy chủ sử dụng"
+      ],
       "correct": 1,
-      "explanation": "An API key is a unique string that identifies your account, authorizes your requests, and allows the provider to track usage and billing."
+      "explanation": "Khóa API là một chuỗi duy nhất xác định tài khoản của bạn, ủy quyền các yêu cầu của bạn và cho phép nhà cung cấp theo dõi việc sử dụng và thanh toán."
     },
     {
       "stage": "pre",
-      "question": "Why should API keys never be hardcoded directly in source code?",
-      "options": ["Hardcoded keys make the code run slower", "They can be accidentally committed to git and exposed publicly", "Python cannot read string literals longer than 50 characters", "API providers block keys that appear in source files"],
+      "question": "Tại sao khóa API không bao giờ được mã hóa cứng trực tiếp trong mã nguồn?",
+      "options": [
+        "Phím mã hóa cứng làm cho mã chạy chậm hơn",
+        "Họ có thể vô tình phạm phải git và bị phơi bày công khai",
+        "Python không thể đọc chuỗi ký tự dài hơn 50 ký tự",
+        "Nhà cung cấp API chặn các khóa xuất hiện trong tệp nguồn"
+      ],
       "correct": 1,
-      "explanation": "Hardcoded keys in source code risk being committed to version control and pushed to public repositories, where they can be scraped and abused by others."
+      "explanation": "Các khóa mã hóa cứng trong mã nguồn có nguy cơ bị chuyển sang kiểm soát phiên bản và bị đẩy đến các kho lưu trữ công khai, nơi chúng có thể bị người khác lấy cắp và lạm dụng."
     },
     {
       "stage": "post",
-      "question": "What is the recommended way to store API keys for local development?",
-      "options": ["In a Python variable at the top of your script", "In a .env file that is listed in .gitignore", "In the README.md for easy access", "In the requirements.txt alongside package versions"],
+      "question": "Cách được đề xuất để lưu trữ khóa API để phát triển cục bộ là gì?",
+      "options": [
+        "Trong một biến Python ở đầu tập lệnh của bạn",
+        "Trong tệp .env được liệt kê trong .gitignore",
+        "Trong README.md để dễ dàng truy cập",
+        "Trong tệp require.txt cùng với các phiên bản gói"
+      ],
       "correct": 1,
-      "explanation": "A .env file stores keys as environment variables and should be added to .gitignore so it is never committed to version control. SDKs read keys from environment variables automatically."
+      "explanation": "Tệp .env lưu trữ các khóa dưới dạng biến môi trường và phải được thêm vào .gitignore để nó không bao giờ được cam kết kiểm soát phiên bản. SDK tự động đọc khóa từ các biến môi trường."
     },
     {
       "stage": "post",
-      "question": "In the raw HTTP API call to Anthropic, which header carries the API key?",
-      "options": ["Authorization: Bearer sk-ant-...", "x-api-key: sk-ant-...", "Content-Type: application/json", "anthropic-version: 2023-06-01"],
+      "question": "Trong lệnh gọi API HTTP thô tới Anthropic, tiêu đề nào mang khóa API?",
+      "options": [
+        "Ủy quyền: Bearer sk-ant-...",
+        "x-api-key: sk-ant-...",
+        "Loại nội dung: ứng dụng/json",
+        "phiên bản nhân loại: 2023-06-01"
+      ],
       "correct": 1,
-      "explanation": "Anthropic's API uses the 'x-api-key' header for authentication, not the more common 'Authorization: Bearer' pattern. This is specific to their API design."
+      "explanation": "API của Anthropic sử dụng tiêu đề 'x-api-key' để xác thực chứ không phải mẫu 'Ủy quyền: Người mang' phổ biến hơn. Điều này dành riêng cho thiết kế API của họ."
     },
     {
       "stage": "post",
-      "question": "What happens when you exceed an API's rate limit?",
-      "options": ["Your API key is permanently revoked", "The server returns an error (typically HTTP 429) and you must wait before retrying", "Your request is queued and processed later automatically", "The API silently drops your request with no response"],
+      "question": "Điều gì xảy ra khi bạn vượt quá giới hạn tốc độ của API?",
+      "options": [
+        "Khóa API của bạn bị thu hồi vĩnh viễn",
+        "Máy chủ trả về lỗi (thường là HTTP 429) và bạn phải đợi trước khi thử lại",
+        "Yêu cầu của bạn được xếp hàng đợi và xử lý tự động sau đó",
+        "API âm thầm loại bỏ yêu cầu của bạn mà không có phản hồi"
+      ],
       "correct": 1,
-      "explanation": "Rate limiting returns HTTP 429 (Too Many Requests). You need to wait and retry, typically with exponential backoff. Rate limits prevent abuse and ensure fair usage."
+      "explanation": "Giới hạn tốc độ trả về HTTP 429 (Quá nhiều yêu cầu). Bạn cần đợi và thử lại, thường có thời gian chờ theo cấp số nhân. Giới hạn tỷ lệ ngăn ngừa lạm dụng và đảm bảo sử dụng hợp lý."
     }
   ]
 }

@@ -2,31 +2,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does a p-value of 0.03 mean in a hypothesis test?",
+      "question": "Giá trị p 0,03 có ý nghĩa gì trong thử nghiệm giả thuyết?",
       "options": [
-        "There is a 3% probability the null hypothesis is true",
-        "There is a 3% probability of seeing data this extreme if the null hypothesis were true",
-        "The model improved by 3%",
-        "97% of the data supports the alternative hypothesis"
+        "Có xác suất 3% giả thuyết không là đúng",
+        "Có 3% xác suất nhìn thấy dữ liệu cực đoan này nếu giả thuyết khống là đúng",
+        "Mô hình được cải thiện 3%",
+        "97% dữ liệu ủng hộ giả thuyết thay thế"
       ],
       "correct": 1,
-      "explanation": "The p-value is the probability of observing data as extreme as what you got, assuming the null hypothesis is true. It is NOT the probability that H0 is true — this is the single most common misunderstanding in statistics."
+      "explanation": "Giá trị p là xác suất quan sát dữ liệu cực đoan như những gì bạn nhận được, giả sử giả thuyết khống là đúng. KHÔNG phải xác suất H0 đúng - đây là hiểu lầm phổ biến nhất trong thống kê."
     },
     {
       "stage": "pre",
-      "question": "Why do you divide by (n-1) instead of n when computing sample variance?",
+      "question": "Tại sao bạn chia cho (n-1) thay vì n khi tính phương sai mẫu?",
       "options": [
-        "It makes the computation faster",
-        "It accounts for the fact that the sample mean is not the true population mean (Bessel's correction)",
-        "It converts the variance to standard deviation",
-        "It only applies when the sample size is odd"
+        "Nó làm cho việc tính toán nhanh hơn",
+        "Nó giải thích thực tế là giá trị trung bình mẫu không phải là giá trị trung bình thực của tổng thể (hiệu chỉnh Bessel)",
+        "Nó chuyển đổi phương sai thành độ lệch chuẩn",
+        "Nó chỉ áp dụng khi cỡ mẫu là số lẻ"
       ],
       "correct": 1,
-      "explanation": "Bessel's correction (dividing by n-1) compensates for the bias introduced by using the sample mean instead of the true population mean. Without it, sample variance systematically underestimates the true population variance."
+      "explanation": "Hiệu chỉnh Bessel (chia cho n-1) bù đắp cho độ lệch được đưa ra bằng cách sử dụng giá trị trung bình mẫu thay vì giá trị trung bình tổng thể thực. Không có nó, phương sai mẫu sẽ đánh giá thấp một cách có hệ thống phương sai tổng thể thực sự."
     },
     {
       "stage": "post",
-      "question": "You test 20 different model configurations at alpha = 0.05. What is the approximate probability of at least one false positive?",
+      "question": "Bạn kiểm tra 20 cấu hình mô hình khác nhau với alpha = 0,05. Xác suất gần đúng của ít nhất một kết quả dương tính giả là bao nhiêu?",
       "options": [
         "5%",
         "25%",
@@ -34,31 +34,31 @@
         "95%"
       ],
       "correct": 2,
-      "explanation": "P(at least one false positive) = 1 - (1 - 0.05)^20 = 1 - 0.95^20 ≈ 0.64 (64%). This is the multiple comparison problem. Bonferroni correction addresses it by testing each at alpha/20 = 0.0025."
+      "explanation": "P(ít nhất một dương tính giả) = 1 - (1 - 0,05)^20 = 1 - 0,95^20 ≈ 0,64 (64%). Đây là vấn đề so sánh nhiều. Hiệu chỉnh Bonferroni giải quyết nó bằng cách kiểm tra từng giá trị ở alpha/20 = 0,0025."
     },
     {
       "stage": "post",
-      "question": "Model A scores 0.9234 and Model B scores 0.9237 on 1 million test samples with p-value = 0.001. What should you conclude?",
+      "question": "Mô hình A đạt điểm 0,9234 và Mô hình B đạt điểm 0,9237 trên 1 triệu mẫu thử nghiệm với giá trị p = 0,001. Bạn nên kết luận điều gì?",
       "options": [
-        "Model B is significantly better and should be deployed immediately",
-        "The difference is statistically significant but a 0.03% improvement may not be practically significant",
-        "The test is invalid because the sample size is too large",
-        "Model A is better because it was tested first"
+        "Mô hình B tốt hơn đáng kể và cần được triển khai ngay lập tức",
+        "Sự khác biệt có ý nghĩa thống kê nhưng mức cải thiện 0,03% có thể không có ý nghĩa thực tế",
+        "Thử nghiệm không hợp lệ vì cỡ mẫu quá lớn",
+        "Model A tốt hơn vì nó được thử nghiệm trước"
       ],
       "correct": 1,
-      "explanation": "With 1 million samples, even trivially small differences become statistically significant. The p-value confirms the difference is real, but the effect size (0.03% accuracy gain) may not justify the engineering cost of deployment. Always report both p-value and effect size."
+      "explanation": "Với 1 triệu mẫu, ngay cả những khác biệt nhỏ không đáng kể cũng trở nên có ý nghĩa thống kê. Giá trị p xác nhận sự khác biệt là có thật, nhưng kích thước hiệu ứng (tăng độ chính xác 0,03%) có thể không chứng minh được chi phí kỹ thuật khi triển khai. Luôn báo cáo cả giá trị p và kích thước hiệu ứng."
     },
     {
       "stage": "post",
-      "question": "What advantage does bootstrap have over the paired t-test for comparing two ML models?",
+      "question": "Bootstrap có lợi thế gì so với thử nghiệm t ghép đôi để so sánh hai mô hình ML?",
       "options": [
-        "Bootstrap always produces smaller p-values",
-        "Bootstrap requires no distributional assumptions and works for any metric (AUC, F1, median)",
-        "Bootstrap needs fewer samples to reach significance",
-        "Bootstrap can only be used with neural networks"
+        "Bootstrap luôn tạo ra giá trị p nhỏ hơn",
+        "Bootstrap không yêu cầu giả định phân phối và hoạt động với mọi số liệu (AUC, F1, trung vị)",
+        "Bootstrap cần ít mẫu hơn để đạt được ý nghĩa",
+        "Bootstrap chỉ có thể được sử dụng với mạng lưới thần kinh"
       ],
       "correct": 1,
-      "explanation": "Bootstrap resampling estimates the sampling distribution of any statistic by resampling with replacement. Unlike the t-test, it does not assume normality. It works for any metric — AUC, F1, precision@k, median — without needing a closed-form formula."
+      "explanation": "Lấy mẫu lại Bootstrap ước tính phân phối lấy mẫu của bất kỳ thống kê nào bằng cách lấy mẫu lại bằng thay thế. Không giống như bài kiểm tra t, nó không có tính quy phạm. Nó hoạt động với mọi số liệu — AUC, F1, Precision@k, trung vị — mà không cần công thức dạng đóng."
     }
   ]
 }
