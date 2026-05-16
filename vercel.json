@@ -6,6 +6,8 @@
   "rewrites": [
     { "source": "/glossary", "destination": "/glossary.html" },
     { "source": "/catalog", "destination": "/catalog.html" },
+    { "source": "/books", "destination": "/books.html" },
+    { "source": "/book.html/:path*", "destination": "/book/:path*" },
     { "source": "/path", "destination": "/prereqs.html" },
     { "source": "/roadmap", "destination": "/prereqs.html" }
   ],
@@ -29,7 +31,7 @@
       ]
     },
     {
-      "source": "/(glossary|catalog|path|roadmap)",
+      "source": "/(glossary|catalog|books|path|roadmap)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }
       ]

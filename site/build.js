@@ -16,8 +16,44 @@ const README_PATH = path.join(REPO_ROOT, 'README.md');
 const ROADMAP_PATH = path.join(REPO_ROOT, 'ROADMAP.md');
 const GLOSSARY_PATH = path.join(REPO_ROOT, 'glossary', 'terms.md');
 const OUTPUT_PATH = path.join(__dirname, 'data.js');
+const BOOK_SOURCE_DIR = path.join(REPO_ROOT, 'book');
+const BOOK_OUTPUT_DIR = path.join(__dirname, 'book');
 
 const GITHUB_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
+
+function copyBookFiles() {
+  if (!fs.existsSync(BOOK_SOURCE_DIR)) {
+    console.log('\nNo book directory found; skipping book assets.');
+    return;
+  }
+
+  fs.mkdirSync(BOOK_OUTPUT_DIR, { recursive: true });
+
+  const allowedExtensions = new Set(['.html', '.css']);
+  const copied = [];
+
+  for (const fileName of fs.readdirSync(BOOK_SOURCE_DIR)) {
+    const sourcePath = path.join(BOOK_SOURCE_DIR, fileName);
+    const stat = fs.statSync(sourcePath);
+    if (!stat.isFile()) continue;
+    if (!allowedExtensions.has(path.extname(fileName).toLowerCase())) continue;
+
+    fs.copyFileSync(sourcePath, path.join(BOOK_OUTPUT_DIR, fileName));
+    copied.push(fileName);
+  }
+
+  for (const fileName of fs.readdirSync(BOOK_OUTPUT_DIR)) {
+    const outputPath = path.join(BOOK_OUTPUT_DIR, fileName);
+    const stat = fs.statSync(outputPath);
+    if (!stat.isFile()) continue;
+    if (!allowedExtensions.has(path.extname(fileName).toLowerCase())) continue;
+    if (!copied.includes(fileName)) {
+      fs.rmSync(outputPath, { force: true });
+    }
+  }
+
+  console.log(`\nCopied ${copied.length} book asset(s) to ${BOOK_OUTPUT_DIR}`);
+}
 
 // ─── Parse ROADMAP.md for lesson statuses ────────────────────────────
 function parseRoadmap(content) {
@@ -129,6 +165,10 @@ function parseReadme(content, roadmapStatuses) {
       // | 02 | Multi-Layer Networks & Forward Pass | Build | Python |
       const cols = line.split('|').map(c => c.trim()).filter(c => c.length > 0);
       if (cols.length >= 4) {
+        if (!/^\d+$/.test(cols[0])) {
+          continue;
+        }
+
         const lessonCol = cols[1];
         const typeRaw = cols[2];
         const langRaw = cols[3];
@@ -304,6 +344,7 @@ const GLOSSARY = ${JSON.stringify(glossaryTerms, null, 2)};
 `;
 
   fs.writeFileSync(OUTPUT_PATH, output, 'utf8');
+  copyBookFiles();
   console.log(`\n✅ Generated ${OUTPUT_PATH}`);
 }
 
