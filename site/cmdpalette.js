@@ -52,13 +52,14 @@
             id:         'l:' + i + ':' + j,
             phaseId:    phase.id,
             phaseName:  phase.name,
-            name:       lesson.name    || '',
-            summary:    lesson.summary || '',
-            type:       lesson.type    || '',
-            lang:       lesson.lang    || '',
-            status:     lesson.status  || '',
+            name:       lesson.name     || '',
+            summary:    lesson.summary  || '',
+            keywords:   lesson.keywords || '',
+            type:       lesson.type     || '',
+            lang:       lesson.lang     || '',
+            status:     lesson.status   || '',
             lessonPath: lessonPath,
-            url:        lesson.url     || '',
+            url:        lesson.url      || '',
           });
         }
       }
@@ -83,12 +84,13 @@
   // ── Scoring ──────────────────────────────────────────────────────────
   function scoreItem(item, q) {
     // q is already lowercased + trimmed by the caller
-    var name    = item.name.toLowerCase();
-    var summary = (item.summary || '').toLowerCase();
-    var phase   = (item.phaseName || '').toLowerCase();
-    var lang    = (item.lang  || '').toLowerCase();
-    var type    = (item.type  || '').toLowerCase();
-    var says    = (item.says  || '').toLowerCase();
+    var name     = item.name.toLowerCase();
+    var summary  = (item.summary  || '').toLowerCase();
+    var keywords = (item.keywords || '').toLowerCase();
+    var phase    = (item.phaseName || '').toLowerCase();
+    var lang     = (item.lang  || '').toLowerCase();
+    var type     = (item.type  || '').toLowerCase();
+    var says     = (item.says  || '').toLowerCase();
 
     var s = 0;
 
@@ -96,7 +98,7 @@
     if (name === q) return 200;
 
     // Substring matches in name (most important signal)
-    if (name.startsWith(q))        s += 100;
+    if (name.startsWith(q))          s += 100;
     else if (name.indexOf(q) !== -1) s +=  70;
 
     // Multi-word query: every word must appear somewhere in name
@@ -104,17 +106,18 @@
     if (words.length > 1) {
       var allInName = words.every(function (w) { return name.indexOf(w) !== -1; });
       if (allInName) {
-        s += (s === 0 ? 65 : 20); // big bonus if nothing matched yet
+        s += (s === 0 ? 65 : 20);
       } else {
-        // Weaker: every word spread across name + summary + phase
-        var blob = name + ' ' + summary + ' ' + phase;
+        // Weaker: every word spread across name + summary + keywords + phase
+        var blob = name + ' ' + summary + ' ' + keywords + ' ' + phase;
         var allInBlob = words.every(function (w) { return blob.indexOf(w) !== -1; });
         if (allInBlob) s += 15;
       }
     }
 
-    // Supporting fields
+    // Supporting fields — ordered by expected relevance
     if (summary.indexOf(q)  !== -1) s += 25;
+    if (keywords.indexOf(q) !== -1) s += 22; // H3 headings: dense vocabulary
     if (says.indexOf(q)     !== -1) s += 22; // glossary "what people say"
     if (phase.indexOf(q)    !== -1) s += 18;
     if (lang.indexOf(q)     !== -1) s += 14;
@@ -126,8 +129,9 @@
       for (var i = 0; i < nameParts.length; i++) {
         if (nameParts[i].startsWith(q)) { s += 30; break; }
       }
-      // Last resort: single word anywhere in summary
-      if (s === 0 && summary.indexOf(q) !== -1) s += 12;
+      // Last resort: single word anywhere in keywords or summary
+      if (s === 0 && keywords.indexOf(q) !== -1) s += 18;
+      if (s === 0 && summary.indexOf(q)  !== -1) s += 12;
     }
 
     return s;
@@ -350,7 +354,9 @@
           : r.url;
         chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
       } else {
-        dest      = 'glossary.html';
+        // Deep-link: pre-populate glossary search with the exact term name
+        // so the user lands directly on the definition, not the full list.
+        dest      = 'glossary.html?q=' + encodeURIComponent(r.name);
         chip      = 'Glossary';
         chipClass += ' cp-item-chip--alt';
       }

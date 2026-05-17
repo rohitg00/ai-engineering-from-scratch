@@ -305,7 +305,16 @@
           listEl.innerHTML = html;
         }
 
-        renderGlossary('');
+        // Support ?q= deep-links from the command palette and external sources.
+        // Pre-populate the search box and filter to the matching term so the
+        // user lands directly on the definition rather than the full list.
+        var urlQ = '';
+        try { urlQ = new URLSearchParams(window.location.search).get('q') || ''; } catch (_) {}
+        if (urlQ && searchInput) {
+          searchInput.value = urlQ;
+        }
+
+        renderGlossary(urlQ);
 
         if (searchInput) {
           searchInput.addEventListener('input', function () {
