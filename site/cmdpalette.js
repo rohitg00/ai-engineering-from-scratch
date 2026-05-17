@@ -291,7 +291,8 @@
         var inp = _inputEl();
         if (inp) {
           inp.focus();
-          renderResults([]); // show empty-state prompt
+          var q = inp.value.trim();
+          renderResults(q ? search(q) : []);
         }
       });
     });
@@ -425,13 +426,14 @@
         _updateActive(items);
         break;
 
-      case 'Enter':
+      case 'Enter': {
         e.preventDefault();
-        var target = (_activeIdx >= 0 && items[_activeIdx])
+        const target = (_activeIdx >= 0 && items[_activeIdx])
           ? items[_activeIdx]
           : (count === 1 ? items[0] : null);
         if (target) _navigate(target);
         break;
+      }
 
       case 'Tab':
         // Trap focus inside the palette (only interactive element is the input)
