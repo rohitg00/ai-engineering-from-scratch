@@ -222,29 +222,42 @@ function parseReadme(content, roadmapStatuses) {
   return phases;
 }
 
-// ─── Extract lesson summary from docs/en.md ──────────────────────────
+// ─── Extract lesson summary + keywords from docs/en.md ───────────────
 /**
- * Read the first blockquote line (`> ...`) from a lesson's docs/en.md.
- * Returns an empty string when the file is absent or has no blockquote
- * in the first 30 lines — expected for planned lessons that have no docs yet.
+ * Single-pass read of a lesson's docs/en.md.
+ *
+ * Returns:
+ *   summary  — first `> blockquote` line (the lesson's one-liner motto).
+ *   keywords — all `### H3` heading texts joined by ' · '.
+ *              H3 headings are the densest vocabulary in a lesson doc
+ *              (e.g. "Scaled dot-product · Causal masking · KV cache"),
+ *              so they extend search coverage without bloating data.js.
+ *
+ * Both fields are empty strings when the file is absent or has no
+ * matching content — expected for planned lessons with no docs yet.
  */
-function extractLessonSummary(relPath) {
+function extractLessonMeta(relPath) {
   const docPath = path.join(REPO_ROOT, relPath, 'docs', 'en.md');
+  const result = { summary: '', keywords: '' };
   try {
-    const content = fs.readFileSync(docPath, 'utf8');
-    const lines = content.split('\n');
-    const limit = Math.min(lines.length, 30);
-    for (let i = 0; i < limit; i++) {
-      const line = lines[i].trim();
-      if (line.startsWith('> ') && line.length > 3) {
-        const summary = line.slice(2).trim();
-        return summary.length > 180 ? summary.slice(0, 177) + '…' : summary;
+    const lines = fs.readFileSync(docPath, 'utf8').split('\n');
+    const h3s = [];
+    for (const raw of lines) {
+      const line = raw.trim();
+      if (!result.summary && line.startsWith('> ') && line.length > 3) {
+        const s = line.slice(2).trim();
+        result.summary = s.length > 180 ? s.slice(0, 177) + '…' : s;
+      }
+      if (line.startsWith('### ')) {
+        const heading = line.slice(4).trim();
+        if (heading) h3s.push(heading);
       }
     }
+    if (h3s.length) result.keywords = h3s.join(' · ');
   } catch (_) {
     // File absent or unreadable — expected for planned lessons.
   }
-  return '';
+  return result;
 }
 
 // ─── Parse glossary/terms.md ──────────────────────────────────────────
@@ -305,14 +318,15 @@ function build() {
   console.log('🔍 Parsing glossary/terms.md...');
   const glossaryTerms = parseGlossary(glossary);
 
-  console.log('📚 Extracting lesson summaries from docs/en.md...');
-  let summarized = 0;
+  console.log('📚 Extracting lesson summaries + keywords from docs/en.md...');
+  let summarized = 0, withKeywords = 0;
   for (const phase of phases) {
     for (const lesson of phase.lessons) {
       if (lesson.url) {
         const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
-        lesson.summary = extractLessonSummary(relPath);
-        if (lesson.summary) summarized++;
+        const meta = extractLessonMeta(relPath);
+        if (meta.summary)  { lesson.summary  = meta.summary;  summarized++;   }
+        if (meta.keywords) { lesson.keywords = meta.keywords; withKeywords++; }
       }
     }
   }
@@ -329,7 +343,7 @@ function build() {
   console.log(`   Phases: ${phases.length}`);
   console.log(`   Lessons: ${totalLessons}`);
   console.log(`   Complete: ${completeLessons}`);
-  console.log(`   Summaries: ${summarized}`);
+  console.log(`   Summaries: ${summarized}, Keywords: ${withKeywords}`);
   console.log(`   Glossary terms: ${glossaryTerms.length}`);
 
   // Generate data.js
