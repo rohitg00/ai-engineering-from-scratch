@@ -1001,3 +1001,352 @@ body.js-anim .toc-row.in-view {
     max-width: 1240px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Command Palette  —  global search  (Cmd/Ctrl+K or search button)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Search trigger button in the header ─────────────────────────────── */
+.search-toggle {
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  transition: border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.search-toggle:hover {
+  border-color: var(--blueprint);
+  color: var(--blueprint);
+}
+
+/* ── Palette overlay wrapper ─────────────────────────────────────────── */
+#cmdPalette {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* push the panel below the fixed header on any viewport */
+  padding: clamp(68px, 13vh, 150px) 16px 16px;
+  pointer-events: none; /* clicks pass through until open */
+}
+
+#cmdPalette.cp-open {
+  pointer-events: auto;
+}
+
+/* ── Dimmed backdrop ─────────────────────────────────────────────────── */
+.cp-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+#cmdPalette.cp-open .cp-backdrop {
+  opacity: 1;
+}
+
+/* ── Panel ───────────────────────────────────────────────────────────── */
+.cp-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--modal-bg);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  overflow: hidden;
+  /* entry animation */
+  opacity: 0;
+  transform: translateY(-12px);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity   0.16s ease;
+}
+
+#cmdPalette.cp-open .cp-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Search row ──────────────────────────────────────────────────────── */
+.cp-search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rule-soft);
+  flex-shrink: 0;
+}
+
+.cp-search-icon {
+  color: var(--ink-mute);
+  flex-shrink: 0;
+}
+
+.cp-input {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  outline: none;
+  min-width: 0;
+  caret-color: var(--blueprint);
+}
+
+.cp-input::placeholder {
+  color: var(--ink-mute);
+}
+
+/* Strip browser chrome from <input type="search"> */
+.cp-input[type="search"]::-webkit-search-decoration,
+.cp-input[type="search"]::-webkit-search-cancel-button,
+.cp-input[type="search"]::-webkit-search-results-button,
+.cp-input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+.cp-kbd-esc {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--ink-mute);
+  background: var(--bg-surface);
+  border: 1px solid var(--rule-soft);
+  padding: 2px 6px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cp-kbd-esc:hover {
+  color: var(--blueprint);
+  border-color: var(--blueprint);
+}
+
+/* ── Results list ────────────────────────────────────────────────────── */
+.cp-results {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  overscroll-behavior: contain;
+}
+
+.cp-results::-webkit-scrollbar       { width: 4px; }
+.cp-results::-webkit-scrollbar-thumb { background: var(--rule-soft); border-radius: 2px; }
+
+/* ── Empty / no-match state ──────────────────────────────────────────── */
+.cp-empty {
+  display: block;
+  padding: 24px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  text-align: center;
+}
+
+.cp-empty em {
+  font-style: normal;
+  color: var(--ink-soft);
+}
+
+/* ── Result item ─────────────────────────────────────────────────────── */
+.cp-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  list-style: none;
+  transition: background 0.08s, border-left-color 0.08s;
+}
+
+.cp-item + .cp-item {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.cp-item:hover,
+.cp-item--active {
+  background: var(--blueprint-tint);
+  border-left-color: var(--blueprint);
+}
+
+.cp-item-body {
+  display: grid;
+  /* chip / name / summary / meta — all rows auto-height */
+  grid-template-rows: auto auto auto auto;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Phase / Glossary chip */
+.cp-item-chip {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  line-height: 1.2;
+}
+
+.cp-item-chip--alt {
+  color: var(--ink-mute);
+}
+
+/* Lesson / term name */
+.cp-item-name {
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
+}
+
+/* One-line summary */
+.cp-item-summary {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* Type · Language meta line */
+.cp-item-meta {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-mute);
+  line-height: 1.3;
+}
+
+/* Chevron arrow — appears only on hover / active */
+.cp-item-arrow {
+  color: var(--ink-mute);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.1s, color 0.1s;
+}
+
+.cp-item:hover .cp-item-arrow,
+.cp-item--active .cp-item-arrow {
+  opacity: 1;
+  color: var(--blueprint);
+}
+
+/* Highlighted match inside results */
+.cp-results mark {
+  background: var(--blueprint-tint-strong);
+  color: var(--blueprint);
+  padding: 0 1px;
+  font-style: normal;
+  border-radius: 2px;
+}
+
+/* ── Footer keyboard hints ───────────────────────────────────────────── */
+.cp-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 7px 16px;
+  border-top: 1px solid var(--rule-soft);
+  flex-shrink: 0;
+}
+
+.cp-footer-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cp-footer kbd {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-mute);
+  background: var(--bg-surface);
+  border: 1px solid var(--rule-soft);
+  padding: 1px 5px;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.cp-footer-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+
+.cp-footer-shortcut {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+}
+
+/* ── Scroll lock when palette is open ───────────────────────────────── */
+body[data-palette-open] {
+  overflow: hidden;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cp-backdrop,
+  .cp-panel {
+    transition: none !important;
+  }
+}
+
+/* ── Mobile: full-width sheet pinned to top ──────────────────────────── */
+@media (max-width: 600px) {
+  #cmdPalette {
+    padding: 56px 0 0; /* clear the 56px mobile header */
+    align-items: flex-start;
+  }
+
+  .cp-panel {
+    max-width: 100%;
+    max-height: calc(85vh - 56px);
+    border-left: none;
+    border-right: none;
+    border-top: 2px solid var(--ink);
+    box-shadow: none;
+  }
+
+  .search-toggle {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Keep only the "navigate" hint on small screens */
+  .cp-footer-group:not(:first-child),
+  .cp-footer-shortcut {
+    display: none;
+  }
+}
