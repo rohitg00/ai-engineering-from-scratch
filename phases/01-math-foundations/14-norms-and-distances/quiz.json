@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does cosine similarity measure between two vectors?",
+      "question": "Độ tương tự cosine đo lường giữa hai vectơ là gì?",
       "options": [
-        "The Euclidean distance between them",
-        "The angle between them, ignoring their magnitudes",
-        "The sum of their element-wise products",
-        "The maximum difference in any single dimension"
+        "Khoảng cách Euclide giữa chúng",
+        "Góc giữa chúng, bỏ qua độ lớn của chúng",
+        "Tổng các sản phẩm theo từng phần tử của chúng",
+        "Sự khác biệt tối đa trong bất kỳ chiều đơn lẻ nào"
       ],
       "correct": 1,
-      "explanation": "Cosine similarity measures the cosine of the angle between two vectors, normalized by their magnitudes. It ranges from -1 (opposite) to +1 (same direction) and ignores vector length, which is why it dominates in NLP where document length is noise."
+      "explanation": "Độ tương tự cosine đo cosin của góc giữa hai vectơ, được chuẩn hóa bằng độ lớn của chúng. Nó nằm trong khoảng từ -1 (ngược lại) đến +1 (cùng hướng) và bỏ qua độ dài vectơ, đó là lý do tại sao nó chiếm ưu thế trong NLP nơi độ dài tài liệu bị nhiễu."
     },
     {
       "stage": "pre",
-      "question": "Why is L1 distance called 'Manhattan distance'?",
+      "question": "Tại sao khoảng cách L1 được gọi là 'khoảng cách Manhattan'?",
       "options": [
-        "It was invented in Manhattan",
-        "It measures distance along a grid, as if walking on city blocks",
-        "It only works in exactly two dimensions",
-        "It computes the maximum difference across all dimensions"
+        "Nó được phát minh ở Manhattan",
+        "Nó đo khoảng cách dọc theo một mạng lưới, như thể đang đi bộ trên các khối phố",
+        "Nó chỉ hoạt động theo đúng hai chiều",
+        "Nó tính toán sự khác biệt tối đa trên tất cả các chiều"
       ],
       "correct": 1,
-      "explanation": "L1 distance sums the absolute differences along each axis, which corresponds to the shortest path on a grid where you can only move along axes (no diagonals) — like walking on a city street grid."
+      "explanation": "Khoảng cách L1 tính tổng các chênh lệch tuyệt đối dọc theo mỗi trục, tương ứng với đường đi ngắn nhất trên lưới nơi bạn chỉ có thể di chuyển dọc theo các trục (không có đường chéo) — giống như đi bộ trên lưới đường phố trong thành phố."
     },
     {
       "stage": "post",
-      "question": "Why does L1 regularization (Lasso) produce sparse weights while L2 regularization (Ridge) does not?",
+      "question": "Tại sao chính quy hóa L1 (Lasso) tạo ra trọng số thưa thớt trong khi chính quy hóa L2 (Ridge) thì không?",
       "options": [
-        "L1 uses a larger penalty constant than L2",
-        "The L1 diamond constraint has corners on the axes where weights are zero; loss contours are likely to touch at corners",
-        "L2 regularization only applies to the bias terms",
-        "L1 regularization clips weights below a threshold to zero"
+        "L1 sử dụng hằng số phạt lớn hơn L2",
+        "Ràng buộc kim cương L1 có các góc trên trục có trọng số bằng 0; đường viền mất khả năng chạm vào ở các góc",
+        "Chính quy hóa L2 chỉ áp dụng cho các điều khoản sai lệch",
+        "Clip chính quy hóa L1 có trọng số dưới ngưỡng bằng 0"
       ],
       "correct": 1,
-      "explanation": "The L1 constraint region is a diamond shape with corners aligned with the axes. The loss function's contour ellipses are most likely to first touch the diamond at a corner, where one or more weights are exactly zero. The L2 constraint is a circle with no corners, so the touch point has all weights nonzero."
+      "explanation": "Vùng ràng buộc L1 có dạng hình kim cương với các góc thẳng hàng với các trục. Các đường viền hình elip của hàm mất mát có nhiều khả năng chạm vào viên kim cương đầu tiên ở một góc, nơi một hoặc nhiều trọng số chính xác bằng 0. Ràng buộc L2 là một hình tròn không có góc, do đó điểm tiếp xúc có tất cả các trọng số khác 0."
     },
     {
       "stage": "post",
-      "question": "What advantage does Wasserstein distance have over KL divergence when comparing probability distributions?",
+      "question": "Khoảng cách Wasserstein có lợi thế gì so với phân kỳ KL khi so sánh phân bố xác suất?",
       "options": [
-        "Wasserstein is always smaller than KL divergence",
-        "Wasserstein provides meaningful gradients even when distributions do not overlap, while KL goes to infinity",
-        "Wasserstein is symmetric but KL is not",
-        "Both B and C are correct"
+        "Wasserstein luôn nhỏ hơn phân kỳ KL",
+        "Wasserstein cung cấp độ dốc có ý nghĩa ngay cả khi phân phối không trùng nhau, trong khi KL tiến tới vô cùng",
+        "Wasserstein đối xứng nhưng KL thì không",
+        "Cả B và C đều đúng"
       ],
       "correct": 3,
-      "explanation": "Wasserstein distance is a true metric (symmetric, satisfies triangle inequality) and provides gradients even for non-overlapping distributions. KL divergence is asymmetric and goes to infinity when distributions don't overlap, which is why WGANs replaced KL-based GANs."
+      "explanation": "Khoảng cách Wasserstein là một thước đo thực sự (đối xứng, thỏa mãn bất đẳng thức tam giác) và cung cấp độ dốc ngay cả đối với các phân bố không chồng chéo. Phân kỳ KL không đối xứng và tiến tới vô cùng khi phân phối không trùng nhau, đó là lý do tại sao WGAN thay thế GAN dựa trên KL."
     },
     {
       "stage": "post",
-      "question": "When would you use Mahalanobis distance instead of Euclidean distance?",
+      "question": "Khi nào bạn sẽ sử dụng khoảng cách Mahalanobis thay vì khoảng cách Euclide?",
       "options": [
-        "When features are all binary (0 or 1)",
-        "When features have different scales and are correlated with each other",
-        "When you are comparing strings instead of vectors",
-        "When you need a faster computation than L2"
+        "Khi các đặc điểm đều là nhị phân (0 hoặc 1)",
+        "Khi các đặc điểm có tỷ lệ khác nhau và có mối tương quan với nhau",
+        "Khi bạn so sánh các chuỗi thay vì vectơ",
+        "Khi bạn cần tính toán nhanh hơn L2"
       ],
       "correct": 1,
-      "explanation": "Mahalanobis distance accounts for the covariance structure of the data, decorrelating and normalizing features before computing L2 distance. It correctly handles features at different scales and with correlations, whereas Euclidean distance treats all dimensions equally."
+      "explanation": "Khoảng cách Mahalanobis chiếm cấu trúc hiệp phương sai của dữ liệu, giải tương quan và chuẩn hóa các tính năng trước khi tính khoảng cách L2. Nó xử lý chính xác các đặc điểm ở các tỷ lệ khác nhau và với các mối tương quan, trong khi khoảng cách Euclide xử lý tất cả các chiều như nhau."
     }
   ]
 }

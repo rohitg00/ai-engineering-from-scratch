@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is a GPU faster than a CPU for training neural networks?",
-      "options": ["GPUs have higher clock speeds than CPUs", "GPUs can perform thousands of parallel matrix operations simultaneously", "GPUs have more RAM than CPUs", "GPUs use a more efficient programming language"],
+      "question": "Tại sao GPU lại nhanh hơn CPU trong việc huấn luyện mạng nơ-ron?",
+      "options": [
+        "GPU có tốc độ xung cao hơn CPU",
+        "GPU có thể thực hiện bài hát ma trận hàng hóa được phép cùng lúc",
+        "GPU có nhiều RAM hơn CPU",
+        "GPU sử dụng hiệu quả của trình lập ngôn ngữ hơn"
+      ],
       "correct": 1,
-      "explanation": "GPUs have thousands of cores optimized for parallel computation, making them ideal for the matrix multiplications that dominate neural network training."
+      "explanation": "GPU có hàng nghìn lõi được tối ưu hóa cho tính toán song song, khiến chúng trở nên lý tưởng cho các phép nhân ma trận chiếm ưu thế trong quá trình huấn luyện mạng nơ-ron."
     },
     {
       "stage": "pre",
-      "question": "What does VRAM refer to?",
-      "options": ["Virtual RAM used by the operating system for swap space", "Video RAM on the GPU, separate from system RAM", "The total RAM available across all devices", "A type of CPU cache memory"],
+      "question": "VRAM là gì?",
+      "options": [
+        "RAM Virtual được hệ điều hành sử dụng cho không gian trao đổi",
+        "RAM video trên GPU, đặc biệt với hệ thống RAM",
+        "Tổng số RAM khả dụng trên tất cả các thiết bị",
+        "Một loại bộ nhớ đệm của CPU"
+      ],
       "correct": 1,
-      "explanation": "VRAM (Video RAM) is the dedicated memory on a GPU. It limits the size of models and batch sizes you can use during training, separate from your system's main RAM."
+      "explanation": "VRAM (Video RAM) là bộ nhớ chuyên dụng trên GPU. Nó giới hạn kích thước của các mô hình và kích thước batch bạn có thể sử dụng trong quá trình huấn luyện, tách biệt với RAM chính của hệ thống."
     },
     {
       "stage": "post",
-      "question": "What command verifies that your NVIDIA GPU is detected and shows its current status?",
-      "options": ["gpu --status", "nvidia-smi", "torch.cuda.list_devices()", "lspci | grep gpu"],
+      "question": "Lệnh nào xác định rằng GPU NVIDIA của bạn đã được phát hiện và hiển thị trạng thái của nó?",
+      "options": [
+        "gpu --trạng thái",
+        "nvidia-smi",
+        "ngọn đuốc.cuda.list_devices()",
+        "lspci | gpu grep"
+      ],
       "correct": 1,
-      "explanation": "nvidia-smi (NVIDIA System Management Interface) displays GPU utilization, memory usage, temperature, and running processes. It is the standard tool for verifying GPU availability."
+      "explanation": "nvidia-smi (Giao diện Quản lý Hệ thống NVIDIA) hiển thị mức sử dụng GPU, mức sử dụng bộ nhớ, nhiệt độ và các tiến trình đang chạy. Đây là công cụ tiêu chuẩn để xác minh tính khả dụng của GPU."
     },
     {
       "stage": "post",
-      "question": "When benchmarking GPU vs CPU matrix multiplication, why must you call torch.cuda.synchronize() before measuring GPU time?",
-      "options": ["To transfer data from CPU to GPU memory", "To ensure all GPU operations have completed before stopping the timer", "To reset the GPU clock speed to its base frequency", "To free unused GPU memory"],
+      "question": "Khi đo chuẩn (benchmark) phép nhân ma trận giữa GPU và CPU, tại sao bạn phải gọi torch.cuda.synchronize() trước khi đo thời gian của GPU?",
+      "options": [
+        "Để truyền dữ liệu từ CPU bộ nhớ sang GPU bộ nhớ",
+        "Để đảm bảo tất cả các hoạt động của GPU đã hoàn tất trước khi dừng bộ đếm thời gian",
+        "Để thiết lập lại GPU xung nhịp về tần số cơ bản",
+        "Để giải nén GPU bộ nhớ không sử dụng"
+      ],
       "correct": 1,
-      "explanation": "GPU operations are asynchronous -- Python returns immediately while the GPU is still computing. synchronize() blocks until all GPU operations finish, giving accurate timing."
+      "explanation": "Các hoạt động của GPU là bất đồng bộ -- Python trả về kết quả ngay lập tức trong khi GPU vẫn đang tính toán. synchronize() sẽ chặn (block) cho đến khi tất cả các hoạt động của GPU kết thúc, giúp đo thời gian chính xác."
     },
     {
       "stage": "post",
-      "question": "Using the fp16 rule of thumb, approximately how many parameters can fit in 24 GB of VRAM?",
-      "options": ["24 billion parameters", "12 billion parameters", "6 billion parameters", "48 billion parameters"],
+      "question": "Sử dụng quy tắc ngón tay cái fp16, khoảng bao nhiêu tham số có thể vừa với 24 GB VRAM?",
+      "options": [
+        "tham số 24 rate",
+        "tham số 12 rate",
+        "6 rate tham số",
+        "48 rate tham số"
+      ],
       "correct": 1,
-      "explanation": "In fp16, each parameter uses 2 bytes. 24 GB / 2 bytes = 12 billion parameters. This is a rough estimate; actual usage includes activations, gradients, and optimizer states."
+      "explanation": "Trong fp16, mỗi tham số sử dụng 2 byte. 24 GB / 2 byte = 12 tỷ tham số. Đây là một ước tính sơ bộ; mức sử dụng thực tế còn bao gồm các activations, gradients và trạng thái của optimizer."
     }
   ]
 }

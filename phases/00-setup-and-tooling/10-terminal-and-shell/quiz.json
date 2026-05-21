@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the pipe operator '|' do in a shell command?",
-      "options": ["Runs two commands in parallel", "Sends the standard output of one command as standard input to the next", "Saves the output of a command to a file", "Combines two files into one"],
+      "question": "Toán tử đường ống '|' làm gì làm gì trong lệnh shell?",
+      "options": [
+        "Chạy song song hai lệnh",
+        "Gửi đầu ra tiêu chuẩn của một lệnh làm đầu vào tiêu chuẩn cho lệnh tiếp theo",
+        "Lưu đầu ra của lệnh vào một tập tin",
+        "Kết hợp hai tập tin thành một"
+      ],
       "correct": 1,
-      "explanation": "The pipe operator connects commands in a pipeline. For example, 'cat log.txt | grep error' sends the contents of log.txt as input to grep, which filters for lines containing 'error'."
+      "explanation": "Toán tử đường ống kết nối các lệnh trong một đường ống. Ví dụ: 'cat log.txt | grep error' gửi nội dung của log.txt làm đầu vào cho grep, bộ lọc này sẽ lọc các dòng có chứa 'lỗi'."
     },
     {
       "stage": "pre",
-      "question": "What happens to a running process when you close the terminal that started it?",
-      "options": ["The process continues running in the background", "The process receives a hangup signal (SIGHUP) and typically terminates", "The process pauses until you open a new terminal", "The process automatically migrates to a system service"],
+      "question": "Điều gì xảy ra với một tiến trình đang chạy khi bạn đóng thiết bị đầu cuối đã khởi động nó?",
+      "options": [
+        "Quá trình tiếp tục chạy ở chế độ nền",
+        "Quá trình nhận được tín hiệu gác máy (SIGHUP) và thường chấm dứt",
+        "Quá trình tạm dừng cho đến khi bạn mở một thiết bị đầu cuối mới",
+        "Quá trình tự động di chuyển sang một dịch vụ hệ thống"
+      ],
       "correct": 1,
-      "explanation": "Closing the terminal sends SIGHUP to child processes, which causes them to terminate by default. Tools like tmux, nohup, or screen prevent this."
+      "explanation": "Việc đóng thiết bị đầu cuối sẽ gửi SIGHUP tới các tiến trình con, khiến chúng chấm dứt theo mặc định. Các công cụ như tmux, Nohup hoặc screen ngăn chặn điều này."
     },
     {
       "stage": "post",
-      "question": "What is the key advantage of tmux over using 'nohup command &' for long-running training jobs?",
-      "options": ["tmux uses less CPU than nohup", "tmux lets you detach, reattach, and see live output with multiple panes", "tmux automatically restarts failed processes", "tmux compresses the process output to save disk space"],
+      "question": "Ưu điểm chính của tmux so với việc sử dụng 'lệnh Nohup &' cho các công việc đào tạo kéo dài là gì?",
+      "options": [
+        "tmux sử dụng ít CPU hơn nohup",
+        "tmux cho phép bạn tách, gắn lại và xem đầu ra trực tiếp với nhiều khung",
+        "tmux tự động khởi động lại các tiến trình bị lỗi",
+        "tmux nén đầu ra của quá trình để tiết kiệm dung lượng ổ đĩa"
+      ],
       "correct": 1,
-      "explanation": "tmux creates persistent sessions you can detach from and reattach to later, with live output visible in multiple panes. nohup only logs to a file with no way to interact or reattach."
+      "explanation": "tmux tạo các phiên liên tục mà bạn có thể tách ra và gắn lại sau này, với đầu ra trực tiếp hiển thị trong nhiều khung. Nohup chỉ đăng nhập vào một tập tin mà không có cách nào để tương tác hoặc đính kèm lại."
     },
     {
       "stage": "post",
-      "question": "What does 'python train.py > output.log 2>&1' accomplish?",
-      "options": ["Runs train.py and saves only errors to output.log", "Runs train.py and redirects both standard output and standard error to output.log", "Runs train.py twice and logs the second run", "Runs train.py with double the memory allocation"],
+      "question": "'python train.py > out.log 2>&1' làm được gì?",
+      "options": [
+        "Chạy train.py và chỉ lưu lỗi vào out.log",
+        "Chạy train.py và chuyển hướng cả đầu ra tiêu chuẩn và lỗi tiêu chuẩn sang out.log",
+        "Chạy train.py hai lần và ghi lại lần chạy thứ hai",
+        "Chạy train.py với phân bổ bộ nhớ gấp đôi"
+      ],
       "correct": 1,
-      "explanation": "'> output.log' redirects stdout to the file. '2>&1' sends stderr to the same place as stdout. The result is both normal output and errors captured in one file."
+      "explanation": "'> out.log' chuyển hướng thiết bị xuất chuẩn sang tệp. '2>&1' gửi thiết bị xuất chuẩn đến cùng vị trí với thiết bị xuất chuẩn. Kết quả là cả đầu ra bình thường và lỗi được ghi lại trong một tệp."
     },
     {
       "stage": "post",
-      "question": "Which command lets you access a remote Jupyter notebook running on port 8888 of a GPU box from your local browser?",
-      "options": ["scp -P 8888 user@gpu-box:~/notebook.ipynb", "ssh -L 8888:localhost:8888 user@gpu-box", "rsync -avz user@gpu-box:8888 localhost:8888", "ssh user@gpu-box --forward-port 8888"],
+      "question": "Lệnh nào cho phép bạn truy cập sổ ghi chép Jupyter từ xa chạy trên cổng 8888 của hộp GPU từ trình duyệt cục bộ của bạn?",
+      "options": [
+        "scp -P 8888 user@gpu-box:~/notebook.ipynb",
+        "ssh -L 8888:localhost:8888 user@gpu-box",
+        "rsync -avz user@gpu-box:8888 localhost:8888",
+        "người dùng ssh@gpu-box --forward-port 8888"
+      ],
       "correct": 1,
-      "explanation": "SSH local port forwarding (-L) maps a remote port to your local machine. After this command, opening localhost:8888 in your browser accesses the remote Jupyter server."
+      "explanation": "Chuyển tiếp cổng cục bộ SSH (-L) ánh xạ một cổng từ xa tới máy cục bộ của bạn. Sau lệnh này, việc mở localhost:8888 trong trình duyệt của bạn sẽ truy cập vào máy chủ Jupyter từ xa."
     }
   ]
 }

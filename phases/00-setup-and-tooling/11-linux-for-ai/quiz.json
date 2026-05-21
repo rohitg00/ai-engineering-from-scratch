@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the '~' symbol represent in a Linux file path?",
-      "options": ["The root directory of the file system", "The current user's home directory", "The temporary files directory", "The directory where system programs are installed"],
+      "question": "Biểu tượng '~' thể hiện điều gì trong đường dẫn tệp Linux?",
+      "options": [
+        "Thư mục gốc của hệ thống tập tin",
+        "Thư mục chính của người dùng hiện tại",
+        "Thư mục tập tin tạm thời",
+        "Thư mục cài đặt các chương trình hệ thống"
+      ],
       "correct": 1,
-      "explanation": "The tilde (~) is a shortcut for the current user's home directory, typically /home/username on Linux. 'cd ~' takes you home from anywhere."
+      "explanation": "Dấu ngã (~) là lối tắt cho thư mục chính của người dùng hiện tại, thường là /home/username trên Linux. 'cd ~' sẽ đưa bạn về nhà từ bất cứ đâu."
     },
     {
       "stage": "pre",
-      "question": "What is the purpose of 'sudo' before a command?",
-      "options": ["It speeds up the command execution", "It runs the command with root (administrator) privileges", "It runs the command in a sandboxed environment", "It logs the command output to a system file"],
+      "question": "Mục đích của 'sudo' trước lệnh là gì?",
+      "options": [
+        "Nó tăng tốc độ thực thi lệnh",
+        "Nó chạy lệnh với quyền root (quản trị viên)",
+        "Nó chạy lệnh trong môi trường hộp cát",
+        "Nó ghi lại đầu ra lệnh vào một tập tin hệ thống"
+      ],
       "correct": 1,
-      "explanation": "sudo (superuser do) temporarily elevates your privileges to root level for a single command. Required for system-level operations like installing packages with apt."
+      "explanation": "sudo (superuser do) tạm thời nâng cao đặc quyền của bạn lên cấp gốc cho một lệnh duy nhất. Cần thiết cho các hoạt động cấp hệ thống như cài đặt các gói bằng apt."
     },
     {
       "stage": "post",
-      "question": "You get 'Permission denied' when trying to run a shell script. What command fixes this?",
-      "options": ["sudo rm script.sh", "chmod +x script.sh", "chown root script.sh", "mv script.sh /usr/bin/"],
+      "question": "Bạn nhận được 'Quyền bị từ chối' khi cố chạy tập lệnh shell. Lệnh nào sửa lỗi này?",
+      "options": [
+        "sudo rm script.sh",
+        "chmod +x script.sh",
+        "chown root script.sh",
+        "mv script.sh /usr/bin/"
+      ],
       "correct": 1,
-      "explanation": "chmod +x adds execute permission to the file. Without the execute bit set, the shell refuses to run the script even if you own it."
+      "explanation": "chmod +x thêm quyền thực thi vào tệp. Nếu không thiết lập bit thực thi, shell sẽ từ chối chạy tập lệnh ngay cả khi bạn sở hữu nó."
     },
     {
       "stage": "post",
-      "question": "On a remote GPU box, your training data fills the disk. Which command shows the largest directories consuming space?",
-      "options": ["ls -la /", "du -h --max-depth=1 / | sort -hr | head -20", "cat /proc/meminfo", "free -h"],
+      "question": "Trên hộp GPU từ xa, dữ liệu huấn luyện của bạn sẽ lấp đầy đĩa. Lệnh nào hiển thị các thư mục tiêu tốn dung lượng lớn nhất?",
+      "options": [
+        "ls -la /",
+        "du -h --max-deep=1 / | sắp xếp -hr | đầu -20",
+        "mèo /proc/meminfo",
+        "miễn phí -h"
+      ],
       "correct": 1,
-      "explanation": "du -h shows disk usage per directory, --max-depth=1 limits to top-level directories, and sort -hr sorts by size in descending order. This reveals which directories are consuming the most space."
+      "explanation": "du -h hiển thị mức sử dụng đĩa trên mỗi thư mục, --max-deep=1 giới hạn đối với các thư mục cấp cao nhất và sắp xếp -hr sắp xếp theo kích thước theo thứ tự giảm dần. Điều này cho thấy thư mục nào đang tiêu tốn nhiều dung lượng nhất."
     },
     {
       "stage": "post",
-      "question": "What is a key difference between the macOS and Linux versions of 'sed -i'?",
-      "options": ["Linux sed is faster than macOS sed", "macOS sed requires an empty string argument after -i ('sed -i \"\"'), while Linux does not", "Linux sed does not support regular expressions", "macOS sed cannot modify files in place"],
+      "question": "Sự khác biệt chính giữa phiên bản macOS và Linux của 'sed -i' là gì?",
+      "options": [
+        "Linux sed nhanh hơn macOS sed",
+        "macOS sed yêu cầu đối số chuỗi trống sau -i ('sed -i \"\"'), trong khi Linux thì không",
+        "Linux sed không hỗ trợ các biểu thức thông thường",
+        "macOS sed không thể sửa đổi tập tin tại chỗ"
+      ],
       "correct": 1,
-      "explanation": "macOS uses BSD sed which requires 'sed -i \"\" pattern file', while Linux uses GNU sed which accepts 'sed -i pattern file'. This is a common gotcha when moving scripts between systems."
+      "explanation": "macOS sử dụng BSD sed yêu cầu 'tệp mẫu sed -i \"', trong khi Linux sử dụng GNU sed chấp nhận 'tệp mẫu sed -i'. Đây là vấn đề thường gặp khi di chuyển tập lệnh giữa các hệ thống."
     }
   ]
 }

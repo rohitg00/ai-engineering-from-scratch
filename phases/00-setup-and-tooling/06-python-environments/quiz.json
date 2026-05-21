@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What problem do virtual environments solve?",
-      "options": ["They make Python code run faster by optimizing the interpreter", "They isolate project dependencies so different projects can use different package versions", "They provide a graphical interface for managing Python scripts", "They automatically update packages to the latest versions"],
+      "question": "Môi trường ảo giải quyết được vấn đề gì?",
+      "options": [
+        "Chúng làm cho mã Python chạy nhanh hơn bằng cách tối ưu hóa trình thông dịch",
+        "Họ tách biệt các phần phụ thuộc của dự án để các dự án khác nhau có thể sử dụng các phiên bản gói khác nhau",
+        "Chúng cung cấp giao diện đồ họa để quản lý các tập lệnh Python",
+        "Họ tự động cập nhật các gói lên phiên bản mới nhất"
+      ],
       "correct": 1,
-      "explanation": "Virtual environments give each project its own isolated set of packages. Without them, installing PyTorch 2.4 for one project would overwrite PyTorch 2.1 needed by another."
+      "explanation": "Môi trường ảo cung cấp cho mỗi dự án một bộ gói riêng biệt. Nếu không có chúng, việc cài đặt PyTorch 2.4 cho một dự án sẽ ghi đè lên PyTorch 2.1 mà dự án khác cần."
     },
     {
       "stage": "pre",
-      "question": "What is a lockfile in the context of Python dependency management?",
-      "options": ["A file that prevents other users from editing your code", "A file that pins every package to an exact version for reproducible installs", "A file that locks the Python interpreter version", "A file that encrypts your project dependencies"],
+      "question": "Tệp khóa trong bối cảnh quản lý phụ thuộc Python là gì?",
+      "options": [
+        "Một tệp ngăn người dùng khác chỉnh sửa mã của bạn",
+        "Một tệp ghim mọi gói vào một phiên bản chính xác để cài đặt có thể lặp lại",
+        "Một tệp khóa phiên bản trình thông dịch Python",
+        "Một tệp mã hóa các phần phụ thuộc dự án của bạn"
+      ],
       "correct": 1,
-      "explanation": "A lockfile records the exact version of every package (including transitive dependencies) so anyone installing from it gets identical packages, ensuring reproducibility."
+      "explanation": "Tệp khóa ghi lại phiên bản chính xác của mọi gói (bao gồm cả các phần phụ thuộc bắc cầu) để bất kỳ ai cài đặt từ nó đều nhận được các gói giống hệt nhau, đảm bảo khả năng tái tạo."
     },
     {
       "stage": "post",
-      "question": "How can you verify that your pip and python commands are using the virtual environment and not the system Python?",
-      "options": ["Run 'pip --version' and check the version number", "Run 'which python' and confirm it shows .venv/bin/python, not /usr/bin/python", "Check if the terminal background color has changed", "Run 'python --check-env' to verify"],
+      "question": "Làm cách nào bạn có thể xác minh rằng các lệnh pip và python của bạn đang sử dụng môi trường ảo chứ không phải Python hệ thống?",
+      "options": [
+        "Chạy 'pip --version' và kiểm tra số phiên bản",
+        "Chạy 'which python' và xác nhận nó hiển thị .venv/bin/python, không phải /usr/bin/python",
+        "Kiểm tra xem màu nền của thiết bị đầu cuối có thay đổi không",
+        "Chạy 'python --check-env' để xác minh"
+      ],
       "correct": 1,
-      "explanation": "'which python' (or 'where python' on Windows) shows the full path to the interpreter. If it points to .venv/bin/python, you are in the virtual environment."
+      "explanation": "'which python' (hoặc 'where python' trên Windows) hiển thị đường dẫn đầy đủ tới trình thông dịch. Nếu nó trỏ tới .venv/bin/python thì bạn đang ở trong môi trường ảo."
     },
     {
       "stage": "post",
-      "question": "Why is mixing pip and conda in the same environment problematic?",
-      "options": ["Pip packages are incompatible with conda's Python interpreter", "Pip installs can break conda's dependency tracking, causing hard-to-debug conflicts", "Conda cannot install packages that pip has already installed", "It doubles the disk space used by every package"],
+      "question": "Tại sao việc trộn pip và conda trong cùng một môi trường lại có vấn đề?",
+      "options": [
+        "Các gói Pip không tương thích với trình thông dịch Python của conda",
+        "Lượt cài đặt Pip có thể phá vỡ tính năng theo dõi phụ thuộc của conda, gây ra xung đột khó gỡ lỗi",
+        "Conda không thể cài đặt các gói mà pip đã cài đặt",
+        "Nó tăng gấp đôi dung lượng ổ đĩa được sử dụng bởi mọi gói"
+      ],
       "correct": 1,
-      "explanation": "Conda maintains its own dependency solver. Pip installs bypass it, so conda no longer knows the true state of the environment. This leads to dependency conflicts that are painful to resolve."
+      "explanation": "Conda duy trì bộ giải phụ thuộc của riêng mình. Cài đặt Pip bỏ qua nó, vì vậy conda không còn biết trạng thái thực sự của môi trường. Điều này dẫn đến những xung đột phụ thuộc khó giải quyết."
     },
     {
       "stage": "post",
-      "question": "Your PyTorch code reports 'CUDA not available' despite having an NVIDIA GPU. What is the most likely cause?",
-      "options": ["Your GPU does not support CUDA", "PyTorch was installed with a CUDA version incompatible with your GPU driver", "You forgot to import the torch.cuda module", "Virtual environments cannot access GPU hardware"],
+      "question": "Mã PyTorch của bạn báo cáo 'CUDA không khả dụng' mặc dù có GPU NVIDIA. Nguyên nhân có thể xảy ra nhất là gì?",
+      "options": [
+        "GPU của bạn không hỗ trợ CUDA",
+        "PyTorch đã được cài đặt với phiên bản CUDA không tương thích với trình điều khiển GPU của bạn",
+        "Bạn quên nhập mô-đun torch.cuda",
+        "Môi trường ảo không thể truy cập phần cứng GPU"
+      ],
       "correct": 1,
-      "explanation": "PyTorch ships CUDA bindings compiled for specific CUDA versions. If the PyTorch CUDA version exceeds your driver's CUDA version, CUDA will not be available. Check with nvidia-smi and torch.version.cuda."
+      "explanation": "PyTorch gửi các ràng buộc CUDA được biên dịch cho các phiên bản CUDA cụ thể. Nếu phiên bản CUDA của PyTorch vượt quá phiên bản CUDA của trình điều khiển của bạn thì CUDA sẽ không khả dụng. Kiểm tra với nvidia-smi và torch.version.cuda."
     }
   ]
 }

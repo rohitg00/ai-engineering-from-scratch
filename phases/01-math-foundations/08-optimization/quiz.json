@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does 'optimization' mean in the context of training a neural network?",
-      "options": ["Making the code run faster", "Finding the model weights that minimize the loss function", "Reducing the number of parameters in the model", "Choosing the best hardware for training"],
+      "question": "'Tối ưu hóa' có nghĩa là gì trong bối cảnh đào tạo mạng lưới thần kinh?",
+      "options": [
+        "Làm cho mã chạy nhanh hơn",
+        "Tìm trọng số mô hình để giảm thiểu hàm mất mát",
+        "Giảm số lượng tham số trong mô hình",
+        "Lựa chọn phần cứng tốt nhất cho đào tạo"
+      ],
       "correct": 1,
-      "explanation": "Training a neural network IS optimization. The loss function measures how wrong the model is, and optimization finds the weight values that make it as small as possible."
+      "explanation": "Huấn luyện mạng nơ-ron tối ưu hóa IS. Hàm mất mát đo lường mức độ sai sót của mô hình và việc tối ưu hóa sẽ tìm ra các giá trị trọng số làm cho mô hình trở nên nhỏ nhất có thể."
     },
     {
       "stage": "pre",
-      "question": "What happens if the learning rate is too large during gradient descent?",
-      "options": ["Training converges faster to the global minimum", "The optimizer overshoots the minimum and the loss diverges (bounces or increases)", "The gradients become zero", "The model automatically reduces the learning rate"],
+      "question": "Điều gì xảy ra nếu tốc độ học quá lớn trong quá trình giảm độ dốc?",
+      "options": [
+        "Đào tạo hội tụ nhanh hơn đến mức tối thiểu toàn cầu",
+        "Trình tối ưu hóa vượt quá mức tối thiểu và tổn thất phân kỳ (tăng hoặc trả lại)",
+        "Độ dốc trở thành số không",
+        "Mô hình tự động giảm tốc độ học tập"
+      ],
       "correct": 1,
-      "explanation": "A learning rate that is too large causes each step to overshoot the valley, potentially bouncing between walls or diverging entirely. The loss increases instead of decreasing."
+      "explanation": "Tốc độ học quá lớn khiến mỗi bước vượt qua thung lũng, có khả năng nảy giữa các bức tường hoặc chuyển hướng hoàn toàn. Sự mất mát tăng thay vì giảm."
     },
     {
       "stage": "post",
-      "question": "How does Adam differ from vanilla gradient descent?",
-      "options": ["Adam uses a fixed learning rate while GD uses adaptive rates", "Adam tracks running averages of gradients and squared gradients to give each weight its own adaptive learning rate", "Adam computes exact second derivatives while GD uses first derivatives", "Adam processes the full dataset per step while GD uses mini-batches"],
+      "question": "Adam khác với độ dốc giảm dần như thế nào?",
+      "options": [
+        "Adam sử dụng tỷ lệ học tập cố định trong khi GD sử dụng tỷ lệ thích ứng",
+        "Adam theo dõi mức trung bình của các gradient và gradient bình phương để cung cấp cho mỗi trọng số tốc độ học thích ứng riêng",
+        "Adam tính toán chính xác đạo hàm bậc hai trong khi GD sử dụng đạo hàm bậc nhất",
+        "Adam xử lý toàn bộ tập dữ liệu theo từng bước trong khi GD sử dụng các đợt nhỏ"
+      ],
       "correct": 1,
-      "explanation": "Adam maintains per-weight first moment (gradient direction) and second moment (gradient magnitude) estimates. Dividing by sqrt(second moment) gives small steps for weights with large gradients and large steps for weights with small gradients."
+      "explanation": "Adam duy trì các ước tính về mômen thứ nhất (hướng gradient) và mômen thứ hai (cường độ gradient) trên mỗi trọng lượng. Chia cho sqrt (khoảnh khắc thứ hai) đưa ra các bước nhỏ cho trọng số có độ dốc lớn và các bước lớn cho trọng số có độ dốc nhỏ."
     },
     {
       "stage": "post",
-      "question": "Why is the noise in mini-batch SGD considered beneficial rather than just a nuisance?",
-      "options": ["Noise reduces memory usage during training", "Noise helps the optimizer escape shallow local minima and saddle points that a noiseless optimizer would get stuck in", "Noise is not beneficial; it always slows convergence", "Noise makes the loss function convex"],
+      "question": "Tại sao tiếng ồn trong SGD lô nhỏ được coi là có lợi hơn là chỉ gây phiền toái?",
+      "options": [
+        "Tiếng ồn làm giảm mức sử dụng bộ nhớ trong quá trình đào tạo",
+        "Tiếng ồn giúp trình tối ưu hóa thoát khỏi các điểm yên tĩnh và cực tiểu cục bộ nông mà trình tối ưu hóa không ồn ào sẽ bị mắc kẹt",
+        "Tiếng ồn không có lợi; nó luôn làm chậm sự hội tụ",
+        "Nhiễu làm cho hàm loss lồi"
+      ],
       "correct": 1,
-      "explanation": "The stochastic noise from random mini-batches provides random perturbations that can push the optimizer out of shallow local minima and saddle points, leading to better generalization."
+      "explanation": "Nhiễu ngẫu nhiên từ các lô nhỏ ngẫu nhiên cung cấp các nhiễu loạn ngẫu nhiên có thể đẩy trình tối ưu hóa ra khỏi các điểm yên và cực tiểu cục bộ nông, dẫn đến khái quát hóa tốt hơn."
     },
     {
       "stage": "post",
-      "question": "What does a cosine annealing learning rate schedule do?",
-      "options": ["Increases the learning rate throughout training following a cosine curve", "Starts with a high learning rate and smoothly decreases it following a cosine curve, with optional warmup", "Alternates the learning rate between two fixed values", "Sets the learning rate to the cosine of the current epoch number"],
+      "question": "Biểu đồ tốc độ học tập ủ cosine làm gì?",
+      "options": [
+        "Tăng tốc độ học tập trong suốt quá trình đào tạo theo đường cong cosine",
+        "Bắt đầu với tốc độ học tập cao và giảm dần theo đường cong cosin, với khả năng khởi động tùy chọn",
+        "Thay thế tốc độ học tập giữa hai giá trị cố định",
+        "Đặt tốc độ học thành cosin của số kỷ nguyên hiện tại"
+      ],
       "correct": 1,
-      "explanation": "Cosine annealing smoothly reduces the learning rate from lr_max to lr_min following a half-cosine curve. This provides large steps early for fast progress and small steps late for fine convergence."
+      "explanation": "Ủ cosine giúp giảm tốc độ học từ lr_max xuống lr_min một cách trơn tru theo đường cong nửa cosin. Điều này cung cấp các bước lớn sớm để tiến triển nhanh và các bước nhỏ trễ để hội tụ tốt."
     }
   ]
 }

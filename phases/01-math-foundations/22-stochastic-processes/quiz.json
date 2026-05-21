@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the Markov property?",
+      "question": "Tài sản Markov là gì?",
       "options": [
-        "The process always returns to its starting state",
-        "The next state depends only on the current state, not on the history of previous states",
-        "All states are equally likely at every step",
-        "The process must have a finite number of states"
+        "Quá trình luôn trở về trạng thái ban đầu",
+        "Trạng thái tiếp theo chỉ phụ thuộc vào trạng thái hiện tại chứ không phụ thuộc vào lịch sử của các trạng thái trước đó",
+        "Tất cả các trạng thái đều có khả năng như nhau ở mọi bước",
+        "Quá trình phải có số lượng hữu hạn các trạng thái"
       ],
       "correct": 1,
-      "explanation": "The Markov property (memorylessness) means P(X_{t+1} = j | X_t = i, X_{t-1}, ...) = P(X_{t+1} = j | X_t = i). The future depends only on where you are, not how you got there. This enables compact representation via a transition matrix."
+      "explanation": "Thuộc tính Markov (không có bộ nhớ) có nghĩa là P(X_{t+1} = j | X_t = i, X_{t-1}, ...) = P(X_{t+1} = j | X_t = i). Tương lai chỉ phụ thuộc vào việc bạn đang ở đâu chứ không phụ thuộc vào việc bạn đến đó bằng cách nào. Điều này cho phép biểu diễn nhỏ gọn thông qua ma trận chuyển tiếp."
     },
     {
       "stage": "pre",
-      "question": "In a 1D random walk, how does the expected distance from the origin scale with the number of steps n?",
+      "question": "Trong bước đi ngẫu nhiên 1D, khoảng cách dự kiến ​​​​từ điểm gốc có tỷ lệ như thế nào với số bước n?",
       "options": [
-        "Linearly: proportional to n",
-        "As the square root: proportional to sqrt(n)",
-        "Logarithmically: proportional to log(n)",
-        "It stays constant regardless of n"
+        "Tuyến tính: tỷ lệ thuận với n",
+        "Là căn bậc hai: tỉ lệ với sqrt(n)",
+        "Theo logarit: tỷ lệ thuận với log(n)",
+        "Nó không đổi bất chấp n"
       ],
       "correct": 1,
-      "explanation": "Each step is +/-1 with equal probability. The variance after n steps is n, so the standard deviation (typical distance from origin) is sqrt(n). After 10,000 steps, the expected distance is about 100, not 10,000."
+      "explanation": "Mỗi bước là +/-1 với xác suất bằng nhau. Phương sai sau n bước là n, do đó độ lệch chuẩn (khoảng cách điển hình từ điểm gốc) là sqrt(n). Sau 10.000 bước, khoảng cách dự kiến ​​là khoảng 100 chứ không phải 10.000."
     },
     {
       "stage": "post",
-      "question": "What is the stationary distribution of a Markov chain?",
+      "question": "Phân phối cố định của chuỗi Markov là gì?",
       "options": [
-        "The initial distribution of states",
-        "The distribution that does not change under the transition matrix: pi * P = pi",
-        "The distribution of states after exactly one transition",
-        "The uniform distribution over all states"
+        "Sự phân bố ban đầu của các trạng thái",
+        "Phân phối không thay đổi theo ma trận chuyển tiếp: pi * P = pi",
+        "Sự phân bố các trạng thái sau đúng một lần chuyển đổi",
+        "Sự phân bổ thống nhất trên tất cả các tiểu bang"
       ],
       "correct": 1,
-      "explanation": "The stationary distribution pi satisfies pi * P = pi — applying the transition matrix leaves it unchanged. It represents the long-run fraction of time spent in each state. For an irreducible, aperiodic chain, any initial distribution converges to pi."
+      "explanation": "Phân phối cố định pi thỏa mãn pi * P = pi - việc áp dụng ma trận chuyển tiếp sẽ khiến nó không thay đổi. Nó đại diện cho phần thời gian dài hạn dành cho mỗi trạng thái. Đối với một chuỗi không tuần hoàn, bất khả quy, mọi phân phối ban đầu đều hội tụ về pi."
     },
     {
       "stage": "post",
-      "question": "In Langevin dynamics x_{t+1} = x_t - dt * grad(U) + sqrt(2*T*dt) * z, what happens as temperature T approaches 0?",
+      "question": "Trong động lực học Langevin x_{t+1} = x_t - dt * grad(U) + sqrt(2*T*dt) * z, điều gì xảy ra khi nhiệt độ T tiến tới 0?",
       "options": [
-        "The process becomes a pure random walk",
-        "The process becomes pure gradient descent (deterministic optimization)",
-        "The process diverges to infinity",
-        "The process freezes at the initial position"
+        "Quá trình trở thành một bước đi ngẫu nhiên thuần túy",
+        "Quá trình trở thành giảm độ dốc thuần túy (tối ưu hóa xác định)",
+        "Quá trình phân kỳ đến vô cùng",
+        "Quá trình đóng băng ở vị trí ban đầu"
       ],
       "correct": 1,
-      "explanation": "At T = 0, the noise term sqrt(2*T*dt)*z vanishes, leaving x_{t+1} = x_t - dt * grad(U), which is standard gradient descent. At high T, the noise dominates and the process is nearly a random walk. Intermediate T balances exploration and exploitation."
+      "explanation": "Tại T = 0, thuật ngữ nhiễu sqrt(2*T*dt)*z biến mất, để lại x_{t+1} = x_t - dt * grad(U), là độ dốc giảm dần tiêu chuẩn. Ở mức T cao, tiếng ồn chiếm ưu thế và quá trình này gần như diễn ra ngẫu nhiên. Trung cấp T cân bằng giữa thăm dò và khai thác."
     },
     {
       "stage": "post",
-      "question": "In a diffusion model, what does the forward process do to a data sample over T steps?",
+      "question": "Trong mô hình khuếch tán, quá trình chuyển tiếp làm gì với mẫu dữ liệu qua T bước?",
       "options": [
-        "It sharpens the image by removing noise at each step",
-        "It gradually adds Gaussian noise until the sample becomes pure noise, following a Markov chain",
-        "It compresses the image to a lower resolution",
-        "It applies learned transformations to generate new data"
+        "Nó làm sắc nét hình ảnh bằng cách loại bỏ nhiễu ở mỗi bước",
+        "Nó dần dần thêm nhiễu Gaussian cho đến khi mẫu trở thành nhiễu thuần túy, theo chuỗi Markov",
+        "Nó nén hình ảnh xuống độ phân giải thấp hơn",
+        "Nó áp dụng các phép biến đổi đã học để tạo ra dữ liệu mới"
       ],
       "correct": 1,
-      "explanation": "The forward process is a Markov chain: x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise. After T steps, x_T is approximately N(0, I) — pure Gaussian noise. The reverse process (learned by a neural network) then denoises step-by-step to generate new data."
+      "explanation": "Quá trình chuyển tiếp là một chuỗi Markov: x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise. Sau T bước, x_T xấp xỉ N(0, I) - nhiễu Gaussian thuần túy. Quá trình ngược lại (được mạng lưới thần kinh học) sau đó khử nhiễu từng bước để tạo ra dữ liệu mới."
     }
   ]
 }

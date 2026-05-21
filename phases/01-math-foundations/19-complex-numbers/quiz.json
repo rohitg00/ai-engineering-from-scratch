@@ -2,31 +2,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the imaginary unit i defined by?",
+      "question": "Đơn vị tưởng tượng tôi xác định bởi là gì?",
       "options": [
-        "i = sqrt(2)",
-        "i^2 = -1",
-        "i = -1",
-        "i^2 = 1"
+        "tôi = sqrt(2)",
+        "tôi^2 = -1",
+        "tôi = -1",
+        "tôi^2 = 1"
       ],
       "correct": 1,
-      "explanation": "The imaginary unit i is defined by the property i^2 = -1. It extends the real number line into a 2D plane. Geometrically, multiplying by i is a 90-degree rotation — two multiplications (i^2) give a 180-degree rotation, which is -1."
+      "explanation": "Đơn vị ảo i được xác định bởi thuộc tính i^2 = -1. Nó mở rộng trục số thực thành mặt phẳng 2D. Về mặt hình học, nhân với i là một phép quay 90 độ — hai phép nhân (i^2) cho một phép quay 180 độ, bằng -1."
     },
     {
       "stage": "pre",
-      "question": "What does Euler's formula e^(i*theta) equal?",
+      "question": "Công thức Euler e^(i*theta) bằng bao nhiêu?",
       "options": [
-        "theta + i",
+        "theta + tôi",
         "cos(theta) + i*sin(theta)",
         "sin(theta) + cos(theta)",
         "i^theta"
       ],
       "correct": 1,
-      "explanation": "Euler's formula states e^(i*theta) = cos(theta) + i*sin(theta). This connects complex exponentials to trigonometry and shows that e^(i*theta) traces the unit circle as theta varies."
+      "explanation": "Công thức Euler nêu rõ e^(i*theta) = cos(theta) + i*sin(theta). Điều này kết nối các số mũ phức tạp với lượng giác và cho thấy rằng e^(i*theta) theo dõi vòng tròn đơn vị khi theta thay đổi."
     },
     {
       "stage": "post",
-      "question": "What is the result of (3 + 2i)(1 + 4i)?",
+      "question": "Kết quả của (3 + 2i)(1 + 4i) là gì?",
       "options": [
         "3 + 8i",
         "4 + 6i",
@@ -34,31 +34,31 @@
         "5 + 14i"
       ],
       "correct": 2,
-      "explanation": "Using FOIL: (3)(1) + (3)(4i) + (2i)(1) + (2i)(4i) = 3 + 12i + 2i + 8i^2 = 3 + 14i + 8(-1) = 3 + 14i - 8 = -5 + 14i."
+      "explanation": "Sử dụng FOIL: (3)(1) + (3)(4i) + (2i)(1) + (2i)(4i) = 3 + 12i + 2i + 8i^2 = 3 + 14i + 8(-1) = 3 + 14i - 8 = -5 + 14i."
     },
     {
       "stage": "post",
-      "question": "Why are complex numbers used in Rotary Position Embedding (RoPE) for transformers?",
+      "question": "Tại sao số phức được sử dụng trong Nhúng vị trí quay (RoPE) cho máy biến áp?",
       "options": [
-        "Complex numbers compress the position encoding to use less memory",
-        "Multiplying query/key vectors by complex rotations encodes relative position as a rotation angle",
-        "Complex numbers are required by the attention softmax function",
-        "RoPE uses imaginary numbers to handle negative positions"
+        "Số phức nén mã hóa vị trí để sử dụng ít bộ nhớ hơn",
+        "Nhân vectơ truy vấn/khóa với các phép quay phức tạp sẽ mã hóa vị trí tương đối dưới dạng góc xoay",
+        "Hàm softmax cần có số phức",
+        "RoPE sử dụng số ảo để xử lý các vị trí âm"
       ],
       "correct": 1,
-      "explanation": "RoPE multiplies query and key vectors by complex rotation matrices e^(i*m*theta) where m is the position. The relative position between two tokens becomes a rotation angle, and attention naturally becomes sensitive to relative (not absolute) position through complex multiplication."
+      "explanation": "RoPE nhân vectơ truy vấn và vectơ khóa với các ma trận xoay phức tạp e^(i*m*theta) trong đó m là vị trí. Vị trí tương đối giữa hai mã thông báo trở thành một góc quay và sự chú ý trở nên nhạy cảm một cách tự nhiên với vị trí tương đối (không phải tuyệt đối) thông qua phép nhân phức tạp."
     },
     {
       "stage": "post",
-      "question": "The N-th roots of unity are N equally spaced points on the unit circle. What is their sum?",
+      "question": "Căn bậc N của đơn vị là N điểm cách đều nhau trên đường tròn đơn vị. Tổng của họ là bao nhiêu?",
       "options": [
         "N",
         "1",
         "0",
-        "N/2"
+        "Không có/2"
       ],
       "correct": 2,
-      "explanation": "The N roots of unity are e^(2*pi*i*k/N) for k = 0, ..., N-1. They are symmetrically distributed around the unit circle, so their vector sum cancels out to zero. This symmetry property is what makes the DFT invertible."
+      "explanation": "Căn N của sự thống nhất là e^(2*pi*i*k/N) với k = 0, ..., N-1. Chúng được phân bố đối xứng xung quanh vòng tròn đơn vị, do đó tổng vectơ của chúng triệt tiêu bằng 0. Thuộc tính đối xứng này làm cho DFT có thể nghịch đảo được."
     }
   ]
 }

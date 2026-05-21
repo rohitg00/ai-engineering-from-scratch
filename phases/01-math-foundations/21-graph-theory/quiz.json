@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the adjacency matrix A[i][j] = 1 represent?",
+      "question": "Ma trận kề A[i][j] = 1 thể hiện điều gì?",
       "options": [
-        "Node i has degree j",
-        "There is an edge from node i to node j",
-        "Node i and node j have the same label",
-        "The shortest path from i to j has length 1"
+        "Nút i có bậc j",
+        "Có một cạnh từ nút i đến nút j",
+        "Nút i và nút j có cùng nhãn",
+        "Đường đi ngắn nhất từ ​​i tới j có độ dài 1"
       ],
       "correct": 1,
-      "explanation": "The adjacency matrix is the core representation of a graph. A[i][j] = 1 means there is an edge connecting node i to node j. For undirected graphs, the matrix is symmetric (A[i][j] = A[j][i])."
+      "explanation": "Ma trận kề là biểu diễn cốt lõi của đồ thị. A[i][j] = 1 nghĩa là có một cạnh nối nút i với nút j. Đối với đồ thị vô hướng, ma trận là đối xứng (A[i][j] = A[j][i])."
     },
     {
       "stage": "pre",
-      "question": "What data structure does BFS use and what does it find?",
+      "question": "BFS sử dụng cấu trúc dữ liệu nào và nó tìm thấy gì?",
       "options": [
-        "Stack; finds connected components",
-        "Queue; finds shortest paths in unweighted graphs",
-        "Priority queue; finds minimum spanning tree",
-        "Hash map; finds duplicate nodes"
+        "Xếp chồng; tìm các thành phần được kết nối",
+        "Xếp hàng; tìm đường đi ngắn nhất trong đồ thị không có trọng số",
+        "Hàng đợi ưu tiên; tìm cây khung nhỏ nhất",
+        "Bản đồ băm; tìm thấy các nút trùng lặp"
       ],
       "correct": 1,
-      "explanation": "BFS uses a queue (FIFO) to explore all neighbors at distance k before moving to distance k+1. This guarantees that the first time a node is discovered, it is via a shortest path from the source."
+      "explanation": "BFS sử dụng hàng đợi (FIFO) để khám phá tất cả các hàng xóm ở khoảng cách k trước khi di chuyển đến khoảng cách k+1. Điều này đảm bảo rằng lần đầu tiên một nút được phát hiện, nó sẽ đi qua một đường dẫn ngắn nhất từ ​​nguồn."
     },
     {
       "stage": "post",
-      "question": "The graph Laplacian L = D - A of a connected graph has how many zero eigenvalues?",
+      "question": "Đồ thị Laplacian L = D - A của đồ thị liên thông có bao nhiêu giá trị riêng bằng 0?",
       "options": [
-        "Zero",
-        "Exactly one",
-        "Equal to the number of nodes",
-        "Equal to the number of edges"
+        "số không",
+        "Chính xác là một",
+        "Bằng số lượng nút",
+        "Bằng số cạnh"
       ],
       "correct": 1,
-      "explanation": "The number of zero eigenvalues of the Laplacian equals the number of connected components. A connected graph has exactly one connected component, so exactly one zero eigenvalue. A graph with k disconnected pieces has k zero eigenvalues."
+      "explanation": "Số lượng giá trị riêng bằng 0 của Laplacian bằng số lượng thành phần được kết nối. Một đồ thị liên thông có chính xác một thành phần liên thông, do đó có chính xác một giá trị riêng bằng 0. Một đồ thị có k phần rời rạc có k giá trị riêng."
     },
     {
       "stage": "post",
-      "question": "In GNN message passing, what does h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)})) compute?",
+      "question": "Khi truyền tin nhắn GNN, h_v^(k+1) = sigma(W * Mean({h_u^(k) : u in Neighbor(v)})) tính toán những gì?",
       "options": [
-        "The shortest path from v to all other nodes",
-        "A new feature vector for node v by aggregating neighbor features, transforming with learned weights, and applying a nonlinearity",
-        "The degree of node v at layer k+1",
-        "The PageRank score of node v"
+        "Đường đi ngắn nhất từ ​​v đến tất cả các nút khác",
+        "Một vectơ đặc trưng mới cho nút v bằng cách tổng hợp các đặc điểm lân cận, biến đổi theo các trọng số đã học và áp dụng tính phi tuyến",
+        "Mức độ của nút v ở lớp k+1",
+        "Điểm PageRank của nút v"
       ],
       "correct": 1,
-      "explanation": "Each node collects features from its neighbors (mean aggregation), multiplies by a learned weight matrix W, and applies an activation function sigma. After k rounds, each node has information from its k-hop neighborhood."
+      "explanation": "Mỗi nút thu thập các đặc điểm từ các nút lân cận của nó (tập hợp trung bình), nhân với ma trận trọng số đã học W và áp dụng hàm kích hoạt sigma. Sau k vòng, mỗi nút có thông tin từ vùng lân cận k-hop của nó."
     },
     {
       "stage": "post",
-      "question": "How does spectral clustering use the Fiedler vector (eigenvector of the second-smallest eigenvalue of L)?",
+      "question": "Làm thế nào để phân cụm quang phổ sử dụng vectơ Fiedler (vector riêng của giá trị riêng nhỏ thứ hai của L)?",
       "options": [
-        "Nodes with the largest Fiedler vector entries form one cluster",
-        "Nodes with positive Fiedler vector values go in one group, nodes with negative values go in the other",
-        "The Fiedler vector is used as edge weights",
-        "The Fiedler vector determines the number of clusters"
+        "Các nút có mục vectơ Fiedler lớn nhất tạo thành một cụm",
+        "Các nút có giá trị vectơ Fiedler dương sẽ nằm trong một nhóm, các nút có giá trị âm sẽ nằm trong nhóm khác",
+        "Vectơ Fiedler được sử dụng làm trọng số cạnh",
+        "Vectơ Fiedler xác định số cụm"
       ],
       "correct": 1,
-      "explanation": "The Fiedler vector encodes the smoothest non-trivial function on the graph. Nodes in the same tightly-connected cluster get similar values, while nodes separated by a bottleneck get values with opposite signs. The sign split partitions the graph into two clusters."
+      "explanation": "Vectơ Fiedler mã hóa hàm không tầm thường trơn tru nhất trên đồ thị. Các nút trong cùng một cụm được kết nối chặt chẽ sẽ nhận được các giá trị tương tự nhau, trong khi các nút được phân tách bằng nút cổ chai sẽ nhận được các giá trị có dấu ngược lại. Dấu phân chia phân vùng đồ thị thành hai cụm."
     }
   ]
 }

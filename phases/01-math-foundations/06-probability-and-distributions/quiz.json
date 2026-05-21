@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the difference between a probability mass function (PMF) and a probability density function (PDF)?",
-      "options": ["PMFs are used for continuous variables, PDFs for discrete variables", "PMFs give exact probabilities for discrete outcomes, while PDFs give densities for continuous variables that must be integrated over an interval to get probability", "There is no difference; they are the same concept with different names", "PMFs always sum to 0.5, PDFs integrate to 1"],
+      "question": "Sự khác biệt giữa hàm khối xác suất (PMF) và hàm mật độ xác suất (PDF) là gì?",
+      "options": [
+        "PMF được sử dụng cho các biến liên tục, PDF cho các biến rời rạc",
+        "PMF cung cấp xác suất chính xác cho các kết quả riêng biệt, trong khi PDF cung cấp mật độ cho các biến liên tục phải được tích hợp trong một khoảng thời gian để có xác suất",
+        "Không có sự khác biệt; chúng là cùng một khái niệm với những cái tên khác nhau",
+        "PMF luôn có tổng bằng 0,5, PDF tích hợp thành 1"
+      ],
       "correct": 1,
-      "explanation": "For discrete variables, the PMF gives P(X=k) directly. For continuous variables, the PDF f(x) is a density -- P(a<=X<=b) requires integrating f(x) from a to b. The density at a single point is not a probability."
+      "explanation": "Đối với các biến rời rạc, PMF cung cấp trực tiếp P(X=k). Đối với các biến liên tục, PDF f(x) là mật độ -- P(a<=X<=b) yêu cầu lấy tích phân f(x) từ a đến b. Mật độ tại một điểm không phải là một xác suất."
     },
     {
       "stage": "pre",
-      "question": "What does the Central Limit Theorem state?",
-      "options": ["All data follows a normal distribution", "The mean of many independent random samples converges to a normal distribution regardless of the source distribution", "Large datasets always have low variance", "The probability of rare events decreases as sample size increases"],
+      "question": "Định lý giới hạn trung tâm phát biểu gì?",
+      "options": [
+        "Tất cả dữ liệu tuân theo phân phối chuẩn",
+        "Giá trị trung bình của nhiều mẫu ngẫu nhiên độc lập hội tụ về phân phối chuẩn bất kể phân phối nguồn",
+        "Các tập dữ liệu lớn luôn có phương sai thấp",
+        "Xác suất xảy ra các sự kiện hiếm gặp giảm khi cỡ mẫu tăng"
+      ],
       "correct": 1,
-      "explanation": "The CLT says that the average of many independent random variables approaches a Gaussian, no matter what the original distribution looks like. This explains why the normal distribution appears everywhere."
+      "explanation": "CLT nói rằng giá trị trung bình của nhiều biến ngẫu nhiên độc lập tiến tới một Gaussian, bất kể phân phối ban đầu trông như thế nào. Điều này giải thích tại sao phân phối chuẩn xuất hiện ở mọi nơi."
     },
     {
       "stage": "post",
-      "question": "Why does softmax subtract the maximum logit before exponentiating (the 'softmax trick')?",
-      "options": ["To make all probabilities equal", "To prevent numerical overflow from exponentiating large numbers while producing mathematically identical results", "To normalize the logits to have mean zero", "To speed up the computation by reducing the number of exponentiations"],
+      "question": "Tại sao softmax trừ logit tối đa trước khi lũy thừa ('thủ thuật softmax')?",
+      "options": [
+        "Để làm cho mọi xác suất đều bằng nhau",
+        "Để ngăn chặn tràn số do lũy thừa số lớn trong khi tạo ra kết quả giống hệt nhau về mặt toán học",
+        "Để bình thường hóa các bản ghi có giá trị bằng 0",
+        "Để tăng tốc độ tính toán bằng cách giảm số mũ"
+      ],
       "correct": 1,
-      "explanation": "exp(100) overflows to infinity. Subtracting max(logits) shifts all values so the largest is 0. exp(0)=1 is safe. The subtraction cancels out in the normalization, giving identical probabilities."
+      "explanation": "exp(100) tràn tới vô cùng. Trừ max(logits) sẽ dịch chuyển tất cả các giá trị sao cho giá trị lớn nhất là 0. exp(0)=1 là an toàn. Phép trừ hủy bỏ trong quá trình chuẩn hóa, cho xác suất giống nhau."
     },
     {
       "stage": "post",
-      "question": "Cross-entropy loss for classification simplifies to -log(q(true_class)). What does this mean intuitively?",
-      "options": ["Multiply the predicted probabilities by the true labels", "Penalize the model based on how low its predicted probability is for the correct class -- lower prediction means higher loss", "Average the log probabilities across all classes", "Compute the entropy of the true distribution"],
+      "question": "Mất entropy chéo để phân loại đơn giản hóa thành -log(q(true_class)). Điều này có ý nghĩa gì về mặt trực giác?",
+      "options": [
+        "Nhân xác suất dự đoán với nhãn đúng",
+        "Phạt mô hình dựa trên mức độ xác suất dự đoán của nó đối với đúng lớp -- dự đoán thấp hơn có nghĩa là tổn thất cao hơn",
+        "Tính trung bình xác suất nhật ký trên tất cả các lớp",
+        "Tính entropy của phân phối thực"
+      ],
       "correct": 1,
-      "explanation": "If the model predicts 0.9 for the correct class, loss = -log(0.9) = 0.105 (low). If it predicts 0.01, loss = -log(0.01) = 4.6 (high). The loss punishes low confidence in the correct answer."
+      "explanation": "Nếu mô hình dự đoán đúng lớp là 0,9 thì loss = -log(0,9) = 0,105 (thấp). Nếu nó dự đoán 0,01, loss = -log(0,01) = 4,6 (cao). Sự mất mát trừng phạt sự tự tin thấp vào câu trả lời đúng."
     },
     {
       "stage": "post",
-      "question": "Why do language models work with log probabilities instead of raw probabilities?",
-      "options": ["Log probabilities are easier to interpret visually", "Multiplying many small probabilities causes numerical underflow to zero; log probabilities convert products to sums, avoiding this", "Log probabilities are required by the transformer architecture", "Raw probabilities cannot represent values less than 0.01"],
+      "question": "Tại sao các mô hình ngôn ngữ hoạt động với xác suất nhật ký thay vì xác suất thô?",
+      "options": [
+        "Xác suất nhật ký dễ diễn giải trực quan hơn",
+        "Việc nhân nhiều xác suất nhỏ sẽ khiến dòng chảy ngầm bằng số về 0; xác suất ghi nhật ký chuyển đổi sản phẩm thành tổng, tránh điều này",
+        "Xác suất nhật ký được yêu cầu bởi kiến ​​trúc máy biến áp",
+        "Xác suất thô không thể biểu thị các giá trị nhỏ hơn 0,01"
+      ],
       "correct": 1,
-      "explanation": "P(sentence) = P(word1) * P(word2) * ... quickly underflows to 0.0 with float64. Log P(sentence) = log P(word1) + log P(word2) + ... stays in a finite range. Products become sums."
+      "explanation": "P(câu) = P(word1) * P(word2) * ... nhanh chóng tràn xuống 0,0 với float64. Log P(câu) = log P(word1) + log P(word2) + ... nằm trong phạm vi hữu hạn. Sản phẩm trở thành số tiền."
     }
   ]
 }

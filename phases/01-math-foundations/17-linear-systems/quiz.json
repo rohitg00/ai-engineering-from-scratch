@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does it mean geometrically when a system Ax = b has no exact solution?",
+      "question": "Về mặt hình học, nó có ý nghĩa gì khi hệ Ax = b không có nghiệm chính xác?",
       "options": [
-        "The matrix A has all zero entries",
-        "The vector b does not lie in the column space of A",
-        "The system has more unknowns than equations",
-        "The matrix A is symmetric"
+        "Ma trận A có tất cả các phần tử bằng 0",
+        "Vectơ b không nằm trong không gian cột của A",
+        "Hệ thống có nhiều ẩn số hơn phương trình",
+        "Ma trận A đối xứng"
       ],
       "correct": 1,
-      "explanation": "In the column picture, Ax = b asks: what linear combination of A's columns produces b? If b is not in the column space (span of A's columns), no exact solution exists. This happens when the system is overdetermined (more equations than unknowns)."
+      "explanation": "Trong hình cột, Ax = b hỏi: sự kết hợp tuyến tính nào giữa các cột của A tạo ra b? Nếu b không có trong không gian cột (khoảng cột của A) thì không tồn tại nghiệm chính xác. Điều này xảy ra khi hệ thống được xác định quá mức (nhiều phương trình hơn là ẩn số)."
     },
     {
       "stage": "pre",
-      "question": "Why is partial pivoting used in Gaussian elimination?",
+      "question": "Tại sao xoay vòng một phần được sử dụng trong việc loại bỏ Gaussian?",
       "options": [
-        "It reduces the time complexity from O(n^3) to O(n^2)",
-        "It selects the largest available pivot to minimize error amplification from dividing by small numbers",
-        "It ensures the result is always an integer",
-        "It eliminates the need for back substitution"
+        "Nó làm giảm độ phức tạp về thời gian từ O(n^3) xuống O(n^2)",
+        "Nó chọn trục xoay lớn nhất hiện có để giảm thiểu việc khuếch đại lỗi khi chia cho các số nhỏ",
+        "Nó đảm bảo kết quả luôn là số nguyên",
+        "Nó loại bỏ sự cần thiết phải thay thế trở lại"
       ],
       "correct": 1,
-      "explanation": "Without pivoting, dividing by a small pivot amplifies rounding errors. Partial pivoting swaps rows to place the largest absolute value in the pivot position, keeping the multipliers small and the computation numerically stable."
+      "explanation": "Nếu không xoay vòng, việc chia cho một trục nhỏ sẽ làm tăng sai số làm tròn. Xoay vòng một phần hoán đổi các hàng để đặt giá trị tuyệt đối lớn nhất vào vị trí xoay, giữ cho hệ số nhân ở mức nhỏ và tính toán ổn định về mặt số."
     },
     {
       "stage": "post",
-      "question": "Why is Cholesky decomposition preferred over LU for solving (X^T X + lambda I) w = X^T y in ridge regression?",
+      "question": "Tại sao phân tách Cholesky được ưu tiên hơn LU để giải (X^T X + lambda I) w = X^T y trong hồi quy sườn?",
       "options": [
-        "Cholesky works on any matrix while LU requires square matrices",
-        "The matrix X^T X + lambda I is symmetric positive definite, so Cholesky is twice as fast as LU and requires half the storage",
-        "Cholesky gives a more accurate answer than LU",
-        "LU decomposition cannot handle regularization terms"
+        "Cholesky hoạt động trên mọi ma trận trong khi LU yêu cầu ma trận vuông",
+        "Ma trận X^T X + lambda I là ma trận xác định dương đối xứng nên Cholesky nhanh gấp đôi LU và yêu cầu một nửa dung lượng lưu trữ",
+        "Cholesky đưa ra câu trả lời chính xác hơn LU",
+        "Phân tách LU không thể xử lý các thuật ngữ chính quy hóa"
       ],
       "correct": 1,
-      "explanation": "When lambda > 0, X^T X + lambda I is always symmetric positive definite. Cholesky factors A = LL^T in O(n^3/3) operations — roughly half the O(2n^3/3) of LU — and needs only the lower triangle. It exploits the symmetry that LU does not."
+      "explanation": "Khi lambda > 0, X^T X + lambda I luôn xác định dương đối xứng. Hệ số Cholesky A = LL^T trong các phép toán O(n^3/3) - gần bằng một nửa O(2n^3/3) của LU - và chỉ cần tam giác bên dưới. Nó khai thác tính đối xứng mà LU không có."
     },
     {
       "stage": "post",
-      "question": "A matrix has condition number kappa = 10^8. You are using float64 (~15 digits of precision). How many digits of the solution can you trust?",
+      "question": "Một ma trận có số điều kiện kappa = 10^8. Bạn đang sử dụng float64 (độ chính xác ~ 15 chữ số). Bạn có thể tin cậy được bao nhiêu chữ số của giải pháp?",
       "options": [
-        "About 15 digits",
-        "About 7 digits (15 - log10(10^8) = 15 - 8)",
-        "About 8 digits",
-        "Zero digits — the solution is meaningless"
+        "Khoảng 15 chữ số",
+        "Khoảng 7 chữ số (15 - log10(10^8) = 15 - 8)",
+        "Khoảng 8 chữ số",
+        "Không có chữ số - giải pháp là vô nghĩa"
       ],
       "correct": 1,
-      "explanation": "You lose approximately log10(kappa) digits of precision. With kappa = 10^8, you lose about 8 digits from float64's ~15 digits, leaving about 7 trustworthy digits. If kappa approaches 10^16, the solution becomes meaningless in float64."
+      "explanation": "Bạn mất khoảng log10(kappa) chữ số chính xác. Với kappa = 10^8, bạn mất khoảng 8 chữ số từ ~ 15 chữ số của float64, để lại khoảng 7 chữ số đáng tin cậy. Nếu kappa tiến tới 10^16, giải pháp trong float64 sẽ trở nên vô nghĩa."
     },
     {
       "stage": "post",
-      "question": "What is the main advantage of LU decomposition over Gaussian elimination when you need to solve Ax = b for many different b vectors?",
+      "question": "Ưu điểm chính của việc phân tách LU so với việc loại bỏ Gaussian là gì khi bạn cần giải Ax = b cho nhiều vectơ b khác nhau?",
       "options": [
-        "LU decomposition is more numerically stable",
-        "The O(n^3) factorization is done once; each subsequent solve with a new b costs only O(n^2)",
-        "LU decomposition works on rectangular matrices",
-        "LU always produces a unique solution"
+        "Phân rã LU ổn định hơn về mặt số lượng",
+        "Việc phân tích hệ số O(n^3) được thực hiện một lần; mỗi lần giải tiếp theo với b mới chỉ tốn O(n^2)",
+        "Phân rã LU hoạt động trên ma trận hình chữ nhật",
+        "LU luôn tạo ra giải pháp độc đáo"
       ],
       "correct": 1,
-      "explanation": "LU factors A = LU once in O(n^3). Then for each new b, you solve Ly = b (forward substitution) and Ux = y (back substitution), each O(n^2). Gaussian elimination would redo the full O(n^3) for every new b."
+      "explanation": "LU thừa số A = LU một lần trong O(n^3). Sau đó, với mỗi b mới, bạn giải Ly = b (thay thế thuận) và Ux = y (thay thế ngược), mỗi O(n^2). Việc loại bỏ Gaussian sẽ làm lại toàn bộ O(n^3) cho mỗi b mới."
     }
   ]
 }

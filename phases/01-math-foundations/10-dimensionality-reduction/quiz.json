@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the 'curse of dimensionality'?",
-      "options": ["High-dimensional data takes too long to download", "As dimensions grow, distances become meaningless, volume concentrates in corners, and you need exponentially more data", "Neural networks cannot process data with more than 100 features", "High-dimensional data always contains noise"],
+      "question": "'Lời nguyền của chiều hướng' là gì?",
+      "options": [
+        "Dữ liệu nhiều chiều mất quá nhiều thời gian để tải xuống",
+        "Khi kích thước tăng lên, khoảng cách trở nên vô nghĩa, khối lượng tập trung ở các góc và bạn cần nhiều dữ liệu hơn theo cấp số nhân",
+        "Mạng nơ-ron không thể xử lý dữ liệu có hơn 100 tính năng",
+        "Dữ liệu nhiều chiều luôn chứa nhiễu"
+      ],
       "correct": 1,
-      "explanation": "In high dimensions, all pairwise distances converge to similar values, data points spread to corners, and maintaining sample density requires exponentially more data. Dimensionality reduction counteracts these effects."
+      "explanation": "Ở kích thước cao, tất cả các khoảng cách theo cặp đều hội tụ về các giá trị tương tự, các điểm dữ liệu trải rộng đến các góc và việc duy trì mật độ mẫu đòi hỏi nhiều dữ liệu hơn theo cấp số nhân. Việc giảm kích thước sẽ chống lại những hiệu ứng này."
     },
     {
       "stage": "pre",
-      "question": "What does PCA find?",
-      "options": ["The most important features by name", "The orthogonal directions of maximum variance in the data", "Clusters of similar data points", "The optimal number of features to keep"],
+      "question": "PCA tìm thấy gì?",
+      "options": [
+        "Các tính năng quan trọng nhất theo tên",
+        "Các hướng trực giao của phương sai tối đa trong dữ liệu",
+        "Các cụm điểm dữ liệu tương tự",
+        "Số lượng tính năng tối ưu cần giữ"
+      ],
       "correct": 1,
-      "explanation": "PCA computes the eigenvectors of the covariance matrix, which are orthogonal directions ranked by how much data variance they capture. The first principal component points along the direction of maximum spread."
+      "explanation": "PCA tính toán các vectơ riêng của ma trận hiệp phương sai, là các hướng trực giao được xếp hạng theo mức độ phương sai dữ liệu mà chúng thu được. Thành phần chính đầu tiên hướng theo hướng có mức chênh lệch tối đa."
     },
     {
       "stage": "post",
-      "question": "After running PCA on 784-dimensional MNIST data with k=50 components, you find 95% of variance is captured. What does this tell you?",
-      "options": ["Only 50 pixels matter in each image", "The data effectively lives in a ~50-dimensional subspace; the remaining 734 dimensions are mostly noise or redundancy", "95% of images belong to the same class", "The model will achieve 95% accuracy"],
+      "question": "Sau khi chạy PCA trên dữ liệu MNIST 784 chiều với k=50 thành phần, bạn thấy 95% phương sai được ghi lại. Điều này cho bạn biết điều gì?",
+      "options": [
+        "Chỉ có 50 pixel quan trọng trong mỗi hình ảnh",
+        "Dữ liệu tồn tại một cách hiệu quả trong không gian con ~ 50 chiều; 734 chiều còn lại chủ yếu là nhiễu hoặc dư thừa",
+        "95% hình ảnh thuộc cùng một lớp",
+        "Mô hình sẽ đạt độ chính xác 95%"
+      ],
       "correct": 1,
-      "explanation": "95% explained variance with 50 components means the essential structure of 784-dimensional data is captured by just 50 directions. The rest carries only 5% of the variation -- mostly noise."
+      "explanation": "Phương sai được giải thích 95% với 50 thành phần có nghĩa là cấu trúc thiết yếu của dữ liệu 784 chiều chỉ được ghi lại theo 50 hướng. Phần còn lại chỉ mang 5% biến thể - chủ yếu là tiếng ồn."
     },
     {
       "stage": "post",
-      "question": "Why should you NOT use t-SNE as preprocessing before training a classifier?",
-      "options": ["t-SNE is too slow for large datasets", "t-SNE is designed for visualization only: it distorts global distances, is stochastic, and the output coordinates have no consistent meaning across runs", "t-SNE reduces data to exactly 2 dimensions which is too few", "t-SNE requires the labels to be known in advance"],
+      "question": "Tại sao bạn KHÔNG nên sử dụng t-SNE làm tiền xử lý trước khi đào tạo bộ phân loại?",
+      "options": [
+        "t-SNE quá chậm đối với các tập dữ liệu lớn",
+        "t-SNE được thiết kế chỉ để trực quan hóa: nó làm biến dạng khoảng cách toàn cầu, mang tính ngẫu nhiên và tọa độ đầu ra không có ý nghĩa nhất quán trong các lần chạy",
+        "t-SNE giảm dữ liệu xuống đúng 2 chiều, quá ít",
+        "t-SNE yêu cầu phải biết trước các nhãn"
+      ],
       "correct": 1,
-      "explanation": "t-SNE preserves local neighborhoods but distorts global structure. Distances between clusters are meaningless, and different runs produce different layouts. Use PCA for preprocessing and t-SNE/UMAP only for visualization."
+      "explanation": "t-SNE bảo tồn các vùng lân cận địa phương nhưng làm biến dạng cấu trúc toàn cầu. Khoảng cách giữa các cụm là vô nghĩa và các lần chạy khác nhau tạo ra các bố cục khác nhau. Sử dụng PCA để tiền xử lý và chỉ sử dụng t-SNE/UMAP để trực quan hóa."
     },
     {
       "stage": "post",
-      "question": "When would you choose kernel PCA over standard PCA?",
-      "options": ["When you have more samples than features", "When the data lies on a nonlinear manifold that standard PCA cannot separate, like concentric circles", "When you need the fastest possible computation", "When you want interpretable principal components"],
+      "question": "Khi nào bạn chọn PCA kernel thay vì PCA tiêu chuẩn?",
+      "options": [
+        "Khi bạn có nhiều mẫu hơn tính năng",
+        "Khi dữ liệu nằm trên một đa tạp phi tuyến mà PCA tiêu chuẩn không thể tách rời, giống như các vòng tròn đồng tâm",
+        "Khi bạn cần tính toán nhanh nhất có thể",
+        "Khi bạn muốn các thành phần chính có thể hiểu được"
+      ],
       "correct": 1,
-      "explanation": "Standard PCA finds linear subspaces. If data has nonlinear structure (e.g., two concentric rings), PCA projects both onto the same line. Kernel PCA maps data to a higher-dimensional space where the structure becomes linear."
+      "explanation": "PCA tiêu chuẩn tìm không gian con tuyến tính. Nếu dữ liệu có cấu trúc phi tuyến tính (ví dụ: hai vòng đồng tâm), PCA chiếu cả hai lên cùng một đường. Kernel PCA ánh xạ dữ liệu tới không gian có chiều cao hơn, nơi cấu trúc trở nên tuyến tính."
     }
   ]
 }

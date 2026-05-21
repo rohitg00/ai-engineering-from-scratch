@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is an eigenvector of a matrix?",
-      "options": ["The largest row in the matrix", "A vector that the matrix only scales (never rotates) when multiplied", "A vector perpendicular to all columns of the matrix", "The diagonal entries of the matrix expressed as a vector"],
+      "question": "Một vectơ riêng của ma trận là gì?",
+      "options": [
+        "Hàng lớn nhất trong ma trận",
+        "Một vectơ mà ma trận chỉ chia tỷ lệ (không bao giờ quay) khi nhân",
+        "Một vectơ vuông góc với tất cả các cột của ma trận",
+        "Các phần tử đường chéo của ma trận được biểu thị dưới dạng vectơ"
+      ],
       "correct": 1,
-      "explanation": "An eigenvector v satisfies Av = lambda*v, meaning the matrix A only stretches v by the scalar factor lambda (the eigenvalue) without changing its direction."
+      "explanation": "Một vectơ riêng v thỏa mãn Av = lambda*v, nghĩa là ma trận A chỉ kéo dài v theo hệ số vô hướng lambda (giá trị riêng) mà không thay đổi hướng của nó."
     },
     {
       "stage": "pre",
-      "question": "What does the determinant of a 2D transformation matrix represent geometrically?",
-      "options": ["The angle of rotation applied by the matrix", "The factor by which the matrix scales area", "The number of eigenvectors the matrix has", "The trace of the matrix"],
+      "question": "Định thức của ma trận biến đổi 2D biểu thị điều gì về mặt hình học?",
+      "options": [
+        "Góc quay được áp dụng bởi ma trận",
+        "Hệ số theo đó ma trận chia tỷ lệ diện tích",
+        "Số lượng vectơ riêng mà ma trận có",
+        "Dấu vết của ma trận"
+      ],
       "correct": 1,
-      "explanation": "The determinant measures how much the transformation scales area. det=1 preserves area (rotation), det=2 doubles area, det=0 crushes to a lower dimension, and det=-1 preserves area but flips orientation."
+      "explanation": "Yếu tố quyết định đo diện tích quy mô chuyển đổi là bao nhiêu. det=1 bảo toàn diện tích (xoay), det=2 nhân đôi diện tích, det=0 nén xuống kích thước thấp hơn và det=-1 bảo toàn diện tích nhưng đảo hướng."
     },
     {
       "stage": "post",
-      "question": "Why does the order of matrix transformations matter? (i.e., why is R @ S different from S @ R?)",
-      "options": ["Matrix addition is not commutative", "Matrix multiplication is not commutative: rotating then scaling gives a different result than scaling then rotating", "The determinants are different for each order", "One order produces a larger matrix than the other"],
+      "question": "Tại sao thứ tự biến đổi ma trận lại quan trọng? (tức là tại sao R@S lại khác với S@R?)",
+      "options": [
+        "Phép cộng ma trận không có tính giao hoán",
+        "Phép nhân ma trận không có tính giao hoán: xoay rồi chia tỷ lệ cho kết quả khác với chia tỷ lệ rồi quay",
+        "Các yếu tố quyết định là khác nhau cho mỗi thứ tự",
+        "Một đơn hàng tạo ra một ma trận lớn hơn đơn hàng kia"
+      ],
       "correct": 1,
-      "explanation": "Matrix multiplication is not commutative. Rotating (1,0) by 90 degrees then scaling by (2,0.5) gives (0,0.5), but scaling first then rotating gives (0,2). The geometric operations compose differently."
+      "explanation": "Phép nhân ma trận không có tính giao hoán. Xoay (1,0) 90 độ rồi chia tỷ lệ theo (2,0,5) cho (0,0,5), nhưng chia tỷ lệ trước rồi xoay sẽ cho (0,2). Các hoạt động hình học sáng tác khác nhau."
     },
     {
       "stage": "post",
-      "question": "In a recurrent neural network, what happens when the weight matrix has eigenvalues with magnitude greater than 1?",
-      "options": ["The network learns faster", "Outputs explode exponentially over time steps (exploding gradient problem)", "The network becomes more stable", "The eigenvalues converge to 1 over training"],
+      "question": "Trong mạng nơ-ron hồi quy, điều gì xảy ra khi ma trận trọng số có giá trị riêng có độ lớn lớn hơn 1?",
+      "options": [
+        "Mạng học nhanh hơn",
+        "Đầu ra bùng nổ theo cấp số nhân theo các bước thời gian (vấn đề bùng nổ độ dốc)",
+        "Mạng trở nên ổn định hơn",
+        "Các giá trị riêng hội tụ về 1 trong quá trình huấn luyện"
+      ],
       "correct": 1,
-      "explanation": "Repeated multiplication by a matrix amplifies the eigenvalue directions. Eigenvalues > 1 cause exponential growth (exploding gradients), while eigenvalues < 1 cause exponential decay (vanishing gradients)."
+      "explanation": "Phép nhân lặp lại với một ma trận sẽ khuếch đại các hướng giá trị riêng. Giá trị riêng > 1 gây ra sự tăng trưởng theo cấp số nhân (độ dốc bùng nổ), trong khi giá trị riêng < 1 gây ra sự phân rã theo cấp số nhân (độ dốc biến mất)."
     },
     {
       "stage": "post",
-      "question": "The matrix A = [[2, 1], [1, 2]] has eigenvalues 3 and 1. What does eigendecomposition A = V @ D @ V^(-1) reveal?",
-      "options": ["A is equivalent to two rotations", "A stretches space by 3x along the [1,1] direction and leaves the [1,-1] direction unchanged", "A compresses all vectors by a factor of 2", "A has rank 1 and maps all vectors to a line"],
+      "question": "Ma trận A = [[2, 1], [1, 2]] có giá trị riêng là 3 và 1. Phân tích riêng A = V @ D @ V^(-1) tiết lộ điều gì?",
+      "options": [
+        "A tương đương với hai phép quay",
+        "Một không gian giãn ra gấp 3 lần dọc theo hướng [1,1] và giữ nguyên hướng [1,-1]",
+        "A nén tất cả các vectơ theo hệ số 2",
+        "A có hạng 1 và ánh xạ tất cả các vectơ thành một đường"
+      ],
       "correct": 1,
-      "explanation": "The eigenvalue 3 with eigenvector [1,1] means A stretches 3x along the diagonal. The eigenvalue 1 with eigenvector [1,-1] means A leaves the anti-diagonal unchanged. D holds {3,1}, V holds the eigenvectors."
+      "explanation": "Giá trị riêng 3 với vectơ riêng [1,1] có nghĩa là A trải dài 3x dọc theo đường chéo. Giá trị riêng 1 với vectơ riêng [1,-1] có nghĩa là A không thay đổi đường chéo. D giữ {3,1}, V giữ các vectơ riêng."
     }
   ]
 }

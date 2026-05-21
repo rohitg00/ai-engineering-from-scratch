@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tại sao việc lập lịch khối lượng công việc GPU trên Kubernetes lại khác với việc lập lịch khối lượng công việc CPU?",
+      "options": [
+        "Kubernetes không hỗ trợ khối lượng công việc GPU",
+        "GPU không thể thay thế được: nhóm yêu cầu A100 không thể chạy trên L4 và số giờ sử dụng GPU đắt hơn 10-50 lần so với số giờ sử dụng CPU, khiến tài nguyên nhàn rỗi trở nên cực kỳ tốn kém",
+        "Khối lượng công việc GPU không cần giới hạn tài nguyên",
+        "Kubernetes tự động phát hiện và phân bổ GPU mà không cần bất kỳ cấu hình nào"
+      ],
+      "correct": 1,
+      "explanation": "Các lõi CPU có thể hoán đổi cho nhau, nhưng loại GPU thì không. Mô hình được biên dịch cho A100 có thể không vừa với bộ nhớ của L4. Bộ lập lịch phải phù hợp với các loại GPU cụ thể và chi phí của GPU nhàn rỗi khiến việc lập lịch hiệu quả trở nên quan trọng."
+    },
+    {
+      "stage": "pre",
+      "question": "'Khởi đầu nguội' trong bối cảnh phân phát mô hình trên Kubernetes là gì?",
+      "options": [
+        "Bắt đầu cụm Kubernetes lần đầu tiên",
+        "Độ trễ khi nhóm mới khởi động và phải tải mô hình nhiều gigabyte vào bộ nhớ GPU trước khi có thể phân phát yêu cầu, thường mất 3-5 phút",
+        "Thời gian cần thiết để kéo hình ảnh Docker từ sổ đăng ký",
+        "Khởi động lại nhóm sau sự cố"
+      ],
+      "correct": 1,
+      "explanation": "Việc tải mô hình tham số 7B vào bộ nhớ GPU mất 3-5 phút. Trong thời gian này nhóm đang chạy nhưng không thể phục vụ yêu cầu. Đối với tính năng tự động điều chỉnh quy mô, điều này có nghĩa là dung lượng mới sẽ không có sẵn trong vài phút sau khi lưu lượng truy cập bắt đầu tăng đột biến."
+    },
+    {
+      "stage": "post",
+      "question": "Tại sao bạn nên tự động điều chỉnh quy mô máy chủ mô hình GPU dựa trên độ sâu hàng đợi yêu cầu thay vì mức sử dụng CPU?",
+      "options": [
+        "Việc sử dụng CPU không khả dụng trong Kubernetes",
+        "Suy luận GPU giúp mức sử dụng CPU ở mức thấp ngay cả khi GPU bão hòa; độ sâu hàng đợi đo trực tiếp nhu cầu vượt quá khả năng hiện tại",
+        "Việc mở rộng quy mô dựa trên CPU đắt hơn",
+        "Độ sâu hàng đợi dễ cấu hình hơn trong Kubernetes"
+      ],
+      "correct": 1,
+      "explanation": "Một máy chủ mô hình có thể sử dụng 10% CPU trong khi GPU bận 100% và các yêu cầu đang xếp hàng. HPA dựa trên CPU sẽ không mở rộng quy mô. Độ sâu hàng đợi (yêu cầu đang chờ xử lý) đo trực tiếp 'người dùng có đang chờ không?' và kích hoạt mở rộng quy mô khi có."
+    },
+    {
+      "stage": "post",
+      "question": "Chiến lược nhóm ấm để giảm thiểu khởi đầu lạnh là gì?",
+      "options": [
+        "Chạy các mô hình trên CPU trong thời gian lưu lượng truy cập thấp",
+        "Giữ lại các nhóm được cung cấp trước với các mô hình đã được tải trong bộ nhớ GPU để chúng có thể phục vụ lưu lượng truy cập ngay lập tức khi nhu cầu tăng, thay vì tải từ đầu",
+        "Trọng lượng mô hình bộ nhớ đệm trên mặt phẳng điều khiển Kubernetes",
+        "Sử dụng các mô hình lượng tử hóa nhỏ hơn trong các sự kiện mở rộng quy mô"
+      ],
+      "correct": 1,
+      "explanation": "Một nhóm ấm duy trì các nhóm không hoạt động với các mô hình được tải sẵn trong bộ nhớ GPU. Khi lưu lượng truy cập tăng đột biến, các nhóm này sẽ có sẵn ngay lập tức (khởi động nguội 0 giây so với 3-5 phút). Sự đánh đổi là phải trả giá cho thời gian GPU nhàn rỗi."
+    },
+    {
+      "stage": "post",
+      "question": "Đầu dò mức độ sẵn sàng của Kubernetes nên kiểm tra điều gì đối với nhóm phân phát mô hình?",
+      "options": [
+        "Mức độ sử dụng CPU của nhóm có dưới 50% hay không",
+        "Liệu mô hình có được tải đầy đủ vào bộ nhớ GPU hay không và điểm cuối phân phát có thể xử lý thành công yêu cầu suy luận hay không",
+        "Bộ chứa Docker đã bắt đầu chưa",
+        "Liệu nhóm có kết nối mạng với internet hay không"
+      ],
+      "correct": 1,
+      "explanation": "Một nhóm máy chủ mô hình có thể đang chạy (hoạt động) nhưng chưa sẵn sàng phục vụ (mô hình vẫn đang tải). Đầu dò mức độ sẵn sàng sẽ đạt điểm cuối suy luận với yêu cầu kiểm tra. Cho đến khi trả về 200, Kubernetes sẽ không định tuyến lưu lượng truy cập đến nhóm đó."
+    }
+  ]
+}

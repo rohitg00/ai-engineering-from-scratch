@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "For matrix multiplication (m x n) @ (n x p), what must be true about the dimensions?",
-      "options": ["m must equal p", "The inner dimensions n must match", "All dimensions must be equal", "m must be greater than p"],
+      "question": "Đối với phép nhân ma trận (m x n) @ (n x p), điều gì phải đúng về các kích thước?",
+      "options": [
+        "m phải bằng p",
+        "Kích thước bên trong n phải phù hợp",
+        "Tất cả các kích thước phải bằng nhau",
+        "m phải lớn hơn p"
+      ],
       "correct": 1,
-      "explanation": "Matrix multiplication requires the number of columns in the first matrix (n) to equal the number of rows in the second matrix (n). The result has shape (m x p)."
+      "explanation": "Phép nhân ma trận yêu cầu số cột trong ma trận thứ nhất (n) bằng số hàng trong ma trận thứ hai (n). Kết quả có hình dạng (m x p)."
     },
     {
       "stage": "pre",
-      "question": "What is the identity matrix?",
-      "options": ["A matrix of all ones", "A square matrix with ones on the diagonal and zeros elsewhere that acts as the multiplicative identity", "A matrix where every element is unique", "The transpose of any given matrix"],
+      "question": "Ma trận nhận dạng là gì?",
+      "options": [
+        "Một ma trận của tất cả những cái đó",
+        "Một ma trận vuông với các số trên đường chéo và các số 0 ở nơi khác đóng vai trò là đơn vị nhân",
+        "Một ma trận trong đó mọi phần tử là duy nhất",
+        "Chuyển vị của bất kỳ ma trận đã cho nào"
+      ],
       "correct": 1,
-      "explanation": "The identity matrix I has ones on the diagonal and zeros everywhere else. Multiplying any matrix by I returns the original matrix unchanged, like multiplying a number by 1."
+      "explanation": "Ma trận đồng nhất tôi có ma trận trên đường chéo và các số 0 ở mọi nơi khác. Nhân bất kỳ ma trận nào với I sẽ trả về ma trận ban đầu không thay đổi, giống như nhân một số với 1."
     },
     {
       "stage": "post",
-      "question": "What is the key difference between element-wise multiplication and matrix multiplication?",
-      "options": ["Element-wise is faster while matrix multiplication is more accurate", "Element-wise multiplies matching positions (same shape required), matrix multiplication takes dot products of rows and columns (inner dimensions must match)", "They produce the same result but use different notation", "Element-wise only works on vectors while matrix multiplication works on matrices"],
+      "question": "Sự khác biệt chính giữa phép nhân phần tử và phép nhân ma trận là gì?",
+      "options": [
+        "Phần tử khôn ngoan nhanh hơn trong khi phép nhân ma trận chính xác hơn",
+        "Về phần tử, nhân các vị trí khớp nhau (yêu cầu hình dạng giống nhau), phép nhân ma trận lấy tích số chấm của hàng và cột (kích thước bên trong phải khớp)",
+        "Họ tạo ra cùng một kết quả nhưng sử dụng ký hiệu khác nhau",
+        "Phần tử khôn ngoan chỉ hoạt động trên vectơ trong khi phép nhân ma trận hoạt động trên ma trận"
+      ],
       "correct": 1,
-      "explanation": "Element-wise (Hadamard) product multiplies corresponding elements and requires identical shapes. Matrix multiplication computes dot products between rows and columns with the rule (m,n)@(n,p)=(m,p)."
+      "explanation": "Sản phẩm theo phần tử (Hadamard) nhân các phần tử tương ứng và yêu cầu hình dạng giống hệt nhau. Phép nhân ma trận tính tích số chấm giữa các hàng và cột với quy tắc (m,n)@(n,p)=(m,p)."
     },
     {
       "stage": "post",
-      "question": "In the expression 'output = relu(W @ x + b)', what role does broadcasting play?",
-      "options": ["It broadcasts the computation across multiple GPUs", "It automatically stretches the bias vector b to match the shape of W @ x so they can be added", "It converts the data types of W and x to match", "It repeats the relu activation across all elements"],
+      "question": "Trong biểu thức 'output = relu(W @ x + b)', việc phát sóng đóng vai trò gì?",
+      "options": [
+        "Nó phát sóng tính toán trên nhiều GPU",
+        "Nó tự động kéo dài vectơ thiên vị b để phù hợp với hình dạng của W@x để có thể thêm chúng vào",
+        "Nó chuyển đổi kiểu dữ liệu của W và x để phù hợp",
+        "Nó lặp lại kích hoạt relu trên tất cả các phần tử"
+      ],
       "correct": 1,
-      "explanation": "W @ x produces a column vector, and b is also a vector. Broadcasting stretches b across the batch dimension if needed, allowing element-wise addition without explicit shape matching."
+      "explanation": "W @ x tạo ra một vectơ cột và b cũng là một vectơ. Việc phát sóng trải dài b trên kích thước lô nếu cần, cho phép bổ sung từng phần tử mà không cần khớp hình dạng rõ ràng."
     },
     {
       "stage": "post",
-      "question": "What does a determinant of zero for a matrix indicate?",
-      "options": ["The matrix has all zero entries", "The matrix is singular: it crushes at least one dimension, cannot be inverted, and has no unique solution", "The matrix is the identity matrix", "The matrix performs a rotation"],
+      "question": "Định thức bằng 0 của ma trận cho biết điều gì?",
+      "options": [
+        "Ma trận có tất cả các mục bằng 0",
+        "Ma trận là số ít: nó nghiền nát ít nhất một chiều, không thể đảo ngược và không có nghiệm duy nhất",
+        "Ma trận là ma trận nhận dạng",
+        "Ma trận thực hiện một phép quay"
+      ],
       "correct": 1,
-      "explanation": "A zero determinant means the transformation collapses space by at least one dimension (e.g., mapping 2D to a line). The matrix has no inverse, and linear systems using it have either no solution or infinitely many."
+      "explanation": "Định thức bằng 0 có nghĩa là phép biến đổi thu gọn không gian theo ít nhất một chiều (ví dụ: ánh xạ 2D thành một đường thẳng). Ma trận không có nghịch đảo và các hệ tuyến tính sử dụng nó không có nghiệm hoặc có vô số nghiệm."
     }
   ]
 }

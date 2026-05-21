@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is it important to have separate train, validation, and test splits in machine learning?",
-      "options": ["To make the dataset smaller so training is faster", "To evaluate model performance on unseen data and prevent overfitting", "To ensure each split uses a different file format", "To distribute data across multiple GPUs"],
+      "question": "Tại sao việc phân tách đào tạo, xác thực và kiểm tra riêng biệt trong học máy lại quan trọng?",
+      "options": [
+        "Để làm cho tập dữ liệu nhỏ hơn để đào tạo nhanh hơn",
+        "Để đánh giá hiệu suất mô hình trên dữ liệu không nhìn thấy và ngăn chặn việc trang bị quá mức",
+        "Để đảm bảo mỗi phần chia sử dụng một định dạng tệp khác nhau",
+        "Để phân phối dữ liệu trên nhiều GPU"
+      ],
       "correct": 1,
-      "explanation": "The training set teaches the model, the validation set tunes hyperparameters during training, and the test set provides a final unbiased evaluation on data the model has never seen."
+      "explanation": "Tập huấn luyện dạy mô hình, tập xác thực điều chỉnh các siêu tham số trong quá trình huấn luyện và tập kiểm tra cung cấp đánh giá khách quan cuối cùng về dữ liệu mà mô hình chưa từng thấy."
     },
     {
       "stage": "pre",
-      "question": "What is the Hugging Face Hub primarily used for in AI/ML workflows?",
-      "options": ["Hosting and sharing datasets, models, and ML artifacts", "Running GPU training jobs in the cloud", "Managing Python virtual environments", "Version controlling source code like GitHub"],
+      "question": "Hugging Face Hub chủ yếu được sử dụng để làm gì trong quy trình làm việc AI/ML?",
+      "options": [
+        "Lưu trữ và chia sẻ bộ dữ liệu, mô hình và tạo phẩm ML",
+        "Chạy các công việc đào tạo GPU trên đám mây",
+        "Quản lý môi trường ảo Python",
+        "Phiên bản kiểm soát mã nguồn như GitHub"
+      ],
       "correct": 0,
-      "explanation": "Hugging Face Hub is a platform for hosting and sharing pre-trained models, datasets, and ML demos. The 'datasets' library provides a standard way to load data from it."
+      "explanation": "Hugging Face Hub là một nền tảng để lưu trữ và chia sẻ các mô hình, bộ dữ liệu và bản trình diễn ML được đào tạo trước. Thư viện 'bộ dữ liệu' cung cấp một cách tiêu chuẩn để tải dữ liệu từ nó."
     },
     {
       "stage": "post",
-      "question": "What advantage does the Parquet format have over CSV for storing ML datasets?",
-      "options": ["Parquet files are human-readable in any text editor", "Parquet uses columnar storage for smaller file sizes and faster read speeds", "Parquet supports more data types than CSV", "Parquet files can be edited in spreadsheet applications"],
+      "question": "Định dạng Parquet có lợi thế gì so với CSV trong việc lưu trữ bộ dữ liệu ML?",
+      "options": [
+        "Các tệp sàn gỗ có thể đọc được bằng bất kỳ trình soạn thảo văn bản nào",
+        "Parquet sử dụng bộ lưu trữ theo cột để có kích thước tệp nhỏ hơn và tốc độ đọc nhanh hơn",
+        "Sàn gỗ hỗ trợ nhiều loại dữ liệu hơn CSV",
+        "Các tập tin sàn có thể được chỉnh sửa trong các ứng dụng bảng tính"
+      ],
       "correct": 1,
-      "explanation": "Parquet is a columnar binary format that compresses better than CSV and enables fast column-level reads. It is the preferred storage format for ML datasets."
+      "explanation": "Parquet là định dạng nhị phân cột có khả năng nén tốt hơn CSV và cho phép đọc ở cấp độ cột nhanh chóng. Đây là định dạng lưu trữ ưa thích cho bộ dữ liệu ML."
     },
     {
       "stage": "post",
-      "question": "What does 'streaming=True' do when loading a dataset with the Hugging Face datasets library?",
-      "options": ["Downloads the dataset faster using parallel connections", "Loads data row by row without downloading the full dataset to disk", "Converts the dataset to a streaming video format", "Enables real-time updates as new data is added to the Hub"],
+      "question": "'streaming=True' làm gì khi tải tập dữ liệu bằng thư viện tập dữ liệu Ôm khuôn mặt?",
+      "options": [
+        "Tải xuống tập dữ liệu nhanh hơn bằng cách sử dụng các kết nối song song",
+        "Tải dữ liệu theo hàng mà không tải toàn bộ dữ liệu xuống đĩa",
+        "Chuyển đổi tập dữ liệu sang định dạng video phát trực tuyến",
+        "Cho phép cập nhật theo thời gian thực khi dữ liệu mới được thêm vào Hub"
+      ],
       "correct": 1,
-      "explanation": "Streaming mode creates an IterableDataset that fetches rows on demand. Memory usage stays constant regardless of dataset size, which is essential for datasets too large to fit on disk."
+      "explanation": "Chế độ phát trực tuyến tạo IterableDataset để tìm nạp các hàng theo yêu cầu. Việc sử dụng bộ nhớ không đổi bất kể kích thước tập dữ liệu, điều này rất cần thiết đối với các tập dữ liệu quá lớn để vừa trên đĩa."
     },
     {
       "stage": "post",
-      "question": "When should you use DVC (Data Version Control) instead of just .gitignore for large files?",
-      "options": ["When your dataset is smaller than 1 MB", "When you need to reproduce exact experiments across machines with versioned data", "When you are working alone on a personal project", "When you only have CSV files in your project"],
+      "question": "Khi nào bạn nên sử dụng DVC (Kiểm soát phiên bản dữ liệu) thay vì chỉ .gitignore cho các tệp lớn?",
+      "options": [
+        "Khi tập dữ liệu của bạn nhỏ hơn 1 MB",
+        "Khi bạn cần tái tạo các thử nghiệm chính xác trên các máy có dữ liệu được phiên bản",
+        "Khi bạn đang làm việc một mình trong một dự án cá nhân",
+        "Khi bạn chỉ có tệp CSV trong dự án của mình"
+      ],
       "correct": 1,
-      "explanation": "DVC tracks data versions with small pointer files in git while storing the actual data in remote storage (S3, GCS). It ensures anyone can reproduce your exact experiment with the same data."
+      "explanation": "DVC theo dõi các phiên bản dữ liệu bằng các tệp con trỏ nhỏ trong git trong khi lưu trữ dữ liệu thực tế trong bộ lưu trữ từ xa (S3, GCS). Nó đảm bảo bất kỳ ai cũng có thể tái tạo thử nghiệm chính xác của bạn với cùng một dữ liệu."
     }
   ]
 }

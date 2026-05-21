@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a Language Server Protocol (LSP)?",
-      "options": ["A protocol for transferring files between editors", "A standard for editors to receive type info, completions, and diagnostics from a language-specific server", "A compression format for source code files", "A network protocol for remote pair programming"],
+      "question": "Giao thức máy chủ ngôn ngữ (LSP) là gì?",
+      "options": [
+        "Giao thức truyền tập tin giữa các biên tập viên",
+        "Một tiêu chuẩn để người chỉnh sửa nhận thông tin về loại, phần hoàn thành và chẩn đoán từ máy chủ dành riêng cho ngôn ngữ",
+        "Một định dạng nén cho các tập tin mã nguồn",
+        "Một giao thức mạng để lập trình cặp từ xa"
+      ],
       "correct": 1,
-      "explanation": "LSP is a standardized protocol that lets editors communicate with language servers for features like autocomplete, type checking, and error diagnostics, regardless of the editor used."
+      "explanation": "LSP là một giao thức được tiêu chuẩn hóa cho phép người chỉnh sửa giao tiếp với máy chủ ngôn ngữ để có các tính năng như tự động hoàn thành, kiểm tra loại và chẩn đoán lỗi, bất kể sử dụng trình soạn thảo nào."
     },
     {
       "stage": "pre",
-      "question": "Why is format-on-save useful for team projects?",
-      "options": ["It reduces file sizes by removing whitespace", "It ensures consistent code style across all contributors without manual formatting", "It catches runtime bugs before the code is executed", "It compresses the code for faster git operations"],
+      "question": "Tại sao định dạng khi lưu lại hữu ích cho các dự án nhóm?",
+      "options": [
+        "Nó giảm kích thước tập tin bằng cách loại bỏ khoảng trắng",
+        "Nó đảm bảo kiểu mã nhất quán trên tất cả những người đóng góp mà không cần định dạng thủ công",
+        "Nó bắt lỗi thời gian chạy trước khi mã được thực thi",
+        "Nó nén mã để hoạt động git nhanh hơn"
+      ],
       "correct": 1,
-      "explanation": "Format-on-save runs a formatter (like Black or Ruff) every time you save, ensuring all code follows the same style conventions regardless of who wrote it."
+      "explanation": "Định dạng khi lưu chạy một trình định dạng (như Đen hoặc Ruff) mỗi khi bạn lưu, đảm bảo tất cả mã đều tuân theo các quy ước về kiểu giống nhau bất kể ai đã viết nó."
     },
     {
       "stage": "post",
-      "question": "Which VS Code extension enables editing code on a remote GPU machine as if it were local?",
-      "options": ["GitLens", "Pylance", "Remote SSH", "Debugpy"],
+      "question": "Tiện ích mở rộng VS Code nào cho phép chỉnh sửa mã trên máy GPU từ xa như thể mã cục bộ?",
+      "options": [
+        "GitLens",
+        "Pylance",
+        "SSH từ xa",
+        "Gỡ lỗi"
+      ],
       "correct": 2,
-      "explanation": "Remote SSH installs a lightweight VS Code server on the remote machine and streams the UI to your local editor, letting you edit files, run terminals, and debug remotely."
+      "explanation": "SSH từ xa cài đặt máy chủ VS Code nhẹ trên máy từ xa và truyền giao diện người dùng đến trình chỉnh sửa cục bộ của bạn, cho phép bạn chỉnh sửa tệp, chạy thiết bị đầu cuối và gỡ lỗi từ xa."
     },
     {
       "stage": "post",
-      "question": "Why should 'notebook.output.scrolling' be enabled in VS Code settings for AI work?",
-      "options": ["It enables horizontal scrolling for wide dataframes", "It prevents training loop output (thousands of lines) from exploding the output panel", "It allows scrolling between notebook cells with the mouse wheel", "It enables smooth scrolling animations in the editor"],
+      "question": "Tại sao nên bật 'notebook.output.scrolling' trong cài đặt Mã VS để AI hoạt động?",
+      "options": [
+        "Nó cho phép cuộn ngang cho các khung dữ liệu rộng",
+        "Nó ngăn đầu ra vòng lặp đào tạo (hàng nghìn dòng) làm nổ bảng đầu ra",
+        "Nó cho phép cuộn giữa các ô notebook bằng con lăn chuột",
+        "Nó cho phép hoạt ảnh cuộn mượt mà trong trình chỉnh sửa"
+      ],
       "correct": 1,
-      "explanation": "Training loops can print thousands of lines of output. Without output scrolling, the notebook output panel grows unbounded, making the notebook unusable."
+      "explanation": "Vòng lặp đào tạo có thể in hàng nghìn dòng đầu ra. Nếu không cuộn đầu ra, bảng đầu ra của sổ ghi chép sẽ phát triển không giới hạn, khiến sổ ghi chép không thể sử dụng được."
     },
     {
       "stage": "post",
-      "question": "What does setting 'python.analysis.typeCheckingMode' to 'basic' in VS Code accomplish?",
-      "options": ["It enables syntax highlighting for Python files", "It catches wrong argument types and tensor shape mismatches before running the code", "It formats Python code according to PEP 8 standards", "It enables Python 3.12 language features"],
+      "question": "Việc cài đặt 'python.analysis.typeCheckingMode' thành 'basic' trong Mã VS thực hiện được điều gì?",
+      "options": [
+        "Nó cho phép tô sáng cú pháp cho các tệp Python",
+        "Nó bắt các loại đối số sai và hình dạng tensor không khớp trước khi chạy mã",
+        "Nó định dạng mã Python theo tiêu chuẩn PEP 8",
+        "Nó kích hoạt các tính năng ngôn ngữ Python 3.12"
+      ],
       "correct": 1,
-      "explanation": "Basic type checking with Pylance flags type mismatches, wrong argument types, and incorrect API parameters at edit time, catching bugs before you run a potentially expensive training script."
+      "explanation": "Kiểm tra loại cơ bản với loại cờ Pylance không khớp, loại đối số sai và tham số API không chính xác tại thời điểm chỉnh sửa, phát hiện lỗi trước khi bạn chạy tập lệnh đào tạo có khả năng tốn kém."
     }
   ]
 }

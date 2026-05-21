@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does vanilla self-attention scale the dot product by 1/sqrt(d_k)?",
-      "options": ["To make the output values between 0 and 1", "To prevent dot products from growing large in high dimensions, which would push softmax into regions with tiny gradients", "To normalize the query and key vectors to unit length", "To reduce the computational cost of the matrix multiplication"],
+      "question": "Tại sao mức độ tự chú ý của vanilla lại chia tỷ lệ tích số chấm theo 1/sqrt(d_k)?",
+      "options": [
+        "Để tạo các giá trị đầu ra trong khoảng từ 0 đến 1",
+        "Để ngăn các sản phẩm chấm phát triển lớn ở kích thước cao, điều này sẽ đẩy softmax vào các vùng có độ dốc nhỏ",
+        "Để chuẩn hóa truy vấn và vectơ khóa theo độ dài đơn vị",
+        "Để giảm chi phí tính toán của phép nhân ma trận"
+      ],
       "correct": 1,
-      "explanation": "When d_k is large, the dot product of random vectors grows proportionally to sqrt(d_k). Without scaling, softmax receives large inputs, producing near-one-hot outputs where gradients vanish."
+      "explanation": "Khi d_k lớn, tích số chấm của các vectơ ngẫu nhiên tăng tỷ lệ thuận với sqrt(d_k). Nếu không chia tỷ lệ, softmax nhận được đầu vào lớn, tạo ra đầu ra gần như nóng trong đó độ dốc biến mất."
     },
     {
       "stage": "pre",
-      "question": "What are the three projections in self-attention?",
-      "options": ["Input, hidden, and output", "Query, key, and value -- each a learned linear projection of the same input", "Encoder, decoder, and cross-attention", "Embedding, position, and segment"],
+      "question": "Ba phóng chiếu trong sự chú ý đến bản thân là gì?",
+      "options": [
+        "Đầu vào, ẩn và đầu ra",
+        "Truy vấn, khóa và giá trị -- mỗi truy vấn là một phép chiếu tuyến tính đã học của cùng một đầu vào",
+        "Bộ mã hóa, giải mã và chú ý chéo",
+        "Nhúng, vị trí và phân đoạn"
+      ],
       "correct": 1,
-      "explanation": "Self-attention projects the input through three different weight matrices to produce queries (what am I looking for?), keys (what do I contain?), and values (what do I output if matched?)."
+      "explanation": "Tự chú ý chiếu đầu vào thông qua ba ma trận trọng số khác nhau để tạo ra các truy vấn (tôi đang tìm kiếm gì?), khóa (tôi chứa gì?) và giá trị (tôi sẽ xuất ra gì nếu khớp?)."
     },
     {
       "stage": "post",
-      "question": "In multi-head attention with 8 heads and d_model=512, what is the dimension of each head?",
-      "options": ["512 -- each head sees the full dimension", "64 -- d_model is split evenly across heads (512/8=64)", "8 -- one dimension per head", "4096 -- each head expands the representation"],
+      "question": "Trong chú ý nhiều đầu có 8 đầu và d_model=512, kích thước của mỗi đầu là bao nhiêu?",
+      "options": [
+        "512 -- mỗi cái đầu nhìn thấy toàn bộ chiều không gian",
+        "64 -- d_model được chia đều cho các đầu (512/8=64)",
+        "8 -- một chiều cho mỗi đầu",
+        "4096 -- mỗi đầu mở rộng cách biểu diễn"
+      ],
       "correct": 1,
-      "explanation": "Multi-head attention splits d_model into h heads, each operating on d_k = d_model/h dimensions. With 512/8 = 64 dimensions per head, the total computation cost equals single-head attention at full dimension."
+      "explanation": "Sự chú ý của nhiều đầu chia d_model thành h đầu, mỗi đầu hoạt động trên các kích thước d_k = d_model/h. Với 512/8 = 64 kích thước trên mỗi đầu, tổng chi phí tính toán tương đương với sự chú ý của một đầu ở kích thước đầy đủ."
     },
     {
       "stage": "post",
-      "question": "What does the causal mask in autoregressive attention prevent?",
-      "options": ["It prevents the model from attending to padding tokens", "It prevents each position from attending to future positions, ensuring the model can only use past context when predicting the next token", "It prevents attention weights from becoming too large", "It prevents the model from attending to its own position"],
+      "question": "Mặt nạ nhân quả trong sự chú ý tự hồi quy ngăn cản điều gì?",
+      "options": [
+        "Nó ngăn mô hình tham gia vào các mã thông báo đệm",
+        "Nó ngăn từng vị trí tham dự vào các vị trí trong tương lai, đảm bảo mô hình chỉ có thể sử dụng bối cảnh trong quá khứ khi dự đoán mã thông báo tiếp theo",
+        "Nó ngăn chặn trọng số chú ý trở nên quá lớn",
+        "Nó ngăn cản mô hình tham gia vào vị trí của chính nó"
+      ],
       "correct": 1,
-      "explanation": "In autoregressive generation, token t must not see tokens t+1, t+2, etc. The causal mask sets future positions to -infinity before softmax, zeroing out their attention weights."
+      "explanation": "Trong quá trình tạo tự hồi quy, mã thông báo t không được nhìn thấy mã thông báo t+1, t+2, v.v. Mặt nạ nhân quả đặt các vị trí trong tương lai thành -infinity trước softmax, loại bỏ trọng số chú ý của chúng."
     },
     {
       "stage": "post",
-      "question": "Why does self-attention have O(n^2) complexity in sequence length n?",
-      "options": ["Because the model has n layers stacked on top of each other", "Because every token computes attention scores with every other token, producing an n x n attention matrix", "Because the feedforward layers after attention are quadratic", "Because backpropagation through attention requires n^2 gradient computations"],
+      "question": "Tại sao việc tự chú ý có độ phức tạp O(n^2) trong độ dài chuỗi n?",
+      "options": [
+        "Vì mô hình có n lớp xếp chồng lên nhau",
+        "Bởi vì mỗi mã thông báo tính điểm chú ý với mọi mã thông báo khác, tạo ra ma trận chú ý n x n",
+        "Bởi vì các lớp tiếp liệu sau sự chú ý là bậc hai",
+        "Bởi vì lan truyền ngược thông qua sự chú ý yêu cầu tính toán độ dốc n^2"
+      ],
       "correct": 1,
-      "explanation": "The QK^T matrix multiplication produces an n x n attention matrix where entry (i,j) is the attention from token i to token j. Both computation and memory scale as O(n^2), which is why long-context models need techniques like FlashAttention."
+      "explanation": "Phép nhân ma trận QK^T tạo ra ma trận chú ý n x n trong đó mục (i,j) là sự chú ý từ mã thông báo i đến mã thông báo j. Cả tính toán và quy mô bộ nhớ đều ở mức O(n^2), đó là lý do tại sao các mô hình ngữ cảnh dài cần các kỹ thuật như FlashAttention."
     }
   ]
 }

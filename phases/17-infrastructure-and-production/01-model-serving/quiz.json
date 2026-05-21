@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tại sao bạn không thể phục vụ mô hình sản xuất bằng cách gọi model.generate() trong vòng lặp?",
+      "options": [
+        "model.generate() chỉ hoạt động trong sổ ghi chép Jupyter",
+        "Xử lý tuần tự có nghĩa là mỗi yêu cầu đợi tất cả các yêu cầu trước đó kết thúc, khiến độ trễ không thể chấp nhận được khi tải đồng thời",
+        "model.generate() không hỗ trợ đầu ra phát trực tuyến",
+        "GIL của Python ngăn chặn mọi thực thi đồng thời"
+      ],
+      "correct": 1,
+      "explanation": "Một vòng lặp ngây thơ xử lý một yêu cầu tại một thời điểm. Với 100 mili giây cho mỗi yêu cầu và 10 người dùng đồng thời, người dùng cuối cùng đợi 1 giây. Trong điều kiện lưu lượng truy cập thực tế, hàng đợi này phát triển không giới hạn và dịch vụ trở nên không thể sử dụng được."
+    },
+    {
+      "stage": "pre",
+      "question": "'Thời gian nhận được mã thông báo đầu tiên' (TTFT) là gì và tại sao nó lại quan trọng?",
+      "options": [
+        "Thời gian token hóa văn bản đầu vào",
+        "Độ trễ từ khi người dùng gửi yêu cầu đến khi họ nhìn thấy mã thông báo được tạo đầu tiên, xác định mức độ phản hồi được nhận biết",
+        "Thời gian tải mô hình vào bộ nhớ GPU",
+        "Thời gian để hoàn thành câu trả lời đầy đủ"
+      ],
+      "correct": 1,
+      "explanation": "TTFT là độ trễ do người dùng cảm nhận trước khi mọi thứ xuất hiện trên màn hình. Ngay cả khi phản hồi đầy đủ mất 5 giây, TTFT 200 mili giây với tính năng phát trực tuyến sẽ khiến hệ thống có cảm giác phản hồi nhanh. TTFT cao khiến người dùng nghĩ rằng hệ thống bị hỏng."
+    },
+    {
+      "stage": "post",
+      "question": "Trộn liên tục là gì và tại sao nó tốt hơn trộn tĩnh?",
+      "options": [
+        "Phân khối liên tục sử dụng kích thước lô nhỏ hơn để giảm mức sử dụng bộ nhớ",
+        "Phân nhóm liên tục tự động thêm các yêu cầu mới và xóa các yêu cầu đã hoàn thành khỏi lô ở mỗi bước, thay vì đợi toàn bộ lô hoàn tất trước khi bắt đầu các yêu cầu mới",
+        "Phân khối liên tục chia mô hình trên nhiều GPU",
+        "Phân nhóm liên tục xử lý các yêu cầu theo thứ tự chúng đến mà không cần phân nhóm"
+      ],
+      "correct": 1,
+      "explanation": "Phân nhóm tĩnh chờ tất cả các chuỗi trong một đợt kết thúc (lãng phí chu kỳ GPU khi đệm). Tính năng phân nhóm liên tục sẽ chèn các yêu cầu mới vào các vị trí trống khi các chuỗi hoàn tất, giúp duy trì mức sử dụng GPU gần 100%."
+    },
+    {
+      "stage": "post",
+      "question": "Tại sao bộ nhớ GPU lại là nút thắt cổ chai chính trong việc phân phối mô hình chứ không phải tính toán GPU?",
+      "options": [
+        "GPU hiện đại có khả năng tính toán nhiều hơn băng thông bộ nhớ",
+        "Bộ đệm KV cho mỗi yêu cầu đang hoạt động sẽ tiêu tốn bộ nhớ GPU tỷ lệ với độ dài chuỗi và việc phân phát nhiều yêu cầu đồng thời có thể làm cạn kiệt VRAM trước khi các đơn vị tính toán được sử dụng hết",
+        "Tính toán GPU chỉ được sử dụng trong quá trình tải mô hình",
+        "Bộ nhớ truy cập chậm hơn so với các đơn vị tính toán"
+      ],
+      "correct": 1,
+      "explanation": "Mỗi yêu cầu đồng thời duy trì một bộ đệm KV tăng dần theo độ dài chuỗi. Mô hình 7B phục vụ 32 yêu cầu đồng thời với ngữ cảnh 4K có thể sử dụng 16GB+ chỉ dành cho bộ nhớ đệm KV. Bạn hết bộ nhớ từ rất lâu trước khi hết FLOP."
+    },
+    {
+      "stage": "post",
+      "question": "Bạn nên tối ưu hóa số liệu nào khi cần tối đa hóa số lượng người dùng được phục vụ trên mỗi GPU?",
+      "options": [
+        "Thời gian đến mã thông báo đầu tiên (TTFT)",
+        "Thông lượng (mã thông báo mỗi giây trên tất cả các yêu cầu đồng thời), đo lường mức độ hiệu quả mà bạn sử dụng GPU để phục vụ nhiều người dùng cùng một lúc",
+        "Độ trễ yêu cầu riêng lẻ (P50)",
+        "Độ chính xác của mô hình trên điểm chuẩn"
+      ],
+      "correct": 1,
+      "explanation": "Thông lượng đo lường tổng số mã thông báo được tạo mỗi giây trên tất cả các yêu cầu. Các kỹ thuật như phân nhóm liên tục, PagedAttention và lượng tử hóa đều làm tăng thông lượng, cho phép một GPU phục vụ nhiều người dùng đồng thời hơn."
+    }
+  ]
+}

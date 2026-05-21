@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the Fourier transform do to a signal?",
+      "question": "Biến đổi Fourier làm gì với tín hiệu?",
       "options": [
-        "Compresses the signal to use less storage",
-        "Decomposes the signal into sine waves of different frequencies, amplitudes, and phases",
-        "Removes noise from the signal",
-        "Converts the signal from analog to digital"
+        "Nén tín hiệu để sử dụng ít bộ nhớ hơn",
+        "Phân tách tín hiệu thành các sóng hình sin có tần số, biên độ và pha khác nhau",
+        "Loại bỏ nhiễu khỏi tín hiệu",
+        "Chuyển đổi tín hiệu từ analog sang kỹ thuật số"
       ],
       "correct": 1,
-      "explanation": "The Fourier transform converts a signal from the time domain to the frequency domain. Each frequency coefficient X[k] tells you the amplitude and phase of a sine wave at frequency k. The signal is re-expressed as a sum of these sine waves."
+      "explanation": "Biến đổi Fourier chuyển đổi tín hiệu từ miền thời gian sang miền tần số. Mỗi hệ số tần số X[k] cho bạn biết biên độ và pha của sóng hình sin ở tần số k. Tín hiệu được biểu diễn lại dưới dạng tổng của các sóng hình sin này."
     },
     {
       "stage": "pre",
-      "question": "What is the time complexity of the Fast Fourier Transform (FFT) compared to the direct DFT?",
+      "question": "Độ phức tạp về thời gian của Biến đổi Fourier nhanh (FFT) so với DFT trực tiếp là bao nhiêu?",
       "options": [
-        "Both are O(N^2)",
-        "FFT is O(N log N), DFT is O(N^2)",
-        "FFT is O(N), DFT is O(N log N)",
-        "FFT is O(log N), DFT is O(N)"
+        "Cả hai đều là O(N^2)",
+        "FFT là O(N log N), DFT là O(N^2)",
+        "FFT là O(N), DFT là O(N log N)",
+        "FFT là O(log N), DFT là O(N)"
       ],
       "correct": 1,
-      "explanation": "The direct DFT computes N outputs, each summing over N inputs: O(N^2). The Cooley-Tukey FFT splits the signal into even/odd halves recursively, doing O(N) work at each of log2(N) levels, giving O(N log N). For N = 1 million, this is 20 million vs 1 trillion operations."
+      "explanation": "DFT trực tiếp tính toán N đầu ra, mỗi đầu ra tính tổng trên N đầu vào: O(N^2). Cooley-Tukey FFT chia tín hiệu thành hai nửa chẵn/lẻ theo cách đệ quy, thực hiện công việc O(N) ở mỗi mức log2(N), tạo ra O(N log N). Với N = 1 triệu, đây là 20 triệu so với 1 nghìn tỷ hoạt động."
     },
     {
       "stage": "post",
-      "question": "What does the convolution theorem state?",
+      "question": "Định lý tích chập phát biểu điều gì?",
       "options": [
-        "Convolution in the time domain equals addition in the frequency domain",
-        "Convolution in the time domain equals pointwise multiplication in the frequency domain",
-        "Convolution always increases the length of a signal",
-        "Convolution and correlation are identical operations"
+        "Tích chập trong miền thời gian bằng phép cộng trong miền tần số",
+        "Tích chập trong miền thời gian bằng phép nhân theo điểm trong miền tần số",
+        "Tích chập luôn làm tăng độ dài của tín hiệu",
+        "Tích chập và tương quan là các hoạt động giống hệt nhau"
       ],
       "correct": 1,
-      "explanation": "The convolution theorem states that convolution in the time domain equals pointwise multiplication in the frequency domain: x * h = IFFT(FFT(x) . FFT(h)). This is why FFT-based convolution is O(N log N) instead of O(N*M) for large kernels."
+      "explanation": "Định lý tích chập phát biểu rằng tích chập trong miền thời gian bằng phép nhân theo điểm trong miền tần số: x * h = IFFT(FFT(x) . FFT(h)). Đây là lý do tại sao tích chập dựa trên FFT là O(N log N) thay vì O(N*M) đối với các hạt nhân lớn."
     },
     {
       "stage": "post",
-      "question": "Why does zero-padding a signal before FFT NOT increase the true frequency resolution?",
+      "question": "Tại sao việc đệm tín hiệu bằng 0 trước FFT KHÔNG làm tăng độ phân giải tần số thực?",
       "options": [
-        "Zero-padding introduces noise that cancels the improvement",
-        "Zero-padding interpolates between existing frequency bins but cannot reveal frequency detail absent from the original samples",
-        "Zero-padding only works for power-of-2 signal lengths",
-        "The FFT algorithm ignores zero-padded samples"
+        "Zero-padding tạo ra tiếng ồn làm mất đi sự cải tiến",
+        "Phần đệm 0 nội suy giữa các ngăn tần số hiện có nhưng không thể tiết lộ chi tiết tần số không có trong các mẫu ban đầu",
+        "Phần đệm bằng 0 chỉ hoạt động đối với độ dài tín hiệu có công suất bằng 2",
+        "Thuật toán FFT bỏ qua các mẫu không đệm"
       ],
       "correct": 1,
-      "explanation": "True frequency resolution depends on the observation time T = N/fs. Zero-padding adds more frequency bins (finer grid) but only interpolates the existing spectrum — it gives a smoother-looking result without resolving frequencies closer than 1/T Hz apart."
+      "explanation": "Độ phân giải tần số thực phụ thuộc vào thời gian quan sát T = N/fs. Khoảng đệm bằng 0 bổ sung thêm nhiều ngăn tần số hơn (lưới mịn hơn) nhưng chỉ nội suy phổ hiện có — nó mang lại kết quả trông mượt mà hơn mà không phân giải các tần số gần nhau hơn 1/T Hz."
     },
     {
       "stage": "post",
-      "question": "In the original Transformer's sinusoidal positional encodings, why are different dimension pairs assigned geometrically spaced frequencies?",
+      "question": "Trong mã hóa vị trí hình sin của Transformer ban đầu, tại sao các cặp thứ nguyên khác nhau được gán các tần số cách đều nhau về mặt hình học?",
       "options": [
-        "It reduces the computational cost of attention",
-        "Each frequency provides a different resolution — high frequencies encode fine position, low frequencies encode coarse position, giving each position a unique fingerprint",
-        "Geometric spacing is required by the FFT algorithm",
-        "It ensures all encoding values are between 0 and 1"
+        "Nó làm giảm chi phí tính toán của sự chú ý",
+        "Mỗi tần số cung cấp một độ phân giải khác nhau - tần số cao mã hóa vị trí tốt, tần số thấp mã hóa vị trí thô, tạo cho mỗi vị trí một dấu vân tay duy nhất",
+        "Khoảng cách hình học được yêu cầu bởi thuật toán FFT",
+        "Nó đảm bảo tất cả các giá trị mã hóa nằm trong khoảng từ 0 đến 1"
       ],
       "correct": 1,
-      "explanation": "High-frequency dimensions change rapidly with position (fine resolution), while low-frequency dimensions change slowly (coarse resolution). Together, the multi-frequency encoding gives every position a unique pattern — similar to how Fourier coefficients uniquely identify a signal."
+      "explanation": "Kích thước tần số cao thay đổi nhanh chóng theo vị trí (độ phân giải tốt), trong khi kích thước tần số thấp thay đổi chậm (độ phân giải thô). Cùng với nhau, mã hóa đa tần số mang lại cho mỗi vị trí một mẫu duy nhất - tương tự như cách các hệ số Fourier xác định duy nhất một tín hiệu."
     }
   ]
 }

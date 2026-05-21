@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does 'entropy' measure in information theory?",
-      "options": ["The energy of a physical system", "The average surprise or uncertainty in a probability distribution", "The number of bits in a binary message", "The error rate of a communication channel"],
+      "question": "'Entropy' đo lường điều gì trong lý thuyết thông tin?",
+      "options": [
+        "Năng lượng của một hệ vật lý",
+        "Độ bất ngờ hoặc độ không chắc chắn trung bình trong phân bố xác suất",
+        "Số bit trong một thông điệp nhị phân",
+        "Tỷ lệ lỗi của kênh truyền thông"
+      ],
       "correct": 1,
-      "explanation": "Entropy H(P) = -sum(p(x) * log(p(x))) measures the average amount of surprise across all outcomes. High entropy means high uncertainty (uniform distribution). Low entropy means the outcome is predictable."
+      "explanation": "Entropy H(P) = -sum(p(x) * log(p(x))) đo lường mức độ bất ngờ trung bình trên tất cả các kết quả. Entropy cao có nghĩa là độ không chắc chắn cao (phân bố đồng đều). Entropy thấp có nghĩa là kết quả có thể dự đoán được."
     },
     {
       "stage": "pre",
-      "question": "What is the cross-entropy loss commonly used for in neural networks?",
-      "options": ["Regression tasks with continuous outputs", "Classification tasks, measuring how far predicted probabilities are from true labels", "Generating new data samples", "Regularizing model weights to prevent overfitting"],
+      "question": "Mất entropy chéo thường được sử dụng trong mạng lưới thần kinh là gì?",
+      "options": [
+        "Nhiệm vụ hồi quy với đầu ra liên tục",
+        "Nhiệm vụ phân loại, đo lường xác suất dự đoán cách nhãn thực bao xa",
+        "Tạo mẫu dữ liệu mới",
+        "Thường xuyên hóa trọng lượng mô hình để ngăn chặn việc trang bị quá mức"
+      ],
       "correct": 1,
-      "explanation": "Cross-entropy loss H(P,Q) = -sum(p(x)*log(q(x))) measures the difference between the true distribution (labels) and the model's predicted distribution. It is THE standard loss for classification."
+      "explanation": "Mất entropy chéo H(P,Q) = -sum(p(x)*log(q(x))) đo lường sự khác biệt giữa phân phối thực (nhãn) và phân phối dự đoán của mô hình. Đó là sự mất mát tiêu chuẩn để phân loại."
     },
     {
       "stage": "post",
-      "question": "Why is minimizing cross-entropy equivalent to minimizing KL divergence during training?",
-      "options": ["Because KL divergence is always zero during training", "Because cross-entropy = entropy + KL divergence, and the entropy of the true labels is constant, so minimizing cross-entropy minimizes KL divergence", "Because cross-entropy and KL divergence are the same formula", "Because the model's entropy equals zero at convergence"],
+      "question": "Tại sao việc giảm thiểu entropy chéo tương đương với việc giảm thiểu sự phân kỳ KL trong quá trình đào tạo?",
+      "options": [
+        "Bởi vì độ phân kỳ KL luôn bằng 0 trong quá trình huấn luyện",
+        "Bởi vì entropy chéo = entropy + phân kỳ KL và entropy của các nhãn thực là không đổi, do đó giảm thiểu entropy chéo sẽ giảm thiểu phân kỳ KL",
+        "Bởi vì entropy chéo và phân kỳ KL là cùng một công thức",
+        "Bởi vì entropy của mô hình bằng 0 khi hội tụ"
+      ],
       "correct": 1,
-      "explanation": "H(P,Q) = H(P) + D_KL(P||Q). Since the true distribution P doesn't change during training, H(P) is constant. Minimizing H(P,Q) is the same as minimizing D_KL(P||Q) -- pushing the model toward the true distribution."
+      "explanation": "H(P,Q) = H(P) + D_KL(P||Q). Vì phân phối thực P không thay đổi trong quá trình huấn luyện nên H(P) không đổi. Giảm thiểu H(P,Q) cũng giống như giảm thiểu D_KL(P||Q) -- đẩy mô hình về phía phân phối thực."
     },
     {
       "stage": "post",
-      "question": "A language model has perplexity 50 on a test set. What does this mean?",
-      "options": ["The model makes 50 errors per sentence", "On average, the model is as uncertain as if it were choosing uniformly from 50 possible next tokens at each step", "The model has 50 layers", "The model was trained for 50 epochs"],
+      "question": "Một mô hình ngôn ngữ có độ phức tạp 50 trên tập kiểm tra. Điều này có nghĩa là gì?",
+      "options": [
+        "Mô hình mắc 50 lỗi mỗi câu",
+        "Trung bình, mô hình không chắc chắn như thể nó đang chọn thống nhất từ ​​50 mã thông báo tiếp theo có thể có ở mỗi bước",
+        "Mô hình có 50 lớp",
+        "Mô hình được đào tạo trong 50 kỷ nguyên"
+      ],
       "correct": 1,
-      "explanation": "Perplexity = e^(cross-entropy). A perplexity of 50 means the model's uncertainty at each token is equivalent to picking randomly from 50 equally likely options. Lower perplexity means better predictions."
+      "explanation": "Sự bối rối = e^(entropy chéo). Độ phức tạp là 50 có nghĩa là độ không chắc chắn của mô hình ở mỗi mã thông báo tương đương với việc chọn ngẫu nhiên từ 50 tùy chọn có khả năng như nhau. Độ bối rối thấp hơn có nghĩa là dự đoán tốt hơn."
     },
     {
       "stage": "post",
-      "question": "How does mutual information differ from Pearson correlation for feature selection?",
-      "options": ["Mutual information is faster to compute", "Mutual information detects any statistical dependency (linear or nonlinear) while correlation only detects linear relationships", "Pearson correlation works for any data type while mutual information only works for continuous data", "They always give the same feature rankings"],
+      "question": "Thông tin lẫn nhau khác với mối tương quan Pearson trong việc lựa chọn tính năng như thế nào?",
+      "options": [
+        "Thông tin lẫn nhau được tính toán nhanh hơn",
+        "Thông tin lẫn nhau phát hiện bất kỳ sự phụ thuộc thống kê nào (tuyến tính hoặc phi tuyến tính) trong khi mối tương quan chỉ phát hiện các mối quan hệ tuyến tính",
+        "Tương quan Pearson hoạt động với mọi loại dữ liệu trong khi thông tin lẫn nhau chỉ hoạt động đối với dữ liệu liên tục",
+        "Họ luôn đưa ra thứ hạng tính năng giống nhau"
+      ],
       "correct": 1,
-      "explanation": "Mutual information I(X;Y) captures all statistical dependencies between variables, including nonlinear and non-monotonic ones. Pearson correlation only measures linear association, missing many important relationships."
+      "explanation": "Thông tin lẫn nhau I(X;Y) nắm bắt tất cả các phụ thuộc thống kê giữa các biến, bao gồm cả các biến phi tuyến và không đơn điệu. Tương quan Pearson chỉ đo lường mối liên hệ tuyến tính, thiếu nhiều mối quan hệ quan trọng."
     }
   ]
 }

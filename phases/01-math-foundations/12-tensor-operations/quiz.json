@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the 'shape' of a tensor describe?",
+      "question": "'Hình dạng' của tensor mô tả điều gì?",
       "options": [
-        "A tuple listing the size along each axis",
-        "The total number of elements in the tensor",
-        "The data type of the tensor elements",
-        "The memory address of the tensor"
+        "Một tuple liệt kê kích thước dọc theo mỗi trục",
+        "Tổng số phần tử trong tensor",
+        "Kiểu dữ liệu của phần tử tensor",
+        "Địa chỉ bộ nhớ của tensor"
       ],
       "correct": 0,
-      "explanation": "The shape is a tuple listing the size along each axis. For example, a tensor with shape (2, 3, 4) has 2 elements along axis 0, 3 along axis 1, and 4 along axis 2."
+      "explanation": "Hình dạng là một bộ dữ liệu liệt kê kích thước dọc theo mỗi trục. Ví dụ: một tenxơ có hình dạng (2, 3, 4) có 2 phần tử dọc theo trục 0, 3 dọc theo trục 1 và 4 dọc theo trục 2."
     },
     {
       "stage": "pre",
-      "question": "In PyTorch, what layout does an image batch tensor use by default?",
+      "question": "Trong PyTorch, tensor hàng loạt hình ảnh sử dụng bố cục nào theo mặc định?",
       "options": [
-        "NHWC (batch, height, width, channels)",
-        "NCHW (batch, channels, height, width)",
-        "CHWN (channels, height, width, batch)",
-        "WHCN (width, height, channels, batch)"
+        "NHWC (lô, chiều cao, chiều rộng, kênh)",
+        "NCHW (lô, kênh, chiều cao, chiều rộng)",
+        "CHWN (kênh, chiều cao, chiều rộng, lô)",
+        "WHCN (chiều rộng, chiều cao, kênh, lô)"
       ],
       "correct": 1,
-      "explanation": "PyTorch defaults to NCHW (channels-first) layout. TensorFlow defaults to NHWC (channels-last). Mismatched layouts cause silent errors or performance issues."
+      "explanation": "PyTorch mặc định có bố cục NCHW (kênh đầu tiên). TensorFlow mặc định là NHWC (kênh cuối cùng). Bố cục không khớp gây ra lỗi im lặng hoặc vấn đề về hiệu suất."
     },
     {
       "stage": "post",
-      "question": "What is the result shape when broadcasting tensors of shape (8, 1, 6, 1) and (7, 1, 5)?",
+      "question": "Hình dạng kết quả khi phát các tensor có hình dạng (8, 1, 6, 1) và (7, 1, 5) là gì?",
       "options": [
         "(8, 7, 6, 1)",
         "(8, 1, 6, 5)",
         "(8, 7, 6, 5)",
-        "Broadcasting fails — shapes are incompatible"
+        "Phát sóng không thành công - hình dạng không tương thích"
       ],
       "correct": 2,
-      "explanation": "Align shapes from the right: (8,1,6,1) and (1,7,1,5). Dimensions are compatible when equal or one is 1. The result takes the maximum along each axis: (8, 7, 6, 5)."
+      "explanation": "Căn chỉnh các hình từ bên phải: (8,1,6,1) và (1,7,1,5). Các kích thước tương thích khi bằng nhau hoặc một bằng 1. Kết quả lấy giá trị lớn nhất dọc theo mỗi trục: (8, 7, 6, 5)."
     },
     {
       "stage": "post",
-      "question": "In the einsum expression 'bhtd,bhsd->bhts', what happens to the index 'd'?",
+      "question": "Trong biểu thức einsum 'bhtd,bhsd->bhts', điều gì xảy ra với chỉ mục 'd'?",
       "options": [
-        "It is kept in the output as a new axis",
-        "It is summed over (contracted) because it appears in both inputs but not the output",
-        "It is broadcast across both tensors",
-        "It is transposed between the two input tensors"
+        "Nó được giữ ở đầu ra như một trục mới",
+        "Nó được tổng hợp (rút gọn) vì nó xuất hiện ở cả hai đầu vào nhưng không xuất hiện ở đầu ra",
+        "Nó được phát sóng trên cả hai tensor",
+        "Nó được chuyển đổi giữa hai tensor đầu vào"
       ],
       "correct": 1,
-      "explanation": "In einsum, any index that appears in the inputs but not the output is summed over. Index 'd' appears in both 'bhtd' and 'bhsd' but not in the output 'bhts', so it is contracted (multiplied and summed)."
+      "explanation": "Trong einsum, bất kỳ chỉ số nào xuất hiện ở đầu vào nhưng không xuất hiện ở đầu ra đều được tính tổng. Chỉ số 'd' xuất hiện trong cả 'bhtd' và 'bhsd' nhưng không xuất hiện trong 'bhts' đầu ra, do đó nó được rút gọn (nhân và tính tổng)."
     },
     {
       "stage": "post",
-      "question": "Why does calling .view() fail on a transposed tensor in PyTorch?",
+      "question": "Tại sao việc gọi .view() không thành công trên tensor chuyển đổi trong PyTorch?",
       "options": [
-        "Transposed tensors have a different data type",
-        "The tensor is non-contiguous in memory after transpose, and view requires contiguous data",
-        "View only works on 2D tensors",
-        "Transpose changes the total number of elements"
+        "Các tensor chuyển đổi có kiểu dữ liệu khác",
+        "Tenxơ không liền kề trong bộ nhớ sau khi hoán vị và chế độ xem yêu cầu dữ liệu liền kề",
+        "Xem chỉ hoạt động trên tensor 2D",
+        "Transpose thay đổi tổng số phần tử"
       ],
       "correct": 1,
-      "explanation": "Transpose swaps strides without moving data, making the tensor non-contiguous. The .view() operation requires contiguous memory layout. Use .reshape() or call .contiguous() first."
+      "explanation": "Hoán đổi các bước mà không di chuyển dữ liệu, làm cho tensor không liền kề nhau. Thao tác .view() yêu cầu bố cục bộ nhớ liền kề. Trước tiên hãy sử dụng .reshape() hoặc gọi .contiguous()."
     }
   ]
 }

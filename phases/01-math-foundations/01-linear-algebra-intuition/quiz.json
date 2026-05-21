@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the dot product of two vectors measure?",
-      "options": ["The distance between the two vectors", "How similar or aligned the two vectors are", "The angle between the vectors in degrees", "The number of dimensions the vectors share"],
+      "question": "Tích số chấm của hai vectơ đo được gì?",
+      "options": [
+        "Khoảng cách giữa hai vectơ",
+        "Hai vectơ giống nhau hoặc thẳng hàng như thế nào",
+        "Góc giữa các vectơ tính bằng độ",
+        "Số chiều mà các vectơ chia sẻ"
+      ],
       "correct": 1,
-      "explanation": "The dot product measures alignment: positive means same direction (similar), zero means perpendicular (unrelated), negative means opposite direction (dissimilar). This is the basis of similarity search in AI."
+      "explanation": "Tích số chấm đo sự căn chỉnh: dương có nghĩa là cùng hướng (tương tự), 0 có nghĩa là vuông góc (không liên quan), âm có nghĩa là hướng ngược lại (không giống nhau). Đây là cơ sở của tìm kiếm tương tự trong AI."
     },
     {
       "stage": "pre",
-      "question": "In AI, what does 'embedding' refer to?",
-      "options": ["Inserting one model inside another", "A vector representation that captures the meaning of something (word, image, user)", "A technique for compressing model weights", "The process of converting code to machine instructions"],
+      "question": "Trong AI, 'nhúng' ám chỉ điều gì?",
+      "options": [
+        "Chèn một mô hình vào trong một mô hình khác",
+        "Một biểu diễn vector nắm bắt ý nghĩa của một cái gì đó (từ, hình ảnh, người dùng)",
+        "Một kỹ thuật nén trọng lượng mô hình",
+        "Quá trình chuyển đổi mã thành lệnh máy"
+      ],
       "correct": 1,
-      "explanation": "An embedding maps discrete objects (words, images, users) to continuous vectors in a high-dimensional space where similar items are close together. It is the bridge between real-world concepts and mathematical operations."
+      "explanation": "Việc nhúng ánh xạ các đối tượng riêng biệt (từ ngữ, hình ảnh, người dùng) thành các vectơ liên tục trong không gian nhiều chiều, nơi các mục tương tự ở gần nhau. Nó là cầu nối giữa các khái niệm trong thế giới thực và các phép toán."
     },
     {
       "stage": "post",
-      "question": "Three vectors v1=[1,0,0], v2=[0,1,0], v3=[2,1,0] are given. Are they linearly independent?",
-      "options": ["Yes, because there are three vectors in 3D space", "No, because v3 = 2*v1 + v2, so v3 is a linear combination of the others", "Yes, because none of the vectors are identical", "No, because they all have a zero component"],
+      "question": "Ba vectơ v1=[1,0,0], v2=[0,1,0], v3=[2,1,0] đã cho. Chúng có độc lập tuyến tính không?",
+      "options": [
+        "Có, vì có ba vectơ trong không gian 3D",
+        "Không, vì v3 = 2*v1 + v2 nên v3 là tổ hợp tuyến tính của các số còn lại",
+        "Có, bởi vì không có vectơ nào giống hệt nhau",
+        "Không, bởi vì tất cả chúng đều có thành phần bằng 0"
+      ],
       "correct": 1,
-      "explanation": "v3 = 2*v1 + v2, making the set linearly dependent. All three vectors lie in the xy-plane and cannot reach [0,0,1]. Despite having 3 vectors in 3D, they only span a 2D subspace."
+      "explanation": "v3 = 2*v1 + v2, làm cho tập hợp phụ thuộc tuyến tính. Cả ba vectơ đều nằm trong mặt phẳng xy và không thể đạt tới [0,0,1]. Mặc dù có 3 vectơ ở dạng 3D nhưng chúng chỉ trải rộng trong không gian con 2D."
     },
     {
       "stage": "post",
-      "question": "What does the rank of a matrix tell you in the context of machine learning?",
-      "options": ["How fast the matrix can be multiplied", "The number of linearly independent columns, indicating how many dimensions of useful information it contains", "The maximum value in the matrix", "The number of non-zero entries in the matrix"],
+      "question": "Thứ hạng của ma trận cho bạn biết điều gì trong bối cảnh học máy?",
+      "options": [
+        "Ma trận có thể được nhân nhanh như thế nào",
+        "Số lượng cột độc lập tuyến tính, cho biết nó chứa bao nhiêu chiều thông tin hữu ích",
+        "Giá trị tối đa trong ma trận",
+        "Số phần tử khác 0 trong ma trận"
+      ],
       "correct": 1,
-      "explanation": "Rank equals the number of linearly independent columns. In ML, a rank-deficient feature matrix means redundant features, infinitely many weight solutions, and the need for regularization."
+      "explanation": "Xếp hạng bằng số lượng cột độc lập tuyến tính. Trong ML, ma trận tính năng thiếu thứ hạng có nghĩa là các tính năng dư thừa, vô số giải pháp trọng số và nhu cầu chính quy hóa."
     },
     {
       "stage": "post",
-      "question": "How does LoRA (Low-Rank Adaptation) use linear algebra to efficiently fine-tune large language models?",
-      "options": ["It removes unused rows from weight matrices to shrink the model", "It decomposes weight updates into two small low-rank matrices instead of updating the full weight matrix", "It converts all weights from float32 to int8", "It freezes the embedding layer and only trains the output head"],
+      "question": "LoRA (Thích ứng cấp thấp) sử dụng đại số tuyến tính để tinh chỉnh các mô hình ngôn ngữ lớn một cách hiệu quả như thế nào?",
+      "options": [
+        "Nó loại bỏ các hàng không sử dụng khỏi ma trận trọng số để thu nhỏ mô hình",
+        "Nó phân hủy các cập nhật trọng số thành hai ma trận nhỏ cấp thấp thay vì cập nhật ma trận trọng số đầy đủ",
+        "Nó chuyển đổi tất cả các trọng số từ float32 sang int8",
+        "Nó đóng băng lớp nhúng và chỉ đào tạo đầu ra"
+      ],
       "correct": 1,
-      "explanation": "LoRA decomposes a 4096x4096 weight update into two matrices of size 4096x16 and 16x4096 (rank-16), reducing trainable parameters from 16M to 131K by assuming updates live in a low-dimensional subspace."
+      "explanation": "LoRA phân tách bản cập nhật trọng số 4096x4096 thành hai ma trận có kích thước 4096x16 và 16x4096 (cấp 16), giảm các tham số có thể huấn luyện từ 16M xuống 131K bằng cách giả sử các bản cập nhật tồn tại trong không gian con có chiều thấp."
     }
   ]
 }

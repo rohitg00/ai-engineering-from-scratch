@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the chain rule in calculus state?",
-      "options": ["The derivative of a sum is the sum of derivatives", "The derivative of composed functions is the product of their individual derivatives", "The integral of a product is the product of integrals", "Functions can only be differentiated if they are linear"],
+      "question": "Quy tắc dây chuyền trong trạng thái tính toán là gì?",
+      "options": [
+        "Đạo hàm của một tổng là tổng của các đạo hàm",
+        "Đạo hàm của các hàm tổng hợp là tích của các đạo hàm riêng lẻ của chúng",
+        "Tích phân của một tích là tích của tích phân",
+        "Các hàm chỉ có thể lấy vi phân nếu chúng là tuyến tính"
+      ],
       "correct": 1,
-      "explanation": "For y = f(g(x)), the chain rule says dy/dx = f'(g(x)) * g'(x). You multiply the derivatives at each link in the chain. This is the mathematical basis of backpropagation."
+      "explanation": "Với y = f(g(x)), quy tắc dây chuyền cho biết dy/dx = f'(g(x)) * g'(x). Bạn nhân các đạo hàm ở mỗi mắt xích trong chuỗi. Đây là cơ sở toán học của lan truyền ngược."
     },
     {
       "stage": "pre",
-      "question": "What is a computational graph?",
-      "options": ["A plot of loss vs training steps", "A directed graph where nodes are operations and edges carry values forward or gradients backward", "A diagram showing the architecture of a neural network", "A graph database used for storing training data"],
+      "question": "Đồ thị tính toán là gì?",
+      "options": [
+        "Một âm mưu mất mát và các bước đào tạo",
+        "Một biểu đồ có hướng trong đó các nút là các phép toán và các cạnh mang các giá trị tiến lên hoặc gradient lùi lại",
+        "Sơ đồ thể hiện kiến ​​trúc của mạng nơ-ron",
+        "Cơ sở dữ liệu đồ thị được sử dụng để lưu trữ dữ liệu đào tạo"
+      ],
       "correct": 1,
-      "explanation": "A computational graph represents the sequence of operations in a computation. Data flows forward through the graph, and gradients flow backward during backpropagation."
+      "explanation": "Biểu đồ tính toán thể hiện trình tự các thao tác trong tính toán. Dữ liệu chảy về phía trước qua biểu đồ và độ dốc chảy ngược trong quá trình truyền ngược."
     },
     {
       "stage": "post",
-      "question": "Why does PyTorch use reverse-mode autodiff (backpropagation) instead of forward-mode?",
-      "options": ["Reverse mode is more numerically accurate", "Reverse mode computes all gradients in one backward pass, while forward mode needs one pass per input variable -- neural networks have millions of inputs but one loss output", "Reverse mode uses less memory", "Forward mode cannot handle non-linear functions"],
+      "question": "Tại sao PyTorch sử dụng tính năng tự động phân tách chế độ đảo ngược (lan truyền ngược) thay vì chế độ chuyển tiếp?",
+      "options": [
+        "Chế độ đảo ngược chính xác hơn về mặt số",
+        "Chế độ đảo ngược tính toán tất cả các độ dốc trong một lần truyền ngược, trong khi chế độ chuyển tiếp cần một lần cho mỗi biến đầu vào - mạng thần kinh có hàng triệu đầu vào nhưng một đầu ra bị mất",
+        "Chế độ đảo ngược sử dụng ít bộ nhớ hơn",
+        "Chế độ chuyển tiếp không thể xử lý các chức năng phi tuyến tính"
+      ],
       "correct": 1,
-      "explanation": "Neural networks have millions of weight inputs but produce a single scalar loss. Reverse mode needs one backward pass total. Forward mode would need one pass per weight -- millions of passes -- making it impractical."
+      "explanation": "Mạng nơ-ron có hàng triệu trọng lượng đầu vào nhưng tạo ra một tổn thất vô hướng duy nhất. Chế độ lùi cần tổng cộng một lượt lùi. Chế độ chuyển tiếp sẽ cần một lượt cho mỗi trọng lượng -- hàng triệu lượt -- khiến nó không thực tế."
     },
     {
       "stage": "post",
-      "question": "In the Value class autograd engine, why does the backward function use '+=' instead of '=' for accumulating gradients?",
-      "options": ["To average the gradients across multiple samples", "Because a value used in multiple operations receives gradient contributions from each one, which must be summed", "To prevent numerical overflow in the gradients", "Because Python does not support the '=' operator in closures"],
+      "question": "Trong công cụ tự động cấp lớp Giá trị, tại sao hàm lùi lại sử dụng '+=' thay vì '=' để tích lũy độ dốc?",
+      "options": [
+        "Để tính trung bình độ dốc trên nhiều mẫu",
+        "Bởi vì một giá trị được sử dụng trong nhiều thao tác nhận được sự đóng góp độ dốc từ mỗi thao tác, giá trị này phải được tính tổng",
+        "Để tránh tràn số trong gradient",
+        "Bởi vì Python không hỗ trợ toán tử '=' trong các bao đóng"
+      ],
       "correct": 1,
-      "explanation": "When a value feeds into multiple operations (e.g., x used in both x*y and x+z), its total gradient is the sum of all incoming gradient contributions. Using '=' would overwrite earlier contributions."
+      "explanation": "Khi một giá trị được đưa vào nhiều thao tác (ví dụ: x được sử dụng trong cả x*y và x+z), tổng độ dốc của nó là tổng của tất cả các đóng góp độ dốc đến. Việc sử dụng '=' sẽ ghi đè những đóng góp trước đó."
     },
     {
       "stage": "post",
-      "question": "What is gradient checking and when should you use it?",
-      "options": ["Checking that gradients are below a threshold to prevent exploding gradients", "Comparing autodiff gradients against numerical finite-difference gradients to verify correctness of the backward pass", "Checking that all parameters received non-zero gradients during training", "Monitoring gradient magnitudes during training to detect vanishing gradients"],
+      "question": "Kiểm tra độ dốc là gì và khi nào bạn nên sử dụng nó?",
+      "options": [
+        "Kiểm tra độ dốc có ở dưới ngưỡng để ngăn độ dốc bùng nổ không",
+        "So sánh độ dốc tự động với độ dốc sai phân hữu hạn bằng số để xác minh tính chính xác của quá trình truyền ngược",
+        "Kiểm tra xem tất cả các tham số có nhận được độ dốc khác 0 trong quá trình đào tạo không",
+        "Theo dõi cường độ gradient trong quá trình đào tạo để phát hiện độ dốc biến mất"
+      ],
       "correct": 1,
-      "explanation": "Gradient checking computes numerical derivatives via (f(x+h) - f(x-h)) / 2h and compares them to autodiff gradients. Use it when adding new operations to your autograd engine or debugging training failures."
+      "explanation": "Kiểm tra độ dốc tính toán đạo hàm số thông qua (f(x+h) - f(x-h)) / 2h và so sánh chúng với độ dốc tự động. Sử dụng nó khi thêm các hoạt động mới vào công cụ autograd của bạn hoặc gỡ lỗi các lỗi đào tạo."
     }
   ]
 }

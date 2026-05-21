@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does temperature < 1.0 do to a language model's output distribution?",
+      "question": "Nhiệt độ < 1,0 có tác dụng gì đối với phân phối đầu ra của mô hình ngôn ngữ?",
       "options": [
-        "Makes the distribution more uniform (more random)",
-        "Sharpens the distribution, making the highest-probability token more likely",
-        "Removes all tokens except the top one",
-        "Has no effect on the output"
+        "Làm cho sự phân bố đồng đều hơn (ngẫu nhiên hơn)",
+        "Tăng cường phân phối, làm cho mã thông báo có xác suất cao nhất có nhiều khả năng hơn",
+        "Xóa tất cả các mã thông báo ngoại trừ mã thông báo trên cùng",
+        "Không ảnh hưởng đến đầu ra"
       ],
       "correct": 1,
-      "explanation": "Temperature < 1.0 divides logits by a number less than 1, which amplifies differences between logits. After softmax, the highest-probability token gets an even larger share. Temperature approaches 0 gives greedy (argmax) decoding."
+      "explanation": "Nhiệt độ < 1,0 chia log cho một số nhỏ hơn 1, điều này khuếch đại sự khác biệt giữa các log. Sau softmax, mã thông báo có xác suất cao nhất sẽ nhận được thị phần lớn hơn. Nhiệt độ tiến tới 0 sẽ giải mã tham lam (argmax)."
     },
     {
       "stage": "pre",
-      "question": "What is the key difference between top-k and top-p (nucleus) sampling?",
+      "question": "Sự khác biệt chính giữa lấy mẫu top-k và top-p (hạt nhân) là gì?",
       "options": [
-        "Top-k is faster than top-p",
-        "Top-k keeps a fixed number of tokens; top-p keeps a variable number based on cumulative probability",
-        "Top-p only works with temperature = 1.0",
-        "Top-k works on logits while top-p works on probabilities"
+        "Top-k nhanh hơn top-p",
+        "Top-k giữ một số lượng mã thông báo cố định; top-p giữ một số thay đổi dựa trên xác suất tích lũy",
+        "Top-p chỉ hoạt động với nhiệt độ = 1,0",
+        "Top-k hoạt động trên log trong khi top-p hoạt động trên xác suất"
       ],
       "correct": 1,
-      "explanation": "Top-k always keeps exactly k tokens regardless of the probability distribution. Top-p adaptively keeps the smallest set of tokens whose cumulative probability exceeds p. When the model is confident, top-p keeps few tokens; when uncertain, it keeps many."
+      "explanation": "Top-k luôn giữ chính xác k token bất kể phân bố xác suất như thế nào. Top-p giữ tập hợp mã thông báo nhỏ nhất có xác suất tích lũy vượt quá p một cách thích ứng. Khi mô hình tự tin, top-p giữ ít mã thông báo; khi không chắc chắn, nó giữ lại nhiều."
     },
     {
       "stage": "post",
-      "question": "Why can't you backpropagate through a standard sampling operation z ~ N(mu, sigma^2)?",
+      "question": "Tại sao bạn không thể truyền ngược thông qua thao tác lấy mẫu tiêu chuẩn z ~ N(mu, sigma^2)?",
       "options": [
-        "Normal distributions don't have gradients",
-        "The sampling operation is non-deterministic and has no well-defined derivative with respect to mu and sigma",
-        "PyTorch doesn't support normal distributions",
-        "The gradient is always exactly zero"
+        "Phân phối bình thường không có độ dốc",
+        "Hoạt động lấy mẫu không mang tính xác định và không có đạo hàm được xác định rõ ràng đối với mu và sigma",
+        "PyTorch không hỗ trợ phân phối bình thường",
+        "Độ dốc luôn chính xác bằng 0"
       ],
       "correct": 1,
-      "explanation": "Sampling introduces a stochastic discontinuity — you can't compute d(sample)/d(mu) for a random draw. The reparameterization trick solves this by writing z = mu + sigma * epsilon (where epsilon ~ N(0,1)), making z a deterministic, differentiable function of mu and sigma."
+      "explanation": "Việc lấy mẫu đưa ra sự gián đoạn ngẫu nhiên - bạn không thể tính d(sample)/d(mu) cho một lần rút ngẫu nhiên. Thủ thuật tham số hóa lại giải quyết vấn đề này bằng cách viết z = mu + sigma * epsilon (trong đó epsilon ~ N(0,1)), biến z thành một hàm xác định, khả vi của mu và sigma."
     },
     {
       "stage": "post",
-      "question": "In Metropolis-Hastings MCMC, what happens if the proposal standard deviation is set much too large?",
+      "question": "Trong Metropolis-Hastings MCMC, điều gì sẽ xảy ra nếu độ lệch chuẩn đề xuất được đặt quá lớn?",
       "options": [
-        "The chain converges faster because it takes bigger steps",
-        "Most proposals land in low-probability regions and are rejected, so the chain barely moves",
-        "The stationary distribution changes to a uniform distribution",
-        "The burn-in period becomes zero"
+        "Chuỗi hội tụ nhanh hơn vì phải thực hiện các bước lớn hơn",
+        "Hầu hết các đề xuất đều nằm ở những khu vực có xác suất thấp và bị từ chối, do đó chuỗi hầu như không di chuyển",
+        "Phân phối cố định chuyển sang phân phối đều",
+        "Thời gian burn-in trở thành số không"
       ],
       "correct": 1,
-      "explanation": "With a large proposal standard deviation, proposed points are far from the current position and likely land in low-probability regions. These are rejected, causing the chain to stay stuck at the current point. The optimal acceptance rate is about 23% for high-dimensional Gaussian proposals."
+      "explanation": "Với độ lệch chuẩn đề xuất lớn, các điểm được đề xuất cách xa vị trí hiện tại và có khả năng nằm ở những vùng có xác suất thấp. Những thứ này bị từ chối, khiến chuỗi bị kẹt ở thời điểm hiện tại. Tỷ lệ chấp nhận tối ưu là khoảng 23% đối với các đề xuất Gaussian nhiều chiều."
     },
     {
       "stage": "post",
-      "question": "In rejection sampling, what happens to the acceptance rate as the dimensionality of the target distribution increases?",
+      "question": "Trong lấy mẫu từ chối, điều gì xảy ra với tỷ lệ chấp nhận khi số chiều của phân phối mục tiêu tăng lên?",
       "options": [
-        "It stays constant regardless of dimension",
-        "It increases because there are more dimensions to accept in",
-        "It drops exponentially because most of the proposal volume gets rejected",
-        "It approaches 50% in all cases"
+        "Nó không đổi bất kể kích thước",
+        "Nó tăng lên vì có nhiều chiều kích hơn để chấp nhận trong",
+        "Nó giảm theo cấp số nhân vì phần lớn khối lượng đề xuất bị từ chối",
+        "Nó đạt tới 50% trong mọi trường hợp"
       ],
       "correct": 2,
-      "explanation": "In high dimensions, the volume of the proposal distribution that overlaps with the target distribution shrinks exponentially. The bound M grows, and the acceptance rate (1/M) drops exponentially. This is the curse of dimensionality for rejection sampling."
+      "explanation": "Ở các chiều cao, khối lượng phân phối đề xuất trùng với phân phối mục tiêu sẽ giảm theo cấp số nhân. Giới hạn M tăng lên và tỷ lệ chấp nhận (1/M) giảm theo cấp số nhân. Đây là lời nguyền của tính chiều đối với việc lấy mẫu từ chối."
     }
   ]
 }
