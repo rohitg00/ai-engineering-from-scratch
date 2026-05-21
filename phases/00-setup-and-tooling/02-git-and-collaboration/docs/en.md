@@ -78,6 +78,7 @@ cd ai-engineering-from-scratch
 git checkout -b my-progress
 # By default, `origin` points to this repo. Run the command below to redirect pushes to your own fork:
 git remote set-url origin <your_repository_url>.git
+git remote -v # Check if the repository points to your fork
 
 # work through lessons, commit your code
 
