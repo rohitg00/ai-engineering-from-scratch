@@ -25,7 +25,7 @@ function parseRoadmap(content) {
   let currentPhase = null;
   let currentPhaseStatus = null;
 
-  for (const line of content.split('\n')) {
+  for (const line of content.split(/\r?\n/)) {
     // Match phase headers like: ## Phase 0: Setup & Tooling — ✅
     const phaseMatch = line.match(/^##\s+Phase\s+(\d+).*?—\s*(✅|🚧|⬚)/);
     if (phaseMatch) {
@@ -60,7 +60,7 @@ function parseReadme(content, roadmapStatuses) {
   // Phase 0 is in a <table> block, phases 1-19 are in <details> blocks
   // We'll parse line by line to extract phase headers and lesson tables
 
-  const lines = content.split('\n');
+  const lines = content.split(/\r?\n/);
   let currentPhase = null;
   let inLessonTable = false;
   let isCapstoneTable = false;
@@ -240,7 +240,7 @@ function extractLessonMeta(relPath) {
   const docPath = path.join(REPO_ROOT, relPath, 'docs', 'en.md');
   const result = { summary: '', keywords: '' };
   try {
-    const lines = fs.readFileSync(docPath, 'utf8').split('\n');
+    const lines = fs.readFileSync(docPath, 'utf8').split(/\r?\n/);
     const h3s = [];
     for (const raw of lines) {
       const line = raw.trim();
@@ -265,7 +265,7 @@ function parseGlossary(content) {
   const terms = [];
   let currentTerm = null;
 
-  for (const line of content.split('\n')) {
+  for (const line of content.split(/\r?\n/)) {
     // Match term headers: ### Agent or ### Adam (Optimizer)
     const termMatch = line.match(/^###\s+(.+)/);
     if (termMatch) {
