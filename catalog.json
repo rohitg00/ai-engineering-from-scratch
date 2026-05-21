@@ -3,10 +3,10 @@
   "totals": {
     "phases": 20,
     "lessons": 435,
-    "skills": 373,
+    "skills": 378,
     "prompts": 99,
     "agents": 0,
-    "code_files": 433
+    "code_files": 435
   },
   "phases": [
     {
@@ -4730,11 +4730,29 @@
           "title": "Visual Autoregressive Modeling (VAR): Next-Scale Prediction",
           "path": "phases/08-generative-ai/19-visual-autoregressive-var",
           "has_docs": true,
-          "has_code": false,
+          "has_code": true,
           "has_quiz": false,
           "has_notebook": false,
-          "code_files": [],
-          "outputs": []
+          "code_files": [
+            "main.py"
+          ],
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "var-tokenizer-designer",
+              "path": "phases/08-generative-ai/19-visual-autoregressive-var/outputs/skill-var-tokenizer-designer.md",
+              "version": "1.0.0",
+              "description": "Design a multi-scale residual VQ tokenizer for next-scale visual autoregressive image generation.",
+              "tags": [
+                "var",
+                "next-scale-prediction",
+                "vq-vae",
+                "residual-vq",
+                "image-generation",
+                "tokenizer"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -5779,11 +5797,29 @@
           "title": "Speculative Decoding and EAGLE",
           "path": "phases/10-llms-from-scratch/25-speculative-decoding",
           "has_docs": true,
-          "has_code": false,
+          "has_code": true,
           "has_quiz": false,
           "has_notebook": false,
-          "code_files": [],
-          "outputs": []
+          "code_files": [
+            "main.py"
+          ],
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "speculative-tuning",
+              "path": "phases/10-llms-from-scratch/25-speculative-decoding/outputs/skill-speculative-tuning.md",
+              "version": "1.0.0",
+              "description": "Profile a decode workload and pick draft model, draft length K, temperature gate, and fallback policy for speculative decoding.",
+              "tags": [
+                "speculative-decoding",
+                "draft-model",
+                "alpha",
+                "throughput",
+                "inference",
+                "decode-latency"
+              ]
+            }
+          ]
         },
         {
           "num": 34,
@@ -5797,7 +5833,22 @@
           "code_files": [
             "main.py"
           ],
-          "outputs": []
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "checkpointing-planner",
+              "path": "phases/10-llms-from-scratch/34-gradient-checkpointing/outputs/skill-checkpointing-planner.md",
+              "version": "1.0.0",
+              "description": "Choose an activation recomputation policy per layer (none / selective / full / offload) given a training config and HBM budget.",
+              "tags": [
+                "gradient-checkpointing",
+                "activation-recomputation",
+                "selective-checkpoint",
+                "fsdp-offload",
+                "training-memory"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -6372,7 +6423,24 @@
           "code_files": [
             "main.py"
           ],
-          "outputs": []
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "stategraph-designer",
+              "path": "phases/11-llm-engineering/16-langgraph-state-machines/outputs/skill-stategraph-designer.md",
+              "version": "1.0.0",
+              "description": "Turn an agent task into a LangGraph StateGraph with named nodes, typed state, reducers, checkpointer, and human interrupts.",
+              "tags": [
+                "langgraph",
+                "stategraph",
+                "checkpointer",
+                "interrupt",
+                "time-travel",
+                "react-agent",
+                "human-in-the-loop"
+              ]
+            }
+          ]
         },
         {
           "num": 17,
@@ -6386,7 +6454,24 @@
           "code_files": [
             "main.py"
           ],
-          "outputs": []
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "framework-picker",
+              "path": "phases/11-llm-engineering/17-agent-framework-tradeoffs/outputs/skill-framework-picker.md",
+              "version": "1.0.0",
+              "description": "Pick LangGraph, CrewAI, AutoGen, Agno, or plain Python for an agent task by matching abstraction to problem shape.",
+              "tags": [
+                "langgraph",
+                "crewai",
+                "autogen",
+                "agno",
+                "agent-framework",
+                "orchestration",
+                "decision-matrix"
+              ]
+            }
+          ]
         }
       ]
     },

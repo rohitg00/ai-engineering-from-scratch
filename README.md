@@ -865,7 +865,7 @@ Codex, OpenClaw, Hermes, or any MCP-compatible agent. Real tools, not homework.
 
 ### Install every course skill into your agent
 
-The repo ships 373 skills and 99 prompts under `phases/**/outputs/`.
+The repo ships 378 skills and 99 prompts under `phases/**/outputs/`.
 `scripts/install_skills.py` walks every artifact, parses YAML frontmatter, and
 copies the matching files into a target directory in the layout your agent
 expects.
