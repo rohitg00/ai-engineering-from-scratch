@@ -1,0 +1,90 @@
+{
+  "lesson": "12-anthropic-workflow-patterns",
+  "title": "Anthropic's Workflow Patterns: Simple Over Complex",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How does Anthropic distinguish a workflow from an agent?",
+      "options": [
+        "Workflows use embeddings; agents use tools",
+        "Workflows are engineer-owned predefined graphs; agents are model-owned dynamic tool direction",
+        "Workflows run on CPUs; agents need GPUs",
+        "Workflows are stateless; agents are stateful"
+      ],
+      "correct": 1,
+      "explanation": "Workflow = predefined code path the engineer owns; agent = the model owns the graph."
+    },
+    {
+      "stage": "pre",
+      "question": "What are the three capabilities of the augmented LLM that underpins all five patterns?",
+      "options": [
+        "Search (retrieval), tools (actions), memory (persistence)",
+        "Embeddings, fine-tuning, RAG",
+        "Vector, KV, graph",
+        "Plan, execute, reflect"
+      ],
+      "correct": 0,
+      "explanation": "The atomic unit is one LLM with retrieval, tools, and memory wired in."
+    },
+    {
+      "stage": "check",
+      "question": "Which is NOT one of the five Anthropic workflow patterns?",
+      "options": [
+        "Prompt chaining",
+        "Routing",
+        "Evaluator-optimizer",
+        "Gradient distillation"
+      ],
+      "correct": 3,
+      "explanation": "The five are prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer. Gradient distillation is a training concept."
+    },
+    {
+      "stage": "check",
+      "question": "Which two shapes does parallelization come in?",
+      "options": [
+        "Sync and async",
+        "Sectioning (different chunks) and voting (same prompt N times, aggregate)",
+        "Hot and cold",
+        "Stateful and stateless"
+      ],
+      "correct": 1,
+      "explanation": "Parallelization is sectioning or voting; both fan out N calls and aggregate."
+    },
+    {
+      "stage": "check",
+      "question": "Which workflow pattern is Self-Refine generalized?",
+      "options": [
+        "Prompt chaining",
+        "Routing",
+        "Orchestrator-workers",
+        "Evaluator-optimizer"
+      ],
+      "correct": 3,
+      "explanation": "Evaluator-optimizer is the Anthropic name for the Self-Refine / CRITIC iterative pattern."
+    },
+    {
+      "stage": "post",
+      "question": "When do workflows beat agents according to the lesson?",
+      "options": [
+        "Always",
+        "On predictable, cost-bounded, or compliance-bounded tasks where the graph can be enumerated and audited",
+        "Only for chat",
+        "Only on GPUs"
+      ],
+      "correct": 1,
+      "explanation": "Workflows are cheaper, easier to debug, and auditable; pick them when steps are knowable."
+    },
+    {
+      "stage": "post",
+      "question": "What is the lesson's recommended default starting point?",
+      "options": [
+        "A multi-agent framework",
+        "Direct API calls; add frameworks only when durable state, actor concurrency, or role templating earns its cost",
+        "Fine-tune the model",
+        "Build a custom MCTS"
+      ],
+      "correct": 1,
+      "explanation": "Schluntz and Zhang: start simple; add framework complexity only when justified."
+    }
+  ]
+}

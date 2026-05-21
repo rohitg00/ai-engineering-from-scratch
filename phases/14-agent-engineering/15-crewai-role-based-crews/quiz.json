@@ -1,0 +1,90 @@
+{
+  "lesson": "15-crewai-role-based-crews",
+  "title": "CrewAI: Role-Based Crews and Flows",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What are CrewAI's four primitives?",
+      "options": [
+        "Agent, Task, Crew, Process",
+        "Node, Edge, Reducer, Checkpointer",
+        "Actor, Message, Inbox, Runtime",
+        "Tool, Prompt, Model, Memory"
+      ],
+      "correct": 0,
+      "explanation": "Agent, Task, Crew, and Process are the four primitives."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the recommended production starting point per the CrewAI docs?",
+      "options": [
+        "Crew",
+        "Flow",
+        "Sequential process",
+        "Hierarchical process"
+      ],
+      "correct": 1,
+      "explanation": "The docs say start production apps with Flows; fold Crews in as sub-steps when autonomy earns its cost."
+    },
+    {
+      "stage": "check",
+      "question": "What is the difference between a Crew and a Flow?",
+      "options": [
+        "Crew is paid, Flow is free",
+        "Crew is autonomous and LLM-driven; Flow is event-driven, code-owned, deterministic and testable",
+        "Crew runs on GPUs only",
+        "Flow has no agents"
+      ],
+      "correct": 1,
+      "explanation": "Crew is autonomy-first; Flow is determinism-first."
+    },
+    {
+      "stage": "check",
+      "question": "Which of these is NOT one of the four memory types CrewAI ships?",
+      "options": [
+        "Short-term",
+        "Long-term",
+        "Entity",
+        "Quantized"
+      ],
+      "correct": 3,
+      "explanation": "Short-term, long-term, entity, and contextual are the four. Quantized memory is not a CrewAI concept."
+    },
+    {
+      "stage": "check",
+      "question": "What is backstory bloat and how does the lesson recommend handling it?",
+      "options": [
+        "Storing too many crews; archive old ones",
+        "2000-word agent backstories push out context budget; keep them tight",
+        "Too many tools; delete some",
+        "Slow Bedrock calls; switch regions"
+      ],
+      "correct": 1,
+      "explanation": "Backstories shape tone and judgment but eat context if oversized."
+    },
+    {
+      "stage": "post",
+      "question": "When is Hierarchical process worth picking over Sequential?",
+      "options": [
+        "Always",
+        "When you have 4+ specialists that need a manager Agent to route between them",
+        "When you have one task",
+        "When you do not have any tools"
+      ],
+      "correct": 1,
+      "explanation": "Hierarchical adds a manager Agent; only worthwhile when several specialists need dynamic routing."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson caution against using a free-form Crew in production?",
+      "options": [
+        "Crews are unsupported",
+        "Output variability is high and debugging is painful without a Flow wrapper",
+        "Crews cost more than Flows",
+        "Crews lack memory"
+      ],
+      "correct": 1,
+      "explanation": "Crew autonomy makes prod replay and audit painful; wrap with a Flow when shipping."
+    }
+  ]
+}

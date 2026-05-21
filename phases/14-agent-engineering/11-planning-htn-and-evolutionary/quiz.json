@@ -1,0 +1,90 @@
+{
+  "lesson": "11-planning-htn-and-evolutionary",
+  "title": "Planning with HTN and Evolutionary Search",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does an HTN add over a free-form LLM plan?",
+      "options": [
+        "Provable correctness when operator preconditions and effects are enforced",
+        "Cheaper inference",
+        "Shorter prompts",
+        "Better embeddings"
+      ],
+      "correct": 0,
+      "explanation": "HTN's symbolic operators with preconditions and effects guarantee soundness by construction."
+    },
+    {
+      "stage": "pre",
+      "question": "Which problem class is AlphaEvolve built for?",
+      "options": [
+        "Free-form prose generation",
+        "Optimizations with a machine-checkable, deterministic fitness function",
+        "Multi-turn chat memory",
+        "Vector search ranking"
+      ],
+      "correct": 1,
+      "explanation": "Evolutionary search needs a deterministic evaluator; AlphaEvolve targets domains where one exists."
+    },
+    {
+      "stage": "check",
+      "question": "How does ChatHTN preserve plan soundness while using an LLM?",
+      "options": [
+        "It does not; soundness is best-effort",
+        "LLM suggestions only enter as candidate decompositions, validated against the operator schema; the symbolic layer owns correctness",
+        "It fine-tunes the LLM on HTN traces",
+        "It uses a vector database"
+      ],
+      "correct": 1,
+      "explanation": "The LLM expands the method library but cannot bypass operator preconditions and effects."
+    },
+    {
+      "stage": "check",
+      "question": "Which AlphaEvolve result does the lesson cite?",
+      "options": [
+        "First improvement over Strassen for 4x4 complex matrix multiplication in 56 years",
+        "10x speedup of inference on Gemini",
+        "Beating GPT-4 on HumanEval",
+        "First proof of P=NP"
+      ],
+      "correct": 0,
+      "explanation": "AlphaEvolve found 48 scalar multiplications for 4x4 complex matmul, the first improvement on Strassen in 56 years."
+    },
+    {
+      "stage": "check",
+      "question": "Which element of an HTN is a primitive directly-executable action with preconditions and effects?",
+      "options": [
+        "Task",
+        "Method",
+        "Operator",
+        "State"
+      ],
+      "correct": 2,
+      "explanation": "Operators are the primitives; methods decompose compound tasks; state is a set of facts."
+    },
+    {
+      "stage": "post",
+      "question": "What is the lesson's warning about AlphaEvolve without a real evaluator?",
+      "options": [
+        "It is slow",
+        "Asking an LLM whether the code is better is not a fitness function; the evaluator must be deterministic and fast",
+        "It violates Apache 2.0",
+        "It cannot run on GPUs"
+      ],
+      "correct": 1,
+      "explanation": "Without a deterministic evaluator the search has no signal to converge on."
+    },
+    {
+      "stage": "post",
+      "question": "When should you reach for ReAct or ReWOO instead of HTN or AlphaEvolve?",
+      "options": [
+        "Never; HTN is strictly better",
+        "When you do not need formal soundness or a machine-checkable fitness; most agent tasks land here",
+        "When you have a GPU cluster available",
+        "When latency is below 100 ms"
+      ],
+      "correct": 1,
+      "explanation": "The lesson explicitly warns against over-engineering: most tasks do not need formal planning or evolutionary search."
+    }
+  ]
+}
