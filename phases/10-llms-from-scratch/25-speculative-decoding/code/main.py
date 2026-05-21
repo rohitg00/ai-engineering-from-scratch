@@ -169,13 +169,30 @@ def validate_tree_mask(mask: np.ndarray,
     return True
 
 
+def _positive_int(value: str, *, minimum: int = 1) -> int:
+    n = int(value)
+    if n < minimum:
+        raise argparse.ArgumentTypeError(f"value must be >= {minimum}, got {n}")
+    return n
+
+
+def _unit_float(value: str) -> float:
+    f = float(value)
+    if not (0.0 < f <= 1.0):
+        raise argparse.ArgumentTypeError(f"value must be in (0, 1], got {f}")
+    return f
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--vocab", type=int, default=32)
-    parser.add_argument("--alpha", type=float, default=0.75,
-                        help="target acceptance rate of the toy draft")
-    parser.add_argument("--k", type=int, default=4, help="draft length")
-    parser.add_argument("--samples", type=int, default=20000)
+    parser.add_argument("--vocab", type=lambda v: _positive_int(v, minimum=2), default=32,
+                        help="vocab size (>= 2)")
+    parser.add_argument("--alpha", type=_unit_float, default=0.75,
+                        help="target acceptance rate in (0, 1]")
+    parser.add_argument("--k", type=lambda v: _positive_int(v, minimum=1), default=4,
+                        help="draft length (>= 1)")
+    parser.add_argument("--samples", type=lambda v: _positive_int(v, minimum=2), default=20000,
+                        help="sample count (>= 2)")
     parser.add_argument("--seed", type=int, default=0)
     return parser.parse_args()
 

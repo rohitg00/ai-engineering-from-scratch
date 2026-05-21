@@ -65,6 +65,8 @@ def fit_codebook(samples: np.ndarray, k: int, iters: int = 30,
     """k-means on scalar samples; returns codebook of length k."""
     rng = np.random.default_rng(seed)
     flat = samples.reshape(-1)
+    if flat.size < k:
+        raise ValueError(f"need >= {k} samples for codebook init, got {flat.size}")
     idx = rng.choice(flat.size, size=k, replace=False)
     centers = flat[idx].astype(np.float32)
     for _ in range(iters):
