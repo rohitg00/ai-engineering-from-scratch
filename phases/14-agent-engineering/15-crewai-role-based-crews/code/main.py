@@ -67,9 +67,20 @@ class SequentialCrew:
     def kickoff(self, inputs: dict[str, Any]) -> list[str]:
         outputs: list[str] = []
         prior = inputs.get("topic", "")
+        by_task: dict[int, str] = {}
         for task in self.tasks:
-            out = task.agent.fn(prior, task.agent.tools, self.memory)
+            if task.context:
+                # CrewAI behavior: feed outputs of every declared upstream task
+                # into the current one. Falls back to prior when none declared.
+                joined = "\n\n".join(
+                    by_task[id(t)] for t in task.context if id(t) in by_task
+                )
+                agent_input = joined or prior
+            else:
+                agent_input = prior
+            out = task.agent.fn(agent_input, task.agent.tools, self.memory)
             outputs.append(f"[{task.agent.role}] {out}")
+            by_task[id(task)] = out
             prior = out
             if self.memory is not None:
                 self.memory.write_short_term(task.agent.role, out)
