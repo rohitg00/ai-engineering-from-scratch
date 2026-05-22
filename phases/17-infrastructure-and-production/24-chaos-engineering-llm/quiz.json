@@ -1,0 +1,78 @@
+{
+  "lesson": "24-chaos-engineering-llm",
+  "title": "Chaos Engineering for LLM Production",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which five prerequisites does the lesson require before running chaos in production?",
+      "options": [
+        "Slack channel, sticker pack, mascot, hashtag, blog post",
+        "SLI/SLO, observability, automated rollback, structured runbooks, on-call",
+        "Vector database only",
+        "Three frontier models"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which four planes does the chaos architecture have, plus the feedback loop?",
+      "options": [
+        "Frontend, backend, mobile, web",
+        "Control, target, safety, observability — with feedback into SLO adjustments",
+        "Train, eval, deploy, archive",
+        "Ingest, transform, store, serve"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the burn-rate alert guardrail do during chaos experiments?",
+      "options": [
+        "Speeds up the experiment",
+        "Pauses the experiment when daily error-budget burn exceeds roughly 2x expected",
+        "Auto-promotes the experiment to production",
+        "Disables observability"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which is an LLM-specific chaos experiment listed in the lesson?",
+      "options": [
+        "Random fan-speed reduction",
+        "KV eviction storm that forces vLLM block-budget saturation",
+        "Reboot the entire datacenter",
+        "Drop all DNS"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which cadence does the lesson recommend for chaos exercises?",
+      "options": [
+        "Yearly only",
+        "Weekly small canary, monthly game day with postmortem, quarterly cross-team resilience audit",
+        "Daily full-prod outages",
+        "Never"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What LLM-specific failure mode does the malformed-prompt experiment uncover?",
+      "options": [
+        "Network packet loss",
+        "Tokenizer stalls that lock up a worker on inputs like deeply nested unicode or huge UTF-8 codepoints",
+        "GPU undervolt",
+        "Disk I/O contention"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}
