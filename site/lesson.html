@@ -917,10 +917,12 @@
       height: auto;
     }
 
-    .lesson-article .mermaid-render foreignObject p,
-    .lesson-article .mermaid-render foreignObject span,
-    .mermaid-modal-body foreignObject p,
-    .mermaid-modal-body foreignObject span {
+    :where(
+      .lesson-article .mermaid-render foreignObject p,
+      .lesson-article .mermaid-render foreignObject span,
+      .mermaid-modal-body foreignObject p,
+      .mermaid-modal-body foreignObject span
+    ) {
       font-family: var(--font-mono);
       font-size: 13px;
       line-height: 1.4;
