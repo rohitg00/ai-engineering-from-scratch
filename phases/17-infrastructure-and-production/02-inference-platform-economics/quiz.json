@@ -1,0 +1,78 @@
+{
+  "lesson": "02-inference-platform-economics",
+  "title": "Inference Platform Economics — Fireworks, Together, Baseten, Modal, Replicate, Anyscale",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which three market segments does the lesson use to organize 2026 inference vendors?",
+      "options": [
+        "Free, paid, enterprise",
+        "Custom silicon, GPU platforms, API-first marketplaces",
+        "Single-tenant, multi-tenant, on-prem",
+        "Open-source, commercial, hybrid"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Around what sustained GPU utilization does per-minute billing (Baseten, Modal) start to beat per-token billing (Fireworks, Together)?",
+      "options": [
+        "5%",
+        "30%",
+        "60%",
+        "90%"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which platform is described as Python-native serverless with per-second billing and 2-4s cold starts after pre-warming?",
+      "options": [
+        "Fireworks",
+        "Baseten",
+        "Modal",
+        "Anyscale"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is Fireworks's notable LoRA pricing differentiator?",
+      "options": [
+        "LoRA-served requests cost more than base model",
+        "LoRA-served requests are charged at the base model's per-token rate",
+        "LoRA is not supported at all",
+        "LoRA requests require a separate dedicated GPU contract"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which platform fits a regulated healthcare customer that needs SOC 2 Type II, HIPAA-ready posture, and dedicated GPUs?",
+      "options": [
+        "Replicate",
+        "Together",
+        "Baseten",
+        "Anyscale"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson argue that custom-engine claims are mostly marketing shade at the platform layer?",
+      "options": [
+        "Custom engines never outperform vLLM",
+        "vLLM and SGLang represent roughly 80% of production open-source inference, so platform differentiation comes more from DX, attribution, and SLAs than engine",
+        "All custom engines are forks of TensorRT-LLM",
+        "Per-token pricing is the only real differentiator"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}
