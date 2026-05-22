@@ -12,10 +12,10 @@ Options:
     --type {skill,prompt,agent,all}   default: skill
     --phase N                          filter to a single phase number
     --tag TAG                          filter to outputs whose tags include TAG
-    --layout {flat,by-phase,skillkit}  default: skillkit
+    --layout {flat,by-phase,skills}    default: skills
         flat       <target>/<name>.md
         by-phase   <target>/phase-NN/<name>.md
-        skillkit   <target>/<name>/SKILL.md
+        skills     <target>/<name>/SKILL.md
     --dry-run                          preview without writing
     --force                            overwrite existing files
     --json                             write manifest.json only; do not print steps
@@ -41,7 +41,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PHASES_DIR = ROOT / "phases"
 
 VALID_TYPES = ("skill", "prompt", "agent")
-LAYOUTS = ("flat", "by-phase", "skillkit")
+LAYOUTS = ("flat", "by-phase", "skills")
 
 
 @dataclass
@@ -160,7 +160,7 @@ def target_path(artifact: Artifact, target_root: Path, layout: str) -> Path:
     if layout == "by-phase":
         phase_dir = f"phase-{artifact.phase:02d}" if artifact.phase is not None else "phase-unknown"
         return target_root / phase_dir / f"{artifact.name}.md"
-    if layout == "skillkit":
+    if layout == "skills":
         return target_root / artifact.name / "SKILL.md"
     raise ValueError(f"unknown layout: {layout}")
 
@@ -232,7 +232,7 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--type", choices=(*VALID_TYPES, "all"), default="skill")
     parser.add_argument("--phase", type=int, default=None)
     parser.add_argument("--tag", default=None)
-    parser.add_argument("--layout", choices=LAYOUTS, default="skillkit")
+    parser.add_argument("--layout", choices=LAYOUTS, default="skills")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--force", action="store_true")
     parser.add_argument(
