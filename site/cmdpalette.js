@@ -78,6 +78,24 @@
       }
     }
 
+    if (typeof ARTIFACTS !== 'undefined' && Array.isArray(ARTIFACTS)) {
+      for (var a = 0; a < ARTIFACTS.length; a++) {
+        var art = ARTIFACTS[a];
+        _index.push({
+          kind:       'artifact',
+          id:         'a:' + a,
+          artKind:    art.kind || 'artifact',
+          name:       art.name || '',
+          summary:    art.description || '',
+          keywords:   Array.isArray(art.tags) ? art.tags.join(' ') : '',
+          phaseId:    art.phase,
+          lesson:     art.lesson,
+          lessonPath: art.lessonPath || '',
+          file:       art.file || '',
+        });
+      }
+    }
+
     return _index;
   }
 
@@ -326,7 +344,7 @@
     if (!query) {
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'Type to search 435 lessons and glossary terms' +
+        'Type to search 435 lessons, 489 outputs, and glossary terms' +
         '</li>';
       _activeIdx = -1;
       return;
@@ -354,6 +372,14 @@
           ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
         chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
+      } else if (r.kind === 'artifact') {
+        // Jump to the lesson that produced this artifact
+        dest = r.lessonPath
+          ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
+          : ('https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + r.file);
+        var ak = (r.artKind || 'artifact');
+        chip = ak.charAt(0).toUpperCase() + ak.slice(1);
+        chipClass += ' cp-item-chip--alt';
       } else {
         // Deep-link: pre-populate glossary search with the exact term name
         // so the user lands directly on the definition, not the full list.
@@ -367,6 +393,10 @@
       if (r.kind === 'lesson') {
         if (r.type && r.type !== '—') metaParts.push(r.type);
         if (r.lang && r.lang !== '—') metaParts.push(r.lang);
+      } else if (r.kind === 'artifact') {
+        if (r.phaseId !== undefined && r.phaseId !== null) {
+          metaParts.push('Phase ' + String(r.phaseId).padStart(2, '0'));
+        }
       }
       var meta = metaParts.join(' · '); // ·
 
