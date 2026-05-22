@@ -16,6 +16,11 @@ If you or your company want to support the curriculum, this page is the rate car
 GitHub Sponsors handles billing, receipts, and tax forms. 0% platform fee on personal
 sponsorships, up to 6% on organization sponsorships, per [GitHub's policy](https://docs.github.com/en/sponsors/receiving-sponsorships-through-github-sponsors/about-github-sponsors-for-open-source-contributors).
 
+For clarity: the curriculum has no token, no coin, no NFT, no wallet, and no chain
+partnership. The maintainer does not endorse, promote, partner with, or accept
+payment from any crypto project. The funding link above is the only channel;
+anything else using this project's name is unaffiliated.
+
 ## Reach
 
 These are real numbers, not pitch decks. Verified 2026-05-14 from the official analytics
