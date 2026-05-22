@@ -2717,8 +2717,8 @@
           "outputs": [
             {
               "type": "skill",
-              "name": "tokenizer-picker",
-              "path": "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/outputs/skill-tokenizer-picker.md",
+              "name": "embeddings-picker",
+              "path": "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/outputs/skill-embeddings-picker.md",
               "version": "1.0.0",
               "description": "Pick a tokenization approach for a new language model or text pipeline.",
               "tags": [
@@ -3101,8 +3101,8 @@
           "outputs": [
             {
               "type": "skill",
-              "name": "tokenizer-picker",
-              "path": "phases/05-nlp-foundations-to-advanced/19-subword-tokenization/outputs/skill-tokenizer-picker.md",
+              "name": "bpe-vs-wordpiece",
+              "path": "phases/05-nlp-foundations-to-advanced/19-subword-tokenization/outputs/skill-bpe-vs-wordpiece.md",
               "version": "1.0.0",
               "description": "Pick tokenizer algorithm, vocab size, library for a given corpus and deployment target.",
               "tags": [
@@ -5405,8 +5405,8 @@
             },
             {
               "type": "skill",
-              "name": "skill-evaluation",
-              "path": "phases/10-llms-from-scratch/10-evaluation/outputs/skill-evaluation.md",
+              "name": "llm-evaluation",
+              "path": "phases/10-llms-from-scratch/10-evaluation/outputs/skill-llm-evaluation.md",
               "version": "1.0.0",
               "description": "Decision framework for choosing the right LLM evaluation strategy based on task type, budget, and requirements",
               "tags": [

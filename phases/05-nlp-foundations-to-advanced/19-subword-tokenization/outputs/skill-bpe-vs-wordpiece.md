@@ -1,5 +1,5 @@
 ---
-name: tokenizer-picker
+name: bpe-vs-wordpiece
 description: Pick tokenizer algorithm, vocab size, library for a given corpus and deployment target.
 version: 1.0.0
 phase: 5

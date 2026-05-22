@@ -211,7 +211,7 @@ The `Ġ` prefix marks word boundaries (a GPT-2 convention). Every modern tokeniz
 
 ## Ship It
 
-Save as `outputs/skill-tokenizer-picker.md`:
+Save as `outputs/skill-embeddings-picker.md`:
 
 ```markdown
 ---
