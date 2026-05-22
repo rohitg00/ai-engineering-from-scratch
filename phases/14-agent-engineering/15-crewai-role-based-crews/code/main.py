@@ -10,6 +10,7 @@ keyed off agent role and input prefix.
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
@@ -166,7 +167,11 @@ class Memory:
         self.entity: dict[str, dict[str, str]] = {}
 
     def _embed(self, text: str) -> np.ndarray:
-        rng = np.random.default_rng(abs(hash(text)) % (2**32))
+        seed = int.from_bytes(
+            hashlib.sha256(text.encode("utf-8")).digest()[:8],
+            "little",
+        )
+        rng = np.random.default_rng(seed)
         v = rng.standard_normal(self.dim)
         n = np.linalg.norm(v)
         return v / n if n > 0 else v
@@ -194,7 +199,12 @@ class Memory:
 
 def _researcher(prior: Any, tools: list[Callable[..., str]], memory: Memory | None) -> str:
     topic = prior if isinstance(prior, str) else ""
-    sources = search(topic) if tools else "src1, src2, src3"
+    # Run whichever search-ish tool the agent was wired with, in order.
+    search_fn = next(
+        (t for t in tools if getattr(t, "is_tool", False) and "search" in getattr(t, "tool_name", "").lower()),
+        None,
+    )
+    sources = search_fn(topic) if search_fn else "src1, src2, src3"
     return f"3 sources on {topic}: {sources}"
 
 
@@ -283,15 +293,24 @@ def main() -> None:
 
     @flow.start
     def kickoff(topic: str) -> tuple[str, str]:
-        return "researched", _researcher(topic, [search], memory)
+        out = _researcher(topic, [search], memory)
+        memory.write_short_term("researcher", out)
+        memory.write_long_term("researcher", out)
+        return "researched", out
 
     @flow.listen("researched")
     def on_researched(prior: str) -> tuple[str, str]:
-        return "drafted", _writer(prior, [], memory)
+        out = _writer(prior, [], memory)
+        memory.write_short_term("writer", out)
+        memory.write_long_term("writer", out)
+        return "drafted", out
 
     @flow.listen("drafted")
     def on_drafted(prior: str) -> tuple[str, str]:
-        return "edited", _editor(prior, [], memory)
+        out = _editor(prior, [], memory)
+        memory.write_short_term("editor", out)
+        memory.write_long_term("editor", out)
+        return "edited", out
 
     @flow.listen("edited")
     def on_edited(prior: str) -> None:

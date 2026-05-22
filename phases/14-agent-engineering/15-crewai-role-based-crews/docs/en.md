@@ -147,7 +147,7 @@ Concrete demo: researcher, writer, editor crew producing a brief on "agent engin
 
 Run it:
 
-```
+```bash
 python3 code/main.py
 ```
 
