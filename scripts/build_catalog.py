@@ -55,6 +55,9 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _lib import parse_frontmatter as _parse_frontmatter  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 PHASES_DIR = ROOT / "phases"
 
@@ -100,34 +103,7 @@ def slug_to_title(slug: str) -> str:
 
 
 def parse_frontmatter(text: str) -> dict[str, object]:
-    if not text.startswith("---"):
-        return {}
-    end = text.find("\n---", 4)
-    if end == -1:
-        return {}
-    block = text[4:end].strip("\n")
-    result: dict[str, object] = {}
-    for raw in block.splitlines():
-        line = raw.rstrip()
-        if not line or line.startswith("#") or ":" not in line:
-            continue
-        key, _, value = line.partition(":")
-        key = key.strip()
-        value = value.strip()
-        if value.startswith("[") and value.endswith("]"):
-            inner = value[1:-1].strip()
-            result[key] = (
-                [item.strip().strip("'\"") for item in inner.split(",") if item.strip()]
-                if inner
-                else []
-            )
-        elif (value.startswith('"') and value.endswith('"')) or (
-            value.startswith("'") and value.endswith("'")
-        ):
-            result[key] = value[1:-1]
-        else:
-            result[key] = value
-    return result
+    return _parse_frontmatter(text) or {}
 
 
 def read_h1(doc_path: Path) -> str | None:

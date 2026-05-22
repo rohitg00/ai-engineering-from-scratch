@@ -34,6 +34,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _lib import parse_frontmatter  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 PHASES_DIR = ROOT / "phases"
 
@@ -66,40 +69,6 @@ class Artifact:
         if target is not None:
             out["target"] = target.as_posix()
         return out
-
-
-def parse_frontmatter(text: str) -> dict[str, object] | None:
-    if not text.startswith("---"):
-        return None
-    end = text.find("\n---", 4)
-    if end == -1:
-        return None
-    block = text[4:end].strip("\n")
-    result: dict[str, object] = {}
-    for raw in block.splitlines():
-        line = raw.rstrip()
-        if not line or line.startswith("#"):
-            continue
-        if ":" not in line:
-            continue
-        key, _, value = line.partition(":")
-        key = key.strip()
-        value = value.strip()
-        if value.startswith("[") and value.endswith("]"):
-            inner = value[1:-1].strip()
-            if not inner:
-                result[key] = []
-            else:
-                result[key] = [
-                    item.strip().strip("'\"") for item in inner.split(",") if item.strip()
-                ]
-        elif value.startswith("\"") and value.endswith("\""):
-            result[key] = value[1:-1]
-        elif value.startswith("'") and value.endswith("'"):
-            result[key] = value[1:-1]
-        else:
-            result[key] = value
-    return result
 
 
 def derive_phase_lesson(path: Path) -> tuple[int | None, int | None]:
