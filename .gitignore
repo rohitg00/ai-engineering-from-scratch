@@ -56,3 +56,4 @@ mlruns/
 
 .link-cache.json
 .claude/
+.workbuddy/
