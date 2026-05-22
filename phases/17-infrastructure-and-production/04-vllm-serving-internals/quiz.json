@@ -1,0 +1,78 @@
+{
+  "lesson": "04-vllm-serving-internals",
+  "title": "vLLM Serving Internals: PagedAttention, Continuous Batching, Chunked Prefill",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the main problem classic static batching has with mixed-length requests?",
+      "options": [
+        "It cannot use GPUs at all",
+        "Padding to the longest prompt and longest output wastes memory and stalls the whole batch on the slowest sequence",
+        "It only works with FP4",
+        "It requires NVLink between every GPU"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does PagedAttention reduce KV cache fragmentation from 60-80% to under 4%?",
+      "options": [
+        "By compressing weights to INT4",
+        "By allocating KV cache in fixed-size blocks (default 16 tokens) referenced through a per-sequence block table",
+        "By disabling KV cache entirely",
+        "By holding the full prompt in CPU RAM"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What invariant defines continuous batching in vLLM's V1 scheduler?",
+      "options": [
+        "The scheduler runs once per request and the batch never changes",
+        "The scheduler runs once per decode iteration, admitting finished sequences out and waiting ones in",
+        "The scheduler waits 10 ms windows to fill a batch before running",
+        "Each request gets its own dedicated GPU stream"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which latency metric does chunked prefill primarily protect under mixed load?",
+      "options": [
+        "Mean throughput",
+        "P99 inter-token latency (ITL)",
+        "Cold-start time",
+        "Network RTT"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "In vLLM v0.18.0, which speculative-decoding variant remains compatible with --enable-chunked-prefill?",
+      "options": [
+        "Draft-model speculative decoding",
+        "N-gram GPU speculative decoding in the V1 scheduler",
+        "EAGLE-1 only",
+        "No speculative decoding is compatible"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does chunked prefill not in isolation increase mean throughput?",
+      "options": [
+        "It only reduces decode-time jitter; the throughput win in practice comes from keeping decode sequences alive during long prefills, not from changing the work done",
+        "It compresses weights more aggressively",
+        "It runs on a different GPU than decode",
+        "It uses speculative decoding under the hood"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}
