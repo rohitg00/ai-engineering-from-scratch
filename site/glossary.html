@@ -67,6 +67,11 @@
       border-color: var(--accent);
     }
 
+    .glossary-search:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
+    }
+
     .glossary-count {
       text-align: center;
       font-family: var(--font-mono);
@@ -163,6 +168,8 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo">
@@ -194,7 +201,7 @@
     </div>
   </header>
 
-  <main class="glossary-page">
+  <main class="glossary-page" id="main">
     <div class="container">
       <div class="glossary-header">
         <h1>AI Glossary</h1>

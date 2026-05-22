@@ -101,6 +101,28 @@ body {
   transition: background-color 0.2s, color 0.2s;
 }
 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  background: var(--blueprint);
+  color: #fff;
+  padding: 12px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 0;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 16px;
+  top: 16px;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

@@ -70,6 +70,12 @@
       border-color: var(--accent);
     }
 
+    .catalog-search:focus-visible,
+    .catalog-filter:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
+    }
+
     .catalog-filter {
       font-family: var(--font-body);
       font-size: 1rem;
@@ -211,6 +217,8 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo">
@@ -242,7 +250,7 @@
     </div>
   </header>
 
-  <main class="catalog-page">
+  <main class="catalog-page" id="main">
     <div class="container">
       <div class="catalog-header">
         <h1>Lesson Catalog</h1>
