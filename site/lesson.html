@@ -1577,10 +1577,10 @@
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github" aria-label="GitHub repository (opens in new tab)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
-          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+          <span class="star-count" data-loading="true" aria-hidden="true">…</span>
         </a>
       </nav>
       <button class="search-toggle" type="button" data-cmd-palette
@@ -1593,12 +1593,12 @@
         </svg>
       </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
-        <span class="theme-icon" id="themeIcon">N</span>
+        <span class="theme-icon" id="themeIcon" aria-hidden="true">N</span>
       </button>
     </div>
   </header>
 
-  <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#9776;</button>
+  <button class="lesson-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle lesson sidebar" aria-expanded="false" aria-controls="lessonSidebar">&#9776;</button>
 
   <div class="mermaid-modal-overlay" id="mermaidModalOverlay" aria-hidden="true">
     <div class="mermaid-modal" role="dialog" aria-modal="true" aria-label="Expanded diagram">
@@ -1613,16 +1613,16 @@
   </div>
 
   <div class="lesson-layout">
-    <aside class="lesson-sidebar" id="lessonSidebar"></aside>
-    <main class="lesson-main" id="main">
+    <aside class="lesson-sidebar" id="lessonSidebar" aria-label="Lessons in this phase"></aside>
+    <main class="lesson-main" id="main" tabindex="-1">
       <div class="lesson-content" id="lessonContent">
-        <div class="lesson-loading" id="lessonLoading">
-          <div class="spinner"></div>
+        <div class="lesson-loading" id="lessonLoading" role="status" aria-live="polite">
+          <div class="spinner" aria-hidden="true"></div>
           <div class="lesson-loading-text">Loading lesson...</div>
         </div>
       </div>
     </main>
-    <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
+    <aside class="toc-sidebar" id="tocSidebar" aria-label="On this page" aria-hidden="true"></aside>
   </div>
 
   <script src="data.js?v=20260508a"></script>
@@ -1810,17 +1810,25 @@
         var sidebar = document.getElementById('lessonSidebar');
         if (!toggle || !sidebar) return;
 
+        function syncExpanded() {
+          toggle.setAttribute('aria-expanded', sidebar.classList.contains('open') ? 'true' : 'false');
+        }
+
         toggle.addEventListener('click', function () {
           sidebar.classList.toggle('open');
+          syncExpanded();
         });
 
         document.addEventListener('click', function (e) {
           if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
             if (!sidebar.contains(e.target) && e.target !== toggle) {
               sidebar.classList.remove('open');
+              syncExpanded();
             }
           }
         });
+
+        syncExpanded();
       }
 
       function initScrollProgress() {
@@ -2690,22 +2698,23 @@
         for (var qi = 0; qi < questions.length; qi++) {
           var q = questions[qi];
           var qid = id + '-q' + qi;
-          html += '<div class="quiz-question" data-correct="' + q.correct + '" id="' + qid + '">';
-          html += '<div class="quiz-question-text">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
-          html += '<div class="quiz-options">';
+          var optsId = qid + '-opts';
+          html += '<div class="quiz-question" data-correct="' + q.correct + '" id="' + qid + '" role="group" aria-labelledby="' + qid + '-text">';
+          html += '<div class="quiz-question-text" id="' + qid + '-text">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
+          html += '<div class="quiz-options" id="' + optsId + '">';
           for (var oi = 0; oi < q.options.length; oi++) {
-            html += '<div class="quiz-option" data-index="' + oi + '" onclick="handleQuizClick(this)">';
-            html += '<span class="quiz-marker"></span>';
+            html += '<button type="button" class="quiz-option" data-index="' + oi + '" onclick="handleQuizClick(this)">';
+            html += '<span class="quiz-marker" aria-hidden="true"></span>';
             html += '<span>' + escapeHtml(q.options[oi]) + '</span>';
-            html += '</div>';
+            html += '</button>';
           }
           html += '</div>';
           if (q.explanation) {
-            html += '<div class="quiz-explanation" id="' + qid + '-exp">' + escapeHtml(q.explanation) + '</div>';
+            html += '<div class="quiz-explanation" id="' + qid + '-exp" role="status" aria-live="polite">' + escapeHtml(q.explanation) + '</div>';
           }
           html += '</div>';
         }
-        html += '<div class="quiz-score" id="quiz-' + id + '-score"></div>';
+        html += '<div class="quiz-score" id="quiz-' + id + '-score" role="status" aria-live="polite"></div>';
         html += '</div>';
         return html;
       }

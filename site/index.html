@@ -580,9 +580,9 @@
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github" aria-label="GitHub repository (opens in new tab)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+          <span class="star-count" data-loading="true" aria-hidden="true">…</span>
         </a>
       </nav>
       <button class="search-toggle" type="button" data-cmd-palette
@@ -595,7 +595,7 @@
         </svg>
       </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
-        <span class="theme-icon" id="themeIcon">N</span>
+        <span class="theme-icon" id="themeIcon" aria-hidden="true">N</span>
       </button>
     </div>
   </header>
@@ -630,29 +630,29 @@
       <div class="stat-rows reveal" style="--stagger-delay: 100ms;" id="statRows">
         <div class="stat-row">
           <span class="stat-row-label">Finished Lessons</span>
-          <span class="stat-row-bar" data-bar="complete" style="--bar-pct:0%;" aria-hidden="true">bar</span>
+          <span class="stat-row-bar" data-bar="complete" style="--bar-pct:0%;" aria-hidden="true"></span>
           <span class="stat-row-value" data-stat="complete-frac">0 / 0</span>
         </div>
         <div class="stat-row">
           <span class="stat-row-label">Phases</span>
-          <span class="stat-row-bar" data-bar="phases" style="--bar-pct:0%;" aria-hidden="true">bar</span>
+          <span class="stat-row-bar" data-bar="phases" style="--bar-pct:0%;" aria-hidden="true"></span>
           <span class="stat-row-value" data-stat="phases-frac">0 / 0</span>
         </div>
         <div class="stat-row">
           <span class="stat-row-label">Languages</span>
-          <span class="stat-row-bar" data-bar="languages" style="--bar-pct:100%;" aria-hidden="true">bar</span>
+          <span class="stat-row-bar" data-bar="languages" style="--bar-pct:100%;" aria-hidden="true"></span>
           <span class="stat-row-value">4</span>
         </div>
         <div class="stat-row">
           <span class="stat-row-label">Glossary Terms</span>
-          <span class="stat-row-bar" data-bar="glossary" style="--bar-pct:100%;" aria-hidden="true">bar</span>
+          <span class="stat-row-bar" data-bar="glossary" style="--bar-pct:100%;" aria-hidden="true"></span>
           <span class="stat-row-value" data-stat="glossary-count">···</span>
         </div>
       </div>
     </section>
 
-    <section class="toc container" id="contents">
-      <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 435 lessons</div>
+    <section class="toc container" id="contents" aria-labelledby="contentsHeading">
+      <h2 class="toc-title reveal reveal--left" id="contentsHeading">Curriculum · 20 phases · 435 lessons</h2>
       <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
       <div class="toc-list" id="phasesGrid"></div>
       <div class="legend">
@@ -662,9 +662,9 @@
       </div>
     </section>
 
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal" id="modal">
-        <button class="modal-close" id="modalClose" type="button">×</button>
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+      <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close phase details">×</button>
         <div class="modal-header">
           <span class="modal-phase-num" id="modalPhaseNum"></span>
           <h2 class="modal-title" id="modalTitle"></h2>
@@ -688,7 +688,7 @@
           <p>The entire curriculum is on GitHub. Clone it, fork it, learn at your own pace. No paywall, no signup. Every lesson has runnable code in Python, TypeScript, Rust, or Julia, depending on what fits the concept best.</p>
           <div class="colophon-cmd">
             <code id="cloneCmd">git clone https://github.com/rohitg00/ai-engineering-from-scratch.git</code>
-            <button class="copy-btn" id="copyBtn" aria-label="Copy command" type="button">cp</button>
+            <button class="copy-btn" id="copyBtn" aria-label="Copy command" type="button" aria-live="polite">cp</button>
           </div>
         </div>
       </div>
