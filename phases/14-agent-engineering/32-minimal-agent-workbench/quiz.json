@@ -1,0 +1,90 @@
+{
+  "lesson": "32-minimal-agent-workbench",
+  "title": "The Minimal Agent Workbench",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What three files form the smallest useful workbench?",
+      "options": [
+        "AGENTS.md (router), agent_state.json (state), task_board.json (queue)",
+        "README.md, CHANGELOG.md, LICENSE",
+        "model.py, prompts.py, tools.py",
+        "Dockerfile, Makefile, .gitignore"
+      ],
+      "correct": 0,
+      "explanation": "A short router, durable state, and a task queue are the floor."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the lesson's framing of AGENTS.md?",
+      "options": [
+        "A 3000-line onboarding manual",
+        "A short router that points at deeper docs and the state and board",
+        "A pure prompt-cache key",
+        "A secret kept out of the repo"
+      ],
+      "correct": 1,
+      "explanation": "AGENTS.md is a router, not a manual; long manuals get ignored."
+    },
+    {
+      "stage": "check",
+      "question": "What does Augment Code's data say about a good AGENTS.md?",
+      "options": [
+        "It has no measurable effect",
+        "A good AGENTS.md gives a quality jump equivalent to upgrading from Haiku to Opus; a bad one is worse than no file",
+        "Length always helps",
+        "Only Claude reads it"
+      ],
+      "correct": 1,
+      "explanation": "Augment Code's measurement: best files are model-upgrade-shaped, worst are worse than nothing."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the lesson recommend file-backed state over chat-history state?",
+      "options": [
+        "Disk is cheaper",
+        "Chat history is volatile; the file survives session death, conversation trimming, and tool resets",
+        "Files are smaller",
+        "It is required by SOC 2"
+      ],
+      "correct": 1,
+      "explanation": "Sessions die and chat gets trimmed; the file is the durable system of record."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson say happens when conflicting instructions land in AGENTS.md?",
+      "options": [
+        "Latency drops",
+        "Conflicting instructions silently drop the agent from interactive to greedy mode (AMBIG-SWE: 48.8% to 28% resolve rate)",
+        "Cost rises slightly",
+        "Nothing"
+      ],
+      "correct": 1,
+      "explanation": "AMBIG-SWE measured a large resolve-rate drop when contradictions appear; number priorities instead."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson recommend cross-tool symlinks like CLAUDE.md -> AGENTS.md?",
+      "options": [
+        "To save bytes",
+        "So a single source of truth fans out to every coding agent without forking",
+        "To pass auditing",
+        "To satisfy MIT"
+      ],
+      "correct": 1,
+      "explanation": "Symlinks (or Nx-style generators) keep one canonical source across Claude Code, Codex, Cursor, Copilot, etc."
+    },
+    {
+      "stage": "post",
+      "question": "What pattern do nested AGENTS.md files follow?",
+      "options": [
+        "Only the root file is read",
+        "Walk from the working file toward the repo root, concatenate every AGENTS.md found on the way (nearest wins; sub-directories extend root)",
+        "Random selection",
+        "Alphabetical merge"
+      ],
+      "correct": 1,
+      "explanation": "OpenAI ships 88 AGENTS.md files across its main repo; tools concatenate nearest-up-tree."
+    }
+  ]
+}

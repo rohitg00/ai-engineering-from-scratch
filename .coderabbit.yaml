@@ -1,0 +1,6 @@
+reviews:
+  high_level_summary: false
+  poem: false
+  changelog: false
+  release_notes: false
+  collapse_walkthrough: true

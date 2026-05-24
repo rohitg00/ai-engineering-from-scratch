@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lesson - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 416 lessons across 20 phases, four languages, every algorithm built from raw math.">
+  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 435 lessons across 20 phases, four languages, every algorithm built from raw math.">
   <meta property="og:title" content="AI Engineering from Scratch · Lesson">
-  <meta property="og:description" content="416 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta property="og:description" content="435 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
   <!-- og:url omitted intentionally: lesson.html is a static template that loads the lesson body client-side via ?path=. Static hosting cannot template the URL, so we let crawlers fall back to the request URL (which is the lesson-specific share link). -->
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Engineering from Scratch">
-  <meta name="twitter:description" content="416 lessons. 20 phases. Build it from raw math, by hand.">
+  <meta name="twitter:description" content="435 lessons. 20 phases. Build it from raw math, by hand.">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -917,10 +917,12 @@
       height: auto;
     }
 
-    .lesson-article .mermaid-render foreignObject p,
-    .lesson-article .mermaid-render foreignObject span,
-    .mermaid-modal-body foreignObject p,
-    .mermaid-modal-body foreignObject span {
+    :where(
+      .lesson-article .mermaid-render foreignObject p,
+      .lesson-article .mermaid-render foreignObject span,
+      .mermaid-modal-body foreignObject p,
+      .mermaid-modal-body foreignObject span
+    ) {
       font-family: var(--font-mono);
       font-size: 13px;
       line-height: 1.4;
@@ -1306,61 +1308,6 @@
       white-space: nowrap;
     }
 
-    .tools-card {
-      margin-top: 32px;
-      padding: 16px;
-      border: 1px solid var(--rule-soft);
-      background: var(--bg-surface);
-    }
-    .tools-card-header {
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 14px;
-    }
-    .tools-card-item {
-      display: block;
-      padding: 12px 0;
-      text-decoration: none;
-      color: var(--ink);
-      border-top: 1px solid var(--rule-soft);
-    }
-    .tools-card-item:first-of-type { border-top: none; padding-top: 0; }
-    .tools-card-item:hover { color: var(--blueprint); }
-    .tools-card-name {
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      font-weight: 500;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
-    }
-    .tools-card-stars {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--ink-mute);
-      white-space: nowrap;
-    }
-    .tools-card-desc {
-      font-family: var(--font-body);
-      font-size: 0.86rem;
-      color: var(--ink-soft);
-      line-height: 1.4;
-      margin-top: 4px;
-    }
-    .tools-card-foot {
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid var(--rule-soft);
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      color: var(--ink-mute);
-      font-style: italic;
-      line-height: 1.4;
-    }
 
     .phase-progress-bar {
       width: 100%;
@@ -1616,6 +1563,8 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <div class="scroll-progress" id="scrollProgress"></div>
 
   <header class="site-header">
@@ -1666,7 +1615,7 @@
 
   <div class="lesson-layout">
     <aside class="lesson-sidebar" id="lessonSidebar"></aside>
-    <main class="lesson-main">
+    <main class="lesson-main" id="main">
       <div class="lesson-content" id="lessonContent">
         <div class="lesson-loading" id="lessonLoading">
           <div class="spinner"></div>
@@ -2208,7 +2157,6 @@
         var article = document.querySelector('.lesson-article');
         if (!article) {
           sidebar.innerHTML = '';
-          renderToolsCard(sidebar);
           sidebar.removeAttribute('aria-hidden');
           return;
         }
@@ -2216,7 +2164,6 @@
         var headings = article.querySelectorAll('h2, h3');
         if (!headings.length) {
           sidebar.innerHTML = '';
-          renderToolsCard(sidebar);
           sidebar.removeAttribute('aria-hidden');
           return;
         }
@@ -2263,7 +2210,6 @@
         }
         html += '</ul></nav>';
         sidebar.innerHTML = html;
-        renderToolsCard(sidebar);
         sidebar.removeAttribute('aria-hidden');
 
         sidebar.querySelectorAll('.toc-link').forEach(function (a) {
@@ -2948,9 +2894,10 @@
         var keyTermsH2 = article.querySelector('#key-terms');
 
         var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check');
+        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', 'Mid-Lesson Check');
         var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz');
 
-        if (!preQuizHtml && !postQuizHtml) {
+        if (!preQuizHtml && !checkQuizHtml && !postQuizHtml) {
           var allHtml = buildQuizHtml(questions, 'all', 'Quiz');
           if (allHtml && keyTermsH2) {
             keyTermsH2.insertAdjacentHTML('beforebegin', allHtml);
@@ -2965,6 +2912,20 @@
           conceptH2.insertAdjacentHTML('beforebegin', preQuizHtml);
         } else if (preQuizHtml && buildH2) {
           buildH2.insertAdjacentHTML('beforebegin', preQuizHtml);
+        }
+
+        // Mid-lesson check: land between Build It and Use It if possible,
+        // otherwise fall back to before Use It / Ship It / Key Terms.
+        var useH2 = article.querySelector('#use-it, #use');
+        var shipH2 = article.querySelector('#ship-it, #ship');
+        if (checkQuizHtml && useH2) {
+          useH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
+        } else if (checkQuizHtml && shipH2) {
+          shipH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
+        } else if (checkQuizHtml && keyTermsH2) {
+          keyTermsH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
+        } else if (checkQuizHtml) {
+          article.insertAdjacentHTML('beforeend', checkQuizHtml);
         }
 
         if (postQuizHtml && keyTermsH2) {
@@ -3198,7 +3159,7 @@
               installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
             } else if (type === 'skill') {
               var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
-              installHint = 'npx skillkit install ' + skillName;
+              installHint = 'npx skills add ' + skillName;
             }
 
             html += '<div class="output-card">';
@@ -3376,7 +3337,7 @@
         });
 
         html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
-        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with SkillKit installed</div>';
+        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed</div>';
         html += '</div>';
 
         panel.innerHTML = html;
@@ -3534,7 +3495,7 @@
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 
-        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with SkillKit installed for a personalized learning path</div>';
+        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed for a personalized learning path</div>';
         html += '</div>';
 
         panel.innerHTML = html;

@@ -1,0 +1,102 @@
+{
+  "lesson": "21-nli-textual-entailment",
+  "title": "Natural Language Inference — Textual Entailment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What three labels does NLI assign to a (premise, hypothesis) pair?",
+      "options": [
+        "Positive / negative / neutral",
+        "True / false / unknown",
+        "Entailment / contradiction / neutral",
+        "Cause / effect / unrelated"
+      ],
+      "correct": 2,
+      "explanation": "NLI is a 3-way classification over entailment, contradiction, and neutral."
+    },
+    {
+      "stage": "pre",
+      "question": "How is NLI used as a zero-shot text classifier?",
+      "options": [
+        "Verbalize each candidate label as a hypothesis (e.g. 'This text is about sports') and pick the label with the highest entailment score",
+        "By averaging embeddings",
+        "By computing TF-IDF",
+        "By prompting an LLM"
+      ],
+      "correct": 0,
+      "explanation": "NLI-as-classifier turns labels into hypotheses; the model picks the max-entailment label."
+    },
+    {
+      "stage": "check",
+      "question": "Why is NLI a faithfulness check for RAG outputs?",
+      "options": [
+        "It uses tokenizers",
+        "Checking whether the retrieved context entails each answer claim is exactly the formulation NLI was trained on",
+        "It is cheap",
+        "It is multilingual"
+      ],
+      "correct": 1,
+      "explanation": "Hallucination = answer claims not entailed by retrieved context; NLI directly measures entailment."
+    },
+    {
+      "stage": "check",
+      "question": "What does the hypothesis-only baseline expose?",
+      "options": [
+        "Multilingual gaps",
+        "Slow inference",
+        "Datasets where the hypothesis alone (without the premise) is predictive of the label, signalling label leakage",
+        "Tokenizer drift"
+      ],
+      "correct": 2,
+      "explanation": "A high hypothesis-only score on SNLI revealed annotation artifacts; useful for debugging your data."
+    },
+    {
+      "stage": "check",
+      "question": "Which NLI model family tops 2026 leaderboards as the standard workhorse?",
+      "options": [
+        "fastText",
+        "Plain Word2Vec",
+        "DeBERTa-v3 variants fine-tuned on MNLI/FEVER/ANLI",
+        "GPT-2"
+      ],
+      "correct": 2,
+      "explanation": "DeBERTa-v3 fine-tuned on MNLI and related corpora is the open NLI workhorse in 2026."
+    },
+    {
+      "stage": "post",
+      "question": "Why do sentence-level NLI models drop accuracy on document-length premises?",
+      "options": [
+        "They were trained on short premises and fail at multi-sentence and multi-hop inference; DocNLI-tuned models handle longer inputs",
+        "Larger inputs run slower",
+        "Documents trigger tokenizer drift",
+        "Cosine similarity decays"
+      ],
+      "correct": 0,
+      "explanation": "Training distribution mismatch: single-sentence NLI models lose 20+ F1 on document-length inputs."
+    },
+    {
+      "stage": "post",
+      "question": "Why can zero-shot accuracy swing 10+ points based on the hypothesis template?",
+      "options": [
+        "Models are sensitive to phrasing; e.g. 'This text is about {label}' vs '{label}' alone shifts entailment probabilities",
+        "Templates change tokenizer behavior",
+        "Templates affect model weights",
+        "Templates change the label set"
+      ],
+      "correct": 0,
+      "explanation": "Template wording materially shifts entailment scores; tune it on a small held-out set."
+    },
+    {
+      "stage": "post",
+      "question": "What is a safe limit to claim about NLI for hallucination detection?",
+      "options": [
+        "It only works on English",
+        "It reduces hallucination as a faithfulness signal but does not eliminate it; combine with retrieval recall and human review",
+        "It eliminates hallucination",
+        "It requires LLMs"
+      ],
+      "correct": 1,
+      "explanation": "NLI is a useful signal but not a complete solution; pair with retrieval metrics and human spot-checks."
+    }
+  ]
+}

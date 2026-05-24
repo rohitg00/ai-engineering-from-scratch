@@ -17,8 +17,6 @@ This lesson walks the classical path (rule-based, HMM, CRF) into the modern one 
 
 ## The Concept
 
-![NER tagging: BIO schema + CRF+BiLSTM pipeline](./assets/ner.svg)
-
 **BIO tagging** (or BILOU) turns entity extraction into a sequence-labeling problem. Label each token with `B-TYPE` (beginning of entity), `I-TYPE` (inside entity), or `O` (outside any entity).
 
 ```

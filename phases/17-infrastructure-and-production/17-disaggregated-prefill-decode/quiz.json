@@ -1,0 +1,78 @@
+{
+  "lesson": "17-disaggregated-prefill-decode",
+  "title": "Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do prefill and decode want different optimal GPU configurations?",
+      "options": [
+        "Prefill must run on AMD and decode on NVIDIA",
+        "Prefill is compute-bound on matmul throughput; decode is memory-bound on HBM bandwidth, so colocating them wastes one resource",
+        "They use different model weights",
+        "Decode requires more network bandwidth"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What transport does NVIDIA Dynamo use to move KV cache between the prefill and decode pools?",
+      "options": [
+        "Plain HTTP",
+        "gRPC bidi only",
+        "Shared filesystem on NFS",
+        "NIXL (RDMA/InfiniBand when available, TCP fallback)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "When does disaggregation NOT pay off according to the lesson?",
+      "options": [
+        "MoE workloads on Blackwell",
+        "Multi-tenant serving with shared system prompts",
+        "RAG with 8K+ prefixes",
+        "Prompts under 512 tokens and outputs under 200 tokens, where the KV transfer tax dominates the gain"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the core architectural difference between Dynamo and llm-d?",
+      "options": [
+        "Dynamo is open source; llm-d is closed",
+        "Dynamo runs on CPU; llm-d on GPU",
+        "Dynamo is a stack-above orchestrator over vLLM/SGLang/TRT-LLM; llm-d is Kubernetes-native with prefill/decode/router as independent Services",
+        "Dynamo requires AMD; llm-d requires NVIDIA"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which Dynamo components automatically tune the prefill:decode ratio for an SLO?",
+      "options": [
+        "Sidecar proxy and Envoy filter",
+        "Planner Profiler and SLA Planner",
+        "Cluster Autoscaler",
+        "Marlin kernels"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "How does disaggregation interact with cache-aware routing from Phase 17 · 11?",
+      "options": [
+        "Disaggregation disables KV cache reuse entirely",
+        "The cache-aware router can land a request on the decode pool already holding its prefix; on miss it flows prefill -> decode, so the two compound",
+        "They are mutually exclusive",
+        "Cache-aware routing is only for colocated serving"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

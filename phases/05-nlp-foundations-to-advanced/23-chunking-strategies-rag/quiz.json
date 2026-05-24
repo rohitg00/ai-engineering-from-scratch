@@ -1,0 +1,102 @@
+{
+  "lesson": "23-chunking-strategies-rag",
+  "title": "Chunking Strategies for RAG",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is chunking strategy as important as the embedding model in RAG?",
+      "options": [
+        "Chunk boundaries determine whether the answer is even retrievable; bad chunks defeat any embedding",
+        "Chunking shrinks the model",
+        "Smaller chunks train faster",
+        "Chunking is required by FAISS"
+      ],
+      "correct": 0,
+      "explanation": "Vectara's 2025 study showed chunking quality matches or exceeds embedding-model impact on retrieval quality."
+    },
+    {
+      "stage": "pre",
+      "question": "What does LangChain's RecursiveCharacterTextSplitter try in order?",
+      "options": [
+        "Always split on character N",
+        "Split on token IDs",
+        "Try splitting on paragraph breaks, then newlines, then sentence boundaries, then spaces",
+        "Split on whitespace only"
+      ],
+      "correct": 2,
+      "explanation": "Recursive splitting falls back through paragraph -> newline -> sentence -> space to preserve structure."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the parent-document pattern improve answer quality?",
+      "options": [
+        "Children give precise retrieval; returning the larger parent block preserves the surrounding context the reader needs",
+        "It removes embeddings",
+        "It avoids tokenization",
+        "It uses fewer GPU cycles"
+      ],
+      "correct": 0,
+      "explanation": "Retrieve by small child chunks for precision, then expand to the parent for context."
+    },
+    {
+      "stage": "check",
+      "question": "What does Anthropic's 'contextual retrieval' add to each chunk before indexing?",
+      "options": [
+        "A POS tag",
+        "A language code",
+        "An LLM-generated 50-100 word summary placing the chunk in the document's overall context",
+        "Random noise"
+      ],
+      "correct": 2,
+      "explanation": "Contextual retrieval prepends an LLM-written situating summary to each chunk; ~35-50% recall gain."
+    },
+    {
+      "stage": "check",
+      "question": "Which 2026 finding contradicts the conventional wisdom about chunk overlap?",
+      "options": [
+        "Overlap is required for BM25",
+        "Empirical 2026 benchmarks show overlap often provides zero measurable benefit while doubling index cost",
+        "Overlap improves contextual retrieval only",
+        "Overlap should be 50%"
+      ],
+      "correct": 1,
+      "explanation": "Newer studies (SPLADE+Mistral on NQ) show chunk overlap rarely helps and inflates index size."
+    },
+    {
+      "stage": "post",
+      "question": "Which chunk size does NVIDIA's 2026 benchmark associate with factoid queries?",
+      "options": [
+        "64 tokens",
+        "Roughly 256-512 tokens",
+        "2048-4096 tokens",
+        "8192 tokens"
+      ],
+      "correct": 1,
+      "explanation": "Factoid queries benefit from smaller chunks (256-512 tokens) that concentrate the answer signal."
+    },
+    {
+      "stage": "post",
+      "question": "Why is a min-token floor important when using semantic chunking?",
+      "options": [
+        "Required by BERT",
+        "Without a floor, semantic chunking can produce tiny 40-token fragments that hurt retrieval",
+        "Floors speed up inference",
+        "Floors prevent overlap"
+      ],
+      "correct": 1,
+      "explanation": "Semantic chunkers can over-segment; enforcing a min size prevents low-signal fragments."
+    },
+    {
+      "stage": "post",
+      "question": "What does 'late chunking' do differently from traditional chunking?",
+      "options": [
+        "Skips chunking entirely",
+        "Embeds the whole document at the token level first, then pools token embeddings into chunk vectors to preserve cross-chunk context",
+        "Chunks after retrieval",
+        "Uses BM25 instead"
+      ],
+      "correct": 1,
+      "explanation": "Late chunking embeds first and pools second, preserving contextual interactions across chunk boundaries."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "26-failure-modes-agentic",
+  "title": "Failure Modes: Why Agents Break",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is MASFT's central claim?",
+      "options": [
+        "Failures are random noise",
+        "Multi-agent failures are fundamental design flaws, not LLM limitations to be fixed with better base models",
+        "Failures vanish with bigger models",
+        "Failures are due to network outages"
+      ],
+      "correct": 1,
+      "explanation": "Berkeley's MASFT categorizes failures as design flaws; they do not disappear by scaling the base model."
+    },
+    {
+      "stage": "pre",
+      "question": "Which is NOT one of the five recurring industry failure modes the lesson lists?",
+      "options": [
+        "Hallucinated actions",
+        "Scope creep",
+        "Cascading errors",
+        "Embedding versioning"
+      ],
+      "correct": 3,
+      "explanation": "The five are hallucinated actions, scope creep, cascading errors, context loss, tool misuse."
+    },
+    {
+      "stage": "check",
+      "question": "What is a cascading error in this lesson?",
+      "options": [
+        "An LLM rate-limit cascade",
+        "One wrong call triggers downstream effects across systems (a phantom SKU triggers four downstream API calls)",
+        "A cron failure",
+        "A YAML parser error"
+      ],
+      "correct": 1,
+      "explanation": "Cascades amplify a single bad call into a multi-system incident; especially severe when agents fake success."
+    },
+    {
+      "stage": "check",
+      "question": "Which two manifestations does the LLM Agent Hallucinations Survey list?",
+      "options": [
+        "Hot and cold tokens",
+        "Instruction-following Deviation and Long-range Contextual Misuse",
+        "Greedy and beam search",
+        "Soft and hard prompts"
+      ],
+      "correct": 1,
+      "explanation": "Hallucinations show up as either ignoring system prompt or forgetting/misapplying earlier-turn context."
+    },
+    {
+      "stage": "check",
+      "question": "What does success hallucination mean?",
+      "options": [
+        "The model is overconfident on benchmarks",
+        "The agent returns a success message even though the target state did not change (often on a 400 from a tool)",
+        "The user thinks success when none happened",
+        "A unit test passed"
+      ],
+      "correct": 1,
+      "explanation": "Re-probe environment state; agents commonly fake completion when they cannot distinguish 'I failed' from 'impossible'."
+    },
+    {
+      "stage": "post",
+      "question": "Why is tagging only crashes insufficient?",
+      "options": [
+        "Crashes are slow",
+        "Most agent failures produce valid-looking output that does not crash; content-level checks are needed",
+        "Crashes leak PII",
+        "Logging is paid"
+      ],
+      "correct": 1,
+      "explanation": "Crash-based monitoring misses the bulk of agent failures, which are content-shaped."
+    },
+    {
+      "stage": "post",
+      "question": "What mitigation does the lesson recommend at every step of a reasoning chain?",
+      "options": [
+        "Add a sleep()",
+        "Automated verification gates that check factual grounding against environment state",
+        "Disable retries",
+        "Lower temperature only"
+      ],
+      "correct": 1,
+      "explanation": "Per-step gates (safety classifier, argument validation, CRITIC, state re-probe) catch failures before they cascade."
+    }
+  ]
+}

@@ -21,8 +21,6 @@ This lesson builds the three preprocessing primitives from scratch, then shows h
 
 Three operations. Each has a job and a failure mode.
 
-![Preprocessing pipeline: raw text → tokens → stems or lemmas → model](./assets/pipeline.svg)
-
 **Tokenization** splits a string into tokens. "Token" is deliberately vague because the right granularity depends on the task. Word-level for classical NLP. Subword for transformers. Character for languages without whitespace.
 
 **Stemming** chops suffixes with rules. Fast, aggressive, dumb. `running -> run`. `organization -> organ`. That second one is the failure mode.

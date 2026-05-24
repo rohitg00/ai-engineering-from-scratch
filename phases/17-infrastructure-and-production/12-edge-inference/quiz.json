@@ -1,0 +1,78 @@
+{
+  "lesson": "12-edge-inference",
+  "title": "Edge Inference — Apple Neural Engine, Qualcomm Hexagon, WebGPU/WebLLM, Jetson",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the core constraint that makes mobile LLM inference slower than datacenter, per the lesson?",
+      "options": [
+        "Wi-Fi latency",
+        "Compute throughput",
+        "Memory bandwidth (mobile DRAM at 50-90 GB/s vs HBM3 at 2-3 TB/s)",
+        "Storage capacity"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does Apple's Neural Engine avoid CPU-NPU copy overhead?",
+      "options": [
+        "It uses PCIe 5.0",
+        "Core ML disables KV cache",
+        "It transcodes weights to FP4 before copy",
+        "Apple Silicon ships unified memory — CPU and ANE share the same pool"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which quantization format does the lesson recommend for WebGPU + WebLLM in the browser?",
+      "options": [
+        "NVFP4",
+        "FP8",
+        "Q4 MLC (q4f16_1) compiled via mlc_llm convert_weight",
+        "GGUF Q4_K_M"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Roughly what WebGPU mobile coverage does the lesson report for 2026?",
+      "options": [
+        "100% across all browsers",
+        "Only iOS Safari",
+        "Under 10%",
+        "About 70-75%, with Firefox Android still catching up"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why is keeping 128K context impractical on a typical phone?",
+      "options": [
+        "Tokenizers fail above 8K",
+        "Model weights plus KV cache for 32K tokens plus OS overhead easily exceed the 8 GB RAM budget",
+        "WebGPU caps context at 4K",
+        "iOS forbids long context"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why is voice highlighted as the killer app for edge inference?",
+      "options": [
+        "Voice agents are latency-sensitive (first token < 500 ms) and local inference eliminates network latency entirely",
+        "Voice models do not need KV cache",
+        "Voice models always fit in 50 MB",
+        "Voice runs in WebAssembly only"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

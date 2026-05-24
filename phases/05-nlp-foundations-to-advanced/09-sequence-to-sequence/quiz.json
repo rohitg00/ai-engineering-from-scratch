@@ -1,0 +1,102 @@
+{
+  "lesson": "09-sequence-to-sequence",
+  "title": "Sequence-to-Sequence Models",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the role of the encoder in a 2014-style seq2seq model?",
+      "options": [
+        "Computes attention weights",
+        "Performs beam search",
+        "Reads the source and produces a fixed-size context vector summarizing it",
+        "Generates target tokens"
+      ],
+      "correct": 2,
+      "explanation": "The encoder RNN compresses the source into a final hidden state used by the decoder."
+    },
+    {
+      "stage": "pre",
+      "question": "What is teacher forcing during seq2seq training?",
+      "options": [
+        "Adding a teacher network during inference",
+        "Doubling the batch size",
+        "Feeding the ground-truth previous token (instead of the model's prediction) as decoder input",
+        "Manually labeling each decoder step"
+      ],
+      "correct": 2,
+      "explanation": "Teacher forcing stabilizes training by using true previous tokens; without it early errors cascade."
+    },
+    {
+      "stage": "check",
+      "question": "Why does fixed context-vector seq2seq accuracy fall as input length grows?",
+      "options": [
+        "Padding tokens accumulate",
+        "Cross-entropy diverges",
+        "All information about the source must fit in a single fixed-size encoder hidden state, which loses detail on long inputs",
+        "Vocabulary becomes too large"
+      ],
+      "correct": 2,
+      "explanation": "The fixed context-vector bottleneck means long inputs cannot be losslessly summarized."
+    },
+    {
+      "stage": "check",
+      "question": "What is exposure bias?",
+      "options": [
+        "Bias from class imbalance",
+        "Bias in encoder embeddings",
+        "Annotator disagreement",
+        "The train/inference gap from training on ground-truth tokens but generating from the model's own predictions at inference"
+      ],
+      "correct": 3,
+      "explanation": "The model never practiced recovering from its own mistakes during training, so errors cascade at inference."
+    },
+    {
+      "stage": "check",
+      "question": "Why does beam search often outperform greedy decoding for generation?",
+      "options": [
+        "Beam search keeps the top-k partial sequences alive at each step instead of irrevocably committing to one token",
+        "Beam search avoids exposure bias",
+        "Beam search is faster",
+        "Beam search lowers the loss"
+      ],
+      "correct": 0,
+      "explanation": "Greedy commits per step; beam search explores multiple hypotheses, then picks the best complete one."
+    },
+    {
+      "stage": "post",
+      "question": "Which architectural family replaced RNN seq2seq for general generation tasks?",
+      "options": [
+        "Transformer encoder-decoder models (BART, T5, mBART, NLLB)",
+        "Graph neural networks",
+        "Naive Bayes",
+        "1D CNNs"
+      ],
+      "correct": 0,
+      "explanation": "Transformer encoder-decoders dropped recurrence and now dominate generation tasks."
+    },
+    {
+      "stage": "post",
+      "question": "What does scheduled sampling do?",
+      "options": [
+        "Anneals the teacher-forcing ratio downward during training so the model learns to recover from its own predictions",
+        "Schedules learning-rate decay",
+        "Reorders the training set",
+        "Adds random noise to embeddings"
+      ],
+      "correct": 0,
+      "explanation": "Scheduled sampling gradually mixes in model predictions to close the train/inference gap."
+    },
+    {
+      "stage": "post",
+      "question": "Why does greedy decoding alone often fail for user-facing generation?",
+      "options": [
+        "It cannot use embeddings",
+        "It always picks <EOS> first",
+        "Greedy can repeat or loop and cannot backtrack from a locally good but globally poor token choice",
+        "It requires more memory"
+      ],
+      "correct": 2,
+      "explanation": "Greedy decoding's irrevocable per-step choice causes loops and repetition without beam search or sampling."
+    }
+  ]
+}

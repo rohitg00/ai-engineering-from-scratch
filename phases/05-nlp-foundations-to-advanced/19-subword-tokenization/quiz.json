@@ -1,0 +1,102 @@
+{
+  "lesson": "19-subword-tokenization",
+  "title": "Subword Tokenization — BPE, WordPiece, Unigram, SentencePiece",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does subword tokenization buy you over word-level vocabularies?",
+      "options": [
+        "Rare words decompose into known subword pieces, eliminating OOV while keeping vocabulary bounded",
+        "Smaller models",
+        "Faster training",
+        "Better embeddings"
+      ],
+      "correct": 0,
+      "explanation": "Subword tokens cover any input by decomposition, removing the OOV problem of word-level vocab."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does GPT-2 use byte-level BPE rather than character-level BPE?",
+      "options": [
+        "Required by transformers",
+        "Byte BPE skips merges",
+        "A 256-byte base vocabulary covers any UTF-8 input, guaranteeing no [UNK] tokens",
+        "Bytes are smaller"
+      ],
+      "correct": 2,
+      "explanation": "Byte-level BPE starts from 256 bytes so every input encodes; nothing is OOV."
+    },
+    {
+      "stage": "check",
+      "question": "How does the Unigram tokenizer build its vocabulary?",
+      "options": [
+        "Greedy IDF weighting",
+        "Start from a large candidate set, iteratively prune tokens whose removal least hurts corpus log-likelihood",
+        "Greedy frequent-pair merging",
+        "Random sampling"
+      ],
+      "correct": 1,
+      "explanation": "Unigram fits a unigram LM and iteratively removes the least useful tokens to reach target vocab size."
+    },
+    {
+      "stage": "check",
+      "question": "What distinguishes WordPiece's merge criterion from BPE's?",
+      "options": [
+        "WordPiece uses bytes",
+        "WordPiece is unsupervised",
+        "WordPiece merges pairs that maximize training-corpus likelihood, while BPE merges the most frequent pair",
+        "WordPiece skips merges"
+      ],
+      "correct": 2,
+      "explanation": "WordPiece picks merges by likelihood; BPE picks by raw frequency."
+    },
+    {
+      "stage": "check",
+      "question": "Which tool trains a tokenizer directly on raw multilingual Unicode text?",
+      "options": [
+        "spaCy",
+        "tiktoken",
+        "tokenizers-lite",
+        "SentencePiece (encodes whitespace as a special marker and trains BPE or Unigram)"
+      ],
+      "correct": 3,
+      "explanation": "SentencePiece trains BPE/Unigram on raw text without pre-tokenization; tiktoken only encodes."
+    },
+    {
+      "stage": "post",
+      "question": "Why must production CI hash-check the deployed tokenizer.json?",
+      "options": [
+        "Tokenizer drift produces different token IDs from those the model was trained on, silently corrupting outputs",
+        "Required by Hugging Face",
+        "To compress storage",
+        "It reduces vocabulary size"
+      ],
+      "correct": 0,
+      "explanation": "Even small tokenizer changes shift IDs; a hash check catches drift before it reaches users."
+    },
+    {
+      "stage": "post",
+      "question": "What is a common reason a single emoji takes many tokens?",
+      "options": [
+        "Emojis are reserved",
+        "Multi-codepoint emojis encode into multiple UTF-8 bytes; without dedicated tokens each byte is its own subword",
+        "Emojis are stored as floats",
+        "Emojis are stop characters"
+      ],
+      "correct": 1,
+      "explanation": "Composite emojis encode as several bytes; byte-level tokenizers may use multiple tokens per glyph."
+    },
+    {
+      "stage": "post",
+      "question": "What heuristic guides vocabulary size for a new monolingual transformer?",
+      "options": [
+        "Always 8000",
+        "Always 1M",
+        "Roughly 32k for models under 1B parameters; 50-100k for 1-10B; 200k+ for multilingual or frontier models",
+        "Match training corpus size"
+      ],
+      "correct": 2,
+      "explanation": "Vocab size scales with model and language coverage; these are rough community defaults."
+    }
+  ]
+}

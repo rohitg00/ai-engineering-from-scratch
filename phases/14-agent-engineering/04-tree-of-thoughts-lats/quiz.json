@@ -1,0 +1,90 @@
+{
+  "lesson": "04-tree-of-thoughts-lats",
+  "title": "Tree of Thoughts and LATS: Deliberate Search",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does chain-of-thought struggle on Game of 24?",
+      "options": [
+        "The model cannot multiply integers",
+        "A linear walk cannot backtrack when an early step is wrong, so later steps compound the error",
+        "The prompt is too short",
+        "CoT requires a calculator tool that GPT-4 lacks"
+      ],
+      "correct": 1,
+      "explanation": "Without branching, a wrong early subexpression poisons the rest of the chain; the paper measures only 4 percent for CoT."
+    },
+    {
+      "stage": "pre",
+      "question": "What is a node in a Tree of Thoughts search?",
+      "options": [
+        "A token produced by the model",
+        "A coherent intermediate step or thought, with K possible child expansions",
+        "A weight update during fine-tuning",
+        "A tool registered with the runtime"
+      ],
+      "correct": 1,
+      "explanation": "ToT treats reasoning as a tree where each node is an intermediate thought that can expand into K children."
+    },
+    {
+      "stage": "check",
+      "question": "Which of these three is NOT one of LATS's roles for the LLM?",
+      "options": [
+        "Policy that proposes next actions",
+        "Value function that scores partial trajectories",
+        "Self-reflector that writes reflections on failure",
+        "Optimizer that updates model weights between rollouts"
+      ],
+      "correct": 3,
+      "explanation": "LATS is gradient-free; the three LLM roles are policy, value, and self-reflector. There are no weight updates."
+    },
+    {
+      "stage": "check",
+      "question": "Name the four MCTS phases the lesson lists.",
+      "options": [
+        "Sample, Score, Sort, Submit",
+        "Select, Expand, Simulate, Backpropagate",
+        "Plan, Execute, Reflect, Stop",
+        "Search, Synthesize, Synthesize-Again, Stop"
+      ],
+      "correct": 1,
+      "explanation": "MCTS proceeds in select, expand, simulate, backpropagate per iteration."
+    },
+    {
+      "stage": "check",
+      "question": "In UCT, what is the role of the exploration constant c?",
+      "options": [
+        "It scales the value estimate Q",
+        "It weights the exploration term sqrt(ln N / n) against the exploitation term Q",
+        "It sets the maximum tree depth",
+        "It controls the number of rollouts"
+      ],
+      "correct": 1,
+      "explanation": "c balances exploitation (Q) against the exploration term; tune per task."
+    },
+    {
+      "stage": "post",
+      "question": "When is search actively harmful compared to a single trajectory?",
+      "options": [
+        "When the evaluator is noisy and there is a single right answer, so the search converges on a good-scoring wrong answer",
+        "When the task involves multiple correct answers",
+        "Whenever tokens are cheap",
+        "When the task is code generation"
+      ],
+      "correct": 0,
+      "explanation": "A noisy value function plus a single correct answer is exactly when search overfits to the noise."
+    },
+    {
+      "stage": "post",
+      "question": "Roughly how much more token usage should you budget for ToT on Game of 24 compared with CoT?",
+      "options": [
+        "About 2x",
+        "About 10x",
+        "100x to 1000x",
+        "Less than CoT because of pruning"
+      ],
+      "correct": 2,
+      "explanation": "The lesson cites 100-1000x token cost for ToT on Game of 24 versus CoT."
+    }
+  ]
+}

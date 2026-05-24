@@ -1,0 +1,90 @@
+{
+  "lesson": "25-multi-agent-debate",
+  "title": "Multi-Agent Debate and Collaboration",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the Society of Minds protocol have N model instances do?",
+      "options": [
+        "Each runs a different benchmark",
+        "Independently propose answers, then over R rounds read and critique each other's proposals until they converge",
+        "Train on a shared dataset",
+        "Negotiate prices"
+      ],
+      "correct": 1,
+      "explanation": "N proposers, R rounds, cross-critique, convergence is the canonical Du et al. debate."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does cross-model debate (e.g. ChatGPT + Bard) outperform single-model debate?",
+      "options": [
+        "Different vendors negotiate prices",
+        "Heterogeneity reduces shared blind spots so cross-critique catches more errors",
+        "It is cheaper",
+        "Vendors share weights"
+      ],
+      "correct": 1,
+      "explanation": "Mixing models brings independent error distributions, which raises the ceiling of debate."
+    },
+    {
+      "stage": "check",
+      "question": "What is the main token-cost win of a sparse topology over full mesh?",
+      "options": [
+        "Sparse topology requires no models",
+        "Each debater reads only a subset of peers, so critique-op count drops while accuracy often matches",
+        "Sparse topology doubles the rounds",
+        "It removes the LLM"
+      ],
+      "correct": 1,
+      "explanation": "Sparse (star, ring, hub-and-spoke) reduces critique ops without losing accuracy on many tasks."
+    },
+    {
+      "stage": "check",
+      "question": "Which case does the lesson list as where debate hurts?",
+      "options": [
+        "Open-ended reasoning",
+        "A simple factual lookup, because one lookup is cheaper than five debates",
+        "Chess move validity",
+        "Biography generation"
+      ],
+      "correct": 1,
+      "explanation": "Latency- and cost-sensitive trivial lookups do not benefit from N x R debate."
+    },
+    {
+      "stage": "check",
+      "question": "What is convergence collapse?",
+      "options": [
+        "Network outage",
+        "All agents converge on the first wrong answer; mitigate with required disagreement rounds",
+        "Process crash",
+        "TLS handshake failure"
+      ],
+      "correct": 1,
+      "explanation": "Early agreement on a wrong answer is mitigated by forcing distinct round-1 proposals."
+    },
+    {
+      "stage": "post",
+      "question": "Why does prompt homogenization undermine debate?",
+      "options": [
+        "It violates Apache 2.0",
+        "Identical prompts produce nearly identical answers, removing the cross-critique signal",
+        "It uses too many tokens",
+        "It bypasses the supervisor"
+      ],
+      "correct": 1,
+      "explanation": "Diverse prompts (and ideally diverse models) keep the proposal distribution wide."
+    },
+    {
+      "stage": "post",
+      "question": "Which production pattern is a debate variant per the lesson?",
+      "options": [
+        "Anthropic orchestrator-workers with a synthesis step",
+        "Pure single-shot RAG",
+        "Cron-only schedule",
+        "Vector indexing"
+      ],
+      "correct": 0,
+      "explanation": "Orchestrator-workers with synthesis is a debate-shaped pattern in production."
+    }
+  ]
+}

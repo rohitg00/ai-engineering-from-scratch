@@ -1,0 +1,90 @@
+{
+  "lesson": "18-agno-and-mastra-runtimes",
+  "title": "Agno and Mastra: Production Runtimes",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which language pairing does the lesson recommend for each runtime?",
+      "options": [
+        "Agno for TypeScript, Mastra for Python",
+        "Agno for Python, Mastra for TypeScript",
+        "Both are Rust-first",
+        "Both are Go-first"
+      ],
+      "correct": 1,
+      "explanation": "Agno is Python (FastAPI-shaped); Mastra is TypeScript (Vercel AI SDK-shaped)."
+    },
+    {
+      "stage": "pre",
+      "question": "What is Agno's recommended production deployment shape?",
+      "options": [
+        "A long-lived stateful daemon",
+        "A stateless session-scoped FastAPI backend; each request starts a fresh agent and session state lives in a DB",
+        "A serverless cron worker only",
+        "A WebSocket-only server"
+      ],
+      "correct": 1,
+      "explanation": "Stateless FastAPI per request; session state externalized to a DB."
+    },
+    {
+      "stage": "check",
+      "question": "What are Mastra's three primitives?",
+      "options": [
+        "Agents, Tools, Workflows",
+        "Actor, Message, Inbox",
+        "Plan, Worker, Solver",
+        "Node, Edge, State"
+      ],
+      "correct": 0,
+      "explanation": "Agents (LLM + role), Tools (Zod-typed), and Workflows are Mastra's three primitives."
+    },
+    {
+      "stage": "check",
+      "question": "Roughly what agent-instantiation cost does Agno target per its docs?",
+      "options": [
+        "About 2 microseconds with about 3.75 KiB per agent",
+        "About 200 milliseconds and 100 MiB per agent",
+        "About 1 second and 1 GiB per agent",
+        "About 10 minutes and 4 GiB per agent"
+      ],
+      "correct": 0,
+      "explanation": "Agno's docs cite about 2 microseconds and about 3.75 KiB per agent."
+    },
+    {
+      "stage": "check",
+      "question": "What does Mastra's Unified Model Router give?",
+      "options": [
+        "A single client surface for thousands of models across many providers",
+        "A queue for tool calls",
+        "A vector DB layer",
+        "A graph checkpointer"
+      ],
+      "correct": 0,
+      "explanation": "Mastra's Unified Model Router cites 3,300+ models across 94 providers."
+    },
+    {
+      "stage": "post",
+      "question": "When is perf-for-perf's-sake the wrong reason to pick Agno?",
+      "options": [
+        "When the workload is one slow agent call per request and overhead is not the bottleneck",
+        "When using Python 3.13",
+        "When deploying to AWS",
+        "When using Langfuse"
+      ],
+      "correct": 0,
+      "explanation": "2 microseconds matters at chat fan-in scale, not for a single slow call per request."
+    },
+    {
+      "stage": "post",
+      "question": "What licensing surface should you read carefully before forking Mastra?",
+      "options": [
+        "There is no license file",
+        "ee/ directories are source-available rather than Apache 2.0 and restrict commercial use",
+        "All of Mastra is GPL",
+        "Mastra requires CLA but no license review"
+      ],
+      "correct": 1,
+      "explanation": "Mastra is Apache 2.0 except for ee/ which is source-available; check the restrictions before forking."
+    }
+  ]
+}

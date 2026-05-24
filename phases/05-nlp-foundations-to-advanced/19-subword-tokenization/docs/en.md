@@ -132,7 +132,7 @@ Vocabulary size is a scaling decision, not a constant. Rough heuristic: 32k for 
 
 ## Ship It
 
-Save as `outputs/skill-tokenizer-picker.md`:
+Save as `outputs/skill-bpe-vs-wordpiece.md`:
 
 ```markdown
 ---

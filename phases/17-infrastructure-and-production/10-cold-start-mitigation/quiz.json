@@ -1,0 +1,78 @@
+{
+  "lesson": "10-cold-start-mitigation",
+  "title": "Cold Start Mitigation for Serverless LLMs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Roughly how long does a cold start typically take for a 70B model on a fresh node without mitigations?",
+      "options": [
+        "Over 1 hour",
+        "30-60 seconds",
+        "3-8 minutes",
+        "Under 10 seconds"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which AWS-side feature does the lesson recommend for pre-seeding container images so step-2 image pull disappears?",
+      "options": [
+        "Bottlerocket dual-volume architecture referenced from EC2NodeClass",
+        "ECS task definitions",
+        "Spot fleet placement",
+        "EBS volume snapshots only"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which Modal feature provides the closest thing to a \"warm GPU boot in seconds\" by deserializing post-load state directly into HBM?",
+      "options": [
+        "Tiered NVMe-to-DRAM loading",
+        "Live migration",
+        "GPU memory snapshots (checkpoints)",
+        "Run:ai Model Streamer"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does live migration transfer input tokens rather than KV cache between nodes?",
+      "options": [
+        "Live migration is required by GDPR",
+        "Input tokens have larger entropy",
+        "KV cache is encrypted and cannot move",
+        "Recomputing KV on the destination is cheaper than transferring GB of KV cache over the network"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which serverless layer trades direct GPU cost for predictable readiness by keeping at least one replica live?",
+      "options": [
+        "Warm pool with min_workers >= 1",
+        "Tiered loading",
+        "Bottlerocket pre-seeding",
+        "Live migration"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson say cold-start mitigation must be stacked across layers rather than picked as a single tool?",
+      "options": [
+        "No single layer eliminates every step (node provision, image pull, weights load, engine init); stacking layers compresses each step",
+        "It is a regulatory requirement",
+        "Modal owns the entire stack",
+        "All five layers are bundled in vLLM"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

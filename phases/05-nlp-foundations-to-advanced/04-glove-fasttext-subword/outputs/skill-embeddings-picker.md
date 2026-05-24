@@ -1,5 +1,5 @@
 ---
-name: tokenizer-picker
+name: skill-embeddings-picker
 description: Pick a tokenization approach for a new language model or text pipeline.
 version: 1.0.0
 phase: 5

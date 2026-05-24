@@ -1,0 +1,90 @@
+{
+  "lesson": "07-end-to-end-fine-tuning-pipeline",
+  "title": "Capstone 07 — End-to-End Fine-Tuning Pipeline (Data to SFT to DPO to Serve)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the contamination check guard against during data preparation?",
+      "options": [
+        "Tokenizer drift between SFT and DPO stages",
+        "GPU driver mismatches between training and serving",
+        "GGUF version skew across llama.cpp builds",
+        "Test-set leakage from public benchmarks such as MMLU-Pro and MT-Bench-v2 into training data"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Why does the pipeline compose SFT then DPO (or GRPO) rather than DPO alone?",
+      "options": [
+        "Axolotl does not implement DPO",
+        "SFT establishes domain behavior on labeled completions while DPO or GRPO aligns the model against preference pairs or verifiable rewards",
+        "DPO requires a separate base model architecture",
+        "DPO cannot run on quantized weights"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does EAGLE-3 contribute to the vLLM serving stage?",
+      "options": [
+        "A new prompt-caching layer",
+        "An OPA policy for tool calls",
+        "An automatic data dedup step",
+        "Draft heads that predict N tokens ahead; the target verifies in one pass for 2-3x throughput"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which metric reports how well a speculative-decoding draft aligns with the target model?",
+      "options": [
+        "Acceptance rate",
+        "Coverage delta",
+        "PSI",
+        "Perplexity"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which trio of quants does the pipeline ship for deployment flexibility?",
+      "options": [
+        "ONNX, CoreML, TFLite",
+        "GPTQ-INT4-Marlin, AWQ-INT4, and GGUF-Q4_K_M",
+        "INT8 only across three runtimes",
+        "FP32, FP16, BF16"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which framework convention does the 2026 model card follow in this capstone?",
+      "options": [
+        "Datasheets for Datasets",
+        "Model Openness Framework (MOF) 2026 template covering data, training, eval, safety, license, and reproducibility",
+        "HuggingFace YAML front-matter only",
+        "OpenAI's model card format"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which HPA metric is used to autoscale the serving replicas?",
+      "options": [
+        "Queue-wait time",
+        "CPU utilization",
+        "GPU temperature",
+        "Network egress bytes"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "lesson": "05-sentiment-analysis",
+  "title": "Sentiment Analysis",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is 'The food was not great' a hard case for naive BoW classifiers?",
+      "options": [
+        "It has no punctuation",
+        "It mixes English and French",
+        "Negation flips meaning, but bag of words discards the link between 'not' and 'great'",
+        "It contains too few tokens"
+      ],
+      "correct": 2,
+      "explanation": "BoW cannot bind 'not' to the word it negates, so the classifier misses the polarity flip."
+    },
+    {
+      "stage": "pre",
+      "question": "What two steps make up classical sentiment analysis?",
+      "options": [
+        "Translate, then classify",
+        "Embed, then cluster",
+        "Represent (vectorize text) and classify (linear model on the vector)",
+        "Search, then rank"
+      ],
+      "correct": 2,
+      "explanation": "Classical sentiment is feature extraction followed by a linear classifier."
+    },
+    {
+      "stage": "check",
+      "question": "Why does Naive Bayes work despite its 'naive' independence assumption?",
+      "options": [
+        "With sparse text features and moderate data the classifier mostly cares which side each word leans toward, not exact joint probabilities",
+        "Naive Bayes secretly learns interactions",
+        "The assumption is actually true for text",
+        "Laplace smoothing fixes dependence"
+      ],
+      "correct": 0,
+      "explanation": "Even with wrong independence, leaning-direction information per word is enough to classify well."
+    },
+    {
+      "stage": "check",
+      "question": "Why include 'NOT_' prefixed tokens during preprocessing?",
+      "options": [
+        "To normalize case",
+        "To stem the words",
+        "To turn 'good' versus 'NOT_good' into separate features that the classifier can weight oppositely",
+        "To shrink the vocabulary"
+      ],
+      "correct": 2,
+      "explanation": "Negation scoping splits negated forms into distinct features so a BoW classifier can model the flip."
+    },
+    {
+      "stage": "check",
+      "question": "Why is removing stopwords risky for sentiment analysis?",
+      "options": [
+        "Negation words ('not', 'no', 'never') are usually treated as stopwords but carry sentiment signal",
+        "Stopword lists are too long",
+        "It increases sparsity",
+        "Stopword removal breaks tokenization"
+      ],
+      "correct": 0,
+      "explanation": "Default stopword lists drop negations and similar carriers of sentiment."
+    },
+    {
+      "stage": "post",
+      "question": "Which metric should you report when sentiment classes are imbalanced?",
+      "options": [
+        "Macro-F1 (mean of per-class F1s, equal-weighted)",
+        "Accuracy alone",
+        "Mean squared error",
+        "Micro-F1 only"
+      ],
+      "correct": 0,
+      "explanation": "Macro-F1 forces the minority class to count; accuracy or micro-F1 hides it."
+    },
+    {
+      "stage": "post",
+      "question": "When should you skip classical models and reach for a transformer for sentiment?",
+      "options": [
+        "When you have under 100 examples",
+        "When latency is critical",
+        "When you need explainability",
+        "Sarcasm detection, long shifting documents, aspect-based sentiment, or low-resource languages"
+      ],
+      "correct": 3,
+      "explanation": "Sarcasm, aspect-based, and cross-lingual sentiment exceed classical BoW models' reach."
+    },
+    {
+      "stage": "post",
+      "question": "Why is L2 regularization important for logistic regression on text?",
+      "options": [
+        "Required to compute gradients",
+        "Avoids ReLU dead units",
+        "Speeds up matrix inversion",
+        "Sparse high-dimensional text features otherwise let the model memorize training examples"
+      ],
+      "correct": 3,
+      "explanation": "L2 prevents overfitting in the sparse-feature, high-dimensional regime of text."
+    }
+  ]
+}

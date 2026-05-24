@@ -1,0 +1,90 @@
+{
+  "lesson": "09-code-migration-agent",
+  "title": "Capstone 09 — Code Migration Agent (Repo-Level Language / Runtime Upgrade)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the pipeline combine a deterministic substrate with an agent layer rather than using just one?",
+      "options": [
+        "OpenRewrite or libcst handles 70-80% of mechanical rewrites safely and cheaply, leaving the agent for the ambiguous long tail",
+        "Agents alone are faster than recipes",
+        "Deterministic recipes are slower than LLMs",
+        "Determinism is needed only for the build system"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What signal does the pipeline use as ground truth for a successful migration?",
+      "options": [
+        "Agent self-grading on a rubric",
+        "Reviewer approval on the PR",
+        "Diff size below a hard limit",
+        "Green CI in the sandbox without a coverage regression beyond a small threshold"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which budget caps does the agent loop enforce per repo?",
+      "options": [
+        "Unlimited time and cost; abort only on errors",
+        "No turn limit, $100 ceiling",
+        "1 hour wall-clock and 100 turns",
+        "30 minutes wall-clock, $8 cost, and 20 agent turns"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What gate fires when coverage drops more than about 2% after migration?",
+      "options": [
+        "The reviewer is bypassed",
+        "The repo gets filed under a coverage_regression failure class instead of opening a clean PR",
+        "The deterministic substrate replays its recipes",
+        "The agent automatically force-pushes a fix"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is the failure taxonomy treated as a deliverable rather than a side artifact?",
+      "options": [
+        "It replaces the test suite",
+        "It groups failed repos by class so future recipe authors can target the top failure modes",
+        "It is required by GitHub branch protection",
+        "It satisfies a compliance checklist"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which public benchmark does the capstone target for Java 8 to 17 migration?",
+      "options": [
+        "MigrationBench from Amazon",
+        "SWE-bench Pro",
+        "MMLU-Pro",
+        "ViDoRe v3"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the agent integration rubric measure about the fix distribution?",
+      "options": [
+        "Tokenization speed of the source file",
+        "The number of force-pushes per repo",
+        "Number of dependencies pinned",
+        "The fraction of fixes handled by OpenRewrite versus authored by the agent layer"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

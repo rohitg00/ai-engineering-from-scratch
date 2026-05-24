@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="416 lessons. 20 phases. Build the math, the model, the trainer, the tokenizer, and the agent loop. Once, by hand.">
+  <meta name="description" content="435 lessons. 20 phases. Build the math, the model, the trainer, the tokenizer, and the agent loop. Once, by hand.">
   <meta property="og:title" content="AI Engineering from Scratch">
-  <meta property="og:description" content="416 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand before any framework gets imported. Python, TypeScript, Rust, Julia.">
+  <meta property="og:description" content="435 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand before any framework gets imported. Python, TypeScript, Rust, Julia.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
   <meta property="og:url" content="https://aiengineeringfromscratch.com">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Engineering from Scratch">
-  <meta name="twitter:description" content="416 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta name="twitter:description" content="435 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,60 +69,6 @@
       font-style: italic;
     }
 
-    .manual-hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
-      gap: 48px;
-      align-items: start;
-    }
-
-    .manual-hero-left { min-width: 0; }
-
-    .manual-hero-stack {
-      border: 1px solid var(--rule-soft);
-      background-color: var(--bg);
-      background-image: radial-gradient(circle at 4px 4px, rgba(0,0,0,0.05) 1px, transparent 1.5px);
-      background-size: 16px 16px;
-      padding: 14px 16px 16px;
-    }
-
-    .hero-stack-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--rule-soft);
-      margin-bottom: 12px;
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .hero-stack-eyebrow { color: var(--blueprint); }
-    .hero-stack-tag { color: var(--ink-mute); }
-
-    .manual-hero-stack svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      color: var(--blueprint);
-    }
-
-    .hero-repo-link { cursor: pointer; font-weight: 400; text-decoration: none; }
-    .hero-repo-link text { font-weight: 400; }
-    .hero-repo-link .hrepo-rect { transition: fill 0.15s, stroke-width 0.15s; }
-    .hero-repo-link:hover .hrepo-rect { fill: var(--blueprint-tint-strong); }
-    .hero-repo-link:focus { outline: none; }
-    .hero-repo-link:focus-visible .hrepo-rect {
-      fill: var(--blueprint-tint-strong);
-      stroke-width: 2.5;
-    }
-
-    @media (max-width: 1024px) {
-      .manual-hero-grid { grid-template-columns: 1fr; gap: 32px; }
-      .manual-hero-stack { max-width: 420px; }
-    }
 
     .preface {
       padding: 48px 0 32px;
@@ -582,90 +528,6 @@
       }
     }
 
-    .ecosystem {
-      padding: 64px 0;
-      border-top: 1px solid var(--rule-soft);
-      border-bottom: 1px solid var(--rule-soft);
-    }
-    .ecosystem-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 12px;
-    }
-    .ecosystem-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      line-height: 1.1;
-      color: var(--ink);
-      margin-bottom: 12px;
-    }
-    .ecosystem-lede {
-      font-family: var(--font-body);
-      font-size: 1.06rem;
-      color: var(--ink-soft);
-      max-width: 720px;
-      line-height: 1.55;
-      margin-bottom: 36px;
-    }
-    .ecosystem-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .ecosystem-card {
-      display: flex;
-      flex-direction: column;
-      padding: 24px;
-      border: 1px solid var(--rule-soft);
-      background: var(--bg-surface);
-      text-decoration: none;
-      color: var(--ink);
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .ecosystem-card:hover {
-      border-color: var(--blueprint);
-      background: var(--bg);
-    }
-    .ecosystem-card-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 12px;
-      gap: 8px;
-    }
-    .ecosystem-card-name {
-      font-family: var(--font-mono);
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--ink);
-    }
-    .ecosystem-card-stars {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--ink-mute);
-      white-space: nowrap;
-    }
-    .ecosystem-card-desc {
-      font-family: var(--font-body);
-      font-size: 0.96rem;
-      color: var(--ink-soft);
-      line-height: 1.45;
-      flex: 1;
-    }
-    .ecosystem-card-cta {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--blueprint);
-      margin-top: 16px;
-    }
-    @media (max-width: 800px) {
-      .ecosystem-grid { grid-template-columns: 1fr; }
-    }
 
     /* Figure card (makingsoftware aesthetic) */
     .figure-card {
@@ -706,6 +568,8 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo">
@@ -737,105 +601,16 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
 
     <section class="manual-masthead container">
       <div class="manual-meta-row">
         <span>FIG_000 &middot; curriculum v1.0 · 2026</span>
         <span class="right">open source · MIT</span>
       </div>
-      <div class="manual-hero-grid">
-        <div class="manual-hero-left">
-          <h1 class="manual-title">AI Engineering<br>from Scratch</h1>
-          <p class="manual-tagline reveal">416 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported.</p>
-          <p class="manual-attribution reveal" style="--stagger-delay: 80ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
-        </div>
-        <aside class="manual-hero-stack reveal" style="--stagger-delay: 120ms;" aria-labelledby="heroStackTitle">
-          <div class="hero-stack-head">
-            <span class="hero-stack-eyebrow">FIG_006 · the stack</span>
-            <span class="hero-stack-tag">memory · reasoning · kb</span>
-          </div>
-          <svg viewBox="0 0 320 380" xmlns="http://www.w3.org/2000/svg"
-               fill="none" stroke="currentColor" stroke-width="1.5" role="img" aria-labelledby="heroStackTitle">
-            <title id="heroStackTitle">Three repos compose into the agent stack the curriculum teaches.</title>
-            <style>
-              text { font-weight: 400; }
-              .hbp-fill { fill: var(--blueprint); }
-              .hbp-tint { fill: var(--blueprint-tint); }
-              .hbp-tint-strong { fill: var(--blueprint-tint-strong); }
-              .hink { fill: var(--ink); }
-              .hink-mute { fill: var(--ink-mute); }
-              .hmono { font-family: var(--font-mono); font-weight: 400; }
-              .hserif { font-family: var(--font-body); font-weight: 400; }
-              .hflow { stroke: var(--blueprint); stroke-width: 1.4; }
-            </style>
-
-            <!-- agentbrain (top) -->
-            <a href="https://github.com/rohitg00/agentbrain" target="_blank" rel="noopener" class="hero-repo-link">
-              <g transform="translate(60, 16)">
-                <rect width="200" height="56" class="hbp-tint hrepo-rect" stroke="currentColor"/>
-                <text x="12" y="20" class="hmono hbp-fill" font-size="8" letter-spacing="1.4">REPO · REASONING</text>
-                <text x="12" y="42" class="hmono hink" font-size="13">agentbrain</text>
-                <text x="188" y="50" text-anchor="end" class="hmono hbp-fill" font-size="10" data-eco-svg-stars="agentbrain">★ ...</text>
-              </g>
-            </a>
-
-            <!-- arrow brain -> agent -->
-            <line x1="160" y1="72" x2="160" y2="118" class="hflow"/>
-            <polyline points="155,112 160,118 165,112" class="hflow"/>
-            <text x="170" y="100" class="hmono hbp-fill" font-size="8" letter-spacing="1.4">STEERS</text>
-
-            <!-- AGENT center -->
-            <g transform="translate(60, 122)">
-              <rect width="200" height="92" class="hbp-tint-strong" stroke="currentColor"/>
-              <text x="100" y="22" text-anchor="middle" class="hmono hink" font-size="10" letter-spacing="2">AGENT LOOP</text>
-              <line x1="14" y1="32" x2="186" y2="32" stroke="currentColor" stroke-opacity="0.25"/>
-              <text x="100" y="52" text-anchor="middle" class="hmono hink" font-size="10">function · worker · trigger</text>
-              <text x="100" y="68" text-anchor="middle" class="hmono hink-mute" font-size="9">+ queue · persistence · authz</text>
-              <text x="100" y="84" text-anchor="middle" class="hmono hbp-fill" font-size="8" letter-spacing="1.6">FROM THE CURRICULUM</text>
-            </g>
-
-            <!-- arrow agent -> memory -->
-            <line x1="100" y1="214" x2="100" y2="258" class="hflow"/>
-            <polyline points="95,252 100,258 105,252" class="hflow"/>
-            <line x1="86" y1="214" x2="86" y2="258" class="hflow"/>
-            <polyline points="81,220 86,214 91,220" class="hflow"/>
-            <text x="115" y="240" class="hmono hbp-fill" font-size="8" letter-spacing="1.4">READ / WRITE</text>
-
-            <!-- agentmemory -->
-            <a href="https://github.com/rohitg00/agentmemory" target="_blank" rel="noopener" class="hero-repo-link">
-              <g transform="translate(0, 262)">
-                <rect width="148" height="56" class="hbp-tint hrepo-rect" stroke="currentColor"/>
-                <text x="12" y="20" class="hmono hbp-fill" font-size="8" letter-spacing="1.4">REPO · MEMORY</text>
-                <text x="12" y="42" class="hmono hink" font-size="13">agentmemory</text>
-                <text x="136" y="50" text-anchor="end" class="hmono hbp-fill" font-size="10" data-eco-svg-stars="agentmemory">★ ...</text>
-              </g>
-            </a>
-
-            <!-- arrow agent -> akbp -->
-            <line x1="220" y1="214" x2="220" y2="258" class="hflow"/>
-            <polyline points="215,252 220,258 225,252" class="hflow"/>
-            <text x="270" y="240" class="hmono hbp-fill" font-size="8" letter-spacing="1.4">ANSWERS</text>
-            <line x1="234" y1="214" x2="234" y2="258" class="hflow"/>
-            <polyline points="229,220 234,214 239,220" class="hflow"/>
-
-            <!-- akbp -->
-            <a href="https://github.com/rohitg00/akbp" target="_blank" rel="noopener" class="hero-repo-link">
-              <g transform="translate(172, 262)">
-                <rect width="148" height="56" class="hbp-tint hrepo-rect" stroke="currentColor"/>
-                <text x="12" y="20" class="hmono hbp-fill" font-size="8" letter-spacing="1.4">REPO · KNOWLEDGE</text>
-                <text x="12" y="42" class="hmono hink" font-size="13">akbp</text>
-                <text x="136" y="50" text-anchor="end" class="hmono hbp-fill" font-size="10" data-eco-svg-stars="akbp">★ ...</text>
-              </g>
-            </a>
-
-            <!-- divider -->
-            <line x1="0" y1="338" x2="320" y2="338" stroke="currentColor" stroke-opacity="0.25" stroke-width="0.6"/>
-            <text x="160" y="358" text-anchor="middle" class="hmono hbp-fill" font-size="9" letter-spacing="2">SAME AUTHOR · OPEN SOURCE</text>
-            <text x="160" y="374" text-anchor="middle" class="hmono hink-mute" font-size="8" letter-spacing="1.4">FULL STACK BELOW · SCROLL TO FIG_006</text>
-          </svg>
-        </aside>
-      </div>
+      <h1 class="manual-title">AI Engineering<br>from Scratch</h1>
+      <p class="manual-tagline reveal">435 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported.</p>
+      <p class="manual-attribution reveal" style="--stagger-delay: 80ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
       <div class="ascii-rule" style="margin-top:48px;"></div>
     </section>
 
@@ -844,7 +619,7 @@
         <div class="preface-eyebrow reveal reveal--left">How this works</div>
         <div class="preface-body reveal" style="--stagger-delay: 120ms;">
           <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.</p>
-          <p>This curriculum is the spine. 20 phases, 416 lessons, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
+          <p>This curriculum is the spine. 20 phases, 435 lessons, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
           <p>Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.</p>
         </div>
       </div>
@@ -878,7 +653,7 @@
     </section>
 
     <section class="toc container" id="contents">
-      <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 416 lessons</div>
+      <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 435 lessons</div>
       <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
       <div class="toc-list" id="phasesGrid"></div>
       <div class="legend">
@@ -906,134 +681,6 @@
       </div>
     </div>
 
-    <section class="ecosystem container" id="ecosystem">
-      <div class="ecosystem-eyebrow reveal reveal--left">From the same author</div>
-      <h2 class="ecosystem-title reveal" style="--stagger-delay: 60ms;">Memory + reasoning + knowledge protocol</h2>
-      <p class="ecosystem-lede reveal" style="--stagger-delay: 120ms;">Three open-source repositories that compose into a full agent stack. The curriculum teaches the primitives; these tools ship them in production.</p>
-
-      <figure class="figure-card reveal" style="--stagger-delay: 160ms;">
-        <div class="figure-head">
-          <span class="left">FIG_006 · the agent stack</span>
-          <span class="right">memory · reasoning · knowledge</span>
-        </div>
-        <div class="figure-body">
-          <svg viewBox="0 0 1100 460" xmlns="http://www.w3.org/2000/svg"
-               fill="none" stroke="currentColor" stroke-width="1.5"
-               role="img" aria-labelledby="figAgentStackTitle">
-            <title id="figAgentStackTitle">Three repositories — agentmemory, agentbrain, akbp — composing into the agent stack the curriculum teaches.</title>
-            <style>
-              text { font-weight: 400; }
-              .bp-fill { fill: var(--blueprint); }
-              .bp-tint { fill: var(--blueprint-tint); }
-              .bp-tint-strong { fill: var(--blueprint-tint-strong); }
-              .ink { fill: var(--ink); }
-              .ink-mute { fill: var(--ink-mute); }
-              .mono { font-family: var(--font-mono); font-weight: 400; }
-              .serif { font-family: var(--font-body); font-weight: 400; }
-              .leader { stroke: var(--blueprint); stroke-opacity: 0.35; stroke-width: 1; }
-              .flow { stroke: var(--blueprint); stroke-width: 1.6; }
-              .anchor { fill: var(--blueprint); }
-            </style>
-
-            <!-- Center: AGENT block (what the curriculum builds) -->
-            <g transform="translate(440, 170)">
-              <rect width="220" height="120" class="bp-tint-strong" stroke="currentColor" stroke-width="1.5"/>
-              <text x="110" y="34" text-anchor="middle" class="mono ink" font-size="12" letter-spacing="2.4">AGENT LOOP</text>
-              <line x1="20" y1="46" x2="200" y2="46" stroke="currentColor" stroke-opacity="0.3" stroke-width="0.8"/>
-              <text x="110" y="70" text-anchor="middle" class="serif ink" font-size="14" font-style="italic">function · worker · trigger</text>
-              <text x="110" y="92" text-anchor="middle" class="serif ink-mute" font-size="13">you build this in Phase 14</text>
-              <text x="110" y="110" text-anchor="middle" class="mono ink-mute" font-size="10" letter-spacing="2">FROM THE CURRICULUM</text>
-            </g>
-
-            <!-- Left module: agentmemory -->
-            <a href="https://github.com/rohitg00/agentmemory" target="_blank" rel="noopener" class="hero-repo-link">
-              <g transform="translate(60, 180)">
-                <rect width="220" height="100" class="bp-tint hrepo-rect" stroke="currentColor" stroke-width="1.5"/>
-                <text x="14" y="26" class="mono bp-fill" font-size="9" letter-spacing="1.6">MEMORY SURFACE</text>
-                <text x="14" y="54" class="mono ink" font-size="17">agentmemory</text>
-                <text x="14" y="78" class="serif ink-mute" font-size="12">persistent memory for AI agents.</text>
-                <text x="206" y="94" text-anchor="end" class="mono bp-fill" font-size="11" data-eco-svg-stars="agentmemory">★ ...</text>
-              </g>
-            </a>
-
-            <!-- Top module: agentbrain -->
-            <a href="https://github.com/rohitg00/agentbrain" target="_blank" rel="noopener" class="hero-repo-link">
-              <g transform="translate(440, 30)">
-                <rect width="220" height="100" class="bp-tint hrepo-rect" stroke="currentColor" stroke-width="1.5"/>
-                <text x="14" y="26" class="mono bp-fill" font-size="9" letter-spacing="1.6">REASONING SURFACE</text>
-                <text x="14" y="54" class="mono ink" font-size="17">agentbrain</text>
-                <text x="14" y="78" class="serif ink-mute" font-size="12">evidence-first reasoning loop.</text>
-                <text x="206" y="94" text-anchor="end" class="mono bp-fill" font-size="11" data-eco-svg-stars="agentbrain">★ ...</text>
-              </g>
-            </a>
-
-            <!-- Right module: akbp -->
-            <a href="https://github.com/rohitg00/akbp" target="_blank" rel="noopener" class="hero-repo-link">
-              <g transform="translate(820, 180)">
-                <rect width="220" height="100" class="bp-tint hrepo-rect" stroke="currentColor" stroke-width="1.5"/>
-                <text x="14" y="26" class="mono bp-fill" font-size="9" letter-spacing="1.6">KNOWLEDGE SURFACE</text>
-                <text x="14" y="54" class="mono ink" font-size="17">akbp</text>
-                <text x="14" y="78" class="serif ink-mute" font-size="12">agent knowledge base protocol.</text>
-                <text x="206" y="94" text-anchor="end" class="mono bp-fill" font-size="11" data-eco-svg-stars="akbp">★ ...</text>
-              </g>
-            </a>
-
-            <!-- Flow: agentmemory <-> AGENT (one label, two arrowheads) -->
-            <line x1="280" y1="230" x2="440" y2="230" class="flow"/>
-            <polyline points="434,225 440,230 434,235" class="flow"/>
-            <polyline points="286,225 280,230 286,235" class="flow"/>
-            <text x="360" y="222" text-anchor="middle" class="mono bp-fill" font-size="10" letter-spacing="1.6">READ / WRITE STATE</text>
-
-            <!-- Flow: agentbrain → AGENT (top) -->
-            <line x1="550" y1="130" x2="550" y2="170" class="flow"/>
-            <polyline points="545,164 550,170 555,164" class="flow"/>
-            <text x="565" y="155" class="mono bp-fill" font-size="10" letter-spacing="1.6">STEERS</text>
-
-            <!-- Flow: akbp <-> AGENT (one label, two arrowheads) -->
-            <line x1="820" y1="230" x2="660" y2="230" class="flow"/>
-            <polyline points="666,225 660,230 666,235" class="flow"/>
-            <polyline points="814,225 820,230 814,235" class="flow"/>
-            <text x="740" y="222" text-anchor="middle" class="mono bp-fill" font-size="10" letter-spacing="1.6">ANSWERS QUERIES</text>
-
-            <!-- Footer rule + caption inside SVG -->
-            <line x1="60" y1="340" x2="1040" y2="340" stroke="currentColor" stroke-opacity="0.25" stroke-width="0.6"/>
-            <text x="60" y="372" class="mono bp-fill" font-size="10" letter-spacing="1.8">EIGHT PRIMITIVES</text>
-            <text x="60" y="396" class="serif ink" font-size="14">function · worker · trigger · runtime · HTTP/RPC · queue · session persistence · authorization policy</text>
-            <text x="60" y="424" class="serif ink-mute" font-size="13" font-style="italic">Phase 14 teaches the primitives. The three repos above are the same primitives, shipped.</text>
-          </svg>
-        </div>
-        <figcaption class="figure-foot">
-          Three repositories, one stack: <strong>agentmemory</strong> writes durable state, <strong>agentbrain</strong> steers the loop from evidence, <strong>akbp</strong> answers knowledge queries between sessions and across agents.
-        </figcaption>
-      </figure>
-
-      <div class="ecosystem-grid">
-        <a class="ecosystem-card reveal" style="--stagger-delay: 180ms;" href="https://github.com/rohitg00/agentmemory" target="_blank" rel="noopener">
-          <div class="ecosystem-card-head">
-            <span class="ecosystem-card-name">agentmemory</span>
-            <span class="ecosystem-card-stars" data-eco-repo="agentmemory"></span>
-          </div>
-          <p class="ecosystem-card-desc">Persistent memory for AI coding agents. The state surface from Phase 14, productionized.</p>
-          <span class="ecosystem-card-cta">View on GitHub →</span>
-        </a>
-        <a class="ecosystem-card reveal" style="--stagger-delay: 240ms;" href="https://github.com/rohitg00/agentbrain" target="_blank" rel="noopener">
-          <div class="ecosystem-card-head">
-            <span class="ecosystem-card-name">agentbrain</span>
-            <span class="ecosystem-card-stars" data-eco-repo="agentbrain"></span>
-          </div>
-          <p class="ecosystem-card-desc">Evidence-first operating system for agents. The reasoning + verification surfaces, wired end-to-end.</p>
-          <span class="ecosystem-card-cta">View on GitHub →</span>
-        </a>
-        <a class="ecosystem-card reveal" style="--stagger-delay: 300ms;" href="https://github.com/rohitg00/akbp" target="_blank" rel="noopener">
-          <div class="ecosystem-card-head">
-            <span class="ecosystem-card-name">akbp</span>
-            <span class="ecosystem-card-stars" data-eco-repo="akbp"></span>
-          </div>
-          <p class="ecosystem-card-desc">Agent Knowledge Base Protocol. The handoff + knowledge layer between sessions and across agents.</p>
-          <span class="ecosystem-card-cta">View on GitHub →</span>
-        </a>
-      </div>
-    </section>
 
     <section class="colophon container">
       <div class="colophon-grid">

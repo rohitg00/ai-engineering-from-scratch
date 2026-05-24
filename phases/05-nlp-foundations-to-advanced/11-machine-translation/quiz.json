@@ -1,0 +1,102 @@
+{
+  "lesson": "11-machine-translation",
+  "title": "Machine Translation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does BLEU measure?",
+      "options": [
+        "Language identification accuracy",
+        "N-gram precision (typically 1-4) between hypothesis and reference, with a brevity penalty",
+        "Character-level F-score",
+        "Embedding cosine similarity"
+      ],
+      "correct": 1,
+      "explanation": "BLEU is the geometric mean of 1-4-gram precision against references, plus a brevity penalty."
+    },
+    {
+      "stage": "pre",
+      "question": "Why use sacrebleu instead of rolling your own BLEU?",
+      "options": [
+        "It is more accurate",
+        "It runs on GPU",
+        "It normalizes tokenization so scores are comparable across papers and runs",
+        "It supports streaming"
+      ],
+      "correct": 2,
+      "explanation": "sacrebleu freezes tokenization, removing a common source of incomparable BLEU numbers."
+    },
+    {
+      "stage": "check",
+      "question": "Which NLLB-specific setting controls the target language during decoding?",
+      "options": [
+        "length_penalty",
+        "forced_bos_token_id set to the target language code's token id",
+        "num_beams",
+        "src_lang"
+      ],
+      "correct": 1,
+      "explanation": "NLLB forces the first decoded token to a target-language code via forced_bos_token_id."
+    },
+    {
+      "stage": "check",
+      "question": "Which metric family is the 2026 default for production MT quality where labeled data exists?",
+      "options": [
+        "BLEU alone",
+        "Token edit distance",
+        "Learned metrics such as COMET (and BERTScore/BLEURT) trained on human judgment",
+        "Latency"
+      ],
+      "correct": 2,
+      "explanation": "Learned metrics like COMET correlate more strongly with human judgment than BLEU/chrF alone."
+    },
+    {
+      "stage": "check",
+      "question": "When does chrF tend to be more informative than BLEU?",
+      "options": [
+        "For morphologically rich languages where character-level matches catch inflectional variants BLEU misses",
+        "When using beam search",
+        "On very short sentences",
+        "Whenever a reference exists"
+      ],
+      "correct": 0,
+      "explanation": "Character F-score captures partial morphological matches that word-level BLEU undercounts."
+    },
+    {
+      "stage": "post",
+      "question": "What is off-target generation in multilingual MT?",
+      "options": [
+        "Output that drops named entities",
+        "Output that misses punctuation",
+        "The model decodes into the wrong target language (e.g. NLLB outputting Spanish when French was requested)",
+        "Output that is too short"
+      ],
+      "correct": 2,
+      "explanation": "Off-target generation is common on rare language pairs; a post-translation language-ID check catches it."
+    },
+    {
+      "stage": "post",
+      "question": "Why does fine-tuning on a few thousand high-quality domain pairs often beat much larger noisy web data?",
+      "options": [
+        "Larger data overflows GPU memory",
+        "Smaller datasets train faster",
+        "Web data is illegal to use",
+        "Quality and domain match dominate volume; noisy parallel data introduces drift and hallucination"
+      ],
+      "correct": 3,
+      "explanation": "Clean domain-aligned pairs are the largest production lever; noisy data degrades adaptation."
+    },
+    {
+      "stage": "post",
+      "question": "When is an LLM (e.g. GPT-4) likely to outperform a specialized MT model in 2026?",
+      "options": [
+        "Highest throughput batch translation",
+        "Latency-critical browser translation",
+        "Idiomatic content, long context, stylistic adaptation via prompting, or content requiring tone control",
+        "Small-language pairs with millions of parallel sentences"
+      ],
+      "correct": 2,
+      "explanation": "LLMs win on idiomatic, long-context, or style-controlled translation; specialized MT wins on throughput and latency."
+    }
+  ]
+}

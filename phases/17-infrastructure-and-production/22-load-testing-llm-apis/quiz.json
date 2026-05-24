@@ -1,0 +1,78 @@
+{
+  "lesson": "22-load-testing-llm-apis",
+  "title": "Load Testing LLM APIs — Why k6 and Locust Lie",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the GIL trap in Locust-based LLM load testing?",
+      "options": [
+        "Locust only works on Windows",
+        "Locust does not support HTTP",
+        "Client-side tokenization runs under the Python GIL and queues behind request generation, inflating reported inter-token latency",
+        "Locust requires CUDA"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the prompt-uniformity trap?",
+      "options": [
+        "Uniform prompts always slow the server down",
+        "Sampling from a real distribution under-represents long prompts",
+        "Uniform prompts require streaming",
+        "Looping the same prompt makes prefix caching look like full concurrent decode, inflating reported throughput"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which four load patterns does the lesson recommend?",
+      "options": [
+        "Constant 1 RPS for 10 days",
+        "Manual click tests",
+        "Steady-state, ramp, spike, soak",
+        "Burst only"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does the lesson recommend building a realistic prompt distribution?",
+      "options": [
+        "Sample from a real distribution using mean and stddev (for example LLMPerf's --mean-input-tokens / --stddev-input-tokens) or replay real traffic",
+        "Random characters per request",
+        "Hand-write 5 prompts and shuffle",
+        "Always use the same prompt to maximize cache hits"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which 2026 tool combination is positioned as best for CI/CD SLA gates and Kubernetes-native distributed runs?",
+      "options": [
+        "k6 v2026.1.0 with the k6 Operator 1.0 GA (TestRun / PrivateLoadZone CRDs)",
+        "guidellm only",
+        "Vegeta only",
+        "Locust 2.43.3 stock"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which failure mode does the soak load pattern catch?",
+      "options": [
+        "Memory leaks, connection-pool drift, and observability overflow over hours",
+        "Cold-start tail",
+        "Tokenizer GIL contention",
+        "Cache eviction storms"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

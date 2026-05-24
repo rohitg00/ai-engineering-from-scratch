@@ -21,8 +21,6 @@ This lesson walks all three, then explains which to reach for when.
 
 ## The Concept
 
-![Three embedding approaches: GloVe co-occurrence, FastText subwords, BPE merges](./assets/embeddings.svg)
-
 **GloVe (Global Vectors).** Build the word-word co-occurrence matrix `X` where `X[i][j]` is how often word `j` appears in the context of word `i`. Train vectors such that `v_i · v_j + b_i + b_j ≈ log(X[i][j])`. Weight the loss so frequent pairs do not dominate. Done.
 
 **FastText.** A word is the sum of its character n-grams plus the word itself. `where` becomes `<wh, whe, her, ere, re>, <where>`. The word vector is the sum of those component vectors. Train as Word2Vec. Benefit: unseen words (`whereupon`) compose from known n-grams.
@@ -213,7 +211,7 @@ The `Ġ` prefix marks word boundaries (a GPT-2 convention). Every modern tokeniz
 
 ## Ship It
 
-Save as `outputs/skill-tokenizer-picker.md`:
+Save as `outputs/skill-embeddings-picker.md`:
 
 ```markdown
 ---

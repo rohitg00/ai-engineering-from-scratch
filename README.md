@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-428-3553ff?style=flat-square&labelColor=fafaf5" alt="428 lessons"></a>
+  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-435-3553ff?style=flat-square&labelColor=fafaf5" alt="435 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
@@ -17,7 +17,7 @@
 > **84% of students already use AI tools. Only 18% feel prepared to use them
 > professionally.** This curriculum closes that gap.
 >
-> 428 lessons. 20 phases. ~320 hours. Python, TypeScript, Rust, Julia. Every lesson ships
+> 435 lessons. 20 phases. ~320 hours. Python, TypeScript, Rust, Julia. Every lesson ships
 > a reusable artifact: a prompt, a skill, an agent, an MCP server. Free, open source, MIT.
 >
 > You don't just learn AI. You build it. End-to-end. By hand.
@@ -29,7 +29,7 @@ flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot 
 explain its loss curve. You hook a function to an agent but can't say what attention does
 inside the model that's calling it.
 
-This curriculum is the spine. 20 phases, 428 lessons, four languages: Python, TypeScript,
+This curriculum is the spine. 20 phases, 435 lessons, four languages: Python, TypeScript,
 Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
 gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
 PyTorch shows up, you already know what it's doing under the hood.
@@ -134,6 +134,7 @@ For the student dashboard UI, open `http://127.0.0.1:5174/dashboard.html`.
 Frontend docs: `site/FRONTEND.md`.
 
 **Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with SkillKit installed:
+**Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed:
 
 ```bash
 /find-your-level
@@ -154,7 +155,7 @@ ls phases/03-deep-learning-core/05-loss-functions/outputs/
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
 
-### Built-in agent skills (SkillKit / Claude, Cursor, Codex, OpenClaw, Hermes)
+### Built-in agent skills (Claude, Cursor, Codex, OpenClaw, Hermes)
 
 | Skill | What it does |
 |---|---|
@@ -185,8 +186,8 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </tr>
 </table>
 
-> Install the lot with [SkillKit](https://github.com/rohitg00/skillkit). Real tools, not
-> homework. By the end of the curriculum, you have a portfolio of 428 artifacts you actually
+> Install the lot with `python3 scripts/install_skills.py`. Real tools, not homework.
+> By the end of the curriculum, you have a portfolio of 435 artifacts you actually
 > understand because you built them.
 
 ### FIG_002 · A worked sample
@@ -550,7 +551,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-11">
-<summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>15 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
+<summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -570,6 +571,8 @@ Twenty phases. Click any phase to expand its lesson list.
 | 13 | [Building a Production LLM App](phases/11-llm-engineering/13-production-app/) | Build | Python |
 | 14 | [Model Context Protocol (MCP)](phases/11-llm-engineering/14-model-context-protocol/) | Build | Python |
 | 15 | [Prompt Caching & Context Caching](phases/11-llm-engineering/15-prompt-caching/) | Build | Python |
+| 16 | [LangGraph: State Machines for Agents](phases/11-llm-engineering/16-langgraph-state-machines/) | Build | Python |
+| 17 | [Agent Framework Tradeoffs](phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Learn | Python |
 
 </details>
 
@@ -687,6 +690,8 @@ Twenty phases. Click any phase to expand its lesson list.
 | 40 | [Multi-Session Handoff](phases/14-agent-engineering/40-multi-session-handoff/) | Build | Python |
 | 41 | [The Workbench on a Real Repo](phases/14-agent-engineering/41-workbench-for-real-repos/) | Build | Python |
 | 42 | [Capstone: Ship a Reusable Agent Workbench Pack](phases/14-agent-engineering/42-agent-workbench-capstone/) | Build | Python |
+
+Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent before it opens the full lesson docs.
 
 </details>
 
@@ -868,27 +873,25 @@ Every lesson produces a reusable artifact. By the end you have:
 ```
 outputs/
 ├── prompts/      prompt templates for every AI task
-├── skills/       SKILL.md files for AI coding agents
-├── agents/       agent definitions ready to deploy
-└── mcp-servers/  MCP servers built during the course
+└── skills/       SKILL.md files for AI coding agents
 ```
 
-Install them with [SkillKit](https://github.com/rohitg00/skillkit). Plug them into Claude, Cursor,
+Install them with `python3 scripts/install_skills.py`. Plug them into Claude, Cursor,
 Codex, OpenClaw, Hermes, or any MCP-compatible agent. Real tools, not homework.
 
 ### Install every course skill into your agent
 
-The repo ships 373 skills, 99 prompts, and 6 agents under `phases/**/outputs/`.
+The repo ships 378 skills and 99 prompts under `phases/**/outputs/`.
 `scripts/install_skills.py` walks every artifact, parses YAML frontmatter, and
 copies the matching files into a target directory in the layout your agent
 expects.
 
 ```bash
-python3 scripts/install_skills.py ~/.claude/skills                 # every skill, SkillKit layout
+python3 scripts/install_skills.py ~/.claude/skills                 # every skill, nested layout
 python3 scripts/install_skills.py ./out --type all                 # skills + prompts + agents
 python3 scripts/install_skills.py ./out --phase 14                 # one phase only
 python3 scripts/install_skills.py ./out --tag rag                  # filter by tag
-python3 scripts/install_skills.py ./out --layout flat              # flat files instead of SkillKit
+python3 scripts/install_skills.py ./out --layout flat              # flat files
 python3 scripts/install_skills.py ./out --dry-run                  # preview without writing
 python3 scripts/install_skills.py ./out --force                    # overwrite existing files
 ```
@@ -901,7 +904,7 @@ phase. Pick the layout your agent reads:
 
 | `--layout`  | Path written |
 |---|---|
-| `skillkit`  | `<target>/<name>/SKILL.md` (Claude / Cursor / SkillKit) |
+| `skills`    | `<target>/<name>/SKILL.md` (Claude / Cursor convention) |
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
@@ -944,6 +947,31 @@ on every PR and fails the build if the committed file is stale. After editing
 any lesson, run `python3 scripts/build_catalog.py` and commit the result, or
 CI will reject the PR. The same workflow runs `audit_lessons.py` in
 warn-only mode (so existing drift does not block contributors).
+
+### Smoke-check every lesson's Python code
+
+`scripts/lesson_run.py` byte-compiles every `.py` file under each lesson's
+`code/` directory. Default mode is syntax-check only — no execution, no API
+keys, no heavy ML deps required. Catches the regressions contributors
+introduce most often (bad indentation, broken f-strings, stray edits).
+
+```bash
+python3 scripts/lesson_run.py                  # syntax-check the whole curriculum
+python3 scripts/lesson_run.py --phase 14       # one phase only
+python3 scripts/lesson_run.py --json           # JSON report on stdout
+python3 scripts/lesson_run.py --strict         # exit 1 if any lesson fails
+python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per lesson
+```
+
+`--execute` runs each lesson's `code/main.py` (or the first `.py` file) with a
+10-second timeout. Lessons whose entry file starts with a `# requires: pkg1,
+pkg2` comment listing non-stdlib deps are skipped with reason `needs <deps>`.
+The script is opt-in and not wired into CI.
+
+Stdlib only, Python 3.10+. Set `LINK_CHECK_SKIP=domain1,domain2` to override
+the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
+`instagram.com`, `medium.com` — domains that aggressively block automated
+HEAD/GET).
 
 ## Where to start
 
@@ -1028,7 +1056,7 @@ relative links inside lesson docs.
 
 ## Sponsor the work
 
-Free, MIT-licensed, 428 lessons. The curriculum is maintained on sponsorship alone. Cash only.
+Free, MIT-licensed, 435 lessons. The curriculum is maintained on sponsorship alone. Cash only.
 
 **Reach (verified 2026-05-14):** 55,593 monthly visitors · 90,709 page views · 7.5K stars ·
 Twitter/X is the #1 acquisition channel.
@@ -1043,21 +1071,6 @@ Twitter/X is the #1 acquisition channel.
 
 Full rate card, hard rules, pricing anchors, and reach data: [SPONSORS.md](SPONSORS.md).
 Sign up via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
-
-```
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## From the same author
-
-The curriculum teaches the primitives. These three repositories ship them in production —
-memory, reasoning, and a knowledge-base protocol — and compose into a full agent stack.
-
-| Repo | Stars | What it is |
-|---|---|---|
-| [agentmemory](https://github.com/rohitg00/agentmemory) | ![stars](https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&label=%E2%98%85&color=3553ff&labelColor=fafaf5) | Persistent memory for AI coding agents. The state surface from Phase 14, productionized. |
-| [agentbrain](https://github.com/rohitg00/agentbrain) | ![stars](https://img.shields.io/github/stars/rohitg00/agentbrain?style=flat-square&label=%E2%98%85&color=3553ff&labelColor=fafaf5) | Evidence-first operating system for agents. Reasoning + verification surfaces, end-to-end. |
-| [akbp](https://github.com/rohitg00/akbp) | ![stars](https://img.shields.io/github/stars/rohitg00/akbp?style=flat-square&label=%E2%98%85&color=3553ff&labelColor=fafaf5) | Agent Knowledge Base Protocol. Handoff + knowledge layer between sessions and across agents. |
 
 ```
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒

@@ -1,0 +1,78 @@
+{
+  "lesson": "25-security-secrets-audit",
+  "title": "Security — Secrets, API Key Rotation, Audit Logs, Guardrails",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the 2026 standard pattern for LLM service credentials?",
+      "options": [
+        "Store keys in a Slack channel",
+        "Centralized vault pulled by an AI gateway at runtime via IAM role; rotate in vault and all apps pick up in minutes",
+        "Email the key to each engineer",
+        "Hardcode API keys in config files for speed"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What rotation cadence does the lesson recommend for API keys, vault root tokens, and CI/CD credentials?",
+      "options": [
+        "Within 90 days, automated where possible, logged and tracked when manual",
+        "Every 5 years",
+        "Only when leaked",
+        "Never"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is consistent tokenization (Mesh approach) used for PII scrubbing?",
+      "options": [
+        "It uses less memory than regex",
+        "It encrypts the prompt to the model",
+        "It is required by ISO 27001",
+        "Same source value maps to the same placeholder, so the LLM preserves code and relationship semantics across the prompt"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What egress posture does the lesson recommend for LLM service subnets?",
+      "options": [
+        "Whitelist a small set of domains (api.openai.com, api.anthropic.com, vector DB, vault) and drop everything else, with an allowlist-only DNS resolver",
+        "Block all egress including providers",
+        "Allow DNS but block HTTP",
+        "Allow all outbound traffic"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What did the 2026 Vercel supply-chain incident teach about CI/CD credentials?",
+      "options": [
+        "CI/CD credentials are prod-equivalent — store in vault, scope narrowly, rotate aggressively",
+        "CI/CD secrets cannot be stolen",
+        "CI/CD credentials are low-risk and can stay in env files",
+        "Vercel was unaffected"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which audit log fields does the lesson recommend keeping for every LLM call?",
+      "options": [
+        "Just the raw prompt",
+        "Only the response",
+        "Timestamp, user/tenant, prompt hash (not raw), model + version, token counts, cost, response hash, any guardrail trips",
+        "Only the cost"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "17-personal-ai-tutor",
+  "title": "Capstone 17 — Personal AI Tutor (Adaptive, Multimodal, with Memory)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a Socratic tutor policy do when a learner asks for the answer outright?",
+      "options": [
+        "Asks a leading question that scaffolds the learner toward the answer",
+        "Logs the request and goes silent",
+        "Provides the answer immediately and moves on",
+        "Switches to a different concept node"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Which structure does the curriculum graph encode?",
+      "options": [
+        "A directed graph of concepts with prerequisite edges, attached to OER content",
+        "A random shuffle of topics",
+        "A flat list of unrelated concepts",
+        "Only the most recently studied node"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the learner model update after each interaction?",
+      "options": [
+        "The base LLM's weights",
+        "The COPPA retention policy",
+        "The curriculum graph schema",
+        "Per-concept mastery probability via Bayesian knowledge tracing or a similar variant"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How is memory split between episodic and semantic stores?",
+      "options": [
+        "Episodic holds every interaction; semantic holds compacted mistakes and preferences promoted from episodic",
+        "They are duplicates of the same data",
+        "Episodic is for the parent; semantic is for the learner",
+        "Episodic holds embeddings; semantic holds raw audio"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which constraint shapes memory retention for K-12 learners?",
+      "options": [
+        "Retention based on model context length",
+        "Permanent retention with no deletion",
+        "GDPR only",
+        "COPPA-aware retention with auto-deletion after a defined window and parental access"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the structure of the efficacy study used to gate the deliverable?",
+      "options": [
+        "Anonymous internet survey",
+        "A 30-second AB test",
+        "Pre-test and post-test over two weeks with 10 learners, compared against a non-adaptive baseline cohort",
+        "A single one-hour session with one learner"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which multimodal input paths does the tutor expose to the learner?",
+      "options": [
+        "Text only",
+        "Photo only via a custom OCR model",
+        "Voice only with no text or photo",
+        "Text typed, voice via LiveKit + Whisper, and photo math via dots.ocr or PaliGemma 2"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

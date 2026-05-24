@@ -17,8 +17,6 @@ Word2Vec gave us that space. Two layer neural network, trillion-token training r
 
 ## The Concept
 
-![Skip-gram window and embedding space](./assets/word2vec.svg)
-
 **Distributional hypothesis** (Firth, 1957): "You shall know a word by the company it keeps." If two words appear in similar contexts, they probably mean similar things.
 
 Word2Vec comes in two flavors, both exploiting that idea.

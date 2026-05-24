@@ -12,12 +12,14 @@ If you or your company want to support the curriculum, this page is the rate car
 ## How to sponsor
 
 - **GitHub Sponsors:** [github.com/sponsors/rohitg00](https://github.com/sponsors/rohitg00)
-- **Open Collective:** *coming soon, link will land here once the collective is approved*
-- **Wire / invoice** for Gold and Platinum tiers: email the maintainer through the address
-  listed on the GitHub profile.
 
 GitHub Sponsors handles billing, receipts, and tax forms. 0% platform fee on personal
 sponsorships, up to 6% on organization sponsorships, per [GitHub's policy](https://docs.github.com/en/sponsors/receiving-sponsorships-through-github-sponsors/about-github-sponsors-for-open-source-contributors).
+
+For clarity: the curriculum has no token, no coin, no NFT, no wallet, and no chain
+partnership. The maintainer does not endorse, promote, partner with, or accept
+payment from any crypto project. The funding link above is the only channel;
+anything else using this project's name is unaffiliated.
 
 ## Reach
 
@@ -76,16 +78,13 @@ These rules are non-negotiable. Sponsors who cannot accept them are politely dec
 5. **30-day editorial-conflict exit.** If a sponsor pressures the maintainer to bias content,
    the sponsorship terminates within 30 days with a pro-rata refund. The logo drops on the
    next site deploy.
-6. **Public ledger.** Once the Open Collective is live, every dollar in and every category of
-   spend is published on the public ledger.
-7. **Conflict refusal.** The curriculum declines sponsors whose product directly contradicts
+6. **Conflict refusal.** The curriculum declines sponsors whose product directly contradicts
    curriculum principles (closed-loop vibe-coding tools, vendor lock-in evangelism, agent
    products that ignore observability or refuse to ship with open formats). Refusal is at
-   the maintainer's sole discretion. Examples of refusals will be published anonymously on
-   the public ledger when the collective is live.
-8. **Cash only.** Credits-in-kind, equity, free hardware, "we'll do your DevRel for you,"
+   the maintainer's sole discretion.
+7. **Cash only.** Credits-in-kind, equity, free hardware, "we'll do your DevRel for you,"
    and bundle deals are not accepted. They are too easy to undervalue and too hard to
-   account for cleanly on the public ledger.
+   account for cleanly.
 
 ## Counter-proposals from prospective sponsors
 

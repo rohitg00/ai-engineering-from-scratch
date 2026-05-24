@@ -1,0 +1,102 @@
+{
+  "lesson": "18-multilingual-nlp",
+  "title": "Multilingual NLP",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does zero-shot cross-lingual transfer mean?",
+      "options": [
+        "Fine-tune a multilingual model on one source language and evaluate on a different language with no target-language labels",
+        "Translating without a translation model",
+        "Tokenizing with zero merges",
+        "Training with zero examples"
+      ],
+      "correct": 0,
+      "explanation": "Zero-shot transfer: train on the source language, run on the target without target-language supervision."
+    },
+    {
+      "stage": "pre",
+      "question": "Which model family ships as the standard 100-language cross-lingual baseline?",
+      "options": [
+        "GloVe",
+        "GPT-2",
+        "XLM-R (e.g. XLM-RoBERTa-base, 270M)",
+        "DistilBERT"
+      ],
+      "correct": 2,
+      "explanation": "XLM-R is the canonical 100-language pretrained baseline for cross-lingual classification."
+    },
+    {
+      "stage": "check",
+      "question": "Why does English-as-source not always give the best transfer for a non-English target?",
+      "options": [
+        "English has too little data",
+        "Language similarity (typology, script, morphology) predicts transfer quality; a closer high-resource source can outperform English",
+        "English uses BPE",
+        "English is too short"
+      ],
+      "correct": 1,
+      "explanation": "Typologically related sources (e.g. Hindi for Indic targets) often outperform English as a fine-tune source."
+    },
+    {
+      "stage": "check",
+      "question": "What is the 'fertility tax' for low-resource languages?",
+      "options": [
+        "BPE refuses to train",
+        "Low-resource text tokenizes into more subwords per word than English, consuming context window, latency, and capacity",
+        "Smaller models train slower",
+        "Tokenizers cannot handle Unicode"
+      ],
+      "correct": 1,
+      "explanation": "Long-tail languages tokenize at much higher fertility, eating context and training efficiency."
+    },
+    {
+      "stage": "check",
+      "question": "Why is per-language evaluation required, not aggregated accuracy?",
+      "options": [
+        "Aggregates ignore tokenization",
+        "Aggregate numbers hide long-tail languages where a multilingual model can be far worse than its mean suggests",
+        "Aggregates only work on classification",
+        "Aggregates run faster"
+      ],
+      "correct": 1,
+      "explanation": "Aggregate accuracy masks poor performance on low-resource languages; per-language scores expose it."
+    },
+    {
+      "stage": "post",
+      "question": "Why is fine-tuning learning rate critical when adapting a multilingual model with few-shot data?",
+      "options": [
+        "Lower LR wastes GPU",
+        "Required by tokenizers",
+        "It changes the vocabulary",
+        "High LR can collapse the multilingual alignment and effectively reduce the model to English-only"
+      ],
+      "correct": 3,
+      "explanation": "Excessive LR drifts the shared representation; conservative LR (~2e-5) preserves cross-lingual structure."
+    },
+    {
+      "stage": "post",
+      "question": "Which mitigation directly addresses tokenizer fertility for long-tail scripts?",
+      "options": [
+        "Skip stopwords",
+        "Lower batch size",
+        "Use byte-fallback (SentencePiece byte_fallback=True) or a tokenizer with broader script coverage (e.g. XLM-V)",
+        "More training epochs"
+      ],
+      "correct": 2,
+      "explanation": "Byte fallback and broader-vocab tokenizers reduce fertility and OOV for low-resource scripts."
+    },
+    {
+      "stage": "post",
+      "question": "When is a monolingual model from scratch worth trying instead of a multilingual one?",
+      "options": [
+        "Always for English",
+        "When the target language has enough data to train a monolingual model that beats the multilingual baseline; test before assuming",
+        "Only for translation",
+        "Whenever the tokenizer is BPE"
+      ],
+      "correct": 1,
+      "explanation": "Sometimes monolingual training beats multilingual for high-resource targets; empirical comparison decides."
+    }
+  ]
+}

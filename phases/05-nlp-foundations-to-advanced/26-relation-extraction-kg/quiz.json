@@ -1,0 +1,102 @@
+{
+  "lesson": "26-relation-extraction-kg",
+  "title": "Relation Extraction & Knowledge Graph Construction",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the atomic unit of a knowledge graph?",
+      "options": [
+        "A POS tag",
+        "A (subject, relation, object) triple",
+        "A token",
+        "A sentence"
+      ],
+      "correct": 1,
+      "explanation": "KGs store information as (s, r, o) triples; aggregated triples form the graph."
+    },
+    {
+      "stage": "pre",
+      "question": "What does AEVS stand for in 2026 relation extraction?",
+      "options": [
+        "Anchor-Extraction-Verification-Supplement: anchor spans, extract triples, verify against source, supplement coverage",
+        "Auto-Encoder Vector Search",
+        "Async Entity Validation Service",
+        "Aggregated Entity-Value Schema"
+      ],
+      "correct": 0,
+      "explanation": "AEVS is the 2026 hallucination-mitigation framework for grounded RE."
+    },
+    {
+      "stage": "check",
+      "question": "Why must each triple carry source provenance (doc id + span)?",
+      "options": [
+        "Provenance lets you audit triples and reject hallucinations whose spans do not match the source text",
+        "It speeds up extraction",
+        "Provenance changes the ontology",
+        "Provenance is required by SPARQL"
+      ],
+      "correct": 0,
+      "explanation": "Provenance enables auditing and is the core of AEVS-style hallucination detection."
+    },
+    {
+      "stage": "check",
+      "question": "What does canonicalization of relations do?",
+      "options": [
+        "Maps surface verb phrases (e.g. 'was born in', 'is a native of') onto a fixed property id so the graph is queryable",
+        "Removes triples",
+        "Adds embeddings",
+        "Translates the document"
+      ],
+      "correct": 0,
+      "explanation": "Canonicalization collapses paraphrases into canonical KG property ids."
+    },
+    {
+      "stage": "check",
+      "question": "Why does relation extraction usually need coreference resolution first?",
+      "options": [
+        "Pronouns like 'he founded Apple' must be resolved to a named entity before triple extraction",
+        "Coref adds embeddings",
+        "Coref provides positions",
+        "Coref normalizes case"
+      ],
+      "correct": 0,
+      "explanation": "Without coref, RE attaches relations to pronouns instead of the underlying named entity."
+    },
+    {
+      "stage": "post",
+      "question": "Which choice trades open IE recall for graph queryability?",
+      "options": [
+        "Skipping NER",
+        "Random sampling of triples",
+        "Embedding-only graphs",
+        "Mapping open-IE relations onto a closed ontology (e.g. Wikidata properties) before merging into the KG"
+      ],
+      "correct": 3,
+      "explanation": "Closed ontologies make the graph queryable; the canonicalization step pays for itself downstream."
+    },
+    {
+      "stage": "post",
+      "question": "Why do many production KGs use temporal qualifiers (start/end time)?",
+      "options": [
+        "Faster SPARQL",
+        "Required by RDF",
+        "Many relations are time-bounded (employer, spouse, role); qualifiers prevent 'forever true' claims that go stale",
+        "To remove NIL entities"
+      ],
+      "correct": 2,
+      "explanation": "Time-bounded relations need qualifiers (e.g. Wikidata P580/P582) or facts go silently stale."
+    },
+    {
+      "stage": "post",
+      "question": "What is REBEL?",
+      "options": [
+        "A vector database",
+        "A seq2seq relation extractor that outputs triples already in Wikidata property ids",
+        "A tokenizer",
+        "A coreference model"
+      ],
+      "correct": 1,
+      "explanation": "REBEL (Babelscape) is a seq2seq RE model trained on distantly supervised Wikidata triples."
+    }
+  ]
+}

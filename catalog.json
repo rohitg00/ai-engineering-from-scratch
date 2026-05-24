@@ -3,10 +3,10 @@
   "totals": {
     "phases": 20,
     "lessons": 435,
-    "skills": 373,
+    "skills": 378,
     "prompts": 99,
     "agents": 0,
-    "code_files": 433
+    "code_files": 435
   },
   "phases": [
     {
@@ -2636,7 +2636,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/01-text-processing",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2659,7 +2659,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2682,7 +2682,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2709,7 +2709,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2717,8 +2717,8 @@
           "outputs": [
             {
               "type": "skill",
-              "name": "tokenizer-picker",
-              "path": "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/outputs/skill-tokenizer-picker.md",
+              "name": "skill-embeddings-picker",
+              "path": "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/outputs/skill-embeddings-picker.md",
               "version": "1.0.0",
               "description": "Pick a tokenization approach for a new language model or text pipeline.",
               "tags": [
@@ -2736,7 +2736,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2759,7 +2759,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2786,7 +2786,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2813,7 +2813,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2836,7 +2836,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2859,7 +2859,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/10-attention-mechanism",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2882,7 +2882,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/11-machine-translation",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2909,7 +2909,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/12-text-summarization",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2935,7 +2935,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/13-question-answering",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2962,7 +2962,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -2990,7 +2990,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/15-topic-modeling",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3016,7 +3016,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3039,7 +3039,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3066,7 +3066,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/18-multilingual-nlp",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3093,7 +3093,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/19-subword-tokenization",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3101,8 +3101,8 @@
           "outputs": [
             {
               "type": "skill",
-              "name": "tokenizer-picker",
-              "path": "phases/05-nlp-foundations-to-advanced/19-subword-tokenization/outputs/skill-tokenizer-picker.md",
+              "name": "skill-bpe-vs-wordpiece",
+              "path": "phases/05-nlp-foundations-to-advanced/19-subword-tokenization/outputs/skill-bpe-vs-wordpiece.md",
               "version": "1.0.0",
               "description": "Pick tokenizer algorithm, vocab size, library for a given corpus and deployment target.",
               "tags": [
@@ -3119,7 +3119,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3146,7 +3146,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3173,7 +3173,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3200,7 +3200,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3227,7 +3227,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/24-coreference-resolution",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3254,7 +3254,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/25-entity-linking",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3281,7 +3281,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3308,7 +3308,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3335,7 +3335,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -3362,7 +3362,7 @@
           "path": "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -4730,11 +4730,29 @@
           "title": "Visual Autoregressive Modeling (VAR): Next-Scale Prediction",
           "path": "phases/08-generative-ai/19-visual-autoregressive-var",
           "has_docs": true,
-          "has_code": false,
+          "has_code": true,
           "has_quiz": false,
           "has_notebook": false,
-          "code_files": [],
-          "outputs": []
+          "code_files": [
+            "main.py"
+          ],
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "var-tokenizer-designer",
+              "path": "phases/08-generative-ai/19-visual-autoregressive-var/outputs/skill-var-tokenizer-designer.md",
+              "version": "1.0.0",
+              "description": "Design a multi-scale residual VQ tokenizer for next-scale visual autoregressive image generation.",
+              "tags": [
+                "var",
+                "next-scale-prediction",
+                "vq-vae",
+                "residual-vq",
+                "image-generation",
+                "tokenizer"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -5387,8 +5405,8 @@
             },
             {
               "type": "skill",
-              "name": "skill-evaluation",
-              "path": "phases/10-llms-from-scratch/10-evaluation/outputs/skill-evaluation.md",
+              "name": "skill-llm-evaluation",
+              "path": "phases/10-llms-from-scratch/10-evaluation/outputs/skill-llm-evaluation.md",
               "version": "1.0.0",
               "description": "Decision framework for choosing the right LLM evaluation strategy based on task type, budget, and requirements",
               "tags": [
@@ -5779,11 +5797,29 @@
           "title": "Speculative Decoding and EAGLE",
           "path": "phases/10-llms-from-scratch/25-speculative-decoding",
           "has_docs": true,
-          "has_code": false,
+          "has_code": true,
           "has_quiz": false,
           "has_notebook": false,
-          "code_files": [],
-          "outputs": []
+          "code_files": [
+            "main.py"
+          ],
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "speculative-tuning",
+              "path": "phases/10-llms-from-scratch/25-speculative-decoding/outputs/skill-speculative-tuning.md",
+              "version": "1.0.0",
+              "description": "Profile a decode workload and pick draft model, draft length K, temperature gate, and fallback policy for speculative decoding.",
+              "tags": [
+                "speculative-decoding",
+                "draft-model",
+                "alpha",
+                "throughput",
+                "inference",
+                "decode-latency"
+              ]
+            }
+          ]
         },
         {
           "num": 34,
@@ -5797,7 +5833,22 @@
           "code_files": [
             "main.py"
           ],
-          "outputs": []
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "checkpointing-planner",
+              "path": "phases/10-llms-from-scratch/34-gradient-checkpointing/outputs/skill-checkpointing-planner.md",
+              "version": "1.0.0",
+              "description": "Choose an activation recomputation policy per layer (none / selective / full / offload) given a training config and HBM budget.",
+              "tags": [
+                "gradient-checkpointing",
+                "activation-recomputation",
+                "selective-checkpoint",
+                "fsdp-offload",
+                "training-memory"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -6372,7 +6423,24 @@
           "code_files": [
             "main.py"
           ],
-          "outputs": []
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "stategraph-designer",
+              "path": "phases/11-llm-engineering/16-langgraph-state-machines/outputs/skill-stategraph-designer.md",
+              "version": "1.0.0",
+              "description": "Turn an agent task into a LangGraph StateGraph with named nodes, typed state, reducers, checkpointer, and human interrupts.",
+              "tags": [
+                "langgraph",
+                "stategraph",
+                "checkpointer",
+                "interrupt",
+                "time-travel",
+                "react-agent",
+                "human-in-the-loop"
+              ]
+            }
+          ]
         },
         {
           "num": 17,
@@ -6386,7 +6454,24 @@
           "code_files": [
             "main.py"
           ],
-          "outputs": []
+          "outputs": [
+            {
+              "type": "skill",
+              "name": "framework-picker",
+              "path": "phases/11-llm-engineering/17-agent-framework-tradeoffs/outputs/skill-framework-picker.md",
+              "version": "1.0.0",
+              "description": "Pick LangGraph, CrewAI, AutoGen, Agno, or plain Python for an agent task by matching abstraction to problem shape.",
+              "tags": [
+                "langgraph",
+                "crewai",
+                "autogen",
+                "agno",
+                "agent-framework",
+                "orchestration",
+                "decision-matrix"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -7811,7 +7896,7 @@
           "path": "phases/14-agent-engineering/01-the-agent-loop",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -7840,7 +7925,7 @@
           "path": "phases/14-agent-engineering/02-rewoo-plan-and-execute",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -7869,7 +7954,7 @@
           "path": "phases/14-agent-engineering/03-reflexion-verbal-rl",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -7898,7 +7983,7 @@
           "path": "phases/14-agent-engineering/04-tree-of-thoughts-lats",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -7927,7 +8012,7 @@
           "path": "phases/14-agent-engineering/05-self-refine-and-critic",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -7956,7 +8041,7 @@
           "path": "phases/14-agent-engineering/06-tool-use-and-function-calling",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -7986,7 +8071,7 @@
           "path": "phases/14-agent-engineering/07-memory-virtual-context-memgpt",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8015,7 +8100,7 @@
           "path": "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8044,7 +8129,7 @@
           "path": "phases/14-agent-engineering/09-hybrid-memory-mem0",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8075,7 +8160,7 @@
           "path": "phases/14-agent-engineering/10-skill-libraries-voyager",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8104,7 +8189,7 @@
           "path": "phases/14-agent-engineering/11-planning-htn-and-evolutionary",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8133,7 +8218,7 @@
           "path": "phases/14-agent-engineering/12-anthropic-workflow-patterns",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8162,7 +8247,7 @@
           "path": "phases/14-agent-engineering/13-langgraph-stateful-graphs",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8191,7 +8276,7 @@
           "path": "phases/14-agent-engineering/14-autogen-actor-model",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8220,7 +8305,7 @@
           "path": "phases/14-agent-engineering/15-crewai-role-based-crews",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8249,7 +8334,7 @@
           "path": "phases/14-agent-engineering/16-openai-agents-sdk",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8279,7 +8364,7 @@
           "path": "phases/14-agent-engineering/17-claude-agent-sdk",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8308,7 +8393,7 @@
           "path": "phases/14-agent-engineering/18-agno-and-mastra-runtimes",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8337,7 +8422,7 @@
           "path": "phases/14-agent-engineering/19-benchmarks-swebench-gaia",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8366,7 +8451,7 @@
           "path": "phases/14-agent-engineering/20-benchmarks-webarena-osworld",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8394,7 +8479,7 @@
           "path": "phases/14-agent-engineering/21-computer-use-agents",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8423,7 +8508,7 @@
           "path": "phases/14-agent-engineering/22-voice-agents-pipecat-livekit",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8452,7 +8537,7 @@
           "path": "phases/14-agent-engineering/23-otel-genai-conventions",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8481,7 +8566,7 @@
           "path": "phases/14-agent-engineering/24-agent-observability-platforms",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8511,7 +8596,7 @@
           "path": "phases/14-agent-engineering/25-multi-agent-debate",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8539,7 +8624,7 @@
           "path": "phases/14-agent-engineering/26-failure-modes-agentic",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8567,7 +8652,7 @@
           "path": "phases/14-agent-engineering/27-prompt-injection-defense",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8596,7 +8681,7 @@
           "path": "phases/14-agent-engineering/28-orchestration-patterns",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8625,7 +8710,7 @@
           "path": "phases/14-agent-engineering/29-production-runtimes",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8655,7 +8740,7 @@
           "path": "phases/14-agent-engineering/30-eval-driven-agent-development",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -8684,7 +8769,7 @@
           "path": "phases/14-agent-engineering/31-agent-workbench-why-models-fail",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8712,7 +8797,7 @@
           "path": "phases/14-agent-engineering/32-minimal-agent-workbench",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8741,7 +8826,7 @@
           "path": "phases/14-agent-engineering/33-instructions-as-executable-constraints",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8770,7 +8855,7 @@
           "path": "phases/14-agent-engineering/34-repo-memory-and-state",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8799,7 +8884,7 @@
           "path": "phases/14-agent-engineering/35-initialization-scripts",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8828,7 +8913,7 @@
           "path": "phases/14-agent-engineering/36-scope-contracts",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8857,7 +8942,7 @@
           "path": "phases/14-agent-engineering/37-runtime-feedback-loops",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8886,7 +8971,7 @@
           "path": "phases/14-agent-engineering/38-verification-gates",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8915,7 +9000,7 @@
           "path": "phases/14-agent-engineering/39-reviewer-agent",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8944,7 +9029,7 @@
           "path": "phases/14-agent-engineering/40-multi-session-handoff",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -8973,7 +9058,7 @@
           "path": "phases/14-agent-engineering/41-workbench-for-real-repos",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -9002,7 +9087,7 @@
           "path": "phases/14-agent-engineering/42-agent-workbench-capstone",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": false,
           "code_files": [
             "main.py"
@@ -10416,7 +10501,7 @@
           "path": "phases/17-infrastructure-and-production/01-managed-llm-platforms",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10446,7 +10531,7 @@
           "path": "phases/17-infrastructure-and-production/02-inference-platform-economics",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10478,7 +10563,7 @@
           "path": "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10510,7 +10595,7 @@
           "path": "phases/17-infrastructure-and-production/04-vllm-serving-internals",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10540,7 +10625,7 @@
           "path": "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10569,7 +10654,7 @@
           "path": "phases/17-infrastructure-and-production/06-sglang-radixattention",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10598,7 +10683,7 @@
           "path": "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10629,7 +10714,7 @@
           "path": "phases/17-infrastructure-and-production/08-inference-metrics-goodput",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10660,7 +10745,7 @@
           "path": "phases/17-infrastructure-and-production/09-production-quantization",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10691,7 +10776,7 @@
           "path": "phases/17-infrastructure-and-production/10-cold-start-mitigation",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10722,7 +10807,7 @@
           "path": "phases/17-infrastructure-and-production/11-multi-region-kv-locality",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10754,7 +10839,7 @@
           "path": "phases/17-infrastructure-and-production/12-edge-inference",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10787,7 +10872,7 @@
           "path": "phases/17-infrastructure-and-production/13-llm-observability",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10820,7 +10905,7 @@
           "path": "phases/17-infrastructure-and-production/14-prompt-semantic-caching",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10851,7 +10936,7 @@
           "path": "phases/17-infrastructure-and-production/15-batch-apis",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10881,7 +10966,7 @@
           "path": "phases/17-infrastructure-and-production/16-model-routing",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10911,7 +10996,7 @@
           "path": "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10941,7 +11026,7 @@
           "path": "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -10970,7 +11055,7 @@
           "path": "phases/17-infrastructure-and-production/19-ai-gateways",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11004,7 +11089,7 @@
           "path": "phases/17-infrastructure-and-production/20-shadow-canary-progressive",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11036,7 +11121,7 @@
           "path": "phases/17-infrastructure-and-production/21-ab-testing-llm-features",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11067,7 +11152,7 @@
           "path": "phases/17-infrastructure-and-production/22-load-testing-llm-apis",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11098,7 +11183,7 @@
           "path": "phases/17-infrastructure-and-production/23-sre-for-ai",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11130,7 +11215,7 @@
           "path": "phases/17-infrastructure-and-production/24-chaos-engineering-llm",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11160,7 +11245,7 @@
           "path": "phases/17-infrastructure-and-production/25-security-secrets-audit",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11194,7 +11279,7 @@
           "path": "phases/17-infrastructure-and-production/26-compliance-frameworks",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11227,7 +11312,7 @@
           "path": "phases/17-infrastructure-and-production/27-finops-llms",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -11257,7 +11342,7 @@
           "path": "phases/17-infrastructure-and-production/28-self-hosted-serving-selection",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12179,7 +12264,7 @@
           "path": "phases/19-capstone-projects/01-terminal-native-coding-agent",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12210,7 +12295,7 @@
           "path": "phases/19-capstone-projects/02-rag-over-codebase",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12241,7 +12326,7 @@
           "path": "phases/19-capstone-projects/03-realtime-voice-assistant",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12273,7 +12358,7 @@
           "path": "phases/19-capstone-projects/04-multimodal-document-qa",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12304,7 +12389,7 @@
           "path": "phases/19-capstone-projects/05-autonomous-research-agent",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12335,7 +12420,7 @@
           "path": "phases/19-capstone-projects/06-devops-troubleshooting-agent",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12366,7 +12451,7 @@
           "path": "phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12399,7 +12484,7 @@
           "path": "phases/19-capstone-projects/08-production-rag-chatbot",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12431,7 +12516,7 @@
           "path": "phases/19-capstone-projects/09-code-migration-agent",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12462,7 +12547,7 @@
           "path": "phases/19-capstone-projects/10-multi-agent-software-team",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12493,7 +12578,7 @@
           "path": "phases/19-capstone-projects/11-llm-observability-dashboard",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12525,7 +12610,7 @@
           "path": "phases/19-capstone-projects/12-video-understanding-pipeline",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12557,7 +12642,7 @@
           "path": "phases/19-capstone-projects/13-mcp-server-with-registry",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12589,7 +12674,7 @@
           "path": "phases/19-capstone-projects/14-speculative-decoding-server",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12622,7 +12707,7 @@
           "path": "phases/19-capstone-projects/15-constitutional-safety-harness",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12654,7 +12739,7 @@
           "path": "phases/19-capstone-projects/16-github-issue-to-pr-agent",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"
@@ -12686,7 +12771,7 @@
           "path": "phases/19-capstone-projects/17-personal-ai-tutor",
           "has_docs": true,
           "has_code": true,
-          "has_quiz": false,
+          "has_quiz": true,
           "has_notebook": true,
           "code_files": [
             "main.py"

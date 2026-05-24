@@ -1,0 +1,78 @@
+{
+  "lesson": "27-finops-llms",
+  "title": "FinOps for LLMs — Unit Economics and Multi-Tenant Attribution",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does traditional FinOps break on LLM spend?",
+      "options": [
+        "LLMs don't cost money",
+        "LLM bills are always free",
+        "Cloud providers refuse to itemize",
+        "Costs are token-transactions rather than resource-uptime; tags don't auto-propagate from API calls and you must stamp user/task/tenant at the call site"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which three attribution dimensions does the lesson require instrumenting on day one?",
+      "options": [
+        "Per-user (user_id), per-task (task_id + route), per-tenant (tenant_id)",
+        "Provider, model, API version",
+        "Region, AZ, datacenter",
+        "GPU, CPU, RAM"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which four token layers should be broken out in cost attribution?",
+      "options": [
+        "Prompt, tool, memory, response",
+        "Input, output, network, disk",
+        "Cache, model, gateway, observability",
+        "GPU, CPU, RAM, storage"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the kill-switch trigger in the enforcement ladder?",
+      "options": [
+        "Tenant spend z-score > 4 relative to baseline; auto-pause tenant and page on-call",
+        "Latency P50 > 2s",
+        "Any 5xx response",
+        "Spend over $1 in a minute"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which unit metric does the lesson recommend instead of $/M tokens?",
+      "options": [
+        "Cost per gateway",
+        "Cost per GPU-hour",
+        "Cost per second",
+        "Cost per product outcome (e.g. cost per resolved support ticket, cost per generated article, cost per successful agent task)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which attribution pattern does the lesson call the highest-accuracy one mature teams use?",
+      "options": [
+        "Sampling and extrapolation",
+        "Model-based allocation",
+        "Tag-and-aggregate only",
+        "Telemetry joiner — join traces to billing via trace IDs"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}
