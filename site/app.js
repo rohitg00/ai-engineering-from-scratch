@@ -50,13 +50,12 @@
       var lessons = PHASES[i].lessons;
       totalLessons += lessons.length;
       for (var j = 0; j < lessons.length; j++) {
-        var staticDone = lessons[j].status === 'complete';
         var userDone = false;
         if (hasProgress && lessons[j].url) {
           var lp = window.AIFSProgress.extractPath(lessons[j].url);
           if (lp) userDone = window.AIFSProgress.isLessonComplete(lp);
         }
-        if (staticDone || userDone) completeLessons++;
+        if (userDone) completeLessons++;
       }
     }
     var completePhases = 0;
@@ -113,13 +112,12 @@
       var total = p.lessons.length;
       var done = 0;
       for (var j = 0; j < p.lessons.length; j++) {
-        var staticDone = p.lessons[j].status === 'complete';
         var userDone = false;
         if (hasProgress && p.lessons[j].url) {
           var lp = window.AIFSProgress.extractPath(p.lessons[j].url);
           if (lp) userDone = window.AIFSProgress.isLessonComplete(lp);
         }
-        if (staticDone || userDone) done++;
+        if (userDone) done++;
       }
       var statusClass = p.status.replace(/ /g, '-');
       var roman = toRoman(p.id);
@@ -218,11 +216,12 @@
 
       var statusClass = l.status.replace(/ /g, '-');
       if (userComplete) statusClass = 'complete';
+      else statusClass = 'planned';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
       html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + '></span>';
-      if (l.url) {
-        html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
+      if (lessonPath) {
+        html += '<a href="lesson.html?path=' + encodeURIComponent(lessonPath) + '">' + escapeHtml(l.name) + '</a>';
       } else {
         html += '<a>' + escapeHtml(l.name) + '</a>';
       }

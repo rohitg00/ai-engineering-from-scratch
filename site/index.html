@@ -712,6 +712,7 @@
         <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
+        <a href="dashboard.html">Dashboard</a>
         <a href="#contents">Contents</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
@@ -1066,49 +1067,5 @@
   <script src="header.js?v=20260508a" defer></script>
   <script src="cmdpalette.js?v=20260508a" defer></script>
   <script src="app.js?v=20260508a"></script>
-  <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
-  <script>
-    (function () {
-      var ECO_REPOS = ['agentmemory', 'agentbrain', 'akbp'];
-      function fmt(n) {
-        if (typeof n !== 'number') return '';
-        if (n >= 1000) return '★ ' + (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-        return '★ ' + String(n);
-      }
-      ECO_REPOS.forEach(function (repo) {
-        var key = 'aifs:stars:' + repo;
-        try {
-          var cached = JSON.parse(localStorage.getItem(key));
-          if (cached && Date.now() - cached.ts < 6 * 3600 * 1000) {
-            var el = document.querySelector('[data-eco-repo="' + repo + '"]');
-            if (el) el.textContent = fmt(cached.count);
-            return;
-          }
-        } catch (e) {}
-        fetch('https://api.github.com/repos/rohitg00/' + repo).then(function (r) {
-          if (!r.ok) throw 0;
-          return r.json();
-        }).then(function (data) {
-          try { localStorage.setItem(key, JSON.stringify({ count: data.stargazers_count, ts: Date.now() })); } catch (e) {}
-          paint(repo, fmt(data.stargazers_count));
-        }).catch(function () {});
-      });
-
-      function paint(repo, text) {
-        document.querySelectorAll('[data-eco-repo="' + repo + '"], [data-eco-svg-stars="' + repo + '"]').forEach(function (el) {
-          el.textContent = text;
-        });
-      }
-
-      // Re-run paint for any cache hits set above (only the card was updated in the inline path).
-      ECO_REPOS.forEach(function (repo) {
-        var key = 'aifs:stars:' + repo;
-        try {
-          var cached = JSON.parse(localStorage.getItem(key));
-          if (cached && Date.now() - cached.ts < 6 * 3600 * 1000) paint(repo, fmt(cached.count));
-        } catch (e) {}
-      });
-    })();
-  </script>
 </body>
 </html>

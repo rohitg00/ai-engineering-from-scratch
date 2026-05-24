@@ -42,6 +42,18 @@
   }
 
   function load() {
+    // Local-first mode: avoid any network calls.
+    try {
+      var host = String(window.location && window.location.hostname || '');
+      var proto = String(window.location && window.location.protocol || '');
+      if (proto === 'file:' || host === '127.0.0.1' || host === 'localhost') {
+        paint(0);
+        var els = document.querySelectorAll('.header-github .star-count, #starCount');
+        for (var i = 0; i < els.length; i++) els[i].textContent = '—';
+        return;
+      }
+    } catch (e) {}
+
     var cached = readCache();
     if (cached != null) {
       paint(cached);

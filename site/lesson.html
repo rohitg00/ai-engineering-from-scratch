@@ -1620,10 +1620,11 @@
 
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo">
+      <a href="dashboard.html" class="logo">
         <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
+        <a href="dashboard.html">Dashboard</a>
         <a href="index.html#contents">Contents</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
@@ -1886,10 +1887,10 @@
       }
 
       function fetchLesson(path) {
-        var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
-        var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
+        var localUrl = '/content/' + path + '/docs/en.md';
+        var localQuizUrl = '/content/' + path + '/quiz.json';
 
-        fetch(rawUrl)
+        fetch(localUrl)
           .then(function (res) {
             if (!res.ok) throw new Error('fetch-failed');
             return res.text();
@@ -1902,7 +1903,7 @@
               showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
               return;
             }
-            fetch(quizUrl)
+            fetch(localQuizUrl)
               .then(function (res) { return res.ok ? res.json() : null; })
               .catch(function () { return null; })
               .then(function (data) {
@@ -1912,7 +1913,7 @@
               });
           })
           .catch(function () {
-            showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code>. It may not have been written yet.');
+            showError('Lesson not found', 'Could not load the lesson at <code>' + escapeHtml(path) + '</code> from your local repo. Start the local server (<code>node site/local-server.mjs</code>) and try again.');
           });
       }
 
@@ -1925,14 +1926,17 @@
         var el = document.getElementById('lessonContent');
         var html = parseMd(md);
         html += '<div class="ai-panels" id="aiPanels"></div>';
+        html += '<div class="code-lab" id="codeLab"></div>';
         html = addBottomNav(html);
-        el.innerHTML = '<article class="lesson-article">' + html + '</article>';
+        el.innerHTML = '<div class="lesson-topbar" id="lessonTopbar"></div><article class="lesson-article">' + html + '</article>';
 
         document.title = extractTitle(md) + ' - AI Engineering from Scratch';
 
         initCodeCopy();
         renderMermaidBlocks();
+        renderLessonTopbar();
         renderAIPanels();
+        renderCodeLab(lessonPath);
         buildTOC();
 
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -1947,33 +1951,240 @@
         });
       }
 
+      function renderLessonTopbar() {
+        var bar = document.getElementById('lessonTopbar');
+        if (!bar || !lessonPath) return;
+        if (typeof PHASES === 'undefined' || !Array.isArray(PHASES)) return;
+
+        var currentPhase = null;
+        var phaseLessonPaths = [];
+        for (var i = 0; i < PHASES.length; i++) {
+          var p = PHASES[i];
+          for (var j = 0; j < (p.lessons || []).length; j++) {
+            var url = p.lessons[j].url || '';
+            var m = url.match(/(phases\/[^/]+\/[^/]+)\/?$/);
+            if (!m) continue;
+            var lp = m[1];
+            if (lp) phaseLessonPaths.push({ phaseId: p.id, phaseName: p.name, path: lp, url: url });
+            if (lp === lessonPath) currentPhase = p;
+          }
+          if (currentPhase) break;
+        }
+        if (!currentPhase) return;
+
+        var hasProgress = !!window.AIFSProgress;
+        var total = currentPhase.lessons.length;
+        var done = 0;
+        for (var k = 0; k < currentPhase.lessons.length; k++) {
+          var l = currentPhase.lessons[k];
+          var mm = (l.url || '').match(/(phases\/[^/]+\/[^/]+)\/?$/);
+          var lp2 = mm ? mm[1] : '';
+          var userDone = hasProgress && lp2 ? window.AIFSProgress.isLessonComplete(lp2) : false;
+          if (userDone) done++;
+        }
+
+        var lessonDone = hasProgress ? window.AIFSProgress.isLessonComplete(lessonPath) : false;
+        var pct = total ? Math.round((done / total) * 100) : 0;
+
+        bar.innerHTML =
+          '<div class="lesson-topbar-inner">' +
+            '<div class="lesson-topbar-left">' +
+              '<a class="lesson-crumb" href="dashboard.html">Dashboard<\/a>' +
+              '<span class="lesson-crumb-sep">\/<\/span>' +
+              '<a class="lesson-crumb" href="phase.html?phase=' + encodeURIComponent(currentPhase.id) + '">Phase ' + String(currentPhase.id).padStart(2, '0') + '<\/a>' +
+              '<span class="lesson-crumb-sep">\/<\/span>' +
+              '<span class="lesson-crumb current">' + escapeHtml(extractTitleFromPath(lessonPath)) + '<\/span>' +
+            '<\/div>' +
+            '<div class="lesson-topbar-right">' +
+              '<span class="lesson-phase-pill">' + escapeHtml(currentPhase.name) + ' · ' + done + ' / ' + total + ' (' + pct + '%)<\/span>' +
+              (hasProgress ? '<button id="lessonDoneToggle" class="btn ' + (lessonDone ? 'btn-primary' : '') + '" type="button">' + (lessonDone ? 'Completed' : 'Mark complete') + '<\/button>' : '') +
+            '<\/div>' +
+          '<\/div>';
+
+        var btn = document.getElementById('lessonDoneToggle');
+        if (btn && hasProgress) {
+          btn.addEventListener('click', function () {
+            if (window.AIFSProgress.isLessonComplete(lessonPath)) window.AIFSProgress.unmarkLessonComplete(lessonPath);
+            else window.AIFSProgress.markLessonComplete(lessonPath);
+            renderLessonTopbar();
+          });
+        }
+      }
+
+      function extractTitleFromPath(p) {
+        var parts = String(p || '').split('/');
+        var slug = parts.length ? parts[parts.length - 1] : '';
+        slug = slug.replace(/^\d+-/, '').replace(/-/g, ' ').trim();
+        if (!slug) return 'Lesson';
+        return slug.charAt(0).toUpperCase() + slug.slice(1);
+      }
+
+      function renderCodeLab(path) {
+        var root = document.getElementById('codeLab');
+        if (!root) return;
+
+        fetch('/api/lesson-meta?path=' + encodeURIComponent(path))
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .catch(function () { return null; })
+          .then(function (meta) {
+            if (!meta || !meta.runnables || !meta.runnables.length) return;
+
+            var options = '';
+            for (var i = 0; i < meta.runnables.length; i++) {
+              var r = meta.runnables[i];
+              if (!r || !r.path) continue;
+              options += '<option value="' + escapeAttr(r.path) + '">' + escapeHtml(r.path + (r.lang ? ' · ' + r.lang : '')) + '</option>';
+            }
+
+            root.innerHTML =
+              '<div class="code-lab-header">' +
+                '<div class="code-lab-title">Code Lab</div>' +
+                '<div class="code-lab-sub">Run and test the lesson code locally (uses your machine).<\/div>' +
+              '<\/div>' +
+              '<div class="code-lab-controls">' +
+                '<label class="code-lab-label">File<\/label>' +
+                '<select id="codeLabFile" class="code-lab-select">' + options + '<\/select>' +
+                '<button id="codeLabRun" class="btn btn-primary">Run<\/button>' +
+                '<button id="codeLabTest" class="btn">Test<\/button>' +
+                '<button id="codeLabRubric" class="btn">Rubric<\/button>' +
+                '<button id="codeLabReview" class="btn">AI review<\/button>' +
+                '<button id="codeLabReset" class="btn">Reset<\/button>' +
+              '<\/div>' +
+              '<textarea id="codeLabEditor" class="code-lab-editor" spellcheck="false"><\/textarea>' +
+              '<pre id="codeLabOut" class="code-lab-out"><\/pre>';
+
+            var sel = document.getElementById('codeLabFile');
+            var ed = document.getElementById('codeLabEditor');
+            var out = document.getElementById('codeLabOut');
+            var runBtn = document.getElementById('codeLabRun');
+            var testBtn = document.getElementById('codeLabTest');
+            var rubricBtn = document.getElementById('codeLabRubric');
+            var reviewBtn = document.getElementById('codeLabReview');
+            var resetBtn = document.getElementById('codeLabReset');
+
+            if (!sel || !ed || !out || !runBtn || !testBtn || !rubricBtn || !reviewBtn || !resetBtn) return;
+
+            var originalByFile = {};
+
+            function fileUrl(filePath) {
+              return '/content/' + path + '/' + filePath;
+            }
+
+            function setOut(kind, text) {
+              var prefix = kind ? ('[' + kind + '] ') : '';
+              out.textContent = prefix + (text || '');
+            }
+
+            function loadFile(filePath) {
+              setOut('loading', 'Fetching ' + filePath + '…');
+              fetch(fileUrl(filePath))
+                .then(function (r) { if (!r.ok) throw new Error('file-missing'); return r.text(); })
+                .then(function (txt) {
+                  if (typeof originalByFile[filePath] !== 'string') originalByFile[filePath] = txt;
+                  ed.value = txt;
+                  setOut('', '');
+                })
+                .catch(function () {
+                  setOut('error', 'Could not load ' + filePath + '. Start the local server (site/local-server.mjs) to enable Code Lab.');
+                });
+            }
+
+            function runCurrent() {
+              var filePath = sel.value;
+              setOut('running', 'python3 ' + filePath);
+              fetch('/api/run', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ lessonPath: path, filePath: filePath, code: ed.value, args: [] })
+              })
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (data) {
+                  if (!data) return setOut('error', 'Run failed (no response).');
+                  var txt = '';
+                  if (data.timedOut) txt += 'Timed out.\n\n';
+                  if (data.stdout) txt += data.stdout;
+                  if (data.stderr) txt += (data.stdout ? '\n' : '') + data.stderr;
+                  if (!txt) txt = data.ok ? 'OK' : 'No output.';
+                  setOut(data.ok ? 'ok' : 'fail', txt);
+                })
+                .catch(function () { setOut('error', 'Run request failed. Is the local server running?'); });
+            }
+
+            function testCurrent() {
+              var filePath = sel.value;
+              setOut('testing', 'Running tests…');
+              var edits = {};
+              edits[filePath] = ed.value;
+              fetch('/api/test', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ lessonPath: path, edits: edits })
+              })
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (data) {
+                  if (!data) return setOut('error', 'Test failed (no response).');
+                  var txt = '';
+                  txt += 'Runner: ' + data.runner + '\n';
+                  if (data.timedOut) txt += 'Timed out.\n\n';
+                  if (data.stdout) txt += '\n' + data.stdout;
+                  if (data.stderr) txt += (data.stdout ? '\n' : '\n') + data.stderr;
+                  setOut(data.ok ? 'ok' : 'fail', txt.trim());
+                })
+                .catch(function () { setOut('error', 'Test request failed. Is the local server running?'); });
+            }
+
+            function showRubric() {
+              setOut('rubric', 'Loading rubric…');
+              fetch('/api/rubric?path=' + encodeURIComponent(path))
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (data) {
+                  if (!data || !data.ok) return setOut('error', 'Could not load rubric.');
+                  setOut('rubric', JSON.stringify(data.rubric, null, 2));
+                })
+                .catch(function () { setOut('error', 'Rubric request failed.'); });
+            }
+
+            function reviewCurrent() {
+              var filePath = sel.value;
+              setOut('review', 'Requesting AI review…');
+              fetch('/api/review', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ lessonPath: path, filePath: filePath, code: ed.value })
+              })
+                .then(function (r) { return r.json().catch(function () { return null; }).then(function (j) { return { ok: r.ok, status: r.status, json: j }; }); })
+                .then(function (resp) {
+                  if (!resp || !resp.json) return setOut('error', 'AI review failed.');
+                  if (resp.status === 501) return setOut('info', resp.json.message || 'AI review not implemented yet.');
+                  setOut(resp.ok ? 'ok' : 'fail', JSON.stringify(resp.json, null, 2));
+                })
+                .catch(function () { setOut('error', 'AI review request failed.'); });
+            }
+
+            function resetCurrent() {
+              var filePath = sel.value;
+              if (typeof originalByFile[filePath] === 'string') {
+                ed.value = originalByFile[filePath];
+                setOut('reset', 'Reset ' + filePath + ' to original.');
+              }
+            }
+
+            sel.addEventListener('change', function () { loadFile(sel.value); });
+            runBtn.addEventListener('click', runCurrent);
+            testBtn.addEventListener('click', testCurrent);
+            rubricBtn.addEventListener('click', showRubric);
+            reviewBtn.addEventListener('click', reviewCurrent);
+            resetBtn.addEventListener('click', resetCurrent);
+
+            loadFile(sel.value);
+          });
+      }
+
       var TOOLS = [
         { repo: 'agentmemory', name: 'agentmemory', desc: 'Persistent memory for AI coding agents.' },
         { repo: 'agentbrain',  name: 'agentbrain',  desc: 'Evidence-first operating system for agents.' },
         { repo: 'akbp',        name: 'akbp',        desc: 'Agent Knowledge Base Protocol.' }
       ];
-
-      function formatStars(n) {
-        if (typeof n !== 'number') return '';
-        if (n >= 1000) return '★ ' + (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-        return '★ ' + String(n);
-      }
-
-      function fetchStars(repo) {
-        var key = 'aifs:stars:' + repo;
-        try {
-          var cached = JSON.parse(localStorage.getItem(key));
-          if (cached && Date.now() - cached.ts < 6 * 3600 * 1000) return Promise.resolve(cached.count);
-        } catch (e) {}
-        return fetch('https://api.github.com/repos/rohitg00/' + repo).then(function (r) {
-          if (!r.ok) throw new Error('gh-' + r.status);
-          return r.json();
-        }).then(function (data) {
-          var count = data.stargazers_count;
-          try { localStorage.setItem(key, JSON.stringify({ count: count, ts: Date.now() })); } catch (e) {}
-          return count;
-        });
-      }
 
       function renderToolsCard(sidebar) {
         if (!sidebar || sidebar.querySelector('.tools-card')) return;
@@ -1981,19 +2192,13 @@
         html += '<div class="tools-card-header">Tools we maintain</div>';
         TOOLS.forEach(function (t) {
           html += '<a class="tools-card-item" href="https://github.com/rohitg00/' + t.repo + '" target="_blank" rel="noopener">';
-          html += '<div class="tools-card-name"><span>' + escapeHtml(t.name) + '</span><span class="tools-card-stars" data-repo="' + escapeAttr(t.repo) + '"></span></div>';
+          html += '<div class="tools-card-name"><span>' + escapeHtml(t.name) + '</span></div>';
           html += '<div class="tools-card-desc">' + escapeHtml(t.desc) + '</div>';
           html += '</a>';
         });
         html += '<div class="tools-card-foot">Memory + reasoning + knowledge protocol for agents and harnesses.</div>';
         html += '</div>';
         sidebar.insertAdjacentHTML('beforeend', html);
-        TOOLS.forEach(function (t) {
-          fetchStars(t.repo).then(function (count) {
-            var el = sidebar.querySelector('.tools-card-stars[data-repo="' + t.repo + '"]');
-            if (el) el.textContent = formatStars(count);
-          }).catch(function () { /* rate limit, silent */ });
-        });
       }
 
       function buildTOC() {
@@ -2922,24 +3127,14 @@
         renderContinuePanel(container);
       }
 
-      var ghApiCache = {};
-
-      function ghApiFetch(apiPath, cb) {
-        if (ghApiCache[apiPath]) {
-          cb(null, ghApiCache[apiPath]);
-          return;
-        }
-        fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath, {
-          headers: { 'Accept': 'application/vnd.github.v3+json' }
-        }).then(function (res) {
-          if (!res.ok) throw new Error(res.status);
-          return res.json();
-        }).then(function (data) {
-          ghApiCache[apiPath] = data;
-          cb(null, data);
-        }).catch(function (err) {
-          cb(err, null);
-        });
+      function localListFetch(dirPath, cb) {
+        fetch('/api/list?path=' + encodeURIComponent(dirPath))
+          .then(function (res) { return res.ok ? res.json() : null; })
+          .then(function (data) {
+            if (!data || !data.ok || !Array.isArray(data.entries)) throw new Error('list-failed');
+            cb(null, data.entries);
+          })
+          .catch(function (err) { cb(err, null); });
       }
 
       function classifyOutput(name) {
@@ -2984,15 +3179,16 @@
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
         container.appendChild(panel);
 
-        ghApiFetch(lessonPath + '/outputs', function (err, data) {
+        localListFetch(lessonPath + '/outputs', function (err, data) {
           var el = document.getElementById('outputsContent');
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            el.innerHTML = '<div class="panel-fallback">No outputs for this lesson.</div>';
             return;
           }
 
           var html = '<div class="output-cards">';
           data.forEach(function (file, idx) {
+            if (!file || file.type !== 'file') return;
             var type = classifyOutput(file.name);
             var badgeClass = type;
             var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
@@ -3010,7 +3206,7 @@
             html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
             html += '<div class="output-desc" id="desc-' + idx + '">Loading description...</div>';
             html += '<div class="output-actions">';
-            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            html += '<a class="output-btn" href="' + file.url + '" target="_blank" rel="noopener">Open file</a>';
             if (installHint) {
               html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
             }
@@ -3020,7 +3216,7 @@
             }
             html += '</div>';
 
-            fetch(file.download_url).then(function (r) { return r.text(); }).then(function (content) {
+            fetch(file.url).then(function (r) { return r.text(); }).then(function (content) {
               var descEl = document.getElementById('desc-' + idx);
               if (descEl) {
                 var desc = extractFrontmatterDesc(content);
@@ -3042,15 +3238,16 @@
         panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
         container.appendChild(panel);
 
-        ghApiFetch(lessonPath + '/code', function (err, data) {
+        localListFetch(lessonPath + '/code', function (err, data) {
           var el = document.getElementById('codeContent');
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            el.innerHTML = '<div class="panel-fallback">No code directory for this lesson.</div>';
             return;
           }
 
           var html = '<div class="code-cards">';
           data.forEach(function (file) {
+            if (!file || file.type !== 'file') return;
             var icon = langIcon(file.name);
             var cmd = langCommand(file.name);
             var runCmd = cmd + ' ' + lessonPath + '/code/' + file.name;
@@ -3059,7 +3256,7 @@
             html += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
             html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
             html += '<div class="code-card-actions">';
-            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            html += '<a class="code-card-btn" href="' + file.url + '" target="_blank" rel="noopener">Open file</a>';
             html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button>';
             html += '</div>';
             html += '</div>';
