@@ -380,7 +380,14 @@
         btn.textContent = '✓';
         // Announce via a dedicated live region — the button's aria-label
         // overrides its textContent, so AT won't hear "✓" otherwise.
-        if (status) status.textContent = 'Command copied to clipboard';
+        // Clear first, then set on the next frame so repeated clicks
+        // produce a fresh AT announcement (live regions debounce identical text).
+        if (status) {
+          status.textContent = '';
+          window.requestAnimationFrame(function () {
+            status.textContent = 'Command copied to clipboard';
+          });
+        }
         if (revertTimer) clearTimeout(revertTimer);
         revertTimer = setTimeout(function () {
           btn.textContent = originalLabel;
