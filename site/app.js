@@ -222,9 +222,11 @@
   }
 
   function getFocusables(root) {
+    // getClientRects().length is more reliable than offsetParent for visibility:
+    // offsetParent returns null for position: fixed elements even when visible.
     return Array.prototype.slice.call(root.querySelectorAll(
       'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    )).filter(function (el) { return el.offsetParent !== null; });
+    )).filter(function (el) { return el.getClientRects().length > 0; });
   }
 
   function trapTab(e, container) {
@@ -369,14 +371,21 @@
   function initCopyButton() {
     var btn = document.getElementById('copyBtn');
     var code = document.getElementById('cloneCmd');
+    var status = document.getElementById('copyStatus');
     if (!btn || !code) return;
     var originalLabel = btn.textContent;
     var revertTimer = null;
     btn.addEventListener('click', function () {
       navigator.clipboard.writeText(code.textContent).then(function () {
         btn.textContent = '✓';
+        // Announce via a dedicated live region — the button's aria-label
+        // overrides its textContent, so AT won't hear "✓" otherwise.
+        if (status) status.textContent = 'Command copied to clipboard';
         if (revertTimer) clearTimeout(revertTimer);
-        revertTimer = setTimeout(function () { btn.textContent = originalLabel; }, 1500);
+        revertTimer = setTimeout(function () {
+          btn.textContent = originalLabel;
+          if (status) status.textContent = '';
+        }, 1500);
       });
     });
   }

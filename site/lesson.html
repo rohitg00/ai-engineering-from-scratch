@@ -2710,7 +2710,9 @@
           }
           html += '</div>';
           if (q.explanation) {
-            html += '<div class="quiz-explanation" id="' + qid + '-exp" role="status" aria-live="polite">' + escapeHtml(q.explanation) + '</div>';
+            // Render empty; text is injected on reveal so the live region
+            // fires a content-change announcement (not just a visibility flip).
+            html += '<div class="quiz-explanation" id="' + qid + '-exp" role="status" aria-live="polite" data-explanation="' + escapeAttr(q.explanation) + '"></div>';
           }
           html += '</div>';
         }
@@ -2750,7 +2752,13 @@
         }
 
         var exp = questionDiv.querySelector('.quiz-explanation');
-        if (exp) exp.style.display = 'block';
+        if (exp) {
+          var explanationText = exp.getAttribute('data-explanation');
+          if (explanationText && !exp.textContent) {
+            exp.textContent = explanationText;
+          }
+          exp.style.display = 'block';
+        }
 
         if (persist && window.AIFSProgress && lessonPath) {
           window.AIFSProgress.recordAnswer(lessonPath, questionDiv.id, chosen, chosen === correct);

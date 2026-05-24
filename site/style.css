@@ -129,7 +129,8 @@ body {
   outline-offset: 2px;
 }
 
-/* Visually-hidden but accessible to assistive tech. */
+/* Visually-hidden but accessible to assistive tech. clip is kept as a
+   fallback for older WebKit; modern browsers honor clip-path. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -138,6 +139,7 @@ body {
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
