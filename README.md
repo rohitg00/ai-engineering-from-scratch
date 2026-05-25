@@ -257,6 +257,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 11 | [Linux for AI](phases/00-setup-and-tooling/11-linux-for-ai/) | Learn | — |
 | 12 | [Debugging & Profiling](phases/00-setup-and-tooling/12-debugging-and-profiling/) | Build | Python |
 
+<a id="phase-1"></a>
 <details id="phase-1">
 <summary><b>Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>The intuition behind every AI algorithm, through code.</em></summary>
 <br/>
@@ -288,6 +289,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-2"></a>
 <details id="phase-2">
 <summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>18 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
 <br/>
@@ -315,6 +317,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-3"></a>
 <details id="phase-3">
 <summary><b>Phase 3 — Deep Learning Core</b> &nbsp;<code>13 lessons</code>&nbsp; <em>Neural networks from first principles. No frameworks until you build one.</em></summary>
 <br/>
@@ -337,6 +340,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-4"></a>
 <details id="phase-4">
 <summary><b>Phase 4 — Computer Vision</b> &nbsp;<code>28 lessons</code>&nbsp; <em>From pixels to understanding — image, video, 3D, VLMs, and world models.</em></summary>
 <br/>
@@ -374,6 +378,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-5"></a>
 <details id="phase-5">
 <summary><b>Phase 5 — NLP: Foundations to Advanced</b> &nbsp;<code>29 lessons</code>&nbsp; <em>Language is the interface to intelligence.</em></summary>
 <br/>
@@ -412,6 +417,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-6"></a>
 <details id="phase-6">
 <summary><b>Phase 6 — Speech & Audio</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Hear, understand, speak.</em></summary>
 <br/>
@@ -438,6 +444,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-7"></a>
 <details id="phase-7">
 <summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>14 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
 <br/>
@@ -461,6 +468,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-8"></a>
 <details id="phase-8">
 <summary><b>Phase 8 — Generative AI</b> &nbsp;<code>14 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
 <br/>
@@ -484,6 +492,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-9"></a>
 <details id="phase-9">
 <summary><b>Phase 9 — Reinforcement Learning</b> &nbsp;<code>12 lessons</code>&nbsp; <em>The foundation of RLHF and game-playing AI.</em></summary>
 <br/>
@@ -505,6 +514,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-10"></a>
 <details id="phase-10">
 <summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
 <br/>
@@ -536,6 +546,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-11"></a>
 <details id="phase-11">
 <summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
 <br/>
@@ -562,6 +573,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-12"></a>
 <details id="phase-12">
 <summary><b>Phase 12 — Multimodal AI</b> &nbsp;<code>25 lessons</code>&nbsp; <em>See, hear, read, and reason across modalities — from ViT patches to computer-use agents.</em></summary>
 <br/>
@@ -596,6 +608,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-13"></a>
 <details id="phase-13">
 <summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>23 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
 <br/>
@@ -628,6 +641,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 </details>
 
+<a id="phase-14"></a>
 <details id="phase-14">
 <summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>42 lessons</code>&nbsp; <em>Build agents from first principles — loop, memory, planning, frameworks, benchmarks, production, workbench.</em></summary>
 <br/>
@@ -681,6 +695,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 </details>
 
+<a id="phase-15"></a>
 <details id="phase-15">
 <summary><b>Phase 15 — Autonomous Systems</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Long-horizon agents, self-improvement, and the 2026 safety stack.</em></summary>
 <br/>
@@ -712,6 +727,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 </details>
 
+<a id="phase-16"></a>
 <details id="phase-16">
 <summary><b>Phase 16 — Multi-Agent & Swarms</b> &nbsp;<code>25 lessons</code>&nbsp; <em>Coordination, emergence, and collective intelligence.</em></summary>
 <br/>
@@ -746,6 +762,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 </details>
 
+<a id="phase-17"></a>
 <details id="phase-17">
 <summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
 <br/>
@@ -783,6 +800,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 </details>
 
+<a id="phase-18"></a>
 <details id="phase-18">
 <summary><b>Phase 18 — Ethics, Safety & Alignment</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build AI that helps humanity. Not optional.</em></summary>
 <br/>
@@ -822,6 +840,7 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 
 </details>
 
+<a id="phase-19"></a>
 <details id="phase-19">
 <summary><b>Phase 19 — Capstone Projects</b> &nbsp;<code>17 projects</code>&nbsp; <em>2026 end-to-end shippable products, 20-40 hours each.</em></summary>
 <br/>
