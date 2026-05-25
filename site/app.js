@@ -124,11 +124,12 @@
       var statusClass = p.status.replace(/ /g, '-');
       var roman = toRoman(p.id);
       var num = String(p.id).padStart(2, '0');
-      html += '<div class="toc-row" data-phase="' + i + '">';
-      html += '<span class="toc-num">' + roman + '.</span>';
-      html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
-      html += '<span class="toc-meta">' + done + ' / ' + total + '</span>';
-      html += '<span class="toc-meta">' + num + '</span>';
+      var label = 'Phase ' + num + ': ' + p.name + ', ' + done + ' of ' + total + ' lessons complete';
+      html += '<div class="toc-row" data-phase="' + i + '" role="button" tabindex="0" aria-label="' + escapeHtml(label) + '">';
+      html += '<span class="toc-num" aria-hidden="true">' + roman + '.</span>';
+      html += '<div><span class="toc-status ' + statusClass + '" aria-hidden="true"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
+      html += '<span class="toc-meta" aria-hidden="true">' + done + ' / ' + total + '</span>';
+      html += '<span class="toc-meta" aria-hidden="true">' + num + '</span>';
       html += '</div>';
     }
     grid.innerHTML = html;
@@ -179,8 +180,18 @@
       var row = e.target.closest('.toc-row, .phase-card');
       if (row) {
         var idx = parseInt(row.getAttribute('data-phase'), 10);
-        if (!isNaN(idx)) openModal(idx);
+        if (!isNaN(idx)) openModal(idx, row);
       }
+    });
+
+    // Keyboard activation for the role="button" phase rows.
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var row = e.target.closest && e.target.closest('.toc-row, .phase-card');
+      if (!row || !row.hasAttribute('data-phase')) return;
+      e.preventDefault();
+      var idx = parseInt(row.getAttribute('data-phase'), 10);
+      if (!isNaN(idx)) openModal(idx, row);
     });
 
     closeBtn.addEventListener('click', closeModal);
@@ -188,7 +199,15 @@
       if (e.target === overlay) closeModal();
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeModal();
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeModal();
+        return;
+      }
+      if (e.key === 'Tab') {
+        trapTab(e, overlay);
+      }
     });
 
     var resetBtn = document.getElementById('modalReset');
@@ -202,12 +221,37 @@
     }
   }
 
-  var currentPhaseIdx = -1;
+  function getFocusables(root) {
+    // getClientRects().length is more reliable than offsetParent for visibility:
+    // offsetParent returns null for position: fixed elements even when visible.
+    return Array.prototype.slice.call(root.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (el) { return el.getClientRects().length > 0; });
+  }
 
-  function openModal(idx) {
+  function trapTab(e, container) {
+    var f = getFocusables(container);
+    if (!f.length) return;
+    var first = f[0];
+    var last = f[f.length - 1];
+    var active = document.activeElement;
+    if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  var currentPhaseIdx = -1;
+  var lastModalTrigger = null;
+
+  function openModal(idx, triggerEl) {
     var p = PHASES[idx];
     if (!p) return;
     currentPhaseIdx = idx;
+    lastModalTrigger = triggerEl || document.activeElement;
 
     document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
     document.getElementById('modalTitle').textContent = p.name;
@@ -215,8 +259,14 @@
 
     renderModalLessons(p);
 
-    document.getElementById('modalOverlay').classList.add('open');
+    var overlay = document.getElementById('modalOverlay');
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+
+    // Move focus into the dialog so screen readers and keyboards land there.
+    var closeBtn = document.getElementById('modalClose');
+    if (closeBtn) closeBtn.focus();
   }
 
   function renderModalLessons(p) {
@@ -238,11 +288,13 @@
       if (userComplete) statusClass = 'complete';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
-      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + '></span>';
+      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + ' aria-hidden="true"></span>';
       if (l.url) {
         html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
       } else {
-        html += '<a>' + escapeHtml(l.name) + '</a>';
+        // Unreleased lesson: render as plain text rather than a non-functional <a>
+        // so it isn't announced or focused as a link.
+        html += '<span class="modal-lesson-pending" aria-label="' + escapeHtml(l.name) + ' (not yet available)">' + escapeHtml(l.name) + '</span>';
       }
       html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span>';
       html += '<span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span>';
@@ -306,21 +358,41 @@
   }
 
   function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
+    var overlay = document.getElementById('modalOverlay');
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (lastModalTrigger && typeof lastModalTrigger.focus === 'function') {
+      try { lastModalTrigger.focus(); } catch (_) {}
+    }
+    lastModalTrigger = null;
   }
 
   function initCopyButton() {
     var btn = document.getElementById('copyBtn');
     var code = document.getElementById('cloneCmd');
+    var status = document.getElementById('copyStatus');
     if (!btn || !code) return;
     var originalLabel = btn.textContent;
     var revertTimer = null;
     btn.addEventListener('click', function () {
       navigator.clipboard.writeText(code.textContent).then(function () {
         btn.textContent = '✓';
+        // Announce via a dedicated live region — the button's aria-label
+        // overrides its textContent, so AT won't hear "✓" otherwise.
+        // Clear first, then set on the next frame so repeated clicks
+        // produce a fresh AT announcement (live regions debounce identical text).
+        if (status) {
+          status.textContent = '';
+          window.requestAnimationFrame(function () {
+            status.textContent = 'Command copied to clipboard';
+          });
+        }
         if (revertTimer) clearTimeout(revertTimer);
-        revertTimer = setTimeout(function () { btn.textContent = originalLabel; }, 1500);
+        revertTimer = setTimeout(function () {
+          btn.textContent = originalLabel;
+          if (status) status.textContent = '';
+        }, 1500);
       });
     });
   }

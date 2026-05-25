@@ -9,9 +9,13 @@
   --bg-surface-hover: #ece9dc;
   --ink: #1a1a1a;
   --ink-soft: #4a4a4a;
-  --ink-mute: #7a7a78;
+  /* Bumped from #7a7a78 → #686867 to meet WCAG AA 4.5:1 on --bg. */
+  --ink-mute: #686867;
   --rule: #1a1a1a;
+  /* Decorative paper rules stay subtle; component borders use --rule-strong
+     for WCAG 1.4.11 (3:1) contrast against the background. */
   --rule-soft: rgba(26, 26, 26, 0.16);
+  --rule-strong: rgba(26, 26, 26, 0.45);
   --paper-rule: rgba(26, 26, 26, 0.08);
 
   --blueprint: #3553ff;
@@ -50,9 +54,11 @@
   --bg-surface-hover: #1b2244;
   --ink: #e8e6dc;
   --ink-soft: #a8a6a0;
-  --ink-mute: #7a7878;
+  /* Bumped from #7a7878 → #9a9a98 to meet WCAG AA 4.5:1 on --bg. */
+  --ink-mute: #9a9a98;
   --rule: #e8e6dc;
   --rule-soft: rgba(232, 230, 220, 0.18);
+  --rule-strong: rgba(232, 230, 220, 0.5);
   --paper-rule: rgba(232, 230, 220, 0.08);
 
   --blueprint: #6b8eff;
@@ -120,6 +126,32 @@ body {
   left: 16px;
   top: 16px;
   outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Visually-hidden but accessible to assistive tech. clip is kept as a
+   fallback for older WebKit; modern browsers honor clip-path. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Global keyboard-focus indicator. Individual components may still override
+   for tighter styling, but every focusable element gets a visible ring. */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--blueprint);
   outline-offset: 2px;
 }
 
@@ -296,7 +328,7 @@ p.dropcap::first-letter {
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  border: 1px solid var(--rule-soft);
+  border: 1px solid var(--rule-strong);
   background: var(--bg-surface);
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -334,7 +366,7 @@ p.dropcap::first-letter {
 
 .theme-toggle {
   background: transparent;
-  border: 1px solid var(--rule-soft);
+  border: 1px solid var(--rule-strong);
   width: 36px;
   height: 36px;
   cursor: pointer;
@@ -626,6 +658,17 @@ p.dropcap::first-letter {
 .modal-lesson > a:hover {
   color: var(--blueprint);
   border-bottom-color: var(--blueprint);
+}
+
+.modal-lesson > .modal-lesson-pending {
+  color: var(--ink-mute);
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  font-weight: 500;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .modal-lesson-status {
@@ -1031,7 +1074,7 @@ body.js-anim .toc-row.in-view {
 /* ── Search trigger button in the header ─────────────────────────────── */
 .search-toggle {
   background: transparent;
-  border: 1px solid var(--rule-soft);
+  border: 1px solid var(--rule-strong);
   width: 36px;
   height: 36px;
   cursor: pointer;
