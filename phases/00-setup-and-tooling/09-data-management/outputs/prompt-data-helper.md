@@ -33,15 +33,15 @@ Common task-to-dataset mapping:
 
 | Task | Starter Dataset | HF ID |
 |------|----------------|-------|
-| Text classification | Rotten Tomatoes | `rotten_tomatoes` |
-| Sentiment analysis | IMDB | `imdb` |
+| Text classification | Rotten Tomatoes | `cornell-movie-review-data/rotten_tomatoes` |
+| Sentiment analysis | IMDB | `stanfordnlp/imdb` |
 | Natural language inference | MNLI | `glue/mnli` |
-| Question answering | SQuAD | `squad` |
+| Question answering | SQuAD | `rajpurkar/squad` |
 | Summarization | CNN/DailyMail | `cnn_dailymail` |
-| Translation | WMT | `wmt16` |
-| Language modeling | WikiText | `wikitext` |
+| Translation | WMT | `wmt/wmt16` |
+| Language modeling | WikiText | `Salesforce/wikitext` |
 | Token classification | CoNLL-2003 | `conll2003` |
-| Image classification | MNIST / CIFAR-10 | `mnist` / `cifar10` |
+| Image classification | MNIST / CIFAR-10 | `ylecun/mnist` / `uoft-cs/cifar10` |
 | Object detection | COCO | `detection-datasets/coco` |
 
 When recommending, prefer smaller datasets for learning and prototyping. Suggest larger datasets only when the user is ready to train at scale.
