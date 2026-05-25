@@ -6,7 +6,7 @@
     "skills": 378,
     "prompts": 99,
     "agents": 0,
-    "code_files": 435
+    "code_files": 436
   },
   "phases": [
     {
@@ -836,7 +836,8 @@
           "has_quiz": true,
           "has_notebook": false,
           "code_files": [
-            "logistic_regression.py"
+            "logistic_regression.py",
+            "logistic_regression.rs"
           ],
           "outputs": [
             {
