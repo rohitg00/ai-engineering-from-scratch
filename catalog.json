@@ -6,7 +6,7 @@
     "skills": 378,
     "prompts": 99,
     "agents": 0,
-    "code_files": 435
+    "code_files": 436
   },
   "phases": [
     {
@@ -807,7 +807,8 @@
           "has_quiz": true,
           "has_notebook": false,
           "code_files": [
-            "linear_regression.py"
+            "linear_regression.py",
+            "linear_regression.rs"
           ],
           "outputs": [
             {
