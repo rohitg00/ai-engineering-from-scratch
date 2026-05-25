@@ -321,7 +321,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | [The Perceptron: Where It All Started](phases/03-deep-learning-core/01-the-perceptron/) | Build | Python |
+| 01 | [The Perceptron: Where It All Started](phases/03-deep-learning-core/01-the-perceptron/) | Build | Python, Rust |
 | 02 | [Multi-Layer Networks & Forward Pass](phases/03-deep-learning-core/02-multi-layer-networks/) | Build | Python |
 | 03 | [Backpropagation from Scratch](phases/03-deep-learning-core/03-backpropagation/) | Build | Python |
 | 04 | [Activation Functions: ReLU, Sigmoid, GELU & Why](phases/03-deep-learning-core/04-activation-functions/) | Build | Python |
