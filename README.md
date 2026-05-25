@@ -120,6 +120,20 @@ cd ai-engineering-from-scratch
 python phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
+**Option B.1 — run the course site locally (offline + Code Lab).**
+
+```bash
+cd ai-engineering-from-scratch
+node site/local-server.mjs
+```
+
+Then open `http://127.0.0.1:5174/index.html`.
+
+For the student dashboard UI, open `http://127.0.0.1:5174/dashboard.html`.
+
+Frontend docs: `site/FRONTEND.md`.
+
+**Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with SkillKit installed:
 **Option C — find your level *(recommended)*.** Skip ahead intelligently. Inside Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed:
 
 ```bash
