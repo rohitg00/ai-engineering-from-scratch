@@ -1,0 +1,10 @@
+$ python hello.py
+Hello, AI Engineering
+
+$ pnpm dlx tsx hello.ts
+Hello, AI Engineering
+
+$ rustc hello.rs -o /tmp/hello-aiefs && /tmp/hello-aiefs && rm /tmp/hello-aiefs
+Hello, AI Engineering
+
+# julia not installed — skipped (optional per README)

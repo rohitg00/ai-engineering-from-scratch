@@ -144,3 +144,15 @@ Full output at: `phases/00-setup-and-tooling/01-dev-environment/outputs/verify-r
 - `pnpm` check not added — reviewer marked it optional. `uv` covers the Python-side package manager gap that caused the medium-severity finding.
 - No venv-activation paragraph added to `docs/en.md` — reviewer marked optional. The reviewer's answer to Q1 (standardize on venv activation) is the correct pedagogical fix; a separate docs PR is a cleaner scope.
 - MPS/Apple Silicon section not added to `docs/en.md` Step 6 — reviewer marked optional; own PR.
+
+---
+
+## 8. Post-review fixes (responses to 00-01-review.md action items)
+
+| Item | Status | Detail |
+|------|--------|--------|
+| Python version threshold aligned (3.10 → 3.11) | Done | `code/verify.py` — commit `cb737a2` |
+| `uv` check added to verify.py | Done | New entry in CHECKS list — commit `cb737a2` |
+| Node 20+ enforcement added | Done | `_node_major()` helper in verify.py — commit `cb737a2` |
+| Intel Mac NumPy<2 pin | Done (not from review) | `numpy<2` pinned in `phases/00-setup-and-tooling/01-dev-environment/requirements.txt`. PyTorch 2.2.2 was built against NumPy 1.x; NumPy 2.0 C-ABI break causes `_ARRAY_API` errors on Intel Mac. Pin not needed on Apple Silicon or Linux. |
+| Exercise #3 completed | Done | `phases/00-setup-and-tooling/01-dev-environment/exercises/hello-world/` — hello.py, hello.ts, hello.rs, hello.jl (optional), README.md, runs.txt |

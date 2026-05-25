@@ -1,0 +1,9 @@
+# Intel Mac constraint: PyTorch 2.2.2 (the last Intel Mac wheel) was built
+# against NumPy 1.x. NumPy 2.0's C-ABI break causes _ARRAY_API errors.
+# On Apple Silicon or Linux this pin is not required.
+numpy<2
+matplotlib
+jupyter
+torch
+torchvision
+torchaudio
