@@ -2,13 +2,20 @@ import sys
 import shutil
 import subprocess
 
+
+def _node_major() -> int:
+    out = subprocess.run(["node", "--version"], capture_output=True, text=True).stdout
+    return int(out.strip().lstrip("v").split(".")[0])
+
+
 CHECKS = [
-    ("Python 3.10+", lambda: sys.version_info >= (3, 10), f"Python {sys.version}"),
+    ("Python 3.11+", lambda: sys.version_info >= (3, 11), f"Python {sys.version}"),
+    ("uv", lambda: shutil.which("uv") is not None, None),
     ("NumPy", lambda: __import__("numpy"), None),
     ("Matplotlib", lambda: __import__("matplotlib"), None),
     ("Jupyter", lambda: __import__("jupyter"), None),
     ("Git", lambda: shutil.which("git") is not None, None),
-    ("Node.js", lambda: shutil.which("node") is not None, None),
+    ("Node.js 20+", lambda: shutil.which("node") is not None and _node_major() >= 20, None),
     ("Rust (cargo)", lambda: shutil.which("cargo") is not None, None),
 ]
 

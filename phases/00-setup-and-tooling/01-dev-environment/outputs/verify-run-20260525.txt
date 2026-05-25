@@ -2,19 +2,20 @@
 === AI Engineering from Scratch — Environment Check ===
 
 Core:
-  [PASS] Python 3.10+ (Python 3.12.8 (v3.12.8:2dc476bcb91, Dec  3 2024, 14:43:20) [Clang 13.0.0 (clang-1300.0.29.30)])
+  [PASS] Python 3.11+ (Python 3.12.8 (v3.12.8:2dc476bcb91, Dec  3 2024, 14:43:20) [Clang 13.0.0 (clang-1300.0.29.30)])
+  [PASS] uv
   [PASS] NumPy
   [PASS] Matplotlib
   [PASS] Jupyter
   [PASS] Git
-  [PASS] Node.js
+  [PASS] Node.js 20+
   [PASS] Rust (cargo)
 
 GPU (optional):
   [FAIL] PyTorch
   [FAIL] CUDA
 
-Result: 7/7 core checks passed (no GPU — that's fine, most lessons work on CPU)
+Result: 8/8 core checks passed (no GPU — that's fine, most lessons work on CPU)
 
 You're ready. Start with Phase 1.
 

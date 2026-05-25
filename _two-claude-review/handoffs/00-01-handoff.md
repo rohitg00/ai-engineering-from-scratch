@@ -9,7 +9,7 @@
 - **Type:** Build
 - **Date completed:** 2026-05-25
 - **Time spent:** ~1h
-- **Status:** `ready-for-review`
+- **Status:** `ready-for-re-review` (tightening pass after APPROVED verdict)
 
 ## 1. What I built
 
@@ -95,3 +95,52 @@ Edge cases considered:
 | 5 | post | Verify GPU access | `import torch; print(torch.cuda.is_available())` | ✓ |
 
 **Score: 5/5**
+
+---
+
+## Follow-up: Addressing Review Feedback (commit after `84a87c2`)
+
+**Reviewer verdict:** `APPROVED` with three required action items before merge.
+
+### Changes made
+
+| Action item | File | Change |
+|-------------|------|--------|
+| Align Python threshold to 3.11 | `code/verify.py` | `(3, 10)` → `(3, 11)`; label updated to "Python 3.11+" |
+| Add `uv` check | `code/verify.py` | New entry in CHECKS; now 8 core checks |
+| Enforce Node 20+ | `code/verify.py` | Added `_node_major()` helper; check label is "Node.js 20+" |
+| Align Python in docs | `docs/en.md` | `uv python install 3.12` → `3.11` |
+| Fix fragile notebook path | `notebook/lesson.ipynb` cell-10 | Path resolved via candidate list (notebook/ or project root) |
+| Add `uv` to notebook Layer 1+2 cell | `notebook/lesson.ipynb` cell-2 | Added `uv` to shutil.which display |
+
+### Updated verify.py output
+
+```
+=== AI Engineering from Scratch — Environment Check ===
+
+Core:
+  [PASS] Python 3.11+ (Python 3.12.8 ...)
+  [PASS] uv
+  [PASS] NumPy
+  [PASS] Matplotlib
+  [PASS] Jupyter
+  [PASS] Git
+  [PASS] Node.js 20+
+  [PASS] Rust (cargo)
+
+GPU (optional):
+  [FAIL] PyTorch
+  [FAIL] CUDA
+
+Result: 8/8 core checks passed (no GPU — that's fine, most lessons work on CPU)
+
+You're ready. Start with Phase 1.
+```
+
+Full output at: `phases/00-setup-and-tooling/01-dev-environment/outputs/verify-run-20260525.txt`
+
+### Deferred from this pass (optional items per reviewer)
+
+- `pnpm` check not added — reviewer marked it optional. `uv` covers the Python-side package manager gap that caused the medium-severity finding.
+- No venv-activation paragraph added to `docs/en.md` — reviewer marked optional. The reviewer's answer to Q1 (standardize on venv activation) is the correct pedagogical fix; a separate docs PR is a cleaner scope.
+- MPS/Apple Silicon section not added to `docs/en.md` Step 6 — reviewer marked optional; own PR.

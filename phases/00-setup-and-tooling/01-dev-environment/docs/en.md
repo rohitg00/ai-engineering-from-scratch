@@ -58,7 +58,7 @@ We use `uv` — it's 10-100x faster than pip and handles virtual environments au
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-uv python install 3.12
+uv python install 3.11
 
 uv venv
 source .venv/bin/activate  # or .venv\Scripts\activate on Windows
