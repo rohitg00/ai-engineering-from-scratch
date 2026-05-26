@@ -173,10 +173,18 @@ plt.show()
 
 The plot appears right below the cell. This is why notebooks dominate AI work. You see the data, the plot, and the code together.
 
-For images:
+For images, make sure the file exists before displaying it. This example creates a small placeholder image first:
 
 ```python
+import matplotlib.pyplot as plt
 from IPython.display import Image, display
+
+plt.figure(figsize=(6, 3))
+plt.text(0.5, 0.5, "Architecture Diagram", ha="center", va="center", fontsize=18)
+plt.axis("off")
+plt.savefig("architecture.png", bbox_inches="tight", dpi=150)
+plt.close()
+
 display(Image(filename="architecture.png"))
 ```
 
