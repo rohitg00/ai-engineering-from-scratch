@@ -35,12 +35,12 @@ Common task-to-dataset mapping:
 |------|----------------|-------|
 | Text classification | Rotten Tomatoes | `cornell-movie-review-data/rotten_tomatoes` |
 | Sentiment analysis | IMDB | `stanfordnlp/imdb` |
-| Natural language inference | MNLI | `glue/mnli` |
+| Natural language inference | MNLI | `nyu-mll/glue` (config:`mnli`) |
 | Question answering | SQuAD | `rajpurkar/squad` |
-| Summarization | CNN/DailyMail | `cnn_dailymail` |
-| Translation | WMT | `wmt/wmt16` |
+| Summarization | CNN/DailyMail | `abisee/cnn_dailymail`(config: `3.0.0`) |
+| Translation | WMT | `wmt/wmt16`(config: `cs-en`) |
 | Language modeling | WikiText | `Salesforce/wikitext` |
-| Token classification | CoNLL-2003 | `conll2003` |
+| Token classification | CoNLL-2003 | `lhoestq/conll2003` |
 | Image classification | MNIST / CIFAR-10 | `ylecun/mnist` / `uoft-cs/cifar10` |
 | Object detection | COCO | `detection-datasets/coco` |
 
