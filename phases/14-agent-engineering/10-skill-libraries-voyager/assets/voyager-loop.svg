@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .curr { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .lib { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .iter { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .env { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Voyager — automatic curriculum, skill library, iterative refinement</text>
+
+  <rect x="40" y="60" width="280" height="180" class="curr"/>
+  <text x="180" y="82" text-anchor="middle" class="head">automatic curriculum</text>
+  <text x="60" y="108" class="small">proposes next task from current capability gap</text>
+  <text x="60" y="126" class="small">curiosity-driven, bottom-up exploration</text>
+  <text x="60" y="146" class="small">"learn to craft iron pickaxe" comes before diamond</text>
+  <rect x="60" y="158" width="240" height="70" class="box"/>
+  <text x="78" y="178" class="step">production analog:</text>
+  <text x="78" y="196" class="small">gap review — what skills missing in library</text>
+  <text x="78" y="212" class="small">weekly curriculum pass by human + agent pair</text>
+
+  <rect x="340" y="60" width="280" height="180" class="lib"/>
+  <text x="480" y="82" text-anchor="middle" class="head">skill library</text>
+  <text x="360" y="108" class="small">skill = named code + description + deps</text>
+  <text x="360" y="126" class="small">versioned, retrievable, composable</text>
+  <text x="360" y="146" class="small">dedup on write; tag filter on retrieve</text>
+  <rect x="360" y="158" width="240" height="70" class="box"/>
+  <text x="378" y="178" class="step">2026 production analog:</text>
+  <text x="378" y="196" class="small">Claude Agent SDK skills</text>
+  <text x="378" y="212" class="small">skillkit registry; MCP resources</text>
+
+  <rect x="640" y="60" width="280" height="180" class="iter"/>
+  <text x="780" y="82" text-anchor="middle" class="head">iterative prompting</text>
+  <text x="660" y="108" class="small">execution error + env feedback + self-verify</text>
+  <text x="660" y="126" class="small">rewrite the skill, bump version</text>
+  <text x="660" y="146" class="small">v1 fails to craft; v2 adds stick dep</text>
+  <rect x="660" y="158" width="240" height="70" class="box"/>
+  <text x="678" y="178" class="step">underpinnings:</text>
+  <text x="678" y="196" class="small">Self-Refine (Lesson 05)</text>
+  <text x="678" y="212" class="small">CRITIC (Lesson 05) with env verifier</text>
+
+  <rect x="80" y="280" width="800" height="230" class="env"/>
+  <text x="480" y="302" text-anchor="middle" class="head">worked loop — craft_iron_pickaxe</text>
+
+  <rect x="100" y="320" width="760" height="40" class="box"/>
+  <text x="120" y="342" class="step">1. retrieve: library.search("need a pickaxe")  returns craft_iron_pickaxe v1</text>
+
+  <rect x="100" y="368" width="760" height="40" class="box"/>
+  <text x="120" y="390" class="step">2. execute v1: topo_order  place_table  mine_ore  craft_iron_pickaxe</text>
+
+  <rect x="100" y="416" width="760" height="40" class="box"/>
+  <text x="120" y="438" class="step">3. fail: RuntimeError "need 2 stick, have 0"  environment feedback surface</text>
+
+  <rect x="100" y="464" width="760" height="40" class="box"/>
+  <text x="120" y="486" class="step">4. refine: register v2 with gather_sticks dep; re-execute; success; inventory += iron_pickaxe</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">action space = code. skills compose into DAGs. failures bump versions. library grows monotonically.</text>
+</svg>

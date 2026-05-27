@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .old { fill: #eeeeee; stroke: #888; stroke-width: 1.2; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">vLLM scheduler — three compounding defaults</text>
+
+  <rect x="40" y="50" width="280" height="490" class="box"/>
+  <text x="180" y="72" text-anchor="middle" class="head">PagedAttention allocator</text>
+  <rect x="60" y="90" width="240" height="60" class="cool"/>
+  <text x="180" y="112" text-anchor="middle" class="step">KV cache = blocks of 16 tokens</text>
+  <text x="180" y="130" text-anchor="middle" class="small">block table per sequence;</text>
+  <text x="180" y="144" text-anchor="middle" class="small">allocate on demand, release on EOS</text>
+  <rect x="60" y="160" width="240" height="60" class="cool"/>
+  <text x="180" y="182" text-anchor="middle" class="step">fragmentation &lt; 4%</text>
+  <text x="180" y="200" text-anchor="middle" class="small">vs 60-80% contiguous</text>
+  <text x="180" y="214" text-anchor="middle" class="small">pay only for tokens used</text>
+  <rect x="60" y="230" width="240" height="70" class="cold"/>
+  <text x="180" y="252" text-anchor="middle" class="step">--gpu-memory-utilization = 0.9</text>
+  <text x="180" y="270" text-anchor="middle" class="small">the knob (not a flag)</text>
+  <text x="180" y="286" text-anchor="middle" class="small">PagedAttention is the only</text>
+  <text x="180" y="300" text-anchor="middle" class="small">allocator vLLM ships</text>
+  <rect x="60" y="310" width="240" height="100" class="box"/>
+  <text x="180" y="332" text-anchor="middle" class="step">logical to physical map</text>
+  <text x="70" y="352" class="small">seq_A: [tok0..15] to block 37</text>
+  <text x="70" y="368" class="small">seq_A: [tok16..31] to block 12</text>
+  <text x="70" y="384" class="small">seq_B: [tok0..15] to block 42</text>
+  <text x="70" y="400" class="small">... block table grows with seq</text>
+  <text x="180" y="430" text-anchor="middle" class="caption">KV is virtual memory for sequences</text>
+
+  <rect x="340" y="50" width="280" height="490" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">continuous batching</text>
+  <rect x="360" y="90" width="240" height="50" class="hot"/>
+  <text x="480" y="110" text-anchor="middle" class="step">iteration-level scheduling</text>
+  <text x="480" y="126" text-anchor="middle" class="small">admit / release every decode step</text>
+  <rect x="360" y="150" width="240" height="80" class="box"/>
+  <text x="480" y="170" text-anchor="middle" class="step">the loop</text>
+  <text x="370" y="190" class="small">1. drop finished seqs from RUNNING</text>
+  <text x="370" y="206" class="small">2. admit WAITING if KV blocks free</text>
+  <text x="370" y="222" class="small">3. one forward across the batch</text>
+  <rect x="360" y="240" width="240" height="70" class="cool"/>
+  <text x="480" y="262" text-anchor="middle" class="step">batch is always full of real work</text>
+  <text x="480" y="280" text-anchor="middle" class="small">no padding to longest seq</text>
+  <text x="480" y="296" text-anchor="middle" class="small">fast seqs leave, new seqs join</text>
+  <rect x="360" y="320" width="240" height="90" class="cold"/>
+  <text x="480" y="342" text-anchor="middle" class="step">V1 scheduler (2026)</text>
+  <text x="480" y="360" text-anchor="middle" class="small">scheduler runs per iteration</text>
+  <text x="480" y="376" text-anchor="middle" class="small">not per request</text>
+  <text x="480" y="394" text-anchor="middle" class="small">N-gram spec decode is the</text>
+  <text x="480" y="408" text-anchor="middle" class="small">chunked-prefill-compatible path</text>
+  <text x="480" y="430" text-anchor="middle" class="caption">3-4x over naive at 128 concurrent</text>
+
+  <rect x="640" y="50" width="280" height="490" class="box"/>
+  <text x="780" y="72" text-anchor="middle" class="head">chunked prefill</text>
+  <rect x="660" y="90" width="240" height="60" class="hot"/>
+  <text x="780" y="112" text-anchor="middle" class="step">slice prefill into 512-tok chunks</text>
+  <text x="780" y="130" text-anchor="middle" class="small">interleave with decode</text>
+  <text x="780" y="144" text-anchor="middle" class="small">protect TTFT tail, not mean</text>
+  <rect x="660" y="160" width="240" height="70" class="cool"/>
+  <text x="780" y="182" text-anchor="middle" class="step">P99 ITL under mixed load</text>
+  <text x="780" y="200" text-anchor="middle" class="small">without chunking: ~50 ms</text>
+  <text x="780" y="216" text-anchor="middle" class="small">with chunking: ~15 ms</text>
+  <rect x="660" y="240" width="240" height="70" class="dsk"/>
+  <text x="780" y="262" text-anchor="middle" class="step">gotcha — vLLM v0.18.0</text>
+  <text x="780" y="280" text-anchor="middle" class="small">--enable-chunked-prefill</text>
+  <text x="780" y="296" text-anchor="middle" class="small">incompatible with draft-model spec</text>
+  <rect x="660" y="320" width="240" height="90" class="old"/>
+  <text x="780" y="342" text-anchor="middle" class="step">exception</text>
+  <text x="780" y="360" text-anchor="middle" class="small">N-gram GPU speculative decoding</text>
+  <text x="780" y="376" text-anchor="middle" class="small">in V1 scheduler works with</text>
+  <text x="780" y="394" text-anchor="middle" class="small">chunked prefill</text>
+  <text x="780" y="430" text-anchor="middle" class="caption">read the release notes before flipping flags</text>
+
+  <rect x="40" y="470" width="880" height="70" class="box"/>
+  <text x="480" y="492" text-anchor="middle" class="step">all three on together — Llama 3.3 70B FP8, H100 SXM5, 128 concurrent</text>
+  <text x="480" y="512" text-anchor="middle" class="small">throughput 2,200-2,400 tok/s  ·  25% over default vLLM  ·  3-4x naive PyTorch  ·  &lt; 4% fragmentation</text>
+  <text x="480" y="530" text-anchor="middle" class="caption">each default assumes the other two</text>
+</svg>

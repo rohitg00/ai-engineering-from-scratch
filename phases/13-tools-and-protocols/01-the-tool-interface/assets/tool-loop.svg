@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 13px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">the four-step tool-call loop</text>
+
+  <rect x="40" y="70" width="200" height="110" class="cool"/>
+  <text x="140" y="96" text-anchor="middle" class="head">1 / describe</text>
+  <text x="140" y="122" text-anchor="middle" class="small">host registers tools</text>
+  <text x="140" y="138" text-anchor="middle" class="small">name + description</text>
+  <text x="140" y="154" text-anchor="middle" class="small">+ JSON Schema input</text>
+  <text x="140" y="170" text-anchor="middle" class="small">+ executor function</text>
+
+  <rect x="280" y="70" width="200" height="110" class="cold"/>
+  <text x="380" y="96" text-anchor="middle" class="head">2 / decide</text>
+  <text x="380" y="122" text-anchor="middle" class="small">model emits either</text>
+  <text x="380" y="138" text-anchor="middle" class="small">text answer OR</text>
+  <text x="380" y="154" text-anchor="middle" class="small">tool_calls: [ {id,</text>
+  <text x="380" y="170" text-anchor="middle" class="small">name, arguments} ]</text>
+
+  <rect x="520" y="70" width="200" height="110" class="hot"/>
+  <text x="620" y="96" text-anchor="middle" class="head">3 / execute</text>
+  <text x="620" y="122" text-anchor="middle" class="small">host validates args</text>
+  <text x="620" y="138" text-anchor="middle" class="small">against schema,</text>
+  <text x="620" y="154" text-anchor="middle" class="small">gates consequential</text>
+  <text x="620" y="170" text-anchor="middle" class="small">tools, runs executor</text>
+
+  <rect x="760" y="70" width="180" height="110" class="box"/>
+  <text x="850" y="96" text-anchor="middle" class="head">4 / observe</text>
+  <text x="850" y="122" text-anchor="middle" class="small">host appends</text>
+  <text x="850" y="138" text-anchor="middle" class="small">tool result with</text>
+  <text x="850" y="154" text-anchor="middle" class="small">matching id; re-</text>
+  <text x="850" y="170" text-anchor="middle" class="small">invokes the model</text>
+
+  <path d="M240,125 L280,125" class="edge" marker-end="url(#arrow)"/>
+  <path d="M480,125 L520,125" class="edge" marker-end="url(#arrow)"/>
+  <path d="M720,125 L760,125" class="edge" marker-end="url(#arrow)"/>
+  <path d="M850,180 C850,240 380,240 380,220" class="edge" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+
+  <text x="600" y="256" text-anchor="middle" class="caption">loop closes until model returns text or host hits MAX_TURNS</text>
+
+  <rect x="40" y="290" width="440" height="210" class="box"/>
+  <text x="260" y="316" text-anchor="middle" class="head">same loop, different names</text>
+  <text x="60" y="342" class="step">OpenAI         : tools / tool_calls / tool_choice</text>
+  <text x="60" y="362" class="step">Anthropic      : tools / tool_use / tool_result</text>
+  <text x="60" y="382" class="step">Gemini         : functionDeclarations / functionCall</text>
+  <text x="60" y="402" class="step">MCP            : tools/list / tools/call / content</text>
+  <text x="60" y="422" class="step">A2A            : skills / tasks/send / Artifact parts</text>
+  <text x="60" y="442" class="step">WebMCP (2026)  : browser tool manifest / dispatch</text>
+  <text x="60" y="472" class="small">every row is the same four steps with different column labels.</text>
+
+  <rect x="520" y="290" width="420" height="210" class="cool"/>
+  <text x="730" y="316" text-anchor="middle" class="head">pure vs consequential</text>
+  <text x="540" y="342" class="step">pure (safe to re-run)</text>
+  <text x="540" y="360" class="small">get_weather, search_docs, get_time</text>
+  <text x="540" y="380" class="step">consequential (gate required)</text>
+  <text x="540" y="398" class="small">send_email, delete_file, execute_trade</text>
+  <text x="540" y="424" class="step">Meta Rule of Two (2026)</text>
+  <text x="540" y="442" class="small">one turn may combine AT MOST two of:</text>
+  <text x="540" y="458" class="small">  - untrusted input</text>
+  <text x="540" y="474" class="small">  - sensitive data</text>
+  <text x="540" y="490" class="small">  - consequential action</text>
+</svg>

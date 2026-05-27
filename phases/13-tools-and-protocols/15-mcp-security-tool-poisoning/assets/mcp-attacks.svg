@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">seven MCP attack classes and defense-in-depth</text>
+
+  <rect x="40" y="50" width="880" height="210" class="hot"/>
+  <text x="480" y="72" text-anchor="middle" class="head">attacks</text>
+
+  <rect x="60" y="90" width="270" height="60" class="box"/>
+  <text x="76" y="110" class="step">1 / tool poisoning</text>
+  <text x="76" y="128" class="small">hidden instructions in</text>
+  <text x="76" y="144" class="small">tool description</text>
+
+  <rect x="345" y="90" width="270" height="60" class="box"/>
+  <text x="361" y="110" class="step">2 / rug pull</text>
+  <text x="361" y="128" class="small">benign first, poisoned</text>
+  <text x="361" y="144" class="small">after user approval</text>
+
+  <rect x="630" y="90" width="270" height="60" class="box"/>
+  <text x="646" y="110" class="step">3 / tool shadowing</text>
+  <text x="646" y="128" class="small">two servers same name;</text>
+  <text x="646" y="144" class="small">malicious wins route</text>
+
+  <rect x="60" y="160" width="270" height="60" class="box"/>
+  <text x="76" y="180" class="step">4 / MPMA</text>
+  <text x="76" y="198" class="small">manipulate modelPreferences</text>
+  <text x="76" y="214" class="small">to escalate cost or weaken</text>
+
+  <rect x="345" y="160" width="270" height="60" class="box"/>
+  <text x="361" y="180" class="step">5 / parasitic chain</text>
+  <text x="361" y="198" class="small">server A orchestrates</text>
+  <text x="361" y="214" class="small">server B via sampling</text>
+
+  <rect x="630" y="160" width="270" height="60" class="box"/>
+  <text x="646" y="180" class="step">6 / sampling attacks</text>
+  <text x="646" y="198" class="small">covert reasoning / theft /</text>
+  <text x="646" y="214" class="small">conversation hijacking</text>
+
+  <rect x="60" y="230" width="840" height="28" class="box"/>
+  <text x="76" y="248" class="step">7 / supply-chain masquerade</text>
+  <text x="300" y="248" class="small">fake server on registry (Postmark incident, Sept 2025). publisher sigs, reverse-DNS names.</text>
+
+  <rect x="40" y="280" width="880" height="260" class="cool"/>
+  <text x="480" y="302" text-anchor="middle" class="head">defense-in-depth (no single check wins)</text>
+
+  <rect x="60" y="320" width="270" height="80" class="box"/>
+  <text x="76" y="340" class="step">hash pinning</text>
+  <text x="76" y="358" class="small">SHA256 of each description;</text>
+  <text x="76" y="374" class="small">mutation -&gt; re-approval.</text>
+  <text x="76" y="390" class="small">catches rug pulls.</text>
+
+  <rect x="345" y="320" width="270" height="80" class="box"/>
+  <text x="361" y="340" class="step">static detector</text>
+  <text x="361" y="358" class="small">regex: SYSTEM tag, ignore-</text>
+  <text x="361" y="374" class="small">prev, secret-read, URL-</text>
+  <text x="361" y="390" class="small">shortener. CI ready.</text>
+
+  <rect x="630" y="320" width="270" height="80" class="box"/>
+  <text x="646" y="340" class="step">Rule of Two</text>
+  <text x="646" y="358" class="small">max two of: untrusted input,</text>
+  <text x="646" y="374" class="small">sensitive data, consequential</text>
+  <text x="646" y="390" class="small">action. Reject if all three.</text>
+
+  <rect x="60" y="410" width="270" height="80" class="box"/>
+  <text x="76" y="430" class="step">MELON</text>
+  <text x="76" y="448" class="small">masked re-execution +</text>
+  <text x="76" y="464" class="small">tool comparison. &gt;99%</text>
+  <text x="76" y="480" class="small">indirect-injection catch.</text>
+
+  <rect x="345" y="410" width="270" height="80" class="box"/>
+  <text x="361" y="430" class="step">gateway</text>
+  <text x="361" y="448" class="small">central policy, audit log,</text>
+  <text x="361" y="464" class="small">allowed-servers list.</text>
+  <text x="361" y="480" class="small">Phase 13 . 17.</text>
+
+  <rect x="630" y="410" width="270" height="80" class="box"/>
+  <text x="646" y="430" class="step">signed registry</text>
+  <text x="646" y="448" class="small">namespace-verified, reverse</text>
+  <text x="646" y="464" class="small">DNS (io.github.user/server).</text>
+  <text x="646" y="480" class="small">publisher signatures.</text>
+
+  <text x="480" y="530" text-anchor="middle" class="caption">adaptive attackers still hit ~85% against SOTA (arXiv March 2026). keep stacking.</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.B — SKILL.md packaged for agents">
+  <defs>
+    <style>
+      .bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .bp-fill { fill: #3553ff; }
+      .face { fill: rgba(53, 83, 255, 0.08); }
+      .face-strong { fill: rgba(53, 83, 255, 0.18); }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="120" height="120" fill="#fafaf5"/>
+
+  <text class="mono bp-fill" x="8" y="14" font-size="6.5" letter-spacing="1.5">FIG_001.B</text>
+
+  <!-- file body -->
+  <rect class="face" x="22" y="26" width="62" height="74"/>
+  <rect class="bp" x="22" y="26" width="62" height="74" stroke-width="1.5"/>
+
+  <!-- frontmatter header strip -->
+  <rect class="face-strong" x="22" y="26" width="62" height="14"/>
+  <line class="bp" x1="22" y1="40" x2="84" y2="40" stroke-width="1"/>
+  <text class="mono bp-fill" x="28" y="36" font-size="6.5" letter-spacing="1.2">SKILL.md</text>
+
+  <!-- body content lines -->
+  <line class="bp" x1="30" y1="52" x2="74" y2="52" stroke-width="1.2"/>
+  <line class="bp" x1="30" y1="60" x2="74" y2="60" stroke-width="1.2"/>
+  <line class="bp" x1="30" y1="68" x2="66" y2="68" stroke-width="1.2"/>
+  <line class="bp" x1="30" y1="80" x2="74" y2="80" stroke-width="1.2"/>
+  <line class="bp" x1="30" y1="88" x2="58" y2="88" stroke-width="1.2"/>
+
+  <!-- adapter plug coming out of file (drop-in shape) -->
+  <line class="bp" x1="84" y1="84" x2="98" y2="84" stroke-width="1.5"/>
+  <rect class="face-strong" x="98" y="80" width="10" height="8"/>
+  <rect class="bp" x="98" y="80" width="10" height="8" stroke-width="1.2"/>
+  <line class="bp" x1="100" y1="84" x2="100" y2="84.5" stroke-width="1"/>
+  <line class="bp" x1="106" y1="84" x2="106" y2="84.5" stroke-width="1"/>
+
+  <text class="mono bp-fill" x="60" y="114" font-size="7" letter-spacing="1.5" text-anchor="middle">SKILL</text>
+</svg>

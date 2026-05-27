@@ -2,49 +2,64 @@
   "lesson": "phase-11/17-agent-framework-tradeoffs",
   "questions": [
     {
-      "id": 1,
-      "prompt": "Which framework is the right first pick for a workflow that must resume after a crash, accept a human approval mid-run, and fan out to three retrievers in parallel?",
-      "choices": ["CrewAI", "AutoGen", "LangGraph", "Agno"],
-      "answer": 2
+      "stage": "post",
+      "question": "Which framework is the right first pick for a workflow that must resume after a crash, accept a human approval mid-run, and fan out to three retrievers in parallel?",
+      "options": [
+        "CrewAI",
+        "AutoGen",
+        "LangGraph",
+        "Agno"
+      ],
+      "correct": 2,
+      "explanation": ""
     },
     {
-      "id": 2,
-      "prompt": "Why does LLM-selected routing cost more tokens per turn than explicit routing?",
-      "choices": [
+      "stage": "post",
+      "question": "Why does LLM-selected routing cost more tokens per turn than explicit routing?",
+      "options": [
         "It pre-fetches the next node in parallel to hedge latency.",
         "A planner LLM call picks the next step each turn, adding prompt and completion tokens for every decision.",
         "It duplicates the tool list for every agent in the crew.",
         "It sends the whole conversation history to a verifier model."
       ],
-      "answer": 1
+      "correct": 1,
+      "explanation": ""
     },
     {
-      "id": 3,
-      "prompt": "Proposer-critic dialogue in code review naturally maps to which framework's core abstraction?",
-      "choices": [
+      "stage": "post",
+      "question": "Proposer-critic dialogue in code review naturally maps to which framework's core abstraction?",
+      "options": [
         "CrewAI's sequential Crew",
         "LangGraph's StateGraph",
         "AutoGen's GroupChat / ConversableAgent pair",
         "Agno's single Agent with tools"
       ],
-      "answer": 2
+      "correct": 2,
+      "explanation": ""
     },
     {
-      "id": 4,
-      "prompt": "Which framework has built-in storage drivers (SQLite, Postgres, Redis, Mongo, DynamoDB) attached directly to the Agent primitive for session and memory persistence?",
-      "choices": ["LangGraph", "CrewAI", "AutoGen", "Agno"],
-      "answer": 3
-    },
-    {
-      "id": 5,
-      "prompt": "You have a two-call summarizer: fetch text, summarize. Which option is the right framework choice?",
-      "choices": [
-        "LangGraph StateGraph — always use a framework for reliability.",
-        "CrewAI with researcher + summarizer roles — roles make it clearer.",
-        "Plain Python with the provider SDK — no framework is the fastest framework for tiny pipelines.",
-        "AutoGen GroupChat — two agents can argue about the best summary."
+      "stage": "post",
+      "question": "Which framework has built-in storage drivers (SQLite, Postgres, Redis, Mongo, DynamoDB) attached directly to the Agent primitive for session and memory persistence?",
+      "options": [
+        "LangGraph",
+        "CrewAI",
+        "AutoGen",
+        "Agno"
       ],
-      "answer": 2
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "You have a two-call summarizer: fetch text, summarize. Which option is the right framework choice?",
+      "options": [
+        "LangGraph StateGraph \u2014 always use a framework for reliability.",
+        "CrewAI with researcher + summarizer roles \u2014 roles make it clearer.",
+        "Plain Python with the provider SDK \u2014 no framework is the fastest framework for tiny pipelines.",
+        "AutoGen GroupChat \u2014 two agents can argue about the best summary."
+      ],
+      "correct": 2,
+      "explanation": ""
     }
   ]
 }

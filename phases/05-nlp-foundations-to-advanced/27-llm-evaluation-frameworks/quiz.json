@@ -1,0 +1,102 @@
+{
+  "lesson": "27-llm-evaluation-frameworks",
+  "title": "LLM Evaluation — RAGAS, DeepEval, G-Eval",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why are Exact Match and token-F1 insufficient for evaluating modern LLM outputs?",
+      "options": [
+        "They are too slow",
+        "They are not differentiable",
+        "They require GPUs",
+        "They miss semantic equivalence; 'June 29th, 2007' vs 'June 29, 2007' scores 0 EM despite being correct"
+      ],
+      "correct": 3,
+      "explanation": "Exact-match/F1 cannot recognize paraphrases or formatting differences that humans would mark correct."
+    },
+    {
+      "stage": "pre",
+      "question": "What does the RAGAS faithfulness metric measure?",
+      "options": [
+        "Retrieval recall",
+        "Whether each claim in the answer is entailed by the retrieved context, via NLI",
+        "Latency",
+        "Tokens per second"
+      ],
+      "correct": 1,
+      "explanation": "Faithfulness checks each answer claim against retrieved context using NLI entailment."
+    },
+    {
+      "stage": "check",
+      "question": "Why is judge-model calibration against human labels required before trusting scores?",
+      "options": [
+        "Required by the GDPR",
+        "If Spearman correlation between judge and human labels is too low (e.g. below 0.7), the score is noise rather than signal",
+        "Calibration speeds up the judge",
+        "Calibration is a tokenization issue"
+      ],
+      "correct": 1,
+      "explanation": "Without calibration, you cannot tell whether judge scores reflect quality or model bias."
+    },
+    {
+      "stage": "check",
+      "question": "What is self-evaluation bias in LLM-as-judge setups?",
+      "options": [
+        "Using the same LLM family to generate and judge inflates scores by 10-20% versus an independent judge",
+        "Lower latency",
+        "Judges run faster on cached outputs",
+        "Judges ignore system prompts"
+      ],
+      "correct": 0,
+      "explanation": "Same-family generator+judge biases scores upward; use a different model family for judging."
+    },
+    {
+      "stage": "check",
+      "question": "What does G-Eval specifically add over a naive 'score 0-1' prompt?",
+      "options": [
+        "Bigger context",
+        "Lower cost",
+        "Multilingual scoring",
+        "An explicit chain-of-thought rubric with named evaluation steps, which yields more stable scores"
+      ],
+      "correct": 3,
+      "explanation": "G-Eval's structured eval-steps produce more reliable scores than freeform 'rate it' prompts."
+    },
+    {
+      "stage": "post",
+      "question": "Why is reporting only the aggregate mean score dangerous?",
+      "options": [
+        "Aggregates are too large",
+        "Aggregates ignore the judge",
+        "Aggregates need GPU",
+        "An 0.85 mean can hide 5% catastrophic failures; always inspect the bottom quantile"
+      ],
+      "correct": 3,
+      "explanation": "Means hide tail failures; surface bottom-10% to catch high-severity issues."
+    },
+    {
+      "stage": "post",
+      "question": "Why pin the judge model + version in CI?",
+      "options": [
+        "Required by Anthropic",
+        "Lower cost",
+        "Tokenizer drift",
+        "Upgrading the judge changes every metric; longitudinal comparison breaks without a frozen judge"
+      ],
+      "correct": 3,
+      "explanation": "A judge upgrade silently shifts the metric baseline; pinning preserves cross-run comparability."
+    },
+    {
+      "stage": "post",
+      "question": "Where does DeepEval fit relative to RAGAS?",
+      "options": [
+        "DeepEval is pytest-for-LLMs (CI gates, G-Eval, hallucination metrics); RAGAS specializes in reference-free RAG monitoring",
+        "DeepEval is hosted only",
+        "DeepEval is a tokenizer",
+        "Replaces RAGAS entirely"
+      ],
+      "correct": 0,
+      "explanation": "DeepEval anchors CI/CD regression testing; RAGAS handles reference-free RAG monitoring."
+    }
+  ]
+}

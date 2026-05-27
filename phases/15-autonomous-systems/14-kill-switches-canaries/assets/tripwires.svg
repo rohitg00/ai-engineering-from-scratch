@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Three detectors, three failure classes</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Agent -->
+  <rect x="330" y="80" width="220" height="80" class="cool"/>
+  <text x="440" y="104" text-anchor="middle" class="label">agent</text>
+  <text x="346" y="128" class="small">reads, reasons, acts</text>
+  <text x="346" y="144" class="small">cannot touch tripwires</text>
+
+  <!-- Kill switch -->
+  <rect x="60" y="200" width="220" height="120" class="hot"/>
+  <text x="170" y="222" text-anchor="middle" class="label">kill switch</text>
+  <text x="76" y="244" class="small">external boolean</text>
+  <text x="76" y="260" class="small">• feature flag / Redis / signed cfg</text>
+  <text x="76" y="276" class="small">• checked every action, not boot</text>
+  <text x="76" y="292" class="small">• agent cannot set OFF</text>
+  <text x="76" y="308" class="small">• re-enable = explicit human</text>
+
+  <!-- Circuit breaker -->
+  <rect x="330" y="200" width="220" height="120" class="warn"/>
+  <text x="440" y="222" text-anchor="middle" class="label">circuit breaker</text>
+  <text x="346" y="244" class="small">pattern-specific pause</text>
+  <text x="346" y="260" class="small">• 5 identical tool calls</text>
+  <text x="346" y="276" class="small">• N consecutive failures</text>
+  <text x="346" y="292" class="small">• rate above threshold</text>
+  <text x="346" y="308" class="small">• closed / open / half-open</text>
+
+  <!-- Canary -->
+  <rect x="600" y="200" width="220" height="120" class="cold"/>
+  <text x="710" y="222" text-anchor="middle" class="label">canary token</text>
+  <text x="616" y="244" class="small">bait with no legitimate use</text>
+  <text x="616" y="260" class="small">• fake AWS_SECRET_ACCESS_KEY</text>
+  <text x="616" y="276" class="small">• fake DB record sentinel</text>
+  <text x="616" y="292" class="small">• fake file in workspace</text>
+  <text x="616" y="308" class="small">• fake memory entry</text>
+
+  <path d="M390 160 L250 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M440 160 L440 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M490 160 L630 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Catches vs misses -->
+  <rect x="60" y="350" width="760" height="76" class="cool"/>
+  <text x="440" y="374" text-anchor="middle" class="label">what each catches</text>
+  <text x="80" y="394" class="content">kill: operator decision  ·  breaker: repetitive / rate patterns  ·  canary: intent to touch off-limit resource</text>
+  <text x="80" y="412" class="content">Cilium/eBPF egress redirect (under 500ms) complements canaries: quarantined pod goes to forensic honeypot</text>
+
+  <!-- What nothing catches -->
+  <rect x="60" y="430" width="760" height="60" class="hot"/>
+  <text x="440" y="454" text-anchor="middle" class="label">what no detector catches</text>
+  <text x="80" y="474" class="content">semantic composites: individual actions pass every detector; composition is the attack (see Lesson 10)</text>
+</svg>

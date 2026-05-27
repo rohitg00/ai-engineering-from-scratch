@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 11px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Frontier safety frameworks: cross-lab matrix</text>
+
+  <rect x="40" y="60" width="200" height="60" class="box"/>
+  <text x="140" y="95" text-anchor="middle" class="head">axis</text>
+
+  <rect x="260" y="60" width="220" height="60" class="cool"/>
+  <text x="370" y="85" text-anchor="middle" class="head">Anthropic RSP v3.0</text>
+  <text x="370" y="105" text-anchor="middle" class="small">Feb 2026</text>
+
+  <rect x="500" y="60" width="220" height="60" class="cold"/>
+  <text x="610" y="85" text-anchor="middle" class="head">OpenAI PF v2</text>
+  <text x="610" y="105" text-anchor="middle" class="small">Apr 15, 2025</text>
+
+  <rect x="740" y="60" width="180" height="60" class="hot"/>
+  <text x="830" y="85" text-anchor="middle" class="head">DeepMind FSF v3.0</text>
+  <text x="830" y="105" text-anchor="middle" class="small">Sep 2025</text>
+
+  <rect x="40" y="140" width="200" height="60" class="box"/>
+  <text x="140" y="175" text-anchor="middle" class="step">tier structure</text>
+  <rect x="260" y="140" width="220" height="60" class="cool"/>
+  <text x="370" y="175" text-anchor="middle" class="small">ASL-1..5+</text>
+  <rect x="500" y="140" width="220" height="60" class="cold"/>
+  <text x="610" y="175" text-anchor="middle" class="small">Low/Med/High/Crit per capability</text>
+  <rect x="740" y="140" width="180" height="60" class="hot"/>
+  <text x="830" y="175" text-anchor="middle" class="small">CCL per domain</text>
+
+  <rect x="40" y="210" width="200" height="60" class="box"/>
+  <text x="140" y="245" text-anchor="middle" class="step">CBRN</text>
+  <rect x="260" y="210" width="220" height="60" class="cool"/>
+  <text x="370" y="245" text-anchor="middle" class="small">ASL-3 activated May 2025</text>
+  <rect x="500" y="210" width="220" height="60" class="cold"/>
+  <text x="610" y="245" text-anchor="middle" class="small">High bio; "on the cusp"</text>
+  <rect x="740" y="210" width="180" height="60" class="hot"/>
+  <text x="830" y="245" text-anchor="middle" class="small">Bioweapon CCL</text>
+
+  <rect x="40" y="280" width="200" height="60" class="box"/>
+  <text x="140" y="315" text-anchor="middle" class="step">AI R&amp;D</text>
+  <rect x="260" y="280" width="220" height="60" class="cool"/>
+  <text x="370" y="315" text-anchor="middle" class="small">AI R&amp;D-2 + AI R&amp;D-4</text>
+  <rect x="500" y="280" width="220" height="60" class="cold"/>
+  <text x="610" y="315" text-anchor="middle" class="small">High; Critical pending</text>
+  <rect x="740" y="280" width="180" height="60" class="hot"/>
+  <text x="830" y="315" text-anchor="middle" class="small">ML R&amp;D CCL</text>
+
+  <rect x="40" y="350" width="200" height="60" class="box"/>
+  <text x="140" y="385" text-anchor="middle" class="step">adjustment clause</text>
+  <rect x="260" y="350" width="220" height="60" class="cool"/>
+  <text x="370" y="385" text-anchor="middle" class="small">yes (peer-ship)</text>
+  <rect x="500" y="350" width="220" height="60" class="cold"/>
+  <text x="610" y="385" text-anchor="middle" class="small">yes (Leadership)</text>
+  <rect x="740" y="350" width="180" height="60" class="hot"/>
+  <text x="830" y="385" text-anchor="middle" class="small">yes (added 2025)</text>
+
+  <rect x="40" y="420" width="880" height="70" class="box"/>
+  <text x="60" y="445" class="small">safety case (three-pillar): monitoring (can we detect?), illegibility (can U execute a plan?), incapability (does U have the capability?).</text>
+  <text x="60" y="465" class="small">external: UK AISI (renamed Feb 2025), US CAISI (renamed June 2025), EU AI Office + GPAI Code of Practice (Aug 2025).</text>
+  <text x="60" y="483" class="small">cross-lab terminology varies ("ASL" vs "High" vs "CCL"); structural alignment: three-tier capability bars.</text>
+</svg>

@@ -1,0 +1,90 @@
+{
+  "lesson": "02-rag-over-codebase",
+  "title": "Capstone 02 — RAG over Codebase (Cross-Repo Semantic Search)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is naive cosine search over raw chunks insufficient for cross-repo code retrieval?",
+      "options": [
+        "It poisons results on generated code, monorepo duplication, and rarely imported symbols",
+        "Cosine similarity is undefined on code embeddings",
+        "Vector indexes cannot store payloads larger than 1KB",
+        "Embedding models do not see code as tokens"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What does AST-aware chunking mean in the ingestion pipeline?",
+      "options": [
+        "Compressing chunks with gzip before storage",
+        "Dropping comments and whitespace before embedding",
+        "Cutting at tree-sitter node boundaries such as function and class spans",
+        "Splitting code into fixed 256-token windows"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which three retrievable modalities does each chunk get in this pipeline?",
+      "options": [
+        "Token IDs, syntax tree, and call graph",
+        "AST, IR, and bytecode",
+        "Raw text, gzip, and hash",
+        "Dense embedding, BM25 terms, and a natural-language summary"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of the cross-encoder reranker after the hybrid retrieval step?",
+      "options": [
+        "It rewrites the chunks to remove generated code",
+        "It re-embeds the query in a different model",
+        "It compresses the chunks before sending to the synthesizer",
+        "It scores each query-candidate pair together for higher accuracy than cosine alone"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does the synthesizer reject answers without (repo/path:start-end) anchors?",
+      "options": [
+        "Citation faithfulness gates the answer so users can verify each claim",
+        "Anchors reduce token cost on the synthesis call",
+        "Anchors are needed for downstream BM25 reranking",
+        "Anchors are required by the vector database schema"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does incremental re-index require to stay under 60 seconds on a 50-file push?",
+      "options": [
+        "Re-embedding only chunks whose text changed and recomputing affected symbol edges",
+        "Re-embedding the full 2M-LOC corpus on each commit",
+        "Dropping the symbol graph entirely",
+        "Throwing away the BM25 index and rebuilding it from scratch"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which metric measures whether retrieved claims are verifiable in the source?",
+      "options": [
+        "MRR@10",
+        "Citation faithfulness",
+        "nDCG@10",
+        "p95 query latency"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "lesson": "29-dialogue-state-tracking",
+  "title": "Dialogue State Tracking",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does dialogue state tracking maintain across turns?",
+      "options": [
+        "A free-text history only",
+        "A slot-value dictionary representing the user's current goal, updated after every turn",
+        "An embedding of the conversation",
+        "A POS-tagged transcript"
+      ],
+      "correct": 1,
+      "explanation": "DST keeps a structured slot-value map that the backend can act on."
+    },
+    {
+      "stage": "pre",
+      "question": "What does Joint Goal Accuracy (JGA) measure?",
+      "options": [
+        "Fraction of turns where every slot is exactly correct (all-or-nothing)",
+        "Average slot accuracy",
+        "Latency per turn",
+        "Cosine similarity"
+      ],
+      "correct": 0,
+      "explanation": "JGA is the strict per-turn match across all slots; per-slot accuracy is more lenient."
+    },
+    {
+      "stage": "check",
+      "question": "Why does regenerating the whole state from history each turn handle user corrections naturally?",
+      "options": [
+        "It uses fewer tokens",
+        "It runs on GPU",
+        "It avoids embeddings",
+        "Reading the full history lets the model re-derive the final state including 'actually...' corrections without explicit rollback logic"
+      ],
+      "correct": 3,
+      "explanation": "Full-history regeneration absorbs corrections by recomputing the final state from the entire conversation."
+    },
+    {
+      "stage": "check",
+      "question": "Which 2026 pattern gives a guaranteed-valid slot dict in 5 lines of code?",
+      "options": [
+        "Hand-written regex",
+        "BM25 retrieval",
+        "LLM + Instructor + Pydantic schema with constrained or validated output",
+        "TF-IDF classifier"
+      ],
+      "correct": 2,
+      "explanation": "Pydantic schema + Instructor validates the LLM's state output against the slot ontology automatically."
+    },
+    {
+      "stage": "check",
+      "question": "Why version your DST schema?",
+      "options": [
+        "Adding new slots post-hoc invalidates older training data and breaks longitudinal evaluation",
+        "Required by JSON",
+        "Reduce token count",
+        "Speed gains"
+      ],
+      "correct": 0,
+      "explanation": "Unversioned schema changes silently break training data alignment and eval comparability."
+    },
+    {
+      "stage": "post",
+      "question": "Why must DST for compliance-sensitive domains include a rule-based check alongside LLM extraction?",
+      "options": [
+        "Rules avoid embeddings",
+        "LLM-only DST can mis-extract destructive parameters (amount, account, date); a rules layer enforces deterministic constraints",
+        "LLMs are slower",
+        "Rules are multilingual"
+      ],
+      "correct": 1,
+      "explanation": "Compliance domains require deterministic enforcement; rules catch slot errors that LLMs introduce."
+    },
+    {
+      "stage": "post",
+      "question": "What is the cost concern with regenerating state on every turn via LLM?",
+      "options": [
+        "Re-reading the full history each turn yields O(n^2) total token usage; cap or summarize older turns",
+        "More embeddings",
+        "Cosine costs",
+        "Embedding drift"
+      ],
+      "correct": 0,
+      "explanation": "Full-history regeneration is quadratic in turns; cap history or use rolling summaries."
+    },
+    {
+      "stage": "post",
+      "question": "Why are explicit confirmation flows required before destructive backend actions?",
+      "options": [
+        "Latency",
+        "Confirmation increases JGA",
+        "Required by tokenizers",
+        "Even good DST has nonzero slot-error rates; a deterministic confirmation prevents wrong-account or wrong-amount actions"
+      ],
+      "correct": 3,
+      "explanation": "Destructive actions need user confirmation because DST is never error-free."
+    }
+  ]
+}

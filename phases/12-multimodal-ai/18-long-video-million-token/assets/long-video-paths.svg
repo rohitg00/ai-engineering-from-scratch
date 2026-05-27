@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Long-video understanding — four scaling paths</text>
+
+  <rect x="30" y="50" width="440" height="210" class="hot"/>
+  <text x="250" y="72" text-anchor="middle" class="head">Path 1: brute context</text>
+  <text x="250" y="96" text-anchor="middle" class="small">Gemini 1.5 Pro: 1M tokens</text>
+  <text x="250" y="114" text-anchor="middle" class="small">Gemini 2.5 Pro: 10M+ tokens</text>
+  <text x="250" y="132" text-anchor="middle" class="small">Claude Opus 4.7: 1M tokens</text>
+  <text x="250" y="160" text-anchor="middle" class="step">engineering</text>
+  <text x="250" y="180" text-anchor="middle" class="small">custom attention hierarchy</text>
+  <text x="250" y="196" text-anchor="middle" class="small">MoE expert routing</text>
+  <text x="250" y="212" text-anchor="middle" class="small">closed-source</text>
+  <text x="250" y="240" text-anchor="middle" class="caption">best recall, closed only</text>
+
+  <rect x="490" y="50" width="440" height="210" class="cool"/>
+  <text x="710" y="72" text-anchor="middle" class="head">Path 2: ring attention</text>
+  <text x="710" y="96" text-anchor="middle" class="small">LWM: 1M-token training</text>
+  <text x="710" y="114" text-anchor="middle" class="small">LongVILA: 1400-frame videos</text>
+  <text x="710" y="132" text-anchor="middle" class="small">distributed ring pattern</text>
+  <text x="710" y="160" text-anchor="middle" class="step">engineering</text>
+  <text x="710" y="180" text-anchor="middle" class="small">each device holds chunk</text>
+  <text x="710" y="196" text-anchor="middle" class="small">rotates for attention passes</text>
+  <text x="710" y="212" text-anchor="middle" class="small">open-source</text>
+  <text x="710" y="240" text-anchor="middle" class="caption">good open scaling, heavy compute</text>
+
+  <rect x="30" y="280" width="440" height="230" class="cold"/>
+  <text x="250" y="302" text-anchor="middle" class="head">Path 3: token compression</text>
+  <text x="250" y="326" text-anchor="middle" class="small">Video-XL: one summary token</text>
+  <text x="250" y="344" text-anchor="middle" class="small">per clip (100s of frames -&gt; 1)</text>
+  <text x="250" y="362" text-anchor="middle" class="small">LongVA: long-context transfer</text>
+  <text x="250" y="380" text-anchor="middle" class="small">VideoChat2: hierarchical pool</text>
+  <text x="250" y="410" text-anchor="middle" class="step">engineering</text>
+  <text x="250" y="430" text-anchor="middle" class="small">learned compressor pre-LLM</text>
+  <text x="250" y="446" text-anchor="middle" class="small">trades recall for scale</text>
+  <text x="250" y="462" text-anchor="middle" class="small">~32k context sufficient</text>
+  <text x="250" y="490" text-anchor="middle" class="caption">cheapest inference, weakest grounding</text>
+
+  <rect x="490" y="280" width="440" height="230" class="reg"/>
+  <text x="710" y="302" text-anchor="middle" class="head">Path 4: agentic retrieval</text>
+  <text x="710" y="326" text-anchor="middle" class="small">VideoAgent: LLM as query planner</text>
+  <text x="710" y="344" text-anchor="middle" class="small">tool: find_clips(keyword)</text>
+  <text x="710" y="362" text-anchor="middle" class="small">VLM reads only matches</text>
+  <text x="710" y="380" text-anchor="middle" class="small">LLM composes final answer</text>
+  <text x="710" y="410" text-anchor="middle" class="step">engineering</text>
+  <text x="710" y="430" text-anchor="middle" class="small">retrieval quality is the bottleneck</text>
+  <text x="710" y="446" text-anchor="middle" class="small">99% cheaper for single-event queries</text>
+  <text x="710" y="462" text-anchor="middle" class="small">worse for holistic understanding</text>
+  <text x="710" y="490" text-anchor="middle" class="caption">best for 2h+ specific queries</text>
+</svg>

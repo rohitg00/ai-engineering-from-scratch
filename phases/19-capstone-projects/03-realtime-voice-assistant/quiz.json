@@ -1,0 +1,90 @@
+{
+  "lesson": "03-realtime-voice-assistant",
+  "title": "Capstone 03 — Real-Time Voice Assistant (ASR to LLM to TTS)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can a voice agent not be built by stitching three blocking REST calls?",
+      "options": [
+        "REST endpoints have a 30-second hard timeout",
+        "REST is incompatible with WebRTC",
+        "JSON serialization is too slow for audio data",
+        "End-to-end latency below 800ms requires pipelined streaming at every stage"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What is the role of the turn-detector alongside VAD?",
+      "options": [
+        "Trains a custom voice clone for the agent",
+        "Reads partial transcripts and scores whether the user has actually finished their utterance",
+        "Detects which speaker is talking in a multi-party call",
+        "Mixes background music into the output stream"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "When the user starts speaking while the agent is mid-response, what must happen for barge-in to feel right?",
+      "options": [
+        "The TTS finishes the current sentence before yielding",
+        "The pipeline buffers user audio until TTS completes",
+        "The TTS is canceled immediately, remaining LLM output is dropped, and ASR re-arms",
+        "The agent raises the TTS volume to assert priority"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is a short filler such as \"one second, let me check\" emitted when a tool exceeds about 300ms?",
+      "options": [
+        "It avoids silence so the conversation does not stall while the side-channel tool runs",
+        "It triggers a fallback ASR model",
+        "It resets the WebRTC jitter buffer",
+        "It improves WER on the next utterance"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "The first audio chunk must leave the server within roughly how long of the first LLM token?",
+      "options": [
+        "20ms",
+        "800ms",
+        "2 seconds",
+        "200ms"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which metric directly measures inappropriate barge-in or over-eager turn closure?",
+      "options": [
+        "WER",
+        "MOS",
+        "Acceptance rate",
+        "False-cutoff rate"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Under 3% packet loss, which two adaptive behaviors does the pipeline rely on?",
+      "options": [
+        "Switching to a larger LLM and disabling TTS",
+        "Falling back to PSTN audio codecs",
+        "Holding partial transcripts and raising the VAD speech-gate threshold",
+        "Restarting the LiveKit room"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

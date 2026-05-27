@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">AlphaEvolve — generator, evaluator, archive</text>
+
+  <rect x="40" y="50" width="800" height="420" class="box"/>
+
+  <!-- Generator box -->
+  <rect x="80" y="100" width="220" height="120" class="cool"/>
+  <text x="190" y="124" text-anchor="middle" class="label">LLM generator</text>
+  <text x="190" y="146" text-anchor="middle" class="content">Gemini Flash (many)</text>
+  <text x="190" y="162" text-anchor="middle" class="content">Gemini Pro (hard cases)</text>
+  <text x="190" y="184" text-anchor="middle" class="small">prompt = parent(s) +</text>
+  <text x="190" y="200" text-anchor="middle" class="small">top variants + task + eval sig</text>
+
+  <!-- Archive box (MAP-elites) -->
+  <rect x="330" y="100" width="220" height="260" class="cold"/>
+  <text x="440" y="124" text-anchor="middle" class="label">program archive</text>
+  <text x="440" y="142" text-anchor="middle" class="small">MAP-elites grid / islands</text>
+
+  <!-- Archive cells grid illustration -->
+  <g stroke="#2c5ea9" stroke-width="1" fill="#ffffff">
+    <rect x="345" y="158" width="60" height="44"/>
+    <rect x="405" y="158" width="60" height="44"/>
+    <rect x="465" y="158" width="60" height="44"/>
+    <rect x="345" y="202" width="60" height="44"/>
+    <rect x="405" y="202" width="60" height="44"/>
+    <rect x="465" y="202" width="60" height="44"/>
+    <rect x="345" y="246" width="60" height="44"/>
+    <rect x="405" y="246" width="60" height="44"/>
+    <rect x="465" y="246" width="60" height="44"/>
+  </g>
+  <g class="small">
+    <text x="375" y="182" text-anchor="middle">92.1</text>
+    <text x="435" y="182" text-anchor="middle">89.3</text>
+    <text x="495" y="182" text-anchor="middle">94.0</text>
+    <text x="375" y="226" text-anchor="middle">85.8</text>
+    <text x="435" y="226" text-anchor="middle">91.7</text>
+    <text x="495" y="226" text-anchor="middle">88.4</text>
+    <text x="375" y="270" text-anchor="middle">78.6</text>
+    <text x="435" y="270" text-anchor="middle">82.2</text>
+    <text x="495" y="270" text-anchor="middle">87.0</text>
+  </g>
+  <text x="440" y="312" text-anchor="middle" class="small">cell key = feature descriptor</text>
+  <text x="440" y="326" text-anchor="middle" class="small">(depth, complexity, footprint, ...)</text>
+  <text x="440" y="342" text-anchor="middle" class="small">each cell keeps its best</text>
+
+  <!-- Evaluator box -->
+  <rect x="580" y="100" width="220" height="120" class="hot"/>
+  <text x="690" y="124" text-anchor="middle" class="label">evaluator</text>
+  <text x="690" y="146" text-anchor="middle" class="content">correctness + benchmark</text>
+  <text x="690" y="164" text-anchor="middle" class="content">deterministic, fast</text>
+  <text x="690" y="186" text-anchor="middle" class="small">held-out inputs generated</text>
+  <text x="690" y="202" text-anchor="middle" class="small">at evaluation time</text>
+
+  <!-- Arrows -->
+  <path d="M300 160 L330 160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="305" y="152" class="small">variants</text>
+  <path d="M550 180 L580 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="555" y="172" class="small">variant</text>
+  <path d="M690 220 Q 690 280 550 280" stroke="#1a1a1a" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="620" y="248" class="small">score</text>
+  <path d="M345 160 Q 220 100 190 100" stroke="#1a1a1a" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="260" y="82" class="small">parent sample</text>
+
+  <!-- Wins box -->
+  <rect x="80" y="370" width="720" height="84" class="box"/>
+  <text x="100" y="392" class="label">documented wins (DeepMind, June 2025)</text>
+  <text x="100" y="412" class="content">- 48-mul 4x4 complex matmul (Strassen 1969 bound 49)</text>
+  <text x="100" y="428" class="content">- Google Borg scheduling heuristic, ~0.7% compute recovered in prod</text>
+  <text x="100" y="444" class="content">- 32.5% FlashAttention kernel speedup · Gemini training throughput gains</text>
+
+  <text x="440" y="496" text-anchor="middle" class="caption">reward hacking is bounded only by evaluator rigor. pick domains where the evaluator is not the weak link.</text>
+</svg>

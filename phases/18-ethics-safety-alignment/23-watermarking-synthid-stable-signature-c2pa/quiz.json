@@ -1,0 +1,78 @@
+{
+  "lesson": "23-watermarking-synthid-stable-signature-c2pa",
+  "title": "Watermarking - SynthID, Stable Signature, C2PA",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How does Kirchenbauer-style (SynthID-text) token watermarking embed a signal?",
+      "options": [
+        "By modifying the prompt template",
+        "By encrypting the output with a public key",
+        "At each decoding step, hash the previous K tokens to partition the vocabulary into green/red sets and bias sampling toward green; detection counts green tokens via a z-score",
+        "By inserting a hidden HTML comment"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the primary limitation of text watermarks against paraphrase?",
+      "options": [
+        "Rewording or paraphrasing the text destroys the green-token statistical signal",
+        "Paraphrase only affects image watermarks",
+        "Paraphrase strengthens the watermark",
+        "They actually survive paraphrase"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does Stable Signature (Fernandez et al., ICCV 2023) do?",
+      "options": [
+        "Uses C2PA to sign the image at upload",
+        "Adds a visible watermark in the corner of the image",
+        "Fine-tunes the latent diffusion decoder so every generated image carries a fixed embedded message detectable from the latent",
+        "Signs the metadata with a private key"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the May 2024 'Stable Signature is Unstable' result demonstrate?",
+      "options": [
+        "The watermark is provably unforgeable",
+        "The watermark requires C2PA to function",
+        "The watermark fails only on JPEG compression",
+        "Post-generation fine-tuning of the decoder can remove the watermark while preserving image quality, undermining adversarial robustness"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "How are C2PA metadata and watermarking complementary?",
+      "options": [
+        "They are interchangeable",
+        "Watermarks are signed by the same keys as C2PA",
+        "Metadata can be stripped but carries rich provenance chain; watermarks persist through transcoding but carry few bits; layered, they provide a usable provenance story",
+        "C2PA replaces watermarks entirely"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why is 'no SynthID signal' NOT proof of authenticity (human origin)?",
+      "options": [
+        "Because SynthID only watermarks generations from SynthID-enabled models; content from any model without SynthID is unwatermarked by default",
+        "Because SynthID is closed-source",
+        "Because SynthID always produces false positives on human text",
+        "Because SynthID only works on Gemini outputs"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

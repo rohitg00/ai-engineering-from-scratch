@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">ColPali / ColQwen late-interaction retrieval</text>
+
+  <rect x="40" y="50" width="290" height="460" class="box"/>
+  <text x="185" y="72" text-anchor="middle" class="head">query side</text>
+  <rect x="60" y="90" width="250" height="40" class="cool"/>
+  <text x="185" y="116" text-anchor="middle" class="step">tokenize query</text>
+  <rect x="60" y="140" width="250" height="40" class="cool"/>
+  <text x="185" y="166" text-anchor="middle" class="step">embed each token</text>
+  <text x="185" y="190" text-anchor="middle" class="small">n query tokens -&gt; n vectors</text>
+
+  <rect x="60" y="210" width="250" height="220" class="cold"/>
+  <text x="185" y="232" text-anchor="middle" class="step">MaxSim per query token</text>
+  <text x="185" y="252" text-anchor="middle" class="small">for each q_i:</text>
+  <text x="185" y="270" text-anchor="middle" class="small">max over doc patches (q_i . p_j)</text>
+  <text x="185" y="288" text-anchor="middle" class="small">sum all q_i max scores</text>
+  <text x="185" y="310" text-anchor="middle" class="small">-&gt; page score</text>
+  <text x="185" y="336" text-anchor="middle" class="small">O(|q| * |patches|) per page</text>
+  <text x="185" y="354" text-anchor="middle" class="small">but vectorized on GPU</text>
+  <text x="185" y="378" text-anchor="middle" class="small">multi-vector index stores</text>
+  <text x="185" y="396" text-anchor="middle" class="small">patches + MaxSim ranks</text>
+  <text x="185" y="418" text-anchor="middle" class="caption">Vespa / Qdrant multi-vector / AstraDB</text>
+
+  <rect x="360" y="50" width="290" height="460" class="box"/>
+  <text x="505" y="72" text-anchor="middle" class="head">document side</text>
+  <rect x="380" y="90" width="250" height="40" class="cool"/>
+  <text x="505" y="116" text-anchor="middle" class="step">render page (180 DPI)</text>
+  <rect x="380" y="140" width="250" height="40" class="cool"/>
+  <text x="505" y="166" text-anchor="middle" class="step">ColQwen2.5-v0.2</text>
+  <text x="505" y="190" text-anchor="middle" class="small">patch tokenizer + LM head</text>
+
+  <rect x="380" y="210" width="250" height="220" class="dsk"/>
+  <text x="505" y="232" text-anchor="middle" class="step">patch embeddings</text>
+  <text x="505" y="252" text-anchor="middle" class="small">~2048 patches per page</text>
+  <text x="505" y="270" text-anchor="middle" class="small">dim 128 each</text>
+  <text x="505" y="288" text-anchor="middle" class="small">no pooling: preserve locality</text>
+  <text x="505" y="310" text-anchor="middle" class="small">DocPruner: keep 50%</text>
+  <text x="505" y="328" text-anchor="middle" class="small">accuracy drop &lt; 0.5%</text>
+  <text x="505" y="350" text-anchor="middle" class="small">storage halved</text>
+  <text x="505" y="378" text-anchor="middle" class="small">per-patch bounding box kept</text>
+  <text x="505" y="396" text-anchor="middle" class="small">for evidence highlighting</text>
+  <text x="505" y="418" text-anchor="middle" class="caption">Illuin Tech ColPali + 2026 DocPruner</text>
+
+  <rect x="680" y="50" width="240" height="460" class="box"/>
+  <text x="800" y="72" text-anchor="middle" class="head">synthesis + eval</text>
+  <rect x="700" y="90" width="200" height="40" class="cool"/>
+  <text x="800" y="116" text-anchor="middle" class="step">top-5 pages</text>
+  <rect x="700" y="140" width="200" height="40" class="hot"/>
+  <text x="800" y="166" text-anchor="middle" class="step">Qwen3-VL-30B</text>
+  <text x="800" y="190" text-anchor="middle" class="small">vision + text context</text>
+
+  <rect x="700" y="210" width="200" height="40" class="cold"/>
+  <text x="800" y="236" text-anchor="middle" class="step">cited regions</text>
+  <rect x="700" y="260" width="200" height="40" class="dsk"/>
+  <text x="800" y="286" text-anchor="middle" class="step">viewer overlay</text>
+
+  <rect x="700" y="310" width="200" height="200" class="box"/>
+  <text x="800" y="332" text-anchor="middle" class="head">evaluation</text>
+  <text x="800" y="352" text-anchor="middle" class="small">ViDoRe v3 (retrieval)</text>
+  <text x="800" y="370" text-anchor="middle" class="small">M3DocVQA (multi-page QA)</text>
+  <text x="800" y="388" text-anchor="middle" class="small">content-class x approach</text>
+  <text x="800" y="406" text-anchor="middle" class="small">matrix: text / table / chart /</text>
+  <text x="800" y="424" text-anchor="middle" class="small">handwriting / equation</text>
+  <text x="800" y="444" text-anchor="middle" class="small">vs OCR-then-text baseline</text>
+  <text x="800" y="472" text-anchor="middle" class="caption">publish side-by-side delta</text>
+</svg>

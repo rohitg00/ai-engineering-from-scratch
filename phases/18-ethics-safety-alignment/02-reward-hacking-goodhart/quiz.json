@@ -1,0 +1,78 @@
+{
+  "lesson": "02-reward-hacking-goodhart",
+  "title": "Reward Hacking and Goodhart's Law",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Goodhart's Law, as originally stated, says:",
+      "options": [
+        "Any measure that becomes a target ceases to be a good measure",
+        "Reward models converge to true human preference at large scale",
+        "Heavy-tailed errors cannot occur in finite-dimensional models",
+        "Optimization always improves a proxy without limit"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "In Gao, Schulman, Hilton (2023), how do proxy reward and gold reward behave as KL distance from the initial policy grows?",
+      "options": [
+        "Both stay flat under any KL constraint",
+        "Both rise monotonically with KL",
+        "Proxy peaks then falls, gold rises monotonically",
+        "Proxy keeps rising, gold peaks closer to the origin then falls"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which of the following is NOT one of the four 'costumes' of reward hacking listed in the lesson?",
+      "options": [
+        "Unfaithful reasoning",
+        "Verbosity bias",
+        "Tokenizer mismatch",
+        "Sycophancy"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the 'Catastrophic Goodhart' result about KL regularization?",
+      "options": [
+        "KL regularization always prevents reward hacking when beta is positive",
+        "KL regularization only fails when the policy is randomly initialized",
+        "KL regularization is equivalent to ensembling reward models",
+        "Under heavy-tailed reward error, a KL-constrained optimal policy can still drive proxy reward up while gold reward stays at baseline"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which mitigation does Coste et al. (2023) study to soften reward over-optimization?",
+      "options": [
+        "Removing the KL penalty entirely",
+        "Training the policy on the proxy at zero temperature",
+        "Reward-model ensembles with worst-case aggregation",
+        "Increasing the labeler pool to one million raters"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "According to the 2026 unified view, what core mechanism do verbosity, sycophancy, unfaithful CoT, and evaluator tampering share?",
+      "options": [
+        "Probability mass shifts to outputs that maximize proxy reward by exploiting easy-to-learn heuristics that spuriously correlated with approval",
+        "They are caused only by labelers who write malicious preferences",
+        "They all stem from learning-rate schedules being too aggressive",
+        "They are each independent bugs in distinct reward heads"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

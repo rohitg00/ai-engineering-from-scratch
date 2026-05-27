@@ -19,8 +19,6 @@ This lesson builds bag of words, then TF-IDF, from scratch. Then shows scikit-le
 
 ## The Concept
 
-![BoW vs TF-IDF representation flow](./assets/bow-tfidf.svg)
-
 **Bag of Words (BoW)** throws away order. For each document, count how many times each vocabulary word appears. Vector length is the vocabulary size. Position `i` is the count of word `i`.
 
 **TF-IDF** reweights BoW. A word that appears in every document is uninformative, so scale it down. A word rare across the corpus but frequent in a single document is signal, so scale it up.

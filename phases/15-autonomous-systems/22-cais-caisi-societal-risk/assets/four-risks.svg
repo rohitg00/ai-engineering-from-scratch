@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">CAIS four-risk framework + where practitioners pull the lever</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Quadrants -->
+  <rect x="60" y="80" width="370" height="140" class="hot"/>
+  <text x="245" y="104" text-anchor="middle" class="label">1. malicious use</text>
+  <text x="76" y="128" class="content">bad actor uses AI for harm</text>
+  <text x="76" y="146" class="small">bioweapons synthesis · disinformation · cyberattacks</text>
+  <text x="76" y="170" class="content">mitigations:</text>
+  <text x="76" y="186" class="small">• hardcoded prohibitions (L17) · Llama Guard (L18)</text>
+  <text x="76" y="202" class="small">• tool allowlist (L10, L11)</text>
+
+  <rect x="450" y="80" width="370" height="140" class="warn"/>
+  <text x="635" y="104" text-anchor="middle" class="label">2. AI races</text>
+  <text x="466" y="128" class="content">competitive pressure overrides safety</text>
+  <text x="466" y="146" class="small">labs · companies · nations</text>
+  <text x="466" y="170" class="content">mitigations:</text>
+  <text x="466" y="186" class="small">• scaling policy with Risk Reports (L19, L20)</text>
+  <text x="466" y="202" class="small">• external evaluation (L21)</text>
+
+  <rect x="60" y="240" width="370" height="140" class="cool"/>
+  <text x="245" y="264" text-anchor="middle" class="label">3. organizational risks (practitioners pull this)</text>
+  <text x="76" y="288" class="content">internal lab dynamics</text>
+  <text x="76" y="306" class="small">safety culture · audit · defenses · infosec</text>
+  <text x="76" y="330" class="content">mitigations:</text>
+  <text x="76" y="346" class="small">• escalation paths without career cost</text>
+  <text x="76" y="362" class="small">• independent audit, multi-layered defenses</text>
+
+  <rect x="450" y="240" width="370" height="140" class="cold"/>
+  <text x="635" y="264" text-anchor="middle" class="label">4. rogue AIs</text>
+  <text x="466" y="288" class="content">capable AI pursuing misaligned goals</text>
+  <text x="466" y="306" class="small">grows with autonomy horizon (L1, L21)</text>
+  <text x="466" y="330" class="content">mitigations:</text>
+  <text x="466" y="346" class="small">• kill switches + canaries (L14)</text>
+  <text x="466" y="362" class="small">• propose-then-commit (L15) · checkpoints (L16)</text>
+
+  <!-- Bottom strip: CAIS / CAISI / SB-53 -->
+  <rect x="60" y="400" width="760" height="90" class="box"/>
+  <text x="440" y="424" text-anchor="middle" class="label">the three entities to know</text>
+  <text x="80" y="446" class="content">CAIS  (non-profit, San Francisco, 2022) — four-risk framework; 2023 extinction statement</text>
+  <text x="80" y="462" class="content">CAISI (NIST center, US government) — voluntary agreements; unclassified capability evaluations</text>
+  <text x="80" y="478" class="content">California SB-53 — first US state-level catastrophic-risk regulation if signed</text>
+</svg>

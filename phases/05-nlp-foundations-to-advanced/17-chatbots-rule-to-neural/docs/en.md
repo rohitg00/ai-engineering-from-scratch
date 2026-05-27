@@ -127,7 +127,8 @@ def agent_loop(user_message, tools, llm, max_steps=5):
                 history.append({"role": "assistant", "tool_call": tool_call})
                 history.append({"role": "tool", "name": tool_name, "content": f"error: arguments must be a dict, got {type(args).__name__}"})
                 continue
-            result = tools[tool_name](**args)
+            fn = tools[tool_name]
+            result = fn(**args)
             history.append({"role": "assistant", "tool_call": tool_call})
             history.append({"role": "tool", "name": tool_name, "content": result})
         else:

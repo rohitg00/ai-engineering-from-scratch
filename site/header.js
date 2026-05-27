@@ -14,7 +14,9 @@
   }
 
   function paint(n) {
-    var els = document.querySelectorAll('.header-github .star-count, #starCount');
+    var els = document.querySelectorAll(
+      '.header-github .star-count, #starCount, [data-gh-stars="' + REPO + '"]'
+    );
     for (var i = 0; i < els.length; i++) {
       els[i].textContent = format(n);
       els[i].removeAttribute('data-loading');

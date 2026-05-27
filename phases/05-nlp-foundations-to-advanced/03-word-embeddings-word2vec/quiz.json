@@ -1,0 +1,102 @@
+{
+  "lesson": "03-word-embeddings-word2vec",
+  "title": "Word Embeddings — Word2Vec from Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the distributional hypothesis?",
+      "options": [
+        "You shall know a word by the company it keeps",
+        "Words are uniformly distributed across documents",
+        "All words can be embedded in 300 dimensions",
+        "Frequent words carry the most meaning"
+      ],
+      "correct": 0,
+      "explanation": "Firth's (1957) distributional hypothesis: similar contexts imply similar meanings."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is plain softmax over the vocabulary impractical in Word2Vec?",
+      "options": [
+        "Computing softmax over 100k+ vocabulary terms is prohibitively expensive per training step",
+        "Softmax cannot model probabilities",
+        "Softmax has no gradient",
+        "It causes vanishing gradients"
+      ],
+      "correct": 0,
+      "explanation": "Full-vocabulary softmax is too expensive; negative sampling reformulates it as binary classification."
+    },
+    {
+      "stage": "check",
+      "question": "What is the difference between skip-gram and CBOW?",
+      "options": [
+        "Skip-gram uses bigrams; CBOW uses unigrams",
+        "Skip-gram predicts context words from the center; CBOW predicts the center from context",
+        "Skip-gram predicts the center word from context; CBOW does the reverse",
+        "Skip-gram trains a deep network; CBOW is shallow"
+      ],
+      "correct": 1,
+      "explanation": "Skip-gram: center -> context. CBOW: context -> center."
+    },
+    {
+      "stage": "check",
+      "question": "In negative sampling, what is the objective for the positive pair (center, context)?",
+      "options": [
+        "Maximize sigmoid(W[center] dot W'[context]) so it is close to 1",
+        "Force them to be orthogonal",
+        "Minimize their dot product",
+        "Decorrelate the vectors"
+      ],
+      "correct": 0,
+      "explanation": "Positive pairs train sigmoid near 1; sampled negatives train sigmoid near 0."
+    },
+    {
+      "stage": "check",
+      "question": "After training Word2Vec, which weight matrix becomes the word embeddings?",
+      "options": [
+        "A separate post-training projection",
+        "The input-to-hidden W matrix (center-word table)",
+        "Both, multiplied together",
+        "The hidden-to-output W' matrix"
+      ],
+      "correct": 1,
+      "explanation": "The center-word table W is the standard embedding output; W' is often discarded or averaged in."
+    },
+    {
+      "stage": "post",
+      "question": "Why does Word2Vec fail on polysemy (e.g. 'bank')?",
+      "options": [
+        "The window size is too small",
+        "It ignores rare words",
+        "Negative sampling drops rare meanings",
+        "It assigns one static vector per word, so 'river bank' and 'financial bank' share the same vector"
+      ],
+      "correct": 3,
+      "explanation": "Static embeddings cannot disambiguate senses; contextual embeddings (ELMo/BERT) fix this."
+    },
+    {
+      "stage": "post",
+      "question": "When would you still reach for Word2Vec over a transformer in 2026?",
+      "options": [
+        "Lightweight, on-device, domain-specific retrieval where a single row lookup is the latency budget",
+        "When you need contextual disambiguation",
+        "When inputs are very long",
+        "When dialog quality matters"
+      ],
+      "correct": 0,
+      "explanation": "Word2Vec wins on tiny latency budgets, on-device inference, or fast domain-specific training."
+    },
+    {
+      "stage": "post",
+      "question": "What enables the famous analogy 'king - man + woman ~ queen'?",
+      "options": [
+        "The model encodes royalty as a flag bit",
+        "Skip-gram trains on royal vocabularies",
+        "Vector arithmetic captures linear directions like 'royal' that transfer across genders",
+        "Cosine similarity is invariant to gender"
+      ],
+      "correct": 2,
+      "explanation": "Directions in embedding space encode relational features, so adding/subtracting moves systematically."
+    }
+  ]
+}

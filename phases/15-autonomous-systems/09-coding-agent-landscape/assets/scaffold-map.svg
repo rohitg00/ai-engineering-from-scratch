@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Scaffolding moves the score more than the base model</text>
+
+  <rect x="40" y="50" width="800" height="440" class="box"/>
+
+  <!-- Base model -->
+  <rect x="80" y="80" width="160" height="70" class="cool"/>
+  <text x="160" y="104" text-anchor="middle" class="label">base model</text>
+  <text x="160" y="124" text-anchor="middle" class="small">Claude Sonnet 4.5</text>
+  <text x="160" y="140" text-anchor="middle" class="small">(fixed weights)</text>
+
+  <!-- Two scaffolds -->
+  <rect x="290" y="80" width="160" height="70" class="hot"/>
+  <text x="370" y="104" text-anchor="middle" class="label">SWE-agent v1</text>
+  <text x="370" y="124" text-anchor="middle" class="small">ACI command set</text>
+  <text x="370" y="140" text-anchor="middle" class="small">JSON tool calls</text>
+
+  <rect x="500" y="80" width="160" height="70" class="cold"/>
+  <text x="580" y="104" text-anchor="middle" class="label">Cline autonomous</text>
+  <text x="580" y="124" text-anchor="middle" class="small">VS Code + policy</text>
+  <text x="580" y="140" text-anchor="middle" class="small">verifier loop</text>
+
+  <rect x="700" y="80" width="140" height="70" class="box"/>
+  <text x="770" y="104" text-anchor="middle" class="label">SWE-bench Verified</text>
+  <text x="770" y="124" text-anchor="middle" class="small">500 curated tasks</text>
+  <text x="770" y="140" text-anchor="middle" class="small">(same tasks)</text>
+
+  <path d="M240 115 L290 115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M240 115 Q265 200 290 115" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+  <path d="M450 115 L500 115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M660 115 L700 115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Score delta -->
+  <rect x="80" y="180" width="580" height="80" class="box"/>
+  <text x="100" y="202" class="label">the score delta</text>
+  <text x="100" y="226" class="content">same model: SWE-agent v1  43.2%    |    Cline autonomous  59.8%</text>
+  <text x="100" y="244" class="content">+16.6 absolute points from scaffolding alone. (OpenHands, Epoch AI 2026)</text>
+
+  <!-- CodeAct vs JSON -->
+  <rect x="80" y="290" width="360" height="160" class="hot"/>
+  <text x="260" y="312" text-anchor="middle" class="label">CodeAct scaffold (OpenHands)</text>
+  <text x="100" y="334" class="content">+ composable: one action edits many files</text>
+  <text x="100" y="350" class="content">+ catches exceptions inside an action</text>
+  <text x="100" y="366" class="content">- larger per-action blast radius</text>
+  <text x="100" y="382" class="content">- requires hardened sandbox (Docker)</text>
+  <text x="100" y="402" class="content">use when: agent is inside an isolated container</text>
+  <text x="100" y="418" class="content">         and composability is worth the audit cost</text>
+  <text x="100" y="434" class="small">arXiv:2407.16741 · MIT license · most active open platform</text>
+
+  <rect x="460" y="290" width="360" height="160" class="cold"/>
+  <text x="640" y="312" text-anchor="middle" class="label">JSON tool-call scaffold</text>
+  <text x="480" y="334" class="content">+ every action goes through a validator</text>
+  <text x="480" y="350" class="content">+ easy to audit turn-by-turn</text>
+  <text x="480" y="366" class="content">- one action per turn; more turns for same task</text>
+  <text x="480" y="382" class="content">- compositionality lives in the orchestrator</text>
+  <text x="480" y="402" class="content">use when: provider controls the executor</text>
+  <text x="480" y="418" class="content">         (Claude Managed Agents, OpenAI Assistants)</text>
+  <text x="480" y="434" class="small">dominant in managed services, where safety is by construction</text>
+</svg>

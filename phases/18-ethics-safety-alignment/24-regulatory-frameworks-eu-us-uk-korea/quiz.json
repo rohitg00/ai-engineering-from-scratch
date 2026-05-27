@@ -1,0 +1,78 @@
+{
+  "lesson": "24-regulatory-frameworks-eu-us-uk-korea",
+  "title": "Regulatory Frameworks - EU, US, UK, Korea",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "When did the EU AI Act enter into force, and what category applied first?",
+      "options": [
+        "August 2024; prohibited practices and AI literacy applied 2 February 2025",
+        "August 2026; only GPAI applied at force-date",
+        "August 2025; all categories applied at once",
+        "January 2024; high-risk systems applied that day"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the maximum monetary penalty under the EU AI Act applicable from 2 August 2026?",
+      "options": [
+        "Unlimited",
+        "Up to 1M EUR or 0.1% of global turnover",
+        "Up to 15M EUR or 3% of global turnover",
+        "Up to 5M EUR or 1% of global turnover"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which three chapters make up the GPAI Code of Practice (10 July 2025)?",
+      "options": [
+        "Training, Inference, Deployment",
+        "Capability, Control, Compliance",
+        "Privacy, Bias, Watermarking",
+        "Transparency, Copyright, Safety and Security"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the February 2025 UK AISI rebrand to 'AI Security Institute' signal?",
+      "options": [
+        "A narrower scope focused on frontier-capability security, dropping algorithmic bias and free-speech framings",
+        "Merger with the EU AI Office",
+        "Closure of UK frontier evaluation",
+        "Expansion into algorithmic bias"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the US CAISI rebrand (June 2025) signal in policy direction?",
+      "options": [
+        "Merger with FDA",
+        "Stricter pre-deployment safety evaluation",
+        "A shift toward 'pro-growth AI policies,' with emphasis on standards and innovation support and reduced emphasis on pre-deployment evaluation",
+        "Mandatory open-source release of frontier models"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the headline obligation in Korea's AI Framework Act (effective January 2026)?",
+      "options": [
+        "Identical adoption of the EU AI Act",
+        "Mandatory open-weights for all generative models",
+        "Total prohibition of foreign AI providers",
+        "Article 12 establishes an AISI under MSIT and mandates local representatives, risk assessment, and safety measures for high-impact and generative AI"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

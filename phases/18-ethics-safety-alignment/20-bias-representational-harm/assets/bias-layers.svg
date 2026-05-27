@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Bias and representational harm: measurement and intervention</text>
+
+  <rect x="40" y="60" width="880" height="150" class="box"/>
+  <text x="480" y="85" text-anchor="middle" class="head">Gallegos et al. 2024 three metric categories</text>
+  <rect x="60" y="105" width="280" height="90" class="cool"/>
+  <text x="200" y="130" text-anchor="middle" class="step">embedding-based</text>
+  <text x="200" y="150" text-anchor="middle" class="small">WEAT, SEAT</text>
+  <text x="200" y="170" text-anchor="middle" class="small">pre-RLHF; measures representation</text>
+  <rect x="360" y="105" width="280" height="90" class="cool"/>
+  <text x="500" y="130" text-anchor="middle" class="step">probability-based</text>
+  <text x="500" y="150" text-anchor="middle" class="small">stereotype log-likelihood</text>
+  <text x="500" y="170" text-anchor="middle" class="small">decoder-side; partial behaviour</text>
+  <rect x="660" y="105" width="240" height="90" class="cool"/>
+  <text x="780" y="130" text-anchor="middle" class="step">generated-text</text>
+  <text x="780" y="150" text-anchor="middle" class="small">resume-scoring, recommendation</text>
+  <text x="780" y="170" text-anchor="middle" class="small">ecologically valid; expensive</text>
+
+  <rect x="40" y="230" width="880" height="130" class="box"/>
+  <text x="480" y="255" text-anchor="middle" class="head">intersectionality + mechanism</text>
+  <rect x="60" y="275" width="420" height="70" class="cold"/>
+  <text x="270" y="298" text-anchor="middle" class="step">intersectional evaluation</text>
+  <text x="270" y="316" text-anchor="middle" class="small">An et al. 2025 (PNAS Nexus): 5 models, race x gender</text>
+  <text x="270" y="334" text-anchor="middle" class="small">WinoIdentity (COLM 2025): uncertainty-based</text>
+  <rect x="500" y="275" width="400" height="70" class="cold"/>
+  <text x="700" y="298" text-anchor="middle" class="step">mechanistic debiasing</text>
+  <text x="700" y="316" text-anchor="middle" class="small">gender neurons (Yu &amp; Ananiadou 2025)</text>
+  <text x="700" y="334" text-anchor="middle" class="small">SAE features (Ahsan &amp; Wallace 2025); UniBias heads</text>
+
+  <rect x="40" y="380" width="880" height="110" class="box"/>
+  <text x="480" y="405" text-anchor="middle" class="head">harm-type separation</text>
+  <rect x="60" y="425" width="400" height="55" class="hot"/>
+  <text x="260" y="450" text-anchor="middle" class="step">representational</text>
+  <text x="260" y="470" text-anchor="middle" class="small">stereotypes, erasure, demeaning portrayal</text>
+  <rect x="480" y="425" width="420" height="55" class="hot"/>
+  <text x="690" y="450" text-anchor="middle" class="step">allocational</text>
+  <text x="690" y="470" text-anchor="middle" class="small">unequal material outcome (resume score, credit decision)</text>
+</svg>

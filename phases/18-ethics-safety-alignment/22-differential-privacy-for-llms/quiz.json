@@ -1,0 +1,78 @@
+{
+  "lesson": "22-differential-privacy-for-llms",
+  "title": "Differential Privacy for LLMs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does (epsilon, delta)-differential privacy guarantee for a randomized algorithm M?",
+      "options": [
+        "M does not memorize any training data ever",
+        "M is deterministic up to noise",
+        "For any two datasets differing in one example and any event S, P(M(D) in S) <= e^epsilon * P(M(D') in S) + delta, so any single individual's contribution cannot be reliably inferred",
+        "M is provably equivalent to a non-private algorithm"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which is NOT a step of DP-SGD as described by Abadi et al. 2016?",
+      "options": [
+        "Sample a mini-batch and compute per-example gradients",
+        "Clip each per-example gradient to a threshold C",
+        "Re-randomize the model's tokenizer between steps",
+        "Sum clipped gradients and add Gaussian noise scaled by sigma * C"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is LoRA + DP-SGD the common 2025 configuration?",
+      "options": [
+        "Full DP-SGD on a frontier model is prohibitive; LoRA limits gradient updates to a small adapter, reducing per-example gradient storage while still providing DP guarantees on the adapter",
+        "It uses LoRA as a tokenizer",
+        "LoRA increases epsilon by design",
+        "LoRA removes the need for an accountant"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How did the March 2025 audit (arXiv:2503.06808) resolve the canary-MIA vs training-data-extraction tension?",
+      "options": [
+        "It eliminated the need for canaries entirely",
+        "It proved DP-SGD is unnecessary",
+        "It showed both measure the same property",
+        "It showed they measure different things: MIA on inserted canaries under-reports memorization because canaries are not optimized to be the 'most extractable' examples that actually matter for privacy"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does PMixED (arXiv:2403.15638) provide as an alternative to DP training?",
+      "options": [
+        "A faster DP-SGD variant",
+        "A new accountant for Renyi DP",
+        "Inference-time differential privacy via a mixture of experts on next-token distributions, with aggregation noise; avoids DP training entirely",
+        "A way to compute epsilon from epsilon-delta accounting alone"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the Differential Privacy Reversal via LLM Feedback attack?",
+      "options": [
+        "Using a DP-trained model's confidence scores as an oracle to re-identify individuals, even when outputs do not leak directly",
+        "An attack on tokenizer entropy",
+        "A method to reset epsilon to zero",
+        "A countermeasure to canary insertion"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

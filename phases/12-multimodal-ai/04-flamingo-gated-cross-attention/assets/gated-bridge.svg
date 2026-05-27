@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .frozen { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; stroke-dasharray: 4 3; }
+      .train { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .gate { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Flamingo — gated cross-attention inside a frozen 70B Chinchilla LLM</text>
+
+  <rect x="40" y="50" width="220" height="480" class="box"/>
+  <text x="150" y="72" text-anchor="middle" class="head">image / video pipeline</text>
+
+  <rect x="60" y="92" width="180" height="50" class="frozen"/>
+  <text x="150" y="114" text-anchor="middle" class="step">frozen ViT</text>
+  <text x="150" y="130" text-anchor="middle" class="small">196-900 patches / image</text>
+
+  <path d="M 150 148 L 150 172" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="180" width="180" height="100" class="train"/>
+  <text x="150" y="202" text-anchor="middle" class="step">Perceiver resampler</text>
+  <text x="150" y="220" text-anchor="middle" class="small">K=64 learnable latents</text>
+  <text x="150" y="238" text-anchor="middle" class="small">cross-attn over patches</text>
+  <text x="150" y="256" text-anchor="middle" class="small">6 blocks, 64M params</text>
+  <text x="150" y="272" text-anchor="middle" class="small">fixed 64 tokens out</text>
+
+  <path d="M 150 288 L 150 318" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="328" width="180" height="60" class="cool"/>
+  <text x="150" y="350" text-anchor="middle" class="step">64 visual tokens</text>
+  <text x="150" y="368" text-anchor="middle" class="small">per image (or per video)</text>
+
+  <rect x="60" y="408" width="180" height="110" class="box"/>
+  <text x="150" y="428" text-anchor="middle" class="head">variable inputs</text>
+  <text x="150" y="448" text-anchor="middle" class="small">image: 196 patches -&gt; 64</text>
+  <text x="150" y="464" text-anchor="middle" class="small">high-res: 900 patches -&gt; 64</text>
+  <text x="150" y="482" text-anchor="middle" class="small">video: T * 64</text>
+  <text x="150" y="500" text-anchor="middle" class="small">output shape: always K=64</text>
+
+  <path d="M 265 350 L 340 350" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="345" y="50" width="570" height="480" class="box"/>
+  <text x="630" y="72" text-anchor="middle" class="head">frozen LLM with inserted gated cross-attn</text>
+
+  <rect x="365" y="92" width="530" height="52" class="frozen"/>
+  <text x="630" y="114" text-anchor="middle" class="step">LLM self-attn + FFN (block 1-4)</text>
+  <text x="630" y="132" text-anchor="middle" class="small">frozen Chinchilla 70B layers</text>
+
+  <rect x="365" y="154" width="530" height="80" class="gate"/>
+  <text x="630" y="176" text-anchor="middle" class="step">GATED CROSS-ATTENTION (trained)</text>
+  <text x="390" y="200" class="small">y = tanh(alpha) * cross_attn(text, visual_tokens) + x</text>
+  <text x="390" y="218" class="small">alpha init 0 -&gt; tanh(0) = 0 -&gt; output == input</text>
+  <text x="390" y="234" class="small">-&gt; LLM text capability preserved at step 0</text>
+
+  <rect x="365" y="244" width="530" height="52" class="frozen"/>
+  <text x="630" y="266" text-anchor="middle" class="step">LLM self-attn + FFN (block 5-8)</text>
+  <text x="630" y="284" text-anchor="middle" class="small">text tokens continue causal self-attention</text>
+
+  <rect x="365" y="306" width="530" height="80" class="gate"/>
+  <text x="630" y="328" text-anchor="middle" class="step">GATED CROSS-ATTENTION (trained)</text>
+  <text x="390" y="352" class="small">as alpha increases, visual contribution mixes in</text>
+  <text x="390" y="370" class="small">ends training with alpha O(1-2), tanh ~0.8</text>
+  <text x="390" y="386" class="caption">inserted every M=4 LLM layers</text>
+
+  <rect x="365" y="396" width="530" height="52" class="frozen"/>
+  <text x="630" y="418" text-anchor="middle" class="step">LLM self-attn + FFN (block 9-12, ..., N)</text>
+
+  <rect x="365" y="458" width="530" height="60" class="cool"/>
+  <text x="630" y="478" text-anchor="middle" class="step">total cross-attn layers: N/4</text>
+  <text x="630" y="496" text-anchor="middle" class="small">for 70B LLM with 80 layers -&gt; 20 gated bridges</text>
+  <text x="630" y="510" text-anchor="middle" class="small">trained params: ~10B / 80B total</text>
+</svg>

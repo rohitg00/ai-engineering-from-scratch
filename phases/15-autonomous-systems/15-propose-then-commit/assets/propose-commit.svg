@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Propose → Surface → Commit → Verify (all four required)</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Phases -->
+  <rect x="60" y="80" width="170" height="90" class="cool"/>
+  <text x="145" y="104" text-anchor="middle" class="label">1. propose</text>
+  <text x="76" y="126" class="small">intent + lineage +</text>
+  <text x="76" y="142" class="small">permissions + blast +</text>
+  <text x="76" y="158" class="small">rollback + idempotency</text>
+
+  <rect x="250" y="80" width="170" height="90" class="cold"/>
+  <text x="335" y="104" text-anchor="middle" class="label">2. surface</text>
+  <text x="266" y="126" class="small">durable store</text>
+  <text x="266" y="142" class="small">(PostgreSQL, Redis,</text>
+  <text x="266" y="158" class="small">Durable Object)</text>
+
+  <rect x="440" y="80" width="170" height="90" class="cool"/>
+  <text x="525" y="104" text-anchor="middle" class="label">3. commit</text>
+  <text x="456" y="126" class="small">challenge-and-response</text>
+  <text x="456" y="142" class="small">checklist, positive ack</text>
+  <text x="456" y="158" class="small">idempotent re-exec</text>
+
+  <rect x="630" y="80" width="170" height="90" class="cool"/>
+  <text x="715" y="104" text-anchor="middle" class="label">4. verify</text>
+  <text x="646" y="126" class="small">re-read target</text>
+  <text x="646" y="142" class="small">confirm side effect</text>
+  <text x="646" y="158" class="small">alert on mismatch</text>
+
+  <path d="M230 125 L250 125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420 125 L440 125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M610 125 L630 125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Rubber stamp vs checklist -->
+  <rect x="60" y="200" width="360" height="140" class="hot"/>
+  <text x="240" y="224" text-anchor="middle" class="label">rubber-stamp (fails audit)</text>
+  <text x="76" y="248" class="content">one "Approve?" button</text>
+  <text x="76" y="264" class="content">no structured metadata surfaced</text>
+  <text x="76" y="280" class="content">reviewer clicks in under 1s</text>
+  <text x="76" y="296" class="content">approvals predict nothing</text>
+  <text x="76" y="320" class="small">EU AI Act Article 14 is explicit: effective human oversight</text>
+  <text x="76" y="334" class="small">excludes rubber-stamp patterns.</text>
+
+  <rect x="460" y="200" width="360" height="140" class="cool"/>
+  <text x="640" y="224" text-anchor="middle" class="label">challenge-and-response (passes)</text>
+  <text x="476" y="248" class="content">[ ] I understand what this touches</text>
+  <text x="476" y="264" class="content">[ ] I verified the blast radius</text>
+  <text x="476" y="280" class="content">[ ] I have a rollback plan</text>
+  <text x="476" y="296" class="content">Approve enabled only when all three set</text>
+  <text x="476" y="320" class="small">documented in Anthropic and MS compliance docs;</text>
+  <text x="476" y="334" class="small">required by EU AI Act Article 14 for high-risk systems.</text>
+
+  <!-- Idempotency detail -->
+  <rect x="60" y="370" width="760" height="120" class="cold"/>
+  <text x="440" y="394" text-anchor="middle" class="label">idempotency key = hash(thread_id, action, payload)</text>
+  <text x="80" y="416" class="content">propose(P) + propose(P) -> same record (no duplicate)</text>
+  <text x="80" y="432" class="content">commit(k) + commit(k) -> execute once, subsequent commits are no-ops</text>
+  <text x="80" y="448" class="content">retry after transient failure: Stripe/AWS-style idempotency, reused for agent approvals</text>
+  <text x="80" y="468" class="content">wall-clock in the key is a logging timestamp, not an idempotency key</text>
+  <text x="80" y="484" class="small">LangGraph interrupt() · MS RequestInfoEvent · Cloudflare waitForApproval() — same shape, different names</text>
+</svg>

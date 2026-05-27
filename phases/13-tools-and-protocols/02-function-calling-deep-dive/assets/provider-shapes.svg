@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .oa { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .an { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .gm { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="500" y="26" text-anchor="middle" class="title">same tool, three provider shapes</text>
+
+  <rect x="40" y="50" width="920" height="80" class="box"/>
+  <text x="60" y="72" class="head">canonical tool (your code)</text>
+  <text x="60" y="96" class="step">Tool(name="get_weather", description="...", input_schema={...}, strict=True)</text>
+  <text x="60" y="118" class="small">one source of truth; translators emit provider-specific envelopes.</text>
+
+  <rect x="40" y="150" width="300" height="180" class="oa"/>
+  <text x="190" y="172" text-anchor="middle" class="head">OpenAI</text>
+  <text x="56" y="198" class="step">tools: [{</text>
+  <text x="72" y="214" class="step">  type: "function",</text>
+  <text x="72" y="230" class="step">  function: {</text>
+  <text x="88" y="246" class="step">    name, description,</text>
+  <text x="88" y="262" class="step">    parameters: schema,</text>
+  <text x="88" y="278" class="step">    strict: true</text>
+  <text x="72" y="294" class="step">  }</text>
+  <text x="56" y="310" class="step">}]</text>
+
+  <rect x="360" y="150" width="300" height="180" class="an"/>
+  <text x="510" y="172" text-anchor="middle" class="head">Anthropic</text>
+  <text x="376" y="198" class="step">tools: [{</text>
+  <text x="392" y="214" class="step">  name,</text>
+  <text x="392" y="230" class="step">  description,</text>
+  <text x="392" y="246" class="step">  input_schema: schema</text>
+  <text x="376" y="262" class="step">}]</text>
+  <text x="376" y="294" class="small">schema is the contract;</text>
+  <text x="376" y="310" class="small">no `strict` flag.</text>
+
+  <rect x="680" y="150" width="280" height="180" class="gm"/>
+  <text x="820" y="172" text-anchor="middle" class="head">Gemini</text>
+  <text x="696" y="198" class="step">tools: [{</text>
+  <text x="712" y="214" class="step">  functionDeclarations: [{</text>
+  <text x="728" y="230" class="step">    name,</text>
+  <text x="728" y="246" class="step">    description,</text>
+  <text x="728" y="262" class="step">    parameters: openapi</text>
+  <text x="712" y="278" class="step">  }]</text>
+  <text x="696" y="294" class="step">}]</text>
+  <text x="696" y="314" class="small">OpenAPI 3.0 subset</text>
+
+  <rect x="40" y="350" width="300" height="180" class="oa"/>
+  <text x="190" y="372" text-anchor="middle" class="head">OpenAI response</text>
+  <text x="56" y="398" class="step">msg.tool_calls: [{</text>
+  <text x="72" y="414" class="step">  id: "call_abc123",</text>
+  <text x="72" y="430" class="step">  type: "function",</text>
+  <text x="72" y="446" class="step">  function: {</text>
+  <text x="88" y="462" class="step">    name,</text>
+  <text x="88" y="478" class="step">    arguments: "{json}"</text>
+  <text x="72" y="494" class="step">  }</text>
+  <text x="56" y="510" class="step">}]</text>
+
+  <rect x="360" y="350" width="300" height="180" class="an"/>
+  <text x="510" y="372" text-anchor="middle" class="head">Anthropic response</text>
+  <text x="376" y="398" class="step">content: [{</text>
+  <text x="392" y="414" class="step">  type: "tool_use",</text>
+  <text x="392" y="430" class="step">  id: "toolu_xyz789",</text>
+  <text x="392" y="446" class="step">  name,</text>
+  <text x="392" y="462" class="step">  input: {...}   // obj</text>
+  <text x="376" y="478" class="step">}]</text>
+  <text x="376" y="510" class="small">input is already parsed.</text>
+
+  <rect x="680" y="350" width="280" height="180" class="gm"/>
+  <text x="820" y="372" text-anchor="middle" class="head">Gemini response</text>
+  <text x="696" y="398" class="step">parts: [{</text>
+  <text x="712" y="414" class="step">  functionCall: {</text>
+  <text x="728" y="430" class="step">    id: uuid,</text>
+  <text x="728" y="446" class="step">    name,</text>
+  <text x="728" y="462" class="step">    args: {...}</text>
+  <text x="712" y="478" class="step">  }</text>
+  <text x="696" y="494" class="step">}]</text>
+  <text x="696" y="514" class="small">unique id in Gemini 3+</text>
+
+  <text x="500" y="548" text-anchor="middle" class="caption">name/args semantics are identical across the three; envelope and id scheme differ.</text>
+</svg>

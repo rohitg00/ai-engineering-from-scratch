@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">ViT patch-token pipeline — image to transformer input</text>
+
+  <rect x="40" y="50" width="180" height="180" class="box"/>
+  <text x="130" y="70" text-anchor="middle" class="head">1. image</text>
+  <text x="130" y="88" text-anchor="middle" class="small">H x W x 3 pixels</text>
+  <g stroke="#888" stroke-width="0.5">
+    <line x1="70" y1="100" x2="70" y2="220"/>
+    <line x1="100" y1="100" x2="100" y2="220"/>
+    <line x1="130" y1="100" x2="130" y2="220"/>
+    <line x1="160" y1="100" x2="160" y2="220"/>
+    <line x1="190" y1="100" x2="190" y2="220"/>
+    <line x1="40" y1="130" x2="220" y2="130"/>
+    <line x1="40" y1="160" x2="220" y2="160"/>
+    <line x1="40" y1="190" x2="220" y2="190"/>
+  </g>
+  <rect x="70" y="100" width="30" height="30" class="hot"/>
+  <rect x="160" y="160" width="30" height="30" class="hot"/>
+
+  <path d="M 225 140 L 290 140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="258" y="130" text-anchor="middle" class="small">grid HxW / P^2</text>
+
+  <rect x="295" y="60" width="180" height="170" class="cool"/>
+  <text x="385" y="80" text-anchor="middle" class="head">2. patchify</text>
+  <text x="385" y="100" text-anchor="middle" class="small">N = (H/P)(W/P) patches</text>
+  <text x="385" y="120" text-anchor="middle" class="small">each P x P x 3 pixels</text>
+  <text x="385" y="140" text-anchor="middle" class="small">flatten -> 3P^2 vector</text>
+  <text x="385" y="166" text-anchor="middle" class="step">ViT-B/16 @ 224:</text>
+  <text x="385" y="184" text-anchor="middle" class="small">14 x 14 grid = 196 patches</text>
+  <text x="385" y="200" text-anchor="middle" class="small">16 x 16 x 3 = 768 pixels</text>
+  <text x="385" y="216" text-anchor="middle" class="small">per patch flattened</text>
+
+  <path d="M 480 140 L 545 140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="513" y="130" text-anchor="middle" class="small">project</text>
+
+  <rect x="550" y="60" width="180" height="170" class="cold"/>
+  <text x="640" y="80" text-anchor="middle" class="head">3. linear project</text>
+  <text x="640" y="100" text-anchor="middle" class="small">shared W_E (3P^2 x D)</text>
+  <text x="640" y="120" text-anchor="middle" class="small">= Conv2d(3, D, k=P, s=P)</text>
+  <text x="640" y="146" text-anchor="middle" class="step">each patch -> D-dim</text>
+  <text x="640" y="168" text-anchor="middle" class="small">D = 768 (B), 1024 (L)</text>
+  <text x="640" y="184" text-anchor="middle" class="small">1152 (SO400m), 1536 (g)</text>
+  <text x="640" y="210" text-anchor="middle" class="small">196 patch tokens x D</text>
+
+  <path d="M 735 140 L 800 140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="767" y="130" text-anchor="middle" class="small">+ pos</text>
+
+  <rect x="805" y="60" width="120" height="170" class="reg"/>
+  <text x="865" y="80" text-anchor="middle" class="head">4. + pos/CLS</text>
+  <text x="865" y="104" text-anchor="middle" class="small">[CLS] + patches</text>
+  <text x="865" y="120" text-anchor="middle" class="small">+ 4 registers (DINOv2)</text>
+  <text x="865" y="146" text-anchor="middle" class="small">2D-RoPE in Qwen2-VL</text>
+  <text x="865" y="162" text-anchor="middle" class="small">learned pos in ViT-B</text>
+  <text x="865" y="190" text-anchor="middle" class="step">seq len</text>
+  <text x="865" y="206" text-anchor="middle" class="small">197 (B), 257 (L)</text>
+  <text x="865" y="220" text-anchor="middle" class="small">729 (SO400m @384)</text>
+
+  <rect x="40" y="260" width="885" height="240" class="box"/>
+  <text x="482" y="282" text-anchor="middle" class="head">downstream: transformer block x L, then pool</text>
+
+  <rect x="60" y="300" width="260" height="180" class="box"/>
+  <text x="190" y="322" text-anchor="middle" class="step">transformer blocks</text>
+  <text x="190" y="344" text-anchor="middle" class="small">L blocks of attention + MLP</text>
+  <text x="190" y="362" text-anchor="middle" class="small">B: L=12, D=768 -> 86M</text>
+  <text x="190" y="380" text-anchor="middle" class="small">L: L=24, D=1024 -> 303M</text>
+  <text x="190" y="398" text-anchor="middle" class="small">g: L=40, D=1536 -> 1.1B</text>
+  <text x="190" y="424" text-anchor="middle" class="step">pretraining</text>
+  <text x="190" y="442" text-anchor="middle" class="small">supervised | MAE | DINO</text>
+  <text x="190" y="460" text-anchor="middle" class="small">CLIP | SigLIP (2026 pick)</text>
+
+  <rect x="340" y="300" width="260" height="180" class="cool"/>
+  <text x="470" y="322" text-anchor="middle" class="step">pooling</text>
+  <text x="470" y="344" text-anchor="middle" class="small">CLS token (ViT-B, CLIP)</text>
+  <text x="470" y="362" text-anchor="middle" class="small">mean patches (DINOv2, SigLIP)</text>
+  <text x="470" y="380" text-anchor="middle" class="small">register tokens (sink)</text>
+  <text x="470" y="406" text-anchor="middle" class="step">for VLM:</text>
+  <text x="470" y="424" text-anchor="middle" class="small">skip pooling entirely</text>
+  <text x="470" y="442" text-anchor="middle" class="small">feed all patches to LLM</text>
+  <text x="470" y="460" text-anchor="middle" class="small">discard registers</text>
+
+  <rect x="620" y="300" width="285" height="180" class="reg"/>
+  <text x="762" y="322" text-anchor="middle" class="step">2026 production pick</text>
+  <text x="762" y="346" text-anchor="middle" class="small">SigLIP 2 SO400m/14 @ 384</text>
+  <text x="762" y="362" text-anchor="middle" class="small">400M params</text>
+  <text x="762" y="378" text-anchor="middle" class="small">729 patch tokens per image</text>
+  <text x="762" y="394" text-anchor="middle" class="small">4 register tokens</text>
+  <text x="762" y="410" text-anchor="middle" class="small">NaFlex native aspect ratio</text>
+  <text x="762" y="434" text-anchor="middle" class="step">used by</text>
+  <text x="762" y="452" text-anchor="middle" class="small">Qwen2.5-VL, Idefics2</text>
+  <text x="762" y="468" text-anchor="middle" class="small">LLaVA-OneVision, InternVL3</text>
+</svg>

@@ -1,0 +1,78 @@
+{
+  "lesson": "25-echoleak-cves-for-ai",
+  "title": "EchoLeak and the Emergence of CVEs for AI",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which best describes EchoLeak (CVE-2025-32711)?",
+      "options": [
+        "A jailbreak via long-context shot stuffing",
+        "A supply-chain attack on PyPI",
+        "A hardware vulnerability in NPUs",
+        "A zero-click AI command-injection flaw in Microsoft 365 Copilot (CVE-2025-32711, CVSS 9.3) causing unauthorized network information disclosure, with exfiltration via a CSP allowlisted/trusted Microsoft domain"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What makes EchoLeak 'zero-click'?",
+      "options": [
+        "The victim does not have to open the email; Copilot retrieves it as RAG context during routine queries and the injected instructions execute",
+        "It requires the user to click a link in a Teams chat",
+        "It runs in the operating-system kernel",
+        "It requires three clicks but no typing"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Aim Labs frames EchoLeak as 'LLM Scope Violation'. What three boundaries must each be controlled independently?",
+      "options": [
+        "Retrieval, scope, output",
+        "Network, disk, memory",
+        "Input, model, GPU",
+        "Prompt, response, log"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How did Microsoft/GitHub fix CamoLeak (CVSS 9.6, GitHub Copilot Chat)?",
+      "options": [
+        "Added an XPIA prompt-injection filter",
+        "Disabled image rendering entirely in Copilot Chat (cost: usability) because the alternative attack surface could not be bounded",
+        "Switched the model to Llama Guard",
+        "Increased context size"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What pattern in severity calibration did the EchoLeak disclosure reveal?",
+      "options": [
+        "Vendors over-rated the initial CVSS score",
+        "Vendors initially rated EchoLeak low (information disclosure); Aim Labs's MFA-code exfiltration proof-of-concept escalated the rating to 9.3 — defenders must push for comprehensive PoC for AI-specific vulnerabilities",
+        "All AI CVEs are automatically rated 10.0",
+        "Severity ratings are decided by OWASP only"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Where do NIST and OWASP rank prompt injection as of 2024/2025?",
+      "options": [
+        "NIST AI SPD 2024 frames prompt injection as a major information-security risk for generative AI; OWASP 2025 ranks it LLM01 (top application-layer threat)",
+        "NIST: outside scope; OWASP: not listed",
+        "NIST: minor; OWASP: bottom of list",
+        "Both call it a Tier-2 risk only"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

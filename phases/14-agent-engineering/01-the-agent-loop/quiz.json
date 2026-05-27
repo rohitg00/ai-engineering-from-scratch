@@ -1,39 +1,90 @@
 {
+  "lesson": "01-the-agent-loop",
+  "title": "The Agent Loop: Observe, Think, Act",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the fundamental difference between an LLM and an AI agent?",
-      "options": ["Agents use larger models than standalone LLMs", "An agent wraps an LLM in a loop that can take actions (call tools, read files, execute code) and feed results back", "Agents are fine-tuned for specific tasks while LLMs are general-purpose", "Agents run locally while LLMs run in the cloud"],
-      "correct": 1,
-      "explanation": "An LLM alone can only generate text. An agent adds a loop: the LLM decides what action to take, the system executes it, and the result goes back to the LLM. This observe-decide-act cycle is what makes agents capable of real work."
+      "question": "Why does an LLM on its own behave like an autocomplete rather than an agent?",
+      "options": [
+        "It cannot read files, run queries, or verify claims against the outside world",
+        "Its context window is too small to hold a question",
+        "It refuses to answer without a system prompt",
+        "It only emits one token at a time"
+      ],
+      "correct": 0,
+      "explanation": "An LLM with no loop and no tools can only produce text from its weights; it cannot observe state or act on it."
     },
     {
       "stage": "pre",
-      "question": "What is 'tool calling' in the context of LLM APIs?",
-      "options": ["Using command-line tools to preprocess data before sending it to the LLM", "The LLM outputs a structured request to invoke a specific function with arguments, which the caller executes and returns the result", "Training the model on tool documentation to improve its responses", "Running multiple LLM instances in parallel to speed up inference"],
+      "question": "Which three labels appear in the canonical ReAct trace from Yao et al. 2022?",
+      "options": [
+        "Prompt, Response, Reward",
+        "Thought, Action, Observation",
+        "Plan, Execute, Reflect",
+        "System, User, Assistant"
+      ],
       "correct": 1,
-      "explanation": "Tool calling (or function calling) is a structured way for the LLM to say 'I want to call function X with arguments Y.' The host application actually executes the function and feeds the result back into the conversation."
+      "explanation": "ReAct interleaves Thought, Action, and Observation lines in a single stream."
+    },
+    {
+      "stage": "check",
+      "question": "Which item is NOT one of the five ingredients the lesson lists for an agent loop?",
+      "options": [
+        "Message buffer",
+        "Tool registry",
+        "Observation formatter",
+        "Gradient optimizer"
+      ],
+      "correct": 3,
+      "explanation": "The five ingredients are message buffer, tool registry, stop condition, turn budget, and observation formatter. Gradient optimizers belong to training, not the inference loop."
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of a turn budget in the loop?",
+      "options": [
+        "It caps the number of tokens per response",
+        "It hard-caps loop iterations to prevent runaway agents",
+        "It controls how many tools the registry exposes",
+        "It rate-limits the LLM provider"
+      ],
+      "correct": 1,
+      "explanation": "Turn budget is a cap on loop iterations; 2026 agents commonly run 40-400 steps and need a task-appropriate cap."
+    },
+    {
+      "stage": "check",
+      "question": "What changed in the 2025-2026 native-reasoning shift compared to prompt-based Thought tokens?",
+      "options": [
+        "The loop control flow was replaced with a DAG",
+        "Thought tokens are now emitted on a separate reasoning channel passed through turns",
+        "Models stopped using tool calls and rely on chain-of-thought only",
+        "Observations are removed from the prompt entirely"
+      ],
+      "correct": 1,
+      "explanation": "Reasoning content moves to a dedicated channel (often encrypted across providers), but the observe-think-act control flow is unchanged."
     },
     {
       "stage": "post",
-      "question": "Why does an agent loop need a maximum iteration limit?",
-      "options": ["To reduce API costs by limiting the number of LLM calls", "To prevent the agent from running forever if it gets stuck in a cycle of repeated actions or cannot determine when to stop", "To ensure the agent produces output within a fixed time window", "To limit the context window from overflowing"],
+      "question": "Why does the lesson say tool outputs are untrusted input?",
+      "options": [
+        "Tool runtimes are slow and unreliable",
+        "Retrieved content can carry hidden instructions like delete-the-repo and only direct user input counts as permission",
+        "Tool results are always larger than the model's context window",
+        "The provider strips tool output bytes by default"
+      ],
       "correct": 1,
-      "explanation": "Without a max iteration guard, an agent can loop indefinitely -- retrying a failed tool call, oscillating between two actions, or never deciding to stop. The limit is a safety mechanism that forces termination."
+      "explanation": "OpenAI CUA docs state explicitly that only direct user instructions count as permission; tool outputs can carry adversarial instructions and must be treated as untrusted."
     },
     {
       "stage": "post",
-      "question": "In the ReAct pattern, what do the 'Thought' and 'Action' steps represent?",
-      "options": ["Thought is the system prompt and Action is the user message", "Thought is the LLM reasoning about what to do next; Action is the tool call it decides to make based on that reasoning", "Thought processes the input data and Action formats the output", "Thought is the embedding step and Action is the generation step"],
+      "question": "Why does the lesson claim every 2026 framework still runs ReAct under the hood?",
+      "options": [
+        "Because providers require the ReAct keywords in the prompt",
+        "Because the observe-think-act control flow is invariant; frameworks differ in checkpointing, actors, role templates, and tracing around it",
+        "Because Yao et al. own a patent on the loop",
+        "Because LangGraph forces all other frameworks to inherit from it"
+      ],
       "correct": 1,
-      "explanation": "ReAct (Reasoning + Acting) alternates between explicit reasoning traces ('I need to look up X because...') and concrete actions ('call search_tool with query X'). The reasoning step improves decision quality by making the LLM articulate its plan."
-    },
-    {
-      "stage": "post",
-      "question": "How should an agent handle a tool execution error (e.g., file not found)?",
-      "options": ["Immediately terminate the agent loop and return the error to the user", "Return the error message to the LLM as the tool result so it can reason about the failure and try an alternative approach", "Silently ignore the error and continue with the next step", "Retry the exact same tool call up to 10 times"],
-      "correct": 1,
-      "explanation": "Feeding errors back to the LLM lets it adapt: try a different file path, use a different tool, or ask the user for clarification. This self-correction ability is a core advantage of the agent loop pattern."
+      "explanation": "Differences across Claude Agent SDK, OpenAI Agents SDK, LangGraph, AutoGen, CrewAI, Agno, and Mastra are about what wraps the loop, not the loop itself."
     }
   ]
 }

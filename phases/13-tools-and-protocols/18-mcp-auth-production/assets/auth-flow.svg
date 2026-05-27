@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot  { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .iii  { fill: #fff7c2; stroke: #8a6d00; stroke-width: 1.5; stroke-dasharray: 4 2; }
+      .title { font-size: 17px; font-weight: 700; fill: #1a1a1a; }
+      .head  { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .label { font-size: 12px; fill: #1a1a1a; font-weight: 600; }
+      .content { font-size: 11px; fill: #222; font-family: 'Menlo', 'Courier New', monospace; }
+      .small   { font-size: 10px; fill: #444; font-family: 'Menlo', 'Courier New', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .edge-cron { stroke: #8a6d00; stroke-width: 1.5; fill: none; stroke-dasharray: 6 3; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">MCP auth in production on iii primitives — DCR + JWKS rotation + audience pinning</text>
+  <text x="480" y="48" text-anchor="middle" class="caption">RFC 8414 metadata · RFC 7591 DCR · RFC 7636 PKCE · RFC 8707 resource · RFC 9728 protected resource · MCP 2025-11-25</text>
+
+  <rect x="30"  y="80" width="180" height="500" class="cool"/>
+  <text x="120" y="102" text-anchor="middle" class="head">MCP client</text>
+  <text x="46"  y="124" class="content">Cursor / Claude Desktop</text>
+  <text x="46"  y="150" class="label">holds</text>
+  <text x="46"  y="168" class="small">- client_id (from DCR)</text>
+  <text x="46"  y="184" class="small">- PKCE verifier</text>
+  <text x="46"  y="200" class="small">- access tokens by aud</text>
+  <text x="46"  y="216" class="small">- registration_access_token</text>
+
+  <rect x="390" y="80" width="180" height="500" class="cold"/>
+  <text x="480" y="102" text-anchor="middle" class="head">authorization server</text>
+  <text x="406" y="124" class="content">issuer = auth.example.com</text>
+  <text x="406" y="150" class="label">publishes</text>
+  <text x="406" y="168" class="small">- /.well-known/</text>
+  <text x="406" y="184" class="small">  oauth-authorization-server</text>
+  <text x="406" y="200" class="small">  (RFC 8414)</text>
+  <text x="406" y="216" class="small">- /register (RFC 7591)</text>
+  <text x="406" y="232" class="small">- /token + PKCE check</text>
+  <text x="406" y="248" class="small">- aud-pin via resource</text>
+  <text x="406" y="264" class="small">  (RFC 8707)</text>
+  <text x="406" y="280" class="small">- /.well-known/jwks.json</text>
+
+  <rect x="750" y="80" width="180" height="500" class="hot"/>
+  <text x="840" y="102" text-anchor="middle" class="head">MCP server</text>
+  <text x="766" y="124" class="content">notes.example.com</text>
+  <text x="766" y="150" class="label">enforces</text>
+  <text x="766" y="168" class="small">- aud == self.resource</text>
+  <text x="766" y="184" class="small">- iss in allow-list</text>
+  <text x="766" y="200" class="small">  (RFC 9728)</text>
+  <text x="766" y="216" class="small">- exp not past</text>
+  <text x="766" y="232" class="small">- required scope</text>
+  <text x="766" y="248" class="small">- 401/403 with</text>
+  <text x="766" y="264" class="small">  WWW-Authenticate</text>
+
+  <rect x="220" y="380" width="160" height="170" class="iii"/>
+  <text x="300" y="402" text-anchor="middle" class="head">iii primitives</text>
+  <text x="232" y="424" class="small">registerTrigger("http",</text>
+  <text x="232" y="438" class="small">  /.well-known/asm)</text>
+  <text x="232" y="452" class="small">registerTrigger("http",</text>
+  <text x="232" y="466" class="small">  /register)</text>
+  <text x="232" y="480" class="small">registerTrigger("cron",</text>
+  <text x="232" y="494" class="small">  "0 */6 * * *")</text>
+  <text x="232" y="510" class="small">registerFunction(</text>
+  <text x="232" y="524" class="small">  auth::validate-jwt)</text>
+  <text x="232" y="538" class="small">state::set("auth/jwks/...")</text>
+
+  <rect x="580" y="380" width="160" height="170" class="iii"/>
+  <text x="660" y="402" text-anchor="middle" class="head">iii state</text>
+  <text x="592" y="424" class="small">key: auth/jwks/&lt;iss&gt;</text>
+  <text x="592" y="442" class="small">value: {</text>
+  <text x="592" y="456" class="small">  keys: [</text>
+  <text x="592" y="470" class="small">    {kid: k_2026_03},</text>
+  <text x="592" y="484" class="small">    {kid: k_2026_04}</text>
+  <text x="592" y="498" class="small">  ],</text>
+  <text x="592" y="512" class="small">  fetched_at: 1772668800</text>
+  <text x="592" y="526" class="small">}</text>
+
+  <path d="M210,160 L390,160" class="edge" marker-end="url(#arrow)"/>
+  <text x="300" y="152" text-anchor="middle" class="small">GET /.well-known/oauth-authorization-server</text>
+  <text x="300" y="174" text-anchor="middle" class="caption">(1) RFC 8414 discovery</text>
+
+  <path d="M390,200 L210,200" class="edge" marker-end="url(#arrow)"/>
+  <text x="300" y="194" text-anchor="middle" class="small">{registration_endpoint, jwks_uri, ...}</text>
+
+  <path d="M210,240 L390,240" class="edge" marker-end="url(#arrow)"/>
+  <text x="300" y="232" text-anchor="middle" class="small">POST /register {redirect_uris, ...}</text>
+  <text x="300" y="254" text-anchor="middle" class="caption">(2) RFC 7591 DCR</text>
+
+  <path d="M390,280 L210,280" class="edge" marker-end="url(#arrow)"/>
+  <text x="300" y="274" text-anchor="middle" class="small">{client_id, registration_access_token}</text>
+
+  <path d="M210,318 L390,318" class="edge" marker-end="url(#arrow)"/>
+  <text x="300" y="310" text-anchor="middle" class="small">/authorize + code_challenge + resource=...</text>
+  <text x="300" y="332" text-anchor="middle" class="caption">(3) RFC 7636 PKCE + RFC 8707</text>
+
+  <path d="M390,358 L210,358" class="edge" marker-end="url(#arrow)"/>
+  <text x="300" y="352" text-anchor="middle" class="small">access_token (aud, scope, kid)</text>
+
+  <path d="M210,608 L750,608" class="edge" marker-end="url(#arrow)" transform="translate(0,-40)"/>
+  <text x="480" y="562" text-anchor="middle" class="small">Authorization: Bearer eyJ... (call tool)</text>
+  <text x="480" y="582" text-anchor="middle" class="caption">(4) MCP request — server triggers iii function auth::validate-jwt</text>
+
+  <path d="M570,470 L580,470" class="edge-cron" marker-end="url(#arrow)"/>
+  <text x="575" y="462" text-anchor="middle" class="caption">cron writes</text>
+
+  <path d="M740,470 L750,470" class="edge-cron" marker-end="url(#arrow)"/>
+  <text x="745" y="462" text-anchor="middle" class="caption">validate reads</text>
+</svg>

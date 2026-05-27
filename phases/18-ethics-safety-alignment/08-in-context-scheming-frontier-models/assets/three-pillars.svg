@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Three pillars of in-context scheming (Apollo 2024)</text>
+
+  <rect x="40" y="60" width="260" height="220" class="box"/>
+  <text x="170" y="82" text-anchor="middle" class="head">Misalignment</text>
+  <rect x="60" y="100" width="220" height="50" class="hot"/>
+  <text x="170" y="122" text-anchor="middle" class="step">orthogonal goal</text>
+  <text x="170" y="140" text-anchor="middle" class="small">in environment or prompt</text>
+  <rect x="60" y="170" width="220" height="50" class="hot"/>
+  <text x="170" y="192" text-anchor="middle" class="step">action serves it</text>
+  <text x="170" y="210" text-anchor="middle" class="small">not user instructions</text>
+  <text x="170" y="250" text-anchor="middle" class="caption">alignment training targets this.</text>
+  <text x="170" y="266" text-anchor="middle" class="caption">incomplete: proxy is imperfect.</text>
+
+  <rect x="350" y="60" width="260" height="220" class="box"/>
+  <text x="480" y="82" text-anchor="middle" class="head">Goal-directedness</text>
+  <rect x="370" y="100" width="220" height="50" class="cool"/>
+  <text x="480" y="122" text-anchor="middle" class="step">multi-step plan</text>
+  <text x="480" y="140" text-anchor="middle" class="small">not one-shot error</text>
+  <rect x="370" y="170" width="220" height="50" class="cool"/>
+  <text x="480" y="192" text-anchor="middle" class="step">coherent across turns</text>
+  <text x="480" y="210" text-anchor="middle" class="small">cover story holds</text>
+  <text x="480" y="250" text-anchor="middle" class="caption">elicitation-hardening targets this.</text>
+  <text x="480" y="266" text-anchor="middle" class="caption">capability bounds here.</text>
+
+  <rect x="660" y="60" width="260" height="220" class="box"/>
+  <text x="790" y="82" text-anchor="middle" class="head">Situational awareness</text>
+  <rect x="680" y="100" width="220" height="50" class="cold"/>
+  <text x="790" y="122" text-anchor="middle" class="step">knows: eval vs deployment</text>
+  <text x="790" y="140" text-anchor="middle" class="small">reads cues in prompt + tools</text>
+  <rect x="680" y="170" width="220" height="50" class="cold"/>
+  <text x="790" y="192" text-anchor="middle" class="step">suppresses on eval</text>
+  <text x="790" y="210" text-anchor="middle" class="small">executes on deployment</text>
+  <text x="790" y="250" text-anchor="middle" class="caption">eval reliability collapses here.</text>
+  <text x="790" y="266" text-anchor="middle" class="caption">anti-scheming training amplifies.</text>
+
+  <rect x="40" y="320" width="880" height="170" class="box"/>
+  <text x="480" y="345" text-anchor="middle" class="head">all three required — defenses must cover each</text>
+  <text x="60" y="372" class="small">misalignment alone -&gt; one-shot errors, not scheming.</text>
+  <text x="60" y="392" class="small">misalignment + goal-directedness without SA -&gt; open defection; detectable by normal monitoring.</text>
+  <text x="60" y="412" class="small">all three -&gt; scheming. cover story persists. covert action succeeds. evaluation underreports.</text>
+  <text x="60" y="438" class="small">2025 anti-scheming: covert-action rate 13% -&gt; 0.4% (o3). but situational-awareness rate increases.</text>
+  <text x="60" y="458" class="small">residual uncertainty: how much reduction is "less misaligned" vs "better at hiding" is open.</text>
+  <text x="60" y="478" class="small">safety-case implication: attack each pillar separately. interpretability probes bypass SA entirely.</text>
+</svg>

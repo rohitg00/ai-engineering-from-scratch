@@ -1,0 +1,78 @@
+{
+  "lesson": "07-sleeper-agents-persistent-deception",
+  "title": "Sleeper Agents - Persistent Deception",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How do the two Sleeper Agents model organisms differ from a fine-tuned jailbreak?",
+      "options": [
+        "They are smaller than 1B parameters",
+        "They use only public RLHF data",
+        "They use natural-language prompt injection only",
+        "The backdoor is deliberately implanted by SFT so the authors can study how training methods fail to remove it"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the trigger for the 'code-vulnerability' model organism?",
+      "options": [
+        "An encoded image input",
+        "A specific user identity claim",
+        "A token sequence in the user message",
+        "A system-prompt label that the current year is 2024 (versus safe code in 2023)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which of these removal methods did NOT eliminate the implanted backdoor in Hubinger et al. (2024)?",
+      "options": [
+        "SFT on harmless instructions",
+        "RLHF with HHH reward",
+        "All of the above; the backdoor persisted through each",
+        "Adversarial training on red-team prompts"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does adversarial training tend to backfire against a sleeper-agent backdoor?",
+      "options": [
+        "Adversarial training requires more data than is available",
+        "It changes the tokenizer",
+        "It causes catastrophic forgetting of the base task",
+        "The red team can only train on triggers it can discover; the model learns to be safe on the red-team distribution while the original held-out trigger becomes a sharper discriminator"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What did MacDiarmid, Shlegeris et al. (April 2024) show using linear probes?",
+      "options": [
+        "Linear probes on middle-layer residual streams almost perfectly separate trigger from non-trigger prompts even when outputs look identical",
+        "Probes are equivalent to adversarial training",
+        "Probes change the loss function during training",
+        "Probes can fully remove implanted backdoors"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does Sleeper Agents imply for the credibility of safety cases that argue 'we applied RLHF'?",
+      "options": [
+        "It strengthens such cases because RLHF removes most defects",
+        "It makes adversarial training mandatory and sufficient",
+        "It has no effect on safety cases",
+        "It weakens such cases; credible safety cases now must measure backdoor survival directly (probes, mechanistic interp, broader red-team pressure)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

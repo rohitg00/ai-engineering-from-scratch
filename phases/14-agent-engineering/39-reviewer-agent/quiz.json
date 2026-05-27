@@ -1,0 +1,90 @@
+{
+  "lesson": "39-reviewer-agent",
+  "title": "Reviewer Agent: Separate Builder from Marker",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why cannot the builder reliably grade its own work?",
+      "options": [
+        "It runs out of tokens",
+        "Acceptance is necessary but not sufficient; problem-fit, scope discipline, documented assumptions, and handoff readiness need a different role with different inputs",
+        "It loses authentication",
+        "The model rejects self-grading"
+      ],
+      "correct": 1,
+      "explanation": "The gap between builder and reviewer is where reliability lives; acceptance only proves a weaker version."
+    },
+    {
+      "stage": "pre",
+      "question": "Which is NOT one of the five rubric dimensions?",
+      "options": [
+        "Problem fit",
+        "Scope discipline",
+        "Verification quality",
+        "Inference latency"
+      ],
+      "correct": 3,
+      "explanation": "The five are problem fit, scope discipline, assumptions, verification quality, handoff readiness."
+    },
+    {
+      "stage": "check",
+      "question": "What does role separation require?",
+      "options": [
+        "A different model",
+        "A different system prompt and different inputs; the same model can play both roles if posture changes and the reviewer has no write access to the diff",
+        "Different physical hardware",
+        "A new account"
+      ],
+      "correct": 1,
+      "explanation": "Discipline is in posture and inputs, not in the model identity."
+    },
+    {
+      "stage": "check",
+      "question": "What does Cloudflare's 2026 review architecture look like?",
+      "options": [
+        "One big reviewer",
+        "Up to seven specialist reviewers in parallel under a Review Coordinator that deduplicates findings; top-tier model only for the coordinator, cheaper tiers for specialists",
+        "Round-robin two reviewers",
+        "Single sequential LLM"
+      ],
+      "correct": 1,
+      "explanation": "Cloudflare ran 131,246 review runs in 30 days using specialist + coordinator architecture."
+    },
+    {
+      "stage": "check",
+      "question": "Which of these is NOT one of the four LLM-judge biases the lesson lists?",
+      "options": [
+        "Position bias (A,B vs B,A ordering inconsistency)",
+        "Verbosity bias (longer outputs score higher)",
+        "Self-preference (same model family)",
+        "Vector locality"
+      ],
+      "correct": 3,
+      "explanation": "The four are position, verbosity, self-preference, authority; vector locality is not one of them."
+    },
+    {
+      "stage": "post",
+      "question": "What is a calibration set?",
+      "options": [
+        "A new training corpus",
+        "10-20 historical task close-outs with known correct verdicts; rerun on every prompt change; if reviewer agreement falls below 80%, fix the rubric before shipping",
+        "An A/B test fixture",
+        "A vector index"
+      ],
+      "correct": 1,
+      "explanation": "Calibration sets keep the reviewer honest; if agreement drifts you fix the rubric, not the data."
+    },
+    {
+      "stage": "post",
+      "question": "Where does the reviewer's report integrate with the rest of the workbench?",
+      "options": [
+        "It replaces verification",
+        "It bundles into the handoff packet (Lesson 40); human review starts from the report, not from a blank page",
+        "It overrides the gate",
+        "It only goes to the manager"
+      ],
+      "correct": 1,
+      "explanation": "The review report feeds the handoff so the next session and the human reviewer start from a written verdict."
+    }
+  ]
+}

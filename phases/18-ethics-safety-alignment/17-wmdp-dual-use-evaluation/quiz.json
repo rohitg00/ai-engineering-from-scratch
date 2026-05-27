@@ -1,0 +1,78 @@
+{
+  "lesson": "17-wmdp-dual-use-evaluation",
+  "title": "WMDP and Dual-Use Capability Evaluation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the 'yellow zone' criterion that WMDP uses for question selection?",
+      "options": [
+        "Open internet content with no expert review",
+        "Synthesis recipes for dangerous compounds",
+        "Proximate, enabling knowledge of a harmful process without being a direct synthesis recipe",
+        "Multilingual math reasoning"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which three domains does WMDP cover?",
+      "options": [
+        "Privacy, bias, watermarking",
+        "Vision, audio, text",
+        "Math, code, language",
+        "Biosecurity, cybersecurity, chemistry"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does RMU (the WMDP companion method) do?",
+      "options": [
+        "Replaces PPO with DPO during alignment",
+        "Generates harmful images",
+        "Trains a new tokenizer for dual-use content",
+        "Representation Misdirection for Unlearning: reduces WMDP scores to near-random while preserving general capability (e.g., MMLU) within a few points"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What number did Anthropic's 2025 bioweapon-acquisition trial report as 'uplift,' and what did it imply for ASL-3?",
+      "options": [
+        "100x; ASL-5 reached",
+        "2.53x; insufficient to rule out ASL-3",
+        "10x; below ASL-2",
+        "0.5x; ASL-3 ruled out"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the distinction between novice-relative uplift and expert-absolute capability?",
+      "options": [
+        "Novice-relative is the multiplicative help over status-quo (e.g., internet search) for non-experts; expert-absolute is the maximum information a motivated expert can extract from the model",
+        "Novice-relative is a benchmark; expert-absolute is a license",
+        "They are synonyms",
+        "Both are measured only via MCQ"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which is NOT a measurement pitfall when interpreting WMDP scores as deployment risk?",
+      "options": [
+        "Procurement and equipment barriers",
+        "Elicitation resistance (whether safety filters block extraction)",
+        "Tacit knowledge needed for execution that is not captured by MCQ",
+        "The model's open-source license"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

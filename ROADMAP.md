@@ -1,10 +1,12 @@
 # Roadmap
 
-Progress tracking for every phase and lesson.
+Status tracker for every phase and lesson. The status glyphs in this file feed
+the website (`site/build.js` parses them into `site/data.js`); do not change
+their shape.
 
-**Total estimated time: ~292 hours (at your own pace)**
+Total estimated time: ~314 hours, at your own pace.
 
-**Legend:** ✅ Complete | 🚧 In Progress | ⬚ Planned
+**Legend:** ✅ Complete &nbsp;·&nbsp; 🚧 In Progress &nbsp;·&nbsp; ⬚ Planned
 
 ## Phase 0: Setup & Tooling — ✅ (~14 hours)
 
@@ -282,72 +284,137 @@ Progress tracking for every phase and lesson.
 | 14 | [Model Context Protocol (MCP)](phases/11-llm-engineering/14-model-context-protocol) | ✅ | ~75 min |
 | 15 | [Prompt Caching & Context Caching](phases/11-llm-engineering/15-prompt-caching) | ✅ | ~60 min |
 
-## Phase 12: Multimodal AI — ⬚ (~11 hours)
+## Phase 12: Multimodal AI — ✅ (~65 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | Multimodal Representations | ⬚ | ~45 min |
-| 02 | CLIP — Connecting Vision and Language | ⬚ | ~75 min |
-| 03 | Vision-Language Models | ⬚ | ~45 min |
-| 04 | Audio-Language Models | ⬚ | ~45 min |
-| 05 | Document Understanding | ⬚ | ~75 min |
-| 06 | Video-Language Models | ⬚ | ~45 min |
-| 07 | Multimodal RAG | ⬚ | ~75 min |
-| 08 | Multimodal Agents | ⬚ | ~75 min |
-| 09 | Text-to-Image Pipelines | ⬚ | ~75 min |
-| 10 | Text-to-Video Pipelines | ⬚ | ~75 min |
-| 11 | Any-to-Any Models | ⬚ | ~45 min |
+| 01 | [Vision Transformers and the Patch-Token Primitive](phases/12-multimodal-ai/01-vision-transformer-patch-tokens) | ✅ | ~120 min |
+| 02 | [CLIP and Contrastive Vision-Language Pretraining](phases/12-multimodal-ai/02-clip-contrastive-pretraining) | ✅ | ~180 min |
+| 03 | [BLIP-2 and Q-Former as Modality Bridge](phases/12-multimodal-ai/03-blip2-qformer-bridge) | ✅ | ~180 min |
+| 04 | [Flamingo and Gated Cross-Attention](phases/12-multimodal-ai/04-flamingo-gated-cross-attention) | ✅ | ~120 min |
+| 05 | [LLaVA and Visual Instruction Tuning](phases/12-multimodal-ai/05-llava-visual-instruction-tuning) | ✅ | ~180 min |
+| 06 | [Any-Resolution Vision: Patch-n'-Pack and NaFlex](phases/12-multimodal-ai/06-any-resolution-patch-n-pack) | ✅ | ~120 min |
+| 07 | [Open-Weight VLM Recipes: What Actually Matters](phases/12-multimodal-ai/07-open-weight-vlm-recipes) | ✅ | ~180 min |
+| 08 | [LLaVA-OneVision: Single, Multi, Video](phases/12-multimodal-ai/08-llava-onevision-single-multi-video) | ✅ | ~180 min |
+| 09 | [Qwen-VL Family and Dynamic-FPS Video](phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps) | ✅ | ~120 min |
+| 10 | [InternVL3 Native Multimodal Pretraining](phases/12-multimodal-ai/10-internvl3-native-multimodal) | ✅ | ~120 min |
+| 11 | [Chameleon and Early-Fusion Token-Only](phases/12-multimodal-ai/11-chameleon-early-fusion-tokens) | ✅ | ~180 min |
+| 12 | [Emu3 Next-Token Prediction for Generation](phases/12-multimodal-ai/12-emu3-next-token-for-generation) | ✅ | ~120 min |
+| 13 | [Transfusion Autoregressive + Diffusion](phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion) | ✅ | ~180 min |
+| 14 | [Show-o and Discrete-Diffusion Unified](phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified) | ✅ | ~120 min |
+| 15 | [Janus-Pro Decoupled Encoders](phases/12-multimodal-ai/15-janus-pro-decoupled-encoders) | ✅ | ~120 min |
+| 16 | [MIO Any-to-Any Streaming](phases/12-multimodal-ai/16-mio-any-to-any-streaming) | ✅ | ~120 min |
+| 17 | [Video-Language Temporal Grounding](phases/12-multimodal-ai/17-video-language-temporal-grounding) | ✅ | ~180 min |
+| 18 | [Long-Video Understanding at Million-Token Context](phases/12-multimodal-ai/18-long-video-million-token) | ✅ | ~180 min |
+| 19 | [Audio-Language Models: Whisper to AF3](phases/12-multimodal-ai/19-audio-language-whisper-to-af3) | ✅ | ~180 min |
+| 20 | [Omni Models: Thinker-Talker](phases/12-multimodal-ai/20-omni-models-thinker-talker) | ✅ | ~180 min |
+| 21 | [Embodied VLAs: RT-2, OpenVLA, π0, GR00T](phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot) | ✅ | ~180 min |
+| 22 | [Document and Diagram Understanding](phases/12-multimodal-ai/22-document-diagram-understanding) | ✅ | ~180 min |
+| 23 | [ColPali Vision-Native Document RAG](phases/12-multimodal-ai/23-colpali-vision-native-rag) | ✅ | ~180 min |
+| 24 | [Multimodal RAG and Cross-Modal Retrieval](phases/12-multimodal-ai/24-multimodal-rag-cross-modal) | ✅ | ~180 min |
+| 25 | [Multimodal Agents and Computer-Use (Capstone)](phases/12-multimodal-ai/25-multimodal-agents-computer-use) | ✅ | ~240 min |
 
-## Phase 13: Tools & Protocols — ⬚ (~11 hours)
-
-| # | Lesson | Status | Est. |
-|---|--------|--------|------|
-| 01 | Function Calling Deep Dive | ⬚ | ~45 min |
-| 02 | Tool Use Patterns | ⬚ | ~45 min |
-| 03 | MCP — Model Context Protocol Fundamentals | ⬚ | ~45 min |
-| 04 | Building MCP Servers | ⬚ | ~75 min |
-| 05 | Building MCP Clients | ⬚ | ~75 min |
-| 06 | MCP Resources, Prompts & Sampling | ⬚ | ~45 min |
-| 07 | Structured Output Schemas | ⬚ | ~75 min |
-| 08 | API Design for AI | ⬚ | ~75 min |
-| 09 | Browser Automation & Web Agents | ⬚ | ~75 min |
-| 10 | Build a Complete Tool Ecosystem | ⬚ | ~120 min |
-
-## Phase 14: Agent Engineering — 🚧 (~17 hours)
-
-| # | Lesson | Status | Est. |
-|---|--------|--------|------|
-| 01 | The Agent Loop | ✅ | ~45 min |
-| 02 | Tool Dispatch & Registration | ⬚ | ~75 min |
-| 03 | Planning — TodoWrite, DAGs, Goal Decomposition | ⬚ | ~75 min |
-| 04 | Memory — Short-Term, Long-Term, Episodic | ⬚ | ~75 min |
-| 05 | Context Window Management | ⬚ | ~45 min |
-| 06 | Context Compression & Summarization | ⬚ | ~75 min |
-| 07 | Subagents — Isolated Context, Delegation | ⬚ | ~75 min |
-| 08 | Skills & Knowledge Loading | ⬚ | ~45 min |
-| 09 | Permissions, Sandboxing & Safety | ⬚ | ~45 min |
-| 10 | File-Based Task Systems | ⬚ | ~75 min |
-| 11 | Background Task Execution | ⬚ | ~75 min |
-| 12 | Error Recovery & Self-Healing | ⬚ | ~75 min |
-| 13 | Hooks — PreToolUse, PostToolUse, SessionStart | ⬚ | ~45 min |
-| 14 | Eval-Driven Agent Development | ⬚ | ~45 min |
-| 15 | Build a Complete AI Agent from Scratch | ⬚ | ~120 min |
-
-## Phase 15: Autonomous Systems — ⬚ (~11 hours)
+## Phase 13: Tools & Protocols — ✅ (~24.5 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | What Makes a System Autonomous | ⬚ | ~45 min |
-| 02 | Autonomous Loops — The Core Pattern | ⬚ | ~75 min |
-| 03 | Self-Healing Agents | ⬚ | ~75 min |
-| 04 | AutoResearch — Autonomous Research Agents | ⬚ | ~75 min |
-| 05 | Eval-Driven Loops | ⬚ | ~45 min |
-| 06 | Human-in-the-Loop | ⬚ | ~45 min |
-| 07 | Continuous Agents | ⬚ | ~45 min |
-| 08 | Cost-Aware Autonomous Systems | ⬚ | ~45 min |
-| 09 | Monitoring & Observability | ⬚ | ~45 min |
-| 10 | Safety Boundaries — When to Stop | ⬚ | ~45 min |
-| 11 | Build an Autonomous Coding Agent | ⬚ | ~120 min |
+| 01 | [The Tool Interface](phases/13-tools-and-protocols/01-the-tool-interface/) | ✅ | ~45 min |
+| 02 | [Function Calling Deep Dive](phases/13-tools-and-protocols/02-function-calling-deep-dive/) | ✅ | ~75 min |
+| 03 | [Parallel and Streaming Tool Calls](phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | ✅ | ~75 min |
+| 04 | [Structured Output](phases/13-tools-and-protocols/04-structured-output/) | ✅ | ~75 min |
+| 05 | [Tool Schema Design](phases/13-tools-and-protocols/05-tool-schema-design/) | ✅ | ~45 min |
+| 06 | [MCP Fundamentals](phases/13-tools-and-protocols/06-mcp-fundamentals/) | ✅ | ~45 min |
+| 07 | [Building an MCP Server](phases/13-tools-and-protocols/07-building-an-mcp-server/) | ✅ | ~75 min |
+| 08 | [Building an MCP Client](phases/13-tools-and-protocols/08-building-an-mcp-client/) | ✅ | ~75 min |
+| 09 | [MCP Transports](phases/13-tools-and-protocols/09-mcp-transports/) | ✅ | ~45 min |
+| 10 | [MCP Resources and Prompts](phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | ✅ | ~45 min |
+| 11 | [MCP Sampling](phases/13-tools-and-protocols/11-mcp-sampling/) | ✅ | ~75 min |
+| 12 | [MCP Roots and Elicitation](phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | ✅ | ~45 min |
+| 13 | [MCP Async Tasks](phases/13-tools-and-protocols/13-mcp-async-tasks/) | ✅ | ~75 min |
+| 14 | [MCP Apps](phases/13-tools-and-protocols/14-mcp-apps/) | ✅ | ~75 min |
+| 15 | [MCP Security I — Tool Poisoning](phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | ✅ | ~45 min |
+| 16 | [MCP Security II — OAuth 2.1](phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | ✅ | ~75 min |
+| 17 | [MCP Gateways and Registries](phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | ✅ | ~45 min |
+| 18 | [MCP Auth in Production — DCR + JWKS on iii](phases/13-tools-and-protocols/18-mcp-auth-production/) | ✅ | ~90 min |
+| 19 | [A2A Protocol](phases/13-tools-and-protocols/19-a2a-protocol/) | ✅ | ~75 min |
+| 20 | [OpenTelemetry GenAI](phases/13-tools-and-protocols/20-opentelemetry-genai/) | ✅ | ~75 min |
+| 21 | [LLM Routing Layer](phases/13-tools-and-protocols/21-llm-routing-layer/) | ✅ | ~45 min |
+| 22 | [Skills and Agent SDKs](phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | ✅ | ~45 min |
+| 23 | [Capstone — Tool Ecosystem](phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | ✅ | ~120 min |
+
+## Phase 14: Agent Engineering — ✅ (~42 hours)
+
+| # | Lesson | Status | Est. |
+|---|--------|--------|------|
+| 01 | The Agent Loop | ✅ | ~60 min |
+| 02 | ReWOO and Plan-and-Execute | ✅ | ~60 min |
+| 03 | Reflexion and Verbal Reinforcement Learning | ✅ | ~60 min |
+| 04 | Tree of Thoughts and LATS | ✅ | ~75 min |
+| 05 | Self-Refine and CRITIC | ✅ | ~60 min |
+| 06 | Tool Use and Function Calling | ✅ | ~60 min |
+| 07 | Memory — Virtual Context and MemGPT | ✅ | ~75 min |
+| 08 | Memory Blocks and Sleep-Time Compute (Letta) | ✅ | ~75 min |
+| 09 | Hybrid Memory — Vector + Graph + KV (Mem0) | ✅ | ~75 min |
+| 10 | Skill Libraries and Lifelong Learning (Voyager) | ✅ | ~75 min |
+| 11 | Planning with HTN and Evolutionary Search | ✅ | ~75 min |
+| 12 | Anthropic's Workflow Patterns | ✅ | ~60 min |
+| 13 | LangGraph — Stateful Graphs and Durable Execution | ✅ | ~75 min |
+| 14 | AutoGen v0.4 — Actor Model | ✅ | ~75 min |
+| 15 | CrewAI — Role-Based Crews and Flows | ✅ | ~60 min |
+| 16 | OpenAI Agents SDK — Handoffs, Guardrails, Tracing | ✅ | ~75 min |
+| 17 | Claude Agent SDK — Subagents and Session Store | ✅ | ~75 min |
+| 18 | Agno and Mastra — Production Runtimes | ✅ | ~45 min |
+| 19 | Benchmarks — SWE-bench, GAIA, AgentBench | ✅ | ~60 min |
+| 20 | Benchmarks — WebArena and OSWorld | ✅ | ~60 min |
+| 21 | Computer Use — Claude, OpenAI CUA, Gemini | ✅ | ~60 min |
+| 22 | Voice Agents — Pipecat and LiveKit | ✅ | ~60 min |
+| 23 | OpenTelemetry GenAI Semantic Conventions | ✅ | ~60 min |
+| 24 | Agent Observability — Langfuse, Phoenix, Opik | ✅ | ~45 min |
+| 25 | Multi-Agent Debate and Collaboration | ✅ | ~60 min |
+| 26 | Failure Modes — Why Agents Break | ✅ | ~60 min |
+| 27 | Prompt Injection and the PVE Defense | ✅ | ~75 min |
+| 28 | Orchestration Patterns — Supervisor, Swarm, Hierarchical | ✅ | ~60 min |
+| 29 | Production Runtimes — Queue, Event, Cron | ✅ | ~60 min |
+| 30 | Eval-Driven Agent Development | ✅ | ~60 min |
+| 31 | Agent Workbench: Why Capable Models Still Fail | ✅ | ~45 min |
+| 32 | The Minimal Agent Workbench | ✅ | ~45 min |
+| 33 | Agent Instructions as Executable Constraints | ✅ | ~50 min |
+| 34 | Repo Memory and Durable State | ✅ | ~60 min |
+| 35 | Initialization Scripts for Agents | ✅ | ~45 min |
+| 36 | Scope Contracts and Task Boundaries | ✅ | ~50 min |
+| 37 | Runtime Feedback Loops | ✅ | ~50 min |
+| 38 | Verification Gates | ✅ | ~55 min |
+| 39 | Reviewer Agent: Separate Builder from Marker | ✅ | ~55 min |
+| 40 | Multi-Session Handoff | ✅ | ~50 min |
+| 41 | The Workbench on a Real Repo | ✅ | ~60 min |
+| 42 | Capstone: Ship a Reusable Agent Workbench Pack | ✅ | ~75 min |
+
+## Phase 15: Autonomous Systems — ✅ (~20 hours)
+
+| # | Lesson | Status | Est. |
+|---|--------|--------|------|
+| 01 | From Chatbots to Long-Horizon Agents (METR) | ✅ | ~45 min |
+| 02 | STaR, V-STaR, Quiet-STaR — Self-Taught Reasoning | ✅ | ~60 min |
+| 03 | AlphaEvolve — Evolutionary Coding Agents | ✅ | ~60 min |
+| 04 | Darwin Gödel Machine — Self-Modifying Agents | ✅ | ~60 min |
+| 05 | AI Scientist v2 — Workshop-Level Research | ✅ | ~60 min |
+| 06 | Automated Alignment Research (Anthropic AAR) | ✅ | ~60 min |
+| 07 | Recursive Self-Improvement — Capability vs Alignment | ✅ | ~60 min |
+| 08 | Bounded Self-Improvement Designs | ✅ | ~60 min |
+| 09 | Autonomous Coding Agent Landscape (SWE-bench, CodeAct) | ✅ | ~45 min |
+| 10 | Claude Code Permission Modes and Auto Mode | ✅ | ~45 min |
+| 11 | Browser Agents and Indirect Prompt Injection | ✅ | ~45 min |
+| 12 | Durable Execution for Long-Running Agents | ✅ | ~60 min |
+| 13 | Action Budgets, Iteration Caps, Cost Governors | ✅ | ~60 min |
+| 14 | Kill Switches, Circuit Breakers, Canary Tokens | ✅ | ~60 min |
+| 15 | HITL — Propose-Then-Commit | ✅ | ~60 min |
+| 16 | Checkpoints and Rollback | ✅ | ~60 min |
+| 17 | Constitutional AI and Rule Overrides | ✅ | ~60 min |
+| 18 | Llama Guard and Input/Output Classification | ✅ | ~45 min |
+| 19 | Anthropic Responsible Scaling Policy v3.0 | ✅ | ~45 min |
+| 20 | OpenAI Preparedness Framework and DeepMind FSF | ✅ | ~45 min |
+| 21 | METR Time Horizons and External Evaluation | ✅ | ~60 min |
+| 22 | CAIS, CAISI, and Societal-Scale Risk | ✅ | ~45 min |
 
 ## Phase 16: Multi-Agent & Swarms — ✅ (~28 hours)
 
@@ -379,45 +446,98 @@ Progress tracking for every phase and lesson.
 | 24 | [Evaluation and Coordination Benchmarks](phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | ✅ | ~75 min |
 | 25 | [Case Studies and 2026 State of the Art](phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | ✅ | ~90 min |
 
-## Phase 17: Infrastructure & Production — 🚧 (~13 hours)
+## Phase 17: Infrastructure & Production — ✅ (~32 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | Model Serving | ✅ | ~75 min |
-| 02 | Docker for AI Workloads | ✅ | ~75 min |
-| 03 | Kubernetes for AI | ✅ | ~75 min |
-| 04 | Edge Deployment | ⬚ | ~75 min |
-| 05 | Observability | ⬚ | ~45 min |
-| 06 | Cost Optimization | ⬚ | ~45 min |
-| 07 | CI/CD for ML | ⬚ | ~75 min |
-| 08 | A/B Testing & Feature Flags for AI | ⬚ | ~45 min |
-| 09 | Data Pipelines | ⬚ | ~75 min |
-| 10 | Security | ⬚ | ~45 min |
-| 11 | Build a Production AI Platform | ⬚ | ~120 min |
+| 01 | Managed LLM Platforms — Bedrock, Azure OpenAI, Vertex AI | ✅ | ~60 min |
+| 02 | Inference Platform Economics — Fireworks, Together, Baseten, Modal | ✅ | ~60 min |
+| 03 | GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler | ✅ | ~75 min |
+| 04 | vLLM Serving Internals — PagedAttention, Continuous Batching, Chunked Prefill | ✅ | ~75 min |
+| 05 | EAGLE-3 Speculative Decoding in Production | ✅ | ~60 min |
+| 06 | SGLang and RadixAttention for Prefix-Heavy Workloads | ✅ | ~60 min |
+| 07 | TensorRT-LLM on Blackwell with FP8 and NVFP4 | ✅ | ~75 min |
+| 08 | Inference Metrics — TTFT, TPOT, ITL, Goodput, P99 | ✅ | ~60 min |
+| 09 | Production Quantization — AWQ, GPTQ, GGUF, FP8, NVFP4 | ✅ | ~75 min |
+| 10 | Cold Start Mitigation for Serverless LLMs | ✅ | ~60 min |
+| 11 | Multi-Region LLM Serving and KV Cache Locality | ✅ | ~60 min |
+| 12 | Edge Inference — ANE, Hexagon, WebGPU, Jetson | ✅ | ~60 min |
+| 13 | LLM Observability Stack Selection | ✅ | ~60 min |
+| 14 | Prompt Caching and Semantic Caching Economics | ✅ | ~60 min |
+| 15 | Batch APIs — the 50% Discount as Industry Standard | ✅ | ~45 min |
+| 16 | Model Routing as a Cost-Reduction Primitive | ✅ | ~60 min |
+| 17 | Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d | ✅ | ~75 min |
+| 18 | vLLM Production Stack with LMCache KV Offloading | ✅ | ~60 min |
+| 19 | AI Gateways — LiteLLM, Portkey, Kong, Bifrost | ✅ | ~60 min |
+| 20 | Shadow, Canary, and Progressive Deployment | ✅ | ~60 min |
+| 21 | A/B Testing LLM Features — GrowthBook and Statsig | ✅ | ~60 min |
+| 22 | Load Testing LLM APIs — k6, LLMPerf, GenAI-Perf | ✅ | ~75 min |
+| 23 | SRE for AI — Multi-Agent Incident Response | ✅ | ~60 min |
+| 24 | Chaos Engineering for LLM Production | ✅ | ~60 min |
+| 25 | Security — Secrets, PII Scrubbing, Audit Logs | ✅ | ~60 min |
+| 26 | Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001 | ✅ | ~60 min |
+| 27 | FinOps for LLMs — Unit Economics and Multi-Tenant Attribution | ✅ | ~60 min |
+| 28 | Self-Hosted Serving Selection — llama.cpp, Ollama, TGI, vLLM, SGLang | ✅ | ~45 min |
 
-## Phase 18: Ethics, Safety & Alignment — ⬚ (~5 hours)
+## Phase 18: Ethics, Safety & Alignment — ✅ (~31 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
-| 01 | AI Ethics | ⬚ | ~45 min |
-| 02 | Alignment | ⬚ | ~45 min |
-| 03 | Red Teaming & Adversarial Testing | ⬚ | ~75 min |
-| 04 | Responsible AI Frameworks | ⬚ | ~45 min |
-| 05 | Privacy — Differential Privacy, Federated Learning | ⬚ | ~45 min |
-| 06 | Interpretability | ⬚ | ~45 min |
+| 01 | [Instruction-Following as Alignment Signal](phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal) | ✅ | ~45 min |
+| 02 | [Reward Hacking & Goodhart's Law](phases/18-ethics-safety-alignment/02-reward-hacking-goodhart) | ✅ | ~60 min |
+| 03 | [Direct Preference Optimization Family](phases/18-ethics-safety-alignment/03-direct-preference-optimization-family) | ✅ | ~60 min |
+| 04 | [Sycophancy as RLHF Amplification](phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification) | ✅ | ~45 min |
+| 05 | [Constitutional AI & RLAIF](phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif) | ✅ | ~60 min |
+| 06 | [Mesa-Optimization & Deceptive Alignment](phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment) | ✅ | ~75 min |
+| 07 | [Sleeper Agents — Persistent Deception](phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception) | ✅ | ~60 min |
+| 08 | [In-Context Scheming in Frontier Models](phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models) | ✅ | ~60 min |
+| 09 | [Alignment Faking](phases/18-ethics-safety-alignment/09-alignment-faking) | ✅ | ~60 min |
+| 10 | [AI Control — Safety Despite Subversion](phases/18-ethics-safety-alignment/10-ai-control-subversion) | ✅ | ~75 min |
+| 11 | [Scalable Oversight & Weak-to-Strong Generalization](phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong) | ✅ | ~60 min |
+| 12 | [Red-Teaming — PAIR & Automated Attacks](phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks) | ✅ | ~75 min |
+| 13 | [Many-Shot Jailbreaking](phases/18-ethics-safety-alignment/13-many-shot-jailbreaking) | ✅ | ~45 min |
+| 14 | [ASCII Art & Visual Jailbreaks](phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks) | ✅ | ~60 min |
+| 15 | [Indirect Prompt Injection](phases/18-ethics-safety-alignment/15-indirect-prompt-injection) | ✅ | ~75 min |
+| 16 | [Red-Team Tooling — Garak, Llama Guard, PyRIT](phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit) | ✅ | ~75 min |
+| 17 | [WMDP & Dual-Use Capability Evaluation](phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation) | ✅ | ~60 min |
+| 18 | [Frontier Safety Frameworks — RSP, PF, FSF](phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf) | ✅ | ~75 min |
+| 19 | [Model Welfare Research](phases/18-ethics-safety-alignment/19-model-welfare-research) | ✅ | ~45 min |
+| 20 | [Bias & Representational Harm](phases/18-ethics-safety-alignment/20-bias-representational-harm) | ✅ | ~60 min |
+| 21 | [Fairness Criteria — Group, Individual, Counterfactual](phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual) | ✅ | ~60 min |
+| 22 | [Differential Privacy for LLMs](phases/18-ethics-safety-alignment/22-differential-privacy-for-llms) | ✅ | ~60 min |
+| 23 | [Watermarking — SynthID, Stable Signature, C2PA](phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa) | ✅ | ~75 min |
+| 24 | [Regulatory Frameworks — EU, US, UK, Korea](phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea) | ✅ | ~75 min |
+| 25 | [EchoLeak & CVEs for AI](phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai) | ✅ | ~45 min |
+| 26 | [Model, System & Dataset Cards](phases/18-ethics-safety-alignment/26-model-system-dataset-cards) | ✅ | ~60 min |
+| 27 | [Data Provenance & Training-Data Governance](phases/18-ethics-safety-alignment/27-data-provenance-training-governance) | ✅ | ~60 min |
+| 28 | [Alignment Research Ecosystem — MATS, Redwood, Apollo, METR](phases/18-ethics-safety-alignment/28-alignment-research-ecosystem) | ✅ | ~45 min |
+| 29 | [Moderation Systems — OpenAI, Perspective, Llama Guard](phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard) | ✅ | ~60 min |
+| 30 | [Dual-Use Risk — Cyber, Bio, Chem, Nuclear](phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear) | ✅ | ~75 min |
 
-## Phase 19: Capstone Projects — ⬚ (~10 hours)
+## Phase 19: Capstone Projects — ✅ (~500 hours)
 
 | # | Project | Status | Est. |
 |---|---------|--------|------|
-| 01 | Build a Mini GPT & Chat Interface | ⬚ | ~120 min |
-| 02 | Build a Multimodal RAG System | ⬚ | ~120 min |
-| 03 | Build an Autonomous Research Agent | ⬚ | ~120 min |
-| 04 | Build a Multi-Agent Development Team | ⬚ | ~120 min |
-| 05 | Build a Production AI Platform | ⬚ | ~120 min |
+| 01 | [Terminal-Native Coding Agent](phases/19-capstone-projects/01-terminal-native-coding-agent) | ✅ | ~35 hr |
+| 02 | [RAG over Codebase (Cross-Repo Semantic Search)](phases/19-capstone-projects/02-rag-over-codebase) | ✅ | ~30 hr |
+| 03 | [Real-Time Voice Assistant (ASR to LLM to TTS)](phases/19-capstone-projects/03-realtime-voice-assistant) | ✅ | ~30 hr |
+| 04 | [Multimodal Document QA (Vision-First)](phases/19-capstone-projects/04-multimodal-document-qa) | ✅ | ~30 hr |
+| 05 | [Autonomous Research Agent (AI-Scientist Class)](phases/19-capstone-projects/05-autonomous-research-agent) | ✅ | ~40 hr |
+| 06 | [DevOps Troubleshooting Agent for Kubernetes](phases/19-capstone-projects/06-devops-troubleshooting-agent) | ✅ | ~30 hr |
+| 07 | [End-to-End Fine-Tuning Pipeline](phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline) | ✅ | ~35 hr |
+| 08 | [Production RAG Chatbot (Regulated Vertical)](phases/19-capstone-projects/08-production-rag-chatbot) | ✅ | ~30 hr |
+| 09 | [Code Migration Agent (Repo-Level Upgrade)](phases/19-capstone-projects/09-code-migration-agent) | ✅ | ~30 hr |
+| 10 | [Multi-Agent Software Engineering Team](phases/19-capstone-projects/10-multi-agent-software-team) | ✅ | ~40 hr |
+| 11 | [LLM Observability & Eval Dashboard](phases/19-capstone-projects/11-llm-observability-dashboard) | ✅ | ~25 hr |
+| 12 | [Video Understanding Pipeline (Scene to QA)](phases/19-capstone-projects/12-video-understanding-pipeline) | ✅ | ~30 hr |
+| 13 | [MCP Server with Registry and Governance](phases/19-capstone-projects/13-mcp-server-with-registry) | ✅ | ~25 hr |
+| 14 | [Speculative-Decoding Inference Server](phases/19-capstone-projects/14-speculative-decoding-server) | ✅ | ~30 hr |
+| 15 | [Constitutional Safety Harness + Red-Team Range](phases/19-capstone-projects/15-constitutional-safety-harness) | ✅ | ~25 hr |
+| 16 | [GitHub Issue-to-PR Autonomous Agent](phases/19-capstone-projects/16-github-issue-to-pr-agent) | ✅ | ~30 hr |
+| 17 | [Personal AI Tutor (Adaptive, Multimodal)](phases/19-capstone-projects/17-personal-ai-tutor) | ✅ | ~30 hr |
 
 ---
 
-**Total: 20 phases, 300+ lessons | 191 complete | ~340 hours estimated**
+**Total: 20 phases, 380+ lessons | 350+ complete | ~950 hours estimated**
 
 Want to help? Pick any ⬚ lesson and submit a PR. See [CONTRIBUTING.md](CONTRIBUTING.md).

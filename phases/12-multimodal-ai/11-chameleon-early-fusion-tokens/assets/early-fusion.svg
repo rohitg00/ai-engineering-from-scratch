@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Chameleon — images as discrete tokens in a shared vocabulary</text>
+
+  <rect x="30" y="50" width="900" height="230" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">training: one sequence, one loss</text>
+
+  <rect x="60" y="90" width="180" height="150" class="hot"/>
+  <text x="150" y="110" text-anchor="middle" class="step">1. image</text>
+  <text x="150" y="128" text-anchor="middle" class="small">raw RGB pixels</text>
+  <g stroke="#888" stroke-width="0.5">
+    <rect x="80" y="140" width="140" height="80" fill="#f8e5ba" stroke="#c0392b"/>
+    <line x1="115" y1="140" x2="115" y2="220"/>
+    <line x1="150" y1="140" x2="150" y2="220"/>
+    <line x1="185" y1="140" x2="185" y2="220"/>
+    <line x1="80" y1="170" x2="220" y2="170"/>
+    <line x1="80" y1="200" x2="220" y2="200"/>
+  </g>
+
+  <path d="M 245 160 L 305 160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="275" y="150" text-anchor="middle" class="small">VQ-VAE</text>
+
+  <rect x="310" y="90" width="180" height="150" class="cool"/>
+  <text x="400" y="110" text-anchor="middle" class="step">2. quantize</text>
+  <text x="400" y="128" text-anchor="middle" class="small">codebook K=8192</text>
+  <text x="400" y="146" text-anchor="middle" class="small">32x32 = 1024 ints</text>
+  <text x="400" y="170" text-anchor="middle" class="step">[4821, 1029, 2891, ...]</text>
+  <text x="400" y="196" text-anchor="middle" class="small">one token per patch</text>
+  <text x="400" y="214" text-anchor="middle" class="small">reconstruction is lossy</text>
+
+  <path d="M 495 160 L 555 160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="560" y="90" width="350" height="150" class="cold"/>
+  <text x="735" y="110" text-anchor="middle" class="step">3. shared vocabulary</text>
+  <text x="735" y="128" text-anchor="middle" class="small">text ids 0..31999</text>
+  <text x="735" y="146" text-anchor="middle" class="small">image ids 32000..40191</text>
+  <text x="735" y="164" text-anchor="middle" class="small">&lt;image&gt; / &lt;/image&gt; separators</text>
+  <text x="735" y="190" text-anchor="middle" class="step">single embedding layer</text>
+  <text x="735" y="208" text-anchor="middle" class="small">single next-token cross-entropy loss</text>
+
+  <rect x="30" y="300" width="900" height="220" class="box"/>
+  <text x="480" y="322" text-anchor="middle" class="head">inference: mixed-modality generation in one forward pass</text>
+
+  <rect x="60" y="340" width="300" height="160" class="reg"/>
+  <text x="210" y="360" text-anchor="middle" class="step">prompt: "Draw a cat"</text>
+  <text x="210" y="382" text-anchor="middle" class="small">text tokens flow in</text>
+  <text x="210" y="400" text-anchor="middle" class="small">model autoregressively emits</text>
+  <text x="210" y="418" text-anchor="middle" class="small">&lt;image&gt; code code code ... &lt;/image&gt;</text>
+  <text x="210" y="436" text-anchor="middle" class="small">then follows with caption text</text>
+  <text x="210" y="462" text-anchor="middle" class="caption">VQ decoder renders pixels at display time</text>
+
+  <rect x="380" y="340" width="250" height="160" class="cool"/>
+  <text x="505" y="360" text-anchor="middle" class="step">stability tricks</text>
+  <text x="505" y="382" text-anchor="middle" class="small">QK-Norm before dot product</text>
+  <text x="505" y="400" text-anchor="middle" class="small">dropout after every residual</text>
+  <text x="505" y="418" text-anchor="middle" class="small">final-block skip LN</text>
+  <text x="505" y="442" text-anchor="middle" class="small">without these 34B diverges</text>
+  <text x="505" y="462" text-anchor="middle" class="caption">training recipe is half the paper</text>
+
+  <rect x="650" y="340" width="270" height="160" class="hot"/>
+  <text x="785" y="360" text-anchor="middle" class="step">trade-offs</text>
+  <text x="785" y="382" text-anchor="middle" class="small">+ image gen in same model</text>
+  <text x="785" y="400" text-anchor="middle" class="small">+ mixed-modality output free</text>
+  <text x="785" y="418" text-anchor="middle" class="small">- tokenizer caps image quality</text>
+  <text x="785" y="436" text-anchor="middle" class="small">- expensive inference (VQ decode)</text>
+  <text x="785" y="454" text-anchor="middle" class="small">- no LLM reuse</text>
+  <text x="785" y="478" text-anchor="middle" class="caption">Emu3 + Transfusion extend this path</text>
+</svg>

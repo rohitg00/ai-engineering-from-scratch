@@ -1,0 +1,90 @@
+{
+  "lesson": "37-runtime-feedback-loops",
+  "title": "Runtime Feedback Loops",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the feedback runner force the agent to do?",
+      "options": [
+        "React to imagined output",
+        "React to facts: structured stdout/stderr/exit/duration records captured into the loop on every command",
+        "Skip verification",
+        "Use a different model"
+      ],
+      "correct": 1,
+      "explanation": "The runner closes the gap between 'tests passed' (imagined) and 'tests actually ran and exited zero' (recorded)."
+    },
+    {
+      "stage": "pre",
+      "question": "How does feedback differ from telemetry?",
+      "options": [
+        "Telemetry is paid",
+        "Feedback is for the next turn of this run; telemetry is for operators reviewing runs across time (different files, different retention)",
+        "Telemetry uses OTel; feedback uses GraphQL",
+        "They are the same thing"
+      ],
+      "correct": 1,
+      "explanation": "Both share fields but live in different files with different retention; feedback is intra-run, telemetry is cross-run."
+    },
+    {
+      "stage": "check",
+      "question": "Which field MUST appear in every feedback record?",
+      "options": [
+        "model_id",
+        "exit_code (and a null exit must refuse to advance the loop)",
+        "embedding_vector",
+        "prompt_cache_token"
+      ],
+      "correct": 1,
+      "explanation": "exit_code is the unambiguous success signal; null exit means no progress."
+    },
+    {
+      "stage": "check",
+      "question": "How does the runner truncate large outputs?",
+      "options": [
+        "Random sampling",
+        "Deterministic head + tail with a 'truncated N lines' marker so the same output always produces the same record",
+        "First 10 lines only",
+        "Compresses with gzip"
+      ],
+      "correct": 1,
+      "explanation": "Deterministic truncation keeps records replayable while bounding token cost; tails carry the failure summary."
+    },
+    {
+      "stage": "check",
+      "question": "Why redact at write time rather than read time?",
+      "options": [
+        "Compression",
+        "The file on disk is what an attacker reaches; redacting only on read leaves secrets in JSONL files",
+        "Read-time redaction breaks JSON",
+        "It is faster"
+      ],
+      "correct": 1,
+      "explanation": "Redact lines matching Bearer, password=, api_key=, AKIA..., xox[baprs]- before append; auditing the patterns quarterly."
+    },
+    {
+      "stage": "post",
+      "question": "What does parent_command_id give the workbench?",
+      "options": [
+        "Cheaper inference",
+        "Retries link to their parent attempt so the reviewer and audit see the failure chain; without it retries look like independent successes",
+        "Faster file I/O",
+        "Lower memory"
+      ],
+      "correct": 1,
+      "explanation": "Parent linkage makes retry chains visible to the reviewer (Lesson 39) and the verification gate."
+    },
+    {
+      "stage": "post",
+      "question": "Why cap feedback_record.jsonl at 1 MB with rotation?",
+      "options": [
+        "JSON does not handle larger files",
+        "The agent only reads the current file; rotation keeps runtime cost bounded while CI artifacts capture the full set",
+        "Disks are too slow",
+        "The provider charges per byte"
+      ],
+      "correct": 1,
+      "explanation": "Bounded current file + rotated history is the same pattern logrotate uses; predictable cost in the hot loop."
+    }
+  ]
+}

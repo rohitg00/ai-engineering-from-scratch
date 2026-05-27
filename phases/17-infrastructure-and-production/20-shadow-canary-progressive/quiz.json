@@ -1,0 +1,78 @@
+{
+  "lesson": "20-shadow-canary-progressive",
+  "title": "Shadow Traffic, Canary Rollout, and Progressive Deployment for LLMs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the right way to order shadow, canary, and A/B testing for an LLM rollout?",
+      "options": [
+        "Shadow (zero-impact compare), then canary (live traffic progressive with gates), then A/B for distinct alternatives once stability is confirmed",
+        "Skip shadow entirely",
+        "Canary first, then shadow, then A/B",
+        "A/B first, then shadow, then canary"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which set of five metrics does the lesson gate canary progressions on?",
+      "options": [
+        "GPU temp, fan speed, queue depth, cost, latency",
+        "Accuracy on offline eval only",
+        "Latency percentiles, cost per request, error/refusal rate, output length distribution, user-feedback rate",
+        "Just throughput"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Roughly how much run-to-run accuracy variance does the lesson cite for identical inputs on LLMs?",
+      "options": [
+        "Under 0.1%",
+        "Identical outputs run-to-run",
+        "Always 50%",
+        "Up to about 15%, due to GPU FP non-associativity plus batch-size variance"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is shadow mode for, in the lesson's framing?",
+      "options": [
+        "Replacement for rollback",
+        "A complete quality test that replaces evals",
+        "Final production rollout step",
+        "A smoke test catching cost blow-ups, length regressions, refusal changes, and hard errors — not a quality guarantee"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the correct rollback design per the lesson?",
+      "options": [
+        "Wait for the next release window",
+        "Redeploy with new model digest, taking hours",
+        "Flip a policy flag and revert the pinned model digest in seconds — no redeploy",
+        "Manual SSH to each pod"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why is cost listed as a gate alongside latency and quality?",
+      "options": [
+        "A 20% better model can be 3x more expensive per call; shipping that without a cost gate breaks unit economics",
+        "Cost is automatically capped by every provider",
+        "Cost is a vanity metric",
+        "Cost is the same across providers"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

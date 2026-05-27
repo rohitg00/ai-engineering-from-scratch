@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Roadmap - AI Engineering from Scratch</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0d18'/><text x='4' y='23' font-size='18' font-weight='bold' font-family='system-ui' fill='%23ff6b6b'>AI</text></svg>">
-  <meta name="description" content="Interactive prerequisite map for 260+ AI engineering lessons. See which phases depend on which, and plan your learning path.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
+  <meta name="description" content="Interactive prerequisite map for 435 AI engineering lessons. See which phases depend on which, and plan your learning path.">
+  <meta property="og:title" content="Roadmap · AI Engineering from Scratch">
+  <meta property="og:description" content="Interactive prerequisite map. See what each phase depends on and what it unlocks downstream.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
+  <meta property="og:url" content="https://aiengineeringfromscratch.com/prereqs.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roadmap · AI Engineering from Scratch">
+  <meta name="twitter:description" content="Interactive prerequisite map across 20 phases.">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260417e">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260525a">
   <style>
     /* ===================================================
        Learning Path — Page Styles
@@ -81,7 +90,7 @@
       padding: 6px 14px;
       background: var(--bg-surface);
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       color: var(--text-muted);
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
@@ -174,10 +183,12 @@
     }
 
     .node-name {
-      font-family: 'Kalam', cursive;
-      font-size: 12.5px;
-      font-weight: 700;
-      fill: var(--text);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 400;
+      fill: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       transition: opacity 0.25s;
     }
 
@@ -210,7 +221,7 @@
       margin: 0 auto;
       background: var(--bg-surface);
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       padding: 28px 24px;
       box-shadow: var(--shadow-hard);
       display: none;
@@ -253,7 +264,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 3px 10px;
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
     }
 
     .detail-status.complete    { background: rgba(90, 184, 143, 0.15); color: var(--complete); border: 1px solid var(--complete); }
@@ -347,7 +358,7 @@
       font-size: 0.75rem;
       padding: 6px 14px;
       border: 2px solid var(--border);
-      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      border-radius: 0;
       color: var(--text-muted);
       text-decoration: none;
       transition: border-color 0.2s, color 0.2s, transform 0.2s;
@@ -383,13 +394,15 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <span class="logo-icon">&#9679;</span> AI from Scratch
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="index.html#phases">Phases</a>
+        <a href="index.html#contents">Contents</a>
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
@@ -399,17 +412,26 @@
           <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
         </a>
       </nav>
+      <button class="search-toggle" type="button" data-cmd-palette
+        aria-label="Search (⌘K)" title="Search (⌘K)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="theme-icon" id="themeIcon">&#9789;</span>
+        <span class="theme-icon" id="themeIcon">N</span>
       </button>
     </div>
   </header>
 
-  <main class="prereqs-page">
+  <main class="prereqs-page" id="main">
     <div class="container">
       <div class="prereqs-header">
         <h1>Roadmap</h1>
-        <p>Click any phase to see what you need to learn first &mdash; and what it unlocks next.</p>
+        <p>Click any phase to see its prerequisites and what it unlocks downstream.</p>
       </div>
 
       <div class="prereqs-controls">
@@ -435,19 +457,21 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>AI Engineering from Scratch &mdash; open source, free forever.</p>
+      <p>AI Engineering from Scratch · open source · free forever.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
         <a href="catalog.html">Catalog</a>
         <a href="glossary.html">Glossary</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
       </div>
     </div>
   </footer>
 
-  <script src="data.js?v=20260417e"></script>
-  <script src="progress.js?v=20260417e"></script>
-  <script src="header.js?v=20260417e" defer></script>
+  <script src="data.js?v=20260525a"></script>
+  <script src="progress.js?v=20260525a"></script>
+  <script src="header.js?v=20260525a" defer></script>
+  <script src="cmdpalette.js?v=20260525a" defer></script>
   <script>
   (function () {
     /* ===================================================
@@ -457,14 +481,16 @@
     var stored = localStorage.getItem('theme');
     if (stored) {
       root.setAttribute('data-theme', stored);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      root.setAttribute('data-theme', 'dark');
+    } else {
       root.setAttribute('data-theme', 'light');
     }
 
     function updateIcon() {
       var icon = document.getElementById('themeIcon');
       if (!icon) return;
-      icon.innerHTML = root.getAttribute('data-theme') === 'light' ? '&#9728;' : '&#9789;';
+      icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';
     }
 
     updateIcon();
@@ -920,7 +946,7 @@
         }
         prereqHtml += '</ul>';
       } else {
-        prereqHtml = '<div class="detail-empty">None — this is a starting point!</div>';
+        prereqHtml = '<div class="detail-empty">None. This is a starting point.</div>';
       }
 
       /* Unlocks list */
@@ -935,7 +961,7 @@
         }
         unlockHtml += '</ul>';
       } else {
-        unlockHtml = '<div class="detail-empty">Final destination — you made it!</div>';
+        unlockHtml = '<div class="detail-empty">Final destination. End of the curriculum.</div>';
       }
 
       /* Compute exact GitHub tree URL using standard slug logic */

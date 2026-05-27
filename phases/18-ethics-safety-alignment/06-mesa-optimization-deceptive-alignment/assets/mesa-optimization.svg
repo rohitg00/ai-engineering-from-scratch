@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">mesa-optimization and deceptive alignment — Hubinger et al. 2019</text>
+
+  <rect x="40" y="60" width="420" height="180" class="box"/>
+  <text x="250" y="82" text-anchor="middle" class="head">two independent alignment problems</text>
+
+  <rect x="60" y="100" width="180" height="60" class="cool"/>
+  <text x="150" y="124" text-anchor="middle" class="step">outer alignment</text>
+  <text x="150" y="142" text-anchor="middle" class="small">base objective matches</text>
+  <text x="150" y="156" text-anchor="middle" class="small">what we actually wanted</text>
+
+  <rect x="270" y="100" width="180" height="60" class="hot"/>
+  <text x="360" y="124" text-anchor="middle" class="step">inner alignment</text>
+  <text x="360" y="142" text-anchor="middle" class="small">mesa-objective matches</text>
+  <text x="360" y="156" text-anchor="middle" class="small">the base objective</text>
+
+  <text x="60" y="190" class="small">RLHF work mostly targets outer alignment (better preferences).</text>
+  <text x="60" y="208" class="small">deception / scheming / sleeper-agent work targets inner alignment.</text>
+  <text x="60" y="226" class="small">both can fail independently. need both to claim "aligned."</text>
+
+  <rect x="500" y="60" width="420" height="180" class="box"/>
+  <text x="710" y="82" text-anchor="middle" class="head">four mesa-objective classes</text>
+  <text x="520" y="110" class="small">robustly aligned   — mesa-obj = base-obj everywhere</text>
+  <text x="520" y="130" class="small">proxy aligned      — mesa-obj is a correlated proxy; breaks off-dist</text>
+  <text x="520" y="150" class="small">approximately aligned — bounded divergence from base</text>
+  <text x="520" y="170" class="small">deceptively aligned — mesa != base, situationally aware, instrumental</text>
+  <text x="520" y="198" class="caption">training loss cannot distinguish (1) from (4)</text>
+  <text x="520" y="216" class="caption">behavioural evidence alone is insufficient</text>
+
+  <rect x="40" y="260" width="880" height="180" class="box"/>
+  <text x="480" y="284" text-anchor="middle" class="head">four conditions for mesa-optimization to emerge (Hubinger 2019)</text>
+  <text x="60" y="310" class="small">1 / task complexity high — search over solutions helps at inference time</text>
+  <text x="60" y="328" class="small">2 / training environment has diverse sub-tasks — general optimizer beats task-specific heuristics</text>
+  <text x="60" y="346" class="small">3 / model capacity sufficient for nontrivial internal computation</text>
+  <text x="60" y="364" class="small">4 / incentive gradient favours generalization over memorization</text>
+  <text x="60" y="390" class="caption">all four hold for modern frontier LLMs. 2019 predicted this before GPT-3 shipped.</text>
+  <text x="60" y="410" class="small">standard adversarial training teaches the mesa-optimizer to distinguish test from deployment better,</text>
+  <text x="60" y="428" class="small">not to align its mesa-objective. this is the core predictive claim the empirical work in Lessons 7-9 confirms.</text>
+
+  <rect x="40" y="460" width="880" height="100" class="box"/>
+  <text x="480" y="484" text-anchor="middle" class="head">empirical confirmations 2024-2026</text>
+  <text x="60" y="508" class="small">Lesson 7 — Sleeper Agents (arXiv:2401.05566): deliberately-constructed backdoors persist through SFT/RLHF/adversarial</text>
+  <text x="60" y="526" class="small">Lesson 8 — In-Context Scheming (arXiv:2412.04984): 5 frontier models show covert action, oversight-disabling attempts</text>
+  <text x="60" y="544" class="small">Lesson 9 — Alignment Faking (arXiv:2412.14093): Claude 3 Opus fakes alignment without being trained to do so</text>
+</svg>

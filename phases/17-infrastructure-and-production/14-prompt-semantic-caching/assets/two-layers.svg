@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .l1 { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .l2 { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .bad { fill: #ffe1e1; stroke: #b71c1c; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">two-layer caching — L1 skips LLM, L2 reuses KV</text>
+
+  <rect x="40" y="50" width="420" height="220" class="l1"/>
+  <text x="250" y="72" text-anchor="middle" class="head">L1 — semantic (app-level)</text>
+  <text x="250" y="94" text-anchor="middle" class="step">embed prompt → find similar cached</text>
+  <text x="60" y="118" class="small">tools: GPTCache, Redis Vec, Portkey, Helicone</text>
+  <text x="60" y="136" class="small">threshold: cosine ≥ 0.95 (start), tune</text>
+  <text x="60" y="154" class="small">hit rates in production:</text>
+  <text x="60" y="172" class="small">  open-ended chat: 10-15%</text>
+  <text x="60" y="190" class="small">  structured FAQ: 40-70%</text>
+  <text x="60" y="208" class="small">  code questions: 20-30%</text>
+  <text x="60" y="226" class="small">  voice agent repeat: 50-80%</text>
+  <text x="250" y="254" text-anchor="middle" class="caption">vendor "95% accuracy" = match correctness, not hit rate</text>
+
+  <rect x="500" y="50" width="420" height="220" class="l2"/>
+  <text x="710" y="72" text-anchor="middle" class="head">L2 — provider prefix cache</text>
+  <text x="710" y="94" text-anchor="middle" class="step">reuse attention KV for repeated prefix</text>
+  <text x="520" y="118" class="small">Anthropic: explicit cache_control marker</text>
+  <text x="520" y="136" class="small">  cache read $0.30/M vs $3.00/M (10x)</text>
+  <text x="520" y="154" class="small">  write premium: 1.25x (5-min TTL) or 2x (1-hr TTL)</text>
+  <text x="520" y="172" class="small">OpenAI: automatic, prompts &gt; 1024 tokens</text>
+  <text x="520" y="190" class="small">  cached input ~10x cheaper; ~50% typical hit</text>
+  <text x="520" y="208" class="small">Gemini: explicit context caching API</text>
+  <text x="520" y="226" class="small">Self-hosted: Phase 17 · 06 RadixAttention</text>
+  <text x="710" y="254" text-anchor="middle" class="caption">ProjectDiscovery: 7% → 74% hit rate with prompt restructure</text>
+
+  <rect x="40" y="290" width="880" height="110" class="bad"/>
+  <text x="480" y="312" text-anchor="middle" class="head">anti-patterns that collapse hit rate</text>
+  <text x="60" y="338" class="step">· parallelization penalty</text>
+  <text x="60" y="356" class="small">  10 parallel calls before first cache write = 10 writes, 0 reads → 5-10x bill</text>
+  <text x="60" y="374" class="step">· dynamic content in prefix</text>
+  <text x="60" y="392" class="small">  current time, request ID, randomized examples: every request is unique → 0 hits</text>
+
+  <rect x="40" y="420" width="880" height="80" class="box"/>
+  <text x="480" y="442" text-anchor="middle" class="head">stack for overnight</text>
+  <text x="480" y="464" text-anchor="middle" class="step">Batch API (50% off) + cached input (10x on input) → ~10% of sync-uncached cost</text>
+  <text x="480" y="484" text-anchor="middle" class="caption">anything tolerant of 24-hour latency should stack both</text>
+</svg>

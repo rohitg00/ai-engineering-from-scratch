@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .gw { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .feat { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .scale { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">AI gateways — seven features, four 2026 leaders</text>
+
+  <rect x="40" y="50" width="280" height="220" class="feat"/>
+  <text x="180" y="72" text-anchor="middle" class="head">core features</text>
+  <text x="60" y="96" class="step">· provider routing</text>
+  <text x="60" y="116" class="step">· fallback chains</text>
+  <text x="60" y="136" class="step">· retries (backoff)</text>
+  <text x="60" y="156" class="step">· rate limits (per-tenant)</text>
+  <text x="60" y="176" class="step">· secret references</text>
+  <text x="60" y="196" class="step">· observability (OTel)</text>
+  <text x="60" y="216" class="step">· guardrails (PII, jailbreak)</text>
+  <text x="180" y="250" text-anchor="middle" class="caption">all seven mandatory at enterprise scale</text>
+
+  <rect x="340" y="50" width="280" height="220" class="gw"/>
+  <text x="480" y="72" text-anchor="middle" class="head">2026 gateways</text>
+  <rect x="360" y="90" width="240" height="35" class="box"/>
+  <text x="480" y="112" text-anchor="middle" class="step">LiteLLM — MIT, Python</text>
+  <rect x="360" y="132" width="240" height="35" class="box"/>
+  <text x="480" y="154" text-anchor="middle" class="step">Portkey — Apache 2.0, guardrails</text>
+  <rect x="360" y="174" width="240" height="35" class="box"/>
+  <text x="480" y="196" text-anchor="middle" class="step">Kong AI Gateway — enterprise</text>
+  <rect x="360" y="216" width="240" height="35" class="box"/>
+  <text x="480" y="238" text-anchor="middle" class="step">Cloudflare / Vercel — edge managed</text>
+
+  <rect x="640" y="50" width="280" height="220" class="scale"/>
+  <text x="780" y="72" text-anchor="middle" class="head">scale + overhead (Kong benchmark)</text>
+  <text x="660" y="96" class="step">Kong:      ~5 ms overhead  (baseline)</text>
+  <text x="660" y="116" class="step">LiteLLM:  ~10 ms overhead  (breaks &gt;2K RPS)</text>
+  <text x="660" y="136" class="step">Portkey:  ~30 ms overhead</text>
+  <text x="660" y="156" class="step">Cloudflare: ~2 ms  (edge)</text>
+  <text x="660" y="190" class="small">Kong 228% faster than Portkey</text>
+  <text x="660" y="208" class="small">Kong 859% faster than LiteLLM</text>
+  <text x="660" y="226" class="small">on same 12 CPUs</text>
+  <text x="780" y="258" text-anchor="middle" class="caption">LiteLLM for dev, Kong for prod scale</text>
+
+  <rect x="40" y="290" width="440" height="130" class="box"/>
+  <text x="260" y="312" text-anchor="middle" class="head">data residency drives self-host</text>
+  <text x="60" y="338" class="step">healthcare / finance → self-hosted</text>
+  <text x="60" y="356" class="step">  LiteLLM OSS, Portkey OSS, Kong OSS</text>
+  <text x="60" y="374" class="step">consumer → managed edge</text>
+  <text x="60" y="392" class="step">  Cloudflare AI Gateway, Vercel AI</text>
+  <text x="60" y="410" class="caption">Portkey Apache 2.0 March 2026 moved middle tier</text>
+
+  <rect x="500" y="290" width="420" height="130" class="box"/>
+  <text x="710" y="312" text-anchor="middle" class="head">compose with Phase 17 · 13 + 16</text>
+  <text x="520" y="338" class="step">gateway (19) + observability (13) + routing (16)</text>
+  <text x="520" y="356" class="step">often the same tool:</text>
+  <text x="520" y="374" class="step">  Portkey = gateway + observability + guardrails</text>
+  <text x="520" y="392" class="step">  Helicone = gateway + observability</text>
+  <text x="520" y="410" class="caption">pick one, or wire three with OpenTelemetry</text>
+
+  <rect x="40" y="440" width="880" height="50" class="box"/>
+  <text x="480" y="462" text-anchor="middle" class="step">fallback arithmetic — OpenAI 3% × Anthropic 2% = 0.06% both-fail</text>
+  <text x="480" y="480" text-anchor="middle" class="caption">three-provider chain effectively 99.997% availability</text>
+</svg>

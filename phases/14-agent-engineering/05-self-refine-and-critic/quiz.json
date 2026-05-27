@@ -1,0 +1,90 @@
+{
+  "lesson": "05-self-refine-and-critic",
+  "title": "Self-Refine and CRITIC: Iterative Output Improvement",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What three prompts make up a Self-Refine loop?",
+      "options": [
+        "Plan, execute, solve",
+        "Generate, feedback, refine",
+        "Actor, evaluator, reflector",
+        "Search, score, synthesize"
+      ],
+      "correct": 1,
+      "explanation": "Self-Refine uses one model in three roles: generate, feedback, refine."
+    },
+    {
+      "stage": "pre",
+      "question": "Why does Self-Refine require history on the refine step?",
+      "options": [
+        "Providers cache only on history",
+        "Without prior outputs and critiques the refine step repeats earlier mistakes; the ablation shows quality drops sharply",
+        "History is needed for billing",
+        "It speeds up token generation"
+      ],
+      "correct": 1,
+      "explanation": "The refine prompt conditions on the full history so the model does not repeat its earlier errors."
+    },
+    {
+      "stage": "check",
+      "question": "What does CRITIC change relative to Self-Refine?",
+      "options": [
+        "It removes the refine step",
+        "It replaces the self-feedback step with an external tool-grounded verifier",
+        "It uses a larger model for generation",
+        "It runs the feedback step in parallel"
+      ],
+      "correct": 1,
+      "explanation": "CRITIC swaps self-critique for a verify step routed through search, code interpreter, calculator, or domain verifiers."
+    },
+    {
+      "stage": "check",
+      "question": "Which Anthropic workflow pattern matches Self-Refine and CRITIC in Claude-friendly language?",
+      "options": [
+        "Router",
+        "Prompt chain",
+        "Evaluator-Optimizer",
+        "Parallel sampling"
+      ],
+      "correct": 2,
+      "explanation": "Anthropic names this pattern Evaluator-Optimizer: an evaluator scores, an optimizer revises, loop until convergence."
+    },
+    {
+      "stage": "check",
+      "question": "What is a rubber-stamp loop and how does the lesson recommend avoiding it?",
+      "options": [
+        "A test that always passes; remove the test",
+        "Same model and same prompt critiquing its own output and approving it; use structurally different prompts or a separate smaller critic",
+        "A retry that always fails; raise the budget",
+        "A guardrail that times out; widen the timeout"
+      ],
+      "correct": 1,
+      "explanation": "Same-style self-critique converges on 'looks good to me'; differentiate the evaluator from the optimizer."
+    },
+    {
+      "stage": "post",
+      "question": "Which SDK feature in OpenAI Agents SDK is CRITIC-shaped?",
+      "options": [
+        "Handoffs",
+        "Sessions",
+        "Output guardrails (which can call tools)",
+        "Tracing"
+      ],
+      "correct": 2,
+      "explanation": "Output guardrails validate the final agent output and can call tools, matching CRITIC's verifier role."
+    },
+    {
+      "stage": "post",
+      "question": "What stop condition does the lesson recommend for 2026 evaluator-optimizer loops?",
+      "options": [
+        "Stop only when the verifier passes",
+        "Stop only when the model says 'fine'",
+        "Combine: verifier passes OR (model says fine AND iterations >= 2) OR iterations >= max_iterations",
+        "Never stop; let the agent self-improve indefinitely"
+      ],
+      "correct": 2,
+      "explanation": "A combined condition avoids single-condition failure modes."
+    }
+  ]
+}

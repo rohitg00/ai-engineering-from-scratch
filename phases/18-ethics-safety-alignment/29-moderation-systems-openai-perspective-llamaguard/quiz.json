@@ -1,0 +1,78 @@
+{
+  "lesson": "29-moderation-systems-openai-perspective-llamaguard",
+  "title": "Moderation Systems - OpenAI, Perspective, Llama Guard",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is OpenAI's omni-moderation-latest (2024)?",
+      "options": [
+        "An RLHF reward model",
+        "A reasoning-focused frontier model",
+        "A C2PA watermarking endpoint",
+        "A GPT-4o-based moderation classifier that handles text and images in one call, returning a 13-category response schema (harassment, hate, self-harm, sexual, violence, illicit, with sub-categories), free for most developers"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which of these is NOT one of OpenAI Moderation's primary top-level categories?",
+      "options": [
+        "violence",
+        "election-interference",
+        "self-harm",
+        "harassment"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What are the three layers of the standard 2026 moderation pattern?",
+      "options": [
+        "Probe / detector / harness",
+        "Tokenizer / model / detokenizer",
+        "Telescopic / periscopic / microscopic",
+        "Input moderation (pre-generation), Output moderation (post-generation), Custom moderation (domain rules)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is Perspective API (Google Jigsaw) primarily designed to score?",
+      "options": [
+        "Watermark strength",
+        "Toxicity (with severe-toxicity, insult, profanity, threat, identity-attack sub-dimensions) as a pre-LLM-era content-moderation baseline",
+        "Reasoning quality",
+        "Reward over user satisfaction"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is one failure mode of input-only moderation?",
+      "options": [
+        "It cannot run on GPUs",
+        "It does not catch model output failures or hallucinations; encoding attacks (Lessons 12-14) can bypass input classifiers entirely",
+        "It always blocks legitimate content",
+        "It removes the need for output classifiers"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the Azure Content Moderator deprecation and migration target?",
+      "options": [
+        "Deprecated February 2024, retired March 15, 2027; migration target is Azure AI Content Safety (LLM-based, integrated with Azure OpenAI)",
+        "Replaced by Perspective API",
+        "Merged into Llama Guard 4",
+        "Deprecated immediately with no replacement"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

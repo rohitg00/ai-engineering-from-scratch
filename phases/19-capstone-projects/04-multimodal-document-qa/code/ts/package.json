@@ -1,0 +1,22 @@
+{
+  "name": "capstone-04-multimodal-document-qa",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Multimodal document QA viewer skeleton (TypeScript)",
+  "scripts": {
+    "start": "tsx src/index.ts --demo",
+    "serve": "tsx src/index.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.6.14",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

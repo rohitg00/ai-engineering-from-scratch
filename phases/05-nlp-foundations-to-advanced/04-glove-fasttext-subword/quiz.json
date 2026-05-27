@@ -1,0 +1,102 @@
+{
+  "lesson": "04-glove-fasttext-subword",
+  "title": "GloVe, FastText, and Subword Embeddings",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What did GloVe contribute over Word2Vec?",
+      "options": [
+        "Direct factorization of the word-word co-occurrence matrix with a weighted loss",
+        "Byte-level tokenization",
+        "A deeper neural network",
+        "Subword n-gram embeddings"
+      ],
+      "correct": 0,
+      "explanation": "GloVe factorizes the global co-occurrence matrix with a thoughtfully weighted log-loss."
+    },
+    {
+      "stage": "pre",
+      "question": "What problem does FastText solve that Word2Vec and GloVe do not?",
+      "options": [
+        "Reducing training cost",
+        "Multilingual transfer",
+        "Producing vectors for unseen words by composing character n-grams",
+        "Polysemy disambiguation"
+      ],
+      "correct": 2,
+      "explanation": "FastText composes a word vector from its subword n-grams, so OOV words still get a sensible vector."
+    },
+    {
+      "stage": "check",
+      "question": "In GloVe, what role does the weighting function f(x) = (x/x_max)^alpha play?",
+      "options": [
+        "Downweights extremely frequent pairs so they do not dominate the loss",
+        "Selects negative samples",
+        "Initializes weights randomly",
+        "Normalizes vectors to unit length"
+      ],
+      "correct": 0,
+      "explanation": "The weighting prevents ubiquitous co-occurrences like (the, and) from dominating training."
+    },
+    {
+      "stage": "check",
+      "question": "How does the BPE merge step pick which pair to combine next?",
+      "options": [
+        "A random pair",
+        "The lexicographically first pair",
+        "The most frequent adjacent token pair across the corpus",
+        "The pair with highest IDF"
+      ],
+      "correct": 2,
+      "explanation": "BPE iteratively merges the most frequent adjacent pair."
+    },
+    {
+      "stage": "check",
+      "question": "Why does GPT-2 use byte-level BPE?",
+      "options": [
+        "Byte BPE skips merge training",
+        "The base vocabulary of 256 bytes covers any input, eliminating out-of-vocabulary entirely",
+        "Bytes train faster than characters",
+        "Bytes preserve casing implicitly"
+      ],
+      "correct": 1,
+      "explanation": "Starting from 256 bytes means every UTF-8 string tokenizes; nothing is OOV."
+    },
+    {
+      "stage": "post",
+      "question": "Which tokenizer should you use when fine-tuning a pretrained transformer?",
+      "options": [
+        "Always SentencePiece",
+        "The exact tokenizer the model shipped with; mismatch breaks the embeddings",
+        "Whichever has the largest vocabulary",
+        "Always byte-level BPE"
+      ],
+      "correct": 1,
+      "explanation": "Tokenizer-model mismatch silently corrupts inputs; always pair the shipped tokenizer with its model."
+    },
+    {
+      "stage": "post",
+      "question": "When would you pick FastText over GloVe for pretrained word vectors?",
+      "options": [
+        "When you need a 50d model",
+        "For morphologically rich languages or domains with frequent neologisms and misspellings",
+        "When latency is tightest",
+        "When the corpus is very small"
+      ],
+      "correct": 1,
+      "explanation": "FastText's subword composition handles inflections, neologisms, and misspellings that GloVe cannot."
+    },
+    {
+      "stage": "post",
+      "question": "What unit forms the base of WordPiece, BPE, and SentencePiece vocabularies?",
+      "options": [
+        "Sentences",
+        "Whole words",
+        "Paragraphs",
+        "Subword pieces (characters, n-grams, or learned merges) below the word level"
+      ],
+      "correct": 3,
+      "explanation": "All three are subword tokenizers; they differ in how merges or pieces are learned, not in being subword."
+    }
+  ]
+}

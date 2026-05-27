@@ -1,10 +1,11 @@
-
 (function () {
   var root = document.documentElement;
   var stored = localStorage.getItem('theme');
   if (stored) {
     root.setAttribute('data-theme', stored);
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    root.setAttribute('data-theme', 'dark');
+  } else {
     root.setAttribute('data-theme', 'light');
   }
   updateThemeIcon();
@@ -13,19 +14,19 @@
     initThemeToggle();
     populateStats();
     renderPhases();
-    renderRoadmap();
-    renderGlossaryPreview();
+    initStaggerIndex();
     initModal();
     initCopyButton();
     initSmoothScroll();
     initFadeObserver();
+    initScrollExplode();
   });
 
   function updateThemeIcon() {
     var icon = document.getElementById('themeIcon');
     if (!icon) return;
     var theme = root.getAttribute('data-theme');
-    icon.innerHTML = theme === 'light' ? '&#9728;' : '&#9789;';
+    icon.textContent = theme === 'light' ? 'N' : 'D';
   }
 
   function initThemeToggle() {
@@ -58,46 +59,55 @@
         if (staticDone || userDone) completeLessons++;
       }
     }
+    var completePhases = 0;
+    for (var p = 0; p < PHASES.length; p++) {
+      if (PHASES[p].status === 'complete') completePhases++;
+    }
     return {
       lessons: totalLessons,
       phases: PHASES.length,
-      complete: completeLessons
+      complete: completeLessons,
+      completePhases: completePhases
     };
   }
 
-  function animateCount(el, target) {
-    var start = 0;
-    var duration = 1200;
-    var startTime = null;
-
-    function tick(ts) {
-      if (!startTime) startTime = ts;
-      var progress = Math.min((ts - startTime) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target);
-      if (progress < 1) requestAnimationFrame(tick);
+  function setBar(selector, pct) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+    var clamped = Math.max(0, Math.min(100, pct));
+    el.setAttribute('data-target-pct', clamped.toFixed(1));
+    if (el.classList.contains('in-view') || !window.IntersectionObserver) {
+      el.style.setProperty('--bar-pct', clamped.toFixed(1) + '%');
+    } else {
+      el.style.setProperty('--bar-pct', '0%');
     }
-
-    requestAnimationFrame(tick);
   }
 
   function populateStats() {
     var stats = computeStats();
-    var els = document.querySelectorAll('.stat-number');
-    for (var i = 0; i < els.length; i++) {
-      var key = els[i].getAttribute('data-target');
-      if (stats[key] !== undefined) {
-        animateCount(els[i], stats[key]);
-      }
-    }
+    var pct = stats.lessons > 0 ? (stats.complete / stats.lessons) * 100 : 0;
+    var phasePct = stats.phases > 0 ? (stats.completePhases / stats.phases) * 100 : 0;
+    var glossaryCount = (typeof GLOSSARY !== 'undefined') ? GLOSSARY.length : 0;
+
+    setText('[data-stat="complete-frac"]', stats.complete + ' / ' + stats.lessons);
+    setText('[data-stat="phases-frac"]', stats.completePhases + ' / ' + stats.phases);
+    setText('[data-stat="glossary-count"]', String(glossaryCount));
+    setBar('[data-bar="complete"]', pct);
+    setBar('[data-bar="phases"]', phasePct);
+    setBar('[data-bar="languages"]', 100);
+    setBar('[data-bar="glossary"]', glossaryCount > 0 ? 100 : 0);
+  }
+
+  function setText(selector, value) {
+    var el = document.querySelector(selector);
+    if (el) el.textContent = value;
   }
 
   function renderPhases() {
     var grid = document.getElementById('phasesGrid');
     if (!grid) return;
-    var html = '';
-    var rotations = [-1.5, 0.8, -0.7, 1.2, -1, 0.5, -0.3, 1.4, -1.2, 0.6, -0.8, 1.1, -0.4, 0.9, -1.3, 0.7, -0.6, 1.3, -0.9, 0.4];
     var hasProgress = !!window.AIFSProgress;
+    var html = '';
     for (var i = 0; i < PHASES.length; i++) {
       var p = PHASES[i];
       var total = p.lessons.length;
@@ -111,52 +121,53 @@
         }
         if (staticDone || userDone) done++;
       }
-      var pct = total > 0 ? Math.round((done / total) * 100) : 0;
-      var rot = rotations[i % rotations.length];
-      html += '<div class="phase-card fade-in ' + p.status.replace(/ /g, '-') + '" data-phase="' + i + '" style="transform:rotate(' + rot + 'deg)">';
-      html += '<span class="phase-card-status ' + p.status + '">' + p.status + '</span>';
-      html += '<span class="phase-card-num">Phase ' + String(p.id).padStart(2, '0') + '</span>';
-      html += '<div class="phase-card-name">' + escapeHtml(p.name) + '</div>';
-      html += '<div class="phase-card-desc">' + escapeHtml(p.desc) + '</div>';
-      html += '<div class="phase-card-progress"><div class="phase-card-progress-fill" style="width:' + pct + '%"></div></div>';
-      html += '<div class="phase-card-meta">' + done + '/' + total + ' lessons</div>';
+      var statusClass = p.status.replace(/ /g, '-');
+      var roman = toRoman(p.id);
+      var num = String(p.id).padStart(2, '0');
+      html += '<div class="toc-row" data-phase="' + i + '">';
+      html += '<span class="toc-num">' + roman + '.</span>';
+      html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
+      html += '<span class="toc-meta">' + done + ' / ' + total + '</span>';
+      html += '<span class="toc-meta">' + num + '</span>';
       html += '</div>';
     }
     grid.innerHTML = html;
+
+    // Re-apply per-row stagger delays for the freshly created rows.
+    initStaggerIndex();
+
+    // If the reveal observer has already initialised (body.js-anim is set),
+    // the IntersectionObserver is only watching the *original* rows it was
+    // given at startup. Re-rendering via innerHTML replaces those nodes with
+    // brand-new elements that are NOT being observed, so they would otherwise
+    // stay hidden forever under `body.js-anim .toc-row { opacity: 0 }`.
+    //
+    // Since the user has already seen the initial reveal animation, just mark
+    // the rebuilt rows as visible immediately (no second fade-in).
+    if (document.body.classList.contains('js-anim')) {
+      var newRows = grid.querySelectorAll('.toc-row');
+      for (var r = 0; r < newRows.length; r++) {
+        newRows[r].classList.add('in-view', 'visible');
+      }
+    }
   }
 
-  function renderRoadmap() {
-    var stats = computeStats();
-    var pct = stats.lessons > 0 ? Math.round((stats.complete / stats.lessons) * 100) : 0;
-
-    var fill = document.getElementById('roadmapFill');
-    if (fill) fill.style.width = pct + '%';
-
-    var pctEl = document.getElementById('roadmapPct');
-    if (pctEl) pctEl.textContent = pct + '%';
-
-    var grid = document.getElementById('roadmapGrid');
-    if (!grid) return;
-    var html = '';
-    for (var i = 0; i < PHASES.length; i++) {
-      var p = PHASES[i];
-      html += '<div class="roadmap-item fade-in">';
-      html += '<span class="roadmap-dot ' + p.status + '"></span>';
-      html += '<span class="roadmap-name">' + String(p.id).padStart(2, '0') + ' ' + escapeHtml(p.name) + '</span>';
-      html += '</div>';
+  function toRoman(num) {
+    var lookup = [
+      ['M', 1000], ['CM', 900], ['D', 500], ['CD', 400],
+      ['C', 100], ['XC', 90], ['L', 50], ['XL', 40],
+      ['X', 10], ['IX', 9], ['V', 5], ['IV', 4], ['I', 1]
+    ];
+    var n = parseInt(num, 10);
+    if (isNaN(n) || n <= 0) return String(num);
+    var out = '';
+    for (var k = 0; k < lookup.length; k++) {
+      while (n >= lookup[k][1]) {
+        out += lookup[k][0];
+        n -= lookup[k][1];
+      }
     }
-    grid.innerHTML = html;
-  }
-
-  function renderGlossaryPreview() {
-    var container = document.getElementById('glossaryPreview');
-    if (!container || typeof GLOSSARY === 'undefined') return;
-    var sample = GLOSSARY.slice(0, 8);
-    var html = '';
-    for (var i = 0; i < sample.length; i++) {
-      html += '<span class="glossary-chip">' + escapeHtml(sample[i].term) + '</span>';
-    }
-    container.innerHTML = html;
+    return out;
   }
 
   function initModal() {
@@ -165,21 +176,17 @@
     if (!overlay || !closeBtn) return;
 
     document.addEventListener('click', function (e) {
-      var card = e.target.closest('.phase-card');
-      if (card) {
-        var idx = parseInt(card.getAttribute('data-phase'), 10);
-        openModal(idx);
+      var row = e.target.closest('.toc-row, .phase-card');
+      if (row) {
+        var idx = parseInt(row.getAttribute('data-phase'), 10);
+        if (!isNaN(idx)) openModal(idx);
       }
     });
 
-    closeBtn.addEventListener('click', function () {
-      closeModal();
-    });
-
+    closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', function (e) {
       if (e.target === overlay) closeModal();
     });
-
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeModal();
     });
@@ -202,7 +209,7 @@
     if (!p) return;
     currentPhaseIdx = idx;
 
-    document.getElementById('modalPhaseNum').textContent = 'Phase ' + String(p.id).padStart(2, '0');
+    document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
     document.getElementById('modalTitle').textContent = p.name;
     document.getElementById('modalDesc').textContent = p.desc;
 
@@ -227,7 +234,7 @@
       var userComplete = hasProgress && lessonPath && window.AIFSProgress.isLessonComplete(lessonPath);
       if (userComplete) userDone++;
 
-      var statusClass = l.status;
+      var statusClass = l.status.replace(/ /g, '-');
       if (userComplete) statusClass = 'complete';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
@@ -237,7 +244,7 @@
       } else {
         html += '<a>' + escapeHtml(l.name) + '</a>';
       }
-      html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '">' + escapeHtml(l.type) + '</span>';
+      html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span>';
       html += '<span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span>';
 
       var actionHtml = '';
@@ -246,7 +253,7 @@
       }
       var toggleHtml = '';
       if (hasProgress && lessonPath) {
-        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '">' + (userComplete ? '\u2713' : '+') + '</button>';
+        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '">' + (userComplete ? '✓' : '+') + '</button>';
       }
       html += (actionHtml || '<span class="modal-lesson-read-placeholder" aria-hidden="true"></span>') + toggleHtml;
       html += '</div>';
@@ -276,7 +283,7 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">completed by you</span> <span class="modal-progress-pct">' + pct + '%</span>';
+        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">completed</span> <span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
@@ -293,15 +300,9 @@
       if (currentPhaseIdx >= 0 && PHASES[currentPhaseIdx]) {
         renderModalLessons(PHASES[currentPhaseIdx]);
       }
-      updateHeroProgressStat();
+      populateStats();
       renderPhases();
     });
-  }
-
-  function updateHeroProgressStat() {
-    var stats = computeStats();
-    var el = document.querySelector('.stat-number[data-target="complete"]');
-    if (el) el.textContent = String(stats.complete);
   }
 
   function closeModal() {
@@ -313,12 +314,13 @@
     var btn = document.getElementById('copyBtn');
     var code = document.getElementById('cloneCmd');
     if (!btn || !code) return;
+    var originalLabel = btn.textContent;
+    var revertTimer = null;
     btn.addEventListener('click', function () {
       navigator.clipboard.writeText(code.textContent).then(function () {
-        btn.textContent = '\u2713';
-        setTimeout(function () {
-          btn.innerHTML = '&#128203;';
-        }, 1500);
+        btn.textContent = '✓';
+        if (revertTimer) clearTimeout(revertTimer);
+        revertTimer = setTimeout(function () { btn.textContent = originalLabel; }, 1500);
       });
     });
   }
@@ -336,40 +338,115 @@
   }
 
   function initFadeObserver() {
-    var els = document.querySelectorAll('.fade-in');
-    if (!els.length) return;
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    if (!window.IntersectionObserver || prefersReduced) {
+      document.querySelectorAll('.reveal, .fade-in, .stat-row-bar').forEach(function (el) {
+        el.classList.add('in-view', 'visible');
+        var target = el.getAttribute('data-target-pct');
+        if (target !== null) el.style.setProperty('--bar-pct', target + '%');
+      });
+      return;
+    }
+
+    document.body.classList.add('js-anim');
+
+    var els = document.querySelectorAll('.reveal, .fade-in, .stat-row-bar, .ascii-rule, .toc-row');
+    if (!els.length) return;
     var observer = new IntersectionObserver(function (entries) {
       for (var i = 0; i < entries.length; i++) {
         if (entries[i].isIntersecting) {
-          entries[i].target.classList.add('visible');
-          observer.unobserve(entries[i].target);
+          var el = entries[i].target;
+          el.classList.add('in-view', 'visible');
+          var target = el.getAttribute('data-target-pct');
+          if (target !== null) {
+            el.style.setProperty('--bar-pct', target + '%');
+          }
+          observer.unobserve(el);
         }
       }
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     for (var i = 0; i < els.length; i++) {
       observer.observe(els[i]);
     }
   }
 
+  function initStaggerIndex() {
+    var rows = document.querySelectorAll('.toc-list .toc-row');
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].style.setProperty('--stagger-delay', (i * 30) + 'ms');
+    }
+  }
+
+  function initScrollExplode() {
+    var containers = document.querySelectorAll('[data-svg-explode]');
+    if (!containers.length) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      for (var c = 0; c < containers.length; c++) applyExplode(containers[c], 1);
+      return;
+    }
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      for (var i = 0; i < containers.length; i++) {
+        var rect = containers[i].getBoundingClientRect();
+        var startEdge = vh;
+        var endEdge = vh * 0.35;
+        var raw = (startEdge - rect.top) / (startEdge - endEdge);
+        var progress = Math.max(0, Math.min(1, raw));
+        progress = 1 - Math.pow(1 - progress, 3);
+        applyExplode(containers[i], progress);
+      }
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+
+  function applyExplode(container, progress) {
+    // Each layer / label animates over its own window in [stagger_start, stagger_start + window].
+    // Sequential reveal: layer N waits for layer N-1 to mostly settle before starting.
+    var STAGGER_DENOM = 720; // higher → wider gaps between layer entrances
+    var WINDOW = 0.55;       // each layer's local animation duration as fraction of global progress
+
+    function localProgress(staggerAttr) {
+      var stagger = parseFloat(staggerAttr) || 0;
+      var start = stagger / STAGGER_DENOM;
+      var local = (progress - start) / WINDOW;
+      if (local < 0) local = 0;
+      if (local > 1) local = 1;
+      // ease-out cubic on the local segment
+      return 1 - Math.pow(1 - local, 3);
+    }
+
+    var layers = container.querySelectorAll('.explode-layer');
+    for (var i = 0; i < layers.length; i++) {
+      var final = parseFloat(layers[i].getAttribute('data-final')) || 0;
+      var lp = localProgress(layers[i].getAttribute('data-stagger'));
+      var dy = -final * lp;
+      layers[i].setAttribute('transform', 'translate(0, ' + dy.toFixed(2) + ')');
+      layers[i].setAttribute('opacity', lp.toFixed(3));
+    }
+    var labels = container.querySelectorAll('.explode-label');
+    for (var j = 0; j < labels.length; j++) {
+      var final2 = parseFloat(labels[j].getAttribute('data-final')) || 0;
+      var lp2 = localProgress(labels[j].getAttribute('data-stagger'));
+      var dy2 = -final2 * lp2;
+      labels[j].setAttribute('transform', 'translate(0, ' + dy2.toFixed(2) + ')');
+      labels[j].setAttribute('opacity', lp2.toFixed(3));
+    }
+  }
+
   function escapeHtml(str) {
     var div = document.createElement('div');
-    div.textContent = str;
+    div.textContent = str == null ? '' : str;
     return div.innerHTML;
   }
-})();
-
-(function() {
-  var viewer = document.querySelector('spline-viewer');
-  if (!viewer) return;
-  var interval = setInterval(function() {
-    var shadow = viewer.shadowRoot;
-    if (!shadow) return;
-    var style = document.createElement('style');
-    style.textContent = '#logo, a[href*="spline"], div[id="logo"] { display: none !important; height: 0 !important; overflow: hidden !important; }';
-    shadow.appendChild(style);
-    clearInterval(interval);
-  }, 500);
-  setTimeout(function() { clearInterval(interval); }, 10000);
 })();

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">STaR bootstrap loop (and how shortcuts sneak in)</text>
+
+  <!-- Left: the loop -->
+  <rect x="40" y="56" width="380" height="480" class="box"/>
+  <text x="230" y="80" text-anchor="middle" class="label">the STaR loop</text>
+
+  <rect x="60" y="100" width="340" height="56" class="cool"/>
+  <text x="230" y="124" text-anchor="middle" class="content">1. sample (rationale, answer)</text>
+  <text x="230" y="140" text-anchor="middle" class="small">base model, T &gt; 0</text>
+
+  <path d="M230 160 L230 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="186" width="340" height="56" class="hot"/>
+  <text x="230" y="210" text-anchor="middle" class="content">2. filter: keep if answer == label</text>
+  <text x="230" y="226" text-anchor="middle" class="small">discards incorrect rationales entirely</text>
+
+  <path d="M230 246 L230 266" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="272" width="340" height="56" class="cool"/>
+  <text x="230" y="296" text-anchor="middle" class="content">3. SFT on the kept rationales</text>
+  <text x="230" y="312" text-anchor="middle" class="small">teacher forcing on (problem, rationale, answer)</text>
+
+  <path d="M230 332 L230 352" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="358" width="340" height="56" class="cold"/>
+  <text x="230" y="382" text-anchor="middle" class="content">4. rationalize failures</text>
+  <text x="230" y="398" text-anchor="middle" class="small">inject answer, re-ask for the rationale</text>
+
+  <path d="M60 386 Q 20 386 20 140 Q 20 100 60 128" stroke="#1a1a1a" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="28" y="260" class="small">repeat</text>
+
+  <rect x="60" y="438" width="340" height="80" class="box"/>
+  <text x="230" y="458" text-anchor="middle" class="label">what the loop reinforces</text>
+  <text x="230" y="478" text-anchor="middle" class="content">sound rationale · right answer</text>
+  <text x="230" y="494" text-anchor="middle" class="content">shortcut rationale · right answer</text>
+  <text x="230" y="510" text-anchor="middle" class="small">both get kept. filter cannot tell them apart.</text>
+
+  <!-- Right: three variants -->
+  <rect x="450" y="56" width="410" height="480" class="box"/>
+  <text x="655" y="80" text-anchor="middle" class="label">three variants, three signal shapes</text>
+
+  <rect x="470" y="100" width="372" height="106" class="cool"/>
+  <text x="480" y="122" class="label">STaR (Zelikman 2022)</text>
+  <text x="480" y="142" class="content">keep-if-correct filter on generator.</text>
+  <text x="480" y="158" class="content">repeat SFT rounds.</text>
+  <text x="480" y="174" class="content">GPT-J + STaR ≈ fine-tuned 30x larger model</text>
+  <text x="480" y="190" class="content">on GSM8K (no new human labels).</text>
+
+  <rect x="470" y="212" width="372" height="110" class="cold"/>
+  <text x="480" y="234" class="label">V-STaR (Hosseini 2024)</text>
+  <text x="480" y="254" class="content">DPO-train a verifier on correct AND</text>
+  <text x="480" y="270" class="content">incorrect rationales (the STaR waste).</text>
+  <text x="480" y="286" class="content">inference: sample N, pick verifier's top.</text>
+  <text x="480" y="302" class="content">+4 to +17 pp over prior self-improve.</text>
+
+  <rect x="470" y="328" width="372" height="110" class="hot"/>
+  <text x="480" y="350" class="label">Quiet-STaR (Zelikman 2024)</text>
+  <text x="480" y="370" class="content">per-token internal rationale.</text>
+  <text x="480" y="386" class="content">end-of-thought token + mixing head.</text>
+  <text x="480" y="402" class="content">Mistral 7B GSM8K 5.9% -&gt; 10.9%</text>
+  <text x="480" y="418" class="content">no task-specific fine-tune.</text>
+
+  <rect x="470" y="444" width="372" height="84" class="box"/>
+  <text x="480" y="466" class="label">shared weakness</text>
+  <text x="480" y="486" class="content">all three use answer-conditioned gradient.</text>
+  <text x="480" y="502" class="content">shortcut-reasoning reaches the label.</text>
+  <text x="480" y="518" class="content">fix: process reward models + OOD eval.</text>
+</svg>

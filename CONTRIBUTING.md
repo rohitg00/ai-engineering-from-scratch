@@ -1,6 +1,26 @@
-# Contributing to AI Engineering from Scratch
+# Contributing
 
-Thank you for wanting to make AI education better for everyone.
+Lessons, translations, fixes, outputs — all welcome. One contribution per pull
+request keeps reviews fast and lets contributor counts and credit work
+correctly.
+
+## Important: the README and ROADMAP feed the website
+
+`site/build.js` parses `README.md`, `ROADMAP.md`, and `glossary/terms.md` to
+generate `site/data.js`. Two patterns must stay intact in any pull request that
+touches those files:
+
+- Phase headers in either `### Phase N: Name \`X lessons\`` form or
+  `<details><summary><b>Phase N — Name</b> ... <code>X lessons</code> ... <em>Description</em></summary>` form.
+- Lesson tables with the column shape `| # | Lesson | Type | Lang |` (or
+  `| # | Project | Combines | Lang |` for capstone tables). The `Lang` column
+  accepts plain text (`Python, TypeScript`) or the legacy emoji flags
+  (`🐍 🟦 🦀 🟣 ⚛️`); both are parser-equivalent.
+- ROADMAP status glyphs (`✅`, `🚧`, `⬚`) on phase headers and lesson rows.
+  Do not replace them with text — the parser keys off the exact characters.
+
+Run `node site/build.js` after editing those files; `git diff site/data.js`
+should show only the timestamp change if your edit was structural-safe.
 
 ## Ways to Contribute
 
@@ -133,3 +153,11 @@ More exercises and projects are always welcome, especially ones that connect mul
 ## Code of Conduct
 
 See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Be kind, be helpful, be constructive.
+
+## Style
+
+- Direct prose. Cut filler. Match the manual's tone, not marketing copy.
+- No decorative emojis in headings. Lang column emoji flags are the one
+  exception and only because the parser maps them.
+- Code runs as-is with the dependencies listed in the lesson.
+- Build from scratch first, framework second.

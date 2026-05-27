@@ -17,8 +17,6 @@ Sentiment is a working lab for classical NLP. If you understand why every naive 
 
 ## The Concept
 
-![Sentiment pipeline: tokens → features → classifier → label](./assets/sentiment.svg)
-
 Classical sentiment is a two-step recipe.
 
 1. **Represent.** Turn the text into a feature vector. BoW, TF-IDF, or n-grams.

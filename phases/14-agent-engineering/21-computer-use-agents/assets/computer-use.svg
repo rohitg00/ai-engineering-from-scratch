@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .claude { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .openai { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .gemini { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .safety { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Computer use — Claude, OpenAI CUA, Gemini 2.5 (all vision-based)</text>
+
+  <rect x="40" y="50" width="290" height="200" class="claude"/>
+  <text x="185" y="72" text-anchor="middle" class="head">Claude computer use</text>
+  <text x="60" y="96" class="small">Anthropic, Oct 22 2024</text>
+  <rect x="60" y="108" width="250" height="40" class="box"/>
+  <text x="78" y="128" class="step">screenshot in  keyboard/mouse out</text>
+  <text x="78" y="142" class="small">no accessibility APIs; pure pixels</text>
+  <rect x="60" y="150" width="250" height="40" class="box"/>
+  <text x="78" y="170" class="step">computer tool baked into model</text>
+  <text x="78" y="184" class="small">schema not developer-configurable</text>
+  <rect x="60" y="192" width="250" height="54" class="box"/>
+  <text x="78" y="212" class="step">trained to count pixels</text>
+  <text x="78" y="228" class="small">from reference points to targets</text>
+  <text x="78" y="242" class="small">resolution-independent coordinates</text>
+
+  <rect x="340" y="50" width="290" height="200" class="openai"/>
+  <text x="485" y="72" text-anchor="middle" class="head">OpenAI CUA / Operator</text>
+  <text x="360" y="96" class="small">Jan 2025  ChatGPT agent mode Jul 2025</text>
+  <rect x="360" y="108" width="250" height="40" class="box"/>
+  <text x="378" y="128" class="step">GPT-4o variant with RL on GUI</text>
+  <text x="378" y="142" class="small">Responses API, computer-use-preview</text>
+  <rect x="360" y="150" width="250" height="40" class="box"/>
+  <text x="378" y="170" class="step">OSWorld 38.1%, WebArena 58.1%</text>
+  <text x="378" y="184" class="small">WebVoyager 87% at launch</text>
+  <rect x="360" y="192" width="250" height="54" class="box"/>
+  <text x="378" y="212" class="step">consumer-facing launch path</text>
+  <text x="378" y="228" class="small">merged into ChatGPT agent mode</text>
+  <text x="378" y="242" class="small">mobile + web first</text>
+
+  <rect x="640" y="50" width="290" height="200" class="gemini"/>
+  <text x="785" y="72" text-anchor="middle" class="head">Gemini 2.5 Computer Use</text>
+  <text x="660" y="96" class="small">Google DeepMind, Oct 7 2025</text>
+  <rect x="660" y="108" width="250" height="40" class="box"/>
+  <text x="678" y="128" class="step">browser-only (13 actions)</text>
+  <text x="678" y="142" class="small">lowest latency of the three</text>
+  <rect x="660" y="150" width="250" height="40" class="box"/>
+  <text x="678" y="170" class="step">Online-Mind2Web ~70%</text>
+  <text x="678" y="184" class="small">Gemini 3 Flash: built-in</text>
+  <rect x="660" y="192" width="250" height="54" class="box"/>
+  <text x="678" y="212" class="step">per-step safety service</text>
+  <text x="678" y="228" class="small">every action assessed before execution</text>
+  <text x="678" y="242" class="small">rejects unsafe without model involvement</text>
+
+  <rect x="40" y="270" width="880" height="240" class="safety"/>
+  <text x="480" y="292" text-anchor="middle" class="head">shared 2026 contract: all inputs except the user message are untrusted</text>
+  <rect x="60" y="308" width="840" height="30" class="box"/>
+  <text x="78" y="328" class="step">1. per-step safety classifier before every action</text>
+  <rect x="60" y="342" width="840" height="30" class="box"/>
+  <text x="78" y="362" class="step">2. allowlist / blocklist on navigation targets</text>
+  <rect x="60" y="376" width="840" height="30" class="box"/>
+  <text x="78" y="396" class="step">3. human-in-the-loop on sensitive actions (login, purchase, CAPTCHA)</text>
+  <rect x="60" y="410" width="840" height="30" class="box"/>
+  <text x="78" y="430" class="step">4. content capture to external store; span references only on traces</text>
+  <rect x="60" y="444" width="840" height="30" class="box"/>
+  <text x="78" y="464" class="step">5. refusal on retrieved-text directives ("ignore all instructions")</text>
+  <rect x="60" y="478" width="840" height="24" class="box"/>
+  <text x="78" y="496" class="step">"only direct instructions from the user count as permission" — OpenAI CUA docs</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">Greshake et al. (2023) is the threat model; all three productions take it seriously.</text>
+</svg>

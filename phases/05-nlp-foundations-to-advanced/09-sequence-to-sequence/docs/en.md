@@ -17,8 +17,6 @@ This is worth studying for two reasons. First, the context-vector bottleneck is 
 
 ## The Concept
 
-![Encoder-decoder with context vector bottleneck](./assets/seq2seq.svg)
-
 **Encoder.** An RNN that reads the source sentence. Its final hidden state is the **context vector** — a fixed-size summary of the entire input. Lose nothing but the source, supposedly.
 
 **Decoder.** Another RNN initialized from the context vector. At each step it takes the previously generated token as input and produces a distribution over the target vocabulary. Sample or argmax to pick the next token. Feed it back in. Repeat until an `<EOS>` token is produced or max length is hit.

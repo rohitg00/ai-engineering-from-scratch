@@ -1,0 +1,90 @@
+{
+  "lesson": "04-multimodal-document-qa",
+  "title": "Capstone 04 — Multimodal Document QA (Vision-First PDF, Tables, Charts)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the 2026 frontier prefer vision-first late interaction over OCR-then-text on financial PDFs and scientific papers?",
+      "options": [
+        "Vision models are cheaper per page",
+        "OCR pipelines mangle rotated tables, dense equations, and chart imagery, losing half the signal",
+        "OCR is slower than rendering",
+        "OCR cannot run on GPUs"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What does late interaction mean in ColPali-style retrieval?",
+      "options": [
+        "Each query token scores against every patch token, and per-token maxima are summed via MaxSim",
+        "Embeddings are deferred until eval time",
+        "Embeddings are computed after the user clicks a result",
+        "The reranker only runs on the final candidate"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Roughly how many patch vectors does a ColQwen embedding produce per page, and what storage problem does that create?",
+      "options": [
+        "Around 2048 patch vectors per page, ballooning raw storage compared with single-vector indexes",
+        "Exactly 128 vectors, fitting cleanly in any vector DB",
+        "1 vector per page, no storage issue",
+        "16 vectors with negligible storage overhead"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does DocPruner do in this pipeline?",
+      "options": [
+        "Removes duplicate PDF pages before ingestion",
+        "Compresses the multi-vector index by keeping high-signal patches at about 50% with negligible accuracy loss",
+        "Rewrites the query embedding for shorter vectors",
+        "Crops bounding boxes around evidence regions"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is an OCR text channel still spliced in for some pages?",
+      "options": [
+        "It improves PDF rendering quality",
+        "VLMs cannot read images at 180 DPI",
+        "OCR is the primary retrieval modality",
+        "Equation-dense and table-heavy pages benefit from a text fallback alongside the image"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which benchmark does this capstone target for vision-first retrieval evaluation?",
+      "options": [
+        "RewardBench-2",
+        "SWE-bench Pro",
+        "ViDoRe v3",
+        "MMLU-Pro"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the rubric mean by evidence-region grounding?",
+      "options": [
+        "Compression ratio achieved by DocPruner",
+        "Re-ranker latency at the p99 tail",
+        "Total number of pages retrieved per query",
+        "Fraction of cited bounding boxes that actually contain the answer span"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

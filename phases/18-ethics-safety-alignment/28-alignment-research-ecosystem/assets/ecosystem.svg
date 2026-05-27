@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow28" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Alignment research ecosystem (2026)</text>
+
+  <rect x="60" y="60" width="200" height="180" class="box"/>
+  <text x="160" y="82" text-anchor="middle" class="head">MATS</text>
+  <text x="160" y="100" text-anchor="middle" class="small">talent pipeline</text>
+  <rect x="80" y="110" width="160" height="50" class="cool"/>
+  <text x="160" y="132" text-anchor="middle" class="step">527+ scholars</text>
+  <text x="160" y="150" text-anchor="middle" class="small">180+ papers, h-index 47</text>
+  <rect x="80" y="170" width="160" height="50" class="cool"/>
+  <text x="160" y="192" text-anchor="middle" class="step">90 scholars 2024</text>
+  <text x="160" y="210" text-anchor="middle" class="small">~80% safety careers</text>
+
+  <rect x="300" y="60" width="200" height="180" class="box"/>
+  <text x="400" y="82" text-anchor="middle" class="head">Redwood + Apollo</text>
+  <text x="400" y="100" text-anchor="middle" class="small">external evaluation</text>
+  <rect x="320" y="110" width="160" height="50" class="cold"/>
+  <text x="400" y="132" text-anchor="middle" class="step">Redwood: AI Control</text>
+  <text x="400" y="150" text-anchor="middle" class="small">ICML 2024</text>
+  <rect x="320" y="170" width="160" height="50" class="cold"/>
+  <text x="400" y="192" text-anchor="middle" class="step">Apollo: scheming</text>
+  <text x="400" y="210" text-anchor="middle" class="small">arXiv:2412.04984</text>
+
+  <rect x="540" y="60" width="200" height="180" class="box"/>
+  <text x="640" y="82" text-anchor="middle" class="head">METR + Eleos</text>
+  <text x="640" y="100" text-anchor="middle" class="small">task + welfare</text>
+  <rect x="560" y="110" width="160" height="50" class="cold"/>
+  <text x="640" y="132" text-anchor="middle" class="step">METR: task horizons</text>
+  <text x="640" y="150" text-anchor="middle" class="small">policy comparisons</text>
+  <rect x="560" y="170" width="160" height="50" class="cold"/>
+  <text x="640" y="192" text-anchor="middle" class="step">Eleos: welfare</text>
+  <text x="640" y="210" text-anchor="middle" class="small">Opus 4 assessment</text>
+
+  <rect x="780" y="60" width="160" height="180" class="box"/>
+  <text x="860" y="82" text-anchor="middle" class="head">labs</text>
+  <text x="860" y="100" text-anchor="middle" class="small">Anthropic / OpenAI / DM</text>
+  <rect x="800" y="110" width="120" height="50" class="hot"/>
+  <text x="860" y="132" text-anchor="middle" class="step">safety teams</text>
+  <text x="860" y="150" text-anchor="middle" class="small">200+ MATS alumni</text>
+  <rect x="800" y="170" width="120" height="50" class="hot"/>
+  <text x="860" y="192" text-anchor="middle" class="step">RSP / PF / FSF</text>
+  <text x="860" y="210" text-anchor="middle" class="small">(Lesson 18)</text>
+
+  <path d="M 260 150 L 300 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow28)" fill="none"/>
+  <path d="M 500 150 L 540 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow28)" fill="none"/>
+  <path d="M 740 150 L 780 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow28)" fill="none"/>
+
+  <rect x="60" y="280" width="880" height="210" class="box"/>
+  <text x="480" y="305" text-anchor="middle" class="head">multi-org publications as quality control</text>
+  <text x="80" y="335" class="small">Sleeper Agents (Lesson 7): Anthropic + Redwood. external co-author validates the threat model.</text>
+  <text x="80" y="355" class="small">Alignment Faking (Lesson 9): Anthropic + Redwood. same pattern.</text>
+  <text x="80" y="375" class="small">Anti-Scheming Training (Lesson 8): Apollo + OpenAI. external evaluator inside the training collab.</text>
+  <text x="80" y="395" class="small">AI Control (Lesson 10): Redwood, then published at ICML 2024; UK AISI partner from 2025.</text>
+  <text x="80" y="425" class="small">regulatory counterparts: UK AISI (Feb 2025 rename), US CAISI (Jun 2025), EU AI Office.</text>
+  <text x="80" y="445" class="small">MATS -&gt; labs is the dominant flow. retention: 80% on safety/security.</text>
+  <text x="80" y="475" class="small">gap: China, India, Africa alignment ecosystems are less documented publicly as of 2026.</text>
+</svg>

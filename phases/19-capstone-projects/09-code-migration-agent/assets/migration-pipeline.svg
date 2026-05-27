@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .edge { stroke: #555; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">migration pipeline — deterministic recipes + agent fallback</text>
+
+  <rect x="40" y="60" width="220" height="100" class="cool"/>
+  <text x="150" y="86" text-anchor="middle" class="step">deterministic pass</text>
+  <text x="150" y="106" text-anchor="middle" class="small">OpenRewrite (Java)</text>
+  <text x="150" y="122" text-anchor="middle" class="small">libcst (Python)</text>
+  <text x="150" y="142" text-anchor="middle" class="small">70-80% of rewrites</text>
+
+  <rect x="300" y="60" width="220" height="100" class="cold"/>
+  <text x="410" y="86" text-anchor="middle" class="step">Daytona sandbox</text>
+  <text x="410" y="106" text-anchor="middle" class="small">target runtime preinstalled</text>
+  <text x="410" y="122" text-anchor="middle" class="small">branch-scoped, read-only input</text>
+  <text x="410" y="142" text-anchor="middle" class="small">per-branch build</text>
+
+  <rect x="560" y="60" width="360" height="100" class="dsk"/>
+  <text x="740" y="86" text-anchor="middle" class="step">agent loop</text>
+  <text x="740" y="106" text-anchor="middle" class="small">Claude Opus 4.7 + GPT-5.4-Codex</text>
+  <text x="740" y="122" text-anchor="middle" class="small">classify failure -&gt; patch -&gt; rerun</text>
+  <text x="740" y="142" text-anchor="middle" class="small">budget: 30min / $8 / 20 turns</text>
+
+  <path d="M260,110 L300,110" class="edge"/>
+  <path d="M520,110 L560,110" class="edge"/>
+
+  <rect x="40" y="200" width="440" height="310" class="box"/>
+  <text x="260" y="222" text-anchor="middle" class="head">failure taxonomy (across 50 repos)</text>
+
+  <rect x="60" y="244" width="400" height="28" class="hot"/>
+  <text x="80" y="263" class="small">dep_upgrade_required         30%</text>
+  <rect x="60" y="276" width="400" height="28" class="hot"/>
+  <text x="80" y="295" class="small">build_tool_drift             20%</text>
+  <rect x="60" y="308" width="400" height="28" class="hot"/>
+  <text x="80" y="327" class="small">custom_annotation            18%</text>
+  <rect x="60" y="340" width="400" height="28" class="cool"/>
+  <text x="80" y="359" class="small">syntax_edge_case             17%</text>
+  <rect x="60" y="372" width="400" height="28" class="cool"/>
+  <text x="80" y="391" class="small">test_flake                   15%</text>
+
+  <rect x="60" y="410" width="400" height="90" class="box"/>
+  <text x="260" y="432" text-anchor="middle" class="head">what the taxonomy unlocks</text>
+  <text x="260" y="452" text-anchor="middle" class="small">top 3 classes become the next recipe target</text>
+  <text x="260" y="470" text-anchor="middle" class="small">agent stops relearning mechanical patterns</text>
+  <text x="260" y="488" text-anchor="middle" class="small">per-class pass rate drives Moderne-style policy</text>
+
+  <rect x="510" y="200" width="410" height="310" class="box"/>
+  <text x="715" y="222" text-anchor="middle" class="head">metrics (pass set)</text>
+  <rect x="530" y="244" width="380" height="32" class="cool"/>
+  <text x="720" y="265" text-anchor="middle" class="step">MigrationBench pass@1: 60-70% target</text>
+
+  <rect x="530" y="284" width="380" height="32" class="cool"/>
+  <text x="720" y="305" text-anchor="middle" class="step">mean $/repo: $2-4 at 50-repo scale</text>
+
+  <rect x="530" y="324" width="380" height="32" class="cool"/>
+  <text x="720" y="345" text-anchor="middle" class="step">coverage delta: within +/- 1% of base</text>
+
+  <rect x="530" y="364" width="380" height="32" class="cool"/>
+  <text x="720" y="385" text-anchor="middle" class="step">time-to-green p50: &lt; 10 min</text>
+
+  <rect x="530" y="404" width="380" height="96" class="dsk"/>
+  <text x="720" y="426" text-anchor="middle" class="head">compare-to-baseline</text>
+  <text x="720" y="446" text-anchor="middle" class="small">deterministic-only: 35-45% pass rate</text>
+  <text x="720" y="464" text-anchor="middle" class="small">the agent layer is where the delta lives</text>
+  <text x="720" y="486" text-anchor="middle" class="caption">publish side-by-side, by failure class</text>
+</svg>

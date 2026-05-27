@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-label="FIG_005 — exploded view of multi-head attention block in a transformer encoder">
+  <defs>
+    <pattern id="paper" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="0" cy="0" r="1" fill="#1a1a1a" fill-opacity="0.06"/>
+    </pattern>
+    <style>
+      .ink { fill: #1a1a1a; }
+      .mute { fill: #7a7a78; }
+      .bp { fill: #3553ff; }
+      .face { fill: rgba(53, 83, 255, 0.06); }
+      .face-strong { fill: rgba(53, 83, 255, 0.18); }
+      .stroke { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="820" fill="#fafaf5"/>
+  <rect width="1200" height="820" fill="url(#paper)"/>
+
+  <text class="mono bp" x="40" y="44" font-size="11" letter-spacing="2.4">FIG_005</text>
+  <text class="mono mute" x="1160" y="44" font-size="11" letter-spacing="2.4" text-anchor="end">PHASE 07 · LESSON 01 · MULTI-HEAD ATTENTION</text>
+  <line x1="40" y1="64" x2="1160" y2="64" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.35"/>
+
+  <!-- INPUT row: Q K V projections, separated above the stack -->
+  <g transform="translate(120, 130)">
+    <text class="mono bp" x="0" y="0" font-size="9" letter-spacing="2">FIG_005.A — INPUT PROJECTIONS</text>
+
+    <g transform="translate(40, 30)">
+      <rect class="face-strong" x="0" y="0" width="64" height="22" transform="skewX(-22)"/>
+      <rect class="stroke" stroke-width="1.2" x="0" y="0" width="64" height="22" transform="skewX(-22)"/>
+      <text class="mono bp" x="22" y="14" font-size="11" letter-spacing="1.6">Q</text>
+      <text class="mono mute" x="-4" y="46" font-size="8" letter-spacing="1.4">QUERY</text>
+    </g>
+    <g transform="translate(160, 30)">
+      <rect class="face-strong" x="0" y="0" width="64" height="22" transform="skewX(-22)"/>
+      <rect class="stroke" stroke-width="1.2" x="0" y="0" width="64" height="22" transform="skewX(-22)"/>
+      <text class="mono bp" x="22" y="14" font-size="11" letter-spacing="1.6">K</text>
+      <text class="mono mute" x="-4" y="46" font-size="8" letter-spacing="1.4">KEY</text>
+    </g>
+    <g transform="translate(280, 30)">
+      <rect class="face-strong" x="0" y="0" width="64" height="22" transform="skewX(-22)"/>
+      <rect class="stroke" stroke-width="1.2" x="0" y="0" width="64" height="22" transform="skewX(-22)"/>
+      <text class="mono bp" x="22" y="14" font-size="11" letter-spacing="1.6">V</text>
+      <text class="mono mute" x="-4" y="46" font-size="8" letter-spacing="1.4">VALUE</text>
+    </g>
+  </g>
+
+  <!-- Stack of 4 attention heads, isometric, tall vertical spacing so labels never overlap -->
+  <g transform="translate(160, 270)">
+    <!-- Head 4 (bottom, emphasis) -->
+    <g transform="translate(60, 360)">
+      <polygon class="face-strong" points="0,0 320,-80 480,-40 160,40"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-80 480,-40 160,40"/>
+    </g>
+    <!-- Head 3 -->
+    <g transform="translate(40, 280)">
+      <polygon class="face" points="0,0 320,-80 480,-40 160,40"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-80 480,-40 160,40"/>
+    </g>
+    <!-- Head 2 -->
+    <g transform="translate(20, 200)">
+      <polygon class="face" points="0,0 320,-80 480,-40 160,40"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-80 480,-40 160,40"/>
+    </g>
+    <!-- Head 1 (top) -->
+    <g transform="translate(0, 120)">
+      <polygon class="face" points="0,0 320,-80 480,-40 160,40"/>
+      <polygon class="stroke" stroke-width="1.4" points="0,0 320,-80 480,-40 160,40"/>
+    </g>
+
+    <!-- leader lines from each head's right edge to right-margin labels -->
+    <g class="stroke" stroke-width="0.8" stroke-dasharray="3 3">
+      <line x1="500" y1="80"  x2="640" y2="-130"/>
+      <line x1="520" y1="160" x2="640" y2="-30"/>
+      <line x1="540" y1="240" x2="640" y2="70"/>
+      <line x1="560" y1="320" x2="640" y2="170"/>
+    </g>
+  </g>
+
+  <!-- Right margin: per-head behavior labels -->
+  <g transform="translate(800, 160)">
+    <g transform="translate(0, 0)">
+      <text class="mono bp" x="0" y="0" font-size="11" letter-spacing="1.8">HEAD 1 · LOCAL SYNTAX</text>
+      <text class="mono mute" x="0" y="16" font-size="9" letter-spacing="1.2">attends to neighbors only</text>
+    </g>
+    <g transform="translate(0, 100)">
+      <text class="mono bp" x="0" y="0" font-size="11" letter-spacing="1.8">HEAD 2 · NOUN-ADJ DEPS</text>
+      <text class="mono mute" x="0" y="16" font-size="9" letter-spacing="1.2">attends from a noun back to its modifier</text>
+    </g>
+    <g transform="translate(0, 200)">
+      <text class="mono bp" x="0" y="0" font-size="11" letter-spacing="1.8">HEAD 3 · LONG-RANGE COREF</text>
+      <text class="mono mute" x="0" y="16" font-size="9" letter-spacing="1.2">attends across the sentence to track entities</text>
+    </g>
+    <g transform="translate(0, 300)">
+      <text class="mono bp" x="0" y="0" font-size="11" letter-spacing="1.8">HEAD 4 · OUTPUT POSITION</text>
+      <text class="mono mute" x="0" y="16" font-size="9" letter-spacing="1.2">attends to the next-token slot</text>
+    </g>
+  </g>
+
+  <!-- Concat + W_O note -->
+  <g transform="translate(160, 700)">
+    <text class="mono bp" x="0" y="0" font-size="9" letter-spacing="2">FIG_005.B — OUTPUT</text>
+    <rect class="face" x="0" y="14" width="480" height="28"/>
+    <rect class="stroke" stroke-width="1.2" x="0" y="14" width="480" height="28"/>
+    <text class="mono ink" x="14" y="34" font-size="11" letter-spacing="0.8">CONCAT(HEAD₁, HEAD₂, HEAD₃, HEAD₄) · W_O  →  D_MODEL DIM</text>
+  </g>
+
+  <!-- Math formula on the right under labels -->
+  <g transform="translate(800, 580)">
+    <text class="mono ink" x="0" y="0" font-size="13" letter-spacing="0.6">Attention(Q, K, V)</text>
+    <text class="mono ink" x="0" y="22" font-size="13" letter-spacing="0.6">= softmax( Q · Kᵀ / √d_k ) · V</text>
+    <text class="mono mute" x="0" y="44" font-size="9" letter-spacing="1.4">PER HEAD · D_K = D_MODEL / N_HEADS</text>
+  </g>
+
+  <line x1="40" y1="760" x2="1160" y2="760" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.35"/>
+  <text class="mono mute" x="1160" y="788" font-size="10" letter-spacing="2" text-anchor="end">© FIG_005 · MULTI-HEAD ATTENTION · MIT</text>
+</svg>

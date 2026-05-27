@@ -25,7 +25,7 @@ function parseRoadmap(content) {
   let currentPhase = null;
   let currentPhaseStatus = null;
 
-  for (const line of content.split('\n')) {
+  for (const line of content.split(/\r?\n/)) {
     // Match phase headers like: ## Phase 0: Setup & Tooling — ✅
     const phaseMatch = line.match(/^##\s+Phase\s+(\d+).*?—\s*(✅|🚧|⬚)/);
     if (phaseMatch) {
@@ -60,9 +60,10 @@ function parseReadme(content, roadmapStatuses) {
   // Phase 0 is in a <table> block, phases 1-19 are in <details> blocks
   // We'll parse line by line to extract phase headers and lesson tables
 
-  const lines = content.split('\n');
+  const lines = content.split(/\r?\n/);
   let currentPhase = null;
   let inLessonTable = false;
+  let isCapstoneTable = false;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -113,6 +114,7 @@ function parseReadme(content, roadmapStatuses) {
     // Detect start of lesson table
     if (currentPhase && line.match(/^\|\s*#\s*\|\s*Lesson/)) {
       inLessonTable = true;
+      isCapstoneTable = false;
       continue;
     }
 
@@ -188,13 +190,19 @@ function parseReadme(content, roadmapStatuses) {
           status = 'complete';
         }
 
-        currentPhase.lessons.push({
+        // Capstone tables use the middle column for prerequisite phase tokens
+        // (e.g., "P11 P13 P14"), not a Build/Learn enum. Keep `type` on the
+        // Build/Learn axis so CSS selectors (data-type="Build"/"Learn") stay
+        // valid, and emit the prereq string in a dedicated `combines` field.
+        const lessonEntry = {
           name: lessonName.trim(),
           status,
-          type: type.trim(),
+          type: isCapstoneTable ? 'Capstone' : type.trim(),
           lang: lang.trim() || '—',
-          ...(url && { url })
-        });
+          ...(isCapstoneTable && { combines: type.trim() }),
+          ...(url && { url }),
+        };
+        currentPhase.lessons.push(lessonEntry);
       }
     }
 
@@ -206,6 +214,7 @@ function parseReadme(content, roadmapStatuses) {
     // Also detect capstone table format (# | Project | Combines | Lang)
     if (currentPhase && line.match(/^\|\s*#\s*\|\s*Project/)) {
       inLessonTable = true;
+      isCapstoneTable = true;
       continue;
     }
   }
@@ -213,12 +222,50 @@ function parseReadme(content, roadmapStatuses) {
   return phases;
 }
 
-// ─── Parse glossary/terms.md ─────────────────────────────────────────
+// ─── Extract lesson summary + keywords from docs/en.md ───────────────
+/**
+ * Single-pass read of a lesson's docs/en.md.
+ *
+ * Returns:
+ *   summary  — first `> blockquote` line (the lesson's one-liner motto).
+ *   keywords — all `### H3` heading texts joined by ' · '.
+ *              H3 headings are the densest vocabulary in a lesson doc
+ *              (e.g. "Scaled dot-product · Causal masking · KV cache"),
+ *              so they extend search coverage without bloating data.js.
+ *
+ * Both fields are empty strings when the file is absent or has no
+ * matching content — expected for planned lessons with no docs yet.
+ */
+function extractLessonMeta(relPath) {
+  const docPath = path.join(REPO_ROOT, relPath, 'docs', 'en.md');
+  const result = { summary: '', keywords: '' };
+  try {
+    const lines = fs.readFileSync(docPath, 'utf8').split(/\r?\n/);
+    const h3s = [];
+    for (const raw of lines) {
+      const line = raw.trim();
+      if (!result.summary && line.startsWith('> ') && line.length > 3) {
+        const s = line.slice(2).trim();
+        result.summary = s.length > 180 ? s.slice(0, 177) + '…' : s;
+      }
+      if (line.startsWith('### ')) {
+        const heading = line.slice(4).trim();
+        if (heading) h3s.push(heading);
+      }
+    }
+    if (h3s.length) result.keywords = h3s.join(' · ');
+  } catch (_) {
+    // File absent or unreadable — expected for planned lessons.
+  }
+  return result;
+}
+
+// ─── Parse glossary/terms.md ──────────────────────────────────────────
 function parseGlossary(content) {
   const terms = [];
   let currentTerm = null;
 
-  for (const line of content.split('\n')) {
+  for (const line of content.split(/\r?\n/)) {
     // Match term headers: ### Agent or ### Adam (Optimizer)
     const termMatch = line.match(/^###\s+(.+)/);
     if (termMatch) {
@@ -254,6 +301,94 @@ function parseGlossary(content) {
   return terms;
 }
 
+// ─── Discover outputs/ artifacts (skills / prompts / agents) ──────────
+function parseFrontmatter(text) {
+  if (!text.startsWith('---')) return null;
+  const end = text.indexOf('\n---', 4);
+  if (end === -1) return null;
+  const block = text.slice(4, end);
+  const result = {};
+  for (const raw of block.split(/\r?\n/)) {
+    const line = raw.trimEnd();
+    if (!line || line.startsWith('#') || !line.includes(':')) continue;
+    const idx = line.indexOf(':');
+    const key = line.slice(0, idx).trim();
+    let value = line.slice(idx + 1).trim();
+    if (value.startsWith('[') && value.endsWith(']')) {
+      const inner = value.slice(1, -1).trim();
+      result[key] = inner
+        ? inner.split(',').map(s => s.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean)
+        : [];
+    } else if ((value.startsWith('"') && value.endsWith('"')) ||
+               (value.startsWith("'") && value.endsWith("'"))) {
+      result[key] = value.slice(1, -1);
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
+}
+
+function discoverArtifacts() {
+  const artifacts = [];
+  const phasesDir = path.join(REPO_ROOT, 'phases');
+  if (!fs.existsSync(phasesDir)) return artifacts;
+  const VALID_TYPES = ['skill', 'prompt', 'agent'];
+  for (const phaseDirName of fs.readdirSync(phasesDir).sort()) {
+    const phaseMatch = phaseDirName.match(/^([0-9]{2})-([a-z0-9-]+)$/);
+    if (!phaseMatch) continue;
+    const phaseId = parseInt(phaseMatch[1], 10);
+    const phaseDir = path.join(phasesDir, phaseDirName);
+    for (const lessonDirName of fs.readdirSync(phaseDir).sort()) {
+      const lessonMatch = lessonDirName.match(/^([0-9]{2})-([a-z0-9-]+)$/);
+      if (!lessonMatch) continue;
+      const lessonId = parseInt(lessonMatch[1], 10);
+      const lessonRel = `phases/${phaseDirName}/${lessonDirName}`;
+      const outputsDir = path.join(phaseDir, lessonDirName, 'outputs');
+      if (fs.existsSync(outputsDir)) {
+        for (const file of fs.readdirSync(outputsDir).sort()) {
+          if (!file.endsWith('.md')) continue;
+          const stem = file.replace(/\.md$/, '');
+          const type = VALID_TYPES.find(t => stem.startsWith(`${t}-`));
+          if (!type) continue;
+          let meta = {};
+          try {
+            meta = parseFrontmatter(fs.readFileSync(path.join(outputsDir, file), 'utf8')) || {};
+          } catch (_) {}
+          artifacts.push({
+            kind: type,
+            name: (meta.name || stem).trim(),
+            description: (meta.description || '').trim(),
+            tags: Array.isArray(meta.tags) ? meta.tags : [],
+            phase: phaseId,
+            lesson: lessonId,
+            lessonPath: lessonRel,
+            file: `${lessonRel}/outputs/${file}`,
+          });
+        }
+      }
+      const missionPath = path.join(phaseDir, lessonDirName, 'mission.md');
+      if (fs.existsSync(missionPath)) {
+        let firstLine = '';
+        try {
+          firstLine = fs.readFileSync(missionPath, 'utf8').split(/\r?\n/)[0].replace(/^#\s+/, '').trim();
+        } catch (_) {}
+        artifacts.push({
+          kind: 'mission',
+          name: firstLine || `${lessonDirName} mission`,
+          description: '',
+          tags: [],
+          phase: phaseId,
+          lesson: lessonId,
+          lessonPath: lessonRel,
+          file: `${lessonRel}/mission.md`,
+        });
+      }
+    }
+  }
+  return artifacts;
+}
+
 // ─── Main build ──────────────────────────────────────────────────────
 function build() {
   console.log('📖 Reading source files...');
@@ -271,6 +406,22 @@ function build() {
   console.log('🔍 Parsing glossary/terms.md...');
   const glossaryTerms = parseGlossary(glossary);
 
+  console.log('🔍 Discovering outputs + Phase 14 missions...');
+  const artifacts = discoverArtifacts();
+
+  console.log('📚 Extracting lesson summaries + keywords from docs/en.md...');
+  let summarized = 0, withKeywords = 0;
+  for (const phase of phases) {
+    for (const lesson of phase.lessons) {
+      if (lesson.url) {
+        const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
+        const meta = extractLessonMeta(relPath);
+        if (meta.summary)  { lesson.summary  = meta.summary;  summarized++;   }
+        if (meta.keywords) { lesson.keywords = meta.keywords; withKeywords++; }
+      }
+    }
+  }
+
   // Stats
   let totalLessons = 0;
   let completeLessons = 0;
@@ -283,7 +434,9 @@ function build() {
   console.log(`   Phases: ${phases.length}`);
   console.log(`   Lessons: ${totalLessons}`);
   console.log(`   Complete: ${completeLessons}`);
+  console.log(`   Summaries: ${summarized}, Keywords: ${withKeywords}`);
   console.log(`   Glossary terms: ${glossaryTerms.length}`);
+  console.log(`   Artifacts: ${artifacts.length}`);
 
   // Generate data.js
   const output = `// Auto-generated by build.js — do not edit manually.
@@ -292,6 +445,8 @@ function build() {
 const PHASES = ${JSON.stringify(phases, null, 2)};
 
 const GLOSSARY = ${JSON.stringify(glossaryTerms, null, 2)};
+
+const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
 `;
 
   fs.writeFileSync(OUTPUT_PATH, output, 'utf8');

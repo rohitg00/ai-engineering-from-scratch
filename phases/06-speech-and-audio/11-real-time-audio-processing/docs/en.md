@@ -3,7 +3,7 @@
 > Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget.
 
 **Type:** Build
-**Languages:** Python, Rust
+**Languages:** Python
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 6 · 04 (ASR), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

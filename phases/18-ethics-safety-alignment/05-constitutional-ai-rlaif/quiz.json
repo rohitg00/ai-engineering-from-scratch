@@ -1,0 +1,78 @@
+{
+  "lesson": "05-constitutional-ai-rlaif",
+  "title": "Constitutional AI and RLAIF",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the core substitution in Constitutional AI versus standard RLHF?",
+      "options": [
+        "It replaces the human preference labeler with an AI labeler that reads a list of principles",
+        "It replaces PPO with DPO",
+        "It uses synthetic prompts instead of real ones",
+        "It removes the reward model entirely"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the first (SFT) phase of Constitutional AI do?",
+      "options": [
+        "Trains a reward model on AI-generated preferences only",
+        "Produces an initial response, critiques it under a sampled constitution principle, then revises and uses the revision as SFT target",
+        "Generates synthetic principles by clustering labeler comments",
+        "Performs PPO with a constitution-derived reward"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the second (RLAIF) phase do?",
+      "options": [
+        "Skips PPO and applies a single supervised loss",
+        "Has humans re-label the SFT outputs",
+        "Distills the constitution into the tokenizer",
+        "Trains a reward model on AI-generated preferences from a feedback model and runs PPO against it"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the tier order in Anthropic's January 2026 four-tier Claude constitution?",
+      "options": [
+        "Platform rules > avoid catastrophe > helpful > broadly ethical",
+        "Broadly ethical > helpful > platform rules > avoid catastrophe",
+        "Avoid catastrophic outcomes > follow Anthropic guidelines > broadly ethical > helpful and candid",
+        "Helpful > broadly ethical > platform rules > avoid catastrophe"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which failure mode is NOT necessarily fixed by switching from RLHF to RLAIF?",
+      "options": [
+        "Labeler psychological inconsistency",
+        "Reward hacking / Goodhart's Law",
+        "Labeler cost",
+        "Labeler scarcity"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the headline shift between Constitutional Classifiers v1 and v2 (2026)?",
+      "options": [
+        "v2 increased compute overhead from 1% to 23.7%",
+        "v2 removed the classifier and relied on constitution alone",
+        "v2 only runs on input, not output",
+        "v2 dropped compute overhead from 23.7% to about 1% with low successful attack rate"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "16-openai-agents-sdk",
+  "title": "OpenAI Agents SDK: Handoffs, Guardrails, Tracing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What are the five primitives of the OpenAI Agents SDK?",
+      "options": [
+        "Agent, Handoff, Guardrail, Session, Tracing",
+        "Node, Edge, Reducer, Checkpointer, Subgraph",
+        "Plan, Worker, Solver, Evaluator, Reflector",
+        "Tool, Prompt, Model, Memory, Trace"
+      ],
+      "correct": 0,
+      "explanation": "The SDK ships these five primitives."
+    },
+    {
+      "stage": "pre",
+      "question": "How does the model see a handoff?",
+      "options": [
+        "As a custom HTTP endpoint",
+        "As a tool named transfer_to_<agent_name>",
+        "As a system message",
+        "As a special token"
+      ],
+      "correct": 1,
+      "explanation": "Handoffs are exposed as tools with the transfer_to_<agent> name shape."
+    },
+    {
+      "stage": "check",
+      "question": "Which three guardrail types does the SDK ship?",
+      "options": [
+        "Input, output, and tool guardrails",
+        "Pre, post, and inline guardrails",
+        "Hard, soft, and best-effort guardrails",
+        "Static, dynamic, and federated guardrails"
+      ],
+      "correct": 0,
+      "explanation": "Input (first agent), output (last agent), and tool (per function tool) guardrails."
+    },
+    {
+      "stage": "check",
+      "question": "What is the difference between parallel and blocking guardrails?",
+      "options": [
+        "Parallel runs alongside the main LLM (lower latency, wastes tokens on trip); blocking runs first (no wasted tokens on trip)",
+        "Blocking is asynchronous; parallel is synchronous",
+        "Parallel costs more money always",
+        "Blocking only works on output"
+      ],
+      "correct": 0,
+      "explanation": "Parallel optimizes latency at the cost of wasted tokens when tripped; blocking saves tokens but adds latency."
+    },
+    {
+      "stage": "check",
+      "question": "How is tracing enabled in the SDK?",
+      "options": [
+        "Off by default; enable per agent",
+        "On by default; OPENAI_AGENTS_DISABLE_TRACING=1 opts out",
+        "Only via OpenTelemetry collector",
+        "Only on the hosted dashboard"
+      ],
+      "correct": 1,
+      "explanation": "Spans for LLM, tool, handoff, and guardrail emit by default; an env var disables them."
+    },
+    {
+      "stage": "post",
+      "question": "What is handoff drift and how does the lesson recommend mitigating it?",
+      "options": [
+        "Tracing falls behind; reduce span volume",
+        "Agent A hands off to B which hands back to A in a loop; add a hop counter",
+        "Sessions overflow; archive old ones",
+        "Guardrails desync; retrain"
+      ],
+      "correct": 1,
+      "explanation": "A hop counter caps transfer chains before they loop indefinitely."
+    },
+    {
+      "stage": "post",
+      "question": "Why are built-in tools a guardrail gap?",
+      "options": [
+        "They are slower than function tools",
+        "Tool guardrails only fire on function tools; built-in tools (file reader, web fetch) need separate policy",
+        "They cannot be traced",
+        "They do not support handoffs"
+      ],
+      "correct": 1,
+      "explanation": "Per-tool guardrails cover function tools; built-in tools require a separate policy layer."
+    }
+  ]
+}

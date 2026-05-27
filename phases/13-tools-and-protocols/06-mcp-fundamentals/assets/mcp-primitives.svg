@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="490" y="26" text-anchor="middle" class="title">MCP primitives and three-phase lifecycle</text>
+
+  <rect x="40" y="60" width="440" height="240" class="cool"/>
+  <text x="260" y="82" text-anchor="middle" class="head">server primitives</text>
+
+  <rect x="60" y="100" width="400" height="50" class="box"/>
+  <text x="80" y="120" class="step">tools</text>
+  <text x="80" y="138" class="small">callable actions; tools/list, tools/call</text>
+
+  <rect x="60" y="160" width="400" height="50" class="box"/>
+  <text x="80" y="180" class="step">resources</text>
+  <text x="80" y="198" class="small">URI-addressable data; resources/list, read, subscribe</text>
+
+  <rect x="60" y="220" width="400" height="50" class="box"/>
+  <text x="80" y="240" class="step">prompts</text>
+  <text x="80" y="258" class="small">reusable templates; prompts/list, prompts/get</text>
+
+  <rect x="500" y="60" width="440" height="240" class="cold"/>
+  <text x="720" y="82" text-anchor="middle" class="head">client primitives</text>
+
+  <rect x="520" y="100" width="400" height="50" class="box"/>
+  <text x="540" y="120" class="step">roots</text>
+  <text x="540" y="138" class="small">URIs the server may touch; roots/list</text>
+
+  <rect x="520" y="160" width="400" height="50" class="box"/>
+  <text x="540" y="180" class="step">sampling</text>
+  <text x="540" y="198" class="small">server asks client's LLM for a completion; sampling/createMessage</text>
+
+  <rect x="520" y="220" width="400" height="50" class="box"/>
+  <text x="540" y="240" class="step">elicitation</text>
+  <text x="540" y="258" class="small">server asks user for structured input; elicitation/create</text>
+
+  <rect x="40" y="320" width="900" height="220" class="box"/>
+  <text x="490" y="342" text-anchor="middle" class="head">three-phase lifecycle (JSON-RPC 2.0)</text>
+
+  <rect x="60" y="360" width="270" height="160" class="hot"/>
+  <text x="195" y="382" text-anchor="middle" class="step">1 / initialize</text>
+  <text x="74" y="408" class="small">client -&gt; initialize {caps,</text>
+  <text x="74" y="424" class="small">                 protocolVersion}</text>
+  <text x="74" y="442" class="small">server -&gt; result {caps, info,</text>
+  <text x="74" y="458" class="small">                  protocolVersion}</text>
+  <text x="74" y="478" class="small">client -&gt; notify initialized</text>
+  <text x="74" y="502" class="small">capability negotiation complete</text>
+
+  <rect x="350" y="360" width="270" height="160" class="cool"/>
+  <text x="485" y="382" text-anchor="middle" class="step">2 / operation</text>
+  <text x="364" y="408" class="small">tools/list, tools/call</text>
+  <text x="364" y="424" class="small">resources/list, resources/read</text>
+  <text x="364" y="442" class="small">prompts/list, prompts/get</text>
+  <text x="364" y="462" class="small">sampling/createMessage (S-&gt;C)</text>
+  <text x="364" y="478" class="small">elicitation/create (S-&gt;C)</text>
+  <text x="364" y="496" class="small">notifications/*_changed</text>
+
+  <rect x="640" y="360" width="280" height="160" class="cold"/>
+  <text x="780" y="382" text-anchor="middle" class="step">3 / shutdown</text>
+  <text x="654" y="408" class="small">transport-level close; no</text>
+  <text x="654" y="424" class="small">JSON-RPC method. stdio EOF or</text>
+  <text x="654" y="442" class="small">HTTP session expiry terminates.</text>
+  <text x="654" y="472" class="small">cleanup: flush pending responses,</text>
+  <text x="654" y="488" class="small">cancel outstanding tasks, log.</text>
+</svg>

@@ -3,7 +3,7 @@
 > Containers make "works on my machine" a thing of the past.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Docker
 **Prerequisites:** Phase 0, Lessons 01 and 03
 **Time:** ~60 minutes
 

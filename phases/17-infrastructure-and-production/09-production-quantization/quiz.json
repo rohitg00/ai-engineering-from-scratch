@@ -1,0 +1,78 @@
+{
+  "lesson": "09-production-quantization",
+  "title": "Production Quantization — AWQ, GPTQ, GGUF K-quants, FP8, MXFP4/NVFP4",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which quantization format does the lesson call the production default for CPU and edge serving?",
+      "options": [
+        "FP8",
+        "GGUF Q4_K_M / Q5_K_M",
+        "AWQ INT4",
+        "NVFP4"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which format is the lesson's pick for datacenter GPU serving when multi-LoRA is required in vLLM?",
+      "options": [
+        "GGUF Q4_K_M",
+        "AWQ",
+        "GPTQ with Marlin kernels",
+        "NVFP4"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the \"my model is 4 GB now\" trap with AWQ?",
+      "options": [
+        "AWQ is incompatible with vLLM",
+        "AWQ requires INT8 KV cache",
+        "AWQ does not actually shrink weights",
+        "AWQ only shrinks weights; KV cache and activations are separate and can add 30-50 GB at production batch sizes"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does calibrating AWQ on generic web text hurt domain models?",
+      "options": [
+        "It disables Marlin kernels",
+        "The algorithm makes wrong decisions about which weights to protect, dropping domain accuracy (for example several Pass@1 points on HumanEval)",
+        "It only works on AMD GPUs",
+        "It increases model size"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "For a reasoning-heavy workload where quality is non-negotiable, which precision does the lesson recommend by default?",
+      "options": [
+        "GPTQ INT4",
+        "INT2 GGUF",
+        "NVFP4 weights",
+        "FP8 weights"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which 2026 quantization limitation does the lesson call out for NVFP4 in early 2026?",
+      "options": [
+        "No LoRA support yet",
+        "Not supported on H100",
+        "Only runs on CPU",
+        "Cannot be combined with FP8 KV cache"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

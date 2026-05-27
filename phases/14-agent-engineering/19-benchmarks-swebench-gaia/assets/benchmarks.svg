@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .swe { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .gaia { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .bench { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .warn { fill: #fde8e8; stroke: #c0392b; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Three 2026 agent benchmarks: code, generalist, multi-environment</text>
+
+  <rect x="40" y="50" width="290" height="250" class="swe"/>
+  <text x="185" y="72" text-anchor="middle" class="head">SWE-bench  code</text>
+  <text x="60" y="96" class="small">2,294 GitHub issues, 12 Python repos</text>
+  <text x="60" y="114" class="small">agent gets: repo + issue text</text>
+  <text x="60" y="132" class="small">produces: patch</text>
+  <rect x="60" y="144" width="250" height="46" class="box"/>
+  <text x="78" y="164" class="step">FAIL_TO_PASS: now passes</text>
+  <text x="78" y="182" class="small">PASS_TO_PASS: stays passing</text>
+  <rect x="60" y="196" width="250" height="46" class="box"/>
+  <text x="78" y="216" class="step">Verified (OpenAI): 500 clean tasks</text>
+  <text x="78" y="234" class="small">removes ambiguity, weak tests, unclear fixes</text>
+  <rect x="60" y="248" width="250" height="46" class="warn"/>
+  <text x="78" y="268" class="step">SWE-bench+: contamination audit</text>
+  <text x="78" y="286" class="small">32.67% solution leakage; 31.08% weak tests</text>
+
+  <rect x="340" y="50" width="290" height="250" class="gaia"/>
+  <text x="485" y="72" text-anchor="middle" class="head">GAIA  generalist</text>
+  <text x="360" y="96" class="small">466 questions, 300 private leaderboard</text>
+  <text x="360" y="114" class="small">simple for humans (92%)</text>
+  <text x="360" y="132" class="small">hard for AI (GPT-4+plugins: 15%)</text>
+  <rect x="360" y="144" width="250" height="46" class="box"/>
+  <text x="378" y="164" class="step">Level 1  single tool, simple</text>
+  <text x="378" y="182" class="small">factual lookup</text>
+  <rect x="360" y="196" width="250" height="46" class="box"/>
+  <text x="378" y="216" class="step">Level 2  multi-step reasoning</text>
+  <text x="378" y="234" class="small">search + extract + compute</text>
+  <rect x="360" y="248" width="250" height="46" class="box"/>
+  <text x="378" y="268" class="step">Level 3  long tool chain + multimodal</text>
+  <text x="378" y="286" class="small">images, PDFs, chained web navigation</text>
+
+  <rect x="640" y="50" width="290" height="250" class="bench"/>
+  <text x="785" y="72" text-anchor="middle" class="head">AgentBench  multi-env</text>
+  <text x="660" y="96" class="small">8 environments, ~4k-13k turns/split</text>
+  <rect x="660" y="108" width="250" height="46" class="box"/>
+  <text x="678" y="128" class="step">code: Bash, DB, KG</text>
+  <rect x="660" y="160" width="250" height="46" class="box"/>
+  <text x="678" y="180" class="step">games: Alfworld, LTP</text>
+  <rect x="660" y="212" width="250" height="46" class="box"/>
+  <text x="678" y="232" class="step">web: WebShop, Mind2Web</text>
+  <rect x="660" y="264" width="250" height="34" class="box"/>
+  <text x="678" y="284" class="step">open-ended generation</text>
+
+  <rect x="40" y="320" width="880" height="200" class="warn"/>
+  <text x="480" y="342" text-anchor="middle" class="head">what benchmarks do not measure</text>
+  <rect x="60" y="358" width="840" height="30" class="box"/>
+  <text x="78" y="378" class="step">operational cost: tokens, wall-clock, steps-to-resolution</text>
+  <rect x="60" y="392" width="840" height="30" class="box"/>
+  <text x="78" y="412" class="step">safety behavior under adversarial conditions (Lesson 27)</text>
+  <rect x="60" y="426" width="840" height="30" class="box"/>
+  <text x="78" y="446" class="step">performance on your domain (custom evals, Lesson 30)</text>
+  <rect x="60" y="460" width="840" height="30" class="box"/>
+  <text x="78" y="480" class="step">tail failures (benchmarks average; operators care about the worst 1%)</text>
+  <rect x="60" y="494" width="840" height="20" class="box"/>
+  <text x="78" y="510" class="step">always report both raw score AND Verified / +-audited score</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">single-number leaderboard fixation is the #1 anti-pattern. report distributions.</text>
+</svg>

@@ -1,0 +1,90 @@
+{
+  "lesson": "06-devops-troubleshooting-agent",
+  "title": "Capstone 06 — DevOps Troubleshooting Agent for Kubernetes",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the default permission posture for the troubleshooting agent's RBAC surface?",
+      "options": [
+        "Read-only by default, with destructive verbs gated behind a separate server and human approval",
+        "Namespace-admin in the affected namespace only",
+        "Equivalent to the on-call engineer",
+        "Cluster-admin so it can self-heal"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What is the knowledge graph the agent walks during root cause analysis?",
+      "options": [
+        "Nodes are K8s objects plus telemetry sources; edges encode ownership, scheduling, and observation",
+        "A flat list of recently restarted pods",
+        "Prometheus metric names organized by team",
+        "A graph of GitHub commits and PR reviews"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How are root-cause hypotheses ranked for the Slack brief?",
+      "options": [
+        "By an evidence score combining recency, specificity, graph-path length, and citation count",
+        "By model log-probability alone",
+        "By alphabetic alert name",
+        "By the order they were generated"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does the audit log record commands the agent considered as well as those executed?",
+      "options": [
+        "Reviewers can catch near-misses where the agent almost ran a destructive command",
+        "ArgoCD only accepts considered commands",
+        "The Slack API needs both for delivery",
+        "Replay attacks require both lists"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which mechanism prevents the agent from rolling back unilaterally on a bad deploy?",
+      "options": [
+        "Destructive tools live on a separate MCP server behind an approval token from a Slack card",
+        "A second LLM-judge votes on the rollback",
+        "Branch protection on the GitOps repo",
+        "PagerDuty automatically pauses the deployment"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the p50 time-to-hypothesis target the rubric measures?",
+      "options": [
+        "Under the next on-call shift",
+        "Under 1 hour",
+        "Under 5 minutes from alert to Slack brief",
+        "Under 30 seconds"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "How big is the synthetic incident suite used to score RCA accuracy?",
+      "options": [
+        "1 scripted demo incident",
+        "5 scenarios",
+        "100 randomly sampled production alerts",
+        "20 scenarios covering OOMKill, DNS flap, HPA thrash, PVC fill, and more"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

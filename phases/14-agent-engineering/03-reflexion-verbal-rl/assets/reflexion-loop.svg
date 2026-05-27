@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Reflexion — Actor, Evaluator, Self-Reflector, Episodic memory</text>
+
+  <rect x="60" y="60" width="180" height="60" class="cool"/>
+  <text x="150" y="84" text-anchor="middle" class="step">Actor</text>
+  <text x="150" y="102" text-anchor="middle" class="small">ReAct trajectory</text>
+
+  <rect x="60" y="180" width="180" height="60" class="cold"/>
+  <text x="150" y="204" text-anchor="middle" class="step">Evaluator</text>
+  <text x="150" y="222" text-anchor="middle" class="small">binary / heuristic / self</text>
+
+  <rect x="60" y="300" width="180" height="60" class="hot"/>
+  <text x="150" y="324" text-anchor="middle" class="step">Self-Reflector</text>
+  <text x="150" y="342" text-anchor="middle" class="small">natural-language diagnosis</text>
+
+  <rect x="60" y="420" width="180" height="80" class="dsk"/>
+  <text x="150" y="446" text-anchor="middle" class="step">Episodic memory</text>
+  <text x="150" y="464" text-anchor="middle" class="small">bounded list of reflections</text>
+  <text x="150" y="480" text-anchor="middle" class="small">prepended next trial</text>
+
+  <line x1="150" y1="120" x2="150" y2="180" class="edge" marker-end="url(#arrow)"/>
+  <line x1="150" y1="240" x2="150" y2="300" class="edge" marker-end="url(#arrow)"/>
+  <line x1="150" y1="360" x2="150" y2="420" class="edge" marker-end="url(#arrow)"/>
+  <path d="M240,450 Q340,450 340,90 L240,90" class="edge" marker-end="url(#arrow)"/>
+  <text x="330" y="270" class="small">feed-back loop</text>
+
+  <rect x="380" y="60" width="540" height="200" class="box"/>
+  <text x="650" y="84" text-anchor="middle" class="head">three evaluator types</text>
+
+  <rect x="400" y="100" width="500" height="40" class="cool"/>
+  <text x="420" y="124" class="step">scalar  binary/numeric ground truth (tests pass, answer correct)</text>
+
+  <rect x="400" y="148" width="500" height="40" class="cold"/>
+  <text x="420" y="172" class="step">heuristic  stuck-loop, too-many-steps, repeated-action signatures</text>
+
+  <rect x="400" y="196" width="500" height="40" class="hot"/>
+  <text x="420" y="220" class="step">self-eval  LLM-as-judge on own trace (weak; pair with tool grounding)</text>
+
+  <rect x="380" y="280" width="540" height="220" class="box"/>
+  <text x="650" y="304" text-anchor="middle" class="head">2026 instantiations</text>
+  <text x="400" y="328" class="step">Letta sleep-time compute</text>
+  <text x="400" y="346" class="small">a separate reflector agent runs off the hot path, writes to memory blocks</text>
+  <text x="400" y="368" class="step">pro-workflow /learn-rule</text>
+  <text x="400" y="386" class="small">manual reflection capture into project memory — curated over time</text>
+  <text x="400" y="408" class="step">Claude Code /memory</text>
+  <text x="400" y="426" class="small">CLAUDE.md functions as long-lived episodic buffer across sessions</text>
+  <text x="400" y="448" class="step">LangGraph reflection nodes</text>
+  <text x="400" y="466" class="small">graph node that scores and routes to refine-or-finish</text>
+  <text x="400" y="488" class="small">memory rot: compact, TTL, or dedupe — accumulating reflections go stale</text>
+</svg>

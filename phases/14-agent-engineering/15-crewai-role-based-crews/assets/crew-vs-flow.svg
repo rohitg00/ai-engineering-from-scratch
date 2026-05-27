@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .crew { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .flow { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .primitive { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">CrewAI — Agent, Task, Crew, Process + Flow for production</text>
+
+  <rect x="40" y="50" width="880" height="140" class="primitive"/>
+  <text x="480" y="72" text-anchor="middle" class="head">four primitives</text>
+  <rect x="60" y="88" width="200" height="86" class="box"/>
+  <text x="160" y="108" text-anchor="middle" class="step">Agent</text>
+  <text x="78" y="128" class="small">role + goal + backstory + tools</text>
+  <text x="78" y="144" class="small">backstory shapes tone + judgment</text>
+  <text x="78" y="160" class="small">keep it tight (&lt;200 words)</text>
+  <rect x="280" y="88" width="200" height="86" class="box"/>
+  <text x="380" y="108" text-anchor="middle" class="step">Task</text>
+  <text x="298" y="128" class="small">description + expected_output</text>
+  <text x="298" y="144" class="small">assigned to one Agent</text>
+  <text x="298" y="160" class="small">reusable; composes into Crews</text>
+  <rect x="500" y="88" width="200" height="86" class="box"/>
+  <text x="600" y="108" text-anchor="middle" class="step">Crew</text>
+  <text x="518" y="128" class="small">container: Agents + Tasks</text>
+  <text x="518" y="144" class="small">owns the Process</text>
+  <text x="518" y="160" class="small">Sequential | Hierarchical | Consensual</text>
+  <rect x="720" y="88" width="180" height="86" class="box"/>
+  <text x="810" y="108" text-anchor="middle" class="step">Process</text>
+  <text x="738" y="128" class="small">execution strategy</text>
+  <text x="738" y="144" class="small">Hierarchical adds manager</text>
+  <text x="738" y="160" class="small">reach only for 4+ specialists</text>
+
+  <rect x="40" y="210" width="420" height="300" class="crew"/>
+  <text x="250" y="232" text-anchor="middle" class="head">Crew  autonomous collaboration</text>
+  <rect x="60" y="248" width="380" height="40" class="box"/>
+  <text x="78" y="270" class="step">researcher  outliner  drafter</text>
+  <text x="78" y="284" class="small">free-form; Process picks shape at runtime</text>
+  <rect x="60" y="296" width="380" height="40" class="box"/>
+  <text x="78" y="318" class="step">Hierarchical: manager Agent picks next specialist</text>
+  <rect x="60" y="344" width="380" height="40" class="box"/>
+  <text x="78" y="366" class="step">good for: exploration, first drafts, brainstorming</text>
+  <rect x="60" y="392" width="380" height="40" class="box"/>
+  <text x="78" y="414" class="step">bad for: prod replay, deterministic audits, SLAs</text>
+  <rect x="60" y="440" width="380" height="60" class="box"/>
+  <text x="78" y="462" class="step">output variance: high</text>
+  <text x="78" y="478" class="small">LLM picks Task order if Process=Hierarchical</text>
+  <text x="78" y="494" class="small">debug path: read the trace; no graph to read</text>
+
+  <rect x="480" y="210" width="440" height="300" class="flow"/>
+  <text x="700" y="232" text-anchor="middle" class="head">Flow  event-driven deterministic</text>
+  <rect x="500" y="248" width="400" height="40" class="box"/>
+  <text x="518" y="270" class="step">@start  researched  outlined  drafted</text>
+  <text x="518" y="284" class="small">code owns the graph; engineers own the shape</text>
+  <rect x="500" y="296" width="400" height="40" class="box"/>
+  <text x="518" y="318" class="step">@listen("researched"): fires when that topic emits</text>
+  <rect x="500" y="344" width="400" height="40" class="box"/>
+  <text x="518" y="366" class="step">good for: production, replay, SLAs, audits</text>
+  <rect x="500" y="392" width="400" height="40" class="box"/>
+  <text x="518" y="414" class="step">bad for: open-ended creativity</text>
+  <rect x="500" y="440" width="400" height="60" class="box"/>
+  <text x="518" y="462" class="step">2026 docs: start production with Flow</text>
+  <text x="518" y="478" class="small">fold Crews in as sub-steps when autonomy earns cost</text>
+  <text x="518" y="494" class="small">observability: every event is a span</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">same three-step task; Crew is fluid, Flow is fixed. choice is operational, not architectural.</text>
+</svg>

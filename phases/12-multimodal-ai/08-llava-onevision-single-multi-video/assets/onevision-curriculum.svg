@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">LLaVA-OneVision — unified token budget and three-stage curriculum</text>
+
+  <rect x="30" y="50" width="900" height="200" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">shared visual-token budget ~4000 across three scenarios</text>
+
+  <rect x="60" y="90" width="260" height="140" class="hot"/>
+  <text x="190" y="110" text-anchor="middle" class="step">single-image</text>
+  <text x="190" y="130" text-anchor="middle" class="small">AnyRes 9 tiles + thumbnail</text>
+  <text x="190" y="146" text-anchor="middle" class="small">each tile 384, 2x pool</text>
+  <text x="190" y="162" text-anchor="middle" class="small">182 tokens per tile</text>
+  <text x="190" y="182" text-anchor="middle" class="step">total 1820 tokens</text>
+  <text x="190" y="202" text-anchor="middle" class="small">perception + OCR + detail</text>
+
+  <rect x="340" y="90" width="260" height="140" class="cool"/>
+  <text x="470" y="110" text-anchor="middle" class="step">multi-image</text>
+  <text x="470" y="130" text-anchor="middle" class="small">6 images at 384</text>
+  <text x="470" y="146" text-anchor="middle" class="small">no pooling, 729 per image</text>
+  <text x="470" y="162" text-anchor="middle" class="small">cross-image reasoning</text>
+  <text x="470" y="182" text-anchor="middle" class="step">total 4374 tokens</text>
+  <text x="470" y="202" text-anchor="middle" class="small">compare, count, diff</text>
+
+  <rect x="620" y="90" width="280" height="140" class="cold"/>
+  <text x="760" y="110" text-anchor="middle" class="step">video</text>
+  <text x="760" y="130" text-anchor="middle" class="small">32 frames at 384</text>
+  <text x="760" y="146" text-anchor="middle" class="small">3x pool -&gt; 81 per frame</text>
+  <text x="760" y="162" text-anchor="middle" class="small">temporal grounding</text>
+  <text x="760" y="182" text-anchor="middle" class="step">total 2592 tokens</text>
+  <text x="760" y="202" text-anchor="middle" class="small">events, action recog</text>
+
+  <rect x="30" y="270" width="900" height="250" class="box"/>
+  <text x="480" y="292" text-anchor="middle" class="head">three-stage curriculum + emergent skills</text>
+
+  <rect x="60" y="310" width="200" height="190" class="reg"/>
+  <text x="160" y="332" text-anchor="middle" class="step">Stage SI</text>
+  <text x="160" y="354" text-anchor="middle" class="small">single-image only</text>
+  <text x="160" y="370" text-anchor="middle" class="small">AnyRes high-res</text>
+  <text x="160" y="390" text-anchor="middle" class="small">perception base</text>
+  <text x="160" y="410" text-anchor="middle" class="small">MMMU + OCR + detail</text>
+  <text x="160" y="444" text-anchor="middle" class="caption">reverse order (video first)</text>
+  <text x="160" y="460" text-anchor="middle" class="caption">loses 2-4 MMMU</text>
+  <text x="160" y="476" text-anchor="middle" class="caption">per OneVision ablation</text>
+
+  <path d="M 265 410 L 325 410" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="330" y="310" width="200" height="190" class="cool"/>
+  <text x="430" y="332" text-anchor="middle" class="step">Stage OV</text>
+  <text x="430" y="354" text-anchor="middle" class="small">50% single</text>
+  <text x="430" y="370" text-anchor="middle" class="small">30% multi-image</text>
+  <text x="430" y="390" text-anchor="middle" class="small">20% video</text>
+  <text x="430" y="410" text-anchor="middle" class="small">unified budget</text>
+  <text x="430" y="444" text-anchor="middle" class="caption">cross-scenario alignment</text>
+  <text x="430" y="460" text-anchor="middle" class="caption">structural reasoning</text>
+
+  <path d="M 535 410 L 595 410" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="600" y="310" width="200" height="190" class="hot"/>
+  <text x="700" y="332" text-anchor="middle" class="step">Stage TT</text>
+  <text x="700" y="354" text-anchor="middle" class="small">task-specific mix</text>
+  <text x="700" y="370" text-anchor="middle" class="small">e.g., agent / doc</text>
+  <text x="700" y="390" text-anchor="middle" class="small">/ robotics / video</text>
+  <text x="700" y="410" text-anchor="middle" class="small">deployment tune</text>
+  <text x="700" y="444" text-anchor="middle" class="caption">optional, preserves base</text>
+
+  <rect x="820" y="310" width="100" height="190" class="reg"/>
+  <text x="870" y="332" text-anchor="middle" class="step">emergent</text>
+  <text x="870" y="354" text-anchor="middle" class="small">multi-camera</text>
+  <text x="870" y="370" text-anchor="middle" class="small">reasoning</text>
+  <text x="870" y="390" text-anchor="middle" class="small">set-of-mark</text>
+  <text x="870" y="406" text-anchor="middle" class="small">prompt</text>
+  <text x="870" y="426" text-anchor="middle" class="small">iPhone screen</text>
+  <text x="870" y="442" text-anchor="middle" class="small">agent</text>
+  <text x="870" y="476" text-anchor="middle" class="caption">none trained</text>
+</svg>

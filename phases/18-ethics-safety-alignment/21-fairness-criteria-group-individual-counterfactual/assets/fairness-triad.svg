@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Fairness: three families, one impossibility</text>
+
+  <rect x="40" y="60" width="280" height="200" class="box"/>
+  <text x="180" y="85" text-anchor="middle" class="head">group fairness</text>
+  <rect x="60" y="100" width="240" height="50" class="cool"/>
+  <text x="180" y="122" text-anchor="middle" class="step">demographic parity</text>
+  <text x="180" y="140" text-anchor="middle" class="small">P(Y=1 | A=a) equal</text>
+  <rect x="60" y="160" width="240" height="50" class="cool"/>
+  <text x="180" y="182" text-anchor="middle" class="step">equalized odds</text>
+  <text x="180" y="200" text-anchor="middle" class="small">TPR/FPR equal across groups</text>
+  <rect x="60" y="220" width="240" height="30" class="cool"/>
+  <text x="180" y="242" text-anchor="middle" class="step">conditional use accuracy equality</text>
+
+  <rect x="340" y="60" width="280" height="200" class="box"/>
+  <text x="480" y="85" text-anchor="middle" class="head">individual fairness</text>
+  <rect x="360" y="100" width="240" height="80" class="cold"/>
+  <text x="480" y="125" text-anchor="middle" class="step">Dwork et al. 2012</text>
+  <text x="480" y="145" text-anchor="middle" class="small">|f(x) - f(x')| &lt;= L * d(x, x')</text>
+  <text x="480" y="165" text-anchor="middle" class="small">Lipschitz; d task-specific</text>
+  <rect x="360" y="190" width="240" height="60" class="cold"/>
+  <text x="480" y="215" text-anchor="middle" class="step">similar individuals</text>
+  <text x="480" y="233" text-anchor="middle" class="small">get similar decisions</text>
+
+  <rect x="640" y="60" width="280" height="200" class="box"/>
+  <text x="780" y="85" text-anchor="middle" class="head">counterfactual fairness</text>
+  <rect x="660" y="100" width="240" height="80" class="hot"/>
+  <text x="780" y="125" text-anchor="middle" class="step">Kusner et al. 2017</text>
+  <text x="780" y="145" text-anchor="middle" class="small">invariant under attribute</text>
+  <text x="780" y="165" text-anchor="middle" class="small">counterfactual</text>
+  <rect x="660" y="190" width="240" height="60" class="hot"/>
+  <text x="780" y="215" text-anchor="middle" class="step">needs causal DAG</text>
+  <text x="780" y="233" text-anchor="middle" class="small">backtracking (2024) sidesteps</text>
+
+  <rect x="40" y="290" width="880" height="200" class="box"/>
+  <text x="480" y="315" text-anchor="middle" class="head">impossibility + reconciliation</text>
+  <text x="60" y="345" class="small">Chouldechova, KMR 2017: under unequal base rates, the three group criteria cannot all hold.</text>
+  <text x="60" y="365" class="small">policy choice: demographic parity gives equal access; equalized odds preserves accuracy equity;</text>
+  <text x="60" y="385" class="small">conditional use accuracy equality preserves predictive-value equity. each has a constituency.</text>
+  <text x="60" y="415" class="small">2024 NeurIPS: CF-accuracy trade-off is bounded; model-agnostic conversion of optimal-unfair -&gt; CF.</text>
+  <text x="60" y="435" class="small">backtracking counterfactuals (arXiv:2401.13935): avoid intervening on protected attributes.</text>
+  <text x="60" y="455" class="small">ICLR 2024 reconciliation: with explicit causal graphs, group and counterfactual are facets of one structure.</text>
+  <text x="60" y="475" class="small">impossibility still holds on base rates; reconciliation is about what is being measured.</text>
+</svg>

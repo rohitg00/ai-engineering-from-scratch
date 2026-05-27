@@ -19,8 +19,6 @@ Worth knowing. This lesson introduces the tagsets, the baselines, and the point 
 
 ## The Concept
 
-![POS tag + dependency parse example](./assets/pos-parse.svg)
-
 **POS tagging** labels each token with a grammatical category. The **Penn Treebank (PTB)** tagset is the English default. 36 tags with distinctions the casual reader finds fussy: `NN` singular noun, `NNS` plural noun, `NNP` proper noun singular, `VBD` verb past tense, `VBZ` verb 3rd person singular present, and so on. The **Universal Dependencies (UD)** tagset is coarser (17 tags) and language-agnostic; it became the default for cross-lingual work.
 
 ```

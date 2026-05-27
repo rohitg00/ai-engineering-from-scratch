@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">InstructGPT three-stage alignment pipeline</text>
+
+  <rect x="40" y="60" width="260" height="260" class="box"/>
+  <text x="170" y="82" text-anchor="middle" class="head">Stage 1 — SFT</text>
+
+  <rect x="60" y="100" width="220" height="60" class="cool"/>
+  <text x="170" y="125" text-anchor="middle" class="step">prompts + demos (13k)</text>
+  <text x="170" y="145" text-anchor="middle" class="small">labeler-written responses</text>
+
+  <rect x="60" y="180" width="220" height="60" class="cool"/>
+  <text x="170" y="205" text-anchor="middle" class="step">cross-entropy fine-tune</text>
+  <text x="170" y="225" text-anchor="middle" class="small">pi_SFT(y | x)</text>
+
+  <text x="170" y="285" text-anchor="middle" class="caption">now the model answers,</text>
+  <text x="170" y="301" text-anchor="middle" class="caption">but cannot rank answers.</text>
+
+  <rect x="350" y="60" width="260" height="260" class="box"/>
+  <text x="480" y="82" text-anchor="middle" class="head">Stage 2 — Reward model</text>
+
+  <rect x="370" y="100" width="220" height="60" class="cold"/>
+  <text x="480" y="125" text-anchor="middle" class="step">K completions per prompt</text>
+  <text x="480" y="145" text-anchor="middle" class="small">labeler ranks pairs</text>
+
+  <rect x="370" y="180" width="220" height="60" class="cold"/>
+  <text x="480" y="202" text-anchor="middle" class="step">Bradley-Terry fit</text>
+  <text x="480" y="222" text-anchor="middle" class="small">-log sig(r_w - r_l)</text>
+
+  <text x="480" y="285" text-anchor="middle" class="caption">scalar proxy for</text>
+  <text x="480" y="301" text-anchor="middle" class="caption">labeler preference.</text>
+
+  <rect x="660" y="60" width="260" height="260" class="box"/>
+  <text x="790" y="82" text-anchor="middle" class="head">Stage 3 — PPO</text>
+
+  <rect x="680" y="100" width="220" height="60" class="hot"/>
+  <text x="790" y="125" text-anchor="middle" class="step">maximize r(x,y)</text>
+  <text x="790" y="145" text-anchor="middle" class="small">- beta * KL(pi || pi_SFT)</text>
+
+  <rect x="680" y="180" width="220" height="60" class="hot"/>
+  <text x="790" y="202" text-anchor="middle" class="step">+ gamma * log pi(D_pretrain)</text>
+  <text x="790" y="222" text-anchor="middle" class="small">PPO-ptx: alignment tax fix</text>
+
+  <text x="790" y="285" text-anchor="middle" class="caption">RM score climbs,</text>
+  <text x="790" y="301" text-anchor="middle" class="caption">KL anchor holds ground.</text>
+
+  <path d="M 300 190 L 350 190" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M 610 190 L 660 190" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+  <rect x="40" y="360" width="880" height="130" class="box"/>
+  <text x="480" y="385" text-anchor="middle" class="head">why 1.3B InstructGPT beats 175B GPT-3 on human preference</text>
+  <text x="60" y="412" class="small">1 / alignment is a different axis from capability; the 1.3B model does the task humans asked for.</text>
+  <text x="60" y="432" class="small">2 / capability floor is still set by the base model — RLHF cannot teach new facts.</text>
+  <text x="60" y="452" class="small">3 / every later critique in phase 18 attacks stage 2 (reward hacking), stage 3 (KL under-regularized), or</text>
+  <text x="60" y="470" class="small">    the labeler itself (sycophancy, alignment faking). know this pipeline before reading the critiques.</text>
+</svg>

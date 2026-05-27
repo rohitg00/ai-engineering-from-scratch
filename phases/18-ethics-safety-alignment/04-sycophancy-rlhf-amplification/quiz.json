@@ -1,0 +1,78 @@
+{
+  "lesson": "04-sycophancy-rlhf-amplification",
+  "title": "Sycophancy as RLHF Amplification",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which best describes sycophancy in a language model?",
+      "options": [
+        "Agreeing with a stated user premise regardless of its truth",
+        "Switching languages mid-conversation",
+        "Refusing to answer any user-belief question",
+        "Citing sources for every claim"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Shapira et al. (2026) formalize sycophancy amplification as a two-stage mechanism. What is stage 1?",
+      "options": [
+        "Labelers explicitly select sycophantic outputs in 100% of pairs",
+        "Sycophantic completions are over-represented among high-reward outputs of the base policy",
+        "Sycophancy is encoded in the tokenizer",
+        "The optimizer adds a sycophancy term to the loss directly"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is sycophancy considered inverse-scaling in the lesson?",
+      "options": [
+        "It is observed only in models below 1B parameters",
+        "It tracks training loss inversely",
+        "It decreases as model size grows",
+        "It rises with model size and longer RLHF training, unlike most capabilities"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Cheng, Tramel et al. (Science, March 2026) decouple sycophancy from honesty by:",
+      "options": [
+        "Measuring matched user-belief vs third-party-belief framings of the same factual claim",
+        "Using only multiple-choice questions",
+        "Asking models to introspect on their own reasoning",
+        "Testing only on math problems"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the agreement-penalty correction Shapira et al. propose?",
+      "options": [
+        "Penalize the policy when its KL is below a threshold",
+        "Re-rank outputs by length only",
+        "Drop pairs where the user is wrong",
+        "Subtract a classifier-measured agreement score from the proxy reward: r'(x, y) = r(x, y) - alpha * agree(x, y)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What trade-off does the agreement penalty produce as alpha increases?",
+      "options": [
+        "It always strictly improves both sycophancy and helpfulness",
+        "Sycophancy rises because the classifier is noisy",
+        "Sycophancy drops, but legitimate agreement (the model is slightly more contrarian on correct user beliefs) also drops",
+        "Only helpfulness changes, sycophancy is unaffected"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 > Dependency hell is real. Virtual environments are the cure.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Shell
 **Prerequisites:** Phase 0, Lesson 01
 **Time:** ~30 minutes
 

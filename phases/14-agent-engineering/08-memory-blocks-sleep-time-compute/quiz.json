@@ -1,0 +1,90 @@
+{
+  "lesson": "08-memory-blocks-sleep-time-compute",
+  "title": "Memory Blocks and Sleep-Time Compute (Letta)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What are Letta's three memory tiers?",
+      "options": [
+        "Cache, KV, archival",
+        "Core, recall, archival",
+        "RAM, swap, disk",
+        "Working, episodic, semantic"
+      ],
+      "correct": 1,
+      "explanation": "Letta uses core (always visible), recall (conversation history), and archival (external) tiers."
+    },
+    {
+      "stage": "pre",
+      "question": "Which production problem does sleep-time compute target?",
+      "options": [
+        "Tail latency from doing memory consolidation on the critical path",
+        "Higher accuracy on math problems",
+        "Lower embedding cost",
+        "Faster JSON parsing"
+      ],
+      "correct": 0,
+      "explanation": "Sleep-time moves prune/summarize/reconcile off the user-facing path, so primary responses stay fast."
+    },
+    {
+      "stage": "check",
+      "question": "Which property is NOT a memory block field in Letta?",
+      "options": [
+        "label",
+        "value",
+        "limit",
+        "embedding_model_version"
+      ],
+      "correct": 3,
+      "explanation": "Blocks carry id, label, value, limit, description; embedding model version is not part of the block schema."
+    },
+    {
+      "stage": "check",
+      "question": "Why can the sleep-time agent run a stronger model than the primary?",
+      "options": [
+        "It receives a private API key",
+        "It is off the critical path, so it is not latency-constrained",
+        "It is exempt from rate limits",
+        "Memory ops cost half tokens"
+      ],
+      "correct": 1,
+      "explanation": "Because it does not block user responses, the sleep-time agent can be slower and more expensive."
+    },
+    {
+      "stage": "check",
+      "question": "What pattern do the Human and Persona blocks generalize to?",
+      "options": [
+        "Vector embeddings",
+        "Arbitrary user-defined typed editable blocks (Task, Project, Safety, ...)",
+        "JSON-RPC channels",
+        "OS processes"
+      ],
+      "correct": 1,
+      "explanation": "Letta generalizes the two MemGPT blocks to any user-defined block with id, label, value, limit, description."
+    },
+    {
+      "stage": "post",
+      "question": "What is silent drift in this pattern?",
+      "options": [
+        "A primary agent never seeing that the sleep-time agent rewrote a block underneath it; fix with versioning and visible diffs",
+        "Slow disk writes",
+        "Embedding model upgrades",
+        "Rate-limit jitter"
+      ],
+      "correct": 0,
+      "explanation": "Versioning blocks and surfacing diffs in the trace makes sleep-time rewrites visible to the primary loop."
+    },
+    {
+      "stage": "post",
+      "question": "What replaced inline `Thought:` tokens and the send_message/heartbeat pattern in Letta V1?",
+      "options": [
+        "Native reasoning emitted on a separate channel and passed through turns",
+        "A second LLM dedicated to thoughts",
+        "A bigger system prompt",
+        "Manual user-typed thoughts"
+      ],
+      "correct": 0,
+      "explanation": "Letta V1 (letta_v1_agent) uses provider-level native reasoning, not prompt-shaped thoughts."
+    }
+  ]
+}

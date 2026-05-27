@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Document AI — three eras from OCR pipeline to VLM-native</text>
+
+  <rect x="30" y="50" width="900" height="210" class="box"/>
+
+  <rect x="50" y="80" width="280" height="160" class="hot"/>
+  <text x="190" y="102" text-anchor="middle" class="step">Era 1: OCR pipeline</text>
+  <text x="190" y="124" text-anchor="middle" class="small">Tesseract / TrOCR detect</text>
+  <text x="190" y="140" text-anchor="middle" class="small">LayoutLMv3 layout</text>
+  <text x="190" y="156" text-anchor="middle" class="small">table recognizer</text>
+  <text x="190" y="172" text-anchor="middle" class="small">regex + domain rules</text>
+  <text x="190" y="196" text-anchor="middle" class="step">pros: cheap, deterministic</text>
+  <text x="190" y="216" text-anchor="middle" class="small">cons: brittle on new formats</text>
+
+  <rect x="340" y="80" width="280" height="160" class="cool"/>
+  <text x="480" y="102" text-anchor="middle" class="step">Era 2: OCR-free specialists</text>
+  <text x="480" y="124" text-anchor="middle" class="small">Donut: image -&gt; JSON</text>
+  <text x="480" y="140" text-anchor="middle" class="small">Nougat: paper -&gt; LaTeX</text>
+  <text x="480" y="156" text-anchor="middle" class="small">DocLLM: layout-aware gen</text>
+  <text x="480" y="172" text-anchor="middle" class="small">swin / ViT encoder</text>
+  <text x="480" y="196" text-anchor="middle" class="step">pros: single model</text>
+  <text x="480" y="216" text-anchor="middle" class="small">cons: domain-specific</text>
+
+  <rect x="630" y="80" width="280" height="160" class="cold"/>
+  <text x="770" y="102" text-anchor="middle" class="step">Era 3: VLM-native</text>
+  <text x="770" y="124" text-anchor="middle" class="small">Qwen2.5-VL native res</text>
+  <text x="770" y="140" text-anchor="middle" class="small">PaliGemma 2 doc-trained</text>
+  <text x="770" y="156" text-anchor="middle" class="small">Claude 4.7 at 2576px</text>
+  <text x="770" y="172" text-anchor="middle" class="small">frontier proprietary</text>
+  <text x="770" y="196" text-anchor="middle" class="step">pros: no pipeline</text>
+  <text x="770" y="216" text-anchor="middle" class="small">cons: cost + hallucination</text>
+
+  <rect x="30" y="280" width="900" height="230" class="box"/>
+  <text x="480" y="302" text-anchor="middle" class="head">benchmarks + 2026 recipe picker</text>
+
+  <g transform="translate(60, 320)">
+    <text x="0" y="15" class="step">benchmark</text>
+    <text x="200" y="15" class="step">OCR+LLMv3</text>
+    <text x="320" y="15" class="step">Nougat</text>
+    <text x="420" y="15" class="step">PaliGemma 2</text>
+    <text x="560" y="15" class="step">Claude 4.7</text>
+
+    <text x="0" y="40" class="small">DocVQA</text>
+    <text x="200" y="40" class="small">83.0</text>
+    <text x="320" y="40" class="small">77.3</text>
+    <text x="420" y="40" class="small">88.4</text>
+    <text x="560" y="40" class="small">95.1</text>
+
+    <text x="0" y="60" class="small">ChartQA</text>
+    <text x="200" y="60" class="small">-</text>
+    <text x="320" y="60" class="small">-</text>
+    <text x="420" y="60" class="small">85.1</text>
+    <text x="560" y="60" class="small">92.2</text>
+
+    <text x="0" y="80" class="small">Math LaTeX</text>
+    <text x="200" y="80" class="small">-</text>
+    <text x="320" y="80" class="small">90.5</text>
+    <text x="420" y="80" class="small">82.0</text>
+    <text x="560" y="80" class="small">94.3</text>
+
+    <text x="0" y="100" class="small">handwriting</text>
+    <text x="200" y="100" class="small">65</text>
+    <text x="320" y="100" class="small">-</text>
+    <text x="420" y="100" class="small">80</text>
+    <text x="560" y="100" class="small">92</text>
+  </g>
+
+  <rect x="620" y="320" width="290" height="170" class="reg"/>
+  <text x="765" y="342" text-anchor="middle" class="step">2026 picker</text>
+  <text x="765" y="362" text-anchor="middle" class="small">10M invoices/day -&gt; Era 1</text>
+  <text x="765" y="378" text-anchor="middle" class="small">scientific papers -&gt; Nougat + VLM</text>
+  <text x="765" y="394" text-anchor="middle" class="small">mixed handwriting -&gt; VLM-native</text>
+  <text x="765" y="410" text-anchor="middle" class="small">regulated -&gt; hybrid cross-check</text>
+  <text x="765" y="436" text-anchor="middle" class="step">frontier gap</text>
+  <text x="765" y="456" text-anchor="middle" class="small">open 7B VLM: ~88 DocVQA</text>
+  <text x="765" y="472" text-anchor="middle" class="small">Claude 4.7: ~95, near-human</text>
+</svg>

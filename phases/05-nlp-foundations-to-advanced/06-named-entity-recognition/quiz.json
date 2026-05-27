@@ -1,0 +1,102 @@
+{
+  "lesson": "06-named-entity-recognition",
+  "title": "Named Entity Recognition",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is BIO tagging?",
+      "options": [
+        "Per-token labels: B-TYPE for entity start, I-TYPE for inside, O for outside",
+        "A binary entity vs non-entity scheme",
+        "A tokenization style",
+        "A tree representation of entities"
+      ],
+      "correct": 0,
+      "explanation": "BIO turns span extraction into token classification with B/I/O prefixes."
+    },
+    {
+      "stage": "pre",
+      "question": "Why are rule-based gazetteers brittle in production NER?",
+      "options": [
+        "They require GPUs",
+        "They are slow",
+        "They have zero coverage on new entities and cannot disambiguate (e.g. Apple fruit vs company)",
+        "They cannot handle multi-token entities"
+      ],
+      "correct": 2,
+      "explanation": "Gazetteers can match known strings but cannot disambiguate sense or generalize to unseen names."
+    },
+    {
+      "stage": "check",
+      "question": "What is the key advantage of a CRF over an HMM for NER?",
+      "options": [
+        "CRFs avoid the Viterbi algorithm",
+        "CRFs never need training data",
+        "CRFs are discriminative and can mix arbitrary features (shape, capitalization, neighbors)",
+        "CRFs are faster"
+      ],
+      "correct": 2,
+      "explanation": "CRFs are discriminative and let you condition on rich, overlapping features."
+    },
+    {
+      "stage": "check",
+      "question": "In a BiLSTM-CRF architecture, what role does the CRF layer play?",
+      "options": [
+        "Performs tokenization",
+        "Enforces valid BIO tag sequences by modeling tag-to-tag transitions on top of LSTM emissions",
+        "Pretrains the LSTM",
+        "Replaces embeddings"
+      ],
+      "correct": 1,
+      "explanation": "The CRF on top of LSTM features models inter-label dependencies and rules out illegal sequences."
+    },
+    {
+      "stage": "check",
+      "question": "Why must NER be evaluated with entity-level F1, not token-level F1?",
+      "options": [
+        "Entity-level F1 is easier to compute",
+        "Predicted spans must match true spans exactly; token-level F1 overstates accuracy by counting partial matches",
+        "Token-level F1 cannot handle BIO",
+        "Entity-level F1 is required by HuggingFace"
+      ],
+      "correct": 1,
+      "explanation": "Span exact-match is the meaningful metric; token-level F1 inflates scores via partial overlap."
+    },
+    {
+      "stage": "post",
+      "question": "What does aggregation_strategy='simple' do in the HuggingFace NER pipeline?",
+      "options": [
+        "Lowercases the output",
+        "Skips tokenization",
+        "Merges contiguous B-X and I-X tokens into a single span",
+        "Returns only the most confident entity"
+      ],
+      "correct": 2,
+      "explanation": "It merges contiguous BIO tokens of the same type into span-level entities."
+    },
+    {
+      "stage": "post",
+      "question": "Why does standard BIO fail on nested entities?",
+      "options": [
+        "BIO requires a transformer",
+        "BIO is a flat per-token scheme and cannot express two overlapping spans of different types",
+        "BIO cannot represent multi-token entities",
+        "BIO drops the type label"
+      ],
+      "correct": 1,
+      "explanation": "BIO assigns one label per token; nested spans need multi-pass or span-based models."
+    },
+    {
+      "stage": "post",
+      "question": "When does classical NER (CRF or BiLSTM-CRF) still beat an LLM in 2026?",
+      "options": [
+        "On nested entities",
+        "Whenever the input is in English",
+        "On open-domain narrative",
+        "Under tight latency budgets, abundant labels, stable ontologies, or non-generative regulatory constraints"
+      ],
+      "correct": 3,
+      "explanation": "Classical NER wins on latency, labeled-data regimes, fixed ontologies, and on-prem constraints."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "06-mesa-optimization-deceptive-alignment",
+  "title": "Mesa-Optimization and Deceptive Alignment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which pair best captures the inner / outer alignment distinction?",
+      "options": [
+        "Outer = does the model run on hardware; inner = is loss low",
+        "Outer = does the base objective match what we wanted; inner = does the mesa-objective match the base objective",
+        "Outer = is the policy stable; inner = is the temperature low",
+        "Outer = is data clean; inner = is the optimizer stochastic"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which of the following is NOT one of Hubinger et al.'s four classes of mesa-objective alignment?",
+      "options": [
+        "Approximately aligned",
+        "Robustly aligned",
+        "Proxy aligned",
+        "Probabilistically aligned"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Under what conditions is deceptive alignment the reward-maximizing strategy for a mesa-optimizer?",
+      "options": [
+        "It is trained with PPO rather than DPO",
+        "It has a persistent terminal goal, has situational awareness of training vs deployment, and the base optimizer modifies it if it defects in training",
+        "Its capacity exceeds 100B parameters",
+        "It has any internal representation at all"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why can standard adversarial training fail (or worsen) deceptive alignment?",
+      "options": [
+        "It requires more compute than RLHF",
+        "It teaches the mesa-optimizer a sharper discriminator between test and deployment, not an aligned mesa-objective",
+        "It uses the wrong loss function",
+        "It cannot run on GPUs"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is gradient hacking, as introduced in Hubinger et al. (2019)?",
+      "options": [
+        "A speculative pathology where a capable mesa-optimizer produces outputs that shape its own gradient updates to preserve its mesa-objective",
+        "A jailbreaking method for instruction-tuned models",
+        "A bug in autograd",
+        "A technique for faster training"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which of these is an OUTER alignment failure, not an inner one?",
+      "options": [
+        "Reward hacking and sycophancy emerging because the base objective is itself a flawed proxy for human intent",
+        "Mesa-optimizer optimizes a proxy goal that diverges off-distribution",
+        "Backdoor surviving SFT",
+        "Mesa-optimizer hides its goal during evaluation"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

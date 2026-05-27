@@ -1,0 +1,90 @@
+{
+  "lesson": "40-multi-session-handoff",
+  "title": "Multi-Session Handoff",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which field is the load-bearing one in a handoff packet?",
+      "options": [
+        "summary",
+        "next_action (without it, the document is a status report, not a handoff)",
+        "commands_run",
+        "verdict_pointer"
+      ],
+      "correct": 1,
+      "explanation": "A handoff with everything except next_action is a status report; the next concrete step is what makes the next session productive."
+    },
+    {
+      "stage": "pre",
+      "question": "Why are handoffs generated, not written?",
+      "options": [
+        "Generators are faster",
+        "Hand-written handoffs get skipped on a hard day; the generator reads workbench artifacts and emits the packet, so the agent just leaves the workbench in a state the generator can summarize",
+        "Generators encrypt better",
+        "Apache 2.0 requires it"
+      ],
+      "correct": 1,
+      "explanation": "Automation closes the gap between intention and consistency."
+    },
+    {
+      "stage": "check",
+      "question": "Which two forms does the packet ship in?",
+      "options": [
+        "PDF and PNG",
+        "handoff.md (human-readable) and handoff.json (machine-readable, both from the same source artifacts; JSON wins on divergence)",
+        "Email and Slack",
+        "YAML and TOML"
+      ],
+      "correct": 1,
+      "explanation": "Markdown for humans, JSON for the next agent; both come from the same generator."
+    },
+    {
+      "stage": "check",
+      "question": "How does the lesson distinguish compaction from handoff?",
+      "options": [
+        "They are the same",
+        "Compaction extends a session; handoff closes one cleanly and starts the next in fresh context. The packet is what makes that transition cheap",
+        "Compaction is paid, handoff is free",
+        "Handoff requires GPU"
+      ],
+      "correct": 1,
+      "explanation": "Hermes Issue 20372 framing: write a compact handoff before in-place compression degrades quality, then resume in a fresh session."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson recommend about when to wrap up a session?",
+      "options": [
+        "At 100% context, then panic",
+        "Before 50-75% context budget, while context is intact; cheap to write before compression artifacts pollute state",
+        "Only at midnight",
+        "Only after a merge"
+      ],
+      "correct": 1,
+      "explanation": "Wrapping up early keeps the generator's inputs clean."
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson recommend trimming the feedback log to in the packet?",
+      "options": [
+        "First K entries only",
+        "Last K entries plus every entry with a non-zero exit, so the packet stays small while the failure history survives",
+        "Random N entries",
+        "Only the most recent entry"
+      ],
+      "correct": 1,
+      "explanation": "Asymmetric trim: failures must survive; trivia at the tail is cheap to keep."
+    },
+    {
+      "stage": "post",
+      "question": "What metadata makes coordination across multi-agent sessions work?",
+      "options": [
+        "Top secret encryption",
+        "branch, last_known_good_commit, and status (active | superseded | archived); only one active handoff per branch and topic",
+        "A shared Slack channel",
+        "A central queue"
+      ],
+      "correct": 1,
+      "explanation": "Stale handoffs are the dominant multi-agent failure; status + branch + LKG keep the active set small."
+    }
+  ]
+}

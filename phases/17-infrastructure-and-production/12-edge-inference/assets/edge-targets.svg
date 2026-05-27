@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .apple { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .qcom { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .web { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .jet { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">edge inference — four targets, bandwidth sets the ceiling</text>
+
+  <rect x="40" y="50" width="220" height="190" class="apple"/>
+  <text x="150" y="72" text-anchor="middle" class="head">Apple Neural Engine</text>
+  <text x="150" y="95" text-anchor="middle" class="step">M4 / A18 — up to 38 TOPS</text>
+  <text x="150" y="113" text-anchor="middle" class="small">unified memory, no copy</text>
+  <text x="150" y="131" text-anchor="middle" class="small">Core ML for native ANE</text>
+  <text x="150" y="149" text-anchor="middle" class="small">MPS via llama.cpp</text>
+  <text x="150" y="175" text-anchor="middle" class="step">iPhone 16 ≈ 8 tok/s</text>
+  <text x="150" y="193" text-anchor="middle" class="small">60 GB/s DRAM</text>
+  <text x="150" y="211" text-anchor="middle" class="small">7B Q4, decode memory-bound</text>
+
+  <rect x="280" y="50" width="220" height="190" class="qcom"/>
+  <text x="390" y="72" text-anchor="middle" class="head">Qualcomm Hexagon</text>
+  <text x="390" y="95" text-anchor="middle" class="step">SD X Elite — up to 45 TOPS</text>
+  <text x="390" y="113" text-anchor="middle" class="small">SD 8 Gen 4 flagship Android</text>
+  <text x="390" y="131" text-anchor="middle" class="small">QNN SDK, AI Hub converts</text>
+  <text x="390" y="149" text-anchor="middle" class="small">Windows ARM copilots</text>
+  <text x="390" y="175" text-anchor="middle" class="step">SD 8 Gen 3 ≈ 7 tok/s</text>
+  <text x="390" y="193" text-anchor="middle" class="small">77 GB/s DRAM</text>
+  <text x="390" y="211" text-anchor="middle" class="small">7B Q4, typical mid/high</text>
+
+  <rect x="520" y="50" width="220" height="190" class="web"/>
+  <text x="630" y="72" text-anchor="middle" class="head">WebGPU + WebLLM</text>
+  <text x="630" y="95" text-anchor="middle" class="step">browser, no install</text>
+  <text x="630" y="113" text-anchor="middle" class="small">Chrome Android 121+ / Safari iOS 26</text>
+  <text x="630" y="131" text-anchor="middle" class="small">Firefox Android catching up</text>
+  <text x="630" y="149" text-anchor="middle" class="small">~70-75% mobile coverage</text>
+  <text x="630" y="175" text-anchor="middle" class="step">M3 Max ≈ 41 tok/s</text>
+  <text x="630" y="193" text-anchor="middle" class="small">~70-80% of native</text>
+  <text x="630" y="211" text-anchor="middle" class="small">OpenAI-compatible JS API</text>
+
+  <rect x="760" y="50" width="160" height="190" class="jet"/>
+  <text x="840" y="72" text-anchor="middle" class="head">NVIDIA Jetson</text>
+  <text x="840" y="95" text-anchor="middle" class="step">Orin / AGX / Thor</text>
+  <text x="840" y="113" text-anchor="middle" class="small">TensorRT Edge-LLM</text>
+  <text x="840" y="131" text-anchor="middle" class="small">EAGLE-3 + NVFP4</text>
+  <text x="840" y="149" text-anchor="middle" class="small">chunked prefill</text>
+  <text x="840" y="175" text-anchor="middle" class="step">AGX ≈ 40 tok/s</text>
+  <text x="840" y="193" text-anchor="middle" class="small">gpt-oss-20b vLLM</text>
+  <text x="840" y="211" text-anchor="middle" class="small">205 GB/s</text>
+
+  <rect x="40" y="260" width="880" height="110" class="box"/>
+  <text x="480" y="282" text-anchor="middle" class="head">bandwidth sets the ceiling — decode reads full weights each token</text>
+  <text x="480" y="308" text-anchor="middle" class="step">H100 HBM3: 3350 GB/s  →  Llama 8B Q4 ceiling ≈ 710 tok/s (observed 170)</text>
+  <text x="480" y="326" text-anchor="middle" class="step">M3 Max 400 GB/s  →  ceiling ≈ 85 tok/s (observed 55)</text>
+  <text x="480" y="344" text-anchor="middle" class="step">iPhone 16 60 GB/s  →  ceiling ≈ 12 tok/s (observed 8)</text>
+  <text x="480" y="362" text-anchor="middle" class="caption">compute matters only when runtime efficiency drops below this ceiling</text>
+
+  <rect x="40" y="390" width="880" height="100" class="box"/>
+  <text x="480" y="412" text-anchor="middle" class="head">quantization picks per target</text>
+  <text x="480" y="432" text-anchor="middle" class="step">ANE: INT4 weights + FP16 activations (Core ML path)</text>
+  <text x="480" y="450" text-anchor="middle" class="step">Hexagon: QNN INT8/INT4 (AI Hub converters)</text>
+  <text x="480" y="468" text-anchor="middle" class="step">WebGPU: Q4 GGUF (browser memory ceiling ~3-4 GB)</text>
+  <text x="480" y="486" text-anchor="middle" class="step">Jetson Thor: NVFP4 + FP8 KV (Edge-LLM path)</text>
+</svg>

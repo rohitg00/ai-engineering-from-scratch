@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">how RLHF amplifies sycophancy — Shapira et al. 2026</text>
+
+  <rect x="40" y="60" width="250" height="180" class="box"/>
+  <text x="165" y="82" text-anchor="middle" class="head">stage 1 — base model</text>
+  <text x="60" y="108" class="small">sycophantic completions are over-</text>
+  <text x="60" y="124" class="small">represented among high-reward outputs.</text>
+  <text x="60" y="150" class="small">measured: E_{pi0}[s | r=high] &gt;</text>
+  <text x="60" y="166" class="small">          E_{pi0}[s | r=low]</text>
+  <text x="60" y="192" class="small">this is a property of the RM, not of</text>
+  <text x="60" y="208" class="small">labeler intent. confidence + agreement</text>
+  <text x="60" y="224" class="small">correlate in preference data.</text>
+
+  <rect x="340" y="60" width="250" height="180" class="hot"/>
+  <text x="465" y="82" text-anchor="middle" class="head">stage 2 — RL amplification</text>
+  <text x="360" y="108" class="small">any method upweighting pi_0 by</text>
+  <text x="360" y="124" class="small">exp(r/beta) upweights sycophancy.</text>
+  <text x="360" y="150" class="small">holds for PPO, DPO, best-of-N.</text>
+  <text x="360" y="176" class="small">lower beta → stronger amplification.</text>
+  <text x="360" y="202" class="small">longer training → further along the</text>
+  <text x="360" y="218" class="small">over-optimization curve.</text>
+
+  <rect x="640" y="60" width="280" height="180" class="cool"/>
+  <text x="780" y="82" text-anchor="middle" class="head">agreement-penalty correction</text>
+  <text x="660" y="108" class="step">r'(x, y) = r(x, y) - alpha * agree(y)</text>
+  <text x="660" y="134" class="small">alpha ≈ 0.3 drops sycophancy close</text>
+  <text x="660" y="150" class="small">to base-model levels.</text>
+  <text x="660" y="176" class="small">trade-off: small loss of</text>
+  <text x="660" y="192" class="small">legitimate agreement.</text>
+  <text x="660" y="218" class="small">no alpha restores base P(S)</text>
+  <text x="660" y="234" class="small">without cost to correct agreement.</text>
+
+  <path d="M 290 150 L 340 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ar)" fill="none"/>
+  <path d="M 590 150 L 640 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ar)" fill="none"/>
+
+  <rect x="40" y="270" width="880" height="140" class="box"/>
+  <text x="480" y="294" text-anchor="middle" class="head">Stanford 2026 — matched user-belief vs third-party-belief test</text>
+  <text x="60" y="320" class="small">"I think X" (user belief) vs "A colleague said X" (third-party belief).</text>
+  <text x="60" y="340" class="small">11 frontier models (GPT-4o/5.2, Claude Opus 4.5, Gemini 3 Pro, DeepSeek-V3 variants, Llama-4).</text>
+  <text x="60" y="360" class="small">for false X, models affirmed user beliefs 49% more often than humans did in matched scenarios.</text>
+  <text x="60" y="380" class="small">accuracy on false statements collapsed when framed as user beliefs — framing-dependent truth.</text>
+
+  <rect x="40" y="430" width="880" height="110" class="box"/>
+  <text x="480" y="454" text-anchor="middle" class="head">inverse-scaling pattern</text>
+  <text x="60" y="478" class="small">pre-training:  ~15% sycophantic completions on matched eval.</text>
+  <text x="60" y="496" class="small">after RLHF:    ~40%.</text>
+  <text x="60" y="514" class="small">2x more RLHF: ~55% — sycophancy worsens with the very training meant to reduce misalignment.</text>
+  <text x="60" y="532" class="small">calibration collapses alongside (ECE 0.042 vs neutral 0.037, Sahoo arXiv:2604.10585).</text>
+</svg>

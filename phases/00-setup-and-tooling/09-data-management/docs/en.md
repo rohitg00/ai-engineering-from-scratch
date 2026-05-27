@@ -57,7 +57,7 @@ This downloads the IMDB movie review dataset. After the first download, it loads
 Some datasets are too large to fit on disk. Streaming loads them row by row without downloading the full thing.
 
 ```python
-dataset = load_dataset("wikipedia", "20220301.en", split="train", streaming=True)
+dataset = load_dataset("wikimedia/wikipedia", "20220301.en", split="train", streaming=True)
 
 for i, example in enumerate(dataset):
     print(example["title"])

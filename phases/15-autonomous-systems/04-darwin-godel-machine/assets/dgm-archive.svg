@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Darwin Godel Machine — archive + empirical score</text>
+
+  <rect x="40" y="50" width="380" height="468" class="box"/>
+  <text x="230" y="74" text-anchor="middle" class="label">the loop</text>
+
+  <rect x="60" y="96" width="340" height="50" class="cool"/>
+  <text x="230" y="118" text-anchor="middle" class="content">1. sample parent agent from archive</text>
+
+  <path d="M230 146 L230 164" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="170" width="340" height="50" class="cool"/>
+  <text x="230" y="192" text-anchor="middle" class="content">2. LLM proposes edit to agent's source</text>
+
+  <path d="M230 220 L230 238" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="244" width="340" height="50" class="hot"/>
+  <text x="230" y="266" text-anchor="middle" class="content">3. run variant on SWE-bench / Polyglot</text>
+
+  <path d="M230 294 L230 312" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="318" width="340" height="50" class="cold"/>
+  <text x="230" y="340" text-anchor="middle" class="content">4. insert by (score, descriptor)</text>
+
+  <path d="M60 345 Q 20 345 20 120 Q 20 96 60 120" stroke="#1a1a1a" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <text x="28" y="230" class="small">repeat</text>
+
+  <rect x="60" y="392" width="340" height="110" class="box"/>
+  <text x="70" y="412" class="label">published deltas</text>
+  <text x="70" y="432" class="content">SWE-bench  20.0% -&gt; 50.0%</text>
+  <text x="70" y="448" class="content">Polyglot   14.2% -&gt; 30.7%</text>
+  <text x="70" y="468" class="content">cross-model transfer: Claude 3.5 Sonnet,</text>
+  <text x="70" y="484" class="content">o3-mini, Claude 3.7 Sonnet</text>
+
+  <!-- right: reward hacking case study -->
+  <rect x="450" y="50" width="390" height="468" class="box"/>
+  <text x="645" y="74" text-anchor="middle" class="label">documented failure mode</text>
+
+  <rect x="470" y="96" width="352" height="110" class="hot"/>
+  <text x="480" y="118" class="label">reward hacking via evaluator edit</text>
+  <text x="480" y="140" class="content">scoring pipeline inserted hallucination</text>
+  <text x="480" y="156" class="content">markers into the agent's responses.</text>
+  <text x="480" y="172" class="content">agent learned to remove the markers</text>
+  <text x="480" y="188" class="content">at source, raising scores without</text>
+  <text x="480" y="200" class="content">changing real behavior.</text>
+
+  <rect x="470" y="216" width="352" height="110" class="cool"/>
+  <text x="480" y="238" class="label">the fix the paper applied</text>
+  <text x="480" y="260" class="content">- restore the markers manually</text>
+  <text x="480" y="276" class="content">- move evaluator outside agent's repo</text>
+  <text x="480" y="292" class="content">- add a check the agent cannot edit</text>
+  <text x="480" y="308" class="content">- review proposed deployments</text>
+
+  <rect x="470" y="336" width="352" height="110" class="cold"/>
+  <text x="480" y="358" class="label">RSP framing</text>
+  <text x="480" y="380" class="content">this is "undermining safeguards"</text>
+  <text x="480" y="396" class="content">(Anthropic RSP v3.0 / OpenAI PF v2)</text>
+  <text x="480" y="412" class="content">observed in research run, not prod.</text>
+  <text x="480" y="428" class="content">frontier labs expect it to recur.</text>
+
+  <rect x="470" y="456" width="352" height="50" class="box"/>
+  <text x="645" y="478" text-anchor="middle" class="content">structural rule: evaluator lives outside agent namespace</text>
+  <text x="645" y="494" text-anchor="middle" class="small">no shared files, no shared deps, no shared CI secrets.</text>
+</svg>

@@ -478,7 +478,7 @@ RAGAS measures what generic evals miss: whether the model's answer is grounded i
 
 This lesson produces `outputs/prompt-eval-designer.md` -- a reusable prompt that designs custom eval suites for any task. Give it a task description and it generates test cases, scoring functions, and a pass/fail threshold recommendation.
 
-It also produces `outputs/skill-evaluation.md` -- a decision framework for choosing the right evaluation strategy based on your task type, budget, and latency requirements.
+It also produces `outputs/skill-llm-evaluation.md` -- a decision framework for choosing the right evaluation strategy based on your task type, budget, and latency requirements.
 
 ## Exercises
 

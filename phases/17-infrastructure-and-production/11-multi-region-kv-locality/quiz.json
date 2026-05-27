@@ -1,0 +1,78 @@
+{
+  "lesson": "11-multi-region-kv-locality",
+  "title": "Multi-Region LLM Serving and KV Cache Locality",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is round-robin load balancing actively harmful for cached LLM inference?",
+      "options": [
+        "A request that does not land on the node holding its prefix pays full prefill cost instead of a cache hit",
+        "Round-robin requires sticky sessions",
+        "Round-robin breaks TLS",
+        "Round-robin is only valid for stateful databases"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What two inputs does a cache-aware router consume?",
+      "options": [
+        "Random shuffles and request size",
+        "Only the user_id and tenant_id",
+        "Round-robin counters and TLS keys",
+        "KV-cache events from replicas and a prefix hash on the incoming request"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Roughly what is the TTFT gap between a cache hit and a cold prefill on a 2K-token prompt for Llama 3.3 70B FP8?",
+      "options": [
+        "Identical",
+        "About 10x (~80 ms vs ~800 ms)",
+        "About 1.1x",
+        "About 1000x"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does cross-region routing not always beat regional routing for cache hits?",
+      "options": [
+        "Cache-aware routing is impossible across regions",
+        "GORGO research found cache hits do not help latency",
+        "Inter-region routing is forbidden by all hyperscalers",
+        "Saved prefill can be dwarfed by network RTT, e.g. 440 ms round-trip can dwarf an 800-to-80 ms prefill saving"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson cite as the 32% LLM DR failure driver?",
+      "options": [
+        "Backups that include weights but miss tokenizer files or quantization configs",
+        "Region quota exhaustion",
+        "Misconfigured load balancers",
+        "Unencrypted backups"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson say about commercial cross-region inference offerings such as Bedrock CRI?",
+      "options": [
+        "They are KV-cache-aware and replace app-layer routing",
+        "They only work in us-east-1",
+        "They optimize availability, not TTFT, and treat inference as opaque — you still need an app-layer cache-aware router",
+        "They are forbidden under GDPR"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

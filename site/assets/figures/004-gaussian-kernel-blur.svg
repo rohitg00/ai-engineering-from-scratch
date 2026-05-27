@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="FIG_004 — gaussian kernel and how it blurs an image, Hollick-style blueprint">
+  <defs>
+    <pattern id="paper" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="0" cy="0" r="1" fill="#1a1a1a" fill-opacity="0.06"/>
+    </pattern>
+    <style>
+      .ink { fill: #1a1a1a; }
+      .mute { fill: #7a7a78; }
+      .bp { fill: #3553ff; }
+      .face { fill: rgba(53, 83, 255, 0.06); }
+      .face-strong { fill: rgba(53, 83, 255, 0.18); }
+      .stroke { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="700" fill="#fafaf5"/>
+  <rect width="1200" height="700" fill="url(#paper)"/>
+
+  <text class="mono bp" x="40" y="44" font-size="11" letter-spacing="2.4">FIG_004</text>
+  <text class="mono mute" x="1160" y="44" font-size="11" letter-spacing="2.4" text-anchor="end">PHASE 01 · LESSON 08</text>
+
+  <!-- divider rule -->
+  <line x1="40" y1="64" x2="1160" y2="64" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.35"/>
+
+  <!-- LEFT: continuous bell-curve cross-section family -->
+  <g transform="translate(80, 120)">
+    <text class="mono bp" x="0" y="-20" font-size="9" letter-spacing="2">FIG_004.A — CONTINUOUS DISTRIBUTION</text>
+
+    <!-- axes -->
+    <g class="stroke" stroke-width="0.6" stroke-opacity="0.45">
+      <line x1="0" y1="280" x2="320" y2="280"/>
+      <line x1="0" y1="40" x2="0" y2="280"/>
+      <line x1="160" y1="280" x2="160" y2="290"/>
+    </g>
+
+    <!-- bell curve (gaussian) -->
+    <path class="stroke" stroke-width="2" d="M 0 280 Q 60 280 100 240 Q 160 60 220 240 Q 260 280 320 280"/>
+
+    <!-- shaded area under curve -->
+    <path class="face" d="M 0 280 Q 60 280 100 240 Q 160 60 220 240 Q 260 280 320 280 Z"/>
+
+    <!-- center marker μ -->
+    <line class="stroke" stroke-width="0.8" stroke-dasharray="3 3" x1="160" y1="60" x2="160" y2="280"/>
+    <text class="mono bp" x="166" y="80" font-size="10" letter-spacing="1.6">μ</text>
+
+    <!-- σ markers -->
+    <line class="stroke" stroke-width="0.6" stroke-opacity="0.6" x1="100" y1="240" x2="100" y2="280"/>
+    <line class="stroke" stroke-width="0.6" stroke-opacity="0.6" x1="220" y1="240" x2="220" y2="280"/>
+    <text class="mono mute" x="92" y="300" font-size="9" letter-spacing="1.4">−σ</text>
+    <text class="mono mute" x="216" y="300" font-size="9" letter-spacing="1.4">+σ</text>
+    <text class="mono mute" x="156" y="300" font-size="9" letter-spacing="1.4">μ</text>
+    <text class="mono ink" x="0" y="320" font-size="11">G(x) = (1 / σ√2π) · exp(−x² / 2σ²)</text>
+  </g>
+
+  <!-- MIDDLE: discrete 5x5 kernel grid -->
+  <g transform="translate(480, 120)">
+    <text class="mono bp" x="0" y="-20" font-size="9" letter-spacing="2">FIG_004.B — DISCRETE 5 × 5 KERNEL</text>
+
+    <!-- 5x5 cells -->
+    <g class="stroke" stroke-width="1">
+      <rect class="face" x="0"   y="0"   width="48" height="48"/>
+      <rect class="face" x="48"  y="0"   width="48" height="48"/>
+      <rect class="face" x="96"  y="0"   width="48" height="48"/>
+      <rect class="face" x="144" y="0"   width="48" height="48"/>
+      <rect class="face" x="192" y="0"   width="48" height="48"/>
+
+      <rect class="face" x="0"   y="48"  width="48" height="48"/>
+      <rect class="face" x="48"  y="48"  width="48" height="48"/>
+      <rect class="face-strong" x="96"  y="48"  width="48" height="48"/>
+      <rect class="face" x="144" y="48"  width="48" height="48"/>
+      <rect class="face" x="192" y="48"  width="48" height="48"/>
+
+      <rect class="face" x="0"   y="96"  width="48" height="48"/>
+      <rect class="face-strong" x="48"  y="96"  width="48" height="48"/>
+      <rect class="face-strong" x="96"  y="96"  width="48" height="48"/>
+      <rect class="face-strong" x="144" y="96"  width="48" height="48"/>
+      <rect class="face" x="192" y="96"  width="48" height="48"/>
+
+      <rect class="face" x="0"   y="144" width="48" height="48"/>
+      <rect class="face" x="48"  y="144" width="48" height="48"/>
+      <rect class="face-strong" x="96"  y="144" width="48" height="48"/>
+      <rect class="face" x="144" y="144" width="48" height="48"/>
+      <rect class="face" x="192" y="144" width="48" height="48"/>
+
+      <rect class="face" x="0"   y="192" width="48" height="48"/>
+      <rect class="face" x="48"  y="192" width="48" height="48"/>
+      <rect class="face" x="96"  y="192" width="48" height="48"/>
+      <rect class="face" x="144" y="192" width="48" height="48"/>
+      <rect class="face" x="192" y="192" width="48" height="48"/>
+
+      <rect x="0"   y="0"   width="240" height="240"/>
+    </g>
+
+    <!-- per-cell weights -->
+    <g class="mono bp" font-size="11" letter-spacing="1" text-anchor="middle">
+      <text x="24"  y="29">1</text>
+      <text x="72"  y="29">4</text>
+      <text x="120" y="29">7</text>
+      <text x="168" y="29">4</text>
+      <text x="216" y="29">1</text>
+
+      <text x="24"  y="77">4</text>
+      <text x="72"  y="77">16</text>
+      <text x="120" y="77">26</text>
+      <text x="168" y="77">16</text>
+      <text x="216" y="77">4</text>
+
+      <text x="24"  y="125">7</text>
+      <text x="72"  y="125">26</text>
+      <text x="120" y="125">41</text>
+      <text x="168" y="125">26</text>
+      <text x="216" y="125">7</text>
+
+      <text x="24"  y="173">4</text>
+      <text x="72"  y="173">16</text>
+      <text x="120" y="173">26</text>
+      <text x="168" y="173">16</text>
+      <text x="216" y="173">4</text>
+
+      <text x="24"  y="221">1</text>
+      <text x="72"  y="221">4</text>
+      <text x="120" y="221">7</text>
+      <text x="168" y="221">4</text>
+      <text x="216" y="221">1</text>
+    </g>
+
+    <text class="mono ink" x="0" y="270" font-size="11">DIVIDE BY 273 TO NORMALIZE</text>
+    <text class="mono mute" x="0" y="288" font-size="10">σ ≈ 1.0  ·  RADIUS = 2 PX</text>
+  </g>
+
+  <!-- RIGHT: result on a sample image (3 stages: original, blurred small, blurred large) -->
+  <g transform="translate(820, 120)">
+    <text class="mono bp" x="0" y="-20" font-size="9" letter-spacing="2">FIG_004.C — APPLIED</text>
+
+    <!-- ORIGINAL -->
+    <g transform="translate(0, 0)">
+      <rect class="stroke" stroke-width="1.2" x="0" y="0" width="120" height="80"/>
+      <rect class="bp" x="20" y="20" width="80" height="40" opacity="0.85"/>
+      <text class="mono mute" x="0" y="100" font-size="9" letter-spacing="1.4">σ = 0</text>
+    </g>
+
+    <!-- σ = 1 -->
+    <g transform="translate(140, 0)">
+      <rect class="stroke" stroke-width="1.2" x="0" y="0" width="120" height="80"/>
+      <rect class="bp" x="22" y="22" width="76" height="36" opacity="0.6"/>
+      <rect class="face-strong" x="14" y="14" width="92" height="52"/>
+      <text class="mono mute" x="0" y="100" font-size="9" letter-spacing="1.4">σ = 1</text>
+    </g>
+
+    <!-- σ = 2 -->
+    <g transform="translate(0, 130)">
+      <rect class="stroke" stroke-width="1.2" x="0" y="0" width="120" height="80"/>
+      <rect class="bp" x="28" y="26" width="64" height="28" opacity="0.4"/>
+      <rect class="face-strong" x="18" y="18" width="84" height="44"/>
+      <rect class="face" x="6" y="6" width="108" height="68"/>
+      <text class="mono mute" x="0" y="100" font-size="9" letter-spacing="1.4">σ = 2</text>
+    </g>
+
+    <!-- σ = 4 -->
+    <g transform="translate(140, 130)">
+      <rect class="stroke" stroke-width="1.2" x="0" y="0" width="120" height="80"/>
+      <rect class="face-strong" x="20" y="18" width="80" height="44"/>
+      <rect class="face" x="0" y="0" width="120" height="80"/>
+      <text class="mono mute" x="0" y="100" font-size="9" letter-spacing="1.4">σ = 4</text>
+    </g>
+  </g>
+
+  <!-- bottom rule -->
+  <line x1="40" y1="640" x2="1160" y2="640" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.35"/>
+  <text class="mono mute" x="1160" y="668" font-size="10" letter-spacing="2" text-anchor="end">© FIG_004 · GAUSSIAN KERNEL · MIT</text>
+</svg>

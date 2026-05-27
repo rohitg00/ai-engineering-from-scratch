@@ -1,0 +1,90 @@
+{
+  "lesson": "17-claude-agent-sdk",
+  "title": "Claude Agent SDK: Subagents and Session Store",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the difference between the Anthropic Client SDK and the Claude Agent SDK?",
+      "options": [
+        "Client SDK is raw Messages API; Agent SDK is the Claude Code harness shape with built-in tools, MCP, hooks, subagents, and session store",
+        "Client SDK is paid; Agent SDK is free",
+        "Client SDK is for Python only",
+        "There is no difference"
+      ],
+      "correct": 0,
+      "explanation": "Client SDK gives you the loop; Agent SDK ships the loop pre-built."
+    },
+    {
+      "stage": "pre",
+      "question": "What are the two documented purposes of subagents?",
+      "options": [
+        "Parallelization and context isolation",
+        "Caching and rate limiting",
+        "Logging and metrics",
+        "Authn and authz"
+      ],
+      "correct": 0,
+      "explanation": "Subagents run independent work concurrently and preserve the orchestrator's context budget by isolating context."
+    },
+    {
+      "stage": "check",
+      "question": "Which method is NOT part of the session store surface?",
+      "options": [
+        "append",
+        "load",
+        "list_subkeys",
+        "compile_prompt"
+      ],
+      "correct": 3,
+      "explanation": "Session store ships append, load, list_sessions, delete, list_subkeys; compile_prompt is not a session API."
+    },
+    {
+      "stage": "check",
+      "question": "Which is NOT a Claude Agent SDK lifecycle hook?",
+      "options": [
+        "PreToolUse",
+        "PostToolUse",
+        "PreCompact",
+        "PreEmbedding"
+      ],
+      "correct": 3,
+      "explanation": "Hooks include PreToolUse, PostToolUse, SessionStart/End, UserPromptSubmit, PreCompact, Stop, Notification. PreEmbedding is not a hook."
+    },
+    {
+      "stage": "check",
+      "question": "How does trace context propagate across the agent and CLI subprocess?",
+      "options": [
+        "Through the file system",
+        "Through W3C trace context headers passed into the CLI subprocess",
+        "Only via the provider's dashboard",
+        "Through environment variables only"
+      ],
+      "correct": 1,
+      "explanation": "OTel spans on the caller propagate into the CLI subprocess via W3C trace context, so the whole multi-process run is one trace."
+    },
+    {
+      "stage": "post",
+      "question": "What is subagent over-spawn and when does it happen?",
+      "options": [
+        "Spawning 100 subagents for 100 tiny tasks where overhead dominates; batch instead",
+        "Forgetting to close subagents",
+        "Spawning before SessionStart",
+        "Spawning more subagents than CPU cores"
+      ],
+      "correct": 0,
+      "explanation": "Subagents have overhead; batch small tasks instead of spawning one each."
+    },
+    {
+      "stage": "post",
+      "question": "What does Claude Managed Agents trade off against the self-hosted SDK?",
+      "options": [
+        "Control for managed infrastructure (long-running async, built-in prompt caching, built-in compaction)",
+        "Latency for cost",
+        "Tools for memory",
+        "Tracing for streaming"
+      ],
+      "correct": 0,
+      "explanation": "Managed Agents is the hosted alternative for long-running async work; less control, less ops surface."
+    }
+  ]
+}
