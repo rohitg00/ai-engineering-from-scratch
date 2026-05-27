@@ -4,6 +4,7 @@ import urllib.request
 
 
 def call_with_sdk():
+    """Make an LLM API call using the official Anthropic Python SDK."""
     try:
         import anthropic
     except ImportError:
@@ -21,6 +22,7 @@ def call_with_sdk():
 
 
 def call_raw_http():
+    """Make a raw HTTP API call to Anthropic's Messages endpoint using urllib."""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         print("Set ANTHROPIC_API_KEY environment variable first")

@@ -14,6 +14,7 @@ from typing import AsyncGenerator
 
 
 class ModelName(Enum):
+    """Enum representing supported LLM model identifiers."""
     CLAUDE_SONNET = "claude-sonnet-4-6"
     GPT_4O = "gpt-4o"
     GPT_4O_MINI = "gpt-4o-mini"
@@ -30,6 +31,7 @@ FALLBACK_CHAIN = [ModelName.CLAUDE_SONNET, ModelName.GPT_4O, ModelName.GPT_4O_MI
 
 @dataclass
 class RequestLog:
+    """Dataclass for logging comprehensive information about each LLM request."""
     request_id: str
     user_id: str
     timestamp: str
@@ -48,6 +50,7 @@ class RequestLog:
 
 @dataclass
 class CostTracker:
+    """Class for tracking input/output tokens and cost metrics globally and per user/model."""
     total_input_tokens: int = 0
     total_output_tokens: int = 0
     total_cost_usd: float = 0.0
@@ -57,6 +60,7 @@ class CostTracker:
     cost_by_model: dict = field(default_factory=lambda: defaultdict(float))
 
     def record(self, user_id, model, input_tokens, output_tokens, cost):
+        """Record the token usage and cost for a successful LLM request."""
         self.total_input_tokens += input_tokens
         self.total_output_tokens += output_tokens
         self.total_cost_usd += cost
@@ -65,6 +69,7 @@ class CostTracker:
         self.cost_by_model[model] += cost
 
     def summary(self):
+        """Generate a dictionary summary of aggregated cost, request counts, and top users."""
         avg_cost = self.total_cost_usd / max(self.total_requests, 1)
         cache_rate = self.total_cache_hits / max(self.total_requests, 1) * 100
         return {
@@ -83,6 +88,7 @@ class CostTracker:
 
 @dataclass
 class PromptTemplate:
+    """Dataclass representing a versioned prompt template with associated settings."""
     name: str
     version: str
     template: str
@@ -150,6 +156,7 @@ AB_EXPERIMENTS = {
 
 
 def select_prompt(template_name, user_id, variables):
+    """Select and render the appropriate prompt template based on experiment traffic buckets."""
     versions = PROMPT_TEMPLATES.get(template_name)
     if not versions:
         raise ValueError(f"Unknown template: {template_name}")
@@ -170,6 +177,7 @@ def select_prompt(template_name, user_id, variables):
 
 
 def simple_embedding(text, dim=64):
+    """Generate a simple, deterministic pseudo-embedding vector from text using SHA-256."""
     h = hashlib.sha256(text.lower().strip().encode()).hexdigest()
     raw = [int(h[i:i+2], 16) / 255.0 for i in range(0, min(len(h), dim * 2), 2)]
     while len(raw) < dim:
@@ -181,6 +189,7 @@ def simple_embedding(text, dim=64):
 
 
 def cosine_similarity(a, b):
+    """Calculate the cosine similarity between two vectors."""
     dot = sum(x * y for x, y in zip(a, b))
     norm_a = math.sqrt(sum(x * x for x in a))
     norm_b = math.sqrt(sum(x * x for x in b))
@@ -190,7 +199,9 @@ def cosine_similarity(a, b):
 
 
 class SemanticCache:
+    """A semantic caching system that uses pseudo-embeddings and cosine similarity."""
     def __init__(self, similarity_threshold=0.92, max_entries=10000, ttl_seconds=3600):
+        """Initialize the SemanticCache with a similarity threshold, max size, and TTL."""
         self.threshold = similarity_threshold
         self.max_entries = max_entries
         self.ttl = ttl_seconds
@@ -199,6 +210,7 @@ class SemanticCache:
         self.misses = 0
 
     def get(self, query):
+        """Lookup a query in the cache and return the entry if it exceeds the similarity threshold."""
         query_emb = simple_embedding(query)
         now = time.time()
 
@@ -226,6 +238,7 @@ class SemanticCache:
         return None
 
     def put(self, query, response):
+        """Put a new query and response entry into the semantic cache, evicting old entries if full."""
         if len(self.entries) >= self.max_entries:
             self.entries.sort(key=lambda e: e["timestamp"])
             self.entries = self.entries[len(self.entries) // 4:]
@@ -238,6 +251,7 @@ class SemanticCache:
         })
 
     def stats(self):
+        """Return semantic cache metrics such as cache hits, misses, and hit rate percentage."""
         total = self.hits + self.misses
         return {
             "entries": len(self.entries),
@@ -275,6 +289,7 @@ BANNED_OUTPUT_PATTERNS = [
 
 @dataclass
 class GuardrailResult:
+    """Dataclass holding validation outcome and details from a guardrail check."""
     passed: bool
     blocked_reason: str | None = None
     pii_detected: list = field(default_factory=list)
@@ -282,6 +297,7 @@ class GuardrailResult:
 
 
 def check_input_guardrails(text):
+    """Check user input for injection patterns and PII, returning redaction if necessary."""
     for pattern in INJECTION_PATTERNS:
         if re.search(pattern, text, re.IGNORECASE):
             return GuardrailResult(
@@ -308,6 +324,7 @@ def check_input_guardrails(text):
 
 
 def check_output_guardrails(text):
+    """Verify that model output does not contain banned code or SQL syntax patterns."""
     for pattern in BANNED_OUTPUT_PATTERNS:
         if re.search(pattern, text):
             return GuardrailResult(
@@ -318,10 +335,12 @@ def check_output_guardrails(text):
 
 
 def estimate_tokens(text):
+    """Estimate the token count of a given text using a simple word-ratio heuristic."""
     return max(1, len(text.split()) * 4 // 3)
 
 
 def calculate_cost(model, input_tokens, output_tokens):
+    """Compute the API call cost based on input/output tokens and pricing configurations."""
     pricing = MODEL_PRICING.get(model, MODEL_PRICING[ModelName.GPT_4O])
     input_cost = input_tokens / 1_000_000 * pricing["input"]
     output_cost = output_tokens / 1_000_000 * pricing["output"]
@@ -357,6 +376,7 @@ SIMULATED_RESPONSES = {
 
 
 async def call_llm_with_retry(prompt, model, max_retries=3):
+    """Simulate an LLM API call with retry logic and exponential backoff on connection errors."""
     for attempt in range(max_retries + 1):
         try:
             failure_chance = 0.15 if attempt == 0 else 0.05
@@ -390,6 +410,7 @@ async def call_llm_with_retry(prompt, model, max_retries=3):
 
 
 async def call_with_fallback(prompt, preferred_model=None):
+    """Attempt an LLM API call cascading down the fallback chain if the preferred model fails."""
     chain = list(FALLBACK_CHAIN)
     if preferred_model and preferred_model in chain:
         chain.remove(preferred_model)
@@ -413,6 +434,7 @@ async def call_with_fallback(prompt, preferred_model=None):
 
 
 async def stream_response(text):
+    """Simulate streaming token delivery by yielding chunks with subtle random sleep delays."""
     words = text.split()
     for i, word in enumerate(words):
         token = word if i == 0 else " " + word
@@ -421,13 +443,16 @@ async def stream_response(text):
 
 
 class ProductionLLMService:
+    """Production service orchestrator integrating caching, guardrails, fallbacks, and cost tracking."""
     def __init__(self):
+        """Initialize the ProductionLLMService with a semantic cache, cost tracker, and logs."""
         self.cache = SemanticCache(similarity_threshold=0.92, ttl_seconds=3600)
         self.cost_tracker = CostTracker()
         self.request_logs = []
         self.eval_results = []
 
     async def handle_request(self, user_id, query, template_name="general_chat", variables=None):
+        """Handle a single LLM request by running it through input guardrails, caching, fallback LLM call, and output guardrails."""
         request_id = str(uuid.uuid4())[:12]
         start_time = time.time()
         variables = variables or {}
@@ -523,6 +548,7 @@ class ProductionLLMService:
         }
 
     async def handle_streaming_request(self, user_id, query, template_name="general_chat"):
+        """Handle a request with streaming token delivery, aggregating the simulated stream statistics."""
         result = await self.handle_request(user_id, query, template_name)
         if result.get("cache_hit"):
             return result
@@ -535,6 +561,7 @@ class ProductionLLMService:
         return result
 
     def _blocked_response(self, request_id, user_id, template_name, guardrail_result, start_time):
+        """Generate a structured response for requests blocked by input guardrails."""
         log = RequestLog(
             request_id=request_id,
             user_id=user_id,
@@ -561,6 +588,7 @@ class ProductionLLMService:
         }
 
     def _log_eval(self, request_id, template_name, version, result, latency_ms):
+        """Log request details and latency for post-execution evaluation and offline analysis."""
         self.eval_results.append({
             "request_id": request_id,
             "template": template_name,
@@ -572,6 +600,7 @@ class ProductionLLMService:
         })
 
     def health_check(self):
+        """Return the health status of the service along with cache, cost, and logging metrics."""
         return {
             "status": "healthy",
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -583,6 +612,7 @@ class ProductionLLMService:
 
 
 async def run_production_demo():
+    """Run a comprehensive production simulation demo with normal, streaming, load, and guardrail test requests."""
     service = ProductionLLMService()
 
     print("=" * 70)
@@ -691,6 +721,7 @@ async def run_production_demo():
 
 
 def main():
+    """Run the main async loop executing the production demo simulation."""
     asyncio.run(run_production_demo())
 
 
