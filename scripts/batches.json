@@ -1,0 +1,3113 @@
+[
+  {
+    "id": 1,
+    "phase": "00-setup-and-tooling",
+    "lessons": [
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "01-dev-environment",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/01-dev-environment/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/01-dev-environment/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "02-git-and-collaboration",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/02-git-and-collaboration/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/02-git-and-collaboration/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "03-gpu-setup-and-cloud",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/03-gpu-setup-and-cloud/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/03-gpu-setup-and-cloud/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "04-apis-and-keys",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/04-apis-and-keys/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/04-apis-and-keys/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "05-jupyter-notebooks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/05-jupyter-notebooks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/05-jupyter-notebooks/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "06-python-environments",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/06-python-environments/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/06-python-environments/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "07-docker-for-ai",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/07-docker-for-ai/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/07-docker-for-ai/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "08-editor-setup",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/08-editor-setup/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/08-editor-setup/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "09-data-management",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/09-data-management/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/09-data-management/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "10-terminal-and-shell",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/10-terminal-and-shell/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/10-terminal-and-shell/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "11-linux-for-ai",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/11-linux-for-ai/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/11-linux-for-ai/docs/pt-br.md"
+      },
+      {
+        "phase": "00-setup-and-tooling",
+        "lesson": "12-debugging-and-profiling",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/12-debugging-and-profiling/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/00-setup-and-tooling/12-debugging-and-profiling/docs/pt-br.md"
+      }
+    ],
+    "count": 12
+  },
+  {
+    "id": 2,
+    "phase": "01-math-foundations",
+    "lessons": [
+      {
+        "phase": "01-math-foundations",
+        "lesson": "01-linear-algebra-intuition",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/01-linear-algebra-intuition/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/01-linear-algebra-intuition/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "02-vectors-matrices-operations",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/02-vectors-matrices-operations/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/02-vectors-matrices-operations/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "03-matrix-transformations",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/03-matrix-transformations/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/03-matrix-transformations/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "04-calculus-for-ml",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/04-calculus-for-ml/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/04-calculus-for-ml/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "05-chain-rule-and-autodiff",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/05-chain-rule-and-autodiff/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/05-chain-rule-and-autodiff/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "06-probability-and-distributions",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/06-probability-and-distributions/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/06-probability-and-distributions/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "07-bayes-theorem",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/07-bayes-theorem/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/07-bayes-theorem/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "08-optimization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/08-optimization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/08-optimization/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "09-information-theory",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/09-information-theory/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/09-information-theory/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "10-dimensionality-reduction",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/10-dimensionality-reduction/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/10-dimensionality-reduction/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "11-singular-value-decomposition",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/11-singular-value-decomposition/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/11-singular-value-decomposition/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "12-tensor-operations",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/12-tensor-operations/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/12-tensor-operations/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "13-numerical-stability",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/13-numerical-stability/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/13-numerical-stability/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "14-norms-and-distances",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/14-norms-and-distances/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/14-norms-and-distances/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "15-statistics-for-ml",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/15-statistics-for-ml/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/15-statistics-for-ml/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 3,
+    "phase": "01-math-foundations",
+    "lessons": [
+      {
+        "phase": "01-math-foundations",
+        "lesson": "16-sampling-methods",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/16-sampling-methods/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/16-sampling-methods/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "17-linear-systems",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/17-linear-systems/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/17-linear-systems/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "18-convex-optimization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/18-convex-optimization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/18-convex-optimization/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "19-complex-numbers",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/19-complex-numbers/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/19-complex-numbers/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "20-fourier-transform",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/20-fourier-transform/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/20-fourier-transform/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "21-graph-theory",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/21-graph-theory/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/21-graph-theory/docs/pt-br.md"
+      },
+      {
+        "phase": "01-math-foundations",
+        "lesson": "22-stochastic-processes",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/22-stochastic-processes/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/01-math-foundations/22-stochastic-processes/docs/pt-br.md"
+      }
+    ],
+    "count": 7
+  },
+  {
+    "id": 4,
+    "phase": "02-ml-fundamentals",
+    "lessons": [
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "01-what-is-machine-learning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/01-what-is-machine-learning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/01-what-is-machine-learning/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "02-linear-regression",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/02-linear-regression/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/02-linear-regression/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "03-logistic-regression",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/03-logistic-regression/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/03-logistic-regression/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "04-decision-trees",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/04-decision-trees/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/04-decision-trees/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "05-support-vector-machines",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/05-support-vector-machines/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/05-support-vector-machines/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "06-knn-and-distances",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/06-knn-and-distances/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/06-knn-and-distances/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "07-unsupervised-learning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/07-unsupervised-learning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/07-unsupervised-learning/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "08-feature-engineering",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/08-feature-engineering/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/08-feature-engineering/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "09-model-evaluation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/09-model-evaluation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/09-model-evaluation/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "10-bias-variance",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/10-bias-variance/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/10-bias-variance/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "11-ensemble-methods",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/11-ensemble-methods/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/11-ensemble-methods/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "12-hyperparameter-tuning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "13-ml-pipelines",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/13-ml-pipelines/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/13-ml-pipelines/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "14-naive-bayes",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/14-naive-bayes/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/14-naive-bayes/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "15-time-series",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/15-time-series/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/15-time-series/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 5,
+    "phase": "02-ml-fundamentals",
+    "lessons": [
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "16-anomaly-detection",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/16-anomaly-detection/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/16-anomaly-detection/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "17-imbalanced-data",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/17-imbalanced-data/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/17-imbalanced-data/docs/pt-br.md"
+      },
+      {
+        "phase": "02-ml-fundamentals",
+        "lesson": "18-feature-selection",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/18-feature-selection/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/02-ml-fundamentals/18-feature-selection/docs/pt-br.md"
+      }
+    ],
+    "count": 3
+  },
+  {
+    "id": 6,
+    "phase": "03-deep-learning-core",
+    "lessons": [
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "01-the-perceptron",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/01-the-perceptron/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/01-the-perceptron/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "02-multi-layer-networks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/02-multi-layer-networks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/02-multi-layer-networks/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "03-backpropagation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/03-backpropagation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/03-backpropagation/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "04-activation-functions",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/04-activation-functions/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/04-activation-functions/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "05-loss-functions",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/05-loss-functions/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/05-loss-functions/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "06-optimizers",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/06-optimizers/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/06-optimizers/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "07-regularization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/07-regularization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/07-regularization/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "08-weight-initialization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/08-weight-initialization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/08-weight-initialization/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "09-learning-rate-schedules",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/09-learning-rate-schedules/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/09-learning-rate-schedules/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "10-mini-framework",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/10-mini-framework/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/10-mini-framework/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "11-intro-to-pytorch",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/11-intro-to-pytorch/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/11-intro-to-pytorch/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "12-intro-to-jax",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/12-intro-to-jax/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/12-intro-to-jax/docs/pt-br.md"
+      },
+      {
+        "phase": "03-deep-learning-core",
+        "lesson": "13-debugging-neural-networks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/13-debugging-neural-networks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/03-deep-learning-core/13-debugging-neural-networks/docs/pt-br.md"
+      }
+    ],
+    "count": 13
+  },
+  {
+    "id": 7,
+    "phase": "04-computer-vision",
+    "lessons": [
+      {
+        "phase": "04-computer-vision",
+        "lesson": "01-image-fundamentals",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/01-image-fundamentals/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/01-image-fundamentals/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "02-convolutions-from-scratch",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/02-convolutions-from-scratch/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/02-convolutions-from-scratch/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "03-cnns-lenet-to-resnet",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/03-cnns-lenet-to-resnet/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/03-cnns-lenet-to-resnet/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "04-image-classification",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/04-image-classification/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/04-image-classification/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "05-transfer-learning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/05-transfer-learning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/05-transfer-learning/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "06-object-detection-yolo",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/06-object-detection-yolo/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/06-object-detection-yolo/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "07-semantic-segmentation-unet",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/07-semantic-segmentation-unet/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/07-semantic-segmentation-unet/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "08-instance-segmentation-mask-rcnn",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/08-instance-segmentation-mask-rcnn/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/08-instance-segmentation-mask-rcnn/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "09-image-generation-gans",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/09-image-generation-gans/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/09-image-generation-gans/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "10-image-generation-diffusion",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/10-image-generation-diffusion/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/10-image-generation-diffusion/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "11-stable-diffusion",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/11-stable-diffusion/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/11-stable-diffusion/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "12-video-understanding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/12-video-understanding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/12-video-understanding/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "13-3d-vision-nerf",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/13-3d-vision-nerf/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/13-3d-vision-nerf/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "14-vision-transformers",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/14-vision-transformers/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/14-vision-transformers/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "15-real-time-edge",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/15-real-time-edge/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/15-real-time-edge/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 8,
+    "phase": "04-computer-vision",
+    "lessons": [
+      {
+        "phase": "04-computer-vision",
+        "lesson": "16-vision-pipeline-capstone",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/16-vision-pipeline-capstone/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/16-vision-pipeline-capstone/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "17-self-supervised-vision",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/17-self-supervised-vision/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/17-self-supervised-vision/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "18-open-vocab-clip",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/18-open-vocab-clip/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/18-open-vocab-clip/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "19-ocr-document-understanding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/19-ocr-document-understanding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/19-ocr-document-understanding/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "20-image-retrieval-metric",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/20-image-retrieval-metric/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/20-image-retrieval-metric/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "21-keypoint-pose",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/21-keypoint-pose/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/21-keypoint-pose/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "22-3d-gaussian-splatting",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/22-3d-gaussian-splatting/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/22-3d-gaussian-splatting/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "23-diffusion-transformers-rectified-flow",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/23-diffusion-transformers-rectified-flow/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/23-diffusion-transformers-rectified-flow/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "24-sam3-open-vocab-segmentation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/24-sam3-open-vocab-segmentation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/24-sam3-open-vocab-segmentation/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "25-vision-language-models",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/25-vision-language-models/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/25-vision-language-models/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "26-monocular-depth",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/26-monocular-depth/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/26-monocular-depth/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "27-multi-object-tracking",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/27-multi-object-tracking/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/27-multi-object-tracking/docs/pt-br.md"
+      },
+      {
+        "phase": "04-computer-vision",
+        "lesson": "28-world-models-video-diffusion",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/28-world-models-video-diffusion/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/04-computer-vision/28-world-models-video-diffusion/docs/pt-br.md"
+      }
+    ],
+    "count": 13
+  },
+  {
+    "id": 9,
+    "phase": "05-nlp-foundations-to-advanced",
+    "lessons": [
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "01-text-processing",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/01-text-processing/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/01-text-processing/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "02-bag-of-words-tfidf",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "03-word-embeddings-word2vec",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "04-glove-fasttext-subword",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "05-sentiment-analysis",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "06-named-entity-recognition",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "07-pos-tagging-parsing",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "08-cnns-rnns-for-text",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "09-sequence-to-sequence",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "10-attention-mechanism",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/10-attention-mechanism/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/10-attention-mechanism/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "11-machine-translation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/11-machine-translation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/11-machine-translation/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "12-text-summarization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/12-text-summarization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/12-text-summarization/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "13-question-answering",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/13-question-answering/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/13-question-answering/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "14-information-retrieval-search",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "15-topic-modeling",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/15-topic-modeling/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 10,
+    "phase": "05-nlp-foundations-to-advanced",
+    "lessons": [
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "16-text-generation-pre-transformer",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "17-chatbots-rule-to-neural",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "18-multilingual-nlp",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "19-subword-tokenization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/19-subword-tokenization/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "20-structured-outputs-constrained-decoding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "21-nli-textual-entailment",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "22-embedding-models-deep-dive",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "23-chunking-strategies-rag",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "24-coreference-resolution",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/24-coreference-resolution/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "25-entity-linking",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/25-entity-linking/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/25-entity-linking/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "26-relation-extraction-kg",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "27-llm-evaluation-frameworks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "28-long-context-evaluation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/docs/pt-br.md"
+      },
+      {
+        "phase": "05-nlp-foundations-to-advanced",
+        "lesson": "29-dialogue-state-tracking",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/docs/pt-br.md"
+      }
+    ],
+    "count": 14
+  },
+  {
+    "id": 11,
+    "phase": "06-speech-and-audio",
+    "lessons": [
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "01-audio-fundamentals",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/01-audio-fundamentals/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/01-audio-fundamentals/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "02-spectrograms-mel-features",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/02-spectrograms-mel-features/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/02-spectrograms-mel-features/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "03-audio-classification",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/03-audio-classification/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/03-audio-classification/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "04-speech-recognition-asr",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/04-speech-recognition-asr/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/04-speech-recognition-asr/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "05-whisper-architecture-finetuning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/05-whisper-architecture-finetuning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/05-whisper-architecture-finetuning/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "06-speaker-recognition-verification",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/06-speaker-recognition-verification/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/06-speaker-recognition-verification/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "07-text-to-speech",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/07-text-to-speech/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/07-text-to-speech/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "08-voice-cloning-conversion",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/08-voice-cloning-conversion/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/08-voice-cloning-conversion/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "09-music-generation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/09-music-generation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/09-music-generation/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "10-audio-language-models",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/10-audio-language-models/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/10-audio-language-models/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "11-real-time-audio-processing",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/11-real-time-audio-processing/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/11-real-time-audio-processing/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "12-voice-assistant-pipeline",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/12-voice-assistant-pipeline/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/12-voice-assistant-pipeline/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "13-neural-audio-codecs",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/13-neural-audio-codecs/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/13-neural-audio-codecs/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "14-voice-activity-detection-turn-taking",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/14-voice-activity-detection-turn-taking/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/14-voice-activity-detection-turn-taking/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "15-streaming-speech-to-speech-moshi-hibiki",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 12,
+    "phase": "06-speech-and-audio",
+    "lessons": [
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "16-anti-spoofing-audio-watermarking",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking/docs/pt-br.md"
+      },
+      {
+        "phase": "06-speech-and-audio",
+        "lesson": "17-audio-evaluation-metrics",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/17-audio-evaluation-metrics/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/06-speech-and-audio/17-audio-evaluation-metrics/docs/pt-br.md"
+      }
+    ],
+    "count": 2
+  },
+  {
+    "id": 13,
+    "phase": "07-transformers-deep-dive",
+    "lessons": [
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "01-why-transformers",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/01-why-transformers/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/01-why-transformers/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "02-self-attention-from-scratch",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/02-self-attention-from-scratch/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/02-self-attention-from-scratch/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "03-multi-head-attention",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/03-multi-head-attention/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/03-multi-head-attention/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "04-positional-encoding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/04-positional-encoding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/04-positional-encoding/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "05-full-transformer",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/05-full-transformer/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/05-full-transformer/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "06-bert-masked-language-modeling",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/06-bert-masked-language-modeling/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/06-bert-masked-language-modeling/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "07-gpt-causal-language-modeling",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "08-t5-bart-encoder-decoder",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "09-vision-transformers",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/09-vision-transformers/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/09-vision-transformers/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "10-audio-transformers-whisper",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/10-audio-transformers-whisper/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/10-audio-transformers-whisper/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "11-mixture-of-experts",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/11-mixture-of-experts/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/11-mixture-of-experts/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "12-kv-cache-flash-attention",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/12-kv-cache-flash-attention/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/12-kv-cache-flash-attention/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "13-scaling-laws",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/13-scaling-laws/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/13-scaling-laws/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "14-build-a-transformer-capstone",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/14-build-a-transformer-capstone/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/14-build-a-transformer-capstone/docs/pt-br.md"
+      },
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "15-attention-variants",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/15-attention-variants/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/15-attention-variants/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 14,
+    "phase": "07-transformers-deep-dive",
+    "lessons": [
+      {
+        "phase": "07-transformers-deep-dive",
+        "lesson": "16-speculative-decoding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/16-speculative-decoding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/07-transformers-deep-dive/16-speculative-decoding/docs/pt-br.md"
+      }
+    ],
+    "count": 1
+  },
+  {
+    "id": 15,
+    "phase": "08-generative-ai",
+    "lessons": [
+      {
+        "phase": "08-generative-ai",
+        "lesson": "01-generative-models-taxonomy-history",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/01-generative-models-taxonomy-history/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/01-generative-models-taxonomy-history/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "02-autoencoders-vae",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/02-autoencoders-vae/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/02-autoencoders-vae/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "03-gans-generator-discriminator",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/03-gans-generator-discriminator/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/03-gans-generator-discriminator/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "04-conditional-gans-pix2pix",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/04-conditional-gans-pix2pix/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/04-conditional-gans-pix2pix/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "05-stylegan",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/05-stylegan/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/05-stylegan/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "06-diffusion-ddpm-from-scratch",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/06-diffusion-ddpm-from-scratch/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/06-diffusion-ddpm-from-scratch/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "07-latent-diffusion-stable-diffusion",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/07-latent-diffusion-stable-diffusion/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/07-latent-diffusion-stable-diffusion/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "08-controlnet-lora-conditioning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/08-controlnet-lora-conditioning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/08-controlnet-lora-conditioning/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "09-inpainting-outpainting-editing",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/09-inpainting-outpainting-editing/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/09-inpainting-outpainting-editing/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "10-video-generation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/10-video-generation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/10-video-generation/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "11-audio-generation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/11-audio-generation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/11-audio-generation/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "12-3d-generation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/12-3d-generation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/12-3d-generation/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "13-flow-matching-rectified-flows",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/13-flow-matching-rectified-flows/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/13-flow-matching-rectified-flows/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "14-evaluation-fid-clip-score",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/14-evaluation-fid-clip-score/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/14-evaluation-fid-clip-score/docs/pt-br.md"
+      },
+      {
+        "phase": "08-generative-ai",
+        "lesson": "19-visual-autoregressive-var",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/19-visual-autoregressive-var/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/08-generative-ai/19-visual-autoregressive-var/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 16,
+    "phase": "09-reinforcement-learning",
+    "lessons": [
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "01-mdps-states-actions-rewards",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/01-mdps-states-actions-rewards/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/01-mdps-states-actions-rewards/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "02-dynamic-programming",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/02-dynamic-programming/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/02-dynamic-programming/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "03-monte-carlo-methods",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/03-monte-carlo-methods/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/03-monte-carlo-methods/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "04-q-learning-sarsa",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/04-q-learning-sarsa/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/04-q-learning-sarsa/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "05-dqn",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/05-dqn/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/05-dqn/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "06-policy-gradients-reinforce",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/06-policy-gradients-reinforce/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/06-policy-gradients-reinforce/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "07-actor-critic-a2c-a3c",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "08-ppo",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/08-ppo/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/08-ppo/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "09-reward-modeling-rlhf",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/09-reward-modeling-rlhf/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/09-reward-modeling-rlhf/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "10-multi-agent-rl",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/10-multi-agent-rl/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/10-multi-agent-rl/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "11-sim-to-real-transfer",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/11-sim-to-real-transfer/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/11-sim-to-real-transfer/docs/pt-br.md"
+      },
+      {
+        "phase": "09-reinforcement-learning",
+        "lesson": "12-rl-for-games",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/12-rl-for-games/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/09-reinforcement-learning/12-rl-for-games/docs/pt-br.md"
+      }
+    ],
+    "count": 12
+  },
+  {
+    "id": 17,
+    "phase": "10-llms-from-scratch",
+    "lessons": [
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "01-tokenizers",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/01-tokenizers/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/01-tokenizers/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "02-building-a-tokenizer",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/02-building-a-tokenizer/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "03-data-pipelines",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/03-data-pipelines/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/03-data-pipelines/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "04-pre-training-mini-gpt",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/04-pre-training-mini-gpt/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/04-pre-training-mini-gpt/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "05-scaling-distributed",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/05-scaling-distributed/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/05-scaling-distributed/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "06-instruction-tuning-sft",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/06-instruction-tuning-sft/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/06-instruction-tuning-sft/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "07-rlhf",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/07-rlhf/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/07-rlhf/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "08-dpo",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/08-dpo/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/08-dpo/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "09-constitutional-ai-self-improvement",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "10-evaluation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/10-evaluation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/10-evaluation/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "11-quantization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/11-quantization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/11-quantization/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "12-inference-optimization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/12-inference-optimization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/12-inference-optimization/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "13-building-complete-llm-pipeline",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/13-building-complete-llm-pipeline/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/13-building-complete-llm-pipeline/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "14-open-models-architecture-walkthroughs",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "15-speculative-decoding-eagle3",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/15-speculative-decoding-eagle3/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/15-speculative-decoding-eagle3/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 18,
+    "phase": "10-llms-from-scratch",
+    "lessons": [
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "16-differential-attention-v2",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/16-differential-attention-v2/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/16-differential-attention-v2/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "17-native-sparse-attention",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/17-native-sparse-attention/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/17-native-sparse-attention/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "18-multi-token-prediction",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/18-multi-token-prediction/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/18-multi-token-prediction/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "19-dualpipe-parallelism",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/19-dualpipe-parallelism/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/19-dualpipe-parallelism/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "20-deepseek-v3-walkthrough",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "21-jamba-hybrid-ssm-transformer",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "22-async-hogwild-inference",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/22-async-hogwild-inference/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/22-async-hogwild-inference/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "25-speculative-decoding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/25-speculative-decoding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/25-speculative-decoding/docs/pt-br.md"
+      },
+      {
+        "phase": "10-llms-from-scratch",
+        "lesson": "34-gradient-checkpointing",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/34-gradient-checkpointing/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/10-llms-from-scratch/34-gradient-checkpointing/docs/pt-br.md"
+      }
+    ],
+    "count": 9
+  },
+  {
+    "id": 19,
+    "phase": "11-llm-engineering",
+    "lessons": [
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "01-prompt-engineering",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/01-prompt-engineering/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/01-prompt-engineering/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "02-few-shot-cot",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/02-few-shot-cot/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/02-few-shot-cot/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "03-structured-outputs",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/03-structured-outputs/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/03-structured-outputs/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "04-embeddings",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/04-embeddings/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/04-embeddings/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "05-context-engineering",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/05-context-engineering/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/05-context-engineering/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "06-rag",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/06-rag/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/06-rag/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "07-advanced-rag",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/07-advanced-rag/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/07-advanced-rag/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "08-fine-tuning-lora",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/08-fine-tuning-lora/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/08-fine-tuning-lora/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "09-function-calling",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/09-function-calling/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/09-function-calling/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "10-evaluation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/10-evaluation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/10-evaluation/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "11-caching-cost",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/11-caching-cost/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/11-caching-cost/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "12-guardrails",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/12-guardrails/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/12-guardrails/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "13-production-app",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/13-production-app/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/13-production-app/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "14-model-context-protocol",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/14-model-context-protocol/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/14-model-context-protocol/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "15-prompt-caching",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/15-prompt-caching/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/15-prompt-caching/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 20,
+    "phase": "11-llm-engineering",
+    "lessons": [
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "16-langgraph-state-machines",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/16-langgraph-state-machines/docs/pt-br.md"
+      },
+      {
+        "phase": "11-llm-engineering",
+        "lesson": "17-agent-framework-tradeoffs",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/17-agent-framework-tradeoffs/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/11-llm-engineering/17-agent-framework-tradeoffs/docs/pt-br.md"
+      }
+    ],
+    "count": 2
+  },
+  {
+    "id": 21,
+    "phase": "12-multimodal-ai",
+    "lessons": [
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "01-vision-transformer-patch-tokens",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/01-vision-transformer-patch-tokens/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/01-vision-transformer-patch-tokens/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "02-clip-contrastive-pretraining",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/02-clip-contrastive-pretraining/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/02-clip-contrastive-pretraining/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "03-blip2-qformer-bridge",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "04-flamingo-gated-cross-attention",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/04-flamingo-gated-cross-attention/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/04-flamingo-gated-cross-attention/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "05-llava-visual-instruction-tuning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/05-llava-visual-instruction-tuning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/05-llava-visual-instruction-tuning/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "06-any-resolution-patch-n-pack",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/06-any-resolution-patch-n-pack/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/06-any-resolution-patch-n-pack/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "07-open-weight-vlm-recipes",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/07-open-weight-vlm-recipes/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/07-open-weight-vlm-recipes/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "08-llava-onevision-single-multi-video",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/08-llava-onevision-single-multi-video/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/08-llava-onevision-single-multi-video/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "09-qwen-vl-family-dynamic-fps",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "10-internvl3-native-multimodal",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/10-internvl3-native-multimodal/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/10-internvl3-native-multimodal/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "11-chameleon-early-fusion-tokens",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "12-emu3-next-token-for-generation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/12-emu3-next-token-for-generation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/12-emu3-next-token-for-generation/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "13-transfusion-autoregressive-diffusion",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "14-show-o-discrete-diffusion-unified",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "15-janus-pro-decoupled-encoders",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 22,
+    "phase": "12-multimodal-ai",
+    "lessons": [
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "16-mio-any-to-any-streaming",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/16-mio-any-to-any-streaming/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/16-mio-any-to-any-streaming/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "17-video-language-temporal-grounding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/17-video-language-temporal-grounding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/17-video-language-temporal-grounding/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "18-long-video-million-token",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/18-long-video-million-token/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/18-long-video-million-token/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "19-audio-language-whisper-to-af3",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/19-audio-language-whisper-to-af3/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/19-audio-language-whisper-to-af3/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "20-omni-models-thinker-talker",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/20-omni-models-thinker-talker/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/20-omni-models-thinker-talker/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "21-embodied-vlas-openvla-pi0-groot",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "22-document-diagram-understanding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/22-document-diagram-understanding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/22-document-diagram-understanding/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "23-colpali-vision-native-rag",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/23-colpali-vision-native-rag/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/23-colpali-vision-native-rag/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "24-multimodal-rag-cross-modal",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/24-multimodal-rag-cross-modal/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/24-multimodal-rag-cross-modal/docs/pt-br.md"
+      },
+      {
+        "phase": "12-multimodal-ai",
+        "lesson": "25-multimodal-agents-computer-use",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/25-multimodal-agents-computer-use/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/12-multimodal-ai/25-multimodal-agents-computer-use/docs/pt-br.md"
+      }
+    ],
+    "count": 10
+  },
+  {
+    "id": 23,
+    "phase": "13-tools-and-protocols",
+    "lessons": [
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "01-the-tool-interface",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/01-the-tool-interface/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/01-the-tool-interface/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "02-function-calling-deep-dive",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/02-function-calling-deep-dive/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/02-function-calling-deep-dive/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "03-parallel-and-streaming-tool-calls",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "04-structured-output",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/04-structured-output/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/04-structured-output/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "05-tool-schema-design",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/05-tool-schema-design/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "06-mcp-fundamentals",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/06-mcp-fundamentals/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/06-mcp-fundamentals/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "07-building-an-mcp-server",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/07-building-an-mcp-server/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/07-building-an-mcp-server/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "08-building-an-mcp-client",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/08-building-an-mcp-client/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/08-building-an-mcp-client/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "09-mcp-transports",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/09-mcp-transports/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/09-mcp-transports/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "10-mcp-resources-and-prompts",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/10-mcp-resources-and-prompts/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/10-mcp-resources-and-prompts/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "11-mcp-sampling",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/11-mcp-sampling/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/11-mcp-sampling/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "12-mcp-roots-and-elicitation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "13-mcp-async-tasks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/13-mcp-async-tasks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/13-mcp-async-tasks/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "14-mcp-apps",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/14-mcp-apps/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/14-mcp-apps/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "15-mcp-security-tool-poisoning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 24,
+    "phase": "13-tools-and-protocols",
+    "lessons": [
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "16-mcp-security-oauth-2-1",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "17-mcp-gateways-and-registries",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/17-mcp-gateways-and-registries/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/17-mcp-gateways-and-registries/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "18-mcp-auth-production",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/18-mcp-auth-production/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/18-mcp-auth-production/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "19-a2a-protocol",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/19-a2a-protocol/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/19-a2a-protocol/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "20-opentelemetry-genai",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/20-opentelemetry-genai/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/20-opentelemetry-genai/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "21-llm-routing-layer",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/21-llm-routing-layer/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/21-llm-routing-layer/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "22-skills-and-agent-sdks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/22-skills-and-agent-sdks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/22-skills-and-agent-sdks/docs/pt-br.md"
+      },
+      {
+        "phase": "13-tools-and-protocols",
+        "lesson": "23-capstone-tool-ecosystem",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/23-capstone-tool-ecosystem/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/13-tools-and-protocols/23-capstone-tool-ecosystem/docs/pt-br.md"
+      }
+    ],
+    "count": 8
+  },
+  {
+    "id": 25,
+    "phase": "14-agent-engineering",
+    "lessons": [
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "01-the-agent-loop",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/01-the-agent-loop/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/01-the-agent-loop/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "02-rewoo-plan-and-execute",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/02-rewoo-plan-and-execute/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/02-rewoo-plan-and-execute/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "03-reflexion-verbal-rl",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/03-reflexion-verbal-rl/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/03-reflexion-verbal-rl/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "04-tree-of-thoughts-lats",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/04-tree-of-thoughts-lats/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/04-tree-of-thoughts-lats/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "05-self-refine-and-critic",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/05-self-refine-and-critic/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/05-self-refine-and-critic/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "06-tool-use-and-function-calling",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/06-tool-use-and-function-calling/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/06-tool-use-and-function-calling/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "07-memory-virtual-context-memgpt",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/07-memory-virtual-context-memgpt/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/07-memory-virtual-context-memgpt/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "08-memory-blocks-sleep-time-compute",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "09-hybrid-memory-mem0",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/09-hybrid-memory-mem0/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/09-hybrid-memory-mem0/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "10-skill-libraries-voyager",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/10-skill-libraries-voyager/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/10-skill-libraries-voyager/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "11-planning-htn-and-evolutionary",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/11-planning-htn-and-evolutionary/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/11-planning-htn-and-evolutionary/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "12-anthropic-workflow-patterns",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/12-anthropic-workflow-patterns/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/12-anthropic-workflow-patterns/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "13-langgraph-stateful-graphs",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/13-langgraph-stateful-graphs/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/13-langgraph-stateful-graphs/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "14-autogen-actor-model",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/14-autogen-actor-model/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/14-autogen-actor-model/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "15-crewai-role-based-crews",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/15-crewai-role-based-crews/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/15-crewai-role-based-crews/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 26,
+    "phase": "14-agent-engineering",
+    "lessons": [
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "16-openai-agents-sdk",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/16-openai-agents-sdk/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/16-openai-agents-sdk/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "17-claude-agent-sdk",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/17-claude-agent-sdk/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/17-claude-agent-sdk/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "18-agno-and-mastra-runtimes",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/18-agno-and-mastra-runtimes/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/18-agno-and-mastra-runtimes/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "19-benchmarks-swebench-gaia",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/19-benchmarks-swebench-gaia/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/19-benchmarks-swebench-gaia/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "20-benchmarks-webarena-osworld",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/20-benchmarks-webarena-osworld/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/20-benchmarks-webarena-osworld/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "21-computer-use-agents",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/21-computer-use-agents/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/21-computer-use-agents/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "22-voice-agents-pipecat-livekit",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/22-voice-agents-pipecat-livekit/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/22-voice-agents-pipecat-livekit/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "23-otel-genai-conventions",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/23-otel-genai-conventions/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/23-otel-genai-conventions/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "24-agent-observability-platforms",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/24-agent-observability-platforms/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/24-agent-observability-platforms/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "25-multi-agent-debate",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/25-multi-agent-debate/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/25-multi-agent-debate/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "26-failure-modes-agentic",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/26-failure-modes-agentic/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/26-failure-modes-agentic/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "27-prompt-injection-defense",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/27-prompt-injection-defense/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/27-prompt-injection-defense/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "28-orchestration-patterns",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/28-orchestration-patterns/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/28-orchestration-patterns/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "29-production-runtimes",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/29-production-runtimes/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/29-production-runtimes/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "30-eval-driven-agent-development",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/30-eval-driven-agent-development/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/30-eval-driven-agent-development/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 27,
+    "phase": "14-agent-engineering",
+    "lessons": [
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "31-agent-workbench-why-models-fail",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/31-agent-workbench-why-models-fail/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/31-agent-workbench-why-models-fail/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "32-minimal-agent-workbench",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/32-minimal-agent-workbench/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/32-minimal-agent-workbench/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "33-instructions-as-executable-constraints",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/33-instructions-as-executable-constraints/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/33-instructions-as-executable-constraints/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "34-repo-memory-and-state",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/34-repo-memory-and-state/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/34-repo-memory-and-state/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "35-initialization-scripts",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/35-initialization-scripts/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/35-initialization-scripts/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "36-scope-contracts",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/36-scope-contracts/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/36-scope-contracts/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "37-runtime-feedback-loops",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/37-runtime-feedback-loops/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/37-runtime-feedback-loops/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "38-verification-gates",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/38-verification-gates/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/38-verification-gates/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "39-reviewer-agent",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/39-reviewer-agent/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/39-reviewer-agent/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "40-multi-session-handoff",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/40-multi-session-handoff/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/40-multi-session-handoff/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "41-workbench-for-real-repos",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/41-workbench-for-real-repos/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/41-workbench-for-real-repos/docs/pt-br.md"
+      },
+      {
+        "phase": "14-agent-engineering",
+        "lesson": "42-agent-workbench-capstone",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/42-agent-workbench-capstone/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/14-agent-engineering/42-agent-workbench-capstone/docs/pt-br.md"
+      }
+    ],
+    "count": 12
+  },
+  {
+    "id": 28,
+    "phase": "15-autonomous-systems",
+    "lessons": [
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "01-long-horizon-agents",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/01-long-horizon-agents/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/01-long-horizon-agents/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "02-star-family-reasoning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/02-star-family-reasoning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/02-star-family-reasoning/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "03-alphaevolve-evolutionary-coding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "04-darwin-godel-machine",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/04-darwin-godel-machine/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/04-darwin-godel-machine/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "05-ai-scientist-v2",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/05-ai-scientist-v2/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/05-ai-scientist-v2/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "06-automated-alignment-research",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/06-automated-alignment-research/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/06-automated-alignment-research/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "07-recursive-self-improvement",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/07-recursive-self-improvement/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/07-recursive-self-improvement/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "08-bounded-self-improvement",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/08-bounded-self-improvement/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/08-bounded-self-improvement/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "09-coding-agent-landscape",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/09-coding-agent-landscape/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/09-coding-agent-landscape/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "10-claude-code-permission-modes",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/10-claude-code-permission-modes/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/10-claude-code-permission-modes/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "11-browser-agents",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/11-browser-agents/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/11-browser-agents/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "12-durable-execution",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/12-durable-execution/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/12-durable-execution/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "13-cost-governors",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/13-cost-governors/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/13-cost-governors/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "14-kill-switches-canaries",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/14-kill-switches-canaries/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/14-kill-switches-canaries/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "15-propose-then-commit",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/15-propose-then-commit/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/15-propose-then-commit/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 29,
+    "phase": "15-autonomous-systems",
+    "lessons": [
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "16-checkpoints-rollback",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/16-checkpoints-rollback/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/16-checkpoints-rollback/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "17-constitutional-ai",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/17-constitutional-ai/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/17-constitutional-ai/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "18-llama-guard",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/18-llama-guard/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/18-llama-guard/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "19-anthropic-rsp",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/19-anthropic-rsp/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/19-anthropic-rsp/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "20-openai-preparedness-deepmind-fsf",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "21-metr-external-evaluation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/21-metr-external-evaluation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/21-metr-external-evaluation/docs/pt-br.md"
+      },
+      {
+        "phase": "15-autonomous-systems",
+        "lesson": "22-cais-caisi-societal-risk",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/22-cais-caisi-societal-risk/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/15-autonomous-systems/22-cais-caisi-societal-risk/docs/pt-br.md"
+      }
+    ],
+    "count": 7
+  },
+  {
+    "id": 30,
+    "phase": "16-multi-agent-and-swarms",
+    "lessons": [
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "01-why-multi-agent",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/01-why-multi-agent/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/01-why-multi-agent/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "02-fipa-acl-heritage",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "03-communication-protocols",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/03-communication-protocols/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/03-communication-protocols/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "04-primitive-model",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/04-primitive-model/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/04-primitive-model/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "05-supervisor-orchestrator-pattern",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "06-hierarchical-architecture",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/06-hierarchical-architecture/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/06-hierarchical-architecture/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "07-society-of-mind-debate",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/07-society-of-mind-debate/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/07-society-of-mind-debate/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "08-role-specialization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/08-role-specialization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/08-role-specialization/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "09-parallel-swarm-networks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "10-group-chat-speaker-selection",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "11-handoffs-and-routines",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/11-handoffs-and-routines/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/11-handoffs-and-routines/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "12-a2a-protocol",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/12-a2a-protocol/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/12-a2a-protocol/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "13-shared-memory-blackboard",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "14-consensus-and-bft",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/14-consensus-and-bft/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/14-consensus-and-bft/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "15-voting-debate-topology",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/15-voting-debate-topology/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/15-voting-debate-topology/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 31,
+    "phase": "16-multi-agent-and-swarms",
+    "lessons": [
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "16-negotiation-bargaining",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/16-negotiation-bargaining/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/16-negotiation-bargaining/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "17-generative-agents-simulation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/17-generative-agents-simulation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/17-generative-agents-simulation/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "18-theory-of-mind-coordination",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "19-swarm-optimization-pso-aco",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "20-marl-maddpg-qmix-mappo",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "21-agent-economies",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/21-agent-economies/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/21-agent-economies/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "22-production-scaling-queues-checkpoints",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "23-failure-modes-mast-groupthink",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "24-evaluation-coordination-benchmarks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/docs/pt-br.md"
+      },
+      {
+        "phase": "16-multi-agent-and-swarms",
+        "lesson": "25-case-studies-2026-sota",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/docs/pt-br.md"
+      }
+    ],
+    "count": 10
+  },
+  {
+    "id": 32,
+    "phase": "17-infrastructure-and-production",
+    "lessons": [
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "01-managed-llm-platforms",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/01-managed-llm-platforms/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/01-managed-llm-platforms/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "02-inference-platform-economics",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/02-inference-platform-economics/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/02-inference-platform-economics/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "03-gpu-autoscaling-kubernetes",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "04-vllm-serving-internals",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/04-vllm-serving-internals/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/04-vllm-serving-internals/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "05-eagle3-speculative-decoding",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "06-sglang-radixattention",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/06-sglang-radixattention/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/06-sglang-radixattention/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "07-tensorrt-llm-blackwell",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "08-inference-metrics-goodput",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/08-inference-metrics-goodput/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/08-inference-metrics-goodput/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "09-production-quantization",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/09-production-quantization/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/09-production-quantization/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "10-cold-start-mitigation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/10-cold-start-mitigation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/10-cold-start-mitigation/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "11-multi-region-kv-locality",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/11-multi-region-kv-locality/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/11-multi-region-kv-locality/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "12-edge-inference",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/12-edge-inference/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/12-edge-inference/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "13-llm-observability",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/13-llm-observability/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/13-llm-observability/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "14-prompt-semantic-caching",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/14-prompt-semantic-caching/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/14-prompt-semantic-caching/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "15-batch-apis",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/15-batch-apis/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/15-batch-apis/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 33,
+    "phase": "17-infrastructure-and-production",
+    "lessons": [
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "16-model-routing",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/16-model-routing/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/16-model-routing/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "17-disaggregated-prefill-decode",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "18-vllm-production-stack-lmcache",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "19-ai-gateways",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/19-ai-gateways/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/19-ai-gateways/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "20-shadow-canary-progressive",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/20-shadow-canary-progressive/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/20-shadow-canary-progressive/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "21-ab-testing-llm-features",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/21-ab-testing-llm-features/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/21-ab-testing-llm-features/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "22-load-testing-llm-apis",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/22-load-testing-llm-apis/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/22-load-testing-llm-apis/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "23-sre-for-ai",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/23-sre-for-ai/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/23-sre-for-ai/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "24-chaos-engineering-llm",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/24-chaos-engineering-llm/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/24-chaos-engineering-llm/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "25-security-secrets-audit",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/25-security-secrets-audit/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "26-compliance-frameworks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/26-compliance-frameworks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/26-compliance-frameworks/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "27-finops-llms",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/27-finops-llms/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/27-finops-llms/docs/pt-br.md"
+      },
+      {
+        "phase": "17-infrastructure-and-production",
+        "lesson": "28-self-hosted-serving-selection",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/28-self-hosted-serving-selection/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/17-infrastructure-and-production/28-self-hosted-serving-selection/docs/pt-br.md"
+      }
+    ],
+    "count": 13
+  },
+  {
+    "id": 34,
+    "phase": "18-ethics-safety-alignment",
+    "lessons": [
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "01-instruction-following-alignment-signal",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "02-reward-hacking-goodhart",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "03-direct-preference-optimization-family",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "04-sycophancy-rlhf-amplification",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "05-constitutional-ai-rlaif",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "06-mesa-optimization-deceptive-alignment",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "07-sleeper-agents-persistent-deception",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "08-in-context-scheming-frontier-models",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "09-alignment-faking",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/09-alignment-faking/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/09-alignment-faking/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "10-ai-control-subversion",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/10-ai-control-subversion/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/10-ai-control-subversion/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "11-scalable-oversight-weak-to-strong",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "12-red-teaming-pair-automated-attacks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "13-many-shot-jailbreaking",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "14-ascii-art-visual-jailbreaks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "15-indirect-prompt-injection",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/15-indirect-prompt-injection/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/15-indirect-prompt-injection/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 35,
+    "phase": "18-ethics-safety-alignment",
+    "lessons": [
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "16-red-team-tooling-garak-llamaguard-pyrit",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "17-wmdp-dual-use-evaluation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "18-frontier-safety-frameworks-rsp-pf-fsf",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "19-model-welfare-research",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/19-model-welfare-research/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/19-model-welfare-research/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "20-bias-representational-harm",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/20-bias-representational-harm/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/20-bias-representational-harm/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "21-fairness-criteria-group-individual-counterfactual",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "22-differential-privacy-for-llms",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "23-watermarking-synthid-stable-signature-c2pa",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "24-regulatory-frameworks-eu-us-uk-korea",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "25-echoleak-cves-for-ai",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "26-model-system-dataset-cards",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/26-model-system-dataset-cards/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/26-model-system-dataset-cards/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "27-data-provenance-training-governance",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/27-data-provenance-training-governance/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/27-data-provenance-training-governance/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "28-alignment-research-ecosystem",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "29-moderation-systems-openai-perspective-llamaguard",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/docs/pt-br.md"
+      },
+      {
+        "phase": "18-ethics-safety-alignment",
+        "lesson": "30-dual-use-risk-cyber-bio-chem-nuclear",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 36,
+    "phase": "19-capstone-projects",
+    "lessons": [
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "01-terminal-native-coding-agent",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/01-terminal-native-coding-agent/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/01-terminal-native-coding-agent/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "02-rag-over-codebase",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/02-rag-over-codebase/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/02-rag-over-codebase/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "03-realtime-voice-assistant",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/03-realtime-voice-assistant/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/03-realtime-voice-assistant/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "04-multimodal-document-qa",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/04-multimodal-document-qa/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/04-multimodal-document-qa/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "05-autonomous-research-agent",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/05-autonomous-research-agent/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/05-autonomous-research-agent/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "06-devops-troubleshooting-agent",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/06-devops-troubleshooting-agent/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/06-devops-troubleshooting-agent/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "07-end-to-end-fine-tuning-pipeline",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "08-production-rag-chatbot",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/08-production-rag-chatbot/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/08-production-rag-chatbot/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "09-code-migration-agent",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/09-code-migration-agent/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/09-code-migration-agent/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "10-multi-agent-software-team",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/10-multi-agent-software-team/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/10-multi-agent-software-team/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "11-llm-observability-dashboard",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/11-llm-observability-dashboard/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/11-llm-observability-dashboard/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "12-video-understanding-pipeline",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/12-video-understanding-pipeline/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/12-video-understanding-pipeline/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "13-mcp-server-with-registry",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/13-mcp-server-with-registry/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/13-mcp-server-with-registry/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "14-speculative-decoding-server",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/14-speculative-decoding-server/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/14-speculative-decoding-server/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "15-constitutional-safety-harness",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/15-constitutional-safety-harness/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/15-constitutional-safety-harness/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 37,
+    "phase": "19-capstone-projects",
+    "lessons": [
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "16-github-issue-to-pr-agent",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/16-github-issue-to-pr-agent/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/16-github-issue-to-pr-agent/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "17-personal-ai-tutor",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/17-personal-ai-tutor/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/17-personal-ai-tutor/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "20-agent-harness-loop-contract",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/20-agent-harness-loop-contract/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/20-agent-harness-loop-contract/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "21-tool-registry-schema-validation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/21-tool-registry-schema-validation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/21-tool-registry-schema-validation/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "22-jsonrpc-stdio-transport",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/22-jsonrpc-stdio-transport/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/22-jsonrpc-stdio-transport/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "23-function-call-dispatcher",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/23-function-call-dispatcher/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/23-function-call-dispatcher/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "24-plan-execute-control-flow",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/24-plan-execute-control-flow/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/24-plan-execute-control-flow/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "25-verification-gates-observation-budget",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/25-verification-gates-observation-budget/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/25-verification-gates-observation-budget/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "26-sandbox-runner-denylist",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/26-sandbox-runner-denylist/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/26-sandbox-runner-denylist/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "27-eval-harness-fixture-tasks",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/27-eval-harness-fixture-tasks/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/27-eval-harness-fixture-tasks/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "28-observability-otel-traces",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/28-observability-otel-traces/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/28-observability-otel-traces/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "29-end-to-end-coding-task-demo",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/29-end-to-end-coding-task-demo/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/29-end-to-end-coding-task-demo/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "30-bpe-tokenizer-from-scratch",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "31-tokenized-dataset-sliding-window",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/31-tokenized-dataset-sliding-window/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/31-tokenized-dataset-sliding-window/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "32-token-positional-embeddings",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/32-token-positional-embeddings/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/32-token-positional-embeddings/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 38,
+    "phase": "19-capstone-projects",
+    "lessons": [
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "33-multihead-self-attention",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/33-multihead-self-attention/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/33-multihead-self-attention/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "34-transformer-block",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/34-transformer-block/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/34-transformer-block/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "35-gpt-model-assembly",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/35-gpt-model-assembly/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/35-gpt-model-assembly/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "36-training-loop-eval",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/36-training-loop-eval/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/36-training-loop-eval/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "37-loading-pretrained-weights",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/37-loading-pretrained-weights/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/37-loading-pretrained-weights/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "38-classifier-finetuning",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/38-classifier-finetuning/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/38-classifier-finetuning/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "39-instruction-tuning-sft",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/39-instruction-tuning-sft/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/39-instruction-tuning-sft/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "40-dpo-from-scratch",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/40-dpo-from-scratch/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/40-dpo-from-scratch/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "41-eval-pipeline",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/41-eval-pipeline/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/41-eval-pipeline/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "42-large-corpus-downloader",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/42-large-corpus-downloader/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/42-large-corpus-downloader/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "43-hdf5-tokenized-corpus",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/43-hdf5-tokenized-corpus/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/43-hdf5-tokenized-corpus/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "44-cosine-lr-warmup",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/44-cosine-lr-warmup/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/44-cosine-lr-warmup/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "45-gradient-clipping-amp",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/45-gradient-clipping-amp/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/45-gradient-clipping-amp/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "46-gradient-accumulation",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/46-gradient-accumulation/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/46-gradient-accumulation/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "47-checkpoint-save-resume",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/47-checkpoint-save-resume/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/47-checkpoint-save-resume/docs/pt-br.md"
+      }
+    ],
+    "count": 15
+  },
+  {
+    "id": 39,
+    "phase": "19-capstone-projects",
+    "lessons": [
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "48-distributed-fsdp-ddp",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/48-distributed-fsdp-ddp/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/48-distributed-fsdp-ddp/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "49-lm-eval-harness",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/49-lm-eval-harness/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/49-lm-eval-harness/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "50-hypothesis-generator",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/50-hypothesis-generator/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/50-hypothesis-generator/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "51-literature-retrieval",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/51-literature-retrieval/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/51-literature-retrieval/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "52-experiment-runner",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/52-experiment-runner/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/52-experiment-runner/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "53-result-evaluator",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/53-result-evaluator/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/53-result-evaluator/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "54-paper-writer",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/54-paper-writer/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/54-paper-writer/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "55-critic-loop",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/55-critic-loop/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/55-critic-loop/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "56-iteration-scheduler",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/56-iteration-scheduler/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/56-iteration-scheduler/docs/pt-br.md"
+      },
+      {
+        "phase": "19-capstone-projects",
+        "lesson": "57-end-to-end-research-demo",
+        "en_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/57-end-to-end-research-demo/docs/en.md",
+        "pt_br_path": "/tmp/ai-engineering-from-scratch/phases/19-capstone-projects/57-end-to-end-research-demo/docs/pt-br.md"
+      }
+    ],
+    "count": 10
+  }
+]
