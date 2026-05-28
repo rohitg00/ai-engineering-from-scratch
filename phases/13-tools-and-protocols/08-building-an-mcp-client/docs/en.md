@@ -1,143 +1,143 @@
 # Building an MCP Client — Discovery, Invocation, Session Management
 
-> Most MCP content ships server tutorials and waves a hand at the client. Client code is where the hard orchestration lives: process spawning, capability negotiation, tool list merging across multiple servers, sampling callbacks, reconnection, and namespace collision resolution. This lesson builds a multi-server client that lifts three different MCP servers into one flat tool namespace for the model.
+> MCP の content の多くは server tutorial を出荷し、client には軽く触れるだけです。難しい orchestration は client code にあります。process spawning、capability negotiation、複数 server にまたがる tool list merge、sampling callbacks、reconnection、namespace collision resolution です。この lesson では、3 つの異なる MCP servers を model 用の 1 つの flat tool namespace に持ち上げる multi-server client を構築します。
 
-**Type:** Build
-**Languages:** Python (stdlib, multi-server MCP client)
-**Prerequisites:** Phase 13 · 07 (building an MCP server)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python (stdlib, multi-server MCP client)
+**前提条件:** Phase 13 · 07（building an MCP server）
+**所要時間:** 約 75 分
 
 ## Learning Objectives
 
-- Spawn an MCP server as a child process, complete `initialize`, and send a `notifications/initialized`.
-- Maintain per-server session state (capabilities, tool list, last-seen notification ids).
-- Merge tool lists across multiple servers into one namespace with collision handling.
-- Route a tool call to the server that owns it and reassemble the response.
+- MCP server を child process として spawn し、`initialize` を complete して `notifications/initialized` を送る。
+- per-server session state（capabilities、tool list、last-seen notification ids）を維持する。
+- 複数 server の tool lists を 1 つの namespace に merge し、collision handling を行う。
+- tool call をその tool を所有する server に route し、response を reassemble する。
 
-## The Problem
+## 問題
 
-A real agent host (Claude Desktop, Cursor, Goose, Gemini CLI) loads multiple MCP servers at once. A user might have a filesystem server, a Postgres server, and a GitHub server running simultaneously. The client's job:
+実際の agent host（Claude Desktop、Cursor、Goose、Gemini CLI）は複数の MCP servers を同時に load します。user は filesystem server、Postgres server、GitHub server を同時に動かしているかもしれません。client の仕事:
 
-1. Spawn each server.
-2. Handshake each independently.
-3. Call `tools/list` on each and flatten the result.
-4. When the model emits `notes_search`, look it up in the merged namespace and route to the right server.
-5. Handle notifications from any server (`tools/list_changed`) without blocking.
-6. Reconnect on transport failure.
+1. 各 server を spawn する。
+2. それぞれを独立に handshake する。
+3. 各 server で `tools/list` を呼び、結果を flatten する。
+4. model が `notes_search` を emit したら、merged namespace で lookup し、正しい server に route する。
+5. 任意の server からの notifications（`tools/list_changed`）を blocking なしで扱う。
+6. transport failure 時に reconnect する。
 
-Hand-rolling all of that is what separates "toy" from "serviceable". The official SDKs wrap this, but the mental model has to be yours.
+これを hand-roll できるかどうかが、"toy" と "serviceable" を分けます。official SDKs はこれを wrap しますが、mental model は自分のものにしておく必要があります。
 
 ## The Concept
 
 ### Child-process spawning
 
-`subprocess.Popen` with `stdin=PIPE, stdout=PIPE, stderr=PIPE`. Set `bufsize=1` and use text mode for line-by-line reads. Each server is one process; the client holds one `Popen` handle per server.
+`subprocess.Popen` を `stdin=PIPE, stdout=PIPE, stderr=PIPE` で使います。`bufsize=1` を設定し、line-by-line reads のために text mode を使います。各 server は 1 process です。client は server ごとに 1 つの `Popen` handle を保持します。
 
 ### Per-server session state
 
-A `Session` object per server holds:
+server ごとに `Session` object が次を保持します。
 
-- `process` — the Popen handle.
-- `capabilities` — what the server declared at `initialize`.
-- `tools` — the last `tools/list` result.
-- `pending` — map of request id to a promise/future waiting for the response.
+- `process` — Popen handle。
+- `capabilities` — server が `initialize` で宣言したもの。
+- `tools` — 直近の `tools/list` result。
+- `pending` — request id から response を待つ promise/future への map。
 
-Requests are async by nature; a `tools/call` sent to server A while server B is mid-call must not block. Either use threads with queues or asyncio.
+Requests は本質的に async です。server B が mid-call の間に server A へ送った `tools/call` が block されてはいけません。queues 付き threads または asyncio を使います。
 
 ### Merged namespace
 
-When the client sees the aggregate tool list, names can collide. Two servers might both expose `search`. The client has three options:
+client が aggregate tool list を見ると、names は collision することがあります。2 つの servers がどちらも `search` を公開しているかもしれません。client には 3 つの options があります。
 
-1. **Prefix by server name.** `notes/search`, `files/search`. Clear but ugly.
-2. **Silent first-come.** Later server's `search` overrides the earlier. Risky; hides collisions.
-3. **Collision rejection.** Refuse to load the second server; notify the user. Safest for security-sensitive hosts.
+1. **Prefix by server name.** `notes/search`, `files/search`。明確だが見た目は悪い。
+2. **Silent first-come.** 後から来た server の `search` が earlier のものを override する。危険で、collisions を隠す。
+3. **Collision rejection.** 2 つ目の server を load しない。user に通知する。security-sensitive hosts では最も安全。
 
-Claude Desktop uses prefix-by-server. Cursor uses collision rejection with a clear error. VS Code MCP adopts prefix-by-server as well.
+Claude Desktop は prefix-by-server を使います。Cursor は clear error 付きの collision rejection を使います。VS Code MCP も prefix-by-server を採用しています。
 
 ### Routing
 
-After merging, a dispatch table maps `tool_name -> session`. The model emits a call by name; the client finds the session and writes a `tools/call` message to that server's stdin, then awaits the response.
+merge 後、dispatch table は `tool_name -> session` を map します。model は name で call を emit します。client は session を見つけ、その server の stdin に `tools/call` message を write し、response を await します。
 
 ### Sampling callback
 
-If the server declared the `sampling` capability at `initialize`, it may send `sampling/createMessage` asking the client to run its LLM. The client must:
+server が `initialize` で `sampling` capability を宣言している場合、client に LLM を実行させるため `sampling/createMessage` を送ることがあります。client は次を行う必要があります。
 
-1. Block further requests to that server until the sample resolves, or pipeline if its implementation supports concurrency.
-2. Call its LLM provider.
-3. Send the response back to the server.
+1. sample が resolve するまでその server へのさらなる requests を block する。implementation が concurrency を support する場合は pipeline する。
+2. 自身の LLM provider を呼ぶ。
+3. response を server に返す。
 
-Lesson 11 covers sampling end-to-end. This lesson stubs it for completeness.
+Lesson 11 は sampling を end-to-end で扱います。この lesson では completeness のために stub します。
 
 ### Notification handling
 
-`notifications/tools/list_changed` means re-call `tools/list`. `notifications/resources/updated` means re-read the resource if it is in use. Notifications must not produce responses — do not try to ack them.
+`notifications/tools/list_changed` は `tools/list` を再呼び出しせよという意味です。`notifications/resources/updated` は、その resource が use 中なら re-read せよという意味です。Notifications は responses を生成してはいけません。ack しようとしてはいけません。
 
-A common client bug: blocking the read loop on `tools/call` while a notification sits in the stream. Use a background reader thread that pushes every message onto a queue; the main thread dequeues and dispatches.
+よくある client bug: notification が stream に残っている間に `tools/call` で read loop を block してしまうこと。background reader thread を使い、すべての message を queue に push します。main thread が dequeue して dispatch します。
 
 ### Reconnection
 
-Transport can fail: server crashed, OS killed the process, stdio pipe broke. The client detects EOF on stdout and treats the session as dead. Options:
+Transport は fail します。server crash、OS による process kill、stdio pipe break です。client は stdout の EOF を検出し、その session を dead と扱います。options:
 
-- Silently restart the server and re-handshake. OK for pure read-only servers.
-- Surface the failure to the user. OK for stateful servers with user-visible sessions.
+- server を黙って restart し、re-handshake する。pure read-only servers では OK。
+- failure を user に表示する。user-visible sessions を持つ stateful servers では OK。
 
-Phase 13 · 09 covers the Streamable HTTP reconnection semantics; stdio is simpler.
+Phase 13 · 09 は Streamable HTTP reconnection semantics を扱います。stdio はより単純です。
 
 ### Keepalive and session id
 
-Streamable HTTP uses a `Mcp-Session-Id` header. Stdio has no session id — the process identity IS the session. Keepalive pings are optional; stdio pipes do not break under inactivity.
+Streamable HTTP は `Mcp-Session-Id` header を使います。stdio には session id がありません。process identity そのものが session です。Keepalive pings は optional です。stdio pipes は inactivity で切れません。
 
 ## Use It
 
-`code/main.py` spawns three simulated MCP servers as subprocesses, handshakes each, merges their tool lists, and routes tool calls to the right one. The "servers" are actually other Python processes running toy responders (no real LLM). Run it to see:
+`code/main.py` は 3 つの simulated MCP servers を subprocesses として spawn し、それぞれを handshake し、tool lists を merge し、tool calls を正しい server に route します。"servers" は実際には toy responders を実行する別の Python processes です（real LLM はありません）。実行すると次が見えます。
 
-- Three initializations, each with their own capability set.
-- Three `tools/list` results merged into a 7-tool namespace.
-- A routing decision based on the tool name.
-- A collision prevented by namespace prefixing.
+- 3 つの initialization。それぞれが独自の capability set を持つ。
+- 3 つの `tools/list` results が 7-tool namespace に merge される。
+- tool name に基づく routing decision。
+- namespace prefixing によって collision が防がれる。
 
-What to look at:
+見るべき点:
 
-- The `Session` dataclass holds per-server state cleanly.
-- The background reader thread dequeues every line on stdout without blocking the main thread.
-- The dispatch table is a simple `dict[str, Session]`.
-- Collision handling is explicit: when two servers declare the same name, the later one is renamed with a prefix.
+- `Session` dataclass が per-server state を clean に保持しています。
+- background reader thread が main thread を block せずに stdout の各 line を dequeue します。
+- dispatch table は単純な `dict[str, Session]` です。
+- collision handling は explicit です。2 つの servers が同じ name を宣言した場合、後から来たものは prefix 付きに rename されます。
 
 ## Ship It
 
-This lesson produces `outputs/skill-mcp-client-harness.md`. Given a declarative list of MCP servers (name, command, args), the skill produces a harness that spawns them, merges tool lists, and ships a routing function with collision resolution.
+この lesson は `outputs/skill-mcp-client-harness.md` を生成します。MCP servers の declarative list（name、command、args）を受け取り、skill はそれらを spawn し、tool lists を merge し、collision resolution 付きの routing function を出荷する harness を生成します。
 
 ## Exercises
 
-1. Run `code/main.py` and watch the server spawn log. Kill one of the simulated server processes with a SIGTERM and observe how the client detects the EOF and marks that session as dead.
+1. `code/main.py` を実行し、server spawn log を観察してください。simulated server process の 1 つを SIGTERM で kill し、client が EOF を検出してその session を dead と mark する様子を観察してください。
 
-2. Implement namespace prefixing. When two servers expose `search`, rename the second as `<server>/search`. Update the dispatch table and verify tool calls route correctly.
+2. namespace prefixing を実装してください。2 つの servers が `search` を公開する場合、2 つ目を `<server>/search` に rename します。dispatch table を update し、tool calls が正しく route されることを verify してください。
 
-3. Add a connection-pool-style backoff for server restart: exponential backoff on consecutive failures, cap at 30 seconds, emit a notification to the user after three failures.
+3. server restart のための connection-pool-style backoff を追加してください。連続 failure に対して exponential backoff、30 秒で cap、3 回 failure したら user に notification を emit します。
 
-4. Sketch a client that supports 100 concurrent MCP servers. What data structure replaces the simple dispatch dict? (Hint: trie for prefix namespacing, plus a metric for tool-count-per-server.)
+4. 100 個の concurrent MCP servers を support する client を sketch してください。単純な dispatch dict はどの data structure に置き換わりますか？（Hint: prefix namespacing 用の trie と、tool-count-per-server の metric。）
 
-5. Port the client to the official MCP Python SDK. The SDK wraps `stdio_client` and `ClientSession`. The code should shrink from ~200 lines to ~40 lines while preserving multi-server routing.
+5. client を official MCP Python SDK に port してください。SDK は `stdio_client` と `ClientSession` を wrap します。multi-server routing を保ったまま、code は約 200 行から約 40 行に縮むはずです。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| MCP client | "The agent host" | Process that spawns servers and orchestrates tool calls |
-| Session | "Per-server state" | Capabilities, tool list, and pending-request bookkeeping |
-| Merged namespace | "One tool list" | Flat set of tool names across all active servers |
-| Namespace collision | "Two servers same tool" | Client must prefix, reject, or first-come the duplicate |
-| Routing | "Who gets this call?" | Dispatch from tool name to owning server |
-| Background reader | "Non-blocking stdout" | Thread or task that drains server stdout into a queue |
-| Sampling callback | "LLM-as-a-service" | Client handler for `sampling/createMessage` from server |
-| `notifications/*_changed` | "Primitive mutated" | Signal the client must re-discover or re-read |
-| Reconnection policy | "When server dies" | Restart semantics when transport fails |
-| Stdio session | "Process = session" | No session id; child process lifetime is the session |
+| MCP client | "agent host" | servers を spawn し、tool calls を orchestrate する process |
+| Session | "Per-server state" | capabilities、tool list、pending-request bookkeeping |
+| Merged namespace | "One tool list" | active servers 全体にまたがる flat set of tool names |
+| Namespace collision | "2 servers same tool" | client は duplicate を prefix、reject、または first-come にする必要がある |
+| Routing | "この call は誰が受ける？" | tool name から owning server への dispatch |
+| Background reader | "Non-blocking stdout" | server stdout を queue に drain する thread または task |
+| Sampling callback | "LLM-as-a-service" | server からの `sampling/createMessage` に対する client handler |
+| `notifications/*_changed` | "Primitive mutated" | client が re-discover または re-read すべき signal |
+| Reconnection policy | "server が死んだとき" | transport failure 時の restart semantics |
+| Stdio session | "Process = session" | session id はなく、child process lifetime が session |
 
-## Further Reading
+## 参考文献
 
 - [Model Context Protocol — Client spec](https://modelcontextprotocol.io/specification/2025-11-25/client) — canonical client behavior
-- [MCP — Quickstart client guide](https://modelcontextprotocol.io/quickstart/client) — hello-world client tutorial with the Python SDK
+- [MCP — Quickstart client guide](https://modelcontextprotocol.io/quickstart/client) — Python SDK を使う hello-world client tutorial
 - [MCP Python SDK — client module](https://github.com/modelcontextprotocol/python-sdk) — reference `ClientSession` and `stdio_client`
 - [MCP TypeScript SDK — Client](https://github.com/modelcontextprotocol/typescript-sdk) — TS parallel
-- [VS Code — MCP in extensions](https://code.visualstudio.com/api/extension-guides/ai/mcp) — how VS Code multiplexes multiple MCP servers in a single editor host
+- [VS Code — MCP in extensions](https://code.visualstudio.com/api/extension-guides/ai/mcp) — VS Code が単一 editor host 内で複数 MCP servers を multiplex する方法

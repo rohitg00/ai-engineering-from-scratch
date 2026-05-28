@@ -9,20 +9,20 @@ tags: [diffusion, rectified-flow, DiT, training]
 
 # Rectified Flow Trainer
 
-Produce a clean, minimal training loop that would successfully train a small DiT with rectified flow on any image tensor dataset.
+任意の image tensor dataset 上で small DiT を rectified flow で正しく学習できる、clean で minimal な training loop を生成する。
 
-## When to use
+## 使う場面
 
-- Reproducing the SD3 / FLUX training objective at small scale.
-- Benchmarking rectified flow vs DDPM on the same data.
-- Building a custom rectified-flow model for a non-standard domain (medical, satellite).
+- SD3 / FLUX training objective を小規模に再現するとき。
+- 同じ data 上で rectified flow と DDPM を benchmark するとき。
+- non-standard domain (medical, satellite) 向け custom rectified-flow model を作るとき。
 
-## Inputs
+## 入力
 
-- `model`: an `nn.Module` taking `(x, t)` and returning a predicted velocity.
-- `dataset`: an iterable of clean images in the model's domain.
-- `optimizer`: AdamW with `lr=1e-4`, `weight_decay=0.01`, `betas=(0.9, 0.99)`.
-- `scheduler`: cosine with warmup, default 1000 warmup steps.
+- `model`: `(x, t)` を受け取り predicted velocity を返す `nn.Module`。
+- `dataset`: model の domain にある clean images の iterable。
+- `optimizer`: `lr=1e-4`, `weight_decay=0.01`, `betas=(0.9, 0.99)` の AdamW。
+- `scheduler`: warmup 付き cosine。default は 1000 warmup steps。
 
 ## Training step
 
@@ -59,15 +59,15 @@ def sample(model, shape, steps=20, device="cpu"):
     return x
 ```
 
-## Tips
+## ヒント
 
-- Use `torch.rand` uniform `t`; logit-normal or Sd3-style weighted sampling of `t` helps slightly but is not required to get started.
-- EMA of model weights is standard practice; maintain `ema_model` with decay 0.9999.
-- Classifier-free guidance for conditional models: with 10% probability replace the conditioning with an empty/null embedding during training; at inference mix `v_uncond + w * (v_cond - v_uncond)` with `w` around 3-5.
-- For LDM-style training (FLUX, SD3), the whole loop runs in a VAE latent space; the clean `x0` above is actually `VAE.encode(image)`.
-- Typical convergence on a 32x32 toy dataset: 2000-5000 steps. On real latent SD3 training: hundreds of thousands.
+- `torch.rand` による uniform `t` を使う。logit-normal や SD3-style weighted sampling of `t` は少し効くが、始めるには必須ではない。
+- model weights の EMA は標準 practice である。decay 0.9999 の `ema_model` を維持する。
+- conditional models の Classifier-free guidance: training 中に 10% の確率で conditioning を empty/null embedding に置き換える。inference では `v_uncond + w * (v_cond - v_uncond)` を `w` 3-5 程度で mix する。
+- LDM-style training (FLUX, SD3) では、loop 全体が VAE latent space で走る。上の clean `x0` は実際には `VAE.encode(image)` である。
+- 32x32 toy dataset の typical convergence は 2000-5000 steps。real latent SD3 training では hundreds of thousands。
 
-## Report
+## レポート
 
 ```
 [rectified flow training]
@@ -83,9 +83,9 @@ def sample(model, shape, steps=20, device="cpu"):
   full quality reference: 50+ (for comparison only)
 ```
 
-## Rules
+## ルール
 
-- Never train rectified flow with an image-space velocity target on RGB `uint8` data; normalise to zero mean, unit variance first.
-- Always log training loss per timestep-bucket; if early timesteps (near 0) have higher loss than late ones (near 1) the velocity parameterisation is probably miswired.
-- Do not mix rectified-flow velocity target with DDPM noise target in the same training loop; pick one.
-- Use bfloat16 training on Ampere+ GPUs; float16 sometimes produces NaN grads in rectified flow due to the velocity magnitude.
+- RGB `uint8` data に対して image-space velocity target で rectified flow を学習してはいけない。まず zero mean, unit variance に normalise する。
+- timestep-bucket ごとの training loss を必ず log する。early timesteps (near 0) の loss が late timesteps (near 1) より高い場合、velocity parameterisation が miswired の可能性が高い。
+- 同じ training loop 内で rectified-flow velocity target と DDPM noise target を混ぜない。どちらかを選ぶ。
+- Ampere+ GPUs では bfloat16 training を使う。float16 は velocity magnitude のため rectified flow で NaN grads を出すことがある。

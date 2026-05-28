@@ -1,26 +1,26 @@
 # Self-Supervised Vision — SimCLR, DINO, MAE
 
-> Labels are the bottleneck of supervised vision. Self-supervised pretraining removes them: learn visual features from 100M unlabelled images, fine-tune on 10k labelled ones.
+> 教師あり vision のボトルネックはラベルです。自己教師あり事前学習はラベルを取り除きます。1億枚のラベルなし画像から視覚特徴を学び、1万枚のラベル付き画像で fine-tune します。
 
-**Type:** Learn + Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 04 (Image Classification), Phase 4 Lesson 14 (ViT)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 04 (Image Classification), Phase 4 Lesson 14 (ViT)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Trace the three major self-supervised families — contrastive (SimCLR), teacher-student (DINO), masked reconstruction (MAE) — and state what each one optimises
-- Implement an InfoNCE loss from scratch and explain why a batch of 512 works but a batch of 32 fails
-- Explain why MAE's 75% masking ratio is not arbitrary and how it differs from BERT's 15% for text
-- Use DINOv2 or MAE ImageNet checkpoints for linear probing and zero-shot retrieval
+- 主要な3つの自己教師ありファミリーである contrastive (SimCLR)、teacher-student (DINO)、masked reconstruction (MAE) をたどり、それぞれが何を最適化するか説明する
+- InfoNCE loss をゼロから実装し、batch 512 では機能するのに batch 32 では失敗する理由を説明する
+- MAE の 75% masking ratio が任意ではない理由と、テキスト向け BERT の 15% とどう違うかを説明する
+- DINOv2 または MAE ImageNet checkpoint を linear probing と zero-shot retrieval に使う
 
-## The Problem
+## 問題
 
-Supervised ImageNet has 1.3M labelled images, which cost an estimated $10M to annotate. Medical and industrial datasets are smaller and even more expensive to label. Every vision team asks: can we pretrain on cheap unlabelled data — YouTube frames, web crawls, webcam footage, satellite sweeps — and then fine-tune on a small labelled set?
+教師あり ImageNet には 130万枚のラベル付き画像があり、アノテーション費用は推定 1000万ドルです。医療や産業データセットはより小さく、ラベル付けはさらに高価です。すべての vision チームが同じ問いに直面します。YouTube frames、web crawls、webcam footage、satellite sweeps などの安価なラベルなしデータで事前学習し、その後に小さなラベル付きセットで fine-tune できないか。
 
-Self-supervised learning is the answer. A modern self-supervised ViT trained on LAION or JFT reaches or beats supervised ImageNet accuracy when fine-tuned. It also transfers better to downstream tasks (detection, segmentation, depth) than supervised pretraining. DINOv2 (Meta, 2023) and MAE (Meta, 2022) are the current production defaults for transferable vision features.
+その答えが self-supervised learning です。LAION や JFT で学習した現代的な self-supervised ViT は、fine-tune すると教師あり ImageNet accuracy に到達するか上回ります。また、教師あり事前学習よりも downstream tasks (detection, segmentation, depth) へよく転移します。DINOv2 (Meta, 2023) と MAE (Meta, 2022) は、転移可能な vision features の現在の production default です。
 
-The conceptual shift is that the pretext task — the thing the model is trained to do — does not have to be the downstream task. What matters is that it forces the model to learn useful features. Predict the colour of grayscale images, rotate images and ask the model to classify the rotation, mask patches and reconstruct them — all have worked. The three approaches that scale are contrastive learning, teacher-student distillation, and masked reconstruction.
+概念上の転換は、pretext task、つまりモデルが学習時に解く課題が downstream task と同じである必要はないという点です。重要なのは、それがモデルに有用な特徴を学ばせることです。grayscale images の色を予測する、画像を回転して回転角を分類させる、patches を mask して復元する、といった方法はすべて機能してきました。スケールする3つのアプローチが contrastive learning、teacher-student distillation、masked reconstruction です。
 
 ## The Concept
 
@@ -39,7 +39,7 @@ flowchart LR
 
 ### Contrastive learning (SimCLR)
 
-Take one image, apply two random augmentations, get two views. Feed both through the same encoder plus a projection head. Minimise a loss that says "these two embeddings should be close" and "this embedding should be far from every other image's embeddings in the batch."
+1枚の画像に2つの random augmentations を適用して、2つの views を作ります。両方を同じ encoder と projection head に通します。そして「この2つの embeddings は近くあるべき」「この embedding は batch 内の他のすべての画像 embeddings から遠くあるべき」という loss を最小化します。
 
 ```
 Loss for positive pair (z_i, z_j) among 2N views per batch:
@@ -50,11 +50,11 @@ sim = cosine similarity
 tau = temperature (0.1 standard)
 ```
 
-This is the InfoNCE loss. It requires many negatives per positive, so batch size matters — SimCLR needs 512-8192. MoCo introduced a momentum queue of past batches to decouple negative count from batch size.
+これが InfoNCE loss です。positive ごとに多くの negatives が必要なので batch size が重要です。SimCLR には 512-8192 が必要です。MoCo は過去 batch の momentum queue を導入し、negative 数を batch size から切り離しました。
 
 ### Teacher-student (DINO)
 
-Two networks with the same architecture: student and teacher. The teacher is an exponential moving average (EMA) of the student's weights. Both see augmented views of the image. The student's output is trained to match the teacher's — no explicit negatives.
+同じ architecture を持つ2つの networks、student と teacher を使います。teacher は student weights の exponential moving average (EMA) です。両方が画像の augmented views を見ます。student の出力は teacher の出力に一致するよう学習されます。明示的な negatives はありません。
 
 ```
 loss = CE( student_output(view_1),  teacher_output(view_2) )
@@ -63,13 +63,13 @@ loss = CE( student_output(view_1),  teacher_output(view_2) )
 teacher_weights = m * teacher_weights + (1 - m) * student_weights   (m ≈ 0.996)
 ```
 
-Why it does not collapse to "predict a constant": the teacher's output is centred (subtract per-dimension mean) and sharpened (divide by small temperature). Centering prevents one dimension from dominating; sharpening prevents output collapse to uniform.
+「定数を予測する」状態に collapse しない理由は、teacher output が centered (次元ごとの平均を引く) され、sharpened (小さい temperature で割る) されるためです。Centering は1つの次元が支配的になるのを防ぎ、sharpening は output が一様分布へ collapse するのを防ぎます。
 
-DINO is what DINOv2 scales up, on 142M curated images. The resulting features are the current SOTA for zero-shot visual retrieval and dense prediction.
+DINOv2 は DINO を 142M 枚の curated images にスケールさせたものです。得られる特徴は zero-shot visual retrieval と dense prediction の現在の SOTA です。
 
 ### Masked reconstruction (MAE)
 
-Mask 75% of patches of a ViT input. Pass only the visible 25% through the encoder. A small decoder receives the encoder's output plus mask tokens at masked positions, and is trained to reconstruct the pixels of the masked patches.
+ViT input の patches の 75% を mask します。visible な 25% だけを encoder に通します。小さな decoder は encoder output と masked positions の mask tokens を受け取り、masked patches の pixels を復元するよう学習されます。
 
 ```
 Encoder:  visible 25% of patches -> features
@@ -77,35 +77,35 @@ Decoder:  features + mask tokens at masked positions -> reconstructed pixels
 Loss:     MSE between reconstructed and original pixels on masked patches only
 ```
 
-Key design choices that make MAE work:
+MAE を機能させる主要な設計選択:
 
-- **75% mask ratio** — high. Forces the encoder to learn semantic features; reconstructing 25% would be near-trivial (neighbouring pixels are so correlated that a CNN could nail it).
-- **Asymmetric encoder/decoder** — the big ViT encoder only sees visible patches; a small decoder (8-layer, 512-dim) handles reconstruction. 3x faster pretraining than naive BEiT.
-- **Pixel-space reconstruction target** — simpler than BEiT's tokenised target and works better on ViT.
+- **75% mask ratio** — 高い値です。encoder に semantic features を学ばせます。25% を復元するだけならほぼ自明です。隣接 pixels は強く相関しているため、CNN でも解けます。
+- **Asymmetric encoder/decoder** — 大きな ViT encoder は visible patches だけを見ます。小さな decoder (8-layer, 512-dim) が reconstruction を担当します。naive BEiT より 3x 速い pretraining になります。
+- **Pixel-space reconstruction target** — BEiT の tokenised target より単純で、ViT ではよりよく機能します。
 
-After pretraining, discard the decoder. The encoder is the feature extractor.
+事前学習後は decoder を捨てます。encoder が feature extractor です。
 
 ### Why 75% and not 15%
 
-BERT masks 15% of tokens. MAE masks 75%. The difference is information density.
+BERT は tokens の 15% を mask します。MAE は 75% を mask します。違いは情報密度です。
 
-- Natural language has high entropy per token. Predicting 15% of tokens is still hard because each masked position has many plausible completions.
-- Image patches have low entropy — an unmasked neighbourhood often determines the masked patch's pixels almost exactly. To make prediction require semantic understanding, you have to mask aggressively.
+- Natural language は token あたりの entropy が高いです。masked position ごとに多くの plausible completions があるため、15% の tokens を予測するだけでも難しい課題です。
+- Image patches は entropy が低いです。unmasked neighbourhood が masked patch の pixels をほぼ完全に決めることがよくあります。予測に semantic understanding を必要とさせるには、強く mask する必要があります。
 
-75% is high enough that simple spatial extrapolation cannot solve the task; the encoder must represent the image content.
+75% は単純な spatial extrapolation では解けないほど高く、encoder が image content を表現しなければなりません。
 
 ### Linear-probe evaluation
 
-After self-supervised pretraining, the standard evaluation is a **linear probe**: freeze the encoder, train a single linear classifier on top on ImageNet labels. Reports top-1 accuracy.
+自己教師あり事前学習後の標準評価は **linear probe** です。encoder を freeze し、その上に単一の linear classifier を ImageNet labels で学習します。top-1 accuracy を報告します。
 
 - SimCLR ResNet-50: ~71% (2020)
 - DINO ViT-S/16: ~77% (2021)
 - MAE ViT-L/16: ~76% (2022)
 - DINOv2 ViT-g/14: ~86% (2023)
 
-Linear probe is a pure measure of feature quality; fine-tuning typically adds 2-5 points but also mixes in the effect of head retraining.
+Linear probe は feature quality の純粋な測定です。fine-tuning は通常 2-5 points 上乗せしますが、head retraining の効果も混ざります。
 
-## Build It
+## 実装
 
 ### Step 1: Two-view augmentation pipeline
 
@@ -137,7 +137,7 @@ class TwoViewDataset(torch.utils.data.Dataset):
         return v1, v2
 ```
 
-Each __getitem__ returns two augmented views of the same image; labels are not needed.
+各 `__getitem__` は同じ画像の2つの augmented views を返します。labels は不要です。
 
 ### Step 2: InfoNCE loss
 
@@ -159,7 +159,7 @@ def info_nce(z1, z2, tau=0.1):
     return F.cross_entropy(sim, targets)
 ```
 
-L2-normalise embeddings before calling. `tau=0.1` is the SimCLR default; lower makes the loss sharper and requires more negatives.
+呼び出す前に embeddings を L2-normalise します。`tau=0.1` は SimCLR の default です。低い値ほど loss が sharper になり、より多くの negatives が必要になります。
 
 ### Step 3: Sanity check InfoNCE
 
@@ -173,7 +173,7 @@ print(f"InfoNCE with identical pairs:  {loss_same:.3f}")
 print(f"InfoNCE with random pairs:     {loss_random:.3f}")
 ```
 
-Identical pairs should give a low loss (close to 0 for a large batch and cold temperature). Random pairs should give log(2N-1) = ~log(31) = ~3.4 with a 16-pair batch.
+同一 pairs では低い loss になるはずです。large batch と cold temperature では 0 に近づきます。random pairs では、16-pair batch なら log(2N-1) = ~log(31) = ~3.4 になるはずです。
 
 ### Step 4: MAE-style masking
 
@@ -193,11 +193,11 @@ print(f"visible: {len(visible)} / {num_patches}")
 print(f"masked:  {len(masked)} / {num_patches}")
 ```
 
-Simple, fast, and deterministic for a given seed. Real MAE implementations batch this and keep per-sample masks.
+単純で高速で、同じ seed に対して deterministic です。実際の MAE implementations はこれを batch 化し、sample ごとの masks を保持します。
 
 ## Use It
 
-DINOv2 is the production standard in 2026:
+DINOv2 は 2026 年の production standard です。
 
 ```python
 import torch
@@ -214,39 +214,27 @@ with torch.no_grad():
     embedding = outputs.last_hidden_state[:, 0]  # CLS token
 ```
 
-The resulting 768-dim embedding is the backbone of modern image retrieval, dense correspondence, and zero-shot transfer pipelines. Fine-tuning on a downstream task rarely needs more than a linear head.
+得られる 768-dim embedding は、現代的な image retrieval、dense correspondence、zero-shot transfer pipelines の backbone です。downstream task への fine-tuning は linear head だけで済むことがほとんどです。
 
-For image-text embeddings, SigLIP or OpenCLIP is the equivalent; for MAE-style fine-tuning, the `timm` repo ships every MAE checkpoint.
+image-text embeddings では SigLIP または OpenCLIP が対応物です。MAE-style fine-tuning では、`timm` repo がすべての MAE checkpoints を提供しています。
 
 ## Ship It
 
-This lesson produces:
+この lesson は次を生成します。
 
-- `outputs/prompt-ssl-pretraining-picker.md` — a prompt that picks SimCLR / MAE / DINOv2 given dataset size, compute, and downstream task.
-- `outputs/skill-linear-probe-runner.md` — a skill that writes the linear-probe evaluation for any frozen encoder + labelled dataset.
+- `outputs/prompt-ssl-pretraining-picker.md` — dataset size、compute、downstream task から SimCLR / MAE / DINOv2 を選ぶ prompt。
+- `outputs/skill-linear-probe-runner.md` — 任意の frozen encoder + labelled dataset 向けに linear-probe evaluation を書く skill。
 
 ## Exercises
 
-1. **(Easy)** Verify that InfoNCE loss drops when you decrease temperature for well-aligned embeddings and rises when you decrease temperature for random embeddings. Produce a plot `tau in [0.05, 0.1, 0.2, 0.5]` vs loss.
-2. **(Medium)** Implement a DINO-style centre buffer. Show that without the centring, the student collapses to a constant vector within a few epochs.
-3. **(Hard)** Train MAE on CIFAR-100 using the TinyUNet from Lesson 10 as the backbone. Report linear-probe accuracy at 10, 50, and 200 epochs. Show that a MAE-pretrained linear probe beats a from-scratch supervised linear probe on the same 1,000-image subset.
+1. **(Easy)** よく aligned された embeddings では temperature を下げると InfoNCE loss が下がり、random embeddings では temperature を下げると loss が上がることを確認してください。`tau in [0.05, 0.1, 0.2, 0.5]` vs loss の plot を作成してください。
+2. **(Medium)** DINO-style centre buffer を実装してください。centring がないと、student が数 epochs 以内に constant vector へ collapse することを示してください。
+3. **(Hard)** Lesson 10 の TinyUNet を backbone として使い、CIFAR-100 で MAE を学習してください。10, 50, 200 epochs 時点の linear-probe accuracy を報告してください。同じ 1,000-image subset 上で、MAE-pretrained linear probe が from-scratch supervised linear probe を上回ることを示してください。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Self-supervised | "Label-free" | A pretext task that produces useful representations from unlabelled data |
-| Pretext task | "The fake task" | The objective used during SSL (reconstruct patches, match views); discarded after pretraining |
-| Linear probe | "Frozen encoder + linear head" | Standard SSL evaluation: train only a linear classifier on top of frozen features |
-| InfoNCE | "Contrastive loss" | softmax over cosine similarities; positive pair is the target class, all others are negatives |
-| EMA teacher | "Moving-average teacher" | Teacher whose weights are an exponential moving average of the student's; used by BYOL, MoCo, DINO |
-| Mask ratio | "% of patches hidden" | Fraction of patches masked during MAE; 75% for vision, 15% for text |
-| Representation collapse | "Constant output" | SSL failure where the encoder outputs a constant vector for all inputs; prevented by centring, sharpening, or negatives |
-| DINOv2 | "Production SSL backbone" | Meta's 2023 self-supervised ViT; strongest general-purpose image features in 2026 |
-
-## Further Reading
-
-- [SimCLR (Chen et al., 2020)](https://arxiv.org/abs/2002.05709) — contrastive learning reference
-- [DINO (Caron et al., 2021)](https://arxiv.org/abs/2104.14294) — teacher-student with momentum, centring, sharpening
-- [MAE (He et al., 2022)](https://arxiv.org/abs/2111.06377) — masked autoencoder pretraining for ViT
-- [DINOv2 (Oquab et al., 2023)](https://arxiv.org/abs/2304.07193) — scaling self-supervised ViT to production features
+| Self-supervised | 「Label-free」 | ラベルなしデータから有用な表現を作る pretext task |
+| Pretext task | 「The fake task」 | SSL 中に使う objective (patches を復元する、views を一致させる)。pretraining 後は捨てる |
+| Linear probe | 「Frozen encoder + linear head」 | 標準的な SSL 評価。frozen features の上で linear classifier だけを学習する |

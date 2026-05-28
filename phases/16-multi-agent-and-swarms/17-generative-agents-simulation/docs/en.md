@@ -1,23 +1,23 @@
-# Generative Agents and Emergent Simulation
+# Generative Agents と創発的シミュレーション
 
-> Park et al. 2023 (UIST '23, arXiv:2304.03442) populated **Smallville**, a sandbox of 25 agents, with a three-part architecture: **memory stream** (natural-language log), **reflection** (higher-level syntheses the agent generates about its own stream), and **plan** (day-level behavior, then sub-plans). The landmark result was the Valentine's Day party emergence: one agent seeded with "wants to throw a Valentine's Day party," without further scripting, produced invitations spread through the population, coordinated dates, and the party happened — from 24 agents who started with no knowledge of it. Ablations show all three components are required for believability. The documented failures are spatial-norm errors (entering closed stores, sharing single-person bathrooms). This is the reference architecture for agent simulations and multi-agent social evaluation in 2026.
+> Park et al. 2023（UIST '23, arXiv:2304.03442）は、25 体のエージェントからなる sandbox **Smallville** に、3 部構成のアーキテクチャを入れた。**memory stream**（自然言語ログ）、**reflection**（エージェントが自分の stream から生成する高次の synthesis）、**plan**（日単位の behavior、その後 sub-plans）である。画期的な結果は、Valentine's Day party の創発だった。1 体のエージェントに「Valentine's Day party を開きたい」という seed を与えただけで、それ以上の scripting なしに、招待が集団内に広がり、日程が調整され、最初はそれをまったく知らなかった 24 体のエージェントから party が実現した。ablation は、believability には 3 components すべてが必要であることを示す。documented failures は spatial-norm errors（閉店中の店に入る、1 人用 bathroom を共有する）である。これは 2026 年の agent simulations と multi-agent social evaluation の reference architecture である。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 13 (Shared Memory)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 16 · 04 (Primitive Model), Phase 16 · 13 (Shared Memory)
+**所要時間:** 約75分
 
-## Problem
+## 問題
 
-Most multi-agent systems are tightly-scripted teams: planner plans, coder codes, reviewer reviews. That works for well-defined tasks. It does not capture the emergent, unscripted behavior that arises when agents have memory, priorities, and an open world. Research, society simulation, and increasingly game AI need this second kind.
+多くの multi-agent systems は、planner が計画し、coder が書き、reviewer がレビューする tightly-scripted teams である。これは well-defined tasks には有効だ。しかし、agent が memory、priorities、open world を持つときに生じる、創発的で unscripted な behavior は捉えられない。研究、社会シミュレーション、そしてますます game AI では、この第 2 の種類が必要になる。
 
-The Smallville architecture is the benchmark for it. Until Park 2023, the best agent simulations were shallow script-followers; after it, the pattern is the default for generative agents in open worlds. If you build an agent simulation in 2026, you are either using Smallville's three components or explicitly justifying why you are not.
+Smallville architecture はその benchmark である。Park 2023 以前の agent simulations は浅い script-followers が中心だったが、それ以降、この pattern は open world の generative agents における default になった。2026 年に agent simulation を構築するなら、Smallville の 3 components を使うか、使わない理由を明示的に正当化することになる。
 
-## Concept
+## コンセプト
 
-### The three components
+### 3 つの components
 
-**Memory stream.** An append-only log of observations, actions, reflections, and plans. Each entry has a timestamp, a type, a description (natural language), and derived metadata: **recency**, **importance** (self-rated 1-10 by the agent), and **relevance** (cosine similarity to current query).
+**Memory stream。** observations、actions、reflections、plans の append-only log。各 entry は timestamp、type、description（natural language）、そして derived metadata を持つ: **recency**、**importance**（agent 自身が 1-10 で評価）、**relevance**（current query との cosine similarity）。
 
 ```
 [2026-02-14 09:12:03] observation: Isabella Rodriguez asked me if I like jazz
@@ -25,75 +25,75 @@ The Smallville architecture is the benchmark for it. Until Park 2023, the best a
 [2026-02-14 10:05:00] plan:         Attend Isabella's Valentine's Day party tonight
 ```
 
-Memory retrieval combines the three scores: `score = w_recency * e^(-decay * age) + w_importance * importance + w_relevance * cos_sim`. Top-k entries enter the current prompt.
+Memory retrieval は 3 つの score を組み合わせる: `score = w_recency * e^(-decay * age) + w_importance * importance + w_relevance * cos_sim`。Top-k entries が current prompt に入る。
 
-**Reflection.** Periodically (every N memories or on important events), the agent generates higher-order syntheses from recent memories. Reflection entries go back into the stream and are retrievable like any other memory. This is how agents build "understandings" — the architecture's equivalent of long-term beliefs.
+**Reflection。** 定期的に（N memories ごと、または重要 events で）、agent は recent memories から高次の syntheses を生成する。Reflection entries は stream に戻され、他の memory と同じように retrieval 可能になる。これにより agent は「understandings」を形成する。これはこの architecture における long-term beliefs に相当する。
 
-**Plan.** Top-down decomposition. First, a day-level plan in broad strokes ("go to work, have dinner with Klaus"). Then hour-level plans. Then action-level plans. Plans are revisable: when an observation contradicts a plan, the agent replans the affected segment.
+**Plan。** Top-down decomposition。まず大まかな day-level plan（「work に行く、Klaus と dinner を食べる」）。次に hour-level plans。そして action-level plans。Plans は revisable である。observation が plan と矛盾したら、agent は影響を受ける segment だけを replan する。
 
-### Why all three matter (ablation)
+### なぜ 3 つすべてが重要か（ablation）
 
-Park et al. ran ablations dropping each of observation, reflection, and plan. Each ablation hurts believability:
+Park et al. は observation、reflection、plan の各要素を落とした ablations を実行した。どれを落としても believability が下がる:
 
-- Without **observation** the agent misses context and acts on stale beliefs.
-- Without **reflection** the agent cannot form higher-order beliefs; interactions stay shallow.
-- Without **plan** behavior becomes reactive noise; goals dissipate.
+- **observation** がないと、agent は context を取り逃がし、古い beliefs に基づいて行動する。
+- **reflection** がないと、agent は高次の beliefs を形成できず、interactions は浅いままになる。
+- **plan** がないと、behavior は reactive noise になり、goals が散逸する。
 
-Believability scores from human raters are highest with all three; dropping any one produces a measurable regression.
+human raters による believability scores は 3 つすべてがあるとき最も高く、どれか 1 つを落とすと measurable regression が生じる。
 
-### The Valentine's Day emergence
+### Valentine's Day の創発
 
-One agent, Isabella Rodriguez, is seeded with the goal "wants to throw a Valentine's Day party at Hobbs Cafe on Feb 14 at 5pm." The 24 other agents receive no such seed. Over simulated days:
+1 体の agent、Isabella Rodriguez に「Feb 14 5pm に Hobbs Cafe で Valentine's Day party を開きたい」という goal を seed する。他の 24 agents にはその seed を与えない。simulated days の間に:
 
-1. Isabella's plan includes inviting people.
-2. Each invitation becomes an observation in a neighbor's memory stream.
-3. That neighbor's reflection generates beliefs: "Isabella is throwing a party."
-4. The neighbor's plan incorporates "attend party on Feb 14."
-5. Neighbors tell other neighbors. The invitation spreads without central coordination.
-6. At 5pm on Feb 14, several agents converge at Hobbs Cafe.
+1. Isabella の plan に人を招待することが含まれる。
+2. 各 invitation が neighbor の memory stream に observation として入る。
+3. その neighbor の reflection が「Isabella is throwing a party」という beliefs を生成する。
+4. neighbor の plan に「Feb 14 の party に参加する」が組み込まれる。
+5. neighbors が別の neighbors に伝える。central coordination なしに invitation が広がる。
+6. Feb 14 5pm、複数の agents が Hobbs Cafe に集まる。
 
-This is emergence in the technical sense: system-level behavior (a party) arose from local interactions (bilateral invitations + individual planning) without a central orchestrator.
+これは technical sense での emergence である。system-level behavior（party）が、central orchestrator なしに、local interactions（bilateral invitations + individual planning）から生じた。
 
-### The documented failure modes
+### documented failure modes
 
-Park et al. explicitly document:
+Park et al. は明示的に次を記録している:
 
-- **Spatial norm errors.** Agents walk into closed stores. Agents try to use the same single-person bathroom. Agents eat in rooms not intended for eating. The model does not infer social-physical norms from the environment alone.
-- **Memory overflow.** Deep simulation runs cause memory-retrieval cost to grow. Practical remedy: periodic memory compaction (summarize-and-prune) and decay on low-importance entries.
-- **Reflection hallucination.** Reflections can invent relationships that do not exist in the memory stream. Mitigation: include source memory ids in reflection prompts and verify at retrieval time.
+- **Spatial norm errors。** Agents が閉店中の store に入る。1 人用 bathroom を同時に使おうとする。食事向けでない room で食事をする。model は environment だけから social-physical norms を推論しない。
+- **Memory overflow。** deep simulation runs では memory-retrieval cost が増える。実用上の対処は periodic memory compaction（summarize-and-prune）と low-importance entries への decay。
+- **Reflection hallucination。** reflections が memory stream に存在しない relationships を invent することがある。mitigation: reflection prompts に source memory ids を含め、retrieval time に verify する。
 
-These are production-relevant failure modes: any 2026 agent simulation inherits them.
+これらは production-relevant failure modes である。2026 年のどの agent simulation もそれらを継承する。
 
-### Three-component implementation rules
+### 3-component implementation rules
 
-1. **Memory is append-only.** Never mutate a memory entry. Corrections are new entries.
-2. **Importance scores are cheap.** Call the LLM to rate importance 1-10 at write time. Cache the score.
-3. **Retrieval is ranked, not filtered.** Top-k by combined score; do not use hard filters (which lose context).
-4. **Reflection runs periodically.** Trigger when the sum of importance of unprocessed memories exceeds a threshold (e.g., 150).
-5. **Plans are revisable.** When a new observation contradicts a plan, regenerate the affected segment only, not the whole plan.
+1. **Memory は append-only。** memory entry を mutate しない。correction は新しい entry。
+2. **Importance scores は安くする。** write time に LLM へ importance 1-10 の評価をさせる。score は cache する。
+3. **Retrieval は ranked であり、filtered ではない。** combined score の Top-k。hard filters は context を失うため使わない。
+4. **Reflection は periodic に走る。** unprocessed memories の importance 合計が threshold（例: 150）を超えたとき trigger する。
+5. **Plans は revisable。** new observation が plan と矛盾したら、whole plan ではなく affected segment だけを regenerate する。
 
-### Generative agents beyond Smallville
+### Smallville を超える generative agents
 
-The 2024-2026 follow-up literature extends the architecture:
+2024-2026 年の follow-up literature はこの architecture を拡張している:
 
-- **Multi-agent social simulation for policy / market research.** Smallville-like populations simulate user behavior in response to features. Faster than A/B tests; accuracy is contested.
-- **NPC AI for games.** RPGs with Smallville agents produce emergent storylines instead of scripted quests.
-- **Generative-agent evaluation benchmarks.** Rather than task accuracy, the metric becomes believability + coherence of behavior over long runs.
+- **policy / market research 向け multi-agent social simulation。** Smallville 風の populations が features に対する user behavior を simulate する。A/B tests より速いが、accuracy は議論がある。
+- **games 向け NPC AI。** Smallville agents を持つ RPG は scripted quests ではなく emergent storylines を生む。
+- **Generative-agent evaluation benchmarks。** metric は task accuracy ではなく、long runs にわたる behavior の believability + coherence になる。
 
-The architecture is the reference. Extensions swap components (vector store for memory, retrieval-augmented reflection, neurosymbolic plan) but keep the three-part structure.
+この architecture が reference である。extensions は components を差し替える（memory に vector store、retrieval-augmented reflection、neurosymbolic plan）が、3-part structure は維持する。
 
-### Why this matters for multi-agent engineering
+### multi-agent engineering にとってなぜ重要か
 
-Smallville is the proof of concept that multi-agent emergence is cheap when the components are right. The architecture has now been replicated on open-source models (smaller LLMs lose believability gracefully, not sharply). Any production system that needs **emergent social behavior** uses this shape. Any system that needs **tight task execution** uses the supervisor / roles / primitives patterns from earlier in this phase.
+Smallville は、components が正しければ multi-agent emergence が安価に得られる proof of concept である。この architecture はすでに open-source models でも再現されている（smaller LLMs では believability が急落ではなく緩やかに低下する）。**emergent social behavior** が必要な production system はこの形を使う。**tight task execution** が必要な system は、この phase の前半で扱った supervisor / roles / primitives patterns を使う。
 
-## Build It
+## 実装
 
-`code/main.py` implements the three components in stdlib Python with scripted agent policies (no real LLM). The demo reproduces the Valentine's-party emergence in miniature:
+`code/main.py` は stdlib Python で 3 components を実装する。agent policies は scripted で、real LLM は使わない。demo は Valentine's-party emergence を miniature で再現する:
 
-- `MemoryStream` — append-only log with recency/importance/relevance retrieval.
-- `reflect(stream)` — scripted reflection over recent high-importance memories.
-- `plan(agent_state)` — day-level and hour-level plans based on current beliefs.
-- Scenario: 5 agents. Agent 1 starts with "throw party at 5pm." Over simulated ticks, the invitation spreads and agents converge.
+- `MemoryStream` — recency/importance/relevance retrieval を備えた append-only log。
+- `reflect(stream)` — recent high-importance memories に対する scripted reflection。
+- `plan(agent_state)` — current beliefs に基づく day-level と hour-level plans。
+- Scenario: 5 agents。Agent 1 は「5pm に party を開く」から始める。simulated ticks の間に invitation が広がり、agents が converge する。
 
 Run:
 
@@ -101,46 +101,46 @@ Run:
 python3 code/main.py
 ```
 
-Expected output: tick-by-tick trace. By the final tick, at least 3 of the 5 agents show the party in their plan, and they converge at the party location. The single seed produced the coordinated arrival without any orchestrator.
+期待される出力: tick-by-tick trace。final tick までに 5 agents 中少なくとも 3 agents が plan に party を持ち、party location に converge する。single seed が orchestrator なしに coordinated arrival を生んだことが分かる。
 
 ## Use It
 
-`outputs/skill-simulation-designer.md` designs a generative-agent simulation: number of agents, memory schema, reflection cadence, plan horizon, and evaluation metric.
+`outputs/skill-simulation-designer.md` は generative-agent simulation を設計する。agents 数、memory schema、reflection cadence、plan horizon、evaluation metric を定義する。
 
 ## Ship It
 
-Rules for production simulations:
+production simulations の rules:
 
-- **Memory is the database.** Pick a real store (vector DB, Postgres) at scale. In-memory stdlib is for prototypes.
-- **Log the retrieval trace.** For every action, log the top-k memories that drove it. This is your debug ability.
-- **Budget per-agent tokens.** Each agent's retrieve + reflect + plan per tick is O(k) LLM calls. N agents × T ticks × calls-per-tick can dwarf your budget.
-- **Compact memory periodically.** Summarize-and-prune low-importance entries. Retention policy is a design decision, not a detail.
-- **Detect spatial / social norm violations** explicitly. The architecture does not learn them.
+- **Memory is the database。** scale では real store（vector DB、Postgres）を選ぶ。in-memory stdlib は prototypes 用。
+- **retrieval trace を log する。** 各 action について、それを動かした top-k memories を log する。これが debug ability である。
+- **agent ごとの token budget を切る。** tick あたり各 agent の retrieve + reflect + plan は O(k) LLM calls。N agents × T ticks × calls-per-tick は budget を容易に超える。
+- **memory を periodic に compact する。** low-importance entries を summarize-and-prune する。retention policy は design decision であって detail ではない。
+- **spatial / social norm violations を明示的に detect する。** architecture はそれらを学習しない。
 
 ## Exercises
 
-1. Run `code/main.py`. Confirm 3+ agents converge at the party. Increase agents to 10 — does the emergence still happen?
-2. Remove the reflection step. What does behavior look like? Map to the ablation finding in Park 2023.
-3. Introduce a competing seeded goal ("Klaus wants to give a research talk at 5pm"). Do agents split, or does one goal dominate? What determines it?
-4. Add spatial constraints: Hobbs Cafe holds at most 4 agents. Does the simulation handle overflow gracefully, or does it hit the "single-person bathroom" failure pattern?
-5. Read Park et al. (arXiv:2304.03442) Section 6 (emergent behavior experiments). Identify one behavior not reproducible in your miniature. What component of the architecture would you need to enhance?
+1. `code/main.py` を実行する。3+ agents が party に converge することを確認する。agents を 10 に増やすと、emergence はまだ起きるか。
+2. reflection step を取り除く。behavior はどう見えるか。Park 2023 の ablation finding に対応づける。
+3. 競合する seeded goal（「Klaus wants to give a research talk at 5pm」）を導入する。agents は分裂するか、片方の goal が支配するか。何がそれを決めるか。
+4. spatial constraints を追加する: Hobbs Cafe は最大 4 agents まで。simulation は overflow を graceful に扱うか、それとも「single-person bathroom」failure pattern に当たるか。
+5. Park et al.（arXiv:2304.03442）Section 6（emergent behavior experiments）を読む。miniature で再現できない behavior を 1 つ特定する。それを再現するには architecture のどの component を強化する必要があるか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Memory stream | "The agent's diary" | Append-only log of observations, actions, reflections, plans. |
-| Recency | "How new is the memory" | Exponential-decay score by age. |
-| Importance | "How much does the agent care" | Self-rated 1-10 at write time. Cached. |
-| Relevance | "How related to the current query" | Cosine similarity (embedding-based). |
-| Reflection | "Higher-order belief" | Synthesis generated from recent memories, re-ingested as a new memory. |
-| Plan | "Day/hour/action decomposition" | Top-down plan tree. Revisable when observations contradict. |
-| Smallville | "Park 2023's sandbox" | 25-agent simulation that produced the Valentine's Day emergence. |
-| Believability | "The quality metric" | Human-rater score for whether behavior seems like a plausible agent. |
+| Memory stream | 「agent の diary」 | observations、actions、reflections、plans の append-only log。 |
+| Recency | 「memory がどれだけ新しいか」 | age による exponential-decay score。 |
+| Importance | 「agent がどれだけ気にするか」 | write time に 1-10 で self-rated。cache される。 |
+| Relevance | 「current query とどれだけ関係するか」 | cosine similarity（embedding-based）。 |
+| Reflection | 「higher-order belief」 | recent memories から生成され、新しい memory として再投入される synthesis。 |
+| Plan | 「day/hour/action decomposition」 | top-down plan tree。observations が矛盾すると revisable。 |
+| Smallville | 「Park 2023 の sandbox」 | Valentine's Day emergence を生んだ 25-agent simulation。 |
+| Believability | 「quality metric」 | behavior が plausible agent らしく見えるかの human-rater score。 |
 
-## Further Reading
+## 参考文献
 
-- [Park et al. — Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) — the reference architecture
+- [Park et al. — Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) — reference architecture
 - [UIST '23 paper page](https://dl.acm.org/doi/10.1145/3586183.3606763) — publication venue
 - [Smallville code release](https://github.com/joonspk-research/generative_agents) — reference Python implementation
-- [Hayes-Roth 1985 — A Blackboard Architecture for Control](https://www.sciencedirect.com/science/article/abs/pii/0004370285900639) — prior art for structured-memory agents
+- [Hayes-Roth 1985 — A Blackboard Architecture for Control](https://www.sciencedirect.com/science/article/abs/pii/0004370285900639) — structured-memory agents の prior art

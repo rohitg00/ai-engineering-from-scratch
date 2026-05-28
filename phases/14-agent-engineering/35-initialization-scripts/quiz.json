@@ -1,34 +1,34 @@
 {
   "lesson": "35-initialization-scripts",
-  "title": "Initialization Scripts for Agents",
+  "title": "Agents のための Initialization Scripts",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does an init script eliminate?",
+      "question": "init script は何をなくすか？",
       "options": [
-        "Latency from inference",
-        "The per-session setup tax: probing runtime, listing the repo, retrying the same checks each new session",
-        "Provider rate limits",
-        "Authn tokens"
+        "inference の latency",
+        "session ごとの setup tax: runtime probing、repo listing、new session ごとの同じ checks の retry",
+        "provider rate limits",
+        "authn tokens"
       ],
       "correct": 1,
-      "explanation": "The script pays the tax once and writes the answers into init_report.json the agent reads."
+      "explanation": "script は tax を一度だけ払い、agent が読む init_report.json に答えを書く。"
     },
     {
       "stage": "pre",
-      "question": "What is the init script's failure-mode contract?",
+      "question": "init script の failure-mode contract は何か？",
       "options": [
-        "Fail soft and continue",
-        "Fail loud, fail fast, fail in one place; refuse to start when the workbench is broken",
-        "Always succeed",
-        "Retry forever"
+        "fail soft して続行する",
+        "fail loud, fail fast, fail in one place。workbench が壊れているとき start を拒否する",
+        "常に成功する",
+        "永遠に retry する"
       ],
       "correct": 1,
-      "explanation": "The whole point is to refuse to start when the workbench is broken; silent fallback defeats the purpose."
+      "explanation": "目的は workbench が壊れているとき start を拒否すること。silent fallback は目的を壊す。"
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of the probes the lesson lists?",
+      "question": "lesson が挙げる probes に含まれないものはどれか？",
       "options": [
         "Runtime versions",
         "Dependency availability",
@@ -36,55 +36,55 @@
         "Token-by-token sampling temperature"
       ],
       "correct": 3,
-      "explanation": "Probes include runtime versions, deps, test command, paths, env vars, state freshness, last-known-good commit."
+      "explanation": "probes には runtime versions、deps、test command、paths、env vars、state freshness、last-known-good commit が含まれる。"
     },
     {
       "stage": "check",
-      "question": "Why does the lesson say init must be idempotent?",
+      "question": "lesson が init は idempotent であるべきと言う理由は何か？",
       "options": [
-        "It satisfies SOC 2",
-        "Running it twice should be a no-op except for a fresh timestamp, so it can be wired into CI, hooks, or a pre-task slash command",
-        "Idempotence saves money",
-        "It is required by JSON Schema"
+        "SOC 2 を満たすため",
+        "2 回実行しても fresh timestamp 以外 no-op になり、CI、hooks、pre-task slash command に結線できるようにするため",
+        "idempotence が money を節約するため",
+        "JSON Schema で必須だから"
       ],
       "correct": 1,
-      "explanation": "Idempotence makes init safe to call from many entry points (hooks, CI, slash command)."
+      "explanation": "idempotence により、hooks、CI、slash command など複数の entry point から安全に呼べる。"
     },
     {
       "stage": "check",
-      "question": "What is last-known-good commit anchoring?",
+      "question": "last-known-good commit anchoring とは何か？",
       "options": [
-        "The most recent commit by the team lead",
-        "Probe the current commit against an LKG file; refuse to start if the diff exceeds a budget without human ratification",
-        "The earliest commit in the repo",
-        "The merge base of HEAD and main"
+        "team lead による最新 commit",
+        "current commit を LKG file に照らして probe し、diff が budget を超えたら human ratification なしでは start を拒否すること",
+        "repo の最初の commit",
+        "HEAD と main の merge base"
       ],
       "correct": 1,
-      "explanation": "Cloudflare's AI Code Review scopes reviewers against the LKG to prevent drift compounding across sessions."
+      "explanation": "Cloudflare の AI Code Review は reviewer を LKG に scope し、sessions 間で drift が compound しないようにする。"
     },
     {
       "stage": "post",
-      "question": "What does the lock file with TTL pattern do?",
+      "question": "TTL 付き lock file pattern は何をするか？",
       "options": [
-        "Locks the repo from edits",
-        "Writes prereqs.lock after a successful probe pass; subsequent runs trust the lock for 24h and skip expensive probes if the manifest hash matches",
-        "Blocks all writes for 24 hours",
-        "Disables CI"
+        "repo の edits を lock する",
+        "successful probe pass 後に prereqs.lock を書き、subsequent runs は 24h lock を信頼し、manifest hash が一致すれば expensive probes を skip する",
+        "すべての writes を 24 時間 block する",
+        "CI を無効化する"
       ],
       "correct": 1,
-      "explanation": "Same shape as Docker layer caches: idempotent probe + content hash = skip."
+      "explanation": "Docker layer caches と同じ形。idempotent probe + content hash = skip。"
     },
     {
       "stage": "post",
-      "question": "What should NEVER appear in the init hot path?",
+      "question": "init hot path に絶対に入れるべきでないものは何か？",
       "options": [
-        "Local filesystem reads",
-        "Network calls, LLM calls, external license checks; probes are deterministic plumbing under three seconds",
-        "Reading env vars",
-        "Reading the lockfile"
+        "local filesystem reads",
+        "network calls、LLM calls、external license checks。probes は 3 seconds 未満の deterministic plumbing",
+        "env vars の read",
+        "lockfile の read"
       ],
       "correct": 1,
-      "explanation": "A probe that calls an LLM is a workflow, not a probe; keep init deterministic."
+      "explanation": "LLM を呼ぶ probe は workflow であり probe ではない。init は deterministic に保つ。"
     }
   ]
 }

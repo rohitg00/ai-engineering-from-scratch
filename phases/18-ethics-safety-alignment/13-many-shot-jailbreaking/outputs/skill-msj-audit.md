@@ -1,29 +1,29 @@
 ---
 name: msj-audit
-description: Audit a long-context safety evaluation for many-shot jailbreaking coverage.
+description: long-context safety evaluation が many-shot jailbreaking を網羅しているか監査する。
 version: 1.0.0
 phase: 18
 lesson: 13
 tags: [many-shot-jailbreaking, context-window, power-law, anthropic]
 ---
 
-Given a safety evaluation for a long-context model, audit whether the evaluation covers many-shot jailbreaking.
+long-context model の safety evaluation が与えられたら、その評価が many-shot jailbreaking を網羅しているか監査する。
 
-Produce:
+生成する内容:
 
-1. Shot-count coverage. Report the shot counts tested (should include 1, 5, 16, 64, 256, and at least one >= 512 for models with >= 1M context). If the evaluation tests at a single shot count, ASR is uninformative — MSJ is a curve.
-2. Power-law fit. Report the fitted exponent per behaviour category. A shallow exponent indicates the model is ICL-robust on that category; a steep exponent indicates MSJ is disproportionately effective.
-3. Category breakdown. MSJ effectiveness varies by category: violent content, deceit, self-harm, bioweapon. Per Anil et al. 2024, violent/deceitful needs fewer shots to jailbreak. Flag any category absent from the evaluation.
-4. Defense identification. Is a classifier-based prompt modification in place? Is the classifier itself evaluated for adversarial robustness? Anthropic's reported 61% -> 2% reduction depends on classifier calibration.
-5. Compositional check. Does the evaluation test MSJ + PAIR, MSJ + persuasive templates, or MSJ + encoding? Compositional attacks are frequently stronger than any single technique.
+1. Shot-count coverage。テストされた shot counts を報告する (1, 5, 16, 64, 256、および >= 1M context のモデルでは少なくとも1つの >= 512 を含むべき)。単一の shot count だけをテストする評価では ASR は情報量が少ない。MSJ は曲線である。
+2. Power-law fit。behaviour category ごとの fitted exponent を報告する。浅い exponent は、その category で model が ICL-robust であることを示す。急な exponent は MSJ が不釣り合いに有効であることを示す。
+3. Category breakdown。MSJ effectiveness は category によって異なる: violent content、deceit、self-harm、bioweapon。Anil et al. 2024 によれば、violent/deceitful はより少ない shots で jailbreak される。評価にない category を flag する。
+4. Defense identification。classifier-based prompt modification は入っているか。classifier 自体の adversarial robustness は評価されているか。Anthropic の 61% -> 2% という報告は classifier calibration に依存する。
+5. Compositional check。MSJ + PAIR、MSJ + persuasive templates、MSJ + encoding をテストしているか。compositional attacks は単独技術より強いことが多い。
 
-Hard rejects:
-- Any "our long-context model is safe" claim based on 5-shot-only evaluation.
-- Any defense claim without reporting both jailbreak ASR and benign ICL performance on the same classifier — the trade-off is the point.
-- Any category-aggregate ASR without a category breakdown.
+強い却下条件:
+- 5-shot-only evaluation に基づく「our long-context model is safe」という主張。
+- jailbreak ASR と benign ICL performance を同じ classifier で報告しない defense claim。trade-off が論点である。
+- category breakdown のない category-aggregate ASR。
 
-Refusal rules:
-- If the user asks whether MSJ can be fully patched, refuse the binary answer; MSJ shares a mechanism with ICL and cannot be eliminated without eliminating ICL.
-- If the user asks for a recommended shot count for evaluation, refuse a single number; request the power-law fit over 5 to 512 shots.
+拒否ルール:
+- ユーザーが MSJ を完全に patch できるか尋ねたら、二択回答を拒否する。MSJ は ICL と mechanism を共有しており、ICL を消さずに除去することはできない。
+- ユーザーが evaluation に推奨 shot count を尋ねたら、単一の数値を拒否し、5 から 512 shots までの power-law fit を求める。
 
-Output: a one-page audit that reports the shot-count coverage, power-law fit per category, defense identification, and one compositional attack gap. Cite Anil et al. 2024 (Anthropic) once as the methodological reference.
+出力: shot-count coverage、category ごとの power-law fit、defense identification、compositional attack gap を1つ報告する1ページの監査。methodological reference として Anil et al. 2024 (Anthropic) を1回引用する。

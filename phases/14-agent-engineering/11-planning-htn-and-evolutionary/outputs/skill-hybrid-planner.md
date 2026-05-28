@@ -1,44 +1,44 @@
 ---
 name: hybrid-planner
-description: Build a hybrid planner — ChatHTN for provably-sound plans, AlphaEvolve for code search with a machine-checkable evaluator — and pick the right one for the problem.
+description: Hybrid planner を構築する。Provably-sound plans には ChatHTN、machine-checkable evaluator を持つ code search には AlphaEvolve を使い、問題に合う方を選ぶ。
 version: 1.0.0
 phase: 14
 lesson: 11
 tags: [planning, htn, chathtn, alphaevolve, evolutionary-search]
 ---
 
-Given a problem class (policy-bound workflow vs code optimization vs open-ended task), pick a planner and produce a correct scaffold.
+Problem class (policy-bound workflow vs code optimization vs open-ended task) が与えられたら、planner を選び、正しい scaffold を生成する。
 
 Decision:
 
-1. Does the problem have hard preconditions / policy / scheduling constraints? -> HTN (ChatHTN).
-2. Does the problem have a deterministic, machine-checkable fitness function? -> Evolutionary (AlphaEvolve).
-3. Neither? -> Reach for ReAct (Lesson 01) or ReWOO (Lesson 02) instead.
+1. Problem に hard preconditions / policy / scheduling constraints があるか? -> HTN (ChatHTN)。
+2. Problem に deterministic, machine-checkable fitness function があるか? -> Evolutionary (AlphaEvolve)。
+3. どちらでもないか? -> 代わりに ReAct (Lesson 01) または ReWOO (Lesson 02) を使う。
 
-For HTN, produce:
+HTN では、次を生成する:
 
-1. `Operator` type with `preconditions`, `effects_add`, `effects_remove`.
-2. `Method` type with `task`, `preconditions`, `subtasks`.
-3. A planner that tries methods first, falls back to LLM decomposition, and caches successful LLM decompositions.
-4. A validation step that rejects LLM decompositions referencing unknown operators or methods.
+1. `preconditions`, `effects_add`, `effects_remove` を持つ `Operator` type。
+2. `task`, `preconditions`, `subtasks` を持つ `Method` type。
+3. Methods を先に試し、LLM decomposition に fallback し、成功した LLM decompositions を cache する planner。
+4. Unknown operators や methods を参照する LLM decompositions を reject する validation step。
 
-For Evolutionary, produce:
+Evolutionary では、次を生成する:
 
-1. A seed population of candidate programs.
-2. A deterministic evaluator returning a scalar fitness.
-3. A mutation operator (LLM-driven or rule-based).
-4. A selection loop (keep top-k, mutate, repeat) with early stopping.
+1. Candidate programs の seed population。
+2. Scalar fitness を返す deterministic evaluator。
+3. Mutation operator (LLM-driven または rule-based)。
+4. Early stopping 付き selection loop (top-k を残し、mutate し、repeat)。
 
 Hard rejects:
 
-- ChatHTN where LLM output is applied directly without operator-schema validation. The soundness claim fails.
-- AlphaEvolve where the evaluator calls an LLM judge. Fitness must be deterministic; LLM judges introduce stochastic noise the loop cannot recover from.
-- Either pattern for open-ended tasks ("write a blog post"). No evaluator, no preconditions -> use ReAct.
+- LLM output を operator-schema validation なしで直接適用する ChatHTN。Soundness claim が壊れる。
+- Evaluator が LLM judge を呼ぶ AlphaEvolve。Fitness は deterministic でなければならない。LLM judges は loop が回収できない stochastic noise を持ち込む。
+- Open-ended tasks (「blog post を書く」) にどちらかの pattern を使うこと。Evaluator も preconditions もないなら ReAct を使う。
 
 Refusal rules:
 
-- If the domain has no clear operator schema, refuse ChatHTN. Suggest ReWOO or plain ReAct.
-- If the domain has no machine-checkable fitness, refuse AlphaEvolve. Suggest Self-Refine (Lesson 05).
-- If the user wants "planner + LLM makes final call," refuse. The split between symbolic correctness and LLM exploration is load-bearing.
+- Domain に明確な operator schema がない場合、ChatHTN を拒否する。ReWOO または plain ReAct を提案する。
+- Domain に machine-checkable fitness がない場合、AlphaEvolve を拒否する。Self-Refine (Lesson 05) を提案する。
+- User が「planner + LLM が final call をする」と望む場合は拒否する。Symbolic correctness と LLM exploration の分担は load-bearing。
 
-Output: `operators.py`, `methods.py`, `planner.py` (HTN) or `evaluator.py`, `mutator.py`, `loop.py` (evolutionary), plus `README.md` with the decision rationale. End with "what to read next" pointing to Lesson 25 if debate-style verification fits the problem, or Lesson 02 if the task is actually ReWOO-shaped after all.
+Output: `operators.py`, `methods.py`, `planner.py` (HTN) または `evaluator.py`, `mutator.py`, `loop.py` (evolutionary)、そして decision rationale を記した `README.md`。最後に、debate-style verification が合うなら Lesson 25、実は ReWOO 形の task なら Lesson 02 への "what to read next" で締める。

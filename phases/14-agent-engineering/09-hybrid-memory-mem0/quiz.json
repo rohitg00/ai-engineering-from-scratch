@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which query class does a KV store handle best?",
+      "question": "KV store が最も得意な query class はどれですか?",
       "options": [
-        "Semantic similarity over long conversations",
-        "Direct fact lookup keyed by (user, type, entity)",
-        "Reachability across customers sharing a billing entity",
-        "Temporal queries valid-at-time"
+        "Long conversations に対する semantic similarity",
+        "(user, type, entity) で key される direct fact lookup",
+        "同じ billing entity を共有する customer 間の reachability",
+        "Valid-at-time の temporal queries"
       ],
       "correct": 1,
-      "explanation": "KV is O(1) on exact keys; vector is for similarity, graph is for relationships."
+      "explanation": "KV は exact key に対して O(1) です。Vector は similarity、graph は relationships に向きます。"
     },
     {
       "stage": "pre",
-      "question": "What are the three stores Mem0 writes in parallel on each add()?",
+      "question": "Mem0 が各 add() で parallel write する 3 つの stores は何ですか?",
       "options": [
         "Vector, KV, graph",
         "Cache, queue, log",
@@ -24,11 +24,11 @@
         "Embedding, attention, FFN"
       ],
       "correct": 0,
-      "explanation": "Mem0 fans every write out to vector, KV, and graph stores."
+      "explanation": "Mem0 はすべての write を vector、KV、graph stores へ fan out します。"
     },
     {
       "stage": "check",
-      "question": "What three dimensions feed Mem0's fusion score?",
+      "question": "Mem0 の fusion score に入る 3 つの dimensions は何ですか?",
       "options": [
         "Relevance, importance, recency",
         "Precision, recall, F1",
@@ -36,35 +36,35 @@
         "Confidence, perplexity, BLEU"
       ],
       "correct": 0,
-      "explanation": "Score is a weighted sum of relevance, importance, and recency; weights tune per product."
+      "explanation": "Score は relevance、importance、recency の weighted sum です。Weights は product ごとに tune します。"
     },
     {
       "stage": "check",
-      "question": "What does Mem0g do when an incoming fact contradicts an existing edge?",
+      "question": "Incoming fact が existing edge と矛盾したとき、Mem0g は何をしますか?",
       "options": [
-        "Deletes the edge",
-        "Marks the existing edge invalid but does not delete it, so temporal queries can still traverse",
-        "Raises an exception",
-        "Rewrites the user_id"
+        "Edge を delete する",
+        "Existing edge を invalid と mark するが delete はしないため、temporal queries で traverse できる",
+        "Exception を raise する",
+        "user_id を rewrite する"
       ],
       "correct": 1,
-      "explanation": "Soft invalidation preserves history for temporal (valid-at-time) queries."
+      "explanation": "Soft invalidation は temporal (valid-at-time) queries のために history を保存します。"
     },
     {
       "stage": "check",
-      "question": "Why does the lesson recommend tuning fusion weights per product?",
+      "question": "この lesson が fusion weights を product ごとに tune することを勧める理由は何ですか?",
       "options": [
-        "Providers require it",
-        "Recency dominates for chat agents while importance dominates for compliance agents and relevance dominates for retrieval agents",
-        "Vector libraries reject equal weights",
-        "It is required by Apache 2.0"
+        "Provider が要求するから",
+        "Chat agents では recency、compliance agents では importance、retrieval agents では relevance が支配的だから",
+        "Vector libraries が equal weights を拒否するから",
+        "Apache 2.0 で必須だから"
       ],
       "correct": 1,
-      "explanation": "Different products want different bias on relevance/importance/recency; one set of weights does not fit all."
+      "explanation": "異なる product は relevance / importance / recency に異なる bias を求めます。1 つの weight set では合いません。"
     },
     {
       "stage": "post",
-      "question": "What is the scope taxonomy Mem0 uses?",
+      "question": "Mem0 が使う scope taxonomy は何ですか?",
       "options": [
         "Public, private, secret",
         "User, session, agent",
@@ -72,19 +72,19 @@
         "Read, write, admin"
       ],
       "correct": 1,
-      "explanation": "Scopes are user (cross-session), session (one thread), agent (per-instance state)."
+      "explanation": "Scopes は user (cross-session)、session (one thread)、agent (per-instance state) です。"
     },
     {
       "stage": "post",
-      "question": "What is embedding drift in this pattern, and how does the lesson recommend mitigating it?",
+      "question": "この pattern での embedding drift とは何で、lesson はどう緩和すると勧めていますか?",
       "options": [
-        "Vectors get encrypted; rotate keys",
-        "Vector retrieval quality degrades as the corpus grows; periodically re-embed the top-N most used records",
-        "Embeddings overflow integers; switch to float64",
-        "The embedding API changes URL; pin a domain"
+        "Vector が encrypted されること。Keys を rotate する",
+        "Corpus growth とともに vector retrieval quality が劣化すること。Top-N most used records を periodic re-embed する",
+        "Embeddings が integer overflow すること。float64 へ切り替える",
+        "Embedding API の URL が変わること。Domain を pin する"
       ],
       "correct": 1,
-      "explanation": "Periodic re-embedding of hot records keeps retrieval quality steady as the corpus grows."
+      "explanation": "Hot records の periodic re-embedding によって、corpus が増えても retrieval quality を安定させます。"
     }
   ]
 }

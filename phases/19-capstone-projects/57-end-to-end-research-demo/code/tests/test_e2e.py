@@ -1,4 +1,4 @@
-"""Tests for the end-to-end auto-research demo: composition, determinism, failure modes."""
+"""end-to-end auto-research demo の tests: composition、determinism、failure modes。"""
 
 from __future__ import annotations
 

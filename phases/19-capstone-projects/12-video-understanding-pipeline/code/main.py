@@ -1,12 +1,12 @@
-"""Video understanding pipeline — multi-vector scene index scaffold.
+"""Video understanding pipeline — multi-vector scene index scaffold。
 
-The hard architectural primitive is a multi-vector-per-scene index with
-three representations (caption, frame, transcript), queried in parallel and
-merged with reciprocal rank fusion, then refined by a temporal-grounding
-step that picks a sub-window inside the best scene. This scaffold implements
-the index shape, the triple-query fusion, and the sub-window grounding.
+重要な architecture primitive は、scene ごとに 3 つの representation
+(caption、frame、transcript) を持つ multi-vector index である。
+それらを parallel に query し、reciprocal rank fusion で merge し、
+temporal-grounding step で best scene 内の sub-window を選ぶ。この
+scaffold は index shape、triple-query fusion、sub-window grounding を実装する。
 
-Run:  python main.py
+実行:  python main.py
 """
 
 from __future__ import annotations
@@ -51,7 +51,7 @@ class Scene:
     end_ms: int
     caption: str
     transcript: str
-    frame_tags: str              # stand-in for frame embedding features
+    frame_tags: str              # frame embedding feature の stand-in
     caption_emb: list[float] = field(default_factory=list)
     frame_emb: list[float] = field(default_factory=list)
     transcript_emb: list[float] = field(default_factory=list)
@@ -109,11 +109,11 @@ def multi_vector_search(query: str, scenes: list[Scene], k: int = 5) -> list[tup
 
 
 # ---------------------------------------------------------------------------
-# temporal grounding stub  --  refine start/end within the best scene
+# temporal grounding stub  --  best scene 内の start/end を refine する
 # ---------------------------------------------------------------------------
 
 def ground_window(query: str, scene: Scene) -> tuple[int, int]:
-    """Stand-in: pick a sub-window of the scene based on query keyword position."""
+    """Stand-in: query keyword 位置に基づいて scene の sub-window を選ぶ。"""
     q = set(tokenize(query))
     t_tokens = tokenize(scene.transcript)
     if not q or not t_tokens:
@@ -159,7 +159,7 @@ def main() -> None:
         top = hits[0][0]
         start, end = ground_window(q, top)
         print(f"  grounded window: [{fmt_ms(start)}-{fmt_ms(end)}] "
-              f"(narrowed from {fmt_ms(top.start_ms)}-{fmt_ms(top.end_ms)})")
+              f"({fmt_ms(top.start_ms)}-{fmt_ms(top.end_ms)} から絞り込み)")
 
 
 if __name__ == "__main__":

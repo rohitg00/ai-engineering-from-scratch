@@ -1,116 +1,116 @@
-# AI Control — Safety Despite Subversion
+# AI Control — Subversion があっても安全に使う
 
-> Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). Control reframes the safety question: given an untrusted strong model U that may be adversarially optimizing against you, what protocols let you extract useful work while bounding the probability of an unacceptable outcome? Resources are a trusted weaker model T, a budget of trusted human labor H, and the ability to edit U's outputs. Within this frame, Trusted Editing Pareto-dominates Untrusted Monitoring on code-backdoor tasks. The frame inherits worst-case assumptions from security engineering: safety is the probability that an adversarially chosen U cannot cause a concrete unacceptable outcome, measured under red-team pressure that stands in for U.
+> Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024)。Control は safety question を組み替えます。adversarial にあなたへ最適化しているかもしれない untrusted strong model U があるとして、unacceptable outcome の確率を bounded にしながら useful work を取り出すには、どんな protocols が必要か。resources は trusted weaker model T、trusted human labor H の budget、そして U の outputs を edit する能力です。この frame では、code-backdoor tasks で Trusted Editing が Untrusted Monitoring を Pareto-dominate します。この frame は security engineering の worst-case assumptions を引き継ぎます。safety とは、adversarially chosen U が concrete unacceptable outcome を起こせない確率であり、U の代役となる red-team pressure のもとで測られます。
 
-**Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
-**Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
-**Time:** ~75 minutes
+**種別:** 学習
+**言語:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
+**前提条件:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Define the AI Control threat model: untrusted strong model U, trusted weaker model T, trusted human budget H.
-- Describe the Trusted Editing protocol and why it Pareto-dominates Untrusted Monitoring on the ICML 2024 code-backdoor task.
-- Explain the difference between alignment (U is trustworthy) and control (U is not trustworthy and we are safe anyway).
-- State the three limits of control: humans do not scale, trusted weak models eventually lag, control does not produce trustworthy strong models.
+- AI Control threat model、untrusted strong model U、trusted weaker model T、trusted human budget H を定義できる。
+- Trusted Editing protocol と、それが ICML 2024 code-backdoor task で Untrusted Monitoring を Pareto-dominate する理由を説明できる。
+- alignment (U が trustworthy) と control (U が trustworthy でなくても安全) の違いを説明できる。
+- control の 3 つの限界、humans do not scale、trusted weak models eventually lag、control does not produce trustworthy strong models を述べられる。
 
-## The Problem
+## 問題
 
-Lessons 7-9 establish that a frontier model may be deceptively aligned, scheming, or faking alignment. The safety question re-frames: can we extract useful work from a model we do not trust, without giving it the opportunity to cause unacceptable outcomes? This is the control problem, and it is structured like classical security: assume worst-case adversary, design a protocol, measure the adversary's success rate under red-team pressure.
+Lessons 7-9 は、frontier model が deceptively aligned、scheming、または faking alignment であり得ることを示しました。safety question は再構成されます。信頼していない model から、unacceptable outcomes の機会を与えずに useful work を取り出せるか。これが control problem であり、classical security と同じ構造を持ちます。worst-case adversary を仮定し、protocol を設計し、red-team pressure のもとで adversary の success rate を測ります。
 
-## The Concept
+## 概念
 
-### The threat model
+### Threat model
 
-Control assumes:
-- U — untrusted strong model. Capable. Possibly adversarial (the evaluation treats it as if it were).
-- T — trusted weaker model. Less capable, but known not to be adversarial.
-- H — trusted human labor. Small budget; does not scale.
+Control は次を仮定します。
+- U — untrusted strong model。capable で、possibly adversarial (evaluation ではそうであるかのように扱う)。
+- T — trusted weaker model。less capable だが、adversarial ではないと分かっている。
+- H — trusted human labor。小さい budget で、scale しない。
 
-The system must produce useful output using U. The adversary tries to cause a concrete unacceptable outcome (e.g., a backdoor in the shipped code) while maintaining a fraction of legitimate useful work to pass usefulness thresholds.
+system は U を使って useful output を作らなければなりません。adversary は、legitimate useful work を一定割合保って usefulness thresholds を通過しつつ、concrete unacceptable outcome (例: shipped code の backdoor) を起こそうとします。
 
-Control gives up on trusting U. It asks what protocols maintain safety in U's absence of trust.
+Control は U を信頼することを諦めます。U への信頼がない中で、どの protocols が safety を維持するかを問います。
 
-### The ICML 2024 backdoor task
+### ICML 2024 backdoor task
 
-Prompts are competition-level coding problems. U produces a candidate solution. A hidden oracle flags if the solution contains a backdoor (a specific input that makes the code produce a wrong output). Red team controls U and is allowed to see all protocol internals. The protocol must maximize solved-problem rate while keeping backdoor-shipping rate below a threshold.
+prompts は competition-level coding problems です。U が candidate solution を生成します。hidden oracle は solution に backdoor が含まれるかを flag します (特定 input で code が wrong output を出す)。red team は U を control し、protocol internals をすべて見られます。protocol は solved-problem rate を最大化しつつ、backdoor-shipping rate を threshold 未満に保つ必要があります。
 
-### Four protocols compared
+### 比較された 4 protocols
 
-- **Baseline:** ship U's output directly. Usefulness maxed. Safety minimal.
-- **Upfront auditing:** use H on all outputs. Safety maxed. Budget exhausted quickly.
-- **Untrusted Monitoring:** a second instance of U scores the first instance's output; H audits flagged outputs. Risk: the two U instances can collude.
-- **Trusted Editing:** T edits U's output on every query. If T is not confident, route to H.
+- **Baseline:** U の output をそのまま ship。usefulness は最大。safety は最小。
+- **Upfront auditing:** すべての outputs に H を使う。safety は最大。budget はすぐ尽きる。
+- **Untrusted Monitoring:** 2 つ目の U instance が 1 つ目の output を score し、H が flagged outputs を audit する。risk: 2 つの U instances が collude できる。
+- **Trusted Editing:** T がすべての query で U の output を edit する。T が confident でない場合は H に route する。
 
-Greenblatt et al. find Trusted Editing Pareto-dominates Untrusted Monitoring: higher usefulness at every safety level.
+Greenblatt et al. は Trusted Editing が Untrusted Monitoring を Pareto-dominate すること、つまりあらゆる safety level でより高い usefulness を持つことを示しました。
 
-### Why Trusted Editing wins
+### なぜ Trusted Editing が勝つのか
 
-Untrusted Monitoring requires that U's second instance cannot coordinate with the first. Collusion is possible via steganographic cues or shared training priors. The protocol has to invest budget in collusion-resistance (paraphrasing, obfuscation) that reduces the monitor's signal. Trusted Editing avoids collusion entirely because T is trusted — any edit T proposes is, by assumption, not adversarial. The cost is that T is less capable, so it may over-reject or miss subtle backdoors.
+Untrusted Monitoring は、2 つ目の U instance が 1 つ目と coordinate できないことを必要とします。collusion は steganographic cues や shared training priors によって可能です。protocol は collusion-resistance (paraphrasing, obfuscation) に budget を投じる必要があり、それは monitor の signal を弱めます。Trusted Editing は collusion を完全に避けます。T は trusted であり、T が提案する edit は assumption 上 adversarial ではないからです。代償は T が less capable であることです。そのため subtle backdoors を見逃したり over-reject したりします。
 
-### The four protocol axes
+### 4 つの protocol axes
 
-1. Which role U plays: producer only, monitor, or both.
-2. Which role T plays: editor, monitor, or resampler.
-3. How H is allocated: uniform audit, random audit, or flag-directed audit.
-4. How much compute the protocol spends on collusion-resistance.
+1. U が果たす role: producer only、monitor、または both。
+2. T が果たす role: editor、monitor、または resampler。
+3. H の allocation: uniform audit、random audit、または flag-directed audit。
+4. protocol が collusion-resistance に使う compute 量。
 
 ### Alignment vs control
 
-- Alignment: "is U safe to trust?" Lessons 2, 4, 5, 6, 7, 8, 9 all bear on this.
-- Control: "can we use U safely without trusting it?" Lesson 10.
+- Alignment: 「U は trust してよいほど safe か」。Lessons 2、4、5、6、7、8、9 が関係します。
+- Control: 「U を信頼せずに安全に使えるか」。Lesson 10。
 
-Alignment is a property of the model. Control is a property of the deployment protocol. Control does not produce aligned models; it produces safe use of possibly-unaligned models. Both agendas are needed.
+Alignment は model の性質です。Control は deployment protocol の性質です。Control は aligned models を作りません。possibly-unaligned models の safe use を作ります。両方の agendas が必要です。
 
-### Three fundamental limits
+### 3 つの根本的限界
 
-- Humans do not scale. The H budget is bounded by the number of humans willing to audit hard AI outputs.
-- Trusted weak models eventually lag. When T is much weaker than U, T's editing signal becomes noise.
-- Control is not alignment. Protocols that work at ASL-3 (Lesson 18) may not work at ASL-4 — if U can manipulate T or reason about H's audit distribution, control fails.
+- Humans do not scale。H budget は、難しい AI outputs を audit する意思のある人間の数で bounded です。
+- Trusted weak models eventually lag。T が U より大きく弱いと、T の editing signal は noise になります。
+- Control is not alignment。ASL-3 (Lesson 18) で機能する protocols が ASL-4 で機能するとは限りません。U が T を manipulate したり、H の audit distribution について reason できたりすると control は失敗します。
 
-### The 2025 development
+### 2025 年の展開
 
-UK AISI and Redwood collaborate on Control Safety Cases (metr.org / redwoodresearch.org 2025): a control safety case argues that under worst-case assumptions about U, the protocol bounds the probability of an unacceptable outcome. Safety cases (Lesson 18) inherit the control frame.
+UK AISI と Redwood は Control Safety Cases (metr.org / redwoodresearch.org 2025) で協力しています。control safety case は、U に関する worst-case assumptions のもとで protocol が unacceptable outcome の確率を bound することを論じます。Safety cases (Lesson 18) は control frame を引き継ぎます。
 
-### Where this fits in Phase 18
+### Phase 18 での位置づけ
 
-Lessons 6-9 describe the threat (deception is possible). Lesson 10 describes the defensive paradigm under the assumption that the threat is real. Lesson 11 describes the complementary offensive paradigm (make U trustworthy via scalable oversight).
+Lessons 6-9 は threat (deception is possible) を説明します。Lesson 10 は、その threat が現実だと仮定した defensive paradigm を説明します。Lesson 11 は補完的な offensive paradigm、つまり scalable oversight によって U を trustworthy にする agenda を説明します。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates the four protocols on a toy backdoor task. U produces outputs; a fraction are backdoored (red-team policy). T approves or edits. H is called on a budget. You can sweep the budget and the collusion parameter to reproduce the Pareto frontier in Greenblatt et al. 2024 Figure 2 (shape, not numbers).
+`code/main.py` は toy backdoor task 上で 4 protocols を simulation します。U は outputs を生成し、その一部は backdoored です (red-team policy)。T は approve または edit します。H は budget 内で呼ばれます。budget と collusion parameter を sweep し、Greenblatt et al. 2024 Figure 2 の Pareto frontier を再現します (形だけで、数値は一致させません)。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-control-protocol-audit.md`. Given a deployment protocol description, it identifies the U / T / H roles, names the collusion vectors, and estimates the protocol's position on the usefulness-safety frontier under red-team pressure.
+この lesson では `outputs/skill-control-protocol-audit.md` を作ります。deployment protocol description を受け取り、U / T / H roles を特定し、collusion vectors を挙げ、red-team pressure のもとで usefulness-safety frontier 上の protocol の位置を見積もります。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Reproduce the usefulness-safety frontier for Trusted Editing vs Untrusted Monitoring. Identify the budget regime in which Untrusted Monitoring's collusion assumption becomes pivotal.
+1. `code/main.py` を実行してください。Trusted Editing と Untrusted Monitoring の usefulness-safety frontier を再現してください。Untrusted Monitoring の collusion assumption が pivotal になる budget regime を特定してください。
 
-2. Add a new protocol: "T resamples with low temperature, then U edits T's output." Measure its position on the frontier. Why does this fail more catastrophically than Trusted Editing?
+2. 新しい protocol を追加してください。"T resamples with low temperature, then U edits T's output." frontier 上の位置を測ってください。なぜこれは Trusted Editing より catastrophic に失敗するのですか。
 
-3. The 2024 paper assumes U can see the protocol. Design a protocol that hides from U which outputs are being audited. What does this protocol require from the deployment infrastructure?
+3. 2024 paper は U が protocol を見られると仮定します。どの outputs が audit されているかを U から隠す protocol を設計してください。この protocol は deployment infrastructure に何を要求しますか。
 
-4. Read Greenblatt et al. 2024 Section 7 (collusion). Propose a collusion-resistance measure and explain its expected usefulness cost.
+4. Greenblatt et al. 2024 Section 7 (collusion) を読んでください。collusion-resistance measure を 1 つ提案し、その expected usefulness cost を説明してください。
 
-5. Articulate a control safety case for a deployment that uses U = GPT-4-class, T = GPT-3.5-class, H = 1% of outputs audited. Identify the single strongest assumption the case depends on.
+5. U = GPT-4-class、T = GPT-3.5-class、H = outputs の 1% audited という deployment の control safety case を明確に述べてください。その case が依存する最も強い assumption を特定してください。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| AI Control | "safety under subversion" | Protocol design that bounds unacceptable outcomes under a worst-case U |
-| Untrusted model (U) | "the strong model" | The capable model we want to extract work from but do not trust |
-| Trusted model (T) | "the weak model" | A weaker model, known not to be adversarial, used as editor/monitor |
-| Trusted human (H) | "the audit budget" | Bounded expert labor; expensive; the ground-truth signal |
-| Trusted Editing | "T edits U" | Protocol where T is the gate on U's outputs; H called on ambiguous outputs |
-| Untrusted Monitoring | "U monitors U" | Protocol where a second U instance scores outputs; collusion-resistant only with extra investment |
-| Control safety case | "the formal argument" | Written argument that a protocol bounds the adversary's success under worst-case U |
+| Term | よく言われること | 実際の意味 |
+|------|-----------------|------------|
+| AI Control | "safety under subversion" | worst-case U のもとで unacceptable outcomes を bound する protocol design |
+| Untrusted model (U) | "the strong model" | 仕事を取り出したいが信頼しない capable model |
+| Trusted model (T) | "the weak model" | adversarial ではないと分かっている weaker model。editor/monitor として使う |
+| Trusted human (H) | "the audit budget" | bounded expert labor。高価で、ground-truth signal |
+| Trusted Editing | "T edits U" | T が U の outputs の gate になり、ambiguous outputs で H を呼ぶ protocol |
+| Untrusted Monitoring | "U monitors U" | 2 つ目の U instance が outputs を score する protocol。追加投資なしでは collusion-resistant ではない |
+| Control safety case | "the formal argument" | worst-case U のもとで protocol が adversary の success を bound することを示す written argument |
 
-## Further Reading
+## 追加資料
 
-- [Greenblatt, Shlegeris, Sachan, Roger — AI Control (arXiv:2312.06942)](https://arxiv.org/abs/2312.06942) — the canonical ICML 2024 paper
+- [Greenblatt, Shlegeris, Sachan, Roger — AI Control (arXiv:2312.06942)](https://arxiv.org/abs/2312.06942) — canonical ICML 2024 paper
 - [Redwood Research — Recent AI Control papers index](https://redwoodresearch.substack.com/) — 2024-2025 follow-ups
-- [UK AISI + METR — Control safety cases](https://metr.org/blog/2025-03-26-common-elements-of-frontier-ai-safety-policies/) — operationalization for frontier labs
-- [Hubinger et al. — Sleeper Agents (Lesson 7, arXiv:2401.05566)](https://arxiv.org/abs/2401.05566) — the threat model control assumes
+- [UK AISI + METR — Control safety cases](https://metr.org/blog/2025-03-26-common-elements-of-frontier-ai-safety-policies/) — frontier labs 向け operationalization
+- [Hubinger et al. — Sleeper Agents (Lesson 7, arXiv:2401.05566)](https://arxiv.org/abs/2401.05566) — control が仮定する threat model

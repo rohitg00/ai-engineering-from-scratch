@@ -1,24 +1,24 @@
 # Plan-Execute Control Flow
 
-> A plan that cannot survive a failure is a script. A script that can replan is an agent. Build the replanner first.
+> 失敗に耐えられない plan は script です。replan できる script が agent です。まず replanner を作ります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 13 lessons 01-07, Phase 14 lesson 01
+**所要時間:** 約90分
 
-## Learning Objectives
-- Represent a plan as an ordered list of typed steps so the executor can reason about progress and outcome.
-- Execute steps sequentially with a controlled failure handoff back to the planner.
-- Replan from the current cursor with the prior error in the context so the next plan is informed.
-- Emit a plan diff on each revision so a downstream tracer or UI can show why the plan changed.
-- Enforce two budgets: a hard step ceiling and a hard replan ceiling.
+## 学習目標
+- executor が進捗と outcome を推論できるように、plan を typed step の ordered list として表現する。
+- step を sequential に実行し、制御された failure handoff を planner に戻す。
+- prior error を context に入れた current cursor から replan し、次の plan に情報を反映する。
+- downstream tracer や UI が plan 変更の理由を示せるように、revision ごとに plan diff を emit する。
+- hard step ceiling と hard replan ceiling の 2 つの budget を enforce する。
 
-## Plan and execute, not chain-of-thought
+## chain-of-thought ではなく plan and execute
 
-A chain-of-thought agent emits tokens and lets the loop guess where the tool call ends. A plan-and-execute agent emits a structured plan first, then executes each step deterministically. The plan is data the harness can introspect. The execution is the harness running that data through a dispatcher.
+chain-of-thought agent は token を emit し、tool call がどこで終わるかを loop に推測させます。plan-and-execute agent は先に structured plan を emit し、その後で各 step を deterministic に実行します。plan は harness が introspect できる data です。execution は、その data を dispatcher に通す harness の実行です。
 
-Two pieces. A planner that produces a plan. An executor that runs the plan. The interesting work is what happens when the executor hits a failure. Three options:
+piece は 2 つです。plan を作る planner。plan を走らせる executor。面白いのは、executor が failure に当たったときです。option は 3 つあります。
 
 ```text
 1. Abort         (return failed, surface the error)
@@ -26,9 +26,9 @@ Two pieces. A planner that produces a plan. An executor that runs the plan. The 
 3. Replan        (hand the error to the planner, get a new plan from the cursor)
 ```
 
-Replan is the one that turns a script into an agent.
+script を agent に変えるのは Replan です。
 
-## The Step shape
+## Step shape
 
 ```text
 Step
@@ -40,22 +40,22 @@ Step
   error           : str | None
 ```
 
-`expected_outcome` is a short sentence the planner emits alongside the step. It is not enforced by the executor. It is for two things: the replanner reads it when revising the plan; the event stream emits it so a tracer can show "this step was supposed to do X."
+`expected_outcome` は planner が step と一緒に emit する短い文です。executor はそれを enforce しません。用途は 2 つです。replanner が plan を revise するときに読みます。event stream が emit するので tracer は「この step は X するはずだった」と表示できます。
 
-## The planner shape
+## planner shape
 
 ```python
 def planner(goal: str, history: list[Step], last_error: str | None) -> list[Step]:
     ...
 ```
 
-A pure function. `goal` is the user goal. `history` is the steps already executed (with results and errors filled in). `last_error` is None on the first call and the most recent failure message on every subsequent call. The planner returns the next plan starting from the cursor.
+pure function です。`goal` は user goal。`history` はすでに実行された step（result と error が埋まったもの）。`last_error` は初回 call では None、以後は最新 failure message です。planner は cursor 以降の次の plan を返します。
 
-The planner does not know about the executor. It does not know about retries. It does not know about timeouts. It produces a plan. That is all.
+planner は executor を知りません。retry も知りません。timeout も知りません。plan を作るだけです。それで十分です。
 
-## The executor
+## executor
 
-The executor is a small state machine. Each step runs through the dispatcher. The outcome is one of three things: success, failure-replannable, failure-fatal. Replannable failures hand back to the planner. Fatal failures (budget exceeded, replan ceiling hit) return a `FAILED` session result.
+executor は小さな state machine です。各 step は dispatcher を通ります。outcome は success、failure-replannable、failure-fatal の 3 つです。replannable failure は planner に戻します。fatal failure（budget exceeded、replan ceiling hit）は `FAILED` session result を返します。
 
 ```mermaid
 stateDiagram-v2
@@ -70,9 +70,9 @@ stateDiagram-v2
     DONE --> [*]
 ```
 
-## Plan diffs on revision
+## revision 時の plan diff
 
-When the planner returns a new plan after a failure, the executor emits a `plan.diff` event with three fields.
+failure 後に planner が新しい plan を返すと、executor は 3 つの field を持つ `plan.diff` event を emit します。
 
 ```text
 removed: list of step ids that were in the old plan and are not in the new
@@ -80,17 +80,17 @@ added  : list of step ids in the new plan that were not in the old
 revised: list of step ids whose tool_name or args changed
 ```
 
-A tracer or UI can render this as a strikethrough on the removed steps and a highlight on the added ones. The point is not the diff format. The point is that revision is a visible event, not a silent rewrite.
+tracer や UI は removed step に strikethrough、added step に highlight を出せます。重要なのは diff format ではありません。revision が silent rewrite ではなく visible event であることです。
 
-## Two budgets, both hard
+## 2 つの budget はどちらも hard
 
-`max_steps` caps total step executions across the whole session, including replans. Default is twelve. A linear five-step plan that replans twice and adds three steps each time hits sixteen executions and would exceed the budget. The executor will refuse the replan and return FAILED.
+`max_steps` は replan を含む session 全体の step execution 総数を cap します。default は 12 です。5-step の linear plan が 2 回 replan し、そのたびに 3 step 追加すると 16 execution に達し、budget を超えます。executor は replan を拒否し、FAILED を返します。
 
-`max_replans` caps the number of times the planner is called after the first plan. Default is five. This is the more important limit. A planner that returns the same broken plan five times in a row would otherwise loop until the step budget catches it. Capping replans makes the failure faster and the reason clearer.
+`max_replans` は初回 plan 後に planner が呼ばれる回数を cap します。default は 5 です。こちらの方が重要です。同じ broken plan を planner が 5 回連続で返すと、放っておけば step budget が捕まえるまで loop します。replan を cap すると failure が速くなり、理由も明確になります。
 
-## The deterministic planner in this lesson
+## この lesson の deterministic planner
 
-We do not call a model in this lesson. The lesson ships a deterministic planner that picks a plan based on `last_error`.
+この lesson では model を呼びません。`last_error` に基づいて plan を選ぶ deterministic planner を同梱します。
 
 ```text
 last_error is None    -> emit a four-step plan
@@ -99,7 +99,7 @@ last_error matches Y  -> emit a two-step plan that gives up gracefully
 otherwise             -> return [] (signals nothing to replan)
 ```
 
-This is enough to test the executor's behavior on every transition path: success, replan-once, replan-twice, replan-exhaustion, and step-budget exhaustion.
+これで executor behavior の全 transition path（success、replan-once、replan-twice、replan-exhaustion、step-budget exhaustion）を test するには十分です。
 
 ## Result shape
 
@@ -112,16 +112,16 @@ SessionResult
   events      : list[Event]
 ```
 
-The harness loop from lesson twenty can read this directly. The dispatcher from lesson twenty-three is what executes each step. The registry from lesson twenty-one validates each step's args. The transport from lesson twenty-two would surface this whole flow over JSON-RPC to a model client.
+lesson 20 の harness loop はこれをそのまま読めます。lesson 23 の dispatcher が各 step を実行します。lesson 21 の registry が各 step の args を validate します。lesson 22 の transport は、この flow 全体を JSON-RPC 経由で model client に surface できます。
 
-## How to read the code
+## code の読み方
 
-`code/main.py` defines `PlanExecuteAgent`, `Step`, `PlanDiff`, `SessionResult`, and the deterministic planner. The executor is a single `run(goal)` method that returns a `SessionResult`. The plan diff is computed by comparing step ids and `(tool_name, args)` tuples.
+`code/main.py` は `PlanExecuteAgent`, `Step`, `PlanDiff`, `SessionResult`, deterministic planner を定義します。executor は `SessionResult` を返す単一の `run(goal)` method です。plan diff は step id と `(tool_name, args)` tuple を比較して計算します。
 
-`code/tests/test_agent.py` covers a linear success, a mid-plan failure that replans once, replan exhaustion that returns `failed:replan_budget`, step-budget exhaustion, and the plan-diff event format.
+`code/tests/test_agent.py` は linear success、mid-plan failure から 1 回 replan する case、`failed:replan_budget` を返す replan exhaustion、step-budget exhaustion、plan-diff event format を cover します。
 
-## Going further
+## さらに進む
 
-Two extensions you will want once you wire this to a real model. First, partial-plan caching: when a plan succeeds for the first three of six steps and then fails, you do not want to re-run the first three. The executor already keeps history; the planner just needs to read it. Second, parallel branches: the current executor is strictly sequential. A planner that emits an independent branch (`gather_step` instead of `next_step`) can run two tool calls concurrently through the dispatcher.
+実 model に接続すると欲しくなる extension は 2 つです。1 つ目は partial-plan caching です。6 step 中 3 step 成功してから失敗した場合、最初の 3 step は再実行したくありません。executor はすでに history を保持しています。planner がそれを読むだけです。2 つ目は parallel branch です。現在の executor は厳密に sequential です。独立 branch（`next_step` ではなく `gather_step`）を emit する planner なら、dispatcher 経由で 2 つの tool call を concurrent に走らせられます。
 
-Both add real complexity. Both are easier to add once the linear executor is pinned. That is what this lesson does.
+どちらも実際の complexity を増やします。linear executor が固定されてからの方が追加しやすいです。この lesson はその土台を作ります。

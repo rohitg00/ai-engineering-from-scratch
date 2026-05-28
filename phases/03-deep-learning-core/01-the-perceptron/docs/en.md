@@ -1,32 +1,32 @@
-# The Perceptron
+# パーセプトロン
 
-> The perceptron is the atom of neural networks. Split it open and you find weights, a bias, and a decision.
+> パーセプトロンはニューラルネットワークの原子です。中を開くと、重み、バイアス、そして意思決定があります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 1 (Linear Algebra Intuition)
-**Time:** ~60 minutes
+**種類:** Build
+**言語:** Python
+**前提条件:** Phase 1 (Linear Algebra Intuition)
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Implement a perceptron from scratch in Python, including the weight update rule and step activation function
-- Explain why a single perceptron can only solve linearly separable problems and demonstrate the XOR failure case
-- Construct a multi-layer perceptron by composing OR, NAND, and AND gates to solve XOR
-- Train a two-layer network with sigmoid activation and backpropagation to learn XOR automatically
+- 重み更新ルールとステップ活性化関数を含むパーセプトロンを、Pythonでゼロから実装する
+- 単一のパーセプトロンが線形分離可能な問題しか解けない理由を説明し、XORで失敗することを示す
+- OR、NAND、ANDゲートを組み合わせて、XORを解く多層パーセプトロンを構成する
+- sigmoid活性化関数とバックプロパゲーションを使った2層ネットワークを訓練し、XORを自動的に学習させる
 
-## The Problem
+## 問題
 
-You know vectors and dot products. You know that a matrix transforms inputs into outputs. But how does a machine *learn* which transformation to use?
+あなたはベクトルとドット積を知っています。行列が入力を出力へ変換することも知っています。では、機械はどの変換を使うべきかをどうやって*学習*するのでしょうか。
 
-The perceptron answers this. It's the simplest possible learning machine: take some inputs, multiply by weights, add a bias, and make a binary decision. Then adjust. That's it. Every neural network ever built is layers of this idea stacked together.
+パーセプトロンはこの問いに答えます。これは考えられる限り最も単純な学習機械です。いくつかの入力を受け取り、重みを掛け、バイアスを足し、二値の判断を下します。そして調整します。それだけです。これまで作られてきたすべてのニューラルネットワークは、この考え方を層として積み重ねたものです。
 
-Understanding the perceptron means understanding what "learning" actually means in code: adjusting numbers until the output matches reality.
+パーセプトロンを理解することは、コードにおける「学習」が実際には何を意味するのかを理解することです。つまり、出力が現実と一致するまで数値を調整する、ということです。
 
-## The Concept
+## 概念
 
-### One Neuron, One Decision
+### 1つのニューロン、1つの判断
 
-A perceptron takes n inputs, multiplies each by a weight, sums them up, adds a bias, and passes the result through an activation function.
+パーセプトロンはn個の入力を受け取り、それぞれに重みを掛けて合計し、バイアスを足して、その結果を活性化関数に通します。
 
 ```mermaid
 graph LR
@@ -38,18 +38,18 @@ graph LR
     step --> out["output (0 or 1)"]
 ```
 
-The step function is brutal: if the weighted sum plus bias is >= 0, output 1. Otherwise, output 0.
+ステップ関数は容赦がありません。重み付き和にバイアスを足した値が0以上なら1を出力し、それ以外なら0を出力します。
 
 ```
 step(z) = 1  if z >= 0
            0  if z < 0
 ```
 
-This is a linear classifier. The weights and bias define a line (or hyperplane in higher dimensions) that splits the input space into two regions.
+これは線形分類器です。重みとバイアスは、入力空間を2つの領域に分ける直線（高次元では超平面）を定義します。
 
-### The Decision Boundary
+### 決定境界
 
-For two inputs, the perceptron draws a line through 2D space:
+入力が2つの場合、パーセプトロンは2次元空間に直線を引きます。
 
 ```
   x2
@@ -64,11 +64,11 @@ For two inputs, the perceptron draws a line through 2D space:
   ┼───────────/──────────── x1
 ```
 
-Everything on one side of the line outputs 0. Everything on the other side outputs 1. Training moves this line until it correctly separates the classes.
+直線の片側にあるものはすべて0を出力します。反対側にあるものはすべて1を出力します。訓練では、この直線を動かしてクラスを正しく分離できるようにします。
 
-### The Learning Rule
+### 学習ルール
 
-The perceptron learning rule is simple:
+パーセプトロンの学習ルールは単純です。
 
 ```
 For each training example (x, y_true):
@@ -80,11 +80,11 @@ For each training example (x, y_true):
     bias = bias + learning_rate * error
 ```
 
-If the prediction is correct, error = 0, nothing changes. If it predicts 0 but should be 1, weights increase. If it predicts 1 but should be 0, weights decrease. The learning rate controls how big each adjustment is.
+予測が正しければ error = 0 なので、何も変わりません。0と予測したが本当は1である場合、重みは増えます。1と予測したが本当は0である場合、重みは減ります。learning rateは、それぞれの調整の大きさを制御します。
 
-### The XOR Problem
+### XOR問題
 
-Here's where it breaks. Look at these logic gates:
+ここで破綻が起きます。次の論理ゲートを見てください。
 
 ```
 AND gate:           OR gate:            XOR gate:
@@ -95,7 +95,7 @@ x1  x2  out         x1  x2  out         x1  x2  out
 1   1   1           1   1   1           1   1   0
 ```
 
-AND and OR are linearly separable: you can draw a single line to separate the 0s from the 1s. XOR is not. No single line can separate [0,1] and [1,0] from [0,0] and [1,1].
+ANDとORは線形分離可能です。0と1を分ける1本の直線を引けます。XORはそうではありません。[0,1] と [1,0] を、[0,0] と [1,1] から1本の直線で分けることはできません。
 
 ```
 AND (separable):        XOR (not separable):
@@ -108,13 +108,13 @@ AND (separable):        XOR (not separable):
        line works!          no single line works!
 ```
 
-This is a fundamental limit. A single perceptron can only solve linearly separable problems. Minsky and Papert proved this in 1969 and it nearly killed neural network research for a decade.
+これは根本的な限界です。単一のパーセプトロンが解けるのは線形分離可能な問題だけです。MinskyとPapertは1969年にこれを証明し、その後10年近くニューラルネットワーク研究は停滞しました。
 
-The fix: stack perceptrons into layers. A multi-layer perceptron can solve XOR by combining two linear decisions into a nonlinear one.
+解決策は、パーセプトロンを層として積み重ねることです。多層パーセプトロンは、2つの線形判断を組み合わせて非線形の判断を作ることでXORを解けます。
 
-## Build It
+## 作ってみる
 
-### Step 1: The Perceptron class
+### Step 1: Perceptronクラス
 
 ```python
 class Perceptron:
@@ -145,7 +145,7 @@ class Perceptron:
         print(f"Did not converge after {epochs} epochs")
 ```
 
-### Step 2: Train on logic gates
+### Step 2: 論理ゲートで訓練する
 
 ```python
 and_data = [
@@ -186,7 +186,7 @@ for inputs, _ in not_data:
     print(f"  {inputs} -> {p_not.predict(inputs)}")
 ```
 
-### Step 3: Watch XOR fail
+### Step 3: XORが失敗する様子を見る
 
 ```python
 xor_data = [
@@ -205,11 +205,11 @@ for inputs, expected in xor_data:
     print(f"  {inputs} -> {result} (expected {expected}) {status}")
 ```
 
-It will never converge. This is the hard proof that a single perceptron cannot learn XOR.
+これは決して収束しません。単一のパーセプトロンがXORを学習できないことを示す、はっきりした証拠です。
 
-### Step 4: Solve XOR with two layers
+### Step 4: 2層でXORを解く
 
-The trick: XOR = (x1 OR x2) AND NOT (x1 AND x2). Combine three perceptrons:
+コツは、XOR = (x1 OR x2) AND NOT (x1 AND x2) と分解することです。3つのパーセプトロンを組み合わせます。
 
 ```mermaid
 graph LR
@@ -248,11 +248,11 @@ for inputs, expected in xor_data:
     print(f"  {inputs} -> {result} (expected {expected})")
 ```
 
-All four cases correct. Stacking perceptrons into layers creates decision boundaries that no single perceptron can produce.
+4つのケースすべてが正しくなります。パーセプトロンを層として積み重ねると、単一のパーセプトロンでは作れない決定境界を作れます。
 
-### Step 5: Train a Two-Layer Network
+### Step 5: 2層ネットワークを訓練する
 
-Step 4 hand-wired the weights. That works for XOR, but not for real problems where you don't know the right weights in advance. The fix: replace the step function with sigmoid and learn the weights automatically through backpropagation.
+Step 4では重みを手で配線しました。XORではうまくいきますが、正しい重みが事前に分からない現実の問題では使えません。解決策は、ステップ関数をsigmoidに置き換え、バックプロパゲーションで重みを自動的に学習することです。
 
 ```python
 class TwoLayerNetwork:
@@ -316,13 +316,13 @@ for inputs, expected in xor_data:
     print(f"  {inputs} -> {result:.4f} (rounded: {predicted}, expected {expected})")
 ```
 
-Two key differences from Step 4. First, sigmoid replaces the step function -- it's smooth, so gradients exist. Second, the `train` method propagates error backward from output to hidden layer, adjusting every weight proportionally to its contribution to the error. That's backpropagation in 20 lines.
+Step 4との大きな違いは2つあります。第一に、ステップ関数がsigmoidに置き換わっています。sigmoidは滑らかなので勾配が存在します。第二に、`train`メソッドは誤差を出力層から隠れ層へ逆向きに伝え、各重みが誤差にどれだけ寄与したかに比例して調整します。これが20行で書いたバックプロパゲーションです。
 
-This is the bridge to Lesson 03. The math behind `d_output` and `hidden_deltas` is the chain rule applied to the network graph. We'll derive it properly there.
+これはLesson 03への橋渡しです。`d_output` と `hidden_deltas` の背後にある数学は、ネットワークのグラフに連鎖律を適用したものです。そこであらためてきちんと導出します。
 
-## Use It
+## 使ってみる
 
-Everything you just built from scratch exists in one import:
+ここまでゼロから作ったものは、1つのimportで使えます。
 
 ```python
 from sklearn.linear_model import Perceptron as SkPerceptron
@@ -336,43 +336,43 @@ clf.fit(X, y)
 print([clf.predict([x])[0] for x in X])
 ```
 
-Five lines. Your 30-line `Perceptron` class does the same thing. The sklearn version adds convergence checks, multiple loss functions, and sparse input support -- but the core loop is identical: weighted sum, step function, weight update on error.
+5行です。あなたの30行の `Perceptron` クラスも同じことをしています。sklearn版には収束チェック、複数の損失関数、疎な入力のサポートが追加されていますが、中心のループは同じです。重み付き和、ステップ関数、誤差に応じた重み更新です。
 
-The real gap shows up at scale. What changes in production networks:
+本当の差はスケールで現れます。本番のネットワークで変わることは次の通りです。
 
-- The step function becomes sigmoid, ReLU, or other smooth activations
-- Weights are learned automatically via backpropagation (Lesson 03)
-- Layers get deeper: 3, 10, 100+ layers
-- The same principle holds: each layer creates new features from the previous layer's outputs
+- ステップ関数はsigmoid、ReLU、その他の滑らかな活性化関数になる
+- 重みはバックプロパゲーションで自動的に学習される（Lesson 03）
+- 層はより深くなる。3層、10層、100層以上
+- 原理は同じまま。各層は前の層の出力から新しい特徴を作る
 
-A single perceptron can only draw straight lines. Stack them, and you can draw any shape.
+単一のパーセプトロンが引けるのは直線だけです。積み重ねれば、どんな形でも描けます。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/skill-perceptron.md` - a skill covering when single-layer vs multi-layer architectures are needed
+このレッスンでは次を作ります。
+- `outputs/skill-perceptron.md` - 単層アーキテクチャと多層アーキテクチャがそれぞれ必要になる場面を扱うスキル
 
-## Exercises
+## 演習
 
-1. Train a perceptron on a NAND gate (the universal gate - any logic circuit can be built from NAND). Verify its weights and bias form a valid decision boundary.
-2. Modify the Perceptron class to track the decision boundary (w1*x1 + w2*x2 + b = 0) at each epoch. Print how the line shifts during training on the AND gate.
-3. Build a 3-input perceptron that outputs 1 only when at least 2 of the 3 inputs are 1 (a majority vote function). Is this linearly separable? Why?
+1. NANDゲート（万能ゲート。どんな論理回路もNANDから作れます）でパーセプトロンを訓練してください。その重みとバイアスが有効な決定境界を作っていることを確認しましょう。
+2. 各epochで決定境界（w1*x1 + w2*x2 + b = 0）を追跡するようにPerceptronクラスを変更してください。ANDゲートで訓練している間に直線がどう移動するかを出力しましょう。
+3. 3入力のうち少なくとも2つが1のときだけ1を出力する3入力パーセプトロン（多数決関数）を作ってください。これは線形分離可能ですか。なぜですか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Perceptron | "A fake neuron" | A linear classifier: dot product of inputs and weights, plus bias, through a step function |
-| Weight | "How important an input is" | A multiplier that scales each input's contribution to the decision |
-| Bias | "The threshold" | A constant that shifts the decision boundary, letting the perceptron fire even with zero inputs |
-| Activation function | "The thing that squishes values" | A function applied after the weighted sum - step function for perceptrons, sigmoid/ReLU for modern networks |
-| Linearly separable | "You can draw a line between them" | A dataset where a single hyperplane can perfectly separate the classes |
-| XOR problem | "The thing perceptrons can't do" | Proof that single-layer networks cannot learn non-linearly-separable functions |
-| Decision boundary | "Where the classifier switches" | The hyperplane w*x + b = 0 that divides input space into two classes |
-| Multi-layer perceptron | "A real neural network" | Perceptrons stacked in layers, where each layer's output feeds the next layer's input |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| パーセプトロン | 「人工ニューロン」 | 入力と重みのドット積にバイアスを足し、ステップ関数に通す線形分類器 |
+| 重み | 「入力の重要度」 | 各入力が判断に与える寄与を拡大または縮小する乗数 |
+| バイアス | 「しきい値」 | 決定境界をずらす定数。入力がすべて0でもパーセプトロンを発火させられる |
+| 活性化関数 | 「値を押しつぶすもの」 | 重み付き和の後に適用する関数。パーセプトロンではステップ関数、現代のネットワークではsigmoidやReLU |
+| 線形分離可能 | 「間に線を引ける」 | 1つの超平面でクラスを完全に分けられるデータセット |
+| XOR問題 | 「パーセプトロンができないこと」 | 単層ネットワークが非線形分離可能な関数を学習できないことの証明 |
+| 決定境界 | 「分類器が切り替わる場所」 | 入力空間を2つのクラスに分ける超平面 w*x + b = 0 |
+| 多層パーセプトロン | 「本物のニューラルネットワーク」 | パーセプトロンを層として積み重ね、各層の出力を次の層の入力にする構造 |
 
-## Further Reading
+## 参考資料
 
-- Frank Rosenblatt, "The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain" (1958) -- the original paper that started it all
-- Minsky & Papert, "Perceptrons" (1969) -- the book that proved XOR was unsolvable by single-layer networks and killed perceptron research for a decade
-- Michael Nielsen, "Neural Networks and Deep Learning", Chapter 1 (http://neuralnetworksanddeeplearning.com/) -- free online, best visual explanation of how perceptrons compose into networks
+- Frank Rosenblatt, "The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain" (1958) -- すべての出発点になった原論文
+- Minsky & Papert, "Perceptrons" (1969) -- XORが単層ネットワークでは解けないことを証明し、パーセプトロン研究を10年停滞させた本
+- Michael Nielsen, "Neural Networks and Deep Learning", Chapter 1 (http://neuralnetworksanddeeplearning.com/) -- 無料で読めるオンライン資料。パーセプトロンがネットワークへ合成される仕組みの視覚的な説明として最良の一つ

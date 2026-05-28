@@ -1,38 +1,38 @@
 ---
 name: horizon-reality-check
-description: Given a task you want to hand to an agent, decide whether the current frontier's horizon covers it with enough margin.
+description: エージェントに任せたいタスクを、現在の最先端モデルのホライズンが十分な余裕をもってカバーできるかどうかを判断してください。
 version: 1.0.0
 phase: 15
 lesson: 1
 tags: [autonomous-agents, metr, time-horizon, reliability, deployment]
 ---
 
-Given a proposed autonomous task (what the agent should do, how long a human expert would take, what the failure cost is), produce a reality check on whether the current frontier model's horizon actually covers it.
+提案された自律タスク（エージェントが何をすべきか、人間の専門家がどれくらいかかるか、失敗コストは何か）に基づき、現在の最先端モデルのホライズンが実際にそれをカバーしているかどうかの現実的な検証を実施する。
 
-Produce:
+以下の項目を作成する：
 
-1. **Expert-time estimate.** Ask the user for the median expert completion time in minutes or hours. If they cannot estimate it, refuse and redirect them to measure a small sample first.
-2. **Headroom ratio.** Divide the chosen model's 50% METR horizon by the expert-time estimate. Flag any ratio under 4x — at 50% success probability, you want a generous margin. At ratio 2x or below, refuse the deployment unless HITL is in the loop on every significant action.
-3. **Reliability budget.** Estimate trajectory length in tool calls, then compute end-to-end success at per-step reliability 0.95, 0.99, 0.995. If the task length exceeds the 50%-success threshold at your assumed per-step reliability, require checkpoints or split the task.
-4. **Eval-vs-deploy adjustment.** Apply a 20-40% gap between benchmark horizon and deploy-context horizon. Cite the Anthropic 2024 alignment-faking study or the 2026 International AI Safety Report when justifying to stakeholders.
-5. **Required controls.** Based on headroom, list the minimum set of controls: budget cap, iteration cap, kill switch, HITL checkpoint points, canary tokens, and trajectory audit schedule.
+1. **専門家時間見積もり。** ユーザーに、中央値の専門家完了時間（分または時間）を尋ねる。見積もりができない場合は、拒否し、まず小規模なサンプルを測定するように誘導する。
+2. **余裕比率。** 選択したモデルの50% METRホライズンを専門家時間見積もりで割る。比率が4x未満の場合はフラグを立てる。50%の成功確率であっても、十分な余裕が必要である。比率が2x以下の場合、すべての重要なアクションでHITL（Human-in-the-Loop）が組み込まれていない限り、デプロイメントを拒否する。
+3. **信頼性予算。** ツールコールにおける軌跡の長さを推定し、次に、ステップごとの信頼性（per-step reliability）が0.95、0.99、0.995の場合のエンドツーエンドの成功率を計算する。タスクの長さが想定されるステップごとの信頼性における50%成功閾値を超える場合、チェックポイントを要求するか、タスクを分割する必要がある。
+4. **評価対デプロイ調整。** ベンチマークホライズンとデプロイコンテキストホライズンの間に20〜40%のギャップを適用する。ステークホルダーに正当化を行う際は、Anthropic 2024のアライメント偽装研究、または2026年国際AI安全レポートを引用する。
+5. **必須の制御策。** 余裕度に基づいて、最小限の制御策のセットをリストアップする：予算上限、イテレーション上限、キルスイッチ、HITLチェックポイント、カナリアトークン、および軌跡監査スケジュール。
 
-Hard rejects:
-- Any deployment at horizon ratio below 2x without HITL on every consequential action.
-- Any claim that a model "can do" a task based on the METR horizon alone. The horizon is the 50% mark on a logistic curve; tail failures are guaranteed.
-- Treating METR horizons as a floor rather than a ceiling.
+絶対的な拒否条件：
+- すべての重要なアクションでHITLがない状態で、ホライズン比率が2x未満のデプロイメント。
+- METRホライズンのみに基づいてモデルがタスクを「できる」と主張すること。ホライズンはロジスティックカーブ上の50%の点であり、テールでの失敗は保証されている。
+- METRホライズンを天井ではなく床として扱うこと。
 
-Refusal rules:
-- If the user cannot estimate expert-time for the task, refuse and ask them to measure a small sample first. Anything else is guesswork.
-- If the proposed task would cost more than the user's worst-case budget at full model pricing, refuse and recommend budget controls from Lesson 13 before proceeding.
-- If the user describes a task that touches irreversible actions (financial transactions, production database writes, emails to customers) without any HITL layer, refuse. The horizon argument does not clear irreversible deployment.
+拒否ルール：
+- ユーザーがタスクの専門家時間を推定できない場合、拒否し、まず小規模なサンプルを測定するように依頼する。それ以外は推測に過ぎない。
+- 提案されたタスクが、モデルの最大価格設定におけるユーザーの最悪ケース予算を超える場合、拒否し、先に進む前にレッスン13の予算制御策を推奨する。
+- ユーザーが、いかなるHITLレイヤーもなく、不可逆的なアクション（金融取引、本番データベースへの書き込み、顧客へのメールなど）に触れるタスクを記述した場合、拒否する。ホライズンによる議論は不可逆的なデプロイメントをクリアしない。
 
-Output format:
+出力形式：
 
-Return a short memo with:
-- **Task summary** (one sentence)
-- **Expert-time estimate** (with units)
-- **Headroom ratio** (with explicit number)
-- **End-to-end reliability estimate** (table at three per-step rates)
-- **Minimum controls** (bulleted)
-- **Go / hold / no-go** (explicit verdict plus one-sentence justification)
+以下の内容を含む短いメモを返す：
+- **タスク概要**（一文）
+- **専門家時間見積もり**（単位付き）
+- **余裕比率**（具体的な数値付き）
+- **エンドツーエンドの信頼性見積もり**（3つのステップごとのレートの表）
+- **最小限の制御策**（箇条書き）
+- **判定**（明示的な判定と、一文の根拠）

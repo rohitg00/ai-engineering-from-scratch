@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
-"""Install course outputs (skills / prompts / agents) into a target directory.
+"""コースのoutputs（skills / prompts / agents）を対象ディレクトリへインストールする。
 
-Walks every `phases/**/outputs/{skill,prompt,agent}-*.md` artifact across the
-curriculum, parses YAML frontmatter, filters by type / phase / tag, and copies
-the matching files into a target directory using one of three layouts.
+カリキュラム全体の `phases/**/outputs/{skill,prompt,agent}-*.md` artifact を走査し、
+YAML frontmatterを解析し、type / phase / tagで絞り込み、3つのlayoutのいずれかで
+一致したファイルを対象ディレクトリへコピーする。
 
-Usage:
+使い方:
     python3 scripts/install_skills.py <target_dir> [options]
 
-Options:
-    --type {skill,prompt,agent,all}   default: skill
-    --phase N                          filter to a single phase number
-    --tag TAG                          filter to outputs whose tags include TAG
-    --layout {flat,by-phase,skills}    default: skills
+オプション:
+    --type {skill,prompt,agent,all}   デフォルト: skill
+    --phase N                          単一フェーズ番号へ絞り込み
+    --tag TAG                          TAGを含むoutputsへ絞り込み
+    --layout {flat,by-phase,skills}    デフォルト: skills
         flat       <target>/<name>.md
         by-phase   <target>/phase-NN/<name>.md
         skills     <target>/<name>/SKILL.md
-    --dry-run                          preview without writing
-    --force                            overwrite existing files
-    --json                             write manifest.json only; do not print steps
+    --dry-run                          書き込まずにプレビュー
+    --force                            既存ファイルを上書き
+    --json                             manifest.jsonのみを書き、手順表示はしない
 
-Always writes <target>/manifest.json with the full inventory (name, type, phase,
-lesson, source path, target path, tags, version).
+常に <target>/manifest.json に完全な目録（name, type, phase, lesson, source path,
+target path, tags, version）を書き込む。
 """
 
 from __future__ import annotations
@@ -180,8 +180,8 @@ def build_plan(
         dest = target_path(a, target_root, layout)
         if dest in seen_targets:
             sys.stderr.write(
-                f"warn: target collision between {seen_targets[dest].source} "
-                f"and {a.source} (both map to {dest}); skipping latter\n"
+                f"警告: {seen_targets[dest].source} と {a.source} のtargetが衝突 "
+                f"（どちらも {dest} へ対応）。後者をスキップします\n"
             )
             continue
         seen_targets[dest] = a
@@ -238,33 +238,33 @@ def main(argv: list[str]) -> int:
     parser.add_argument(
         "--json",
         action="store_true",
-        help="suppress human-readable output (manifest.json still written unless --dry-run)",
+        help="人間向け出力を抑制（--dry-runでなければmanifest.jsonは書く）",
     )
     args = parser.parse_args(argv)
 
     artifacts = list(discover_artifacts())
     selected = filter_artifacts(artifacts, args.type, args.phase, args.tag)
     if not selected:
-        sys.stderr.write("no artifacts matched the given filters\n")
+        sys.stderr.write("指定されたフィルターに一致するartifactがありません\n")
         return 1
 
     plan = build_plan(selected, args.target_dir, args.layout, args.force)
     if plan.collisions and not args.force:
         sys.stderr.write(
-            f"error: {len(plan.collisions)} target file(s) already exist. "
-            f"Pass --force to overwrite.\n"
+            f"エラー: {len(plan.collisions)} 個のtarget fileが既に存在します。"
+            f"上書きするには --force を渡してください。\n"
         )
         if not args.json:
             for c in plan.collisions[:10]:
                 sys.stderr.write(f"  {c}\n")
             if len(plan.collisions) > 10:
-                sys.stderr.write(f"  ... and {len(plan.collisions) - 10} more\n")
+                sys.stderr.write(f"  ... ほか {len(plan.collisions) - 10} 件\n")
         return 1
 
     if args.dry_run:
         if not args.json:
             sys.stdout.write(
-                f"dry run: {len(plan.actions)} artifact(s) -> {args.target_dir} "
+                f"dry run: {len(plan.actions)} 個のartifact -> {args.target_dir} "
                 f"(layout={args.layout})\n"
             )
             for artifact, _dest in plan.actions[:20]:
@@ -273,14 +273,14 @@ def main(argv: list[str]) -> int:
                     f"<- {artifact.source.relative_to(ROOT)}\n"
                 )
             if len(plan.actions) > 20:
-                sys.stdout.write(f"  ... and {len(plan.actions) - 20} more\n")
+                sys.stdout.write(f"  ... ほか {len(plan.actions) - 20} 件\n")
         return 0
 
     apply_plan(plan)
     manifest_path = write_manifest(args.target_dir, selected, args.layout)
     if not args.json:
         sys.stdout.write(
-            f"installed {len(plan.actions)} artifact(s) into {args.target_dir} "
+            f"{len(plan.actions)} 個のartifactを {args.target_dir} へインストールしました "
             f"(layout={args.layout})\n"
         )
         sys.stdout.write(f"manifest: {manifest_path}\n")

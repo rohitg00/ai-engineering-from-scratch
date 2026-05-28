@@ -4,67 +4,67 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the 2026 frontier prefer vision-first late interaction over OCR-then-text on financial PDFs and scientific papers?",
+      "question": "financial PDF や scientific paper で、2026年の frontier が OCR-then-text より vision-first late interaction を好むのはなぜですか？",
       "options": [
-        "Vision models are cheaper per page",
-        "OCR pipelines mangle rotated tables, dense equations, and chart imagery, losing half the signal",
-        "OCR is slower than rendering",
-        "OCR cannot run on GPUs"
+        "vision model は page あたり安価なため",
+        "OCR pipeline は回転した table、dense equation、chart image を崩し、signal の半分を失うため",
+        "OCR は rendering より遅いため",
+        "OCR は GPU 上で実行できないため"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What does late interaction mean in ColPali-style retrieval?",
+      "question": "ColPali-style retrieval における late interaction とは何ですか？",
       "options": [
-        "Each query token scores against every patch token, and per-token maxima are summed via MaxSim",
-        "Embeddings are deferred until eval time",
-        "Embeddings are computed after the user clicks a result",
-        "The reranker only runs on the final candidate"
+        "各 query token がすべての patch token と score され、token ごとの最大値を MaxSim で合計すること",
+        "embedding を eval time まで遅延させること",
+        "user が result を click した後に embedding を計算すること",
+        "reranker が最後の candidate にだけ実行されること"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how many patch vectors does a ColQwen embedding produce per page, and what storage problem does that create?",
+      "question": "ColQwen embedding は page あたりおおよそ何個の patch vector を生成し、それによりどんな storage problem が生じますか？",
       "options": [
-        "Around 2048 patch vectors per page, ballooning raw storage compared with single-vector indexes",
-        "Exactly 128 vectors, fitting cleanly in any vector DB",
-        "1 vector per page, no storage issue",
-        "16 vectors with negligible storage overhead"
+        "page あたり約2048個の patch vector を生成し、single-vector index と比べて raw storage が膨らむ",
+        "正確に128 vector で、どの vector DB にもきれいに収まる",
+        "page あたり1 vector なので storage issue はない",
+        "16 vector で storage overhead は無視できる"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does DocPruner do in this pipeline?",
+      "question": "この pipeline で DocPruner は何をしますか？",
       "options": [
-        "Removes duplicate PDF pages before ingestion",
-        "Compresses the multi-vector index by keeping high-signal patches at about 50% with negligible accuracy loss",
-        "Rewrites the query embedding for shorter vectors",
-        "Crops bounding boxes around evidence regions"
+        "ingestion 前に duplicate PDF pages を削除する",
+        "high-signal patch を約50%残し、accuracy loss ほぼなしで multi-vector index を圧縮する",
+        "より短い vector のために query embedding を書き換える",
+        "evidence region の周辺で bounding box を crop する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is an OCR text channel still spliced in for some pages?",
+      "question": "一部の page で OCR text channel をまだ差し込む理由は何ですか？",
       "options": [
-        "It improves PDF rendering quality",
-        "VLMs cannot read images at 180 DPI",
-        "OCR is the primary retrieval modality",
-        "Equation-dense and table-heavy pages benefit from a text fallback alongside the image"
+        "PDF rendering quality を改善するため",
+        "VLM は 180 DPI の image を読めないため",
+        "OCR が primary retrieval modality だから",
+        "equation-dense や table-heavy page では image と並ぶ text fallback が有効なため"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which benchmark does this capstone target for vision-first retrieval evaluation?",
+      "question": "vision-first retrieval evaluation でこの capstone が対象にする benchmark はどれですか？",
       "options": [
         "RewardBench-2",
         "SWE-bench Pro",
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "What does the rubric mean by evidence-region grounding?",
+      "question": "rubric の evidence-region grounding とは何を意味しますか？",
       "options": [
-        "Compression ratio achieved by DocPruner",
-        "Re-ranker latency at the p99 tail",
-        "Total number of pages retrieved per query",
-        "Fraction of cited bounding boxes that actually contain the answer span"
+        "DocPruner が達成した compression ratio",
+        "p99 tail の re-ranker latency",
+        "query あたり retrieval された page の総数",
+        "cited bounding box のうち、実際に answer span を含む割合"
       ],
       "correct": 3,
       "explanation": ""

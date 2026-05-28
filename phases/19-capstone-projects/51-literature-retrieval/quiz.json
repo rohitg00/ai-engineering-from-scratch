@@ -1,78 +1,78 @@
 {
   "lesson": "51-literature-retrieval",
-  "title": "Literature Retrieval",
+  "title": "文献検索",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the retrieval client run a BM25 pass and a citation graph pass?",
+      "question": "retrieval client が BM25 pass と citation graph pass の両方を実行する理由は何ですか?",
       "options": [
-        "Because BM25 needs the graph to build its index",
-        "Because lexical hits miss foundational papers with different vocabulary, and graph hits miss papers that share no citation with the seed",
-        "Because the mock APIs require it",
-        "Because the parser fails otherwise"
+        "BM25 が index を作るために graph を必要とするため",
+        "lexical hit は別語彙の基礎論文を落とし、graph hit は seed と citation を共有しない論文を落とすため",
+        "mock API がそれを要求するため",
+        "parser がそうしないと失敗するため"
       ],
       "correct": 1,
-      "explanation": "Each pass catches what the other misses. Lexical covers shared vocabulary; the graph covers ancestor and descendant papers regardless of vocabulary."
+      "explanation": "各 pass は相手が落とすものを拾います。lexical は共有語彙を、graph は語彙に依存せず ancestor と descendant paper を拾います。"
     },
     {
       "stage": "pre",
-      "question": "Why is the citation graph traversal capped at two hops?",
+      "question": "citation graph traversal が二 hop に制限されている理由は何ですか?",
       "options": [
-        "Because beyond two hops the result set tends to drift off topic and overwhelm downstream ranking",
-        "Because the Python recursion limit forbids three hops",
-        "Because BM25 only scores two hops away",
-        "Because the corpus only stores two layers of citations"
+        "二 hop を超えると result set が話題から逸れて downstream ranking を圧迫しやすいため",
+        "Python recursion limit が三 hop を禁じるため",
+        "BM25 が二 hop 先までしか score しないため",
+        "corpus が citation を二層しか保存しないため"
       ],
       "correct": 0,
-      "explanation": "Two hops is the practical ceiling. Three hops blows up the result set on a connected graph and rarely returns more on topic papers."
+      "explanation": "二 hop は実用的な上限です。connected graph で三 hop は result set を膨らませ、topic に合う paper を増やしにくいです。"
     },
     {
       "stage": "check",
-      "question": "What does idf evaluate to for a term that appears in every document?",
+      "question": "すべての document に現れる term の idf はどうなりますか?",
       "options": [
-        "A large positive value",
-        "A value near zero",
-        "Negative infinity",
-        "Undefined; the BM25 implementation skips it"
+        "大きな正の値",
+        "ゼロに近い値",
+        "負の無限大",
+        "未定義で、BM25 実装は skip する"
       ],
       "correct": 1,
-      "explanation": "When df equals N the numerator and denominator inside the log are close, and the +1 keeps the term non negative but small. The contribution of universally common terms is near zero."
+      "explanation": "df が N に等しいと log 内の比は小さくなり、+1 によって非負ですが小さい値になります。普遍的な term の寄与はほぼゼロです。"
     },
     {
       "stage": "check",
-      "question": "Which keys does the merge step use to dedup hits from the two passes?",
+      "question": "merge step は二つの pass の hit を何で dedup しますか?",
       "options": [
-        "Title text",
-        "Stable paper id",
-        "Year and first author",
+        "title text",
+        "stable paper id",
+        "year と first author",
         "BM25 score bucket"
       ],
       "correct": 1,
-      "explanation": "Paper id is the stable handle. Title and author are duplicated across versions, year alone is ambiguous."
+      "explanation": "paper id が stable handle です。title や author は version 間で重複し、year だけでは曖昧です。"
     },
     {
       "stage": "check",
-      "question": "What does graph_score return for a paper that is two hops from the seed set?",
+      "question": "seed set から二 hop 離れた paper に対して graph_score は何を返しますか?",
       "options": [
-        "Zero",
-        "0.3 by default",
-        "1.0 by default",
-        "The BM25 score divided by ten"
+        "ゼロ",
+        "default で 0.3",
+        "default で 1.0",
+        "BM25 score を10で割った値"
       ],
       "correct": 1,
-      "explanation": "The default graph score schedule is 1.0 at zero hops, 0.6 at one hop, 0.3 at two hops, and zero beyond that."
+      "explanation": "default の graph score は zero hop で1.0、one hop で0.6、two hops で0.3、それ以外で0です。"
     },
     {
       "stage": "check",
-      "question": "Why is the corpus loaded once into a RetrievalClient instead of refetched per query?",
+      "question": "corpus を query ごとに再取得せず RetrievalClient に一度 load する理由は何ですか?",
       "options": [
-        "Because the mock APIs are slow on every call",
-        "Because the BM25 index and citation graph are built once at construction time and reused across queries",
-        "Because the parser is global",
-        "Because the recency score requires it"
+        "mock API が毎回遅いため",
+        "BM25 index と citation graph は construction 時に一度 build され、query 間で再利用されるため",
+        "parser が global であるため",
+        "recency score がそれを要求するため"
       ],
       "correct": 1,
-      "explanation": "Index construction is the expensive step. Reusing the index amortises that cost across every query the client handles."
+      "explanation": "index construction は高コストです。index を再利用することで、client が処理するすべての query にその cost を amortise できます。"
     }
   ]
 }

@@ -1,14 +1,14 @@
 """
-End-to-end coding agent on the Track A harness.
+Track A harness 上の end-to-end coding agent。
 
 See: phases/19-capstone-projects/29-end-to-end-coding-task-demo/docs/en.md
 Concept refs:
   - Verification gates + observation budget (Phase 19 · 25).
-  - Sandbox runner with denylist + path jail (Phase 19 · 26).
-  - Eval harness with fixture tasks (Phase 19 · 27).
-  - OTel GenAI span shapes and Prometheus exposition (Phase 19 · 28).
-The demo composes a deterministic policy with the minimal harness primitives
-re-stated inline. Exits zero after solving the bundled fixture.
+  - denylist + path jail つき Sandbox runner (Phase 19 · 26).
+  - fixture task つき Eval harness (Phase 19 · 27).
+  - OTel GenAI span shape と Prometheus exposition (Phase 19 · 28).
+demo は deterministic policy と inline に再定義した minimal harness primitive を compose する。
+bundled fixture を解いたあと exit zero する。
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ from typing import Any, Callable, Iterator
 
 
 # ===========================================================================
-# Minimal harness primitives, copied with intent from lessons 25-28.
+# lessons 25-28 から意図を保って copy した minimal harness primitive。
 # ===========================================================================
 
 
@@ -90,9 +90,9 @@ class WhitelistGate:
 
     def evaluate(self, call: ToolCall, ctx: GateContext) -> GateDecision:
         if call.tool in self.allowed:
-            return GateDecision(True, self.name, "tool in allow-set")
+            return GateDecision(True, self.name, "tool は allow-set 内です")
         return GateDecision(
-            False, self.name, f"tool {call.tool!r} not in allow-set"
+            False, self.name, f"tool {call.tool!r} は allow-set にありません"
         )
 
 
@@ -110,9 +110,9 @@ class RegexGate:
         for pat in self.patterns:
             if pat.search(haystack):
                 return GateDecision(
-                    False, self.name, f"refused pattern {pat.pattern!r}"
+                    False, self.name, f"拒否対象 pattern {pat.pattern!r} に match しました"
                 )
-        return GateDecision(True, self.name, "clean")
+        return GateDecision(True, self.name, "問題ありません")
 
 
 @dataclass
@@ -126,9 +126,9 @@ class BudgetGate:
             return GateDecision(
                 False,
                 self.name,
-                f"observation budget exhausted: {used}/{self.max_tokens}",
+                f"observation budget を使い切りました: {used}/{self.max_tokens}",
             )
-        return GateDecision(True, self.name, f"{self.max_tokens - used} remaining")
+        return GateDecision(True, self.name, f"残り {self.max_tokens - used}")
 
 
 @dataclass
@@ -208,13 +208,13 @@ class Sandbox:
             if resolved != self.project_root and not resolved.startswith(
                 self.project_root + os.sep
             ):
-                return f"path {arg!r} resolves outside root"
+                return f"path {arg!r} は root の外に resolve されます"
         return None
 
     def run(self, argv: list[str]) -> SandboxResult:
         if not argv:
             return SandboxResult(
-                argv=argv, exit_code=DENIED_EXIT, denied=True, reason="empty argv"
+                argv=argv, exit_code=DENIED_EXIT, denied=True, reason="argv が空です"
             )
         name = os.path.basename(argv[0])
         if name in self.denylist:
@@ -222,7 +222,7 @@ class Sandbox:
                 argv=argv,
                 exit_code=DENIED_EXIT,
                 denied=True,
-                reason=f"executable {name!r} on denylist",
+                reason=f"executable {name!r} は denylist に含まれています",
             )
         jail = self._path_jail(argv)
         if jail is not None:
@@ -243,7 +243,7 @@ class Sandbox:
                 argv=argv,
                 exit_code=TIMED_OUT_EXIT,
                 timed_out=True,
-                reason=f"wall-clock timeout after {self.timeout_seconds}s",
+                reason=f"wall-clock timeout: {self.timeout_seconds}s 経過",
                 duration_ms=(time.perf_counter() - started) * 1000.0,
             )
         except FileNotFoundError as exc:
@@ -251,7 +251,7 @@ class Sandbox:
                 argv=argv,
                 exit_code=DENIED_EXIT,
                 denied=True,
-                reason=f"not found: {exc}",
+                reason=f"見つかりません: {exc}",
                 duration_ms=(time.perf_counter() - started) * 1000.0,
             )
         elapsed = (time.perf_counter() - started) * 1000.0
@@ -470,13 +470,13 @@ class SpanBuilder:
 
 
 # ===========================================================================
-# The coding agent
+# Coding agent
 # ===========================================================================
 
 
 @dataclass
 class AgentStep:
-    """One step taken by the agent loop."""
+    """agent loop が実行した 1 step。"""
 
     index: int
     state: str
@@ -522,7 +522,7 @@ class AgentRunReport:
 
 
 class CodingAgentPolicy:
-    """Deterministic state machine that plays the role of a coding agent.
+    """coding agent の役割を担う deterministic state machine。
 
     States: SURVEY -> RUN_TESTS -> INSPECT -> FIX -> VERIFY -> HALT.
     """
@@ -537,10 +537,10 @@ class CodingAgentPolicy:
         self.identified_fix: str | None = None
 
     def next_action(self, last_obs: Observation | None) -> tuple[str, tuple[str, ...], str]:
-        """Return (tool, argv, payload) for the next action.
+        """次 action の (tool, argv, payload) を返す。
 
-        Pure function of self.state. Caller is responsible for transitioning state
-        after the action's result is observed.
+        self.state の pure function。action result の observation 後に state transition
+        する責任は caller にある。
         """
 
         if self.state == "SURVEY":
@@ -568,7 +568,7 @@ class CodingAgentPolicy:
         return ("noop", (), "")
 
     def observe(self, tool: str, exit_code: int, text: str) -> None:
-        """Update state based on the result of the last action."""
+        """直前 action の result に基づいて state を更新する。"""
 
         if self.state == "SURVEY" and tool == "read_file":
             self.state = "RUN_TESTS"
@@ -581,7 +581,7 @@ class CodingAgentPolicy:
             self.state = "INSPECT"
             return
         if self.state == "INSPECT" and tool == "read_file":
-            # Use the recorded failing test text to decide on the fix.
+            # 記録済みの failing test text を使って fix を決める。
             if "expected" in self.last_test_stderr and "fizz" in self.last_test_stderr.lower():
                 self.identified_bug_file = "src/fizz.py"
                 self.identified_fix = (
@@ -602,12 +602,12 @@ class CodingAgentPolicy:
         if self.state == "VERIFY" and tool == "run_tests":
             self.state = "HALT"
             return
-        # Default: do not advance.
+        # default: advance しない。
         return
 
 
 # ---------------------------------------------------------------------------
-# Tool dispatch on top of the sandbox
+# sandbox 上の tool dispatch
 # ---------------------------------------------------------------------------
 
 
@@ -618,9 +618,9 @@ def tool_read_file(sandbox: Sandbox, argv: tuple[str, ...]) -> tuple[int, str]:
     if not (
         real == sandbox.project_root or real.startswith(sandbox.project_root + os.sep)
     ):
-        return (DENIED_EXIT, f"path {path!r} outside root")
+        return (DENIED_EXIT, f"path {path!r} は root の外です")
     if not os.path.isfile(real):
-        return (1, f"file not found: {path}")
+        return (1, f"file が見つかりません: {path}")
     with open(real, "r", encoding="utf-8") as fh:
         return (0, fh.read())
 
@@ -634,11 +634,11 @@ def tool_write_file(
     if not (
         real == sandbox.project_root or real.startswith(sandbox.project_root + os.sep)
     ):
-        return (DENIED_EXIT, f"dir {path!r} outside root")
+        return (DENIED_EXIT, f"dir {path!r} は root の外です")
     os.makedirs(os.path.dirname(full) or sandbox.project_root, exist_ok=True)
     with open(full, "w", encoding="utf-8") as fh:
         fh.write(payload)
-    return (0, f"wrote {len(payload)} bytes to {path}")
+    return (0, f"{len(payload)} bytes を {path} に書き込みました")
 
 
 def tool_run_tests(sandbox: Sandbox, argv: tuple[str, ...]) -> tuple[int, str]:
@@ -654,7 +654,7 @@ def tool_run_tests(sandbox: Sandbox, argv: tuple[str, ...]) -> tuple[int, str]:
 
 
 # ---------------------------------------------------------------------------
-# Bundled fixture management
+# bundled fixture management
 # ---------------------------------------------------------------------------
 
 
@@ -675,7 +675,7 @@ def prepare_scratch_repo() -> str:
 
 
 # ---------------------------------------------------------------------------
-# The agent runner
+# agent runner
 # ---------------------------------------------------------------------------
 
 
@@ -707,12 +707,12 @@ class AgentRun:
         ) as chat_span:
             for step_index in range(self.step_budget):
                 if policy.state == "HALT":
-                    halted_reason = "policy reached HALT"
+                    halted_reason = "policy が HALT に到達しました"
                     solved = True
                     break
                 tool, argv, payload = policy.next_action(last_obs)
                 if tool == "noop":
-                    halted_reason = "policy emitted noop"
+                    halted_reason = "policy が noop を emit しました"
                     break
                 turn = step_index + 1
                 call = ToolCall(turn=turn, tool=tool, argv=argv, payload=payload)
@@ -729,10 +729,10 @@ class AgentRun:
                             allow=False,
                             deny_reason=outcome.deny_reason or "",
                             exit_code=DENIED_EXIT,
-                            notes="gate refused",
+                            notes="gate が拒否しました",
                         )
                     )
-                    halted_reason = f"gate refused: {outcome.deny_reason}"
+                    halted_reason = f"gate が拒否しました: {outcome.deny_reason}"
                     break
 
                 with self.builder.span(
@@ -752,7 +752,7 @@ class AgentRun:
                     elif tool == "run_tests":
                         exit_code, text = tool_run_tests(self.sandbox, argv)
                     else:
-                        exit_code, text = (DENIED_EXIT, f"unknown tool {tool!r}")
+                        exit_code, text = (DENIED_EXIT, f"未知の tool {tool!r}")
                     tool_span.attributes["gen_ai.tool.result.bytes"] = len(text)
                     tool_span.attributes["exit_code"] = exit_code
 
@@ -780,14 +780,14 @@ class AgentRun:
 
                 if ledger.cumulative() > self.observation_budget:
                     halted_reason = (
-                        f"observation budget {self.observation_budget} exceeded"
+                        f"observation budget {self.observation_budget} を超過しました"
                     )
                     break
 
                 policy.observe(tool, exit_code, text)
 
             else:
-                halted_reason = halted_reason or "step budget exhausted"
+                halted_reason = halted_reason or "step budget を使い切りました"
 
         return AgentRunReport(
             steps=steps,
@@ -830,7 +830,7 @@ def build_default_chain(budget: int = 4000) -> GateChain:
 
 def run_demo() -> int:
     repo = prepare_scratch_repo()
-    print("END-TO-END CODING AGENT DEMO")
+    print("END-TO-END CODING AGENT デモ")
     print(f"scratch repo: {repo}")
     print("")
 
@@ -868,11 +868,11 @@ def run_demo() -> int:
         )
 
     print("")
-    print(f"spans emitted: {len(in_mem.spans)} (jsonl at {traces_path})")
+    print(f"{len(in_mem.spans)} 個の span を emit しました (jsonl: {traces_path})")
     print("")
-    print("--- prometheus exposition (excerpt) ---")
+    print("--- prometheus exposition (抜粋) ---")
     text = prometheus_text(metrics)
-    # Print only the counter + the tool_latency_ms count lines for brevity.
+    # 簡潔にするため counter と tool_latency_ms の count line だけを print する。
     excerpt: list[str] = []
     for line in text.splitlines():
         if (
@@ -885,18 +885,18 @@ def run_demo() -> int:
             excerpt.append(line)
     print("\n".join(excerpt))
 
-    # Hard assertions for the demo: the lesson promises them.
+    # demo の hard assertion: lesson が約束している条件。
     if not report.solved:
-        print(f"ERROR: agent did not solve fixture: {report.halted_reason}", file=sys.stderr)
+        print(f"ERROR: agent は fixture を解けませんでした: {report.halted_reason}", file=sys.stderr)
         return 1
     if len(report.steps) >= 12:
-        print(f"ERROR: agent used too many steps: {len(report.steps)}", file=sys.stderr)
+        print(f"ERROR: agent の step 数が多すぎます: {len(report.steps)}", file=sys.stderr)
         return 1
     if report.observation_tokens > report.max_observation_budget:
-        print("ERROR: observation budget exceeded", file=sys.stderr)
+        print("ERROR: observation budget を超過しました", file=sys.stderr)
         return 1
     if report.refused_legal_tool_calls != 0:
-        print("ERROR: agent fired denied tool calls", file=sys.stderr)
+        print("ERROR: agent が denied tool call を発火しました", file=sys.stderr)
         return 1
     return 0
 

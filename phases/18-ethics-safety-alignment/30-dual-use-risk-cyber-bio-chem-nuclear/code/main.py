@@ -1,7 +1,7 @@
 """Dual-use triage table — stdlib Python.
 
-Prints the 2024-2025 cross-domain dual-use picture as a table.
-Reference-only; primary sources cited in docs/en.md.
+2024-2025年の cross-domain dual-use picture を table として出力する。
+Reference-only; primary sources は docs/en.md で引用している。
 
 Usage: python3 code/main.py
 """
@@ -20,7 +20,7 @@ DOMAINS = [
     {
         "domain": "chem",
         "2024_state": "mild uplift",
-        "2025_state": "execution-gap erosion via vision-enabled LLMs",
+        "2025_state": "vision-enabled LLMs による execution-gap erosion",
         "inflection": "real-time wet-lab protocol correction",
         "bottleneck_remaining": "precursor procurement, specialized equipment",
     },
@@ -35,8 +35,8 @@ DOMAINS = [
         "domain": "nuclear",
         "2024_state": "limited",
         "2025_state": "limited",
-        "inflection": "(no major 2024-2025 inflection reported)",
-        "bottleneck_remaining": "fissile-material acquisition dominates",
+        "inflection": "(2024-2025年に major inflection は報告なし)",
+        "bottleneck_remaining": "fissile-material acquisition が支配的",
     },
 ]
 
@@ -54,11 +54,11 @@ def main() -> None:
         print(f"  remaining bottleneck   : {d['bottleneck_remaining']}")
 
     print("\n" + "=" * 82)
-    print("TAKEAWAY: three of four CBRN domains crossed thresholds in 2025.")
-    print("bio: 2.53x uplift, ASL-3 approach. chem: execution-gap erosion.")
-    print("cyber: agentic automation of 80-90% of campaigns. nuclear remains")
-    print("bounded by material access. safety cases must target novice-relative")
-    print("AND expert-absolute; input-filter-only defenses do not suffice.")
+    print("TAKEAWAY: 4つの CBRN domains のうち3つが 2025年に thresholds を越えた。")
+    print("bio: 2.53x uplift, ASL-3 approach。chem: execution-gap erosion。")
+    print("cyber: campaigns の 80-90% を agentic automation。nuclear は material access に")
+    print("bounded のまま。safety cases は novice-relative と expert-absolute の両方を")
+    print("target にする必要がある。input-filter-only defenses では不十分である。")
     print("=" * 82)
 
 

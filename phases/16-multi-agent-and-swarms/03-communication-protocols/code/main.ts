@@ -508,12 +508,12 @@ class ProtocolGateway {
     sessionId?: string
   ): Promise<{ task: Task; audit: AuditEntry } | { error: string }> {
     if (!this.identityRegistry.verify(fromDid, signature, message.id)) {
-      return { error: "Identity verification failed" };
+      return { error: "identity verification に失敗しました" };
     }
 
     const card = this.registry.resolve(targetAgent);
     if (!card) {
-      return { error: `Agent ${targetAgent} not found in registry` };
+      return { error: `Agent ${targetAgent} は registry に見つかりません` };
     }
 
     const audit = await this.auditRunner.run(
@@ -535,7 +535,7 @@ class ProtocolGateway {
     const candidates = this.registry.discoverBySkillTag(skillTag);
     if (candidates.length === 0) {
       return Promise.resolve({
-        error: `No agents found with skill tag: ${skillTag}`,
+        error: `skill tag ${skillTag} を持つ agents が見つかりません`,
       });
     }
     return this.delegateTask(
@@ -551,7 +551,7 @@ async function protocolDemo() {
   const registry = new AgentRegistry();
   registry.register({
     name: "researcher",
-    description: "Searches and summarizes findings",
+    description: "findings を検索して要約する",
     version: "1.0.0",
     url: "https://researcher.local/a2a/v1",
     capabilities: { streaming: true, pushNotifications: false },
@@ -561,7 +561,7 @@ async function protocolDemo() {
       {
         id: "web-research",
         name: "Web Research",
-        description: "Searches the web",
+        description: "web を検索する",
         tags: ["research", "search", "summarization"],
         inputModes: ["text/plain"],
         outputModes: ["application/json"],
@@ -570,7 +570,7 @@ async function protocolDemo() {
   });
   registry.register({
     name: "coder",
-    description: "Writes code from specs",
+    description: "specs から code を書く",
     version: "1.0.0",
     url: "https://coder.local/a2a/v1",
     capabilities: { streaming: false, pushNotifications: false },
@@ -580,7 +580,7 @@ async function protocolDemo() {
       {
         id: "code-gen",
         name: "Code Generation",
-        description: "Generates code",
+        description: "code を生成する",
         tags: ["coding", "generation"],
         inputModes: ["text/plain", "application/json"],
         outputModes: ["text/plain"],
@@ -603,7 +603,7 @@ async function protocolDemo() {
       };
 
       researchTrajectory.push({
-        reasoning: "Searching for React 19 documentation",
+        reasoning: "React 19 documentation を検索する",
         toolName: "web_search",
         toolInput: { query: "React 19 compiler features" },
         toolOutput: {
@@ -613,7 +613,7 @@ async function protocolDemo() {
       });
 
       researchTrajectory.push({
-        reasoning: "Extracting key findings from search results",
+        reasoning: "search results から key findings を抽出する",
         toolName: "doc_analysis",
         toolInput: { url: "react.dev/blog/react-19" },
         toolOutput: {
@@ -683,12 +683,12 @@ async function protocolDemo() {
   console.log("1. Agent Discovery (A2A)");
   const researchAgents = registry.discoverBySkillTag("research");
   console.log(
-    `   Found ${researchAgents.length} agent(s):`,
+    `   ${researchAgents.length} agent(s) が見つかりました:`,
     researchAgents.map((a) => a.name)
   );
 
   console.log("\n2. Identity Verification (ANP)");
-  const message = textMessage("user", "Research React 19 compiler features");
+  const message = textMessage("user", "React 19 compiler features を調査してください");
   const signature = signPayload(coderIdentity, message.id);
   const verified = identityRegistry.verify(
     coderIdentity.did,
@@ -739,6 +739,6 @@ async function protocolDemo() {
 }
 
 protocolDemo().catch((err) => {
-  console.error("Protocol demo failed:", err);
+  console.error("Protocol demo に失敗しました:", err);
   process.exitCode = 1;
 });

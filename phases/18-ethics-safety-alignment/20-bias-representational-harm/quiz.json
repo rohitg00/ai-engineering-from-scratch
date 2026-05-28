@@ -1,75 +1,75 @@
 {
   "lesson": "20-bias-representational-harm",
-  "title": "Bias and Representational Harm in LLMs",
+  "title": "LLMs における Bias と Representational Harm",
   "questions": [
     {
       "stage": "pre",
-      "question": "How does the lesson distinguish representational harm from allocational harm?",
+      "question": "この lesson は representational harm と allocational harm をどのように区別しますか。",
       "options": [
-        "Representational harm only matters for vision models",
-        "Representational harm is stereotypes / erasure / demeaning portrayal; allocational harm is unequal material outcomes for a group",
-        "Representational is computational; allocational is statistical",
-        "Allocational harm only occurs offline"
+        "representational harm は vision models でだけ重要である",
+        "representational harm は stereotypes / erasure / demeaning portrayal、allocational harm は group に対する unequal material outcomes である",
+        "representational は computational、allocational は statistical である",
+        "allocational harm は offline でしか起きない"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of these are the three evaluation-metric categories from Gallegos et al. 2024?",
+      "question": "Gallegos et al. 2024 の3つの evaluation-metric categories はどれですか。",
       "options": [
-        "Pre-RLHF, mid-RLHF, post-RLHF",
-        "Vision, audio, text",
-        "WEAT, BLEU, ROUGE",
-        "Embedding-based, probability-based, generated-text-based"
+        "Pre-RLHF、mid-RLHF、post-RLHF",
+        "Vision、audio、text",
+        "WEAT、BLEU、ROUGE",
+        "Embedding-based、probability-based、generated-text-based"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is intersectional fairness evaluation needed in addition to single-axis evaluation?",
+      "question": "single-axis evaluation に加えて intersectional fairness evaluation が必要なのはなぜですか。",
       "options": [
-        "Intersectionality is the same as cross-validation",
-        "Single-axis measures are computationally cheaper",
-        "Single-axis is the only legally allowed approach",
-        "Bias that only emerges at intersections (e.g., gender x race) is missed by evaluations that look at one axis at a time"
+        "intersectionality は cross-validation と同じだから",
+        "single-axis measures の方が computationally cheaper だから",
+        "single-axis が唯一 legally allowed な approach だから",
+        "gender x race のような intersection でのみ現れる bias は、1軸ずつ見る evaluation では見落とされるから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does WinoIdentity (COLM 2025) introduce?",
+      "question": "WinoIdentity (COLM 2025) は何を導入しますか。",
       "options": [
-        "An adversarial attack on demographic classifiers",
-        "A new tokenizer for identity terms",
-        "A replacement for WEAT in embedding space",
-        "Uncertainty-based intersectional fairness evaluation that compares the model's uncertainty over outcomes across intersectional identity tuples, not just point predictions"
+        "demographic classifiers に対する adversarial attack",
+        "identity terms 用の新しい tokenizer",
+        "embedding space における WEAT の置き換え",
+        "point predictions だけでなく、intersectional identity tuples 間で model の outcome uncertainty を比較する uncertainty-based intersectional fairness evaluation"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of these is a mechanistic-interpretability approach to bias?",
+      "question": "bias に対する mechanistic-interpretability approach はどれですか。",
       "options": [
-        "Switching to DPO from PPO",
-        "Identifying gender neurons in MLP layers, using SAEs to surface race-correlated features, or manipulating specific attention heads (UniBias)",
-        "Adding more KL regularization",
-        "Re-labeling the training set"
+        "PPO から DPO へ切り替える",
+        "MLP layers の gender neurons を特定する、SAEs で race-correlated features を表面化する、または specific attention heads を操作する (UniBias)",
+        "KL regularization を増やす",
+        "training set を relabel する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the 10-year meta-critique (arXiv:2508.11067) argue about the bias literature?",
+      "question": "10-year meta-critique (arXiv:2508.11067) は bias literature について何を論じていますか。",
       "options": [
-        "It disproportionately focuses on binary-gender bias, neglecting other axes (disability, religion, migration status, multi-lingual identity) that may harm marginalized groups by neglect",
-        "It avoids quantitative methods",
-        "It overemphasizes intersectionality",
-        "It is balanced across all identity axes"
+        "binary-gender bias に不均衡に集中し、他の axes (disability、religion、migration status、multi-lingual identity) を軽視しており、それが neglect によって marginalized groups を害し得る",
+        "quantitative methods を避けている",
+        "intersectionality を過剰に重視している",
+        "すべての identity axes に均等である"
       ],
       "correct": 0,
       "explanation": ""

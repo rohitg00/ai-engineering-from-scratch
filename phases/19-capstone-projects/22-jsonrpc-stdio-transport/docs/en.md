@@ -1,28 +1,28 @@
-# JSON-RPC 2.0 Over Newline-Delimited Stdio
+# Newline-Delimited Stdio 上の JSON-RPC 2.0
 
-> The transport between a model client and a tool server is JSON-RPC over stdio. Hand-rolling it once teaches you what every framing layer is paying for.
+> model client と tool server の間の transport は、stdio 上の JSON-RPC です。一度 hand-roll すると、あらゆる framing layer が何にコストを払っているのかが見えます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 13 lessons 01-07, Phase 14 lesson 01
+**所要時間:** 約90分
 
-## Learning Objectives
-- Speak JSON-RPC 2.0 framed as newline-delimited JSON over stdin and stdout.
-- Map the five standard error codes (-32700, -32600, -32601, -32602, -32603) and surface them with the right semantics.
-- Distinguish requests, responses, notifications, and batches without inventing new envelope keys.
-- Handle one parse error per line without poisoning the rest of the stream.
-- Build a self-terminating demo using io.BytesIO so the lesson runs without spawning a child process.
+## 学習目標
+- stdin/stdout 上の newline-delimited JSON として framing された JSON-RPC 2.0 を扱う。
+- 5 つの standard error code（-32700, -32600, -32601, -32602, -32603）を対応づけ、正しい意味で surface する。
+- 新しい envelope key を作らずに、request、response、notification、batch を区別する。
+- stream の残りを汚染せず、1 line あたり 1 つの parse error として扱う。
+- child process を spawn せずに lesson を実行できるよう、io.BytesIO を使った self-terminating demo を作る。
 
-## Why JSON-RPC stays the lingua franca
+## なぜ JSON-RPC は lingua franca のままなのか
 
-A coding agent in 2026 talks to maybe twelve tool servers in a single session. Each server is a separate process or a remote endpoint. The wire format has been the same since 2013. JSON-RPC 2.0 is two-page spec. It survives because the alternatives (gRPC, HTTP per call, custom binary) all impose a tradeoff JSON-RPC does not: they pick either streaming or batching or transport-coupling. JSON-RPC is symmetric across stdio, sockets, websockets, and HTTP, and a client can drive a server it has never seen if both honor the spec.
+2026 年の coding agent は、1 つの session で 12 個程度の tool server と話します。各 server は別 process または remote endpoint です。wire format は 2013 年から同じです。JSON-RPC 2.0 は 2 ページの spec です。代替案（gRPC、call ごとの HTTP、custom binary）はすべて、JSON-RPC にはない tradeoff を課します。streaming、batching、transport coupling のどれかを選ばせるのです。JSON-RPC は stdio、socket、websocket、HTTP にまたがって対称であり、client は相手 server を見たことがなくても、双方が spec を守れば駆動できます。
 
-This lesson builds the stdio variant. Newline-delimited JSON. Each request is one line. Each response is one line. The transport boundary is `\n`.
+この lesson では stdio variant を作ります。newline-delimited JSON です。各 request は 1 行。各 response も 1 行。transport boundary は `\n` です。
 
-## The wire shape
+## wire の形
 
-Four envelope shapes exist. Two are spoken by the client. Two are spoken by the server.
+envelope は 4 種類あります。2 つは client が話し、2 つは server が話します。
 
 ```mermaid
 sequenceDiagram
@@ -36,11 +36,11 @@ sequenceDiagram
     Server-->>Client: error {jsonrpc:"2.0", id:7 or null, error:{code, message, data?}}
 ```
 
-A notification has no `id`. The server must not respond to it. If a server returns a response to a notification, the client has no way to attach it to a call site. That single rule keeps the framing math simple.
+notification には `id` がありません。server は response を返してはいけません。notification に response を返すと、client はそれを call site に結びつけられません。この 1 つの rule が framing の計算を単純に保ちます。
 
-A batch is a JSON array of requests or notifications. The server replies with an array of responses, in any order, one per non-notification entry. If every entry in the batch is a notification, the server sends nothing back.
+batch は request または notification の JSON array です。server は response の array を返します。順序は任意で、non-notification entry 1 つにつき response 1 つです。batch 内のすべてが notification なら、server は何も返しません。
 
-## The five error codes
+## 5 つの error code
 
 ```text
 -32700  Parse error      JSON could not be parsed
@@ -50,19 +50,19 @@ A batch is a JSON array of requests or notifications. The server replies with an
 -32603  Internal error
 ```
 
-The codes between -32000 and -32099 are reserved for server-defined errors. Everything else is application-defined. The lesson sticks to the five. If your handler raises, the transport wraps it as -32603 with the exception class name in `data.exception`.
+-32000 から -32099 までは server-defined error のために予約されています。それ以外は application-defined です。この lesson では 5 つだけに留めます。handler が raise した場合、transport はそれを -32603 として wrap し、exception class name を `data.exception` に入れます。
 
-A parse error has a special rule. The `id` in the response is `null`, because the request never parsed enough to extract an id.
+parse error には特別な rule があります。request は id を取り出せるほど parse できていないので、response の `id` は `null` です。
 
-## Newline framing and the BytesIO demo
+## Newline framing と BytesIO demo
 
-The transport reads one line at a time. A line is bytes up to and including `\n`. If a line cannot be parsed, the transport writes a -32700 response with `id: null` and continues. The stream is not poisoned. The next line gets parsed fresh.
+transport は 1 行ずつ読みます。line は `\n` までを含む bytes です。line を parse できない場合、transport は `id: null` の -32700 response を書き込み、続行します。stream は汚染されません。次の line は新しく parse されます。
 
-For the lesson we wrap an `io.BytesIO` pair as stdin and stdout. The server reads requests until EOF, writes responses for each, and returns. The client reads the responses back. No process spawn. No timeouts. The transport behavior is identical to a real subprocess pipe because Python's `io` interface presents the same `.readline()` and `.write()` contract.
+lesson では stdin と stdout として `io.BytesIO` の pair を wrap します。server は EOF まで request を読み、各 request の response を書き、戻ります。client は response を読み返します。process spawn も timeout もありません。Python の `io` interface は同じ `.readline()` と `.write()` contract を提示するので、transport behavior は実際の subprocess pipe と同じです。
 
 ## Method dispatch
 
-The transport does not know which methods exist. It hands off to a callable `handler(method, params)` that the harness supplies. The handler returns a result or raises. Three exception classes surface specific codes.
+transport はどの method が存在するかを知りません。harness が供給する callable `handler(method, params)` に渡します。handler は result を返すか raise します。3 つの exception class が specific code を surface します。
 
 ```text
 MethodNotFound -> -32601
@@ -70,9 +70,9 @@ InvalidParams  -> -32602
 Anything else  -> -32603 with exception name in data
 ```
 
-The transport never sees a tool registry. The registry sits behind the handler. This is the layering we want. The transport speaks JSON-RPC. The registry speaks tool shapes. The dispatcher (lesson twenty-three) stitches them together.
+transport は tool registry を見ません。registry は handler の背後にあります。これが欲しい layering です。transport は JSON-RPC を話します。registry は tool shape を話します。dispatcher（lesson 23）がそれらを縫い合わせます。
 
-## Stream behavior on errors
+## error 時の stream behavior
 
 ```text
 client writes              server reads             server writes
@@ -83,20 +83,20 @@ client writes              server reads             server writes
 {...missing method...}     invalid envelope         {id:X, error: -32600}
 ```
 
-A broken JSON line does not stop the loop. A missing `method` field does not stop the loop. A handler exception does not stop the loop. The transport keeps reading until EOF.
+broken JSON line は loop を止めません。`method` field の欠落も loop を止めません。handler exception も loop を止めません。transport は EOF まで読み続けます。
 
-## Notifications and asymmetric flows
+## Notifications と asymmetric flow
 
-A notification is fire-and-forget. The harness uses notifications for progress events, cancellation signals, and log lines. Notifications are how a long-running tool can stream status updates without round-tripping for each one.
+notification は fire-and-forget です。harness は progress event、cancellation signal、log line に notification を使います。long-running tool が各 status update に round-trip せずに status を stream する手段が notification です。
 
-The lesson implements one outbound notification helper, `write_notification`. The server uses it to emit progress while a request is in flight. The demo shows the pattern: a request comes in, the handler emits two progress notifications, then writes the final response.
+この lesson では outbound notification helper `write_notification` を 1 つ実装します。server は request の処理中に progress を emit するためにそれを使います。demo は pattern を示します。request が入り、handler が 2 つの progress notification を emit し、最後に final response を書きます。
 
-## How to read the code
+## code の読み方
 
-`code/main.py` defines `StdioTransport`, the parse helper (`parse_request`), the three write helpers (`write_response`, `write_error`, `write_notification`), and the dispatch loop `serve`. The error code constants live at module scope.
+`code/main.py` は `StdioTransport`、parse helper（`parse_request`）、3 つの write helper（`write_response`, `write_error`, `write_notification`）、dispatch loop `serve` を定義します。error code constant は module scope にあります。
 
-`code/tests/test_transport.py` covers the five error codes, notifications (no response written), batches (array in, array out, notifications skipped), broken JSON (parse error then continue), and the asymmetric flow where a handler writes a notification mid-call.
+`code/tests/test_transport.py` は 5 つの error code、notification（response が書かれない）、batch（array in / array out、notification は skip）、broken JSON（parse error のあと continue）、handler が mid-call で notification を書く asymmetric flow を cover します。
 
-## Going further
+## さらに進む
 
-This transport is enough for the lessons that follow. Production transports add three things. A correlation id field that survives forwarding (your `id` is already this, but in a mesh you need an outer trace id too). A cancellation channel (a notification like `$/cancelRequest` with the id of the in-flight call). And a content-type negotiation handshake so the same socket can speak JSON-RPC and Streamable HTTP. None of those change the wire. They add metadata.
+この transport は後続 lesson には十分です。production transport は 3 つを追加します。forwarding 後も残る correlation id field（あなたの `id` がすでにそれですが、mesh では outer trace id も必要です）。cancellation channel（in-flight call の id を持つ `$/cancelRequest` のような notification）。そして同じ socket で JSON-RPC と Streamable HTTP を話せるようにする content-type negotiation handshake です。これらはいずれも wire を変えません。metadata を追加するだけです。

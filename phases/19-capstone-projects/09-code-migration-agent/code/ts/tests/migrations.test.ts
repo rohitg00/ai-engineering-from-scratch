@@ -9,7 +9,7 @@ import {
   tickOne,
 } from "../src/migrations.js";
 
-test("seed produces three running migrations", () => {
+test("seed は running migration を3つ生成する", () => {
   const migrations = defaultSeed();
   assert.equal(migrations.length, 3);
   for (const m of migrations) {
@@ -18,7 +18,7 @@ test("seed produces three running migrations", () => {
   }
 });
 
-test("advanceFile walks queued to rewriting to building to passed", () => {
+test("advanceFile は queued から rewriting、building、passed へ進める", () => {
   const f = fileDiff("foo.java", "openrewrite");
   const noFail = () => 0.99;
   advanceFile(f, noFail);
@@ -29,7 +29,7 @@ test("advanceFile walks queued to rewriting to building to passed", () => {
   assert.equal(f.status, "passed");
 });
 
-test("advanceFile is a no-op on terminal states", () => {
+test("advanceFile は terminal state では no-op", () => {
   const f = fileDiff("foo.java", "openrewrite");
   f.status = "passed";
   advanceFile(f);
@@ -39,7 +39,7 @@ test("advanceFile is a no-op on terminal states", () => {
   assert.equal(f.status, "failed");
 });
 
-test("tickOne can move a migration to passed when all files pass", () => {
+test("tickOne は全 file が pass すると migration を passed に進められる", () => {
   const m = defaultSeed()[0]!;
   const det = () => 0.99;
   for (let i = 0; i < 200; i++) tickOne(m, det);
@@ -47,7 +47,7 @@ test("tickOne can move a migration to passed when all files pass", () => {
   assert.ok(m.state === "passed" || m.state === "failed");
 });
 
-test("rolledUpStats counts states correctly", () => {
+test("rolledUpStats は state を正しく count する", () => {
   const m = defaultSeed();
   m[0]!.state = "passed";
   m[1]!.state = "failed";

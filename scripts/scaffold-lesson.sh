@@ -3,14 +3,14 @@ set -euo pipefail
 
 if [[ $# -lt 2 ]]; then
   cat <<'USAGE' >&2
-Usage: scripts/scaffold-lesson.sh <phase-dir> <lesson-slug> [title]
+使い方: scripts/scaffold-lesson.sh <phase-dir> <lesson-slug> [title]
 
-Examples:
+例:
   scripts/scaffold-lesson.sh 05-nlp-foundations-to-advanced 03-tokenizers
   scripts/scaffold-lesson.sh 05-nlp-foundations-to-advanced 03-tokenizers "Tokenizers from Scratch"
 
-Creates phases/<phase-dir>/<lesson-slug>/ with code/, notebook/, docs/, outputs/
-and a docs/en.md skeleton prefilled from LESSON_TEMPLATE.md.
+phases/<phase-dir>/<lesson-slug>/ に code/, notebook/, docs/, outputs/ を作り、
+LESSON_TEMPLATE.md をもとにした docs/en.md の雛形を入れます。
 USAGE
   exit 2
 fi
@@ -21,7 +21,7 @@ TITLE="${3:-}"
 
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 if [[ -z "$REPO_ROOT" ]]; then
-  echo "error: run this from inside the ai-engineering-from-scratch git repo" >&2
+  echo "エラー: ai-engineering-from-scratch のgit repo内で実行してください" >&2
   exit 1
 fi
 
@@ -29,18 +29,18 @@ PHASE_DIR="$REPO_ROOT/phases/$PHASE"
 LESSON_DIR="$PHASE_DIR/$LESSON"
 
 if [[ ! -d "$PHASE_DIR" ]]; then
-  echo "error: phase dir not found: phases/$PHASE" >&2
-  echo "       run: ls phases/ to see valid phases" >&2
+  echo "エラー: phase dirが見つかりません: phases/$PHASE" >&2
+  echo "       有効なphaseを見るには実行: ls phases/" >&2
   exit 1
 fi
 
 if [[ -e "$LESSON_DIR" ]]; then
-  echo "error: lesson already exists: phases/$PHASE/$LESSON" >&2
+  echo "エラー: lessonは既に存在します: phases/$PHASE/$LESSON" >&2
   exit 1
 fi
 
 if [[ ! "$LESSON" =~ ^[0-9]{2}-[a-z0-9-]+$ ]]; then
-  echo "error: lesson slug must match NN-kebab-case (e.g. 03-tokenizers)" >&2
+  echo "エラー: lesson slugは NN-kebab-case に一致する必要があります（例: 03-tokenizers）" >&2
   exit 1
 fi
 
@@ -57,67 +57,67 @@ LESSON_NUM="${LESSON%%-*}"
 cat >"$LESSON_DIR/docs/en.md" <<EOF
 # $PRETTY_TITLE
 
-> [One-line motto. The core idea that sticks.]
+> [一文のモットー。記憶に残る中核アイデア。]
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** [prior lessons]
-**Time:** ~75 minutes
+**タイプ:** 構築
+**言語:** Python
+**前提条件:** [前提となるレッスン]
+**時間:** 約75分
 
-## The Problem
+## 課題
 
-[2-3 paragraphs. What can't a learner do without this? Make it concrete.]
+[2-3段落。この内容がないと学習者は何ができないのか。具体化する。]
 
-## The Concept
+## 考え方
 
-[Intuition first. Diagrams, tables, mental models. No code yet.]
+[直感から始める。図、表、メンタルモデル。まだコードは出さない。]
 
-## Build It
+## 作ってみる
 
-### Step 1: [name]
+### ステップ1: [名前]
 
-[explanation]
-
-\`\`\`python
-# code here
-\`\`\`
-
-### Step 2: [name]
-
-[explanation]
+[説明]
 
 \`\`\`python
-# code here
+# ここにコード
 \`\`\`
 
-## Use It
+### ステップ2: [名前]
 
-[How a real framework solves the same thing. Compare your version.]
+[説明]
 
-## Ship It
+\`\`\`python
+# ここにコード
+\`\`\`
 
-[The reusable artifact this lesson produces. Save in outputs/.]
+## 使ってみる
 
-## Exercises
+[実際のフレームワークが同じ問題をどう解くか。自分の実装と比較する。]
 
-1. [Easy — reinforce core concept]
-2. [Medium — apply to a different problem]
-3. [Hard — extend or combine with prior lessons]
+## 形にしてみる
 
-## Key Terms
+[このレッスンが生み出す再利用可能なartifact。outputs/ に保存する。]
 
-| Term | What people say | What it actually means |
+## 演習
+
+1. [易 — 中核概念を定着させる]
+2. [中 — 別の問題に適用する]
+3. [難 — 拡張する、または以前のレッスンと組み合わせる]
+
+## 重要用語
+
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
 |      |                |                      |
 
-## Further Reading
+## さらに読む
 
 - []() — []
 EOF
 
 cat >"$LESSON_DIR/code/main.py" <<'EOF'
 def main():
-    raise NotImplementedError("implement the lesson")
+    raise NotImplementedError("レッスンを実装してください")
 
 
 if __name__ == "__main__":
@@ -129,9 +129,9 @@ touch "$LESSON_DIR/outputs/.gitkeep"
 
 echo "created phases/$PHASE/$LESSON/"
 echo ""
-echo "next:"
-echo "  1. edit phases/$PHASE/$LESSON/docs/en.md"
-echo "  2. write phases/$PHASE/$LESSON/code/main.py"
-echo "  3. add a markdown-link row to ROADMAP.md under Phase $PHASE_NUM:"
+echo "次:"
+echo "  1. phases/$PHASE/$LESSON/docs/en.md を編集"
+echo "  2. phases/$PHASE/$LESSON/code/main.py を書く"
+echo "  3. ROADMAP.md の Phase $PHASE_NUM にmarkdown link行を追加:"
 echo "     | $LESSON_NUM | [$PRETTY_TITLE](phases/$PHASE/$LESSON) | ✅ | ~75 min |"
 echo "  4. atomic commit: git add phases/$PHASE/$LESSON ROADMAP.md && git commit -m \"feat(phase-$PHASE_NUM/$LESSON_NUM): $PRETTY_TITLE\""

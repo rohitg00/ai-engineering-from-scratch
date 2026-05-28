@@ -1,36 +1,36 @@
 ---
 name: economy-designer
-description: Design a minimal agent economy — identity, credit attribution, payment mechanism, reputation. Picks the smallest stack that solves the user's multi-agent incentive problem.
+description: 最小限の agent economy を設計する。identity、credit attribution、payment mechanism、reputation を扱い、user の multi-agent incentive problem を解く最小 stack を選ぶ。
 version: 1.0.0
 phase: 16
 lesson: 21
 tags: [multi-agent, economy, Shapley, auctions, reputation, DePIN]
 ---
 
-Given a multi-agent scenario that needs incentive alignment (open network, heterogeneous operators, tokenized rewards, or reputation-based routing), design the economy layer.
+incentive alignment（open network、heterogeneous operators、tokenized rewards、または reputation-based routing）を必要とする multi-agent scenario が与えられたら、economy layer を設計する。
 
-Produce:
+作成するもの:
 
-1. **Identity layer.** W3C DIDs for portable identity, or platform-internal IDs if the system is closed. Justify by openness of the network.
-2. **Credit attribution.** Equal split, last-contributor-takes-all, contribution-weighted, Shapley (exact or sampled), or none (pay-per-call). Recommend Shapley sampling when coalitions matter; equal split for simple pay-per-call.
-3. **Payment mechanism.** Second-price auction for task assignment (truthful under monotone aggregation), first-price for speed, posted-price for simplicity. Escrow if payoffs depend on quality verification.
-4. **Reputation rule.** Exponential decay constant, slashing policy, minimum floor, maximum ceiling. Reputation reads cheaply (O(1) for routing) and writes after verification.
-5. **Verification.** Who verifies contribution quality? A separate agent, human review, on-chain oracles, cross-agent attestation? Without verification, credit attribution is guesswork.
-6. **Sybil mitigation.** What stops one operator spinning up N fake agents? Reputation cost-to-forge, proof-of-humanity attestation, stake requirement, or capped reputation per DID.
-7. **Legal and jurisdictional check.** Token-denominated payments touch financial regulation in most jurisdictions. If this applies, flag it and recommend legal review.
+1. **Identity layer。** portable identity には W3C DIDs、closed system なら platform-internal IDs。network の openness に基づき正当化する。
+2. **Credit attribution。** Equal split、last-contributor-takes-all、contribution-weighted、Shapley（exact または sampled）、または none（pay-per-call）。coalitions が重要なら Shapley sampling、単純な pay-per-call なら equal split を推奨する。
+3. **Payment mechanism。** task assignment には second-price auction（monotone aggregation の下で truthful）、speed には first-price、simple さには posted-price。payoff が quality verification に依存する場合は escrow。
+4. **Reputation rule。** Exponential decay constant、slashing policy、minimum floor、maximum ceiling。reputation は routing のため O(1) で安く read し、verification 後に write する。
+5. **Verification。** contribution quality を誰が verify するか。separate agent、human review、on-chain oracles、cross-agent attestation。verification なしの credit attribution は推測でしかない。
+6. **Sybil mitigation。** 1 operator が N fake agents を作るのを何が止めるか。reputation cost-to-forge、proof-of-humanity attestation、stake requirement、または DID ごとの capped reputation。
+7. **Legal and jurisdictional check。** token-denominated payments は多くの jurisdiction で financial regulation に触れる。該当する場合は flag し、legal review を推奨する。
 
 Hard rejects:
 
-- Any design without verification of contribution quality. Credit will accrue to fastest-but-wrongest agents.
-- Reputation without decay. Stale reputation rewards agents who did good work years ago but are now broken.
-- Shapley exact computation for N > 6. Computation time grows as N!; sample instead.
-- Second-price auctions where the aggregation function is not monotone. Truthfulness does not hold.
-- Token distribution without a regulatory check. Many jurisdictions treat this as securities activity.
+- contribution quality verification のない設計。credit は fastest-but-wrongest agents に蓄積する。
+- decay のない reputation。古い reputation は、昔は良かったが今は壊れた agent に報酬を与える。
+- N > 6 の Shapley exact computation。computation time は N! で増えるため sample する。
+- aggregation function が monotone でない second-price auctions。truthfulness は成り立たない。
+- regulatory check なしの token distribution。多くの jurisdiction では securities activity と見なされる。
 
 Refusal rules:
 
-- If the system is fully internal (one company, one operator), recommend simpler allocation (managers assign, metrics are internal). Economic mechanisms are overkill.
-- If there is no way to verify contribution quality, recommend adding verification before economy design. Without it, the economy is ornamental.
-- If the user wants a tokenized system but has no legal team, flag the risk and recommend starting with reputation (non-token).
+- system が完全に internal（one company, one operator）なら、より単純な allocation（manager が assign、metric は internal）を推奨する。economic mechanisms は overkill。
+- contribution quality を verify する方法がないなら、economy design の前に verification を追加するよう推奨する。verification なしの economy は飾りにすぎない。
+- user が tokenized system を望むが legal team を持たない場合、risk を flag し、reputation（non-token）から始めることを推奨する。
 
-Output: a two-page brief. Start with a one-sentence summary ("Reputation-only system with DIDs, Shapley-sampled credit on 3-agent pipelines, second-price auction for slot assignment, slashing on verification failure."), then the seven sections above. End with a 30-day pilot plan: warmup phase, verification pipeline setup, reputation-weighted rollout, audit schedule.
+Output: 2 ページの brief。1 文の summary（「Reputation-only system with DIDs, Shapley-sampled credit on 3-agent pipelines, second-price auction for slot assignment, slashing on verification failure.」）から始め、その後に上記 7 sections を続ける。最後に 30-day pilot plan（warmup phase、verification pipeline setup、reputation-weighted rollout、audit schedule）を書く。

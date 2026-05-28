@@ -1,16 +1,16 @@
 // Capstone 19/01: terminal-native coding agent harness (multi-file TypeScript).
 //
 // Sources:
-//   This lesson's docs/en.md (the Bun + Ink TUI harness with eight 2026 hooks)
+//   この lesson の docs/en.md (2026年版8 hook を備えた Bun + Ink TUI harness)
 //   Claude Code docs            https://docs.anthropic.com/en/docs/claude-code
 //   Model Context Protocol      https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/
 //   OpenTelemetry GenAI semconv https://opentelemetry.io/docs/specs/semconv/gen-ai/
 //
-// The harness side of the capstone: REPL command parser (repl.ts), tool dispatcher
-// with read_file/run_shell (tools.ts), scripted offline model (model.ts), eight-event
-// hook bus (hooks.ts), plan state rewritten whole each turn (plan.ts), and a tiny
-// pass/fail eval counter (eval.ts). The non-interactive path asserts the eval
-// passes before exiting, so the binary is self-validating.
+// capstone の harness 側: REPL command parser (repl.ts)、read_file/run_shell を持つ
+// tool dispatcher (tools.ts)、scripted offline model (model.ts)、eight-event hook bus
+// (hooks.ts)、毎 turn 全体を書き換える plan state (plan.ts)、小さな pass/fail eval
+// counter (eval.ts)。non-interactive path は exit 前に eval 通過を assert するため、
+// binary は self-validating です。
 
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,7 +27,7 @@ async function main(): Promise<void> {
     await repl(sandbox);
     return;
   }
-  const task = "demonstrate the plan-act-observe loop without network calls";
+  const task = "network call なしで plan-act-observe loop をデモする";
   const result = runAgent(task, sandbox);
   console.log(result.plan);
   console.log("---");
@@ -36,7 +36,7 @@ async function main(): Promise<void> {
       `dollars=$${result.budget.dollarsUsed.toFixed(3)}`,
   );
   console.log("---");
-  console.log(`trace events: ${result.trace.length}`);
+  console.log(`trace event 数: ${result.trace.length}`);
   for (const ev of result.trace) console.log(" ", JSON.stringify(ev));
   console.log("---");
   const e = runEval(sandbox);
@@ -45,7 +45,7 @@ async function main(): Promise<void> {
     throw new Error(`eval regression: passed=${e.passed} failed=${e.failed}`);
   }
   if (!result.passed) {
-    throw new Error("scripted demo run did not converge to all-done plan");
+    throw new Error("scripted demo run が all-done plan に収束しませんでした");
   }
 }
 

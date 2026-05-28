@@ -1,12 +1,12 @@
-"""MCP server + registry + OPA policy gate scaffold.
+"""MCP server + registry + OPA policy gate scaffold。
 
-The hard architectural primitives are: (a) a stateless StreamableHTTP-style
-dispatch that looks up a tool, checks scopes through an OPA-style policy,
-and executes with audit log enrichment; (b) a registry that pulls
-.well-known/mcp-capabilities from each server and validates. This scaffold
-implements a minimal in-memory version of both so the handshakes are visible.
+重要な architecture primitive は 2 つある。(a) tool を lookup し、
+OPA-style policy で scope を確認し、audit log enrichment 付きで実行する
+stateless StreamableHTTP-style dispatch。(b) 各 server から
+.well-known/mcp-capabilities を pull して validate する registry。この
+scaffold は handshakes が見えるように、両方の最小 in-memory 版を実装する。
 
-Run:  python main.py
+実行:  python main.py
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ class MCPServer:
         self.handlers[schema.name] = handler
 
     def capabilities(self) -> dict:
-        """The .well-known/mcp-capabilities document."""
+        """.well-known/mcp-capabilities document。"""
         return {
             "server": self.name,
             "transport": "streamable_http",
@@ -69,7 +69,7 @@ class MCPServer:
 class Token:
     user: str
     scopes: set[str]
-    approved_at: float = 0.0      # epoch; scope_elevation freshness for destructive tools
+    approved_at: float = 0.0      # epoch; destructive tool 用 scope_elevation freshness
 
     def has_scope(self, s: str) -> bool:
         return s in self.scopes
@@ -79,7 +79,7 @@ class Token:
 
 
 # ---------------------------------------------------------------------------
-# OPA-style policy  --  Rego-like function over (tool, token, args)
+# OPA-style policy  --  (tool, token, args) に対する Rego-like function
 # ---------------------------------------------------------------------------
 
 def policy_decide(server: MCPServer, tool: str, token: Token, args: dict,
@@ -90,19 +90,19 @@ def policy_decide(server: MCPServer, tool: str, token: Token, args: dict,
     if not token.has_scope(schema.required_scope):
         return False, f"missing scope: {schema.required_scope}"
     if schema.destructive and not token.fresh_approval(now):
-        return False, "destructive tool requires fresh human approval (Slack card)"
-    # payload size cap example
+        return False, "destructive tool には fresh human approval (Slack card) が必要です"
+    # payload size cap の例
     if len(json.dumps(args)) > 8192:
         return False, "payload too large (> 8 KB)"
     return True, "ok"
 
 
 # ---------------------------------------------------------------------------
-# audit log  --  structured JSONL with PII redaction
+# audit log  --  PII redaction 付き structured JSONL
 # ---------------------------------------------------------------------------
 
 def redact(payload: dict) -> dict:
-    """Presidio-style redaction stand-in: email, SSN, phone."""
+    """Presidio-style redaction の stand-in: email、SSN、phone。"""
     s = json.dumps(payload)
     s = re.sub(r"[\w.+-]+@[\w-]+\.[\w.-]+", "[email]", s)
     s = re.sub(r"\b\d{3}-\d{2}-\d{4}\b", "[ssn]", s)
@@ -144,7 +144,7 @@ def dispatch(server: MCPServer, token: Token, tool: str, args: dict,
 
 
 # ---------------------------------------------------------------------------
-# registry  --  polls capabilities and validates
+# registry  --  capability を poll して validate する
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -165,19 +165,19 @@ class Registry:
 
 
 # ---------------------------------------------------------------------------
-# demo servers  --  read-only and destructive
+# demo servers  --  read-only と destructive
 # ---------------------------------------------------------------------------
 
 def build_readonly_server() -> MCPServer:
     s = MCPServer(name="internal-readonly-mcp", url="https://mcp.internal/readonly")
     s.register(ToolSchema("postgres.readonly", "postgres:query:readonly", False,
-                          "Read-only Postgres query",
+                          "Read-only Postgres query を実行する",
                           {"type": "object", "properties": {"sql": {"type": "string"}}}),
                lambda a: {"rows": [[1]], "sql_echo": a.get("sql", "")})
-    s.register(ToolSchema("s3.list", "s3:list", False, "List S3 objects",
+    s.register(ToolSchema("s3.list", "s3:list", False, "S3 object を list する",
                           {"type": "object", "properties": {"bucket": {"type": "string"}}}),
                lambda a: {"objects": [{"key": "a/b.txt", "size": 128}]})
-    s.register(ToolSchema("jira.search", "jira:read", False, "Search Jira issues",
+    s.register(ToolSchema("jira.search", "jira:read", False, "Jira issue を search する",
                           {"type": "object", "properties": {"jql": {"type": "string"}}}),
                lambda a: {"issues": [{"id": "PROJ-42", "title": "fix widget"}]})
     return s
@@ -185,7 +185,7 @@ def build_readonly_server() -> MCPServer:
 
 def build_destructive_server() -> MCPServer:
     s = MCPServer(name="internal-destructive-mcp", url="https://mcp.internal/destructive")
-    s.register(ToolSchema("jira.create", "jira:write", True, "Create Jira issue",
+    s.register(ToolSchema("jira.create", "jira:write", True, "Jira issue を create する",
                           {"type": "object", "properties": {"title": {"type": "string"}}}),
                lambda a: {"id": "PROJ-99", "created": True})
     return s
@@ -200,13 +200,13 @@ def main() -> None:
 
     audit: list[AuditEntry] = []
 
-    # token with read-only scopes
+    # read-only scope を持つ token
     readonly_token = Token(user="u42", scopes={"postgres:query:readonly",
                                                "s3:list",
                                                "jira:read"})
-    # token with write scope but no fresh human approval
+    # write scope はあるが fresh human approval がない token
     write_token_no_approval = Token(user="u42", scopes={"jira:write"})
-    # token with write scope AND approval fresh
+    # write scope と fresh approval の両方を持つ token
     write_token_approved = Token(user="u42",
                                  scopes={"jira:write", "approved:by:human"},
                                  approved_at=time.time() - 60)
@@ -220,7 +220,7 @@ def main() -> None:
                  {"sql": "SELECT email FROM users LIMIT 1"}, audit)
     print(" ", r)
 
-    print("\n=== dispatch: jira.create without approval (expect deny) ===")
+    print("\n=== dispatch: jira.create without approval (deny される想定) ===")
     r = dispatch(rw, write_token_no_approval, "jira.create", {"title": "new bug"}, audit)
     print(" ", r)
 

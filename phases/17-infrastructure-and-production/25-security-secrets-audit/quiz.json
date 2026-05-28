@@ -1,75 +1,75 @@
 {
   "lesson": "25-security-secrets-audit",
-  "title": "Security — Secrets, API Key Rotation, Audit Logs, Guardrails",
+  "title": "Security — Secrets、API Key Rotation、Audit Logs、Guardrails",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the 2026 standard pattern for LLM service credentials?",
+      "question": "LLM service credentials に対する 2026 年の標準 pattern は何ですか。",
       "options": [
-        "Store keys in a Slack channel",
-        "Centralized vault pulled by an AI gateway at runtime via IAM role; rotate in vault and all apps pick up in minutes",
-        "Email the key to each engineer",
-        "Hardcode API keys in config files for speed"
+        "keys を Slack channel に保存する",
+        "AI gateway が IAM role で runtime に centralized vault から取得する。vault で rotate すれば、すべての apps が数分で取得する",
+        "各 engineer に key を email する",
+        "速度のために API keys を config files に hardcode する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What rotation cadence does the lesson recommend for API keys, vault root tokens, and CI/CD credentials?",
+      "question": "この lesson は API keys、vault root tokens、CI/CD credentials にどの rotation cadence を推奨していますか。",
       "options": [
-        "Within 90 days, automated where possible, logged and tracked when manual",
-        "Every 5 years",
-        "Only when leaked",
-        "Never"
+        "90 日以内。可能なら automated。manual の場合は logged and tracked",
+        "5 年ごと",
+        "leak したときだけ",
+        "実施しない"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is consistent tokenization (Mesh approach) used for PII scrubbing?",
+      "question": "PII scrubbing で consistent tokenization (Mesh approach) を使う理由は何ですか。",
       "options": [
-        "It uses less memory than regex",
-        "It encrypts the prompt to the model",
-        "It is required by ISO 27001",
-        "Same source value maps to the same placeholder, so the LLM preserves code and relationship semantics across the prompt"
+        "regex より memory 使用量が少ないため",
+        "prompt を model 向けに encrypt するため",
+        "ISO 27001 で必須だから",
+        "同じ source value が同じ placeholder に map されるため、LLM が prompt 全体の code と relationship semantics を保てるから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What egress posture does the lesson recommend for LLM service subnets?",
+      "question": "この lesson は LLM service subnets にどの egress posture を推奨していますか。",
       "options": [
-        "Whitelist a small set of domains (api.openai.com, api.anthropic.com, vector DB, vault) and drop everything else, with an allowlist-only DNS resolver",
-        "Block all egress including providers",
-        "Allow DNS but block HTTP",
-        "Allow all outbound traffic"
+        "少数の domains (api.openai.com、api.anthropic.com、vector DB、vault) を whitelist し、それ以外を drop する。DNS は allowlist-only resolver にする",
+        "providers を含むすべての egress を block する",
+        "DNS は許可するが HTTP は block する",
+        "すべての outbound traffic を許可する"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What did the 2026 Vercel supply-chain incident teach about CI/CD credentials?",
+      "question": "2026 年の Vercel supply-chain incident は CI/CD credentials について何を教えましたか。",
       "options": [
-        "CI/CD credentials are prod-equivalent — store in vault, scope narrowly, rotate aggressively",
-        "CI/CD secrets cannot be stolen",
-        "CI/CD credentials are low-risk and can stay in env files",
-        "Vercel was unaffected"
+        "CI/CD credentials は prod-equivalent である。vault に保存し、狭く scope し、積極的に rotate する",
+        "CI/CD secrets は盗まれない",
+        "CI/CD credentials は low-risk なので env files に置いたままでよい",
+        "Vercel は影響を受けなかった"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which audit log fields does the lesson recommend keeping for every LLM call?",
+      "question": "この lesson はすべての LLM call について、どの audit log fields を保存することを推奨していますか。",
       "options": [
-        "Just the raw prompt",
-        "Only the response",
-        "Timestamp, user/tenant, prompt hash (not raw), model + version, token counts, cost, response hash, any guardrail trips",
-        "Only the cost"
+        "raw prompt だけ",
+        "response だけ",
+        "timestamp、user/tenant、prompt hash (raw ではない)、model + version、token counts、cost、response hash、any guardrail trips",
+        "cost だけ"
       ],
       "correct": 2,
       "explanation": ""

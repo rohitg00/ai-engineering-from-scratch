@@ -1,29 +1,26 @@
-# Paper Writer
+# 論文ライター
 
-> A LaTeX skeleton is a contract between the researcher and the typesetter. If the contract is broken the document does not compile, and the failure is loud. Build the skeleton first, then fill it.
+> LaTeX skeleton は研究者と typesetter の contract です。contract が壊れていれば document は compile されず、失敗は大きく見えます。まず skeleton を作り、それから埋めます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 19 lessons 50-53
-**Time:** ~90 minutes
+**種別:** Build
+**言語:** Python
+**前提:** Phase 19 lessons 50-53
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
+- 論文を freeform document ではなく、既知の section graph を持つ structured artifact として扱う。
+- prose を書く前に abstract、sections、figure slots、bibliography keys を宣言する LaTeX skeleton を生成する。
+- experiment output の paths と captions から、決定的な slot mechanism で figures を skeleton に注入する。
+- structured outline から各 section を埋める mocked prose generator をつなぎ、model なしで harness を test できるようにする。
+- `paper.tex`、`references.bib`、参照 figure と citation を列挙する manifest を出力する。
 
-- Treat a research paper as a structured artifact with a known section graph, not a freeform document.
-- Generate a LaTeX skeleton that declares its abstract, sections, figure slots, and bibliography keys before any prose is written.
-- Inject figures from experiment outputs (paths and captions) into the skeleton through a deterministic slot mechanism.
-- Wire a mocked prose generator that fills each section from a structured outline so the harness is testable without a model.
-- Emit a single `paper.tex` plus a `references.bib` plus a manifest that lists every figure referenced and every citation used.
+## なぜ skeleton first か
 
-## Why a skeleton first
+prose から始まる draft は structural debt を蓄積します。introduction に related work の paragraph が入り、figure が定義前に参照され、同じ paper に三つの bibliography key ができます。気づく頃には、書くコストより直すコストが高くなります。
 
-A draft that starts as prose accumulates structural debt. The introduction grows three paragraphs that should be in related work. A figure gets referenced before it is defined. The bibliography ends up with three keys for the same paper. By the time the author notices, the rewriting cost is higher than the writing cost.
+skeleton はこれを反転します。構造を data として先に宣言します。section は name と order を持つ slot、figure は id と caption を持つ slot、bibliography key は対応する entry とともに宣言されます。prose は slot に一つずつ生成されます。harness は prose 生成前に、figure slot、citation entry、table of contents の section を検証できます。
 
-A skeleton inverts that. The structure is declared up front as data. Sections are slots with names and order. Figures are slots with ids and captions. Bibliography keys are declared at the top with the entries they point at. Prose is generated into those slots one at a time. The harness can validate, before any prose is written, that every figure has a slot, every citation has an entry, and every section appears in the table of contents.
-
-This is the same discipline that earlier lessons applied to plans, tool calls, and traces. The structure is the contract.
-
-## The Paper shape
+## Paper の形
 
 ```mermaid
 flowchart TB
@@ -39,17 +36,17 @@ flowchart TB
     Bib --> Entry1[BibEntry: key, fields]
 ```
 
-Every field is plain Python data. The renderer is a pure function from `Paper` to a LaTeX string. The harness can introspect the paper before rendering: count sections, list missing figure files, check that every `\cite{key}` has a matching `BibEntry`.
+すべての field は plain Python data です。renderer は `Paper` から LaTeX string への pure function です。harness は render 前に section 数、missing figure files、すべての `\cite{key}` に対応する `BibEntry` があるかを検査できます。
 
-## The render contract
+## Render contract
 
-The renderer guarantees three properties. First, every figure slot in the skeleton emits a `\begin{figure}` block with a stable label of the form `fig:<id>`. Second, every section emits a `\section{}` with a stable label of the form `sec:<id>` so cross-references work. Third, the bibliography emits a `\bibliography` block whose `references.bib` contains exactly the entries declared on the paper, no more and no fewer.
+renderer は三つを保証します。第一に、すべての figure slot は `fig:<id>` 形式の stable label を持つ `\begin{figure}` block を出力します。第二に、すべての section は `sec:<id>` 形式の stable label を持つ `\section{}` を出力します。第三に、bibliography は `references.bib` に paper で宣言された entry だけを含めます。
 
-Violating any of these is a render error, not a warning. The skeleton is the contract; a render that silently drops a figure is a contract break.
+違反は warning ではなく render error です。skeleton は contract なので、figure を黙って落とす render は contract break です。
 
-## Figure injection from experiments
+## Experiment からの figure injection
 
-The earlier lessons in this track produced experiment outputs as JSON manifests. Each manifest carries a list of artifacts with paths and short captions. The paper writer reads that manifest and produces `Figure` records.
+この track の前半 lesson は experiment output を JSON manifest として出します。各 manifest は path と short caption を持つ artifacts list を含みます。paper writer はそれを読み `Figure` record を作ります。
 
 ```mermaid
 flowchart LR
@@ -60,17 +57,17 @@ flowchart LR
     Render --> Out[paper.tex]
 ```
 
-The injection is deterministic. Figure ids are derived from the experiment name plus a monotonic counter. Captions come from the manifest. Paths are normalised relative to the paper's output directory so the LaTeX compiles even when the experiment outputs sit elsewhere on disk.
+figure id は experiment name と monotonic counter から導出します。caption は manifest から来ます。path は paper output directory からの相対 path に正規化されます。
 
-## The mocked prose generator
+## Mocked prose generator
 
-The lesson does not call a model. A `MockProseGenerator` reads an outline shape and emits prose deterministically. The outline shape is one short string per section. The generator expands that string into two short paragraphs with the section title woven in. The generated prose name-drops figures and citations exactly when the outline declares them.
+この lesson は model を呼びません。`MockProseGenerator` は outline shape を読み、決定的に prose を出します。outline は section ごとに一つの短い string です。generator は section title を織り込みつつ二つの短い paragraph へ展開し、outline が宣言したときだけ figure と citation に言及します。
 
-This is enough to test every behaviour of the writer. A real implementation would swap the generator for a model call. The harness around it does not change. That is the value of declaring the prose generator as a callable: the test substitutes a deterministic one, production substitutes a model one, the rest of the pipeline is identical.
+実装を本番化する場合は generator を model call に差し替えます。周囲の harness は変わりません。
 
-## The manifest output
+## Manifest output
 
-The writer emits three files into the output directory.
+writer は output directory に三つの file を出します。
 
 ```mermaid
 flowchart TB
@@ -82,27 +79,25 @@ flowchart TB
     Man --> S[sections rendered]
 ```
 
-The manifest is what a downstream evaluator or critic loop reads. It does not parse LaTeX; it reads the manifest. The next lesson, the critic loop, takes this manifest as input and produces a feedback list. That is why the manifest is part of the contract and the LaTeX is not.
+次の critic loop は LaTeX ではなく manifest を読みます。そのため manifest は contract の一部です。
 
 ## Validation gates
 
-The writer runs four gates before writing any file.
+writer は file を書く前に四つの gate を走らせます。
 
-1. Every figure id is unique within the paper.
-2. Every section's `cites` field references a bibliography key that is declared on the paper.
-3. The abstract is non-empty.
-4. The title is non-empty.
+1. paper 内のすべての figure id が unique。
+2. 各 section の `cites` が paper 上で宣言された bibliography key を参照している。
+3. abstract が空ではない。
+4. title が空ではない。
 
-A failed gate raises `PaperValidationError` with a precise reason. The harness surfaces the reason as the failure mode. There is no partial write: either all three files are emitted, or none.
+失敗した gate は precise reason 付きで `PaperValidationError` を raise します。partial write はありません。三つの file がすべて出るか、一つも出ません。
 
-## How to read the code
+## コードの読み方
 
-`code/main.py` defines `Paper`, `Section`, `Figure`, `BibEntry`, `PaperValidationError`, `MockProseGenerator`, `PaperWriter`, and a `render_latex` function. The `write` method takes an output directory and emits `paper.tex`, `references.bib`, and `manifest.json`. The `read_experiment_manifest` helper converts a list of experiment manifests into `Figure` records.
+`code/main.py` は `Paper`, `Section`, `Figure`, `BibEntry`, `PaperValidationError`, `MockProseGenerator`, `PaperWriter`, `render_latex` を定義します。`write` method は output directory を受け取り、`paper.tex`, `references.bib`, `manifest.json` を出します。`read_experiment_manifest` は experiment manifest list を `Figure` record に変換します。
 
-`code/tests/test_paper_writer.py` covers: skeleton render with no sections, full render with two sections and two figures, missing-citation gate, duplicate-figure-id gate, manifest content, and the LaTeX-string contract (every section emits a `\section{}`, every figure emits a `\begin{figure}`).
+`code/tests/test_paper_writer.py` は section なし skeleton、二つの section と二つの figure を持つ full render、missing citation gate、duplicate figure id gate、manifest content、LaTeX string contract を確認します。
 
-## Going further
+## 発展
 
-Two extensions a real implementation will want. First, multi-format render: the same `Paper` shape compiles to Markdown for blog posts and HTML for previews. The renderer becomes a strategy on `Paper`. Second, citation enrichment: the writer fetches BibTeX entries from a citation key, given a local cache of DOIs. Both add value, both can be added without touching the skeleton contract.
-
-The skeleton is the bet. Sections, figures, and citations declared as data, prose generated into slots, manifest emitted alongside the LaTeX. Every other improvement composes on top.
+実装を広げるなら二つの方向があります。第一に multi-format render です。同じ `Paper` shape から blog 用 Markdown や preview 用 HTML を生成できます。第二に citation enrichment です。local DOI cache から BibTeX entry を補完できます。どちらも skeleton contract を変えずに足せます。

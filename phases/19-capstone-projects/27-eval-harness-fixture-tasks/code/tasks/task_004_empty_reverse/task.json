@@ -1,6 +1,6 @@
 {
   "id": "task_004_empty_reverse",
-  "goal": "reverse_list takes a list and should return a new list with the elements in reverse order. The buggy version has an empty body and returns None. Implement the function and verify with the bundled assertion.",
+  "goal": "reverse_list は list を受け取り、要素を逆順にした新しい list を返す必要があります。buggy version は body が空で None を返します。function を実装し、同梱 assertion で確認してください。",
   "verifier": {
     "name": "regex_match",
     "args": {

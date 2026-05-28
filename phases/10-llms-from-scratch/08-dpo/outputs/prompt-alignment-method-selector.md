@@ -1,150 +1,150 @@
 ---
 name: prompt-alignment-method-selector
-description: Choose the right alignment method (SFT, RLHF, DPO, KTO, ORPO, SimPO) for your use case
+description: ユースケースに合ったアラインメント手法（SFT、RLHF、DPO、KTO、ORPO、SimPO）を選ぶ
 version: 1.0.0
 phase: 10
 lesson: 8
 tags: [alignment, dpo, rlhf, kto, orpo, simpo, preference-optimization, fine-tuning]
 ---
 
-# Alignment Method Selector
+# アラインメント手法セレクター
 
-When choosing an alignment method for a language model, use this framework to evaluate your data, compute, and quality requirements, then select the method that best fits your constraints.
+言語モデルのアラインメント手法を選ぶときは、このフレームワークを使って、データ、計算資源、品質要件を評価し、制約に最も合う手法を選択してください。
 
-## Input Requirements
+## 入力要件
 
-Provide:
-- **Base model** (e.g., Llama 3 8B, Mistral 7B, Qwen 2.5 72B)
-- **Starting point** (base model, or already SFT'd?)
-- **Available data** (instruction pairs, preference pairs, unpaired ratings, or none)
-- **Compute budget** (GPU hours, number of GPUs)
-- **Quality target** (good enough for prototype, competitive with open-source, state-of-the-art)
-- **Timeline** (days, weeks, months)
+以下を用意してください。
+- **ベースモデル**（例: Llama 3 8B、Mistral 7B、Qwen 2.5 72B）
+- **開始地点**（ベースモデルか、すでにSFT済みか）
+- **利用可能なデータ**（指示ペア、選好ペア、ペアでない評価、またはデータなし）
+- **計算予算**（GPU時間、GPU数）
+- **品質目標**（プロトタイプとして十分、オープンソースと競争可能、最先端）
+- **スケジュール**（日、週、月）
 
-## Decision Matrix
+## 判断マトリクス
 
-### Quick Selection
+### クイック選択
 
-| Your Situation | Recommended Method | Why |
+| 状況 | 推奨手法 | 理由 |
 |---------------|-------------------|-----|
-| No preference data, only instruction pairs | SFT only | You can't align without preference signal |
-| < 5,000 preference pairs, limited compute | DPO | Simpler pipeline, works well with small data |
-| Unpaired feedback (thumbs up/down only) | KTO | Only method that works without pairwise comparisons |
-| Want alignment in a single training run | ORPO | Combines SFT + alignment, no reference model |
-| Memory-constrained (can't fit reference model) | SimPO | No reference model needed |
-| Large-scale, multi-objective alignment | RLHF (PPO) | Separate reward model captures complex preferences |
-| Iterative alignment with online data | RLHF (PPO) | Can generate, rate, and retrain in a loop |
-| Post-RLHF refinement | DPO | Fine-tune an RLHF model on targeted preferences |
+| 選好データがなく、指示ペアだけがある | SFTのみ | 選好信号なしではアラインできない |
+| 選好ペアが5,000未満で、計算資源が限られる | DPO | パイプラインが単純で、小規模データでもうまく機能する |
+| ペアでないフィードバック（高評価/低評価のみ） | KTO | ペア比較なしで機能する唯一の手法 |
+| 1回の訓練実行でアラインしたい | ORPO | SFT + アラインメントを統合し、参照モデルが不要 |
+| メモリ制約がある（参照モデルを載せられない） | SimPO | 参照モデルが不要 |
+| 大規模で多目的のアラインメント | RLHF (PPO) | 別個の報酬モデルが複雑な選好を捉える |
+| オンラインデータを使う反復的アラインメント | RLHF (PPO) | 生成、評価、再訓練をループできる |
+| RLHF後の改良 | DPO | ターゲットを絞った選好でRLHFモデルを微調整する |
 
-### Detailed Comparison
+### 詳細比較
 
-| Method | Data Requirement | Models in Memory | Training Loops | Stability | Best Scale |
+| 手法 | データ要件 | メモリ上のモデル数 | 訓練ループ | 安定性 | 最適な規模 |
 |--------|-----------------|-----------------|----------------|-----------|------------|
-| SFT | Instruction pairs (10K+) | 1 | 1 | High | Any |
-| RLHF | Preference pairs (20K+) | 3-4 | 3 | Low | Large (70B+) |
-| DPO | Preference pairs (5K+) | 2 | 2 (SFT + DPO) | High | Small-Medium (7B-70B) |
-| KTO | Unpaired ratings (5K+) | 2 | 2 (SFT + KTO) | High | Any |
-| ORPO | Preference pairs (10K+) | 1 | 1 | High | Small-Medium |
-| SimPO | Preference pairs (5K+) | 1 | 2 (SFT + SimPO) | High | Small-Medium |
+| SFT | 指示ペア（10K+） | 1 | 1 | 高 | 任意 |
+| RLHF | 選好ペア（20K+） | 3-4 | 3 | 低 | 大規模（70B+） |
+| DPO | 選好ペア（5K+） | 2 | 2（SFT + DPO） | 高 | 小-中規模（7B-70B） |
+| KTO | ペアでない評価（5K+） | 2 | 2（SFT + KTO） | 高 | 任意 |
+| ORPO | 選好ペア（10K+） | 1 | 1 | 高 | 小-中規模 |
+| SimPO | 選好ペア（5K+） | 1 | 2（SFT + SimPO） | 高 | 小-中規模 |
 
-## Method-Specific Configuration
+## 手法別設定
 
 ### SFT
 
-- **When to stop**: After 1-3 epochs or when validation loss stops decreasing
-- **Key hyperparameter**: Learning rate (1e-5 to 5e-5, lower for bigger models)
-- **Critical detail**: Mask instruction tokens in the loss
-- **Gotcha**: More than 3 epochs causes memorization; mix in 2-5% pre-training data
+- **いつ止めるか**: 1-3エポック後、または検証損失が下がらなくなった時点
+- **重要なハイパーパラメータ**: 学習率（1e-5 to 5e-5、大きいモデルほど低め）
+- **重要な詳細**: 損失で指示トークンをマスクする
+- **落とし穴**: 3エポックを超えると暗記が起きる。2-5%の事前訓練データを混ぜる
 
 ### RLHF (PPO)
 
-- **When to use**: You have 20K+ comparison pairs, need multi-objective alignment, or want iterative online learning
-- **Key hyperparameters**: KL coefficient (0.01-0.05), PPO clip ratio (0.1-0.3), learning rate (5e-6 to 3e-5)
-- **Critical detail**: Reward model should be >= policy model size
-- **Gotcha**: PPO is unstable; monitor KL divergence and reward curves continuously
+- **いつ使うか**: 20K以上の比較ペアがあり、多目的アラインメントが必要、または反復的なオンライン学習をしたい場合
+- **重要なハイパーパラメータ**: KL係数（0.01-0.05）、PPO clip ratio（0.1-0.3）、学習率（5e-6 to 3e-5）
+- **重要な詳細**: 報酬モデルは方策モデル以上のサイズにするべき
+- **落とし穴**: PPOは不安定。KLダイバージェンスと報酬曲線を継続的に監視する
 
 ### DPO
 
-- **When to use**: You have preference pairs and want a simpler pipeline than RLHF
-- **Key hyperparameter**: Beta (0.1-0.5; lower = more deviation from reference allowed)
-- **Critical detail**: Reference model must be a frozen copy of the SFT checkpoint
-- **Gotcha**: Very sensitive to beta; run a sweep over [0.05, 0.1, 0.2, 0.5]
+- **いつ使うか**: 選好ペアがあり、RLHFより単純なパイプラインが欲しい場合
+- **重要なハイパーパラメータ**: Beta（0.1-0.5。低いほど参照からの乖離を大きく許す）
+- **重要な詳細**: 参照モデルはSFTチェックポイントの凍結コピーでなければならない
+- **落とし穴**: betaに非常に敏感。[0.05, 0.1, 0.2, 0.5]でスイープする
 
 ### KTO
 
-- **When to use**: You only have "good" or "bad" labels without pairwise comparisons
-- **Key hyperparameter**: Beta (same as DPO), loss aversion multiplier (1.5x on bad responses)
-- **Critical detail**: Needs roughly balanced good/bad examples (40-60% split)
-- **Gotcha**: Without pairs, the gradient signal is weaker; may need more data than DPO
+- **いつ使うか**: ペア比較ではなく「良い」または「悪い」ラベルだけがある場合
+- **重要なハイパーパラメータ**: Beta（DPOと同じ）、損失回避乗数（悪い応答の損失に通常1.5x）
+- **重要な詳細**: 良い例と悪い例がだいたい均衡している必要がある（40-60%分割）
+- **落とし穴**: ペアがないため勾配信号が弱い。DPOより多くのデータが必要になる場合がある
 
 ### ORPO
 
-- **When to use**: You want to skip SFT entirely and go straight from base to aligned
-- **Key hyperparameter**: Lambda (weight of the preference term vs SFT term)
-- **Critical detail**: Needs both instruction labels AND preference pairs in one dataset
-- **Gotcha**: Combined objective can be hard to balance; if SFT loss dominates, alignment is weak
+- **いつ使うか**: SFTを完全に省略し、ベースから直接アライン済みに進めたい場合
+- **重要なハイパーパラメータ**: Lambda（SFT項に対する選好項の重み）
+- **重要な詳細**: 1つのデータセット内に指示ラベルと選好ペアの両方が必要
+- **落とし穴**: 統合目的のバランス調整は難しい。SFT損失が支配的だとアラインメントが弱い
 
 ### SimPO
 
-- **When to use**: Memory-constrained setup where you can't hold a reference model
-- **Key hyperparameter**: Beta, gamma (length normalization exponent)
-- **Critical detail**: Length normalization prevents the model from favoring short responses
-- **Gotcha**: Without a reference model anchor, the model can drift further; monitor carefully
+- **いつ使うか**: 参照モデルを保持できないメモリ制約下
+- **重要なハイパーパラメータ**: Beta、gamma（長さ正規化の指数）
+- **重要な詳細**: 長さ正規化により、モデルが短い応答を好むことを防ぐ
+- **落とし穴**: 参照モデルというアンカーがないため、モデルはより遠くへドリフトし得る。慎重に監視する
 
-## Pipeline Templates
+## パイプラインテンプレート
 
-### Template 1: Fast Prototype (1-2 days)
+### テンプレート1: 高速プロトタイプ（1-2日）
 
 ```
 Base Model -> SFT (1 epoch, 10K examples) -> DPO (3 epochs, 5K pairs)
 ```
 
-Compute: ~4 GPU-hours for 7B model on A100
-Quality: Solid instruction following, basic preference alignment
+計算: A100上の7Bモデルで約4 GPU-hours
+品質: 堅実な指示追従、基本的な選好アラインメント
 
-### Template 2: Production Quality (1-2 weeks)
+### テンプレート2: 本番品質（1-2週間）
 
 ```
 Base Model -> SFT (2 epochs, 50K examples) -> DPO (5 epochs, 20K pairs) -> Eval -> Iterate
 ```
 
-Compute: ~40 GPU-hours for 7B, ~200 GPU-hours for 70B
-Quality: Competitive with open-source RLHF models
+計算: 7Bで約40 GPU-hours、70Bで約200 GPU-hours
+品質: オープンソースのRLHFモデルと競争可能
 
-### Template 3: State-of-the-Art (1-3 months)
+### テンプレート3: 最先端（1-3か月）
 
 ```
 Base Model -> SFT (2 epochs, 100K+ examples) -> RLHF (PPO, 50K+ pairs) -> DPO (targeted refinement) -> Eval -> Iterate
 ```
 
-Compute: ~500+ GPU-hours for 70B
-Quality: Approaching frontier model alignment
+計算: 70Bで約500+ GPU-hours
+品質: フロンティアモデルのアラインメントに近づく
 
-### Template 4: Minimal Data (1-2 days)
+### テンプレート4: 最小データ（1-2日）
 
 ```
 Base Model -> SFT (1 epoch, 5K examples) -> KTO (unpaired thumbs up/down from users)
 ```
 
-Compute: ~2 GPU-hours for 7B
-Quality: Better than SFT-only with minimal data collection overhead
+計算: 7Bで約2 GPU-hours
+品質: 最小限のデータ収集コストでSFTのみより良い
 
-## Evaluation Protocol
+## 評価プロトコル
 
-After alignment, evaluate across these dimensions:
+アラインメント後、次の観点で評価します。
 
-1. **Preference win rate**: Compare aligned model vs SFT model on 200+ test prompts with human judges. Target: > 60% win rate.
-2. **Benchmark retention**: MMLU, HumanEval, or domain-specific benchmarks. Should not drop > 5% from SFT baseline.
-3. **MT-Bench or AlpacaEval**: Standard alignment quality benchmarks. Compare against published baselines.
-4. **Safety evaluation**: Test against adversarial prompts, jailbreaks, and harmful request categories.
-5. **Response diversity**: Measure entropy of responses across 100 prompts. Low entropy = mode collapse.
+1. **選好勝率**: 200件以上のテストプロンプトで、アライン済みモデルとSFTモデルを人間の判定者が比較する。目標: 勝率 > 60%。
+2. **ベンチマーク維持**: MMLU、HumanEval、またはドメイン固有ベンチマーク。SFTベースラインから > 5% 低下しないこと。
+3. **MT-BenchまたはAlpacaEval**: 標準的なアラインメント品質ベンチマーク。公開ベースラインと比較する。
+4. **安全性評価**: 敵対的プロンプト、jailbreak、有害リクエストカテゴリでテストする。
+5. **応答多様性**: 100プロンプトに対する応答のエントロピーを測定する。低エントロピー = モード崩壊。
 
-## Common Failure Modes
+## よくある失敗モード
 
-| Symptom | Cause | Method-Specific Fix |
+| 症状 | 原因 | 手法別の修正 |
 |---------|-------|-------------------|
-| Verbose, padded responses | Reward model / implicit reward favors length | DPO: increase beta. RLHF: add length penalty. SimPO: adjust gamma. |
-| Model agrees with everything | Sycophancy from preference data bias | Add preference pairs where the correct response disagrees with the user |
-| Refuses benign requests | Over-alignment on safety data | Reduce safety example proportion, add more benign-refusal pairs |
-| Outputs are nearly identical to SFT | Beta too high (DPO/KTO) or KL coefficient too high (PPO) | Lower beta / KL coefficient; the model isn't learning |
-| Training loss oscillates | Learning rate too high or insufficient data | Reduce lr by 2-3x; increase preference data |
+| 冗長で水増しされた応答 | 報酬モデル / 暗黙の報酬が長さを好む | DPO: betaを上げる。RLHF: 長さペナルティを加える。SimPO: gammaを調整する。 |
+| モデルが何にでも同意する | 選好データのバイアスによる迎合 | 正しい応答がユーザーに反論する選好ペアを追加する |
+| 無害な依頼を拒否する | 安全性データへの過剰アラインメント | 安全性例の割合を減らし、無害な拒否例を追加する |
+| 出力がSFTとほぼ同一 | Betaが高すぎる（DPO/KTO）、またはKL係数が高すぎる（PPO） | beta / KL係数を下げる。モデルが学習していない |
+| 訓練損失が振動する | 学習率が高すぎる、またはデータ不足 | lrを2-3倍下げる。選好データを増やす |

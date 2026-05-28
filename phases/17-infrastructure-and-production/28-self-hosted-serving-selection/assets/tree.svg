@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -8,54 +8,54 @@
       .maint { fill: #ffe1e1; stroke: #b71c1c; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">self-hosted engine decision tree — hardware first, then scale, then workload</text>
+  <text x="480" y="24" text-anchor="middle" class="title">自社運用エンジン 判断ツリー - ハードウェア、スケール、ワークロードの順で決める</text>
 
   <rect x="40" y="50" width="280" height="200" class="cpu"/>
-  <text x="180" y="72" text-anchor="middle" class="head">CPU / edge</text>
-  <text x="180" y="96" text-anchor="middle" class="step">llama.cpp (dominant)</text>
-  <text x="60" y="124" class="small">· widest model support</text>
-  <text x="60" y="142" class="small">· fastest CPU inference</text>
-  <text x="60" y="160" class="small">· full control over quant / threads</text>
+  <text x="180" y="72" text-anchor="middle" class="head">CPU / エッジ</text>
+  <text x="180" y="96" text-anchor="middle" class="step">llama.cpp (主流)</text>
+  <text x="60" y="124" class="small">· 最も広いモデル対応</text>
+  <text x="60" y="142" class="small">· 最速級のCPU推論</text>
+  <text x="60" y="160" class="small">· 量子化 / スレッドを完全制御</text>
   <rect x="60" y="180" width="240" height="60" class="box"/>
   <text x="180" y="202" text-anchor="middle" class="step">Ollama = llama.cpp + UX</text>
-  <text x="180" y="220" text-anchor="middle" class="small">one command, single user</text>
-  <text x="180" y="236" text-anchor="middle" class="small">15-30% slower than llama.cpp</text>
+  <text x="180" y="220" text-anchor="middle" class="small">1コマンド、単一ユーザー</text>
+  <text x="180" y="236" text-anchor="middle" class="small">llama.cppより15-30%遅い</text>
 
   <rect x="340" y="50" width="280" height="200" class="gpu"/>
   <text x="480" y="72" text-anchor="middle" class="head">NVIDIA GPU</text>
   <rect x="360" y="90" width="240" height="45" class="box"/>
-  <text x="480" y="113" text-anchor="middle" class="step">vLLM (broad default)</text>
+  <text x="480" y="113" text-anchor="middle" class="step">vLLM (広い標準)</text>
   <text x="480" y="128" text-anchor="middle" class="small">v0.15.1 Feb 2026, Blackwell SM120</text>
   <rect x="360" y="145" width="240" height="45" class="box"/>
-  <text x="480" y="168" text-anchor="middle" class="step">TRT-LLM (Blackwell only)</text>
-  <text x="480" y="183" text-anchor="middle" class="small">throughput leader on B200/GB200</text>
+  <text x="480" y="168" text-anchor="middle" class="step">TRT-LLM (Blackwellのみ)</text>
+  <text x="480" y="183" text-anchor="middle" class="small">B200/GB200でスループット首位</text>
   <rect x="360" y="200" width="240" height="45" class="box"/>
-  <text x="480" y="222" text-anchor="middle" class="step">Ollama (dev only)</text>
-  <text x="480" y="237" text-anchor="middle" class="small">not for shared production</text>
+  <text x="480" y="222" text-anchor="middle" class="step">Ollama (開発専用)</text>
+  <text x="480" y="237" text-anchor="middle" class="small">共有本番向けではない</text>
 
   <rect x="640" y="50" width="280" height="200" class="agent"/>
-  <text x="780" y="72" text-anchor="middle" class="head">agentic / prefix-heavy</text>
-  <text x="780" y="96" text-anchor="middle" class="step">SGLang (specialist)</text>
+  <text x="780" y="72" text-anchor="middle" class="head">エージェント型 / prefix多用</text>
+  <text x="780" y="96" text-anchor="middle" class="step">SGLang (特化型)</text>
   <text x="660" y="124" class="small">· RadixAttention (Phase 17 · 06)</text>
-  <text x="660" y="142" class="small">· 400,000+ GPUs in production</text>
+  <text x="660" y="142" class="small">· 400,000+ GPUs 本番運用</text>
   <text x="660" y="160" class="small">· xAI, LinkedIn, Cursor, Oracle</text>
   <text x="660" y="178" class="small">· GCP, Azure, AWS</text>
-  <text x="780" y="210" text-anchor="middle" class="caption">RAG heavy prefix reuse → here</text>
-  <text x="780" y="228" text-anchor="middle" class="caption">multi-turn agent tools → here</text>
+  <text x="780" y="210" text-anchor="middle" class="caption">RAGのprefix再利用多め → ここ</text>
+  <text x="780" y="228" text-anchor="middle" class="caption">マルチターンエージェントツール → ここ</text>
 
   <rect x="40" y="280" width="880" height="90" class="maint"/>
-  <text x="480" y="302" text-anchor="middle" class="head">TGI maintenance mode since December 11, 2025</text>
-  <text x="480" y="324" text-anchor="middle" class="step">only bug fixes going forward — do NOT default to TGI for new projects</text>
-  <text x="480" y="344" text-anchor="middle" class="caption">existing TGI deployments can continue; migrate to SGLang or vLLM when convenient</text>
+  <text x="480" y="302" text-anchor="middle" class="head">TGIは2025-12-11以降保守モード</text>
+  <text x="480" y="324" text-anchor="middle" class="step">今後はバグ修正のみ - 新規プロジェクトでTGIをデフォルトにしない</text>
+  <text x="480" y="344" text-anchor="middle" class="caption">既存TGI デプロイは継続可; 都合のよい時にSGLangまたはvLLMへ移行</text>
 
   <rect x="40" y="390" width="880" height="100" class="box"/>
-  <text x="480" y="412" text-anchor="middle" class="head">2026 pipeline pattern</text>
-  <text x="480" y="434" text-anchor="middle" class="step">dev: Ollama   →   staging: llama.cpp   →   prod: vLLM (or SGLang)</text>
-  <text x="480" y="454" text-anchor="middle" class="step">same GGUF or HF weights across all three tiers</text>
-  <text x="480" y="476" text-anchor="middle" class="caption">engineers iterate fast locally; staging mirrors prod quant; prod is the serving target</text>
+  <text x="480" y="412" text-anchor="middle" class="head">2026年パイプラインパターン</text>
+  <text x="480" y="434" text-anchor="middle" class="step">開発: Ollama   →   ステージング: llama.cpp   →   本番: vLLM (またはSGLang)</text>
+  <text x="480" y="454" text-anchor="middle" class="step">3層で同じGGUFまたはHF重みを使う</text>
+  <text x="480" y="476" text-anchor="middle" class="caption">エンジニアはローカルで高速反復; ステージングは本番量子化をミラー; 本番が提供先</text>
 </svg>

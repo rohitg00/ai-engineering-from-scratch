@@ -1,32 +1,32 @@
 ---
 name: primitive-mapper
-description: Map any multi-agent framework or codebase to the four primitive axes (agent, handoff, shared state, orchestrator).
+description: 任意の multi-agent framework または codebase を 4 つの primitive axes (agent, handoff, shared state, orchestrator) に map する。
 version: 1.0.0
 phase: 16
 lesson: 04
 tags: [multi-agent, primitives, framework-comparison, architecture]
 ---
 
-Given a multi-agent framework (or a codebase that uses one), produce the four-primitive mapping so the reader can understand the framework in one paragraph.
+multi-agent framework (またはそれを使う codebase) が与えられたら、reader が framework を 1 段落で理解できるように 4-primitive mapping を作成する。
 
-Produce:
+生成するもの:
 
-1. **Agent definition.** How is an agent constructed? What parameters? What state does it carry? Name the exact class or factory.
-2. **Handoff mechanism.** Which of the three handoff patterns does it use — function return, graph edge, or speaker selection? If a hybrid, which is primary? Show the minimum code that triggers one handoff.
-3. **Shared state model.** Full message pool or projected view? In-memory or durable (checkpointed)? Is it thread-safe for concurrent writers? Who reconciles conflicts?
-4. **Orchestrator type.** Static, LLM-selected, handoff-driven, or queue-driven? If LLM-selected, which model by default? If static, is the graph cyclic or DAG?
-5. **Cross-axis tradeoffs.** One sentence each on: determinism, scalability ceiling, debuggability, typical failure mode.
+1. **Agent definition.** agent はどう construct されるか。parameters は何か。どんな state を持つか。exact class または factory 名を挙げる。
+2. **Handoff mechanism.** 3 つの handoff patterns のどれを使うか。function return、graph edge、speaker selection。hybrid なら primary を示す。1 handoff を trigger する minimum code を示す。
+3. **Shared state model.** full message pool か projected view か。in-memory か durable (checkpointed) か。concurrent writers に thread-safe か。conflicts を誰が reconcile するか。
+4. **Orchestrator type.** static、LLM-selected、handoff-driven、queue-driven のどれか。LLM-selected なら default model、static なら graph が cyclic か DAG かを示す。
+5. **Cross-axis tradeoffs.** determinism、scalability ceiling、debuggability、typical failure mode について各 1 文。
 
-Hard rejects:
+強制 reject:
 
-- Any mapping that claims an abstraction is "new" without showing it does not collapse to one of the four primitives. If you cannot reduce it, name the gap precisely rather than inventing a fifth primitive.
-- Framework comparisons that only cite marketing docs. Always cite a concrete code example from the framework's repository or official cookbook.
-- Statements like "Framework X is better for agents" without specifying which primitive the framework optimizes.
+- abstraction が 4 primitives のどれにも collapse しないことを示さずに "new" と主張する mapping。reduce できない場合は 5 つ目を invent せず、gap を正確に述べる。
+- marketing docs だけを cite する framework comparisons。必ず framework repository または official cookbook の concrete code example を cite する。
+- framework がどの primitive を optimize しているかを特定せずに "Framework X is better for agents" と述べること。
 
-Refusal rules:
+拒否ルール:
 
-- If the framework is closed-source and the public docs do not expose the agent-handoff-state-orchestrator surface, state that mapping is not possible without internals.
-- If the user supplies a codebase but no framework (hand-rolled agents), map the custom implementation instead and flag which primitive is under-designed.
-- If the framework is older than 2024 (original AutoGen v0.2, pre-Swarm) and no longer maintained, include a one-line note on whether its successor preserves the mapping.
+- framework が closed-source で public docs が agent-handoff-state-orchestrator surface を expose していない場合、internals なしでは mapping 不可能だと述べる。
+- user が framework なしの codebase (hand-rolled agents) を提供した場合、custom implementation を map し、under-designed な primitive を flag する。
+- framework が 2024 年以前 (original AutoGen v0.2、pre-Swarm) で maintenance されていない場合、successor が mapping を preserve しているか 1-line note を含める。
 
-Output: a one-page framework brief. Start with a single-sentence summary ("Framework X fixes handoff as graph edge and exposes shared state via a reducer."), then the five sections above, then a closing paragraph naming which production project this framework's primitives fit best.
+出力: 1 ページの framework brief。single-sentence summary ("Framework X fixes handoff as graph edge and exposes shared state via a reducer.") で始め、上記 5 sections を続け、最後にこの framework の primitives が最も fit する production project を述べる closing paragraph を置く。

@@ -1,32 +1,32 @@
 ---
 name: skill-library
-description: Generate a Voyager-shaped skill library with registration, retrieval by similarity, compositional execution, and failure-driven refinement.
+description: Similarity による retrieval、compositional execution、failure-driven refinement を備えた Voyager-shaped skill library を生成する。
 version: 1.0.0
 phase: 14
 lesson: 10
 tags: [voyager, skills, library, composition, refinement]
 ---
 
-Given a target runtime and a domain, produce a skill library that supports Voyager's three components: curriculum hook, retrievable skill store, iterative refinement.
+Target runtime と domain が与えられたら、Voyager の 3 components (curriculum hook、retrievable skill store、iterative refinement) を support する skill library を生成する。
 
-Produce:
+生成するもの:
 
-1. `Skill` type with `name`, `description`, `code`, `version`, `tags`, `depends_on`, `history`. Every write records the prior code.
-2. `SkillLibrary` with `register(skill, dedup=True)` (new or version bump), `search(query, top_k, tag_filter)`, `get(name)`, `topo_order(name)` (dep resolution), `execute(name, context)` (topological run).
-3. Retrieval MUST use embedding similarity or BM25, not LLM scoring over the full library. LLM re-rank allowed on the top-k shortlist.
-4. Execution MUST catch exceptions per-skill and surface them into the trace as feedback the refinement loop can consume.
-5. A refinement hook: after a failed `execute`, the runtime collects (task, skill_name, error, env_state), passes it to the model, and calls `register` on the rewritten skill. Version bumps; history preserves old code.
+1. `name`, `description`, `code`, `version`, `tags`, `depends_on`, `history` を持つ `Skill` type。すべての write は prior code を記録する。
+2. `register(skill, dedup=True)` (new または version bump)、`search(query, top_k, tag_filter)`、`get(name)`、`topo_order(name)` (dep resolution)、`execute(name, context)` (topological run) を持つ `SkillLibrary`。
+3. Retrieval は embedding similarity または BM25 を使わなければならない。Full library に対する LLM scoring は使わない。LLM re-rank は top-k shortlist でのみ許可。
+4. Execution は per-skill で exceptions を catch し、refinement loop が consume できる feedback として trace に surface しなければならない。
+5. Refinement hook: failed `execute` 後、runtime は (task, skill_name, error, env_state) を集め、model に渡し、rewritten skill に対して `register` を呼ぶ。Version は bump し、history は old code を保存する。
 
 Hard rejects:
 
-- A library where skills are strings of prose, not code. Skills are executable. Prose belongs in `description`.
-- Composition without topological sort. Depth-first without cycle detection breaks on skill DAGs.
-- Silent version overwrites. Every refinement MUST bump `version` and push the old code to `history` for audit.
+- Skills が code ではなく prose strings の library。Skills は executable である。Prose は `description` に置く。
+- Topological sort なしの composition。Cycle detection なしの depth-first は skill DAG で壊れる。
+- Silent version overwrite。すべての refinement は必ず `version` を bump し、audit 用に old code を `history` へ push する。
 
 Refusal rules:
 
-- If the target runtime has no sandbox for skill execution, refuse for domains where skills touch production systems. Require a sandbox (Lesson 09 principles) before ship.
-- If the user asks for "auto-retry on every failure without refinement," refuse. Retries without refinement amplify the bug; they do not fix it.
-- If the library exceeds ~200 skills with flat retrieval, refuse to call it "production-ready." Add tag filters and hierarchical namespaces first.
+- Target runtime に skill execution 用 sandbox がない場合、production systems に触れる domain では拒否する。Ship 前に sandbox (Lesson 09 principles) を要求する。
+- User が「refinement なしで failure ごとに auto-retry」と依頼した場合は拒否する。Refinement なしの retry は bug を増幅するだけで修正しない。
+- Library が flat retrieval のまま約 200 skills を超える場合、それを "production-ready" と呼ぶことを拒否する。まず tag filters と hierarchical namespaces を追加する。
 
-Output: `skill.py`, `library.py`, `execute.py`, `refine.py`, and a `README.md` explaining the dedup rule, retrieval backend, refinement prompt, and version policy. End with "what to read next" pointing to Lesson 17 for Claude Agent SDK integration, Lesson 16 for OpenAI Agents SDK tool translation, or Lesson 30 for evaluating skill-library quality.
+Output: `skill.py`, `library.py`, `execute.py`, `refine.py` と、dedup rule、retrieval backend、refinement prompt、version policy を説明する `README.md`。最後に、Claude Agent SDK integration には Lesson 17、OpenAI Agents SDK tool translation には Lesson 16、skill-library quality 評価には Lesson 30 への "what to read next" で締める。

@@ -1,44 +1,44 @@
 # Positional Encoding — Sinusoidal, RoPE, ALiBi
 
-> Attention is permutation-invariant. "The cat sat on the mat" and "mat the on sat cat the" produce the same output without positional signal. Three algorithms fix it — each with a different bet on what "position" means.
+> Attention は permutation-invariant です。位置情報がなければ、"The cat sat on the mat" と "mat the on sat cat the" は同じ出力を生みます。3 つのアルゴリズムがこれを修正します。それぞれが「位置」とは何かについて異なる仮定を置いています。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head Attention)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head Attention)
+**所要時間:** 約 45 分
 
-## The Problem
+## 問題
 
-Scaled dot-product attention is order-blind. The attention matrix `softmax(Q K^T / √d) V` is computed from pairwise similarities. Shuffle the rows of `X`, get the rows of the output shuffled the same way. Nothing inside attention cares about position.
+Scaled dot-product attention は順序を見ません。attention 行列 `softmax(Q K^T / √d) V` はペアごとの類似度から計算されます。`X` の行をシャッフルすると、出力の行も同じようにシャッフルされます。attention の内部には、位置を気にするものが何もありません。
 
-That is not a bug in a bag-of-words model. For language, code, audio, video — anything where order carries meaning — it is fatal.
+これは bag-of-words モデルではバグではありません。しかし、言語、コード、音声、動画など、順序が意味を持つものでは致命的です。
 
-The fix is to inject position into the embeddings somehow. Three eras of answers:
+解決策は、何らかの方法で位置を embedding に注入することです。答えには 3 つの時代があります。
 
-1. **Absolute sinusoidal** (Vaswani 2017). Add `sin/cos` of position to the embedding. Simple, learnable-free, extrapolates poorly beyond trained lengths.
-2. **RoPE — Rotary Position Embeddings** (Su 2021). Rotate Q and K vectors by an angle proportional to position. Encodes *relative* position directly in the dot product. Dominant in 2026.
-3. **ALiBi — Attention with Linear Biases** (Press 2022). Skip embeddings entirely; add a per-head linear penalty to attention scores based on distance. Excellent length extrapolation.
+1. **Absolute sinusoidal** (Vaswani 2017)。位置の `sin/cos` を embedding に加える。単純で、学習パラメータは不要だが、学習長を超える外挿は弱い。
+2. **RoPE — Rotary Position Embeddings** (Su 2021)。Q と K のベクトルを、位置に比例した角度で回転させる。内積の中に*相対*位置を直接エンコードする。2026 年の主流。
+3. **ALiBi — Attention with Linear Biases** (Press 2022)。embedding を完全に避け、距離に基づく head ごとの線形ペナルティを attention score に加える。長さ外挿が非常に強い。
 
-As of 2026, essentially every frontier open model uses RoPE: Llama 2/3/4, Qwen 2/3, Mistral, Mixtral, DeepSeek-V3, Kimi. A handful of long-context models use ALiBi or its modern variants. Absolute sinusoidal is historical.
+2026 年時点で、ほぼすべての frontier open model は RoPE を使っています。Llama 2/3/4、Qwen 2/3、Mistral、Mixtral、DeepSeek-V3、Kimi などです。一部の long-context model は ALiBi やその現代的な変種を使います。Absolute sinusoidal は歴史的な方式になっています。
 
-## The Concept
+## コンセプト
 
-![Sinusoidal absolute vs RoPE rotations vs ALiBi distance bias](../assets/positional-encoding.svg)
+![Sinusoidal absolute、RoPE rotations、ALiBi distance bias の比較](../assets/positional-encoding.svg)
 
 ### Absolute sinusoidal
 
-Pre-compute a fixed matrix `PE` of shape `(max_len, d_model)`:
+形状 `(max_len, d_model)` の固定行列 `PE` を事前計算します。
 
 ```
 PE[pos, 2i]   = sin(pos / 10000^(2i / d_model))
 PE[pos, 2i+1] = cos(pos / 10000^(2i / d_model))
 ```
 
-Then `X' = X + PE[:N]` before attention. Each dimension is a sinusoid at a different frequency. The model learns to read position from the phase pattern. Fails beyond `max_len`: nothing told the model what happens at position 2048 when it only saw positions 0–2047.
+その後、attention の前に `X' = X + PE[:N]` とします。各次元は異なる周波数の sinusoid です。モデルは位相パターンから位置を読み取ることを学びます。`max_len` を超えると失敗します。位置 0〜2047 しか見ていないモデルには、位置 2048 で何が起こるかが何も教えられていないからです。
 
 ### RoPE
 
-Rotate the Q and K vectors (not embeddings). For a pair of dimensions `(2i, 2i+1)`:
+Q と K のベクトルを回転させます（embedding ではありません）。次元ペア `(2i, 2i+1)` について:
 
 ```
 [q'_2i    ]   [ cos(pos·θ_i)  -sin(pos·θ_i) ] [q_2i   ]
@@ -47,21 +47,21 @@ Rotate the Q and K vectors (not embeddings). For a pair of dimensions `(2i, 2i+1
 θ_i = base^(-2i / d_head),  base = 10000 by default
 ```
 
-Apply the same rotation to keys with position `pos_k`. The dot product `q'_m · k'_n` becomes a function of `(m - n)` alone. That is: **the attention score depends only on the relative distance**, even though the rotation was keyed off absolute positions. Beautiful trick.
+位置 `pos_k` の key にも同じ回転を適用します。内積 `q'_m · k'_n` は `(m - n)` だけの関数になります。つまり、回転は絶対位置に基づいているにもかかわらず、**attention score は相対距離だけに依存します**。見事なトリックです。
 
-Extending RoPE: `base` can be scaled (NTK-aware, YaRN, LongRoPE) to extrapolate to longer contexts without retraining. Llama 3 extended from 8K to 128K context this way.
+RoPE の拡張では、再学習なしにより長いコンテキストへ外挿するため、`base` をスケールできます（NTK-aware、YaRN、LongRoPE）。Llama 3 はこの方法で 8K から 128K context へ拡張しました。
 
 ### ALiBi
 
-Skip the embedding trick. Bias the attention scores directly:
+embedding の仕掛けを使わず、attention score に直接 bias を加えます。
 
 ```
 attn_score[i, j] = (q_i · k_j) / √d  -  m_h · |i - j|
 ```
 
-Where `m_h` is a head-specific slope (e.g. `1 / 2^(8·h/H)`). Closer tokens get boosted; far tokens get penalized. No training-time cost. The paper shows length extrapolation beats sinusoidal and matches RoPE on its original trained length.
+ここで `m_h` は head 固有の slope です（例: `1 / 2^(8·h/H)`）。近いトークンは強められ、遠いトークンは罰せられます。学習時コストはありません。論文では、長さ外挿で sinusoidal を上回り、元の学習長では RoPE に匹敵することが示されています。
 
-### What to pick in 2026
+### 2026 年に何を選ぶか
 
 | Variant | Extrapolation | Training cost | Used by |
 |---------|---------------|---------------|---------|
@@ -71,13 +71,13 @@ Where `m_h` is a head-specific slope (e.g. `1 / 2^(8·h/H)`). Closer tokens get 
 | RoPE + YaRN | excellent | fine-tune stage | Qwen2-1M, Llama 3.1 128K |
 | ALiBi | excellent | free | BLOOM, MPT, Baichuan |
 
-RoPE won because it slots into attention without changing the architecture, encodes relative position, and its `base` hyperparameter gives a clean knob for long-context fine-tuning.
+RoPE が勝った理由は、アーキテクチャを変えずに attention へ差し込め、相対位置をエンコードでき、`base` hyperparameter が long-context fine-tuning のための明確なノブになるからです。
 
-## Build It
+## 作ってみる
 
 ### Step 1: sinusoidal encoding
 
-See `code/main.py`. A 4-line computation:
+`code/main.py` を見てください。4 行程度の計算です。
 
 ```python
 def sinusoidal(N, d):
@@ -90,11 +90,11 @@ def sinusoidal(N, d):
     return pe
 ```
 
-Add this to the embedding matrix before the first attention layer.
+これを最初の attention 層の前で embedding 行列に加えます。
 
-### Step 2: RoPE applied to Q, K
+### Step 2: Q, K に RoPE を適用する
 
-RoPE operates in-place on Q and K. For each pair of dims:
+RoPE は Q と K に対して in-place に動作します。各次元ペアについて:
 
 ```python
 def apply_rope(x, pos, base=10000):
@@ -109,9 +109,9 @@ def apply_rope(x, pos, base=10000):
     return out
 ```
 
-Crucial: apply the same function to Q at position `m` and K at position `n`. Their dot product picks up a `cos((m-n)·θ_i)` factor on every coordinate pair. Attention learns relative position for free.
+重要なのは、位置 `m` の Q と位置 `n` の K に同じ関数を適用することです。それらの内積は、各座標ペアで `cos((m-n)·θ_i)` 因子を得ます。attention は相対位置を無料で学べます。
 
-### Step 3: ALiBi slopes and bias
+### Step 3: ALiBi の slope と bias
 
 ```python
 def alibi_bias(n_heads, seq_len):
@@ -124,15 +124,15 @@ def alibi_bias(n_heads, seq_len):
     return bias  # add to attention scores before softmax
 ```
 
-Add `bias[h]` to the `(seq_len, seq_len)` attention score matrix of head `h`, then softmax.
+`bias[h]` を head `h` の `(seq_len, seq_len)` attention score 行列に加え、その後 softmax します。
 
-### Step 4: verify relative-distance property of RoPE
+### Step 4: RoPE の相対距離性を検証する
 
-Pick two random vectors `a, b`. Rotate by `(pos_a, pos_b)`. Then by `(pos_a + k, pos_b + k)`. Both dot products must match within floating-point error. That property is the whole point of RoPE — it is invariant to the absolute offset, only the relative gap matters.
+ランダムな 2 つのベクトル `a, b` を選びます。`(pos_a, pos_b)` で回転させます。次に `(pos_a + k, pos_b + k)` で回転させます。両方の内積は浮動小数点誤差の範囲で一致しなければなりません。この性質こそが RoPE の要点です。絶対オフセットには不変で、相対的な差だけが重要になります。
 
-## Use It
+## 使いどころ
 
-PyTorch 2.5+ ships RoPE utilities in `torch.nn.functional`. Most production code uses `flash_attn` or `xformers` where RoPE is applied inside the attention kernel.
+PyTorch 2.5+ は `torch.nn.functional` に RoPE utilities を含んでいます。本番コードの多くは `flash_attn` または `xformers` を使い、RoPE は attention kernel の内部で適用されます。
 
 ```python
 from transformers import AutoModel
@@ -140,42 +140,42 @@ model = AutoModel.from_pretrained("meta-llama/Llama-3.2-3B")
 # model.config.rope_scaling → {"type": "yarn", "factor": 32.0, "original_max_position_embeddings": 8192}
 ```
 
-**Long-context tricks in 2026:**
+**2026 年の long-context の工夫:**
 
-- **NTK-aware interpolation.** Rescale `base` to `base * (scale_factor)^(d/(d-2))` when extending from 4K to 16K+.
-- **YaRN.** Smarter interpolation that preserves attention entropy on long contexts. Llama 3.1 128K uses it.
-- **LongRoPE.** Microsoft's 2024 method that uses evolutionary search to pick per-dimension scale factors. Phi-3-Long uses it.
-- **Position interpolation + fine-tuning.** Just shrink positions by the extension factor and fine-tune for 1–5B tokens. Surprisingly effective.
+- **NTK-aware interpolation.** 4K から 16K+ に拡張するとき、`base` を `base * (scale_factor)^(d/(d-2))` に rescale する。
+- **YaRN.** 長いコンテキストで attention entropy を保つ、より賢い interpolation。Llama 3.1 128K が使っている。
+- **LongRoPE.** 次元ごとの scale factor を選ぶために evolutionary search を使う Microsoft の 2024 年の手法。Phi-3-Long が使っている。
+- **Position interpolation + fine-tuning.** extension factor で位置を縮め、1〜5B tokens で fine-tune するだけ。驚くほど有効。
 
-## Ship It
+## 仕上げる
 
-See `outputs/skill-positional-encoding-picker.md`. The skill picks an encoding strategy for a new model given target context length, extrapolation needs, and training budget.
+`outputs/skill-positional-encoding-picker.md` を見てください。この skill は、target context length、外挿要件、学習予算をもとに、新しいモデルの encoding strategy を選びます。
 
-## Exercises
+## 演習
 
-1. **Easy.** Plot the sinusoidal `PE` matrix as a heatmap for `max_len=512, d=128`. Confirm the "stripes get wider as dimension index grows" pattern.
-2. **Medium.** Implement NTK-aware RoPE scaling. Train a tiny LM on sequences of length 256, then test on length 1024 with and without scaling. Measure perplexity.
-3. **Hard.** Implement ALiBi and RoPE in the same attention module. Train a 4-layer transformer on a copy task with sequences of length 512. Extrapolate to 2048 at test time. Compare degradation.
+1. **Easy.** `max_len=512, d=128` の sinusoidal `PE` 行列をヒートマップとしてプロットしてください。「次元 index が大きくなるほど縞が広くなる」パターンを確認します。
+2. **Medium.** NTK-aware RoPE scaling を実装してください。長さ 256 の系列で小さな LM を学習し、scaling あり/なしで長さ 1024 に対してテストします。perplexity を測ってください。
+3. **Hard.** 同じ attention module に ALiBi と RoPE を実装してください。長さ 512 の copy task で 4 層 Transformer を学習します。テスト時に 2048 へ外挿し、劣化を比較してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Positional encoding | "Tells attention about order" | Any signal added to embeddings or attention that encodes position. |
-| Sinusoidal | "The original one" | `sin/cos` at geometric frequencies added to embeddings; doesn't extrapolate. |
-| RoPE | "Rotary embeddings" | Rotate Q, K by position-dependent angle; dot product encodes relative distance. |
-| ALiBi | "Linear bias trick" | Add `-m·\|i-j\|` to attention scores; no embedding needed, great extrapolation. |
-| base | "RoPE's knob" | The frequency scaler in RoPE; increase to extend context at inference. |
-| NTK-aware | "A RoPE scaling trick" | Rescale `base` so high-frequency dims aren't squeezed when context expands. |
-| YaRN | "The fancy one" | Per-dimension interpolation+extrapolation that preserves attention entropy. |
-| Extrapolation | "Works beyond trained length" | Can the position scheme serve correct output past `max_len` seen in training? |
+| Positional encoding | 「attention に順序を教える」 | 位置をエンコードするために embedding または attention に加えられる任意の信号。 |
+| Sinusoidal | 「元祖」 | 幾何的な周波数の `sin/cos` を embedding に加える方式。外挿しない。 |
+| RoPE | 「Rotary embeddings」 | Q, K を位置依存の角度で回転させる。内積が相対距離をエンコードする。 |
+| ALiBi | 「線形 bias の工夫」 | attention score に `-m·\|i-j\|` を加える。embedding は不要で、外挿に強い。 |
+| base | 「RoPE のノブ」 | RoPE の周波数 scaler。推論時に context を拡張するために大きくする。 |
+| NTK-aware | 「RoPE scaling の工夫」 | context 拡張時に高周波次元が詰まりすぎないよう、`base` を rescale する。 |
+| YaRN | 「凝った方式」 | attention entropy を保つ、次元ごとの interpolation+extrapolation。 |
+| Extrapolation | 「学習長を超えて動く」 | 学習時に見た `max_len` を超えても、その位置方式が正しい出力を出せるか。 |
 
-## Further Reading
+## 参考文献
 
-- [Vaswani et al. (2017). Attention Is All You Need §3.5](https://arxiv.org/abs/1706.03762) — original sinusoidal.
-- [Su et al. (2021). RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864) — RoPE paper.
-- [Press, Smith, Lewis (2021). Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation](https://arxiv.org/abs/2108.12409) — ALiBi.
-- [Peng et al. (2023). YaRN: Efficient Context Window Extension of Large Language Models](https://arxiv.org/abs/2309.00071) — state of the art RoPE scaling.
-- [Chen et al. (2023). Extending Context Window of Large Language Models via Positional Interpolation](https://arxiv.org/abs/2306.15595) — Meta's Llama 2 long-context paper.
-- [Ding et al. (2024). LongRoPE: Extending LLM Context Window Beyond 2 Million Tokens](https://arxiv.org/abs/2402.13753) — the Microsoft method used by Phi-3-Long and cited in the Use It section.
-- [HuggingFace Transformers — `modeling_rope_utils.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/modeling_rope_utils.py) — production-grade implementations of every RoPE scaling scheme (default, linear, dynamic, YaRN, LongRoPE, Llama-3).
+- [Vaswani et al. (2017). Attention Is All You Need §3.5](https://arxiv.org/abs/1706.03762) — 元祖 sinusoidal。
+- [Su et al. (2021). RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864) — RoPE 論文。
+- [Press, Smith, Lewis (2021). Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation](https://arxiv.org/abs/2108.12409) — ALiBi。
+- [Peng et al. (2023). YaRN: Efficient Context Window Extension of Large Language Models](https://arxiv.org/abs/2309.00071) — 最先端の RoPE scaling。
+- [Chen et al. (2023). Extending Context Window of Large Language Models via Positional Interpolation](https://arxiv.org/abs/2306.15595) — Meta の Llama 2 long-context 論文。
+- [Ding et al. (2024). LongRoPE: Extending LLM Context Window Beyond 2 Million Tokens](https://arxiv.org/abs/2402.13753) — Phi-3-Long で使われ、「使いどころ」セクションで言及した Microsoft の手法。
+- [HuggingFace Transformers — `modeling_rope_utils.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/modeling_rope_utils.py) — すべての RoPE scaling scheme（default、linear、dynamic、YaRN、LongRoPE、Llama-3）の本番品質実装。

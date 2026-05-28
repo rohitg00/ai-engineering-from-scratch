@@ -1,39 +1,39 @@
 ---
 name: orchestration-picker
-description: Pick an orchestration topology (supervisor, swarm, hierarchical, debate, or none) for a given problem and implement it minimally.
+description: 与えられた problem に対して orchestration topology (supervisor, swarm, hierarchical, debate, or none) を選び、最小限に実装する。
 version: 1.0.0
 phase: 14
 lesson: 28
 tags: [orchestration, supervisor, swarm, hierarchical, debate]
 ---
 
-Given a product domain and a task class, pick the minimal topology.
+product domain と task class が与えられたら、最小 topology を選ぶ。
 
-Decision:
+判断:
 
-1. 1 agent + workflow patterns (Lesson 12) suffice? -> don't use topology at all.
-2. 2-4 specialists with distinct responsibilities? -> **supervisor-worker**.
-3. Latency-critical and specialists can cleanly hand off? -> **swarm**.
-4. 10+ specialists, supervisor context budget failing? -> **hierarchical**.
-5. Accuracy matters more than cost, multi-proposer + critique helps? -> **debate** (Lesson 25).
+1. 1 agent + workflow patterns (Lesson 12) で十分か。-> topology をまったく使わない。
+2. distinct responsibilities を持つ 2-4 specialists か。-> **supervisor-worker**。
+3. latency-critical で、specialists がきれいに hand off できるか。-> **swarm**。
+4. 10+ specialists で supervisor context budget が破綻しているか。-> **hierarchical**。
+5. cost より accuracy が重要で、multi-proposer + critique が効くか。-> **debate** (Lesson 25)。
 
-Produce:
+生成するもの:
 
-1. The chosen topology scaffold.
-2. Hop counter on swarm; nesting depth limit on hierarchical; round cap on debate.
-3. Observability hooks per handoff or per step (OTel GenAI spans, Lesson 23).
-4. A "why this, not that" README section.
+1. 選択した topology scaffold。
+2. swarm には hop counter、hierarchical には nesting depth limit、debate には round cap。
+3. handoff ごと、または step ごとの observability hooks (OTel GenAI spans, Lesson 23)。
+4. "why this, not that" README section。
 
-Hard rejects:
+強い却下条件:
 
-- Calling 3 LLM calls in sequence "multi-agent." That's a prompt chain.
-- Swarm without hop counter. Bouncing is a certainty.
-- Hierarchical that bottoms out at 1 specialist per branch. Flatten.
+- 3 回の LLM calls を直列に呼ぶだけのものを "multi-agent" と呼ぶこと。それは prompt chain。
+- hop counter のない swarm。bouncing は確実に起きる。
+- branch ごとに 1 specialist で終わる hierarchical。flatten する。
 
-Refusal rules:
+拒否ルール:
 
-- If the user wants multi-agent for a task that a single ReAct loop handles, refuse and suggest Lesson 01.
-- If the user wants supervisor for a 2-step task, refuse and suggest prompt chaining (Lesson 12).
-- If the domain has compliance / audit requirements, refuse swarm and suggest supervisor or hierarchical.
+- user が single ReAct loop で処理できる task に multi-agent を望むなら拒否し、Lesson 01 を提案する。
+- user が 2-step task に supervisor を望むなら拒否し、prompt chaining (Lesson 12) を提案する。
+- domain に compliance / audit requirements があるなら swarm を拒否し、supervisor または hierarchical を提案する。
 
-Output: topology scaffold + README with decision rationale. End with "what to read next" pointing to Lesson 13 (LangGraph) for supervisor implementation, Lesson 16 (OpenAI Agents SDK) for handoffs-as-tools, or Lesson 25 for debate specifics.
+出力: topology scaffold + decision rationale を含む README。最後に、supervisor implementation なら Lesson 13 (LangGraph)、handoffs-as-tools なら Lesson 16 (OpenAI Agents SDK)、debate specifics なら Lesson 25 を指す "what to read next" で締める。

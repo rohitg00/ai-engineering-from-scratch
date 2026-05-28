@@ -1,7 +1,7 @@
-"""Assemble the capstone agent-workbench-pack into outputs/.
+"""capstone agent-workbench-pack を outputs/ に組み立てる。
 
-Seeds schemas, scripts, and docs from the surfaces built in the
-preceding lessons of this mini-track. Idempotent. Prints the tree.
+この mini-track の preceding lessons で作った surfaces から schemas、scripts、docs を seed する。
+idempotent。tree を表示する。
 
 Run: python3 code/main.py
 """
@@ -19,18 +19,18 @@ PACK_VERSION = "1.0.0"
 
 AGENTS_MD = """# AGENTS.md
 
-You are working inside a repository that runs with an agent workbench.
+あなたは agent workbench を使う repository の中で作業しています。
 
-Read these before acting:
+行動する前に次を読んでください。
 
-1. `agent_state.json` — where the last session stopped.
-2. `task_board.json` — what is in flight, what is next.
-3. `docs/agent-rules.md` — startup, forbidden, done, uncertainty, approval.
-4. `docs/reliability-policy.md` — failure modes this workbench is designed to absorb.
-5. `docs/handoff-protocol.md` — what session end must produce.
-6. `docs/reviewer-rubric.md` — how completed work is judged.
+1. `agent_state.json` — 前 session が止まった場所。
+2. `task_board.json` — 進行中のもの、次に行うもの。
+3. `docs/agent-rules.md` — startup、forbidden、done、uncertainty、approval。
+4. `docs/reliability-policy.md` — この workbench が吸収するよう設計された failure modes。
+5. `docs/handoff-protocol.md` — session end が生成すべきもの。
+6. `docs/reviewer-rubric.md` — completed work の判断方法。
 
-Verification command: see `acceptance_criteria` in the active task on the board.
+Verification command: board 上の active task の `acceptance_criteria` を参照してください。
 
 Pack version: {version}
 """.lstrip()
@@ -41,73 +41,73 @@ AGENT_RULES_MD = """# Agent Rules
 ## startup/state-file-fresh
 - category: startup
 - check: state_file_fresh
-Agent must read agent_state.json before any tool call.
+Agent は tool call の前に必ず agent_state.json を読む。
 
 ## forbidden/no-out-of-scope-writes
 - category: forbidden
 - check: no_out_of_scope_writes
-Never edit a file outside the active task's scope contract.
+active task の scope contract 外の file を編集してはいけない。
 
 ## done/tests-pass
 - category: definition_of_done
 - check: tests_pass
-A task is done only when every acceptance command exits zero.
+task は、すべての acceptance command が exit zero になったときだけ done。
 
 ## uncertainty/open-question-note
 - category: uncertainty
 - check: opened_question_when_unsure
-When confidence is below threshold, open a question note instead of guessing.
+confidence が threshold 未満のときは、推測せず question note を開く。
 
 ## approval/new-dependency
 - category: approval
 - check: new_dependency_approved
-Adding a runtime dependency requires explicit human approval.
+runtime dependency を追加するには、明示的な human approval が必要。
 """
 
 
 RELIABILITY_POLICY_MD = """# Reliability Policy
 
-The workbench absorbs the five industry-recurring failure modes:
+workbench は、業界で繰り返し発生する5つの failure modes を吸収します。
 
-1. Hallucinated action — caught by the rule set + verification gate.
-2. Scope creep — caught by the scope contract diff check.
-3. Cascading errors — caught by feedback records + refuse-on-null-exit.
-4. Context loss — absorbed by repo memory; chat is not the source of truth.
-5. Tool misuse — caught by the reviewer rubric's verification dimension.
+1. Hallucinated action — rule set + verification gate で捕捉する。
+2. Scope creep — scope contract diff check で捕捉する。
+3. Cascading errors — feedback records + refuse-on-null-exit で捕捉する。
+4. Context loss — repo memory で吸収する。chat は source of truth ではない。
+5. Tool misuse — reviewer rubric の verification dimension で捕捉する。
 
-The policy is enforced by the verification gate. The override path is signed
-and audited; agents cannot self-override.
+policy は verification gate により enforce されます。override path は signed
+and audited です。agents は self-override できません。
 """
 
 
 HANDOFF_PROTOCOL_MD = """# Handoff Protocol
 
-Every session ends with a handoff packet containing:
+すべての session は、次を含む handoff packet で終わります。
 
 - summary
 - changed_files
 - commands_run
 - failed_attempts
 - open_risks (severity + detail)
-- next_action (one concrete step)
-- verdict_pointer (paths to verification + review reports)
+- next_action (1つの具体的 step)
+- verdict_pointer (verification + review reports への paths)
 
-The packet ships as both handoff.md (humans) and handoff.json (next agent).
-Missing fields halt the session-end hook.
+packet は handoff.md (humans) と handoff.json (next agent) の両方で出荷されます。
+missing fields は session-end hook を停止させます。
 """
 
 
 REVIEWER_RUBRIC_MD = """# Reviewer Rubric
 
-Five dimensions, scored 0 to 2.
+5つの dimensions を 0 から 2 で採点します。
 
-1. Problem fit — did the change solve the task as stated?
-2. Scope discipline — were edits confined to the contract?
-3. Assumptions — are hidden assumptions written down?
-4. Verification quality — does acceptance actually prove the goal?
-5. Handoff readiness — can the next session pick up cleanly?
+1. Problem fit — change は stated task を解いたか。
+2. Scope discipline — edits は contract 内に収まったか。
+3. Assumptions — hidden assumptions は書かれているか。
+4. Verification quality — acceptance は goal を実際に証明しているか。
+5. Handoff readiness — 次 session は clean に引き継げるか。
 
-Total >= 7 with no zeros: pass. Total 5-6: soft fail. Below 5 or any zero: hard fail.
+total >= 7 かつ zero なし: pass。total 5-6: soft fail。5 未満またはいずれか zero: hard fail。
 """
 
 
@@ -160,7 +160,7 @@ SCOPE_SCHEMA = {
 INSTALL_SH = """#!/usr/bin/env bash
 set -euo pipefail
 
-# Install the agent workbench pack into the current repo.
+# agent workbench pack を current repo に install する。
 # Usage: bin/install.sh [--force]
 
 FORCE="${1:-}"
@@ -170,13 +170,13 @@ PACK_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 required=("AGENTS.md" "VERSION" "docs" "schemas" "scripts")
 for path in "${required[@]}"; do
     if [[ ! -e "$PACK_ROOT/$path" ]]; then
-        echo "missing pack source: $PACK_ROOT/$path" >&2
+        echo "pack source がありません: $PACK_ROOT/$path" >&2
         exit 1
     fi
 done
 
 if [[ -e "$TARGET/AGENTS.md" && "$FORCE" != "--force" ]]; then
-    echo "AGENTS.md already exists. Pass --force to overwrite." >&2
+    echo "AGENTS.md はすでに存在します。overwrite するには --force を渡してください。" >&2
     exit 1
 fi
 
@@ -187,13 +187,13 @@ cp -r "$PACK_ROOT/schemas/." "$TARGET/schemas/"
 cp -r "$PACK_ROOT/scripts/." "$TARGET/scripts/"
 cat "$PACK_ROOT/VERSION" > "$TARGET/.workbench-version"
 
-echo "pack installed at version $(cat "$PACK_ROOT/VERSION")"
-echo "next: edit task_board.json, set acceptance commands, run scripts/init_agent.py"
+echo "pack version $(cat "$PACK_ROOT/VERSION") を install しました"
+echo "next: task_board.json を編集し、acceptance commands を設定し、scripts/init_agent.py を実行してください"
 """
 
 
 INIT_AGENT_PY = '''#!/usr/bin/env python3
-"""Workbench init script. See Phase 14 · 35 for the from-scratch build."""
+"""Workbench init script。from-scratch build は Phase 14 · 35 を参照。"""
 
 from __future__ import annotations
 
@@ -223,25 +223,25 @@ def _probe_runtime() -> tuple[str, str, str]:
 
 def _probe_deps() -> tuple[str, str, str]:
     missing = [d for d in REQUIRED_DEPS if importlib.util.find_spec(d) is None]
-    return ("dependencies", "fail" if missing else "pass", f"missing: {missing}" if missing else "all importable")
+    return ("dependencies", "fail" if missing else "pass", f"missing: {missing}" if missing else "すべて import 可能")
 
 
 def _probe_test_command() -> tuple[str, str, str]:
-    return ("test_command", "pass" if shutil.which(TEST_COMMAND) else "fail", f"{TEST_COMMAND} on PATH")
+    return ("test_command", "pass" if shutil.which(TEST_COMMAND) else "fail", f"{TEST_COMMAND} が PATH 上にある")
 
 
 def _probe_env() -> tuple[str, str, str]:
     missing = [k for k in REQUIRED_ENV if not os.environ.get(k)]
-    return ("env", "fail" if missing else "pass", f"missing: {missing}" if missing else "all present")
+    return ("env", "fail" if missing else "pass", f"missing: {missing}" if missing else "すべて存在")
 
 
 def _probe_state() -> tuple[str, str, str]:
     if not STATE_PATH.exists():
-        return ("state_freshness", "warn", "no state file yet")
+        return ("state_freshness", "warn", "state file はまだありません")
     age = time.time() - STATE_PATH.stat().st_mtime
     if age > FRESH_SECONDS:
-        return ("state_freshness", "warn", f"state is {int(age // 3600)}h old")
-    return ("state_freshness", "pass", f"state is {int(age)}s old")
+        return ("state_freshness", "warn", f"state は {int(age // 3600)}h old")
+    return ("state_freshness", "pass", f"state は {int(age)}s old")
 
 
 def main() -> int:
@@ -258,7 +258,7 @@ def main() -> int:
         print(f"  {name:<{width}}  {status:>4}  {detail}")
     failed = [n for n, s, _ in probes if s == "fail"]
     if failed:
-        print(f"\\ninit failed: {failed}", file=sys.stderr)
+        print(f"\\ninit に失敗しました: {failed}", file=sys.stderr)
         return 1
     return 0
 
@@ -269,7 +269,7 @@ if __name__ == "__main__":
 
 
 RUN_WITH_FEEDBACK_PY = '''#!/usr/bin/env python3
-"""Structured shell-command runner. See Phase 14 · 37."""
+"""structured shell-command runner。Phase 14 · 37 を参照。"""
 
 from __future__ import annotations
 
@@ -341,7 +341,7 @@ if __name__ == "__main__":
 
 
 VERIFY_AGENT_PY = '''#!/usr/bin/env python3
-"""Deterministic verification gate. See Phase 14 · 38."""
+"""deterministic verification gate。Phase 14 · 38 を参照。"""
 
 from __future__ import annotations
 
@@ -377,14 +377,14 @@ def check_acceptance(accept: list[str], feedback: list[dict]) -> list[dict]:
     accept_set = set(accept)
     for cmd in accept:
         if cmd not in commands_run:
-            findings.append({"code": "acceptance.missing", "severity": "block", "detail": f"never ran: {cmd}"})
+            findings.append({"code": "acceptance.missing", "severity": "block", "detail": f"未実行: {cmd}"})
     for r in feedback:
         cmd_str = _normalize_command(r.get("command"))
         if r.get("exit_code") is None:
-            findings.append({"code": "feedback.null_exit", "severity": "block", "detail": f"missing exit for {cmd_str}"})
+            findings.append({"code": "feedback.null_exit", "severity": "block", "detail": f"{cmd_str} の exit が欠落"})
         elif r.get("exit_code") != 0 and cmd_str in accept_set:
             findings.append({"code": "acceptance.failed", "severity": "block",
-                             "detail": f"exit {r.get('exit_code')} on {cmd_str}"})
+                             "detail": f"{cmd_str} で exit {r.get('exit_code')}"})
     return findings
 
 
@@ -392,10 +392,10 @@ def check_scope(scope_report: dict) -> list[dict]:
     findings: list[dict] = []
     if scope_report.get("forbidden_writes"):
         findings.append({"code": "scope.forbidden", "severity": "block",
-                         "detail": f"forbidden writes: {scope_report['forbidden_writes']}"})
+                         "detail": f"forbidden writes がある: {scope_report['forbidden_writes']}"})
     if scope_report.get("off_scope_writes"):
         findings.append({"code": "scope.off_scope", "severity": "warn",
-                         "detail": f"off-scope writes: {scope_report['off_scope_writes']}"})
+                         "detail": f"off-scope writes がある: {scope_report['off_scope_writes']}"})
     return findings
 
 
@@ -423,7 +423,7 @@ def main() -> int:
     out.write_text(json.dumps(report, indent=2) + "\\n")
     print(json.dumps(report, indent=2))
     if not report["passed"]:
-        print("verification failed", file=sys.stderr)
+        print("verification に失敗しました", file=sys.stderr)
         return 1
     return 0
 
@@ -434,7 +434,7 @@ if __name__ == "__main__":
 
 
 GENERATE_HANDOFF_PY = '''#!/usr/bin/env python3
-"""End-of-session handoff packet generator. See Phase 14 · 40."""
+"""end-of-session handoff packet generator。Phase 14 · 40 を参照。"""
 
 from __future__ import annotations
 
@@ -465,13 +465,13 @@ def derive_risks(verdict: dict, state: dict, review: dict) -> list[dict[str, str
         if isinstance(f, dict) and f.get("severity") in ("warn", "block"):
             risks.append({"severity": str(f.get("severity")), "detail": str(f.get("detail"))})
     for blocker in state.get("blockers") or []:
-        risks.append({"severity": "warn", "detail": f"open blocker: {blocker}"})
+        risks.append({"severity": "warn", "detail": f"未解決 blocker: {blocker}"})
     try:
         total = int(review.get("total", 10))
     except (TypeError, ValueError):
         total = 10
     if total < 7:
-        risks.append({"severity": "warn", "detail": f"review total {review.get('total')} below 7"})
+        risks.append({"severity": "warn", "detail": f"review total {review.get('total')} が 7 未満"})
     return risks
 
 
@@ -494,7 +494,7 @@ def generate_handoff(task_id: str, session_id: str | None = None) -> dict[str, o
             for r in feedback if r.get("exit_code") not in (0, None)
         ],
         "open_risks": derive_risks(verdict, state, review),
-        "next_action": str(state.get("next_action") or "no next_action recorded; needs human"),
+        "next_action": str(state.get("next_action") or "next_action の記録なし。人間の確認が必要"),
         "verdict_pointer": {
             "verdict": f"outputs/verification/{task_id}.json",
             "review": f"outputs/review/{task_id}.json",
@@ -509,28 +509,28 @@ def generate_handoff(task_id: str, session_id: str | None = None) -> dict[str, o
 
 def _render_markdown(p: dict[str, object]) -> str:
     def bullets(items):
-        return [f"- {x}" for x in items] or ["- none"]
+        return [f"- {x}" for x in items] or ["- なし"]
     lines = [
         f"# Handoff: {p['task_id']}",
         "",
-        f"**Summary.** {p['summary']}",
+        f"**概要.** {p['summary']}",
         "",
-        "## Changed files",
+        "## 変更ファイル",
         *bullets(p["changed_files"]),
         "",
-        "## Commands run",
+        "## 実行したコマンド",
         *bullets(p["commands_run"]),
         "",
-        "## Failed attempts",
+        "## 失敗した試行",
         *bullets(p["failed_attempts"]),
         "",
-        "## Open risks",
+        "## 未解決リスク",
         *bullets([f"[{r['severity']}] {r['detail']}" for r in p["open_risks"]]),
         "",
-        "## Next action",
+        "## 次のアクション",
         str(p["next_action"]),
         "",
-        "## Receipts",
+        "## 証跡",
         f"- verdict: `{p['verdict_pointer']['verdict']}`",
         f"- review:  `{p['verdict_pointer']['review']}`",
     ]
@@ -545,9 +545,9 @@ def main() -> int:
     try:
         payload = generate_handoff(args.task_id, args.session_id)
     except Exception as exc:
-        print(f"handoff failed: {exc}", file=sys.stderr)
+        print(f"handoff に失敗しました: {exc}", file=sys.stderr)
         return 1
-    print(f"wrote outputs/handoff/{payload['session_id']}/{{handoff.json,handoff.md}}")
+    print(f"outputs/handoff/{payload['session_id']}/{{handoff.json,handoff.md}} を書きました")
     return 0
 
 
@@ -566,15 +566,15 @@ SCRIPT_FILES: dict[str, str] = {
 
 PACK_README = """# Agent Workbench Pack
 
-Drop-in workbench for any repo that wants reliable agent work.
+reliable な agent work を必要とする任意の repo 向けの drop-in workbench。
 
-## What you get
+## 得られるもの
 
-- `AGENTS.md` short router into the rest of the pack.
-- `docs/` rules, reliability policy, handoff protocol, reviewer rubric.
-- `schemas/` JSON Schemas for state, board, and scope contract.
-- `scripts/` init, feedback runner, verification gate, handoff generator.
-- `bin/install.sh` idempotent installer.
+- pack の残りへ案内する短い router としての `AGENTS.md`。
+- rules、reliability policy、handoff protocol、reviewer rubric を含む `docs/`。
+- state、board、scope contract 用の JSON Schemas を含む `schemas/`。
+- init、feedback runner、verification gate、handoff generator を含む `scripts/`。
+- idempotent installer としての `bin/install.sh`。
 
 ## Quickstart
 
@@ -586,7 +586,7 @@ python3 scripts/init_agent.py
 
 ## Versioning
 
-The `VERSION` file is the contract. Major bumps require a state migration.
+`VERSION` file が contract です。major bump には state migration が必要です。
 """
 
 

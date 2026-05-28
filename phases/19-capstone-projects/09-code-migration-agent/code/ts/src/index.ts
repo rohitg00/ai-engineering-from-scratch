@@ -1,10 +1,10 @@
 /**
  * Code Migration Agent: dashboard skeleton entry point (TypeScript).
  *
- * Mirrors the dashboard layer from docs/en.md: agent runs in a sandbox; this
- * server renders progress for the operator. Hono routes serve HTML root,
- * /migrations, and /migrations/:id. State machine in migrations.ts; budget
- * + cost in cost.ts; types in types.ts.
+ * docs/en.md の dashboard layer に対応します。agent は sandbox 内で走り、
+ * この server は operator 向けに progress を render します。Hono routes は
+ * HTML root、/migrations、/migrations/:id を serve します。state machine は
+ * migrations.ts、budget + cost は cost.ts、type は types.ts です。
  *
  * Source: phases/19-capstone-projects/09-code-migration-agent/docs/en.md
  * Recipe specs: https://docs.openrewrite.org and the libcst Python parser.
@@ -35,7 +35,7 @@ export function runDemoTicks(rounds: number): ReturnType<typeof defaultSeed> {
 }
 
 function main(): void {
-  console.log("[dashboard] simulating 40 ticks of agent progress...");
+  console.log("[dashboard] agent progress の 40 ticks を simulate します...");
   const migrations = runDemoTicks(40);
   summarise(migrations);
   if (process.env["SERVE"] === "1") {
@@ -47,7 +47,7 @@ function main(): void {
     setInterval(() => tickAll(migrations), 750).unref();
   } else {
     console.log(
-      "[dashboard] set SERVE=1 to start the HTTP dashboard on PORT (default 8009)",
+      "[dashboard] HTTP dashboard を PORT (default 8009) で起動するには SERVE=1 を設定してください",
     );
   }
 }

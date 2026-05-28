@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "A YOLO detector with grid 13x13, 3 anchors per cell, and 20 classes produces a head output of shape (N, 13, 13, 3, 25). Why is the last dimension 25?",
-      "options": ["4 box coords + 1 bias + 20 classes", "4 box coords + 1 objectness + 20 classes = 5 + C", "25 is the number of classes in COCO", "It is padding to the next power of 2"],
+      "question": "YOLO detector が 13x13 grid、cell あたり 3 anchors、20 classes を持つとき、head output の shape は (N, 13, 13, 3, 25) です。最後の次元が 25 なのはなぜですか？",
+      "options": [
+        "4 box coords + 1 bias + 20 classes",
+        "4 box coords + 1 objectness + 20 classes = 5 + C",
+        "25 は COCO のクラス数だから",
+        "次の 2 のべき乗に合わせる padding だから"
+      ],
       "correct": 1,
-      "explanation": "Every anchor emits four box regression targets (tx, ty, tw, th), one objectness score, and C class logits. For YOLO-style detectors the per-anchor dimension is always 5 + C. On COCO with 80 classes it is 85; on PASCAL VOC with 20 it is 25."
+      "explanation": "各 anchor は 4 つの box regression target（tx, ty, tw, th）、1 つの objectness score、C 個の class logits を出力します。YOLO 形式の detector では per-anchor 次元は常に 5 + C です。80 クラスの COCO では 85、20 クラスの PASCAL VOC では 25 になります。"
     },
     {
       "stage": "pre",
-      "question": "Why does YOLO predict tx, ty through a sigmoid before adding the grid cell?",
-      "options": ["To normalise them to [0, 1] so the centre stays inside the cell and cannot escape to a neighbouring cell's territory", "Sigmoid is required by the convolution", "To prevent NaN during training", "To make the box larger"],
+      "question": "YOLO が grid cell を足す前に tx, ty を sigmoid に通すのはなぜですか？",
+      "options": [
+        "[0, 1] に正規化し、中心が cell 内に留まり隣接 cell の担当領域へ逃げないようにするため",
+        "convolution が sigmoid を要求するから",
+        "学習中の NaN を防ぐため",
+        "box を大きくするため"
+      ],
       "correct": 0,
-      "explanation": "sigmoid(tx) is in [0, 1], so (sigmoid(tx) + cell_x) * stride places the centre somewhere inside the cell at column cell_x. This constraint keeps each cell responsible for only the objects centred within its own area, which is the assumption that makes grid-based training stable."
+      "explanation": "sigmoid(tx) は [0, 1] に入るため、(sigmoid(tx) + cell_x) * stride は中心を cell_x 列の cell 内に置きます。この制約により、各 cell は自分の領域内に中心がある object だけを担当し、grid-based training が安定します。"
     },
     {
       "stage": "post",
-      "question": "Your detector predicts 15 boxes around a single object after the head. You apply NMS with iou_threshold=0.45 and get back 1 box. What did NMS do?",
-      "options": ["It averaged all 15 predictions", "It sorted the 15 boxes by score, kept the highest-scoring, and deleted every box whose IoU with it exceeded 0.45; the other 14 all overlapped the winner above the threshold so one remained", "It picked a random survivor", "It merged the boxes geometrically"],
+      "question": "Head の後で、detector が 1 つの object の周辺に 15 個の boxes を予測しました。iou_threshold=0.45 で NMS を適用すると 1 box だけ残りました。NMS は何をしましたか？",
+      "options": [
+        "15 個の予測を平均した",
+        "15 個の boxes を score 降順に並べ、最高 score の box を残し、それとの IoU が 0.45 を超える box をすべて削除した。他の 14 個は winner と閾値以上に重なっていたため 1 個だけ残った",
+        "ランダムに survivor を選んだ",
+        "boxes を幾何学的に merge した"
+      ],
       "correct": 1,
-      "explanation": "NMS is a greedy deduplication: sort by score, keep the top, remove everything close to it (IoU > threshold), repeat. It does not merge or average. That is why detection latency benchmarks include NMS time and why modern models like RT-DETR replace it with a learned alternative."
+      "explanation": "NMS は貪欲な重複排除です。score で sort し、top を keep し、それに近いもの（IoU > threshold）を除去して繰り返します。merge や average は行いません。そのため detection latency benchmark には NMS 時間が含まれ、RT-DETR のような近年の model は learned alternative で置き換えます。"
     },
     {
       "stage": "post",
-      "question": "Your model has mAP@0.5 = 0.75 but mAP@0.5:0.95 = 0.32. What is the most accurate interpretation?",
-      "options": ["The model is broken; mAP@0.5 must equal mAP@0.5:0.95", "The model finds the right objects but its boxes are not tightly localised — fine at IoU 0.5, fail at IoU 0.7+", "The dataset has too many classes", "The inference threshold is too high"],
+      "question": "あなたの model は mAP@0.5 = 0.75 だが mAP@0.5:0.95 = 0.32 です。最も正確な解釈はどれですか？",
+      "options": [
+        "model は壊れている。mAP@0.5 は mAP@0.5:0.95 と等しくなければならない",
+        "model は正しい object を見つけているが boxes が tight に localised されていない。IoU 0.5 では通るが IoU 0.7+ で失敗する",
+        "dataset の class が多すぎる",
+        "inference threshold が高すぎる"
+      ],
       "correct": 1,
-      "explanation": "mAP@0.5 is lenient about localisation; mAP@0.5:0.95 averages over strict thresholds up to 0.95. A big gap between the two means the boxes are in roughly the right place but not tight. Typical fixes: CIoU/DIoU box loss, higher-resolution features, anchor sets better tuned to the dataset."
+      "explanation": "mAP@0.5 は localisation に寛容です。mAP@0.5:0.95 は 0.95 までの厳しい threshold を平均します。両者の差が大きい場合、box は概ね正しい位置にあるものの tight ではありません。典型的な対策は CIoU/DIoU box loss、高解像度 features、dataset に合わせた anchor sets です。"
     },
     {
       "stage": "post",
-      "question": "YOLO loss weights lambda_coord=5.0 and lambda_noobj=0.5 roughly mirror the original paper. What do these ratios encode?",
-      "options": ["GPU memory trade-offs", "The fact that most cells have no object, so the no-object cells must be downweighted or they would dominate the total loss; and the fact that box regression is a smaller-scale loss than cross-entropy, so it needs upweighting to produce comparable gradients", "Random choices the authors never justified", "The number of anchors per cell"],
+      "question": "YOLO loss の lambda_coord=5.0 と lambda_noobj=0.5 は、元論文におおむね対応しています。この比率は何を表しますか？",
+      "options": [
+        "GPU memory の trade-off",
+        "ほとんどの cells には object がないため no-object cells を downweight しないと total loss を支配すること、また box regression は cross-entropy より小さい scale の loss なので同程度の gradients を出すために upweight が必要であること",
+        "著者が説明していないランダムな選択",
+        "cell あたりの anchors 数"
+      ],
       "correct": 1,
-      "explanation": "In a 13x13 grid there are 169 cells, usually with one to five objects. The 160+ empty cells all contribute objectness loss; without a small lambda_noobj they would overwhelm the positive signal. Conversely, MSE box loss is numerically small next to cross-entropy, so lambda_coord > 1 keeps its gradients comparable. Both ratios are about balancing per-component gradient magnitudes."
+      "explanation": "13x13 grid には 169 cells ありますが、通常 object は 1 から 5 個程度です。160 個以上の empty cells がすべて objectness loss に寄与するため、小さい lambda_noobj がないと positive signal を圧倒します。一方、MSE box loss は cross-entropy に比べて数値的に小さいため、lambda_coord > 1 により gradient を同程度に保ちます。どちらも component ごとの gradient magnitude を均衡させる比率です。"
     }
   ]
 }

@@ -4,84 +4,84 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What search shape does the AI-Scientist-class agent use to explore experiments?",
+      "question": "AI-Scientist-class agent は experiment を探索するためにどの search 形状を使いますか？",
       "options": [
-        "Beam search over token outputs",
-        "Best-first tree search over experiment nodes with a novelty x quality x budget score",
-        "Pure reinforcement learning from human feedback",
-        "Breadth-first expansion with random scoring"
+        "token output に対する beam search",
+        "novelty × quality × budget score を持つ experiment node 上の best-first tree search",
+        "human feedback からの純粋な reinforcement learning",
+        "random scoring を使う breadth-first expansion"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Why is the sandbox configured with --network=none and bounded resource caps?",
+      "question": "sandbox を --network=none と bounded resource caps で構成する理由は何ですか？",
       "options": [
-        "To force the agent to use prompt caching",
-        "To enforce deterministic floating-point arithmetic",
-        "To allow GPU passthrough by default",
-        "To prevent network egress and contain experiment side effects within a reproducible envelope"
+        "agent に prompt caching を強制するため",
+        "deterministic floating-point arithmetic を強制するため",
+        "GPU passthrough を default で許可するため",
+        "network egress を防ぎ、experiment side effect を再現可能な envelope に閉じ込めるため"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the role of the vision critique step in the writer loop?",
+      "question": "writer loop における vision critique step の役割は何ですか？",
       "options": [
-        "Translates figures into bar charts",
-        "Compiles the LaTeX draft to PDF, then has a VLM critique layout, figure legibility, and claim-evidence alignment",
-        "Generates new experiment ideas from screenshots",
-        "Replaces matplotlib at render time"
+        "figure を bar chart に翻訳する",
+        "LaTeX draft を PDF に compile し、その後 VLM が layout、figure legibility、claim-evidence alignment を critique する",
+        "screenshot から新しい experiment idea を生成する",
+        "render 時に matplotlib を置き換える"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the reviewer ensemble gate the pipeline?",
+      "question": "reviewer ensemble は pipeline をどのように gate しますか？",
       "options": [
-        "A single judge accepts or rejects on a binary flag",
-        "Reviewers vote anonymously and the majority wins",
-        "Reviews run after publication only",
-        "Five judges score on NeurIPS-style rubrics and the weighted aggregate must clear a threshold, otherwise the draft loops back to the writer"
+        "単一 judge が binary flag で accept/reject する",
+        "reviewer が匿名で投票し、多数決で決める",
+        "review は publication 後にだけ走る",
+        "5人の judge が NeurIPS-style rubric で score し、weighted aggregate が threshold を越えなければ draft は writer に戻る"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which cost discipline does the capstone enforce per paper?",
+      "question": "この capstone は paper あたりどの cost discipline を強制しますか？",
       "options": [
-        "A $30 hard budget tracked through Langfuse counters and pre-run estimates",
-        "Cost-only optimization without quality checks",
-        "Unbounded compute, hard wall-clock only",
-        "GPU-hours tracked but never capped"
+        "Langfuse counters と pre-run estimates で追跡する $30 の hard budget",
+        "quality check なしの cost-only optimization",
+        "unbounded compute と hard wall-clock のみ",
+        "GPU-hours は追跡するが cap しない"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which scoring function ranks tree nodes for further expansion?",
+      "question": "さらに expand する tree node を rank する scoring function はどれですか？",
       "options": [
-        "Novelty x quality x remaining budget",
-        "Citation count of related papers",
-        "Random uniform priority",
-        "Output length and token count"
+        "Novelty × quality × remaining budget",
+        "related paper の citation count",
+        "random uniform priority",
+        "output length と token count"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the red-team report exercise against the system?",
+      "question": "red-team report は system に対して何を演習しますか？",
       "options": [
-        "Caching hit rate on system prompts",
-        "Multi-tenant data leakage in the vector DB",
-        "Latency tail under packet loss",
-        "Sandbox-escape attempts such as fork bombs, network exfiltration, and filesystem escapes"
+        "system prompt の caching hit rate",
+        "vector DB の multi-tenant data leakage",
+        "packet loss 下の latency tail",
+        "fork bomb、network exfiltration、filesystem escape などの sandbox-escape attempt"
       ],
       "correct": 3,
       "explanation": ""

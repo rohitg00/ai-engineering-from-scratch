@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,60 +10,60 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="28" text-anchor="middle" class="title">MAST taxonomy — the 2026 reference for multi-agent failure modes</text>
+  <text x="480" y="28" text-anchor="middle" class="title">MAST分類 — マルチエージェント失敗モードの2026年参照</text>
 
   <rect x="40" y="60" width="880" height="200" class="box"/>
-  <text x="480" y="84" text-anchor="middle" class="head">three MAST categories (Cemri 2025, NeurIPS) — 41-86.7% failure rate on real MAS</text>
+  <text x="480" y="84" text-anchor="middle" class="head">3つのMASTカテゴリ (Cemri 2025, NeurIPS) — 実MASで41-86.7%の失敗率</text>
 
   <rect x="60" y="110" width="270" height="130" class="hot"/>
-  <text x="195" y="134" text-anchor="middle" class="head">Specification</text>
+  <text x="195" y="134" text-anchor="middle" class="head">仕様</text>
   <text x="195" y="154" text-anchor="middle" class="step">41.77%</text>
-  <text x="195" y="180" text-anchor="middle" class="small">role ambiguity</text>
-  <text x="195" y="196" text-anchor="middle" class="small">unclear task definition</text>
-  <text x="195" y="212" text-anchor="middle" class="small">implicit success criteria</text>
-  <text x="195" y="232" text-anchor="middle" class="caption">fix: explicit role contracts</text>
+  <text x="195" y="180" text-anchor="middle" class="small">役割の曖昧さ</text>
+  <text x="195" y="196" text-anchor="middle" class="small">タスク定義が曖昧</text>
+  <text x="195" y="212" text-anchor="middle" class="small">暗黙の成功条件</text>
+  <text x="195" y="232" text-anchor="middle" class="caption">修正: 明示的な役割契約</text>
 
   <rect x="345" y="110" width="270" height="130" class="cool"/>
-  <text x="480" y="134" text-anchor="middle" class="head">Coordination</text>
+  <text x="480" y="134" text-anchor="middle" class="head">協調</text>
   <text x="480" y="154" text-anchor="middle" class="step">36.94%</text>
-  <text x="480" y="180" text-anchor="middle" class="small">state desync</text>
-  <text x="480" y="196" text-anchor="middle" class="small">message loss / timeout</text>
-  <text x="480" y="212" text-anchor="middle" class="small">concurrent writes</text>
-  <text x="480" y="232" text-anchor="middle" class="caption">fix: versioned state + acks</text>
+  <text x="480" y="180" text-anchor="middle" class="small">状態ずれ</text>
+  <text x="480" y="196" text-anchor="middle" class="small">メッセージ喪失 / タイムアウト</text>
+  <text x="480" y="212" text-anchor="middle" class="small">同時書込み</text>
+  <text x="480" y="232" text-anchor="middle" class="caption">修正: 版付き状態 + ack</text>
 
   <rect x="630" y="110" width="270" height="130" class="cold"/>
-  <text x="765" y="134" text-anchor="middle" class="head">Verification</text>
+  <text x="765" y="134" text-anchor="middle" class="head">検証</text>
   <text x="765" y="154" text-anchor="middle" class="step">21.30%</text>
-  <text x="765" y="180" text-anchor="middle" class="small">no independent checker</text>
-  <text x="765" y="196" text-anchor="middle" class="small">chain of trust</text>
-  <text x="765" y="212" text-anchor="middle" class="small">silent wrong outputs</text>
-  <text x="765" y="232" text-anchor="middle" class="caption">fix: unwritable verifier</text>
+  <text x="765" y="180" text-anchor="middle" class="small">独立チェッカーなし</text>
+  <text x="765" y="196" text-anchor="middle" class="small">信頼の連鎖</text>
+  <text x="765" y="212" text-anchor="middle" class="small">静かな誤出力</text>
+  <text x="765" y="232" text-anchor="middle" class="caption">修正: 書換不能な検証器</text>
 
   <rect x="40" y="270" width="880" height="230" class="cool"/>
-  <text x="480" y="294" text-anchor="middle" class="head">Groupthink family (arXiv:2508.05687)</text>
+  <text x="480" y="294" text-anchor="middle" class="head">集団思考ファミリー (arXiv:2508.05687)</text>
 
-  <text x="60" y="326" class="step">monoculture</text>
-  <text x="220" y="326" class="small">same base model → correlated hallucinations</text>
+  <text x="60" y="326" class="step">単一文化</text>
+  <text x="220" y="326" class="small">同一ベースモデル → 相関した幻覚</text>
 
-  <text x="60" y="352" class="step">conformity</text>
-  <text x="220" y="352" class="small">agents align with loudest peer; rewards sycophancy</text>
+  <text x="60" y="352" class="step">同調</text>
+  <text x="220" y="352" class="small">エージェントが最も声の大きい相手へ同調。迎合を報酬化</text>
 
-  <text x="60" y="378" class="step">deficient ToM</text>
-  <text x="220" y="378" class="small">fails to model each other (Lesson 18); long-horizon break</text>
+  <text x="60" y="378" class="step">不足したToM</text>
+  <text x="220" y="378" class="small">互いをモデル化できない (Lesson 18)。長期ホライズンで破綻</text>
 
-  <text x="60" y="404" class="step">mixed-motive</text>
-  <text x="220" y="404" class="small">partial-incentive alignment → compromise-middle outputs</text>
+  <text x="60" y="404" class="step">混合動機</text>
+  <text x="220" y="404" class="small">部分的なインセンティブ整合 → 中途半端な出力</text>
 
-  <text x="60" y="430" class="step">cascading</text>
-  <text x="220" y="430" class="small">retry storms; one failure amplifies through dependencies</text>
+  <text x="60" y="430" class="step">連鎖</text>
+  <text x="220" y="430" class="small">再試行嵐。1つの失敗が依存を通じて増幅</text>
 
-  <text x="60" y="466" class="step">fix: STRATUS</text>
-  <text x="220" y="466" class="small">detection + diagnosis + validation agents → 1.5x mitigation success</text>
-  <text x="60" y="486" class="step">+ breakers</text>
-  <text x="220" y="486" class="small">circuit breakers on every outbound call; capped retries</text>
+  <text x="60" y="466" class="step">修正: STRATUS</text>
+  <text x="220" y="466" class="small">検知 + 診断 + 検証エージェント → 緩和成功1.5倍</text>
+  <text x="60" y="486" class="step">+ ブレーカ</text>
+  <text x="220" y="486" class="small">全アウトバウンド呼出しにサーキットブレーカ。上限付き再試行</text>
 </svg>

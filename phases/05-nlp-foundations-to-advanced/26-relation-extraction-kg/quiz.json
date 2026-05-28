@@ -1,102 +1,102 @@
 {
   "lesson": "26-relation-extraction-kg",
-  "title": "Relation Extraction & Knowledge Graph Construction",
+  "title": "関係抽出とナレッジグラフ構築",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the atomic unit of a knowledge graph?",
+      "question": "knowledge graph の atomic unit は何ですか。",
       "options": [
-        "A POS tag",
-        "A (subject, relation, object) triple",
-        "A token",
-        "A sentence"
+        "POS tag",
+        "(subject, relation, object) triple",
+        "token",
+        "sentence"
       ],
       "correct": 1,
-      "explanation": "KGs store information as (s, r, o) triples; aggregated triples form the graph."
+      "explanation": "KGs は information を (s, r, o) triples として保存し、集約された triples が graph を形成します。"
     },
     {
       "stage": "pre",
-      "question": "What does AEVS stand for in 2026 relation extraction?",
+      "question": "2026 年の relation extraction において AEVS は何を表しますか。",
       "options": [
-        "Anchor-Extraction-Verification-Supplement: anchor spans, extract triples, verify against source, supplement coverage",
+        "Anchor-Extraction-Verification-Supplement: spans を anchor し、triples を extract し、source に照らして verify し、coverage を supplement する",
         "Auto-Encoder Vector Search",
         "Async Entity Validation Service",
         "Aggregated Entity-Value Schema"
       ],
       "correct": 0,
-      "explanation": "AEVS is the 2026 hallucination-mitigation framework for grounded RE."
+      "explanation": "AEVS は grounded RE のための 2026 年の hallucination-mitigation framework です。"
     },
     {
       "stage": "check",
-      "question": "Why must each triple carry source provenance (doc id + span)?",
+      "question": "各 triple が source provenance (doc id + span) を持たなければならないのはなぜですか。",
       "options": [
-        "Provenance lets you audit triples and reject hallucinations whose spans do not match the source text",
-        "It speeds up extraction",
-        "Provenance changes the ontology",
-        "Provenance is required by SPARQL"
+        "provenance により triples を audit でき、spans が source text と一致しない hallucinations を reject できるから",
+        "extraction が速くなるから",
+        "provenance が ontology を変えるから",
+        "provenance が SPARQL で必須だから"
       ],
       "correct": 0,
-      "explanation": "Provenance enables auditing and is the core of AEVS-style hallucination detection."
+      "explanation": "provenance は auditing を可能にし、AEVS-style hallucination detection の中核です。"
     },
     {
       "stage": "check",
-      "question": "What does canonicalization of relations do?",
+      "question": "relations の canonicalization は何をしますか。",
       "options": [
-        "Maps surface verb phrases (e.g. 'was born in', 'is a native of') onto a fixed property id so the graph is queryable",
-        "Removes triples",
-        "Adds embeddings",
-        "Translates the document"
+        "'was born in' や 'is a native of' などの surface verb phrases を fixed property id に map し、graph を query 可能にする",
+        "triples を削除する",
+        "embeddings を追加する",
+        "document を翻訳する"
       ],
       "correct": 0,
-      "explanation": "Canonicalization collapses paraphrases into canonical KG property ids."
+      "explanation": "canonicalization は paraphrases を canonical KG property ids に collapse します。"
     },
     {
       "stage": "check",
-      "question": "Why does relation extraction usually need coreference resolution first?",
+      "question": "relation extraction で通常 coreference resolution を先に必要とするのはなぜですか。",
       "options": [
-        "Pronouns like 'he founded Apple' must be resolved to a named entity before triple extraction",
-        "Coref adds embeddings",
-        "Coref provides positions",
-        "Coref normalizes case"
+        "'he founded Apple' のような pronouns は triple extraction の前に named entity へ resolve する必要があるから",
+        "coref が embeddings を追加するから",
+        "coref が positions を提供するから",
+        "coref が case を normalize するから"
       ],
       "correct": 0,
-      "explanation": "Without coref, RE attaches relations to pronouns instead of the underlying named entity."
+      "explanation": "coref がないと、RE は underlying named entity ではなく pronouns に relations を付けてしまいます。"
     },
     {
       "stage": "post",
-      "question": "Which choice trades open IE recall for graph queryability?",
+      "question": "open IE の recall と graph queryability を trade off する選択肢はどれですか。",
       "options": [
-        "Skipping NER",
-        "Random sampling of triples",
-        "Embedding-only graphs",
-        "Mapping open-IE relations onto a closed ontology (e.g. Wikidata properties) before merging into the KG"
+        "NER を skip する",
+        "triples を random sampling する",
+        "embedding-only graphs",
+        "KG に merge する前に open-IE relations を closed ontology (例: Wikidata properties) に map する"
       ],
       "correct": 3,
-      "explanation": "Closed ontologies make the graph queryable; the canonicalization step pays for itself downstream."
+      "explanation": "closed ontologies は graph を query 可能にします。canonicalization step は downstream で元が取れます。"
     },
     {
       "stage": "post",
-      "question": "Why do many production KGs use temporal qualifiers (start/end time)?",
+      "question": "多くの production KGs が temporal qualifiers (start/end time) を使うのはなぜですか。",
       "options": [
-        "Faster SPARQL",
-        "Required by RDF",
-        "Many relations are time-bounded (employer, spouse, role); qualifiers prevent 'forever true' claims that go stale",
-        "To remove NIL entities"
+        "SPARQL が速くなるから",
+        "RDF で必須だから",
+        "多くの relations は time-bounded (employer、spouse、role) であり、qualifiers によって stale な 'forever true' claims を防げるから",
+        "NIL entities を取り除くため"
       ],
       "correct": 2,
-      "explanation": "Time-bounded relations need qualifiers (e.g. Wikidata P580/P582) or facts go silently stale."
+      "explanation": "time-bounded relations には qualifiers (例: Wikidata P580/P582) が必要です。ない場合、facts は黙って古くなります。"
     },
     {
       "stage": "post",
-      "question": "What is REBEL?",
+      "question": "REBEL とは何ですか。",
       "options": [
-        "A vector database",
-        "A seq2seq relation extractor that outputs triples already in Wikidata property ids",
-        "A tokenizer",
-        "A coreference model"
+        "vector database",
+        "Wikidata property ids として triples を出力する seq2seq relation extractor",
+        "tokenizer",
+        "coreference model"
       ],
       "correct": 1,
-      "explanation": "REBEL (Babelscape) is a seq2seq RE model trained on distantly supervised Wikidata triples."
+      "explanation": "REBEL (Babelscape) は、distantly supervised Wikidata triples で訓練された seq2seq RE model です。"
     }
   ]
 }

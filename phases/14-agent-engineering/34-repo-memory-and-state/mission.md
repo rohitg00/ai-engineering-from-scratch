@@ -1,25 +1,25 @@
-# Mission - Repo Memory and Durable State
+# Mission - Repo Memory と Durable State
 
 ## Goal
-Author JSON Schemas for `agent_state.json` and `task_board.json`, build a `StateManager` that loads, validates, mutates, and writes atomically, and prove the round-trip across two turns.
+`agent_state.json` と `task_board.json` の JSON Schemas を作成し、load、validate、mutate、atomic write を行う `StateManager` を構築し、2 turns にまたがる round-trip を証明する。
 
 ## Inputs
-- The three-file workbench shape from lesson 32
-- A stdlib-only validator covering required, type, enum, pattern, and items
+- lesson 32 の three-file workbench shape
+- required、type、enum、pattern、items を扱う stdlib-only validator
 
-## Deliverables
-- `agent_state.schema.json` and `task_board.schema.json` next to the code
-- `StateManager.load`, `StateManager.update`, `StateManager.commit` with temp-and-rename writes
-- A demo run that mutates state across two turns and reloads cleanly
+## 成果物
+- code の横に置く `agent_state.schema.json` と `task_board.schema.json`
+- temp-and-rename writes を持つ `StateManager.load`, `StateManager.update`, `StateManager.commit`
+- 2 turns にわたって state を mutate し、clean に reload する demo run
 
 ## Acceptance
-- `python3 code/main.py` exits zero
-- A bad write (missing required field, bad enum) is refused, not persisted
-- `workdir/agent_state.json` after the run validates against the schema
+- `python3 code/main.py` が exit zero
+- bad write (missing required field, bad enum) は persisted されず拒否される
+- run 後の `workdir/agent_state.json` が schema に対して validate される
 
 ## Out of scope
-- SQLite or external storage backends. The local file is the lesson.
-- LangGraph checkpointers, Letta memory blocks. Same idea, different storage; out of scope here.
+- SQLite または external storage backends。local file がこの lesson。
+- LangGraph checkpointers、Letta memory blocks。同じ考えだが別 storage なのでここでは対象外。
 
 ## References
 - `docs/en.md` - full lesson

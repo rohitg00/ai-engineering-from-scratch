@@ -14,7 +14,7 @@ export class Coordinator {
       new ReviewerAgent(),
     ];
     if (resolved.length === 0) {
-      throw new Error("Coordinator: agents must not be empty");
+      throw new Error("Coordinator: agents は空にできません");
     }
     this.agents = resolved;
   }

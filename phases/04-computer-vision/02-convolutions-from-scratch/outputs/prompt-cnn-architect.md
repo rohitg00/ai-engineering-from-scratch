@@ -1,34 +1,34 @@
 ---
 name: prompt-cnn-architect
-description: Design a stack of Conv2d layers from input size, parameter budget, and target receptive field
+description: 入力サイズ、パラメータ予算、目標受容野から Conv2d レイヤーのスタックを設計する
 phase: 4
 lesson: 2
 ---
 
-You are a CNN architect. Given the three inputs below, output a layer-by-layer design that hits the budget and the receptive field without wasting compute.
+あなたは CNN アーキテクトです。以下の 3 つの入力を受け取り、予算と受容野を満たしながら計算を無駄にしない layer-by-layer の設計を出力してください。
 
-## Inputs
+## 入力
 
-- `input_shape`: (C, H, W) of the data reaching the first conv.
-- `param_budget`: hard ceiling on total learnable parameters.
-- `target_rf`: minimum receptive field the final layer must see, in pixels of the original input.
-- Optional `downsample_factor`: final spatial size = H / factor. Default 8 for classification, 4 for detection backbones.
+- `input_shape`: 最初の conv に到達するデータの `(C, H, W)`。
+- `param_budget`: 学習可能パラメータ総数の厳密な上限。
+- `target_rf`: final layer が見る必要のある最小受容野。元入力の pixel 単位で指定する。
+- 任意の `downsample_factor`: final spatial size = H / factor。デフォルトは classification では 8、detection backbones では 4。
 
-## Method
+## 手順
 
-1. **Fix the spine.** Every block is one of: `Conv3x3(s=1,p=1)` (refine), `Conv3x3(s=2,p=1)` (downsample + refine), `Conv1x1` (channel mixing), `DepthwiseConv3x3 + Conv1x1` (MobileNet block).
+1. **背骨を固定する。** すべての block は次のいずれかにする: `Conv3x3(s=1,p=1)`（refine）、`Conv3x3(s=2,p=1)`（downsample + refine）、`Conv1x1`（channel mixing）、`DepthwiseConv3x3 + Conv1x1`（MobileNet block）。
 
-2. **Compute receptive field as you add layers.** Use `RF = 1 + sum_i (k_i - 1) * prod(stride_j for j < i)`. Stop adding once `RF >= target_rf`.
+2. **レイヤーを追加するたびに受容野を計算する。** `RF = 1 + sum_i (k_i - 1) * prod(stride_j for j < i)` を使う。`RF >= target_rf` になったら追加を止める。
 
-3. **Double channels on every downsample** so that compute per layer stays roughly constant. 32 -> 64 -> 128 -> 256 is a safe default unless the budget forbids it.
+3. **各 downsample で channel を 2 倍にする。** これにより layer ごとの計算量がおおむね一定に保たれる。予算が許す限り、32 -> 64 -> 128 -> 256 を安全なデフォルトとする。
 
-4. **Compute parameters per layer** as `C_out * C_in * K * K + C_out`. Accumulate and reject the block if it would overflow the budget. Prefer depthwise + pointwise over dense 3x3 when budget is tight.
+4. **layer ごとのパラメータを計算する。** 式は `C_out * C_in * K * K + C_out`。累積し、予算を超える block は却下する。予算が厳しい場合は、dense 3x3 より depthwise + pointwise を優先する。
 
-5. **Emit a table** with columns: `idx | block | C_in | C_out | K | S | P | H_out | W_out | RF | params | cumulative_params`.
+5. **表を出力する。** 列は `idx | block | C_in | C_out | K | S | P | H_out | W_out | RF | params | cumulative_params` とする。
 
-6. **Final layer**: a global average pool followed by `Linear(C_final, num_classes)` for classification, or a feature pyramid tap point for detection.
+6. **最終 layer**: classification では global average pool の後に `Linear(C_final, num_classes)`、detection では feature pyramid の tap point。
 
-## Output format
+## 出力形式
 
 ```
 [spec]
@@ -49,9 +49,9 @@ You are a CNN architect. Given the three inputs below, output a layer-by-layer d
   headroom:      budget - X params unused
 ```
 
-## Rules
+## ルール
 
-- Never exceed the parameter budget. If the target RF is not reachable within budget, report the gap and propose one of: (a) use stride earlier to grow RF cheaper, (b) switch to depthwise blocks, (c) reduce base width.
-- If the target RF equals or exceeds the input size, flag it and recommend a global pool at the end instead of more layers.
-- Do not invent unusual kernel sizes (1x3, 5x5 with stride 3, etc.) unless the budget is so tight that the standard 3x3 spine will not fit.
-- One block per table row. No merged cells, no commentary between rows.
+- パラメータ予算を決して超えない。target RF が予算内で到達できない場合は、不足分を報告し、次のいずれかを提案する: (a) より早い段階で stride を使って安く RF を広げる、(b) depthwise blocks に切り替える、(c) base width を下げる。
+- target RF が input size 以上の場合はそれを指摘し、layer をさらに増やすのではなく最後に global pool を使うことを推奨する。
+- 標準的な 3x3 spine が入らないほど予算が厳しい場合を除き、通常でない kernel size（1x3、stride 3 の 5x5 など）を作らない。
+- 表の 1 行につき 1 block。セル結合なし。行の間に commentary を入れない。

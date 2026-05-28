@@ -1,10 +1,9 @@
-"""Multi-agent software team — typed task board + handoff accounting scaffold.
+"""Multi-agent software team - typed task board + handoff accounting scaffold。
 
-The hard architectural primitive is the typed message task board that
-coordinates an architect, N parallel coders, a reviewer, and a tester, with
-every role boundary producing a trace span. This scaffold runs the full
-message flow with stubbed LLM calls so the handoff logic and token accounting
-are observable end to end.
+難しい architectural primitive は、architect、N parallel coders、reviewer、tester
+を coordinate し、すべての role boundary が trace span を生成する typed message
+task board です。この scaffold は stubbed LLM call で message flow 全体を走らせ、
+handoff logic と token accounting を end to end に観測できるようにします。
 
 Run:  python main.py
 """
@@ -18,7 +17,7 @@ from enum import Enum
 
 
 # ---------------------------------------------------------------------------
-# typed message task board  --  A2A-style typed messages
+# typed message task board  --  A2A-style typed message
 # ---------------------------------------------------------------------------
 
 class MsgKind(Enum):
@@ -56,7 +55,7 @@ class Board:
 
 
 # ---------------------------------------------------------------------------
-# role stubs  --  architect, coders, reviewer, tester
+# role stub  --  architect、coder、reviewer、tester
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -64,18 +63,18 @@ class Subtask:
     name: str
     files: list[str]
     lines_changed: int = 0
-    has_bug: bool = False  # for injected-bug probe
+    has_bug: bool = False  # injected-bug probe 用
 
 
 def architect_plan(issue: str, rng: random.Random) -> list[Subtask]:
-    """Stubbed architect plan."""
+    """stubbed architect plan。"""
     subs = [
         Subtask("parser", ["src/parser.py"]),
         Subtask("cache", ["src/cache.py", "src/cache_test.py"]),
         Subtask("api", ["src/api.py"]),
         Subtask("migration", ["src/migrate.py"]),
     ]
-    # randomly inject one bug for reviewer probe
+    # reviewer probe 用に bug を1つ random に注入する
     subs[rng.randrange(len(subs))].has_bug = rng.random() < 0.3
     return subs
 
@@ -87,27 +86,27 @@ def coder_implement(sub: Subtask, rng: random.Random) -> dict:
 
 
 def reviewer_check(diffs: list[dict], rng: random.Random) -> tuple[bool, str]:
-    """Reviewer stub. Catches bugs ~85% of the time; 15% false-approve rate."""
+    """reviewer stub。約85%で bug を検出し、15% false-approve rate を持つ。"""
     buggy = [d for d in diffs if d["has_bug"]]
     if not buggy:
-        return True, "lgtm"
+        return True, "承認"
     if rng.random() < 0.85:
-        return False, f"found bug in {buggy[0]['subtask']}: please revisit"
-    return True, "lgtm (FALSE-APPROVE)"
+        return False, f"{buggy[0]['subtask']} に bug を発見。再確認してください"
+    return True, "承認 (FALSE-APPROVE)"
 
 
 def tester_run(diffs: list[dict], rng: random.Random) -> tuple[bool, str]:
-    """Tester stub. Catches any remaining bugs, with ~3% flake rate."""
+    """tester stub。残った bug を検出し、約3%の flake rate を持つ。"""
     buggy = [d for d in diffs if d["has_bug"]]
     if buggy:
-        return False, f"test fails in {buggy[0]['subtask']} module"
+        return False, f"{buggy[0]['subtask']} module で test が失敗"
     if rng.random() < 0.03:
-        return False, "flaky test"
-    return True, "412/412 passing"
+        return False, "flaky test で失敗"
+    return True, "412/412 pass"
 
 
 # ---------------------------------------------------------------------------
-# orchestrator  --  runs the full flow, computes token amplification
+# orchestrator  --  flow 全体を走らせ、token amplification を計算する
 # ---------------------------------------------------------------------------
 
 def run_team(issue: str, n_coders: int = 4, rng: random.Random | None = None) -> dict:
@@ -120,14 +119,14 @@ def run_team(issue: str, n_coders: int = 4, rng: random.Random | None = None) ->
                    payload={"issue": issue, "subtasks": [s.name for s in plan]},
                    tokens=4500))
 
-    # dispatch subtasks to coders
+    # subtask を coder に dispatch する
     for i, sub in enumerate(plan[:n_coders]):
         coder = f"coder-{chr(65 + i)}"
         board.post(Msg(MsgKind.SUBTASK, by="architect", to=coder,
                        payload={"subtask": sub.name, "files": sub.files},
                        tokens=1200))
 
-    # coders implement in parallel
+    # coder が parallel に実装する
     diffs: list[dict] = []
     for i, sub in enumerate(plan[:n_coders]):
         coder = f"coder-{chr(65 + i)}"
@@ -136,7 +135,7 @@ def run_team(issue: str, n_coders: int = 4, rng: random.Random | None = None) ->
         board.post(Msg(MsgKind.DIFF_READY, by=coder, to="merge_coord",
                        payload=result, tokens=3200 + result["lines"] * 30))
 
-    # merge (no conflict by construction in this scaffold)
+    # merge (この scaffold では構造上 conflict しない)
     board.post(Msg(MsgKind.REVIEW_NEEDED, by="merge_coord", to="reviewer",
                    payload={"diffs": diffs}, tokens=2000))
 
@@ -146,17 +145,17 @@ def run_team(issue: str, n_coders: int = 4, rng: random.Random | None = None) ->
         board.post(Msg(MsgKind.APPROVED, by="reviewer", to="tester",
                        payload={"comment": comment}, tokens=1800))
     else:
-        # route back to coder who owned the subtask (simplified: first coder)
+        # subtask を所有する coder に戻す (簡略化して first coder)
         board.post(Msg(MsgKind.REVIEW_FEEDBACK, by="reviewer", to="coder-A",
                        payload={"comment": comment}, tokens=1800))
-        # coder revises
+        # coder が revise する
         board.post(Msg(MsgKind.DIFF_READY, by="coder-A", to="merge_coord",
                        payload={"subtask": "parser", "lines": 52, "has_bug": False},
                        tokens=3100))
-        # reviewer re-approves
+        # reviewer が再 approve する
         board.post(Msg(MsgKind.APPROVED, by="reviewer", to="tester",
-                       payload={"comment": "now lgtm"}, tokens=1500))
-        # update diffs: drop bug
+                       payload={"comment": "修正後に承認"}, tokens=1500))
+        # diff を更新して bug を落とす
         diffs = [{"subtask": d["subtask"], "lines": d["lines"], "has_bug": False}
                  for d in diffs]
 
@@ -181,12 +180,12 @@ def run_team(issue: str, n_coders: int = 4, rng: random.Random | None = None) ->
 
 
 # ---------------------------------------------------------------------------
-# run several matched trials vs single-agent baseline
+# single-agent baseline に対する matched trial を複数走らせる
 # ---------------------------------------------------------------------------
 
 def single_agent_baseline(issue: str, rng: random.Random) -> dict:
-    """Stub: one Sonnet 4.7 in a single worktree does the whole thing."""
-    # slower but fewer handoffs; tokens roughly the whole budget minus role overhead
+    """stub: single worktree 上の Sonnet 4.7 1体が全体を実行する。"""
+    # 遅いが handoff は少ない。tokens は role overhead を除いた全体 budget 程度
     return {
         "passed": rng.random() < 0.68,
         "total_tokens": 18_000 + rng.randint(0, 6_000),
@@ -196,16 +195,16 @@ def single_agent_baseline(issue: str, rng: random.Random) -> dict:
 def main() -> None:
     rng = random.Random(11)
     print("=== multi-agent team run ===")
-    result = run_team("fix widget parser race", n_coders=4, rng=rng)
+    result = run_team("widget parser race を修正", n_coders=4, rng=rng)
     print(f"approved     : {result['approved']}  ({result['review_comment']})")
     print(f"tested passed: {result['tested_passed']}  ({result['test_msg']})")
     print(f"handoffs     : {result['handoffs']}")
     print(f"total tokens : {result['total_tokens']:,}")
-    print("tokens by role:")
+    print("role 別 token:")
     for role, n in sorted(result['tokens_by_role'].items(), key=lambda x: -x[1]):
         print(f"  {role:14s} {n:>6,}")
 
-    print("\n=== 10 matched trials vs single-agent baseline ===")
+    print("\n=== single-agent baseline との matched trial 10回 ===")
     team_pass = 0
     baseline_pass = 0
     team_tok_sum = 0

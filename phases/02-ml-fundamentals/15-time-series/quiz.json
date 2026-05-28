@@ -2,66 +2,66 @@
   {
     "id": "timeseries-pre-1",
     "stage": "pre",
-    "question": "Why is a random train/test split invalid for time series data?",
+    "question": "time series data で random train/test split が無効なのはなぜですか。",
     "options": [
-      "Random splits make the dataset too small",
-      "Random splits leak future information into the training set, allowing the model to cheat",
-      "Time series data cannot be split at all",
-      "Random splits only work for classification problems"
+      "random splits によって dataset が小さくなりすぎるから",
+      "random splits は future information を training set に漏らし、model が cheat できてしまうから",
+      "time series data は一切 split できないから",
+      "random splits は classification problems でしか動かないから"
     ],
     "correct": 1,
-    "explanation": "In a random split, future data points can end up in the training set while past points are in the test set. The model then uses future information to predict the past, giving falsely optimistic results."
+    "explanation": "random split では、future data points が training set に入り、past points が test set に入ることがあります。model は future information を使って past を予測することになり、結果が不当に楽観的になります。"
   },
   {
     "id": "timeseries-pre-2",
     "stage": "pre",
-    "question": "What does it mean for a time series to be stationary?",
+    "question": "time series が stationary であるとはどういう意味ですか。",
     "options": [
-      "The values never change over time",
-      "Its statistical properties (mean, variance, autocorrelation) do not change over time",
-      "It has no seasonal patterns",
-      "It always trends upward"
+      "values が時間とともに一切変わらないこと",
+      "statistical properties（mean、variance、autocorrelation）が時間とともに変わらないこと",
+      "seasonal patterns がないこと",
+      "常に upward trend を持つこと"
     ],
     "correct": 1,
-    "explanation": "A stationary series has constant mean, variance, and autocorrelation structure over time. Most forecasting methods assume stationarity. Non-stationary series need differencing or detrending first."
+    "explanation": "stationary series は mean、variance、autocorrelation structure が時間を通じて一定です。多くの forecasting methods は stationarity を仮定します。non-stationary series は先に differencing や detrending が必要です。"
   },
   {
     "id": "timeseries-post-1",
     "stage": "post",
-    "question": "What is the purpose of differencing a time series?",
+    "question": "time series を differencing する目的は何ですか。",
     "options": [
-      "To increase the number of data points",
-      "To remove trend and make the series stationary by modeling changes between consecutive values",
-      "To convert regression into classification",
-      "To normalize the values between 0 and 1"
+      "data points の数を増やすため",
+      "連続する values の変化を model 化することで trend を取り除き、series を stationary に近づけるため",
+      "regression を classification に変換するため",
+      "values を 0 から 1 の間に normalize するため"
     ],
     "correct": 1,
-    "explanation": "Differencing replaces each value with the change from the previous value: diff[t] = value[t] - value[t-1]. This removes trend, making the series closer to stationary."
+    "explanation": "Differencing は各 value を previous value からの変化に置き換えます: diff[t] = value[t] - value[t-1]。これにより trend が取り除かれ、series は stationary に近づきます。"
   },
   {
     "id": "timeseries-post-2",
     "stage": "post",
-    "question": "Lag features convert a time series into a supervised learning problem. What is a lag-3 feature for predicting y[t]?",
+    "question": "Lag features は time series を supervised learning problem に変換します。y[t] を予測するための lag-3 feature とは何ですか。",
     "options": [
-      "The average of the next 3 values: (y[t+1] + y[t+2] + y[t+3]) / 3",
-      "The value 3 time steps ago: y[t-3]",
-      "The 3rd derivative of the series",
-      "The difference between the current value and 3 steps ahead"
+      "次の 3 values の平均: (y[t+1] + y[t+2] + y[t+3]) / 3",
+      "3 time steps 前の値: y[t-3]",
+      "series の 3rd derivative",
+      "current value と 3 steps ahead の差"
     ],
     "correct": 1,
-    "explanation": "A lag-3 feature is y[t-3]: the value 3 time steps in the past. Using past values as input features lets standard ML models (regression, trees) make time series predictions without specialized algorithms."
+    "explanation": "lag-3 feature は y[t-3]、つまり 3 time steps 過去の値です。past values を input features として使うことで、標準 ML models（regression、trees）が specialized algorithms なしに time series prediction を行えます。"
   },
   {
     "id": "timeseries-post-3",
     "stage": "post",
-    "question": "Walk-forward validation splits time data into expanding or sliding windows. Why is this better than K-fold CV for time series?",
+    "question": "Walk-forward validation は time data を expanding または sliding windows に分割します。time series で K-fold CV より優れているのはなぜですか。",
     "options": [
-      "Walk-forward is faster to compute",
-      "Walk-forward respects temporal order, training only on past data and testing on future data, preventing lookahead bias",
-      "K-fold CV cannot be used on numeric data",
-      "Walk-forward uses more data for training"
+      "Walk-forward の方が計算が速いから",
+      "Walk-forward は temporal order を守り、past data だけで training し future data で testing するため、lookahead bias を防ぐから",
+      "K-fold CV は numeric data では使えないから",
+      "Walk-forward は training により多くの data を使うから"
     ],
     "correct": 1,
-    "explanation": "Walk-forward validation always trains on past data and tests on future data, mimicking real-world deployment. K-fold CV shuffles data, potentially training on future to predict past (temporal leakage)."
+    "explanation": "Walk-forward validation は常に past data で訓練し future data で test するため、real-world deployment を模倣します。K-fold CV は data を shuffle し、future で訓練して past を予測する temporal leakage を起こす可能性があります。"
   }
 ]

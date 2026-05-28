@@ -1,36 +1,36 @@
-# Building a Tokenizer from Scratch
+# トークナイザーをゼロから構築する
 
-> Lesson 01 gave you a toy. This lesson gives you a weapon.
+> Lesson 01 で作ったのはおもちゃでした。このレッスンでは、実戦で使える道具にします。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 10, Lesson 01 (Tokenizers: BPE, WordPiece, SentencePiece)
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提条件:** Phase 10, Lesson 01 (Tokenizers: BPE, WordPiece, SentencePiece)
+**時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Build a production-grade BPE tokenizer that handles Unicode, whitespace normalization, and special tokens
-- Implement byte-level fallback so the tokenizer can encode any input (including emoji, CJK, and code) without unknown tokens
-- Add pre-tokenization regex patterns that split text at word boundaries before applying BPE merges
-- Train a custom tokenizer on a corpus and evaluate its compression ratio against tiktoken on multilingual text
+- Unicode、空白の正規化、特殊トークンを扱える本番品質の BPE トークナイザーを構築する
+- バイトレベルのフォールバックを実装し、未知トークンなしで任意の入力 (絵文字、CJK、コードを含む) をエンコードできるようにする
+- BPE マージを適用する前に単語境界でテキストを分割する、事前トークン化用の正規表現パターンを追加する
+- コーパス上でカスタムトークナイザーを訓練し、多言語テキストでの圧縮率を tiktoken と比較して評価する
 
-## The Problem
+## 課題
 
-Your BPE tokenizer from Lesson 01 works on English text. Now throw Japanese at it. Or emoji. Or Python code with mixed tabs and spaces.
+Lesson 01 で作った BPE トークナイザーは英語テキストでは動きます。では、日本語を入れてみましょう。絵文字でも構いません。タブとスペースが混ざった Python コードでもいいでしょう。
 
-It breaks.
+壊れます。
 
-Not because BPE is wrong -- because the implementation is incomplete. A production tokenizer handles raw bytes in any encoding, normalizes Unicode before splitting, manages special tokens that never get merged, chains pre-tokenization with subword splitting, and does all of this fast enough to not bottleneck a training pipeline processing 15 trillion tokens.
+BPE が間違っているからではありません。実装が不完全だからです。本番用トークナイザーは、任意のエンコーディングの生バイトを扱い、分割前に Unicode を正規化し、決してマージされない特殊トークンを管理し、事前トークン化とサブワード分割をつなげます。しかも、15 兆トークンを処理する訓練パイプラインのボトルネックにならない速度で、これらすべてを実行する必要があります。
 
-GPT-2's tokenizer has 50,257 tokens. Llama 3 has 128,256. GPT-4 has roughly 100,000. These are not toy numbers. The merge tables behind those vocabularies were trained on hundreds of gigabytes of text, and the surrounding machinery -- normalization, pre-tokenization, special token injection, chat template formatting -- is what separates a tokenizer that handles "hello world" from one that handles the entire internet.
+GPT-2 のトークナイザーには 50,257 個のトークンがあります。Llama 3 は 128,256 個です。GPT-4 はおよそ 100,000 個です。これはおもちゃの数字ではありません。これらの語彙の背後にあるマージテーブルは、数百 GB のテキストで訓練されています。そして、その周囲の仕組み、つまり正規化、事前トークン化、特殊トークンの挿入、チャットテンプレートの整形こそが、「hello world」しか扱えないトークナイザーと、インターネット全体を扱えるトークナイザーを分けます。
 
-You are going to build that machinery.
+このレッスンでは、その仕組みを構築します。
 
-## The Concept
+## 概念
 
-### The Full Pipeline
+### 全体のパイプライン
 
-A production tokenizer is not one algorithm. It is a pipeline of five stages, each solving a different problem.
+本番用トークナイザーは 1 つのアルゴリズムではありません。異なる問題を解く 5 段階のパイプラインです。
 
 ```mermaid
 graph LR
@@ -48,64 +48,64 @@ graph LR
     style F fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-Each stage has a specific job:
+各段階には明確な役割があります。
 
-| Stage | What It Does | Why It Matters |
+| 段階 | 何をするか | なぜ重要か |
 |-------|-------------|----------------|
-| Normalize | NFKC Unicode, lowercase optional, strip accents optional | "fi" ligature (U+FB01) becomes "fi" (two chars). Without this, same word gets different tokens. |
-| Pre-Tokenize | Split text into chunks before BPE | Prevents BPE from merging across word boundaries. "the cat" should never produce a token "e c". |
-| BPE Merge | Apply learned merge rules to byte sequences | The core compression. Turns raw bytes into subword tokens. |
-| Special Tokens | Inject [BOS], [EOS], [PAD], chat template markers | These tokens have fixed IDs. They never participate in BPE merges. The model needs them for structure. |
-| ID Mapping | Convert token strings to integer IDs | The model sees integers, not strings. |
+| 正規化 | NFKC Unicode、任意で小文字化、任意でアクセント除去 | "fi" 合字 (U+FB01) が "fi" (2 文字) になります。これがないと、同じ単語が異なるトークンになります。 |
+| 事前トークン化 | BPE の前にテキストをチャンクへ分割する | BPE が単語境界をまたいでマージするのを防ぎます。"the cat" から "e c" というトークンが作られてはいけません。 |
+| BPE マージ | 学習済みのマージ規則をバイト列に適用する | 中核となる圧縮です。生バイトをサブワードトークンに変換します。 |
+| 特殊トークン | [BOS]、[EOS]、[PAD]、チャットテンプレートのマーカーを挿入する | これらのトークンには固定 ID があります。BPE マージには参加しません。モデルは構造を理解するためにこれらを必要とします。 |
+| ID マッピング | トークン文字列を整数 ID に変換する | モデルが見るのは文字列ではなく整数です。 |
 
-### Byte-Level BPE
+### バイトレベル BPE
 
-Lesson 01's tokenizer operated on UTF-8 bytes. That was the right call. But we skipped something important: what happens when those bytes are not valid UTF-8?
+Lesson 01 のトークナイザーは UTF-8 バイト上で動いていました。これは正しい選択でした。ただし、重要なことを飛ばしていました。そのバイト列が有効な UTF-8 ではない場合、何が起きるのでしょうか。
 
-Byte-level BPE solves this by treating every possible byte value (0-255) as a valid token. Your base vocabulary is exactly 256 entries. Any file -- text, binary, corrupted -- can be tokenized without producing an unknown token.
+バイトレベル BPE は、取り得るすべてのバイト値 (0-255) を有効なトークンとして扱うことでこの問題を解きます。基礎語彙は正確に 256 エントリです。テキスト、バイナリ、壊れたファイルを問わず、未知トークンを出さずにトークン化できます。
 
-GPT-2 added a trick: map each byte to a printable Unicode character so the vocabulary stays human-readable. Byte 0x20 (space) becomes the character "G" in their mapping. This is purely cosmetic. The algorithm does not care.
+GPT-2 はここに工夫を加えました。各バイトを表示可能な Unicode 文字に対応させ、語彙を人間が読める形に保ったのです。Byte 0x20 (space) は、その対応表では文字 "G" になります。これは純粋に見た目のためです。アルゴリズムは気にしません。
 
-The real power: byte-level BPE handles every language on earth. Chinese characters are 3 UTF-8 bytes each. Japanese can be 3-4 bytes. Arabic, Devanagari, emoji -- all just byte sequences. The BPE algorithm finds patterns in these byte sequences exactly the same way it finds patterns in English ASCII bytes.
+本当の強みは、バイトレベル BPE が地球上のあらゆる言語を扱えることです。中国語の文字は 1 文字あたり 3 UTF-8 バイトです。日本語は 3-4 バイトになり得ます。アラビア文字、デーヴァナーガリー、絵文字も、すべて単なるバイト列です。BPE アルゴリズムは、英語 ASCII バイトのパターンを見つけるのとまったく同じ方法で、これらのバイト列にあるパターンを見つけます。
 
-### Pre-Tokenization
+### 事前トークン化
 
-Before BPE touches your text, you need to split it into chunks. This prevents the merge algorithm from creating tokens that span word boundaries.
+BPE がテキストに触れる前に、テキストをチャンクに分割する必要があります。これにより、マージアルゴリズムが単語境界をまたぐトークンを作るのを防ぎます。
 
-GPT-2 uses a regex pattern to split text:
+GPT-2 は正規表現パターンを使ってテキストを分割します。
 
 ```
 '(?:[sdmt]|ll|ve|re)| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+
 ```
 
-This pattern splits on contractions ("don't" becomes "don" + "'t"), words with optional leading spaces, numbers, punctuation, and whitespace. The leading space is kept attached to the word -- so "the cat" becomes [" the", " cat"], not ["the", " ", "cat"].
+このパターンは短縮形 ("don't" は "don" + "'t")、任意の先頭スペースを持つ単語、数字、句読点、空白で分割します。先頭のスペースは単語に付いたままになります。つまり "the cat" は [" the", " cat"] になり、["the", " ", "cat"] にはなりません。
 
-Llama uses SentencePiece, which skips regex entirely. It treats the raw byte stream as one long sequence and lets the BPE algorithm figure out the boundaries. This is simpler but gives BPE more freedom to create cross-word tokens.
+Llama は SentencePiece を使います。これは正規表現を完全に省略します。生のバイトストリームを 1 つの長い系列として扱い、境界は BPE アルゴリズムに見つけさせます。こちらは単純ですが、BPE が単語をまたぐトークンを作る自由度が高くなります。
 
-The choice matters. GPT-2's regex prevents the tokenizer from learning that "the" at the end of one word and "the" at the start of the next should merge. SentencePiece allows it, which sometimes produces more efficient compression but less interpretable tokens.
+この選択は重要です。GPT-2 の正規表現は、ある単語の末尾にある "the" と次の単語の先頭にある "the" がマージされるのを防ぎます。SentencePiece はそれを許します。結果として圧縮効率が上がることもありますが、トークンの解釈性は下がります。
 
-### Special Tokens
+### 特殊トークン
 
-Every production tokenizer reserves token IDs for structural markers:
+すべての本番用トークナイザーは、構造を示すマーカー用にトークン ID を予約します。
 
-| Token | Purpose | Used By |
+| トークン | 目的 | 使うモデル |
 |-------|---------|---------|
-| `[BOS]` / `<s>` | Beginning of sequence | Llama 3, GPT |
-| `[EOS]` / `</s>` | End of sequence | All models |
-| `[PAD]` | Padding for batch alignment | BERT, T5 |
-| `[UNK]` | Unknown token (byte-level BPE eliminates this) | BERT, WordPiece |
-| `<\|im_start\|>` | Chat message boundary start | ChatGPT, Qwen |
-| `<\|im_end\|>` | Chat message boundary end | ChatGPT, Qwen |
-| `<\|user\|>` | User turn marker | Llama 3 |
-| `<\|assistant\|>` | Assistant turn marker | Llama 3 |
+| `[BOS]` / `<s>` | 系列の開始 | Llama 3, GPT |
+| `[EOS]` / `</s>` | 系列の終了 | すべてのモデル |
+| `[PAD]` | バッチ整列のためのパディング | BERT, T5 |
+| `[UNK]` | 未知トークン (バイトレベル BPE では不要) | BERT, WordPiece |
+| `<\|im_start\|>` | チャットメッセージ境界の開始 | ChatGPT, Qwen |
+| `<\|im_end\|>` | チャットメッセージ境界の終了 | ChatGPT, Qwen |
+| `<\|user\|>` | ユーザー発話のマーカー | Llama 3 |
+| `<\|assistant\|>` | アシスタント発話のマーカー | Llama 3 |
 
-Special tokens are never split by BPE. They are matched exactly before the merge algorithm runs, replaced with their fixed ID, and the surrounding text is tokenized normally.
+特殊トークンは BPE によって分割されません。マージアルゴリズムが走る前に完全一致で検出され、固定 ID に置き換えられます。周囲のテキストは通常どおりトークン化されます。
 
-### Chat Templates
+### チャットテンプレート
 
-This is where most people get confused and most implementations break.
+ここで多くの人が混乱し、多くの実装が壊れます。
 
-When you send messages to a chat model, the API accepts a list of messages:
+チャットモデルにメッセージを送るとき、API はメッセージのリストを受け取ります。
 
 ```
 [
@@ -115,7 +115,7 @@ When you send messages to a chat model, the API accepts a list of messages:
 ]
 ```
 
-The model does not see JSON. It sees a flat token sequence. The chat template converts messages into that flat sequence using special tokens. Every model does this differently:
+モデルが JSON を見るわけではありません。モデルが見るのは平坦なトークン列です。チャットテンプレートは、特殊トークンを使ってメッセージをその平坦な列に変換します。モデルごとに形式は異なります。
 
 ```
 Llama 3:
@@ -136,23 +136,23 @@ Hello<|im_end|>
 Hi there!<|im_end|>
 ```
 
-Get the template wrong and the model produces garbage. It was trained on one exact format. Any deviation -- a missing newline, a swapped token, an extra space -- puts the input outside the training distribution.
+テンプレートを間違えると、モデルはでたらめな出力をします。モデルは 1 つの正確な形式で訓練されています。改行が 1 つ足りない、トークンを入れ替える、余分なスペースを入れるといったどんなズレも、入力を訓練分布の外に出してしまいます。
 
-### Speed
+### 速度
 
-Python is too slow for production tokenization.
+Python は本番用のトークン化には遅すぎます。
 
-tiktoken (OpenAI) is written in Rust with Python bindings. HuggingFace tokenizers is also Rust. SentencePiece is C++. These achieve 10-100x speedups over pure Python.
+tiktoken (OpenAI) は Rust で書かれ、Python バインディングを持っています。HuggingFace tokenizers も Rust です。SentencePiece は C++ です。これらは純粋な Python より 10-100 倍高速です。
 
-For perspective: tokenizing 15 trillion tokens for Llama 3 pre-training at 1 million tokens per second (fast Python) would take 174 days. At 100 million tokens per second (Rust), it takes 1.7 days.
+感覚をつかむために考えてみましょう。Llama 3 の事前訓練用に 15 兆トークンをトークン化するとします。1 秒あたり 100 万トークン (高速な Python) では 174 日かかります。1 秒あたり 1 億トークン (Rust) なら 1.7 日です。
 
-You are building in Python to understand the algorithm. In production, you would use a compiled implementation and only touch the Python wrapper.
+ここではアルゴリズムを理解するために Python で構築します。本番では、コンパイル済み実装を使い、Python ラッパーだけを触ることになります。
 
-## Build It
+## 作ってみる
 
-### Step 1: Byte-Level Encoding
+### Step 1: バイトレベルエンコーディング
 
-The foundation. Convert any string into a sequence of bytes, map each byte to a printable character for display, and reverse the process.
+基礎です。任意の文字列をバイト列へ変換し、表示用に各バイトを表示可能な文字へ対応させ、逆変換できるようにします。
 
 ```python
 def bytes_to_tokens(text):
@@ -162,7 +162,7 @@ def tokens_to_text(token_bytes):
     return bytes(token_bytes).decode("utf-8", errors="replace")
 ```
 
-Test on multilingual text to see the byte counts:
+多言語テキストでテストし、バイト数を確認します。
 
 ```python
 texts = [
@@ -177,11 +177,11 @@ for label, text in texts:
     print(f"{label}: {len(text)} chars -> {len(b)} bytes -> {b}")
 ```
 
-"hello" is 5 bytes. "你好" is 6 bytes (3 per character). The fire emoji is 4 bytes. The byte-level tokenizer does not care what language it is. Bytes are bytes.
+"hello" は 5 バイトです。"你好" は 6 バイトです (1 文字あたり 3 バイト)。炎の絵文字は 4 バイトです。バイトレベルのトークナイザーは言語を気にしません。バイトはバイトです。
 
-### Step 2: Pre-Tokenizer with Regex
+### Step 2: 正規表現による事前トークナイザー
 
-Split text into chunks using the GPT-2 regex pattern. Each chunk gets tokenized independently by BPE.
+GPT-2 の正規表現パターンを使ってテキストをチャンクに分割します。各チャンクは BPE によって独立にトークン化されます。
 
 ```python
 import re
@@ -200,20 +200,20 @@ def pre_tokenize(text):
     return [match.group() for match in GPT2_PATTERN.finditer(text)]
 ```
 
-The `regex` module supports Unicode property escapes (`\p{L}` for letters, `\p{N}` for numbers). The standard library `re` module does not, so we fall back to ASCII character classes. For production multilingual tokenizers, install `regex`.
+`regex` モジュールは Unicode プロパティエスケープ (`\p{L}` は文字、`\p{N}` は数字) をサポートします。標準ライブラリの `re` モジュールはサポートしないため、ASCII の文字クラスへフォールバックします。本番用の多言語トークナイザーでは `regex` をインストールしてください。
 
-Try it:
+試してみましょう。
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
 # [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
 ```
 
-The leading space stays attached to the word. Contractions split at the apostrophe. Punctuation becomes its own chunk. BPE will never merge tokens across these boundaries.
+先頭スペースは単語に付いたままです。短縮形はアポストロフィで分割されます。句読点は独立したチャンクになります。BPE がこれらの境界をまたいでトークンをマージすることはありません。
 
-### Step 3: BPE on Byte Sequences
+### Step 3: バイト列上の BPE
 
-The core algorithm from Lesson 01, but now operating on pre-tokenized chunks independently.
+Lesson 01 の中核アルゴリズムと同じですが、今回は事前トークン化されたチャンクごとに独立して動かします。
 
 ```python
 from collections import Counter
@@ -239,9 +239,9 @@ def apply_merge(byte_seq, pair, new_id):
     return merged
 ```
 
-### Step 4: Special Token Handling
+### Step 4: 特殊トークンの処理
 
-Special tokens need exact matching and fixed IDs. They bypass BPE entirely.
+特殊トークンには完全一致と固定 ID が必要です。BPE を完全に迂回します。
 
 ```python
 class SpecialTokenHandler:
@@ -269,9 +269,9 @@ class SpecialTokenHandler:
         return parts
 ```
 
-### Step 5: Full Tokenizer Class
+### Step 5: 完全なトークナイザークラス
 
-Chain everything together: normalize, split on special tokens, pre-tokenize, BPE merge, map to IDs.
+すべてをつなげます。正規化、特殊トークンでの分割、事前トークン化、BPE マージ、ID へのマッピングです。
 
 ```python
 import unicodedata
@@ -338,9 +338,9 @@ class ProductionTokenizer:
         return len(self.vocab)
 ```
 
-### Step 6: Multilingual Test
+### Step 6: 多言語テスト
 
-The real test. Throw English, Chinese, emoji, and code at it.
+本当のテストです。英語、中国語、絵文字、コードを投げ込みます。
 
 ```python
 corpus = (
@@ -375,13 +375,13 @@ for text in test_texts:
     print()
 ```
 
-Chinese characters produce 3 bytes each. The emoji produces 4 bytes. None of these crash the tokenizer. None produce unknown tokens. That is the power of byte-level BPE.
+中国語の文字は 1 文字あたり 3 バイトになります。絵文字は 4 バイトです。どれもトークナイザーをクラッシュさせません。未知トークンも生成しません。これがバイトレベル BPE の力です。
 
-## Use It
+## 使ってみる
 
-### Comparing Real Tokenizers
+### 実際のトークナイザーを比較する
 
-Load the actual tokenizers from Llama 3, GPT-4, and Mistral. See how each handles the same multilingual paragraph.
+Llama 3、GPT-4、Mistral の実際のトークナイザーを読み込みます。同じ多言語段落をそれぞれがどう扱うかを見ます。
 
 ```python
 import tiktoken
@@ -407,37 +407,37 @@ for name, tok in [("Llama 3", llama_tok), ("Mistral", mistral_tok)]:
     print(f"{name} ({len(tokens)} tokens): {pieces[:20]}...")
 ```
 
-You will see different token counts for the same text. Llama 3 with 128K vocabulary is more aggressive at merging common patterns. GPT-4 with 100K sits in the middle. Mistral with 32K produces more tokens but has a smaller embedding layer.
+同じテキストでもトークン数が異なることがわかります。128K 語彙を持つ Llama 3 は、一般的なパターンをより積極的にマージします。100K 語彙の GPT-4 は中間です。32K 語彙の Mistral はより多くのトークンを生成しますが、埋め込み層は小さくなります。
 
-The tradeoff is always the same: larger vocabulary means shorter sequences but more parameters.
+トレードオフは常に同じです。語彙が大きいほど系列は短くなりますが、パラメータ数は増えます。
 
-## Ship It
+## 提出物
 
-This lesson produces a prompt for building and debugging production tokenizers. See `outputs/prompt-tokenizer-builder.md`.
+このレッスンでは、本番用トークナイザーを構築、デバッグするためのプロンプトを作ります。`outputs/prompt-tokenizer-builder.md` を参照してください。
 
-## Exercises
+## 演習
 
-1. **Easy:** Add a `get_token_bytes(id)` method that shows the raw bytes for any token ID. Use it to inspect what your most common merged tokens actually represent.
-2. **Medium:** Implement the Llama-style pre-tokenizer that splits on whitespace and digits but keeps leading spaces. Compare its vocabulary with the GPT-2 regex approach on the same corpus.
-3. **Hard:** Add a chat template method that takes a list of `{"role": ..., "content": ...}` messages and produces the correct token sequence for the Llama 3 chat format. Test it against the HuggingFace implementation.
+1. **Easy:** 任意のトークン ID の生バイトを表示する `get_token_bytes(id)` メソッドを追加してください。最頻出のマージ済みトークンが実際に何を表しているかを調べるのに使います。
+2. **Medium:** 空白と数字で分割しつつ先頭スペースを保持する、Llama 風の事前トークナイザーを実装してください。同じコーパスで、GPT-2 の正規表現アプローチと語彙を比較してください。
+3. **Hard:** `{"role": ..., "content": ...}` メッセージのリストを受け取り、Llama 3 のチャット形式に合う正しいトークン列を生成するチャットテンプレートメソッドを追加してください。HuggingFace 実装と照合してテストしてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|----------------|----------------------|
-| Byte-level BPE | "Tokenizer that works on bytes" | BPE with a base vocabulary of 256 byte values -- handles any input without unknown tokens |
-| Pre-tokenization | "Splitting before BPE" | Regex or rule-based splitting that prevents BPE from merging across word boundaries |
-| NFKC normalization | "Unicode cleanup" | Canonical decomposition followed by compatibility composition -- "fi" ligature becomes "fi", fullwidth "A" becomes "A" |
-| Chat template | "How messages become tokens" | The exact format for converting a list of role/content messages into a flat token sequence -- model-specific and must match training format |
-| Special tokens | "Control tokens" | Reserved token IDs that bypass BPE -- [BOS], [EOS], [PAD], chat markers -- matched exactly before merge |
-| Fertility | "Tokens per word" | Ratio of output tokens to input words -- 1.3 for English in GPT-4, 2-3 for Korean, higher means wasted context |
-| tiktoken | "OpenAI tokenizer" | Rust BPE implementation with Python bindings -- 10-100x faster than pure Python |
-| Merge table | "The vocabulary" | Ordered list of byte-pair merges learned during training -- this IS the tokenizer's learned knowledge |
+| Byte-level BPE | 「バイト上で動くトークナイザー」 | 256 個のバイト値を基礎語彙に持つ BPE。未知トークンなしで任意の入力を扱えます |
+| Pre-tokenization | 「BPE の前に分割すること」 | BPE が単語境界をまたいでマージするのを防ぐ、正規表現またはルールベースの分割 |
+| NFKC normalization | 「Unicode の整理」 | 正準分解に続く互換合成。"fi" 合字は "fi" になり、全角の "A" は "A" になります |
+| Chat template | 「メッセージがトークンになる方法」 | role/content メッセージのリストを平坦なトークン列に変換する正確な形式。モデル固有で、訓練時の形式と一致する必要があります |
+| Special tokens | 「制御トークン」 | BPE を迂回する予約済みトークン ID。[BOS]、[EOS]、[PAD]、チャットマーカーなど。マージ前に完全一致で検出されます |
+| Fertility | 「単語あたりのトークン数」 | 出力トークン数と入力単語数の比率。GPT-4 の英語では 1.3、韓国語では 2-3。高いほどコンテキストを浪費します |
+| tiktoken | 「OpenAI のトークナイザー」 | Python バインディングを持つ Rust 製 BPE 実装。純粋な Python より 10-100 倍高速です |
+| Merge table | 「語彙」 | 訓練中に学習されたバイトペアマージの順序付きリスト。これこそがトークナイザーの学習済み知識です |
 
-## Further Reading
+## 参考文献
 
-- [OpenAI tiktoken source](https://github.com/openai/tiktoken) -- Rust BPE implementation used by GPT-3.5/4
-- [HuggingFace tokenizers](https://github.com/huggingface/tokenizers) -- Rust tokenizer library supporting BPE, WordPiece, Unigram
-- [Llama 3 paper (Meta, 2024)](https://arxiv.org/abs/2407.21783) -- details on 128K vocabulary and tokenizer training
-- [SentencePiece (Kudo & Richardson, 2018)](https://arxiv.org/abs/1808.06226) -- language-agnostic tokenization
-- [GPT-2 tokenizer source](https://github.com/openai/gpt-2/blob/master/src/encoder.py) -- the original byte-to-Unicode mapping
+- [OpenAI tiktoken source](https://github.com/openai/tiktoken) -- GPT-3.5/4 で使われる Rust 製 BPE 実装
+- [HuggingFace tokenizers](https://github.com/huggingface/tokenizers) -- BPE、WordPiece、Unigram をサポートする Rust 製トークナイザーライブラリ
+- [Llama 3 paper (Meta, 2024)](https://arxiv.org/abs/2407.21783) -- 128K 語彙とトークナイザー訓練の詳細
+- [SentencePiece (Kudo & Richardson, 2018)](https://arxiv.org/abs/1808.06226) -- 言語非依存のトークン化
+- [GPT-2 tokenizer source](https://github.com/openai/gpt-2/blob/master/src/encoder.py) -- 元祖バイトから Unicode への対応表

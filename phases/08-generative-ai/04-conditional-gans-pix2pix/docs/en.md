@@ -1,48 +1,48 @@
-# Conditional GANs & Pix2Pix
+# Conditional GANs と Pix2Pix
 
-> The first big unlock of 2014-2017 was controlling what a GAN makes. Attach a label, or an image, or a sentence. Pix2Pix did the image version and it still beats every generic text-to-image model on narrow image-to-image tasks.
+> 2014-2017年の最初の大きな進展は、GAN が何を作るかを制御できるようにしたことだった。label、image、sentence を付ける。Pix2Pix はその画像版であり、狭い image-to-image tasks では今でも generic text-to-image model を上回る。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-An unconditional GAN samples arbitrary faces. Useful for a demo, useless in production. You want: *map a sketch to a photo*, *map a map to an aerial photo*, *map a daytime scene to nighttime*, *colorize a grayscale image*. In all of these, you are given an input image `x` and must output `y` with some semantic correspondence. There are many plausible `y`s per `x`. Mean-squared error flattens them into mush. An adversarial loss doesn't, because "looks real" is sharp.
+Unconditional GAN は任意の顔をサンプルする。デモには使えるが、本番では役に立たない。欲しいのは、*sketch を photo に写す*、*map を aerial photo に写す*、*daytime scene を nighttime に写す*、*grayscale image を colorize する* といったものだ。これらでは入力画像 `x` が与えられ、意味的対応を保った `y` を出力しなければならない。1つの `x` に対して妥当な `y` は多数ある。Mean-squared error はそれらを潰して泥のようにする。adversarial loss はそうしない。"looks real" はシャープだからだ。
 
-Conditional GAN (Mirza & Osindero, 2014) adds a condition `c` as an input to both `G` and `D`. Pix2Pix (Isola et al., 2017) specialized this: condition is a full input image, generator is a U-Net, discriminator is a *patch-based* classifier (PatchGAN), and loss is adversarial + L1. That recipe outperforms from-scratch text-to-image models on narrow image-to-image domains even in 2026 because it is trained on *paired data* — you have exactly the signal you need.
+Conditional GAN（Mirza & Osindero, 2014）は、condition `c` を `G` と `D` の両方の入力に加える。Pix2Pix（Isola et al., 2017）はこれを特化した。condition は丸ごとの入力画像、generator は U-Net、discriminator は *patch-based* classifier（PatchGAN）、loss は adversarial + L1 である。このレシピは、2026年でも狭い image-to-image domains で from-scratch text-to-image models を上回る。*paired data* で学習されており、必要な信号を正確に持っているからだ。
 
-## The Concept
+## コンセプト
 
 ![Pix2Pix: U-Net generator, PatchGAN discriminator](../assets/pix2pix.svg)
 
-**Conditional G.** `G(x, z) → y`. In Pix2Pix, `z` is dropout inside G (no input noise — Isola found explicit noise got ignored).
+**Conditional G。** `G(x, z) → y`。Pix2Pix では `z` は G 内の dropout である（input noise はない。Isola は explicit noise が無視されることを見つけた）。
 
-**Conditional D.** `D(x, y) → [0, 1]`. Input is the *pair* (condition, output). This is the key difference: D must judge whether `y` is consistent with `x`, not just whether `y` looks real.
+**Conditional D。** `D(x, y) → [0, 1]`。入力は *pair*（condition, output）である。ここが重要な違いだ。D は `y` が本物らしいかだけでなく、`x` と整合しているかを判定しなければならない。
 
-**U-Net generator.** Encoder-decoder with skip connections across the bottleneck. Critical for tasks where input and output share low-level structure (edges, silhouette). Without the skips, high-frequency detail vanishes.
+**U-Net generator。** bottleneck をまたいだ skip connections を持つ encoder-decoder。入力と出力が low-level structure（edges、silhouette）を共有するタスクでは不可欠である。skip がないと high-frequency detail が消える。
 
-**PatchGAN discriminator.** Instead of outputting a single real/fake score, D outputs an `N×N` grid where each cell judges a receptive field of ~70×70 pixels. Averaged. This is a Markov random field assumption: realism is local. Much faster to train, fewer parameters, sharper output.
+**PatchGAN discriminator。** 単一の real/fake score を出す代わりに、D は `N×N` grid を出力し、各 cell が約70×70 pixels の receptive field を判定する。それを平均する。これは Markov random field assumption、つまり realism は local であるという仮定だ。学習がずっと速く、パラメータが少なく、出力はシャープになる。
 
-**Loss.**
+**Loss。**
 
 ```
 loss_G = -log D(x, G(x)) + λ · ||y - G(x)||_1
 loss_D = -log D(x, y) - log (1 - D(x, G(x)))
 ```
 
-The L1 term stabilizes training and pushes G toward the known target. L1 gives sharper edges than L2 (medians, not means). `λ = 100` was the Pix2Pix default.
+L1 項は学習を安定させ、G を既知の target に近づける。L1 は L2 より edges がシャープになる（means ではなく medians）。`λ = 100` が Pix2Pix の default だった。
 
-## CycleGAN — when you don't have pairs
+## CycleGAN — pairs がない場合
 
-Pix2Pix needs paired `(x, y)` data. CycleGAN (Zhu et al., 2017) drops this requirement at the cost of an extra loss: the *cycle consistency* loss. Two generators `G: X → Y` and `F: Y → X`. Train them so `F(G(x)) ≈ x` and `G(F(y)) ≈ y`. This lets you translate horses to zebras, summer to winter, without paired examples.
+Pix2Pix には paired `(x, y)` data が必要である。CycleGAN（Zhu et al., 2017）は追加の loss、つまり *cycle consistency* loss を支払うことでこの要件を外す。2つの generators `G: X → Y` と `F: Y → X` を用意する。`F(G(x)) ≈ x` かつ `G(F(y)) ≈ y` になるように学習する。これにより、paired examples なしで horses を zebras に、summer を winter に変換できる。
 
-In 2026, unpaired image-to-image is mostly done via diffusion (ControlNet, IP-Adapter) rather than CycleGAN, but the cycle-consistency idea survives in almost every unpaired domain adaptation paper.
+2026年では、unpaired image-to-image の大部分は CycleGAN ではなく diffusion（ControlNet、IP-Adapter）で行われる。それでも cycle-consistency の考え方は、ほぼすべての unpaired domain adaptation paper に生き残っている。
 
-## Build It
+## 実装
 
-`code/main.py` implements a tiny conditional GAN on 1-D data. The condition `c` is a class label (0 or 1). The task: produce a sample from the conditional distribution for the given class.
+`code/main.py` は1-D data 上に小さな conditional GAN を実装する。condition `c` は class label（0 または 1）。タスクは、与えられた class に対して conditional distribution から sample を生成することだ。
 
 ### Step 1: append condition to both G and D inputs
 
@@ -54,7 +54,7 @@ def D(x, c, params):
     return mlp(concat([x, one_hot(c)]), params)
 ```
 
-One-hot encoding is the simplest way. Larger models use learned embeddings, FiLM modulation, or cross-attention.
+One-hot encoding が最も単純な方法である。より大きなモデルでは learned embeddings、FiLM modulation、cross-attention を使う。
 
 ### Step 2: train conditional
 
@@ -66,7 +66,7 @@ for step in range(steps):
     update_G(noise, c)
 ```
 
-The generator must match the real distribution *for the given condition*, not the marginal.
+Generator は marginal ではなく、*与えられた condition に対する* real distribution に一致しなければならない。
 
 ### Step 3: verify per-class output
 
@@ -77,56 +77,56 @@ for c in [0, 1]:
     assert_near(mean_c, real_mean_for_class_c)
 ```
 
-## Pitfalls
+## 落とし穴
 
-- **Condition ignored.** G learns to marginalize, D never penalizes because condition signal is weak. Fix: condition D more aggressively (early layer, not just late), use projection discriminator (Miyato & Koyama 2018).
-- **L1 weight too low.** G drifts to arbitrary real-looking outputs, not faithful ones. Start λ≈100 for Pix2Pix-style tasks.
-- **L1 weight too high.** G produces blurry outputs because L1 is still an L_p norm. Anneal down once training stabilizes.
-- **Ground-truth leakage in D.** Concatenate `(x, y)` as D input, not just `y`. Without this D cannot check consistency.
-- **Mode collapse per class.** Each class can collapse independently. Run class-conditional diversity checks.
+- **Condition が無視される。** G が marginalize することを学び、condition signal が弱いため D が罰しない。対策: D をより強く condition する（late だけでなく early layer）、projection discriminator（Miyato & Koyama 2018）を使う。
+- **L1 weight が低すぎる。** G が faithful な出力ではなく、任意の本物らしい出力へ drift する。Pix2Pix-style tasks では λ≈100 から始める。
+- **L1 weight が高すぎる。** L1 も L_p norm なので、G はぼやけた出力を作る。学習が安定したら anneal down する。
+- **D に ground-truth leakage。** D input には `y` だけでなく `(x, y)` を concatenate する。そうしないと D は整合性を確認できない。
+- **Class ごとの mode collapse。** 各 class は独立に collapse しうる。class-conditional diversity checks を実行する。
 
 ## Use It
 
-2026 state of image-to-image tasks:
+2026年の image-to-image tasks の状況:
 
-| Task | Best approach |
+| タスク | 最適な手法 |
 |------|---------------|
-| Sketch → photo, same domain, paired data | Pix2Pix / Pix2PixHD (still fast, still sharp) |
-| Sketch → photo, unpaired | ControlNet with a Scribble conditioning model |
-| Semantic seg → photo | SPADE / GauGAN2 or SD + ControlNet-Seg |
-| Style transfer | Diffusion with IP-Adapter or LoRA; GAN methods are legacy |
-| Depth → photo | ControlNet-Depth over Stable Diffusion |
-| Super-resolution | Real-ESRGAN (GAN), ESRGAN-Plus, or SD-Upscale (diffusion) |
-| Colorization | ColTran, diffusion-based colorizers, or Pix2Pix-color |
-| Daytime → nighttime, seasons, weather | CycleGAN or ControlNet-based |
+| Sketch → photo、同一ドメイン、paired data | Pix2Pix / Pix2PixHD（今でも速く、シャープ） |
+| Sketch → photo、unpaired | Scribble conditioning model を持つ ControlNet |
+| Semantic seg → photo | SPADE / GauGAN2 または SD + ControlNet-Seg |
+| Style transfer | IP-Adapter または LoRA を使う diffusion。GAN methods は legacy |
+| Depth → photo | Stable Diffusion 上の ControlNet-Depth |
+| Super-resolution | Real-ESRGAN（GAN）、ESRGAN-Plus、または SD-Upscale（diffusion） |
+| Colorization | ColTran、diffusion-based colorizers、または Pix2Pix-color |
+| Daytime → nighttime、seasons、weather | CycleGAN または ControlNet-based |
 
-Pix2Pix remains the right tool when (a) you have thousands of paired examples, (b) the task is narrow and repeatable, and (c) you need fast inference. On generic open-domain tasks, diffusion wins.
+Pix2Pix が正しい道具であり続けるのは、(a) 数千の paired examples があり、(b) タスクが狭く反復可能で、(c) 高速推論が必要な場合である。generic open-domain tasks では diffusion が勝つ。
 
 ## Ship It
 
-Save `outputs/skill-img2img-chooser.md`. Skill takes a task description, data availability (paired vs unpaired, N samples), and latency/quality budget, then outputs: approach (Pix2Pix, CycleGAN, ControlNet variant, SDXL + IP-Adapter), training data requirements, inference cost, and eval protocol (LPIPS, FID, task-specific).
+`outputs/skill-img2img-chooser.md` を保存する。Skill は task description、data availability（paired vs unpaired、N samples）、latency/quality budget を受け取り、approach（Pix2Pix、CycleGAN、ControlNet variant、SDXL + IP-Adapter）、training data requirements、inference cost、eval protocol（LPIPS、FID、task-specific）を出力する。
 
-## Exercises
+## 演習
 
-1. **Easy.** Modify `code/main.py` to add a third class. Confirm G still maps each class's noise to the correct mode.
-2. **Medium.** Replace L1 with a perceptual-style loss in the 1-D setting (e.g. a small frozen D acting as feature extractor). Does it change sharpness of the conditional distribution?
-3. **Hard.** Sketch a CycleGAN in the 1-D setting: two distributions, two generators, cycle loss. Show that it learns to map between them with no paired data.
+1. **Easy.** `code/main.py` を変更して3つ目の class を追加する。G が各 class の noise を正しい mode に写すことを確認する。
+2. **Medium.** 1-D setting で L1 を perceptual-style loss に置き換える（例: feature extractor として動く小さな frozen D）。conditional distribution の sharpness は変わるか。
+3. **Hard.** 1-D setting で CycleGAN をスケッチする。2つの distributions、2つの generators、cycle loss。paired data なしでそれらの間の写像を学べることを示す。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Conditional GAN | "GAN with labels" | G(z, c), D(x, c). Both networks see the condition. |
-| Pix2Pix | "Image-to-image GAN" | Paired cGAN with U-Net G and PatchGAN D + L1 loss. |
-| U-Net | "Encoder-decoder with skips" | Symmetric conv network; skips preserve high-freq. |
-| PatchGAN | "Local-realism classifier" | D outputs per-patch score instead of global score. |
-| CycleGAN | "Unpaired image translation" | Two G's + cycle-consistency loss; no paired data. |
-| SPADE | "GauGAN" | Normalizes intermediate activations with the semantic map; segmentation-to-image. |
-| FiLM | "Feature-wise linear modulation" | Per-feature affine transform from the condition; cheap conditioning. |
+| Conditional GAN | "GAN with labels" | G(z, c), D(x, c)。両方の networks が condition を見る。 |
+| Pix2Pix | "Image-to-image GAN" | U-Net G と PatchGAN D + L1 loss を持つ paired cGAN。 |
+| U-Net | "Encoder-decoder with skips" | 対称な conv network。skips が high-freq を保つ。 |
+| PatchGAN | "Local-realism classifier" | D が global score ではなく per-patch score を出力する。 |
+| CycleGAN | "Unpaired image translation" | 2つの G + cycle-consistency loss。paired data は不要。 |
+| SPADE | "GauGAN" | semantic map で中間 activations を normalize する。segmentation-to-image。 |
+| FiLM | "Feature-wise linear modulation" | condition から作る per-feature affine transform。安価な conditioning。 |
 
-## Production note: Pix2Pix as a latency-bound baseline
+## 本番メモ: latency-bound baseline としての Pix2Pix
 
-When you have paired data and a narrow task (sketch → render, semantic map → photo, day → night), Pix2Pix's one-shot inference beats diffusion by an order of magnitude on latency. The production comparison is usually:
+paired data があり、タスクが狭い場合（sketch → render、semantic map → photo、day → night）、Pix2Pix の one-shot inference は diffusion より1桁速い。production comparison はたいてい次のようになる。
 
 | Path | Steps | Typical latency at 512² on a single L4 |
 |------|-------|----------------------------------------|
@@ -135,13 +135,13 @@ When you have paired data and a narrow task (sketch → render, semantic map →
 | SDXL-Turbo Img2Img | 1-4 | ~0.15-0.35 s |
 | ControlNet + SDXL base | 20-30 | ~3-5 s |
 
-Pix2Pix wins on throughput in static batches (every request is the same FLOPs). Diffusion wins on quality and generalization. The modern play is often to ship a Pix2Pix-style distilled model for the narrow task and a diffusion fallback for tail inputs.
+Pix2Pix は static batches の throughput で勝つ（すべての request が同じ FLOPs）。Diffusion は品質と generalization で勝つ。現代的な選択は、狭いタスクには Pix2Pix-style distilled model を出荷し、tail inputs には diffusion fallback を用意することが多い。
 
-## Further Reading
+## 参考文献
 
-- [Mirza & Osindero (2014). Conditional Generative Adversarial Nets](https://arxiv.org/abs/1411.1784) — the cGAN paper.
-- [Isola et al. (2017). Image-to-Image Translation with Conditional Adversarial Networks](https://arxiv.org/abs/1611.07004) — Pix2Pix.
-- [Zhu et al. (2017). Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://arxiv.org/abs/1703.10593) — CycleGAN.
-- [Wang et al. (2018). High-Resolution Image Synthesis with Conditional GANs](https://arxiv.org/abs/1711.11585) — Pix2PixHD.
-- [Park et al. (2019). Semantic Image Synthesis with Spatially-Adaptive Normalization](https://arxiv.org/abs/1903.07291) — SPADE / GauGAN.
-- [Miyato & Koyama (2018). cGANs with Projection Discriminator](https://arxiv.org/abs/1802.05637) — the projection D.
+- [Mirza & Osindero (2014). Conditional Generative Adversarial Nets](https://arxiv.org/abs/1411.1784) — cGAN 論文。
+- [Isola et al. (2017). Image-to-Image Translation with Conditional Adversarial Networks](https://arxiv.org/abs/1611.07004) — Pix2Pix。
+- [Zhu et al. (2017). Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://arxiv.org/abs/1703.10593) — CycleGAN。
+- [Wang et al. (2018). High-Resolution Image Synthesis with Conditional GANs](https://arxiv.org/abs/1711.11585) — Pix2PixHD。
+- [Park et al. (2019). Semantic Image Synthesis with Spatially-Adaptive Normalization](https://arxiv.org/abs/1903.07291) — SPADE / GauGAN。
+- [Miyato & Koyama (2018). cGANs with Projection Discriminator](https://arxiv.org/abs/1802.05637) — projection D。

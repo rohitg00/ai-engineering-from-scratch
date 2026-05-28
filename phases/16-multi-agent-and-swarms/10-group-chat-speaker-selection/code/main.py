@@ -1,7 +1,7 @@
-"""Group chat with speaker selection -- AutoGen GroupChat in miniature.
+"""speaker selection 付き group chat -- AutoGen GroupChat のミニチュア。
 
-Three agents (coder, reviewer, manager), two selector variants
-(round-robin, LLM-simulated), TERMINATE-token stop condition.
+3つの agent (coder, reviewer, manager)、2つの selector variant
+(round-robin, LLM-simulated)、TERMINATE token による stop condition。
 """
 from __future__ import annotations
 
@@ -66,8 +66,8 @@ def round_robin_selector(pool: list[Msg], team: dict[str, Agent]) -> Optional[st
 
 
 def llm_style_selector(pool: list[Msg], team: dict[str, Agent]) -> Optional[str]:
-    """Simulated LLM selector: picks based on recent context keywords.
-    A real implementation is an LLM call with the recent pool."""
+    """simulated LLM selector: recent context keyword に基づいて選ぶ。
+    実装では recent pool を渡す LLM call になる。"""
     if not pool:
         return "manager"
     last = pool[-1]
@@ -102,8 +102,8 @@ def run_groupchat(
         print(f"  [{nxt:8s}]: {content}")
         if content.strip().endswith("TERMINATE"):
             break
-    print(f"  Selector trace: {trace}")
-    print(f"  Rounds used: {len(pool)}")
+    print(f"  selector trace: {trace}")
+    print(f"  使用 rounds: {len(pool)}")
     return pool
 
 
@@ -115,19 +115,19 @@ def speaker_counts(pool: list[Msg]) -> dict[str, int]:
 
 
 def main() -> None:
-    print("Group chat with speaker selection -- AutoGen GroupChat shape")
+    print("speaker selection 付き group chat -- AutoGen GroupChat shape")
     print("-" * 62)
 
     p_rr = run_groupchat(AGENTS, round_robin_selector, max_rounds=8, label="Round-robin")
-    print(f"  Speaker counts: {speaker_counts(p_rr)}")
+    print(f"  speaker counts: {speaker_counts(p_rr)}")
 
     p_llm = run_groupchat(AGENTS, llm_style_selector, max_rounds=8, label="LLM-style (context-aware)")
-    print(f"  Speaker counts: {speaker_counts(p_llm)}")
+    print(f"  speaker counts: {speaker_counts(p_llm)}")
 
-    print("\nObservations:")
-    print("  - Round-robin gives every agent an equal turn regardless of context.")
-    print("  - LLM-style routes by context; reviewer only speaks after coder, etc.")
-    print("  - Both terminate on TERMINATE token or max_rounds.")
+    print("\n観察:")
+    print("  - Round-robin は context に関係なく各 agent に均等な turn を与える。")
+    print("  - LLM-style は context で route する。reviewer は coder の後だけ話す、など。")
+    print("  - どちらも TERMINATE token または max_rounds で終了する。")
 
 
 if __name__ == "__main__":

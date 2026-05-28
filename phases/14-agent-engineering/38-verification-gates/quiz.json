@@ -4,87 +4,87 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What single question does the verification gate answer?",
+      "question": "verification gate が答える単一の問いは何ですか？",
       "options": [
-        "Is the model fast?",
-        "Is this task actually complete? (reading scope, rule, feedback, and diff artifacts)",
-        "Is the prompt optimal?",
-        "Is the token budget healthy?"
+        "model は速いか？",
+        "この task は本当に完了しているか？ (scope、rule、feedback、diff artifacts を読む)",
+        "prompt は最適か？",
+        "token budget は健全か？"
       ],
       "correct": 1,
-      "explanation": "The gate is a deterministic function over workbench artifacts producing a pass/fail verdict."
+      "explanation": "gate は workbench artifacts に対する deterministic function で、pass/fail verdict を生成します。"
     },
     {
       "stage": "pre",
-      "question": "Why must the gate be deterministic?",
+      "question": "なぜ gate は deterministic でなければならないのですか？",
       "options": [
-        "Determinism is free",
-        "The same artifact set must produce the same verdict every time; LLM judges belong in the reviewer (qualitative), not the gate (status)",
-        "Providers require it",
-        "It saves money"
+        "determinism は無料だから",
+        "同じ artifact set は毎回同じ verdict を生成しなければならないから。LLM judge は gate (status) ではなく reviewer (qualitative) に置く",
+        "provider が要求するから",
+        "費用を節約できるから"
       ],
       "correct": 1,
-      "explanation": "Mixing model judgment into the gate collapses the deterministic/qualitative split."
+      "explanation": "model judgment を gate に混ぜると deterministic/qualitative の分離が崩れます。"
     },
     {
       "stage": "check",
-      "question": "What is the gate's override discipline?",
+      "question": "gate の override discipline は何ですか？",
       "options": [
-        "Anyone can override silently",
-        "Block-severity findings can only be overridden by a human with a recorded override_reason and overridden_by user id in a signed audit log",
-        "Override requires a manager email",
-        "Overrides are forbidden"
+        "誰でも黙って override できる",
+        "block-severity findings は、人間が signed audit log に recorded override_reason と overridden_by user id を残す場合だけ override できる",
+        "override には manager email が必要",
+        "override は禁止"
       ],
       "correct": 1,
-      "explanation": "Signed overrides land in outputs/verification/overrides.jsonl; agent cannot self-override."
+      "explanation": "signed override は outputs/verification/overrides.jsonl に入ります。agent は self-override できません。"
     },
     {
       "stage": "check",
-      "question": "What is the Hybrid Norm pairing the lesson cites?",
+      "question": "lesson が引用する Hybrid Norm pairing とは何ですか？",
       "options": [
-        "Hot/cold prompts",
-        "Verifiable rewards (tests, schemas, exit codes) answer 'did it solve the problem?'; LLM rubrics answer 'is it readable, secure, on-style?'",
-        "GPU and CPU split",
-        "Cache vs no-cache"
+        "hot/cold prompts",
+        "verifiable rewards (tests、schemas、exit codes) は「問題を解いたか？」に答え、LLM rubrics は「読みやすく、安全で、style に合うか？」に答える",
+        "GPU と CPU の分離",
+        "cache vs no-cache"
       ],
       "correct": 1,
-      "explanation": "Anthropic 2026 guidance: gate runs the first class; reviewer (Lesson 39) runs the second."
+      "explanation": "Anthropic 2026 guidance では、gate が前者を実行し、reviewer (Lesson 39) が後者を実行します。"
     },
     {
       "stage": "check",
-      "question": "How does defense-in-depth layer the gates?",
+      "question": "defense-in-depth は gate をどのように layer 化しますか？",
       "options": [
-        "Single gate at merge time",
-        "Pre-commit hook -> CI status check -> pre-tool authz hook -> pre-merge gate; each layer is deterministic so failure in one is caught by the next",
-        "Only IDE warnings",
-        "Only a chat reminder"
+        "merge 時の単一 gate",
+        "Pre-commit hook -> CI status check -> pre-tool authz hook -> pre-merge gate。各 layer は deterministic なので、ある layer の failure は次の layer で捕捉される",
+        "IDE warning だけ",
+        "chat reminder だけ"
       ],
       "correct": 1,
-      "explanation": "Multiple non-bypassable layers catch what a single layer would miss."
+      "explanation": "複数の non-bypassable layer は、単一 layer が見逃すものを捕捉します。"
     },
     {
       "stage": "post",
-      "question": "What does a coverage_floor check protect against?",
+      "question": "coverage_floor check は何を防ぎますか？",
       "options": [
-        "Hot-path latency",
-        "Agents quietly deleting tests that fail; the gate fails if measured coverage drops below the floor or last merge by more than 1 percentage point",
-        "Cold starts",
-        "Outdated lockfiles"
+        "hot-path latency",
+        "agent が失敗する test を黙って削除すること。measured coverage が floor を下回るか、last merge より 1 percentage point 超下がると gate は fail する",
+        "cold starts",
+        "古い lockfiles"
       ],
       "correct": 1,
-      "explanation": "Without a floor, agents can silently lower coverage to keep the verdict green."
+      "explanation": "floor がないと、agent は verdict を green に保つために coverage を黙って下げられます。"
     },
     {
       "stage": "post",
-      "question": "When should --strict mode promote every warn to block?",
+      "question": "`--strict` mode はいつすべての warn を block に昇格すべきですか？",
       "options": [
-        "Always",
-        "Release branches, ship-blocking PRs, post-incident triage; not the daily default because strict-on-everything corrodes flow",
-        "Never",
-        "Only on Sundays"
+        "常に",
+        "release branches、ship-blocking PRs、post-incident triage。strict-on-everything は flow を腐食させるため daily default にはしない",
+        "決してしない",
+        "日曜日だけ"
       ],
       "correct": 1,
-      "explanation": "--strict is opt-in by branch; reserve for high-stakes moments."
+      "explanation": "--strict は branch ごとの opt-in です。high-stakes moments に限定します。"
     }
   ]
 }

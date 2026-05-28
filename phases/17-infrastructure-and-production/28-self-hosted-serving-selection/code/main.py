@@ -1,6 +1,6 @@
-"""Self-hosted LLM engine decision-tree walker — stdlib Python.
+"""Self-hosted LLM engine decision-tree walker — 標準ライブラリのみの Python。
 
-Given hardware, scale, and workload, pick an engine with explanation.
+hardware、scale、workload を受け取り、理由つきで engine を選びます。
 """
 
 from __future__ import annotations
@@ -12,40 +12,40 @@ def pick_engine(hardware: str, scale: str, workload: str) -> dict:
 
     if hardware == "CPU":
         engine = "llama.cpp"
-        reasons.append("hardware is CPU — only llama.cpp is competitive")
+        reasons.append("hardware が CPU — competitive なのは llama.cpp だけ")
         if scale == "single_user":
-            reasons.append("single-user dev → Ollama wraps llama.cpp with one-command UX")
+            reasons.append("single-user dev → Ollama は llama.cpp を one-command UX で wrap する")
             engine = "Ollama (llama.cpp under the hood)"
     elif hardware == "Apple Silicon":
         engine = "Ollama" if scale == "single_user" else "llama.cpp"
-        reasons.append("Apple Silicon → Metal via llama.cpp (Ollama wraps)")
+        reasons.append("Apple Silicon → llama.cpp 経由の Metal (Ollama が wrap)")
     elif hardware == "AMD":
         engine = "vLLM"
-        reasons.append("AMD → vLLM ROCm support; TRT-LLM is NVIDIA-only")
+        reasons.append("AMD → vLLM ROCm support。TRT-LLM は NVIDIA-only")
         if "agentic" in workload.lower() or "prefix" in workload.lower():
             engine = "SGLang"
             reasons.append("agentic / prefix-heavy → SGLang RadixAttention")
     elif hardware == "NVIDIA Hopper":
         if "agentic" in workload.lower() or "prefix" in workload.lower():
             engine = "SGLang"
-            reasons.append("Hopper + agentic/prefix → SGLang is the specialist")
+            reasons.append("Hopper + agentic/prefix → SGLang が specialist")
         elif scale == "single_user":
             engine = "Ollama"
-            reasons.append("single-user on Hopper is a dev scenario → Ollama is enough")
+            reasons.append("Hopper の single-user は dev scenario → Ollama で十分")
         else:
             engine = "vLLM"
-            reasons.append("Hopper production → vLLM is the broad default")
+            reasons.append("Hopper production → vLLM が broad default")
     elif hardware == "NVIDIA Blackwell":
         engine = "TRT-LLM"
-        reasons.append("Blackwell + throughput priority → TRT-LLM leads on B200/GB200")
+        reasons.append("Blackwell + throughput priority → B200/GB200 では TRT-LLM が先行")
         if scale in ("small_team", "production") and "agentic" not in workload.lower():
-            reasons.append("vLLM Blackwell SM120 is a close second (v0.15.1 Feb 2026)")
+            reasons.append("vLLM Blackwell SM120 は僅差の second (v0.15.1 Feb 2026)")
 
     if scale == "enterprise":
-        reasons.append("10k+ users → stack with production-stack (Phase 17 · 18)"
-                      " + disaggregated (Phase 17 · 17) + cache-aware router (Phase 17 · 11)")
+        reasons.append("10k+ users → production-stack (Phase 17 · 18)"
+                      " + disaggregated (Phase 17 · 17) + cache-aware router (Phase 17 · 11) と stack")
 
-    reasons.append("TGI is in maintenance mode since Dec 11, 2025 — default AWAY from TGI for new projects")
+    reasons.append("TGI は 2025 年 12 月 11 日から maintenance mode — new projects では TGI 以外を default にする")
 
     return {
         "hardware": hardware,

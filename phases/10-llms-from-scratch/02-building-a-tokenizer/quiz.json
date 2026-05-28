@@ -1,37 +1,37 @@
 [
   {
-    "question": "Why does a basic BPE tokenizer break on multilingual or code input?",
-    "options": ["BPE is inherently monolingual", "Without proper Unicode handling, byte fallback, and pre-tokenization regex, it produces incorrect or inefficient token sequences", "Multilingual text can't be tokenized", "BPE only works on ASCII"],
+    "question": "基本的な BPE トークナイザーが多言語入力やコード入力で壊れるのはなぜですか？",
+    "options": ["BPE は本質的に単一言語専用だから", "適切な Unicode 処理、バイトフォールバック、事前トークン化の正規表現がないと、不正確または非効率なトークン列を生成するから", "多言語テキストはトークン化できないから", "BPE は ASCII でしか動かないから"],
     "correct": 1,
-    "explanation": "A naive BPE implementation may not handle multi-byte Unicode characters, may merge across word boundaries incorrectly, and may not have byte-level fallback for characters outside the trained vocabulary.",
+    "explanation": "素朴な BPE 実装は、複数バイトの Unicode 文字を扱えないことがあり、単語境界をまたいで不適切にマージすることがあり、訓練済み語彙の外にある文字に対するバイトレベルのフォールバックを持たないことがあります。",
     "stage": "pre"
   },
   {
-    "question": "What is the role of pre-tokenization regex in a production tokenizer?",
-    "options": ["It removes punctuation", "It splits text at word boundaries before BPE merges, preventing merges across spaces and word boundaries", "It compresses whitespace", "It converts text to lowercase"],
+    "question": "本番用トークナイザーにおける事前トークン化の正規表現の役割は何ですか？",
+    "options": ["句読点を削除する", "BPE マージの前に単語境界でテキストを分割し、スペースや単語境界をまたぐマージを防ぐ", "空白を圧縮する", "テキストを小文字に変換する"],
     "correct": 1,
-    "explanation": "Pre-tokenization regex splits text into chunks (typically at word boundaries, numbers, and punctuation) so BPE merges only happen within chunks. Without this, BPE could merge 'end' with the space before the next word.",
+    "explanation": "事前トークン化の正規表現は、テキストをチャンクに分割します (通常は単語境界、数字、句読点)。そのため BPE マージはチャンク内でだけ起きます。これがないと、BPE は 'end' と次の単語の前のスペースをマージしてしまう可能性があります。",
     "stage": "pre"
   },
   {
-    "question": "What is a special token and why are tokenizers designed to handle them?",
-    "options": ["Tokens that appear frequently", "Reserved tokens like <|endoftext|> or [PAD] that control model behavior and must be encoded as single, specific IDs", "Tokens with the highest embedding values", "Tokens used only during evaluation"],
+    "question": "特殊トークンとは何で、なぜトークナイザーはそれを扱うよう設計されているのですか？",
+    "options": ["頻繁に出現するトークン", "<|endoftext|> や [PAD] のようにモデルの挙動を制御し、単一の特定 ID としてエンコードされる必要がある予約済みトークン", "最も高い埋め込み値を持つトークン", "評価時にだけ使われるトークン"],
     "correct": 1,
-    "explanation": "Special tokens serve structural purposes: marking document boundaries, padding sequences, indicating start/end of generation. They must be recognized and encoded as their exact IDs, not broken into subwords.",
+    "explanation": "特殊トークンは、文書境界の標示、系列のパディング、生成の開始/終了の指示など、構造的な目的を持ちます。サブワードに分割されるのではなく、正確な ID として認識、エンコードされる必要があります。",
     "stage": "post"
   },
   {
-    "question": "How do you evaluate whether a custom tokenizer is good?",
-    "options": ["By checking if it can tokenize your name", "By measuring compression ratio (tokens per character) across diverse text and comparing to established tokenizers like tiktoken", "By counting the vocabulary size", "By measuring encoding speed only"],
+    "question": "カスタムトークナイザーが良いものかどうかは、どのように評価しますか？",
+    "options": ["自分の名前をトークン化できるか確認する", "多様なテキストで圧縮率 (文字あたりのトークン数) を測定し、tiktoken のような確立されたトークナイザーと比較する", "語彙サイズを数える", "エンコード速度だけを測る"],
     "correct": 1,
-    "explanation": "Compression ratio (bytes per token or tokens per word) measures efficiency. A good tokenizer produces fewer tokens for the same text, which means more content fits in the context window. Compare across languages and domains.",
+    "explanation": "圧縮率 (トークンあたりのバイト数、または単語あたりのトークン数) は効率を測ります。良いトークナイザーは同じテキストに対してより少ないトークンを生成し、コンテキストウィンドウにより多くの内容を収められます。言語やドメインをまたいで比較してください。",
     "stage": "post"
   },
   {
-    "question": "Why is byte-level BPE preferred over word-level tokenization for modern LLMs?",
-    "options": ["It's faster", "It can represent any input without unknown tokens while still learning efficient subword merges for common patterns", "It produces smaller vocabularies", "Word-level tokenization is more accurate"],
+    "question": "現代の LLM で、単語レベルのトークン化よりバイトレベル BPE が好まれるのはなぜですか？",
+    "options": ["より高速だから", "未知トークンなしで任意の入力を表現でき、同時によくあるパターンには効率的なサブワードマージを学習できるから", "より小さな語彙を生成するから", "単語レベルのトークン化の方が正確だから"],
     "correct": 1,
-    "explanation": "Word-level tokenizers can't handle unseen words (producing [UNK] tokens). Byte-level BPE starts from raw bytes (guaranteeing coverage of any input) and learns merges for common sequences, balancing coverage with efficiency.",
+    "explanation": "単語レベルのトークナイザーは未知語を扱えず、[UNK] トークンを生成します。バイトレベル BPE は生バイトから始めるため任意の入力を必ずカバーでき、よくある系列にはマージを学習するので、網羅性と効率のバランスが取れます。",
     "stage": "post"
   }
 ]

@@ -1,27 +1,27 @@
 ---
 name: framework-picker
-description: Pick LangGraph, CrewAI, AutoGen, Agno, or plain Python for an agent task by matching abstraction to problem shape.
+description: abstractionをproblem shapeに合わせ、agent taskにLangGraph、CrewAI、AutoGen、Agno、またはplain Pythonを選ぶ。
 version: 1.0.0
 phase: 11
 lesson: 17
 tags: [langgraph, crewai, autogen, agno, agent-framework, orchestration, decision-matrix]
 ---
 
-Given the task description (problem shape, total LLM calls per run, branching pattern, durability and resume needs, human-in-the-loop checkpoints, parallel fanout, session memory, expected daily run volume), output:
+task description (problem shape、runあたりのtotal LLM calls、branching pattern、durability/resume needs、human-in-the-loop checkpoints、parallel fanout、session memory、expected daily run volume) が与えられたら、次を出力する:
 
-1. Shape match. One sentence naming the abstraction that fits: graph (typed state, named transitions), org chart (specialist roles, manager-routed handoffs), chat (agents talk until done), single agent with tools. If you cannot pick one, the task is not agent-shaped yet; stop and decompose.
-2. Branching authority. Who picks the next step: developer (explicit edges), manager LLM (CrewAI hierarchical), conversational emergent (AutoGen GroupChat), tool-call self-routed (Agno). Cite the per-turn token cost of LLM-selected routing if applicable.
-3. State budget. Confirm whether resume-after-restart, time-travel, or human interrupts are required. If yes, LangGraph wins on state-first abstractions; Agno covers session-scoped memory only.
-4. Framework choice. Output one of langgraph, crewai, autogen, agno, plain_python. Include the one-sentence justification that maps the shape and state answers onto the framework's core abstraction.
-5. Escape hatch. If the daily run volume is over 10_000 or the task is two or fewer LLM calls without state, recommend plain Python with the provider SDK instead. No framework is the fastest framework when the task is small.
+1. Shape match。合うabstractionを1文で命名する: graph (typed state、named transitions)、org chart (specialist roles、manager-routed handoffs)、chat (agents talk until done)、tools付きsingle agent。1つに選べないなら、taskはまだagent-shapedではない。停止してdecomposeする。
+2. Branching authority。next stepを誰が選ぶか: developer (explicit edges)、manager LLM (CrewAI hierarchical)、conversational emergent (AutoGen GroupChat)、tool-call self-routed (Agno)。該当する場合はLLM-selected routingのper-turn token costを明記する。
+3. State budget。resume-after-restart、time-travel、human interruptsが必要か確認する。必要ならstate-first abstractionのLangGraphが勝つ。Agnoはsession-scoped memoryのみをcoverする。
+4. Framework choice。`langgraph`、`crewai`、`autogen`、`agno`、`plain_python` のいずれかを出力する。shape/stateの回答をframeworkのcore abstractionに対応付ける1文のjustificationを含める。
+5. Escape hatch。daily run volumeが10_000超、またはtaskがstateなしの2 LLM calls以下なら、provider SDKを使ったplain Pythonを推奨する。taskが小さいときは、frameworkなしが最速のframeworkである。
 
-Refuse to recommend AutoGen for deterministic workflows with a known DAG; the GroupChatManager spends tokens picking speakers that the developer could have wired statically. CrewAI does support structured task outputs via `output_pydantic` / `output_json` (see [docs.crewai.com/en/concepts/tasks](https://docs.crewai.com/en/concepts/tasks)), but its `context` channel still flows through the next task's prompt string. Push back on CrewAI when the workflow relies on raw `context` to carry structured state across tasks without one of those output schemas wired up. Push back on LangGraph for a two-call summarizer; the StateGraph overhead is pure tax. Push back on Agno when the task fans out across more than 4 parallel sub-workers with reducer semantics; Agno ships a `Parallel` block whose outputs join into a dict keyed by step name (see [docs-v1.agno.com/workflows_2/overview](https://docs-v1.agno.com/workflows_2/overview) and [docs.agno.com/workflows/access-previous-steps](https://docs.agno.com/workflows/access-previous-steps)), but it does not expose a Send-style fanout-and-reduce API comparable to LangGraph's.
+known DAGを持つdeterministic workflowにAutoGenを推奨しない。GroupChatManagerは、developerがstaticにwireできるspeaker選択にtokensを使います。CrewAIは `output_pydantic` / `output_json` によるstructured task outputをsupportします ([docs.crewai.com/en/concepts/tasks](https://docs.crewai.com/en/concepts/tasks) 参照) が、`context` channelは依然として次taskのprompt stringを通ります。workflowがそれらのoutput schemaを接続せずraw `context` でstructured stateをtask間に運ぶ前提ならCrewAIにpush backする。two-call summarizerにLangGraphを使う案にもpush backする。StateGraph overheadは純粋なtaxです。taskがreducer semantics付きで4を超えるparallel sub-workersへfan outする場合はAgnoにpush backする。Agnoにはoutputがstep名keyのdictへjoinされる `Parallel` blockがあります ([docs-v1.agno.com/workflows_2/overview](https://docs-v1.agno.com/workflows_2/overview) と [docs.agno.com/workflows/access-previous-steps](https://docs.agno.com/workflows/access-previous-steps) 参照) が、LangGraphのSendに相当するfanout-and-reduce APIは公開していません。
 
-Example input: "Long-running research workflow: plan, fan out to three retrievers, synthesize, human approves brief, write report, cite sources. Must resume after crash. Production-bound to 50 runs per day."
+Example input: "Long-running research workflow: plan、3 retrieversへのfan out、synthesize、humanがbriefをapprove、reportを書く、sourcesをcite。crash後resume必須。production-boundで1日50 runs。"
 
 Example output:
-- Shape: graph. Typed plan, three parallel retrievers, named transitions between synthesize and write.
-- Branching: developer-decided via conditional edges. No per-turn manager LLM.
-- State: requires resume and human interrupt. LangGraph mandatory.
-- Framework: langgraph. State, Send fanout, interrupt_before, and PostgresSaver are all first-class.
-- Escape hatch: not applicable. 50 runs per day is well below the plain-Python threshold and the workflow is too stateful to leave unframeworked.
+- Shape: graph。typed plan、3つのparallel retrievers、synthesizeとwriteの間のnamed transitions。
+- Branching: conditional edgesによるdeveloper-decided。per-turn manager LLMなし。
+- State: resumeとhuman interruptが必要。LangGraph必須。
+- Framework: langgraph。State、Send fanout、interrupt_before、PostgresSaverがすべてfirst-class。
+- Escape hatch: 該当なし。1日50 runsはplain-Python thresholdを大きく下回るが、workflowはframeworkなしにするにはstatefulすぎる。

@@ -1,64 +1,64 @@
-# Data Pipelines for Pre-Training
+# 事前学習のためのデータパイプライン
 
-> The model is a mirror. It reflects whatever data you feed it. Feed it garbage, it reflects garbage with perfect fluency.
+> モデルは鏡です。与えたデータをそのまま映します。ゴミを与えれば、完璧に流暢なゴミを映します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
-**Time:** ~90 minutes
+**種類:** 実装
+**言語:** Python
+**前提条件:** フェーズ 10、レッスン 01-02 (トークナイザー、トークナイザーの構築)
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Build a streaming data pipeline that tokenizes, chunks, shuffles, and batches terabytes of text without loading it all into memory
-- Implement data quality filters (deduplication, language detection, content filtering) used in real pre-training pipelines
-- Create fixed-length training sequences with proper attention masks and document boundary handling
-- Profile pipeline throughput to ensure the dataloader keeps up with GPU training speed
+- テラバイト規模のテキストをすべてメモリに読み込まず、トークン化、チャンク化、シャッフル、バッチ化するストリーミングデータパイプラインを構築する
+- 実際の事前学習パイプラインで使われるデータ品質フィルター、つまり重複排除、言語検出、コンテンツフィルタリングを実装する
+- 適切な attention mask と文書境界処理を備えた固定長の訓練シーケンスを作成する
+- dataloader が GPU 訓練速度に追いつくように、パイプラインのスループットをプロファイルする
 
-## The Problem
+## 課題
 
-You have a tokenizer. Now you need data.
+トークナイザーは手に入りました。次に必要なのはデータです。
 
-Not a dataset. Not a CSV file. Terabytes of text -- cleaned, deduplicated, filtered for quality, tokenized into fixed-length sequences, and served in randomized batches fast enough that your 8-GPU cluster never waits for the next batch.
+データセットではありません。CSV ファイルでもありません。テラバイト規模のテキストです。クリーニングされ、重複が取り除かれ、品質でフィルタリングされ、固定長シーケンスへトークン化され、8 GPU クラスタが次のバッチを待たずに済む速度でランダム化バッチとして供給される必要があります。
 
-Most people think training an LLM is about the model architecture. It is not. Llama 3 used 15.6 trillion tokens. GPT-3 used 300 billion. DeepSeek-V2 used 8.1 trillion. The architecture across all three is roughly the same: stacked transformer blocks with attention and feedforward layers. The difference in output quality comes overwhelmingly from the data.
+多くの人は、LLM の訓練はモデルアーキテクチャの話だと考えます。そうではありません。Llama 3 は15.6兆トークンを使いました。GPT-3 は3000億トークンを使いました。DeepSeek-V2 は8.1兆トークンを使いました。3つのアーキテクチャはおおむね同じです。attention と feedforward 層を持つ transformer ブロックの積み重ねです。出力品質の差は、圧倒的にデータから来ます。
 
-The Chinchilla paper from DeepMind made this precise. For a given compute budget, there is an optimal ratio of model parameters to training tokens. Chinchilla showed that most models in 2022 were dramatically undertrained -- they had too many parameters for the amount of data they saw. A 70B parameter model trained on 1.4 trillion tokens (Chinchilla-optimal) outperformed a 280B model trained on 300 billion tokens (Gopher).
+DeepMind の Chinchilla 論文はこれを精密に示しました。一定の計算予算に対して、モデルパラメータ数と訓練トークン数には最適な比率があります。Chinchilla は、2022年時点の多くのモデルが大幅に訓練不足だったことを示しました。見たデータ量に対して、パラメータが多すぎたのです。1.4兆トークンで訓練された70Bパラメータモデル、つまり Chinchilla 最適なモデルは、3000億トークンで訓練された280Bモデルの Gopher を上回りました。
 
-Your data pipeline determines whether your model learns language or learns noise.
+データパイプラインは、モデルが言語を学ぶのか、ノイズを学ぶのかを決めます。
 
-## The Concept
+## 考え方
 
-### Where the Data Comes From
+### データはどこから来るのか
 
-Every large language model is trained on a mix of sources. The exact composition is a closely guarded secret for most labs, but we know enough to understand the categories.
+すべての大規模言語モデルは、複数ソースの混合データで訓練されます。正確な構成は多くの研究所にとって厳重な秘密ですが、カテゴリを理解するには十分な情報があります。
 
-| Source | Size | Quality | Used By |
-|--------|------|---------|---------|
-| Common Crawl | ~250 TB raw | Low (needs heavy filtering) | GPT-3, Llama, most open models |
-| Wikipedia | ~20 GB | High | Every major LLM |
-| GitHub code | ~1 TB+ | Medium (lots of duplicates, dead code) | StarCoder, CodeLlama, DeepSeek-Coder |
-| Books (BookCorpus, Pile) | ~100 GB | High | GPT-2, GPT-3, early models |
-| Academic papers (arXiv, S2ORC) | ~100 GB | High for STEM | Llama, Galactica |
-| StackOverflow, Reddit | ~100 GB | Medium | Llama, Falcon |
-| Curated web (C4, RefinedWeb) | ~5 TB | Medium-High (pre-filtered) | T5, Falcon |
+| ソース | サイズ | 品質 | 利用例 |
+|--------|------|------|--------|
+| Common Crawl | 生データ約250 TB | 低い (重いフィルタリングが必要) | GPT-3、Llama、多くのオープンモデル |
+| Wikipedia | 約20 GB | 高い | 主要な LLM ほぼすべて |
+| GitHub code | 約1 TB以上 | 中程度 (重複、死んだコードが多い) | StarCoder、CodeLlama、DeepSeek-Coder |
+| Books (BookCorpus, Pile) | 約100 GB | 高い | GPT-2、GPT-3、初期モデル |
+| Academic papers (arXiv, S2ORC) | 約100 GB | STEM では高い | Llama、Galactica |
+| StackOverflow, Reddit | 約100 GB | 中程度 | Llama、Falcon |
+| Curated web (C4, RefinedWeb) | 約5 TB | 中から高 (事前フィルタ済み) | T5、Falcon |
 
-Llama 3 disclosed its data mix: roughly 50% web data, 25% code, 13% books and academic papers, 8% math data, and 4% multilingual web data. The total was 15.6 trillion tokens from sources exceeding 5 TB of raw text.
+Llama 3 はデータ構成を公開しました。おおよそ 50% が Web データ、25% がコード、13% が書籍と学術論文、8% が数学データ、4% が多言語 Web データです。総量は、5 TB を超える生テキストソースから得た15.6兆トークンでした。
 
-The ratio matters as much as the total size. Too much web data and the model becomes a Reddit parrot. Too little code and it cannot program. Too little math and it fails at reasoning. Getting this mix right is one of the hardest parts of training an LLM, and there is no formula -- it requires experimentation and evaluation.
+比率は総量と同じくらい重要です。Web データが多すぎると、モデルは Reddit のものまねになります。コードが少なすぎると、プログラミングができません。数学が少なすぎると、推論に失敗します。この混合比を正しくすることは LLM 訓練で最も難しい部分の1つであり、公式はありません。実験と評価が必要です。
 
-### Data Cleaning
+### データクリーニング
 
-Raw web data is filthy. A typical Common Crawl dump contains:
+生の Web データは汚れています。典型的な Common Crawl のダンプには次のものが含まれます。
 
-- HTML tags and JavaScript
-- Boilerplate headers, footers, navigation menus
-- Duplicate pages (exact and near-duplicate)
-- Machine-generated spam
-- Personally identifiable information (PII)
-- Low-quality text (lists of keywords, SEO spam)
-- Non-text content encoded as text
+- HTML タグと JavaScript
+- ボイラープレートのヘッダー、フッター、ナビゲーションメニュー
+- 重複ページ (完全重複と近似重複)
+- 機械生成スパム
+- 個人識別情報 (PII)
+- 低品質テキスト (キーワード列、SEO スパム)
+- テキストとしてエンコードされた非テキストコンテンツ
 
-Cleaning this is not optional. It is the difference between a model that generates coherent paragraphs and one that outputs HTML tags mixed with product listings.
+これをクリーニングすることは任意ではありません。一貫した段落を生成するモデルと、HTML タグを商品リストに混ぜて出力するモデルの差になります。
 
 ```mermaid
 graph TD
@@ -78,23 +78,23 @@ graph TD
     style G fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-Each step eliminates a category of noise:
+各ステップは、ノイズの特定カテゴリを取り除きます。
 
-**HTML stripping:** Remove all markup. Keep only the visible text content. Libraries like `trafilatura` or `readability` extract article content while discarding navigation, ads, and boilerplate.
+**HTML 除去:** すべてのマークアップを削除します。可視テキストだけを残します。`trafilatura` や `readability` のようなライブラリは、ナビゲーション、広告、ボイラープレートを捨てながら記事本文を抽出します。
 
-**Language detection:** Use fastText's language identification model (lid.176.bin) to classify each document. Filter to your target languages. A document classified as English with less than 0.8 confidence probably is not clean English.
+**言語検出:** fastText の言語識別モデル (`lid.176.bin`) を使って各文書を分類します。対象言語だけを残します。信頼度 0.8 未満で英語と分類された文書は、おそらくきれいな英語ではありません。
 
-**Quality filtering:** This is where it gets interesting. RefinedWeb (the dataset behind Falcon) uses a perplexity-based filter: train a small language model on Wikipedia, then score each document. High perplexity means the document is unlike Wikipedia -- likely spam, keyword lists, or machine-generated content. Documents with perplexity above a threshold get removed.
+**品質フィルタリング:** ここが面白い部分です。Falcon の背後にあるデータセット RefinedWeb は、perplexity ベースのフィルターを使います。Wikipedia で小さな言語モデルを訓練し、各文書にスコアを付けます。perplexity が高いということは、その文書が Wikipedia らしくない、つまりスパム、キーワード列、機械生成コンテンツである可能性が高いという意味です。閾値を超えた文書は削除されます。
 
-**Deduplication:** The single most impactful cleaning step. Common Crawl contains enormous numbers of duplicated pages -- legal disclaimers, cookie notices, terms of service. Training on duplicates wastes compute and can cause the model to memorize and regurgitate specific passages verbatim.
+**重複排除:** クリーニングで最も影響の大きいステップです。Common Crawl には大量の重複ページがあります。法的免責、Cookie 通知、利用規約などです。重複で訓練すると計算を浪費し、モデルが特定の文章を暗記してそのまま吐き出す原因になります。
 
-**PII removal:** Names, email addresses, phone numbers, social security numbers. Regex-based detection for structured PII, NER models for names in context.
+**PII 除去:** 名前、メールアドレス、電話番号、社会保障番号。構造化された PII には正規表現による検出を使い、文脈内の名前には NER モデルを使います。
 
-### Deduplication with MinHash
+### MinHash による重複排除
 
-Exact deduplication is easy: hash each document, remove duplicates. But near-duplicates are the real problem. Two copies of the same news article with slightly different ads around it are near-duplicates. The content is 95% identical, but byte-for-byte they differ.
+完全重複の排除は簡単です。各文書をハッシュ化して重複を削除します。本当の問題は近似重複です。同じニュース記事でも、周囲の広告が少し違えば近似重複になります。本文は95%同じでも、バイト単位では異なります。
 
-MinHash + Locality-Sensitive Hashing (LSH) solves this efficiently.
+MinHash と Locality-Sensitive Hashing (LSH) はこれを効率的に解決します。
 
 ```mermaid
 graph LR
@@ -114,25 +114,25 @@ graph LR
     style G fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-The idea:
+考え方は次の通りです。
 
-1. **Shingling:** Convert each document into a set of n-grams (e.g., 5-grams of words or characters). "the quick brown fox" with 3-word shingles becomes {"the quick brown", "quick brown fox"}.
+1. **Shingling:** 各文書を n-gram の集合へ変換します。たとえば単語または文字の 5-gram です。`"the quick brown fox"` を3単語 shingle にすると、`{"the quick brown", "quick brown fox"}` になります。
 
-2. **MinHash:** For each document's shingle set, compute k hash values. Each hash value is the minimum hash across all shingles under a different hash function. This creates a fixed-size "signature" that approximates the Jaccard similarity between any two documents.
+2. **MinHash:** 各文書の shingle 集合について、k 個のハッシュ値を計算します。各ハッシュ値は、異なるハッシュ関数のもとで全 shingle のうち最小のハッシュです。これにより、任意の2文書間の Jaccard 類似度を近似する固定長の「シグネチャ」ができます。
 
-3. **LSH:** Group documents into buckets based on bands of their MinHash signature. Documents in the same bucket are candidate near-duplicates. This avoids comparing every pair -- you only compare candidates.
+3. **LSH:** MinHash シグネチャの帯、つまり band に基づいて文書をバケットへグループ化します。同じバケットに入った文書は近似重複候補です。これにより、すべてのペアを比較せずに済みます。候補だけを比較します。
 
-4. **Verify:** For each candidate pair, compute exact Jaccard similarity. Remove one copy if similarity exceeds a threshold (typically 0.8).
+4. **検証:** 各候補ペアについて正確な Jaccard 類似度を計算します。類似度が閾値、通常は 0.8 を超えた場合、一方を削除します。
 
-The Llama team reported removing approximately 38% of their web data through deduplication. That is not a small number. More than a third of Common Crawl is duplicate or near-duplicate content.
+Llama チームは、重複排除によって Web データのおよそ38%を削除したと報告しています。これは小さな数字ではありません。Common Crawl の3分の1以上が重複または近似重複コンテンツなのです。
 
-### Sequence Packing
+### シーケンスパッキング
 
-Your model expects fixed-length input sequences. Your documents are variable length. Some are 50 tokens. Some are 50,000 tokens.
+モデルは固定長の入力シーケンスを期待します。文書は可変長です。50トークンの文書もあれば、50,000トークンの文書もあります。
 
-Naive approach: pad every document to the maximum sequence length. This wastes enormous compute on padding tokens that contribute nothing to learning.
+素朴な方法は、すべての文書を最大シーケンス長まで padding することです。これは学習に何も寄与しない padding トークンに大量の計算を浪費します。
 
-Better approach: pack multiple documents into a single sequence, separated by end-of-sequence tokens. A 2048-token sequence might contain three short documents concatenated with [EOS] tokens between them.
+より良い方法は、複数文書を1つのシーケンスに詰め、間に end-of-sequence トークンを挟むことです。2048トークンのシーケンスに、3つの短い文書を [EOS] トークンで連結して入れることができます。
 
 ```mermaid
 graph TD
@@ -155,35 +155,35 @@ graph TD
     style B1 fill:#1a1a2e,stroke:#16c784,color:#fff
 ```
 
-The attention mask must be set correctly. Tokens from Document A should not attend to tokens from Document B within the same packed sequence. This requires a block-diagonal attention mask.
+attention mask は正しく設定しなければなりません。同じ packed sequence 内にあっても、Document A のトークンが Document B のトークンへ attend してはいけません。そのためには block-diagonal の attention mask が必要です。
 
-Long documents get truncated or split into chunks at sequence boundaries. The split point matters: splitting mid-sentence forces the model to see incomplete thoughts. Some pipelines align splits to paragraph or sentence boundaries when possible.
+長い文書は、シーケンス境界で切り詰めるか分割します。分割位置は重要です。文の途中で切ると、モデルは不完全な考えを見ることになります。パイプラインによっては、可能な限り段落や文の境界に分割位置を合わせます。
 
-### The Chinchilla Scaling Law
+### Chinchilla スケーリング則
 
-For a fixed compute budget C (measured in FLOPs), the optimal model size N and dataset size D follow:
+固定された計算予算 C、つまり FLOPs で測られる予算に対して、最適なモデルサイズ N とデータセットサイズ D は次に従います。
 
 ```
 N_opt ~ C^0.5
 D_opt ~ C^0.5
 ```
 
-In practice, this means you should scale model size and dataset size roughly equally. A model with 10x more parameters needs roughly 10x more training tokens to reach the same loss.
+実務的には、モデルサイズとデータセットサイズをおおむね同じ比率で増やすべきだという意味です。パラメータ数が10倍のモデルは、同じ損失に到達するために、おおむね10倍の訓練トークンを必要とします。
 
-| Model | Parameters | Training Tokens | Chinchilla-Optimal? |
-|-------|-----------|----------------|-------------------|
-| GPT-3 | 175B | 300B | No (undertrained 3-4x) |
-| Chinchilla | 70B | 1.4T | Yes (by design) |
-| Llama 2 | 70B | 2T | Overtrained (intentionally) |
-| Llama 3 | 70B | 15T | Heavily overtrained |
+| モデル | パラメータ数 | 訓練トークン | Chinchilla 最適か |
+|-------|-----------|--------------|-------------------|
+| GPT-3 | 175B | 300B | いいえ (3-4倍の訓練不足) |
+| Chinchilla | 70B | 1.4T | はい (設計上) |
+| Llama 2 | 70B | 2T | 過剰訓練 (意図的) |
+| Llama 3 | 70B | 15T | 大幅な過剰訓練 |
 
-Llama 3 deliberately violates the Chinchilla law. Meta found that overtraining on more data -- far beyond the compute-optimal ratio -- produces better models for inference. The extra training cost is paid once, but the smaller model is cheaper to serve forever. This is sometimes called the "inference-optimal" scaling approach, and it has become the industry standard since 2024.
+Llama 3 は意図的に Chinchilla 則から外れています。Meta は、計算最適比を大きく超えて追加データで過剰訓練すると、推論時により良いモデルになることを見つけました。追加の訓練コストは一度だけ支払えばよく、小さいモデルは以後ずっと安く提供できます。これは「推論最適」なスケーリング手法と呼ばれることがあり、2024年以降の業界標準になっています。
 
-## Build It
+## 作ってみる
 
-### Step 1: Text Cleaning
+### ステップ1: テキストクリーニング
 
-Strip HTML, normalize whitespace, remove non-text content. We will use a public domain text (Project Gutenberg) as our small corpus.
+HTML を取り除き、空白を正規化し、非テキストコンテンツを削除します。ここでは小さなコーパスとして、パブリックドメインのテキスト (Project Gutenberg) を使います。
 
 ```python
 import re
@@ -209,11 +209,11 @@ def quality_filter(text, min_words=50, max_ratio_caps=0.3, max_ratio_special=0.1
     return True
 ```
 
-The quality filter catches SEO spam (ALL CAPS), machine-generated noise (high special character ratio), and stub pages (too short). These three checks alone remove a surprising amount of garbage from web crawls.
+品質フィルターは SEO スパム (ALL CAPS)、機械生成ノイズ (特殊文字比率が高い)、スタブページ (短すぎる) を捕まえます。この3つのチェックだけでも、Web クロールから驚くほど多くのゴミを取り除けます。
 
-### Step 2: MinHash Deduplication
+### ステップ2: MinHash 重複排除
 
-Implement MinHash from scratch. No external libraries required -- just `hashlib`.
+MinHash をゼロから実装します。外部ライブラリは不要です。`hashlib` だけを使います。
 
 ```python
 import hashlib
@@ -280,11 +280,11 @@ def deduplicate(documents, threshold=0.8, num_hashes=128, bands=16):
     return [doc for idx, doc in enumerate(documents) if idx not in removed], len(removed)
 ```
 
-The `num_hashes=128` and `bands=16` parameters control the precision-recall tradeoff. More hashes give more accurate similarity estimates. More bands increase recall (catch more duplicates) at the cost of more false positives. These values work well for typical web text.
+`num_hashes=128` と `bands=16` は precision と recall のトレードオフを制御します。ハッシュ数を増やすと類似度推定がより正確になります。band 数を増やすと recall が上がり、より多くの重複を捕まえますが、false positive も増えます。これらの値は一般的な Web テキストでうまく機能します。
 
-### Step 3: Tokenize and Pack Sequences
+### ステップ3: トークン化してシーケンスへ詰める
 
-Take the clean, deduplicated text, tokenize it, and pack into fixed-length sequences for training.
+クリーニングされ、重複排除されたテキストをトークン化し、訓練用の固定長シーケンスへ詰めます。
 
 ```python
 def tokenize_corpus(documents, tokenizer):
@@ -310,9 +310,9 @@ def pack_sequences(token_ids, seq_length, pad_id=0):
     return sequences, attention_masks
 ```
 
-### Step 4: DataLoader for Training
+### ステップ4: 訓練用 DataLoader
 
-Yield randomized batches of packed sequences. This is what the training loop consumes.
+packed sequence のランダム化バッチを yield します。訓練ループが消費するのはこれです。
 
 ```python
 import random
@@ -338,9 +338,9 @@ class PreTrainingDataLoader:
             yield batch_seqs, batch_masks
 ```
 
-### Step 5: Dataset Statistics
+### ステップ5: データセット統計
 
-Compute the numbers that matter: total tokens, unique tokens, compression ratio, document length distribution.
+重要な数値を計算します。総トークン数、一意なトークン数、圧縮率、文書長の分布です。
 
 ```python
 from collections import Counter
@@ -380,15 +380,15 @@ def compute_statistics(documents, token_ids, sequences, tokenizer_vocab_size):
     return stats
 ```
 
-Compression ratio tells you how efficient the tokenizer is on this corpus. English text typically compresses to about 3-4 characters per token. If you see 1.5 characters per token, your tokenizer is splitting too aggressively. If you see 8+, it has learned very domain-specific merges.
+圧縮率は、このコーパス上でトークナイザーがどれほど効率的かを示します。英語テキストは通常、1トークンあたり約3から4文字に圧縮されます。1トークンあたり1.5文字なら、トークナイザーが細かく分割しすぎています。8以上なら、非常にドメイン特化したマージを学んでいます。
 
-Sequence utilization tells you how much of your packed sequences is real data versus padding. Below 90% means your packing is inefficient -- you are wasting compute on padding tokens.
+シーケンス利用率は、packed sequence のうち実データがどれだけを占め、padding がどれだけかを示します。90%を下回るなら、パッキングが非効率です。padding トークンに計算を浪費しています。
 
-## Use It
+## 使ってみる
 
-### Compare With HuggingFace Datasets
+### HuggingFace Datasets と比較する
 
-Load the same corpus through HuggingFace's datasets library and compare the pipeline speed.
+同じコーパスを HuggingFace の `datasets` ライブラリで読み込み、パイプライン速度を比較します。
 
 ```python
 from datasets import load_dataset
@@ -410,38 +410,38 @@ total_tokens = sum(len(t) for t in tokenized["input_ids"])
 print(f"HuggingFace: {total_tokens:,} tokens in {hf_time:.2f}s ({total_tokens/hf_time:,.0f} tokens/sec)")
 ```
 
-The HuggingFace pipeline uses Rust tokenizers under the hood and parallel processing across 4 cores. Your pure Python pipeline will be 10-50x slower. That gap is why production teams use compiled tokenizers. The algorithm is the same. The implementation language is the difference.
+HuggingFace のパイプラインは、内部で Rust トークナイザーを使い、4コアで並列処理します。純粋な Python パイプラインは10から50倍遅くなります。この差が、本番チームがコンパイル済みトークナイザーを使う理由です。アルゴリズムは同じです。実装言語が違います。
 
-## Ship It
+## 形にして届ける
 
-This lesson produces a prompt for validating and debugging data quality in LLM training pipelines. See `outputs/prompt-data-quality-checker.md`.
+このレッスンでは、LLM 訓練パイプラインのデータ品質を検証し、デバッグするためのプロンプトを作ります。`outputs/prompt-data-quality-checker.md` を参照してください。
 
-## Exercises
+## 演習
 
-1. **Easy:** Add language detection to the cleaning pipeline using a simple heuristic (character set analysis). Filter to only English documents and measure how many documents get removed.
-2. **Medium:** Implement exact deduplication using SHA-256 hashes alongside the MinHash near-deduplication. Compare the number of duplicates caught by each method on a web-scraped corpus.
-3. **Hard:** Build a perplexity-based quality filter. Train a small bigram language model on Wikipedia text, score each document by perplexity, and remove the bottom 20%. Compare model output quality when training on filtered vs unfiltered data.
+1. **易:** 文字種分析のような単純なヒューリスティックを使って、クリーニングパイプラインに言語検出を追加してください。英語文書だけを残し、何件の文書が削除されたかを測定します。
+2. **中:** MinHash による近似重複排除に加えて、SHA-256 ハッシュを使った完全重複排除を実装してください。Web スクレイピングしたコーパスで、それぞれの方法が捕まえる重複数を比較します。
+3. **難:** perplexity ベースの品質フィルターを作ってください。Wikipedia テキストで小さな bigram 言語モデルを訓練し、各文書を perplexity でスコアリングし、下位20%を削除します。フィルタ済みデータと未フィルタデータで訓練した場合のモデル出力品質を比較してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Common Crawl | "The internet" | A non-profit that crawls the web monthly -- ~250TB raw, the starting point for most LLM training data |
-| MinHash | "Some hashing trick" | A technique to estimate Jaccard similarity between sets using fixed-size signatures -- enables near-duplicate detection at scale |
-| LSH | "Locality-Sensitive Hashing" | A method to group similar items into the same bucket -- reduces pairwise comparisons from O(n^2) to near-linear |
-| Sequence packing | "Concatenating documents" | Fitting multiple documents into fixed-length sequences with proper attention masks -- eliminates padding waste |
-| Chinchilla scaling | "Train on more data" | For a fixed compute budget, optimal performance requires scaling model size and training tokens roughly equally |
-| Fertility | "Tokens per word" | Average number of tokens per word -- 1.3 for English in GPT-4, higher for non-Latin scripts |
-| Data mixing | "Choosing training data" | The ratio of code vs text vs math vs multilingual data -- no formula, requires experimentation |
-| Perplexity filter | "Quality scoring" | Use a small language model to score documents -- high perplexity means the text is unlike clean reference data |
-| Deduplication | "Removing copies" | Eliminating exact and near-duplicate documents -- typically removes 30-40% of raw web data |
-| Attention mask | "Which tokens to look at" | A binary mask that prevents attention across document boundaries in packed sequences |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Common Crawl | 「インターネット」 | 毎月 Web をクロールする非営利団体。生データ約250TBで、多くの LLM 訓練データの出発点 |
+| MinHash | 「何かのハッシュ技法」 | 固定長シグネチャを使って集合間の Jaccard 類似度を推定する技法。大規模な近似重複検出を可能にする |
+| LSH | 「Locality-Sensitive Hashing」 | 類似アイテムを同じバケットへ集める方法。ペア比較を `O(n^2)` からほぼ線形へ減らす |
+| Sequence packing | 「文書を連結すること」 | 複数文書を適切な attention mask とともに固定長シーケンスへ収めること。padding の無駄をなくす |
+| Chinchilla scaling | 「もっとデータで訓練すること」 | 固定計算予算では、最適性能のためにモデルサイズと訓練トークンをほぼ同じ比率で増やす必要がある |
+| Fertility | 「単語あたりトークン数」 | 単語あたりの平均トークン数。GPT-4 の英語では約1.3、非ラテン文字体系ではより高い |
+| Data mixing | 「訓練データを選ぶこと」 | コード、テキスト、数学、多言語データの比率。公式はなく、実験が必要 |
+| Perplexity filter | 「品質スコアリング」 | 小さな言語モデルで文書をスコアリングすること。高い perplexity は、きれいな参照データに似ていないテキストを意味する |
+| Deduplication | 「コピーを消すこと」 | 完全重複と近似重複文書を取り除くこと。通常、生 Web データの30から40%を削除する |
+| Attention mask | 「どのトークンを見るか」 | packed sequence 内で文書境界を越えた attention を防ぐバイナリマスク |
 
-## Further Reading
+## 参考資料
 
-- [Hoffmann et al., 2022 -- Training Compute-Optimal Large Language Models (Chinchilla)](https://arxiv.org/abs/2203.15556) -- the paper that changed how we think about data scale
-- [Penedo et al., 2023 -- The RefinedWeb Dataset for Falcon LLM](https://arxiv.org/abs/2306.01116) -- how to filter Common Crawl to high quality
-- [Touvron et al., 2023 -- Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288) -- data pipeline details for Llama 2
-- [Lee et al., 2022 -- Deduplicating Training Data Makes Language Models Better](https://arxiv.org/abs/2107.06499) -- why deduplication matters more than you think
-- [Broder, 1997 -- On the Resemblance and Containment of Documents](https://ieeexplore.ieee.org/document/666900) -- the original MinHash paper
-- [Meta, 2024 -- Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- 15.6T tokens, data mixing ratios, filtering pipeline
+- [Hoffmann et al., 2022 -- Training Compute-Optimal Large Language Models (Chinchilla)](https://arxiv.org/abs/2203.15556) -- データスケールに対する考え方を変えた論文
+- [Penedo et al., 2023 -- The RefinedWeb Dataset for Falcon LLM](https://arxiv.org/abs/2306.01116) -- Common Crawl を高品質化するフィルタリング方法
+- [Touvron et al., 2023 -- Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288) -- Llama 2 のデータパイプライン詳細
+- [Lee et al., 2022 -- Deduplicating Training Data Makes Language Models Better](https://arxiv.org/abs/2107.06499) -- 重複排除が想像以上に重要である理由
+- [Broder, 1997 -- On the Resemblance and Containment of Documents](https://ieeexplore.ieee.org/document/666900) -- 元祖 MinHash 論文
+- [Meta, 2024 -- Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- 15.6T トークン、データ混合比、フィルタリングパイプライン

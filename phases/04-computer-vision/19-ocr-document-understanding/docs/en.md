@@ -1,30 +1,30 @@
 # OCR & Document Understanding
 
-> OCR is a three-stage pipeline — detect text boxes, recognise the characters, then lay them out. Every modern OCR system reorders these stages or merges them.
+> OCR は3段階の pipeline です。text boxes を detect し、characters を recognise し、それらを layout します。現代の OCR system は、この段階を並べ替えるか統合します。
 
-**Type:** Learn + Use
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 06 (Detection), Phase 7 Lesson 02 (Self-Attention)
-**Time:** ~45 minutes
+**種別:** 学習 + 活用
+**言語:** Python
+**前提条件:** Phase 4 Lesson 06 (Detection), Phase 7 Lesson 02 (Self-Attention)
+**所要時間:** 約45分
 
 ## Learning Objectives
 
-- Trace the classical OCR pipeline (detect -> recognise -> layout) and the modern end-to-end alternatives (Donut, Qwen-VL-OCR)
-- Implement CTC (Connectionist Temporal Classification) loss for sequence-to-sequence OCR training
-- Use PaddleOCR or EasyOCR for production document parsing without training
-- Distinguish OCR, layout parsing, and document understanding — and pick the right tool per task
+- 古典的な OCR pipeline (detect -> recognise -> layout) と現代の end-to-end alternatives (Donut, Qwen-VL-OCR) をたどる
+- sequence-to-sequence OCR training のための CTC (Connectionist Temporal Classification) loss を実装する
+- training なしで production document parsing に PaddleOCR または EasyOCR を使う
+- OCR、layout parsing、document understanding を区別し、task ごとに適切な tool を選ぶ
 
-## The Problem
+## 問題
 
-Images full of text are everywhere: receipts, invoices, IDs, scanned books, forms, whiteboards, signs, screenshots. Extracting structured data from them — not just the characters, but "this is the total amount" — is one of the highest-value applied-vision problems.
+text で埋まった images は至る所にあります。receipts、invoices、IDs、scanned books、forms、whiteboards、signs、screenshots。そこから structured data を抽出すること、つまり characters だけでなく「これは total amount である」と取り出すことは、最も価値の高い applied-vision problems の1つです。
 
-The field splits into three skill layers:
+この分野は3つの skill layers に分かれます。
 
-1. **OCR proper**: turn pixels into text.
-2. **Layout parsing**: group OCR output into regions (title, body, table, header).
-3. **Document understanding**: extract structured fields ("invoice_total = $42.50") from layout.
+1. **OCR proper**: pixels を text に変換する。
+2. **Layout parsing**: OCR output を regions (title, body, table, header) にまとめる。
+3. **Document understanding**: layout から structured fields ("invoice_total = $42.50") を抽出する。
 
-Each layer has classical and modern approaches, and the gap between "I want text from an image" and "I need the total amount from this receipt" is bigger than most teams realise.
+各 layer には classical approaches と modern approaches があり、「image から text が欲しい」と「この receipt から total amount が必要」の間の差は、多くの teams が思うより大きいです。
 
 ## The Concept
 
@@ -45,44 +45,44 @@ flowchart LR
     style OUT fill:#dcfce7,stroke:#16a34a
 ```
 
-- **Text detection** produces per-line or per-word quadrilaterals.
-- **Recognition** crops each region to a fixed height, runs a CNN + BiLSTM + CTC to produce a character sequence.
-- **Layout** rebuilds reading order (top-to-bottom, left-to-right for Latin; different for Arabic, Japanese).
+- **Text detection** は line ごと、または word ごとの quadrilaterals を生成します。
+- **Recognition** は各 region を fixed height に crop し、CNN + BiLSTM + CTC を実行して character sequence を生成します。
+- **Layout** は reading order を再構築します。Latin では top-to-bottom, left-to-right、Arabic や Japanese では異なります。
 
 ### CTC in one paragraph
 
-OCR recognition produces a variable-length sequence from a fixed-length feature map. CTC (Graves et al., 2006) lets you train this without character-level alignment. The model outputs a distribution over (vocab + blank) at every time step; CTC loss marginalises over all alignments that reduce to the target text after merging repeats and removing blanks.
+OCR recognition は fixed-length feature map から variable-length sequence を生成します。CTC (Graves et al., 2006) により、character-level alignment なしでこれを学習できます。model は各 time step で (vocab + blank) 上の distribution を出力します。CTC loss は、repeats を merge し blanks を除去した後に target text へ reduce されるすべての alignments を marginalise します。
 
 ```
 raw output: "h h h _ _ e e l l _ l l o _ _"
 after merge repeats and remove blanks: "hello"
 ```
 
-CTC is the reason CRNN worked in 2015 and still trains most production OCR models in 2026.
+CTC は 2015 年に CRNN が機能した理由であり、2026 年でも多くの production OCR models を学習させています。
 
 ### Modern end-to-end models
 
-- **Donut** (Kim et al., 2022) — a ViT encoder + a text decoder; reads an image and emits JSON directly. No text detector, no layout module.
-- **TrOCR** — ViT + transformer decoder for line-level OCR.
-- **Qwen-VL-OCR / InternVL** — full vision-language models fine-tuned for OCR tasks; best accuracy in 2026 on complex documents.
-- **PaddleOCR** — classical DB + CRNN pipeline in a mature production package; still the open-source workhorse.
+- **Donut** (Kim et al., 2022) — ViT encoder + text decoder。image を読み、JSON を直接出力します。text detector も layout module もありません。
+- **TrOCR** — line-level OCR 向けの ViT + transformer decoder。
+- **Qwen-VL-OCR / InternVL** — OCR tasks に fine-tune された full vision-language models。complex documents では 2026 年時点で最高 accuracy。
+- **PaddleOCR** — mature production package に入った古典的な DB + CRNN pipeline。今でも open-source の主力です。
 
-End-to-end models need more data and compute but skip the error accumulation of multi-stage pipelines.
+End-to-end models はより多くの data と compute を必要としますが、multi-stage pipelines の error accumulation を避けられます。
 
 ### Layout parsing
 
-For structured documents, run a layout detector (LayoutLMv3, DocLayNet) that labels each region: Title, Paragraph, Figure, Table, Footnote. Reading order then becomes "iterate through regions in layout order, concatenate."
+structured documents では、各 region を Title、Paragraph、Figure、Table、Footnote と label する layout detector (LayoutLMv3, DocLayNet) を実行します。Reading order は「layout order で regions を iterate し、concatenate する」になります。
 
-For forms, use **Key-Value extraction** models (Donut for visually-rich documents, LayoutLMv3 for plain scans). They take image + detected text + positions and predict structured key-value pairs.
+forms では **Key-Value extraction** models を使います。visually-rich documents には Donut、plain scans には LayoutLMv3 です。これらは image + detected text + positions を受け取り、structured key-value pairs を予測します。
 
 ### Evaluation metrics
 
-- **Character Error Rate (CER)** — Levenshtein distance / length of reference. Lower is better. Production target: < 2% on clean scans.
-- **Word Error Rate (WER)** — same at the word level.
-- **F1 on structured fields** — for key-value tasks; measures whether `{invoice_total: 42.50}` appears correctly.
-- **Edit distance on JSON** — for end-to-end document parsing; the Donut paper introduced normalised tree edit distance.
+- **Character Error Rate (CER)** — Levenshtein distance / reference length。低いほど良いです。production target は clean scans で < 2%。
+- **Word Error Rate (WER)** — word level で同じもの。
+- **F1 on structured fields** — key-value tasks 向け。`{invoice_total: 42.50}` が正しく現れるかを測ります。
+- **Edit distance on JSON** — end-to-end document parsing 向け。Donut paper は normalised tree edit distance を導入しました。
 
-## Build It
+## 実装
 
 ### Step 1: CTC loss + greedy decoder
 
@@ -121,11 +121,11 @@ def greedy_ctc_decode(log_probs, blank=0):
     return out
 ```
 
-`F.ctc_loss` uses the efficient CuDNN implementation when available. The greedy decoder is simpler than a beam search and usually within 1% CER of it.
+`F.ctc_loss` は利用可能な場合、efficient CuDNN implementation を使います。greedy decoder は beam search より単純で、通常 CER は 1% 以内に収まります。
 
 ### Step 2: Tiny CRNN recogniser
 
-Minimal CNN + BiLSTM for line OCR.
+line OCR 向けの最小 CNN + BiLSTM です。
 
 ```python
 class TinyCRNN(nn.Module):
@@ -152,11 +152,11 @@ class TinyCRNN(nn.Module):
         return F.log_softmax(self.head(h).transpose(0, 1), dim=-1)  # (W', N, vocab)
 ```
 
-Fixed-height input (the CNN max-pools height to 1). Width is the time dimension for CTC.
+入力は fixed-height です。CNN max-pools により height は 1 になります。width が CTC の time dimension です。
 
 ### Step 3: Synthetic OCR
 
-Generate black-on-white digit strings for an end-to-end smoke test.
+end-to-end smoke test のために、白地に黒の digit strings を生成します。
 
 ```python
 import numpy as np
@@ -190,7 +190,7 @@ imgs, targets, lengths = build_batch(["hello", "world"], vocab)
 print(f"images: {imgs.shape}   targets: {targets.shape}   lengths: {lengths.tolist()}")
 ```
 
-A real OCR dataset adds fonts, noise, rotation, blur, and colour. The pipeline above is identical.
+実際の OCR dataset では fonts、noise、rotation、blur、colour を追加します。上の pipeline は同一です。
 
 ### Step 4: Training sketch
 
@@ -207,17 +207,17 @@ for step in range(200):
     opt.zero_grad(); loss.backward(); opt.step()
 ```
 
-Loss should drop from ~3 to ~0.2 over 200 steps on this trivial synthetic data.
+この自明な synthetic data では、loss は 200 steps で ~3 から ~0.2 まで下がるはずです。
 
 ## Use It
 
-Three production paths:
+3つの production paths があります。
 
-- **PaddleOCR** — mature, fast, multilingual. One-line usage: `paddleocr.PaddleOCR(lang="en").ocr(image_path)`.
-- **EasyOCR** — Python-native, multilingual, PyTorch backbone.
-- **Tesseract** — classical; still useful for old scanned documents when models struggle.
+- **PaddleOCR** — mature、fast、multilingual。one-line usage: `paddleocr.PaddleOCR(lang="en").ocr(image_path)`。
+- **EasyOCR** — Python-native、multilingual、PyTorch backbone。
+- **Tesseract** — classical。models が苦戦する古い scanned documents では今でも有用です。
 
-For end-to-end document parsing, use Donut or a VLM:
+end-to-end document parsing には Donut または VLM を使います。
 
 ```python
 from transformers import DonutProcessor, VisionEncoderDecoderModel
@@ -226,37 +226,35 @@ processor = DonutProcessor.from_pretrained("naver-clova-ix/donut-base-finetuned-
 model = VisionEncoderDecoderModel.from_pretrained("naver-clova-ix/donut-base-finetuned-cord-v2")
 ```
 
-For receipts, invoices, and forms with repeatable structure, fine-tune Donut. For arbitrary documents or OCR with reasoning, a VLM like Qwen-VL-OCR is the current default.
+repeatable structure を持つ receipts、invoices、forms では Donut を fine-tune します。arbitrary documents や reasoning を伴う OCR では、Qwen-VL-OCR のような VLM が現在の default です。
 
 ## Ship It
 
-This lesson produces:
+この lesson は次を生成します。
 
-- `outputs/prompt-ocr-stack-picker.md` — a prompt that picks Tesseract / PaddleOCR / Donut / VLM-OCR given document type, language, and structure.
-- `outputs/skill-ctc-decoder.md` — a skill that writes greedy and beam-search CTC decoders from scratch, including length normalisation.
+- `outputs/prompt-ocr-stack-picker.md` — document type、language、structure に基づいて Tesseract / PaddleOCR / Donut / VLM-OCR を選ぶ prompt。
+- `outputs/skill-ctc-decoder.md` — greedy と beam-search CTC decoders を scratch から書く skill。length normalisation を含む。
 
 ## Exercises
 
-1. **(Easy)** Train the TinyCRNN on 5-digit random numeric strings for 500 steps. Report CER on a held-out set.
-2. **(Medium)** Replace greedy decoding with beam search (beam_width=5). Report CER delta. On which inputs does beam search win?
-3. **(Hard)** Use PaddleOCR on a set of 20 receipts, extract line items, and compute F1 against hand-labelled ground truth for {item_name, price} pairs.
+1. **(Easy)** TinyCRNN を 5-digit random numeric strings で 500 steps 学習してください。held-out set 上の CER を報告してください。
+2. **(Medium)** greedy decoding を beam search (beam_width=5) に置き換えてください。CER delta を報告してください。どの inputs で beam search が勝ちますか？
+3. **(Hard)** 20 receipts の set に PaddleOCR を使い、line items を抽出し、{item_name, price} pairs の hand-labelled ground truth に対して F1 を計算してください。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| OCR | "Text from pixels" | Turning image regions into character sequences |
-| CTC | "Alignment-free loss" | Loss that trains a sequence model without per-timestep labels; marginalises over alignments |
-| CRNN | "Classic OCR model" | Conv feature extractor + BiLSTM + CTC; the 2015 baseline still used in production |
-| Donut | "End-to-end OCR" | ViT encoder + text decoder; emits JSON directly from image |
-| Layout parsing | "Find regions" | Detect and label Title/Table/Figure/Paragraph regions in a document |
-| Reading order | "Text sequence" | Ordering of recognised regions into a sentence; trivial for Latin, non-trivial for mixed layouts |
-| CER / WER | "Error rates" | Levenshtein distance / reference length at character or word granularity |
-| VLM-OCR | "LLM that reads" | A vision-language model trained or prompted for OCR tasks; current SOTA on complex documents |
+| OCR | 「Text from pixels」 | image regions を character sequences に変換すること |
+| CTC | 「Alignment-free loss」 | per-timestep labels なしで sequence model を学習する loss。alignments を marginalise する |
+| CRNN | 「Classic OCR model」 | Conv feature extractor + BiLSTM + CTC。2015 年の baseline だが production で今も使われる |
+| Donut | 「End-to-end OCR」 | ViT encoder + text decoder。image から JSON を直接出力する |
+| Layout parsing | 「Find regions」 | document 内の Title/Table/Figure/Paragraph regions を detect して label する |
+| Reading order | 「Text sequence」 | recognised regions を文として並べる順序。Latin では自明、mixed layouts では難しい |
+| CER / WER | 「Error rates」 | character または word granularity での Levenshtein distance / reference length |
+| VLM-OCR | 「LLM that reads」 | OCR tasks 向けに学習または prompt された vision-language model。complex documents では現在の SOTA |
 
-## Further Reading
+## 参考文献
 
-- [CRNN (Shi et al., 2015)](https://arxiv.org/abs/1507.05717) — the original CNN+RNN+CTC architecture
-- [CTC (Graves et al., 2006)](https://www.cs.toronto.edu/~graves/icml_2006.pdf) — the original CTC paper; densely packed with the algorithmic ideas
-- [Donut (Kim et al., 2022)](https://arxiv.org/abs/2111.15664) — OCR-free document understanding transformer
-- [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) — the open-source production OCR stack
+- [CRNN (Shi et al., 2015)](https://arxiv.org/abs/1507.05717) — original CNN+RNN+CTC architecture
+- [CTC (Graves et al., 2006)](https://www.cs.toronto.edu/~graves/icml_2006.pdf) — original CTC paper。algorithmic ideas が濃縮されています

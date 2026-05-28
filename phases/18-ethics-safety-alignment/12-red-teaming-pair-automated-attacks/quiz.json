@@ -1,58 +1,58 @@
 {
   "lesson": "12-red-teaming-pair-automated-attacks",
-  "title": "Red-Teaming: PAIR and Automated Attacks",
+  "title": "Red-Teaming: PAIR と自動攻撃",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is manual red-teaming insufficient for evaluating frontier models?",
+      "question": "frontier model の評価において、手作業の red-teaming だけでは不十分な理由は何ですか。",
       "options": [
-        "It does not scale; attack success rate needs a statistical sample against a moving target with every model release",
-        "Manual prompts are always blocked by filters",
-        "Manual testing produces too many false positives",
-        "Manual testers cannot read model outputs"
+        "scale しないため。attack success rate には、モデルリリースごとに変わる標的に対する統計的サンプルが必要だから",
+        "manual prompts は常に filters に block されるから",
+        "manual testing は false positive を出しすぎるから",
+        "manual tester は model output を読めないから"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does PAIR stand for, and what does it do?",
+      "question": "PAIR は何の略で、何をしますか。",
       "options": [
-        "Prompt Automatic Iterative Refinement; an attacker LLM iteratively proposes jailbreaks for a target, with prior attempts as in-context feedback",
-        "Pairwise Adversarial Inference Routing; routes attacks across models",
-        "Pre-Action Inspection Reasoning; a defensive scaffolding",
-        "Persuasive Adversarial Iterative Reward; replaces RM with a persuader"
+        "Prompt Automatic Iterative Refinement。attacker LLM が、以前の試行を in-context feedback として使いながら、target への jailbreak を反復的に提案する",
+        "Pairwise Adversarial Inference Routing。攻撃を複数モデルに route する",
+        "Pre-Action Inspection Reasoning。防御用 scaffolding",
+        "Persuasive Adversarial Iterative Reward。RM を persuader で置き換える"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is PAIR more efficient than GCG for a black-box target?",
+      "question": "black-box target に対して PAIR が GCG より効率的なのはなぜですか。",
       "options": [
-        "PAIR uses a larger attacker model than GCG",
-        "GCG only attacks open-source models",
-        "GCG requires white-box gradient access and produces unreadable suffixes that cannot use in-context feedback; PAIR is black-box and natural-language with in-context learning",
-        "PAIR ignores the target's response"
+        "PAIR は GCG より大きい attacker model を使うから",
+        "GCG は open-source model だけを攻撃するから",
+        "GCG は white-box gradient access が必要で、in-context feedback を使えない読みにくい suffix を生成する。一方 PAIR は black-box で自然言語を使い、in-context learning を活用できるから",
+        "PAIR は target の response を無視するから"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why must Attack Success Rate (ASR) be reported with both a query budget and a judge identity?",
+      "question": "Attack Success Rate (ASR) は、なぜ query budget と judge identity の両方とともに報告する必要がありますか。",
       "options": [
-        "Because judges always agree",
-        "Because budgets are set by JailbreakBench only",
-        "Because ASR varies with how many queries the attacker is allowed and with which LLM judges a response as a jailbreak",
-        "Because ASR is required by export-control regulations"
+        "judge は常に一致するから",
+        "budget は JailbreakBench だけが設定するから",
+        "ASR は attacker に許可された queries 数と、response を jailbreak と判定する LLM によって変わるから",
+        "ASR は export-control regulations で要求されるから"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of these automated attacks is best described as 'tree-of-attacks with pruning'?",
+      "question": "次の自動攻撃のうち、'tree-of-attacks with pruning' と最もよく説明されるものはどれですか。",
       "options": [
         "TAP",
         "GCG",
@@ -64,7 +64,7 @@
     },
     {
       "stage": "post",
-      "question": "Which standardized benchmark uses 510 behaviours across 7 categories with semantic and functional harm tests?",
+      "question": "7カテゴリ510 behaviours と semantic / functional harm tests を使う標準 benchmark はどれですか。",
       "options": [
         "JailbreakBench",
         "HarmBench",

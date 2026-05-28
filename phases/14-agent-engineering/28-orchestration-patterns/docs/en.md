@@ -1,137 +1,137 @@
-# Orchestration Patterns: Supervisor, Swarm, Hierarchical
+# オーケストレーションパターン: Supervisor, Swarm, Hierarchical
 
-> Four orchestration patterns recur across 2026 frameworks: supervisor-worker, swarm / peer-to-peer, hierarchical, debate. Anthropic's guidance: "It's about building the right system for your needs." Start simple; add topology only when a single agent plus five workflow patterns is insufficient.
+> 2026 年の frameworks では、supervisor-worker、swarm / peer-to-peer、hierarchical、debate という 4 つの orchestration patterns が繰り返し現れる。Anthropic の指針は「必要に合った正しい system を作ること」。単純に始め、single agent + 5 つの workflow patterns では不十分になったときだけ topology を追加する。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
-**Time:** ~60 minutes
+**種類:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
+**時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Name the four recurring orchestration patterns and when each fits.
-- Describe the 2026 LangChain recommendation: tool-call-based supervision vs supervisor libraries.
-- Explain Anthropic's "build the right system" rule and how it gates topology choice.
-- Implement all four in stdlib against a common scripted LLM.
+- 繰り返し現れる 4 つの orchestration patterns と、それぞれが合う場面を挙げる。
+- 2026 年の LangChain recommendation を説明する: tool-call-based supervision vs supervisor libraries。
+- Anthropic の「right system を作る」ルールと、それが topology 選択をどう gate するかを説明する。
+- 共通の scripted LLM に対して、4 つすべてを stdlib で実装する。
 
-## The Problem
+## 問題
 
-Teams reach for "multi-agent" before they need it. Four patterns recur across frameworks; once you can name them, you can pick the right one — or skip topology entirely.
+teams は必要になる前に「multi-agent」に手を伸ばしがちである。frameworks をまたいで 4 つの patterns が繰り返し現れる。名前を付けられるようになると、正しいものを選べる。あるいは topology 自体を使わない判断もできる。
 
-## The Concept
+## コンセプト
 
 ### Supervisor-worker
 
-- A central routing LLM dispatches to specialist agents.
-- Decides: loop back to self, hand off to specialist, terminate.
-- Specialists do not talk to each other; all routing goes through the supervisor.
+- 中央の routing LLM が specialist agents に dispatch する。
+- 判断すること: 自分へ loop back するか、specialist に hand off するか、終了するか。
+- Specialists は互いに会話しない。すべての routing は supervisor 経由。
 
-Frameworks: LangGraph `create_supervisor`, Anthropic orchestrator-workers, CrewAI Hierarchical Process.
+Frameworks: LangGraph `create_supervisor`, Anthropic orchestrator-workers, CrewAI Hierarchical Process。
 
-**2026 LangChain recommendation:** do supervision through direct tool calls rather than `create_supervisor`. Gives finer context engineering control — you decide exactly what each specialist sees.
+**2026 年の LangChain recommendation:** `create_supervisor` ではなく direct tool calls で supervision する。より細かい context engineering control が得られる。各 specialist が何を見るかを正確に決められる。
 
 ### Swarm / peer-to-peer
 
-- Agents hand off directly via a shared tool surface.
-- No central router.
-- Lower latency than supervisor (fewer hops).
-- Harder to reason about (no single point of control).
+- Agents が shared tool surface 経由で直接 hand off する。
+- 中央 router はない。
+- supervisor より低 latency (hops が少ない)。
+- 推論しにくい (単一の control point がない)。
 
-Frameworks: LangGraph swarm topology, OpenAI Agents SDK handoffs (when all agents can hand off to all others).
+Frameworks: LangGraph swarm topology、OpenAI Agents SDK handoffs (すべての agents が互いに hand off できる場合)。
 
 ### Hierarchical
 
-- Supervisors managing sub-supervisors managing workers.
-- Implemented as nested subgraphs in LangGraph; nested crews in CrewAI.
-- Scales to large agent populations at the cost of operational complexity.
+- supervisors が sub-supervisors を管理し、その sub-supervisors が workers を管理する。
+- LangGraph では nested subgraphs、CrewAI では nested crews として実装される。
+- operational complexity と引き換えに、大規模な agent populations へ scale する。
 
-When you need it: when a single supervisor's context budget cannot hold descriptions of all specialists.
+必要になる場面: single supervisor の context budget にすべての specialists の descriptions が入らないとき。
 
 ### Debate
 
-- Parallel proposers + iterative cross-critique (Lesson 25).
-- Not really orchestration — more verification — but shows up as a topology choice in frameworks.
+- parallel proposers + iterative cross-critique (Lesson 25)。
+- 厳密には orchestration ではなく verification に近いが、frameworks では topology choice として現れる。
 
 ### CrewAI Crew vs Flow
 
-CrewAI formalizes two deployment modes:
+CrewAI は 2 つの deployment modes を formalize する。
 
-- **Flow** for deterministic event-driven automation (recommended starting point for production).
-- **Crew** for autonomous role-based collaboration.
+- deterministic event-driven automation には **Flow** (production の starting point として推奨)。
+- autonomous role-based collaboration には **Crew**。
 
-This is orthogonal to the four patterns above but maps to topology: Flow is typically supervisor or hierarchical; Crew is typically supervisor with an LLM router.
+これは上記 4 patterns と直交するが、topology に対応づけられる。Flow は通常 supervisor または hierarchical。Crew は通常 LLM router を持つ supervisor。
 
-### Anthropic's guidance
+### Anthropic の指針
 
-"Success in the LLM space isn't about building the most sophisticated system. It's about building the right system for your needs."
+「LLM space での成功は、最も洗練された system を作ることではない。必要に合った正しい system を作ることだ。」
 
-Decision order:
+判断順:
 
-1. Single agent + workflow patterns (Lesson 12) — start here.
-2. Supervisor-worker — when you have 2-4 specialists.
-3. Swarm — when latency matters more than reasoning clarity.
-4. Hierarchical — only when supervisor context budget fails.
-5. Debate — when accuracy matters more than cost.
+1. Single agent + workflow patterns (Lesson 12) — ここから始める。
+2. Supervisor-worker — 2-4 人の specialists がいるとき。
+3. Swarm — latency が reasoning clarity より重要なとき。
+4. Hierarchical — supervisor context budget が破綻するときだけ。
+5. Debate — cost より accuracy が重要なとき。
 
-### Where this pattern goes wrong
+### このパターンが失敗するところ
 
-- **Topology-first thinking.** "We need multi-agent" before identifying what problem multi-agent solves.
-- **Bouncing handoffs in swarm.** A -> B -> A -> B. Use hop counters.
-- **Fake hierarchy.** Three layers because "enterprise"; two actual teams. Collapse.
+- **Topology-first thinking。** multi-agent が何を解決するか特定する前に「multi-agent が必要」と考える。
+- **swarm で bouncing handoffs。** A -> B -> A -> B。hop counters を使う。
+- **Fake hierarchy。** 「enterprise」だから 3 layers、実際の teams は 2 つだけ。collapse する。
 
-## Build It
+## 構築
 
-`code/main.py` implements all four patterns in stdlib against a scripted LLM:
+`code/main.py` は scripted LLM に対して 4 つの patterns すべてを stdlib で実装する。
 
-- `Supervisor` — central router.
-- `Swarm` — peer-to-peer with direct handoffs.
-- `Hierarchical` — supervisors of supervisors.
-- `Debate` — parallel proposers + critique.
+- `Supervisor` — 中央 router。
+- `Swarm` — direct handoffs を伴う peer-to-peer。
+- `Hierarchical` — supervisors of supervisors。
+- `Debate` — parallel proposers + critique。
 
-Each pattern handles the same three-intent task (refund / bug / sales). Trace shapes differ.
+各 pattern は同じ 3-intent task (refund / bug / sales) を処理する。trace shapes が異なる。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-Output: per-pattern trace + op count. Supervisor is cleanest; swarm is shortest; hierarchical is deepest; debate is most expensive.
+出力: pattern ごとの trace + op count。Supervisor は最も明快。swarm は最短。hierarchical は最も深い。debate は最も高価。
 
-## Use It
+## 利用
 
-- **LangGraph** for supervisor and hierarchical (nested subgraphs).
-- **OpenAI Agents SDK** for handoffs-as-tools (supervisor-shaped).
-- **CrewAI Flow** for production deterministic.
-- **Custom** for debate or when you want exact control.
+- supervisor と hierarchical (nested subgraphs) には **LangGraph**。
+- handoffs-as-tools (supervisor-shaped) には **OpenAI Agents SDK**。
+- production deterministic には **CrewAI Flow**。
+- debate や正確な control が必要な場合は **Custom**。
 
-## Ship It
+## 出荷
 
-`outputs/skill-orchestration-picker.md` picks a topology and implements it.
+`outputs/skill-orchestration-picker.md` は topology を選び、実装する。
 
-## Exercises
+## 演習
 
-1. Convert a supervisor-worker to a swarm by removing the router. What breaks? What improves?
-2. Add a hop counter to the swarm: refuse after 3 handoffs. Does it catch A->B->A bouncing?
-3. Build a two-level hierarchical system for a 12-specialist domain. Where does the context budget fail without nesting?
-4. Profile the four patterns on a production-shaped workload. Which wins on which metric (latency, cost, accuracy, debuggability)?
-5. Read Anthropic's "Building Effective Agents" post. Map each of your production flows to one of the four. Any that don't map cleanly?
+1. router を取り除き、supervisor-worker を swarm に変換する。何が壊れるか。何が改善するか。
+2. swarm に hop counter を追加する。3 handoffs 後に拒否する。A->B->A の bouncing を捕まえられるか。
+3. 12-specialist domain 向けに 2-level hierarchical system を構築する。nesting なしでは context budget はどこで破綻するか。
+4. production-shaped workload 上で 4 patterns を profile する。どの metric (latency, cost, accuracy, debuggability) でどれが勝つか。
+5. Anthropic の "Building Effective Agents" post を読む。自分の production flows を 4 つのどれかに map する。きれいに map できないものはあるか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Supervisor-worker | "Router + specialists" | Central LLM dispatches to specialists; they don't talk to each other |
-| Swarm | "Peer-to-peer" | Direct handoffs via shared tools; no central router |
-| Hierarchical | "Supervisors of supervisors" | Nested subgraphs for large populations |
-| Debate | "Proposer + critique" | Parallel proposers, cross-critique (Lesson 25) |
-| Tool-call-based supervision | "Supervisor without a library" | Implement supervisor as direct tool calls for context control |
-| Crew | "Autonomous team" | CrewAI's role-based collaboration mode |
-| Flow | "Deterministic workflow" | CrewAI's event-driven production mode |
+| 用語 | よく言われる表現 | 実際の意味 |
+|------|----------------|------------|
+| Supervisor-worker | "Router + specialists" | 中央 LLM が specialists に dispatch し、specialists 同士は会話しない |
+| Swarm | "Peer-to-peer" | shared tools 経由の direct handoffs。central router はない |
+| Hierarchical | "Supervisors of supervisors" | 大規模 populations 向けの nested subgraphs |
+| Debate | "Proposer + critique" | parallel proposers、cross-critique (Lesson 25) |
+| Tool-call-based supervision | "Supervisor without a library" | context control のため、direct tool calls として supervisor を実装する |
+| Crew | "Autonomous team" | CrewAI の role-based collaboration mode |
+| Flow | "Deterministic workflow" | CrewAI の event-driven production mode |
 
-## Further Reading
+## 参考文献
 
-- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — five patterns + agent vs workflow
+- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — 5 patterns + agent vs workflow
 - [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — supervisor, swarm, hierarchical
 - [CrewAI docs](https://docs.crewai.com/en/introduction) — Crew vs Flow
 - [Du et al., Society of Minds (arXiv:2305.14325)](https://arxiv.org/abs/2305.14325) — debate pattern

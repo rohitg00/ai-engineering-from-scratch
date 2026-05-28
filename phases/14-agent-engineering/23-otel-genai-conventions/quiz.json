@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which span name represents an agent run in the GenAI conventions?",
+      "question": "GenAI conventionsでagent runを表すspan nameはどれですか?",
       "options": [
         "agent.start",
-        "invoke_agent (optionally suffixed by gen_ai.agent.name)",
+        "invoke_agent (任意でgen_ai.agent.nameがsuffixされる)",
         "run_chain",
         "agent_loop"
       ],
       "correct": 1,
-      "explanation": "invoke_agent is the canonical name; the agent's name attribute appears in the span name when set."
+      "explanation": "invoke_agentがcanonical nameです。agentのname attributeが設定されている場合、span nameに現れます。"
     },
     {
       "stage": "pre",
-      "question": "Which three span categories does the GenAI SIG define?",
+      "question": "GenAI SIGが定義する3つのspan categoryはどれですか?",
       "options": [
-        "Model/client, agent, tool",
-        "Frontend, backend, db",
-        "Read, write, exec",
-        "Latency, error, throughput"
+        "model/client、agent、tool",
+        "frontend、backend、db",
+        "read、write、exec",
+        "latency、error、throughput"
       ],
       "correct": 0,
-      "explanation": "Model/client (LLM calls), agent (create/invoke), tool (per invocation) are the categories."
+      "explanation": "model/client (LLM calls)、agent (create/invoke)、tool (invocationごと) がcategoryです。"
     },
     {
       "stage": "check",
-      "question": "When does an invoke_agent span use kind CLIENT vs INTERNAL?",
+      "question": "invoke_agent spanはいつkind CLIENTとINTERNALを使い分けますか?",
       "options": [
-        "Always INTERNAL",
-        "CLIENT for remote agent services (OpenAI Assistants, Bedrock Agents); INTERNAL for in-process frameworks (LangChain, CrewAI, local ReAct)",
-        "CLIENT for HTTPS only",
-        "Always CLIENT"
+        "常にINTERNAL",
+        "remote agent services (OpenAI Assistants、Bedrock Agents) ではCLIENT。in-process frameworks (LangChain、CrewAI、local ReAct) ではINTERNAL",
+        "HTTPSだけでCLIENT",
+        "常にCLIENT"
       ],
       "correct": 1,
-      "explanation": "Remote agent calls are CLIENT; in-process agent runs are INTERNAL."
+      "explanation": "remote agent callはCLIENT、in-process agent runはINTERNALです。"
     },
     {
       "stage": "check",
-      "question": "What is the default rule for content capture (inputs and outputs)?",
+      "question": "content capture (inputs and outputs) のdefault ruleは何ですか?",
       "options": [
-        "Capture everything by default",
-        "Instrumentations SHOULD NOT capture by default; capture is opt-in via gen_ai.* attributes",
-        "Capture only output, never input",
-        "Capture only on errors"
+        "defaultですべてcaptureする",
+        "instrumentationはdefaultでcaptureすべきではない (SHOULD NOT)。captureはgen_ai.* attributes経由のopt-in",
+        "outputだけcaptureし、inputは決してcaptureしない",
+        "error時だけcaptureする"
       ],
       "correct": 1,
-      "explanation": "Default-off content capture protects PII and secrets; opt-in is explicit."
+      "explanation": "default-offのcontent captureはPIIとsecretを保護します。opt-inは明示的です。"
     },
     {
       "stage": "check",
-      "question": "Which attribute identifies the corpus or store consulted for a retrieval?",
+      "question": "retrievalでconsultしたcorpusまたはstoreを識別するattributeはどれですか?",
       "options": [
         "gen_ai.provider.name",
         "gen_ai.request.model",
@@ -60,31 +60,31 @@
         "gen_ai.agent.name"
       ],
       "correct": 2,
-      "explanation": "gen_ai.data_source.id labels the RAG corpus or store hit by retrieval."
+      "explanation": "gen_ai.data_source.idは、retrievalがhitしたRAG corpusまたはstoreをlabelします。"
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend for storing prompt content in production?",
+      "question": "このlessonはproductionでprompt contentを保存する方法として何を推奨していますか?",
       "options": [
-        "Capture full prompts on every span as plain text",
-        "Store content externally (S3, log store) and record reference IDs on the span instead",
-        "Never store any content",
-        "Encrypt prompts in span attributes"
+        "すべてのspanにfull promptをplain textでcaptureする",
+        "contentを外部 (S3、log store) に保存し、代わりにspanへreference IDを記録する",
+        "contentを一切保存しない",
+        "span attributes内でpromptをencryptする"
       ],
       "correct": 1,
-      "explanation": "External storage with pointer IDs avoids PII leaking into traces that ops can read."
+      "explanation": "pointer ID付きexternal storageにより、Opsが読めるtraceへPIIが漏れることを避けられます。"
     },
     {
       "stage": "post",
-      "question": "How do you opt into the experimental stable preview of GenAI conventions?",
+      "question": "GenAI conventionsのexperimental stable previewにはどのようにopt inしますか?",
       "options": [
-        "Edit the OTel collector config",
-        "Set OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental",
-        "Rebuild the SDK from source",
-        "Pay for a license"
+        "OTel collector configを編集する",
+        "OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimentalを設定する",
+        "SDKをsourceからrebuildする",
+        "license料金を支払う"
       ],
       "correct": 1,
-      "explanation": "The env var pins the experimental conventions so attributes are not silently renamed."
+      "explanation": "このenv varはexperimental conventionsをpinし、attributeがsilentにrenameされるのを防ぎます。"
     }
   ]
 }

@@ -1,22 +1,22 @@
 {
   "lesson": "39-reviewer-agent",
-  "title": "Reviewer Agent: Separate Builder from Marker",
+  "title": "Reviewer Agent: Builder と Marker を分ける",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why cannot the builder reliably grade its own work?",
+      "question": "なぜ builder は自分の work を reliable に採点できないのですか？",
       "options": [
-        "It runs out of tokens",
-        "Acceptance is necessary but not sufficient; problem-fit, scope discipline, documented assumptions, and handoff readiness need a different role with different inputs",
-        "It loses authentication",
-        "The model rejects self-grading"
+        "tokens が尽きるから",
+        "acceptance は必要だが十分ではないから。problem-fit、scope discipline、documented assumptions、handoff readiness には、異なる inputs を持つ別 role が必要",
+        "authentication を失うから",
+        "model が self-grading を拒否するから"
       ],
       "correct": 1,
-      "explanation": "The gap between builder and reviewer is where reliability lives; acceptance only proves a weaker version."
+      "explanation": "builder と reviewer の gap に reliability があります。acceptance は弱い version しか証明しません。"
     },
     {
       "stage": "pre",
-      "question": "Which is NOT one of the five rubric dimensions?",
+      "question": "5つの rubric dimensions に含まれないものはどれですか？",
       "options": [
         "Problem fit",
         "Scope discipline",
@@ -24,67 +24,67 @@
         "Inference latency"
       ],
       "correct": 3,
-      "explanation": "The five are problem fit, scope discipline, assumptions, verification quality, handoff readiness."
+      "explanation": "5つは problem fit、scope discipline、assumptions、verification quality、handoff readiness です。"
     },
     {
       "stage": "check",
-      "question": "What does role separation require?",
+      "question": "role separation には何が必要ですか？",
       "options": [
-        "A different model",
-        "A different system prompt and different inputs; the same model can play both roles if posture changes and the reviewer has no write access to the diff",
-        "Different physical hardware",
-        "A new account"
+        "別の model",
+        "別の system prompt と別の inputs。posture が変わり、reviewer が diff への write access を持たなければ、同じ model でも両 role を担える",
+        "別の物理 hardware",
+        "新しい account"
       ],
       "correct": 1,
-      "explanation": "Discipline is in posture and inputs, not in the model identity."
+      "explanation": "discipline は model identity ではなく posture と inputs にあります。"
     },
     {
       "stage": "check",
-      "question": "What does Cloudflare's 2026 review architecture look like?",
+      "question": "Cloudflare の 2026 review architecture はどのようなものですか？",
       "options": [
-        "One big reviewer",
-        "Up to seven specialist reviewers in parallel under a Review Coordinator that deduplicates findings; top-tier model only for the coordinator, cheaper tiers for specialists",
-        "Round-robin two reviewers",
-        "Single sequential LLM"
+        "巨大 reviewer 1つ",
+        "Review Coordinator の下で最大7つの specialist reviewers が並列に動き findings を deduplicate する。top-tier model は coordinator 専用、specialists は安価な tiers",
+        "round-robin の2 reviewer",
+        "単一の sequential LLM"
       ],
       "correct": 1,
-      "explanation": "Cloudflare ran 131,246 review runs in 30 days using specialist + coordinator architecture."
+      "explanation": "Cloudflare は specialist + coordinator architecture で30日間に 131,246 review runs を実行しました。"
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of the four LLM-judge biases the lesson lists?",
+      "question": "lesson が挙げる4つの LLM-judge biases に含まれないものはどれですか？",
       "options": [
-        "Position bias (A,B vs B,A ordering inconsistency)",
-        "Verbosity bias (longer outputs score higher)",
-        "Self-preference (same model family)",
+        "Position bias (A,B と B,A ordering inconsistency)",
+        "Verbosity bias (長い output ほど score が高い)",
+        "Self-preference (同じ model family)",
         "Vector locality"
       ],
       "correct": 3,
-      "explanation": "The four are position, verbosity, self-preference, authority; vector locality is not one of them."
+      "explanation": "4つは position、verbosity、self-preference、authority です。vector locality は含まれません。"
     },
     {
       "stage": "post",
-      "question": "What is a calibration set?",
+      "question": "calibration set とは何ですか？",
       "options": [
-        "A new training corpus",
-        "10-20 historical task close-outs with known correct verdicts; rerun on every prompt change; if reviewer agreement falls below 80%, fix the rubric before shipping",
-        "An A/B test fixture",
-        "A vector index"
+        "新しい training corpus",
+        "正しい verdict が既知の 10-20 historical task close-outs。prompt change ごとに再実行し、reviewer agreement が 80% 未満なら出荷前に rubric を直す",
+        "A/B test fixture",
+        "vector index"
       ],
       "correct": 1,
-      "explanation": "Calibration sets keep the reviewer honest; if agreement drifts you fix the rubric, not the data."
+      "explanation": "calibration set は reviewer を正直に保ちます。agreement が drift したら data ではなく rubric を直します。"
     },
     {
       "stage": "post",
-      "question": "Where does the reviewer's report integrate with the rest of the workbench?",
+      "question": "reviewer の report は workbench のどこに統合されますか？",
       "options": [
-        "It replaces verification",
-        "It bundles into the handoff packet (Lesson 40); human review starts from the report, not from a blank page",
-        "It overrides the gate",
-        "It only goes to the manager"
+        "verification を置き換える",
+        "handoff packet (Lesson 40) に bundle される。human review は blank page ではなく report から始まる",
+        "gate を override する",
+        "manager にだけ送られる"
       ],
       "correct": 1,
-      "explanation": "The review report feeds the handoff so the next session and the human reviewer start from a written verdict."
+      "explanation": "review report は handoff に feed され、next session と human reviewer は written verdict から始められます。"
     }
   ]
 }

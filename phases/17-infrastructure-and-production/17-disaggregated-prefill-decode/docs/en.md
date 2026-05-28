@@ -1,38 +1,38 @@
 # Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d
 
-> Prefill is compute-bound; decode is memory-bound. Running both on the same GPU wastes one resource. Disaggregation splits them onto separate pools and transfers KV cache between them over NIXL (RDMA/InfiniBand or TCP fallback). NVIDIA Dynamo (GTC 2025 announce, 1.0 GA) sits above vLLM/SGLang/TRT-LLM — its Planner Profiler + SLA Planner auto-rate-match prefill:decode ratios to meet SLOs. NVIDIA publishes throughput gains in this ballpark — developer.nvidia.com (2025-06) shows a ~6x improvement for DeepSeek-R1 MoE on GB200 NVL72 + Dynamo in the medium-latency regime, and the Dynamo product page (developer.nvidia.com, undated) advertises up to 50x MoE throughput on GB300 NVL72 + Dynamo vs Hopper. The "30x" figure is a community aggregate across full-stack Blackwell + Dynamo + DeepSeek-R1 reports; we have not found a single primary source stating exactly 30x, so treat it as a directional claim. llm-d (Red Hat + AWS) is Kubernetes-native: prefill / decode / router as independent Services with per-role HPA. llm-d 0.5 adds hierarchical KV offloading, cache-aware LoRA routing, UCCL networking, scale-to-zero. Economics: internal rollup of multiple customer disclosures suggests 30–40% savings on $2M-class inference spend (i.e., $600-800K/year) when switching from colocated serving to disaggregated with Dynamo at constant SLA; the specific $2M→$600-800K figure is an internal composite, not a single published case study — use it as an order-of-magnitude anchor, not a reference citation. Short prompts (<512 tokens, short output) don't justify the transfer cost.
+> Prefill は compute-bound、decode は memory-bound である。同じ GPU で両方を動かすと、どちらかの resource を無駄にする。disaggregation は両者を別々の pool に分け、NIXL（RDMA/InfiniBand または TCP fallback）で KV cache を転送する。NVIDIA Dynamo（GTC 2025 announcement、1.0 GA）は vLLM/SGLang/TRT-LLM の上に位置する。Planner Profiler + SLA Planner が prefill:decode ratio を自動で rate-match し、SLO を満たす。NVIDIA はこの範囲の throughput gain を公開している。developer.nvidia.com（2025-06）は GB200 NVL72 + Dynamo 上の DeepSeek-R1 MoE で medium-latency regime における約6x改善を示し、Dynamo product page（developer.nvidia.com、日付なし）は GB300 NVL72 + Dynamo で Hopper 比最大50x MoE throughput を宣伝している。"30x" という数字は full-stack Blackwell + Dynamo + DeepSeek-R1 report 全体の community aggregate であり、正確に30xと述べる単一 primary source は見つかっていない。方向感を示す主張として扱う。llm-d（Red Hat + AWS）は Kubernetes-native で、prefill / decode / router を独立した Services とし、role ごとの HPA を使う。llm-d 0.5 は hierarchical KV offloading、cache-aware LoRA routing、UCCL networking、scale-to-zero を追加した。economics: 複数 customer disclosure の internal rollup では、constant SLA のまま colocated serving から Dynamo による disaggregated serving へ切り替えると、$2M 級 inference spend で30-40% saving（つまり $600-800K/year）が示唆される。この $2M→$600-800K という具体値は internal composite であり、単一の published case study ではない。reference citation ではなく order-of-magnitude anchor として使う。短い prompt（<512 tokens、short output）は transfer cost を正当化しない。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy disaggregated-vs-colocated simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 08 (Inference Metrics)
-**Time:** ~75 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy disaggregated-vs-colocated simulator)
+**前提条件:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 08 (Inference Metrics)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Explain why prefill and decode have different optimal GPU allocations and quantify the waste under colocation.
-- Diagram the disaggregated architecture: prefill pool, decode pool, KV transfer via NIXL, router.
-- Name the condition when disaggregation does NOT pay off (short prompts, short outputs).
-- Distinguish NVIDIA Dynamo (stack-above) from llm-d (Kubernetes-native) and match each to an operational context.
+- prefill と decode で最適な GPU allocation が異なる理由を説明し、colocation 下の waste を定量化する。
+- disaggregated architecture を図示する。prefill pool、decode pool、NIXL による KV transfer、router。
+- disaggregation が割に合わない条件（short prompts、short outputs）を説明する。
+- NVIDIA Dynamo（stack-above）と llm-d（Kubernetes-native）を区別し、それぞれを運用 context に対応づける。
 
-## The Problem
+## 課題
 
-You run Llama 3.3 70B on 8 H100s. Under mixed workload (long prompts + short outputs), GPUs idle during decode because most of the compute was spent on prefill. Under different workload (short prompts + long outputs), the opposite happens. Colocated prefill + decode means you over-provision both.
+あなたは Llama 3.3 70B を 8 H100s で動かしている。mixed workload（long prompts + short outputs）では、compute の大半が prefill に使われた後、decode 中に GPU が idle になる。別の workload（short prompts + long outputs）では逆が起きる。colocated prefill + decode は、両方を over-provision することを意味する。
 
-Budget impact: 20-40% of GPU time is wasted on the wrong resource. You are buying H100 compute to run memory-bound decode, or buying H100 HBM bandwidth to run compute-bound prefill. Both are expensive waste.
+予算への影響: GPU time の20-40%が間違った resource に浪費される。memory-bound decode を走らせるために H100 compute を買っている、または compute-bound prefill を走らせるために H100 HBM bandwidth を買っている。どちらも高価な無駄だ。
 
-Disaggregation splits prefill and decode onto separate pools sized for each's bottleneck. KV cache transfers from prefill pool to decode pool via high-bandwidth interconnect.
+disaggregation は prefill と decode を、それぞれの bottleneck に合わせて size した別 pool に分ける。KV cache は prefill pool から decode pool へ high-bandwidth interconnect で転送される。
 
-## The Concept
+## コンセプト
 
-### Why the bottlenecks differ
+### bottleneck が異なる理由
 
-**Prefill** — run the transformer over the full input prompt in one forward. Matrix multiplications dominate; compute-bound. H100 FP8 gives ~2000 TFLOPS of useful throughput. Batch efficiency is good — one forward processes many tokens.
+**Prefill** — 入力 prompt 全体に対して transformer を1回 forward する。matrix multiplication が支配的で compute-bound。H100 FP8 は有効 throughput として約2000 TFLOPS を出す。batch efficiency は高く、1回の forward で多くの tokens を処理する。
 
-**Decode** — generate one token at a time, reading the full weights each iteration. Memory-bandwidth-bound. HBM3 gives ~3 TB/s. Batch efficiency is good only at high concurrency — the weights read amortizes across the batch.
+**Decode** — 1 token ずつ生成し、各 iteration で全 weights を読む。memory-bandwidth-bound。HBM3 は約3 TB/s。batch efficiency が良いのは high concurrency のときだけで、weights read が batch で償却される。
 
-Colocating them: you buy GPUs optimized for both. H100 is good at both but costs the same either way. At scale, you want prefill pool on H100 / compute-heavy; decode pool on H200 / memory-heavy, or with aggressive quantization.
+両者を colocate すると、両方に最適化された GPU を買うことになる。H100 はどちらにも強いが、どちらの使い方でも同じ金額がかかる。scale すると、prefill pool は H100 / compute-heavy、decode pool は H200 / memory-heavy、または aggressive quantization を使いたくなる。
 
-### The architecture
+### architecture
 
 ```
             ┌──────────────┐
@@ -49,93 +49,93 @@ Colocating them: you buy GPUs optimized for both. H100 is good at both but costs
                                                  Client
 ```
 
-NIXL is NVIDIA's inter-node transport. Uses RDMA/InfiniBand when available, TCP fallback otherwise. Transfer latency is real — typically 20-80 ms for KV cache of a 4K-token prompt on 70B FP8. This is why short prompts don't justify disaggregation: the transfer tax exceeds the savings.
+NIXL は NVIDIA の inter-node transport である。利用できる場合は RDMA/InfiniBand を使い、なければ TCP に fallback する。transfer latency は実在する。70B FP8 の 4K-token prompt の KV cache では典型的に20-80 ms 程度だ。だから short prompt では disaggregation を正当化できない。transfer tax が saving を上回る。
 
 ### Dynamo vs llm-d
 
-**NVIDIA Dynamo** (GTC 2025 announce, 1.0 GA):
-- Sits above vLLM, SGLang, TRT-LLM as an orchestrator.
-- Planner Profiler measures workload, SLA Planner auto-configures prefill:decode ratios.
-- Rust core, Python extensibility.
-- Throughput gains: NVIDIA reports 6x for DeepSeek-R1 MoE on GB200 NVL72 + Dynamo in the medium-latency regime (developer.nvidia.com, 2025-06); community reports of "up to 30x" on full Blackwell + Dynamo + DeepSeek-R1 stacks lack a single primary source and should be treated as directional.
-- GB300 NVL72 + Dynamo: up to 50x MoE throughput vs Hopper per the Dynamo product page (developer.nvidia.com, undated).
+**NVIDIA Dynamo**（GTC 2025 announcement、1.0 GA）:
+- vLLM、SGLang、TRT-LLM の上に orchestrator として位置する。
+- Planner Profiler が workload を測定し、SLA Planner が prefill:decode ratio を自動設定する。
+- Rust core、Python extensibility。
+- Throughput gains: NVIDIA は GB200 NVL72 + Dynamo 上の DeepSeek-R1 MoE で medium-latency regime における6xを報告している（developer.nvidia.com, 2025-06）。full Blackwell + Dynamo + DeepSeek-R1 stack で「最大30x」という community report は単一 primary source を欠くため、方向感として扱う。
+- GB300 NVL72 + Dynamo: Dynamo product page（developer.nvidia.com、日付なし）によれば Hopper 比で最大50x MoE throughput。
 
-**llm-d** (Red Hat + AWS, Kubernetes-native):
-- Prefill / decode / router as independent Kubernetes Services.
-- Per-role HPA with queue depth (prefill) / KV utilization (decode) signals.
-- `topologyConstraint packDomain: rack` packs prefill+decode cliques on the same rack for high-bandwidth KV transfer.
-- llm-d 0.5 (2026): hierarchical KV offloading, cache-aware LoRA routing, UCCL networking, scale-to-zero.
+**llm-d**（Red Hat + AWS、Kubernetes-native）:
+- prefill / decode / router を独立した Kubernetes Services として動かす。
+- queue depth（prefill）/ KV utilization（decode）signal を使う role ごとの HPA。
+- `topologyConstraint packDomain: rack` により、高帯域 KV transfer のため prefill+decode clique を同一 rack に pack する。
+- llm-d 0.5（2026）: hierarchical KV offloading、cache-aware LoRA routing、UCCL networking、scale-to-zero。
 
-Use Dynamo if you want a managed stack-above orchestrator. Use llm-d if you want Kubernetes-native primitives and are committed to the CNCF ecosystem.
+stack-above の managed orchestrator が欲しいなら Dynamo を使う。Kubernetes-native primitive が欲しく、CNCF ecosystem に committed しているなら llm-d を使う。
 
-### Economics
+### 経済性
 
-Internal composite (not a single published case study — order-of-magnitude anchor):
+Internal composite（単一 published case study ではない。order-of-magnitude anchor）:
 
-- $2M/year inference spend on colocated serving.
-- Switched to disaggregated with Dynamo.
-- Same request volume, same P99 latency SLA.
-- Reported savings: $600K–$800K/year (30–40% reduction).
-- No new hardware.
+- colocated serving に $2M/year の inference spend。
+- Dynamo を使う disaggregated へ切り替え。
+- request volume も P99 latency SLA も同じ。
+- reported savings: $600K–$800K/year（30–40% reduction）。
+- 新規 hardware なし。
 
-We synthesize this figure from multiple customer disclosures rather than a single citable case study; closest published data point is Baseten's 2x faster TTFT / 61% higher throughput with Dynamo KV routing (baseten.co, 2025-10), and VAST + CoreWeave's projection of 60–130% more tokens/$ at 40–60% KV hit rate (vastdata.com, 2025-12). The savings come from right-sizing each pool; prefill-heavy workloads (RAG with 8K+ prefixes) benefit more than balanced ones.
+この数字は単一の cite 可能な case study ではなく、複数 customer disclosure から合成したものだ。近い published data point として、Baseten の Dynamo KV routing による 2x faster TTFT / 61% higher throughput（baseten.co, 2025-10）、VAST + CoreWeave の 40-60% KV hit rate で 60-130% more tokens/$ という projection（vastdata.com, 2025-12）がある。saving は各 pool の right-sizing から生まれる。RAG with 8K+ prefixes のような prefill-heavy workload は、balanced workload より大きく恩恵を受ける。
 
-### When NOT to disaggregate
+### disaggregate すべきでない場合
 
-- Prompts < 512 tokens and outputs < 200 tokens: transfer tax dominates gain.
-- Small cluster (< 4 GPUs): not enough pool diversity.
-- Team cannot operate two GPU pools with per-role scaling: Dynamo helps but not trivially.
-- No RDMA fabric: TCP transfer tax is heavier.
+- Prompts < 512 tokens かつ outputs < 200 tokens: transfer tax が gain を支配する。
+- Small cluster（< 4 GPUs）: pool diversity が足りない。
+- team が role ごとの scaling を持つ2つの GPU pool を運用できない。Dynamo は助けになるが、自動で簡単になるわけではない。
+- RDMA fabric がない: TCP transfer tax は重い。
 
-### The router integrates with Phase 17 · 11
+### router と Phase 17 · 11 の統合
 
-Disaggregated routers are KV-cache-aware (Phase 17 · 11). A request lands on the decode pool holding its prefix — if no match, it flows prefill → decode. Hit rate and disaggregation compound — the cache-aware router determines whether a new prefill is even needed.
+Disaggregated router は KV-cache-aware（Phase 17 · 11）である。request は prefix を保持している decode pool に着地する。一致がなければ prefill → decode に流れる。hit rate と disaggregation は相乗効果がある。cache-aware router が、新しい prefill が必要かどうかを決める。
 
-### MoE on Blackwell is where the real numbers are
+### 本当の数字は Blackwell 上の MoE にある
 
-GB300 NVL72 + Dynamo shows 50x MoE throughput over Hopper baselines. MoE expert routing is compute-heavy on prefill but memory-heavy on decode (expert caches), so disaggregation is a double win. 2026 frontier model serving is MoE-dominant (DeepSeek-V3, future GPT-5 variants).
+GB300 NVL72 + Dynamo は Hopper baseline に対して50x MoE throughput を示す。MoE expert routing は prefill では compute-heavy だが decode では memory-heavy（expert caches）なので、disaggregation は二重に効く。2026年の frontier model serving は MoE-dominant（DeepSeek-V3、将来の GPT-5 variants）である。
 
-### Numbers you should remember
+### 覚えておくべき数字
 
-Benchmark numbers drift — NVIDIA and the inference stack post updated results every quarter. Re-check before quoting.
+benchmark number は変動する。NVIDIA と inference stack は四半期ごとに updated result を出す。引用前に再確認する。
 
-- DeepSeek-R1 on GB200 NVL72 + Dynamo: ~6x throughput vs baseline in the medium-latency regime (developer.nvidia.com, 2025-06); community "up to 30x" claims on full Blackwell + Dynamo stacks are directional aggregates without a single primary source.
-- GB300 NVL72 + Dynamo: up to 50x MoE throughput vs Hopper (developer.nvidia.com, undated).
-- Savings anchor (internal composite, not a single case study): $600-800K/year off a $2M annual spend at constant SLA.
-- Disaggregation threshold: prompts >512 tokens + outputs >200 tokens.
-- KV transfer via NIXL: 20-80 ms for 4K-prompt KV on 70B FP8.
+- GB200 NVL72 + Dynamo 上の DeepSeek-R1: medium-latency regime で baseline 比約6x throughput（developer.nvidia.com, 2025-06）。full Blackwell + Dynamo stack の community "up to 30x" claim は単一 primary source のない directional aggregate。
+- GB300 NVL72 + Dynamo: Hopper 比最大50x MoE throughput（developer.nvidia.com、日付なし）。
+- Savings anchor（internal composite、単一 case study ではない）: annual spend $2M から constant SLA で $600-800K/year 削減。
+- Disaggregation threshold: prompts >512 tokens + outputs >200 tokens。
+- KV transfer via NIXL: 70B FP8 の 4K-prompt KV で20-80 ms。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates colocated vs disaggregated serving. Reports throughput, cost per request, and the prompt-length crossover.
+`code/main.py` は colocated と disaggregated serving を simulate する。throughput、cost per request、prompt-length crossover を report する。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-disaggregation-decider.md`. Given workload and cluster, decides whether to disaggregate.
+この lesson は `outputs/skill-disaggregation-decider.md` を生成する。workload と cluster が与えられたら、disaggregate すべきかを判断する。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. At what prompt length does disaggregation beat colocation?
-2. Design the prefill pool and decode pool for a RAG service with P99 prefix length 8K, output 300.
-3. Dynamo vs llm-d: pick one for a pure-Kubernetes shop with no Python runtime preference.
-4. Compute KV transfer cost: 4K prefill on 70B FP8 = ~500 MB KV. At RDMA 100 GB/s, transfer = 5 ms. At TCP 10 GB/s = 50 ms. Which matters for your SLA?
-5. MoE expert routing changes KV access patterns. How does disaggregation behave with MoE that activates different experts per token?
+1. `code/main.py` を実行する。どの prompt length で disaggregation は colocation に勝つか。
+2. P99 prefix length 8K、output 300 の RAG service に対して prefill pool と decode pool を設計する。
+3. Dynamo vs llm-d: Python runtime preference のない pure-Kubernetes shop にどちらを選ぶか。
+4. KV transfer cost を計算する。70B FP8 の 4K prefill は約500 MB KV。RDMA 100 GB/s では transfer = 5 ms。TCP 10 GB/s では 50 ms。あなたの SLA に効くのはどちらか。
+5. MoE expert routing は KV access pattern を変える。token ごとに異なる expert を activate する MoE では、disaggregation はどう振る舞うか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| Disaggregated serving | "split prefill/decode" | Separate GPU pools for each phase |
-| NIXL | "NVIDIA transport" | Dynamo's inter-node KV transfer (RDMA/TCP) |
-| NVIDIA Dynamo | "the orchestrator" | Stack-above coordinator for vLLM/SGLang/TRT-LLM |
-| llm-d | "Kubernetes native" | Red Hat + AWS K8s disaggregated stack |
-| Planner Profiler | "Dynamo auto-config" | Measures workload, configures pool ratios |
-| SLA Planner | "Dynamo policy" | Auto-rate-matches prefill:decode to meet SLOs |
-| `packDomain: rack` | "llm-d topology" | Pack prefill+decode on same rack for fast KV |
-| UCCL | "unified collective" | llm-d 0.5 networking layer for scale-to-zero |
-| MoE expert routing | "expert per token" | DeepSeek-V3 pattern; disaggregation helps |
+| Disaggregated serving | "split prefill/decode" | phase ごとに separate GPU pools を使う |
+| NIXL | "NVIDIA transport" | Dynamo の inter-node KV transfer（RDMA/TCP） |
+| NVIDIA Dynamo | "the orchestrator" | vLLM/SGLang/TRT-LLM の stack-above coordinator |
+| llm-d | "Kubernetes native" | Red Hat + AWS の K8s disaggregated stack |
+| Planner Profiler | "Dynamo auto-config" | workload を測定し pool ratio を設定する |
+| SLA Planner | "Dynamo policy" | SLO を満たすよう prefill:decode を auto-rate-match |
+| `packDomain: rack` | "llm-d topology" | fast KV のため prefill+decode を同一 rack に pack |
+| UCCL | "unified collective" | scale-to-zero 用の llm-d 0.5 networking layer |
+| MoE expert routing | "expert per token" | DeepSeek-V3 pattern。disaggregation が効く |
 
-## Further Reading
+## 参考資料
 
 - [NVIDIA — Introducing Dynamo](https://developer.nvidia.com/blog/introducing-nvidia-dynamo-a-low-latency-distributed-inference-framework-for-scaling-reasoning-ai-models/)
 - [NVIDIA — Disaggregated LLM Inference on Kubernetes](https://developer.nvidia.com/blog/deploying-disaggregated-llm-inference-workloads-on-kubernetes/)

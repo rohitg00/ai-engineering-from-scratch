@@ -1,41 +1,41 @@
 ---
 name: benchmark-reader
-description: Read a multi-agent benchmark claim skeptically. Grades the claim on benchmark selection, contamination, baselines, statistical significance, task diversity, and cost disclosure.
+description: multi-agent benchmark claim を懐疑的に読む。benchmark selection、contamination、baselines、statistical significance、task diversity、cost disclosure の観点で claim を grade する。
 version: 1.0.0
 phase: 16
 lesson: 24
 tags: [multi-agent, benchmarks, evaluation, SWE-bench, MARBLE]
 ---
 
-Given a published or internal claim of multi-agent benchmark performance, grade the claim and surface caveats.
+公開または internal の multi-agent benchmark performance claim が与えられたら、その claim を grade し caveats を表面化する。
 
-Produce:
+作成するもの:
 
-1. **Benchmark + split identification.** Which benchmark (MARBLE, COMMA, MedAgentBoard, AgentArch, SWE-bench Pro, SWE-bench Verified, custom)? Which split (full, held-out, contamination-cleaned)? Unknown splits are disqualifying.
-2. **Contamination status.** Is the benchmark post-training-cutoff for the model under test? If the benchmark predates the training cutoff, flag for contamination risk and discount the claim.
-3. **Baseline quality.** Vs single-LLM, vs random, vs prior multi-agent work. Vs untuned-same-system does not count; it is an ablation, not a baseline.
-4. **Statistical significance.** N trials, confidence interval or standard error, p-value or equivalent. Claims without statistics on N < 50 trials are under-supported.
-5. **Task diversity.** One task, one domain, or many? Single-task claims do not imply generalization.
-6. **Cost disclosure.** Tokens per task, wall-clock per task, dollar cost per task. A 90% solution at 20x cost is a business decision; without cost, the claim is incomplete.
-7. **Letter grade + one-sentence verdict.**
+1. **Benchmark + split identification。** どの benchmark（MARBLE、COMMA、MedAgentBoard、AgentArch、SWE-bench Pro、SWE-bench Verified、custom）か。どの split（full、held-out、contamination-cleaned）か。unknown split は disqualifying。
+2. **Contamination status。** benchmark は test 対象 model の training cutoff より後か。benchmark が training cutoff より前なら contamination risk を flag し、claim を discount する。
+3. **Baseline quality。** Vs single-LLM、vs random、vs prior multi-agent work。vs untuned-same-system は baseline ではなく ablation なので数えない。
+4. **Statistical significance。** N trials、confidence interval または standard error、p-value または同等指標。N < 50 trials で statistics のない claim は根拠が弱い。
+5. **Task diversity。** 1 task、1 domain、または many か。single-task claims は generalization を意味しない。
+6. **Cost disclosure。** task あたり tokens、task あたり wall-clock、task あたり dollar cost。20x cost の 90% solution は business decision である。cost がなければ claim は incomplete。
+7. **Letter grade + one-sentence verdict。**
 
-   - **A:** All six checks pass; the claim is likely robust.
-   - **B:** One weakness; the claim is plausible with noted caveats.
-   - **C:** Two weaknesses; the claim is suggestive but needs replication.
-   - **D:** Three or more weaknesses; the claim is not evidence.
-   - **F:** Disqualifying issue (contamination on undisclosed split, no statistics, no baseline).
+   - **A:** 6 checks すべて pass。claim はおそらく robust。
+   - **B:** weakness が 1 つ。claim は caveat 付きで plausible。
+   - **C:** weakness が 2 つ。claim は suggestive だが replication が必要。
+   - **D:** weakness が 3 つ以上。claim は evidence ではない。
+   - **F:** disqualifying issue（undisclosed split の contamination、statistics なし、baseline なし）。
 
 Hard rejects:
 
-- Claims citing "SWE-bench" without specifying Verified vs Pro. The 40+ point gap makes this ambiguous reporting unacceptable.
-- Claims without baseline comparison. "Our system does X%" is a number, not a result.
-- Claims based on fewer than 20 trials for multi-agent systems. Variance is too high.
-- Cost-unreported claims for multi-agent systems. The coordination tax is material.
+- Verified vs Pro を指定せずに「SWE-bench」を引用する claim。40+ point gap があるため、この曖昧な報告は受け入れられない。
+- baseline comparison のない claim。「Our system does X%」は数字であって result ではない。
+- multi-agent systems で trials が 20 未満の claim。variance が高すぎる。
+- cost-unreported な multi-agent system claim。coordination tax は実質的なコストである。
 
 Refusal rules:
 
-- If the benchmark is not publicly available and the user has no internal audit trail, grade cannot be assigned. Recommend releasing evaluation artifacts.
-- If the claim is from a paper currently under peer review (arXiv preprint, unsubmitted), downgrade one letter grade as precaution until replication.
-- If the user is the claimant themselves asking for an audit, run the audit straight; flag when the claim is not yet ready for publication.
+- benchmark が public に利用できず、user に internal audit trail もない場合、grade は付けられない。evaluation artifacts の公開を推奨する。
+- claim が peer review 中の paper（arXiv preprint、unsubmitted）から来ている場合、replication までは precaution として 1 letter grade 下げる。
+- user 自身が claimant として audit を依頼している場合、audit をそのまま実行する。claim が publication ready でない場合は flag する。
 
-Output: a one-page grade card. Start with a one-sentence summary ("Grade: C — good benchmark choice, adequate baselines, but no contamination check and no cost disclosure."), then the seven sections above. End with a prioritized list of "what to fix to raise the grade."
+Output: 1 ページの grade card。1 文の summary（「Grade: C — good benchmark choice, adequate baselines, but no contamination check and no cost disclosure.」）から始め、その後に上記 7 sections を続ける。最後に「what to fix to raise the grade」の prioritized list を書く。

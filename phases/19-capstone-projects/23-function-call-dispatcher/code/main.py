@@ -1,11 +1,11 @@
-"""Function call dispatcher with timeout, retry, idempotency, concurrency limit.
+"""timeout、retry、idempotency、concurrency limit を備えた function call dispatcher。
 
 Conceptual references:
 - ./docs/en.md (this lesson)
 - JSON-RPC 2.0 specification (error envelope shape)
 - IETF draft draft-bhutton-json-schema-2020-12 (schema subset reused)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -26,11 +26,11 @@ ERR_INTERNAL = -32603
 
 
 class TransientError(Exception):
-    """Raised by a handler to indicate the failure is worth retrying."""
+    """retry する価値のある failure であることを handler が示すために raise する。"""
 
 
 class _DispatchedError(Exception):
-    """Internal sentinel that wraps a DispatchError so dedup followers preserve kind."""
+    """dedupe follower が kind を保てるよう DispatchError を wrap する internal sentinel。"""
 
     def __init__(self, error: "DispatchError") -> None:
         super().__init__(error.message)
@@ -71,7 +71,7 @@ class _ToolRecord:
 
 
 class MiniRegistry:
-    """A trimmed registry: name, schema, handler, idempotent, timeout."""
+    """最小 registry: name、schema、handler、idempotent、timeout。"""
 
     def __init__(self) -> None:
         self._recs: dict[str, _ToolRecord] = {}
@@ -109,7 +109,7 @@ def _walk(schema: dict, value: Any, path: str, errs: list[str]) -> None:
     elif t == "array" and not isinstance(value, list):
         type_ok = False
     if not type_ok:
-        errs.append(f"{path or '/'}: expected {t}, got {type(value).__name__}")
+        errs.append(f"{path or '/'}: {t} を期待しましたが {type(value).__name__} でした")
         return
     if t == "object":
         for req in schema.get("required", []):
@@ -127,7 +127,7 @@ class _InFlight:
 
 
 class Dispatcher:
-    """Per-call timeout, retry, idempotency, concurrency limit."""
+    """per-call timeout、retry、idempotency、concurrency limit。"""
 
     def __init__(
         self,
@@ -139,7 +139,7 @@ class Dispatcher:
         sleep: Callable[[float], Awaitable[None]] | None = None,
     ) -> None:
         if max_attempts <= 0:
-            raise ValueError("max_attempts must be > 0")
+            raise ValueError("max_attempts は 0 より大きい必要があります")
         self.registry = registry
         self.max_attempts = max_attempts
         self._sem = asyncio.Semaphore(concurrency)
@@ -174,7 +174,7 @@ class Dispatcher:
 
         if budget_tool_calls_remaining is not None and budget_tool_calls_remaining <= 0:
             return DispatchError(
-                kind="budget_exceeded", message="tool_calls remaining is 0", attempts=0,
+                kind="budget_exceeded", message="残り tool_calls が 0 です", attempts=0,
             )
 
         if idempotency_key is not None:
@@ -220,7 +220,7 @@ class Dispatcher:
                 except asyncio.TimeoutError:
                     last_error = DispatchError(
                         kind="timeout",
-                        message=f"timeout after {timeout_ms}ms",
+                        message=f"{timeout_ms}ms 後に timeout",
                         attempts=attempt,
                     )
                     if not rec.idempotent:
@@ -298,7 +298,7 @@ async def _demo() -> None:
     async def flaky_fetch(id: int) -> dict:
         counter["a"] += 1
         if counter["a"] < 2:
-            raise TransientError("upstream not ready")
+            raise TransientError("upstream の準備ができていません")
         return {"id": id, "name": "ada"}
 
     async def slow(n: int) -> int:

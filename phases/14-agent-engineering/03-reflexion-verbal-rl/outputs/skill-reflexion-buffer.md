@@ -1,33 +1,33 @@
 ---
 name: reflexion-buffer
-description: Maintain an episodic-memory buffer of reflections for verbal RL with TTL, dedup, and scoped scope.
+description: verbal RL向けに、TTL、dedup、scope管理を備えたreflectionのepisodic-memory bufferを維持する。
 version: 1.0.0
 phase: 14
 lesson: 03
 tags: [reflexion, episodic-memory, self-healing, verbal-rl, sleep-time]
 ---
 
-Given a task class (repeating kind of agent run — e.g. "refactor a function," "close a support ticket"), maintain an episodic-memory buffer of reflections. Each reflection records a failure mode and the corrective insight in natural language. The buffer is prepended to the next trial of the same task class.
+task class（繰り返されるagent runの種類。例: 「functionをrefactorする」「support ticketをcloseする」）が与えられたら、reflectionのepisodic-memory bufferを維持する。各reflectionはfailure modeとcorrective insightを自然言語で記録する。bufferは同じtask classの次のtrialのprompt前半に付けられる。
 
-Produce:
+生成するもの:
 
-1. Reflection capture. After a trial ends with an evaluator score below threshold, emit a one-line reflection in the shape "I failed to do X because Y; next time, Z." Discard reflections on external failures (network, upstream 500s) unless they are reproducible.
-2. TTL and dedup. Reflections expire after N trials by default (10 suggested). Exact duplicates collapse. Near-duplicates (>0.9 cosine on a small embedding model, or shared substring >= 80%) keep only the most recent.
-3. Scope policy. Three scopes: task-class (per task name), user (across tasks for same user), agent (across all users). Default is task-class. Escalate to user scope only if the reflection refers to user-specific preferences; never escalate to agent scope automatically.
-4. Compaction. When the buffer exceeds the budget, run sleep-time compaction: cluster near-duplicates, summarize, merge. Compaction runs off the hot path — do not delay the primary agent's response.
-5. Prompt integration. Emit a single block titled "What I learned from prior trials" with a bulleted list. Cap at 6 items in the prompt; overflow goes to a separate summary item ("... and 4 older reflections about timeouts").
+1. Reflection capture。trialがthreshold未満のevaluator scoreで終わった後、「I failed to do X because Y; next time, Z.」という形の1行reflectionを出す。external failure（network、upstream 500s）については、再現可能でない限りreflectionを捨てる。
+2. TTL and dedup。reflectionsはdefaultでN trials後にexpireする（10推奨）。完全重複はまとめる。near-duplicates（small embedding modelでcosine >0.9、またはshared substring >= 80%）は最新だけを残す。
+3. Scope policy。3つのscope: task-class（task nameごと）、user（同一userのtasks across）、agent（全users across）。defaultはtask-class。reflectionがuser-specific preferenceに言及する場合だけuser scopeへescalateし、agent scopeへは自動escalateしない。
+4. Compaction。bufferがbudgetを超えたら、sleep-time compactionを実行する。near-duplicatesをcluster、summarize、mergeする。compactionはhot path外で実行し、primary agentのresponseを遅らせない。
+5. Prompt integration。`What I learned from prior trials`というtitleのsingle blockを、bulleted listで出力する。prompt内では6 itemsにcapし、overflowは別summary item（「... and 4 older reflections about timeouts」）へ送る。
 
-Hard rejects:
+強い却下条件:
 
-- Writing reflections as "be more careful next time." That is not actionable. Re-run the reflector with a prompt that forces a concrete next-time instruction.
-- Expiring reflections based on wall-clock time rather than trial count. TTL should be trial-scoped, not time-scoped, for offline-replayable runs.
-- Storing reflections that reference secrets (API keys, tokens, PII). Reject with a specific "contains secret"-class error before committing to the buffer.
+- reflectionsを「be more careful next time」として書くこと。これはactionableではない。具体的なnext-time instructionを強制するpromptでreflectorを再実行する。
+- wall-clock timeに基づいてreflectionsをexpireすること。TTLはoffline-replayable runsのため、time-scopedではなくtrial-scopedであるべき。
+- secrets（API keys、tokens、PII）に言及するreflectionsを保存すること。bufferへcommitする前に、具体的な`contains secret` class errorで拒否する。
 
-Refusal rules:
+拒否ルール:
 
-- If no evaluator is attached, refuse and recommend Lesson 05 (Self-Refine/CRITIC) — reflection requires a signal, not a gut feeling.
-- If the task class is one-shot (never recurs), refuse; episodic memory does nothing for a task that never repeats.
+- evaluatorがattachedされていない場合は拒否し、レッスン05（Self-Refine/CRITIC）を推奨する。reflectionにはgut feelingではなくsignalが必要である。
+- task classがone-shot（二度と再発しない）なら拒否する。episodic memoryは繰り返されないtaskには何もしない。
 
-Output: a structured buffer file (JSON with reflection objects: trial id, task class, scope, text, created_at, ttl_remaining), a prompt block for the next trial, and a "stale reflections" report listing entries that will expire soon.
+出力: structured buffer file（reflection objectsを持つJSON: trial id、task class、scope、text、created_at、ttl_remaining）、next trial用prompt block、まもなくexpireするentriesを列挙する「stale reflections」report。
 
-End with a "what to read next" note pointing to Lesson 06 (context compression) if the buffer keeps hitting its cap, or Lesson 08 (Letta sleep-time compute) to move compaction off the hot path.
+最後に、bufferがcapに頻繁に当たる場合はレッスン06（context compression）、compactionをhot path外へ移す場合はレッスン08（Letta sleep-time compute）を指す「次に読むもの」を添える。

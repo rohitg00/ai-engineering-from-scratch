@@ -1,13 +1,8 @@
-"""Streaming corpus downloader with resume, MinHash plus LSH dedup, and a shard manifest.
+"""resume、MinHash + LSH dedup、shard manifest を持つ streaming corpus downloader。
 
-Pulls compressed shards from a list of URLs, streams them through a Zstandard
-decompressor, iterates JSONL documents, fingerprints each document with MinHash,
-buckets the signature with locality-sensitive hashing, drops near-duplicates,
-and writes a per-corpus manifest.
+URL list から compressed shard を取得し、Zstandard で stream 展開し、JSONL document を走査する。各 document に MinHash fingerprint を付け、LSH bucket で near-duplicate を落とし、corpus manifest を書く。
 
-The demo at the bottom builds a small synthetic corpus on disk, compresses it
-with Zstandard, exposes it via a file URL, downloads it through this module,
-and prints the manifest. Run: python3 code/main.py
+末尾の demo は小さな synthetic corpus を disk に作り、Zstandard で圧縮し、file URL としてこの module で download して manifest を表示する。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -31,7 +26,7 @@ try:
     import zstandard as zstd
 except ImportError as exc:
     raise SystemExit(
-        "zstandard is required for this lesson. Install with: pip install zstandard"
+        "この lesson には zstandard が必要です。Install: pip install zstandard"
     ) from exc
 
 
@@ -45,7 +40,7 @@ MERSENNE_PRIME = (1 << 61) - 1
 
 @dataclass
 class ShardPlan:
-    """One row of the planned shard list."""
+    """planned shard list の 1 行。"""
 
     shard_id: str
     url: str
@@ -54,7 +49,7 @@ class ShardPlan:
 
 @dataclass
 class ShardResult:
-    """Per-shard download and dedup outcome."""
+    """shard ごとの download と dedup 結果。"""
 
     shard_id: str
     url: str
@@ -71,7 +66,7 @@ class ShardResult:
 
 @dataclass
 class DocVerdict:
-    """One document's dedup verdict."""
+    """1 document の dedup verdict。"""
 
     shard_id: str
     doc_index: int
@@ -81,7 +76,7 @@ class DocVerdict:
 
 @dataclass
 class CheckpointState:
-    """Resume checkpoint persisted next to the shard."""
+    """shard の横に永続化する resume checkpoint。"""
 
     url: str
     verified_bytes: int
@@ -103,11 +98,10 @@ class CheckpointState:
 
 
 def _hash_seed_pair(seed: int) -> tuple[int, int]:
-    """Derive two 64-bit coefficients (a, b) from a seed.
+    """seed から 2 つの 64-bit coefficient (a, b) を導出する。
 
-    The signature uses universal hashing of the form ((a * x + b) mod p) mod 2^64.
-    Two coefficients are derived deterministically from the seed so the family
-    of hash functions is reproducible across runs and machines.
+    signature は ((a * x + b) mod p) mod 2^64 形式の universal hashing を使う。
+    2 つの coefficient は seed から deterministic に導出されるため、hash family は run と machine をまたいで再現できる。
     """
 
     digest = hashlib.blake2b(seed.to_bytes(8, "little"), digest_size=16).digest()
@@ -117,19 +111,19 @@ def _hash_seed_pair(seed: int) -> tuple[int, int]:
 
 
 class MinHasher:
-    """MinHash signature builder with a fixed family of hash seeds."""
+    """固定 hash seed 群を使う MinHash signature builder。"""
 
     def __init__(self, num_hashes: int = DEFAULT_NUM_HASHES, shingle_width: int = DEFAULT_SHINGLE_WIDTH) -> None:
         if num_hashes <= 0:
-            raise ValueError("num_hashes must be positive")
+            raise ValueError("num_hashes は正でなければなりません")
         if shingle_width <= 0:
-            raise ValueError("shingle_width must be positive")
+            raise ValueError("shingle_width は正でなければなりません")
         self.num_hashes = num_hashes
         self.shingle_width = shingle_width
         self._coefficients: list[tuple[int, int]] = [_hash_seed_pair(i) for i in range(num_hashes)]
 
     def shingles(self, text: str) -> list[str]:
-        """Return overlapping whitespace-token shingles."""
+        """overlap する whitespace-token shingle を返す。"""
 
         tokens = text.split()
         if len(tokens) < self.shingle_width:
@@ -145,7 +139,7 @@ class MinHasher:
         return int.from_bytes(digest, "little")
 
     def signature(self, text: str) -> list[int]:
-        """Return the MinHash signature as a list of num_hashes 64-bit ints."""
+        """num_hashes 個の 64-bit int list として MinHash signature を返す。"""
 
         shingles = self.shingles(text)
         if not shingles:
@@ -163,13 +157,13 @@ class MinHasher:
 
 
 class LSHIndex:
-    """Locality-sensitive hashing index over MinHash signatures.
+    """MinHash signature 上の locality-sensitive hashing index。
 
-    Splits each signature into `bands` bands of `rows = num_hashes / bands` rows.
-    Two signatures collide if they agree on at least one band. The collision
-    probability is 1 - (1 - s^r)^b where s is Jaccard similarity, which gives
-    a sharp threshold near s = (1/b)^(1/r). For (b=32, r=4) the threshold is
-    near s = 0.42; for (b=20, r=5) it is near s = 0.55.
+    各 signature を `rows = num_hashes / bands` 行の `bands` 個に分割する。
+    少なくとも 1 つの band が一致すれば 2 つの signature は collide する。
+    確率は Jaccard similarity を s として 1 - (1 - s^r)^b である。
+    これにより s = (1/b)^(1/r) 付近に sharp threshold ができる。
+    (b=32, r=4) では約 0.42、(b=20, r=5) では約 0.55 である。
     """
 
     def __init__(self, num_hashes: int, bands: int = DEFAULT_BANDS) -> None:
@@ -186,7 +180,7 @@ class LSHIndex:
         return hashlib.blake2b(b"".join(struct.pack("<Q", v) for v in band), digest_size=16).digest()
 
     def query(self, signature: list[int]) -> str | None:
-        """Return the doc id of a near-duplicate keeper or None."""
+        """near-duplicate keeper の doc id、または None を返す。"""
 
         for i in range(self.bands):
             band = signature[i * self.rows : (i + 1) * self.rows]
@@ -204,7 +198,7 @@ class LSHIndex:
             self._buckets[i].setdefault(key, []).append(doc_id)
 
     def jaccard_estimate(self, doc_a: str, doc_b: str) -> float:
-        """Return an unbiased Jaccard estimate between two indexed docs."""
+        """index 済み 2 document 間の unbiased Jaccard estimate を返す。"""
 
         sig_a = self._signatures[doc_a]
         sig_b = self._signatures[doc_b]
@@ -213,7 +207,7 @@ class LSHIndex:
 
 
 class Dedup:
-    """Combine MinHasher and LSHIndex into a streaming dedup."""
+    """MinHasher と LSHIndex を組み合わせた streaming dedup。"""
 
     def __init__(self, hasher: MinHasher, index: LSHIndex) -> None:
         self.hasher = hasher
@@ -235,9 +229,9 @@ class Dedup:
 
 
 class ZstdDocIterator:
-    """Iterate JSONL documents from a Zstandard-compressed byte stream.
+    """Zstandard-compressed byte stream から JSONL document を反復する。
 
-    Wraps the upstream reader in a Zstandard stream reader, then iterates one
+    upstream reader を Zstandard stream reader で包み、1 行ずつ反復する。
     line per document. The decompressor never buffers the whole shard; it
     consumes the upstream incrementally.
     """
@@ -255,9 +249,9 @@ class ZstdDocIterator:
 
 
 class StreamingDownloader:
-    """Stream a remote URL to a local path with Range-resume and checkpointing.
+    """Range-resume と checkpointing 付きで remote URL を local path に stream する。
 
-    On every chunk the verified hash and byte count are advanced and the
+    chunk ごとに verified hash と byte count を進める。 and the
     checkpoint is rewritten atomically. The checkpoint records the sha256
     prefix over the verified bytes, so a corrupted partial cannot be silently
     resumed.
@@ -313,7 +307,7 @@ class StreamingDownloader:
         parsed = urllib.parse.urlparse(plan.url)
         if parsed.scheme not in {"http", "https", "file"}:
             raise ValueError(
-                f"unsupported URL scheme {parsed.scheme!r} for shard {plan.shard_id}"
+                f"未対応の URL scheme {parsed.scheme!r} for shard {plan.shard_id}"
             )
         shard_path, checkpoint_path = self._paths_for(plan.shard_id)
         state = self._read_checkpoint(checkpoint_path)
@@ -409,7 +403,7 @@ class StreamingDownloader:
 
 
 class ShardPlanner:
-    """Turn a list of URLs into a planned shard list."""
+    """URL list を planned shard list に変換する。"""
 
     @staticmethod
     def from_urls(urls: Iterable[str]) -> list[ShardPlan]:
@@ -421,7 +415,7 @@ class ShardPlanner:
 
 
 class ManifestWriter:
-    """Collect shard results into a manifest with its own content hash."""
+    """shard result を集め、自身の content hash を持つ manifest を作る。"""
 
     def __init__(self) -> None:
         self._rows: list[dict[str, object]] = []
@@ -462,7 +456,7 @@ def process_shard(
     dedup: Dedup,
     manifest: ManifestWriter,
 ) -> ShardResult:
-    """Download, decompress, dedup, and account for one shard."""
+    """1 shard を download、decompress、dedup、accounting する。"""
 
     result = downloader.download(plan)
     kept = 0
@@ -482,22 +476,22 @@ def process_shard(
 
 
 def build_demo_corpus(directory: Path) -> list[str]:
-    """Build a tiny synthetic corpus with duplicates and write zst shards.
+    """duplicate を含む小さな synthetic corpus を作り、zst shard を書く。
 
-    Returns the list of file URLs the downloader should pull.
+    downloader が取得する file URL list を返す。
     """
 
     directory.mkdir(parents=True, exist_ok=True)
     base = [
-        "the alignment problem is a story about reward functions and what we miss when we write them",
-        "the alignment problem is a story about reward functions and the things we forget to write down",
-        "transformers replaced recurrent networks because attention scales better with sequence length",
-        "attention scales better with sequence length so transformers replaced recurrent networks",
-        "evaluation harnesses keep training honest by treating the test corpus as a contract",
-        "a contract between training and evaluation is what an eval harness ultimately enforces",
-        "deduplication is upstream of tokenization so duplicates do not pay tokenization cost twice",
-        "the tokenizer is a vocabulary contract between the model and the corpus",
-        "checkpointing the verified bytes before writing the buffer is the only safe resume order",
+        "alignment problem は reward function と、それを書くときに見落とすものについての話である",
+        "alignment problem は reward function と、書き忘れるものについての話である",
+        "attention は sequence length に対してよりよく scale するため transformer は recurrent network を置き換えた",
+        "attention は sequence length に対してよりよく scale するため transformer は recurrent network を置き換えた",
+        "evaluation harness は test corpus を contract として扱い training を正直に保つ",
+        "training と evaluation の contract を eval harness が最終的に強制する",
+        "deduplication は tokenization の upstream にあり duplicate に tokenization cost を 2 回払わせない",
+        "tokenizer は model と corpus の間の vocabulary contract である",
+        "buffer を書く前に verified bytes を checkpoint するのが唯一安全な resume order である",
         "the manifest is the deciding edge between data is downloaded and data is verifiable",
     ]
     shards = [base[:5], base[3:9], base[6:]]

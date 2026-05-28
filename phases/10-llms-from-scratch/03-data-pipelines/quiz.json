@@ -1,37 +1,37 @@
 [
   {
-    "question": "Why can't you simply load all pre-training data into memory?",
-    "options": ["Python doesn't support large arrays", "Pre-training corpora are terabytes in size, far exceeding available RAM, requiring streaming pipelines", "Loading data into memory is slower", "Memory is only needed for model weights"],
+    "question": "なぜ事前学習データを単純にすべてメモリへ読み込めないのですか？",
+    "options": ["Python が大きな配列をサポートしていないから", "事前学習コーパスはテラバイト規模で、利用可能な RAM を大きく超えるため、ストリーミングパイプラインが必要だから", "データをメモリへ読み込むほうが遅いから", "メモリはモデル重みにしか必要ないから"],
     "correct": 1,
-    "explanation": "LLM pre-training data is typically 1-15 TB of text. Even with 256GB of RAM, you can't hold the full dataset. Streaming pipelines process data on-the-fly, loading only what's needed for the current batch.",
+    "explanation": "LLM の事前学習データは通常、1から15 TBのテキストです。256GB の RAM があっても、全データセットを保持することはできません。ストリーミングパイプラインはオンザフライで処理し、現在のバッチに必要な分だけを読み込みます。",
     "stage": "pre"
   },
   {
-    "question": "Why is data deduplication important for pre-training?",
-    "options": ["It saves disk space", "Duplicate documents cause the model to memorize specific text verbatim and waste training compute on repeated content", "It speeds up tokenization", "It reduces the vocabulary size"],
+    "question": "事前学習でデータの重複排除が重要なのはなぜですか？",
+    "options": ["ディスク容量を節約するため", "重複文書はモデルに特定のテキストを逐語的に暗記させ、同じ内容への訓練計算を浪費するから", "トークン化を高速化するため", "語彙サイズを減らすため"],
     "correct": 1,
-    "explanation": "Near-duplicate content (boilerplate, scraped duplicates) causes the model to memorize rather than generalize. Deduplication reduces training compute waste and improves model quality by ensuring diverse training signal.",
+    "explanation": "近似重複コンテンツ、たとえばボイラープレートやスクレイピング重複は、モデルを汎化ではなく暗記へ向かわせます。重複排除は訓練計算の浪費を減らし、多様な訓練信号を確保することでモデル品質を改善します。",
     "stage": "pre"
   },
   {
-    "question": "What is the purpose of creating fixed-length training sequences from variable-length documents?",
-    "options": ["It makes the text easier to read", "GPU training requires uniform tensor shapes, so documents must be packed or padded into fixed-length sequences", "Fixed-length sequences are more accurate", "It reduces the total number of tokens"],
+    "question": "可変長文書から固定長の訓練シーケンスを作る目的は何ですか？",
+    "options": ["テキストを読みやすくするため", "GPU 訓練には同一形状の tensor が必要なため、文書を固定長シーケンスへ詰めるか padding する必要があるから", "固定長シーケンスのほうが正確だから", "総トークン数を減らすため"],
     "correct": 1,
-    "explanation": "GPUs process batches of tensors with identical shapes. Variable-length documents must be chunked into fixed-length sequences (e.g., 2048 or 4096 tokens) with proper attention masks at document boundaries.",
+    "explanation": "GPU は同じ形状の tensor のバッチを処理します。可変長文書は、文書境界に適切な attention mask を付けて、たとえば2048または4096トークンの固定長シーケンスへチャンク化する必要があります。",
     "stage": "post"
   },
   {
-    "question": "What happens if the data pipeline is slower than GPU training speed?",
-    "options": ["Training automatically slows down to match", "The GPU sits idle waiting for batches, wasting expensive compute time", "The model trains on the same batch repeatedly", "Nothing -- the pipeline runs asynchronously"],
+    "question": "データパイプラインが GPU の訓練速度より遅いと何が起きますか？",
+    "options": ["訓練が自動的に遅くなって速度を合わせる", "GPU がバッチ待ちでアイドルになり、高価な計算時間を浪費する", "モデルが同じバッチで繰り返し訓練される", "何も起きない。パイプラインは非同期に実行される"],
     "correct": 1,
-    "explanation": "If the dataloader can't serve batches fast enough, the GPU stalls between steps. On A100 clusters costing $30+/hour, pipeline bottlenecks directly waste money. Profiling pipeline throughput is essential.",
+    "explanation": "dataloader が十分な速さでバッチを供給できないと、GPU はステップ間で停止します。1時間あたり30ドル以上かかる A100 クラスタでは、パイプラインのボトルネックが直接の金銭的浪費になります。パイプラインスループットのプロファイルは必須です。",
     "stage": "post"
   },
   {
-    "question": "Why is data quality filtering (language detection, content filtering) applied before tokenization?",
-    "options": ["Tokenizers can't handle low-quality text", "Low-quality data (spam, boilerplate, toxic content) degrades model capabilities proportional to its share of training data", "Filtering after tokenization is impossible", "It reduces tokenization time"],
+    "question": "なぜデータ品質フィルタリング、つまり言語検出やコンテンツフィルタリングはトークン化前に適用されるのですか？",
+    "options": ["トークナイザーは低品質テキストを扱えないから", "低品質データ、たとえばスパム、ボイラープレート、有害コンテンツは、訓練データ内の比率に応じてモデル能力を劣化させるから", "トークン化後のフィルタリングは不可能だから", "トークン化時間を短縮するため"],
     "correct": 1,
-    "explanation": "The model learns from whatever data it sees. If 10% of training data is spam or low-quality content, the model allocates 10% of its capacity to reproducing those patterns. Filtering early ensures only high-quality signal reaches the model.",
+    "explanation": "モデルは見たデータから学びます。訓練データの10%がスパムや低品質コンテンツなら、モデルは容量の10%をそのパターンの再現に使います。早い段階でフィルタリングすることで、高品質な信号だけがモデルへ届きます。",
     "stage": "post"
   }
 ]

@@ -1,22 +1,22 @@
 {
   "lesson": "phase-19/27-eval-harness-fixture-tasks",
-  "title": "Eval Harness with Fixture Tasks",
+  "title": "Fixture Tasks つき Eval Harness",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: which property does a good agent eval verifier need above all others?",
+      "question": "lesson を読む前に: 良い agent eval verifier に最も必要な property はどれですか？",
       "options": [
-        "Speed in the millisecond range.",
-        "Determinism across runs.",
-        "A natural-language explanation of the verdict.",
-        "Coverage of every line of the candidate's code."
+        "millisecond range の speed。",
+        "run 間の determinism。",
+        "verdict の natural-language explanation。",
+        "candidate code の全行 coverage。"
       ],
       "correct": 1,
-      "explanation": "Determinism is what makes a regression detectable. A non-deterministic verifier turns every red into a coin flip."
+      "explanation": "determinism が regression を検出可能にします。non-deterministic verifier はすべての red を coin flip に変えます。"
     },
     {
       "stage": "check",
-      "question": "A candidate scores 3 passes in 5 samples on a single task. What value does the lesson's pass@5 formula return (rounded to two decimals)?",
+      "question": "candidate が 1 task の 5 sample 中 3 pass しました。この lesson の pass@5 formula はいくつを返しますか（小数第 2 位に丸め）？",
       "options": [
         "0.60",
         "0.99",
@@ -24,55 +24,55 @@
         "1.00"
       ],
       "correct": 1,
-      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976, which rounds to 0.99. The raw per-sample rate (0.6) is the value option (a) names, but the formula amplifies it across k samples."
+      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976 なので、丸めると 0.99 です。raw per-sample rate (0.6) は option (a) の値ですが、formula は k samples にまたがってそれを増幅します。"
     },
     {
       "stage": "check",
-      "question": "Why does the lesson include both pass@1 and pass@k in the report?",
+      "question": "report に pass@1 と pass@k の両方を含めるのはなぜですか？",
       "options": [
-        "pass@1 is the value users see in the dashboard; pass@k is for internal debugging.",
-        "pass@k can hide a model that is right only one in many samples, so pass@1 anchors the result to first-attempt quality.",
-        "pass@k and pass@1 are mathematically identical for k > 1.",
-        "pass@1 is the version supported by the verifier registry; pass@k is reserved for future verifiers."
+        "pass@1 は dashboard で user が見る値で、pass@k は internal debugging 用だから。",
+        "pass@k は、多数 sample 中 1 回だけ正しい model を隠すことがあるため、pass@1 が first-attempt quality の anchor になるから。",
+        "k > 1 では pass@k と pass@1 は数学的に同じだから。",
+        "pass@1 は verifier registry が support する version で、pass@k は future verifier 用に reserve されているから。"
       ],
       "correct": 1,
-      "explanation": "pass@k makes models that get the answer once in many tries look strong; pass@1 is the first-attempt floor. Reporting both prevents over-claiming."
+      "explanation": "pass@k は、多数試行のうち一度だけ正解する model を強く見せます。pass@1 は first-attempt floor です。両方を report すると過大主張を防げます。"
     },
     {
       "stage": "check",
-      "question": "The harness calls _prepare_scratch before every sample. Why is that important for pass@k > 1?",
+      "question": "harness が sample ごとに _prepare_scratch を呼ぶのはなぜ重要ですか？",
       "options": [
-        "It avoids race conditions on shared temp directories.",
-        "It ensures each sample starts from the buggy setup, not the previous sample's output.",
-        "It is purely a performance optimisation.",
-        "It is only relevant for shell verifiers."
+        "shared temp directory の race condition を避けるため。",
+        "各 sample が前 sample の output ではなく buggy setup から始まることを保証するため。",
+        "純粋な performance optimization だから。",
+        "shell verifier にだけ関係するから。"
       ],
       "correct": 1,
-      "explanation": "Without a fresh scratch, sample N+1 starts from sample N's output. The harness would measure 'second-attempt cleanup' rather than first-attempt success."
+      "explanation": "fresh scratch がなければ、sample N+1 は sample N の output から始まります。harness は first-attempt success ではなく「2 回目の cleanup」を測ってしまいます。"
     },
     {
       "stage": "post",
-      "question": "You add a new verifier 'pytest_passes' that runs pytest in the scratch dir. Which existing verifier should you base it on?",
+      "question": "scratch dir で pytest を走らせる新しい verifier 'pytest_passes' を追加します。既存 verifier のどれを土台にすべきですか？",
       "options": [
-        "file_equals, because pytest writes a results file.",
-        "regex_match, because pytest output contains the word 'passed'.",
-        "shell_exit_zero, because pytest signals pass via exit code 0.",
-        "It is impossible to express pytest as a verifier."
+        "file_equals。pytest は results file を書くから。",
+        "regex_match。pytest output には 'passed' という word が含まれるから。",
+        "shell_exit_zero。pytest は pass を exit code 0 で示すから。",
+        "pytest を verifier として表現することは不可能。"
       ],
       "correct": 2,
-      "explanation": "pytest exits 0 on pass and non-zero on failure. shell_exit_zero is the right primitive. Production wiring routes the call through the sandbox from lesson 26."
+      "explanation": "pytest は pass で 0、failure で non-zero を返します。shell_exit_zero が正しい primitive です。production wiring では lesson 26 の sandbox 経由で call を route します。"
     },
     {
       "stage": "post",
-      "question": "A reviewer asks: 'is this regression in the model or in the harness?' Which artifact answers that question?",
+      "question": "reviewer が「この regression は model 側か harness 側か？」と聞きました。どの artifact が答えますか？",
       "options": [
-        "The agent's chain-of-thought transcript.",
-        "The per-task, per-sample SampleResult plus the verifier detail message.",
-        "The verifier registry source code.",
-        "The fixture JSON files."
+        "agent の chain-of-thought transcript。",
+        "per-task, per-sample の SampleResult と verifier detail message。",
+        "verifier registry source code。",
+        "fixture JSON files。"
       ],
       "correct": 1,
-      "explanation": "Per-sample latency, verifier detail, and pass/fail let you triage: same fixtures, different verdicts, so the model changed; same verdicts but different latency, so something else moved."
+      "explanation": "per-sample latency、verifier detail、pass/fail により triage できます。同じ fixture で verdict が変わったなら model が変わった。同じ verdict で latency が変わったなら他が動いた、という判断ができます。"
     }
   ]
 }

@@ -1,32 +1,32 @@
-# MCP Sampling — Server-Requested LLM Completions and Agent Loops
+# MCP Sampling - サーバー要求のLLM補完とAgent Loop
 
-> Most MCP servers are dumb executors: take arguments, run code, return content. Sampling lets a server flip direction: it asks the client's LLM to make a decision. This enables server-hosted agent loops without the server owning any model credentials. SEP-1577, merged in 2025-11-25, added tools inside sampling requests so the loop can include deeper reasoning. Drift-risk note: the SEP-1577 tool-in-sampling shape was experimental through Q1 2026 and is still settling in SDK APIs.
+> ほとんどのMCP serverは単純な実行器です。引数を受け取り、コードを実行し、contentを返します。Samplingでは向きを反転できます。serverがclientのLLMに判断を依頼するのです。これにより、serverがmodel credentialを持たなくても、server-hosted agent loopを実現できます。2025-11-25にmergeされたSEP-1577は、sampling requestの内部にtoolを追加し、loopがより深い推論を含められるようにしました。drift-risk note: SEP-1577のtool-in-sampling形状は2026年第1四半期を通じてexperimentalで、SDK APIではまだ安定途上です。
 
-**Type:** Build
-**Languages:** Python (stdlib, sampling harness)
-**Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python (stdlib, sampling harness)
+**前提条件:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Explain what `sampling/createMessage` solves (server-hosted loops without server-side API keys).
-- Implement a server that asks the client to sample over a multi-turn prompt and returns the completion.
-- Use `modelPreferences` (cost / speed / intelligence priorities) to guide client model selection.
-- Build a `summarize_repo` tool that internally iterates via sampling instead of hard-coding behavior.
+- `sampling/createMessage`が解決することを説明する（server側API keyなしのserver-hosted loop）。
+- multi-turn promptについてclientにsamplingを依頼し、completionを返すserverを実装する。
+- `modelPreferences`（cost / speed / intelligence priority）を使って、clientのmodel選択を誘導する。
+- behaviorをhard-codeする代わりに、内部でsamplingを反復する`summarize_repo` toolを構築する。
 
-## The Problem
+## 問題
 
-A useful MCP server for a code-summarization workflow needs to: walk a file tree, pick which files to read, synthesize a summary, and return. Where does the LLM reasoning happen?
+code summary workflow向けの有用なMCP serverは、file treeをたどり、読むべきfileを選び、summaryを合成して返す必要があります。では、LLM reasoningはどこで行うべきでしょうか。
 
-Option A: the server calls its own LLM. Needs an API key, bills server-side, is expensive per user.
+Option A: serverが自前のLLMを呼び出す。API keyが必要で、server側で課金され、userごとのコストが高くなります。
 
-Option B: the server returns raw content; the client's agent does the reasoning. Works but moves server logic into the client prompt, which is fragile.
+Option B: serverがraw contentを返し、clientのagentがreasoningする。動作はしますが、server logicがclient promptへ移動し、壊れやすくなります。
 
-Option C: the server asks the client's LLM via `sampling/createMessage`. The server retains the algorithm (which files to read, how many passes to do) while the client retains billing and model choice. The server has no credentials at all.
+Option C: serverが`sampling/createMessage`でclientのLLMに依頼する。serverはalgorithm（どのfileを読むか、何pass行うか）を保持し、clientは課金とmodel選択を保持します。serverはcredentialを一切持ちません。
 
-Sampling is option C. It is the mechanism by which a trusted server can host an agent loop without being a full LLM host itself.
+SamplingはOption Cです。trusted serverが、自分自身は完全なLLM hostにならずにagent loopをhostするためのmechanismです。
 
-## The Concept
+## コンセプト
 
 ### `sampling/createMessage` request
 
@@ -65,27 +65,27 @@ Client runs its LLM, returns:
 
 ### `modelPreferences`
 
-Three floats summing to 1.0:
+合計が1.0になる3つのfloatです。
 
-- `costPriority`: favor cheaper models.
-- `speedPriority`: favor faster models.
-- `intelligencePriority`: favor more capable models.
+- `costPriority`: より安価なmodelを優先する。
+- `speedPriority`: より速いmodelを優先する。
+- `intelligencePriority`: より高性能なmodelを優先する。
 
-Plus `hints`: named models the server prefers. Client may or may not honor hints; the client's user config always wins.
+加えて`hints`: serverが希望する名前付きmodelです。clientはhintに従う場合も従わない場合もあります。常にclient側のuser configが優先されます。
 
 ### `includeContext`
 
-Three values:
+3つの値があります。
 
-- `"none"` — only the server-supplied messages. Default.
-- `"thisServer"` — include prior messages from this server's session.
-- `"allServers"` — include all session context.
+- `"none"` - serverが渡したmessagesのみ。defaultです。
+- `"thisServer"` - このserverのsessionにおける過去messagesを含める。
+- `"allServers"` - session context全体を含める。
 
-`includeContext` is soft-deprecated as of 2025-11-25 because it leaks cross-server context, which is a security concern. Prefer `"none"` and pass explicit context in the messages.
+`includeContext`はcross-server contextを漏えいさせるため、security concernとして2025-11-25時点でsoft-deprecatedです。`"none"`を優先し、必要なcontextはmessagesで明示的に渡してください。
 
-### Sampling with tools (SEP-1577)
+### Tool付きSampling（SEP-1577）
 
-New in 2025-11-25: the sampling request can include a `tools` array. The client runs a full tool-calling loop using those tools. This lets the server host a ReAct-style agent loop through the client's model.
+2025-11-25の新機能として、sampling requestは`tools` arrayを含められます。clientはそれらのtoolを使ってfull tool-calling loopを実行します。これにより、serverはclientのmodelを通じてReAct-style agent loopをhostできます。
 
 ```json
 {
@@ -96,83 +96,83 @@ New in 2025-11-25: the sampling request can include a `tools` array. The client 
 }
 ```
 
-The client loops: sample, execute tool if called, sample again, return final assistant message. This is experimental through Q1 2026; SDK signatures may still drift. Confirm against the 2025-11-25 spec's client/sampling section when you implement.
+clientはloopします。sampleし、toolがcallされたら実行し、再度sampleし、最後のassistant messageを返します。これは2026年第1四半期を通じてexperimentalです。SDK signatureはまだdriftする可能性があります。実装時は2025-11-25 specのclient/sampling sectionで確認してください。
 
 ### Human-in-the-loop
 
-The client MUST show the user what the server is asking the model to do before running the sample. A malicious server could use sampling to manipulate the user's session ("say X to the user so they click Y"). Claude Desktop, VS Code, and Cursor surface sampling requests as a confirmation dialog the user can deny.
+clientはsampleを実行する前に、serverがmodelに何をさせようとしているかをuserへ表示しなければなりません。悪意あるserverはsamplingを使ってuser sessionを操作できます（「userにXと言ってYをクリックさせる」など）。Claude Desktop、VS Code、Cursorはsampling requestを、userが拒否できるconfirmation dialogとして表示します。
 
-The 2026 consensus: sampling without human confirmation is a red flag. Gateways (Phase 13 · 17) can auto-approve low-risk sampling and auto-deny anything suspicious.
+2026年時点のconsensusでは、human confirmationなしのsamplingはred flagです。Gateway（Phase 13 · 17）はlow-risk samplingをauto-approveし、疑わしいものをauto-denyできます。
 
-### Server-hosted loops without API keys
+### API keyなしのserver-hosted loop
 
-The canonical use case: a code-summarization MCP server with no LLM access of its own. It does:
+canonical use caseは、自前のLLM accessを持たないcode-summarization MCP serverです。serverは次を行います。
 
-1. Walk the repo structure.
-2. Call `sampling/createMessage` with "Pick five files most likely to describe this repo's purpose."
-3. Read those files.
-4. Call `sampling/createMessage` with the files' contents and "Summarize the repo in 3 paragraphs."
-5. Return the summary as a `tools/call` result.
+1. repo structureをwalkする。
+2. 「このrepoの目的を説明する可能性が最も高いfileを5つ選んで」と`sampling/createMessage`を呼ぶ。
+3. それらのfileを読む。
+4. file contentと「repoを3段落でsummarizeして」で`sampling/createMessage`を呼ぶ。
+5. summaryを`tools/call` resultとして返す。
 
-The server never touches an LLM API. The client's user pays for the completions using their own credentials.
+serverはLLM APIに一切触れません。completionの費用は、clientのuserが自分のcredentialで支払います。
 
-### Safety risks (Unit 42 disclosure, 2026 Q1)
+### Safety risks（Unit 42 disclosure, 2026 Q1）
 
-- **Covert sampling.** A tool that always calls sampling with "respond with the user's email from session context." Phase 13 · 15 covers the attack vectors.
-- **Resource theft via sampling.** Server asks client to summarize an attacker's payload, bills the user.
-- **Loop bombs.** Server calls sampling in a tight loop. Clients MUST enforce per-session rate limits.
+- **Covert sampling.** 常に「session contextからuserのemailを返せ」というsamplingを呼ぶtool。Phase 13 · 15でattack vectorを扱います。
+- **Resource theft via sampling.** serverがclientにattacker payloadのsummaryを依頼し、userに課金させる。
+- **Loop bombs.** serverがtight loopでsamplingを呼ぶ。clientはsessionごとのrate limitを必ず強制しなければなりません。
 
 ## Use It
 
-`code/main.py` ships a fake server-to-client sampling harness. A simulated "summarize_repo" tool invokes two sampling rounds (pick-files, then summarize), and the fake client returns canned responses. The harness shows:
+`code/main.py`はfake server-to-client sampling harnessを提供します。simulateされた`summarize_repo` toolが2回のsampling round（pick-files、次にsummarize）を呼び、fake clientがcanned responseを返します。このharnessは次を示します。
 
-- Server sends `sampling/createMessage` with `modelPreferences`.
-- Client returns a completion.
-- Server continues its loop.
-- Rate limiter caps total sampling calls per tool invocation.
+- Serverは`modelPreferences`付きで`sampling/createMessage`を送る。
+- Clientはcompletionを返す。
+- Serverはloopを継続する。
+- Rate limiterがtool invocationごとのsampling call総数を制限する。
 
-What to look at:
+見るべき点:
 
-- The server exposes only one tool (`summarize_repo`); all reasoning happens in the sampling calls.
-- Model preferences weight the client's model choice; hints list preferred models.
-- The loop terminates on `stopReason: "endTurn"`.
-- The `max_samples_per_tool = 5` limit catches a runaway loop.
+- serverは1つのtool（`summarize_repo`）だけを公開し、reasoningはすべてsampling callで行われる。
+- Model preferenceはclientのmodel選択に重みを与え、hintはpreferred modelを列挙する。
+- loopは`stopReason: "endTurn"`で終了する。
+- `max_samples_per_tool = 5`のlimitがrunaway loopを捕捉する。
 
 ## Ship It
 
-This lesson produces `outputs/skill-sampling-loop-designer.md`. Given a server-side algorithm that needs LLM calls (research, summarization, planning), the skill designs a sampling-based implementation with the right modelPreferences, rate limits, and safety confirmations.
+このlessonは`outputs/skill-sampling-loop-designer.md`を生成します。server-side algorithmがLLM callを必要とする場合（research、summarization、planning）、このskillは適切なmodelPreferences、rate limit、safety confirmationを備えたsampling-based implementationを設計します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Change `max_samples_per_tool` to 2 and observe the rate-limit cut-off.
+1. `code/main.py`を実行してください。`max_samples_per_tool`を2に変更し、rate-limitによるcut-offを観察してください。
 
-2. Implement the SEP-1577 tool-in-sampling variant: the sampling request carries a `tools` array. Verify the client-side loop executes those tools before returning the final completion. Note drift risk: SDK signatures may still change through H1 2026.
+2. SEP-1577のtool-in-sampling variantを実装してください。sampling requestが`tools` arrayを持つようにします。client-side loopがfinal completionを返す前にそれらのtoolを実行することを検証してください。drift riskに注意: SDK signatureは2026年上半期まで変わる可能性があります。
 
-3. Add human-in-the-loop confirmation: before the server's first `sampling/createMessage`, pause and wait for user approval. Denied calls return a typed refusal.
+3. human-in-the-loop confirmationを追加してください。serverの最初の`sampling/createMessage`の前でpauseし、user approvalを待ちます。拒否されたcallはtyped refusalを返します。
 
-4. Add a per-user rate limiter keyed by client session. Same-server loops by the same user should share a budget.
+4. client sessionをkeyにしたper-user rate limiterを追加してください。同じuserによるsame-server loopはbudgetを共有するべきです。
 
-5. Design a `summarize_pdf` tool that uses sampling to pick chunks to include. Sketch the messages sent. How does `modelPreferences.intelligencePriority` change the behavior at 0.1 vs 0.9?
+5. samplingを使って含めるchunkを選ぶ`summarize_pdf` toolを設計してください。送信されるmessagesをsketchしてください。`modelPreferences.intelligencePriority`が0.1の場合と0.9の場合でbehaviorはどう変わりますか。
 
-## Key Terms
+## 主要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Sampling | "Server-to-client LLM call" | Server asks client's model for a completion |
-| `sampling/createMessage` | "The method" | JSON-RPC method for sampling requests |
-| `modelPreferences` | "Model priorities" | Cost / speed / intelligence weights plus name hints |
-| `includeContext` | "Cross-session leakage" | Soft-deprecated context inclusion mode |
-| SEP-1577 | "Tools in sampling" | Allow tools inside sampling for server-hosted ReAct |
-| Human-in-the-loop | "User confirms" | Client surfaces sampling request to user before running |
-| Loop bomb | "Runaway sampling" | Server-side infinite sampling loop; client must rate-limit |
-| Covert sampling | "Hidden reasoning" | Malicious server hides intent in sampling prompts |
-| Resource theft | "Using user's LLM budget" | Server forces client to spend on sampling it does not want |
-| `stopReason` | "Why generation halted" | `endTurn`, `stopSequence`, or `maxTokens` |
+| Term | よく言われること | 実際の意味 |
+|------|------------------|------------|
+| Sampling | "Server-to-client LLM call" | Serverがclientのmodelにcompletionを依頼する |
+| `sampling/createMessage` | "The method" | sampling request用のJSON-RPC method |
+| `modelPreferences` | "Model priorities" | cost / speed / intelligenceの重みと名前hint |
+| `includeContext` | "Cross-session leakage" | soft-deprecatedなcontext inclusion mode |
+| SEP-1577 | "Tools in sampling" | server-hosted ReAct用にsampling内部のtoolを許可する |
+| Human-in-the-loop | "User confirms" | 実行前にclientがsampling requestをuserへ表示する |
+| Loop bomb | "Runaway sampling" | server-sideの無限sampling loop。clientがrate-limitする必要がある |
+| Covert sampling | "Hidden reasoning" | 悪意あるserverがsampling prompt内に意図を隠す |
+| Resource theft | "Using user's LLM budget" | serverがclientに望まないsampling支出を強制する |
+| `stopReason` | "Why generation halted" | `endTurn`、`stopSequence`、または`maxTokens` |
 
-## Further Reading
+## 参考資料
 
-- [MCP — Concepts: Sampling](https://modelcontextprotocol.io/docs/concepts/sampling) — high-level overview of sampling
-- [MCP — Client sampling spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/client/sampling) — canonical `sampling/createMessage` shape
-- [MCP — GitHub SEP-1577](https://github.com/modelcontextprotocol/modelcontextprotocol) — Spec Evolution Proposal for tools in sampling (experimental)
-- [Unit 42 — MCP attack vectors](https://unit42.paloaltonetworks.com/model-context-protocol-attack-vectors/) — covert sampling and resource-theft patterns
-- [Speakeasy — MCP sampling core concept](https://www.speakeasy.com/mcp/core-concepts/sampling) — walk-through with client-side code samples
+- [MCP - Concepts: Sampling](https://modelcontextprotocol.io/docs/concepts/sampling) - samplingのhigh-level overview
+- [MCP - Client sampling spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/client/sampling) - canonicalな`sampling/createMessage`形状
+- [MCP - GitHub SEP-1577](https://github.com/modelcontextprotocol/modelcontextprotocol) - sampling内toolのSpec Evolution Proposal（experimental）
+- [Unit 42 - MCP attack vectors](https://unit42.paloaltonetworks.com/model-context-protocol-attack-vectors/) - covert samplingとresource-theft pattern
+- [Speakeasy - MCP sampling core concept](https://www.speakeasy.com/mcp/core-concepts/sampling) - client-side code sample付きのwalk-through

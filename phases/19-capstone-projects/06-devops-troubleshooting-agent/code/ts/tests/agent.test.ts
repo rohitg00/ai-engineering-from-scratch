@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mockAgent } from "../src/agent.js";
 
 describe("mockAgent", () => {
-  it("ranks OOM hypotheses for memory alerts", () => {
+  it("memory alert に対して OOM hypothesis を rank する", () => {
     const report = mockAgent("OOMKilled payments-api");
     assert.equal(report.topHypotheses.length, 2);
     const ranks = report.topHypotheses.map((h) => h.rank);
@@ -13,7 +13,7 @@ describe("mockAgent", () => {
     assert.match(first.summary, /OOMKilled/);
   });
 
-  it("ranks crashloop hypotheses for restart alerts", () => {
+  it("restart alert に対して crashloop hypothesis を rank する", () => {
     const report = mockAgent("auth-svc CrashLoopBackOff");
     assert.equal(report.topHypotheses.length, 1);
     const first = report.topHypotheses[0];
@@ -21,7 +21,7 @@ describe("mockAgent", () => {
     assert.match(first.summary, /CrashLoopBackOff/);
   });
 
-  it("falls back to a low-signal hypothesis for unknown alerts", () => {
+  it("unknown alert では low-signal hypothesis に fallback する", () => {
     const report = mockAgent("some-unknown-alert");
     assert.equal(report.topHypotheses.length, 1);
     const first = report.topHypotheses[0];
@@ -29,7 +29,7 @@ describe("mockAgent", () => {
     assert.match(first.summary, /telemetry/);
   });
 
-  it("produces a unique incident id per call", () => {
+  it("call ごとに unique incident id を生成する", () => {
     const a = mockAgent("OOMKilled");
     const b = mockAgent("OOMKilled");
     assert.ok(a.incidentId.startsWith("inc-"));

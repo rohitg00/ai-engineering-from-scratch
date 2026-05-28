@@ -1,75 +1,75 @@
 {
   "lesson": "20-shadow-canary-progressive",
-  "title": "Shadow Traffic, Canary Rollout, and Progressive Deployment for LLMs",
+  "title": "LLM の Shadow Traffic、Canary Rollout、Progressive Deployment",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the right way to order shadow, canary, and A/B testing for an LLM rollout?",
+      "question": "LLM rollout で shadow、canary、A/B testing を並べる正しい順序はどれですか？",
       "options": [
-        "Shadow (zero-impact compare), then canary (live traffic progressive with gates), then A/B for distinct alternatives once stability is confirmed",
-        "Skip shadow entirely",
-        "Canary first, then shadow, then A/B",
-        "A/B first, then shadow, then canary"
+        "Shadow（zero-impact compare）、次に canary（gates 付き live traffic progressive）、stability が確認されたら distinct alternatives に A/B",
+        "shadow を完全に skip する",
+        "canary first、then shadow、then A/B",
+        "A/B first、then shadow、then canary"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which set of five metrics does the lesson gate canary progressions on?",
+      "question": "この lesson が canary progression を gate する5つの metrics はどれですか？",
       "options": [
-        "GPU temp, fan speed, queue depth, cost, latency",
-        "Accuracy on offline eval only",
-        "Latency percentiles, cost per request, error/refusal rate, output length distribution, user-feedback rate",
-        "Just throughput"
+        "GPU temp、fan speed、queue depth、cost、latency",
+        "offline eval の accuracy のみ",
+        "Latency percentiles、cost per request、error/refusal rate、output length distribution、user-feedback rate",
+        "throughput のみ"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how much run-to-run accuracy variance does the lesson cite for identical inputs on LLMs?",
+      "question": "この lesson は、同一 input に対する LLM の run-to-run accuracy variance をおおよそどれくらいと述べていますか？",
       "options": [
-        "Under 0.1%",
-        "Identical outputs run-to-run",
-        "Always 50%",
-        "Up to about 15%, due to GPU FP non-associativity plus batch-size variance"
+        "0.1%未満",
+        "run-to-run で完全に同一 output",
+        "常に50%",
+        "GPU FP non-associativity と batch-size variance により最大約15%"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is shadow mode for, in the lesson's framing?",
+      "question": "この lesson の説明では shadow mode は何のためのものですか？",
       "options": [
-        "Replacement for rollback",
-        "A complete quality test that replaces evals",
-        "Final production rollout step",
-        "A smoke test catching cost blow-ups, length regressions, refusal changes, and hard errors — not a quality guarantee"
+        "rollback の replacement",
+        "eval を置き換える完全な quality test",
+        "final production rollout step",
+        "cost blow-ups、length regressions、refusal changes、hard errors を捕まえる smoke test。quality guarantee ではない"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the correct rollback design per the lesson?",
+      "question": "この lesson による正しい rollback design はどれですか？",
       "options": [
-        "Wait for the next release window",
-        "Redeploy with new model digest, taking hours",
-        "Flip a policy flag and revert the pinned model digest in seconds — no redeploy",
-        "Manual SSH to each pod"
+        "次の release window を待つ",
+        "new model digest で redeploy し、数時間かける",
+        "policy flag を flip し、pinned model digest を数秒で戻す。redeploy は不要",
+        "各 pod に手動 SSH する"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is cost listed as a gate alongside latency and quality?",
+      "question": "cost が latency や quality と並んで gate に入っているのはなぜですか？",
       "options": [
-        "A 20% better model can be 3x more expensive per call; shipping that without a cost gate breaks unit economics",
-        "Cost is automatically capped by every provider",
-        "Cost is a vanity metric",
-        "Cost is the same across providers"
+        "20%良い model が call あたり3x 高価なことがあり、cost gate なしで出荷すると unit economics を壊すから",
+        "cost はすべての provider で自動的に cap されるから",
+        "cost は vanity metric だから",
+        "cost は providers 間で同一だから"
       ],
       "correct": 0,
       "explanation": ""

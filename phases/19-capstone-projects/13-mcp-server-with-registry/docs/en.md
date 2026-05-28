@@ -1,28 +1,28 @@
-# Capstone 13 — MCP Server with Registry and Governance
+# キャップストーン 13 — MCP Server with Registry and Governance
 
-> The Model Context Protocol stopped being the future and became the default tool-use spec in 2026. Anthropic, OpenAI, Google, and every major IDE ship MCP clients. Pinterest published its internal ecosystem of MCP servers. The AAIF Registry formalized capability metadata at `.well-known`. AWS ECS published the reference stateless deployment. Block's goose-agent put the same protocol inside a hosted assistant. The 2026 production shape is: StreamableHTTP transport, OAuth 2.1 scopes, OPA policy gating, and a registry that lets platform teams discover, validate, and enable servers. Build that end to end.
+> Model Context Protocol は未来の仕様ではなく、2026 年には default の tool-use spec になった。Anthropic、OpenAI、Google、主要 IDE は MCP client を提供している。Pinterest は内部 MCP server ecosystem を公開した。AAIF Registry は `.well-known` に置く capability metadata を形式化した。AWS ECS は stateless deployment の参照実装を公開した。Block の goose-agent は同じ protocol を hosted assistant の中に入れた。2026 年の本番構成は、StreamableHTTP transport、OAuth 2.1 scopes、OPA policy gating、platform team が server を discover、validate、enable できる registry である。これを end to end で構築する。
 
-**Type:** Capstone
-**Languages:** Python (server, via FastMCP) or TypeScript (@modelcontextprotocol/sdk), Go (registry service)
-**Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and MCP), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
-**Phases exercised:** P11 · P13 · P14 · P17 · P18
-**Time:** 25 hours
+**種類:** Capstone
+**言語:** Python (server, via FastMCP) または TypeScript (@modelcontextprotocol/sdk)、Go (registry service)
+**前提:** Phase 11 (LLM engineering)、Phase 13 (tools and MCP)、Phase 14 (agents)、Phase 17 (infrastructure)、Phase 18 (safety)
+**演習対象フェーズ:** P11 · P13 · P14 · P17 · P18
+**時間:** 25 時間
 
-## Problem
+## 問題
 
-MCP became the tool-use lingua franca. Claude Code, Cursor 3, Amp, OpenCode, Gemini CLI, and every managed agent now consume MCP servers. The production challenges are not authoring servers (FastMCP makes that easy) but deploying them at scale with enterprise requirements: per-tenant OAuth scopes, OPA policy on destructive tools, StreamableHTTP stateless scaling, a registry for discovery, audit logs per tool call. Pinterest's internal MCP ecosystem and the AAIF Registry spec set the 2026 bar.
+MCP は tool-use の lingua franca になった。Claude Code、Cursor 3、Amp、OpenCode、Gemini CLI、そしてすべての managed agent が MCP server を consume する。本番での課題は server authoring ではない (FastMCP が容易にする)。課題は、enterprise requirement を満たして scale deployment することだ: tenant ごとの OAuth scope、destructive tool に対する OPA policy、StreamableHTTP stateless scaling、discovery 用 registry、tool call ごとの audit log。Pinterest の internal MCP ecosystem と AAIF Registry spec が 2026 年の基準を作っている。
 
-You will build an MCP server exposing 10 internal tools (Postgres read-only, S3 listing, Jira, Linear, Datadog, etc.), a registry UI for platform discovery, and a human-approval gate for destructive tools. The load test demonstrates StreamableHTTP horizontal scaling. The audit trail satisfies an enterprise security review.
+あなたは 10 個の internal tool (Postgres read-only、S3 listing、Jira、Linear、Datadog など) を公開する MCP server、platform discovery 用 registry UI、destructive tool の human-approval gate を構築する。Load test では StreamableHTTP の horizontal scaling を示す。Audit trail は enterprise security review を満たす。
 
-## Concept
+## コンセプト
 
-MCP 2026 revision mandates StreamableHTTP as the default transport. Unlike the earlier stdio-and-SSE shape, StreamableHTTP is stateless by default: a single HTTP endpoint accepts JSON-RPC requests, streams responses, and supports long-lived connections for notifications. Stateless means horizontally scalable behind a load balancer.
+MCP 2026 revision は StreamableHTTP を default transport として要求する。以前の stdio-and-SSE 形式と違い、StreamableHTTP は default で stateless である。単一の HTTP endpoint が JSON-RPC request を受け取り、response を stream し、notification 用の long-lived connection を support する。Stateless なので load balancer の背後で horizontal scale できる。
 
-Authorization is OAuth 2.1 with per-tool scopes. A token carries scopes like `jira:read`, `s3:list`, `postgres:query:readonly`. The MCP server checks scopes at tool-call time, not just session start. For high-risk tools, the server rejects any call whose scope is not elevated to `approved:by:human` within the last N minutes — that elevation comes from a Slack review card.
+Authorization は per-tool scope を持つ OAuth 2.1 で行う。Token には `jira:read`、`s3:list`、`postgres:query:readonly` のような scope が入る。MCP server は session start だけではなく tool-call time に scope を検査する。High-risk tool では、直近 N 分以内に `approved:by:human` に elevation されていない scope の call を server が拒否する。この elevation は Slack review card から来る。
 
-The registry is a separate service. Every MCP server exposes a `.well-known/mcp-capabilities` document with its tool manifest, transport URL, auth requirements. The registry polls, validates, and indexes. Platform teams use the registry UI to see what tools are available, what scopes they need, and which teams own them.
+Registry は別 service である。各 MCP server は tool manifest、transport URL、auth requirements を含む `.well-known/mcp-capabilities` document を公開する。Registry は poll、validate、index を行う。Platform team は registry UI で、利用できる tool、必要な scope、owner team を確認する。
 
-## Architecture
+## アーキテクチャ
 
 ```
 MCP client (Claude Code, Cursor 3, ...)
@@ -55,38 +55,38 @@ Postgres    S3 listing  Jira       Linear     Datadog
      UI: search / validate / enable-disable / ownership
 ```
 
-## Stack
+## スタック
 
-- Server framework: FastMCP (Python) or `@modelcontextprotocol/sdk` (TypeScript)
-- Transport: StreamableHTTP over HTTPS (stateless)
-- Auth: OAuth 2.1 with workload identity via SPIFFE / SPIRE
-- Policy: OPA / Rego rules per tool; policy decision service per request
-- Registry: self-hosted, consumes `.well-known/mcp-capabilities` manifests
-- Human approval: Slack interactive message for destructive tools
-- Deployment: AWS ECS Fargate or Fly.io, one server per tenant or shared with tenant scoping
-- Audit: structured JSONL per-tenant bucket with per-call lineage
+- Server framework: FastMCP (Python) または `@modelcontextprotocol/sdk` (TypeScript)
+- Transport: HTTPS 上の StreamableHTTP (stateless)
+- Auth: OAuth 2.1 と SPIFFE / SPIRE による workload identity
+- Policy: tool ごとの OPA / Rego rule。Request ごとに policy decision service を呼ぶ
+- Registry: self-hosted。`.well-known/mcp-capabilities` manifest を consume する
+- Human approval: destructive tool 用 Slack interactive message
+- Deployment: AWS ECS Fargate または Fly.io。Tenant ごとに 1 server、または tenant scoping 付き shared server
+- Audit: per-tenant bucket に structured JSONL、call ごとの lineage 付き
 
-## Build It
+## 実装
 
-1. **Tool surface.** Expose 10 internal tools: Postgres read-only query, S3 list objects, Jira search/fetch, Linear search/fetch, Datadog metric query, PagerDuty on-call lookup, GitHub read-only, Notion search, Slack search, Salesforce read. Each tool has a typed schema and a scope label.
+1. **Tool surface.** 10 個の internal tool を expose する: Postgres read-only query、S3 list objects、Jira search/fetch、Linear search/fetch、Datadog metric query、PagerDuty on-call lookup、GitHub read-only、Notion search、Slack search、Salesforce read。各 tool は typed schema と scope label を持つ。
 
-2. **FastMCP server.** Mount the tools. Configure StreamableHTTP transport. Add a middleware for OAuth token introspection and scope enforcement.
+2. **FastMCP server.** Tool を mount する。StreamableHTTP transport を設定する。OAuth token introspection と scope enforcement 用 middleware を追加する。
 
-3. **OPA policy.** Rego policy per tool: what scopes permit invocation, what PII redaction applies, what payload-size caps apply. Decision service called on every tool call.
+3. **OPA policy.** Tool ごとの Rego policy: どの scope が invocation を許可するか、どの PII redaction を適用するか、payload-size cap は何か。すべての tool call で decision service を呼ぶ。
 
-4. **Registry service.** Separate Go or TS service that polls `.well-known/mcp-capabilities` from registered servers, validates with JSON Schema, and exposes a list / search / validate / enable-disable UI.
+4. **Registry service.** Registered server から `.well-known/mcp-capabilities` を poll し、JSON Schema で validate し、list / search / validate / enable-disable UI を提供する独立した Go または TS service。
 
-5. **Capability manifest.** Each server exposes `.well-known/mcp-capabilities` with: tool list, auth requirements, transport URL, owner team, SLO.
+5. **Capability manifest.** 各 server は `.well-known/mcp-capabilities` を expose する。中身は tool list、auth requirements、transport URL、owner team、SLO。
 
-6. **Destructive tool separation.** Tools that mutate state (Jira create, Linear create, Postgres write) live on a second MCP server with a stricter auth flow: tokens must have a `approved:by:human` scope elevated via Slack card within 15 minutes.
+6. **Destructive tool separation.** State を mutate する tool (Jira create、Linear create、Postgres write) は 2 つ目の MCP server に置き、より厳しい auth flow にする。Token は Slack card 経由で 15 分以内に elevation された `approved:by:human` scope を持つ必要がある。
 
-7. **Audit log.** Append-only JSONL per tenant: `{timestamp, user, tool, args_redacted, response_redacted, outcome}`. PII redaction via Presidio before write.
+7. **Audit log.** Tenant ごとに append-only JSONL: `{timestamp, user, tool, args_redacted, response_redacted, outcome}`。Write 前に Presidio で PII redaction する。
 
-8. **Load test.** 100 concurrent clients on StreamableHTTP. Demonstrate horizontal scaling by adding a second replica; show the load balancer redistributing without session stickiness.
+8. **Load test.** StreamableHTTP 上で 100 concurrent clients。2 つ目の replica を追加して horizontal scaling を示し、session stickiness なしに load balancer が redistributing することを見せる。
 
-9. **Conformance tests.** Run the official MCP conformance suite against both servers. Pass all mandatory sections.
+9. **Conformance tests.** Official MCP conformance suite を両 server に対して実行する。Mandatory section をすべて pass する。
 
-## Use It
+## 使ってみる
 
 ```
 $ curl -H "Authorization: Bearer eyJhbGc..." \
@@ -101,48 +101,48 @@ response:    { "result": { "rows": [[1]] } }
 
 ## Ship It
 
-`outputs/skill-mcp-server.md` describes the deliverable. A production-grade MCP server + registry + audit layer for internal tools with OAuth 2.1 scopes and OPA gating.
+`outputs/skill-mcp-server.md` が提出物を説明する。OAuth 2.1 scope と OPA gating を備えた internal tool 用の production-grade MCP server + registry + audit layer。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
-| 25 | Spec conformance | StreamableHTTP + capability manifest passes MCP conformance tests |
-| 20 | Security | Scope enforcement, OPA coverage across every tool, secret hygiene |
-| 20 | Observability | Per-tool-call audit log with PII redaction |
-| 20 | Scale | 100-client load test horizontal scale demonstration |
+| 25 | Spec conformance | StreamableHTTP + capability manifest が MCP conformance test を pass |
+| 20 | Security | Scope enforcement、全 tool の OPA coverage、secret hygiene |
+| 20 | Observability | PII redaction 付き per-tool-call audit log |
+| 20 | Scale | 100-client load test で horizontal scale を demonstrate |
 | 15 | Registry UX | Discover / validate / enable-disable workflow |
 | **100** | | |
 
-## Exercises
+## 演習
 
-1. Add a new tool (Confluence search). Ship it through the registry validation flow without touching the core server.
+1. 新しい tool (Confluence search) を追加する。Core server に触らず registry validation flow を通して ship する。
 
-2. Write an OPA policy that redacts Postgres query results containing columns named `email`, `ssn`, or `phone`. Exercise with a probe query.
+2. `email`、`ssn`、`phone` という列を含む Postgres query result を redact する OPA policy を書く。Probe query で実行する。
 
-3. Benchmark StreamableHTTP vs stdio on local latency. Report per-call p50/p95.
+3. Local latency で StreamableHTTP と stdio を benchmark する。Per-call p50/p95 を報告する。
 
-4. Implement per-tenant quota: maximum N calls per minute per tool per tenant. Enforce via a second OPA rule.
+4. Per-tenant quota を実装する: tenant ごと、tool ごと、1 分あたり最大 N calls。2 つ目の OPA rule で enforce する。
 
-5. Run the MCP conformance suite from [mcp-conformance-tests](https://github.com/modelcontextprotocol/conformance) and fix every failure.
+5. [mcp-conformance-tests](https://github.com/modelcontextprotocol/conformance) から MCP conformance suite を実行し、すべての failure を修正する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| StreamableHTTP | "2026 MCP transport" | Stateless HTTP + streaming; replaces SSE + stdio for networked servers |
-| Capability manifest | "Well-known doc" | `.well-known/mcp-capabilities` with tool list, auth, transport URL |
-| OPA / Rego | "Policy engine" | Open Policy Agent for authorizing tool calls against external rules |
-| Scope elevation | "Approved-by-human" | Short-lived scope granted via Slack approval, required for destructive tools |
-| Registry | "Tool discovery" | Service that indexes MCP servers from their capability manifests |
-| Workload identity | "SPIFFE / SPIRE" | Cryptographic service identity for OAuth token issuance |
-| Conformance suite | "Spec tests" | Official MCP test battery for StreamableHTTP + tool manifest correctness |
+| Term | よくある言い方 | 実際の意味 |
+|------|-----------------|------------|
+| StreamableHTTP | "2026 MCP transport" | Stateless HTTP + streaming。Networked server では SSE + stdio を置き換える |
+| Capability manifest | "Well-known doc" | tool list、auth、transport URL を持つ `.well-known/mcp-capabilities` |
+| OPA / Rego | "Policy engine" | External rule に対して tool call を authorize する Open Policy Agent |
+| Scope elevation | "Approved-by-human" | Slack approval で付与される短命 scope。Destructive tool に必要 |
+| Registry | "Tool discovery" | capability manifest から MCP server を index する service |
+| Workload identity | "SPIFFE / SPIRE" | OAuth token 発行用の cryptographic service identity |
+| Conformance suite | "Spec tests" | StreamableHTTP + tool manifest correctness 用の official MCP test battery |
 
-## Further Reading
+## 参考資料
 
-- [Model Context Protocol 2026 Roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — StreamableHTTP, capability metadata, registry
-- [AAIF MCP Registry spec](https://github.com/modelcontextprotocol/registry) — the 2026 registry spec
-- [AWS ECS reference deployment](https://aws.amazon.com/blogs/containers/deploying-model-context-protocol-mcp-servers-on-amazon-ecs/) — reference production deployment
-- [Pinterest internal MCP ecosystem](https://www.infoq.com/news/2026/04/pinterest-mcp-ecosystem/) — the reference internal deployment
-- [Block `goose` MCP usage](https://block.github.io/goose/) — reference agent consumption pattern
+- [Model Context Protocol 2026 Roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — StreamableHTTP、capability metadata、registry
+- [AAIF MCP Registry spec](https://github.com/modelcontextprotocol/registry) — 2026 registry spec
+- [AWS ECS reference deployment](https://aws.amazon.com/blogs/containers/deploying-model-context-protocol-mcp-servers-on-amazon-ecs/) — production deployment の参照実装
+- [Pinterest internal MCP ecosystem](https://www.infoq.com/news/2026/04/pinterest-mcp-ecosystem/) — internal deployment の参照例
+- [Block `goose` MCP usage](https://block.github.io/goose/) — agent consumption pattern の参照例
 - [FastMCP](https://github.com/jlowin/fastmcp) — Python server framework
 - [Open Policy Agent](https://www.openpolicyagent.org/) — policy engine reference
 - [SPIFFE / SPIRE](https://spiffe.io) — workload identity reference

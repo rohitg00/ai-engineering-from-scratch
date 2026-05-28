@@ -1,33 +1,33 @@
 ---
 name: gradient-accumulation
-description: Train at an effective batch larger than device memory by scaling micro-batch losses and stepping the optimizer once per window.
+description: micro-batch loss を scaling し、window ごとに 1 回だけ optimizer step して device memory より大きい effective batch で学習する。
 version: 1.0.0
 phase: 19
 lesson: 46
 tags: [training, batch-size, distributed, scaling]
 ---
 
-## When to use
+## 使う場面
 
-Effective batch is the lever that smooths the gradient and matches the learning rate schedule. When you cannot afford it in a single forward pass, this is the recipe.
+effective batch は gradient を滑らかにし、learning rate schedule と対応させるためのレバーである。1 回の forward pass に入らない場合、この recipe を使う。
 
 ## Recipe
 
-1. Pick `micro_batch` as the largest size that fits in memory and saturates the accelerator.
-2. Pick `effective_batch` from the learning rate schedule.
-3. Set `accum_steps = effective_batch // (micro_batch * world_size)` and assert it divides evenly.
-4. Per micro batch: `loss = criterion(model(x), y) / accum_steps; loss.backward()`.
-5. On non-final micros, enter `model.no_sync()` to skip the gradient all-reduce in DDP.
-6. After the last micro batch, run `optimizer.step()` once. Zero gradients before the next window.
-7. The optimizer state advances once per effective batch; the learning rate schedule ticks once per effective batch.
+1. `micro_batch` は memory に入り accelerator を飽和させる最大値にする。
+2. `effective_batch` を schedule から決める。
+3. `accum_steps = effective_batch // (micro_batch * world_size)` とし、割り切れることを assert する。
+4. micro batch ごとに `loss = criterion(model(x), y) / accum_steps; loss.backward()` を実行する。
+5. 非最終 micro では `model.no_sync()` に入り、DDP の gradient all-reduce を抑える。
+6. 最後の micro batch 後に `optimizer.step()` を 1 回だけ実行する。次 window の前に gradient を zero にする。
+7. optimizer state と learning rate schedule は effective batch ごとに 1 回進む。
 
 ## Logging
 
-Emit a small JSON record per effective step with `samples_per_sec`, `median_step_ms`, `sync_calls`, `accum_steps`, `effective_batch`. Without this the cost trade is invisible.
+`effective_batch` ごとに `samples_per_sec`、`median_step_ms`、`sync_calls`、`accum_steps`、`effective_batch` を JSON に出す。これがないと cost trade-off が見えない。
 
 ## Failure modes
 
-- Forgetting the `/ accum_steps` scaling: gradients explode by N.
-- Stepping mid-window: parameters drift.
-- Sync on every micro batch: network bound for no statistical gain.
-- Mixing this with mixed precision unscaling: scale the unscaled loss only.
+- `/ accum_steps` を忘れる: gradient が N 倍になる。
+- window の途中で step する: parameter が drift する。
+- micro batch ごとに sync する: 統計的な利点なしに network bound になる。
+- mixed precision unscaling と混ぜる: scaling するのは unscaled loss だけ。

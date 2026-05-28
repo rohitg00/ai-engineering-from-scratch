@@ -1,33 +1,33 @@
 # RAG (Retrieval-Augmented Generation)
 
-> Your LLM knows everything up to its training cutoff. It knows nothing about your company's docs, your codebase, or last week's meeting notes. RAG solves this by retrieving relevant documents and stuffing them into the prompt. It's the most deployed pattern in production AI. If you build one thing from this course, build a RAG pipeline.
+> LLMはtraining cutoffまでの一般知識は持っていますが、あなたの会社のdocs、codebase、先週のmeeting notesは知りません。RAGは関連documentsを取得してpromptへ詰めることでこの問題を解きます。production AIで最も広く使われるpatternです。このcourseで1つだけ作るなら、RAG pipelineを作ってください。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 10 (LLMs from Scratch), Phase 11 Lessons 01-05
-**Time:** ~90 minutes
-**Related:** Phase 5 · 23 (Chunking Strategies for RAG) for the six chunking algorithms and when each wins. Phase 5 · 22 (Embedding Models Deep Dive) for picking the embedder. Phase 11 · 07 (Advanced RAG) for hybrid search, reranking, and query transformation.
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 10 (LLMs from Scratch), Phase 11 Lessons 01-05
+**所要時間:** 約90分
+**Related:** Phase 5 · 23 (Chunking Strategies for RAG) は6つのchunking algorithmsと勝ち筋を扱います。Phase 5 · 22 (Embedding Models Deep Dive) はembedder選定を扱います。Phase 11 · 07 (Advanced RAG) はhybrid search、reranking、query transformationを扱います。
 
 ## Learning Objectives
 
-- Build a complete RAG pipeline: document loading, chunking, embedding, vector storage, retrieval, and generation
-- Implement semantic search using a vector database (ChromaDB, FAISS, or Pinecone) with proper indexing
-- Explain why RAG is preferred over fine-tuning for knowledge-grounded applications (cost, freshness, attribution)
-- Evaluate RAG quality using retrieval metrics (precision, recall) and generation metrics (faithfulness, relevance)
+- document loading、chunking、embedding、vector storage、retrieval、generationからなる完全なRAG pipelineを構築する
+- ChromaDB、FAISS、Pineconeなどのvector databaseで適切なindexingを行い、semantic searchを実装する
+- knowledge-grounded applicationsでRAGがfine-tuningより好まれる理由（cost、freshness、attribution）を説明する
+- retrieval metrics（precision、recall）とgeneration metrics（faithfulness、relevance）でRAG品質を評価する
 
-## The Problem
+## 問題
 
-You build a chatbot for your company. A customer asks "What's the refund policy for enterprise plans?" The LLM responds with a generic answer about typical SaaS refund policies. The actual policy, buried in a 200-page internal wiki, says enterprise customers get a 60-day window with pro-rated refunds. The LLM has never seen this document. It cannot know what it was not trained on.
+会社向けchatbotを作ったとします。顧客が「enterprise planのrefund policyは何ですか」と聞きます。LLMは一般的なSaaS refund policyについて答えます。しかし実際のpolicyは200ページのinternal wikiに埋もれていて、enterprise customersは60-day windowとpro-rated refundsを受けられます。LLMはそのdocumentを見ていません。訓練されていないものは知りようがありません。
 
-Fine-tuning is one solution. Take the LLM, train it on your internal docs, and deploy the updated model. This works but has serious problems. Fine-tuning costs thousands of dollars in compute. The model becomes stale the moment a document changes. You have no way to know which source the model drew from. And if the company acquires another product line next month, you fine-tune again.
+fine-tuningは一つの解決策です。LLMをinternal docsでtrainingし、更新modelをdeployします。しかしこれは高価で、documentが変わった瞬間に古くなり、どのsourceから答えたかも追跡しにくくなります。来月別product lineを買収したら、またfine-tuneです。
 
-RAG is the other solution. Leave the model untouched. When a question comes in, search your document store for relevant passages, paste them into the prompt before the question, and let the model answer using those passages as context. The document store can be updated in minutes. You can see exactly which documents were retrieved. The model itself never changes. This is why RAG is the dominant pattern in production: it's cheaper, fresher, more auditable, and works with any LLM.
+RAGはもう一つの解決策です。modelは触りません。質問が来たらdocument storeを検索し、関連passagesをpromptに貼り、modelにそのcontextを使って答えさせます。document storeは数分で更新できます。どのdocumentsがretrievedされたか見えます。model自体は変わりません。これがRAGがproductionで支配的な理由です。安く、新鮮で、監査しやすく、どのLLMでも動きます。
 
 ## The Concept
 
 ### The RAG Pattern
 
-The entire pattern fits in four steps:
+全体は4 stepsです。
 
 ```mermaid
 graph LR
@@ -53,97 +53,83 @@ graph LR
     end
 ```
 
-Query -> Retrieve -> Augment prompt -> Generate. Every RAG system follows this pattern. The differences between production RAG systems are in the details of each step: how you chunk, how you embed, how you search, and how you construct the prompt.
+Query -> Retrieve -> Augment prompt -> Generate。すべてのRAG systemはこのpatternに従います。production RAGの違いは、chunking、embedding、search、prompt constructionの細部にあります。
 
 ### Why RAG Beats Fine-Tuning
 
 | Concern | Fine-tuning | RAG |
 |---------|------------|-----|
-| Cost | $1,000-$100,000+ per training run | $0.01-$0.10 per query (embedding + LLM) |
-| Freshness | Stale until retrained | Updated in minutes by re-indexing docs |
-| Auditability | Cannot trace answer to source | Can show exact retrieved passages |
-| Hallucination | Still hallucinates freely | Grounded in retrieved documents |
-| Data privacy | Training data baked into weights | Documents stay in your vector store |
+| Cost | training runごとに$1,000-$100,000+ | queryごとに$0.01-$0.10（embedding + LLM） |
+| Freshness | retrainまで古い | docsをre-indexすれば数分で更新 |
+| Auditability | answerをsourceへ追跡しにくい | exact retrieved passagesを示せる |
+| Hallucination | 自由にhallucinateし得る | retrieved documentsにgroundedされる |
+| Data privacy | training dataがweightsに焼き込まれる | documentsはvector storeに留まる |
 
-Fine-tuning changes the model's weights permanently. RAG changes the model's context temporarily. For most applications, temporary context is what you want.
+fine-tuningはmodel weightsを永久に変えます。RAGはmodel contextを一時的に変えます。多くのapplicationsでは一時的contextが必要です。
 
-The one case where fine-tuning wins: when you need the model to adopt a specific style, tone, or reasoning pattern that cannot be achieved through prompting alone. For factual knowledge retrieval, RAG wins every time.
+fine-tuningが勝つ場合は、promptingだけでは得られない特定のstyle、tone、reasoning patternをmodelへ採用させたいときです。factual knowledge retrievalではRAGが勝ちます。
 
 ### Embedding Models
 
-An embedding model converts text into a dense vector. Similar texts produce vectors that are close together in this high-dimensional space. "How do I reset my password?" and "I need to change my password" produce nearly identical vectors despite sharing few words. "The cat sat on the mat" produces a very different vector.
-
-Common embedding models (2026 lineup — see Phase 5 · 22 for full analysis):
+embedding modelはtextをdense vectorへ変換します。似た意味のtextは高次元空間で近くなります。「How do I reset my password?」と「I need to change my password」は共有語が少なくても近いvectorsになります。
 
 | Model | Dimensions | Provider | Notes |
 |-------|-----------|----------|-------|
-| text-embedding-3-small | 1536 (Matryoshka) | OpenAI | Best price/performance for most use cases |
-| text-embedding-3-large | 3072 (Matryoshka) | OpenAI | Higher accuracy, truncatable to 256/512/1024 |
-| Gemini Embedding 2 | 3072 (Matryoshka) | Google | Top MTEB retrieval; 8K context |
-| voyage-4 | 1024/2048 (Matryoshka) | Voyage AI | Domain variants (code, finance, law) |
-| Cohere embed-v4 | 1024 (Matryoshka) | Cohere | Strong multilingual, 128K context |
-| BGE-M3 | 1024 (dense + sparse + ColBERT) | BAAI (open-weight) | Three views from one model |
-| Qwen3-Embedding | 4096 (Matryoshka) | Alibaba (open-weight) | Top open-weight retrieval score |
-| all-MiniLM-L6-v2 | 384 | Open-weight (Sentence Transformers) | Prototyping baseline |
+| text-embedding-3-small | 1536 (Matryoshka) | OpenAI | 多くの用途で価格性能が高い |
+| text-embedding-3-large | 3072 (Matryoshka) | OpenAI | 高精度、256/512/1024へtruncate可能 |
+| Gemini Embedding 2 | 3072 (Matryoshka) | Google | MTEB retrieval上位、8K context |
+| voyage-4 | 1024/2048 (Matryoshka) | Voyage AI | code、finance、lawなどdomain variants |
+| Cohere embed-v4 | 1024 (Matryoshka) | Cohere | multilingualに強く、128K context |
+| BGE-M3 | 1024 (dense + sparse + ColBERT) | BAAI (open-weight) | 1 modelから3 views |
+| Qwen3-Embedding | 4096 (Matryoshka) | Alibaba (open-weight) | open-weight retrievalで高スコア |
+| all-MiniLM-L6-v2 | 384 | Open-weight (Sentence Transformers) | prototyping baseline |
 
-For this lesson, we build our own simple embedding using TF-IDF. Not because TF-IDF is what production systems use, but because it makes the concept concrete: text goes in, a vector comes out, similar texts produce similar vectors.
+このlessonではTF-IDFで簡易embeddingを作ります。productionで使うためではなく、textがvectorになり、似たtextが似たvectorになる概念を具体化するためです。
 
 ### Vector Similarity
 
-Given two vectors, how do you measure similarity? Three options:
+2つのvectorsの類似度は主に3通りで測ります。
 
-**Cosine similarity**: the cosine of the angle between two vectors. Ranges from -1 (opposite) to 1 (identical). Ignores magnitude, only cares about direction. This is the default for RAG.
+**Cosine similarity**: 2つのvectorsの角度のcosineです。-1（反対）から1（同一）まで。magnitudeを無視し、directionを見ます。RAGのdefaultです。
 
-```
-cosine_sim(a, b) = dot(a, b) / (||a|| * ||b||)
-```
+**Dot product**: raw inner productです。大きいvectorsほど高scoreになります。magnitudeが意味を持つ場合に有効です。
 
-**Dot product**: the raw inner product. Larger vectors get higher scores. Useful when magnitude carries information (longer documents might be more relevant).
+**L2 (Euclidean) distance**: vector space内の直線距離です。小さいほど似ています。magnitude差に敏感です。
 
-```
-dot(a, b) = sum(a_i * b_i)
-```
-
-**L2 (Euclidean) distance**: straight-line distance in the vector space. Smaller distance = more similar. Sensitive to magnitude differences.
-
-```
-L2(a, b) = sqrt(sum((a_i - b_i)^2))
-```
-
-Cosine similarity is the standard. It handles documents of different lengths gracefully because it normalizes by magnitude. When someone says "vector search," they almost always mean cosine similarity.
+通常「vector search」と言うとcosine similarityを指します。document lengthが違ってもmagnitudeで正規化されるため扱いやすいからです。
 
 ### Chunking Strategies
 
-Documents are too long to embed as single vectors. A 50-page PDF might produce a terrible embedding because it contains dozens of topics. Instead, you split documents into chunks and embed each chunk separately.
+長いdocumentsを1つのvectorにすると、複数topicが混ざった悪いembeddingになります。そこでdocumentsをchunksに分割し、各chunkを個別にembedします。
 
-**Fixed-size chunking**: split every N tokens. Simple and predictable. A 512-token chunk with 50-token overlap means chunk 1 is tokens 0-511, chunk 2 is tokens 462-973, and so on. The overlap ensures you do not split a sentence at an unlucky boundary.
+**Fixed-size chunking**: N tokensごとに分割します。単純で予測可能です。512-token chunkに50-token overlapなら、chunk 1はtokens 0-511、chunk 2は462-973です。
 
-**Semantic chunking**: split at natural boundaries. Paragraphs, sections, or markdown headers. Each chunk is a coherent unit of meaning. More complex to implement but produces better retrieval.
+**Semantic chunking**: paragraphs、sections、markdown headersなど自然な境界で分割します。各chunkがまとまった意味単位になります。
 
-**Recursive chunking**: try to split at the largest boundary first (section headers). If a section is still too large, split at paragraph boundaries. If a paragraph is still too large, split at sentence boundaries. This is the LangChain RecursiveCharacterTextSplitter approach and it works well in practice.
+**Recursive chunking**: まず大きい境界（section headers）で分割し、まだ大きければparagraph、sentenceへ下げていきます。LangChain RecursiveCharacterTextSplitterの考え方です。
 
-Chunk size matters more than people think:
+chunk sizeは重要です。
 
-- Too small (64-128 tokens): each chunk lacks context. "It increased 15% last quarter" means nothing without knowing what "it" refers to.
-- Too large (2048+ tokens): each chunk covers multiple topics, diluting relevance. When you search for revenue data, you get a chunk that's 10% about revenue and 90% about headcount.
-- Sweet spot (256-512 tokens): enough context to be self-contained, focused enough to be relevant.
+- 小さすぎる（64-128 tokens）: 文脈が足りない
+- 大きすぎる（2048+ tokens）: 複数topicが混ざり関連度が薄まる
+- ちょうどよい（256-512 tokens）: self-containedで、かつ焦点が絞られる
 
-Most production RAG systems use 256-512 token chunks with 50-token overlap. Anthropic's RAG guidelines recommend this range.
+多くのproduction RAG systemsは256-512 token chunksと50-token overlapを使います。
 
 ### Vector Databases
 
-Once you have embeddings, you need somewhere to store and search them. Options:
+embeddingsを保存し検索する場所が必要です。
 
 | Database | Type | Best for |
 |----------|------|----------|
-| FAISS | Library (in-process) | Prototyping, small to medium datasets |
-| Chroma | Lightweight DB | Local development, small deployments |
-| Pinecone | Managed service | Production without ops overhead |
-| Weaviate | Open source DB | Self-hosted production |
-| pgvector | Postgres extension | Already using Postgres |
-| Qdrant | Open source DB | High-performance self-hosted |
+| FAISS | Library (in-process) | prototyping、小-中規模datasets |
+| Chroma | Lightweight DB | local development、小規模deployments |
+| Pinecone | Managed service | ops負担なしのproduction |
+| Weaviate | Open source DB | self-hosted production |
+| pgvector | Postgres extension | すでにPostgresを使う場合 |
+| Qdrant | Open source DB | high-performance self-hosted |
 
-For this lesson, we build a simple in-memory vector store. It stores vectors in a list and does brute-force cosine similarity search. This is equivalent to FAISS with a flat index. It scales to maybe 100,000 vectors before getting slow. Production systems use approximate nearest neighbor (ANN) algorithms like HNSW to search millions of vectors in milliseconds.
+このlessonではin-memory vector storeを作ります。vectorsをlistへ保存し、brute-force cosine similarity searchを行います。flat indexのFAISSに相当し、遅くなる前に10万vectors程度まで扱えます。productionではHNSWなどのANN algorithmsでmillions of vectorsをmillisecondsで検索します。
 
 ### The Full Pipeline
 
@@ -165,268 +151,66 @@ graph TD
     S -.->|"same vector space"| VS
 ```
 
-The indexing phase runs once per document (or when documents update). The querying phase runs on every user request. In production, indexing might process millions of documents over hours. Querying must respond in under a second.
+indexing phaseは文書ごとに一度、または文書更新時に走ります。querying phaseはユーザーリクエストごとに走ります。productionではindexingに数時間、queryingには1秒未満が求められます。
 
 ### Real Numbers
 
-Most production RAG systems use these parameters:
+多くのproduction RAG systemsは次の設定を使います。
 
 - **k = 5 to 10** retrieved chunks per query
 - **Chunk size = 256 to 512 tokens** with 50-token overlap
-- **Context budget**: 2,500-5,000 tokens of retrieved content per query
-- **Total prompt**: ~8,000-16,000 tokens (system prompt + retrieved chunks + conversation history + user query)
-- **Embedding dimension**: 384-3072 depending on model
-- **Indexing throughput**: 100-1,000 documents per second with API embeddings
-- **Query latency**: 50-200ms for retrieval, 500-3000ms for generation
+- **Context budget**: queryあたり2,500-5,000 tokensのretrieved content
+- **Total prompt**: ~8,000-16,000 tokens
+- **Embedding dimension**: modelに応じて384-3072
+- **Indexing throughput**: API embeddingsで100-1,000 documents/second
+- **Query latency**: retrieval 50-200ms、generation 500-3000ms
 
-## Build It
+## 実装
 
-### Step 1: Document Chunking
-
-```python
-def chunk_text(text, chunk_size=200, overlap=50):
-    words = text.split()
-    chunks = []
-    start = 0
-    while start < len(words):
-        end = start + chunk_size
-        chunk = " ".join(words[start:end])
-        chunks.append(chunk)
-        start += chunk_size - overlap
-    return chunks
-```
-
-### Step 2: TF-IDF Embeddings
-
-We build a simple embedding function. TF-IDF (Term Frequency-Inverse Document Frequency) is not a neural embedding, but it converts text to vectors in a way that captures word importance. Frequent words in a document get higher TF. Rare words across the corpus get higher IDF. The product gives a vector where important, distinctive words have high values.
-
-```python
-import math
-from collections import Counter
-
-def build_vocabulary(documents):
-    vocab = set()
-    for doc in documents:
-        vocab.update(doc.lower().split())
-    return sorted(vocab)
-
-def compute_tf(text, vocab):
-    words = text.lower().split()
-    count = Counter(words)
-    total = len(words)
-    return [count.get(word, 0) / total for word in vocab]
-
-def compute_idf(documents, vocab):
-    n = len(documents)
-    idf = []
-    for word in vocab:
-        doc_count = sum(1 for doc in documents if word in doc.lower().split())
-        idf.append(math.log((n + 1) / (doc_count + 1)) + 1)
-    return idf
-
-def tfidf_embed(text, vocab, idf):
-    tf = compute_tf(text, vocab)
-    return [t * i for t, i in zip(tf, idf)]
-```
-
-### Step 3: Cosine Similarity Search
-
-```python
-def cosine_similarity(a, b):
-    dot = sum(x * y for x, y in zip(a, b))
-    norm_a = math.sqrt(sum(x * x for x in a))
-    norm_b = math.sqrt(sum(x * x for x in b))
-    if norm_a == 0 or norm_b == 0:
-        return 0.0
-    return dot / (norm_a * norm_b)
-
-def search(query_embedding, stored_embeddings, top_k=5):
-    scores = []
-    for i, emb in enumerate(stored_embeddings):
-        sim = cosine_similarity(query_embedding, emb)
-        scores.append((i, sim))
-    scores.sort(key=lambda x: x[1], reverse=True)
-    return scores[:top_k]
-```
-
-### Step 4: Prompt Construction
-
-This is where the "augmented" in RAG happens. Take the retrieved chunks, format them into a prompt, and ask the LLM to answer based on the provided context.
-
-```python
-def build_rag_prompt(query, retrieved_chunks):
-    context = "\n\n---\n\n".join(
-        f"[Source {i+1}]\n{chunk}"
-        for i, chunk in enumerate(retrieved_chunks)
-    )
-    return f"""Answer the question based ONLY on the following context.
-If the context doesn't contain enough information, say "I don't have enough information to answer that."
-
-Context:
-{context}
-
-Question: {query}
-
-Answer:"""
-```
-
-### Step 5: The Complete RAG Pipeline
-
-```python
-class RAGPipeline:
-    def __init__(self):
-        self.chunks = []
-        self.embeddings = []
-        self.vocab = []
-        self.idf = []
-
-    def index(self, documents):
-        all_chunks = []
-        for doc in documents:
-            all_chunks.extend(chunk_text(doc))
-        self.chunks = all_chunks
-        self.vocab = build_vocabulary(all_chunks)
-        self.idf = compute_idf(all_chunks, self.vocab)
-        self.embeddings = [
-            tfidf_embed(chunk, self.vocab, self.idf)
-            for chunk in all_chunks
-        ]
-
-    def query(self, question, top_k=5):
-        query_emb = tfidf_embed(question, self.vocab, self.idf)
-        results = search(query_emb, self.embeddings, top_k)
-        retrieved = [(self.chunks[i], score) for i, score in results]
-        prompt = build_rag_prompt(
-            question, [chunk for chunk, _ in retrieved]
-        )
-        return prompt, retrieved
-```
-
-### Step 6: Generation (simulated)
-
-In production, this is where you call the LLM API. For this lesson, we simulate generation by extracting the most relevant sentence from the retrieved context.
-
-```python
-def simple_generate(prompt, retrieved_chunks):
-    query_words = set(prompt.lower().split("question:")[-1].split())
-    best_sentence = ""
-    best_score = 0
-    for chunk in retrieved_chunks:
-        for sentence in chunk.split("."):
-            sentence = sentence.strip()
-            if not sentence:
-                continue
-            words = set(sentence.lower().split())
-            overlap = len(query_words & words)
-            if overlap > best_score:
-                best_score = overlap
-                best_sentence = sentence
-    return best_sentence if best_sentence else "I don't have enough information."
-```
+このlessonでは、document chunking、TF-IDF embeddings、cosine similarity search、RAG prompt construction、complete RAG pipeline、simple generationを実装します。実装は `code/main.py` と `code/main.ts` にあります。productionではTF-IDF部分をOpenAI、Anthropic、Chroma、FAISSなどに置き換えるだけで、pipeline構造は同じです。
 
 ## Use It
 
-With a real embedding model and LLM, the code barely changes:
+real embedding modelとLLMを使っても、設計はほとんど変わりません。embedding functionをAPI callへ差し替え、generation functionをchat completionへ差し替え、brute-force searchをvector databaseへ置き換えます。chunking、retrieval、prompt constructionの考え方はmodel vendorに依存しません。
 
-```python
-from openai import OpenAI
-
-client = OpenAI()
-
-def embed(text):
-    response = client.embeddings.create(
-        model="text-embedding-3-small",
-        input=text
-    )
-    return response.data[0].embedding
-
-def generate(prompt):
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0
-    )
-    return response.choices[0].message.content
-```
-
-Or with Anthropic:
-
-```python
-import anthropic
-
-client = anthropic.Anthropic()
-
-def generate(prompt):
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=1024,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response.content[0].text
-```
-
-The pipeline is the same. Swap the embedding function. Swap the generation function. The retrieval logic, chunking, prompt construction -- all identical regardless of which models you use.
-
-For vector storage at scale, replace the brute-force search with a proper vector database:
-
-```python
-import chromadb
-
-client = chromadb.Client()
-collection = client.create_collection("my_docs")
-
-collection.add(
-    documents=chunks,
-    ids=[f"chunk_{i}" for i in range(len(chunks))]
-)
-
-results = collection.query(
-    query_texts=["What is the refund policy?"],
-    n_results=5
-)
-```
-
-Chroma handles the embedding internally (it uses all-MiniLM-L6-v2 by default) and stores the vectors in a local database. Same pattern, different plumbing.
+scaleしたvector storageではChroma、FAISS、Pinecone、Weaviate、pgvector、Qdrantなどを使います。重要なのは、indexingとqueryingで同じembedding spaceを使い、retrieved chunksをsource付きでpromptへ入れることです。
 
 ## Ship It
 
-This lesson produces:
-- `outputs/prompt-rag-architect.md` -- a prompt for designing RAG systems for specific use cases
-- `outputs/skill-rag-pipeline.md` -- a skill that teaches agents how to build and debug RAG pipelines
+このlessonは次を生成します。
+
+- `outputs/prompt-rag-architect.md` -- specific use cases向けにRAG systemsを設計するprompt
+- `outputs/skill-rag-pipeline.md` -- agentsにRAG pipelinesの構築とdebugを教えるskill
 
 ## Exercises
 
-1. Replace the TF-IDF embeddings with a simple bag-of-words approach (binary: 1 if word present, 0 if not). Compare retrieval quality on the sample documents. TF-IDF should outperform because it weights rare words higher.
-
-2. Experiment with chunk sizes: try 50, 100, 200, and 500 words on the same document set. For each size, run the same 5 queries and count how many return a relevant chunk in the top-3. Find the sweet spot where retrieval quality peaks.
-
-3. Add metadata to each chunk (source document name, chunk position). Modify the prompt template to include source attribution so the LLM cites its sources.
-
-4. Implement a simple evaluation: given 10 question-answer pairs, run each question through the RAG pipeline, and measure what percentage of retrieved chunks contain the answer. This is retrieval recall at k.
-
-5. Build a conversation-aware RAG pipeline: maintain a history of the last 3 exchanges and include them in the prompt alongside the retrieved chunks. Test with follow-up questions like "What about enterprise?" after asking about pricing.
+1. TF-IDF embeddingsをsimple bag-of-words approach（wordが存在すれば1、なければ0）に置き換え、sample documentsでretrieval qualityを比較します。
+2. chunk sizes 50、100、200、500 wordsを試し、同じ5 queriesでtop-3にrelevant chunkが入る数を数えます。
+3. 各chunkにmetadata（source document name、chunk position）を追加し、prompt templateでsource attributionを含めます。
+4. 10個のquestion-answer pairsを使い、retrieved chunksにanswerが含まれる割合を測るsimple evaluationを実装します。
+5. last 3 exchangesのhistoryを保持し、retrieved chunksと一緒にpromptへ含めるconversation-aware RAG pipelineを作ります。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| RAG | "AI that reads your docs" | Retrieve relevant documents, paste them into the prompt, and generate an answer grounded in those documents |
-| Embedding | "Convert text to numbers" | A dense vector representation of text where similar meanings produce similar vectors |
-| Vector database | "Search engine for AI" | A data store optimized for storing vectors and finding the nearest neighbors by similarity |
-| Chunking | "Split docs into pieces" | Breaking documents into smaller segments (typically 256-512 tokens) so each can be embedded and retrieved independently |
-| Cosine similarity | "How similar are two vectors" | The cosine of the angle between two vectors; 1 = identical direction, 0 = orthogonal, -1 = opposite |
-| Top-k retrieval | "Get the k best matches" | Return the k most similar chunks to the query from the vector store |
-| Context window | "How much text the LLM can see" | The maximum number of tokens the LLM can process in a single request; retrieved chunks must fit within this |
-| Augmented generation | "Answer using given context" | Generating a response using retrieved documents as context rather than relying solely on trained knowledge |
-| TF-IDF | "Word importance scoring" | Term Frequency times Inverse Document Frequency; weights words by how distinctive they are within a corpus |
-| Indexing | "Preparing docs for search" | The offline process of chunking, embedding, and storing documents so they can be searched at query time |
+| RAG | 「docsを読むAI」 | 関連documentsを取得し、promptへ貼り、documentsにgroundedしたanswerを生成すること |
+| Embedding | 「textをnumbersに変換する」 | 似た意味が似たvectorsになるdense vector表現 |
+| Vector database | 「AI用search engine」 | vectorsを保存し、similarityでnearest neighborsを探すdata store |
+| Chunking | 「docsを分割する」 | documentsを小さなsegmentsに分け、個別にembed/retrieveできるようにすること |
+| Cosine similarity | 「vectorsの類似度」 | 2 vectorsの角度のcosine。1は同一方向、0は直交、-1は反対 |
+| Top-k retrieval | 「k個のbest matchesを取る」 | queryに最も似たk chunksをvector storeから返すこと |
+| Context window | 「LLMが見られるtext量」 | LLMがsingle requestで処理できる最大tokens |
+| Augmented generation | 「与えられたcontextで答える」 | trained knowledgeだけでなくretrieved documentsをcontextとして使って生成すること |
+| TF-IDF | 「word importance scoring」 | Term Frequency x Inverse Document Frequency。corpus内で特徴的なwordsを重くする |
+| Indexing | 「docsをsearch用に準備する」 | chunking、embedding、storingを行うoffline process |
 
-## Further Reading
+## 参考文献
 
-- Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (2020) -- the original RAG paper from Facebook AI Research that formalized the retrieve-then-generate pattern
-- Anthropic's RAG documentation (docs.anthropic.com) -- practical guidelines for chunk sizes, prompt construction, and evaluation
-- Pinecone Learning Center, "What is RAG?" -- clear visual explanations of the RAG pipeline with production considerations
-- Sentence-BERT: Reimers & Gurevych (2019) -- the paper behind the all-MiniLM embedding models, showing how to train bi-encoders for semantic similarity
-- [Karpukhin et al., "Dense Passage Retrieval for Open-Domain Question Answering" (EMNLP 2020)](https://arxiv.org/abs/2004.04906) -- the DPR paper that proved dense bi-encoder retrieval beats BM25 on open-domain QA and set the pattern for modern RAG retrievers.
-- [LlamaIndex High-Level Concepts](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html) -- the main concepts to know when building RAG pipelines: data loaders, node parsers, indices, retrievers, response synthesizers.
-- [LangChain RAG tutorial](https://python.langchain.com/docs/tutorials/rag/) -- the opposite-flavor orchestrator; chain-of-runnables view of the same retrieve-then-generate pattern.
+- Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (2020) -- retrieve-then-generate patternを形式化したoriginal RAG paper
+- Anthropic's RAG documentation -- chunk sizes、prompt construction、evaluationの実践指針
+- Pinecone Learning Center, "What is RAG?" -- production considerationsを含む視覚的説明
+- Sentence-BERT: Reimers & Gurevych (2019) -- semantic similarity向けbi-encodersの基礎
+- [Karpukhin et al., "Dense Passage Retrieval for Open-Domain Question Answering" (EMNLP 2020)](https://arxiv.org/abs/2004.04906) -- dense bi-encoder retrievalがBM25を上回ることを示したDPR paper
+- [LlamaIndex High-Level Concepts](https://docs.llamaindex.ai/en/stable/getting_started/concepts.html) -- RAG pipelinesの主要概念
+- [LangChain RAG tutorial](https://python.langchain.com/docs/tutorials/rag/) -- retrieve-then-generate patternのchain-of-runnables版

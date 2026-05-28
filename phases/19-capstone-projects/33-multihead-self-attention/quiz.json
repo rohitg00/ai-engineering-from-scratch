@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does an efficient self-attention block use a single linear layer that outputs 3*D features?",
+      "question": "効率的な self-attention block が 3*D features を出す1つの linear layer を使う理由は何ですか?",
       "options": [
-        "It enforces weight sharing between Q, K, and V",
-        "It is mathematically equivalent to three Linear(D, D) layers and runs as one matmul",
-        "It avoids the need for a causal mask",
-        "It reduces the model parameter count"
+        "Q、K、V の weight sharing を強制するため",
+        "3つの Linear(D, D) と数学的に同じで、1回の matmul として実行できるため",
+        "causal mask を不要にするため",
+        "model parameter count を減らすため"
       ],
       "correct": 1,
-      "explanation": "Stacking three (D, D) projection matrices into one (3D, D) matrix produces the same outputs, but the forward pass is a single accelerator-friendly matmul."
+      "explanation": "3つの (D,D) projection matrix を1つの (3D,D) matrix に積むと同じ出力になり、forward pass は accelerator に向いた1回の matmul になります。"
     },
     {
       "stage": "check",
-      "question": "What is the relationship between d_model, n_heads, and d_head?",
+      "question": "d_model、n_heads、d_head の関係はどれですか?",
       "options": [
         "d_head = d_model * n_heads",
         "d_head = d_model + n_heads",
-        "d_head = d_model // n_heads and d_model must be divisible by n_heads",
-        "d_head is independent of d_model"
+        "d_head = d_model // n_heads で、d_model は n_heads で割り切れる必要がある",
+        "d_head は d_model と独立"
       ],
       "correct": 2,
-      "explanation": "The block splits d_model evenly across heads. The constraint d_model % n_heads == 0 is enforced at construction."
+      "explanation": "block は d_model を head 間で均等に分割します。d_model % n_heads == 0 が構築時に強制されます。"
     },
     {
       "stage": "check",
-      "question": "What value goes into the scaling factor of scaled dot-product attention?",
+      "question": "scaled dot-product attention の scaling factor には何が入りますか?",
       "options": [
         "sqrt(d_model)",
         "sqrt(d_head)",
@@ -36,43 +36,43 @@
         "sqrt(seq_len)"
       ],
       "correct": 1,
-      "explanation": "Scores are divided by sqrt(d_head), the head dimension that the matmul contracts. This keeps the variance of the scores bounded as d_head grows."
+      "explanation": "scores は matmul が縮約する head dimension である sqrt(d_head) で割ります。"
     },
     {
       "stage": "check",
-      "question": "How does the causal mask enforce that position t cannot attend to position t+1?",
+      "question": "causal mask は position t が t+1 に attend できないことをどう保証しますか?",
       "options": [
-        "By multiplying the keys at future positions by zero",
-        "By setting score entries above the diagonal to negative infinity before softmax",
-        "By removing future tokens from the input",
-        "By using a different attention head for the future"
+        "未来位置の keys に0を掛ける",
+        "softmax 前に対角より上の score entries を negative infinity にする",
+        "input から未来 token を取り除く",
+        "未来用に別の attention head を使う"
       ],
       "correct": 1,
-      "explanation": "Setting future entries to -inf forces softmax to give them weight zero. Past and present positions retain a valid weight distribution."
+      "explanation": "未来 entries を -inf にすると softmax 後の重みが0になります。"
     },
     {
       "stage": "post",
-      "question": "Why does the block end with a Linear(D, D) output projection after merging heads?",
+      "question": "head を merge した後に Linear(D, D) output projection で終わる理由は何ですか?",
       "options": [
-        "To allow the model to mix information across heads",
-        "To match the model's vocabulary size",
-        "To normalize the activations to mean zero",
-        "It is required for autograd to track gradients"
+        "head 間の情報を混ぜられるようにするため",
+        "model の vocabulary size に合わせるため",
+        "activation を平均0に正規化するため",
+        "autograd が gradient を追跡するために必須だから"
       ],
       "correct": 0,
-      "explanation": "Without the output projection, head outputs would only ever combine in later layers. The projection gives the block one place to mix heads in the same step."
+      "explanation": "output projection がないと head 出力は後続層でしか混ざりません。projection は同じ step 内で head を混合する場所です。"
     },
     {
       "stage": "post",
-      "question": "What does an attention-weight matrix of shape (B, H, T, T) tell you?",
+      "question": "shape (B, H, T, T) の attention-weight matrix は何を示しますか?",
       "options": [
-        "How many parameters each head has",
-        "Which key positions each query position attends to, per head, per batch element",
-        "The cosine similarity between query and value vectors",
-        "The output logits for the next token"
+        "各 head の parameter 数",
+        "batch 要素ごと、head ごとに、各 query position がどの key position を見るか",
+        "query と value vector の cosine similarity",
+        "次 token の output logits"
       ],
       "correct": 1,
-      "explanation": "Row t of the per-head matrix is the distribution over key positions used by query position t. Inspecting it shows where each head looks."
+      "explanation": "各 head matrix の行 t は query position t が使う key positions 上の分布です。"
     }
   ]
 }

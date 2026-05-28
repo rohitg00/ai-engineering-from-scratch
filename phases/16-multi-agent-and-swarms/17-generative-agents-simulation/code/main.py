@@ -1,9 +1,9 @@
-"""Generative agents miniature: Smallville-in-stdlib.
+"""Generative agents のミニチュア: stdlib 版 Smallville。
 
-Five agents share a small world. Agent 0 is seeded with a party goal. Over
-ticks, invitations spread through bilateral memory observations, reflection
-synthesizes beliefs, and plans update. By the final tick, 3+ agents converge
-at the party location without any central orchestrator.
+5 体のエージェントが小さな world を共有する。Agent 0 には party goal を seed する。
+tick が進むにつれ、bilateral memory observations によって invitations が広がり、
+reflection が beliefs を synthesize し、plans が update される。final tick までに、
+central orchestrator なしで 3 体以上の agents が party location に集まる。
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import time
 from dataclasses import dataclass, field
 
 
-TICK_DURATION_S = 0.01  # simulated; output is instantaneous
+TICK_DURATION_S = 0.01  # simulation 用。出力は実質 instantaneous
 
 
 @dataclass
@@ -75,29 +75,29 @@ def retrieve_top_k(stream: list[Memory], query: str, tick: int, k: int = 3) -> l
 def run_simulation(n_agents: int = 5, ticks: int = 6) -> None:
     agents = [Agent(f"agent-{i}", location="home") for i in range(n_agents)]
 
-    # Seed agent 0 with the party goal.
+    # agent 0 に party goal を seed する。
     agents[0].stream.append(Memory(0, "goal", "host a Valentine's party at HobbsCafe at tick 5", 10))
     agents[0].plans.append(Plan(tick=5, where="HobbsCafe", note="host the party"))
     agents[0].beliefs.append("there is a party I was invited to")
 
     print("=" * 72)
-    print(f"GENERATIVE AGENTS (miniature) — {n_agents} agents, {ticks} ticks")
+    print(f"GENERATIVE AGENTS（ミニチュア）— {n_agents} agents, {ticks} ticks")
     print("=" * 72)
 
     for tick in range(ticks):
         print(f"\n--- tick {tick} ---")
-        # Invitation propagation: agent 0 invites direct neighbors tick 0-2; then each invited
-        # agent invites one more on subsequent ticks.
+        # invitation propagation: agent 0 が tick 0-2 で direct neighbors を招待し、
+        # 招待された agent が subsequent ticks でさらに 1 体を招待する。
         if tick == 0:
             for i in (1, 2):
                 agents[i].observe(tick, f"agent-0 invited me to a party at HobbsCafe at tick 5", importance=8)
-                print(f"  agent-0 -> agent-{i}: invitation")
+                print(f"  agent-0 -> agent-{i}: 招待")
         if tick == 1:
             agents[3].observe(tick, f"agent-1 invited me to a party at HobbsCafe at tick 5", importance=7)
-            print(f"  agent-1 -> agent-3: second-degree invitation")
+            print(f"  agent-1 -> agent-3: 二次的な招待")
         if tick == 2:
             agents[4].observe(tick, f"agent-2 invited me to a party at HobbsCafe at tick 5", importance=7)
-            print(f"  agent-2 -> agent-4: second-degree invitation")
+            print(f"  agent-2 -> agent-4: 二次的な招待")
 
         for a in agents:
             a.reflect(tick)
@@ -106,20 +106,20 @@ def run_simulation(n_agents: int = 5, ticks: int = 6) -> None:
             if action.startswith(a.name + " moves"):
                 print(f"  {action}")
 
-    # Final state
+    # 最終状態
     print("\n" + "=" * 72)
-    print("final locations:")
+    print("最終位置:")
     for a in agents:
         print(f"  {a.name:10s} at {a.location}")
 
     at_party = sum(1 for a in agents if a.location == "HobbsCafe")
-    print(f"\n{at_party}/{n_agents} agents converged at HobbsCafe for the party.")
-    print("No orchestrator. One seed. The rest is memory + reflection + plan.")
+    print(f"\n{at_party}/{n_agents} agents が HobbsCafe の party に集まりました。")
+    print("orchestrator はありません。seed は 1 つだけ。残りは memory + reflection + plan です。")
 
 
 def demo_retrieval() -> None:
     print("\n" + "=" * 72)
-    print("RETRIEVAL DEMO — top-k by recency + importance + relevance")
+    print("RETRIEVAL DEMO — recency + importance + relevance による top-k")
     print("=" * 72)
     stream = [
         Memory(0, "observation", "saw Isabella at the cafe", importance=4),
@@ -136,10 +136,10 @@ def demo_retrieval() -> None:
 def main() -> None:
     run_simulation()
     demo_retrieval()
-    print("\nTakeaways:")
-    print("  one seed + three components = coordinated arrival without an orchestrator.")
-    print("  reflection is load-bearing: dropping it stops belief formation.")
-    print("  retrieval combines recency, importance, relevance -- no single score is enough.")
+    print("\n要点:")
+    print("  seed 1 つ + 3 components = orchestrator なしの coordinated arrival。")
+    print("  reflection は load-bearing です。外すと belief formation が止まります。")
+    print("  retrieval は recency、importance、relevance を組み合わせます。単一 score では足りません。")
 
 
 if __name__ == "__main__":

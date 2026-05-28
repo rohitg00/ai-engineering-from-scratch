@@ -1,54 +1,54 @@
-# Relation Extraction & Knowledge Graph Construction
+# 関係抽出とナレッジグラフ構築
 
-> NER found the entities. Entity linking anchored them. Relation extraction finds the edges between them. A knowledge graph is the sum of nodes, edges, and their provenance.
+> NER は entities を見つけました。Entity linking はそれらを anchor しました。Relation extraction は、その間の edges を見つけます。Knowledge graph は nodes、edges、そしてそれらの provenance の総和です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
-**Time:** ~60 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-An analyst reads: "Tim Cook became CEO of Apple in 2011." Four facts:
+analyst が "Tim Cook became CEO of Apple in 2011." を読みます。facts は 4 つあります。
 
 - `(Tim Cook, role, CEO)`
 - `(Tim Cook, employer, Apple)`
 - `(Tim Cook, start_date, 2011)`
 - `(Apple, type, Organization)`
 
-Relation Extraction (RE) turns free text into structured triples `(subject, relation, object)`. Aggregate across a corpus and you have a knowledge graph. Aggregate and query and you have a reasoning substrate for RAG, analytics, or compliance audits.
+Relation Extraction (RE) は free text を structured triples `(subject, relation, object)` に変換します。corpus 全体で集約すれば knowledge graph になります。さらに集約して query すれば、RAG、analytics、compliance audits のための reasoning substrate になります。
 
-The 2026 problem: LLMs extract relations enthusiastically. Too enthusiastically. They hallucinate triples that the source text does not support. Without provenance, you cannot tell real triples from plausible fiction. The 2026 answer is AEVS-style anchor-and-verify pipelines.
+2026 年の問題: LLMs は relations を熱心に抽出します。熱心すぎるほどです。source text が support していない triples を hallucinate します。provenance がなければ、real triples と plausible fiction を見分けられません。2026 年の答えは、AEVS-style anchor-and-verify pipelines です。
 
-## The Concept
+## 概念
 
 ![Text → triples → knowledge graph](../assets/relation-extraction.svg)
 
-**Triple form.** `(subject_entity, relation_type, object_entity)`. Relations come from a closed ontology (Wikidata properties, FIBO, UMLS) or an open set (OpenIE-style, anything goes).
+**Triple form。** `(subject_entity, relation_type, object_entity)`。relations は closed ontology (Wikidata properties、FIBO、UMLS) から来る場合も、open set (OpenIE-style、anything goes) から来る場合もあります。
 
-**Three extraction approaches.**
+**3 つの extraction approaches。**
 
-1. **Rule / pattern-based.** Hearst patterns: "X such as Y" → `(Y, isA, X)`. Plus hand-crafted regex. Brittle, precise, explainable.
-2. **Supervised classifier.** Given two entity mentions in a sentence, predict the relation from a fixed set. Trained on TACRED, ACE, KBP. Standard 2015–2022.
-3. **Generative LLM.** Prompt the model to emit triples. Works out of the box. Needs provenance, or hallucinates plausible-looking junk.
+1. **Rule / pattern-based。** Hearst patterns: "X such as Y" → `(Y, isA, X)`。さらに hand-crafted regex。壊れやすい一方で、precise で explainable です。
+2. **Supervised classifier。** 1 文内の 2 つの entity mentions が与えられたとき、fixed set から relation を予測します。TACRED、ACE、KBP で訓練します。2015-2022 年の standard です。
+3. **Generative LLM。** triples を emit するよう model に prompt します。out of the box で動きます。provenance がなければ、plausible-looking junk を hallucinate します。
 
-**AEVS (Anchor-Extraction-Verification-Supplement, 2026).** The current hallucination-mitigation framework:
+**AEVS (Anchor-Extraction-Verification-Supplement, 2026)。** 現在の hallucination-mitigation framework です。
 
-- **Anchor.** Identify every entity span and relation-phrase span with exact positions.
-- **Extract.** Generate triples linked to anchor spans.
-- **Verify.** Match each triple element back to the source text; reject anything unsupported.
-- **Supplement.** A coverage pass ensures no anchored span is dropped.
+- **Anchor。** すべての entity span と relation-phrase span を exact positions とともに特定します。
+- **Extract。** anchor spans に link された triples を生成します。
+- **Verify。** 各 triple element を source text に照合します。unsupported なものを reject します。
+- **Supplement。** coverage pass により、anchored span が落ちていないことを確認します。
 
-Hallucinations drop sharply. Requires more compute but is auditable.
+hallucinations は大きく減ります。より多くの compute が必要ですが、auditable になります。
 
-**The open-vs-closed tradeoff.**
+**open-vs-closed tradeoff。**
 
-- **Closed ontology.** Fixed property list (e.g., Wikidata's 11,000+ properties). Predictable. Queryable. Hard to invent.
-- **Open IE.** Any verbal phrase becomes a relation. High recall. Low precision. Messy to query.
+- **Closed ontology。** fixed property list (例: Wikidata の 11,000+ properties)。predictable。queryable。invent しにくい。
+- **Open IE。** 任意の verbal phrase が relation になります。high recall。low precision。query しづらい。
 
-Production KGs usually mix: open IE for discovery, then canonicalize relations onto a closed ontology before merging into the main graph.
+Production KGs は通常 mix します。discovery には open IE を使い、main graph に merge する前に relations を closed ontology へ canonicalize します。
 
-## Build It
+## 作ってみる
 
 ### Step 1: pattern-based extraction
 
@@ -61,7 +61,7 @@ PATTERNS = [
 ]
 ```
 
-See `code/main.py` for the full toy extractor. Hearst patterns still ship in domain-specific pipelines because they are debuggable.
+full toy extractor は `code/main.py` を参照してください。Hearst patterns は debuggable なので、domain-specific pipelines で今も出荷されています。
 
 ### Step 2: supervised relation classification
 
@@ -77,7 +77,7 @@ output = model.generate(**encoded, max_length=200)
 triples = tok.batch_decode(output, skip_special_tokens=False)
 ```
 
-REBEL is a seq2seq relation extractor: text in, triples out, already in Wikidata property ids. Fine-tuned on distant-supervision data. Standard open-weights baseline.
+REBEL は seq2seq relation extractor です。text を入力し、triples を出力します。すでに Wikidata property ids になっています。distant-supervision data で fine-tuned されています。標準的な open-weights baseline です。
 
 ### Step 3: LLM-prompted extraction with anchoring
 
@@ -96,9 +96,9 @@ Only include triples fully supported by the text. No inference beyond what is st
 """
 ```
 
-Verify every returned span against the source. Reject anything where `text[start:end] != triple_entity`. This is the AEVS "verify" step in its minimal form.
+返されたすべての span を source に照らして verify してください。`text[start:end] != triple_entity` となるものは reject します。これは AEVS の "verify" step を最小化した形です。
 
-### Step 4: canonicalize onto a closed ontology
+### Step 4: closed ontology へ canonicalize する
 
 ```python
 RELATION_MAP = {
@@ -116,9 +116,9 @@ def canonicalize(relation):
     return None   # drop unmapped open relations or route to manual review
 ```
 
-Canonicalization is often 60-80% of the engineering work. Budget for it.
+canonicalization は engineering work の 60-80% を占めることがよくあります。必ず budget に入れてください。
 
-### Step 5: build a small graph and query
+### Step 5: 小さな graph を作って query する
 
 ```python
 triples = extract(text)
@@ -134,79 +134,79 @@ def neighbors(node, relation=None):
 print(neighbors("Tim Cook", relation="P108"))    # -> [(P108, Apple)]
 ```
 
-This is the atom of every RAG-over-KG system. Scale it with RDF triple stores (Blazegraph, Virtuoso), property graphs (Neo4j), or vector-augmented graph stores.
+これはすべての RAG-over-KG system の atom です。RDF triple stores (Blazegraph、Virtuoso)、property graphs (Neo4j)、または vector-augmented graph stores で scale します。
 
-## Pitfalls
+## 落とし穴
 
-- **Coreference before RE.** "He founded Apple" — RE needs to know who "he" is. Run coref first (lesson 24).
-- **Entity canonicalization.** "Apple Inc" and "Apple" must resolve to the same node. Entity linking first (lesson 25).
-- **Hallucinated triples.** LLMs emit triples the text does not support. Enforce span verification.
-- **Relation canonicalization drift.** Open IE relations are inconsistent ("was born in," "came from," "is a native of"). Collapse to canonical ids or the graph is unqueryable.
-- **Temporal errors.** "Tim Cook is CEO of Apple" — true now, false in 2005. Many relations are time-bounded. Use qualifiers (`P580` start time, `P582` end time in Wikidata).
-- **Domain mismatch.** REBEL trained on Wikipedia. Legal, medical, and scientific text often need domain-fine-tuned RE models.
+- **Coreference before RE。** "He founded Apple" — RE には "he" が誰かを知る必要があります。coref を先に実行してください (lesson 24)。
+- **Entity canonicalization。** "Apple Inc" と "Apple" は同じ node に resolve されなければなりません。entity linking を先に実行してください (lesson 25)。
+- **Hallucinated triples。** LLMs は text が support していない triples を emit します。span verification を enforce してください。
+- **Relation canonicalization drift。** Open IE relations は一貫しません ("was born in," "came from," "is a native of")。canonical ids に collapse しなければ、graph は query できません。
+- **Temporal errors。** "Tim Cook is CEO of Apple" — 今は true ですが、2005 年には false です。多くの relations は time-bounded です。qualifiers (Wikidata の `P580` start time、`P582` end time) を使ってください。
+- **Domain mismatch。** REBEL は Wikipedia で訓練されています。legal、medical、scientific text では domain-fine-tuned RE models が必要になることがよくあります。
 
-## Use It
+## 使う
 
-The 2026 stack:
+2026 年の stack:
 
-| Situation | Pick |
+| 状況 | 選択 |
 |-----------|------|
-| Fast production, general domain | REBEL or LlamaPred with Wikidata canonicalization |
-| Domain-specific (biomed, legal) | SciREX-style domain fine-tune + custom ontology |
-| LLM-prompted, audited output | AEVS pipeline: anchor → extract → verify → supplement |
+| Fast production、general domain | REBEL または LlamaPred + Wikidata canonicalization |
+| Domain-specific (biomed、legal) | SciREX-style domain fine-tune + custom ontology |
+| LLM-prompted、audited output | AEVS pipeline: anchor → extract → verify → supplement |
 | High-volume news IE | Pattern-based + supervised hybrid |
-| Building a KG from scratch | Open IE + manual canonicalization pass |
-| Temporal KG | Extract with qualifiers (start/end time, point in time) |
+| KG を scratch から作る | Open IE + manual canonicalization pass |
+| Temporal KG | qualifiers (start/end time、point in time) 付きで extract |
 
-The integration pattern: NER → coref → entity linking → relation extraction → ontology mapping → graph load. Every stage is a potential quality gate.
+integration pattern: NER → coref → entity linking → relation extraction → ontology mapping → graph load。すべての stage が potential quality gate です。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-re-designer.md`:
+`outputs/skill-re-designer.md` として保存:
 
 ```markdown
 ---
 name: re-designer
-description: Design a relation extraction pipeline with provenance and canonicalization.
+description: provenance と canonicalization を備えた relation extraction pipeline を設計する。
 version: 1.0.0
 phase: 5
 lesson: 26
 tags: [nlp, relation-extraction, knowledge-graph]
 ---
 
-Given a corpus (domain, language, volume) and downstream use (KG-RAG, analytics, compliance), output:
+corpus (domain、language、volume) と downstream use (KG-RAG、analytics、compliance) が与えられたら、次を出力してください。
 
-1. Extractor. Pattern-based / supervised / LLM / AEVS hybrid. Reason tied to precision vs recall target.
-2. Ontology. Closed property list (Wikidata / domain) or open IE with canonicalization pass.
-3. Provenance. Every triple carries source char-span + doc id. Non-negotiable for audit.
-4. Merge strategy. Canonical entity id + relation id + temporal qualifiers; dedup policy.
-5. Evaluation. Precision / recall on 200 hand-labelled triples + hallucination-rate on LLM-extracted sample.
+1. Extractor。Pattern-based / supervised / LLM / AEVS hybrid。precision vs recall target に結びついた理由。
+2. Ontology。Closed property list (Wikidata / domain)、または canonicalization pass 付きの open IE。
+3. Provenance。すべての triple が source char-span + doc id を持つ。audit では譲れない条件。
+4. Merge strategy。Canonical entity id + relation id + temporal qualifiers。dedup policy。
+5. Evaluation。200 hand-labelled triples 上の precision / recall + LLM-extracted sample の hallucination-rate。
 
-Refuse any LLM-based RE pipeline without span verification (source provenance). Refuse open-IE output flowing into a production graph without canonicalization. Flag pipelines with no temporal qualifier on time-bounded relations (employer, spouse, position).
+span verification (source provenance) のない LLM-based RE pipeline は拒否する。canonicalization なしに open-IE output を production graph へ流す設計は拒否する。time-bounded relations (employer、spouse、position) に temporal qualifier がない pipeline は警告する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Run the pattern extractor in `code/main.py` on 5 news-article sentences. Hand-check precision.
-2. **Medium.** Use REBEL (or a small LLM) on the same sentences. Compare triples. Which extractor has higher precision? Higher recall?
-3. **Hard.** Build the AEVS pipeline: extract with LLM + verify spans against source. Measure hallucination rate before vs after the verify step on 50 Wikipedia-style sentences.
+1. **Easy.** `code/main.py` の pattern extractor を 5 つの news-article sentences に対して実行してください。precision を hand-check します。
+2. **Medium.** 同じ sentences に REBEL (または small LLM) を使ってください。triples を比較します。どちらの extractor が higher precision ですか。higher recall はどちらですか。
+3. **Hard.** AEVS pipeline を作ってください。LLM で extract し、source に対して spans を verify します。50 Wikipedia-style sentences 上で、verify step の前後の hallucination rate を測ります。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| Term | みんなの言い方 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Triple | Subject-relation-object | `(s, r, o)` tuple that is the atomic unit of a KG. |
-| Open IE | Extract anything | Open-vocabulary relation phrases; high recall, low precision. |
-| Closed ontology | Fixed schema | Bounded set of relation types (Wikidata, UMLS, FIBO). |
-| Canonicalization | Normalize everything | Map surface names / relations to canonical ids. |
-| AEVS | Grounded extraction | Anchor-Extraction-Verification-Supplement pipeline (2026). |
-| Provenance | Source-of-truth link | Every triple carries a doc id + char-span to its source. |
-| Distant supervision | Cheap labels | Align text with an existing KG to create training data. |
+| Triple | Subject-relation-object | KG の atomic unit である `(s, r, o)` tuple。 |
+| Open IE | 何でも抽出する | open-vocabulary relation phrases。high recall、low precision。 |
+| Closed ontology | fixed schema | relation types の bounded set (Wikidata、UMLS、FIBO)。 |
+| Canonicalization | すべてを normalize する | surface names / relations を canonical ids に map する。 |
+| AEVS | grounded extraction | Anchor-Extraction-Verification-Supplement pipeline (2026)。 |
+| Provenance | source-of-truth link | すべての triple が source への doc id + char-span を持つ。 |
+| Distant supervision | cheap labels | text を existing KG と align して training data を作る。 |
 
-## Further Reading
+## 参考文献
 
-- [Mintz et al. (2009). Distant supervision for relation extraction without labeled data](https://www.aclweb.org/anthology/P09-1113.pdf) — the distant-supervision paper.
-- [Huguet Cabot, Navigli (2021). REBEL: Relation Extraction By End-to-end Language generation](https://aclanthology.org/2021.findings-emnlp.204.pdf) — seq2seq RE workhorse.
-- [Wadden et al. (2019). Entity, Relation, and Event Extraction with Contextualized Span Representations (DyGIE++)](https://arxiv.org/abs/1909.03546) — joint IE.
-- [AEVS — Anchor-Extraction-Verification-Supplement framework](https://www.mdpi.com/2073-431X/15/3/178) — 2026 hallucination-mitigation design.
-- [Wikidata SPARQL tutorial](https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial) — canonical graph queries.
+- [Mintz et al. (2009). Distant supervision for relation extraction without labeled data](https://www.aclweb.org/anthology/P09-1113.pdf) — distant-supervision paper。
+- [Huguet Cabot, Navigli (2021). REBEL: Relation Extraction By End-to-end Language generation](https://aclanthology.org/2021.findings-emnlp.204.pdf) — seq2seq RE の workhorse。
+- [Wadden et al. (2019). Entity, Relation, and Event Extraction with Contextualized Span Representations (DyGIE++)](https://arxiv.org/abs/1909.03546) — joint IE。
+- [AEVS — Anchor-Extraction-Verification-Supplement framework](https://www.mdpi.com/2073-431X/15/3/178) — 2026 年の hallucination-mitigation design。
+- [Wikidata SPARQL tutorial](https://www.wikidata.org/wiki/Wikidata:SPARQL_tutorial) — canonical graph queries。

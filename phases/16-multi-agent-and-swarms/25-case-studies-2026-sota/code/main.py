@@ -1,8 +1,8 @@
-"""Case-study mapper: pick the closest 2026 reference for a proposed design.
+"""Case-study mapper: proposed design に最も近い 2026 reference を選ぶ。
 
-Stdlib only. Scripted mapping from design attributes to one of three case
-studies (Anthropic Research, MetaGPT/ChatDev, OpenClaw/Moltbook) and the
-framework-of-choice recommendation.
+stdlib のみ。design attributes から 3 つの case studies
+（Anthropic Research、MetaGPT/ChatDev、OpenClaw/Moltbook）の 1 つへ
+scripted mapping し、framework-of-choice recommendation を出す。
 """
 from __future__ import annotations
 
@@ -69,8 +69,8 @@ def map_to_case(d: Design) -> str:
 
 def print_case(key: str) -> None:
     case = CASES[key]
-    print(f"\n  closest case study: {case['name']}")
-    print(f"  patterns to copy:")
+    print(f"\n  最も近い case study: {case['name']}")
+    print("  copy する patterns:")
     for p in case["patterns"]:
         print(f"    - {p}")
     print(f"  recommended framework: {case['framework']}")
@@ -84,8 +84,8 @@ def print_landscape() -> None:
     print(f"  {'framework':30s} {'status':22s} {'best for':30s}")
     for name, status, best_for in FRAMEWORK_LANDSCAPE:
         print(f"  {name:30s} {status:22s} {best_for:30s}")
-    print("\n  every major framework ships MCP support; most ship A2A.")
-    print("  protocol compatibility is no longer a differentiator -- handoff semantics are.")
+    print("\n  すべての major framework が MCP support を出荷し、ほとんどが A2A を出荷しています。")
+    print("  protocol compatibility はもはや differentiator ではありません。handoff semantics が differentiator です。")
 
 
 def main() -> None:
@@ -109,10 +109,10 @@ def main() -> None:
 
     print_landscape()
 
-    print("\nTakeaways:")
-    print("  pick a case study first; adapt the design to match its known trade-offs.")
-    print("  every 2026 framework supports MCP; most support A2A -- choose on handoff semantics.")
-    print("  production-grade multi-agent needs: verification, cost accounting, rainbow deploys.")
+    print("\n要点:")
+    print("  まず case study を選び、known trade-offs に合うよう design を adapt します。")
+    print("  2026 年の framework はすべて MCP を support し、多くは A2A も support します。handoff semantics で選びます。")
+    print("  production-grade multi-agent には verification、cost accounting、rainbow deploys が必要です。")
 
 
 if __name__ == "__main__":

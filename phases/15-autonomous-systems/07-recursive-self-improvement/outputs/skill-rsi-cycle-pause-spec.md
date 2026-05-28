@@ -1,39 +1,39 @@
 ---
 name: rsi-cycle-pause-spec
-description: Specify the conditions under which an RSI pipeline must pause and wait for human review before the next cycle.
+description: RSI パイプラインが次サイクルの前に停止し、人間のレビューを待つべき条件を定義する。
 version: 1.0.0
 phase: 15
 lesson: 7
 tags: [rsi, self-improvement, alignment, pause-threshold, rsp]
 ---
 
-Given a proposed recursive-self-improvement pipeline, produce a pause specification: the explicit conditions that halt the loop for human inspection before the next cycle begins. A pipeline without a pause spec is not ready to run.
+提案された再帰的自己改善パイプラインに対して、一時停止仕様を作成してください。これは、次のサイクルが始まる前に人間が点検できるよう、ループを停止させる明示的な条件です。一時停止仕様のないパイプラインは、実行できる状態ではありません。
 
-Produce:
+作成するもの:
 
-1. **Cycle-level thresholds.** For each measurable axis (capability score, alignment score, budget, trajectory length, resource usage), define a numeric threshold whose crossing pauses the loop. Thresholds must be set before the loop starts and recorded.
-2. **Cycle-over-cycle deltas.** Set limits on how much any axis can move in a single cycle. A 30%+ capability jump in one cycle is almost always a sign of evaluator gaming; pause and audit.
-3. **Misalignment gap.** Compute capability-minus-alignment after each cycle. If the gap widens by more than X (operator-set), pause. This is the metric the simulator in `code/main.py` exercises.
-4. **Regression watch.** If any axis drops more than Y in a cycle, pause. Capability regressions often follow surges; catching them prevents false-progress acceleration.
-5. **Human resumption contract.** Before the loop resumes after a pause, require a named human to review the pause trigger, re-set thresholds if appropriate, and log the decision to the out-of-pipeline audit trail.
+1. **サイクル単位のしきい値。** 測定可能な各軸（能力スコア、アラインメントスコア、予算、軌跡長、リソース使用量）について、それを超えたらループを一時停止する数値しきい値を定義してください。しきい値はループ開始前に設定し、記録する必要があります。
+2. **サイクル間の差分。** 1 サイクルで各軸がどれだけ動いてよいかの上限を設定してください。1 サイクルで能力が 30% 以上跳ね上がる場合、ほとんど常に評価器の攻略を示しています。一時停止して監査してください。
+3. **ミスアラインメントのギャップ。** 各サイクル後に、能力からアラインメントを引いた値を計算してください。ギャップが X（オペレーターが設定）を超えて広がったら一時停止します。これは `code/main.py` のシミュレータが扱う指標です。
+4. **回帰の監視。** いずれかの軸が 1 サイクルで Y を超えて低下したら一時停止します。能力の回帰は急増の後によく起こります。それを捉えることで、見かけ上の進歩による加速を防げます。
+5. **人間による再開契約。** 一時停止後にループを再開する前に、指名された人間が一時停止のトリガーをレビューし、必要に応じてしきい値を再設定し、その判断をパイプライン外の監査証跡へ記録することを必須にしてください。
 
-Hard rejects:
-- Any pipeline that can resume after a pause without human action.
-- Any threshold that depends on the loop's own internal evaluator (the agent can game it).
-- Any pipeline whose threshold set can be edited by the agent.
+即時却下:
+- 人間の行為なしに一時停止後の再開が可能なパイプライン。
+- ループ自身の内部評価器に依存するしきい値（エージェントが攻略できます）。
+- エージェントがしきい値セットを編集できるパイプライン。
 
-Refusal rules:
-- If the user cannot name the thresholds up-front, refuse. Thresholds set post-hoc are not thresholds; they are rationalizations.
-- If the pipeline has no external (out-of-loop) evaluator, refuse — regression and surge detection require an outside view.
-- If the proposed resumption contract is "notify the team and continue after 24 hours," refuse. Resumption must be a positive act.
+拒否ルール:
+- ユーザーが事前にしきい値を明示できない場合は拒否してください。事後的に設定されたしきい値は、しきい値ではなく合理化です。
+- パイプラインに外部（ループ外）評価器がない場合は拒否してください。回帰と急増の検出には外部の視点が必要です。
+- 提案された再開契約が「チームに通知し、24 時間後に続行する」である場合は拒否してください。再開は能動的な行為でなければなりません。
 
-Output format:
+出力形式:
 
-Return a one-page spec with:
-- **Axes and thresholds** (table)
-- **Cycle-delta limits** (table)
-- **Misalignment gap formula and threshold**
-- **Regression limits**
-- **External evaluator** (what it is, when it runs)
-- **Resumption contract** (named owner, checklist, log destination)
-- **Sign-off line** (who owns the pause invariant)
+次を含む 1 ページの仕様を返してください。
+- **軸としきい値**（表）
+- **サイクル差分の上限**（表）
+- **ミスアラインメントのギャップの式としきい値**
+- **回帰の上限**
+- **外部評価器**（それが何で、いつ実行されるか）
+- **再開契約**（指名されたオーナー、チェックリスト、ログの保存先）
+- **承認欄**（一時停止不変条件の責任者）

@@ -1,9 +1,9 @@
-"""FIPA-ACL translator and mini contract-net demo, stdlib only.
+"""FIPA-ACL translator と小さな contract-net demo。stdlib only。
 
-Shows that every 2026 agent-protocol message (MCP tools/call, MCP
-resources/read, A2A task creation) reduces to a FIPA-ACL envelope with a
-different syntax. Then runs a 3-bidder contract-net negotiation using the
-canonical cfp / propose / accept-proposal / reject-proposal performatives.
+2026 年の agent-protocol message (MCP tools/call、MCP resources/read、
+A2A task creation) が、syntax の違う FIPA-ACL envelope に還元できることを
+示す。その後、canonical な cfp / propose / accept-proposal /
+reject-proposal performatives を使って 3-bidder contract-net negotiation を実行する。
 """
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ class ACLMessage:
 
 
 def mcp_tools_call_to_acl(req: dict) -> ACLMessage:
-    """MCP tools/call JSON-RPC message -> FIPA-ACL request."""
+    """MCP tools/call JSON-RPC message -> FIPA-ACL request。"""
     return ACLMessage(
         performative="request",
         sender="host",
@@ -69,7 +69,7 @@ def mcp_tools_call_to_acl(req: dict) -> ACLMessage:
 
 
 def mcp_resources_read_to_acl(req: dict) -> ACLMessage:
-    """MCP resources/read JSON-RPC message -> FIPA-ACL query-ref."""
+    """MCP resources/read JSON-RPC message -> FIPA-ACL query-ref。"""
     return ACLMessage(
         performative="query-ref",
         sender="host",
@@ -84,7 +84,7 @@ def mcp_resources_read_to_acl(req: dict) -> ACLMessage:
 
 
 def a2a_task_create_to_acl(task: dict) -> ACLMessage:
-    """A2A POST /tasks body -> FIPA-ACL request inside a contract-net-like flow."""
+    """A2A POST /tasks body -> contract-net-like flow 内の FIPA-ACL request。"""
     return ACLMessage(
         performative="request",
         sender=task.get("client", "client"),
@@ -99,7 +99,7 @@ def a2a_task_create_to_acl(task: dict) -> ACLMessage:
 
 
 def a2a_subscribe_to_acl(task_id: str, client: str, agent: str) -> ACLMessage:
-    """A2A SSE subscription -> FIPA-ACL subscribe."""
+    """A2A SSE subscription -> FIPA-ACL subscribe。"""
     return ACLMessage(
         performative="subscribe",
         sender=client,
@@ -155,7 +155,7 @@ class ContractNet:
             performative="accept-proposal",
             sender=self.manager,
             receiver=winner,
-            content="awarded",
+            content="落札",
             ontology="contract-net",
             protocol="fipa-contract-net",
             conversation_id=conv,
@@ -165,7 +165,7 @@ class ContractNet:
                 performative="reject-proposal",
                 sender=self.manager,
                 receiver=L,
-                content="not awarded",
+                content="非落札",
                 ontology="contract-net",
                 protocol="fipa-contract-net",
                 conversation_id=conv,
@@ -185,7 +185,7 @@ def demo_round_trip() -> None:
     }
     print("\n-- MCP tools/call --")
     print(mcp_call)
-    print("as ACL:")
+    print("ACL として:")
     print(mcp_tools_call_to_acl(mcp_call).render())
 
     mcp_read = {
@@ -196,7 +196,7 @@ def demo_round_trip() -> None:
     }
     print("\n-- MCP resources/read --")
     print(mcp_read)
-    print("as ACL:")
+    print("ACL として:")
     print(mcp_resources_read_to_acl(mcp_read).render())
 
     a2a_task = {
@@ -208,7 +208,7 @@ def demo_round_trip() -> None:
     }
     print("\n-- A2A POST /tasks --")
     print(a2a_task)
-    print("as ACL:")
+    print("ACL として:")
     print(a2a_task_create_to_acl(a2a_task).render())
 
     print("\n-- A2A SSE subscribe --")
@@ -217,7 +217,7 @@ def demo_round_trip() -> None:
 
 def demo_contract_net() -> None:
     print("\n" + "=" * 72)
-    print("Contract Net Protocol — manager broadcasts cfp, bidders propose")
+    print("Contract Net Protocol - manager が cfp を broadcast し、bidders が propose する")
     print("=" * 72)
 
     cn = ContractNet(manager="scheduler", bidders=["worker-a", "worker-b", "worker-c"])
@@ -237,14 +237,14 @@ def demo_contract_net() -> None:
         print()
         print(msg.render())
 
-    print(f"\nWinner: {winner.sender} (price {winner.content['price']}, eta {winner.content['eta_minutes']}m)")
+    print(f"\n勝者: {winner.sender} (price {winner.content['price']}, eta {winner.content['eta_minutes']}m)")
 
 
 def main() -> None:
     demo_round_trip()
     demo_contract_net()
-    print("\nTakeaway: MCP/A2A messages are FIPA-ACL envelopes with JSON syntax.")
-    print("The structural primitives survive; the ontology and formal semantics do not.")
+    print("\nTakeaway: MCP/A2A messages は JSON syntax の FIPA-ACL envelopes です。")
+    print("structural primitives は残り、ontology と formal semantics は残りません。")
 
 
 if __name__ == "__main__":

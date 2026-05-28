@@ -1,26 +1,26 @@
-# Capstone 08 — Production RAG Chatbot for a Regulated Vertical
+# Capstone 08 — Regulated Vertical 向け Production RAG Chatbot
 
-> Harvey, Glean, Mendable, and LlamaCloud all run the same production shape in 2026. Ingest with docling or Unstructured and ColPali for visuals. Hybrid search. Re-rank with bge-reranker-v2-gemma. Synthesize with Claude Sonnet 4.7 using prompt caching at 60-80% hit rate. Guard with Llama Guard 4 and NeMo Guardrails. Watch with Langfuse and Phoenix. Grade with RAGAS on a 200-question golden set. Build one in a regulated domain (legal, clinical, insurance), and the capstone is passing the golden set, the red team, and the drift dashboard.
+> Harvey、Glean、Mendable、LlamaCloud は2026年に同じ production shape を走らせています。docling または Unstructured で ingest し、visual は ColPali。hybrid search。bge-reranker-v2-gemma で re-rank。prompt caching hit rate 60-80% の Claude Sonnet 4.7 で synthesize。Llama Guard 4 と NeMo Guardrails で guard。Langfuse と Phoenix で watch。200問の golden set を RAGAS で grade。regulated domain (legal、clinical、insurance) で1つ作り、golden set、red team、drift dashboard を通過します。
 
-**Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
-**Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
+**種別:** Capstone
+**言語:** Python (pipeline + API), TypeScript (chat UI)
+**前提条件:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:** P5 · P7 · P11 · P12 · P17 · P18
-**Time:** 30 hours
+**所要時間:** 30時間
 
-## Problem
+## 問題
 
-Regulated-domain RAG (legal contracts, clinical trial protocols, insurance policies) is the most-shipped production shape of 2026 because the ROI is obvious and the stakes are concrete. Harvey (Allen & Overy) built it for legal. Mendable ships the developer-docs flavor. Glean covers enterprise search. The pattern is: ingest high-fidelity, retrieve hybrid with rerank, synthesize with citation enforcement and prompt caching, guard with multiple safety layers, and monitor drift continuously.
+regulated-domain RAG (legal contracts、clinical trial protocols、insurance policies) は2026年に最も多く production に出た形です。ROI が明確で、stakes が具体的だからです。Harvey は legal 向けに作りました。Mendable は developer-docs 版を出しています。Glean は enterprise search をカバーします。pattern は、高忠実度 ingest、hybrid retrieval + rerank、citation enforcement と prompt caching 付き synthesis、多層 safety guard、continuous drift monitoring です。
 
-The hard parts are not the model. They are jurisdiction-aware compliance (HIPAA, GDPR, SOC2), citation-level auditability, cost control (prompt caching buys 60-90% discount when hit rate is high), hallucination detection via RAGAS faithfulness, and drift detection when the source documents get updated without the index catching up. This capstone asks you to ship all of it on a 200-question golden set with a red-team suite alongside.
+難しいのは model ではありません。jurisdiction-aware compliance (HIPAA, GDPR, SOC2)、citation-level auditability、cost control (prompt caching は hit rate が高いと 60-90% discount を生む)、RAGAS faithfulness による hallucination detection、source document が更新されたのに index が追いつかない drift detection です。この capstone では、200問の golden set と red-team suite に対してすべてを出荷します。
 
-## Concept
+## コンセプト
 
-The pipeline has two sides. **Ingestion**: docling or Unstructured parses structured documents; ColPali handles visually rich ones; chunks get summaries, tags, and role-based access labels. Vectors go into pgvector + pgvectorscale (under 50M vectors) or Qdrant Cloud; sparse BM25 runs alongside. **Conversation**: LangGraph handles memory and multi-turn; each query runs hybrid retrieval, reranks with bge-reranker-v2-gemma-2b, synthesizes with Claude Sonnet 4.7 (prompt-cached), passes output through Llama Guard 4 and NeMo Guardrails, and emits a citation-anchored response.
+pipeline は2つの側面を持ちます。**Ingestion**: docling または Unstructured が structured document を parse し、ColPali が visually rich なものを処理します。chunk には summary、tag、role-based access label を付けます。vector は 50M vectors 未満なら pgvector + pgvectorscale、または Qdrant Cloud に入り、sparse BM25 も並走します。**Conversation**: LangGraph が memory と multi-turn を処理します。各 query は hybrid retrieval、bge-reranker-v2-gemma-2b で rerank、Claude Sonnet 4.7 (prompt-cached) で synthesize、Llama Guard 4 と NeMo Guardrails で guard され、citation-anchored response を出します。
 
-The eval stack has four layers. **Golden set** (200 labeled Q/A with citations) for correctness. **Red team** (jailbreaks, PII extraction attempts, off-domain questions) for safety. **RAGAS** for faithfulness / answer relevance / context precision automatically per-turn. **Drift dashboard** (Arize Phoenix) watching retrieval quality and hallucination score weekly.
+eval stack は4層です。**Golden set** (citation 付き200 labeled Q/A) で correctness。**Red team** (jailbreak、PII extraction attempt、off-domain question) で safety。**RAGAS** で per-turn の faithfulness / answer relevance / context precision を自動評価。**Drift dashboard** (Arize Phoenix) が retrieval quality と hallucination score を週次で監視します。
 
-Prompt caching is the cost lever. Claude 4.5+ and GPT-5+ support caching system prompts + retrieved context. At 60-80% hit rate, per-query cost drops 3-5x. The pipeline must be designed for stable prefixes (system prompt + reranked context first) to achieve high cache hit rates.
+prompt caching が cost lever です。Claude 4.5+ と GPT-5+ は system prompt + retrieved context の caching に対応しています。60-80% hit rate では per-query cost が 3-5x 下がります。高い hit rate を得るには、stable prefix (system prompt + reranked context first) を保つよう pipeline を設計しなければなりません。
 
 ## Architecture
 
@@ -57,36 +57,36 @@ eval:
 
 ## Stack
 
-- Ingestion: Unstructured.io or docling for structured documents; ColPali for visually-rich PDFs
-- Vector DB: pgvector + pgvectorscale under 50M vectors; Qdrant Cloud otherwise
-- Sparse: Tantivy BM25 with field weights
-- Orchestration: LlamaIndex Workflows (ingestion) + LangGraph (conversation)
-- Re-ranker: bge-reranker-v2-gemma-2b self-hosted or Voyage rerank-2 hosted
-- LLM: Claude Sonnet 4.7 with prompt caching; fallback Llama 3.3 70B self-hosted
-- Eval: RAGAS 0.2 online, DeepEval for hallucination and jailbreak suites
-- Observability: Langfuse self-hosted with annotation queue; Arize Phoenix for drift
-- Guardrails: Llama Guard 4 input/output classifier, NeMo Guardrails v0.12 policy, Presidio PII scrub
-- Compliance: role-based access labels on chunks; jurisdiction tags for GDPR/HIPAA
+- Ingestion: structured document は Unstructured.io または docling、visually-rich PDF は ColPali
+- Vector DB: 50M vectors 未満は pgvector + pgvectorscale、それ以外は Qdrant Cloud
+- Sparse: field weight 付き Tantivy BM25
+- Orchestration: ingestion は LlamaIndex Workflows、conversation は LangGraph
+- Re-ranker: self-hosted bge-reranker-v2-gemma-2b または hosted Voyage rerank-2
+- LLM: prompt caching 付き Claude Sonnet 4.7、fallback は self-hosted Llama 3.3 70B
+- Eval: online RAGAS 0.2、hallucination / jailbreak suite は DeepEval
+- Observability: annotation queue 付き self-hosted Langfuse、drift は Arize Phoenix
+- Guardrails: Llama Guard 4 input/output classifier、NeMo Guardrails v0.12 policy、Presidio PII scrub
+- Compliance: chunk 上の role-based access label、GDPR/HIPAA 用 jurisdiction tag
 
-## Build It
+## 実装
 
-1. **Ingestion.** Parse your corpus (1000-10000 documents for a serious build) with Unstructured or docling. For scanned / visual-heavy pages, route through ColPali. Produce chunks with summaries, role-labels, jurisdiction tags.
+1. **Ingestion.** corpus (serious build なら1000-10000 documents) を Unstructured または docling で parse します。scanned / visual-heavy page は ColPali に route します。summary、role-label、jurisdiction tag 付き chunk を生成します。
 
-2. **Index.** Dense embeddings (Voyage-3 or Nomic-embed-v2) into pgvector + pgvectorscale. BM25 side-index via Tantivy. Role and jurisdiction filters as payload.
+2. **Index.** dense embeddings (Voyage-3 または Nomic-embed-v2) を pgvector + pgvectorscale に入れます。Tantivy で BM25 side-index を作ります。role と jurisdiction は payload filter にします。
 
-3. **Hybrid retrieve.** Filter by role+jurisdiction first; then parallel dense + BM25; merge with reciprocal rank fusion; top-20 to reranker; top-5 to synth.
+3. **Hybrid retrieve.** まず role+jurisdiction で filter します。その後 dense + BM25 を parallel に走らせ、reciprocal rank fusion で merge します。top-20 を reranker、top-5 を synth へ送ります。
 
-4. **Synthesize with prompt caching.** System prompt + static policies in cache header; reranked context as cache extension; user question as uncached suffix. Target 60-80% cache hit rate in steady state.
+4. **Synthesize with prompt caching.** system prompt + static policies を cache header に、reranked context を cache extension に、user question を uncached suffix にします。steady state で 60-80% cache hit rate を目標にします。
 
-5. **Guardrails.** Llama Guard 4 on input; NeMo Guardrails rails block off-domain questions or policy-forbidden topics; Presidio scrubs accidental PII in the output; citation enforcement post-filter.
+5. **Guardrails.** input は Llama Guard 4、off-domain や policy-forbidden topic は NeMo Guardrails rails、output の accidental PII は Presidio で scrub、citation enforcement は post-filter で行います。
 
-6. **Golden set.** 200 Q/A pairs labeled by a domain expert with (answer, citations). Score agent on exact-citation match, answer correctness, faithfulness (RAGAS).
+6. **Golden set.** domain expert が (answer, citations) 付きで label した200 Q/A pair を作ります。exact-citation match、answer correctness、faithfulness (RAGAS) で agent を score します。
 
-7. **Red team.** 50 adversarial prompts: jailbreaks (PAIR, TAP), PII exfiltration attempts, off-domain, cross-jurisdiction leaks. Score with pass/fail and severity.
+7. **Red team.** 50 adversarial prompts を作ります: jailbreak (PAIR, TAP)、PII exfiltration attempts、off-domain、cross-jurisdiction leaks。pass/fail と severity で score します。
 
-8. **Drift dashboard.** Arize Phoenix tracks retrieval quality (nDCG, citation faithfulness) weekly. Alert on 5% drop.
+8. **Drift dashboard.** Arize Phoenix が retrieval quality (nDCG、citation faithfulness) を週次で追跡します。5% drop で alert します。
 
-9. **Cost report.** Langfuse: prompt-caching hit rate, tokens per query, $/query breakdown by stage.
+9. **Cost report.** Langfuse で prompt-caching hit rate、query あたり tokens、stage 別 $/query breakdown を出します。
 
 ## Use It
 
@@ -106,49 +106,49 @@ answer:
 
 ## Ship It
 
-`outputs/skill-production-rag.md` describes the deliverable. A regulated-domain chatbot deployed with compliance labels, passed through the rubric, observed with live drift monitoring.
+`outputs/skill-production-rag.md` が deliverable を説明します。compliance label 付きで deploy され、rubric を通過し、live drift monitoring で観測される regulated-domain chatbot です。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
-| 25 | RAGAS faithfulness + answer relevance | Online scores on the golden set (200 Q/A) |
-| 20 | Citation correctness | Fraction of answers with verifiable source anchors |
+| 25 | RAGAS faithfulness + answer relevance | golden set (200 Q/A) 上の online scores |
+| 20 | Citation correctness | verifiable source anchor を持つ answer の割合 |
 | 20 | Guardrail coverage | Llama Guard 4 pass rate + jailbreak suite results |
-| 20 | Cost / latency engineering | Prompt-cache hit rate, p95 latency, $/query |
-| 15 | Drift monitoring dashboard | Phoenix live dashboard with weekly retrieval-quality trend |
+| 20 | Cost / latency engineering | prompt-cache hit rate、p95 latency、$/query |
+| 15 | Drift monitoring dashboard | weekly retrieval-quality trend を持つ Phoenix live dashboard |
 | **100** | | |
 
 ## Exercises
 
-1. Build a second corpus slice under a different jurisdiction (e.g., HIPAA alongside GDPR). Demonstrate role+jurisdiction filtering preventing cross-leak on a 20-question cross-jurisdiction probe.
+1. 異なる jurisdiction の2つ目の corpus slice (例: GDPR と HIPAA) を作ります。20-question cross-jurisdiction probe で role+jurisdiction filtering が cross-leak を防ぐことを示します。
 
-2. Measure prompt-cache hit rate over a week of production traffic. Identify which queries break the cache prefix. Restructure.
+2. production traffic 1週間分で prompt-cache hit rate を測ります。cache prefix を壊す query を特定し、restructure します。
 
-3. Add multi-turn memory with a 10k-token summary buffer. Measure whether faithfulness drops as the conversation grows.
+3. 10k-token summary buffer を持つ multi-turn memory を追加します。conversation が長くなるにつれて faithfulness が落ちるか測ります。
 
-4. Swap Claude Sonnet 4.7 for Llama 3.3 70B self-hosted. Measure $/query and faithfulness delta.
+4. Claude Sonnet 4.7 を self-hosted Llama 3.3 70B に差し替えます。$/query と faithfulness delta を測ります。
 
-5. Add an "unsure" mode: if top reranked scores are below a threshold, the agent says "I do not have confident citations" instead of answering. Measure false-confidence reduction.
+5. "unsure" mode を追加します。top reranked score が threshold 未満なら agent は回答せず「確信できる citation がありません」と言います。false-confidence reduction を測ります。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| Prompt caching | "Cached system + context" | Claude/OpenAI feature: cached prefix tokens discounted 60-90% on hit |
-| RAGAS | "RAG evaluator" | Automated scoring of faithfulness, answer relevance, context precision |
-| Golden set | "Labeled eval" | 200+ expert-labeled Q/A with citations; the ground truth |
-| Jurisdiction tag | "Compliance label" | GDPR/HIPAA/SOC2 scope attached to chunks; enforced by retrieval filter |
-| Citation faithfulness | "Grounded answer rate" | Fraction of claims backed by retrievable source spans |
-| Drift | "Retrieval quality decay" | Weekly change in nDCG or citation score; alert threshold 5% |
-| Red team | "Adversarial eval" | Pre-release jailbreak, PII extraction, off-domain probes |
+| Prompt caching | 「Cached system + context」 | Claude/OpenAI feature。hit 時に cached prefix token が 60-90% discount される |
+| RAGAS | 「RAG evaluator」 | faithfulness、answer relevance、context precision の automated scoring |
+| Golden set | 「Labeled eval」 | citation 付き200+ expert-labeled Q/A。ground truth |
+| Jurisdiction tag | 「Compliance label」 | chunk に付く GDPR/HIPAA/SOC2 scope。retrieval filter が強制する |
+| Citation faithfulness | 「Grounded answer rate」 | claim が retrievable source span に裏付けられる割合 |
+| Drift | 「Retrieval quality decay」 | nDCG または citation score の週次変化。alert threshold は5% |
+| Red team | 「Adversarial eval」 | pre-release jailbreak、PII extraction、off-domain probe |
 
-## Further Reading
+## 参考文献
 
 - [Harvey AI](https://www.harvey.ai) — reference legal production stack
-- [Glean enterprise search](https://www.glean.com) — reference RAG at enterprise scale
+- [Glean enterprise search](https://www.glean.com) — enterprise scale RAG reference
 - [Mendable documentation](https://mendable.ai) — developer-docs RAG reference
 - [LlamaCloud Parse + Index](https://docs.llamaindex.ai/en/stable/examples/llama_cloud/llama_parse/) — managed ingestion
-- [Anthropic prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) — the cost-lever reference
-- [RAGAS 0.2 documentation](https://docs.ragas.io/) — the canonical RAG eval framework
-- [Arize Phoenix](https://github.com/Arize-ai/phoenix) — reference drift observability
+- [Anthropic prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) — cost-lever reference
+- [RAGAS 0.2 documentation](https://docs.ragas.io/) — canonical RAG eval framework
+- [Arize Phoenix](https://github.com/Arize-ai/phoenix) — drift observability reference
 - [Llama Guard 4](https://ai.meta.com/research/publications/llama-guard-4/) — 2026 safety classifier
 - [NeMo Guardrails v0.12](https://docs.nvidia.com/nemo-guardrails/) — policy rail framework

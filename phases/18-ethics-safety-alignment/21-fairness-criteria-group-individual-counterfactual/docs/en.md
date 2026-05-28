@@ -1,100 +1,100 @@
 # Fairness Criteria — Group, Individual, Counterfactual
 
-> Three families structure the fairness literature. Group fairness: demographic parity, equalized odds, conditional use accuracy equality — equal rates across protected groups on average. Individual fairness (Dwork et al. 2012): similar individuals receive similar decisions; Lipschitz condition on the decision map. Counterfactual fairness (Kusner et al. 2017): a decision is fair to an individual if it is unchanged when sensitive attributes are counterfactually altered. 2024 theoretical result (NeurIPS 2024): there is an inherent CF-vs-accuracy trade-off; a model-agnostic method converts an optimal-but-unfair predictor into a CF one with bounded accuracy loss. Backtracking counterfactuals (arXiv:2401.13935, January 2024): new paradigm that avoids requiring interventions on legally protected attributes. Philosophical reconciliation (ICLR Blogposts 2024): with causal graphs, satisfying certain group fairness measures entails counterfactual fairness.
+> Fairness の文献は3つの family で整理できる。Group fairness: demographic parity、equalized odds、conditional use accuracy equality。平均的に protected group 間の rate を等しくする。Individual fairness (Dwork et al. 2012): 類似した個人には類似した decision を与える。decision map に Lipschitz 条件を置く。Counterfactual fairness (Kusner et al. 2017): sensitive attributes を counterfactual に変えても decision が変わらないなら、その decision は個人に対して fair。2024年の理論結果 (NeurIPS 2024): counterfactual fairness と accuracy には本質的な trade-off がある。model-agnostic な方法で、optimal だが unfair な predictor を、accuracy loss を bounded にした CF predictor へ変換できる。Backtracking counterfactuals (arXiv:2401.13935, 2024年1月): 法的に保護された属性への intervention を要求しない新しい paradigm。哲学的な reconciliation (ICLR Blogposts 2024): causal graph があれば、特定の group fairness measure を満たすことが counterfactual fairness を含意する。
 
-**Type:** Learn
-**Languages:** Python (stdlib, three-criteria comparison)
-**Prerequisites:** Phase 18 · 20 (bias), Phase 02 (classical ML)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib, three-criteria comparison)
+**前提条件:** Phase 18 · 20 (bias), Phase 02 (classical ML)
+**所要時間:** 約60分
 
 ## Learning Objectives
 
-- State the three group-fairness criteria (demographic parity, equalized odds, conditional use accuracy equality) and one impossibility result.
-- Describe individual fairness via the Dwork et al. 2012 Lipschitz formulation.
-- Describe counterfactual fairness and its causal-graph dependency.
-- Explain backtracking counterfactuals and why they sidestep the intervention-on-protected-attribute problem.
+- 3つの group-fairness criteria (demographic parity、equalized odds、conditional use accuracy equality) と1つの impossibility result を述べる。
+- Dwork et al. 2012 の Lipschitz 形式で individual fairness を説明する。
+- Counterfactual fairness と、それが causal graph に依存することを説明する。
+- Backtracking counterfactuals と、それが protected attribute への intervention 問題をどう回避するかを説明する。
 
-## The Problem
+## 問題
 
-Lesson 20 was about measuring bias. Lesson 21 is about defining the fairness standard the measurement should serve. The three families give structurally different standards — a model can be group-fair and individual-unfair, counterfactually fair and group-unfair. Choosing a standard is a policy decision; no standard is universally optimal.
+Lesson 20 は bias を測る話だった。Lesson 21 は、その測定が従うべき fairness standard を定義する話である。3つの family は構造的に異なる standard を与える。あるモデルは group-fair だが individual-unfair になり得るし、counterfactually fair だが group-unfair にもなり得る。どの standard を選ぶかはポリシー判断であり、普遍的に最適な standard は存在しない。
 
 ## The Concept
 
 ### Group fairness
 
-- **Demographic parity.** P(Y=1 | A=a) = P(Y=1 | A=a') for all groups. Equal acceptance rates.
-- **Equalized odds.** P(Y=1 | Y*=y, A=a) = P(Y=1 | Y*=y, A=a'). Equal TPR and FPR across groups.
-- **Conditional use accuracy equality.** P(Y*=y | Y=y, A=a) = P(Y*=y | Y=y, A=a'). Equal predictive value across groups.
+- **Demographic parity.** すべての group について P(Y=1 | A=a) = P(Y=1 | A=a')。acceptance rate が等しい。
+- **Equalized odds.** P(Y=1 | Y*=y, A=a) = P(Y=1 | Y*=y, A=a')。group 間で TPR と FPR が等しい。
+- **Conditional use accuracy equality.** P(Y*=y | Y=y, A=a) = P(Y*=y | Y=y, A=a')。group 間で predictive value が等しい。
 
-Impossibility (Chouldechova, Kleinberg-Mullainathan-Raghavan 2017): these three cannot be satisfied simultaneously under unequal base rates.
+Impossibility (Chouldechova, Kleinberg-Mullainathan-Raghavan 2017): base rate が等しくない場合、この3つは同時に満たせない。
 
 ### Individual fairness
 
-Dwork et al. 2012. A decision map f is individually fair with respect to a task-specific similarity metric d if |f(x) - f(x')| <= L * d(x, x') for some Lipschitz constant L. Similar individuals get similar decisions.
+Dwork et al. 2012。decision map f は、タスク固有の similarity metric d に対して、ある Lipschitz constant L について |f(x) - f(x')| <= L * d(x, x') を満たすなら individually fair。類似した個人には類似した decision が与えられる。
 
-Requires defining d. Policy question, not statistical.
+d の定義が必要になる。これは統計の問題ではなくポリシーの問題である。
 
 ### Counterfactual fairness
 
-Kusner et al. 2017. A decision is counterfactually fair to individual i if, under a causal model of the population, the decision is unchanged when i's sensitive attributes are counterfactually altered.
+Kusner et al. 2017。母集団の causal model の下で、個人 i の sensitive attributes を counterfactual に変更しても decision が変わらないなら、その decision は i に対して counterfactually fair。
 
-Requires a causal DAG. The DAG is a modeling choice. Counterfactual fairness is only as justified as the DAG.
+causal DAG が必要である。DAG はモデリング上の選択である。Counterfactual fairness の正当性は、その DAG の正当性に依存する。
 
-### The CF-vs-accuracy trade-off
+### CF-vs-accuracy trade-off
 
-NeurIPS 2024 theoretical: there is an inherent trade-off between counterfactual fairness and predictive accuracy. A model-agnostic method can convert an optimal-but-unfair predictor into a CF one, at a bounded accuracy cost. The accuracy cost depends on the magnitude of the sensitive-attribute coefficient in the optimal unfair predictor.
+NeurIPS 2024 の理論結果: counterfactual fairness と predictive accuracy の間には本質的な trade-off がある。model-agnostic な方法で、optimal だが unfair な predictor を CF predictor に変換できるが、その accuracy cost は bounded である。accuracy cost は、optimal unfair predictor における sensitive-attribute coefficient の大きさに依存する。
 
 ### Backtracking counterfactuals
 
-arXiv:2401.13935 (January 2024). Traditional counterfactuals require interventions on the sensitive attribute — "would the decision change if this person had been a different gender." Legally, this is problematic: protected attributes cannot be intervened on in classification law.
+arXiv:2401.13935 (2024年1月)。従来の counterfactual は sensitive attribute への intervention を要求する。「この人の gender が違っていたら decision は変わったか」と問う。法的には、分類法において protected attributes に intervention することは問題になる。
 
-Backtracking counterfactuals flip the direction: instead of intervening on the attribute, ask what combination of the individual's actual features would have produced the counterfactual outcome. This sidesteps the legal objection.
+Backtracking counterfactuals は向きを反転させる。属性に intervention する代わりに、その個人の実際の features のどの組み合わせなら counterfactual outcome が生じたかを問う。これにより法的な objection を回避する。
 
 ### Philosophical reconciliation
 
-ICLR Blogposts 2024. With a causal graph in hand, satisfying certain group-fairness measures entails counterfactual fairness. The three families are not orthogonal; they are different facets of the same underlying causal structure.
+ICLR Blogposts 2024。causal graph が手元にある場合、特定の group-fairness measures を満たすことは counterfactual fairness を含意する。3つの family は直交しているわけではない。同じ underlying causal structure の異なる側面である。
 
-This does not resolve the impossibility theorems (unequal base rates still prevent simultaneous group fairness). But it shows the apparent opposition between "group" and "individual / counterfactual" is partially an artifact of not being explicit about the causal model.
+これは impossibility theorem を解消しない。base rate が等しくない場合、同時に group fairness を満たすことはなお妨げられる。しかし、「group」と「individual / counterfactual」の対立に見えるものの一部は、causal model を明示していないことによる artifact だと分かる。
 
 ### Where this fits in Phase 18
 
-Lesson 20 is bias measurement. Lesson 21 is fairness definition. Lesson 22 is privacy (differential privacy). Lesson 23 is watermarking. These are the allocation-adjacent lessons complementing the deception-adjacent Lessons 7-11.
+Lesson 20 は bias measurement。Lesson 21 は fairness definition。Lesson 22 は privacy (differential privacy)。Lesson 23 は watermarking。これらは deception-adjacent な Lessons 7-11 を補完する allocation-adjacent な lesson 群である。
 
 ## Use It
 
-`code/main.py` builds a toy binary-classification dataset with a sensitive attribute and unequal base rates. Compute demographic parity, equalized odds, and conditional use accuracy equality on a simple classifier. Observe the three metrics disagreeing. Apply a re-weighting for demographic parity and observe its cost on the other two.
+`code/main.py` は sensitive attribute と unequal base rates を持つ toy binary-classification dataset を作る。simple classifier で demographic parity、equalized odds、conditional use accuracy equality を計算する。3つの metric が食い違うことを観察する。demographic parity のための re-weighting を適用し、他の2つへの cost を観察する。
 
 ## Ship It
 
-This lesson produces `outputs/skill-fairness-criterion.md`. Given a fairness claim or policy, identifies which criterion is being claimed, whether the model can satisfy the remaining criteria under the claimed unequal base rates, and what causal DAG the claim depends on.
+この lesson では `outputs/skill-fairness-criterion.md` を作る。fairness claim や policy が与えられたとき、どの criterion が主張されているか、claimed unequal base rates の下で残りの criteria を満たせるか、その主張がどの causal DAG に依存するかを特定する。
 
 ## Exercises
 
-1. Run `code/main.py`. Report the three group metrics on the default data. Apply the demographic-parity-targeted re-weighting and re-report.
+1. `code/main.py` を実行する。default data で3つの group metrics を報告する。demographic-parity-targeted re-weighting を適用し、再度報告する。
 
-2. Implement the Dwork et al. 2012 individual-fairness metric using L2 on non-sensitive features. Report how many pairs violate Lipschitz with constant L=1.
+2. non-sensitive features の L2 を使って Dwork et al. 2012 の individual-fairness metric を実装する。Lipschitz constant L=1 に違反する pair がいくつあるか報告する。
 
-3. Read Kusner et al. 2017. Construct a simple two-feature causal DAG for resume scoring and identify the counterfactual-fairness condition it implies.
+3. Kusner et al. 2017 を読む。resume scoring のための単純な2-feature causal DAG を構成し、それが含意する counterfactual-fairness condition を特定する。
 
-4. The 2024 backtracking-counterfactuals paper avoids intervention on protected attributes. Describe a scenario where this matters for legal compliance.
+4. 2024年の backtracking-counterfactuals paper は protected attributes への intervention を避ける。これが legal compliance に重要になる scenario を説明する。
 
-5. The ICLR 2024 reconciliation argues group and counterfactual fairness are facets of the same structure. Pick two of the three criteria in `code/main.py` and state the causal assumption that would make them equivalent.
+5. ICLR 2024 の reconciliation は、group fairness と counterfactual fairness が同じ構造の側面だと論じている。`code/main.py` の3つの criteria から2つを選び、それらを等価にする causal assumption を述べる。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| Demographic parity | "equal rates" | P(Y=1 | A=a) equal across groups |
-| Equalized odds | "equal TPR/FPR" | Equal true-positive and false-positive rates across groups |
-| Conditional use accuracy | "equal PPV/NPV" | Equal predictive values across groups |
-| Individual fairness | "Lipschitz condition" | Similar individuals get similar decisions |
-| Counterfactual fairness | "causal alteration invariance" | Decision unchanged under counterfactual attribute alteration |
-| Backtracking counterfactual | "explain via actuals" | Counterfactual reasoned backward from outcome, not forward from attribute |
-| Impossibility theorem | "the three conflict" | Chouldechova / KMR 2017: group criteria mutually exclusive under unequal base rates |
+| Demographic parity | 「rate が等しい」 | group 間で P(Y=1 | A=a) が等しい |
+| Equalized odds | 「TPR/FPR が等しい」 | group 間で true-positive rate と false-positive rate が等しい |
+| Conditional use accuracy | 「PPV/NPV が等しい」 | group 間で predictive value が等しい |
+| Individual fairness | 「Lipschitz condition」 | 類似した個人には類似した decision が与えられる |
+| Counterfactual fairness | 「causal alteration invariance」 | counterfactual な属性変更の下で decision が変わらない |
+| Backtracking counterfactual | 「actuals で説明する」 | 属性から前向きにではなく、outcome から後ろ向きに推論する counterfactual |
+| Impossibility theorem | 「3つは衝突する」 | Chouldechova / KMR 2017: base rate が等しくない場合、group criteria は互いに排他的 |
 
-## Further Reading
+## 参考文献
 
 - [Dwork et al. — Fairness through Awareness (arXiv:1104.3913)](https://arxiv.org/abs/1104.3913) — individual fairness
 - [Kusner, Loftus, Russell, Silva — Counterfactual Fairness (arXiv:1703.06856)](https://arxiv.org/abs/1703.06856) — counterfactual fairness
 - [Chouldechova — Fair prediction with disparate impact (arXiv:1703.00056)](https://arxiv.org/abs/1703.00056) — impossibility
-- [Backtracking Counterfactuals (arXiv:2401.13935)](https://arxiv.org/abs/2401.13935) — new paradigm for protected-attribute interventions
+- [Backtracking Counterfactuals (arXiv:2401.13935)](https://arxiv.org/abs/2401.13935) — protected-attribute intervention のための新しい paradigm

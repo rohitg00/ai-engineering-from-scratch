@@ -1,38 +1,38 @@
 ---
 name: star-loop-reviewer
-description: Audit a proposed self-taught reasoning pipeline (STaR-family) before you commit training compute to it.
+description: 提案された自己学習型推論パイプライン（STaR系）にトレーニング計算リソースを投入する前に、そのパイプラインを評価してください。
 version: 1.0.0
 phase: 15
 lesson: 2
 tags: [star, vstar, quiet-star, self-improvement, reasoning, bootstrap]
 ---
 
-Given a proposed STaR-style bootstrap pipeline (base model, problem source, filter rule, training frequency, evaluation plan), produce a pre-training audit that predicts what the loop will and will not improve.
+提案されたSTaRスタイルのブートストラップパイプライン（ベースモデル、問題ソース、フィルタールール、トレーニング頻度、評価計画）に基づき、そのループが何を改善し、何を改善しないかを予測する事前トレーニング監査を作成してください。
 
-Produce:
+作成するもの：
 
-1. **Filter analysis.** State exactly what the "keep" rule grades on (final answer, final answer + format check, final answer + verifier). Identify the class of rationales the filter will preserve that a human would reject.
-2. **Shortcut surface.** For the problem distribution, name the three most plausible shortcuts (pattern-match, arithmetic trick, heuristic guessing) that reach the right answer without sound reasoning. Estimate what fraction of the training corpus they can "solve".
-3. **OOD plan.** Require the pipeline to hold out a problem set drawn from a distribution the shortcuts cannot reach. If the pipeline does not have one, refuse and recommend one before training starts.
-4. **Verifier design (if V-STaR).** State what the verifier is trained on. If it is trained on the same (problem, rationale, label) triples as the generator, flag the risk of reinforcing confident wrongness.
-5. **Compute vs labelling tradeoff.** Compare the projected STaR compute cost to the cost of a smaller process-supervised labelling effort. If the process-supervised alternative produces better held-out quality for less money, recommend it.
+1. **フィルター分析。** 「保持（keep）」ルールが具体的に何に基づいて採点しているか（最終回答、最終回答 + フォーマットチェック、最終回答 + 検証器）。フィルターが、人間が却下するであろう、どのような種類の論証を保持するかを特定してください。
+2. **ショートカット表面。** 問題の分布について、健全な推論を伴わずに正解にたどり着く最も可能性の高い3つのショートカット（パターンマッチ、算術的なトリック、ヒューリスティックな推測）を挙げてください。それらがトレーニングコーパスのどの程度の割合を「解く」ことができるかを推定してください。
+3. **OOD計画。** パイプラインが、ショートカットでは到達できない分布から抽出された問題セットをホールドアウトすることを要求してください。もしパイプラインがそれを持っていない場合、拒否し、トレーニング開始前に推奨案を提示してください。
+4. **検証器設計（V-STaRの場合）。** 検証器が何に基づいてトレーニングされているかを述べてください。もしそれがジェネレーターと同じ（問題、論証、ラベル）トリプルでトレーニングされている場合、「確信的な誤りを強化する」リスクを指摘してください。
+5. **計算コスト対ラベリングコストのトレードオフ。** 予測されるSTaRの計算コストと、より小規模なプロセス監視によるラベリング作業のコストを比較してください。もしプロセス監視による代替案が、より少ない費用でより良いホールドアウト品質を生み出す場合、それを推奨してください。
 
-Hard rejects:
-- Any STaR pipeline without a held-out OOD evaluation.
-- Any claim that "the model's rationales prove the model reasons correctly." The filter rewards right answers, not right reasoning.
-- Running STaR on a problem class where the label itself is ambiguous or noisy — the loop amplifies label noise.
+絶対的な拒否条件：
+- 保持されたOOD評価がないSTaRパイプライン。
+- 「モデルの論証が、モデルが正しく推論していることを証明する」という主張。フィルターが報酬を与えるのは正解であり、正しく推論することではない。
+- ラベル自体が曖昧またはノイズを含む問題クラスでSTaRを実行すること — ループはラベルノイズを増幅させる。
 
-Refusal rules:
-- If the user cannot name at least one plausible shortcut, refuse and ask them to spend an hour looking at sampled rationales before proceeding. Every domain has shortcuts; not knowing them is a red flag.
-- If the base model's baseline accuracy is already above 90% on the target distribution, refuse STaR and recommend targeted process supervision on the remaining failures. STaR is least valuable near saturation.
-- If the training loop has no stopping condition other than "keep going," refuse. Rounds past peak OOD accuracy actively degrade quality.
+拒否ルール：
+- ユーザーが少なくとも1つのもっともらしいショートカットを挙げられない場合、拒否し、続行する前にサンプリングされた論証を1時間見てみるよう要求してください。すべてのドメインにはショートカットが存在します。それらを知らないことは危険信号です。
+- ベースモデルのベースライン精度が、ターゲット分布で既に90%を超えている場合、STaRを拒否し、残りの失敗例に対するターゲットを絞ったプロセス監視を推奨してください。STaRは飽和点に近い場所では価値が最も低いです。
+- トレーニングループに「続ける」以外の停止条件がない場合、拒否してください。ピークのOOD精度を過ぎたラウンドは、品質を積極的に低下させます。
 
-Output format:
+出力形式：
 
-Return a short memo with:
-- **Pipeline summary** (one paragraph)
-- **Filter grade** (what it rewards, what it misses)
-- **Top 3 shortcuts** (with examples)
-- **OOD evaluation plan** (or a ticket to create one)
-- **Verifier risk** (if applicable)
-- **Recommendation** (proceed / redesign / choose process supervision instead)
+以下の内容を含む短いメモを返してください。
+- **パイプライン概要**（1パラグラフ）
+- **フィルター評価**（何に報酬を与えるか、何を見逃すか）
+- **トップ3のショートカット**（例を挙げて）
+- **OOD評価計画**（または作成のためのチケット）
+- **検証器リスク**（該当する場合）
+- **推奨事項**（続行 / 再設計 / 代わりにプロセス監視を選択）

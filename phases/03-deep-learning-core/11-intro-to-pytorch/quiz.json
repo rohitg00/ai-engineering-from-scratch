@@ -1,37 +1,37 @@
 [
   {
-    "question": "What is autograd in PyTorch?",
-    "options": ["A data loading library", "An automatic differentiation engine that records operations and computes gradients without manual backward implementations", "A model compression tool", "A hyperparameter tuning framework"],
+    "question": "PyTorch における autograd とは何ですか？",
+    "options": ["data loading library", "operations を記録し、手動の backward 実装なしに gradients を計算する automatic differentiation engine", "model compression tool", "hyperparameter tuning framework"],
     "correct": 1,
-    "explanation": "PyTorch's autograd builds a computational graph during forward computation and automatically computes gradients when you call .backward(). This eliminates the need to manually implement backward() in each module.",
+    "explanation": "PyTorch の autograd は forward computation 中に computational graph を構築し、.backward() を呼ぶと gradients を自動計算します。これにより、各 module で backward() を手動実装する必要がなくなります。",
     "stage": "pre"
   },
   {
-    "question": "What does torch.no_grad() do and when should you use it?",
-    "options": ["It prevents overfitting", "It disables gradient tracking for inference, saving memory and computation when you don't need to train", "It freezes all model weights", "It enables GPU acceleration"],
+    "question": "torch.no_grad() は何をしますか。また、いつ使うべきですか？",
+    "options": ["overfitting を防ぐ", "inference のために gradient tracking を無効化し、training が不要なときに memory と computation を節約する", "すべての model weights を freeze する", "GPU acceleration を有効化する"],
     "correct": 1,
-    "explanation": "During inference, you don't need gradients. torch.no_grad() disables gradient tracking, which saves the memory that would be used to store the computational graph and speeds up computation.",
+    "explanation": "inference 中は gradients が不要です。torch.no_grad() は gradient tracking を無効化し、computational graph の保存に使われる memory を節約し、computation を高速化します。",
     "stage": "pre"
   },
   {
-    "question": "What does nn.Linear(784, 256) create in PyTorch?",
-    "options": ["A ReLU activation layer", "A fully connected layer with a (256, 784) weight matrix and a (256,) bias vector", "A dropout layer with p=784/256", "A batch normalization layer"],
+    "question": "PyTorch で nn.Linear(784, 256) は何を作りますか？",
+    "options": ["ReLU activation layer", "(256, 784) の weight matrix と (256,) の bias vector を持つ fully connected layer", "p=784/256 の dropout layer", "batch normalization layer"],
     "correct": 1,
-    "explanation": "nn.Linear(in_features, out_features) creates a layer that computes y = x @ W^T + b, with W of shape (256, 784) and b of shape (256,). This is the PyTorch equivalent of the Layer class you built from scratch.",
+    "explanation": "nn.Linear(in_features, out_features) は y = x @ W^T + b を計算する layer を作ります。W の shape は (256, 784)、b の shape は (256,) です。これは、あなたがゼロから作った Layer class の PyTorch equivalent です。",
     "stage": "post"
   },
   {
-    "question": "Which PyTorch method computes gradients for all parameters in the computational graph?",
+    "question": "computational graph 内のすべての parameters について gradients を計算する PyTorch method はどれですか？",
     "options": ["optimizer.step()", "model.forward()", "loss.backward()", "optimizer.zero_grad()"],
     "correct": 2,
-    "explanation": "loss.backward() traverses the computational graph in reverse, computing dL/dp for every parameter p that requires gradients. optimizer.step() then uses these gradients to update the parameters.",
+    "explanation": "loss.backward() は computational graph を逆向きにたどり、gradients を必要とするすべての parameter p について dL/dp を計算します。その後 optimizer.step() がこれらの gradients を使って parameters を更新します。",
     "stage": "post"
   },
   {
-    "question": "Why is PyTorch's training loop significantly faster than the pure-Python mini framework?",
-    "options": ["PyTorch uses a different algorithm", "PyTorch runs operations as optimized C++/CUDA kernels on GPU, while pure Python loops are interpreted one operation at a time", "PyTorch uses smaller data types", "PyTorch skips the backward pass"],
+    "question": "PyTorch の training loop が pure-Python mini framework より大幅に速いのはなぜですか？",
+    "options": ["PyTorch は別の algorithm を使うから", "PyTorch は operations を GPU 上の optimized C++/CUDA kernels として実行する一方、pure Python loops は operation ごとに interpreter overhead を伴って解釈実行されるから", "PyTorch はより小さい data types を使うから", "PyTorch は backward pass を skip するから"],
     "correct": 1,
-    "explanation": "PyTorch delegates matrix operations to highly optimized C++ and CUDA kernels that run on GPU with massive parallelism. Pure Python executes loops sequentially with interpreter overhead on each operation.",
+    "explanation": "PyTorch は matrix operations を、高度に最適化された C++ と CUDA kernels に委譲し、GPU 上で大規模な parallelism により実行します。Pure Python は loops を sequential に実行し、各 operation で interpreter overhead が発生します。",
     "stage": "post"
   }
 ]

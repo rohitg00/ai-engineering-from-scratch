@@ -1,4 +1,4 @@
-"""Tests for HypothesisGenerator: linear queue, dedup, parser, schedule, rank order."""
+"""HypothesisGenerator の tests: linear queue、dedup、parser、schedule、rank order。"""
 
 from __future__ import annotations
 

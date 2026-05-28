@@ -1,7 +1,7 @@
-"""Failure modes: MAST categorizer, circuit breaker, retry-storm simulator.
+"""Failure modes: MAST categorizer、circuit breaker、retry-storm simulator。
 
-Stdlib only. The simulator shows how a 10% downstream error rate amplifies
-through retries to 10x load without a breaker; the breaker caps it.
+stdlib のみ。simulator は、breaker なしでは 10% downstream error rate が
+retries により 10x load へ増幅されること、breaker がそれを cap することを示す。
 """
 from __future__ import annotations
 
@@ -14,17 +14,17 @@ from enum import Enum
 # ---------- MAST categorizer ----------
 
 MAST_CATEGORIES = {
-    "spec": "Specification Problem (41.77% of failures)",
-    "coord": "Coordination Failure (36.94% of failures)",
-    "verify": "Verification Gap (21.30% of failures)",
+    "spec": "Specification Problem（failures の 41.77%）",
+    "coord": "Coordination Failure（failures の 36.94%）",
+    "verify": "Verification Gap（failures の 21.30%）",
 }
 
 GROUPTHINK = {
-    "monoculture": "monoculture collapse (same base model → correlated errors)",
-    "conformity": "conformity bias (agents align with loudest peer)",
-    "tom": "deficient theory of mind (cannot model each other)",
-    "mixed_motive": "mixed-motive drift (compromise-middle satisfies no one)",
-    "cascade": "cascading reliability failures (retry storms)",
+    "monoculture": "monoculture collapse（same base model → correlated errors）",
+    "conformity": "conformity bias（agents が loudest peer に揃う）",
+    "tom": "deficient theory of mind（互いを model できない）",
+    "mixed_motive": "mixed-motive drift（compromise-middle が誰も満足させない）",
+    "cascade": "cascading reliability failures（retry storms）",
 }
 
 
@@ -35,7 +35,7 @@ def categorize_incident(symptoms: dict) -> tuple[str, str]:
         return "coord", MAST_CATEGORIES["coord"]
     if symptoms.get("no_verifier") or symptoms.get("hallucination_propagation"):
         return "verify", MAST_CATEGORIES["verify"]
-    return "unknown", "no MAST category matched"
+    return "unknown", "一致する MAST category なし"
 
 
 def detect_groupthink(symptoms: dict) -> list[tuple[str, str]]:
@@ -106,7 +106,7 @@ class DownstreamService:
     load: int = 0
 
     def handle(self, rng: random.Random) -> bool:
-        # Increased load -> increased failure (degradation model)
+        # load 増加 -> failure 増加（degradation model）
         effective_rate = self.base_failure_rate + (self.load * 0.02)
         effective_rate = min(effective_rate, 0.99)
         return rng.random() > effective_rate
@@ -140,14 +140,14 @@ def simulate_retry_storm(requests: int, use_breaker: bool, seed: int = 0) -> tup
 
 def demo_incident_categorization() -> None:
     print("=" * 72)
-    print("INCIDENT CATEGORIZATION — map symptoms to MAST + Groupthink families")
+    print("INCIDENT CATEGORIZATION — symptoms を MAST + Groupthink families に map")
     print("=" * 72)
     incidents = [
-        {"role_conflict": True, "name": "two agents both reviewing"},
-        {"state_drift": True, "name": "agent A thinks done; agent B still running"},
-        {"no_verifier": True, "hallucination_propagation": True, "name": "hallucinated fact crosses agents"},
-        {"correlated_errors": True, "agreement_rate_spike": True, "name": "3 agents all give same wrong answer"},
-        {"retry_amplification": True, "name": "payment retries cascade to inventory"},
+        {"role_conflict": True, "name": "2 agents がどちらも review している"},
+        {"state_drift": True, "name": "agent A は完了と思うが agent B はまだ実行中"},
+        {"no_verifier": True, "hallucination_propagation": True, "name": "hallucinated fact が agents をまたぐ"},
+        {"correlated_errors": True, "agreement_rate_spike": True, "name": "3 agents が全員同じ誤答を出す"},
+        {"retry_amplification": True, "name": "payment retries が inventory へ cascade"},
     ]
     for inc in incidents:
         name = inc.pop("name")
@@ -162,24 +162,24 @@ def demo_incident_categorization() -> None:
 
 def demo_retry_storm() -> None:
     print("\n" + "=" * 72)
-    print("RETRY STORM — 200 requests against a 10% baseline-failing service")
+    print("RETRY STORM — 10% baseline-failing service への 200 requests")
     print("=" * 72)
     total_no_cb, succ_no_cb, _ = simulate_retry_storm(200, use_breaker=False, seed=0)
     total_cb, succ_cb, sc = simulate_retry_storm(200, use_breaker=True, seed=0)
     print(f"  no circuit breaker:  total_calls={total_no_cb:4d}  success={succ_no_cb:4d}")
     print(f"  with circuit breaker: total_calls={total_cb:4d}  success={succ_cb:4d}  short_circuited={sc}")
-    print("  the breaker short-circuits once failure rate exceeds the threshold,")
-    print("  stopping the amplification. Success count may drop, but downstream survives.")
+    print("  breaker は failure rate が threshold を超えると short-circuit し、")
+    print("  amplification を止めます。success count は下がることがありますが、downstream は生き残ります。")
 
 
 def main() -> None:
     demo_incident_categorization()
     demo_retry_storm()
-    print("\nTakeaways:")
-    print("  MAST categories give names to the failures; categorization is the first fix.")
-    print("  Circuit breakers are the canonical cascade mitigation -- same as distributed systems.")
-    print("  STRATUS-style detection / diagnosis / validation adds 1.5x mitigation success.")
-    print("  Slow-failure proxies (agreement rate, retry rate) catch drift before loud errors.")
+    print("\n要点:")
+    print("  MAST categories は failures に名前を与えます。categorization が最初の fix です。")
+    print("  Circuit breakers は canonical cascade mitigation です。distributed systems と同じです。")
+    print("  STRATUS-style detection / diagnosis / validation は mitigation success を 1.5x にします。")
+    print("  Slow-failure proxies（agreement rate、retry rate）は loud errors の前に drift を捕まえます。")
 
 
 if __name__ == "__main__":

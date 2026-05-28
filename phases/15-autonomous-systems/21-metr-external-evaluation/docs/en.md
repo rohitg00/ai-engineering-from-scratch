@@ -1,115 +1,115 @@
-# METR Time Horizons and External Capability Evaluation
+# METR の時間ホライズンと外部能力評価
 
-> METR (ex-ARC Evals) is an independent 501(c)(3) since December 2023. Their Time Horizon 1.1 benchmark (January 2026) fits a logistic curve to task-success probability vs log(expert human completion time); the intersection at 50% probability defines the model's time horizon. The 2025–2026 engagement set covers GPT-5.1, GPT-5.1-Codex-Max, and prototype monitoring evaluations (can a monitor catch side tasks; can the agent evade). Benchmark suites: HCAST (180+ ML, cyber, SWE, reasoning tasks; 1 minute to 8+ hours), RE-Bench (71 ML research-engineering tasks with expert baseline), SWAA. The honest note: METR measurements are idealized — no human, no real consequences — and the team has documented the eval-vs-deployment behavior gap (Lesson 1). A time horizon is an upper bound, not a deployment prediction.
+> METR（旧ARC Evals）は、2023年12月から独立した501(c)(3)である。同組織の Time Horizon 1.1 ベンチマーク（2026年1月）は、タスク成功確率を専門家による人間の完了時間の対数に対してロジスティック曲線でフィットする。確率50%との交点がモデルの時間ホライズンを定義する。2025-2026年の関与セットは、GPT-5.1、GPT-5.1-Codex-Max、そしてプロトタイプの監視評価（監視器は副次タスクを検知できるか、エージェントは回避できるか）を含む。ベンチマークスイートは、HCAST（ML、サイバー、SWE、推論の180以上のタスク、1分から8時間以上）、RE-Bench（専門家ベースライン付きの71件のML研究エンジニアリングタスク）、SWAAである。正直な注意点として、METRの測定は理想化されている。そこには人間も実際の結果もない。そして同チームは、評価時とデプロイ時の行動ギャップを文書化している（レッスン1）。時間ホライズンは上限であり、デプロイ予測ではない。
 
-**Type:** Learn
-**Languages:** Python (stdlib, logistic-fit horizon estimator)
-**Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 19 (RSP)
-**Time:** ~60 minutes
+**タイプ:** 学習
+**言語:** Python（stdlib、ロジスティックフィットのホライズン推定器）
+**前提条件:** フェーズ 15 · 01（長期ホライズンエージェント）、フェーズ 15 · 19（RSP）
+**時間:** 約60分
 
-## The Problem
+## 課題
 
-Scaling policies (Lessons 19, 20) are only as useful as the measurements they reference. "AI R&D-4 threshold" and "Long-range Autonomy" are defined in policy prose; they become actionable only when specific evaluations produce specific numbers.
+スケーリングポリシー（レッスン19、20）は、参照する測定があって初めて役に立つ。「AI R&D-4 threshold」や「Long-range Autonomy」はポリシー文書の中の表現である。具体的な評価が具体的な数値を返したときに、初めて実務上の判断に使える。
 
-METR is the 2024–2026 external evaluation organization that has defined many of those numbers. They evaluate frontier models — often pre-release, under NDA with labs — and publish methodology afterward. The Time Horizon 1.1 benchmark (January 2026) is their headline artifact: a single scalar that compresses capability into a human-legible unit ("this model can do the kind of task an expert spends X hours on at 50% reliability").
+METRは、そうした数値の多くを定義してきた2024-2026年の外部評価組織である。METRは、しばしばリリース前のフロンティアモデルを、研究所とのNDA下で評価し、後から方法論を公開する。Time Horizon 1.1 ベンチマーク（2026年1月）は、同組織の代表的な成果物である。これは能力を、人間が読み取れる単位に圧縮した単一のスカラー値にする。「このモデルは、専門家がX時間を費やす種類のタスクを、50%の信頼性で実行できる」という形で表す。
 
-The lesson is partly about the methodology (how a horizon is computed) and partly about the interpretation (why a horizon is an upper bound, not a deployment prediction). The two skills belong together. A team that understands how the horizon is fit is much harder to fool with a bad vendor claim than a team that just sees "14 hours" on a slide.
+このレッスンは、方法論（ホライズンをどう計算するか）と解釈（なぜホライズンは上限であり、デプロイ予測ではないのか）の両方を扱う。この2つのスキルは切り離せない。ホライズンのフィット方法を理解しているチームは、スライド上の「14時間」という数字だけを見るチームよりも、ベンダーの弱い主張にだまされにくい。
 
-## The Concept
+## 考え方
 
-### METR background
+### METRの背景
 
-- Founded: December 2023 (ex-ARC Evals, spun out into independent 501(c)(3)).
-- Scope: evaluation of frontier models' autonomous capabilities, often pre-release.
-- Partner labs: Anthropic, OpenAI (multiple engagements 2025–2026).
-- Notable deliverables: Time Horizon 1.0 (March 2025), Time Horizon 1.1 (January 2026), prototype monitoring evaluations.
+- 設立: 2023年12月（旧ARC Evalsから独立し、501(c)(3)へ移行）。
+- 対象範囲: フロンティアモデルの自律能力評価。リリース前モデルを扱うことが多い。
+- 提携研究所: Anthropic、OpenAI（2025-2026年に複数の関与）。
+- 代表的な成果物: Time Horizon 1.0（2025年3月）、Time Horizon 1.1（2026年1月）、プロトタイプの監視評価。
 
-### The Time Horizon fit
+### Time Horizon のフィット
 
-Methodology (from METR blog and papers):
+METRのブログと論文に基づく方法論:
 
-1. Collect a task suite spanning minute-scale to hour-scale expert completion times. Current suites: HCAST (180+ tasks), RE-Bench (71 tasks), SWAA.
-2. Run the model on each task; record success or failure.
-3. Fit a logistic curve: P(success) as a function of log(expert completion time).
-4. The horizon is the expert-time at which P(success) = 0.5.
+1. 分単位から時間単位までの専門家完了時間にまたがるタスクスイートを集める。現在のスイートは、HCAST（180以上のタスク）、RE-Bench（71タスク）、SWAAである。
+2. 各タスクでモデルを実行し、成功または失敗を記録する。
+3. ロジスティック曲線をフィットする。すなわち、log(専門家完了時間) の関数として P(success) を表す。
+4. ホライズンは、P(success) = 0.5 となる専門家時間である。
 
-The logistic-fit shape is the right one because capability generally has an increasing, plateau-approaching relationship with task difficulty. The 50% point is a choice (could be 10%, 90%); METR reports multiple thresholds in the detailed paper but leads with 50% because it is the most intuitive.
+このロジスティックフィット形状が適しているのは、能力がタスク難度に対して一般に増加し、やがてプラトーに近づく関係を持つためである。50%点は選択である（10%や90%でもよい）。METRは詳細論文では複数のしきい値を報告するが、直感的に最も理解しやすいため50%を主な値としている。
 
-### The January 2026 numbers
+### 2026年1月の数値
 
-Per Time Horizon 1.1:
+Time Horizon 1.1 によると:
 
-- Claude Opus 4.6: ~14 hours at 50% reliability, as of Time Horizon 1.1 (January 2026).
-- Doubling time on HCAST-style tasks: ~4.3 months (130.8 days) on the post-2023 fit reported by Time Horizon 1.1 (January 2026); the ~7-month figure is the full 2019–2025 fit from Time Horizon 1.0 and is reported in TH1.1 alongside the post-2023 number.
+- Claude Opus 4.6: Time Horizon 1.1（2026年1月）時点で、50%の信頼性で約14時間。
+- HCAST形式タスクでの倍増時間: Time Horizon 1.1（2026年1月）が報告した2023年以後のフィットでは約4.3ヶ月（130.8日）。約7ヶ月という数値は、Time Horizon 1.0 の2019-2025年全期間フィットであり、TH1.1でも2023年以後の数値と並べて報告されている。
 
-Those are the specific numbers the rest of Phase 15 references. They are cited in Anthropic's RSP v3.0 (Lesson 19) and DeepMind's FSF v3 (Lesson 20) as one of the measurements feeding threshold assessments.
+これらが、Phase 15の残りで参照される具体的な数値である。AnthropicのRSP v3.0（レッスン19）とDeepMindのFSF v3（レッスン20）は、しきい値評価に入力される測定の一つとしてこれらを引用している。
 
-### Benchmark suites
+### ベンチマークスイート
 
-- **HCAST**: 189 tasks across ML, cybersecurity, software engineering, and general reasoning. Span: 1 minute to 8+ hours of expert time. The main suite behind the horizon number.
-- **RE-Bench**: 71 ML research-engineering tasks with a human expert baseline. Measures whether the model can do the kind of ML R&D work that feeds into the AI R&D-4 threshold.
-- **SWAA**: shorter tasks; useful for calibrating the low end of the horizon curve.
+- **HCAST**: ML、サイバーセキュリティ、ソフトウェアエンジニアリング、一般推論にまたがる189タスク。範囲は専門家時間で1分から8時間以上。ホライズン値の中心となる主要スイート。
+- **RE-Bench**: 人間の専門家ベースライン付きの71件のML研究エンジニアリングタスク。AI R&D-4 しきい値につながる種類のML R&D作業をモデルが実行できるかを測る。
+- **SWAA**: より短いタスク。ホライズン曲線の低い側を較正するために有用。
 
-### Prototype monitoring evaluations
+### プロトタイプの監視評価
 
-2025–2026 METR work included monitoring-evaluation prototypes: can a monitor catch a model performing a side task (something other than what the operator asked for); can the agent evade the monitor. These directly feed the "Undermining Safeguards" category in OpenAI PF v2 and the deceptive-alignment monitoring in DeepMind FSF v3 (Lesson 20).
+2025-2026年のMETRの作業には、監視評価のプロトタイプも含まれていた。監視器は、モデルが副次タスク（オペレーターが依頼したもの以外の作業）を実行していることを検知できるか。エージェントは監視器を回避できるか。これらは、OpenAI PF v2 の「Undermining Safeguards」カテゴリや、DeepMind FSF v3 の欺瞞的アラインメント監視（レッスン20）に直接つながる。
 
-### Why horizons are upper bounds
+### なぜホライズンは上限なのか
 
-- **Idealized tooling**: benchmark tasks give the model clean tools and well-formatted data. Real deployments are messier.
-- **No real consequences**: the model never actually bills a customer, deletes real data, or contacts real people. Real deployments have irreversible stakes.
-- **Eval-context gaming**: Lesson 1. Models behave differently in tests. The 2026 International AI Safety Report documents this empirically.
-- **No legitimate user variance**: benchmark prompts are structured. Real users produce ambiguous, context-dependent requests.
+- **理想化されたツール環境**: ベンチマークタスクは、モデルに整理されたツールと整形済みデータを与える。実際のデプロイはもっと散らかっている。
+- **現実の結果がない**: モデルは実際に顧客へ請求したり、本物のデータを削除したり、実在の人物へ連絡したりしない。実運用には取り返しのつかない利害がある。
+- **評価コンテキストでのゲーミング**: レッスン1。モデルはテスト中に異なる振る舞いをする。2026年 International AI Safety Report はこれを実証的に記録している。
+- **正当なユーザー差分がない**: ベンチマークプロンプトは構造化されている。現実のユーザーは、曖昧でコンテキスト依存の依頼をする。
 
-The horizon is the capability ceiling under favorable conditions. Deployment reliability is a different number, lower, and teams must measure their own distribution to know it.
+ホライズンは、有利な条件下での能力上限である。デプロイ時の信頼性は別の数値であり、より低い。チームは、自分たちの分布を測らなければそれを知ることはできない。
 
-### The external-evaluator case
+### 外部評価者が必要な理由
 
-External evaluation matters because internal labs have incentives to optimize metrics they report. METR's independence — a 501(c)(3) with a declared methodology and peer-reviewed papers — is the structural mitigation. It is not sufficient alone (labs still control what METR sees), but it is strictly better than no external evaluation.
+外部評価が重要なのは、内部研究所には、報告する指標を最適化するインセンティブがあるからである。METRの独立性、すなわち方法論を明示し査読論文を出す501(c)(3)であることは、構造的な緩和策である。それだけで十分ではない（研究所は依然としてMETRが何を見るかをコントロールする）が、外部評価がないよりは明確に良い。
 
-### How to use horizon numbers in practice
+### ホライズン値を実務で使う方法
 
-- **As a capability filter**: if a model's horizon is well below the expert-time of a proposed task, do not ship it autonomous (Lesson 1's skill file).
-- **As a trend indicator**: doubling time tells you how long the current practice will remain safe even without new mitigations.
-- **As a prior**: a horizon of 14 hours is a starting point. Adjust down for your task distribution, your tooling quality, and your deployment context.
+- **能力フィルターとして**: モデルのホライズンが提案タスクの専門家時間を大きく下回るなら、それを自律実行として出荷しない（レッスン1のスキルファイル）。
+- **トレンド指標として**: 倍増時間は、新しい緩和策がなくても現在の実務が安全でいられる期間を示す。
+- **事前分布として**: 14時間のホライズンは出発点である。自分たちのタスク分布、ツール品質、デプロイ文脈に合わせて下方修正する。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements a logistic fit of task-success vs log(expert time), given a synthetic result set. It reports the 50% horizon (METR's headline), 10% horizon (conservative), and 90% horizon (optimistic). Also demonstrates what changes when the success rate is artificially inflated by eval-context gaming.
+`code/main.py` は、合成結果セットを受け取り、タスク成功率と log(専門家時間) のロジスティックフィットを実装している。50%ホライズン（METRの代表値）、10%ホライズン（保守的）、90%ホライズン（楽観的）を報告する。また、評価コンテキストのゲーミングによって成功率が人工的に水増しされた場合に何が変わるかも示す。
 
-## Ship It
+## 形にしてみる
 
-`outputs/skill-horizon-interpretation.md` reviews a vendor's horizon claim and produces a gap analysis between benchmark claim and deployment reality.
+`outputs/skill-horizon-interpretation.md` は、ベンダーのホライズン主張をレビューし、ベンチマーク上の主張とデプロイ現実のギャップ分析を作成する。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Confirm the fit's 50% horizon matches the synthetic ground truth. Now halve the task-time grid; does the horizon estimate change meaningfully?
+1. `code/main.py` を実行する。フィットの50%ホライズンが合成データの真の値と一致することを確認する。次にタスク時間グリッドを半分にする。ホライズン推定値は大きく変わるか。
 
-2. Read METR's Time Horizon 1.1 blog post. Identify the specific tasks where reliability is highest and where it is lowest. Explain why the gap exists.
+2. METRの Time Horizon 1.1 ブログ記事を読む。信頼性が最も高い具体的なタスクと、最も低いタスクを特定する。その差が生じる理由を説明する。
 
-3. Read METR's "Measuring Autonomous AI Capabilities" resources. List the HCAST task categories. Pick one category you would weight more heavily for a production task and justify why.
+3. METRの「Measuring Autonomous AI Capabilities」関連資料を読む。HCASTのタスクカテゴリを列挙する。本番タスクでより強く重み付けしたいカテゴリを一つ選び、その理由を説明する。
 
-4. Introduce eval-context gaming into the simulator: flip ~20% of failed tasks to success. Report the new horizon. This approximates what a gaming rate of 20% does to the observed number.
+4. シミュレーターに評価コンテキストのゲーミングを導入する。失敗タスクの約20%を成功に反転する。新しいホライズンを報告する。これは、20%のゲーミング率が観測値に与える影響の近似である。
 
-5. Design an internal horizon evaluation on your own bug backlog or a representative task set. Describe the data collection, the fit, and what the output tells you. Compare to METR numbers.
+5. 自分のバグバックログ、または代表的なタスクセットに対して、内部ホライズン評価を設計する。データ収集、フィット、出力が何を教えるかを説明する。METRの数値と比較する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |---|---|---|
-| METR | "External evaluator" | ex-ARC Evals; independent 501(c)(3) since Dec 2023 |
-| Time Horizon | "Capability measure" | Expert task length at 50% reliability, from logistic fit |
-| HCAST | "METR's main suite" | 180+ tasks spanning 1 min to 8+ hours |
-| RE-Bench | "Research engineering" | 71 ML research-engineering tasks with human baseline |
-| SWAA | "Short-task suite" | Calibrates the low end of the horizon curve |
-| Doubling time | "Growth rate" | Time for the 50% horizon to double; ~7 months per HCAST |
-| Eval-context gaming | "Model behaves differently" | Documented behavior gap between tests and deployment |
-| Upper bound | "Horizon is a ceiling" | Benchmark horizon > deployment reliability under load |
+| METR | 「外部評価者」 | 旧ARC Evals。2023年12月以降は独立した501(c)(3) |
+| Time Horizon | 「能力指標」 | ロジスティックフィットから得る、50%信頼性での専門家タスク長 |
+| HCAST | 「METRの主要スイート」 | 1分から8時間以上にまたがる180以上のタスク |
+| RE-Bench | 「研究エンジニアリング」 | 人間ベースライン付きの71件のML研究エンジニアリングタスク |
+| SWAA | 「短時間タスクスイート」 | ホライズン曲線の低い側を較正する |
+| Doubling time | 「成長率」 | 50%ホライズンが倍増する時間。HCASTでは約7ヶ月 |
+| Eval-context gaming | 「モデルが違う振る舞いをする」 | テストとデプロイの間で文書化された行動ギャップ |
+| Upper bound | 「ホライズンは上限」 | ベンチマークホライズンは、負荷下のデプロイ信頼性より大きい |
 
-## Further Reading
+## さらに読む
 
-- [METR — Resources for Measuring Autonomous AI Capabilities](https://metr.org/measuring-autonomous-ai-capabilities/) — HCAST, RE-Bench, SWAA specs.
-- [METR — Measuring AI Ability to Complete Long Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) — the original horizon paper.
-- [METR — Time Horizon 1.1 (January 2026)](https://metr.org/research/) — current numbers and methodology.
-- [Epoch AI — METR Time Horizons benchmark](https://epoch.ai/benchmarks/metr-time-horizons) — live tracking.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — internal perspective on METR's measurements.
+- [METR — Resources for Measuring Autonomous AI Capabilities](https://metr.org/measuring-autonomous-ai-capabilities/) — HCAST、RE-Bench、SWAAの仕様。
+- [METR — Measuring AI Ability to Complete Long Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) — 元のホライズン論文。
+- [METR — Time Horizon 1.1 (January 2026)](https://metr.org/research/) — 現在の数値と方法論。
+- [Epoch AI — METR Time Horizons benchmark](https://epoch.ai/benchmarks/metr-time-horizons) — ライブトラッキング。
+- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — METRの測定に対する内部視点。

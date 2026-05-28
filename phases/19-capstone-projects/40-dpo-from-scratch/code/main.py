@@ -1,21 +1,18 @@
 """
-Direct Preference Optimization (DPO) from scratch.
+scratch からの Direct Preference Optimization (DPO)。
 
 See: phases/19-capstone-projects/40-dpo-from-scratch/docs/en.md
 
-Builds:
-  - InstructionTokenizer with INST / RESP specials (byte-level)
-  - TinyGPT (causal decoder-only transformer)
-  - preference fixture of (prompt, chosen, rejected) triples
-  - sequence_log_prob that sums next-token log probabilities over the
-    completion, masking the prompt
-  - dpo_loss that implements:
-       L = -log sigmoid( beta * ( (logp_w_pol - logp_w_ref)
-                                - (logp_l_pol - logp_l_ref) ) )
-  - train_dpo loop with a frozen reference and a trainable policy
-  - run_demo that prints loss and chosen-rejected margins per epoch.
+以下を作ります。
+  - INST / RESP specials 付き InstructionTokenizer（byte-level）
+  - TinyGPT（causal decoder-only transformer）
+  - (prompt, chosen, rejected) triples の preference fixture
+  - prompt を mask して completion の next-token log probability を合計する sequence_log_prob
+  - DPO loss
+  - frozen reference と trainable policy を使う train_dpo loop
+  - epoch ごとの loss と chosen-rejected margin を表示する run_demo
 
-Exits 0 when the chosen-rejected log-prob margin increases under training.
+training で chosen-rejected log-prob margin が増えれば exit 0 です。
 """
 
 from __future__ import annotations
@@ -33,7 +30,7 @@ import torch.nn.functional as F
 
 
 # ---------------------------------------------------------------------------
-# Tokeniser
+# tokenizer
 # ---------------------------------------------------------------------------
 
 
@@ -117,78 +114,30 @@ class TinyGPT(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# Preference fixture
+# preference fixture
 # ---------------------------------------------------------------------------
 
 
 def make_preferences() -> List[Dict[str, str]]:
-    """Twelve preference triples covering simple task types."""
+    """単純な task types を含む12個の preference triples。"""
     return [
-        {
-            "prompt": "What is the capital of France?",
-            "chosen": "Paris.",
-            "rejected": "France is in Europe and has many beautiful cities including Paris.",
-        },
-        {
-            "prompt": "What is the capital of Japan?",
-            "chosen": "Tokyo.",
-            "rejected": "Japan is an island nation. Its government sits in Tokyo.",
-        },
-        {
-            "prompt": "What is the capital of Spain?",
-            "chosen": "Madrid.",
-            "rejected": "Spain has many cities. Madrid is the largest of them.",
-        },
-        {
-            "prompt": "Compute 2 + 3.",
-            "chosen": "5.",
-            "rejected": "Let me think. 2 plus 3 is something close to 5 I believe.",
-        },
-        {
-            "prompt": "Compute 7 * 6.",
-            "chosen": "42.",
-            "rejected": "7 multiplied by 6 gives a number around the forties.",
-        },
-        {
-            "prompt": "Compute 12 / 4.",
-            "chosen": "3.",
-            "rejected": "Twelve divided by four is roughly three or so.",
-        },
-        {
-            "prompt": "List three colors.",
-            "chosen": "red, green, blue.",
-            "rejected": "Colors are everywhere. Some of them are red, green, and there is blue too.",
-        },
-        {
-            "prompt": "List three vowels.",
-            "chosen": "a, e, i.",
-            "rejected": "Vowels are letters that produce open mouth sounds, like a and e and also i.",
-        },
-        {
-            "prompt": "Define variable.",
-            "chosen": "a name bound to a value.",
-            "rejected": "A variable is a thing that you can use in programming to store stuff.",
-        },
-        {
-            "prompt": "Define function.",
-            "chosen": "a reusable block of code that returns an output.",
-            "rejected": "A function is basically something that does things when you call it on inputs.",
-        },
-        {
-            "prompt": "Python: print 42.",
-            "chosen": "print(42)",
-            "rejected": "You can print numbers in python. For 42 you would call print on it.",
-        },
-        {
-            "prompt": "Python: sort items.",
-            "chosen": "items.sort()",
-            "rejected": "Sorting a list in python is easy, just call sort on the items list.",
-        },
+        {"prompt": "フランスの首都は何ですか?", "chosen": "パリ。", "rejected": "フランスには多くの美しい都市があり、パリもその一つです。"},
+        {"prompt": "日本の首都は何ですか?", "chosen": "東京。", "rejected": "日本は島国です。政府の中心は東京にあります。"},
+        {"prompt": "スペインの首都は何ですか?", "chosen": "マドリード。", "rejected": "スペインには多くの都市があります。マドリードはその中で大きな都市です。"},
+        {"prompt": "2 + 3 を計算してください。", "chosen": "5。", "rejected": "考えてみます。2足す3は5に近い何かだと思います。"},
+        {"prompt": "7 * 6 を計算してください。", "chosen": "42。", "rejected": "7に6を掛けると40台くらいの数になります。"},
+        {"prompt": "12 / 4 を計算してください。", "chosen": "3。", "rejected": "12を4で割るとだいたい3くらいです。"},
+        {"prompt": "色を3つ挙げてください。", "chosen": "赤、緑、青。", "rejected": "色はどこにでもあります。赤や緑があり、青もあります。"},
+        {"prompt": "母音を3つ挙げてください。", "chosen": "あ、い、う。", "rejected": "母音は口を開いて出す音で、あやいなどがあります。"},
+        {"prompt": "変数を定義してください。", "chosen": "値に束縛された名前。", "rejected": "変数はプログラミングで何かを保存するために使うものです。"},
+        {"prompt": "関数を定義してください。", "chosen": "出力を返す再利用可能なコード片。", "rejected": "関数は入力を与えて呼ぶと何かをするものです。"},
+        {"prompt": "Python で 42 を表示してください。", "chosen": "print(42)", "rejected": "Python では数値を表示できます。42なら print を呼びます。"},
+        {"prompt": "Python で items をソートしてください。", "chosen": "items.sort()", "rejected": "Python でリストをソートするには items に対して sort を呼びます。"},
     ]
 
 
 # ---------------------------------------------------------------------------
-# Log-probability machinery
+# log-probability machinery
 # ---------------------------------------------------------------------------
 
 
@@ -197,22 +146,22 @@ def sequence_log_prob(
     prompt_ids: Sequence[int],
     completion_ids: Sequence[int],
 ) -> torch.Tensor:
-    """Sum of log-probabilities of the completion tokens conditioned on prompt.
+    """prompt を条件とする completion tokens の log-probabilities の合計。
 
-    Returns a 0-dim tensor on the same device as the model.
+    model と同じ device 上の 0-dim tensor を返します。
 
-    Implementation:
-      - Concatenate prompt + completion.
-      - Forward through the model.
-      - Take log-softmax of the logits.
-      - For each completion position i (counted in the full sequence), gather
-        log p(completion[i] | tokens[<i]) and sum.
+    実装:
+      - prompt + completion を連結します。
+      - model に forward します。
+      - logits の log-softmax を取ります。
+      - full sequence 上の各 completion position i について、
+        log p(completion[i] | tokens[<i]) を gather して合計します。
     """
     if len(completion_ids) == 0:
         return torch.zeros((), device=next(model.parameters()).device)
     full = list(prompt_ids) + list(completion_ids)
     if len(full) > model.max_len:
-        # Truncate from the left to keep the most recent context.
+        # 最新 context を保つため左から truncate します。
         full = full[-model.max_len :]
         prompt_len = max(0, len(full) - len(completion_ids))
     else:
@@ -220,12 +169,12 @@ def sequence_log_prob(
     ids = torch.tensor([full], dtype=torch.long, device=next(model.parameters()).device)
     logits = model(ids)
     log_probs = F.log_softmax(logits, dim=-1)
-    # Position i predicts token i+1. The completion lives at indices [prompt_len, len(full)).
-    # We need log p(token at index k | tokens up to k-1), for k in that range.
-    # That probability is log_probs[0, k-1, token_k].
+    # position i は token i+1 を予測します。completion は indices [prompt_len, len(full)) にあります。
+    # その範囲の k について log p(token at index k | tokens up to k-1) が必要です。
+    # その確率は log_probs[0, k-1, token_k] です。
     completion_targets = torch.tensor(full[prompt_len:], dtype=torch.long, device=ids.device)
     pred_positions = torch.arange(prompt_len - 1, len(full) - 1, device=ids.device)
-    # Guard against the (degenerate) case where prompt_len == 0.
+    # prompt_len == 0 の degenerate case を guard。
     if prompt_len == 0:
         pred_positions = torch.arange(0, len(full) - 1, device=ids.device)
         completion_targets = torch.tensor(full[1:], dtype=torch.long, device=ids.device)
@@ -240,7 +189,7 @@ def dpo_loss(
     logp_l_ref: torch.Tensor,
     beta: float,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
-    """Per-example DPO loss and the implicit reward margin.
+    """example ごとの DPO loss と implicit reward margin。
 
     L = -log sigmoid( beta * ( (logp_w_pol - logp_w_ref) - (logp_l_pol - logp_l_ref) ) )
 
@@ -251,7 +200,7 @@ def dpo_loss(
     diff_l = logp_l_pol - logp_l_ref
     margin = diff_w - diff_l
     z = beta * margin
-    # logsigmoid is numerically stable; loss is per-example, scalar.
+    # logsigmoid は numerically stable。loss は example ごとの scalar です。
     loss = -F.logsigmoid(z)
     return loss, margin
 
@@ -263,7 +212,7 @@ def ipo_loss(
     logp_l_ref: torch.Tensor,
     beta: float,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
-    """The IPO variant: a squared loss that does not saturate.
+    """IPO variant: 飽和しない squared loss。
 
     L_IPO = ( ( (logp_w_pol - logp_w_ref) - (logp_l_pol - logp_l_ref) ) - 1 / (2 * beta) ) ** 2
 
@@ -284,7 +233,7 @@ def length_normalised_log_prob(
     prompt_ids: Sequence[int],
     completion_ids: Sequence[int],
 ) -> torch.Tensor:
-    """Sequence log-prob divided by completion length.
+    """sequence log-prob を completion length で割ったもの。
 
     Useful for diagnosing length bias: if length-normalised margins are
     positive but raw margins are negative (or vice versa) the model is
@@ -311,7 +260,7 @@ def margin_table(
     tok: InstructionTokenizer,
     triples: Sequence[Dict[str, str]],
 ) -> List[MarginRow]:
-    """Per-triple margin report under the policy. Useful for debugging."""
+    """policy 下での triple ごとの margin report。debug に便利です。"""
     rows: List[MarginRow] = []
     with torch.no_grad():
         for tri in triples:
@@ -343,7 +292,7 @@ def print_margin_table(rows: Sequence[MarginRow], log: Callable[[str], None] = p
 
 
 # ---------------------------------------------------------------------------
-# Reference / policy management
+# reference / policy management
 # ---------------------------------------------------------------------------
 
 
@@ -358,19 +307,19 @@ class DPOConfig:
     lr: float = 1e-3
     epochs: int = 30
     seed: int = 0
-    warmup_epochs: int = 8  # brief reference pretrain so log-probs are non-trivial
+    warmup_epochs: int = 8  # log-probs が非自明になるよう短く reference を pretrain
 
 
 def build_models(cfg: DPOConfig) -> Tuple[TinyGPT, TinyGPT]:
-    """Build a reference and a policy. The policy is initialised from the
+    """reference と policy を構築します。 The policy is initialised from the
     reference's state dict so they start in the same place, then the policy
     diverges under DPO training while the reference stays frozen."""
     torch.manual_seed(cfg.seed)
     reference = TinyGPT(cfg.vocab, cfg.hidden, cfg.heads, cfg.depth, cfg.max_len)
-    torch.manual_seed(cfg.seed)  # reseed so the policy weights match before any training
+    torch.manual_seed(cfg.seed)  # training 前に policy weights が一致するよう reseed
     policy = TinyGPT(cfg.vocab, cfg.hidden, cfg.heads, cfg.depth, cfg.max_len)
     policy.load_state_dict(reference.state_dict())
-    # Freeze the reference.
+    # reference を freeze。
     for p in reference.parameters():
         p.requires_grad = False
     reference.eval()
@@ -385,8 +334,7 @@ def warmup_pretrain(
     lr: float = 3e-3,
     seed: int = 0,
 ) -> List[float]:
-    """A short next-token pretraining pass on the chosen completions so the
-    reference has non-trivial probabilities on the fixture's task structure."""
+    """reference が fixture の task structure に非自明な確率を持つよう、chosen completions で短い next-token pretraining pass を行います。"""
     torch.manual_seed(seed)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     losses: List[float] = []
@@ -415,7 +363,7 @@ def warmup_pretrain(
 
 
 # ---------------------------------------------------------------------------
-# Training loop
+# training loop
 # ---------------------------------------------------------------------------
 
 
@@ -433,9 +381,9 @@ def evaluate_margins(
     tok: InstructionTokenizer,
     triples: Sequence[Dict[str, str]],
 ) -> float:
-    """Mean (chosen - rejected) log-prob difference under the policy.
+    """policy 下での mean (chosen - rejected) log-prob difference。
 
-    Without DPO this can be anything; DPO training drives it positive.
+    DPO なしでは任意の値になりえます。DPO training はこれを正に押し上げます。
     """
     margins: List[float] = []
     with torch.no_grad():
@@ -459,7 +407,7 @@ def train_dpo(
 ) -> DPOReport:
     report = DPOReport()
     opt = torch.optim.Adam(policy.parameters(), lr=cfg.lr)
-    # Snapshot reference log-probs up front; they never change.
+    # reference log-probs は最初に snapshot し、以後変わりません。
     ref_logps: List[Tuple[torch.Tensor, torch.Tensor]] = []
     with torch.no_grad():
         for tri in triples:
@@ -494,7 +442,7 @@ def train_dpo(
 
 
 # ---------------------------------------------------------------------------
-# Demo
+# demo
 # ---------------------------------------------------------------------------
 
 
@@ -513,9 +461,9 @@ def run_demo(cfg: Optional[DPOConfig] = None) -> int:
 
     reference, policy = build_models(cfg)
 
-    print(f"[warmup] short pretrain on chosen completions ({cfg.warmup_epochs} epochs)...")
-    # build_models() freezes the reference so the DPO loop cannot accidentally
-    # update it. Unfreeze it just for warmup, then re-freeze before training.
+    print(f"[warmup] chosen completions で短く pretrain ({cfg.warmup_epochs} epochs)...")
+    # build_models() は reference を freeze し、DPO loop が誤って
+    # 更新できないようにします。warmup の間だけ unfreeze し、training 前に再 freeze します。
     for p in reference.parameters():
         p.requires_grad = True
     reference.train()
@@ -526,7 +474,7 @@ def run_demo(cfg: Optional[DPOConfig] = None) -> int:
         epochs=cfg.warmup_epochs,
         seed=cfg.seed,
     )
-    # Copy warmed-up weights into the policy and re-freeze the reference.
+    # warmed-up weights を policy に copy し、reference を再 freeze します。
     policy.load_state_dict(reference.state_dict())
     for p in reference.parameters():
         p.requires_grad = False
@@ -541,20 +489,20 @@ def run_demo(cfg: Optional[DPOConfig] = None) -> int:
     report = train_dpo(policy, reference, tok, triples, cfg)
 
     print("")
-    print("[per-triple margins after training]")
+    print("[training 後の triple 別 margins]")
     print_margin_table(margin_table(policy, tok, triples))
 
     print("")
     print(f"FINAL margin = {report.final_margin:+.4f}  (initial was {report.initial_margin:+.4f})")
     print(f"FINAL loss   = {report.losses[-1]:.4f}  (epoch-1 loss was {report.losses[0]:.4f})")
 
-    # Sanity: training should push the margin up.
+    # sanity: training は margin を上げるはずです。
     if report.final_margin <= report.initial_margin:
-        print("ERROR: training did not increase the chosen-rejected margin", file=sys.stderr)
+        print("ERROR: training が chosen-rejected margin を増やしませんでした", file=sys.stderr)
         return 1
-    # And loss should drop.
+    # さらに loss は下がるはずです。
     if report.losses[-1] >= report.losses[0]:
-        print("ERROR: training did not reduce loss across epochs", file=sys.stderr)
+        print("ERROR: training が epoch 間で loss を下げませんでした", file=sys.stderr)
         return 1
     return 0
 

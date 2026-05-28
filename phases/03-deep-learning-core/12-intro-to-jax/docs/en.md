@@ -1,49 +1,49 @@
-# Introduction to JAX
+# JAX 入門
 
-> PyTorch mutates tensors. TensorFlow builds graphs. JAX compiles pure functions. That last one changes how you think about deep learning.
+> PyTorch は tensors を mutate します。TensorFlow は graphs を構築します。JAX は pure functions を compile します。最後の 1 つが、deep learning の考え方を変えます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 03 Lessons 01-10, basic NumPy
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 03 Lessons 01-10、basic NumPy
+**時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Write pure-function neural network code using JAX's functional API (jax.numpy, jax.grad, jax.jit, jax.vmap)
-- Explain the key design difference between PyTorch's eager mutation and JAX's functional compilation model
-- Apply jit compilation and vmap vectorization to accelerate training loops compared to naive Python
-- Train a simple network in JAX and contrast the explicit state management with PyTorch's object-oriented approach
+- JAX の functional API（jax.numpy、jax.grad、jax.jit、jax.vmap）を使って pure-function neural network code を書く
+- PyTorch の eager mutation と JAX の functional compilation model の重要な design difference を説明する
+- jit compilation と vmap vectorization を適用し、naive Python と比べて training loops を高速化する
+- JAX で simple network を学習し、explicit state management を PyTorch の object-oriented approach と対比する
 
-## The Problem
+## 問題
 
-You know how to build neural networks in PyTorch. You define an `nn.Module`, call `.backward()`, step the optimizer. It works. Millions of people use it.
+あなたは PyTorch で neural networks を作る方法を知っています。`nn.Module` を定義し、`.backward()` を呼び、optimizer を step します。それは動きます。何百万人も使っています。
 
-But PyTorch has a constraint baked into its DNA: it traces operations eagerly, one at a time, in Python. Every `tensor + tensor` is a separate kernel launch. Every training step re-interprets the same Python code. This works fine until you need to train a 540-billion-parameter model across 2,048 TPUs. Then the overhead kills you.
+しかし PyTorch には、その DNA に組み込まれた制約があります。operations を Python で 1 つずつ eager に trace することです。すべての `tensor + tensor` は別々の kernel launch です。すべての training step は同じ Python code を再解釈します。540-billion-parameter model を 2,048 TPUs 全体で学習する必要が出るまでは、これで十分です。その規模では overhead が致命的になります。
 
-Google DeepMind trains Gemini on JAX. Anthropic trained Claude on JAX. These are not small operations -- they are the largest neural network training runs on Earth. They chose JAX because it treats your training loop as a compilable program, not a sequence of Python calls.
+Google DeepMind は Gemini を JAX で学習しています。Anthropic は Claude を JAX で学習しました。これらは小さな operations ではありません。地球上で最大級の neural network training runs です。彼らが JAX を選んだのは、training loop を Python calls の列ではなく、compile 可能な program として扱うからです。
 
-JAX is NumPy with three superpowers: automatic differentiation, JIT compilation to XLA, and automatic vectorization. You write a function that processes one example. JAX gives you a function that processes a batch, computes gradients, compiles to machine code, and runs across multiple devices. All without changing the original function.
+JAX は 3 つの superpowers を持つ NumPy です。automatic differentiation、XLA への JIT compilation、automatic vectorization。あなたは 1 example を処理する function を書きます。JAX はそれを、batch を処理し、gradients を計算し、machine code に compile し、複数 devices にまたがって実行する function にします。元の function を変えずに、です。
 
-## The Concept
+## 概念
 
-### The JAX Philosophy
+### JAX Philosophy
 
-JAX is a functional framework. No classes, no mutable state, no `.backward()` method. Instead:
+JAX は functional framework です。classes なし、mutable state なし、`.backward()` method なし。代わりに:
 
 | PyTorch | JAX |
 |---------|-----|
-| `nn.Module` class with state | Pure function: `f(params, x) -> y` |
+| state を持つ `nn.Module` class | Pure function: `f(params, x) -> y` |
 | `loss.backward()` | `jax.grad(loss_fn)(params, x, y)` |
-| Eager execution | JIT compilation via XLA |
+| Eager execution | XLA による JIT compilation |
 | `for x in batch:` manual loop | `jax.vmap(f)` auto-vectorization |
 | `DataParallel` / `FSDP` | `jax.pmap(f)` auto-parallelism |
-| Mutable `model.parameters()` | Immutable pytree of arrays |
+| mutable な `model.parameters()` | arrays の immutable pytree |
 
-This is not a style preference. It is a compiler constraint. JIT compilation requires pure functions -- same inputs always produce same outputs, no side effects. That restriction is what makes 100x speedups possible.
+これは style preference ではありません。compiler constraint です。JIT compilation には pure functions が必要です。同じ inputs は常に同じ outputs を生み、side effects がない function です。その制約が 100x speedups を可能にします。
 
-### jax.numpy: The Familiar Surface
+### jax.numpy: 見慣れた表面
 
-JAX reimplements the NumPy API on accelerators:
+JAX は accelerator 上で NumPy API を再実装しています。
 
 ```python
 import jax.numpy as jnp
@@ -53,13 +53,13 @@ b = jnp.array([4.0, 5.0, 6.0])
 c = jnp.dot(a, b)
 ```
 
-Same function names. Same broadcasting rules. Same slicing semantics. But the arrays live on GPU/TPU, and every operation is traceable by the compiler.
+同じ function names。同じ broadcasting rules。同じ slicing semantics。しかし arrays は GPU/TPU 上にあり、すべての operation は compiler によって trace 可能です。
 
-One critical difference: JAX arrays are immutable. No `a[0] = 5`. Instead: `a = a.at[0].set(5)`. This feels awkward for a week, then it clicks -- immutability is what makes transformations like `grad`, `jit`, and `vmap` composable.
+重要な違いが 1 つあります。JAX arrays は immutable です。`a[0] = 5` はできません。代わりに `a = a.at[0].set(5)` と書きます。最初の 1 週間は扱いづらく感じますが、その後腑に落ちます。immutability こそが、`grad`、`jit`、`vmap` のような transformations を composable にします。
 
 ### jax.grad: Functional Autodiff
 
-PyTorch attaches gradients to tensors (`.grad`). JAX attaches gradients to functions.
+PyTorch は gradients を tensors（`.grad`）に付けます。JAX は gradients を functions に付けます。
 
 ```python
 import jax
@@ -71,20 +71,20 @@ df = jax.grad(f)
 df(3.0)
 ```
 
-`jax.grad` takes a function and returns a new function that computes the gradient. No `.backward()` call. No computation graph stored on tensors. The gradient is just another function you can call, compose, or JIT-compile.
+`jax.grad` は function を受け取り、gradient を計算する新しい function を返します。`.backward()` call はありません。tensors 上に保存される computation graph もありません。gradient はただの別の function であり、呼び出したり、compose したり、JIT-compile したりできます。
 
-This composes arbitrarily:
+これは任意に compose できます。
 
 ```python
 d2f = jax.grad(jax.grad(f))
 d2f(3.0)
 ```
 
-Second derivatives. Third derivatives. Jacobians. Hessians. All by composing `grad`. PyTorch can do this too (`torch.autograd.functional.hessian`), but it is bolted on. In JAX, it is the foundation.
+second derivatives。third derivatives。Jacobians。Hessians。すべて `grad` を compose するだけです。PyTorch でも可能ですが（`torch.autograd.functional.hessian`）、後付けです。JAX ではこれが土台です。
 
-The constraint: `grad` only works on pure functions. No print statements inside (they run during tracing, not execution). No mutation of external state. No random number generation without explicit key management.
+制約: `grad` は pure functions にしか使えません。内部に print statements は置けません（tracing 中に実行され、execution 中ではありません）。external state を mutate できません。explicit key management なしに random number generation もできません。
 
-### jit: Compile to XLA
+### jit: XLA へ Compile する
 
 ```python
 @jax.jit
@@ -95,60 +95,60 @@ def train_step(params, x, y):
 fast_step = jax.jit(train_step)
 ```
 
-On the first call, JAX traces the function -- it records which operations happen, without executing them. Then it hands that trace to XLA (Accelerated Linear Algebra), Google's compiler for TPUs and GPUs. XLA fuses operations, eliminates redundant memory copies, and generates optimized machine code.
+最初の call で、JAX は function を trace します。つまり、実行せずにどの operations が起きるかを記録します。その trace を XLA（Accelerated Linear Algebra）へ渡します。XLA は Google の TPUs/GPUs 向け compiler です。XLA は operations を fuse し、冗長な memory copies を削除し、optimized machine code を生成します。
 
-Subsequent calls skip Python entirely. The compiled code runs on the accelerator at C++ speed.
+以後の calls では Python を完全に skip します。compiled code が accelerator 上で C++ speed で動きます。
 
-When JIT helps:
-- Training steps (same computation repeated thousands of times)
-- Inference (same model, different inputs)
-- Any function called more than once with similar-shaped inputs
+JIT が役立つ場面:
+- Training steps（同じ computation を何千回も繰り返す）
+- Inference（同じ model、異なる inputs）
+- 似た shape の inputs で複数回呼ばれる任意の function
 
-When JIT hurts:
-- Functions with Python control flow that depends on values (`if x > 0` where x is a traced array)
-- One-shot computations (compilation overhead exceeds runtime)
-- Debugging (tracing hides the actual execution)
+JIT が逆効果になる場面:
+- values に依存する Python control flow を持つ functions（traced array である x に対する `if x > 0` など）
+- one-shot computations（compilation overhead が runtime を上回る）
+- debugging（tracing が実際の execution を隠す）
 
-The control flow restriction is real. `jax.lax.cond` replaces `if/else`. `jax.lax.scan` replaces `for` loops. These are not optional -- they are the price of compilation.
+control flow restriction は現実的な制約です。`jax.lax.cond` は `if/else` を置き換えます。`jax.lax.scan` は `for` loops を置き換えます。これは optional ではありません。compilation の代償です。
 
 ### vmap: Automatic Vectorization
 
-You write a function that processes one example:
+1 example を処理する function を書きます。
 
 ```python
 def predict(params, x):
     return jnp.dot(params['w'], x) + params['b']
 ```
 
-`vmap` lifts it to process a batch:
+`vmap` はそれを batch を処理する function に持ち上げます。
 
 ```python
 batch_predict = jax.vmap(predict, in_axes=(None, 0))
 ```
 
-`in_axes=(None, 0)` means: do not batch over `params` (shared), batch over axis 0 of `x`. No manual `for` loop. No reshaping. No batch dimension threading. JAX figures out the batch dimension and vectorizes the entire computation.
+`in_axes=(None, 0)` は、`params` には batch をかけず（shared）、`x` の axis 0 に batch をかけるという意味です。manual `for` loop は不要です。reshaping も不要です。batch dimension を手で通す必要もありません。JAX が batch dimension を見つけ、computation 全体を vectorize します。
 
-This is not syntactic sugar. `vmap` generates fused vectorized code that runs 10-100x faster than a Python loop. And it composes with `jit` and `grad`:
+これは syntactic sugar ではありません。`vmap` は Python loop より 10-100x 速く動く fused vectorized code を生成します。そして `jit` や `grad` と compose できます。
 
 ```python
 per_example_grads = jax.vmap(jax.grad(loss_fn), in_axes=(None, 0, 0))
 ```
 
-Per-example gradients. One line. This is nearly impossible in PyTorch without hacks.
+Per-example gradients。1 行です。これは PyTorch では hacks なしではほぼ不可能です。
 
-### pmap: Data Parallelism Across Devices
+### pmap: Devices 間の Data Parallelism
 
 ```python
 parallel_step = jax.pmap(train_step, axis_name='devices')
 ```
 
-`pmap` replicates the function across all available devices (GPUs/TPUs) and splits the batch. Inside the function, `jax.lax.pmean` and `jax.lax.psum` synchronize gradients across devices.
+`pmap` は function を利用可能なすべての devices（GPUs/TPUs）に replicate し、batch を分割します。function 内では、`jax.lax.pmean` と `jax.lax.psum` が devices 間で gradients を synchronize します。
 
-Google trains Gemini across thousands of TPU v5e chips using `pmap` (and its successor `shard_map`). The programming model: write the single-device version, wrap with `pmap`, done.
+Google は Gemini を、`pmap`（とその successor である `shard_map`）を使って数千の TPU v5e chips 全体で学習しています。programming model は、single-device version を書き、`pmap` で wrap して終わりです。
 
-### Pytrees: The Universal Data Structure
+### Pytrees: Universal Data Structure
 
-JAX operates on "pytrees" -- nested combinations of lists, tuples, dicts, and arrays. Your model parameters are a pytree:
+JAX は "pytrees"、つまり lists、tuples、dicts、arrays の nested combinations を扱います。model parameters は pytree です。
 
 ```python
 params = {
@@ -158,17 +158,17 @@ params = {
 }
 ```
 
-Every JAX transformation -- `grad`, `jit`, `vmap` -- knows how to traverse pytrees. `jax.tree.map(f, tree)` applies `f` to every leaf. This is how optimizers update all parameters at once:
+すべての JAX transformation（`grad`、`jit`、`vmap`）は pytrees を traverse する方法を知っています。`jax.tree.map(f, tree)` はすべての leaf に `f` を適用します。optimizers がすべての parameters を一度に更新できるのはこの仕組みです。
 
 ```python
 params = jax.tree.map(lambda p, g: p - lr * g, params, grads)
 ```
 
-No `.parameters()` method. No parameter registration. The tree structure is the model.
+`.parameters()` method はありません。parameter registration もありません。tree structure が model です。
 
 ### Functional vs Object-Oriented
 
-PyTorch stores state inside objects:
+PyTorch は state を objects の中に保存します。
 
 ```python
 class Model(nn.Module):
@@ -179,28 +179,28 @@ class Model(nn.Module):
         return self.linear(x)
 ```
 
-JAX uses pure functions with explicit state:
+JAX は explicit state を持つ pure functions を使います。
 
 ```python
 def predict(params, x):
     return jnp.dot(x, params['w']) + params['b']
 ```
 
-The params are passed in. Nothing is stored. Nothing is mutated. This makes every function testable, composable, and compilable. It also means you manage the params yourself -- or use a library like Flax or Equinox.
+params は渡されます。何も保存されません。何も mutate されません。これにより、すべての function が testable、composable、compilable になります。同時に、自分で params を管理する必要があります。あるいは Flax や Equinox のような library を使います。
 
-### The JAX Ecosystem
+### JAX Ecosystem
 
-JAX gives you primitives. Libraries give you ergonomics:
+JAX は primitives を提供します。libraries は ergonomics を提供します。
 
 | Library | Role | Style |
 |---------|------|-------|
-| **Flax** (Google) | Neural network layers | `nn.Module` with explicit state |
-| **Equinox** (Patrick Kidger) | Neural network layers | Pytree-based, Pythonic |
-| **Optax** (DeepMind) | Optimizers + LR schedules | Composable gradient transforms |
-| **Orbax** (Google) | Checkpointing | Save/restore pytrees |
-| **CLU** (Google) | Metrics + logging | Training loop utilities |
+| **Flax** (Google) | Neural network layers | explicit state 付き `nn.Module` |
+| **Equinox** (Patrick Kidger) | Neural network layers | Pytree-based、Pythonic |
+| **Optax** (DeepMind) | Optimizers + LR schedules | composable gradient transforms |
+| **Orbax** (Google) | Checkpointing | pytrees の save/restore |
+| **CLU** (Google) | Metrics + logging | training loop utilities |
 
-Optax is the standard optimizer library. It separates the gradient transformation (Adam, SGD, clipping) from the parameter update, making it trivial to compose:
+Optax は標準 optimizer library です。gradient transformation（Adam、SGD、clipping）を parameter update から分離し、compose を容易にします。
 
 ```python
 optimizer = optax.chain(
@@ -213,21 +213,21 @@ optimizer = optax.chain(
 
 | Factor | JAX | PyTorch |
 |--------|-----|---------|
-| TPU support | First-class (Google built both) | Community-maintained (torch_xla) |
-| GPU support | Good (CUDA via XLA) | Best-in-class (native CUDA) |
-| Debugging | Hard (tracing + compilation) | Easy (eager, line-by-line) |
-| Ecosystem | Research-focused (Flax, Equinox) | Massive (HuggingFace, torchvision, etc.) |
-| Hiring | Niche (Google/DeepMind/Anthropic) | Mainstream (everywhere) |
-| Large-scale training | Superior (XLA, pmap, mesh) | Good (FSDP, DeepSpeed) |
-| Prototyping speed | Slower (functional overhead) | Faster (mutate and go) |
-| Production inference | TensorFlow Serving, Vertex AI | TorchServe, Triton, ONNX |
-| Who uses it | DeepMind (Gemini), Anthropic (Claude) | Meta (Llama), OpenAI (GPT), Stability AI |
+| TPU support | first-class（Google が両方を作った） | community-maintained（torch_xla） |
+| GPU support | 良い（XLA 経由の CUDA） | best-in-class（native CUDA） |
+| Debugging | 難しい（tracing + compilation） | 簡単（eager、line-by-line） |
+| Ecosystem | research-focused（Flax、Equinox） | massive（HuggingFace、torchvision など） |
+| Hiring | niche（Google/DeepMind/Anthropic） | mainstream（everywhere） |
+| Large-scale training | 優秀（XLA、pmap、mesh） | 良い（FSDP、DeepSpeed） |
+| Prototyping speed | 遅め（functional overhead） | 速い（mutate and go） |
+| Production inference | TensorFlow Serving、Vertex AI | TorchServe、Triton、ONNX |
+| Who uses it | DeepMind（Gemini）、Anthropic（Claude） | Meta（Llama）、OpenAI（GPT）、Stability AI |
 
-The honest answer: use PyTorch unless you have a specific reason to use JAX. Those reasons are -- TPU access, need for per-example gradients, multi-device training at massive scale, or working at Google/DeepMind/Anthropic.
+正直な答えは、JAX を使う明確な理由がない限り PyTorch を使うことです。その理由とは、TPU access、per-example gradients の必要性、massive scale の multi-device training、または Google/DeepMind/Anthropic で働いていることです。
 
 ### Random Numbers in JAX
 
-JAX does not have a global random state. Every random operation requires an explicit PRNG key:
+JAX には global random state がありません。すべての random operation には explicit PRNG key が必要です。
 
 ```python
 key = jax.random.PRNGKey(42)
@@ -235,13 +235,13 @@ key1, key2 = jax.random.split(key)
 w = jax.random.normal(key1, shape=(784, 256))
 ```
 
-This is annoying at first. But it guarantees reproducibility across devices and compilations -- a property that PyTorch's `torch.manual_seed` cannot guarantee in multi-GPU settings.
+これは最初は面倒です。しかし devices や compilations をまたいだ reproducibility を保証します。これは multi-GPU settings では PyTorch の `torch.manual_seed` では保証できない性質です。
 
-## Build It
+## 作ってみる
 
 ### Step 1: Setup and Data
 
-We will train a 3-layer MLP on MNIST using JAX and Optax. 784 inputs, two hidden layers of 256 and 128 neurons, 10 output classes.
+JAX と Optax を使って MNIST 上で 3-layer MLP を学習します。784 inputs、256 と 128 neurons の hidden layers 2 つ、10 output classes です。
 
 ```python
 import jax
@@ -259,9 +259,9 @@ def get_mnist_data():
     return X_train, y_train, X_test, y_test
 ```
 
-### Step 2: Initialize Parameters
+### Step 2: Parameters を初期化する
 
-No class. Just a function that returns a pytree:
+class はありません。pytree を返す function だけです。
 
 ```python
 def init_params(key):
@@ -286,7 +286,7 @@ def init_params(key):
     return params
 ```
 
-He-initialization, done manually. Three PRNG keys split from one seed. Every weight is an immutable array in a nested dict.
+He-initialization を手動で行っています。1 つの seed から 3 つの PRNG keys を split します。すべての weight は nested dict 内の immutable array です。
 
 ### Step 3: Forward Pass
 
@@ -305,7 +305,7 @@ def loss_fn(params, x, y):
     return -jnp.mean(jnp.sum(jax.nn.log_softmax(logits) * one_hot, axis=-1))
 ```
 
-Pure functions. Params in, prediction out. No `self`, no stored state. `loss_fn` computes cross-entropy from scratch -- softmax, log, negative mean.
+Pure functions です。Params in、prediction out。`self` はなく、stored state もありません。`loss_fn` は cross-entropy をゼロから計算しています。softmax、log、negative mean です。
 
 ### Step 4: JIT-Compiled Training Step
 
@@ -324,7 +324,7 @@ def accuracy(params, x, y):
     return jnp.mean(preds == y)
 ```
 
-`jax.value_and_grad` returns both the loss value and the gradients in one pass. The `@jax.jit` decorator compiles both functions to XLA. After the first call, each training step runs without touching Python.
+`jax.value_and_grad` は 1 回の pass で loss value と gradients の両方を返します。`@jax.jit` decorator は両方の functions を XLA に compile します。最初の call の後、各 training step は Python に触れずに実行されます。
 
 ### Step 5: Training Loop
 
@@ -363,15 +363,15 @@ for epoch in range(n_epochs):
           f"Train Acc: {train_acc:.4f} | Test Acc: {test_acc:.4f}")
 ```
 
-10 epochs. ~97% test accuracy. The first epoch is slow (JIT compilation). Epochs 2-10 are fast.
+10 epochs。test accuracy は約 97%。最初の epoch は遅いです（JIT compilation）。epochs 2-10 は高速です。
 
-Notice what is missing: no `.zero_grad()`, no `.backward()`, no `.step()`. The entire update is one composed function call. Gradients are computed, transformed by Adam, and applied to parameters -- all inside `train_step`.
+欠けているものに注目してください。`.zero_grad()` も、`.backward()` も、`.step()` もありません。update 全体が 1 つの composed function call です。gradients が計算され、Adam によって変換され、parameters に適用されます。すべて `train_step` の中です。
 
-## Use It
+## 使ってみる
 
-### Flax: The Google Standard
+### Flax: Google Standard
 
-Flax is the most common JAX neural network library. It adds `nn.Module` back, but with explicit state management:
+Flax は最も一般的な JAX neural network library です。`nn.Module` を戻しますが、explicit state management を伴います。
 
 ```python
 import flax.linen as nn
@@ -391,11 +391,11 @@ params = model.init(jax.random.PRNGKey(0), jnp.ones((1, 784)))
 logits = model.apply(params, x_batch)
 ```
 
-Same structure as PyTorch, but `params` is separate from the model. `model.init()` creates params. `model.apply(params, x)` runs the forward pass. The model object has no state.
+PyTorch と同じ構造ですが、`params` は model から分離されています。`model.init()` が params を作ります。`model.apply(params, x)` が forward pass を実行します。model object は state を持ちません。
 
-### Equinox: The Pythonic Alternative
+### Equinox: Pythonic Alternative
 
-Equinox (by Patrick Kidger) represents models as pytrees:
+Equinox（Patrick Kidger による）は models を pytrees として表現します。
 
 ```python
 import equinox as eqx
@@ -407,11 +407,11 @@ model = eqx.nn.MLP(
 logits = model(x)
 ```
 
-The model itself is a pytree. No `.apply()` needed. Parameters are just the model's leaves. This is closer to how JAX thinks.
+model 自体が pytree です。`.apply()` は不要です。parameters は model の leaves です。これは JAX の考え方により近い形です。
 
 ### Optax: Composable Optimizers
 
-Optax decouples the gradient transformation from the update:
+Optax は gradient transformation を update から decouple します。
 
 ```python
 schedule = optax.warmup_cosine_decay_schedule(
@@ -425,9 +425,9 @@ optimizer = optax.chain(
 )
 ```
 
-Gradient clipping, learning rate warmup, weight decay -- all composed as a chain of transforms. Each transform sees the gradients, modifies them, and passes them to the next. No monolithic optimizer class.
+Gradient clipping、learning rate warmup、weight decay。すべて transform の chain として compose されています。各 transform は gradients を受け取り、それを変更し、次へ渡します。monolithic optimizer class はありません。
 
-## Ship It
+## 成果物
 
 **Installation:**
 
@@ -435,13 +435,13 @@ Gradient clipping, learning rate warmup, weight decay -- all composed as a chain
 pip install jax jaxlib optax flax
 ```
 
-For GPU support:
+GPU support:
 
 ```bash
 pip install jax[cuda12]
 ```
 
-For TPU (Google Cloud):
+TPU（Google Cloud）:
 
 ```bash
 pip install jax[tpu] -f https://storage.googleapis.com/jax-releases/libtpu_releases.html
@@ -449,11 +449,11 @@ pip install jax[tpu] -f https://storage.googleapis.com/jax-releases/libtpu_relea
 
 **Performance gotchas:**
 
-- First JIT call is slow (compilation). Warm up before benchmarking.
-- Avoid Python loops over JAX arrays inside JIT. Use `jax.lax.scan` or `jax.lax.fori_loop`.
-- `jax.debug.print()` works inside JIT. Regular `print()` does not.
-- Profile with `jax.profiler` or TensorBoard. XLA compilation can hide bottlenecks.
-- JAX pre-allocates 75% of GPU memory by default. Set `XLA_PYTHON_CLIENT_PREALLOCATE=false` to disable.
+- 最初の JIT call は遅いです（compilation）。benchmarking の前に warm up してください。
+- JIT 内で JAX arrays に対する Python loops は避けてください。`jax.lax.scan` または `jax.lax.fori_loop` を使います。
+- `jax.debug.print()` は JIT 内で動きます。通常の `print()` は動きません。
+- `jax.profiler` または TensorBoard で profile してください。XLA compilation は bottlenecks を隠すことがあります。
+- JAX は default で GPU memory の 75% を pre-allocate します。無効化するには `XLA_PYTHON_CLIENT_PREALLOCATE=false` を設定します。
 
 **Checkpointing:**
 
@@ -464,42 +464,42 @@ checkpointer.save('/tmp/model', params)
 restored = checkpointer.restore('/tmp/model')
 ```
 
-**This lesson produces:**
-- `outputs/prompt-jax-optimizer.md` -- a prompt for choosing the right JAX optimizer configuration
-- `outputs/skill-jax-patterns.md` -- a skill covering functional patterns in JAX
+**この lesson で作るもの:**
+- `outputs/prompt-jax-optimizer.md` -- 適切な JAX optimizer configuration を選ぶための prompt
+- `outputs/skill-jax-patterns.md` -- JAX の functional patterns を扱う skill
 
-## Exercises
+## 演習
 
-1. Add dropout to the MLP. In JAX, dropout requires a PRNG key -- thread a key through the forward pass and split it for each dropout layer. Compare test accuracy with and without.
+1. MLP に dropout を追加してください。JAX では dropout に PRNG key が必要です。forward pass に key を通し、各 dropout layer 用に split してください。あり/なしで test accuracy を比較します。
 
-2. Use `jax.vmap` to compute per-example gradients for a batch of 32 MNIST images. Compute the gradient norm for each example. Which examples have the largest gradients, and why?
+2. `jax.vmap` を使い、32 枚の MNIST images の batch について per-example gradients を計算してください。各 example の gradient norm を計算します。どの examples が最大 gradients を持ちますか。なぜですか。
 
-3. Replace the manual forward function with a generic `mlp_forward(params, x)` that works for any number of layers. Use `jax.tree.leaves` to determine the depth automatically.
+3. manual forward function を、任意の number of layers で動く generic な `mlp_forward(params, x)` に置き換えてください。`jax.tree.leaves` を使って depth を自動的に決めます。
 
-4. Benchmark the training step with and without `@jax.jit`. Time 100 steps of each. How large is the speedup on your hardware? What is the compilation overhead on the first call?
+4. `@jax.jit` あり/なしで training step を benchmark してください。それぞれ 100 steps を計測します。あなたの hardware では speedup はどれくらいですか。first call の compilation overhead はどれくらいですか。
 
-5. Implement gradient clipping by composing `optax.chain(optax.clip_by_global_norm(1.0), optax.adam(1e-3))`. Train with and without clipping. Plot the gradient norm over training to see the effect.
+5. `optax.chain(optax.clip_by_global_norm(1.0), optax.adam(1e-3))` を compose して gradient clipping を実装してください。clipping あり/なしで学習します。training 中の gradient norm を plot して effect を確認してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| XLA | "The thing that makes JAX fast" | Accelerated Linear Algebra -- a compiler that fuses operations and generates optimized GPU/TPU kernels from a computation graph |
-| JIT | "Just-in-time compilation" | JAX traces the function on first call, compiles to XLA, then runs the compiled version on subsequent calls |
-| Pure function | "No side effects" | A function where the output depends only on inputs -- no global state, no mutation, no randomness without explicit keys |
-| vmap | "Auto-batching" | Transforms a function that processes one example into one that processes a batch, without rewriting |
-| pmap | "Auto-parallelism" | Replicates a function across multiple devices and splits the input batch |
-| Pytree | "Nested dict of arrays" | Any nested structure of lists, tuples, dicts, and arrays that JAX can traverse and transform |
-| Tracing | "Recording the computation" | JAX executes the function with abstract values to build a computation graph, without computing real results |
-| Functional autodiff | "grad of a function" | Computing derivatives by transforming functions, not by attaching gradient storage to tensors |
-| Optax | "JAX's optimizer library" | A composable library of gradient transformations -- Adam, SGD, clipping, scheduling -- that chain together |
-| Flax | "JAX's nn.Module" | Google's neural network library for JAX, adding layer abstractions while keeping state explicit |
+| XLA | "The thing that makes JAX fast" | Accelerated Linear Algebra。computation graph から operations を fuse し、optimized GPU/TPU kernels を生成する compiler |
+| JIT | "Just-in-time compilation" | JAX が first call で function を trace し、XLA に compile し、subsequent calls では compiled version を実行すること |
+| Pure function | "No side effects" | output が inputs だけに依存する function。global state、mutation、explicit keys なしの randomness がない |
+| vmap | "Auto-batching" | 1 example を処理する function を、書き換えなしに batch を処理するものへ変換する |
+| pmap | "Auto-parallelism" | function を複数 devices に replicate し、input batch を分割する |
+| Pytree | "Nested dict of arrays" | JAX が traverse して transform できる、lists、tuples、dicts、arrays の任意の nested structure |
+| Tracing | "Recording the computation" | 実際の results を計算せず、abstract values で function を実行して computation graph を構築すること |
+| Functional autodiff | "grad of a function" | gradient storage を tensors に付けるのではなく、functions を変換して derivatives を計算すること |
+| Optax | "JAX's optimizer library" | Adam、SGD、clipping、scheduling などを chain できる composable gradient transformations の library |
+| Flax | "JAX's nn.Module" | state を explicit に保ったまま layer abstractions を追加する、Google の JAX 用 neural network library |
 
-## Further Reading
+## 参考資料
 
-- JAX documentation: https://jax.readthedocs.io/ -- the official docs, with excellent tutorials on grad, jit, and vmap
-- "JAX: composable transformations of Python+NumPy programs" (Bradbury et al., 2018) -- the original paper explaining the design philosophy
-- Flax documentation: https://flax.readthedocs.io/ -- Google's neural network library for JAX
-- Patrick Kidger, "Equinox: neural networks in JAX via callable PyTrees and filtered transformations" (2021) -- the Pythonic alternative to Flax
-- DeepMind, "Optax: composable gradient transformation and optimisation" -- the standard optimizer library
-- "You Don't Know JAX" (Colin Raffel, 2020) -- a practical guide to JAX gotchas and patterns, from one of the T5 authors
+- JAX documentation: https://jax.readthedocs.io/ -- grad、jit、vmap の優れた tutorials を含む official docs
+- "JAX: composable transformations of Python+NumPy programs" (Bradbury et al., 2018) -- design philosophy を説明する original paper
+- Flax documentation: https://flax.readthedocs.io/ -- Google の JAX 用 neural network library
+- Patrick Kidger, "Equinox: neural networks in JAX via callable PyTrees and filtered transformations" (2021) -- Flax の Pythonic alternative
+- DeepMind, "Optax: composable gradient transformation and optimisation" -- standard optimizer library
+- "You Don't Know JAX" (Colin Raffel, 2020) -- T5 authors の 1 人による、JAX gotchas and patterns の practical guide

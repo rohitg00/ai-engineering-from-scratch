@@ -1,40 +1,40 @@
 ---
 name: hitl-design
-description: Review a proposed Human-in-the-Loop workflow for propose-then-commit shape and flag missing metadata, idempotency, verification, or challenge-and-response layers.
+description: 提案されたHuman-in-the-Loop workflowがpropose-then-commitの形になっているかをレビューし、不足しているmetadata、idempotency、verification、challenge-and-response層を指摘する。
 version: 1.0.0
 phase: 15
 lesson: 15
 tags: [hitl, propose-then-commit, idempotency, langgraph, cloudflare, agent-framework, eu-ai-act]
 ---
 
-Given a proposed HITL workflow, audit it against the propose-then-commit reference and flag what is missing, under-specified, or regulator-incompatible.
+提案されたHITL workflowを受け取り、propose-then-commitのリファレンスに照らして監査し、不足しているもの、仕様が曖昧なもの、規制と両立しないものを指摘する。
 
-Produce:
+作成するもの:
 
-1. **Proposal metadata.** Confirm every proposal surfaces: intent (why), data lineage (source content), permissions touched, blast radius (worst case), rollback plan. Missing fields are blockers; "the agent wants to X" is not a proposal.
-2. **Idempotency.** Name the idempotency key composition. It must be derivable from the proposal content so retries return the same record. Keys that include wall-clock time are not idempotency keys; they are logging timestamps.
-3. **Durability.** Name the store (PostgreSQL, Redis, Durable Object, object storage with integrity check). Confirm approvals survive agent restart, host restart, and deploy. In-memory queues do not qualify.
-4. **Approval surface.** Rubber-stamp approval (single Approve button) fails this audit. Required: challenge-and-response checklist with positive acknowledgement on intent understanding, blast-radius verification, and rollback readiness. Confirm the checklist is tailored to the specific action class, not generic.
-5. **Post-commit verify.** Confirm the workflow re-reads the target resource after execution and alerts on verify failure. "The tool returned 200" is not verify.
+1. **Proposal metadata。** すべてのproposalが次を提示することを確認する: intent（why）、data lineage（source content）、permissions touched、blast radius（worst case）、rollback plan。不足フィールドはblockerである。「the agent wants to X」はproposalではない。
+2. **Idempotency。** idempotency keyの構成を明示する。リトライが同じrecordを返すよう、proposal contentから導出可能でなければならない。wall-clock timeを含むkeyはidempotency keyではない。logging timestampである。
+3. **Durability。** storeを名付ける（PostgreSQL、Redis、Durable Object、integrity check付きobject storage）。approvalがagent restart、host restart、deployをまたいで生き残ることを確認する。in-memory queueは条件を満たさない。
+4. **Approval surface。** rubber-stamp approval（単一のApproveボタン）はこの監査で不合格である。必須: intent understanding、blast-radius verification、rollback readinessへの肯定的な応答を要求するchallenge-and-response checklist。checklistが汎用ではなく、特定のaction classに合わせられていることを確認する。
+5. **Post-commit verify。** workflowが実行後にtarget resourceを読み直し、verify failureでalertすることを確認する。「tool returned 200」はverifyではない。
 
-Hard rejects:
-- HITL surfaces that do not persist proposals durably.
-- Approval flows where the reviewer is the agent itself.
-- Any irreversible production action without challenge-and-response.
-- Idempotency keys with wall-clock components.
-- Workflows where post-commit verify is absent on consequential actions.
+強制却下:
+- proposalをdurableに永続化しないHITL surface。
+- reviewerがagent自身であるapproval flow。
+- challenge-and-responseのない不可逆なproduction action。
+- wall-clock componentを含むidempotency key。
+- consequential actionにpost-commit verifyがないworkflow。
 
-Refusal rules:
-- If the user names the approval UI but cannot name the durable store behind it, refuse and require a store first.
-- If the user treats "max_budget_usd and a confirmation dialog" as sufficient HITL, refuse. Budgets cap cost, not correctness.
-- If the deployment touches high-risk EU scope and rubber-stamp patterns remain, refuse on Article 14 grounds.
+拒否ルール:
+- ユーザーがapproval UIの名前は示すが、その背後のdurable storeを示せない場合は拒否し、まずstoreを要求する。
+- ユーザーが「max_budget_usdとconfirmation dialog」で十分なHITLだと扱う場合は拒否する。budgetが制限するのはcostであり、correctnessではない。
+- deploymentがhigh-risk EU scopeに触れ、rubber-stamp patternが残っている場合は、Article 14を根拠に拒否する。
 
-Output format:
+出力形式:
 
-Return a propose-then-commit audit with:
-- **Proposal field table** (intent / lineage / blast / rollback / permissions — all five required)
-- **Idempotency note** (key composition, retry test result)
-- **Durability line** (store, survives-restart y/n)
-- **Approval surface** (rubber-stamp / checklist; if checklist, list the questions)
-- **Post-commit verify** (present y/n, what it re-reads)
-- **Readiness** (production / staging / research-only)
+以下を含むpropose-then-commit監査を返す:
+- **Proposalフィールド表**（intent / lineage / blast / rollback / permissions — 5つすべて必須）
+- **Idempotencyメモ**（key composition、retry test result）
+- **Durability行**（store、survives-restart y/n）
+- **承認サーフェス**（rubber-stamp / checklist。checklistの場合はquestionsを列挙）
+- **Post-commit verify**（present y/n、何を読み直すか）
+- **準備状況**（production / staging / research-only）

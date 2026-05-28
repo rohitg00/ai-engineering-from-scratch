@@ -10,7 +10,7 @@ import { parseCommand } from "../src/repl.ts";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
-test("runAgent: scripted task converges to all-done plan", () => {
+test("runAgent: scripted task は all-done plan に収束する", () => {
   const r = runAgent("demo", here);
   assert.equal(r.passed, true);
   assert.ok(r.plan.includes("[x] 1."));
@@ -19,13 +19,13 @@ test("runAgent: scripted task converges to all-done plan", () => {
   assert.equal(r.budget.dollarsUsed > 0, true);
 });
 
-test("runEval: all three offline tasks pass", () => {
+test("runEval: 3つの offline task がすべて pass する", () => {
   const e = runEval(here);
   assert.equal(e.passed, 3);
   assert.equal(e.failed, 0);
 });
 
-test("HookBus: fires hooks in registration order", () => {
+test("HookBus: 登録順に hook を発火する", () => {
   const bus = new HookBus();
   const order: string[] = [];
   bus.on("PreToolUse", (p) => {
@@ -40,18 +40,18 @@ test("HookBus: fires hooks in registration order", () => {
   assert.deepEqual(order, ["a", "b"]);
 });
 
-test("destructiveGuard: blocks rm -rf", () => {
+test("destructiveGuard: rm -rf を block する", () => {
   const out = destructiveGuard({ tool: "run_shell", args: { cmd: "rm -rf /" } });
   assert.equal(out.blocked, true);
-  assert.match(String(out.reason), /destructive/);
+  assert.match(String(out.reason), /破壊的/);
 });
 
-test("destructiveGuard: passes safe commands", () => {
+test("destructiveGuard: safe command は通す", () => {
   const out = destructiveGuard({ tool: "run_shell", args: { cmd: "ls" } });
   assert.equal(out.blocked, undefined);
 });
 
-test("Budget: trips on turn limit", () => {
+test("Budget: turn limit で trip する", () => {
   const b = new Budget();
   b.maxTurns = 2;
   b.step(10, 0.01);
@@ -60,7 +60,7 @@ test("Budget: trips on turn limit", () => {
   assert.equal(b.exceeded(), "turn_limit");
 });
 
-test("PlanState: summary marks status correctly", () => {
+test("PlanState: summary が status を正しく mark する", () => {
   const p = new PlanState("write");
   p.rewrite([
     { id: 1, description: "draft", status: "done", note: "" },
@@ -71,7 +71,7 @@ test("PlanState: summary marks status correctly", () => {
   assert.match(s, /\[>\] 2\. edit/);
 });
 
-test("parseCommand: recognizes core verbs", () => {
+test("parseCommand: core verb を認識する", () => {
   assert.equal(parseCommand("quit").kind, "quit");
   assert.equal(parseCommand("help").kind, "help");
   assert.equal(parseCommand("eval").kind, "eval");

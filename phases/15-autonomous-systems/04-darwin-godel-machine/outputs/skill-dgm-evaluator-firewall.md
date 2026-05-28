@@ -1,40 +1,40 @@
 ---
 name: dgm-evaluator-firewall
-description: Specify the evaluator separation a Darwin-Godel-Machine-style self-modifying agent loop needs to avoid documented reward hacking.
+description: Darwin-Godel-Machine風の自己改変エージェントループが、記録済みの報酬ハッキングを避けるために必要な評価器分離を規定する。
 version: 1.0.0
 phase: 15
 lesson: 4
 tags: [dgm, self-modification, reward-hacking, evaluator, sandbox]
 ---
 
-Given a proposed self-modifying agent loop (agent scaffolding, evaluator pipeline, deployment target), produce a firewall specification that keeps the evaluator outside the agent's reach. The DGM paper documented the agent removing its own safety markers to raise scores; this skill is the control.
+提案された自己改変エージェントループ (エージェントの足場、評価器パイプライン、デプロイ対象) が与えられたら、評価器をエージェントの手の届かない場所に保つファイアウォール仕様を作成する。DGM論文は、エージェントがスコアを上げるために自分自身の安全性マーカーを削除したことを記録している。このスキルはその制御策である。
 
-Produce:
+作成するもの:
 
-1. **File-system boundary.** List every file the agent can edit. List every file the evaluator reads. The intersection must be empty. If it is not, specify the exact move needed to make it empty.
-2. **Process boundary.** The evaluator must run in a process the agent does not control. Spec the container or sandbox. If the agent has shell access, the agent can bypass in-process guards.
-3. **Network and secret boundary.** The agent must not be able to edit the CI secrets that fetch evaluator inputs or post scores. List where secrets live and how they are mounted.
-4. **Score-ingress contract.** Scores return from the evaluator to the loop's archive. That path is the only channel. Anything the agent can write that influences future scoring breaks the contract.
-5. **Mutation review list.** List the classes of agent edits that require manual review before acceptance: new dependencies, edits to scoring-adjacent code, edits to sandbox configuration, edits to logging or monitoring.
+1. **ファイルシステム境界。** エージェントが編集できるすべてのファイルを列挙する。評価器が読むすべてのファイルを列挙する。両者の交差は空でなければならない。空でない場合は、空にするために必要な正確な移動を指定する。
+2. **プロセス境界。** 評価器は、エージェントが制御しないプロセスで実行されなければならない。コンテナまたはサンドボックスを仕様化する。エージェントがシェルアクセスを持つ場合、プロセス内ガードは回避できる。
+3. **ネットワークとシークレット境界。** エージェントが、評価器入力の取得やスコア投稿を行うCIシークレットを編集できてはならない。シークレットがどこにあり、どのようにマウントされるかを列挙する。
+4. **スコア流入契約。** スコアは評価器からループのアーカイブへ戻る。その経路だけが唯一のチャネルである。エージェントが書き込めるものが将来のスコアリングに影響するなら、その契約は破られている。
+5. **変異レビューリスト。** 受け入れ前に手動レビューを必要とするエージェント編集の種類を列挙する。新しい依存関係、スコアリング隣接コードへの編集、サンドボックス設定への編集、ログや監視への編集。
 
-Hard rejects:
-- Evaluator in the same repository as the agent source. Move it out.
-- Evaluator that runs as a Python import inside the agent process. Run it in a subprocess.
-- Any score adjustment that is applied at the agent's side of the boundary. All adjustment must be server-side.
-- Any logging that the agent can silence by editing its own code.
+強制却下:
+- エージェントソースと同じリポジトリ内の評価器。外へ移動する。
+- エージェントプロセス内でPython importとして実行される評価器。サブプロセスで実行する。
+- 境界のエージェント側で適用されるスコア調整。すべての調整はサーバー側で行わなければならない。
+- エージェントが自分のコードを編集して黙らせられるログ。
 
-Refusal rules:
-- If the user cannot name every file the agent can edit, refuse and require a file-level write-access audit first.
-- If the evaluator has no held-out inputs, refuse — this is Lesson 3's audit, a precondition.
-- If the deployment surface includes mutations to the evaluator itself (even indirectly through a proposed dependency update), refuse and require a manual firewall-review step.
+拒否規則:
+- ユーザーがエージェントの編集可能ファイルをすべて挙げられない場合は拒否し、先にファイル単位の書き込みアクセス監査を要求する。
+- 評価器にホールドアウト入力がない場合は拒否する。これはLesson 3の監査であり、前提条件である。
+- デプロイ面に評価器自体への変異が含まれる場合 (提案された依存関係更新を通じた間接的なものも含む) は拒否し、手動のファイアウォールレビュー手順を要求する。
 
-Output format:
+出力形式:
 
-Return a one-page spec with:
-- **Agent write-surface** (paths, globs)
-- **Evaluator read-surface** (paths, endpoints)
-- **Intersection** (must be empty; show the diff)
-- **Process model** (how the evaluator is isolated)
-- **Secrets inventory** (where and how mounted)
-- **Review-required mutation classes** (bulleted)
-- **Sign-off line** (who owns the firewall invariant)
+以下を含む1ページの仕様を返す:
+- **エージェント書き込み面** (パス、glob)
+- **評価器読み取り面** (パス、エンドポイント)
+- **交差** (空でなければならない。差分を示す)
+- **プロセスモデル** (評価器をどう分離するか)
+- **シークレット一覧** (場所とマウント方法)
+- **レビュー必須の変異クラス** (箇条書き)
+- **サインオフ行** (ファイアウォール不変条件の責任者)

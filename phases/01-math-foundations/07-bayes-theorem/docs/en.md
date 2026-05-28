@@ -1,80 +1,80 @@
-# Bayes' Theorem
+# ベイズの定理
 
-> Probability is about what you expect. Bayes' theorem is about what you learn.
+> 確率は、あなたが何を予想するかを扱います。ベイズの定理は、あなたが何を学ぶかを扱います。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 1、Lesson 06（確率の基礎）
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Apply Bayes' theorem to compute posterior probabilities from priors, likelihoods, and evidence
-- Build a Naive Bayes text classifier from scratch with Laplace smoothing and log-space computation
-- Compare MLE and MAP estimation and explain how MAP corresponds to L2 regularization
-- Implement sequential Bayesian updating using Beta-Binomial conjugate priors for A/B testing
+- 事前確率、尤度、証拠からベイズの定理を使って事後確率を計算する
+- ラプラス平滑化とlog空間での計算を使い、ナイーブベイズのテキスト分類器をスクラッチで構築する
+- MLEとMAP推定を比較し、MAPがL2正則化に対応する理由を説明する
+- A/Bテストのために、Beta-Binomialの共役事前分布を使った逐次ベイズ更新を実装する
 
-## The Problem
+## 問題
 
-A medical test is 99% accurate. You test positive. What are the chances you actually have the disease?
+ある医療検査は99%正確です。検査で陽性になりました。実際にその病気である確率はどれくらいでしょうか？
 
-Most people say 99%. The real answer depends on how rare the disease is. If 1 in 10,000 people have it, a positive result only gives you about a 1% chance of being sick. The other 99% of positive results are false alarms from healthy people.
+多くの人は99%と答えます。本当の答えは、その病気がどれほど珍しいかに依存します。もし1万人に1人しかその病気にかからないなら、陽性結果が出ても、実際に病気である確率は約1%にすぎません。陽性結果の残り99%は、健康な人から出た誤警報です。
 
-This is not a trick question. It is Bayes' theorem. Every spam filter, every medical diagnostic, every machine learning model that quantifies uncertainty uses this exact reasoning. You start with a belief. You see evidence. You update.
+これはひっかけ問題ではありません。ベイズの定理です。あらゆるスパムフィルター、あらゆる医療診断、不確実性を定量化するあらゆる機械学習モデルが、まさにこの推論を使っています。信念から始める。証拠を見る。更新する。
 
-If you build ML systems without understanding this, you will misinterpret model outputs, set bad thresholds, and ship overconfident predictions.
+これを理解せずにMLシステムを作ると、モデル出力を誤解し、悪いしきい値を設定し、自信過剰な予測を出荷してしまいます。
 
-## The Concept
+## 概念
 
-### From joint probability to Bayes
+### 同時確率からベイズへ
 
-You already know from Lesson 06 that conditional probability is:
+Lesson 06で、条件付き確率は次のように書けると学びました。
 
 ```
 P(A|B) = P(A and B) / P(B)
 ```
 
-And symmetrically:
+対称的に、次も成り立ちます。
 
 ```
 P(B|A) = P(A and B) / P(A)
 ```
 
-Both expressions share the same numerator: P(A and B). Set them equal and rearrange:
+どちらの式も同じ分子 P(A and B) を共有しています。これらを等しいものとして置き、並べ替えます。
 
 ```
 P(A and B) = P(A|B) * P(B) = P(B|A) * P(A)
 
-Therefore:
+よって:
 
 P(A|B) = P(B|A) * P(A) / P(B)
 ```
 
-That is Bayes' theorem. Four quantities, one equation.
+これがベイズの定理です。4つの量、1つの方程式です。
 
-### The four parts
+### 4つの構成要素
 
-| Part | Name | What it means |
-|------|------|---------------|
-| P(A\|B) | Posterior | Your updated belief about A after seeing evidence B |
-| P(B\|A) | Likelihood | How probable the evidence B is if A is true |
-| P(A) | Prior | Your belief about A before seeing any evidence |
-| P(B) | Evidence | Total probability of seeing B under all possibilities |
+| 要素 | 名前 | 意味 |
+|------|------|------|
+| P(A\|B) | 事後確率 | 証拠Bを見た後の、Aに関する更新後の信念 |
+| P(B\|A) | 尤度 | Aが真であるとき、証拠Bがどれだけ起こりやすいか |
+| P(A) | 事前確率 | 証拠を見る前の、Aに関する信念 |
+| P(B) | 証拠 | すべての可能性のもとでBを見る全確率 |
 
-The evidence term P(B) acts as a normalizer. You can expand it using the law of total probability:
+証拠項 P(B) は正規化係数として働きます。全確率の法則を使って展開できます。
 
 ```
 P(B) = P(B|A) * P(A) + P(B|not A) * P(not A)
 ```
 
-### Medical test example
+### 医療検査の例
 
-A disease affects 1 in 10,000 people. The test is 99% accurate (catches 99% of sick people, gives false positives 1% of the time).
+ある病気は1万人に1人に影響します。検査は99%正確です（病気の人を99%検出し、1%の確率で偽陽性を出します）。
 
 ```
-P(sick)          = 0.0001     (prior: disease is rare)
-P(positive|sick) = 0.99       (likelihood: test catches it)
-P(positive|healthy) = 0.01    (false positive rate)
+P(sick)          = 0.0001     (事前確率: 病気はまれ)
+P(positive|sick) = 0.99       (尤度: 検査が検出する)
+P(positive|healthy) = 0.01    (偽陽性率)
 
 P(positive) = P(positive|sick) * P(sick) + P(positive|healthy) * P(healthy)
             = 0.99 * 0.0001 + 0.01 * 0.9999
@@ -87,11 +87,11 @@ P(sick|positive) = P(positive|sick) * P(sick) / P(positive)
                  = 0.98%
 ```
 
-Less than 1%. The prior dominates. When a condition is rare, even accurate tests produce mostly false positives. This is why doctors order confirmation tests.
+1%未満です。事前確率が支配的です。状態がまれな場合、正確な検査であっても、陽性の大半は偽陽性になります。これが、医師が確認検査を依頼する理由です。
 
-### Spam filter example
+### スパムフィルターの例
 
-You receive an email containing the word "lottery". Is it spam?
+「lottery」という単語を含むメールを受け取りました。これはスパムでしょうか？
 
 ```
 P(spam)                = 0.3      (30% of email is spam)
@@ -107,11 +107,11 @@ P(spam|"lottery") = 0.05 * 0.3 / 0.0157
                   = 95.5%
 ```
 
-One word shifts the probability from 30% to 95.5%. A real spam filter applies Bayes across hundreds of words simultaneously.
+1つの単語だけで、確率は30%から95.5%へ動きます。実際のスパムフィルターは、数百個の単語に対して同時にベイズを適用します。
 
-### Naive Bayes: independence assumption
+### ナイーブベイズ: 独立性の仮定
 
-Naive Bayes extends this to multiple features by assuming all features are conditionally independent given the class:
+ナイーブベイズは、クラスが与えられたとき、すべての特徴量が条件付き独立であると仮定して、これを複数特徴量へ拡張します。
 
 ```
 P(class | feature_1, feature_2, ..., feature_n)
@@ -119,85 +119,85 @@ P(class | feature_1, feature_2, ..., feature_n)
     / P(feature_1, feature_2, ..., feature_n)
 ```
 
-The "naive" part is the independence assumption. In text, word occurrences are not independent ("New" and "York" are correlated). But the assumption works surprisingly well in practice because the classifier only needs to rank classes, not produce calibrated probabilities.
+「ナイーブ」な部分は、この独立性の仮定です。テキストでは、単語の出現は独立ではありません（「New」と「York」は相関しています）。それでも実務では驚くほどよく機能します。なぜなら、この分類器に必要なのはクラスを順位付けすることであり、較正された確率を出すことではないからです。
 
-Since the denominator is the same for all classes, you can skip it and just compare numerators:
+分母はすべてのクラスで同じなので、省略して分子だけを比較できます。
 
 ```
 score(class) = P(class) * product of P(feature_i | class)
 ```
 
-Pick the class with the highest score.
+最も高いスコアのクラスを選びます。
 
-### Maximum likelihood estimation (MLE)
+### 最尤推定（MLE）
 
-How do you get P(feature|class) from training data? Count.
+訓練データから P(feature|class) をどう得るのでしょうか？数えます。
 
 ```
 P("free"|spam) = (number of spam emails containing "free") / (total spam emails)
 ```
 
-This is MLE: choose the parameter values that make the observed data most likely. You are maximizing the likelihood function, which for discrete counts reduces to relative frequency.
+これがMLEです。観測データが最も起こりやすくなるパラメータ値を選びます。尤度関数を最大化しており、離散的なカウントでは相対頻度に帰着します。
 
-Problem: if a word never appears in spam during training, MLE gives it probability zero. One unseen word kills the entire product. Fix this with Laplace smoothing:
+問題: 訓練中にある単語がスパムに一度も現れなかった場合、MLEはその単語の確率をゼロにします。未知の単語が1つあるだけで、積全体がゼロになります。これをラプラス平滑化で修正します。
 
 ```
 P(word|class) = (count(word, class) + 1) / (total_words_in_class + vocabulary_size)
 ```
 
-Adding 1 to every count ensures no probability is ever zero.
+すべてのカウントに1を足すことで、確率がゼロになることを防ぎます。
 
-### Maximum a posteriori (MAP)
+### 最大事後確率推定（MAP）
 
-MLE asks: what parameters maximize P(data|parameters)?
+MLEが問うのは、どのパラメータが P(data|parameters) を最大化するか、です。
 
-MAP asks: what parameters maximize P(parameters|data)?
+MAPが問うのは、どのパラメータが P(parameters|data) を最大化するか、です。
 
-By Bayes' theorem:
+ベイズの定理により、次が成り立ちます。
 
 ```
 P(parameters|data) proportional to P(data|parameters) * P(parameters)
 ```
 
-MAP adds a prior over the parameters themselves. If you believe parameters should be small, you encode that as a prior that penalizes large values. This is identical to L2 regularization in ML. The "ridge" penalty in ridge regression is literally a Gaussian prior on the weights.
+MAPはパラメータ自身に事前分布を追加します。パラメータは小さいはずだと信じるなら、大きな値にペナルティを与える事前分布としてそれを符号化します。これはMLにおけるL2正則化と同じです。リッジ回帰の「ridge」ペナルティは、文字どおり重みに対するガウス事前分布です。
 
-| Estimation | Optimizes | ML equivalent |
-|------------|-----------|---------------|
-| MLE | P(data\|params) | Unregularized training |
-| MAP | P(data\|params) * P(params) | L2 / L1 regularization |
+| 推定 | 最適化するもの | MLでの対応物 |
+|------|----------------|--------------|
+| MLE | P(data\|params) | 正則化なしの訓練 |
+| MAP | P(data\|params) * P(params) | L2 / L1正則化 |
 
-### Bayesian vs frequentist: the practical difference
+### ベイズ主義と頻度主義: 実務上の違い
 
-Frequentists treat parameters as fixed unknowns. They ask: "If I repeated this experiment many times, what would happen?"
+頻度主義者は、パラメータを固定された未知の値として扱います。「この実験を何度も繰り返したら、何が起こるか？」と問います。
 
-Bayesians treat parameters as distributions. They ask: "Given what I have observed, what do I believe about the parameters?"
+ベイズ主義者は、パラメータを分布として扱います。「観測したものを前提に、パラメータについて何を信じるか？」と問います。
 
-For building ML systems, the practical difference:
+MLシステムを作るうえでの実務上の違いは次のとおりです。
 
-| Aspect | Frequentist | Bayesian |
-|--------|-------------|----------|
-| Output | Point estimate | Distribution over values |
-| Uncertainty | Confidence intervals (about procedure) | Credible intervals (about parameter) |
-| Small data | Can overfit | Prior acts as regularization |
-| Computation | Usually faster | Often requires sampling (MCMC) |
+| 観点 | 頻度主義 | ベイズ主義 |
+|------|----------|------------|
+| 出力 | 点推定 | 値に対する分布 |
+| 不確実性 | 信頼区間（手続きに関するもの） | 信用区間（パラメータに関するもの） |
+| 少量データ | 過学習しやすい | 事前分布が正則化として働く |
+| 計算 | 通常は速い | 多くの場合、サンプリング（MCMC）が必要 |
 
-Most production ML is frequentist (SGD, point estimates). Bayesian methods shine when you need calibrated uncertainty (medical decisions, safety-critical systems) or when data is scarce (few-shot learning, cold start).
+本番MLの多くは頻度主義的です（SGD、点推定）。ベイズ手法が力を発揮するのは、較正された不確実性が必要な場合（医療判断、安全クリティカルなシステム）や、データが少ない場合（few-shot学習、コールドスタート）です。
 
-### Why Bayesian thinking matters for ML
+### MLでベイズ的思考が重要な理由
 
-The connection is deeper than analogy:
+このつながりは単なる比喩より深いものです。
 
-**Priors are regularization.** A Gaussian prior on weights is L2 regularization. A Laplace prior is L1. Every time you add a regularization term, you are making a Bayesian statement about what parameter values you expect.
+**事前分布は正則化です。** 重みに対するガウス事前分布はL2正則化です。ラプラス事前分布はL1です。正則化項を追加するたびに、期待するパラメータ値についてベイズ的な主張をしていることになります。
 
-**Posteriors are uncertainty.** A single predicted probability tells you nothing about how confident the model is in that estimate. Bayesian methods give you a distribution: "I think P(spam) is between 0.8 and 0.95."
+**事後分布は不確実性です。** 単一の予測確率だけでは、モデルがその推定にどれほど自信を持っているかはわかりません。ベイズ手法は分布を与えます。「P(spam) は0.8から0.95の間だと思う」という形です。
 
-**Bayes updates are online learning.** Today's posterior becomes tomorrow's prior. When your model sees new data, it updates its beliefs incrementally instead of retraining from scratch.
+**ベイズ更新はオンライン学習です。** 今日の事後分布が明日の事前分布になります。モデルが新しいデータを見ると、最初から再訓練するのではなく、信念を逐次的に更新します。
 
-**Model comparison is Bayesian.** Bayesian information criterion (BIC), marginal likelihood, and Bayes factors all use Bayesian reasoning to choose between models without overfitting.
+**モデル比較はベイズ的です。** ベイズ情報量規準（BIC）、周辺尤度、ベイズファクターはいずれも、過学習せずにモデルを選ぶためにベイズ推論を使います。
 
-## Build It
+## 作ってみる
 
-### Step 1: Bayes theorem function
+### ステップ 1: ベイズの定理の関数
 
 ```python
 def bayes(prior, likelihood, false_positive_rate):
@@ -209,7 +209,7 @@ result = bayes(prior=0.0001, likelihood=0.99, false_positive_rate=0.01)
 print(f"P(sick|positive) = {result:.4f}")
 ```
 
-### Step 2: Naive Bayes classifier
+### ステップ 2: ナイーブベイズ分類器
 
 ```python
 import math
@@ -250,9 +250,9 @@ class NaiveBayes:
         return best_class
 ```
 
-Log probabilities prevent underflow. Multiplying many small probabilities produces numbers too tiny for floating point. Summing log-probabilities is numerically stable and mathematically equivalent.
+log確率はアンダーフローを防ぎます。小さな確率を大量に掛け合わせると、浮動小数点で表せないほど小さな数になります。log確率を足し合わせることは、数値的に安定で、数学的にも同等です。
 
-### Step 3: Train on spam data
+### ステップ 3: スパムデータで訓練する
 
 ```python
 train_docs = [
@@ -289,7 +289,7 @@ for msg in test_messages:
     print(f"  '{msg}' -> {classifier.predict(msg)}")
 ```
 
-### Step 4: Inspect the learned probabilities
+### ステップ 4: 学習された確率を調べる
 
 ```python
 def show_top_words(classifier, cls, n=5):
@@ -309,9 +309,9 @@ print("\nTop ham words:")
 show_top_words(classifier, "ham")
 ```
 
-## Use It
+## 使ってみる
 
-Scikit-learn ships production-ready naive Bayes implementations:
+Scikit-learnには、本番で使えるナイーブベイズ実装が含まれています。
 
 ```python
 from sklearn.feature_extraction.text import CountVectorizer
@@ -329,142 +329,142 @@ for msg, pred in zip(test_messages, predictions):
     print(f"  '{msg}' -> {pred}")
 ```
 
-Same algorithm. CountVectorizer handles tokenization and vocabulary building. MultinomialNB handles smoothing and log-probabilities internally. Your from-scratch version does the same thing in 40 lines.
+同じアルゴリズムです。CountVectorizerはトークン化と語彙構築を扱います。MultinomialNBは平滑化とlog確率を内部で扱います。あなたのスクラッチ実装も、40行で同じことをしています。
 
-## Ship It
+## 出荷する
 
-The NaiveBayes class built here demonstrates the full pipeline: tokenization, probability estimation with Laplace smoothing, log-space prediction. The code in `code/bayes.py` runs end-to-end with no dependencies beyond Python's standard library.
+ここで構築したNaiveBayesクラスは、トークン化、ラプラス平滑化による確率推定、log空間での予測という完全なパイプラインを示します。`code/bayes.py` のコードは、Python標準ライブラリ以外の依存なしでエンドツーエンドに実行できます。
 
-### Conjugate Priors
+### 共役事前分布
 
-When the prior and posterior belong to the same family of distributions, the prior is called "conjugate." This makes Bayesian updating algebraically clean -- you get a closed-form posterior without numerical integration.
+事前分布と事後分布が同じ分布族に属するとき、その事前分布を「共役」と呼びます。これによりベイズ更新は代数的にきれいになります。数値積分なしで閉形式の事後分布が得られます。
 
-| Likelihood | Conjugate Prior | Posterior | Example |
-|-----------|----------------|-----------|---------|
-| Bernoulli | Beta(a, b) | Beta(a + successes, b + failures) | Coin flip bias estimation |
-| Normal (known variance) | Normal(mu_0, sigma_0) | Normal(weighted mean, smaller variance) | Sensor calibration |
-| Poisson | Gamma(a, b) | Gamma(a + sum of counts, b + n) | Modeling arrival rates |
-| Multinomial | Dirichlet(alpha) | Dirichlet(alpha + counts) | Topic modeling, language models |
+| 尤度 | 共役事前分布 | 事後分布 | 例 |
+|------|--------------|----------|----|
+| Bernoulli | Beta(a, b) | Beta(a + successes, b + failures) | コインの表が出る偏りの推定 |
+| Normal（分散既知） | Normal(mu_0, sigma_0) | Normal(weighted mean, smaller variance) | センサー較正 |
+| Poisson | Gamma(a, b) | Gamma(a + sum of counts, b + n) | 到着率のモデリング |
+| Multinomial | Dirichlet(alpha) | Dirichlet(alpha + counts) | トピックモデリング、言語モデル |
 
-Why this matters: without conjugate priors, you need Monte Carlo sampling or variational inference to approximate the posterior. With conjugate priors, you just update two numbers.
+これが重要な理由: 共役事前分布がなければ、事後分布を近似するためにMonte Carloサンプリングや変分推論が必要です。共役事前分布があれば、2つの数を更新するだけで済みます。
 
-The Beta distribution is the most common conjugate prior in practice. Beta(a, b) represents your belief about a probability parameter. The mean is a/(a+b). The larger a+b, the more concentrated (confident) the distribution.
+Beta分布は実務で最もよく使われる共役事前分布です。Beta(a, b) は確率パラメータに関する信念を表します。平均は a/(a+b) です。a+b が大きいほど、分布はより集中します（自信が強い）。
 
-Special cases of the Beta prior:
-- Beta(1, 1) = uniform. You have no opinion about the parameter.
-- Beta(10, 10) = peaked at 0.5. You strongly believe the parameter is near 0.5.
-- Beta(1, 10) = skewed toward 0. You believe the parameter is small.
+Beta事前分布の特別な場合:
+- Beta(1, 1) = 一様分布。パラメータについて特に意見がない。
+- Beta(10, 10) = 0.5付近で鋭い。パラメータが0.5に近いと強く信じている。
+- Beta(1, 10) = 0に偏っている。パラメータは小さいと信じている。
 
-The update rule is dead simple:
+更新規則は非常に単純です。
 
 ```
-Prior:     Beta(a, b)
-Data:      s successes, f failures
-Posterior: Beta(a + s, b + f)
+事前分布: Beta(a, b)
+データ:   成功 s 回、失敗 f 回
+事後分布: Beta(a + s, b + f)
 ```
 
-No integrals. No sampling. Just addition.
+積分なし。サンプリングなし。足し算だけです。
 
-### Sequential Bayesian Updating
+### 逐次ベイズ更新
 
-Bayesian inference is naturally sequential. Today's posterior becomes tomorrow's prior. This is how real systems learn incrementally without reprocessing all historical data.
+ベイズ推論は自然に逐次的です。今日の事後分布が明日の事前分布になります。これは、実システムが過去データをすべて再処理せずに逐次学習する方法です。
 
-Concrete example: estimating whether a coin is fair.
+具体例: コインが公平かどうかを推定する。
 
-**Day 1: No data yet.**
-Start with Beta(1, 1) -- a uniform prior. You have no opinion.
-- Prior mean: 0.5
-- Prior is flat across [0, 1]
+**1日目: まだデータがない。**
+Beta(1, 1) という一様事前分布から始めます。特に意見はありません。
+- 事前平均: 0.5
+- 事前分布は [0, 1] 全体で平坦
 
-**Day 2: Observe 7 heads, 3 tails.**
-Posterior = Beta(1 + 7, 1 + 3) = Beta(8, 4)
-- Posterior mean: 8/12 = 0.667
-- Evidence suggests the coin is biased toward heads
+**2日目: 表7回、裏3回を観測。**
+事後分布 = Beta(1 + 7, 1 + 3) = Beta(8, 4)
+- 事後平均: 8/12 = 0.667
+- 証拠は、コインが表に偏っていることを示唆している
 
-**Day 3: Observe 5 more heads, 5 more tails.**
-Use yesterday's posterior as today's prior.
-Posterior = Beta(8 + 5, 4 + 5) = Beta(13, 9)
-- Posterior mean: 13/22 = 0.591
-- The balanced new data pulled the estimate back toward 0.5
+**3日目: さらに表5回、裏5回を観測。**
+昨日の事後分布を今日の事前分布として使います。
+事後分布 = Beta(8 + 5, 4 + 5) = Beta(13, 9)
+- 事後平均: 13/22 = 0.591
+- 新しいバランスしたデータが、推定値を0.5へ引き戻した
 
 ```mermaid
 graph LR
-    A["Prior<br/>Beta(1,1)<br/>mean = 0.50"] -->|"7H, 3T"| B["Posterior 1<br/>Beta(8,4)<br/>mean = 0.67"]
-    B -->|"becomes prior"| C["Prior 2<br/>Beta(8,4)"]
-    C -->|"5H, 5T"| D["Posterior 2<br/>Beta(13,9)<br/>mean = 0.59"]
+    A["事前分布<br/>Beta(1,1)<br/>平均 = 0.50"] -->|"表7回、裏3回"| B["事後分布 1<br/>Beta(8,4)<br/>平均 = 0.67"]
+    B -->|"事前分布になる"| C["事前分布 2<br/>Beta(8,4)"]
+    C -->|"表5回、裏5回"| D["事後分布 2<br/>Beta(13,9)<br/>平均 = 0.59"]
 ```
 
-The order of observations does not matter. Beta(1,1) updated with all 12 heads and 8 tails at once gives Beta(13, 9) -- the same result. Sequential updating and batch updating are mathematically equivalent. But sequential updating lets you make decisions at each step without storing raw data.
+観測の順序は関係ありません。Beta(1,1) を表12回・裏8回の全データで一度に更新しても、Beta(13, 9) になります。同じ結果です。逐次更新とバッチ更新は数学的に同等です。ただし逐次更新なら、生データを保存せずに各ステップで意思決定できます。
 
-This is the foundation of online learning in production ML systems. Thompson sampling for bandits, incremental recommendation systems, and streaming anomaly detectors all use this pattern.
+これは本番MLシステムにおけるオンライン学習の基礎です。バンディットのThompson sampling、逐次的な推薦システム、ストリーミング異常検知器はいずれもこのパターンを使います。
 
-### Connection to A/B Testing
+### A/Bテストとのつながり
 
-A/B testing is Bayesian inference in disguise.
+A/Bテストは、見方を変えればベイズ推論です。
 
-Setup: you are testing two button colors. Variant A (blue) and variant B (green). You want to know which one gets more clicks.
+設定: 2つのボタン色をテストしています。Variant A（blue）とvariant B（green）です。どちらがより多くクリックされるかを知りたいとします。
 
-The Bayesian A/B test:
+ベイズA/Bテスト:
 
-1. **Prior.** Start with Beta(1, 1) for both variants. No prior preference.
-2. **Data.** Variant A: 50 clicks out of 1000 views. Variant B: 65 clicks out of 1000 views.
-3. **Posteriors.**
-   - A: Beta(1 + 50, 1 + 950) = Beta(51, 951). Mean = 0.051
-   - B: Beta(1 + 65, 1 + 935) = Beta(66, 936). Mean = 0.066
-4. **Decision.** Compute P(B > A) -- the probability that B's true conversion rate is higher than A's.
+1. **事前分布。** 両方のvariantについて Beta(1, 1) から始めます。事前の好みはありません。
+2. **データ。** Variant A: 1000 views中50 clicks。Variant B: 1000 views中65 clicks。
+3. **事後分布。**
+   - A: Beta(1 + 50, 1 + 950) = Beta(51, 951)。平均 = 0.051
+   - B: Beta(1 + 65, 1 + 935) = Beta(66, 936)。平均 = 0.066
+4. **意思決定。** P(B > A)、つまりBの真のコンバージョン率がAより高い確率を計算します。
 
-Computing P(B > A) analytically is hard. But Monte Carlo makes it trivial:
+P(B > A) を解析的に計算するのは困難です。しかしMonte Carloを使えば簡単です。
 
 ```
-1. Draw 100,000 samples from Beta(51, 951)  -> samples_A
-2. Draw 100,000 samples from Beta(66, 936)  -> samples_B
-3. P(B > A) = fraction of samples where B > A
+1. Beta(51, 951) から100,000個のサンプルを引く -> samples_A
+2. Beta(66, 936) から100,000個のサンプルを引く -> samples_B
+3. P(B > A) = B > A となるサンプルの割合
 ```
 
-If P(B > A) > 0.95, you ship variant B. If it is between 0.05 and 0.95, you keep collecting data. If P(B > A) < 0.05, you ship variant A.
+P(B > A) > 0.95 ならvariant Bを出荷します。0.05から0.95の間ならデータ収集を続けます。P(B > A) < 0.05 ならvariant Aを出荷します。
 
-Advantages over frequentist A/B testing:
-- You get a direct probability statement: "there is a 97% chance B is better"
-- No p-value confusion. No "fail to reject the null hypothesis" hedging.
-- You can check results at any time without inflating false positive rates (no "peeking problem")
-- You can incorporate prior knowledge (e.g., previous tests suggest conversion rates are usually 3-8%)
+頻度主義的なA/Bテストに対する利点:
+- 「Bの方がよい確率は97%である」という直接的な確率文が得られる
+- p値の混乱がない。「帰無仮説を棄却できない」といった曖昧な表現がない
+- 偽陽性率を膨らませず、いつでも結果を確認できる（「peeking problem」がない）
+- 事前知識を取り込める（例: 過去のテストからコンバージョン率は通常3-8%だとわかっている）
 
-| Aspect | Frequentist A/B | Bayesian A/B |
-|--------|----------------|--------------|
-| Output | p-value | P(B > A) |
-| Interpretation | "How surprising is this data if A=B?" | "How likely is B better than A?" |
-| Early stopping | Inflates false positives | Safe at any point (given a well-chosen prior and correctly specified model) |
-| Prior knowledge | Not used | Encoded as Beta prior |
-| Decision rule | p < 0.05 | P(B > A) > threshold |
+| 観点 | 頻度主義A/B | ベイズA/B |
+|------|-------------|-----------|
+| 出力 | p値 | P(B > A) |
+| 解釈 | 「A=Bなら、このデータはどれほど意外か？」 | 「BがAよりよい可能性はどれくらいか？」 |
+| 早期停止 | 偽陽性を増やす | 任意の時点で安全（適切に選んだ事前分布と正しく指定したモデルが前提） |
+| 事前知識 | 使わない | Beta事前分布として符号化する |
+| 意思決定規則 | p < 0.05 | P(B > A) > threshold |
 
-## Exercises
+## 演習
 
-1. **Multiple tests.** A patient tests positive twice on independent tests (both 99% accurate, disease prevalence 1 in 10,000). What is P(sick) after both tests? Use the posterior from the first test as the prior for the second.
+1. **複数の検査。** 患者が独立した検査で2回陽性になりました（どちらも99%正確、病気の有病率は1万人に1人）。2回の検査後の P(sick) はいくらですか？1回目の検査から得た事後確率を2回目の事前確率として使ってください。
 
-2. **Smoothing impact.** Run the spam classifier with smoothing values of 0.01, 0.1, 1.0, and 10.0. How do the top word probabilities change? What happens with smoothing=0 and a word that appears only in ham?
+2. **平滑化の影響。** smoothing値 0.01、0.1、1.0、10.0 でスパム分類器を実行してください。上位単語の確率はどう変わりますか？smoothing=0 で、hamにだけ出現する単語があると何が起こりますか？
 
-3. **Add features.** Extend the NaiveBayes class to also use message length (short/long) as a feature alongside word counts. Estimate P(short|spam) and P(short|ham) from the training data and fold it into the prediction score.
+3. **特徴量を追加する。** NaiveBayesクラスを拡張し、単語カウントに加えてメッセージ長（short/long）も特徴量として使ってください。訓練データから P(short|spam) と P(short|ham) を推定し、予測スコアに組み込んでください。
 
-4. **MAP by hand.** Given observed data (7 heads in 10 coin flips), compute the MAP estimate of the bias using a Beta(2,2) prior. Compare it to the MLE estimate (7/10).
+4. **MAPを手計算する。** 観測データ（10回のコイン投げで表7回）が与えられたとき、Beta(2,2) 事前分布を使って偏りのMAP推定値を計算してください。MLE推定値（7/10）と比較してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Prior | "My initial guess" | P(hypothesis) before observing evidence. In ML: the regularization term. |
-| Likelihood | "How well the data fits" | P(evidence\|hypothesis). How probable the observed data is under a specific hypothesis. |
-| Posterior | "My updated belief" | P(hypothesis\|evidence). The prior multiplied by the likelihood, then normalized. |
-| Evidence | "The normalizing constant" | P(data) across all hypotheses. Ensures the posterior sums to 1. |
-| Naive Bayes | "That simple text classifier" | A classifier that assumes features are independent given the class. Works well despite the false assumption. |
-| Laplace smoothing | "Add-one smoothing" | Adding a small count to every feature to prevent zero probabilities from unseen data. |
-| MLE | "Just use the frequencies" | Choose parameters that maximize P(data\|parameters). No prior. Can overfit with small data. |
-| MAP | "MLE with a prior" | Choose parameters that maximize P(data\|parameters) * P(parameters). Equivalent to regularized MLE. |
-| Log-probability | "Work in log space" | Using log(P) instead of P to avoid floating-point underflow when multiplying many small numbers. |
-| False positive | "A wrong alarm" | The test says positive, but the true state is negative. Drives the base rate fallacy. |
+| 用語 | よく言われる表現 | 実際の意味 |
+|------|------------------|------------|
+| Prior | 「最初の推測」 | 証拠を観測する前の P(hypothesis)。MLでは正則化項。 |
+| Likelihood | 「データがどれだけ合っているか」 | P(evidence\|hypothesis)。特定の仮説のもとで観測データがどれだけ起こりやすいか。 |
+| Posterior | 「更新後の信念」 | P(hypothesis\|evidence)。事前確率に尤度を掛け、正規化したもの。 |
+| Evidence | 「正規化定数」 | すべての仮説にまたがる P(data)。事後確率の和を1にする。 |
+| Naive Bayes | 「あの単純なテキスト分類器」 | クラスが与えられたとき特徴量が独立だと仮定する分類器。誤った仮定にもかかわらずよく機能する。 |
+| Laplace smoothing | 「add-one smoothing」 | 未観測データによるゼロ確率を防ぐため、すべての特徴量に小さなカウントを加えること。 |
+| MLE | 「頻度をそのまま使う」 | P(data\|parameters) を最大化するパラメータを選ぶ。事前分布はない。少量データでは過学習しやすい。 |
+| MAP | 「事前分布つきのMLE」 | P(data\|parameters) * P(parameters) を最大化するパラメータを選ぶ。正則化されたMLEと等価。 |
+| Log-probability | 「log空間で計算する」 | 多くの小さな数を掛けるときの浮動小数点アンダーフローを避けるため、Pではなくlog(P)を使うこと。 |
+| False positive | 「誤警報」 | 検査は陽性と言うが、真の状態は陰性であること。ベースレート無視を引き起こす。 |
 
-## Further Reading
+## 参考資料
 
-- [3Blue1Brown: Bayes' theorem](https://www.youtube.com/watch?v=HZGCoVF3YvM) - visual explanation with the medical test example
-- [Stanford CS229: Generative Learning Algorithms](https://cs229.stanford.edu/notes2022fall/cs229-notes2.pdf) - naive Bayes and its connection to discriminative models
-- [Think Bayes](https://greenteapress.com/wp/think-bayes/) - free book, Bayesian statistics with Python code
-- [scikit-learn Naive Bayes](https://scikit-learn.org/stable/modules/naive_bayes.html) - production implementations and when to use each variant
+- [3Blue1Brown: Bayes' theorem](https://www.youtube.com/watch?v=HZGCoVF3YvM) - 医療検査の例を使った視覚的な説明
+- [Stanford CS229: Generative Learning Algorithms](https://cs229.stanford.edu/notes2022fall/cs229-notes2.pdf) - ナイーブベイズと識別モデルとのつながり
+- [Think Bayes](https://greenteapress.com/wp/think-bayes/) - 無料書籍。Pythonコードで学ぶベイズ統計
+- [scikit-learn Naive Bayes](https://scikit-learn.org/stable/modules/naive_bayes.html) - 本番実装と各variantの使いどころ

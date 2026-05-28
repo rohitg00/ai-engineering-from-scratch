@@ -1,170 +1,170 @@
-# Optimizers
+# オプティマイザ
 
-> Gradient descent tells you which direction to move. It says nothing about how far or how fast. SGD is a compass. Adam is GPS with traffic data.
+> 勾配降下は、どちらへ動くべきかを教えてくれます。どれくらい遠くへ、どれくらい速く動くべきかは教えてくれません。SGD はコンパスです。Adam は渋滞情報付きの GPS です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Lesson 03.05 (Loss Functions)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** レッスン 03.05（Loss Functions）
+**時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Implement SGD, SGD with momentum, Adam, and AdamW optimizers from scratch in Python
-- Explain how Adam's bias correction compensates for zero-initialized moment estimates in early training steps
-- Demonstrate why AdamW produces better generalization than Adam with L2 regularization on the same task
-- Select the appropriate optimizer and default hyperparameters for transformers, CNNs, GANs, and fine-tuning
+- SGD、momentum 付き SGD、Adam、AdamW optimizer を Python でゼロから実装する
+- Adam の bias correction が、訓練初期のゼロ初期化された moment 推定をどのように補正するかを説明する
+- 同じタスクで、AdamW が L2 正則化付き Adam より良い汎化を生む理由を示す
+- transformers、CNNs、GANs、fine-tuning に対して適切な optimizer とデフォルトハイパーパラメータを選ぶ
 
-## The Problem
+## 問題
 
-You computed the gradients. You know that weight #4,721 should decrease by 0.003 to reduce the loss. But 0.003 in what units? Scaled by what? And should you move the same amount on step 1 as on step 1,000?
+勾配は計算できました。weight #4,721 は損失を減らすために 0.003 減らすべきだと分かっています。しかし 0.003 とはどの単位でしょうか。何でスケールすべきでしょうか。そして step 1 と step 1,000 で同じ量だけ動くべきでしょうか。
 
-Vanilla gradient descent applies the same learning rate to every parameter on every step: w = w - lr * gradient. This creates three problems that make training neural networks painful in practice.
+素の gradient descent は、すべての step で、すべてのパラメータに同じ learning rate を適用します: w = w - lr * gradient。これは、実務でニューラルネットワークの訓練を苦しくする3つの問題を生みます。
 
-First, oscillation. The loss landscape is rarely shaped like a smooth bowl. It's more like a long, narrow valley. The gradient points across the valley (steep direction), not along it (shallow direction). Gradient descent bounces back and forth across the narrow dimension while making tiny progress along the useful one. You've seen this: loss drops fast then plateaus, not because the model converged but because it's oscillating.
+第一に、振動です。損失地形は滑らかなお椀のような形であることはほとんどありません。むしろ長く狭い谷のような形です。勾配は谷に沿った方向（浅い方向）ではなく、谷を横切る方向（急な方向）を指します。gradient descent は狭い次元を行ったり来たり跳ねながら、有用な方向にはわずかにしか進みません。これはよく見ます。loss が急に下がってから plateau するのは、モデルが収束したからではなく、振動しているからです。
 
-Second, one learning rate for all parameters is wrong. Some weights need large updates (they're in the early, underfitting stage). Others need tiny updates (they're near their optimal value). A learning rate that works for the former destroys the latter, and vice versa.
+第二に、すべてのパラメータに1つの learning rate を使うのは間違っています。大きな更新が必要な重みもあります（初期の underfitting 段階にあるもの）。小さな更新だけでよい重みもあります（最適値に近いもの）。前者に合う learning rate は後者を壊し、後者に合う learning rate は前者には小さすぎます。
 
-Third, saddle points. In high dimensions, the loss landscape has vast flat regions where the gradient is near zero. Vanilla SGD crawls through these at the speed of the gradient, which is effectively zero. The model looks stuck. It isn't stuck -- it's in a flat region with useful descent on the other side. But SGD has no mechanism to push through.
+第三に、saddle points です。高次元の損失地形には、勾配がゼロに近い広大な平坦領域があります。素の SGD は、この領域を勾配の速度、つまり実質ゼロの速度で這って進みます。モデルは詰まっているように見えます。実際には詰まっていません。その先に有用な降下方向がある平坦領域にいるだけです。しかし SGD には押し抜ける仕組みがありません。
 
-Adam solves all three. It maintains two running averages per parameter -- the mean gradient (momentum, handles oscillation) and the mean squared gradient (adaptive rate, handles different scales). Combined with bias correction for the first few steps, it gives you a single optimizer that works on 80% of problems with default hyperparameters. This lesson builds it from scratch so you understand exactly when and why it fails on the other 20%.
+Adam はこの3つすべてを解決します。パラメータごとに2つの running average を維持します。平均勾配（momentum、振動を扱う）と、二乗勾配の平均（adaptive rate、スケールの違いを扱う）です。最初の数 step に対する bias correction と組み合わせることで、デフォルトハイパーパラメータのまま80%の問題で動く単一の optimizer になります。このレッスンでは、それをゼロから作り、残り20%でいつ、なぜ失敗するかを正確に理解します。
 
-## The Concept
+## 概念
 
-### Stochastic Gradient Descent (SGD)
+### Stochastic Gradient Descent（SGD）
 
-The simplest optimizer. Compute the gradient on a mini-batch and step in the opposite direction.
+最も単純な optimizer です。mini-batch で勾配を計算し、反対方向へ step します。
 
 ```
 w = w - lr * gradient
 ```
 
-The "stochastic" means you use a random subset (mini-batch) of data to estimate the gradient, rather than the full dataset. This noise is actually useful -- it helps escape sharp local minima. But the noise also causes oscillation.
+「stochastic」は、full dataset ではなくランダムな subset（mini-batch）を使って勾配を推定するという意味です。このノイズは実は有用で、鋭い局所最小から抜ける助けになります。ただしノイズは振動も引き起こします。
 
-Learning rate is the only knob. Too high: the loss diverges. Too low: training takes forever. The optimal value depends on the architecture, the data, the batch size, and the current stage of training. For vanilla SGD on modern networks, typical values range from 0.01 to 0.1. But even within a single training run, the ideal learning rate changes.
+learning rate が唯一のノブです。高すぎると loss は発散します。低すぎると訓練に永遠に時間がかかります。最適値は、アーキテクチャ、データ、batch size、訓練の現在段階に依存します。現代的なネットワークで素の SGD を使う場合、典型値は 0.01 から 0.1 です。ただし1回の訓練の中でも、理想的な learning rate は変化します。
 
 ### Momentum
 
-The ball-rolling-downhill analogy is overused but accurate. Instead of stepping by the gradient alone, you maintain a velocity that accumulates past gradients.
+坂を転がるボールの比喩は使い古されていますが、正確です。勾配だけで step する代わりに、過去の勾配を蓄積する velocity を維持します。
 
 ```
 m_t = beta * m_{t-1} + gradient
 w = w - lr * m_t
 ```
 
-Beta (typically 0.9) controls how much history to keep. With beta = 0.9, the momentum is roughly the average of the last 10 gradients (1 / (1 - 0.9) = 10).
+Beta（通常 0.9）は、どれくらい履歴を保持するかを制御します。beta = 0.9 では、momentum はおおよそ直近10個の勾配の平均です（1 / (1 - 0.9) = 10）。
 
-Why this fixes oscillation: gradients that point in the same direction accumulate. Gradients that flip direction cancel out. In that narrow valley, the "across" component flips sign each step and gets dampened. The "along" component stays consistent and gets amplified. The result is smooth acceleration in the useful direction.
+これが振動を直す理由: 同じ方向を向く勾配は蓄積されます。方向が反転する勾配は打ち消し合います。狭い谷では、「横切る」成分は step ごとに符号が反転して減衰します。「沿う」成分は一貫して残り、増幅されます。その結果、有用な方向へ滑らかに加速します。
 
-Real numbers: SGD alone on a badly conditioned loss landscape might take 10,000 steps. SGD with momentum (beta=0.9) typically takes 3,000-5,000 steps on the same problem. The speedup is not marginal.
+具体的には、条件の悪い損失地形で SGD 単体なら 10,000 steps かかるかもしれません。同じ問題で momentum 付き SGD（beta=0.9）なら、典型的には 3,000-5,000 steps です。この高速化は小さな差ではありません。
 
 ### RMSProp
 
-The first per-parameter adaptive learning rate method that actually worked. Proposed by Hinton in a Coursera lecture (never formally published).
+実際にうまく機能した最初のパラメータごとの adaptive learning rate 手法です。Hinton が Coursera の講義で提案しました（正式な論文としては未発表）。
 
 ```
 s_t = beta * s_{t-1} + (1 - beta) * gradient^2
 w = w - lr * gradient / (sqrt(s_t) + epsilon)
 ```
 
-s_t tracks the running average of squared gradients. Parameters with consistently large gradients get divided by a large number (smaller effective learning rate). Parameters with small gradients get divided by a small number (larger effective learning rate).
+s_t は二乗勾配の running average を追跡します。継続的に大きな勾配を持つパラメータは大きな数で割られます（有効 learning rate が小さくなる）。小さな勾配を持つパラメータは小さな数で割られます（有効 learning rate が大きくなる）。
 
-This solves the "one learning rate for all parameters" problem. A weight that's already been getting large updates is probably near its target -- slow it down. A weight that's been getting tiny updates might be undertrained -- speed it up.
+これは「すべてのパラメータに1つの learning rate」問題を解決します。すでに大きな更新を受け続けている重みは、目標に近い可能性があります。遅くします。小さな更新しか受けていない重みは、学習不足かもしれません。速くします。
 
-Epsilon (typically 1e-8) prevents division by zero when a parameter hasn't been updated.
+Epsilon（通常 1e-8）は、パラメータがまだ更新されていないときのゼロ除算を防ぎます。
 
 ### Adam: Momentum + RMSProp
 
-Adam combines both ideas. It maintains two exponential moving averages per parameter:
+Adam はこの2つのアイデアを組み合わせます。パラメータごとに2つの exponential moving averages を維持します。
 
 ```
 m_t = beta1 * m_{t-1} + (1 - beta1) * gradient        (first moment: mean)
 v_t = beta2 * v_{t-1} + (1 - beta2) * gradient^2       (second moment: variance)
 ```
 
-**Bias correction** is the key detail most explanations skip. At step 1, m_1 = (1 - beta1) * gradient. With beta1 = 0.9, that's 0.1 * gradient -- ten times too small. The moving average hasn't warmed up yet. Bias correction compensates:
+**Bias correction** は、多くの説明が飛ばす重要な細部です。step 1 では、m_1 = (1 - beta1) * gradient です。beta1 = 0.9 なら、これは 0.1 * gradient、つまり10倍小さすぎます。moving average がまだ温まっていないからです。bias correction はこれを補正します。
 
 ```
 m_hat = m_t / (1 - beta1^t)
 v_hat = v_t / (1 - beta2^t)
 ```
 
-At step 1 with beta1 = 0.9: m_hat = m_1 / (1 - 0.9) = m_1 / 0.1 = the actual gradient. At step 100: (1 - 0.9^100) is approximately 1.0, so the correction vanishes. Bias correction matters for the first ~10 steps and is irrelevant after ~50.
+step 1 で beta1 = 0.9 の場合、m_hat = m_1 / (1 - 0.9) = m_1 / 0.1 = 実際の勾配です。step 100 では、(1 - 0.9^100) はほぼ 1.0 なので、補正は消えます。bias correction が重要なのは最初の約10 steps で、約50 steps 後にはほぼ関係なくなります。
 
-The update:
+更新式は次のとおりです。
 
 ```
 w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
 ```
 
-Adam defaults: lr = 0.001, beta1 = 0.9, beta2 = 0.999, epsilon = 1e-8. These defaults work for 80% of problems. When they don't, change lr first. Then beta2. Almost never change beta1 or epsilon.
+Adam のデフォルトは、lr = 0.001、beta1 = 0.9、beta2 = 0.999、epsilon = 1e-8 です。これらのデフォルトは80%の問題で機能します。機能しないときは、まず lr を変えます。次に beta2 です。beta1 や epsilon を変えることはほとんどありません。
 
-### AdamW: Weight Decay Done Right
+### AdamW: 正しい Weight Decay
 
-L2 regularization adds lambda * w^2 to the loss. In vanilla SGD, this is equivalent to weight decay (subtracting lambda * w from the weight at each step). In Adam, this equivalence breaks.
+L2 正則化は lambda * w^2 を損失に追加します。素の SGD では、これは weight decay（各 step で weight から lambda * w を引くこと）と等価です。Adam では、この等価性が壊れます。
 
-The Loshchilov & Hutter insight: when you add L2 to the loss and then Adam processes the gradient, the adaptive learning rate scales the regularization term too. Parameters with large gradient variance get less regularization. Parameters with small variance get more. This is not what you want -- you want uniform regularization regardless of the gradient statistics.
+Loshchilov & Hutter の洞察はこうです。L2 を損失に追加し、その勾配を Adam が処理すると、adaptive learning rate が正則化項もスケールしてしまいます。勾配分散が大きいパラメータは正則化が弱くなります。分散が小さいパラメータは正則化が強くなります。これは望む挙動ではありません。勾配統計に関係なく、一様な正則化が欲しいはずです。
 
-AdamW fixes this by applying weight decay directly to the weights, after the Adam update:
+AdamW は、Adam update の後に weight decay を直接重みに適用してこれを修正します。
 
 ```
 w = w - lr * m_hat / (sqrt(v_hat) + epsilon) - lr * lambda * w
 ```
 
-The weight decay term (lr * lambda * w) is not scaled by Adam's adaptive factor. Every parameter gets the same proportional shrinkage.
+weight decay 項（lr * lambda * w）は、Adam の adaptive factor でスケールされません。すべてのパラメータが同じ比例縮小を受けます。
 
-This seems like a minor detail. It's not. AdamW converges to better solutions than Adam + L2 regularization on virtually every task. It's the default optimizer in PyTorch for training transformers, diffusion models, and most modern architectures. BERT, GPT, LLaMA, Stable Diffusion -- all trained with AdamW.
+これは小さな細部に見えます。違います。AdamW は、ほぼすべてのタスクで Adam + L2 正則化より良い解へ収束します。PyTorch では、transformer、diffusion model、そして現代的な多くのアーキテクチャを訓練するデフォルト optimizer です。BERT、GPT、LLaMA、Stable Diffusion はすべて AdamW で訓練されています。
 
-### Learning Rate: The Most Important Hyperparameter
+### Learning Rate: 最も重要なハイパーパラメータ
 
 ```mermaid
 graph TD
-    LR["Learning Rate"] --> TooHigh["Too high (lr > 0.01)"]
-    LR --> JustRight["Just right"]
-    LR --> TooLow["Too low (lr < 0.00001)"]
+    LR["Learning Rate"] --> TooHigh["高すぎる (lr > 0.01)"]
+    LR --> JustRight["ちょうどよい"]
+    LR --> TooLow["低すぎる (lr < 0.00001)"]
 
-    TooHigh --> Diverge["Loss explodes<br/>NaN weights<br/>Training crashes"]
-    JustRight --> Converge["Loss decreases steadily<br/>Reaches good minimum<br/>Generalizes well"]
-    TooLow --> Stall["Loss decreases slowly<br/>Gets stuck in suboptimal minimum<br/>Wastes compute"]
+    TooHigh --> Diverge["Loss が爆発<br/>NaN weights<br/>訓練がクラッシュ"]
+    JustRight --> Converge["Loss が着実に減少<br/>良い最小値へ到達<br/>よく汎化"]
+    TooLow --> Stall["Loss の減少が遅い<br/>準最適な最小値に停滞<br/>計算資源を浪費"]
 
-    JustRight --> Schedule["Usually needs scheduling"]
-    Schedule --> Warmup["Warmup: ramp from 0 to max<br/>First 1-10% of training"]
-    Schedule --> Decay["Decay: reduce over time<br/>Cosine or linear"]
+    JustRight --> Schedule["通常は scheduling が必要"]
+    Schedule --> Warmup["Warmup: 0 から max へ ramp<br/>訓練の最初の 1-10%"]
+    Schedule --> Decay["Decay: 時間とともに減らす<br/>Cosine または linear"]
 ```
 
-If you tune one hyperparameter, tune the learning rate. A 10x change in learning rate matters more than any architectural decision you'll make. Common defaults:
+ハイパーパラメータを1つだけ調整するなら、learning rate を調整してください。learning rate の10倍の変化は、あなたが行うどんなアーキテクチャ上の判断よりも大きく効きます。よく使うデフォルトは次のとおりです。
 
 - SGD: lr = 0.01 to 0.1
 - Adam/AdamW: lr = 1e-4 to 3e-4
-- Fine-tuning pretrained models: lr = 1e-5 to 5e-5
-- Learning rate warmup: linear ramp over first 1-10% of steps
+- 事前訓練済みモデルの fine-tuning: lr = 1e-5 to 5e-5
+- Learning rate warmup: 最初の 1-10% steps で linear ramp
 
-### Optimizer Comparison
+### Optimizer の比較
 
 ```mermaid
 flowchart LR
-    subgraph "Optimization Path"
-        SGD_P["SGD<br/>Oscillates across valley<br/>Slow but finds flat minima"]
-        Mom_P["SGD + Momentum<br/>Smoother path<br/>3x faster than SGD"]
-        Adam_P["Adam<br/>Adapts per-parameter<br/>Fast convergence"]
-        AdamW_P["AdamW<br/>Adam + proper decay<br/>Best generalization"]
+    subgraph "最適化パス"
+        SGD_P["SGD<br/>谷を横切って振動<br/>遅いが平坦な最小値を見つける"]
+        Mom_P["SGD + Momentum<br/>より滑らかな経路<br/>SGD より3倍速い"]
+        Adam_P["Adam<br/>パラメータごとに適応<br/>高速に収束"]
+        AdamW_P["AdamW<br/>Adam + 適切な decay<br/>最良の汎化"]
     end
     SGD_P --> Mom_P --> Adam_P --> AdamW_P
 ```
 
-### When Each Optimizer Wins
+### どの Optimizer がいつ勝つか
 
 ```mermaid
 flowchart TD
-    Task["What are you training?"] --> Type{"Model type?"}
+    Task["何を訓練していますか?"] --> Type{"モデル種別?"}
 
     Type -->|"Transformer / LLM"| AdamW["AdamW<br/>lr=1e-4, wd=0.01-0.1"]
     Type -->|"CNN / ResNet"| SGD_M["SGD + Momentum<br/>lr=0.1, momentum=0.9"]
     Type -->|"GAN"| Adam2["Adam<br/>lr=2e-4, beta1=0.5"]
     Type -->|"Fine-tuning"| AdamW2["AdamW<br/>lr=2e-5, wd=0.01"]
-    Type -->|"Don't know yet"| Default["Start with AdamW<br/>lr=3e-4, wd=0.01"]
+    Type -->|"まだ不明"| Default["AdamW から始める<br/>lr=3e-4, wd=0.01"]
 ```
 
-## Build It
+## 作ってみる
 
 ### Step 1: Vanilla SGD
 
@@ -178,7 +178,7 @@ class SGD:
             params[i] -= self.lr * grads[i]
 ```
 
-### Step 2: SGD with Momentum
+### Step 2: Momentum 付き SGD
 
 ```python
 class SGDMomentum:
@@ -259,9 +259,9 @@ class AdamW:
             params[i] -= self.lr * self.weight_decay * params[i]
 ```
 
-### Step 5: Training Comparison
+### Step 5: 訓練比較
 
-Train the same two-layer network on the circle dataset from lesson 05 with all four optimizers. Compare convergence.
+レッスン05の円データセットで、同じ2層ネットワークを4つの optimizer すべてで訓練します。収束を比較します。
 
 ```python
 import random
@@ -381,9 +381,9 @@ class OptimizerTestNetwork:
         return losses
 ```
 
-## Use It
+## 使ってみる
 
-PyTorch optimizers handle parameter groups, gradient clipping, and learning rate scheduling:
+PyTorch optimizer は、parameter groups、gradient clipping、learning rate scheduling を扱います。
 
 ```python
 import torch
@@ -409,45 +409,45 @@ for epoch in range(100):
     scheduler.step()
 ```
 
-The pattern is always: zero_grad, forward, loss, backward, (clip), step, (schedule). Memorize this order. Getting it wrong (e.g., calling scheduler.step() before optimizer.step()) is a common source of subtle bugs.
+パターンは常に zero_grad、forward、loss、backward、(clip)、step、(schedule) です。この順序を覚えてください。これを間違えること（たとえば optimizer.step() の前に scheduler.step() を呼ぶこと）は、気づきにくいバグのよくある原因です。
 
-For CNNs, many practitioners still prefer SGD + momentum (lr=0.1, momentum=0.9, weight_decay=1e-4) with a step or cosine schedule. SGD finds flatter minima, which often generalize better. For transformers and LLMs, AdamW with warmup + cosine decay is the universal default. Don't fight the consensus without a measured reason.
+CNN では、今でも多くの実務者が step schedule または cosine schedule とともに SGD + momentum（lr=0.1, momentum=0.9, weight_decay=1e-4）を好みます。SGD はより平坦な最小値を見つけるため、汎化が良くなることがよくあります。transformers と LLMs では、warmup + cosine decay 付き AdamW が普遍的なデフォルトです。測定に基づく理由なしに、この合意に逆らわないでください。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-optimizer-selector.md` -- a decision prompt for choosing the right optimizer and learning rate for any architecture
+このレッスンで作るもの:
+- `outputs/prompt-optimizer-selector.md` -- 任意のアーキテクチャに対して正しい optimizer と learning rate を選ぶための判断プロンプト
 
-## Exercises
+## 演習
 
-1. Implement Nesterov momentum, where you compute the gradient at the "lookahead" position (w - lr * beta * v) instead of the current position. Compare convergence to standard momentum on the circle dataset.
+1. Nesterov momentum を実装してください。現在位置ではなく「lookahead」位置（w - lr * beta * v）で勾配を計算します。円データセットで標準 momentum との収束を比較してください。
 
-2. Implement a learning rate warmup schedule: linear ramp from 0 to max_lr over the first 10% of training steps, then cosine decay to 0. Train with Adam + warmup vs Adam without warmup. Measure how many epochs it takes to reach 90% accuracy on the circle dataset.
+2. learning rate warmup schedule を実装してください。訓練 step の最初の10%で 0 から max_lr へ linear ramp し、その後 0 まで cosine decay します。Adam + warmup と warmup なし Adam を訓練してください。円データセットで 90% accuracy に到達するまで何 epochs かかるかを測定してください。
 
-3. Track the effective learning rate for each parameter during Adam training. The effective rate is lr * m_hat / (sqrt(v_hat) + eps). Plot the distribution of effective rates after 10, 50, and 200 steps. Are all parameters being updated at the same speed?
+3. Adam 訓練中、各パラメータの有効 learning rate を追跡してください。有効 rate は lr * m_hat / (sqrt(v_hat) + eps) です。10、50、200 steps 後の有効 rate の分布をプロットしてください。すべてのパラメータは同じ速度で更新されていますか?
 
-4. Implement gradient clipping (clip by global norm). Set the max gradient norm to 1.0. Train with and without clipping using a high learning rate (lr=0.01 for Adam). Count how many runs diverge (loss goes to NaN) with and without clipping over 10 random seeds.
+4. gradient clipping（global norm で clip）を実装してください。最大勾配ノルムを 1.0 に設定します。高い learning rate（Adam で lr=0.01）を使い、clipping あり/なしで訓練してください。10個の random seeds で、loss が NaN になって発散した run の数を比較してください。
 
-5. Compare Adam vs AdamW on a network with large weights. Initialize all weights to random values in [-5, 5] (much larger than normal). Train for 200 epochs with weight_decay=0.1. Plot the L2 norm of weights over training for both optimizers. AdamW should show faster weight shrinkage.
+5. 大きな重みを持つネットワークで Adam と AdamW を比較してください。すべての重みを [-5, 5] のランダム値（通常よりかなり大きい）で初期化します。weight_decay=0.1 で200 epochs 訓練してください。訓練中の重みの L2 norm を両 optimizer でプロットします。AdamW のほうがより速く重みを縮小するはずです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Learning rate | "Step size" | The scalar multiplier on the gradient update; the single most impactful hyperparameter in training |
-| SGD | "Basic gradient descent" | Stochastic gradient descent: update weights by subtracting lr * gradient, computed on a mini-batch |
-| Momentum | "Rolling ball analogy" | Exponential moving average of past gradients; dampens oscillation and accelerates consistent directions |
-| RMSProp | "Adaptive learning rate" | Divides each parameter's gradient by the running RMS of its recent gradients; equalizes learning rates |
-| Adam | "The default optimizer" | Combines momentum (first moment) and RMSProp (second moment) with bias correction for the initial steps |
-| AdamW | "Adam done right" | Adam with decoupled weight decay; applies regularization directly to weights rather than through the gradient |
-| Bias correction | "Warmup for running averages" | Dividing by (1 - beta^t) to compensate for the zero-initialization of Adam's moment estimates |
-| Weight decay | "Shrink the weights" | Subtracting a fraction of the weight value at each step; a regularizer that penalizes large weights |
-| Learning rate schedule | "Changing lr over time" | A function that adjusts the learning rate during training; warmup + cosine decay is the modern default |
-| Gradient clipping | "Capping the gradient norm" | Scaling down the gradient vector when its norm exceeds a threshold; prevents exploding gradient updates |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Learning rate | 「Step size」 | 勾配更新に掛けるスカラー係数。訓練で最も影響が大きい単一のハイパーパラメータ |
+| SGD | 「基本の gradient descent」 | Stochastic gradient descent。mini-batch で計算した lr * gradient を重みから引いて更新する |
+| Momentum | 「転がるボールの比喩」 | 過去の勾配の exponential moving average。振動を減衰し、一貫した方向を加速する |
+| RMSProp | 「Adaptive learning rate」 | 各パラメータの勾配を、その最近の勾配の running RMS で割る。learning rate を均す |
+| Adam | 「デフォルト optimizer」 | momentum（first moment）と RMSProp（second moment）を、初期 steps の bias correction と組み合わせる |
+| AdamW | 「正しい Adam」 | decoupled weight decay を持つ Adam。正則化を勾配経由ではなく重みに直接適用する |
+| Bias correction | 「running average の warmup」 | Adam の moment 推定がゼロ初期化されることを補正するため、(1 - beta^t) で割ること |
+| Weight decay | 「重みを縮める」 | 各 step で重み値の一部を引くこと。大きな重みを罰する正則化 |
+| Learning rate schedule | 「時間とともに lr を変える」 | 訓練中に learning rate を調整する関数。warmup + cosine decay が現代的なデフォルト |
+| Gradient clipping | 「勾配ノルムに上限をかける」 | 勾配ベクトルのノルムが閾値を超えたときに縮小すること。勾配爆発による更新を防ぐ |
 
-## Further Reading
+## 参考資料
 
-- Kingma & Ba, "Adam: A Method for Stochastic Optimization" (2014) -- the original Adam paper with convergence analysis and the bias correction derivation
-- Loshchilov & Hutter, "Decoupled Weight Decay Regularization" (2017) -- proved that L2 regularization and weight decay are not equivalent in Adam, and proposed AdamW
-- Smith, "Cyclical Learning Rates for Training Neural Networks" (2017) -- introduced the LR range test and cyclical schedules that remove the need to tune a fixed learning rate
-- Ruder, "An Overview of Gradient Descent Optimization Algorithms" (2016) -- the best single survey of all optimizer variants, with clear comparisons and intuitions
+- Kingma & Ba, "Adam: A Method for Stochastic Optimization" (2014) -- Adam の原論文。収束解析と bias correction の導出を含む
+- Loshchilov & Hutter, "Decoupled Weight Decay Regularization" (2017) -- L2 正則化と weight decay が Adam では等価ではないことを示し、AdamW を提案した論文
+- Smith, "Cyclical Learning Rates for Training Neural Networks" (2017) -- LR range test と cyclical schedule を導入し、固定 learning rate の調整を不要にする考え方を示した論文
+- Ruder, "An Overview of Gradient Descent Optimization Algorithms" (2016) -- optimizer 変種を明快な比較と直感でまとめた、最良の単一サーベイ

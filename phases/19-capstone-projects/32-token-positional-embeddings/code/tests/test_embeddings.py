@@ -1,4 +1,4 @@
-"""Tests for token and positional embeddings."""
+"""token embedding と positional embedding のテスト。"""
 
 from __future__ import annotations
 

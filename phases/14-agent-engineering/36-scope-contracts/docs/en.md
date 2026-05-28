@@ -1,24 +1,24 @@
-# Scope Contracts and Task Boundaries
+# スコープ契約とタスク境界
 
-> The model does not know where the work ends. A scope contract is a per-task file that says where the work begins, where it ends, and how to roll back if it spills. The contract turns "stay in scope" from a wish into a check.
+> モデルは作業の終わりを知りません。スコープ契約は、作業がどこから始まり、どこで終わり、はみ出したらどう戻すかをタスクごとに書くファイルです。この契約によって、「スコープ内に留まる」という願いがチェックに変わります。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
-**Time:** ~50 minutes
+**種別:** 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
+**所要時間:** 約50分
 
 ## Learning Objectives
 
-- Write a scope contract that an agent reads at task start and a verifier reads at task end.
-- Specify allowed files, forbidden files, acceptance criteria, rollback plan, and approval boundaries.
-- Implement a scope checker that compares a diff against the contract and flags violations.
-- Make scope creep visible, automatic, and reviewable.
+- agent がタスク開始時に読み、verifier がタスク終了時に読むスコープ契約を書けるようになる。
+- 許可ファイル、禁止ファイル、受け入れ条件、rollback plan、approval boundary を指定できるようになる。
+- diff を契約と照合し、違反を検出する scope checker を実装する。
+- scope creep を見える化し、自動化し、review 可能にする。
 
-## The Problem
+## 問題
 
-Agents creep. The task is "fix the login bug." The diff touches the login route, the email helper, the database driver, the README, and the release script. Each touch had a plausible reason in the moment. Together they are a different change than the one that was reviewed.
+Agent はスコープからはみ出します。タスクは「login bug を修正する」です。diff は login route、email helper、database driver、README、release script に触れます。その瞬間ごとには、どの変更にももっともらしい理由がありました。しかし全体としては、review された変更とは別物になっています。
 
-Scope creep is the most under-monitored failure mode in agent work because the agent narrates each step in good faith. The fix is not a stricter prompt. The fix is a contract on disk that says what was promised and a check that compares the result against the promise.
+Scope creep は agent 作業でもっとも監視不足になりやすい failure mode です。agent は各ステップを善意で説明するからです。解決策は prompt を厳しくすることではありません。約束した内容をディスク上の契約にし、結果をその約束と比較する check を置くことです。
 
 ## The Concept
 
@@ -34,103 +34,103 @@ flowchart LR
   Verdict -- no --> Block[block + open question]
 ```
 
-### What goes in a scope contract
+### スコープ契約に入れるもの
 
 | Field | Purpose |
 |-------|---------|
-| `task_id` | Links to the task on the board |
-| `goal` | One sentence the reviewer can verify |
-| `allowed_files` | Globs the agent may write |
-| `forbidden_files` | Globs the agent must not touch even by accident |
-| `acceptance_criteria` | Test commands or assertion lines that prove done |
-| `rollback_plan` | One paragraph the operator can execute if a halt is required |
-| `approvals_required` | Actions outside scope that need explicit human sign-off |
+| `task_id` | ボード上のタスクに紐づける |
+| `goal` | reviewer が検証できる一文の目標 |
+| `allowed_files` | agent が書き換えてよい glob |
+| `forbidden_files` | 偶発的にも触れてはいけない glob |
+| `acceptance_criteria` | 完了を証明する test command や assertion 行 |
+| `rollback_plan` | 停止が必要なとき operator が実行できる一段落の手順 |
+| `approvals_required` | スコープ外で明示的な human sign-off が必要な行為 |
 
-A contract without `forbidden_files` is incomplete. The negative space is half the contract.
+`forbidden_files` がない契約は未完成です。negative space は契約の半分です。
 
-### Globs, not raw paths
+### raw path ではなく glob
 
-Real repos move files. Pin contracts to globs (`app/**/*.py`, `tests/test_signup*.py`) so a refactor between sessions does not invalidate the contract.
+実際の repo ではファイルが動きます。契約は raw path ではなく glob (`app/**/*.py`, `tests/test_signup*.py`) に固定します。そうすれば session 間の refactor で契約が無効になりにくくなります。
 
-### Rollback is part of scope
+### rollback はスコープの一部
 
-Listing how to roll back forces the contract author to think about what could go wrong. A contract you cannot roll back from is a contract that should not be approved.
+戻し方を列挙すると、契約を書く人は何が壊れうるかを考えざるを得ません。rollback できない契約は、承認すべき契約ではありません。
 
-### Scope check is a diff check
+### scope check は diff check
 
-The agent writes a diff. The checker reads the diff, the allowed globs, the forbidden globs, and a list of any acceptance commands that ran. Each violation is a tagged finding the verification gate can refuse.
+Agent は diff を書きます。checker は diff、allowed glob、forbidden glob、実行された acceptance command の一覧を読みます。各違反は verification gate が拒否できる tagged finding になります。
 
-## Build It
+## 実装
 
-`code/main.py` implements:
+`code/main.py` は次を実装します。
 
-- `scope_contract.json` schema (subset of JSON Schema, glob arrays).
-- A diff parser that turns a list of touched files plus a list of run commands into a `RunSummary`.
-- A `scope_check` that returns `(violations, in_scope, off_scope)` against the contract.
-- Two demo runs: one that stays in scope, one that creeps. The checker flags the creep with the exact file and reason.
+- `scope_contract.json` schema (JSON Schema のサブセット、glob 配列)。
+- touched file の一覧と実行コマンドの一覧を `RunSummary` に変換する diff parser。
+- 契約に対して `(violations, in_scope, off_scope)` を返す `scope_check`。
+- スコープ内に留まる demo run と、scope creep する demo run。checker は creep を exact file と理由つきで flag します。
 
-Run it:
+実行します。
 
 ```
 python3 code/main.py
 ```
 
-Output: the contract, the two runs, the per-run verdicts, and a saved `scope_report.json`.
+出力: 契約、2 つの run、run ごとの verdict、保存された `scope_report.json`。
 
 ## Production patterns in the wild
 
-A practitioner running "specsmaxxing" (scope contracts in YAML before invoking the agent) reports rabbit-hole rate dropped from 52% to 21% in three weeks without changing the agent. The contract did the work, not the model. Three patterns make the gain stick.
+「specsmaxxing」(agent 起動前に YAML で scope contract を書く運用) を行った practitioner は、agent を変えずに rabbit-hole rate が 3 週間で 52% から 21% に下がったと報告しています。仕事をしたのは model ではなく契約です。この改善を定着させる pattern が 3 つあります。
 
-**Violation budgets, not binary failures.** `agent-guardrails` (the OSS merge gate used by Claude Code, Cursor, Windsurf, Codex via MCP) ships a `violationBudget` per task: minor scope slips within budget are surfaced as warnings; only when the budget is exceeded does the merge gate refuse. Pair with `violationSeverity: "error" | "warning"`. The budget is the difference between a gate that ships and a gate that gets disabled by the team that hated it.
+**Violation budgets, not binary failures.** `agent-guardrails` (Claude Code、Cursor、Windsurf、Codex が MCP 経由で使う OSS merge gate) は、タスクごとに `violationBudget` を持ちます。budget 内の小さなスコープ逸脱は warning として提示し、budget を超えたときだけ merge gate が拒否します。`violationSeverity: "error" | "warning"` と組み合わせます。budget は、実際に運用される gate と、嫌われて無効化される gate の差です。
 
-**Severity asymmetry by path family.** Off-scope writes to `docs/**` are usually `warn`; off-scope writes to `scripts/**`, `migrations/**`, `config/prod/**` are always `block`. This asymmetry has to live in the contract, not in the runtime, because it is project-specific and changes per task.
+**Severity asymmetry by path family.** `docs/**` への off-scope write はたいてい `warn` です。一方、`scripts/**`、`migrations/**`、`config/prod/**` への off-scope write は常に `block` です。この非対称性は runtime ではなく契約に置く必要があります。project 固有で、task ごとに変わるからです。
 
-**Time and network budgets next to file budgets.** A `time_budget_minutes` field bounds the wall clock; the runtime refuses to continue past it without re-approval. A `network_egress` allowlist on hostnames prevents the agent from quietly hitting an external API that was not part of the task. These are scope dimensions too; the file globs are necessary, not sufficient.
+**Time and network budgets next to file budgets.** `time_budget_minutes` field は wall clock を制限し、runtime は再承認なしに超過後の継続を拒否します。hostname の `network_egress` allowlist は、タスクに含まれていない外部 API を agent が静かに叩くことを防ぎます。これらもスコープの dimension です。file glob は必要ですが十分ではありません。
 
-**Multi-contract merge semantics (least privilege).** When two scope contracts apply (e.g., a project-wide contract plus a task-specific one), the merge is: **intersect** `allowed_files` (both contracts must permit the path), **union** `forbidden_files` (either can prohibit), `time_budget_minutes` is the most restrictive (min), `approvals_required` accumulates. `network_egress` is `None` for no enforcement, `[]` for deny-all, `[...]` as an allowlist; under merge, `None` defers to the other side, two lists intersect, and deny-all stays deny-all. State this in the contract schema so the merge is mechanical and reviewable.
+**Multi-contract merge semantics (least privilege).** 2 つのスコープ契約が同時に適用される場合 (project-wide contract と task-specific contract など)、merge は次の通りです。`allowed_files` は **intersect** (両方の契約が path を許可する必要がある)、`forbidden_files` は **union** (どちらかが禁止すれば禁止)、`time_budget_minutes` はもっとも厳しい値 (min)、`approvals_required` は累積します。`network_egress` は、`None` が enforcement なし、`[]` が deny-all、`[...]` が allowlist です。merge では `None` は相手側に委ね、2 つの list は交差し、deny-all は deny-all のままです。merge が機械的で review 可能になるように、この規則を contract schema に明記します。
 
 ## Use It
 
-Production patterns:
+Production pattern:
 
-- **Claude Code slash commands.** A `/scope` command writes the contract and pins it as session context. Subagents read the contract before acting.
-- **GitHub PRs.** Push the contract as a JSON file in the PR body or as a checked-in artifact. CI runs the scope checker against the merge diff.
-- **LangGraph interrupts.** A scope violation triggers an interrupt; the handler asks the human whether the contract needs to grow or the agent needs to back off.
+- **Claude Code slash commands.** `/scope` command が契約を書き、session context として pin します。Subagent は作業前に契約を読みます。
+- **GitHub PRs.** 契約を PR body の JSON file または checked-in artifact として push します。CI が merge diff に対して scope checker を実行します。
+- **LangGraph interrupts.** scope violation が interrupt を発生させます。handler は、人間に契約を広げるべきか、agent が引くべきかを確認します。
 
-The contract travels with the task. When the task closes, the contract is archived under `outputs/scope/closed/`.
+契約はタスクと一緒に移動します。タスクが close されたら、契約は `outputs/scope/closed/` に archive されます。
 
 ## Ship It
 
-`outputs/skill-scope-contract.md` generates a scope contract for a task description and a glob-aware checker that runs in CI on every agent diff.
+`outputs/skill-scope-contract.md` は、タスク説明からスコープ契約を生成し、すべての agent diff に対して CI で走る glob-aware checker を生成します。
 
 ## Exercises
 
-1. Add a `network_egress` field listing allowed external hosts. Refuse runs that touch other hosts.
-2. Extend the checker to fail soft on `docs/**` and hard on `scripts/**`. Justify the asymmetry.
-3. Make the contract derive `allowed_files` from a `goal` field using a static rule set (no LLM). What goes wrong on the first edge case?
-4. Add a `time_budget_minutes` and refuse to continue once the wall clock exceeds it.
-5. Run two contracts against the same diff. What is the right merge semantics when both apply?
+1. 許可された外部 host を列挙する `network_egress` field を追加してください。他の host に触れる run は拒否してください。
+2. checker を拡張し、`docs/**` は soft fail、`scripts/**` は hard fail にしてください。その非対称性を正当化してください。
+3. static rule set (LLM なし) を使って、`goal` field から `allowed_files` を導出してください。最初の edge case で何が壊れますか。
+4. `time_budget_minutes` を追加し、wall clock が超えたら継続を拒否してください。
+5. 同じ diff に対して 2 つの契約を実行してください。両方が適用される場合の正しい merge semantics は何ですか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Scope contract | "The task brief" | Per-task JSON listing allowed/forbidden files, acceptance, rollback |
-| Scope creep | "It also touched..." | Files outside the contract changed in the same task |
-| Rollback plan | "We can revert" | The one-paragraph operator runbook for halting |
-| Approval boundary | "Needs sign-off" | An action listed in the contract as requiring explicit human approval |
-| Diff check | "Path audit" | Comparing touched files against the contract globs |
+| Scope contract | 「タスク brief」 | 許可/禁止ファイル、acceptance、rollback を列挙する task ごとの JSON |
+| Scope creep | 「ここにも触れた」 | 同じ task 内で契約外のファイルが変更されること |
+| Rollback plan | 「revert できる」 | 停止時に operator が使う一段落の runbook |
+| Approval boundary | 「sign-off が必要」 | 明示的な human approval が必要な action として契約に列挙された境界 |
+| Diff check | 「path audit」 | touched file を contract glob と比較すること |
 
-## Further Reading
+## 参考文献
 
 - [LangGraph human-in-the-loop interrupts](https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/)
 - [OpenAI Agents SDK tool approval policies](https://platform.openai.com/docs/guides/agents-sdk)
-- [logi-cmd/agent-guardrails — merge gates and scope validation](https://github.com/logi-cmd/agent-guardrails) — violation budgets, severity tiers
-- [Dev|Journal, Preventing AI Agent Configuration Drift with Agent Contract Testing](https://earezki.com/ai-news/2026-05-05-i-built-a-tiny-ci-tool-to-keep-ai-agent-configs-from-drifting-in-my-repo/) — `--strict` mode without external deps
-- [Agentic Coding Is Not a Trap (production logs)](https://dev.to/jtorchia/agentic-coding-is-not-a-trap-i-answered-the-viral-hn-post-with-my-own-production-logs-33d9) — specsmaxxing receipts: 52% → 21%
-- [OpenCode permission globs](https://opencode.ai/docs/agents/) — fine-grained per-permission scope
-- [Knostic, AI Coding Agent Security: Threat Models and Protection Strategies](https://www.knostic.ai/blog/ai-coding-agent-security) — scope as part of least privilege
-- [Augment Code, AI Spec Template](https://www.augmentcode.com/guides/ai-spec-template) — three-tier boundary system (must/ask/never)
-- Phase 14 · 27 — prompt injection defenses that pair with scope locks
-- Phase 14 · 33 — the rule set this contract specializes per task
-- Phase 14 · 38 — the verification gate the checker reports into
+- [logi-cmd/agent-guardrails — merge gates and scope validation](https://github.com/logi-cmd/agent-guardrails) — violation budget と severity tier
+- [Dev|Journal, Preventing AI Agent Configuration Drift with Agent Contract Testing](https://earezki.com/ai-news/2026-05-05-i-built-a-tiny-ci-tool-to-keep-ai-agent-configs-from-drifting-in-my-repo/) — external deps なしの `--strict` mode
+- [Agentic Coding Is Not a Trap (production logs)](https://dev.to/jtorchia/agentic-coding-is-not-a-trap-i-answered-the-viral-hn-post-with-my-own-production-logs-33d9) — specsmaxxing の実績: 52% → 21%
+- [OpenCode permission globs](https://opencode.ai/docs/agents/) — permission ごとの細かな scope
+- [Knostic, AI Coding Agent Security: Threat Models and Protection Strategies](https://www.knostic.ai/blog/ai-coding-agent-security) — least privilege の一部としての scope
+- [Augment Code, AI Spec Template](https://www.augmentcode.com/guides/ai-spec-template) — 3 層の boundary system (must/ask/never)
+- Phase 14 · 27 — scope lock と組み合わせる prompt injection defense
+- Phase 14 · 33 — この契約が task ごとに特化する rule set
+- Phase 14 · 38 — checker が report を渡す verification gate

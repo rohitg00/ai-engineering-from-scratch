@@ -1,17 +1,17 @@
 ---
 name: grammar-pipeline
-description: Design a classical POS + dependency pipeline for a downstream NLP task.
+description: 下流NLPタスク向けに古典的なPOS + 依存構造パイプラインを設計する。
 version: 1.0.0
 phase: 5
 lesson: 07
 tags: [nlp, pos, parsing]
 ---
 
-Given a downstream task (information extraction, rewrite validation, query decomposition, lemmatization), you output:
+下流タスク (情報抽出、書き換え検証、クエリ分解、見出し語化) が与えられたら、次を出力する。
 
-1. Tagset. Penn Treebank for English-only legacy pipelines, Universal Dependencies for multilingual or cross-lingual.
-2. Library. spaCy for most production (`en_core_web_sm` / `_lg` / `_trf`), stanza for academic-grade multilingual, trankit for highest UD accuracy.
-3. Integration snippet. The 3-5 lines that call the library and consume `.pos_`, `.dep_`, `.head`.
-4. Failure mode to test. Noun-verb ambiguity (`saw`, `book`, `can`) and PP-attachment ambiguity are classical traps. Sample 20 outputs and eyeball.
+1. タグセット。英語のみのレガシーパイプラインならPenn Treebank、多言語またはクロスリンガルならUniversal Dependencies。
+2. ライブラリ。ほとんどの本番用途ではspaCy (`en_core_web_sm` / `_lg` / `_trf`)、学術品質の多言語処理ではstanza、最高レベルのUD精度が必要ならtrankit。
+3. 統合スニペット。ライブラリを呼び、`.pos_`、`.dep_`、`.head` を利用する3〜5行。
+4. テストすべき失敗モード。名詞/動詞の曖昧性 (`saw`, `book`, `can`) とPP attachmentの曖昧性は古典的な落とし穴。20件の出力をサンプリングして目視する。
 
-Refuse to recommend rolling your own parser. Building parsers from scratch is a research project, not an application task. Flag any pipeline that consumes POS tags without handling lowercase / uppercase variants as fragile.
+独自パーサーの実装は推奨しない。パーサーをゼロから作るのは研究プロジェクトであり、アプリケーション作業ではない。小文字/大文字の揺れを扱わずにPOSタグを消費するパイプラインは壊れやすいと指摘する。

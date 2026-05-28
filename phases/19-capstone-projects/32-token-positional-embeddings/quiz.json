@@ -1,78 +1,78 @@
 {
   "lesson": "32-token-positional-embeddings",
-  "title": "Token and Positional Embeddings",
+  "title": "Token Embedding と Positional Embedding",
   "questions": [
     {
       "stage": "pre",
-      "question": "What shape does the embedding stage produce from (B, T) ids?",
+      "question": "embedding stage は (B, T) の ids からどの shape を生成しますか?",
       "options": [
         "(B, T)",
         "(B, V)",
-        "(B, T, D) where D is the model dimension",
-        "(B, T, V) where V is the vocabulary size"
+        "model dimension D を持つ (B, T, D)",
+        "vocabulary size V を持つ (B, T, V)"
       ],
       "correct": 2,
-      "explanation": "Each id is mapped to a D-dimensional vector. The batch keeps B and T and gains a new feature dimension D."
+      "explanation": "各 id は D 次元ベクトルに写されます。batch は B と T を保ち、新しい feature 次元 D を得ます。"
     },
     {
       "stage": "check",
-      "question": "How are token and positional embeddings composed in this lesson?",
+      "question": "このレッスンで token embedding と positional embedding はどう合成されますか?",
       "options": [
-        "By concatenation along the feature axis",
-        "By elementwise sum, broadcasting the position vector across the batch",
-        "By an extra linear projection",
-        "By taking the elementwise maximum"
+        "feature axis で concatenation する",
+        "elementwise sum し、position vector を batch に broadcast する",
+        "追加の linear projection を通す",
+        "elementwise maximum を取る"
       ],
       "correct": 1,
-      "explanation": "The two tensors of shape (B, T, D) and (T, D) are summed. Broadcasting replicates the positional table across the batch axis."
+      "explanation": "(B,T,D) と (T,D) の tensor を足します。broadcast により positional table が batch axis に複製されます。"
     },
     {
       "stage": "check",
-      "question": "How many learnable parameters does a SinusoidalPositionalEmbedding contribute?",
+      "question": "SinusoidalPositionalEmbedding が追加する learnable parameters はいくつですか?",
       "options": [
         "max_context_length",
         "max_context_length * d_model",
         "d_model",
-        "Zero"
+        "0"
       ],
       "correct": 3,
-      "explanation": "The sinusoidal table is computed from a formula and stored as a buffer. It contributes no parameters."
+      "explanation": "sinusoidal table は式から計算され buffer として保存されるため、parameter はありません。"
     },
     {
       "stage": "check",
-      "question": "Which positional encoding cannot accept a sequence longer than its construction limit?",
+      "question": "構築時の上限より長い sequence を受け付けられない positional encoding はどれですか?",
       "options": [
         "Sinusoidal positional embedding",
         "Learned positional embedding",
-        "Both",
-        "Neither"
+        "両方",
+        "どちらでもない"
       ],
       "correct": 2,
-      "explanation": "In this lesson implementation, both classes enforce max_context_length at forward time. Learned is inherently table-bounded; sinusoidal here is also bounded because it uses a prebuilt table."
+      "explanation": "この実装では両方とも forward 時に max_context_length を強制します。learned は表の行数に縛られ、sinusoidal も事前構築 table を使うためです。"
     },
     {
       "stage": "post",
-      "question": "Why does the sinusoidal scheme use both sin and cos on adjacent feature pairs?",
+      "question": "sinusoidal scheme が隣接 feature pair に sin と cos の両方を使う理由は何ですか?",
       "options": [
-        "Because sin alone is not periodic",
-        "Because cos by itself cannot be backpropagated through",
-        "So that the vector at position p+k is a linear function of the vector at position p",
-        "Because it doubles the parameter count"
+        "sin だけでは周期関数ではないため",
+        "cos だけでは backpropagation できないため",
+        "位置 p+k の vector を位置 p の vector の線形関数にできるため",
+        "parameter count を2倍にするため"
       ],
       "correct": 2,
-      "explanation": "Pairing sin and cos at the same wavelength means a position shift by k is a rotation, which is a linear map. Attention can then learn relative offsets through linear projections."
+      "explanation": "同じ波長の sin/cos は位置 shift を回転として表せます。これは線形 map なので、attention が相対 offset を学びやすくなります。"
     },
     {
       "stage": "post",
-      "question": "Why does the embedding backward pass only update rows of the token table that appeared in the batch?",
+      "question": "embedding の backward pass が batch に現れた token table の行だけを更新する理由は何ですか?",
       "options": [
-        "PyTorch only stores gradients for non-zero entries",
-        "Rows not touched in the forward pass produce zero gradient by the chain rule",
-        "The optimizer skips rows it has not seen",
-        "Token ids are stored in a sparse data structure"
+        "PyTorch は非ゼロ entry の gradient だけを保存するため",
+        "forward に使われなかった行は chain rule により gradient がゼロだから",
+        "optimizer が未出現行を skip するため",
+        "token ids が sparse data structure に保存されるため"
       ],
       "correct": 1,
-      "explanation": "A row that did not contribute to any output has zero derivative for the loss, so its gradient is zero for that step."
+      "explanation": "出力に寄与しなかった行は loss に対する導関数がゼロなので、その step の gradient はゼロです。"
     }
   ]
 }

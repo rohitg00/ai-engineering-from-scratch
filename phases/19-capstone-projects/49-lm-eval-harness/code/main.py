@@ -1,6 +1,6 @@
-"""Language model evaluation harness from scratch.
+"""language model evaluation harness を from scratch で実装する。
 
-Task spec is a JSONL line per example with `prompt`, `targets`, and
+task spec は example ごとに `prompt`、`targets`、`metric` を持つ JSONL line。
 `metric`. Five metrics ship: exact match for arithmetic, rouge-l F1 for
 summary, executable check for code, accuracy for multiple choice, and
 substring contains for generation. The runner batches examples by task,
@@ -75,9 +75,9 @@ class ModelAdapter(Protocol):
 
 
 class ToyAdapter:
-    """Deterministic adapter that pattern-matches each task.
+    """各 task を pattern match する deterministic adapter。
 
-    The point is not to score well; the point is to give the harness a
+    目的は高 score ではなく、harness に固定出力を与えて採点対象を作ること。
     fixed set of outputs to score against. Replace with a real client
     when you ship the harness against a model.
     """
@@ -89,30 +89,34 @@ class ToyAdapter:
 
     def _answer(self, prompt: str) -> str:
         text = prompt.strip()
-        if text.startswith("compute:"):
-            expr = text[len("compute:"):].strip()
+        if text.startswith("compute:") or text.startswith("計算:"):
+            prefix = "compute:" if text.startswith("compute:") else "計算:"
+            expr = text[len(prefix):].strip()
             try:
                 return str(safe_arith_eval(expr))
             except Exception:
                 return ""
-        if text.startswith("summarize:"):
-            body = text[len("summarize:"):].strip()
+        if text.startswith("summarize:") or text.startswith("要約:"):
+            prefix = "summarize:" if text.startswith("summarize:") else "要約:"
+            body = text[len(prefix):].strip()
             sentences = re.split(r"(?<=[.!?])\s+", body)
             return sentences[0] if sentences else body
         if text.startswith("python:"):
             body = text[len("python:"):].strip()
-            if "double" in body:
+            if "double" in body or "2 倍" in body:
                 return "def f(x):\n    return x * 2\n"
-            if "increment" in body:
+            if "increment" in body or "1 増や" in body:
                 return "def f(x):\n    return x + 1\n"
-            if "square" in body:
+            if "square" in body or "二乗" in body:
                 return "def f(x):\n    return x * x\n"
             return "def f(x):\n    return x\n"
-        if text.startswith("choose:"):
-            body = text[len("choose:"):].strip()
+        if text.startswith("choose:") or text.startswith("選択:"):
+            prefix = "choose:" if text.startswith("choose:") else "選択:"
+            body = text[len(prefix):].strip()
             return body.split("|", 1)[0].strip()[:1].upper()
-        if text.startswith("write:"):
-            body = text[len("write:"):].strip()
+        if text.startswith("write:") or text.startswith("書いて:"):
+            prefix = "write:" if text.startswith("write:") else "書いて:"
+            body = text[len(prefix):].strip()
             return body
         return text
 
@@ -131,7 +135,7 @@ _ARITH_OPS = {
 
 
 def safe_arith_eval(expr: str) -> float:
-    """Evaluate a small arithmetic expression without exposing eval."""
+    """`eval` を expose せず小さな arithmetic expression を評価する。"""
     tree = ast.parse(expr, mode="eval")
     return _safe_eval(tree.body)
 
@@ -143,7 +147,7 @@ def _safe_eval(node: ast.AST) -> float:
         return _ARITH_OPS[type(node.op)](_safe_eval(node.left), _safe_eval(node.right))
     if isinstance(node, ast.UnaryOp) and type(node.op) in _ARITH_OPS:
         return _ARITH_OPS[type(node.op)](_safe_eval(node.operand))
-    raise ValueError(f"unsafe node: {ast.dump(node)}")
+    raise ValueError(f"安全でない node: {ast.dump(node)}")
 
 
 def normalize(s: str) -> str:
@@ -166,7 +170,7 @@ def metric_multiple_choice(prediction: str, targets: List[str]) -> float:
 
 
 def _tokens(s: str) -> List[str]:
-    return re.findall(r"[a-z0-9]+", s.lower())
+    return re.findall(r"[^\W_]+", s.lower(), flags=re.UNICODE)
 
 
 def _lcs_length(a: List[str], b: List[str]) -> int:
@@ -207,7 +211,7 @@ def metric_rouge_l(prediction: str, targets: List[str]) -> float:
 
 
 def metric_code_exec(prediction: str, targets: List[str], extras: Dict[str, object]) -> float:
-    """Execute the prediction in a small namespace and compare against
+    """prediction を小さな namespace で実行し、expected output と比較する。
     expected outputs.
 
     Targets is a list of stringified expected results; extras carries a
@@ -262,7 +266,7 @@ def load_task_jsonl(path: Path) -> List[Example]:
             try:
                 obj = json.loads(raw)
             except json.JSONDecodeError as exc:
-                raise ValueError(f"bad json at {path}:{line_num}: {exc}") from exc
+                raise ValueError(f"不正な JSON: {path}:{line_num}: {exc}") from exc
             examples.append(Example(
                 id=str(obj.get("id", f"ex-{line_num}")),
                 prompt=obj["prompt"],
@@ -294,11 +298,11 @@ def run_task(
     batch_size: int = 8,
 ) -> TaskResult:
     if batch_size <= 0:
-        raise ValueError(f"batch_size must be > 0, got {batch_size}")
+        raise ValueError(f"batch_size は 0 より大きい必要があります: {batch_size}")
     if not examples:
         return TaskResult(task=task_name, metric="none", score=0.0, correct=0, total=0)
     metric = examples[0].metric
-    assert all(ex.metric == metric for ex in examples), f"task {task_name} mixes metrics"
+    assert all(ex.metric == metric for ex in examples), f"task {task_name} が複数 metric を混在させています"
     metric_fn = METRIC_FNS[metric]
     per_example: List[Dict[str, object]] = []
     correct_sum = 0.0
@@ -390,27 +394,27 @@ def write_leaderboard(
 
 def build_arithmetic_task() -> List[Example]:
     items = [("2 + 2", "4"), ("7 - 3", "4"), ("6 * 4", "24"), ("100 / 4", "25.0"), ("12 + 9", "21")]
-    return [Example(id=f"arith-{i:02d}", prompt=f"compute: {q}", targets=[a], metric="exact_match") for i, (q, a) in enumerate(items)]
+    return [Example(id=f"arith-{i:02d}", prompt=f"計算: {q}", targets=[a], metric="exact_match") for i, (q, a) in enumerate(items)]
 
 
 def build_summary_task() -> List[Example]:
     items = [
-        ("Cats are mammals. Mammals are warm blooded.", "cats are mammals"),
-        ("Python uses indentation. Indentation defines blocks.", "python uses indentation"),
-        ("The river flows east. Boats pass slowly.", "the river flows east"),
-        ("Storms approach the coast. Waves rise quickly.", "storms approach the coast"),
-        ("Bread bakes at high heat. Crust forms last.", "bread bakes at high heat"),
+        ("猫は哺乳類です。哺乳類は恒温動物です。", "猫は哺乳類です"),
+        ("Python は indentation を使います。indentation が block を定義します。", "Python は indentation を使います"),
+        ("川は東へ流れます。船はゆっくり通ります。", "川は東へ流れます"),
+        ("嵐が海岸に近づきます。波が急に高くなります。", "嵐が海岸に近づきます"),
+        ("パンは高温で焼かれます。最後に crust ができます。", "パンは高温で焼かれます"),
     ]
-    return [Example(id=f"sum-{i:02d}", prompt=f"summarize: {p}", targets=[t], metric="rouge_l") for i, (p, t) in enumerate(items)]
+    return [Example(id=f"sum-{i:02d}", prompt=f"要約: {p}", targets=[t], metric="rouge_l") for i, (p, t) in enumerate(items)]
 
 
 def build_code_task() -> List[Example]:
     items = [
-        ("write a function f that doubles its input", "double", [[1, 2], [3, 6], [5, 10]]),
-        ("write a function f that increments its input", "increment", [[1, 2], [5, 6], [10, 11]]),
-        ("write a function f that squares its input", "square", [[2, 4], [3, 9], [4, 16]]),
-        ("write a function f that doubles its input again", "double", [[7, 14], [9, 18]]),
-        ("write a function f that increments its input again", "increment", [[0, 1], [2, 3]]),
+        ("入力を 2 倍にする function f を書く", "double", [[1, 2], [3, 6], [5, 10]]),
+        ("入力を 1 増やす function f を書く", "increment", [[1, 2], [5, 6], [10, 11]]),
+        ("入力を二乗する function f を書く", "square", [[2, 4], [3, 9], [4, 16]]),
+        ("入力をもう一度 2 倍にする function f を書く", "double", [[7, 14], [9, 18]]),
+        ("入力をもう一度 1 増やす function f を書く", "increment", [[0, 1], [2, 3]]),
     ]
     return [
         Example(
@@ -426,24 +430,24 @@ def build_code_task() -> List[Example]:
 
 def build_choice_task() -> List[Example]:
     items = [
-        ("A | mammal, B | reptile, C | bird", ["A"]),
-        ("A | apple, B | car, C | tree", ["A"]),
-        ("A | water, B | iron, C | wood", ["A"]),
-        ("A | square, B | triangle, C | circle", ["A"]),
-        ("A | bread, B | rock, C | leaf", ["A"]),
+        ("A | 哺乳類, B | 爬虫類, C | 鳥類", ["A"]),
+        ("A | りんご, B | 車, C | 木", ["A"]),
+        ("A | 水, B | 鉄, C | 木材", ["A"]),
+        ("A | 正方形, B | 三角形, C | 円", ["A"]),
+        ("A | パン, B | 岩, C | 葉", ["A"]),
     ]
-    return [Example(id=f"mc-{i:02d}", prompt=f"choose: {q}", targets=t, metric="multiple_choice") for i, (q, t) in enumerate(items)]
+    return [Example(id=f"mc-{i:02d}", prompt=f"選択: {q}", targets=t, metric="multiple_choice") for i, (q, t) in enumerate(items)]
 
 
 def build_generation_task() -> List[Example]:
     items = [
-        ("hello world", ["hello"]),
-        ("training language models", ["language"]),
-        ("evaluation harness", ["evaluation"]),
-        ("gradient accumulation step", ["gradient"]),
+        ("こんにちは 世界", ["こんにちは"]),
+        ("言語モデルの学習", ["言語"]),
+        ("評価 harness", ["評価"]),
+        ("gradient accumulation の step", ["gradient"]),
         ("distributed parameter sharding", ["distributed"]),
     ]
-    return [Example(id=f"gen-{i:02d}", prompt=f"write: {p}", targets=t, metric="substring_contains") for i, (p, t) in enumerate(items)]
+    return [Example(id=f"gen-{i:02d}", prompt=f"書いて: {p}", targets=t, metric="substring_contains") for i, (p, t) in enumerate(items)]
 
 
 def seed_fixture_tasks(target_dir: Path) -> Dict[str, Path]:
@@ -483,10 +487,10 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     if args.seed_fixtures or not args.task_dir.exists() or not list(args.task_dir.glob("*.jsonl")):
-        print(f"seeding fixture tasks into {args.task_dir}")
+        print(f"fixture task を作成します: {args.task_dir}")
         seed_fixture_tasks(args.task_dir)
     tasks = load_all_tasks(args.task_dir)
-    print(f"loaded {len(tasks)} tasks: {sorted(tasks)}")
+    print(f"読み込みました: {len(tasks)} tasks: {sorted(tasks)}")
     adapter = ToyAdapter()
     board = run_leaderboard(tasks, adapter, batch_size=args.batch_size)
     write_leaderboard(
@@ -498,7 +502,7 @@ def main() -> int:
     print(f"overall_score = {board.overall_score:.3f}")
     for r in board.tasks:
         print(f"  {r.task:>16}  metric={r.metric:>18}  score={r.score:0.3f}  ({r.correct}/{r.total})  latency_ms={r.latency_ms:.1f}")
-    print(f"wrote {args.out}")
+    print(f"書き込みました: {args.out}")
     return 0
 
 

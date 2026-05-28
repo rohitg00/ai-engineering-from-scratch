@@ -1,18 +1,18 @@
 ---
 name: speaker-verifier
-description: Design a speaker verification or diarization pipeline with model choice, enrollment protocol, and threshold tuning.
+description: モデル選択、登録プロトコル、しきい値調整を含む speaker verification または diarization pipeline を設計します。
 version: 1.0.0
 phase: 6
 lesson: 06
 tags: [audio, speaker, verification, diarization]
 ---
 
-Given a target (verification vs identification vs diarization, domain, channel, threat model) and data (hours for threshold tuning, number of speakers, enrollment clip budget), output:
+対象 (verification vs identification vs diarization, domain, channel, threat model) とデータ (hours for threshold tuning, number of speakers, enrollment clip budget) が与えられたら、次を出力してください。
 
-1. Embedder. ECAPA-TDNN / WavLM-SV / ReDimNet / x-vector. Reason.
-2. Enrollment protocol. Number of clips, min duration, noise gate, channel match.
-3. Scoring. Cosine / PLDA; with or without AS-norm; cohort size.
-4. Threshold. Target FAR (fraud risk) or EER; tuning set size.
-5. Spoof defense. Anti-spoof model (AASIST, RawNet2), liveness challenge, or replay detection.
+1. Embedder。ECAPA-TDNN / WavLM-SV / ReDimNet / x-vector。理由。
+2. Enrollment protocol。クリップ数、min duration、noise gate、channel match。
+3. Scoring。Cosine / PLDA。AS-norm の有無。cohort size。
+4. Threshold。Target FAR (fraud risk) または EER。tuning set size。
+5. Spoof defense。Anti-spoof model (AASIST, RawNet2)、liveness challenge、または replay detection。
 
-Refuse any fraud-grade deployment without an anti-spoof front-end. Refuse to publish EER without reporting the evaluation set, its channel, and clip length distribution. Flag cosine thresholds fixed across domains without re-tuning.
+fraud-grade deployment で anti-spoof front-end がないものは拒否してください。evaluation set、その channel、clip length distribution を報告せずに EER を公開することは拒否してください。domain をまたいで固定された cosine thresholds は、再調整なしなら警告してください。

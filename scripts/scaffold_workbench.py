@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
-"""Scaffold the Agent Workbench pack into a target repository.
+"""Agent Workbench packを対象repositoryへscaffoldする。
 
-Usage:
+使い方:
     python3 scripts/scaffold_workbench.py <target_dir> [options]
 
-Options:
-    --force         Overwrite existing AGENTS.md / docs / schemas / scripts.
-    --minimal       Skip docs/ (only AGENTS.md, schemas/, scripts/, VERSION).
-    --dry-run       Print what would happen without writing.
-    --no-seed       Skip seeding starter task_board.json + agent_state.json.
+オプション:
+    --force         既存のAGENTS.md / docs / schemas / scriptsを上書き。
+    --minimal       docs/を省略（AGENTS.md、schemas/、scripts/、VERSIONのみ）。
+    --dry-run       書き込まずに何が起きるか表示。
+    --no-seed       starter task_board.json + agent_state.json のseedを省略。
 
-What it installs:
-    AGENTS.md                      — root contract for the builder agent
-    docs/                          — agent rules, reviewer rubric, handoff, reliability
-    schemas/                       — JSON Schemas for state + task board + scope
-    scripts/                       — init, run_with_feedback, verify, generate_handoff
-    task_board.json (seeded)       — one todo example task
-    agent_state.json (seeded)      — fresh state record at schema_version 1
-    .workbench-version             — pinned pack version
+インストールするもの:
+    AGENTS.md                      — builder agent用のroot contract
+    docs/                          — agent rules、reviewer rubric、handoff、reliability
+    schemas/                       — state + task board + scope用JSON Schema
+    scripts/                       — init、run_with_feedback、verify、generate_handoff
+    task_board.json (seeded)       — todo例タスク1件
+    agent_state.json (seeded)      — schema_version 1の新規state record
+    .workbench-version             — 固定されたpack version
 
-The pack source is read from this repo at:
+pack sourceはこのrepoの以下から読む:
     phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/
 """
 
@@ -63,10 +63,10 @@ class Action:
 def validate_pack(pack_dir: Path) -> list[str]:
     errors: list[str] = []
     if not pack_dir.is_dir():
-        return [f"pack source not found: {pack_dir}"]
+        return [f"pack sourceが見つかりません: {pack_dir}"]
     for entry in REQUIRED_PACK_ENTRIES:
         if not (pack_dir / entry).exists():
-            errors.append(f"pack missing required entry: {entry}")
+            errors.append(f"packに必須entryがありません: {entry}")
     return errors
 
 
@@ -125,7 +125,7 @@ def seed_task_board(target: Path) -> bool:
     seed = [
         {
             "id": "T-001",
-            "goal": "First task. Replace with the real one before the agent starts.",
+            "goal": "最初のタスク。agent開始前に実タスクへ置き換えてください。",
             "owner": "builder",
             "acceptance": [
                 "code change lands",
@@ -152,7 +152,7 @@ def seed_agent_state(target: Path) -> bool:
         "touched_files": [],
         "assumptions": [],
         "blockers": [],
-        "next_action": "read AGENTS.md, pick a task from task_board.json, run scripts/init_agent.py",
+        "next_action": "AGENTS.mdを読み、task_board.jsonからtaskを選び、scripts/init_agent.pyを実行する",
     }
     path.write_text(
         json.dumps(seed, indent=2, ensure_ascii=False) + "\n",
@@ -165,13 +165,13 @@ def render_next_steps(target: Path, pack_version: str) -> str:
     rel = target.resolve()
     lines = [
         "",
-        f"Workbench pack v{pack_version} scaffolded into {rel}",
+        f"Workbench pack v{pack_version} を {rel} へscaffoldしました",
         "",
-        "Next steps:",
-        "  1. Edit task_board.json. Replace T-001 with the real task.",
-        "  2. Edit AGENTS.md. Set project-specific build cmd, test cmd, deny rules.",
-        "  3. Run scripts/init_agent.py to capture environment probes.",
-        "  4. Hand AGENTS.md + task_board.json to the agent. Iterate.",
+        "次の手順:",
+        "  1. task_board.jsonを編集し、T-001を実タスクへ置き換える。",
+        "  2. AGENTS.mdを編集し、project固有のbuild cmd、test cmd、deny rulesを設定する。",
+        "  3. scripts/init_agent.pyを実行し、environment probesを記録する。",
+        "  4. AGENTS.md + task_board.jsonをagentへ渡し、反復する。",
         "",
     ]
     return "\n".join(lines)
@@ -179,37 +179,37 @@ def render_next_steps(target: Path, pack_version: str) -> str:
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("target_dir", type=Path, help="directory to scaffold into")
-    parser.add_argument("--force", action="store_true", help="overwrite existing files")
-    parser.add_argument("--minimal", action="store_true", help="skip docs/")
-    parser.add_argument("--dry-run", action="store_true", help="preview without writing")
+    parser.add_argument("target_dir", type=Path, help="scaffold先ディレクトリ")
+    parser.add_argument("--force", action="store_true", help="既存ファイルを上書き")
+    parser.add_argument("--minimal", action="store_true", help="docs/を省略")
+    parser.add_argument("--dry-run", action="store_true", help="書き込まずにプレビュー")
     parser.add_argument(
         "--no-seed",
         action="store_true",
-        help="do not seed task_board.json / agent_state.json",
+        help="task_board.json / agent_state.json をseedしない",
     )
     args = parser.parse_args(argv)
 
     errors = validate_pack(PACK_DIR)
     if errors:
         for e in errors:
-            sys.stderr.write(f"error: {e}\n")
+            sys.stderr.write(f"エラー: {e}\n")
         return 2
 
     target = args.target_dir
     if not target.exists():
         if args.dry_run:
-            sys.stdout.write(f"would create target dir: {target}\n")
+            sys.stdout.write(f"target dirを作成予定: {target}\n")
         else:
             target.mkdir(parents=True, exist_ok=True)
 
     actions = plan_copies(target, args.minimal)
     collisions = detect_collisions(target, actions)
     if collisions and not args.force and not args.dry_run:
-        sys.stderr.write("error: target already contains:\n")
+        sys.stderr.write("エラー: targetに既に以下が存在します:\n")
         for c in collisions:
             sys.stderr.write(f"  {c}\n")
-        sys.stderr.write("pass --force to overwrite\n")
+        sys.stderr.write("上書きするには --force を渡してください\n")
         return 1
 
     pack_version = (PACK_DIR / "VERSION").read_text(encoding="utf-8").strip()
@@ -219,8 +219,8 @@ def main(argv: list[str]) -> int:
         for action in actions:
             sys.stdout.write(action.describe(target) + "\n")
         if not args.no_seed:
-            sys.stdout.write("  [seed] task_board.json (if absent)\n")
-            sys.stdout.write("  [seed] agent_state.json (if absent)\n")
+            sys.stdout.write("  [seed] task_board.json（存在しなければ）\n")
+            sys.stdout.write("  [seed] agent_state.json（存在しなければ）\n")
         return 0
 
     for action in actions:

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -8,53 +8,53 @@
       .kill { fill: #ffe1e1; stroke: #b71c1c; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">FinOps for LLMs — three dimensions, four layers, three-tier enforcement</text>
+  <text x="480" y="24" text-anchor="middle" class="title">LLMのFinOps - 3 軸、4層、3段階強制</text>
 
   <rect x="40" y="50" width="280" height="180" class="dim"/>
-  <text x="180" y="72" text-anchor="middle" class="head">three attribution dimensions</text>
+  <text x="180" y="72" text-anchor="middle" class="head">3つの配賦軸</text>
   <rect x="60" y="90" width="240" height="35" class="box"/>
-  <text x="180" y="112" text-anchor="middle" class="step">per-user (user_id)</text>
+  <text x="180" y="112" text-anchor="middle" class="step">ユーザー別 (user_id)</text>
   <rect x="60" y="130" width="240" height="35" class="box"/>
-  <text x="180" y="152" text-anchor="middle" class="step">per-task (task_id + route)</text>
+  <text x="180" y="152" text-anchor="middle" class="step">タスク別 (task_id + route)</text>
   <rect x="60" y="170" width="240" height="35" class="box"/>
-  <text x="180" y="192" text-anchor="middle" class="step">per-tenant (tenant_id)</text>
-  <text x="180" y="222" text-anchor="middle" class="caption">instrument all three on day 1</text>
+  <text x="180" y="192" text-anchor="middle" class="step">テナント別 (tenant_id)</text>
+  <text x="180" y="222" text-anchor="middle" class="caption">初日で3つ全てを計測する</text>
 
   <rect x="340" y="50" width="280" height="180" class="layer"/>
-  <text x="480" y="72" text-anchor="middle" class="head">four token layers</text>
-  <text x="360" y="96" class="step">· prompt (40-60%)</text>
-  <text x="360" y="116" class="step">· tool (20-40%, agent-heavy)</text>
-  <text x="360" y="136" class="step">· memory (10-30%, RAG)</text>
-  <text x="360" y="156" class="step">· response (10-30%)</text>
-  <text x="480" y="200" text-anchor="middle" class="caption">bucketing all four hides the optimization lever</text>
+  <text x="480" y="72" text-anchor="middle" class="head">4つのトークン層</text>
+  <text x="360" y="96" class="step">· プロンプト (40-60%)</text>
+  <text x="360" y="116" class="step">· ツール (20-40%, agent-heavy)</text>
+  <text x="360" y="136" class="step">· メモリ (10-30%, RAG)</text>
+  <text x="360" y="156" class="step">· 応答 (10-30%)</text>
+  <text x="480" y="200" text-anchor="middle" class="caption">4つをまとめると最適化レバーが見えなくなる</text>
 
   <rect x="640" y="50" width="280" height="180" class="enforce"/>
-  <text x="780" y="72" text-anchor="middle" class="head">three-tier enforcement</text>
-  <text x="660" y="96" class="step">1. rate limit per tenant</text>
-  <text x="660" y="114" class="small">   2-3x peak, 429 + Retry-After</text>
-  <text x="660" y="138" class="step">2. daily spend cap per tenant</text>
-  <text x="660" y="156" class="small">   1.5-3x contract; tighten rate + alert CS</text>
-  <text x="660" y="180" class="step">3. kill switch on z-score &gt; 4</text>
-  <text x="660" y="198" class="small">   auto-pause + page on-call</text>
+  <text x="780" y="72" text-anchor="middle" class="head">3段階強制</text>
+  <text x="660" y="96" class="step">1. テナントごとのレート制限</text>
+  <text x="660" y="114" class="small">   2-3x ピーク, 429 + Retry-After</text>
+  <text x="660" y="138" class="step">2. テナントごとの日次利用上限</text>
+  <text x="660" y="156" class="small">   契約の1.5-3x; レートを絞りCSへ通知</text>
+  <text x="660" y="180" class="step">3. z-score &gt; 4で緊急停止</text>
+  <text x="660" y="198" class="small">   自動停止 + オンコールへ呼び出し</text>
 
   <rect x="40" y="260" width="880" height="100" class="box"/>
-  <text x="480" y="282" text-anchor="middle" class="head">unit metric — cost per product outcome, not $/M tokens</text>
-  <text x="60" y="308" class="step">cost per resolved support ticket</text>
-  <text x="60" y="326" class="step">cost per generated article</text>
-  <text x="60" y="344" class="step">cost per successful agent task</text>
-  <text x="500" y="308" class="step">cost per user-session-minute</text>
-  <text x="500" y="326" class="step">cost per index refresh</text>
-  <text x="500" y="344" class="caption">tie cost to a product outcome, else optimization is unanchored</text>
+  <text x="480" y="282" text-anchor="middle" class="head">単位指標 - $/M トークンではなく製品成果あたりコスト</text>
+  <text x="60" y="308" class="step">解決済みサポートチケットあたりコスト</text>
+  <text x="60" y="326" class="step">生成記事あたりコスト</text>
+  <text x="60" y="344" class="step">成功したエージェントタスクあたりコスト</text>
+  <text x="500" y="308" class="step">ユーザーセッション分あたりコスト</text>
+  <text x="500" y="326" class="step">インデックス更新あたりコスト</text>
+  <text x="500" y="344" class="caption">コストを製品成果へ結び、最適化を基準化にする</text>
 
   <rect x="40" y="380" width="880" height="110" class="kill"/>
-  <text x="480" y="402" text-anchor="middle" class="head">stacked optimization ceiling — ~5-10% of naive baseline</text>
-  <text x="480" y="424" text-anchor="middle" class="step">cache (14) + batch (15) + route (16) + gateway (19)</text>
-  <text x="480" y="444" text-anchor="middle" class="step">each halves or 10xs; compound multiplies</text>
-  <text x="480" y="464" text-anchor="middle" class="caption">most teams run 2-3 levers; few stack all four</text>
-  <text x="480" y="484" text-anchor="middle" class="small">leaked spend = gap between best-case stack and current</text>
+  <text x="480" y="402" text-anchor="middle" class="head">積み上げ最適化の上限 - 単純基準の~5-10%</text>
+  <text x="480" y="424" text-anchor="middle" class="step">キャッシュ (14) + バッチ (15) + ルート (16) + ゲートウェイ (19)</text>
+  <text x="480" y="444" text-anchor="middle" class="step">各レバーが半減または10x改善し、複合で効く</text>
+  <text x="480" y="464" text-anchor="middle" class="caption">多くのチームは2-3 レバー止まり; 4つ全てをスタックする例は少ない</text>
+  <text x="480" y="484" text-anchor="middle" class="small">漏れコスト = 最良ケーススタックと現状の差</text>
 </svg>

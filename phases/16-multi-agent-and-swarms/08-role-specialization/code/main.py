@@ -1,9 +1,9 @@
-"""Role specialization: planner, executor, critic, verifier.
+"""Role specialization: planner, executor, critic, verifier。
 
-Builds a small Python function. Critic (LLM-simulated) and verifier (code)
-together catch bugs that either alone would miss.
+小さな Python function を build する。critic (LLM-simulated) と verifier (code) が
+一緒に、どちらか片方では見逃す bugs を捕まえる。
 
-Run twice: once with correct executor output, once with off-spec output.
+2 回実行する。1 回は correct executor output、もう 1 回は off-spec output。
 """
 from __future__ import annotations
 
@@ -36,7 +36,7 @@ class VerifierReport:
 
 
 def planner(user_wish: str) -> Spec:
-    """Produces a structured spec from a high-level wish."""
+    """high-level wish から structured spec を生成する。"""
     return Spec(
         task_name="add_two",
         signature="add_two(a: int, b: int) -> int",
@@ -54,21 +54,21 @@ def executor_buggy(spec: Spec) -> Artifact:
 
 
 def critic(spec: Spec, art: Artifact) -> CriticReport:
-    """LLM-style review. Pattern-matches against common issues but can be fooled
-    by plausible-looking code that is semantically wrong."""
+    """LLM-style review。common issues を pattern-match するが、
+    semantically wrong でも plausible-looking code には騙されることがある。"""
     notes: list[str] = []
     if "def" not in art.code:
-        notes.append("missing def statement")
+        notes.append("def statement がない")
     if "return" not in art.code:
-        notes.append("missing return")
+        notes.append("return がない")
     if spec.task_name not in art.code:
-        notes.append(f"function name does not match spec '{spec.task_name}'")
+        notes.append(f"function name が spec '{spec.task_name}' と一致しない")
     approved = not notes
     return CriticReport(approved=approved, notes=notes)
 
 
 def verifier(spec: Spec, art: Artifact) -> VerifierReport:
-    """Run the code in a sandbox namespace and execute the tests. Deterministic."""
+    """code を sandbox namespace で実行し tests を走らせる。deterministic。"""
     ns: dict = {}
     try:
         exec(art.code, ns, ns)
@@ -76,7 +76,7 @@ def verifier(spec: Spec, art: Artifact) -> VerifierReport:
         return VerifierReport(passed=False, failures=[f"exec error: {e}"])
     fn = ns.get(spec.task_name)
     if not callable(fn):
-        return VerifierReport(passed=False, failures=[f"no callable '{spec.task_name}' produced"])
+        return VerifierReport(passed=False, failures=[f"callable '{spec.task_name}' が生成されていない"])
     failures: list[str] = []
     for args, expected in spec.tests:
         try:
@@ -100,32 +100,32 @@ def run_pipeline(user_wish: str, executor, label: str) -> None:
     vrep = verifier(spec, art)
     print(f"  [verifier] passed={vrep.passed}, failures={vrep.failures}")
     if crep.approved and vrep.passed:
-        print("  RESULT: ship it.")
+        print("  RESULT: ship してよい。")
     elif not vrep.passed:
-        print("  RESULT: verifier blocked ship (deterministic catch).")
+        print("  RESULT: verifier が ship を止めました (deterministic catch)。")
     elif not crep.approved:
-        print("  RESULT: critic blocked ship (subjective catch).")
+        print("  RESULT: critic が ship を止めました (subjective catch)。")
 
 
 def main() -> None:
-    print("Role specialization pipeline — planner, executor, critic, verifier")
+    print("Role specialization pipeline - planner, executor, critic, verifier")
     print("-" * 70)
 
     run_pipeline(
-        "A function that returns the sum of two integers.",
+        "2 つの integers の sum を返す function。",
         executor_correct,
         "Correct executor output",
     )
 
     run_pipeline(
-        "A function that returns the sum of two integers.",
+        "2 つの integers の sum を返す function。",
         executor_buggy,
-        "Buggy executor output (looks plausible; fails runtime)",
+        "Buggy executor output (plausible に見えるが runtime で失敗)",
     )
 
-    print("\nKey insight: the critic passes the buggy code because it looks fine.")
-    print("Only the verifier -- deterministic test execution -- catches the semantic bug.")
-    print("All-LLM pipelines (no verifier) would ship the bug. Classic MAST failure mode.")
+    print("\nKey insight: critic は buggy code がまともに見えるため pass します。")
+    print("verifier、つまり deterministic test execution だけが semantic bug を捕まえます。")
+    print("All-LLM pipelines (verifier なし) は bug を ship します。classic MAST failure mode です。")
 
 
 if __name__ == "__main__":

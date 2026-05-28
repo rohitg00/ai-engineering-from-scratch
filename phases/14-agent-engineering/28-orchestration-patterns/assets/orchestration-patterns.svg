@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,8 +9,8 @@
       .swarm { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .hier { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .debate { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -32,9 +32,9 @@
   <line x1="208" y1="130" x2="278" y2="110" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="208" y1="130" x2="338" y2="150" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="208" y1="130" x2="278" y2="190" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="260" y="240" text-anchor="middle" class="small">central router dispatches; specialists don't talk to each other</text>
+  <text x="260" y="240" text-anchor="middle" class="small">central routerがdispatch; specialists同士は話さない</text>
   <text x="260" y="258" text-anchor="middle" class="small">LangGraph create_supervisor / Anthropic orchestrator-workers</text>
-  <text x="260" y="274" text-anchor="middle" class="small">2026: direct tool calls preferred for context control</text>
+  <text x="260" y="274" text-anchor="middle" class="small">2026: context controlにはdirect tool callsが好まれる</text>
 
   <rect x="500" y="50" width="420" height="230" class="swarm"/>
   <text x="710" y="72" text-anchor="middle" class="head">swarm  peer-to-peer</text>
@@ -47,9 +47,9 @@
   <line x1="638" y1="150" x2="742" y2="110" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="638" y1="150" x2="742" y2="190" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="770" y1="138" x2="770" y2="162" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="710" y="240" text-anchor="middle" class="small">direct handoffs via shared tools; no central router</text>
-  <text x="710" y="258" text-anchor="middle" class="small">lower latency; harder to reason about</text>
-  <text x="710" y="274" text-anchor="middle" class="small">hop counter required to avoid bouncing A  B  A</text>
+  <text x="710" y="240" text-anchor="middle" class="small">shared toolsでdirect handoffs; central routerなし</text>
+  <text x="710" y="258" text-anchor="middle" class="small">低latency; reasoningは難しい</text>
+  <text x="710" y="274" text-anchor="middle" class="small">A  B  Aのbounce回避にhop counterが必要</text>
 
   <rect x="40" y="300" width="440" height="210" class="hier"/>
   <text x="260" y="322" text-anchor="middle" class="head">hierarchical  nested subgraphs</text>
@@ -70,7 +70,7 @@
   <line x1="160" y1="432" x2="100" y2="442" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="160" y1="432" x2="220" y2="442" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="360" y1="432" x2="360" y2="442" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="260" y="498" text-anchor="middle" class="small">only when supervisor context budget fails</text>
+  <text x="260" y="498" text-anchor="middle" class="small">supervisorのcontext budgetが足りない時だけ使う</text>
 
   <rect x="500" y="300" width="420" height="210" class="debate"/>
   <text x="710" y="322" text-anchor="middle" class="head">debate  proposer + critique</text>
@@ -85,7 +85,7 @@
   <line x1="600" y1="408" x2="710" y2="432" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="710" y1="408" x2="710" y2="432" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="820" y1="408" x2="710" y2="432" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="710" y="498" text-anchor="middle" class="small">most expensive; best for hard reasoning + factuality</text>
+  <text x="710" y="498" text-anchor="middle" class="small">最も高価; hard reasoning + factualityに向く</text>
 
-  <text x="480" y="540" text-anchor="middle" class="caption">pick problem first, topology second. Anthropic: "the right system, not the most sophisticated."</text>
+  <text x="480" y="540" text-anchor="middle" class="caption">先にproblem、次にtopologyを選ぶ。Anthropic: "the right system, not the most sophisticated."</text>
 </svg>

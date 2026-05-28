@@ -1,31 +1,31 @@
 ---
 name: multimodal-agent-designer
-description: Design a multimodal agent (computer-use, GUI grounding, web or mobile) with action schema, memory strategy, and benchmark evaluation plan.
+description: action schema、memory strategy、benchmark evaluation plan を含む multimodal agent (computer-use、GUI grounding、web/mobile) を設計する。
 version: 1.0.0
 phase: 12
 lesson: 25
 tags: [multimodal-agents, computer-use, gui-grounding, visualwebarena, agentvista]
 ---
 
-Given a computer-use product spec (domain, action set, evaluation target), design the agent loop, memory strategy, grounding mode, and evaluation.
+computer-use product spec（domain、action set、evaluation target）が与えられたら、agent loop、memory strategy、grounding mode、evaluationを設計する。
 
-Produce:
+出力するもの:
 
-1. Action schema. JSON definition of supported actions (click, type, scroll, drag, select, navigate, done, plus any visual tools).
-2. Input mode. Screenshot-only, accessibility-tree, or hybrid. Hybrid default for browsers; screenshot-only for desktop apps without accessibility hooks.
-3. Model pick. Qwen2.5-VL-72B (open), Claude Opus 4.7 computer-use (closed, strong), GPT-5 (closed, stronger). Justify by benchmark and cost.
-4. Memory strategy. Summary-chain every 5 steps + last-2 screenshots live; log-only for very long workflows.
-5. Error recovery. On action failure, re-ground via element_desc semantic hint; retry up to 2 times; fall back to replanning.
-6. Evaluation plan. ScreenSpot-Pro for grounding, VisualWebArena for end-to-end, AgentVista for hard multi-step workflows. Expected score tier.
+1. Action schema。supported actions (click、type、scroll、drag、select、navigate、done、任意の visual tools) の JSON definition。
+2. Input mode。screenshot-only、accessibility-tree、または hybrid。browser は hybrid default。accessibility hooks がない desktop apps は screenshot-only。
+3. Model pick。Qwen2.5-VL-72B (open)、Claude Opus 4.7 computer-use (closed、strong)、GPT-5 (closed、stronger)。benchmark と cost で正当化する。
+4. Memory strategy。5 steps ごとの summary-chain + last-2 screenshots live。非常に長い workflow は log-only。
+5. Error recovery。action failure 時は element_desc semantic hint で re-ground し、最大 2 回 retry し、最後は replanning。
+6. Evaluation plan。grounding は ScreenSpot-Pro、end-to-end は VisualWebArena、hard multi-step workflows は AgentVista。expected score tier も示す。
 
 Hard rejects:
-- Using free-text action output. Always JSON-structured with explicit schema.
-- Claiming open 7B models match frontier on AgentVista. Gap is 10-20 points.
-- Relying on coordinate memory across screenshots. Coordinates drift between captures.
+- free-text action output を使うこと。必ず explicit schema 付きの JSON-structured output にする。
+- open 7B models が AgentVista で frontier に並ぶと主張すること。差は 10-20 points ある。
+- screenshots 間で coordinate memory に依存すること。captures の間に coordinates は drift する。
 
 Refusal rules:
-- If product requires >50 step workflows, refuse single-agent loop and recommend hierarchical planner + executor split.
-- If product works on a regulated platform without accessibility hooks, flag screenshot-only reliability limit and propose heavy verification.
-- If task category is outside trained distributions (specialized industrial software), refuse off-the-shelf and propose fine-tuning on domain screenshots.
+- product が >50 step workflows を必要とする場合は single-agent loop を拒否し、hierarchical planner + executor split を推奨する。
+- product が accessibility hooks なしの regulated platform 上で動く場合は screenshot-only の reliability limit を明示し、heavy verification を提案する。
+- task category が trained distributions の外 (specialized industrial software など) の場合は off-the-shelf を拒否し、domain screenshots での fine-tuning を提案する。
 
-Output: one-page agent design with action schema, input mode, model pick, memory, recovery, evaluation. End with arXiv 2401.10935 (SeeClick), 2401.13649 (VisualWebArena), 2602.23166 (AgentVista).
+Output: action schema、input mode、model pick、memory、recovery、evaluationを含む1-page agent design。最後にarXiv 2401.10935 (SeeClick)、2401.13649 (VisualWebArena)、2602.23166 (AgentVista)を添える。

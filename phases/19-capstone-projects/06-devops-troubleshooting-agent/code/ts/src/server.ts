@@ -29,7 +29,7 @@ export function buildApp(options: AppOptions = {}): {
 } {
   const signingSecret = options.signingSecret || process.env.SLACK_SIGNING_SECRET;
   if (!signingSecret) {
-    throw new Error("SLACK_SIGNING_SECRET is required");
+    throw new Error("SLACK_SIGNING_SECRET が必要です");
   }
   const outboundLog: OutboundCall[] = options.outboundLog ?? [];
   const now = options.now ?? (() => Math.floor(Date.now() / 1000));
@@ -61,7 +61,7 @@ export function buildApp(options: AppOptions = {}): {
     }
     return c.json({
       response_type: "ephemeral",
-      text: `Triaging incident, will follow up in <${responseUrl || "channel"}>.`,
+      text: `incident を triage 中です。<${responseUrl || "channel"}> に follow up します。`,
     });
   });
 
@@ -85,7 +85,7 @@ export function buildApp(options: AppOptions = {}): {
     try {
       parsed = InteractivitySchema.parse(JSON.parse(payloadStr));
     } catch {
-      return c.json({ error: "bad interactivity payload" }, 400);
+      return c.json({ error: "interactivity payload が不正です" }, 400);
     }
     const action = parsed.actions?.[0] ?? {};
     const actionId = action.action_id ?? "unknown";

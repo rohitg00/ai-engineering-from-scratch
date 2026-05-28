@@ -26,7 +26,7 @@
     var icon = document.getElementById('themeIcon');
     if (!icon) return;
     var theme = root.getAttribute('data-theme');
-    icon.textContent = theme === 'light' ? 'N' : 'D';
+    icon.textContent = theme === 'light' ? '夜' : '昼';
   }
 
   function initThemeToggle() {
@@ -133,17 +133,15 @@
     }
     grid.innerHTML = html;
 
-    // Re-apply per-row stagger delays for the freshly created rows.
+    // 作り直した行に、行ごとの表示遅延を再適用する。
     initStaggerIndex();
 
-    // If the reveal observer has already initialised (body.js-anim is set),
-    // the IntersectionObserver is only watching the *original* rows it was
-    // given at startup. Re-rendering via innerHTML replaces those nodes with
-    // brand-new elements that are NOT being observed, so they would otherwise
-    // stay hidden forever under `body.js-anim .toc-row { opacity: 0 }`.
+    // reveal用の監視が初期化済みの場合（body.js-anim が付いている場合）、
+    // IntersectionObserver は起動時の行だけを見ている。innerHTML で再描画すると
+    // 監視対象外の新しいノードに置き換わるため、そのままだと
+    // `body.js-anim .toc-row { opacity: 0 }` により非表示のままになる。
     //
-    // Since the user has already seen the initial reveal animation, just mark
-    // the rebuilt rows as visible immediately (no second fade-in).
+    // 初回アニメーションは表示済みなので、再構築した行はすぐ表示状態にする。
     if (document.body.classList.contains('js-anim')) {
       var newRows = grid.querySelectorAll('.toc-row');
       for (var r = 0; r < newRows.length; r++) {
@@ -195,7 +193,7 @@
     if (resetBtn) {
       resetBtn.addEventListener('click', function () {
         if (!window.AIFSProgress) return;
-        var ok = window.confirm('Clear all your local progress (quiz answers and completed lessons)? This cannot be undone.');
+        var ok = window.confirm('ローカルの進捗（クイズ回答と完了済みレッスン）をすべて消去しますか？この操作は元に戻せません。');
         if (!ok) return;
         window.AIFSProgress.reset();
       });
@@ -209,7 +207,7 @@
     if (!p) return;
     currentPhaseIdx = idx;
 
-    document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
+    document.getElementById('modalPhaseNum').textContent = 'フェーズ ' + String(p.id).padStart(2, '0');
     document.getElementById('modalTitle').textContent = p.name;
     document.getElementById('modalDesc').textContent = p.desc;
 
@@ -238,22 +236,22 @@
       if (userComplete) statusClass = 'complete';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
-      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="You completed this lesson"' : '') + '></span>';
+      html += '<span class="modal-lesson-status ' + statusClass + '"' + (userComplete ? ' title="このレッスンは完了済み"' : '') + '></span>';
       if (l.url) {
         html += '<a href="' + l.url + '" target="_blank" rel="noopener">' + escapeHtml(l.name) + '</a>';
       } else {
         html += '<a>' + escapeHtml(l.name) + '</a>';
       }
-      html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span>';
+      html += '<span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="組み合わせ: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(typeLabel(l.type)) + '</span>';
       html += '<span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span>';
 
       var actionHtml = '';
       if ((l.status === 'complete' || userComplete) && lessonPath) {
-        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? 'Review' : 'Read') + '</a>';
+        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? '復習' : '読む') + '</a>';
       }
       var toggleHtml = '';
       if (hasProgress && lessonPath) {
-        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '">' + (userComplete ? '✓' : '+') + '</button>';
+        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? '未完了に戻す' : '完了にする') + '" aria-label="' + (userComplete ? '未完了に戻す' : '完了にする') + '">' + (userComplete ? '✓' : '+') + '</button>';
       }
       html += (actionHtml || '<span class="modal-lesson-read-placeholder" aria-hidden="true"></span>') + toggleHtml;
       html += '</div>';
@@ -283,7 +281,7 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">completed</span> <span class="modal-progress-pct">' + pct + '%</span>';
+        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">完了</span> <span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
@@ -411,10 +409,10 @@
   }
 
   function applyExplode(container, progress) {
-    // Each layer / label animates over its own window in [stagger_start, stagger_start + window].
-    // Sequential reveal: layer N waits for layer N-1 to mostly settle before starting.
-    var STAGGER_DENOM = 720; // higher → wider gaps between layer entrances
-    var WINDOW = 0.55;       // each layer's local animation duration as fraction of global progress
+    // 各レイヤー／ラベルは [stagger_start, stagger_start + window] の範囲で動く。
+    // 順次表示: レイヤーNは、レイヤーN-1がほぼ落ち着くまで待ってから開始する。
+    var STAGGER_DENOM = 720; // 大きいほどレイヤー間の登場間隔が広がる
+    var WINDOW = 0.55;       // グローバル進捗に対する各レイヤーの局所アニメーション長
 
     function localProgress(staggerAttr) {
       var stagger = parseFloat(staggerAttr) || 0;
@@ -422,7 +420,7 @@
       var local = (progress - start) / WINDOW;
       if (local < 0) local = 0;
       if (local > 1) local = 1;
-      // ease-out cubic on the local segment
+      // 局所区間で ease-out cubic をかける
       return 1 - Math.pow(1 - local, 3);
     }
 
@@ -448,5 +446,12 @@
     var div = document.createElement('div');
     div.textContent = str == null ? '' : str;
     return div.innerHTML;
+  }
+
+  function typeLabel(type) {
+    if (type === 'Learn') return '学習';
+    if (type === 'Build') return '実装';
+    if (type === 'Capstone') return '総仕上げ';
+    return type;
   }
 })();

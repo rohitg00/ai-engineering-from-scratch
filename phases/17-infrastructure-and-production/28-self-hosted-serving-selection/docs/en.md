@@ -1,127 +1,127 @@
-# Self-Hosted Serving Selection — llama.cpp, Ollama, TGI, vLLM, SGLang
+# Self-Hosted Serving Selection — llama.cpp、Ollama、TGI、vLLM、SGLang
 
-> Four engines dominate self-hosted inference in 2026. Pick based on hardware, scale, and ecosystem. **llama.cpp** is fastest on CPU — widest model support, full control over quantization and threading. **Ollama** is the dev-laptop one-command install, ~15-30% slower than llama.cpp (Go + CGo + HTTP serialization), 3x throughput gap under prod-like load. **TGI entered maintenance mode December 11, 2025** — only bug fixes, ~10% slower raw throughput than vLLM but historically top observability and HF-ecosystem integration. That maintenance status makes it a risky long-term bet — SGLang or vLLM are safer defaults for new projects. **vLLM** is the general-purpose production default — v0.15.1 (February 2026) adds PyTorch 2.10, RTX Blackwell SM120, H200 optimization. **SGLang** is the agentic multi-turn / prefix-heavy specialist — 400,000+ GPUs in production (xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS). Hardware constraints: CPU-only → llama.cpp only. AMD / non-NVIDIA → vLLM only (TRT-LLM is NVIDIA-locked). 2026 pipeline pattern: dev = Ollama, staging = llama.cpp, prod = vLLM or SGLang. Same GGUF/HF weights throughout.
+> 2026 年の self-hosted inference は 4 つの engines が支配しています。hardware、scale、ecosystem に基づいて選びます。**llama.cpp** は CPU で最速です。model support が最も広く、quantization と threading を完全に制御できます。**Ollama** は dev-laptop の one-command install で、llama.cpp より約 15-30% 遅いです (Go + CGo + HTTP serialization)。prod-like load では throughput gap が 3 倍になります。**TGI entered maintenance mode December 11, 2025** — 今後は bug fixes のみです。raw throughput は vLLM より約 10% 遅いものの、historically には top observability と HF-ecosystem integration が強みでした。この maintenance status により、long-term bet としては risk が高く、新規 projects では SGLang または vLLM がより安全な defaults です。**vLLM** は general-purpose production default です。v0.15.1 (2026 年 2 月) は PyTorch 2.10、RTX Blackwell SM120、H200 optimization を追加しました。**SGLang** は agentic multi-turn / prefix-heavy specialist です。production で 400,000+ GPUs が稼働しています (xAI、LinkedIn、Cursor、Oracle、GCP、Azure、AWS)。Hardware constraints: CPU-only → llama.cpp のみ。AMD / non-NVIDIA → vLLM のみ (TRT-LLM は NVIDIA-locked)。2026 pipeline pattern: dev = Ollama、staging = llama.cpp、prod = vLLM または SGLang。同じ GGUF/HF weights を全体で使います。
 
-**Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
-**Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
-**Time:** ~45 minutes
+**種類:** Learn
+**言語:** Python (標準ライブラリ、engine-decision tree walker)
+**前提:** engines を扱う Phase 17 の全 lessons (04、06、07、09、18)
+**時間:** 約 45 分
 
-## Learning Objectives
+## 学習目標
 
-- Pick an engine given hardware (CPU / AMD / NVIDIA Hopper / Blackwell), scale (1 user / 100 / 10,000), and workload (general chat / agent / long-context).
-- Name the 2026 TGI maintenance-mode status (December 11, 2025) and why it biases new projects toward vLLM or SGLang.
-- Describe the dev/staging/prod pipeline using the same GGUF or HF weights throughout.
-- Explain why "CPU only" forces llama.cpp and "AMD" excludes TRT-LLM.
+- hardware (CPU / AMD / NVIDIA Hopper / Blackwell)、scale (1 user / 100 / 10,000)、workload (general chat / agent / long-context) に応じて engine を選ぶ。
+- 2026 年時点の TGI maintenance-mode status (2025 年 12 月 11 日) と、それが新規 projects を vLLM または SGLang に寄せる理由を説明する。
+- 同じ GGUF または HF weights を使い続ける dev/staging/prod pipeline を説明する。
+- 「CPU only」が llama.cpp を強制し、「AMD」が TRT-LLM を除外する理由を説明する。
 
-## The Problem
+## 問題
 
-Your team starts a new self-hosted LLM project. One engineer says Ollama, another says vLLM, a third says "doesn't TGI just work out of the box?" All three are right for different contexts. None is right for all.
+team が新しい self-hosted LLM project を始めます。ある engineer は Ollama と言い、別の engineer は vLLM と言い、3 人目は「TGI は out of the box で動くんじゃないの?」と言います。3 人とも、違う context では正しいです。すべてに正しいものはありません。
 
-In 2026 the choice tree matters: hardware first, scale second, workload third. And one specific 2025 event — TGI entering maintenance mode December 11 — changes the default for new projects.
+2026 年には choice tree が重要です。hardware first、scale second、workload third。そして 2025 年の特定の event、TGI が 12 月 11 日に maintenance mode に入ったことが、新規 projects の default を変えます。
 
-## The Concept
+## コンセプト
 
-### The five engines
+### 5 つの engines
 
 | Engine | Best for | Notes |
 |--------|----------|-------|
-| **llama.cpp** | CPU / edge / minimal deps / widest model support | Fastest on CPU, full control |
-| **Ollama** | Dev laptops, single user, one-command install | 15-30% slower than llama.cpp; 3x prod throughput gap |
-| **TGI** | HF ecosystem, regulated industries | **Maintenance mode Dec 11, 2025** |
-| **vLLM** | General-purpose production, 100+ users | Broad production default; v0.15.1 Feb 2026 |
-| **SGLang** | Agentic multi-turn, prefix-heavy workloads | 400,000+ GPUs in production |
+| **llama.cpp** | CPU / edge / minimal deps / widest model support | CPU で最速、full control |
+| **Ollama** | Dev laptops、single user、one-command install | llama.cpp より 15-30% 遅い。prod throughput gap は 3 倍 |
+| **TGI** | HF ecosystem、regulated industries | **Maintenance mode Dec 11, 2025** |
+| **vLLM** | General-purpose production、100+ users | 幅広い production default。v0.15.1 Feb 2026 |
+| **SGLang** | Agentic multi-turn、prefix-heavy workloads | production で 400,000+ GPUs |
 
 ### Hardware-first decision
 
-**CPU only** → llama.cpp. Ollama works too but is slower. No other engine is competitive on CPU.
+**CPU only** → llama.cpp。Ollama も動きますが遅いです。CPU で競争力のある他 engine はありません。
 
-**AMD GPU** → vLLM (AMD ROCm support). SGLang also works. TRT-LLM is NVIDIA-locked, so it's out.
+**AMD GPU** → vLLM (AMD ROCm support)。SGLang も動きます。TRT-LLM は NVIDIA-locked なので除外します。
 
-**NVIDIA Hopper (H100 / H200)** → vLLM or SGLang or TRT-LLM. All three top-tier.
+**NVIDIA Hopper (H100 / H200)** → vLLM、SGLang、または TRT-LLM。3 つとも top-tier です。
 
-**NVIDIA Blackwell (B200 / GB200)** → TRT-LLM is the throughput leader (Phase 17 · 07). vLLM and SGLang follow close.
+**NVIDIA Blackwell (B200 / GB200)** → TRT-LLM が throughput leader です (Phase 17 · 07)。vLLM と SGLang が僅差で続きます。
 
-**Apple Silicon (M-series)** → llama.cpp (Metal). Ollama wraps this.
+**Apple Silicon (M-series)** → llama.cpp (Metal)。Ollama はこれを wrap します。
 
 ### Scale-second decision
 
-**1 user / local dev** → Ollama. One command, first-token in seconds.
+**1 user / local dev** → Ollama。one command で、first-token は数秒です。
 
-**10-100 users / small team** → vLLM single-GPU.
+**10-100 users / small team** → vLLM single-GPU。
 
-**100-10k users / production** → vLLM production-stack (Phase 17 · 18) or SGLang.
+**100-10k users / production** → vLLM production-stack (Phase 17 · 18) または SGLang。
 
-**10k+ users / enterprise** → vLLM production-stack + disaggregated (Phase 17 · 17) + LMCache (Phase 17 · 18).
+**10k+ users / enterprise** → vLLM production-stack + disaggregated (Phase 17 · 17) + LMCache (Phase 17 · 18)。
 
 ### Workload-third decision
 
-**General chat / Q&A** → vLLM wins on broad default.
+**General chat / Q&A** → broad default として vLLM が勝ちます。
 
-**Agentic multi-turn (tools, planning, memory)** → SGLang's RadixAttention (Phase 17 · 06) dominates.
+**Agentic multi-turn (tools、planning、memory)** → SGLang の RadixAttention (Phase 17 · 06) が強いです。
 
-**RAG with heavy prefix reuse** → SGLang.
+**heavy prefix reuse の RAG** → SGLang。
 
-**Code generation** → vLLM fine; SGLang slightly better on cache.
+**Code generation** → vLLM で十分。cache では SGLang がやや有利です。
 
-**Long context (128K+)** → vLLM + chunked prefill; SGLang + tiered KV.
+**Long context (128K+)** → vLLM + chunked prefill、または SGLang + tiered KV。
 
-### The TGI maintenance trap
+### TGI maintenance trap
 
-Hugging Face TGI entered maintenance mode December 11, 2025 — only bug fixes going forward. Historically: top-tier observability, best-in-class HF-ecosystem integration (model cards, safety tools), slightly behind vLLM on raw throughput.
+Hugging Face TGI は 2025 年 12 月 11 日に maintenance mode に入りました。今後は bug fixes のみです。historically には top-tier observability、best-in-class HF-ecosystem integration (model cards、safety tools)、raw throughput は vLLM より少し後ろ、という位置づけでした。
 
-For new projects in 2026: default away from TGI. Existing TGI deployments can continue but should migrate eventually. SGLang and vLLM are the safer defaults.
+2026 年の new projects では、TGI を default にしません。既存 TGI deployments は継続できますが、最終的には migrate すべきです。SGLang と vLLM の方が安全な defaults です。
 
-### The pipeline pattern
+### Pipeline pattern
 
-Dev (Ollama) → staging (llama.cpp) → prod (vLLM). Same GGUF or HF weights throughout. Engineers iterate quickly on laptops; staging mirrors production quantization; prod is the serving target.
+Dev (Ollama) → staging (llama.cpp) → prod (vLLM)。同じ GGUF または HF weights を全体で使います。engineers は laptops で素早く iterate し、staging は production quantization を mirror し、prod が serving target になります。
 
 ### Ollama caveat
 
-Ollama is great for dev. It is not great for shared production: Go HTTP serialization adds overhead, concurrency management is simpler than vLLM, OpenTelemetry support lags. Use Ollama where it shines — one user, one command — and switch to vLLM for shared.
+Ollama は dev には優れています。shared production には向きません。Go HTTP serialization が overhead を追加し、concurrency management は vLLM より単純で、OpenTelemetry support も遅れています。Ollama が得意な場所、つまり one user、one command で使い、shared では vLLM に切り替えます。
 
-### Self-hosted vs managed is a separate decision
+### Self-hosted と managed は別の判断
 
-Phase 17 · 01 (managed hyperscalers), · 02 (inference platforms) cover managed. This lesson assumes you've already decided to self-host. Reasons to self-host: data residency, custom fine-tune, total cost ownership at scale, domain model not available on hosted.
+Phase 17 · 01 (managed hyperscalers)、· 02 (inference platforms) は managed を扱います。この lesson は self-host すると既に決めた前提です。self-host する理由: data residency、custom fine-tune、scale したときの total cost ownership、hosted で使えない domain model。
 
-### Numbers you should remember
+### 覚えておくべき数字
 
-- TGI maintenance mode: December 11, 2025.
-- vLLM v0.15.1: February 2026; PyTorch 2.10; Blackwell SM120 support.
-- SGLang production footprint: 400,000+ GPUs.
-- Ollama throughput gap vs llama.cpp: 15-30% slower; 3x under prod load.
+- TGI maintenance mode: 2025 年 12 月 11 日。
+- vLLM v0.15.1: 2026 年 2 月。PyTorch 2.10。Blackwell SM120 support。
+- SGLang production footprint: 400,000+ GPUs。
+- Ollama throughput gap vs llama.cpp: 15-30% 遅い。prod load 下では 3 倍。
 
-## Use It
+## 使ってみる
 
-`code/main.py` is a decision-tree walker: given hardware + scale + workload, picks an engine and explains why.
+`code/main.py` は decision-tree walker です。hardware + scale + workload を受け取り、engine を選び、その理由を説明します。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-engine-picker.md`. Given constraints, picks an engine and writes the migration plan.
+この lesson では `outputs/skill-engine-picker.md` を作ります。constraints を受け取り、engine を選び、migration plan を書きます。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py` with your hardware / scale / workload. Does the output match your intuition?
-2. Your infra is 12 H100s and 8 MI300X AMD. What engine? Why is TRT-LLM off the table?
-3. A team wants to use TGI in 2026 because "it's what we know." Argue the migration case.
-4. Ollama dev to vLLM prod: what changes in quantization, configuration, and observability?
-5. RAG product with P99 prefix length 8K and high reuse across tenants. Pick an engine and stack it with Phase 17 · 11 + 18.
+1. 自分の hardware / scale / workload で `code/main.py` を実行してください。output は直感と一致しますか。
+2. infra は 12 H100s と 8 MI300X AMD です。どの engine を選びますか。なぜ TRT-LLM は候補外ですか。
+3. ある team が「慣れているから」という理由で 2026 年に TGI を使いたいと言っています。migration case を論じてください。
+4. Ollama dev から vLLM prod へ移るとき、quantization、configuration、observability は何が変わりますか。
+5. P99 prefix length 8K で tenants 間の reuse が高い RAG product。engine を選び、Phase 17 · 11 + 18 と組み合わせてください。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|------------------------|
-| llama.cpp | "the CPU one" | Widest model support, fastest on CPU |
-| Ollama | "the laptop one" | One-command install, dev-grade throughput |
-| TGI | "HF's serving" | Maintenance mode since Dec 2025 |
-| vLLM | "the default" | Broad production baseline 2026 |
-| SGLang | "the agentic one" | Prefix-heavy, RadixAttention |
-| TRT-LLM | "NVIDIA-locked" | Blackwell throughput leader, NVIDIA only |
-| GGUF | "llama.cpp format" | Bundled K-quant variants |
-| Production-stack | "vLLM K8s" | Phase 17 · 18 reference deployment |
-| Pipeline pattern | "dev→stage→prod" | Ollama → llama.cpp → vLLM on same weights |
+| llama.cpp | 「CPU のもの」 | widest model support、CPU で最速 |
+| Ollama | 「laptop のもの」 | one-command install、dev-grade throughput |
+| TGI | 「HF の serving」 | 2025 年 12 月から maintenance mode |
+| vLLM | 「default」 | 2026 年の broad production baseline |
+| SGLang | 「agentic のもの」 | prefix-heavy、RadixAttention |
+| TRT-LLM | 「NVIDIA-locked」 | Blackwell throughput leader、NVIDIA only |
+| GGUF | 「llama.cpp format」 | bundled K-quant variants |
+| Production-stack | 「vLLM K8s」 | Phase 17 · 18 reference deployment |
+| Pipeline pattern | 「dev→stage→prod」 | 同じ weights で Ollama → llama.cpp → vLLM |
 
-## Further Reading
+## 参考資料
 
 - [AI Made Tools — vLLM vs Ollama vs llama.cpp vs TGI 2026](https://www.aimadetools.com/blog/vllm-vs-ollama-vs-llamacpp-vs-tgi/)
 - [Morph — llama.cpp vs Ollama 2026](https://www.morphllm.com/comparisons/llama-cpp-vs-ollama)

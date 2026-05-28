@@ -1,5 +1,5 @@
-{"id": "gen-00", "prompt": "write: hello world", "targets": ["hello"], "metric": "substring_contains"}
-{"id": "gen-01", "prompt": "write: training language models", "targets": ["language"], "metric": "substring_contains"}
-{"id": "gen-02", "prompt": "write: evaluation harness", "targets": ["evaluation"], "metric": "substring_contains"}
-{"id": "gen-03", "prompt": "write: gradient accumulation step", "targets": ["gradient"], "metric": "substring_contains"}
-{"id": "gen-04", "prompt": "write: distributed parameter sharding", "targets": ["distributed"], "metric": "substring_contains"}
+{"id": "gen-00", "prompt": "書いて: こんにちは 世界", "targets": ["こんにちは"], "metric": "substring_contains"}
+{"id": "gen-01", "prompt": "書いて: 言語モデルの学習", "targets": ["言語"], "metric": "substring_contains"}
+{"id": "gen-02", "prompt": "書いて: 評価 harness", "targets": ["評価"], "metric": "substring_contains"}
+{"id": "gen-03", "prompt": "書いて: gradient accumulation の step", "targets": ["gradient"], "metric": "substring_contains"}
+{"id": "gen-04", "prompt": "書いて: distributed parameter sharding", "targets": ["distributed"], "metric": "substring_contains"}

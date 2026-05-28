@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does an HTN add over a free-form LLM plan?",
+      "question": "HTN は free-form LLM plan に対して何を追加しますか?",
       "options": [
-        "Provable correctness when operator preconditions and effects are enforced",
+        "Operator preconditions と effects が enforced される場合の provable correctness",
         "Cheaper inference",
         "Shorter prompts",
         "Better embeddings"
       ],
       "correct": 0,
-      "explanation": "HTN's symbolic operators with preconditions and effects guarantee soundness by construction."
+      "explanation": "HTN の symbolic operators は preconditions と effects を持つため、construction によって soundness を保証します。"
     },
     {
       "stage": "pre",
-      "question": "Which problem class is AlphaEvolve built for?",
+      "question": "AlphaEvolve はどの problem class のために作られていますか?",
       "options": [
         "Free-form prose generation",
-        "Optimizations with a machine-checkable, deterministic fitness function",
+        "Machine-checkable かつ deterministic な fitness function を持つ optimizations",
         "Multi-turn chat memory",
         "Vector search ranking"
       ],
       "correct": 1,
-      "explanation": "Evolutionary search needs a deterministic evaluator; AlphaEvolve targets domains where one exists."
+      "explanation": "Evolutionary search には deterministic evaluator が必要です。AlphaEvolve はそれが存在する domain を対象にします。"
     },
     {
       "stage": "check",
-      "question": "How does ChatHTN preserve plan soundness while using an LLM?",
+      "question": "ChatHTN は LLM を使いながら plan soundness をどう保ちますか?",
       "options": [
-        "It does not; soundness is best-effort",
-        "LLM suggestions only enter as candidate decompositions, validated against the operator schema; the symbolic layer owns correctness",
-        "It fine-tunes the LLM on HTN traces",
-        "It uses a vector database"
+        "保てない。Soundness は best-effort",
+        "LLM suggestions は candidate decompositions としてだけ入り、operator schema に対して validate される。Symbolic layer が correctness を所有する",
+        "HTN traces で LLM を fine-tune する",
+        "Vector database を使う"
       ],
       "correct": 1,
-      "explanation": "The LLM expands the method library but cannot bypass operator preconditions and effects."
+      "explanation": "LLM は method library を拡張しますが、operator preconditions と effects を bypass できません。"
     },
     {
       "stage": "check",
-      "question": "Which AlphaEvolve result does the lesson cite?",
+      "question": "この lesson が引用する AlphaEvolve の結果はどれですか?",
       "options": [
-        "First improvement over Strassen for 4x4 complex matrix multiplication in 56 years",
-        "10x speedup of inference on Gemini",
-        "Beating GPT-4 on HumanEval",
-        "First proof of P=NP"
+        "4x4 complex matrix multiplication で 56 年ぶりに Strassen を上回る改善",
+        "Gemini inference の 10x speedup",
+        "HumanEval で GPT-4 に勝つ",
+        "P=NP の初証明"
       ],
       "correct": 0,
-      "explanation": "AlphaEvolve found 48 scalar multiplications for 4x4 complex matmul, the first improvement on Strassen in 56 years."
+      "explanation": "AlphaEvolve は 4x4 complex matmul で 48 scalar multiplications を見つけ、Strassen 以来 56 年ぶりの改善を示しました。"
     },
     {
       "stage": "check",
-      "question": "Which element of an HTN is a primitive directly-executable action with preconditions and effects?",
+      "question": "HTN の中で、preconditions と effects を持つ primitive directly-executable action はどれですか?",
       "options": [
         "Task",
         "Method",
@@ -60,31 +60,31 @@
         "State"
       ],
       "correct": 2,
-      "explanation": "Operators are the primitives; methods decompose compound tasks; state is a set of facts."
+      "explanation": "Operators が primitives です。Methods は compound tasks を decompose し、state は facts の集合です。"
     },
     {
       "stage": "post",
-      "question": "What is the lesson's warning about AlphaEvolve without a real evaluator?",
+      "question": "Real evaluator なしの AlphaEvolve について、この lesson は何を警告していますか?",
       "options": [
-        "It is slow",
-        "Asking an LLM whether the code is better is not a fitness function; the evaluator must be deterministic and fast",
-        "It violates Apache 2.0",
-        "It cannot run on GPUs"
+        "遅い",
+        "Code が良くなったか LLM に聞くことは fitness function ではない。Evaluator は deterministic かつ fast でなければならない",
+        "Apache 2.0 に違反する",
+        "GPU で実行できない"
       ],
       "correct": 1,
-      "explanation": "Without a deterministic evaluator the search has no signal to converge on."
+      "explanation": "Deterministic evaluator がなければ、search が converge するための signal がありません。"
     },
     {
       "stage": "post",
-      "question": "When should you reach for ReAct or ReWOO instead of HTN or AlphaEvolve?",
+      "question": "HTN や AlphaEvolve ではなく ReAct または ReWOO を使うべきなのはいつですか?",
       "options": [
-        "Never; HTN is strictly better",
-        "When you do not need formal soundness or a machine-checkable fitness; most agent tasks land here",
-        "When you have a GPU cluster available",
-        "When latency is below 100 ms"
+        "絶対にない。HTN の方が常に良い",
+        "Formal soundness も machine-checkable fitness も不要なとき。ほとんどの agent tasks はここに入る",
+        "GPU cluster が利用できるとき",
+        "Latency が 100 ms 未満のとき"
       ],
       "correct": 1,
-      "explanation": "The lesson explicitly warns against over-engineering: most tasks do not need formal planning or evolutionary search."
+      "explanation": "Lesson は over-engineering を明確に警告しています。ほとんどの task は formal planning や evolutionary search を必要としません。"
     }
   ]
 }

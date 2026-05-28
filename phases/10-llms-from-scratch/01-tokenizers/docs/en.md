@@ -1,42 +1,42 @@
-# Tokenizers: BPE, WordPiece, SentencePiece
+# トークナイザー: BPE、WordPiece、SentencePiece
 
-> Your LLM does not read English. It reads integers. The tokenizer decides whether those integers carry meaning or waste it.
+> LLM は英語を読んでいるわけではありません。読んでいるのは整数です。その整数が意味を運ぶのか、無駄になるのかを決めるのがトークナイザーです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 05 (NLP Foundations)
-**Time:** ~90 minutes
+**種類:** 実装
+**言語:** Python
+**前提条件:** フェーズ 05 (NLP の基礎)
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement BPE, WordPiece, and Unigram tokenization algorithms from scratch and compare their merge strategies
-- Explain how vocabulary size affects model efficiency: too small creates long sequences, too large wastes embedding parameters
-- Analyze tokenization artifacts across languages and code, identifying where specific tokenizers break down
-- Use the tiktoken and sentencepiece libraries to tokenize text and inspect the resulting token IDs
+- BPE、WordPiece、Unigram のトークナイゼーションアルゴリズムをゼロから実装し、それぞれのマージ戦略を比較する
+- 語彙サイズがモデル効率に与える影響を説明する: 小さすぎるとシーケンスが長くなり、大きすぎると埋め込みパラメータを浪費する
+- 言語やコードごとのトークナイゼーションの副作用を分析し、特定のトークナイザーが破綻する箇所を見つける
+- `tiktoken` と `sentencepiece` ライブラリを使ってテキストをトークン化し、生成されたトークン ID を調べる
 
-## The Problem
+## 課題
 
-Your LLM does not read English. It does not read any language. It reads numbers.
+LLM は英語を読んでいません。どの言語も読んでいません。読んでいるのは数値です。
 
-The gap between "Hello, world!" and [15496, 11, 995, 0] is the tokenizer. Every word, every space, every punctuation mark must be converted into an integer before a model can process it. This conversion is not neutral. It bakes assumptions into the model that cannot be undone later.
+`"Hello, world!"` と `[15496, 11, 995, 0]` の間にあるものがトークナイザーです。モデルが処理できるようにする前に、すべての単語、すべての空白、すべての句読点を整数へ変換しなければなりません。この変換は中立ではありません。後から取り消せない前提をモデルに埋め込みます。
 
-Get this wrong and your model wastes capacity encoding common words with multiple tokens. "unfortunately" becomes four tokens instead of one. Your 128K context window just shrank by 75% for text heavy in multi-syllable words. Get it right and the same context window holds twice as much meaning. The difference between "this model handles code well" and "this model chokes on Python" often comes down to how the tokenizer was trained.
+ここを間違えると、モデルは一般的な単語を複数トークンで表すために容量を浪費します。`"unfortunately"` が1トークンではなく4トークンになります。多音節語の多い文章では、128K のコンテキストウィンドウが実質 75% 小さくなります。うまく設計すれば、同じコンテキストウィンドウに2倍の意味を詰め込めます。`"this model handles code well"` と `"this model chokes on Python"` の差は、トークナイザーがどう訓練されたかで決まることがよくあります。
 
-Every API call you make to GPT-4 or Claude is priced per token. Every token your model generates costs compute. The fewer tokens required to represent an output, the faster the end-to-end inference. Tokenization is not preprocessing. It is architecture.
+GPT-4 や Claude への API 呼び出しは、すべてトークン単位で課金されます。モデルが生成するすべてのトークンに計算コストがかかります。出力を表現するのに必要なトークン数が少ないほど、エンドツーエンドの推論は速くなります。トークナイゼーションは前処理ではありません。アーキテクチャです。
 
-## The Concept
+## 考え方
 
-### Three Approaches That Failed (and One That Won)
+### 失敗した3つの方法と、勝ち残った1つ
 
-There are three obvious ways to convert text to numbers. Two of them do not work at scale.
+テキストを数値へ変換する明らかな方法は3つあります。そのうち2つは大規模には機能しません。
 
-**Word-level tokenization** splits on spaces and punctuation. "The cat sat" becomes ["The", "cat", "sat"]. Simple. But what about "tokenization"? Or "GPT-4o"? Or a German compound word like "Geschwindigkeitsbegrenzung"? Word-level requires a massive vocabulary to cover every word in every language. Miss a word and you get the dreaded `[UNK]` token -- the model's way of saying "I have no idea what this is." English alone has over a million word forms. Add code, URLs, scientific notation, and 100 other languages and you need an infinite vocabulary.
+**単語レベルトークナイゼーション**は空白と句読点で分割します。`"The cat sat"` は `["The", "cat", "sat"]` になります。単純です。では `"tokenization"` はどうでしょうか。`"GPT-4o"` はどうでしょうか。ドイツ語の複合語 `"Geschwindigkeitsbegrenzung"` はどうでしょうか。単語レベル方式では、あらゆる言語のあらゆる単語をカバーする巨大な語彙が必要です。語彙にない単語に出会うと、悪名高い `[UNK]` トークンになります。これはモデルにとって「これが何か分からない」という意味です。英語だけでも語形は100万を超えます。コード、URL、科学表記、さらに100以上の言語を加えれば、必要な語彙は無限に近づきます。
 
-**Character-level tokenization** goes the other direction. "hello" becomes ["h", "e", "l", "l", "o"]. Vocabulary is tiny (a few hundred characters). No unknown tokens ever. But sequences become extremely long. A sentence that would be 10 word-level tokens becomes 50 character-level tokens. The model must learn that "t", "h", "e" together mean "the" -- burning attention capacity on something a human learns at age three.
+**文字レベルトークナイゼーション**は逆方向に振り切ります。`"hello"` は `["h", "e", "l", "l", "o"]` になります。語彙は非常に小さく、せいぜい数百文字です。未知トークンは発生しません。しかしシーケンスが極端に長くなります。単語レベルなら10トークンで済む文が、文字レベルでは50トークンになります。モデルは `"t"`、`"h"`、`"e"` が並ぶと `"the"` を意味することを学ばなければならず、人間なら3歳で覚えることに注意容量を燃やします。
 
-**Subword tokenization** finds the sweet spot. Common words stay whole: "the" is one token. Rare words decompose into meaningful pieces: "unhappiness" becomes ["un", "happi", "ness"]. Vocabulary stays manageable (30K to 128K tokens). Sequences stay short. Unknown tokens essentially disappear because any word can be built from subword pieces.
+**サブワードトークナイゼーション**はちょうどよい妥協点を見つけます。頻出語は丸ごと残します。`"the"` は1トークンです。まれな単語は意味のある部品へ分解します。`"unhappiness"` は `["un", "happi", "ness"]` になります。語彙は扱いやすいサイズ、たとえば 30K から 128K トークンに収まります。シーケンスも短く保てます。どんな単語もサブワード部品から作れるため、未知トークンは実質的になくなります。
 
-Every modern LLM uses subword tokenization. GPT-2, GPT-4, BERT, Llama 3, Claude -- all of them. The question is which algorithm.
+現代の LLM はすべてサブワードトークナイゼーションを使います。GPT-2、GPT-4、BERT、Llama 3、Claude もそうです。問題は、どのアルゴリズムを使うかです。
 
 ```mermaid
 graph TD
@@ -52,11 +52,11 @@ graph TD
 
 ### BPE: Byte Pair Encoding
 
-BPE is a greedy compression algorithm repurposed for tokenization. The idea is simple enough to fit on an index card.
+BPE は、トークナイゼーションに転用された貪欲な圧縮アルゴリズムです。考え方はインデックスカード1枚に収まるほど単純です。
 
-Start with individual characters. Count every adjacent pair in the training corpus. Merge the most frequent pair into a new token. Repeat until you reach your target vocabulary size.
+個々の文字から始めます。訓練コーパス内の隣接ペアをすべて数えます。最も頻度の高いペアを新しいトークンへマージします。目標の語彙サイズに達するまで繰り返します。
 
-Here is BPE running on a tiny corpus with the words "lower", "lowest", and "newest":
+これは `"lower"`、`"lowest"`、`"newest"` という小さなコーパスで BPE を動かした例です。
 
 ```
 Corpus (with word frequencies):
@@ -102,7 +102,7 @@ Step 4 -- Merge (wes,t) -> "west":
 ...continue until target vocab size reached.
 ```
 
-The merge table is the tokenizer. To encode new text, apply merges in the order they were learned. The training corpus determines which merges exist, and that choice permanently shapes what the model sees.
+マージ表こそがトークナイザーです。新しいテキストをエンコードするときは、学習された順番でマージを適用します。どのマージが存在するかは訓練コーパスで決まり、その選択がモデルの見る入力を恒久的に形作ります。
 
 ```mermaid
 graph LR
@@ -117,49 +117,50 @@ graph LR
     end
 ```
 
-### Byte-Level BPE (GPT-2, GPT-3, GPT-4)
+### バイトレベル BPE (GPT-2、GPT-3、GPT-4)
 
-Standard BPE operates on Unicode characters. Byte-level BPE operates on raw bytes (0-255). This gives you a base vocabulary of exactly 256, handles any language or encoding, and never produces an unknown token.
+標準的な BPE は Unicode 文字を対象に動きます。バイトレベル BPE は生のバイト列、つまり 0 から 255 を対象に動きます。これにより基礎語彙はちょうど256になり、どんな言語やエンコーディングでも扱え、未知トークンを生成しません。
 
-GPT-2 introduced this approach. The base vocabulary covers every possible byte. BPE merges build on top of that. OpenAI's tiktoken library implements byte-level BPE with these vocabulary sizes:
+GPT-2 がこの方式を導入しました。基礎語彙は取り得るすべてのバイトをカバーします。BPE のマージはその上に積み上がります。OpenAI の `tiktoken` ライブラリは、次の語彙サイズでバイトレベル BPE を実装しています。
 
-- GPT-2: 50,257 tokens
-- GPT-3.5/GPT-4: ~100,256 tokens (cl100k_base encoding)
-- GPT-4o: 200,019 tokens (o200k_base encoding)
+- GPT-2: 50,257 トークン
+- GPT-3.5/GPT-4: 約100,256トークン (`cl100k_base` エンコーディング)
+- GPT-4o: 200,019トークン (`o200k_base` エンコーディング)
 
 ### WordPiece (BERT)
 
-WordPiece looks similar to BPE but picks merges differently. Instead of raw frequency, it maximizes the likelihood of the training data:
+WordPiece は BPE に似ていますが、マージの選び方が違います。生の頻度ではなく、訓練データの尤度を最大化します。
 
 ```
 BPE merge criterion:      count(A, B)
 WordPiece merge criterion: count(AB) / (count(A) * count(B))
 ```
 
-BPE asks: "Which pair appears most often?" WordPiece asks: "Which pair appears together more often than you would expect by chance?" This subtle difference produces different vocabularies. WordPiece favors merges where co-occurrence is surprising, not just frequent.
+BPE は「どのペアが最もよく出現するか」を尋ねます。WordPiece は「偶然から期待されるよりも、どのペアが一緒に現れやすいか」を尋ねます。この微妙な違いが、異なる語彙を生みます。WordPiece は、単に頻出するだけでなく、共起が意外なマージを好みます。
 
-WordPiece also uses a "##" prefix for continuation subwords:
+WordPiece は継続サブワードに `"##"` 接頭辞も使います。
 
 ```
 "unhappiness" -> ["un", "##happi", "##ness"]
 "embedding"   -> ["em", "##bed", "##ding"]
 ```
 
-The "##" prefix tells you this piece continues a previous token. BERT uses WordPiece with a vocabulary of 30,522 tokens. Every BERT variant -- DistilBERT, RoBERTa's tokenizer is actually BPE, but BERT itself is WordPiece.
+`"##"` 接頭辞は、この部品が前のトークンの続きであることを示します。BERT は 30,522 トークンの語彙を持つ WordPiece を使います。BERT 系の各種モデルも同じです。ただし DistilBERT は BERT 系ですが、RoBERTa のトークナイザーは実際には BPE です。
 
-### SentencePiece (Llama, T5)
+### SentencePiece (Llama、T5)
 
-SentencePiece treats the input as a raw stream of Unicode characters, including whitespace. No pre-tokenization step. No language-specific rules about word boundaries. This makes it genuinely language-agnostic -- it works on Chinese, Japanese, Thai, and other languages where spaces do not separate words.
+SentencePiece は、空白を含む Unicode 文字の生ストリームとして入力を扱います。事前トークナイゼーションのステップはありません。単語境界に関する言語固有ルールもありません。このため本当に言語非依存で、中国語、日本語、タイ語など、空白で単語が区切られない言語でも機能します。
 
-SentencePiece supports two algorithms:
-- **BPE mode**: same merge logic as standard BPE, applied to raw character sequences
-- **Unigram mode**: starts with a large vocabulary and iteratively removes tokens that least affect the overall likelihood. The reverse of BPE -- prune instead of merge.
+SentencePiece は2つのアルゴリズムをサポートします。
 
-Llama 2 uses SentencePiece BPE with a vocabulary of 32,000 tokens. T5 uses SentencePiece Unigram with 32,000 tokens. Note: Llama 3 switched to a tiktoken-based byte-level BPE tokenizer with 128,256 tokens.
+- **BPE モード**: 標準 BPE と同じマージロジックを、生の文字列に適用する
+- **Unigram モード**: 大きな語彙から始め、全体の尤度への影響が最も小さいトークンを反復的に削除する。BPE の逆で、マージではなく枝刈りを行う
 
-### Vocabulary Size Tradeoffs
+Llama 2 は 32,000 トークンの語彙を持つ SentencePiece BPE を使います。T5 は 32,000 トークンの SentencePiece Unigram を使います。なお Llama 3 は、128,256 トークンの `tiktoken` ベースのバイトレベル BPE トークナイザーに切り替わりました。
 
-This is a real engineering decision with measurable consequences.
+### 語彙サイズのトレードオフ
+
+これは実際のエンジニアリング判断であり、測定可能な影響があります。
 
 ```mermaid
 graph LR
@@ -177,32 +178,32 @@ graph LR
     end
 ```
 
-Concrete numbers. For a 128K vocabulary with 4,096-dimensional embeddings, the embedding matrix alone is 128,000 x 4,096 = 524 million parameters. For a 32K vocabulary, it is 131 million parameters. That is a 400M parameter difference from the tokenizer choice alone.
+具体的な数字で考えます。語彙が 128K、埋め込み次元が 4,096 の場合、埋め込み行列だけで `128,000 x 4,096 = 524 million` パラメータになります。語彙が 32K なら 131 million パラメータです。トークナイザーの選択だけで 400M パラメータの差が生まれます。
 
-But larger vocabularies compress text more aggressively. The same English paragraph that takes 100 tokens with a 32K vocabulary might take 70 tokens with a 128K vocabulary. That means 30% fewer forward passes during generation. For a model serving millions of requests, that is a direct reduction in compute cost.
+一方で、大きな語彙はテキストをより強く圧縮します。32K 語彙では100トークンになる英語段落が、128K 語彙なら70トークンで済むかもしれません。これは生成時の forward pass が30%少なくなるということです。何百万リクエストを処理するモデルでは、計算コストの直接的な削減になります。
 
-The trend is clear: vocabulary sizes are growing. GPT-2 used 50,257. GPT-4 uses ~100K. Llama 3 uses 128K. GPT-4o uses 200K.
+傾向は明確です。語彙サイズは大きくなっています。GPT-2 は 50,257、GPT-4 は約100K、Llama 3 は128K、GPT-4o は200Kを使います。
 
-| Model | Vocab Size | Tokenizer Type | Avg Tokens per English Word |
+| モデル | 語彙サイズ | トークナイザー種別 | 英単語あたりの平均トークン数 |
 |-------|-----------|----------------|---------------------------|
-| BERT | 30,522 | WordPiece | ~1.4 |
-| GPT-2 | 50,257 | Byte-level BPE | ~1.3 |
-| Llama 2 | 32,000 | SentencePiece BPE | ~1.4 |
-| GPT-4 | ~100,256 | Byte-level BPE | ~1.2 |
-| Llama 3 | 128,256 | Byte-level BPE (tiktoken) | ~1.1 |
-| GPT-4o | 200,019 | Byte-level BPE | ~1.0 |
+| BERT | 30,522 | WordPiece | 約1.4 |
+| GPT-2 | 50,257 | Byte-level BPE | 約1.3 |
+| Llama 2 | 32,000 | SentencePiece BPE | 約1.4 |
+| GPT-4 | 約100,256 | Byte-level BPE | 約1.2 |
+| Llama 3 | 128,256 | Byte-level BPE (tiktoken) | 約1.1 |
+| GPT-4o | 200,019 | Byte-level BPE | 約1.0 |
 
-### The Multilingual Tax
+### 多言語税
 
-Tokenizers trained primarily on English are brutal to other languages. Korean text in GPT-2's tokenizer averages 2-3 tokens per word. Chinese can be worse. This means a Korean user effectively has a context window that is half the size of an English user's -- paying the same price for less information density.
+主に英語で訓練されたトークナイザーは、他言語に厳しく当たります。GPT-2 のトークナイザーでは、韓国語テキストは平均して単語あたり2から3トークンになります。中国語ではさらに悪くなることがあります。つまり韓国語ユーザーは、英語ユーザーと同じ料金を払っているにもかかわらず、実質的なコンテキストウィンドウが半分になります。
 
-This is why Llama 3 quadrupled its vocabulary from 32K to 128K. More tokens dedicated to non-English scripts means fairer compression across languages.
+Llama 3 が語彙を 32K から 128K へ4倍にした理由はここにあります。非英語の文字体系により多くのトークンを割り当てることで、言語間でより公平な圧縮ができます。
 
-## Build It
+## 作ってみる
 
-### Step 1: Character-Level Tokenizer
+### ステップ1: 文字レベルトークナイザー
 
-Start at the foundation. A character-level tokenizer maps each character to its Unicode code point. No training needed. No unknown tokens. Just a direct mapping.
+基礎から始めます。文字レベルトークナイザーは、各文字を Unicode コードポイントへ対応付けます。訓練は不要です。未知トークンもありません。単純な直接対応です。
 
 ```python
 class CharTokenizer:
@@ -213,11 +214,11 @@ class CharTokenizer:
         return "".join(chr(t) for t in tokens)
 ```
 
-"hello" becomes [104, 101, 108, 108, 111]. Every character is its own token. This is the baseline we improve on.
+`"hello"` は `[104, 101, 108, 108, 111]` になります。すべての文字がそれぞれ1トークンです。ここが、これから改善するベースラインです。
 
-### Step 2: BPE Tokenizer from Scratch
+### ステップ2: BPE トークナイザーをゼロから作る
 
-The real implementation. We train on raw bytes (like GPT-2), count pairs, merge the most frequent, and record every merge in order. The merge table is the tokenizer.
+本物の実装です。GPT-2 のように生バイトで訓練し、ペアを数え、最頻ペアをマージし、すべてのマージを順番に記録します。マージ表がトークナイザーです。
 
 ```python
 from collections import Counter
@@ -272,13 +273,13 @@ class BPETokenizer:
         return byte_sequence.decode("utf-8", errors="replace")
 ```
 
-The training loop is the core of BPE: count pairs, merge the winner, repeat. Each merge reduces the total token count. After `num_merges` rounds, the vocabulary grows from 256 (base bytes) to 256 + num_merges.
+訓練ループが BPE の中核です。ペアを数え、勝者をマージし、繰り返します。各マージは総トークン数を減らします。`num_merges` 回の後、語彙は基礎バイトの256から `256 + num_merges` へ増えます。
 
-Encoding applies merges in the exact order they were learned. This matters. If merge 1 created "th" and merge 5 created "the", encoding must apply merge 1 first so that "the" can form from "th" + "e" in merge 5.
+エンコードでは、学習された正確な順序でマージを適用します。これは重要です。マージ1で `"th"` が作られ、マージ5で `"the"` が作られたなら、エンコード時もマージ1を先に適用し、マージ5で `"th" + "e"` から `"the"` を形成できるようにしなければなりません。
 
-Decoding is the inverse: look up each token ID in the vocabulary, concatenate the bytes, decode to UTF-8.
+デコードはその逆です。各トークン ID を語彙で引き、バイト列を連結し、UTF-8 としてデコードします。
 
-### Step 3: Encode and Decode Roundtrip
+### ステップ3: エンコードとデコードのラウンドトリップ
 
 ```python
 corpus = (
@@ -309,9 +310,9 @@ for sentence in test_sentences:
     print(f"  Roundtrip: {'PASS' if decoded == sentence else 'FAIL'}")
 ```
 
-The compression ratio tells you how effective the tokenizer is. A ratio of 0.50 means the tokenizer compressed the text to half as many tokens as raw bytes. Lower is better. On the training corpus, the ratio will be good. On out-of-distribution text like "unhappiness" (which does not appear in the corpus), the ratio will be worse -- the tokenizer falls back to character-level encoding for unseen patterns.
+圧縮率は、トークナイザーがどれほど有効かを示します。比率が 0.50 なら、生バイトの半分のトークン数まで圧縮できたということです。低いほどよいです。訓練コーパス上では比率は良くなります。`"unhappiness"` のような分布外テキスト、つまりコーパスに現れない語では比率が悪くなります。未知のパターンに対して、トークナイザーは文字レベル相当の符号化へ戻るためです。
 
-### Step 4: Compare with tiktoken
+### ステップ4: tiktoken と比較する
 
 ```python
 import tiktoken
@@ -335,9 +336,9 @@ for text in texts:
     print(f"  tiktoken:  {len(tiktoken_tokens)} tokens -> {tiktoken_pieces}")
 ```
 
-tiktoken uses the exact same algorithm but trained on hundreds of gigabytes of text with 100,000 merges. The algorithm is identical. The difference is the training data and the number of merges. Your tokenizer trained on a paragraph with 40 merges cannot compete with tiktoken's 100K merges on a massive corpus. But the mechanism is the same.
+`tiktoken` はまったく同じアルゴリズムを使いますが、数百GBのテキストと10万マージで訓練されています。アルゴリズムは同じです。違いは訓練データとマージ数です。1段落と40マージで訓練したあなたのトークナイザーは、大規模コーパスと100Kマージで訓練された `tiktoken` には勝てません。しかし仕組みは同じです。
 
-### Step 5: Vocabulary Analysis
+### ステップ5: 語彙分析
 
 ```python
 def analyze_vocabulary(tokenizer, test_texts):
@@ -367,11 +368,11 @@ def analyze_vocabulary(tokenizer, test_texts):
     print(f"\nUnused tokens: {len(unused)} out of {len(tokenizer.vocab)}")
 ```
 
-This reveals the Zipf distribution in your vocabulary. A few tokens dominate (spaces, "the", "e"). Most tokens are rarely used. Production tokenizers optimize for this distribution -- common patterns get short token IDs, rare patterns get longer representations.
+これにより、語彙内の Zipf 分布が見えてきます。少数のトークン、たとえば空白、`"the"`、`"e"` が支配的です。多くのトークンはめったに使われません。本番トークナイザーはこの分布に合わせて最適化されます。よく現れるパターンには短いトークン ID が割り当てられ、まれなパターンは長い表現になります。
 
-## Use It
+## 使ってみる
 
-Your scratch BPE works. Now see what production tools look like.
+スクラッチ実装の BPE は動きます。次は本番ツールがどのようなものか見てみます。
 
 ### tiktoken (OpenAI)
 
@@ -387,7 +388,7 @@ print(f"Pieces: {[enc.decode([t]) for t in tokens]}")
 print(f"Roundtrip: {enc.decode(tokens)}")
 ```
 
-tiktoken is written in Rust with Python bindings. It encodes millions of tokens per second. Same BPE algorithm, industrial-strength implementation.
+`tiktoken` は Rust で書かれ、Python バインディングを持ちます。秒間数百万トークンをエンコードできます。同じ BPE アルゴリズムを、産業用の実装にしたものです。
 
 ### Hugging Face tokenizers
 
@@ -408,9 +409,9 @@ print(f"Tokens: {output.tokens}")
 print(f"IDs: {output.ids}")
 ```
 
-The Hugging Face tokenizers library is also Rust under the hood. It trains BPE on gigabyte-scale corpora in seconds. This is what you use when training your own model.
+Hugging Face の `tokenizers` ライブラリも内部では Rust です。GB 規模のコーパスで BPE を数秒で訓練します。自分のモデルを訓練するときに使うのはこれです。
 
-### Loading Llama's Tokenizer
+### Llama のトークナイザーを読み込む
 
 ```python
 from transformers import AutoTokenizer
@@ -429,42 +430,42 @@ for text in multilingual:
     print(f"'{text}' -> {len(ids)} tokens")
 ```
 
-Llama 3's 128K vocabulary compresses non-English text significantly better than GPT-2's 50K vocabulary. You can verify this yourself -- encode the same sentence in multiple languages and count the tokens.
+Llama 3 の 128K 語彙は、GPT-2 の 50K 語彙よりも非英語テキストを大幅に効率よく圧縮します。これは自分でも確認できます。同じ文を複数の言語でエンコードし、トークン数を数えてください。
 
-## Ship It
+## 形にして届ける
 
-This lesson produces `outputs/prompt-tokenizer-analyzer.md` -- a reusable prompt that analyzes tokenization efficiency for any text and model combination. Feed it a text sample and it tells you which model's tokenizer handles it best.
+このレッスンでは `outputs/prompt-tokenizer-analyzer.md` を作ります。これは、任意のテキストとモデルの組み合わせについて、トークナイゼーション効率を分析する再利用可能なプロンプトです。テキストサンプルを渡すと、どのモデルのトークナイザーが最も適しているかを教えてくれます。
 
-## Exercises
+## 演習
 
-1. Modify the BPE tokenizer to print the vocabulary at each merge step. Watch how "t" + "h" becomes "th", then "th" + "e" becomes "the". Track how common English words get assembled piece by piece.
+1. BPE トークナイザーを変更して、各マージステップで語彙を表示するようにしてください。`"t" + "h"` が `"th"` になり、さらに `"th" + "e"` が `"the"` になる様子を観察します。一般的な英単語が部品から組み上がっていく過程を追跡してください。
 
-2. Add special tokens (`<pad>`, `<eos>`, `<unk>`) to the BPE tokenizer. Assign them IDs 0, 1, 2 and shift all other tokens accordingly. Implement a pre-tokenization step that splits on whitespace before running BPE.
+2. BPE トークナイザーに特殊トークン (`<pad>`、`<eos>`、`<unk>`) を追加してください。それらに ID 0、1、2 を割り当て、他のすべてのトークンをずらします。BPE の前に空白で分割する事前トークナイゼーションステップも実装してください。
 
-3. Implement the WordPiece merge criterion (likelihood ratio instead of frequency). Train both BPE and WordPiece on the same corpus with the same number of merges. Compare the resulting vocabularies -- which one produces more linguistically meaningful subwords?
+3. WordPiece のマージ基準、つまり頻度ではなく尤度比を実装してください。同じコーパス、同じマージ数で BPE と WordPiece の両方を訓練します。得られた語彙を比較してください。どちらがより言語学的に意味のあるサブワードを作るでしょうか。
 
-4. Build a multilingual tokenizer efficiency benchmark. Take 10 sentences in English, Spanish, Chinese, Korean, and Arabic. Tokenize each with tiktoken (cl100k_base) and measure the average tokens per character. Quantify the "multilingual tax" for each language.
+4. 多言語トークナイザー効率ベンチマークを作ってください。英語、スペイン語、中国語、韓国語、アラビア語でそれぞれ10文を用意します。`tiktoken` (`cl100k_base`) でトークン化し、文字あたり平均トークン数を測ります。各言語の「多言語税」を定量化してください。
 
-5. Train your BPE tokenizer on a larger corpus (download a Wikipedia article). Tune the number of merges to achieve a compression ratio within 10% of tiktoken on that same text. This forces you to understand the relationship between corpus size, merge count, and compression quality.
+5. より大きなコーパス、たとえば Wikipedia 記事をダウンロードして BPE トークナイザーを訓練してください。同じテキスト上で `tiktoken` との圧縮率差が10%以内になるようにマージ数を調整します。これにより、コーパスサイズ、マージ数、圧縮品質の関係を理解できます。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Token | "A word" | A unit in the model's vocabulary -- could be a character, subword, word, or multi-word chunk |
-| BPE | "Some compression thing" | Byte Pair Encoding -- iteratively merge the most frequent adjacent pair of tokens until the target vocabulary size is reached |
-| WordPiece | "BERT's tokenizer" | Like BPE but merges maximize the likelihood ratio count(AB)/(count(A)*count(B)) instead of raw frequency |
-| SentencePiece | "A tokenizer library" | A language-agnostic tokenizer that operates on raw Unicode without pre-tokenization, supporting BPE and Unigram algorithms |
-| Vocabulary size | "How many words it knows" | The total number of unique tokens: GPT-2 has 50,257, BERT has 30,522, Llama 3 has 128,256 |
-| Fertility | "Not a tokenizer term" | Average number of tokens per word -- measures tokenizer efficiency across languages (1.0 is perfect, 3.0 means the model works three times harder) |
-| Byte-level BPE | "GPT's tokenizer" | BPE operating on raw bytes (0-255) instead of Unicode characters, guaranteeing no unknown tokens for any input |
-| Merge table | "The tokenizer file" | Ordered list of pair merges learned during training -- this IS the tokenizer, and order matters |
-| Pre-tokenization | "Splitting on spaces" | Rules applied before subword tokenization: whitespace splitting, digit separation, punctuation handling |
-| Compression ratio | "How efficient the tokenizer is" | Tokens produced divided by input bytes -- lower means better compression and faster inference |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Token | 「単語」 | モデル語彙内の単位。文字、サブワード、単語、複数語のまとまりのいずれにもなり得る |
+| BPE | 「何かの圧縮」 | Byte Pair Encoding。目標語彙サイズに達するまで、最頻の隣接トークンペアを反復的にマージする |
+| WordPiece | 「BERT のトークナイザー」 | BPE に似ているが、生頻度ではなく `count(AB)/(count(A)*count(B))` の尤度比を最大化するマージを選ぶ |
+| SentencePiece | 「トークナイザーライブラリ」 | 事前トークナイゼーションなしで生の Unicode に作用する言語非依存トークナイザー。BPE と Unigram をサポートする |
+| Vocabulary size | 「知っている単語数」 | 一意なトークンの総数。GPT-2 は 50,257、BERT は 30,522、Llama 3 は 128,256 |
+| Fertility | 「トークナイザー用語ではなさそう」 | 単語あたりの平均トークン数。言語間のトークナイザー効率を測る。1.0 は理想、3.0 はモデルが3倍働くことを意味する |
+| Byte-level BPE | 「GPT のトークナイザー」 | Unicode 文字ではなく生バイト (0-255) 上で動く BPE。どんな入力でも未知トークンが発生しない |
+| Merge table | 「トークナイザーファイル」 | 訓練中に学習されたペアマージの順序付きリスト。これがトークナイザーそのものであり、順序が重要 |
+| Pre-tokenization | 「空白で分割すること」 | サブワードトークナイゼーションの前に適用するルール。空白分割、数字分離、句読点処理など |
+| Compression ratio | 「トークナイザーの効率」 | 生成されたトークン数を入力バイト数で割った値。低いほど圧縮が良く、推論が速い |
 
-## Further Reading
+## 参考資料
 
-- [Sennrich et al., 2016 -- "Neural Machine Translation of Rare Words with Subword Units"](https://arxiv.org/abs/1508.07909) -- the paper that introduced BPE for NLP, turning a 1994 compression algorithm into the foundation of modern tokenization
-- [Kudo & Richardson, 2018 -- "SentencePiece: A simple and language independent subword tokenizer"](https://arxiv.org/abs/1808.06226) -- language-agnostic tokenization that made multilingual models practical
-- [OpenAI tiktoken repository](https://github.com/openai/tiktoken) -- production BPE implementation in Rust with Python bindings, used by GPT-3.5/4/4o
-- [Hugging Face Tokenizers documentation](https://huggingface.co/docs/tokenizers) -- production-grade tokenizer training with Rust performance
+- [Sennrich et al., 2016 -- "Neural Machine Translation of Rare Words with Subword Units"](https://arxiv.org/abs/1508.07909) -- BPE を NLP に導入し、1994年の圧縮アルゴリズムを現代のトークナイゼーションの基礎へ変えた論文
+- [Kudo & Richardson, 2018 -- "SentencePiece: A simple and language independent subword tokenizer"](https://arxiv.org/abs/1808.06226) -- 多言語モデルを実用的にした、言語非依存のトークナイゼーション
+- [OpenAI tiktoken repository](https://github.com/openai/tiktoken) -- GPT-3.5/4/4o で使われる、Python バインディング付き Rust 製の本番 BPE 実装
+- [Hugging Face Tokenizers documentation](https://huggingface.co/docs/tokenizers) -- Rust の性能を備えた本番グレードのトークナイザー訓練

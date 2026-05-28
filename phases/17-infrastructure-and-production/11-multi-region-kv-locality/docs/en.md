@@ -1,126 +1,126 @@
-# Multi-Region LLM Serving and KV Cache Locality
+# Multi-Region LLM Serving と KV Cache Locality
 
-> Round-robin load balancing is actively harmful for cached LLM inference. A request that does not land on the node holding its prefix pays full prefill cost — roughly 800 ms at P50 on a long prompt versus ~80 ms with a cache hit. In 2026 the production pattern is a cache-aware router (vLLM Router in Rust, llm-d router) that consumes KV-cache events and routes on prefix-hash match. Recent research (GORGO) makes cross-region network latency an explicit term in the routing objective. Commercial "cross-region inference" offerings (Bedrock cross-region inference, GKE multi-cluster gateways) treat inference as opaque — they handle availability, not TTFT. JPMorgan and Mayo Clinic ran us-east-1 failover in Nov 2024 at ~22 minutes. The DR reality: 32% of LLM DR failures are because teams backed up weights but forgot tokenizer files or quantization configs.
+> Round-robin load balancing は cached LLM inference では積極的に有害です。Prefix を持つ node に着地しない request は full prefill cost を支払います。長い prompt では P50 で約 800 ms かかる一方、cache hit なら約 80 ms です。2026 年の production pattern は cache-aware router（Rust の vLLM Router、llm-d router）で、KV-cache events を取り込み、prefix-hash match に基づいて route します。Recent research（GORGO）は cross-region network latency を routing objective の明示的な項にします。Commercial な "cross-region inference" offerings（Bedrock cross-region inference、GKE multi-cluster gateways）は inference を opaque に扱います。Availability は扱いますが TTFT は扱いません。JPMorgan と Mayo Clinic は 2024 年 11 月に us-east-1 failover を実施し、約 22 分でした。DR の現実: LLM DR failures の 32% は、team が weights を backup したものの tokenizer files や quantization configs を忘れたことが原因です。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy prefix-cache-aware router simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib、toy prefix-cache-aware router simulator)
+**前提条件:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
+**所要時間:** 約 60 分
 
-## Learning Objectives
+## 学習目標
 
-- Explain why round-robin load balancing breaks cached inference and quantify the TTFT penalty.
-- Diagram a cache-aware router: inputs (KV-cache events), algorithm (prefix-hash match), tie-breaker (GPU utilization).
-- Name the 32% DR failure driver for LLMs (missing tokenizer files / quantization configs) and state a three-file DR checklist.
-- Distinguish commercial cross-region offerings (Bedrock CRI, GKE Multi-Cluster Gateway) from KV-aware routing.
+- Round-robin load balancing が cached inference を壊す理由を説明し、TTFT penalty を定量化できる。
+- Cache-aware router を図解できる: inputs（KV-cache events）、algorithm（prefix-hash match）、tie-breaker（GPU utilization）。
+- LLM の 32% DR failure driver（missing tokenizer files / quantization configs）を挙げ、3-file DR checklist を示せる。
+- Commercial cross-region offerings（Bedrock CRI、GKE Multi-Cluster Gateway）と KV-aware routing を区別できる。
 
-## The Problem
+## 問題
 
-Your service runs in us-east-1, us-west-2, and eu-west-1. You put an ALB in front with round-robin. Prefix cache hit rate in production drops to 8%. TTFT P50 triples. Your vLLM logs show every request is paying full prefill cost.
+Service は us-east-1、us-west-2、eu-west-1 で動いています。前段に round-robin の ALB を置きました。Production の prefix cache hit rate は 8% まで落ちました。TTFT P50 は 3 倍になりました。vLLM logs には、すべての request が full prefill cost を支払っていることが示されています。
 
-Round-robin is optimal for stateless services. LLM inference is stateful by design — the KV cache encodes everything the model has seen. Routing blind is routing into the wrong cache.
+Round-robin は stateless services では最適です。LLM inference は設計上 stateful です。KV cache は model が見たすべてを encode します。盲目的に route することは、間違った cache に route することです。
 
-Separately, your team has a DR plan. You back up model weights to S3 cross-region. A regional outage hits; you attempt failover; the replica refuses to start. You forgot tokenizer.json, the quantization config, and the RoPE scaling config were in a separate bucket you didn't sync.
+別の問題として、team には DR plan があります。Model weights を S3 cross-region に backup しています。Regional outage が起き、failover を試みると replica が起動を拒否します。`tokenizer.json`、quantization config、RoPE scaling config が別 bucket にあり、sync していませんでした。
 
-Multi-region LLM serving is a cache problem, a routing problem, and a DR-hygiene problem — not a load-balancer problem.
+Multi-region LLM serving は cache problem、routing problem、DR-hygiene problem であり、load-balancer problem ではありません。
 
-## The Concept
+## コンセプト
 
 ### Cache-aware routing
 
-Request arrives with a prompt. Router hashes the prefix (say, first 512 tokens); it asks each replica "do you have this prefix cached?". Replicas publish KV-cache events on a pub/sub channel as they allocate and evict blocks. Router picks the replica with the match, falls through to GPU-util-based tie-breaker if no one does.
+Request が prompt とともに到着します。Router は prefix（例: first 512 tokens）を hash し、各 replica に「この prefix を cache しているか」を尋ねます。Replicas は block を allocate/evict するたびに pub/sub channel へ KV-cache events を publish します。Router は match した replica を選び、誰も match しなければ GPU-util-based tie-breaker に fall through します。
 
-**vLLM Router** (Rust, 2026 production-stack): subscribes to `kv.cache.block_added` events, maintains a prefix-hash → replica index, routes with O(1) lookup. Falls through to least-queue-depth when no match.
+**vLLM Router**（Rust、2026 production-stack）: `kv.cache.block_added` events を subscribe し、prefix-hash → replica index を保持し、O(1) lookup で route します。Match がない場合は least-queue-depth に fall through します。
 
-**llm-d router**: same pattern, Kubernetes-native. Publishes events via the ControlPlane API.
+**llm-d router**: 同じ pattern で Kubernetes-native です。ControlPlane API 経由で events を publish します。
 
-**SGLang RadixAttention** (Phase 17 · 06) is the intra-replica equivalent. Cross-replica routing is strictly upstream.
+**SGLang RadixAttention**（Phase 17 · 06）は intra-replica equivalent です。Cross-replica routing はその upstream にあります。
 
-### Numbers
+### 数値
 
-TTFT P50 on a 2K-token prompt, Llama 3.3 70B FP8, H100:
-- Cache hit (same replica, prefix resident): ~80 ms.
-- Cache miss (cold prefill): ~800 ms.
+2K-token prompt、Llama 3.3 70B FP8、H100 での TTFT P50:
+- Cache hit（same replica、prefix resident）: 約 80 ms。
+- Cache miss（cold prefill）: 約 800 ms。
 
-10x gap. If your router hits 60-80% of prefix cache across replicas, you approximate single-replica performance at N-replica capacity. If it hits 10%, you approximate naive scaling.
+10x の差です。Router が replicas 全体で prefix cache の 60-80% に hit できれば、N-replica capacity で single-replica performance に近づきます。10% しか hit できない場合、naive scaling に近づきます。
 
-### Cross-region has a new constraint — network latency
+### Cross-region には新しい制約がある — network latency
 
 Inter-region RTT:
-- us-east-1 ↔ us-west-2: ~65 ms.
-- us-east-1 ↔ eu-west-1: ~75 ms.
-- us-east-1 ↔ ap-southeast-1: ~220 ms.
+- us-east-1 ↔ us-west-2: 約 65 ms。
+- us-east-1 ↔ eu-west-1: 約 75 ms。
+- us-east-1 ↔ ap-southeast-1: 約 220 ms。
 
-If routing takes a request from us-east-1 to a hot prefix in ap-southeast-1, the saved prefill (800 → 80 ms) is dwarfed by 440 ms round-trip. GORGO (2026 research) makes this explicit — minimize `prefill_time + network_latency` jointly, not prefill alone. Often the answer is to keep routing regional except on massive multi-MB prefixes where prefill dominates.
+Routing が us-east-1 の request を ap-southeast-1 の hot prefix に送ると、保存できる prefill（800 → 80 ms）は 440 ms の round-trip によって薄まります。GORGO（2026 research）はこれを明示します。Prefill だけでなく `prefill_time + network_latency` を同時に minimize します。多くの場合、massive multi-MB prefixes で prefill が支配的な場合を除き、regional routing に留めるのが答えです。
 
-### Commercial "cross-region inference" does not help here
+### Commercial "cross-region inference" はここでは役に立たない
 
-AWS Bedrock cross-region inference automatically routes requests to other regions during capacity pressure. It optimizes availability, not TTFT, and treats inference as opaque. GKE Multi-Cluster Gateway is the same — service-level failover, no awareness of KV cache.
+AWS Bedrock cross-region inference は capacity pressure 時に requests を他 region へ自動 route します。Availability を最適化するもので、TTFT ではありません。Inference を opaque に扱います。GKE Multi-Cluster Gateway も同じです。Service-level failover であり、KV cache awareness はありません。
 
-You still need an app-layer cache-aware router even when using these. They handle the "us-east-1 is on fire" case. Cache-aware routing handles the TTFT case.
+これらを使っていても、app-layer cache-aware router は必要です。それらは「us-east-1 が燃えている」ケースを扱います。Cache-aware routing は TTFT のケースを扱います。
 
-### DR hygiene — the 32% missing-files problem
+### DR hygiene — 32% missing-files problem
 
-Widely cited 2026 stat: 32% of LLM DR failures happen because teams backed up weights but forgot:
+広く引用される 2026 年の統計: LLM DR failures の 32% は、team が weights を backup したものの次を忘れたことで発生します。
 
-- `tokenizer.json` or `tokenizer.model`
-- Quantization configs (`quantize_config.json`, AWQ scales, GPTQ zero-points)
-- Model-specific configs (RoPE scaling, attention masks, chat templates)
-- Engine config (`vllm_config.yaml`, sampling defaults, LoRA adapter manifests)
+- `tokenizer.json` または `tokenizer.model`
+- Quantization configs（`quantize_config.json`、AWQ scales、GPTQ zero-points）
+- Model-specific configs（RoPE scaling、attention masks、chat templates）
+- Engine config（`vllm_config.yaml`、sampling defaults、LoRA adapter manifests）
 
-The fix is a three-file minimum DR manifest:
+修正策は 3-file minimum DR manifest です。
 
-1. All files under the HF model repo (weights + configs + tokenizer).
-2. Engine-specific serving config.
-3. Deployment manifest (K8s YAML, Dockerfile, dependency lock).
+1. HF model repo 配下のすべての file（weights + configs + tokenizer）。
+2. Engine-specific serving config。
+3. Deployment manifest（K8s YAML、Dockerfile、dependency lock）。
 
-Plus: run a DR drill quarterly. The JPMorgan us-east-1 drill hit 22 minutes recovery in Nov 2024 only because the playbook was rehearsed.
+さらに、四半期ごとに DR drill を実行してください。JPMorgan の us-east-1 drill が 2024 年 11 月に 22 分 recovery を達成できたのは、playbook を rehearsal していたからです。
 
-### Data residency is orthogonal
+### Data residency は直交する
 
-EU customer PHI cannot leave EU. If your cache-aware router sends a Paris-originated request to us-east-1 for a prefix match, you have violated GDPR regardless of TTFT gain. Partition routers by residency boundary before optimizing for cache.
+EU customer PHI は EU を出られません。Cache-aware router が prefix match のために Paris-originated request を us-east-1 に送れば、TTFT gain に関係なく GDPR に違反しています。Cache を最適化する前に、residency boundary ごとに routers を partition してください。
 
-### Numbers you should remember
+### 覚えておくべき数値
 
-- Cache hit vs miss TTFT gap: ~10x (80 ms vs 800 ms on 2K prompt).
-- Inter-region RTT US-EU: ~75 ms.
-- DR failure: 32% miss tokenizer/quant configs.
-- JPMorgan us-east-1 failover Nov 2024: 22 minutes (30-min SLA).
+- Cache hit vs miss TTFT gap: 約 10x（2K prompt で 80 ms vs 800 ms）。
+- Inter-region RTT US-EU: 約 75 ms。
+- DR failure: 32% は tokenizer/quant configs の欠落。
+- JPMorgan us-east-1 failover 2024 年 11 月: 22 分（30-min SLA）。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates three routing strategies (round-robin, cache-aware regional, cache-aware global) on a multi-region workload. Reports cache hit rate, TTFT P50/P99, and cross-region bill.
+`code/main.py` は multi-region workload 上で 3 つの routing strategies（round-robin、cache-aware regional、cache-aware global）を simulate します。Cache hit rate、TTFT P50/P99、cross-region bill を報告します。
 
 ## Ship It
 
-This lesson produces `outputs/skill-multi-region-router.md`. Given regions, residency constraints, and SLA, designs a routing plan.
+このレッスンは `outputs/skill-multi-region-router.md` を生成します。Regions、residency constraints、SLA を与えると routing plan を設計します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. At what prompt length does cross-region routing beat local-only routing, given 75 ms RTT?
-2. Your cache hit rate drops from 70% to 12%. Diagnose three possible causes and the observables that would confirm each.
-3. Design a DR manifest for a 70B AWQ-quantized model served in vLLM with 5 LoRA adapters. List every file and config.
-4. Argue whether Bedrock cross-region inference is "enough" for a fintech with strict TTFT SLOs. Cite specific behaviors.
-5. A Paris-origin request matches a prefix in us-east-1. Do you route it? Write the policy.
+1. `code/main.py` を実行してください。75 ms RTT の場合、どの prompt length で cross-region routing が local-only routing に勝ちますか。
+2. Cache hit rate が 70% から 12% に落ちました。考えられる原因を 3 つと、それぞれを確認する observables を挙げてください。
+3. vLLM で 5 つの LoRA adapters とともに serving される 70B AWQ-quantized model の DR manifest を設計してください。すべての file と config を列挙してください。
+4. Strict TTFT SLO を持つ fintech にとって Bedrock cross-region inference が「十分」かどうかを論じてください。具体的な behaviors を引用してください。
+5. Paris-origin request が us-east-1 の prefix と match しました。Route しますか。Policy を書いてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Cache-aware routing | "smart LB" | Route on prefix-hash match to KV-cache-holding replica |
-| KV-cache events | "cache pub-sub" | Replicas publish block add/evict; router indexes |
-| Prefix hash | "cache key" | Hash of first N tokens used as router lookup |
-| GORGO | "cross-region routing research" | arXiv 2602.11688; network latency as explicit term |
-| Cross-region inference | "Bedrock CRI" | AWS product; availability failover, not TTFT awareness |
-| DR manifest | "the backup list" | Every file needed to restore — not just weights |
-| Data residency | "GDPR boundary" | Legal constraint on which region sees user data |
-| RTT | "round-trip time" | Network latency; 75 ms US-EU, 220 ms US-APAC |
-| LLM-aware LB | "cache-hit LB" | Cache-aware router as a product category |
+| Term | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Cache-aware routing | "smart LB" | Prefix-hash match に基づき、KV-cache を持つ replica へ route |
+| KV-cache events | "cache pub-sub" | Replicas が block add/evict を publish し、router が index |
+| Prefix hash | "cache key" | Router lookup に使う first N tokens の hash |
+| GORGO | "cross-region routing research" | arXiv 2602.11688。network latency を明示的な項にする |
+| Cross-region inference | "Bedrock CRI" | AWS product。availability failover であり TTFT awareness ではない |
+| DR manifest | "the backup list" | Restore に必要なすべての file。weights だけではない |
+| Data residency | "GDPR boundary" | どの region が user data を見られるかの法的制約 |
+| RTT | "round-trip time" | Network latency。US-EU 75 ms、US-APAC 220 ms |
+| LLM-aware LB | "cache-hit LB" | Product category としての cache-aware router |
 
-## Further Reading
+## 参考資料
 
 - [BentoML — Multi-cloud and cross-region inference](https://bentoml.com/llm/infrastructure-and-operations/multi-cloud-and-cross-region-inference)
-- [arXiv — GORGO (2602.11688)](https://arxiv.org/html/2602.11688v1) — cross-region KV-cache reuse with network latency term.
+- [arXiv — GORGO (2602.11688)](https://arxiv.org/html/2602.11688v1) — network latency term を持つ cross-region KV-cache reuse。
 - [TianPan — Multi-Region LLM Serving Cache Locality](https://tianpan.co/blog/2026-04-17-multi-region-llm-serving-data-residency-routing)
-- [AWS Bedrock Cross-Region Inference](https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html) — availability failover documentation.
-- [vLLM Production Stack Router](https://github.com/vllm-project/production-stack) — cache-aware router source.
+- [AWS Bedrock Cross-Region Inference](https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html) — availability failover documentation。
+- [vLLM Production Stack Router](https://github.com/vllm-project/production-stack) — cache-aware router source。

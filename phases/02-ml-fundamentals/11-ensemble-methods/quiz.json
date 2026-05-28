@@ -2,66 +2,66 @@
   {
     "id": "ensemble-pre-1",
     "stage": "pre",
-    "question": "Why does combining multiple weak classifiers into an ensemble improve accuracy?",
+    "question": "複数の weak classifier を ensemble に組み合わせると accuracy が向上するのはなぜですか？",
     "options": [
-      "Each weak classifier memorizes a different part of the test set",
-      "If the classifiers make different errors, majority voting cancels out individual mistakes",
-      "Ensembles always use more training data than single models",
-      "Weak classifiers are always faster than strong classifiers"
+      "各 weak classifier が test set の異なる部分を暗記するから",
+      "classifier が異なる誤りをするなら、majority voting が個々の間違いを打ち消すから",
+      "ensemble は単一モデルより常に多くの training data を使うから",
+      "weak classifier は常に strong classifier より速いから"
     ],
     "correct": 1,
-    "explanation": "The key is diversity. If classifiers make independent errors, majority voting means a wrong answer must fool more than half the models. Errors cancel out, and the ensemble accuracy exceeds any individual."
+    "explanation": "鍵は diversity です。classifier が独立した誤りをするなら、誤答するには半数を超えるモデルをだます必要があります。誤りが打ち消され、ensemble accuracy は個々のモデルを上回ります。"
   },
   {
     "id": "ensemble-pre-2",
     "stage": "pre",
-    "question": "What is the main difference between bagging and boosting?",
+    "question": "bagging と boosting の主な違いは何ですか？",
     "options": [
-      "Bagging trains models in parallel on random subsets; boosting trains models sequentially, focusing on previous errors",
-      "Bagging uses deep neural networks; boosting uses decision trees",
-      "Bagging reduces bias; boosting reduces variance",
-      "Bagging requires labeled data; boosting works unsupervised"
+      "Bagging は random subset 上でモデルを並列に学習し、boosting は以前の error に注目してモデルを逐次的に学習する",
+      "Bagging は deep neural network を使い、boosting は decision tree を使う",
+      "Bagging は bias を減らし、boosting は variance を減らす",
+      "Bagging には labeled data が必要で、boosting は unsupervised に動く"
     ],
     "correct": 0,
-    "explanation": "Bagging trains models independently on bootstrap samples (parallel, reduces variance). Boosting trains models sequentially, with each new model focusing on the mistakes of the ensemble so far (reduces bias)."
+    "explanation": "Bagging は bootstrap sample 上でモデルを独立に学習します（並列、variance を減らす）。Boosting はモデルを逐次的に学習し、各新しいモデルがそれまでの ensemble の間違いに注目します（bias を減らす）。"
   },
   {
     "id": "ensemble-post-1",
     "stage": "post",
-    "question": "In AdaBoost, what happens to the sample weight of a misclassified training point after each round?",
+    "question": "AdaBoost では、各 round 後に誤分類された training point の sample weight はどうなりますか？",
     "options": [
-      "It stays the same",
-      "It increases, so the next weak learner focuses more on this hard example",
-      "It decreases, so the next learner ignores it",
-      "It is removed from the training set"
+      "同じまま",
+      "増加し、次の weak learner がこの難しい example により注目する",
+      "減少し、次の learner がそれを無視する",
+      "training set から削除される"
     ],
     "correct": 1,
-    "explanation": "AdaBoost increases the weights of misclassified samples after each round. This forces the next weak learner to pay more attention to the examples the ensemble currently gets wrong."
+    "explanation": "AdaBoost は各 round 後に誤分類 sample の重みを増やします。これにより、次の weak learner は現在の ensemble が間違えている example により注意を払うようになります。"
   },
   {
     "id": "ensemble-post-2",
     "stage": "post",
-    "question": "A random forest with 100 trees has the same test accuracy as 200 trees. Adding more trees to 500 also shows no improvement. Why?",
+    "question": "100 本の tree を持つ Random Forest と 200 本の tree の test accuracy が同じでした。500 本に増やしても改善しません。なぜですか？",
     "options": [
-      "The random forest is underfitting and needs a different algorithm",
-      "After enough trees, variance reduction plateaus and adding more trees provides diminishing returns without increasing overfitting",
-      "500 trees is the maximum allowed",
-      "The trees are all identical so adding more has no effect"
+      "Random Forest が underfit しており、別の algorithm が必要だから",
+      "十分な数の tree の後は variance reduction が plateau し、tree を増やしても overfitting を増やさずに diminishing returns だけになるから",
+      "500 本が許される最大数だから",
+      "tree がすべて同一で、増やしても効果がないから"
     ],
     "correct": 1,
-    "explanation": "Random forests do not overfit with more trees (unlike boosting). However, variance reduction plateaus once enough diverse trees have been averaged. More trees just add compute cost without improving accuracy."
+    "explanation": "Random Forest は（boosting と違い）tree を増やしても overfit しません。ただし、十分に多様な tree を平均した後は variance reduction が plateau します。tree を増やしても compute cost が増えるだけで accuracy は改善しません。"
   },
   {
     "id": "ensemble-post-3",
     "stage": "post",
-    "question": "Gradient boosting fits each new tree to what quantity?",
+    "question": "Gradient boosting は各新しい tree を何に fit しますか？",
     "options": [
-      "The original target values",
-      "The residuals (errors) of the current ensemble's predictions",
-      "Random subsets of features",
-      "The predictions of the previous tree"
+      "元の target value",
+      "現在の ensemble prediction の residual（error）",
+      "特徴量の random subset",
+      "前の tree の prediction"
     ],
     "correct": 1,
-    "explanation": "In gradient boosting, each new tree is trained to predict the residuals (negative gradient of the loss) of the current ensemble. This sequentially reduces the remaining error."
+    "explanation": "gradient boosting では、各新しい tree は現在の ensemble の residual（loss の負の勾配）を予測するように学習されます。これにより残っている error を逐次的に減らします。"
   }
 ]

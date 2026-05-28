@@ -2,31 +2,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do AI projects need a separate virtual environment?",
+      "question": "AI project に separate virtual environment が必要なのはなぜですか。",
       "options": [
-        "Virtual environments make code run faster",
-        "They isolate dependencies so different projects don't conflict",
-        "Python requires virtual environments to import packages",
-        "Virtual environments provide GPU access"
+        "virtual environment は code の実行を速くするから",
+        "dependency を隔離し、project 間の衝突を防ぐから",
+        "Python は package import に virtual environment を必須にしているから",
+        "virtual environment が GPU access を提供するから"
       ],
       "correct": 1,
-      "explanation": "Virtual environments isolate package versions per project. Without them, upgrading PyTorch for one project can break another that depends on an older version."
+      "explanation": "virtual environment は package version を project ごとに隔離します。これがないと、ある project のために PyTorch を upgrade しただけで、古い version に依存する別 project が壊れることがあります。"
     },
     {
       "stage": "pre",
-      "question": "What does CUDA provide for AI workloads?",
+      "question": "CUDA は AI workload に何を提供しますか。",
       "options": [
-        "A Python package manager for ML libraries",
-        "A web framework for deploying models",
-        "Parallel computing on NVIDIA GPUs for matrix operations",
-        "A container runtime for model serving"
+        "ML library 用の Python package manager",
+        "model deploy 用の web framework",
+        "行列演算のための NVIDIA GPU 上の parallel computing",
+        "model serving 用の container runtime"
       ],
       "correct": 2,
-      "explanation": "CUDA is NVIDIA's parallel computing platform that lets you run matrix operations on thousands of GPU cores simultaneously. PyTorch and TensorFlow use it under the hood."
+      "explanation": "CUDA は NVIDIA の parallel computing platform で、数千の GPU core 上で行列演算を同時に実行できます。PyTorch や TensorFlow は内部でこれを使います。"
     },
     {
       "stage": "post",
-      "question": "In the four-layer environment stack, which layer must be installed first?",
+      "question": "4 層の environment stack で、最初に install する必要がある layer はどれですか。",
       "options": [
         "AI/ML Libraries (PyTorch, JAX)",
         "Package Managers (pip, npm, cargo)",
@@ -34,23 +34,23 @@
         "System Foundation (OS, shell, GPU drivers)"
       ],
       "correct": 3,
-      "explanation": "You install bottom-up: system foundation first (OS, drivers), then package managers, then language runtimes, then AI libraries. Each layer depends on the one below."
+      "explanation": "bottom-up に install します。まず system foundation (OS, drivers)、次に package managers、language runtimes、AI libraries です。各 layer は下の layer に依存します。"
     },
     {
       "stage": "post",
-      "question": "What is the purpose of uv in a Python AI project?",
+      "question": "Python AI project における uv の目的は何ですか。",
       "options": [
-        "A GPU monitoring tool",
-        "An ultra-fast Python package installer and resolver",
-        "A neural network visualization library",
-        "A CUDA compiler for custom kernels"
+        "GPU monitoring tool",
+        "非常に高速な Python package installer と resolver",
+        "neural network visualization library",
+        "custom kernel 用の CUDA compiler"
       ],
       "correct": 1,
-      "explanation": "uv is a fast Python package installer written in Rust. It replaces pip with much faster dependency resolution and installation, often 10-100x faster."
+      "explanation": "uv は Rust で書かれた高速な Python package installer です。pip を置き換え、dependency resolution と installation を大幅に速くします。多くの場合 10〜100 倍速くなります。"
     },
     {
       "stage": "post",
-      "question": "How do you verify that PyTorch can access your GPU?",
+      "question": "PyTorch が GPU に access できることをどう確認しますか。",
       "options": [
         "import torch; print(torch.__version__)",
         "nvidia-smi --query",
@@ -58,7 +58,7 @@
         "python -c 'import gpu'"
       ],
       "correct": 2,
-      "explanation": "torch.cuda.is_available() returns True if PyTorch can access CUDA GPUs. On Apple Silicon, use torch.backends.mps.is_available() for Metal Performance Shaders."
+      "explanation": "`torch.cuda.is_available()` は、PyTorch が CUDA GPU に access できる場合 True を返します。Apple Silicon では Metal Performance Shaders 用に `torch.backends.mps.is_available()` を使います。"
     }
   ]
 }

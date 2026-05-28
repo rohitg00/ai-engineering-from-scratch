@@ -1,8 +1,9 @@
 """Managed LLM platform comparator — stdlib Python.
 
-Models three platforms (Bedrock on-demand, Azure PTU, Vertex on-demand) on the
-same synthetic workload. Reports per-day cost, TTFT median / P99, and attribution
-fidelity. Pedagogical: prices and latencies are 2026 public-domain approximations.
+3つの platform（Bedrock on-demand、Azure PTU、Vertex on-demand）を同じ
+synthetic workload で model 化する。per-day cost、TTFT median / P99、
+attribution fidelity を報告する。教育用: price と latency は 2026年の
+public-domain approximation。
 """
 
 from __future__ import annotations
@@ -15,13 +16,13 @@ import statistics
 @dataclass
 class Platform:
     name: str
-    per_mtok_input: float        # $/M input tokens on-demand
-    per_mtok_output: float       # $/M output tokens on-demand
-    ptu_hourly: float | None     # $/hour for one reservation unit (None = not offered)
-    ptu_tokens_per_hour: int     # tokens/hour a single PTU delivers
-    ttft_median_ms: float        # median TTFT on shared capacity
-    ttft_p99_ms: float           # P99 TTFT on shared capacity
-    ttft_median_ptu_ms: float    # median TTFT on dedicated PTU
+    per_mtok_input: float        # on-demand の $/M input tokens
+    per_mtok_output: float       # on-demand の $/M output tokens
+    ptu_hourly: float | None     # 1 reservation unit あたり $/hour（None = 提供なし）
+    ptu_tokens_per_hour: int     # single PTU が処理する tokens/hour
+    ttft_median_ms: float        # shared capacity の median TTFT
+    ttft_p99_ms: float           # shared capacity の P99 TTFT
+    ttft_median_ptu_ms: float    # dedicated PTU の median TTFT
     attribution: str             # qualitative FinOps surface grade
 
 
@@ -79,7 +80,7 @@ def break_even_demo() -> None:
 
 def lock_in_cost() -> None:
     print("\n" + "=" * 80)
-    print("TWO-PROVIDER MINIMUM — cost uplift for redundancy")
+    print("TWO-PROVIDER MINIMUM — redundancy の cost uplift")
     print("=" * 80)
     tokens_per_day = 5_000_000
     primary_cost = (tokens_per_day / 1e6) * 10.00
@@ -91,7 +92,7 @@ def lock_in_cost() -> None:
     print(f"Idle secondary headroom ({failover_headroom_pct:.0f}%): ${primary_cost * failover_headroom_pct / 100:.2f}/day")
     print(f"Total uplift: ${uplift:.2f}/day")
     print(f"Monthly uplift: ${uplift * 30:.2f}")
-    print("Cost of one multi-hour regional outage without redundancy: customer churn, SLA credits, war-room time")
+    print("redundancy なしで multi-hour regional outage が1回起きる cost: customer churn、SLA credits、war-room time")
 
 
 def main() -> None:

@@ -1,24 +1,24 @@
-# Data Management
+# データ管理
 
-> Data is the fuel. How you manage it determines how fast you go.
+> データは燃料です。管理の仕方が、どれだけ速く進めるかを決めます。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~45 minutes
+**タイプ:** 作ってみる
+**言語:** Python
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Load, stream, and cache datasets using the Hugging Face `datasets` library
-- Convert between CSV, JSON, Parquet, and Arrow formats and explain their tradeoffs
-- Create reproducible train/validation/test splits with fixed random seeds
-- Manage large model and dataset files using `.gitignore`, Git LFS, or DVC
+- Hugging Faceの `datasets` ライブラリを使ってdatasetをload、stream、cacheする
+- CSV、JSON、Parquet、Arrow形式を相互変換し、それぞれのtradeoffを説明する
+- 固定random seedを使って、再現可能なtrain/validation/test splitを作成する
+- `.gitignore`、Git LFS、DVCを使って、大きなmodel fileやdataset fileを管理する
 
-## The Problem
+## 課題
 
-Every AI project starts with data. You need to find datasets, download them, convert between formats, split them for training and evaluation, and version them so experiments are reproducible. Doing this manually every time is slow and error-prone. You need a repeatable workflow.
+すべてのAIプロジェクトはデータから始まります。datasetを見つけ、downloadし、形式を変換し、trainingとevaluation用に分割し、実験が再現できるようversion管理する必要があります。毎回手作業で行うのは遅く、ミスが起きやすいです。繰り返し使えるworkflowが必要です。
 
-## The Concept
+## 考え方
 
 ```mermaid
 graph TD
@@ -30,17 +30,17 @@ graph TD
     F --> G["Your Training Pipeline"]
 ```
 
-The Hugging Face `datasets` library is the standard way to load data for AI work. It handles downloading, caching, format conversion, and streaming out of the box.
+Hugging Faceの `datasets` ライブラリは、AI作業でデータを読み込む標準的な方法です。download、cache、format conversion、streamingを標準で扱います。
 
-## Build It
+## 作ってみる
 
-### Step 1: Install the datasets library
+### ステップ1: datasetsライブラリをインストールする
 
 ```bash
 pip install datasets huggingface_hub
 ```
 
-### Step 2: Load a dataset
+### ステップ2: datasetを読み込む
 
 ```python
 from datasets import load_dataset
@@ -50,11 +50,11 @@ print(dataset)
 print(dataset["train"][0])
 ```
 
-This downloads the IMDB movie review dataset. After the first download, it loads from cache at `~/.cache/huggingface/datasets/`.
+これはIMDB映画レビューdatasetをdownloadします。初回download後は、`~/.cache/huggingface/datasets/` のcacheから読み込まれます。
 
-### Step 3: Stream large datasets
+### ステップ3: 大きなdatasetをstreamする
 
-Some datasets are too large to fit on disk. Streaming loads them row by row without downloading the full thing.
+diskに収まらないdatasetもあります。streamingでは、全体をdownloadせず、行ごとに読み込みます。
 
 ```python
 dataset = load_dataset("wikimedia/wikipedia", "20220301.en", split="train", streaming=True)
@@ -65,11 +65,11 @@ for i, example in enumerate(dataset):
         break
 ```
 
-Streaming gives you an `IterableDataset`. You process rows as they arrive. Memory usage stays constant regardless of dataset size.
+streamingは `IterableDataset` を返します。到着した行から処理します。dataset sizeに関係なく、memory usageは一定です。
 
-### Step 4: Dataset formats
+### ステップ4: dataset形式
 
-The `datasets` library uses Apache Arrow under the hood. You can convert to other formats depending on what your pipeline needs.
+`datasets` ライブラリは内部でApache Arrowを使います。pipelineの必要に応じて、他の形式へ変換できます。
 
 ```python
 dataset = load_dataset("imdb", split="train")
@@ -79,26 +79,26 @@ dataset.to_json("imdb_train.json")
 dataset.to_parquet("imdb_train.parquet")
 ```
 
-Format comparison:
+形式の比較:
 
-| Format | Size | Read Speed | Best For |
+| 形式 | サイズ | 読み込み速度 | 向いている用途 |
 |--------|------|-----------|----------|
-| CSV | Large | Slow | Human readability, spreadsheets |
-| JSON | Large | Slow | APIs, nested data |
-| Parquet | Small | Fast | Analytics, columnar queries |
-| Arrow | Small | Fastest | In-memory processing (what `datasets` uses internally) |
+| CSV | 大きい | 遅い | 人間が読む、spreadsheet |
+| JSON | 大きい | 遅い | API、nested data |
+| Parquet | 小さい | 速い | 分析、columnar query |
+| Arrow | 小さい | 最速 | in-memory processing（`datasets` が内部で使うもの） |
 
-For AI work, Parquet is the best storage format. Arrow is what you work with in memory. CSV and JSON are for interchange.
+AI作業では、Parquetが最適な保存形式です。memory内で扱う形式はArrowです。CSVとJSONは交換用です。
 
-### Step 5: Data splits
+### ステップ5: Data split
 
-Every ML project needs three splits:
+すべてのMLプロジェクトには3つのsplitが必要です。
 
-- **Train**: The model learns from this (typically 80%)
-- **Validation**: You check progress during training (typically 10%)
-- **Test**: Final evaluation after training is done (typically 10%)
+- **Train**: modelがここから学習する（通常80%）
+- **Validation**: training中に進捗を確認する（通常10%）
+- **Test**: training完了後の最終評価（通常10%）
 
-Some datasets come pre-split. When they don't, split them yourself:
+最初からsplit済みのdatasetもあります。そうでない場合は自分で分割します。
 
 ```python
 dataset = load_dataset("imdb", split="train")
@@ -113,11 +113,11 @@ test_ds = split["test"]
 print(f"Train: {len(train_ds)}, Val: {len(val_ds)}, Test: {len(test_ds)}")
 ```
 
-Always set a seed for reproducibility. The same seed produces the same split every time.
+再現性のため、必ずseedを設定します。同じseedなら毎回同じsplitが生成されます。
 
-### Step 6: Download and cache models
+### ステップ6: modelをdownloadしてcacheする
 
-Models are large files. The `huggingface_hub` library handles downloading and caching.
+modelは大きなfileです。`huggingface_hub` ライブラリがdownloadとcacheを扱います。
 
 ```python
 from huggingface_hub import hf_hub_download, snapshot_download
@@ -132,13 +132,13 @@ model_dir = snapshot_download("sentence-transformers/all-MiniLM-L6-v2")
 print(f"Full model at: {model_dir}")
 ```
 
-Models cache to `~/.cache/huggingface/hub/`. Once downloaded, they load instantly on subsequent runs.
+modelは `~/.cache/huggingface/hub/` にcacheされます。一度downloadすれば、次回以降は即座に読み込めます。
 
-### Step 7: Handle large files
+### ステップ7: 大きなfileを扱う
 
-Model weights and large datasets should not go into git. Three options:
+model weightや大きなdatasetはgitに入れるべきではありません。選択肢は3つです。
 
-**Option A: .gitignore (simplest)**
+**選択肢A: .gitignore（最も単純）**
 
 ```
 *.bin
@@ -150,7 +150,7 @@ data/*.csv
 models/
 ```
 
-**Option B: Git LFS (track large files in git)**
+**選択肢B: Git LFS（大きなfileをgitで追跡する）**
 
 ```bash
 git lfs install
@@ -159,9 +159,9 @@ git lfs track "*.safetensors"
 git add .gitattributes
 ```
 
-Git LFS stores pointers in your repo and the actual files on a separate server. GitHub gives you 1 GB free.
+Git LFSはrepo内にpointerを置き、実際のfileは別serverに保存します。GitHubでは1GBまで無料です。
 
-**Option C: DVC (data version control)**
+**選択肢C: DVC（data version control）**
 
 ```bash
 pip install dvc
@@ -171,21 +171,21 @@ git add data/training_set.parquet.dvc data/.gitignore
 git commit -m "Track training data with DVC"
 ```
 
-DVC creates small `.dvc` files that point to your data. The data itself lives in S3, GCS, or another remote storage backend.
+DVCはdataを指す小さな `.dvc` fileを作ります。data本体はS3、GCS、または別のremote storage backendに置きます。
 
-| Approach | Complexity | Best For |
+| 方法 | 複雑さ | 向いている用途 |
 |----------|-----------|----------|
-| .gitignore | Low | Personal projects, downloaded data you can re-fetch |
-| Git LFS | Medium | Teams sharing model weights via git |
-| DVC | High | Reproducible experiments, large datasets, teams |
+| .gitignore | 低 | 個人project、再取得できるdownload済みdata |
+| Git LFS | 中 | git経由でmodel weightを共有するteam |
+| DVC | 高 | 再現可能な実験、大規模dataset、team |
 
-For this course, `.gitignore` is enough. Use DVC when you need to reproduce exact experiments across machines.
+このコースでは `.gitignore` で十分です。machine間で正確な実験を再現する必要がある場合はDVCを使ってください。
 
-### Step 8: Storage patterns
+### ステップ8: Storage pattern
 
-**Local storage** works for datasets under ~10 GB. The HF cache handles this automatically.
+**Local storage** は約10GB未満のdatasetに向いています。HF cacheが自動的に扱います。
 
-**Cloud storage** is for anything larger or shared across machines:
+**Cloud storage** は、それより大きいものやmachine間で共有するものに使います。
 
 ```python
 import os
@@ -196,59 +196,59 @@ local_path = os.path.expanduser("~/.cache/huggingface/datasets/")
 # gcs_path = "gs://my-bucket/datasets/"
 ```
 
-DVC integrates with S3 and GCS directly:
+DVCはS3やGCSと直接統合します。
 
 ```bash
 dvc remote add -d myremote s3://my-bucket/dvc-store
 dvc push
 ```
 
-For this course, local storage is sufficient. Cloud storage becomes relevant when you fine-tune on remote GPU instances.
+このコースではlocal storageで十分です。cloud storageはremote GPU instanceでfine-tuningする時に重要になります。
 
-## Datasets Used in This Course
+## このコースで使うDataset
 
-| Dataset | Lessons | Size | What It Teaches |
+| Dataset | レッスン | サイズ | 学ぶこと |
 |---------|---------|------|----------------|
-| IMDB | Tokenization, classification | 84 MB | Text classification basics |
-| WikiText | Language modeling | 181 MB | Next-token prediction |
-| SQuAD | QA systems | 35 MB | Question answering, spans |
-| Common Crawl (subset) | Embeddings | Varies | Large-scale text processing |
-| MNIST | Vision basics | 21 MB | Image classification fundamentals |
-| COCO (subset) | Multimodal | Varies | Image-text pairs |
+| IMDB | Tokenization、classification | 84 MB | text classificationの基本 |
+| WikiText | Language modeling | 181 MB | next-token prediction |
+| SQuAD | QA systems | 35 MB | question answering、span |
+| Common Crawl（subset） | Embeddings | 変動 | 大規模text processing |
+| MNIST | Vision basics | 21 MB | image classificationの基礎 |
+| COCO（subset） | Multimodal | 変動 | image-text pair |
 
-You do not need to download all of these now. Each lesson specifies what it needs.
+今すぐすべてをdownloadする必要はありません。各レッスンが必要なものを指定します。
 
-## Use It
+## 使ってみる
 
-Run the utility script to verify everything works:
+utility scriptを実行して、すべて動くことを確認します。
 
 ```bash
 python code/data_utils.py
 ```
 
-This downloads a small dataset, converts it, splits it, and prints a summary.
+これは小さなdatasetをdownloadし、変換し、分割し、summaryを出力します。
 
-## Ship It
+## 形にして届ける
 
-This lesson produces:
-- `code/data_utils.py` - reusable data loading and caching utility
-- `outputs/prompt-data-helper.md` - prompt for finding the right dataset for a task
+このレッスンで作るもの:
+- `code/data_utils.py` - 再利用可能なdata loading/cache utility
+- `outputs/prompt-data-helper.md` - taskに適したdatasetを見つけるためのprompt
 
-## Exercises
+## 演習
 
-1. Load the `glue` dataset with the `mrpc` config and inspect the first 5 examples
-2. Stream the `c4` dataset and count how many examples you can process in 10 seconds
-3. Convert a dataset to Parquet and compare the file size to CSV
-4. Create a 70/15/15 train/val/test split with a fixed seed and verify the sizes
+1. `mrpc` configで `glue` datasetを読み込み、最初の5例を確認する
+2. `c4` datasetをstreamし、10秒で何例処理できるか数える
+3. datasetをParquetへ変換し、CSVとのfile sizeを比較する
+4. 固定seedで70/15/15のtrain/val/test splitを作成し、sizeを検証する
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Dataset split | "Training data" | A named subset (train/val/test) used at different stages of the ML lifecycle |
-| Streaming | "Load it lazily" | Processing data row by row from a remote source without downloading the full dataset |
-| Parquet | "Compressed CSV" | A columnar file format optimized for analytical queries and storage efficiency |
-| Arrow | "Fast dataframe" | An in-memory columnar format used internally by the datasets library for zero-copy reads |
-| Git LFS | "Git for big files" | An extension that stores large files outside the git repo while keeping pointers in version control |
-| DVC | "Git for data" | A version control system for datasets and models that integrates with cloud storage |
-| Cache | "Already downloaded" | A local copy of previously fetched data, stored at ~/.cache/huggingface/ by default |
+| Dataset split | 「training data」 | ML lifecycleの異なる段階で使われる名前付きsubset（train/val/test） |
+| Streaming | 「lazyに読み込む」 | dataset全体をdownloadせず、remote sourceから行ごとにdataを処理すること |
+| Parquet | 「圧縮CSV」 | analytical queryとstorage efficiencyに最適化されたcolumnar file format |
+| Arrow | 「高速dataframe」 | zero-copy readのためにdatasets libraryが内部で使うin-memory columnar format |
+| Git LFS | 「大きなfile用Git」 | version control内にpointerを残しつつ、大きなfileをgit repo外に保存する拡張 |
+| DVC | 「data用Git」 | cloud storageと統合する、datasetとmodelのversion control system |
+| Cache | 「download済み」 | 以前取得したdataのlocal copy。既定では ~/.cache/huggingface/ に保存される |

@@ -1,33 +1,33 @@
 # Voice Agents: Pipecat and LiveKit
 
-> Voice agents are a first-class production category in 2026. Pipecat gives you a Python frame-based pipeline (VAD → STT → LLM → TTS → transport). LiveKit Agents bridges AI models to users over WebRTC. Production latency targets land at 450–600ms end-to-end for premium stacks.
+> Voice agentは2026年のfirst-class production categoryです。PipecatはPythonのframe-based pipeline (VAD → STT → LLM → TTS → transport) を提供します。LiveKit AgentsはAI modelとuserをWebRTCでつなぎます。premium stackのproduction latency targetはend-to-endで450–600msです。
 
-**Type:** Learn
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
+**所要時間:** 約60分
 
 ## Learning Objectives
 
-- Describe Pipecat's frame-based pipeline: DOWNSTREAM (source→sink) and UPSTREAM (control).
-- Name the canonical voice pipeline stages and which transports Pipecat supports.
-- Explain LiveKit Agents' two voice agent classes (MultimodalAgent, VoicePipelineAgent) and when each fits.
-- Summarize 2026 production latency expectations and how they drive architecture choices.
+- Pipecatのframe-based pipelineを説明する: DOWNSTREAM (source→sink) とUPSTREAM (control)。
+- canonical voice pipeline stagesと、Pipecatがsupportするtransportを挙げる。
+- LiveKit Agentsの2つのvoice agent class (MultimodalAgent、VoicePipelineAgent) と、それぞれが合う場面を説明する。
+- 2026年のproduction latency expectationと、それがarchitecture choiceをどう動かすかを要約する。
 
-## The Problem
+## 問題
 
-Voice agents are not a text loop with TTS bolted on. Latency budgets are brutal (~600ms), partial audio is the default, turn detection is a model, and transports range from telephony SIP to WebRTC. Either you build a frame-based pipeline (Pipecat) or you lean on a platform (LiveKit).
+Voice agentは、text loopにTTSを後付けしたものではありません。latency budgetは厳しく (約600ms)、partial audioがdefaultで、turn detectionはmodelであり、transportはtelephony SIPからWebRTCまで広がります。frame-based pipeline (Pipecat) を構築するか、platform (LiveKit) に寄せるかのどちらかです。
 
 ## The Concept
 
 ### Pipecat (pipecat-ai/pipecat)
 
-- Python frame-based pipeline framework.
-- `Frame` → `FrameProcessor` chain.
-- Two flow directions:
-  - **DOWNSTREAM** — source → sink (audio in, TTS out).
-  - **UPSTREAM** — feedback and control (cancellation, metrics, barge-in).
-- `PipelineTask` manages lifecycle with events (`on_pipeline_started`, `on_pipeline_finished`, `on_idle_timeout`) and observers for metrics/tracing/RTVI.
+- Python frame-based pipeline framework。
+- `Frame` → `FrameProcessor` chain。
+- 2つのflow direction:
+  - **DOWNSTREAM** — source → sink (audio in、TTS out)。
+  - **UPSTREAM** — feedbackとcontrol (cancellation、metrics、barge-in)。
+- `PipelineTask`はevents (`on_pipeline_started`, `on_pipeline_finished`, `on_idle_timeout`) とmetrics/tracing/RTVI向けobserverでlifecycleを管理します。
 
 Typical pipeline:
 
@@ -35,32 +35,32 @@ Typical pipeline:
 VAD (Silero) → STT → LLM (context alternates user/assistant) → TTS → transport
 ```
 
-Transports: Daily, LiveKit, SmallWebRTCTransport, FastAPI WebSocket, WhatsApp.
+Transports: Daily、LiveKit、SmallWebRTCTransport、FastAPI WebSocket、WhatsApp。
 
-Pipecat Flows adds structured conversations (state machines). Pipecat Cloud is the managed runtime.
+Pipecat Flowsはstructured conversations (state machines) を追加します。Pipecat Cloudはmanaged runtimeです。
 
 ### LiveKit Agents (livekit/agents)
 
-- Bridges AI models to users over WebRTC.
-- Key concepts: `Agent`, `AgentSession`, `entrypoint`, `AgentServer`.
-- Two voice agent classes:
-  - **MultimodalAgent** — direct audio via OpenAI Realtime or equivalent.
-  - **VoicePipelineAgent** — STT → LLM → TTS cascade; gives text-level control.
-- Semantic turn detection via a transformer model.
-- Native MCP integration.
-- Telephony via SIP.
-- 50+ models with no API keys via LiveKit Inference; 200+ more via plugins.
+- AI modelとuserをWebRTCでbridgeします。
+- Key concepts: `Agent`、`AgentSession`、`entrypoint`、`AgentServer`。
+- 2つのvoice agent class:
+  - **MultimodalAgent** — OpenAI Realtimeまたは同等の仕組みによるdirect audio。
+  - **VoicePipelineAgent** — STT → LLM → TTS cascade。text-level controlを提供する。
+- transformer modelによるsemantic turn detection。
+- Native MCP integration。
+- SIPによるtelephony。
+- LiveKit Inference経由でAPI keyなしの50+ models、plugin経由でさらに200+。
 
 ### Commercial platforms
 
-Vapi (~450–600ms on an optimized premium stack) and Retell (~600ms end-to-end across 180 test calls) build on top of these. Pick a platform when you want a managed voice stack without a WebRTC team.
+Vapi (optimized premium stackで約450–600ms) とRetell (180 test callsで約600ms end-to-end) は、これらの上に構築されています。WebRTC teamなしでmanaged voice stackが欲しい場合はplatformを選びます。
 
 ### Where this pattern goes wrong
 
-- **No barge-in handling.** User interrupts; agent keeps talking. Requires UPSTREAM cancel frames in Pipecat, equivalent in LiveKit.
-- **STT confidence ignored.** Low-confidence transcripts fed to the LLM as if gospel. Gate on confidence or request confirmation.
-- **TTS mid-sentence cutoff.** When the pipeline cancels mid-utterance, TTS needs to know or cut audio.
-- **Latency budget ignored.** Every component adds 50–200ms. Sum your chain before shipping.
+- **No barge-in handling。** userがinterruptしてもagentが話し続ける。PipecatではUPSTREAM cancel frames、LiveKitでは同等の仕組みが必要です。
+- **STT confidence ignored。** low-confidence transcriptを真実のようにLLMへ渡す。confidenceでgateするか、confirmationを求めます。
+- **TTS mid-sentence cutoff。** pipelineがutterance途中でcancelされたとき、TTSはそれを知るかaudioをcutする必要があります。
+- **Latency budget ignored。** すべてのcomponentが50–200msを追加します。ship前にchain全体を合計してください。
 
 ### Typical 2026 latencies
 
@@ -70,58 +70,58 @@ Vapi (~450–600ms on an optimized premium stack) and Retell (~600ms end-to-end 
 - TTS first audio: 100–200ms
 - Transport RTT: 30–80ms
 
-End-to-end 450–600ms is premium. 800–1200ms is common. Anything > 1500ms feels broken.
+End-to-end 450–600msはpremiumです。800–1200msは一般的です。1500msを超えると壊れているように感じられます。
 
-## Build It
+## 実装
 
-`code/main.py` is a frame-based toy pipeline with:
+`code/main.py`はframe-based toy pipelineです。
 
-- `Frame` types (audio, transcript, text, tts_audio, control).
-- `Processor` interface with `process(frame)`.
-- A five-stage pipeline (VAD → STT → LLM → TTS → transport) as scripted processors.
-- An UPSTREAM cancel frame to demonstrate barge-in.
+- `Frame` types (audio、transcript、text、tts_audio、control)。
+- `process(frame)`を持つ`Processor` interface。
+- scripted processorsとしての5-stage pipeline (VAD → STT → LLM → TTS → transport)。
+- barge-inを示すUPSTREAM cancel frame。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-The trace shows normal flow and a barge-in cancel that stops TTS mid-utterance.
+traceはnormal flowと、TTSをutterance途中で止めるbarge-in cancelを示します。
 
 ## Use It
 
-- **Pipecat** for full control — custom processors, Python-first, pluggable providers.
-- **LiveKit Agents** for WebRTC-first deployments and telephony.
-- **Vapi / Retell** for hosted voice agents without a WebRTC team.
-- **OpenAI Realtime / Gemini Live** for direct audio-in/audio-out (MultimodalAgent).
+- **Pipecat** はfull control向け。custom processors、Python-first、pluggable providers。
+- **LiveKit Agents** はWebRTC-first deploymentとtelephony向け。
+- **Vapi / Retell** はWebRTC teamなしのhosted voice agents向け。
+- **OpenAI Realtime / Gemini Live** はdirect audio-in/audio-out (MultimodalAgent) 向け。
 
 ## Ship It
 
-`outputs/skill-voice-pipeline.md` scaffolds a Pipecat-shaped voice pipeline with VAD + STT + LLM + TTS + transport plus barge-in handling.
+`outputs/skill-voice-pipeline.md`は、VAD + STT + LLM + TTS + transportにbarge-in handlingを加えたPipecat-shaped voice pipelineをscaffoldします。
 
 ## Exercises
 
-1. Add a metrics observer to your toy pipeline: count frames per stage per second. Where does latency accumulate?
-2. Implement confidence-gated STT: below threshold, request "could you repeat that?"
-3. Add semantic turn detection: simple rule — if transcript ends with "?", end of turn.
-4. Read Pipecat's transport docs. Swap the stdlib transport for the SmallWebRTCTransport config (stub).
-5. Measure an OpenAI Realtime vs STT+LLM+TTS cascade on the same query. What latency cost does text-level control carry?
+1. toy pipelineにmetrics observerを追加する。stageごとに1秒あたりのframe数をcountする。latencyはどこに蓄積するか。
+2. confidence-gated STTを実装する。threshold未満なら"could you repeat that?"をrequestする。
+3. semantic turn detectionを追加する。simple rule: transcriptが"?"で終わるならturn終了。
+4. Pipecatのtransport docsを読む。stdlib transportをSmallWebRTCTransport config (stub) に差し替える。
+5. 同じqueryでOpenAI RealtimeとSTT+LLM+TTS cascadeを測定する。text-level controlにはどのlatency costがあるか。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Frame | "Event" | Typed unit of data in the pipeline (audio, transcript, text, control) |
-| Processor | "Pipeline stage" | Handler with process(frame) |
-| DOWNSTREAM | "Forward flow" | Source to sink: audio in, speech out |
-| UPSTREAM | "Feedback flow" | Control: cancel, metrics, barge-in |
-| VAD | "Voice activity detection" | Detects when user is speaking |
-| Semantic turn detection | "Smart end-of-turn" | Model-based decision that the user is done |
-| MultimodalAgent | "Direct audio agent" | Audio in, audio out; no text in the middle |
-| VoicePipelineAgent | "Cascade agent" | STT + LLM + TTS; text-level control |
+| Term | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Frame | "Event" | pipeline内のtyped data unit (audio、transcript、text、control) |
+| Processor | "Pipeline stage" | process(frame)を持つhandler |
+| DOWNSTREAM | "Forward flow" | sourceからsinkへ。audio in、speech out |
+| UPSTREAM | "Feedback flow" | control: cancel、metrics、barge-in |
+| VAD | "Voice activity detection" | userが話しているタイミングをdetectする |
+| Semantic turn detection | "Smart end-of-turn" | userが話し終えたかをmodel-basedに判定する |
+| MultimodalAgent | "Direct audio agent" | audio in、audio out。途中にtextを挟まない |
+| VoicePipelineAgent | "Cascade agent" | STT + LLM + TTS。text-level control |
 
-## Further Reading
+## 参考文献
 
 - [Pipecat docs](https://docs.pipecat.ai/getting-started/introduction) — frame-based pipeline, processors, transports
 - [LiveKit Agents docs](https://docs.livekit.io/agents/) — WebRTC + voice primitives

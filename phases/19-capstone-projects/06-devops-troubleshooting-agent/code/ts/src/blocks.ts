@@ -14,8 +14,8 @@ export function buildSlackResponse(report: AgentReport): SlackResponse {
         type: "mrkdwn",
         text:
           `*#${h.rank}.* ${h.summary}\n` +
-          `Evidence:\n- ${h.evidence.join("\n- ")}\n` +
-          `_Remediation:_ ${h.remediation}`,
+          `根拠:\n- ${h.evidence.join("\n- ")}\n` +
+          `_対応:_ ${h.remediation}`,
       },
     });
   }
@@ -24,20 +24,20 @@ export function buildSlackResponse(report: AgentReport): SlackResponse {
     elements: [
       {
         type: "button",
-        text: { type: "plain_text", text: "Approve top remediation" },
+        text: { type: "plain_text", text: "最上位 remediation を approve" },
         style: "primary",
         action_id: "approve",
         value: report.incidentId,
       },
       {
         type: "button",
-        text: { type: "plain_text", text: "Escalate" },
+        text: { type: "plain_text", text: "エスカレート" },
         action_id: "escalate",
         value: report.incidentId,
       },
       {
         type: "button",
-        text: { type: "plain_text", text: "Ignore" },
+        text: { type: "plain_text", text: "無視" },
         style: "danger",
         action_id: "ignore",
         value: report.incidentId,
@@ -50,11 +50,11 @@ export function buildSlackResponse(report: AgentReport): SlackResponse {
 export function actionReply(actionId: string, incidentId: string): SlackResponse {
   let text: string;
   if (actionId === "approve") {
-    text = `Approved remediation for ${incidentId}. Calling gated MCP server (mocked).`;
+    text = `${incidentId} の remediation を approve しました。gated MCP server を呼び出します (mock)。`;
   } else if (actionId === "escalate") {
-    text = `Escalated ${incidentId} to on-call.`;
+    text = `${incidentId} を on-call に escalate しました。`;
   } else {
-    text = `Ignored ${incidentId}.`;
+    text = `${incidentId} を ignore しました。`;
   }
   return { response_type: "in_channel", replace_original: false, text };
 }

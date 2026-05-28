@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,48 +10,48 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .content { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="440" y="26" text-anchor="middle" class="title">Three detectors, three failure classes</text>
+  <text x="440" y="26" text-anchor="middle" class="title">3つの検知器、3つの失敗クラス</text>
 
   <rect x="40" y="50" width="800" height="460" class="box"/>
 
-  <!-- Agent -->
+  <!-- エージェント -->
   <rect x="330" y="80" width="220" height="80" class="cool"/>
   <text x="440" y="104" text-anchor="middle" class="label">agent</text>
-  <text x="346" y="128" class="small">reads, reasons, acts</text>
-  <text x="346" y="144" class="small">cannot touch tripwires</text>
+  <text x="346" y="128" class="small">読み、推論し、行動する</text>
+  <text x="346" y="144" class="small">トリップワイヤには触れない</text>
 
   <!-- Kill switch -->
   <rect x="60" y="200" width="220" height="120" class="hot"/>
-  <text x="170" y="222" text-anchor="middle" class="label">kill switch</text>
-  <text x="76" y="244" class="small">external boolean</text>
-  <text x="76" y="260" class="small">• feature flag / Redis / signed cfg</text>
-  <text x="76" y="276" class="small">• checked every action, not boot</text>
-  <text x="76" y="292" class="small">• agent cannot set OFF</text>
-  <text x="76" y="308" class="small">• re-enable = explicit human</text>
+  <text x="170" y="222" text-anchor="middle" class="label">キルスイッチ</text>
+  <text x="76" y="244" class="small">外部ブール値</text>
+  <text x="76" y="260" class="small">• 機能フラグ / Redis / signed cfg</text>
+  <text x="76" y="276" class="small">• 起動時でなく毎アクションで確認</text>
+  <text x="76" y="292" class="small">• エージェントはOFFにできない</text>
+  <text x="76" y="308" class="small">• 再有効化 = 明示的人間</text>
 
   <!-- Circuit breaker -->
   <rect x="330" y="200" width="220" height="120" class="warn"/>
-  <text x="440" y="222" text-anchor="middle" class="label">circuit breaker</text>
-  <text x="346" y="244" class="small">pattern-specific pause</text>
-  <text x="346" y="260" class="small">• 5 identical tool calls</text>
-  <text x="346" y="276" class="small">• N consecutive failures</text>
-  <text x="346" y="292" class="small">• rate above threshold</text>
-  <text x="346" y="308" class="small">• closed / open / half-open</text>
+  <text x="440" y="222" text-anchor="middle" class="label">サーキットブレーカ</text>
+  <text x="346" y="244" class="small">パターン別の一時停止</text>
+  <text x="346" y="260" class="small">• 同一ツール呼出しが5回</text>
+  <text x="346" y="276" class="small">• N回連続失敗</text>
+  <text x="346" y="292" class="small">• レートがしきい値超え</text>
+  <text x="346" y="308" class="small">• 閉 / 開 / 半開</text>
 
   <!-- Canary -->
   <rect x="600" y="200" width="220" height="120" class="cold"/>
-  <text x="710" y="222" text-anchor="middle" class="label">canary token</text>
-  <text x="616" y="244" class="small">bait with no legitimate use</text>
-  <text x="616" y="260" class="small">• fake AWS_SECRET_ACCESS_KEY</text>
-  <text x="616" y="276" class="small">• fake DB record sentinel</text>
-  <text x="616" y="292" class="small">• fake file in workspace</text>
-  <text x="616" y="308" class="small">• fake memory entry</text>
+  <text x="710" y="222" text-anchor="middle" class="label">カナリアトークン</text>
+  <text x="616" y="244" class="small">正当用途のない囮</text>
+  <text x="616" y="260" class="small">• 偽AWS_SECRET_ACCESS_KEY</text>
+  <text x="616" y="276" class="small">• 偽DBレコード番兵</text>
+  <text x="616" y="292" class="small">• ワークスペース内の偽ファイル</text>
+  <text x="616" y="308" class="small">• 偽メモリエントリ</text>
 
   <path d="M390 160 L250 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <path d="M440 160 L440 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -59,12 +59,12 @@
 
   <!-- Catches vs misses -->
   <rect x="60" y="350" width="760" height="76" class="cool"/>
-  <text x="440" y="374" text-anchor="middle" class="label">what each catches</text>
-  <text x="80" y="394" class="content">kill: operator decision  ·  breaker: repetitive / rate patterns  ·  canary: intent to touch off-limit resource</text>
-  <text x="80" y="412" class="content">Cilium/eBPF egress redirect (under 500ms) complements canaries: quarantined pod goes to forensic honeypot</text>
+  <text x="440" y="374" text-anchor="middle" class="label">それぞれが捕捉するもの</text>
+  <text x="80" y="394" class="content">kill: 運用者判断 · ブレーカ: 反復/レートパターン · canary: 禁止リソースへ触れる意図</text>
+  <text x="80" y="412" class="content">Cilium/eBPF egress redirect（500ms未満）はカナリアを補完。隔離Podをフォレンジック用ハニーポットへ送る</text>
 
   <!-- What nothing catches -->
   <rect x="60" y="430" width="760" height="60" class="hot"/>
-  <text x="440" y="454" text-anchor="middle" class="label">what no detector catches</text>
-  <text x="80" y="474" class="content">semantic composites: individual actions pass every detector; composition is the attack (see Lesson 10)</text>
+  <text x="440" y="454" text-anchor="middle" class="label">どの検知器も捕捉しないもの</text>
+  <text x="80" y="474" class="content">意味的合成: 個別アクションは全検知器を通る。合成そのものが攻撃（Lesson 10参照）</text>
 </svg>

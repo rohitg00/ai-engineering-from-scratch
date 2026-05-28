@@ -1,6 +1,6 @@
 ---
 name: skill-depth-to-pointcloud
-description: Build point clouds from depth maps with correct intrinsics handling and export to .ply
+description: 正しい intrinsics handling と .ply export を使って depth maps から point clouds を構築する
 version: 1.0.0
 phase: 4
 lesson: 26
@@ -9,30 +9,30 @@ tags: [depth, point-cloud, 3d, intrinsics]
 
 # Depth to Point Cloud
 
-Turn a depth map plus a colour image into a textured point cloud, exportable for visualisation or further 3D work.
+depth map と colour image を textured point cloud に変換し、visualisation や追加の 3D work のために export できるようにする。
 
-## When to use
+## 使用する場面
 
-- Visualising depth predictions as an actual 3D scene.
-- Bootstrapping a sparse 3D reconstruction from a single image.
-- Producing input for 3DGS training when SfM fails.
-- Comparing predicted depth against LiDAR ground truth.
+- depth predictions を実際の 3D scene として visualise するとき。
+- single image から sparse 3D reconstruction を bootstrapping するとき。
+- SfM が失敗する場合に 3DGS training 用 input を作るとき。
+- predicted depth を LiDAR ground truth と比較するとき。
 
-## Inputs
+## 入力
 
-- `depth`: `(H, W)` numpy array of depths in the same units you want in the output (metres recommended).
-- `rgb`: `(H, W, 3)` numpy array of colours (uint8 or float32 [0, 1]).
-- `intrinsics`: `(fx, fy, cx, cy)` in pixel units.
-- Optional `depth_scale`: multiplier to convert predicted depth units to metres.
+- `depth`: output で使いたい単位の depths を持つ `(H, W)` numpy array (metres 推奨)。
+- `rgb`: colours を持つ `(H, W, 3)` numpy array (uint8 または float32 [0, 1])。
+- `intrinsics`: pixel units の `(fx, fy, cx, cy)`。
+- Optional `depth_scale`: predicted depth units を metres に変換する multiplier。
 
-## Pipeline
+## pipeline
 
-1. **Validate** — depth must be positive and finite everywhere you plan to include. Mask out invalid pixels.
-2. **Lift** — `X = (u - cx) * d / fx`, `Y = (v - cy) * d / fy`, `Z = d` per pixel.
-3. **Pair** with RGB — each 3D point gets an `(r, g, b)` triple from the matching pixel.
-4. **Export** — PLY (portable), `.xyz` (lightweight), `.pcd` (Open3D-native), `.las`/`.laz` (geospatial).
+1. **Validate** — include する予定の場所では depth が positive かつ finite でなければならない。invalid pixels を mask out する。
+2. **Lift** — pixel ごとに `X = (u - cx) * d / fx`、`Y = (v - cy) * d / fy`、`Z = d`。
+3. **Pair** with RGB — 各 3D point は対応する pixel から `(r, g, b)` triple を受け取る。
+4. **Export** — PLY (portable)、`.xyz` (lightweight)、`.pcd` (Open3D-native)、`.las`/`.laz` (geospatial)。
 
-## Implementation template
+## implementation template
 
 ```python
 import numpy as np
@@ -75,7 +75,7 @@ def write_ply(path, points, colors=None, valid_mask=None):
                 f.write(f"{pt[0]:.4f} {pt[1]:.4f} {pt[2]:.4f}\n")
 ```
 
-## Report
+## report
 
 ```
 [export]
@@ -86,10 +86,10 @@ def write_ply(path, points, colors=None, valid_mask=None):
   scale:              metres | millimetres | normalised
 ```
 
-## Rules
+## ルール
 
-- Always mask invalid depth (zero, NaN, inf, saturated); including them produces a cloud of garbage points at the origin.
-- For prediction from a relative-depth model, do NOT export as metric; prefix output filename with `relative_` to signal the convention.
-- Keep the camera coordinate convention consistent (OpenCV: +X right, +Y down, +Z forward). Swap signs if the downstream tool expects OpenGL (+Y up).
-- For dense scenes (> 1M points), offer a subsample parameter; PLY files > 500 MB are awkward to load everywhere.
-- Never silently clip depth to produce "reasonable" output; clip explicitly with warned thresholds so users know what was discarded.
+- invalid depth (zero、NaN、inf、saturated) を必ず mask する。含めると origin 付近に garbage points の cloud ができる。
+- relative-depth model からの prediction では、metric として export しない。convention が分かるよう output filename に `relative_` prefix を付ける。
+- camera coordinate convention を一貫させる (OpenCV: +X right、+Y down、+Z forward)。downstream tool が OpenGL (+Y up) を想定する場合は sign を入れ替える。
+- dense scenes (> 1M points) では subsample parameter を用意する。500 MB を超える PLY files はどこでも扱いづらい。
+- 「reasonable」な output を作るために silently clip しない。discard された内容が user に分かるよう、warned thresholds で明示的に clip する。

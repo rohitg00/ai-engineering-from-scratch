@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "CLIP's contrastive loss is symmetric (image-to-text + text-to-image). Why both directions?",
-      "options": ["Numerical stability", "You want both queries to work at inference: text-to-image retrieval and image-to-text retrieval. Training only one direction makes the other direction's accuracy drop significantly", "Because loss must sum to zero", "Symmetry is required by PyTorch"],
+      "question": "CLIP の contrastive loss は symmetric (image-to-text + text-to-image) です。なぜ両方向が必要ですか？",
+      "options": ["Numerical stability のため", "inference で text-to-image retrieval と image-to-text retrieval の両方の queries を機能させたいから。片方向だけで学習すると、もう片方向の accuracy が大きく下がる", "loss はゼロに合計されなければならないから", "PyTorch が symmetry を要求するから"],
       "correct": 1,
-      "explanation": "The embedding space needs to be symmetric across modalities because downstream tasks query in both directions. Zero-shot classification is text-to-image (classify image given text prompts). Retrieval can go either way. Training with only i2t or only t2i leaves the other direction weak."
+      "explanation": "downstream tasks は両方向に query するため、embedding space は modalities 間で symmetric である必要があります。Zero-shot classification は text-to-image (text prompts を与えて image を分類) です。Retrieval はどちらの方向にもなり得ます。i2t だけ、または t2i だけで学習すると、もう一方が弱くなります。"
     },
     {
       "stage": "pre",
-      "question": "Zero-shot classification with CLIP works by... ?",
-      "options": ["Running a classifier head trained on ImageNet", "Encoding prompts like 'a photo of a dog' for each candidate class, encoding the test image, and taking argmax of cosine similarities between the image embedding and all class text embeddings", "Fine-tuning the image encoder on the class", "Searching a database of labelled examples"],
+      "question": "CLIP による zero-shot classification はどのように機能しますか？",
+      "options": ["ImageNet で学習した classifier head を実行する", "各 candidate class について 'a photo of a dog' のような prompts を encode し、test image を encode し、image embedding とすべての class text embeddings の cosine similarities の argmax を取る", "class に対して image encoder を fine-tune する", "labelled examples の database を検索する"],
       "correct": 1,
-      "explanation": "Zero-shot means no task-specific training: the model's representations already let you compare images to arbitrary text descriptions. Write one prompt per class, encode all prompts and the test image, cosine similarity, argmax. The only 'trick' is prompt engineering — using multiple templates per class and averaging their embeddings gains 1-3 top-1 on ImageNet."
+      "explanation": "Zero-shot とは task-specific training がないという意味です。model の representations は、images と任意の text descriptions をすでに比較できます。class ごとに prompt を1つ書き、すべての prompts と test image を encode し、cosine similarity を計算して argmax を取ります。唯一の「工夫」は prompt engineering です。class ごとに複数 templates を使い embeddings を平均すると、ImageNet で top-1 が 1-3 上がります。"
     },
     {
       "stage": "post",
-      "question": "SigLIP replaces CLIP's softmax with a sigmoid loss per pair. What benefit does that give?",
-      "options": ["Faster GPU kernels", "The sigmoid loss is per-pair, so it does not depend on the batch as a normalisation denominator. SigLIP trains well at smaller batch sizes where CLIP's softmax loss starves for negatives", "Lower memory use", "Better accuracy on COCO only"],
+      "question": "SigLIP は CLIP の softmax を per-pair sigmoid loss に置き換えます。どのような利点がありますか？",
+      "options": ["GPU kernels が速くなる", "sigmoid loss は per-pair なので、normalisation denominator として batch に依存しない。CLIP の softmax loss が negatives 不足になる小さな batch sizes でも SigLIP はよく学習する", "memory use が下がる", "COCO だけで accuracy が上がる"],
       "correct": 1,
-      "explanation": "CLIP's symmetric cross-entropy is a softmax over the whole batch, so effective negatives = batch_size - 1. Small batches starve it. SigLIP is per-pair: each (image, caption) pair gets a binary decision (match or not). No batch-level normalisation, so SigLIP works at batch 128 while CLIP needs 8192. At equal scale SigLIP matches or beats CLIP."
+      "explanation": "CLIP の symmetric cross-entropy は batch 全体への softmax なので、effective negatives = batch_size - 1 です。小さな batches では不足します。SigLIP は per-pair で、各 (image, caption) pair が binary decision (match かどうか) を持ちます。batch-level normalisation がないため、CLIP が 8192 を必要とする場面でも SigLIP は batch 128 で機能します。同じ scale では SigLIP は CLIP に匹敵するか上回ります。"
     },
     {
       "stage": "post",
-      "question": "A practitioner reports 88% zero-shot top-1 on CIFAR-10 with CLIP ViT-B/32 and 90% with the same model using 80 prompt templates per class. Why does template averaging help?",
-      "options": ["It doubles the dataset", "Different templates activate different aspects of the text encoder's learned distribution; averaging smooths the class embedding over the manifold of plausible natural-language descriptions of the class, producing a more robust centroid", "It reduces variance in logit_scale", "80 is the magic number for CLIP"],
+      "question": "ある practitioner は CLIP ViT-B/32 で CIFAR-10 zero-shot top-1 が 88%、同じ model で class あたり 80 prompt templates を使うと 90% と報告しました。template averaging が役立つのはなぜですか？",
+      "options": ["dataset が2倍になるから", "異なる templates は text encoder が学習した distribution の異なる側面を活性化するから。平均すると、class embedding はその class の plausible natural-language descriptions の manifold 上で滑らかになり、より robust な centroid になる", "logit_scale の variance が下がるから", "80 は CLIP にとって magic number だから"],
       "correct": 1,
-      "explanation": "Each template is a different natural-language cue. 'a photo of a dog' emphasises one aspect; 'a blurry photo of a dog' another; 'a sketch of a dog' yet another. Averaging the text embeddings gives a smoother representation of the concept 'dog' that is less sensitive to individual-prompt quirks. The OpenAI CLIP paper published 80 templates that lift ImageNet zero-shot by ~2 points."
+      "explanation": "各 template は異なる natural-language cue です。'a photo of a dog' はある側面を強調し、'a blurry photo of a dog' は別の側面、'a sketch of a dog' はさらに別の側面を強調します。text embeddings を平均すると、個々の prompt の癖に敏感でない、concept 'dog' のより滑らかな表現になります。OpenAI CLIP paper は ImageNet zero-shot を約 2 points 上げる 80 templates を公開しました。"
     },
     {
       "stage": "post",
-      "question": "Why do modern VLMs (LLaVA, Qwen-VL, InternVL) use a CLIP-family vision encoder instead of a supervised ImageNet ResNet?",
-      "options": ["CLIP encoders are faster", "CLIP features are aligned with natural language, so the LLM can reason about them with less adaptation; supervised ImageNet features were never trained against captions and need heavy projection layers to bridge to text", "ResNets cannot see colour", "It is a licensing requirement"],
+      "question": "現代の VLMs (LLaVA, Qwen-VL, InternVL) が supervised ImageNet ResNet ではなく CLIP-family vision encoder を使うのはなぜですか？",
+      "options": ["CLIP encoders の方が速いから", "CLIP features は natural language と aligned しているため、LLM が少ない adaptation で推論できるから。supervised ImageNet features は captions に対して学習されておらず、text へ橋渡しするために重い projection layers が必要になる", "ResNets は色を見られないから", "licensing requirement だから"],
       "correct": 1,
-      "explanation": "A VLM bolts a vision encoder to a language model and trains a small projection. CLIP-style encoders were trained against text, so their outputs already live in a space the LLM can consume with a few linear layers of adaptation. Supervised ImageNet encoders have no notion of natural-language structure and require much larger bridging MLPs to work with an LLM. This is why every SOTA VLM uses a CLIP-family vision tower."
+      "explanation": "VLM は vision encoder を language model に接続し、小さな projection を学習します。CLIP-style encoders は text に対して学習されているため、その outputs は数個の linear layers による adaptation で LLM が消費しやすい space にすでにあります。supervised ImageNet encoders には natural-language structure の概念がなく、LLM と機能させるにははるかに大きな bridging MLPs が必要です。これが、すべての SOTA VLM が CLIP-family vision tower を使う理由です。"
     }
   ]
 }

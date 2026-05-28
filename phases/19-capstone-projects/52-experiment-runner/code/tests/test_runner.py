@@ -1,4 +1,4 @@
-"""Tests for ExperimentRunner: ok path, timeout, crash, ablation, determinism."""
+"""ExperimentRunner の tests: ok path、timeout、crash、ablation、determinism。"""
 
 from __future__ import annotations
 

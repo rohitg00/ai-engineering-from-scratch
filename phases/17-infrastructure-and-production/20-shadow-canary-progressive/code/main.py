@@ -1,7 +1,7 @@
 """Canary rollout simulator — stdlib Python.
 
-Progressively increases candidate traffic share and checks five gates at each
-step. Halts when any gate breaches. Supports injected regressions.
+candidate traffic share を段階的に増やし、各 step で5つの gate を確認する。
+どれかの gate が breach すると停止する。regression injection をサポートする。
 """
 
 from __future__ import annotations
@@ -73,9 +73,9 @@ def rollout(name: str, reg: Regression) -> None:
               f"thumbs_dn={metrics['thumbs_down_rate']*100:4.1f}%  "
               f"{status}")
         if breaches:
-            print(f"  → ROLLBACK (policy flip, pinned model reverted)")
+            print(f"  → ROLLBACK (policy flip、pinned model reverted)")
             return
-    print("  → PROMOTED to 100%")
+    print("  → 100% へ PROMOTED")
 
 
 def stage_seed(i: int) -> int:
@@ -84,15 +84,15 @@ def stage_seed(i: int) -> int:
 
 def main() -> None:
     print("=" * 95)
-    print("CANARY ROLLOUT — six stages, five gates, injected regressions")
+    print("CANARY ROLLOUT — 6 stages、5 gates、injected regressions")
     print("=" * 95)
 
-    rollout("Clean promotion", Regression())
-    rollout("Small cost regression (10%) — within gate", Regression(cost_mult=1.10))
-    rollout("Cost regression 25%", Regression(cost_mult=1.25))
-    rollout("Latency regression 80%", Regression(latency_mult=1.80))
-    rollout("Thumbs-down regression 60%", Regression(thumbs_down_mult=1.60))
-    rollout("Quality silent + cost creep", Regression(cost_mult=1.15, thumbs_down_mult=1.45))
+    rollout("クリーンな昇格", Regression())
+    rollout("小さなコスト退行 (10%) — gate 内", Regression(cost_mult=1.10))
+    rollout("コスト退行 25%", Regression(cost_mult=1.25))
+    rollout("レイテンシ退行 80%", Regression(latency_mult=1.80))
+    rollout("thumbs-down 退行 60%", Regression(thumbs_down_mult=1.60))
+    rollout("quality は静かに悪化 + cost creep", Regression(cost_mult=1.15, thumbs_down_mult=1.45))
 
 
 if __name__ == "__main__":

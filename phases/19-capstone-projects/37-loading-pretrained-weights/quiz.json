@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the loader need a name map?",
+      "question": "loader に name map が必要な理由は何ですか?",
       "options": [
-        "Pretrained tensors and local parameters share the same name",
-        "Published GPT-2 weights use names like wte, wpe, h.N.attn.c_attn; the local model uses tok_embed, pos_embed, blocks.N.attn.qkv; the loader translates one onto the other",
-        "Safetensors files are encrypted",
-        "Torch requires it"
+        "pretrained tensor と local parameter が同じ名前だから",
+        "公開 GPT-2 は wte/wpe/h.N.attn.c_attn などを使い、local model は tok_embed/pos_embed/blocks.N.attn.qkv などを使うため変換が必要",
+        "Safetensors files が暗号化されているため",
+        "Torch が要求するため"
       ],
       "correct": 1,
-      "explanation": "The two naming conventions are different histories; the map is a literal dict expanded per layer."
+      "explanation": "2つの naming convention が異なるため、layer ごとに展開した dict で対応付けます。"
     },
     {
       "stage": "check",
-      "question": "What is the conv1d transpose, and which tensors need it?",
+      "question": "conv1d transpose とは何で、どの tensors に必要ですか?",
       "options": [
-        "All weight tensors",
-        "Published GPT-2 stores c_attn, c_proj, and c_fc weights in tensorflow conv1d layout, which is the transpose of what nn.Linear.weight expects; the loader calls .t() on those during assignment",
-        "Only the embedding",
-        "Only the LayerNorm scales"
+        "全 weight tensors",
+        "公開 GPT-2 の c_attn, c_proj, c_fc weights は tensorflow conv1d layout で保存され、nn.Linear.weight が期待する向きの transpose なので assignment 時に .t() する",
+        "embedding だけ",
+        "LayerNorm scales だけ"
       ],
       "correct": 1,
-      "explanation": "Three suffixes need transposing; biases and LayerNorms are already shaped correctly."
+      "explanation": "transpose が必要なのは一部の suffix だけで、bias と LayerNorm はそのままです。"
     },
     {
       "stage": "check",
-      "question": "Why is the LM head not in the safetensors file?",
+      "question": "safetensors file に LM head がない理由は何ですか?",
       "options": [
-        "It is computed at runtime from logits",
-        "Weight tying: the LM head shares storage with the token embedding (wte), so loading wte and aliasing lm_head.weight = tok_embed.weight after the load reconstructs the head",
-        "It is too large",
-        "It is loaded from a separate file"
+        "runtime に logits から計算するため",
+        "weight tying により LM head は token embedding (wte) と storage を共有するため。wte を load し lm_head.weight = tok_embed.weight で alias すれば復元される",
+        "大きすぎるため",
+        "別 file から load するため"
       ],
       "correct": 1,
-      "explanation": "Setting lm_head.weight = tok_embed.weight after wte lands restores the alias; copying instead doubles the parameter count."
+      "explanation": "copy ではなく alias を戻すことで parameter count も増えません。"
     },
     {
       "stage": "check",
-      "question": "What does the loader do on a shape mismatch?",
+      "question": "shape mismatch 時に loader は何をしますか?",
       "options": [
-        "Pads the smaller tensor",
-        "Records the mismatch in LoadReport.shape_mismatch and refuses to assign, leaving the local parameter untouched",
-        "Crashes the process",
-        "Truncates the larger tensor"
+        "小さい tensor を padding する",
+        "LoadReport.shape_mismatch に記録し assignment を拒否して local parameter を untouched にする",
+        "process を crash させる",
+        "大きい tensor を truncate する"
       ],
       "correct": 1,
-      "explanation": "Half loaded models are silent failure machines; refusing to assign keeps the report honest."
+      "explanation": "半端に load された model は危険なので、report に残して代入しません。"
     },
     {
       "stage": "post",
-      "question": "Why is the demo's stub fixture not a real GPT-2 download?",
+      "question": "demo の stub fixture が本物の GPT-2 download ではない理由は何ですか?",
       "options": [
-        "Real files are not in safetensors format",
-        "The demo must run offline and quickly; the stub uses the exact pretrained naming convention so the loader code path is identical, and swapping in a real file changes nothing about the loader",
-        "Real weights are encrypted",
-        "Safetensors cannot store large tensors"
+        "本物は safetensors format ではないから",
+        "demo は offline かつ高速に走る必要があるため。stub は同じ pretrained naming convention を使うので loader code path は同じ",
+        "本物の weights は暗号化されているから",
+        "safetensors は large tensors を保存できないから"
       ],
       "correct": 1,
-      "explanation": "Same code path, smaller payload; the loader works on either."
+      "explanation": "小さい payload でも同じ code path を通ります。"
     },
     {
       "stage": "post",
-      "question": "Why generate a sample before and after the load?",
+      "question": "load 前後で sample を生成する理由は何ですか?",
       "options": [
-        "To measure inference speed",
-        "If the post-load samples are identical to the pre-load samples, the load did not change the model, which means the mapping silently missed every tensor",
-        "To warm up the GPU cache",
-        "To set the random seed"
+        "inference speed を測るため",
+        "post-load samples が pre-load と同じなら、load が model を変えておらず mapping が全 tensor を見逃した可能性があるため",
+        "GPU cache を warm up するため",
+        "random seed を設定するため"
       ],
       "correct": 1,
-      "explanation": "Sanity generation is the cheapest gate: a sample fingerprint that fails to change exposes a broken load that the LoadReport summary would not catch on its own."
+      "explanation": "sanity generation は load が実際に影響したかを見る安価な gate です。"
     }
   ]
 }

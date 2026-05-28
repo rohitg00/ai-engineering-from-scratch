@@ -1,13 +1,13 @@
-"""Speculative decoding server — draft/verify scheduler scaffold.
+"""Speculative decoding server — draft/verify scheduler scaffold。
 
-The hard architectural primitive is the draft/verify scheduler: a draft
-model proposes k candidate tokens; the target model verifies them in one
-batched pass; any accepted prefix is committed and the rejected suffix is
-resampled from the target. This scaffold implements the scheduler with
-synthetic token probabilities so the accept/reject logic and the throughput
-math are observable end to end.
+重要な architecture primitive は draft/verify scheduler である。Draft
+model が k 個の candidate token を提案し、target model が 1 回の batched
+pass でそれらを verify する。Accepted prefix は commit され、rejected
+suffix は target から resample される。この scaffold は synthetic token
+probability を使って scheduler を実装し、accept/reject logic と throughput
+math を end to end で観測できるようにする。
 
-Run:  python main.py
+実行:  python main.py
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from dataclasses import dataclass, field
 
 
 # ---------------------------------------------------------------------------
-# synthetic models  --  probability distributions over a tiny vocabulary
+# synthetic models  --  小さな vocabulary 上の probability distribution
 # ---------------------------------------------------------------------------
 
 VOCAB = list("abcdefghij")
@@ -41,7 +41,7 @@ def sample(dist: list[float], rng: random.Random) -> int:
 
 
 # ---------------------------------------------------------------------------
-# target  --  the expensive model we are trying to save calls to
+# target  --  call 数を節約したい高コスト model
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -54,20 +54,21 @@ class TargetModel:
 
     def verify(self, draft_tokens: list[int], ctx_seed: int,
                rng: random.Random) -> tuple[list[int], int]:
-        """Return (accepted_tokens, resampled_next). In one target call we can
-        verify draft_tokens in a batched pass: the target produces a prob per
-        position; we accept up to the first rejection."""
+        """(accepted_tokens, resampled_next) を返す。
+        1 回の target call で draft_tokens を batched pass として verify できる。
+        Target は position ごとに probability を出し、最初の rejection まで accept する。
+        """
         self.calls += 1
         self.tokens_verified += len(draft_tokens) + 1
         accepted: list[int] = []
         for pos, tok in enumerate(draft_tokens):
             dist = self.distribution(ctx_seed + pos)
-            # simple accept criterion: target prob on this token >= 0.5 * max prob
+            # 単純な accept criterion: この token の target prob >= 0.5 * max prob
             if dist[tok] >= 0.5 * max(dist):
                 accepted.append(tok)
             else:
                 break
-        # resample a next token from the target at the position after the accept
+        # accept 後の position で target から next token を resample する
         ctx = ctx_seed + len(accepted)
         dist = self.distribution(ctx)
         next_tok = sample(dist, rng)
@@ -75,13 +76,13 @@ class TargetModel:
 
 
 # ---------------------------------------------------------------------------
-# draft  --  a cheaper model that is mostly aligned with target
+# draft  --  target とおおむね aligned している低コスト model
 # ---------------------------------------------------------------------------
 
 @dataclass
 class DraftModel:
     calls: int = 0
-    alignment: float = 0.80     # probability that draft picks what target would
+    alignment: float = 0.80     # draft が target と同じ選択をする確率
 
     def propose(self, ctx_seed: int, k: int, rng: random.Random,
                 target: TargetModel) -> list[int]:
@@ -89,7 +90,7 @@ class DraftModel:
         draft_tokens: list[int] = []
         for pos in range(k):
             dist = target.distribution(ctx_seed + pos)
-            # with prob alignment, emit target's best; otherwise sample a neighbour
+            # alignment の確率で target の best を出し、それ以外では sample する
             if rng.random() < self.alignment:
                 draft_tokens.append(max(range(len(dist)), key=lambda i: dist[i]))
             else:
@@ -98,7 +99,7 @@ class DraftModel:
 
 
 # ---------------------------------------------------------------------------
-# decode scheduler  --  speculative loop + baseline greedy for comparison
+# decode scheduler  --  比較用の speculative loop + baseline greedy
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -153,12 +154,12 @@ def baseline_decode(n_tokens: int, rng: random.Random,
 
 
 # ---------------------------------------------------------------------------
-# sweep  --  compare speedup across k and draft alignment
+# sweep  --  k と draft alignment ごとの speedup を比較する
 # ---------------------------------------------------------------------------
 
 def main() -> None:
     n_tokens = 500
-    print(f"=== decode {n_tokens} tokens, compare baseline vs speculative ===")
+    print(f"=== {n_tokens} tokens を decode: baseline と speculative を比較 ===")
 
     target = TargetModel()
     rng = random.Random(7)

@@ -11,9 +11,9 @@ type ScriptStep = {
 const SCRIPT: ScriptStep[] = [
   {
     plan: [
-      ["locate target file", "in_progress"],
-      ["read and diagnose", "pending"],
-      ["apply fix and verify", "pending"],
+      ["対象ファイルを探す", "in_progress"],
+      ["読み取って診断する", "pending"],
+      ["修正を適用して検証する", "pending"],
     ],
     tool: { name: "run_shell", args: { cmd: "ls" } },
     tokens: 1200,
@@ -21,9 +21,9 @@ const SCRIPT: ScriptStep[] = [
   },
   {
     plan: [
-      ["locate target file", "done"],
-      ["read and diagnose", "in_progress"],
-      ["apply fix and verify", "pending"],
+      ["対象ファイルを探す", "done"],
+      ["読み取って診断する", "in_progress"],
+      ["修正を適用して検証する", "pending"],
     ],
     tool: { name: "read_file", args: { path: "README.md" } },
     tokens: 900,
@@ -31,9 +31,9 @@ const SCRIPT: ScriptStep[] = [
   },
   {
     plan: [
-      ["locate target file", "done"],
-      ["read and diagnose", "done"],
-      ["apply fix and verify", "done"],
+      ["対象ファイルを探す", "done"],
+      ["読み取って診断する", "done"],
+      ["修正を適用して検証する", "done"],
     ],
     tool: null,
     tokens: 600,

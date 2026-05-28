@@ -1,45 +1,45 @@
 ---
 name: skill-perceptron
-description: Understand the perceptron pattern and when to use single-layer vs multi-layer architectures
+description: パーセプトロンのパターンと、単層アーキテクチャと多層アーキテクチャを使い分けるタイミングを理解する
 version: 1.0.0
 phase: 3
 lesson: 1
 tags: [perceptron, neural-networks, classification, deep-learning]
 ---
 
-# The Perceptron Pattern
+# パーセプトロンのパターン
 
-A perceptron computes a weighted sum of inputs plus a bias, then applies a step function to produce a binary output. It is the fundamental unit of neural networks.
+パーセプトロンは入力の重み付き和にバイアスを足し、その後ステップ関数を適用して二値出力を生成します。これはニューラルネットワークの基本単位です。
 
 ```
 output = step(w1*x1 + w2*x2 + ... + wn*xn + bias)
 ```
 
-## When a single perceptron is enough
+## 単一のパーセプトロンで十分な場合
 
-- The problem is linearly separable: a straight line (or hyperplane) can divide the two classes
-- Logic gates: AND, OR, NOT, NAND
-- Simple threshold decisions: "is the score above X?"
-- Binary classifiers on data that clusters into two non-overlapping regions
+- 問題が線形分離可能である。つまり、1本の直線（または超平面）で2つのクラスを分けられる
+- 論理ゲート: AND、OR、NOT、NAND
+- 単純なしきい値判断: 「スコアがXを超えているか」
+- データが重ならない2つの領域にまとまる二値分類
 
-## When you need multiple layers
+## 複数の層が必要な場合
 
-- The problem is not linearly separable: no single line can separate the classes
-- XOR and parity problems
-- Any task requiring "this but not that" reasoning (combinations of conditions)
-- Real-world classification: images, text, audio - almost always non-linear
+- 問題が線形分離可能ではない。つまり、1本の直線ではクラスを分けられない
+- XORやパリティ問題
+- 条件の組み合わせによる「これは当てはまるが、あれは当てはまらない」という推論が必要なタスク
+- 現実世界の分類。画像、テキスト、音声はほぼ常に非線形
 
-## Decision checklist
+## 判断チェックリスト
 
-1. Plot or inspect your data. Can you draw a single straight boundary between classes?
-   - Yes: single perceptron works
-   - No: you need at least two layers
-2. Can the problem be decomposed into AND/OR of simpler linear decisions?
-   - This decomposition tells you the minimum network structure
-   - XOR = (A OR B) AND (NOT (A AND B)) = 3 perceptrons in 2 layers
-3. For problems with more than two classes, you need one output node per class
+1. データをプロットするか確認する。クラス間に1本の直線境界を引けるか。
+   - はい: 単一のパーセプトロンで動く
+   - いいえ: 少なくとも2層が必要
+2. 問題を、より単純な線形判断のAND/ORへ分解できるか。
+   - この分解から、最小限のネットワーク構造が分かる
+   - XOR = (A OR B) AND (NOT (A AND B)) = 2層の3つのパーセプトロン
+3. クラスが3つ以上ある問題では、クラスごとに1つの出力ノードが必要
 
-## The training rule
+## 訓練ルール
 
 ```
 error = expected - predicted
@@ -47,11 +47,11 @@ weight_new = weight_old + learning_rate * error * input
 bias_new = bias_old + learning_rate * error
 ```
 
-If the prediction is correct, nothing changes. If wrong, weights shift to reduce the error. This only works for single-layer perceptrons. Multi-layer networks require backpropagation.
+予測が正しければ何も変わりません。間違っていれば、誤差を減らす方向へ重みが動きます。これは単層パーセプトロンでしか機能しません。多層ネットワークにはバックプロパゲーションが必要です。
 
-## Common mistakes
+## よくある間違い
 
-- Trying to learn non-linear patterns with a single perceptron (it will never converge)
-- Setting the learning rate too high (weights oscillate) or too low (training takes forever)
-- Forgetting the bias term (without it, the decision boundary must pass through the origin)
-- Confusing perceptron convergence (guaranteed for linearly separable data) with general neural network convergence (not guaranteed)
+- 単一のパーセプトロンで非線形パターンを学習しようとする（決して収束しない）
+- learning rateを高くしすぎる（重みが振動する）、または低くしすぎる（訓練に非常に時間がかかる）
+- バイアス項を忘れる（バイアスがないと、決定境界は必ず原点を通らなければならない）
+- パーセプトロンの収束（線形分離可能なデータでは保証される）と、一般的なニューラルネットワークの収束（保証されない）を混同する

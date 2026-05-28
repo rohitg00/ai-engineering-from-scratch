@@ -1,31 +1,31 @@
 ---
 name: llm-pipeline-reviewer
-description: Review an end-to-end LLM training pipeline manifest before a multi-million-dollar run.
+description: multi-million-dollar run の前に、end-to-end LLM training pipeline manifest を review する
 version: 1.0.0
 phase: 10
 lesson: 13
 tags: [pipeline, training, manifest, eval-gate, cost, rollback]
 ---
 
-Given a proposed training pipeline manifest (YAML or JSON describing tokenizer, data, pre-training, SFT, alignment, eval, quantization, and serving stages), produce a review covering:
+proposed training pipeline manifest (tokenizer、data、pre-training、SFT、alignment、eval、quantization、serving stages を記述した YAML または JSON) が与えられたら、以下を含む review を作成してください。
 
-1. Stage graph. Confirm each stage has typed inputs and outputs. Call out missing dependencies, implicit state, or any stage that consumes a bare directory instead of a named artifact hash.
-2. Hash chain. Verify output_hash of stage N equals one of the input_hashes of every downstream stage. Any mismatch means the manifest is incoherent and the pipeline must not start.
-3. Eval gate. Every metric in the gate list must be numeric, have an operator, a threshold, and a measurement source. Reject any gate that is subjective ("looks good"), unbounded (no threshold), or measured on the training data.
-4. Regression guard. The new model's core benchmarks (MMLU, MATH, HumanEval+, GPQA, or a domain-specific equivalent) must have baseline numbers attached. A run with no baselines is a run with no regression detection.
-5. KL budget. Alignment stages (RLHF, DPO, CAI, GRPO) must declare a cumulative KL cap against the reference. Unbounded KL is an unbounded drift.
-6. Contamination check. Training data shards and eval sets must have a documented overlap check (exact match or 13-gram). Required pass threshold: <0.1%.
-7. Cost estimate. Pre-run estimate for each stage plus a total, compared against the budget gate. If estimate > budget, pipeline refuses to start.
-8. Rollback plan. For each stage, named actions on failure: re-run, fall back to previous artifact, revise inputs and re-run downstream. Expensive stages (pre-training) must have a warm checkpoint strategy.
-9. Artifact store. Checkpoints, datasets, tokenizers, eval reports must be content-addressed (SHA-256). Filename-addressed artifacts ("latest.pt") are a hard reject.
-10. Observability. Every stage must emit structured logs with a trace ID, stage name, input hashes, output hash, wall clock, and cost. Missing trace IDs mean the run cannot be debugged after the fact.
+1. Stage graph。各 stage が typed inputs と typed outputs を持つことを確認する。missing dependencies、implicit state、named artifact hash ではなく bare directory を consume している stage を指摘する。
+2. Hash chain。stage N の output_hash が、すべての downstream stage の input_hashes の 1つと一致することを verify する。不一致があれば manifest は incoherent であり、pipeline を start してはいけない。
+3. Eval gate。gate list のすべての metric は numeric であり、operator、threshold、measurement source を持たなければならない。subjective ("looks good")、unbounded (threshold なし)、training data 上で測定される gate は reject する。
+4. Regression guard。new model の core benchmarks (MMLU、MATH、HumanEval+、GPQA、または domain-specific equivalent) には baseline numbers が attached されていなければならない。baseline のない run は regression detection のない run である。
+5. KL budget。alignment stages (RLHF、DPO、CAI、GRPO) は reference に対する cumulative KL cap を declare しなければならない。unbounded KL は unbounded drift である。
+6. Contamination check。training data shards と eval sets には documented overlap check (exact match または 13-gram) が必要。required pass threshold は <0.1%。
+7. Cost estimate。各 stage の pre-run estimate と total を budget gate と比較する。estimate > budget の場合、pipeline は start を拒否する。
+8. Rollback plan。各 stage について、failure 時の named actions を示す: re-run、previous artifact への fall back、inputs を revise して downstream を re-run。expensive stages (pre-training) には warm checkpoint strategy が必要。
+9. Artifact store。checkpoints、datasets、tokenizers、eval reports は content-addressed (SHA-256) でなければならない。filename-addressed artifacts ("latest.pt") は hard reject。
+10. Observability。すべての stage は trace ID、stage name、input hashes、output hash、wall clock、cost を含む structured logs を emit しなければならない。trace ID がない場合、run は事後 debug できない。
 
-Red flags that halt the review:
-- a gate missing a measurement source (gate on a metric no stage computes)
-- a stage that shares a checkpoint with a downstream stage (no separation of concerns)
-- an alignment stage with no reference model (no anchor for KL)
-- an LLM-as-judge eval where the judge is the same model family as the policy (contamination)
-- a cost estimate that exceeds the budget by more than 20%
-- a rollback plan consisting solely of "re-run from scratch"
+review を halt する red flags:
+- measurement source のない gate (どの stage も compute しない metric に対する gate)
+- downstream stage と checkpoint を share する stage (separation of concerns がない)
+- reference model のない alignment stage (KL の anchor がない)
+- judge が policy と同じ model family である LLM-as-judge eval (contamination)
+- budget を 20% 超えて上回る cost estimate
+- "re-run from scratch" だけで構成された rollback plan
 
-Output: a two-page review with PASS/HOLD per gate, the exact manifest field or missing field that produced each verdict, and the minimum change required to flip a HOLD into a PASS.
+出力: gate ごとの PASS/HOLD、各 verdict を生んだ exact manifest field または missing field、HOLD を PASS に変えるための minimum change を含む 2ページの review。

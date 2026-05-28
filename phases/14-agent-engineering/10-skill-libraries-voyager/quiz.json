@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does Voyager treat as the action space?",
+      "question": "Voyager は action space を何として扱いますか?",
       "options": [
         "Primitive Minecraft commands",
-        "Executable code (JavaScript functions) stored, retrieved, and composed",
-        "Text prompts only",
+        "保存、retrieve、compose される executable code (JavaScript functions)",
+        "Text prompts のみ",
         "Reinforcement learning Q-values"
       ],
       "correct": 1,
-      "explanation": "Voyager's contribution is making code the action: skills are programs, not raw commands."
+      "explanation": "Voyager の貢献は code を action にすることです。Skills は raw commands ではなく programs です。"
     },
     {
       "stage": "pre",
-      "question": "What three components define a Voyager agent?",
+      "question": "Voyager agent を定義する 3 つの components は何ですか?",
       "options": [
         "Encoder, decoder, value head",
         "Automatic curriculum, skill library, iterative prompting",
@@ -24,35 +24,35 @@
         "Retriever, generator, ranker"
       ],
       "correct": 1,
-      "explanation": "Voyager structures the agent around curriculum, skill library, and iterative prompting."
+      "explanation": "Voyager は curriculum、skill library、iterative prompting を中心に agent を構成します。"
     },
     {
       "stage": "check",
-      "question": "What three signals can return from a skill execution attempt?",
+      "question": "Skill execution attempt から返る 3 つの signals は何ですか?",
       "options": [
         "Pass, fail, retry",
-        "Success, error (with stack trace), self-verification failure",
+        "Success, error (stack trace 付き), self-verification failure",
         "Green, yellow, red",
         "Heartbeat, ack, nack"
       ],
       "correct": 1,
-      "explanation": "Voyager's iterative prompting mechanism is driven by these three signals folded back into the next version."
+      "explanation": "Voyager の iterative prompting mechanism は、この 3 signals を次 version に折り込むことで駆動されます。"
     },
     {
       "stage": "check",
-      "question": "How does the automatic curriculum pick the next task?",
+      "question": "Automatic curriculum は次の task をどう選びますか?",
       "options": [
-        "Random uniform over the action space",
-        "Just above current capability, based on environment state and skill inventory (the exploration sweet spot)",
-        "Always the hardest available task",
-        "User-supplied list only"
+        "Action space から random uniform に選ぶ",
+        "Environment state と skill inventory に基づき、current capability より少し上の exploration sweet spot を選ぶ",
+        "常に最も難しい task を選ぶ",
+        "User-supplied list だけを使う"
       ],
       "correct": 1,
-      "explanation": "The proposer aims for tasks just above current capability so progress is steady."
+      "explanation": "Proposer は現在の capability より少し上の task を狙い、progress を安定させます。"
     },
     {
       "stage": "check",
-      "question": "Which 2026 product is the lesson's clearest match for the Voyager skill?",
+      "question": "この lesson が Voyager skill に最も明確に対応するとする 2026 product はどれですか?",
       "options": [
         "OpenAI fine-tuning",
         "Claude Agent SDK skills: named, retrievable code plus instructions loaded on demand",
@@ -60,31 +60,31 @@
         "AWS Lambda layers"
       ],
       "correct": 1,
-      "explanation": "Agent SDK skills match Voyager's named-retrievable-composable code pattern."
+      "explanation": "Agent SDK skills は Voyager の named-retrievable-composable code pattern と一致します。"
     },
     {
       "stage": "post",
-      "question": "Why does the lesson recommend dedup on write for the skill library?",
+      "question": "Skill library で write 時の dedup が推奨される理由は何ですか?",
       "options": [
-        "Disk is expensive",
-        "Without dedup, the same skill gets added many times with slightly different descriptions; retrieval should return one canonical version",
-        "Providers reject duplicates",
-        "Git blocks duplicates"
+        "Disk が高価だから",
+        "Dedup なしでは同じ skill が少し違う descriptions で何度も追加されるため、retrieval は 1 つの canonical version を返すべきだから",
+        "Provider が duplicates を拒否するから",
+        "Git が duplicates を block するから"
       ],
       "correct": 1,
-      "explanation": "Near-duplicate descriptions collapse to a single canonical skill so retrieval stays clean."
+      "explanation": "Near-duplicate descriptions は single canonical skill に collapse し、retrieval を clean に保ちます。"
     },
     {
       "stage": "post",
-      "question": "What problem does composed-skill drift describe?",
+      "question": "Composed-skill drift はどの問題を指しますか?",
       "options": [
-        "A skill stops compiling after a Python upgrade",
-        "A parent skill silently picks up a refined child version it was never tested against; fix by pinning skill versions",
-        "Skills get encrypted in storage",
-        "Retrieval returns nothing"
+        "Python upgrade 後に skill が compile できなくなる",
+        "Parent skill が、test されていない refined child version を silent に拾うこと。Skill versions を pin して直す",
+        "Skills が storage で encrypted される",
+        "Retrieval が何も返さない"
       ],
       "correct": 1,
-      "explanation": "Without version pinning, a refinement to a child silently changes the parent's behavior."
+      "explanation": "Version pinning がないと、child の refinement が parent の behavior を黙って変えてしまいます。"
     }
   ]
 }

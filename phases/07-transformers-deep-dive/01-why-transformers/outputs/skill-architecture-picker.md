@@ -1,18 +1,18 @@
 ---
 name: sequence-architecture-picker
-description: Pick sequence architecture (RNN, transformer, SSM, hybrid) given length, throughput, and training budget.
+description: 長さ、スループット、学習予算に基づいて系列アーキテクチャ（RNN、transformer、SSM、hybrid）を選ぶ。
 version: 1.0.0
 phase: 7
 lesson: 1
 tags: [transformers, architecture, rnn, ssm]
 ---
 
-Given a sequence problem (max length, batch shape, training tokens budgeted, inference latency target, device class), output:
+系列問題（最大長、バッチ形状、予算化された学習トークン数、推論レイテンシ目標、デバイスクラス）が与えられたら、次を出力してください。
 
-1. Primary architecture. One of: transformer, state-space model (Mamba/RWKV), hybrid SSM+attention, RNN. One-sentence reason tied to the dominant constraint.
-2. Context length strategy. If transformer: full attention cutoff, sliding window size, RoPE scaling factor. If SSM: scan chunk size. If RNN: hidden width.
-3. Training FLOP profile. Approximate FLOPs per token from architecture + context; note whether the spec fits the compute budget.
-4. Inference memory profile. KV cache for transformers, state size for SSMs, per-token memory for RNNs. Flag if the target device can hold a single batch of 1.
-5. Risk note. One specific failure mode that this choice is known to have at the scale of the spec (e.g. transformer OOM at 64K context on a 24GB GPU without Flash Attention).
+1. 主要アーキテクチャ。次のいずれか: transformer、state-space model (Mamba/RWKV)、hybrid SSM+attention、RNN。支配的な制約に結びつけた 1 文の理由。
+2. コンテキスト長戦略。transformer の場合: full attention の打ち切り、sliding window size、RoPE scaling factor。SSM の場合: scan chunk size。RNN の場合: hidden width。
+3. 学習 FLOP プロファイル。アーキテクチャ + コンテキストから、1 トークンあたりのおおよその FLOPs を示し、その仕様が計算予算に収まるかを述べる。
+4. 推論メモリプロファイル。Transformer では KV cache、SSM では state size、RNN では per-token memory。対象デバイスが batch size 1 を保持できない場合は明示する。
+5. リスクメモ。その仕様のスケールで、この選択に既知の具体的な失敗モードを 1 つ挙げる（例: Flash Attention なしの 24GB GPU で 64K context の transformer が OOM になる）。
 
-Refuse to recommend a pure RNN for any training run above 1B tokens without explicitly stating the gradient-flow and parallelism penalties. Refuse to recommend a full-attention transformer for >64K context without stating the `O(N^2)` memory cost. Refuse to recommend a brand-new architecture (published <12 months ago) for production without a named fallback.
+1B tokens を超える学習実行に対して、勾配フローと並列性のペナルティを明示せずに純粋な RNN を推奨してはいけません。`O(N^2)` のメモリコストを述べずに、>64K context に対して full-attention transformer を推奨してはいけません。名前付きのフォールバックなしに、公開から 12 か月未満のまったく新しいアーキテクチャを本番向けに推奨してはいけません。

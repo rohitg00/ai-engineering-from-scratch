@@ -1,11 +1,11 @@
-"""Multi-turn critic loop for a paper draft with five fixed scoring dimensions.
+"""五つの固定 scoring dimensions を持つ paper draft 用 multi-turn critic loop。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
-- Phase 19 lesson 54 (paper writer; provides the draft shape)
+概念参照:
+- ./docs/en.md (この lesson)
+- Phase 19 lesson 54 (paper writer; draft shape を提供)
 - Phase 19 lessons 50-53 (earlier auto-research stages)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ DIMENSIONS: tuple[str, ...] = (
 
 @dataclass
 class MiniSection:
-    """Minimal section shape for the critic loop. Mirrors lesson 54 Section."""
+    """critic loop 用の最小 section shape。lesson 54 の Section に対応します。"""
     id: str
     title: str
     body: str = ""
@@ -36,7 +36,7 @@ class MiniSection:
 
 @dataclass
 class MiniPaper:
-    """Minimal paper shape for the critic loop. Mirrors lesson 54 Paper."""
+    """critic loop 用の最小 paper shape。lesson 54 の Paper に対応します。"""
     title: str
     abstract: str
     sections: list[MiniSection] = field(default_factory=list)
@@ -129,7 +129,7 @@ class LoopResult:
 
 
 class CriticLoop:
-    """Drives critic -> reviser -> convergence-check until a stop condition fires."""
+    """stop condition が発火するまで critic -> reviser -> convergence-check を駆動します。"""
 
     def __init__(
         self,
@@ -212,7 +212,7 @@ class CriticLoop:
 
 
 def deterministic_score(paper: MiniPaper) -> dict[str, float]:
-    """Score a paper deterministically across the five dimensions, 0..10 each."""
+    """五つの dimension で paper を決定的に score します。各 score は 0..10 です。"""
     body_lens = [len(s.body) for s in paper.sections]
     avg_body = (sum(body_lens) / len(body_lens)) if body_lens else 0.0
     section_titles = {s.title.lower() for s in paper.sections}
@@ -254,7 +254,7 @@ def deterministic_score(paper: MiniPaper) -> dict[str, float]:
 
 
 def deterministic_critic(paper: MiniPaper, round_: int) -> Critique:
-    """Score the paper and emit one suggestion per dimension that is below target."""
+    """paper を score し、target 未満の dimension ごとに一つの suggestion を出します。"""
     scores = deterministic_score(paper)
     suggestions: list[Suggestion] = []
 
@@ -298,7 +298,7 @@ def deterministic_critic(paper: MiniPaper, round_: int) -> Critique:
 
 
 def deterministic_reviser(paper: MiniPaper, suggestions: list[Suggestion]) -> MiniPaper:
-    """Apply each suggestion's edit deterministically. Returns a mutated paper (same object)."""
+    """各 suggestion の edit を決定的に適用します。mutated paper (same object) を返します。"""
     fig_counter = 0
     cite_counter = 0
     for s in paper.sections:
@@ -329,23 +329,23 @@ def deterministic_reviser(paper: MiniPaper, suggestions: list[Suggestion]) -> Mi
             if not any(s.title.lower().startswith("method") for s in paper.sections):
                 paper.sections.append(MiniSection(
                     id="method", title="Method",
-                    body="A description of the method follows. " + ("x" * 200),
+                    body="method の説明を以下に示す。 " + ("x" * 200),
                 ))
             else:
                 for sec in paper.sections:
                     if sec.title.lower().startswith("method") and not sec.body:
-                        sec.body = "A description of the method follows. " + ("x" * 200)
+                        sec.body = "method の説明を以下に示す。 " + ("x" * 200)
                         break
         elif sug.edit == "add-related-work-section":
             if not any(s.title.lower() == "related work" for s in paper.sections):
                 paper.sections.append(MiniSection(
                     id="related-work", title="Related Work",
-                    body="We survey adjacent work. " + ("x" * 200),
+                    body="隣接研究を survey する。 " + ("x" * 200),
                 ))
             else:
                 for sec in paper.sections:
                     if sec.title.lower() == "related work" and not sec.body:
-                        sec.body = "We survey adjacent work. " + ("x" * 200)
+                        sec.body = "隣接研究を survey する。 " + ("x" * 200)
                         break
     return paper
 
@@ -357,9 +357,9 @@ def make_deterministic_critic_pair() -> tuple[Critic, Reviser]:
 def demo() -> dict:
     paper = MiniPaper(
         title="Auto-Research Loop",
-        abstract="abstract",
+        abstract="要旨",
         sections=[
-            MiniSection(id="intro", title="Introduction", body="short intro"),
+            MiniSection(id="intro", title="Introduction", body="短い導入"),
         ],
         originality_tag="low",
     )

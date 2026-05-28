@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,37 +9,37 @@
       .worker2 { fill: #ffd9c2; stroke: #c0392b; stroke-width: 1.5; }
       .cache { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Hogwild! inference — N workers, one shared KV cache</text>
+  <text x="480" y="24" text-anchor="middle" class="title">Hogwild! 推論 — N workers、1 つの共有 KV cache</text>
 
   <!-- Worker 1 -->
   <rect x="60" y="60" width="200" height="120" class="worker1"/>
   <text x="160" y="84" text-anchor="middle" class="head">worker 1</text>
-  <text x="160" y="106" text-anchor="middle" class="small">reads full shared cache</text>
-  <text x="160" y="124" text-anchor="middle" class="small">decides what to write next</text>
-  <text x="160" y="144" text-anchor="middle" class="small">writes one token</text>
-  <text x="160" y="164" text-anchor="middle" class="small">repeat</text>
+  <text x="160" y="106" text-anchor="middle" class="small">共有 cache 全体を読む</text>
+  <text x="160" y="124" text-anchor="middle" class="small">次に書く内容を決める</text>
+  <text x="160" y="144" text-anchor="middle" class="small">1 token 書く</text>
+  <text x="160" y="164" text-anchor="middle" class="small">繰り返す</text>
 
   <!-- Worker 2 -->
   <rect x="60" y="360" width="200" height="120" class="worker2"/>
   <text x="160" y="384" text-anchor="middle" class="head">worker 2</text>
-  <text x="160" y="406" text-anchor="middle" class="small">reads full shared cache</text>
-  <text x="160" y="424" text-anchor="middle" class="small">sees worker 1's tokens</text>
-  <text x="160" y="444" text-anchor="middle" class="small">pivots to unexplored work</text>
-  <text x="160" y="464" text-anchor="middle" class="small">writes one token</text>
+  <text x="160" y="406" text-anchor="middle" class="small">共有 cache 全体を読む</text>
+  <text x="160" y="424" text-anchor="middle" class="small">worker 1 の token を見る</text>
+  <text x="160" y="444" text-anchor="middle" class="small">未探索の作業へ切り替える</text>
+  <text x="160" y="464" text-anchor="middle" class="small">1 token 書く</text>
 
-  <!-- Shared cache -->
+  <!-- 共有 cache -->
   <rect x="380" y="180" width="540" height="180" class="cache"/>
-  <text x="650" y="210" text-anchor="middle" class="head">shared KV cache</text>
+  <text x="650" y="210" text-anchor="middle" class="head">共有 KV cache</text>
 
-  <!-- Tokens in cache -->
+  <!-- cache 内の token -->
   <rect x="400" y="230" width="40" height="30" class="worker1"/>
   <text x="420" y="249" text-anchor="middle" class="step">A</text>
   <rect x="445" y="230" width="40" height="30" class="worker1"/>
@@ -61,12 +61,12 @@
   <rect x="805" y="230" width="40" height="30" class="worker2"/>
   <text x="825" y="249" text-anchor="middle" class="step">C</text>
 
-  <text x="650" y="290" text-anchor="middle" class="small">tokens arrive asynchronously from all workers</text>
-  <text x="650" y="308" text-anchor="middle" class="small">RoPE positions let the cache stay stable under concurrent writes</text>
-  <text x="650" y="328" text-anchor="middle" class="small">each worker's next read sees everything</text>
-  <text x="650" y="346" text-anchor="middle" class="small">(including the other workers' just-written tokens)</text>
+  <text x="650" y="290" text-anchor="middle" class="small">すべての worker から token が非同期に届く</text>
+  <text x="650" y="308" text-anchor="middle" class="small">RoPE position により concurrent writes 中も cache が安定する</text>
+  <text x="650" y="328" text-anchor="middle" class="small">各 worker の次の read はすべてを見る</text>
+  <text x="650" y="346" text-anchor="middle" class="small">(他 worker が直前に書いた token も含む)</text>
 
-  <!-- Arrows -->
+  <!-- 矢印 -->
   <line x1="260" y1="120" x2="380" y2="200" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow)"/>
   <line x1="260" y1="420" x2="380" y2="340" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
   <line x1="380" y1="250" x2="260" y2="150" stroke="#5a4fcf" stroke-width="1.0" stroke-dasharray="4,3"/>
@@ -75,5 +75,5 @@
   <!-- Amdahl summary -->
   <rect x="60" y="500" width="860" height="36" class="box"/>
   <text x="80" y="524" class="step">speedup(N, p, c) = 1 / [(1 - p) + p/N + c * N / T_serial]</text>
-  <text x="500" y="524" class="small">p = parallelizable fraction · c = per-worker coord cost · T_serial = single-worker task length</text>
+  <text x="500" y="524" class="small">p = 並列化可能割合 · c = worker ごとの調整コスト · T_serial = 単一 worker の長さ</text>
 </svg>

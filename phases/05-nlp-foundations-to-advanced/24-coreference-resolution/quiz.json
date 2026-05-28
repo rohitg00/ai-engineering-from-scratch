@@ -1,102 +1,102 @@
 {
   "lesson": "24-coreference-resolution",
-  "title": "Coreference Resolution",
+  "title": "共参照解析",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the goal of coreference resolution?",
+      "question": "coreference resolution の目的は何ですか。",
       "options": [
-        "Cluster all mentions (named, nominal, pronominal) that refer to the same real-world entity",
-        "Tag parts of speech",
-        "Extract relations",
-        "Translate pronouns to nouns"
+        "同じ real-world entity を指すすべての mentions (named、nominal、pronominal) を cluster すること",
+        "parts of speech に tag を付けること",
+        "relations を抽出すること",
+        "pronouns を nouns に翻訳すること"
       ],
       "correct": 0,
-      "explanation": "Coref clusters mention spans that all refer to the same entity."
+      "explanation": "Coref は、すべて同じ entity を指す mention spans を cluster にします。"
     },
     {
       "stage": "pre",
-      "question": "Which type of expression is a 'nominal' mention?",
+      "question": "「nominal」mention はどのような expression ですか。",
       "options": [
-        "A proper noun only",
-        "A noun phrase such as 'the CEO' or 'the company'",
-        "A pronoun like 'she'",
-        "A verb"
+        "proper noun だけ",
+        "'the CEO' や 'the company' のような noun phrase",
+        "'she' のような pronoun",
+        "verb"
       ],
       "correct": 1,
-      "explanation": "Nominal mentions are noun phrases like 'the company'; pronominal mentions are pronouns."
+      "explanation": "Nominal mentions は 'the company' のような noun phrases です。pronominal mentions は pronouns です。"
     },
     {
       "stage": "check",
-      "question": "What is the modern (Lee et al., 2017) coref architecture?",
+      "question": "現代的な (Lee et al., 2017) coref architecture はどれですか。",
       "options": [
         "BM25 retrieval",
-        "Rule-based syntactic parsing only",
-        "Decision trees",
-        "End-to-end span-based: enumerate spans, score mentions, then score antecedent probabilities and cluster greedily"
+        "rule-based syntactic parsing だけ",
+        "decision trees",
+        "End-to-end span-based: spans を列挙し、mentions を score し、その後 antecedent probabilities を score して greedy に cluster する"
       ],
       "correct": 3,
-      "explanation": "End-to-end neural coref enumerates spans and learns mention + antecedent scoring jointly."
+      "explanation": "End-to-end neural coref は spans を列挙し、mention scoring と antecedent scoring を jointly に学習します。"
     },
     {
       "stage": "check",
-      "question": "What does CoNLL F1 average?",
+      "question": "CoNLL F1 は何の平均ですか。",
       "options": [
-        "F1 across languages",
-        "MUC, B-cubed, and CEAF-phi4 F1 scores",
-        "Token and span F1",
-        "Precision and recall"
+        "languages をまたいだ F1",
+        "MUC、B-cubed、CEAF-phi4 の F1 scores",
+        "Token F1 と span F1",
+        "Precision と recall"
       ],
       "correct": 1,
-      "explanation": "CoNLL F1 is the mean of MUC, B-cubed, and CEAF-phi4 metrics."
+      "explanation": "CoNLL F1 は MUC、B-cubed、CEAF-phi4 metrics の平均です。"
     },
     {
       "stage": "check",
-      "question": "What is bridging anaphora?",
+      "question": "bridging anaphora とは何ですか。",
       "options": [
-        "A mistranslation",
-        "An implicit reference like 'the wheels' implying the wheels of a previously mentioned car",
-        "A pronoun before its referent",
-        "A pronoun without an antecedent"
+        "誤訳",
+        "以前に言及された car の wheels を含意する 'the wheels' のような implicit reference",
+        "referent の前にある pronoun",
+        "antecedent のない pronoun"
       ],
       "correct": 1,
-      "explanation": "Bridging links a mention to a part-of or related entity that was implied but not explicitly stated."
+      "explanation": "Bridging は、明示されていなくても含意された part-of または related entity に mention を link します。"
     },
     {
       "stage": "post",
-      "question": "Why is LLM-only coref unreliable on long documents?",
+      "question": "LLM-only coref が long documents で信頼できないのはなぜですか。",
       "options": [
-        "LLMs cannot read text",
-        "Tokenizers fail",
-        "Single-call LLMs over-merge or silently drop mentions across 50+ paragraphs; require sliding-window plus merge",
-        "Coref requires a CFG"
+        "LLMs は text を読めないから",
+        "tokenizers が失敗するから",
+        "single-call LLMs は 50+ paragraphs にまたがる mentions を過剰に merge したり黙って落としたりするため、sliding-window plus merge が必要だから",
+        "coref には CFG が必要だから"
       ],
       "correct": 2,
-      "explanation": "Long-doc LLM coref degrades; sliding-window with cross-window merging mitigates."
+      "explanation": "Long-doc LLM coref は劣化します。sliding-window と cross-window merging によって緩和できます。"
     },
     {
       "stage": "post",
-      "question": "Why merge coref clusters into NER results before downstream tasks?",
+      "question": "downstream tasks の前に coref clusters を NER results に merge するのはなぜですか。",
       "options": [
-        "Required by Wikidata",
-        "To increase token count",
-        "Lower latency",
-        "So downstream tasks see one entity per cluster rather than one per surface mention, dramatically improving coverage"
+        "Wikidata で必須だから",
+        "token count を増やすため",
+        "latency を下げるため",
+        "downstream tasks が surface mention ごとに 1 つではなく cluster ごとに 1 entity を見られるようになり、coverage が大きく改善するから"
       ],
       "correct": 3,
-      "explanation": "Without merging, NER counts each surface form separately and misses 60-80% of entity mentions."
+      "explanation": "merge しない場合、NER は各 surface form を別々に数え、entity mentions の 60-80% を見逃します。"
     },
     {
       "stage": "post",
-      "question": "Why are hard-coded gender rules a fragility in coref systems?",
+      "question": "hard-coded gender rules が coref systems で脆弱性になるのはなぜですか。",
       "options": [
-        "They break on non-binary referents, organizations, and animals; learned scoring is more robust",
-        "They require GPU",
-        "They run too fast",
-        "They cannot use POS tags"
+        "non-binary referents、organizations、animals で壊れるため。learned scoring のほうが robust だから",
+        "GPU が必要だから",
+        "速く動きすぎるから",
+        "POS tags を使えないから"
       ],
       "correct": 0,
-      "explanation": "Gender heuristics fail in demographically diverse text; learned models are preferred."
+      "explanation": "Gender heuristics は demographically diverse text で失敗します。learned models が望まれます。"
     }
   ]
 }

@@ -1,75 +1,75 @@
 {
   "lesson": "10-ai-control-subversion",
-  "title": "AI Control - Safety Despite Subversion",
+  "title": "AI Control - Subversion があっても安全に使う",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best captures the difference between alignment and AI control?",
+      "question": "alignment と AI control の違いを最もよく表すものはどれですか。",
       "options": [
-        "Alignment asks whether U is trustworthy; control asks whether we can safely use U without trusting it",
-        "Control replaces the loss function while alignment changes the optimizer",
-        "They are synonyms",
-        "Control is about hardware; alignment is about software"
+        "alignment は U が trustworthy かを問い、control は U を trust せずに安全に使えるかを問う",
+        "control は loss function を置き換え、alignment は optimizer を変える",
+        "両者は同義語である",
+        "control は hardware、alignment は software に関するもの"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the AI Control threat model assume?",
+      "question": "AI Control threat model は何を仮定しますか。",
       "options": [
-        "U is untrusted strong, T is trusted weak, H is bounded trusted human labor",
-        "U and T are both adversarial",
-        "All three resources (U, T, H) are trusted",
-        "Only U exists"
+        "U は untrusted strong、T は trusted weak、H は bounded trusted human labor",
+        "U と T の両方が adversarial",
+        "3 つの resources (U, T, H) はすべて trusted",
+        "U だけが存在する"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the key risk in Untrusted Monitoring that Trusted Editing avoids?",
+      "question": "Trusted Editing が避ける、Untrusted Monitoring の key risk は何ですか。",
       "options": [
-        "Two instances of U can collude or share priors, so the protocol must spend budget on collusion-resistance",
-        "Humans cannot be audited",
-        "Hardware contention",
-        "T cannot edit text"
+        "U の 2 instances が collude したり priors を共有したりできるため、protocol は collusion-resistance に budget を使う必要がある",
+        "humans は audited できない",
+        "hardware contention",
+        "T は text を edit できない"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "On the Greenblatt et al. (ICML 2024) code-backdoor task, what does Trusted Editing achieve relative to Untrusted Monitoring?",
+      "question": "Greenblatt et al. (ICML 2024) code-backdoor task で、Trusted Editing は Untrusted Monitoring に対して何を達成しましたか。",
       "options": [
-        "It is strictly worse",
-        "It only wins at zero human budget",
-        "They are exactly equivalent",
-        "It strictly Pareto-dominates: higher usefulness at every safety level"
+        "strictly worse だった",
+        "zero human budget のときだけ勝った",
+        "完全に同等だった",
+        "strictly Pareto-dominates: あらゆる safety level で usefulness が高い"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of the following is NOT one of the lesson's three fundamental limits of control?",
+      "question": "次のうち、この lesson の control の 3 つの根本的限界に含まれないものはどれですか。",
       "options": [
-        "Trusted weak models eventually lag U",
-        "Control produces aligned models as a byproduct",
-        "Humans do not scale",
-        "Control may fail at higher capability levels if U can manipulate T or reason about H's audit distribution"
+        "trusted weak models は eventually U に遅れる",
+        "control は副産物として aligned models を生み出す",
+        "humans do not scale",
+        "U が T を manipulate したり H の audit distribution を reason できたりすると、高い capability levels で control は失敗し得る"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does a Control Safety Case argue?",
+      "question": "Control Safety Case は何を論じますか。",
       "options": [
-        "That T is more capable than U",
-        "That under worst-case assumptions about U, the deployment protocol bounds the probability of an unacceptable outcome",
-        "That U is trustworthy",
-        "That the model passed a manual jailbreak test"
+        "T が U より capable であること",
+        "U に関する worst-case assumptions のもとで、deployment protocol が unacceptable outcome の確率を bound すること",
+        "U が trustworthy であること",
+        "model が manual jailbreak test に合格したこと"
       ],
       "correct": 1,
       "explanation": ""

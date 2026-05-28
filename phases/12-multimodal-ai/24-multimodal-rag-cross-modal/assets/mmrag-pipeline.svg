@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,22 +9,22 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Multimodal RAG — cross-modal retrieve, fuse, ground, generate</text>
+  <text x="480" y="24" text-anchor="middle" class="title">Multimodal RAG - クロスモーダルに検索・融合・接地・生成</text>
 
   <rect x="30" y="50" width="900" height="220" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">query -&gt; decompose -&gt; 3 retrievers -&gt; fuse -&gt; VLM generator</text>
+  <text x="480" y="72" text-anchor="middle" class="head">クエリ -&gt; 分解 -&gt; 3つの検索器 -&gt; 融合 -&gt; VLM生成</text>
 
   <rect x="60" y="90" width="180" height="60" class="reg"/>
-  <text x="150" y="112" text-anchor="middle" class="step">query</text>
-  <text x="150" y="130" text-anchor="middle" class="small">"quiet vegan brunch</text>
+  <text x="150" y="112" text-anchor="middle" class="step">クエリ</text>
+  <text x="150" y="130" text-anchor="middle" class="small">"quiet vegan b実行ch</text>
   <text x="150" y="145" text-anchor="middle" class="small">with natural light"</text>
 
   <path d="M 245 120 L 285 100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -32,62 +32,62 @@
   <path d="M 245 140 L 285 240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="290" y="80" width="170" height="50" class="hot"/>
-  <text x="375" y="100" text-anchor="middle" class="step">text retriever</text>
-  <text x="375" y="120" text-anchor="middle" class="small">reviews / menus</text>
+  <text x="375" y="100" text-anchor="middle" class="step">テキスト検索器</text>
+  <text x="375" y="120" text-anchor="middle" class="small">レビュー / メニュー</text>
 
   <rect x="290" y="150" width="170" height="50" class="cool"/>
-  <text x="375" y="170" text-anchor="middle" class="step">image retriever</text>
-  <text x="375" y="190" text-anchor="middle" class="small">CLIP / SigLIP photos</text>
+  <text x="375" y="170" text-anchor="middle" class="step">画像検索器</text>
+  <text x="375" y="190" text-anchor="middle" class="small">CLIP / SigLIP写真</text>
 
   <rect x="290" y="220" width="170" height="50" class="cold"/>
-  <text x="375" y="240" text-anchor="middle" class="step">audio retriever</text>
-  <text x="375" y="260" text-anchor="middle" class="small">CLAP ambient clips</text>
+  <text x="375" y="240" text-anchor="middle" class="step">音声検索器</text>
+  <text x="375" y="260" text-anchor="middle" class="small">CLAP環境音クリップ</text>
 
   <path d="M 465 105 L 505 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <path d="M 465 175 L 505 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <path d="M 465 245 L 505 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="510" y="130" width="170" height="90" class="reg"/>
-  <text x="595" y="152" text-anchor="middle" class="step">score fusion</text>
-  <text x="595" y="172" text-anchor="middle" class="small">weighted sum</text>
-  <text x="595" y="188" text-anchor="middle" class="small">or MoE gate</text>
-  <text x="595" y="206" text-anchor="middle" class="small">top-k candidates</text>
+  <text x="595" y="152" text-anchor="middle" class="step">スコア融合</text>
+  <text x="595" y="172" text-anchor="middle" class="small">重み付き和</text>
+  <text x="595" y="188" text-anchor="middle" class="small">またはMoE ゲート</text>
+  <text x="595" y="206" text-anchor="middle" class="small">上位k候補</text>
 
   <path d="M 685 175 L 725 175" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="730" y="130" width="180" height="90" class="cool"/>
-  <text x="820" y="152" text-anchor="middle" class="step">VLM generator</text>
+  <text x="820" y="152" text-anchor="middle" class="step">VLM生成器</text>
   <text x="820" y="172" text-anchor="middle" class="small">Qwen2.5-VL / Claude</text>
-  <text x="820" y="188" text-anchor="middle" class="small">grounded citations</text>
-  <text x="820" y="206" text-anchor="middle" class="small">per source</text>
+  <text x="820" y="188" text-anchor="middle" class="small">根拠付き引用</text>
+  <text x="820" y="206" text-anchor="middle" class="small">ソースごとに</text>
 
   <rect x="30" y="290" width="900" height="220" class="box"/>
-  <text x="480" y="312" text-anchor="middle" class="head">the three surveys of 2025</text>
+  <text x="480" y="312" text-anchor="middle" class="head">2025年の3つのサーベイ</text>
 
   <rect x="60" y="330" width="260" height="170" class="hot"/>
   <text x="190" y="352" text-anchor="middle" class="step">Abootorabi et al.</text>
   <text x="190" y="368" text-anchor="middle" class="small">arXiv:2502.08826</text>
-  <text x="190" y="388" text-anchor="middle" class="small">comprehensive taxonomy</text>
-  <text x="190" y="404" text-anchor="middle" class="small">retrieval / fusion / generation</text>
-  <text x="190" y="420" text-anchor="middle" class="small">broadest coverage</text>
-  <text x="190" y="446" text-anchor="middle" class="step">start here if new</text>
-  <text x="190" y="466" text-anchor="middle" class="caption">names all subproblems</text>
+  <text x="190" y="388" text-anchor="middle" class="small">包括的分類体系</text>
+  <text x="190" y="404" text-anchor="middle" class="small">検索 / 融合 / 生成</text>
+  <text x="190" y="420" text-anchor="middle" class="small">最も広い網羅性</text>
+  <text x="190" y="446" text-anchor="middle" class="step">初学者はここから</text>
+  <text x="190" y="466" text-anchor="middle" class="caption">全部分問題に名前を付ける</text>
 
   <rect x="340" y="330" width="260" height="170" class="cool"/>
   <text x="470" y="352" text-anchor="middle" class="step">Mei et al.</text>
   <text x="470" y="368" text-anchor="middle" class="small">arXiv:2504.08748</text>
-  <text x="470" y="388" text-anchor="middle" class="small">sub-task benchmarks</text>
-  <text x="470" y="404" text-anchor="middle" class="small">failure modes cataloged</text>
-  <text x="470" y="420" text-anchor="middle" class="small">useful for eval design</text>
-  <text x="470" y="446" text-anchor="middle" class="step">read for evals</text>
-  <text x="470" y="466" text-anchor="middle" class="caption">per-metric decomposition</text>
+  <text x="470" y="388" text-anchor="middle" class="small">サブタスクベンチマーク</text>
+  <text x="470" y="404" text-anchor="middle" class="small">失敗モードを整理</text>
+  <text x="470" y="420" text-anchor="middle" class="small">評価設計に有用</text>
+  <text x="470" y="446" text-anchor="middle" class="step">評価目的で読む</text>
+  <text x="470" y="466" text-anchor="middle" class="caption">指標別分解</text>
 
   <rect x="620" y="330" width="290" height="170" class="cold"/>
   <text x="765" y="352" text-anchor="middle" class="step">Zhao et al.</text>
   <text x="765" y="368" text-anchor="middle" class="small">arXiv:2503.18016</text>
-  <text x="765" y="388" text-anchor="middle" class="small">vision-focused RAG</text>
-  <text x="765" y="404" text-anchor="middle" class="small">strong on ColPali-family</text>
-  <text x="765" y="420" text-anchor="middle" class="small">visual-only emphasis</text>
-  <text x="765" y="446" text-anchor="middle" class="step">read for vision RAG</text>
-  <text x="765" y="466" text-anchor="middle" class="caption">complements lesson 23</text>
+  <text x="765" y="388" text-anchor="middle" class="small">視覚重視 RAG</text>
+  <text x="765" y="404" text-anchor="middle" class="small">ColPali-familyに強い</text>
+  <text x="765" y="420" text-anchor="middle" class="small">視覚のみを重視</text>
+  <text x="765" y="446" text-anchor="middle" class="step">視覚RAG目的で読む</text>
+  <text x="765" y="466" text-anchor="middle" class="caption">lesson 23を補完</text>
 </svg>

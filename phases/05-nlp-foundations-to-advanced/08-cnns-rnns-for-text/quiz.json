@@ -1,102 +1,102 @@
 {
   "lesson": "08-cnns-rnns-for-text",
-  "title": "CNNs and RNNs for Text",
+  "title": "テキスト向けCNNとRNN",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a 1D convolutional filter of width 3 over word embeddings effectively learning?",
+      "question": "単語埋め込み上の幅3の1D畳み込みフィルタは、実質的に何を学習していますか？",
       "options": [
-        "A learnable bigram detector",
-        "A position embedding",
-        "A learnable trigram (n-gram) detector",
-        "A unigram count"
+        "学習可能なbigram検出器",
+        "位置埋め込み",
+        "学習可能なtrigram (n-gram) 検出器",
+        "unigramカウント"
       ],
       "correct": 2,
-      "explanation": "A width-3 filter spans three consecutive tokens, acting as a learnable trigram detector."
+      "explanation": "幅3のフィルタは連続する3トークンにまたがるため、学習可能なtrigram検出器として働きます。"
     },
     {
       "stage": "pre",
-      "question": "Why does an LSTM use a cell state with mostly additive interactions?",
+      "question": "LSTMが主に加算的な相互作用を持つcell stateを使うのはなぜですか？",
       "options": [
-        "Additive flow lets gradients propagate through long sequences without vanishing or exploding",
-        "Faster softmax",
-        "It saves memory",
-        "To avoid matrix inversion"
+        "加算的な流れにより、長い系列でも勾配が消失・爆発しにくく伝播できるから",
+        "softmaxを高速にするため",
+        "メモリを節約するため",
+        "行列の逆行列計算を避けるため"
       ],
       "correct": 0,
-      "explanation": "The cell-state highway keeps gradients stable across hundreds of steps, fixing vanishing-gradient issues."
+      "explanation": "cell-stateの高速道路は数百ステップにわたって勾配を安定させ、勾配消失の問題を緩和します。"
     },
     {
       "stage": "check",
-      "question": "Why does TextCNN use global max-pooling after the convolutional layer?",
+      "question": "TextCNNが畳み込み層の後にglobal max-poolingを使うのはなぜですか？",
       "options": [
-        "To enable backpropagation",
-        "To remove embeddings",
-        "To reduce vocabulary",
-        "Max-pool gives a fixed-size, position-invariant representation by selecting the strongest activation per filter"
+        "backpropagationを可能にするため",
+        "埋め込みを取り除くため",
+        "語彙を減らすため",
+        "フィルタごとの最も強い活性化を選び、固定長で位置不変な表現を得るため"
       ],
       "correct": 3,
-      "explanation": "Global max-pool produces a fixed-size feature vector regardless of input length, with position invariance."
+      "explanation": "global max-poolは入力長に関係なく固定長の特徴ベクトルを作り、位置不変性も与えます。"
     },
     {
       "stage": "check",
-      "question": "What is the main advantage of a bidirectional RNN over a one-way RNN for sequence labeling?",
+      "question": "系列ラベリングにおいて、双方向RNNが一方向RNNより優れる主な点は何ですか？",
       "options": [
-        "Faster training",
-        "Each token's representation sees both left and right context, which is essential for tagging",
-        "Avoids embeddings",
-        "Cheaper memory"
+        "訓練が速いこと",
+        "各トークンの表現が左右両方の文脈を見られ、タグ付けに不可欠であること",
+        "埋め込みを不要にすること",
+        "メモリが安いこと"
       ],
       "correct": 1,
-      "explanation": "Bidirectional networks concatenate forward + backward hidden states so labels can use full context."
+      "explanation": "双方向ネットワークは順方向と逆方向の隠れ状態を連結するため、ラベルが全文脈を利用できます。"
     },
     {
       "stage": "check",
-      "question": "Why does max-pooling over an LSTM's outputs often beat using just the last hidden state for classification?",
+      "question": "LSTMの出力にmax-poolingをかける方法が、分類で最後の隠れ状態だけを使う方法を上回りやすいのはなぜですか？",
       "options": [
-        "Max-pool is differentiable; last-state is not",
-        "Information at the end of a long sequence tends to dominate the last state, hiding earlier evidence",
-        "Max-pool removes capitalization",
-        "Last-state pool ignores padding"
+        "max-poolは微分可能だが、last-stateは微分可能ではないから",
+        "長い系列では末尾の情報が最後の状態を支配しやすく、前半の証拠が隠れるから",
+        "max-poolが大文字小文字を取り除くから",
+        "last-state poolはpaddingを無視するから"
       ],
       "correct": 1,
-      "explanation": "Max-pool aggregates strongest signal across positions; last-state can lose earlier evidence."
+      "explanation": "max-poolは各位置の最も強い信号を集約します。last-stateは前半の証拠を失うことがあります。"
     },
     {
       "stage": "post",
-      "question": "Which limitation of LSTM/RNN encoder-decoders motivated attention?",
+      "question": "Attentionを動機づけたLSTM/RNN encoder-decoderの制約はどれですか？",
       "options": [
-        "They require subword tokenizers",
-        "They cannot use embeddings",
-        "The decoder sees only a fixed-size encoder state, losing detail on long inputs; recurrence also serializes training",
-        "They cannot embed tokens"
+        "subword tokenizerが必須であること",
+        "埋め込みを使えないこと",
+        "decoderが固定長のencoder状態だけを見るため長い入力の詳細を失い、さらに再帰が訓練を逐次化すること",
+        "トークンを埋め込めないこと"
       ],
       "correct": 2,
-      "explanation": "Fixed-size summarization plus serial training were two failures attention removed."
+      "explanation": "固定長要約と逐次訓練は、Attentionが取り除いた2つの失敗でした。"
     },
     {
       "stage": "post",
-      "question": "When does a TextCNN or BiLSTM still beat a transformer in 2026?",
+      "question": "2026年でもTextCNNやBiLSTMがTransformerに勝つのはどのような場合ですか？",
       "options": [
-        "On image inputs",
-        "Edge / on-device, streaming token-by-token inputs, or tiny-data baselines",
-        "Whenever the dataset is multilingual",
-        "When latency requirements are extremely loose"
+        "画像入力の場合",
+        "エッジ / オンデバイス、トークン単位のストリーミング入力、または少量データのベースラインの場合",
+        "データセットが多言語である場合は常に",
+        "レイテンシ要件が非常に緩い場合"
       ],
       "correct": 1,
-      "explanation": "Small architectures still win on edge inference, streaming inputs, and rapid baselines."
+      "explanation": "小型アーキテクチャは、エッジ推論、ストリーミング入力、高速なベースラインで今でも勝ちます。"
     },
     {
       "stage": "post",
-      "question": "What is the vanishing gradient problem in plain RNNs?",
+      "question": "素のRNNにおける勾配消失問題とは何ですか？",
       "options": [
-        "Repeated multiplication by recurrent weights smaller than 1 makes gradients toward early steps shrink toward zero",
-        "Embedding matrix becomes singular",
-        "Inputs become zero",
-        "Loss becomes negative"
+        "1未満の再帰重みによる反復乗算で、初期ステップへ向かう勾配がゼロに近づくこと",
+        "埋め込み行列が特異になること",
+        "入力がゼロになること",
+        "損失が負になること"
       ],
       "correct": 0,
-      "explanation": "Long-product gradients vanish (or explode) without gating; this is why LSTMs and GRUs exist."
+      "explanation": "ゲートがないと長い積の勾配は消失または爆発します。これがLSTMやGRUが存在する理由です。"
     }
   ]
 }

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -12,48 +12,48 @@
       .title { font-size: 17px; font-weight: 700; fill: #1a1a1a; }
       .head  { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
       .label { font-size: 12px; fill: #1a1a1a; font-weight: 600; }
-      .content { font-size: 11px; fill: #222; font-family: 'Menlo', 'Courier New', monospace; }
-      .small   { font-size: 10px; fill: #444; font-family: 'Menlo', 'Courier New', monospace; }
+      .content { font-size: 11px; fill: #222; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', 'Courier New', monospace; }
+      .small   { font-size: 10px; fill: #444; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', 'Courier New', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
       .edge-cron { stroke: #8a6d00; stroke-width: 1.5; fill: none; stroke-dasharray: 6 3; }
     </style>
   </defs>
 
-  <text x="480" y="28" text-anchor="middle" class="title">MCP auth in production on iii primitives — DCR + JWKS rotation + audience pinning</text>
+  <text x="480" y="28" text-anchor="middle" class="title">iii primitives上の本番MCP auth — DCR + JWKS rotation + audience pinning</text>
   <text x="480" y="48" text-anchor="middle" class="caption">RFC 8414 metadata · RFC 7591 DCR · RFC 7636 PKCE · RFC 8707 resource · RFC 9728 protected resource · MCP 2025-11-25</text>
 
   <rect x="30"  y="80" width="180" height="500" class="cool"/>
   <text x="120" y="102" text-anchor="middle" class="head">MCP client</text>
   <text x="46"  y="124" class="content">Cursor / Claude Desktop</text>
-  <text x="46"  y="150" class="label">holds</text>
-  <text x="46"  y="168" class="small">- client_id (from DCR)</text>
-  <text x="46"  y="184" class="small">- PKCE verifier</text>
-  <text x="46"  y="200" class="small">- access tokens by aud</text>
+  <text x="46"  y="150" class="label">保持するもの</text>
+  <text x="46"  y="168" class="small">- client_id (DCR由来)</text>
+  <text x="46"  y="184" class="small">- PKCE検証子</text>
+  <text x="46"  y="200" class="small">- aud別access tokens</text>
   <text x="46"  y="216" class="small">- registration_access_token</text>
 
   <rect x="390" y="80" width="180" height="500" class="cold"/>
-  <text x="480" y="102" text-anchor="middle" class="head">authorization server</text>
+  <text x="480" y="102" text-anchor="middle" class="head">認可server</text>
   <text x="406" y="124" class="content">issuer = auth.example.com</text>
-  <text x="406" y="150" class="label">publishes</text>
+  <text x="406" y="150" class="label">公開するもの</text>
   <text x="406" y="168" class="small">- /.well-known/</text>
   <text x="406" y="184" class="small">  oauth-authorization-server</text>
   <text x="406" y="200" class="small">  (RFC 8414)</text>
   <text x="406" y="216" class="small">- /register (RFC 7591)</text>
-  <text x="406" y="232" class="small">- /token + PKCE check</text>
-  <text x="406" y="248" class="small">- aud-pin via resource</text>
+  <text x="406" y="232" class="small">- /token + PKCE確認</text>
+  <text x="406" y="248" class="small">- resourceでaud固定</text>
   <text x="406" y="264" class="small">  (RFC 8707)</text>
   <text x="406" y="280" class="small">- /.well-known/jwks.json</text>
 
   <rect x="750" y="80" width="180" height="500" class="hot"/>
   <text x="840" y="102" text-anchor="middle" class="head">MCP server</text>
   <text x="766" y="124" class="content">notes.example.com</text>
-  <text x="766" y="150" class="label">enforces</text>
+  <text x="766" y="150" class="label">強制するもの</text>
   <text x="766" y="168" class="small">- aud == self.resource</text>
-  <text x="766" y="184" class="small">- iss in allow-list</text>
+  <text x="766" y="184" class="small">- iss が許可list内</text>
   <text x="766" y="200" class="small">  (RFC 9728)</text>
-  <text x="766" y="216" class="small">- exp not past</text>
-  <text x="766" y="232" class="small">- required scope</text>
+  <text x="766" y="216" class="small">- exp が期限内</text>
+  <text x="766" y="232" class="small">- 必須scope</text>
   <text x="766" y="248" class="small">- 401/403 with</text>
   <text x="766" y="264" class="small">  WWW-Authenticate</text>
 
@@ -102,12 +102,12 @@
   <text x="300" y="352" text-anchor="middle" class="small">access_token (aud, scope, kid)</text>
 
   <path d="M210,608 L750,608" class="edge" marker-end="url(#arrow)" transform="translate(0,-40)"/>
-  <text x="480" y="562" text-anchor="middle" class="small">Authorization: Bearer eyJ... (call tool)</text>
-  <text x="480" y="582" text-anchor="middle" class="caption">(4) MCP request — server triggers iii function auth::validate-jwt</text>
+  <text x="480" y="562" text-anchor="middle" class="small">Authorization: Bearer eyJ... (tool呼び出し)</text>
+  <text x="480" y="582" text-anchor="middle" class="caption">(4) MCP request — serverがiii function auth::validate-jwtをtrigger</text>
 
   <path d="M570,470 L580,470" class="edge-cron" marker-end="url(#arrow)"/>
-  <text x="575" y="462" text-anchor="middle" class="caption">cron writes</text>
+  <text x="575" y="462" text-anchor="middle" class="caption">cronがwrite</text>
 
   <path d="M740,470 L750,470" class="edge-cron" marker-end="url(#arrow)"/>
-  <text x="745" y="462" text-anchor="middle" class="caption">validate reads</text>
+  <text x="745" y="462" text-anchor="middle" class="caption">validateがread</text>
 </svg>

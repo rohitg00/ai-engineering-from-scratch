@@ -1,15 +1,15 @@
 # Real-Time Audio Processing
 
-> Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot lives and dies by this latency budget.
+> バッチパイプラインはファイルを処理します。リアルタイムパイプラインは、次の20ミリ秒が到着する前に、今の20ミリ秒を処理します。すべての会話 AI、放送スタジオ、電話 bot は、このレイテンシ予算で成否が決まります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 6 · 04 (ASR), Phase 6 · 07 (TTS)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 6 · 02 (Spectrograms), Phase 6 · 04 (ASR), Phase 6 · 07 (TTS)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-You want a voice assistant that feels alive. Human conversational turn-taking latency is ~230 ms (silence-to-response). Anything above 500 ms feels robotic; above 1500 ms feels broken. The budget for a full **hear → understand → respond → speak** loop in 2026 is:
+生きているように感じられる voice assistant を作りたいとします。人間の会話の turn-taking latency は約 230 ms（沈黙から応答まで）です。500 ms を超えるとロボット的に感じられ、1500 ms を超えると壊れているように感じられます。2026年の **hear → understand → respond → speak** ループ全体の予算は次のとおりです。
 
 | Stage | Budget |
 |-------|--------|
@@ -21,34 +21,34 @@ You want a voice assistant that feels alive. Human conversational turn-taking la
 | Render → speaker | 20 ms |
 | **Total** | **~400 ms** |
 
-Moshi (Kyutai, 2024) clocked 200 ms full-duplex. GPT-4o-realtime (2024) clocks ~320 ms. Cascaded pipelines in 2022 shipped at 2500 ms. The 10× improvement came from three techniques: (1) streaming everywhere, (2) asynchronous pipelining with partial results, (3) interruptible generation.
+Moshi（Kyutai、2024年）は full-duplex で 200 ms を記録しました。GPT-4o-realtime（2024年）は約 320 ms です。2022年の cascaded pipeline は 2500 ms で出荷されていました。10倍の改善は、(1) すべてを streaming にする、(2) partial results を使って非同期に pipeline 化する、(3) generation を interruptible にする、という3つの技術から来ました。
 
-## The Concept
+## コンセプト
 
 ![Streaming audio pipeline with ring buffer, VAD gate, interruption](../assets/real-time.svg)
 
-**Frame / chunk / window.** Real-time audio flows as fixed-size blocks. Common choice: 20 ms (320 samples at 16 kHz). Everything downstream must keep up with this cadence.
+**Frame / chunk / window。** リアルタイム音声は固定サイズのブロックとして流れます。一般的な選択は 20 ms（16 kHz で 320 samples）です。下流のすべての処理は、この周期に追いつかなければなりません。
 
-**Ring buffer.** Fixed-size circular buffer. Producer thread writes new frames, consumer thread reads. Prevents allocations in the hot path. Size ≈ maximum-latency × sample-rate; a 2-second 16 kHz ring = 32,000 samples.
+**Ring buffer。** 固定サイズの circular buffer です。producer thread が新しい frame を書き込み、consumer thread が読みます。hot path での allocation を防ぎます。サイズはおおよそ maximum-latency × sample-rate です。2秒の 16 kHz ring は 32,000 samples です。
 
-**VAD (Voice Activity Detection).** Gates downstream work when nobody is speaking. Silero VAD 4.0 (2024) runs <1 ms per 30 ms frame on CPU. `webrtcvad` is the older alternative.
+**VAD (Voice Activity Detection)。** 誰も話していないとき、下流の処理を止めます。Silero VAD 4.0（2024年）は CPU 上で 30 ms frame あたり <1 ms で動作します。`webrtcvad` は古い代替です。
 
-**Streaming ASR.** Models that emit partial transcripts as audio arrives. Parakeet-CTC-0.6B in streaming mode (NeMo, 2024) does 2–5% WER at 320 ms latency. Whisper-Streaming (Macháček et al., 2023) chunks Whisper for near-streaming at ~2 s latency.
+**Streaming ASR。** 音声が到着するにつれて partial transcript を出すモデルです。Parakeet-CTC-0.6B の streaming mode（NeMo、2024年）は、320 ms latency で 2-5% WER を出します。Whisper-Streaming（Macháček et al., 2023）は Whisper を chunk 化し、約 2 s latency の near-streaming を実現します。
 
-**Interruption.** When the user speaks while the assistant is talking, you must (a) detect the barge-in, (b) stop the TTS, (c) discard the remaining LLM output. All within 100 ms, or the user perceives deaf assistant.
+**Interruption。** assistant が話している間にユーザーが話し始めたら、(a) barge-in を検出し、(b) TTS を停止し、(c) 残りの LLM output を捨てる必要があります。すべて 100 ms 以内に行わないと、ユーザーは assistant が耳を貸していないと感じます。
 
-**WebRTC Opus transport.** 20 ms frames, 48 kHz, adaptive bitrate 8–128 kbps. Standard for browser and mobile. LiveKit, Daily.co, Pion are the 2026 stacks for building voice apps.
+**WebRTC Opus transport。** 20 ms frames、48 kHz、adaptive bitrate 8-128 kbps。ブラウザとモバイルの標準です。LiveKit、Daily.co、Pion は、voice app を作るための2026年の stack です。
 
-**Jitter buffer.** Network packets arrive out of order / late. The jitter buffer reorders and smooths; too small → audible gaps, too large → latency. 60–80 ms typical.
+**Jitter buffer。** ネットワーク packet は順不同または遅延して到着します。jitter buffer は並べ替えと平滑化を行います。小さすぎると可聴の欠落が出て、大きすぎると latency が増えます。60-80 ms が典型です。
 
-### Common gotchas
+### よくある落とし穴
 
-- **Thread contention.** Python's GIL + heavy models can starve the audio thread. Use a C-callback audio library (sounddevice, PortAudio) and keep Python off the hot path.
-- **Sample-rate conversion latency.** Resampling inside the pipeline adds 5–20 ms. Either resample upfront or use a zero-latency resampler (PolyPhase, `soxr_hq`).
-- **TTS priming.** Even fast TTS like Kokoro has a 100–200 ms warm-up on first request. Cache model + warm it with a dummy run before the first real turn.
-- **Echo cancellation.** Without AEC, TTS output re-enters the mic and triggers ASR on the bot's own voice. WebRTC AEC3 is the open-source default.
+- **Thread contention。** Python の GIL と重いモデルは audio thread を飢えさせることがあります。C-callback の audio library（sounddevice、PortAudio）を使い、hot path に Python を置かないでください。
+- **Sample-rate conversion latency。** pipeline 内の resampling は 5-20 ms を追加します。最初に resample するか、zero-latency resampler（PolyPhase、`soxr_hq`）を使います。
+- **TTS priming。** Kokoro のような高速 TTS でも、初回リクエストでは 100-200 ms の warm-up があります。モデルを cache し、最初の実 turn の前に dummy run で warm します。
+- **Echo cancellation。** AEC がないと、TTS output が mic に戻り、bot 自身の声で ASR が発火します。WebRTC AEC3 がオープンソースの標準です。
 
-## Build It
+## 作ってみる
 
 ### Step 1: ring buffer
 
@@ -66,7 +66,7 @@ class RingBuffer:
         return len(self.buf)
 ```
 
-Capacity determines max buffering latency. 32,000 samples at 16 kHz = 2 s.
+capacity は最大 buffering latency を決めます。16 kHz で 32,000 samples = 2 s です。
 
 ### Step 2: VAD gate
 
@@ -75,7 +75,7 @@ def simple_energy_vad(frame, threshold=0.01):
     return sum(x * x for x in frame) / len(frame) > threshold ** 2
 ```
 
-Replace with Silero VAD in production:
+本番では Silero VAD に置き換えます。
 
 ```python
 import torch
@@ -115,11 +115,11 @@ class Dialog:
             speaker.write(tts_chunk)
 ```
 
-Hinges on async I/O and cancellable TTS streaming. WebRTC peerconnection.stop() on the audio track is the canonical way.
+async I/O と cancel 可能な TTS streaming に依存します。WebRTC では audio track に対する peerconnection.stop() が標準的な方法です。
 
-## Use It
+## 使いどころ
 
-The 2026 stack:
+2026年の stack:
 
 | Layer | Pick |
 |-------|------|
@@ -131,40 +131,40 @@ The 2026 stack:
 | Echo cancel | WebRTC AEC3 |
 | End-to-end native | OpenAI Realtime API or Moshi |
 
-## Pitfalls
+## 落とし穴
 
-- **Buffering 500 ms to be safe.** The buffer *is* your latency floor. Shrink it.
-- **Not pinning threads.** Audio callback on a priority-lower-than-UI thread = glitches under load.
-- **TTS chunks too small.** Sub-200 ms chunks make vocoder artifacts audible. 320 ms chunks are the sweet spot.
-- **No jitter buffer.** Real networks are jittery; without smoothing you get pops.
-- **Single-shot error handling.** Audio pipelines must be crash-proof. One exception kills the session.
+- **安全のために 500 ms buffering する。** buffer はそのまま latency floor です。縮めてください。
+- **thread を pin しない。** UI より低い priority の thread で audio callback を動かすと、負荷時に glitch が出ます。
+- **TTS chunk が小さすぎる。** 200 ms 未満の chunk は vocoder artifact が聞こえやすくなります。320 ms chunk がよい妥協点です。
+- **Jitter buffer がない。** 実ネットワークは jittery です。平滑化しないと pop が出ます。
+- **一発限りの error handling。** Audio pipeline は crash-proof でなければなりません。1つの例外で session が死にます。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-realtime-designer.md`. Design a real-time audio pipeline with concrete latency budgets per stage.
+`outputs/skill-realtime-designer.md` として保存します。stage ごとの具体的な latency budget を持つ real-time audio pipeline を設計します。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. Simulates a ring buffer + energy VAD; prints stage latencies for a fake 10-second stream.
-2. **Medium.** Using `sounddevice`, build a passthrough loop that processes your mic in 20 ms frames and prints VAD state at each frame.
-3. **Hard.** Build a full duplex echo test with `aiortc`: browser → WebRTC → Python → WebRTC → browser. Measure glass-to-glass latency with a 1 kHz pulse.
+1. **Easy。** `code/main.py` を実行します。ring buffer + energy VAD をシミュレートし、fake 10-second stream の stage latencies を出力します。
+2. **Medium。** `sounddevice` を使い、mic を 20 ms frame で処理する passthrough loop を作り、各 frame の VAD state を出力します。
+3. **Hard。** `aiortc` で full duplex echo test を作ります。browser → WebRTC → Python → WebRTC → browser。1 kHz pulse で glass-to-glass latency を測定します。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Ring buffer | The circular queue | Fixed-size, lock-free (or SPSC-locked) FIFO for audio frames. |
-| VAD | Silence gate | Model or heuristic marking speech vs non-speech. |
-| Streaming ASR | Real-time STT | Emits partial text as audio arrives; bounded lookahead. |
-| Jitter buffer | Network smoother | Queue reordering out-of-order packets; 60–80 ms typical. |
-| AEC | Echo cancellation | Subtracts speaker-to-mic feedback path. |
-| Barge-in | User interrupt | System detects user speech mid-TTS; must cancel playback. |
-| Full duplex | Simultaneous both ways | User and bot can talk at the same time; Moshi is full duplex. |
+| Ring buffer | The circular queue | audio frames 向けの固定サイズ、lock-free（または SPSC-locked）FIFO。 |
+| VAD | Silence gate | speech vs non-speech を示すモデルまたは heuristic。 |
+| Streaming ASR | Real-time STT | 音声到着に合わせて partial text を出す。lookahead は bounded。 |
+| Jitter buffer | Network smoother | out-of-order packets を並べ替える queue。典型値は 60-80 ms。 |
+| AEC | Echo cancellation | speaker-to-mic feedback path を差し引く。 |
+| Barge-in | User interrupt | TTS 中の user speech を system が検出し、playback を cancel する必要がある。 |
+| Full duplex | Simultaneous both ways | user と bot が同時に話せる。Moshi は full duplex。 |
 
-## Further Reading
+## 参考資料
 
-- [Macháček et al. (2023). Whisper-Streaming](https://arxiv.org/abs/2307.14743) — chunked near-streaming Whisper.
-- [Kyutai (2024). Moshi](https://kyutai.org/Moshi.pdf) — full-duplex 200 ms latency.
-- [LiveKit Agents framework (2024)](https://docs.livekit.io/agents/) — production audio agent orchestration.
-- [Silero VAD repo](https://github.com/snakers4/silero-vad) — sub-1 ms VAD, Apache 2.0.
-- [WebRTC AEC3 paper](https://webrtc.googlesource.com/src/+/main/modules/audio_processing/aec3/) — echo cancellation under open source.
+- [Macháček et al. (2023). Whisper-Streaming](https://arxiv.org/abs/2307.14743) — chunked near-streaming Whisper。
+- [Kyutai (2024). Moshi](https://kyutai.org/Moshi.pdf) — full-duplex 200 ms latency。
+- [LiveKit Agents framework (2024)](https://docs.livekit.io/agents/) — production audio agent orchestration。
+- [Silero VAD repo](https://github.com/snakers4/silero-vad) — sub-1 ms VAD、Apache 2.0。
+- [WebRTC AEC3 paper](https://webrtc.googlesource.com/src/+/main/modules/audio_processing/aec3/) — オープンソースの echo cancellation。

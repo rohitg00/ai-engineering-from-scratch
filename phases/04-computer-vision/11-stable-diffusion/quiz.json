@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does Stable Diffusion run its DDPM in a 4x64x64 latent space rather than directly on 3x512x512 pixel images?",
-      "options": ["Latents are easier to visualise", "Training and sampling on 16,384 latent values instead of 786,432 pixels is roughly 48x cheaper; a pretrained VAE handles the image <-> latent conversion, and the diffusion model only has to model the structured latent manifold", "Latents are the native output of GPUs", "To make inference deterministic"],
+      "question": "Stable Diffusion は、なぜ 3x512x512 の pixel images に直接ではなく、4x64x64 の latent space で DDPM を実行するのですか？",
+      "options": ["Latents のほうが visualise しやすいため", "786,432 pixels ではなく 16,384 latent values 上で学習・sampling するため、およそ 48x 安価になります。pretrained VAE が image <-> latent conversion を担当し、diffusion model は構造化された latent manifold だけを model 化すればよいため", "Latents は GPU の native output だから", "Inference を deterministic にするため"],
       "correct": 1,
-      "explanation": "Latent diffusion is the single innovation that made consumer-GPU text-to-image practical. The VAE compresses 48x spatial and channel information. The diffusion model can spend its entire parameter and compute budget modelling the latent manifold, which is the part the user sees after decoding."
+      "explanation": "Latent diffusion は、consumer-GPU で text-to-image を実用化した単一の革新です。VAE は spatial と channel の情報を 48x 圧縮します。diffusion model は、decoding 後にユーザーが見る部分である latent manifold の model 化に parameter と compute budget を集中できます。"
     },
     {
       "stage": "pre",
-      "question": "What does classifier-free guidance (CFG) do at inference?",
-      "options": ["Runs two separate models and averages them", "Uses one model trained to predict both conditional eps_cond and unconditional eps_uncond noise, then combines them as eps = eps_uncond + w*(eps_cond - eps_uncond) to amplify prompt adherence", "Adds a classifier head to the model at test time", "Uses a larger scheduler"],
+      "question": "classifier-free guidance (CFG) は inference 時に何をしますか？",
+      "options": ["2 つの別々の model を実行して平均する", "conditional eps_cond と unconditional eps_uncond noise の両方を予測するよう学習された 1 つの model を使い、eps = eps_uncond + w*(eps_cond - eps_uncond) と組み合わせて prompt adherence を増幅する", "test time に classifier head を model に追加する", "より大きな scheduler を使う"],
       "correct": 1,
-      "explanation": "CFG trains a single model with the conditioning dropped 10% of the time so the same weights produce both cond and uncond predictions. At inference the formula above amplifies the conditional direction. Guidance scale w is the standard knob to tune prompt adherence vs diversity; SD defaults to 7.5."
+      "explanation": "CFG では conditioning を 10% の確率で落として単一 model を学習するため、同じ weights が cond と uncond の両方の予測を出します。inference では上の式が conditional direction を増幅します。guidance scale w は prompt adherence と diversity を調整する標準 knob で、SD の default は 7.5 です。"
     },
     {
       "stage": "post",
-      "question": "You swap SD's default scheduler for DPM-Solver++ 2M Karras and reduce num_inference_steps from 50 to 20. What is the expected result?",
-      "options": ["Worse quality and longer runtime", "Comparable quality in roughly half the time; DPM-Solver++ is a second-order ODE integrator that converges in fewer steps than DDIM for the same sample quality", "Numerical instability", "You must also retrain the model"],
+      "question": "SD の default scheduler を DPM-Solver++ 2M Karras に替え、num_inference_steps を 50 から 20 に減らしました。期待される結果は何ですか？",
+      "options": ["品質が悪化し runtime が長くなる", "同程度の品質をおよそ半分の時間で得られる。DPM-Solver++ は second-order ODE integrator で、同じ sample quality に対して DDIM より少ない steps で収束するため", "数値的に不安定になる", "model も retrain しなければならない"],
       "correct": 1,
-      "explanation": "Schedulers are decoupled from the model weights. DPM-Solver++ is a higher-order solver that achieves DDIM-50 quality in about 20 steps. Zero retraining required, and it is the production default in 2026. Going below 8 steps typically needs distilled/consistency-model variants like LCM or Turbo."
+      "explanation": "Schedulers は model weights から切り離されています。DPM-Solver++ は higher-order solver で、約 20 steps で DDIM-50 相当の品質を達成します。retraining は不要で、2026 年の production default です。8 steps 未満にする場合は通常 LCM や Turbo のような distilled/consistency-model variants が必要です。"
     },
     {
       "stage": "post",
-      "question": "Why is LoRA fine-tuning popular for Stable Diffusion instead of full fine-tuning?",
-      "options": ["LoRA produces better images by default", "LoRA keeps the 860M base U-Net frozen and inserts tiny rank-decomposition matrices into attention layers, so a fine-tune trains in minutes on consumer hardware, produces 10-50 MB adapters, and can be swapped or mixed at inference", "LoRA is required by diffusers", "LoRA prevents overfitting entirely"],
+      "question": "Stable Diffusion で full fine-tuning ではなく LoRA fine-tuning が人気なのはなぜですか？",
+      "options": ["LoRA はデフォルトでより良い画像を生成するため", "LoRA は 860M の base U-Net を frozen のままにし、attention layers に小さな rank-decomposition matrices を挿入します。そのため consumer hardware で数分で fine-tune でき、10-50 MB の adapters を作れ、inference 時に差し替えたり混ぜたりできるため", "LoRA は diffusers で必須だから", "LoRA は overfitting を完全に防ぐため"],
       "correct": 1,
-      "explanation": "LoRA's value is training cost and distribution. Full SD fine-tuning updates 860M+ parameters and needs 20+ GB of VRAM. LoRA updates ~1-10M parameters and fits in 6-8 GB. The base model is unchanged, so the same LoRA loads into any compatible checkpoint, and multiple LoRAs can be combined. CivitAI's ecosystem is entirely LoRAs."
+      "explanation": "LoRA の価値は training cost と配布しやすさです。Full SD fine-tuning は 860M+ parameters を更新し、20+ GB の VRAM を必要とします。LoRA は約 1-10M parameters だけを更新し、6-8 GB に収まります。base model は変わらないため、同じ LoRA を互換 checkpoint に読み込め、複数の LoRA も組み合わせられます。CivitAI の ecosystem はほぼ LoRA で成り立っています。"
     },
     {
       "stage": "post",
-      "question": "You generate the same prompt with guidance_scale=15 and see oversaturated colours and burned-in artefacts. What is going on?",
-      "options": ["The model is broken", "CFG amplifies the conditional direction; past a threshold around 9-12 the amplification pushes predictions outside the manifold the VAE can decode cleanly, producing visual artefacts. Drop guidance to 7-9 for balanced results", "The VAE needs retraining", "The seed is wrong"],
+      "question": "同じ prompt を guidance_scale=15 で生成すると、過飽和の色と焼き付いた artefacts が見えました。何が起きていますか？",
+      "options": ["model が壊れている", "CFG は conditional direction を増幅します。9-12 前後の閾値を超えると、増幅により predictions が VAE がきれいに decode できる manifold の外へ押し出され、visual artefacts が生じます。balanced results には guidance を 7-9 に下げます", "VAE を retrain する必要がある", "seed が間違っている"],
       "correct": 1,
-      "explanation": "CFG's formula is unbounded: higher w moves the prediction further along (eps_cond - eps_uncond). Past a point, you leave the trained distribution and the VAE decoder produces over-saturated, posterised images. Production default is 7-8. Some newer schedulers support CFG scheduling (lower w at final timesteps) to avoid this."
+      "explanation": "CFG の式は unbounded です。w を高くすると、prediction は (eps_cond - eps_uncond) に沿ってさらに遠くへ移動します。ある点を超えると trained distribution から外れ、VAE decoder が over-saturated, posterised images を生成します。production default は 7-8 です。一部の新しい schedulers は、これを避けるため CFG scheduling（final timesteps で w を下げる）をサポートします。"
     }
   ]
 }

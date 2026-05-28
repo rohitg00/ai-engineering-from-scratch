@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow29" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -8,15 +8,15 @@
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Three-layer moderation: the 2026 default deployment pattern</text>
+  <text x="480" y="24" text-anchor="middle" class="title">3-layer moderation: 2026年のdefault deployment pattern</text>
 
   <rect x="40" y="60" width="180" height="100" class="cool"/>
   <text x="130" y="90" text-anchor="middle" class="step">user prompt</text>
@@ -31,7 +31,7 @@
   <rect x="440" y="60" width="180" height="100" class="hot"/>
   <text x="530" y="90" text-anchor="middle" class="step">model</text>
   <text x="530" y="115" text-anchor="middle" class="small">GPT-5, Claude, Gemini</text>
-  <text x="530" y="135" text-anchor="middle" class="small">or open-source</text>
+  <text x="530" y="135" text-anchor="middle" class="small">またはopen-source</text>
 
   <rect x="640" y="60" width="180" height="100" class="cool"/>
   <text x="730" y="90" text-anchor="middle" class="step">output moderation</text>
@@ -60,12 +60,12 @@
   <text x="780" y="250" text-anchor="middle" class="step">Perspective (toxicity baseline)</text>
   <text x="780" y="270" text-anchor="middle" class="small">TOXICITY / SEVERE / INSULT</text>
   <text x="780" y="288" text-anchor="middle" class="small">pre-LLM-era</text>
-  <text x="780" y="306" text-anchor="middle" class="small">still used in research</text>
+  <text x="780" y="306" text-anchor="middle" class="small">researchでは今も使用</text>
 
   <rect x="40" y="360" width="880" height="130" class="box"/>
   <text x="480" y="385" text-anchor="middle" class="head">deprecations + migration</text>
-  <text x="60" y="415" class="small">Azure Content Moderator: deprecated Feb 2024, retired Feb 2027.</text>
-  <text x="60" y="435" class="small">replacement: Azure AI Content Safety (LLM-based, integrates with Azure OpenAI).</text>
-  <text x="60" y="455" class="small">migration projects: 2024-2027 for affected deployments; factor into EU AI Act timeline.</text>
-  <text x="60" y="475" class="small">omni-moderation-latest (2024): free for most developers; text + images; 42% better on multilingual.</text>
+  <text x="60" y="415" class="small">Azure Content Moderator: 2024年2月deprecated、2027年2月retired。</text>
+  <text x="60" y="435" class="small">replacement: Azure AI Content Safety (LLM-based、Azure OpenAIとintegrate)。</text>
+  <text x="60" y="455" class="small">migration projects: 影響deploymentsは2024-2027。EU AI Act timelineにも織り込む。</text>
+  <text x="60" y="475" class="small">omni-moderation-latest (2024): 多くのdevelopersに無料。text + images。multilingualで42%改善。</text>
 </svg>

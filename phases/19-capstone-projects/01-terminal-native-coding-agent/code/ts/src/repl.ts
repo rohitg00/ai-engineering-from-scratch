@@ -23,10 +23,10 @@ export function parseCommand(line: string): Command {
 export function helpText(): string {
   return [
     "harness commands:",
-    "  run <task>   plan/act/observe loop for one task against the scripted model",
-    "  eval         run the offline eval and print pass/fail counts",
-    "  help         show this message",
-    "  quit         exit",
+    "  run <task>   scripted model に対して 1 task の plan/act/observe loop を実行",
+    "  eval         offline eval を実行し、pass/fail 数を表示",
+    "  help         この message を表示",
+    "  quit         終了",
   ].join("\n");
 }
 
@@ -62,7 +62,7 @@ export async function repl(sandbox: string): Promise<void> {
       );
       continue;
     }
-    console.log(`unknown command: ${cmd.raw}; type 'help'`);
+    console.log(`unknown command: ${cmd.raw}; 'help' と入力してください`);
   }
   rl.close();
 }

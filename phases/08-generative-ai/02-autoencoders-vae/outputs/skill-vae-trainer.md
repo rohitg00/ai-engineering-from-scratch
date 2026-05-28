@@ -1,18 +1,18 @@
 ---
 name: vae-trainer
-description: Specify VAE architecture, latent size, beta schedule, and eval plan for a given dataset and downstream use.
+description: データセットと下流用途に応じて、VAE アーキテクチャ、潜在サイズ、beta スケジュール、評価計画を指定する。
 version: 1.0.0
 phase: 8
 lesson: 02
 tags: [vae, latent, generative]
 ---
 
-Given a dataset profile (modality, resolution, dataset size) and the downstream use (reconstruction only, sampling, or input-encoder for a latent-diffusion or token-AR model), output:
+データセットのプロファイル（モダリティ、解像度、データセットサイズ）と下流用途（再構成のみ、サンプリング、または latent-diffusion / token-AR モデルの入力エンコーダ）を受け取り、次を出力する。
 
-1. Variant. Plain VAE, beta-VAE, VQ-VAE, RVQ (residual), or NVAE. One-sentence reason tied to modality and downstream use.
-2. Architecture. Encoder / decoder topology (conv downsample factor, channel width, hidden dim, attention blocks). Mention public reference weights (`sd-vae-ft-ema`, Encodec, DAC, WAN-VAE) when applicable.
-3. Latent dim. Spatial and channel dims. Total bits per sample. Compression ratio vs the raw data.
-4. Beta schedule. Warmup ramp, final value, and free-bits threshold if used.
-5. Eval plan. Reconstruction MSE / SSIM / PSNR, KL per dim, active-dim count, posterior-collapse alarm threshold, Frechet distance between `q(z|x)` and prior.
+1. 変種。Plain VAE、beta-VAE、VQ-VAE、RVQ（residual）、または NVAE。モダリティと下流用途に結び付けた理由を1文で述べる。
+2. アーキテクチャ。Encoder / decoder のトポロジー（conv downsample factor、channel width、hidden dim、attention blocks）。該当する場合は公開されている参照 weights（`sd-vae-ft-ema`、Encodec、DAC、WAN-VAE）に触れる。
+3. 潜在次元。空間次元とチャネル次元。サンプルあたりの総ビット数。raw data に対する圧縮率。
+4. Beta スケジュール。Warmup ramp、最終値、使用する場合は free-bits threshold。
+5. 評価計画。Reconstruction MSE / SSIM / PSNR、次元ごとの KL、active-dim 数、posterior-collapse の警告しきい値、`q(z|x)` と prior の Frechet distance。
 
-Refuse to ship a VAE with beta > 0.5 at training start (posterior collapse). Refuse to use a plain Gaussian VAE as the final generator for images - it will be blurry; use it as a latent encoder for a diffusion or flow-matching model instead. Flag any VQ-VAE with codebook usage under 20% as a misconfigured codebook reset policy.
+学習開始時点で beta > 0.5 の VAE は出荷を拒否する（posterior collapse）。plain Gaussian VAE を画像の最終ジェネレータとして使うことは拒否する。ぼやけるため、代わりに diffusion または flow-matching モデルの latent encoder として使う。codebook usage が 20% 未満の VQ-VAE には、codebook reset policy の設定ミスとして警告を付ける。

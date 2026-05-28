@@ -1,9 +1,9 @@
-"""Voting and debate topology harness, stdlib only.
+"""Voting and debate topology harness。stdlib のみ。
 
-Runs star / chain / tree / graph topologies under a scripted task. Each
-agent has a base-accuracy probability and an error_bias direction (which
-wrong answer it drifts to on miss). We simulate N agents, rounds of
-refinement, and measure (accuracy, tokens, simulated latency).
+scripted task 上で star / chain / tree / graph topology を実行する。
+各 agent は base-accuracy probability と error_bias direction
+(miss したときに drift する wrong answer) を持つ。N agents、refinement rounds を
+simulate し、(accuracy, tokens, simulated latency) を測る。
 """
 from __future__ import annotations
 
@@ -77,8 +77,8 @@ def run_tree(agents: list[SimAgent], correct: str, rng: random.Random) -> RunRes
 
 
 def run_graph(agents: list[SimAgent], correct: str, rng: random.Random, rounds: int = 2) -> RunResult:
-    # Every agent proposes, then every agent sees all proposals and may update
-    # (scaled down accuracy if they drift toward consensus).
+    # 全 agent が propose し、その後全 agent が全 proposal を見て update する場合がある
+    # (consensus に drift するなら accuracy は低下する)。
     positions = [a.answer(correct, rng) for a in agents]
     tokens = sum(a.tokens_per_call for a in agents)
     for _ in range(rounds - 1):
@@ -140,10 +140,10 @@ def main() -> None:
     bench(correct="RIGHT", trials=200, heterogeneous=False)
     bench(correct="RIGHT", trials=200, heterogeneous=True)
     print("\nTakeaways:")
-    print("  heterogeneous ensembles outperform homogeneous at every topology/N.")
-    print("  graph/N=7 shows coordination tax: tokens inflate ~7x over star/N=3.")
-    print("  star is the cost-sweet-spot for low-stakes aggregation.")
-    print("  chain underperforms on monoculture because one bias propagates along the chain.")
+    print("  heterogeneous ensemble はすべての topology/N で homogeneous を上回る。")
+    print("  graph/N=7 は coordination tax を示す。tokens は star/N=3 の約7倍に膨らむ。")
+    print("  star は low-stakes aggregation の cost sweet spot。")
+    print("  chain は1つの bias が chain に沿って伝播するため、monoculture で弱い。")
 
 
 if __name__ == "__main__":

@@ -1,87 +1,87 @@
 {
   "lesson": "17-personal-ai-tutor",
-  "title": "Capstone 17 — Personal AI Tutor (Adaptive, Multimodal, with Memory)",
+  "title": "キャップストーン 17 — Personal AI Tutor (Adaptive, Multimodal, with Memory)",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does a Socratic tutor policy do when a learner asks for the answer outright?",
+      "question": "Learner が答えをそのまま求めたとき、Socratic tutor policy は何をしますか？",
       "options": [
-        "Asks a leading question that scaffolds the learner toward the answer",
-        "Logs the request and goes silent",
-        "Provides the answer immediately and moves on",
-        "Switches to a different concept node"
+        "Learner を答えに近づける leading question を出す",
+        "Request を log して沈黙する",
+        "すぐに答えを提供して次へ進む",
+        "別の concept node に切り替える"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Which structure does the curriculum graph encode?",
+      "question": "Curriculum graph はどの構造を encode しますか？",
       "options": [
-        "A directed graph of concepts with prerequisite edges, attached to OER content",
-        "A random shuffle of topics",
-        "A flat list of unrelated concepts",
-        "Only the most recently studied node"
+        "OER content が付いた、prerequisite edge を持つ concept の directed graph",
+        "Topic の random shuffle",
+        "無関係な concept の flat list",
+        "直近に学習した node のみ"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the learner model update after each interaction?",
+      "question": "Learner model は各 interaction の後に何を更新しますか？",
       "options": [
-        "The base LLM's weights",
-        "The COPPA retention policy",
-        "The curriculum graph schema",
-        "Per-concept mastery probability via Bayesian knowledge tracing or a similar variant"
+        "Base LLM の weights",
+        "COPPA retention policy",
+        "Curriculum graph schema",
+        "Bayesian knowledge tracing または類似 variant による concept ごとの mastery probability"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How is memory split between episodic and semantic stores?",
+      "question": "Memory は episodic store と semantic store にどのように分かれますか？",
       "options": [
-        "Episodic holds every interaction; semantic holds compacted mistakes and preferences promoted from episodic",
-        "They are duplicates of the same data",
-        "Episodic is for the parent; semantic is for the learner",
-        "Episodic holds embeddings; semantic holds raw audio"
+        "Episodic は全 interaction を保持し、semantic は episodic から promote された compacted mistakes と preferences を保持する",
+        "同じ data の duplicate である",
+        "Episodic は parent 用、semantic は learner 用である",
+        "Episodic は embedding、semantic は raw audio を保持する"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which constraint shapes memory retention for K-12 learners?",
+      "question": "K-12 learner の memory retention を形作る制約はどれですか？",
       "options": [
-        "Retention based on model context length",
-        "Permanent retention with no deletion",
-        "GDPR only",
-        "COPPA-aware retention with auto-deletion after a defined window and parental access"
+        "Model context length に基づく retention",
+        "Deletion なしの永久 retention",
+        "GDPR のみ",
+        "定義された window 後の auto-deletion と parental access を持つ COPPA-aware retention"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the structure of the efficacy study used to gate the deliverable?",
+      "question": "提出物を gate する efficacy study の構造はどれですか？",
       "options": [
-        "Anonymous internet survey",
-        "A 30-second AB test",
-        "Pre-test and post-test over two weeks with 10 learners, compared against a non-adaptive baseline cohort",
-        "A single one-hour session with one learner"
+        "匿名 internet survey",
+        "30 秒の AB test",
+        "10 人の learner に対する 2 週間の pre-test と post-test。Non-adaptive baseline cohort と比較",
+        "1 人の learner に対する 1 時間 session"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which multimodal input paths does the tutor expose to the learner?",
+      "question": "Tutor が learner に提供する multimodal input path はどれですか？",
       "options": [
-        "Text only",
-        "Photo only via a custom OCR model",
-        "Voice only with no text or photo",
-        "Text typed, voice via LiveKit + Whisper, and photo math via dots.ocr or PaliGemma 2"
+        "Text のみ",
+        "Custom OCR model による photo のみ",
+        "Text や photo なしの voice のみ",
+        "Typed text、LiveKit + Whisper による voice、dots.ocr または PaliGemma 2 による photo math"
       ],
       "correct": 3,
       "explanation": ""

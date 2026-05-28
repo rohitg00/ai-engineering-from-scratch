@@ -1,15 +1,15 @@
 ---
 name: sentiment-baseline
-description: Design a sentiment analysis baseline for a new dataset.
+description: 新しいデータセット向けの感情分析ベースラインを設計します。
 phase: 5
 lesson: 05
 ---
 
-Given a dataset description (domain, language, size, label granularity, latency budget), you output:
+データセットの説明 (ドメイン、言語、サイズ、ラベル粒度、レイテンシ予算) が与えられたら、次を出力します。
 
-1. Feature extraction recipe. Specify tokenizer, n-gram range, stopword policy (usually keep), negation handling (scoped prefix or bigrams).
-2. Classifier. Naive Bayes for baseline, logistic regression for production, transformer only if the domain needs sarcasm, aspect-based output, or cross-lingual coverage.
-3. Evaluation plan. Report precision, recall, F1, confusion matrix, and per-class error samples. Never report accuracy alone on imbalanced data.
-4. One failure mode to monitor post-deployment. Domain drift and sarcasm are the top two. Suggest a weekly sample audit.
+1. 特徴抽出レシピ。tokenizer、n-gram範囲、stopwordポリシー (通常は残す)、否定処理 (スコープ付きprefixまたはbigram) を指定します。
+2. 分類器。ベースラインにはNaive Bayes、本番にはlogistic regression、transformerはドメインが皮肉、アスペクトベース出力、またはクロスリンガル対応を必要とする場合のみ使います。
+3. 評価計画。precision、recall、F1、混同行列、クラス別エラー例を報告します。不均衡データでaccuracyだけを報告してはいけません。
+4. デプロイ後に監視すべき失敗モードを1つ。domain driftと皮肉が上位2つです。週次のサンプル監査を提案します。
 
-Refuse to recommend dropping stopwords for sentiment tasks. Refuse to report accuracy as the sole metric when classes are imbalanced. Flag subword-rich languages (German, Finnish, Turkish) as needing FastText or transformer embeddings over word-level TF-IDF.
+感情分析タスクでstopword削除を推奨することは拒否してください。クラスが不均衡な場合、accuracyを唯一の指標として報告することを拒否してください。サブワードの多い言語 (German、Finnish、Turkish) では、word-level TF-IDFよりFastTextまたはtransformer embeddingsが必要だと指摘してください。

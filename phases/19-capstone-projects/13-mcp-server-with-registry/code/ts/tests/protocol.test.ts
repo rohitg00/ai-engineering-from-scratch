@@ -9,7 +9,7 @@ function freshState() {
   return makeState(TOOL_DESCRIPTORS, makeExecutors(makeIncidents()));
 }
 
-test("initialize returns protocol version and server info", () => {
+test("initialize は protocol version と server info を返す", () => {
   const state = freshState();
   const resp = dispatch(state, { jsonrpc: "2.0", id: 1, method: "initialize" });
   assert.ok(resp);
@@ -19,7 +19,7 @@ test("initialize returns protocol version and server info", () => {
   assert.equal(result.serverInfo.name, "lesson-13-internal-mcp");
 });
 
-test("tools/list shape includes name + inputSchema for each tool", () => {
+test("tools/list の shape は各 tool の name と inputSchema を含む", () => {
   const state = freshState();
   const resp = dispatch(state, { jsonrpc: "2.0", id: 2, method: "tools/list" });
   assert.ok(resp);
@@ -31,7 +31,7 @@ test("tools/list shape includes name + inputSchema for each tool", () => {
   }
 });
 
-test("tools/call dispatches to incidents_get", () => {
+test("tools/call は incidents_get に dispatch する", () => {
   const state = freshState();
   const resp = dispatch(state, {
     jsonrpc: "2.0",
@@ -46,7 +46,7 @@ test("tools/call dispatches to incidents_get", () => {
   assert.ok(text.includes("INC-101"));
 });
 
-test("tools/call unknown tool returns isError=true", () => {
+test("unknown tool の tools/call は isError=true を返す", () => {
   const state = freshState();
   const resp = dispatch(state, {
     jsonrpc: "2.0",
@@ -59,7 +59,7 @@ test("tools/call unknown tool returns isError=true", () => {
   assert.equal(result.isError, true);
 });
 
-test("incidents_ack flips acked state", () => {
+test("incidents_ack は acked state を flip する", () => {
   const state = freshState();
   dispatch(state, {
     jsonrpc: "2.0",
@@ -78,31 +78,31 @@ test("incidents_ack flips acked state", () => {
   assert.ok(text.includes('"acked":true'));
 });
 
-test("shutdown sets flag", () => {
+test("shutdown は flag を set する", () => {
   const state = freshState();
   dispatch(state, { jsonrpc: "2.0", id: 7, method: "shutdown" });
   assert.equal(state.shutdownRequested, true);
 });
 
-test("notification (no id) returns null", () => {
+test("notification (id なし) は null を返す", () => {
   const state = freshState();
   const resp = dispatch(state, { jsonrpc: "2.0", method: "notifications/initialized" });
   assert.equal(resp, null);
 });
 
-test("unknown method returns -32601", () => {
+test("unknown method は -32601 を返す", () => {
   const state = freshState();
   const resp = dispatch(state, { jsonrpc: "2.0", id: 8, method: "no/such" });
   assert.ok(resp);
   assert.equal(resp.error?.code, -32601);
 });
 
-test("parseRpc rejects malformed JSON", () => {
+test("parseRpc は malformed JSON を reject する", () => {
   const r = parseRpc("not json");
   assert.equal(r.ok, false);
 });
 
-test("processLine emits -32700 envelope on parse failure", () => {
+test("processLine は parse failure で -32700 envelope を emit する", () => {
   const state = freshState();
   const lines: string[] = [];
   processLine(state, "not json", (line) => lines.push(line));
@@ -111,7 +111,7 @@ test("processLine emits -32700 envelope on parse failure", () => {
   assert.equal(parsed.error?.code, -32700);
 });
 
-test("replayFixture roundtrip drives full fixture sequence", () => {
+test("replayFixture roundtrip は fixture sequence 全体を駆動する", () => {
   const state = freshState();
   const msgs: JsonRpcRequest[] = [
     { jsonrpc: "2.0", id: 1, method: "initialize" },

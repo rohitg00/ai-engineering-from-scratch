@@ -1,23 +1,23 @@
-# Named Entity Recognition
+# 固有表現認識
 
-> Pull the names out. Sounds easy until you deal with ambiguous boundaries, nested entities, and domain jargon.
+> 名前を抜き出す。それだけなら簡単に聞こえますが、曖昧な境界、入れ子のエンティティ、ドメイン用語が出てくると話は変わります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word Embeddings)
-**Time:** ~75 minutes
+**種類:** 実装
+**言語:** Python
+**前提:** フェーズ 5 · 02 (BoW + TF-IDF)、フェーズ 5 · 03 (Word Embeddings)
+**時間:** 約75分
 
-## The Problem
+## 問題
 
-"Apple sued Google over its iPhone search deal in the US." Five entities: Apple (ORG), Google (ORG), iPhone (PRODUCT), search deal (maybe), US (GPE). A good NER system extracts all of them with correct types. A bad one misses iPhone, confuses Apple the fruit with Apple the company, and labels "US" as a PERSON.
+"Apple sued Google over its iPhone search deal in the US." エンティティは5つあります。Apple (ORG)、Google (ORG)、iPhone (PRODUCT)、search deal (おそらく)、US (GPE) です。よいNERシステムは、それらをすべて正しい型で抽出します。悪いシステムはiPhoneを見逃し、果物のAppleと会社のAppleを混同し、`US` をPERSONとしてラベル付けします。
 
-NER is the workhorse underneath every structured extraction pipeline. Resume parsing, compliance log scanning, medical record anonymization, search query understanding, grounding for chatbot responses, legal contract extraction. You never quite see it; you always depend on it.
+NERは、あらゆる構造化抽出pipelineの下にある働き者です。履歴書解析、コンプライアンスログのスキャン、医療記録の匿名化、検索クエリ理解、チャットボット応答のgrounding、法務契約の抽出。普段は目にしませんが、常に依存しています。
 
-This lesson walks the classical path (rule-based, HMM, CRF) into the modern one (BiLSTM-CRF, then transformers). Each step solves a specific limitation of the one before it. The pattern is the lesson.
+このレッスンでは、古典的な道筋 (rule-based、HMM、CRF) から現代的な道筋 (BiLSTM-CRF、その後transformer) へ進みます。それぞれの段階は、前の段階の具体的な制限を解きます。そのパターン自体がこのレッスンです。
 
-## The Concept
+## コンセプト
 
-**BIO tagging** (or BILOU) turns entity extraction into a sequence-labeling problem. Label each token with `B-TYPE` (beginning of entity), `I-TYPE` (inside entity), or `O` (outside any entity).
+**BIO tagging** (またはBILOU) は、エンティティ抽出を系列ラベリング問題に変換します。各tokenに `B-TYPE` (エンティティの開始)、`I-TYPE` (エンティティの内側)、または `O` (どのエンティティにも属さない) を付けます。
 
 ```
 Apple    B-ORG
@@ -34,19 +34,19 @@ US       B-GPE
 .        O
 ```
 
-Multi-token entities chain: `New B-GPE`, `York I-GPE`, `City I-GPE`. A model that understands BIO can extract arbitrary spans.
+複数tokenのエンティティは連鎖します。`New B-GPE`、`York I-GPE`、`City I-GPE` です。BIOを理解するモデルは任意のspanを抽出できます。
 
-The architecture progression:
+アーキテクチャの進化は次の通りです。
 
-- **Rule-based.** Regex + gazetteer lookups. High precision on known entities, zero coverage on new ones.
-- **HMM.** Hidden Markov Model. Emission probability of token given tag, transition probability of tag-to-tag. Viterbi decode. Trained on labeled data.
-- **CRF.** Conditional Random Field. Like HMM but discriminative, so you can mix arbitrary features (word shape, capitalization, neighboring words). Still the classical production workhorse in 2026 for low-resource deployments.
-- **BiLSTM-CRF.** Neural features instead of hand-crafted. LSTM reads the sentence both directions, CRF layer on top enforces consistent tag sequences.
-- **Transformer-based.** Fine-tune BERT with a token-classification head. Best accuracy. Most compute.
+- **Rule-based。** Regex + gazetteer lookup。既知エンティティでは高precision、新しいエンティティではカバレッジゼロです。
+- **HMM。** Hidden Markov Model。tagが与えられたときのtokenのemission probability、tagからtagへのtransition probability、Viterbi decode。ラベル付きデータで学習します。
+- **CRF。** Conditional Random Field。HMMに似ていますがdiscriminativeなので、word shape、大文字小文字、周辺語など任意の特徴を混ぜられます。2026年でも低リソースdeploymentにおける古典的な本番の主力です。
+- **BiLSTM-CRF。** 手作り特徴の代わりにneural特徴を使います。LSTMが文を両方向から読み、上にあるCRF layerが一貫したtag列を強制します。
+- **Transformer-based。** BERTにtoken-classification headを載せてfine-tuneします。最高accuracy。最も多い計算量。
 
-## Build It
+## 実装
 
-### Step 1: BIO tagging helpers
+### ステップ1: BIO tagging helper
 
 ```python
 def spans_to_bio(tokens, spans):
@@ -84,9 +84,9 @@ def bio_to_spans(tokens, labels):
 [(0, 1, 'ORG'), (2, 3, 'ORG'), (4, 5, 'PRODUCT')]
 ```
 
-### Step 2: hand-crafted features
+### ステップ2: 手作り特徴
 
-For classical (non-neural) NER, features are the game. Useful ones:
+古典的な (非neural) NERでは、特徴が勝負です。役に立つ特徴は次のようなものです。
 
 ```python
 def token_features(token, prev_token, next_token):
@@ -116,9 +116,9 @@ def word_shape(word):
     return "".join(out)
 ```
 
-`word_shape("iPhone")` returns `xXxxxx`. `word_shape("USA-2024")` returns `XXX-dddd`. Capitalization patterns are high-signal for proper nouns.
+`word_shape("iPhone")` は `xXxxxx` を返します。`word_shape("USA-2024")` は `XXX-dddd` を返します。大文字小文字のパターンは固有名詞に対する強いシグナルです。
 
-### Step 3: a simple rule-based + dictionary baseline
+### ステップ3: 単純なrule-based + 辞書ベースライン
 
 ```python
 ORG_GAZETTEER = {"Apple", "Google", "Microsoft", "OpenAI", "Meta", "Amazon", "Netflix"}
@@ -140,11 +140,11 @@ def rule_based_ner(tokens):
     return labels
 ```
 
-Production gazetteers have millions of entries scraped from Wikipedia and DBpedia. Coverage is good. Disambiguation (`Apple` the company vs the fruit) is terrible. That is why statistical models won.
+本番のgazetteerには、WikipediaやDBpediaから収集した数百万件のエントリが入ります。カバレッジは良好です。曖昧性解消 (`Apple` が会社か果物か) はひどいです。だから統計的モデルが勝ちました。
 
-### Step 4: the CRF step (sketch, not full impl)
+### ステップ4: CRFの段階 (概略、完全実装ではない)
 
-Full CRF from scratch in 50 lines is not enlightening without the probability-theory foundations. Use `sklearn-crfsuite` instead:
+確率論の基礎なしにCRFをゼロから50行で完全実装しても、あまり学びはありません。代わりに `sklearn-crfsuite` を使います。
 
 ```python
 import sklearn_crfsuite
@@ -174,11 +174,11 @@ X_train = [to_features(s) for s in sentences_tokenized]
 crf.fit(X_train, bio_labels_train)
 ```
 
-`c1` and `c2` are L1 and L2 regularization. `all_possible_transitions=True` lets the model learn illegal sequences (e.g., `I-ORG` after `O`) are unlikely, which is how a CRF enforces BIO consistency without you writing the constraint.
+`c1` と `c2` はL1正則化とL2正則化です。`all_possible_transitions=True` にすると、`O` の後に `I-ORG` が来るような不正な系列が起こりにくいことをモデルが学習できます。これが、制約を自分で書かなくてもCRFがBIOの一貫性を強制する仕組みです。
 
-### Step 5: what a BiLSTM-CRF adds
+### ステップ5: BiLSTM-CRFが追加するもの
 
-Features become learned. Inputs: token embeddings (GloVe or fastText). LSTM reads left-to-right and right-to-left. Concatenated hidden states go through a CRF output layer. The CRF still enforces tag-sequence consistency; the LSTM replaces hand-crafted features with learned ones.
+特徴は学習されるものになります。入力はtoken embeddings (GloVeまたはfastText) です。LSTMは左から右、右から左に読みます。結合されたhidden stateがCRF出力layerを通ります。CRFは引き続きtag列の一貫性を強制します。LSTMは手作り特徴を学習済み特徴で置き換えます。
 
 ```python
 import torch
@@ -199,11 +199,11 @@ class BiLSTM_CRF_Head(nn.Module):
         return emissions
 ```
 
-For the CRF layer, use `torchcrf.CRF` (pip install pytorch-crf). The gain over hand-crafted CRF is measurable but smaller than you expect unless you have tens of thousands of labeled sentences.
+CRF layerには `torchcrf.CRF` を使います (pip install pytorch-crf)。手作りCRFに対する改善は測定できますが、数万件のラベル付き文がない限り、期待するほど大きくはありません。
 
-## Use It
+## 使う
 
-spaCy ships production-grade NER out of the box.
+spaCyには、本番品質のNERが最初から同梱されています。
 
 ```python
 import spacy
@@ -221,9 +221,9 @@ iPhone               ORG
 US                   GPE
 ```
 
-Notice `iPhone` labeled `ORG` rather than `PRODUCT` — spaCy's small model has weak product-entity coverage. The large model (`en_core_web_lg`) does better. The transformer model (`en_core_web_trf`) does better still.
+`iPhone` が `PRODUCT` ではなく `ORG` とラベル付けされている点に注意してください。spaCyの小さいモデルはproductエンティティのカバレッジが弱いです。大きいモデル (`en_core_web_lg`) はより良く、transformerモデル (`en_core_web_trf`) はさらに良くなります。
 
-Hugging Face for BERT-based NER:
+BERTベースNERにはHugging Faceを使います。
 
 ```python
 from transformers import pipeline
@@ -239,79 +239,79 @@ print(ner("Apple sued Google over its iPhone in the US."))
  {'entity_group': 'LOC', 'word': 'US', ...}]
 ```
 
-`aggregation_strategy="simple"` merges contiguous B-X, I-X tokens into a span. Without it, you get token-level labels and have to merge yourself.
+`aggregation_strategy="simple"` は、連続したB-X、I-X tokenを1つのspanにまとめます。これがないとtoken単位のlabelが返り、自分でmergeする必要があります。
 
-### LLM-based NER (the 2026 option)
+### LLMベースNER (2026年の選択肢)
 
-Zero-shot and few-shot LLM NER is now competitive with fine-tuned models on many domains, and dramatically better when labeled data is scarce.
+Zero-shotおよびfew-shotのLLM NERは、多くのドメインでfine-tuned modelと競えるようになっており、ラベル付きデータが乏しい場合は大幅に優れます。
 
-- **Zero-shot prompting.** Give the LLM a list of entity types and an example schema. Ask for JSON output. Works out of the box; accuracy is moderate on novel domains.
-- **ZeroTuneBio-style prompting.** Decompose the task into candidate extraction → meaning explanation → judgment → re-check. A multi-stage prompt (not one-shot) lifts accuracy substantially on biomedical NER. The same pattern works for legal, financial, and scientific domains.
-- **Dynamic prompting with RAG.** Retrieve the most similar labeled examples from a small annotated seed set for every inference call; build the few-shot prompt on the fly. In 2026 benchmarks, this lifts GPT-4 biomedical NER F1 by 11-12% over static prompting.
-- **Per-entity-type decomposition.** For long documents, a single call that extracts all entity types at once loses recall as length grows. Run one extraction pass per entity type. Higher inference cost, substantially higher accuracy. This is the standard pattern for clinical notes and legal contracts.
+- **Zero-shot prompting。** エンティティ型の一覧とschema例をLLMに与えます。JSON出力を依頼します。すぐに動きます。新規ドメインでのaccuracyは中程度です。
+- **ZeroTuneBio風prompting。** タスクを、候補抽出 → 意味説明 → 判定 → 再確認に分解します。one-shotではない多段promptにより、biomedical NERのaccuracyが大きく上がります。同じパターンは法務、金融、科学ドメインにも使えます。
+- **RAGによるdynamic prompting。** 推論呼び出しごとに、小さな注釈済みseed setから最も類似したラベル付き例を取得し、その場でfew-shot promptを組み立てます。2026年のbenchmarkでは、GPT-4のbiomedical NER F1がstatic promptingより11-12%向上します。
+- **エンティティ型ごとの分解。** 長い文書では、すべてのエンティティ型を一度に抽出する単一呼び出しは、長さが増えるほどrecallを落とします。エンティティ型ごとに1回ずつ抽出を実行します。推論コストは上がりますが、accuracyはかなり上がります。臨床ノートや法務契約では標準的なパターンです。
 
-Production recommendation as of 2026: start with an LLM zero-shot baseline before you collect training data. Often the F1 is good enough that you never need to fine-tune.
+2026年時点の本番推奨: 学習データを集める前に、LLM zero-shotベースラインから始めてください。多くの場合、F1は十分高く、fine-tuningが不要になります。
 
-### Where classical NER still wins
+### 古典的NERがまだ勝つ場所
 
-Even with LLMs available, classical NER wins when:
+LLMが使える場合でも、古典的NERが勝つのは次のような場合です。
 
-- Latency budget is under 50ms.
-- You have thousands of labeled examples and need 98%+ F1.
-- The domain has a stable ontology where a pretrained CRF or BiLSTM transfers well.
-- Regulatory constraints require an on-prem, non-generative model.
+- レイテンシ予算が50ms未満。
+- 数千件のラベル付き例があり、98%以上のF1が必要。
+- ドメインに安定したontologyがあり、事前学習済みCRFまたはBiLSTMがよく転移する。
+- 規制上の制約により、オンプレミスで非生成モデルが必要。
 
-### Where it falls apart
+### 破綻する場所
 
-- **Domain shift.** CoNLL-trained NER on legal contracts performs worse than a gazetteer. Fine-tune on your domain.
-- **Nested entities.** "Bank of America Tower" is simultaneously an ORG and a FACILITY. Standard BIO cannot represent overlapping spans. You need nested NER (multi-pass or span-based models).
-- **Long entities.** "United States Federal Deposit Insurance Corporation." Token-level models sometimes split this. Use `aggregation_strategy` or post-process.
-- **Sparse types.** Medical NER labels like DRUG_BRAND, ADVERSE_EVENT, DOSE. General-purpose models have no idea. Scispacy and BioBERT are the starting points there.
+- **Domain shift。** CoNLLで学習したNERは、法務契約ではgazetteerより悪い結果になります。自分のドメインでfine-tuneしてください。
+- **Nested entities。** "Bank of America Tower" はORGであると同時にFACILITYでもあります。標準BIOでは重なり合うspanを表現できません。nested NER (multi-passまたはspan-based model) が必要です。
+- **Long entities。** "United States Federal Deposit Insurance Corporation." token-level modelはこれを分割してしまうことがあります。`aggregation_strategy` を使うか、post-processしてください。
+- **Sparse types。** 医療NERのlabelにはDRUG_BRAND、ADVERSE_EVENT、DOSEなどがあります。汎用モデルには何もわかりません。この領域ではScispacyとBioBERTが出発点です。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-ner-picker.md`:
+`outputs/skill-ner-picker.md` として保存します。
 
 ```markdown
 ---
 name: ner-picker
-description: Pick the right NER approach for a given extraction task.
+description: 与えられた抽出タスクに適したNER手法を選びます。
 version: 1.0.0
 phase: 5
 lesson: 06
 tags: [nlp, ner, extraction]
 ---
 
-Given a task description (domain, label set, language, latency, data volume), output:
+タスクの説明 (ドメイン、label set、言語、レイテンシ、データ量) が与えられたら、次を出力します。
 
-1. Approach. Rule-based + gazetteer, CRF, BiLSTM-CRF, or transformer fine-tune.
-2. Starting model. Name it (spaCy model ID, Hugging Face checkpoint ID, or "custom, trained from scratch").
-3. Labeling strategy. BIO, BILOU, or span-based. Justify in one sentence.
-4. Evaluation. Use `seqeval`. Always report entity-level F1 (not token-level).
+1. アプローチ。Rule-based + gazetteer、CRF、BiLSTM-CRF、またはtransformer fine-tune。
+2. 開始モデル。名前を挙げます (spaCy model ID、Hugging Face checkpoint ID、または「custom, trained from scratch」)。
+3. ラベリング戦略。BIO、BILOU、またはspan-based。1文で正当化します。
+4. 評価。`seqeval` を使います。token-levelではなく、必ずentity-level F1を報告します。
 
-Refuse to recommend fine-tuning a transformer for under 500 labeled examples unless the user already has a pretrained domain model. Flag nested entities as needing span-based or multi-pass models. Require a gazetteer audit if the user mentions "production scale" and labels are unchanged from CoNLL-2003.
+ユーザーが事前学習済みドメインモデルを既に持っている場合を除き、500件未満のラベル付き例でtransformerをfine-tuningすることを推奨してはいけません。nestedエンティティにはspan-basedまたはmulti-pass modelが必要だと指摘してください。ユーザーが「production scale」に言及し、labelがCoNLL-2003から変わっていない場合はgazetteer監査を必須にしてください。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement `bio_to_spans` (the inverse of `spans_to_bio`) and verify round-trip consistency on 10 sentences.
-2. **Medium.** Train the sklearn-crfsuite CRF above on the CoNLL-2003 English NER dataset. Report per-entity F1 using `seqeval`. Typical result: ~84 F1.
-3. **Hard.** Fine-tune `distilbert-base-cased` on a domain-specific NER dataset (medical, legal, or financial). Compare against the spaCy small model. Document data leakage checks and write up what surprised you.
+1. **易しい。** `bio_to_spans` (`spans_to_bio` の逆変換) を実装し、10文でround-tripの一貫性を検証してください。
+2. **普通。** 上のsklearn-crfsuite CRFをCoNLL-2003 English NER datasetで学習してください。`seqeval` を使ってentity別F1を報告します。典型的な結果は約84 F1です。
+3. **難しい。** ドメイン固有のNERデータセット (医療、法務、金融) で `distilbert-base-cased` をfine-tuneしてください。spaCy small modelと比較します。data leakage checkを文書化し、何が意外だったかを書いてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| NER | Extract names | Label token spans with types (PERSON, ORG, GPE, DATE, ...). |
-| BIO | Tagging scheme | `B-X` begins, `I-X` continues, `O` outside. |
-| BILOU | Better BIO | Adds `L-X` (last), `U-X` (unit) for cleaner boundaries. |
-| CRF | Structured classifier | Models transitions between labels, not just emissions. Enforces valid sequences. |
-| Nested NER | Overlapping entities | One span is a different entity than a sub-span of it. BIO cannot express this. |
-| Entity-level F1 | Proper NER metric | Predicted span must match true span exactly. Token-level F1 overstates accuracy. |
+| 用語 | よく言われること | 実際の意味 |
+|------|-----------------|------------|
+| NER | 名前を抽出する | token spanに型 (PERSON、ORG、GPE、DATEなど) を付ける。 |
+| BIO | Tagging scheme | `B-X` は開始、`I-X` は継続、`O` は外側。 |
+| BILOU | よりよいBIO | 境界をきれいにするために `L-X` (last)、`U-X` (unit) を追加する。 |
+| CRF | 構造化分類器 | emissionだけでなくlabel間のtransitionもモデル化する。妥当な系列を強制する。 |
+| Nested NER | 重なり合うエンティティ | あるspanが、その部分spanとは別のエンティティである。BIOでは表現できない。 |
+| Entity-level F1 | 正しいNER指標 | 予測spanは正解spanと完全一致する必要がある。Token-level F1はaccuracyを過大評価する。 |
 
-## Further Reading
+## 参考文献
 
-- [Lample et al. (2016). Neural Architectures for Named Entity Recognition](https://arxiv.org/abs/1603.01360) — the BiLSTM-CRF paper. Canonical.
-- [Devlin et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers](https://arxiv.org/abs/1810.04805) — introduces the token-classification pattern that became standard.
-- [spaCy linguistic features — named entities](https://spacy.io/usage/linguistic-features#named-entities) — practical reference for every attribute on `Doc.ents` and `Span`.
-- [seqeval](https://github.com/chakki-works/seqeval) — the correct metric library. Use it always.
+- [Lample et al. (2016). Neural Architectures for Named Entity Recognition](https://arxiv.org/abs/1603.01360) - BiLSTM-CRFの論文。定番です。
+- [Devlin et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers](https://arxiv.org/abs/1810.04805) - 標準になったtoken-classification patternを導入しました。
+- [spaCy linguistic features - named entities](https://spacy.io/usage/linguistic-features#named-entities) - `Doc.ents` と `Span` の全属性に関する実用リファレンスです。
+- [seqeval](https://github.com/chakki-works/seqeval) - 正しいmetric libraryです。必ず使ってください。

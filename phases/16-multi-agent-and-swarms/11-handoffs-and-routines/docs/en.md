@@ -1,27 +1,27 @@
 # Handoffs and Routines — Stateless Orchestration
 
-> OpenAI's Swarm (October 2024) distilled multi-agent orchestration to two primitives: **routines** (instructions + tools as a system prompt) and **handoffs** (a tool that returns another Agent). No state machine, no branching DSL — the LLM routes by calling the right handoff tool. The OpenAI Agents SDK (March 2025) is the production successor. Swarm itself remains the cleanest conceptual reference — its entire source fits in a few hundred lines. The pattern is viral because the API surface is roughly "agent = prompt + tools; handoff = function returning agent." Limitation: stateless, so memory is the caller's problem.
+> OpenAI の Swarm (2024 年 10 月) は multi-agent orchestration を2つの primitive に絞った。**routines** (system prompt としての instructions + tools) と **handoffs** (別の Agent を返す tool) だ。state machine も branching DSL もない。LLM が適切な handoff tool を呼ぶことで route する。OpenAI Agents SDK (2025 年 3 月) は production successor である。Swarm 自体は、今でも最も明快な概念参照だ。source 全体が数百行に収まる。この pattern が広がった理由は、API surface がほぼ「agent = prompt + tools; handoff = agent を返す function」だからだ。制限: stateless なので memory は caller 側の責任になる。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 16 · 04 (Primitive Model)
-**Time:** ~60 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 16 · 04 (Primitive Model)
+**所要時間:** 約60分
 
-## Problem
+## 問題
 
-Every multi-agent framework wants you to learn its DSL: LangGraph nodes and edges, CrewAI crews and tasks, AutoGen GroupChat and managers. The DSLs are real abstractions, but they make the thing feel heavier than it needs to be.
+あらゆる multi-agent framework は独自 DSL を学ばせようとする。LangGraph の nodes と edges、CrewAI の crews と tasks、AutoGen の GroupChat と managers。DSL は本物の抽象化だが、対象を必要以上に重く感じさせる。
 
-Swarm pushes in the opposite direction: use the tool-calling capability the model already has. Handoffs become tool calls. The orchestrator is whichever agent currently holds the conversation. The state machine is implicit in the agents' system prompts.
+Swarm は逆方向に進む。model がすでに持つ tool-calling capability を使う。handoff は tool call になる。orchestrator は現在 conversation を持っている agent だ。state machine は agent の system prompt に暗黙に含まれる。
 
-## Concept
+## コンセプト
 
 ### Two primitives
 
-**Routine.** A system prompt that defines an agent's role and available tools. Think of it like a scoped set of instructions: "you are a triage agent; if the user asks about refunds, hand off to the refund agent."
+**Routine.** agent の role と利用可能な tool を定義する system prompt。scoped instruction set と考えるとよい: 「あなたは triage agent である。user が refund について尋ねたら refund agent に hand off する」。
 
-**Handoff.** A tool the agent can call that returns a new Agent object. The Swarm runtime detects the Agent return value and switches the active agent for the next turn.
+**Handoff.** agent が呼べる tool で、new Agent object を返す。Swarm runtime は Agent return value を検出し、次の turn の active agent を切り替える。
 
-That is the entire abstraction.
+抽象化はこれだけだ。
 
 ```
 def transfer_to_refunds():
@@ -34,57 +34,57 @@ triage_agent = Agent(
 )
 ```
 
-The triage agent's system prompt makes it choose the right handoff based on the user message. The LLM's tool-calling does the routing.
+triage agent の system prompt が user message に基づいて適切な handoff を選ばせる。LLM の tool-calling が routing を行う。
 
 ### Why it is viral
 
-- **Small API.** Two concepts to learn.
-- **Uses what the model already does.** Tool calling is already production-grade across providers.
-- **No state-machine burden.** You do not describe the graph; the agents' prompts describe who they hand off to.
+- **Small API.** 学ぶ概念は2つ。
+- **model がすでにできることを使う。** tool calling は provider をまたいで production-grade になっている。
+- **state-machine burden がない。** graph を記述しない。agent prompt が、誰に hand off するかを記述する。
 
 ### The stateless trade
 
-Swarm is explicitly stateless between runs. The framework keeps a message history during a run, but it does not persist anything. Memory, continuity, long-running tasks — all the caller's problem.
+Swarm は run 間で明示的に stateless である。framework は run 中の message history を保持するが、何も persist しない。memory、continuity、long-running tasks はすべて caller の責任になる。
 
-In production (OpenAI Agents SDK, March 2025) this was one of the main things that changed: the SDK adds built-in session management, guardrails, and tracing while keeping the handoff primitive.
+production 版 (OpenAI Agents SDK、2025 年 3 月) で主に変わった点の1つがこれだ。SDK は handoff primitive を保ったまま、built-in session management、guardrails、tracing を追加する。
 
 ### When Swarm/handoffs fit
 
-- **Triage patterns.** Front-line agent routes user to a specialist.
-- **Skill-based handoffs.** "If the task needs code, call the coder; if it needs research, call the researcher."
-- **Short, bounded conversations.** Customer support, FAQ-to-ticket, simple workflows.
+- **Triage patterns。** front-line agent が user を specialist に route する。
+- **Skill-based handoffs。** 「task に code が必要なら coder を呼ぶ。research が必要なら researcher を呼ぶ」。
+- **Short, bounded conversations。** customer support、FAQ-to-ticket、simple workflows。
 
 ### When Swarm struggles
 
-- **Long sessions with shared memory.** Handoffs reset the conversation state to the new agent's prompt plus history. No persistent state across agents without caller-managed memory.
-- **Parallel execution.** Handoff is one-at-a-time — the active agent switches. Parallelism requires the caller orchestrating multiple Swarm runs.
-- **Audit and replay.** Stateless runs are hard to replay exactly; the LLM's handoff choice is not deterministic.
+- **shared memory を持つ long sessions。** handoff は conversation state を新しい agent の prompt + history に reset する。caller-managed memory なしでは agent 間で persistent state を持てない。
+- **Parallel execution。** handoff は1回に1つ。active agent が切り替わるだけだ。parallelism には caller が複数の Swarm run を orchestrate する必要がある。
+- **Audit and replay。** stateless run を正確に replay するのは難しい。LLM の handoff choice は deterministic ではない。
 
 ### OpenAI Agents SDK (March 2025)
 
-The production successor adds:
+production successor は次を追加する:
 
-- **Session state.** Persistent thread across runs.
-- **Guardrails.** Input/output validation hooks.
-- **Tracing.** Every tool call and handoff is logged.
-- **Handoff filters.** Control what context transfers on handoff.
+- **Session state.** run をまたぐ persistent thread。
+- **Guardrails.** input/output validation hook。
+- **Tracing.** すべての tool call と handoff を log する。
+- **Handoff filters.** handoff 時にどの context を transfer するかを制御する。
 
-The handoff primitive survives; production ergonomics get added around it.
+handoff primitive は残り、その周りに production ergonomics が追加される。
 
 ### Swarm vs GroupChat
 
-Both use LLM-driven routing, but they differ on **who picks next**:
+どちらも LLM-driven routing を使うが、違いは **誰が next を選ぶか** だ:
 
-- GroupChat: a selector (function or LLM) picks the next speaker from outside.
-- Swarm: the current agent picks its successor by calling a handoff tool.
+- GroupChat: selector (function または LLM) が外側から next speaker を選ぶ。
+- Swarm: current agent が handoff tool を呼び、自分の successor を選ぶ。
 
-Swarm is "agent decides what's next"; GroupChat is "manager decides what's next." Swarm's decision lives in the active agent's tool call; GroupChat's lives in the `GroupChatManager`.
+Swarm は「agent が次を決める」。GroupChat は「manager が次を決める」。Swarm の decision は active agent の tool call にあり、GroupChat の decision は `GroupChatManager` にある。
 
-## Build It
+## 実装
 
-`code/main.py` implements Swarm from scratch: an Agent dataclass, a handoff mechanism (tool returns Agent), and a run loop that detects agent switches.
+`code/main.py` は Swarm を scratch で実装する。Agent dataclass、handoff mechanism (tool が Agent を返す)、agent switch を検出する run loop を含む。
 
-Demo: a triage agent routes to refund, sales, or support specialists. Each specialist has its own tools. The run loop prints each handoff.
+demo: triage agent が refund、sales、support specialist に route する。各 specialist は独自 tool を持つ。run loop は各 handoff を出力する。
 
 Run:
 
@@ -94,42 +94,42 @@ python3 code/main.py
 
 ## Use It
 
-`outputs/skill-handoff-designer.md` designs a handoff topology for a given task: which agents exist, which handoffs they can call, what context transfers.
+`outputs/skill-handoff-designer.md` は、与えられた task の handoff topology を設計する。どの agent が存在し、どの handoff を呼べるか、どの context を transfer するかを決める。
 
 ## Ship It
 
 Checklist:
 
-- **Handoff logging.** Every handoff writes a trace event with from-agent, to-agent, context snapshot.
-- **Context transfer rules.** Decide what moves on handoff: full history (expensive), last N messages, or a summary.
-- **Guardrail on handoff.** A handoff to a specialist with different tool permissions must be authenticated — otherwise prompt injection can force unwanted handoffs.
-- **Loop detection.** Two agents handing back and forth is a common failure; detect with a simple last-K ring check.
-- **Fallback agent.** If a handoff target does not exist, fall back to a safe default.
+- **Handoff logging。** すべての handoff は from-agent、to-agent、context snapshot を含む trace event を書く。
+- **Context transfer rules。** handoff 時に何を移すかを決める。full history (高価)、last N messages、summary のいずれか。
+- **Guardrail on handoff。** 異なる tool permission を持つ specialist への handoff は認証されなければならない。そうしないと prompt injection が望ましくない handoff を強制できる。
+- **Loop detection。** 2つの agent が行き来し続けるのはよくある failure。単純な last-K ring check で検出する。
+- **Fallback agent。** handoff target が存在しない場合、安全な default に fallback する。
 
 ## Exercises
 
-1. Run `code/main.py`, triage to the refund agent. Confirm the second turn's active agent is refund.
-2. Add a loop-detection rule: if the same two agents have handed off 3 times in a row, force an exit. Design the fallback.
-3. Read the OpenAI Agents SDK docs on handoff filters. Implement a "summarize-on-handoff" version: the outgoing agent compresses context to a bullet summary before the incoming agent takes over.
-4. Compare the Swarm handoff to a GroupChatManager selector. Which pattern makes prompt injection worse, and why?
-5. Read the Swarm cookbook (https://developers.openai.com/cookbook/examples/orchestrating_agents). Identify one explicit design decision Swarm makes that OpenAI Agents SDK changed or kept.
+1. `code/main.py` を実行し、refund agent への triage を行う。2 turn 目の active agent が refund であることを確認する。
+2. loop-detection rule を追加する。同じ2 agent が3回連続で handoff し合ったら exit を強制する。fallback を設計する。
+3. OpenAI Agents SDK docs の handoff filters を読む。"summarize-on-handoff" 版を実装する。incoming agent が引き継ぐ前に outgoing agent が context を bullet summary に圧縮する。
+4. Swarm handoff と GroupChatManager selector を比較する。どちらの pattern が prompt injection を悪化させるか、なぜか。
+5. Swarm cookbook (https://developers.openai.com/cookbook/examples/orchestrating_agents) を読む。Swarm の明示的な design decision のうち、OpenAI Agents SDK が変更または維持したものを1つ特定する。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Routine | "The agent prompt" | System prompt + tool list. Defines role and available handoffs. |
-| Handoff | "Transfer to another agent" | A tool the active agent can call that returns a new Agent. The runtime switches active agent. |
-| Stateless | "No memory between runs" | Swarm does not persist anything; memory is the caller's responsibility. |
-| Active agent | "Who's speaking now" | The agent currently holding the conversation. Handoff changes this. |
-| Context transfer | "What moves on handoff" | Policy for what history the incoming agent sees: full, last N, or summarized. |
-| Handoff loop | "Agents ping-pong" | Failure mode where two agents keep handing back to each other. |
-| OpenAI Agents SDK | "Production Swarm" | March 2025 successor; adds sessions, guardrails, tracing on top of the handoff primitive. |
-| Handoff filter | "Gate on transfer" | SDK feature to inspect and modify context at the handoff boundary. |
+| Routine | "The agent prompt" | system prompt + tool list。role と available handoffs を定義する。 |
+| Handoff | "Transfer to another agent" | active agent が呼べる tool。new Agent を返す。runtime が active agent を切り替える。 |
+| Stateless | "No memory between runs" | Swarm は何も persist しない。memory は caller の責任。 |
+| Active agent | "Who's speaking now" | 現在 conversation を保持している agent。handoff がこれを変える。 |
+| Context transfer | "What moves on handoff" | incoming agent が見る history の policy: full、last N、summary。 |
+| Handoff loop | "Agents ping-pong" | 2つの agent が互いに handoff し続ける failure mode。 |
+| OpenAI Agents SDK | "Production Swarm" | 2025 年 3 月の successor。handoff primitive に sessions、guardrails、tracing を追加する。 |
+| Handoff filter | "Gate on transfer" | handoff boundary で context を inspect/modify する SDK feature。 |
 
-## Further Reading
+## 参考文献
 
-- [OpenAI cookbook — Orchestrating Agents: Routines and Handoffs](https://developers.openai.com/cookbook/examples/orchestrating_agents) — the reference articulation
-- [OpenAI Swarm repo](https://github.com/openai/swarm) — original implementation, kept as conceptual reference
-- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — production successor with sessions and tracing
-- [Anthropic handoff-in-Claude notes](https://docs.anthropic.com/en/docs/claude-code) — how Claude Code subagents use a handoff-like pattern via `Task`
+- [OpenAI cookbook — Orchestrating Agents: Routines and Handoffs](https://developers.openai.com/cookbook/examples/orchestrating_agents) — reference articulation
+- [OpenAI Swarm repo](https://github.com/openai/swarm) — original implementation。概念参照として保持されている
+- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — sessions と tracing を持つ production successor
+- [Anthropic handoff-in-Claude notes](https://docs.anthropic.com/en/docs/claude-code) — Claude Code subagents が `Task` で handoff-like pattern を使う方法

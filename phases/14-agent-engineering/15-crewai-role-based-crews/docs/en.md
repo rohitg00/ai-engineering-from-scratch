@@ -1,67 +1,67 @@
 # CrewAI: Role-Based Crews and Flows
 
-> CrewAI is the 2026 role-based multi-agent framework. Four primitives: Agent, Task, Crew, Process. Two top-level shapes: Crews (autonomous, role-based collaboration) and Flows (event-driven, deterministic). The docs are blunt: "for any production-ready application, start with a Flow."
+> CrewAIは、2026年のrole-based multi-agent frameworkです。4つのprimitive: Agent、Task、Crew、Process。top-level shapeは2つ: Crews (autonomousなrole-based collaboration) とFlows (event-drivenでdeterministic)。docsは率直です。「production-readyなapplicationでは、必ずFlowから始める」。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 14 (Actor Model)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 14 (Actor Model)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Name CrewAI's four primitives (Agent, Task, Crew, Process) and what each owns.
-- Distinguish Sequential, Hierarchical, and the planned Consensus process; pick one per workload.
-- Distinguish Crews (autonomous role-based) from Flows (event-driven deterministic), and explain the docs' production recommendation.
-- Wire tools with the `@tool` decorator and `BaseTool` subclass; reason about structured outputs vs free text.
-- Name the four CrewAI memory types and when each pays off.
-- Implement a stdlib three-agent crew (researcher, writer, editor) that produces a brief.
-- Spot the three CrewAI failure modes: prompt-bloat, manager-LLM tax, brittle handoffs.
+- CrewAIの4つのprimitive (Agent、Task、Crew、Process) と、それぞれが何をownするかを挙げる。
+- Sequential、Hierarchical、planned Consensus processを区別し、workloadごとに選ぶ。
+- Crews (autonomous role-based) とFlows (event-driven deterministic) を区別し、docsのproduction recommendationを説明する。
+- `@tool` decoratorと`BaseTool` subclassでtoolをwireし、structured outputsとfree textの違いをreasoningする。
+- CrewAIの4種類のmemoryと、それぞれがpay offする場面を挙げる。
+- briefを生成するstdlib three-agent crew (researcher、writer、editor) を実装する。
+- CrewAIの3つのfailure modeを見抜く: prompt-bloat、manager-LLM tax、brittle handoffs。
 
-## The Problem
+## 問題
 
-Teams adopting multi-agent frameworks hit the same wall. "Autonomous collaboration" sounds great in a demo. Then a customer files a bug and you need deterministic replay. Or finance asks how much an LLM-routed crew costs per run. Or on-call needs to know which agent stalled at 3 AM.
+multi-agent frameworkを採用するteamは同じ壁に当たります。「autonomous collaboration」はdemoでは見栄えがします。ところがcustomerがbugをfileし、deterministic replayが必要になります。あるいはfinanceがLLM-routed crewのrunごとのcostを聞きます。あるいはon-callが午前3時にどのagentがstallしたか知る必要があります。
 
-Free-form LLM-routed crews answer none of those cleanly. Pure DAGs answer them all but lose the exploratory shape a brainstorming agent needs.
+free-formなLLM-routed crewは、これらにきれいに答えられません。pure DAGはすべてに答えられますが、brainstorming agentが必要とするexploratoryな形を失います。
 
-CrewAI's split is honest about the trade. Crews for collaborative, role-based, exploratory work. Flows for event-driven, code-owned, auditable production. Same framework, two shapes, pick per surface.
+CrewAIの分割は、このtrade-offに正直です。collaborative、role-based、exploratoryな作業にはCrews。event-driven、code-owned、auditableなproductionにはFlows。同じframeworkに2つのshapeがあり、surfaceごとに選びます。
 
 ## The Concept
 
 ### Four primitives
 
-CrewAI's surface is small. Memorize this and the rest is config.
+CrewAIのsurfaceは小さいです。これを覚えれば、残りはconfigです。
 
-- **Agent.** `role + goal + backstory + tools + (optional) llm`. The backstory is load-bearing. It shapes tone, judgment, when the agent stops. Tools are functions the agent can call (more below).
-- **Task.** `description + expected_output + agent + (optional) context + (optional) output_pydantic`. A reusable unit of work. `expected_output` is the contract. `context` lists upstream tasks whose outputs are passed in. `output_pydantic` forces a structured shape.
-- **Crew.** Container. Owns the list of `agents`, the list of `tasks`, the `process`, and optional `memory` + `verbose` + `manager_llm` settings.
-- **Process.** Execution strategy. Sequential, Hierarchical, Consensus (planned). Picks the shape of the run.
+- **Agent.** `role + goal + backstory + tools + (optional) llm`。backstoryはload-bearingです。tone、judgment、agentがいつ止まるかを形作ります。toolsはagentが呼べる関数です (後述)。
+- **Task.** `description + expected_output + agent + (optional) context + (optional) output_pydantic`。再利用可能なwork unit。`expected_output`がcontractです。`context`はoutputを渡すupstream taskを列挙します。`output_pydantic`はstructured shapeを強制します。
+- **Crew.** containerです。`agents` list、`tasks` list、`process`、optionalな`memory` + `verbose` + `manager_llm` settingsをownします。
+- **Process.** execution strategyです。Sequential、Hierarchical、Consensus (planned)。runのshapeを選びます。
 
-Agents do not see each other directly. Tasks reference agents. The Crew sequences tasks. The Process decides who picks the next task. That is the whole mental model.
+Agent同士は直接見えません。TaskがAgentを参照します。CrewがTaskをsequenceします。Processが次のtaskを誰が選ぶかを決めます。mental modelはこれで全部です。
 
-> **Validated against** CrewAI 0.86 (2026-05). Newer versions may rename or merge process types; check the [CrewAI Processes docs](https://docs.crewai.com/concepts/processes) before relying on a specific shape.
+> **Validated against** CrewAI 0.86 (2026-05)。新しいversionではprocess typeがrenameまたはmergeされる可能性があります。specific shapeに依存する前に[CrewAI Processes docs](https://docs.crewai.com/concepts/processes)を確認してください。
 
 ### Sequential vs Hierarchical vs Consensus
 
-- **Sequential.** Tasks run in declaration order. Output of task N is available as `context` to task N+1. Lowest cost. Most predictable. Use when the order is fixed.
-- **Hierarchical.** A manager Agent (separate LLM call) routes between specialists. CrewAI spawns the manager either from your `manager_llm` config or a default. The manager picks the next task each round and can refuse or re-route. Use when you have four or more specialists and order genuinely depends on prior output.
-- **Consensus.** Planned, not currently implemented in the public API. The docs reserve the name for a future voting-based process. Do not rely on it today.
+- **Sequential.** Taskをdeclaration orderで実行します。Task NのoutputはTask N+1の`context`として使えます。最も低costで、最もpredictableです。orderがfixedならこれを使います。
+- **Hierarchical.** manager Agent (別のLLM call) がspecialist間をrouteします。CrewAIは`manager_llm` configまたはdefaultからmanagerをspawnします。managerは各roundで次のtaskを選び、拒否やre-routeもできます。specialistが4つ以上あり、orderが本当にprior outputに依存する場合に使います。
+- **Consensus.** plannedであり、public APIでは現在未実装です。docsは将来のvoting-based process用にこの名前を予約しています。現時点で依存しないでください。
 
-Hierarchical adds a per-round LLM call (the manager) on top of every specialist call. Token cost can triple on a five-step run. Pay for it only when you need the routing.
+Hierarchicalは、各specialist callに加えてroundごとにmanager LLM callを追加します。5 step runではtoken costが3倍になり得ます。routingが必要な場合だけ支払います。
 
 ### Crews vs Flows
 
-This is the framing the docs lead with in 2026.
+これは2026年のdocsが前面に出すframingです。
 
-- **Crew.** LLM-driven autonomy. The framework picks the shape at runtime. Good for: research, brainstorming, first drafts, anywhere the path is part of the answer. Hard to replay. Hard to test. Cheap to prototype.
-- **Flow.** Event-driven graph you own. `@start` marks the entry. `@listen(topic)` marks a step that fires when another step emits that topic. Each step is plain Python (can call a Crew internally). Good for: production. Observable. Testable. Deterministic.
+- **Crew.** LLM-driven autonomy。frameworkがruntimeでshapeを選びます。向いているもの: research、brainstorming、first drafts、path自体がanswerの一部であるもの。replayしにくい。testしにくい。prototypeは安い。
+- **Flow.** 自分がownするevent-driven graph。`@start`がentryを示します。`@listen(topic)`は別stepがそのtopicをemitしたときにfireするstepを示します。各stepはplain Pythonです (内部でCrewを呼ぶこともできます)。向いているもの: production。observable。testable。deterministic。
 
-The docs' 2026 production recommendation: start with a Flow. Fold Crews in as `Crew.kickoff()` calls from inside Flow steps when autonomy earns its cost. The Flow gives you the audit trail, the Crew gives you the exploration. Compose, do not pick.
+docsの2026年production recommendation: Flowから始める。autonomyがcostに見合う場合だけ、Flow step内の`Crew.kickoff()` callとしてCrewを折り込む。Flowがaudit trailを与え、Crewがexplorationを与えます。composeするのであって、片方だけを選ぶ必要はありません。
 
 ### Tool integration
 
-Three ways to give an Agent a tool. Pick the simplest one that fits.
+Agentへtoolを渡す方法は3つあります。fitする中で最も単純なものを選びます。
 
-1. **`@tool` decorator.** Pure functions become tools. Signature is the schema; docstring is the description the LLM sees. Best for one-off helpers.
+1. **`@tool` decorator.** pure functionがtoolになります。signatureがschemaで、docstringがLLMに見えるdescriptionです。one-off helperに最適です。
 
    ```python
    from crewai.tools import tool
@@ -72,7 +72,7 @@ Three ways to give an Agent a tool. Pick the simplest one that fits.
        return run_search(query)
    ```
 
-2. **`BaseTool` subclass.** Class-based tool with explicit args schema, async support, retries. Use when the tool has state (a client, a cache) or needs structured args.
+2. **`BaseTool` subclass.** explicit args schema、async support、retryを持つclass-based toolです。toolにstate (client、cache) がある場合や、structured argsが必要な場合に使います。
 
    ```python
    from crewai.tools import BaseTool
@@ -91,129 +91,129 @@ Three ways to give an Agent a tool. Pick the simplest one that fits.
            return self.client.search(query, limit=limit)
    ```
 
-3. **Built-in toolkits.** CrewAI ships first-party adapters: `SerperDevTool`, `FileReadTool`, `DirectoryReadTool`, `CodeInterpreterTool`, `RagTool`, `WebsiteSearchTool`. Wired with one import.
+3. **Built-in toolkits.** CrewAIはfirst-party adaptersをshipしています: `SerperDevTool`、`FileReadTool`、`DirectoryReadTool`、`CodeInterpreterTool`、`RagTool`、`WebsiteSearchTool`。1 importでwireできます。
 
-Structured outputs use Pydantic. Pass `output_pydantic=MyModel` on the Task. CrewAI validates the LLM response against the model and either coerces or retries. Pair this with a tight `expected_output` string. Free-text outputs are fine for drafts; structured outputs are what downstream Flows can consume.
+structured outputsにはPydanticを使います。Taskに`output_pydantic=MyModel`を渡します。CrewAIはLLM responseをmodelでvalidateし、coerceまたはretryします。tightな`expected_output` stringと組み合わせます。free-text outputはdraftには十分ですが、downstream Flowがconsumeできるのはstructured outputです。
 
 ### Memory hooks
 
-CrewAI ships four memory types out of the box. They compose: a Crew can enable all four at once.
+CrewAIは4種類のmemoryをout of the boxでshipしています。これらはcomposeでき、1つのCrewで4つすべてをenableできます。
 
-> **Validated against** CrewAI 0.86 (2026-05). Recent releases route everything through a unified `Memory` system that wraps these four stores. The conceptual model below still holds, but the public class surface may collapse to a single `Memory` entry-point in newer versions; check [CrewAI memory docs](https://docs.crewai.com/concepts/memory) for the current API.
+> **Validated against** CrewAI 0.86 (2026-05)。recent releasesでは、これら4 storeをwrapするunified `Memory` system経由で全体がrouteされます。下のconceptual modelは有効ですが、新しいversionではpublic class surfaceが単一の`Memory` entry-pointへcollapseする可能性があります。current APIは[CrewAI memory docs](https://docs.crewai.com/concepts/memory)を確認してください。
 
-- **Short-term.** Conversation buffer within a single run. Wiped at the end.
-- **Long-term.** Persisted across runs. Stored in a vector DB (Chroma by default, swappable). Retrieved by similarity to the current task.
-- **Entity.** Per-entity facts. "Customer X is on the enterprise plan." Keyed by entity, not by similarity. Survives across runs.
-- **Contextual.** Assembly-time retrieval. Pulls relevant memory at the moment the Agent needs it, not preloaded.
+- **Short-term.** single run内のconversation buffer。終了時に消える。
+- **Long-term.** runをまたいでpersistする。vector DB (defaultはChroma、差し替え可能) に保存され、current taskとのsimilarityでretrievedされる。
+- **Entity.** entityごとのfact。「Customer X is on the enterprise plan.」similarityではなくentity keyで引く。runをまたいで残る。
+- **Contextual.** assembly-time retrieval。preloadではなく、Agentが必要とする瞬間にrelevant memoryをpullする。
 
-Enable on the Crew with `memory=True` or per-type config. Backed by an embeddings provider you configure (defaults to OpenAI, swappable to local). Memory is one of the places CrewAI earns its keep against thinner frameworks; pure LangGraph requires you to wire each of these yourself.
+Crewで`memory=True`またはtype別configによりenableします。backingには設定したembeddings providerを使います (defaultはOpenAI、localに差し替え可能)。MemoryはCrewAIが薄いframeworkに対して価値を出す場所の1つです。pure LangGraphでは、これらをすべて自分でwireする必要があります。
 
 ### When CrewAI fits
 
-- Three to six agents with named roles and a collaborative workflow. Drafting, reviewing, planning, brainstorming.
-- Routing where the LLM's judgment about the next step is part of the value (Hierarchical).
-- Anywhere the team is happier reading `role + goal + backstory` than reading a graph definition.
+- named roleを持つ3〜6 agentとcollaborative workflow。drafting、reviewing、planning、brainstorming。
+- next stepについてのLLM judgment自体に価値があるrouting (Hierarchical)。
+- teamがgraph definitionを読むより`role + goal + backstory`を読むほうが楽な場合。
 
 ### When CrewAI does not fit
 
-- Deterministic DAGs with strict ordering. Use LangGraph (Lesson 13). The graph shape is the right abstraction; CrewAI's role framing is friction.
-- Sub-second latency budgets. Hierarchical adds round trips. Even Sequential serializes prompts that include backstories and prior outputs.
-- Single-agent loops. Skip the framework; an agent loop (Lesson 1) plus a tool registry is shorter.
+- strict orderingを持つdeterministic DAG。LangGraph (Lesson 13) を使う。graph shapeが正しいabstractionであり、CrewAIのrole framingは摩擦になる。
+- sub-second latency budget。Hierarchicalはround tripを追加します。Sequentialでもbackstoryとprior outputを含むpromptをserializeします。
+- single-agent loop。frameworkをskipする。agent loop (Lesson 1) とtool registryのほうが短い。
 
-Lesson 17 (Agent Framework Tradeoffs) lays this out in a matrix. The short version: CrewAI sits in the "collaborative role-based" corner.
+Lesson 17 (Agent Framework Tradeoffs) はこれをmatrixで整理します。短く言えば、CrewAIは「collaborative role-based」のcornerにあります。
 
 ### Dependency shape
 
-Independent of LangChain. Python 3.10 to 3.13. Uses `uv`. Star count: see [crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) (snapshot as of 2026-05). AWS Bedrock integration is documented; vendor benchmarks report a substantial speedup vs LangGraph on QA workloads, but the methodology (dataset, hardware, evaluation metric) is not published, so treat framework-vendor numbers as directional only.
+LangChainから独立しています。Python 3.10〜3.13。`uv`を使います。star countは[crewAIInc/crewAI](https://github.com/crewAIInc/crewAI)を参照してください (2026-05時点のsnapshot)。AWS Bedrock integrationはdocumentedです。vendor benchmarkはQA workloadでLangGraph比の大幅なspeedupを報告していますが、methodology (dataset、hardware、evaluation metric) が公開されていないため、framework vendorの数値はdirectionalに扱ってください。
 
 ### Where this pattern goes wrong
 
-- **Prompt-bloat from backstories.** A 2000-word backstory per agent and a five-agent crew burns the context budget before the first tool call. Keep backstories under 200 words. Reuse phrases across agents; do not repeat house style five times.
-- **Manager-LLM token tax.** Hierarchical process adds a manager LLM call before every specialist call. On a five-task crew that is six LLM calls instead of five, and the manager call carries the full task list plus prior outputs. Switch to Sequential unless routing depends on output.
-- **Brittle handoffs.** Task N's `expected_output` is "an outline". Task N+1 reads it as `context` and tries to parse three sections. The LLM produced four. The downstream Agent ad-libs. Fix with `output_pydantic` on Task N so Task N+1 reads a typed object, not free text.
-- **Crew-as-prod.** Free-form Crew shipped to production without a Flow wrapper. Output variability is high; replay is impossible; on-call cannot diff a bad run against a good one. Wrap with a Flow.
+- **backstoryによるprompt-bloat。** agentごとに2000-word backstoryを持つ5-agent crewは、最初のtool call前にcontext budgetを燃やします。backstoryは200 words未満にします。agent間でphraseを再利用し、house styleを5回繰り返さないでください。
+- **Manager-LLM token tax。** Hierarchical processは各specialist call前にmanager LLM callを追加します。5-task crewなら5回ではなく6回のLLM callになり、manager callはfull task listとprior outputsを運びます。routingがoutputに依存しないならSequentialへ切り替えます。
+- **Brittle handoffs。** Task Nの`expected_output`が「an outline」。Task N+1はそれを`context`として読み、3 sectionをparseしようとします。LLMは4 sectionを生成しました。downstream Agentがad-libします。Task Nに`output_pydantic`を付け、Task N+1がfree textではなくtyped objectを読むようにします。
+- **Crew-as-prod。** Flow wrapperなしでfree-form Crewをproductionへshipする。output variabilityが高く、replay不能で、on-callはbad runとgood runをdiffできません。Flowでwrapしてください。
 
-## Build It
+## 実装
 
-`code/main.py` implements stdlib versions of both shapes plus a three-agent crew.
+`code/main.py`は両方のshapeのstdlib versionとthree-agent crewを実装しています。
 
 Shape:
 
-- `Agent`, `Task` dataclasses matching CrewAI's surface.
-- `SequentialCrew.kickoff(inputs)` runs tasks in declaration order, threading outputs as `context`.
-- `HierarchicalCrew.kickoff(topic)` adds a manager Agent picking the next specialist each round, stops at "done".
-- `Flow` with `@start` and `@listen(topic)` decorators, a tiny event loop, and a trace.
-- `tool(name)` decorator mirroring CrewAI's `@tool` shape.
-- `Memory` with `short_term`, `long_term`, `entity` stores; mocked similarity uses numpy.
-- Mock LLM responses are hardcoded strings keyed off role plus input prefix. No network. Deterministic.
+- CrewAI surfaceに合わせた`Agent`、`Task` dataclasses。
+- `SequentialCrew.kickoff(inputs)`はdeclaration orderでtaskを実行し、outputを`context`としてthreadする。
+- `HierarchicalCrew.kickoff(topic)`はmanager Agentが各roundでnext specialistを選び、"done"で停止する。
+- `@start`と`@listen(topic)` decorator、小さなevent loop、traceを持つ`Flow`。
+- CrewAIの`@tool` shapeをmirrorする`tool(name)` decorator。
+- `short_term`、`long_term`、`entity` storeを持つ`Memory`。mock similarityはnumpyを使う。
+- mock LLM responseはroleとinput prefixに基づくhardcoded string。networkなし。deterministic。
 
-Concrete demo: researcher, writer, editor crew producing a brief on "agent engineering 2026". Researcher pulls (mocked) sources. Writer drafts. Editor tightens. Same crew runs through a Flow to show the deterministic shape.
+具体的なdemo: researcher、writer、editor crewが"agent engineering 2026"についてbriefを生成します。Researcherはmocked sourceをpullします。Writerがdraftします。Editorがtightenします。同じcrewをFlow経由でも動かし、deterministic shapeを示します。
 
-Run it:
+実行:
 
 ```bash
 python3 code/main.py
 ```
 
-Trace covers: sequential crew threading outputs through `context`, hierarchical crew with manager picks (researcher, writer, editor, then "done"), flow running the same three steps with explicit topics (`researched`, `drafted`, `edited`), tool calls routed through `@tool`, and long-term memory surviving across two kickoffs.
+traceは次をcoverします: sequential crewがoutputを`context`にthreadする様子、manager picks (researcher、writer、editor、その後"done") を持つhierarchical crew、explicit topics (`researched`、`drafted`、`edited`) で同じ3 stepを実行するflow、`@tool`経由のtool call、2回のkickoffをまたいで残るlong-term memory。
 
-The Crew trace is fluid; the manager could in principle re-order. The Flow trace is fixed. That choice is the lesson.
+Crew traceはfluidで、managerは原理上re-orderできます。Flow traceはfixedです。その選択がlessonです。
 
 ## Use It
 
-- **CrewAI Flow** for production. Even when the Flow is one step that calls `Crew.kickoff()`. The Flow gives the audit boundary.
-- **CrewAI Crew (Sequential)** for clear-ordering collaborative work, especially first drafts and review loops.
-- **CrewAI Crew (Hierarchical)** when routing depends on output and you have four or more specialists.
-- **LangGraph** (Lesson 13) for explicit state machines, durable resume, strict ordering.
-- **AutoGen v0.4** (Lesson 14) for actor-model concurrency and fault isolation.
-- **OpenAI Agents SDK** (Lesson 16) for OpenAI-first products with handoffs and guardrails.
-- **Claude Agent SDK** (Lesson 17) for Claude-first products with subagents and session store.
+- **CrewAI Flow** for production。Flowが`Crew.kickoff()`を呼ぶ1 stepだけでもよい。Flowがaudit boundaryを与える。
+- **CrewAI Crew (Sequential)** for clear-ordering collaborative work、特にfirst draftsとreview loops。
+- **CrewAI Crew (Hierarchical)** when routing depends on output and you have four or more specialists。
+- **LangGraph** (Lesson 13) for explicit state machines、durable resume、strict ordering。
+- **AutoGen v0.4** (Lesson 14) for actor-model concurrency and fault isolation。
+- **OpenAI Agents SDK** (Lesson 16) for OpenAI-first products with handoffs and guardrails。
+- **Claude Agent SDK** (Lesson 17) for Claude-first products with subagents and session store。
 
 ## Ship It
 
-`outputs/skill-crew-or-flow.md` picks Crew vs Flow for a task and scaffolds the minimal implementation. Hard rejects on Crew-without-backstory, Flow-without-explicit-topics, Hierarchical with under three specialists.
+`outputs/skill-crew-or-flow.md`は、taskに対してCrewかFlowかを選び、minimal implementationをscaffoldします。Crew-without-backstory、Flow-without-explicit-topics、specialistが3未満のHierarchicalはhard rejectします。
 
 ## Pitfalls
 
-- **Backstory as flavor.** It shapes outputs. Test three variants per agent; variance is real. Pick one, freeze it.
-- **Skipping `expected_output`.** Without a contract per task, downstream tasks pick up whatever the LLM produced. Crew runs; audit fails.
-- **Memory always-on.** Long-term writes every run. Vector DB grows. Retrieval gets noisy. Scope writes to tasks where the fact is persistent.
-- **Manager prompt drift.** Hierarchical's manager prompt is implicit. If routing gets weird, dump it in verbose mode and read.
-- **Tool side effects in Crews.** A Crew can call a tool more times than expected. POST, DELETE, payment belong in a Flow step, never a Crew tool.
+- **Backstory as flavor。** backstoryはoutputを形作ります。agentごとに3 variantsをtestしてください。varianceは実在します。1つ選んでfreezeします。
+- **`expected_output`のskip。** taskごとのcontractがないと、downstream taskはLLMが生成したものを何でも拾います。Crewは動きますが、auditは失敗します。
+- **Memory always-on。** long-termは毎run書き込みます。vector DBは増えます。retrievalはnoisyになります。persistentなfactがあるtaskにwriteをscopeします。
+- **Manager prompt drift。** Hierarchicalのmanager promptはimplicitです。routingがおかしい場合はverbose modeでdumpして読みます。
+- **Crew内tool side effect。** Crewは想定より多くtoolをcallすることがあります。POST、DELETE、paymentはFlow stepに置き、Crew toolにはしません。
 
 ## Exercises
 
-1. Convert the Sequential crew to a Flow. Count the touchpoints where variability drops. Note where readability dropped.
-2. Add entity memory to the crew: facts about a customer persist across kickoffs. Verify retrieval pulls the right entity.
-3. Implement a Hierarchical process where the manager refuses to route to the editor until the writer's output has at least three paragraphs. Trace the retry.
-4. Wire a `BaseTool` subclass for a (mocked) web search. Compare the trace shape vs the `@tool` decorator version.
-5. Add `output_pydantic=Brief` to the editor task, where `Brief` has `title`, `summary`, `sections`. Make the writer task output malformed JSON once; verify CrewAI's retry behavior in the trace.
-6. Read CrewAI's docs intro. Port the toy to the real `crewai` API. Which guarantees did the stdlib version skip?
-7. Wire AgentOps or Langfuse (Lesson 24) to a real run. Which traces did you miss in the stdlib version?
+1. Sequential crewをFlowに変換する。variabilityが下がったtouchpointを数える。readabilityが下がった場所もnoteする。
+2. crewにentity memoryを追加する。customerに関するfactがkickoffをまたいでpersistする。retrievalが正しいentityをpullすることを確認する。
+3. writer outputが少なくとも3 paragraphになるまでeditorへrouteすることをmanagerが拒否するHierarchical processを実装する。retryをtraceする。
+4. (mocked) web search用の`BaseTool` subclassをwireする。`@tool` decorator versionとtrace shapeを比較する。
+5. editor taskに`output_pydantic=Brief`を追加する。`Brief`は`title`、`summary`、`sections`を持つ。writer taskが一度malformed JSONを出すようにし、CrewAIのretry behaviorをtraceで確認する。
+6. CrewAI docs introを読む。toyを実際の`crewai` APIへportする。stdlib versionはどのguaranteeをskipしたか。
+7. AgentOpsまたはLangfuse (Lesson 24) をreal runへwireする。stdlib versionではどのtraceが欠けていたか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Agent | "Persona" | Role + goal + backstory + tools |
-| Task | "Unit of work" | Description + expected output + assignee + optional structured output |
-| Crew | "Agent team" | Container for Agents + Tasks + Process |
-| Process | "Execution strategy" | Sequential / Hierarchical / Consensus (planned) |
-| Flow | "Deterministic workflow" | Event-driven, code-owned, testable |
-| Backstory | "Persona prompt" | Tone and judgment shaper for the Agent |
-| `@tool` | "Function tool" | Decorator that turns a function into a tool the Agent can call |
-| `BaseTool` | "Class tool" | Class-based tool with args schema, retries, async support |
-| Entity memory | "Per-entity facts" | Memory scoped to a customer / account / issue |
-| Long-term memory | "Cross-run memory" | Vector-backed memory that survives between kickoffs |
-| Contextual memory | "Just-in-time retrieval" | Memory pulled at the moment the Agent needs it |
-| Manager LLM | "Router agent" | Extra LLM in Hierarchical process that picks the next task |
-| `expected_output` | "Task contract" | String that tells the Agent (and audit) what shape to return |
+| Agent | 「Persona」 | role + goal + backstory + tools |
+| Task | 「Unit of work」 | description + expected output + assignee + optional structured output |
+| Crew | 「Agent team」 | Agents + Tasks + Processのcontainer |
+| Process | 「Execution strategy」 | Sequential / Hierarchical / Consensus (planned) |
+| Flow | 「Deterministic workflow」 | event-driven、code-owned、testable |
+| Backstory | 「Persona prompt」 | Agentのtoneとjudgmentを形作るもの |
+| `@tool` | 「Function tool」 | 関数をAgentが呼べるtoolへ変換するdecorator |
+| `BaseTool` | 「Class tool」 | args schema、retry、async supportを持つclass-based tool |
+| Entity memory | 「Per-entity facts」 | customer / account / issueにscopeされたmemory |
+| Long-term memory | 「Cross-run memory」 | kickoff間で残るvector-backed memory |
+| Contextual memory | 「Just-in-time retrieval」 | Agentが必要とする瞬間にpullされるmemory |
+| Manager LLM | 「Router agent」 | Hierarchical processでnext taskを選ぶ追加LLM |
+| `expected_output` | 「Task contract」 | Agentとauditに返すshapeを伝えるstring |
 
-## Further Reading
+## 参考文献
 
 - [CrewAI docs introduction](https://docs.crewai.com/en/introduction): concepts and the recommended production path
 - [CrewAI Flows guide](https://docs.crewai.com/en/concepts/flows): event-driven shape, `@start`, `@listen`
 - [CrewAI tools reference](https://docs.crewai.com/en/concepts/tools): `@tool`, `BaseTool`, built-in toolkits
 - [CrewAI memory](https://docs.crewai.com/en/concepts/memory): short-term, long-term, entity, contextual
-- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents): when multi-agent helps and when it does not
-- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview): the state-machine alternative
+- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents): multi-agentが効く場合と効かない場合
+- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview): state-machine alternative

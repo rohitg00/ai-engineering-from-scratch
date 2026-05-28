@@ -1,32 +1,32 @@
 ---
 name: actor-runtime
-description: Build an AutoGen v0.4-shaped actor runtime with private state, inbox-per-actor, message-only IPC, fault isolation, and a dead-letter queue.
+description: private state、actorごとのinbox、message-only IPC、fault isolation、dead-letter queueを備えたAutoGen v0.4型actor runtimeを構築する。
 version: 1.0.0
 phase: 14
 lesson: 14
 tags: [autogen, actor-model, messaging, fault-isolation, dead-letter]
 ---
 
-Given a multi-agent task, produce an actor runtime and the agent actors needed.
+multi-agent taskを受け取り、actor runtimeと必要なagent actorsを生成する。
 
-Produce:
+生成するもの:
 
-1. A `Message` type with `sender`, `recipient`, `topic`, `body`, `mid`.
-2. An `Actor` base class with `receive(message, runtime)`. Actor state is private.
-3. A `Runtime` with a shared queue, `send()`, `run_until_idle()`, and a dead-letter queue. Exceptions in handlers go to DLQ; do not propagate.
-4. One topology helper: RoundRobin (fixed rotation), Selector (LLM picks next), or custom broadcast.
-5. Observability hooks per message: emit OTel spans with `gen_ai.agent.name` and `gen_ai.operation.name` per Lesson 23.
+1. `sender`、`recipient`、`topic`、`body`、`mid`を持つ`Message` type。
+2. `receive(message, runtime)`を持つ`Actor` base class。actor stateはprivate。
+3. shared queue、`send()`、`run_until_idle()`、dead-letter queueを持つ`Runtime`。handler内のexceptionはDLQへ送り、propagateしない。
+4. 1つのtopology helper: RoundRobin (fixed rotation)、Selector (LLMがnextを選ぶ)、またはcustom broadcast。
+5. messageごとのobservability hook: Lesson 23に従い、`gen_ai.agent.name`と`gen_ai.operation.name`を持つOTel spanをemitする。
 
 Hard rejects:
 
-- Synchronous message passing that blocks the sender until the recipient returns. That is the v0.2 model; it breaks fault isolation.
-- Shared mutable state across actors. Actors read state via messages or not at all.
-- A runtime that propagates handler exceptions. Failures belong in the DLQ; let other actors keep running.
+- recipientがreturnするまでsenderをblockするsynchronous message passing。それはv0.2 modelであり、fault isolationを壊します。
+- actor間のshared mutable state。actorはmessage経由でstateを読むか、まったく読まない。
+- handler exceptionをpropagateするruntime。failureはDLQへ入れ、他のactorは走り続けるべきです。
 
 Refusal rules:
 
-- If the task has only two actors with a fixed back-and-forth, refuse the actor framing and suggest a prompt chain (Lesson 12). Actors earn cost when there are >=3 actors or async concurrency.
-- If the user wants "synchronous mode" for "easier debugging," refuse. Suggest logging + tracing (Lesson 23) instead.
-- If the domain is strictly request/response with a single specialist, suggest routing (Lesson 12) instead of an actor team.
+- taskがfixed back-and-forthの2 actorだけならactor framingを拒否し、prompt chain (Lesson 12) を提案する。actorは3 actor以上またはasync concurrencyがあるときにcostを正当化する。
+- userが「debugしやすいからsynchronous mode」を求めたら拒否する。代わりにlogging + tracing (Lesson 23) を提案する。
+- domainがsingle specialistの厳密なrequest/responseなら、actor teamではなくrouting (Lesson 12) を提案する。
 
-Output: `message.py`, `actor.py`, `runtime.py`, `teams.py`, `README.md` explaining DLQ policy, the topology choice, and how OTel spans are wired. End with "what to read next" pointing to Lesson 25 (multi-agent debate) if actors negotiate, Lesson 23 (OTel) if tracing is required, or Microsoft Agent Framework if you want the forward-looking runtime.
+Output: `message.py`, `actor.py`, `runtime.py`, `teams.py`, `README.md`。DLQ policy、topology choice、OTel span wiringを説明する。最後に"what to read next"として、actorがnegotiateするならLesson 25 (multi-agent debate)、tracingが必要ならLesson 23 (OTel)、forward-looking runtimeが欲しいならMicrosoft Agent Frameworkを示す。

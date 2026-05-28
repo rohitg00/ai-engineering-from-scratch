@@ -1,47 +1,47 @@
-# Build a Voice Assistant Pipeline — The Phase 6 Capstone
+# Build a Voice Assistant Pipeline — Phase 6 の Capstone
 
-> Everything from lessons 01-11, stitched together. Build a voice assistant that listens, reasons, and talks back. In 2026 that is a solved engineering problem, not a research problem — but the integration details decide whether it ships.
+> lessons 01-11 のすべてをつなぎ合わせます。聞いて、推論し、話し返す voice assistant を作ります。2026年には、これは研究問題ではなく解決済みのエンジニアリング問題です。ただし、出荷できるかどうかは統合の細部で決まります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 6 · 04, 05, 06, 07, 11; Phase 11 · 09 (Function Calling); Phase 14 · 01 (Agent Loop)
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 6 · 04, 05, 06, 07, 11; Phase 11 · 09 (Function Calling); Phase 14 · 01 (Agent Loop)
+**所要時間:** 約120分
 
-## The Problem
+## 問題
 
-Build an end-to-end assistant:
+end-to-end assistant を作ります。
 
-1. Captures mic input (16 kHz mono).
-2. Detects start/end of user speech.
-3. Transcribes streaming.
-4. Passes transcript to an LLM that can call tools (timer, weather, calendar).
-5. Streams LLM text to a TTS.
-6. Plays audio back to the user.
-7. Stops if the user interrupts mid-response.
+1. mic input（16 kHz mono）を取得する。
+2. user speech の開始 / 終了を検出する。
+3. streaming で文字起こしする。
+4. transcript を、tools（timer、weather、calendar）を呼べる LLM に渡す。
+5. LLM text を TTS に stream する。
+6. ユーザーへ audio を再生する。
+7. ユーザーが応答途中で割り込んだら停止する。
 
-Latency target: first TTS audio byte within 800 ms of the user finishing their utterance on a laptop CPU. Quality target: no missed words, no hallucinated subtitles on silence, no voice cloning leakage, no prompt injection success.
+レイテンシ目標: laptop CPU 上で、ユーザーが発話を終えてから 800 ms 以内に最初の TTS audio byte を出すこと。品質目標: 聞き漏らしなし、沈黙時の字幕ハルシネーションなし、voice cloning leakage なし、prompt injection 成功なし。
 
-## The Concept
+## コンセプト
 
 ![Voice assistant pipeline: mic → VAD → STT → LLM+tools → TTS → speaker](../assets/voice-assistant.svg)
 
-### The seven components
+### 7つのコンポーネント
 
-1. **Audio capture.** Mic → 16 kHz mono → 20 ms chunks. Usually `sounddevice` in Python or native AudioUnit/ALSA/WASAPI in production.
-2. **VAD (Lesson 11).** Silero VAD @ threshold 0.5, min speech 250 ms, silence hang-over 500 ms. Signals "start" and "end."
-3. **Streaming STT (Lesson 4-5).** Whisper-streaming, Parakeet-TDT, or Deepgram Nova-3 (API). Partial + final transcripts.
-4. **LLM with tool calling.** GPT-4o / Claude 3.5 / Gemini 2.5 Flash. JSON schema for tools. Stream tokens.
-5. **Streaming TTS (Lesson 7).** Kokoro-82M (fastest open) or Cartesia Sonic (commercial). Start TTS after 20 LLM tokens.
-6. **Playback.** Speaker out; opus-encode for low-bandwidth networks.
-7. **Interruption handler.** If VAD fires during TTS playback, stop playback, cancel LLM, restart STT.
+1. **Audio capture。** Mic → 16 kHz mono → 20 ms chunks。通常 Python では `sounddevice`、本番では native AudioUnit/ALSA/WASAPI。
+2. **VAD（Lesson 11）。** Silero VAD @ threshold 0.5、min speech 250 ms、silence hang-over 500 ms。"start" と "end" を通知します。
+3. **Streaming STT（Lesson 4-5）。** Whisper-streaming、Parakeet-TDT、または Deepgram Nova-3（API）。partial + final transcripts。
+4. **tool calling 付き LLM。** GPT-4o / Claude 3.5 / Gemini 2.5 Flash。tools 用 JSON schema。tokens を stream します。
+5. **Streaming TTS（Lesson 7）。** Kokoro-82M（最速の open）または Cartesia Sonic（commercial）。LLM tokens 20個後に TTS を開始します。
+6. **Playback。** Speaker out。低帯域ネットワークでは opus-encode します。
+7. **Interruption handler。** TTS playback 中に VAD が発火したら、playback を止め、LLM を cancel し、STT を再開します。
 
-### The three failure modes you will hit
+### 必ず遭遇する3つの失敗モード
 
-1. **First-word clip.** VAD starts a beat too late. User's "hey" is missing. Start threshold at 0.3, not 0.5.
-2. **Mid-response interrupt confusion.** LLM keeps generating after user interrupts; assistant talks over user. Wire VAD → cancel-LLM.
-3. **Silence hallucination.** Whisper outputs "Thanks for watching" on the silent warm-up frames. Always VAD-gate.
+1. **First-word clip。** VAD の開始が少し遅れます。ユーザーの "hey" が欠けます。start threshold は 0.5 ではなく 0.3 にします。
+2. **Mid-response interrupt confusion。** ユーザーが割り込んだ後も LLM が生成し続け、assistant がユーザーにかぶせて話します。VAD → cancel-LLM を配線します。
+3. **Silence hallucination。** Whisper が silent warm-up frames で "Thanks for watching" を出力します。必ず VAD-gate します。
 
-### 2026 production reference stacks
+### 2026年の本番 reference stacks
 
 | Stack | Latency | License | Notes |
 |-------|---------|---------|-------|
@@ -51,9 +51,9 @@ Latency target: first TTS audio byte within 800 ms of the user finishing their u
 | Vapi / Retell (managed) | 300-500 ms | commercial | Fastest to launch; limited customization |
 | Whisper.cpp + llama.cpp + Kokoro-ONNX | offline | open | Privacy / edge |
 
-## Build It
+## 作ってみる
 
-### Step 1: mic capture with chunking (pseudocode)
+### Step 1: chunking 付き mic capture（pseudocode）
 
 ```python
 import sounddevice as sd
@@ -98,7 +98,7 @@ async def turn(audio_bytes):
             await speaker.play(audio)
 ```
 
-### Step 4: tool calling inside the LLM loop
+### Step 4: LLM loop 内の tool calling
 
 ```python
 tools = [
@@ -127,9 +127,9 @@ while True:
         break
 ```
 
-## Use It
+## 使いどころ
 
-See `code/main.py` for a runnable simulation that wires all seven components with stub models, so you can see the pipeline shape even without hardware. For a real implementation, swap stubs with:
+`code/main.py` には、7つのコンポーネントを stub models でつなぐ実行可能な simulation があります。ハードウェアがなくても pipeline の形を確認できます。実装では、stub を次に差し替えます。
 
 - `silero-vad` (`pip install silero-vad`)
 - `deepgram-sdk` or `openai-whisper`
@@ -137,41 +137,41 @@ See `code/main.py` for a runnable simulation that wires all seven components wit
 - `kokoro` or `cartesia`
 - `sounddevice` for I/O
 
-## Pitfalls
+## 落とし穴
 
-- **Logging PII forever.** Full-turn audio is PII in most jurisdictions. 30-day retention, encrypted at rest.
-- **No barge-in.** Users will interrupt. Your assistant must stop talking.
-- **TTS that blocks.** Synchronous TTS blocks the event loop. Use async or a separate thread.
-- **No tool-call error handling.** Tools fail. LLM must get back the error + retry once, then gracefully degrade.
-- **Overzealous hallucination filters.** Over-filter and the assistant repeats "I can't help with that." Under-filter and it says anything. Calibrate on a held-out set.
-- **No wake-word option.** Always-listening is a privacy liability. Add a wake-word gate (Porcupine or openWakeWord).
+- **PII を永続的にログする。** Full-turn audio は多くの法域で PII です。30-day retention、encrypted at rest にします。
+- **barge-in がない。** ユーザーは割り込みます。assistant は話すのを止めなければなりません。
+- **blocking TTS。** Synchronous TTS は event loop をブロックします。async または別 thread を使います。
+- **tool-call error handling がない。** Tools は失敗します。LLM は error を受け取り、一度 retry し、その後 graceful degrade する必要があります。
+- **過剰な hallucination filters。** 過剰に filter すると assistant は "I can't help with that." を繰り返します。不十分だと何でも言います。held-out set で calibration します。
+- **wake-word option がない。** 常時リスニングは privacy liability です。wake-word gate（Porcupine または openWakeWord）を追加します。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-voice-assistant-architect.md`. Given budget + scale + language + compliance constraints, produce a full stack spec.
+`outputs/skill-voice-assistant-architect.md` として保存します。予算 + scale + language + compliance constraints が与えられたら、full stack spec を作ります。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. It simulates one full turn end-to-end with stub modules and prints per-stage latency.
-2. **Medium.** Replace the STT stub with a real Whisper model on a pre-recorded `.wav`. Measure WER and end-to-end latency.
-3. **Hard.** Add tool calling: implement `get_weather` (any API) and `set_timer`. Route the LLM through the tools and verify that when the user says "set a 5 minute timer" the right function fires and the spoken reply confirms it.
+1. **Easy。** `code/main.py` を実行します。stub modules で1つの full turn を end-to-end にシミュレートし、stage ごとの latency を出力します。
+2. **Medium。** STT stub を、録音済み `.wav` 上の実 Whisper model に置き換えます。WER と end-to-end latency を測定します。
+3. **Hard。** tool calling を追加します。`get_weather`（任意の API）と `set_timer` を実装します。LLM を tools 経由にし、ユーザーが "set a 5 minute timer" と言ったときに正しい関数が発火し、spoken reply がそれを確認することを検証します。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Turn | A user + assistant round-trip | One VAD-bounded user speech + one LLM-TTS response. |
-| Barge-in | Interruption | User speaks while assistant talks; assistant stops. |
-| Wake word | "Hey assistant" | Short keyword detector; Porcupine, Snowboy, openWakeWord. |
-| End-pointing | Turn ending | VAD + min-silence decision that user has finished. |
-| Pre-roll | Pre-speech buffer | Keep 200-400 ms of audio before VAD fires to avoid first-word clip. |
-| Tool call | Function invocation | LLM emits JSON; runtime dispatches; result feeds back in-loop. |
+| Turn | A user + assistant round-trip | VAD で区切られた1つの user speech + 1つの LLM-TTS response。 |
+| Barge-in | Interruption | assistant が話している間に user が話し、assistant が停止する。 |
+| Wake word | "Hey assistant" | 短い keyword detector。Porcupine、Snowboy、openWakeWord。 |
+| End-pointing | Turn ending | user が話し終えたことを判断する VAD + min-silence decision。 |
+| Pre-roll | Pre-speech buffer | VAD 発火前の 200-400 ms の音声を保持し、first-word clip を避ける。 |
+| Tool call | Function invocation | LLM が JSON を出し、runtime が dispatch し、result が loop 内に戻る。 |
 
-## Further Reading
+## 参考資料
 
-- [LiveKit — voice agent quickstart](https://docs.livekit.io/agents/) — production-grade reference.
-- [Pipecat — voice agent examples](https://github.com/pipecat-ai/pipecat) — DIY-friendly framework.
-- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — the managed voice-native path.
-- [Kyutai Moshi](https://github.com/kyutai-labs/moshi) — full-duplex reference (Lesson 15).
-- [Porcupine wake-word](https://picovoice.ai/products/porcupine/) — wake-word gating.
-- [Anthropic — tool use guide](https://docs.anthropic.com/en/docs/build-with-claude/tool-use) — LLM function calling.
+- [LiveKit — voice agent quickstart](https://docs.livekit.io/agents/) — production-grade reference。
+- [Pipecat — voice agent examples](https://github.com/pipecat-ai/pipecat) — DIY-friendly framework。
+- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — managed voice-native path。
+- [Kyutai Moshi](https://github.com/kyutai-labs/moshi) — full-duplex reference（Lesson 15）。
+- [Porcupine wake-word](https://picovoice.ai/products/porcupine/) — wake-word gating。
+- [Anthropic — tool use guide](https://docs.anthropic.com/en/docs/build-with-claude/tool-use) — LLM function calling。

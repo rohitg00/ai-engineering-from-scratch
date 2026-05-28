@@ -1,11 +1,11 @@
-"""DPO family losses on toy preference data — stdlib Python.
+"""toy preference data 上の DPO family losses — stdlib Python。
 
-Fits a softmax policy on 4 actions to a pairwise preference dataset using
-six losses: DPO, IPO, KTO, SimPO, ORPO, BPO. Compares final chosen log-prob,
-rejected log-prob, implicit reward spread, and win rate.
+4 actions 上の softmax policy を pairwise preference dataset に fit します。
+使う loss は DPO、IPO、KTO、SimPO、ORPO、BPO の 6 つです。final chosen
+log-prob、rejected log-prob、implicit reward spread、win rate を比較します。
 
-Toy-level — goal is to read the loss formulas side by side, not to match
-production numbers.
+toy level の実装です。目的は production numbers を再現することではなく、
+loss formulas を横並びで読むことです。
 
 Usage: python3 code/main.py
 """
@@ -45,7 +45,7 @@ def sigmoid(x: float) -> float:
 
 
 def sample_pref_pair() -> tuple[int, int, float]:
-    """Sample a preference pair (y_w, y_l) with true preference strength p_w."""
+    """true preference strength p_w を持つ preference pair (y_w, y_l) を sample します。"""
     i, j = random.sample(range(N_ACTIONS), 2)
     p_i_beats_j = sigmoid(TRUE_UTILITY[i] - TRUE_UTILITY[j])
     if random.random() < p_i_beats_j:
@@ -98,9 +98,9 @@ def train_dpo(pairs: list[tuple[int, int, float]], beta: float = 0.1,
             g_margin = 2 * diff
             grad = [g_margin * (gw_i - gl_i) for gw_i, gl_i in zip(gw, gl)]
         elif variant == "bpo":
-            # DPO + penalty on decreases of log_pi_w
+            # DPO + log_pi_w の低下への penalty
             g_margin = -(1.0 - sigmoid(margin))
-            anchor_pen = -1.0 * (log_pi_w - log_ref_w)  # push chosen toward/above ref
+            anchor_pen = -1.0 * (log_pi_w - log_ref_w)  # chosen を ref 方向/以上へ押す
             grad = [beta * (g_margin * gw_i - g_margin * gl_i) - 0.05 * anchor_pen * gw_i
                     for gw_i, gl_i in zip(gw, gl)]
         else:
@@ -112,7 +112,7 @@ def train_dpo(pairs: list[tuple[int, int, float]], beta: float = 0.1,
 def train_simpo(pairs: list[tuple[int, int, float]], beta: float = 1.5,
                 gamma: float = 0.5, steps: int = 2000, lr: float = 0.05) -> Policy:
     pi, _ = make_policy_and_ref()
-    lens = [1, 1, 1, 1]  # trivial in single-action toy; illustrative
+    lens = [1, 1, 1, 1]  # single-action toy では自明だが、考え方を示すために置く
     for _ in range(steps):
         w, l, _ = random.choice(pairs)
         log_pi_w = pi.logprob(w) / lens[w]
@@ -137,7 +137,7 @@ def train_kto(labels: list[tuple[int, bool]], beta: float = 0.1,
         log_ref_y = ref.logprob(y)
         value = beta * (log_pi_y - log_ref_y) - z_ref
         if desirable:
-            v = sigmoid(value)  # want up
+            v = sigmoid(value)  # 上げたい
             g_value = -(1 - v)
         else:
             v = sigmoid(-value)
@@ -157,7 +157,7 @@ def train_orpo(pairs: list[tuple[int, int, float]], lam: float = 0.1,
         log_pi_l = pi.logprob(l)
         # NLL term
         gw = pi.grad_logprob(w)
-        # odds ratio term (simplified)
+        # odds ratio term (簡略化)
         odds_w = math.exp(log_pi_w) / (1 - math.exp(log_pi_w) + 1e-6)
         odds_l = math.exp(log_pi_l) / (1 - math.exp(log_pi_l) + 1e-6)
         log_ratio = math.log(odds_w + 1e-6) - math.log(odds_l + 1e-6)
@@ -178,7 +178,7 @@ def win_rate(pi: Policy) -> float:
 
 
 def report(name: str, pi: Policy) -> None:
-    print(f"  {name:8s}  probs={[f'{p:.3f}' for p in softmax(pi.logits)]}  "
+    print(f"  {name:8s}  確率={[f'{p:.3f}' for p in softmax(pi.logits)]}  "
           f"win_rate={win_rate(pi):.3f}  logits={[f'{l:+.2f}' for l in pi.logits]}")
 
 
@@ -220,9 +220,9 @@ def main() -> None:
 
     print()
     print("-" * 70)
-    print("TAKEAWAY: all six methods shift mass toward action 1 (highest true")
-    print("utility). they differ in how tightly they anchor to the reference,")
-    print("how they treat preference strength, and whether they need pairs.")
+    print("要点: 6 つの方法はすべて action 1 (true utility が最大) へ mass を")
+    print("移します。違いは reference への anchor の強さ、preference strength の")
+    print("扱い、そして pairs を必要とするかどうかです。")
     print("=" * 70)
 
 

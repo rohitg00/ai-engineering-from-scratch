@@ -1,26 +1,26 @@
-# GPU Setup & Cloud
+# GPUセットアップとクラウド
 
-> Training on CPU is fine for learning. Training for real needs a GPU.
+> 学習目的ならCPUで十分です。本格的に学習させるならGPUが必要です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~45 minutes
+**タイプ:** 作ってみる
+**言語:** Python
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Verify local GPU availability using `nvidia-smi` and PyTorch's CUDA API
-- Configure Google Colab with a T4 GPU for free cloud-based experiments
-- Benchmark matrix multiplication on CPU vs GPU and measure the speedup
-- Estimate the largest model that fits in your VRAM using the fp16 rule of thumb
+- `nvidia-smi` とPyTorchのCUDA APIを使って、ローカルGPUが利用可能か確認する
+- 無料のクラウド実験用に、T4 GPU付きGoogle Colabを設定する
+- CPUとGPUで行列積をベンチマークし、速度向上を測定する
+- fp16の経験則を使って、VRAMに収まる最大モデルを見積もる
 
-## The Problem
+## 課題
 
-Most lessons in phases 1-3 run fine on CPU. But once you start training CNNs, transformers, or LLMs (phases 4+), you need GPU acceleration. A training run that takes 8 hours on CPU takes 10 minutes on GPU.
+フェーズ1から3のほとんどのレッスンはCPUで問題なく動きます。しかしCNN、transformer、LLM（フェーズ4以降）を学習し始めると、GPUによる高速化が必要になります。CPUで8時間かかる学習が、GPUなら10分で終わります。
 
-You have three options: local GPU, cloud GPU, or Google Colab (free).
+選択肢は3つです。ローカルGPU、クラウドGPU、またはGoogle Colab（無料）です。
 
-## The Concept
+## 考え方
 
 ```
 Your options:
@@ -41,17 +41,17 @@ Your options:
    Best for: Serious training, large models
 ```
 
-## Build It
+## 作ってみる
 
-### Option 1: Local NVIDIA GPU
+### 選択肢1: ローカルNVIDIA GPU
 
-Check if you have one:
+GPUがあるか確認します。
 
 ```bash
 nvidia-smi
 ```
 
-Install PyTorch with CUDA:
+CUDA対応のPyTorchをインストールします。
 
 ```python
 import torch
@@ -63,17 +63,17 @@ if torch.cuda.is_available():
     print(f"Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
 ```
 
-### Option 2: Google Colab
+### 選択肢2: Google Colab
 
-1. Go to [colab.research.google.com](https://colab.research.google.com)
+1. [colab.research.google.com](https://colab.research.google.com) を開く
 2. Runtime > Change runtime type > T4 GPU
-3. Run `!nvidia-smi` to verify
+3. `!nvidia-smi` を実行して確認する
 
-Upload notebooks from this course directly to Colab.
+このコースのnotebookは、そのままColabへアップロードできます。
 
-### Option 3: Cloud GPU
+### 選択肢3: クラウドGPU
 
-For Lambda Labs, RunPod, or Vast.ai:
+Lambda Labs、RunPod、Vast.aiの場合:
 
 ```bash
 ssh user@your-gpu-instance
@@ -82,16 +82,16 @@ pip install torch torchvision torchaudio
 python -c "import torch; print(torch.cuda.get_device_name(0))"
 ```
 
-### No GPU? No problem.
+### GPUがなくても大丈夫
 
-Most lessons work on CPU. The ones that need GPU will say so and include Colab links.
+ほとんどのレッスンはCPUで動きます。GPUが必要なレッスンではその旨を明記し、Colabリンクを用意します。
 
 ```python
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using: {device}")
 ```
 
-## Build It: GPU vs CPU benchmark
+## 作ってみる: GPU vs CPUベンチマーク
 
 ```python
 import torch
@@ -120,17 +120,17 @@ if torch.cuda.is_available():
     print(f"Speedup: {cpu_time / gpu_time:.0f}x")
 ```
 
-## Exercises
+## 演習
 
-1. Run the benchmark above and compare CPU vs GPU times
-2. If you don't have a GPU, run it on Google Colab and compare
-3. Check how much GPU memory you have and estimate the largest model you can fit (rule of thumb: 2 bytes per parameter for fp16)
+1. 上のベンチマークを実行し、CPUとGPUの時間を比較する
+2. GPUがない場合はGoogle Colabで実行して比較する
+3. GPUメモリの容量を確認し、収まる最大モデルを見積もる（経験則: fp16では1パラメータあたり2バイト）
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| CUDA | "GPU programming" | NVIDIA's parallel computing platform that lets you run code on the GPU |
-| VRAM | "GPU memory" | Video RAM on the GPU, separate from system RAM. Limits model size. |
-| fp16 | "Half precision" | 16-bit floating point, uses half the memory of fp32 with minimal accuracy loss |
-| Tensor Core | "Fast matrix hardware" | Specialized GPU cores for matrix multiplication, 4-8x faster than regular cores |
+| CUDA | 「GPUプログラミング」 | GPU上でコードを実行できるNVIDIAの並列計算プラットフォーム |
+| VRAM | 「GPUメモリ」 | システムRAMとは別にGPU上にあるVideo RAM。モデルサイズを制限する。 |
+| fp16 | 「半精度」 | 16ビット浮動小数点。精度低下を最小限に抑えながら、fp32の半分のメモリを使う |
+| Tensor Core | 「高速な行列用ハードウェア」 | 行列積用の専用GPUコア。通常のコアより4〜8倍高速 |

@@ -1,28 +1,28 @@
-# Dev Environment
+# 開発環境
 
-> Your tools shape your thinking. Set them up once, set them up right.
+> あなたのツールが思考を形作る。一度セットアップしたら、正しくセットアップする。
 
-**Type:** Build
-**Languages:** Python, Node.js, Rust
-**Prerequisites:** None
-**Time:** ~45 minutes
+**タイプ:** 作ってみる
+**言語:** Python, Node.js, Rust
+**前提条件:** なし
+**時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Set up Python 3.11+, Node.js 20+, and Rust toolchains from scratch
-- Configure virtual environments and package managers for reproducible builds
-- Verify GPU access with CUDA/MPS and run a test tensor operation
-- Understand the four-layer stack: system, packages, runtimes, AI libraries
+- Python 3.11以上、Node.js 20以上、Rustのツールチェーンをゼロからセットアップする
+- 再現可能なビルドのために仮想環境とパッケージマネージャーを設定する
+- CUDA/MPSによるGPUアクセスを確認し、テストテンソル演算を実行する
+- 4層のスタック（システム、パッケージ、ランタイム、AIライブラリ）を理解する
 
-## The Problem
+## 課題
 
-You're about to learn AI engineering across 200+ lessons using Python, TypeScript, Rust, and Julia. If your environment is broken, every single lesson becomes a fight against tooling instead of learning.
+あなたは、Python、TypeScript、Rust、Juliaを使用して200以上のレッスンにわたるAIエンジニアリングを学習しようとしています。環境が壊れていれば、すべてのレッスンが学習ではなくツールへの戦いになります。
 
-Most people skip environment setup. Then they spend hours debugging import errors, version conflicts, and missing CUDA drivers. We're going to do this once, properly.
+ほとんどの人は環境設定をスキップします。そして、インポートエラー、バージョン競合、欠落したCUDAドライバーのデバッグに何時間も費やします。私たちはこれを一度、適切に行います。
 
-## The Concept
+## 考え方
 
-An AI engineering environment has four layers:
+AIエンジニアリング環境には4つのレイヤーがあります。
 
 ```mermaid
 graph TD
@@ -31,13 +31,13 @@ graph TD
     C --> D["1. System Foundation\nOS, shell, git, editor, GPU drivers"]
 ```
 
-We install bottom-up. Each layer depends on the one below it.
+下から積み上げてインストールしていきます。各レイヤーは、その下のレイヤーに依存しています。
 
-## Build It
+## 作ってみる
 
-### Step 1: System Foundation
+### ステップ1：システム基盤
 
-Check your system and install the basics.
+システムを確認し、基本的なものをインストールします。
 
 ```bash
 # macOS
@@ -51,9 +51,9 @@ sudo apt update && sudo apt install -y build-essential git curl wget
 wsl --install -d Ubuntu-24.04
 ```
 
-### Step 2: Python with uv
+### ステップ2: uvを使ったPython
 
-We use `uv` — it's 10-100x faster than pip and handles virtual environments automatically.
+`uv`を使用します。これは`pip`よりも10〜100倍高速であり、仮想環境の管理を自動で行います。
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -66,7 +66,7 @@ source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 uv pip install numpy matplotlib jupyter
 ```
 
-Verify:
+検証:
 
 ```python
 import sys
@@ -78,9 +78,9 @@ a = np.array([1, 2, 3])
 print(f"Vector: {a}, dot product with itself: {np.dot(a, a)}")
 ```
 
-### Step 3: Node.js with pnpm
+### ステップ3: pnpm を使用した Node.js
 
-For TypeScript lessons (agents, MCP servers, web apps).
+TypeScriptのレッスン（エージェント、MCPサーバー、Webアプリ）用。
 
 ```bash
 curl -fsSL https://fnm.vercel.app/install | bash
@@ -92,9 +92,9 @@ npm install -g pnpm
 node -e "console.log('Node', process.version)"
 ```
 
-### Step 4: Rust
+### ステップ4: Rust
 
-For performance-critical lessons (inference, systems).
+パフォーマンスが重要なレッスン（推論、システム）向け。
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -103,9 +103,9 @@ rustc --version
 cargo --version
 ```
 
-### Step 5: Julia (Optional)
+### ステップ 5: Julia (オプション)
 
-For math-heavy lessons where Julia shines.
+Juliaが特に力を発揮する、数学的な内容のレッスン向け。
 
 ```bash
 curl -fsSL https://install.julialang.org | sh
@@ -113,7 +113,7 @@ curl -fsSL https://install.julialang.org | sh
 julia -e 'println("Julia ", VERSION)'
 ```
 
-### Step 6: GPU Setup (If You Have One)
+### ステップ6: GPUセットアップ（お持ちの場合）
 
 ```bash
 # NVIDIA
@@ -130,35 +130,35 @@ if torch.cuda.is_available():
     print(f"GPU: {torch.cuda.get_device_name(0)}")
 ```
 
-No GPU? No problem. Most lessons work on CPU. For training-heavy lessons, use Google Colab or cloud GPUs.
+GPUがなくても大丈夫です。ほとんどのレッスンはCPUで動作します。トレーニング負荷の高いレッスンでは、Google ColabまたはクラウドGPUを使用してください。
 
-### Step 7: Verify Everything
+### ステップ 7: すべての検証
 
-Run the verification script:
+検証スクリプトを実行します：
 
 ```bash
 python phases/00-setup-and-tooling/01-dev-environment/code/verify.py
 ```
 
-## Use It
+## 使ってみる
 
-Your environment is now ready for every lesson in this course. Here's what you'll use where:
+環境は、このコースのすべてのレッスンに対応できるようになりました。どこで何を使うかを見てみましょう。
 
 | Language | Used In | Package Manager |
 |----------|---------|-----------------|
-| Python | Phases 1-12 (ML, DL, NLP, Vision, Audio, LLMs) | uv |
-| TypeScript | Phases 13-17 (Tools, Agents, Swarms, Infra) | pnpm |
-| Rust | Phases 12, 15-17 (Performance-critical systems) | cargo |
-| Julia | Phase 1 (Math foundations) | Pkg |
+| Python | フェーズ 1-12 (ML, DL, NLP, Vision, Audio, LLMs) | uv |
+| TypeScript | フェーズ 13-17 (Tools, Agents, Swarms, Infra) | pnpm |
+| Rust | フェーズ 12, 15-17 (Performance-critical systems) | cargo |
+| Julia | フェーズ 1 (Math foundations) | Pkg |
 
-## Ship It
+## 形にして届ける
 
-This lesson produces a verification script that anyone can run to check their setup.
+このレッスンでは、誰でも実行してセットアップを確認できる検証スクリプトを作成します。
 
-See `outputs/prompt-env-check.md` for a prompt that helps AI assistants diagnose environment issues.
+AIアシスタントが環境の問題を診断するのに役立つプロンプトについては、`outputs/prompt-env-check.md` を参照してください。
 
-## Exercises
+## 演習
 
-1. Run the verification script and fix any failures
-2. Create a Python virtual environment for this course and install PyTorch
-3. Write a "hello world" in all four languages and run each one
+1. 検証スクリプトを実行し、失敗した箇所を修正する
+2. このコース用のPython仮想環境を作成し、PyTorchをインストールする
+3. 4つのすべての言語で「hello world」を書き、それぞれを実行する

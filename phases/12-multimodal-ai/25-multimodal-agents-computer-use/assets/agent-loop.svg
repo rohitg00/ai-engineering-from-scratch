@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,81 +9,81 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Multimodal agent loop — perceive, reason, act, observe</text>
+  <text x="480" y="24" text-anchor="middle" class="title">マルチモーダルエージェントループ - 見る、考える、動く、観察する</text>
 
   <rect x="30" y="50" width="900" height="230" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">the four-phase loop</text>
+  <text x="480" y="72" text-anchor="middle" class="head">4段階ループ</text>
 
   <rect x="60" y="100" width="190" height="150" class="hot"/>
-  <text x="155" y="122" text-anchor="middle" class="step">1. perceive</text>
-  <text x="155" y="142" text-anchor="middle" class="small">screenshot</text>
-  <text x="155" y="158" text-anchor="middle" class="small">+ accessibility tree</text>
-  <text x="155" y="174" text-anchor="middle" class="small">+ goal + history</text>
-  <text x="155" y="200" text-anchor="middle" class="step">VLM encoding</text>
-  <text x="155" y="220" text-anchor="middle" class="small">high-res 1280+</text>
-  <text x="155" y="236" text-anchor="middle" class="small">native aspect</text>
+  <text x="155" y="122" text-anchor="middle" class="step">1. 知覚</text>
+  <text x="155" y="142" text-anchor="middle" class="small">スクリーンショット</text>
+  <text x="155" y="158" text-anchor="middle" class="small">+ アクセシビリティツリー</text>
+  <text x="155" y="174" text-anchor="middle" class="small">+ 目標 + 履歴</text>
+  <text x="155" y="200" text-anchor="middle" class="step">VLMエンコード</text>
+  <text x="155" y="220" text-anchor="middle" class="small">高解像度 1280+</text>
+  <text x="155" y="236" text-anchor="middle" class="small">ネイティブ縦横比</text>
 
   <path d="M 255 175 L 295 175" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="300" y="100" width="190" height="150" class="cool"/>
-  <text x="395" y="122" text-anchor="middle" class="step">2. reason</text>
-  <text x="395" y="142" text-anchor="middle" class="small">plan next step</text>
-  <text x="395" y="158" text-anchor="middle" class="small">ground instruction</text>
-  <text x="395" y="174" text-anchor="middle" class="small">to coordinates</text>
-  <text x="395" y="200" text-anchor="middle" class="step">emit JSON action</text>
+  <text x="395" y="122" text-anchor="middle" class="step">2. 推論</text>
+  <text x="395" y="142" text-anchor="middle" class="small">次ステップを計画</text>
+  <text x="395" y="158" text-anchor="middle" class="small">指示を</text>
+  <text x="395" y="174" text-anchor="middle" class="small">座標へ接地</text>
+  <text x="395" y="200" text-anchor="middle" class="step">JSONアクションを出力</text>
   <text x="395" y="220" text-anchor="middle" class="small">{action, x, y, desc}</text>
-  <text x="395" y="236" text-anchor="middle" class="small">element_desc helps</text>
+  <text x="395" y="236" text-anchor="middle" class="small">element_descが有効</text>
 
   <path d="M 495 175 L 535 175" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="540" y="100" width="190" height="150" class="cold"/>
-  <text x="635" y="122" text-anchor="middle" class="step">3. act</text>
-  <text x="635" y="142" text-anchor="middle" class="small">dispatch to browser</text>
+  <text x="635" y="122" text-anchor="middle" class="step">3. 実行</text>
+  <text x="635" y="142" text-anchor="middle" class="small">ブラウザへ送信</text>
   <text x="635" y="158" text-anchor="middle" class="small">Selenium / CDP</text>
-  <text x="635" y="174" text-anchor="middle" class="small">or OS driver</text>
-  <text x="635" y="200" text-anchor="middle" class="step">verify success</text>
-  <text x="635" y="220" text-anchor="middle" class="small">element exists?</text>
-  <text x="635" y="236" text-anchor="middle" class="small">retry on failure</text>
+  <text x="635" y="174" text-anchor="middle" class="small">またはOSドライバ</text>
+  <text x="635" y="200" text-anchor="middle" class="step">成功を検証</text>
+  <text x="635" y="220" text-anchor="middle" class="small">element存在?</text>
+  <text x="635" y="236" text-anchor="middle" class="small">失敗時は再試行</text>
 
   <path d="M 735 175 L 775 175" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="780" y="100" width="130" height="150" class="reg"/>
-  <text x="845" y="122" text-anchor="middle" class="step">4. observe</text>
-  <text x="845" y="142" text-anchor="middle" class="small">new screenshot</text>
-  <text x="845" y="158" text-anchor="middle" class="small">state diff</text>
-  <text x="845" y="174" text-anchor="middle" class="small">goal check</text>
-  <text x="845" y="200" text-anchor="middle" class="step">repeat or done</text>
-  <text x="845" y="220" text-anchor="middle" class="small">max steps ~30</text>
+  <text x="845" y="122" text-anchor="middle" class="step">4. 観察</text>
+  <text x="845" y="142" text-anchor="middle" class="small">新しいスクリーンショット</text>
+  <text x="845" y="158" text-anchor="middle" class="small">状態差分</text>
+  <text x="845" y="174" text-anchor="middle" class="small">目標確認</text>
+  <text x="845" y="200" text-anchor="middle" class="step">繰り返し / 完了</text>
+  <text x="845" y="220" text-anchor="middle" class="small">最大ステップ ~30</text>
 
   <path d="M 845 255 Q 845 270 845 280 L 845 300 Q 500 300 500 255 L 500 255"
         fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="5,3"/>
 
   <rect x="30" y="300" width="900" height="210" class="box"/>
-  <text x="480" y="322" text-anchor="middle" class="head">memory + benchmarks</text>
+  <text x="480" y="322" text-anchor="middle" class="head">メモリ + ベンチマーク</text>
 
   <rect x="60" y="340" width="400" height="160" class="reg"/>
-  <text x="260" y="362" text-anchor="middle" class="step">memory compression</text>
-  <text x="260" y="382" text-anchor="middle" class="small">1. summary-chain: summary every 5 steps</text>
-  <text x="260" y="398" text-anchor="middle" class="small">2. skip-frame: first + last + every 3rd</text>
-  <text x="260" y="414" text-anchor="middle" class="small">3. log-only: text log of actions (Claude)</text>
-  <text x="260" y="430" text-anchor="middle" class="small">4. hybrid: log + last-2 screenshots + summary</text>
-  <text x="260" y="460" text-anchor="middle" class="caption">30 screenshots at 2048 px = 360k tokens</text>
-  <text x="260" y="476" text-anchor="middle" class="caption">compression is mandatory past step ~10</text>
+  <text x="260" y="362" text-anchor="middle" class="step">メモリ圧縮</text>
+  <text x="260" y="382" text-anchor="middle" class="small">1. summary-chain: 5 ステップごとに要約</text>
+  <text x="260" y="398" text-anchor="middle" class="small">2. スキップ-frame: 最初 + 最後 + 3枚ごと</text>
+  <text x="260" y="414" text-anchor="middle" class="small">3. log-のみ: アクションのテキストログ (Claude)</text>
+  <text x="260" y="430" text-anchor="middle" class="small">4. hybrid: log + 直近2枚 + 要約</text>
+  <text x="260" y="460" text-anchor="middle" class="caption">2048 pxの30枚 = 360kトークン</text>
+  <text x="260" y="476" text-anchor="middle" class="caption">ステップ~10以降は圧縮必須</text>
 
   <rect x="480" y="340" width="430" height="160" class="hot"/>
-  <text x="695" y="362" text-anchor="middle" class="step">2026 benchmarks</text>
+  <text x="695" y="362" text-anchor="middle" class="step">2026年ベンチマーク</text>
   <text x="695" y="384" text-anchor="middle" class="small">ScreenSpot-Pro  : Claude 4.7 ~90 / Qwen2.5-VL 85</text>
   <text x="695" y="400" text-anchor="middle" class="small">VisualWebArena : Gemini 3 Pro 27 / open ~20</text>
   <text x="695" y="416" text-anchor="middle" class="small">AgentVista     : frontier 27-40 / open 10-20</text>
   <text x="695" y="432" text-anchor="middle" class="small">Ferret-UI      : GPT-5 ~82 / Qwen2.5-VL ~70</text>
-  <text x="695" y="462" text-anchor="middle" class="step">still hard</text>
-  <text x="695" y="482" text-anchor="middle" class="caption">long-horizon + recovery + fine grounding</text>
+  <text x="695" y="462" text-anchor="middle" class="step">まだ難しい</text>
+  <text x="695" y="482" text-anchor="middle" class="caption">長期ホライズン + 復旧 + 精密接地</text>
 </svg>

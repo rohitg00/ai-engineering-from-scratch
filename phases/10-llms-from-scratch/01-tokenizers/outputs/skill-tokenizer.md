@@ -1,54 +1,54 @@
 ---
 name: skill-tokenizer
-description: Choosing and building tokenizers for LLM projects
+description: LLM プロジェクト向けのトークナイザー選定と構築
 version: 1.0.0
 phase: 10
 lesson: 1
 tags: [tokenizer, bpe, wordpiece, sentencepiece, llm, nlp]
 ---
 
-# Tokenizer Selection and Implementation
+# トークナイザーの選定と実装
 
-When starting an LLM project, apply this decision framework for tokenizer selection.
+LLM プロジェクトを始めるときは、トークナイザー選定にこの判断フレームワークを使ってください。
 
-## When to use each tokenizer
+## 各トークナイザーを使う場面
 
-**Byte-level BPE (tiktoken):** You are building on or fine-tuning GPT-family models. You need guaranteed handling of any input byte sequence. You want no unknown tokens.
+**バイトレベル BPE (`tiktoken`):** GPT 系モデルを土台にする、または fine-tuning するとき。どんな入力バイト列も確実に扱う必要があるとき。未知トークンを出したくないとき。
 
-**WordPiece (Hugging Face):** You are working with BERT-family models for classification, NER, or embedding tasks. You need the "##" continuation prefix for downstream tasks that rely on word boundary signals.
+**WordPiece (Hugging Face):** 分類、NER、埋め込みタスクで BERT 系モデルを使うとき。単語境界シグナルに依存する下流タスクのために、`##` 継続接頭辞が必要なとき。
 
-**SentencePiece (BPE or Unigram):** You are training from scratch. You need language-agnostic tokenization. Your data includes CJK languages, Thai, or other scripts without whitespace word boundaries. LLaMA, T5, and most multilingual models use this.
+**SentencePiece (BPE または Unigram):** ゼロから訓練するとき。言語非依存のトークナイゼーションが必要なとき。データに CJK 言語、タイ語、または空白による単語境界を持たない文字体系が含まれるとき。LLaMA、T5、多くの多言語モデルがこれを使っています。
 
-## Vocabulary size guidelines
+## 語彙サイズの指針
 
-- 32K tokens: good default for single-language models, keeps embedding layer small
-- 50K-64K tokens: better for multilingual or code-heavy models
-- 100K+ tokens: only when you have massive training data and want short sequences
+- 32K トークン: 単一言語モデルのよいデフォルト。埋め込み層を小さく保てる
+- 50K-64K トークン: 多言語モデルやコードが多いモデルに向く
+- 100K以上: 大規模な訓練データがあり、短いシーケンスを重視する場合のみ
 
-Larger vocabulary means shorter sequences (cheaper inference) but more parameters in the embedding matrix. For a 100K vocabulary with 4096-dimensional embeddings, the embedding layer alone is 400M parameters.
+語彙を大きくするとシーケンスは短くなり、推論は安くなりますが、埋め込み行列のパラメータは増えます。100K 語彙、4096次元埋め込みでは、埋め込み層だけで 400M パラメータになります。
 
-## Pre-tokenization rules that matter
+## 重要な事前トークナイゼーション規則
 
-1. Split on whitespace before BPE to prevent cross-word merges
-2. Separate digits individually if you want the model to learn arithmetic
-3. Normalize Unicode (NFC) before tokenization for consistent behavior
-4. Add special tokens for your use case: `<pad>`, `<eos>`, `<bos>`, `<unk>`, and any task-specific markers
+1. 単語をまたいだマージを防ぐため、BPE の前に空白で分割する
+2. モデルに算術を学ばせたい場合は、数字を個別に分離する
+3. 一貫した挙動のため、トークン化前に Unicode を NFC 正規化する
+4. 用途に応じて特殊トークンを追加する: `<pad>`、`<eos>`、`<bos>`、`<unk>`、タスク固有マーカー
 
-## Red flags in tokenizer behavior
+## トークナイザー挙動の危険信号
 
-- Fertility above 2.0 for your target language: the model wastes context window
-- Common domain words splitting into 3+ tokens: retrain with domain data
-- Inconsistent tokenization of numbers: check digit-splitting rules
-- Large vocabulary with many single-use tokens: reduce vocabulary size
+- 対象言語の fertility が 2.0 を超える: モデルがコンテキストウィンドウを浪費している
+- よく使うドメイン語が3トークン以上に分割される: ドメインデータで再訓練する
+- 数値のトークナイゼーションが一貫しない: 数字分割ルールを確認する
+- 大きな語彙に単発使用トークンが多い: 語彙サイズを下げる
 
-## Building a custom tokenizer - checklist
+## カスタムトークナイザー構築チェックリスト
 
-1. Collect representative training data (at least 1GB of text in target domain)
-2. Choose algorithm: BPE for general use, Unigram for multilingual
-3. Set vocabulary size based on guidelines above
-4. Configure pre-tokenization: whitespace splitting, digit handling, punctuation
-5. Add special tokens
-6. Train using Hugging Face tokenizers library (Rust backend, fast)
-7. Validate: check fertility on held-out text across all target languages
-8. Test edge cases: empty string, very long input, binary data, emoji, RTL text
-9. Save and version the tokenizer alongside model checkpoints
+1. 代表的な訓練データを集める。対象ドメインで少なくとも 1GB のテキストを用意する
+2. アルゴリズムを選ぶ。一般用途なら BPE、多言語なら Unigram
+3. 上の指針に基づいて語彙サイズを設定する
+4. 事前トークナイゼーションを設定する。空白分割、数字処理、句読点処理など
+5. 特殊トークンを追加する
+6. Hugging Face `tokenizers` ライブラリで訓練する。Rust バックエンドなので高速
+7. 検証する。すべての対象言語の保持評価用テキストで fertility を確認する
+8. エッジケースをテストする。空文字列、非常に長い入力、バイナリデータ、絵文字、RTL テキスト
+9. モデルチェックポイントと一緒にトークナイザーを保存し、バージョン管理する

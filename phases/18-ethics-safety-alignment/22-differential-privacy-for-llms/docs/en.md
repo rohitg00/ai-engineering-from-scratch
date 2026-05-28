@@ -1,111 +1,111 @@
 # Differential Privacy for LLMs
 
-> DP-SGD remains the standard — noise-injected gradient updates provide formal (epsilon, delta) guarantees. Overhead in compute, memory, and utility is substantial; parameter-efficient DP fine-tuning (LoRA + DP-SGD) is the common 2025 configuration (ACM 2025). Two bodies of evidence in tension: canary-based membership inference (Duan et al., 2024) reports limited success against language models; training-data extraction (Carlini et al., 2021; Nasr et al., 2025) recovers substantial verbatim memorization. Resolution (arXiv:2503.06808, March 2025): the gap is in what is measured — inserted canaries vs "most extractable" data. New canary designs enable loss-based MIA without shadow models and yield the first nontrivial DP audit of an LLM trained on real data with realistic DP guarantees. Alternatives: PMixED (arXiv:2403.15638) — private prediction at inference time via mixture of experts on next-token distributions; DP synthetic data generation (Google Research 2024). Emerging attack: Differential Privacy Reversal via LLM Feedback — confidence-score leakage.
+> DP-SGD は依然として standard である。noise を注入した gradient update が形式的な (epsilon, delta) guarantee を与える。compute、memory、utility の overhead は大きい。parameter-efficient な DP fine-tuning (LoRA + DP-SGD) が 2025年の一般的な構成である (ACM 2025)。緊張関係にある2つの evidence がある。canary-based membership inference (Duan et al., 2024) は language model に対して限定的な成功しか報告しない。一方、training-data extraction (Carlini et al., 2021; Nasr et al., 2025) はかなりの verbatim memorization を回収する。Resolution (arXiv:2503.06808, 2025年3月): 差は「何を測っているか」にある。挿入された canaries と「最も extractable な」data は違う。新しい canary design により、shadow model なしの loss-based MIA と、real data で realistic DP guarantees を持つ LLM に対する初の nontrivial DP audit が可能になった。Alternatives: PMixED (arXiv:2403.15638) — next-token distributions の mixture of experts による inference time の private prediction。DP synthetic data generation (Google Research 2024)。Emerging attack: Differential Privacy Reversal via LLM Feedback — confidence-score leakage。
 
-**Type:** Build
-**Languages:** Python (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
-**Prerequisites:** Phase 01 · 09 (information theory), Phase 10 · 01 (large-model training)
-**Time:** ~60 minutes
+**種別:** 構築
+**言語:** Python (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
+**前提条件:** Phase 01 · 09 (information theory), Phase 10 · 01 (large-model training)
+**所要時間:** 約60分
 
 ## Learning Objectives
 
-- Define (epsilon, delta)-differential privacy and state the DP-SGD recipe.
-- Explain the 2024-2025 tension: canary MIA vs training-data extraction give different pictures.
-- Describe PMixED and why inference-time private prediction is an alternative to DP training.
-- Describe the Differential Privacy Reversal via LLM Feedback attack.
+- (epsilon, delta)-differential privacy を定義し、DP-SGD の recipe を述べる。
+- 2024-2025年の tension、つまり canary MIA と training-data extraction が異なる picture を与える理由を説明する。
+- PMixED と、inference-time private prediction が DP training の alternative になる理由を説明する。
+- Differential Privacy Reversal via LLM Feedback attack を説明する。
 
-## The Problem
+## 問題
 
-LLMs memorize. Carlini et al. 2021 showed production language models reproduce verbatim training text on demand. DP is the formal defense: train so that the output is provably insensitive to any single training example. The 2024-2025 evidence shows DP-SGD is necessary but the deployed ε values may not match the threat model.
+LLM は記憶する。Carlini et al. 2021 は、production language model が training text を要求に応じて verbatim に再現することを示した。DP は形式的な defense である。任意の単一 training example に対して output が provably insensitive になるように training する。2024-2025年の evidence は、DP-SGD が必要である一方、deployed ε values が threat model と一致していない可能性を示している。
 
 ## The Concept
 
 ### (ε, δ)-differential privacy
 
-A randomized algorithm M is (ε, δ)-DP if for any two datasets differing in one example and any event S:
-P(M(D) in S) <= e^ε * P(M(D') in S) + δ.
+randomized algorithm M は、1つの example だけが異なる任意の2つの dataset と任意の event S について次を満たすなら (ε, δ)-DP である:
+P(M(D) in S) <= e^ε * P(M(D') in S) + δ。
 
-Interpretation: the output distribution is close enough (parametrized by ε) that the contribution of any single individual cannot be reliably inferred, except with probability δ.
+解釈: output distribution が十分近いため (ε で parametrized)、任意の1人の contribution は、δ の確率を除いて信頼して推測できない。
 
 ### DP-SGD
 
-Abadi et al. 2016. The standard recipe:
-1. Sample a mini-batch.
-2. Compute per-example gradients.
-3. Clip each per-example gradient to a threshold C.
-4. Sum the clipped gradients and add Gaussian noise with std σ * C.
-5. Use the noisy sum to update parameters.
+Abadi et al. 2016。標準 recipe:
+1. mini-batch を sample する。
+2. per-example gradients を計算する。
+3. 各 per-example gradient を threshold C で clip する。
+4. clipped gradients を合計し、std σ * C の Gaussian noise を加える。
+5. noisy sum で parameters を update する。
 
-Privacy cost is tracked by an accountant (Moments Accountant, Rényi DP accountant). Reported ε values in the LLM literature vary widely by threat model, data sensitivity, and utility target; there is no universally "safe" default ε. Published examples span roughly ε ≈ 1–10 in some LLM training settings, but these are illustrative — not recommended defaults. Lower ε generally requires more noise and can increase utility loss.
+Privacy cost は accountant (Moments Accountant, Rényi DP accountant) で追跡する。LLM literature で報告される ε values は、threat model、data sensitivity、utility target により大きく異なる。普遍的に「安全」な default ε はない。一部の LLM training setting では ε ≈ 1–10 程度の published examples があるが、これは例示であり推奨 default ではない。一般に低い ε はより多くの noise を必要とし、utility loss を増やし得る。
 
 ### LoRA + DP-SGD
 
-Full DP-SGD of a frontier model is prohibitive. LoRA (Hu et al. 2022) limits gradient updates to a small adapter, reducing per-example gradient storage. LoRA + DP-SGD is the common 2025 configuration. DP guarantees apply to the adapter; the base model is held fixed.
+frontier model 全体に DP-SGD を適用するのは prohibitive である。LoRA (Hu et al. 2022) は gradient update を小さな adapter に限定し、per-example gradient storage を減らす。LoRA + DP-SGD は 2025年の一般的な構成である。DP guarantees は adapter に適用され、base model は固定される。
 
 ### The 2024-2025 tension
 
-Two lines of evidence:
+2つの evidence の流れ:
 
-- **Canary MIA (Duan et al. 2024).** Insert unique canaries into training data, measure whether a membership-inference attacker can identify them. Reports limited success on language models. Suggests MIA is hard.
-- **Training-data extraction (Carlini 2021, Nasr et al. 2025).** Prompt the model with a prefix; measure whether it recovers verbatim text from training. Reports substantial memorization. Suggests MIA is easy in the relevant sense.
+- **Canary MIA (Duan et al. 2024).** training data に unique canaries を挿入し、membership-inference attacker がそれらを識別できるか測る。language model では限定的な成功を報告する。MIA は難しいことを示唆する。
+- **Training-data extraction (Carlini 2021, Nasr et al. 2025).** model に prefix を与え、training から verbatim text を回収できるか測る。かなりの memorization を報告する。関連する意味では MIA が容易であることを示唆する。
 
-March 2025 resolution (arXiv:2503.06808): the two measure different things. MIA asks "is example e in D?" on inserted canaries. Extraction asks "what can I recover of D?" The "most extractable" example is what matters for privacy; canaries under-report this because they are not optimized to be extractable.
+2025年3月の resolution (arXiv:2503.06808): この2つは異なるものを測っている。MIA は挿入された canaries について「example e は D に含まれるか」を問う。Extraction は「D から何を回収できるか」を問う。privacy に重要なのは「最も extractable な」example であり、canaries は extractable になるよう最適化されていないため、これを過小報告する。
 
-New canary designs. Loss-based MIA without shadow models. First nontrivial DP audit of an LLM on real data with realistic DP guarantees.
+新しい canary design。shadow model なしの loss-based MIA。real data と realistic DP guarantees を持つ LLM に対する初の nontrivial DP audit。
 
 ### Alternatives to DP training
 
-- **PMixED (arXiv:2403.15638).** Private prediction at inference time. Mixture of experts on next-token distributions; each expert sees a shard of training data; aggregation adds noise for DP. Avoids DP training entirely.
-- **DP synthetic data generation (Google Research 2024).** LoRA-fine-tune with DP-SGD, sample synthetic data, train a downstream classifier on the synthetic data.
+- **PMixED (arXiv:2403.15638).** inference time の private prediction。next-token distributions に対する mixture of experts。各 expert は training data の shard を見る。aggregation に DP のための noise を加える。DP training 自体を回避する。
+- **DP synthetic data generation (Google Research 2024).** DP-SGD で LoRA fine-tune し、synthetic data を sample し、その synthetic data で downstream classifier を train する。
 
-Both sidestep the utility cost of full DP training at the cost of a different threat model.
+どちらも、異なる threat model を受け入れる代わりに full DP training の utility cost を回避する。
 
 ### Differential Privacy Reversal via LLM Feedback
 
-Emerging 2025 attack. Use a DP-trained model's confidence scores as an oracle to re-identify individuals. Even when outputs do not leak, confidence distributions can.
+2025年に emerging な attack。DP-trained model の confidence scores を oracle として使い、個人を re-identify する。outputs が直接 leak しなくても、confidence distributions は leak し得る。
 
-The defense: do not expose confidences, or truncate/quantize them before exposure. This is an additional requirement beyond (ε, δ)-DP training.
+Defense: confidences を公開しない、または公開前に truncate / quantize する。これは (ε, δ)-DP training に加えて必要になる要件である。
 
 ### Where this fits in Phase 18
 
-Lessons 20-21 are bias/fairness. Lesson 22 is privacy. Lesson 23 is provenance via watermarking. Lesson 27 covers the regulatory data-provenance layer.
+Lessons 20-21 は bias/fairness。Lesson 22 は privacy。Lesson 23 は watermarking による provenance。Lesson 27 は regulatory data-provenance layer を扱う。
 
 ## Use It
 
-`code/main.py` simulates DP-SGD on a toy binary-classification dataset. You can sweep the noise multiplier σ and the clipping norm C and track the (ε, δ) budget and the accuracy cost. A "canary attack" inserts a unique training example and measures whether a log-loss test can detect it before and after DP.
+`code/main.py` は toy binary-classification dataset で DP-SGD を simulate する。noise multiplier σ と clipping norm C を sweep し、(ε, δ) budget と accuracy cost を追跡できる。"canary attack" は unique training example を挿入し、DP 前後で log-loss test がそれを検出できるか測る。
 
 ## Ship It
 
-This lesson produces `outputs/skill-dp-audit.md`. Given a DP claim on a language model deployment, it audits: the (ε, δ) values, the accountant used, the MIA evaluation protocol, and whether confidence-exposure vectors have been assessed.
+この lesson では `outputs/skill-dp-audit.md` を作る。language model deployment に対する DP claim が与えられたとき、(ε, δ) values、使った accountant、MIA evaluation protocol、confidence-exposure vectors が評価済みかを監査する。
 
 ## Exercises
 
-1. Run `code/main.py`. Sweep σ in {0.5, 1.0, 2.0} and report the (ε, δ)-accuracy trade-off. Identify the point at which utility collapses.
+1. `code/main.py` を実行する。σ in {0.5, 1.0, 2.0} を sweep し、(ε, δ)-accuracy trade-off を報告する。utility が崩れる点を特定する。
 
-2. Implement a canary insertion and a log-loss test. Measure detection rate before and after DP-SGD at σ = 1.0.
+2. canary insertion と log-loss test を実装する。σ = 1.0 の DP-SGD 前後で detection rate を測る。
 
-3. Read Nasr et al. 2025 on training-data extraction. Why does extraction success not collapse under moderate ε? What does this imply about MIA-as-evaluation?
+3. Nasr et al. 2025 の training-data extraction を読む。moderate ε でも extraction success が崩れないのはなぜか。これは evaluation としての MIA について何を示唆するか。
 
-4. Design a deployment using PMixED (arXiv:2403.15638) that operates entirely at inference time. What is the threat model that PMixED addresses that DP-SGD does not?
+4. inference time だけで動作する PMixED (arXiv:2403.15638) deployment を設計する。PMixED が扱い、DP-SGD が扱わない threat model は何か。
 
-5. Sketch the DP Reversal via LLM Feedback attack. Design a countermeasure that limits confidence-score leakage and estimate its deployment cost.
+5. DP Reversal via LLM Feedback attack を sketch する。confidence-score leakage を制限する countermeasure を設計し、その deployment cost を見積もる。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| DP | "(ε, δ)-differential privacy" | Formal privacy: output distribution close under neighbouring-dataset change |
-| DP-SGD | "noise-injected SGD" | Gradient clipping + Gaussian noise addition; standard DP training |
-| LoRA + DP-SGD | "efficient private fine-tune" | DP-SGD on low-rank adapters; standard 2025 configuration |
-| MIA | "membership inference" | Attack that determines whether an example was in training data |
-| Canary | "inserted watermark example" | Unique training example used to measure DP leakage |
-| PMixED | "private inference mixture" | Inference-time DP via mixture-of-experts on next-token distributions |
-| DP Reversal | "confidence leakage attack" | Attack that uses a model's confidence as an oracle for re-identification |
+| DP | 「(ε, δ)-differential privacy」 | 近傍 dataset の変更に対して output distribution が近いという形式的 privacy |
+| DP-SGD | 「noise-injected SGD」 | Gradient clipping + Gaussian noise addition。標準的な DP training |
+| LoRA + DP-SGD | 「efficient private fine-tune」 | low-rank adapter に対する DP-SGD。2025年の標準構成 |
+| MIA | 「membership inference」 | ある example が training data に含まれたかを判定する attack |
+| Canary | 「inserted watermark example」 | DP leakage を測るために使う unique training example |
+| PMixED | 「private inference mixture」 | next-token distributions の mixture-of-experts による inference-time DP |
+| DP Reversal | 「confidence leakage attack」 | model confidence を re-identification の oracle として使う attack |
 
-## Further Reading
+## 参考文献
 
-- [Abadi et al. — DP-SGD (arXiv:1607.00133)](https://arxiv.org/abs/1607.00133) — the standard DP training algorithm
-- [Carlini et al. — Extracting Training Data (arXiv:2012.07805)](https://arxiv.org/abs/2012.07805) — the canonical extraction paper
+- [Abadi et al. — DP-SGD (arXiv:1607.00133)](https://arxiv.org/abs/1607.00133) — 標準的な DP training algorithm
+- [Carlini et al. — Extracting Training Data (arXiv:2012.07805)](https://arxiv.org/abs/2012.07805) — canonical extraction paper
 - [Duan et al. — Canary MIA on LLMs (arXiv:2402.07841, 2024)](https://arxiv.org/abs/2402.07841) — limited-success MIA
-- [Kowalczyk et al. — Auditing DP for LLMs (arXiv:2503.06808, March 2025)](https://arxiv.org/abs/2503.06808) — resolution of the tension
+- [Kowalczyk et al. — Auditing DP for LLMs (arXiv:2503.06808, March 2025)](https://arxiv.org/abs/2503.06808) — tension の resolution
 - [PMixED (arXiv:2403.15638)](https://arxiv.org/abs/2403.15638) — inference-time private prediction

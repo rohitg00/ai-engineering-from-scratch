@@ -1,8 +1,8 @@
-"""Agent economies: Shapley attribution, second-price auction, reputation routing.
+"""Agent economies: Shapley attribution、second-price auction、reputation routing。
 
-All stdlib. Shapley is exact for N<=6 and sampled otherwise. Second-price
-auction demonstrates truthful bidding. Reputation routing compares
-rep-weighted vs random assignment over 100 rounds.
+すべて stdlib。Shapley は N<=6 では exact、それ以外では sampled。
+Second-price auction は truthful bidding を示す。Reputation routing は
+100 rounds で rep-weighted assignment と random assignment を比較する。
 """
 from __future__ import annotations
 
@@ -98,11 +98,11 @@ def weighted_choice(agents: list[str], weights: list[float], rng: random.Random)
 
 def demo_shapley() -> None:
     print("=" * 72)
-    print("SHAPLEY ATTRIBUTION — 3 agents collaborate on a task")
+    print("SHAPLEY ATTRIBUTION — 3 agents が task で collaborate")
     print("=" * 72)
 
-    # Value function: coder alone = 0.5, researcher alone = 0.3, reviewer alone = 0.1,
-    # pairs and trio gain superadditively.
+    # value function: coder alone = 0.5、researcher alone = 0.3、
+    # reviewer alone = 0.1。pairs と trio は superadditively に gain する。
     base = {
         frozenset(): 0.0,
         frozenset(["coder"]): 0.5,
@@ -120,18 +120,18 @@ def demo_shapley() -> None:
     print("  exact Shapley values:")
     for a, v in exact.items():
         print(f"    {a:11s} {v:.4f}")
-    print(f"    sum = {sum(exact.values()):.4f} (should equal grand coalition value 1.0000)")
+    print(f"    sum = {sum(exact.values()):.4f}（grand coalition value 1.0000 と等しいはず）")
 
     rng = random.Random(0)
     sampled = shapley_sampled(value_fn, agents, samples=200, rng=rng)
-    print("\n  sampled Shapley values (N=200):")
+    print("\n  sampled Shapley values（N=200）:")
     for a, v in sampled.items():
         print(f"    {a:11s} {v:.4f}")
 
 
 def demo_auction() -> None:
     print("\n" + "=" * 72)
-    print("SECOND-PRICE AUCTION — 5 bidders compete for a task slot")
+    print("SECOND-PRICE AUCTION — 5 bidders が task slot を競う")
     print("=" * 72)
     bids = [
         Bid("agent-a", 0.82),
@@ -141,38 +141,38 @@ def demo_auction() -> None:
         Bid("agent-e", 0.77),
     ]
     for b in bids:
-        print(f"  {b.bidder:10s} bids {b.value:.2f}")
+        print(f"  {b.bidder:10s} が {b.value:.2f} を bid")
     result = second_price(bids)
     if result:
         winner, payment = result
         print(f"\n  winner: {winner}  payment: {payment:.2f}")
-        print("  (winner pays second-highest bid; this is truthful)")
+        print("  （winner は second-highest bid を支払います。これは truthful です）")
 
 
 def demo_reputation_routing() -> None:
     print("\n" + "=" * 72)
-    print("REPUTATION-WEIGHTED ROUTING — 100 tasks, 4 agents, 50 warmup")
+    print("REPUTATION-WEIGHTED ROUTING — 100 tasks、4 agents、50 warmup")
     print("=" * 72)
     agents = ["alpha", "beta", "gamma", "delta"]
     true_quality = {"alpha": 0.9, "beta": 0.5, "gamma": 0.75, "delta": 0.3}
 
     rng = random.Random(0)
 
-    # Random baseline
+    # random baseline
     random_quality = 0.0
     for _ in range(100):
         a = rng.choice(agents)
         q = max(0.0, min(1.0, true_quality[a] + rng.uniform(-0.1, 0.1)))
         random_quality += q
 
-    # Rep-weighted with 50 warmup
+    # 50 warmup 付き rep-weighted
     rng = random.Random(0)
     rep = Reputation()
     rep.init(agents)
     rep_quality = 0.0
     for i in range(100):
         if i < 50:
-            a = rng.choice(agents)  # warmup: learn everyone
+            a = rng.choice(agents)  # warmup: everyone を学習する
         else:
             a = weighted_choice(agents, rep.weights(agents), rng)
         q = max(0.0, min(1.0, true_quality[a] + rng.uniform(-0.1, 0.1)))
@@ -191,10 +191,10 @@ def main() -> None:
     demo_shapley()
     demo_auction()
     demo_reputation_routing()
-    print("\nTakeaways:")
-    print("  Shapley is fair but expensive. Sample for N > 6.")
-    print("  Second-price auctions are truthful under monotone aggregation (Google Research).")
-    print("  Reputation capital closes the loop: good routing + decay + slashing.")
+    print("\n要点:")
+    print("  Shapley は fair ですが高価です。N > 6 では sample します。")
+    print("  Second-price auctions は monotone aggregation の下で truthful です（Google Research）。")
+    print("  Reputation capital は loop を閉じます: good routing + decay + slashing。")
 
 
 if __name__ == "__main__":

@@ -1,26 +1,26 @@
 # Runtime Feedback Loops
 
-> Agents that do not see real command output guess. A feedback runner captures stdout, stderr, exit code, and timing into a structured record the next turn can read. Then the agent reacts to facts instead of to its own prediction of facts.
+> 実際のコマンド出力を見ないエージェントは推測します。feedback runner は stdout、stderr、exit code、実行時間を、次のターンが読める構造化レコードに取り込みます。そうするとエージェントは、事実についての自分の予測ではなく、事実そのものに反応できます。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
-**Time:** ~50 minutes
+**種類:** Build
+**言語:** Python (stdlib)
+**前提:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
+**時間:** 約50分
 
-## Learning Objectives
+## 学習目標
 
-- Distinguish runtime feedback from observability telemetry.
-- Build a feedback runner that wraps shell commands and persists structured records.
-- Truncate large outputs deterministically so the loop stays within token budget.
-- Refuse to advance the loop when feedback is missing.
+- ランタイム feedback と observability telemetry を区別する。
+- shell コマンドをラップし、構造化レコードを永続化する feedback runner を構築する。
+- ループを token budget 内に保つため、大きな出力を決定的に切り詰める。
+- feedback が欠けているときはループの前進を拒否する。
 
-## The Problem
+## 問題
 
-The agent says "running tests now." The next message says "all tests pass." The reality is that no test ran. The agent imagined the output, or it ran the command and never read the result, or it read the result and silently truncated the failure line.
+エージェントが「これからテストを実行します」と言います。次のメッセージでは「すべてのテストが通りました」と言います。しかし実際にはテストは実行されていません。エージェントが出力を想像したか、コマンドを実行して結果を読まなかったか、結果を読んだものの失敗行を黙って切り詰めたのです。
 
-A feedback runner removes that gap. Every command goes through the runner. Every record carries the command, the captured stdout and stderr, the exit code, the wall-clock duration, and a one-line agent note. The agent reads the record at the next turn. The verification gate reads the records at the end of the task.
+feedback runner はそのすき間をなくします。すべてのコマンドは runner を通ります。すべてのレコードには、コマンド、取り込んだ stdout と stderr、exit code、wall-clock duration、エージェントの1行メモが含まれます。エージェントは次のターンでそのレコードを読みます。verification gate はタスクの最後にレコードを読みます。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart LR
@@ -32,96 +32,96 @@ flowchart LR
   Record --> Gate[Verification Gate]
 ```
 
-### What goes in a feedback record
+### feedback record に入るもの
 
-| Field | Why it matters |
-|-------|----------------|
-| `command` | Exact argv, no shell expansion surprises |
-| `stdout_tail` | Last N lines, deterministic truncation |
-| `stderr_tail` | Last N lines, separate from stdout |
-| `exit_code` | The unambiguous success signal |
-| `duration_ms` | Surfaces slow probes and runaway processes |
-| `started_at` | Timestamp for replay |
-| `agent_note` | One line the agent writes about what it expected |
+| Field | なぜ重要か |
+|-------|------------|
+| `command` | 正確な argv。shell 展開の思わぬ副作用を避ける |
+| `stdout_tail` | 末尾 N 行。決定的な切り詰め |
+| `stderr_tail` | stdout と分離した末尾 N 行 |
+| `exit_code` | 曖昧さのない成功シグナル |
+| `duration_ms` | 遅い probe や暴走プロセスを表面化する |
+| `started_at` | replay 用の timestamp |
+| `agent_note` | 結果を読む前にエージェントが予想を書く1行 |
 
-### Truncation is deterministic
+### 切り詰めは決定的にする
 
-A 50 MB log destroys the loop. The runner truncates head and tail with a `...truncated N lines...` marker, deterministic so the same output always produces the same record. No sampling; the parts the agent needs to see (final error, final summary) live at the tail.
+50 MB の log はループを壊します。runner は head と tail を `...truncated N lines...` marker 付きで切り詰めます。同じ出力は常に同じ record になるよう決定的にします。sampling はしません。エージェントが見る必要のある部分、つまり最後の error や summary は tail にあります。
 
-### Feedback versus telemetry
+### feedback と telemetry
 
-Telemetry (Phase 14 · 23, OTel GenAI conventions) is for human operators reviewing runs across time. Feedback is for the next turn of this run. They share fields but they live in different files with different retention.
+Telemetry (Phase 14 · 23, OTel GenAI conventions) は、人間の operator が時間をまたいで run を確認するためのものです。Feedback は、この run の次のターンのためのものです。両者は field を共有しますが、異なる保持期間を持つ別ファイルに住みます。
 
-### Refuse to advance without feedback
+### feedback なしでは前進しない
 
-If the runner errors before capturing exit, the record carries `exit_code: null` and `error: <reason>`. The agent loop must refuse to claim success on a `null` exit. No exit, no progress.
+runner が exit を取り込む前に error になった場合、record は `exit_code: null` と `error: <reason>` を持ちます。agent loop は `null` exit で成功を主張してはいけません。exit がなければ進捗もありません。
 
-## Build It
+## 作ってみる
 
-`code/main.py` implements:
+`code/main.py` は次を実装しています。
 
-- `run_with_feedback(command, agent_note)` that wraps `subprocess.run`, captures stdout/stderr/exit/duration, truncates deterministically, appends to `feedback_record.jsonl`.
-- A small loader that streams the JSONL into a Python list.
-- A demo that runs three commands (success, failure, slow) and prints the last record per command.
+- `subprocess.run` をラップし、stdout/stderr/exit/duration を取り込み、決定的に切り詰め、`feedback_record.jsonl` に append する `run_with_feedback(command, agent_note)`。
+- JSONL を Python list に stream する小さな loader。
+- 3つの command (success、failure、slow) を実行し、各 command の最後の record を inline で表示する demo。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-Output: three feedback records appended to `feedback_record.jsonl`, the last one of each printed inline. Tail the file across re-runs to see the loop accumulate.
+出力: 3つの feedback record が `feedback_record.jsonl` に append され、それぞれの最後の record が inline で表示されます。再実行しながら file を tail すると、loop が蓄積していく様子を見られます。
 
-## Production patterns in the wild
+## 現場の production pattern
 
-Three patterns harden the runner enough to ship.
+runner を出荷できる水準まで堅牢にする pattern は3つあります。
 
-**Redact at write, not at read.** Any record that touches stdout or stderr can leak secrets. The runner ships a redaction pass before the JSONL append: strip lines matching `^Bearer `, `password=`, `api[_-]?key=`, `AKIA[0-9A-Z]{16}` (AWS), `xox[baprs]-` (Slack). Redaction at read time is a foot-gun; the file on disk is what an attacker reaches. Audit the redaction patterns quarterly against the production runtime's observed secret formats.
+**read 時ではなく write 時に redact する。** stdout や stderr に触れる record は秘密情報を漏らす可能性があります。runner は JSONL append の前に redaction pass を持ちます。`^Bearer `、`password=`、`api[_-]?key=`、`AKIA[0-9A-Z]{16}` (AWS)、`xox[baprs]-` (Slack) に一致する行を strip します。read 時の redaction は foot-gun です。disk 上の file こそ攻撃者が到達するものです。production runtime で観測された secret format に照らして、redaction pattern を四半期ごとに audit してください。
 
-**Rotation policy, not a single file.** Cap `feedback_record.jsonl` at 1 MB per file; on overflow rotate to `.1`, `.2`, drop `.5`. The agent's loop only reads the current file, so the runtime cost is bounded. CI artifact storage gets the full rotated set. Without rotation the file becomes the bottleneck on every loader call.
+**単一 file ではなく rotation policy。** `feedback_record.jsonl` を file ごとに 1 MB で cap します。overflow したら `.1`、`.2` に rotate し、`.5` を drop します。agent loop は現在の file だけを読むので runtime cost は bounded です。CI artifact storage には rotated set 全体を保存します。rotation がなければ、loader call のたびに file が bottleneck になります。
 
-**Parent-command id for retry chains.** Every record gets `command_id`; retries carry `parent_command_id` pointing at the previous attempt. The reviewer's "failed attempts" list (Phase 14 · 40) and the verification gate's audit both follow the chain. Without this link, retries look like independent successes and the audit hides the failure history.
+**retry chain 用の parent-command id。** すべての record は `command_id` を持ちます。retry は前回 attempt を指す `parent_command_id` を持ちます。reviewer の「failed attempts」list (Phase 14 · 40) と verification gate の audit はどちらも chain を辿ります。この link がないと、retry は独立した成功に見え、audit は failure history を隠してしまいます。
 
-## Use It
+## 使い方
 
-Production patterns:
+Production pattern:
 
-- **Claude Code Bash tool.** The tool already captures stdout, stderr, exit, and duration. The runner in this lesson is the framework-agnostic equivalent for any agent product.
-- **LangGraph nodes.** Wrap any shell node in the runner so the record persists outside graph state.
-- **CI logs.** Pipe the JSONL into your CI artifact store; reviewers can replay any command without rerunning the session.
+- **Claude Code Bash tool。** この tool はすでに stdout、stderr、exit、duration を取り込みます。この lesson の runner は、あらゆる agent product 向けの framework-agnostic な同等物です。
+- **LangGraph nodes。** shell node を runner で wrap して、record が graph state の外に永続化されるようにします。
+- **CI logs。** JSONL を CI artifact store に流します。reviewer は session を再実行せずに任意の command を replay できます。
 
-The runner is a thin wrapper that survives every framework migration because it owns the shape of the record.
+runner は薄い wrapper です。record の shape を所有するため、framework migration のたびに生き残ります。
 
-## Ship It
+## 出荷する
 
-`outputs/skill-feedback-runner.md` generates a project-specific `run_with_feedback.py` with the right truncation budget, a JSONL writer wired to the workbench, and a loader the agent reads at every turn.
+`outputs/skill-feedback-runner.md` は、正しい truncation budget、workbench に接続された JSONL writer、エージェントが毎ターン読む loader を備えた、project-specific な `run_with_feedback.py` を生成します。
 
-## Exercises
+## 演習
 
-1. Add a `cwd` field per record so the same command run from different directories is distinguishable.
-2. Add a `redaction` step that strips lines matching `^Bearer ` or `password=`. Test on a fixture record.
-3. Cap total `feedback_record.jsonl` size at 1 MB by rotating to `.1`, `.2` files. Defend the rotation policy.
-4. Add a `parent_command_id` so retry chains are visible: which command produced the input that the next command consumed.
-5. Pipe the JSONL into a tiny TUI that highlights the latest non-zero exit. Eight key features the TUI must show to be useful in a review.
+1. record ごとに `cwd` field を追加し、異なる directory から実行した同じ command を区別できるようにする。
+2. `^Bearer ` または `password=` に一致する行を strip する `redaction` step を追加する。fixture record で test する。
+3. `feedback_record.jsonl` の総 size を 1 MB に cap し、`.1`、`.2` file へ rotate する。rotation policy を説明する。
+4. retry chain が見えるように `parent_command_id` を追加する。次の command が消費した input をどの command が作ったかを示す。
+5. JSONL を、最新の non-zero exit を highlight する小さな TUI に流す。review で有用になるために TUI が表示すべき8つの key feature を挙げる。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Feedback record | "Run log" | Structured JSONL entry with command, output, exit, duration |
-| Tail truncation | "Trim the log" | Deterministic head+tail capture so records fit in token budget |
-| Refuse-on-null | "Block on missing data" | The loop must not advance when `exit_code` is null |
-| Agent note | "Expectation tag" | The one-line prediction the agent writes before reading the result |
-| Telemetry split | "Two log files" | Feedback for the next turn, telemetry for the operator |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Feedback record | 「Run log」 | command、output、exit、duration を含む構造化 JSONL entry |
+| Tail truncation | 「log を trim する」 | record を token budget に収めるための決定的な head+tail capture |
+| Refuse-on-null | 「missing data で block する」 | `exit_code` が null のとき loop は前進してはいけない |
+| Agent note | 「Expectation tag」 | 結果を読む前にエージェントが書く1行の予測 |
+| Telemetry split | 「2つの log file」 | 次のターン用の feedback、operator 用の telemetry |
 
-## Further Reading
+## 参考文献
 
 - [OpenTelemetry GenAI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-- [Guardrails AI x MLflow — deterministic safety, PII, quality validators](https://guardrailsai.com/blog/guardrails-mlflow) — redaction patterns as regression tests
-- [Aport.io, Best AI Agent Guardrails 2026: Pre-Action Authorization Compared](https://aport.io/blog/best-ai-agent-guardrails-2026-pre-action-authorization-compared/) — pre/post-tool capture
-- [Andrii Furmanets, AI Agents in 2026: Practical Architecture for Tools, Memory, Evals, Guardrails](https://andriifurmanets.com/blogs/ai-agents-2026-practical-architecture-tools-memory-evals-guardrails) — observability surfaces
-- Phase 14 · 23 — OTel GenAI conventions for the telemetry side
+- [Guardrails AI x MLflow — deterministic safety, PII, quality validators](https://guardrailsai.com/blog/guardrails-mlflow) — regression test としての redaction pattern
+- [Aport.io, Best AI Agent Guardrails 2026: Pre-Action Authorization Compared](https://aport.io/blog/best-ai-agent-guardrails-2026-pre-action-authorization-compared/) — tool 実行前後の capture
+- [Andrii Furmanets, AI Agents in 2026: Practical Architecture for Tools, Memory, Evals, Guardrails](https://andriifurmanets.com/blogs/ai-agents-2026-practical-architecture-tools-memory-evals-guardrails) — observability surface
+- Phase 14 · 23 — telemetry 側の OTel GenAI conventions
 - Phase 14 · 24 — agent observability platforms (Langfuse, Phoenix, Opik)
-- Phase 14 · 33 — the rule that demands feedback before declaring done
-- Phase 14 · 38 — the verification gate that reads the JSONL
+- Phase 14 · 33 — done 宣言前に feedback を要求する rule
+- Phase 14 · 38 — JSONL を読む verification gate

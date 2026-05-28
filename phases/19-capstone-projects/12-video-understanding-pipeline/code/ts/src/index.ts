@@ -1,7 +1,7 @@
-// Video understanding pipeline: TypeScript UI half of the lesson stack.
-// Python side ships the multi-vector index + temporal grounding; this TS
-// project exposes /jobs and /job/:id over the four pipeline stages.
-// Refs: docs/en.md (this lesson),
+// Video understanding pipeline: lesson stack の TypeScript UI 側。
+// Python 側は multi-vector index + temporal grounding を提供し、この TS
+// project は 4 つの pipeline stage を /jobs と /job/:id で expose する。
+// Refs: docs/en.md (この lesson),
 //   VideoDB CRUD-for-video API: https://videodb.io
 //   TransNetV2 scene segmentation: https://github.com/soCzech/TransNetV2
 
@@ -24,7 +24,7 @@ function runDemo(): void {
     process.stdout.write(`\nGET /job/${id}\n`);
     const body = store.detail(id);
     if (!body) {
-      process.stdout.write(JSON.stringify({ error: "not found", id }) + "\n");
+      process.stdout.write(JSON.stringify({ error: "見つかりません", id }) + "\n");
       continue;
     }
     process.stdout.write(JSON.stringify(body, null, 2) + "\n");
@@ -77,12 +77,12 @@ function parsePort(argv: string[], defaultPort: number): number {
   if (portFlag < 0) return defaultPort;
   const raw = argv[portFlag + 1];
   if (raw === undefined) {
-    process.stderr.write("--port requires a value\n");
+    process.stderr.write("--port には値が必要です\n");
     process.exit(2);
   }
   const n = Number(raw);
   if (!Number.isInteger(n) || n < 1 || n > 65535) {
-    process.stderr.write(`invalid --port ${raw}: must be integer in 1..65535\n`);
+    process.stderr.write(`invalid --port ${raw}: 1..65535 の integer が必要です\n`);
     process.exit(2);
   }
   return n;

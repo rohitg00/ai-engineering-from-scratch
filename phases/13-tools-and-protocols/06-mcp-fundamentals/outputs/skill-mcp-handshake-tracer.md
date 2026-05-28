@@ -1,29 +1,29 @@
 ---
 name: mcp-handshake-tracer
-description: Given a pcap-style transcript of an MCP client-server conversation, annotate every message with its primitive, lifecycle phase, and capability dependency.
+description: MCP client-server conversation の pcap-style transcript を受け取り、すべての message に primitive、lifecycle phase、capability dependency を注釈する。
 version: 1.0.0
 phase: 13
 lesson: 06
 tags: [mcp, json-rpc, lifecycle, capabilities]
 ---
 
-Given a sequence of JSON-RPC 2.0 envelopes captured from an MCP session, produce a walk-through that names each message's primitive, lifecycle phase, and underlying capability flag.
+MCP session から capture された JSON-RPC 2.0 envelopes の sequence を受け取り、各 message の primitive、lifecycle phase、基礎となる capability flag を名付ける walk-through を作成してください。
 
-Produce:
+生成するもの:
 
-1. Per-message annotation. For each `{request, response, notification}`, state: direction (client-to-server or server-to-client), primitive (tools / resources / prompts / roots / sampling / elicitation / lifecycle), lifecycle phase, and the capability flag that had to be negotiated for this message to be valid.
-2. Capability check. Reconstruct the `initialize` exchange from the transcript and list all negotiated capabilities. Flag any message that would violate an absent capability.
-3. Error diagnostics. For every JSON-RPC error, name the code and the most likely cause given the surrounding context.
-4. Completeness audit. Flag a transcript that is missing one of: `initialize`, `initialized` notification, at least one `tools/list` or equivalent, graceful shutdown.
-5. Spec compliance. Check each request's params against the 2025-11-25 spec's minimum field set. Flag omissions.
+1. Per-message annotation。各 `{request, response, notification}` について、direction（client-to-server または server-to-client）、primitive（tools / resources / prompts / roots / sampling / elicitation / lifecycle）、lifecycle phase、この message が valid であるために negotiation されている必要があった capability flag を述べる。
+2. Capability check。transcript から `initialize` exchange を再構成し、negotiated capabilities をすべて list する。存在しない capability に違反する message があれば flag する。
+3. Error diagnostics。すべての JSON-RPC error について、code と、周囲の context から考えられる最も可能性の高い原因を名付ける。
+4. Completeness audit。`initialize`、`initialized` notification、少なくとも 1 つの `tools/list` または equivalent、graceful shutdown のいずれかを欠いている transcript を flag する。
+5. Spec compliance。各 request の params を 2025-11-25 spec の minimum field set と照合する。omission を flag する。
 
-Hard rejects:
-- Any message that uses a method outside the spec's allowed set without an `x-` prefix.
-- Any `sampling/createMessage` message when the client did not declare the `sampling` capability.
-- Any invocation before `notifications/initialized` arrived.
+強制 reject:
+- `x-` prefix なしで spec の allowed set 外の method を使う message。
+- client が `sampling` capability を宣言していないときの `sampling/createMessage` message。
+- `notifications/initialized` が到着する前の invocation。
 
-Refusal rules:
-- If asked to audit a transcript from a non-MCP protocol, refuse and point at the A2A spec (Phase 13 · 19) as the alternative.
-- If asked to "fix" the transcript, refuse. This skill annotates; it does not rewrite. Route corrections through the implementing SDK.
+拒否ルール:
+- 非 MCP protocol の transcript の audit を求められた場合は拒否し、代替として A2A spec（Phase 13 · 19）を示す。
+- transcript の "fix" を求められた場合は拒否する。この skill は注釈するものであり、rewrite はしない。修正は implementing SDK に route する。
 
-Output: one annotated line per message in arrival order: `[phase/primitive/capability] <method or result shape>`. End with a three-line summary naming any capability violations and any missing lifecycle steps.
+出力: arrival order で message ごとに 1 行の注釈: `[phase/primitive/capability] <method or result shape>`。最後に 3 行の summary を置き、capability violations と missing lifecycle steps を名付ける。

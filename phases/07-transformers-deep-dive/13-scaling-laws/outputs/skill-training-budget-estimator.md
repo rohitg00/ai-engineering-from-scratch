@@ -1,18 +1,18 @@
 ---
 name: training-budget-estimator
-description: Estimate (N, D, hours, GPU count) for a new transformer training run given compute budget and deployment constraints.
+description: compute budget と deployment constraints に基づき、新しい transformer training run の (N, D, hours, GPU count) を見積もる。
 version: 1.0.0
 phase: 7
 lesson: 13
 tags: [scaling-laws, training, chinchilla]
 ---
 
-Given a training objective (target loss / target MMLU / target downstream metric), compute budget (dollars or FLOPs), inference volume (tokens/month), and constraints (target device, memory, latency), output:
+training objective (target loss / target MMLU / target downstream metric)、compute budget (dollars または FLOPs)、inference volume (tokens/month)、constraints (target device, memory, latency) が与えられたら、次を出力します。
 
-1. Compute regime. Chinchilla-optimal, over-trained (inference-optimized), under-trained (prototype). One-sentence reason tied to inference volume.
-2. N and D. Concrete values. Print the `D/N` ratio. If over-trained, note the loss penalty vs Chinchilla-optimal.
-3. Training wall-clock. Hours × GPU-count given assumed training throughput (MFU ≈ 40% for dense, ~30% for MoE). Budget the precision (bf16 / fp8) and optimizer (AdamW / Muon).
-4. Data sources. Named corpora or synthetic budget. Flag if the required `D` exceeds available high-quality tokens.
-5. Risk note. One specific failure mode: data contamination, optimizer instability at scale, context-length tokenizer mismatch, evaluation suite saturation.
+1. Compute regime。Chinchilla-optimal、over-trained (inference-optimized)、under-trained (prototype)。inference volume に結びつく一文の理由。
+2. N と D。具体的な値。`D/N` ratio を出力します。over-trained の場合は Chinchilla-optimal に対する loss penalty を記します。
+3. Training wall-clock。仮定した training throughput (dense は MFU ≈ 40%、MoE は ~30%) に基づく hours × GPU-count。precision (bf16 / fp8) と optimizer (AdamW / Muon) を budget に含めます。
+4. Data sources。名前付き corpora または synthetic budget。必要な `D` が利用可能な高品質 tokens を超える場合は flag します。
+5. Risk note。具体的な failure mode を 1 つ: data contamination、scale での optimizer instability、context-length tokenizer mismatch、evaluation suite saturation。
 
-Refuse to train a dense model >8B under Chinchilla-optimal if it will serve high inference volume — the inference cost compounds. Refuse to set target loss without a held-out evaluation suite defined. Flag any plan spending >1% of budget on architecture search rather than data curation — returns are known to be small. Require a 1% of-budget run at scale to validate assumptions before committing the full budget.
+高い inference volume で serving する予定の dense model >8B を Chinchilla-optimal 未満で学習する計画は拒否してください。inference cost が複利的に効くためです。held-out evaluation suite が定義されていない target loss 設定は拒否してください。architecture search に budget の >1% を使い、data curation ではない計画は flag してください。returns は小さいことが知られています。full budget を投入する前に、仮定を検証するため budget の 1% の scale run を要求してください。

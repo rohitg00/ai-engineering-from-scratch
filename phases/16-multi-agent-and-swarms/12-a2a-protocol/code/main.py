@@ -1,11 +1,11 @@
-"""A2A-minimal server and client using http.server.
+"""http.server を使った A2A-minimal server/client。
 
-Implements the discovery-submit-poll-result flow:
+discovery-submit-poll-result flow を実装する:
   - GET /.well-known/agent.json  -> Agent Card
-  - POST /tasks                  -> create task
+  - POST /tasks                  -> task を作成
   - GET /tasks/{id}              -> state + artifact
 
-Server runs in a background thread; client talks to it and prints the trace.
+server は background thread で動き、client が通信して trace を表示する。
 """
 from __future__ import annotations
 
@@ -135,13 +135,13 @@ def run_client() -> None:
     card = http_json("GET", "http://localhost:8765/.well-known/agent.json")
     print(f"    name={card['name']}, skills={card['skills']}")
 
-    print("\n[2] submit task: POST /tasks")
+    print("\n[2] task submit: POST /tasks")
     submission = {"skill": "review-python", "payload": {"code": "x = 1\nprint(x)\n"}}
     resp = http_json("POST", card["endpoints"]["tasks"], submission)
     tid = resp["task_id"]
     print(f"    task_id={tid}, state={resp['state']}")
 
-    print("\n[3] poll until completed")
+    print("\n[3] completed まで poll")
     for i in range(10):
         task = http_json("GET", f"http://localhost:8765/tasks/{tid}")
         print(f"    attempt {i + 1}: state={task['state']}")
@@ -160,8 +160,8 @@ def main() -> None:
         run_client()
     finally:
         server.shutdown()
-    print("\nKey insight: discovery + task lifecycle + typed artifact + auth is the A2A surface.")
-    print("MCP is agent <-> tool (vertical); A2A is agent <-> agent (horizontal). Production uses both.")
+    print("\nKey insight: discovery + task lifecycle + typed artifact + auth が A2A surface。")
+    print("MCP は agent <-> tool (vertical)。A2A は agent <-> agent (horizontal)。production では両方を使う。")
 
 
 if __name__ == "__main__":

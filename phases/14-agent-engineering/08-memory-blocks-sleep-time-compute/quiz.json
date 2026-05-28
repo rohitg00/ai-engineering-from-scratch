@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What are Letta's three memory tiers?",
+      "question": "Letta の 3 つの memory tiers は何ですか?",
       "options": [
         "Cache, KV, archival",
         "Core, recall, archival",
@@ -12,23 +12,23 @@
         "Working, episodic, semantic"
       ],
       "correct": 1,
-      "explanation": "Letta uses core (always visible), recall (conversation history), and archival (external) tiers."
+      "explanation": "Letta は core (常に見える)、recall (conversation history)、archival (external) の tiers を使います。"
     },
     {
       "stage": "pre",
-      "question": "Which production problem does sleep-time compute target?",
+      "question": "Sleep-time compute はどの production problem を狙っていますか?",
       "options": [
-        "Tail latency from doing memory consolidation on the critical path",
-        "Higher accuracy on math problems",
-        "Lower embedding cost",
-        "Faster JSON parsing"
+        "Memory consolidation を critical path で行うことによる tail latency",
+        "Math problem の accuracy 向上",
+        "Embedding cost の削減",
+        "JSON parsing の高速化"
       ],
       "correct": 0,
-      "explanation": "Sleep-time moves prune/summarize/reconcile off the user-facing path, so primary responses stay fast."
+      "explanation": "Sleep-time は prune / summarize / reconcile を user-facing path の外へ移すため、primary response を高速に保てます。"
     },
     {
       "stage": "check",
-      "question": "Which property is NOT a memory block field in Letta?",
+      "question": "次のうち Letta の memory block field ではないものはどれですか?",
       "options": [
         "label",
         "value",
@@ -36,55 +36,55 @@
         "embedding_model_version"
       ],
       "correct": 3,
-      "explanation": "Blocks carry id, label, value, limit, description; embedding model version is not part of the block schema."
+      "explanation": "Block は id, label, value, limit, description を持ちます。embedding model version は block schema の一部ではありません。"
     },
     {
       "stage": "check",
-      "question": "Why can the sleep-time agent run a stronger model than the primary?",
+      "question": "Sleep-time agent が primary より強い model を実行できるのはなぜですか?",
       "options": [
-        "It receives a private API key",
-        "It is off the critical path, so it is not latency-constrained",
-        "It is exempt from rate limits",
-        "Memory ops cost half tokens"
+        "Private API key を受け取るから",
+        "Critical path の外にあり、latency-constrained ではないから",
+        "Rate limit の対象外だから",
+        "Memory ops の token cost が半分だから"
       ],
       "correct": 1,
-      "explanation": "Because it does not block user responses, the sleep-time agent can be slower and more expensive."
+      "explanation": "User response を block しないため、sleep-time agent はより遅く高価な model を使えます。"
     },
     {
       "stage": "check",
-      "question": "What pattern do the Human and Persona blocks generalize to?",
+      "question": "Human block と Persona block はどの pattern へ一般化されますか?",
       "options": [
         "Vector embeddings",
-        "Arbitrary user-defined typed editable blocks (Task, Project, Safety, ...)",
+        "任意の user-defined typed editable blocks (Task, Project, Safety, ...)",
         "JSON-RPC channels",
         "OS processes"
       ],
       "correct": 1,
-      "explanation": "Letta generalizes the two MemGPT blocks to any user-defined block with id, label, value, limit, description."
+      "explanation": "Letta は 2 つの MemGPT blocks を、id, label, value, limit, description を持つ任意の user-defined block へ一般化します。"
     },
     {
       "stage": "post",
-      "question": "What is silent drift in this pattern?",
+      "question": "この pattern における silent drift とは何ですか?",
       "options": [
-        "A primary agent never seeing that the sleep-time agent rewrote a block underneath it; fix with versioning and visible diffs",
-        "Slow disk writes",
+        "Sleep-time agent が裏で block を rewrite したことを primary agent が見ない状態。Versioning と visible diffs で直す",
+        "遅い disk writes",
         "Embedding model upgrades",
         "Rate-limit jitter"
       ],
       "correct": 0,
-      "explanation": "Versioning blocks and surfacing diffs in the trace makes sleep-time rewrites visible to the primary loop."
+      "explanation": "Block を version 化し、trace に diff を surface すると、sleep-time rewrite が primary loop から見えるようになります。"
     },
     {
       "stage": "post",
-      "question": "What replaced inline `Thought:` tokens and the send_message/heartbeat pattern in Letta V1?",
+      "question": "Letta V1 では inline `Thought:` tokens と send_message/heartbeat pattern は何に置き換わりましたか?",
       "options": [
-        "Native reasoning emitted on a separate channel and passed through turns",
-        "A second LLM dedicated to thoughts",
-        "A bigger system prompt",
-        "Manual user-typed thoughts"
+        "Separate channel で emit され、turn をまたいで渡される native reasoning",
+        "Thought 専用の second LLM",
+        "より大きい system prompt",
+        "User が手で入力する thoughts"
       ],
       "correct": 0,
-      "explanation": "Letta V1 (letta_v1_agent) uses provider-level native reasoning, not prompt-shaped thoughts."
+      "explanation": "Letta V1 (`letta_v1_agent`) は prompt-shaped thoughts ではなく provider-level native reasoning を使います。"
     }
   ]
 }

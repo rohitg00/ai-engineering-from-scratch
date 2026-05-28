@@ -1,10 +1,10 @@
 {
   "lesson": "32-minimal-agent-workbench",
-  "title": "The Minimal Agent Workbench",
+  "title": "最小の Agent Workbench",
   "questions": [
     {
       "stage": "pre",
-      "question": "What three files form the smallest useful workbench?",
+      "question": "最小限に役立つ workbench を構成する 3 つの file は何か？",
       "options": [
         "AGENTS.md (router), agent_state.json (state), task_board.json (queue)",
         "README.md, CHANGELOG.md, LICENSE",
@@ -12,79 +12,79 @@
         "Dockerfile, Makefile, .gitignore"
       ],
       "correct": 0,
-      "explanation": "A short router, durable state, and a task queue are the floor."
+      "explanation": "短い router、durable state、task queue が床になる。"
     },
     {
       "stage": "pre",
-      "question": "What is the lesson's framing of AGENTS.md?",
+      "question": "lesson は AGENTS.md をどう位置づけているか？",
       "options": [
-        "A 3000-line onboarding manual",
-        "A short router that points at deeper docs and the state and board",
-        "A pure prompt-cache key",
-        "A secret kept out of the repo"
+        "3000 行の onboarding manual",
+        "deeper docs と state と board を指す短い router",
+        "純粋な prompt-cache key",
+        "repo の外に置く secret"
       ],
       "correct": 1,
-      "explanation": "AGENTS.md is a router, not a manual; long manuals get ignored."
+      "explanation": "AGENTS.md は manual ではなく router。長い manual は無視される。"
     },
     {
       "stage": "check",
-      "question": "What does Augment Code's data say about a good AGENTS.md?",
+      "question": "よい AGENTS.md について、Augment Code の data は何を示しているか？",
       "options": [
-        "It has no measurable effect",
-        "A good AGENTS.md gives a quality jump equivalent to upgrading from Haiku to Opus; a bad one is worse than no file",
-        "Length always helps",
-        "Only Claude reads it"
+        "測定可能な効果はない",
+        "よい AGENTS.md は Haiku から Opus への upgrade に相当する quality jump を与え、悪いものは file がないより悪い",
+        "長さは常に役立つ",
+        "Claude だけが読む"
       ],
       "correct": 1,
-      "explanation": "Augment Code's measurement: best files are model-upgrade-shaped, worst are worse than nothing."
+      "explanation": "Augment Code の測定では、最良の file は model upgrade 形の効果を持ち、最悪のものは何もない場合より悪い。"
     },
     {
       "stage": "check",
-      "question": "Why does the lesson recommend file-backed state over chat-history state?",
+      "question": "lesson が chat-history state より file-backed state を推奨する理由は何か？",
       "options": [
-        "Disk is cheaper",
-        "Chat history is volatile; the file survives session death, conversation trimming, and tool resets",
-        "Files are smaller",
-        "It is required by SOC 2"
+        "disk の方が安いから",
+        "chat history は揮発的で、file は session death、conversation trimming、tool reset を越えて残るから",
+        "file の方が小さいから",
+        "SOC 2 で必須だから"
       ],
       "correct": 1,
-      "explanation": "Sessions die and chat gets trimmed; the file is the durable system of record."
+      "explanation": "session は死に、chat は trim される。file が durable system of record。"
     },
     {
       "stage": "check",
-      "question": "What does the lesson say happens when conflicting instructions land in AGENTS.md?",
+      "question": "AGENTS.md に矛盾する instructions が入ると何が起きると lesson は述べているか？",
       "options": [
-        "Latency drops",
-        "Conflicting instructions silently drop the agent from interactive to greedy mode (AMBIG-SWE: 48.8% to 28% resolve rate)",
-        "Cost rises slightly",
-        "Nothing"
+        "latency が下がる",
+        "矛盾する instructions は agent を interactive から greedy mode へ silently drop する (AMBIG-SWE: resolve rate 48.8% から 28%)",
+        "cost が少し上がる",
+        "何も起きない"
       ],
       "correct": 1,
-      "explanation": "AMBIG-SWE measured a large resolve-rate drop when contradictions appear; number priorities instead."
+      "explanation": "AMBIG-SWE は contradiction による大きな resolve-rate drop を測定した。代わりに priority に番号を振る。"
     },
     {
       "stage": "post",
-      "question": "Why does the lesson recommend cross-tool symlinks like CLAUDE.md -> AGENTS.md?",
+      "question": "lesson が CLAUDE.md -> AGENTS.md のような cross-tool symlink を推奨する理由は何か？",
       "options": [
-        "To save bytes",
-        "So a single source of truth fans out to every coding agent without forking",
-        "To pass auditing",
-        "To satisfy MIT"
+        "bytes を節約するため",
+        "1 つの source of truth を fork せずにすべての coding agent へ展開するため",
+        "auditing に通すため",
+        "MIT を満たすため"
       ],
       "correct": 1,
-      "explanation": "Symlinks (or Nx-style generators) keep one canonical source across Claude Code, Codex, Cursor, Copilot, etc."
+      "explanation": "symlinks または Nx 風 generator により、Claude Code、Codex、Cursor、Copilot などで canonical source を 1 つに保てる。"
     },
     {
       "stage": "post",
-      "question": "What pattern do nested AGENTS.md files follow?",
+      "question": "nested AGENTS.md files はどの pattern に従うか？",
       "options": [
-        "Only the root file is read",
-        "Walk from the working file toward the repo root, concatenate every AGENTS.md found on the way (nearest wins; sub-directories extend root)",
-        "Random selection",
-        "Alphabetical merge"
+        "root file だけを読む",
+        "working file から repo root に向かって歩き、途中で見つけたすべての AGENTS.md を concatenate する (nearest wins; sub-directories extend root)",
+        "random selection",
+        "alphabetical merge"
       ],
       "correct": 1,
-      "explanation": "OpenAI ships 88 AGENTS.md files across its main repo; tools concatenate nearest-up-tree."
+      "explanation": "OpenAI は main repo 全体に 88 個の AGENTS.md を出荷しており、tools は nearest-up-tree を concatenate する。"
     }
   ]
 }

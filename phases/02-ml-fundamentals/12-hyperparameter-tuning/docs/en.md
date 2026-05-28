@@ -1,43 +1,43 @@
-# Hyperparameter Tuning
+# ハイパーパラメータチューニング
 
-> Hyperparameters are the knobs you turn before training starts. Turning them well is the difference between a mediocre model and a great one.
+> Hyperparameter は、学習が始まる前に回すつまみです。うまく回せるかどうかが、平凡なモデルと優れたモデルの差になります。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 2, Lesson 11 (Ensemble Methods)
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 2, Lesson 11 (Ensemble Methods)
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement grid search, random search, and Bayesian optimization from scratch and compare their sample efficiency
-- Explain why random search outperforms grid search when most hyperparameters have low effective dimensionality
-- Build a Bayesian optimization loop using a surrogate model and acquisition function to guide the search
-- Design a hyperparameter tuning strategy that avoids overfitting the validation set through proper cross-validation
+- grid search、random search、Bayesian optimization をゼロから実装し、sample efficiency を比較する
+- ほとんどの hyperparameter が低い effective dimensionality を持つとき、random search が grid search を上回る理由を説明する
+- surrogate model と acquisition function を使い、探索を導く Bayesian optimization loop を構築する
+- 適切な cross-validation により validation set への overfitting を避ける hyperparameter tuning strategy を設計する
 
-## The Problem
+## 問題
 
-Your gradient boosting model has a learning rate, number of trees, max depth, min samples per leaf, subsample ratio, and column sample ratio. That is six hyperparameters. If each has 5 reasonable values, the grid has 5^6 = 15,625 combinations. Training each takes 10 seconds. That is 43 hours of compute to try them all.
+gradient boosting model には、learning rate、tree の数、max depth、min samples per leaf、subsample ratio、column sample ratio があります。つまり 6 つの hyperparameter です。それぞれに妥当な値が 5 個あるなら、grid は 5^6 = 15,625 通りです。1 回の学習に 10 秒かかるとします。すべて試すには 43 時間の計算が必要です。
 
-Grid search is the obvious approach and the worst one at scale. Random search does better with less compute. Bayesian optimization does even better by learning from past evaluations. Knowing which strategy to use, and which hyperparameters actually matter, saves days of wasted GPU time.
+Grid search は分かりやすい方法であり、大規模では最悪の方法です。Random search はより少ない compute で良い結果を出します。Bayesian optimization は過去の評価から学ぶことでさらに良い結果を出します。どの strategy を使うか、どの hyperparameter が実際に重要かを知ることで、GPU 時間の浪費を何日分も節約できます。
 
-## The Concept
+## コンセプト
 
-### Parameters vs Hyperparameters
+### Parameter と Hyperparameter
 
-Parameters are learned during training (weights, biases, split thresholds). Hyperparameters are set before training starts and control how learning happens.
+Parameter は学習中に学ばれるもの（weights、biases、split thresholds）です。Hyperparameter は学習開始前に設定され、学習の進み方を制御します。
 
-| Hyperparameter | What it controls | Typical range |
+| Hyperparameter | 制御するもの | 典型的な範囲 |
 |---------------|-----------------|---------------|
-| Learning rate | Step size per update | 0.001 to 1.0 |
-| Number of trees/epochs | How long to train | 10 to 10,000 |
-| Max depth | Model complexity | 1 to 30 |
-| Regularization (lambda) | Overfitting prevention | 0.0001 to 100 |
-| Batch size | Gradient estimation noise | 16 to 512 |
-| Dropout rate | Fraction of neurons dropped | 0.0 to 0.5 |
+| Learning rate | update ごとの step size | 0.001 から 1.0 |
+| Number of trees/epochs | どれだけ長く学習するか | 10 から 10,000 |
+| Max depth | model complexity | 1 から 30 |
+| Regularization (lambda) | overfitting prevention | 0.0001 から 100 |
+| Batch size | gradient estimation noise | 16 から 512 |
+| Dropout rate | dropped される neuron の割合 | 0.0 から 0.5 |
 
 ### Grid Search
 
-Grid search evaluates every combination of specified values. It is exhaustive and easy to understand, but scales exponentially with the number of hyperparameters.
+Grid search は、指定された値のすべての組み合わせを評価します。網羅的で理解しやすい一方、hyperparameter の数に対して指数的に拡大します。
 
 ```
 Grid for 2 hyperparameters:
@@ -52,11 +52,11 @@ Grid for 2 hyperparameters:
   (1.0,  3)  (1.0,  5)  (1.0,  7)
 ```
 
-Grid search has a fundamental flaw: if one hyperparameter matters and the other does not, most evaluations are wasted. You get only 3 unique values of the important parameter from 9 evaluations.
+Grid search には根本的な欠陥があります。1 つの hyperparameter だけが重要で、もう 1 つが重要でない場合、ほとんどの評価が無駄になります。9 回評価しても、重要な parameter について得られる一意な値は 3 個だけです。
 
 ### Random Search
 
-Random search samples hyperparameters from distributions instead of a grid. With the same budget of 9 evaluations, you get 9 unique values of each hyperparameter.
+Random search は grid ではなく分布から hyperparameter を sample します。同じ 9 回の評価予算なら、各 hyperparameter について 9 個の一意な値を得られます。
 
 ```mermaid
 flowchart LR
@@ -73,16 +73,16 @@ flowchart LR
     end
 ```
 
-Why random beats grid (Bergstra & Bengio, 2012):
+random が grid に勝つ理由（Bergstra & Bengio, 2012）:
 
-- Most hyperparameters have low effective dimensionality. Only 1-2 of 6 hyperparameters usually matter for a given problem.
-- Grid search wastes evaluations on unimportant dimensions.
-- Random search covers the important dimensions more densely for the same budget.
-- At 60 random trials, you have a 95% chance of finding a point within 5% of the optimum (if one exists in the search space).
+- ほとんどの hyperparameter は低い effective dimensionality を持ちます。特定の問題で本当に重要なのは、通常 6 個中 1-2 個だけです。
+- Grid search は重要でない次元に評価を浪費します。
+- Random search は同じ予算で重要な次元をより密にカバーします。
+- 60 回の random trial があれば、search space 内に最適点がある場合、最適点の 5% 以内の点を見つける確率が 95% あります。
 
 ### Bayesian Optimization
 
-Random search ignores results. It does not learn that high learning rates cause divergence or that depth 3 consistently outperforms depth 10. Bayesian optimization uses past evaluations to decide where to search next.
+Random search は結果を無視します。高い learning rate が発散を引き起こすことや、depth 3 が depth 10 を一貫して上回ることを学びません。Bayesian optimization は過去の評価を使って、次にどこを探索するかを決めます。
 
 ```mermaid
 flowchart TD
@@ -95,63 +95,63 @@ flowchart TD
     F -->|Yes| G[Return best hyperparameters found]
 ```
 
-The two key components:
+2 つの主要コンポーネント:
 
-**Surrogate model:** A cheap-to-evaluate model (usually a Gaussian process) that approximates the expensive objective function. It gives both a prediction and an uncertainty estimate at any point in the search space.
+**Surrogate model:** 高価な objective function を近似する、評価の安いモデル（通常は Gaussian process）です。search space 内の任意の点で、予測値と uncertainty estimate の両方を返します。
 
-**Acquisition function:** Decides where to evaluate next by balancing exploitation (search near known good points) and exploration (search where uncertainty is high). Common choices:
+**Acquisition function:** exploitation（既知の良い点の近くを探す）と exploration（uncertainty が高い場所を探す）のバランスを取り、次に評価する場所を決めます。一般的な選択肢:
 
-- **Expected Improvement (EI):** How much improvement over the current best do we expect at this point?
-- **Upper Confidence Bound (UCB):** Prediction plus a multiple of uncertainty. Higher UCB means either promising or unexplored.
-- **Probability of Improvement (PI):** What is the probability this point beats the current best?
+- **Expected Improvement (EI):** この点で、現在の best よりどれだけ改善すると期待できるか？
+- **Upper Confidence Bound (UCB):** 予測値に uncertainty の倍数を足したもの。UCB が高い点は、有望か未探索のどちらかです。
+- **Probability of Improvement (PI):** この点が現在の best を上回る確率はどれくらいか？
 
-Bayesian optimization typically finds better hyperparameters than random search with 2-5x fewer evaluations. The overhead of fitting the surrogate model is negligible compared to training the actual model.
+Bayesian optimization は通常、random search より 2-5 倍少ない評価でより良い hyperparameter を見つけます。surrogate model を fit する overhead は、実際のモデルを学習するコストと比べれば無視できます。
 
 ### Early Stopping
 
-Not every training run needs to finish. If a configuration is clearly bad after 10 epochs, stop it and move on. This is early stopping in the context of hyperparameter search.
+すべての training run を最後まで実行する必要はありません。ある configuration が 10 epoch 後に明らかに悪いなら、そこで止めて次へ進みます。これは hyperparameter search の文脈での early stopping です。
 
-Strategies:
-- **Patience-based:** Stop if validation loss has not improved for N consecutive epochs
-- **Median pruning:** Stop if the trial's intermediate result is worse than the median of completed trials at the same step
-- **Hyperband:** Allocate small budgets to many configurations, then progressively increase budget for the best ones
+戦略:
+- **Patience-based:** validation loss が N epoch 連続で改善しなければ停止
+- **Median pruning:** trial の intermediate result が、同じ step における完了済み trial の median より悪ければ停止
+- **Hyperband:** 多くの configuration に小さな budget を割り当て、最良のものだけに budget を段階的に増やす
 
-Hyperband is particularly effective. It starts 81 configurations with 1 epoch each, keeps the top third, gives them 3 epochs, keeps the top third, and so on. This finds good configurations 10-50x faster than evaluating all configs for the full budget.
+Hyperband は特に効果的です。81 個の configuration を 1 epoch ずつ開始し、上位 1/3 を残して 3 epoch 与え、さらに上位 1/3 を残す、という流れを続けます。これにより、すべての config を full budget で評価するより 10-50 倍速く良い configuration を見つけられます。
 
-### Learning Rate Schedulers
+### Learning Rate Scheduler
 
-The learning rate is almost always the most important hyperparameter. Rather than keeping it fixed, schedulers adjust it during training.
+learning rate はほぼ常に最も重要な hyperparameter です。固定したままにする代わりに、scheduler は学習中に learning rate を調整します。
 
-| Scheduler | Formula | When to use |
+| Scheduler | 式 | 使う場面 |
 |-----------|---------|-------------|
-| Step decay | Multiply by 0.1 every N epochs | Classic CNN training |
-| Cosine annealing | lr * 0.5 * (1 + cos(pi * t / T)) | Modern default |
-| Warmup + decay | Linear increase then cosine decay | Transformers |
-| One-cycle | Increase then decrease over one cycle | Fast convergence |
-| Reduce on plateau | Reduce by factor when metric stalls | Safe default |
+| Step decay | N epochs ごとに 0.1 倍する | classic CNN training |
+| Cosine annealing | lr * 0.5 * (1 + cos(pi * t / T)) | modern default |
+| Warmup + decay | linear increase の後に cosine decay | Transformers |
+| One-cycle | 1 cycle の中で増やしてから減らす | 速い収束 |
+| Reduce on plateau | metric が停滞したら係数倍で下げる | 安全な default |
 
-### Hyperparameter Importance
+### Hyperparameter の重要度
 
-Not all hyperparameters matter equally. Research on random forests (Probst et al., 2019) and gradient boosting shows consistent patterns:
+すべての hyperparameter が同じ重要度を持つわけではありません。Random Forest（Probst et al., 2019）と gradient boosting に関する研究は、一貫したパターンを示しています。
 
-**High importance:**
-- Learning rate (always tune first)
-- Number of estimators / epochs (use early stopping instead of tuning)
+**重要度が高い:**
+- Learning rate（常に最初に tune する）
+- Number of estimators / epochs（tuning ではなく early stopping を使う）
 - Regularization strength
 
-**Medium importance:**
+**重要度が中程度:**
 - Max depth / number of layers
 - Min samples per leaf / weight decay
 - Subsample ratio
 
-**Low importance:**
-- Max features (for random forests)
+**重要度が低い:**
+- Max features（Random Forest の場合）
 - Specific activation function choice
-- Batch size (within reasonable range)
+- Batch size（妥当な範囲内）
 
-Tune the important ones first, leave the rest at defaults.
+重要なものを先に tune し、残りは default のままにします。
 
-### Practical Strategy
+### 実践的な戦略
 
 ```mermaid
 flowchart TD
@@ -162,20 +162,20 @@ flowchart TD
     E --> F[Retrain on full training data]
 ```
 
-The concrete workflow:
+具体的な workflow:
 
-1. **Start with library defaults.** They are chosen by experienced practitioners and are often 80% of the way there.
-2. **Coarse random search.** Wide ranges, 20-50 trials. Use early stopping to kill bad runs fast.
-3. **Analyze results.** Which hyperparameters correlate with performance? Narrow the search space.
-4. **Fine search.** Bayesian optimization or focused random search in the narrowed space. 50-100 trials.
-5. **Retrain on all training data** with the best hyperparameters found.
+1. **library default から始める。** default は経験豊富な practitioner によって選ばれており、多くの場合、最適解の 80% までは到達します。
+2. **Coarse random search。** 広い範囲で 20-50 trials。early stopping を使って悪い run を素早く止めます。
+3. **結果を分析する。** どの hyperparameter が performance と相関していますか？search space を狭めます。
+4. **Fine search。** 狭めた空間で Bayesian optimization または focused random search を行います。50-100 trials。
+5. **見つかった best hyperparameter で全 training data に再学習** します。
 
-### Cross-Validation Integration
+### Cross-Validation との統合
 
-Tuning hyperparameters on a single validation split is risky. The best hyperparameters might overfit to the specific validation fold. Nested cross-validation solves this by using two loops:
+単一の validation split で hyperparameter を tune するのは危険です。best hyperparameter がその特定の validation fold に overfit する可能性があります。Nested cross-validation は 2 つの loop を使ってこれを解決します。
 
-- **Outer loop** (evaluation): splits data into train+val and test. Reports unbiased performance.
-- **Inner loop** (tuning): splits train+val into train and val. Finds best hyperparameters.
+- **Outer loop**（evaluation）: data を train+val と test に分けます。unbiased performance を報告します。
+- **Inner loop**（tuning）: train+val を train と val に分けます。best hyperparameter を見つけます。
 
 ```mermaid
 flowchart TD
@@ -194,9 +194,9 @@ flowchart TD
     T2 --> E2[Evaluate on outer test fold 2]
 ```
 
-Each outer fold finds its own best hyperparameters independently. The outer scores are an unbiased estimate of generalization performance.
+各 outer fold は、独立に自身の best hyperparameter を見つけます。outer score は generalization performance の unbiased estimate です。
 
-With sklearn:
+sklearn では次のように書けます。
 
 ```python
 from sklearn.model_selection import cross_val_score, GridSearchCV
@@ -220,36 +220,36 @@ outer_scores = cross_val_score(
 print(f"Nested CV MSE: {-outer_scores.mean():.4f} +/- {outer_scores.std():.4f}")
 ```
 
-This is expensive (5 outer folds x 5 inner folds x 27 grid points = 675 model fits), but it gives you a trustworthy performance estimate. Use it when reporting final results in papers or when the stake of the decision is high.
+これは高価です（5 outer folds x 5 inner folds x 27 grid points = 675 model fits）が、信頼できる performance estimate を与えます。論文で最終結果を報告するときや、意思決定の stakes が高いときに使います。
 
-### Practical Tips
+### 実践的な Tips
 
-**Start with the learning rate.** It is always the most important hyperparameter for gradient-based methods. A bad learning rate makes everything else irrelevant. Fix other hyperparameters at defaults and sweep learning rate first.
+**learning rate から始める。** gradient-based method では常に最も重要な hyperparameter です。悪い learning rate は他のすべてを無意味にします。他の hyperparameter を default に固定し、まず learning rate を sweep します。
 
-**Use log-uniform distributions for learning rate and regularization.** The difference between 0.001 and 0.01 matters as much as the difference between 0.1 and 1.0. Searching linearly wastes budget on the large end.
+**learning rate と regularization には log-uniform distribution を使う。** 0.001 と 0.01 の差は、0.1 と 1.0 の差と同じくらい重要です。linear に探索すると大きい側に budget を浪費します。
 
-**Use early stopping instead of tuning n_estimators.** For boosting and neural networks, set n_estimators or epochs high and let early stopping decide when to stop. This removes one hyperparameter from the search.
+**n_estimators を tune する代わりに early stopping を使う。** boosting と neural network では、n_estimators または epochs を高い値に設定し、いつ止めるかは early stopping に決めさせます。これにより search から hyperparameter を 1 つ取り除けます。
 
-**Budget allocation.** Spend 60% of your tuning budget on the top 2 most important hyperparameters. Spend the remaining 40% on everything else. The top 2 account for most of the performance variation.
+**Budget allocation。** tuning budget の 60% を、最も重要な上位 2 つの hyperparameter に使います。残りの 40% をその他すべてに使います。上位 2 つが performance variation の大部分を占めます。
 
-**Scale matters.** Never search batch size on a log scale (16, 32, 64 are fine). Always search learning rate on a log scale. Match the search distribution to how the hyperparameter affects the model.
+**Scale matters。** batch size を log scale で探索してはいけません（16、32、64 は問題ありません）。learning rate は必ず log scale で探索します。hyperparameter がモデルに与える影響に search distribution を合わせてください。
 
-| Model Type | Top Hyperparameters | Recommended Search | Budget |
+| モデル種別 | 重要な Hyperparameters | 推奨 Search | 予算 |
 |-----------|--------------------|--------------------|--------|
-| Random Forest | n_estimators, max_depth, min_samples_leaf | Random search, 50 trials | Low (fast training) |
-| Gradient Boosting | learning_rate, n_estimators, max_depth | Bayesian, 100 trials + early stopping | Medium |
-| Neural Network | learning_rate, weight_decay, batch_size | Bayesian or random, 100+ trials | High (slow training) |
-| SVM | C, gamma (RBF kernel) | Grid on log scale, 25-50 trials | Low (2 params) |
-| Lasso/Ridge | alpha | 1D search on log scale, 20 trials | Very low |
-| XGBoost | learning_rate, max_depth, subsample, colsample | Bayesian, 100-200 trials + early stopping | Medium |
+| Random Forest | n_estimators, max_depth, min_samples_leaf | Random search, 50 trials | 低い（学習が速い） |
+| Gradient Boosting | learning_rate, n_estimators, max_depth | Bayesian, 100 trials + early stopping | 中程度 |
+| Neural Network | learning_rate, weight_decay, batch_size | Bayesian or random, 100+ trials | 高い（学習が遅い） |
+| SVM | C, gamma (RBF kernel) | log scale の grid, 25-50 trials | 低い（2 params） |
+| Lasso/Ridge | alpha | log scale の 1D search, 20 trials | 非常に低い |
+| XGBoost | learning_rate, max_depth, subsample, colsample | Bayesian, 100-200 trials + early stopping | 中程度 |
 
-**When in doubt:** random search with 2x the number of hyperparameters as trials (e.g., 6 hyperparameters = 12+ trials minimum). You will be surprised how often random search with 50 trials beats carefully designed grid search.
+**迷ったら:** hyperparameter 数の 2 倍を trial 数とする random search（例: 6 hyperparameters = 最低 12+ trials）。random search 50 trials が、注意深く設計した grid search に勝つことがどれほど多いかに驚くはずです。
 
-## Build It
+## 作る
 
-### Step 1: Grid Search from Scratch
+### Step 1: Grid Search をゼロから実装する
 
-The code in `code/tuning.py` implements grid search, random search, and a simple Bayesian optimizer from scratch.
+`code/tuning.py` のコードは、grid search、random search、単純な Bayesian optimizer をゼロから実装しています。
 
 ```python
 def grid_search(model_fn, param_grid, X_train, y_train, X_val, y_val):
@@ -273,7 +273,7 @@ def grid_search(model_fn, param_grid, X_train, y_train, X_val, y_val):
     return best_params, best_score, n_evals
 ```
 
-### Step 2: Random Search from Scratch
+### Step 2: Random Search をゼロから実装する
 
 ```python
 def random_search(model_fn, param_distributions, X_train, y_train,
@@ -297,7 +297,7 @@ def random_search(model_fn, param_distributions, X_train, y_train,
 
 ### Step 3: Bayesian Optimization (Simplified)
 
-The core idea: fit a Gaussian process to observed (hyperparameter, score) pairs, then use an acquisition function to decide where to look next.
+中心となる考え方は、観測された（hyperparameter, score）のペアに Gaussian process を fit し、acquisition function を使って次に見る場所を決めることです。
 
 ```python
 class SimpleBayesianOptimizer:
@@ -351,11 +351,11 @@ class SimpleBayesianOptimizer:
         self.y_observed.append(score)
 ```
 
-The GP surrogate gives two things at each candidate point: a predicted score (mu) and an uncertainty (var). Expected Improvement balances these: it favors points where the model predicts high scores OR where uncertainty is high. Early on, most points have high uncertainty so the optimizer explores. Later, it focuses on the most promising region.
+GP surrogate は各 candidate point で 2 つのものを返します。predicted score（mu）と uncertainty（var）です。Expected Improvement はこれらのバランスを取ります。モデルが高い score を予測する点、または uncertainty が高い点を好みます。初期には多くの点で uncertainty が高いため optimizer は探索します。後半では最も有望な領域に集中します。
 
-### Step 4: Compare All Methods
+### Step 4: すべての手法を比較する
 
-Run all three methods on the same synthetic objective and compare. This comparison uses a simplified wrapper that calls each optimizer with a direct objective function (no model training), so the API differs from the model-based implementations above:
+同じ synthetic objective 上で 3 つの手法をすべて実行し、比較します。この比較では、各 optimizer が直接 objective function を呼び出す単純な wrapper を使うため（model training はありません）、API は上記の model-based implementation と異なります。
 
 ```python
 def synthetic_objective(params):
@@ -412,13 +412,13 @@ print(f"{'Random Search':<20} {rand_score:>12.4f} {len(rand_history):>12}")
 print(f"{'Bayesian Opt':<20} {bayes_score:>12.4f} {len(bayes_history):>12}")
 ```
 
-With the same budget, Bayesian optimization usually finds the best score fastest because it does not waste evaluations in clearly bad regions. Random search covers more ground than grid search. Grid search only wins when you have very few hyperparameters and can afford to be exhaustive.
+同じ budget なら、Bayesian optimization は明らかに悪い領域で評価を浪費しないため、通常は最も速く best score を見つけます。Random search は grid search より広く探索します。Grid search が勝つのは、hyperparameter が非常に少なく、網羅的に調べる余裕がある場合だけです。
 
-## Use It
+## 使う
 
-### Optuna in Practice
+### 実務での Optuna
 
-Optuna is the recommended library for serious hyperparameter tuning. It supports pruning, distributed search, and visualization out of the box.
+本格的な hyperparameter tuning には Optuna を推奨します。pruning、distributed search、visualization を最初からサポートしています。
 
 ```python
 import optuna
@@ -443,16 +443,16 @@ print(f"Best params: {study.best_params}")
 print(f"Best MSE: {study.best_value:.4f}")
 ```
 
-Key Optuna features:
-- `suggest_float(..., log=True)` for parameters best searched on log scale (learning rate, regularization)
-- `suggest_int` for integer parameters
-- `suggest_categorical` for discrete choices
-- Built-in MedianPruner for early stopping of bad trials
-- `study.trials_dataframe()` for analysis
+Optuna の主要機能:
+- log scale で探索すべき parameter（learning rate、regularization）には `suggest_float(..., log=True)`
+- integer parameter には `suggest_int`
+- discrete choice には `suggest_categorical`
+- 悪い trial を early stopping する built-in MedianPruner
+- 分析用の `study.trials_dataframe()`
 
-### Optuna with Pruning
+### Pruning を使った Optuna
 
-Pruning stops unpromising trials early, saving massive compute. Here is the pattern:
+Pruning は有望でない trial を早期に停止し、大量の compute を節約します。pattern は次の通りです。
 
 ```python
 import optuna
@@ -482,11 +482,11 @@ study = optuna.create_study(direction="minimize", pruner=pruner)
 study.optimize(objective, n_trials=200)
 ```
 
-The `MedianPruner` stops a trial if its intermediate value is worse than the median of all completed trials at the same step. Pruning requires calling `trial.report()` to report intermediate metrics and `trial.should_prune()` to check whether the trial should be stopped. The `n_startup_trials=10` ensures at least 10 trials complete fully before pruning kicks in. This typically saves 40-60% of total compute.
+`MedianPruner` は、その intermediate value が同じ step における全完了 trial の median より悪い場合に trial を停止します。Pruning には、中間 metric を報告する `trial.report()` と、trial を停止すべきか確認する `trial.should_prune()` の呼び出しが必要です。`n_startup_trials=10` は、pruning が始まる前に少なくとも 10 trial が完全に完了することを保証します。これにより通常、total compute の 40-60% を節約できます。
 
-### sklearn's Built-in Tuners
+### sklearn の組み込み Tuner
 
-For quick experiments, sklearn provides `GridSearchCV`, `RandomizedSearchCV`, and `HalvingRandomSearchCV`:
+quick experiment には、sklearn が `GridSearchCV`、`RandomizedSearchCV`、`HalvingRandomSearchCV` を提供しています。
 
 ```python
 from sklearn.model_selection import RandomizedSearchCV
@@ -512,50 +512,50 @@ print(f"Best params: {search.best_params_}")
 print(f"Best CV MSE: {-search.best_score_:.4f}")
 ```
 
-Use `loguniform` from scipy for learning rate and regularization. Use `randint` for integer hyperparameters. The `n_jobs=-1` flag parallelizes across all CPU cores.
+learning rate と regularization には scipy の `loguniform` を使います。integer hyperparameter には `randint` を使います。`n_jobs=-1` flag はすべての CPU core で並列化します。
 
-### Common Mistakes in Hyperparameter Tuning
+### Hyperparameter Tuning でよくあるミス
 
-**Data leakage through preprocessing.** If you fit a scaler on the full dataset before cross-validation, information from the validation fold leaks into training. Always put preprocessing inside a `Pipeline` so it is fit only on the training fold.
+**preprocessing による data leakage。** cross-validation の前に full dataset 上で scaler を fit すると、validation fold の情報が training に漏れます。preprocessing は必ず `Pipeline` の中に入れ、training fold 上だけで fit されるようにします。
 
-**Overfitting to the validation set.** Running thousands of trials effectively trains on the validation set. Use nested cross-validation for final performance estimates, or hold out a separate test set that you never touch during tuning.
+**validation set への overfitting。** 数千 trial を実行すると、実質的に validation set 上で学習していることになります。最終 performance estimate には nested cross-validation を使うか、tuning 中に一切触れない別の test set を hold out してください。
 
-**Searching too narrow a range.** If your best value is at the boundary of your search space, you have not searched widely enough. The optimal value might be outside your range. Always check if the best parameters are at the edges.
+**範囲が狭すぎる search。** best value が search space の境界にあるなら、十分に広く探索できていません。最適値は範囲外にあるかもしれません。best parameter が端にないか必ず確認します。
 
-**Ignoring interaction effects.** Learning rate and number of estimators interact strongly in boosting. A low learning rate needs more estimators. Tuning them independently gives worse results than tuning them together.
+**interaction effect を無視する。** boosting では learning rate と number of estimators が強く相互作用します。低い learning rate にはより多くの estimator が必要です。別々に tune すると、一緒に tune するより悪い結果になります。
 
-**Not using early stopping for iterative models.** For gradient boosting and neural networks, set n_estimators or epochs to a high value and use early stopping. This is strictly better than tuning the number of iterations as a hyperparameter.
+**iterative model に early stopping を使わない。** gradient boosting と neural network では、n_estimators または epochs を高い値に設定し、early stopping を使います。これは iteration 数を hyperparameter として tune するより明確に優れています。
 
-## Exercises
+## 演習
 
-1. Run grid search and random search with the same total budget (e.g., 50 evaluations). Compare the best scores found. Run the experiment 10 times with different seeds. How often does random search win?
+1. grid search と random search を同じ total budget（例: 50 evaluations）で実行してください。見つかった best score を比較します。異なる seed で 10 回実験してください。random search はどのくらいの頻度で勝ちますか？
 
-2. Implement Hyperband from scratch. Start with 81 configurations, each trained for 1 epoch. Keep the top 1/3 at each round and triple their budget. Compare total compute (sum of all epochs across all configs) to running 81 configs for the full budget.
+2. Hyperband をゼロから実装してください。81 個の configuration から始め、それぞれ 1 epoch だけ学習します。各 round で上位 1/3 を残し、budget を 3 倍にします。total compute（すべての config にわたる epoch の合計）を、81 config を full budget で実行する場合と比較してください。
 
-3. Add a learning rate scheduler (cosine annealing) to the gradient boosting implementation from Lesson 11. Does it help compared to a fixed learning rate?
+3. Lesson 11 の gradient boosting implementation に learning rate scheduler（cosine annealing）を追加してください。固定 learning rate と比べて役立ちますか？
 
-4. Use Optuna to tune a RandomForestClassifier on a real dataset (e.g., sklearn's breast cancer dataset). Use `optuna.visualization.plot_param_importances(study)` to see which hyperparameters matter most. Does it match the importance ranking from this lesson?
+4. Optuna を使って、実データセット（例: sklearn の breast cancer dataset）上の RandomForestClassifier を tune してください。どの hyperparameter が最も重要かを見るために `optuna.visualization.plot_param_importances(study)` を使います。この lesson の importance ranking と一致しますか？
 
-5. Implement a simple acquisition function (Expected Improvement) and demonstrate exploration vs exploitation. Plot the surrogate model's mean and uncertainty, and show where EI chooses to evaluate next.
+5. 単純な acquisition function（Expected Improvement）を実装し、exploration vs exploitation を示してください。surrogate model の mean と uncertainty をプロットし、EI が次にどこを評価するかを示します。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Hyperparameter | "A setting you choose" | A value set before training that controls the learning process, not learned from data |
-| Grid search | "Try every combination" | Exhaustive search over a specified parameter grid. Exponential cost. |
-| Random search | "Just sample randomly" | Sample hyperparameters from distributions. Covers important dimensions better than grid search. |
-| Bayesian optimization | "Smart search" | Uses a surrogate model of the objective to decide where to evaluate next, balancing exploration and exploitation |
-| Surrogate model | "A cheap approximation" | A model (usually Gaussian process) that approximates the expensive objective function from observed evaluations |
-| Acquisition function | "Where to look next" | Scores candidate points by balancing expected improvement with uncertainty. EI and UCB are common choices. |
-| Early stopping | "Stop wasting time" | Terminate training early when validation performance stops improving |
-| Hyperband | "Tournament bracket for configs" | Adaptive resource allocation: start many configs with small budgets, keep the best and increase their budgets |
-| Learning rate scheduler | "Change lr during training" | A function that adjusts the learning rate over the course of training for better convergence |
+| Hyperparameter | 「選ぶ設定」 | 学習前に設定され、学習プロセスを制御する値。データから学習されるものではない |
+| Grid search | 「すべての組み合わせを試す」 | 指定された parameter grid 上の網羅的探索。コストは指数的に増える。 |
+| Random search | 「ランダムに sample するだけ」 | 分布から hyperparameter を sample する。grid search より重要な次元をよくカバーする。 |
+| Bayesian optimization | 「賢い探索」 | objective の surrogate model を使って次に評価する場所を決め、exploration と exploitation のバランスを取る |
+| Surrogate model | 「安い近似」 | 観測済み評価から高価な objective function を近似するモデル（通常は Gaussian process） |
+| Acquisition function | 「次にどこを見るか」 | expected improvement と uncertainty のバランスで candidate point を score する。EI と UCB がよく使われる。 |
+| Early stopping | 「時間を無駄にしない」 | validation performance が改善しなくなったら training を早期終了する |
+| Hyperband | 「config 用の tournament bracket」 | adaptive resource allocation: 多数の config を小さな budget で始め、最良のものを残して budget を増やす |
+| Learning rate scheduler | 「training 中に lr を変える」 | より良い収束のため、学習の進行に合わせて learning rate を調整する関数 |
 
-## Further Reading
+## 参考文献
 
-- [Bergstra & Bengio: Random Search for Hyper-Parameter Optimization (2012)](https://jmlr.org/papers/v13/bergstra12a.html) -- the paper that showed random beats grid
-- [Snoek et al., Practical Bayesian Optimization of Machine Learning Algorithms (2012)](https://arxiv.org/abs/1206.2944) -- Bayesian optimization for ML
-- [Li et al., Hyperband: A Novel Bandit-Based Approach (2018)](https://jmlr.org/papers/v18/16-558.html) -- the Hyperband paper
-- [Optuna: A Next-generation Hyperparameter Optimization Framework](https://arxiv.org/abs/1907.10902) -- the Optuna paper
-- [Probst et al., Tunability: Importance of Hyperparameters (2019)](https://jmlr.org/papers/v20/18-444.html) -- which hyperparameters matter
+- [Bergstra & Bengio: Random Search for Hyper-Parameter Optimization (2012)](https://jmlr.org/papers/v13/bergstra12a.html) -- random が grid に勝つことを示した論文
+- [Snoek et al., Practical Bayesian Optimization of Machine Learning Algorithms (2012)](https://arxiv.org/abs/1206.2944) -- ML 向け Bayesian optimization
+- [Li et al., Hyperband: A Novel Bandit-Based Approach (2018)](https://jmlr.org/papers/v18/16-558.html) -- Hyperband paper
+- [Optuna: A Next-generation Hyperparameter Optimization Framework](https://arxiv.org/abs/1907.10902) -- Optuna paper
+- [Probst et al., Tunability: Importance of Hyperparameters (2019)](https://jmlr.org/papers/v20/18-444.html) -- どの hyperparameter が重要か

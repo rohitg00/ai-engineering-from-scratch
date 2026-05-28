@@ -1,30 +1,30 @@
-# Singular Value Decomposition
+# 特異値分解
 
-> SVD is the Swiss Army knife of linear algebra. Every matrix has one. Every data scientist needs one.
+> SVDは線形代数の万能ナイフです。どんな行列にも存在し、すべてのデータサイエンティストに必要です。
 
-**Type:** Build
-**Languages:** Python, Julia
-**Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices Operations), 03 (Matrix Transformations)
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python、Julia
+**前提条件:** Phase 1、Lesson 01（線形代数の直感）、02（ベクトル・行列演算）、03（行列変換）
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Implement SVD via power iteration and explain the geometric meaning of U, Sigma, and V^T
-- Apply truncated SVD for image compression and measure the compression ratio vs reconstruction error
-- Compute the Moore-Penrose pseudoinverse via SVD to solve overdetermined least-squares systems
-- Connect SVD to PCA, recommendation systems (latent factors), and Latent Semantic Analysis in NLP
+- べき反復でSVDを実装し、U、Sigma、V^Tの幾何学的意味を説明する
+- 切り詰めSVDを画像圧縮に適用し、圧縮率と再構成誤差を測る
+- SVDでMoore-Penrose擬似逆行列を計算し、過決定の最小二乗系を解く
+- SVDをPCA、推薦システム（潜在因子）、NLPのLatent Semantic Analysisへ結びつける
 
-## The Problem
+## 問題
 
-You have a 1000x2000 matrix. Maybe it is user-movie ratings. Maybe it is a document-term frequency table. Maybe it is the pixel values of an image. You need to compress it, denoise it, find hidden structure in it, or solve a least-squares system with it. Eigendecomposition only works on square matrices. Even then, it requires the matrix to have a full set of linearly independent eigenvectors.
+1000x2000の行列があります。ユーザーと映画の評価かもしれません。文書と単語の頻度表かもしれません。画像のピクセル値かもしれません。それを圧縮したい、ノイズを取り除きたい、隠れた構造を見つけたい、あるいは最小二乗系を解きたいとします。固有分解は正方行列にしか使えません。さらに、その行列が線形独立な固有ベクトルの完全な集合を持つ必要があります。
 
-SVD works on any matrix. Any shape. Any rank. No conditions. It decomposes the matrix into three factors that reveal the geometry of what the matrix does to space. It is the most general and most useful factorization in all of linear algebra.
+SVDはどんな行列にも使えます。どんな形でも、どんなrankでも、条件はありません。SVDは行列を3つの因子へ分解し、その行列が空間に対して何をしているのかという幾何を明らかにします。線形代数全体で最も一般的で、最も有用な分解です。
 
-## The Concept
+## 概念
 
-### What SVD does geometrically
+### SVDは幾何学的に何をするか
 
-Every matrix, regardless of shape, performs three operations in sequence: rotate, scale, rotate. SVD makes this decomposition explicit.
+どんな形の行列でも、順番に3つの操作を行います。回転、スケール、回転です。SVDはこの分解を明示します。
 
 ```
 A = U * Sigma * V^T
@@ -33,10 +33,10 @@ A = U * Sigma * V^T
      (any)    (rotate)  (scale)  (rotate)
 ```
 
-Given any matrix A, SVD factors it into:
-- V^T rotates vectors in the input space (n-dimensional)
-- Sigma scales along each axis (stretches or compresses)
-- U rotates the result into the output space (m-dimensional)
+任意の行列Aについて、SVDはそれを次のように分解します。
+- V^Tは入力空間（n次元）のベクトルを回転する
+- Sigmaは各軸に沿ってスケールする（伸ばす、または縮める）
+- Uは結果を出力空間（m次元）へ回転する
 
 ```mermaid
 graph LR
@@ -44,11 +44,11 @@ graph LR
     B -->|"U\n(rotate)"| C["Output space (m-dim)\nRotated to output\norientation"]
 ```
 
-Think of it this way. You hand SVD a matrix. It tells you: "This matrix takes a sphere of inputs, first rotates it by V^T, then stretches it into an ellipsoid by Sigma, then rotates the ellipsoid by U." The singular values are the lengths of the ellipsoid's axes.
+このように考えてください。SVDに行列を渡すと、こう教えてくれます。「この行列は入力の球を、まずV^Tで回転し、次にSigmaで楕円体へ伸縮し、最後にUでその楕円体を回転します」。特異値は、その楕円体の軸の長さです。
 
-### The full decomposition
+### 完全な分解
 
-For a matrix A with shape m x n:
+shapeがm x nの行列Aについて:
 
 ```
 A = U * Sigma * V^T
@@ -62,19 +62,19 @@ The singular values sigma_1 >= sigma_2 >= ... >= sigma_r > 0
 where r = rank(A)
 ```
 
-The columns of U are called left singular vectors. The columns of V are called right singular vectors. The diagonal entries of Sigma are called singular values. They are always non-negative and conventionally sorted in decreasing order.
+Uの列は左特異ベクトルと呼ばれます。Vの列は右特異ベクトルと呼ばれます。Sigmaの対角要素は特異値と呼ばれます。特異値は常に非負で、慣例的に降順に並べられます。
 
-### Left singular vectors, singular values, right singular vectors
+### 左特異ベクトル、特異値、右特異ベクトル
 
-Each component of the SVD has a distinct geometric meaning.
+SVDの各要素には、それぞれ異なる幾何学的意味があります。
 
-**Right singular vectors (columns of V):** These form an orthonormal basis for the input space (R^n). They are the directions in input space that the matrix maps to orthogonal directions in output space. Think of them as the natural coordinate system for the domain.
+**右特異ベクトル（Vの列）:** 入力空間（R^n）の正規直交基底を形成します。行列が出力空間の直交方向へ写す入力空間の方向です。定義域にとって自然な座標系だと考えられます。
 
-**Singular values (diagonal of Sigma):** These are the scaling factors. The i-th singular value tells you how much the matrix stretches vectors along the i-th right singular vector. A singular value of zero means the matrix crushes that direction entirely.
+**特異値（Sigmaの対角）:** スケール係数です。i番目の特異値は、行列がi番目の右特異ベクトル方向に沿うベクトルをどれだけ伸ばすかを示します。特異値がゼロなら、その方向は完全につぶされます。
 
-**Left singular vectors (columns of U):** These form an orthonormal basis for the output space (R^m). The i-th left singular vector is the direction in output space where the i-th right singular vector lands (after scaling).
+**左特異ベクトル（Uの列）:** 出力空間（R^m）の正規直交基底を形成します。i番目の左特異ベクトルは、i番目の右特異ベクトルが（スケール後に）到達する出力空間内の方向です。
 
-The relationship between them:
+これらの関係は次のとおりです。
 
 ```
 A * v_i = sigma_i * u_i
@@ -83,11 +83,11 @@ The matrix A takes the i-th right singular vector v_i,
 scales it by sigma_i, and maps it to the i-th left singular vector u_i.
 ```
 
-This gives you a coordinate-by-coordinate picture of what any matrix does.
+これにより、任意の行列が何をするのかを座標ごとに理解できます。
 
-### Outer product form
+### 外積形式
 
-The SVD can be written as a sum of rank-1 matrices:
+SVDはrank-1行列の和として書けます。
 
 ```
 A = sigma_1 * u_1 * v_1^T + sigma_2 * u_2 * v_2^T + ... + sigma_r * u_r * v_r^T
@@ -96,7 +96,7 @@ Each term sigma_i * u_i * v_i^T is a rank-1 matrix (an outer product).
 The full matrix is the sum of r such matrices, where r is the rank.
 ```
 
-This form is the foundation of low-rank approximation. Each term adds one layer of structure. The first term captures the single most important pattern. The second captures the next most important. And so on. Truncating this sum gives you the best possible approximation at any given rank.
+この形式は低rank近似の基礎です。各項は構造を1層ずつ追加します。最初の項は単一で最も重要なパターンを捉えます。2番目の項は次に重要なパターンを捉えます。以後も同様です。この和を途中で切ると、与えられたrankで可能な最良の近似が得られます。
 
 ```
 Rank-1 approx:    A_1 = sigma_1 * u_1 * v_1^T
@@ -109,9 +109,9 @@ Rank-k approx:    A_k = sum of top k terms
                   (optimal by the Eckart-Young theorem)
 ```
 
-### Relationship to eigendecomposition
+### 固有分解との関係
 
-SVD and eigendecomposition are deeply connected. The singular values and vectors of A come directly from the eigenvalues and eigenvectors of A^T A and A A^T.
+SVDと固有分解は深くつながっています。Aの特異値と特異ベクトルは、A^T AとA A^Tの固有値・固有ベクトルから直接得られます。
 
 ```
 A^T A = V * Sigma^T * U^T * U * Sigma * V^T
@@ -133,14 +133,14 @@ So:
 - The eigenvalues of A A^T are also sigma_i^2
 ```
 
-This connection tells you three things:
-1. Singular values are always real and non-negative (they are square roots of eigenvalues of a positive semi-definite matrix).
-2. You could compute SVD via eigendecomposition of A^T A, but this squares the condition number and loses numerical precision. Dedicated SVD algorithms avoid this.
-3. When A is square and symmetric positive semi-definite, SVD and eigendecomposition are the same thing.
+この関係から3つのことがわかります。
+1. 特異値は常に実数かつ非負です（半正定値行列の固有値の平方根だからです）。
+2. A^T Aの固有分解でSVDを計算することもできますが、条件数を二乗して数値精度を失います。専用のSVDアルゴリズムはこれを避けます。
+3. Aが正方かつ対称半正定値なら、SVDと固有分解は同じものになります。
 
-### Truncated SVD: low-rank approximation
+### 切り詰めSVD: 低rank近似
 
-The Eckart-Young-Mirsky theorem states that the best rank-k approximation to A (in both Frobenius and spectral norm) is obtained by keeping only the top k singular values and their corresponding vectors:
+Eckart-Young-Mirskyの定理は、Aに対する最良のrank-k近似（Frobeniusノルムとスペクトルノルムの両方）は、上位k個の特異値と対応するベクトルだけを残すことで得られる、と述べます。
 
 ```
 A_k = U_k * Sigma_k * V_k^T
@@ -154,26 +154,26 @@ Approximation error = sigma_{k+1}  (in spectral norm)
                     = sqrt(sigma_{k+1}^2 + ... + sigma_r^2)  (in Frobenius norm)
 ```
 
-This is not just "a good" approximation. It is provably the best possible approximation of rank k. No other rank-k matrix is closer to A.
+これは単に「よい」近似ではありません。rank kで可能な最良近似であることが証明されています。Aにこれ以上近いrank-k行列は存在しません。
 
-| Component | Relative magnitude | Kept in rank-3 approx? |
+| 成分 | 相対的な大きさ | rank-3近似で残すか？ |
 |-----------|-------------------|------------------------|
-| sigma_1 | Largest | Yes |
-| sigma_2 | Large | Yes |
-| sigma_3 | Medium-large | Yes |
-| sigma_4 | Medium | No (error) |
-| sigma_5 | Medium-small | No (error) |
-| sigma_6 | Small | No (error) |
-| sigma_7 | Very small | No (error) |
-| sigma_8 | Tiny | No (error) |
+| sigma_1 | 最大 | はい |
+| sigma_2 | 大 | はい |
+| sigma_3 | 中から大 | はい |
+| sigma_4 | 中 | いいえ（誤差） |
+| sigma_5 | 中から小 | いいえ（誤差） |
+| sigma_6 | 小 | いいえ（誤差） |
+| sigma_7 | 非常に小 | いいえ（誤差） |
+| sigma_8 | ごく小 | いいえ（誤差） |
 
-Keep top 3: A_3 captures the three largest singular values. Error = remaining values (sigma_4 through sigma_8).
+上位3個を残すと、A_3は3つの最大特異値を捉えます。誤差は残りの値（sigma_4からsigma_8）です。
 
-If singular values decay fast, a small k captures most of the matrix. If they decay slowly, the matrix has no low-rank structure.
+特異値が急速に減衰するなら、小さなkで行列の大半を捉えられます。ゆっくり減衰するなら、その行列には低rank構造がありません。
 
-### Image compression with SVD
+### SVDによる画像圧縮
 
-A grayscale image is a matrix of pixel intensities. An 800x600 image has 480,000 values. SVD lets you approximate it with far fewer.
+グレースケール画像はピクセル強度の行列です。800x600の画像には480,000個の値があります。SVDを使うと、はるかに少ない値で近似できます。
 
 ```
 Original image: 800 x 600 = 480,000 values
@@ -192,11 +192,11 @@ SVD with rank k:
   but visual quality degrades.
 ```
 
-The key insight: natural images have rapidly decaying singular values. The first few singular values capture the broad structure (shapes, gradients). The later ones capture fine detail and noise. Truncating at rank 50 often produces an image that looks nearly identical to the original while using 85% less storage.
+重要な洞察は、自然画像の特異値は急速に減衰するということです。最初の数個の特異値が大まかな構造（形状、勾配）を捉えます。後の特異値は細部とノイズを捉えます。rank 50で切り詰めると、ストレージを85%削減しながら元画像とほぼ同じに見える画像になることがよくあります。
 
-### SVD for recommendation systems
+### 推薦システムにおけるSVD
 
-The Netflix Prize made this famous. You have a user-movie ratings matrix where most entries are missing.
+Netflix Prizeによってこの考え方は有名になりました。ユーザーと映画の評価行列があり、大半の要素は欠損しています。
 
 ```
              Movie1  Movie2  Movie3  Movie4  Movie5
@@ -208,20 +208,20 @@ The Netflix Prize made this famous. You have a user-movie ratings matrix where m
   ? = unknown rating
 ```
 
-The idea: this ratings matrix has low rank. Users do not have completely independent tastes. There are a handful of latent factors (action vs. drama, old vs. new, cerebral vs. visceral) that explain most preferences.
+考え方は、この評価行列が低rankであるというものです。ユーザーの好みは完全に独立ではありません。ほとんどの嗜好を説明する少数の潜在因子（action vs. drama、old vs. new、cerebral vs. visceral）があります。
 
-SVD on the (filled-in) ratings matrix decomposes it into:
-- U: user profiles in latent factor space
-- Sigma: importance of each latent factor
-- V^T: movie profiles in latent factor space
+（埋められた）評価行列にSVDを適用すると、次へ分解されます。
+- U: 潜在因子空間におけるユーザープロファイル
+- Sigma: 各潜在因子の重要度
+- V^T: 潜在因子空間における映画プロファイル
 
-A user's predicted rating for a movie is the dot product of their user profile with the movie's profile (weighted by singular values). The low-rank approximation fills in the missing entries.
+あるユーザーのある映画に対する予測評価は、そのユーザープロファイルと映画プロファイルの内積（特異値で重み付け）です。低rank近似は欠損要素を埋めます。
 
-In practice, you use variants like Simon Funk's incremental SVD or ALS (alternating least squares) that handle missing data directly. But the core idea is the same: latent factor decomposition via SVD.
+実務では、欠損データを直接扱えるSimon Funkのincremental SVDやALS（alternating least squares）のような変種を使います。それでも中核の考え方は同じです。SVDによる潜在因子分解です。
 
-### SVD in NLP: Latent Semantic Analysis
+### NLPにおけるSVD: Latent Semantic Analysis
 
-Latent Semantic Analysis (LSA), also called Latent Semantic Indexing (LSI), applies SVD to a term-document matrix.
+Latent Semantic Analysis（LSA）はLatent Semantic Indexing（LSI）とも呼ばれ、単語-文書行列にSVDを適用します。
 
 ```
              Doc1   Doc2   Doc3   Doc4
@@ -243,33 +243,33 @@ After SVD with rank k=2:
   Doc1 and Doc3 cluster if they share similar topics.
 ```
 
-LSA was one of the first successful methods for capturing semantic similarity from raw text. It works because synonymous terms tend to appear in similar documents, so SVD groups them into the same latent dimensions. Modern word embeddings (Word2Vec, GloVe) can be seen as descendants of this idea.
+LSAは、生テキストから意味的類似性を捉えることに成功した初期の手法の1つでした。同義語は似た文書に現れやすいため、SVDはそれらを同じ潜在次元へまとめます。現代の単語埋め込み（Word2Vec、GloVe）は、この考え方の子孫と見ることができます。
 
-### SVD for noise reduction
+### ノイズ除去のためのSVD
 
-Noisy data has signal concentrated in the top singular values and noise spread across all singular values. Truncating removes the noise floor.
+ノイズを含むデータでは、信号は上位特異値に集中し、ノイズはすべての特異値に広がります。切り詰めることでノイズ床を取り除けます。
 
-**Clean signal singular values:**
+**クリーンな信号の特異値:**
 
-| Component | Magnitude | Type |
+| 成分 | 大きさ | 種類 |
 |-----------|-----------|------|
-| sigma_1 | Very large | Signal |
-| sigma_2 | Large | Signal |
-| sigma_3 | Medium | Signal |
-| sigma_4 | Near zero | Negligible |
-| sigma_5 | Near zero | Negligible |
+| sigma_1 | 非常に大 | 信号 |
+| sigma_2 | 大 | 信号 |
+| sigma_3 | 中 | 信号 |
+| sigma_4 | ほぼゼロ | 無視可能 |
+| sigma_5 | ほぼゼロ | 無視可能 |
 
-**Noisy signal singular values (noise adds to all):**
+**ノイズを含む信号の特異値（ノイズは全体へ加わる）:**
 
-| Component | Magnitude | Type |
+| 成分 | 大きさ | 種類 |
 |-----------|-----------|------|
-| sigma_1 | Very large | Signal |
-| sigma_2 | Large | Signal |
-| sigma_3 | Medium | Signal |
-| sigma_4 | Small | Noise |
-| sigma_5 | Small | Noise |
-| sigma_6 | Small | Noise |
-| sigma_7 | Small | Noise |
+| sigma_1 | 非常に大 | 信号 |
+| sigma_2 | 大 | 信号 |
+| sigma_3 | 中 | 信号 |
+| sigma_4 | 小 | ノイズ |
+| sigma_5 | 小 | ノイズ |
+| sigma_6 | 小 | ノイズ |
+| sigma_7 | 小 | ノイズ |
 
 ```mermaid
 graph TD
@@ -279,11 +279,11 @@ graph TD
     C --> E["Reconstruct with A_k to get denoised version"]
 ```
 
-This is used in signal processing, scientific measurement, and data cleaning. Any time you have a matrix corrupted by additive noise, truncated SVD is a principled way to separate signal from noise.
+これは信号処理、科学計測、データクリーニングで使われます。加法ノイズで汚れた行列があるとき、切り詰めSVDは信号とノイズを分ける原理的な方法です。
 
-### Pseudoinverse via SVD
+### SVDによる擬似逆行列
 
-The Moore-Penrose pseudoinverse A+ generalizes matrix inversion to non-square and singular matrices. SVD makes computing it trivial.
+Moore-Penrose擬似逆行列A+は、行列の逆を非正方行列や特異行列へ一般化します。SVDを使うと計算は簡単です。
 
 ```
 If A = U * Sigma * V^T, then:
@@ -299,7 +299,7 @@ For A (m x n):      A+ is (n x m)
 For Sigma (m x n):  Sigma+ is (n x m)
 ```
 
-The pseudoinverse solves least-squares problems. If Ax = b has no exact solution (overdetermined system), then x = A+ b is the least-squares solution (minimizes ||Ax - b||).
+擬似逆行列は最小二乗問題を解きます。Ax = bに厳密解が存在しない場合（過決定系）、x = A+ bは最小二乗解（||Ax - b||を最小化する解）です。
 
 ```
 Overdetermined system (more equations than unknowns):
@@ -315,9 +315,9 @@ Overdetermined system (more equations than unknowns):
   but numerically more stable.
 ```
 
-### Numerical stability advantages
+### 数値安定性上の利点
 
-Computing eigendecomposition of A^T A squares the singular values (eigenvalues of A^T A are sigma_i^2). This squares the condition number, amplifying numerical errors.
+A^T Aの固有分解を計算すると、特異値が二乗されます（A^T Aの固有値はsigma_i^2です）。これは条件数を二乗し、数値誤差を増幅します。
 
 ```
 Example:
@@ -332,11 +332,11 @@ Example:
                            (6 extra digits of precision lost)
 ```
 
-Modern SVD algorithms (Golub-Kahan bidiagonalization) work directly on A, never forming A^T A. This is why you should always prefer `np.linalg.svd(A)` over `np.linalg.eig(A.T @ A)`.
+現代的なSVDアルゴリズム（Golub-Kahan bidiagonalization）はAに直接作用し、A^T Aを作りません。だからこそ、`np.linalg.eig(A.T @ A)` より常に `np.linalg.svd(A)` を選ぶべきです。
 
-### Connection to PCA
+### PCAとのつながり
 
-PCA IS SVD on centered data. This is not an analogy. It is literally the same computation.
+PCAは、中心化したデータに対するSVDです。これは比喩ではありません。文字どおり同じ計算です。
 
 ```
 Given data matrix X (n_samples x n_features), centered (mean subtracted):
@@ -358,13 +358,13 @@ In sklearn, PCA is implemented using SVD, not eigendecomposition.
 It is faster and more numerically stable.
 ```
 
-This means everything you learned about dimensionality reduction in Lesson 10 is SVD under the hood. PCA is the most common application of SVD in machine learning.
+つまり、Lesson 10で学んだ次元削減のすべては、内部ではSVDです。PCAは機械学習におけるSVDの最も一般的な応用です。
 
-## Build It
+## 構築
 
-### Step 1: SVD from scratch using power iteration
+### Step 1: べき反復を使ってSVDをスクラッチから実装する
 
-The idea: to find the largest singular value and its vectors, use power iteration on A^T A (or A A^T). Then deflate the matrix and repeat for the next singular value.
+考え方はこうです。最大特異値と対応するベクトルを見つけるには、A^T A（またはA A^T）にべき反復を使います。次に行列をデフレーションし、次の特異値について繰り返します。
 
 ```python
 import numpy as np
@@ -415,7 +415,7 @@ def svd_from_scratch(A, k=None):
     return U, S, V
 ```
 
-### Step 2: Test and compare with NumPy
+### Step 2: テストしてNumPyと比較する
 
 ```python
 np.random.seed(42)
@@ -431,7 +431,7 @@ A_reconstructed = U_ours @ np.diag(S_ours) @ V_ours.T
 print(f"Reconstruction error: {np.linalg.norm(A - A_reconstructed):.8f}")
 ```
 
-### Step 3: Image compression demo
+### Step 3: 画像圧縮デモ
 
 ```python
 def compress_image_svd(image_matrix, k):
@@ -452,7 +452,7 @@ for k in [1, 5, 10, 20, 50]:
     print(f"k={k:>3d}  error={error:.4f}  storage={ratio:.1%}")
 ```
 
-### Step 4: Noise reduction
+### Step 4: ノイズ除去
 
 ```python
 np.random.seed(42)
@@ -469,7 +469,7 @@ print(f"Denoised error: {np.linalg.norm(denoised - clean):.4f}")
 print(f"Improvement:    {(1 - np.linalg.norm(denoised - clean) / np.linalg.norm(noisy - clean)):.1%}")
 ```
 
-### Step 5: Pseudoinverse
+### Step 5: 擬似逆行列
 
 ```python
 A = np.array([[1, 1], [2, 1], [3, 1]], dtype=float)
@@ -488,59 +488,59 @@ print(f"np.linalg.lstsq solution:   {x_lstsq}")
 print(f"np.linalg.pinv solution:    {x_pinv}")
 ```
 
-## Use It
+## 使う
 
-Full working demos are in `code/svd.py`. Run it to see SVD applied to image compression, recommendation systems, latent semantic analysis, and noise reduction.
+完全に動作するデモは `code/svd.py` にあります。実行すると、画像圧縮、推薦システム、Latent Semantic Analysis、ノイズ除去にSVDが適用される様子を見られます。
 
 ```bash
 python svd.py
 ```
 
-The Julia version in `code/svd.jl` demonstrates the same concepts using Julia's native `svd()` function and `LinearAlgebra` package.
+`code/svd.jl` のJulia版は、Juliaネイティブの `svd()` 関数と `LinearAlgebra` パッケージを使って同じ概念を示します。
 
 ```bash
 julia svd.jl
 ```
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/skill-svd.md` - a skill for knowing when and how to apply SVD in real projects
+このレッスンでは次を作ります。
+- `outputs/skill-svd.md` - 実プロジェクトでSVDをいつ、どのように適用するかを知るためのskill
 
-## Exercises
+## 演習
 
-1. Implement the full SVD from scratch without using power iteration. Instead, compute the eigendecomposition of A^T A to get V and the singular values, then compute U = A V Sigma^{-1}. Compare numerical accuracy with your power iteration version and with NumPy.
+1. べき反復を使わずに完全なSVDをスクラッチから実装してください。代わりに、A^T Aの固有分解を計算してVと特異値を得てから、U = A V Sigma^{-1} を計算します。数値精度を、べき反復版およびNumPyと比較してください。
 
-2. Load a real grayscale image (or convert one to grayscale). Compress it at ranks 1, 5, 10, 25, 50, 100. For each rank, compute the compression ratio and the relative error. Find the rank where the image becomes visually acceptable.
+2. 実際のグレースケール画像を読み込んでください（または画像をグレースケールへ変換してください）。rank 1、5、10、25、50、100で圧縮します。各rankについて圧縮率と相対誤差を計算してください。見た目として許容できるようになるrankを見つけてください。
 
-3. Build a tiny recommendation system. Create a 10x8 user-movie ratings matrix with some known entries. Fill missing entries with row means. Compute SVD and reconstruct a rank-3 approximation. Use the reconstructed matrix to predict the missing ratings. Verify that the predictions are reasonable.
+3. 小さな推薦システムを作ってください。既知の要素をいくつか持つ10x8のユーザー-映画評価行列を作ります。欠損要素を行平均で埋めます。SVDを計算し、rank-3近似を再構成します。再構成行列を使って欠損評価を予測し、予測が妥当か確認してください。
 
-4. Create a 100x50 document-term matrix with 3 synthetic topics. Each topic has 5 associated terms. Add noise. Apply SVD and verify that the top 3 singular values are much larger than the rest. Project documents into the 3D latent space and check that documents from the same topic cluster together.
+4. 3つの合成トピックを持つ100x50の文書-単語行列を作ってください。各トピックには関連する5語があります。ノイズを加えます。SVDを適用し、上位3つの特異値が残りよりずっと大きいことを確認してください。文書を3D潜在空間へ射影し、同じトピックの文書がまとまることを確認してください。
 
-5. Generate a clean low-rank matrix (rank 3, size 50x40) and add Gaussian noise at different levels (sigma = 0.1, 0.5, 1.0, 2.0). For each noise level, find the optimal truncation rank by sweeping k from 1 to 40 and measuring reconstruction error against the clean matrix. Plot how the optimal k changes with noise level.
+5. クリーンな低rank行列（rank 3、サイズ50x40）を生成し、異なる水準のGaussian noise（sigma = 0.1、0.5、1.0、2.0）を加えてください。各ノイズ水準について、kを1から40までスイープし、クリーン行列に対する再構成誤差を測って最適な切り詰めrankを見つけてください。最適なkがノイズ水準とともにどう変化するかをプロットしてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| SVD | "Factor any matrix" | Decompose A into U Sigma V^T where U and V are orthogonal and Sigma is diagonal with non-negative entries. Works for any matrix of any shape. |
-| Singular value | "How important this component is" | The i-th diagonal entry of Sigma. Measures how much the matrix stretches along the i-th principal direction. Always non-negative, sorted in decreasing order. |
-| Left singular vector | "Output direction" | A column of U. The direction in output space that the i-th right singular vector maps to (after scaling by sigma_i). |
-| Right singular vector | "Input direction" | A column of V. The direction in input space that the matrix maps to the i-th left singular vector (after scaling by sigma_i). |
-| Truncated SVD | "Low-rank approximation" | Keep only the top k singular values and their vectors. Produces the provably best rank-k approximation to the original matrix (Eckart-Young theorem). |
-| Rank | "True dimensionality" | The number of non-zero singular values. Tells you how many independent directions the matrix actually uses. |
-| Pseudoinverse | "Generalized inverse" | V Sigma+ U^T. Inverts non-zero singular values, leaves zeros as zeros. Solves least-squares problems for non-square or singular matrices. |
-| Condition number | "How sensitive to errors" | sigma_max / sigma_min. A large condition number means small input changes cause large output changes. SVD reveals this directly. |
-| Latent factor | "Hidden variable" | A dimension in the low-rank space discovered by SVD. In recommendations, a latent factor might correspond to genre preference. In NLP, it might correspond to a topic. |
-| Frobenius norm | "Total matrix size" | Square root of the sum of squared entries. Equals the square root of the sum of squared singular values. Used to measure approximation error. |
-| Eckart-Young theorem | "SVD gives the best compression" | For any target rank k, the truncated SVD minimizes the approximation error over all possible rank-k matrices. |
-| Power iteration | "Find the biggest eigenvector" | Repeatedly multiply a random vector by the matrix and normalize. Converges to the eigenvector with the largest eigenvalue. The building block of many SVD algorithms. |
+| SVD | 「任意の行列を分解する」 | AをU Sigma V^Tへ分解する。UとVは直交行列で、Sigmaは非負要素を持つ対角行列。任意の形の任意の行列で機能する。 |
+| 特異値 | 「この成分がどれだけ重要か」 | Sigmaのi番目の対角要素。行列がi番目の主方向に沿ってどれだけ伸ばすかを測る。常に非負で、降順に並ぶ。 |
+| 左特異ベクトル | 「出力方向」 | Uの列。i番目の右特異ベクトルが（sigma_iでスケールされた後に）写される出力空間の方向。 |
+| 右特異ベクトル | 「入力方向」 | Vの列。行列がi番目の左特異ベクトルへ（sigma_iでスケールして）写す入力空間の方向。 |
+| 切り詰めSVD | 「低rank近似」 | 上位k個の特異値とそのベクトルだけを残す。元の行列に対する、証明可能に最良のrank-k近似を作る（Eckart-Young theorem）。 |
+| Rank | 「真の次元数」 | 非ゼロ特異値の数。行列が実際に使っている独立方向の数を示す。 |
+| 擬似逆行列 | 「一般化された逆行列」 | V Sigma+ U^T。非ゼロ特異値を逆数にし、ゼロはゼロのままにする。非正方または特異行列の最小二乗問題を解く。 |
+| 条件数 | 「誤差にどれだけ敏感か」 | sigma_max / sigma_min。条件数が大きいと、小さな入力変化が大きな出力変化を生む。SVDはこれを直接明らかにする。 |
+| 潜在因子 | 「隠れ変数」 | SVDが発見する低rank空間内の次元。推薦ではジャンル嗜好に対応するかもしれない。NLPではトピックに対応するかもしれない。 |
+| Frobenius norm | 「行列全体の大きさ」 | 要素の二乗和の平方根。特異値の二乗和の平方根に等しい。近似誤差を測るために使う。 |
+| Eckart-Young theorem | 「SVDは最良の圧縮を与える」 | 任意の目標rank kについて、切り詰めSVDはすべての可能なrank-k行列の中で近似誤差を最小化する。 |
+| べき反復 | 「最大の固有ベクトルを見つける」 | ランダムベクトルに行列を繰り返し掛けて正規化する。最大固有値に対応する固有ベクトルへ収束する。多くのSVDアルゴリズムの構成要素。 |
 
-## Further Reading
+## さらに読む
 
-- [Gilbert Strang: Linear Algebra and Its Applications, Chapter 7](https://math.mit.edu/~gs/linearalgebra/) - thorough treatment of SVD with applications
-- [3Blue1Brown: But what is the SVD?](https://www.youtube.com/watch?v=vSczTbgc8Rc) - geometric intuition for SVD
-- [We Recommend a Singular Value Decomposition](https://www.ams.org/publicoutreach/feature-column/fcarc-svd) - accessible overview from the American Mathematical Society
-- [Netflix Prize and Matrix Factorization](https://sifter.org/~simon/journal/20061211.html) - Simon Funk's original blog post on SVD for recommendations
-- [Latent Semantic Analysis](https://en.wikipedia.org/wiki/Latent_semantic_analysis) - the original NLP application of SVD
-- [Numerical Linear Algebra by Trefethen and Bau](https://people.maths.ox.ac.uk/trefethen/text.html) - the gold standard for understanding SVD algorithms and their numerical properties
+- [Gilbert Strang: Linear Algebra and Its Applications, Chapter 7](https://math.mit.edu/~gs/linearalgebra/) - SVDと応用を丁寧に扱っている
+- [3Blue1Brown: But what is the SVD?](https://www.youtube.com/watch?v=vSczTbgc8Rc) - SVDの幾何学的直感
+- [We Recommend a Singular Value Decomposition](https://www.ams.org/publicoutreach/feature-column/fcarc-svd) - American Mathematical Societyによる親しみやすい概要
+- [Netflix Prize and Matrix Factorization](https://sifter.org/~simon/journal/20061211.html) - 推薦向けSVDについてのSimon Funkの元ブログ記事
+- [Latent Semantic Analysis](https://en.wikipedia.org/wiki/Latent_semantic_analysis) - SVDの元祖NLP応用
+- [Numerical Linear Algebra by Trefethen and Bau](https://people.maths.ox.ac.uk/trefethen/text.html) - SVDアルゴリズムと数値的性質を理解するための定番

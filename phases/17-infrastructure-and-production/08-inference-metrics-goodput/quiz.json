@@ -1,26 +1,26 @@
 {
   "lesson": "08-inference-metrics-goodput",
-  "title": "Inference Metrics — TTFT, TPOT, ITL, Goodput, P99",
+  "title": "推論メトリクス — TTFT、TPOT、ITL、Goodput、P99",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which components dominate TTFT (time to first token)?",
+      "question": "TTFT（time to first token）を支配する components はどれですか？",
       "options": [
-        "Decode-only forward time",
-        "Disk I/O for weights",
-        "Tokenizer GIL overhead",
-        "Queue time, network request time, and prefill time"
+        "Decode の forward time だけ",
+        "Weights の disk I/O",
+        "Tokenizer の GIL overhead",
+        "Queue time、network request time、prefill time"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which metric does the lesson call the one that actually matters for product?",
+      "question": "このレッスンが、プロダクトで実際に重要だとする metric はどれですか？",
       "options": [
         "GPU duty cycle",
-        "Aggregate throughput in tokens per second",
-        "Goodput — fraction of requests meeting every SLO constraint simultaneously",
+        "Tokens/sec の aggregate throughput",
+        "Goodput — すべての SLO constraint を同時に満たした requests の割合",
         "Mean ITL"
       ],
       "correct": 2,
@@ -28,33 +28,33 @@
     },
     {
       "stage": "check",
-      "question": "Why is mean the wrong statistic to report for LLM latency?",
+      "question": "LLM latency の報告で mean が不適切な統計量である理由は何ですか？",
       "options": [
-        "Mean is never computable on streaming responses",
-        "Mean only works for prefill, not decode",
-        "LLM latency distributions are right-skewed; users routinely hit P99 outliers that mean hides",
-        "Mean is not supported by GenAI-Perf"
+        "Mean は streaming responses では計算できないため",
+        "Mean は prefill には使えるが decode には使えないため",
+        "LLM latency distributions は右に歪んでおり、ユーザーが頻繁に当たる P99 outliers を mean が隠すため",
+        "Mean は GenAI-Perf で support されていないため"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why do GenAI-Perf and LLMPerf disagree on TPOT for the same run?",
+      "question": "同じ実行で GenAI-Perf と LLMPerf の TPOT が一致しないのはなぜですか？",
       "options": [
-        "GenAI-Perf only runs on Blackwell",
-        "GenAI-Perf excludes TTFT from the ITL calculation; LLMPerf includes it, so tool choice changes the number",
-        "LLMPerf uses microseconds and GenAI-Perf uses milliseconds",
-        "They sample different requests"
+        "GenAI-Perf は Blackwell でしか動かないため",
+        "GenAI-Perf は ITL 計算から TTFT を除外し、LLMPerf は含めるため、tool choice が数値を変える",
+        "LLMPerf は microseconds を使い、GenAI-Perf は milliseconds を使うため",
+        "異なる requests を sample するため"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "For long-output requests (>500 tokens), which metric dominates end-to-end latency?",
+      "question": "長い出力 request（>500 tokens）では、end-to-end latency を支配する metric はどれですか？",
       "options": [
-        "TPOT times output length",
+        "TPOT と output length の積",
         "Cold-start time",
         "TTFT",
         "Network response time"
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Which set best captures the lesson's reasonable consumer-facing SLO for a 70B chat model in 2026?",
+      "question": "2026 年の 70B chat model に対する、このレッスンの妥当な consumer-facing SLO として最も近いものはどれですか？",
       "options": [
-        "P50 only, no percentiles above",
-        "TTFT P99 800 ms, TPOT P99 25 ms, E2E P99 3 s for <300-token outputs, goodput >= 99%",
-        "TTFT P99 8s, TPOT P99 200ms, goodput 50%",
-        "Mean TTFT 10 ms, mean TPOT 1 ms"
+        "P50 のみで、それ以上の percentile はなし",
+        "TTFT P99 800 ms、TPOT P99 25 ms、<300-token outputs で E2E P99 3 s、goodput >= 99%",
+        "TTFT P99 8s、TPOT P99 200ms、goodput 50%",
+        "Mean TTFT 10 ms、mean TPOT 1 ms"
       ],
       "correct": 1,
       "explanation": ""

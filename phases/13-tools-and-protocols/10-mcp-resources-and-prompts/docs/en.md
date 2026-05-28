@@ -1,28 +1,28 @@
-# MCP Resources and Prompts — Context Exposure Beyond Tools
+# MCP Resources and Prompts — Tool を超えた Context Exposure
 
-> Tools get 90 percent of MCP attention. The other two server primitives solve different problems. Resources expose data for reading; prompts expose reusable templates as slash-commands. Many servers should use resources instead of wrapping reads in tools, and prompts instead of hard-coding workflows in client prompts. This lesson names the decision rule and walks the `resources/*` and `prompts/*` messages.
+> MCP では tool に注目が集まりがちです。しかし残り 2 つの server primitive は別の問題を解きます。Resource は read 用の data を expose し、prompt は reusable template を slash-command として expose します。多くの server は、read を tool で包むのではなく resource を使い、workflow を client prompt に hard-code するのではなく prompt を使うべきです。このレッスンでは decision rule を定義し、`resources/*` と `prompts/*` message をたどります。
 
-**Type:** Build
-**Languages:** Python (stdlib, resource + prompt handler)
-**Prerequisites:** Phase 13 · 07 (MCP server)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python (stdlib, resource + prompt handler)
+**前提条件:** Phase 13 · 07 (MCP server)
+**所要時間:** ~45 分
 
 ## Learning Objectives
 
-- Decide between exposing a capability as a tool, a resource, or a prompt for a given domain.
-- Implement `resources/list`, `resources/read`, `resources/subscribe` and handle `notifications/resources/updated`.
-- Implement `prompts/list` and `prompts/get` with argument templates.
-- Recognize when the host surfaces prompts as slash-commands vs auto-injected context.
+- ある domain の capability を tool、resource、prompt のどれとして expose するかを判断する。
+- `resources/list`、`resources/read`、`resources/subscribe` を実装し、`notifications/resources/updated` を handle する。
+- argument template 付きで `prompts/list` と `prompts/get` を実装する。
+- host が prompt を slash-command として surface する場合と、auto-injected context として扱う場合を見分ける。
 
-## The Problem
+## 問題
 
-A naive MCP server for a notes app exposes everything as tools: `notes_read`, `notes_list`, `notes_search`. This wraps every data access in a model-driven tool call. Consequences:
+notes app 用の素朴な MCP server は、すべてを tool として expose します。`notes_read`、`notes_list`、`notes_search` です。これはすべての data access を model-driven tool call で包みます。結果はこうです。
 
-- The model has to decide whether to call `notes_read` for every query that might benefit from context.
-- Read-only content cannot be subscribed to or streamed to the host's side panel.
-- Client UIs (Claude Desktop's resource attachment panel, Cursor's "Include file" picker) cannot surface the data.
+- context が役立つかもしれない query ごとに、model が `notes_read` を呼ぶべきか判断しなければならない。
+- read-only content を subscribe したり、host の side panel に stream したりできない。
+- Client UI (Claude Desktop の resource attachment panel、Cursor の "Include file" picker) が data を surface できない。
 
-The right split: expose data as a resource, expose mutating or computed actions as tools, expose reusable multi-step workflows as prompts. Each primitive has its UX affordance and its access pattern.
+正しい分割はこうです。data は resource として expose し、mutating または computed action は tool として expose し、reusable multi-step workflow は prompt として expose します。それぞれの primitive には固有の UX affordance と access pattern があります。
 
 ## The Concept
 
@@ -30,119 +30,119 @@ The right split: expose data as a resource, expose mutating or computed actions 
 
 | Capability | Primitive |
 |------------|-----------|
-| User wants to search, filter, or transform data | tool |
-| User wants the host to include this data as context | resource |
-| User wants a templated workflow they can re-run | prompt |
+| user が data の search、filter、transform をしたい | tool |
+| user が host にこの data を context として含めたい | resource |
+| user が再実行できる templated workflow を欲しい | prompt |
 
-Guideline: if the model would benefit from calling it on every related query, it is a tool. If the user would benefit from attaching it to a conversation, it is a resource. If a whole multi-step workflow is the unit the user wants to re-use, it is a prompt.
+Guideline: 関連 query のたびに model がそれを呼ぶことで得をするなら tool です。User がそれを conversation に attach できることで得をするなら resource です。User が再利用したい unit が multi-step workflow 全体なら prompt です。
 
 ### Resources
 
-`resources/list` returns `{resources: [{uri, name, mimeType, description?}]}`. `resources/read` takes `{uri}` and returns `{contents: [{uri, mimeType, text | blob}]}`.
+`resources/list` は `{resources: [{uri, name, mimeType, description?}]}` を返します。`resources/read` は `{uri}` を受け取り、`{contents: [{uri, mimeType, text | blob}]}` を返します。
 
-URIs can be anything addressable:
+URI は addressable であれば何でも構いません。
 
 - `file:///Users/alice/notes/mcp.md`
 - `postgres://my-db/query/SELECT ...`
 - `notes://note-14` (custom scheme)
 - `memory://session-2026-04-22/recent` (server-specific)
 
-`contents[]` supports both text and binary. Binary uses `blob` as a base64-encoded string plus a `mimeType`.
+`contents[]` は text と binary の両方を support します。Binary は base64-encoded string の `blob` と `mimeType` を使います。
 
 ### Resource subscriptions
 
-Declare `{resources: {subscribe: true}}` in capabilities. Client calls `resources/subscribe {uri}`. Server sends `notifications/resources/updated {uri}` when the resource changes. Client re-reads.
+capabilities で `{resources: {subscribe: true}}` を宣言します。Client は `resources/subscribe {uri}` を呼びます。Resource が変わると、server は `notifications/resources/updated {uri}` を送ります。Client は再 read します。
 
-Use case: a notes server whose resources are files on disk; a file watcher triggers update notifications; Claude Desktop re-pulls the file into context when edited outside the host.
+Use case: resource が disk 上の file である notes server。file watcher が update notification を trigger し、host の外で編集されたとき Claude Desktop が file を context に再 pull します。
 
 ### Resource templates (2025-11-25 addition)
 
-`resourceTemplates` let you expose a parameterized URI pattern: `notes://{id}` with `id` as a completion target. The client can autocomplete ids in the resource picker.
+`resourceTemplates` により parameterized URI pattern を expose できます。例: `id` を completion target とする `notes://{id}`。Client は resource picker で id を autocomplete できます。
 
 ### Prompts
 
-`prompts/list` returns `{prompts: [{name, description, arguments?}]}`. `prompts/get` takes `{name, arguments}` and returns `{description, messages: [{role, content}]}`.
+`prompts/list` は `{prompts: [{name, description, arguments?}]}` を返します。`prompts/get` は `{name, arguments}` を受け取り、`{description, messages: [{role, content}]}` を返します。
 
-A prompt is a template that fills to a list of messages the host feeds its model. For example, a `code_review` prompt takes a `file_path` argument and returns a three-message sequence: a system message, a user message with the file body, and an assistant kickoff with a reasoning template.
+Prompt は、host が model に渡す message list に展開される template です。たとえば `code_review` prompt は `file_path` argument を受け取り、3-message sequence を返します。system message、file body を含む user message、reasoning template を含む assistant kickoff です。
 
 ### Hosts and prompts
 
-Claude Desktop, VS Code, and Cursor expose prompts as slash-commands in the chat UI. The user types `/code_review` and picks arguments from a form. The server's prompt is the contract between "user shortcut" and "full prompt sent to model".
+Claude Desktop、VS Code、Cursor は chat UI で prompt を slash-command として expose します。User は `/code_review` と入力し、form から argument を選びます。Server の prompt は、「user shortcut」と「model に送られる full prompt」の間の contract です。
 
-Not every client supports prompts yet — check capability negotiation. A server with prompt capability declared but a client without prompt support simply will not see the slash commands.
+すべての client が prompt を support しているわけではありません。capability negotiation を確認してください。Server が prompt capability を宣言していても、client が prompt support を持たなければ slash command は見えません。
 
 ### The "list changed" notification
 
-Both resources and prompts emit `notifications/list_changed` when the set mutates. A notes server that just imported 20 new notes emits `notifications/resources/list_changed`; the client re-calls `resources/list` to pick up the additions.
+resources と prompts はどちらも、set が mutate したとき `notifications/list_changed` を emit します。20 個の新しい note を import した notes server は `notifications/resources/list_changed` を emit します。Client は追加分を取得するために `resources/list` を再 call します。
 
 ### Content type conventions
 
-For text: `mimeType: "text/plain"`, `text/markdown`, `application/json`.
-For binary: `image/png`, `application/pdf`, plus the `blob` field.
-For MCP Apps (Lesson 14): `text/html;profile=mcp-app` in a `ui://` URI.
+text の場合: `mimeType: "text/plain"`、`text/markdown`、`application/json`。
+binary の場合: `image/png`、`application/pdf` と `blob` field。
+MCP Apps (Lesson 14) の場合: `ui://` URI 内の `text/html;profile=mcp-app`。
 
 ### Dynamic resources
 
-A resource URI does not have to correspond to a static file. `notes://recent` can return the latest five notes on every read. `db://query/users/active` can execute a parameterized query. The server is free to compute content dynamically.
+Resource URI は static file に対応している必要はありません。`notes://recent` は read のたびに最新 5 件の note を返せます。`db://query/users/active` は parameterized query を実行できます。Server は content を動的に compute して構いません。
 
-Rule: if the client can cache by URI, the URI must be stable. If computation is one-shot, the URI should include a timestamp or nonce so the client cache does not stale out.
+Rule: client が URI で cache できるなら、URI は stable でなければなりません。Computation が one-shot なら、client cache が stale にならないように URI に timestamp または nonce を含めるべきです。
 
 ### Subscriptions vs polling
 
-Subscription-capable clients get server push via `notifications/resources/updated`. Pre-subscription clients or hosts that do not support it poll by re-reading. Both are spec-compliant. The server's capability declaration tells the client which it supports.
+Subscription-capable client は `notifications/resources/updated` によって server push を受け取ります。pre-subscription client や、それを support しない host は再 read によって poll します。どちらも spec-compliant です。Server の capability declaration が、何を support しているかを client に伝えます。
 
-Cost of subscriptions: per-session state on the server (who is subscribed to what). Keep the subscribed set bounded; disconnected clients should time out.
+Subscription の cost は、server 上の per-session state (誰が何を subscribe しているか) です。subscribed set は bounded に保ちます。disconnect した client は timeout させるべきです。
 
 ### Prompts vs system prompts
 
-Prompts in MCP are not system prompts. The host's system prompt (its own operating instructions) and MCP prompts (server-supplied templates invoked by user) live side by side. A well-behaved client never lets a server prompt override its own system prompt; it layers them.
+MCP の prompt は system prompt ではありません。Host の system prompt (それ自身の operating instruction) と MCP prompt (user が invoke する server-supplied template) は side by side に存在します。行儀のよい client は、server prompt に自分の system prompt を override させません。layer します。
 
 ## Use It
 
-`code/main.py` extends the notes server from Lesson 07 with:
+`code/main.py` は Lesson 07 の notes server を次のように拡張します。
 
-- Per-note resources (`notes://note-1`, etc.) with `resources/subscribe` support.
-- A `review_note` prompt that renders to a three-message template.
-- A file-watcher simulation that emits `notifications/resources/updated` when a note is modified.
-- A `notes://recent` dynamic resource that always returns the latest five notes.
+- `resources/subscribe` support 付きの per-note resource (`notes://note-1` など)。
+- three-message template に render される `review_note` prompt。
+- note が変更されたとき `notifications/resources/updated` を emit する file-watcher simulation。
+- 常に最新 5 件の note を返す `notes://recent` dynamic resource。
 
-Run the demo to see the full flow.
+demo を実行して full flow を確認してください。
 
 ## Ship It
 
-This lesson produces `outputs/skill-primitive-splitter.md`. Given a proposed MCP server, the skill categorizes each capability as tool / resource / prompt with a rationale.
+このレッスンは `outputs/skill-primitive-splitter.md` を作ります。提案された MCP server が与えられると、この skill は各 capability を rationale 付きで tool / resource / prompt に categorize します。
 
 ## Exercises
 
-1. Run `code/main.py`. Observe the initial resource list, then trigger a note edit and verify the `notifications/resources/updated` event fires.
+1. `code/main.py` を実行する。initial resource list を観察し、その後 note edit を trigger して `notifications/resources/updated` event が fire することを確認する。
 
-2. Add a `resources/list_changed` emitter: when a new note is created, send the notification so clients re-discover.
+2. `resources/list_changed` emitter を追加する。新しい note が作成されたら notification を送り、client が再 discover できるようにする。
 
-3. Design three prompts for a GitHub MCP server: `summarize_pr`, `triage_issue`, `release_notes`. Each with argument schemas. The prompt body should be runnable without further edits.
+3. GitHub MCP server 用に 3 つの prompt を設計する: `summarize_pr`、`triage_issue`、`release_notes`。それぞれ argument schema を持たせる。Prompt body は追加編集なしで runnable にする。
 
-4. Take an existing tool in the Lesson 07 server and classify whether it should remain a tool or be split into a resource plus tool pair. Justify in one sentence.
+4. Lesson 07 server にある既存 tool を 1 つ取り上げ、それを tool のままにすべきか、resource plus tool pair に split すべきかを classify する。1 文で justify する。
 
-5. Read the spec's `server/resources` and `server/prompts` sections. Identify the one field in `resources/read` that is rarely populated but spec-supported. Hint: look at `_meta` on resource content.
+5. spec の `server/resources` と `server/prompts` section を読む。`resources/read` のうち、ほとんど populate されないが spec-supported な field を 1 つ特定する。Hint: resource content の `_meta` を見る。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| Resource | "Exposed data" | URI-addressable content the host can read |
-| Resource URI | "Pointer to data" | Scheme-prefixed identifier (`file://`, `notes://`, etc.) |
-| `resources/subscribe` | "Watch for changes" | Client-opt-in server-push updates for a specific URI |
-| `notifications/resources/updated` | "Resource changed" | Signal to client that a subscribed resource has new content |
-| Resource template | "Parameterized URI" | URI pattern with completion hints for the host picker |
-| Prompt | "Slash-command template" | Named multi-message template with argument slots |
-| Prompt arguments | "Template inputs" | Typed parameters the host collects before rendering |
-| `prompts/get` | "Render template" | Server returns the filled-in message list |
+| Resource | "Exposed data" | host が read できる URI-addressable content |
+| Resource URI | "Pointer to data" | scheme-prefixed identifier (`file://`, `notes://` など) |
+| `resources/subscribe` | "Watch for changes" | 特定 URI に対する client-opt-in の server-push update |
+| `notifications/resources/updated` | "Resource changed" | subscribed resource に新しい content があることを client に知らせる signal |
+| Resource template | "Parameterized URI" | host picker 用の completion hint を持つ URI pattern |
+| Prompt | "Slash-command template" | argument slot を持つ named multi-message template |
+| Prompt arguments | "Template inputs" | render 前に host が収集する typed parameter |
+| `prompts/get` | "Render template" | server が filled-in message list を返す |
 | Content block | "Typed chunk" | `{type: text \| image \| resource \| ui_resource}` |
-| Slash-command UX | "User shortcut" | Host surfaces prompts as commands starting with `/` |
+| Slash-command UX | "User shortcut" | host が `/` で始まる command として prompt を surface する |
 
-## Further Reading
+## 参考文献
 
-- [MCP — Concepts: Resources](https://modelcontextprotocol.io/docs/concepts/resources) — resource URIs, subscriptions, and templates
-- [MCP — Concepts: Prompts](https://modelcontextprotocol.io/docs/concepts/prompts) — prompt templates and slash-command integration
+- [MCP — Concepts: Resources](https://modelcontextprotocol.io/docs/concepts/resources) — resource URI、subscription、template
+- [MCP — Concepts: Prompts](https://modelcontextprotocol.io/docs/concepts/prompts) — prompt template と slash-command integration
 - [MCP — Server resources spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/server/resources) — full `resources/*` message reference
 - [MCP — Server prompts spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25/server/prompts) — full `prompts/*` message reference
-- [MCP — Protocol info site: resources](https://modelcontextprotocol.info/docs/concepts/resources/) — community guide expanding on the official docs
+- [MCP — Protocol info site: resources](https://modelcontextprotocol.info/docs/concepts/resources/) — official docs を補足する community guide

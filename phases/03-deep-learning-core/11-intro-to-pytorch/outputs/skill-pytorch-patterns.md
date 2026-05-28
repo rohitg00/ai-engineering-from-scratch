@@ -1,6 +1,6 @@
 ---
 name: skill-pytorch-patterns
-description: Reference patterns for PyTorch training, evaluation, and deployment
+description: PyTorch の training、evaluation、deployment の reference patterns
 version: 1.0.0
 phase: 03
 lesson: 11
@@ -50,7 +50,7 @@ for inputs, targets in train_loader:
     scaler.update()
 ```
 
-Use when: training on GPU with float16-capable hardware (V100, A100, H100, RTX 3090+). Expect ~1.5-2x speedup and ~50% memory reduction.
+使う場面: float16-capable hardware（V100、A100、H100、RTX 3090+）を持つ GPU で training するとき。約 1.5-2x の speedup と約 50% の memory reduction が期待できます。
 
 ## Gradient Accumulation
 
@@ -67,7 +67,7 @@ for i, (inputs, targets) in enumerate(train_loader):
         optimizer.zero_grad()
 ```
 
-Use when: effective batch size needs to be larger than GPU memory allows. Dividing loss by accumulation_steps keeps gradient scale consistent.
+使う場面: effective batch size を GPU memory が許す範囲より大きくする必要があるとき。loss を accumulation_steps で割ることで gradient scale を一貫させます。
 
 ## Save and Load
 
@@ -84,7 +84,7 @@ model.load_state_dict(checkpoint["model_state_dict"])
 optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
 ```
 
-Always save optimizer state for resuming training. For inference-only, save just `model.state_dict()`.
+training を resume するには、必ず optimizer state も保存してください。inference-only なら `model.state_dict()` だけを保存します。
 
 ## Custom Dataset
 
@@ -121,12 +121,12 @@ train_loader = torch.utils.data.DataLoader(
 )
 ```
 
-| Parameter | What it does | When to use |
+| Parameter | 何をするか | いつ使うか |
 |-----------|-------------|-------------|
-| num_workers=4 | Parallel data loading | Always on multi-core machines |
-| pin_memory=True | Page-locked CPU memory | When training on GPU |
-| drop_last=True | Drop incomplete final batch | When using BatchNorm |
-| persistent_workers=True | Keep workers alive across epochs | When num_workers > 0 |
+| num_workers=4 | parallel data loading | multi-core machines では常に |
+| pin_memory=True | page-locked CPU memory | GPU で training するとき |
+| drop_last=True | incomplete final batch を捨てる | BatchNorm を使うとき |
+| persistent_workers=True | workers を epochs 間で生かしておく | num_workers > 0 のとき |
 
 ## Learning Rate Schedules
 
@@ -145,7 +145,7 @@ for epoch in range(num_epochs):
         scheduler.step()
 ```
 
-OneCycleLR: best default for most tasks. Warms up to max_lr, then cosine decays. Call `scheduler.step()` after every batch, not every epoch.
+OneCycleLR は多くの task に対する最良の default です。max_lr まで warm up し、その後 cosine decay します。`scheduler.step()` は epoch ごとではなく、必ず batch ごとに呼んでください。
 
 ## Weight Initialization
 
@@ -170,15 +170,15 @@ with torch.inference_mode():
     outputs = model(inputs)
 ```
 
-`torch.inference_mode()` is faster than `torch.no_grad()` because it disables autograd entirely rather than just suppressing gradient computation.
+`torch.inference_mode()` は、gradient computation を抑制するだけでなく autograd を完全に無効化するため、`torch.no_grad()` より高速です。
 
 ## Common Mistakes Checklist
 
-1. Applying softmax before CrossEntropyLoss (it includes log_softmax internally)
-2. Forgetting to call model.eval() during validation
-3. Forgetting to move tensors to the same device as the model
-4. Not calling optimizer.zero_grad() (gradients accumulate by default)
-5. Using torch.no_grad() during training (disables gradient computation)
-6. Setting num_workers too high (spawns too many processes, thrashes memory)
-7. Not using pin_memory=True when training on GPU
-8. Saving the entire model object instead of state_dict (breaks on refactor)
+1. CrossEntropyLoss の前に softmax を適用する（内部で log_softmax を含む）
+2. validation 中に model.eval() を呼び忘れる
+3. tensors を model と同じ device に移し忘れる
+4. optimizer.zero_grad() を呼ばない（gradients は default で蓄積される）
+5. training 中に torch.no_grad() を使う（gradient computation を無効化する）
+6. num_workers を高くしすぎる（processes を増やしすぎ、memory thrashing を起こす）
+7. GPU training で pin_memory=True を使わない
+8. state_dict ではなく model object 全体を保存する（refactor で壊れる）

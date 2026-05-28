@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the 'curse of dimensionality'?",
-      "options": ["High-dimensional data takes too long to download", "As dimensions grow, distances become meaningless, volume concentrates in corners, and you need exponentially more data", "Neural networks cannot process data with more than 100 features", "High-dimensional data always contains noise"],
+      "question": "「次元の呪い」とは何ですか？",
+      "options": ["高次元データはダウンロードに時間がかかりすぎること", "次元が増えると、距離が意味を失い、体積が角に集中し、指数関数的に多くのデータが必要になること", "ニューラルネットワークは100個を超える特徴量を持つデータを処理できないこと", "高次元データには常にノイズが含まれること"],
       "correct": 1,
-      "explanation": "In high dimensions, all pairwise distances converge to similar values, data points spread to corners, and maintaining sample density requires exponentially more data. Dimensionality reduction counteracts these effects."
+      "explanation": "高次元では、すべてのペア間距離が似た値へ収束し、データ点は角へ広がり、サンプル密度を保つには指数関数的に多くのデータが必要になります。次元削減はこれらの影響を打ち消します。"
     },
     {
       "stage": "pre",
-      "question": "What does PCA find?",
-      "options": ["The most important features by name", "The orthogonal directions of maximum variance in the data", "Clusters of similar data points", "The optimal number of features to keep"],
+      "question": "PCAは何を見つけますか？",
+      "options": ["名前から見た最も重要な特徴量", "データ内で分散が最大になる直交方向", "似たデータ点のクラスタ", "残すべき最適な特徴量数"],
       "correct": 1,
-      "explanation": "PCA computes the eigenvectors of the covariance matrix, which are orthogonal directions ranked by how much data variance they capture. The first principal component points along the direction of maximum spread."
+      "explanation": "PCAは共分散行列の固有ベクトルを計算します。固有ベクトルは、どれだけのデータ分散を捉えるかで順位付けされた直交方向です。第1主成分は、データの広がりが最大になる方向を指します。"
     },
     {
       "stage": "post",
-      "question": "After running PCA on 784-dimensional MNIST data with k=50 components, you find 95% of variance is captured. What does this tell you?",
-      "options": ["Only 50 pixels matter in each image", "The data effectively lives in a ~50-dimensional subspace; the remaining 734 dimensions are mostly noise or redundancy", "95% of images belong to the same class", "The model will achieve 95% accuracy"],
+      "question": "784次元のMNISTデータにk=50成分でPCAを実行したところ、分散の95%が捉えられていました。これは何を意味しますか？",
+      "options": ["各画像では50個のピクセルだけが重要である", "データは実質的に約50次元の部分空間にあり、残りの734次元は主にノイズまたは冗長性である", "画像の95%が同じクラスに属している", "モデルは95%の精度を達成する"],
       "correct": 1,
-      "explanation": "95% explained variance with 50 components means the essential structure of 784-dimensional data is captured by just 50 directions. The rest carries only 5% of the variation -- mostly noise."
+      "explanation": "50成分で95%の説明分散があるということは、784次元データの本質的な構造が、わずか50方向で捉えられているという意味です。残りは変動の5%しか持たず、その多くはノイズです。"
     },
     {
       "stage": "post",
-      "question": "Why should you NOT use t-SNE as preprocessing before training a classifier?",
-      "options": ["t-SNE is too slow for large datasets", "t-SNE is designed for visualization only: it distorts global distances, is stochastic, and the output coordinates have no consistent meaning across runs", "t-SNE reduces data to exactly 2 dimensions which is too few", "t-SNE requires the labels to be known in advance"],
+      "question": "分類器の訓練前の前処理としてt-SNEを使うべきではないのはなぜですか？",
+      "options": ["t-SNEは大規模データセットでは遅すぎるから", "t-SNEは可視化専用に設計されており、大域的な距離を歪め、確率的で、出力座標が実行ごとに一貫した意味を持たないから", "t-SNEはデータをちょうど2次元に削減し、それでは少なすぎるから", "t-SNEにはラベルが事前にわかっている必要があるから"],
       "correct": 1,
-      "explanation": "t-SNE preserves local neighborhoods but distorts global structure. Distances between clusters are meaningless, and different runs produce different layouts. Use PCA for preprocessing and t-SNE/UMAP only for visualization."
+      "explanation": "t-SNEは局所近傍を保ちますが、大域構造を歪めます。クラスタ間距離は意味を持たず、実行ごとに異なるレイアウトが得られます。前処理にはPCAを使い、t-SNE/UMAPは可視化だけに使います。"
     },
     {
       "stage": "post",
-      "question": "When would you choose kernel PCA over standard PCA?",
-      "options": ["When you have more samples than features", "When the data lies on a nonlinear manifold that standard PCA cannot separate, like concentric circles", "When you need the fastest possible computation", "When you want interpretable principal components"],
+      "question": "標準PCAではなくkernel PCAを選ぶのはどのような場合ですか？",
+      "options": ["特徴量よりサンプル数が多い場合", "データが、同心円のように標準PCAでは分離できない非線形多様体上にある場合", "可能な限り高速な計算が必要な場合", "解釈可能な主成分が欲しい場合"],
       "correct": 1,
-      "explanation": "Standard PCA finds linear subspaces. If data has nonlinear structure (e.g., two concentric rings), PCA projects both onto the same line. Kernel PCA maps data to a higher-dimensional space where the structure becomes linear."
+      "explanation": "標準PCAは線形部分空間を見つけます。データに非線形構造がある場合（例: 2つの同心リング）、PCAは両方を同じ直線へ射影します。Kernel PCAはデータをより高次元の空間へ写像し、そこで構造を線形にします。"
     }
   ]
 }

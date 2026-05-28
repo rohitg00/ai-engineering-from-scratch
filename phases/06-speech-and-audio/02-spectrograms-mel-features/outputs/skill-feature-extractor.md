@@ -1,18 +1,18 @@
 ---
 name: feature-extractor
-description: Pick feature type, mel count, frame/hop, and normalization to match a downstream audio model.
+description: 下流の音声モデルに合わせて feature type、mel count、frame/hop、normalization を選ぶ。
 version: 1.0.0
 phase: 6
 lesson: 02
 tags: [audio, features, spectrogram, mel]
 ---
 
-Given a target model (ASR / TTS / classifier / speaker / music) and input audio (sample rate, domain), output:
+対象モデル (ASR / TTS / classifier / speaker / music) と入力音声 (sample rate, domain) が与えられたら、次を出力します。
 
-1. Feature type. Log-mel, mel, MFCC, raw waveform, or discrete codec (EnCodec, SoundStream). One-sentence reason.
-2. Mel count and frequency range. `n_mels`, `fmin`, `fmax`. Reason tied to domain (speech vs music) and model target.
-3. Frame and hop. `frame_len`, `hop_len`, window type. Reason tied to the required temporal resolution.
-4. Normalization. Per-utterance mean/var, global stats, or dB with fixed reference; pre or post featurization.
-5. Validation snippet. Python that prints the resulting shape, min/max, mean/std on a 1-second reference clip and asserts they match training.
+1. Feature type. Log-mel、mel、MFCC、raw waveform、または discrete codec (EnCodec, SoundStream)。理由を 1 文で示します。
+2. Mel count and frequency range. `n_mels`, `fmin`, `fmax`。domain (speech vs music) と model target に結びつけた理由。
+3. Frame and hop. `frame_len`, `hop_len`, window type。必要な temporal resolution に結びつけた理由。
+4. Normalization. Per-utterance mean/var、global stats、または固定 reference の dB。featurization の前か後か。
+5. Validation snippet. 1 秒の reference clip で結果の shape、min/max、mean/std を出力し、それらが training と一致することを assert する Python。
 
-Refuse to ship a feature pipeline whose frame/hop/mel count diverges from the published training config of the target model. Flag any MFCC-based setup for Whisper or Parakeet as wrong — those models consume log-mel. Flag any feature extractor without a normalization assertion.
+対象モデルの公開 training config から frame/hop/mel count が外れる feature pipeline は出荷を拒否します。Whisper または Parakeet 向けの MFCC ベース構成は誤りとしてフラグします。これらのモデルは log-mel を消費します。normalization assertion のない feature extractor もフラグします。

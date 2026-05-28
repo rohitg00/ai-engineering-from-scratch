@@ -36,7 +36,7 @@ function nodeListener(app: Hono) {
 }
 
 function driveSession(ws: WebSocket): void {
-  const frames = synthCall("what is the weather in tokyo tomorrow");
+  const frames = synthCall("tokyo の明日の天気はどうですか");
   const m = runSession(frames, {
     useTool: true,
     bargeInAtMs: null,

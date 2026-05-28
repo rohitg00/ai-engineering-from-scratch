@@ -1,25 +1,25 @@
-# Mission - Capstone: Ship a Reusable Agent Workbench Pack
+# Mission - Capstone: 再利用可能な Agent Workbench Pack を出荷する
 
-## Goal
-Assemble the eleven prior lessons into a versioned `outputs/agent-workbench-pack/` directory with an installer that lays it idempotently into any target repo.
+## 目標
+prior 11 lessons を、任意の target repo に idempotent に配置する installer 付きの versioned `outputs/agent-workbench-pack/` directory に組み立てる。
 
 ## Inputs
-- Schemas, scripts, and docs from lessons 32 through 40
-- The pack layout: `AGENTS.md`, `docs/`, `schemas/`, `scripts/`, `bin/`, `README.md`, `VERSION`
+- lessons 32 through 40 の schemas、scripts、docs
+- pack layout: `AGENTS.md`、`docs/`、`schemas/`、`scripts/`、`bin/`、`README.md`、`VERSION`
 
-## Deliverables
-- `outputs/agent-workbench-pack/` with the full layout populated
-- `bin/install.sh` (or `bin/install.py`) that refuses to overwrite without `--force`
-- `VERSION` file plus a `README.md` describing what stays in and what stays out
+## 成果物
+- full layout が populated された `outputs/agent-workbench-pack/`
+- `--force` なしでは overwrite を拒否する `bin/install.sh` (または `bin/install.py`)
+- 何を入れ何を出すかを説明する `VERSION` file と `README.md`
 
 ## Acceptance
-- `python3 code/main.py` exits zero and prints the pack tree
-- Re-running the assembler is idempotent
-- `bin/install.sh` into a fresh target leaves a working workbench: state, board, rules, scope, init, runner, gate, reviewer, handoff all in place
+- `python3 code/main.py` が exit zero になり pack tree を表示する
+- assembler の再実行が idempotent
+- fresh target への `bin/install.sh` が working workbench を残す: state、board、rules、scope、init、runner、gate、reviewer、handoff がすべて配置される
 
-## Out of scope
-- Per-project task content. Tasks belong on the target repo's board, not in the pack.
-- Vendor SDK calls. The pack is framework-agnostic by design.
+## 対象外
+- per-project task content。tasks は pack ではなく target repo の board に属する。
+- Vendor SDK calls。pack は設計上 framework-agnostic。
 
 ## References
 - `docs/en.md` - full lesson

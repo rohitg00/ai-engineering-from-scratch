@@ -1,7 +1,7 @@
 """AI gateway routing + fallback simulator — stdlib Python.
 
-Models a gateway fronting OpenAI, Anthropic, and self-hosted. Injects 429/5xx
-errors per provider. Compares fallback strategies.
+OpenAI、Anthropic、self-hosted の前段に gateway がある状況を model 化する。
+provider ごとに 429/5xx error を注入し、fallback strategy を比較する。
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ GATEWAY_OVERHEAD = {
 
 def call_provider(p: Provider, rng: random.Random) -> tuple[bool, float]:
     if rng.random() < p.error_rate:
-        return False, p.base_latency_ms * 0.3  # half-done before error
+        return False, p.base_latency_ms * 0.3  # error 前に一部処理済み
     return True, p.base_latency_ms
 
 
@@ -78,7 +78,7 @@ def report(row: dict) -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("AI GATEWAY FALLBACK — 3-provider chain under error injection")
+    print("AI GATEWAY FALLBACK — error injection 下の 3-provider chain")
     print("=" * 80)
     header = f"{'Gateway':12}  {'Success':>7}         {'mean latency':>12}  retries  fallbacks"
     print(header)
@@ -86,9 +86,9 @@ def main() -> None:
     for gw in ("LiteLLM", "Portkey", "Kong", "Cloudflare"):
         report(simulate_fallback(gw))
 
-    print("\nNotes: a single-provider target at 3% error rate → 97% success.")
-    print("Two-provider fallback → 99.94% success (complement of 0.03 × 0.02).")
-    print("Three-provider fallback → 99.997% success. Latency rises on fallback.")
+    print("\n注記: 3% error rate の single-provider target → 97% success。")
+    print("Two-provider fallback → 99.94% success（0.03 × 0.02 の補集合）。")
+    print("Three-provider fallback → 99.997% success。fallback では latency が上がる。")
 
 
 if __name__ == "__main__":

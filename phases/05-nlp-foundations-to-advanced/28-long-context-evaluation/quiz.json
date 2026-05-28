@@ -4,99 +4,99 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the original NIAH benchmark measure?",
+      "question": "元祖 NIAH benchmark は何を測りますか？",
       "options": [
         "Tokenizer fertility",
-        "Whether the model can retrieve a planted fact at controlled depths across a long context",
+        "model が long context 内の制御された depth に埋め込まれた fact を retrieve できるか",
         "Embedding cosine drift",
-        "Multi-hop reasoning only"
+        "Multi-hop reasoning のみ"
       ],
       "correct": 1,
-      "explanation": "NIAH = needle in a haystack: plant a fact, ask the model to retrieve it, sweep depth and length."
+      "explanation": "NIAH = needle in a haystack です。fact を埋め込み、model に retrieve させ、depth と length を sweep します。"
     },
     {
       "stage": "pre",
-      "question": "Why is the advertised context window often very different from the usable context?",
+      "question": "advertised context window と usable context が大きく異なることが多いのはなぜですか？",
       "options": [
-        "Attention degrades with length and task; spec-sheet maximums rarely hold under multi-hop or reasoning loads",
-        "Tokenizers truncate",
-        "Embeddings overflow",
-        "Beam search slows"
+        "attention は length と task によって劣化し、spec-sheet maximums は multi-hop や reasoning loads ではほとんど維持されないから",
+        "Tokenizers が truncate するから",
+        "Embeddings が overflow するから",
+        "Beam search が遅くなるから"
       ],
       "correct": 0,
-      "explanation": "Effective context for reasoning is usually 25-50% of the advertised max."
+      "explanation": "reasoning に対する effective context は、通常 advertised max の 25-50% です。"
     },
     {
       "stage": "check",
-      "question": "What does RULER add over NIAH?",
+      "question": "RULER は NIAH に何を追加しますか？",
       "options": [
         "Translation tasks",
-        "Faster inference",
+        "より速い inference",
         "Per-token logprobs",
-        "Thirteen task types across retrieval, multi-hop tracing, aggregation, and QA at multiple context lengths"
+        "retrieval、multi-hop tracing、aggregation、QA にまたがる 13 task types を複数の context lengths で測ること"
       ],
       "correct": 3,
-      "explanation": "RULER expands NIAH into a multi-task long-context benchmark catching models that saturate NIAH but fail elsewhere."
+      "explanation": "RULER は NIAH を multi-task long-context benchmark に拡張し、NIAH では飽和するが他で失敗する models を捉えます。"
     },
     {
       "stage": "check",
-      "question": "What is the 'lost in the middle' effect?",
+      "question": "'lost in the middle' effect とは何ですか？",
       "options": [
-        "Models under-attend to content placed in the middle of long inputs; depth=0.5 often performs worse than depth=0 or 1",
-        "Models reorder tokens",
-        "Models forget the first token",
-        "Models lose punctuation"
+        "models が long inputs の中央に置かれた content に十分 attention せず、depth=0.5 が depth=0 や 1 より悪くなることが多い現象",
+        "models が tokens を並べ替えること",
+        "models が最初の token を忘れること",
+        "models が punctuation を失うこと"
       ],
       "correct": 0,
-      "explanation": "Mid-context content is least attended; sweeping depth exposes the U-shaped accuracy curve."
+      "explanation": "mid-context content は最も attention されにくく、depth sweep によって U 字型の accuracy curve が見えます。"
     },
     {
       "stage": "check",
-      "question": "Why must NIAH-only evaluation be supplemented with multi-hop tests?",
+      "question": "NIAH-only evaluation に multi-hop tests を補う必要があるのはなぜですか？",
       "options": [
-        "Multi-hop is faster",
-        "NIAH lacks ground truth",
-        "NIAH cannot run on long context",
-        "Frontier models can ace single-needle retrieval but still fail multi-hop variable-tracing or aggregation tasks"
+        "Multi-hop の方が速いから",
+        "NIAH には ground truth がないから",
+        "NIAH は long context では動かないから",
+        "frontier models は single-needle retrieval を完璧にこなしても、multi-hop variable-tracing や aggregation tasks で失敗することがあるから"
       ],
       "correct": 3,
-      "explanation": "Retrieval pass does not imply reasoning pass; multi-hop benchmarks expose the real ceiling."
+      "explanation": "retrieval pass は reasoning pass を意味しません。multi-hop benchmarks が実際の上限を露出します。"
     },
     {
       "stage": "post",
-      "question": "What does NoLiMa stress?",
+      "question": "NoLiMa は何に負荷をかけますか？",
       "options": [
         "Streaming output",
         "Latency",
         "Tokenization",
-        "Needles that share no literal tokens with the query, so retrieval requires a semantic reasoning step"
+        "query と literal tokens を共有しない needles。retrieval には semantic reasoning step が必要になる"
       ],
       "correct": 3,
-      "explanation": "NoLiMa removes lexical overlap so the model must reason rather than match keywords."
+      "explanation": "NoLiMa は lexical overlap を取り除き、model に keyword matching ではなく reasoning を要求します。"
     },
     {
       "stage": "post",
-      "question": "What two numbers should a long-context spec sheet report?",
+      "question": "long-context spec sheet が報告すべき 2 つの数値は何ですか？",
       "options": [
-        "Effective retrieval length (e.g. 90% NIAH pass) and effective reasoning length (e.g. 70% multi-hop pass)",
-        "GPU memory and latency only",
-        "Only the advertised max",
-        "Tokens per second only"
+        "Effective retrieval length（例: 90% NIAH pass）と effective reasoning length（例: 70% multi-hop pass）",
+        "GPU memory と latency のみ",
+        "advertised max のみ",
+        "Tokens per second のみ"
       ],
       "correct": 0,
-      "explanation": "Distinguishing retrieval-effective from reasoning-effective length is essential for real-world claims."
+      "explanation": "実世界の主張には、retrieval-effective length と reasoning-effective length を区別することが不可欠です。"
     },
     {
       "stage": "post",
-      "question": "Why measure time-to-first-token at long context lengths?",
+      "question": "long context lengths で time-to-first-token を測るのはなぜですか？",
       "options": [
-        "1M-token prefills can take tens of seconds; accuracy alone hides product-impacting latency",
-        "Tokenization is slow",
-        "Required by RAG",
-        "Beam search depends on it"
+        "1M-token prefills には数十秒かかることがあり、accuracy だけでは product-impacting latency が隠れるから",
+        "Tokenization が遅いから",
+        "RAG で必須だから",
+        "Beam search がそれに依存するから"
       ],
       "correct": 0,
-      "explanation": "Long prompts have huge prefill costs; latency must be tracked alongside accuracy."
+      "explanation": "long prompts には大きな prefill cost があります。latency は accuracy と並べて追跡する必要があります。"
     }
   ]
 }

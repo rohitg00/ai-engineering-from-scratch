@@ -1,119 +1,119 @@
-# Instruction-Following as Alignment Signal
+# アラインメント信号としての Instruction-Following
 
-> Every later critique of RLHF argues against this pipeline. Before you study how optimization pressure distorts a proxy, you have to see the proxy. InstructGPT (Ouyang et al., 2022) defined the reference architecture: supervised fine-tuning on instruction-response pairs, a reward model trained on pairwise preference rankings, and PPO against the reward model with a KL penalty to the SFT policy. A 1.3B InstructGPT was preferred over a 175B GPT-3. That single result is the reason every frontier lab in 2026 still ships an RLHF-shaped post-training pipeline.
+> RLHF へのその後の批判は、すべてこのパイプラインへの反論として読めます。最適化圧がプロキシをどう歪めるかを学ぶ前に、まずそのプロキシ自体を見る必要があります。InstructGPT (Ouyang et al., 2022) は参照アーキテクチャを定義しました。instruction-response ペアでの supervised fine-tuning、ペアワイズ preference ranking で訓練された reward model、そして SFT policy への KL penalty を入れた reward model に対する PPO です。1.3B の InstructGPT は 175B の GPT-3 より好まれました。この単一の結果が、2026 年の frontier lab が今でも RLHF 型の post-training pipeline を出荷している理由です。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
-**Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy three-stage pipeline)
+**前提条件:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
+**所要時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Name the three stages of the InstructGPT pipeline and the loss used in each.
-- Explain why a 1.3B instruction-tuned model beat the raw 175B GPT-3 on human preference evaluation.
-- State what the KL penalty in stage 3 is protecting against and why removing it collapses to mode-seeking behaviour.
-- Describe the alignment tax and the PPO-ptx mitigation Ouyang et al. used against it.
+- InstructGPT pipeline の 3 段階と、それぞれで使う loss を説明できる。
+- なぜ 1.3B の instruction-tuned model が human preference evaluation で生の 175B GPT-3 に勝ったのかを説明できる。
+- 第 3 段階の KL penalty が何を守っているのか、またそれを外すと mode-seeking behaviour に崩れる理由を述べられる。
+- alignment tax と、それに対して Ouyang et al. が使った PPO-ptx mitigation を説明できる。
 
-## The Problem
+## 問題
 
-Pre-trained language models complete text. They do not answer questions. Ask GPT-3 "write a Python function that reverses a list" and you often get back another prompt, because most of the training distribution is web text that continues with more web text. The model is doing its job — the job is wrong.
+Pre-trained language model はテキストを補完します。質問に答えるようには訓練されていません。GPT-3 に「リストを反転する Python 関数を書いて」と聞くと、コードではなく別のプロンプトが返ってくることがあります。訓練分布の大半が web text であり、web text はさらに web text として続くからです。モデルは仕事をしています。ただし、その仕事の定義が間違っています。
 
-The proxy every serious lab used to fix this is human preference. Two completions go to a rater; the rater picks the better one; a reward model learns the rater. Then an RL loop shifts the policy toward outputs the reward model scores high. That is the full InstructGPT thesis in three sentences. The rest of the paper is engineering.
+この問題を直すために serious lab が使ったプロキシが human preference です。2 つの completion を rater に渡す。rater がより良い方を選ぶ。reward model がその rater を学習する。次に RL loop が policy を reward model のスコアが高い出力へ寄せる。これが InstructGPT の主張全体です。論文の残りは engineering です。
 
-## The Concept
+## 概念
 
 ### Stage 1: supervised fine-tuning (SFT)
 
-Collect prompt-response pairs where the response is what a well-intentioned human would write. Ouyang et al. used 13k prompts from labelers and the OpenAI API. Fine-tune the base model on this data with standard cross-entropy loss.
+意図のある人間ならこう書く、という response を持つ prompt-response ペアを集めます。Ouyang et al. は labeler と OpenAI API から 13k prompts を使いました。base model をこのデータで標準的な cross-entropy loss により fine-tune します。
 
-What SFT gives you: the model now answers questions instead of continuing them. What it does not give you: any signal about which answer the rater prefers when multiple are plausible.
+SFT が与えるもの: モデルは質問を継続するのではなく、質問に答えるようになります。SFT が与えないもの: 複数の答えが妥当なときに、rater がどれを好むかという信号です。
 
 ### Stage 2: reward model (RM)
 
-For each prompt, sample K completions from the SFT model. A labeler ranks them. Train a reward model that scores any prompt-response pair so that, for pairs where `y_w` was preferred over `y_l`:
+各 prompt について、SFT model から K 個の completion を sample します。labeler がそれらを ranking します。任意の prompt-response pair をスコア化する reward model を訓練し、`y_w` が `y_l` より好まれたペアについて次を最小化します。
 
 ```
 L_RM = -log sigmoid(r(x, y_w) - r(x, y_l))
 ```
 
-This is the Bradley-Terry pairwise preference loss. The RM is usually initialized from the SFT model with the LM head replaced by a scalar head.
+これは Bradley-Terry pairwise preference loss です。RM は通常、SFT model から初期化し、LM head を scalar head に置き換えます。
 
-Reward models are small: 6B was enough for the 175B InstructGPT. They are also fragile — section 5 of the paper is mostly about reward-hacking behaviours that showed up at small scale.
+Reward model は小さくて済みます。175B InstructGPT には 6B で十分でした。一方で壊れやすくもあります。論文の section 5 は、小規模でも現れた reward-hacking behaviours の話が中心です。
 
-### Stage 3: PPO with a KL penalty
+### Stage 3: KL penalty 付き PPO
 
-Define the objective:
+目的関数を次のように定義します。
 
 ```
 J(pi) = E_{x~D, y~pi(.|x)} [ r(x, y) ] - beta * KL(pi(.|x) || pi_SFT(.|x))
 ```
 
-Maximize with PPO. The KL term keeps `pi` from drifting far from the SFT policy. Without it, the optimizer finds adversarial examples — strings that score high under the RM because the RM never saw them, not because humans actually prefer them.
+PPO で最大化します。KL term は `pi` が SFT policy から大きく逸脱しないようにします。これがないと、optimizer は adversarial examples、つまり人間が本当に好むからではなく RM が見たことがないため高スコアになる文字列を見つけます。
 
-The KL coefficient `beta` is the single most important RLHF hyperparameter. Too low: reward hacking. Too high: no improvement over SFT.
+KL coefficient `beta` は RLHF で最も重要な hyperparameter です。低すぎると reward hacking。高すぎると SFT から改善しません。
 
-### The alignment tax
+### Alignment tax
 
-After RLHF, the model is preferred by humans but regresses on standard benchmarks (SQuAD, HellaSwag, DROP). Ouyang et al. call this the alignment tax and fix it with PPO-ptx: mix pre-training gradients into the RL objective so the model does not forget how to do downstream tasks it was never rewarded for.
+RLHF 後、モデルは人間には好まれる一方で、標準 benchmark (SQuAD, HellaSwag, DROP) では後退します。Ouyang et al. はこれを alignment tax と呼び、PPO-ptx で対処します。pre-training gradients を RL objective に混ぜ、reward されていない downstream task の能力を忘れないようにします。
 
 ```
 J_ptx(pi) = J(pi) + gamma * E_{x~D_pretrain} [ log pi(x) ]
 ```
 
-PPO-ptx became standard. Anthropic, DeepMind, and Meta all use some variant.
+PPO-ptx は標準になりました。Anthropic、DeepMind、Meta はいずれも何らかの variant を使っています。
 
-### The result
+### 結果
 
-A 1.3B InstructGPT (SFT + RM + PPO-ptx) is preferred by labelers over the 175B base GPT-3 about 70% of the time. The gap widens on hidden-test prompts from production traffic. Two things to read off this number:
+1.3B InstructGPT (SFT + RM + PPO-ptx) は、175B base GPT-3 より labeler に好まれる割合がおよそ 70% でした。本番 traffic からの hidden-test prompts では差がさらに広がります。この数字から読み取るべきことは 2 つです。
 
-1. Alignment is a different axis from capability. The 175B model had more capability; the 1.3B model had more alignment; labelers preferred the aligned one.
-2. The capability floor is set by the base model. You cannot RLHF a base model into knowing facts it never saw.
+1. Alignment は capability とは別の軸です。175B model は capability が高く、1.3B model は alignment が高かった。labeler は aligned model を好みました。
+2. Capability floor は base model で決まります。RLHF によって base model が見たことのない事実を知るようにはできません。
 
-### Why this is the reference point for Phase 18
+### Phase 18 の基準点になる理由
 
-Every critique in later lessons — reward hacking (Lesson 2), DPO (Lesson 3), sycophancy (Lesson 4), CAI (Lesson 5), sleeper agents (Lesson 7), alignment faking (Lesson 9) — argues against some part of this pipeline. Reward hacking attacks stage 2. DPO collapses stages 2 and 3. CAI replaces the human labeler. Sycophancy shows the labeler is a biased signal. Alignment faking shows the policy can route around stage 3 entirely. You cannot follow any of these critiques without the pipeline in your head first.
+後の lesson に出てくる批判、reward hacking (Lesson 2)、DPO (Lesson 3)、sycophancy (Lesson 4)、CAI (Lesson 5)、sleeper agents (Lesson 7)、alignment faking (Lesson 9) は、すべてこの pipeline のどこかへの反論です。Reward hacking は stage 2 を攻撃します。DPO は stage 2 と 3 を畳み込みます。CAI は human labeler を置き換えます。Sycophancy は labeler が bias のある信号であることを示します。Alignment faking は policy が stage 3 自体を迂回できることを示します。これらの批判を追うには、まず pipeline を頭に入れておく必要があります。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates the three stages on toy preference data. The base "policy" is a biased coin over actions {A, B, C}. Stage 1 SFT mimics labeler actions on 200 prompts. Stage 2 fits a Bradley-Terry reward model from 500 pairwise rankings. Stage 3 runs a simplified PPO update with a KL penalty to the SFT policy. You can watch the reward climb, the KL divergence grow, and the policy drift — and you can turn off the KL term to see reward hacking appear inside 50 update steps.
+`code/main.py` は toy preference data 上で 3 段階を simulation します。base "policy" は actions {A, B, C} 上の bias のある coin です。Stage 1 SFT は 200 prompts 上の labeler actions を模倣します。Stage 2 は 500 個の pairwise rankings から Bradley-Terry reward model を fit します。Stage 3 は SFT policy への KL penalty を入れた簡略 PPO update を実行します。reward が上がり、KL divergence が増え、policy が drift する様子を確認できます。KL term を切ると、50 update steps 以内に reward hacking が現れることも見られます。
 
-What to look at:
+見るべき点:
 
-- Reward trajectory with `beta = 0.1` vs `beta = 0.0`.
-- KL(pi || pi_SFT) over training steps.
-- Final action distribution compared to labeler preference.
+- `beta = 0.1` と `beta = 0.0` の reward trajectory。
+- 訓練 step に対する KL(pi || pi_SFT)。
+- labeler preference と比較した final action distribution。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-instructgpt-explainer.md`. Given an RLHF pipeline description or a paper abstract, it identifies which of the three stages is being modified, what loss is being used at each stage, and whether a KL penalty or equivalent regularizer is present.
+この lesson では `outputs/skill-instructgpt-explainer.md` を作ります。RLHF pipeline description や paper abstract を受け取り、3 段階のどこが変更されているか、各段階でどの loss が使われているか、KL penalty または同等の regularizer があるかを特定します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Set `beta = 0.0` and report the action distribution after 200 PPO steps. Explain the mode-seeking behaviour in one paragraph.
+1. `code/main.py` を実行してください。`beta = 0.0` に設定し、200 PPO steps 後の action distribution を報告してください。mode-seeking behaviour を 1 段落で説明してください。
 
-2. Modify the reward model to have a +0.5 bias for action B (a simulated reward bug). Run PPO with `beta = 0.1`. Does the KL penalty prevent the policy from exploiting the bias? At what `beta` does exploitation become visible?
+2. reward model に action B への +0.5 bias を加えてください (simulated reward bug)。`beta = 0.1` で PPO を実行します。KL penalty は policy が bias を exploit するのを防ぎますか。どの `beta` で exploitation が見えるようになりますか。
 
-3. Read Ouyang et al. (arXiv:2203.02155) Figure 1. Reproduce the labeler-preference curve by running PPO for 1, 5, 20, 100 steps and measuring preference against the SFT model.
+3. Ouyang et al. (arXiv:2203.02155) Figure 1 を読んでください。PPO を 1, 5, 20, 100 steps 実行し、SFT model に対する preference を測って labeler-preference curve を再現してください。
 
-4. The paper's Section 4.3 reports a 1.3B InstructGPT beats 175B GPT-3 about 70% of the time. Why would the ratio be higher on hidden production prompts than on the labeler's own prompts?
+4. 論文の Section 4.3 は、1.3B InstructGPT が 175B GPT-3 におよそ 70% 勝つと報告しています。なぜ labeler 自身の prompts より、hidden production prompts の方が比率が高くなるのでしょうか。
 
-5. Replace the PPO loss with DPO (Phase 10 · 08) on the same preference data. Compare final policy drift (KL to SFT) and final reward. Which method drifts further at matched reward?
+5. 同じ preference data 上で PPO loss を DPO (Phase 10 · 08) に置き換えてください。final policy drift (SFT への KL) と final reward を比較してください。matched reward ではどちらの方法がより大きく drift しますか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| SFT | "instruction tuning" | Stage 1: cross-entropy fine-tune on prompt-response pairs |
-| Reward model | "the RM" | Scalar regressor over (prompt, response) trained with Bradley-Terry on pairwise labels |
-| Bradley-Terry | "pairwise preference loss" | -log sigmoid(r_w - r_l); reduces pairwise ranking to binary classification |
-| KL penalty | "the regularizer" | `beta * KL(pi \|\| pi_SFT)` — keeps the RL policy near the SFT anchor |
-| PPO-ptx | "PPO with pretraining mix" | Adds a fraction of pre-training log-likelihood to the PPO objective to offset the alignment tax |
-| Alignment tax | "the RLHF regression" | Post-RLHF drop on standard benchmarks that RLHF did not target |
-| Labeler preference | "the ground truth" | Sample of human rankings; the RM is a statistical proxy for this, not for "human values" |
+| Term | よく言われること | 実際の意味 |
+|------|-----------------|------------|
+| SFT | "instruction tuning" | Stage 1: prompt-response pairs 上の cross-entropy fine-tune |
+| Reward model | "the RM" | pairwise labels 上の Bradley-Terry で訓練された (prompt, response) の scalar regressor |
+| Bradley-Terry | "pairwise preference loss" | -log sigmoid(r_w - r_l); pairwise ranking を binary classification に落とす |
+| KL penalty | "the regularizer" | `beta * KL(pi \|\| pi_SFT)`。RL policy を SFT anchor の近くに保つ |
+| PPO-ptx | "PPO with pretraining mix" | alignment tax を相殺するため、PPO objective に pre-training log-likelihood の一部を加える |
+| Alignment tax | "the RLHF regression" | RLHF が target にしていない標準 benchmark での post-RLHF drop |
+| Labeler preference | "the ground truth" | human rankings の sample。RM はその統計的プロキシであり、"human values" のプロキシではない |
 
-## Further Reading
+## 追加資料
 
-- [Ouyang et al. — Training language models to follow instructions with human feedback (arXiv:2203.02155)](https://arxiv.org/abs/2203.02155) — the InstructGPT paper, foundation for every RLHF pipeline that followed
-- [Stiennon et al. — Learning to summarize from human feedback (arXiv:2009.01325)](https://arxiv.org/abs/2009.01325) — the RLHF-for-summarization predecessor
-- [Christiano et al. — Deep reinforcement learning from human preferences (arXiv:1706.03741)](https://arxiv.org/abs/1706.03741) — the original preference-based RL formulation
-- [Bai et al. — Training a Helpful and Harmless Assistant with RLHF (arXiv:2204.05862)](https://arxiv.org/abs/2204.05862) — Anthropic's HH extension of the InstructGPT pipeline
+- [Ouyang et al. — Training language models to follow instructions with human feedback (arXiv:2203.02155)](https://arxiv.org/abs/2203.02155) — InstructGPT paper。以後のすべての RLHF pipeline の土台
+- [Stiennon et al. — Learning to summarize from human feedback (arXiv:2009.01325)](https://arxiv.org/abs/2009.01325) — RLHF-for-summarization の先行研究
+- [Christiano et al. — Deep reinforcement learning from human preferences (arXiv:1706.03741)](https://arxiv.org/abs/1706.03741) — preference-based RL の元の定式化
+- [Bai et al. — Training a Helpful and Harmless Assistant with RLHF (arXiv:2204.05862)](https://arxiv.org/abs/2204.05862) — Anthropic による InstructGPT pipeline の HH extension

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -8,63 +8,63 @@
       .audit { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">LLM security — four layers, zero-trust by default</text>
+  <text x="480" y="24" text-anchor="middle" class="title">LLM セキュリティ - 4層、デフォルトでゼロトラスト</text>
 
   <rect x="40" y="50" width="220" height="180" class="vault"/>
-  <text x="150" y="72" text-anchor="middle" class="head">secrets (vault)</text>
+  <text x="150" y="72" text-anchor="middle" class="head">シークレット (Vault)</text>
   <text x="60" y="96" class="step">· HashiCorp Vault</text>
   <text x="60" y="114" class="step">· AWS Secrets Manager</text>
   <text x="60" y="132" class="step">· Azure Key Vault</text>
   <text x="60" y="150" class="step">· GCP Secret Manager</text>
-  <text x="60" y="178" class="small">IAM role + short-lived</text>
-  <text x="60" y="196" class="small">OIDC for CI/CD</text>
-  <text x="60" y="214" class="small">rotation ≤ 90 days</text>
+  <text x="60" y="178" class="small">IAMロール + 短命</text>
+  <text x="60" y="196" class="small">CI/CD向けOIDC</text>
+  <text x="60" y="214" class="small">ローテーション ≤ 90日</text>
 
   <rect x="280" y="50" width="220" height="180" class="pii"/>
-  <text x="390" y="72" text-anchor="middle" class="head">PII scrubbing</text>
+  <text x="390" y="72" text-anchor="middle" class="head">PII除去</text>
   <text x="300" y="96" class="step">· Presidio / spaCy NER</text>
-  <text x="300" y="114" class="step">· regex (SSN, email, phone)</text>
-  <text x="300" y="132" class="step">· consistent tokenization</text>
-  <text x="300" y="150" class="step">· Mesh approach</text>
-  <text x="300" y="178" class="small">same value → same placeholder</text>
-  <text x="300" y="196" class="small">preserves semantics for LLM</text>
-  <text x="300" y="214" class="small">reverse mapping optional</text>
+  <text x="300" y="114" class="step">· 正規表現 (SSN, メール、電話)</text>
+  <text x="300" y="132" class="step">· 一貫したトークン化</text>
+  <text x="300" y="150" class="step">· Mesh方式</text>
+  <text x="300" y="178" class="small">同じ値 → 同じプレースホルダ</text>
+  <text x="300" y="196" class="small">LLM向け意味を保持</text>
+  <text x="300" y="214" class="small">逆対応は任意</text>
 
   <rect x="520" y="50" width="220" height="180" class="net"/>
-  <text x="630" y="72" text-anchor="middle" class="head">network egress</text>
-  <text x="540" y="96" class="step">whitelist only:</text>
+  <text x="630" y="72" text-anchor="middle" class="head">ネットワーク出口</text>
+  <text x="540" y="96" class="step">許可リストのみ:</text>
   <text x="540" y="114" class="step">  api.openai.com</text>
   <text x="540" y="132" class="step">  api.anthropic.com</text>
-  <text x="540" y="150" class="step">  vault endpoints</text>
-  <text x="540" y="168" class="step">  vector DB</text>
-  <text x="540" y="196" class="small">DNS allowlist only</text>
-  <text x="540" y="214" class="small">prevents tunneling exfil</text>
+  <text x="540" y="150" class="step">  Vault エンドポイント</text>
+  <text x="540" y="168" class="step">  ベクトルDB</text>
+  <text x="540" y="196" class="small">DNS 許可リストのみ</text>
+  <text x="540" y="214" class="small">トンネル流出を防ぐ</text>
 
   <rect x="760" y="50" width="160" height="180" class="audit"/>
-  <text x="840" y="72" text-anchor="middle" class="head">audit log</text>
-  <text x="780" y="96" class="step">append-only</text>
-  <text x="780" y="114" class="step">per call:</text>
-  <text x="780" y="132" class="small">· user / tenant</text>
-  <text x="780" y="148" class="small">· prompt/resp hash</text>
-  <text x="780" y="164" class="small">· tokens + cost</text>
-  <text x="780" y="180" class="small">· guardrail trips</text>
+  <text x="840" y="72" text-anchor="middle" class="head">監査ログ</text>
+  <text x="780" y="96" class="step">追記のみ</text>
+  <text x="780" y="114" class="step">呼び出しごと:</text>
+  <text x="780" y="132" class="small">· ユーザー/テナント</text>
+  <text x="780" y="148" class="small">· プロンプト/応答ハッシュ</text>
+  <text x="780" y="164" class="small">· トークン + コスト</text>
+  <text x="780" y="180" class="small">· ガードレール発火</text>
   <text x="780" y="204" class="small">SOC2: 1y</text>
   <text x="780" y="220" class="small">HIPAA: 6y</text>
 
   <rect x="40" y="260" width="880" height="100" class="box"/>
-  <text x="480" y="282" text-anchor="middle" class="head">gateway pattern (Phase 17 · 19)</text>
-  <text x="480" y="304" text-anchor="middle" class="step">app → gateway → model provider</text>
-  <text x="480" y="322" text-anchor="middle" class="step">gateway pulls credentials from vault at runtime</text>
-  <text x="480" y="340" text-anchor="middle" class="caption">rotate in vault → apps pick up in minutes; no redeploys</text>
+  <text x="480" y="282" text-anchor="middle" class="head">ゲートウェイ パターン (Phase 17 · 19)</text>
+  <text x="480" y="304" text-anchor="middle" class="step">アプリ → ゲートウェイ → モデル プロバイダ</text>
+  <text x="480" y="322" text-anchor="middle" class="step">ゲートウェイが実行時にVaultから認証情報を取得</text>
+  <text x="480" y="340" text-anchor="middle" class="caption">Vaultでローテーション → アプリは数分で反映; 再デプロイなし</text>
 
   <rect x="40" y="380" width="880" height="110" class="box"/>
-  <text x="480" y="402" text-anchor="middle" class="head">the 2026 incident driver</text>
-  <text x="480" y="424" text-anchor="middle" class="step">Vercel supply-chain attack: compromised CI/CD credentials</text>
-  <text x="480" y="444" text-anchor="middle" class="step">exfiltrated env vars across thousands of customer deployments</text>
-  <text x="480" y="464" text-anchor="middle" class="caption">CI/CD creds are prod-equivalent; store in vault, scope narrowly, rotate aggressively</text>
+  <text x="480" y="402" text-anchor="middle" class="head">2026年のインシデント要因</text>
+  <text x="480" y="424" text-anchor="middle" class="step">Vercel サプライチェーン攻撃: CI/CD 認証情報の侵害</text>
+  <text x="480" y="444" text-anchor="middle" class="step">数千の顧客デプロイから環境変数が流出</text>
+  <text x="480" y="464" text-anchor="middle" class="caption">CI/CD 認証情報は本番相当; Vault保管、スコープ最小化、積極的ローテーション</text>
 </svg>

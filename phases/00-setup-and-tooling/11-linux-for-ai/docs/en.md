@@ -1,28 +1,28 @@
-# Linux for AI
+# AI のための Linux
 
-> Most AI runs on Linux. You need to know enough to not be stuck.
+> AI の多くは Linux 上で動きます。詰まらず作業できるだけの知識が必要です。
 
-**Type:** Learn
-**Languages:** --
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~30 minutes
+**種類:** 学習
+**言語:** --
+**前提条件:** フェーズ 0、レッスン 01
+**時間:** 約 30 分
 
-## Learning Objectives
+## 学習目標
 
-- Navigate the Linux file system and perform essential file operations from the command line
-- Manage file permissions with `chmod` and `chown` to resolve "Permission denied" errors
-- Install system packages with `apt` and set up a fresh GPU box for AI work
-- Identify macOS-to-Linux differences that commonly trip up developers working on remote machines
+- Linux のファイルシステムを移動し、コマンドラインから基本的なファイル操作を行う
+- `chmod` と `chown` でファイル権限を管理し、"Permission denied" エラーを解決する
+- `apt` でシステムパッケージをインストールし、新しい GPU マシンを AI 作業用にセットアップする
+- リモートマシンで作業する開発者がつまずきやすい macOS と Linux の違いを見分ける
 
-## The Problem
+## 問題
 
-You develop on macOS or Windows. But the moment you SSH into a cloud GPU box, rent a Lambda instance, or spin up an EC2 machine, you land in Ubuntu. The terminal is your only interface. There is no Finder, no Explorer, no GUI. If you can't navigate the file system, install packages, and manage processes from the command line, you're stuck paying for idle GPU hours while googling "how to unzip a file in Linux."
+普段は macOS や Windows で開発していても、クラウド GPU マシンに SSH したり、Lambda インスタンスを借りたり、EC2 マシンを立ち上げたりした瞬間、Ubuntu に入ることになります。使えるインターフェイスはターミナルだけです。Finder も Explorer も GUI もありません。コマンドラインでファイルシステムを移動し、パッケージをインストールし、プロセスを管理できなければ、アイドル状態の GPU にお金を払いながら「Linux でファイルを unzip する方法」を検索することになります。
 
-This is a survival guide. It covers exactly what you need to operate on a remote Linux machine for AI work. Nothing more.
+これはサバイバルガイドです。AI 作業のためにリモート Linux マシンを扱ううえで必要なことだけを扱います。それ以上は扱いません。
 
-## File System Layout
+## ファイルシステムの構成
 
-Linux organizes everything under a single root `/`. There is no `C:\` or `/Volumes`. The directories you'll actually touch:
+Linux ではすべてが単一のルート `/` の下に整理されます。`C:\` や `/Volumes` はありません。実際によく触るディレクトリは次のとおりです。
 
 ```mermaid
 graph TD
@@ -35,13 +35,13 @@ graph TD
     root --> proc["proc/ and /sys/<br/>Virtual files — kernel and hardware info"]
 ```
 
-Your home directory is `~` or `/home/your-username`. Almost everything you do happens here.
+ホームディレクトリは `~` または `/home/your-username` です。ほとんどの作業はここで行います。
 
-## Essential Commands
+## 必須コマンド
 
-These are the 15 commands that cover 95% of what you'll do on a remote GPU box.
+リモート GPU マシンで行う作業の 95% は、次の 15 個のコマンドでカバーできます。
 
-### Moving Around
+### 移動
 
 ```bash
 pwd                         # Where am I?
@@ -52,7 +52,7 @@ cd ~                        # Go home
 cd ..                       # Go up one level
 ```
 
-### Files and Directories
+### ファイルとディレクトリ
 
 ```bash
 mkdir my-project            # Create a directory
@@ -68,9 +68,9 @@ rm file.txt                 # Delete a file (no trash, it's gone)
 rm -rf my-dir/              # Delete a directory and everything inside
 ```
 
-`rm -rf` is permanent. There is no undo. Double-check the path before hitting enter.
+`rm -rf` は元に戻せません。取り消しはありません。Enter を押す前にパスを必ず確認してください。
 
-### Reading Files
+### ファイルを読む
 
 ```bash
 cat file.txt                # Print entire file
@@ -80,7 +80,7 @@ tail -f log.txt             # Follow a log file in real time (Ctrl+C to stop)
 less file.txt               # Scroll through a file (q to quit)
 ```
 
-### Searching
+### 検索
 
 ```bash
 grep "error" training.log           # Find lines containing "error"
@@ -91,9 +91,9 @@ find . -name "*.py"                 # Find all Python files under current dir
 find . -name "*.ckpt" -size +1G     # Find checkpoint files larger than 1GB
 ```
 
-## Permissions
+## 権限
 
-Every file in Linux has an owner and permission bits. You'll run into this when scripts won't execute or you can't write to a directory.
+Linux のすべてのファイルには所有者と権限ビットがあります。スクリプトを実行できないときや、ディレクトリに書き込めないときにここでつまずきます。
 
 ```bash
 ls -l train.py
@@ -103,7 +103,7 @@ ls -l train.py
 #        ^^        everyone else: read only
 ```
 
-Common fixes:
+よく使う修正は次のとおりです。
 
 ```bash
 chmod +x train.sh           # Make a script executable
@@ -113,11 +113,11 @@ chmod 644 config.yaml       # Owner: read+write, others: read only
 chown user:group file.txt   # Change who owns a file (needs sudo)
 ```
 
-When something says "Permission denied," it's almost always a permissions issue. `chmod +x` or `sudo` will fix most cases.
+"Permission denied" と表示される場合、ほとんどは権限の問題です。多くの場合は `chmod +x` か `sudo` で解決できます。
 
-## Package Management (apt)
+## パッケージ管理（apt）
 
-Ubuntu uses `apt`. This is how you install system-level software.
+Ubuntu は `apt` を使います。システムレベルのソフトウェアはこれでインストールします。
 
 ```bash
 sudo apt update             # Refresh the package list (always do this first)
@@ -129,7 +129,7 @@ apt list --installed        # What's installed?
 sudo apt remove htop        # Uninstall
 ```
 
-Common packages you'll install on a fresh GPU box:
+新しい GPU マシンでよくインストールするパッケージは次のとおりです。
 
 ```bash
 sudo apt update && sudo apt install -y \
@@ -143,9 +143,9 @@ sudo apt update && sudo apt install -y \
     python3-venv
 ```
 
-## Users and sudo
+## ユーザーと sudo
 
-You're usually logged in as a regular user. Some operations need root (admin) access.
+通常は一般ユーザーとしてログインしています。一部の操作には root（管理者）権限が必要です。
 
 ```bash
 whoami                      # What user am I?
@@ -153,11 +153,11 @@ sudo command                # Run a single command as root
 sudo su                     # Become root (exit to go back, use sparingly)
 ```
 
-On cloud GPU instances, you're typically the only user and already have sudo access. Don't run everything as root. Use sudo only when needed.
+クラウド GPU インスタンスでは、通常は自分だけがユーザーで、すでに sudo 権限があります。すべてを root で実行しないでください。必要なときだけ sudo を使います。
 
-## Processes and systemd
+## プロセスと systemd
 
-When your training hangs, or you need to check what's running:
+トレーニングが止まったように見えるときや、何が動いているか確認したいときは次を使います。
 
 ```bash
 htop                        # Interactive process viewer (q to quit)
@@ -167,7 +167,7 @@ kill -9 12345               # Force kill (use when graceful doesn't work)
 nvidia-smi                  # GPU processes and memory usage
 ```
 
-systemd manages services (background daemons). You'll use it if you run inference servers:
+systemd はサービス（バックグラウンドデーモン）を管理します。推論サーバーを動かす場合に使うことがあります。
 
 ```bash
 sudo systemctl start nginx          # Start a service
@@ -177,9 +177,9 @@ sudo systemctl status nginx         # Check if it's running
 sudo systemctl enable nginx         # Start automatically on boot
 ```
 
-## Disk Space
+## ディスク容量
 
-GPU boxes often have limited disk space. Models and datasets fill it fast.
+GPU マシンはディスク容量が限られていることがよくあります。モデルとデータセットはすぐに容量を埋めます。
 
 ```bash
 df -h                       # Disk usage for all mounted drives
@@ -193,7 +193,7 @@ du -sh /data/checkpoints/   # Check how big your checkpoints are
 du -h --max-depth=1 / 2>/dev/null | sort -hr | head -20
 ```
 
-Common space savers:
+容量を空けるときによく使う方法は次のとおりです。
 
 ```bash
 # Clear pip cache
@@ -206,9 +206,9 @@ sudo apt clean
 rm -rf checkpoints/epoch_01/ checkpoints/epoch_02/
 ```
 
-## Networking
+## ネットワーク
 
-You'll download models, transfer files, and hit APIs from the command line.
+コマンドラインからモデルをダウンロードし、ファイルを転送し、API にアクセスします。
 
 ```bash
 # Download files
@@ -226,11 +226,11 @@ rsync -avz --progress ./data/ user@remote:/data/
 rsync -avz --progress user@remote:/results/ ./results/
 ```
 
-Use `rsync` over `scp` for anything large. It only transfers changed bytes and handles interrupted connections.
+大きなものには `scp` より `rsync` を使います。変更されたバイトだけを転送し、接続が中断されても再開できます。
 
-## tmux: Keep Sessions Alive
+## tmux: セッションを維持する
 
-When you SSH into a remote box, closing your laptop kills your training run. tmux prevents this.
+リモートマシンに SSH しているときにノート PC を閉じると、トレーニング実行も止まります。tmux はこれを防ぎます。
 
 ```bash
 tmux new -s train           # Start a new session named "train"
@@ -246,11 +246,11 @@ tmux attach -t train        # Reattach to session
 # Ctrl+B, then arrow keys   # Switch between panes
 ```
 
-Always run long training jobs inside tmux. Always.
+長いトレーニングジョブは必ず tmux の中で実行してください。必ずです。
 
-## WSL2 for Windows Users
+## Windows ユーザー向け WSL2
 
-If you're on Windows, WSL2 gives you a real Linux environment without dual-booting.
+Windows を使っている場合、WSL2 を使うとデュアルブートせずに本物の Linux 環境を使えます。
 
 ```bash
 # In PowerShell (admin)
@@ -260,26 +260,26 @@ wsl --install -d Ubuntu-24.04
 sudo apt update && sudo apt upgrade -y
 ```
 
-WSL2 runs a real Linux kernel. Everything in this lesson works inside it. Your Windows files are at `/mnt/c/Users/YourName/` from inside WSL.
+WSL2 は本物の Linux カーネルを実行します。このレッスンの内容はすべて WSL 内でも動きます。WSL の中から見ると、Windows 側のファイルは `/mnt/c/Users/YourName/` にあります。
 
-GPU passthrough works with NVIDIA drivers installed on the Windows side. Install the Windows NVIDIA driver (not the Linux one), and CUDA will be available inside WSL2.
+GPU パススルーは、Windows 側に NVIDIA ドライバーをインストールしていれば動作します。Linux 用ではなく Windows 用の NVIDIA ドライバーをインストールすると、WSL2 内で CUDA が使えるようになります。
 
-## Gotchas: macOS to Linux
+## 注意点: macOS から Linux へ
 
-Things that will trip you up if you're coming from macOS:
+macOS から来た人がつまずきやすい点は次のとおりです。
 
-| macOS | Linux | Notes |
-|-------|-------|-------|
-| `brew install` | `sudo apt install` | Different package names sometimes. `brew install htop` vs `sudo apt install htop` works the same, but `brew install readline` vs `sudo apt install libreadline-dev` does not. |
-| `open file.txt` | `xdg-open file.txt` | But you won't have a GUI on a remote box. Use `cat` or `less`. |
-| `pbcopy` / `pbpaste` | Not available | Pipe to/from clipboard doesn't exist over SSH. |
-| `~/.zshrc` | `~/.bashrc` | macOS defaults to zsh. Most Linux servers use bash. |
-| `/opt/homebrew/` | `/usr/bin/`, `/usr/local/bin/` | Binaries live in different places. |
-| `sed -i '' 's/a/b/' file` | `sed -i 's/a/b/' file` | macOS sed needs an empty string after `-i`. Linux does not. |
-| Case-insensitive filesystem | Case-sensitive filesystem | `Model.py` and `model.py` are two different files on Linux. |
-| Line endings `\n` | Line endings `\n` | Same. But Windows uses `\r\n`, which breaks bash scripts. Run `dos2unix` to fix. |
+| macOS | Linux | メモ |
+|-------|-------|------|
+| `brew install` | `sudo apt install` | パッケージ名が違うことがあります。`brew install htop` と `sudo apt install htop` は同じように動きますが、`brew install readline` と `sudo apt install libreadline-dev` は違います。 |
+| `open file.txt` | `xdg-open file.txt` | ただし、リモートマシンには GUI がないことが多いです。`cat` や `less` を使います。 |
+| `pbcopy` / `pbpaste` | 利用不可 | SSH 越しではクリップボードとのパイプ入出力は使えません。 |
+| `~/.zshrc` | `~/.bashrc` | macOS のデフォルトは zsh です。多くの Linux サーバーは bash を使います。 |
+| `/opt/homebrew/` | `/usr/bin/`, `/usr/local/bin/` | バイナリの置き場所が違います。 |
+| `sed -i '' 's/a/b/' file` | `sed -i 's/a/b/' file` | macOS の sed は `-i` の後に空文字列が必要です。Linux では不要です。 |
+| 大文字小文字を区別しないファイルシステム | 大文字小文字を区別するファイルシステム | Linux では `Model.py` と `model.py` は別ファイルです。 |
+| 改行コード `\n` | 改行コード `\n` | 同じです。ただし Windows は `\r\n` を使うため、bash スクリプトが壊れることがあります。`dos2unix` で修正します。 |
 
-## Quick Reference Card
+## クイックリファレンス
 
 ```
 Navigation:     pwd, ls, cd, find
@@ -294,10 +294,10 @@ Network:        curl, wget, scp, rsync
 Sessions:       tmux new/attach/detach
 ```
 
-## Exercises
+## 演習
 
-1. SSH into any Linux machine (or open WSL2) and navigate to your home directory. Create a project folder, create three empty files inside it with `touch`, then list them with `ls -la`.
-2. Install `htop` with apt, run it, and identify which process is using the most memory.
-3. Start a tmux session, run `sleep 300` inside it, detach, list sessions, and reattach.
-4. Use `df -h` to check available disk space, then use `du -sh ~/.cache/*` to find what's taking up space in your cache.
-5. Transfer a file from your local machine to a remote one using `scp`, then do the same transfer with `rsync` and compare the experience.
+1. 任意の Linux マシンに SSH する（または WSL2 を開く）。ホームディレクトリに移動し、プロジェクトフォルダを作り、その中に `touch` で空ファイルを 3 つ作成してから、`ls -la` で一覧表示してください。
+2. apt で `htop` をインストールして実行し、どのプロセスが最も多くメモリを使っているか確認してください。
+3. tmux セッションを開始し、その中で `sleep 300` を実行し、デタッチして、セッション一覧を表示し、再アタッチしてください。
+4. `df -h` で利用可能なディスク容量を確認し、`du -sh ~/.cache/*` でキャッシュ内の何が容量を使っているか調べてください。
+5. `scp` を使ってローカルマシンからリモートマシンへファイルを転送し、同じ転送を `rsync` でも行って使い勝手を比較してください。

@@ -1,63 +1,63 @@
 # DualPipe Parallelism
 
-> DeepSeek-V3 was trained on 2,048 H800 GPUs with MoE experts scattered across nodes. Cross-node expert all-to-all communication cost 1 GPU-hour of comm for every 1 GPU-hour of compute. GPUs were idle half the time. DualPipe (DeepSeek, Dec 2024) is a bidirectional pipeline that overlaps forward and backward computation with the all-to-all comms they trigger. Bubbles drop, throughput climbs, and the keeping of two model-parameter copies (the "dual" that gives the name) is cheap once Expert Parallelism is already spreading experts across ranks anyway. This lesson is a Learn-type walkthrough of what DualPipe actually does and why Sea AI Lab's DualPipeV refinement drops the 2x parameter cost at the expense of a marginally tighter bubble.
+> DeepSeek-V3 は、MoE experts を node 全体に散らした状態で 2,048 基の H800 GPU 上で訓練された。cross-node expert all-to-all communication は、compute 1 GPU-hour ごとに comm 1 GPU-hour を要する規模だった。GPU は半分の時間 idle になっていた。DualPipe (DeepSeek, Dec 2024) は、forward と backward の computation を、それらが発生させる all-to-all comms と重ねる bidirectional pipeline である。bubbles は減り、throughput は上がる。そして model-parameter copies を 2 つ保持すること、つまり名前の由来である "dual" は、Expert Parallelism がすでに experts を ranks 全体へ分散している状況では安く済む。このレッスンは、DualPipe が実際に何をしているのか、また Sea AI Lab の DualPipeV 改良が、ごくわずかに大きい bubble と引き換えに 2x parameter cost を取り除く理由を解説する Learn 型 walkthrough である。
 
-**Type:** Learn
-**Languages:** Python (stdlib, schedule simulator)
-**Prerequisites:** Phase 10 · 05 (distributed training, FSDP, DeepSpeed), Phase 10 · 14 (open-model architectures and MoE)
-**Time:** ~60 minutes
+**種類:** Learn
+**言語:** Python (stdlib, schedule simulator)
+**前提条件:** Phase 10 · 05 (distributed training, FSDP, DeepSpeed), Phase 10 · 14 (open-model architectures and MoE)
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Name the four components of a DualPipe forward-backward chunk and why each one gets its own overlap window.
-- Explain the pipeline bubble problem at scale, and what "bubble-free" means in practice versus in marketing.
-- Trace a DualPipe schedule by hand for 8 PP ranks and 16 micro-batches and confirm the forward and reverse streams fill each other's idle slots.
-- State the tradeoff DualPipeV (Sea AI Lab, 2025) makes: drops the 2x parameter replication at the cost of a slightly larger bubble when Expert Parallelism is inactive.
+- DualPipe の forward-backward chunk を構成する 4 つの components と、それぞれに固有の overlap window がある理由を挙げる。
+- 大規模環境での pipeline bubble problem を説明し、"bubble-free" が marketing 上の表現ではなく実務上何を意味するかを説明する。
+- 8 PP ranks と 16 micro-batches の DualPipe schedule を手で追跡し、forward stream と reverse stream が互いの idle slots を埋めることを確認する。
+- DualPipeV (Sea AI Lab, 2025) の tradeoff を述べる。Expert Parallelism が inactive のとき、わずかに大きな bubble と引き換えに 2x parameter replication をなくす。
 
-## The Problem
+## 問題
 
-Training a 671B MoE model on 2k H800 GPUs runs into three compounding bottlenecks:
+671B MoE model を 2k H800 GPUs 上で訓練すると、3 つの bottlenecks が重なって発生する。
 
-1. **Memory pressure.** Each GPU holds a slice of the model. Activation memory at sequence 8k across 61 layers on 128 heads is enormous.
-2. **Pipeline bubbles.** Traditional pipeline parallelism (GPipe, 1F1B) leaves GPUs idle while they wait for their stage's input or gradient. At 8 stages, roughly 12% of GPU time can be bubble even with 1F1B scheduling.
-3. **Cross-node all-to-all.** MoE with expert parallelism scatters experts across nodes. Every forward pass triggers an all-to-all to dispatch tokens to their experts, and another to combine. At 2k GPUs this easily becomes a 1:1 compute-to-comm ratio.
+1. **Memory pressure。** 各 GPU は model の slice を保持する。61 layers、128 heads、sequence 8k の activation memory は膨大である。
+2. **Pipeline bubbles。** 従来の pipeline parallelism (GPipe, 1F1B) では、各 stage が input や gradient を待つあいだ GPU が idle になる。8 stages では、1F1B scheduling を使っても GPU time のおよそ 12% が bubble になり得る。
+3. **Cross-node all-to-all。** expert parallelism を伴う MoE は experts を nodes 全体に散らす。すべての forward pass は、tokens を experts に dispatch する all-to-all と、結果を combine するもう 1 つの all-to-all を発生させる。2k GPUs では、これは容易に compute-to-comm ratio 1:1 になる。
 
-Each of these has separate solutions: gradient checkpointing for memory, Zero Bubble (Sea AI Lab, 2023) for pipeline bubbles, expert-parallel comm kernels for all-to-all. What DualPipe does is make them play together. The schedule overlaps compute and comm within a single forward-backward chunk, injects micro-batches from both ends of the pipeline simultaneously, and uses the resulting schedule to hide all-to-all inside the compute windows.
+それぞれには別々の解決策がある。memory には gradient checkpointing、pipeline bubbles には Zero Bubble (Sea AI Lab, 2023)、all-to-all には expert-parallel comm kernels である。DualPipe が行うのは、それらを協調させることだ。schedule は単一の forward-backward chunk 内で compute と comm を overlap させ、pipeline の両端から micro-batches を同時に投入し、その結果得られる schedule を使って all-to-all を compute windows の内側に隠す。
 
-Reported result: near-elimination of pipeline bubbles, over 95% GPU utilization in DeepSeek-V3's 14.8T-token training run.
+報告された結果は、pipeline bubbles のほぼ解消と、DeepSeek-V3 の 14.8T-token training run における 95% 超の GPU utilization である。
 
-## The Concept
+## コンセプト
 
-### Pipeline parallelism refresher
+### Pipeline parallelism の復習
 
-Split an N-layer model across P devices. Device `i` holds layers `i * N/P .. (i+1) * N/P - 1`. A micro-batch flows forward through devices 0 to P-1, then backward from P-1 to 0. Each device can only start its forward stage when the prior device sends its output and can only start backward when the downstream device sends the upstream gradient.
+N-layer model を P devices に分割する。device `i` は layers `i * N/P .. (i+1) * N/P - 1` を保持する。micro-batch は devices 0 から P-1 へ forward に流れ、その後 P-1 から 0 へ backward に流れる。各 device は、前段の device が output を送ってきたときだけ forward stage を開始でき、下流の device が upstream gradient を送ってきたときだけ backward を開始できる。
 
-GPipe (Huang et al., 2019) schedules one micro-batch at a time, which wastes most GPU time. 1F1B (Narayanan et al., 2021) interleaves forward and backward passes for multiple micro-batches. Zero Bubble (Qi et al., 2023) splits the backward pass into two parts — backward-for-input (B) and backward-for-weights (W) — and schedules them to fill the bubble. After Zero Bubble, the pipeline is almost tight.
+GPipe (Huang et al., 2019) は micro-batch を 1 つずつ schedule するため、GPU time の大半を浪費する。1F1B (Narayanan et al., 2021) は複数の micro-batches について forward と backward passes を interleave する。Zero Bubble (Qi et al., 2023) は backward pass を 2 つ、backward-for-input (B) と backward-for-weights (W) に分割し、それらを bubble を埋めるよう schedule する。Zero Bubble 後の pipeline はほぼ詰まっている。
 
-DualPipe is the next step. It adds two ideas on top:
+DualPipe は次の一歩である。そこに 2 つの ideas を追加する。
 
 ### Idea 1: chunk decomposition
 
-Each forward chunk is split into four components:
+各 forward chunk は 4 つの components に分割される。
 
-- **Attention.** Q/K/V projections, attention, output projection.
-- **All-to-all dispatch.** Cross-node communication that sends tokens to their experts.
-- **MLP.** The MoE expert computation.
-- **All-to-all combine.** Cross-node communication that brings expert outputs back.
+- **Attention。** Q/K/V projections、attention、output projection。
+- **All-to-all dispatch。** tokens を experts に送る cross-node communication。
+- **MLP。** MoE expert computation。
+- **All-to-all combine。** expert outputs を戻す cross-node communication。
 
-A backward chunk adds gradient versions of each of these. DualPipe schedules them so that all-to-all dispatch happens in parallel with the attention compute of the next chunk, and all-to-all combine happens in parallel with the MLP compute of the following chunk.
+backward chunk には、これらそれぞれの gradient versions が加わる。DualPipe は、all-to-all dispatch が次の chunk の attention compute と並行して起き、all-to-all combine が後続 chunk の MLP compute と並行して起きるように schedule する。
 
 ### Idea 2: bidirectional scheduling
 
-Most pipeline schedules inject micro-batches from stage 0 and flow toward stage P-1. DualPipe injects micro-batches from BOTH ends. Stage 0 sees forward micro-batches originating there; stage P-1 sees forward micro-batches originating there too. The two streams meet in the middle.
+ほとんどの pipeline schedules は stage 0 から micro-batches を投入し、stage P-1 に向けて流す。DualPipe は両端から micro-batches を投入する。Stage 0 はそこを起点とする forward micro-batches を見て、stage P-1 も同じくそこを起点とする forward micro-batches を見る。2 つの streams は中央で出会う。
 
-For this to work, device `i` must hold BOTH the early-pipeline layer `i` AND the late-pipeline layer `P - 1 - i`. That is the "dual" part of DualPipe: each device keeps two copies of the model layers it needs to serve (one for each direction). At DeepSeek-V3's scale, this is a 2x parameter replication cost. It is affordable because Expert Parallelism already spreads the MoE experts so thin that replicating the non-expert layers twice is small potatoes.
+これを成立させるには、device `i` が early-pipeline layer `i` と late-pipeline layer `P - 1 - i` の両方を保持しなければならない。これが DualPipe の "dual" の部分である。各 device は、自分が各 direction を処理するために必要な model layers を 2 copies 保持する。DeepSeek-V3 の scale では、これは 2x parameter replication cost になる。ただし Expert Parallelism がすでに MoE experts をかなり薄く分散しているため、non-expert layers を 2 回 replicate することは大きな負担ではない。
 
-Crucially, the forward stream in one direction and the backward stream in the other direction overlap exactly where the bubbles would be in a single-direction schedule. The bubbles vanish.
+重要なのは、一方向の forward stream と反対方向の backward stream が、single-direction schedule なら bubbles になっていた場所でちょうど overlap することだ。bubbles は消える。
 
-### A hand-traced schedule
+### 手で追う schedule
 
-Consider P = 4 ranks, 8 micro-batches, divided 4 forward / 4 reverse. Time moves left to right; rows are device ranks.
+P = 4 ranks、8 micro-batches を考える。4 forward / 4 reverse に分かれている。time は左から右へ進み、rows は device ranks である。
 
 ```
            Time →
@@ -67,97 +67,97 @@ rank 2:        F1 F2  F3/F5R F4/F6R    B1 ...
 rank 3:           F1  F2/F5R F3/F6R    ...
 ```
 
-Reading the "F4/F5R" notation: rank 1 is running forward of micro-batch 4 (going left-to-right in the pipeline) AND forward of micro-batch 5 (going right-to-left) in the same time slot. That is what "bidirectional" means operationally.
+"F4/F5R" という表記は、rank 1 が同じ time slot で micro-batch 4 の forward (pipeline を左から右へ進む) と micro-batch 5 の forward (右から左へ進む) を実行していることを意味する。これが operational な意味での "bidirectional" である。
 
-At rank 2 the cross streams overlap sooner, at rank 0 and P-1 they overlap latest. In the stable middle phase of the schedule, every rank runs forward-of-X-direction overlapped with backward-of-Y-direction. Compute is busy. All-to-all dispatches for the forward pass hide inside backward compute. All-to-all combines hide inside forward compute. The bubbles are squeezed out.
+rank 2 では cross streams がより早く overlap し、rank 0 と P-1 では最も遅く overlap する。schedule の安定した中間 phase では、すべての rank が X direction の forward と Y direction の backward を overlap して実行する。compute は埋まっている。forward pass の all-to-all dispatches は backward compute の中に隠れ、all-to-all combines は forward compute の中に隠れる。bubbles は押し出される。
 
 ### Bubble accounting
 
-Standard 1F1B pipeline bubble (time wasted per rank):
+標準的な 1F1B pipeline bubble (rank あたりの wasted time):
 
 ```
 bubble_1F1B = (P - 1) * forward_chunk_time
 ```
 
-Zero Bubble refinement brings it down but not to zero. DualPipe, in the stable phase, has zero bubble if the micro-batch count is divisible by 2 times the pipeline depth. Outside the stable phase (warmup and cooldown), there is some bubble but it does not grow with the number of micro-batches — a key property the paper highlights.
+Zero Bubble refinement はこれを下げるが、ゼロにはしない。DualPipe は stable phase において、micro-batch count が pipeline depth の 2 倍で割り切れるなら bubble がゼロになる。stable phase の外側 (warmup と cooldown) にはいくらか bubble があるが、micro-batches の数とともに増えない。これが paper の強調する key property である。
 
-In marketing terms: "bubble-free". In technical terms: bubbles do not grow with micro-batch count. Sea AI Lab's follow-up analysis (DualPipeV / Cut-in-half) shows the full zero-bubble only when Expert Parallelism is not the bottleneck; with EP-driven all-to-all, some scheduling compromise is always present.
+marketing の言葉では "bubble-free"。technical には、bubbles が micro-batch count とともに増えないという意味である。Sea AI Lab の follow-up analysis (DualPipeV / Cut-in-half) は、完全な zero-bubble が成り立つのは Expert Parallelism が bottleneck でない場合だけだと示している。EP-driven all-to-all がある場合、何らかの scheduling compromise は常に存在する。
 
-### DualPipeV — the refinement
+### DualPipeV — refinement
 
-Sea AI Lab (2025) observed that the 2x parameter replication is wasteful when EP comm overlap is not the point. Their DualPipeV schedule folds the bidirectional injection into a "V-shape" schedule that runs on a single parameter copy. The bubble is slightly larger than DualPipe's, but the memory savings are substantial. DeepSeek adopted DualPipeV in their open-source DualPipe implementation as an EP-off mode.
+Sea AI Lab (2025) は、EP comm overlap が目的でない場合、2x parameter replication は無駄だと観察した。彼らの DualPipeV schedule は bidirectional injection を、single parameter copy 上で動く "V-shape" schedule に折りたたむ。bubble は DualPipe より少し大きいが、memory savings は大きい。DeepSeek は open-source DualPipe implementation において、EP-off mode として DualPipeV を採用した。
 
-The tradeoff:
+tradeoff は次の通り。
 
-| Feature | DualPipe | DualPipeV | 1F1B | Zero Bubble |
+| 特徴 | DualPipe | DualPipeV | 1F1B | Zero Bubble |
 |---------|---------|-----------|------|------------|
-| Param copies per device | 2 | 1 | 1 | 1 |
-| Bubble vs micro-batches | constant | small growth | grows | grows |
-| Compute-comm overlap | full | partial | minimal | partial |
-| Use when | EP-heavy MoE | dense or EP-light | baseline | any pipeline |
+| device あたりの parameter copies | 2 | 1 | 1 | 1 |
+| micro-batches に対する bubble | 一定 | 小さく増加 | 増加 | 増加 |
+| Compute-comm overlap | 完全 | 部分的 | 最小限 | 部分的 |
+| 使う場面 | EP-heavy MoE | dense or EP-light | baseline | どの pipeline でも |
 
-### What it means for a 14.8T-token run
+### 14.8T-token run にとっての意味
 
-DeepSeek-V3's pre-training consumed 14.8T tokens on 2,048 H800 GPUs in roughly 2.8M GPU-hours. With naive 1F1B, they would have lost 12-15% of that to pipeline bubbles — 340-420K GPU-hours, enough to train a full 70B model. DualPipe recovered most of that. Directly quantifying the contribution is difficult without the internal logs, but the claim in the paper is over 95% GPU utilization averaged across training.
+DeepSeek-V3 の pre-training は、2,048 H800 GPUs 上で 14.8T tokens を消費し、およそ 2.8M GPU-hours を要した。naive 1F1B なら、その 12-15% が pipeline bubbles に失われていたはずである。340-420K GPU-hours、full 70B model を訓練できる量である。DualPipe はその大半を回収した。internal logs がなければ contribution を直接定量化するのは難しいが、paper は training 全体の平均 GPU utilization が 95% 超だと主張している。
 
-For smaller runs (under 1k GPUs), DualPipe is overkill — pipeline bubbles are smaller relative to total cost, and dense-model training rarely hits the all-to-all bottleneck. For frontier MoE training at multi-thousand GPU scale, it is effectively required.
+より小さな runs (1k GPUs 未満) では、DualPipe は過剰である。pipeline bubbles は total cost に対して小さく、dense-model training では all-to-all bottleneck に達することがまれだからだ。multi-thousand GPU scale の frontier MoE training では、実質的に必須である。
 
-### Where it sits in the stack
+### stack 内での位置づけ
 
-- Complementary to **FSDP** (Phase 10 · 05). FSDP shards the model parameters across ranks; DualPipe schedules the compute across ranks. They combine.
-- Compatible with **ZeRO-3** gradient sharding. The bookkeeping for the two-copy replication needs to cooperate with ZeRO's sharded gradients.
-- Requires **custom all-to-all kernels** tuned for the specific cluster topology. DeepSeek's open-source kernels are the reference implementation.
+- **FSDP** (Phase 10 · 05) と補完関係にある。FSDP は model parameters を ranks 全体に shard し、DualPipe は compute を ranks 全体に schedule する。両者は組み合わせられる。
+- **ZeRO-3** gradient sharding と compatible である。two-copy replication の bookkeeping は、ZeRO の sharded gradients と協調する必要がある。
+- specific cluster topology に tuned された **custom all-to-all kernels** が必要である。DeepSeek の open-source kernels が reference implementation である。
 
-## Use It
+## 使う
 
-`code/main.py` is a pipeline schedule simulator. It takes `(P, n_micro_batches, schedule)` and prints the stable-phase utilization for each of 1F1B, Zero Bubble, DualPipe, and DualPipeV. It is a teaching tool — the numbers match the qualitative claims in the papers, they are not a claim about production measured speedup.
+`code/main.py` は pipeline schedule simulator である。`(P, n_micro_batches, schedule)` を受け取り、1F1B、Zero Bubble、DualPipe、DualPipeV それぞれについて stable-phase utilization を print する。これは teaching tool である。numbers は papers の qualitative claims と一致するが、production measured speedup に関する主張ではない。
 
-The simulator's value: run it with different P and micro-batch counts and watch how the bubble fraction grows for 1F1B but not DualPipe.
+この simulator の価値は、異なる P と micro-batch counts で動かし、1F1B では bubble fraction が増える一方で DualPipe では増えない様子を観察できることにある。
 
-Integration considerations for a real training run:
+実際の training run での integration considerations:
 
-- Pick a pipeline-parallel depth that divides cleanly into your micro-batch count.
-- Ensure your expert-parallel mesh supports bidirectional all-to-all. DeepSeek's kernels are the reference.
-- Expect to burn a week of debugging time on the schedule itself the first time. The bookkeeping is fiddly.
-- Monitor GPU utilization per rank, not just aggregate. DualPipe's benefit comes from tightening the stragglers.
+- micro-batch count をきれいに割り切る pipeline-parallel depth を選ぶ。
+- expert-parallel mesh が bidirectional all-to-all を support していることを確認する。DeepSeek の kernels が reference である。
+- 初回は schedule 自体の debugging に 1 週間ほど費やす覚悟をする。bookkeeping は細かい。
+- aggregate だけでなく、rank ごとの GPU utilization を monitor する。DualPipe の benefit は stragglers を詰めることから生まれる。
 
-## Ship It
+## 出荷する
 
-This lesson produces `outputs/skill-dualpipe-planner.md`. Given a training cluster specification (GPU count, topology, interconnect, model shape), it recommends a pipeline parallelism strategy, the scheduling algorithm to use, and the expected bubble fraction at the target scale.
+このレッスンは `outputs/skill-dualpipe-planner.md` を生成する。training cluster specification (GPU count、topology、interconnect、model shape) が与えられると、pipeline parallelism strategy、使用する scheduling algorithm、target scale で期待される bubble fraction を推奨する。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py` on `(P=8, micro_batches=16, schedule=dualpipe)` and `(P=8, micro_batches=16, schedule=1f1b)`. Compute the GPU utilization difference and express it as recovered GPU-hours per million tokens of training.
+1. `(P=8, micro_batches=16, schedule=dualpipe)` と `(P=8, micro_batches=16, schedule=1f1b)` で `code/main.py` を実行する。GPU utilization difference を計算し、training 100 万 tokens あたりに回収される GPU-hours として表す。
 
-2. Sketch the schedule table for `(P=4, micro_batches=8, schedule=dualpipe)` by hand. Mark each time slot with the micro-batch ID and direction. Identify the first time slot where bubbles are absent.
+2. `(P=4, micro_batches=8, schedule=dualpipe)` の schedule table を手で sketch する。各 time slot に micro-batch ID と direction を記す。bubbles が存在しない最初の time slot を特定する。
 
-3. Read Figure 5 of the DeepSeek-V3 technical report (arXiv:2412.19437). Identify the overlap window for all-to-all dispatch inside a DualPipe forward chunk. Explain how the compute schedule hides it.
+3. DeepSeek-V3 technical report (arXiv:2412.19437) の Figure 5 を読む。DualPipe forward chunk 内の all-to-all dispatch の overlap window を特定する。compute schedule がそれをどのように隠すかを説明する。
 
-4. Compute the 2x parameter overhead of DualPipe for a 70B dense model with P=8 pipeline stages and a 671B MoE model with P=16 pipeline stages. Show why the MoE case's overhead is proportionally smaller (most parameters are experts, sharded across a large EP group).
+4. P=8 pipeline stages の 70B dense model と、P=16 pipeline stages の 671B MoE model について、DualPipe の 2x parameter overhead を計算する。MoE case の overhead が proportionally に小さい理由を示す。ほとんどの parameters は experts であり、大きな EP group 全体に sharded されているためである。
 
-5. Compare DualPipe to Chimera (a competing bidirectional scheduler from 2021). Identify the two specific properties DualPipe added that Chimera did not have, using the paper's Section 3.4 as the reference.
+5. DualPipe を Chimera (2021 年の competing bidirectional scheduler) と比較する。paper の Section 3.4 を reference として、DualPipe が追加し、Chimera にはなかった 2 つの specific properties を特定する。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| Pipeline bubble | "Idle time per rank" | GPU cycles wasted because a pipeline stage is waiting for its input or gradient |
-| 1F1B | "Default pipeline schedule" | One forward / one backward interleaved scheduling; the baseline DualPipe beats |
-| Zero Bubble | "Sea AI Lab 2023" | Splits backward into B (input gradient) and W (weight gradient); almost fully tightens the pipeline |
-| DualPipe | "DeepSeek-V3 schedule" | Bidirectional pipeline + compute-comm overlap; bubbles do not grow with micro-batch count |
-| DualPipeV | "Cut-in-half" | V-shape refinement that drops the 2x parameter replication at the cost of slightly larger bubbles |
-| Chunk | "Unit of pipeline work" | A forward or backward pass of one micro-batch through one pipeline stage |
-| All-to-all dispatch | "Send tokens to experts" | Cross-node comm that routes tokens to their assigned MoE experts |
-| All-to-all combine | "Bring expert outputs back" | Cross-node comm that gathers expert outputs after the MLP |
-| Expert Parallelism (EP) | "Experts across GPUs" | Shards MoE experts across ranks so different GPUs hold different experts |
-| Pipeline Parallelism (PP) | "Layers across GPUs" | Shards model layers across ranks; the dimension DualPipe schedules |
-| Bubble fraction | "Wasted GPU time" | (bubble_time / total_time); the fraction DualPipe drives toward zero |
+| Pipeline bubble | "rank あたりの idle time" | pipeline stage が input または gradient を待つために浪費される GPU cycles |
+| 1F1B | "default pipeline schedule" | one forward / one backward を interleave する scheduling。DualPipe が上回る baseline |
+| Zero Bubble | "Sea AI Lab 2023" | backward を B (input gradient) と W (weight gradient) に分割する。pipeline をほぼ完全に詰める |
+| DualPipe | "DeepSeek-V3 schedule" | bidirectional pipeline + compute-comm overlap。bubbles が micro-batch count とともに増えない |
+| DualPipeV | "Cut-in-half" | 少し大きな bubbles と引き換えに 2x parameter replication をなくす V-shape refinement |
+| Chunk | "pipeline work の単位" | 1 つの micro-batch が 1 つの pipeline stage を通過する forward または backward pass |
+| All-to-all dispatch | "tokens を experts に送る" | tokens を割り当てられた MoE experts に route する cross-node comm |
+| All-to-all combine | "expert outputs を戻す" | MLP 後に expert outputs を gather する cross-node comm |
+| Expert Parallelism (EP) | "GPUs 全体に experts" | MoE experts を ranks 全体に shard し、異なる GPUs が異なる experts を保持する |
+| Pipeline Parallelism (PP) | "GPUs 全体に layers" | model layers を ranks 全体に shard する。DualPipe が schedule する dimension |
+| Bubble fraction | "wasted GPU time" | (bubble_time / total_time)。DualPipe がゼロへ近づける fraction |
 
-## Further Reading
+## 参考資料
 
-- [DeepSeek-AI — DeepSeek-V3 Technical Report (arXiv:2412.19437), Section 3.3.2 and Figure 5](https://arxiv.org/abs/2412.19437) — the primary DualPipe reference
-- [DeepSeek — DualPipe GitHub repository](https://github.com/deepseek-ai/DualPipe) — the open-source reference implementation, including DualPipeV (Cut-in-half) mode
-- [Qi et al. — Zero Bubble Pipeline Parallelism (arXiv:2401.10241, Sea AI Lab 2023)](https://arxiv.org/abs/2401.10241) — the Zero Bubble predecessor
-- [Sea AI Lab — DualPipe could be better without the Dual](https://sail.sea.com/blog/articles/63) — the DualPipeV analysis that informed DeepSeek's EP-off mode
-- [Narayanan et al. — PipeDream / 1F1B (arXiv:1806.03377, 2018-2021)](https://arxiv.org/abs/1806.03377) — the 1F1B schedule DualPipe compares against
-- [Huang et al. — GPipe (arXiv:1811.06965, 2018)](https://arxiv.org/abs/1811.06965) — the original pipeline parallelism paper and bubble problem
+- [DeepSeek-AI — DeepSeek-V3 Technical Report (arXiv:2412.19437), Section 3.3.2 and Figure 5](https://arxiv.org/abs/2412.19437) — primary DualPipe reference
+- [DeepSeek — DualPipe GitHub repository](https://github.com/deepseek-ai/DualPipe) — DualPipeV (Cut-in-half) mode を含む open-source reference implementation
+- [Qi et al. — Zero Bubble Pipeline Parallelism (arXiv:2401.10241, Sea AI Lab 2023)](https://arxiv.org/abs/2401.10241) — Zero Bubble predecessor
+- [Sea AI Lab — DualPipe could be better without the Dual](https://sail.sea.com/blog/articles/63) — DeepSeek の EP-off mode に影響した DualPipeV analysis
+- [Narayanan et al. — PipeDream / 1F1B (arXiv:1806.03377, 2018-2021)](https://arxiv.org/abs/1806.03377) — DualPipe が比較対象にする 1F1B schedule
+- [Huang et al. — GPipe (arXiv:1811.06965, 2018)](https://arxiv.org/abs/1811.06965) — original pipeline parallelism paper と bubble problem

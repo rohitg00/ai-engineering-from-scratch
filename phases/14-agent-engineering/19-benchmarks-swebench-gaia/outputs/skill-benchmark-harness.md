@@ -1,32 +1,32 @@
 ---
 name: benchmark-harness
-description: Build a SWE-bench-style harness for a codebase with FAIL_TO_PASS / PASS_TO_PASS gating, contamination checks, and step-count metrics.
+description: FAIL_TO_PASS / PASS_TO_PASS gating、contamination checks、step-count metricsを備えたcodebase向けSWE-bench-style harnessを構築する。
 version: 1.0.0
 phase: 14
 lesson: 19
 tags: [swe-bench, gaia, agentbench, harness, evaluation]
 ---
 
-Given a codebase and a list of (bug, fix) pairs, build a benchmark harness that gates on real unit tests and records operational metrics.
+codebaseと(bug, fix) pairのlistを受け取り、実unit testsでgateし、operational metricsを記録するbenchmark harnessを構築する。
 
-Produce:
+生成するもの:
 
-1. Per-task definition: `(tid, description, state_before, fail_to_pass_tests, pass_to_pass_tests, solution)`.
-2. A runner that applies the agent's patch, runs the repo's test suite in a sandbox, and records: FTP pass count, PTP pass count, step count, tokens, wall-clock, cost.
-3. A contamination check: pattern-match the issue text against the produced patch; flag >=30% overlap.
-4. A reporter that emits per-task and aggregate scores as JSON, plus P50/P75/P95 step and cost.
-5. A CI job that runs the harness on every PR and fails on >=5% regression.
+1. taskごとのdefinition: `(tid, description, state_before, fail_to_pass_tests, pass_to_pass_tests, solution)`。
+2. agentのpatchを適用し、sandbox内でrepoのtest suiteを実行し、FTP pass count、PTP pass count、step count、tokens、wall-clock、costを記録するrunner。
+3. contamination check: issue textを生成patchに対してpattern-matchし、overlapが30%以上ならflagする。
+4. taskごととaggregateのscoreをJSONでemitし、P50/P75/P95 stepとcostも出すreporter。
+5. すべてのPRでharnessを実行し、5%以上のregressionでfailするCI job。
 
 Hard rejects:
 
-- Harness that reports only a single aggregate number. Require per-task results + distributions.
-- Harness that runs tests without a sandbox. Agent-provided patches are untrusted code.
-- Harness with no PASS_TO_PASS gate. Patches that break other tests silently regress the product.
+- 単一のaggregate numberだけを報告するharness。task別results + distributionsを必須にする。
+- sandboxなしでtestを実行するharness。agent-provided patchはuntrusted codeです。
+- PASS_TO_PASS gateがないharness。他のtestを壊すpatchは、productをsilentにregressさせます。
 
 Refusal rules:
 
-- If the user asks for "just the FAIL_TO_PASS score," refuse. Add PASS_TO_PASS; breaking existing tests is a worse regression than missing the fix.
-- If the tests are not pinned to a specific commit, refuse. Drift in tests makes scores incomparable across runs.
-- If the tasks overlap with issue text seen during training, flag it explicitly.
+- userが「just the FAIL_TO_PASS score」を求めた場合は拒否する。PASS_TO_PASSを追加する。既存testを壊すことは、fixを逃すより悪いregressionです。
+- testがspecific commitにpinされていない場合は拒否する。testのdriftにより、run間でscoreを比較できなくなります。
+- taskがtraining中に見られたissue textとoverlapする場合は、明示的にflagする。
 
-Output: `tasks.py`, `harness.py`, `contamination.py`, `report.py`, `README.md` explaining the sandbox, the gates, the contamination policy. End with "what to read next" pointing to Lesson 30 for eval-driven development on top of the harness.
+Output: `tasks.py`, `harness.py`, `contamination.py`, `report.py`, `README.md`。sandbox、gates、contamination policyを説明する。最後に"what to read next"として、このharness上でのeval-driven developmentに向けてLesson 30を示す。

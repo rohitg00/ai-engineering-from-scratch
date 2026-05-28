@@ -1,78 +1,78 @@
 {
   "lesson": "phase-19/29-end-to-end-coding-task-demo",
-  "title": "End-to-End Coding Agent on the Harness",
+  "title": "Harness 上の End-to-End Coding Agent",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: why does the end-to-end demo replace the LLM with a deterministic policy?",
+      "question": "lesson を読む前に: end-to-end demo が LLM を deterministic policy に置き換えるのはなぜですか？",
       "options": [
-        "The LLM is too slow to run in tests.",
-        "The harness is what the lesson is testing; the policy is the substitutable seam.",
-        "Deterministic policies always outperform LLMs on coding tasks.",
-        "The lesson cannot afford the inference cost."
+        "LLM は tests で走らせるには遅すぎるから。",
+        "lesson が test しているのは harness であり、policy は差し替え可能な境界だから。",
+        "deterministic policy は coding task で常に LLM を上回るから。",
+        "lesson では inference cost を払えないから。"
       ],
       "correct": 1,
-      "explanation": "The harness contract does not care whether the policy is an LLM or a state machine. Removing the LLM removes the network and the variance and turns the lesson into a reproducible integration test."
+      "explanation": "harness contract は policy が LLM か state machine かを気にしません。LLM を外すと network と variance が消え、lesson は reproducible integration test になります。"
     },
     {
       "stage": "check",
-      "question": "The agent's state machine has five states. In what order does it execute them on a normal pass?",
+      "question": "agent の state machine には 5 state があります。normal pass ではどの順で実行されますか？",
       "options": [
-        "SURVEY -> FIX -> VERIFY -> RUN_TESTS -> INSPECT.",
-        "SURVEY -> RUN_TESTS -> INSPECT -> FIX -> VERIFY.",
-        "RUN_TESTS -> SURVEY -> INSPECT -> FIX -> VERIFY.",
-        "SURVEY -> INSPECT -> FIX -> RUN_TESTS -> VERIFY."
+        "SURVEY -> FIX -> VERIFY -> RUN_TESTS -> INSPECT。",
+        "SURVEY -> RUN_TESTS -> INSPECT -> FIX -> VERIFY。",
+        "RUN_TESTS -> SURVEY -> INSPECT -> FIX -> VERIFY。",
+        "SURVEY -> INSPECT -> FIX -> RUN_TESTS -> VERIFY。"
       ],
       "correct": 1,
-      "explanation": "The agent surveys the project, runs the tests, inspects the failing test, fixes the bug, then verifies. RUN_TESTS comes before INSPECT because the test failure is the signal the policy reads."
+      "explanation": "agent は project を survey し、tests を走らせ、failing test を inspect し、bug を fix してから verify します。RUN_TESTS が INSPECT より前なのは、test failure が policy の読む signal だからです。"
     },
     {
       "stage": "check",
-      "question": "The bundled fixture's bug is an off-by-one in src/fizz.py: range(1, n) instead of range(1, n + 1). Where does the policy decide to apply the fix?",
+      "question": "bundled fixture の bug は src/fizz.py の off-by-one です。range(1, n) ではなく range(1, n + 1) にする必要があります。policy はどこで fix を適用する判断をしますか？",
       "options": [
-        "Inside the SURVEY state, by reading the file header.",
-        "Inside the INSPECT state, after the test failure has named the expected output.",
-        "Inside the VERIFY state, after the rerun.",
-        "Outside the state machine, in the gate chain."
+        "SURVEY state 内で file header を読んで判断する。",
+        "INSPECT state 内で、test failure が expected output を示したあとに判断する。",
+        "VERIFY state 内で rerun 後に判断する。",
+        "state machine の外、gate chain 内で判断する。"
       ],
       "correct": 1,
-      "explanation": "INSPECT is where the policy reads the failing test and learns the expected shape. The fix is identified there and written in the next FIX state."
+      "explanation": "INSPECT で policy は failing test を読み、expected shape を学びます。fix はそこで特定され、次の FIX state で書かれます。"
     },
     {
       "stage": "check",
-      "question": "Every tool call goes through what chain of components in order?",
+      "question": "すべての tool call は、どの component chain をどの順番で通りますか？",
       "options": [
-        "Sandbox -> GateChain -> SpanBuilder -> ObservationLedger.",
-        "GateChain -> SpanBuilder -> Sandbox -> ObservationLedger.",
-        "SpanBuilder -> GateChain -> Sandbox -> ObservationLedger.",
-        "ObservationLedger -> GateChain -> Sandbox -> SpanBuilder."
+        "Sandbox -> GateChain -> SpanBuilder -> ObservationLedger。",
+        "GateChain -> SpanBuilder -> Sandbox -> ObservationLedger。",
+        "SpanBuilder -> GateChain -> Sandbox -> ObservationLedger。",
+        "ObservationLedger -> GateChain -> Sandbox -> SpanBuilder。"
       ],
       "correct": 1,
-      "explanation": "Gate first (allow / refuse), span next (so the refusal is also captured), sandbox third (only if allowed), ledger last (only on success). The lesson code wires it that way."
+      "explanation": "最初に gate（allow / refuse）、次に span（refusal も capture できるように）、3 番目に sandbox（allowed のときだけ）、最後に ledger（success のときだけ）です。lesson code はその順で wire しています。"
     },
     {
       "stage": "post",
-      "question": "You replace the deterministic policy with a real LLM. Which harness component changes?",
+      "question": "deterministic policy を real LLM に置き換えます。どの harness component が変わりますか？",
       "options": [
-        "The gate chain has to be rewritten to handle LLM stochasticity.",
-        "The sandbox has to be hardened with seccomp.",
-        "Nothing in the harness changes; the policy is the only piece that swaps.",
-        "The Prometheus exposition format becomes incompatible."
+        "LLM stochasticity を扱うため gate chain を書き換える必要がある。",
+        "sandbox を seccomp で harden する必要がある。",
+        "harness は何も変わらない。差し替えるのは policy だけ。",
+        "Prometheus exposition format が incompatible になる。"
       ],
       "correct": 2,
-      "explanation": "The lesson's point: the harness is policy-agnostic. The seam is the next_action / observe interface. The LLM plugs in there without touching gate, sandbox, ledger, or spans."
+      "explanation": "lesson の要点は、harness が policy-agnostic であることです。境界は next_action / observe interface です。LLM はそこに差し込まれ、gate、sandbox、ledger、span には触れません。"
     },
     {
       "stage": "post",
-      "question": "The demo asserts the agent solves the fixture in fewer than 12 steps. The deterministic policy uses 5. What is a real-LLM agent likely to do, and how does the harness handle it?",
+      "question": "demo は agent が 12 step 未満で fixture を解くことを assert します。deterministic policy は 5 step を使います。real-LLM agent はどうなりやすく、harness はどう扱いますか？",
       "options": [
-        "The LLM uses 5 steps too; the harness is unchanged.",
-        "The LLM may use more steps; the step_budget bounds the loop and an unsolved run is reported as a failure with a halted_reason.",
-        "The LLM cannot run inside this harness.",
-        "The harness silently extends the budget."
+        "LLM も 5 step を使う。harness は unchanged。",
+        "LLM はより多くの step を使う可能性がある。step_budget が loop を bound し、未解決 run は halted_reason つき failure として report される。",
+        "LLM はこの harness 内では走れない。",
+        "harness は黙って budget を延長する。"
       ],
       "correct": 1,
-      "explanation": "The step budget is the loud, deterministic stopping criterion. An LLM that wanders gets capped and the report tells you exactly why."
+      "explanation": "step budget は loud で deterministic な stopping criterion です。迷走する LLM は cap され、report は理由を正確に伝えます。"
     }
   ]
 }

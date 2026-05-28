@@ -7,22 +7,22 @@ import {
   refuseReason,
 } from "../src/runtime.js";
 
-test("denylist refuses rm", () => {
+test("denylist は rm を拒否する", () => {
   const reason = refuseReason({ branch: "x", command: "rm", argv: ["-rf", "/"] });
-  assert.match(String(reason), /denylisted/);
+  assert.match(String(reason), /denylist/);
 });
 
-test("denylist refuses sudo", () => {
+test("denylist は sudo を拒否する", () => {
   const reason = refuseReason({ branch: "x", command: "sudo", argv: ["ls"] });
-  assert.match(String(reason), /denylisted/);
+  assert.match(String(reason), /denylist/);
 });
 
-test("denylist refuses curl", () => {
+test("denylist は curl を拒否する", () => {
   const reason = refuseReason({ branch: "x", command: "curl", argv: [] });
-  assert.match(String(reason), /denylisted/);
+  assert.match(String(reason), /denylist/);
 });
 
-test("shell metachars are refused", () => {
+test("shell metachar は拒否される", () => {
   assert.equal(hasShellMetachars("foo;bar"), true);
   assert.equal(hasShellMetachars("foo && bar"), true);
   assert.equal(hasShellMetachars("foo|bar"), true);
@@ -30,16 +30,16 @@ test("shell metachars are refused", () => {
   assert.equal(hasShellMetachars("plain.arg"), false);
 });
 
-test("metachar in argv refuses launch", () => {
+test("argv 内の metachar は launch を拒否する", () => {
   const reason = refuseReason({
     branch: "x",
     command: "node",
     argv: ["-e", "1", ";", "echo", "pwned"],
   });
-  assert.match(String(reason), /shell metacharacters/);
+  assert.match(String(reason), /shell metacharacter/);
 });
 
-test("non-denylisted clean command passes refuseReason gate", () => {
+test("denylist 外の clean command は refuseReason gate を通る", () => {
   const reason = refuseReason({
     branch: "x",
     command: "node",
@@ -48,32 +48,32 @@ test("non-denylisted clean command passes refuseReason gate", () => {
   assert.equal(reason, null);
 });
 
-test("launchWorktree refuses denylisted command without running it", async () => {
+test("launchWorktree は denylisted command を実行せず拒否する", async () => {
   const result = await launchWorktree({
     branch: "x",
     command: "rm",
     argv: ["-rf", "/"],
   });
-  assert.match(String(result.refused), /denylisted/);
+  assert.match(String(result.refused), /denylist/);
   assert.equal(result.stdout, "");
 });
 
-test("denylist is non-empty and contains expected commands", () => {
+test("denylist は non-empty で expected command を含む", () => {
   assert.ok(COMMAND_DENYLIST.has("rm"));
   assert.ok(COMMAND_DENYLIST.has("sudo"));
   assert.ok(COMMAND_DENYLIST.has("dd"));
 });
 
-test("path-qualified denylisted command is refused via basename", () => {
+test("path-qualified denylisted command は basename 経由で拒否される", () => {
   const reason = refuseReason({ branch: "x", command: "/bin/rm", argv: ["-rf", "/"] });
-  assert.match(String(reason), /denylisted/);
+  assert.match(String(reason), /denylist/);
 });
 
-test("interpreter -lc invoking denylisted command is refused", () => {
+test("denylisted command を呼ぶ interpreter -lc は拒否される", () => {
   const reason = refuseReason({
     branch: "x",
     command: "bash",
     argv: ["-lc", "rm -rf /"],
   });
-  assert.match(String(reason), /denylisted|metacharacters/);
+  assert.match(String(reason), /denylist|metacharacter/);
 });

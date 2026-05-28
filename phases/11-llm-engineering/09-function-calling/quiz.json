@@ -1,37 +1,37 @@
 [
   {
-    "question": "Can LLMs actually execute functions or access external systems?",
-    "options": ["Yes, LLMs can call APIs directly", "No -- LLMs only generate text (typically JSON) describing which function to call; your code must execute it", "Only GPT-4 can execute functions", "LLMs execute functions through embeddings"],
+    "question": "LLM は実際に functions を実行したり external systems にアクセスしたりできますか？",
+    "options": ["はい、LLM は API を直接呼び出せます", "いいえ。LLM はどの function を呼ぶかを説明する text (通常は JSON) を生成するだけで、実行はあなたの code が行います", "GPT-4 だけが functions を実行できます", "LLM は embeddings 経由で functions を実行します"],
     "correct": 1,
-    "explanation": "LLMs generate tokens. When 'calling a function,' the model outputs JSON specifying the function name and arguments. Your application code parses this JSON, executes the actual function, and sends the result back to the model.",
+    "explanation": "LLM は tokens を生成します。'function を呼ぶ' とき、model は function name と arguments を指定する JSON を出力します。application code がこの JSON を parse し、実際の function を実行して、result を model に戻します。",
     "stage": "pre"
   },
   {
-    "question": "What is a tool schema in the context of function calling?",
-    "options": ["The model's architecture diagram", "A JSON description of a function's name, parameters, types, and purpose that tells the model what tools are available", "A database schema", "The API endpoint URL"],
+    "question": "function calling における tool schema とは何ですか？",
+    "options": ["model の architecture diagram", "利用可能な tools を model に伝える、function の name、parameters、types、purpose の JSON description", "database schema", "API endpoint URL"],
     "correct": 1,
-    "explanation": "Tool schemas describe available functions to the model: function name, parameter names and types, descriptions of what each parameter does, and what the function returns. The model uses these to decide when and how to call tools.",
+    "explanation": "Tool schemas は利用可能な functions を model に説明します。function name、parameter names と types、各 parameter の役割、function が返すものを含みます。model はこれらを使って、いつ、どのように tools を呼ぶかを判断します。",
     "stage": "pre"
   },
   {
-    "question": "What is the standard pattern for a multi-turn function calling loop?",
-    "options": ["Call all functions at once", "Send message -> model requests tool call -> execute function -> send result back -> model generates final response (repeat if needed)", "The model executes functions internally", "Parse the entire conversation as a batch"],
+    "question": "multi-turn function calling loop の標準 pattern はどれですか？",
+    "options": ["すべての functions を一度に呼ぶ", "message を送る -> model が tool call を要求する -> function を実行する -> result を戻す -> model が final response を生成する (必要なら繰り返す)", "model が内部で functions を実行する", "conversation 全体を batch として parse する"],
     "correct": 1,
-    "explanation": "The loop: (1) send user message + tool schemas, (2) model responds with a tool call request, (3) execute the function, (4) send the result back as a tool response, (5) model generates the next response or another tool call.",
+    "explanation": "loop は、(1) user message + tool schemas を送る、(2) model が tool call request で応答する、(3) function を実行する、(4) result を tool response として戻す、(5) model が次の response または別の tool call を生成する、という流れです。",
     "stage": "post"
   },
   {
-    "question": "How do you prevent infinite tool calling loops?",
-    "options": ["Use a faster model", "Set a maximum number of tool call iterations and implement a timeout, breaking the loop if the limit is reached", "Infinite loops can't happen with function calling", "Remove all tool schemas after the first call"],
+    "question": "infinite tool calling loops をどう防ぎますか？",
+    "options": ["より速い model を使う", "tool call iterations の最大数を設定し timeout を実装して、limit に達したら loop を切る", "function calling では infinite loops は起きません", "最初の call 後にすべての tool schemas を削除する"],
     "correct": 1,
-    "explanation": "Without limits, a model could repeatedly call tools (e.g., searching for information it can never find). A max iteration count (e.g., 10 rounds) and total timeout prevent runaway loops in production.",
+    "explanation": "limits がないと、model は tools を繰り返し呼ぶ可能性があります (例: 見つからない情報を search し続ける)。max iteration count (例: 10 rounds) と total timeout が production での runaway loops を防ぎます。",
     "stage": "post"
   },
   {
-    "question": "Why are clear, descriptive parameter names and descriptions important in tool schemas?",
-    "options": ["They make the code more readable", "The model uses descriptions to decide which tool to call and how to fill in parameters -- vague descriptions lead to wrong tool selections and incorrect arguments", "They are required by the API", "They improve response time"],
+    "question": "tool schemas で明確で説明的な parameter names と descriptions が重要なのはなぜですか？",
+    "options": ["code が読みやすくなるから", "model が descriptions を使ってどの tool を呼ぶか、parameters をどう埋めるかを判断するから。曖昧な descriptions は wrong tool selections と incorrect arguments につながります", "API で必須だから", "response time が改善するから"],
     "correct": 1,
-    "explanation": "The model reads tool descriptions to decide what to call and how. A parameter described as 'q' vs 'search_query: The user's search terms to look up in the knowledge base' gives vastly different results.",
+    "explanation": "model は tool descriptions を読んで、何をどう呼ぶかを判断します。'q' とだけ説明された parameter と、'search_query: knowledge base で lookup する user の search terms' と説明された parameter では結果が大きく変わります。",
     "stage": "post"
   }
 ]

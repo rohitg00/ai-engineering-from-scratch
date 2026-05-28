@@ -1,26 +1,26 @@
 # Capstone 05 — Autonomous Research Agent (AI-Scientist Class)
 
-> Sakana's AI-Scientist-v2 published full papers. Agent Laboratory ran the experiments. Allen AI shared traces. The 2026 shape is plan-execute-verify tree search over experiments, budgeted cost, sandboxed code execution, a vision-feedback LaTeX writer, and an automated NeurIPS-style reviewer ensemble. The capstone is to build one, run it end to end within $30 per paper, and survive the sandbox-escape red team that Sakana documented.
+> Sakana の AI-Scientist-v2 は full paper を公開しました。Agent Laboratory は experiment を実行しました。Allen AI は trace を共有しました。2026年の形は、experiment 上の plan-execute-verify tree search、budgeted cost、sandboxed code execution、vision-feedback 付き LaTeX writer、自動 NeurIPS-style reviewer ensemble です。この capstone では、それを作り、paper あたり $30 以内で end to end に走らせ、Sakana が記録した sandbox-escape red team を生き残らせます。
 
-**Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
-**Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
+**種別:** Capstone
+**言語:** Python (agent + sandbox), LaTeX (output)
+**前提条件:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:** P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
-**Time:** 40 hours
+**所要時間:** 40時間
 
-## Problem
+## 問題
 
-Autonomous research agents crossed a threshold in 2026. Sakana AI's AI-Scientist-v2 was published in Nature with generated papers that cleared workshop peer review. ShinkaEvolve (ICLR 2026) extended the line to evolving hypotheses. AMD's Agent Laboratory shipped reproducible traces. The agents are not magic — they are a plan-execute-verify loop running over a tree of candidate experiments, with cost caps, seed-bound sandboxes, and automated review. The craft is in the loop, the budget, and the safety story.
+autonomous research agent は2026年に一つの閾値を越えました。Sakana AI の AI-Scientist-v2 は、workshop peer review を通過した generated paper とともに Nature に掲載されました。ShinkaEvolve (ICLR 2026) は hypothesis evolution に拡張しました。AMD の Agent Laboratory は reproducible trace を提供しました。これらの agent は魔法ではありません。candidate experiment の tree 上で、cost cap、seed-bound sandbox、自動 review を備えた plan-execute-verify loop を回しています。craft は loop、budget、safety story にあります。
 
-You learn the loop by implementing one against a seed idea in a narrow domain (for example, attention-sparsity ablations on a 100M-parameter transformer). The value is not in discovering something new on the first run. The value is in the infrastructure: the tree-search, the experiment sandbox, the writer-reviewer loop, the red-team report. The Sakana team documented sandbox-escape failures; your agent must pass the same red team.
+狭い domain の seed idea (例: 100M-parameter transformer の attention-sparsity ablation) に対して実装することで loop を学びます。最初の run で新発見をすることが価値ではありません。tree-search、experiment sandbox、writer-reviewer loop、red-team report という infrastructure を作ることが価値です。Sakana team は sandbox-escape failure を記録しています。あなたの agent は同じ red team を通過しなければなりません。
 
-## Concept
+## コンセプト
 
-The agent is a best-first tree search. Nodes are experiment specifications: (hypothesis, config, code, expected outcome). An expand step proposes children with small edits (swap optimizer, shift batch size, ablate a component). Each child runs in a fresh sandbox with a hard resource cap. Results feed back into a scoring function that ranks nodes by (novelty × quality × remaining budget). The tree grows until budget is exhausted, then the best branch is written up.
+agent は best-first tree search です。node は experiment specification (hypothesis, config, code, expected outcome) です。expand step は small edit (optimizer の swap、batch size の変更、component ablation) で child を提案します。各 child は hard resource cap を持つ fresh sandbox で実行されます。result は scoring function に戻り、(novelty × quality × remaining budget) で node を rank します。budget が尽きるまで tree を伸ばし、best branch を paper 化します。
 
-The writer is multimodal. It generates a LaTeX draft, compiles it, renders figures, and feeds the rendered PDF back into Claude Opus 4.7's vision mode for critique on layout, figure legibility, and claim-evidence alignment. A reviewer ensemble of five LLM judges emits NeurIPS-style scores (novelty, rigor, clarity, reproducibility, impact); if the average drops below threshold, the paper returns to the writer with critique.
+writer は multimodal です。LaTeX draft を生成し、compile し、figure を render し、rendered PDF を Claude Opus 4.7 の vision mode に戻して layout、figure legibility、claim-evidence alignment を critique させます。5人の LLM judge から成る reviewer ensemble が NeurIPS-style score (novelty, rigor, clarity, reproducibility, impact) を出します。average が threshold 未満なら、paper は critique とともに writer に戻ります。
 
-Safety is load-bearing. Every experiment runs in an E2B or Daytona sandbox with no network egress, bounded wall-clock, and pinned resource limits. The agent's code-generation step passes through a policy layer that blocks syscalls that escape the sandbox. The red-team report reproduces the Sakana-documented attack surface (fork bombs, filesystem escapes, LLM-written network calls).
+safety は load-bearing です。すべての experiment は E2B または Daytona sandbox で実行され、network egress はなく、wall-clock は bounded、resource limit は pin されています。code-generation step は sandbox を抜ける syscall を block する policy layer を通ります。red-team report は Sakana が記録した attack surface (fork bomb、filesystem escape、LLM-written network call) を再現します。
 
 ## Architecture
 
@@ -60,34 +60,34 @@ seed idea + domain
 
 ## Stack
 
-- Orchestration: LangGraph with checkpointing and human-approval gates
-- Tree search: custom best-first over experiment nodes (AB-MCTS-style from Sakana v2)
-- Sandbox: E2B per experiment, Docker-in-Docker fallback; resource caps via cgroups
-- Literature: Semantic Scholar Graph API + OpenAlex + local FAISS cache of abstracts
-- Writer: LaTeX template + Claude Opus 4.7 (vision mode) for figure critique and layout
-- Reviewer: ensemble of 5 judges (Opus 4.7, GPT-5.4, Gemini 3 Pro, DeepSeek R1, Qwen3-Max) with weighted aggregation
-- Experiment framework: PyTorch 2.5 for the physical experiments, W&B for logging
-- Observability: Langfuse for agent traces, $30 hard budget per paper
+- Orchestration: checkpointing と human-approval gates 付き LangGraph
+- Tree search: experiment node 上の custom best-first (Sakana v2 の AB-MCTS-style)
+- Sandbox: experiment ごとの E2B、fallback は Docker-in-Docker。cgroups で resource caps
+- Literature: Semantic Scholar Graph API + OpenAlex + abstract の local FAISS cache
+- Writer: LaTeX template + figure critique / layout 用 Claude Opus 4.7 vision mode
+- Reviewer: 5 judge ensemble (Opus 4.7, GPT-5.4, Gemini 3 Pro, DeepSeek R1, Qwen3-Max) と weighted aggregation
+- Experiment framework: physical experiment 用 PyTorch 2.5、logging 用 W&B
+- Observability: agent trace 用 Langfuse、paper あたり $30 hard budget
 
-## Build It
+## 実装
 
-1. **Seed and domain scoping.** Take a seed idea (e.g., "investigate sparsity patterns in attention maps of sub-1B transformers"). Define the search space: models, datasets, compute budget.
+1. **Seed and domain scoping.** seed idea (例: "investigate sparsity patterns in attention maps of sub-1B transformers") を受け取り、model、dataset、compute budget から search space を定義します。
 
-2. **Literature pass.** Query Semantic Scholar + OpenAlex for 50 most-cited relevant papers; cache abstracts locally; generate a 1-page domain digest.
+2. **Literature pass.** Semantic Scholar + OpenAlex で関連度の高い被引用上位50本を query し、abstract を local cache し、1-page domain digest を生成します。
 
-3. **Tree scaffolding.** Initialize the root with the seed hypothesis. Implement `expand(node) -> children` with small-edit proposals (one config change per child). Implement `score(node)` as a weighted novelty × quality × budget term.
+3. **Tree scaffolding.** root を seed hypothesis で初期化します。`expand(node) -> children` を small-edit proposal (child ごとに config change 1つ) として実装します。`score(node)` は weighted novelty × quality × budget term として実装します。
 
-4. **Sandbox wrapping.** Every experiment runs `docker run --network=none --memory=8g --cpus=2 --pids-limit=256 --read-only` (or the equivalent E2B policy). Seeds are written to the sandbox; outputs are mounted read-only back out.
+4. **Sandbox wrapping.** すべての experiment は `docker run --network=none --memory=8g --cpus=2 --pids-limit=256 --read-only` (または equivalent E2B policy) で実行します。seed は sandbox に書き、output は read-only mount で外に戻します。
 
-5. **Plan-execute-verify loop.** `plan` proposes children. `execute` runs the sandbox, captures logs and metrics. `verify` runs unit checks on metrics (did the loss decrease? did the ablation isolate the effect?). Failed nodes get a failure reason stored on the tree.
+5. **Plan-execute-verify loop.** `plan` が child を提案します。`execute` が sandbox を走らせ、log と metrics を capture します。`verify` が metric の unit check (loss は下がったか、ablation は効果を isolate したか) を実行します。failed node には failure reason を tree に保存します。
 
-6. **Writer.** After budget, select the best branch. Render figures with matplotlib. Generate a LaTeX draft via Claude Opus 4.7 with the branch trace in context. Compile. Feed the compiled PDF back to Opus 4.7 vision for critique. Iterate.
+6. **Writer.** budget 後、best branch を選びます。matplotlib で figure を render します。branch trace を context に入れて Claude Opus 4.7 で LaTeX draft を生成し、compile します。compiled PDF を Opus 4.7 vision に戻して critique し、iterate します。
 
-7. **Reviewer ensemble.** Five judges score the draft on (novelty, rigor, clarity, reproducibility, impact) with NeurIPS-style rubrics. If mean < 4.0/5, return to writer with critique. Hard stop after 3 rewrites.
+7. **Reviewer ensemble.** 5人の judge が draft を novelty、rigor、clarity、reproducibility、impact で score します。mean < 4.0/5 なら critique とともに writer に戻します。3 rewrite で hard stop します。
 
-8. **Red team.** Build or integrate a set of adversarial tasks targeting the sandbox: fork bombs, network exfiltration attempts, filesystem escapes, LLM-written shell metacharacters. Confirm all are blocked. Write up findings.
+8. **Red team.** sandbox を狙う adversarial task set を構築または統合します: fork bomb、network exfiltration attempt、filesystem escape、LLM-written shell metacharacter。すべて block されることを確認し、finding を書きます。
 
-9. **Reproducibility.** Every paper ships with its tree-search trace JSON, seeds, W&B run links, sandbox configs, and a README reproducing it end to end.
+9. **Reproducibility.** すべての paper に tree-search trace JSON、seeds、W&B run links、sandbox configs、end to end で再現する README を同梱します。
 
 ## Use It
 
@@ -108,48 +108,48 @@ $ ai-scientist run --seed "attention sparsity in sub-1B transformers" --budget 3
 
 ## Ship It
 
-`outputs/skill-ai-scientist.md` is the deliverable. Given a seed idea + a domain + a $30 budget, it runs the full pipeline and emits a reviewable paper plus a reproducibility bundle.
+`outputs/skill-ai-scientist.md` が deliverable です。seed idea + domain + $30 budget を受け取り、full pipeline を走らせ、review 可能な paper と reproducibility bundle を出力します。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
-| 25 | Paper quality | Blind rubric review against published workshop papers |
-| 20 | Experimental rigor | Baselines, seeds, ablations; every claim backed by a cell in the results table |
-| 20 | Cost and compute discipline | $30/paper ceiling enforced, Langfuse-traced |
-| 20 | Safety | Sandbox red team passes; network policy and kill-switch verified |
-| 15 | Reproducibility | One-command rerun with identical seeds reproduces the paper |
+| 25 | Paper quality | published workshop papers に対する blind rubric review |
+| 20 | Experimental rigor | baseline、seed、ablation。すべての claim が results table の cell で裏付けられること |
+| 20 | Cost and compute discipline | $30/paper ceiling が強制され、Langfuse-traced であること |
+| 20 | Safety | sandbox red team 通過。network policy と kill-switch の検証 |
+| 15 | Reproducibility | identical seeds で one-command rerun が paper を再現 |
 | **100** | | |
 
 ## Exercises
 
-1. Run the pipeline against three different seed ideas in the same domain. Compare which parts of the tree-search overlap. Identify duplicated wasted compute.
+1. 同じ domain で3つの異なる seed idea に対して pipeline を走らせます。tree-search のどの部分が重複するか比較し、duplicated wasted compute を特定します。
 
-2. Add a human-in-the-loop gate before experiment execution for nodes estimated above $5. Measure how much total cost drops.
+2. $5 を超えると推定される node の experiment execution 前に human-in-the-loop gate を追加します。total cost がどれだけ下がるか測ります。
 
-3. Swap the reviewer ensemble for a single judge. Measure the false-accept rate on a held-out set of known-bad papers.
+3. reviewer ensemble を single judge に差し替えます。known-bad papers の held-out set で false-accept rate を測ります。
 
-4. Introduce a network-exfiltration red team test: agent writes code that tries to `curl` an external address. Confirm the `--network=none` policy blocks it. Log the attempt.
+4. network-exfiltration red team test を導入します。agent が外部 address へ `curl` しようとする code を書きます。`--network=none` policy が block することを確認し、attempt を log します。
 
-5. Compare your tree-search with a flat random baseline (same budget, no expansion strategy). Report the novelty × quality gain.
+5. tree-search を flat random baseline (same budget、expansion strategy なし) と比較します。novelty × quality gain を報告します。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| Tree search | "AB-MCTS-style expansion" | Best-first exploration over experiment nodes with a novelty×quality×budget score |
-| Sandbox | "Experiment isolation" | Container with no network, bounded CPU/memory, pinned seeds, read-only inputs |
-| Vision critique | "Render-then-read" | Compile the paper to PDF, feed the PDF back to a VLM for layout and claim-evidence critique |
-| Reviewer ensemble | "Automated peer review" | Multiple LLM judges scoring the paper with a NeurIPS rubric; weighted aggregate gates the pipeline |
-| Novelty score | "Is this new?" | Heuristic that penalizes proximity to the 50-paper literature cache |
-| Cost ceiling | "$ budget" | Hard cap on total spend per paper; Langfuse counters + pre-run estimates |
-| Red team | "Sandbox-escape audit" | Adversarial tasks that would escape the sandbox if the policy is wrong |
+| Tree search | 「AB-MCTS-style expansion」 | novelty×quality×budget score を持つ experiment node 上の best-first exploration |
+| Sandbox | 「Experiment isolation」 | network なし、CPU/memory bounded、seed pinned、read-only inputs の container |
+| Vision critique | 「Render-then-read」 | paper を PDF に compile し、VLM に戻して layout と claim-evidence を critique させること |
+| Reviewer ensemble | 「Automated peer review」 | 複数 LLM judge が NeurIPS rubric で paper を score し、weighted aggregate が pipeline を gate する |
+| Novelty score | 「Is this new?」 | 50-paper literature cache への近さを penalize する heuristic |
+| Cost ceiling | 「$ budget」 | paper あたり total spend の hard cap。Langfuse counters + pre-run estimates |
+| Red team | 「Sandbox-escape audit」 | policy が間違っていれば sandbox を抜ける adversarial task |
 
-## Further Reading
+## 参考文献
 
-- [Sakana AI-Scientist-v2 repository](https://github.com/SakanaAI/AI-Scientist-v2) — the reference production research agent
-- [Sakana AI-Scientist-v1 paper (arXiv:2408.06292)](https://arxiv.org/abs/2408.06292) — the original methodology
+- [Sakana AI-Scientist-v2 repository](https://github.com/SakanaAI/AI-Scientist-v2) — production research agent の reference
+- [Sakana AI-Scientist-v1 paper (arXiv:2408.06292)](https://arxiv.org/abs/2408.06292) — original methodology
 - [ShinkaEvolve (Sakana ICLR 2026)](https://sakana.ai) — evolutionary extension
 - [Agent Laboratory (AMD)](https://github.com/SamuelSchmidgall/AgentLaboratory) — multi-role research-lab framework
 - [LangGraph documentation](https://langchain-ai.github.io/langgraph/) — reference orchestration layer
 - [Semantic Scholar Graph API](https://api.semanticscholar.org/) — literature search
 - [E2B sandboxes](https://e2b.dev) — reference experiment isolation
-- [NeurIPS reviewer guidelines](https://neurips.cc/Conferences/2026/Reviewer-Guidelines) — the rubric the reviewer ensemble encodes
+- [NeurIPS reviewer guidelines](https://neurips.cc/Conferences/2026/Reviewer-Guidelines) — reviewer ensemble が encode する rubric

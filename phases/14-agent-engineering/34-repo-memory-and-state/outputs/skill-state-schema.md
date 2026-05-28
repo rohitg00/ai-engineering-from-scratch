@@ -1,34 +1,34 @@
 ---
 name: state-schema
-description: Generate project-specific JSON Schemas for agent state and task board, a Python StateManager with atomic writes, and a migration scaffold so schema bumps cannot corrupt the workbench.
+description: agent state と task board の project-specific JSON Schemas、atomic writes を持つ Python StateManager、schema bump で workbench を壊さない migration scaffold を生成する。
 version: 1.0.0
 phase: 14
 lesson: 34
 tags: [state, schema, json-schema, atomic-writes, migrations]
 ---
 
-Given a repo and the agent product running inside it, produce schema-first state files for the workbench.
+repo と、その中で実行される agent product を受け取り、workbench 用の schema-first state files を作成する。
 
 Produce:
 
-1. `schemas/agent_state.schema.json` covering required keys, allowed status values, array-vs-null discipline, and a `schema_version` integer.
-2. `schemas/task_board.schema.json` covering task id pattern, allowed owners, allowed statuses, and acceptance arrays.
-3. `tools/state_manager.py` exposing `load`, `commit`, and `update` with temp-and-rename atomic writes.
-4. `tools/migrate_state.py` scaffold for the next schema bump, fail-loud if the file is from an unknown version.
-5. `agent_state.json` and `task_board.json` seeded at `schema_version: 1` and a fresh backlog.
+1. required keys、allowed status values、array-vs-null discipline、`schema_version` integer を扱う `schemas/agent_state.schema.json`。
+2. task id pattern、allowed owners、allowed statuses、acceptance arrays を扱う `schemas/task_board.schema.json`。
+3. temp-and-rename atomic writes を持つ `load`, `commit`, `update` を公開する `tools/state_manager.py`。
+4. 次の schema bump 用の `tools/migrate_state.py` scaffold。unknown version の file では fail-loud。
+5. `schema_version: 1` と fresh backlog で seed された `agent_state.json` と `task_board.json`。
 
 Hard rejects:
 
-- A schema without a `schema_version` field. Migrations are not optional.
-- Allowing `null` where an array is expected. `null` is a write-time bug masquerading as data.
-- A writer that uses plain `open(path, "w")`. Atomic writes only; partial files corrupt the source of truth.
-- Storing tokens, raw chat transcripts, or PII inside state. State is for repo-relevant facts.
+- `schema_version` field のない schema。migrations は optional ではない。
+- array が期待される場所で `null` を許すこと。`null` は data を装った write-time bug。
+- plain `open(path, "w")` を使う writer。atomic writes のみ。partial files は source of truth を corrupt する。
+- state 内に tokens、raw chat transcripts、PII を保存すること。state は repo-relevant facts のためのもの。
 
 Refusal rules:
 
-- If the repo has no version control, refuse to ship state files. Atomic writes plus git diff is the durability story.
-- If the project does not have at least one acceptance command to validate the `done` transition, refuse the `status: done` enum value. Adding `done` without an acceptance check is theater.
-- If the project intends to share state across processes without a lock strategy, surface that finding before shipping; atomic rename is necessary but not sufficient.
+- repo に version control がない場合、state files の ship を拒否する。atomic writes + git diff が durability story。
+- project に `done` transition を validate する acceptance command が少なくとも 1 つない場合、`status: done` enum value を拒否する。acceptance check なしの `done` は theater。
+- project が lock strategy なしで process 間 state sharing を予定している場合、ship 前にその finding を表面化する。atomic rename は必要だが十分ではない。
 
 Output structure:
 
@@ -44,7 +44,7 @@ Output structure:
     └── migrate_state.py
 ```
 
-End with "what to read next" pointing to:
+最後に "what to read next" として以下を示す:
 
 - Lesson 35 for the initialization script that calls the manager on startup.
 - Lesson 38 for the verification gate that reads state to score completion.

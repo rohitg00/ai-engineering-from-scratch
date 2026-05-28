@@ -1,37 +1,37 @@
 [
   {
-    "question": "What is the fundamental difference between a base language model and an instruction-tuned model?",
-    "options": ["They have different architectures", "A base model continues text patterns; an instruction-tuned model follows instructions and answers questions", "Instruction-tuned models are larger", "Base models are faster"],
+    "question": "ベース言語モデルと指示チューニング済みモデルの根本的な違いは何ですか？",
+    "options": ["アーキテクチャが異なる", "ベースモデルはテキストパターンを継続し、指示チューニング済みモデルは指示に従って質問に答える", "指示チューニング済みモデルの方が大きい", "ベースモデルの方が速い"],
     "correct": 1,
-    "explanation": "A base model trained with next-token prediction continues text patterns. Ask it a question and it may generate more questions. SFT teaches it to produce answers by training on (instruction, response) pairs.",
+    "explanation": "次トークン予測で学習されたベースモデルは、テキストパターンを継続します。質問すると、さらに質問を生成することがあります。SFTは（指示、応答）ペアで学習することで、答えを生成することを教えます。",
     "stage": "pre"
   },
   {
-    "question": "What is the purpose of masking loss on non-assistant tokens during SFT?",
-    "options": ["To speed up training", "To train the model only to generate responses, not to memorize the instruction format or system prompts", "To reduce memory usage", "To prevent overfitting"],
+    "question": "SFT中にassistant以外のトークンの損失をマスクする目的は何ですか？",
+    "options": ["学習を高速化するため", "指示形式やsystemプロンプトを記憶するのではなく、応答だけを生成するようにモデルを学習させるため", "メモリ使用量を減らすため", "過学習を防ぐため"],
     "correct": 1,
-    "explanation": "During SFT, you want the model to learn how to respond, not how to reproduce the instruction. Loss masking sets the loss to 0 for system/user tokens so gradients only come from the assistant's response tokens.",
+    "explanation": "SFTでは、モデルに指示を再現する方法ではなく、応答する方法を学ばせたいからです。損失マスキングはsystem/userトークンの損失を0にし、勾配がassistantの応答トークンからだけ来るようにします。",
     "stage": "pre"
   },
   {
-    "question": "What format does SFT training data typically follow?",
-    "options": ["Raw text documents", "Chat template with system, user, and assistant roles marked by special tokens", "Key-value pairs", "SQL queries and results"],
+    "question": "SFTの学習データは通常どのような形式に従いますか？",
+    "options": ["生テキスト文書", "system、user、assistantのロールを特殊トークンで示すチャットテンプレート", "キー値ペア", "SQLクエリと結果"],
     "correct": 1,
-    "explanation": "SFT data uses a structured chat format: a system prompt setting behavior, a user instruction, and an assistant response. Special tokens mark role boundaries so the model learns the conversational structure.",
+    "explanation": "SFTデータは構造化されたチャット形式を使います。振る舞いを設定するsystemプロンプト、ユーザー指示、assistant応答です。特殊トークンがロール境界を示し、モデルが会話構造を学べるようにします。",
     "stage": "post"
   },
   {
-    "question": "Why might an SFT model produce lower perplexity on benchmarks but worse conversational quality?",
-    "options": ["The benchmarks are wrong", "SFT optimizes for pattern matching on training examples, not for the nuanced quality judgments humans care about -- that requires RLHF/DPO", "The model is too small", "The learning rate was wrong"],
+    "question": "SFTモデルがベンチマーク上では低いパープレキシティを出すのに、会話品質が悪くなることがあるのはなぜですか？",
+    "options": ["ベンチマークが間違っているから", "SFTは学習例へのパターンマッチングを最適化するが、人間が重視する微妙な品質判断までは最適化しないため。それにはRLHF/DPOが必要", "モデルが小さすぎるから", "学習率が間違っていたから"],
     "correct": 1,
-    "explanation": "SFT teaches the model to follow formats and produce plausible responses. It doesn't teach which response is better when multiple valid options exist. Human preference alignment (RLHF/DPO) addresses this gap.",
+    "explanation": "SFTはモデルに形式へ従い、もっともらしい応答を生成することを教えます。複数の妥当な選択肢があるとき、どの応答がより良いかまでは教えません。人間の選好に基づくアラインメント（RLHF/DPO）がこのギャップを埋めます。",
     "stage": "post"
   },
   {
-    "question": "How many high-quality instruction-response pairs are typically needed for effective SFT?",
-    "options": ["Millions", "10,000 to 100,000 high-quality examples", "Fewer than 100", "Billions"],
+    "question": "効果的なSFTには、通常どれくらいの高品質な指示応答ペアが必要ですか？",
+    "options": ["数百万件", "10,000から100,000件の高品質な例", "100件未満", "数十億件"],
     "correct": 1,
-    "explanation": "SFT is surprisingly data-efficient. Studies show that 10K-100K high-quality examples (like the Alpaca or LIMA datasets) can effectively teach instruction following. Quality matters far more than quantity.",
+    "explanation": "SFTは驚くほどデータ効率が高いです。AlpacaやLIMAのようなデータセットでは、10K-100K件の高品質な例で指示追従を効果的に教えられることが示されています。量よりも質がはるかに重要です。",
     "stage": "post"
   }
 ]

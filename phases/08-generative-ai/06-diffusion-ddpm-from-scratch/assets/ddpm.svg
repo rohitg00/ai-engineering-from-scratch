@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,16 +9,16 @@
       .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
       .content { font-size: 12px; fill: #333; }
-      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="450" y="28" text-anchor="middle" class="title">DDPM: one net predicts noise, reversal does the rest</text>
+  <text x="450" y="28" text-anchor="middle" class="title">DDPM: 1つのnetがnoiseを予測し、逆過程が残りを担う</text>
 
   <!-- forward chain -->
-  <text x="80" y="80" class="label">forward q: add noise</text>
+  <text x="80" y="80" class="label">順過程 q: noiseを加える</text>
   <rect x="40" y="95" width="80" height="50" class="box"/>
   <text x="80" y="125" text-anchor="middle" class="mono">x_0</text>
   <line x1="120" y1="120" x2="180" y2="120" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
@@ -37,10 +37,10 @@
   <text x="700" y="138" text-anchor="middle" class="caption">~ N(0, I)</text>
 
   <text x="450" y="170" text-anchor="middle" class="mono">q(x_t | x_0) = N(&#8730;(&#945;&#772;_t) &#183; x_0, (1 - &#945;&#772;_t) I)</text>
-  <text x="450" y="190" text-anchor="middle" class="caption">closed form: jump to any t in one shot</text>
+  <text x="450" y="190" text-anchor="middle" class="caption">閉形式: 任意のtへ一発でジャンプ</text>
 
   <!-- reverse chain -->
-  <text x="80" y="230" class="label">reverse p_&#952;: denoise</text>
+  <text x="80" y="230" class="label">逆過程 p_&#952;: denoise</text>
   <rect x="660" y="245" width="80" height="50" class="hot"/>
   <text x="700" y="275" text-anchor="middle" class="mono">x_T</text>
   <line x1="660" y1="270" x2="600" y2="270" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
@@ -56,13 +56,13 @@
   <text x="170" y="275" text-anchor="middle" class="mono">x_0 (sample)</text>
 
   <text x="450" y="320" text-anchor="middle" class="mono">x_{t-1} = (1/&#8730;&#945;_t) ( x_t - (&#946;_t / &#8730;(1-&#945;&#772;_t)) &#183; &#949;_&#952;(x_t, t) )  +  &#963;_t &#183; z</text>
-  <text x="450" y="340" text-anchor="middle" class="caption">subtract the predicted noise, rescale, re-inject a bit of fresh noise</text>
+  <text x="450" y="340" text-anchor="middle" class="caption">予測noiseを引き、再スケールし、少量の新しいnoiseを再注入</text>
 
   <!-- loss -->
   <rect x="40" y="370" width="820" height="60" class="hot"/>
-  <text x="450" y="395" text-anchor="middle" class="label">training loss</text>
+  <text x="450" y="395" text-anchor="middle" class="label">学習損失</text>
   <text x="450" y="420" text-anchor="middle" class="mono">L = E_{x_0, t, &#949;}  ||&#949; - &#949;_&#952;(&#8730;&#945;&#772;_t &#183; x_0 + &#8730;(1-&#945;&#772;_t) &#183; &#949;,  t)||&#178;</text>
 
-  <text x="450" y="460" text-anchor="middle" class="caption">one net, one MSE loss, no minimax, no KL divergence in the training loop</text>
-  <text x="450" y="480" text-anchor="middle" class="caption">scales unchanged to images, video, audio, 3D Gaussians</text>
+  <text x="450" y="460" text-anchor="middle" class="caption">net 1つ、MSE loss 1つ。minimaxなし、学習loop内のKL divergenceなし</text>
+  <text x="450" y="480" text-anchor="middle" class="caption">画像、動画、音声、3D Gaussiansにもそのままスケール</text>
 </svg>

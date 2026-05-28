@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "When did the EU AI Act enter into force, and what category applied first?",
+      "question": "EU AI Act はいつ in force となり、最初に適用された category は何ですか？",
       "options": [
-        "August 2024; prohibited practices and AI literacy applied 2 February 2025",
-        "August 2026; only GPAI applied at force-date",
-        "August 2025; all categories applied at once",
-        "January 2024; high-risk systems applied that day"
+        "2024年8月。prohibited practices と AI literacy が 2025年2月2日に適用された",
+        "2026年8月。force-date で GPAI だけが適用された",
+        "2025年8月。すべての categories が同時に適用された",
+        "2024年1月。high-risk systems がその日に適用された"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the maximum monetary penalty under the EU AI Act applicable from 2 August 2026?",
+      "question": "2026年8月2日から適用される EU AI Act の最大 monetary penalty はどれですか？",
       "options": [
-        "Unlimited",
-        "Up to 1M EUR or 0.1% of global turnover",
-        "Up to 15M EUR or 3% of global turnover",
-        "Up to 5M EUR or 1% of global turnover"
+        "無制限",
+        "最大 1M EUR または global turnover の0.1%",
+        "最大 15M EUR または global turnover の3%",
+        "最大 5M EUR または global turnover の1%"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which three chapters make up the GPAI Code of Practice (10 July 2025)?",
+      "question": "GPAI Code of Practice (2025年7月10日) を構成する3 chapters はどれですか？",
       "options": [
         "Training, Inference, Deployment",
         "Capability, Control, Compliance",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What does the February 2025 UK AISI rebrand to 'AI Security Institute' signal?",
+      "question": "2025年2月の UK AISI から 'AI Security Institute' への rebrand は何を示していますか？",
       "options": [
-        "A narrower scope focused on frontier-capability security, dropping algorithmic bias and free-speech framings",
-        "Merger with the EU AI Office",
-        "Closure of UK frontier evaluation",
-        "Expansion into algorithmic bias"
+        "algorithmic bias と free-speech framing を落とし、frontier-capability security に focus する narrower scope",
+        "EU AI Office との merger",
+        "UK frontier evaluation の closure",
+        "algorithmic bias への expansion"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the US CAISI rebrand (June 2025) signal in policy direction?",
+      "question": "US CAISI rebrand (2025年6月) は policy direction において何を示していますか？",
       "options": [
-        "Merger with FDA",
-        "Stricter pre-deployment safety evaluation",
-        "A shift toward 'pro-growth AI policies,' with emphasis on standards and innovation support and reduced emphasis on pre-deployment evaluation",
-        "Mandatory open-source release of frontier models"
+        "FDA との merger",
+        "より strict な pre-deployment safety evaluation",
+        "standards と innovation support を重視し、pre-deployment evaluation の emphasis を弱める 'pro-growth AI policies' への shift",
+        "frontier models の mandatory open-source release"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the headline obligation in Korea's AI Framework Act (effective January 2026)?",
+      "question": "Korea's AI Framework Act (2026年1月 effective) の headline obligation は何ですか？",
       "options": [
-        "Identical adoption of the EU AI Act",
-        "Mandatory open-weights for all generative models",
-        "Total prohibition of foreign AI providers",
-        "Article 12 establishes an AISI under MSIT and mandates local representatives, risk assessment, and safety measures for high-impact and generative AI"
+        "EU AI Act の同一採用",
+        "すべての generative models に対する mandatory open-weights",
+        "foreign AI providers の全面禁止",
+        "Article 12 が MSIT 下に AISI を設立し、local representatives、risk assessment、high-impact and generative AI の safety measures を義務付ける"
       ],
       "correct": 3,
       "explanation": ""

@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-"""Build a machine-readable catalog of the entire curriculum.
+"""カリキュラム全体の機械可読catalogを構築する。
 
-Requires Python 3.10+ (PEP 604 union types, Path.is_relative_to).
+Python 3.10+ が必要（PEP 604 union types、Path.is_relative_to）。
 
-Walks every `phases/NN-slug/MM-slug/` lesson directory on disk and emits a
-single JSON document with the truth of what exists in the repo: phases,
-lessons, code files, outputs (skills / prompts / agents), and totals.
+ディスク上のすべての `phases/NN-slug/MM-slug/` レッスンディレクトリを走査し、
+repoに実在する内容（phases、lessons、code files、outputs
+（skills / prompts / agents）、totals）を単一のJSON文書として出力する。
 
-Usage:
-    python3 scripts/build_catalog.py                     # write catalog.json at repo root
+使い方:
+    python3 scripts/build_catalog.py                     # repo rootにcatalog.jsonを書く
     python3 scripts/build_catalog.py --out path/to/catalog.json
-    python3 scripts/build_catalog.py --stdout            # write to stdout, do not touch repo
+    python3 scripts/build_catalog.py --stdout            # stdoutへ書き、repoは変更しない
 
-Output shape (schema_version 1):
+出力形状（schema_version 1）:
     {
       "schema_version": 1,
       "totals": {"phases": ..., "lessons": ..., "skills": ..., "prompts": ..., "agents": ..., "code_files": ...},
@@ -26,7 +26,7 @@ Output shape (schema_version 1):
             {
               "num": 1,
               "slug": "01-...",
-              "title": "...",                  # H1 from docs/en.md
+              "title": "...",                  # docs/en.md のH1
               "path": "phases/00-.../01-...",
               "has_docs": true,
               "has_code": true,
@@ -42,8 +42,7 @@ Output shape (schema_version 1):
       ]
     }
 
-Stdlib only. No dependencies. Reuses frontmatter parsing logic similar to
-install_skills.py but inlined to keep the script self-contained.
+stdlibのみ。依存なし。install_skills.py と同様のfrontmatter解析ロジックを再利用する。
 """
 
 from __future__ import annotations
@@ -260,12 +259,12 @@ def main(argv: list[str]) -> int:
         "--out",
         type=Path,
         default=ROOT / "catalog.json",
-        help="output path (default: <repo>/catalog.json)",
+        help="出力パス（default: <repo>/catalog.json）",
     )
     parser.add_argument(
         "--stdout",
         action="store_true",
-        help="write JSON to stdout instead of a file",
+        help="ファイルではなくJSONをstdoutへ書く",
     )
     args = parser.parse_args(argv)
 

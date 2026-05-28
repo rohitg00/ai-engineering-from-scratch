@@ -1,78 +1,78 @@
 {
   "lesson": "44-cosine-lr-warmup",
-  "title": "Cosine LR with Linear Warmup",
+  "title": "Linear Warmup 付き Cosine LR",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the cosine-with-warmup schedule start at zero rather than at lr_max?",
+      "question": "cosine-with-warmup schedule が step zero で `lr_max` ではなく 0 から始まるのはなぜか。",
       "options": [
-        "Because lr_max is illegal at step zero",
-        "The first thousand updates are noisy; a linear ramp from zero to lr_max gives the optimizer a small effective step size while running estimates stabilise",
-        "Because Adam requires it",
-        "Random tradition"
+        "step zero の `lr_max` は illegal だから。",
+        "初期 update は noisy なので、linear ramp で optimizer の実効 step を小さくし推定を安定させるため。",
+        "Adam が要求するから。",
+        "慣習。"
       ],
       "correct": 1,
-      "explanation": "Warmup keeps brittle early updates small; the model otherwise either diverges or plateaus."
+      "explanation": "warmup は壊れやすい初期 update を小さく保ち、発散や plateau を防ぐ。"
     },
     {
       "stage": "check",
-      "question": "Why is the schedule implemented as a single function over step rather than three glued segments?",
+      "question": "schedule を 3 つの segment の貼り合わせではなく step の単一関数として実装する理由は何か。",
       "options": [
-        "Single functions are smaller",
-        "A glued schedule loses one boundary the first time lr_max is changed; the single function evaluates the same closed-form expression and preserves continuity at warmup and total endpoints",
-        "Linters require it",
-        "Random"
+        "単一関数の方が小さいから。",
+        "closed-form で評価すると warmup と total の境界で連続性を保ちやすいから。",
+        "linter が要求するから。",
+        "random。"
       ],
       "correct": 1,
-      "explanation": "Continuity at lr(warmup_steps) and lr(total_steps) follows from the closed form."
+      "explanation": "境界の連続性が式から直接従い、parameter 変更時の off-by-one を避けやすい。"
     },
     {
       "stage": "check",
-      "question": "What happens for step > total_steps in the schedule?",
+      "question": "`step > total_steps` の場合 schedule はどうするか。",
       "options": [
-        "It throws an exception",
-        "It pins at lr_min; the schedule does not extrapolate, and trainers that need to extend training change total_steps explicitly",
-        "It returns nan",
-        "It wraps around"
+        "exception を投げる。",
+        "`lr_min` に pin する。schedule は外挿せず、延長したい trainer は total_steps を明示的に変える。",
+        "nan を返す。",
+        "wrap around する。"
       ],
       "correct": 1,
-      "explanation": "A pinned floor keeps an overshooting trainer in a documented state instead of crashing."
+      "explanation": "floor に pin すると overshoot した trainer も documented state に残る。"
     },
     {
       "stage": "check",
-      "question": "Why log gradient L2 norm next to the learning rate?",
+      "question": "learning rate の横に gradient L2 norm を log するのはなぜか。",
       "options": [
-        "It looks pretty",
-        "The norm is the other half of training health: a divergent run spikes its norm before the loss; a too-aggressive peak shows up as a norm that stays high after warmup",
-        "Adam requires it",
-        "Tradition"
+        "見た目が良いから。",
+        "norm は training health のもう半分で、divergent run は loss より先に norm が spike するから。",
+        "Adam が要求するから。",
+        "伝統。"
       ],
       "correct": 1,
-      "explanation": "Co-logging makes pathological schedules visible at run time, not after the fact."
+      "explanation": "co-logging により病的 schedule を run time に見つけられる。"
     },
     {
       "stage": "post",
-      "question": "Why configure warmup_steps as a fraction of total_steps in production?",
+      "question": "production で warmup_steps を total_steps の fraction として設定するのはなぜか。",
       "options": [
-        "Fractions are cleaner",
-        "A fixed warmup count that suits a 20k-step run is essentially no warmup in a 200M-step run; the fraction (typical 1-3 percent) scales with training duration",
-        "Random preference",
-        "Hardware requirement"
+        "fraction の方がきれいだから。",
+        "20k step に合う固定 warmup は 200M step ではほぼ warmup なしになるため、duration に合わせて scale させる。",
+        "好み。",
+        "hardware requirement。"
       ],
       "correct": 1,
-      "explanation": "Absolute warmup counts misbehave across training-duration scales."
+      "explanation": "絶対 step 数の warmup は training duration の scale をまたぐと壊れやすい。"
     },
     {
       "stage": "post",
-      "question": "Why is a non-zero lr_min typical in production?",
+      "question": "production で non-zero `lr_min` が一般的なのはなぜか。",
       "options": [
-        "Adam requires non-zero",
-        "A floor near 10 percent of lr_max keeps the optimizer learning during the long tail; an lr_min of zero produces a curve that looks good and a model that has not finished training",
-        "Numerical stability",
-        "Backward compatibility"
+        "Adam が non-zero を要求するから。",
+        "`lr_max` の 10% 近い floor により long tail でも学習を続けられるから。",
+        "数値安定性。",
+        "後方互換性。"
       ],
       "correct": 1,
-      "explanation": "The tail of the schedule is where late-stage refinements land; zeroing it wastes that signal."
+      "explanation": "schedule の tail は late-stage refinement の場所であり、0 にすると信号を捨てる。"
     }
   ]
 }

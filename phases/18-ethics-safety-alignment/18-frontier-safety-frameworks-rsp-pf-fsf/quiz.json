@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does Anthropic's ASL structure model itself on?",
+      "question": "Anthropic の ASL structure は何をモデルにしていますか。",
       "options": [
         "ITIL incident severities",
         "EU AI Act categories",
@@ -16,7 +16,7 @@
     },
     {
       "stage": "check",
-      "question": "Which OpenAI Preparedness Framework v2 criterion captures 'harm occurs fast or cannot be undone'?",
+      "question": "OpenAI Preparedness Framework v2 の criterion のうち、「harm が高速に発生するか、取り返しがつかない」を表すものはどれですか。",
       "options": [
         "Net-new",
         "Instantaneous-or-irremediable",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which Critical Capability Level was added to DeepMind's FSF v3.0 (September 2025)?",
+      "question": "DeepMind の FSF v3.0 (September 2025) に追加された Critical Capability Level はどれですか。",
       "options": [
         "Harmful Manipulation",
         "Cyber Uplift",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What is a 'competitor-adjustment clause' in the 2025+ frontier safety frameworks?",
+      "question": "2025+ frontier safety frameworks における 'competitor-adjustment clause' とは何ですか。",
       "options": [
-        "A provision allowing a lab to reduce safety requirements if peer labs ship without comparable safeguards",
-        "An export-control exemption",
-        "A pricing rule for API access",
-        "A model-card disclosure requirement"
+        "peer labs が comparable safeguards なしで ship した場合、lab が safety requirements を下げられる provision",
+        "export-control exemption",
+        "API access の pricing rule",
+        "model-card disclosure requirement"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What are the three standard pillars of a safety case as described in the lesson?",
+      "question": "この lesson で説明した safety case の標準的な3 pillars は何ですか。",
       "options": [
-        "Speed, accuracy, cost",
-        "Monitoring, illegibility, incapability",
-        "Helpful, honest, harmless",
-        "Inner, outer, mesa"
+        "Speed、accuracy、cost",
+        "Monitoring、illegibility、incapability",
+        "Helpful、honest、harmless",
+        "Inner、outer、mesa"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which structural alignment exists across Anthropic's 'Capability Thresholds,' OpenAI's 'High Capability thresholds,' and DeepMind's 'Critical Capability Levels'?",
+      "question": "Anthropic の 'Capability Thresholds'、OpenAI の 'High Capability thresholds'、DeepMind の 'Critical Capability Levels' の間にはどの structural alignment がありますか。",
       "options": [
-        "Structural alignment: tiered frontier-capability thresholds with published evaluation criteria, even though terminology differs",
-        "None are publicly documented",
-        "Identical terminology and numeric cutoffs",
-        "All three use the exact same evaluations"
+        "terminology は違うが、published evaluation criteria を伴う tiered frontier-capability thresholds という構造が aligned している",
+        "どれも publicly documented ではない",
+        "terminology と numeric cutoffs が完全に同一である",
+        "3つすべてがまったく同じ evaluations を使う"
       ],
       "correct": 0,
       "explanation": ""

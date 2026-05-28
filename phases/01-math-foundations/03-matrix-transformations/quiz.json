@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is an eigenvector of a matrix?",
-      "options": ["The largest row in the matrix", "A vector that the matrix only scales (never rotates) when multiplied", "A vector perpendicular to all columns of the matrix", "The diagonal entries of the matrix expressed as a vector"],
+      "question": "行列の固有ベクトルとは何ですか？",
+      "options": ["行列の中で最も大きい行", "その行列を掛けてもスケールだけされ、回転しないベクトル", "行列のすべての列に垂直なベクトル", "行列の対角成分をベクトルとして表したもの"],
       "correct": 1,
-      "explanation": "An eigenvector v satisfies Av = lambda*v, meaning the matrix A only stretches v by the scalar factor lambda (the eigenvalue) without changing its direction."
+      "explanation": "固有ベクトル v は Av = lambda*v を満たします。つまり、行列 A は v の方向を変えず、スカラー係数 lambda（固有値）だけ引き伸ばします。"
     },
     {
       "stage": "pre",
-      "question": "What does the determinant of a 2D transformation matrix represent geometrically?",
-      "options": ["The angle of rotation applied by the matrix", "The factor by which the matrix scales area", "The number of eigenvectors the matrix has", "The trace of the matrix"],
+      "question": "2D変換行列の行列式は、幾何学的には何を表しますか？",
+      "options": ["その行列が適用する回転角", "その行列が面積を拡大縮小する倍率", "その行列が持つ固有ベクトルの数", "その行列のトレース"],
       "correct": 1,
-      "explanation": "The determinant measures how much the transformation scales area. det=1 preserves area (rotation), det=2 doubles area, det=0 crushes to a lower dimension, and det=-1 preserves area but flips orientation."
+      "explanation": "行列式は、その変換が面積をどれだけ拡大縮小するかを測ります。det=1 は面積を保つ（回転）、det=2 は面積を2倍にする、det=0 は低次元へつぶす、det=-1 は面積を保ちながら向きを反転することを意味します。"
     },
     {
       "stage": "post",
-      "question": "Why does the order of matrix transformations matter? (i.e., why is R @ S different from S @ R?)",
-      "options": ["Matrix addition is not commutative", "Matrix multiplication is not commutative: rotating then scaling gives a different result than scaling then rotating", "The determinants are different for each order", "One order produces a larger matrix than the other"],
+      "question": "なぜ行列変換の順序は重要なのですか？（つまり、なぜ R @ S は S @ R と異なるのですか？）",
+      "options": ["行列の加算が可換ではないから", "行列積が可換ではないから。回転してからスケーリングする場合と、スケーリングしてから回転する場合では結果が異なる", "それぞれの順序で行列式が異なるから", "一方の順序ではもう一方より大きな行列が生成されるから"],
       "correct": 1,
-      "explanation": "Matrix multiplication is not commutative. Rotating (1,0) by 90 degrees then scaling by (2,0.5) gives (0,0.5), but scaling first then rotating gives (0,2). The geometric operations compose differently."
+      "explanation": "行列積は可換ではありません。(1,0) を90度回転してから (2,0.5) でスケーリングすると (0,0.5) になりますが、先にスケーリングしてから回転すると (0,2) になります。幾何学的な操作の合成のされ方が異なります。"
     },
     {
       "stage": "post",
-      "question": "In a recurrent neural network, what happens when the weight matrix has eigenvalues with magnitude greater than 1?",
-      "options": ["The network learns faster", "Outputs explode exponentially over time steps (exploding gradient problem)", "The network becomes more stable", "The eigenvalues converge to 1 over training"],
+      "question": "リカレントニューラルネットワークで、重み行列が大きさ1より大きい固有値を持つと何が起きますか？",
+      "options": ["ネットワークの学習が速くなる", "時間ステップに沿って出力が指数関数的に爆発する（勾配爆発問題）", "ネットワークがより安定する", "訓練中に固有値が1へ収束する"],
       "correct": 1,
-      "explanation": "Repeated multiplication by a matrix amplifies the eigenvalue directions. Eigenvalues > 1 cause exponential growth (exploding gradients), while eigenvalues < 1 cause exponential decay (vanishing gradients)."
+      "explanation": "行列を繰り返し掛けると、固有値方向が増幅されます。固有値の大きさが1より大きいと指数関数的な成長（勾配爆発）を引き起こし、1より小さいと指数関数的な減衰（勾配消失）を引き起こします。"
     },
     {
       "stage": "post",
-      "question": "The matrix A = [[2, 1], [1, 2]] has eigenvalues 3 and 1. What does eigendecomposition A = V @ D @ V^(-1) reveal?",
-      "options": ["A is equivalent to two rotations", "A stretches space by 3x along the [1,1] direction and leaves the [1,-1] direction unchanged", "A compresses all vectors by a factor of 2", "A has rank 1 and maps all vectors to a line"],
+      "question": "行列 A = [[2, 1], [1, 2]] は固有値3と1を持ちます。固有分解 A = V @ D @ V^(-1) から何が分かりますか？",
+      "options": ["A は2つの回転と同等である", "A は [1,1] 方向に空間を3倍引き伸ばし、[1,-1] 方向は変えずに残す", "A はすべてのベクトルを2分の1に圧縮する", "A はランク1で、すべてのベクトルを直線へ写す"],
       "correct": 1,
-      "explanation": "The eigenvalue 3 with eigenvector [1,1] means A stretches 3x along the diagonal. The eigenvalue 1 with eigenvector [1,-1] means A leaves the anti-diagonal unchanged. D holds {3,1}, V holds the eigenvectors."
+      "explanation": "固有ベクトル [1,1] に対応する固有値3は、A が対角方向に3倍引き伸ばすことを意味します。固有ベクトル [1,-1] に対応する固有値1は、A が反対角方向を変えずに残すことを意味します。D は {3,1} を持ち、V は固有ベクトルを持ちます。"
     }
   ]
 }

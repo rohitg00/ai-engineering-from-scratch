@@ -1,12 +1,12 @@
-"""AI Control protocol simulation — stdlib Python.
+"""AI Control protocol simulation — stdlib Python。
 
-Four protocols on a toy backdoor task:
-  baseline   : ship U's output directly.
-  upfront    : audit every output with H (budget-limited).
-  untrusted  : second U scores outputs (collusion-risk).
-  trusted_ed : T edits every output; H on low-confidence T flags.
+toy backdoor task 上の 4 protocols:
+  baseline   : U の output をそのまま ship する。
+  upfront    : すべての output を H で audit する (budget-limited)。
+  untrusted  : 2 つ目の U が outputs を score する (collusion-risk)。
+  trusted_ed : T がすべての output を edit し、low-confidence T flags で H を呼ぶ。
 
-Outcomes: backdoor-ship rate (safety-inverted) and useful-output rate.
+outcomes: backdoor-ship rate (safety-inverted) と useful-output rate。
 
 Usage: python3 code/main.py
 """
@@ -20,38 +20,38 @@ random.seed(23)
 
 
 def u_produce(backdoor_rate: float) -> tuple[str, bool]:
-    """U produces an output. Returns (output, is_backdoored)."""
+    """U が output を生成します。(output, is_backdoored) を返します。"""
     is_backdoor = random.random() < backdoor_rate
     return ("useful" if not is_backdoor else "backdoor"), is_backdoor
 
 
 def t_edit(output: str, is_backdoor: bool, t_skill: float,
            overreject: float = 0.05) -> tuple[str, bool, bool]:
-    """T edits. Returns (edited, still_backdoored, t_low_confidence).
+    """T が edit します。(edited, still_backdoored, t_low_confidence) を返します。
 
-    T succeeds at removing backdoors with probability t_skill. T also rejects
-    a fraction of benign outputs (overreject).
+    T は t_skill の確率で backdoors の除去に成功します。T は benign outputs の
+    一部も reject します (overreject)。
     """
     if is_backdoor:
         if random.random() < t_skill:
             return ("useful", False, False)
         return ("backdoor", True, True)
-    # benign input: T over-rejects with some probability
+    # benign input: T はある確率で over-reject する
     if random.random() < overreject:
         return ("rejected", False, True)
     return ("useful", False, False)
 
 
 def untrusted_monitor(is_backdoor: bool, collusion: float) -> bool:
-    """Second U instance scores. If it colludes, it passes backdoors.
+    """2 つ目の U instance が score します。collude すると backdoors を通します。
 
-    collusion = probability the monitor colludes with the producer.
-    Returns True if the monitor flags the output (i.e. catches it).
+    collusion = monitor が producer と collude する確率。
+    monitor が output を flag する (つまり catch する) なら True を返します。
     """
     if not is_backdoor:
-        # monitor correctly passes benign with high probability
+        # monitor は benign を高い確率で正しく pass する
         return random.random() < 0.05
-    # monitor would normally flag; collusion suppresses that signal.
+    # 通常 monitor は flag するが、collusion はその signal を suppress する。
     if random.random() < collusion:
         return False
     return random.random() < 0.80
@@ -103,7 +103,7 @@ def run_protocol(name: str, backdoor_rate: float, h_budget: float,
                     useful += 1
                 elif still_bd:
                     shipped_backdoor += 1
-    print(f"\n{name:>12s}  useful={useful/n:.3f}  backdoor={shipped_backdoor/n:.3f}"
+    print(f"\n{name:>12s}  usefulness={useful/n:.3f}  backdoor={shipped_backdoor/n:.3f}"
           f"  H used={used_h/n:.3f}")
 
 
@@ -117,19 +117,20 @@ def main() -> None:
         for proto in ("baseline", "upfront", "untrusted", "trusted_ed"):
             run_protocol(proto, backdoor_rate=br, h_budget=0.10, n=1000)
 
-    print("\n-- collusion sweep on untrusted monitoring (backdoor_rate=0.10) --")
+    print("\n-- untrusted monitoring の collusion sweep (backdoor_rate=0.10) --")
     for col in (0.0, 0.20, 0.50, 0.80):
         print(f"\ncollusion={col}")
         run_protocol("untrusted", backdoor_rate=0.10, h_budget=0.10, n=1000,
                      collusion=col)
 
     print("\n" + "=" * 70)
-    print("TAKEAWAY: trusted editing Pareto-dominates untrusted monitoring on")
-    print("this toy task. collusion between two U instances erodes untrusted")
-    print("monitoring's safety signal. trusted editing has no collusion risk")
-    print("because T is, by assumption, not adversarial. cost: T's editing")
-    print("signal is bounded by T's capability; at larger U-T capability gaps")
-    print("control eventually fails. see Greenblatt 2023.")
+    print("要点: この toy task では trusted editing が untrusted monitoring を")
+    print("Pareto-dominate します。2 つの U instances 間の collusion は")
+    print("untrusted monitoring の safety signal を侵食します。trusted editing には")
+    print("collusion risk がありません。T は仮定上 adversarial ではないからです。")
+    print("代償として、T の editing signal は T の capability に bound されます。")
+    print("U-T capability gap が大きくなると control は最終的に失敗します。")
+    print("Greenblatt 2023 を参照してください。")
     print("=" * 70)
 
 

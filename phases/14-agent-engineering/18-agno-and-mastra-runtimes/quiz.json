@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which language pairing does the lesson recommend for each runtime?",
+      "question": "このlessonはruntimeごとにどのlanguage pairingを推奨していますか?",
       "options": [
-        "Agno for TypeScript, Mastra for Python",
-        "Agno for Python, Mastra for TypeScript",
-        "Both are Rust-first",
-        "Both are Go-first"
+        "AgnoはTypeScript、MastraはPython",
+        "AgnoはPython、MastraはTypeScript",
+        "どちらもRust-first",
+        "どちらもGo-first"
       ],
       "correct": 1,
-      "explanation": "Agno is Python (FastAPI-shaped); Mastra is TypeScript (Vercel AI SDK-shaped)."
+      "explanation": "AgnoはPython (FastAPI-shaped)、MastraはTypeScript (Vercel AI SDK-shaped) です。"
     },
     {
       "stage": "pre",
-      "question": "What is Agno's recommended production deployment shape?",
+      "question": "Agnoのrecommended production deployment shapeは何ですか?",
       "options": [
-        "A long-lived stateful daemon",
-        "A stateless session-scoped FastAPI backend; each request starts a fresh agent and session state lives in a DB",
-        "A serverless cron worker only",
-        "A WebSocket-only server"
+        "long-lived stateful daemon",
+        "stateless session-scoped FastAPI backend。各requestでfresh agentを開始し、session stateはDBに置く",
+        "serverless cron workerのみ",
+        "WebSocket-only server"
       ],
       "correct": 1,
-      "explanation": "Stateless FastAPI per request; session state externalized to a DB."
+      "explanation": "requestごとのstateless FastAPIで、session stateはDBへexternalizeします。"
     },
     {
       "stage": "check",
-      "question": "What are Mastra's three primitives?",
+      "question": "Mastraの3つのprimitiveは何ですか?",
       "options": [
         "Agents, Tools, Workflows",
         "Actor, Message, Inbox",
@@ -36,55 +36,55 @@
         "Node, Edge, State"
       ],
       "correct": 0,
-      "explanation": "Agents (LLM + role), Tools (Zod-typed), and Workflows are Mastra's three primitives."
+      "explanation": "Agents (LLM + role)、Tools (Zod-typed)、WorkflowsがMastraの3つのprimitiveです。"
     },
     {
       "stage": "check",
-      "question": "Roughly what agent-instantiation cost does Agno target per its docs?",
+      "question": "Agnoがdocsでtargetにしているagent instantiation costはおよそどれですか?",
       "options": [
-        "About 2 microseconds with about 3.75 KiB per agent",
-        "About 200 milliseconds and 100 MiB per agent",
-        "About 1 second and 1 GiB per agent",
-        "About 10 minutes and 4 GiB per agent"
+        "agentあたり約2 microseconds、約3.75 KiB",
+        "agentあたり約200 milliseconds、100 MiB",
+        "agentあたり約1 second、1 GiB",
+        "agentあたり約10 minutes、4 GiB"
       ],
       "correct": 0,
-      "explanation": "Agno's docs cite about 2 microseconds and about 3.75 KiB per agent."
+      "explanation": "Agno docsはagentあたり約2 microseconds、約3.75 KiBを挙げています。"
     },
     {
       "stage": "check",
-      "question": "What does Mastra's Unified Model Router give?",
+      "question": "MastraのUnified Model Routerは何を提供しますか?",
       "options": [
-        "A single client surface for thousands of models across many providers",
-        "A queue for tool calls",
-        "A vector DB layer",
-        "A graph checkpointer"
+        "many providers across thousands of modelsへのsingle client surface",
+        "tool call用queue",
+        "vector DB layer",
+        "graph checkpointer"
       ],
       "correct": 0,
-      "explanation": "Mastra's Unified Model Router cites 3,300+ models across 94 providers."
+      "explanation": "MastraのUnified Model Routerは94 providers across 3,300+ modelsを挙げています。"
     },
     {
       "stage": "post",
-      "question": "When is perf-for-perf's-sake the wrong reason to pick Agno?",
+      "question": "perf-for-perf's-sakeがAgnoを選ぶ誤った理由になるのはいつですか?",
       "options": [
-        "When the workload is one slow agent call per request and overhead is not the bottleneck",
-        "When using Python 3.13",
-        "When deploying to AWS",
-        "When using Langfuse"
+        "workloadがrequestごとに1つの遅いagent callで、overheadがbottleneckではないとき",
+        "Python 3.13を使うとき",
+        "AWSにdeployするとき",
+        "Langfuseを使うとき"
       ],
       "correct": 0,
-      "explanation": "2 microseconds matters at chat fan-in scale, not for a single slow call per request."
+      "explanation": "2 microsecondsはchat fan-in scaleでは重要ですが、requestごとの単一の遅いcallでは重要ではありません。"
     },
     {
       "stage": "post",
-      "question": "What licensing surface should you read carefully before forking Mastra?",
+      "question": "Mastraをforkする前に慎重に読むべきlicensing surfaceは何ですか?",
       "options": [
-        "There is no license file",
-        "ee/ directories are source-available rather than Apache 2.0 and restrict commercial use",
-        "All of Mastra is GPL",
-        "Mastra requires CLA but no license review"
+        "license fileは存在しない",
+        "ee/ directoriesはApache 2.0ではなくsource-availableで、commercial useを制限する",
+        "Mastra全体がGPL",
+        "MastraはCLAだけを要求し、license reviewは不要"
       ],
       "correct": 1,
-      "explanation": "Mastra is Apache 2.0 except for ee/ which is source-available; check the restrictions before forking."
+      "explanation": "Mastraはee/を除きApache 2.0です。ee/はsource-availableなので、fork前にrestrictionを確認してください。"
     }
   ]
 }

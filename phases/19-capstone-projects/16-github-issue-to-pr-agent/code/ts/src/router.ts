@@ -44,7 +44,7 @@ export function route(audit: AuditLog, event: string, payload: unknown): RouteRe
       event: "pull_request",
       action: "observed",
       repo: "n/a",
-      note: "PR lifecycle event observed",
+      note: "PR lifecycle event を観測しました",
     });
     return { code: 200, body: { observed: true } };
   }

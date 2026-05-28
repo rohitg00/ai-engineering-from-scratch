@@ -1,32 +1,32 @@
 # 3D Gaussian Splatting from Scratch
 
-> A scene is a cloud of millions of 3D Gaussians. Each one has a position, orientation, scale, opacity, and a colour that depends on viewing direction. Rasterise them, backprop through the rasterisation, done.
+> scene は数百万個の 3D Gaussians の cloud である。それぞれが position、orientation、scale、opacity、viewing direction に依存する colour を持つ。それらを rasterise し、rasterisation を通して backprop すればよい。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 13 (3D Vision & NeRF), Phase 1 Lesson 12 (Tensor Operations), Phase 4 Lesson 10 (Diffusion basics optional)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 13 (3D Vision & NeRF), Phase 1 Lesson 12 (Tensor Operations), Phase 4 Lesson 10 (Diffusion basics optional)
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Explain why 3D Gaussian Splatting replaced NeRF as the production default for photorealistic 3D reconstruction in 2026
-- State the six per-Gaussian parameters (position, rotation quaternion, scale, opacity, spherical harmonics colour, optional feature) and how many floats each contributes
-- Implement a 2D Gaussian splatting rasterizer from scratch using `alpha` compositing, then show how the 3D case projects to the same loop
-- Use `nerfstudio`, `gsplat`, or `SuperSplat` to reconstruct a scene from 20-50 photos and export to the `KHR_gaussian_splatting` glTF extension or the OpenUSD 26.03 `UsdVolParticleField3DGaussianSplat` schema
+- 2026 年に photorealistic 3D reconstruction の本番 default として 3D Gaussian Splatting が NeRF を置き換えた理由を説明する
+- Gaussian ごとの 6 つの parameters (position, rotation quaternion, scale, opacity, spherical harmonics colour, optional feature) と、それぞれが何個の float を持つかを述べる
+- `alpha` compositing を使う 2D Gaussian splatting rasterizer を scratch から実装し、3D case が同じ loop に projection されることを示す
+- `nerfstudio`、`gsplat`、または `SuperSplat` を使って 20-50 枚の写真から scene を reconstruct し、`KHR_gaussian_splatting` glTF extension または OpenUSD 26.03 `UsdVolParticleField3DGaussianSplat` schema に export する
 
-## The Problem
+## 問題
 
-A NeRF stores a scene as the weights of an MLP. Every rendered pixel is hundreds of MLP queries along a ray. Training takes hours, rendering takes seconds, and the weights cannot be edited — if you want to move a chair inside a scene, you have to retrain.
+NeRF は scene を MLP の weights として保存する。render される各 pixel は ray に沿って数百回 MLP query を行う。training は何時間もかかり、rendering は秒単位で、weights は編集できない。scene 内の椅子を動かしたいなら retrain が必要になる。
 
-3D Gaussian Splatting (Kerbl, Kopanas, Leimkühler, Drettakis, SIGGRAPH 2023) replaced all of that. A scene is an explicit set of 3D Gaussians. Rendering is GPU rasterisation at 100+ fps. Training takes minutes. Editing is direct: translate a subset of Gaussians and you have moved the chair. By 2026 the Khronos Group has ratified a glTF extension for Gaussian splats, OpenUSD 26.03 ships a Gaussian splat schema, Zillow and Apartments.com render real estate with them, and most new research papers on 3D reconstruction are variants on the core 3DGS idea.
+3D Gaussian Splatting (Kerbl, Kopanas, Leimkühler, Drettakis, SIGGRAPH 2023) はこれを置き換えた。scene は明示的な 3D Gaussians の集合である。Rendering は GPU rasterisation で 100+ fps。Training は分単位。Editing は直接的で、Gaussian の subset を translate すれば椅子を動かしたことになる。2026 年までに Khronos Group は Gaussian splats 用 glTF extension を ratify し、OpenUSD 26.03 は Gaussian splat schema を搭載し、Zillow や Apartments.com は不動産をこれで render し、3D reconstruction の新しい research papers の多くは core 3DGS idea の variants になっている。
 
-The mental model is simple, the math has enough moving parts that most introductions start at rasterisation and skip past the projections and spherical harmonics. This lesson builds the whole thing — a 2D version first, then the 3D extension.
+mental model は単純だが、math には多くの可動部品があるため、多くの入門は rasterisation から始めて projection と spherical harmonics を飛ばす。この lesson では全体を作る。まず 2D version、次に 3D extension である。
 
-## The Concept
+## コンセプト
 
-### What a Gaussian carries
+### Gaussian が持つもの
 
-One 3D Gaussian is a parametric blob in space with these attributes:
+1 つの 3D Gaussian は、空間内の parametric blob であり、次の attributes を持つ。
 
 ```
 position         mu         (3,)    centre in world coordinates
@@ -36,11 +36,11 @@ opacity          alpha      (1,)    post-sigmoid opacity [0, 1]
 SH coefficients  c_lm       (3 * (L+1)^2,)   view-dependent colour
 ```
 
-Rotation + scale build a 3x3 covariance: `Sigma = R S S^T R^T`. That is the shape of the Gaussian in 3D. Spherical harmonics let the colour change with viewing direction — specular highlights, subtle sheen, view-dependent glow — without storing per-view textures. With SH degree 3 you get 16 coefficients per colour channel, 48 floats per Gaussian for colour alone.
+Rotation + scale は 3x3 covariance `Sigma = R S S^T R^T` を作る。これが 3D 内の Gaussian の shape である。Spherical harmonics により、viewing direction に応じて colour を変えられる。specular highlights、subtle sheen、view-dependent glow を per-view textures なしで表現する。SH degree 3 では colour channel ごとに 16 coefficients、つまり colour だけで Gaussian あたり 48 floats になる。
 
-A scene typically has 1-5 million Gaussians. Each stores roughly 60 floats (3 + 4 + 3 + 1 + 48 + misc). That is 240 MB for a five-million-Gaussian scene — far smaller than the equivalent point cloud with per-point texture, and an order of magnitude smaller than a NeRF's MLP weights re-rendered at high resolution.
+scene は通常 1-5 million Gaussians を持つ。各 Gaussian はおよそ 60 floats (3 + 4 + 3 + 1 + 48 + misc) を保存する。500 万 Gaussian の scene で 240 MB であり、per-point texture 付きの同等 point cloud よりはるかに小さく、高解像度で再 render される NeRF の MLP weights より 1 桁小さい。
 
-### Rasterisation, not ray marching
+### ray marching ではなく rasterisation
 
 ```mermaid
 flowchart LR
@@ -55,11 +55,11 @@ flowchart LR
     style PIX fill:#dcfce7,stroke:#16a34a
 ```
 
-Five steps, all GPU-friendly. No MLP query per pixel. A single RTX 3080 Ti renders 6 million splats at 147 fps.
+5 steps で、すべて GPU-friendly である。pixel ごとの MLP query はない。単一の RTX 3080 Ti で 600 万 splats を 147 fps で render できる。
 
-### The projection step
+### projection step
 
-The 3D Gaussian at world position `mu` with 3D covariance `Sigma` projects to a 2D Gaussian at screen position `mu'` with 2D covariance `Sigma'`:
+world position `mu` と 3D covariance `Sigma` を持つ 3D Gaussian は、screen position `mu'` と 2D covariance `Sigma'` を持つ 2D Gaussian に project される。
 
 ```
 mu' = project(mu)
@@ -69,11 +69,11 @@ W = viewing transform (rotation + translation of camera)
 J = Jacobian of the perspective projection at mu'
 ```
 
-The 2D Gaussian's footprint is an ellipse whose axes are the eigenvectors of `Sigma'`. Every pixel inside that ellipse receives the Gaussian's contribution, weighted by `exp(-0.5 * (p - mu')^T Sigma'^-1 (p - mu'))`.
+2D Gaussian の footprint は、`Sigma'` の eigenvectors を axis とする ellipse である。その ellipse 内の各 pixel は Gaussian の contribution を受け取り、`exp(-0.5 * (p - mu')^T Sigma'^-1 (p - mu'))` で重み付けされる。
 
-### The alpha-compositing rule
+### alpha-compositing rule
 
-For one pixel, the Gaussians that cover it are sorted back-to-front (or equivalently front-to-back with inverted formula). Colour is composited with the same equation as every semi-transparent rasteriser since the 1980s:
+1 pixel について、それを覆う Gaussians は back-to-front で sort される (または等価に、反転した式で front-to-back)。Colour は 1980 年代からあるすべての semi-transparent rasteriser と同じ式で composite される。
 
 ```
 C_pixel = sum_i alpha_i * T_i * c_i
@@ -83,27 +83,27 @@ alpha_i = opacity_i * exp(-0.5 * d^T Sigma'^-1 d)   local contribution
 c_i = eval_SH(SH_i, view_direction)    view-dependent colour
 ```
 
-This is **the same equation as NeRF's volumetric render**, just over an explicit sparse set of Gaussians instead of dense samples along a ray. That identity is why rendered quality matches NeRF — both are integrating the same radiance-field equation.
+これは **NeRF の volumetric render と同じ式** である。ただし ray に沿った dense samples ではなく、明示的で sparse な Gaussians 上で計算する。この一致が、rendered quality が NeRF と並ぶ理由である。どちらも同じ radiance-field equation を integrate している。
 
-### Why this is differentiable
+### differentiable である理由
 
-Every step — projection, tile assignment, alpha compositing, SH evaluation — is differentiable with respect to the Gaussian parameters. Given a ground-truth image, compute rendered pixel loss, backprop through the rasteriser, update all `(mu, q, s, alpha, c_lm)` by gradient descent. Over ~30,000 iterations the Gaussians find their right positions, scales, and colours.
+projection、tile assignment、alpha compositing、SH evaluation のすべての step は Gaussian parameters に関して differentiable である。ground-truth image が与えられたら、rendered pixel loss を計算し、rasteriser を通して backprop し、すべての `(mu, q, s, alpha, c_lm)` を gradient descent で更新する。約 30,000 iterations の間に、Gaussians は正しい positions、scales、colours を見つける。
 
 ### Densification and pruning
 
-A fixed set of Gaussians cannot cover a complex scene. Training includes two adaptive mechanisms:
+固定された Gaussian 集合では複雑な scene を覆えない。Training には 2 つの adaptive mechanisms が含まれる。
 
-- **Clone** a Gaussian at its current position when its gradient magnitude is high but its scale is small — the reconstruction needs more detail here.
-- **Split** a large-scale Gaussian into two smaller ones when its gradient is high — one big Gaussian is too smooth to fit the region.
-- **Prune** Gaussians whose opacity drops below a threshold — they are not contributing.
+- **Clone** gradient magnitude が高いが scale が小さい Gaussian を現在位置で clone する。この領域にはより多くの detail が必要である。
+- **Split** gradient が高い大きな scale の Gaussian を 2 つの小さな Gaussian に分割する。1 つの大きな Gaussian はその領域に対して滑らかすぎる。
+- **Prune** opacity が threshold 未満に落ちた Gaussians を削除する。それらは寄与していない。
 
-Densification runs every N iterations. A scene typically grows from ~100k initial Gaussians (seeded from SfM points) to 1-5M at the end of training.
+Densification は N iterations ごとに走る。scene は通常、SfM points から seed された約 100k initial Gaussians から、training の最後には 1-5M まで増える。
 
-### Spherical harmonics in one paragraph
+### spherical harmonics を 1 段落で
 
-View-dependent colour is a function `c(direction)` on the unit sphere. Spherical harmonics are the sphere's Fourier basis. Truncate at degree `L` and you get `(L+1)^2` basis functions per channel. Evaluating the colour for a new view is a dot product between the learned SH coefficients and the basis evaluated at the viewing direction. Degree 0 = one coefficient = constant colour. Degree 3 = 16 coefficients = enough to capture Lambertian shading, specular, and mild reflection. SD Gaussian Splatting papers use degree 3 by default.
+View-dependent colour は unit sphere 上の function `c(direction)` である。Spherical harmonics は sphere の Fourier basis である。degree `L` で打ち切ると、channel ごとに `(L+1)^2` basis functions が得られる。新しい view の colour を評価することは、learned SH coefficients と viewing direction で評価された basis の dot product である。Degree 0 は 1 coefficient の constant colour。Degree 3 は 16 coefficients で、Lambertian shading、specular、軽い reflection を捉えるのに十分である。3D Gaussian Splatting papers は degree 3 を default にする。
 
-### The 2026 production stack
+### 2026 年の production stack
 
 ```
 1. Capture         smartphone / DJI drone / handheld scanner
@@ -116,15 +116,15 @@ View-dependent colour is a function `c(direction)` on the unit sphere. Spherical
 
 ### 4D and generative variants
 
-- **4D Gaussian Splatting** — Gaussians are functions of time; used for volumetric video (Superman 2026, A$AP Rocky's "Helicopter").
-- **Generative splats** — text-to-splat models (Marble by World Labs) that hallucinate entire scenes.
-- **3D Gaussian Unscented Transform** — NVIDIA NuRec's variant for autonomous driving simulation.
+- **4D Gaussian Splatting** — Gaussians が time の functions になる。volumetric video に使われる (Superman 2026, A$AP Rocky's "Helicopter")。
+- **Generative splats** — scene 全体を hallucinate する text-to-splat models (World Labs の Marble)。
+- **3D Gaussian Unscented Transform** — autonomous driving simulation 向け NVIDIA NuRec の variant。
 
-## Build It
+## 実装
 
-### Step 1: A 2D Gaussian
+### Step 1: 2D Gaussian
 
-We first build a 2D rasteriser. The 3D case reduces to it after projection.
+まず 2D rasteriser を作る。3D case は projection 後にこれへ帰着する。
 
 ```python
 import torch
@@ -149,11 +149,11 @@ def eval_2d_gaussian(means, covs, points):
     return density.view(G, H, W)
 ```
 
-`einsum` does the quadratic form `diff^T Sigma^-1 diff` for every (Gaussian, pixel) pair.
+`einsum` はすべての (Gaussian, pixel) pair について quadratic form `diff^T Sigma^-1 diff` を計算する。
 
 ### Step 2: 2D splatting rasteriser
 
-Alpha-compositing front-to-back. Depth in 2D is meaningless, so we use a learned per-Gaussian scalar for order.
+front-to-back の Alpha-compositing。2D では depth に意味がないため、order には Gaussian ごとの learned scalar を使う。
 
 ```python
 def rasterise_2d(means, covs, colours, opacities, depths, image_size):
@@ -191,9 +191,9 @@ def rasterise_2d(means, covs, colours, opacities, depths, image_size):
     return out
 ```
 
-Not fast — a real implementation uses tile-based CUDA kernels — but exactly the right math and fully differentiable.
+速くはない。本物の implementation は tile-based CUDA kernels を使う。しかし math は正しく、完全に differentiable である。
 
-### Step 3: A trainable 2D splat scene
+### Step 3: trainable 2D splat scene
 
 ```python
 class Splats2D(nn.Module):
@@ -225,9 +225,9 @@ class Splats2D(nn.Module):
         return rasterise_2d(self.means, covs, colours, opacities, self.depth, image_size)
 ```
 
-`log_scale`, `opacity_logit`, and `colour_logits` are all unconstrained parameters mapped through the right activation at render time. This is the standard pattern for every 3DGS implementation.
+`log_scale`、`opacity_logit`、`colour_logits` はすべて unconstrained parameters であり、render time に適切な activation で map される。これはすべての 3DGS implementation で使われる標準 pattern である。
 
-### Step 4: Fit 2D Gaussians to a target image
+### Step 4: 2D Gaussians を target image に fit する
 
 ```python
 import math
@@ -257,23 +257,23 @@ for step in range(200):
         print(f"step {step:3d}  mse {loss.item():.4f}")
 ```
 
-Over 200 steps the 64 Gaussians settle into the two shapes. That is the entire idea — gradient-descent on explicit geometric primitives.
+200 steps で 64 Gaussians は 2 つの shapes に収まる。これが全体の考え方である。明示的な geometric primitives に対する gradient descent だ。
 
-### Step 5: From 2D to 3D
+### Step 5: 2D から 3D へ
 
-The 3D extension keeps the same loop. The additions:
+3D extension でも同じ loop を保つ。追加されるものは次の通り。
 
-1. Per-Gaussian rotation is a quaternion instead of a single angle.
-2. Covariance is `R S S^T R^T` with `R` built from the quaternion and `S = diag(exp(log_scale))`.
-3. Projection `(mu, Sigma) -> (mu', Sigma')` uses the camera extrinsics and the Jacobian of the perspective projection at `mu`.
-4. Colour becomes a spherical-harmonics expansion; evaluate it at the viewing direction.
-5. Depth-sort is from actual camera-space z instead of a learned scalar.
+1. Gaussian ごとの rotation は単一 angle ではなく quaternion になる。
+2. Covariance は quaternion から作った `R` と `S = diag(exp(log_scale))` を使う `R S S^T R^T` になる。
+3. Projection `(mu, Sigma) -> (mu', Sigma')` は camera extrinsics と `mu` における perspective projection の Jacobian を使う。
+4. Colour は spherical-harmonics expansion になる。viewing direction で評価する。
+5. Depth-sort は learned scalar ではなく actual camera-space z から行う。
 
-Every production implementation (`gsplat`, `inria/gaussian-splatting`, `nerfstudio`) does exactly this on the GPU with tile-based CUDA kernels.
+すべての production implementation (`gsplat`, `inria/gaussian-splatting`, `nerfstudio`) は、tile-based CUDA kernels を使って GPU 上でまさにこれを行う。
 
-### Step 6: Spherical harmonics evaluation
+### Step 6: spherical harmonics evaluation
 
-The SH basis up to degree 3 has 16 terms per channel. Evaluation:
+Degree 3 までの SH basis は channel ごとに 16 terms を持つ。Evaluation:
 
 ```python
 def eval_sh_degree_3(sh_coeffs, dirs):
@@ -306,11 +306,11 @@ def eval_sh_degree_3(sh_coeffs, dirs):
     return result
 ```
 
-Learned `sh_coeffs` store the "colour in every direction" for that Gaussian. At render time you evaluate against the current view direction and get a 3-vector RGB.
+Learned `sh_coeffs` はその Gaussian の「すべての方向の colour」を保存する。render time には current view direction に対して評価し、3-vector RGB を得る。
 
-## Use It
+## 使い方
 
-For real 3DGS work, use `gsplat` (Meta) or `nerfstudio`:
+実際の 3DGS 作業では `gsplat` (Meta) または `nerfstudio` を使う。
 
 ```bash
 pip install nerfstudio gsplat
@@ -318,48 +318,48 @@ ns-download-data example
 ns-train splatfacto --data path/to/data
 ```
 
-`splatfacto` is nerfstudio's 3DGS trainer. The run takes 10-30 minutes on an RTX 4090 for a typical scene.
+`splatfacto` は nerfstudio の 3DGS trainer である。典型的な scene では RTX 4090 で 10-30 分かかる。
 
-Export options that matter in 2026:
+2026 年に重要な export options:
 
-- `.ply` — raw Gaussian cloud (portable, largest file).
-- `.splat` — PlayCanvas / SuperSplat quantised format.
-- glTF `KHR_gaussian_splatting` — Khronos standard, portable across viewers (Feb 2026 RC).
-- OpenUSD `UsdVolParticleField3DGaussianSplat` — USD-native, for NVIDIA Omniverse and Vision Pro pipelines.
+- `.ply` — raw Gaussian cloud (portable, largest file)。
+- `.splat` — PlayCanvas / SuperSplat quantised format。
+- glTF `KHR_gaussian_splatting` — Khronos standard。viewers 間で portable (Feb 2026 RC)。
+- OpenUSD `UsdVolParticleField3DGaussianSplat` — USD-native。NVIDIA Omniverse と Vision Pro pipelines 向け。
 
-For 4D / dynamic scenes, `4DGS` and `Deformable-3DGS` extend the same machinery with time-varying means and opacities.
+4D / dynamic scenes では、`4DGS` と `Deformable-3DGS` が同じ仕組みを time-varying means と opacities で拡張する。
 
-## Ship It
+## 成果物
 
-This lesson produces:
+この lesson は次を生成する:
 
-- `outputs/prompt-3dgs-capture-planner.md` — a prompt that plans a capture session (number of photos, camera path, lighting) for a given scene type.
-- `outputs/skill-3dgs-export-router.md` — a skill that picks the right export format (`.ply` / `.splat` / glTF / USD) given the downstream viewer or engine.
+- `outputs/prompt-3dgs-capture-planner.md` — 与えられた scene type に対して capture session (写真枚数、camera path、lighting) を計画する prompt。
+- `outputs/skill-3dgs-export-router.md` — downstream viewer または engine に応じて適切な export format (`.ply` / `.splat` / glTF / USD) を選ぶ skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Run the 2D splat trainer above on a different synthetic image. Vary `num_splats` in `[16, 64, 256]` and plot MSE vs step for each. Identify the point of diminishing returns.
-2. **(Medium)** Extend the 2D rasteriser to support per-Gaussian RGB colours that depend on a scalar "view angle" through a degree-2 harmonic. Train on a pair of target images and verify the model reconstructs both.
-3. **(Hard)** Clone `nerfstudio` and train `splatfacto` on a 20-photo capture of any scene you have (desk, plant, face, room). Export to glTF `KHR_gaussian_splatting` and open it in a viewer (Three.js `GaussianSplats3D`, SuperSplat, Babylon.js V9). Report training time, number of Gaussians, and rendered fps.
+1. **(Easy)** 上の 2D splat trainer を別の synthetic image で実行する。`num_splats` を `[16, 64, 256]` で変え、それぞれの MSE vs step を plot する。diminishing returns の地点を特定する。
+2. **(Medium)** 2D rasteriser を拡張し、degree-2 harmonic によって scalar "view angle" に依存する Gaussian ごとの RGB colours を support する。target images のペアで学習し、model が両方を reconstruct することを確認する。
+3. **(Hard)** `nerfstudio` を clone し、手元にある任意の scene (desk, plant, face, room) の 20-photo capture で `splatfacto` を学習する。glTF `KHR_gaussian_splatting` に export し、viewer (Three.js `GaussianSplats3D`, SuperSplat, Babylon.js V9) で開く。training time、Gaussians 数、rendered fps を報告する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる表現 | 実際の意味 |
 |------|----------------|----------------------|
-| 3DGS | "Gaussian splats" | Explicit scene representation as millions of 3D Gaussians with per-Gaussian position, rotation, scale, opacity, SH colour |
-| Covariance | "Shape of the Gaussian" | `Sigma = R S S^T R^T`; orientation and anisotropic scale of one Gaussian |
-| Alpha compositing | "Back-to-front blend" | Same equation as NeRF's volumetric render, now over an explicit sparse set |
-| Densification | "Clone and split" | Adaptive addition of new Gaussians where reconstruction is under-fit |
-| Pruning | "Delete low-opacity" | Remove Gaussians that have collapsed to near-zero opacity during training |
-| Spherical harmonics | "View-dependent colour" | Fourier basis on the sphere; stores colour as a function of viewing direction |
-| Splatfacto | "nerfstudio's 3DGS" | The easiest path to training 3DGS in 2026 |
-| `KHR_gaussian_splatting` | "glTF standard" | Khronos 2026 extension that makes 3DGS portable across viewers and engines |
+| 3DGS | "Gaussian splats" | Gaussian ごとの position, rotation, scale, opacity, SH colour を持つ数百万個の 3D Gaussians による明示的 scene representation |
+| Covariance | "Shape of the Gaussian" | `Sigma = R S S^T R^T`。1 つの Gaussian の orientation と anisotropic scale |
+| Alpha compositing | "Back-to-front blend" | NeRF の volumetric render と同じ式を、明示的で sparse な集合上で計算する |
+| Densification | "Clone and split" | reconstruction が under-fit している場所に新しい Gaussians を adaptive に追加する |
+| Pruning | "Delete low-opacity" | training 中に near-zero opacity に崩れた Gaussians を削除する |
+| Spherical harmonics | "View-dependent colour" | sphere 上の Fourier basis。viewing direction の関数として colour を保存する |
+| Splatfacto | "nerfstudio's 3DGS" | 2026 年に 3DGS を training する最も簡単な path |
+| `KHR_gaussian_splatting` | "glTF standard" | 3DGS を viewers と engines 間で portable にする Khronos 2026 extension |
 
-## Further Reading
+## 参考資料
 
-- [3D Gaussian Splatting for Real-Time Radiance Field Rendering (Kerbl et al., SIGGRAPH 2023)](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) — the original paper
+- [3D Gaussian Splatting for Real-Time Radiance Field Rendering (Kerbl et al., SIGGRAPH 2023)](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/) — original paper
 - [gsplat (Meta/nerfstudio)](https://github.com/nerfstudio-project/gsplat) — production-quality CUDA rasteriser
 - [nerfstudio Splatfacto](https://docs.nerf.studio/nerfology/methods/splat.html) — reference training recipe
-- [Khronos KHR_gaussian_splatting extension](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md) — the 2026 portable format
+- [Khronos KHR_gaussian_splatting extension](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md) — 2026 portable format
 - [OpenUSD 26.03 release notes](https://openusd.org/release/) — `UsdVolParticleField3DGaussianSplat` schema
 - [THE FUTURE 3D State of Gaussian Splatting 2026](https://www.thefuture3d.com/blog-0/2026/4/4/state-of-gaussian-splatting-2026) — industry overview

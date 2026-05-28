@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="'Hiragino Sans', 'Yu Gothic', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#111827"/>
@@ -19,11 +19,11 @@
 
   <!-- agent -->
   <rect x="130" y="80" width="120" height="60" class="node"/>
-  <text x="190" y="115" text-anchor="middle" class="label">agent</text>
+  <text x="190" y="115" text-anchor="middle" class="label">エージェント</text>
 
   <!-- tools -->
   <rect x="330" y="80" width="120" height="60" class="node"/>
-  <text x="390" y="115" text-anchor="middle" class="label">tools</text>
+  <text x="390" y="115" text-anchor="middle" class="label">ツール</text>
 
   <!-- END -->
   <circle cx="570" cy="110" r="18" class="node"/>
@@ -32,15 +32,15 @@
   <!-- edges -->
   <path class="edge" d="M68,110 L130,110" marker-end="url(#arrow)"/>
   <path class="edge" d="M250,100 Q290,70 330,100" marker-end="url(#arrow)"/>
-  <text x="290" y="62" text-anchor="middle" class="label">if tool_calls</text>
+  <text x="290" y="62" text-anchor="middle" class="label">ツール_callsなら</text>
   <path class="edge" d="M330,130 Q290,160 250,130" marker-end="url(#arrow)"/>
-  <text x="290" y="180" text-anchor="middle" class="label">tool results</text>
+  <text x="290" y="180" text-anchor="middle" class="label">ツール結果</text>
   <path class="dash" d="M250,118 L552,118" marker-end="url(#arrow)"/>
-  <text x="400" y="140" text-anchor="middle" class="label">else END</text>
+  <text x="400" y="140" text-anchor="middle" class="label">それ以外はEND</text>
 
   <!-- checkpointer line -->
   <rect x="130" y="230" width="320" height="60" class="cp"/>
-  <text x="290" y="252" text-anchor="middle" class="title">Checkpointer</text>
+  <text x="290" y="252" text-anchor="middle" class="title">チェックポインタ</text>
   <text x="290" y="272" text-anchor="middle" class="label">(thread_id, checkpoint_id) -> State</text>
 
   <path class="dash" d="M190,140 L190,230"/>

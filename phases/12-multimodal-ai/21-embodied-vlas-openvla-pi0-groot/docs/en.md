@@ -1,149 +1,149 @@
-# Embodied VLAs: RT-2, OpenVLA, π0, GR00T
+# Embodied VLAs: RT-2、OpenVLA、π0、GR00T
 
-> The first time a model read a recipe off a website and executed it in a kitchen robot was RT-2 (Google DeepMind, July 2023). RT-2 discretized actions as text tokens, co-fine-tuned a VLM on web data plus robot-action data, and proved that web-scale vision-language knowledge transfers to robotic control. OpenVLA (June 2024) shipped the open 7B reference. Physical Intelligence's π0 series (2024-2025) added flow-matching action experts. NVIDIA's GR00T N1 (March 2025) delivered dual-system (System 1 / System 2) control for humanoid robots at scale. The VLA primitive — vision-language-action, a single model that sees, reads, and acts — is the bridge between this phase's understanding models and the autonomous systems in Phase 15.
+> modelがwebsite上のrecipeを読み、kitchen robotで実行した最初の例がRT-2（Google DeepMind, 2023年7月）でした。RT-2はactionsをtext tokensとしてdiscretizeし、web dataとrobot-action dataでVLMをco-fine-tuneし、web-scale vision-language knowledgeがrobotic controlへtransferすることを示しました。OpenVLA（2024年6月）はopen 7B referenceを提供しました。Physical Intelligenceのπ0 series（2024-2025）はflow-matching action expertsを追加しました。NVIDIAのGR00T N1（2025年3月）は、humanoid robots向けにdual-system（System 1 / System 2）controlをscaleさせました。VLA primitive、つまりvision-language-actionを扱い、見て、読み、行動するsingle modelは、このphaseのunderstanding modelsとPhase 15のautonomous systemsをつなぐbridgeです。
 
-**Type:** Learn
-**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton)
-**Prerequisites:** Phase 12 · 05 (LLaVA), Phase 15 (Autonomous Systems, referenced)
-**Time:** ~180 minutes
+**種別:** 学習
+**言語:** Python (stdlib、action tokenizer + VLA inference skeleton)
+**前提条件:** Phase 12 · 05 (LLaVA)、Phase 15 (Autonomous Systems、参照)
+**所要時間:** 約180分
 
-## Learning Objectives
+## 学習目標
 
-- Describe action tokenization: discrete bin encoding (RT-2), FAST efficient action tokens, continuous flow-matching actions (π0).
-- Explain why co-fine-tuning on web + robot data preserves general-knowledge transfer to novel tasks.
-- Compare OpenVLA (open 7B Llama+VLM), π0 (flow-matching), and GR00T N1 (dual-system) on the same robot task.
-- Name the Open X-Embodiment dataset and its role as the RT-X training corpus.
+- action tokenizationを説明する。discrete bin encoding（RT-2）、FAST efficient action tokens、continuous flow-matching actions（π0）。
+- web + robot dataのco-fine-tuningが、novel tasksへのgeneral-knowledge transferを保つ理由を説明する。
+- 同じrobot taskで、OpenVLA（open 7B Llama+VLM）、π0（flow-matching）、GR00T N1（dual-system）を比較する。
+- Open X-Embodiment datasetと、RT-X training corpusとしての役割を説明する。
 
-## The Problem
+## 問題
 
-A robot that does chores from natural language instructions has been a research target since the 1970s. The 2020s answer: a vision-language-action (VLA) model. Same VLM architecture used for VQA, but output is actions (joint torques, end-effector poses, discrete commands) instead of text.
+natural language instructionから家事をこなすrobotは、1970年代から研究targetでした。2020年代の答えがvision-language-action（VLA）modelです。VQAで使うVLM architectureと同じですが、outputはtextではなくactions（joint torques、end-effector poses、discrete commands）です。
 
-Challenges specific to VLAs:
+VLA固有のchallenge:
 
-1. Action spaces are continuous (joint angles, forces) and high-dimensional (7-DOF arm + 3-DOF gripper = 10 dims at 30 Hz).
-2. Robot-specific training data is scarce. Open X-Embodiment has ~1M trajectories; web text-image is 5B+.
-3. Control frequency matters. 30 Hz control loop means 33ms budget per action.
-4. Safety. A wrong action damages hardware, humans, or property.
+1. Action spacesはcontinuous（joint angles、forces）でhigh-dimensional（7-DOF arm + 3-DOF gripper = 10 dims at 30 Hz）。
+2. Robot-specific training dataは少ない。Open X-Embodimentは約1M trajectories、web text-imageは5B+。
+3. Control frequencyが重要。30 Hz control loopはactionあたり33ms budgetを意味する。
+4. Safety。誤ったactionはhardware、人間、propertyを傷つける。
 
-## The Concept
+## コンセプト
 
 ### Action tokenization (RT-2)
 
-RT-2's trick: represent each joint target as a quantized text token. Discretize the normalized [-1, 1] range into 256 bins, map each bin to a vocabulary ID. A 10-DOF action becomes 10 tokens at each control step.
+RT-2のtrickは、各joint targetをquantized text tokenとして表すことです。normalized [-1, 1] rangeを256 binsへdiscretizeし、各binをvocabulary IDへmapします。10-DOF actionは、各control stepで10 tokensになります。
 
-Co-fine-tune a PaLM-X VLM on a mixture:
+PaLM-X VLMを次のmixtureでco-fine-tuneします。
 
-- Web image-text pairs (captioning, VQA).
-- Robot demonstrations, action as tokens.
+- Web image-text pairs（captioning、VQA）。
+- Robot demonstrations。actionはtokensとして表す。
 
-The model sees "pick up the red cube" (language) → image (vision) → 10-token action sequence (discretized joint targets). Web pretraining preserves general-knowledge transfer: RT-2 can follow "move towards the fast-moving object" even though "fast-moving" isn't in training data.
+modelは「pick up the red cube」（language）→ image（vision）→ 10-token action sequence（discretized joint targets）を見る。web pretrainingによりgeneral-knowledge transferが保たれるため、RT-2はtraining dataに"fast-moving"がなくても「fast-moving objectの方へ動け」に従えます。
 
-Inference at 3-5 Hz in the RT-2 paper, limited by VLM autoregressive decode.
+RT-2 paperではinferenceは3-5 Hzで、VLMのautoregressive decodeが制約でした。
 
-### OpenVLA — the open 7B reference
+### OpenVLA — open 7B reference
 
-OpenVLA (Kim et al., June 2024) is the open-weights RT-2 equivalent. 7B Llama backbone, DINOv2 + SigLIP dual vision encoder, action tokenization over 256 bins.
+OpenVLA（Kim et al., 2024年6月）はopen-weightsのRT-2相当です。7B Llama backbone、DINOv2 + SigLIP dual vision encoder、256 binsのaction tokenizationを使います。
 
-Trained on Open X-Embodiment (970k trajectories across 22 robots). Ships with LoRA fine-tuning support for adapting to new robots.
+Open X-Embodiment（22 robotsにまたがる970k trajectories）でtrainingされています。新しいrobotへadaptするためのLoRA fine-tuning supportもあります。
 
-Inference: 4-5 Hz on an A100 with quantization. Fast enough for slow manipulation, not for high-frequency control.
+InferenceはA100 + quantizationで4-5 Hzです。slow manipulationには十分ですが、high-frequency controlには足りません。
 
 ### FAST tokenizer — faster action decode
 
-Pertsch et al. (2024) showed that discrete-bin tokenization is inefficient — most actions cluster in a small region of bin-space. FAST (Frequency-domain Action Sequence Tokenizer) compresses action sequences via DCT and quantizes the coefficients.
+Pertsch et al.（2024）は、discrete-bin tokenizationが非効率だと示しました。多くのactionsはbin-spaceの狭い領域に集まります。FAST（Frequency-domain Action Sequence Tokenizer）は、DCTでaction sequencesをcompressし、そのcoefficientsをquantizeします。
 
-A 30-step action trajectory becomes ~10 FAST tokens instead of 300 discrete-bin tokens. Inference speeds up 3-5x without quality loss.
+30-step action trajectoryは、300 discrete-bin tokensではなく約10 FAST tokensになります。quality lossなしにinferenceが3-5x速くなります。
 
-### π0 and flow-matching actions
+### π0とflow-matching actions
 
-Physical Intelligence's π0 (Black et al., October 2024) replaces discrete action tokens with a flow-matching action expert:
+Physical Intelligenceのπ0（Black et al., 2024年10月）は、discrete action tokensをflow-matching action expertに置き換えます。
 
-- A small action transformer reads the VLM's hidden states and outputs a continuous 50-step action sequence via rectified flow.
-- The action head trains with flow-matching loss; VLM pretraining stays unchanged.
-- Inference: full action sequence emitted in ~5 denoising steps, effectively 50 Hz control.
+- small action transformerがVLM hidden statesを読み、rectified flowでcontinuous 50-step action sequenceを出力する。
+- action headはflow-matching lossでtrainingし、VLM pretrainingは変えない。
+- inference: 約5 denoising stepsでfull action sequenceをemitし、実質50 Hz controlになる。
 
-π0's claim: beats OpenVLA and Octo on a wide suite of manipulation tasks. The continuous-action formulation preserves smoothness that discretization destroys.
+π0のclaimは、広いmanipulation task suiteでOpenVLAとOctoを上回るというものです。continuous-action formulationは、discretizationが壊すsmoothnessを保ちます。
 
-π0.5 and π0-FAST are incremental upgrades. π0-FAST combines FAST tokenization with flow matching.
+π0.5とπ0-FASTはincremental upgradesです。π0-FASTはFAST tokenizationとflow matchingを組み合わせます。
 
-### GR00T N1 — dual-system for humanoids
+### GR00T N1 — humanoid向けdual-system
 
-NVIDIA's GR00T N1 (March 2025) is built for humanoid robots (>30 DOF, full-body):
+NVIDIAのGR00T N1（2025年3月）は、humanoid robots（>30 DOF、full-body）向けに作られています。
 
-- System 2: a large VLM reading scene + instruction, producing high-level subgoals at ~1 Hz.
-- System 1: a small action-head transformer producing low-level 50-100 Hz joint commands conditioned on the subgoals.
+- System 2: scene + instructionを読み、約1 Hzでhigh-level subgoalsを生成するlarge VLM。
+- System 1: subgoalsにconditionされたlow-level 50-100 Hz joint commandsを生成するsmall action-head transformer。
 
-The split maps to Kahneman's fast-and-slow thinking: System 2 plans, System 1 acts. Benefits: slow VLM-sized planning does not block fast control; System 1 stays small for latency.
+この分割はKahnemanのfast-and-slow thinkingに対応します。System 2がplanし、System 1がactします。利点は、遅いVLM-sized planningがfast controlをblockせず、System 1をlatencyのために小さく保てることです。
 
-GR00T N1.7 (late 2025) improves data scaling. GR00T fine-tunes with sim-to-real data from Omniverse.
+GR00T N1.7（2025年後半）はdata scalingを改善しました。GR00TはOmniverse由来のsim-to-real dataでfine-tuneされます。
 
 ### Open X-Embodiment
 
-The training data. RT-X (October 2023) assembled 22 datasets covering 1M trajectories across 22 robots. Open X-Embodiment is the corpus everyone uses:
+training dataです。RT-X（2023年10月）は22 datasetsを集め、22 robotsにまたがる1M trajectoriesを構成しました。Open X-Embodimentは誰もが使うcorpusです。
 
-- ALOHA / Bridge V2 / Droid / RT-2 Kitchen / Language Table.
-- Each sample: (robot state, camera views, instruction, action sequence).
-- Training hygiene: unify action space, normalize joint ranges, resize cameras.
+- ALOHA / Bridge V2 / Droid / RT-2 Kitchen / Language Table。
+- 各sample: (robot state, camera views, instruction, action sequence)。
+- Training hygiene: action spaceをunifyし、joint rangesをnormalizeし、camerasをresizeする。
 
-OpenVLA and π0 train on Open X-Embodiment. Domain gap to any specific robot is closed by LoRA fine-tuning on 100-1000 task-specific demos.
+OpenVLAとπ0はOpen X-Embodimentでtrainingします。特定robotへのdomain gapは、100-1000 task-specific demosでLoRA fine-tuningして閉じます。
 
 ### Co-fine-tuning vs robot-only
 
-Co-fine-tuning mixes web VQA data with robot trajectories. The ratio matters: too much VQA and the model forgets actions; too much robot data and the model loses general knowledge.
+Co-fine-tuningはweb VQA dataとrobot trajectoriesを混ぜます。ratioが重要です。VQAが多すぎるとmodelはactionsを忘れ、robot dataが多すぎるとgeneral knowledgeを失います。
 
-RT-2's ratio: ~1:1. OpenVLA: ~0.5:1 web-to-robot. π0: similar. The precise ratio is a hyperparameter to tune per dataset size.
+RT-2のratioは約1:1です。OpenVLAはweb-to-robotで約0.5:1です。π0も近いです。正確なratioはdataset sizeごとにtuneするhyperparameterです。
 
-Robot-only training produces task-specific models that fail on out-of-distribution instructions. Co-fine-tuning is the difference between "pick up the red cube (in demo)" and "pick up the third largest object from the left (novel phrasing)."
+Robot-only trainingは、out-of-distribution instructionで失敗するtask-specific modelsを作ります。co-fine-tuningは、「pick up the red cube（demo内）」と「左から3番目に大きいobjectを持ち上げて（novel phrasing）」の差を埋めます。
 
 ### Safety and action limits
 
-Every production VLA ships with:
+production VLAには必ず次があります。
 
-- Hard joint limits (can't torque past spec).
-- Velocity limits (soft clipping).
-- Workspace bounds (end-effector cannot leave the table).
-- Human-in-the-loop approval for novel tasks.
+- Hard joint limits（specを超えてtorqueしない）。
+- Velocity limits（soft clipping）。
+- Workspace bounds（end-effectorがtableから出ない）。
+- novel tasks向けhuman-in-the-loop approval。
 
-These sit outside the VLA as control-layer checks. The VLA's output is a suggestion, not a command.
+これらはVLAの外側にあるcontrol-layer checksです。VLA outputはsuggestionであり、commandではありません。
 
-## Use It
+## 使ってみる
 
 `code/main.py`:
 
-- Implements 256-bin action tokenization and de-tokenization.
-- Sketches a FAST tokenizer based on DCT + quantization.
-- Compares token-count per action step across (discrete-bin, FAST, continuous-flow).
-- Prints a lineage summary of RT-2 → OpenVLA → π0 → GR00T.
+- 256-bin action tokenizationとde-tokenizationを実装する。
+- DCT + quantizationに基づくFAST tokenizerをsketchする。
+- discrete-bin、FAST、continuous-flowの間で、action stepあたりtoken-countを比較する。
+- RT-2 → OpenVLA → π0 → GR00Tのlineage summaryを出力する。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-vla-action-format-picker.md`. Given a robot task (manipulation, navigation, humanoid whole-body), picks between discrete-bin + RT-2, FAST + OpenVLA, flow-matching + π0, or dual-system + GR00T.
+このレッスンは`outputs/skill-vla-action-format-picker.md`を作ります。robot task（manipulation、navigation、humanoid whole-body）を受け取り、discrete-bin + RT-2、FAST + OpenVLA、flow-matching + π0、dual-system + GR00Tのどれを選ぶか決めます。
 
-## Exercises
+## 演習
 
-1. A 10-DOF arm at 30 Hz control rate. Discrete-bin tokenization at 256 bins emits how many tokens per second? Can a 7B VLM keep up?
+1. 10-DOF armを30 Hz control rateで動かします。256 binsのdiscrete-bin tokenizationは1秒あたり何tokensをemitしますか。7B VLMは追いつけますか。
 
-2. FAST tokenization compresses 30-step trajectories to ~10 tokens. What does the user lose if the trajectory has high-frequency motion (e.g., drumming)?
+2. FAST tokenizationは30-step trajectoriesを約10 tokensへcompressします。trajectoryにhigh-frequency motion（例: drumming）がある場合、userは何を失いますか。
 
-3. π0's flow-matching head denoises in ~5 steps. Compare throughput to OpenVLA's autoregressive decode at 4-5 Hz.
+3. π0のflow-matching headは約5 stepsでdenoiseします。OpenVLAの4-5 Hz autoregressive decodeとthroughputを比較してください。
 
-4. GR00T's System 1 / System 2 split maps to Kahneman. Propose a different split (System 3?) that might help bipedal walking.
+4. GR00TのSystem 1 / System 2 splitはKahnemanに対応しています。bipedal walkingに役立つかもしれない別のsplit（System 3?）を提案してください。
 
-5. Read Open X-Embodiment Section 4 on dataset curation. Name the three curation rules that prevent domain leakage.
+5. dataset curationに関するOpen X-Embodiment Section 4を読んでください。domain leakageを防ぐ3つのcuration rulesを挙げてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| VLA | "Vision-language-action" | Model that takes image + instruction and outputs action commands |
-| Action tokenization | "Discrete bins" | Quantize continuous joint targets into 256 bins per dim, each a vocab ID |
-| FAST tokenizer | "Frequency action tokens" | DCT + quantize to compress 30-step trajectories to ~10 tokens |
-| Co-fine-tune | "Mix web + robot" | Train on web VQA data alongside robot demos to preserve general knowledge |
-| Flow-matching action head | "π0 continuous output" | Small transformer that outputs a 50-step action sequence via rectified flow |
-| System 1 / System 2 | "Dual-system control" | Large VLM plans slowly, small action head acts quickly; GR00T pattern |
-| Open X-Embodiment | "RT-X dataset" | 1M-trajectory cross-robot dataset; the training corpus |
+| Term | よく言われる表現 | 実際の意味 |
+|------|-----------------|------------|
+| VLA | "Vision-language-action" | image + instructionを受け取りaction commandsを出すmodel |
+| Action tokenization | "Discrete bins" | continuous joint targetsをdimごとに256 binsへquantizeし、それぞれをvocab IDにする |
+| FAST tokenizer | "Frequency action tokens" | DCT + quantizeで30-step trajectoriesを約10 tokensへcompressする |
+| Co-fine-tune | "Mix web + robot" | general knowledgeを保つため、web VQA dataとrobot demosを一緒にtrainingする |
+| Flow-matching action head | "π0 continuous output" | rectified flowで50-step action sequenceを出すsmall transformer |
+| System 1 / System 2 | "Dual-system control" | large VLMがゆっくりplanし、small action headが速くactするGR00T pattern |
+| Open X-Embodiment | "RT-X dataset" | 1M-trajectory cross-robot dataset。training corpus |
 
-## Further Reading
+## 参考文献
 
 - [Brohan et al. — RT-2 (arXiv:2307.15818)](https://arxiv.org/abs/2307.15818)
 - [Kim et al. — OpenVLA (arXiv:2406.09246)](https://arxiv.org/abs/2406.09246)

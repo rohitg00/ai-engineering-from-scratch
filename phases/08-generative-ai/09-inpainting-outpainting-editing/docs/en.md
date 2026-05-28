@@ -1,63 +1,63 @@
-# Inpainting, Outpainting & Image Editing
+# インペインティング、アウトペインティング、画像編集
 
-> Text-to-image makes new things. Inpainting fixes old ones. In production, 70% of billable image work is editing — swap a background, remove a logo, extend the canvas, regenerate a hand. Inpainting is where diffusion earns its keep.
+> Text-to-image は新しいものを作ります。インペインティングは既存のものを直します。本番環境では、請求対象になる画像作業の 70% は編集です。背景を差し替える、ロゴを消す、キャンバスを拡張する、手を再生成する。インペインティングは、拡散モデルが実務で価値を発揮する場所です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
+**所要時間:** 約75分
 
-## The Problem
+## 課題
 
-A client sends a perfect product photo with a distracting sign in the background. You want to erase the sign and leave everything else pixel-identical. You cannot run text-to-image from scratch — the result will have a different color, different lighting, different product angle. You want to regenerate *only* the masked region, and you want the regeneration to respect the surrounding context.
+クライアントが、背景に目立つ看板が写り込んだ完璧な商品写真を送ってきたとします。看板だけを消し、それ以外はピクセル単位で同一のまま残したい。Text-to-image を最初から実行することはできません。結果は色も照明も商品の角度も変わってしまいます。再生成したいのは *マスクされた領域だけ* であり、その再生成には周囲の文脈を反映してほしい。
 
-That is inpainting. Variants:
+これがインペインティングです。派生形は次のとおりです。
 
-- **Inpainting.** Regenerate inside a mask, keep outside pixels.
-- **Outpainting.** Regenerate outside a mask (or beyond the canvas), keep inside.
-- **Image editing.** Regenerate the whole image but keep semantic or structural fidelity to the original (SDEdit, InstructPix2Pix).
+- **Inpainting.** マスク内を再生成し、外側のピクセルを維持する。
+- **Outpainting.** マスク外、またはキャンバスの外側を再生成し、内側を維持する。
+- **Image editing.** 画像全体を再生成するが、元画像の意味的または構造的な忠実度を保つ (SDEdit, InstructPix2Pix)。
 
-Every diffusion pipeline in 2026 ships an inpainting mode. Flux.1-Fill, Stable Diffusion Inpaint, SDXL-Inpaint, DALL-E 3 Edit. They work on the same principle.
+2026 年の拡散パイプラインは、どれもインペインティングモードを備えています。Flux.1-Fill、Stable Diffusion Inpaint、SDXL-Inpaint、DALL-E 3 Edit。原理は同じです。
 
-## The Concept
+## コンセプト
 
 ![Inpainting: mask-aware denoising with context-preserving reinjection](../assets/inpainting.svg)
 
-### The naive approach (and why it's wrong)
+### 素朴な方法と、それが誤っている理由
 
-Run standard text-to-image with a mask. At each sampling step, replace the unmasked region of the noisy latent with the forward-diffused clean image. It works... badly. Boundary artifacts bleed through because the model has no information about what is in the masked region.
+標準の text-to-image をマスク付きで実行します。各サンプリングステップで、ノイズを含む latent の非マスク領域を、クリーン画像を forward diffusion したものに置き換えます。動きはしますが、品質は低いです。モデルはマスク領域の中に何があるかを知らないため、境界のアーティファクトがにじみます。
 
-### The proper inpainting model
+### 適切なインペインティングモデル
 
-Train a modified U-Net that takes 9 input channels instead of 4:
+4 ではなく 9 入力チャネルを受け取るように変更した U-Net を訓練します。
 
-```
+```python
 input = concat([ noisy_latent (4ch), encoded_image (4ch), mask (1ch) ], dim=channel)
 ```
 
-The extra channels are a copy of the VAE-encoded source image plus a single-channel mask. At training time, you randomly mask regions of the image and train the model to denoise only the masked region while the unmasked region is given as a clean conditioning signal. At inference, the model can "see" what surrounds the masked region and produces coherent completions.
+追加チャネルは、VAE でエンコードした元画像のコピーと、単一チャネルのマスクです。訓練時には画像内の領域をランダムにマスクし、非マスク領域をクリーンな条件信号として与えながら、マスク領域だけを denoise するようにモデルを訓練します。推論時には、モデルはマスク領域の周囲を「見る」ことができ、一貫した補完を生成します。
 
-SD-Inpaint, SDXL-Inpaint, Flux-Fill all use this 9-channel (or analog) input. Diffusers `StableDiffusionInpaintPipeline`, `FluxFillPipeline`.
+SD-Inpaint、SDXL-Inpaint、Flux-Fill はすべて、この 9 チャネル、またはそれに相当する入力を使います。Diffusers では `StableDiffusionInpaintPipeline`、`FluxFillPipeline` です。
 
-### SDEdit (Meng et al., 2022) — free editing
+### SDEdit (Meng et al., 2022) - 再訓練なしの編集
 
-Add noise to the source image up to some intermediate `t`, then run the reverse chain from `t` down to 0 with a new prompt. No retraining. The choice of starting `t` trades fidelity for creative freedom:
+元画像に中間の `t` までノイズを加え、その後、新しいプロンプトで `t` から 0 まで逆過程を実行します。再訓練は不要です。開始する `t` の選択により、忠実度と創造的自由度のトレードオフが決まります。
 
-- `t/T = 0.3` → nearly identical to source, small stylistic changes
-- `t/T = 0.6` → moderate edits, preserves coarse structure
-- `t/T = 0.9` → generated from near-noise, minimal source preservation
+- `t/T = 0.3` → 元画像とほぼ同一で、小さなスタイル変更
+- `t/T = 0.6` → 中程度の編集で、大まかな構造を維持
+- `t/T = 0.9` → ほぼノイズから生成し、元画像の保持は最小限
 
 ### InstructPix2Pix (Brooks et al., 2023)
 
-Fine-tune a diffusion model on `(input_image, instruction, output_image)` triples. At inference, condition on both the input image and a text instruction ("make it sunset", "add a dragon"). Two CFG scales: image scale and text scale.
+`(input_image, instruction, output_image)` の三つ組で拡散モデルを fine-tune します。推論時には、入力画像とテキスト指示 ("make it sunset", "add a dragon") の両方を条件にします。CFG スケールは 2 つあり、image scale と text scale です。
 
 ### RePaint (Lugmayr et al., 2022)
 
-Keep a standard unconditional diffusion model. At each reverse step, resample — jump back to a noisier state occasionally and regenerate. Avoids boundary artifacts. Used when you don't have a trained inpainting model.
+標準の無条件拡散モデルを使います。各逆ステップで resample します。つまり、時々よりノイズの多い状態へ戻り、再生成します。境界アーティファクトを避けられます。訓練済みのインペインティングモデルがない場合に使います。
 
-## Build It
+## 実装
 
-`code/main.py` implements a toy 1-D inpainting scheme on 5-dimensional data. We train a DDPM on 5-D mixture data where each sample is 5 floats from one of two clusters. At inference, we "mask" 2 of the 5 dimensions, inject the noisy-forward version of the unmasked three at each step, and regenerate only the masked dimensions.
+`code/main.py` は、5 次元データ上の簡易的な 1-D インペインティング方式を実装しています。サンプルが 2 つのクラスタのどちらかから来る 5 個の float である、5-D mixture data 上で DDPM を訓練します。推論時には 5 次元のうち 2 つを「マスク」し、各ステップで非マスク 3 次元に forward noise 版を注入し、マスク次元だけを再生成します。
 
 ### Step 1: 5-D DDPM data
 
@@ -68,11 +68,11 @@ def sample_data(rng):
     return [c + rng.gauss(0, 0.2) for c in center], cluster
 ```
 
-### Step 2: train denoiser over all 5 dims
+### Step 2: 5 次元すべてに対する denoiser を訓練する
 
-Standard DDPM. Net outputs 5-D noise prediction for 5-D noisy input.
+標準的な DDPM です。ネットワークは、5-D noisy input に対する 5-D noise prediction を出力します。
 
-### Step 3: at inference, mask-aware reverse
+### Step 3: 推論時の mask-aware reverse
 
 ```python
 def inpaint_step(x_t, mask, clean_image, alpha_bars, t, rng):
@@ -84,73 +84,73 @@ def inpaint_step(x_t, mask, clean_image, alpha_bars, t, rng):
     # ...then run the normal reverse step on x_t
 ```
 
-This is the naive approach and it works on toy 1-D data. Real image inpainting uses the 9-channel input because texture coherence matters more.
+これは素朴な方法であり、toy 1-D データでは機能します。実画像のインペインティングでは、テクスチャの一貫性がより重要なため、9 チャネル入力を使います。
 
 ### Step 4: outpainting
 
-Outpainting is inpainting with the mask inverted: mask the new (previously non-existent) canvas, fill the rest with the original. Identical training objective.
+アウトペインティングは、マスクを反転したインペインティングです。新しい、以前は存在しなかったキャンバスをマスクし、残りを元画像で埋めます。訓練目的は同一です。
 
-## Pitfalls
+## 落とし穴
 
-- **Seams.** The naive approach leaves visible boundaries because gradient info doesn't flow across the mask. Fix: dilate the mask by 8-16 pixels, or use a proper inpainting model.
-- **Mask leakage.** If the conditioning image's unmasked region is low-quality or noisy, it pollutes the generation inside the mask. Denoise or blur slightly.
-- **CFG interacts with mask size.** High CFG on a small mask = saturated patch. Reduce CFG for small edits.
-- **SDEdit fidelity cliff.** Going from `t/T = 0.5` to `t/T = 0.6` can lose the subject's identity. Sweep and checkpoint.
-- **Prompt mismatch.** The prompt should describe the *whole* image, not just the new content. "A cat sitting on a chair" not "a cat".
+- **Seams.** 素朴な方法では、勾配情報がマスクをまたいで流れないため、目に見える境界が残ります。対策: マスクを 8-16 ピクセル膨張させるか、適切なインペインティングモデルを使う。
+- **Mask leakage.** 条件画像の非マスク領域が低品質またはノイジーだと、マスク内の生成を汚染します。少し denoise するか blur します。
+- **CFG interacts with mask size.** 小さいマスクに高い CFG を使うと、彩度の高いパッチになります。小さな編集では CFG を下げます。
+- **SDEdit fidelity cliff.** `t/T = 0.5` から `t/T = 0.6` に上げるだけで、被写体の同一性を失うことがあります。スイープしてチェックポイントを残します。
+- **Prompt mismatch.** プロンプトは新しい内容だけでなく、*画像全体* を説明するべきです。"a cat" ではなく "A cat sitting on a chair" です。
 
-## Use It
+## 使いどころ
 
-| Task | Pipeline |
+| タスク | パイプライン |
 |------|----------|
-| Remove object, small mask | SD-Inpaint or Flux-Fill, standard prompt |
-| Replace sky | SD-Inpaint + "blue sky at sunset" |
-| Extend canvas | SDXL outpaint mode (8px feather) or Flux-Fill with outpaint mask |
-| Regenerate hand / face | SD-Inpaint with prompt re-describing the subject + ControlNet-Openpose |
-| Change style of one region | SDEdit at `t/T=0.5` on masked region |
-| "Make it sunset" | InstructPix2Pix or Flux-Kontext |
-| Background replacement | SAM mask → SD-Inpaint |
-| Ultra-high-fidelity | Flux-Fill or GPT-Image (hosted) for hardest cases |
+| オブジェクト除去、小さいマスク | SD-Inpaint または Flux-Fill、標準プロンプト |
+| 空の差し替え | SD-Inpaint + "blue sky at sunset" |
+| キャンバス拡張 | SDXL outpaint mode (8px feather) または outpaint mask 付き Flux-Fill |
+| 手や顔の再生成 | 被写体を再記述するプロンプト付き SD-Inpaint + ControlNet-Openpose |
+| 一部領域のスタイル変更 | マスク領域に `t/T=0.5` の SDEdit |
+| "Make it sunset" | InstructPix2Pix または Flux-Kontext |
+| 背景差し替え | SAM mask → SD-Inpaint |
+| 超高忠実度 | 最難関ケースには Flux-Fill または GPT-Image (hosted) |
 
-SAM (Meta's Segment Anything, 2023) + diffusion inpaint is the 2026 background-removal pipeline. SAM 2 (2024) works on video.
+SAM (Meta's Segment Anything, 2023) + diffusion inpaint は、2026 年の背景除去パイプラインです。SAM 2 (2024) は動画に対応します。
 
-## Ship It
+## 出荷
 
-Save `outputs/skill-editing-pipeline.md`. Skill takes an original image + edit description + optional mask (or SAM prompt) and outputs: mask-generation approach, base model, CFG scales (image + text), SDEdit-t or inpainting mode, and QA checklist.
+`outputs/skill-editing-pipeline.md` を保存します。このスキルは、元画像 + 編集説明 + 任意のマスク、または SAM prompt を受け取り、mask-generation approach、base model、CFG scales (image + text)、SDEdit-t または inpainting mode、QA checklist を出力します。
 
-## Exercises
+## 演習
 
-1. **Easy.** In `code/main.py`, vary the fraction of dimensions masked from 0.2 to 0.8. At what fraction does the inpaint quality (residual in masked dims) equal unconditional generation?
-2. **Medium.** Implement RePaint: at every 10th reverse step, jump back 5 steps (add noise) and re-denoise. Measure whether it reduces boundary residual at the mask edge.
-3. **Hard.** Use Hugging Face diffusers to compare: SD 1.5 Inpaint + ControlNet-Openpose vs Flux.1-Fill on 20 face-regeneration tasks. Score pose adherence and identity preservation separately.
+1. **Easy.** `code/main.py` で、マスクする次元の割合を 0.2 から 0.8 まで変えてください。どの割合で、インペイント品質、つまりマスク次元の残差が無条件生成と同等になりますか。
+2. **Medium.** RePaint を実装してください。10 回目ごとの逆ステップで 5 ステップ戻り、ノイズを加えて再度 denoise します。マスク境界での残差が減るか測定してください。
+3. **Hard.** Hugging Face diffusers を使って、20 個の顔再生成タスクで SD 1.5 Inpaint + ControlNet-Openpose と Flux.1-Fill を比較してください。pose adherence と identity preservation を別々に採点してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Inpainting | "Fill the hole" | Regenerate inside a mask; keep outside pixels. |
-| Outpainting | "Extend the canvas" | Regenerate outside the canvas; keep inside. |
-| 9-channel U-Net | "Proper inpainting model" | U-Net with `noisy \| encoded-source \| mask` as input. |
-| SDEdit | "Img2img with noise level" | Noise to time `t`, denoise with new prompt. |
-| InstructPix2Pix | "Text-only edits" | Fine-tuned diffusion on (image, instruction, output) triples. |
-| RePaint | "No retraining" | Re-noise periodically during reverse to reduce seams. |
-| SAM | "Segment Anything" | Mask generator by clicks or boxes; pairs with inpaint. |
-| Flux-Kontext | "Edit with context" | Flux variant that accepts a reference image + instruction for edits. |
+| Inpainting | "Fill the hole" | マスク内を再生成し、外側のピクセルを維持する。 |
+| Outpainting | "Extend the canvas" | キャンバス外を再生成し、内側を維持する。 |
+| 9-channel U-Net | "Proper inpainting model" | `noisy \| encoded-source \| mask` を入力とする U-Net。 |
+| SDEdit | "Img2img with noise level" | 時刻 `t` までノイズを加え、新しいプロンプトで denoise する。 |
+| InstructPix2Pix | "Text-only edits" | (image, instruction, output) の三つ組で fine-tune された拡散モデル。 |
+| RePaint | "No retraining" | 逆過程中に周期的に再ノイズ化し、境界を減らす。 |
+| SAM | "Segment Anything" | クリックやボックスで使うマスク生成器。inpaint と組み合わせる。 |
+| Flux-Kontext | "Edit with context" | 参照画像 + 編集指示を受け取る Flux の派生モデル。 |
 
-## Production note: edit pipelines are latency-sensitive
+## 本番メモ: 編集パイプラインはレイテンシに敏感
 
-Users editing an image expect sub-5-second round trips. A 30-step SDXL-Inpaint at 1024² is 3-4 s on an L4, plus SAM mask generation (~200 ms) and VAE encode/decode (~500 ms combined). In production framing, this is TTFT-bound rather than throughput-bound — batch 1, low concurrency, minimize every stage:
+画像を編集するユーザーは、5 秒未満の往復を期待します。1024² の 30-step SDXL-Inpaint は L4 で 3-4 秒かかり、さらに SAM mask generation (~200 ms) と VAE encode/decode (合計 ~500 ms) が加わります。本番の見方では、これは throughput-bound ではなく TTFT-bound です。batch 1、低 concurrency、すべての段階を最小化します。
 
-- **SAM-H is the slow one.** SAM-H at 1024² is ~200 ms; SAM-ViT-B is ~40 ms with minor quality loss. SAM 2 (video) adds temporal overhead; do not use it for single-image edits.
-- **Skip the encode when possible.** `pipe.image_processor.preprocess(img)` encodes to latents. If you have the latents from the previous generation (typical in iterative-edit UIs), pass them directly via `latents=...` to skip one VAE encode.
-- **Mask dilation matters for throughput too.** A small mask means most of the U-Net forward pass is wasted (the unmasked pixels are clamped anyway). `diffusers`' `StableDiffusionInpaintPipeline` runs the full U-Net regardless; only the 9-channel proper-inpaint variants exploit masked compute.
-- **Flux-Kontext is the 2025 answer.** Single forward pass over `(source_image, instruction)` — no separate mask, no SDEdit noise sweep. On an H100 it ships an edit in ~1.5 s. The architectural lesson: collapse the stages.
+- **SAM-H is the slow one.** 1024² の SAM-H は ~200 ms です。SAM-ViT-B は品質低下が小さく ~40 ms です。SAM 2 (video) は時間方向のオーバーヘッドが加わるため、単一画像編集には使いません。
+- **Skip the encode when possible.** `pipe.image_processor.preprocess(img)` は latents にエンコードします。前回生成の latents を持っている場合、反復編集 UI では典型的ですが、`latents=...` で直接渡して VAE encode を 1 回省きます。
+- **Mask dilation matters for throughput too.** 小さいマスクでは、U-Net forward pass の大半が無駄になります。非マスクピクセルはいずれ clamped されるためです。`diffusers` の `StableDiffusionInpaintPipeline` は常に U-Net 全体を実行します。masked compute を活用するのは、9 チャネルの proper-inpaint variants だけです。
+- **Flux-Kontext is the 2025 answer.** `(source_image, instruction)` に対する単一 forward pass です。別マスクも SDEdit noise sweep も不要です。H100 では ~1.5 秒で編集を出荷できます。アーキテクチャ上の教訓は、段階を統合することです。
 
-## Further Reading
+## 参考文献
 
-- [Lugmayr et al. (2022). RePaint: Inpainting using Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2201.09865) — training-free inpainting.
-- [Meng et al. (2022). SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations](https://arxiv.org/abs/2108.01073) — SDEdit.
-- [Brooks, Holynski, Efros (2023). InstructPix2Pix](https://arxiv.org/abs/2211.09800) — text-instruction editing.
-- [Kirillov et al. (2023). Segment Anything](https://arxiv.org/abs/2304.02643) — SAM, the mask source.
-- [Ravi et al. (2024). SAM 2: Segment Anything in Images and Videos](https://arxiv.org/abs/2408.00714) — video SAM.
-- [Hertz et al. (2022). Prompt-to-Prompt Image Editing with Cross-Attention Control](https://arxiv.org/abs/2208.01626) — attention-level editing.
-- [Black Forest Labs (2024). Flux.1-Fill and Flux.1-Kontext](https://blackforestlabs.ai/flux-1-tools/) — 2024 tooling.
+- [Lugmayr et al. (2022). RePaint: Inpainting using Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2201.09865) — 訓練不要のインペインティング。
+- [Meng et al. (2022). SDEdit: Guided Image Synthesis and Editing with Stochastic Differential Equations](https://arxiv.org/abs/2108.01073) — SDEdit。
+- [Brooks, Holynski, Efros (2023). InstructPix2Pix](https://arxiv.org/abs/2211.09800) — テキスト指示による編集。
+- [Kirillov et al. (2023). Segment Anything](https://arxiv.org/abs/2304.02643) — SAM、マスクの供給元。
+- [Ravi et al. (2024). SAM 2: Segment Anything in Images and Videos](https://arxiv.org/abs/2408.00714) — 動画対応 SAM。
+- [Hertz et al. (2022). Prompt-to-Prompt Image Editing with Cross-Attention Control](https://arxiv.org/abs/2208.01626) — attention レベルの編集。
+- [Black Forest Labs (2024). Flux.1-Fill and Flux.1-Kontext](https://blackforestlabs.ai/flux-1-tools/) — 2024 年のツール群。

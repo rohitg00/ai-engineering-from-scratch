@@ -1,12 +1,12 @@
 """Three-layer GPU autoscaling simulator — stdlib Python.
 
-Compares three autoscaling strategies on the same bursty workload:
-  DUTY_CYCLE   : HPA on DCGM_FI_DEV_GPU_UTIL (the broken default)
-  QUEUE_DEPTH  : HPA on request queue depth (correct signal)
-  KAI_GANG     : Gang-scheduled with topology awareness (prevents partial alloc)
+同じ bursty workload で3つの autoscaling strategy を比較する:
+  DUTY_CYCLE   : DCGM_FI_DEV_GPU_UTIL 上の HPA（壊れた default）
+  QUEUE_DEPTH  : request queue depth 上の HPA（正しい signal）
+  KAI_GANG     : topology awareness 付き gang scheduling（partial alloc を防ぐ）
 
-Reports dropped requests, idle GPU-minutes, and composite score.
-Pedagogical: latencies and provisioning times are illustrative.
+dropped requests、idle GPU-minutes、composite score を報告する。
+教育用: latency と provisioning time は illustrative。
 """
 
 from __future__ import annotations
@@ -16,8 +16,8 @@ import random
 
 
 NODE_PROVISION_SEC = 50       # Karpenter ~45-60s
-CLUSTER_AUTOSCALER_SEC = 110  # slower comparison
-MODEL_LOAD_SEC = 45           # load 70B weights + engine init
+CLUSTER_AUTOSCALER_SEC = 110  # 比較用の遅い値
+MODEL_LOAD_SEC = 45           # 70B weights + engine init を load
 REQUEST_PREFILL_SEC = 0.6
 REQUEST_DECODE_SEC = 1.8
 MIN_WARM_REPLICAS = 1
@@ -38,7 +38,7 @@ class Request:
 def make_workload(duration_sec: int = 3600, seed: int = 7) -> list[Request]:
     rng = random.Random(seed)
     reqs = []
-    # simulate a morning burst: quiet 0-600, spike 600-1800, tail 1800-3600
+    # morning burst を simulate: quiet 0-600、spike 600-1800、tail 1800-3600
     for _ in range(int(duration_sec)):
         t = _
         if t < 600:
@@ -158,7 +158,7 @@ def report(row: dict) -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("GPU AUTOSCALING — three strategies on a bursty workload (1-hour sim)")
+    print("GPU AUTOSCALING — bursty workload 上の3 strategy（1-hour sim）")
     print("=" * 80)
     base = make_workload()
     header = f"{'Strategy':14}  reqs       done  dropped  mean_wait  idle_gpu   peak"
@@ -169,9 +169,9 @@ def main() -> None:
         result = simulate(strategy, reqs)
         report(result)
 
-    print("\nRead: DUTY_CYCLE drops requests because DCGM_FI_DEV_GPU_UTIL")
-    print("is a duty-cycle metric. QUEUE_DEPTH reacts to the actual backlog.")
-    print("KAI_GANG scales more aggressively and avoids partial-alloc stalls.")
+    print("\n読み方: DUTY_CYCLE は DCGM_FI_DEV_GPU_UTIL が duty-cycle metric のため requests を drop する。")
+    print("QUEUE_DEPTH は実際の backlog に反応する。")
+    print("KAI_GANG はより積極的に scale し、partial-alloc stalls を避ける。")
 
 
 if __name__ == "__main__":

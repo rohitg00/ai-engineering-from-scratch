@@ -1,23 +1,23 @@
 # A2A — The Agent-to-Agent Protocol
 
-> Google announced A2A in April 2025; by April 2026 the spec is at https://a2a-protocol.org/latest/specification/ and 150+ organizations back it. A2A is the horizontal complement to MCP (Lesson 13): where MCP is vertical (agent ↔ tools), A2A is peer-to-peer (agent ↔ agent). It defines Agent Cards (discovery), tasks with artifacts (text, structured data, video), opaque task lifecycles, and auth. Production systems increasingly pair MCP with A2A. Google Cloud rolled A2A support into Vertex AI Agent Builder during 2025-2026.
+> Google は 2025 年 4 月に A2A を発表した。2026 年 4 月時点で spec は https://a2a-protocol.org/latest/specification/ にあり、150 以上の組織が支援している。A2A は MCP (Lesson 13) の水平補完だ。MCP が vertical (agent ↔ tools) であるのに対し、A2A は peer-to-peer (agent ↔ agent) である。A2A は Agent Cards (discovery)、artifacts (text、structured data、video) を持つ tasks、不透明な task lifecycle、auth を定義する。production system では MCP と A2A を併用する例が増えている。Google Cloud は 2025-2026 年に Vertex AI Agent Builder へ A2A support を組み込んだ。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib, `http.server`, `json`)
-**Prerequisites:** Phase 16 · 04 (Primitive Model)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib, `http.server`, `json`)
+**前提条件:** Phase 16 · 04 (Primitive Model)
+**所要時間:** 約75分
 
-## Problem
+## 問題
 
-Your agent needs to call another agent on another system. How? You can expose an HTTP endpoint, define a bespoke JSON schema, and hope the other side speaks it. Every pair of agents becomes a custom integration.
+あなたの agent が、別 system 上の別 agent を呼ぶ必要がある。どうするか。HTTP endpoint を公開し、独自 JSON schema を定義し、相手側がそれを話せることを祈る。agent の組み合わせごとに custom integration が生まれる。
 
-A2A is the universal wire protocol for that call. Standard discovery, standard task model, standard transport, standard artifacts. Like HTTP+REST but for agents as first-class citizens.
+A2A は、その呼び出しのための universal wire protocol だ。standard discovery、standard task model、standard transport、standard artifacts。agent を first-class citizen として扱う HTTP+REST のようなものだ。
 
-## Concept
+## コンセプト
 
 ### The four elements
 
-**Agent Card.** A JSON document at `/.well-known/agent.json` describing the agent: name, skills, endpoints, supported modalities, auth requirements. Discovery happens by reading the card.
+**Agent Card.** `/.well-known/agent.json` にある JSON document。agent の name、skills、endpoints、supported modalities、auth requirements を記述する。discovery は card を読むことで行う。
 
 ```
 GET https://agent.example.com/.well-known/agent.json
@@ -32,18 +32,18 @@ GET https://agent.example.com/.well-known/agent.json
   }
 ```
 
-**Task.** The unit of work. An async, stateful object with a lifecycle: `submitted → working → completed / failed / canceled`. A client sends a task, polls or subscribes for updates.
+**Task.** work の unit。async で stateful な object で、`submitted → working → completed / failed / canceled` という lifecycle を持つ。client は task を送信し、polling または subscribe で update を受け取る。
 
-**Artifact.** The result type produced by a task. Text, structured JSON, image, video, audio. Artifacts are typed so different modalities are first-class.
+**Artifact.** task が生成する result type。text、structured JSON、image、video、audio。artifact は typed なので、異なる modality が first-class になる。
 
-**Opaque lifecycle.** A2A does not prescribe *how* the remote agent solves the task. The client sees state transitions and artifacts; the implementation is free to use any framework.
+**Opaque lifecycle.** A2A は remote agent が task を *どう* 解くかを規定しない。client が見るのは state transition と artifact であり、implementation は任意の framework を使える。
 
 ### The MCP/A2A split
 
-- **MCP** (Lesson 13): agent ↔ tool. The agent reads/writes via JSON-RPC to a tool server. Stateless by default.
-- **A2A**: agent ↔ agent. Peer protocol; both sides are agents with their own reasoning.
+- **MCP** (Lesson 13): agent ↔ tool。agent は JSON-RPC で tool server を read/write する。default では stateless。
+- **A2A**: agent ↔ agent。peer protocol。両側が独自 reasoning を持つ agent。
 
-Production multi-agent systems use both. An A2A peer calls MCP tools on its side. The split keeps the two concerns clean.
+production multi-agent system は両方を使う。A2A peer は自分側で MCP tools を呼ぶ。この分離により、2つの concern を明確に保てる。
 
 ### Discovery flow
 
@@ -59,60 +59,60 @@ Client                     Agent server
   <──state=completed, artifacts──
 ```
 
-Or with streaming: SSE subscription to `/tasks/{id}/events` for push updates.
+streaming の場合は、push update のために `/tasks/{id}/events` へ SSE subscription する。
 
 ### Auth
 
-A2A supports three common patterns:
+A2A は一般的な3つの pattern をサポートする:
 
-- **Bearer token** — OAuth2 or opaque.
-- **mTLS** — mutual TLS; organizations prove identity to each other.
-- **Signed requests** — HMAC over the payload.
+- **Bearer token** — OAuth2 または opaque。
+- **mTLS** — mutual TLS。組織同士が identity を証明する。
+- **Signed requests** — payload に対する HMAC。
 
-Auth is declared in the Agent Card; clients discover and comply.
+auth は Agent Card で宣言される。client はそれを discover し、準拠する。
 
 ### 150+ organizations by April 2026
 
-Enterprise adoption drove A2A scale. The headline: A2A became the way enterprise agent systems cross trust boundaries. Google Cloud shipped Vertex AI Agent Builder A2A support; Microsoft Agent Framework supports it; most major frameworks (LangGraph, CrewAI, AutoGen) ship A2A adapters.
+enterprise adoption が A2A の規模を押し上げた。headline は、A2A が enterprise agent system が trust boundary を越えるための方法になったことだ。Google Cloud は Vertex AI Agent Builder A2A support を出荷した。Microsoft Agent Framework は A2A をサポートし、主要 framework (LangGraph、CrewAI、AutoGen) の多くが A2A adapter を出荷している。
 
 ### Where A2A wins
 
-- **Cross-organization calls.** Agent at company A calls agent at company B. Without A2A, every pair is a bespoke contract.
-- **Heterogeneous frameworks.** LangGraph agent calls CrewAI agent calls custom Python agent. A2A normalizes.
-- **Typed artifacts.** Video result, structured JSON, audio — all first-class.
-- **Long-running tasks.** Opaque lifecycle + polling makes hours-long tasks straightforward.
+- **Cross-organization calls。** company A の agent が company B の agent を呼ぶ。A2A なしでは、すべての pair が bespoke contract になる。
+- **Heterogeneous frameworks。** LangGraph agent が CrewAI agent を呼び、さらに custom Python agent を呼ぶ。A2A が normalize する。
+- **Typed artifacts。** video result、structured JSON、audio がすべて first-class。
+- **Long-running tasks。** opaque lifecycle + polling により、数時間かかる task も扱いやすい。
 
 ### Where A2A struggles
 
-- **Latency-sensitive micro-calls.** A2A's lifecycle is async. Sub-millisecond agent-to-agent does not fit; use direct RPC.
-- **Tight-coupled in-process agents.** If both agents run in the same Python process, A2A's HTTP round-trip is overkill.
-- **Small teams.** Spec overhead is real; internal-only agents may not need the formality.
+- **Latency-sensitive micro-calls。** A2A の lifecycle は async。sub-millisecond agent-to-agent には合わない。direct RPC を使う。
+- **Tight-coupled in-process agents。** 両 agent が同じ Python process で動くなら、A2A の HTTP round-trip は過剰。
+- **Small teams。** spec overhead は実在する。internal-only agents には形式性が不要なこともある。
 
 ### A2A vs ACP, ANP, NLIP
 
-Several related specs emerged in 2024-2026:
+2024-2026 年に関連 spec がいくつか登場した:
 
-- **ACP** (IBM/Linux Foundation) — predecessor to A2A, narrower scope.
-- **ANP** (Agent Network Protocol) — peer-discovery-heavy, decentralized-first.
-- **NLIP** (Ecma Natural Language Interaction Protocol, standardized December 2025) — natural-language content type.
+- **ACP** (IBM/Linux Foundation) — A2A の predecessor。scope はより狭い。
+- **ANP** (Agent Network Protocol) — peer-discovery-heavy、decentralized-first。
+- **NLIP** (Ecma Natural Language Interaction Protocol、2025 年 12 月 standardized) — natural-language content type。
 
-A2A is the most-adopted peer protocol as of April 2026. See arXiv:2505.02279 (Liu et al., "A Survey of Agent Interoperability Protocols") for the comparison.
+2026 年 4 月時点で、A2A は最も採用された peer protocol である。比較は arXiv:2505.02279 (Liu et al., "A Survey of Agent Interoperability Protocols") を参照。
 
-## Build It
+## 実装
 
-`code/main.py` implements an A2A-minimal server and client using `http.server` and JSON. The server:
+`code/main.py` は `http.server` と JSON を使って A2A-minimal server と client を実装する。server は:
 
-- exposes `/.well-known/agent.json`,
-- accepts `POST /tasks`,
-- manages task state,
-- returns artifacts on `GET /tasks/{id}`.
+- `/.well-known/agent.json` を expose する。
+- `POST /tasks` を受け付ける。
+- task state を管理する。
+- `GET /tasks/{id}` で artifact を返す。
 
-The client:
+client は:
 
-- fetches the Agent Card,
-- submits a task,
-- polls until completion,
-- reads the artifact.
+- Agent Card を fetch する。
+- task を submit する。
+- completion まで poll する。
+- artifact を読む。
 
 Run:
 
@@ -120,46 +120,46 @@ Run:
 python3 code/main.py
 ```
 
-The script starts the server in a background thread, then runs the client against it. You see the complete flow: discovery, submit, poll, artifact.
+script は background thread で server を起動し、それに対して client を実行する。discovery、submit、poll、artifact の完全な flow が見える。
 
 ## Use It
 
-`outputs/skill-a2a-integrator.md` designs an A2A integration: Agent Card contents, task schemas, auth choice, streaming vs polling.
+`outputs/skill-a2a-integrator.md` は A2A integration を設計する。Agent Card contents、task schemas、auth choice、streaming vs polling を含む。
 
 ## Ship It
 
 Checklist:
 
-- **Pin the spec version.** A2A is still evolving; the Agent Card should declare the protocol version.
-- **Idempotent task creation.** Duplicate submissions (network retries) should produce one task.
-- **Artifact schemas.** Declare what shapes the agent returns; consumers should validate.
-- **Rate limits + auth.** A2A is public-facing; apply standard web security.
-- **Dead-letter for failed tasks.** Inspect patterns over time for recurring failure types.
+- **spec version を pin する。** A2A はまだ進化中である。Agent Card は protocol version を宣言すべき。
+- **Idempotent task creation。** duplicate submission (network retry) は1つの task にまとまるべき。
+- **Artifact schemas。** agent が返す shape を宣言する。consumer は validate すべき。
+- **Rate limits + auth。** A2A は public-facing。標準的な web security を適用する。
+- **failed task の dead-letter。** recurring failure type の pattern を時間とともに調べる。
 
 ## Exercises
 
-1. Run `code/main.py`. Confirm the client discovers the server and receives the correct artifact.
-2. Add a second skill to the server (e.g., "summarize"). Update the Agent Card. Write a client that picks the skill based on task type.
-3. Implement an SSE streaming endpoint: `/tasks/{id}/events` that emits state changes. What does the client need to do differently?
-4. Read the A2A spec (https://a2a-protocol.org/latest/specification/). Identify three things the spec mandates that this demo does not implement.
-5. Compare A2A (Agent Card discovery) to MCP (server-side capability listing via `listTools`). What is the tradeoff between self-describing agents and capability-probing?
+1. `code/main.py` を実行する。client が server を discover し、正しい artifact を受け取ることを確認する。
+2. server に2つ目の skill (例: "summarize") を追加する。Agent Card を更新する。task type に基づいて skill を選ぶ client を書く。
+3. SSE streaming endpoint `/tasks/{id}/events` を実装し、state change を emit する。client は何を変える必要があるか。
+4. A2A spec (https://a2a-protocol.org/latest/specification/) を読む。この demo が実装していない、spec が要求するものを3つ特定する。
+5. A2A (Agent Card discovery) と MCP (server-side capability listing via `listTools`) を比較する。self-describing agents と capability-probing の tradeoff は何か。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| A2A | "Agent-to-agent" | Peer protocol for agents to call other agents across systems. Google 2025. |
-| Agent Card | "The agent's business card" | JSON at `/.well-known/agent.json` describing skills, endpoints, auth. |
-| Task | "The unit of work" | Async stateful object with a lifecycle; artifacts produced on completion. |
-| Artifact | "The result" | Typed output: text, structured JSON, image, video, audio. First-class media. |
-| Opaque lifecycle | "How it's solved is the agent's business" | Client sees state transitions; server is free to choose framework/tools. |
-| Discovery | "Finding the agent" | `GET /.well-known/agent.json` returns the card. |
-| MCP vs A2A | "Tools vs peers" | MCP: vertical agent ↔ tool. A2A: horizontal agent ↔ agent. |
-| ACP / ANP / NLIP | "Sibling protocols" | Adjacent specs; A2A is the most-adopted 2026. |
+| A2A | "Agent-to-agent" | system をまたいで agent が他の agent を呼ぶための peer protocol。Google 2025。 |
+| Agent Card | "The agent's business card" | skills、endpoints、auth を記述する `/.well-known/agent.json` の JSON。 |
+| Task | "The unit of work" | lifecycle を持つ async stateful object。completion 時に artifact を生成する。 |
+| Artifact | "The result" | typed output: text、structured JSON、image、video、audio。first-class media。 |
+| Opaque lifecycle | "How it's solved is the agent's business" | client は state transition だけを見る。server は framework/tools を自由に選べる。 |
+| Discovery | "Finding the agent" | `GET /.well-known/agent.json` が card を返す。 |
+| MCP vs A2A | "Tools vs peers" | MCP: vertical agent ↔ tool。A2A: horizontal agent ↔ agent。 |
+| ACP / ANP / NLIP | "Sibling protocols" | 隣接 spec。A2A は 2026 年で最も採用されている。 |
 
-## Further Reading
+## 参考文献
 
-- [A2A specification](https://a2a-protocol.org/latest/specification/) — the canonical spec
-- [Google Developers Blog — A2A announcement](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/) — April 2025 launch post
+- [A2A specification](https://a2a-protocol.org/latest/specification/) — canonical spec
+- [Google Developers Blog — A2A announcement](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/) — 2025 年 4 月の launch post
 - [A2A GitHub repo](https://github.com/a2aproject/A2A) — reference implementations and SDKs
-- [Liu et al. — A Survey of Agent Interoperability Protocols](https://arxiv.org/html/2505.02279v1) — MCP, ACP, A2A, ANP comparison
+- [Liu et al. — A Survey of Agent Interoperability Protocols](https://arxiv.org/html/2505.02279v1) — MCP、ACP、A2A、ANP comparison

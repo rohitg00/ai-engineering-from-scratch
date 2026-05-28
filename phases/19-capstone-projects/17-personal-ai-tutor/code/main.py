@@ -1,12 +1,11 @@
-"""Personal AI tutor — Bayesian knowledge tracing + Socratic policy scaffold.
+"""Personal AI tutor — Bayesian knowledge tracing + Socratic policy scaffold。
 
-The hard architectural primitive is the learner model: per-concept mastery
-probability updated by Bayesian knowledge tracing after each interaction,
-feeding into a curriculum-graph walk that chooses the next concept. This
-scaffold implements BKT, a curriculum DAG, a Socratic policy decision, and
-a simulated two-learner study.
+重要な architecture primitive は learner model である。Interaction ごとに
+Bayesian knowledge tracing で concept ごとの mastery probability を更新し、
+次の concept を選ぶ curriculum-graph walk に渡す。この scaffold は BKT、
+curriculum DAG、Socratic policy decision、simulated two-learner study を実装する。
 
-Run:  python main.py
+実行:  python main.py
 """
 
 from __future__ import annotations
@@ -23,9 +22,9 @@ from dataclasses import dataclass, field
 @dataclass
 class BKTParams:
     p_init: float = 0.2     # prior knowledge
-    p_learn: float = 0.12   # learning rate per practice
-    p_slip: float = 0.10    # correct despite not knowing
-    p_guess: float = 0.15   # correct by guessing despite not knowing
+    p_learn: float = 0.12   # practice ごとの learning rate
+    p_slip: float = 0.10    # 知っているのに誤答する確率
+    p_guess: float = 0.15   # 知らないのに guess で正答する確率
 
 
 def bkt_update(mastery: float, correct: bool, p: BKTParams) -> float:
@@ -36,12 +35,12 @@ def bkt_update(mastery: float, correct: bool, p: BKTParams) -> float:
         num = mastery * p.p_slip
         denom = num + (1 - mastery) * (1 - p.p_guess)
     posterior = num / max(denom, 1e-6)
-    # transition: learn from this interaction
+    # transition: この interaction から学ぶ
     return posterior + (1 - posterior) * p.p_learn
 
 
 # ---------------------------------------------------------------------------
-# curriculum graph  --  DAG of concepts with prerequisite edges
+# curriculum graph  --  prerequisite edge を持つ concept DAG
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -70,7 +69,7 @@ def curriculum_map(concepts: list[Concept]) -> dict[str, Concept]:
 
 
 # ---------------------------------------------------------------------------
-# learner state  --  per-concept mastery plus history
+# learner state  --  concept ごとの mastery と history
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -81,7 +80,7 @@ class LearnerState:
 
 
 # ---------------------------------------------------------------------------
-# concept selector  --  pick next concept with (a) prereqs met and (b) low mastery
+# concept selector  --  (a) prereq 達成済み、(b) mastery が低い next concept を選ぶ
 # ---------------------------------------------------------------------------
 
 def next_concept(state: LearnerState, cmap: dict[str, Concept],
@@ -95,7 +94,7 @@ def next_concept(state: LearnerState, cmap: dict[str, Concept],
 
 
 # ---------------------------------------------------------------------------
-# Socratic policy  --  decides scaffold vs next-step vs celebration
+# Socratic policy  --  scaffold / next-step / celebration を決める
 # ---------------------------------------------------------------------------
 
 def socratic_policy(state: LearnerState, concept: str, correct: bool) -> str:
@@ -110,41 +109,41 @@ def socratic_policy(state: LearnerState, concept: str, correct: bool) -> str:
 
 
 # ---------------------------------------------------------------------------
-# learner simulator  --  random-walk with difficulty sensitive to mastery
+# learner simulator  --  mastery に応じた difficulty を使う random-walk
 # ---------------------------------------------------------------------------
 
 def simulate_answer(learner_knowledge: float, concept_difficulty: float,
                     rng: random.Random) -> bool:
-    """Simulate whether the learner answers correctly."""
-    # probability of correct = sigmoid(knowledge - difficulty)
+    """Learner が正答するかをシミュレートする。"""
+    # 正答確率 = sigmoid(knowledge - difficulty)
     import math
     p = 1 / (1 + math.exp(-(learner_knowledge - concept_difficulty)))
     return rng.random() < p
 
 
 # ---------------------------------------------------------------------------
-# adaptive and baseline cohorts  --  compare learning gain over N interactions
+# adaptive and baseline cohorts  --  N interactions 上の learning gain を比較する
 # ---------------------------------------------------------------------------
 
 def run_adaptive(learner_id: str, inherent_ability: float,
                  cmap: dict[str, Concept], n_turns: int, rng: random.Random) -> LearnerState:
     state = LearnerState(learner_id=learner_id)
     p = BKTParams()
-    # last action taken by the tutor, threaded into the next turn so
-    # scaffold/hint actually reduce difficulty and celebration nudges mastery
+    # tutor の直前 action を次 turn に thread し、scaffold/hint が実際に
+    # difficulty を下げ、celebration が mastery を少し押し上げるようにする
     last_action: str | None = None
     for _ in range(n_turns):
         concept = next_concept(state, cmap)
         if concept is None:
             break
         difficulty = 0.3 + 0.1 * len(cmap[concept].prereqs)
-        # apply the previous turn's action to *this* turn
+        # 前 turn の action を *この* turn に適用する
         if last_action == "scaffold_from_prereq":
-            difficulty -= 0.15    # easier retry from prereqs
+            difficulty -= 0.15    # prereq からの retry で易しくする
         elif last_action == "hint":
-            difficulty -= 0.08    # mild nudge
+            difficulty -= 0.08    # 軽い補助
         elif last_action == "celebrate_and_advance":
-            # celebration buoys confidence for one turn
+            # celebration は 1 turn だけ confidence を支える
             state.mastery[concept] = min(1.0, state.mastery[concept] + 0.02)
         # effective knowledge = inherent + mastery
         ek = inherent_ability + state.mastery[concept] * 1.5
@@ -157,9 +156,10 @@ def run_adaptive(learner_id: str, inherent_ability: float,
 
 def run_baseline(learner_id: str, inherent_ability: float,
                  cmap: dict[str, Concept], n_turns: int, rng: random.Random) -> LearnerState:
-    """Non-adaptive concept selection (round-robin). Mastery is still updated
-    via BKT so both arms share the same learner model; only the policy /
-    concept-selection strategy differs."""
+    """Non-adaptive concept selection (round-robin)。
+    Mastery は BKT で更新するため、両 arm は同じ learner model を共有する。
+    違うのは policy / concept-selection strategy だけである。
+    """
     state = LearnerState(learner_id=learner_id)
     p = BKTParams()
     order = list(cmap.keys())
@@ -191,8 +191,8 @@ def main() -> None:
 
     for i in range(n_learners):
         ability = rng.gauss(0.3, 0.4)
-        # paired randomness: both arms consume the same latent RNG stream so
-        # the delta measures the policy difference, not seed noise
+        # paired randomness: 両 arm が同じ latent RNG stream を消費することで、
+        # delta が seed noise ではなく policy difference を測るようにする
         seed = 100 + i
         r_adapt = random.Random(seed)
         r_base = random.Random()

@@ -1,32 +1,32 @@
-# Word Embeddings — Word2Vec from Scratch
+# 単語埋め込み — Word2Vecをスクラッチから
 
-> A word is the company it keeps. Train a shallow net on that idea and geometry falls out.
+> 単語は、その周囲に現れる単語によって理解できる。この考え方で浅いネットワークを学習すると、幾何構造が現れる。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 3 · 03 (Backpropagation from Scratch)
-**Time:** ~75 minutes
+**種類:** 実装
+**言語:** Python
+**前提:** フェーズ 5 · 02 (BoW + TF-IDF)、フェーズ 3 · 03 (Backpropagation from Scratch)
+**時間:** 約75分
 
-## The Problem
+## 問題
 
-TF-IDF knows `dog` and `puppy` are different words. It does not know they mean nearly the same thing. A classifier trained on `dog` cannot generalize to a review about `puppy`. You can paper over this by listing synonyms, but that fails on rare terms, domain jargon, and every language you did not anticipate.
+TF-IDFは、`dog` と `puppy` が別の単語であることは分かります。しかし、それらがほぼ同じ意味を持つことは分かりません。`dog` で学習した分類器は、`puppy` について書かれたレビューへうまく一般化できません。同義語リストでごまかすこともできますが、まれな語、ドメイン固有の専門用語、想定していなかったあらゆる言語で破綻します。
 
-You want a representation where `dog` and `puppy` land close together in space. Where `king - man + woman` lands near `queen`. Where a model trained on `dog` transfers some signal to `puppy` for free.
+欲しいのは、`dog` と `puppy` が空間上で近い位置に来る表現です。`king - man + woman` が `queen` の近くに来る表現です。`dog` で学習したモデルの信号が、追加コストなしで `puppy` にも少し伝わる表現です。
 
-Word2Vec gave us that space. Two layer neural network, trillion-token training runs, published in 2013. The architecture is almost embarrassingly simple. The results reshaped NLP for a decade.
+Word2Vecはその空間を与えました。2層ニューラルネットワーク、1兆トークン規模の学習、2013年の発表。アーキテクチャは拍子抜けするほど単純です。それでも結果は、その後10年のNLPを作り替えました。
 
-## The Concept
+## コンセプト
 
-**Distributional hypothesis** (Firth, 1957): "You shall know a word by the company it keeps." If two words appear in similar contexts, they probably mean similar things.
+**分布仮説** (Firth, 1957): "You shall know a word by the company it keeps." 2つの単語が似た文脈に現れるなら、おそらく意味も似ています。
 
-Word2Vec comes in two flavors, both exploiting that idea.
+Word2Vecには、この考え方を使う2つの方式があります。
 
-- **Skip-gram.** Given a center word, predict the surrounding words. `cat -> (the, sat, on)` with window size 2.
-- **CBOW (continuous bag of words).** Given surrounding words, predict the center. `(the, sat, on) -> cat`.
+- **Skip-gram。** 中心語から周辺語を予測します。ウィンドウサイズ2なら `cat -> (the, sat, on)` です。
+- **CBOW (continuous bag of words)。** 周辺語から中心語を予測します。`(the, sat, on) -> cat` です。
 
-Skip-gram is slower to train but handles rare words better. It became the default.
+Skip-gramは学習が遅い一方で、まれな語をよりよく扱えます。そのため標準的な選択になりました。
 
-The network has one hidden layer with no nonlinearity. Input is a one-hot vector over the vocabulary. Output is a softmax over the vocabulary. After training, you throw away the output layer. The hidden layer weights are the embeddings.
+ネットワークは非線形性のない隠れ層を1つ持ちます。入力は語彙上のone-hotベクトルです。出力は語彙全体へのsoftmaxです。学習後、出力層は捨てます。隠れ層の重みが埋め込みになります。
 
 ```
 one-hot(center) ── W ──▶ hidden (d-dim) ── W' ──▶ softmax(vocab)
@@ -34,11 +34,11 @@ one-hot(center) ── W ──▶ hidden (d-dim) ── W' ──▶ softmax(vo
                           this is the embedding
 ```
 
-The trick: softmax over 100k words is prohibitively expensive. Word2Vec uses **negative sampling** to turn it into a binary classification task. Predict "did this context word appear near this center word, yes or no". Sample a handful of negative (non-co-occurring) words per training pair instead of computing softmax over the whole vocabulary.
+問題は、10万語に対するsoftmaxが非常に高コストであることです。Word2Vecは**負例サンプリング**を使い、これを二値分類タスクに変えます。「この文脈語はこの中心語の近くに現れたか、はい/いいえ」を予測します。語彙全体にsoftmaxを計算する代わりに、各学習ペアごとに少数の負例、つまり共起していない単語をサンプルします。
 
-## Build It
+## 実装
 
-### Step 1: training pairs from a corpus
+### ステップ1: コーパスから学習ペアを作る
 
 ```python
 def skipgram_pairs(docs, window=2):
@@ -60,11 +60,11 @@ def skipgram_pairs(docs, window=2):
  ...]
 ```
 
-Every (center, context) pair in a window is a positive training example.
+ウィンドウ内のすべての `(center, context)` ペアが正例の学習サンプルになります。
 
-### Step 2: embedding tables
+### ステップ2: 埋め込みテーブル
 
-Two matrices. `W` is the center-word embedding table (the one you keep). `W'` is the context-word table (often discarded, sometimes averaged with `W`).
+行列は2つあります。`W` は中心語の埋め込みテーブルで、最終的に保持するものです。`W'` は文脈語のテーブルで、多くの場合は捨てますが、`W` と平均することもあります。
 
 ```python
 import numpy as np
@@ -77,11 +77,11 @@ def init_embeddings(vocab_size, dim, seed=0):
     return W, W_prime
 ```
 
-Small random init. Vocab size 10k and dim 100 is realistic; for teaching, 50 vocab x 16 dim is enough to see the geometry.
+小さな乱数で初期化します。語彙サイズ10k、次元100は現実的な規模です。学習用の例なら、語彙50、16次元でも幾何構造は見えます。
 
-### Step 3: negative sampling objective
+### ステップ3: 負例サンプリングの目的関数
 
-For each positive pair `(center, context)`, sample `k` random words from the vocabulary as negatives. Train the model so the dot product `W[center] · W'[context]` is high for positives and low for negatives.
+各正例ペア `(center, context)` について、語彙から `k` 個のランダムな単語を負例としてサンプルします。正例では内積 `W[center] · W'[context]` が高く、負例では低くなるようにモデルを学習します。
 
 ```python
 def sigmoid(x):
@@ -107,9 +107,9 @@ def train_pair(W, W_prime, center_idx, context_idx, negative_indices, lr):
     W[center_idx] -= lr * grad_center
 ```
 
-The magic formula: logistic loss on positive pair (want sigmoid near 1) plus logistic loss on negative pairs (want sigmoid near 0). Gradients flow to both tables. Full derivation is in the original paper; walk through it once with pencil and paper if you want it to stick.
+中心となる式は、正例ペアに対するロジスティック損失、つまりsigmoidを1に近づける損失と、負例ペアに対するロジスティック損失、つまりsigmoidを0に近づける損失の和です。勾配は両方のテーブルに流れます。完全な導出は元論文にあります。一度、紙と鉛筆で追うと記憶に残ります。
 
-### Step 4: train on a toy corpus
+### ステップ4: 小さなコーパスで学習する
 
 ```python
 def train(docs, dim=16, window=2, k_neg=5, epochs=100, lr=0.05, seed=0):
@@ -130,9 +130,9 @@ def train(docs, dim=16, window=2, k_neg=5, epochs=100, lr=0.05, seed=0):
     return vocab, W
 ```
 
-After enough epochs on a large corpus, words that share contexts have similar center embeddings. On a toy corpus, you see the effect faintly. On billions of tokens, you see it dramatically.
+十分なエポック数と大きなコーパスがあれば、似た文脈を共有する単語は、似た中心語埋め込みを持つようになります。おもちゃのコーパスでは効果はうっすら見える程度です。数十億トークンなら、はっきり見えます。
 
-### Step 5: the analogy trick
+### ステップ5: アナロジーのトリック
 
 ```python
 def nearest(vocab, W, target_vec, topk=5, exclude=None):
@@ -158,18 +158,18 @@ def analogy(vocab, W, a, b, c, topk=5):
     return nearest(vocab, W, v, topk=topk, exclude={vocab[a], vocab[b], vocab[c]})
 ```
 
-On pre-trained 300d Google News vectors:
+事前学習済みの300次元Google Newsベクトルでは、次のようになります。
 
 ```python
 >>> analogy(vocab, W, "man", "king", "woman")
 [('queen', 0.71), ('monarch', 0.62), ('princess', 0.59), ...]
 ```
 
-`king - man + woman = queen`. Not because the model knows what royalty is. Because the vector `(king - man)` captures something like "royal", and adding it to `woman` lands near the royal-female region.
+`king - man + woman = queen` です。これはモデルが王権とは何かを知っているからではありません。ベクトル `(king - man)` が「royal」のようなものを捉えており、それを `woman` に足すと、王族かつ女性を表す領域の近くに着地するからです。
 
-## Use It
+## 使う
 
-Writing Word2Vec from scratch is teaching. Production NLP uses `gensim`.
+Word2Vecをスクラッチから書くのは学習のためです。本番のNLPでは `gensim` を使います。
 
 ```python
 from gensim.models import Word2Vec
@@ -194,30 +194,30 @@ print(model.wv["cat"])
 print(model.wv.most_similar("cat", topn=3))
 ```
 
-For real work, you almost never train Word2Vec yourself. You download pre-trained vectors.
+実務では、Word2Vecを自分で学習することはほとんどありません。事前学習済みベクトルをダウンロードします。
 
-- **GloVe** — Stanford's co-occurrence-matrix factorization approach. 50d, 100d, 200d, 300d checkpoints. Good general coverage. Lesson 04 covers GloVe specifically.
-- **fastText** — Facebook's Word2Vec extension that embeds character n-grams. Handles out-of-vocabulary words by composing subwords. Lesson 04.
-- **Pretrained Word2Vec on Google News** — 300d, 3M word vocabulary, published 2013. Still downloaded daily.
+- **GloVe** — Stanfordの共起行列分解アプローチです。50d、100d、200d、300dのチェックポイントがあります。一般的なカバレッジが良好です。レッスン04でGloVeを具体的に扱います。
+- **fastText** — FacebookによるWord2Vec拡張で、文字n-gramを埋め込みます。未知語をサブワードの合成で扱えます。レッスン04。
+- **Google Newsの事前学習済みWord2Vec** — 300d、300万語語彙、2013年公開。今でも毎日ダウンロードされています。
 
-### When Word2Vec still wins in 2026
+### 2026年でもWord2Vecが勝つ場面
 
-- Lightweight domain-specific retrieval. Train on medical abstracts in an hour on a laptop, get specialized vectors no general model captures.
-- Analogy-style feature engineering. `gender_vector = mean(man - woman pairs)`. Subtract it from other words to get a gender-neutral axis. Still used in fairness research.
-- Interpretability. 100d is small enough to plot via PCA or t-SNE and actually see clusters form.
-- Anywhere inference has to run on-device with no GPU. Word2Vec lookup is a single row fetch.
+- 軽量なドメイン特化検索。医療論文の要旨で1時間ほどノートPC学習すれば、汎用モデルでは捉えにくい専門ベクトルが得られます。
+- アナロジー型の特徴量エンジニアリング。`gender_vector = mean(man - woman pairs)`。それを他の単語から引くと、性別に中立な軸を作れます。公平性研究では今でも使われます。
+- 解釈しやすさ。100次元はPCAやt-SNEでプロットして、クラスタ形成を実際に見られる程度に小さいです。
+- 推論をGPUなしのオンデバイスで走らせる必要がある場所。Word2Vecのlookupは1行を取り出すだけです。
 
-### Where Word2Vec fails
+### Word2Vecが失敗する場所
 
-The polysemy wall. `bank` has one vector. `river bank` and `financial bank` share it. `table` (spreadsheet vs. furniture) shares it. A classifier downstream cannot distinguish the senses from the vector.
+多義性の壁です。`bank` は1つのベクトルしか持ちません。`river bank` と `financial bank` は同じベクトルを共有します。`table` も、表計算の表と家具のテーブルで同じです。下流の分類器は、そのベクトルだけでは語義を区別できません。
 
-Contextual embeddings (ELMo, BERT, every transformer since) solved this by producing a different vector for each occurrence of the word based on surrounding context. That is the jump from Word2Vec to BERT: from static to contextual. Phase 7 covers the transformer half.
+文脈化埋め込み (ELMo、BERT、それ以降のすべてのtransformer) は、周囲の文脈に基づいて単語の出現ごとに異なるベクトルを作ることで、この問題を解きました。これがWord2VecからBERTへの飛躍です。静的な表現から文脈依存の表現へ。フェーズ7ではtransformer側を扱います。
 
-The out-of-vocabulary problem is the other failure. Word2Vec has never seen `Zoomer-approved` if it was not in training data. No fallback. fastText fixes this with subword composition (lesson 04).
+もう1つの失敗は未知語問題です。学習データに入っていなければ、Word2Vecは `Zoomer-approved` を見たことがありません。フォールバックはありません。fastTextはサブワード合成でこれを修正します (レッスン04)。
 
-## Ship It
+## 成果物
 
-Save as `outputs/skill-embedding-probe.md`:
+`outputs/skill-embedding-probe.md` として保存します。
 
 ```markdown
 ---
@@ -239,25 +239,25 @@ You probe trained word embeddings to verify they are working. Given a `gensim.mo
 Refuse to declare a model good on analogy accuracy alone. Analogy benchmarks are gameable and do not transfer to downstream tasks. Recommend intrinsic + downstream evaluation together.
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Run the training loop on a tiny corpus (20 sentences about cats and dogs). After 200 epochs, verify `nearest(vocab, W, W[vocab["cat"]])` returns `dog` in its top 3. If not, increase epochs or vocabulary.
-2. **Medium.** Add subsampling of frequent words. Words with frequency above `10^-5` are dropped from training pairs with probability proportional to their frequency. Measure the effect on rare-word similarity.
-3. **Hard.** Train a model on the 20 Newsgroups corpus. Compute two bias axes: `he - she` and `doctor - nurse`. Project occupation words onto both axes. Report which occupations have the largest bias gap. This is the kind of probe fairness researchers use.
+1. **初級。** 猫と犬についての小さなコーパス (20文) で学習ループを実行してください。200エポック後に、`nearest(vocab, W, W[vocab["cat"]])` の上位3件に `dog` が入ることを確認します。入らない場合は、エポック数または語彙を増やしてください。
+2. **中級。** 頻出語のsubsamplingを追加してください。頻度が `10^-5` を超える単語を、その頻度に比例した確率で学習ペアから落とします。まれな語の類似度に与える影響を測定してください。
+3. **上級。** 20 Newsgroupsコーパスでモデルを学習してください。`he - she` と `doctor - nurse` の2つのバイアス軸を計算します。職業語を両方の軸に射影してください。どの職業でバイアス差が最大かを報告します。これは公平性研究者が使うタイプのprobeです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| Word embedding | Word as a vector | A dense, low-dim (typically 100-300) representation learned from context. |
-| Skip-gram | Word2Vec trick | Predict context words from center word. Slower than CBOW, better for rare words. |
-| Negative sampling | Training shortcut | Replace softmax over full vocab with binary classification against `k` random words. |
-| Static embedding | One vector per word | Same vector regardless of context. Fails on polysemy. |
-| Contextual embedding | Context-sensitive vector | Different vector for each occurrence based on surrounding words. What transformers produce. |
-| OOV | Out of vocabulary | Word not seen in training. Word2Vec cannot produce a vector for these. |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Word embedding | 単語をベクトルにする | 文脈から学習された、密で低次元な表現です。典型的には100-300次元です。 |
+| Skip-gram | Word2Vecのトリック | 中心語から文脈語を予測します。CBOWより遅いですが、まれな語に強いです。 |
+| Negative sampling | 学習の近道 | 語彙全体へのsoftmaxを、`k` 個のランダム単語に対する二値分類で置き換えます。 |
+| Static embedding | 1単語に1ベクトル | 文脈に関係なく同じベクトルを使います。多義性で失敗します。 |
+| Contextual embedding | 文脈に敏感なベクトル | 周囲の単語に基づき、出現ごとに異なるベクトルになります。transformerが生成するものです。 |
+| OOV | 語彙外 | 学習時に見ていない単語です。Word2Vecはこの単語のベクトルを生成できません。 |
 
-## Further Reading
+## 参考資料
 
-- [Mikolov et al. (2013). Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/abs/1310.4546) — the negative-sampling paper. Short and readable.
-- [Rong, X. (2014). word2vec Parameter Learning Explained](https://arxiv.org/abs/1411.2738) — the clearest derivation of the gradients, if the original paper's math feels dense.
-- [gensim Word2Vec tutorial](https://radimrehurek.com/gensim/models/word2vec.html) — production training settings that actually work.
+- [Mikolov et al. (2013). Distributed Representations of Words and Phrases and their Compositionality](https://arxiv.org/abs/1310.4546) — 負例サンプリングの論文です。短く読みやすいです。
+- [Rong, X. (2014). word2vec Parameter Learning Explained](https://arxiv.org/abs/1411.2738) — 元論文の数式が重く感じる場合に、勾配の導出を最も分かりやすく説明しています。
+- [gensim Word2Vec tutorial](https://radimrehurek.com/gensim/models/word2vec.html) — 実際に機能する本番向け学習設定です。

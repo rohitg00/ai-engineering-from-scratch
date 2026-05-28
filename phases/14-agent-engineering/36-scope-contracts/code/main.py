@@ -1,9 +1,9 @@
-"""Scope contract checker with violation budgets, severity, and multi-contract merge.
+"""violation budgets、severity、multi-contract merge を持つ scope contract checker。
 
-Loads a per-task scope_contract.json and a RunSummary (touched files, commands,
-elapsed minutes), produces a typed Finding list with severity tags, applies a
-violation budget the runtime can survive without halting, and supports merging
-multiple contracts (project-wide + task-specific) into a single effective one.
+per-task scope_contract.json と RunSummary (touched files, commands, elapsed
+minutes) を load し、severity tags 付きの typed Finding list を作り、runtime
+が halt せずに耐えられる violation budget を適用し、複数 contracts
+(project-wide + task-specific) を single effective contract に merge する。
 
 Run: python3 code/main.py
 """
@@ -69,14 +69,14 @@ def matches_any(path: str, patterns: list[str]) -> bool:
 
 
 def merge_contracts(parent: ScopeContract, child: ScopeContract) -> ScopeContract:
-    """Least-privilege merge: intersect allowed, union forbidden, narrowest budgets.
+    """least-privilege merge: allowed は intersect、forbidden は union、budget は最小。
 
-    allowed_files intersect (both contracts must permit a path),
-    forbidden_files union (either contract can prohibit a path),
-    time_budget_minutes min (most restrictive wins),
-    approvals_required accumulate,
-    network_egress: None means no enforcement, otherwise intersect; an empty
-    list means deny-all and stays deny-all under merge.
+    allowed_files は intersect (両方の contracts が path を permit する必要がある)、
+    forbidden_files は union (どちらかが path を prohibit できる)、
+    time_budget_minutes は min (most restrictive wins)、
+    approvals_required は accumulate。
+    network_egress: None は no enforcement、それ以外は intersect。empty list は
+    deny-all を意味し、merge 後も deny-all のまま。
     """
     return ScopeContract(
         task_id=child.task_id,
@@ -129,21 +129,21 @@ def scope_check(contract: ScopeContract, run: RunSummary) -> ScopeReport:
 
     findings: list[Finding] = []
     if forbidden:
-        findings.append(Finding("scope.forbidden", "block", f"forbidden writes: {forbidden}"))
+        findings.append(Finding("scope.forbidden", "block", f"禁止された writes: {forbidden}"))
     if off_scope:
-        findings.append(Finding("scope.off_scope", "warn", f"off-scope writes: {off_scope}"))
+        findings.append(Finding("scope.off_scope", "warn", f"scope 外 writes: {off_scope}"))
     if soft_off_scope:
-        findings.append(Finding("scope.soft_off_scope", "info", f"docs/markdown off-scope: {soft_off_scope}"))
+        findings.append(Finding("scope.soft_off_scope", "info", f"docs/markdown の scope 外: {soft_off_scope}"))
     if missing:
-        findings.append(Finding("acceptance.missing", "block", f"acceptance not run: {missing}"))
+        findings.append(Finding("acceptance.missing", "block", f"acceptance が未実行: {missing}"))
     if contract.time_budget_minutes is not None and run.elapsed_minutes > contract.time_budget_minutes:
         findings.append(Finding("time.over_budget", "block",
-                                f"elapsed {run.elapsed_minutes:.1f}m > budget {contract.time_budget_minutes}m"))
+                                f"経過 {run.elapsed_minutes:.1f}m > budget {contract.time_budget_minutes}m"))
     if contract.network_egress is not None and run.network_hosts:
         bad_hosts = [h for h in run.network_hosts if h not in contract.network_egress]
         if bad_hosts:
             findings.append(Finding("network.unallowed_host", "block",
-                                    f"egress to non-allowlisted hosts: {bad_hosts}"))
+                                    f"allowlist 外 hosts への egress: {bad_hosts}"))
 
     warn_count = sum(1 for f in findings if f.severity == "warn")
     over_budget = warn_count > contract.violation_budget
@@ -179,19 +179,19 @@ def main() -> None:
         allowed_files=["app.py", "test_app.py", "lib/**/*.py"],
         forbidden_files=["scripts/release.sh", "config/prod.yaml"],
         acceptance_criteria=[],
-        rollback_plan="revert and redeploy",
-        approvals_required=["any new runtime dependency"],
+        rollback_plan="revert して redeploy する",
+        approvals_required=["新しい runtime dependency"],
         time_budget_minutes=60,
         violation_budget=1,
         network_egress=["api.openai.com", "api.anthropic.com"],
     )
     task = ScopeContract(
         task_id="T-001",
-        goal="add input validation to /signup",
+        goal="/signup に input validation を追加する",
         allowed_files=["app.py", "test_app.py"],
         forbidden_files=["migrations/**"],
         acceptance_criteria=["pytest -x test_app.py::test_signup_rejects_short_password"],
-        rollback_plan="revert the commit and redeploy the previous build tag",
+        rollback_plan="commit を revert し、previous build tag を redeploy する",
         approvals_required=[],
         time_budget_minutes=30,
         violation_budget=0,
@@ -228,7 +228,7 @@ def main() -> None:
 
     archive(clean_report)
     archive(creep_report)
-    print(f"\narchived under {(HERE / 'closed').name}/")
+    print(f"\narchive 先: {(HERE / 'closed').name}/")
 
 
 if __name__ == "__main__":

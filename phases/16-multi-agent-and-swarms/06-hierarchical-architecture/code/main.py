@@ -1,8 +1,8 @@
-"""Hierarchical multi-agent with decomposition-drift demo.
+"""decomposition drift demo 付き hierarchical multi-agent。
 
-3-level hierarchy: top manager -> sub-managers -> workers.
-Run happy path and a perturbed path where the top manager mislabels one branch.
-Watch the error cascade.
+3-level hierarchy: top manager -> sub-managers -> workers。
+happy path と、top manager が branch を 1 つ mislabel する perturbed path を実行する。
+error cascade を観察する。
 """
 from __future__ import annotations
 
@@ -37,7 +37,7 @@ class Worker:
 
     def run(self, question: str) -> LeafOutput:
         key = self._match_key(question)
-        ans = self.canned.get(key, f"[no canned answer for '{question}']")
+        ans = self.canned.get(key, f"['{question}' への canned answer なし]")
         return LeafOutput(worker=self.name, question=question, answer=ans)
 
     def _match_key(self, q: str) -> str:
@@ -76,7 +76,7 @@ class TopManager:
                     SubSummary(
                         sub_manager=f"MISSING[{label}]",
                         leaves=[],
-                        summary=f"[top] tried to delegate to '{label}' -- no such sub-manager",
+                        summary=f"[top] '{label}' に delegate しようとしたが、その sub-manager は存在しない",
                     )
                 )
                 continue
@@ -86,20 +86,20 @@ class TopManager:
 
 
 def build_hierarchy() -> TopManager:
-    fe = Worker("fe", {"frontend": "React component audited; 2 issues."})
-    be = Worker("be", {"backend": "API endpoints audited; 1 issue."})
+    fe = Worker("fe", {"frontend": "React component を audit。2 issues。"})
+    be = Worker("be", {"backend": "API endpoints を audit。1 issue。"})
     eng = SubManager(
         "eng-manager",
         [fe, be],
-        {"fe": "frontend review of the feature", "be": "backend review of the feature"},
+        {"fe": "feature の frontend review", "be": "feature の backend review"},
     )
-    lw = Worker("lawyer", {"legal": "Contract clauses A and B are non-compliant."})
-    legal = SubManager("legal-manager", [lw], {"lawyer": "legal review of the feature"})
+    lw = Worker("lawyer", {"legal": "Contract clauses A と B は non-compliant。"})
+    legal = SubManager("legal-manager", [lw], {"lawyer": "feature の legal review"})
     fw = Worker(
         "finance",
-        {"finance": "Projected cost $42k/month; exceeds budget by 12%."},
+        {"finance": "Projected cost は $42k/month。budget を 12% 超過。"},
     )
-    finance = SubManager("finance-manager", [fw], {"finance": "finance review of the feature"})
+    finance = SubManager("finance-manager", [fw], {"finance": "feature の finance review"})
     return TopManager("vp-eng", {"engineering": eng, "legal": legal, "finance": finance})
 
 
@@ -115,22 +115,22 @@ def render(label: str, synth: TopSynthesis) -> None:
 
 
 def main() -> None:
-    print("Hierarchical multi-agent with decomposition-drift demo")
+    print("decomposition-drift demo 付き hierarchical multi-agent")
     print("-" * 60)
 
     top = build_hierarchy()
-    task = "Ship the premium tier feature to production."
+    task = "premium tier feature を production に ship する。"
 
     happy = top.run(task, branch_labels=["engineering", "legal"])
     render("Happy path (correct branches)", happy)
 
     perturbed = top.run(task, branch_labels=["engineering", "finance"])
-    render("Perturbed path (top manager mislabels 'legal' as 'finance')", perturbed)
+    render("Perturbed path (top manager が 'legal' を 'finance' と mislabel)", perturbed)
 
-    print("\nUser asked about legal/engineering review.")
-    print("Happy path: both legal and engineering answer truthfully.")
-    print("Perturbed path: finance dutifully answers, legal question goes unanswered.")
-    print("The error appears at TOP synthesis -- one level removed from where a human could catch it.")
+    print("\nUser は legal/engineering review を求めました。")
+    print("Happy path: legal と engineering の両方が正しく答えます。")
+    print("Perturbed path: finance が従順に答え、legal question は未回答のままです。")
+    print("error は TOP synthesis に現れます。human が気づけた場所から 1 level 離れています。")
 
 
 if __name__ == "__main__":

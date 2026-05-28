@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,24 +10,24 @@
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
     </style>
   </defs>
 
-  <text x="490" y="26" text-anchor="middle" class="title">capstone: research and report ecosystem, every Phase 13 primitive</text>
+  <text x="490" y="26" text-anchor="middle" class="title">capstone: research/report ecosystemとPhase 13 primitives</text>
 
   <rect x="40" y="60" width="160" height="440" class="cool"/>
   <text x="120" y="82" text-anchor="middle" class="head">client / host</text>
   <text x="56" y="108" class="small">Claude Desktop,</text>
   <text x="56" y="124" class="small">Cursor, VS Code</text>
-  <text x="56" y="148" class="step">loads:</text>
+  <text x="56" y="148" class="step">load:</text>
   <text x="56" y="166" class="small">- AGENTS.md</text>
   <text x="56" y="182" class="small">- SKILL.md</text>
   <text x="56" y="198" class="small">  (run-research)</text>
-  <text x="56" y="230" class="step">renders:</text>
+  <text x="56" y="230" class="step">render:</text>
   <text x="56" y="248" class="small">ui://report/current</text>
   <text x="56" y="264" class="small">(iframe sandbox)</text>
   <text x="56" y="296" class="step">OAuth 2.1:</text>
@@ -43,8 +43,8 @@
   <text x="296" y="166" class="small">research:read</text>
   <text x="296" y="182" class="small">research:write</text>
   <text x="296" y="214" class="step">pinned-hash:</text>
-  <text x="296" y="232" class="small">SHA256 per tool</text>
-  <text x="296" y="248" class="small">reject mutations</text>
+  <text x="296" y="232" class="small">toolごとにSHA256</text>
+  <text x="296" y="248" class="small">mutationを拒否</text>
   <text x="296" y="280" class="step">audit log</text>
   <text x="296" y="298" class="small">user, tool, decision</text>
   <text x="296" y="330" class="step">OTel: gen_ai.*</text>
@@ -66,8 +66,8 @@
   <text x="576" y="274" class="step">ui://</text>
   <text x="576" y="292" class="small">ui://report/current</text>
   <text x="576" y="324" class="step">tasks</text>
-  <text x="576" y="342" class="small">durable; crash safe</text>
-  <text x="576" y="374" class="step">A2A call out:</text>
+  <text x="576" y="342" class="small">永続化; crash safe</text>
+  <text x="576" y="374" class="step">A2A呼び出し:</text>
   <text x="576" y="392" class="small">writer-agent</text>
   <text x="576" y="408" class="small">tasks/send summary</text>
 
@@ -80,9 +80,9 @@
   <text x="876" y="148" class="step">skills:</text>
   <text x="876" y="166" class="small">summarize_</text>
   <text x="876" y="182" class="small">papers</text>
-  <text x="876" y="214" class="step">returns:</text>
+  <text x="876" y="214" class="step">return:</text>
   <text x="876" y="232" class="small">Artifact</text>
   <text x="876" y="248" class="small">summary.md</text>
 
-  <text x="490" y="540" text-anchor="middle" class="caption">one trace id, spans across client -&gt; gateway -&gt; server -&gt; a2a; OTel GenAI everywhere.</text>
+  <text x="490" y="540" text-anchor="middle" class="caption">1つのtrace idがclient -&gt; gateway -&gt; server -&gt; A2Aを横断。全域でOTel GenAI。</text>
 </svg>

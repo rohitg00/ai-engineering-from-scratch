@@ -1,5 +1,5 @@
-{"id": "sum-00", "prompt": "summarize: Cats are mammals. Mammals are warm blooded.", "targets": ["cats are mammals"], "metric": "rouge_l"}
-{"id": "sum-01", "prompt": "summarize: Python uses indentation. Indentation defines blocks.", "targets": ["python uses indentation"], "metric": "rouge_l"}
-{"id": "sum-02", "prompt": "summarize: The river flows east. Boats pass slowly.", "targets": ["the river flows east"], "metric": "rouge_l"}
-{"id": "sum-03", "prompt": "summarize: Storms approach the coast. Waves rise quickly.", "targets": ["storms approach the coast"], "metric": "rouge_l"}
-{"id": "sum-04", "prompt": "summarize: Bread bakes at high heat. Crust forms last.", "targets": ["bread bakes at high heat"], "metric": "rouge_l"}
+{"id": "sum-00", "prompt": "要約: 猫は哺乳類です。哺乳類は恒温動物です。", "targets": ["猫は哺乳類です"], "metric": "rouge_l"}
+{"id": "sum-01", "prompt": "要約: Python は indentation を使います。indentation が block を定義します。", "targets": ["Python は indentation を使います"], "metric": "rouge_l"}
+{"id": "sum-02", "prompt": "要約: 川は東へ流れます。船はゆっくり通ります。", "targets": ["川は東へ流れます"], "metric": "rouge_l"}
+{"id": "sum-03", "prompt": "要約: 嵐が海岸に近づきます。波が急に高くなります。", "targets": ["嵐が海岸に近づきます"], "metric": "rouge_l"}
+{"id": "sum-04", "prompt": "要約: パンは高温で焼かれます。最後に crust ができます。", "targets": ["パンは高温で焼かれます"], "metric": "rouge_l"}

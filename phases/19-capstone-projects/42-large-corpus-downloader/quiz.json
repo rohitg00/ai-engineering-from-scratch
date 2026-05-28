@@ -1,78 +1,78 @@
 {
   "lesson": "42-large-corpus-downloader",
-  "title": "Large Corpus Downloader",
+  "title": "大規模 Corpus Downloader",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the downloader keep a separate .partial.json checkpoint per shard?",
+      "question": "downloader が shard ごとに別の `.partial.json` checkpoint を持つのはなぜか。",
       "options": [
-        "To make the cache directory look organized",
-        "So a resumed download can verify the sha256 prefix over the verified bytes before appending, making silent corruption impossible",
-        "Because urllib requires it",
-        "To store the URL in case the shard file moves"
+        "cache directory を整理して見せるため。",
+        "resume 前に verified bytes の sha256 prefix を検証し、silent corruption を防ぐため。",
+        "urllib が要求するため。",
+        "shard file が移動した場合に URL を保存するため。"
       ],
       "correct": 1,
-      "explanation": "The checkpoint records verified_bytes and the sha256 of those bytes; resume only proceeds when the on-disk hash matches."
+      "explanation": "checkpoint は verified_bytes とその hash を記録し、disk 上の hash が一致した場合だけ resume する。"
     },
     {
       "stage": "check",
-      "question": "What does the LSH band scheme buy that exact-hash dedup does not?",
+      "question": "LSH band scheme は exact-hash dedup では得られない何をもたらすか。",
       "options": [
-        "Constant memory usage",
-        "Sub-linear lookup that flags near-duplicates with high Jaccard similarity even when the documents differ by a few tokens",
-        "Lossless compression",
-        "Faster sha256 computation"
+        "constant memory usage。",
+        "数 token 違う文書でも高い Jaccard similarity を持つ near-duplicate を sub-linear lookup で検出できる。",
+        "lossless compression。",
+        "sha256 の高速化。"
       ],
       "correct": 1,
-      "explanation": "MinHash plus LSH catches paraphrases and boilerplate variants that exact-hash dedup walks past."
+      "explanation": "MinHash + LSH は boilerplate 違いなど exact hash が見逃す near-duplicate を拾える。"
     },
     {
       "stage": "check",
-      "question": "Why is the checkpoint written before the bytes are appended, not after?",
+      "question": "checkpoint を bytes append の後ではなく前に書くのはなぜか。",
       "options": [
-        "It is convenient",
-        "If the process dies between the write and the checkpoint update, the next resume reads a checkpoint that is behind the bytes and silently re-appends, corrupting the file",
-        "It is faster",
-        "It saves disk space"
+        "便利だから。",
+        "write と checkpoint 更新の間に死ぬと、次回 resume が古い checkpoint から再 append して file を壊すため。",
+        "速いから。",
+        "disk space を節約するため。"
       ],
       "correct": 1,
-      "explanation": "Checkpoint-first matches a write-ahead log: a crash leaves the verified offset trailing or equal to the file, never ahead."
+      "explanation": "checkpoint-first は write-ahead log と同じ考え方で、crash 後も verified offset が file より先行しない。"
     },
     {
       "stage": "check",
-      "question": "What is the role of the manifest sha256 lock file?",
+      "question": "manifest sha256 lock file の役割は何か。",
       "options": [
-        "It speeds up reads",
-        "Downstream stages refuse to start unless the manifest content matches the pinned hash, closing the silent attack surface where an attacker edits one file",
-        "It records the date",
-        "It is a backup of the manifest"
+        "read を速くする。",
+        "downstream stage が pinned hash と一致しない manifest を拒否し、manifest 改ざんという silent attack surface を閉じる。",
+        "日付を記録する。",
+        "manifest の backup である。"
       ],
       "correct": 1,
-      "explanation": "Pinning the manifest hash makes the link between code and data a content-addressed contract."
+      "explanation": "manifest hash を pin すると code と data の関係が content-addressed contract になる。"
     },
     {
       "stage": "post",
-      "question": "Why is dedup placed upstream of tokenization rather than after?",
+      "question": "dedup を tokenization の後ではなく upstream に置くのはなぜか。",
       "options": [
-        "The tokenizer cannot read JSONL",
-        "Tokenization is expensive; running it twice on the same document doubles cost for no loss-curve benefit, so dropping duplicates first is strictly cheaper",
-        "Tokenizers reject duplicates",
-        "The tokenizer needs a vocabulary first"
+        "tokenizer は JSONL を読めないから。",
+        "tokenization は高価であり、同じ文書を 2 回 token 化しても loss curve の利益はないため。",
+        "tokenizer は duplicate を拒否するから。",
+        "tokenizer には vocabulary が先に必要だから。"
       ],
       "correct": 1,
-      "explanation": "Dedup is the first stage where each duplicate-dropped document saves the tokenizer one pass."
+      "explanation": "duplicate を落とした文書 1 つにつき tokenizer の pass を 1 回節約できる。"
     },
     {
       "stage": "post",
-      "question": "What does tombstoning a dropped duplicate preserve that a silent delete does not?",
+      "question": "drop した duplicate を tombstone することで、silent delete では残らない何が残るか。",
       "options": [
-        "Disk space",
-        "The link between the duplicate and the keeper it collided with, plus an audit trail that survives a later threshold change",
-        "Compression ratio",
-        "Manifest sha256 stability"
+        "disk space。",
+        "duplicate と keeper の link、および後で threshold を変えたときに追える audit trail。",
+        "compression ratio。",
+        "manifest sha256 stability。"
       ],
       "correct": 1,
-      "explanation": "Tombstones let a future pass revisit the dedup threshold; deletes lose the evidence."
+      "explanation": "tombstone は dedup 判断の証拠を残す。delete すると後で検証できない。"
     }
   ]
 }

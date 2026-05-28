@@ -1,28 +1,28 @@
-# BPE Tokenizer From Scratch
+# Scratch から作る BPE Tokenizer
 
-> Bytes in, ids out, ids back to the same bytes. Build the tokenizer that every modern text model still starts from.
+> bytes を入れて ids を出し、その ids から同じ bytes に戻します。modern text model が今でも出発点にしている tokenizer を作ります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 04 lessons, Phase 07 transformer lessons
+**所要時間:** 約90分
 
-## Learning Objectives
-- Train a Byte-Pair Encoding vocabulary from a raw text corpus by repeatedly merging the most frequent adjacent symbol pair.
-- Implement a deterministic merge table and apply it to fresh text to produce a stream of subword ids.
-- Round-trip arbitrary UTF-8 input to ids and back without information loss.
-- Reserve and protect special tokens (`<|endoftext|>`, `<|pad|>`) so they survive training and decoding.
-- Reason about why a byte-level alphabet is the right floor for a general-purpose tokenizer.
+## 学習目標
+- raw text corpus から Byte-Pair Encoding vocabulary を train する。最頻の adjacent symbol pair を繰り返し merge する。
+- deterministic な merge table を実装し、新しい text に適用して subword id stream を生成する。
+- 任意の UTF-8 input を information loss なしで ids にし、戻せるようにする。
+- special token（`<|endoftext|>`, `<|pad|>`）を reserve し、training と decoding を通じて保護する。
+- general-purpose tokenizer の floor として byte-level alphabet が適切な理由を説明できる。
 
-## The frame
+## 枠組み
 
-A language model never sees text. It sees integers. The map from a string to a list of integers and back is the tokenizer. Get this layer wrong and every loss curve in the training run is measuring the wrong thing.
+language model は text を見ません。integer を見ます。string と integer list を相互変換する map が tokenizer です。この layer を誤ると、training run の loss curve はすべて間違ったものを測ります。
 
-The dominant family of subword tokenizers for general text models is Byte-Pair Encoding. The idea is small. Start from a known alphabet. Find the adjacent symbol pair that appears most often in the training corpus. Merge it into a new symbol. Repeat until the vocabulary reaches the target size. Encoding new text reuses the same merge list in the same order.
+general text model の subword tokenizer の主流 family は Byte-Pair Encoding です。idea は小さいです。既知の alphabet から始めます。training corpus 内で最も頻繁に現れる adjacent symbol pair を探します。それを新しい symbol に merge します。vocabulary が target size に達するまで繰り返します。新しい text の encoding は、同じ merge list を同じ順序で再利用します。
 
-We will build the byte-level variant. The alphabet is the 256 raw bytes, not Unicode code points. That choice is what lets the tokenizer handle any UTF-8 input without falling back to an unknown token.
+ここでは byte-level variant を作ります。alphabet は Unicode code point ではなく 256 個の raw bytes です。この選択により、unknown token に fall back せずに任意の UTF-8 input を扱えます。
 
-## The pipeline
+## pipeline
 
 ```mermaid
 flowchart LR
@@ -38,17 +38,17 @@ flowchart LR
     H --> J[decode ids back to bytes]
 ```
 
-The training side and the inference side share the merge table. That sharing is the contract. If you change the merge order at inference, you decode a different stream of ids.
+training side と inference side は merge table を共有します。その共有が contract です。inference 時に merge order を変えると、別の id stream を decode することになります。
 
-## The byte alphabet
+## byte alphabet
 
-The first 256 ids are reserved for the raw bytes 0x00 through 0xFF. That guarantees every input string can be expressed in the vocabulary before any merge happens. After the byte block we reserve a small range for special tokens. The training loop never proposes those ids as merge targets because we keep them out of the pretokenized stream entirely.
+最初の 256 ids は raw bytes 0x00 から 0xFF のために reserve します。これにより、どんな input string も merge 前の vocabulary で表現できます。byte block の後に special token 用の小さな range を reserve します。training loop は pretokenized stream から special token を完全に除外するため、これらの id を merge target として提案しません。
 
-The pretokenizer splits the corpus on whitespace and punctuation boundaries before training sees it. Without that split the BPE merge step would happily learn merges that cross word boundaries and the vocabulary fills up with whole common phrases. With the split, merges stay inside a word and the result generalizes.
+pretokenizer は corpus を whitespace と punctuation boundary で分割してから training に渡します。この split がないと、BPE merge step は word boundary をまたぐ merge を喜んで学習し、vocabulary は common phrase 全体で埋まります。split すると merge は word 内に留まり、結果は generalize しやすくなります。
 
-## The training loop
+## training loop
 
-For each training step the loop does three things. It walks every word in the corpus and counts how often each adjacent pair of current symbols appears, weighted by how often the word itself appears. It picks the pair with the highest count. It rewrites every occurrence of that pair into a single new symbol whose id is the next free slot in the vocabulary. Then it records the merge.
+各 training step で loop は 3 つのことをします。corpus 内の各 word を歩き、現在の symbol の adjacent pair が何回現れるかを、word 自体の頻度で weight して数えます。count が最大の pair を選びます。その pair のすべての occurrence を、vocabulary の次の free slot である single new symbol に書き換えます。そして merge を記録します。
 
 ```mermaid
 sequenceDiagram
@@ -63,37 +63,37 @@ sequenceDiagram
     Corpus->>PairCount: recount for next step
 ```
 
-The cost of each step is linear in the size of the corpus expressed as a list of symbol sequences. For a million words and a target vocabulary of ten thousand ids the loop runs to completion in seconds because the symbol sequences shrink as merges land.
+各 step の cost は、symbol sequence の list として表された corpus size に対して linear です。million words と target vocabulary 10,000 ids でも、merge が入るほど symbol sequence は短くなるので、loop は数秒で完了します。
 
-## Encoding fresh text
+## fresh text の encoding
 
-Inference does not call the merge counter. It applies the merge table in the same order it was learned. For a fresh word the encoder starts from the byte split. It scans the current sequence for the lowest-ranked merge (the earliest one that applies). It performs that merge. It scans again. The loop ends when no merge in the table applies to the current sequence.
+inference は merge counter を呼びません。learned order と同じ順序で merge table を適用します。fresh word に対して encoder は byte split から始めます。current sequence に適用できる lowest-ranked merge（最も早く学習された merge）を探します。その merge を行います。また scan します。current sequence に適用できる merge がなくなると loop は終わります。
 
-The ordering by rank is the property that makes encoding deterministic and matches the training behavior on the same input. A merge that was learned first sits at the top of the table and gets applied first. If two merges could apply at the same position, the lower-rank one wins.
+rank 順であることが encoding を deterministic にし、同じ input に対する training behavior と一致させます。先に学習された merge は table の上にあり、先に適用されます。同じ位置に複数 merge が適用できる場合、lower-rank のものが勝ちます。
 
 ## Special tokens
 
-Special tokens are ids that the byte stream can never produce. We reserve them by hand. Two are enough for this lesson.
+special token は byte stream から絶対に生成できない id です。手で reserve します。この lesson では 2 つで十分です。
 
-- `<|endoftext|>` separates documents during pretraining. It tells the model "a new document starts here, do not let the previous one's context leak in."
-- `<|pad|>` fills out short sequences so a batch can be a rectangular tensor. The loss mask hides it during training.
+- `<|endoftext|>` は pretraining 中に document を分離します。「新しい document がここから始まる。前の document の context を leak させるな」と model に伝えます。
+- `<|pad|>` は短い sequence を埋め、batch を rectangular tensor にします。training 中は loss mask がこれを隠します。
 
-The encoder accepts a flag to allow special tokens in the input. With the flag off, the strings `<|endoftext|>` and `<|pad|>` get tokenized as the bytes that spell them out. With the flag on, the literal strings get mapped to their reserved ids and are not subject to any merge.
+encoder は input 内の special token を許可する flag を受け取ります。flag が off の場合、string `<|endoftext|>` と `<|pad|>` はそれを綴る bytes として tokenize されます。flag が on の場合、literal string は reserved id に map され、merge 対象にはなりません。
 
-## Round-trip guarantee
+## round-trip guarantee
 
-Encoding then decoding must return the input bytes exactly. The decoder concatenates the byte expansion of every id in order. Since every id is either a raw byte or the concatenation of two previously known ids, the recursive expansion always terminates in raw bytes. Decoding then returns the UTF-8 string that those bytes spell.
+encode してから decode すると、input bytes と完全に同じものに戻らなければなりません。decoder は各 id の byte expansion を順に concatenate します。すべての id は raw byte か、すでに known な 2 つの id の concatenation なので、recursive expansion は必ず raw bytes に到達します。その bytes が綴る UTF-8 string を decode して返します。
 
-The test suite in this lesson checks that property on an unseen sentence, on a sentence with a Unicode emoji, and on a sentence that contains a literal `<|endoftext|>` token.
+この lesson の test suite は、その property を unseen sentence、Unicode emoji を含む sentence、literal `<|endoftext|>` token を含む sentence で確認します。
 
-## What this lesson does not do
+## この lesson がしないこと
 
-It does not build a regex-driven pretokenizer in the style of the largest production tokenizers. The pretokenizer here is a small whitespace and punctuation split. It is enough to produce sensible merges on a small training corpus and the contract with the rest of the lesson chain stays the same. The next lesson treats the tokenizer as a black box and builds the sliding-window dataset on top of it.
+largest production tokenizer のような regex-driven pretokenizer は作りません。ここでの pretokenizer は小さな whitespace と punctuation split です。small training corpus 上で sensible merge を作るには十分で、lesson chain の残りとの contract は同じです。次の lesson は tokenizer を black box として扱い、その上に sliding-window dataset を作ります。
 
-It does not parallelize the pair counter. A loop in Python over a corpus of a few thousand words finishes in well under a second. For larger corpora the obvious move is to count pairs per word in parallel and reduce.
+pair counter の parallelization もしません。数千 word の corpus を Python loop で回しても 1 秒未満で終わります。大きな corpus では、word ごとに pair を parallel に count して reduce するのが明らかな次の手です。
 
-## How to read the code
+## code の読み方
 
-`main.py` defines four objects. `BPETokenizer` holds the vocabulary, the merge table, and the special-token table. `train` is the training loop. `encode` is the inference path. `decode` is the byte concatenation. The demo at the bottom trains a small tokenizer on a built-in corpus, encodes a held-out sentence, decodes the ids back, and prints both. The tests in `code/tests/test_bpe.py` pin the round-trip property, the special-token reservation, and the merge ordering.
+`main.py` は 4 つの object を定義します。`BPETokenizer` は vocabulary、merge table、special-token table を保持します。`train` は training loop です。`encode` は inference path です。`decode` は byte concatenation です。bottom の demo は built-in corpus で小さな tokenizer を train し、held-out sentence を encode し、id を decode して戻し、両方を print します。`code/tests/test_bpe.py` の tests は round-trip property、special-token reservation、merge ordering を pin します。
 
-Run the demo. Then change the target vocabulary size in the demo from 300 to 600 and watch how the encoded length of the held-out sentence drops. That curve is the BPE compression curve.
+demo を走らせてください。その後、demo の target vocabulary size を 300 から 600 に変え、held-out sentence の encoded length がどう下がるかを見てください。その curve が BPE compression curve です。

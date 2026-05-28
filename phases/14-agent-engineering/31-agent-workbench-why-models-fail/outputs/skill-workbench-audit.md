@@ -1,42 +1,42 @@
 ---
 name: workbench-audit
-description: Audit a repo for the seven agent workbench surfaces and report which are missing, partial, or healthy before any agent work begins.
+description: agent 作業を始める前に repo の 7 つの agent workbench surface を監査し、missing、partial、healthy を報告する。
 version: 1.0.0
 phase: 14
 lesson: 31
 tags: [workbench, audit, reliability, agent-engineering]
 ---
 
-Given a repository path and the agent product that will run inside it, audit the seven workbench surfaces and produce a readiness report.
+repository path と、その中で実行される agent product を受け取り、7 つの workbench surface を監査して readiness report を作成する。
 
-The seven surfaces:
+7 つの surface:
 
-1. Instructions: a root file the agent reads first (e.g. `AGENTS.md`), short, that routes to deeper rules.
-2. State: a durable, machine-readable file that records task, touched files, blockers, next action.
-3. Scope: a contract per task listing allowed files, forbidden files, acceptance criteria, rollback plan.
-4. Feedback: a runner that captures command, stdout, stderr, exit code, and feeds the result back into the loop.
-5. Verification: a gate that runs tests, lint, type-check, smoke run, and confirms acceptance criteria.
-6. Review: a second pass with a different role, builder cannot mark its own work.
-7. Handoff: an artifact that summarizes what changed, why, what is left, and the next best action.
+1. Instructions: agent が最初に読む root file (例: `AGENTS.md`)。短く、より深い rules へ route する。
+2. State: task、touched files、blockers、next action を記録する durable, machine-readable file。
+3. Scope: task ごとの contract。allowed files、forbidden files、acceptance criteria、rollback plan を列挙する。
+4. Feedback: command、stdout、stderr、exit code を捕捉し、結果を loop に戻す runner。
+5. Verification: tests、lint、type-check、smoke run を実行し、acceptance criteria を確認する gate。
+6. Review: 別ロールによる second pass。builder は自分の work を採点できない。
+7. Handoff: 何を変更し、なぜ変更し、何が残り、次の最善 action は何かを要約する artifact。
 
 Produce:
 
-- A score per surface: 0 missing, 1 partial, 2 healthy. Tie each score to a file or process you observed.
-- Three priorities ordered by leverage: which missing surface, if added first, removes the most failure modes.
-- A `workbench_audit.json` machine-readable report plus a `workbench_audit.md` human-readable summary.
-- A starter patch for the weakest surface: the smallest file change that moves the score from 0 to 1.
+- surface ごとの score: 0 missing、1 partial、2 healthy。各 score を観測した file または process に結び付ける。
+- leverage 順の優先度 3 つ: 最初に追加すると最も多くの failure mode を除去する missing surface はどれか。
+- machine-readable な `workbench_audit.json` report と、human-readable な `workbench_audit.md` summary。
+- 最も弱い surface 用の starter patch: score を 0 から 1 へ動かす最小の file change。
 
 Hard rejects:
 
-- "Healthy" scores without a file path or process reference. Audits without evidence rot.
-- A single combined "agent config" surface. Combining surfaces hides which one failed when a task breaks.
-- Skipping verification because tests are slow. If verification is not on the workbench, builders mark their own homework.
+- file path または process reference のない "Healthy" score。evidence のない audit は腐る。
+- 1 つにまとめた "agent config" surface。surface をまとめると、task が壊れたときにどれが失敗したのか隠れてしまう。
+- tests が遅いことを理由に verification を skip すること。verification が workbench にないと、builder が自分の宿題を採点する。
 
 Refusal rules:
 
-- If the repo has no test command at all, refuse the verification score and surface it as a blocking finding.
-- If the repo has no version control history, refuse the handoff score and surface it as a blocking finding.
-- If the agent product runs as root or with unrestricted file access, refuse the scope score until a sandbox or write list is defined.
+- repo に test command がまったくない場合、verification score を拒否し、blocking finding として表面化する。
+- repo に version control history がない場合、handoff score を拒否し、blocking finding として表面化する。
+- agent product が root または unrestricted file access で動く場合、sandbox または write list が定義されるまで scope score を拒否する。
 
 Output structure:
 
@@ -49,7 +49,7 @@ workbench-audit/
 └── README.md
 ```
 
-End with "what to read next" pointing to:
+最後に "what to read next" として以下を示す:
 
 - Lesson 32 for the minimal repo layout.
 - Lesson 33 for the instructions surface in depth.

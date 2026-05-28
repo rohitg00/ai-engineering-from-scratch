@@ -1,77 +1,62 @@
 # Advanced RAG (Chunking, Reranking, Hybrid Search)
 
-> Basic RAG retrieves the top-k most similar chunks. That works for simple questions. It falls apart for multi-hop reasoning, ambiguous queries, and large corpora. Advanced RAG is the difference between a demo that works on 10 documents and a system that works on 10 million.
+> Basic RAGはtop-kの最も似たchunksを取得します。単純な質問では動きますが、multi-hop reasoning、ambiguous queries、大規模corporaでは崩れます。Advanced RAGは、10 documentsで動くdemoと10 million documentsで動くsystemの差です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 11, Lesson 06 (RAG)
-**Time:** ~90 minutes
-**Related:** Phase 5 · 23 (Chunking Strategies for RAG) covers all six chunking algorithms — recursive, semantic, sentence, parent-document, late chunking, contextual retrieval — with Vectara/Anthropic benchmarks. This lesson builds on top: hybrid search, reranking, query transformation.
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 11, Lesson 06 (RAG)
+**所要時間:** 約90分
+**Related:** Phase 5 · 23 (Chunking Strategies for RAG) はrecursive、semantic、sentence、parent-document、late chunking、contextual retrievalの6 algorithmsとbenchmarksを扱います。このlessonはその上にhybrid search、reranking、query transformationを構築します。
 
 ## Learning Objectives
 
-- Implement advanced chunking strategies (semantic, recursive, parent-child) that preserve document structure and context
-- Build a hybrid search pipeline combining BM25 keyword matching with semantic vector search and a cross-encoder reranker
-- Apply query transformation techniques (HyDE, multi-query, step-back) to improve retrieval on ambiguous or complex questions
-- Diagnose and fix common RAG failures: wrong chunk retrieved, answer not in context, multi-hop reasoning breakdown
+- document structureとcontextを保つadvanced chunking strategies（semantic、recursive、parent-child）を実装する
+- BM25 keyword matching、semantic vector search、cross-encoder rerankerを組み合わせたhybrid search pipelineを構築する
+- HyDE、multi-query、step-backなどのquery transformationで曖昧または複雑な質問のretrievalを改善する
+- wrong chunk retrieved、answer not in context、multi-hop reasoning breakdownなどのRAG failureを診断し修正する
 
-## The Problem
+## 問題
 
-You built a basic RAG pipeline in Lesson 06. It works for straightforward questions on a small corpus. Now try these:
+Lesson 06でbasic RAG pipelineを作りました。小さなcorpusの素直な質問には動きます。では次を試すとどうなるでしょう。
 
-**Ambiguous query**: "What was revenue last quarter?" Semantic search returns chunks about revenue strategy, revenue projections, and the CFO's thoughts on revenue growth. All semantically similar to the word "revenue." None containing the actual number. The correct chunk says "$47.2M in Q3 2025" but uses the word "earnings" instead of "revenue." The embedding model thinks "revenue strategy" is closer to the query than "Q3 earnings were $47.2M."
+**Ambiguous query**: 「last quarterのrevenueは？」Semantic searchはrevenue strategy、revenue projections、CFOのrevenue growthに関するchunksを返します。どれも「revenue」に意味的に近いですが、実際の数値はありません。正しいchunkは「$47.2M in Q3 2025」と書いており、「revenue」ではなく「earnings」を使っています。
 
-**Multi-hop question**: "Which team had the highest customer satisfaction score improvement?" This requires finding the satisfaction scores for each team, comparing them, and identifying the maximum. No single chunk contains the answer. The information is scattered across team reports.
+**Multi-hop question**: 「customer satisfaction score improvementが最も高かったteamは？」各teamのscoreを見つけ、比較し、最大を特定する必要があります。単一chunkには答えがありません。
 
-**Large corpus problem**: You have 2 million chunks. The correct answer is in chunk #1,847,293. Your top-5 retrieval pulls chunks #14, #89,201, #1,200,000, #44, and #901,333. Close in embedding space, but none containing the answer. At this scale, approximate nearest neighbor search introduces enough error that relevant results get pushed out of the top-k.
+**Large corpus problem**: 2 million chunksがあり、正解はchunk #1,847,293にあります。top-5 retrievalはembedding spaceでは近いが答えを含まないchunksを返します。この規模ではANN searchの誤差もtop-kから関連結果を押し出します。
 
-Basic RAG fails because vector similarity is not the same as relevance. A chunk can be semantically similar to a query without being useful for answering it. Advanced RAG addresses this with four techniques: hybrid search (add keyword matching), reranking (score candidates more carefully), query transformation (fix the query before searching), and better chunking (retrieve at the right granularity).
+basic RAGが失敗する理由は、vector similarityがrelevanceと同じではないからです。chunkはqueryに意味的に似ていても、answerに役立たないことがあります。Advanced RAGはhybrid search、reranking、query transformation、better chunkingでこれに対処します。
 
 ## The Concept
 
 ### Hybrid Search: Semantic + Keyword
 
-Semantic search (vector similarity) is good at understanding meaning. "How do I cancel my subscription?" matches "Steps to terminate your plan" even though they share no words. But it misses exact matches. "Error code E-4021" might not match a chunk containing "E-4021" if the embedding model treats it as noise.
+semantic searchは意味理解に強く、「cancel my subscription」と「terminate your plan」を結びます。しかし「Error code E-4021」のようなexact matchを落とすことがあります。
 
-Keyword search (BM25) is the opposite. It excels at exact matches. "E-4021" matches perfectly. But "cancel my subscription" returns zero results if the document says "terminate your plan."
+keyword search（BM25）は逆です。exact matchに強く、「E-4021」を完璧に拾います。しかしdocumentが「terminate your plan」と書く場合、「cancel my subscription」ではゼロ件になることがあります。
 
-Hybrid search runs both, then merges the results.
+hybrid searchは両方を実行し、結果をmergeします。
 
-**BM25** (Best Matching 25) is the standard keyword search algorithm. It has been the backbone of search engines since the 1990s. The formula:
-
-```
-BM25(q, d) = sum over terms t in q:
-    IDF(t) * (tf(t,d) * (k1 + 1)) / (tf(t,d) + k1 * (1 - b + b * |d| / avgdl))
-```
-
-Where tf(t,d) is the term frequency of t in document d, IDF(t) is the inverse document frequency, |d| is the document length, avgdl is the average document length, k1 controls term frequency saturation (default 1.2), and b controls length normalization (default 0.75).
-
-In plain terms: BM25 scores documents higher when they contain query terms (especially rare ones), but with diminishing returns for repeated terms. A document with the word "revenue" 50 times is not 50x more relevant than one with it once.
+**BM25** は標準的なkeyword search algorithmです。query termsを含むdocuments、特にrare termsを含むdocumentsを高くscoreし、同じtermの繰り返しにはdiminishing returnsをかけます。「revenue」が50回出るdocumentは1回出るdocumentの50倍関連するわけではありません。
 
 ### Reciprocal Rank Fusion (RRF)
 
-You have two ranked lists: one from vector search, one from BM25. How do you combine them? Reciprocal Rank Fusion is the standard approach.
+vector searchとBM25から2つのranked listsがあるとき、Reciprocal Rank Fusionで統合できます。
 
 ```
 RRF_score(d) = sum over rankings R:
     1 / (k + rank_R(d))
 ```
 
-Where k is a constant (typically 60) that prevents the top-ranked result from dominating.
-
-A document ranked #1 in vector search and #5 in BM25 gets: 1/(60+1) + 1/(60+5) = 0.0164 + 0.0154 = 0.0318
-
-A document ranked #3 in vector search and #2 in BM25 gets: 1/(60+3) + 1/(60+2) = 0.0159 + 0.0161 = 0.0320
-
-RRF naturally balances the two signals. A document that ranks highly in both lists gets the best score. A document that ranks #1 in one list but is absent from the other gets a moderate score. This is robust because it uses ranks, not raw scores, so differences in score distributions between the two systems do not matter.
+kは通常60で、top-ranked resultが支配しすぎるのを防ぎます。RRFはraw scoresではなくranksを使うため、score distributionの違いにrobustです。両方のlistで高順位のdocumentが最高scoreになり、一方だけで1位のdocumentは中程度scoreになります。
 
 ### Reranking
 
-Retrieval (whether vector, keyword, or hybrid) is fast but imprecise. It uses bi-encoders: the query and each document are embedded independently, then compared. The embeddings are computed once and cached. This scales to millions of documents.
+retrievalは高速ですが粗いです。bi-encoderではqueryとdocumentを別々にembedして比較します。embeddingsは事前計算でき、millions of documentsへscaleします。
 
-Reranking uses cross-encoders: the query and a candidate document are fed together into a model that outputs a relevance score. The model sees both texts simultaneously and can capture fine-grained interactions between them. A cross-encoder can understand that "What were Q3 earnings?" is highly relevant to a chunk containing "$47.2M in Q3" even if a bi-encoder missed the connection.
+rerankingはcross-encoderを使います。queryとcandidate documentを一緒にmodelへ入れ、relevance scoreを出します。modelは両textを同時に見られるため、細かい相互作用を捉えられます。「What were Q3 earnings?」と「$47.2M in Q3」を含むchunkの関連性を、bi-encoderより正確に判断できます。
 
-The trade-off: cross-encoders are 100-1000x slower than bi-encoders because they process the query-document pair jointly. You cannot pre-compute cross-encoder scores for a million documents. The solution: retrieve a larger candidate set (top-50 from hybrid search), then rerank with a cross-encoder to get the final top-5.
+trade-offは速度です。cross-encoderはquery-document pairを共同処理するためbi-encoderより100-1000x遅く、million documents全件には使えません。解決策は、hybrid searchでtop-50候補を取り、cross-encoderでtop-5へrerankすることです。
 
 ```mermaid
 graph LR
@@ -83,43 +68,21 @@ graph LR
     P --> LLM["Generate answer"]
 ```
 
-Common reranking models (2026 lineup):
-- Cohere Rerank 3.5: managed API, multilingual, best recall gain on mixed corpora
-- Voyage rerank-2.5: managed API, lowest latency of the hosted options
-- Jina-Reranker-v2 Multilingual: open-weight, 100+ languages
-- bge-reranker-v2-m3: open-weight, strong baseline
-- cross-encoder/ms-marco-MiniLM-L-6-v2: open-weight, runs on CPU for prototyping
-- ColBERTv2 / Jina-ColBERT-v2: late-interaction multi-vector rerankers — O(tokens) not O(docs) at scoring time
+common reranking modelsにはCohere Rerank、Voyage rerank、Jina-Reranker、bge-reranker、cross-encoder/ms-marco、ColBERT系があります。
 
 ### Query Transformation
 
-Sometimes the problem is not retrieval but the query itself. "What was that thing about the new policy change?" is a terrible search query. It contains no specific terms. The embedding is vague. No retrieval system can find the right documents from this.
+問題がretrievalではなくquery自体にあることがあります。「あの新しいpolicy changeの件は？」は検索queryとして悪く、具体語がありません。
 
-**Query rewriting**: rephrase the user's query into a better search query. An LLM can do this:
+**Query rewriting**: LLMでuser queryをより良いsearch queryへ書き換えます。
 
-```
-User: "What was that thing about the new policy change?"
-Rewritten: "Recent policy changes and updates"
-```
-
-**HyDE (Hypothetical Document Embeddings)**: instead of searching with the query, generate a hypothetical answer, embed that, and search for similar real documents.
-
-```
-Query: "What is the refund policy for enterprise?"
-Hypothetical answer: "Enterprise customers are eligible for a full refund
-within 60 days of purchase. Refunds are pro-rated based on the remaining
-subscription period and processed within 5-7 business days."
-```
-
-Embed the hypothetical answer and search for real documents similar to it. The intuition: the hypothetical answer lives closer in embedding space to the real answer than the original question does. Questions and answers have different linguistic structures. By generating a hypothetical answer, you bridge the gap between "question space" and "answer space" in the embedding.
-
-HyDE adds one LLM call before retrieval. This increases latency by 500-2000ms. Worth it when retrieval quality is poor on raw queries.
+**HyDE (Hypothetical Document Embeddings)**: queryではなく、LLMが生成したhypothetical answerをembedして検索します。質問と回答は言語構造が違うため、仮のanswerを作ることでquestion spaceとanswer spaceのgapを埋めます。LLM callが1回増えるため500-2000msほどlatencyが増えますが、raw queryのretrieval qualityが悪い場合には価値があります。
 
 ### Parent-Child Chunking
 
-Standard chunking forces a trade-off: small chunks for precise retrieval, large chunks for sufficient context. Parent-child chunking eliminates this trade-off.
+standard chunkingは、小チャンクの精密retrievalと大チャンクの十分なcontextのtrade-offを強制します。parent-child chunkingはこれを解消します。
 
-Index small chunks (128 tokens) for retrieval. When a small chunk is retrieved, return its parent chunk (512 tokens) for the prompt. The small chunk matches the query precisely. The parent chunk provides enough context for the LLM to generate a good answer.
+small chunks（例: 128 tokens）をindexしてretrievalに使います。small chunkがhitしたら、そのparent chunk（例: 512 tokens）をpromptへ返します。small chunkはqueryに精密に合い、parent chunkはLLMがanswerする十分な文脈を提供します。
 
 ```mermaid
 graph TD
@@ -128,404 +91,73 @@ graph TD
     C2["Child chunk (128 tokens)<br/>Enterprise: 60-day pro-rated"]
     C3["Child chunk (128 tokens)<br/>Processing time: 5-7 days"]
     C4["Child chunk (128 tokens)<br/>How to submit a request"]
-
     P --> C1
     P --> C2
     P --> C3
     P --> C4
-
     Q["Query: enterprise refund?"] -.->|"matches child"| C2
     C2 -.->|"return parent"| P
 ```
 
-The query "enterprise refund?" matches child chunk C2 precisely. But the prompt receives the full parent chunk P, which includes the surrounding context about processing time and submission process.
-
 ### Metadata Filtering
 
-Before running vector search, filter the corpus by metadata: date, source, category, author, language. This reduces the search space and prevents irrelevant results.
-
-"What changed in the security policy last month?" should only search documents from the last 30 days in the security category. Without metadata filtering, you search the entire corpus and might retrieve a 2-year-old security document that happens to be semantically similar.
-
-Production RAG systems store metadata alongside each chunk: source document, creation date, category, author, version. Vector databases support pre-filtering by metadata before similarity search, which is critical for performance at scale.
+vector searchの前にmetadataでcorpusをfilterします。date、source、category、author、languageなどです。「先月security policyで何が変わった？」はlast 30 daysかつsecurity categoryだけを検索すべきです。metadata filteringはirrelevant resultsを減らし、大規模corpusでperformanceにも重要です。
 
 ### Evaluation
 
-You built a RAG system. How do you know if it works? Three metrics:
+RAG systemが動くかは3つのmetricsで見ます。
 
-**Retrieval relevance (Recall@k)**: for a set of test questions with known relevant documents, what percentage of relevant documents appear in the top-k results? If the answer to a question is in chunk #47, does chunk #47 appear in the top-5?
+**Retrieval relevance (Recall@k)**: known relevant documentsを持つtest questionsで、relevant documentsがtop-kに入る割合。
 
-**Faithfulness**: is the generated answer grounded in the retrieved documents? If the retrieved chunks say "60-day refund window" and the model says "90-day refund window," that is a faithfulness failure. The model hallucinated despite having the correct context.
+**Faithfulness**: generated answerがretrieved documentsにgroundedしているか。retrieved chunksが「60-day refund window」と言うのにmodelが「90-day refund window」と答えたらfaithfulness failureです。
 
-**Answer correctness**: does the generated answer match the expected answer? This is the end-to-end metric. It combines retrieval quality and generation quality.
+**Answer correctness**: generated answerがexpected answerに合うか。retrieval qualityとgeneration qualityを組み合わせたend-to-end metricです。
 
-A simple faithfulness check: take each claim in the generated answer and verify it appears (in substance) in the retrieved chunks. If the answer contains a fact not in any retrieved chunk, it is likely hallucinated.
+## 実装
 
-```mermaid
-graph TD
-    subgraph "Evaluation Framework"
-        Q["Test questions<br/>+ expected answers<br/>+ relevant doc IDs"]
-        Q --> Ret["Retrieval evaluation<br/>Recall@k: are right<br/>docs retrieved?"]
-        Q --> Faith["Faithfulness evaluation<br/>Is answer grounded<br/>in retrieved docs?"]
-        Q --> Correct["Correctness evaluation<br/>Does answer match<br/>expected answer?"]
-    end
-```
-
-## Build It
-
-### Step 1: BM25 Implementation
-
-```python
-import math
-from collections import Counter
-
-class BM25:
-    def __init__(self, k1=1.2, b=0.75):
-        self.k1 = k1
-        self.b = b
-        self.docs = []
-        self.doc_lengths = []
-        self.avg_dl = 0
-        self.doc_freqs = {}
-        self.n_docs = 0
-
-    def index(self, documents):
-        self.docs = documents
-        self.n_docs = len(documents)
-        self.doc_lengths = []
-        self.doc_freqs = {}
-
-        for doc in documents:
-            words = doc.lower().split()
-            self.doc_lengths.append(len(words))
-            unique_words = set(words)
-            for word in unique_words:
-                self.doc_freqs[word] = self.doc_freqs.get(word, 0) + 1
-
-        self.avg_dl = sum(self.doc_lengths) / self.n_docs if self.n_docs else 1
-
-    def score(self, query, doc_idx):
-        query_words = query.lower().split()
-        doc_words = self.docs[doc_idx].lower().split()
-        doc_len = self.doc_lengths[doc_idx]
-        word_counts = Counter(doc_words)
-        score = 0.0
-
-        for term in query_words:
-            if term not in word_counts:
-                continue
-            tf = word_counts[term]
-            df = self.doc_freqs.get(term, 0)
-            idf = math.log((self.n_docs - df + 0.5) / (df + 0.5) + 1)
-            numerator = tf * (self.k1 + 1)
-            denominator = tf + self.k1 * (1 - self.b + self.b * doc_len / self.avg_dl)
-            score += idf * numerator / denominator
-
-        return score
-
-    def search(self, query, top_k=10):
-        scores = [(i, self.score(query, i)) for i in range(self.n_docs)]
-        scores.sort(key=lambda x: x[1], reverse=True)
-        return scores[:top_k]
-```
-
-### Step 2: Reciprocal Rank Fusion
-
-```python
-def reciprocal_rank_fusion(ranked_lists, k=60):
-    scores = {}
-    for ranked_list in ranked_lists:
-        for rank, (doc_id, _) in enumerate(ranked_list):
-            if doc_id not in scores:
-                scores[doc_id] = 0.0
-            scores[doc_id] += 1.0 / (k + rank + 1)
-    fused = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    return fused
-```
-
-### Step 3: Hybrid Search Pipeline
-
-```python
-def hybrid_search(query, chunks, vector_embeddings, vocab, idf, bm25_index, top_k=5, fusion_k=60):
-    query_emb = tfidf_embed(query, vocab, idf)
-    vector_results = search(query_emb, vector_embeddings, top_k=top_k * 3)
-    bm25_results = bm25_index.search(query, top_k=top_k * 3)
-    fused = reciprocal_rank_fusion([vector_results, bm25_results], k=fusion_k)
-    return fused[:top_k]
-```
-
-### Step 4: Simple Reranker
-
-In production, you would use a cross-encoder model. Here we build a reranker that scores query-document relevance using word overlap, term importance, and phrase matching.
-
-```python
-def rerank(query, candidates, chunks):
-    query_words = set(query.lower().split())
-    stop_words = {"the", "a", "an", "is", "are", "was", "were", "what", "how",
-                  "why", "when", "where", "do", "does", "for", "of", "in", "to",
-                  "and", "or", "on", "at", "by", "it", "its", "this", "that",
-                  "with", "from", "be", "has", "have", "had", "not", "but"}
-    query_terms = query_words - stop_words
-
-    scored = []
-    for doc_id, initial_score in candidates:
-        chunk = chunks[doc_id].lower()
-        chunk_words = set(chunk.split())
-
-        term_overlap = len(query_terms & chunk_words)
-
-        query_bigrams = set()
-        q_list = [w for w in query.lower().split() if w not in stop_words]
-        for i in range(len(q_list) - 1):
-            query_bigrams.add(q_list[i] + " " + q_list[i + 1])
-        bigram_matches = sum(1 for bg in query_bigrams if bg in chunk)
-
-        position_boost = 0
-        for term in query_terms:
-            pos = chunk.find(term)
-            if pos != -1 and pos < len(chunk) // 3:
-                position_boost += 0.5
-
-        rerank_score = (
-            term_overlap * 1.0
-            + bigram_matches * 2.0
-            + position_boost
-            + initial_score * 5.0
-        )
-        scored.append((doc_id, rerank_score))
-
-    scored.sort(key=lambda x: x[1], reverse=True)
-    return scored
-```
-
-### Step 5: HyDE (Hypothetical Document Embeddings)
-
-```python
-def hyde_generate_hypothesis(query):
-    templates = {
-        "what": "The answer to '{query}' is as follows: Based on our documentation, {topic} involves specific policies and procedures that define how the process works.",
-        "how": "To address '{query}': The process involves several steps. First, you need to initiate the request. Then, the system processes it according to the defined rules.",
-        "default": "Regarding '{query}': Our records indicate specific details and policies related to this topic that provide a comprehensive answer."
-    }
-    query_lower = query.lower()
-    if query_lower.startswith("what"):
-        template = templates["what"]
-    elif query_lower.startswith("how"):
-        template = templates["how"]
-    else:
-        template = templates["default"]
-
-    topic_words = [w for w in query.lower().split()
-                   if w not in {"what", "is", "the", "how", "do", "does", "a", "an",
-                                "for", "of", "to", "in", "on", "at", "by", "and", "or"}]
-    topic = " ".join(topic_words) if topic_words else "this topic"
-
-    return template.format(query=query, topic=topic)
-
-
-def hyde_search(query, chunks, vector_embeddings, vocab, idf, top_k=5):
-    hypothesis = hyde_generate_hypothesis(query)
-    hypothesis_emb = tfidf_embed(hypothesis, vocab, idf)
-    results = search(hypothesis_emb, vector_embeddings, top_k)
-    return results, hypothesis
-```
-
-### Step 6: Parent-Child Chunking
-
-```python
-def create_parent_child_chunks(text, parent_size=200, child_size=50):
-    words = text.split()
-    parents = []
-    children = []
-    child_to_parent = {}
-
-    parent_idx = 0
-    start = 0
-    while start < len(words):
-        parent_end = min(start + parent_size, len(words))
-        parent_text = " ".join(words[start:parent_end])
-        parents.append(parent_text)
-
-        child_start = start
-        while child_start < parent_end:
-            child_end = min(child_start + child_size, parent_end)
-            child_text = " ".join(words[child_start:child_end])
-            child_idx = len(children)
-            children.append(child_text)
-            child_to_parent[child_idx] = parent_idx
-            child_start += child_size
-
-        parent_idx += 1
-        start += parent_size
-
-    return parents, children, child_to_parent
-```
-
-### Step 7: Faithfulness Evaluation
-
-```python
-def evaluate_faithfulness(answer, retrieved_chunks):
-    answer_sentences = [s.strip() for s in answer.split(".") if len(s.strip()) > 10]
-    if not answer_sentences:
-        return 1.0, []
-
-    grounded = 0
-    ungrounded = []
-    context = " ".join(retrieved_chunks).lower()
-
-    for sentence in answer_sentences:
-        words = set(sentence.lower().split())
-        stop_words = {"the", "a", "an", "is", "are", "was", "were", "and", "or",
-                      "to", "of", "in", "for", "on", "at", "by", "it", "this", "that"}
-        content_words = words - stop_words
-        if not content_words:
-            grounded += 1
-            continue
-
-        matched = sum(1 for w in content_words if w in context)
-        ratio = matched / len(content_words) if content_words else 0
-
-        if ratio >= 0.5:
-            grounded += 1
-        else:
-            ungrounded.append(sentence)
-
-    score = grounded / len(answer_sentences) if answer_sentences else 1.0
-    return score, ungrounded
-
-
-def evaluate_retrieval_recall(queries_with_relevant, retrieval_fn, k=5):
-    total_recall = 0.0
-    results = []
-
-    for query, relevant_indices in queries_with_relevant:
-        retrieved = retrieval_fn(query, k)
-        retrieved_indices = set(idx for idx, _ in retrieved)
-        relevant_set = set(relevant_indices)
-        hits = len(retrieved_indices & relevant_set)
-        recall = hits / len(relevant_set) if relevant_set else 1.0
-        total_recall += recall
-        results.append({
-            "query": query,
-            "recall": recall,
-            "hits": hits,
-            "total_relevant": len(relevant_set)
-        })
-
-    avg_recall = total_recall / len(queries_with_relevant) if queries_with_relevant else 0
-    return avg_recall, results
-```
+このlessonでは、BM25 implementation、Reciprocal Rank Fusion、hybrid search pipeline、simple reranker、HyDE、parent-child chunking、faithfulness evaluationを実装します。実装は `code/main.py` にあります。Lesson 06のTF-IDF embeddingとsearch関数を再利用し、keyword signal、rank fusion、reranking、query transformationを追加します。
 
 ## Use It
 
-With a real cross-encoder for reranking:
-
-```python
-from sentence_transformers import CrossEncoder
-
-reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
-
-def rerank_with_cross_encoder(query, candidates, chunks, top_k=5):
-    pairs = [(query, chunks[doc_id]) for doc_id, _ in candidates]
-    scores = reranker.predict(pairs)
-    scored = list(zip([doc_id for doc_id, _ in candidates], scores))
-    scored.sort(key=lambda x: x[1], reverse=True)
-    return scored[:top_k]
-```
-
-With Cohere's managed reranker:
-
-```python
-import cohere
-
-co = cohere.Client()
-
-def rerank_with_cohere(query, candidates, chunks, top_k=5):
-    docs = [chunks[doc_id] for doc_id, _ in candidates]
-    response = co.rerank(
-        model="rerank-english-v3.0",
-        query=query,
-        documents=docs,
-        top_n=top_k
-    )
-    return [(candidates[r.index][0], r.relevance_score) for r in response.results]
-```
-
-For HyDE with a real LLM:
-
-```python
-import anthropic
-
-client = anthropic.Anthropic()
-
-def hyde_with_llm(query):
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=256,
-        messages=[{
-            "role": "user",
-            "content": f"Write a short paragraph that would be a good answer to this question. Do not say you don't know. Just write what the answer would look like.\n\nQuestion: {query}"
-        }]
-    )
-    return response.content[0].text
-```
-
-For production hybrid search with Weaviate:
-
-```python
-import weaviate
-
-client = weaviate.connect_to_local()
-
-collection = client.collections.get("Documents")
-response = collection.query.hybrid(
-    query="enterprise refund policy",
-    alpha=0.5,
-    limit=10
-)
-```
-
-The alpha parameter controls the balance: 0.0 = pure keyword (BM25), 1.0 = pure vector, 0.5 = equal weight. Most production systems use alpha between 0.3 and 0.7.
+productionではsimple rerankerをcross-encoderへ置き換えます。localでは `sentence_transformers.CrossEncoder`、managed APIではCohereやVoyageのrerankerを使えます。HyDEはLLMに「この質問への良いanswerに見える短いparagraphを書け」と依頼し、そのtextをembedします。Weaviateなどのvector DBはhybrid searchをnativeにサポートし、alphaでkeywordとvectorの重みを調整できます。
 
 ## Ship It
 
-This lesson produces:
-- `outputs/prompt-advanced-rag-debugger.md` -- a prompt for diagnosing and fixing RAG quality issues
-- `outputs/skill-advanced-rag.md` -- a skill for building production-grade RAG with hybrid search and reranking
+このlessonは次を生成します。
+
+- `outputs/prompt-advanced-rag-debugger.md` -- RAG quality issuesを診断し修正するprompt
+- `outputs/skill-advanced-rag.md` -- hybrid searchとrerankingでproduction-grade RAGを構築するskill
 
 ## Exercises
 
-1. Compare BM25 vs vector search vs hybrid search on the sample documents. For each of the 5 test queries, record which approach returns the most relevant chunk in position #1. Hybrid search should win on at least 3 out of 5.
-
-2. Implement a metadata filter. Add a "category" field to each document (security, billing, api, product). Before running vector search, filter chunks to only the relevant category. Test with "What encryption is used?" and verify it only searches security-category chunks.
-
-3. Build a full HyDE pipeline using the simple generate function from Lesson 06. Compare retrieval quality (top-3 relevance) between direct query search and HyDE search on all 5 test queries. HyDE should improve results for vague queries.
-
-4. Implement the parent-child chunking strategy on the sample documents. Use child_size=30 and parent_size=100. Search with child chunks but return parent chunks in the prompt. Compare the generated answers to standard chunking with chunk_size=50.
-
-5. Create an evaluation dataset: 10 questions with known answer chunks. Measure Recall@3, Recall@5, and Recall@10 for (a) vector search only, (b) BM25 only, (c) hybrid search, (d) hybrid + reranking. Plot the results and identify where reranking helps most.
+1. sample documentsでBM25、vector search、hybrid searchを比較します。5 test queriesそれぞれでposition #1に最関連chunkを返す手法を記録します。
+2. metadata filterを実装します。各documentにcategory（security、billing、api、product）を追加し、vector search前にcategoryでfilterします。
+3. Lesson 06のsimple generate functionでfull HyDE pipelineを構築し、direct query searchとHyDE searchのtop-3 relevanceを比較します。
+4. sample documentsにparent-child chunkingを実装します。child_size=30、parent_size=100で、searchはchild chunks、promptにはparent chunksを返します。
+5. 10 questionsとknown answer chunksのevaluation datasetを作り、vector only、BM25 only、hybrid、hybrid + rerankingでRecall@3、Recall@5、Recall@10を測ります。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| BM25 | "Keyword search" | A probabilistic ranking algorithm that scores documents by term frequency, inverse document frequency, and document length normalization |
-| Hybrid search | "Best of both worlds" | Running semantic (vector) and keyword (BM25) search in parallel, then merging results with rank fusion |
-| Reciprocal Rank Fusion | "Merge ranked lists" | Combining multiple ranked lists by summing 1/(k + rank) for each document across all lists |
-| Reranking | "Second pass scoring" | Using a more expensive cross-encoder model to re-score a candidate set from initial retrieval |
-| Cross-encoder | "Joint query-document model" | A model that takes a query and document as a single input, producing a relevance score; more accurate than bi-encoders but too slow for full corpus search |
-| Bi-encoder | "Independent embedding model" | A model that embeds queries and documents independently; fast because embeddings are precomputed, but less accurate than cross-encoders |
-| HyDE | "Search with a fake answer" | Generate a hypothetical answer to the query, embed it, and search for real documents similar to it |
-| Parent-child chunking | "Small search, big context" | Index small chunks for precise retrieval but return the larger parent chunk to provide sufficient context |
-| Metadata filtering | "Narrow before searching" | Filtering documents by attributes (date, source, category) before running vector search to reduce the search space |
-| Faithfulness | "Did it stay grounded" | Whether the generated answer is supported by the retrieved documents, as opposed to hallucinated from the model's training data |
+| BM25 | 「Keyword search」 | term frequency、inverse document frequency、document length normalizationでdocumentsをscoreするranking algorithm |
+| Hybrid search | 「両方の良いところ」 | semantic searchとkeyword searchを並列実行し、rank fusionでmergeすること |
+| Reciprocal Rank Fusion | 「ranked listsをmergeする」 | 各documentについてlists全体の1/(k + rank)を合計する方法 |
+| Reranking | 「second pass scoring」 | initial retrievalのcandidate setを高価だが正確なcross-encoderで再scoreすること |
+| Cross-encoder | 「joint query-document model」 | queryとdocumentを単一inputとして受け、relevance scoreを出すmodel |
+| Bi-encoder | 「independent embedding model」 | queryとdocumentsを独立にembedするmodel。高速だがcross-encoderより粗い |
+| HyDE | 「fake answerでsearchする」 | hypothetical answerを生成し、それをembedして似たreal documentsを検索すること |
+| Parent-child chunking | 「小さく検索し、大きくcontextを返す」 | 小chunkをindexし、hit時には大きいparent chunkを返すこと |
+| Metadata filtering | 「search前に絞る」 | date、source、categoryなどでdocumentsをfilterしてsearch spaceを減らすこと |
+| Faithfulness | 「groundedしているか」 | generated answerがretrieved documentsに支えられているか |
 
-## Further Reading
+## 参考文献
 
-- Robertson & Zaragoza, "The Probabilistic Relevance Framework: BM25 and Beyond" (2009) -- the definitive reference for BM25, explaining the probabilistic foundations behind the formula
-- Cormack et al., "Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods" (2009) -- the original RRF paper showing it beats more complex fusion methods
-- Gao et al., "Precise Zero-Shot Dense Retrieval without Relevance Labels" (2022) -- the HyDE paper demonstrating that hypothetical document embeddings improve retrieval without any training data
-- Nogueira & Cho, "Passage Re-ranking with BERT" (2019) -- showed cross-encoder reranking on top of BM25 significantly improves retrieval quality
-- [Khattab et al., "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines" (2023)](https://arxiv.org/abs/2310.03714) -- treats prompt construction and weight selection as an optimization problem over retrieval pipelines; read this for "program LLMs" instead of "prompt LLMs."
-- [Edge et al., "From Local to Global: A Graph RAG Approach to Query-Focused Summarization" (Microsoft Research 2024)](https://arxiv.org/abs/2404.16130) -- GraphRAG paper: entity-relation extraction + Leiden community detection for query-focused summarization; the global vs local retrieval distinction.
-- [Asai et al., "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection" (ICLR 2024)](https://arxiv.org/abs/2310.11511) -- self-evaluating RAG with reflection tokens; the agentic frontier past static retrieve-then-generate.
-- [LangChain Query Construction blog](https://blog.langchain.dev/query-construction/) -- how to translate natural-language queries into structured database queries (Text-to-SQL, Cypher) as a pre-retrieval step.
+- Robertson & Zaragoza, "The Probabilistic Relevance Framework: BM25 and Beyond" (2009) -- BM25の基礎
+- Cormack et al., "Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods" (2009) -- RRFのoriginal paper
+- Gao et al., "Precise Zero-Shot Dense Retrieval without Relevance Labels" (2022) -- HyDE paper
+- Nogueira & Cho, "Passage Re-ranking with BERT" (2019) -- BM25上のcross-encoder reranking
+- [Khattab et al., "DSPy" (2023)](https://arxiv.org/abs/2310.03714) -- retrieval pipelinesをoptimization problemとして扱う
+- [Edge et al., "From Local to Global: A Graph RAG Approach" (2024)](https://arxiv.org/abs/2404.16130) -- GraphRAG paper
+- [Asai et al., "Self-RAG" (ICLR 2024)](https://arxiv.org/abs/2310.11511) -- reflection tokensを使うself-evaluating RAG
+- [LangChain Query Construction blog](https://blog.langchain.dev/query-construction/) -- natural-language queriesをstructured database queriesへ変換する方法

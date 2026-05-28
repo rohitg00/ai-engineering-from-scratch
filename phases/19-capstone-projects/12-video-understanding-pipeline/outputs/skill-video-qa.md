@@ -1,47 +1,47 @@
 ---
 name: video-qa
-description: Build a video understanding pipeline with scene segmentation, multi-vector indexing, temporal grounding, and timestamped citations.
+description: Scene segmentation、multi-vector indexing、temporal grounding、timestamped citation を備えた video understanding pipeline を構築する。
 version: 1.0.0
 phase: 19
 lesson: 12
 tags: [capstone, video, multimodal, gemini, qwen-vl, molmo, transnet, qdrant]
 ---
 
-Given 100 hours of video, build an ingestion pipeline and a query system that answers natural-language questions with (start, end) timestamps plus frame previews.
+100 時間の video を与え、(start, end) timestamp と frame preview 付きで natural-language question に答える ingestion pipeline と query system を構築する。
 
 Build plan:
 
-1. Ingest videos (YouTube URLs or MP4); downscale to 720p if needed.
-2. Scene segmentation with TransNetV2 or PySceneDetect; emit `[{scene_id, start_ms, end_ms, keyframe_path}]`.
-3. ASR with Whisper-v3-turbo (faster-whisper) producing word-level timestamps; slice per scene.
-4. VLM captioning with Gemini 2.5 Pro or Qwen3-VL-Max or Molmo 2; emit caption + frame embedding.
-5. Qdrant multi-vector index with three named vectors per scene (caption_emb, frame_emb, transcript_emb) and payload {video_id, scene_id, start_ms, end_ms, keyframe_url}.
-6. Query: three parallel dense queries; reciprocal rank fusion to merge; top-k=5 scenes.
-7. Temporal grounding (TimeLens adapter or VideoITG) refines (start, end) within the top scene.
-8. VLM synthesis (Gemini 2.5 Pro) with query + top-3 scene clips + transcript; require `(video_id, start_ms, end_ms)` citations.
-9. Eval on ActivityNet-QA, NeXT-GQA, plus a 100-query hand-labeled custom set. Report accuracy overall and per question class (descriptive, counting, action-type).
+1. Video (YouTube URL または MP4) を ingest し、必要なら 720p に downscale する。
+2. TransNetV2 または PySceneDetect で scene segmentation を行い、`[{scene_id, start_ms, end_ms, keyframe_path}]` を出力する。
+3. Whisper-v3-turbo (faster-whisper) で ASR を行い、word-level timestamp を生成する。Scene ごとに slice する。
+4. Gemini 2.5 Pro または Qwen3-VL-Max または Molmo 2 で VLM captioning を行い、caption + frame embedding を出力する。
+5. Scene ごとに 3 つの named vector (caption_emb、frame_emb、transcript_emb) と payload {video_id, scene_id, start_ms, end_ms, keyframe_url} を持つ Qdrant multi-vector index。
+6. Query: 3 本の parallel dense query を投げ、reciprocal rank fusion で merge し、top-k=5 scenes を得る。
+7. Temporal grounding (TimeLens adapter または VideoITG) が top scene 内の (start, end) を refine する。
+8. VLM synthesis (Gemini 2.5 Pro) に query + top-3 scene clips + transcript を渡し、`(video_id, start_ms, end_ms)` citation を必須にする。
+9. ActivityNet-QA、NeXT-GQA、100-query hand-labeled custom set で eval する。Overall と question class 別 (descriptive、counting、action-type) の accuracy を報告する。
 
 Assessment rubric:
 
 | Weight | Criterion | Measurement |
 |:-:|---|---|
-| 25 | Temporal grounding IoU | IoU on held-out grounding set |
-| 20 | QA accuracy | NeXT-GQA and 100-query custom set |
-| 20 | Ingest throughput | Hours of video indexed per dollar |
-| 20 | UI and citation UX | Timestamp links, thumbnail strip, jump-to-frame |
-| 15 | Hallucination rate | Counting and action-type accuracy reported separately |
+| 25 | Temporal grounding IoU | held-out grounding set 上の IoU |
+| 20 | QA accuracy | NeXT-GQA と 100-query custom set |
+| 20 | Ingest throughput | 1 dollar あたりに index できる video hours |
+| 20 | UI and citation UX | Timestamp links、thumbnail strip、jump-to-frame |
+| 15 | Hallucination rate | Counting と action-type の accuracy を別々に報告 |
 
 Hard rejects:
 
-- Pipelines that pool a single vector per scene. Multi-vector is required for the class distinctions to show.
-- Answers without (start, end) citations.
-- Reporting one overall accuracy without the counting/action subset breakdown.
-- VLM synthesis that does not receive scene frames directly (text-only inputs lose the visual grounding).
+- Scene ごとに single vector へ pool する pipeline。Class distinction を出すには multi-vector が必須。
+- (start, end) citation のない回答。
+- Counting/action subset breakdown なしで overall accuracy だけを報告すること。
+- Scene frame を直接受け取らない VLM synthesis。Text-only input では visual grounding が失われる。
 
 Refusal rules:
 
-- Refuse to serve videos with unclear license provenance; require a license tag on every video_id.
-- Refuse to claim "real-time" response at ingest rates above the measured throughput.
-- Refuse to hide the counting/action hallucination number inside an overall accuracy figure.
+- License provenance が不明な video は提供しない。すべての video_id に license tag を必須にする。
+- Measured throughput を超える ingest rate で "real-time" response を主張しない。
+- Counting/action hallucination number を overall accuracy figure の中に隠さない。
 
-Output: a repo containing the scene segmentation + ASR + captioning pipeline, the multi-vector Qdrant collection, the temporal grounding adapter, the Next.js 15 viewer with timestamp deep-links, the three-benchmark eval results (ActivityNet-QA, NeXT-GQA, custom), and a write-up naming the three counting or action-type failure classes you observed and the retrieval or synthesis change that reduced each.
+Output: scene segmentation + ASR + captioning pipeline、multi-vector Qdrant collection、temporal grounding adapter、timestamp deep-link 付き Next.js 15 viewer、3 benchmark の eval results (ActivityNet-QA、NeXT-GQA、custom)、観測した counting または action-type failure class top 3 と、それぞれを減らした retrieval または synthesis の変更を記した write-up を含む repo。

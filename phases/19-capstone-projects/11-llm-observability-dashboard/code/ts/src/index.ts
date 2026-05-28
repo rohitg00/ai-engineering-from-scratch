@@ -1,11 +1,11 @@
 /**
- * LLM Observability Dashboard: capstone skeleton entry point (TypeScript).
+ * LLM Observability Dashboard: capstone skeleton の entry point (TypeScript)。
  *
- * Implements the ingest plane from docs/en.md: a Hono server accepts OTel
- * GenAI-shaped spans on /trace, holds them in a 10k ring buffer, and renders
- * /dashboard plus /dashboard.json with p50/p95/p99 latency and cost per model.
- * Stands in for a real Langfuse/Phoenix backend, with the same span schema
- * so a real OTLP exporter could be pointed at it.
+ * docs/en.md の ingest plane を実装する。Hono server が /trace で OTel
+ * GenAI 形式の span を受け取り、10k ring buffer に保持し、/dashboard と
+ * /dashboard.json で p50/p95/p99 latency と model ごとの cost を描画する。
+ * Real OTLP exporter を向けられるように同じ span schema を使う、
+ * Langfuse/Phoenix backend の stand-in である。
  *
  * Source: phases/19-capstone-projects/11-llm-observability-dashboard/docs/en.md
  * Schema: OpenTelemetry GenAI semantic conventions
@@ -26,7 +26,7 @@ type SyntheticConfig = {
 
 export function generateSyntheticSpans(cfg: SyntheticConfig): GenAISpan[] {
   if (cfg.models.length === 0) {
-    throw new Error("generateSyntheticSpans: cfg.models must not be empty");
+    throw new Error("generateSyntheticSpans: cfg.models は空にできません");
   }
   const now = Date.now() * 1e6;
   const out: GenAISpan[] = [];
@@ -64,7 +64,7 @@ export function generateSyntheticSpans(cfg: SyntheticConfig): GenAISpan[] {
 }
 
 function reportRollups(rollups: ModelRollup[]): void {
-  console.log("[obs] model roll-ups:");
+  console.log("[obs] model roll-up:");
   console.log(
     "  " +
       ["model", "n", "err", "p50", "p95", "p99", "cost($)"]
@@ -90,7 +90,7 @@ function reportRollups(rollups: ModelRollup[]): void {
 }
 
 function main(): void {
-  console.log("[obs] generating 1200 synthetic OTel-GenAI spans...");
+  console.log("[obs] 1200 件の synthetic OTel-GenAI span を生成しています...");
   const store = new ObservabilityStore();
   const synthetic = generateSyntheticSpans({
     spans: 1200,
@@ -110,11 +110,11 @@ function main(): void {
     const port = Number(process.env["PORT"] ?? 8011);
     const app = buildApp(store);
     serve({ fetch: app.fetch, port }, (info) => {
-      console.log(`[obs] ingest + dashboard on http://localhost:${info.port}`);
+      console.log(`[obs] ingest + dashboard: http://localhost:${info.port}`);
     });
   } else {
     console.log(
-      "[obs] set SERVE=1 to start the HTTP server on PORT (default 8011)",
+      "[obs] HTTP server を PORT (default 8011) で起動するには SERVE=1 を設定してください",
     );
   }
 }

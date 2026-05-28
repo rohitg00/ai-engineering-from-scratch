@@ -1,17 +1,8 @@
-"""Load pretrained GPT-2-style weights from safetensors into the lesson 35 architecture.
+"""safetensors から pretrained GPT-2-style weights を lesson 35 architecture に load します。
 
-Reads a safetensors file using the `safetensors` library, maps the pretrained
-parameter names (`wte`, `wpe`, `h.N.attn.c_attn`, ...) onto the local names
-(`tok_embed`, `pos_embed`, `blocks.N.attn.qkv`, ...), checks shapes, transposes
-the conv1d-style weight layout used by published GPT-2 checkpoints, and assigns
-under `torch.no_grad()`. The LM head is a weight tying alias on `tok_embed`,
-so it is not in the file.
+pretrained parameter 名を local model 名へ mapping し、GPT-2 conv1d layout の重みを必要に応じて transpose し、shape mismatch を report します。
 
-To keep the demo offline, `make_stub_safetensors` generates a fixture at first
-run with the exact pretrained naming convention. Swap the fixture for a real
-GPT-2 file and the loader works without modification.
-
-Run: python3 code/main.py
+Run: Python3 code/main.py
 """
 
 from __future__ import annotations
@@ -34,7 +25,7 @@ STUB_PATH = OUTPUTS / "gpt2-stub.safetensors"
 
 @dataclass
 class ModelConfig:
-    """Configuration aligned with the lesson 35 reference; the stub uses a smaller d_model."""
+    """lesson 35 reference と揃えた configuration。stub は小さい d_model を使います。"""
 
     vocab_size: int = 50257
     context_length: int = 1024
@@ -155,7 +146,7 @@ class GPTModel(nn.Module):
 
 @dataclass
 class LoadReport:
-    """Outcome of a load. Print this; it tells you whether the load succeeded."""
+    """load の結果。これを表示すると load の成否が分かります。"""
 
     loaded: list[tuple[str, str, tuple[int, ...]]] = field(default_factory=list)
     missing: list[str] = field(default_factory=list)
@@ -174,13 +165,13 @@ class LoadReport:
         return not self.missing and not self.shape_mismatch
 
 
-# Names that are stored transposed in published GPT-2 checkpoints.
-# The published format uses tensorflow conv1d layout; nn.Linear expects (out, in).
+# 公開 GPT-2 checkpoint で転置された形で保存される names。
+# 公開 format は tensorflow conv1d layout を使い、nn.Linear は (out, in) を期待します。
 CONV1D_SUFFIXES = ("c_attn.weight", "c_proj.weight", "c_fc.weight")
 
 
 def make_pretrained_to_local(num_layers: int) -> dict[str, str]:
-    """Return the full pretrained->local name map for a model with `num_layers` blocks."""
+    """`num_layers` blocks の model 用に pretrained->local の完全な name map を返します。"""
     mapping: dict[str, str] = {
         "wte.weight": "tok_embed.weight",
         "wpe.weight": "pos_embed.weight",
@@ -210,7 +201,7 @@ def _needs_transpose(pretrained_name: str) -> bool:
 
 
 def load_safetensors(model: GPTModel, path: Path, verbose: bool = True) -> LoadReport:
-    """Load weights into model. Refuse to assign on shape mismatch. Returns a report."""
+    """weights を model に load します。shape mismatch では assignment を拒否し report を返します。"""
     if not path.exists():
         raise FileNotFoundError(f"safetensors file not found: {path}")
 
@@ -281,9 +272,9 @@ def load_safetensors(model: GPTModel, path: Path, verbose: bool = True) -> LoadR
 
 
 def make_stub_safetensors(path: Path, cfg: ModelConfig, seed: int = 42) -> None:
-    """Generate a fixture file with the pretrained naming convention.
+    """pretrained naming convention を持つ fixture file を生成します。
 
-    Tensors are random but reproducible from `seed`. Shapes match what a real
+    Tensors are random but reproducible from `seed`. shape match what a real
     GPT-2 checkpoint of `cfg` shape would carry, including the conv1d transpose
     for `c_attn`, `c_proj`, `c_fc`.
     """
@@ -338,7 +329,7 @@ def quick_generate(model: GPTModel, prompt: torch.Tensor, n: int, seed: int = 0)
 
 
 def _state_fingerprint(model: GPTModel) -> float:
-    """Sum of L2 norms across parameters; coarse fingerprint that changes on load."""
+    """parameters 全体の L2 norm 合計。load で変わる粗い fingerprint です。"""
     return float(sum(p.detach().norm().item() for p in model.parameters()))
 
 
@@ -356,11 +347,11 @@ def demo() -> None:
     )
     print(f"model config            : vocab={cfg.vocab_size} d_model={cfg.d_model} layers={cfg.num_layers}")
 
-    print(f"\nWriting stub fixture to : {STUB_PATH}")
+    print(f"\nstub fixture を書き込み: {STUB_PATH}")
     make_stub_safetensors(STUB_PATH, cfg, seed=42)
     print(f"  file size             : {STUB_PATH.stat().st_size:,} bytes")
 
-    print("\nBuilding fresh model (random init)...")
+    print("\nfresh model（random init）を構築...")
     model = GPTModel(cfg)
     before_fp = _state_fingerprint(model)
     prompt = torch.tensor([[7, 11, 13, 17]], dtype=torch.long)
@@ -368,11 +359,11 @@ def demo() -> None:
     print(f"  fingerprint           : {before_fp:.4f}")
     print(f"  sample (random init)  : {before_tokens}")
 
-    print("\nLoading stub...")
+    print("\nstub を load...")
     report = load_safetensors(model, STUB_PATH, verbose=False)
     print(f"  report                : {report.summary()}")
     if not report.ok():
-        print("  WARNING: load did not complete cleanly")
+        print("  WARNING: load が clean に完了しませんでした")
     else:
         print("  load ok")
 
@@ -381,15 +372,15 @@ def demo() -> None:
     print(f"  fingerprint after load: {after_fp:.4f}")
     print(f"  sample (loaded)       : {after_tokens}")
 
-    assert before_fp != after_fp, "fingerprint should change after load"
-    assert before_tokens != after_tokens, "sample should change after load"
+    assert before_fp != after_fp, "load 後に fingerprint は変わる必要があります"
+    assert before_tokens != after_tokens, "load 後に sample は変わる必要があります"
 
-    print("\nWeight tying check after load:")
+    print("\nload 後の weight tying check:")
     tied = model.lm_head.weight.data_ptr() == model.tok_embed.weight.data_ptr()
     print(f"  lm_head tied to tok_embed: {tied}")
     assert tied
 
-    print("\nShape mismatch path: injecting a bad tensor and reloading...")
+    print("\nshape mismatch path: bad tensor を注入して再 load...")
     bad_path = OUTPUTS / "gpt2-bad.safetensors"
     bad_tensors = {}
     with safe_open(str(STUB_PATH), framework="pt") as reader:
@@ -400,11 +391,11 @@ def demo() -> None:
     bad_model = GPTModel(cfg)
     bad_report = load_safetensors(bad_model, bad_path, verbose=False)
     print(f"  bad report            : {bad_report.summary()}")
-    assert bad_report.shape_mismatch, "expected at least one shape mismatch"
+    assert bad_report.shape_mismatch, "少なくとも1つの shape mismatch が必要です"
     print(f"  first mismatch        : {bad_report.shape_mismatch[0]}")
 
     bad_path.unlink()
-    print("\nPretrained weight load check passed.")
+    print("\npretrained weight load check passed。")
 
 
 if __name__ == "__main__":

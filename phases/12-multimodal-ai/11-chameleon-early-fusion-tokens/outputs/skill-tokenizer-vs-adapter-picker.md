@@ -1,31 +1,31 @@
 ---
 name: tokenizer-vs-adapter-picker
-description: Pick between Chameleon-style early fusion (shared-vocab tokenizer) and LLaVA-style late fusion (adapter on frozen LLM) for a VLM project.
+description: VLM project向けに、Chameleon-style early fusion（shared-vocab tokenizer）とLLaVA-style late fusion（frozen LLM上のadapter）のどちらを選ぶか決める。
 version: 1.0.0
 phase: 12
 lesson: 11
 tags: [chameleon, early-fusion, vq-vae, late-fusion, adapter]
 ---
 
-Given a product specification (understanding-only or understanding+generation), target image quality (social-post / magazine / print / broadcast), and cost budget (training + inference), recommend Chameleon-family or LLaVA-family with a concrete architecture outline.
+product specification（understanding-onlyまたはunderstanding+generation）、target image quality（social-post / magazine / print / broadcast）、cost budget（training + inference）を受け取り、concrete architecture outline付きでChameleon-familyまたはLLaVA-familyを推奨する。
 
-Produce:
+出力するもの:
 
-1. Verdict. Early-fusion (Chameleon / Emu3 / AnyGPT) or late-fusion (LLaVA / BLIP-2 / Qwen-VL) family.
-2. Tokenizer pick (for early-fusion verdicts). VQ-VAE (Chameleon), MAGVIT-v2, IBQ, or SBER-MoVQGAN; cite the expected reconstruction ceiling in PSNR.
-3. Training-stability plan. QK-Norm, dropout placement, LayerNorm ordering for early-fusion at scale.
-4. Cost estimate. Training GPU-hours and inference latency per image vs the late-fusion alternative.
-5. Generation-quality ceiling. PSNR / FID range the user can expect; whether the product's quality bar is reachable with discrete tokens or needs continuous (Transfusion-style) generation.
-6. Migration path. If the user grows and late-fusion becomes limiting (they need image output), what does the migration look like.
+1. Verdict。Early-fusion（Chameleon / Emu3 / AnyGPT）またはlate-fusion（LLaVA / BLIP-2 / Qwen-VL）family。
+2. Tokenizer pick（early-fusion verdictの場合）。VQ-VAE（Chameleon）、MAGVIT-v2、IBQ、SBER-MoVQGANのいずれか。expected reconstruction ceilingをPSNRで引用する。
+3. Training-stability plan。scaleしたearly-fusion向けのQK-Norm、dropout placement、LayerNorm ordering。
+4. Cost estimate。late-fusion alternativeと比べたtraining GPU-hoursとimageあたりinference latency。
+5. Generation-quality ceiling。期待できるPSNR / FID range。productのquality barがdiscrete tokensで届くか、continuous（Transfusion-style）generationが必要か。
+6. Migration path。userが成長してlate-fusionが制約になる（image outputが必要になる）場合、migrationはどう見えるか。
 
 Hard rejects:
-- Recommending Chameleon-style for understanding-only products. Late-fusion is simpler, cheaper, and higher-ceiling for pure understanding.
-- Proposing VQ-VAE with K<4096 for production image generation. Codebook is too small, artifacts are visible.
-- Claiming early-fusion inference is free. VQ decoder adds 50-200ms per generated image, often more than the LLM output time.
+- understanding-only productにChameleon-styleを推奨すること。pure understandingではlate-fusionの方がsimple、cheap、higher-ceiling。
+- production image generationにK<4096のVQ-VAEを提案すること。codebookが小さすぎ、artifactsが見える。
+- early-fusion inferenceは無料だと主張すること。VQ decoderはgenerated imageごとに50-200msを追加し、しばしばLLM output timeを上回る。
 
 Refusal rules:
-- If the user wants frontier-quality image generation (FID < 15, print-ready), refuse discrete tokens and point to Transfusion / Stable Diffusion 3 / MMDiT (Lesson 12.13).
-- If the product never needs image output, refuse early-fusion — the complexity is unwarranted.
-- If the user wants to plug in existing Llama / Qwen LLM weights, refuse early-fusion — it requires pretraining a fresh model.
+- userがfrontier-quality image generation（FID < 15、print-ready）を求める場合、discrete tokensを拒否し、Transfusion / Stable Diffusion 3 / MMDiT（Lesson 12.13）を示す。
+- productがimage outputを一切必要としない場合、early-fusionを拒否する。complexityに見合わない。
+- userが既存のLlama / Qwen LLM weightsを差し込みたい場合、early-fusionを拒否する。fresh modelのpretrainingが必要。
 
-Output: one-page plan with verdict, tokenizer pick, stability checklist, cost estimate, quality ceiling, migration path. End with arXiv 2405.09818 (Chameleon) and 2408.11039 (Transfusion) for comparison reading.
+Output: verdict、tokenizer pick、stability checklist、cost estimate、quality ceiling、migration pathを含む1ページplan。comparison readingとしてarXiv 2405.09818 (Chameleon)と2408.11039 (Transfusion)で締める。

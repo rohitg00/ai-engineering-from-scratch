@@ -1,51 +1,51 @@
-# CLIP and Contrastive Vision-Language Pretraining
+# CLIP と Contrastive Vision-Language Pretraining
 
-> OpenAI's CLIP (2021) proved a single idea big enough to power the next five years: align an image encoder and a text encoder in the same vector space using only noisy web image-caption pairs and a contrastive loss. Zero supervised labels. 400M pairs. The resulting embedding space does zero-shot classification, image-text retrieval, and plugs into every 2026 VLM as its vision tower. SigLIP 2 (2025) replaced softmax with sigmoid and scaled past CLIP at lower cost. This lesson walks the math from InfoNCE to sigmoid pairwise loss and builds the training step in stdlib Python.
+> OpenAI の CLIP (2021) は、次の 5 年を支えるほど大きな 1 つの idea を示しました。noisy な web image-caption pair だけを使い、contrastive loss で image encoder と text encoder を同じ vector space に align する、という idea です。supervised label はゼロ。400M pairs。その結果得られた embedding space は zero-shot classification、image-text retrieval を行い、2026 年のあらゆる VLM に vision tower として接続されます。SigLIP 2 (2025) は softmax を sigmoid に置き換え、より低い cost で CLIP を超えて scale しました。この lesson では InfoNCE から sigmoid pairwise loss までの math をたどり、stdlib Python で training step を実装します。
 
-**Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
-**Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
-**Time:** ~180 minutes
+**種別:** 構築
+**言語:** Python (stdlib、InfoNCE + sigmoid loss implementations)
+**前提条件:** Phase 12 · 01 (ViT patches)、Phase 7 (Transformers)
+**所要時間:** ~180 分
 
-## Learning Objectives
+## 学習目標
 
-- Derive InfoNCE loss from mutual information and implement a numerically-stable vectorized version.
-- Explain why sigmoid pairwise loss (SigLIP) scales to batch 32768+ without the all-gather overhead softmax demands.
-- Run zero-shot ImageNet classification by constructing text templates (`a photo of a {class}`) and taking argmax over cosine similarity.
-- Name the four levers CLIP / SigLIP pretraining gives you: batch size, temperature, prompt template, data quality.
+- mutual information から InfoNCE loss を導出し、numerically-stable な vectorized version を実装する。
+- sigmoid pairwise loss (SigLIP) が、softmax の all-gather overhead なしで batch 32768+ へ scale できる理由を説明する。
+- text template (`a photo of a {class}`) を構成し、cosine similarity の argmax を取って zero-shot ImageNet classification を実行する。
+- CLIP / SigLIP pretraining が与える 4 つの lever を挙げる: batch size、temperature、prompt template、data quality。
 
-## The Problem
+## 問題
 
-Pre-CLIP vision was supervised. Collect labeled datasets (ImageNet: 1.2M images, 1000 classes), train a CNN, ship it. Labels are expensive, labels bias to what labelers can agree on, and labels do not transfer to new tasks without finetuning.
+CLIP 以前の vision は supervised でした。labeled dataset (ImageNet: 1.2M images、1000 classes) を集め、CNN を train し、ship する。label は高価で、labeler が合意できるものへ bias し、新しい task へは finetuning なしで転移しにくい。
 
-The image-caption web has one billion-plus loosely-labeled pairs for free. A picture of a golden retriever with alt text "my dog Max in the park" carries a supervisory signal — the text describes the image. The question: can you turn this into useful training?
+image-caption web には、ゆるく label 付けされた 10 億超の pair が無料で存在します。golden retriever の写真に alt text "my dog Max in the park" が付いていれば、text が image を説明しているという supervisory signal があります。問いは、これを有用な training に変換できるかです。
 
-CLIP's answer: treat image-caption pairs as a matching task. Given a batch of N images and N captions, learn to match each image to its own caption against N-1 distractors. The supervision is "these two things belong together; these N-1 do not." No class labels. No human annotation. Just a contrastive loss.
+CLIP の答えは、image-caption pair を matching task として扱うことでした。N 枚の image と N 個の caption の batch が与えられたら、各 image を自分の caption と、N-1 個の distractor に対して match できるように学習する。supervision は「この 2 つは対応する。この N-1 個は対応しない」です。class label なし。human annotation なし。contrastive loss だけです。
 
-The resulting embedding space does more than CLIP was trained for. ImageNet zero-shot works because "a photo of a cat" embeds near pictures of cats that were never explicitly labeled cats. This is the bet that spawned every 2026 VLM.
+得られる embedding space は、CLIP が直接 train された用途を超えます。"a photo of a cat" が、明示的に cat と label されていない猫画像の近くへ embed されるため、ImageNet zero-shot が機能します。これが 2026 年のあらゆる VLM を生んだ賭けです。
 
-## The Concept
+## 概念
 
 ### The dual encoder
 
-CLIP has two towers:
+CLIP には 2 つの tower があります。
 
-- Image encoder `f`: ViT or ResNet, outputs a D-dim vector per image.
-- Text encoder `g`: small transformer, outputs a D-dim vector per caption.
+- Image encoder `f`: ViT または ResNet。image ごとに D-dim vector を出力する。
+- Text encoder `g`: small transformer。caption ごとに D-dim vector を出力する。
 
-Both towers normalize their outputs to unit length. Similarity is `cos(f(x), g(y)) = f(x)^T g(y)` since both are unit-norm.
+両 tower は output を unit length に normalize します。どちらも unit-norm なので similarity は `cos(f(x), g(y)) = f(x)^T g(y)` です。
 
-For a batch of N (image, caption) pairs, build the similarity matrix `S` of shape `(N, N)`:
+N 個の (image, caption) pair の batch について、shape `(N, N)` の similarity matrix `S` を作ります。
 
 ```
 S[i, j] = cos(f(x_i), g(y_j)) / tau
 ```
 
-where `tau` is a learned temperature (CLIP initializes to 0.07; learned in log-space).
+ここで `tau` は learned temperature です (CLIP は 0.07 で初期化し、log-space で学習)。
 
 ### InfoNCE loss
 
-CLIP uses a symmetric cross-entropy over rows and columns:
+CLIP は row と column の symmetric cross-entropy を使います。
 
 ```
 loss_i2t = CE(S, labels=identity)     # each image's positive is its own caption
@@ -53,104 +53,105 @@ loss_t2i = CE(S^T, labels=identity)   # each caption's positive is its own image
 loss = (loss_i2t + loss_t2i) / 2
 ```
 
-This is InfoNCE. The softmax in CE forces each image to match its caption more than every other caption in the batch. The "negatives" are all other batch items. Bigger batches = more negatives = stronger signal. CLIP trained at batch 32k; scale matters.
+これが InfoNCE です。CE 内の softmax は、各 image が batch 内の他の caption より自分の caption に強く match するよう強制します。「negative」は他の batch item すべてです。bigger batch = more negatives = stronger signal。CLIP は batch 32k で training されました。scale が重要です。
 
 ### Temperature
 
-`tau` controls the sharpness of the softmax. Low tau → sharp distribution, hard negative mining effect. High tau → soft, all samples contribute. CLIP learns log(1/tau), clipped to prevent collapse. SigLIP 2 fixes the initial tau and uses a learned bias instead.
+`tau` は softmax の sharpness を制御します。low tau -> sharp distribution、hard negative mining 的な効果。high tau -> soft で、すべての sample が寄与。CLIP は `log(1/tau)` を学習し、collapse を防ぐため clip します。SigLIP 2 は initial tau を固定し、代わりに learned bias を使います。
 
 ### Why sigmoid scales better (SigLIP)
 
-Softmax needs the whole similarity matrix in sync. In distributed training you must all-gather every embedding to every replica, then do the softmax. This is quadratic in world size for communication.
+Softmax は similarity matrix 全体を同期する必要があります。distributed training では、すべての embedding をすべての replica へ all-gather してから softmax します。communication は world size に対して quadratic です。
 
-SigLIP replaces softmax with element-wise sigmoid: for each pair `(i, j)`, the loss is a binary classification of "are these the matching pair?" positive class labels are the diagonal, everything else is negative. The loss is:
+SigLIP は softmax を element-wise sigmoid に置き換えます。各 pair `(i, j)` について、「これは matching pair か」を binary classification する loss です。positive class label は diagonal、他はすべて negative です。loss は次の通りです。
 
 ```
 L = -1/N sum over (i, j) [ y_ij log sigmoid(S[i,j]) + (1-y_ij) log sigmoid(-S[i,j]) ]
 ```
 
-`y_ij = 1` if `i == j`, else 0. Each pair's loss is independent. No all-gather needed. Each GPU computes its local block and sums. SigLIP 2 scales to batch 32k-512k cheaply where CLIP would need proportionally more communication.
+`y_ij = 1` if `i == j`, else 0。各 pair の loss は独立しています。all-gather は不要です。各 GPU は local block を計算して sum します。SigLIP 2 は batch 32k-512k へ安価に scale し、CLIP が必要とする比例的な communication を避けます。
 
 ### Zero-shot classification
 
-Given N class names, for each class build a text template:
+N 個の class name があるとき、各 class について text template を作ります。
 
 ```
 "a photo of a {class}"
 ```
 
-Embed each template with the text encoder. Embed your image with the image encoder. Argmax cosine similarity = predicted class. No training on the target classes.
+各 template を text encoder で embed します。画像を image encoder で embed します。cosine similarity の argmax が predicted class です。target class で training はしません。
 
-Prompt templates matter. CLIP's original paper used 80 templates per class (plain, artistic, photo, painting, etc.) and averaged the embeddings. +3 ImageNet points. Modern usage typically picks one or two templates.
+Prompt template は重要です。CLIP の original paper は class ごとに 80 個の template (plain、artistic、photo、painting など) を使い、embedding を平均しました。ImageNet で +3 point。modern usage では 1-2 個の template を選ぶことが多いです。
 
 ### Linear probes and finetuning
 
-Zero-shot is a baseline. A linear probe (train one linear layer on top of frozen CLIP features for your target classes) beats zero-shot on in-domain tasks. Full finetuning beats linear probe on in-domain but can hurt zero-shot transfer. Three regimes with three trade-offs.
+Zero-shot は baseline です。linear probe (target class のために frozen CLIP feature 上へ linear layer だけを train) は in-domain task で zero-shot を上回ります。full finetuning は in-domain で linear probe を上回りますが、zero-shot transfer を損なうことがあります。3 つの regime には 3 つの trade-off があります。
 
 ### SigLIP 2: NaFlex and dense features
 
-SigLIP 2 (2025) adds:
-- NaFlex: single model handles variable aspect ratios and resolutions.
-- Better dense features for segmentation and depth estimation, targeting use as a frozen backbone in VLMs.
-- Multilingual: trained on 100+ languages where CLIP was English-only.
-- 1B param scale where CLIP topped out at 400M.
+SigLIP 2 (2025) は次を追加します。
 
-In 2026 open VLMs, SigLIP 2 SO400m/14 is the default vision tower. CLIP remains the default for pure image-text retrieval where the specific LAION-2B training distribution matches your query pattern.
+- NaFlex: single model が variable aspect ratio と resolution を扱う。
+- segmentation や depth estimation 向けの better dense features。VLM の frozen backbone としての利用を狙う。
+- Multilingual: CLIP が English-only だったのに対し、100+ languages で training。
+- 1B param scale。CLIP は 400M で頭打ちでした。
+
+2026 年の open VLM では、SigLIP 2 SO400m/14 が default vision tower です。CLIP は、特定の LAION-2B training distribution が query pattern と合う pure image-text retrieval では依然として default です。
 
 ### ALIGN, BASIC, OpenCLIP, EVA-CLIP
 
-ALIGN (Google, 2021): same idea as CLIP, 1.8B pair scale, 90% noisy. Proved noisy data scales. OpenCLIP (LAION): open reproduction of CLIP on LAION-400M / 2B, multiple scales, the go-to open checkpoint. EVA-CLIP: initializes from masked image modeling; strong backbone for VLMs. BASIC: Google's CLIP+ALIGN hybrid. All the same family, different data and tuning.
+ALIGN (Google, 2021): CLIP と同じ idea、1.8B pair scale、90% noisy。noisy data が scale することを示しました。OpenCLIP (LAION): LAION-400M / 2B 上の CLIP open reproduction。複数 scale があり、go-to open checkpoint。EVA-CLIP: masked image modeling から initialization。VLM の強い backbone。BASIC: Google の CLIP+ALIGN hybrid。どれも同じ family で、data と tuning が違います。
 
 ### The zero-shot ceiling
 
-CLIP-class models cap around 76% ImageNet zero-shot (CLIP-G, OpenCLIP-G). Beyond requires either much larger data (SigLIP 2 gets 80%+) or architecture changes (supervised heads, more parameters). The benchmark is saturating; the real value is the embedding space that downstream VLMs consume.
+CLIP-class model は ImageNet zero-shot で約 76% (CLIP-G、OpenCLIP-G) 付近に上限があります。それ以上には、はるかに大きな data (SigLIP 2 は 80%+) または architecture change (supervised head、more parameters) が必要です。benchmark は飽和しつつあります。真の価値は downstream VLM が消費する embedding space です。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements:
+`code/main.py` は次を実装しています。
 
-1. A toy dual encoder (hash-based image features, text char features) so you can see the InfoNCE shape without numpy.
-2. InfoNCE loss in pure Python (numerical stability via log-sum-exp).
-3. Sigmoid pairwise loss for comparison.
-4. A zero-shot classification routine: compute cosine similarity against a set of text prompts, argmax for prediction.
+1. toy dual encoder (hash-based image features、text char features)。numpy なしで InfoNCE の shape を確認できる。
+2. pure Python の InfoNCE loss (log-sum-exp による numerical stability)。
+3. 比較用の sigmoid pairwise loss。
+4. zero-shot classification routine: text prompt set との cosine similarity を計算し、argmax で prediction。
 
-Run it and watch the loss curve. The absolute numbers are toy; the shape matches what a real CLIP trainer emits.
+実行して loss curve を見てください。absolute number は toy ですが、shape は real CLIP trainer が出すものと一致します。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-clip-zero-shot.md`. Given a set of images (via path) and a list of target classes, it builds text prompts with the CLIP template, embeds both sides with a stated checkpoint (e.g., `openai/clip-vit-large-patch14`), and returns top-1 / top-5 predictions with similarity scores. The skill refuses to make claims about classes not in the prompt list.
+この lesson は `outputs/skill-clip-zero-shot.md` を作ります。image set (path 経由) と target class list が与えられると、CLIP template で text prompt を作り、指定 checkpoint (例: `openai/clip-vit-large-patch14`) で両側を embed し、similarity score 付きの top-1 / top-5 prediction を返します。この skill は prompt list に含まれない class について主張しません。
 
-## Exercises
+## 演習
 
-1. Implement InfoNCE for a batch of 4 pairs by hand. Construct the 4x4 similarity matrix, run softmax, pick out the diagonal, compute cross-entropy. Verify your Python implementation against this hand calculation.
+1. 4 pair の batch について InfoNCE を手計算で実装してください。4x4 similarity matrix を作り、softmax を実行し、diagonal を取り出して cross-entropy を計算します。Python implementation をこの手計算と照合してください。
 
-2. SigLIP uses a bias parameter `b` in addition to temperature: `S'[i,j] = S[i,j]/tau + b`. What role does `b` play when the batch has a large class imbalance (many more negatives than positives per row)? Read SigLIP Section 3 (arXiv:2303.15343).
+2. SigLIP は temperature に加えて bias parameter `b` を使います: `S'[i,j] = S[i,j]/tau + b`。batch に大きな class imbalance (row あたり positive より negative が圧倒的に多い) があるとき、`b` はどんな役割を果たしますか。SigLIP Section 3 (arXiv:2303.15343) を読んでください。
 
-3. Build a zero-shot classifier for cats vs dogs. Try two prompt templates: `a photo of a {class}` and `a picture of a {class}`. Measure accuracy on 100 test images. Does the ensemble of templates beat single?
+3. cats vs dogs の zero-shot classifier を作ってください。`a photo of a {class}` と `a picture of a {class}` の 2 つの prompt template を試します。100 枚の test image で accuracy を測定してください。template ensemble は single より良いですか。
 
-4. Compute the communication cost of softmax InfoNCE vs sigmoid pairwise for a 512-GPU run at batch 32k. Which scales as O(N), which as O(N^2)? Cite SigLIP Section 4.
+4. batch 32k、512-GPU run で softmax InfoNCE と sigmoid pairwise の communication cost を計算してください。どちらが O(N) で、どちらが O(N^2) に scale しますか。SigLIP Section 4 を引用してください。
 
-5. Read the OpenCLIP scaling-laws paper (arXiv:2212.07143, Cherti et al.). Reproduce their conclusion for data scaling from the figures: at fixed model size, what is the log-linear relationship between ImageNet zero-shot accuracy and training data size?
+5. OpenCLIP scaling-laws paper (arXiv:2212.07143, Cherti et al.) を読んでください。図から data scaling の結論を再現します。fixed model size では、ImageNet zero-shot accuracy と training data size の log-linear relationship は何ですか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| InfoNCE | "Contrastive loss" | Cross-entropy over a batch's similarity matrix; each item's positive is its paired item, negatives are everything else |
-| Sigmoid loss | "SigLIP loss" | Per-pair binary cross-entropy; no softmax, no all-gather, scales cheaply in distributed training |
-| Temperature | "tau" | Scalar that scales logits before softmax/sigmoid; controls sharpness of the distribution |
-| Zero-shot | "no-finetune classification" | Use text prompts to construct class embeddings and classify by cosine similarity; no training on target classes |
-| Prompt template | "a photo of a ..." | Text scaffold around a class name; affects zero-shot accuracy by 1-5 points |
-| Dual encoder | "Two-tower" | One image encoder + one text encoder, outputs in shared D-dim space |
-| Hard negative | "Tough distractor" | A negative similar enough to the positive that the model has to work to separate them |
-| Linear probe | "Frozen + one layer" | Train only a linear classifier on top of frozen features; measures feature quality |
-| NaFlex | "Native flexible resolution" | SigLIP 2 capability to ingest images at any aspect ratio and resolution without resizing |
-| Temperature scaling | "log-parametrized tau" | CLIP parametrizes `log(1/tau)` so gradients behave; clips to prevent collapse to near-zero tau |
+| InfoNCE | 「Contrastive loss」 | batch の similarity matrix に対する cross-entropy。各 item の positive は paired item、negative はそれ以外すべて |
+| Sigmoid loss | 「SigLIP loss」 | pair ごとの binary cross-entropy。softmax なし、all-gather なしで distributed training に安く scale |
+| Temperature | 「tau」 | softmax/sigmoid 前の logit を scale する scalar。distribution の sharpness を制御 |
+| Zero-shot | 「no-finetune classification」 | text prompt で class embedding を作り、cosine similarity で classify。target class で training しない |
+| Prompt template | 「a photo of a ...」 | class name の周囲に置く text scaffold。zero-shot accuracy に 1-5 point 影響する |
+| Dual encoder | 「Two-tower」 | image encoder と text encoder が 1 つずつあり、shared D-dim space に出力する |
+| Hard negative | 「Tough distractor」 | positive と十分似ていて、model が分離するために努力を要する negative |
+| Linear probe | 「Frozen + one layer」 | frozen features の上で linear classifier だけを train。feature quality を測る |
+| NaFlex | 「Native flexible resolution」 | resize なしで任意の aspect ratio と resolution の image を取り込める SigLIP 2 capability |
+| Temperature scaling | 「log-parametrized tau」 | gradient を扱いやすくするため CLIP は `log(1/tau)` を parameterize し、near-zero tau への collapse を防ぐため clip する |
 
-## Further Reading
+## 参考文献
 
-- [Radford et al. — Learning Transferable Visual Models From Natural Language Supervision (arXiv:2103.00020)](https://arxiv.org/abs/2103.00020) — the CLIP paper.
-- [Zhai et al. — Sigmoid Loss for Language Image Pre-Training (arXiv:2303.15343)](https://arxiv.org/abs/2303.15343) — SigLIP.
-- [Tschannen et al. — SigLIP 2 (arXiv:2502.14786)](https://arxiv.org/abs/2502.14786) — multilingual + NaFlex.
-- [Jia et al. — ALIGN (arXiv:2102.05918)](https://arxiv.org/abs/2102.05918) — scale with noisy web data.
-- [Cherti et al. — Reproducible scaling laws for contrastive language-image learning (arXiv:2212.07143)](https://arxiv.org/abs/2212.07143) — OpenCLIP scaling laws.
+- [Radford et al. — Learning Transferable Visual Models From Natural Language Supervision (arXiv:2103.00020)](https://arxiv.org/abs/2103.00020) — CLIP paper。
+- [Zhai et al. — Sigmoid Loss for Language Image Pre-Training (arXiv:2303.15343)](https://arxiv.org/abs/2303.15343) — SigLIP。
+- [Tschannen et al. — SigLIP 2 (arXiv:2502.14786)](https://arxiv.org/abs/2502.14786) — multilingual + NaFlex。
+- [Jia et al. — ALIGN (arXiv:2102.05918)](https://arxiv.org/abs/2102.05918) — noisy web data での scale。
+- [Cherti et al. — Reproducible scaling laws for contrastive language-image learning (arXiv:2212.07143)](https://arxiv.org/abs/2212.07143) — OpenCLIP scaling laws。

@@ -1,4 +1,4 @@
-"""Tests for the byte-level BPE tokenizer."""
+"""byte-level BPE tokenizer の tests。"""
 
 from __future__ import annotations
 

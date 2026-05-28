@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does 'optimization' mean in the context of training a neural network?",
-      "options": ["Making the code run faster", "Finding the model weights that minimize the loss function", "Reducing the number of parameters in the model", "Choosing the best hardware for training"],
+      "question": "ニューラルネットワークの訓練における「最適化」とは何を意味しますか？",
+      "options": ["コードをより速く動かすこと", "損失関数を最小化するモデル重みを見つけること", "モデル内のパラメータ数を減らすこと", "訓練に最適なハードウェアを選ぶこと"],
       "correct": 1,
-      "explanation": "Training a neural network IS optimization. The loss function measures how wrong the model is, and optimization finds the weight values that make it as small as possible."
+      "explanation": "ニューラルネットワークの訓練そのものが最適化です。損失関数はモデルがどれだけ間違っているかを測り、最適化はそれをできるだけ小さくする重みの値を見つけます。"
     },
     {
       "stage": "pre",
-      "question": "What happens if the learning rate is too large during gradient descent?",
-      "options": ["Training converges faster to the global minimum", "The optimizer overshoots the minimum and the loss diverges (bounces or increases)", "The gradients become zero", "The model automatically reduces the learning rate"],
+      "question": "勾配降下法で学習率が大きすぎると何が起こりますか？",
+      "options": ["訓練が大域最小値へより速く収束する", "optimizerが最小値を飛び越え、損失が発散する（跳ね返る、または増加する）", "勾配がゼロになる", "モデルが自動的に学習率を下げる"],
       "correct": 1,
-      "explanation": "A learning rate that is too large causes each step to overshoot the valley, potentially bouncing between walls or diverging entirely. The loss increases instead of decreasing."
+      "explanation": "学習率が大きすぎると、各ステップで谷を飛び越え、壁の間で跳ね返ったり完全に発散したりします。損失は下がる代わりに上がります。"
     },
     {
       "stage": "post",
-      "question": "How does Adam differ from vanilla gradient descent?",
-      "options": ["Adam uses a fixed learning rate while GD uses adaptive rates", "Adam tracks running averages of gradients and squared gradients to give each weight its own adaptive learning rate", "Adam computes exact second derivatives while GD uses first derivatives", "Adam processes the full dataset per step while GD uses mini-batches"],
+      "question": "Adamは通常の勾配降下法とどう違いますか？",
+      "options": ["Adamは固定学習率を使い、GDは適応的な学習率を使う", "Adamは勾配と勾配二乗の移動平均を追跡し、各重みに独自の適応的学習率を与える", "Adamは正確な2階微分を計算し、GDは1階微分を使う", "Adamは各ステップでデータセット全体を処理し、GDはミニバッチを使う"],
       "correct": 1,
-      "explanation": "Adam maintains per-weight first moment (gradient direction) and second moment (gradient magnitude) estimates. Dividing by sqrt(second moment) gives small steps for weights with large gradients and large steps for weights with small gradients."
+      "explanation": "Adamは重みごとに第1モーメント（勾配方向）と第2モーメント（勾配の大きさ）の推定を保持します。sqrt(第2モーメント) で割ることで、大きな勾配を持つ重みには小さいステップを、小さな勾配を持つ重みには大きいステップを与えます。"
     },
     {
       "stage": "post",
-      "question": "Why is the noise in mini-batch SGD considered beneficial rather than just a nuisance?",
-      "options": ["Noise reduces memory usage during training", "Noise helps the optimizer escape shallow local minima and saddle points that a noiseless optimizer would get stuck in", "Noise is not beneficial; it always slows convergence", "Noise makes the loss function convex"],
+      "question": "ミニバッチSGDのノイズが、単なる邪魔ではなく有益だと考えられるのはなぜですか？",
+      "options": ["ノイズは訓練中のメモリ使用量を減らすから", "ノイズは、ノイズのないoptimizerなら詰まるような浅い局所最小値や鞍点から抜け出す助けになるから", "ノイズは有益ではなく、常に収束を遅くするから", "ノイズは損失関数を凸にするから"],
       "correct": 1,
-      "explanation": "The stochastic noise from random mini-batches provides random perturbations that can push the optimizer out of shallow local minima and saddle points, leading to better generalization."
+      "explanation": "ランダムなミニバッチから生じる確率的ノイズは、optimizerを浅い局所最小値や鞍点から押し出すランダムな揺らぎを与え、よりよい汎化につながることがあります。"
     },
     {
       "stage": "post",
-      "question": "What does a cosine annealing learning rate schedule do?",
-      "options": ["Increases the learning rate throughout training following a cosine curve", "Starts with a high learning rate and smoothly decreases it following a cosine curve, with optional warmup", "Alternates the learning rate between two fixed values", "Sets the learning rate to the cosine of the current epoch number"],
+      "question": "cosine annealingの学習率スケジュールは何をしますか？",
+      "options": ["cosine曲線に従って訓練中ずっと学習率を増やす", "高い学習率から始め、任意のwarmupを伴いながらcosine曲線に従って滑らかに下げる", "学習率を2つの固定値の間で交互に切り替える", "学習率を現在のepoch番号のcosineに設定する"],
       "correct": 1,
-      "explanation": "Cosine annealing smoothly reduces the learning rate from lr_max to lr_min following a half-cosine curve. This provides large steps early for fast progress and small steps late for fine convergence."
+      "explanation": "cosine annealingは、半cosine曲線に従って学習率を lr_max から lr_min へ滑らかに下げます。これにより、初期は大きなステップで速く進み、後期は小さなステップで細かく収束できます。"
     }
   ]
 }

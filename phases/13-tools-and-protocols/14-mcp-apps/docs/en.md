@@ -1,32 +1,32 @@
-# MCP Apps — Interactive UI Resources via `ui://`
+# MCP Apps — `ui://`によるInteractive UI Resources
 
-> Text-only tool output caps what agents can show. MCP Apps (SEP-1724, official January 26, 2026) let a tool return sandboxed interactive HTML rendered inline in Claude Desktop, ChatGPT, Cursor, Goose, and VS Code. Dashboards, forms, maps, 3D scenes, all through one extension. This lesson walks the `ui://` resource scheme, the `text/html;profile=mcp-app` MIME, the iframe-sandbox postMessage protocol, and the security surface that comes with letting a server render HTML.
+> Text-onlyなtool outputでは、agentが見せられるものに限界がある。MCP Apps（SEP-1724、2026年1月26日公式）は、toolがsandboxed interactive HTMLを返し、それをClaude Desktop、ChatGPT、Cursor、Goose、VS Code内にinline renderできるようにする。Dashboard、form、map、3D sceneを1つのextensionで扱える。このlessonでは`ui://` resource scheme、`text/html;profile=mcp-app` MIME、iframe-sandbox postMessage protocol、serverがHTMLをrenderできるようにした時のsecurity surfaceを歩く。
 
-**Type:** Build
-**Languages:** Python (stdlib, UI resource emitter), HTML (sample app)
-**Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python (stdlib, UI resource emitter), HTML (sample app)
+**前提条件:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Return a `ui://` resource from a tool call and set the correct MIME and metadata.
-- Declare a tool's associated UI with `_meta.ui.resourceUri`, `_meta.ui.csp`, and `_meta.ui.permissions`.
-- Implement the iframe sandbox postMessage JSON-RPC for UI-to-host communication.
-- Apply CSP and permissions-policy defaults that defend against UI-originated attacks.
+- Tool callから`ui://` resourceを返し、正しいMIMEとmetadataを設定する。
+- `_meta.ui.resourceUri`、`_meta.ui.csp`、`_meta.ui.permissions`でtoolに紐づくUIを宣言する。
+- UI-to-host communication向けのiframe sandbox postMessage JSON-RPCを実装する。
+- UI起点攻撃を防ぐCSPとpermissions-policy defaultsを適用する。
 
-## The Problem
+## 問題
 
-A 2025-era `visualize_timeline` tool can return "Here are 14 notes organized chronologically: ...". That is a paragraph. Users actually want the interactive timeline. Before MCP Apps, the options were: client-specific widget APIs (Claude artifacts, OpenAI Custom GPT HTML), or no UI at all.
+2025年頃の`visualize_timeline` toolは「14個のnotesを時系列に整理しました: ...」というparagraphを返せた。しかしusersが本当に欲しいのはinteractive timelineである。MCP Apps以前の選択肢は、client-specific widget APIs（Claude artifacts、OpenAI Custom GPT HTML）か、UIなしのどちらかだった。
 
-MCP Apps (SEP-1724, shipped January 26, 2026) standardize the contract. A tool result contains a `resource` whose URI is `ui://...` and whose MIME is `text/html;profile=mcp-app`. The host renders it in a sandboxed iframe with a limited CSP and no network access unless explicitly granted. The UI inside the iframe posts messages to the host via a tiny postMessage JSON-RPC dialect.
+MCP Apps（SEP-1724、2026年1月26日ship）はこのcontractをstandardizeする。Tool resultは`ui://...` URIと`text/html;profile=mcp-app` MIMEを持つ`resource`を含む。Hostは、それをsandboxed iframe内で、制限されたCSPと明示的に許可されない限りnetwork accessなしでrenderする。Iframe内のUIは、小さなpostMessage JSON-RPC dialectでhostへmessageを送る。
 
-Every compatible client (Claude Desktop, ChatGPT, Goose, VS Code) renders the same `ui://` resource the same way. One server, one HTML bundle, universal UI.
+互換client（Claude Desktop、ChatGPT、Goose、VS Code）は同じ`ui://` resourceを同じようにrenderする。1つのserver、1つのHTML bundle、universal UIである。
 
 ## The Concept
 
 ### The `ui://` resource scheme
 
-A tool returns:
+Toolは次を返す。
 
 ```json
 {
@@ -48,7 +48,7 @@ A tool returns:
 }
 ```
 
-The host then calls `resources/read` on the `ui://notes/timeline` URI and gets back:
+その後hostは`ui://notes/timeline` URIに対して`resources/read`を呼び、次を受け取る。
 
 ```json
 {
@@ -62,18 +62,18 @@ The host then calls `resources/read` on the `ui://notes/timeline` URI and gets b
 
 ### Iframe sandbox
 
-The host renders the HTML inside a sandboxed `<iframe>` with:
+HostはHTMLをsandboxed `<iframe>`内でrenderする。
 
-- `sandbox="allow-scripts allow-same-origin"` (or stricter per server declaration)
-- Server-declared CSP applied via response headers.
-- No cookies, no localStorage from the host's origin.
-- Network access limited to `connectSrc` in CSP.
+- `sandbox="allow-scripts allow-same-origin"`（またはserver declarationに応じてより厳しく）。
+- Server-declared CSPをresponse headers経由で適用。
+- Host origin由来のcookiesやlocalStorageはない。
+- Network accessはCSPの`connectSrc`に制限される。
 
 ### postMessage protocol
 
-The iframe communicates with the host via `window.postMessage`. A tiny JSON-RPC 2.0 dialect:
+Iframeは`window.postMessage`でhostと通信する。小さなJSON-RPC 2.0 dialectである。
 
-Always pin `targetOrigin` to the peer's exact origin, and on the receiving side validate `event.origin` against an allowlist before processing any payload. Never use `"*"` for either side of this channel — the body carries tool calls and resource reads.
+常に`targetOrigin`をpeerのexact originへpinし、受信側ではpayload処理前に`event.origin`をallowlistで検証する。このchannelのbodyにはtool callsとresource readsが載るため、どちら側でも`"*"`は使わない。
 
 ```js
 // iframe to host  (pin to host origin)
@@ -98,115 +98,115 @@ window.addEventListener("message", (event) => {
 });
 ```
 
-Available host-side methods the UI can call:
+UIが呼べるhost-side methods:
 
-- `host.callTool(name, arguments)` — invokes a server tool.
-- `host.readResource(uri)` — reads an MCP resource.
-- `host.getPrompt(name, arguments)` — fetches a prompt template.
-- `host.close()` — dismisses the UI.
+- `host.callTool(name, arguments)` — server toolをinvokeする。
+- `host.readResource(uri)` — MCP resourceを読む。
+- `host.getPrompt(name, arguments)` — prompt templateを取得する。
+- `host.close()` — UIを閉じる。
 
-Every call still goes through the MCP protocol and inherits the server's permissions.
+すべてのcallは引き続きMCP protocolを通り、server permissionsを継承する。
 
 ### Permissions
 
-The `_meta.ui.permissions` list requests extra capabilities:
+`_meta.ui.permissions` listは追加capabilitiesを要求する。
 
-- `camera` — access the user's camera (used for scan-a-document UIs).
-- `microphone` — voice input.
-- `geolocation` — location.
-- `network:*` — wider network access than `connectSrc` alone allows.
+- `camera` — userのcameraへaccessする（scan-a-document UIで使う）。
+- `microphone` — voice input。
+- `geolocation` — location。
+- `network:*` — `connectSrc`だけより広いnetwork access。
 
-Each permission is a prompt the user sees before the UI renders.
+各permissionは、UI render前にuserへ見せるpromptである。
 
 ### Security risks
 
-HTML in an iframe is still HTML. New attack surface:
+Iframe内のHTMLもHTMLである。新しいattack surfaceがある。
 
-- **Prompt-injection via UI.** A malicious server UI can show text that looks like a system message and tricks the user. Host rendering should visibly distinguish server UI from host UI.
-- **Exfiltration via `connectSrc`.** If CSP permits `connect-src: *`, the UI can send data anywhere. Default should be strict.
-- **Clickjacking.** The UI overlays host chrome. Hosts must prevent z-index manipulation and enforce opacity rules.
-- **Steal focus.** UI takes keyboard focus and captures the next message. Hosts must intercept.
+- **Prompt-injection via UI.** Malicious server UIがsystem messageのように見えるtextを表示し、userを騙す。Host renderingはserver UIとhost UIを視覚的に区別すべきである。
+- **Exfiltration via `connectSrc`.** CSPが`connect-src: *`を許すと、UIはdataをどこにでも送れる。Defaultはstrictであるべき。
+- **Clickjacking.** UIがhost chromeへ重なる。Hostsはz-index manipulationを防ぎ、opacity rulesを強制する必要がある。
+- **Steal focus.** UIがkeyboard focusを取り、次のmessageをcaptureする。Hostsはinterceptしなければならない。
 
-Phase 13 · 15 covers these in depth as part of MCP security; this lesson introduces them.
+Phase 13 · 15ではMCP securityの一部としてこれらを深掘りする。このlessonでは導入に留める。
 
 ### `ui/initialize` handshake
 
-After the iframe loads, it sends `ui/initialize` over postMessage:
+Iframe load後、postMessageで`ui/initialize`を送る。
 
 ```json
 {"jsonrpc": "2.0", "id": 0, "method": "ui/initialize",
  "params": {"theme": "dark", "locale": "en-US", "sessionId": "..."}}
 ```
 
-Host responds with capabilities and a session token. The UI uses the session token on every subsequent host call.
+Hostはcapabilitiesとsession tokenで応答する。UIは以後のhost callすべてでsession tokenを使う。
 
 ### AppRenderer / AppFrame SDK primitives
 
-The ext-apps SDK exposes two convenience primitives:
+ext-apps SDKは2つのconvenience primitivesを提供する。
 
-- `AppRenderer` (server side) — wraps a React / Vue / Solid component and emits a `ui://` resource with the right MIME and metadata.
-- `AppFrame` (client side) — receives the resource, mounts the iframe, and mediates postMessage.
+- `AppRenderer`（server side）— React / Vue / Solid componentをwrapし、正しいMIMEとmetadataを持つ`ui://` resourceをemitする。
+- `AppFrame`（client side）— resourceを受け取り、iframeをmountし、postMessageをmediateする。
 
-You can use these or hand-roll the HTML and JSON-RPC.
+これらを使ってもよいし、HTMLとJSON-RPCをhand-rollしてもよい。
 
 ### Ecosystem status
 
-MCP Apps shipped January 26, 2026. Client support as of April 2026:
+MCP Appsは2026年1月26日にshipした。2026年4月時点のclient support:
 
-- **Claude Desktop.** Full support since January 2026.
-- **ChatGPT.** Full support via the Apps SDK (same underlying MCP Apps protocol).
-- **Cursor.** Beta; enable via settings.
-- **VS Code.** Insider builds only.
-- **Goose.** Full support.
-- **Zed, Windsurf.** Roadmapped.
+- **Claude Desktop.** 2026年1月からfull support。
+- **ChatGPT.** Apps SDK経由でfull support（underlying protocolは同じMCP Apps）。
+- **Cursor.** Beta。settingsで有効化する。
+- **VS Code.** Insider buildsのみ。
+- **Goose.** Full support。
+- **Zed, Windsurf.** Roadmapped。
 
-Servers in production: dashboards, map visualizations, data tables, chart builders, sandbox IDE previews.
+Production servers: dashboards、map visualizations、data tables、chart builders、sandbox IDE previews。
 
 ## Use It
 
-`code/main.py` extends the notes server with a `visualize_timeline` tool that returns a `ui://notes/timeline` resource, plus a handler for `resources/read` on that URI which returns a small but complete HTML bundle with an SVG timeline. The HTML is stdlib-templated — no build system. postMessage is sketched in JS comments since stdlib cannot drive a browser.
+`code/main.py`はnotes serverを拡張し、`ui://notes/timeline` resourceを返す`visualize_timeline` toolを追加する。さらに、そのURIに対する`resources/read` handlerが、SVG timelineを含む小さいが完全なHTML bundleを返す。HTMLはstdlib-templatedで、build systemはない。stdlibではbrowserを操作できないため、postMessageはJS commentsとしてsketchされている。
 
-What to look at:
+見るべき点:
 
-- `_meta.ui` on the tool response carries resourceUri, CSP, permissions.
-- The HTML renders without network access; all data is inlined.
-- JS calls `host.callTool` via `window.parent.postMessage` (documented but inert in this stdlib demo).
+- Tool responseの`_meta.ui`にresourceUri、CSP、permissionsが入る。
+- HTMLはnetwork accessなしでrenderされ、dataはすべてinlineされる。
+- JSは`window.parent.postMessage`経由で`host.callTool`を呼ぶ（stdlib demoではdocumented but inert）。
 
 ## Ship It
 
-This lesson produces `outputs/skill-mcp-apps-spec.md`. Given a tool that would benefit from an interactive UI, the skill produces the full MCP Apps contract: `ui://` URI, CSP, permissions, postMessage entrypoints, and a security checklist.
+このlessonは`outputs/skill-mcp-apps-spec.md`を生成する。Interactive UIの恩恵を受けるtoolを与えると、このskillはfull MCP Apps contractを作る。`ui://` URI、CSP、permissions、postMessage entrypoints、security checklistを含む。
 
 ## Exercises
 
-1. Run `code/main.py` and inspect the HTML emitted. Open the HTML directly in a browser; verify the SVG renders. Then sketch the postMessage contract the UI would use to call `host.callTool("notes_update", ...)`.
+1. `code/main.py`を実行し、emitされたHTMLをinspectする。HTMLをbrowserで直接開き、SVGがrenderされることを確認する。その後、UIが`host.callTool("notes_update", ...)`を呼ぶためのpostMessage contractをsketchする。
 
-2. Tighten the CSP: remove `'unsafe-inline'` and use a nonce-based script policy. What changes in the HTML generation code?
+2. CSPを強化する。`'unsafe-inline'`を削除し、nonce-based script policyを使う。HTML generation codeの何が変わるか。
 
-3. Add a second UI resource `ui://notes/editor` with a form for editing a note in place. When the user submits, the iframe calls `host.callTool("notes_update", ...)`.
+3. Noteをその場で編集するform付きのsecond UI resource `ui://notes/editor`を追加する。Userがsubmitしたら、iframeが`host.callTool("notes_update", ...)`を呼ぶ。
 
-4. Audit the UI's attack surface. Where could a malicious server inject content? What does the iframe sandbox defend against and what does it not?
+4. UIのattack surfaceをauditする。Malicious serverはどこにcontentをinjectできるか。Iframe sandboxは何を防ぎ、何を防がないか。
 
-5. Read the SEP-1724 spec and identify one capability in the MCP Apps SDK that this toy implementation does not use. (Hint: component-level state sync.)
+5. SEP-1724 specを読み、このtoy implementationが使っていないMCP Apps SDK capabilityを1つ特定する。（Hint: component-level state sync）
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| MCP Apps | "Interactive UI resources" | SEP-1724 extension shipped 2026-01-26 |
-| `ui://` | "App URI scheme" | Resource scheme for UI bundles |
-| `text/html;profile=mcp-app` | "The MIME" | Content-type for MCP App HTML |
-| Iframe sandbox | "Render container" | Browser sandboxing of the UI with CSP and permissions |
-| postMessage JSON-RPC | "UI-to-host wire" | Tiny JSON-RPC-over-postMessage dialect for host calls |
-| `_meta.ui` | "Tool-UI binding" | Metadata linking a tool result to a UI resource |
-| CSP | "Content-Security-Policy" | Declares allowed sources for scripts, network, styles |
-| AppRenderer | "Server SDK primitive" | Converts a framework component into a `ui://` resource |
-| AppFrame | "Client SDK primitive" | Iframe mount helper that mediates postMessage |
-| `ui/initialize` | "Handshake" | First postMessage from UI to host |
+| Term | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| MCP Apps | 「interactive UI resources」 | 2026-01-26にshipされたSEP-1724 extension |
+| `ui://` | 「App URI scheme」 | UI bundles向けresource scheme |
+| `text/html;profile=mcp-app` | 「The MIME」 | MCP App HTMLのcontent-type |
+| Iframe sandbox | 「render container」 | CSPとpermissions付きでUIをbrowser sandbox化する仕組み |
+| postMessage JSON-RPC | 「UI-to-host wire」 | Host calls用の小さなJSON-RPC-over-postMessage dialect |
+| `_meta.ui` | 「tool-UI binding」 | Tool resultをUI resourceへ紐づけるmetadata |
+| CSP | 「Content-Security-Policy」 | scripts、network、stylesの許可sourceを宣言する |
+| AppRenderer | 「server SDK primitive」 | Framework componentを`ui://` resourceへ変換する |
+| AppFrame | 「client SDK primitive」 | postMessageをmediateするiframe mount helper |
+| `ui/initialize` | 「handshake」 | UIからhostへ送る最初のpostMessage |
 
-## Further Reading
+## 参考文献
 
 - [MCP ext-apps — GitHub](https://github.com/modelcontextprotocol/ext-apps) — reference implementation and SDK
 - [MCP Apps specification 2026-01-26](https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx) — formal spec document
 - [MCP — Apps extension overview](https://modelcontextprotocol.io/extensions/apps/overview) — high-level documentation
-- [MCP blog — MCP Apps launch](https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/) — January 2026 launch post
+- [MCP blog — MCP Apps launch](https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/) — 2026年1月launch post
 - [MCP Apps API reference](https://apps.extensions.modelcontextprotocol.io/api/) — JSDoc-style SDK reference

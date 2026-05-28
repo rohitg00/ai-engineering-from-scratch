@@ -1,6 +1,6 @@
 {
   "id": "task_003_error_message_typo",
-  "goal": "The error message 'recieved' should read 'received'. Fix the typo without changing anything else.",
+  "goal": "error message の 'recieved' は 'received' であるべきです。他は変更せず typo を修正してください。",
   "verifier": {
     "name": "file_equals",
     "args": { "path": "errors.py" }

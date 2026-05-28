@@ -1,10 +1,10 @@
-"""Literature retrieval: BM25 over abstracts plus citation graph traversal, merged.
+"""文献検索: abstract 上の BM25 と citation graph traversal を merge します。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
+概念参照:
+- ./docs/en.md (この lesson)
 - Phase 19 Track A lessons 20-29 (agent harness primitives)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -48,7 +48,7 @@ def tokenise(text: str) -> list[str]:
 
 
 class BM25Index:
-    """Okapi BM25 with default k1=1.5, b=0.75. Stdlib only."""
+    """default k1=1.5, b=0.75 の Okapi BM25。stdlib のみです。"""
 
     def __init__(self, k1: float = 1.5, b: float = 0.75) -> None:
         self.k1 = k1
@@ -108,7 +108,7 @@ class BM25Index:
 
 
 class CitationGraph:
-    """Directed citation graph with forward and backward adjacency lists."""
+    """forward と backward adjacency list を持つ directed citation graph。"""
 
     def __init__(self) -> None:
         self._forward: dict[str, list[str]] = {}
@@ -124,7 +124,7 @@ class CitationGraph:
         return out
 
     def expand(self, seeds: list[str], max_hops: int = 2) -> dict[str, int]:
-        """Return a mapping of paper id to shortest hop distance from any seed."""
+        """paper id から任意 seed への shortest hop distance への mapping を返します。"""
         distance: dict[str, int] = {sid: 0 for sid in seeds}
         queue: deque[str] = deque(seeds)
         while queue:
@@ -141,7 +141,7 @@ class CitationGraph:
 
 
 class ArxivMockClient:
-    """Returns title, abstract, year, authors. No reference graph."""
+    """title、abstract、year、authors を返します。reference graph は返しません。"""
 
     def __init__(self, corpus: list[Paper]) -> None:
         self._papers = {p.id: p for p in corpus}
@@ -164,7 +164,7 @@ class ArxivMockClient:
 
 
 class SemanticScholarMockClient:
-    """Returns the same papers as arxiv plus references and citations."""
+    """arxiv と同じ papers に加えて references と citations を返します。"""
 
     def __init__(self, corpus: list[Paper]) -> None:
         self._papers = {p.id: p for p in corpus}
@@ -255,7 +255,7 @@ class RetrievalResult:
 
 
 class RetrievalClient:
-    """Wraps arxiv and semantic scholar mocks and merges lexical and graph hits."""
+    """arxiv と semantic scholar mocks を包み、lexical hit と graph hit を merge します。"""
 
     def __init__(
         self,
@@ -353,11 +353,11 @@ class RetrievalClient:
 
 
 def build_corpus() -> list[Paper]:
-    """Return a hundred paper mock corpus across five topics, with a citation graph.
+    """五つの topic にまたがる100本の mock paper corpus と citation graph を返します。
 
-    Topics: attention sparsity, retrieval augmentation, low rank adapters,
-    dataset distillation, evaluation harnesses. Each topic gets twenty papers
-    with intra topic references and a few cross topic edges.
+    topics: attention sparsity、retrieval augmentation、low rank adapters、
+    dataset distillation、evaluation harnesses。各 topic は20本の paper を持ち、
+    topic 内 reference と少数の cross-topic edge を含みます。
     """
     topics = [
         ("attention sparsity", "attention sparsity head pruning routing block"),
@@ -370,14 +370,14 @@ def build_corpus() -> list[Paper]:
     for topic_idx, (label, terms) in enumerate(topics):
         for i in range(20):
             pid = f"p{topic_idx * 20 + i + 1:03d}"
-            title = f"{label.title()} study {i + 1}"
+            title = f"{label.title()} 調査 {i + 1}"
             abstract = (
-                f"This work investigates {label} and reports on {terms}. "
-                f"We measure perplexity, accuracy, and wall time on small transformer baselines. "
-                f"The study {i + 1} extends prior findings in topic {topic_idx + 1}."
+                f"この研究は {label} を調べ、{terms} について報告する。 "
+                f"small transformer baselines 上で perplexity、accuracy、wall time を測定する。 "
+                f"調査 {i + 1} は topic {topic_idx + 1} の prior findings を拡張する。"
             )
             year = 2018 + (i % 8)
-            authors = [f"Author {topic_idx + 1}-{i + 1}", f"Coauthor {topic_idx + 1}-{i + 1}"]
+            authors = [f"著者 {topic_idx + 1}-{i + 1}", f"共著者 {topic_idx + 1}-{i + 1}"]
             papers.append(Paper(pid, title, abstract, year, authors))
     by_id = {p.id: p for p in papers}
     for topic_idx in range(5):

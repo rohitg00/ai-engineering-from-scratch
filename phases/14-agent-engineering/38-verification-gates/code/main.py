@@ -1,9 +1,9 @@
-"""Deterministic verification gate with coverage floor, --strict mode, and signed overrides.
+"""coverage floor、--strict mode、signed overrides を備えた deterministic verification gate。
 
-Combines a task's scope_report, rule_report, feedback log, and an optional
-coverage_report into a single verification_report.json. No LLM judges; LLM
-judgment lives on the reviewer side (Phase 14 · 39). Overrides require a signed
-entry in overrides.jsonl with reason, user, and HEAD commit.
+task の scope_report、rule_report、feedback log、optional な coverage_report を
+単一の verification_report.json に統合する。LLM judge は使わない。LLM judgment
+は reviewer 側 (Phase 14 · 39) に置く。override には reason、user、HEAD commit
+を持つ overrides.jsonl の signed entry が必要。
 
 Run: python3 code/main.py
 """
@@ -25,9 +25,9 @@ OVERRIDES_PATH = HERE / "overrides.jsonl"
 COVERAGE_FLOOR_DEFAULT = 0.80
 COVERAGE_REGRESSION_DELTA = 0.01
 
-# Audit secret used to sign override entries. In production read from a secrets
-# manager. Fail closed: only fall back to a demo secret when VERIFY_DEMO_MODE=1
-# is set explicitly, and shout about it so it cannot land in CI by accident.
+# override entry への署名に使う audit secret。production では secrets manager から読む。
+# fail closed: VERIFY_DEMO_MODE=1 が明示された場合だけ demo secret に fallback し、
+# 誤って CI に入らないよう大きく警告する。
 _OVERRIDE_SECRET_ENV = "VERIFY_OVERRIDE_SECRET"
 _DEMO_MODE_ENV = "VERIFY_DEMO_MODE"
 
@@ -39,13 +39,13 @@ def _load_override_secret() -> str:
     if os.environ.get(_DEMO_MODE_ENV) == "1":
         print(
             f"WARNING: {_OVERRIDE_SECRET_ENV} unset and {_DEMO_MODE_ENV}=1; "
-            "using insecure demo secret. Do not record real overrides in this mode.",
+            "insecure demo secret を使います。この mode で real overrides を記録しないでください。",
             file=sys.stderr,
         )
         return "demo-override-secret-do-not-ship"
     raise RuntimeError(
-        f"refused to start: {_OVERRIDE_SECRET_ENV} is unset. "
-        f"Set the env var, or pass {_DEMO_MODE_ENV}=1 to run the lesson demo only."
+        f"start を拒否しました: {_OVERRIDE_SECRET_ENV} が未設定です。"
+        f"env var を設定するか、lesson demo 専用で {_DEMO_MODE_ENV}=1 を渡してください。"
     )
 
 
@@ -83,14 +83,14 @@ def _acceptance_findings(art: Artifacts) -> list[Finding]:
     accept_set = set(art.acceptance_commands)
     for cmd in art.acceptance_commands:
         if cmd not in commands_run:
-            findings.append(Finding("acceptance.missing", "block", f"never ran: {cmd}"))
+            findings.append(Finding("acceptance.missing", "block", f"未実行: {cmd}"))
     for rec in art.feedback:
         cmd_str = str(rec.get("command"))
         if rec.get("exit_code") is None:
-            findings.append(Finding("feedback.null_exit", "block", f"missing exit for {cmd_str}"))
+            findings.append(Finding("feedback.null_exit", "block", f"{cmd_str} の exit が欠落"))
         elif rec.get("exit_code") != 0 and cmd_str in accept_set:
             findings.append(
-                Finding("acceptance.failed", "block", f"acceptance exit {rec.get('exit_code')} on {cmd_str}")
+                Finding("acceptance.failed", "block", f"{cmd_str} で acceptance exit {rec.get('exit_code')}")
             )
     return findings
 
@@ -99,10 +99,10 @@ def _scope_findings(art: Artifacts) -> list[Finding]:
     findings: list[Finding] = []
     if art.scope_report.get("forbidden_writes"):
         findings.append(Finding("scope.forbidden", "block",
-                                f"forbidden writes: {art.scope_report['forbidden_writes']}"))
+                                f"forbidden writes がある: {art.scope_report['forbidden_writes']}"))
     if art.scope_report.get("off_scope_writes"):
         findings.append(Finding("scope.off_scope", "warn",
-                                f"off-scope writes: {art.scope_report['off_scope_writes']}"))
+                                f"off-scope writes がある: {art.scope_report['off_scope_writes']}"))
     return findings
 
 
@@ -112,28 +112,28 @@ def _rule_findings(art: Artifacts) -> list[Finding]:
 
 
 def _coverage_findings(art: Artifacts, floor: float) -> list[Finding]:
-    """Anthropic Hybrid Norm: pair verifiable rewards (tests + coverage) with rubric judging.
+    """Anthropic Hybrid Norm: verifiable rewards (tests + coverage) と rubric judging を組にする。
 
-    Floor failure is a block. Regression versus the previous merge by more than
-    COVERAGE_REGRESSION_DELTA is a block; smaller drops are warnings.
+    floor failure は block。previous merge から COVERAGE_REGRESSION_DELTA を超える
+    regression は block。それより小さい低下は warning。
     """
     findings: list[Finding] = []
     if not art.coverage_report:
         findings.append(Finding("coverage.missing", "warn",
-                                "no coverage_report.json; cannot enforce floor"))
+                                "coverage_report.json がないため floor を enforce できない"))
         return findings
     current = float(art.coverage_report.get("current", 0.0))
     previous = float(art.coverage_report.get("previous", current))
     if current < floor:
         findings.append(Finding("coverage.below_floor", "block",
-                                f"coverage {current:.2%} below floor {floor:.0%}"))
+                                f"coverage {current:.2%} が floor {floor:.0%} 未満"))
     delta = previous - current
     if delta > COVERAGE_REGRESSION_DELTA:
         findings.append(Finding("coverage.regression", "block",
-                                f"coverage dropped {delta:.2%} (prev {previous:.2%} -> {current:.2%})"))
+                                f"coverage が {delta:.2%} 低下 (prev {previous:.2%} -> {current:.2%})"))
     elif delta > 0:
         findings.append(Finding("coverage.minor_regression", "warn",
-                                f"coverage dropped {delta:.2%}"))
+                                f"coverage が {delta:.2%} 低下"))
     return findings
 
 
@@ -149,7 +149,7 @@ def verify(
         + _coverage_findings(art, coverage_floor)
     )
     if strict:
-        # --strict promotes every warning to a block. Opt-in by release branch only.
+        # --strict はすべての warning を block に昇格する。release branch だけの opt-in。
         findings = [Finding(f.code, "block" if f.severity == "warn" else f.severity, f.detail)
                     for f in findings]
     blocking = [f for f in findings if f.severity == "block"]
@@ -171,9 +171,9 @@ def _sign(payload: dict[str, object]) -> str:
 def record_override(
     task_id: str, finding_code: str, reason: str, user_id: str, head_commit: str
 ) -> dict[str, object]:
-    """Append a signed override entry. Refuses without all five fields populated."""
+    """signed override entry を append する。5つの field が揃わなければ拒否する。"""
     if not all([task_id, finding_code, reason, user_id, head_commit]):
-        raise ValueError("override requires task_id, finding_code, reason, user_id, head_commit")
+        raise ValueError("override には task_id, finding_code, reason, user_id, head_commit が必要")
     payload = {
         "task_id": task_id,
         "finding_code": finding_code,
@@ -196,7 +196,7 @@ def verify_signature(entry: dict[str, object]) -> bool:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--strict", action="store_true", help="promote every warn to block")
+    ap.add_argument("--strict", action="store_true", help="すべての warn を block に昇格する")
     ap.add_argument("--floor", type=float, default=COVERAGE_FLOOR_DEFAULT)
     args = ap.parse_args()
 
@@ -244,18 +244,18 @@ def main() -> None:
             print(f"  [{f.severity}] {f.code}: {f.detail}")
         print()
 
-    # Demo a signed override on the off-scope warning that T-002 actually emits.
+    # T-002 が実際に emit する off-scope warning で signed override を demo する。
     try:
         entry = record_override(
             task_id="T-002",
             finding_code="scope.off_scope",
-            reason="reviewer approved README update for the new signup contract",
+            reason="reviewer が新しい signup contract の README update を承認した",
             user_id="rohitg00",
             head_commit="b2c3d4e",
         )
-        print(f"override recorded: signature={entry['signature']} verified={verify_signature(entry)}")
+        print(f"override を記録しました: signature={entry['signature']} verified={verify_signature(entry)}")
     except RuntimeError as exc:
-        print(f"override demo skipped: {exc}")
+        print(f"override demo を skip しました: {exc}")
 
 
 if __name__ == "__main__":

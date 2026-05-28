@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the main problem classic static batching has with mixed-length requests?",
+      "question": "mixed-length request に対して classic static batching が抱える主な問題は何ですか。",
       "options": [
-        "It only works with FP4",
-        "It requires NVLink between every GPU",
-        "It cannot use GPUs at all",
-        "Padding to the longest prompt and longest output wastes memory and stalls the whole batch on the slowest sequence"
+        "FP4 でしか動かない",
+        "すべての GPU 間に NVLink が必要",
+        "GPU をまったく使えない",
+        "最長 prompt と最長 output に padding するため memory を浪費し、最も遅い sequence で batch 全体が stall する"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does PagedAttention reduce KV cache fragmentation from 60-80% to under 4%?",
+      "question": "PagedAttention はどのように KV cache fragmentation を 60-80% から 4% 未満へ下げますか。",
       "options": [
-        "By disabling KV cache entirely",
-        "By compressing weights to INT4",
-        "By allocating KV cache in fixed-size blocks (default 16 tokens) referenced through a per-sequence block table",
-        "By holding the full prompt in CPU RAM"
+        "KV cache を完全に無効化する",
+        "weights を INT4 に compress する",
+        "KV cache を fixed-size blocks (default 16 tokens) に allocate し、sequence ごとの block table で参照する",
+        "full prompt を CPU RAM に保持する"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What invariant defines continuous batching in vLLM's V1 scheduler?",
+      "question": "vLLM の V1 scheduler における continuous batching を定義する invariant は何ですか。",
       "options": [
-        "The scheduler runs once per request and the batch never changes",
-        "Each request gets its own dedicated GPU stream",
-        "The scheduler waits 10 ms windows to fill a batch before running",
-        "The scheduler runs once per decode iteration, admitting finished sequences out and waiting ones in"
+        "scheduler は request ごとに 1 回走り、batch は変わらない",
+        "各 request が dedicated GPU stream を持つ",
+        "scheduler は batch を満たすため 10 ms window を待つ",
+        "scheduler は decode iteration ごとに 1 回走り、finished sequence を出し waiting sequence を入れる"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which latency metric does chunked prefill primarily protect under mixed load?",
+      "question": "mixed load で chunked prefill が主に守る latency metric はどれですか。",
       "options": [
         "Mean throughput",
         "Cold-start time",
@@ -52,11 +52,11 @@
     },
     {
       "stage": "post",
-      "question": "In vLLM v0.18.0, which speculative-decoding variant remains compatible with --enable-chunked-prefill?",
+      "question": "vLLM v0.18.0 で `--enable-chunked-prefill` と互換性が残る speculative-decoding variant はどれですか。",
       "options": [
-        "EAGLE-1 only",
-        "N-gram GPU speculative decoding in the V1 scheduler",
-        "No speculative decoding is compatible",
+        "EAGLE-1 のみ",
+        "V1 scheduler の N-gram GPU speculative decoding",
+        "互換性のある speculative decoding はない",
         "Draft-model speculative decoding"
       ],
       "correct": 1,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does chunked prefill not in isolation increase mean throughput?",
+      "question": "chunked prefill が単体では mean throughput を増やさないのはなぜですか。",
       "options": [
-        "It runs on a different GPU than decode",
-        "It uses speculative decoding under the hood",
-        "It compresses weights more aggressively",
-        "It only reduces decode-time jitter; the throughput win in practice comes from keeping decode sequences alive during long prefills, not from changing the work done"
+        "decode とは別の GPU で走るから",
+        "内部で speculative decoding を使うから",
+        "weights をより aggressively に compress するから",
+        "decode-time jitter を減らすだけで、実際の throughput win は long prefill 中も decode sequence を生かし続けることから来る。作業量自体は変わらない"
       ],
       "correct": 3,
       "explanation": ""

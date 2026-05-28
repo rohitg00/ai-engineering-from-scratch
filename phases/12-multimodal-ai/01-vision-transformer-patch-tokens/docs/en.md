@@ -1,81 +1,81 @@
-# Vision Transformers and the Patch-Token Primitive
+# Vision Transformers と Patch-Token Primitive
 
-> Before anything multimodal, an image has to become a sequence of tokens a transformer can eat. The 2020 ViT paper answered this with 16x16 pixel patches, a linear projection, and a position embedding. Five years later every 2026 frontier model (Claude Opus 4.7 at 2576px native, Gemini 3.1 Pro, Qwen3.5-Omni) still begins this way — the encoder changed from ViT to DINOv2 to SigLIP 2, register tokens were added, the positional scheme became 2D-RoPE, but the primitive held. This lesson reads the patch-token pipeline end to end and builds it in stdlib Python so the rest of Phase 12 has a concrete mental model for "visual tokens."
+> マルチモーダルの前に、画像は transformer が処理できる token 列へ変換される必要があります。2020 年の ViT 論文は、16x16 pixel patch、linear projection、position embedding でこの問題に答えました。5 年後の 2026 年の frontier model (Claude Opus 4.7 の 2576px native、Gemini 3.1 Pro、Qwen3.5-Omni) も、依然としてここから始まります。encoder は ViT から DINOv2、SigLIP 2 へ変わり、register token が追加され、position scheme は 2D-RoPE になりましたが、primitive は残りました。この lesson では patch-token pipeline を端から端まで読み、stdlib Python で実装して、Phase 12 の残りに必要な「visual token」の具体的なメンタルモデルを作ります。
 
-**Type:** Learn
-**Languages:** Python (stdlib, patch tokenizer + geometry calculator)
-**Prerequisites:** Phase 7 (Transformers), Phase 4 (Computer Vision)
-**Time:** ~120 minutes
+**種別:** 学習
+**言語:** Python (stdlib、patch tokenizer + geometry calculator)
+**前提条件:** Phase 7 (Transformers)、Phase 4 (Computer Vision)
+**所要時間:** ~120 分
 
-## Learning Objectives
+## 学習目標
 
-- Convert an HxWx3 image into a sequence of patch tokens with correct positional encoding.
-- Compute sequence length, parameter count, and FLOPs for a ViT of a given (patch size, resolution, hidden dim, depth).
-- Name the three upgrades that took ViT from 2020 research to 2026 production: self-supervised pretraining (DINO / MAE), register tokens, and native-resolution packing.
-- Pick between CLS pooling, mean pooling, and register tokens for a downstream task.
+- HxWx3 画像を、正しい positional encoding を持つ patch token 列へ変換する。
+- 指定された (patch size, resolution, hidden dim, depth) の ViT について、sequence length、parameter count、FLOPs を計算する。
+- ViT を 2020 年の研究から 2026 年の production へ押し上げた 3 つの upgrade を説明する: self-supervised pretraining (DINO / MAE)、register token、native-resolution packing。
+- downstream task に応じて CLS pooling、mean pooling、register token を選び分ける。
 
-## The Problem
+## 問題
 
-Transformers operate on sequences of vectors. Text is already a sequence (bytes or tokens). An image is a 2D grid of pixels with three color channels — not a sequence. If you flatten every pixel, a 224x224 RGB image becomes 150,528 tokens, and self-attention at that length is a non-starter (quadratic in sequence length).
+Transformers は vector の sequence を扱います。text はすでに sequence (byte または token) です。image は 3 つの color channel を持つ 2D pixel grid であり、そのままでは sequence ではありません。すべての pixel を flatten すると、224x224 RGB image は 150,528 token になり、この長さでの self-attention は現実的ではありません (sequence length に対して quadratic)。
 
-Pre-2020 approaches bolted a CNN feature extractor onto the front: ResNet produces a 7x7 feature map of 2048-dim vectors, feed those 49 tokens to a transformer. This works but inherits the CNN's biases (translation equivariance, local receptive fields) and loses the transformer's appetite for scale.
+2020 年以前の approach は、front に CNN feature extractor を接続していました。ResNet が 2048-dim vector の 7x7 feature map を生成し、その 49 token を transformer に渡す。この方法は機能しますが、CNN の bias (translation equivariance、local receptive field) を引き継ぎ、transformer の scale への強さを損ないます。
 
-Dosovitskiy et al. (2020) asked the blunt question: what if we skip the CNN? Split the image into fixed-size patches (say 16x16 pixels), linearly project each patch into a vector, add a positional embedding, and feed the sequence to a vanilla transformer. At the time this was heresy — vision without convolutions. With enough data (JFT-300M, then LAION) it beat ResNet on ImageNet and kept improving.
+Dosovitskiy et al. (2020) は率直な問いを立てました: CNN を飛ばしたらどうなるか。画像を固定サイズ patch (たとえば 16x16 pixel) に分割し、各 patch を vector に linearly project し、positional embedding を足して、vanilla transformer に渡す。当時これは異端でした。convolution なしの vision です。十分な data (JFT-300M、その後 LAION) があると ImageNet で ResNet を上回り、その後も改善し続けました。
 
-By 2026 the ViT primitive is the unquestioned foundation. Every open-weights VLM's vision tower is some descendant (DINOv2, SigLIP 2, CLIP, EVA, InternViT). The question is no longer "should we use patches?" but "what patch size, what resolution schedule, what pretraining objective, what positional encoding."
+2026 年時点で、ViT primitive は疑いようのない土台です。open-weights VLM の vision tower はすべて何らかの子孫です (DINOv2、SigLIP 2、CLIP、EVA、InternViT)。問いはもはや「patch を使うべきか」ではなく、「どの patch size、どの resolution schedule、どの pretraining objective、どの positional encoding を使うか」です。
 
-## The Concept
+## 概念
 
 ### Patches as tokens
 
-Given an image `x` of shape `(H, W, 3)` and a patch size `P`, you carve the image into a grid of `(H/P) x (W/P)` non-overlapping patches. Each patch is a `P x P x 3` cube of pixels. Flatten each cube to a `3 P^2` vector. Apply a shared linear projection `W_E` of shape `(3 P^2, D)` to map each patch into the model's hidden dimension `D`.
+shape `(H, W, 3)` の image `x` と patch size `P` があるとします。画像を `(H/P) x (W/P)` の non-overlapping patch grid に切り分けます。各 patch は `P x P x 3` の pixel cube です。この cube を flatten して `3 P^2` vector にします。shape `(3 P^2, D)` の shared linear projection `W_E` を適用し、各 patch を model の hidden dimension `D` へ写像します。
 
-For the ViT-B/16 canonical config:
-- Resolution 224, patch size 16 → grid 14x14 → 196 patch tokens.
-- Each patch is `16 x 16 x 3 = 768` pixel values, projected to `D = 768`.
-- Add a learnable `[CLS]` token → sequence length 197.
+canonical な ViT-B/16 config では:
+- Resolution 224、patch size 16 -> grid 14x14 -> 196 patch tokens。
+- 各 patch は `16 x 16 x 3 = 768` pixel value で、`D = 768` へ projection される。
+- learnable `[CLS]` token を追加 -> sequence length 197。
 
-The patch projection is mathematically identical to a 2D convolution with kernel size `P`, stride `P`, and `D` output channels. That is how production code actually implements it — `nn.Conv2d(3, D, kernel_size=P, stride=P)`. The "linear projection" framing is conceptual; the kernel framing is efficient.
+patch projection は数学的には、kernel size `P`、stride `P`、output channel `D` の 2D convolution と同じです。production code は実際にこの形で実装します: `nn.Conv2d(3, D, kernel_size=P, stride=P)`。「linear projection」という説明は概念上のもので、kernel として扱う実装のほうが効率的です。
 
 ### Positional embeddings
 
-Patches have no inherent order — the transformer sees them as a bag. Early ViTs added a learnable 1D positional embedding (one 768-dim vector per position, 197 of them). Works, but ties the model to the training resolution: at inference you have to interpolate the position table if you change the grid.
+patch には本質的な順序がありません。transformer から見ると bag です。初期 ViT は learnable 1D positional embedding を追加しました (各 position に 768-dim vector、合計 197 個)。これは機能しますが、model を training resolution に縛ります。inference で grid を変えるなら position table を interpolate しなければなりません。
 
-Modern vision backbones use 2D-RoPE (Qwen2-VL's M-RoPE, SigLIP 2's default) or factorized 2D positions. 2D-RoPE rotates the query and key vectors based on the patch's (row, column) index, so the model infers relative 2D position from the rotation angle. No position table. The model handles arbitrary grid sizes at inference.
+modern vision backbone は 2D-RoPE (Qwen2-VL の M-RoPE、SigLIP 2 の default) または factorized 2D position を使います。2D-RoPE は patch の (row, column) index に基づいて query/key vector を回転させるため、model は rotation angle から relative 2D position を推論します。position table はありません。model は inference で任意の grid size を扱えます。
 
 ### CLS token, pooled output, and register tokens
 
-What is the image-level representation? Three choices coexist:
+image-level representation は何でしょうか。3 つの選択肢が共存しています。
 
-1. `[CLS]` token. Prepend a learnable vector to the patch sequence. After all transformer blocks, the CLS token's hidden state is the image representation. Inherited from BERT. Used by original ViT, CLIP.
-2. Mean pool. Average the patch tokens' output hidden states. Used by SigLIP, DINOv2, most modern VLMs.
-3. Register tokens. Darcet et al. (2023) observed that ViTs trained without an explicit sink token develop high-norm "artifact" patches that hijack self-attention. Adding 4–16 learnable register tokens absorbs this load and improves dense-prediction quality (segmentation, depth). DINOv2 and SigLIP 2 both ship with registers.
+1. `[CLS]` token。learnable vector を patch sequence の先頭に付ける。すべての transformer block の後、CLS token の hidden state が画像表現になる。BERT 由来。original ViT と CLIP で使用。
+2. Mean pool。patch token の output hidden state を平均する。SigLIP、DINOv2、modern VLM の多くで使用。
+3. Register tokens。Darcet et al. (2023) は、明示的な sink token なしで training された ViT が self-attention を乗っ取る high-norm の「artifact」patch を発達させることを観察しました。4-16 個の learnable register token を追加するとこの負荷を吸収し、dense-prediction quality (segmentation、depth) が改善します。DINOv2 と SigLIP 2 はどちらも register を備えています。
 
-The choice matters for downstream tasks. CLS is fine for classification. For VLMs that feed patch tokens into an LLM, you skip pooling entirely — every patch becomes an LLM input token. Registers get discarded before handoff (they are scaffolding, not content).
+この選択は downstream task で重要です。classification なら CLS で十分です。patch token を LLM へ渡す VLM では pooling を完全に skip します。すべての patch が LLM input token になります。register は handoff 前に捨てます (scaffolding であって content ではないため)。
 
 ### Pretraining: supervised, contrastive, masked, self-distilled
 
-The 2020 ViT was pretrained with supervised classification on JFT-300M. Quickly supplanted by:
+2020 年の ViT は JFT-300M の supervised classification で pretrained されました。すぐに次の方法へ置き換わっていきます。
 
-- CLIP (2021): contrastive image-text on 400M pairs. Lesson 12.02.
-- MAE (2021, He et al.): mask 75% of patches, reconstruct pixels. Self-supervised, works on pure images.
-- DINO (2021) / DINOv2 (2023): self-distillation with student-teacher, no labels, no captions. The 2023 DINOv2 ViT-g/14 is the strongest purely-visual backbone and the default for "dense features" use cases.
-- SigLIP / SigLIP 2 (2023, 2025): CLIP with a sigmoid loss and NaFlex for native aspect ratio. The dominant vision tower in 2026 open VLMs (Qwen, Idefics2, LLaVA-OneVision).
+- CLIP (2021): 400M pair の contrastive image-text。Lesson 12.02。
+- MAE (2021, He et al.): patch の 75% を mask し、pixel を reconstruct。self-supervised で、pure image だけで機能。
+- DINO (2021) / DINOv2 (2023): student-teacher による self-distillation。label なし、caption なし。2023 年の DINOv2 ViT-g/14 は最強クラスの purely-visual backbone で、「dense features」用途の default。
+- SigLIP / SigLIP 2 (2023, 2025): sigmoid loss と native aspect ratio のための NaFlex を備えた CLIP。2026 年の open VLM (Qwen、Idefics2、LLaVA-OneVision) で支配的な vision tower。
 
-Your choice of pretraining determines what the backbone is good for: CLIP/SigLIP for semantic matching with text, DINOv2 for dense visual features, MAE as a starting point for downstream finetuning.
+どの pretraining を選ぶかで backbone の得意分野が決まります。CLIP/SigLIP は text との semantic matching、DINOv2 は dense visual features、MAE は downstream finetuning の starting point に向きます。
 
 ### Scaling laws
 
-ViT scaling (Zhai et al. 2022) established that a ViT's quality obeys predictable laws in model size, data size, and compute. At fixed compute:
-- Bigger model + more data → better quality.
-- Patch size is a lever on sequence length vs fidelity. Patch 14 (typical for DINOv2/SigLIP SO400m) gives more tokens per image than patch 16; better for OCR and dense tasks, worse for speed.
-- Resolution is the other big lever. Going from 224 to 384 to 512 almost always helps, at quadratic cost in FLOPs.
+ViT scaling (Zhai et al. 2022) は、ViT の quality が model size、data size、compute に関して予測可能な law に従うことを示しました。fixed compute では:
+- bigger model + more data -> better quality。
+- patch size は sequence length と fidelity の lever。Patch 14 (DINOv2/SigLIP SO400m で典型的) は patch 16 より image あたりの token が多い。OCR や dense task では有利だが speed は悪化。
+- resolution はもう 1 つの大きな lever。224 から 384、512 へ上げるとほぼ常に改善するが、FLOPs は quadratic に増える。
 
-ViT-g/14 (1B params, patch 14, resolution 224 → 256 tokens) and SigLIP SO400m/14 (400M params, patch 14) are the two workhorse encoders for 2026 open VLMs.
+ViT-g/14 (1B params、patch 14、resolution 224 -> 256 tokens) と SigLIP SO400m/14 (400M params、patch 14) は、2026 年 open VLM の 2 つの workhorse encoder です。
 
 ### Parameter count for a ViT
 
-The full calculation lives in `code/main.py`. For ViT-B/16 at 224:
+完全な計算は `code/main.py` にあります。224 の ViT-B/16 では:
 
 ```
 patch_embed = 3 * 16 * 16 * 768 + 768  =  591k
@@ -84,70 +84,71 @@ block        = 4 * 768^2 (QKVO) + 2 * 4 * 768^2 (MLP) + 2 * 2*768 (LN)
              = 12 * 768^2 + 3k          =  7.1M
 12 blocks    = 85M
 final LN    = 1.5k
-total       ≈ 86M
+total       ~= 86M
 ```
 
-Ball-park every ViT this way before you load the checkpoint. The backbone size sets your VRAM floor in any downstream VLM.
+checkpoint を load する前に、この方法であらゆる ViT を概算してください。backbone size は downstream VLM の VRAM floor を決めます。
 
 ### 2026 production config
 
-The encoder most open VLMs ship with in 2026 is SigLIP 2 SO400m/14 at native resolution (NaFlex). It has:
-- 400M parameters.
-- Patch size 14, default resolution 384 → 729 patch tokens per image.
-- Mean pool for image-level tasks; all 729 patches flow into the LLM for VQA.
-- 4 register tokens, discarded before LLM handoff.
-- 2D-RoPE with image-level scaling for native aspect ratio.
+2026 年に多くの open VLM が採用している encoder は、native resolution (NaFlex) の SigLIP 2 SO400m/14 です。特徴は次の通りです。
 
-Every decision in that config traces back to a paper you can read.
+- 400M parameters。
+- Patch size 14、default resolution 384 -> image あたり 729 patch tokens。
+- image-level task では mean pool。VQA では 729 patch すべてが LLM へ流れる。
+- 4 register tokens。LLM handoff 前に discard。
+- native aspect ratio のための image-level scaling 付き 2D-RoPE。
 
-## Use It
+この config の各 decision は、読める論文に由来しています。
 
-`code/main.py` is a patch tokenizer and geometry calculator. It takes (image H, W, patch P, hidden D, depth L) and reports:
+## 使ってみる
 
-- Grid shape and sequence length after patching.
-- Token sequence for a synthetic 8x8 pixel toy image (walk through the flatten + project path).
-- Parameter count broken down by patch embed, position embed, transformer blocks, and head.
-- FLOPs per forward pass at the target resolution.
-- A comparison table across ViT-B/16 @ 224, ViT-L/14 @ 336, DINOv2 ViT-g/14 @ 224, SigLIP SO400m/14 @ 384.
+`code/main.py` は patch tokenizer と geometry calculator です。(image H, W, patch P, hidden D, depth L) を受け取り、次を報告します。
 
-Run it. Match the parameter counts to the published numbers. Play with patch size and resolution to feel the token-count cost.
+- patching 後の grid shape と sequence length。
+- synthetic 8x8 pixel toy image の token sequence (flatten + project path をたどる)。
+- patch embed、position embed、transformer blocks、head に分解した parameter count。
+- target resolution での forward pass あたり FLOPs。
+- ViT-B/16 @ 224、ViT-L/14 @ 336、DINOv2 ViT-g/14 @ 224、SigLIP SO400m/14 @ 384 の comparison table。
 
-## Ship It
+実行してください。parameter count を公開値と照合してください。patch size と resolution を変え、token-count cost の感覚をつかんでください。
 
-This lesson produces `outputs/skill-patch-geometry-reader.md`. Given a ViT config (patch size, resolution, hidden dim, depth), it produces a token-count, parameter-count, and VRAM estimate with justifications. Use this skill whenever you pick a vision backbone for a VLM — it prevents "the tokens exploded and my LLM context filled up" surprises.
+## 仕上げ
 
-## Exercises
+この lesson は `outputs/skill-patch-geometry-reader.md` を作ります。ViT config (patch size、resolution、hidden dim、depth) が与えられると、根拠付きの token-count、parameter-count、VRAM estimate を出します。VLM の vision backbone を選ぶたびにこの skill を使ってください。「token が爆発して LLM context が埋まった」という事故を防げます。
 
-1. Compute the patch-token sequence length for Qwen2.5-VL at native 1280x720 input with patch size 14. How does that compare to a CLS-only representation?
+## 演習
 
-2. A 1080p frame (1920x1080) at patch 14 produces how many tokens? At 30 FPS over a 5-minute video, how many total visual tokens? Which cost saves you most: pooling, frame sampling, or token merging?
+1. native 1280x720 input、patch size 14 の Qwen2.5-VL について patch-token sequence length を計算してください。CLS-only representation と比べるとどうなりますか。
 
-3. Implement mean pooling over patch tokens in pure Python. Verify that mean-pool over 196 tokens of a DINOv2 output matches what the model's `forward` returns when you ask for a pooled embedding.
+2. 1080p frame (1920x1080) を patch 14 にすると何 token になりますか。30 FPS の 5 分 video では total visual token はいくつですか。最も cost を減らすのは pooling、frame sampling、token merging のどれですか。
 
-4. Read Section 3 of "Vision Transformers Need Registers" (arXiv:2309.16588). Describe in two sentences what artifact the registers absorb and why it matters for downstream dense prediction.
+3. pure Python で patch token の mean pooling を実装してください。DINOv2 output の 196 token を mean-pool した結果が、pooled embedding を要求したときの model の `forward` と一致することを確認してください。
 
-5. Modify `code/main.py` to support patch-n'-pack: given a list of images of different resolutions, produce a single packed sequence and the block-diagonal attention mask. Verify against Lesson 12.06 when you reach it.
+4. "Vision Transformers Need Registers" (arXiv:2309.16588) の Section 3 を読んでください。register が吸収する artifact と、それが downstream dense prediction で重要な理由を 2 文で説明してください。
 
-## Key Terms
+5. `code/main.py` を patch-n'-pack 対応に変更してください。異なる resolution の image list を受け取り、1 つの packed sequence と block-diagonal attention mask を生成します。Lesson 12.06 に進んだら、その実装と照合してください。
 
-| Term | What people say | What it actually means |
+## 重要語句
+
+| Term | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| Patch | "16x16 pixel square" | A fixed-size non-overlapping region of the input image; becomes one token |
-| Patch embedding | "Linear projection" | A shared learned matrix (or Conv2d with stride=P) mapping flattened patch pixels to D-dim vectors |
-| CLS token | "Class token" | Prepended learnable vector whose final hidden state represents the whole image; optional in 2026 |
-| Register token | "Sink token" | Extra learnable tokens that absorb the high-norm attention artifacts ViTs develop during pretraining |
-| Position embedding | "Positional info" | Per-position vector or rotation making the sequence-order-aware; 2D-RoPE is the modern default |
-| Grid | "Patch grid" | The (H/P) x (W/P) 2D array of patches for a given resolution and patch size |
-| NaFlex | "Native flexible resolution" | SigLIP 2 feature: single model serves multiple aspect ratios and resolutions without retraining |
-| Backbone | "Vision tower" | The pretrained image encoder whose patch-token outputs feed the LLM in a VLM |
-| Pooling | "Image-level summary" | Strategy to turn patch tokens into one vector: CLS, mean, attention pool, or register-based |
-| Patch 14 vs 16 | "Finer vs coarser grid" | Patch 14 produces more tokens per image, better fidelity for OCR, slower; patch 16 is the classic default |
+| Patch | 「16x16 pixel square」 | input image の fixed-size non-overlapping region。1 token になる |
+| Patch embedding | 「Linear projection」 | flattened patch pixels を D-dim vector へ写像する shared learned matrix (または stride=P の Conv2d) |
+| CLS token | 「Class token」 | final hidden state が画像全体を表す、先頭に付与される learnable vector。2026 年では optional |
+| Register token | 「Sink token」 | pretraining 中に ViT が発達させる high-norm attention artifact を吸収する extra learnable tokens |
+| Position embedding | 「Positional info」 | sequence に order を与える per-position vector または rotation。2D-RoPE が modern default |
+| Grid | 「Patch grid」 | given resolution と patch size で得られる (H/P) x (W/P) の 2D patch array |
+| NaFlex | 「Native flexible resolution」 | retraining なしで複数の aspect ratio と resolution を扱う SigLIP 2 の feature |
+| Backbone | 「Vision tower」 | VLM で patch-token output を LLM に渡す pretrained image encoder |
+| Pooling | 「Image-level summary」 | patch token を 1 vector に変換する strategy: CLS、mean、attention pool、register-based など |
+| Patch 14 vs 16 | 「Finer vs coarser grid」 | Patch 14 は image あたり token が多く、OCR fidelity は高いが遅い。patch 16 は classic default |
 
-## Further Reading
+## 参考文献
 
-- [Dosovitskiy et al. — An Image is Worth 16x16 Words (arXiv:2010.11929)](https://arxiv.org/abs/2010.11929) — original ViT.
-- [He et al. — Masked Autoencoders Are Scalable Vision Learners (arXiv:2111.06377)](https://arxiv.org/abs/2111.06377) — MAE, self-supervised pretraining.
-- [Oquab et al. — DINOv2 (arXiv:2304.07193)](https://arxiv.org/abs/2304.07193) — self-distillation at scale, no labels.
-- [Darcet et al. — Vision Transformers Need Registers (arXiv:2309.16588)](https://arxiv.org/abs/2309.16588) — register tokens and artifact analysis.
-- [Tschannen et al. — SigLIP 2 (arXiv:2502.14786)](https://arxiv.org/abs/2502.14786) — the 2026 default vision tower.
-- [Zhai et al. — Scaling Vision Transformers (arXiv:2106.04560)](https://arxiv.org/abs/2106.04560) — empirical scaling laws.
+- [Dosovitskiy et al. — An Image is Worth 16x16 Words (arXiv:2010.11929)](https://arxiv.org/abs/2010.11929) — original ViT。
+- [He et al. — Masked Autoencoders Are Scalable Vision Learners (arXiv:2111.06377)](https://arxiv.org/abs/2111.06377) — MAE、self-supervised pretraining。
+- [Oquab et al. — DINOv2 (arXiv:2304.07193)](https://arxiv.org/abs/2304.07193) — scale した self-distillation、label なし。
+- [Darcet et al. — Vision Transformers Need Registers (arXiv:2309.16588)](https://arxiv.org/abs/2309.16588) — register token と artifact analysis。
+- [Tschannen et al. — SigLIP 2 (arXiv:2502.14786)](https://arxiv.org/abs/2502.14786) — 2026 年の default vision tower。
+- [Zhai et al. — Scaling Vision Transformers (arXiv:2106.04560)](https://arxiv.org/abs/2106.04560) — empirical scaling laws。

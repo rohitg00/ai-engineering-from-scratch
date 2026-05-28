@@ -2,7 +2,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the approximate range of numbers that float32 can represent?",
+      "question": "float32 が表現できる数値範囲はおおよそどれですか？",
       "options": [
         "+/- 65,504",
         "+/- 3.4e38",
@@ -10,55 +10,55 @@
         "+/- 1.0e10"
       ],
       "correct": 1,
-      "explanation": "Float32 has an 8-bit exponent giving a range of approximately +/- 3.4e38. Float16 is limited to +/- 65,504, and float64 reaches +/- 1.8e308."
+      "explanation": "Float32 は 8-bit exponent を持つため、範囲はおおよそ +/- 3.4e38 です。Float16 は +/- 65,504 に制限され、float64 は +/- 1.8e308 まで到達します。"
     },
     {
       "stage": "pre",
-      "question": "Why does 0.1 + 0.2 not equal 0.3 in floating-point arithmetic?",
+      "question": "floating-point arithmetic で 0.1 + 0.2 が 0.3 と等しくならないのはなぜですか？",
       "options": [
-        "Python rounds all decimals to integers",
-        "0.1 and 0.2 cannot be represented exactly in binary floating point",
-        "The CPU has a bug in its addition circuit",
-        "0.3 is not a valid floating-point number"
+        "Python がすべての小数を整数に丸めるから",
+        "0.1 と 0.2 は binary floating point で正確に表現できないから",
+        "CPU の加算回路にバグがあるから",
+        "0.3 は有効な floating-point number ではないから"
       ],
       "correct": 1,
-      "explanation": "The number 0.1 is a repeating fraction in binary (like 1/3 in decimal). Float32 truncates it, so the stored value is approximately 0.100000001490116. The accumulated error makes the sum differ from 0.3."
+      "explanation": "0.1 は binary では循環小数です（decimal における 1/3 のようなもの）。Float32 はそれを切り詰めるため、保存値は約 0.100000001490116 になります。累積誤差により、和は 0.3 と異なります。"
     },
     {
       "stage": "post",
-      "question": "In the stable softmax implementation, why do you subtract max(logits) before exponentiating?",
+      "question": "stable softmax 実装で、指数を取る前に max(logits) を引くのはなぜですか？",
       "options": [
-        "It makes the output probabilities more uniform",
-        "It prevents exp() from overflowing by ensuring the largest exponent is 0",
-        "It converts logits from float16 to float32",
-        "It normalizes the logits to have zero mean"
+        "出力確率をより一様にするため",
+        "最大の exponent が 0 になるようにして exp() の overflow を防ぐため",
+        "logits を float16 から float32 に変換するため",
+        "logits の平均を 0 に正規化するため"
       ],
       "correct": 1,
-      "explanation": "After subtracting max(logits), the largest value is 0 and exp(0) = 1, which cannot overflow. All other values are negative, so their exponentials are less than 1. The probabilities are mathematically identical to the naive version."
+      "explanation": "max(logits) を引くと最大値は 0 になり、exp(0) = 1 なので overflow しません。他の値はすべて負になり、その指数は 1 未満です。確率は naive version と数学的に同一です。"
     },
     {
       "stage": "post",
-      "question": "When using centered finite differences for gradient checking, what happens if the step size h is too small (e.g., 1e-15)?",
+      "question": "gradient checking で centered finite differences を使うとき、step size h が小さすぎる（例: 1e-15）と何が起きますか？",
       "options": [
-        "The approximation becomes more accurate",
-        "Catastrophic cancellation destroys the result because f(x+h) and f(x-h) are nearly identical",
-        "The function evaluation becomes faster",
-        "The gradient automatically becomes zero"
+        "近似がより正確になる",
+        "f(x+h) と f(x-h) がほぼ同一になり、catastrophic cancellation が結果を壊す",
+        "関数評価が速くなる",
+        "勾配が自動的にゼロになる"
       ],
       "correct": 1,
-      "explanation": "When h is extremely small, f(x+h) and f(x-h) differ only in their last few significant digits. Subtracting them cancels the leading digits, leaving mostly rounding noise. Typical good values are h = 1e-5 to 1e-7."
+      "explanation": "h が極端に小さいと、f(x+h) と f(x-h) は最後の数桁しか違いません。それらを引くと上位桁が打ち消され、ほぼ丸め誤差だけが残ります。典型的によい値は h = 1e-5 から 1e-7 です。"
     },
     {
       "stage": "post",
-      "question": "Why is bfloat16 generally preferred over float16 for neural network training?",
+      "question": "neural network training で bfloat16 が float16 より一般に好まれるのはなぜですか？",
       "options": [
-        "bfloat16 has more mantissa bits, giving better precision",
-        "bfloat16 has the same exponent range as float32, avoiding overflow on large activations without loss scaling",
-        "bfloat16 uses less memory than float16",
-        "bfloat16 is supported by more GPU architectures than float16"
+        "bfloat16 は mantissa bits が多く、精度が高いから",
+        "bfloat16 は float32 と同じ exponent range を持ち、large activations の overflow を loss scaling なしで避けやすいから",
+        "bfloat16 は float16 より少ないメモリを使うから",
+        "bfloat16 は float16 より多くの GPU architectures でサポートされているから"
       ],
       "correct": 1,
-      "explanation": "bfloat16 has 8 exponent bits (same as float32, range up to 3.4e38) while float16 has only 5 exponent bits (max ~65,504). During training, activations and gradients can exceed 65,504, causing float16 overflow. bfloat16 handles this without loss scaling."
+      "explanation": "bfloat16 は 8 exponent bits（float32 と同じ、範囲は最大 3.4e38）を持つ一方、float16 は 5 exponent bits（最大約 65,504）しかありません。学習中は activations や gradients が 65,504 を超えることがあり、float16 overflow を起こします。bfloat16 は loss scaling なしでこれに対応しやすいです。"
     }
   ]
 }

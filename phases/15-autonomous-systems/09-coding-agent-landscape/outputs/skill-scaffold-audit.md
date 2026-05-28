@@ -1,38 +1,38 @@
 ---
 name: coding-scaffold-audit
-description: Audit a proposed coding-agent scaffold (retrieval, verifier loop, sandbox, benchmark fit) before adopting it for production code changes.
+description: 本番コード変更に採用する前に、提案されたコーディングエージェントのスキャフォールド（検索、検証ループ、サンドボックス、ベンチマーク適合）を監査する。
 version: 1.0.0
 phase: 15
 lesson: 9
 tags: [coding-agent, scaffolding, swe-bench, codeact, openhands]
 ---
 
-Given a proposed coding-agent scaffold (SWE-agent, OpenHands, Aider, Cline, Devin, Claude Code, or an in-house build), score it across four axes and flag where benchmark numbers will overstate production quality.
+提案されたコーディングエージェントのスキャフォールド（SWE-agent、OpenHands、Aider、Cline、Devin、Claude Code、または内製ビルド）について、4つの軸で採点し、ベンチマーク数値が本番品質を過大評価する箇所を指摘する。
 
-Produce:
+作成するもの:
 
-1. **Retrieval.** Describe how the scaffold selects which files the agent reads before acting. Repo map, embedding search, explicit file list, or agent-driven `grep` calls. Quality of retrieval is the silent dominant reliability factor.
-2. **Verifier loop.** Does the scaffold run tests, read the stack trace, and feed failure back into the next turn? If no verifier loop, flag as missing — this is usually a 10+ point absolute delta on SWE-bench-like tasks.
-3. **Sandbox and blast radius.** Where do actions execute? Local file system, ephemeral container, managed VM. For CodeAct-style scaffolds, confirm the sandbox is hardened (no egress, no host mounts, time limit). For JSON tool-call scaffolds, confirm the tool validators reject every unintended side effect.
-4. **Benchmark fit.** What distribution does the reported number (e.g., "80.9% on SWE-bench Verified") actually cover? Count the fraction of the benchmark made up of 1–2 line tasks; compare the reported score to SWE-bench Pro (10+ line tasks) for the same model. A scaffold whose headline number is driven by the easy tail is not a production signal.
+1. **Retrieval.** エージェントがアクション前に読むファイルを、スキャフォールドがどう選ぶかを説明する。Repo map、embedding search、明示的なファイルリスト、またはエージェント主導の `grep` 呼び出しなど。検索品質は、目立たないが支配的な信頼性要因である。
+2. **Verifier loop.** スキャフォールドはテストを実行し、スタックトレースを読み、失敗を次のターンへ戻すか。検証ループがない場合は欠落として指摘する。これは SWE-bench 的なタスクでは通常、10ポイント以上の絶対差になる。
+3. **Sandbox and blast radius.** アクションはどこで実行されるか。ローカルファイルシステム、一時コンテナ、マネージド VM など。CodeAct 形式のスキャフォールドでは、サンドボックスが強化されていること（外向き通信なし、ホストマウントなし、時間制限）を確認する。JSON tool-call スキャフォールドでは、意図しない副作用をすべてツールバリデーターが拒否することを確認する。
+4. **Benchmark fit.** 報告された数値（例: 「SWE-bench Verified で80.9%」）は実際にどの分布をカバーしているか。ベンチマーク内で1〜2行タスクが占める割合を数え、同じモデルの SWE-bench Pro（10行以上のタスク）と報告スコアを比較する。簡単な裾野に引っ張られた見出し数値は、本番シグナルではない。
 
-Hard rejects:
-- Any scaffold without a verifier loop used for tasks above trivial complexity.
-- CodeAct scaffolds without sandbox isolation (no Docker, no rootless container, no VM) pointing at real repositories.
-- Benchmark claims that do not disclose the distribution (easy-tail fraction, Pro-equivalent score).
-- Tool-call scaffolds where a single tool can touch arbitrary paths with no validator (e.g., a raw `shell_exec` tool exposed to the model).
+即時却下:
+- ごく単純な複雑度を超えるタスクに使うにもかかわらず、検証ループがないスキャフォールド。
+- 実リポジトリを対象にしながら、サンドボックス分離（Docker、rootless container、VM）がない CodeAct スキャフォールド。
+- 分布（簡単な裾野の割合、Pro 相当スコア）を開示していないベンチマーク主張。
+- 1つのツールがバリデーターなしで任意パスに触れられる tool-call スキャフォールド（例: 生の `shell_exec` ツールをモデルに公開する）。
 
-Refusal rules:
-- If the user cannot produce the scaffold's test-suite pass-rate on a representative internal distribution, refuse and require a small-sample measurement first. Public benchmarks predict rank-order, not absolute quality.
-- If the proposed scaffold would run against a production repository without a staging dry-run, refuse and require staging first. Coding agents rewrite files; coding agents with bad retrieval rewrite the wrong files.
-- If the user plans to use benchmark scores alone (without their own evals) to make a go/no-go decision, refuse and require internal eval data.
+拒否ルール:
+- 代表的な内部分布でのスキャフォールドのテストスイート合格率をユーザーが提示できない場合は拒否し、先に小サンプル測定を求める。公開ベンチマークが予測するのは順位であって、絶対品質ではない。
+- 提案されたスキャフォールドをステージングのドライランなしで本番リポジトリに対して実行する場合は拒否し、先にステージングを求める。コーディングエージェントはファイルを書き換える。検索が悪いコーディングエージェントは間違ったファイルを書き換える。
+- ユーザーが go/no-go 判断をベンチマークスコアだけで行う予定なら拒否し、内部評価データを求める。
 
-Output format:
+出力形式:
 
-Return a scored memo with:
-- **Retrieval score** (0–5 with mechanism described)
-- **Verifier loop score** (0–5 with feedback format)
-- **Sandbox score** (0–5 with isolation mechanism)
-- **Benchmark fit score** (0–5 with internal distribution delta)
-- **Deployment recommendation** (production / staging / research only)
-- **One-line risk summary** (the most likely first production failure)
+採点付きメモとして返す:
+- **検索スコア**（0〜5、仕組みを説明）
+- **検証ループスコア**（0〜5、フィードバック形式を説明）
+- **サンドボックススコア**（0〜5、分離機構を説明）
+- **ベンチマーク適合スコア**（0〜5、内部分布との差分を説明）
+- **デプロイ推奨**（production / staging / research only）
+- **1行リスク要約**（本番で最初に起きる可能性が最も高い失敗）

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,74 +10,74 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">ReAct loop — Thought, Action, Observation until a stop condition fires</text>
+  <text x="480" y="26" text-anchor="middle" class="title">ReActループ - 思考、行動、観察を停止条件まで繰り返す</text>
 
   <rect x="40" y="60" width="340" height="460" class="box"/>
-  <text x="210" y="82" text-anchor="middle" class="head">the five ingredients</text>
+  <text x="210" y="82" text-anchor="middle" class="head">5つの構成要素</text>
 
   <rect x="60" y="100" width="300" height="64" class="cool"/>
-  <text x="80" y="122" class="step">1. message buffer</text>
+  <text x="80" y="122" class="step">1. メッセージバッファ</text>
   <text x="80" y="140" class="small">user, assistant, tool, assistant, tool, ...</text>
-  <text x="80" y="156" class="small">Anthropic + OpenAI schemas both encode this</text>
+  <text x="80" y="156" class="small">Anthropic + OpenAIのスキーマはいずれもこれを表す</text>
 
   <rect x="60" y="172" width="300" height="64" class="cold"/>
-  <text x="80" y="194" class="step">2. tool registry</text>
-  <text x="80" y="212" class="small">name - schema - callable; validated on dispatch</text>
-  <text x="80" y="228" class="small">registry is the sandbox boundary</text>
+  <text x="80" y="194" class="step">2. ツールレジストリ</text>
+  <text x="80" y="212" class="small">名前 - スキーマ - 呼び出し先。実行時に検証</text>
+  <text x="80" y="228" class="small">レジストリがサンドボックス境界</text>
 
   <rect x="60" y="244" width="300" height="64" class="hot"/>
-  <text x="80" y="266" class="step">3. stop condition</text>
-  <text x="80" y="284" class="small">explicit finish, no tool calls, budget exhausted</text>
-  <text x="80" y="300" class="small">pick one; mixing them hides early-termination bugs</text>
+  <text x="80" y="266" class="step">3. 停止条件</text>
+  <text x="80" y="284" class="small">明示完了、ツール呼び出しなし、予算切れ</text>
+  <text x="80" y="300" class="small">1つ選ぶ。混在は早期終了バグを隠す</text>
 
   <rect x="60" y="316" width="300" height="64" class="dsk"/>
-  <text x="80" y="338" class="step">4. turn budget</text>
-  <text x="80" y="356" class="small">hard cap on iterations; 40-400 is normal</text>
-  <text x="80" y="372" class="small">scale to task class, not a single global</text>
+  <text x="80" y="338" class="step">4. ターン予算</text>
+  <text x="80" y="356" class="small">反復回数の上限。40-400が一般的</text>
+  <text x="80" y="372" class="small">タスク種別ごとに調整。全体で一律にしない</text>
 
   <rect x="60" y="388" width="300" height="64" class="box"/>
-  <text x="80" y="410" class="step">5. observation formatter</text>
-  <text x="80" y="428" class="small">every 400 error becomes a string, not a crash</text>
-  <text x="80" y="444" class="small">parallel tool calls need a tool_use_id</text>
+  <text x="80" y="410" class="step">5. 観察フォーマッタ</text>
+  <text x="80" y="428" class="small">すべての400エラーは文字列化しクラッシュしない</text>
+  <text x="80" y="444" class="small">並列ツール呼び出しにはtool_use_idが必要</text>
 
   <rect x="400" y="60" width="540" height="460" class="box"/>
-  <text x="670" y="82" text-anchor="middle" class="head">one cycle, annotated</text>
+  <text x="670" y="82" text-anchor="middle" class="head">1サイクルの注釈</text>
 
   <rect x="420" y="100" width="500" height="50" class="cool"/>
-  <text x="440" y="122" class="step">Thought  "I need tax on 120 then add it"</text>
-  <text x="440" y="140" class="small">native reasoning channel in 2026 (Responses API), previously inline tokens</text>
+  <text x="440" y="122" class="step">思考  「120の税額を求めて足す」</text>
+  <text x="440" y="140" class="small">2026年はネイティブ推論チャネル（Responses API）。以前はインライン</text>
 
   <rect x="420" y="158" width="500" height="50" class="cold"/>
-  <text x="440" y="180" class="step">Action  calculator(expr="120 * 0.15")</text>
-  <text x="440" y="198" class="small">structured output, dispatched through the tool registry</text>
+  <text x="440" y="180" class="step">行動  calculator(expr="120 * 0.15")</text>
+  <text x="440" y="198" class="small">構造化出力をツールレジストリ経由で実行</text>
 
   <rect x="420" y="216" width="500" height="50" class="hot"/>
-  <text x="440" y="238" class="step">Observation  18.0</text>
-  <text x="440" y="256" class="small">untrusted; retrieved content may contain injected instructions</text>
+  <text x="440" y="238" class="step">観察  18.0</text>
+  <text x="440" y="256" class="small">信頼しない。取得内容に注入指示が含まれ得る</text>
 
   <rect x="420" y="274" width="500" height="50" class="cool"/>
-  <text x="440" y="296" class="step">Thought  "add 120 + 18.0 and finish"</text>
-  <text x="440" y="314" class="small">loop repeats until an assistant turn has no tool calls</text>
+  <text x="440" y="296" class="step">思考  「120 + 18.0を足して完了」</text>
+  <text x="440" y="314" class="small">アシスタントのターンにツール呼び出しがなくなるまで反復</text>
 
   <rect x="420" y="332" width="500" height="50" class="cold"/>
-  <text x="440" y="354" class="step">Action  calculator(expr="120 + 18.0")</text>
-  <text x="440" y="372" class="small">parallel dispatch possible; tool_use_id correlates outcomes</text>
+  <text x="440" y="354" class="step">行動  calculator(expr="120 + 18.0")</text>
+  <text x="440" y="372" class="small">並列実行も可能。tool_use_idで結果を対応付け</text>
 
   <rect x="420" y="390" width="500" height="50" class="hot"/>
-  <text x="440" y="412" class="step">Observation  138.0</text>
-  <text x="440" y="430" class="small">observations feed back; loop budget decrements</text>
+  <text x="440" y="412" class="step">観察  138.0</text>
+  <text x="440" y="430" class="small">観察を戻し、ループ予算を減らす</text>
 
   <rect x="420" y="448" width="500" height="50" class="box"/>
-  <text x="440" y="470" class="step">Finish  "the total including 15% tax is 138.0"</text>
-  <text x="440" y="488" class="small">stop condition; trace is emitted as a span per OTel GenAI</text>
+  <text x="440" y="470" class="step">完了  「15%税込みの合計は138.0」</text>
+  <text x="440" y="488" class="small">停止条件。OTel GenAIに従いトレースをスパンとして出力</text>
 
-  <text x="480" y="540" text-anchor="middle" class="caption">ReAct (Yao et al., 2023) is the 2026 substrate. Frameworks wrap it; the loop does not change.</text>
+  <text x="480" y="540" text-anchor="middle" class="caption">ReAct（Yao et al., 2023）は2026年の基盤。フレームワークが包んでもループは変わらない。</text>
 </svg>

@@ -1,14 +1,14 @@
 """Toy continuous-batching scheduler — stdlib Python.
 
-Simulates four serving modes on the same workload:
-  NAIVE            : one request at a time, no batching
-  STATIC           : pad to batch boundary, wait for slowest
+同じ workload で4つの serving mode を simulate する:
+  NAIVE            : 一度に1 request、batching なし
+  STATIC           : batch boundary に pad し、最も遅いものを待つ
   CONTINUOUS       : iteration-level admit/release
-  CONTINUOUS+CHUNK : continuous + chunked prefill (512-token slices)
+  CONTINUOUS+CHUNK : continuous + chunked prefill（512-token slices）
 
-Reports throughput (tok / virt-sec), mean TTFT, and P99 ITL so you can
-reproduce the shape of the vLLM benchmarks without a GPU. Pedagogical:
-the latency constants are illustrative, not measured.
+throughput（tok / virt-sec）、mean TTFT、P99 ITL を報告し、GPU なしで
+vLLM benchmark の shape を再現できるようにする。教育用:
+latency constants は illustrative であり measured ではない。
 """
 
 from __future__ import annotations
@@ -19,9 +19,9 @@ import random
 import statistics
 
 
-FORWARD_LATENCY_PER_TOKEN = 0.0005   # 0.5 ms per decode token in the batch
-PREFILL_LATENCY_PER_TOKEN = 0.00004  # prefill ~12x cheaper per token than decode
-BATCH_OVERHEAD = 0.0002              # fixed overhead per forward call
+FORWARD_LATENCY_PER_TOKEN = 0.0005   # batch 内 decode token あたり 0.5 ms
+PREFILL_LATENCY_PER_TOKEN = 0.00004  # prefill は token あたり decode より約12倍安い
+BATCH_OVERHEAD = 0.0002              # forward call ごとの fixed overhead
 CHUNK_SIZE = 512
 KV_BLOCK_SIZE = 16
 KV_BLOCKS_AVAILABLE = 1800           # toy KV block budget
@@ -57,7 +57,7 @@ def make_workload(n: int = 60, seed: int = 7) -> list[Request]:
     reqs = []
     now = 0.0
     for i in range(n):
-        now += rng.expovariate(40.0)   # ~40 req/s arrival
+        now += rng.expovariate(40.0)   # arrival は約40 req/s
         prompt_len = rng.choice([128, 256, 512, 2048, 8192])
         out_len = rng.randint(50, 300)
         reqs.append(Request(i, prompt_len, out_len, now))
@@ -77,7 +77,7 @@ def report(label: str, reqs: list[Request], sim_end: float) -> None:
 
 
 def simulate_naive(reqs: list[Request]) -> float:
-    """One at a time. Prefill the whole prompt, then decode until done."""
+    """一度に1つ。prompt 全体を prefill し、done まで decode する。"""
     now = 0.0
     for r in reqs:
         if now < r.arrived_at:
@@ -96,7 +96,7 @@ def simulate_naive(reqs: list[Request]) -> float:
 
 
 def simulate_static(reqs: list[Request], batch: int = 16) -> float:
-    """Group into fixed batches; wait for the slowest to finish."""
+    """fixed batches に group し、最も遅いものが終わるまで待つ。"""
     now = 0.0
     i = 0
     while i < len(reqs):
@@ -177,7 +177,7 @@ def simulate_continuous(reqs: list[Request], chunked: bool) -> float:
 
 def main() -> None:
     print("=" * 80)
-    print("TOY vLLM SCHEDULER — four modes on the same 60-request workload")
+    print("TOY vLLM SCHEDULER — 同じ60-request workload 上の4 modes")
     print("=" * 80)
 
     base = make_workload()
@@ -198,8 +198,8 @@ def main() -> None:
     report("CONTINUOUS + CHUNKED", w4, end)
 
     print()
-    print("Read the CONTINUOUS+CHUNKED row. That is what vLLM ships as default.")
-    print("The gap between STATIC and CONTINUOUS is the whole reason vLLM exists.")
+    print("CONTINUOUS+CHUNKED row を読んでください。それが vLLM が default として ship するものです。")
+    print("STATIC と CONTINUOUS の差が、vLLM が存在する理由そのものです。")
 
 
 if __name__ == "__main__":

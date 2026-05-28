@@ -1,102 +1,102 @@
 {
   "lesson": "03-word-embeddings-word2vec",
-  "title": "Word Embeddings — Word2Vec from Scratch",
+  "title": "単語埋め込み — Word2Vecをスクラッチから",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the distributional hypothesis?",
+      "question": "分布仮説とは何ですか?",
       "options": [
-        "You shall know a word by the company it keeps",
-        "Words are uniformly distributed across documents",
-        "All words can be embedded in 300 dimensions",
-        "Frequent words carry the most meaning"
+        "単語は、その周囲に現れる単語によって理解できる",
+        "単語は文書全体に一様に分布する",
+        "すべての単語は300次元に埋め込める",
+        "頻出語が最も多くの意味を持つ"
       ],
       "correct": 0,
-      "explanation": "Firth's (1957) distributional hypothesis: similar contexts imply similar meanings."
+      "explanation": "Firth (1957) の分布仮説です。似た文脈は似た意味を示します。"
     },
     {
       "stage": "pre",
-      "question": "Why is plain softmax over the vocabulary impractical in Word2Vec?",
+      "question": "Word2Vecで語彙全体に対する通常のsoftmaxが実用的でないのはなぜですか?",
       "options": [
-        "Computing softmax over 100k+ vocabulary terms is prohibitively expensive per training step",
-        "Softmax cannot model probabilities",
-        "Softmax has no gradient",
-        "It causes vanishing gradients"
+        "10万語を超える語彙項目に対してsoftmaxを計算するのは、学習ステップごとに非常に高コストだから",
+        "Softmaxは確率をモデル化できないから",
+        "Softmaxには勾配がないから",
+        "勾配消失を引き起こすから"
       ],
       "correct": 0,
-      "explanation": "Full-vocabulary softmax is too expensive; negative sampling reformulates it as binary classification."
+      "explanation": "語彙全体のsoftmaxは高コストです。負例サンプリングはそれを二値分類として定式化し直します。"
     },
     {
       "stage": "check",
-      "question": "What is the difference between skip-gram and CBOW?",
+      "question": "skip-gramとCBOWの違いは何ですか?",
       "options": [
-        "Skip-gram uses bigrams; CBOW uses unigrams",
-        "Skip-gram predicts context words from the center; CBOW predicts the center from context",
-        "Skip-gram predicts the center word from context; CBOW does the reverse",
-        "Skip-gram trains a deep network; CBOW is shallow"
+        "Skip-gramはbigramを使い、CBOWはunigramを使う",
+        "Skip-gramは中心語から文脈語を予測し、CBOWは文脈から中心語を予測する",
+        "Skip-gramは文脈から中心語を予測し、CBOWはその逆を行う",
+        "Skip-gramは深いネットワークを学習し、CBOWは浅い"
       ],
       "correct": 1,
-      "explanation": "Skip-gram: center -> context. CBOW: context -> center."
+      "explanation": "Skip-gram: 中心語 -> 文脈。CBOW: 文脈 -> 中心語。"
     },
     {
       "stage": "check",
-      "question": "In negative sampling, what is the objective for the positive pair (center, context)?",
+      "question": "負例サンプリングで、正例ペア (center, context) に対する目的は何ですか?",
       "options": [
-        "Maximize sigmoid(W[center] dot W'[context]) so it is close to 1",
-        "Force them to be orthogonal",
-        "Minimize their dot product",
-        "Decorrelate the vectors"
+        "sigmoid(W[center] dot W'[context]) を最大化し、1に近づける",
+        "それらを直交させる",
+        "それらの内積を最小化する",
+        "ベクトル同士の相関をなくす"
       ],
       "correct": 0,
-      "explanation": "Positive pairs train sigmoid near 1; sampled negatives train sigmoid near 0."
+      "explanation": "正例ペアではsigmoidが1に近づくように学習し、サンプルされた負例ではsigmoidが0に近づくように学習します。"
     },
     {
       "stage": "check",
-      "question": "After training Word2Vec, which weight matrix becomes the word embeddings?",
+      "question": "Word2Vecの学習後、どの重み行列が単語埋め込みになりますか?",
       "options": [
-        "A separate post-training projection",
-        "The input-to-hidden W matrix (center-word table)",
-        "Both, multiplied together",
-        "The hidden-to-output W' matrix"
+        "学習後に別途作る射影",
+        "入力から隠れ層へのW行列 (中心語テーブル)",
+        "両方を掛け合わせたもの",
+        "隠れ層から出力へのW'行列"
       ],
       "correct": 1,
-      "explanation": "The center-word table W is the standard embedding output; W' is often discarded or averaged in."
+      "explanation": "中心語テーブルWが標準的な埋め込み出力です。W'は多くの場合捨てられるか、平均に使われます。"
     },
     {
       "stage": "post",
-      "question": "Why does Word2Vec fail on polysemy (e.g. 'bank')?",
+      "question": "Word2Vecが多義語 (例: 'bank') で失敗するのはなぜですか?",
       "options": [
-        "The window size is too small",
-        "It ignores rare words",
-        "Negative sampling drops rare meanings",
-        "It assigns one static vector per word, so 'river bank' and 'financial bank' share the same vector"
+        "ウィンドウサイズが小さすぎるから",
+        "まれな語を無視するから",
+        "負例サンプリングがまれな意味を落とすから",
+        "単語ごとに1つの静的ベクトルを割り当てるため、'river bank' と 'financial bank' が同じベクトルを共有するから"
       ],
       "correct": 3,
-      "explanation": "Static embeddings cannot disambiguate senses; contextual embeddings (ELMo/BERT) fix this."
+      "explanation": "静的埋め込みは語義を曖昧性解消できません。文脈化埋め込み (ELMo/BERT) がこれを修正します。"
     },
     {
       "stage": "post",
-      "question": "When would you still reach for Word2Vec over a transformer in 2026?",
+      "question": "2026年にtransformerではなくWord2Vecを選ぶのはどのような場合ですか?",
       "options": [
-        "Lightweight, on-device, domain-specific retrieval where a single row lookup is the latency budget",
-        "When you need contextual disambiguation",
-        "When inputs are very long",
-        "When dialog quality matters"
+        "単一行lookupだけが許されるレイテンシ予算の、軽量・オンデバイス・ドメイン特化検索",
+        "文脈による曖昧性解消が必要な場合",
+        "入力が非常に長い場合",
+        "対話品質が重要な場合"
       ],
       "correct": 0,
-      "explanation": "Word2Vec wins on tiny latency budgets, on-device inference, or fast domain-specific training."
+      "explanation": "Word2Vecは、極小のレイテンシ予算、オンデバイス推論、高速なドメイン特化学習で強みがあります。"
     },
     {
       "stage": "post",
-      "question": "What enables the famous analogy 'king - man + woman ~ queen'?",
+      "question": "有名なアナロジー 'king - man + woman ~ queen' を可能にしているものは何ですか?",
       "options": [
-        "The model encodes royalty as a flag bit",
-        "Skip-gram trains on royal vocabularies",
-        "Vector arithmetic captures linear directions like 'royal' that transfer across genders",
-        "Cosine similarity is invariant to gender"
+        "モデルが王権をフラグビットとして符号化していること",
+        "Skip-gramが王族語彙だけで学習されていること",
+        "ベクトル演算が、性別をまたいで転移する 'royal' のような線形方向を捉えること",
+        "cosine類似度が性別に対して不変であること"
       ],
       "correct": 2,
-      "explanation": "Directions in embedding space encode relational features, so adding/subtracting moves systematically."
+      "explanation": "埋め込み空間の方向が関係的な特徴を符号化するため、足し引きによって体系的に移動できます。"
     }
   ]
 }

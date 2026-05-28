@@ -1,12 +1,12 @@
-"""Tool registry with JSON Schema 2020-12 subset validation.
+"""JSON Schema 2020-12 subset validation つき tool registry。
 
 Conceptual references:
 - ./docs/en.md (this lesson)
 - IETF draft draft-bhutton-json-schema-2020-12 (subset: type, properties,
   required, enum, minLength, maxLength, pattern, items)
-- RFC 6901 (JSON Pointer for error paths)
+- RFC 6901 (error path のための JSON Pointer)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -59,7 +59,7 @@ class ToolRecord:
 
 
 class ToolRegistry:
-    """Name-keyed table of tool records with schema validation."""
+    """schema validation を備えた、name keyed な tool record table。"""
 
     _NAME_RE = re.compile(r"^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$")
 
@@ -78,9 +78,9 @@ class ToolRegistry:
         override: bool = False,
     ) -> ToolRecord:
         if not self._NAME_RE.match(name):
-            raise ValueError(f"tool name {name!r} must match {self._NAME_RE.pattern}")
+            raise ValueError(f"tool name {name!r} は {self._NAME_RE.pattern} に match する必要があります")
         if name in self._records and not override:
-            raise ValueError(f"tool {name!r} already registered; pass override=True to replace")
+            raise ValueError(f"tool {name!r} は登録済みです。置き換えるには override=True を渡してください")
         validate_schema_shape(schema)
         rec = ToolRecord(
             name=name, description=description, schema=schema, handler=handler,
@@ -93,7 +93,7 @@ class ToolRegistry:
 
     def get(self, name: str) -> ToolRecord:
         if name not in self._records:
-            raise KeyError(f"unknown tool {name!r}")
+            raise KeyError(f"未知の tool {name!r}")
         return self._records[name]
 
     def names(self) -> list[str]:
@@ -109,38 +109,38 @@ class ToolRegistry:
 
 
 def validate_schema_shape(schema: dict) -> None:
-    """Reject schemas using keywords outside the supported subset."""
+    """supported subset 外の keyword を使う schema を拒否する。"""
     if not isinstance(schema, dict):
-        raise ValueError("schema must be a dict")
+        raise ValueError("schema は dict である必要があります")
     unknown = set(schema.keys()) - ALLOWED_KEYWORDS
     if unknown:
-        raise ValueError(f"unsupported schema keywords: {sorted(unknown)}")
+        raise ValueError(f"未サポートの schema keyword: {sorted(unknown)}")
     t = schema.get("type")
     if t is not None and t not in PRIMITIVE_TYPE_MAP:
-        raise ValueError(f"unsupported type: {t!r}")
+        raise ValueError(f"未サポートの type: {t!r}")
     enum_vals = schema.get("enum")
     if enum_vals is not None and not isinstance(enum_vals, list):
-        raise ValueError("enum must be a list")
+        raise ValueError("enum は list である必要があります")
     min_len = schema.get("minLength")
     if min_len is not None:
         if isinstance(min_len, bool) or not isinstance(min_len, int) or min_len < 0:
-            raise ValueError("minLength must be a non-negative integer")
+            raise ValueError("minLength は non-negative integer である必要があります")
     max_len = schema.get("maxLength")
     if max_len is not None:
         if isinstance(max_len, bool) or not isinstance(max_len, int) or max_len < 0:
-            raise ValueError("maxLength must be a non-negative integer")
+            raise ValueError("maxLength は non-negative integer である必要があります")
     if min_len is not None and max_len is not None and min_len > max_len:
-        raise ValueError("minLength cannot be greater than maxLength")
+        raise ValueError("minLength は maxLength より大きくできません")
     pattern = schema.get("pattern")
     if pattern is not None and not isinstance(pattern, str):
-        raise ValueError("pattern must be a string")
+        raise ValueError("pattern は string である必要があります")
     props = schema.get("properties")
     if props is not None:
         if not isinstance(props, dict):
-            raise ValueError("properties must be a dict")
+            raise ValueError("properties は dict である必要があります")
         for pname, psub in props.items():
             if not isinstance(pname, str):
-                raise ValueError("property names must be strings")
+                raise ValueError("property name は string である必要があります")
             validate_schema_shape(psub)
     items = schema.get("items")
     if items is not None:
@@ -148,7 +148,7 @@ def validate_schema_shape(schema: dict) -> None:
     req = schema.get("required")
     if req is not None:
         if not isinstance(req, list) or not all(isinstance(x, str) for x in req):
-            raise ValueError("required must be list[str]")
+            raise ValueError("required は list[str] である必要があります")
 
 
 def _path(prefix: str, segment: str | int) -> str:
@@ -173,7 +173,7 @@ def _walk(schema: dict, value: Any, path: str, errs: list[ValidationError]) -> N
         errs.append(ValidationError(
             path=path or "/",
             keyword="type",
-            message=f"expected {t}, got {type(value).__name__}",
+            message=f"{t} を期待しましたが {type(value).__name__} でした",
         ))
         return
     if "enum" in schema:
@@ -181,7 +181,7 @@ def _walk(schema: dict, value: Any, path: str, errs: list[ValidationError]) -> N
             errs.append(ValidationError(
                 path=path or "/",
                 keyword="enum",
-                message=f"value {value!r} not in {schema['enum']!r}",
+                message=f"value {value!r} は {schema['enum']!r} に含まれていません",
             ))
             return
     if t == "string":
@@ -208,12 +208,12 @@ def _check_string(schema: dict, value: str, path: str, errs: list[ValidationErro
             if not re.search(schema["pattern"], value):
                 errs.append(ValidationError(
                     path=path or "/", keyword="pattern",
-                    message=f"value {value!r} does not match pattern {schema['pattern']!r}",
+                    message=f"value {value!r} は pattern {schema['pattern']!r} に match しません",
                 ))
         except re.error as exc:
             errs.append(ValidationError(
                 path=path or "/", keyword="pattern",
-                message=f"invalid regex: {exc}",
+                message=f"不正な regex: {exc}",
             ))
 
 
@@ -224,7 +224,7 @@ def _check_object(schema: dict, value: dict, path: str, errs: list[ValidationErr
             errs.append(ValidationError(
                 path=_path(path, req_name),
                 keyword="required",
-                message=f"missing required property {req_name!r}",
+                message=f"required property {req_name!r} がありません",
             ))
     props = schema.get("properties", {})
     for prop_name, prop_value in value.items():
@@ -248,7 +248,7 @@ def _demo() -> None:
 
     registry.register(
         name="db.get_user",
-        description="Fetch a user record by id.",
+        description="id で user record を取得する。",
         schema={
             "type": "object",
             "required": ["id"],
@@ -266,7 +266,7 @@ def _demo() -> None:
 
     cases = [
         {"id": 42, "fields": ["id", "name"]},
-        {"id": "forty-two"},
+        {"id": "四十二"},
         {"fields": ["id"]},
         {"id": 1, "fields": ["id", "phone"]},
     ]

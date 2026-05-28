@@ -1,38 +1,38 @@
 # GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler, Gang Scheduling
 
-> Three layers, not one. Karpenter provisions nodes dynamically (under one minute, 40% faster than Cluster Autoscaler). KAI Scheduler handles gang scheduling, topology awareness, and hierarchical queues — it prevents the 7-of-8 partial allocation trap where seven nodes wait and burn on one missing GPU. Application-level autoscalers (NVIDIA Dynamo Planner, llm-d Workload Variant Autoscaler) scale on inference-specific signals — queue depth, KV cache utilization — not CPU/DCGM duty cycle. The classic HPA trap is that `DCGM_FI_DEV_GPU_UTIL` is a duty-cycle measurement: 100% could be 10 requests or 100. vLLM pre-allocates KV cache memory, so memory never triggers scale-down. This lesson teaches you to compose the three layers and avoid the default Karpenter `WhenEmptyOrUnderutilized` policy that terminates running GPU jobs mid-inference.
+> 1つではなく3つの layer です。Karpenter は node を dynamic に provision します（1分未満、Cluster Autoscaler より40%高速）。KAI Scheduler は gang scheduling、topology awareness、hierarchical queues を扱い、8 GPU 中7 GPU だけ確保して1 GPU 待ちのまま燃え続ける partial allocation trap を防ぎます。Application-level autoscalers（NVIDIA Dynamo Planner、llm-d Workload Variant Autoscaler）は、CPU/DCGM duty cycle ではなく、queue depth や KV cache utilization といった inference-specific signal で scale します。classic HPA trap は `DCGM_FI_DEV_GPU_UTIL` が duty-cycle measurement である点です。100% は10 requests でも100 requests でもあり得ます。vLLM は KV cache memory を事前確保するため、memory は scale-down を trigger しません。このレッスンでは3 layer を組み合わせ、running GPU jobs を inference 中に terminate する default Karpenter `WhenEmptyOrUnderutilized` policy を避ける方法を学びます。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
-**Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (vLLM Serving Internals)
-**Time:** ~75 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy queue-depth autoscaler simulator)
+**前提条件:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (vLLM Serving Internals)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Diagram the three autoscaling layers (node provisioning, gang scheduling, application-level) and name the tool used at each layer.
-- Explain why `DCGM_FI_DEV_GPU_UTIL` is the wrong HPA signal for vLLM and name two replacements (queue depth, KV cache utilization).
-- Describe gang scheduling and the partial-allocation failure mode KAI Scheduler prevents (7 of 8 GPUs idle).
-- Name the Karpenter consolidation policy (`WhenEmptyOrUnderutilized`) that terminates running GPU jobs and state the 2026 safe alternative.
+- 3つの autoscaling layers（node provisioning、gang scheduling、application-level）を図示し、各 layer で使う tool を名前で挙げる。
+- `DCGM_FI_DEV_GPU_UTIL` が vLLM の HPA signal として間違っている理由を説明し、代替 signal を2つ（queue depth、KV cache utilization）挙げる。
+- gang scheduling と、KAI Scheduler が防ぐ partial-allocation failure mode（8 GPU 中7 GPU が idle）を説明する。
+- running GPU jobs を terminate する Karpenter consolidation policy（`WhenEmptyOrUnderutilized`）を名前で挙げ、2026年の safe alternative を述べる。
 
-## The Problem
+## 問題
 
-Your team ships an LLM-serving service on Kubernetes. You set up HPA with `DCGM_FI_DEV_GPU_UTIL` as the signal. The service pins at 100% utilization during business hours. HPA never scales up — it already thinks you're full. You add a replica manually; TTFT drops. HPA still doesn't scale. The signal is lying to you.
+あなたの team は Kubernetes 上で LLM-serving service を出荷します。`DCGM_FI_DEV_GPU_UTIL` を signal にして HPA を設定しました。service は business hours に 100% utilization に張り付きます。HPA は scale up しません。すでに満杯だと考えているからです。replica を手動で追加すると TTFT は下がります。それでも HPA は scale しません。signal が嘘をついています。
 
-Separately, you use Cluster Autoscaler for nodes. A 1M-token prompt arrives at 2 a.m.; the cluster spends 3 minutes provisioning a node, and the request times out.
+別の問題として、node には Cluster Autoscaler を使っています。午前2時に 1M-token prompt が到着すると、cluster は node provision に3分かけ、request は timeout します。
 
-Separately again, you deploy a 70B model requiring 8 GPUs across 2 nodes. The cluster has 7 GPUs free and 1 spread across 3 nodes. Cluster Autoscaler provisions a node for the 1 missing GPU. Seven nodes wait 4 minutes burning money while Kubernetes gets the last GPU up.
+さらに別の問題として、2 nodes にまたがる 8 GPUs を必要とする 70B model を deploy します。cluster には7 GPUs が空いていて、残り1つは3 nodes に分散しています。Cluster Autoscaler は不足している1 GPU のために node を provision します。Kubernetes が最後の GPU を立ち上げるまで、7 nodes が4分間待ちながらコストを燃やします。
 
-Three layers, three different failure modes. GPU-aware autoscaling in 2026 is not "turn on HPA." It's composing node provisioning, gang scheduling, and application-signal autoscaling.
+3つの layer、3つの異なる failure modes。2026年の GPU-aware autoscaling は「HPA を有効化する」ことではありません。node provisioning、gang scheduling、application-signal autoscaling を組み合わせることです。
 
 ## The Concept
 
 ### Layer 1 — node provisioning (Karpenter)
 
-Karpenter watches pending pods and provisions nodes within ~45-60 seconds (Cluster Autoscaler typically takes 90-120 seconds for GPU nodes). It picks instance types dynamically per the `NodePool` constraint — if your pod needs 8 H100s and the cluster has no matching node, Karpenter provisions one directly instead of scaling an existing group.
+Karpenter は pending pods を監視し、約45-60秒で node を provision します（Cluster Autoscaler は GPU nodes で通常90-120秒）。`NodePool` constraint に従って instance types を dynamic に選びます。pod が 8 H100s を必要とし、cluster に一致する node がなければ、既存 group を scale するのではなく直接 provision します。
 
-**The consolidation trap**: Karpenter's default `consolidationPolicy: WhenEmptyOrUnderutilized` is dangerous for GPU pools. It will terminate a running GPU node to migrate pods to a cheaper right-sized instance. For inference workloads that means evicting running requests and reloading a 70B model on the new node. Loss is minutes of capacity plus request failures.
+**The consolidation trap**: Karpenter の default `consolidationPolicy: WhenEmptyOrUnderutilized` は GPU pools では危険です。より安価で right-sized な instance に pods を移すため、running GPU node を terminate します。inference workload では running requests を evict し、新しい node で 70B model を reload することを意味します。失うものは数分の capacity と request failures です。
 
-Safe setting for GPU pools:
+GPU pools の safe setting:
 
 ```yaml
 disruption:
@@ -40,34 +40,34 @@ disruption:
   consolidateAfter: 1h
 ```
 
-Lets Karpenter consolidate truly empty nodes after an hour but never evict a running job.
+Karpenter は1時間後に本当に empty な node だけを consolidate し、running job は evict しません。
 
 ### Layer 2 — gang scheduling (KAI Scheduler)
 
-KAI Scheduler (project "Karp" then renamed) handles what default kube-scheduler does not:
+KAI Scheduler（project "Karp" から rename）は、default kube-scheduler が扱わないものを扱います。
 
-**Gang scheduling** — schedule all-or-nothing. A distributed inference pod requiring 8 GPUs either all 8 start together or none do. Without this, you get the partial-allocation trap: 7 of 8 pods start, wait indefinitely, burn money.
+**Gang scheduling** — all-or-nothing で schedule します。8 GPUs を必要とする distributed inference pod は、8つすべてが一緒に start するか、何も start しません。これがないと、8 pods のうち7つが start し、いつまでも待ち、cost を燃やす partial-allocation trap になります。
 
-**Topology awareness** — know which GPUs share NVLink, which sit on the same rack, which have InfiniBand between them. Place pods accordingly. A DeepSeek-V3 67B tensor-parallel workload must stay on one NVLink domain; KAI Scheduler respects that.
+**Topology awareness** — どの GPUs が NVLink を共有するか、どれが同じ rack にあるか、どれの間に InfiniBand があるかを知っています。それに応じて pods を配置します。DeepSeek-V3 67B tensor-parallel workload は1つの NVLink domain に留める必要があり、KAI Scheduler はそれを尊重します。
 
-**Hierarchical queues** — multiple teams compete for the same GPU pool with priority and quota. Team A's production pinch gets preempted by Team B's training job only if priority rules allow.
+**Hierarchical queues** — 複数 team が priority と quota を持って同じ GPU pool を競います。Team A の production pinch が Team B の training job に preempt されるのは、priority rules が許す場合だけです。
 
-KAI is deployed alongside kube-scheduler as a secondary scheduler; you annotate workloads to use it. Ray and vLLM production-stack both integrate.
+KAI は kube-scheduler と並行して secondary scheduler として deploy されます。workload に annotation を付けて使います。Ray と vLLM production-stack はどちらも integration しています。
 
 ### Layer 3 — application-level signals
 
-**The HPA trap**: `DCGM_FI_DEV_GPU_UTIL` is a duty-cycle metric — it measures whether the GPU was doing work at each sampling interval. 100% utilization could mean 10 concurrent requests or 100; the GPU was busy either way. Scaling on duty cycle is scaling blindly.
+**The HPA trap**: `DCGM_FI_DEV_GPU_UTIL` は duty-cycle metric です。各 sampling interval で GPU が仕事をしていたかを測ります。100% utilization は 10 concurrent requests でも100でもあり得ます。GPU はどちらでも busy です。duty cycle で scale するのは blind scaling です。
 
-Worse, vLLM and similar engines pre-allocate KV cache memory (up to `--gpu-memory-utilization`). Memory usage stays near 90% even at one request. Memory-based HPA never scales down.
+さらに悪いことに、vLLM と同様の engines は KV cache memory（最大 `--gpu-memory-utilization`）を事前確保します。1 request でも memory usage は90%近くに留まります。memory-based HPA は scale down しません。
 
 **2026 replacement signals**:
 
-- Queue depth (number of requests waiting for prefill).
-- KV cache utilization (what fraction of blocks are allocated to active sequences).
-- Per-replica P99 TTFT (your SLA signal).
-- Goodput (requests meeting all SLOs per second).
+- Queue depth（prefill を待つ request 数）。
+- KV cache utilization（active sequences に割り当てられた blocks の割合）。
+- Per-replica P99 TTFT（あなたの SLA signal）。
+- Goodput（すべての SLO を満たした requests per second）。
 
-NVIDIA Dynamo Planner and llm-d Workload Variant Autoscaler consume these signals and scale replicas. They replace HPA entirely for LLM serving.
+NVIDIA Dynamo Planner と llm-d Workload Variant Autoscaler はこれらの signal を取り込み、replica を scale します。LLM serving では HPA を完全に置き換えます。
 
 ### When to use what
 
@@ -81,11 +81,11 @@ NVIDIA Dynamo Planner and llm-d Workload Variant Autoscaler consume these signal
 
 ### Disaggregated prefill/decode complicates everything
 
-If you run disaggregated prefill/decode (Phase 17 · 17), you have two pod classes with different scaling triggers: prefill pods scale on queue depth, decode pods scale on KV cache pressure. llm-d exposes these as separate `Services` with per-role HPA. Do not try to put a single HPA in front of both.
+disaggregated prefill/decode（Phase 17 · 17）を動かす場合、2つの pod classes は異なる scaling triggers を持ちます。prefill pods は queue depth で scale し、decode pods は KV cache pressure で scale します。llm-d はこれらを per-role HPA 付きの separate `Services` として expose します。1つの HPA を両方の前に置こうとしてはいけません。
 
 ### Cold start matters here too
 
-Cold-start mitigation (Phase 17 · 10) is where node provisioning time becomes user-visible. Karpenter's 45-60 second warm-up plus a 20GB model load plus engine init means a from-zero request takes 2-5 minutes. Keep a warm pool (`min_workers=1`) for SLO-critical paths, or use Modal-style checkpointing at application layer.
+cold-start mitigation（Phase 17 · 10）は node provisioning time が user-visible になる場所です。Karpenter の45-60秒の warm-up、20GB model load、engine init を合わせると、from-zero request は2-5分かかります。SLO-critical path では warm pool（`min_workers=1`）を維持するか、application layer で Modal-style checkpointing を使います。
 
 ### Numbers you should remember
 
@@ -96,36 +96,36 @@ Cold-start mitigation (Phase 17 · 10) is where node provisioning time becomes u
 
 ## Use It
 
-`code/main.py` simulates a three-layer autoscaler on a bursty GPU workload. Compares naive HPA (duty cycle), queue-depth HPA, and KAI-gang-scheduled scaling. Reports unmet requests, idle-GPU minutes, and a composite score.
+`code/main.py` は bursty GPU workload 上で three-layer autoscaler を simulate します。naive HPA（duty cycle）、queue-depth HPA、KAI-gang-scheduled scaling を比較し、unmet requests、idle-GPU minutes、composite score を報告します。
 
 ## Ship It
 
-This lesson produces `outputs/skill-gpu-autoscaler-plan.md`. Given cluster topology, workload shape, and SLO, it designs a three-layer autoscaling plan.
+このレッスンは `outputs/skill-gpu-autoscaler-plan.md` を生成します。cluster topology、workload shape、SLO を入力すると、three-layer autoscaling plan を設計します。
 
 ## Exercises
 
-1. Run `code/main.py`. Under a bursty workload, how many requests does naive duty-cycle HPA drop that queue-depth HPA catches? Where does the difference come from?
-2. Design a Karpenter NodePool for a cluster serving Llama 3.3 70B FP8 on H100 SXM5. Specify `capacity-type`, `disruption.consolidationPolicy`, `consolidateAfter`, and a taint that keeps non-GPU workloads off these nodes.
-3. Your team reports that deployments are stuck in Pending because "GPUs available but pod won't schedule." Diagnose — is this Karpenter, kube-scheduler, or KAI Scheduler? Which metrics confirm?
-4. Pick a signal to autoscale disaggregated prefill pods and a different signal for decode pods. Justify both.
-5. Compute the cost of the `WhenEmptyOrUnderutilized` consolidation trap on a 24x7 production service that averages 60 request-dropping events/day at P99 TTFT > 10s.
+1. `code/main.py` を実行してください。bursty workload で、naive duty-cycle HPA が drop し、queue-depth HPA が拾う requests は何件ですか。差はどこから来ていますか。
+2. H100 SXM5 上で Llama 3.3 70B FP8 を serve する cluster 向けに Karpenter NodePool を設計してください。`capacity-type`、`disruption.consolidationPolicy`、`consolidateAfter`、non-GPU workloads をこれらの nodes から除外する taint を指定してください。
+3. team が「GPUs は available なのに pod が schedule されず Pending のまま」と報告しています。診断してください。これは Karpenter、kube-scheduler、KAI Scheduler のどれですか。どの metrics で確認しますか。
+4. disaggregated prefill pods を autoscale する signal と、decode pods 用の別 signal を選んでください。両方を正当化してください。
+5. 平均60件/day の request-dropping events（P99 TTFT > 10s）を起こす 24x7 production service で、`WhenEmptyOrUnderutilized` consolidation trap の cost を計算してください。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Karpenter | "the node provisioner" | Kubernetes node autoscaler; sub-minute provisioning |
-| Cluster Autoscaler | "the old scaler" | Kubernetes node autoscaler predecessor; slower, group-based |
-| KAI Scheduler | "the GPU scheduler" | Secondary scheduler for gang + topology + queues |
-| Gang scheduling | "all or nothing" | Schedule N pods atomically or defer all of them |
-| Topology awareness | "rack-aware" | Place pods based on NVLink/IB/rack placement |
-| `DCGM_FI_DEV_GPU_UTIL` | "GPU utilization" | Duty-cycle metric; NOT a scaling signal for LLMs |
-| Queue depth | "waiting requests" | Correct HPA signal for prefill-bound scaling |
-| KV cache utilization | "memory pressure" | Correct HPA signal for decode-bound scaling |
-| Consolidation | "Karpenter consolidation" | Node termination to cheaper instance type |
-| `WhenEmpty + 1h` | "safe consolidation" | Policy that doesn't evict running GPU jobs |
+| Karpenter | "the node provisioner" | Kubernetes node autoscaler。sub-minute provisioning |
+| Cluster Autoscaler | "the old scaler" | Kubernetes node autoscaler の predecessor。遅く、group-based |
+| KAI Scheduler | "the GPU scheduler" | gang + topology + queues 向け secondary scheduler |
+| Gang scheduling | "all or nothing" | N pods を atomically に schedule するか、すべて defer する |
+| Topology awareness | "rack-aware" | NVLink/IB/rack placement に基づいて pods を配置する |
+| `DCGM_FI_DEV_GPU_UTIL` | "GPU utilization" | duty-cycle metric。LLM の scaling signal ではない |
+| Queue depth | "waiting requests" | prefill-bound scaling の正しい HPA signal |
+| KV cache utilization | "memory pressure" | decode-bound scaling の正しい HPA signal |
+| Consolidation | "Karpenter consolidation" | より安い instance type への移行のための node termination |
+| `WhenEmpty + 1h` | "safe consolidation" | running GPU jobs を evict しない policy |
 
-## Further Reading
+## 参考文献
 
 - [KAI Scheduler GitHub](https://github.com/kai-scheduler/KAI-Scheduler) — design docs and configuration examples.
 - [Karpenter Disruption Controls](https://karpenter.sh/docs/concepts/disruption/) — consolidation policy semantics and GPU-safe defaults.

@@ -1,32 +1,32 @@
 ---
 name: quantization-picker
-description: Pick a 2026 quantization format given hardware, engine, workload, and quality tolerance, and produce a calibration + validation plan.
+description: Hardware、engine、workload、quality tolerance に基づいて 2026 年の quantization format を選び、calibration + validation plan を作成します。
 version: 1.0.0
 phase: 17
 lesson: 09
 tags: [quantization, awq, gptq, gguf, fp8, nvfp4, calibration]
 ---
 
-Given hardware (CPU / H100 / H200 / B200 / GB200, with count), engine (llama.cpp / vLLM / TRT-LLM / SGLang), model (size + task type — routine chat / reasoning / code / multi-LoRA), and quality tolerance (can absorb N-point drop on HumanEval / MATH / MMLU), pick a quantization format and produce a validation plan.
+Hardware（CPU / H100 / H200 / B200 / GB200 と台数）、engine（llama.cpp / vLLM / TRT-LLM / SGLang）、model（size + task type — routine chat / reasoning / code / multi-LoRA）、quality tolerance（HumanEval / MATH / MMLU で N-point drop を許容できるか）を受け取り、quantization format を選び validation plan を作成します。
 
-Produce:
+作成するもの:
 
-1. Format recommendation. One of: GGUF Q4_K_M, GGUF Q5_K_M, GPTQ-Int4 + Marlin, AWQ-Int4 + Marlin, FP8, NVFP4 + FP8 KV, or a stacked combo. Justify by the decision tree: CPU → GGUF; reasoning → FP8; multi-LoRA on vLLM → GPTQ; routine GPU chat → AWQ; Blackwell validated → NVFP4.
-2. Memory budget. Report weights + KV cache (at reported concurrency × context) + activations. Confirm it fits on the target GPU or call out multi-GPU requirement.
-3. Calibration plan. Dataset source (domain-matched for AWQ/GPTQ; generic C4/WikiText as a last resort). Sample count (500-2000 for domain). Validation set (10% held out from calibration pool).
-4. Validation plan. Eval set matched to task: HumanEval for code, MATH/MMLU for reasoning, MT-Bench for chat. Baseline BF16 vs quantized. Ship if drop ≤ quality tolerance.
-5. KV cache decision. Separate from weight quantization. Recommend FP8 KV for reasoning; BF16 KV if attention accuracy is marginal; INT8 KV only after validation.
-6. Rollback path. Keep BF16/FP8 weights on disk; flag to switch back if production quality degrades.
+1. Format recommendation。次のいずれか: GGUF Q4_K_M、GGUF Q5_K_M、GPTQ-Int4 + Marlin、AWQ-Int4 + Marlin、FP8、NVFP4 + FP8 KV、または stacked combo。Decision tree で正当化する: CPU → GGUF、reasoning → FP8、vLLM の multi-LoRA → GPTQ、routine GPU chat → AWQ、validated Blackwell → NVFP4。
+2. Memory budget。Weights + KV cache（報告された concurrency × context）+ activations を報告する。Target GPU に収まるかを確認し、必要なら multi-GPU requirement を明記する。
+3. Calibration plan。Dataset source（AWQ/GPTQ では domain-matched、最後の手段として generic C4/WikiText）。Sample count（domain では 500-2000）。Validation set（calibration pool から 10% held out）。
+4. Validation plan。Task に合う eval set: code なら HumanEval、reasoning なら MATH/MMLU、chat なら MT-Bench。Baseline BF16 vs quantized。Drop が quality tolerance 以下なら ship。
+5. KV cache decision。Weight quantization とは別。Reasoning には FP8 KV を推奨。Attention accuracy が marginal なら BF16 KV。INT8 KV は validation 後のみ。
+6. Rollback path。BF16/FP8 weights を disk に保持し、production quality が劣化したら戻す flag を用意する。
 
 Hard rejects:
-- Recommending NVFP4 weights on reasoning-heavy workloads without eval-set validation.
-- Calibrating on generic web data for domain models. Always use in-domain.
-- Forgetting the KV cache in HBM budget. Always itemize.
-- Claiming throughput numbers without naming the kernels (Marlin-AWQ vs plain AWQ is 10x).
+- Eval-set validation なしで reasoning-heavy workloads に NVFP4 weights を推奨すること。
+- Domain models を generic web data で calibrate すること。必ず in-domain を使う。
+- HBM budget で KV cache を忘れること。必ず itemize する。
+- Kernels を明記せずに throughput numbers を主張すること（Marlin-AWQ と plain AWQ では 10x 違う）。
 
 Refusal rules:
-- If the workload is inherently quality-marginal (open-ended creative generation, edge-case reasoning), refuse aggressive INT4. Stay FP8 or BF16.
-- If the engine is llama.cpp, refuse any format other than GGUF. Matching format to engine is table stakes.
-- If the user cannot run a 1,000-sample eval, refuse. No blind quantization in production.
+- Workload が本質的に quality-marginal（open-ended creative generation、edge-case reasoning）の場合、aggressive INT4 は拒否する。FP8 または BF16 に留める。
+- Engine が llama.cpp の場合、GGUF 以外の format は拒否する。Format と engine の一致は最低条件。
+- User が 1,000-sample eval を実行できない場合は拒否する。Production で blind quantization は不可。
 
-Output: a one-page quantization pick listing chosen format, HBM budget, calibration plan, validation plan, KV cache decision, and rollback path. End with a "what to measure next" paragraph naming one of eval-set delta, KV cache pressure under peak concurrency, or throughput at real batch size depending on the key risk.
+Output: chosen format、HBM budget、calibration plan、validation plan、KV cache decision、rollback path を列挙した 1-page quantization pick。最後に key risk に応じて eval-set delta、peak concurrency 下の KV cache pressure、real batch size での throughput のいずれかを挙げる "what to measure next" paragraph で締めます。

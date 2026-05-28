@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is it important to have separate train, validation, and test splits in machine learning?",
-      "options": ["To make the dataset smaller so training is faster", "To evaluate model performance on unseen data and prevent overfitting", "To ensure each split uses a different file format", "To distribute data across multiple GPUs"],
+      "question": "machine learning で train、validation、test split を分けることが重要なのはなぜですか。",
+      "options": [
+        "dataset を小さくして training を速くするため",
+        "unseen data 上の model performance を評価し、overfitting を防ぐため",
+        "各 split が異なる file format を使うようにするため",
+        "data を複数 GPU に分散するため"
+      ],
       "correct": 1,
-      "explanation": "The training set teaches the model, the validation set tunes hyperparameters during training, and the test set provides a final unbiased evaluation on data the model has never seen."
+      "explanation": "training set は model に学習させ、validation set は training 中の hyperparameter 調整に使い、test set は model が見たことのない data で最終的な unbiased evaluation を提供します。"
     },
     {
       "stage": "pre",
-      "question": "What is the Hugging Face Hub primarily used for in AI/ML workflows?",
-      "options": ["Hosting and sharing datasets, models, and ML artifacts", "Running GPU training jobs in the cloud", "Managing Python virtual environments", "Version controlling source code like GitHub"],
+      "question": "AI/ML workflow で Hugging Face Hub は主に何に使われますか。",
+      "options": [
+        "dataset、model、ML artifact の hosting と sharing",
+        "cloud 上で GPU training job を実行する",
+        "Python virtual environment を管理する",
+        "GitHub のように source code を version control する"
+      ],
       "correct": 0,
-      "explanation": "Hugging Face Hub is a platform for hosting and sharing pre-trained models, datasets, and ML demos. The 'datasets' library provides a standard way to load data from it."
+      "explanation": "Hugging Face Hub は pre-trained model、dataset、ML demo を host し共有する platform です。`datasets` library はそこから data を load する標準的な方法を提供します。"
     },
     {
       "stage": "post",
-      "question": "What advantage does the Parquet format have over CSV for storing ML datasets?",
-      "options": ["Parquet files are human-readable in any text editor", "Parquet uses columnar storage for smaller file sizes and faster read speeds", "Parquet supports more data types than CSV", "Parquet files can be edited in spreadsheet applications"],
+      "question": "ML dataset の保存で Parquet format が CSV より有利な点は何ですか。",
+      "options": [
+        "Parquet file は任意の text editor で human-readable である",
+        "Parquet は columnar storage を使い、file size が小さく read speed が速い",
+        "Parquet は CSV より多くの data type を support する",
+        "Parquet file は spreadsheet application で編集できる"
+      ],
       "correct": 1,
-      "explanation": "Parquet is a columnar binary format that compresses better than CSV and enables fast column-level reads. It is the preferred storage format for ML datasets."
+      "explanation": "Parquet は columnar binary format で、CSV より圧縮率が高く、column-level read が高速です。ML dataset の preferred storage format です。"
     },
     {
       "stage": "post",
-      "question": "What does 'streaming=True' do when loading a dataset with the Hugging Face datasets library?",
-      "options": ["Downloads the dataset faster using parallel connections", "Loads data row by row without downloading the full dataset to disk", "Converts the dataset to a streaming video format", "Enables real-time updates as new data is added to the Hub"],
+      "question": "Hugging Face datasets library で dataset を load するとき、`streaming=True` は何をしますか。",
+      "options": [
+        "parallel connection を使って dataset を速く download する",
+        "full dataset を disk に download せず、row by row で data を load する",
+        "dataset を streaming video format に変換する",
+        "Hub に新しい data が追加されると real-time update を有効にする"
+      ],
       "correct": 1,
-      "explanation": "Streaming mode creates an IterableDataset that fetches rows on demand. Memory usage stays constant regardless of dataset size, which is essential for datasets too large to fit on disk."
+      "explanation": "streaming mode は row を demand に応じて取得する `IterableDataset` を作ります。dataset size に関係なく memory usage が一定で、disk に収まらない dataset には不可欠です。"
     },
     {
       "stage": "post",
-      "question": "When should you use DVC (Data Version Control) instead of just .gitignore for large files?",
-      "options": ["When your dataset is smaller than 1 MB", "When you need to reproduce exact experiments across machines with versioned data", "When you are working alone on a personal project", "When you only have CSV files in your project"],
+      "question": "large file に対して `.gitignore` だけではなく DVC (Data Version Control) を使うべきなのはいつですか。",
+      "options": [
+        "dataset が 1 MB 未満のとき",
+        "versioned data によって machine 間で exact experiment を再現する必要があるとき",
+        "personal project で一人作業しているとき",
+        "project に CSV file しかないとき"
+      ],
       "correct": 1,
-      "explanation": "DVC tracks data versions with small pointer files in git while storing the actual data in remote storage (S3, GCS). It ensures anyone can reproduce your exact experiment with the same data."
+      "explanation": "DVC は小さな pointer file を git に入れて data version を追跡し、実 data は remote storage (S3, GCS) に保存します。誰でも同じ data で exact experiment を再現できます。"
     }
   ]
 }

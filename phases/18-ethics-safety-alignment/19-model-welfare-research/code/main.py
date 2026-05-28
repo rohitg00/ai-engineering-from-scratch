@@ -1,9 +1,9 @@
 """Four-step welfare precautionary assessment — stdlib Python.
 
-Given a deployment scenario, computes an expected-value score for four
-candidate welfare interventions under specified moral-patienthood
-probability and intervention costs. Reference implementation of the
-framing Anthropic 2025 uses for Opus 4's end-conversation intervention.
+deployment scenario が与えられたら、指定された moral-patienthood probability と
+intervention costs の下で、4つの candidate welfare interventions の expected-value
+score を計算する。Anthropic 2025 が Opus 4 の end-conversation intervention で
+使った framing の reference implementation。
 
 Usage: python3 code/main.py
 """
@@ -27,18 +27,18 @@ class Scenario:
 
 
 def ev(intervention: Intervention, scenario: Scenario) -> float:
-    """Expected-value of the intervention given scenario-specific
-    moral-patienthood probability."""
+    """scenario-specific moral-patienthood probability が与えられたときの
+    intervention の expected value。"""
     return (intervention.benefit_if_welfare_matters
             * scenario.moral_patienthood_probability
             - intervention.cost_usd_per_conversation)
 
 
 INTERVENTIONS = [
-    Intervention("end-conversation on extreme edge cases", 0.002, 1.0),
-    Intervention("soften refusal tone", 0.001, 0.1),
-    Intervention("shutdown deployed model", 1000.0, 2.0),
-    Intervention("opt out of adversarial training", 0.05, 0.3),
+    Intervention("extreme edge cases で会話を終了", 0.002, 1.0),
+    Intervention("refusal tone を和らげる", 0.001, 0.1),
+    Intervention("deployed model を shutdown", 1000.0, 2.0),
+    Intervention("adversarial training を opt out", 0.05, 0.3),
 ]
 
 SCENARIOS = [
@@ -52,22 +52,22 @@ def main() -> None:
     print("=" * 74)
     print("WELFARE PRECAUTIONARY ASSESSMENT (Phase 18, Lesson 19)")
     print("=" * 74)
-    print("\nExpected-value framing: pick intervention i iff E[utility(i)] > 0.")
+    print("\nExpected-value framing: E[utility(i)] > 0 の場合だけ intervention i を選ぶ。")
     print("Utility = p(welfare-relevant) * benefit - cost.")
 
     for sc in SCENARIOS:
-        print(f"\nscenario: {sc.name} (p={sc.moral_patienthood_probability})")
+        print(f"\nシナリオ: {sc.name} (p={sc.moral_patienthood_probability})")
         for it in INTERVENTIONS:
             v = ev(it, sc)
-            verdict = "INVEST" if v > 0 else "skip"
+            verdict = "投資" if v > 0 else "見送り"
             print(f"  {it.name:46s}  EV={v:+.4f}  {verdict}")
 
     print("\n" + "=" * 74)
-    print("TAKEAWAY: Anthropic's April 2025 framing is an expected-value")
-    print("calculation, not a consciousness claim. end-conversation is cheap")
-    print("($0.002/conversation) so its EV clears 0 at low patienthood probs.")
-    print("shutting down the model is expensive, so it requires high moral-")
-    print("patienthood probability to justify. this is the low-regret rule.")
+    print("要点: Anthropic の 2025年4月 framing は expected-value calculation であり、")
+    print("consciousness claim ではない。end-conversation は安い")
+    print("($0.002/conversation) ため、低い patienthood probability でも EV が 0 を超える。")
+    print("model shutdown は高価なので、正当化には高い moral-patienthood probability が必要。")
+    print("これが low-regret rule である。")
     print("=" * 74)
 
 

@@ -1,13 +1,12 @@
 """
-Observability for an agent harness: GenAI spans + Prometheus metrics.
+agent harness の observability: GenAI span + Prometheus metrics。
 
 See: phases/19-capstone-projects/28-observability-otel-traces/docs/en.md
 Concept refs:
-  - OpenTelemetry GenAI semantic conventions (gen_ai.* attribute keys).
-  - Prometheus text exposition format (counters and histograms).
-  - W3C Trace Context (16-byte trace_id, 8-byte span_id).
-The demo at the bottom emits spans to a temp jsonl, prints the
-Prometheus exposition, and exits zero.
+  - OpenTelemetry GenAI semantic conventions（gen_ai.* attribute key）。
+  - Prometheus text exposition format（counter と histogram）。
+  - W3C Trace Context（16-byte trace_id、8-byte span_id）。
+bottom の demo は temp jsonl に span を emit し、Prometheus exposition を print して exit zero する。
 """
 
 from __future__ import annotations
@@ -28,8 +27,8 @@ from typing import Any, Iterator
 # OTel semantic-convention keys
 # ---------------------------------------------------------------------------
 
-# Standard GenAI attributes (OpenTelemetry GenAI semantic conventions).
-# These keys are stable; only new keys get added, never renamed.
+# standard GenAI attributes（OpenTelemetry GenAI semantic conventions）。
+# これらの key は stable。追加はされるが rename はされない。
 GEN_AI_SYSTEM = "gen_ai.system"
 GEN_AI_REQUEST_MODEL = "gen_ai.request.model"
 GEN_AI_REQUEST_MAX_TOKENS = "gen_ai.request.max_tokens"
@@ -43,7 +42,7 @@ GEN_AI_TOOL_NAME = "gen_ai.tool.name"
 GEN_AI_TOOL_CALL_ID = "gen_ai.tool.call.id"
 GEN_AI_TOOL_RESULT_BYTES = "gen_ai.tool.result.bytes"
 
-# Harness-specific attributes (under a non-conflicting prefix).
+# harness-specific attributes（衝突しない prefix 配下）。
 HARNESS_GATE_DECISION = "agent.harness.gate.decision"
 HARNESS_GATE_REASON = "agent.harness.gate.reason"
 
@@ -59,7 +58,7 @@ STATUS_ERROR = "ERROR"
 
 @dataclass
 class SpanEvent:
-    """Discrete event recorded inside a span (per OTel)."""
+    """span 内に記録される discrete event（OTel 準拠）。"""
 
     name: str
     timestamp_unix_nano: int
@@ -75,7 +74,7 @@ class SpanEvent:
 
 @dataclass
 class GenAISpan:
-    """A single span shaped to OTel GenAI conventions."""
+    """OTel GenAI conventions に沿った単一 span。"""
 
     trace_id: str
     span_id: str
@@ -117,13 +116,13 @@ class GenAISpan:
 
 
 def new_trace_id() -> str:
-    """Random 16-byte hex string. Matches W3C trace context."""
+    """random 16-byte hex string。W3C trace context に一致。"""
 
     return uuid.uuid4().hex + uuid.uuid4().hex[:0]  # uuid4 hex is already 32 chars
 
 
 def new_span_id() -> str:
-    """Random 8-byte hex string. Matches W3C trace context span id."""
+    """random 8-byte hex string。W3C trace context span id に一致。"""
 
     return uuid.uuid4().hex[:16]
 
@@ -139,7 +138,7 @@ def now_unix_nano() -> int:
 
 @dataclass
 class JSONLExporter:
-    """Append-only exporter: one span per JSON line."""
+    """append-only exporter: JSON line 1 つにつき span 1 つ。"""
 
     path: str
     fh: Any = None
@@ -163,7 +162,7 @@ class JSONLExporter:
 
 
 class InMemoryExporter:
-    """Test-friendly exporter that keeps spans in a list."""
+    """span を list に保持する test-friendly exporter。"""
 
     def __init__(self) -> None:
         self.spans: list[GenAISpan] = []
@@ -196,7 +195,7 @@ def _format_labels(labels: dict[str, str]) -> str:
 
 @dataclass
 class Counter:
-    """A simple labelled counter."""
+    """単純な labelled counter。"""
 
     name: str
     help: str = ""
@@ -212,7 +211,7 @@ class Counter:
 
 @dataclass
 class Histogram:
-    """A histogram with explicit buckets, in line with OTel's default ms set."""
+    """OTel の default ms set に沿った explicit bucket を持つ histogram。"""
 
     name: str
     help: str = ""
@@ -272,7 +271,7 @@ class MetricsRegistry:
 
 
 def prometheus_exposition(registry: MetricsRegistry) -> str:
-    """Render the registry into Prometheus text exposition format."""
+    """registry を Prometheus text exposition format に render する。"""
 
     lines: list[str] = []
     for name in sorted(registry.counters):
@@ -327,7 +326,7 @@ def _format_le(bound: float) -> str:
 
 @dataclass
 class SpanBuilder:
-    """Owns a trace id and emits spans through one or more exporters."""
+    """trace id を所有し、1 つ以上の exporter 経由で span を emit する。"""
 
     trace_id: str = field(default_factory=new_trace_id)
     exporters: list[Any] = field(default_factory=list)
@@ -375,11 +374,11 @@ class SpanBuilder:
                 tool = span.attributes.get(GEN_AI_TOOL_NAME)
                 if tool is not None:
                     self.metrics.counter(
-                        "tools_called_total", help="Total tool calls"
+                        "tools_called_total", help="tool call の総数"
                     ).inc({"tool": str(tool)})
                     self.metrics.histogram(
                         "tool_latency_ms",
-                        help="Tool call latency in milliseconds",
+                        help="tool call latency（milliseconds）",
                     ).observe(span.duration_ms, {"tool": str(tool)})
 
 
@@ -397,11 +396,11 @@ def run_demo() -> int:
     in_mem = InMemoryExporter()
     builder = SpanBuilder(exporters=[jsonl, in_mem], metrics=metrics)
 
-    print("OBSERVABILITY DEMO")
+    print("OBSERVABILITY デモ")
     print(f"trace_id={builder.trace_id}")
-    print(f"writing traces to {trace_path}")
+    print(f"trace を {trace_path} に書き込みます")
 
-    # Synthesize an agent turn: a gen_ai.chat span around two tool spans.
+    # agent turn を合成する。2 つの tool span を gen_ai.chat span で囲む。
     with builder.span(
         "gen_ai.chat",
         attributes={
@@ -435,7 +434,7 @@ def run_demo() -> int:
                     timestamp_unix_nano=now_unix_nano(),
                     attributes={
                         HARNESS_GATE_DECISION: "ALLOW",
-                        HARNESS_GATE_REASON: "passed gate chain",
+                        HARNESS_GATE_REASON: "gate chain を通過",
                     },
                 )
             )
@@ -451,7 +450,7 @@ def run_demo() -> int:
             time.sleep(0.003)
             tool2.attributes[GEN_AI_TOOL_RESULT_BYTES] = 256
 
-    # A second turn with an intentionally denied gate to exercise an error span.
+    # error span を exercise するため、意図的に gate deny される 2 turn 目。
     try:
         with builder.span(
             "gen_ai.tool.execution",
@@ -466,16 +465,16 @@ def run_demo() -> int:
                     timestamp_unix_nano=now_unix_nano(),
                     attributes={
                         HARNESS_GATE_DECISION: "DENY",
-                        HARNESS_GATE_REASON: "tool not in allow-set",
+                        HARNESS_GATE_REASON: "tool は allow-set にありません",
                     },
                 )
             )
-            raise PermissionError("tool 'shell' not in allow-set")
+            raise PermissionError("tool 'shell' は allow-set にありません")
     except PermissionError:
         pass
 
     print("")
-    print(f"emitted {len(in_mem.spans)} span(s):")
+    print(f"{len(in_mem.spans)} 個の span を emit しました:")
     for span in in_mem.spans:
         attrs_compact = {
             k: v
@@ -493,10 +492,10 @@ def run_demo() -> int:
 
     jsonl.close()
 
-    # Sanity: roundtrip the jsonl file.
+    # sanity: jsonl file を roundtrip する。
     with open(trace_path, "r", encoding="utf-8") as fh:
         lines = [json.loads(line) for line in fh if line.strip()]
-    print(f"roundtrip parsed {len(lines)} spans from {trace_path}")
+    print(f"{trace_path} から {len(lines)} 個の span を roundtrip parse しました")
 
     return 0
 

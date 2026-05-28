@@ -1,7 +1,7 @@
-// Internal MCP server: TypeScript skeleton, hand-rolled stdio JSON-RPC.
-// Python side ships the registry and policy gate; this project is the MCP
-// transport with three mock incident tools.
-// Refs: docs/en.md (this lesson),
+// Internal MCP server: hand-rolled stdio JSON-RPC の TypeScript skeleton。
+// Python 側は registry と policy gate を提供し、この project は 3 つの
+// mock incident tool を持つ MCP transport を提供する。
+// Refs: docs/en.md (この lesson),
 //   MCP 2025-11-25 spec: https://modelcontextprotocol.io/specification/2025-11-25
 //   JSON-RPC 2.0: https://www.jsonrpc.org/specification
 //   MCP registry 2026: https://github.com/modelcontextprotocol/registry
@@ -67,7 +67,7 @@ function runDemo(): void {
     process.stdout.write("\n>>> " + JSON.stringify(req) + "\n");
     process.stdout.write("<<< " + JSON.stringify(rep) + "\n");
   }
-  process.stdout.write("\nnotification (no response) processed for notifications/initialized\n");
+  process.stdout.write("\nnotification (response なし) notifications/initialized を処理しました\n");
 }
 
 function main(): void {

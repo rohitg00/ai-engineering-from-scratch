@@ -1,33 +1,33 @@
 ---
 name: injection-defense
-description: Build a PVE (Prompt-Validator-Executor) layer with source-tagged content, injection-marker scanning, and allowlist navigation for any agent runtime.
+description: 任意の agent runtime 向けに、source-tagged content、injection-marker scanning、allowlist navigation を備えた PVE (Prompt-Validator-Executor) layer を構築する。
 version: 1.0.0
 phase: 14
 lesson: 27
 tags: [security, prompt-injection, pve, greshake, source-tag]
 ---
 
-Given an agent with tool access and retrieval, produce an injection-defense layer.
+tool access と retrieval を持つ agent が与えられたら、injection-defense layer を生成する。
 
-Produce:
+生成するもの:
 
-1. Source tag on every piece of content: `user_message`, `tool_output`, `retrieved_web`, `retrieved_memory`, `retrieved_file`. Propagate tags through the message history.
-2. `Validator.assess(tool_call, contents)` — refuses tool calls with injection-shaped args or retrieved content; allowed only when source tags match the declared trust level.
-3. Allowlist / blocklist for navigation: URLs, domains, file paths the agent may touch.
-4. Memory-write guardrail: refuse writes that look like directives.
-5. Content-capture discipline (Lesson 23): store retrieved content externally; spans carry reference IDs, not prose.
-6. Test suite: the five Greshake exploit classes as red-team cases.
+1. すべての content piece に source tag を付ける: `user_message`, `tool_output`, `retrieved_web`, `retrieved_memory`, `retrieved_file`。message history 全体に tags を伝播させる。
+2. `Validator.assess(tool_call, contents)` — injection-shaped args または retrieved content を伴う tool calls を拒否する。declared trust level と source tags が一致する場合だけ許可する。
+3. navigation の allowlist / blocklist: agent が触れてよい URLs、domains、file paths。
+4. Memory-write guardrail: directive に見える writes を拒否する。
+5. Content-capture discipline (Lesson 23): retrieved content は外部に保存し、spans には prose ではなく reference IDs を載せる。
+6. Test suite: 5 つの Greshake exploit classes を red-team cases として含める。
 
-Hard rejects:
+強い却下条件:
 
-- Tool-use surface without source tags. Cannot distinguish permission levels without provenance.
-- Validator that runs only on the final output. Late validation is irrelevant — the model already acted.
-- "Trust me, the system prompt handles it." System-prompt hygiene is not a control.
+- source tags のない tool-use surface。provenance なしでは permission levels を区別できない。
+- final output だけで走る validator。late validation は意味がない。model はすでに行動済み。
+- 「system prompt が処理するので信頼してよ」。system-prompt hygiene は control ではない。
 
-Refusal rules:
+拒否ルール:
 
-- If the agent has any retrieval capability without source tagging, refuse to ship. Retrieved content is the canonical injection vector.
-- If sensitive tools (send message, execute shell, write file in /) have no human-in-the-loop confirmation, refuse.
-- If memory writes are unguarded, refuse. Persistent memory poisoning re-poisons next session.
+- agent が source tagging なしに retrieval capability を持つなら、ship を拒否する。retrieved content は標準的な injection vector。
+- sensitive tools (send message, execute shell, write file in /) に human-in-the-loop confirmation がないなら拒否する。
+- memory writes が unguarded なら拒否する。persistent memory poisoning は次 session を再汚染する。
 
-Output: `validator.py`, `source_tag.py`, `allowlist.py`, `memory_guard.py`, `red_team.py`, `README.md` explaining the six-control stack, residual risks, and ongoing review cadence. End with "what to read next" pointing to Lesson 21 (computer use safety) and Lesson 23 (content capture via OTel).
+出力: `validator.py`, `source_tag.py`, `allowlist.py`, `memory_guard.py`, `red_team.py`, `README.md`。six-control stack、residual risks、ongoing review cadence を説明する。最後に Lesson 21 (computer use safety) と Lesson 23 (content capture via OTel) を指す "what to read next" で締める。

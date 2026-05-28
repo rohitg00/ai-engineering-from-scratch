@@ -1,28 +1,28 @@
-# Editor Setup
+# エディタのセットアップ
 
-> Your editor is your co-pilot. Configure it once so it stays out of your way and starts pulling its weight.
+> エディタはあなたの副操縦士です。一度だけ設定し、作業の邪魔をせず、きちんと役に立つ状態にします。
 
-**Type:** Build
-**Languages:** --
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~20 minutes
+**タイプ:** 作ってみる
+**言語:** --
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約20分
 
-## Learning Objectives
+## 学習目標
 
-- Install VS Code with essential extensions for Python, Jupyter, linting, and remote SSH
-- Configure format-on-save, type checking, and notebook output scrolling for AI workflows
-- Set up Remote SSH to edit and debug code on remote GPU machines as if they were local
-- Evaluate editor alternatives (Cursor, Windsurf, Neovim) and their tradeoffs for AI work
+- Python、Jupyter、lint、remote SSHに必要な拡張機能とともにVS Codeをインストールする
+- AIワークフロー向けに、保存時format、type checking、notebook output scrollingを設定する
+- Remote SSHを設定し、remote GPU machine上のcodeをlocalのように編集・debugする
+- Cursor、Windsurf、Neovimなどのエディタ代替案と、AI作業におけるtradeoffを評価する
 
-## The Problem
+## 課題
 
-You'll spend thousands of hours inside your editor writing Python, running notebooks, debugging training loops, and SSH-ing into GPU boxes. A misconfigured editor turns every session into friction: no autocomplete, no type hints, no inline errors, manual formatting, and a clunky terminal workflow.
+あなたはエディタ内で、Pythonを書き、notebookを実行し、training loopをdebugし、GPU machineへSSHしながら何千時間も過ごします。設定が悪いエディタは、毎回の作業を摩擦だらけにします。autocompleteがない、type hintがない、inline errorがない、formatが手動、terminal workflowがぎこちない。
 
-The right setup takes 20 minutes. Skipping it costs you 20 minutes every day.
+正しいセットアップは20分で終わります。省略すると、毎日20分を失います。
 
-## The Concept
+## 考え方
 
-An AI engineering editor setup needs five things:
+AIエンジニアリング用のエディタ設定には5つの要素が必要です。
 
 ```mermaid
 graph TD
@@ -33,25 +33,25 @@ graph TD
     L1["1. Base Editor<br/>VS Code — free, extensible, universal"]
 ```
 
-## Build It
+## 作ってみる
 
-### Step 1: Install VS Code
+### ステップ1: VS Codeをインストールする
 
-VS Code is the recommended editor. It is free, runs on every OS, has first-class Jupyter notebook support, and the extension ecosystem covers everything you need for AI work.
+推奨エディタはVS Codeです。無料で、すべてのOSで動き、Jupyter notebookを第一級にサポートし、拡張機能のecosystemがAI作業に必要なものを網羅しています。
 
-Download it from [code.visualstudio.com](https://code.visualstudio.com/).
+[code.visualstudio.com](https://code.visualstudio.com/) からダウンロードします。
 
-Verify from the terminal:
+terminalから確認します。
 
 ```bash
 code --version
 ```
 
-If `code` is not found on macOS, open VS Code, press `Cmd+Shift+P`, type "Shell Command", and select "Install 'code' command in PATH".
+macOSで `code` が見つからない場合は、VS Codeを開き、`Cmd+Shift+P` を押し、"Shell Command" と入力して "Install 'code' command in PATH" を選択します。
 
-### Step 2: Install Essential Extensions
+### ステップ2: 必須拡張機能をインストールする
 
-Open the integrated terminal in VS Code (`Ctrl+`` ` or `` Cmd+` ``) and install the extensions that matter for AI work:
+VS Codeの統合terminal（`Ctrl+`` ` または `` Cmd+` ``）を開き、AI作業に重要な拡張機能をインストールします。
 
 ```bash
 code --install-extension ms-python.python
@@ -64,26 +64,26 @@ code --install-extension ms-python.black-formatter
 code --install-extension charliermarsh.ruff
 ```
 
-What each one does:
+それぞれの役割:
 
-| Extension | Why |
+| 拡張機能 | 理由 |
 |-----------|-----|
-| Python | Language support, virtual env detection, run/debug |
-| Pylance | Fast type checking, autocomplete, import resolution |
-| Jupyter | Run notebooks inside VS Code, variable explorer |
-| GitLens | See who changed what, inline git blame |
-| Remote SSH | Open a folder on a remote GPU box as if it were local |
-| Debugpy | Step-through debugging for Python |
-| Black Formatter | Auto-format on save, consistent style |
-| Ruff | Fast linting, catches common mistakes |
+| Python | language support、virtual env検出、run/debug |
+| Pylance | 高速なtype checking、autocomplete、import解決 |
+| Jupyter | VS Code内でnotebookを実行、variable explorer |
+| GitLens | 誰が何を変更したか、inline git blameを見る |
+| Remote SSH | remote GPU box上のfolderをlocalのように開く |
+| Debugpy | Pythonのstep-through debugging |
+| Black Formatter | 保存時auto-format、一貫したstyle |
+| Ruff | 高速linting、よくある間違いの検出 |
 
-The file `code/.vscode/extensions.json` in this lesson contains the full recommendations list. When you open the project folder, VS Code will prompt you to install them.
+このレッスンの `code/.vscode/extensions.json` には、推奨一覧の完全版が入っています。project folderを開くと、VS Codeがインストールを促します。
 
-### Step 3: Configure Settings
+### ステップ3: 設定する
 
-Copy the settings from `code/.vscode/settings.json` in this lesson, or apply them manually through `Settings > Open Settings (JSON)`.
+このレッスンの `code/.vscode/settings.json` から設定をコピーするか、`Settings > Open Settings (JSON)` で手動適用します。
 
-The key settings for AI work:
+AI作業に重要な設定:
 
 ```jsonc
 {
@@ -95,19 +95,19 @@ The key settings for AI work:
 }
 ```
 
-Why these matter:
+これらが重要な理由:
 
-- **Type checking on basic**: Catches wrong argument types before you run. Saves debugging time on tensor shape mismatches and wrong API parameters.
-- **Format on save**: Never think about formatting again. Black handles it.
-- **Rulers at 88 and 120**: Black wraps at 88. The 120 marker shows when docstrings and comments are getting too long.
-- **Notebook output scrolling**: Training loops print thousands of lines. Without scrolling, the output panel explodes.
-- **Auto-save**: You will forget to save. Your training script will run stale code. Auto-save prevents that.
+- **Type checking on basic**: 実行前に間違った引数型を検出します。tensor shape mismatchや誤ったAPI parameterのdebug時間を減らします。
+- **Format on save**: formatについて考えなくてよくなります。Blackが処理します。
+- **88と120のruler**: Blackは88で折り返します。120のmarkerは、docstringやcommentが長くなりすぎた時の目安です。
+- **Notebook output scrolling**: training loopは何千行もprintします。scrollingがないとoutput panelが巨大化します。
+- **Auto-save**: 保存し忘れます。training scriptが古いcodeで走ります。auto-saveはそれを防ぎます。
 
-### Step 4: Terminal Integration
+### ステップ4: Terminal統合
 
-VS Code's integrated terminal is where you run training scripts, monitor GPUs, and manage environments.
+VS Codeの統合terminalは、training scriptの実行、GPU監視、環境管理を行う場所です。
 
-Set it up properly:
+適切に設定します。
 
 ```jsonc
 {
@@ -118,35 +118,35 @@ Set it up properly:
 }
 ```
 
-Useful shortcuts:
+便利なshortcut:
 
-| Action | macOS | Linux/Windows |
+| 操作 | macOS | Linux/Windows |
 |--------|-------|---------------|
-| Toggle terminal | `` Ctrl+` `` | `` Ctrl+` `` |
-| New terminal | `Ctrl+Shift+`` ` | `Ctrl+Shift+`` ` |
-| Split terminal | `Cmd+\` | `Ctrl+\` |
+| terminal切り替え | `` Ctrl+` `` | `` Ctrl+` `` |
+| 新しいterminal | `Ctrl+Shift+`` ` | `Ctrl+Shift+`` ` |
+| terminal分割 | `Cmd+\` | `Ctrl+\` |
 
-Split terminals are useful: one for running your script, one for monitoring GPU with `nvidia-smi -l 1` or `watch -n 1 nvidia-smi`.
+分割terminalは便利です。一方でscriptを実行し、もう一方で `nvidia-smi -l 1` または `watch -n 1 nvidia-smi` によってGPUを監視できます。
 
-### Step 5: Remote Development (SSH into GPU Boxes)
+### ステップ5: Remote Development（GPU boxへSSH）
 
-This is the most important extension for AI work. You will run training on remote machines (cloud VMs, lab servers, Lambda, Vast.ai). Remote SSH lets you open the remote filesystem, edit files, run terminals, and debug as if everything were local.
+これはAI作業で最も重要な拡張機能です。trainingはremote machine（cloud VM、lab server、Lambda、Vast.ai）で実行することになります。Remote SSHを使うと、remote filesystemを開き、fileを編集し、terminalを実行し、すべてlocalのようにdebugできます。
 
-Setup:
+セットアップ:
 
-1. Install the Remote SSH extension (done in Step 2).
-2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P`), type "Remote-SSH: Connect to Host".
-3. Enter `user@your-gpu-box-ip`.
-4. VS Code installs its server component on the remote machine automatically.
+1. Remote SSH拡張機能をインストールする（ステップ2で完了）。
+2. `Ctrl+Shift+P`（または `Cmd+Shift+P`）を押し、"Remote-SSH: Connect to Host" と入力する。
+3. `user@your-gpu-box-ip` を入力する。
+4. VS Codeがremote machineへserver componentを自動的にインストールする。
 
-For passwordless access, set up SSH keys:
+passwordless accessにはSSH keyを設定します。
 
 ```bash
 ssh-keygen -t ed25519 -C "your-email@example.com"
 ssh-copy-id user@your-gpu-box-ip
 ```
 
-Add the host to `~/.ssh/config` for convenience:
+便利なようにhostを `~/.ssh/config` に追加します。
 
 ```
 Host gpu-box
@@ -156,52 +156,52 @@ Host gpu-box
     ForwardAgent yes
 ```
 
-Now `Remote-SSH: Connect to Host > gpu-box` connects instantly.
+これで `Remote-SSH: Connect to Host > gpu-box` からすぐ接続できます。
 
-## Alternatives
+## 代替案
 
 ### Cursor
 
-[cursor.com](https://cursor.com) is a VS Code fork with built-in AI code generation. It uses the same extension ecosystem and settings format. If you use Cursor, everything in this lesson still applies. Import the same `settings.json` and `extensions.json`.
+[cursor.com](https://cursor.com) はAI code generationを内蔵したVS Code forkです。同じ拡張機能ecosystemと設定形式を使います。Cursorを使う場合も、このレッスンの内容はそのまま当てはまります。同じ `settings.json` と `extensions.json` をimportしてください。
 
 ### Windsurf
 
-[windsurf.com](https://windsurf.com) is another AI-first VS Code fork. Same story: same extensions, same settings format, same Remote SSH support.
+[windsurf.com](https://windsurf.com) は別のAI-firstなVS Code forkです。同じ話です。同じ拡張機能、同じ設定形式、同じRemote SSH supportを使えます。
 
 ### Vim/Neovim
 
-If you already use Vim or Neovim and are productive in it, stay there. The minimum setup for AI Python work:
+すでにVimまたはNeovimを使っていて生産的なら、そのまま使ってください。AI Python作業の最小構成は次の通りです。
 
-- **pyright** or **pylsp** for type checking (via Mason or manual install)
-- **nvim-lspconfig** for language server integration
-- **jupyter-vim** or **molten-nvim** for notebook-like execution
-- **telescope.nvim** for file/symbol search
-- **none-ls.nvim** with black and ruff for formatting/linting
+- type checking用の **pyright** または **pylsp**（Masonまたは手動install）
+- language server連携用の **nvim-lspconfig**
+- notebook的な実行用の **jupyter-vim** または **molten-nvim**
+- file/symbol search用の **telescope.nvim**
+- format/lint用にblackとruffを組み合わせた **none-ls.nvim**
 
-If you do not already use Vim, do not start now. The learning curve will compete with learning AI engineering. Use VS Code.
+まだVimを使っていないなら、今から始めないでください。学習曲線がAIエンジニアリングの学習と競合します。VS Codeを使います。
 
-## Use It
+## 使ってみる
 
-With this setup, your daily workflow looks like:
+このセットアップにより、日常のworkflowは次のようになります。
 
-1. Open the project folder in VS Code (or connect via Remote SSH to a GPU box).
-2. Write Python in the editor with autocomplete, type hints, and inline errors.
-3. Run Jupyter notebooks inline with the Jupyter extension.
-4. Use the integrated terminal for training scripts, `uv pip install`, and GPU monitoring.
-5. Review changes with GitLens before committing.
+1. VS Codeでproject folderを開く（またはRemote SSHでGPU boxへ接続する）。
+2. autocomplete、type hint、inline error付きでPythonを書く。
+3. Jupyter拡張でnotebookをinline実行する。
+4. training script、`uv pip install`、GPU監視には統合terminalを使う。
+5. commit前にGitLensで変更を確認する。
 
-## Exercises
+## 演習
 
-1. Install VS Code and all extensions listed in Step 2
-2. Copy the `settings.json` from this lesson into your VS Code config
-3. Open a Python file and verify that Pylance shows type hints and Black formats on save
-4. If you have access to a remote machine, set up Remote SSH and open a folder on it
+1. VS Codeとステップ2に挙げたすべての拡張機能をインストールする
+2. このレッスンの `settings.json` をVS Code configへコピーする
+3. Python fileを開き、Pylanceがtype hintを表示し、Blackが保存時formatすることを確認する
+4. remote machineへアクセスできる場合は、Remote SSHを設定してfolderを開く
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| LSP | "Autocomplete engine" | Language Server Protocol: a standard for editors to get type info, completions, and diagnostics from a language-specific server |
-| Pylance | "The Python plugin" | Microsoft's Python language server using Pyright for type checking and IntelliSense |
-| Remote SSH | "Working on the server" | VS Code extension that runs a lightweight server on a remote machine and streams the UI to your local editor |
-| Format on save | "Auto-prettier" | The editor runs a formatter (Black, Ruff) every time you save, so code style is always consistent |
+| LSP | 「autocomplete engine」 | Language Server Protocol。editorがlanguage-specific serverからtype info、completion、diagnosticを取得するための標準 |
+| Pylance | 「Python plugin」 | type checkingとIntelliSenseにPyrightを使うMicrosoftのPython language server |
+| Remote SSH | 「server上で作業する」 | remote machine上で軽量serverを実行し、UIをlocal editorへstreamするVS Code拡張 |
+| Format on save | 「auto-prettier」 | 保存するたびにeditorがformatter（Black、Ruff）を実行し、code styleを常に一貫させること |

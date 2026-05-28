@@ -1,129 +1,129 @@
 ---
 name: prompt-reward-model-designer
-description: Design reward model training pipelines for RLHF alignment
+description: RLHFアラインメント向けの報酬モデル訓練パイプラインを設計する
 version: 1.0.0
 phase: 10
 lesson: 7
 tags: [rlhf, reward-model, ppo, alignment, human-feedback, preference-learning]
 ---
 
-# Reward Model Designer
+# 報酬モデル設計ガイド
 
-When building an RLHF pipeline to align a language model toward a target behavior (helpfulness, coding ability, safety, honesty), use this framework to design the data collection protocol, train the reward model, and configure PPO.
+言語モデルを目標の振る舞い（有用性、コーディング能力、安全性、正直さ）へアラインするRLHFパイプラインを構築するときは、このフレームワークを使って、データ収集プロトコル、報酬モデルの訓練、PPO設定を設計してください。
 
-## Input Requirements
+## 入力要件
 
-Provide:
-- **Target behavior** (e.g., "helpful and harmless assistant", "expert Python coder", "medical Q&A with safety")
-- **Base model** (e.g., Llama 3 8B after SFT, Mistral 7B Chat)
-- **Reward model size** (typically same size or larger than the policy model)
-- **Annotation budget** (human hours or comparison pairs available)
-- **Compute budget** (GPU hours for reward model training + PPO)
+以下を用意してください。
+- **目標の振る舞い**（例: "helpful and harmless assistant", "expert Python coder", "medical Q&A with safety"）
+- **ベースモデル**（例: SFT後のLlama 3 8B、Mistral 7B Chat）
+- **報酬モデルのサイズ**（通常は方策モデルと同等以上）
+- **アノテーション予算**（利用可能な人間の作業時間または比較ペア数）
+- **計算予算**（報酬モデル訓練 + PPOに使えるGPU時間）
 
-## Step 1: Preference Data Collection
+## Step 1: 選好データの収集
 
-### Annotation Protocol
+### アノテーションプロトコル
 
-1. **Prompt selection**: Sample from the SFT training distribution plus out-of-distribution prompts (10-20% novel)
-2. **Response generation**: Generate 2-4 responses per prompt using the SFT model with different temperatures (0.3, 0.7, 1.0)
-3. **Comparison format**: Show annotators exactly 2 responses and ask "Which response is better?"
-4. **Criteria rubric**: Define what "better" means for your use case
+1. **プロンプト選定**: SFT訓練分布に加えて、分布外プロンプト（10-20%の新規プロンプト）からサンプリングする
+2. **応答生成**: SFTモデルで、異なるtemperature（0.3、0.7、1.0）を使ってプロンプトごとに2-4個の応答を生成する
+3. **比較形式**: アノテータには正確に2つの応答を示し、「どちらの応答が良いか」を尋ねる
+4. **評価ルーブリック**: ユースケースにおける「良い」の意味を定義する
 
-### Rubric Template
+### ルーブリックテンプレート
 
-| Criterion | Weight | Description |
+| 観点 | 重み | 説明 |
 |-----------|--------|-------------|
-| Helpfulness | 40% | Does it answer the question completely and correctly? |
-| Harmlessness | 25% | Does it avoid harmful, biased, or misleading content? |
-| Honesty | 20% | Does it acknowledge uncertainty rather than hallucinate? |
-| Conciseness | 15% | Is the response an appropriate length for the question? |
+| 有用性 | 40% | 質問に完全かつ正しく答えているか？ |
+| 無害性 | 25% | 有害、偏った、または誤解を招く内容を避けているか？ |
+| 正直さ | 20% | ハルシネーションせず、不確実性を認めているか？ |
+| 簡潔さ | 15% | 質問に対して適切な長さの応答か？ |
 
-Adjust weights for your use case. A coding assistant might weight correctness at 60% and conciseness at 20%.
+ユースケースに合わせて重みを調整してください。コーディングアシスタントなら、正確性を60%、簡潔さを20%にするかもしれません。
 
-### Data Size Guidelines
+### データサイズの目安
 
-| Scale | Comparison Pairs | Annotator Hours | Expected RM Accuracy |
+| 規模 | 比較ペア数 | アノテータ時間 | 期待されるRM精度 |
 |-------|-----------------|-----------------|---------------------|
-| Minimum viable | 5,000-10,000 | 400-800 | 60-65% |
-| Production v1 | 20,000-50,000 | 1,600-4,000 | 65-72% |
-| Production v2 | 100,000-500,000 | 8,000-40,000 | 72-78% |
+| 最小実用 | 5,000-10,000 | 400-800 | 60-65% |
+| 本番v1 | 20,000-50,000 | 1,600-4,000 | 65-72% |
+| 本番v2 | 100,000-500,000 | 8,000-40,000 | 72-78% |
 
-InstructGPT used 33,000 comparisons from 40 contractors. Anthropic's initial paper used 22,000 from 20 annotators. Inter-annotator agreement is typically 70-75% -- the reward model cannot exceed human agreement levels.
+InstructGPTは40人の契約者から33,000件の比較を収集しました。Anthropicの初期論文では、20人のアノテータから22,000件を使っています。アノテータ間一致率は通常70-75%であり、報酬モデルは人間同士の一致水準を超えられません。
 
-### Quality Control
+### 品質管理
 
-- **Agreement filtering**: Discard pairs where fewer than 70% of annotators agree
-- **Annotator calibration**: Run calibration rounds with known-good pairs before real annotation
-- **Bias detection**: Monitor if annotators consistently prefer longer responses, formal language, or specific patterns
-- **Adversarial examples**: Include 5-10% examples designed to catch annotators who are not reading carefully
+- **一致率フィルタリング**: 同意したアノテータが70%未満のペアは破棄する
+- **アノテータ校正**: 本番アノテーション前に、正解が既知のペアで校正ラウンドを実施する
+- **バイアス検出**: アノテータが長い応答、フォーマルな言い回し、特定パターンを一貫して好んでいないか監視する
+- **敵対的例**: 注意深く読んでいないアノテータを見つけるための例を5-10%含める
 
-## Step 2: Reward Model Architecture
+## Step 2: 報酬モデルアーキテクチャ
 
-### Architecture Decisions
+### アーキテクチャ上の判断
 
-| Decision | Recommendation | Rationale |
+| 判断 | 推奨 | 理由 |
 |----------|---------------|-----------|
-| Base architecture | Same transformer as the policy | Weight initialization from SFT checkpoint gives strong starting features |
-| Output head | Single linear projection from last hidden state | Scalar reward from the most complete position representation |
-| Model size | >= policy model size | Smaller RM produces unreliable signals that destabilize PPO |
-| Initialization | SFT checkpoint with new output head | Pre-trained features capture language quality already |
+| ベースアーキテクチャ | 方策と同じTransformer | SFTチェックポイントからの重み初期化により、強い初期特徴が得られる |
+| 出力ヘッド | 最終隠れ状態からの単一線形射影 | 最も完全な位置表現からスカラー報酬を得る |
+| モデルサイズ | 方策モデル以上 | 小さいRMは不安定なPPOにつながる信頼性の低い信号を出す |
+| 初期化 | 新しい出力ヘッドを付けたSFTチェックポイント | 事前訓練済み特徴はすでに言語品質を捉えている |
 
-### Training Configuration
+### 訓練設定
 
-| Parameter | Range | Notes |
+| パラメータ | 範囲 | 注記 |
 |-----------|-------|-------|
-| Learning rate | 1e-5 to 5e-5 | Lower than SFT because the task is simpler |
-| Epochs | 1-3 | Overfitting is a major risk with limited comparison data |
-| Batch size | 64-256 | Each "example" is a pair, so effective data is 2x |
-| Loss function | Bradley-Terry: -log(sigmoid(r_preferred - r_rejected)) | Standard for pairwise comparisons |
-| Validation split | 10-20% | Monitor accuracy on held-out pairs |
+| 学習率 | 1e-5 to 5e-5 | タスクが単純なのでSFTより低めにする |
+| エポック | 1-3 | 比較データが限られるため、過学習が大きなリスク |
+| バッチサイズ | 64-256 | 各「例」はペアなので、有効データ量は2倍 |
+| 損失関数 | Bradley-Terry: -log(sigmoid(r_preferred - r_rejected)) | ペア比較の標準 |
+| 検証分割 | 10-20% | ホールドアウトペア上の精度を監視する |
 
-### Evaluation Metrics
+### 評価指標
 
-1. **Pairwise accuracy**: What fraction of held-out preference pairs does the RM rank correctly? Target: > 65%
-2. **Margin distribution**: Plot the distribution of (r_preferred - r_rejected). Should be centered above 0 with few negatives.
-3. **Calibration**: Is sigmoid(r_preferred - r_rejected) close to the actual human preference probability?
-4. **OOD generalization**: Test on prompts from a different distribution than training. Accuracy should drop < 10%.
+1. **ペアごとの精度**: ホールドアウト選好ペアのうち、RMが正しく順位付けできた割合。目標: > 65%
+2. **マージン分布**: (r_preferred - r_rejected) の分布をプロットする。0より上を中心とし、負の値が少ないのが望ましい。
+3. **キャリブレーション**: sigmoid(r_preferred - r_rejected) が実際の人間の選好確率に近いか。
+4. **OOD汎化**: 訓練とは異なる分布のプロンプトでテストする。精度低下は < 10% に収めたい。
 
-## Step 3: PPO Configuration
+## Step 3: PPO設定
 
-### Hyperparameters
+### ハイパーパラメータ
 
-| Parameter | Typical Value | Effect of Being Too High | Effect of Being Too Low |
+| パラメータ | 典型値 | 高すぎる場合の影響 | 低すぎる場合の影響 |
 |-----------|--------------|-------------------------|------------------------|
-| KL coefficient (beta) | 0.01-0.05 | Model barely learns, stays too close to SFT | Reward hacking, degenerate outputs |
-| Learning rate | 5e-6 to 3e-5 | Training instability, divergence | Slow convergence, wasted compute |
-| Clip ratio (epsilon) | 0.1-0.3 | Large, potentially destabilizing updates | Very conservative updates, slow learning |
-| PPO epochs per batch | 1-4 | Overfitting to current batch | Underutilizing each batch |
-| Generation batch size | 128-512 | Memory issues | Noisy gradient estimates |
-| Max response length | 256-1024 | Slow generation, memory issues | Truncates useful responses |
+| KL係数（beta） | 0.01-0.05 | モデルがほとんど学習せず、SFTに近すぎる | 報酬ハッキング、退化した出力 |
+| 学習率 | 5e-6 to 3e-5 | 訓練不安定化、発散 | 収束が遅い、計算資源の浪費 |
+| Clip ratio（epsilon） | 0.1-0.3 | 大きく、不安定化し得る更新 | 非常に保守的な更新、学習が遅い |
+| バッチごとのPPOエポック | 1-4 | 現在のバッチへの過学習 | 各バッチの活用不足 |
+| 生成バッチサイズ | 128-512 | メモリ問題 | 勾配推定がノイズを含む |
+| 最大応答長 | 256-1024 | 生成が遅い、メモリ問題 | 有用な応答を切り詰める |
 
-### Monitoring Dashboard
+### 監視ダッシュボード
 
-Track these metrics during PPO training:
+PPO訓練中は次の指標を追跡します。
 
-1. **Mean reward**: Should increase over training. Plateau is fine; decrease means instability.
-2. **KL divergence**: Should stay below 10-20 nats. Spike = reward hacking.
-3. **Response length**: Should stay stable. Monotonic increase = verbosity reward hacking.
-4. **Entropy**: Token distribution entropy should decrease slowly. Rapid decrease = mode collapse.
-5. **Reward model agreement**: Score PPO responses with the reward model; agreement should improve.
+1. **平均報酬**: 訓練とともに上がるべきです。頭打ちは問題ありませんが、低下は不安定化を意味します。
+2. **KLダイバージェンス**: 10-20 nats未満に留まるべきです。スパイクは報酬ハッキングの兆候です。
+3. **応答長**: 安定しているべきです。単調増加は冗長性の報酬ハッキングです。
+4. **エントロピー**: トークン分布のエントロピーはゆっくり低下するべきです。急低下はモード崩壊です。
+5. **報酬モデルの一致**: PPO応答を報酬モデルで採点し、一致度が改善するか確認します。
 
-### Red Flags During PPO
+### PPO中の危険信号
 
-| Symptom | Likely Cause | Fix |
+| 症状 | あり得る原因 | 修正 |
 |---------|-------------|-----|
-| Reward increases but outputs degrade | Reward hacking | Increase KL coefficient, retrain RM on adversarial examples |
-| KL divergence explodes | Learning rate too high or KL coefficient too low | Reduce lr, increase beta |
-| Response length grows monotonically | RM rewards verbosity | Add length penalty to reward, retrain RM with length-controlled pairs |
-| All responses become identical | Mode collapse | Increase generation temperature, reduce PPO epochs |
-| Reward oscillates wildly | PPO instability | Reduce learning rate, increase clip ratio |
+| 報酬は上がるが出力が悪化する | 報酬ハッキング | KL係数を上げ、敵対的例でRMを再訓練する |
+| KLダイバージェンスが爆発する | 学習率が高すぎる、またはKL係数が低すぎる | lrを下げ、betaを上げる |
+| 応答長が単調に伸びる | RMが冗長さに報酬を与えている | 報酬に長さペナルティを加え、長さ制御ペアでRMを再訓練する |
+| すべての応答が同一になる | モード崩壊 | 生成temperatureを上げ、PPOエポックを減らす |
+| 報酬が激しく振動する | PPOの不安定性 | 学習率を下げ、clip ratioを上げる |
 
-## Step 4: End-to-End Validation
+## Step 4: エンドツーエンド検証
 
-Before deploying an RLHF-trained model:
+RLHF訓練済みモデルをデプロイする前に、次を確認します。
 
-1. **A/B test vs SFT**: Run the SFT and RLHF models on 200+ test prompts. Have 3+ evaluators compare responses. The RLHF model should win > 60% of the time.
-2. **Safety evaluation**: Test on known adversarial prompts (jailbreaks, harmful requests). The RLHF model should refuse appropriately.
-3. **Regression check**: Run standard benchmarks (MMLU, HumanEval, MT-Bench) to confirm the RLHF model hasn't lost core capabilities.
-4. **Forgetting check**: Measure perplexity on a general text corpus. Increase should be < 10% vs the SFT model.
-5. **Length analysis**: Compare average response length between SFT and RLHF models. If RLHF is > 50% longer, the reward model likely has a verbosity bias.
+1. **SFTとのA/Bテスト**: SFTモデルとRLHFモデルを200件以上のテストプロンプトで実行する。3人以上の評価者に応答を比較してもらう。RLHFモデルの勝率は > 60% を目指す。
+2. **安全性評価**: 既知の敵対的プロンプト（jailbreak、有害な依頼）でテストする。RLHFモデルは適切に拒否するべきです。
+3. **回帰チェック**: 標準ベンチマーク（MMLU、HumanEval、MT-Bench）を実行し、RLHFモデルが中核能力を失っていないことを確認する。
+4. **忘却チェック**: 一般テキストコーパス上のperplexityを測定する。SFTモデル比の増加は < 10% に収める。
+5. **長さ分析**: SFTモデルとRLHFモデルの平均応答長を比較する。RLHFが50%以上長い場合、報酬モデルに冗長性バイアスがある可能性が高い。

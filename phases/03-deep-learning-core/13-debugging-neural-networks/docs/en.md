@@ -1,38 +1,38 @@
-# Debugging Neural Networks
+# Neural Networks の Debugging
 
-> Your network compiled. It ran. It produced a number. The number is wrong and nothing crashed. Welcome to the hardest kind of debugging -- the kind where there is no error message.
+> network は compile できました。実行もできました。数値も出ました。その数値が間違っていて、何も crash していません。最も難しい種類の debugging へようこそ。error message がない種類です。
 
-**Type:** Practice
-**Languages:** Python, PyTorch
-**Prerequisites:** Phase 03 Lessons 01-10 (especially backpropagation, loss functions, optimizers)
-**Time:** ~90 minutes
+**種類:** Practice
+**言語:** Python, PyTorch
+**前提:** Phase 03 Lessons 01-10（特に backpropagation、loss functions、optimizers）
+**時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Diagnose common neural network failures (NaN loss, flat loss curve, overfitting, oscillation) using systematic debugging strategies
-- Apply the "overfit one batch" technique to verify that your model architecture and training loop are correct
-- Inspect gradient magnitudes, activation distributions, and weight norms to identify vanishing/exploding gradient problems
-- Build a debugging checklist that covers data pipeline, model architecture, loss function, optimizer, and learning rate issues
+- common neural network failures（NaN loss、flat loss curve、overfitting、oscillation）を systematic debugging strategies で診断する
+- "overfit one batch" technique を適用し、model architecture と training loop が正しいことを検証する
+- gradient magnitudes、activation distributions、weight norms を調べ、vanishing/exploding gradient problems を特定する
+- data pipeline、model architecture、loss function、optimizer、learning rate issues を網羅する debugging checklist を作る
 
-## The Problem
+## 問題
 
-Traditional software crashes when it is broken. A null pointer throws an exception. A type mismatch fails at compile time. An off-by-one error produces a clearly wrong output.
+traditional software は壊れると crash します。null pointer は exception を投げます。type mismatch は compile time に失敗します。off-by-one error は明らかに wrong output を出します。
 
-Neural networks do not give you that luxury.
+neural networks はその贅沢を与えてくれません。
 
-A broken neural network runs to completion, prints a loss value, and outputs predictions. The loss might decrease. The predictions might look plausible. But the model is silently wrong -- learning shortcuts, memorizing noise, or converging to a useless local minimum. Google researchers estimated that 60-70% of ML debugging time is spent on "silent" bugs that produce no errors but degrade model quality.
+壊れた neural network は最後まで実行され、loss value を print し、predictions を出します。loss は下がるかもしれません。predictions はそれらしく見えるかもしれません。しかし model は silently wrong です。shortcuts を学習し、noise を記憶し、役に立たない local minimum に収束します。Google researchers は、ML debugging time の 60-70% が、errors を出さず model quality を劣化させる "silent" bugs に費やされると推定しました。
 
-The difference between a working model and a broken one is often a single misplaced line: a missing `zero_grad()`, a transposed dimension, a learning rate off by 10x. the canonical "Recipe for Training Neural Networks" (2019) opens with this: "The most common neural net mistakes are bugs that don't crash."
+working model と broken model の違いは、しばしば 1 行の置き場所です。missing `zero_grad()`、transposed dimension、10x ずれた learning rate。canonical "Recipe for Training Neural Networks" (2019) はこう始まります。「最もよくある neural net mistakes は crash しない bugs である」。
 
-This lesson teaches you to find those bugs.
+この lesson では、それらの bugs を見つける方法を学びます。
 
-## The Concept
+## 概念
 
-### The Debugging Mindset
+### Debugging Mindset
 
-Forget print-and-pray debugging. Neural network debugging requires a systematic approach because the feedback loop is slow (minutes to hours per training run) and the symptoms are ambiguous (bad loss could mean 20 different things).
+print-and-pray debugging は忘れてください。neural network debugging には systematic approach が必要です。feedback loop は遅く（training run あたり minutes to hours）、symptoms は曖昧だからです（bad loss は 20 種類の意味を持ち得ます）。
 
-The golden rule: **start simple, add complexity one piece at a time, and verify each piece independently.**
+黄金律: **単純なものから始め、complexity を 1 つずつ追加し、各 piece を独立に検証する。**
 
 ```mermaid
 flowchart TD
@@ -50,57 +50,57 @@ flowchart TD
     K -->|"Too deep"| M["Optimization difficulty"]
 ```
 
-### Symptom 1: Loss Not Decreasing
+### 症状 1: Loss が下がらない
 
-This is the most common complaint. The training loop runs, epochs tick by, and the loss stays flat or oscillates wildly.
+これは最も多い complaint です。training loop は動き、epochs は進みますが、loss は flat のまま、または激しく oscillate します。
 
-**Wrong learning rate.** Too high: loss oscillates or jumps to NaN. Too low: loss decreases so slowly it looks flat. For Adam, start at 1e-3. For SGD, start at 1e-1 or 1e-2. Always try 3 learning rates spanning 10x each (e.g., 1e-2, 1e-3, 1e-4) before concluding something else is wrong.
+**learning rate が wrong。** 高すぎると loss が oscillate するか NaN へ飛びます。低すぎると loss は flat に見えるほどゆっくりしか下がりません。Adam では 1e-3 から始めます。SGD では 1e-1 または 1e-2 から始めます。何か別の問題だと結論する前に、必ず 10x 間隔で 3 つの learning rates（例: 1e-2、1e-3、1e-4）を試してください。
 
-**Dead ReLUs.** If a ReLU neuron receives a large negative input, it outputs 0 and its gradient is 0. It never activates again. If enough neurons die, the network cannot learn. Check: print the fraction of activations that are exactly 0 after each ReLU layer. If >50% are dead, switch to LeakyReLU or reduce the learning rate.
+**Dead ReLUs。** ReLU neuron が大きな negative input を受けると、output は 0、gradient も 0 になります。以後二度と activate しません。十分な数の neurons が dead になると、network は学習できません。確認方法: 各 ReLU layer の後で、activations が exactly 0 である割合を print します。50% を超えて dead なら、LeakyReLU に切り替えるか learning rate を下げます。
 
-**Vanishing gradients.** In deep networks with sigmoid or tanh activations, gradients shrink exponentially as they propagate backward. By the time they reach the first layer, they are ~0. The first layers stop learning. Fix: use ReLU/GELU, add residual connections, or use batch normalization.
+**Vanishing gradients。** sigmoid または tanh activations を持つ deep networks では、gradients が backward に伝播するにつれて指数的に小さくなります。first layer に到達する頃にはほぼ 0 です。最初の layers は学習を止めます。修正: ReLU/GELU を使う、residual connections を追加する、batch normalization を使う。
 
-**Exploding gradients.** The opposite problem -- gradients grow exponentially. Common in RNNs and very deep networks. Loss jumps to NaN. Fix: gradient clipping (`torch.nn.utils.clip_grad_norm_`), lower learning rate, or add normalization.
+**Exploding gradients。** 反対の問題です。gradients が指数的に大きくなります。RNNs や very deep networks でよく起きます。loss は NaN に飛びます。修正: gradient clipping（`torch.nn.utils.clip_grad_norm_`）、learning rate を下げる、normalization を追加する。
 
-### Symptom 2: Loss Decreasing But Model is Bad
+### 症状 2: Loss は下がるが Model が悪い
 
-The loss goes down. Training accuracy hits 99%. But test accuracy is 55%. Or the model produces nonsensical outputs on real data.
+loss は下がります。training accuracy は 99% に達します。しかし test accuracy は 55%。または model が real data に対して意味不明な outputs を出します。
 
-**Overfitting.** The model memorizes training data instead of learning patterns. Gap between training and validation loss grows over time. Fix: more data, dropout, weight decay, early stopping, data augmentation.
+**Overfitting。** model が patterns を学ぶ代わりに training data を記憶しています。training loss と validation loss の gap が時間とともに広がります。修正: more data、dropout、weight decay、early stopping、data augmentation。
 
-**Data leakage.** Test data leaked into training. Accuracy is suspiciously high. Common causes: shuffling before splitting, preprocessing with statistics from the full dataset, duplicate samples across splits. Fix: split first, preprocess second, check for duplicates.
+**Data leakage。** test data が training に漏れています。accuracy が怪しいほど高くなります。よくある原因は、split 前の shuffling、full dataset の statistics を使った preprocessing、splits 間の duplicate samples です。修正: split first、preprocess second、duplicates を確認する。
 
-**Label errors.** 5-10% of labels in most real datasets are wrong (Northcutt et al., 2021 -- "Pervasive Label Errors in Test Sets"). The model learns the noise. Fix: use confident learning to find and fix mislabeled examples, or use loss truncation to ignore high-loss samples.
+**Label errors。** ほとんどの real datasets では labels の 5-10% が間違っています（Northcutt et al., 2021 -- "Pervasive Label Errors in Test Sets"）。model は noise を学びます。修正: confident learning で mislabeled examples を見つけて直す、または loss truncation で high-loss samples を無視する。
 
-### Symptom 3: NaN or Inf in Loss
+### 症状 3: Loss の NaN または Inf
 
-The loss value becomes `nan` or `inf`. Training is dead.
+loss value が `nan` または `inf` になります。training は dead です。
 
-**Learning rate too high.** Gradient updates overshoot so far that weights explode. Fix: reduce by 10x.
+**learning rate が高すぎる。** gradient updates が大きく overshoot し、weights が explode します。修正: 10x 下げる。
 
-**log(0) or log(negative).** Cross-entropy loss computes `log(p)`. If your model outputs exactly 0 or a negative probability, the log explodes. Fix: clamp predictions to `[eps, 1-eps]` where `eps=1e-7`.
+**log(0) または log(negative)。** Cross-entropy loss は `log(p)` を計算します。model が exactly 0 または negative probability を出すと log が explode します。修正: predictions を `[eps, 1-eps]` に clamp します。ここで `eps=1e-7` です。
 
-**Division by zero.** Batch normalization divides by standard deviation. A batch with constant values has std=0. Fix: add epsilon to the denominator (PyTorch does this by default, but custom implementations might not).
+**Division by zero。** Batch normalization は standard deviation で割ります。constant values の batch では std=0 です。修正: denominator に epsilon を追加します（PyTorch は default で行いますが、custom implementations では抜けていることがあります）。
 
-**Numerical overflow.** Large activations fed into `exp()` produce Inf. Softmax is especially prone. Fix: subtract the max before exponentiating (the log-sum-exp trick).
+**Numerical overflow。** 大きな activations を `exp()` に入れると Inf が出ます。Softmax は特に起きやすいです。修正: exponentiating の前に max を引きます（log-sum-exp trick）。
 
 ### Technique 1: Gradient Checking
 
-Compare your analytical gradients (from backprop) to numerical gradients (from finite differences). If they disagree, your backward pass has a bug.
+analytical gradients（backprop から）と numerical gradients（finite differences から）を比較します。不一致なら backward pass に bug があります。
 
-Numerical gradient for parameter `w`:
+parameter `w` の numerical gradient:
 
 ```
 grad_numerical = (loss(w + eps) - loss(w - eps)) / (2 * eps)
 ```
 
-Agreement metric (relative difference):
+一致度の metric（relative difference）:
 
 ```
 rel_diff = |grad_analytical - grad_numerical| / max(|grad_analytical|, |grad_numerical|, 1e-8)
 ```
 
-If `rel_diff < 1e-5`: correct. If `rel_diff > 1e-3`: almost certainly a bug.
+`rel_diff < 1e-5` なら正しいです。`rel_diff > 1e-3` なら、ほぼ確実に bug です。
 
 ```mermaid
 flowchart LR
@@ -117,18 +117,18 @@ flowchart LR
 
 ### Technique 2: Activation Statistics
 
-Monitor the mean and standard deviation of activations after each layer during training. Healthy networks maintain activations with mean near 0 and std near 1 (after normalization) or at least bounded.
+training 中に、各 layer 後の activations の mean と standard deviation を monitor します。healthy networks は activations の mean を 0 付近、std を 1 付近（normalization 後）または少なくとも bounded に保ちます。
 
 | Health indicator | Mean | Std | Diagnosis |
 |-----------------|------|-----|-----------|
-| Healthy | ~0 | ~1 | Network is learning normally |
-| Saturated | >>0 or <<0 | ~0 | Activations stuck at extreme values |
-| Dead | 0 | 0 | Neurons are dead (all zeros) |
-| Exploding | >>10 | >>10 | Activations growing without bound |
+| Healthy | ~0 | ~1 | network は通常どおり学習している |
+| Saturated | >>0 or <<0 | ~0 | activations が極端な値に stuck している |
+| Dead | 0 | 0 | neurons が dead（すべて zeros） |
+| Exploding | >>10 | >>10 | activations が無制限に増えている |
 
 ### Technique 3: Gradient Flow Visualization
 
-Plot the average gradient magnitude for each layer. In a healthy network, gradient magnitudes should be roughly similar across layers. If early layers have gradients 1000x smaller than later layers, you have vanishing gradients.
+各 layer の average gradient magnitude を plot します。healthy network では、gradient magnitudes は layers 間でおおむね似ているはずです。early layers の gradients が later layers より 1000x 小さい場合、vanishing gradients があります。
 
 ```mermaid
 graph LR
@@ -144,24 +144,24 @@ graph LR
     end
 ```
 
-### Technique 4: The Overfit-One-Batch Test
+### Technique 4: Overfit-One-Batch Test
 
-The single most important debugging technique in deep learning.
+deep learning で最も重要な debugging technique です。
 
-Take one small batch (8-32 samples). Train on it for 100+ iterations. The loss should go to nearly zero and training accuracy should hit 100%. If it does not, your model or training loop has a fundamental bug -- do not proceed to full training.
+小さな batch（8-32 samples）を 1 つ取ります。それで 100+ iterations 学習します。loss はほぼ 0 まで下がり、training accuracy は 100% に達するはずです。そうならない場合、model または training loop に fundamental bug があります。full training に進んではいけません。
 
-This test catches:
+この test が検出するもの:
 - Broken loss functions
 - Broken backward passes
-- Architecture too small to represent the data
-- Optimizer not connected to model parameters
-- Data and labels misaligned
+- data を表現するには小さすぎる architecture
+- model parameters に接続されていない optimizer
+- data と labels のずれ
 
-This takes 30 seconds to run and saves hours of debugging full training runs.
+これは 30 秒で実行でき、full training runs の debugging に何時間も費やすのを防ぎます。
 
 ### Technique 5: Learning Rate Finder
 
-Leslie Smith (2017) proposed sweeping the learning rate from very small (1e-7) to very large (10) over one epoch while recording the loss. Plot loss vs learning rate. The optimal learning rate is roughly 10x smaller than the rate where loss starts decreasing fastest.
+Leslie Smith（2017）は、1 epoch の間に learning rate を非常に小さい値（1e-7）から非常に大きい値（10）へ sweep しながら loss を記録する方法を提案しました。loss vs learning rate を plot します。optimal learning rate は、loss が最も速く下がり始める rate よりおよそ 10x 小さい値です。
 
 ```mermaid
 graph TD
@@ -175,45 +175,45 @@ graph TD
     end
 ```
 
-Best LR in this example: ~1e-3 (one order of magnitude before the steepest point).
+この例での best LR は約 1e-3 です（steepest point の 1 order of magnitude 前）。
 
 ### Common PyTorch Bugs
 
-These are the bugs that waste the most collective hours in the PyTorch community:
+PyTorch community で最も多くの時間を浪費している bugs です。
 
 | Bug | Symptom | Fix |
 |-----|---------|-----|
-| Forgetting `optimizer.zero_grad()` | Gradients accumulate across batches, loss oscillates | Add `optimizer.zero_grad()` before `loss.backward()` |
-| Forgetting `model.eval()` at test time | Dropout and batch norm behave differently, test accuracy varies between runs | Add `model.eval()` and `torch.no_grad()` |
-| Wrong tensor shapes | Silent broadcasting produces wrong results, no error | Print shapes after every operation during debugging |
-| CPU/GPU mismatch | `RuntimeError: expected CUDA tensor` | Use `.to(device)` on model AND data |
-| Not detaching tensors | Computation graph grows forever, OOM | Use `.detach()` or `with torch.no_grad()` |
-| In-place operations breaking autograd | `RuntimeError: modified by in-place operation` | Replace `x += 1` with `x = x + 1` |
-| Data not normalized | Loss stuck at random-chance level | Normalize inputs to mean=0, std=1 |
-| Labels as wrong dtype | Cross-entropy expects `Long`, got `Float` | Cast labels: `labels.long()` |
+| `optimizer.zero_grad()` を忘れる | gradients が batches 間で蓄積し、loss が oscillate する | `loss.backward()` の前に `optimizer.zero_grad()` を追加する |
+| test 時に `model.eval()` を忘れる | Dropout と batch norm の挙動が変わり、test accuracy が runs 間で変動する | `model.eval()` と `torch.no_grad()` を追加する |
+| wrong tensor shapes | silent broadcasting が wrong results を生み、error は出ない | debugging 中は各 operation 後に shapes を print する |
+| CPU/GPU mismatch | `RuntimeError: expected CUDA tensor` | model と data の両方に `.to(device)` を使う |
+| tensors を detach しない | computation graph が永遠に増え、OOM になる | `.detach()` または `with torch.no_grad()` を使う |
+| in-place operations が autograd を壊す | `RuntimeError: modified by in-place operation` | `x += 1` を `x = x + 1` に置き換える |
+| data が normalized されていない | loss が random-chance level に stuck する | inputs を mean=0、std=1 に normalize する |
+| labels の dtype が wrong | Cross-entropy は `Long` を期待するが `Float` が来る | labels を cast する: `labels.long()` |
 
-### The Master Debugging Table
+### Master Debugging Table
 
 | Symptom | Likely cause | First thing to try |
 |---------|-------------|-------------------|
-| Loss stuck at -log(1/num_classes) | Model predicting uniform distribution | Check data pipeline, verify labels match inputs |
-| Loss NaN after a few steps | Learning rate too high | Reduce LR by 10x |
-| Loss NaN immediately | log(0) or division by zero | Add epsilon to log/division operations |
-| Loss oscillating wildly | LR too high or batch size too small | Reduce LR, increase batch size |
-| Loss decreasing then plateaus | LR too high for fine-tuning phase | Add LR schedule (cosine or step decay) |
-| Training acc high, test acc low | Overfitting | Add dropout, weight decay, more data |
-| Training acc = test acc = chance | Model not learning anything | Run overfit-one-batch test |
-| Training acc = test acc but both low | Underfitting | Bigger model, more layers, more features |
-| Gradients all zero | Dead ReLUs or detached computation graph | Switch to LeakyReLU, check `.requires_grad` |
-| Out of memory during training | Batch too large or graph not freed | Reduce batch size, use `torch.no_grad()` for eval |
+| Loss stuck at -log(1/num_classes) | model が uniform distribution を予測している | data pipeline を確認し、labels が inputs と対応しているか検証する |
+| Loss NaN after a few steps | learning rate が高すぎる | LR を 10x 下げる |
+| Loss NaN immediately | log(0) または division by zero | log/division operations に epsilon を追加する |
+| Loss oscillating wildly | LR が高すぎる、または batch size が小さすぎる | LR を下げ、batch size を増やす |
+| Loss decreasing then plateaus | fine-tuning phase には LR が高すぎる | LR schedule（cosine または step decay）を追加する |
+| Training acc high, test acc low | Overfitting | dropout、weight decay、more data を追加する |
+| Training acc = test acc = chance | model が何も学習していない | overfit-one-batch test を実行する |
+| Training acc = test acc but both low | Underfitting | より大きい model、more layers、more features |
+| Gradients all zero | Dead ReLUs または detached computation graph | LeakyReLU に切り替え、`.requires_grad` を確認する |
+| Out of memory during training | batch が大きすぎる、または graph が解放されていない | batch size を下げ、eval では `torch.no_grad()` を使う |
 
-## Build It
+## 作ってみる
 
-A diagnostic toolkit that monitors activations, gradients, and loss curves. You will deliberately break a network and use the toolkit to diagnose each problem.
+activations、gradients、loss curves を monitor する diagnostic toolkit です。わざと network を壊し、toolkit を使って各問題を診断します。
 
-### Step 1: The NetworkDebugger Class
+### Step 1: NetworkDebugger Class
 
-Hooks into a PyTorch model to record activation and gradient statistics per layer.
+PyTorch model に hooks を入れ、layer ごとの activation と gradient statistics を記録します。
 
 ```python
 import torch
@@ -336,7 +336,7 @@ class NetworkDebugger:
         self.hooks.clear()
 ```
 
-### Step 2: The Overfit-One-Batch Test
+### Step 2: Overfit-One-Batch Test
 
 ```python
 def overfit_one_batch(model, x_batch, y_batch, criterion, lr=0.01, steps=200):
@@ -491,9 +491,9 @@ def gradient_check(model, x, y, criterion, eps=1e-4):
     return overall_max_diff
 ```
 
-### Step 5: Deliberately Broken Networks
+### Step 5: わざと壊した Networks
 
-Now apply the toolkit to broken networks and diagnose each one.
+toolkit を broken networks に適用し、それぞれを診断します。
 
 ```python
 def demo_broken_networks():
@@ -589,7 +589,7 @@ def demo_broken_networks():
     gradient_check(model_grad, x[:4], y[:4], criterion)
 ```
 
-## Use It
+## 使ってみる
 
 ### PyTorch Built-in Tools
 
@@ -650,58 +650,58 @@ for epoch in range(100):
             writer.add_histogram(f"gradients/{name}", param.grad, epoch)
 ```
 
-### The Debug Checklist (Before Full Training)
+### Debug Checklist（Full Training の前）
 
-1. Run overfit-one-batch test. If it fails, stop.
-2. Print model summary -- verify parameter count is reasonable.
-3. Run a single forward pass with random data -- check output shape.
-4. Train for 5 epochs -- verify loss decreases.
-5. Check activation statistics -- no dead layers, no explosions.
-6. Check gradient flow -- no vanishing, no exploding.
-7. Verify data pipeline -- print 5 random samples with labels.
+1. overfit-one-batch test を実行します。失敗したら止めます。
+2. model summary を print し、parameter count が妥当か確認します。
+3. random data で single forward pass を実行し、output shape を確認します。
+4. 5 epochs 学習し、loss が下がることを確認します。
+5. activation statistics を確認し、dead layers や explosions がないことを確認します。
+6. gradient flow を確認し、vanishing や exploding がないことを確認します。
+7. data pipeline を検証し、labels 付きの random samples を 5 つ print します。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-nn-debugger.md` -- a prompt for diagnosing neural network training failures
-- `outputs/skill-debug-checklist.md` -- a decision-tree checklist for debugging training issues
+この lesson で作るもの:
+- `outputs/prompt-nn-debugger.md` -- neural network training failures を診断するための prompt
+- `outputs/skill-debug-checklist.md` -- training issues を debug するための decision-tree checklist
 
-Key deployment patterns for debugging:
-- Add monitoring hooks to production training scripts
-- Log activation and gradient statistics to W&B or TensorBoard every N steps
-- Implement automatic alerts for NaN loss, dead neurons (>80% zero), or gradient explosion
-- Always run the overfit-one-batch test when changing architectures or data pipelines
+debugging の key deployment patterns:
+- production training scripts に monitoring hooks を追加する
+- activation と gradient statistics を W&B または TensorBoard に N steps ごとに log する
+- NaN loss、dead neurons（>80% zero）、gradient explosion に対する automatic alerts を実装する
+- architectures または data pipelines を変更するときは、必ず overfit-one-batch test を実行する
 
-## Exercises
+## 演習
 
-1. **Add an exploding gradient detector.** Modify the `NetworkDebugger` to detect when gradients exceed a threshold and automatically suggest a gradient clipping value. Test it on a 20-layer network with no normalization.
+1. **exploding gradient detector を追加してください。** `NetworkDebugger` を変更し、gradients が threshold を超えたときに検出し、自動的に gradient clipping value を提案するようにします。normalization のない 20-layer network で test してください。
 
-2. **Build a dead neuron resurrector.** Write a function that identifies dead ReLU neurons (always outputting 0) and reinitializes their incoming weights with Kaiming initialization. Show that this recovers a network where >70% of neurons are dead.
+2. **dead neuron resurrector を作ってください。** dead ReLU neurons（常に 0 を出力する）を特定し、その incoming weights を Kaiming initialization で再初期化する function を書きます。neurons の 70% 超が dead な network が回復することを示してください。
 
-3. **Implement the learning rate finder with plotting.** Extend `find_learning_rate` to save results as a CSV and write a separate script that reads the CSV and displays the LR vs loss curve using matplotlib. Identify the optimal LR for ResNet-18 on CIFAR-10.
+3. **plotting 付き learning rate finder を実装してください。** `find_learning_rate` を拡張して results を CSV として保存し、その CSV を読み込んで matplotlib で LR vs loss curve を表示する別 script を書きます。CIFAR-10 上の ResNet-18 に対して optimal LR を特定してください。
 
-4. **Create a data pipeline validator.** Write a function that checks for: duplicate samples across train/test splits, label distribution imbalance (>10:1 ratio), input normalization (mean near 0, std near 1), and NaN/Inf values in the data. Run it on a deliberately corrupted dataset.
+4. **data pipeline validator を作ってください。** 次を確認する function を書きます: train/test splits 間の duplicate samples、label distribution imbalance（>10:1 ratio）、input normalization（mean near 0、std near 1）、data 内の NaN/Inf values。わざと corrupted dataset で実行してください。
 
-5. **Debug a real failure.** Take the mini-framework from Lesson 10, introduce a subtle bug (e.g., transpose the weight matrix in backward), and use gradient checking to locate exactly which parameter has incorrect gradients. Document the debugging process.
+5. **real failure を debug してください。** Lesson 10 の mini-framework を取り、subtle bug（例: backward で weight matrix を transpose する）を入れ、gradient checking を使ってどの parameter の gradients が incorrect か正確に特定してください。debugging process を document してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Silent bug | "It runs but gives bad results" | A bug that produces no error but degrades model quality -- the dominant failure mode in ML |
-| Dead ReLU | "The neurons died" | A ReLU neuron whose input is always negative, so it outputs 0 and receives 0 gradient permanently |
-| Vanishing gradients | "Early layers stop learning" | Gradients shrink exponentially through layers, making weights in early layers effectively frozen |
-| Exploding gradients | "Loss went to NaN" | Gradients grow exponentially through layers, causing weight updates so large they overflow |
-| Gradient checking | "Verify backprop is correct" | Comparing analytical gradients from backprop to numerical gradients from finite differences |
-| Overfit-one-batch | "The most important debug test" | Training on a single small batch to verify the model CAN learn -- if it cannot, something is fundamentally broken |
-| LR finder | "Sweep to find the right learning rate" | Exponentially increasing the learning rate over one epoch and picking the rate just before loss diverges |
-| Data leakage | "Test data leaked into training" | When information from the test set contaminates training, producing artificially high accuracy |
-| Activation statistics | "Monitor layer health" | Tracking mean, std, and zero-fraction of each layer's output to detect dead, saturated, or exploding neurons |
-| Gradient clipping | "Cap the gradient magnitude" | Scaling gradients down when their norm exceeds a threshold, preventing exploding gradient updates |
+| Silent bug | "It runs but gives bad results" | error は出ないが model quality を劣化させる bug。ML における dominant failure mode |
+| Dead ReLU | "The neurons died" | input が常に negative で、0 を出力し、0 gradient を永久に受け取る ReLU neuron |
+| Vanishing gradients | "Early layers stop learning" | gradients が layers を通る間に指数的に小さくなり、early layers の weights が実質的に frozen になる |
+| Exploding gradients | "Loss went to NaN" | gradients が layers を通る間に指数的に大きくなり、weight updates が overflow するほど大きくなる |
+| Gradient checking | "Verify backprop is correct" | backprop からの analytical gradients と finite differences からの numerical gradients を比較すること |
+| Overfit-one-batch | "The most important debug test" | single small batch で学習し、model が学習できることを検証すること。できなければ fundamental に壊れている |
+| LR finder | "Sweep to find the right learning rate" | 1 epoch の間に learning rate を指数的に増やし、loss が diverge する直前の rate を選ぶこと |
+| Data leakage | "Test data leaked into training" | test set の情報が training を汚染し、artificially high accuracy を生むこと |
+| Activation statistics | "Monitor layer health" | 各 layer output の mean、std、zero-fraction を追跡し、dead、saturated、exploding neurons を検出すること |
+| Gradient clipping | "Cap the gradient magnitude" | gradient norm が threshold を超えたときに gradients を scale down し、exploding gradient updates を防ぐこと |
 
-## Further Reading
+## 参考資料
 
-- Smith, "Cyclical Learning Rates for Training Neural Networks" (2017) -- the paper introducing the learning rate range test (LR finder)
-- Northcutt et al., "Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks" (2021) -- demonstrates that 3-6% of labels in ImageNet, CIFAR-10, and other major benchmarks are wrong
-- Zhang et al., "Understanding Deep Learning Requires Rethinking Generalization" (2017) -- the paper showing neural networks can memorize random labels, which is why the overfit-one-batch test works
-- PyTorch documentation on `torch.autograd.detect_anomaly` and `torch.autograd.set_detect_anomaly` for built-in NaN/Inf detection
+- Smith, "Cyclical Learning Rates for Training Neural Networks" (2017) -- learning rate range test（LR finder）を導入した論文
+- Northcutt et al., "Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks" (2021) -- ImageNet、CIFAR-10、その他 major benchmarks の labels の 3-6% が間違っていることを示す
+- Zhang et al., "Understanding Deep Learning Requires Rethinking Generalization" (2017) -- neural networks が random labels を記憶できることを示した論文。overfit-one-batch test が機能する理由でもある
+- `torch.autograd.detect_anomaly` と `torch.autograd.set_detect_anomaly` に関する PyTorch documentation。built-in NaN/Inf detection 用

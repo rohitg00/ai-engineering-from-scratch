@@ -1,63 +1,59 @@
 # Embeddings & Vector Representations
 
-> Text is discrete. Math is continuous. Every time you ask an LLM to find "similar" documents, compare meanings, or search beyond keywords, you're relying on a bridge between these two worlds. That bridge is an embedding. If you don't understand embeddings, you don't understand modern AI. You just use it.
+> Text は離散的です。Math は連続的です。LLM に「似た」documents を見つけさせたり、意味を比較させたり、keyword を超えて検索させたりするたびに、この 2 つの世界をつなぐ橋に頼っています。その橋が embedding です。embeddings を理解していなければ、modern AI を理解しているとは言えません。使っているだけです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 11, Lesson 01 (Prompt Engineering)
-**Time:** ~75 minutes
-**Related:** Phase 5 · 22 (Embedding Models Deep Dive) covers dense vs sparse vs multi-vector, Matryoshka truncation, and per-axis model selection. This lesson focuses on the production pipeline (vector DBs, HNSW, similarity math). Read Phase 5 · 22 before picking a model.
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 11, Lesson 01 (Prompt Engineering)
+**所要時間:** 約75分
+**Related:** Phase 5 · 22 (Embedding Models Deep Dive) は dense vs sparse vs multi-vector、Matryoshka truncation、per-axis model selection を扱います。この lesson は production pipeline (vector DBs、HNSW、similarity math) に焦点を当てます。
 
 ## Learning Objectives
 
-- Generate text embeddings using API providers and open-source models, and compute cosine similarity between them
-- Explain why embeddings solve the vocabulary mismatch problem that keyword search cannot handle
-- Build a semantic search index that retrieves documents by meaning rather than exact keyword match
-- Evaluate embedding quality using retrieval benchmarks (precision@k, recall) and choose the right embedding model for your task
+- API providers と open-source models を使って text embeddings を生成し、cosine similarity を計算する
+- keyword search が扱えない vocabulary mismatch problem を embeddings が解く理由を説明する
+- exact keyword match ではなく meaning で documents を取得する semantic search index を作る
+- retrieval benchmarks (precision@k、recall) で embedding quality を評価し、task に合う embedding model を選ぶ
 
-## The Problem
+## 問題
 
-You have 10,000 support tickets. A customer writes "my payment didn't go through." You need to find similar past tickets. Keyword search finds tickets containing "payment" and "didn't go through." It misses "transaction failed," "charge was declined," and "billing error." These tickets describe the exact same problem with completely different words.
+10,000 件の support tickets があるとします。customer が "my payment didn't go through" と書きました。似た過去 tickets を探す必要があります。keyword search は "payment" と "didn't go through" を含む tickets を見つけますが、"transaction failed"、"charge was declined"、"billing error" を見逃します。これらは同じ問題を完全に異なる言葉で説明しています。
 
-This is the vocabulary mismatch problem. Human language has dozens of ways to say the same thing. Keyword search treats each word as an independent symbol with no meaning. It cannot know that "declined" and "didn't go through" refer to the same concept.
+これが vocabulary mismatch problem です。人間の言語には同じことを言う方法が何十通りもあります。keyword search は各単語を意味のない独立した記号として扱います。"declined" と "didn't go through" が同じ概念を指すとはわかりません。
 
-You need a representation of text where meaning, not spelling, determines similarity. You need a way to place "my payment didn't go through" and "transaction was declined" close together in some mathematical space, while pushing "my payment arrived on time" far away despite sharing the word "payment."
-
-That representation is an embedding.
+必要なのは、綴りではなく意味が similarity を決める text representation です。"my payment didn't go through" と "transaction was declined" を数学的空間で近くに置き、同じ "payment" を含むだけの "my payment arrived on time" を遠ざける方法が必要です。それが embedding です。
 
 ## The Concept
 
 ### What Is an Embedding?
 
-An embedding is a dense vector of floating-point numbers that represents the meaning of text. The word "dense" matters -- every dimension carries information, unlike sparse representations (bag-of-words, TF-IDF) where most dimensions are zero.
+embedding は text の意味を表す dense vector of floating-point numbers です。dense とは、bag-of-words や TF-IDF のように大半の dimensions が 0 になる sparse representations と違い、すべての dimension が情報を持つことを意味します。
 
-"The cat sat on the mat" becomes something like `[0.023, -0.041, 0.087, ..., 0.012]` -- a list of 768 to 3072 numbers depending on the model. These numbers encode meaning. You never inspect them directly. You compare them.
+"The cat sat on the mat" は `[0.023, -0.041, 0.087, ..., 0.012]` のような 768-3072 個の数値リストになります。これらの数値は直接読まず、比較します。
 
 ### The Word2Vec Breakthrough
 
-In 2013, Tomas Mikolov and colleagues at Google published Word2Vec. The core insight: train a neural network to predict a word from its neighbors (or neighbors from a word), and the hidden layer weights become meaningful vector representations.
+2013 年、Google の Tomas Mikolov らは Word2Vec を発表しました。近傍 words から word を予測する neural network を訓練すると、hidden layer weights が意味のある vector representations になる、という発想です。
 
-The famous result:
+有名な結果です。
 
 ```
 king - man + woman = queen
 ```
 
-Vector arithmetic on word embeddings captures semantic relationships. The direction from "man" to "woman" is roughly the same as the direction from "king" to "queen." This was the moment the field realized that geometry could encode meaning.
-
-Word2Vec produced 300-dimensional vectors. Each word got one vector regardless of context. "Bank" in "river bank" and "bank account" had the same embedding. This limitation drove the next decade of research.
+word embeddings 上の vector arithmetic は semantic relationships を捉えます。ただし Word2Vec は各 word に 1 つの vector を与えるため、"river bank" と "bank account" の "bank" が同じ embedding になるという限界がありました。
 
 ### From Words to Sentences
 
-Word embeddings represent single tokens. Production systems need to embed entire sentences, paragraphs, or documents. Four approaches emerged:
+production systems では sentences、paragraphs、documents 全体を embed する必要があります。
 
-**Averaging**: take the mean of all word vectors in the sentence. Cheap, lossy, surprisingly decent for short text. Loses word order entirely -- "dog bites man" and "man bites dog" get identical embeddings.
+**Averaging**: sentence 内の word vectors の平均を取ります。安価ですが word order を失います。
 
-**CLS token**: transformer models (BERT, 2018) output a special [CLS] token embedding that represents the entire input. Better than averaging but the [CLS] token was trained for next-sentence prediction, not similarity.
+**CLS token**: BERT のような transformer models が出力する [CLS] token embedding を使います。averaging より良いですが、もともとは similarity 用に訓練されていません。
 
-**Contrastive learning**: train the model explicitly to push similar pairs together and dissimilar pairs apart. Sentence-BERT (Reimers & Gurevych, 2019) used this approach and became the foundation for modern embedding models. Given "How do I reset my password?" and "I need to change my password," the model learns these should have nearly identical vectors.
+**Contrastive learning**: similar pairs を近づけ、dissimilar pairs を遠ざけるよう明示的に訓練します。Sentence-BERT がこの approach を使い、modern embedding models の基礎になりました。
 
-**Instruction-tuned embeddings**: the latest approach. Models like E5 and GTE accept a task prefix ("search_query:", "search_document:") that tells the model what kind of embedding to produce. This lets one model serve multiple tasks.
+**Instruction-tuned embeddings**: E5 や GTE のような models は `search_query:` や `search_document:` の prefix を受け取り、task に応じた embedding を生成します。
 
 ```mermaid
 graph LR
@@ -65,12 +61,10 @@ graph LR
         W1["king"] --> V1["[0.2, -0.1, ...]"]
         W2["queen"] --> V2["[0.3, -0.2, ...]"]
     end
-
     subgraph "2019: Sentence-BERT"
         S1["How do I reset my password?"] --> E1["[0.04, 0.12, ...]"]
         S2["I need to change my password"] --> E2["[0.05, 0.11, ...]"]
     end
-
     subgraph "2024: Instruction-Tuned"
         I1["search_query: password reset"] --> T1["[0.08, 0.09, ...]"]
         I2["search_document: To reset your password, click..."] --> T2["[0.07, 0.10, ...]"]
@@ -79,7 +73,7 @@ graph LR
 
 ### Modern Embedding Models
 
-The market has settled into a handful of production-grade options (MTEB scores as of early 2026, MTEB v2):
+2026 年初頭の MTEB v2 を基準にした production-grade options です。
 
 | Model | Provider | Dimensions | MTEB | Context | Cost / 1M tokens |
 |-------|----------|-----------|------|---------|------------------|
@@ -92,64 +86,47 @@ The market has settled into a handful of production-grade options (MTEB scores a
 | Qwen3-Embedding | Alibaba | 4096 (Matryoshka) | 66.9 | 32K | Open-weight |
 | Nomic-embed-v2 | Nomic | 768 (Matryoshka) | 63.1 | 8192 | Open-weight |
 
-MTEB (Massive Text Embedding Benchmark) v2 covers 100+ tasks across retrieval, classification, clustering, reranking, and summarization. Higher is better. By 2026, open-weight models (Qwen3-Embedding, BGE-M3) match or beat closed hosted models on most axes. Gemini Embedding 2 leads pure retrieval; Voyage/Cohere lead specific domains (finance, law, code). Always benchmark on your own queries before committing.
+MTEB は retrieval、classification、clustering、reranking、summarization など 100+ tasks を含みます。高いほど良いですが、導入前には必ず自分の queries で benchmark してください。
 
 ### Similarity Metrics
 
-Given two embedding vectors, three ways to measure how similar they are:
+2 つの embedding vectors の類似度を測る代表的な方法は 3 つです。
 
-**Cosine similarity**: the cosine of the angle between two vectors. Ranges from -1 (opposite) to 1 (identical direction). Ignores magnitude -- a 10-word sentence and a 500-word document can score 1.0 if they point the same direction. This is the default for 90% of use cases.
+**Cosine similarity**: 2 vectors の角度の cosine です。-1 (反対) から 1 (同一方向) までを取ります。magnitude を無視するため、多くの retrieval tasks の default です。
 
 ```
 cosine_sim(a, b) = dot(a, b) / (||a|| * ||b||)
 ```
 
-**Dot product**: the raw inner product of two vectors. Identical to cosine similarity when vectors are normalized (unit length). Faster to compute. OpenAI's embeddings are normalized, so dot product and cosine give the same ranking.
+**Dot product**: raw inner product です。vectors が normalized されている場合、cosine similarity と ranking は同じです。OpenAI embeddings は normalized されています。
 
 ```
 dot(a, b) = sum(a_i * b_i)
 ```
 
-**Euclidean (L2) distance**: straight-line distance in the vector space. Smaller = more similar. Sensitive to magnitude differences. Use when the absolute position in space matters, not just the direction.
+**Euclidean (L2) distance**: vector space 上の straight-line distance です。小さいほど類似しています。magnitude differences に敏感です。
 
 ```
 L2(a, b) = sqrt(sum((a_i - b_i)^2))
 ```
 
-When to use which:
-
 | Metric | Use when | Avoid when |
 |--------|----------|------------|
-| Cosine similarity | Comparing texts of different lengths; most retrieval tasks | Magnitude carries information |
-| Dot product | Embeddings are already normalized; maximum speed | Vectors have varying magnitudes |
-| Euclidean distance | Clustering; spatial nearest-neighbor problems | Comparing documents of wildly different lengths |
+| Cosine similarity | 異なる長さの texts を比較する、多くの retrieval tasks | magnitude が情報を持つ場合 |
+| Dot product | embeddings が normalized 済みで maximum speed が欲しい | vectors の magnitudes が異なる場合 |
+| Euclidean distance | clustering、spatial nearest-neighbor problems | 長さが大きく異なる documents を比較する場合 |
 
 ### Vector Databases and HNSW
 
-A brute-force similarity search compares the query against every stored vector. At 1 million vectors with 1536 dimensions, that is 1.5 billion multiply-add operations per query. Too slow.
+brute-force similarity search は query をすべての stored vectors と比較します。1 million vectors、1536 dimensions では query ごとに 15 億 multiply-adds が必要で遅すぎます。
 
-Vector databases solve this with Approximate Nearest Neighbor (ANN) algorithms. The dominant algorithm is HNSW (Hierarchical Navigable Small World):
+Vector databases は Approximate Nearest Neighbor (ANN) algorithms でこれを解きます。主流は HNSW (Hierarchical Navigable Small World) です。
 
-1. Build a multi-layer graph of vectors
-2. Top layers are sparse -- long-range connections between distant clusters
-3. Bottom layers are dense -- fine-grained connections between nearby vectors
-4. Search starts at the top layer, greedily descending to refine
-5. Returns approximate top-k results in O(log n) time instead of O(n)
-
-HNSW trades a small accuracy loss (typically 95-99% recall) for massive speed gains. At 10 million vectors, brute force takes seconds. HNSW takes milliseconds.
-
-```mermaid
-graph TD
-    subgraph "HNSW Layers"
-        L2["Layer 2 (sparse)"] -->|"long jumps"| L1["Layer 1 (medium)"]
-        L1 -->|"shorter jumps"| L0["Layer 0 (dense, all vectors)"]
-    end
-
-    Q["Query vector"] -->|"enter at top"| L2
-    L0 -->|"nearest neighbors"| R["Top-k results"]
-```
-
-Production options:
+1. vectors の multi-layer graph を作る
+2. top layers は sparse で遠い clusters 間の long-range connections を持つ
+3. bottom layers は dense で近い vectors 間の fine-grained connections を持つ
+4. search は top layer から始め、greedy に降りながら refine する
+5. O(n) ではなく O(log n) に近い時間で approximate top-k results を返す
 
 | Database | Type | Best for | Max scale |
 |----------|------|----------|-----------|
@@ -162,15 +139,15 @@ Production options:
 
 ### Chunking Strategies
 
-Documents are too long to embed as single vectors. A 50-page PDF covers dozens of topics -- its embedding becomes an average of everything, similar to nothing specific. You split documents into chunks and embed each one.
+長い documents を単一 vector として embed すると、embedding はすべての平均になり、どの specific topic にも似なくなります。documents を chunks に分け、それぞれを embed します。
 
-**Fixed-size chunking**: split every N tokens with M-token overlap. Simple and predictable. Works well when documents have no clear structure. A 512-token chunk with 50-token overlap: chunk 1 is tokens 0-511, chunk 2 is tokens 462-973.
+**Fixed-size chunking**: N tokens ごとに M-token overlap で分割します。単純で予測可能です。
 
-**Sentence-based chunking**: split at sentence boundaries, grouping sentences until reaching the token limit. Each chunk is at least one complete sentence. Better than fixed-size because you never cut a thought in half.
+**Sentence-based chunking**: sentence boundaries で分割し、token limit まで sentences をまとめます。thought を途中で切りません。
 
-**Recursive chunking**: try splitting at the largest boundary first (section headers). If still too large, try paragraph boundaries. Then sentence boundaries. Then character limits. This is LangChain's `RecursiveCharacterTextSplitter` and it works well for mixed-format corpora.
+**Recursive chunking**: section headers、paragraph boundaries、sentence boundaries、character limits の順に大きい境界から試します。
 
-**Semantic chunking**: embed each sentence, then group consecutive sentences whose embeddings are similar. When the embedding similarity drops below a threshold, start a new chunk. Expensive (requires embedding every sentence individually) but produces the most coherent chunks.
+**Semantic chunking**: 各 sentence を embed し、consecutive sentences の embedding similarity が落ちたところで新しい chunk を始めます。高価ですが coherent chunks を作れます。
 
 | Strategy | Complexity | Quality | Best for |
 |----------|-----------|---------|----------|
@@ -179,240 +156,55 @@ Documents are too long to embed as single vectors. A 50-page PDF covers dozens o
 | Recursive | Medium | Good | Markdown, HTML, mixed docs |
 | Semantic | High | Best | Critical retrieval quality |
 
-The sweet spot for most systems: 256-512 token chunks with 50-token overlap.
+多くの system では 256-512 token chunks と 50-token overlap が sweet spot です。
 
 ### Bi-Encoders vs Cross-Encoders
 
-A bi-encoder embeds the query and documents independently, then compares vectors. Fast -- you embed the query once and compare against pre-computed document embeddings. This is what you use for retrieval.
+bi-encoder は query と documents を独立に embed して vectors を比較します。高速で、documents embeddings を事前計算できます。
 
-A cross-encoder takes the query and a document as a single input and outputs a relevance score. Slow -- it processes each query-document pair through the full model. But far more accurate because it can attend across query and document tokens simultaneously.
+cross-encoder は query と document を 1 つの input として受け取り relevance score を出します。各 query-document pair を full model に通すため遅いですが、より正確です。
 
-The production pattern: bi-encoder retrieves top-100 candidates, cross-encoder reranks them to top-10. This is the retrieve-then-rerank pipeline.
-
-```mermaid
-graph LR
-    Q["Query"] --> BE["Bi-Encoder: embed query"]
-    BE --> VS["Vector search: top 100"]
-    VS --> CE["Cross-Encoder: rerank"]
-    CE --> R["Top 10 results"]
-```
-
-Reranking models: Cohere Rerank 3.5 ($2 per 1000 queries), BGE-reranker-v2 (free, open source), Jina Reranker v2 (free, open source).
+production pattern は bi-encoder で top-100 candidates を取得し、cross-encoder で top-10 に rerank する retrieve-then-rerank pipeline です。
 
 ### Matryoshka Embeddings
 
-Traditional embeddings are all-or-nothing. A 1536-dimensional vector uses 1536 floats. You cannot truncate to 256 dimensions without retraining.
-
-Matryoshka Representation Learning (Kusupati et al., 2022) fixes this. The model is trained so that the first N dimensions capture the most important information, like a Russian nesting doll. Truncating a 1536-d Matryoshka embedding to 256 dimensions loses some accuracy but remains functional.
-
-OpenAI's text-embedding-3-small and text-embedding-3-large support Matryoshka truncation via the `dimensions` parameter. Requesting 256 dimensions instead of 1536 cuts storage by 6x with roughly 3-5% accuracy loss on MTEB benchmarks.
+Matryoshka Representation Learning は、最初の N dimensions が重要情報を持つように訓練します。1536-d embedding を 256 dimensions に truncate しても機能します。OpenAI の text-embedding-3-small/large は `dimensions` parameter でこれをサポートします。
 
 ### Binary Quantization
 
-A 1536-dimensional embedding stored as float32 uses 6,144 bytes. Multiply by 10 million documents: 61 GB just for vectors.
+1536-dimensional embedding を float32 で保存すると 6,144 bytes です。10 million documents では vectors だけで 61 GB です。Binary quantization は各 float を sign bit 1 つに変換し、storage を 32x 減らします。first-pass search に binary を使い、top-1000 を full-precision vectors で rescore するのが一般的です。
 
-Binary quantization converts each float to a single bit: positive values become 1, negative values become 0. Storage drops from 6,144 bytes to 192 bytes -- a 32x reduction. Similarity is computed using Hamming distance (count differing bits), which CPUs can do in a single instruction.
+## 実装
 
-The accuracy hit is around 5-10% on retrieval recall. The common pattern: binary quantization for the first-pass search over millions of vectors, then rescore the top-1000 with full-precision vectors. This gets you 95%+ of full-precision accuracy at 32x less memory.
-
-## Build It
-
-We build a semantic search engine from scratch. No vector database. No external embedding API. Pure Python with numpy for the math.
+semantic search engine を from scratch で作ります。vector database も external embedding API も使わず、math は numpy だけです。
 
 ### Step 1: Text Chunking
 
-```python
-def chunk_text(text, chunk_size=200, overlap=50):
-    words = text.split()
-    chunks = []
-    start = 0
-    while start < len(words):
-        end = start + chunk_size
-        chunk = " ".join(words[start:end])
-        chunks.append(chunk)
-        start += chunk_size - overlap
-    return chunks
-
-
-def chunk_by_sentences(text, max_chunk_tokens=200):
-    sentences = text.replace("\n", " ").split(".")
-    sentences = [s.strip() + "." for s in sentences if s.strip()]
-    chunks = []
-    current_chunk = []
-    current_length = 0
-    for sentence in sentences:
-        sentence_length = len(sentence.split())
-        if current_length + sentence_length > max_chunk_tokens and current_chunk:
-            chunks.append(" ".join(current_chunk))
-            current_chunk = []
-            current_length = 0
-        current_chunk.append(sentence)
-        current_length += sentence_length
-    if current_chunk:
-        chunks.append(" ".join(current_chunk))
-    return chunks
-```
+`chunk_text` は fixed-size chunks と overlap を作ります。`chunk_by_sentences` は sentence boundaries を尊重し、max token count まで sentences をまとめます。
 
 ### Step 2: Building Embeddings from Scratch
 
-We implement a simple dense embedding using TF-IDF with L2 normalization. This is not a neural embedding, but it follows the same contract: text in, fixed-size vector out, similar texts produce similar vectors.
-
-```python
-import math
-import numpy as np
-from collections import Counter
-
-class SimpleEmbedder:
-    def __init__(self):
-        self.vocab = []
-        self.idf = []
-        self.word_to_idx = {}
-
-    def fit(self, documents):
-        vocab_set = set()
-        for doc in documents:
-            vocab_set.update(doc.lower().split())
-        self.vocab = sorted(vocab_set)
-        self.word_to_idx = {w: i for i, w in enumerate(self.vocab)}
-        n = len(documents)
-        self.idf = np.zeros(len(self.vocab))
-        for i, word in enumerate(self.vocab):
-            doc_count = sum(1 for doc in documents if word in doc.lower().split())
-            self.idf[i] = math.log((n + 1) / (doc_count + 1)) + 1
-
-    def embed(self, text):
-        words = text.lower().split()
-        count = Counter(words)
-        total = len(words) if words else 1
-        vec = np.zeros(len(self.vocab))
-        for word, freq in count.items():
-            if word in self.word_to_idx:
-                tf = freq / total
-                vec[self.word_to_idx[word]] = tf * self.idf[self.word_to_idx[word]]
-        norm = np.linalg.norm(vec)
-        if norm > 0:
-            vec = vec / norm
-        return vec
-```
+TF-IDF と L2 normalization で simple dense embedding を実装します。これは neural embedding ではありませんが、text in、fixed-size vector out、similar texts produce similar vectors という契約に従います。
 
 ### Step 3: Similarity Functions
 
-```python
-def cosine_similarity(a, b):
-    dot = np.dot(a, b)
-    norm_a = np.linalg.norm(a)
-    norm_b = np.linalg.norm(b)
-    if norm_a == 0 or norm_b == 0:
-        return 0.0
-    return float(dot / (norm_a * norm_b))
-
-
-def dot_product(a, b):
-    return float(np.dot(a, b))
-
-
-def euclidean_distance(a, b):
-    return float(np.linalg.norm(a - b))
-```
+cosine similarity、dot product、euclidean distance を実装します。zero vectors は cosine similarity 0.0 として扱います。
 
 ### Step 4: Vector Index with Brute-Force Search
 
-```python
-class VectorIndex:
-    def __init__(self):
-        self.vectors = []
-        self.texts = []
-        self.metadata = []
-
-    def add(self, vector, text, meta=None):
-        self.vectors.append(vector)
-        self.texts.append(text)
-        self.metadata.append(meta or {})
-
-    def search(self, query_vector, top_k=5, metric="cosine"):
-        scores = []
-        for i, vec in enumerate(self.vectors):
-            if metric == "cosine":
-                score = cosine_similarity(query_vector, vec)
-            elif metric == "dot":
-                score = dot_product(query_vector, vec)
-            elif metric == "euclidean":
-                score = -euclidean_distance(query_vector, vec)
-            else:
-                raise ValueError(f"Unknown metric: {metric}")
-            scores.append((i, score))
-        scores.sort(key=lambda x: x[1], reverse=True)
-        results = []
-        for idx, score in scores[:top_k]:
-            results.append({
-                "text": self.texts[idx],
-                "score": score,
-                "metadata": self.metadata[idx],
-                "index": idx
-            })
-        return results
-
-    def size(self):
-        return len(self.vectors)
-```
+`VectorIndex` は vectors、texts、metadata を保存し、metric に応じて scores を計算して top-k を返します。小規模なら brute force で十分です。
 
 ### Step 5: The Semantic Search Engine
 
-```python
-class SemanticSearchEngine:
-    def __init__(self, chunk_size=200, overlap=50):
-        self.embedder = SimpleEmbedder()
-        self.index = VectorIndex()
-        self.chunk_size = chunk_size
-        self.overlap = overlap
-
-    def index_documents(self, documents, source_names=None):
-        all_chunks = []
-        all_sources = []
-        for i, doc in enumerate(documents):
-            chunks = chunk_text(doc, self.chunk_size, self.overlap)
-            all_chunks.extend(chunks)
-            name = source_names[i] if source_names else f"doc_{i}"
-            all_sources.extend([name] * len(chunks))
-        self.embedder.fit(all_chunks)
-        for chunk, source in zip(all_chunks, all_sources):
-            vec = self.embedder.embed(chunk)
-            self.index.add(vec, chunk, {"source": source})
-        return len(all_chunks)
-
-    def search(self, query, top_k=5, metric="cosine"):
-        query_vec = self.embedder.embed(query)
-        return self.index.search(query_vec, top_k, metric)
-
-    def search_with_scores(self, query, top_k=5):
-        results = self.search(query, top_k)
-        return [
-            {
-                "text": r["text"][:200],
-                "source": r["metadata"].get("source", "unknown"),
-                "score": round(r["score"], 4)
-            }
-            for r in results
-        ]
-```
+`SemanticSearchEngine` は chunking、embedder fitting、indexing、query embedding、search をまとめます。source metadata を保持し、results に score と preview を付けて返します。
 
 ### Step 6: Comparing Similarity Metrics
 
-```python
-def compare_metrics(engine, query, top_k=3):
-    results = {}
-    for metric in ["cosine", "dot", "euclidean"]:
-        hits = engine.search(query, top_k=top_k, metric=metric)
-        results[metric] = [
-            {"score": round(h["score"], 4), "preview": h["text"][:80]}
-            for h in hits
-        ]
-    return results
-```
+同じ query を cosine、dot、euclidean で検索し、top results の違いを比較します。normalization issues の発見に役立ちます。
 
 ## Use It
 
-With a production embedding API, the architecture stays identical. Only the embedder changes:
+production embedding API を使っても architecture は同じです。変わるのは embedder だけです。
 
 ```python
 from openai import OpenAI
@@ -427,83 +219,46 @@ def openai_embed(texts, model="text-embedding-3-small", dimensions=None):
     return [item.embedding for item in response.data]
 ```
 
-Matryoshka truncation with OpenAI -- same model, fewer dimensions, lower storage:
-
-```python
-full = openai_embed(["semantic search query"], dimensions=1536)
-compact = openai_embed(["semantic search query"], dimensions=256)
-```
-
-The 256-d vector uses 6x less storage. For 10 million documents, that is 10 GB vs 61 GB. The accuracy loss is roughly 3-5% on standard benchmarks.
-
-For reranking with Cohere:
-
-```python
-import cohere
-
-co = cohere.ClientV2()
-
-results = co.rerank(
-    model="rerank-v3.5",
-    query="What is the refund policy?",
-    documents=["Full refund within 30 days...", "No refunds after 90 days..."],
-    top_n=3
-)
-```
-
-For local embeddings with no API dependency:
-
-```python
-from sentence_transformers import SentenceTransformer
-
-model = SentenceTransformer("BAAI/bge-small-en-v1.5")
-embeddings = model.encode(["semantic search query", "another document"])
-```
-
-The VectorIndex class from our build works with any of these. Swap the embedding function, keep the search logic.
+OpenAI の Matryoshka truncation では、同じ model で dimensions を減らし、storage を下げられます。Cohere rerank や Sentence Transformers の local embeddings も、同じ `VectorIndex` に差し替えられます。
 
 ## Ship It
 
-This lesson produces:
-- `outputs/prompt-embedding-advisor.md` -- a prompt for choosing embedding models and strategies for specific use cases
-- `outputs/skill-embedding-patterns.md` -- a skill that teaches agents how to use embeddings effectively in production
+この lesson は次を生成します。
+
+- `outputs/prompt-embedding-advisor.md` -- 特定 use cases に対して embedding models と strategies を選ぶための prompt
+- `outputs/skill-embedding-patterns.md` -- agents が production で embeddings を効果的に使うための skill
 
 ## Exercises
 
-1. **Metric comparison**: run the same 5 queries against the sample documents using cosine similarity, dot product, and euclidean distance. Record the top-3 results for each. For which queries do the metrics disagree? Why?
-
-2. **Chunk size experiment**: index the sample documents with chunk sizes of 50, 100, 200, and 500 words. For each, run 5 queries and record the top-1 similarity score. Plot the relationship between chunk size and retrieval quality. Find the point where larger chunks start hurting.
-
-3. **Matryoshka simulation**: build a SimpleEmbedder that produces 500-d vectors. Truncate to 50, 100, 200, and 500 dimensions. Measure how retrieval recall degrades at each truncation. This simulates Matryoshka behavior without needing the real training trick.
-
-4. **Binary quantization**: take the embeddings from the search engine, convert them to binary (1 if positive, 0 if negative), and implement Hamming distance search. Compare the top-10 results against full-precision cosine similarity. Measure the overlap percentage.
-
-5. **Sentence-based chunking**: replace fixed-size chunking with `chunk_by_sentences`. Run the same queries and compare retrieval scores. Does respecting sentence boundaries improve the results?
+1. **Metric comparison**: 同じ 5 queries を cosine similarity、dot product、euclidean distance で実行し、top-3 results を記録します。
+2. **Chunk size experiment**: chunk sizes 50、100、200、500 words で index し、retrieval quality を比較します。
+3. **Matryoshka simulation**: 500-d vectors を作り、50、100、200、500 dimensions に truncate して recall degradation を測ります。
+4. **Binary quantization**: embeddings を binary に変換し、Hamming distance search を実装して full-precision cosine と比較します。
+5. **Sentence-based chunking**: fixed-size chunking を `chunk_by_sentences` に置き換え、retrieval scores を比較します。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Embedding | "Text to numbers" | A dense vector where geometric proximity encodes semantic similarity |
-| Word2Vec | "The OG embedding" | 2013 model that learned word vectors by predicting context words; proved vector arithmetic encodes meaning |
-| Cosine similarity | "How similar are two vectors" | Cosine of the angle between vectors; 1 = identical direction, 0 = orthogonal, -1 = opposite |
-| HNSW | "Fast vector search" | Hierarchical Navigable Small World graph -- multi-layer structure enabling O(log n) approximate nearest neighbor search |
-| Bi-encoder | "Embed separately, compare fast" | Encodes query and document independently into vectors; enables pre-computation and fast retrieval |
-| Cross-encoder | "Slow but accurate reranker" | Processes query-document pair jointly through the full model; higher accuracy, no pre-computation |
-| Matryoshka embeddings | "Truncatable vectors" | Embeddings trained so the first N dimensions capture the most important information, enabling variable-size storage |
-| Binary quantization | "1-bit embeddings" | Converting float vectors to binary (sign bit only) for 32x storage reduction with Hamming distance search |
-| Chunking | "Split docs for embedding" | Breaking documents into 256-512 token segments so each can be independently embedded and retrieved |
-| Vector database | "Search engine for embeddings" | Data store optimized for storing vectors and performing approximate nearest neighbor search at scale |
-| Contrastive learning | "Train by comparison" | Training approach that pushes similar pair embeddings together and dissimilar pair embeddings apart |
-| MTEB | "The embedding benchmark" | Massive Text Embedding Benchmark -- 56 datasets across 8 tasks; standard for comparing embedding models |
+| Embedding | 「Text to numbers」 | geometric proximity が semantic similarity を表す dense vector |
+| Word2Vec | 「元祖 embedding」 | context words を予測して word vectors を学習した 2013 年の model |
+| Cosine similarity | 「vectors の類似度」 | vectors 間の角度の cosine。1 = 同一方向、0 = 直交、-1 = 反対 |
+| HNSW | 「高速 vector search」 | O(log n) に近い approximate nearest neighbor search を可能にする multi-layer graph |
+| Bi-encoder | 「別々に embed して高速比較」 | query と document を独立に vectors へ encode する方式 |
+| Cross-encoder | 「遅いが正確な reranker」 | query-document pair を jointly に処理する方式 |
+| Matryoshka embeddings | 「切り詰め可能 vectors」 | 最初の N dimensions が最重要情報を持つよう訓練された embeddings |
+| Binary quantization | 「1-bit embeddings」 | float vectors を sign bit の binary に変換し storage を 32x 削減すること |
+| Chunking | 「docs を embed 用に分割」 | documents を 256-512 token segments に分けること |
+| Vector database | 「embeddings 用 search engine」 | vectors の保存と approximate nearest neighbor search に最適化された datastore |
+| Contrastive learning | 「比較で訓練」 | similar pair embeddings を近づけ、dissimilar pair embeddings を遠ざける training approach |
+| MTEB | 「embedding benchmark」 | embedding models を tasks と languages across datasets で比較する benchmark |
 
-## Further Reading
+## 参考文献
 
-- Mikolov et al., "Efficient Estimation of Word Representations in Vector Space" (2013) -- the Word2Vec paper that started the embedding revolution with the king-queen analogy
-- Reimers & Gurevych, "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks" (2019) -- how to train bi-encoders for sentence-level similarity, foundation of modern embedding models
-- Kusupati et al., "Matryoshka Representation Learning" (2022) -- the technique behind variable-dimension embeddings that OpenAI adopted for text-embedding-3
-- Malkov & Yashunin, "Efficient and Robust Approximate Nearest Neighbor using Hierarchical Navigable Small World Graphs" (2018) -- the HNSW paper, the algorithm behind most production vector search
-- OpenAI Embeddings Guide (platform.openai.com/docs/guides/embeddings) -- practical reference for text-embedding-3 models including Matryoshka dimension reduction
-- MTEB Leaderboard (huggingface.co/spaces/mteb/leaderboard) -- live benchmark comparing all embedding models across tasks and languages
-- [Muennighoff et al., "MTEB: Massive Text Embedding Benchmark" (EACL 2023)](https://arxiv.org/abs/2210.07316) -- the benchmark defining 8 task categories (classification, clustering, pair classification, reranking, retrieval, STS, summarization, bitext mining) that the leaderboard reports; read before trusting any single MTEB score.
-- [Sentence Transformers documentation](https://www.sbert.net/) -- canonical reference for bi-encoder vs cross-encoder, pooling strategies, and the ingest-split-embed-store RAG pipeline this lesson implements.
+- Mikolov et al., "Efficient Estimation of Word Representations in Vector Space" (2013) -- Word2Vec paper
+- Reimers & Gurevych, "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks" (2019) -- sentence-level similarity の bi-encoder training
+- Kusupati et al., "Matryoshka Representation Learning" (2022) -- variable-dimension embeddings の手法
+- Malkov & Yashunin, "Efficient and Robust Approximate Nearest Neighbor using Hierarchical Navigable Small World Graphs" (2018) -- HNSW paper
+- OpenAI Embeddings Guide (platform.openai.com/docs/guides/embeddings) -- text-embedding-3 models と Matryoshka dimension reduction
+- MTEB Leaderboard (huggingface.co/spaces/mteb/leaderboard) -- embedding models の live benchmark
+- [Sentence Transformers documentation](https://www.sbert.net/) -- bi-encoder、cross-encoder、pooling strategies、RAG pipeline の reference

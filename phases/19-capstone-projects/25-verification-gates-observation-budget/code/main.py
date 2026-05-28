@@ -1,11 +1,11 @@
 """
-Verification gates and observation budget for an agent harness.
+agent harness の verification gate と observation budget。
 
 See: phases/19-capstone-projects/25-verification-gates-observation-budget/docs/en.md
 Concept refs:
-  - Gate-chain pattern (cheapest deny first, allow last).
-  - Observation budget as a deterministic stopping criterion.
-The demo at the bottom runs a synthetic three-turn loop and exits zero.
+  - Gate-chain pattern（最も安い deny を先に、allow は最後）。
+  - deterministic stopping criterion としての observation budget。
+bottom の demo は synthetic な 3 turn loop を走らせ、exit zero する。
 """
 
 from __future__ import annotations
@@ -18,13 +18,13 @@ from typing import Callable, Iterable, Protocol
 
 
 # ---------------------------------------------------------------------------
-# Wire shapes
+# Wire shape
 # ---------------------------------------------------------------------------
 
 
 @dataclass(frozen=True)
 class ToolCall:
-    """A request from the model to invoke a tool."""
+    """model から tool invocation への request。"""
 
     turn: int
     tool: str
@@ -42,7 +42,7 @@ class ToolCall:
 
 @dataclass(frozen=True)
 class Observation:
-    """The text the model is shown after a tool call."""
+    """tool call 後に model に見せる text。"""
 
     turn: int
     tool: str
@@ -59,7 +59,7 @@ class Observation:
 
 @dataclass(frozen=True)
 class GateDecision:
-    """A single gate's verdict."""
+    """単一 gate の verdict。"""
 
     allow: bool
     gate: str
@@ -75,10 +75,10 @@ class GateDecision:
 
 
 def estimate_tokens(text: str) -> int:
-    """A deterministic, conservative stand-in for a real tokenizer.
+    """real tokenizer の deterministic かつ conservative な stand-in。
 
-    Real harnesses plug in tiktoken or the model's own tokenizer.
-    The gate chain only cares that the counter is monotonic and deterministic.
+    real harness では tiktoken または model 自身の tokenizer を差し込む。
+    gate chain が必要とするのは、counter が monotonic かつ deterministic であることだけ。
     """
 
     if not text:
@@ -93,7 +93,7 @@ def estimate_tokens(text: str) -> int:
 
 @dataclass
 class ObservationLedger:
-    """Append-only ledger of every observation the model has been shown."""
+    """model に見せた全 observation の append-only ledger。"""
 
     rows: list[Observation] = field(default_factory=list)
 
@@ -123,7 +123,7 @@ class ObservationLedger:
 
 @dataclass
 class GateContext:
-    """Read-only context passed to every gate."""
+    """各 gate に渡す read-only context。"""
 
     ledger: ObservationLedger
     current_turn: int
@@ -137,30 +137,30 @@ class VerificationGate(Protocol):
 
 
 # ---------------------------------------------------------------------------
-# Concrete gates
+# 具体的な gates
 # ---------------------------------------------------------------------------
 
 
 @dataclass
 class WhitelistGate:
-    """Refuse any tool not in the explicit allow-set. Cheapest gate."""
+    """明示的な allow-set にない tool を拒否する。最も安い gate。"""
 
     allowed: frozenset[str]
     name: str = "whitelist"
 
     def evaluate(self, call: ToolCall, ctx: GateContext) -> GateDecision:
         if call.tool in self.allowed:
-            return GateDecision(True, self.name, "tool in allow-set")
+            return GateDecision(True, self.name, "tool は allow-set 内です")
         return GateDecision(
             False,
             self.name,
-            f"tool {call.tool!r} not in allow-set {sorted(self.allowed)}",
+            f"tool {call.tool!r} は allow-set {sorted(self.allowed)} にありません",
         )
 
 
 @dataclass
 class RegexGate:
-    """Refuse a call whose argv joins to a string matching any refuse pattern."""
+    """argv を結合した string が refuse pattern に match する call を拒否する。"""
 
     refuse_patterns: tuple[re.Pattern[str], ...]
     name: str = "regex"
@@ -175,17 +175,17 @@ class RegexGate:
         for pat in self.refuse_patterns:
             if pat.search(haystack):
                 return GateDecision(
-                    False, self.name, f"argv matched refuse pattern {pat.pattern!r}"
+                    False, self.name, f"argv が refuse pattern {pat.pattern!r} に match しました"
                 )
-        return GateDecision(True, self.name, "no refuse pattern matched")
+        return GateDecision(True, self.name, "refuse pattern に match しませんでした")
 
 
 @dataclass
 class RecencyGate:
-    """Refuse a call if the last observation is more than window turns old.
+    """last observation が window turn より古い場合に call を拒否する。
 
-    The intent is to force a fresh read instead of relying on stale state.
-    The first call in a session always passes.
+    意図は stale state に頼る代わりに fresh read を強制すること。
+    session の最初の call は常に pass する。
     """
 
     window: int
@@ -194,25 +194,24 @@ class RecencyGate:
     def evaluate(self, call: ToolCall, ctx: GateContext) -> GateDecision:
         last = ctx.ledger.latest_turn()
         if last < 0:
-            return GateDecision(True, self.name, "no prior observations")
+            return GateDecision(True, self.name, "prior observation はありません")
         gap = call.turn - last
         if gap > self.window:
             return GateDecision(
                 False,
                 self.name,
-                f"observation gap {gap} turns exceeds window {self.window}",
+                f"observation gap {gap} turn が window {self.window} を超えています",
             )
-        return GateDecision(True, self.name, f"gap {gap} within window {self.window}")
+        return GateDecision(True, self.name, f"gap {gap} は window {self.window} 内です")
 
 
 @dataclass
 class BudgetGate:
-    """Refuse a call once the cumulative observation budget is exhausted.
+    """cumulative observation budget が尽きたら call を拒否する。
 
-    A single call cannot in advance know how many tokens its result will be.
-    The gate is therefore evaluated against the ledger as it stands before the
-    call, and the harness re-runs the cumulative check against the new ledger
-    state after recording the observation.
+    single call は result が何 token になるかを事前には知れない。
+    そのため gate は call 前の ledger state に対して評価し、harness は observation
+    記録後の新しい ledger state に対して cumulative check を再実行する。
     """
 
     max_tokens: int
@@ -224,17 +223,17 @@ class BudgetGate:
             return GateDecision(
                 False,
                 self.name,
-                f"observation budget exhausted: {used}/{self.max_tokens} tokens",
+                f"observation budget を使い切りました: {used}/{self.max_tokens} tokens",
             )
         remaining = self.max_tokens - used
         return GateDecision(
-            True, self.name, f"{remaining} tokens of budget remaining"
+            True, self.name, f"budget は残り {remaining} tokens です"
         )
 
 
 @dataclass
 class PerToolBudgetGate:
-    """Optional gate: refuse if a single tool has consumed more than its share."""
+    """optional gate: 単一 tool が割当以上を消費していたら拒否する。"""
 
     limits: dict[str, int]
     name: str = "per-tool-budget"
@@ -242,16 +241,16 @@ class PerToolBudgetGate:
     def evaluate(self, call: ToolCall, ctx: GateContext) -> GateDecision:
         limit = self.limits.get(call.tool)
         if limit is None:
-            return GateDecision(True, self.name, "tool has no per-tool budget")
+            return GateDecision(True, self.name, "tool に per-tool budget はありません")
         used = ctx.ledger.per_tool(call.tool)
         if used >= limit:
             return GateDecision(
                 False,
                 self.name,
-                f"per-tool budget for {call.tool} exhausted: {used}/{limit}",
+                f"{call.tool} の per-tool budget を使い切りました: {used}/{limit}",
             )
         return GateDecision(
-            True, self.name, f"per-tool {call.tool}: {limit - used} tokens remaining"
+            True, self.name, f"per-tool {call.tool}: 残り {limit - used} tokens"
         )
 
 
@@ -262,7 +261,7 @@ class PerToolBudgetGate:
 
 @dataclass
 class ChainOutcome:
-    """The full result of a chain evaluation: the per-gate decisions plus a final verdict."""
+    """chain evaluation の full result: per-gate decision と final verdict。"""
 
     decisions: list[GateDecision]
 
@@ -287,7 +286,7 @@ class ChainOutcome:
 
 @dataclass
 class GateChain:
-    """Ordered list of gates evaluated with short-circuit on first deny."""
+    """最初の deny で short-circuit する ordered gate list。"""
 
     gates: tuple[VerificationGate, ...]
 
@@ -302,7 +301,7 @@ class GateChain:
 
 
 # ---------------------------------------------------------------------------
-# Mini synthetic agent loop for the demo
+# demo 用の mini synthetic agent loop
 # ---------------------------------------------------------------------------
 
 
@@ -311,7 +310,7 @@ ToolFn = Callable[[ToolCall], str]
 
 @dataclass
 class LoopReport:
-    """Audit record of a synthetic loop run."""
+    """synthetic loop run の audit record。"""
 
     turns: int
     allowed: int
@@ -334,10 +333,10 @@ def run_synthetic_loop(
     chain: GateChain,
     tool_fns: dict[str, ToolFn],
 ) -> LoopReport:
-    """Run a fixed sequence of tool calls through the chain.
+    """固定された tool call sequence を chain に通す。
 
-    This is the harness skeleton in miniature. A real harness would consult
-    the model for the next tool call; the gate-chain contract is identical.
+    これは harness skeleton の縮小版。real harness は次の tool call を model に
+    問い合わせるが、gate-chain contract は同じ。
     """
 
     ledger = ObservationLedger()
@@ -388,13 +387,13 @@ def run_synthetic_loop(
 
 
 def _demo_tools() -> dict[str, ToolFn]:
-    """Three synthetic tools. read_file is verbose, list_dir is small, run_tests is structured."""
+    """3 つの synthetic tool。read_file は verbose、list_dir は小さく、run_tests は structured。"""
 
     def read_file(call: ToolCall) -> str:
         target = call.argv[0] if call.argv else "<missing>"
         return (
-            f"# fake contents of {target}\n"
-            + ("line of fake source code that is sixty bytes long " * 12)
+            f"# {target} の fake contents\n"
+            + ("60 bytes 程度の fake source code の行 " * 12)
         )
 
     def list_dir(call: ToolCall) -> str:
@@ -409,7 +408,7 @@ def _demo_tools() -> dict[str, ToolFn]:
 
 
 def build_default_chain(budget: int = 200) -> GateChain:
-    """Wire the canonical four-gate chain in the order documented in en.md."""
+    """en.md に記載された順序で canonical な 4-gate chain を wire する。"""
 
     return GateChain(
         gates=(
@@ -430,7 +429,7 @@ def build_default_chain(budget: int = 200) -> GateChain:
 
 
 def run_demo() -> int:
-    """Self-terminating demo. Prints a JSON trace and exits zero."""
+    """self-terminating demo。JSON trace を print し、exit zero する。"""
 
     chain = build_default_chain(budget=200)
     tools = _demo_tools()
@@ -445,20 +444,20 @@ def run_demo() -> int:
 
     report = run_synthetic_loop(calls, chain, tools)
 
-    print("VERIFICATION GATE DEMO")
+    print("VERIFICATION GATE デモ")
     print(f"turns={report.turns} allowed={report.allowed} refused={report.refused}")
     print("")
     for idx, (call, outcome) in enumerate(zip(calls, report.decisions)):
         verdict = "ALLOW" if outcome.allow else "DENY"
         print(f"  [{idx}] turn={call.turn} tool={call.tool} -> {verdict}")
         if not outcome.allow:
-            print(f"        reason: {outcome.deny_reason}")
+            print(f"        理由: {outcome.deny_reason}")
     print("")
-    print(f"cumulative tokens observed: {sum(o.tokens for o in report.observations)}")
-    print(f"observations recorded: {len(report.observations)}")
+    print(f"観測済み cumulative tokens: {sum(o.tokens for o in report.observations)}")
+    print(f"記録した observations: {len(report.observations)}")
 
     if report.refused < 1:
-        print("ERROR: demo expected at least one refusal", file=sys.stderr)
+        print("ERROR: demo は少なくとも 1 つの refusal を期待しています", file=sys.stderr)
         return 1
     return 0
 

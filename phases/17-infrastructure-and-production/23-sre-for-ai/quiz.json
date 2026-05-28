@@ -1,50 +1,50 @@
 {
   "lesson": "23-sre-for-ai",
-  "title": "SRE for AI — Multi-Agent Incident Response, Runbooks, Predictive Detection",
+  "title": "AI のための SRE — マルチエージェントのインシデント対応、Runbook、予測検知",
   "questions": [
     {
       "stage": "pre",
-      "question": "What multi-agent shape does the lesson recommend for AI SRE?",
+      "question": "この lesson は AI SRE にどのような multi-agent 構成を推奨していますか。",
       "options": [
-        "Random selection of one of three agents",
-        "Two agents in series with no supervisor",
-        "One monolithic agent owning everything",
-        "Supervisor agent that breaks the incident into sub-queries for specialized log, metric, and runbook agents, then synthesizes and presents to a human"
+        "3 つの agent からランダムに 1 つ選ぶ",
+        "supervisor なしで 2 つの agent を直列につなぐ",
+        "1 つの monolithic agent がすべてを所有する",
+        "Supervisor agent が incident を specialized log、metric、runbook agents 向けの sub-queries に分解し、統合して人間に提示する"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which auto-remediation set does the lesson call safe?",
+      "question": "この lesson が安全と呼ぶ auto-remediation の集合はどれですか。",
       "options": [
-        "Re-architecting service topology",
-        "Altering databases",
-        "Modifying IAM policies",
-        "Restart pod, revert a specific deploy, scale a pool within pre-approved bounds, enable a pre-approved feature flag"
+        "service topology を re-architect する",
+        "databases を変更する",
+        "IAM policies を変更する",
+        "pod の restart、特定 deploy の revert、事前承認済み範囲内での pool scale、事前承認済み feature flag の enable"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does NeuBird Hawkeye use adversarial evaluation to filter hallucinated root causes?",
+      "question": "NeuBird Hawkeye は hallucinated root causes を filter するために adversarial evaluation をどのように使いますか。",
       "options": [
-        "Two models independently analyze the same incident; agreement = high confidence, disagreement = escalate to human with both hypotheses",
-        "Uses GAN-style training",
-        "Picks the higher-confidence model's answer always",
-        "Runs the same model twice on the same input"
+        "2 つのモデルが同じ incident を独立に分析する。一致 = high confidence、不一致 = 両方の hypotheses を持って人間へ escalate",
+        "GAN-style training を使う",
+        "常に confidence が高いモデルの answer を選ぶ",
+        "同じ model を同じ input で 2 回実行する"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does operational memory solve in AI SRE?",
+      "question": "AI SRE において operational memory は何を解決しますか。",
       "options": [
-        "Cold start of inference pods",
+        "inference pods の cold start",
         "Network egress filtering",
-        "Loss of tribal knowledge when teams turn over — runbooks and post-mortems live in a vector DB that agents retrieve on every incident",
+        "team turnover による tribal knowledge の喪失。runbooks と post-mortems を vector DB に置き、agents が incident ごとに retrieve する",
         "Token cost attribution"
       ],
       "correct": 2,
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "What MIT 2025 result does the lesson cite for pre-incident prediction?",
+      "question": "この lesson は pre-incident prediction について、MIT 2025 のどの結果を引用していますか。",
       "options": [
-        "100% prediction with 1-second lead",
-        "89% of outages predicted 10-15 minutes early using logs + GPU temps + API error patterns",
-        "Predictions remain unsolved",
-        "10% with no lead time"
+        "1 秒前に 100% 予測",
+        "logs + GPU temps + API error patterns を使い、outages の 89% を 10-15 分前に予測",
+        "Predictions は未解決のまま",
+        "lead time なしで 10%"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What operational constraint does the lesson stress about predictive detection?",
+      "question": "この lesson は predictive detection について、どの運用上の制約を強調していますか。",
       "options": [
-        "Predictions replace runbooks",
-        "Predictions should never be wired to action",
-        "Predictions without actuation are just dashboards — the operational question is what action (pre-drain, page, auto-scale) the prediction triggers",
-        "Predictions are always accurate"
+        "Predictions は runbooks を置き換える",
+        "Predictions は action に接続してはいけない",
+        "actuation のない predictions はただの dashboards であり、運用上の問いは prediction がどの action (pre-drain、page、auto-scale) を trigger するかである",
+        "Predictions は常に正確である"
       ],
       "correct": 2,
       "explanation": ""

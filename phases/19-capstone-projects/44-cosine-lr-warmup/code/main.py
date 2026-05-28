@@ -1,6 +1,6 @@
-"""AdamW with cosine learning-rate schedule and linear warmup.
+"""linear warmup 付き cosine learning-rate schedule の AdamW。
 
-Implements:
+実装内容:
 - CosineWithWarmup, a stateless schedule whose lr(step) honors warmup, peak,
   and decay boundaries exactly.
 - TrainState, which wires an AdamW optimizer to the schedule and runs one
@@ -28,7 +28,7 @@ try:
     from torch import nn
 except ImportError as exc:
     raise SystemExit(
-        "torch is required for this lesson. Install with: pip install torch"
+        "この lesson には torch が必要です。Install: pip install torch"
     ) from exc
 
 
@@ -38,9 +38,9 @@ PLOT_WIDTH = 60
 
 @dataclass
 class CosineWithWarmup:
-    """Stateless cosine-with-warmup learning-rate schedule.
+    """stateless な cosine-with-warmup learning-rate schedule。
 
-    Step indexing convention: step zero is the very first training update. At
+    step index の convention: step zero は最初の training update。
     step zero the rate is exactly zero (the warmup ramp starts there). At
     step warmup_steps the rate is exactly lr_max. At step total_steps the
     rate is exactly lr_min. Past total_steps the rate stays at lr_min.
@@ -86,7 +86,7 @@ class CosineWithWarmup:
 
 @dataclass
 class StepLog:
-    """One row of the per-step training log."""
+    """step ごとの training log の 1 行。"""
 
     step: int
     lr: float
@@ -103,7 +103,7 @@ class StepLog:
 
 
 def gradient_l2_norm(parameters: Iterable[torch.nn.Parameter]) -> float:
-    """Return the L2 norm of the concatenated gradient vector.
+    """連結した gradient vector の L2 norm を返す。
 
     Mirrors `torch.nn.utils.get_total_norm` for the gradient case so the lesson
     does not depend on a particular PyTorch version that may or may not expose
@@ -120,7 +120,7 @@ def gradient_l2_norm(parameters: Iterable[torch.nn.Parameter]) -> float:
 
 
 class TrainState:
-    """Bind a model, an AdamW optimizer, a schedule, and a loss function.
+    """model、AdamW optimizer、schedule、loss function を束ねる。
 
     The class owns the step counter so the schedule axis is the durable one.
     """
@@ -181,7 +181,7 @@ def plot_schedule_ascii(
     width: int = PLOT_WIDTH,
     height: int = PLOT_HEIGHT,
 ) -> str:
-    """Return a text plot of the schedule across [0, total_steps]."""
+    """[0, total_steps] 上の schedule を text plot で返す。"""
 
     if width <= 2 or height <= 2:
         raise ValueError("width and height must be at least 3")
@@ -215,7 +215,7 @@ def plot_schedule_ascii(
 
 
 def write_schedule_csv(schedule: CosineWithWarmup, path: Path) -> None:
-    """Write one row per step to a CSV with columns (step, lr)."""
+    """(step, lr) columns の CSV に step ごとに 1 行書く。"""
 
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -227,7 +227,7 @@ def write_schedule_csv(schedule: CosineWithWarmup, path: Path) -> None:
 
 
 def write_step_log_csv(log: Iterable[StepLog], path: Path) -> None:
-    """Write the training log to a CSV with the canonical schema."""
+    """canonical schema の CSV に training log を書く。"""
 
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -240,7 +240,7 @@ def write_step_log_csv(log: Iterable[StepLog], path: Path) -> None:
 
 @dataclass
 class LinearWarmupConstant:
-    """Alternative schedule: linear warmup followed by a flat lr_max plateau.
+    """alternative schedule: linear warmup の後に flat な lr_max plateau。
 
     Useful as a baseline for ablations against the cosine variant. The same
     contract: lr(0) is zero (with non-zero warmup) and the rate stays at
@@ -268,10 +268,10 @@ class LinearWarmupConstant:
 
 @dataclass
 class InverseSqrtWarmup:
-    """Linear warmup followed by an inverse-square-root decay.
+    """linear warmup の後に inverse-square-root decay。
 
     Decays as lr_max * sqrt(warmup_steps / step) for step > warmup_steps. Used
-    historically in transformer training and useful as a comparison baseline.
+    Historically in transformer training and useful as a comparison baseline.
     """
 
     warmup_steps: int
@@ -293,7 +293,7 @@ class InverseSqrtWarmup:
 
 @dataclass
 class EWMA:
-    """Exponentially weighted moving average of a scalar, useful for grad-norm smoothing."""
+    """scalar の exponentially weighted moving average。grad-norm smoothing に便利。"""
 
     beta: float
     value: float = 0.0
@@ -314,7 +314,7 @@ class EWMA:
 
 @dataclass
 class StepLogSummary:
-    """Reduction of a per-step log to the numbers a reviewer scans first."""
+    """reviewer が最初に見る数値へ per-step log を reduction する。"""
 
     steps: int
     lr_peak: float
@@ -345,7 +345,7 @@ def split_decay_groups(
     weight_decay: float = 0.01,
     no_decay_names: tuple[str, ...] = ("bias", "LayerNorm.weight", "layer_norm.weight"),
 ) -> list[dict[str, object]]:
-    """Split model parameters into a decay and a no-decay group.
+    """model parameter を decay group と no-decay group に分ける。
 
     The convention for transformer training is to apply weight decay to dense
     weight matrices but not to biases or LayerNorm gain parameters. This helper
@@ -374,7 +374,7 @@ def build_toy_model(
     out_dim: int = 4,
     seed: int = 7,
 ) -> tuple[nn.Module, torch.Tensor, torch.Tensor]:
-    """Tiny linear model with a fixed batch for the demo."""
+    """demo 用の固定 batch を持つ小さな linear model。"""
 
     torch.manual_seed(seed)
     model = nn.Sequential(nn.Linear(in_dim, 32), nn.GELU(), nn.Linear(32, out_dim))
@@ -384,7 +384,7 @@ def build_toy_model(
 
 
 def run_demo() -> int:
-    """Run 20 training steps on a toy model and render the schedule."""
+    """toy model で 20 training step を実行し schedule を表示する。"""
 
     model, inputs, targets = build_toy_model()
     schedule = CosineWithWarmup(

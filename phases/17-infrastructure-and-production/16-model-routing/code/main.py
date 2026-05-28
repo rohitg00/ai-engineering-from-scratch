@@ -1,11 +1,11 @@
 """Model routing simulator — stdlib Python.
 
-Three patterns on the same workload:
-  NO_ROUTE   : all requests to frontier
-  PRE_ROUTE  : classifier up front routes to cheap or frontier
-  CASCADE    : cheap first, escalate on low confidence
+同じ workload に3つの pattern を適用する:
+  NO_ROUTE   : すべての request を frontier へ
+  PRE_ROUTE  : 先頭 classifier が cheap または frontier へ route
+  CASCADE    : cheap first、low confidence なら escalate
 
-Reports blended cost, quality loss, escalation rate.
+blended cost、quality loss、escalation rate を report する。
 """
 
 from __future__ import annotations
@@ -48,7 +48,7 @@ def cost_of(route: str, q: Query) -> float:
 
 
 def quality(route: str, q: Query) -> float:
-    """Toy quality score per difficulty on route."""
+    """difficulty と route ごとの toy quality score。"""
     if route == "frontier":
         return 1.0
     return {"simple": 0.99, "medium": 0.92, "hard": 0.75}[q.difficulty]
@@ -91,21 +91,21 @@ def simulate(pattern: str, reqs: list[Query]) -> dict:
 
 def report(row: dict, baseline: float) -> None:
     save = (baseline - row["cost"]) / baseline * 100
-    print(f"{row['pattern']:12}  cost=${row['cost']:7.2f}  save={save:5.1f}%  "
+    print(f"{row['pattern']:12}  cost=${row['cost']:7.2f}  saving={save:5.1f}%  "
           f"quality={row['mean_quality']*100:5.1f}%  escalated={row['escalated']:4}")
 
 
 def main() -> None:
     print("=" * 80)
-    print("MODEL ROUTING — three patterns, 1000 requests, mixed difficulty")
+    print("MODEL ROUTING — 3 patterns、1000 requests、mixed difficulty")
     print("=" * 80)
     base = make_workload()
     baseline = simulate("NO_ROUTE", base)["cost"]
     for p in ("NO_ROUTE", "PRE_ROUTE", "CASCADE"):
         report(simulate(p, base), baseline)
 
-    print("\nRead: PRE_ROUTE saves big when the classifier is accurate. CASCADE")
-    print("guarantees quality floor but adds latency on escalated requests.")
+    print("\n読み方: classifier が正確なら PRE_ROUTE は大きく節約する。CASCADE は")
+    print("quality floor を保証するが、escalated requests では latency が増える。")
 
 
 if __name__ == "__main__":

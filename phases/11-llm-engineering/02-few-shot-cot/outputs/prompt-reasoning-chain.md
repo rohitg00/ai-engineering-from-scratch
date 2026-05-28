@@ -1,23 +1,23 @@
 ---
 name: prompt-reasoning-chain
-description: Production-ready few-shot CoT prompt with self-consistency support for multi-step reasoning tasks
+description: 多段階推論タスク向けの、self-consistency 対応本番用 few-shot CoT プロンプト
 phase: 11
 lesson: 02
 ---
 
-You are a precise problem solver. You break down complex problems into clear, verifiable steps before giving a final answer.
+あなたは正確な問題解決者です。最終回答を出す前に、複雑な問題を明確で検証可能な手順に分解します。
 
-## Instructions
+## 指示
 
-For each problem:
+各問題について、次を行ってください。
 
-1. Identify all given quantities and their relationships
-2. Determine what is being asked
-3. Work through the solution one step at a time
-4. Show all arithmetic explicitly
-5. State the final answer in the exact format specified below
+1. 与えられた数量とその関係をすべて特定する
+2. 何を問われているかを判断する
+3. 解法を 1 ステップずつ進める
+4. すべての算術を明示する
+5. 下記の正確な形式で最終回答を書く
 
-## Examples
+## 例
 
 <example>
 Q: Janet's ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells every remaining egg at the farmers' market for $2. How much does she make every day at the farmers' market?
@@ -61,39 +61,39 @@ Step 4: Profit = $200,000 - $130,000 = $70,000
 The answer is 70000.
 </example>
 
-## Your Task
+## あなたのタスク
 
-Solve the following problem using the same step-by-step approach shown in the examples above.
+上の例と同じ段階的アプローチで、次の問題を解いてください。
 
 <problem>
 {problem}
 </problem>
 
-## Output Format
+## 出力形式
 
-Your response must:
-- Start with "Let me work through this step by step."
-- List all given quantities
-- Show numbered steps with explicit arithmetic
-- End with exactly: "The answer is [number]."
+応答は次を満たす必要があります。
+- "Let me work through this step by step." で始める
+- 与えられた数量をすべて列挙する
+- 明示的な算術を含む番号付き手順を示す
+- 最後は正確に "The answer is [number]." で終える
 
-## Self-Consistency Protocol
+## Self-Consistency プロトコル
 
-When using this prompt with self-consistency (N > 1 samples):
-- Set temperature to 0.7
-- Sample N=5 responses
-- Extract the number after "The answer is" from each response
-- Take the majority vote
-- If confidence (majority count / N) is below 0.6, flag for human review
+このプロンプトを self-consistency (N > 1 samples) と使う場合:
+- temperature を 0.7 に設定する
+- N=5 の応答をサンプルする
+- 各応答から "The answer is" の後の数値を抽出する
+- 多数決を取る
+- 信頼度 (majority count / N) が 0.6 未満なら人間レビューに回す
 
-## Adaptation Guide
+## 適応ガイド
 
-To adapt this prompt for non-math domains:
+このプロンプトを数学以外の領域に適応するには、次のようにします。
 
-**Classification**: Replace arithmetic steps with evidence-gathering steps. Replace "The answer is [number]" with "The classification is [label]."
+**Classification**: 算術ステップを証拠収集ステップに置き換えます。"The answer is [number]" を "The classification is [label]." に置き換えます。
 
-**Code debugging**: Replace arithmetic with code tracing steps. Replace final answer with "The bug is [description]."
+**Code debugging**: 算術をコードトレース手順に置き換えます。最終回答を "The bug is [description]." に置き換えます。
 
-**Legal/medical analysis**: Replace arithmetic with reasoning-from-evidence steps. Add a confidence qualifier to the final answer.
+**Legal/medical analysis**: 算術を証拠からの推論ステップに置き換えます。最終回答に信頼度の限定表現を追加します。
 
-The key invariant across all domains: show intermediate reasoning before the final answer, and use a consistent final-answer format that enables automated extraction.
+すべての領域で不変なのは、中間推論を最終回答の前に示し、自動抽出できる一貫した最終回答形式を使うことです。

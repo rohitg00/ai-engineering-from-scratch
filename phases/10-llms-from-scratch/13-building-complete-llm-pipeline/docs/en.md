@@ -1,34 +1,34 @@
-# Building a Complete LLM Pipeline
+# 完全な LLM パイプラインを構築する
 
-> Everything from Lessons 01 to 12 is one stage of one pipeline. This lesson is the scaffold that turns those stages into a single end-to-end run: tokenize, pre-train, scale, SFT, align, evaluate, quantize, serve. You will not train a 70B model on a laptop. You will produce the orchestration layer, the manifest, the eval gate, and the rollback plan that a 2026 frontier team uses to decide what gets shipped. This is the capstone.
+> Lessons 01 から 12 までの内容は、1つの pipeline の各 stage です。このレッスンは、それらの stage を単一の end-to-end run にまとめるための scaffold です。tokenize、pre-train、scale、SFT、align、evaluate、quantize、serve までをつなぎます。laptop で 70B model を train するわけではありません。あなたが作るのは、2026年の frontier team が何を ship するか判断するために使う orchestration layer、manifest、eval gate、rollback plan です。これは capstone です。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** All Phase 10 lessons 01-12
-**Time:** ~120 minutes
+**種類:** Build
+**言語:** Python (stdlib)
+**前提条件:** Phase 10 lessons 01-12 すべて
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Compose the eleven prior lessons (tokenizer, data, pre-training, scaling, SFT, RLHF, DPO, CAI, eval, quantization, inference) into a single reproducible pipeline spec
-- Define the artifact contract between stages: what each stage consumes, what it produces, and how the next stage verifies the input
-- Build an orchestrator that tracks experiments, hashes artifacts, and gates ship decisions on eval thresholds
-- Design the rollback plan: which artifacts are cheap to re-run, which are expensive, and what a corrupted checkpoint costs
+- これまでの 11 レッスン (tokenizer、data、pre-training、scaling、SFT、RLHF、DPO、CAI、eval、quantization、inference) を、単一の再現可能な pipeline spec にまとめる
+- stage 間の artifact contract を定義する: 各 stage が何を消費し、何を生成し、次の stage が input をどう検証するか
+- experiment を追跡し、artifact を hash 化し、eval threshold に基づいて ship decision を gate する orchestrator を構築する
+- rollback plan を設計する: どの artifact は安く再実行でき、どれは高価で、corrupted checkpoint がどれほどの cost になるかを明確にする
 
-## The Problem
+## 問題
 
-The previous lessons each work. Tokenizer trained. Tiny GPT pre-trained. SFT dataset assembled. Reward model trained. DPO run. Evals measured. Quantized weights exported. Inference server spun up. Each one is a notebook. Each one has its own conventions, its own output paths, its own seed.
+前のレッスンは、それぞれ単体では動きます。Tokenizer は train 済み。Tiny GPT は pre-train 済み。SFT dataset は組み立て済み。Reward model は train 済み。DPO は実行済み。Eval は測定済み。Quantized weights は export 済み。Inference server は起動済み。しかし、それぞれが notebook です。それぞれに独自の convention、独自の output path、独自の seed があります。
 
-A frontier training run is not a notebook. Llama 3 405B took 30 million H100 hours over roughly 54 days. DeepSeek-V3 used around 2.8 million H800 hours. During that time, one corrupted checkpoint, one data contamination, one eval regression can cost a team a week of wall-clock and a month of GPU budget. The way teams survive this is through pipeline hygiene: every stage has a deterministic input, a deterministic output, a manifest, a hash, and a gate.
+frontier training run は notebook ではありません。Llama 3 405B には、およそ 54日間で 3,000万 H100 hours がかかりました。DeepSeek-V3 は約 280万 H800 hours を使いました。その期間中、1つの corrupted checkpoint、1つの data contamination、1つの eval regression が、team に 1週間の wall-clock と 1か月分の GPU budget を失わせることがあります。team がこれを乗り切る方法が pipeline hygiene です。すべての stage に deterministic input、deterministic output、manifest、hash、gate を持たせます。
 
-This is the capstone. You will not run the pipeline end-to-end on a laptop. You will write the orchestrator that coordinates the stages, the manifest that describes the run, the verifier that gates ship decisions, and the replay plan that lets a third party re-run your work from a single file. The code is small; the discipline is large.
+これが capstone です。laptop で pipeline を end-to-end に走らせるわけではありません。あなたが書くのは、stage を調整する orchestrator、run を記述する manifest、ship decision を gate する verifier、そして第三者が単一ファイルから作業を再実行できる replay plan です。code は小さいですが、discipline は大きいです。
 
-The pattern scales from 100M to 1T parameters unchanged. The same four components -- manifest, orchestrator, eval gate, artifact store -- run Llama 3 and also run your hobby GPT. The difference is the size of the numbers inside each stage's config, not the shape of the pipeline.
+この pattern は 100M から 1T parameters まで変わらず scale します。同じ 4つの component、manifest、orchestrator、eval gate、artifact store が、Llama 3 も hobby GPT も動かします。違いは各 stage の config に入る数字の大きさであり、pipeline の形ではありません。
 
-## The Concept
+## コンセプト
 
-### The Twelve Stages
+### 12個の stage
 
-Every Phase 10 lesson is a stage. Here is the full dependency graph.
+Phase 10 の各レッスンは stage です。以下が完全な dependency graph です。
 
 ```mermaid
 graph TD
@@ -53,11 +53,11 @@ graph TD
     style GATE fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-Stages 07 and 08 can run in parallel. Everything else is a hard dependency. A change in stage 02 (tokenizer) invalidates every downstream artifact. A change in stage 10 (eval) invalidates only the ship decision.
+Stages 07 と 08 は parallel に実行できます。それ以外はすべて hard dependency です。stage 02 (tokenizer) の変更は、downstream の artifact すべてを invalidate します。stage 10 (eval) の変更は、ship decision だけを invalidate します。
 
-### The Manifest
+### Manifest
 
-A manifest is a single file that describes a run completely enough to replay it. Nothing the pipeline produces should depend on state that is not in the manifest. The fields are boring and mandatory.
+manifest は、run を replay するのに十分な情報を完全に記述する単一ファイルです。pipeline が生成するものは、manifest にない state に依存してはいけません。field は地味ですが必須です。
 
 ```
 pipeline_version: 1.2.3
@@ -72,13 +72,13 @@ stages:
     cost_usd: 12
 ```
 
-The output hash of stage N is the input hash of stage N+1. Any deviation and the pipeline halts. This is how you catch data corruption early. It is also how a teammate on a different continent verifies that their replay produced the same artifact as yours.
+stage N の output hash は stage N+1 の input hash です。少しでもずれれば pipeline は halt します。これにより data corruption を早期に検出できます。また、別の大陸にいる teammate が、自分の replay であなたと同じ artifact が生成されたことを検証する方法にもなります。
 
-In practice teams use a small YAML schema plus a manifest checker that diffs against the previous successful run. Any delta outside the expected fields (cost, wall clock) is a red flag.
+実務では、小さな YAML schema と、前回の successful run との差分を取る manifest checker を使います。想定される field (cost、wall clock) 以外の delta は red flag です。
 
 ### Artifact Typing
 
-Each stage's output is a typed artifact. Not a directory blob, not a pickle, but a named type with a known schema.
+各 stage の output は typed artifact です。directory blob でも pickle でもなく、既知の schema を持つ named type です。
 
 | Stage | Artifact Type | Key Fields |
 |-------|--------------|-----------|
@@ -92,11 +92,11 @@ Each stage's output is a typed artifact. Not a directory blob, not a pickle, but
 | 11 | Quantized Model | quantized weights + calibration data + accuracy delta vs FP16 |
 | 12 | Server Spec | endpoint + model hash + config + observability hooks |
 
-The typing prevents the most common failure mode: using a stage 08 output as a stage 06 input, shipping a DPO-trained model through the SFT path. Typed artifacts and typed stage signatures make these errors compile-time failures, not day-five failures.
+typing は最もよくある failure mode を防ぎます。たとえば stage 08 の output を stage 06 の input として使い、DPO-trained model を SFT path に流して ship してしまう事故です。Typed artifacts と typed stage signatures により、この種の error は 5日目の failure ではなく compile-time failure になります。
 
-### The Eval Gate
+### Eval Gate
 
-Shipping is not "training finished." Shipping is "training finished and the eval gate passed." The gate is defined before the run starts.
+Shipping は「training が終わった」ではありません。Shipping は「training が終わり、eval gate を通過した」です。gate は run 開始前に定義します。
 
 ```
 gates:
@@ -108,49 +108,49 @@ gates:
   cost_total_usd: <= 50000
 ```
 
-Every gate is a numeric threshold. No "looks good" gates. No subjective sign-offs. If every gate passes, the artifact is marked shippable. If any gate fails, the run is held pending explicit override by a named reviewer, which itself is logged in the manifest.
+すべての gate は numeric threshold です。「looks good」gate はありません。subjective sign-off もありません。すべての gate を通過した場合、artifact は shippable と mark されます。どれか 1つでも fail した場合、run は named reviewer による explicit override 待ちになります。その override 自体も manifest に記録されます。
 
-Two gates catch most disasters. A *regression* gate (the new model must be at least as good as the previous on core benchmarks) catches training bugs. A *KL budget* gate (the aligned policy must not have drifted further than X from its reference) catches alignment overcooking. Every production pipeline has both.
+ほとんどの disaster は 2つの gate で捕捉できます。*regression* gate (new model が core benchmark で previous model 以上であること) は training bug を捕まえます。*KL budget* gate (aligned policy が reference から X 以上 drift していないこと) は alignment の overcooking を捕まえます。production pipeline には必ず両方があります。
 
-### The Orchestrator
+### Orchestrator
 
-A small piece of code that reads the manifest, dispatches stages, tracks artifacts, and halts on any contract violation. This is not Airflow. This is not Kubeflow. For pipeline hygiene you want something boring that you wrote.
+orchestrator は、manifest を読み、stage を dispatch し、artifact を追跡し、contract violation があれば halt する小さな code です。これは Airflow ではありません。Kubeflow でもありません。pipeline hygiene のためには、自分で書いた退屈なものが望ましいです。
 
-The orchestrator's job is narrow:
+orchestrator の job は narrow です。
 
-1. Resolve the DAG from the manifest.
-2. For each stage, check if the expected output already exists at the correct hash (skip if so).
-3. Run the stage, capture stdout/stderr, measure wall clock and cost.
-4. Verify the output hash against the downstream stage's expected input hash.
-5. On failure, write a partial manifest with the exact failing stage and exit nonzero.
+1. manifest から DAG を resolve する。
+2. 各 stage について、期待される output が正しい hash で既に存在するか確認する (存在するなら skip)。
+3. stage を実行し、stdout/stderr を capture し、wall clock と cost を測る。
+4. output hash を downstream stage の expected input hash と照合する。
+5. failure 時は、exact failing stage を含む partial manifest を書き出し、nonzero で exit する。
 
-That is 200 lines of Python. It will look like the file `code/main.py` in this lesson. Under the hood, the real pipeline uses `torchrun` or `ray` to execute individual stages on clusters, but the orchestrator itself runs on a single box.
+これは Python で 200行です。このレッスンの `code/main.py` のような見た目になります。裏側では、実際の pipeline は `torchrun` や `ray` を使って cluster 上で個別 stage を実行しますが、orchestrator 自体は single box で動きます。
 
-### Experiment Tracking and Artifact Storage
+### Experiment Tracking と Artifact Storage
 
-Two external systems anchor the pipeline.
+2つの external system が pipeline を支えます。
 
-**Experiment tracker (wandb, neptune, mlflow).** Logs loss curves, eval metrics, system telemetry per stage. The tracker is where you go when you need to compare run A against run B three weeks later. Teams almost always use a hosted tracker for this -- writing your own loses time that should go into training.
+**Experiment tracker (wandb, neptune, mlflow)。** stage ごとの loss curve、eval metrics、system telemetry を log します。3週間後に run A と run B を比較する必要があるとき、見に行く場所が tracker です。team はほぼ必ず hosted tracker を使います。自作すると、training に使うべき時間を失います。
 
-**Artifact store (S3, R2, GCS).** Immutable object store for checkpoints, datasets, tokenizers, eval reports. Artifacts are addressed by hash, not by filename. A filename like `latest.pt` is a foot-gun; `ckpt-7b-step-20000-sha256:abc123.safetensors` is a contract.
+**Artifact store (S3, R2, GCS)。** checkpoints、datasets、tokenizers、eval reports の immutable object store です。artifact は filename ではなく hash で address されます。`latest.pt` のような filename は foot-gun です。`ckpt-7b-step-20000-sha256:abc123.safetensors` は contract です。
 
-The orchestrator writes to both. The tracker is for humans looking at charts. The artifact store is for the next stage looking up inputs.
+orchestrator は両方に書き込みます。tracker は人間が chart を見るためのものです。artifact store は次の stage が input を探すためのものです。
 
 ### Costing
 
-A frontier run has a dollar number attached. Budget discipline happens in two places.
+frontier run には dollar number が付いています。budget discipline は 2か所で発生します。
 
-**Pre-run estimate.** From the manifest, compute expected FLOPs (for pre-training: 6 x params x tokens), expected GPU hours (FLOPs / peak throughput / utilization), and dollar cost at the current rental rate. If the estimate exceeds the budget gate, the pipeline refuses to start.
+**Pre-run estimate。** manifest から expected FLOPs (pre-training なら 6 x params x tokens)、expected GPU hours (FLOPs / peak throughput / utilization)、現在の rental rate に基づく dollar cost を計算します。estimate が budget gate を超える場合、pipeline は start を拒否します。
 
-**In-run tracking.** Stage-by-stage wall clock and cost are logged to the manifest. After every stage, the remaining budget is checked. If a stage overran, the next stage's gate is evaluated with the new remaining budget. You do not find out you are out of money when the VC calls.
+**In-run tracking。** stage-by-stage の wall clock と cost を manifest に記録します。各 stage の後、remaining budget を確認します。stage が overrun した場合、次の stage の gate は新しい remaining budget で評価されます。VC から電話が来たときに初めて資金切れを知る、という状態にはしません。
 
-Llama 3's reported cost was $61M. DeepSeek-V3 reported $5.6M for the main pre-training run. The ratio is mostly hardware efficiency plus mixture-of-experts -- but the specific cost is visible because both teams tracked it per stage, not per run.
+Llama 3 の reported cost は $61M でした。DeepSeek-V3 は main pre-training run で $5.6M と報告しました。この ratio は主に hardware efficiency と mixture-of-experts によるものです。ただし、specific cost が見えるのは、両 team が cost を run 単位ではなく stage 単位で追跡していたからです。
 
 ### Reproducibility vs Determinism
 
-These are not the same. *Reproducible* means the same manifest plus the same code plus the same infrastructure produces a checkpoint with equivalent downstream metrics. *Deterministic* means bit-identical output.
+この 2つは同じではありません。*Reproducible* とは、同じ manifest、同じ code、同じ infrastructure により、downstream metrics が同等の checkpoint を生成できることです。*Deterministic* とは、bit-identical output を意味します。
 
-Modern LLM training is reproducible but not deterministic. Distributed training's reduce-order, GPU kernel non-determinism (cuBLAS, flash-attn), and mixed precision rounding combine to produce floats that differ at the 1e-5 level between runs. This is fine for the final metrics, which do not move. It is fatal if you are trying to debug with bit-level diffs. The cure is to log every stage's input hash, output hash, and headline metrics -- if those match, the run is "reproduced" even if the weights are not bit-identical.
+現代の LLM training は reproducible ですが deterministic ではありません。distributed training の reduce-order、GPU kernel の non-determinism (cuBLAS, flash-attn)、mixed precision rounding が組み合わさり、run 間で 1e-5 level の float 差分が生まれます。final metrics が動かないなら、これは問題ありません。しかし bit-level diff で debug しようとすると致命的です。対策は、すべての stage の input hash、output hash、headline metrics を log することです。それらが一致していれば、weights が bit-identical でなくても run は「reproduced」です。
 
 ```mermaid
 graph LR
@@ -171,46 +171,46 @@ graph LR
 
 ### Rollback Plan
 
-Before the run starts, write down what happens on failure of each stage. Three categories.
+run 開始前に、各 stage が fail したときに何をするかを書き出します。category は 3つです。
 
-- **Cheap to re-run** (hours): tokenizer, eval, quantization, inference server. Just re-run.
-- **Medium** (days): SFT, DPO, CAI. Keep the base model; re-run only the alignment stages.
-- **Expensive** (weeks and millions of dollars): pre-training. The rollback plan here is not "re-run." It is "use the last good checkpoint and re-run the cheaper downstream stages with revised data."
+- **再実行が安い** (hours): tokenizer、eval、quantization、inference server。そのまま再実行します。
+- **中程度** (days): SFT、DPO、CAI。base model は維持し、alignment stages だけを再実行します。
+- **高価** (weeks and millions of dollars): pre-training。ここでの rollback plan は「再実行」ではありません。「last good checkpoint を使い、修正した data で安い downstream stages を再実行する」です。
 
-Because stage dependencies are typed and hashed, the orchestrator can compute the rollback set automatically: invalidate the failed stage plus every descendant. A failure at stage 06 (SFT) invalidates 06, 07, 08, 09, 10, 11, 12. A failure at stage 11 (quantization) invalidates only 11 and 12. Naming this up front avoids improvising while the team is exhausted at 4am.
+stage dependencies は typed かつ hashed なので、orchestrator は rollback set を自動で計算できます。failed stage とそのすべての descendant を invalidate します。stage 06 (SFT) の failure は 06、07、08、09、10、11、12 を invalidate します。stage 11 (quantization) の failure は 11 と 12 だけを invalidate します。これを upfront に naming しておくことで、team が午前4時に疲れ切った状態で improvisation せずに済みます。
 
-### Production Recipes Observed in 2026
+### 2026年に観測される Production Recipes
 
-Most frontier teams converged on the same skeleton.
+ほとんどの frontier teams は同じ skeleton に収束しました。
 
-- Tokenizer: 128k BPE with byte fallback. Trained on a small, balanced multilingual slice.
-- Pre-training: 10-20T tokens, mostly web plus code plus synthetic. Muon or AdamW optimizer. FSDP2 or DeepSpeed ZeRO-3. Gradient checkpointing. BF16 weights, FP32 master.
-- SFT: 500k-2M instruction pairs, mixed human and synthetic, with strict dedup against the eval set.
-- Alignment: DPO or CAI + GRPO. RLHF only where the preference signal is too multidimensional for DPO.
-- Eval: MMLU-Pro, MATH, HumanEval+, GPQA, SWE-Bench Verified, LiveBench, plus a private held-out set the public never sees.
-- Quantization: 4-bit GPTQ or AWQ for serving, 8-bit for safety evals where accuracy deltas matter.
-- Serving: vLLM, TensorRT-LLM, or in-house. Continuous batching. Speculative decoding. KV cache eviction.
+- Tokenizer: byte fallback 付き 128k BPE。小さく balanced な multilingual slice で train。
+- Pre-training: 10-20T tokens。主に web、code、synthetic。Muon または AdamW optimizer。FSDP2 または DeepSpeed ZeRO-3。Gradient checkpointing。BF16 weights、FP32 master。
+- SFT: 500k-2M instruction pairs。human と synthetic の mix。eval set との strict dedup。
+- Alignment: DPO または CAI + GRPO。preference signal が DPO には多次元すぎる場合のみ RLHF。
+- Eval: MMLU-Pro、MATH、HumanEval+、GPQA、SWE-Bench Verified、LiveBench、さらに public には見えない private held-out set。
+- Quantization: serving には 4-bit GPTQ または AWQ。accuracy delta が重要な safety eval には 8-bit。
+- Serving: vLLM、TensorRT-LLM、または in-house。Continuous batching。Speculative decoding。KV cache eviction。
 
-The numbers change every six months. The skeleton does not.
+数字は 6か月ごとに変わります。skeleton は変わりません。
 
-## Build It
+## 作ってみる
 
-The lesson's code is an orchestrator and a manifest checker, not twelve training scripts. Each stage is simulated with a placeholder that produces an output artifact with the correct shape and hash. Running the orchestrator end-to-end proves the pipeline's plumbing works before you burn GPU money on the real stages.
+このレッスンの code は orchestrator と manifest checker であり、12個の training scripts ではありません。各 stage は placeholder で simulation され、正しい shape と hash を持つ output artifact を生成します。orchestrator を end-to-end で実行することで、本物の stage に GPU money を使う前に pipeline の plumbing が動くことを確認できます。
 
-See `code/main.py` for the full implementation. The key pieces:
+完全な実装は `code/main.py` を参照してください。key pieces は以下です。
 
-- `Manifest` dataclass: pipeline version, seed, git commit, stages, gates.
-- `Stage` dataclass: name, type, inputs (hashes), output (hash), wall clock, cost.
-- `Orchestrator.run()`: resolves DAG, dispatches stages, verifies hashes, updates manifest.
-- `EvalGate.check()`: reads thresholds, compares against latest eval report, returns pass/fail.
-- `ArtifactStore` (in-memory stub): put/get by hash, simulates S3.
-- `CostTracker`: per-stage and cumulative, halts when cap exceeded.
+- `Manifest` dataclass: pipeline version、seed、git commit、stages、gates。
+- `Stage` dataclass: name、type、inputs (hashes)、output (hash)、wall clock、cost。
+- `Orchestrator.run()`: DAG を resolve し、stage を dispatch し、hash を verify し、manifest を update する。
+- `EvalGate.check()`: thresholds を読み、latest eval report と比較し、pass/fail を返す。
+- `ArtifactStore` (in-memory stub): hash による put/get。S3 を simulate する。
+- `CostTracker`: per-stage と cumulative。cap を超えたら halt する。
 
-The pipeline in `main.py` runs twelve placeholder stages, produces a manifest, and exercises a failing eval gate to show what a held run looks like. Swap each placeholder for the real training script from the corresponding lesson and you have the skeleton a real frontier pipeline uses.
+`main.py` の pipeline は 12個の placeholder stages を実行し、manifest を生成し、failing eval gate を exercise して held run がどう見えるかを示します。各 placeholder を対応するレッスンの real training script に差し替えれば、real frontier pipeline が使う skeleton になります。
 
-## Use It
+## 使ってみる
 
-The canonical workflow has three commands.
+canonical workflow は 3つの command です。
 
 ```
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
@@ -218,46 +218,46 @@ python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
 ```
 
-Run `plan` first every time. Most pipeline bugs show up at plan time -- missing gate thresholds, stale hashes, budget overruns. Running `plan` is free. Running `run` is expensive. Save money by catching bugs on the cheap side.
+毎回まず `plan` を実行します。多くの pipeline bugs は plan time に見つかります。missing gate thresholds、stale hashes、budget overruns などです。`plan` の実行は無料です。`run` の実行は高価です。安い段階で bug を捕まえて money を節約します。
 
-The output of `gate` is either `SHIP` or `HOLD: <reason>`. A held run is not a failure; it is a decision point. A named reviewer either overrides (and the override is logged), or they approve the rollback.
+`gate` の output は `SHIP` または `HOLD: <reason>` です。held run は failure ではありません。decision point です。named reviewer が override する (その override は log される) か、rollback を approve します。
 
 ## Ship It
 
-This lesson produces `outputs/skill-llm-pipeline-reviewer.md`. Feed it a proposed pipeline manifest and it checks all the contracts: stage typing, hash chain, gates, rollback plan, cost estimate. It refuses to approve a manifest with a missing eval gate, an unbounded KL budget, or a run that mixes eval and training data.
+このレッスンは `outputs/skill-llm-pipeline-reviewer.md` を生成します。proposed pipeline manifest を渡すと、stage typing、hash chain、gates、rollback plan、cost estimate などの contract をすべて check します。missing eval gate、unbounded KL budget、eval data と training data の混在を含む manifest は approve しません。
 
-## Exercises
+## 演習
 
-1. Extend the orchestrator to support parallel execution of stages 07 and 08. Use the stdlib `concurrent.futures` module. Confirm the final manifest records both stages' outputs and that stage 09's input hash is a deterministic combination of both.
+1. orchestrator を拡張し、stages 07 と 08 の parallel execution を support してください。stdlib の `concurrent.futures` module を使います。final manifest が両 stage の outputs を記録し、stage 09 の input hash が両方からなる deterministic combination になっていることを確認してください。
 
-2. Add a "contamination check" gate. Given the eval dataset hash and the training dataset shards, compute the overlap (exact string match or 13-gram match). The gate fails if overlap exceeds 0.1%. Feed it a contaminated training set and confirm the gate holds the run.
+2. "contamination check" gate を追加してください。eval dataset hash と training dataset shards が与えられたら、overlap (exact string match または 13-gram match) を計算します。overlap が 0.1% を超える場合、gate は fail します。contaminated training set を与えて、gate が run を hold することを確認してください。
 
-3. Implement a cost estimator from first principles. For stage 04 (pre-training), estimate FLOPs as 6 x params x tokens, assume 40% MFU (model FLOPs utilization) on H100 at 989 TFLOPs BF16, at $2.50/GPU-hour. Report the estimate for a 7B model trained on 2T tokens. Compare to published Llama 2 numbers.
+3. first principles から cost estimator を実装してください。stage 04 (pre-training) では、FLOPs を 6 x params x tokens と推定し、H100 の 989 TFLOPs BF16 で 40% MFU (model FLOPs utilization)、$2.50/GPU-hour と仮定します。2T tokens で train する 7B model の estimate を report してください。published Llama 2 numbers と比較します。
 
-4. Build a partial rollback. Simulate a failure at stage 09 (CAI), then re-run stages 09 through 12 while leaving 01-08 cached. The orchestrator should detect the cached artifacts by hash and skip them. Measure wall-clock saved versus full re-run.
+4. partial rollback を構築してください。stage 09 (CAI) の failure を simulate し、01-08 を cached のままにして stages 09 through 12 を再実行します。orchestrator は cached artifacts を hash で検出し、それらを skip するべきです。full re-run と比べて saved wall-clock を測定してください。
 
-5. Add observability. Emit OpenTelemetry spans for each stage, with attributes for params, tokens seen, loss, and cost. Pipe the spans to a local collector. The point is not dashboards; the point is that every stage's health is traceable from a single trace ID.
+5. observability を追加してください。各 stage について OpenTelemetry spans を emit し、params、tokens seen、loss、cost を attributes として持たせます。spans を local collector に pipe します。目的は dashboards ではありません。単一の trace ID からすべての stage の health を traceable にすることです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Manifest | "The recipe file" | YAML or JSON describing pipeline version, seed, per-stage config, and gate thresholds — sufficient to replay a run |
-| Content-addressed | "By hash not name" | Artifacts stored by SHA-256 of their contents, so you can never confuse version A with version B |
-| Eval gate | "The ship criteria" | Numeric thresholds on benchmark metrics and safety scores that must pass before an artifact is marked shippable |
-| KL budget | "How far alignment drifted" | A cap on cumulative KL(policy || reference) across alignment stages, enforced as a gate |
-| MFU | "How much of the GPU you used" | Model FLOPs Utilization — achieved FLOPs divided by theoretical peak. 40% is typical at 70B scale, 55% at 7B |
-| Rollback plan | "What we do when it breaks" | Pre-written set of actions per stage on failure: re-run, fall back, retrain with revised inputs |
-| Orchestrator | "The conductor" | The process that reads the manifest, dispatches stages, verifies hashes, halts on any contract violation |
-| Artifact store | "Versioned S3 for weights" | Immutable content-addressed object store — single source of truth for checkpoints, datasets, eval reports |
-| Reproducible | "Same metrics on replay" | Different bit-level weights but equivalent downstream metrics — the realistic target for distributed LLM training |
-| Cost gate | "You cannot exceed X" | Pre-run cost estimate plus in-run tracker — the pipeline refuses to start if the estimate exceeds budget |
+| Manifest | 「recipe file」 | pipeline version、seed、per-stage config、gate thresholds を記述する YAML または JSON。run を replay するのに十分な情報を含む |
+| Content-addressed | 「name ではなく hash で」 | artifact を contents の SHA-256 で保存する方式。version A と version B を混同できない |
+| Eval gate | 「ship criteria」 | artifact を shippable と mark する前に通過しなければならない benchmark metrics と safety scores の numeric thresholds |
+| KL budget | 「alignment がどれだけ drift したか」 | alignment stages 全体での cumulative KL(policy || reference) の上限。gate として enforce される |
+| MFU | 「GPU をどれだけ使ったか」 | Model FLOPs Utilization。achieved FLOPs を theoretical peak で割った値。70B scale では 40%、7B では 55% が典型 |
+| Rollback plan | 「壊れたときに何をするか」 | failure 時に stage ごとに事前に書かれた actions。re-run、fall back、revised inputs で retrain など |
+| Orchestrator | 「conductor」 | manifest を読み、stage を dispatch し、hash を verify し、contract violation があれば halt する process |
+| Artifact store | 「weights 用の versioned S3」 | immutable content-addressed object store。checkpoints、datasets、eval reports の single source of truth |
+| Reproducible | 「replay で同じ metrics」 | bit-level weights は異なるが downstream metrics は同等。distributed LLM training の realistic target |
+| Cost gate | 「X を超えてはいけない」 | pre-run cost estimate と in-run tracker。estimate が budget を超えたら pipeline は start を拒否する |
 
-## Further Reading
+## 参考文献
 
-- [Dubey et al., 2024 -- "The Llama 3 Herd of Models"](https://arxiv.org/abs/2407.21783) -- the most detailed public description of a frontier pipeline including data, training, alignment, eval
-- [DeepSeek-AI, 2024 -- "DeepSeek-V3 Technical Report"](https://arxiv.org/abs/2412.19437) -- efficiency-first pipeline at roughly 1/10th the cost of Llama 3 class training
-- [Kaplan et al., 2020 -- "Scaling Laws for Neural Language Models"](https://arxiv.org/abs/2001.08361) -- the original compute-data-params scaling relationship
-- [Hoffmann et al., 2022 -- "Training Compute-Optimal Large Language Models (Chinchilla)"](https://arxiv.org/abs/2203.15556) -- the correction to Kaplan that recalibrated modern data budgets
-- [PyTorch FSDP2 documentation](https://pytorch.org/docs/stable/fsdp.html) -- the distributed training primitive replacing FSDP1 in PyTorch 2.4+
-- [Weights & Biases LLM Reports](https://wandb.ai/site/llms) -- real manifests and experiment tracker output for open-source LLM runs, useful as plagiarizable templates
+- [Dubey et al., 2024 -- "The Llama 3 Herd of Models"](https://arxiv.org/abs/2407.21783) -- data、training、alignment、eval を含む frontier pipeline の最も詳細な public description
+- [DeepSeek-AI, 2024 -- "DeepSeek-V3 Technical Report"](https://arxiv.org/abs/2412.19437) -- Llama 3 class training の約 1/10 の cost を目指す efficiency-first pipeline
+- [Kaplan et al., 2020 -- "Scaling Laws for Neural Language Models"](https://arxiv.org/abs/2001.08361) -- compute-data-params scaling relationship の原典
+- [Hoffmann et al., 2022 -- "Training Compute-Optimal Large Language Models (Chinchilla)"](https://arxiv.org/abs/2203.15556) -- modern data budgets を再較正した Kaplan への correction
+- [PyTorch FSDP2 documentation](https://pytorch.org/docs/stable/fsdp.html) -- PyTorch 2.4+ で FSDP1 を置き換える distributed training primitive
+- [Weights & Biases LLM Reports](https://wandb.ai/site/llms) -- open-source LLM runs の real manifests と experiment tracker output。template として参考にできる

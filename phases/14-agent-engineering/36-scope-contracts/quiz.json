@@ -1,90 +1,90 @@
 {
   "lesson": "36-scope-contracts",
-  "title": "Scope Contracts and Task Boundaries",
+  "title": "スコープ契約とタスク境界",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is scope creep called the most under-monitored failure mode?",
+      "question": "scope creep がもっとも監視不足になりやすい failure mode と呼ばれるのはなぜですか。",
       "options": [
-        "It crashes the agent loudly",
-        "Each touch had a plausible reason in the moment; together they form a different change than was reviewed",
-        "It is too rare to monitor",
-        "Tests catch it automatically"
+        "agent が大きな音を立ててクラッシュするから",
+        "その瞬間ごとには各変更にもっともらしい理由があり、全体では review されたものと別の変更になるから",
+        "監視するには rare すぎるから",
+        "tests が自動的に検出するから"
       ],
       "correct": 1,
-      "explanation": "Agents narrate each step in good faith; the silent total is the creep."
+      "explanation": "Agent は各ステップを善意で説明しますが、静かな合計が creep になります。"
     },
     {
       "stage": "pre",
-      "question": "Which contract field does the lesson call half the contract?",
+      "question": "この lesson が「契約の半分」と呼ぶ contract field はどれですか。",
       "options": [
         "goal",
-        "forbidden_files (the negative space)",
+        "forbidden_files (negative space)",
         "task_id",
         "approvals_required"
       ],
       "correct": 1,
-      "explanation": "A contract without forbidden_files is incomplete; the negative space is half the contract."
+      "explanation": "forbidden_files のない契約は未完成です。negative space は契約の半分です。"
     },
     {
       "stage": "check",
-      "question": "Why pin allowed/forbidden to globs rather than raw paths?",
+      "question": "allowed/forbidden を raw path ではなく glob に固定する理由は何ですか。",
       "options": [
-        "Globs are faster",
-        "Real repos move files; globs survive refactors between sessions",
-        "Globs encrypt better",
-        "Raw paths are not JSON-serializable"
+        "glob のほうが高速だから",
+        "実際の repo ではファイルが移動し、glob は session 間の refactor に耐えやすいから",
+        "glob のほうが暗号化しやすいから",
+        "raw path は JSON serialize できないから"
       ],
       "correct": 1,
-      "explanation": "Globs (app/**/*.py) keep the contract valid through refactors."
+      "explanation": "`app/**/*.py` のような glob は、refactor 後も契約を有効に保ちやすくします。"
     },
     {
       "stage": "check",
-      "question": "What does the 'violation budget' pattern do?",
+      "question": "`violation budget` pattern は何をしますか。",
       "options": [
-        "Sets a monthly budget for the agent",
-        "Allows minor scope slips as warnings within a budget; only excess triggers a merge refusal — the difference between a gate that ships and one that gets disabled",
-        "Throttles model calls",
-        "Charges per violation"
+        "agent の月次予算を設定する",
+        "budget 内の小さなスコープ逸脱は warning として許容し、超過時だけ merge refusal を発火する。運用される gate と無効化される gate の差になる",
+        "model call を throttle する",
+        "違反ごとに課金する"
       ],
       "correct": 1,
-      "explanation": "agent-guardrails uses violationBudget so the gate is usable in day-to-day flow."
+      "explanation": "agent-guardrails は violationBudget を使い、日常運用で使える gate にします。"
     },
     {
       "stage": "check",
-      "question": "What did the specsmaxxing practitioner report?",
+      "question": "specsmaxxing を行った practitioner は何を報告しましたか。",
       "options": [
-        "Latency dropped 90%",
-        "Rabbit-hole rate dropped from 52% to 21% in three weeks without changing the agent; the contract did the work, not the model",
-        "Cost rose 5x",
-        "Tests slowed down"
+        "latency が 90% 下がった",
+        "agent を変えずに rabbit-hole rate が 3 週間で 52% から 21% に下がった。仕事をしたのは model ではなく契約だった",
+        "cost が 5 倍になった",
+        "tests が遅くなった"
       ],
       "correct": 1,
-      "explanation": "Scope contracts in YAML before invoking the agent halved the rabbit-hole rate without model changes."
+      "explanation": "agent 起動前に YAML で scope contract を書くことで、model を変えずに rabbit-hole rate が半減しました。"
     },
     {
       "stage": "post",
-      "question": "What are the multi-contract merge semantics (least privilege)?",
+      "question": "multi-contract merge semantics (least privilege) は何ですか。",
       "options": [
-        "Last contract wins",
-        "Intersect allowed_files; union forbidden_files; min time_budget; accumulate approvals; deny-all sticks; merge of None defers to the other side",
-        "First contract wins",
-        "Random tie-break"
+        "最後の契約が勝つ",
+        "allowed_files は交差、forbidden_files は和集合、time_budget は最小、approval は累積、deny-all は維持、None は相手側に委ねる",
+        "最初の契約が勝つ",
+        "random tie-break"
       ],
       "correct": 1,
-      "explanation": "Least-privilege merge: intersection on allows, union on forbids, most-restrictive time, accumulate approvals."
+      "explanation": "least-privilege merge は、allow は交差、forbid は和集合、時間は最も厳しく、approval は累積です。"
     },
     {
       "stage": "post",
-      "question": "Why do time and network budgets belong in the contract too?",
+      "question": "time budget と network budget も契約に含めるべきなのはなぜですか。",
       "options": [
-        "Wall clock and external-host access are scope dimensions; file globs alone are necessary but not sufficient",
-        "Providers require them",
-        "They make the JSON smaller",
-        "They are required by Apache 2.0"
+        "wall clock と external host access もスコープの dimension であり、file glob だけでは必要条件ではあっても十分条件ではないから",
+        "provider が必須にしているから",
+        "JSON を小さくできるから",
+        "Apache 2.0 で必須だから"
       ],
       "correct": 0,
-      "explanation": "time_budget_minutes and network_egress allowlists are scope dimensions on top of file globs."
+      "explanation": "`time_budget_minutes` と `network_egress` allowlist は、file glob に加わるスコープ dimension です。"
     }
   ]
 }

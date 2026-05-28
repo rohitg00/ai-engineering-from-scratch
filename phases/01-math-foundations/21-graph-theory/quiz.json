@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the adjacency matrix A[i][j] = 1 represent?",
+      "question": "adjacency matrix の A[i][j] = 1 は何を表しますか。",
       "options": [
-        "Node i has degree j",
-        "There is an edge from node i to node j",
-        "Node i and node j have the same label",
-        "The shortest path from i to j has length 1"
+        "node i の degree が j である",
+        "node i から node j への edge がある",
+        "node i と node j が同じ label を持つ",
+        "i から j への shortest path の長さが 1 である"
       ],
       "correct": 1,
-      "explanation": "The adjacency matrix is the core representation of a graph. A[i][j] = 1 means there is an edge connecting node i to node j. For undirected graphs, the matrix is symmetric (A[i][j] = A[j][i])."
+      "explanation": "adjacency matrix はグラフの中心的表現です。A[i][j] = 1 は node i と node j を結ぶ edge があることを意味します。無向グラフでは A[i][j] = A[j][i] です。"
     },
     {
       "stage": "pre",
-      "question": "What data structure does BFS use and what does it find?",
+      "question": "BFS はどの data structure を使い、何を見つけますか。",
       "options": [
-        "Stack; finds connected components",
-        "Queue; finds shortest paths in unweighted graphs",
-        "Priority queue; finds minimum spanning tree",
-        "Hash map; finds duplicate nodes"
+        "Stack。connected components を見つける",
+        "Queue。無重みグラフの shortest paths を見つける",
+        "Priority queue。minimum spanning tree を見つける",
+        "Hash map。duplicate nodes を見つける"
       ],
       "correct": 1,
-      "explanation": "BFS uses a queue (FIFO) to explore all neighbors at distance k before moving to distance k+1. This guarantees that the first time a node is discovered, it is via a shortest path from the source."
+      "explanation": "BFS は queue (FIFO) を使い、距離 k の neighbor をすべて探索してから距離 k+1 に進みます。最初に発見された経路が source からの shortest path です。"
     },
     {
       "stage": "post",
-      "question": "The graph Laplacian L = D - A of a connected graph has how many zero eigenvalues?",
+      "question": "connected graph の graph Laplacian L = D - A には、ゼロ固有値がいくつありますか。",
       "options": [
-        "Zero",
-        "Exactly one",
-        "Equal to the number of nodes",
-        "Equal to the number of edges"
+        "ゼロ個",
+        "ちょうど一つ",
+        "node 数と同じ",
+        "edge 数と同じ"
       ],
       "correct": 1,
-      "explanation": "The number of zero eigenvalues of the Laplacian equals the number of connected components. A connected graph has exactly one connected component, so exactly one zero eigenvalue. A graph with k disconnected pieces has k zero eigenvalues."
+      "explanation": "Laplacian のゼロ固有値の個数は connected components の個数に等しいです。connected graph は component が一つなので、ゼロ固有値はちょうど一つです。"
     },
     {
       "stage": "post",
-      "question": "In GNN message passing, what does h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)})) compute?",
+      "question": "GNN message passing の h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)})) は何を計算しますか。",
       "options": [
-        "The shortest path from v to all other nodes",
-        "A new feature vector for node v by aggregating neighbor features, transforming with learned weights, and applying a nonlinearity",
-        "The degree of node v at layer k+1",
-        "The PageRank score of node v"
+        "v から全 node への shortest path",
+        "neighbor features を集約し、learned weights で変換し、非線形性を適用した node v の新しい feature vector",
+        "layer k+1 における node v の degree",
+        "node v の PageRank score"
       ],
       "correct": 1,
-      "explanation": "Each node collects features from its neighbors (mean aggregation), multiplies by a learned weight matrix W, and applies an activation function sigma. After k rounds, each node has information from its k-hop neighborhood."
+      "explanation": "各 node は neighbor の features を集め、平均で aggregate し、weight matrix W と activation sigma で新しい表現を作ります。k rounds 後には k-hop neighborhood の情報を持ちます。"
     },
     {
       "stage": "post",
-      "question": "How does spectral clustering use the Fiedler vector (eigenvector of the second-smallest eigenvalue of L)?",
+      "question": "spectral clustering は Fiedler vector (L の二番目に小さい固有値の eigenvector) をどのように使いますか。",
       "options": [
-        "Nodes with the largest Fiedler vector entries form one cluster",
-        "Nodes with positive Fiedler vector values go in one group, nodes with negative values go in the other",
-        "The Fiedler vector is used as edge weights",
-        "The Fiedler vector determines the number of clusters"
+        "Fiedler vector の最大 entries を持つ node が一つの cluster になる",
+        "Fiedler vector の値が正の node を一方、負の node を他方に分ける",
+        "Fiedler vector を edge weights として使う",
+        "Fiedler vector が cluster 数を決める"
       ],
       "correct": 1,
-      "explanation": "The Fiedler vector encodes the smoothest non-trivial function on the graph. Nodes in the same tightly-connected cluster get similar values, while nodes separated by a bottleneck get values with opposite signs. The sign split partitions the graph into two clusters."
+      "explanation": "Fiedler vector はグラフ上の非自明で最も滑らかな関数を表します。同じ密な cluster の node は似た値を持ち、bottleneck で分かれた node は反対符号になりやすいです。"
     }
   ]
 }

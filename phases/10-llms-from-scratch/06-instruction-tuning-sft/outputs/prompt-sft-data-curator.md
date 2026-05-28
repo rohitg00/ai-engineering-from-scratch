@@ -1,57 +1,57 @@
 ---
 name: prompt-sft-data-curator
-description: Design and curate instruction datasets for supervised fine-tuning
+description: 教師ありファインチューニング向けの指示データセットを設計し、キュレーションする
 version: 1.0.0
 phase: 10
 lesson: 6
 tags: [sft, instruction-tuning, fine-tuning, data-curation, alignment]
 ---
 
-# SFT Data Curator
+# SFTデータキュレーター
 
-When designing an instruction-tuning dataset for a specific capability (code generation, math, conversation, safety), use this framework to plan data collection, define quality criteria, and structure the training pipeline.
+特定の能力（コード生成、数学、会話、安全性）に向けた指示チューニングデータセットを設計するときは、このフレームワークを使って、データ収集を計画し、品質基準を定義し、学習パイプラインを構成してください。
 
-## Input Requirements
+## 入力要件
 
-Provide:
-- **Target capability** (e.g., "Python code generation", "medical Q&A", "multi-turn conversation")
-- **Base model** (e.g., Llama 3 8B, Mistral 7B, Qwen 2.5 72B)
-- **Budget** (annotation hours, API costs for synthetic generation)
-- **Format preference** (Alpaca, ShareGPT, ChatML)
+次を提供してください。
+- **対象能力**（例: "Python code generation"、"medical Q&A"、"multi-turn conversation"）
+- **ベースモデル**（例: Llama 3 8B、Mistral 7B、Qwen 2.5 72B）
+- **予算**（アノテーション時間、合成生成のAPIコスト）
+- **形式の希望**（Alpaca、ShareGPT、ChatML）
 
-## Step 1: Dataset Design
+## ステップ1: データセット設計
 
-### Size Guidelines
+### サイズの目安
 
-| Quality Level | Examples Needed | Expected Outcome |
+| 品質レベル | 必要な例数 | 期待される結果 |
 |--------------|----------------|------------------|
-| Research prototype | 1,000-5,000 | LIMA-quality: comparable to larger datasets if examples are expert-written |
-| Production v1 | 10,000-50,000 | Stanford Alpaca level: solid instruction following across common tasks |
-| Production v2 | 50,000-200,000 | Vicuna/Llama 2 Chat level: robust multi-turn, domain coverage |
+| 研究プロトタイプ | 1,000-5,000 | LIMA相当の品質: 専門家が書いた例なら、より大きなデータセットに匹敵し得る |
+| 本番v1 | 10,000-50,000 | Stanford Alpaca水準: 一般的なタスク全体で堅実に指示に従う |
+| 本番v2 | 50,000-200,000 | Vicuna/Llama 2 Chat水準: 堅牢な複数ターン対応とドメインカバレッジ |
 
-Quality always beats quantity. 1,000 expert-written examples (LIMA, May 2023) matched models trained on 50,000+ examples. Prioritize:
+品質は常に量に勝ります。専門家が書いた1,000件の例（LIMA、2023年5月）は、50,000件以上で学習したモデルに匹敵しました。次を優先してください。
 
-1. **Diversity** -- cover the full range of target capabilities
-2. **Accuracy** -- every response must be factually correct
-3. **Clarity** -- responses should be concise and well-structured
-4. **Difficulty gradient** -- include easy, medium, and hard examples
+1. **多様性** -- 対象能力の全範囲をカバーする
+2. **正確性** -- すべての応答が事実として正しい
+3. **明瞭さ** -- 応答は簡潔で構造化されている
+4. **難易度の勾配** -- 簡単、中程度、難しい例を含める
 
-### Diversity Checklist
+### 多様性チェックリスト
 
-For a general-purpose assistant:
-- Open-ended questions (20%)
-- Factual Q&A (20%)
-- Creative writing (10%)
-- Code generation (15%)
-- Reasoning and math (15%)
-- Summarization (10%)
-- Instruction following with constraints (10%)
+汎用アシスタントの場合:
+- 自由回答の質問（20%）
+- 事実Q&A（20%）
+- 創作（10%）
+- コード生成（15%）
+- 推論と数学（15%）
+- 要約（10%）
+- 制約付き指示追従（10%）
 
-Adjust percentages for domain-specific models. A coding assistant might allocate 60% to code generation and 20% to code explanation.
+ドメイン特化モデルでは割合を調整してください。コーディングアシスタントなら、60%をコード生成、20%をコード説明へ割り当てるかもしれません。
 
-## Step 2: Data Format
+## ステップ2: データ形式
 
-### Alpaca Format (single-turn)
+### Alpaca形式（単一ターン）
 
 ```json
 {
@@ -61,9 +61,9 @@ Adjust percentages for domain-specific models. A coding assistant might allocate
 }
 ```
 
-Use when: single-turn tasks, simple instruction-response pairs, rapid prototyping.
+使う場面: 単一ターンタスク、単純な指示応答ペア、迅速なプロトタイピング。
 
-### ShareGPT Format (multi-turn)
+### ShareGPT形式（複数ターン）
 
 ```json
 {
@@ -77,9 +77,9 @@ Use when: single-turn tasks, simple instruction-response pairs, rapid prototypin
 }
 ```
 
-Use when: conversational applications, multi-turn context is important.
+使う場面: 会話アプリケーション、複数ターンのコンテキストが重要な場合。
 
-### ChatML Format (with special tokens)
+### ChatML形式（特殊トークンあり）
 
 ```
 <|im_start|>system
@@ -90,58 +90,58 @@ How do I reverse a string?<|im_end|>
 Use slicing: s[::-1]<|im_end|>
 ```
 
-Use when: targeting models that use ChatML natively (Qwen, Yi).
+使う場面: ChatMLをネイティブに使うモデル（Qwen、Yi）を対象にする場合。
 
-## Step 3: Quality Criteria
+## ステップ3: 品質基準
 
-### Per-Example Checks
+### 例ごとのチェック
 
-1. **Response relevance**: Does the response actually answer the instruction?
-2. **Factual accuracy**: Are all claims verifiable and correct?
-3. **Completeness**: Does the response fully address the instruction?
-4. **Conciseness**: Could the same information be conveyed in fewer words?
-5. **Format consistency**: Does the response follow the expected style?
+1. **応答の関連性**: 応答は実際に指示に答えているか？
+2. **事実正確性**: すべての主張は検証可能で正しいか？
+3. **完全性**: 応答は指示に十分対応しているか？
+4. **簡潔さ**: 同じ情報をより少ない語数で伝えられないか？
+5. **形式の一貫性**: 応答は期待されるスタイルに従っているか？
 
-### Red Flags (reject the example)
+### 危険信号（その例を却下する）
 
-- Response contradicts itself
-- Response includes harmful content without refusal
-- Response hallucinates facts or citations
-- Instruction is ambiguous and response doesn't clarify
-- Response is a copy of the instruction rephrased
+- 応答が自己矛盾している
+- 応答が拒否なしに有害コンテンツを含んでいる
+- 応答が事実や引用を捏造している
+- 指示が曖昧なのに、応答が明確化していない
+- 応答が指示を言い換えただけのコピーである
 
-### Dataset-Level Checks
+### データセット全体のチェック
 
-- No more than 5% of examples from any single source/template
-- At least 80% of response tokens are meaningful (not filler)
-- Average response length is 50-200 tokens (avoid very short or very long)
-- System prompt diversity: at least 10 different system prompts represented
+- 単一のソースまたはテンプレート由来の例が5%を超えない
+- 応答トークンの少なくとも80%が意味のある内容である（埋め草ではない）
+- 平均応答長は50-200トークンである（極端に短い、または長いものを避ける）
+- systemプロンプトの多様性: 少なくとも10種類のsystemプロンプトが含まれている
 
-## Step 4: Training Configuration
+## ステップ4: 学習設定
 
-| Parameter | Recommended Range | Notes |
+| パラメータ | 推奨範囲 | 注記 |
 |-----------|------------------|-------|
-| Learning rate | 1e-5 to 5e-5 | Lower for larger models (1e-5 for 70B, 5e-5 for 7B) |
-| Epochs | 1-3 | Monitor validation loss, stop at first sign of increase |
-| Batch size | 32-128 | Scale with gradient accumulation if GPU-limited |
-| Warmup | 0-5% of steps | Less critical than pre-training |
-| Weight decay | 0.0-0.1 | Optional for short fine-tuning runs |
-| Loss masking | Response tokens only | Mask instruction and system prompt tokens |
-| Pre-training data mixing | 2-5% | Mix raw text to prevent catastrophic forgetting |
+| 学習率 | 1e-5 to 5e-5 | 大きなモデルでは低くする（70Bは1e-5、7Bは5e-5） |
+| エポック | 1-3 | 検証損失を監視し、増加の兆候が出たら止める |
+| バッチサイズ | 32-128 | GPU制約がある場合は勾配蓄積でスケールする |
+| ウォームアップ | ステップの0-5% | 事前学習ほど重要ではない |
+| 重み減衰 | 0.0-0.1 | 短いファインチューニングでは任意 |
+| 損失マスキング | 応答トークンのみ | 指示とsystemプロンプトのトークンをマスクする |
+| 事前学習データ混合 | 2-5% | 破滅的忘却を防ぐために生テキストを混ぜる |
 
-## Step 5: Evaluation Protocol
+## ステップ5: 評価プロトコル
 
-After training, evaluate on:
+学習後、次を評価します。
 
-1. **Instruction following rate**: Percentage of test prompts where the model produces a relevant, complete response
-2. **Forgetting score**: Perplexity on a held-out general text corpus compared to the base model
-3. **Format compliance**: Percentage of responses that follow the expected chat format
-4. **MT-Bench or AlpacaEval**: Standard benchmarks for instruction-tuned models
-5. **Domain-specific eval**: Custom evaluation for your target capability
+1. **指示追従率**: テストプロンプトのうち、モデルが関連性のある完全な応答を生成した割合
+2. **忘却スコア**: ベースモデルと比較した、保留した一般テキストコーパス上のパープレキシティ
+3. **形式遵守率**: 応答が期待されるチャット形式に従った割合
+4. **MT-BenchまたはAlpacaEval**: 指示チューニング済みモデル向けの標準ベンチマーク
+5. **ドメイン固有評価**: 対象能力に合わせたカスタム評価
 
-### Warning Signs
+### 警告サイン
 
-- Validation loss increases after epoch 1: you're overfitting, reduce epochs or increase data
-- Forgetting score increases > 15%: learning rate too high or too many epochs
-- Model reproduces training examples verbatim: severe overfitting, needs more diverse data
-- Model refuses benign instructions: over-trained on safety data, rebalance the dataset
+- 検証損失がエポック1後に増える: 過学習しているため、エポック数を減らすかデータを増やす
+- 忘却スコアが15%超増える: 学習率が高すぎる、またはエポック数が多すぎる
+- モデルが学習例をそのまま再現する: 深刻な過学習。より多様なデータが必要
+- モデルが無害な指示を拒否する: 安全性データで過学習しているため、データセットのバランスを調整する

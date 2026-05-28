@@ -1,17 +1,17 @@
 ---
 name: topic-picker
-description: Pick LDA or BERTopic for a corpus. Specify library, knobs, evaluation.
+description: コーパスに対して LDA と BERTopic のどちらを選ぶかを判断し、ライブラリ、調整項目、評価方法を指定する。
 version: 1.0.0
 phase: 5
 lesson: 15
 tags: [nlp, topic-modeling]
 ---
 
-Given a corpus description (document count, avg length, domain, language, compute budget), output:
+コーパスの説明（文書数、平均長、ドメイン、言語、計算予算）が与えられたら、次を出力する。
 
-1. Algorithm. LDA / NMF / BERTopic / Top2Vec / FASTopic. One-sentence reason.
-2. Configuration. Number of topics (start at ~sqrt(n_docs)), `min_df` / `max_df` filters, embedding model for neural approaches.
-3. Evaluation. Topic coherence (c_v) via `gensim.models.CoherenceModel`, topic diversity, plus a 20-sample human read.
-4. Failure mode to probe. For LDA, "junk topics" absorbing stopwords and frequent terms. For BERTopic, -1 outlier cluster swallowing ambiguous documents.
+1. アルゴリズム。LDA / NMF / BERTopic / Top2Vec / FASTopic。理由を1文で示す。
+2. 設定。トピック数（`~sqrt(n_docs)` から始める）、`min_df` / `max_df` フィルタ、ニューラル手法で使う埋め込みモデル。
+3. 評価。`gensim.models.CoherenceModel` によるトピックコヒーレンス（c_v）、トピック多様性、さらに20サンプルの人手確認。
+4. 調べるべき失敗モード。LDA では、ストップワードや高頻度語を吸収する「ジャンクトピック」。BERTopic では、曖昧な文書を飲み込む -1 外れ値クラスタ。
 
-Refuse BERTopic on documents longer than the embedding model's context window without a chunking strategy. Refuse LDA on very short text (tweets, reviews under 10 tokens) as coherence collapses. Flag any n_topics choice below 5 or above 200 as likely wrong for real data.
+埋め込みモデルのコンテキストウィンドウを超える文書に対して、チャンク化戦略なしで BERTopic を使う提案は拒否する。非常に短いテキスト（ツイート、10トークン未満のレビュー）に対しては、コヒーレンスが崩れるため LDA を拒否する。`n_topics` が5未満または200超の場合は、実データでは不適切である可能性が高いと指摘する。

@@ -1,17 +1,15 @@
 # Code migration agent dashboard (TypeScript skeleton)
 
-Multi-file TypeScript skeleton for the dashboard layer of the code migration
-agent capstone. The agent (Python) runs in a sandbox; this server renders
-progress for the operator.
+code migration agent capstone の dashboard layer 用 multi-file TypeScript skeleton です。agent (Python) は sandbox 内で走り、この server は operator 向けに progress を render します。
 
 ## Layout
 
-- `src/index.ts` — entry point, simulates ticks and optionally serves HTTP.
-- `src/server.ts` — Hono routes for `/`, `/dashboard`, `/migrations`, `/migrations/:id`.
-- `src/migrations.ts` — per-file state machine and seed data.
-- `src/cost.ts` — turn count and dollar budget enforcement.
-- `src/types.ts` — shared types.
-- `tests/*.test.ts` — `node --test` style tests via `tsx`.
+- `src/index.ts` — entry point。tick を simulate し、必要なら HTTP を serve。
+- `src/server.ts` — `/`, `/dashboard`, `/migrations`, `/migrations/:id` の Hono routes。
+- `src/migrations.ts` — per-file state machine と seed data。
+- `src/cost.ts` — turn count と dollar budget enforcement。
+- `src/types.ts` — shared types。
+- `tests/*.test.ts` — `tsx` 経由の `node --test` style tests。
 
 ## Install
 
@@ -22,8 +20,8 @@ npm install
 ## Run
 
 ```bash
-npm start         # offline: simulate 40 ticks and print rollup
-npm run serve     # serve the HTML dashboard on PORT (default 8009)
+npm start         # offline: 40 ticks を simulate し rollup を表示
+npm run serve     # PORT (default 8009) で HTML dashboard を serve
 ```
 
 ## Verify

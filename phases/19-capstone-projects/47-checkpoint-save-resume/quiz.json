@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which set best describes a complete training checkpoint?",
+      "question": "完全な training checkpoint を最もよく表す set はどれか。",
       "options": [
-        "Model weights only",
-        "Model state, optimizer state, scheduler state, step counters, loss history, and RNG state for python, numpy, torch CPU, torch CUDA",
-        "Just the loss history",
-        "Anything torch.save() can serialize"
+        "model weights のみ。",
+        "model state、optimizer state、scheduler state、step counter、loss history、python/numpy/torch CPU/torch CUDA の RNG state。",
+        "loss history だけ。",
+        "`torch.save()` が serialize できるものなら何でも。"
       ],
       "correct": 1,
-      "explanation": "Resume must walk the same trajectory. Without optimizer moments, scheduler position, and RNG state the resumed loss is a different curve."
+      "explanation": "同じ trajectory に戻るには optimizer moments、scheduler position、RNG state が必要である。"
     },
     {
       "stage": "pre",
-      "question": "Why does the saver write to a temporary file and then rename instead of writing the target name directly?",
+      "question": "saver が target 名に直接書かず temporary file に書いてから rename する理由は何か。",
       "options": [
-        "Faster I/O",
-        "POSIX rename within the same directory is atomic, so a crash mid-write leaves the previous good file in place rather than a half-written file at the target name",
-        "It dedupes the file",
-        "It bypasses fsync"
+        "I/O が速いから。",
+        "同じ directory 内の POSIX rename は atomic なので、crash mid-write でも前の良い file が残るから。",
+        "file を dedup するから。",
+        "fsync を回避するから。"
       ],
       "correct": 1,
-      "explanation": "atomic_save calls os.replace from a temp file in the same directory. Cross-device renames lose atomicity, which is why the temp file must live in the target directory."
+      "explanation": "temp file は target directory に置く必要がある。cross-device rename は atomicity を失う。"
     },
     {
       "stage": "check",
-      "question": "Why does a sharded checkpoint store a sha256 in index.json per shard?",
+      "question": "sharded checkpoint が `index.json` に shard ごとの sha256 を保存するのはなぜか。",
       "options": [
-        "For SEO",
-        "So the loader can detect a truncated or tampered shard at load time instead of silently merging a bad state_dict",
-        "To compress the file",
-        "Because torch requires it"
+        "SEO のため。",
+        "loader が truncation や tampering を load time に検出し、bad state_dict を silent merge しないため。",
+        "file を圧縮するため。",
+        "torch が要求するため。"
       ],
       "correct": 1,
-      "explanation": "load_sharded_checkpoint asserts each shard's actual hash matches the recorded one and the meta file's hash too. Silent corruption is the worst failure mode."
+      "explanation": "load_sharded_checkpoint は各 shard と meta file の hash を照合し、silent corruption を防ぐ。"
     },
     {
       "stage": "check",
-      "question": "How does resume continue at the right offset inside the current epoch?",
+      "question": "resume は current epoch 内の正しい offset からどう続けるか。",
       "options": [
-        "It skips to the next epoch boundary",
-        "TrainState records (epoch, batch_in_epoch) and the RNG state is restored, so the loader fast-forwards the generator past the batches already consumed before continuing",
-        "It uses a special database",
-        "It always restarts from step 0"
+        "次の epoch boundary まで skip する。",
+        "TrainState が `(epoch, batch_in_epoch)` を記録し RNG state を復元するため、generator を既に消費した batch 分 fast-forward して続けられる。",
+        "特別な database を使う。",
+        "常に step 0 から再開する。"
       ],
       "correct": 1,
-      "explanation": "Without (epoch, batch_in_epoch) you snap to the next epoch boundary and waste work. Without RNG you see different batches. Both are required."
+      "explanation": "epoch/batch offset と RNG の両方が必要である。片方がないと違う data order になる。"
     },
     {
       "stage": "check",
-      "question": "What does the schema field on the payload buy you?",
+      "question": "payload の schema field は何をもたらすか。",
       "options": [
-        "Nothing",
-        "A migration hook: future format changes bump the schema string and the loader can dispatch on it instead of breaking old runs",
-        "A pretty filename",
-        "Compression"
+        "何もない。",
+        "migration hook。将来の format change で schema を bump し、loader が dispatch できる。",
+        "きれいな filename。",
+        "compression。"
       ],
       "correct": 1,
-      "explanation": "The lesson uses ckpt.v1; the next version is ckpt.v2 with a migrate function. Without the field, format evolution requires breakage."
+      "explanation": "schema がないと format evolution は破壊的変更になりやすい。"
     },
     {
       "stage": "post",
-      "question": "Reading the resume demo summary, what does max_loss_diff_after_resume near 0 prove?",
+      "question": "resume demo summary の `max_loss_diff_after_resume` がほぼ 0 であることは何を証明するか。",
       "options": [
-        "Nothing useful",
-        "That the post-resume loss trajectory matches the uninterrupted baseline within floating point noise, which means the RNG state and the optimizer state were both restored faithfully",
-        "That the model is good",
-        "That the disk is fast"
+        "有用なことはない。",
+        "resume 後の loss trajectory が uninterrupted baseline と floating point noise 内で一致し、RNG と optimizer state が忠実に復元されたこと。",
+        "model が良いこと。",
+        "disk が速いこと。"
       ],
       "correct": 1,
-      "explanation": "If you forget RNG you see a different curve and a non-trivial diff. If you forget optimizer state the diff is huge. The near-zero number is the contract."
+      "explanation": "RNG を忘れると curve が変わり、optimizer state を忘れると diff が大きくなる。"
     }
   ]
 }

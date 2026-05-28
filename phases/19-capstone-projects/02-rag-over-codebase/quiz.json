@@ -1,34 +1,34 @@
 {
   "lesson": "02-rag-over-codebase",
-  "title": "Capstone 02 — RAG over Codebase (Cross-Repo Semantic Search)",
+  "title": "Capstone 02 — Codebase 上の RAG (Cross-Repo Semantic Search)",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is naive cosine search over raw chunks insufficient for cross-repo code retrieval?",
+      "question": "raw chunks に対する単純な cosine search が cross-repo code retrieval に不十分なのはなぜですか？",
       "options": [
-        "It poisons results on generated code, monorepo duplication, and rarely imported symbols",
-        "Cosine similarity is undefined on code embeddings",
-        "Vector indexes cannot store payloads larger than 1KB",
-        "Embedding models do not see code as tokens"
+        "generated code、monorepo の重複、ほとんど import されない symbol で結果が汚染されるため",
+        "code embedding では cosine similarity が定義されないため",
+        "vector index が 1KB を超える payload を保存できないため",
+        "embedding model が code を token として見ないため"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What does AST-aware chunking mean in the ingestion pipeline?",
+      "question": "ingestion pipeline における AST-aware chunking とは何ですか？",
       "options": [
-        "Compressing chunks with gzip before storage",
-        "Dropping comments and whitespace before embedding",
-        "Cutting at tree-sitter node boundaries such as function and class spans",
-        "Splitting code into fixed 256-token windows"
+        "保存前に chunk を gzip で圧縮すること",
+        "embedding 前に comment と whitespace を削除すること",
+        "function や class span などの tree-sitter node 境界で切ること",
+        "code を固定 256-token window に分割すること"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which three retrievable modalities does each chunk get in this pipeline?",
+      "question": "この pipeline で各 chunk が持つ3つの retrieval 可能な modality はどれですか？",
       "options": [
         "Token IDs, syntax tree, and call graph",
         "AST, IR, and bytecode",
@@ -40,43 +40,43 @@
     },
     {
       "stage": "check",
-      "question": "What is the role of the cross-encoder reranker after the hybrid retrieval step?",
+      "question": "hybrid retrieval の後に cross-encoder reranker が担う役割は何ですか？",
       "options": [
-        "It rewrites the chunks to remove generated code",
-        "It re-embeds the query in a different model",
-        "It compresses the chunks before sending to the synthesizer",
-        "It scores each query-candidate pair together for higher accuracy than cosine alone"
+        "generated code を取り除くよう chunk を書き換える",
+        "query を別 model で re-embed する",
+        "synthesizer へ送る前に chunk を圧縮する",
+        "query-candidate pair を一緒に score し、cosine 単独より高い accuracy を得る"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the synthesizer reject answers without (repo/path:start-end) anchors?",
+      "question": "synthesizer が (repo/path:start-end) anchor のない回答を拒否する理由は何ですか？",
       "options": [
-        "Citation faithfulness gates the answer so users can verify each claim",
-        "Anchors reduce token cost on the synthesis call",
-        "Anchors are needed for downstream BM25 reranking",
-        "Anchors are required by the vector database schema"
+        "citation faithfulness が回答を gate し、user が各 claim を検証できるようにするため",
+        "anchor が synthesis call の token cost を減らすため",
+        "anchor が downstream BM25 reranking に必要なため",
+        "anchor が vector database schema に必須なため"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does incremental re-index require to stay under 60 seconds on a 50-file push?",
+      "question": "50ファイル push で60秒未満を保つために、incremental re-index は何を必要としますか？",
       "options": [
-        "Re-embedding only chunks whose text changed and recomputing affected symbol edges",
-        "Re-embedding the full 2M-LOC corpus on each commit",
-        "Dropping the symbol graph entirely",
-        "Throwing away the BM25 index and rebuilding it from scratch"
+        "text が変わった chunk だけを re-embed し、影響を受けた symbol edge を再計算すること",
+        "各 commit で 2M-LOC corpus 全体を re-embed すること",
+        "symbol graph を完全に捨てること",
+        "BM25 index を捨てて scratch から rebuild すること"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which metric measures whether retrieved claims are verifiable in the source?",
+      "question": "取得された claim が source で検証可能かを測る metric はどれですか？",
       "options": [
         "MRR@10",
         "Citation faithfulness",

@@ -1,9 +1,6 @@
 # Capstone 08 - Production RAG Chatbot (TypeScript)
 
-Chat UI skeleton that streams a citation-anchored response over Server-Sent
-Events. Pairs with the Python pipeline in `../main.py`. Conversation state lives
-in an in-process Map keyed by `sessionId`, so the same session id can drive
-multi-turn dialogues.
+Server-Sent Events で citation-anchored response を stream する Chat UI skeleton です。`../main.py` の Python pipeline と対になります。conversation state は `sessionId` key の in-process Map に保持されるため、同じ session id で multi-turn dialogue を進められます。
 
 ## Layout
 
@@ -12,10 +9,10 @@ ts/
   package.json
   tsconfig.json
   src/
-    index.ts        # entrypoint, demo + HTTP server
-    server.ts      # hono app, /, /chat/stream (SSE), /sessions, /health
-    session.ts     # SessionStore (Map<sessionId, Session>)
-    stream.ts      # SSE frame encoder + parser + mock retrieval + tokenizer
+    index.ts        # entrypoint、demo + HTTP server
+    server.ts       # hono app、/、/chat/stream (SSE)、/sessions、/health
+    session.ts      # SessionStore (Map<sessionId, Session>)
+    stream.ts       # SSE frame encoder + parser + mock retrieval + tokenizer
     types.ts        # Session, Turn, Citation, KbEntry, SseEvent
   tests/
     session.test.ts
@@ -29,22 +26,16 @@ ts/
 npm install
 npm run typecheck
 npm test
-npm start          # one self-check pass, exits 0
-npm run serve      # interactive HTTP server on 127.0.0.1:<port>
+npm start          # self-check を1回実行して exit 0
+npm run serve      # 127.0.0.1:<port> の interactive HTTP server
 ```
 
-The interactive server picks a free port when `PORT` is unset, mounts the chat
-HTML client on `/`, and streams via `GET /chat/stream?sessionId=...&q=...`. The
-demo client uses `EventSource` and listens for `session`, `citations`, `token`,
-and `done` events.
+`PORT` が未設定の場合、interactive server は空き port を選び、chat HTML client を `/` に mount し、`GET /chat/stream?sessionId=...&q=...` で stream します。demo client は `EventSource` を使い、`session`、`citations`、`token`、`done` event を listen します。
 
 ## Tests
 
-`node --test` runner via tsx. Coverage:
+tsx 経由の `node --test` runner。coverage:
 
-- SessionStore: create, lookup, append, list, no-op on missing id.
-- SSE encoder + parser round-trip; retrieval boost by jurisdiction tag;
-  tokenizer fallback + "See also" tail.
-- Server: `/`, `/health`, `/chat/stream` happy path (session + citations +
-  token + done), 400 on missing q, multi-turn session persistence,
-  `/sessions` listing.
+- SessionStore: create、lookup、append、list、missing id の no-op。
+- SSE encoder + parser round-trip、jurisdiction tag による retrieval boost、tokenizer fallback + 関連 tail。
+- Server: `/`、`/health`、`/chat/stream` happy path (session + citations + token + done)、q 欠落時の 400、multi-turn session persistence、`/sessions` listing。

@@ -1,38 +1,38 @@
-# Backpropagation from Scratch
+# バックプロパゲーションをゼロから作る
 
-> Backpropagation is the algorithm that makes learning possible. Without it, neural networks are just expensive random number generators.
+> バックプロパゲーションは学習を可能にするアルゴリズムです。これがなければ、ニューラルネットワークは高価な乱数生成器にすぎません。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
-**Time:** ~120 minutes
+**種類:** Build
+**言語:** Python
+**前提条件:** Lesson 03.02 (Multi-Layer Networks)
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Implement a Value-based autograd engine that builds a computational graph and computes gradients via topological sort
-- Derive the backward pass for addition, multiplication, and sigmoid using the chain rule
-- Train a multi-layer network on XOR and circle classification using only your from-scratch backpropagation engine
-- Identify the vanishing gradient problem in deep sigmoid networks and explain why gradients shrink exponentially
+- 計算グラフを構築し、トポロジカルソートで勾配を計算するValueベースのautogradエンジンを実装する
+- 連鎖律を使って、加算、乗算、sigmoidのバックワードパスを導出する
+- ゼロから作ったバックプロパゲーションエンジンだけを使い、XORと円分類で多層ネットワークを訓練する
+- 深いsigmoidネットワークで起きる勾配消失問題を特定し、勾配が指数的に小さくなる理由を説明する
 
-## The Problem
+## 問題
 
-Your network has a single hidden layer with 768 inputs and 3072 outputs. That's 2,359,296 weights. It made a wrong prediction. Which weights caused the error? Testing each weight individually means 2.3 million forward passes. Backpropagation computes all 2.3 million gradients in a single backward pass. That's not an optimization. That's the difference between trainable and impossible.
+あなたのネットワークには、入力768、出力3072の単一の隠れ層があります。重みは2,359,296個です。ネットワークが誤った予測をしました。どの重みが誤差を引き起こしたのでしょうか。各重みを個別に試すなら、230万回のフォワードパスが必要です。バックプロパゲーションなら、1回のバックワードパスで230万個すべての勾配を計算できます。これは単なる最適化ではありません。訓練可能か不可能かの違いです。
 
-The naive approach: take one weight, nudge it by a tiny amount, run the forward pass again, measure whether the loss went up or down. That gives you the gradient for that weight. Now do it for every weight in the network. Multiply by thousands of training steps and millions of data points. You'd need geological time to train anything useful.
+素朴な方法はこうです。重みを1つ取り、ほんの少し動かし、もう一度フォワードパスを実行して、損失が上がったか下がったかを測ります。これでその重みに対する勾配が得られます。次に、ネットワーク内のすべての重みで同じことをします。さらにそれを、何千回もの訓練ステップと何百万ものデータ点に掛け合わせます。有用なものを訓練するには地質学的な時間が必要になります。
 
-Backpropagation solves this. One forward pass, one backward pass, all gradients computed. The trick is the chain rule from calculus, applied systematically to a computational graph. This is the algorithm that made deep learning practical. Without it, we'd still be stuck on toy problems.
+バックプロパゲーションはこれを解決します。1回のフォワードパス、1回のバックワードパス、すべての勾配を計算。コツは微積分の連鎖律を、計算グラフに体系的に適用することです。これこそが深層学習を実用化したアルゴリズムです。これがなければ、私たちは今でもおもちゃの問題で足止めされていたでしょう。
 
-## The Concept
+## 概念
 
-### The Chain Rule, Applied to Networks
+### 連鎖律をネットワークに適用する
 
-You saw the chain rule in Phase 01, Lesson 05. Quick recap: if y = f(g(x)), then dy/dx = f'(g(x)) * g'(x). You multiply derivatives along the chain.
+Phase 01, Lesson 05で連鎖律を見ました。簡単に復習します。y = f(g(x)) なら、dy/dx = f'(g(x)) * g'(x) です。連鎖に沿って導関数を掛け合わせます。
 
-In a neural network, the "chain" is the sequence of operations from input to loss. Each layer applies weights, adds biases, passes through an activation. The loss function compares the final output to the target. Backpropagation traces this chain backward, computing how each operation contributed to the error.
+ニューラルネットワークでは、この「連鎖」は入力から損失までの操作列です。各層は重みを適用し、バイアスを足し、活性化関数に通します。損失関数は最終出力をターゲットと比較します。バックプロパゲーションはこの連鎖を逆向きにたどり、各操作が誤差にどれだけ寄与したかを計算します。
 
-### Computational Graphs
+### 計算グラフ
 
-Every forward pass builds a graph. Each node is an operation (multiply, add, sigmoid). Each edge carries a value forward and a gradient backward.
+すべてのフォワードパスはグラフを構築します。各ノードは操作（乗算、加算、sigmoid）です。各エッジは値を前向きに運び、勾配を後ろ向きに運びます。
 
 ```mermaid
 graph LR
@@ -45,13 +45,13 @@ graph LR
     y["target"] --> loss
 ```
 
-Forward pass: values flow left to right. x and w produce z1 = w*x. Add b to get z2. Sigmoid gives activation a. Compare a to target y using the loss function.
+フォワードパスでは、値が左から右へ流れます。xとwから z1 = w*x が作られます。bを足してz2を得ます。sigmoidで活性化aを得ます。損失関数を使ってaをターゲットyと比較します。
 
-Backward pass: gradients flow right to left. Start with dL/da (how loss changes with the activation). Multiply by da/dz2 (sigmoid derivative). That gives dL/dz2. Split into dL/db (which equals dL/dz2, since z2 = z1 + b) and dL/dz1. Then dL/dw = dL/dz1 * x and dL/dx = dL/dz1 * w.
+バックワードパスでは、勾配が右から左へ流れます。dL/da（活性化が変わると損失がどう変わるか）から始めます。これに da/dz2（sigmoidの導関数）を掛けます。すると dL/dz2 が得られます。z2 = z1 + b なので、これは dL/db（dL/dz2と等しい）と dL/dz1 に分かれます。さらに dL/dw = dL/dz1 * x、dL/dx = dL/dz1 * w です。
 
-Every node in the graph has one job during the backward pass: take the gradient coming from above, multiply by its local derivative, and pass it down.
+グラフ内の各ノードがバックワードパスで行う仕事は1つだけです。上流から来た勾配を受け取り、局所的な導関数を掛けて、下流へ渡します。
 
-### Forward vs Backward
+### フォワードとバックワード
 
 ```mermaid
 graph TB
@@ -70,11 +70,11 @@ graph TB
     Forward --> Backward
 ```
 
-The forward pass stores every intermediate value: z, a, the inputs to each layer. The backward pass needs these stored values to compute gradients. This is the memory-computation tradeoff at the heart of backprop. You trade memory (storing activations) for speed (one pass instead of millions).
+フォワードパスはすべての中間値を保存します。z、a、各層への入力などです。バックワードパスでは、勾配を計算するためにこれらの保存済みの値が必要です。これがバックプロパゲーションの中心にあるメモリと計算のトレードオフです。メモリ（活性化の保存）を使う代わりに速度（何百万回ではなく1回のパス）を得ます。
 
-### Gradient Flow Through a Network
+### ネットワーク内の勾配の流れ
 
-For a 3-layer network, gradients chain through every layer:
+3層ネットワークでは、勾配はすべての層を通って連鎖します。
 
 ```mermaid
 graph RL
@@ -84,11 +84,11 @@ graph RL
     L1 -- "dL/dz1 = dL/da1 * sigmoid'(z1)" --> I["Input"]
 ```
 
-At each layer, the gradient gets multiplied by the sigmoid derivative. The sigmoid derivative is a * (1 - a), which maxes out at 0.25 (when a = 0.5). Three layers deep, the gradient has been multiplied by at most 0.25^3 = 0.0156. Ten layers deep: 0.25^10 = 0.000001.
+各層で、勾配はsigmoidの導関数で掛けられます。sigmoidの導関数は a * (1 - a) で、最大でも0.25です（a = 0.5のとき）。3層深くなると、勾配は最大でも 0.25^3 = 0.0156 倍されています。10層なら 0.25^10 = 0.000001 です。
 
-### Vanishing Gradients
+### 勾配消失
 
-This is the vanishing gradient problem. Sigmoid squashes its output between 0 and 1. Its derivative is always less than 0.25. Stack enough sigmoid layers and gradients shrink to nothing. Early layers barely learn because they receive near-zero gradients.
+これが勾配消失問題です。sigmoidは出力を0から1の間に押し込みます。導関数は常に0.25未満です。sigmoid層を十分に積み重ねると、勾配はほとんどゼロになります。初期層はほぼゼロの勾配しか受け取れないため、ほとんど学習しません。
 
 ```
 sigmoid(z):     Output range [0, 1]
@@ -98,13 +98,13 @@ After 5 layers:   gradient * 0.25^5 = 0.001x original
 After 10 layers:  gradient * 0.25^10 = 0.000001x original
 ```
 
-This is why deep sigmoid networks are nearly impossible to train. The fix -- ReLU and its variants -- is the subject of Lesson 04. For now, understand that backprop works perfectly. The problem is what it's working through.
+これが、深いsigmoidネットワークを訓練するのがほぼ不可能な理由です。解決策であるReLUとその変種はLesson 04の主題です。ここでは、バックプロパゲーションそのものは完全に機能していることを理解してください。問題は、それが何を通って働いているかです。
 
-### Deriving Gradients for a 2-Layer Network
+### 2層ネットワークの勾配を導出する
 
-Concrete math for a network with input x, hidden layer with sigmoid, output layer with sigmoid, and MSE loss.
+入力x、sigmoidを持つ隠れ層、sigmoidを持つ出力層、MSE損失を持つネットワークについて、具体的に数式を見ます。
 
-Forward pass:
+フォワードパス:
 ```
 z1 = W1 * x + b1
 a1 = sigmoid(z1)
@@ -113,7 +113,7 @@ a2 = sigmoid(z2)
 L = (a2 - y)^2
 ```
 
-Backward pass (applying chain rule step by step):
+バックワードパス（連鎖律を一歩ずつ適用）:
 ```
 dL/da2 = 2(a2 - y)
 da2/dz2 = a2 * (1 - a2)
@@ -130,13 +130,13 @@ dL/dW1 = dL/dz1 * x
 dL/db1 = dL/dz1
 ```
 
-Every gradient is a product of local derivatives traced back from the loss. That's all backpropagation is.
+すべての勾配は、損失からさかのぼって局所的な導関数を掛け合わせたものです。バックプロパゲーションとは、それだけです。
 
-## Build It
+## 作ってみる
 
-### Step 1: The Value Node
+### Step 1: Valueノード
 
-Every number in our computation becomes a Value. It stores its data, its gradient, and how it was created (so it knows how to compute gradients backward).
+この計算に現れるすべての数値をValueにします。Valueはデータ、勾配、そしてどのように作られたかを保存します。そうすることで、逆向きに勾配を計算できるようになります。
 
 ```python
 class Value:
@@ -151,11 +151,11 @@ class Value:
         return f"Value(data={self.data:.4f}, grad={self.grad:.4f})"
 ```
 
-No gradient yet (0.0). No backward function yet (no-op). The `_children` track which Values produced this one, so we can topologically sort the graph later.
+まだ勾配はありません（0.0）。まだbackward関数もありません（no-op）。`_children` は、このValueを作ったValueたちを追跡します。あとでグラフをトポロジカルソートするためです。
 
-### Step 2: Operations with Backward Functions
+### Step 2: backward関数を持つ演算
 
-Each operation creates a new Value and defines how gradients flow backward through it.
+各演算は新しいValueを作り、その演算を通って勾配がどのように逆向きへ流れるかを定義します。
 
 ```python
 def __add__(self, other):
@@ -181,13 +181,13 @@ def __mul__(self, other):
     return out
 ```
 
-For addition: d(a+b)/da = 1, d(a+b)/db = 1. So both inputs get the output's gradient directly.
+加算では d(a+b)/da = 1、d(a+b)/db = 1 です。したがって、両方の入力は出力の勾配をそのまま受け取ります。
 
-For multiplication: d(a*b)/da = b, d(a*b)/db = a. Each input gets the other's value times the output gradient.
+乗算では d(a*b)/da = b、d(a*b)/db = a です。各入力は、もう一方の値に出力勾配を掛けたものを受け取ります。
 
-The `+=` is critical. A Value might be used in multiple operations. Its gradient is the sum of gradients from all paths.
+`+=` は重要です。1つのValueが複数の演算で使われることがあります。その勾配は、すべての経路から来る勾配の合計です。
 
-### Step 3: Sigmoid and Loss
+### Step 3: Sigmoidと損失
 
 ```python
 import math
@@ -205,7 +205,7 @@ def sigmoid(self):
     return out
 ```
 
-Sigmoid derivative: sigmoid(x) * (1 - sigmoid(x)). We computed sigmoid(x) = s during the forward pass. Reuse it. No extra work.
+sigmoidの導関数は sigmoid(x) * (1 - sigmoid(x)) です。フォワードパスで sigmoid(x) = s を計算済みです。再利用しましょう。追加の計算は不要です。
 
 ```python
 def mse_loss(predicted, target):
@@ -213,11 +213,11 @@ def mse_loss(predicted, target):
     return diff * diff
 ```
 
-MSE for a single output: (predicted - target)^2. We express subtraction as addition with a negated Value.
+単一出力に対するMSEは (predicted - target)^2 です。ここでは、引き算を負のValueとの足し算として表しています。
 
-### Step 4: Backward Pass
+### Step 4: バックワードパス
 
-Topological sort ensures we process nodes in the right order -- a node's gradient is fully accumulated before we propagate through it.
+トポロジカルソートにより、ノードを正しい順序で処理できます。つまり、あるノードを通って勾配を伝播する前に、そのノードの勾配が完全に蓄積されるようにします。
 
 ```python
 def backward(self):
@@ -237,9 +237,9 @@ def backward(self):
         v._backward()
 ```
 
-Start at the loss (gradient = 1.0, since dL/dL = 1). Walk backward through the sorted graph. Each node's `_backward` pushes gradients to its children.
+損失から始めます（dL/dL = 1 なので gradient = 1.0）。ソート済みのグラフを逆向きにたどります。各ノードの `_backward` が、その子へ勾配を押し戻します。
 
-### Step 5: Layer and Network
+### Step 5: LayerとNetwork
 
 ```python
 import random
@@ -297,9 +297,9 @@ class Network:
             p.grad = 0.0
 ```
 
-A Neuron takes inputs, computes weighted sum + bias, and applies sigmoid. Weight initialization scales by sqrt(2/n_inputs) to prevent sigmoid saturation in deeper networks. A Layer is a list of Neurons. A Network is a list of Layers. The `parameters()` method collects all learnable Values so we can update them.
+Neuronは入力を受け取り、重み付き和にバイアスを足し、sigmoidを適用します。重みの初期化は sqrt(2/n_inputs) でスケールし、深いネットワークでsigmoidが飽和するのを防ぎます。LayerはNeuronのリストです。NetworkはLayerのリストです。`parameters()` メソッドは学習可能なValueをすべて集めるので、それらを更新できます。
 
-### Step 6: Train on XOR
+### Step 6: XORで訓練する
 
 ```python
 random.seed(42)
@@ -338,11 +338,11 @@ for inputs, target in xor_data:
     print(f"  {inputs} -> {pred.data:.4f} (expected {target})")
 ```
 
-Watch the loss decrease. From random predictions to correct XOR outputs, driven entirely by backpropagation computing gradients and nudging weights in the right direction.
+損失が下がっていく様子を見てください。ランダムな予測から正しいXOR出力へ向かいます。そのすべては、バックプロパゲーションが勾配を計算し、重みを正しい方向へ少しずつ動かすことで起きています。
 
-### Step 7: Circle Classification
+### Step 7: 円分類
 
-In Lesson 02, you hand-tuned weights for circle classification. Now let the network learn them.
+Lesson 02では円分類の重みを手で調整しました。ここではネットワークに学習させます。
 
 ```python
 random.seed(7)
@@ -386,13 +386,13 @@ for epoch in range(2000):
         print(f"Epoch {epoch:4d} | Loss: {total_loss_val:.4f} | Accuracy: {accuracy:.1f}%")
 ```
 
-We use online SGD here -- update weights after each sample instead of accumulating the full batch. This breaks symmetry faster and avoids sigmoid saturation on the full loss landscape. Shuffling the data each epoch prevents the network from memorizing the order.
+ここではonline SGDを使います。フルバッチを蓄積するのではなく、各サンプルの後に重みを更新します。これにより対称性がより速く崩れ、全損失地形上でsigmoidが飽和することを避けやすくなります。各epochでデータをシャッフルすると、ネットワークが順序を記憶するのを防げます。
 
-No hand-tuning. The network discovers the circular decision boundary on its own. That's the power of backpropagation: you define the architecture, the loss function, and the data. The algorithm figures out the weights.
+手作業の調整は不要です。ネットワークは円形の決定境界を自力で発見します。これがバックプロパゲーションの力です。あなたはアーキテクチャ、損失関数、データを定義します。重みはアルゴリズムが見つけます。
 
-## Use It
+## 使ってみる
 
-PyTorch does everything above in a few lines. The core idea is identical -- autograd builds a computational graph during the forward pass and traces it backward to compute gradients.
+PyTorchでは、ここまでのすべてを数行で行えます。中心の考え方は同じです。autogradはフォワードパス中に計算グラフを構築し、それを逆向きにたどって勾配を計算します。
 
 ```python
 import torch
@@ -424,43 +424,43 @@ with torch.no_grad():
         print(f"  {X[i].tolist()} -> {pred.item():.4f} (expected {y[i].item()})")
 ```
 
-`loss.backward()` is your `total_loss.backward()`. `optimizer.step()` is your manual `p.data -= lr * p.grad`. `optimizer.zero_grad()` is your `net.zero_grad()`. Same algorithm, industrial-strength implementation. PyTorch handles GPU acceleration, mixed precision, gradient checkpointing, and hundreds of layer types. But the backward pass is the same chain rule applied to the same computational graph.
+`loss.backward()` はあなたの `total_loss.backward()` です。`optimizer.step()` は手で書いた `p.data -= lr * p.grad` です。`optimizer.zero_grad()` は `net.zero_grad()` です。同じアルゴリズムの、産業レベルの実装です。PyTorchはGPUアクセラレーション、mixed precision、gradient checkpointing、何百種類もの層を扱います。それでもバックワードパスは、同じ計算グラフに同じ連鎖律を適用しているだけです。
 
-Training runs the forward pass, then the backward pass, then updates weights. Inference runs only the forward pass. No gradients, no updates. This distinction matters because inference is what happens in production. When you call an API like Claude or GPT, you're running inference -- your prompt flows forward through the network, and tokens come out the other end. No weights change. Understanding backprop matters because it shaped every weight in that network.
+訓練では、フォワードパスを実行し、次にバックワードパスを実行し、重みを更新します。推論ではフォワードパスだけを実行します。勾配も更新もありません。この区別は、本番で起きるのが推論だから重要です。ClaudeやGPTのようなAPIを呼び出すとき、あなたは推論を実行しています。プロンプトがネットワークを前向きに流れ、反対側からトークンが出てきます。重みは変わりません。バックプロパゲーションを理解することが重要なのは、そのネットワーク内のすべての重みがバックプロパゲーションによって形作られているからです。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-gradient-debugger.md` -- a reusable prompt for diagnosing gradient problems (vanishing, exploding, NaN) in any neural network
+このレッスンでは次を作ります。
+- `outputs/prompt-gradient-debugger.md` -- 任意のニューラルネットワークで勾配問題（勾配消失、勾配爆発、NaN）を診断するための再利用可能なプロンプト
 
-## Exercises
+## 演習
 
-1. Add a `__sub__` method to the Value class (a - b = a + (-1 * b)). Then implement a `__neg__` method. Verify that the gradients are correct by comparing with manual calculation for a simple expression like (a - b)^2.
+1. Valueクラスに `__sub__` メソッドを追加してください（a - b = a + (-1 * b)）。次に `__neg__` メソッドを実装します。(a - b)^2 のような単純な式について手計算と比較し、勾配が正しいことを確認してください。
 
-2. Add a `relu` method to Value (output max(0, x), derivative is 1 if x > 0, else 0). Replace sigmoid with relu in the hidden layers and train on XOR again. Compare convergence speed. You should see faster training -- this previews Lesson 04.
+2. Valueに `relu` メソッドを追加してください（出力は max(0, x)、導関数は x > 0 なら1、それ以外なら0）。隠れ層のsigmoidをreluに置き換え、XORでもう一度訓練します。収束速度を比較してください。より速い訓練が見えるはずです。これはLesson 04の予告です。
 
-3. Implement a `__pow__` method on Value for integer powers. Use it to replace `mse_loss` with a proper `(predicted - target) ** 2` expression. Verify gradients match the original implementation.
+3. Valueに整数べき乗のための `__pow__` メソッドを実装してください。それを使って `mse_loss` を本来の `(predicted - target) ** 2` という式に置き換えます。勾配が元の実装と一致することを確認してください。
 
-4. Add gradient clipping to the training loop: after calling `backward()`, clip all gradients to [-1, 1]. Train a deeper network (4+ layers with sigmoid) and compare loss curves with and without clipping. This is your first defense against exploding gradients.
+4. 訓練ループに勾配クリッピングを追加してください。`backward()` を呼んだ後、すべての勾配を [-1, 1] にクリップします。sigmoidを持つより深いネットワーク（4層以上）を訓練し、クリッピングありとなしの損失曲線を比較してください。これは勾配爆発に対する最初の防御策です。
 
-5. Build a visualization: after training on XOR, print the gradient of every parameter in the network. Identify which layer has the smallest gradients. This demonstrates the vanishing gradient problem you read about in the Concept section.
+5. 可視化を作ってください。XORで訓練した後、ネットワーク内のすべてのパラメータの勾配を出力します。どの層の勾配が最も小さいかを特定してください。これにより、概念セクションで読んだ勾配消失問題が実演されます。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Backpropagation | "The network learns" | An algorithm that computes dL/dw for every weight by applying the chain rule backward through the computational graph |
-| Computational graph | "The network structure" | A directed acyclic graph where nodes are operations and edges carry values (forward) and gradients (backward) |
-| Chain rule | "Multiply the derivatives" | If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- the mathematical foundation of backpropagation |
-| Gradient | "The direction of steepest ascent" | The partial derivative of the loss with respect to a parameter -- tells you how to change that parameter to reduce the loss |
-| Vanishing gradient | "Deep networks don't learn" | Gradients shrink exponentially as they propagate through layers with saturating activations like sigmoid |
-| Forward pass | "Running the network" | Computing the output from inputs by sequentially applying each layer's operations and storing intermediate values |
-| Backward pass | "Computing gradients" | Traversing the computational graph in reverse, accumulating gradients at each node using the chain rule |
-| Learning rate | "How fast it learns" | A scalar that controls the step size when updating weights: w_new = w_old - lr * gradient |
-| Topological sort | "The right order" | An ordering of graph nodes where each node appears after all nodes it depends on -- ensures gradients are fully accumulated before propagation |
-| Autograd | "Automatic differentiation" | A system that builds computational graphs during forward computation and automatically computes gradients -- what PyTorch's engine does |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| バックプロパゲーション | 「ネットワークが学習する」 | 計算グラフを逆向きに連鎖律でたどり、すべての重みについて dL/dw を計算するアルゴリズム |
+| 計算グラフ | 「ネットワーク構造」 | ノードが演算、エッジが値（前向き）と勾配（後ろ向き）を運ぶ有向非巡回グラフ |
+| 連鎖律 | 「導関数を掛ける」 | y = f(g(x)) なら dy/dx = f'(g(x)) * g'(x)。バックプロパゲーションの数学的基礎 |
+| 勾配 | 「最急上昇の方向」 | パラメータに関する損失の偏導関数。損失を減らすためにそのパラメータをどう変えるべきかを示す |
+| 勾配消失 | 「深いネットワークが学習しない」 | sigmoidのような飽和する活性化関数を持つ層を通ると、勾配が指数的に小さくなる現象 |
+| フォワードパス | 「ネットワークを実行する」 | 各層の演算を順番に適用し、中間値を保存しながら入力から出力を計算すること |
+| バックワードパス | 「勾配を計算する」 | 計算グラフを逆向きにたどり、各ノードで連鎖律を使って勾配を蓄積すること |
+| learning rate | 「どれくらい速く学習するか」 | 重み更新時のステップ幅を制御するスカラー: w_new = w_old - lr * gradient |
+| トポロジカルソート | 「正しい順序」 | 各ノードが依存先のすべてのノードより後に現れるグラフノードの順序。伝播前に勾配が完全に蓄積されるようにする |
+| Autograd | 「自動微分」 | フォワード計算中に計算グラフを構築し、勾配を自動計算するシステム。PyTorchのエンジンが行っていること |
 
-## Further Reading
+## 参考資料
 
-- Rumelhart, Hinton & Williams, "Learning representations by back-propagating errors" (1986) -- the paper that made backpropagation mainstream and unlocked multi-layer network training
-- 3Blue1Brown, "Neural Networks" series (https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) -- the best visual explanation of backpropagation and gradient flow through networks
+- Rumelhart, Hinton & Williams, "Learning representations by back-propagating errors" (1986) -- バックプロパゲーションを主流にし、多層ネットワークの訓練を切り開いた論文
+- 3Blue1Brown, "Neural Networks" series (https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) -- バックプロパゲーションとネットワーク内の勾配の流れについて、最も優れた視覚的説明の一つ

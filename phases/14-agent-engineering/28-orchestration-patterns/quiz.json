@@ -1,10 +1,10 @@
 {
   "lesson": "28-orchestration-patterns",
-  "title": "Orchestration Patterns: Supervisor, Swarm, Hierarchical",
+  "title": "オーケストレーションパターン: Supervisor, Swarm, Hierarchical",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which four orchestration patterns does the lesson list?",
+      "question": "この lesson が挙げる 4 つの orchestration patterns はどれですか。",
       "options": [
         "Supervisor-worker, swarm/peer-to-peer, hierarchical, debate",
         "Sequential, parallel, distributed, federated",
@@ -12,79 +12,79 @@
         "Push, pull, batch, stream"
       ],
       "correct": 0,
-      "explanation": "Supervisor-worker, swarm, hierarchical, and debate recur across 2026 frameworks."
+      "explanation": "Supervisor-worker、swarm、hierarchical、debate は 2026 年の frameworks をまたいで繰り返し現れます。"
     },
     {
       "stage": "pre",
-      "question": "What is the 2026 LangChain recommendation regarding supervision?",
+      "question": "supervision に関する 2026 年の LangChain recommendation は何ですか。",
       "options": [
-        "Always use create_supervisor",
-        "Prefer direct tool calls over create_supervisor for finer context-engineering control",
-        "Avoid supervision entirely",
-        "Run supervisors on GPUs"
+        "常に create_supervisor を使う",
+        "より細かい context-engineering control のため、create_supervisor より direct tool calls を優先する",
+        "supervision を完全に避ける",
+        "supervisors を GPUs で動かす"
       ],
       "correct": 1,
-      "explanation": "Tool-call-based supervision gives you precise control over what each specialist sees."
+      "explanation": "tool-call-based supervision では、各 specialist が見る内容を正確に control できます。"
     },
     {
       "stage": "check",
-      "question": "What distinguishes a swarm from a supervisor-worker topology?",
+      "question": "swarm と supervisor-worker topology の違いは何ですか。",
       "options": [
-        "Swarm uses GPUs",
-        "Swarm has no central router; agents hand off directly via a shared tool surface",
-        "Swarm is single-agent",
-        "Swarm runs on cron only"
+        "swarm は GPUs を使う",
+        "swarm には central router がなく、agents が shared tool surface 経由で直接 hand off する",
+        "swarm は single-agent である",
+        "swarm は cron だけで動く"
       ],
       "correct": 1,
-      "explanation": "Swarm is peer-to-peer; supervisor centralizes routing through one LLM."
+      "explanation": "swarm は peer-to-peer です。supervisor は 1 つの LLM を通じて routing を centralize します。"
     },
     {
       "stage": "check",
-      "question": "When is hierarchical orchestration justified?",
+      "question": "hierarchical orchestration が正当化されるのはいつですか。",
       "options": [
-        "Always; it scales for free",
-        "When a single supervisor's context budget cannot hold descriptions of all specialists",
-        "Only with GPUs",
-        "Never; it is an antipattern"
+        "常に。無料で scale するから",
+        "single supervisor の context budget にすべての specialists の descriptions が入らないとき",
+        "GPUs があるときだけ",
+        "決してない。antipattern だから"
       ],
       "correct": 1,
-      "explanation": "Nested supervisors are for large specialist populations that exceed one supervisor's budget."
+      "explanation": "nested supervisors は、1 つの supervisor の budget を超える大規模な specialist populations のためのものです。"
     },
     {
       "stage": "check",
-      "question": "What is the recommended decision order Anthropic supports?",
+      "question": "Anthropic が支持する推奨判断順はどれですか。",
       "options": [
-        "Always start with hierarchical multi-agent",
-        "Start with a single agent plus workflow patterns; add topology only when needed; supervisor before swarm before hierarchical; debate when accuracy beats cost",
-        "Start with debate",
-        "Start with swarm and contract toward single"
+        "常に hierarchical multi-agent から始める",
+        "single agent plus workflow patterns から始め、必要な場合だけ topology を追加する。supervisor、swarm、hierarchical の順で検討し、accuracy が cost に勝るなら debate を使う",
+        "debate から始める",
+        "swarm から始め、single に縮小する"
       ],
       "correct": 1,
-      "explanation": "Anthropic's guidance is to build the right system for your needs, not the most sophisticated."
+      "explanation": "Anthropic の指針は、最も洗練された system ではなく、必要に合った正しい system を作ることです。"
     },
     {
       "stage": "post",
-      "question": "What is fake hierarchy in this lesson?",
+      "question": "この lesson における fake hierarchy とは何ですか。",
       "options": [
-        "Mislabelled YAML",
-        "Three layers of supervisors because 'enterprise' when there are only two actual teams; collapse it",
-        "An orchestrator written in TypeScript",
-        "A test fixture"
+        "誤ラベルの YAML",
+        "実際の teams が 2 つしかないのに「enterprise」だからと 3 layers の supervisors を置くこと。collapse すべき",
+        "TypeScript で書かれた orchestrator",
+        "test fixture"
       ],
       "correct": 1,
-      "explanation": "Layers that do not correspond to real teams add operational complexity without payoff."
+      "explanation": "実際の teams に対応しない layers は、見返りなく operational complexity を増やします。"
     },
     {
       "stage": "post",
-      "question": "How do you mitigate bouncing handoffs in a swarm (A -> B -> A -> B)?",
+      "question": "swarm で bouncing handoffs (A -> B -> A -> B) を緩和するにはどうしますか。",
       "options": [
-        "Pin the temperature to 0",
-        "Add a hop counter and refuse after N transfers",
-        "Disable tracing",
-        "Lower the rate limit"
+        "temperature を 0 に固定する",
+        "hop counter を追加し、N transfers 後に拒否する",
+        "tracing を無効にする",
+        "rate limit を下げる"
       ],
       "correct": 1,
-      "explanation": "A hop counter caps swarm cycles before they loop indefinitely."
+      "explanation": "hop counter は swarm cycles が無限に loop する前に上限を設けます。"
     }
   ]
 }

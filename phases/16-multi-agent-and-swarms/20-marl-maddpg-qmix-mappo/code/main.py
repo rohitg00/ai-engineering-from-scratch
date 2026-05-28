@@ -1,8 +1,8 @@
-"""MARL patterns — CTDE, value decomposition, centralized value — on a tiny grid.
+"""tiny grid 上の MARL patterns — CTDE、value decomposition、centralized value。
 
-Two agents, 4x4 grid, one pellet. All four styles share the same environment
-and reward. Scripted policies demonstrate how CTDE variants converge faster
-than the independent baseline even without gradient updates.
+2 agents、4x4 grid、pellet。4 styles は同じ environment と reward を共有する。
+scripted policies により、gradient updates がなくても CTDE variants が
+independent baseline より速く converge することを示す。
 """
 from __future__ import annotations
 
@@ -15,9 +15,9 @@ GRID = 4
 
 @dataclass
 class Env:
-    """Cooperative task: TWO pellets, each agent must collect one; step cost
-    applies whether the agent moves or not; collisions (two agents same cell)
-    cost an extra step."""
+    """Cooperative task: pellets は 2 つで、各 agent が 1 つ collect する。
+    agent が move してもしなくても step cost がかかる。collisions
+    （2 agents が same cell）は extra step の cost になる。"""
     agent0: tuple[int, int]
     agent1: tuple[int, int]
     pellet0: tuple[int, int]
@@ -67,8 +67,8 @@ def move_or_wait(pos: tuple[int, int], target: tuple[int, int], wait: bool) -> t
 
 
 def run_independent(env: Env, max_steps: int = 50) -> int:
-    """Each agent independently targets the nearest pellet; no awareness of
-    the other agent's target. Often both target the same pellet."""
+    """各 agent が独立に nearest pellet を target する。other agent の
+    target を知らないため、両方が同じ pellet を target しがちである。"""
     steps = 0
     while not env.done and steps < max_steps:
         p0_target = min(env.pellets_remaining, key=lambda p: manhattan(env.agent0, p))
@@ -81,7 +81,7 @@ def run_independent(env: Env, max_steps: int = 50) -> int:
 
 
 def _assigned_targets(env: Env) -> tuple[tuple[int, int], tuple[int, int]]:
-    """Centralized optimal pellet assignment: minimize total Manhattan."""
+    """centralized optimal pellet assignment: total Manhattan を最小化する。"""
     pellets = list(env.pellets_remaining)
     if len(pellets) == 1:
         return pellets[0], pellets[0]
@@ -92,8 +92,8 @@ def _assigned_targets(env: Env) -> tuple[tuple[int, int], tuple[int, int]]:
 
 
 def run_maddpg_style(env: Env, max_steps: int = 50) -> int:
-    """Centralized critic assigns each agent a distinct pellet; each agent's
-    actor moves toward its assigned target. Deploy-time only the actors run."""
+    """centralized critic が各 agent に distinct pellet を割り当てる。
+    各 agent の actor は assigned target に向かう。deploy-time には actors だけが動く。"""
     steps = 0
     while not env.done and steps < max_steps:
         t0, t1 = _assigned_targets(env)
@@ -105,8 +105,8 @@ def run_maddpg_style(env: Env, max_steps: int = 50) -> int:
 
 
 def run_qmix_style(env: Env, max_steps: int = 50) -> int:
-    """Value decomposition: each agent picks the pellet with higher local Q
-    (lower manhattan). Monotone mixing makes this argmax-decomposable."""
+    """Value decomposition: 各 agent は higher local Q（lower manhattan）の
+    pellet を選ぶ。monotone mixing により argmax-decomposable になる。"""
     steps = 0
     while not env.done and steps < max_steps:
         if len(env.pellets_remaining) >= 2:
@@ -122,9 +122,9 @@ def run_qmix_style(env: Env, max_steps: int = 50) -> int:
 
 
 def run_mappo_style(env: Env, max_steps: int = 50) -> int:
-    """PPO with centralized value function. Behaves like CTDE at deploy; the
-    scripted variant mirrors MADDPG here because they converge to similar
-    policies on this size task."""
+    """centralized value function を持つ PPO。deploy では CTDE のように振る舞う。
+    この size task では似た policies に converge するため、scripted variant は
+    ここでは MADDPG を mirror する。"""
     return run_maddpg_style(env, max_steps)
 
 
@@ -140,19 +140,19 @@ def bench(label: str, runner) -> None:
 
 def main() -> None:
     print("=" * 72)
-    print("MARL PATTERNS on a 4x4 grid with 2 agents and 2 pellets (cooperative)")
+    print("MARL PATTERNS — 4x4 grid、2 agents、2 pellets（cooperative）")
     print("=" * 72)
     bench("independent (no coord)", run_independent)
     bench("MADDPG-style (CTDE)", run_maddpg_style)
     bench("QMIX-style (mono decomp)", run_qmix_style)
     bench("MAPPO-style (centralized V)", run_mappo_style)
-    print("\nTakeaways:")
-    print("  independent baseline wastes steps on duplicate effort.")
-    print("  CTDE-family variants coordinate so only the closer agent moves per step.")
-    print("  QMIX and MAPPO reach the same steady-state behavior with different training")
-    print("  stories; at deploy-time the policy they learn is similar.")
-    print("  In LLM-agent systems, this is the 'router decides which sub-agent advances'")
-    print("  pattern. CTDE is a design discipline even when you do not train end-to-end.")
+    print("\n要点:")
+    print("  independent baseline は duplicate effort で steps を浪費します。")
+    print("  CTDE-family variants は coordinate し、各 step で近い agent だけが動くようにします。")
+    print("  QMIX と MAPPO は異なる training story から同じ steady-state behavior に到達します。")
+    print("  deploy-time では、学習される policy は似ています。")
+    print("  LLM-agent systems では、これは 'router decides which sub-agent advances' pattern です。")
+    print("  end-to-end で train しなくても、CTDE は design discipline になります。")
 
 
 if __name__ == "__main__":

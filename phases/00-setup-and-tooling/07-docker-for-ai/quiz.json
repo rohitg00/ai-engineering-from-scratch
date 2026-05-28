@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the primary difference between a Docker container and a virtual machine?",
-      "options": ["Containers are slower but more secure than VMs", "Containers share the host OS kernel while VMs run their own full OS", "Containers can only run Linux while VMs support any OS", "There is no practical difference"],
+      "question": "Docker container と virtual machine の主な違いは何ですか。",
+      "options": [
+        "container は VM より遅いが secure である",
+        "container は host OS kernel を共有し、VM は独自の full OS を実行する",
+        "container は Linux でしか動かず、VM は任意の OS を support する",
+        "実用上の違いはない"
+      ],
       "correct": 1,
-      "explanation": "Containers share the host kernel and isolate at the process level, making them start in seconds. VMs run a complete guest OS with its own kernel, requiring more resources and slower startup."
+      "explanation": "container は host kernel を共有し、process level で隔離するため数秒で起動します。VM は独自 kernel を持つ complete guest OS を実行するため、より多くの resource と遅い startup が必要です。"
     },
     {
       "stage": "pre",
-      "question": "What is a Dockerfile?",
-      "options": ["A configuration file for the Docker daemon", "A set of instructions for building a Docker image layer by layer", "A log file that records container activity", "A file that lists running containers"],
+      "question": "Dockerfile とは何ですか。",
+      "options": [
+        "Docker daemon 用の configuration file",
+        "Docker image を layer by layer で build する instruction の集合",
+        "container activity を記録する log file",
+        "running container を列挙する file"
+      ],
       "correct": 1,
-      "explanation": "A Dockerfile contains sequential instructions (FROM, RUN, COPY, etc.) that Docker executes to build an image. Each instruction creates a cached layer."
+      "explanation": "Dockerfile は `FROM`, `RUN`, `COPY` などの sequential instruction を含み、Docker はそれを実行して image を build します。各 instruction は cached layer を作ります。"
     },
     {
       "stage": "post",
-      "question": "Why are volume mounts critical for AI development with Docker?",
-      "options": ["Volumes make containers run faster by using host disk speed", "Volumes persist data (models, datasets, code) across container rebuilds so you don't re-download gigabytes each time", "Volumes are required for Python packages to install correctly", "Volumes allow multiple containers to share the same GPU"],
+      "question": "AI development with Docker で volume mount が critical なのはなぜですか。",
+      "options": [
+        "host disk speed を使うことで container を速くするから",
+        "container rebuild をまたいで data (model, dataset, code) を保持し、毎回 GB 単位の再 download を避けられるから",
+        "Python package の install に必須だから",
+        "複数 container が同じ GPU を共有できるから"
+      ],
       "correct": 1,
-      "explanation": "Without volumes, everything inside a container is lost when it stops. Volume mounts map host directories into the container, so model weights (14+ GB) and datasets survive rebuilds."
+      "explanation": "volume がないと、container 内のものは停止時に失われます。volume mount は host directory を container に map し、model weights (14+ GB) や dataset を rebuild 後も残します。"
     },
     {
       "stage": "post",
-      "question": "What does the NVIDIA Container Toolkit enable?",
-      "options": ["Installing CUDA drivers inside the container", "Exposing host GPUs to Docker containers via the --gpus flag", "Running NVIDIA GPU containers on AMD hardware", "Compiling CUDA code during the Docker build process"],
+      "question": "NVIDIA Container Toolkit は何を可能にしますか。",
+      "options": [
+        "container 内に CUDA driver を install する",
+        "`--gpus` flag を通じて host GPU を Docker container に expose する",
+        "AMD hardware 上で NVIDIA GPU container を実行する",
+        "Docker build process 中に CUDA code を compile する"
+      ],
       "correct": 1,
-      "explanation": "The NVIDIA Container Toolkit is a runtime hook that exposes host GPUs to containers. The CUDA toolkit lives inside the container, but the GPU driver is shared from the host."
+      "explanation": "NVIDIA Container Toolkit は host GPU を container に expose する runtime hook です。CUDA toolkit は container 内にありますが、GPU driver は host から共有されます。"
     },
     {
       "stage": "post",
-      "question": "In a Docker Compose file for AI, how does the 'ai-dev' service reach the 'qdrant' vector database?",
-      "options": ["By using the host machine's IP address and port", "By using the service name 'qdrant' as the hostname, since Compose creates a shared network", "By mounting a shared volume between the two containers", "By configuring a VPN between the containers"],
+      "question": "AI 用 Docker Compose file で、`ai-dev` service はどうやって `qdrant` vector database に到達しますか。",
+      "options": [
+        "host machine の IP address と port を使う",
+        "Compose が shared network を作るため、service name `qdrant` を hostname として使う",
+        "2 つの container 間で shared volume を mount する",
+        "container 間に VPN を設定する"
+      ],
       "correct": 1,
-      "explanation": "Docker Compose automatically creates a shared network where services can reach each other by name. The ai-dev container connects to 'http://qdrant:6333' using the service name as hostname."
+      "explanation": "Docker Compose は service が名前で互いに到達できる shared network を自動作成します。`ai-dev` container は service name を hostname として `http://qdrant:6333` に接続します。"
     }
   ]
 }

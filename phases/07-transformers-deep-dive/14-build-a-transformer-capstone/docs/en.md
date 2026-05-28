@@ -1,25 +1,25 @@
 # Build a Transformer from Scratch — The Capstone
 
-> Thirteen lessons. One model. No shortcuts.
+> 13 lessons。1 つの model。近道なし。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 7 · 01 through 13. Don't skip.
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 7 · 01 through 13。飛ばさないでください。
+**所要時間:** 約120分
 
-## The Problem
+## 課題
 
-You've read every paper. You've implemented attention, multi-head splits, positional encodings, encoder and decoder blocks, BERT and GPT losses, MoE, KV cache. Now make them work together on a real task.
+あなたはすべての paper を読みました。attention, multi-head splits, positional encodings, encoder and decoder blocks, BERT and GPT losses, MoE, KV cache を実装しました。次は、それらを実タスク上で一緒に動かします。
 
-The capstone: train a small decoder-only transformer end-to-end on a character-level language modeling task. It reads Shakespeare. It generates new Shakespeare. It is small enough to train on a laptop in under 10 minutes. It is correct enough that swapping in a bigger dataset and longer training gets you a real LM.
+capstone では、小さな decoder-only transformer を character-level language modeling task で end-to-end に学習します。Shakespeare を読み、新しい Shakespeare を生成します。laptop で 10 分以内に学習できるほど小さく、より大きな dataset と長い training に差し替えれば本物の LM になる程度には正しい実装です。
 
-This is the "nanoGPT" of the course. It is not original — Karpathy's 2023 nanoGPT tutorial is the reference implementation every student writes at least once. We lift the shape and retool it around what we've covered.
+これは course の「nanoGPT」です。独自のものではありません。Karpathy の 2023 nanoGPT tutorial は、すべての student が少なくとも一度は書く reference implementation です。その形を借り、ここまで扱った内容に合わせて組み替えます。
 
-## The Concept
+## コンセプト
 
 ![Transformer-from-scratch block diagram](../assets/capstone.svg)
 
-The architecture, annotated:
+注釈付き architecture:
 
 ```
 input tokens (B, N)
@@ -50,40 +50,40 @@ logits (B, N, V)
 shift-by-one cross-entropy            ◀── Lesson 07
 ```
 
-### What we ship
+### ここで提供するもの
 
-- `GPTConfig` — one place to configure all hyperparameters.
-- `MultiHeadAttention` — causal, batched, with optional Flash-style pathway (PyTorch's `scaled_dot_product_attention`).
-- `SwiGLUFFN` — modern FFN.
-- `Block` — pre-norm, residual-wrapped attention + FFN.
-- `GPT` — embeddings, stacked blocks, LM head, generate().
-- Training loop with AdamW, cosine LR, gradient clipping.
-- Char-level tokenizer on Shakespeare text.
+- `GPTConfig` — すべての hyperparameters を設定する場所。
+- `MultiHeadAttention` — causal, batched、optional Flash-style pathway (PyTorch の `scaled_dot_product_attention`) 付き。
+- `SwiGLUFFN` — modern FFN。
+- `Block` — pre-norm、residual で包んだ attention + FFN。
+- `GPT` — embeddings、stacked blocks、LM head、generate()。
+- AdamW、cosine LR、gradient clipping を備えた training loop。
+- Shakespeare text 上の char-level tokenizer。
 
-### What we don't ship
+### ここで提供しないもの
 
-- RoPE — implemented conceptually in Lesson 04. Here we use learned positional embeddings for simplicity. The exercises ask you to swap in RoPE.
-- KV cache during generation — each generation step recomputes attention over the full prefix. Slower but simpler. The exercises ask you to add a KV cache.
-- Flash Attention — PyTorch 2.0+ auto-dispatches if the inputs match; we use `F.scaled_dot_product_attention`.
-- MoE — single FFN per block. You saw MoE in Lesson 11.
+- RoPE — Lesson 04 で概念的に実装済み。ここでは単純化のため learned positional embeddings を使います。exercises で RoPE に差し替えます。
+- generation 中の KV cache — 各 generation step で full prefix に対して attention を再計算します。遅いですが単純です。exercises で KV cache を追加します。
+- Flash Attention — PyTorch 2.0+ は inputs が一致すれば auto-dispatch します。ここでは `F.scaled_dot_product_attention` を使います。
+- MoE — block ごとに single FFN です。MoE は Lesson 11 で見ました。
 
-### Target metrics
+### 目標 metrics
 
-On a Mac M2 laptop, a 4-layer, 4-head, d_model=128 GPT trained for 2,000 steps on `tinyshakespeare.txt`:
+Mac M2 laptop で、4-layer, 4-head, d_model=128 の GPT を `tinyshakespeare.txt` 上で 2,000 steps 学習すると、次のようになります。
 
-- Training loss converges from ~4.2 (random) to ~1.5 in about 6 minutes.
-- Sampled output looks Shakespeare-shaped: archaic words, line breaks, proper names like "ROMEO:" emerge.
-- Val loss (held-out final 10% of text) tracks training loss closely; no overfitting at this size/budget.
+- Training loss は ~4.2 (random) から約 6 分で ~1.5 に収束します。
+- Sampled output は Shakespeare らしい形になります。古風な words、line breaks、"ROMEO:" のような proper names が現れます。
+- Val loss (held-out final 10% of text) は training loss に近く追従します。この size/budget では overfitting はありません。
 
-## Build It
+## 作ってみる
 
-This lesson uses PyTorch. Install `torch` (CPU build is fine). See `code/main.py`. The script handles:
+この lesson は PyTorch を使います。`torch` を install してください (CPU build で十分です)。`code/main.py` を参照してください。script は次を処理します。
 
-- Downloading `tinyshakespeare.txt` if missing (or reading a local copy).
-- Byte-level char tokenizer.
-- Train/val split at 90/10.
-- Training loop with bf16 autocast on supported hardware.
-- Sampling after training completes.
+- 見つからない場合は `tinyshakespeare.txt` を download (または local copy を読む)。
+- Byte-level char tokenizer。
+- 90/10 の train/val split。
+- 対応 hardware で bf16 autocast を使う training loop。
+- training 完了後の sampling。
 
 ### Step 1: data
 
@@ -96,15 +96,15 @@ encode = lambda s: [stoi[c] for c in s]
 decode = lambda xs: "".join(itos[x] for x in xs)
 ```
 
-65 unique characters. Tiny vocabulary. Fits a 4-byte vocab_size. No BPE, no tokenizer drama.
+unique characters は 65。tiny vocabulary です。4-byte の vocab_size に収まります。BPE も tokenizer drama もありません。
 
 ### Step 2: model
 
-See `code/main.py`. The block is textbook from Lesson 05 — pre-norm, RMSNorm, SwiGLU, causal MHA. Parameter count for 4/4/128: ~800K.
+`code/main.py` を参照してください。block は Lesson 05 の textbook どおりです。pre-norm, RMSNorm, SwiGLU, causal MHA。4/4/128 の parameter count は ~800K です。
 
 ### Step 3: training loop
 
-Get a random batch of length-256 token windows. Forward. Shift-by-one cross-entropy. Backward. AdamW step. Log. Repeat.
+length-256 token windows の random batch を取得します。Forward。Shift-by-one cross-entropy。Backward。AdamW step。Log。繰り返します。
 
 ```python
 for step in range(max_steps):
@@ -119,11 +119,11 @@ for step in range(max_steps):
 
 ### Step 4: sample
 
-Given a prompt, repeatedly forward, sample from top-p logits, append, and continue. Stop after 500 tokens.
+prompt が与えられたら、forward を繰り返し、top-p logits から sample し、append して続けます。500 tokens 後に止めます。
 
 ### Step 5: read the output
 
-After 2,000 steps:
+2,000 steps 後:
 
 ```
 ROMEO:
@@ -132,43 +132,43 @@ The chief that well shame and hath been his friends,
 ...
 ```
 
-Not Shakespeare. But Shakespeare-shaped. A clear win for ~800K parameters and 6 minutes on a laptop.
+Shakespeare ではありません。しかし Shakespeare-shaped です。~800K parameters と laptop で 6 分としては明確な成功です。
 
-## Use It
+## 使ってみる
 
-This capstone is a reference architecture. Three extensions to ship it to something real:
+この capstone は reference architecture です。実用に近づける 3 つの extension:
 
-1. **Swap the tokenizer.** Use BPE (e.g. `tiktoken.get_encoding("cl100k_base")`). Vocab size jumps from 65 to ~50,000. Model capacity needs to scale up to compensate.
-2. **Train on a bigger corpus.** Use `OpenWebText` or `fineweb-edu` (HuggingFace). 10B tokens on a single A100 takes ~24 hours for a 125M-param GPT.
-3. **Add RoPE + KV cache + Flash Attention.** The exercises below walk you through each.
+1. **Tokenizer を差し替える。** BPE を使います (例: `tiktoken.get_encoding("cl100k_base")`)。Vocab size は 65 から ~50,000 に跳ね上がります。補うため model capacity も scale up する必要があります。
+2. **より大きな corpus で学習する。** `OpenWebText` または `fineweb-edu` (HuggingFace) を使います。single A100 で 10B tokens は、125M-param GPT なら 約24時間 かかります。
+3. **RoPE + KV cache + Flash Attention を追加する。** 以下の exercises でそれぞれ扱います。
 
-This ends up as a 125M-parameter GPT that generates fluent English. Not a frontier model. But the same code path — just bigger — is what Karpathy, EleutherAI, and the Allen Institute use to train research checkpoints in 2026.
+最終的には fluent English を生成する 125M-parameter GPT になります。frontier model ではありません。しかし同じ code path を大きくしたものが、Karpathy, EleutherAI, Allen Institute が 2026 年に research checkpoints を学習する方法です。
 
-## Ship It
+## 仕上げる
 
-See `outputs/skill-transformer-review.md`. The skill reviews a transformer-from-scratch implementation for correctness across all 13 prior lessons.
+`outputs/skill-transformer-review.md` を参照してください。この skill は、過去 13 lessons 全体に照らして transformer-from-scratch implementation の correctness を review します。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. Verify your trained model's final-step validation loss is under 2.0. Change `max_steps` from 2,000 to 5,000 — does val loss keep improving?
-2. **Medium.** Replace learned positional embeddings with RoPE. Apply the rotation to Q and K inside `MultiHeadAttention`. Train and verify val loss is at least as low.
-3. **Medium.** Implement a KV cache in the sampling loop. Generate 500 tokens with and without cache. Wall-clock should improve by 5–20× on a laptop.
-4. **Hard.** Add a second head to the model that predicts the next-plus-one token (MTP — Multi-Token Prediction from DeepSeek-V3). Train jointly. Does it help?
-5. **Hard.** Replace the single FFN per block with a 4-expert MoE. Router + top-2 routing. See how val loss changes at matched active parameters.
+1. **Easy.** `code/main.py` を実行してください。trained model の final-step validation loss が 2.0 未満であることを確認します。`max_steps` を 2,000 から 5,000 に変更してください。val loss は改善し続けますか。
+2. **Medium.** learned positional embeddings を RoPE に置き換えてください。`MultiHeadAttention` 内で Q と K に rotation を適用します。学習し、val loss が少なくとも同等に低いことを確認してください。
+3. **Medium.** sampling loop に KV cache を実装してください。cache あり/なしで 500 tokens を生成します。laptop で wall-clock は 5–20× 改善するはずです。
+4. **Hard.** next-plus-one token を予測する second head を model に追加してください (MTP — Multi-Token Prediction from DeepSeek-V3)。jointly に学習します。効果はありますか。
+5. **Hard.** block ごとの single FFN を 4-expert MoE に置き換えてください。Router + top-2 routing。matched active parameters で val loss がどう変わるか見てください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| nanoGPT | "Karpathy's tutorial repo" | Minimal decoder-only transformer training code, ~300 LOC; the canonical reference. |
-| tinyshakespeare | "The standard toy corpus" | ~1.1 MB of text; every character-LM tutorial since 2015 uses it. |
-| Tied embeddings | "Share input/output matrix" | LM head weight = transpose of token embedding matrix; saves parameters, improves quality. |
-| bf16 autocast | "Training precision trick" | Run forward/back in bf16, keep optimizer state in fp32; standard since 2021. |
-| Gradient clipping | "Stops spikes" | Cap global grad norm at 1.0; prevents training blowups. |
-| Cosine LR schedule | "The 2020+ default" | LR ramps up linearly (warmup) then decays cosine-shaped to 10% of peak. |
-| MFU | "Model FLOP Utilization" | Achieved FLOPs / theoretical peak; 40% dense, 30% MoE is strong in 2026. |
-| Val loss | "Held-out loss" | Cross-entropy on data the model never saw; overfit detector. |
+| nanoGPT | 「Karpathy's tutorial repo」 | minimal decoder-only transformer training code、~300 LOC。canonical reference。 |
+| tinyshakespeare | 「The standard toy corpus」 | ~1.1 MB の text。2015 年以降、すべての character-LM tutorial が使っています。 |
+| Tied embeddings | 「Share input/output matrix」 | LM head weight = token embedding matrix の転置。parameters を節約し、quality を改善します。 |
+| bf16 autocast | 「Training precision trick」 | forward/back を bf16 で実行し、optimizer state は fp32 に保つ。2021 年以降の標準。 |
+| Gradient clipping | 「Stops spikes」 | global grad norm を 1.0 に制限し、training blowups を防ぎます。 |
+| Cosine LR schedule | 「The 2020+ default」 | LR は linearly に上がり (warmup)、その後 peak の 10% まで cosine-shaped に decay します。 |
+| MFU | 「Model FLOP Utilization」 | achieved FLOPs / theoretical peak。2026 年では dense 40%、MoE 30% なら強い値です。 |
+| Val loss | 「Held-out loss」 | model が見ていない data 上の cross-entropy。overfit detector。 |
 
-## Further Reading
+## 参考資料
 
-- [The Annotated Transformer (Harvard NLP)](https://nlp.seas.harvard.edu/annotated-transformer/) — the classic annotated implementation.
+- [The Annotated Transformer (Harvard NLP)](https://nlp.seas.harvard.edu/annotated-transformer/) — 古典的な annotated implementation。

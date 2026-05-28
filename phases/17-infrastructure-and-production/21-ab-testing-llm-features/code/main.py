@@ -1,7 +1,7 @@
 """Sequential A/B test simulator — stdlib Python.
 
-Compares fixed-sample vs always-valid sequential testing on a binary outcome.
-Illustrates CUPED-style variance reduction.
+binary outcome に対し、fixed-sample と always-valid sequential testing を比較する。
+CUPED-style variance reduction も示す。
 """
 
 from __future__ import annotations
@@ -46,8 +46,9 @@ def simulate(p_a: float, p_b: float, seed: int = 7, max_n: int = 300_000) -> dic
                 success_a += 1
         if n_a > 100 and n_b > 100 and sequential_stopped_at is None:
             z = z_statistic(success_a, n_a, success_b, n_b)
-            # Always-valid z-boundary (mSPRT-style): grows with log(n) so Type-I stays bounded.
-            # threshold(n) ≈ sqrt(2 * log(1/alpha) + log(n)) for alpha=0.05.
+            # always-valid z-boundary（mSPRT-style）:
+            # Type-I を bounded に保つため log(n) とともに増える。
+            # alpha=0.05 で threshold(n) ≈ sqrt(2 * log(1/alpha) + log(n))。
             n_total = n_a + n_b
             threshold = math.sqrt(2 * math.log(1 / 0.05) + math.log(n_total))
             if abs(z) > threshold:
@@ -65,7 +66,7 @@ def simulate(p_a: float, p_b: float, seed: int = 7, max_n: int = 300_000) -> dic
 
 def main() -> None:
     print("=" * 80)
-    print("SEQUENTIAL A/B — fixed vs always-valid, binary outcome")
+    print("SEQUENTIAL A/B — fixed vs always-valid、binary outcome")
     print("=" * 80)
 
     baseline = 0.03
@@ -73,31 +74,31 @@ def main() -> None:
         required = fixed_sample_size(baseline, lift)
         adjusted = int(required * 1.4)  # LLM non-determinism buffer
         print(f"\nBaseline {baseline*100:.0f}%, lift +{lift*100:.0f}%:")
-        print(f"  fixed sample size (traditional, 80% power, α=0.05): {required}")
-        print(f"  LLM-adjusted (×1.4 for non-determinism): {adjusted}")
+        print(f"  固定 sample size（traditional、80% power、α=0.05）: {required}")
+        print(f"  LLM-adjusted（non-determinism のため ×1.4）: {adjusted}")
 
-    print("\nSimulation — actual lift 5% (p_a=0.03, p_b=0.0315):")
+    print("\nシミュレーション — actual lift 5%（p_a=0.03, p_b=0.0315）:")
     result = simulate(0.03, 0.0315)
     print(f"  final n: A={result['n_a']}, B={result['n_b']}")
     print(f"  observed: p_a={result['p_a_observed']*100:.3f}%, p_b={result['p_b_observed']*100:.3f}%")
     print(f"  sequential stop at n={result['sequential_stop_at']}")
 
-    print("\nSimulation — actual lift 10% (p_a=0.03, p_b=0.033):")
+    print("\nシミュレーション — actual lift 10%（p_a=0.03, p_b=0.033）:")
     result = simulate(0.03, 0.033)
     print(f"  final n: A={result['n_a']}, B={result['n_b']}")
     print(f"  observed: p_a={result['p_a_observed']*100:.3f}%, p_b={result['p_b_observed']*100:.3f}%")
     print(f"  sequential stop at n={result['sequential_stop_at']}")
 
-    print("\nSimulation — actual lift 50% (p_a=0.03, p_b=0.045) — strong signal:")
+    print("\nシミュレーション — actual lift 50%（p_a=0.03, p_b=0.045）— 強い signal:")
     result = simulate(0.03, 0.045)
     print(f"  final n: A={result['n_a']}, B={result['n_b']}")
     print(f"  observed: p_a={result['p_a_observed']*100:.3f}%, p_b={result['p_b_observed']*100:.3f}%")
     print(f"  sequential stop at n={result['sequential_stop_at']}")
 
-    print("\nRead: on strong signals the sequential bound fires early (the 50% lift")
-    print("case above), and the returned n_a/n_b reflect samples *up to* the stop")
-    print("point, not the full horizon. For small or zero effects the bound is")
-    print("deliberately conservative — that is the Type-I guarantee.")
+    print("\n読み方: 強い signal では sequential bound が早く発火する（上の 50% lift")
+    print("case）。返される n_a/n_b は stop までの samples を反映しており、")
+    print("full horizon ではない。small effect または zero effect では bound は")
+    print("意図的に conservative である。それが Type-I guarantee である。")
 
 
 if __name__ == "__main__":

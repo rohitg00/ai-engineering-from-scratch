@@ -1,65 +1,65 @@
 ---
 name: prompt-feature-engineer
-description: Systematic prompt for engineering features from raw tabular data
+description: 生の表形式データから特徴量を設計するための体系的なプロンプト
 phase: 2
 lesson: 8
 ---
 
-# Feature Engineering Prompt
+# 特徴量エンジニアリングプロンプト
 
-You are a feature engineering specialist. Given a raw dataset description, produce a concrete feature engineering plan.
+あなたは特徴量エンジニアリングの専門家です。生データセットの説明が与えられたら、具体的な特徴量エンジニアリング計画を作成してください。
 
-## Input
+## 入力
 
-Describe the dataset: column names, types, sample values, and the prediction target.
+データセットについて、列名、型、サンプル値、予測 target を説明してください。
 
-## Process
+## 手順
 
-For each column in the dataset, work through this checklist:
+データセット内の各列について、次のチェックリストに沿って検討してください。
 
-### 1. Missing values
-- What percentage is missing?
-- Is missingness random or informative?
-- Choose strategy: drop, impute (mean/median/mode), or add a missing indicator column
+### 1. 欠損値
+- 何パーセントが欠損していますか？
+- 欠損はランダムですか、それとも情報を持っていますか？
+- 戦略を選ぶ: drop、impute（mean/median/mode）、または欠損 indicator column を追加する
 
-### 2. Numerical columns
-- Is the distribution skewed? If so, apply log transform
-- Are units comparable across features? If not, standardize or min-max scale
-- Would binning capture a non-linear relationship better than the raw value?
-- Are there meaningful interactions between numerical columns (ratios, products)?
+### 2. 数値列
+- 分布は歪んでいますか？そうであれば log transform を適用する
+- 特徴量間で単位は比較可能ですか？そうでなければ standardize または min-max scale する
+- binning の方が生の値より非線形関係をよく捉えられますか？
+- 数値列間に意味のある相互作用（比率、積）はありますか？
 
-### 3. Categorical columns
-- How many unique values (cardinality)?
-  - Low (under 10): one-hot encode
-  - Medium (10-100): target encode with smoothing
-  - High (100+): consider hashing, embeddings, or grouping rare categories
-- Is there a natural order? If so, ordinal encoding may be appropriate
+### 3. カテゴリ列
+- 一意な値はいくつありますか（cardinality）？
+  - 低い（10 未満）: one-hot encode
+  - 中程度（10-100）: smoothing 付き target encode
+  - 高い（100+）: hashing、embeddings、またはまれなカテゴリのグルーピングを検討する
+- 自然な順序はありますか？ある場合は ordinal encoding が適切な可能性がある
 
-### 4. Text columns
-- Is the text short and structured? Use TF-IDF
-- Is the text long and semantic? Consider embeddings (out of scope for classical ML)
-- Extract length, word count, and character count as additional features
+### 4. テキスト列
+- テキストは短く構造化されていますか？TF-IDF を使う
+- テキストは長く意味的ですか？embeddings を検討する（古典的 ML の範囲外）
+- length、word count、character count を追加特徴量として抽出する
 
-### 5. Date/time columns
-- Extract: year, month, day of week, hour, is_weekend
-- Compute: days since a reference date, time between events
-- Cyclical encoding for periodic features (hour, day of week)
+### 5. 日付/時刻列
+- 抽出: year、month、day of week、hour、is_weekend
+- 計算: 基準日からの日数、イベント間の時間
+- 周期的な特徴量（hour、day of week）には cyclical encoding を使う
 
-### 6. Feature interactions
-- Domain-specific combinations (e.g., BMI from height and weight)
-- Polynomial features for suspected non-linear relationships
-- Ratio features (e.g., price per square foot)
+### 6. 特徴量の相互作用
+- ドメイン固有の組み合わせ（例: height と weight から BMI）
+- 非線形関係が疑われる場合の polynomial features
+- 比率特徴量（例: price per square foot）
 
-### 7. Feature selection
-- Remove zero-variance features
-- Remove features correlated above 0.95 with another feature
-- Rank remaining features by mutual information with the target
-- Keep the top N features or use L1 regularization for automatic selection
+### 7. 特徴量選択
+- 分散ゼロの特徴量を削除する
+- 他の特徴量と 0.95 を超えて相関する特徴量を削除する
+- 残った特徴量を target との mutual information で順位付けする
+- 上位 N 個の特徴量を残すか、L1 regularization で自動選択する
 
-## Output format
+## 出力形式
 
-For each feature, state:
-1. Original column name and type
-2. Transform applied (and why)
-3. New feature name(s)
-4. Expected impact (high/medium/low signal)
+各特徴量について、次を記載してください。
+1. 元の列名と型
+2. 適用した変換（およびその理由）
+3. 新しい特徴量名
+4. 期待される効果（high/medium/low signal）

@@ -1,37 +1,37 @@
-# Evaluation & Testing LLM Applications
+# LLM Applications の Evaluation と Testing
 
-> You would never deploy a web app without tests. You would never ship a database migration without a rollback plan. But right now, most teams ship LLM applications by reading 10 outputs and saying "yeah, looks good." That is not evaluation. That is hope. Hope is not an engineering practice. Every prompt change, every model swap, every temperature tweak changes your output distribution in ways you cannot predict by reading a handful of examples. Evaluation is the only thing standing between your application and silent degradation.
+> tests なしで web app を deploy することはないはずです。rollback plan なしで database migration を ship することもないはずです。しかし今、多くの teams は LLM applications を 10 outputs ほど読んで「良さそう」と言って ship しています。それは evaluation ではありません。ただの希望です。希望は engineering practice ではありません。prompt change、model swap、temperature tweak のすべてが output distribution を変えます。その変化は、少数の examples を読むだけでは予測できません。evaluation だけが、application と silent degradation の間に立っています。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
-**Time:** ~45 minutes
-**Related:** Phase 5 · 27 (LLM Evaluation — RAGAS, DeepEval, G-Eval) covers the framework-level concepts (NLI-based faithfulness, judge calibration, the RAG four). Phase 5 · 28 (Long-Context Evaluation) covers NIAH / RULER / LongBench / MRCR for context-length regression. This lesson focuses on what is LLM-engineering-specific: CI/CD integration, cost-gated eval runs, regression dashboards.
+**種別:** 構築
+**言語:** Python
+**前提:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
+**時間:** 約 45 分
+**関連:** Phase 5 · 27 (LLM Evaluation — RAGAS, DeepEval, G-Eval) は framework-level concepts (NLI-based faithfulness、judge calibration、RAG four) を扱います。Phase 5 · 28 (Long-Context Evaluation) は context-length regression 用の NIAH / RULER / LongBench / MRCR を扱います。この lesson は LLM engineering 固有の内容、つまり CI/CD integration、cost-gated eval runs、regression dashboards に焦点を当てます。
 
-## Learning Objectives
+## 学習目標
 
-- Build an evaluation dataset with input-output pairs, rubrics, and edge cases specific to your LLM application
-- Implement automated scoring using LLM-as-judge, regex matching, and deterministic assertion checks
-- Set up regression testing that detects quality degradation when prompts, models, or parameters change
-- Design evaluation metrics that capture what matters for your use case (correctness, tone, format compliance, latency)
+- LLM application 固有の input-output pairs、rubrics、edge cases を持つ evaluation dataset を構築する
+- LLM-as-judge、regex matching、deterministic assertion checks を使った automated scoring を実装する
+- prompts、models、parameters が変わったときの quality degradation を検出する regression testing を設定する
+- use case に重要なもの (correctness、tone、format compliance、latency) を捉える evaluation metrics を設計する
 
-## The Problem
+## 問題
 
-You build a RAG chatbot for customer support. It works great in your demos. You ship it. Two weeks later, someone changes the system prompt to reduce hallucinations. The change works -- hallucination rate drops. But answer completeness also drops 34% because the model now refuses to answer anything it is not 100% certain about.
+customer support 向けの RAG chatbot を作ったとします。demo ではうまく動きます。ship します。2 週間後、誰かが hallucinations を減らすため system prompt を変更します。変更は効きます。hallucination rate は下がります。しかし answer completeness も 34% 下がります。model が 100% 確信できないことには答えなくなったからです。
 
-Nobody noticed for 11 days. Revenue from the self-service channel fell. Support tickets spiked.
+11 日間、誰も気づきませんでした。self-service channel からの revenue は落ち、support tickets は急増しました。
 
-This is the default outcome when you evaluate by vibes. You check a few examples, they look fine, you merge. But LLM outputs are stochastic. A prompt that works on 5 test cases can fail on the 6th. A model that scores 92% on your benchmarks can score 71% on the edge cases your users actually hit.
+vibes で評価すると、これが default outcome です。数 examples を確認し、問題なさそうに見え、merge します。しかし LLM outputs は stochastic です。5 test cases で動く prompt は 6 つ目で失敗するかもしれません。benchmarks で 92% の model が、users が実際に踏む edge cases では 71% かもしれません。
 
-The fix is not "be more careful." The fix is automated evaluation that runs on every change, scores outputs against rubrics, computes confidence intervals, and blocks deployment when quality regresses.
+解決策は「もっと注意する」ではありません。解決策は、すべての変更で実行され、outputs を rubrics に照らして score し、confidence intervals を計算し、quality が regress したら deployment を block する automated evaluation です。
 
-Evaluation is not a nice-to-have. It is table stakes. Shipping without evals is deploying blind.
+evaluation は nice-to-have ではありません。table stakes です。evals なしで ship するのは、目隠しで deploy するのと同じです。
 
-## The Concept
+## コンセプト
 
-### The Eval Taxonomy
+### Eval Taxonomy
 
-There are three categories of LLM evaluation. Each has a role. None is sufficient alone.
+LLM evaluation には 3 つの categories があります。それぞれに役割があります。単独で十分なものはありません。
 
 ```mermaid
 graph TD
@@ -57,59 +57,59 @@ graph TD
     style H fill:#e8e8e8,stroke:#333
 ```
 
-**Automated metrics** compare output text against reference answers using algorithms. BLEU measures n-gram overlap (originally for machine translation). ROUGE measures recall of reference n-grams (originally for summarization). BERTScore uses BERT embeddings to measure semantic similarity. These are fast and cheap -- you can score 10,000 outputs in seconds. But they miss nuance. Two answers can have zero word overlap and both be correct. One answer can have high ROUGE and be completely wrong in context.
+**Automated metrics** は algorithms を使って output text を reference answers と比較します。BLEU は n-gram overlap を測ります (もともとは machine translation 用)。ROUGE は reference n-grams の recall を測ります (もともとは summarization 用)。BERTScore は BERT embeddings で semantic similarity を測ります。これらは速く安いです。10,000 outputs を数秒で score できます。しかし nuance を見逃します。2 つの answers が word overlap 0 でも両方 correct なことがあります。high ROUGE の answer が context 上は完全に wrong なこともあります。
 
-**LLM-as-judge** uses a strong model (GPT-5, Claude Opus 4.7, Gemini 3 Pro) to grade outputs against a rubric. This captures semantic quality -- relevance, correctness, helpfulness, safety -- that string metrics miss. It costs money (~$8 per 1,000 judge calls with GPT-5-mini, ~$25 with Claude Opus 4.7) but correlates 82-88% with human judgment on well-designed rubrics — see Phase 5 · 27 for the calibration recipe.
+**LLM-as-judge** は strong model (GPT-5、Claude Opus 4.7、Gemini 3 Pro) を使って outputs を rubric に照らして採点します。string metrics が見逃す semantic quality、つまり relevance、correctness、helpfulness、safety を捉えます。cost はかかります (GPT-5-mini で 1,000 judge calls あたり約 $8、Claude Opus 4.7 で約 $25) が、よく設計された rubrics では human judgment と 82-88% 相関します。calibration recipe は Phase 5 · 27 を参照してください。
 
-**Human evaluation** is the gold standard but the slowest and most expensive. Reserve it for calibrating your automated evals, not for running on every commit.
+**Human evaluation** は gold standard ですが、最も遅く高価です。every commit で回すのではなく、automated evals を calibrate するために使います。
 
-| Method | Speed | Cost per 1K evals | Correlation with humans | Best for |
+| Method | Speed | 1K evals あたりの cost | humans との correlation | 向いている用途 |
 |--------|-------|-------------------|------------------------|----------|
 | BLEU/ROUGE | <1 sec | $0 | 40-60% | Translation, summarization baselines |
 | BERTScore | ~30 sec | $0 | 55-70% | Semantic similarity screening |
-| LLM-as-judge (GPT-5-mini) | ~3 min | ~$8 | 82-86% | Default CI judge; cheap, fast, calibrated |
-| LLM-as-judge (Claude Opus 4.7) | ~5 min | ~$25 | 85-88% | High-stakes scoring, safety, refusals |
-| LLM-as-judge (Gemini 3 Flash) | ~2 min | ~$3 | 80-84% | Highest-throughput judge; for 1M+ eval pass |
-| RAGAS (NLI faithfulness + judge) | ~5 min | ~$12 | 85% | RAG-specific metrics (see Phase 5 · 27) |
-| DeepEval (G-Eval + Pytest) | ~4 min | depends on judge | 80-88% | CI-native, per-PR regression gates |
-| Human expert | ~2 hours | ~$500 | 100% (by definition) | Calibration, edge cases, policy |
+| LLM-as-judge (GPT-5-mini) | 約3分 | ~$8 | 82-86% | default CI judge。安く速く calibrated |
+| LLM-as-judge (Claude Opus 4.7) | 約5分 | ~$25 | 85-88% | high-stakes scoring、safety、refusals |
+| LLM-as-judge (Gemini 3 Flash) | 約2分 | ~$3 | 80-84% | highest-throughput judge。1M+ eval pass 向け |
+| RAGAS (NLI faithfulness + judge) | 約5分 | ~$12 | 85% | RAG-specific metrics (Phase 5 · 27 参照) |
+| DeepEval (G-Eval + Pytest) | 約4分 | judge に依存 | 80-88% | CI-native、per-PR regression gates |
+| Human expert | 約2時間 | ~$500 | 100% (定義上) | calibration、edge cases、policy |
 
-### LLM-as-Judge: The Workhorse
+### LLM-as-Judge: 主力
 
-This is the evaluation method you will use 90% of the time. The pattern is simple: give a strong model the input, the output, an optional reference answer, and a rubric. Ask it to score.
+これは 90% の場面で使う evaluation method です。pattern は単純です。strong model に input、output、optional reference answer、rubric を渡し、score させます。
 
-Four criteria cover most use cases:
+ほとんどの use cases は 4 criteria で cover できます。
 
-**Relevance** (1-5): Does the output address what was asked? A score of 1 means completely off-topic. A score of 5 means directly and specifically answers the question.
+**Relevance** (1-5): output は問われたことに答えているか。1 は completely off-topic、5 は question に directly かつ specifically answer していることを意味します。
 
-**Correctness** (1-5): Is the information factually accurate? A score of 1 means contains major factual errors. A score of 5 means all claims are verifiable and accurate.
+**Correctness** (1-5): 情報は factually accurate か。1 は major factual errors を含む、5 はすべての claims が verifiable かつ accurate であることを意味します。
 
-**Helpfulness** (1-5): Would a user find this useful? A score of 1 means the response provides no value. A score of 5 means the user can immediately act on the information.
+**Helpfulness** (1-5): user にとって useful か。1 は response が no value、5 は user が information に基づいてすぐ行動できることを意味します。
 
-**Safety** (1-5): Is the output free from harmful content, bias, or policy violations? A score of 1 means contains harmful or dangerous content. A score of 5 means completely safe and appropriate.
+**Safety** (1-5): output に harmful content、bias、policy violations がないか。1 は harmful または dangerous content を含む、5 は完全に safe で appropriate であることを意味します。
 
 ### Rubric Design
 
-Bad rubrics produce noisy scores. Good rubrics anchor each score to specific, observable behaviors.
+悪い rubrics は noisy scores を生みます。良い rubrics は各 score を specific で observable な behaviors に anchor します。
 
-Bad rubric: "Rate from 1-5 how good the answer is."
+悪い rubric: "Rate from 1-5 how good the answer is."
 
-Good rubric:
-- **5**: The answer is factually correct, directly addresses the question, includes specific details or examples, and provides actionable information.
-- **4**: The answer is factually correct and addresses the question but lacks specific detail or is slightly verbose.
-- **3**: The answer is mostly correct but contains a minor inaccuracy or partially misses the question's intent.
-- **2**: The answer contains significant factual errors or only tangentially relates to the question.
-- **1**: The answer is factually wrong, off-topic, or harmful.
+良い rubric:
+- **5**: answer は factually correct で、question に directly address し、specific details または examples を含み、actionable information を提供する。
+- **4**: answer は factually correct で question に address するが、specific detail が不足している、またはやや verbose。
+- **3**: answer は概ね correct だが minor inaccuracy を含む、または question intent を一部外している。
+- **2**: answer は significant factual errors を含む、または question に tangential にしか関係しない。
+- **1**: answer は factually wrong、off-topic、または harmful。
 
-Anchored descriptions reduce judge variance by 30-40% compared to unanchored scales.
+anchored descriptions は unanchored scales と比べて judge variance を 30-40% 減らします。
 
-**Pairwise comparison** is an alternative: show the judge two outputs and ask which is better. This eliminates scale calibration issues -- the judge does not need to decide if something is a "3" or a "4." It just picks the winner. Useful for comparing two prompt versions head-to-head.
+**Pairwise comparison** は代替手段です。judge に 2 outputs を見せ、どちらが良いかを聞きます。これにより scale calibration issues がなくなります。judge は "3" か "4" かを決める必要がなく、winner を選ぶだけです。2 つの prompt versions を head-to-head で比較するのに useful です。
 
-**Best-of-N** generates N outputs for each input and has the judge pick the best one. This measures the ceiling of your system. If best-of-5 consistently beats best-of-1, you might benefit from sampling multiple responses and selecting.
+**Best-of-N** は各 input に対して N outputs を生成し、judge に最良を選ばせます。system の ceiling を測ります。best-of-5 が一貫して best-of-1 を上回るなら、multiple responses を sampling して selecting する価値があります。
 
-### The Eval Pipeline
+### Eval Pipeline
 
-Every evaluation follows the same 6-step pipeline.
+すべての evaluation は同じ 6-step pipeline に従います。
 
 ```mermaid
 flowchart LR
@@ -127,37 +127,37 @@ flowchart LR
     D -->|ship or block| P
 ```
 
-**Prompt**: Define your test cases. Each case has an input (user query + context) and optionally a reference answer.
+**Prompt**: test cases を定義します。各 case は input (user query + context) と optional reference answer を持ちます。
 
-**Run**: Execute the prompt against the model. Collect outputs. Run each test case 1-3 times if you want to measure variance.
+**Run**: model に対して prompt を実行します。outputs を collect します。variance を測りたい場合は各 test case を 1-3 回実行します。
 
-**Collect**: Store inputs, outputs, and metadata (model, temperature, timestamp, prompt version).
+**Collect**: inputs、outputs、metadata (model、temperature、timestamp、prompt version) を保存します。
 
-**Score**: Apply your evaluation method -- automated metrics, LLM-as-judge, or both.
+**Score**: evaluation method を適用します。automated metrics、LLM-as-judge、または両方です。
 
-**Compare**: Compare scores against a baseline. The baseline is your last known-good version. Compute confidence intervals on the difference.
+**Compare**: scores を baseline と比較します。baseline は last known-good version です。差分の confidence intervals を計算します。
 
-**Decide**: If the new version is statistically significantly better (or not worse), ship it. If it regresses, block.
+**Decide**: new version が statistically significantly better (または悪化していない) なら ship します。regress していれば block します。
 
-### Eval Datasets: The Foundation
+### Eval Datasets: 基礎
 
-Your eval dataset is only as good as the cases in it. Three types of test cases matter:
+eval dataset の品質は、その中の cases の品質で決まります。重要な test cases は 3 種類です。
 
-**Golden test set** (50-100 cases): Curated input-output pairs that represent your core use cases. These are your regression tests. Every prompt change must pass these.
+**Golden test set** (50-100 cases): core use cases を代表する curated input-output pairs。これが regression tests です。すべての prompt change はこれを pass する必要があります。
 
-**Adversarial examples** (20-50 cases): Inputs designed to break your system. Prompt injections, edge cases, ambiguous queries, questions about topics outside your domain, requests for harmful content.
+**Adversarial examples** (20-50 cases): system を壊すために設計された inputs。prompt injections、edge cases、ambiguous queries、domain 外 topics の questions、harmful content requests。
 
-**Distribution samples** (100-200 cases): Random samples from real production traffic. These catch problems that curated tests miss because they reflect what users actually ask.
+**Distribution samples** (100-200 cases): real production traffic からの random samples。users が実際に何を聞くかを反映するため、curated tests が見逃す問題を検出します。
 
-### Sample Size and Confidence
+### Sample Size と Confidence
 
-50 test cases is not enough.
+50 test cases では足りません。
 
-If your eval scores 90% on 50 cases, the 95% confidence interval is [78%, 97%]. That is a 19-point spread. You cannot distinguish a system scoring 80% from one scoring 96%.
+eval が 50 cases で 90% を記録した場合、95% confidence interval は [78%, 97%] です。これは 19 points の幅です。80% の system と 96% の system を区別できません。
 
-At 200 cases with 90% accuracy, the confidence interval tightens to [85%, 94%]. Now you can make decisions.
+200 cases で 90% accuracy の場合、confidence interval は [85%, 94%] まで狭まります。ここで初めて decisions が可能になります。
 
-| Test cases | Observed accuracy | 95% CI width | Can detect 5% regression? |
+| Test cases | Observed accuracy | 95% CI width | 5% regression を検出できるか |
 |-----------|------------------|-------------|--------------------------|
 | 50 | 90% | 19 points | No |
 | 100 | 90% | 12 points | Barely |
@@ -165,50 +165,50 @@ At 200 cases with 90% accuracy, the confidence interval tightens to [85%, 94%]. 
 | 500 | 90% | 5 points | Confidently |
 | 1000 | 90% | 3 points | Precisely |
 
-Use at least 200 test cases for any evaluation where you need to make deployment decisions. Use 500+ if you are comparing two systems that are close in quality.
+deployment decisions に使う evaluation では、少なくとも 200 test cases を使います。quality が近い 2 systems を比較するなら 500+ を使います。
 
 ### Regression Testing
 
-Every prompt change needs a before/after eval. This is non-negotiable.
+すべての prompt change には before/after eval が必要です。これは妥協できません。
 
-The workflow:
-1. Run your eval suite on the current (baseline) prompt -- store the scores
-2. Make the prompt change
-3. Run the same eval suite on the new prompt
-4. Compare scores with a statistical test (paired t-test or bootstrap)
-5. If no statistically significant regression on any criteria -- ship
-6. If regression detected -- investigate which test cases degraded and why
+workflow:
+1. current (baseline) prompt で eval suite を実行し、scores を保存する
+2. prompt change を行う
+3. new prompt で同じ eval suite を実行する
+4. statistical test (paired t-test または bootstrap) で scores を比較する
+5. 任意 criteria で statistically significant regression がなければ ship
+6. regression が検出されたら、どの test cases がなぜ degraded したかを調査する
 
-### Cost of Evals
+### Evals の cost
 
-Evals cost money when using LLM-as-judge. Budget for it.
+LLM-as-judge を使う evals には cost がかかります。budget に入れてください。
 
 | Eval size | GPT-5-mini judge | Claude Opus 4.7 judge | Gemini 3 Flash judge | Time |
 |-----------|------------------|-----------------------|----------------------|------|
-| 100 cases x 4 criteria | ~$2 | ~$6 | ~$0.40 | ~2 min |
-| 200 cases x 4 criteria | ~$4 | ~$12 | ~$0.80 | ~4 min |
-| 500 cases x 4 criteria | ~$10 | ~$30 | ~$2 | ~10 min |
-| 1000 cases x 4 criteria | ~$20 | ~$60 | ~$4 | ~20 min |
+| 100 cases x 4 criteria | ~$2 | ~$6 | ~$0.40 | 約2分 |
+| 200 cases x 4 criteria | ~$4 | ~$12 | ~$0.80 | 約4分 |
+| 500 cases x 4 criteria | ~$10 | ~$30 | ~$2 | 約10分 |
+| 1000 cases x 4 criteria | ~$20 | ~$60 | ~$4 | 約20分 |
 
-A 200-case eval suite running on every PR with GPT-5-mini costs ~$4 per run. If your team merges 10 PRs per week, that is $160/month. Compare that to the cost of shipping a regression that tanks user satisfaction for 11 days.
+200-case eval suite を every PR で GPT-5-mini により実行すると、1 run あたり約 $4 です。team が週 10 PRs を merge するなら月 $160 です。11 日間 user satisfaction を落とす regression を ship する cost と比較してください。
 
 ### Anti-Patterns
 
-**Vibes-based evaluation.** "I read 5 outputs and they looked good." You cannot perceive a 5% quality regression by reading examples. Your brain cherry-picks confirming evidence.
+**Vibes-based evaluation.** 「5 outputs を読んで良さそうだった」。examples を読むだけで 5% quality regression は知覚できません。脳は confirming evidence を cherry-pick します。
 
-**Testing on training examples.** If your eval cases overlap with examples in your prompt or fine-tuning data, you are measuring memorization, not generalization. Keep eval data separate.
+**Testing on training examples.** eval cases が prompt や fine-tuning data の examples と overlap しているなら、測っているのは generalization ではなく memorization です。eval data は分離します。
 
-**Single-metric obsession.** Optimizing only for correctness while ignoring helpfulness produces terse, technically-accurate-but-useless answers. Always score multiple criteria.
+**Single-metric obsession.** helpfulness を無視して correctness だけ optimize すると、terse で technically accurate だが useless な answers になります。常に multiple criteria を score します。
 
-**Evaluating without baselines.** A score of 4.2/5 means nothing in isolation. Is that better or worse than yesterday? Better or worse than the competing prompt? Always compare.
+**Evaluating without baselines.** 4.2/5 という score は単体では意味がありません。昨日より良いのか悪いのか。competing prompt より良いのか悪いのか。常に比較します。
 
-**Using a weak judge.** GPT-3.5 as a judge produces noisy, inconsistent scores. Use GPT-4o or Claude Sonnet. The judge must be at least as capable as the model being evaluated.
+**Using a weak judge.** GPT-3.5 を judge にすると noisy で inconsistent な scores になります。GPT-4o または Claude Sonnet を使います。judge は評価対象 model と少なくとも同程度に capable である必要があります。
 
 ### Real Tools
 
-You do not have to build everything from scratch. These tools provide eval infrastructure:
+すべてを from scratch で作る必要はありません。これらの tools は eval infrastructure を提供します。
 
-| Tool | What it does | Pricing |
+| Tool | 機能 | Pricing |
 |------|-------------|---------|
 | [promptfoo](https://promptfoo.dev) | Open-source eval framework, YAML config, LLM-as-judge, CI integration | Free (OSS) |
 | [Braintrust](https://braintrust.dev) | Eval platform with scoring, experiments, datasets, logging | Free tier, then usage-based |
@@ -216,13 +216,13 @@ You do not have to build everything from scratch. These tools provide eval infra
 | [DeepEval](https://deepeval.com) | Python eval framework, 14+ metrics, Pytest integration | Free (OSS) |
 | [Arize Phoenix](https://phoenix.arize.com) | Open-source observability + evals, tracing, span-level scoring | Free (OSS) |
 
-For this lesson, we build it from scratch so you understand every layer. In production, use one of these tools.
+この lesson では各 layer を理解するため from scratch で作ります。production ではこれらの tools のいずれかを使います。
 
-## Build It
+## 実装
 
-### Step 1: Define the Eval Data Structures
+### Step 1: Eval Data Structures を定義する
 
-Build the core types: test cases, eval results, and scoring rubrics.
+core types、つまり test cases、eval results、scoring rubrics を作ります。
 
 ```python
 import json
@@ -274,9 +274,9 @@ class EvalResult:
         return sum(s.score for s in self.scores) / len(self.scores)
 ```
 
-### Step 2: Build the LLM-as-Judge Scorer
+### Step 2: LLM-as-Judge Scorer を構築する
 
-This simulates a judge model scoring outputs against rubrics. In production, replace the simulation with actual GPT-4o or Claude API calls.
+judge model が outputs を rubrics に照らして scoring する処理を simulate します。production では simulation を実際の GPT-4o または Claude API calls に置き換えます。
 
 ```python
 RUBRICS = {
@@ -375,9 +375,9 @@ def generate_judge_reasoning(input_text, model_output, criterion, score):
     return f"[{criterion.upper()}={score}/5] {description}. Output length: {len(model_output)} chars."
 ```
 
-### Step 3: Build Automated Metrics
+### Step 3: Automated Metrics を構築する
 
-Implement ROUGE-L and a simple semantic similarity score alongside the LLM judge.
+LLM judge と併用する ROUGE-L と simple semantic similarity score を実装します。
 
 ```python
 def rouge_l_score(reference, hypothesis):
@@ -417,9 +417,9 @@ def word_overlap_score(reference, hypothesis):
     return round(len(intersection) / len(union), 4) if union else 0.0
 ```
 
-### Step 4: Build the Confidence Interval Calculator
+### Step 4: Confidence Interval Calculator を構築する
 
-Statistical rigor separates real evaluation from vibes.
+statistical rigor が real evaluation と vibes を分けます。
 
 ```python
 def wilson_confidence_interval(successes, total, z=1.96):
@@ -456,9 +456,9 @@ def bootstrap_confidence_interval(scores, n_bootstrap=1000, confidence=0.95):
     return (round(means[lower_idx], 4), round(mean, 4), round(means[upper_idx], 4))
 ```
 
-### Step 5: Build the Eval Runner and Comparison Report
+### Step 5: Eval Runner と Comparison Report を構築する
 
-This is the orchestration layer that ties everything together.
+これはすべてをつなぐ orchestration layer です。
 
 ```python
 SIMULATED_MODELS = {
@@ -641,7 +641,7 @@ def print_comparison_report(report):
     print("=" * 70)
 ```
 
-### Step 6: Run the Demo
+### Step 6: Demo を実行する
 
 ```python
 def run_demo():
@@ -726,7 +726,7 @@ if __name__ == "__main__":
     run_demo()
 ```
 
-## Use It
+## 使い方
 
 ### promptfoo Integration
 
@@ -759,7 +759,7 @@ if __name__ == "__main__":
 # View: promptfoo view
 ```
 
-promptfoo is the fastest path from zero to eval pipeline. YAML config, built-in LLM-as-judge, web viewer, CI-friendly output. It supports 15+ providers out of the box and custom scoring functions in JavaScript or Python.
+promptfoo は zero から eval pipeline に進む最速の path です。YAML config、built-in LLM-as-judge、web viewer、CI-friendly output を備えています。15+ providers を標準 support し、JavaScript または Python の custom scoring functions も使えます。
 
 ### DeepEval Integration
 
@@ -781,7 +781,7 @@ promptfoo is the fastest path from zero to eval pipeline. YAML config, built-in 
 # evaluate([test_case], [relevancy, faithfulness])
 ```
 
-DeepEval integrates with Pytest. Run `deepeval test run test_evals.py` to execute evals as part of your test suite. It includes 14 built-in metrics including hallucination detection, bias, and toxicity.
+DeepEval は Pytest と統合できます。`deepeval test run test_evals.py` を実行し、test suite の一部として evals を実行します。hallucination detection、bias、toxicity を含む 14 built-in metrics を備えています。
 
 ### CI/CD Integration Pattern
 
@@ -810,50 +810,50 @@ DeepEval integrates with Pytest. Run `deepeval test run test_evals.py` to execut
 #           path: eval_results/
 ```
 
-Trigger evals on every PR that touches prompts or LLM code. Block the merge if any criterion regresses beyond the threshold. Upload results as artifacts for review.
+prompts または LLM code に触れるすべての PR で evals を trigger します。任意 criterion が threshold を超えて regress したら merge を block します。review 用に results を artifacts として upload します。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/prompt-eval-designer.md` -- a reusable prompt template for designing evaluation rubrics. Give it a description of your LLM application and it produces tailored evaluation criteria with anchored scoring rubrics.
+この lesson は `outputs/prompt-eval-designer.md` を生成します。これは evaluation rubrics を設計するための reusable prompt template です。LLM application の description を渡すと、anchored scoring rubrics を持つ tailored evaluation criteria を生成します。
 
-It also produces `outputs/skill-eval-patterns.md` -- a decision framework for choosing the right evaluation strategy based on your use case, budget, and quality requirements.
+また `outputs/skill-eval-patterns.md` も生成します。これは use case、budget、quality requirements に基づいて適切な evaluation strategy を選ぶための decision framework です。
 
-## Exercises
+## 演習
 
-1. **Add BERTScore.** Implement a simplified BERTScore using word embedding cosine similarity. Create a dictionary of 100 common words mapped to random 50-dimensional vectors. Compute the pairwise cosine similarity matrix between reference and hypothesis tokens. Use greedy matching (each hypothesis token matches its most similar reference token) to compute precision, recall, and F1.
+1. **BERTScore を追加する。** word embedding cosine similarity を使った simplified BERTScore を実装します。100 common words を random 50-dimensional vectors に map した dictionary を作ります。reference tokens と hypothesis tokens の pairwise cosine similarity matrix を計算します。greedy matching (各 hypothesis token が最も similar な reference token に match) を使って precision、recall、F1 を計算します。
 
-2. **Build pairwise comparison.** Modify the judge to compare two model outputs side-by-side instead of scoring individually. Given the same input and two outputs, the judge should return which output is better and why. Run pairwise comparison across your test suite with baseline-v1 vs baseline-v2 and compute the win rate with confidence intervals.
+2. **pairwise comparison を構築する。** judge を変更し、個別 scoring ではなく 2 つの model outputs を side-by-side で比較します。同じ input と 2 outputs が与えられたとき、judge はどちらの output が良いかとその理由を返します。test suite 全体で baseline-v1 vs baseline-v2 の pairwise comparison を実行し、confidence intervals 付きの win rate を計算します。
 
-3. **Implement stratified analysis.** Group test cases by category (factual, technical, safety, coding, summarization) and compute per-category scores with confidence intervals. Identify which categories improved and which regressed between prompt versions. A system can improve overall while regressing on a specific category.
+3. **stratified analysis を実装する。** test cases を category (factual、technical、safety、coding、summarization) で group 化し、confidence intervals 付きの per-category scores を計算します。prompt versions 間でどの categories が improved し、どれが regressed したかを特定します。system は overall で改善しながら specific category で regress することがあります。
 
-4. **Add inter-rater reliability.** Run the LLM judge 3 times on each test case (simulating different judge "raters"). Compute Cohen's kappa or Krippendorff's alpha between the three runs. If agreement is below 0.7, your rubric is too ambiguous -- rewrite it.
+4. **inter-rater reliability を追加する。** 各 test case で LLM judge を 3 回実行します (異なる judge "raters" を simulate)。3 runs 間の Cohen's kappa または Krippendorff's alpha を計算します。agreement が 0.7 未満なら rubric が曖昧すぎます。書き直してください。
 
-5. **Build a cost tracker.** Track the token usage and cost of every judge call. Each input to the judge includes the original prompt, the model output, and the rubric (~500 tokens input, ~100 tokens output). Compute the total eval cost across your test suite and project the monthly cost assuming 10 eval runs per week.
+5. **cost tracker を構築する。** すべての judge call の token usage と cost を track します。judge への各 input には original prompt、model output、rubric (約 500 tokens input、約 100 tokens output) が含まれます。test suite 全体の total eval cost を計算し、週 10 eval runs を仮定した monthly cost を予測します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Eval | "Testing" | Systematically scoring LLM outputs against defined criteria using automated metrics, LLM judges, or human review |
-| LLM-as-judge | "AI grading" | Using a strong model (GPT-4o, Claude) to score outputs against a rubric -- correlates 80-85% with human judgment |
-| Rubric | "Scoring guide" | Anchored descriptions for each score level (1-5) that reduce judge variance by defining exactly what each score means |
-| ROUGE-L | "Text overlap" | Longest Common Subsequence-based metric measuring how much of the reference appears in the output -- recall-oriented |
-| Confidence interval | "Error bars" | A range around your measured score that tells you how much uncertainty remains -- wider with fewer test cases |
-| Regression testing | "Before/after" | Running the same eval suite on old and new prompt versions to detect quality degradation before deployment |
-| Golden test set | "Core evals" | Curated input-output pairs representing your most important use cases -- every change must pass these |
-| Pairwise comparison | "A vs B" | Showing a judge two outputs and asking which is better -- eliminates scale calibration problems |
-| Bootstrap | "Resampling" | Estimating confidence intervals by repeatedly sampling from your scores with replacement -- works with any distribution |
-| Wilson interval | "Proportion CI" | A confidence interval for pass/fail rates that works correctly even with small sample sizes or extreme proportions |
+| Eval | "Testing" | automated metrics、LLM judges、human review を使い、defined criteria に対して LLM outputs を systematic に score すること |
+| LLM-as-judge | "AI grading" | strong model (GPT-4o、Claude) を使って outputs を rubric に照らして score すること。human judgment と 80-85% 相関する |
+| Rubric | "Scoring guide" | 各 score level (1-5) の anchored descriptions。各 score の意味を明確化し judge variance を減らす |
+| ROUGE-L | "Text overlap" | reference のどれだけが output に現れるかを測る Longest Common Subsequence-based metric。recall-oriented |
+| Confidence interval | "Error bars" | measured score の周辺で uncertainty がどれだけ残るかを示す range。test cases が少ないほど広い |
+| Regression testing | "Before/after" | deployment 前に quality degradation を検出するため、old/new prompt versions で同じ eval suite を実行すること |
+| Golden test set | "Core evals" | 最重要 use cases を代表する curated input-output pairs。すべての変更はこれを pass する必要がある |
+| Pairwise comparison | "A vs B" | judge に 2 outputs を見せ、どちらが良いかを聞くこと。scale calibration problems をなくす |
+| Bootstrap | "Resampling" | scores から replacement 付きで繰り返し sample し confidence intervals を推定すること。任意 distribution で使える |
+| Wilson interval | "Proportion CI" | pass/fail rates の confidence interval。small sample sizes や extreme proportions でも正しく動く |
 
-## Further Reading
+## 参考資料
 
-- [Zheng et al., 2023 -- "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena"](https://arxiv.org/abs/2306.05685) -- the foundational paper on using LLMs to judge other LLMs, introducing MT-Bench and the pairwise comparison protocol
-- [promptfoo Documentation](https://promptfoo.dev/docs/intro) -- the most practical open-source eval framework with YAML config, 15+ providers, LLM-as-judge, and CI integration
-- [DeepEval Documentation](https://docs.confident-ai.com) -- Python-native eval framework with 14+ metrics, Pytest integration, and hallucination detection
-- [Braintrust Eval Guide](https://www.braintrust.dev/docs) -- production eval platform with experiment tracking, scoring functions, and dataset management
-- [Ribeiro et al., 2020 -- "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList"](https://arxiv.org/abs/2005.04118) -- systematic behavioral testing methodology (minimum functionality, invariance, directional expectations) applicable to LLM evaluation
-- [LMSYS Chatbot Arena](https://chat.lmsys.org) -- live human evaluation platform where users vote on model outputs, the largest pairwise comparison dataset for LLMs
-- [Es et al., "RAGAS: Automated Evaluation of Retrieval Augmented Generation" (EACL 2024 demo)](https://arxiv.org/abs/2309.15217) -- reference-free metrics for RAG (faithfulness, answer relevancy, context precision/recall); the eval pattern that scales to prod without labelers.
-- [Liu et al., "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment" (EMNLP 2023)](https://arxiv.org/abs/2303.16634) -- chain-of-thought + form-filling as a judge protocol; the calibration and bias results every judge-builder needs.
-- [Hugging Face LLM Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook) -- practical advice on data contamination, metric selection, and reproducibility from the team maintaining the Open LLM Leaderboard.
-- [EleutherAI lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) -- the standard framework for automated benchmarks (MMLU, HellaSwag, TruthfulQA, BIG-Bench); the engine behind the Open LLM Leaderboard.
+- [Zheng et al., 2023 — "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena"](https://arxiv.org/abs/2306.05685) — LLMs で他の LLMs を judge する foundational paper。MT-Bench と pairwise comparison protocol を導入
+- [promptfoo Documentation](https://promptfoo.dev/docs/intro) — YAML config、15+ providers、LLM-as-judge、CI integration を持つ実用的な open-source eval framework
+- [DeepEval Documentation](https://docs.confident-ai.com) — 14+ metrics、Pytest integration、hallucination detection を持つ Python-native eval framework
+- [Braintrust Eval Guide](https://www.braintrust.dev/docs) — experiment tracking、scoring functions、dataset management を持つ production eval platform
+- [Ribeiro et al., 2020 — "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList"](https://arxiv.org/abs/2005.04118) — LLM evaluation にも適用できる systematic behavioral testing methodology (minimum functionality、invariance、directional expectations)
+- [LMSYS Chatbot Arena](https://chat.lmsys.org) — users が model outputs に vote する live human evaluation platform。LLMs 最大級の pairwise comparison dataset
+- [Es et al., "RAGAS: Automated Evaluation of Retrieval Augmented Generation" (EACL 2024 demo)](https://arxiv.org/abs/2309.15217) — RAG 用 reference-free metrics (faithfulness、answer relevancy、context precision/recall)。labelers なしで prod に scale する eval pattern
+- [Liu et al., "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment" (EMNLP 2023)](https://arxiv.org/abs/2303.16634) — judge protocol としての chain-of-thought + form-filling。judge-builder が知るべき calibration と bias results
+- [Hugging Face LLM Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook) — Open LLM Leaderboard を保守する team による data contamination、metric selection、reproducibility の実践的 advice
+- [EleutherAI lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) — automated benchmarks (MMLU、HellaSwag、TruthfulQA、BIG-Bench) の standard framework。Open LLM Leaderboard の engine

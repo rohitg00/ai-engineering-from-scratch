@@ -1,6 +1,6 @@
 ---
 name: skill-image-text-retriever
-description: Build an image embedding index with any CLIP checkpoint; support query-by-text and query-by-image
+description: 任意の CLIP checkpoint で image embedding index を構築し、query-by-text と query-by-image をサポートする
 version: 1.0.0
 phase: 4
 lesson: 18
@@ -9,29 +9,29 @@ tags: [clip, retrieval, faiss, zero-shot]
 
 # Image-Text Retriever
 
-Turn a folder of images into a searchable index using CLIP embeddings.
+画像フォルダを CLIP embeddings による検索可能な index に変換します。
 
 ## When to use
 
-- Building a zero-shot image search on an internal catalog.
-- Deduplicating near-identical images by embedding distance.
-- Building a quick "find similar" component without a labelled dataset.
+- internal catalog 上で zero-shot image search を構築する。
+- embedding distance により near-identical images を deduplicate する。
+- labelled dataset なしで素早く "find similar" component を作る。
 
 ## Inputs
 
-- `image_folder`: directory of image files.
-- `clip_model`: HuggingFace id like `openai/clip-vit-base-patch32` or `google/siglip-base-patch16-224`.
-- `index_type`: flat | IVF | HNSW.
-- `embedding_dim`: inferred from the model.
+- `image_folder`: image files の directory。
+- `clip_model`: `openai/clip-vit-base-patch32` や `google/siglip-base-patch16-224` のような HuggingFace id。
+- `index_type`: flat | IVF | HNSW。
+- `embedding_dim`: model から推定する。
 
 ## Steps
 
-1. Load the CLIP model and preprocessor.
-2. Batch-encode every image in the folder. Save embeddings as (N, D) float32 + filename list.
-3. Build a FAISS index over the embeddings. Use inner-product on L2-normalised vectors for cosine similarity.
-4. Expose two query interfaces:
-   - `search_by_text(text, k)` — embed the text, search.
-   - `search_by_image(image_path, k)` — embed the image, search.
+1. CLIP model と preprocessor を load する。
+2. folder 内のすべての images を batch-encode する。embeddings を (N, D) float32 と filename list として保存する。
+3. embeddings 上に FAISS index を構築する。cosine similarity のため、L2-normalised vectors に inner-product を使う。
+4. 2つの query interfaces を公開する。
+   - `search_by_text(text, k)` — text を embed して search する。
+   - `search_by_image(image_path, k)` — image を embed して search する。
 
 ## Output template
 
@@ -113,8 +113,8 @@ class ImageTextRetriever:
 
 ## Rules
 
-- Always L2-normalise embeddings before indexing; FAISS's inner product on normalised vectors equals cosine similarity.
-- For < 100k images, `IndexFlatIP` (exact) is simplest and fastest.
-- For 100k-10M, `IndexIVFFlat` is the standard trade-off.
-- For > 10M, use HNSW or a product-quantised variant.
-- Never rebuild the index on every query; embed once, search many times.
+- indexing 前に embeddings を必ず L2-normalise すること。normalised vectors に対する FAISS の inner product は cosine similarity と等価です。
+- < 100k images では、`IndexFlatIP` (exact) が最も単純で高速です。
+- 100k-10M では、`IndexIVFFlat` が標準的な trade-off です。
+- > 10M では、HNSW または product-quantised variant を使う。
+- query のたびに index を rebuild しないこと。一度 embed し、何度も search します。

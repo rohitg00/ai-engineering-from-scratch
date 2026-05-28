@@ -4,7 +4,7 @@ import { buildIndices, rrf, runQuery } from "../src/retrieval.ts";
 import { SAMPLE_CORPUS } from "../src/corpus.ts";
 import { anchor } from "../src/types.ts";
 
-test("rrf: fuses overlapping ranks above singleton ranks", () => {
+test("rrf: overlapping rank を singleton rank より上に fuse する", () => {
   const a = SAMPLE_CORPUS[0];
   const b = SAMPLE_CORPUS[1];
   const c = SAMPLE_CORPUS[2];
@@ -22,7 +22,7 @@ test("rrf: fuses overlapping ranks above singleton ranks", () => {
   assert.ok(fused.length === 3);
 });
 
-test("rrf: rank-1 in both lists beats rank-2 singletons", () => {
+test("rrf: 両リストの rank-1 は rank-2 singleton に勝つ", () => {
   const a = SAMPLE_CORPUS[0];
   const b = SAMPLE_CORPUS[1];
   const fused = rrf(
@@ -35,7 +35,7 @@ test("rrf: rank-1 in both lists beats rank-2 singletons", () => {
   assert.ok(fusedScore > single[0].score);
 });
 
-test("runQuery: returns citations for a real corpus question", () => {
+test("runQuery: real corpus question に citation を返す", () => {
   const { dense, bm25 } = buildIndices();
   const r = runQuery("how is rank fusion implemented", dense, bm25);
   assert.ok(r.citations.length > 0);
@@ -43,13 +43,13 @@ test("runQuery: returns citations for a real corpus question", () => {
   assert.equal(r.query, "how is rank fusion implemented");
 });
 
-test("runQuery: top citation for auth query lands in auth repo", () => {
+test("runQuery: auth query の top citation は auth repo に入る", () => {
   const { dense, bm25 } = buildIndices();
   const r = runQuery("authorization check_permission", dense, bm25);
   assert.ok(r.citations[0].anchor.startsWith("auth/"));
 });
 
-test("runQuery: fusedTop honours topK parameter", () => {
+test("runQuery: fusedTop は topK parameter を尊重する", () => {
   const { dense, bm25 } = buildIndices();
   const r = runQuery("authorization", dense, bm25, 2);
   assert.ok(r.fusedTop.length <= 2);

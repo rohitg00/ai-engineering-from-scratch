@@ -1,37 +1,37 @@
 [
   {
-    "question": "What is the primary purpose of a tokenizer in an LLM pipeline?",
-    "options": ["To remove stop words from text", "To convert text into a sequence of integers that the model can process", "To translate text between languages", "To compress text for storage"],
+    "question": "LLM パイプラインにおけるトークナイザーの主な目的は何ですか？",
+    "options": ["テキストからストップワードを削除すること", "モデルが処理できる整数列へテキストを変換すること", "テキストを言語間で翻訳すること", "保存用にテキストを圧縮すること"],
     "correct": 1,
-    "explanation": "LLMs process numbers, not text. The tokenizer converts every character, word, and symbol into integer IDs from a fixed vocabulary. This conversion is not neutral -- it determines how the model 'sees' language.",
+    "explanation": "LLM が処理するのはテキストではなく数値です。トークナイザーは、すべての文字、単語、記号を固定語彙内の整数 ID へ変換します。この変換は中立ではなく、モデルが言語をどう「見る」かを決めます。",
     "stage": "pre"
   },
   {
-    "question": "What does BPE (Byte Pair Encoding) do to build its vocabulary?",
-    "options": ["Splits text into individual characters only", "Iteratively merges the most frequent adjacent pair of tokens until reaching the target vocabulary size", "Uses a dictionary lookup for whole words", "Randomly assigns IDs to substrings"],
+    "question": "BPE (Byte Pair Encoding) は語彙を作るために何をしますか？",
+    "options": ["テキストを個々の文字だけに分割する", "目標語彙サイズに達するまで、最頻の隣接トークンペアを反復的にマージする", "単語全体を辞書引きする", "部分文字列へランダムに ID を割り当てる"],
     "correct": 1,
-    "explanation": "BPE starts with individual bytes/characters and repeatedly merges the most common adjacent pair. 'th' + 'e' becomes 'the'. After thousands of merges, common words become single tokens while rare words are split into subword pieces.",
+    "explanation": "BPE は個々のバイトまたは文字から始め、最も一般的な隣接ペアを繰り返しマージします。`'th' + 'e'` が `'the'` になります。何千回もマージすると、頻出語は1トークンになり、まれな単語はサブワード部品に分割されます。",
     "stage": "pre"
   },
   {
-    "question": "Why does vocabulary size create a tradeoff in LLM design?",
-    "options": ["Larger vocabularies always perform better", "Too small creates long sequences (more computation); too large wastes embedding parameters on rare tokens", "Vocabulary size doesn't affect model performance", "Smaller vocabularies are always more efficient"],
+    "question": "LLM 設計において、なぜ語彙サイズはトレードオフを生むのですか？",
+    "options": ["語彙が大きいほど常に性能が高いから", "小さすぎるとシーケンスが長くなり計算量が増える一方、大きすぎるとまれなトークンに埋め込みパラメータを浪費するから", "語彙サイズはモデル性能に影響しないから", "小さい語彙のほうが常に効率的だから"],
     "correct": 1,
-    "explanation": "Small vocabulary (e.g., character-level) means every word is many tokens, increasing sequence length and computation. Large vocabulary wastes parameters on tokens that rarely appear in training data. Most LLMs use 32K-100K tokens.",
+    "explanation": "小さい語彙、たとえば文字レベルでは、すべての単語が多数のトークンになり、シーケンス長と計算量が増えます。大きい語彙では、訓練データにほとんど現れないトークンへパラメータを浪費します。多くの LLM は 32K から 100K トークンを使います。",
     "stage": "post"
   },
   {
-    "question": "What problem does byte-level fallback solve in tokenization?",
-    "options": ["It speeds up tokenization", "It ensures any input (emoji, rare scripts, binary data) can be encoded without 'unknown' tokens", "It reduces vocabulary size", "It improves model accuracy"],
+    "question": "トークナイゼーションにおけるバイトレベルフォールバックはどの問題を解決しますか？",
+    "options": ["トークン化を高速化する", "絵文字、まれな文字体系、バイナリデータなど、どんな入力でも未知トークンなしでエンコードできるようにする", "語彙サイズを削減する", "モデル精度を改善する"],
     "correct": 1,
-    "explanation": "With byte-level fallback, the tokenizer can fall back to raw byte values (256 possible) for any character not in the vocabulary. This guarantees complete coverage -- no input is ever 'unknown.'",
+    "explanation": "バイトレベルフォールバックがあれば、語彙にないどんな文字でも、生のバイト値、つまり256通りの値へ戻して表現できます。これにより完全なカバレッジが保証され、どんな入力も未知扱いになりません。",
     "stage": "post"
   },
   {
-    "question": "How does the tokenizer affect non-English language performance in LLMs?",
-    "options": ["Tokenizers work equally well for all languages", "Languages underrepresented in training data get worse token merges, requiring more tokens per word and wasting context window", "Non-English text is always character-tokenized", "Tokenization doesn't affect language performance"],
+    "question": "トークナイザーは LLM の非英語言語性能にどのような影響を与えますか？",
+    "options": ["トークナイザーはすべての言語で同じように機能する", "訓練データで少ない言語はマージが弱くなり、単語あたりのトークン数が増えてコンテキストウィンドウを浪費する", "非英語テキストは常に文字単位でトークン化される", "トークナイゼーションは言語性能に影響しない"],
     "correct": 1,
-    "explanation": "BPE merges are learned from training data. If Japanese text is 5% of the corpus, Japanese characters get fewer merges, requiring 2-5x more tokens per word than English. This effectively shrinks the context window for non-English text.",
+    "explanation": "BPE のマージは訓練データから学習されます。日本語テキストがコーパスの5%しかない場合、日本語文字には少ないマージしか割り当てられず、英語より単語あたり2から5倍のトークンが必要になります。これにより、非英語テキストでは実質的なコンテキストウィンドウが縮みます。",
     "stage": "post"
   }
 ]

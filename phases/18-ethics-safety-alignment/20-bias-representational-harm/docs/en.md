@@ -1,93 +1,93 @@
-# Bias and Representational Harm in LLMs
+# LLMs における Bias と Representational Harm
 
-> Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Computational Linguistics 2024, arXiv:2309.00770). Foundational 2024 survey distinguishing representational harms (stereotypes, erasure) from allocational harms (unequal resource distribution) and categorizing evaluation metrics as embedding-based, probability-based, or generated-text-based. 2024-2025 empirical: An et al. (PNAS Nexus, March 2025) measure intersectional gender x race bias across GPT-3.5 Turbo, GPT-4o, Gemini 1.5 Flash, Claude 3.5 Sonnet, Llama 3-70B on automated resume evaluation for 20 entry-level jobs. WinoIdentity (COLM 2025, arXiv:2508.07111) introduces uncertainty-based fairness evaluation for intersectional identities. Yu & Ananiadou 2025 identify gender neurons in MLP layers; Ahsan & Wallace 2025 use SAEs to reveal clinical racial bias; Zhou et al. 2024 (UniBias) manipulates attention heads for debiasing. Meta-critique (arXiv:2508.11067): 10-year literature disproportionately focuses on binary-gender bias.
+> Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Computational Linguistics 2024, arXiv:2309.00770)。representational harms (stereotypes、erasure) と allocational harms (unequal resource distribution) を区別し、evaluation metrics を embedding-based、probability-based、generated-text-based に分類した基礎的な 2024 survey。2024-2025 年の実証研究: An et al. (PNAS Nexus, March 2025) は、20の entry-level jobs に対する automated resume evaluation で、GPT-3.5 Turbo、GPT-4o、Gemini 1.5 Flash、Claude 3.5 Sonnet、Llama 3-70B における intersectional gender x race bias を測定しました。WinoIdentity (COLM 2025, arXiv:2508.07111) は intersectional identities に対する uncertainty-based fairness evaluation を導入しました。Yu & Ananiadou 2025 は MLP layers の gender neurons を特定し、Ahsan & Wallace 2025 は SAEs で clinical racial bias を明らかにし、Zhou et al. 2024 (UniBias) は debiasing のため attention heads を操作しました。Meta-critique (arXiv:2508.11067): 10年分の literature は binary-gender bias に不均衡に集中しています。
 
-**Type:** Build
-**Languages:** Python (stdlib, toy embedding-based bias probe)
-**Prerequisites:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
-**Time:** ~60 minutes
+**種別:** 構築
+**言語:** Python (stdlib, toy embedding-based bias probe)
+**前提条件:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Define representational vs allocational harm and give one example of each in an LLM deployment.
-- Name the three evaluation-metric categories from Gallegos et al. 2024 and describe one metric from each.
-- Describe intersectionality and why WinoIdentity's uncertainty-based fairness measurement addresses gaps in single-axis bias evaluation.
-- Describe two mechanistic-interpretability approaches to bias (gender neurons, SAE features, attention-head manipulation).
+- representational harm と allocational harm を定義し、LLM deployment における例をそれぞれ1つ挙げる。
+- Gallegos et al. 2024 の3つの evaluation-metric categories を挙げ、それぞれの metric を1つ説明する。
+- intersectionality と、WinoIdentity の uncertainty-based fairness measurement が single-axis bias evaluation の gap をどう扱うかを説明する。
+- bias に対する mechanistic-interpretability approaches を2つ説明する (gender neurons、SAE features、attention-head manipulation)。
 
-## The Problem
+## 問題
 
-The previous lessons cover deliberate harm (jailbreaks, scheming) and safety governance. Bias is harm that emerges without intent — from training data distributions, from prompt framing, from accumulated design choices. Measuring and reducing it is a distinct methodological challenge from adversarial robustness.
+前の lessons は deliberate harm (jailbreaks、scheming) と safety governance を扱いました。bias は、intent なしに生じる harm です。training data distributions、prompt framing、積み重なった design choices から生じます。bias の測定と削減は、adversarial robustness とは異なる methodological challenge です。
 
-## The Concept
+## コンセプト
 
 ### Representational vs allocational
 
-- **Representational harm.** Stereotypes, erasure, demeaning portrayals. An LLM that depicts nurses as exclusively female is producing representational harm.
-- **Allocational harm.** Unequal material outcomes. An LLM that scores Black applicants' resumes systematically lower is producing allocational harm.
+- **Representational harm。** stereotypes、erasure、demeaning portrayals。LLM が nurses を女性だけとして描くなら representational harm です。
+- **Allocational harm。** 不平等な material outcomes。LLM が Black applicants の resumes を体系的に低く scoring するなら allocational harm です。
 
-These are not the same. A model can be "representationally unbiased" (produces diverse portrayals) while being "allocationally biased" (makes unequal recommendations). Evaluations need to measure both.
+両者は同じではありません。model は「representationally unbiased」(多様な描写を出す) でも、「allocationally biased」(不平等な recommendations をする) ことがあります。evaluations は両方を測る必要があります。
 
-### Three evaluation-metric categories (Gallegos et al. 2024)
+### 3つの evaluation-metric categories (Gallegos et al. 2024)
 
-- **Embedding-based.** WEAT-style tests on pre-RLHF embeddings. Measures statistical associations between identity terms and attribute terms. Limited: measures the representation, not the behaviour.
-- **Probability-based.** Log-likelihood of stereotype-confirming vs stereotype-violating completions. Decoder-side measurement. Captures some behavioural bias.
-- **Generated-text-based.** Downstream-task measurement on generated text. Resume-scoring, recommendation writing, dialogue. Most ecologically valid; hardest to reproduce.
+- **Embedding-based。** pre-RLHF embeddings に対する WEAT-style tests。identity terms と attribute terms の統計的関連を測る。限界: behaviour ではなく representation を測る。
+- **Probability-based。** stereotype-confirming completions と stereotype-violating completions の log-likelihood。decoder-side measurement。一部の behavioural bias を捉える。
+- **Generated-text-based。** generated text に対する downstream-task measurement。resume-scoring、recommendation writing、dialogue。最も ecological validity が高いが、再現が最も難しい。
 
 ### Intersectionality
 
-Bias evaluation on "gender" misses the bias that only fires on (gender, race) pairs. An et al. 2025 find GPT-4o penalizes Black women in resume scoring more than Black men and more than white women separately. Single-axis evaluation cannot capture this.
+"gender" だけの bias evaluation は、(gender, race) pairs でのみ発火する bias を見落とします。An et al. 2025 は、resume scoring で GPT-4o が Black women を Black men よりも、white women よりも強く penalize することを見つけました。single-axis evaluation ではこれは捉えられません。
 
-WinoIdentity (COLM 2025) introduces uncertainty-based intersectional fairness. It measures whether the model's uncertainty over outcomes differs across intersectional identity tuples — not just the point prediction. This catches cases where the model is equally wrong across groups but more uncertain for some, which produces different downstream allocation behaviour.
+WinoIdentity (COLM 2025) は uncertainty-based intersectional fairness を導入します。point prediction だけでなく、intersectional identity tuples 間で model の outcome uncertainty が異なるかを測ります。これにより、model が group 間で同じ程度に誤っていても、一部 group で不確実性が高く、それが downstream allocation behaviour を変えるケースを検出できます。
 
 ### Mechanistic approaches
 
-2024-2025 interpretability work opens bias to mechanistic intervention:
+2024-2025 年の interpretability work により、bias への mechanistic intervention が開かれました。
 
-- **Gender neurons (Yu & Ananiadou 2025).** Specific MLP neurons correlate with gender-specific behaviours. Ablating these neurons reduces gender-gap metrics with limited capability cost.
-- **Clinical racial bias via SAEs (Ahsan & Wallace 2025).** Sparse autoencoder features decompose the internal representation into interpretable dimensions; race-correlated features can be identified and suppressed.
-- **UniBias (Zhou et al. 2024).** Attention-head manipulation for zero-shot debiasing. Specific heads amplify identity-class sensitivity; zeroing or re-weighting these heads reduces bias with no fine-tuning.
+- **Gender neurons (Yu & Ananiadou 2025)。** 特定の MLP neurons が gender-specific behaviours と相関する。これら neurons を ablate すると、capability cost を限定しながら gender-gap metrics が下がる。
+- **Clinical racial bias via SAEs (Ahsan & Wallace 2025)。** Sparse autoencoder features が internal representation を interpretable dimensions に分解する。race-correlated features を特定し、抑制できる。
+- **UniBias (Zhou et al. 2024)。** zero-shot debiasing のための attention-head manipulation。特定 heads が identity-class sensitivity を増幅する。これら heads を zeroing または re-weighting すると、fine-tuning なしで bias が下がる。
 
-### The meta-critique
+### meta-critique
 
-The 10-year literature review (arXiv:2508.11067, 2025) finds the field disproportionately focuses on binary-gender bias. Other axes — disability, religion, migration status, multi-lingual identity — receive far less attention. The meta-critique argues that narrow focus can harm marginalized groups by neglect: a model well-debiased on binary gender may be badly biased on dimensions nobody checked.
+10年分の literature review (arXiv:2508.11067, 2025) は、この分野が binary-gender bias に不均衡に集中していることを示します。他の axes — disability、religion、migration status、multi-lingual identity — ははるかに少ない注目しか受けていません。meta-critique は、狭い focus が neglect によって marginalized groups を害し得ると論じます。binary gender ではよく debiased された model が、誰も調べていない dimensions では強く biased かもしれません。
 
-### Where this fits in Phase 18
+### Phase 18 における位置づけ
 
-Lessons 20-21 cover bias and fairness formally. Lesson 22 covers privacy. Lesson 23 covers watermarking. These are the user-harm layer complementing the earlier deception/safety layer.
+Lessons 20-21 は bias と fairness を形式的に扱います。Lesson 22 は privacy。Lesson 23 は watermarking。これらは earlier deception/safety layer を補完する user-harm layer です。
 
-## Use It
+## 使ってみる
 
-`code/main.py` builds a toy embedding-based bias probe: measure WEAT-style distance between identity terms and attribute terms in a simple co-occurrence embedding. You can inject a bias and observe the metric fire; apply a simple debiasing operation and observe partial recovery.
+`code/main.py` は toy embedding-based bias probe を作ります。simple co-occurrence embedding で、identity terms と attribute terms の WEAT-style distance を測ります。bias を注入して metric が反応することを観察し、単純な debiasing operation を適用して partial recovery を観察できます。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-bias-eval.md`. Given a model card or fairness claim, it audits the evaluation across the three metric categories (embedding, probability, generated-text), the intersectionality coverage, and the mechanism of any debiasing intervention.
+この lesson は `outputs/skill-bias-eval.md` を生成します。model card または fairness claim が与えられたら、3 metric categories (embedding、probability、generated-text)、intersectionality coverage、debiasing intervention の mechanism を監査します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Report WEAT-style bias scores before and after the debiasing step. Explain why the metric does not drop to zero.
+1. `code/main.py` を実行してください。debiasing step の前後で WEAT-style bias scores を報告してください。metric が zero まで下がらない理由を説明してください。
 
-2. Extend the probe with an intersectional test: (gender, race) x (career, family). Report cross-axis bias scores.
+2. probe を intersectional test に拡張してください: (gender, race) x (career, family)。cross-axis bias scores を報告してください。
 
-3. Read An et al. 2025 (PNAS Nexus). Identify the two intersectional effects they report that single-axis gender evaluation would miss.
+3. An et al. 2025 (PNAS Nexus) を読んでください。single-axis gender evaluation が見落とす intersectional effects を2つ特定してください。
 
-4. Yu & Ananiadou 2025 identify gender neurons. Sketch a falsification experiment that would distinguish "these neurons cause gender bias" from "these neurons correlate with gender bias."
+4. Yu & Ananiadou 2025 は gender neurons を特定しました。「これら neurons が gender bias を cause する」と「これら neurons は gender bias と correlate する」を区別する falsification experiment を sketch してください。
 
-5. The meta-critique argues the field focuses too narrowly on binary gender. Pick one under-studied axis and describe a representational-harm measurement protocol for it.
+5. meta-critique は、この分野が binary gender に狭く集中しすぎていると論じます。under-studied axis を1つ選び、その representational-harm measurement protocol を説明してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| Representational harm | "stereotypes / erasure" | Biased portrayal of a group |
-| Allocational harm | "unequal decisions" | Biased material outcome for a group |
-| WEAT | "the embedding test" | Word Embedding Association Test; co-occurrence-based bias probe |
-| Intersectionality | "combined identity effects" | Bias that emerges at the intersection of multiple identity axes |
-| Gender neurons | "MLP bias neurons" | Specific neurons whose activations correlate with gender-specific behaviour |
-| SAE feature | "interpretable dimension" | Sparse-autoencoder-identified feature; useful for mechanistic bias analysis |
-| UniBias | "attention-head debiasing" | Zero-shot debiasing by reweighting attention heads |
+| Term | よく言われる説明 | 実際の意味 |
+|------|------------------|------------|
+| Representational harm | 「stereotypes / erasure」 | group の biased portrayal |
+| Allocational harm | 「unequal decisions」 | group に対する biased material outcome |
+| WEAT | 「embedding test」 | Word Embedding Association Test。co-occurrence-based bias probe |
+| Intersectionality | 「combined identity effects」 | 複数 identity axes の交差で生じる bias |
+| Gender neurons | 「MLP bias neurons」 | gender-specific behaviour と activation が相関する specific neurons |
+| SAE feature | 「interpretable dimension」 | sparse-autoencoder で特定された feature。mechanistic bias analysis に有用 |
+| UniBias | 「attention-head debiasing」 | attention heads の reweighting による zero-shot debiasing |
 
-## Further Reading
+## 参考文献
 
 - [Gallegos et al. — Bias and Fairness in LLMs: A Survey (arXiv:2309.00770, Computational Linguistics 2024)](https://arxiv.org/abs/2309.00770) — canonical survey
 - [An et al. — Intersectional resume-evaluation bias (PNAS Nexus, March 2025)](https://academic.oup.com/pnasnexus/article/4/3/pgaf089/8111343) — five-model intersectional study

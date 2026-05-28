@@ -1,37 +1,37 @@
 [
   {
-    "question": "A 7B parameter model in FP16 needs how much VRAM just for weights?",
+    "question": "FP16の70億パラメータモデルは、重みだけでどれだけのVRAMを必要としますか？",
     "options": ["7 GB", "14 GB", "28 GB", "56 GB"],
     "correct": 1,
-    "explanation": "Each parameter in FP16 is 2 bytes. 7 billion * 2 bytes = 14 GB. With Adam optimizer states (2 copies) and gradients, total training memory is roughly 56 GB before accounting for activations.",
+    "explanation": "FP16では各パラメータが2バイトです。70億 * 2バイト = 14 GBです。Adamのオプティマイザ状態（2つのコピー）と勾配を含めると、活性化を考慮する前の学習メモリはおよそ56 GBになります。",
     "stage": "pre"
   },
   {
-    "question": "What are the three types of parallelism used in distributed training?",
-    "options": ["CPU, GPU, and TPU parallelism", "Data parallelism, tensor parallelism, and pipeline parallelism", "Batch, sequence, and token parallelism", "Forward, backward, and optimizer parallelism"],
+    "question": "分散学習で使われる3種類の並列化は何ですか？",
+    "options": ["CPU、GPU、TPU並列", "データ並列、テンソル並列、パイプライン並列", "バッチ、シーケンス、トークン並列", "順伝播、逆伝播、オプティマイザ並列"],
     "correct": 1,
-    "explanation": "Data parallelism replicates the model on each GPU and splits the data. Tensor parallelism splits individual layers across GPUs. Pipeline parallelism splits the model's layers into stages across GPUs.",
+    "explanation": "データ並列は各GPUにモデルを複製し、データを分割します。テンソル並列は個々の層をGPU間で分割します。パイプライン並列はモデルの層をGPU間のステージに分割します。",
     "stage": "pre"
   },
   {
-    "question": "What does FSDP (Fully Sharded Data Parallel) do that standard DDP does not?",
-    "options": ["It uses a different optimizer", "It shards model parameters, gradients, and optimizer states across GPUs instead of replicating the full model on each", "It processes data faster", "It supports more GPUs"],
+    "question": "FSDP（Fully Sharded Data Parallel）は、標準的なDDPでは行わない何をしますか？",
+    "options": ["別のオプティマイザを使う", "各GPUに完全なモデルを複製する代わりに、モデルパラメータ、勾配、オプティマイザ状態をGPU間でシャーディングする", "データをより速く処理する", "より多くのGPUをサポートする"],
     "correct": 1,
-    "explanation": "Standard DDP replicates the entire model on every GPU (wasteful). FSDP shards parameters across GPUs so each holds only a fraction. Parameters are gathered on-demand for computation and released after.",
+    "explanation": "標準的なDDPは各GPUにモデル全体を複製します（無駄が多い）。FSDPはパラメータをGPU間でシャーディングし、各GPUが一部だけを保持します。計算時に必要に応じてパラメータを集め、計算後に解放します。",
     "stage": "post"
   },
   {
-    "question": "What is DeepSpeed ZeRO Stage 3?",
-    "options": ["A quantization method", "It partitions optimizer states, gradients, AND model parameters across GPUs, achieving maximum memory efficiency", "A learning rate schedule", "A data preprocessing pipeline"],
+    "question": "DeepSpeed ZeRO Stage 3とは何ですか？",
+    "options": ["量子化手法", "オプティマイザ状態、勾配、モデルパラメータのすべてをGPU間で分割し、最大のメモリ効率を実現する手法", "学習率スケジュール", "データ前処理パイプライン"],
     "correct": 1,
-    "explanation": "ZeRO Stage 1 shards optimizer states, Stage 2 adds gradient sharding, Stage 3 adds parameter sharding. Stage 3 gives maximum memory savings, allowing training of models that far exceed single-GPU memory.",
+    "explanation": "ZeRO Stage 1はオプティマイザ状態をシャーディングし、Stage 2は勾配シャーディングを追加し、Stage 3はパラメータシャーディングを追加します。Stage 3は最大のメモリ節約を実現し、単一GPUメモリを大きく超えるモデルの学習を可能にします。",
     "stage": "post"
   },
   {
-    "question": "Why is gradient synchronization necessary in data-parallel training?",
-    "options": ["To prevent overfitting", "Each GPU computes gradients on different data; averaging gradients across GPUs ensures all replicas update identically", "To reduce memory usage", "To speed up the forward pass"],
+    "question": "データ並列学習で勾配同期が必要なのはなぜですか？",
+    "options": ["過学習を防ぐため", "各GPUが異なるデータで勾配を計算するため、GPU間で勾配を平均すると、すべてのレプリカが同一に更新される", "メモリ使用量を減らすため", "順伝播を高速化するため"],
     "correct": 1,
-    "explanation": "In data parallelism, each GPU processes a different batch and computes different gradients. AllReduce averages these gradients across all GPUs so every replica applies the same update and stays in sync.",
+    "explanation": "データ並列では、各GPUが異なるバッチを処理し、異なる勾配を計算します。AllReduceはこれらの勾配を全GPU間で平均し、すべてのレプリカが同じ更新を適用して同期を保てるようにします。",
     "stage": "post"
   }
 ]

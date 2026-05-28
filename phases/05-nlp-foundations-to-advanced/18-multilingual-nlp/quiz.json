@@ -1,102 +1,102 @@
 {
   "lesson": "18-multilingual-nlp",
-  "title": "Multilingual NLP",
+  "title": "多言語NLP",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does zero-shot cross-lingual transfer mean?",
+      "question": "ゼロショット・クロスリンガル転移とは何ですか？",
       "options": [
-        "Fine-tune a multilingual model on one source language and evaluate on a different language with no target-language labels",
-        "Translating without a translation model",
-        "Tokenizing with zero merges",
-        "Training with zero examples"
+        "多言語モデルを1つのソース言語でファインチューニングし、対象言語のラベルなしで別言語で評価すること",
+        "翻訳モデルなしで翻訳すること",
+        "マージ数ゼロでトークン化すること",
+        "例を一切使わずに学習すること"
       ],
       "correct": 0,
-      "explanation": "Zero-shot transfer: train on the source language, run on the target without target-language supervision."
+      "explanation": "ゼロショット転移とは、ソース言語で学習し、対象言語の教師ありデータなしで対象言語に適用することです。"
     },
     {
       "stage": "pre",
-      "question": "Which model family ships as the standard 100-language cross-lingual baseline?",
+      "question": "標準的な100言語クロスリンガルベースラインとして使われるモデルファミリーはどれですか？",
       "options": [
         "GloVe",
         "GPT-2",
-        "XLM-R (e.g. XLM-RoBERTa-base, 270M)",
+        "XLM-R（例: XLM-RoBERTa-base, 270M）",
         "DistilBERT"
       ],
       "correct": 2,
-      "explanation": "XLM-R is the canonical 100-language pretrained baseline for cross-lingual classification."
+      "explanation": "XLM-Rは、クロスリンガル分類における標準的な100言語事前学習ベースラインです。"
     },
     {
       "stage": "check",
-      "question": "Why does English-as-source not always give the best transfer for a non-English target?",
+      "question": "英語をソースにしても、英語以外の対象言語で常に最良の転移になるとは限らないのはなぜですか？",
       "options": [
-        "English has too little data",
-        "Language similarity (typology, script, morphology) predicts transfer quality; a closer high-resource source can outperform English",
-        "English uses BPE",
-        "English is too short"
+        "英語のデータが少なすぎるから",
+        "言語の類似性（類型、文字体系、形態論）が転移品質を予測するため。より近い高リソースのソース言語が英語を上回ることがあるから",
+        "英語がBPEを使うから",
+        "英語が短すぎるから"
       ],
       "correct": 1,
-      "explanation": "Typologically related sources (e.g. Hindi for Indic targets) often outperform English as a fine-tune source."
+      "explanation": "類型的に関連するソース（例: インド系言語の対象に対するヒンディー語）は、ファインチューニング用ソースとして英語を上回ることがよくあります。"
     },
     {
       "stage": "check",
-      "question": "What is the 'fertility tax' for low-resource languages?",
+      "question": "低リソース言語における「fertility tax」とは何ですか？",
       "options": [
-        "BPE refuses to train",
-        "Low-resource text tokenizes into more subwords per word than English, consuming context window, latency, and capacity",
-        "Smaller models train slower",
-        "Tokenizers cannot handle Unicode"
+        "BPEが学習を拒否すること",
+        "低リソース言語のテキストが英語よりも1単語あたり多くのサブワードに分割され、コンテキストウィンドウ、レイテンシ、容量を消費すること",
+        "小さいモデルほど学習が遅くなること",
+        "tokenizerがUnicodeを扱えないこと"
       ],
       "correct": 1,
-      "explanation": "Long-tail languages tokenize at much higher fertility, eating context and training efficiency."
+      "explanation": "ロングテール言語ははるかに高いfertilityでトークン化され、コンテキストと学習効率を消費します。"
     },
     {
       "stage": "check",
-      "question": "Why is per-language evaluation required, not aggregated accuracy?",
+      "question": "集計精度ではなく、言語別評価が必要なのはなぜですか？",
       "options": [
-        "Aggregates ignore tokenization",
-        "Aggregate numbers hide long-tail languages where a multilingual model can be far worse than its mean suggests",
-        "Aggregates only work on classification",
-        "Aggregates run faster"
+        "集計値はトークン化を無視するから",
+        "集計値は、多言語モデルが平均値から想像されるよりずっと悪くなり得るロングテール言語を隠すから",
+        "集計値は分類でしか使えないから",
+        "集計値の方が実行が速いから"
       ],
       "correct": 1,
-      "explanation": "Aggregate accuracy masks poor performance on low-resource languages; per-language scores expose it."
+      "explanation": "集計精度は低リソース言語での低性能を覆い隠します。言語別スコアはそれを明らかにします。"
     },
     {
       "stage": "post",
-      "question": "Why is fine-tuning learning rate critical when adapting a multilingual model with few-shot data?",
+      "question": "few-shotデータで多言語モデルを適応させるとき、ファインチューニングの学習率が重要なのはなぜですか？",
       "options": [
-        "Lower LR wastes GPU",
-        "Required by tokenizers",
-        "It changes the vocabulary",
-        "High LR can collapse the multilingual alignment and effectively reduce the model to English-only"
+        "低いlearning rateはGPUを無駄にするから",
+        "tokenizerに必須だから",
+        "語彙を変えるから",
+        "高いlearning rateは多言語アラインメントを崩壊させ、実質的に英語専用モデルにしてしまう可能性があるから"
       ],
       "correct": 3,
-      "explanation": "Excessive LR drifts the shared representation; conservative LR (~2e-5) preserves cross-lingual structure."
+      "explanation": "過度なlearning rateは共有表現をずらします。保守的なlearning rate（~2e-5）はクロスリンガル構造を保ちます。"
     },
     {
       "stage": "post",
-      "question": "Which mitigation directly addresses tokenizer fertility for long-tail scripts?",
+      "question": "ロングテールの文字体系におけるtokenizer fertilityに直接対処する緩和策はどれですか？",
       "options": [
-        "Skip stopwords",
-        "Lower batch size",
-        "Use byte-fallback (SentencePiece byte_fallback=True) or a tokenizer with broader script coverage (e.g. XLM-V)",
-        "More training epochs"
+        "ストップワードを除外する",
+        "バッチサイズを下げる",
+        "byte-fallback（SentencePiece byte_fallback=True）またはより広い文字体系カバレッジを持つtokenizer（例: XLM-V）を使う",
+        "学習エポックを増やす"
       ],
       "correct": 2,
-      "explanation": "Byte fallback and broader-vocab tokenizers reduce fertility and OOV for low-resource scripts."
+      "explanation": "byte fallbackと広い語彙を持つtokenizerは、低リソース文字体系でのfertilityとOOVを減らします。"
     },
     {
       "stage": "post",
-      "question": "When is a monolingual model from scratch worth trying instead of a multilingual one?",
+      "question": "多言語モデルの代わりに、単言語モデルをゼロから試す価値があるのはいつですか？",
       "options": [
-        "Always for English",
-        "When the target language has enough data to train a monolingual model that beats the multilingual baseline; test before assuming",
-        "Only for translation",
-        "Whenever the tokenizer is BPE"
+        "英語では常に",
+        "対象言語に、多言語ベースラインを上回る単言語モデルを学習できるだけのデータがある場合。決めつける前にテストする",
+        "翻訳の場合だけ",
+        "tokenizerがBPEならいつでも"
       ],
       "correct": 1,
-      "explanation": "Sometimes monolingual training beats multilingual for high-resource targets; empirical comparison decides."
+      "explanation": "高リソースの対象言語では、単言語学習が多言語モデルを上回ることがあります。経験的な比較で判断します。"
     }
   ]
 }

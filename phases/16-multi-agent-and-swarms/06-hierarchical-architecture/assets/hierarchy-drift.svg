@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -11,67 +11,67 @@
       .bad { fill: #f8d7da; stroke: #c0392b; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 11px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
       .bad-edge { stroke: #c0392b; stroke-width: 1.5; fill: none; stroke-dasharray: 4,3; }
     </style>
   </defs>
-  <text x="450" y="28" text-anchor="middle" class="title">Hierarchical failure mode — decomposition drift cascades</text>
+  <text x="450" y="28" text-anchor="middle" class="title">階層型失敗モード — 分解ドリフトが連鎖する</text>
 
-  <!-- happy path -->
-  <text x="220" y="58" text-anchor="middle" class="head">happy path</text>
+  <!-- 正常経路 -->
+  <text x="220" y="58" text-anchor="middle" class="head">正常経路</text>
   <rect x="140" y="70" width="160" height="44" class="cool"/>
-  <text x="220" y="90" text-anchor="middle" class="step">top manager</text>
-  <text x="220" y="106" text-anchor="middle" class="small">splits: eng + legal</text>
+  <text x="220" y="90" text-anchor="middle" class="step">上位マネージャ</text>
+  <text x="220" y="106" text-anchor="middle" class="small">分割: eng + legal</text>
   <line x1="180" y1="114" x2="140" y2="160" class="edge" marker-end="url(#arrow)"/>
   <line x1="260" y1="114" x2="300" y2="160" class="edge" marker-end="url(#arrow)"/>
   <rect x="70" y="160" width="130" height="44" class="cool"/>
-  <text x="135" y="180" text-anchor="middle" class="step">eng-manager</text>
+  <text x="135" y="180" text-anchor="middle" class="step">開発マネージャ</text>
   <text x="135" y="196" text-anchor="middle" class="small">fe + be</text>
   <rect x="240" y="160" width="130" height="44" class="cool"/>
-  <text x="305" y="180" text-anchor="middle" class="step">legal-manager</text>
-  <text x="305" y="196" text-anchor="middle" class="small">lawyer</text>
+  <text x="305" y="180" text-anchor="middle" class="step">法務マネージャ</text>
+  <text x="305" y="196" text-anchor="middle" class="small">弁護士</text>
   <line x1="135" y1="204" x2="135" y2="240" class="edge" marker-end="url(#arrow)"/>
   <line x1="305" y1="204" x2="305" y2="240" class="edge" marker-end="url(#arrow)"/>
   <rect x="70" y="240" width="130" height="40" class="cold"/>
-  <text x="135" y="265" text-anchor="middle" class="small">React + API issues</text>
+  <text x="135" y="265" text-anchor="middle" class="small">React + API課題</text>
   <rect x="240" y="240" width="130" height="40" class="cold"/>
-  <text x="305" y="265" text-anchor="middle" class="small">legal non-compliance</text>
+  <text x="305" y="265" text-anchor="middle" class="small">法務不遵守</text>
   <line x1="135" y1="280" x2="180" y2="340" class="edge"/>
   <line x1="305" y1="280" x2="260" y2="340" class="edge"/>
   <rect x="140" y="340" width="160" height="50" class="cool"/>
-  <text x="220" y="360" text-anchor="middle" class="step">top synthesis</text>
-  <text x="220" y="378" text-anchor="middle" class="small">covers user question</text>
+  <text x="220" y="360" text-anchor="middle" class="step">top 統合</text>
+  <text x="220" y="378" text-anchor="middle" class="small">user questionをカバー</text>
 
-  <!-- perturbed path -->
-  <text x="680" y="58" text-anchor="middle" class="head">perturbed path</text>
+  <!-- 摂動経路 -->
+  <text x="680" y="58" text-anchor="middle" class="head">摂動経路</text>
   <rect x="600" y="70" width="160" height="44" class="bad"/>
-  <text x="680" y="90" text-anchor="middle" class="step">top manager</text>
-  <text x="680" y="106" text-anchor="middle" class="small">splits: eng + FINANCE (!)</text>
+  <text x="680" y="90" text-anchor="middle" class="step">上位マネージャ</text>
+  <text x="680" y="106" text-anchor="middle" class="small">分割: eng + FINANCE (!)</text>
   <line x1="640" y1="114" x2="600" y2="160" class="edge" marker-end="url(#arrow)"/>
   <line x1="720" y1="114" x2="760" y2="160" class="bad-edge" marker-end="url(#arrow)"/>
   <rect x="530" y="160" width="130" height="44" class="cool"/>
-  <text x="595" y="180" text-anchor="middle" class="step">eng-manager</text>
+  <text x="595" y="180" text-anchor="middle" class="step">開発マネージャ</text>
   <text x="595" y="196" text-anchor="middle" class="small">fe + be</text>
   <rect x="700" y="160" width="130" height="44" class="bad"/>
-  <text x="765" y="180" text-anchor="middle" class="step">finance-manager</text>
-  <text x="765" y="196" text-anchor="middle" class="small">obeys mistaken label</text>
+  <text x="765" y="180" text-anchor="middle" class="step">財務マネージャ</text>
+  <text x="765" y="196" text-anchor="middle" class="small">誤ったlabelに従う</text>
   <line x1="595" y1="204" x2="595" y2="240" class="edge" marker-end="url(#arrow)"/>
   <line x1="765" y1="204" x2="765" y2="240" class="bad-edge" marker-end="url(#arrow)"/>
   <rect x="530" y="240" width="130" height="40" class="cold"/>
-  <text x="595" y="265" text-anchor="middle" class="small">React + API issues</text>
+  <text x="595" y="265" text-anchor="middle" class="small">React + API課題</text>
   <rect x="700" y="240" width="130" height="40" class="bad"/>
-  <text x="765" y="265" text-anchor="middle" class="small">$42k/mo over budget</text>
+  <text x="765" y="265" text-anchor="middle" class="small">月4.2万ドル予算超過</text>
   <line x1="595" y1="280" x2="640" y2="340" class="edge"/>
   <line x1="765" y1="280" x2="720" y2="340" class="bad-edge"/>
   <rect x="600" y="340" width="160" height="50" class="bad"/>
-  <text x="680" y="360" text-anchor="middle" class="step">top synthesis</text>
-  <text x="680" y="378" text-anchor="middle" class="small">LEGAL QUESTION UNANSWERED</text>
+  <text x="680" y="360" text-anchor="middle" class="step">top 統合</text>
+  <text x="680" y="378" text-anchor="middle" class="small">LEGAL QUESTIONが未回答</text>
 
   <rect x="60" y="420" width="780" height="80" class="box"/>
-  <text x="450" y="442" text-anchor="middle" class="head">guardrails</text>
-  <text x="450" y="462" text-anchor="middle" class="small">cap tree depth at 2 · bounded reconciliation rounds · canary worker at each level · decomposition-drift alerts</text>
-  <text x="450" y="482" text-anchor="middle" class="small">CrewAI Process.hierarchical and nested LangGraph supervisors both inherit this failure surface</text>
+  <text x="450" y="442" text-anchor="middle" class="head">ガードレール</text>
+  <text x="450" y="462" text-anchor="middle" class="small">木の深さは2で上限 · 調整ラウンドを制限 · 各階層にカナリアワーカー · ドリフト警告</text>
+  <text x="450" y="482" text-anchor="middle" class="small">CrewAI Process.hierarchicalとnested LangGraph supervisorsは同じ失敗面を持つ</text>
 </svg>

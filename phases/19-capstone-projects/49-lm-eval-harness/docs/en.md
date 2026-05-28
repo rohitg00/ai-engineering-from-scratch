@@ -1,85 +1,36 @@
 # Language Model Evaluation Harness
 
-> A model that does well on a task you cannot define is a model that does well by accident. The harness is the task definition, the metric, the runner, and the leaderboard, in one short, swappable shape.
+> 定義できない task でよく見える model は、偶然よく見えているだけである。harness は task definition、metric、runner、leaderboard を小さく差し替え可能な形にまとめる。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 19 lessons 42 to 45
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 19 lessons 42-45
+**時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Define a task as a JSONL file with `prompt`, `targets`, `metric`, and optional `extras` per example.
-- Implement five metrics: exact match, rouge-l F1, executable check, multiple choice, and substring contains.
-- Build a runner that batches examples per task and dispatches to a swappable model adapter.
-- Emit a leaderboard JSON with per-task scores, latency, and an overall average that is reproducible.
+- `prompt`、`targets`、`metric`、optional `extras` を持つ JSONL task を定義する。
+- exact match、rouge-l F1、code execution、multiple choice、substring contains の 5 metric を実装する。
+- task ごとに batch を作り、swappable model adapter へ dispatch する runner を作る。
+- per-task score、latency、overall average を含む leaderboard JSON を出力する。
 
-## The Problem
+## 問題
 
-A new language model lands every week. The marketing claim is that it does well. The honest question is: well at what? The honest answer is the leaderboard you wrote yourself, because the vendor's leaderboard is the one they tuned to.
+新しい language model は毎週出る。vendor の leaderboard だけでは、自分の用途で良いか判断できない。repo 内に harness があれば、固定 task set と固定 metric に対する JSON output を diff できる。これが昨日の run と今日の run の契約になる。
 
-Without a harness in your repo you compare two models by vibes. With a harness you compare them by score on a fixed task set with a fixed metric, on a JSON output you can diff. The harness is the contract between yesterday's run and today's run. Without it, regressions ship.
-
-The trap is over-fitting the harness to a single model. The fix is the same trap in reverse: the harness is small enough to read in fifteen minutes, the tasks are small enough to ship in the repo, the metrics are written from scratch so a colleague can audit them, and the adapter is the only place model-specific code lives. Swap the adapter, the leaderboard moves; swap the tasks, the leaderboard moves. Nothing else should move.
-
-## The Concept
-
-```mermaid
-flowchart TD
-  tasks[task JSONLs: prompt, targets, metric, extras] --> loader[load_all_tasks]
-  loader --> runner[run_leaderboard]
-  runner --> adapter[ModelAdapter.generate batch]
-  adapter --> metrics[METRIC_FNS dispatch by name]
-  metrics --> scores[per example score]
-  scores --> board[Leaderboard: per task + overall]
-  board --> out[leaderboard.json]
-```
-
-### Task spec
-
-Every example is one JSONL line:
+## task spec
 
 ```json
 {"id": "arith-00", "prompt": "compute: 2 + 2", "targets": ["4"], "metric": "exact_match"}
 ```
 
-For metrics that need scoring helpers, `extras` carries the side payload:
+metric が補助データを必要とする場合は `extras` を使う。`code_exec` では `io_pairs` を入れる。1 つの `.jsonl` file は 1 task であり、file name が task name になる。
 
-```json
-{
-  "id": "code-00",
-  "prompt": "python: write a function f that doubles its input",
-  "targets": ["ok"],
-  "metric": "code_exec",
-  "extras": {"io_pairs": [[1, 2], [3, 6]]}
-}
-```
+## metric contract
 
-A task is a `.jsonl` file under `outputs/tasks/`. The file name is the task name. All examples in a file share a metric.
+各 metric は `(prediction, targets, extras) -> float in [0.0, 1.0]` を返す。harness は per-example score を平均して task score を作り、task score を平均して overall score を作る。`code_exec` は制限された namespace で予測コードを実行し、`f(x)` が期待出力に合うかを数える。
 
-### The five fixture tasks
-
-| Task | Metric | What it tests |
-|------|--------|---------------|
-| arithmetic | exact_match | Token-level correctness on a deterministic answer |
-| summary | rouge_l | Longest common subsequence F1 against a one-line reference summary |
-| code-exec | code_exec | Executable test: the predicted function must satisfy a list of input-output pairs |
-| multiple-choice | multiple_choice | First letter of the prediction must match an allowed letter |
-| generation | substring_contains | Free-form text must contain at least one target substring |
-
-### The metric contract
-
-Every metric is a function from `(prediction, targets, extras) -> float in [0.0, 1.0]`. The harness averages the per-example scores to get a task score, then averages task scores to get the overall. The metric functions are tiny:
-
-- `exact_match`: lowercase, collapse whitespace, equality.
-- `substring_contains`: same normalization, substring test.
-- `multiple_choice`: first character uppercased.
-- `rouge_l`: LCS length divided by lengths of prediction and reference, F1 of precision and recall.
-- `code_exec`: execute the prediction in a restricted namespace, call `f(x)` on every input-output pair, count matches.
-
-The code_exec metric runs the prediction in a stripped builtins namespace. The lesson's test asserts that `import os` blows up because `os` is not in the namespace; you cannot reach the filesystem from a code prediction.
-
-### The model adapter
+## adapter
 
 ```python
 class ModelAdapter(Protocol):
@@ -88,107 +39,39 @@ class ModelAdapter(Protocol):
     def name(self) -> str: ...
 ```
 
-The adapter is the seam. The lesson ships `ToyAdapter`, a deterministic pattern matcher that returns the right answer for every prompt in the five fixture tasks. A real adapter calls the model and returns its output. The harness does not care which.
+adapter だけが model-specific code である。`ToyAdapter` は fixture に正答する deterministic pattern matcher で、実運用では HTTP client や local model wrapper に置き換える。
 
-### The runner
+## 実装
 
-`run_task` batches `batch_size` prompts at a time and dispatches to the metric function. `run_leaderboard` walks every task and averages. `write_leaderboard` emits JSON with a schema string so future format changes do not silently break dashboards.
-
-```mermaid
-flowchart LR
-  examples[N examples] --> batches[B-sized batches]
-  batches --> adapter[adapter.generate]
-  adapter --> per[per example score 0..1]
-  per --> avg[task score]
-  avg --> over[overall = mean of task scores]
-```
-
-## Build It
-
-`code/main.py` is the runnable artifact.
-
-### Step 1: seed fixture tasks
-
-`seed_fixture_tasks(target_dir)` writes the five `.jsonl` files. The first run of `main.py` seeds them when the directory is empty.
-
-### Step 2: load tasks
-
-`load_all_tasks(task_dir)` reads every `.jsonl` and returns a dict from task name to a list of `Example` records. Comment lines starting with `#` and blank lines are skipped so contributors can annotate the files.
-
-### Step 3: implement metrics
-
-Each metric is a small function with a unit test. The lesson's test suite includes 13 cases covering normalization, partial overlap, code execution, and unsafe code rejection.
-
-### Step 4: write the runner
-
-`run_task` iterates batches and produces a `TaskResult` with score, correct count, total count, and latency. `run_leaderboard` walks all tasks and produces a `Leaderboard` with the overall average.
-
-### Step 5: emit JSON
-
-`write_leaderboard` serializes the board. The `--include-per-example` flag dumps the per-example records so you can diff predictions against the previous run when scores move.
-
-Run it:
+`seed_fixture_tasks` が 5 つの JSONL task を作り、`load_all_tasks` が読む。`run_task` は batch 単位で adapter を呼び、metric function を適用する。`write_leaderboard` は schema string 付きの JSON を出力する。
 
 ```bash
 python3 code/main.py
 ```
 
-The script seeds the fixtures on first run, scores them with the toy adapter (which gets every fixture right), and writes `outputs/leaderboard.json`. Overall score is 1.0 with the toy adapter; the stub adapter test in `test_main.py` shows the same harness produces 0.0 when the adapter cannot answer.
+## 運用メモ
 
-## Use It
+task file を pin しないと、score が動いた理由が model なのか task なのか分からない。score だけでなく prediction diff も残す。real adapter は rate limit を持つため、batch size は控えめに保つ。
 
-To plug a real model in, write an adapter. The shape:
+## 演習
 
-```python
-class HttpAdapter:
-    name = "vendor.v1"
+1. 主要なハイパーパラメータを 1 つ変え、出力がどう変わるかを記録する。
+2. 失敗ケースを 1 つ追加し、現在の実装がそれを検出できるか確認する。
+3. 生成される JSON に、後段の CI が使える追加メタデータを 1 つ入れる。
+4. 実運用で必要になる監視指標を 1 つ足す。
+5. このレッスンの成果物を次のフェーズの入力として使う手順を書き出す。
 
-    def __init__(self, endpoint, api_key):
-        self.endpoint = endpoint
-        self.api_key = api_key
+## 重要語
 
-    def generate(self, prompts):
-        out = []
-        for prompt in prompts:
-            response = http_post(self.endpoint, prompt, self.api_key)
-            out.append(response["text"])
-        return out
-```
+| 用語 | 意味 |
+|------|------|
+| fixture | 教材内で固定して使う小さな検証データ |
+| manifest | 後段が信頼する成果物一覧とメタデータ |
+| schema | JSON や checkpoint 形式のバージョンを示す文字列 |
+| aggregate | 個別指標を重み付き、または平均でまとめた値 |
 
-Swap `ToyAdapter` for `HttpAdapter` at the top of `main()`. The harness, the tasks, the metrics, and the leaderboard stay the same.
+## 参考
 
-Three patterns to enforce when shipping the harness in a real project:
-
-- **Pin the task files.** The leaderboard.json carries hash-pinned task content or it carries the JSONLs alongside; otherwise the score moves when the task file does, and you cannot tell which.
-- **Diff predictions, not just scores.** The `--include-per-example` flag lets you see what the model said the day the score dropped.
-- **Cap the batch size.** Real adapters have rate limits. A small batch size keeps the harness compatible across vendors.
-
-## Ship It
-
-`outputs/skill-lm-eval-harness.md` carries the recipe: JSONL task spec, five metrics, swappable adapter, batched runner, leaderboard JSON with schema string. The task files in `outputs/tasks/` are the fixtures; copy them into a real project as starters.
-
-## Exercises
-
-1. Add a sixth task with a custom metric you write from scratch (BLEU-like overlap, BLEURT-like reference scoring, anything with a clear contract).
-2. Extend `code_exec` to capture stdout and accept a list of expected stdouts as targets.
-3. Add a leaderboard diff command: given two `leaderboard.json` files, print which tasks moved and by how much.
-4. Cap latency per example. Wrap the adapter call in a timeout; surface a separate `timeouts` column in the leaderboard.
-5. Pin task content with a sha256 in the leaderboard so a future reader can verify they scored the same tasks.
-
-## Key Terms
-
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| Task spec | "The eval format" | JSONL file with prompt, targets, metric, optional extras per example |
-| Metric | "How you score" | Function from (prediction, targets, extras) to a float in [0, 1] |
-| Adapter | "The model client" | Object with a generate(prompts) -> list[str] method; the only model-specific code |
-| Leaderboard | "The scoreboard" | JSON with per-task scores, total counts, latency, and an overall average |
-| Code exec metric | "Run it and check" | Execute the prediction in a restricted namespace, compare against input-output pairs |
-
-## Further Reading
-
-- The original lm-evaluation-harness for the production reference, much larger but the same shape.
-- HuggingFace's lighteval for an alternative implementation of the same contract.
-- Phase 19 lesson 46 covers the gradient accumulation patterns used in the training stack the harness scores.
-- Phase 19 lesson 47 covers the checkpoint format you score against; pin the checkpoint hash in the leaderboard.
-- Phase 19 lesson 48 covers the distributed training stack that produced the model under test.
+- PyTorch と Python 標準ライブラリの公式ドキュメント。
+- このフェーズの直前レッスンで扱った tokenizer、checkpoint、training loop。
+- 実運用では、ここで作った小さな実装をそのまま信頼せず、失敗時の再実行と監査ログを追加する。

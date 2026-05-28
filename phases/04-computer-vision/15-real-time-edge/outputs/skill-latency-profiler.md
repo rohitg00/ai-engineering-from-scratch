@@ -1,6 +1,6 @@
 ---
 name: skill-latency-profiler
-description: Write a complete latency-benchmarking script with warmup, synchronisation, percentiles, and memory tracking
+description: warmup、synchronisation、percentiles、memory trackingを備えた完全なlatency benchmarking scriptを書く
 version: 1.0.0
 phase: 4
 lesson: 15
@@ -9,46 +9,46 @@ tags: [edge, deployment, profiling, benchmarking]
 
 # Latency Profiler
 
-Produce a disciplined latency benchmark for any PyTorch model. Reports that anyone downstream can actually trust.
+任意のPyTorch modelについて、規律あるlatency benchmarkを作ります。下流の誰もが実際に信頼できるreportを出します。
 
-## When to use
+## 使う場面
 
-- Comparing multiple candidate backbones before picking one to deploy.
-- Before and after quantisation or pruning.
-- After a runtime change (eager vs ONNX vs TensorRT).
-- Generating a deployment-readiness report.
+- デプロイ先を決める前に、複数の候補backboneを比較するとき。
+- 量子化またはpruningの前後。
+- runtime変更後（eager vs ONNX vs TensorRT）。
+- deployment-readiness reportを生成するとき。
 
-## Inputs
+## 入力
 
-- `model`: PyTorch `nn.Module`.
-- `input_shape`: tuple like `(1, 3, 224, 224)`.
-- `device`: `cpu` | `cuda` | `mps`.
-- `warmup`: default 10.
-- `iters`: default 100.
+- `model`: PyTorch `nn.Module`。
+- `input_shape`: `(1, 3, 224, 224)` のようなtuple。
+- `device`: `cpu` | `cuda` | `mps`。
+- `warmup`: default 10。
+- `iters`: default 100。
 
-## Checks
+## チェック
 
 ### 1. Warmup
-Run the model `warmup` times without timing. Catches first-forward JIT compilation and cold cache effects.
+時間計測せずにmodelを `warmup` 回実行する。初回forwardのJIT compilationやcold cacheの影響を吸収する。
 
 ### 2. Synchronisation
-For `cuda`, call `torch.cuda.synchronize()` before and after each timed forward pass.
-For `mps`, call `torch.mps.synchronize()`.
+`cuda` では、各forward passの計測前後に `torch.cuda.synchronize()` を呼ぶ。
+`mps` では `torch.mps.synchronize()` を呼ぶ。
 
 ### 3. Timer
-Use `time.perf_counter()` for wall-clock measurement. Convert to milliseconds.
+wall-clock計測には `time.perf_counter()` を使う。ミリ秒へ変換する。
 
 ### 4. Percentiles
-Sort the full list of timings. Report `p50, p90, p95, p99, mean, std`.
+timingの全リストをsortする。`p50, p90, p95, p99, mean, std` を報告する。
 
 ### 5. Memory
-For `cuda`, call `torch.cuda.max_memory_allocated()` after the run and subtract any baseline.
-For `cpu`, use `tracemalloc` or `psutil.Process().memory_info().rss` before and after.
+`cuda` では実行後に `torch.cuda.max_memory_allocated()` を呼び、baselineを差し引く。
+`cpu` では前後で `tracemalloc` または `psutil.Process().memory_info().rss` を使う。
 
 ### 6. Batch-size sweep
-Optionally repeat the benchmark for `batch_size in [1, 4, 16, 32]` to reveal throughput vs latency tradeoffs.
+任意で `batch_size in [1, 4, 16, 32]` のbenchmarkを繰り返し、throughputとlatencyのトレードオフを見える化する。
 
-## Output template
+## 出力テンプレート
 
 ```python
 import time
@@ -106,10 +106,10 @@ def profile(model, input_shape, device="cpu", warmup=10, iters=100):
     return report
 ```
 
-## Rules
+## ルール
 
-- Always run warmup; never trust a first-forward timing.
-- Percentiles, not mean — a single outlier can double the mean but barely move p50.
-- Use the same input_shape as production; latency on 224x224 is not latency on 384x384.
-- For CUDA, never omit `torch.cuda.synchronize()`; the numbers are meaningless without it.
-- Log the torch version, CUDA version, and device name alongside the numbers — they stop being comparable otherwise.
+- 必ずwarmupを実行する。初回forwardのtimingを信じない。
+- meanではなくpercentiles。単一の外れ値はmeanを倍にすることがあるが、p50はほとんど動かない。
+- 本番と同じ `input_shape` を使う。224x224のlatencyは384x384のlatencyではない。
+- CUDAでは `torch.cuda.synchronize()` を省略しない。省略した数値は意味がない。
+- 数値と一緒にtorch version、CUDA version、device nameをlogする。そうしないと比較可能性が失われる。

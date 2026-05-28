@@ -1,26 +1,26 @@
 # Mission - Multi-Session Handoff
 
-## Goal
-Generate `handoff.md` and `handoff.json` from workbench artifacts at session end so the next session is productive in the first minute. Both forms carry the same seven fields; the JSON wins on disagreement.
+## 目標
+session end に workbench artifacts から `handoff.md` と `handoff.json` を生成し、次 session が最初の1分から productive になるようにする。両形式は同じ7つの fields を持ち、食い違えば JSON が勝つ。
 
 ## Inputs
-- `agent_state.json`, `verification_report.json`, `review_report.json`, `feedback_record.jsonl` from earlier lessons
-- The seven fields: summary, changed_files, commands_run, failed_attempts, open_risks, next_action, verdict_pointer
+- earlier lessons の `agent_state.json`、`verification_report.json`、`review_report.json`、`feedback_record.jsonl`
+- 7つの fields: summary、changed_files、commands_run、failed_attempts、open_risks、next_action、verdict_pointer
 
-## Deliverables
-- A `WorkbenchSnapshot` loader bundling the four artifacts
+## 成果物
+- 4つの artifacts を bundle する `WorkbenchSnapshot` loader
 - `generate_handoff(snapshot) -> (markdown, payload)`
-- A feedback filter that picks the last K records plus every non-zero exit
-- `handoff.md` and `handoff.json` written next to the script
+- 最後の K records とすべての non-zero exit を選ぶ feedback filter
+- script の隣に書かれる `handoff.md` と `handoff.json`
 
 ## Acceptance
-- `python3 code/main.py` exits zero
-- Both files carry all seven fields and a non-empty `next_action`
-- Re-running the script with the same inputs produces an identical packet
+- `python3 code/main.py` が exit zero になる
+- 両 file が7つすべての fields と non-empty な `next_action` を持つ
+- 同じ inputs で script を再実行すると同一の packet を生成する
 
-## Out of scope
-- Compaction strategies (Codex compact endpoint, Claude Code five-stage). Handoff closes a session; compaction extends one.
-- PR templating. The markdown is reusable as a PR body but the lesson stops at the file.
+## 対象外
+- Compaction strategies (Codex compact endpoint、Claude Code five-stage)。handoff は session を閉じ、compaction は session を伸ばす。
+- PR templating。markdown は PR body として再利用できるが、lesson は file までで止める。
 
 ## References
 - `docs/en.md` - full lesson

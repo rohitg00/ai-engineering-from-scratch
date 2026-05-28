@@ -1,78 +1,78 @@
 {
   "lesson": "48-distributed-fsdp-ddp",
-  "title": "Distributed Data Parallel and FSDP from Scratch",
+  "title": "DDP と FSDP from scratch",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which two collective ops are the core of a from-scratch DDP wrapper?",
+      "question": "from-scratch DDP wrapper の中心となる 2 つの collective ops はどれか。",
       "options": [
-        "send and recv",
-        "broadcast at construction so every rank starts from the same parameters, and all_reduce after backward so every rank ends with the averaged gradient",
-        "reduce_scatter only",
-        "barrier and barrier"
+        "send と recv。",
+        "construction 時の broadcast と backward 後の all_reduce。全 rank が同じ parameter から始まり、同じ averaged gradient を得るため。",
+        "reduce_scatter のみ。",
+        "barrier と barrier。"
       ],
       "correct": 1,
-      "explanation": "Broadcast at init keeps ranks in sync at step zero. All-reduce after backward keeps them in sync at every step that follows."
+      "explanation": "init の broadcast は step zero をそろえ、backward 後の all-reduce は以後の step をそろえる。"
     },
     {
       "stage": "pre",
-      "question": "Why does this lesson work on CPU without CUDA?",
+      "question": "この lesson が CUDA なしの CPU で動くのはなぜか。",
       "options": [
-        "It is a stub",
-        "torch.distributed ships a gloo backend that runs collectives over plain sockets, so torch.multiprocessing workers on CPU form a real process group; only the device tag changes on a GPU box",
-        "It uses simulated tensors",
-        "It does not use torch.distributed at all"
+        "stub だから。",
+        "torch.distributed には plain socket 上で collective を行う gloo backend があり、CPU worker で real process group を作れるから。",
+        "simulated tensor を使うから。",
+        "torch.distributed を使わないから。"
       ],
       "correct": 1,
-      "explanation": "Gloo is the CPU collective backend. The same call sites work on nccl on GPU; the API surface is identical."
+      "explanation": "Gloo は CPU collective backend で、GPU の nccl と同じ call site を使える。"
     },
     {
       "stage": "check",
-      "question": "What does the manual_all_reduce_matches_single_process test prove?",
+      "question": "`manual_all_reduce_matches_single_process` test は何を証明するか。",
       "options": [
-        "Nothing",
-        "That summing per-rank gradients and dividing by world_size recovers the gradient a single process would compute on the concatenated input, within floating point noise",
-        "That the optimizer converges",
-        "That CUDA is unnecessary"
+        "何もない。",
+        "per-rank gradient を合計して world_size で割ると、concatenated input 上の single process gradient を floating point noise 内で再現すること。",
+        "optimizer が収束すること。",
+        "CUDA が不要であること。"
       ],
       "correct": 1,
-      "explanation": "The cross entropy mean reduction on the full batch equals the average of per-rank means. Sum-and-divide is the right operation; the test makes that visible."
+      "explanation": "full batch の mean reduction は per-rank mean の平均と一致する。"
     },
     {
       "stage": "check",
-      "question": "What does the FSDP sketch in this lesson do per parameter on every forward pass?",
+      "question": "この lesson の FSDP sketch は forward pass ごとに parameter に何をするか。",
       "options": [
-        "Nothing",
-        "Pads the flat parameter to a multiple of world_size, slices, all_gathers the slices on every rank, drops the pad, and verifies the reconstruction matches the original",
-        "Re-initializes the parameter",
-        "Computes a hash"
+        "何もしない。",
+        "flat parameter を world_size の倍数に pad し、slice し、all_gather で全 rank に復元し、pad を落として元と一致するか検証する。",
+        "parameter を再初期化する。",
+        "hash を計算する。"
       ],
       "correct": 1,
-      "explanation": "Each rank owns 1/world_size of every parameter. The gather rebuilds the full tensor for compute; production FSDP overlaps the gather with the previous layer's work."
+      "explanation": "各 rank は parameter の 1/world_size を持ち、compute 前に gather で full tensor を作る。"
     },
     {
       "stage": "check",
-      "question": "Why is the gloo all_gather sized to world_size equal-size shards even when the parameter length is not divisible by world_size?",
+      "question": "parameter length が world_size で割り切れない場合でも gloo all_gather を equal-size shard にするのはなぜか。",
       "options": [
-        "Gloo's all_gather requires equal output tensor sizes per rank, so the flat parameter is right-padded to a multiple of world_size before slicing and the padding is dropped after the gather",
-        "It is a bug",
-        "It speeds up the network",
-        "Random choice"
+        "Gloo の all_gather は rank ごとの output tensor size が等しい必要があるため、pad してから slice し gather 後に padding を落とす。",
+        "bug である。",
+        "network を速くするため。",
+        "random choice。"
       ],
       "correct": 0,
-      "explanation": "Gloo (and nccl) all_gather expects same-size outputs. Padding is the cheapest fix; the sketch trims the result back to the original length."
+      "explanation": "all_gather は同じ size の output を期待する。padding が最も単純な修正である。"
     },
     {
       "stage": "post",
-      "question": "Reading the demo output, param_sum_spread near zero across ranks tells you what?",
+      "question": "demo output で rank 間の `param_sum_spread` がほぼ 0 であることは何を示すか。",
       "options": [
-        "That the loss is low",
-        "That every rank ended the run at the same parameter values, which means the broadcast at construction and the all-reduce after every backward both worked; if either was broken the spread would grow over steps",
-        "That the network is fast",
-        "Nothing meaningful"
+        "loss が低いこと。",
+        "全 rank が同じ parameter value で run を終え、construction broadcast と backward 後 all-reduce が機能したこと。",
+        "network が速いこと。",
+        "意味はない。"
       ],
       "correct": 1,
-      "explanation": "DDP's invariant is parameter parity across ranks. The spread is the audit; the demo asserts it stays under 1e-3."
+      "explanation": "DDP の invariant は rank 間 parameter parity であり、spread はその audit である。"
     }
   ]
 }

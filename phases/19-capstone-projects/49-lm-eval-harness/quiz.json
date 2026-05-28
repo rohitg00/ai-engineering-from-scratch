@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What four fields define a task example in the harness's JSONL format?",
+      "question": "harness の JSONL format で task example を定義する fields はどれか。",
       "options": [
-        "name, score, payload, vendor",
-        "id, prompt, targets, metric, and an optional extras dict for side data the metric needs",
-        "input and output",
-        "weights and bias"
+        "name, score, payload, vendor。",
+        "id, prompt, targets, metric, そして metric が必要とする side data 用の optional extras dict。",
+        "input と output。",
+        "weights と bias。"
       ],
       "correct": 1,
-      "explanation": "The JSONL line is the contract. The extras field lets the code_exec metric pass io_pairs without polluting the prompt."
+      "explanation": "JSONL line が contract である。extras は code_exec の io_pairs などを prompt に混ぜずに渡すための slot である。"
     },
     {
       "stage": "pre",
-      "question": "Why is the metric function signature (prediction, targets, extras) -> float?",
+      "question": "metric function signature が `(prediction, targets, extras) -> float` なのはなぜか。",
       "options": [
-        "Random choice",
-        "It is the smallest signature that handles single-target string match, multi-reference rouge-l, and code_exec with side data, while keeping scores in a comparable [0.0, 1.0] range",
-        "It returns an integer",
-        "It needs the model object"
+        "random choice。",
+        "single-target match、multi-reference rouge-l、side data 付き code_exec を扱える最小 signature で、score を [0.0, 1.0] にそろえられるから。",
+        "integer を返すため。",
+        "model object が必要だから。"
       ],
       "correct": 1,
-      "explanation": "Floats in [0,1] mean per-task and overall scores are interpretable averages. The extras slot is how code_exec gets its io_pairs."
+      "explanation": "[0,1] の float なら task score と overall score が平均として解釈できる。extras は io_pairs などのために使う。"
     },
     {
       "stage": "check",
-      "question": "How does the code_exec metric resist malicious predictions?",
+      "question": "`code_exec` metric は malicious prediction にどう抵抗するか。",
       "options": [
-        "It does not",
-        "It runs the prediction with a stripped __builtins__ dict so the namespace exposes only a few safe names; import statements fail because the importer is not in scope",
-        "It uses sandbox containers",
-        "It rejects anything that contains def"
+        "抵抗しない。",
+        "stripped `__builtins__` dict で prediction を実行し、safe name だけを expose する。import は importer が scope にないため失敗する。",
+        "sandbox container を使う。",
+        "`def` を含むものを拒否する。"
       ],
       "correct": 1,
-      "explanation": "The lesson's safe namespace strips builtins down to a handful of names. The test asserts that import os returns score 0.0 instead of executing."
+      "explanation": "test は `import os` が実行されず score 0.0 になることを確認する。"
     },
     {
       "stage": "check",
-      "question": "What does the model adapter abstraction buy you?",
+      "question": "model adapter abstraction は何をもたらすか。",
       "options": [
-        "Nothing",
-        "It is the only model-specific code in the harness; swap the adapter to point at a new vendor, and the tasks, metrics, runner, and leaderboard format stay the same",
-        "It makes the model faster",
-        "It is required by torch"
+        "何もない。",
+        "harness 内で唯一の model-specific code になる。adapter を差し替えても tasks、metrics、runner、leaderboard format は変わらない。",
+        "model を速くする。",
+        "torch が要求する。"
       ],
       "correct": 1,
-      "explanation": "ToyAdapter in the lesson is a deterministic pattern matcher. An HttpAdapter for a real vendor has the same generate(prompts) -> list[str] surface."
+      "explanation": "ToyAdapter も real vendor 用 HttpAdapter も `generate(prompts) -> list[str]` の surface を持つ。"
     },
     {
       "stage": "check",
-      "question": "Why does the leaderboard JSON carry a schema string like leaderboard.v1?",
+      "question": "leaderboard JSON が `leaderboard.v1` のような schema string を持つのはなぜか。",
       "options": [
-        "For SEO",
-        "So future format changes bump the version and downstream dashboards can dispatch on it instead of breaking silently",
-        "It is random",
-        "It compresses the file"
+        "SEO のため。",
+        "将来の format change で version を bump し、downstream dashboard が silent break せず dispatch できるようにするため。",
+        "random。",
+        "file を圧縮するため。"
       ],
       "correct": 1,
-      "explanation": "Same trick as the checkpoint payload from lesson 47. The schema field is the migration hook."
+      "explanation": "checkpoint payload と同じく、schema field は migration hook である。"
     },
     {
       "stage": "post",
-      "question": "Reading a leaderboard, overall_score is computed how, and what should you watch for when comparing two runs?",
+      "question": "leaderboard を読むとき、overall_score はどう計算され、2 run 比較で何を見るべきか。",
       "options": [
-        "Sum of correct counts",
-        "Mean of per-task scores (each in [0,1]); when comparing, also diff per-example predictions for tasks whose scores moved, because the score alone hides which examples regressed",
-        "Best task score",
-        "Random sample"
+        "correct count の合計。",
+        "per-task score の平均。比較時は score が動いた task の per-example prediction も diff する。",
+        "best task score。",
+        "random sample。"
       ],
       "correct": 1,
-      "explanation": "Mean of per-task means weights every task equally. Use --include-per-example to keep the prediction-level evidence next to the score so regressions are visible."
+      "explanation": "task 平均の平均は各 task を等重みで扱う。prediction-level evidence を残すと regression が見える。"
     }
   ]
 }

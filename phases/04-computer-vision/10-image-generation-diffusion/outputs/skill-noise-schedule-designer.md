@@ -1,6 +1,6 @@
 ---
 name: skill-noise-schedule-designer
-description: Produce a linear, cosine, or sigmoid beta schedule given T and target corruption level, plus SNR plot
+description: T と target corruption level から linear、cosine、sigmoid の beta schedule を作り、SNR plot も出力する
 version: 1.0.0
 phase: 4
 lesson: 10
@@ -9,20 +9,20 @@ tags: [computer-vision, diffusion, noise-schedule, training]
 
 # Noise Schedule Designer
 
-A beta schedule controls how much signal is retained at each diffusion step. Poor schedules cap training efficiency and sample quality at every downstream decision.
+beta schedule は、各 diffusion step でどれだけの signal を保持するかを制御します。悪い schedule は、その後のあらゆる判断において学習効率とサンプル品質の上限を下げます。
 
-## When to use
+## 使う場面
 
-- Starting a new diffusion training run and picking T and beta.
-- Debugging a diffusion model that produces blurry samples (schedule too aggressive) or fails to learn structure (schedule too mild).
-- Comparing designs across papers that report different schedules.
+- 新しい diffusion training run を始め、T と beta を選ぶ。
+- ぼやけたサンプルを出す diffusion model（schedule が強すぎる）や、構造を学習できない model（schedule が弱すぎる）を debugging する。
+- 異なる schedule を報告している論文間で設計を比較する。
 
-## Inputs
+## 入力
 
-- `T`: number of timesteps, typically 100-1000.
-- `type`: linear | cosine | sigmoid.
-- `target_alpha_bar_final`: fraction of signal to keep at t=T, default 0.001 (99.9% corrupted).
-- Optional `image_resolution` — larger images benefit from schedules that corrupt more slowly (cosine or shifted schedules).
+- `T`: timesteps の数。通常は 100-1000。
+- `type`: linear | cosine | sigmoid。
+- `target_alpha_bar_final`: t=T で残す signal の割合。デフォルトは 0.001（99.9% corrupted）。
+- 任意の `image_resolution` — 大きな画像では、よりゆっくり corrupt する schedule（cosine または shifted schedules）が有利。
 
 ## Schedule formulas
 
@@ -30,33 +30,33 @@ A beta schedule controls how much signal is retained at each diffusion step. Poo
 ```
 beta_t = beta_start + (beta_end - beta_start) * (t - 1) / (T - 1)
 ```
-Defaults: beta_start=1e-4, beta_end=0.02 (DDPM paper).
+デフォルト: beta_start=1e-4、beta_end=0.02（DDPM paper）。
 
 ### Cosine (Nichol & Dhariwal, 2021)
 ```
 alpha_bar_t = cos^2((t/T + s) / (1 + s) * pi/2)
 beta_t = 1 - alpha_bar_t / alpha_bar_{t-1}
 ```
-s = 0.008. Keeps signal around longer; better at low step counts.
+s = 0.008。signal を長く保つため、低い step counts で優れる。
 
 ### Sigmoid
 ```
 alpha_bar_t = 1 / (1 + exp(k * (t/T - 0.5)))
 ```
-k = 6 to 12. Good middle ground; used by some SDXL variants.
+k = 6 から 12。中庸な選択肢。一部の SDXL variants で使われる。
 
-## Steps
+## 手順
 
-1. Compute betas per formula.
-2. Precompute `alphas`, `alphas_cumprod`, `sqrt_alphas_cumprod`, `sqrt_one_minus_alphas_cumprod`.
-3. Compute SNR_t = alpha_bar_t / (1 - alpha_bar_t); produce an SNR-over-time summary.
-4. Verify `alphas_cumprod[T-1]` is within 10% of `target_alpha_bar_final`; else tune beta_end (linear), s (cosine), or k (sigmoid) and retry.
-5. Report three checkpoints:
+1. formula ごとに betas を計算する。
+2. `alphas`、`alphas_cumprod`、`sqrt_alphas_cumprod`、`sqrt_one_minus_alphas_cumprod` を事前計算する。
+3. SNR_t = alpha_bar_t / (1 - alpha_bar_t) を計算し、時間に対する SNR summary を作る。
+4. `alphas_cumprod[T-1]` が `target_alpha_bar_final` の 10% 以内にあることを確認する。そうでなければ beta_end（linear）、s（cosine）、k（sigmoid）を調整して再試行する。
+5. 3 つの checkpoint を報告する。
    - `t=T*0.25` — early corruption
    - `t=T*0.5` — midway
    - `t=T*0.75` — near-final
 
-## Report
+## レポート
 
 ```
 [schedule]
@@ -75,9 +75,9 @@ k = 6 to 12. Good middle ground; used by some SDXL variants.
   - <if beta_end produces NaN in log-SNR>
 ```
 
-## Rules
+## ルール
 
-- Never emit a schedule with any `alpha_bar_t <= 0`; clamp values under 1e-5 and warn.
-- Cosine is the default recommendation for low-step-count sampling (< 30 steps).
-- Linear is the default for `quality_target == research` — DDPM baselines are reported with linear schedules.
-- When `image_resolution > 256`, recommend shifting the schedule (Chen, 2023) to retain more signal at high resolutions.
+- `alpha_bar_t <= 0` を含む schedule は絶対に出力しない。1e-5 未満の値は clamp し、警告する。
+- 低い step-count sampling（< 30 steps）では cosine をデフォルト推奨にする。
+- `quality_target == research` では linear をデフォルトにする。DDPM baselines は linear schedules で報告されているため。
+- `image_resolution > 256` の場合は、高解像度でより多くの signal を保持するため schedule の shifting（Chen, 2023）を推奨する。

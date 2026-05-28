@@ -1,34 +1,34 @@
-# SGLang and RadixAttention for Prefix-Heavy Workloads
+# Prefix-Heavy Workloads 向け SGLang と RadixAttention
 
-> SGLang treats the KV cache as a first-class, reusable resource stored in a radix tree. Where vLLM schedules requests FCFS (first-come, first-served), SGLang's cache-aware scheduler prioritizes requests with longer shared prefixes — effectively a depth-first radix traversal so hot branches stay resident in HBM. On Llama 3.1 8B with ShareGPT-like 1K prompts, SGLang hits ~16,200 tok/s to vLLM's ~12,500, a ~29% edge. On prefix-heavy RAG workloads the advantage reaches 6.4x. On voice-cloning-shaped workloads cache hit rate cleared 86%. Deployed on 400,000+ GPUs in 2026 across xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS. The gotcha is that the 6.4x number evaporates when prefix ordering is inconsistent — ordering is the engineer's lever.
+> SGLang は KV cache を radix tree に保存される first-class で再利用可能な resource として扱います。vLLM が FCFS (first-come, first-served) で request を schedule するのに対し、SGLang の cache-aware scheduler は shared prefix が長い request を優先します。実質的には depth-first radix traversal で、hot branch を HBM に resident に保ちます。ShareGPT-like 1K prompts の Llama 3.1 8B では、SGLang は約 16,200 tok/s、vLLM は約 12,500 tok/s で約 29% 優位です。prefix-heavy RAG workload では 6.4x に達します。voice-cloning 形の workload では cache hit rate が 86% を超えました。2026 年には xAI、LinkedIn、Cursor、Oracle、GCP、Azure、AWS にまたがり 400,000+ GPUs で deploy されています。gotcha は、prefix ordering が一貫しないと 6.4x の数字が消えることです。ordering が engineer の lever です。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy radix-tree cache + cache-aware scheduler)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 14 (Agentic RAG)
-**Time:** ~75 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy radix-tree cache + cache-aware scheduler)
+**前提条件:** Phase 17 · 04 (vLLM Serving Internals), Phase 14 (Agentic RAG)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Diagram RadixAttention: how prefixes are stored in a radix tree and how KV blocks are shared across sequences rooted at the same branch.
-- Explain cache-aware scheduling and why FCFS is wrong for prefix-heavy traffic.
-- Compute expected speedup for a workload given prefix-cache hit rate and prompt length distribution.
-- Name the prompt-ordering discipline that makes the 6.4x number real vs a lost upside.
+- RadixAttention を diagram する: prefix が radix tree にどう保存され、同じ branch に root を持つ sequences が KV blocks をどう共有するか。
+- cache-aware scheduling と、prefix-heavy traffic で FCFS がなぜ間違いかを説明する。
+- prefix-cache hit rate と prompt length distribution から expected speedup を計算する。
+- 6.4x を現実にする prompt-ordering discipline と、失われる upside の違いを naming する。
 
-## The Problem
+## 問題
 
-Classic serving treats each request's prompt as opaque. Even when 5,000 RAG requests all start with the same 2,000-token system prompt plus same retrieval preamble, vLLM prefills that 2,000-token prefix 5,000 times. The GPU does the same work over and over.
+classic serving は各 request の prompt を opaque に扱います。5,000 件の RAG requests がすべて同じ 2,000-token system prompt と同じ retrieval preamble で始まっていても、vLLM はその 2,000-token prefix を 5,000 回 prefill します。GPU は同じ作業を何度も繰り返します。
 
-The observation: prompts in agentic and RAG workloads share long prefixes almost always. System prompt, tool schemas, few-shot examples, retrieval headers, conversation history — all repeat across requests. If you stored the KV cache for that prefix once and reused it, you would not prefill it again.
+観察: agentic workload と RAG workload の prompt はほぼ常に long prefix を共有します。system prompt、tool schemas、few-shot examples、retrieval headers、conversation history は request 間で反復されます。その prefix の KV cache を 1 回保存して reuse できれば、再度 prefill する必要はありません。
 
-RadixAttention does exactly this. Tokens are indexed in a radix tree; each node owns KV blocks for the token sequence on its path from root. A new request walks the tree: any node whose token matches re-uses that node's KV blocks. Prefill cost becomes proportional to the "new" suffix, not the full prompt.
+RadixAttention はこれを実行します。tokens は radix tree に index されます。各 node は root から自分までの token sequence に対応する KV blocks を所有します。new request は tree を walk し、token が match する node の KV blocks を reuse します。prefill cost は full prompt ではなく「new」suffix に比例します。
 
-The challenge is scheduling. If two requests share a 2,000-token prefix and a third shares only 200 tokens of the same prefix, you want to serve the two long-shared requests together so the long prefix stays in HBM. FCFS does the opposite — it serves whoever arrived first, potentially evicting the hot branch before the next long-prefix request hits.
+challenge は scheduling です。2 requests が 2,000-token prefix を共有し、3 番目が同じ prefix の 200 tokens だけを共有する場合、2 つの long-shared requests を一緒に serve して、long prefix を HBM に残すべきです。FCFS は逆をします。先に到着したものを serve するため、次の long-prefix request が来る前に hot branch を evict する可能性があります。
 
 ## The Concept
 
-### The radix tree as a KV index
+### KV index としての radix tree
 
-A radix tree (compact trie) stores token sequences. Each node owns a token range and the KV blocks computed for that range. Children extend the sequence one or more tokens.
+radix tree (compact trie) は token sequence を保存します。各 node は token range と、その range のために計算済みの KV blocks を所有します。children は sequence を 1 tokens 以上伸ばします。
 
 ```
 root
@@ -39,86 +39,86 @@ root
       |- "Context: <doc B>..."        (520 tokens, 33 blocks)
 ```
 
-A new request comes in with system prompt + "Context: <doc A>" + "Question: Carol". The scheduler walks: system prefix matches (124 blocks reused), doc-A branch matches (31 blocks reused), then allocates fresh blocks only for "Question: Carol" (4 blocks). Prefill cost: 4 blocks of new tokens. Without the tree: 160 blocks. ~40x savings on prefill.
+new request が system prompt + "Context: <doc A>" + "Question: Carol" で来るとします。scheduler は system prefix を match し (124 blocks reused)、doc-A branch を match し (31 blocks reused)、"Question: Carol" だけに fresh blocks を allocate します (4 blocks)。prefill cost は new tokens 4 blocks です。tree がなければ 160 blocks。prefill は約 40x savings です。
 
 ### Cache-aware scheduling
 
-Radix-tree-backed reuse is pointless if the cache churns. Two key policies:
+radix-tree-backed reuse は cache が churn すると意味がありません。重要な policy は 2 つです。
 
-1. **Depth-first dispatch**. When picking the next request from the queue, prefer requests rooted at the same branch as the current running set. This keeps the hot branch pinned.
-2. **LRU at branch level, not block level**. Evict whole branches (starting from shortest-used leaves) rather than individual blocks, so cache shape matches radix shape.
+1. **Depth-first dispatch**。queue から次の request を選ぶとき、current running set と同じ branch に root を持つ request を優先します。これで hot branch を pin できます。
+2. **block level ではなく branch level LRU**。individual blocks ではなく whole branches (shortest-used leaves から) を evict し、cache shape を radix shape に合わせます。
 
-FCFS violates both. A request sharing 2,000 tokens sits behind a request sharing 50, then the 2,000-token branch gets evicted to admit the 50-token one.
+FCFS は両方に反します。2,000 tokens を共有する request が、50 tokens だけ共有する request の後ろに並び、2,000-token branch は 50-token request を入れるために evict されます。
 
-### Benchmark numbers you should memorize
+### 覚えるべき benchmark numbers
 
-- Llama 3.1 8B, H100, ShareGPT 1K prompts: SGLang ~16,200 tok/s vs vLLM ~12,500 (~29% edge).
-- Prefix-heavy RAG (same system + same doc, varying question): up to 6.4x on SGLang.
-- Voice cloning workloads: 86.4% prefix-cache hit rate.
-- Production hit rates across SGLang customers: 50-99% depending on prompt discipline.
-- Deployed on 400,000+ GPUs in 2026.
+- Llama 3.1 8B、H100、ShareGPT 1K prompts: SGLang 約 16,200 tok/s vs vLLM 約 12,500 (約 29% edge)。
+- Prefix-heavy RAG (same system + same doc, varying question): SGLang で最大 6.4x。
+- Voice cloning workloads: 86.4% prefix-cache hit rate。
+- SGLang customer の production hit rate: prompt discipline により 50-99%。
+- 2026 年に 400,000+ GPUs で deploy。
 
-### The ordering gotcha
+### ordering gotcha
 
-The 6.4x number relies on consistent prompt-template ordering. If your client constructs prompts as `[system, tools, context, history, question]` in some requests and `[system, context, tools, history, question]` in others, the tree cannot find the shared prefix. What looks like a shared prefix to a human is two distinct sequences to the radix tree.
+6.4x は consistent prompt-template ordering に依存します。client がある request では `[system, tools, context, history, question]`、別の request では `[system, context, tools, history, question]` を作ると、tree は shared prefix を見つけられません。human には shared prefix に見えても、radix tree には 2 つの distinct sequences です。
 
-Engineer's lever: your prompt template is a cache key. Fix the order. Put everything immutable (system, tools, schemas) first. Put retrieval context next. Put user question last. Do not interleave dynamic content into the prefix.
+engineer の lever: prompt template は cache key です。order を固定してください。immutable なもの (system, tools, schemas) を先に置きます。retrieval context を次に置きます。user question は最後です。dynamic content を prefix に interleave してはいけません。
 
-Real case from the research: moving dynamic content out of the cacheable prefix took one deployment from 7% to 74% cache hit rate in one change.
+research の real case では、dynamic content を cacheable prefix から外しただけで、ある deployment の cache hit rate は 7% から 74% へ上がりました。
 
-### Where RadixAttention wins and loses
+### RadixAttention が勝つ場所と負ける場所
 
-Wins:
-- RAG (same retrieval preamble, varying question).
-- Agents (same tool schemas, varying query).
-- Chat with long system prompt.
-- Voice / vision workloads with repeated preambles.
+勝つ:
+- RAG (same retrieval preamble, varying question)。
+- Agents (same tool schemas, varying query)。
+- long system prompt を持つ chat。
+- repeated preambles を持つ voice / vision workloads。
 
-Loses (returns to vLLM-level throughput):
-- Single-shot generation with unique prompts (code completion, open-ended chat without system prompt).
-- Dynamic prompts where every request interleaves unique content into the prefix.
+負ける (vLLM-level throughput に戻る):
+- unique prompts の single-shot generation (code completion、system prompt なしの open-ended chat)。
+- dynamic prompts で、毎 request が unique content を prefix に interleave する場合。
 
-### Why this is a scheduler problem, not just a kernel problem
+### kernel だけでなく scheduler 問題である理由
 
-You can implement KV reuse as a kernel trick. SGLang's insight is that reuse only pays if the scheduler keeps the hot branch resident. A naive "reuse if available" policy will churn the cache under mixed load. The radix-tree-indexed scheduler is what turns the kernel trick into a 29% production edge.
+KV reuse は kernel trick として実装できます。SGLang の insight は、scheduler が hot branch を resident に保つときにだけ reuse が効くという点です。naive な "reuse if available" policy は mixed load で cache を churn させます。radix-tree-indexed scheduler が、kernel trick を 29% production edge に変えます。
 
-### Interplay with vLLM
+### vLLM との関係
 
-The two systems are not strict competitors. In 2026 vLLM added prefix caching (`--enable-prefix-caching`) and a cache-aware router (vLLM Router in Rust). The gap closed but did not fully disappear — SGLang's whole stack is radix-first; vLLM grafted it on. For workloads dominated by prefix reuse, SGLang remains the default. For general-purpose serving without strong prefix patterns, vLLM remains equal or better.
+2 つの system は strict competitor ではありません。2026 年に vLLM は prefix caching (`--enable-prefix-caching`) と cache-aware router (Rust の vLLM Router) を追加しました。gap は縮まりましたが完全には消えていません。SGLang は stack 全体が radix-first で、vLLM は後付けです。prefix reuse が支配する workload では SGLang が default です。強い prefix pattern がない general-purpose serving では vLLM が同等または better です。
 
 ## Use It
 
-`code/main.py` implements a toy radix-tree KV cache plus a scheduler with two policies: FCFS and cache-aware. Runs the same workload through both, reports prefix-cache hit rate and throughput delta. Then runs a "scrambled ordering" workload to show the 6.4x collapse.
+`code/main.py` は toy radix-tree KV cache と 2 つの policy (FCFS と cache-aware) を持つ scheduler を実装します。同じ workload を両方で走らせ、prefix-cache hit rate と throughput delta を報告します。その後 "scrambled ordering" workload を走らせ、6.4x が collapse する様子を示します。
 
 ## Ship It
 
-This lesson produces `outputs/skill-radix-scheduler-advisor.md`. Given a workload description (prompt-template shape, retrieval pattern, number of concurrent tenants), it produces a prompt-ordering prescription and a go/no-go for SGLang adoption.
+この lesson は `outputs/skill-radix-scheduler-advisor.md` を生成します。workload description (prompt-template shape、retrieval pattern、concurrent tenants 数) が与えられると、prompt-ordering prescription と SGLang adoption の go/no-go を出します。
 
 ## Exercises
 
-1. Run `code/main.py`. Compare FCFS and cache-aware on the same workload. Where does the delta come from — prefill savings, decode savings, or queue delay?
-2. Modify the workload so prompts randomly permute `[system, tools, context]`. Re-run. What happens to hit rate? Why?
-3. Compute the HBM cost of keeping a 2,000-token system prompt resident as one radix branch on Llama 3.1 8B. Compare to the cost of a 16-sequence batch without prefix reuse.
-4. Read the SGLang RadixAttention paper. Explain in three sentences why tree-shaped LRU eviction beats block-shaped LRU under prefix-heavy load.
-5. A customer reports only 8% cache hit rate. Name three likely causes and the diagnostic you would run for each.
+1. `code/main.py` を実行してください。同じ workload で FCFS と cache-aware を比較してください。delta は prefill savings、decode savings、queue delay のどこから来ますか。
+2. prompts が `[system, tools, context]` を random に permute するよう workload を変更してください。再実行すると hit rate はどうなりますか。なぜですか。
+3. Llama 3.1 8B で 2,000-token system prompt を 1 つの radix branch として resident に保つ HBM cost を計算してください。prefix reuse なしの 16-sequence batch の cost と比べてください。
+4. SGLang RadixAttention paper を読んでください。prefix-heavy load で tree-shaped LRU eviction が block-shaped LRU に勝つ理由を 3 文で説明してください。
+5. customer が cache hit rate 8% だけを報告しています。likely causes を 3 つ挙げ、それぞれに対して実行する diagnostic を naming してください。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| RadixAttention | "the SGLang thing" | KV cache indexed as a radix tree so shared prefixes reuse blocks |
-| Radix tree | "compact trie" | Tree where each node owns a token range and its KV blocks |
-| Cache-aware scheduler | "hot-branch-first" | Scheduler that prefers requests sharing the resident branch |
-| Prefix-cache hit rate | "how much of your prompt was free" | Fraction of prompt tokens served from reused KV blocks |
-| FCFS | "first-come first-served" | Default scheduling that breaks prefix locality |
-| Branch-level LRU | "evict the leaf" | Eviction policy matched to radix shape |
-| Prompt template ordering | "the cache key" | The prompt's component order determines what the tree can share |
-| System prompt pinning | "resident prefix" | Keep the immutable system portion pinned to avoid eviction thrash |
+| RadixAttention | 「SGLang のあれ」 | KV cache を radix tree として index し、shared prefix が blocks を reuse する仕組み |
+| Radix tree | 「compact trie」 | 各 node が token range と KV blocks を所有する tree |
+| Cache-aware scheduler | 「hot-branch-first」 | resident branch を共有する request を優先する scheduler |
+| Prefix-cache hit rate | 「prompt のどれだけが free だったか」 | reused KV blocks から serve された prompt tokens の割合 |
+| FCFS | 「first-come first-served」 | prefix locality を壊す default scheduling |
+| Branch-level LRU | 「leaf を evict」 | radix shape に合った eviction policy |
+| Prompt template ordering | 「cache key」 | prompt component の順序が tree の共有可能性を決める |
+| System prompt pinning | 「resident prefix」 | immutable system 部分を pin し eviction thrash を避ける |
 
-## Further Reading
+## 参考文献
 
-- [SGLang GitHub](https://github.com/sgl-project/sglang) — source and docs.
-- [SGLang documentation](https://sgl-project.github.io/) — RadixAttention and scheduling details.
-- [SGLang paper — Efficiently Programming Large Language Models (arXiv:2312.07104)](https://arxiv.org/abs/2312.07104) — the design reference.
-- [LMSYS blog — SGLang with RadixAttention](https://www.lmsys.org/blog/2024-01-17-sglang/) — benchmark numbers and scheduler rationale.
-- [vLLM — Prefix Caching](https://docs.vllm.ai/en/latest/features/prefix_caching.html) — vLLM's own radix-like implementation, for comparison.
+- [SGLang GitHub](https://github.com/sgl-project/sglang) — source and docs。
+- [SGLang documentation](https://sgl-project.github.io/) — RadixAttention と scheduling details。
+- [SGLang paper — Efficiently Programming Large Language Models (arXiv:2312.07104)](https://arxiv.org/abs/2312.07104) — design reference。
+- [LMSYS blog — SGLang with RadixAttention](https://www.lmsys.org/blog/2024-01-17-sglang/) — benchmark numbers と scheduler rationale。
+- [vLLM — Prefix Caching](https://docs.vllm.ai/en/latest/features/prefix_caching.html) — comparison 用の vLLM 実装。

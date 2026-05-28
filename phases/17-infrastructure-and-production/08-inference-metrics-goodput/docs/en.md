@@ -1,140 +1,140 @@
-# Inference Metrics — TTFT, TPOT, ITL, Goodput, P99
+# 推論メトリクス — TTFT、TPOT、ITL、Goodput、P99
 
-> Four metrics decide whether an inference deployment is working. TTFT is prefill plus queue plus network. TPOT (equivalently ITL) is the memory-bound decode cost per token. End-to-end latency is TTFT plus TPOT times output length. Throughput is tokens per second aggregated across the fleet. But the one that matters for product is goodput — the fraction of requests that met every SLO simultaneously. High throughput at low goodput means you are processing tokens that never reach users on time. Reference numbers for Llama-3.1-8B-Instruct on TRT-LLM in 2026: mean TTFT 162 ms, mean TPOT 7.33 ms, mean E2E 1,093 ms. Always report P50, P90, P99 — never just mean. And watch the measurement trap: GenAI-Perf excludes TTFT from ITL calculation, LLMPerf includes it; two tools disagree on TPOT for the same run.
+> 推論デプロイが機能しているかどうかは 4 つのメトリクスで決まります。TTFT は prefill、キュー、ネットワークの合計です。TPOT（ITL と同等）は token あたりのメモリ律速な decode コストです。エンドツーエンド latency は TTFT に、TPOT と出力長の積を足したものです。Throughput は fleet 全体で集計した tokens/sec です。ただしプロダクトで重要なのは goodput、つまりすべての SLO を同時に満たしたリクエストの割合です。Goodput が低いのに throughput が高い場合、ユーザーに時間内に届かない token を処理しているだけです。2026 年の TRT-LLM 上の Llama-3.1-8B-Instruct の参考値: mean TTFT 162 ms、mean TPOT 7.33 ms、mean E2E 1,093 ms。常に P50、P90、P99 を報告し、mean だけで済ませてはいけません。測定の罠にも注意してください。GenAI-Perf は ITL 計算から TTFT を除外し、LLMPerf は含めます。同じ実行でも 2 つのツールで TPOT が一致しません。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy percentile calculator and goodput reporter)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib、toy percentile calculator and goodput reporter)
+**前提条件:** Phase 17 · 04 (vLLM Serving Internals)
+**所要時間:** 約 60 分
 
-## Learning Objectives
+## 学習目標
 
-- Define TTFT, TPOT, ITL, E2E, throughput, and goodput precisely and name the component each one measures.
-- Explain why mean is the wrong statistic for LLM serving and how to read P50/P90/P99.
-- Construct an SLO multi-constraint (e.g. TTFT<500 ms AND TPOT<15 ms AND E2E<2 s) and compute goodput against it.
-- Name two benchmark tools that disagree on TPOT for the same run and explain why.
+- TTFT、TPOT、ITL、E2E、throughput、goodput を正確に定義し、それぞれが測るコンポーネントを説明できる。
+- LLM serving で mean が不適切な統計量である理由と、P50/P90/P99 の読み方を説明できる。
+- SLO の複合制約（例: TTFT<500 ms AND TPOT<15 ms AND E2E<2 s）を作り、それに対する goodput を計算できる。
+- 同じ実行の TPOT で一致しない 2 つの benchmark tool を挙げ、その理由を説明できる。
 
-## The Problem
+## 問題
 
-"Our throughput is 15,000 tokens per second." So what? If 40% of requests blew past 2 seconds end-to-end, users abandoned the session. Throughput alone does not tell you whether the product works.
+「throughput は 15,000 tokens/sec です」。だから何でしょうか。もしリクエストの 40% が end-to-end で 2 秒を超えていれば、ユーザーはセッションを離脱しています。Throughput だけではプロダクトが機能しているかは分かりません。
 
-Inference has multiple axes of latency and each one fails differently. Prefill is compute-bound and scales with prompt length. Decode is memory-bound and scales with batch size. Queuing delay is an operational problem. Network is a physical-distance problem. You need distinct metrics for each, and you need percentiles, and you need a single composite that says "did the user get what they expected" — that is goodput.
+推論 latency には複数の軸があり、それぞれ失敗の仕方が異なります。Prefill は compute-bound で、prompt length に応じて伸びます。Decode は memory-bound で、batch size に応じて伸びます。Queuing delay は運用上の問題です。Network は物理距離の問題です。それぞれに別のメトリクスが必要で、percentile も必要です。そして「ユーザーは期待したものを得られたか」を示す単一の合成指標が必要です。それが goodput です。
 
-## The Concept
+## コンセプト
 
 ### TTFT — time to first token
 
 `TTFT = queue_time + network_request + prefill_time`
 
-Prefill dominates when prompts are long. On Llama-3.3-70B FP8 on H100, a 32k prompt takes ~800 ms of pure prefill. Queue time is scheduler behavior under load. Network request is wire time including TLS. TTFT is the latency the user sees before anything streams back.
+Prompt が長いと prefill が支配的になります。H100 上の Llama-3.3-70B FP8 では、32k prompt の純粋な prefill だけで約 800 ms かかります。Queue time は負荷下での scheduler の挙動です。Network request は TLS を含む wire time です。TTFT は、何かが stream で返ってくる前にユーザーが体感する latency です。
 
 ### TPOT / ITL — inter-token latency
 
-Many names for one quantity. `TPOT` (time per output token), `ITL` (inter-token latency), `decode latency per token` — all the same. It is the time between consecutive streamed tokens after the first.
+1 つの量に多くの名前があります。`TPOT`（time per output token）、`ITL`（inter-token latency）、`decode latency per token` はすべて同じです。最初の token の後、連続する streamed token 間の時間です。
 
 `TPOT = (decode_forward_time + scheduler_overhead) / tokens_produced`
 
-On the same Llama-3.3-70B H100 stack with chunked prefill, TPOT mean ~7 ms. Without chunked prefill, during a long prefill on a neighboring sequence, TPOT can spike to 50 ms. Watch P99, not mean.
+同じ Llama-3.3-70B H100 stack で chunked prefill を使うと、TPOT mean は約 7 ms です。Chunked prefill がない場合、隣の sequence で長い prefill が走っている間に TPOT は 50 ms まで跳ねることがあります。Mean ではなく P99 を見てください。
 
 ### E2E latency
 
 `E2E = TTFT + TPOT * output_tokens + network_response`
 
-For long outputs (>500 tokens), E2E is TPOT-dominated. For short outputs with long prompts, E2E is TTFT-dominated. Report output-length-conditioned E2E.
+長い出力（>500 tokens）では、E2E は TPOT に支配されます。短い出力で長い prompt の場合、E2E は TTFT に支配されます。出力長で条件付けた E2E を報告してください。
 
 ### Throughput
 
 `throughput = total_output_tokens / elapsed_time`
 
-Aggregate metric. Tells you fleet efficiency. Does not tell you individual-request health.
+集約メトリクスです。Fleet の効率は分かります。個々のリクエストの健全性は分かりません。
 
-### Goodput — the metric you actually care about
+### Goodput — 実際に気にするべきメトリクス
 
 `goodput = fraction of requests meeting (TTFT <= a) AND (TPOT <= b) AND (E2E <= c)`
 
-The SLO is a multi-constraint. A request is "good" only if every constraint held. Goodput is the share. High throughput at 60% goodput is failure. Lower throughput at 99% goodput is the target.
+SLO は複合制約です。すべての制約を満たしたときだけ、そのリクエストは「good」です。Goodput はその割合です。Throughput が高くても goodput が 60% なら失敗です。Throughput が低くても goodput が 99% であることが目標です。
 
-In 2026, goodput is the metric used in MLPerf Inference v6.0 submissions and in internal SLA tracking at AI platform providers.
+2026 年時点で、goodput は MLPerf Inference v6.0 の提出や、AI platform provider の内部 SLA tracking で使われるメトリクスです。
 
-### Why mean is the wrong statistic
+### Mean が不適切な統計量である理由
 
-LLM latency distributions are right-skewed. A decode batch with one long-prefill neighbor can ship 500 tokens with TPOT ~7 ms and 20 tokens with TPOT ~60 ms. Mean TPOT is 9 ms. P99 TPOT is 65 ms. Users hit the P99 regularly — that is why they leave.
+LLM latency の分布は右に歪んでいます。1 つの長い prefill を持つ隣接 sequence がある decode batch では、500 tokens が TPOT 約 7 ms で流れ、20 tokens が TPOT 約 60 ms になることがあります。Mean TPOT は 9 ms です。P99 TPOT は 65 ms です。ユーザーは P99 に定期的に当たります。だから離脱するのです。
 
-Always report the triple (P50, P90, P99). For user experience, P99 is the one you optimize.
+常に (P50, P90, P99) の 3 つを報告してください。ユーザー体験では、最適化すべき対象は P99 です。
 
-### Reference numbers — Llama-3.1-8B-Instruct on TRT-LLM, 2026
+### 参考値 — TRT-LLM 上の Llama-3.1-8B-Instruct、2026 年
 
 - mean TTFT: 162 ms
 - mean TPOT: 7.33 ms
 - mean E2E: 1,093 ms
-- P99 TPOT: varies 10-25 ms depending on chunked-prefill configuration.
+- P99 TPOT: chunked-prefill 設定により 10-25 ms の範囲。
 
-These are the published NVIDIA reference points. They change with model size (70B would show 3-5x), hardware (H100 vs B200 ~3x), and load.
+これらは NVIDIA が公開している参考点です。モデルサイズ（70B なら 3-5 倍）、ハードウェア（H100 vs B200 で約 3 倍）、負荷によって変わります。
 
-### The measurement trap
+### 測定の罠
 
-Two of the most-used 2026 benchmark tools disagree on TPOT for the same run:
+2026 年に最も使われている benchmark tool のうち 2 つは、同じ実行でも TPOT が一致しません。
 
-- **NVIDIA GenAI-Perf**: excludes TTFT from the ITL calculation. ITL starts from token 2.
-- **LLMPerf**: includes TTFT. ITL starts from token 1.
+- **NVIDIA GenAI-Perf**: ITL 計算から TTFT を除外します。ITL は token 2 から始まります。
+- **LLMPerf**: TTFT を含めます。ITL は token 1 から始まります。
 
-For a request with TTFT 500 ms and 100 output tokens in 700 ms total decode, GenAI-Perf reports `ITL = 700/99 = 7.07 ms`, LLMPerf reports `ITL = 1200/100 = 12.00 ms`. Tool choice changes the number.
+TTFT が 500 ms、100 output tokens、合計 decode が 700 ms のリクエストでは、GenAI-Perf は `ITL = 700/99 = 7.07 ms`、LLMPerf は `ITL = 1200/100 = 12.00 ms` と報告します。ツールの選択だけで数値が変わります。
 
-Always state which tool. Always publish the definition.
+必ずどのツールかを書いてください。必ず定義を公開してください。
 
-### Constructing an SLO
+### SLO を構成する
 
-A reasonable consumer-facing SLO for a 70B chat model in 2026:
+2026 年の 70B chat model に対する、妥当な consumer-facing SLO:
 
-- TTFT P99 <= 800 ms.
-- TPOT P99 <= 25 ms.
-- E2E P99 <= 3 s for <300-token outputs.
-- Goodput target >= 99%.
+- TTFT P99 <= 800 ms。
+- TPOT P99 <= 25 ms。
+- <300-token outputs で E2E P99 <= 3 s。
+- Goodput target >= 99%。
 
-Enterprise SLOs tighten TTFT (200-400 ms) and loosen E2E. The point is to write them down, measure all three, and track goodput as a single composite.
+Enterprise SLO では TTFT を厳しく（200-400 ms）し、E2E は緩めることがあります。重要なのは、それらを書き下し、3 つすべてを測定し、goodput を単一の合成指標として追跡することです。
 
-### How to measure
+### 測定方法
 
-- Run real traffic or realistic synthetic (LLMPerf with `--mean-input-tokens 800 --stddev-input-tokens 300 --mean-output-tokens 150`).
-- Target 2x peak concurrency for the benchmark run.
-- Run 30-50 iterations, take percentiles of the combined sample.
-- Publish with tool name, tool version, model, hardware, concurrency, prompt distribution.
+- 実トラフィックまたは現実的な synthetic traffic を走らせる（LLMPerf なら `--mean-input-tokens 800 --stddev-input-tokens 300 --mean-output-tokens 150`）。
+- Benchmark run では peak concurrency の 2 倍を target にする。
+- 30-50 iterations を実行し、結合サンプルの percentile を取る。
+- Tool name、tool version、model、hardware、concurrency、prompt distribution とともに公開する。
 
-## Use It
+## 使ってみる
 
-`code/main.py` is a toy goodput calculator. Generate a synthetic latency distribution, apply an SLO, and compute goodput. Also shows the GenAI-Perf vs LLMPerf TPOT difference on the same trace.
+`code/main.py` は toy goodput calculator です。Synthetic latency distribution を生成し、SLO を適用して goodput を計算します。同じ trace 上で GenAI-Perf と LLMPerf の TPOT の違いも示します。
 
 ## Ship It
 
-This lesson produces `outputs/skill-slo-goodput-gate.md`. Given a workload and SLO, it produces a CI/CD-ready benchmark recipe that gates deploys on goodput rather than throughput.
+このレッスンは `outputs/skill-slo-goodput-gate.md` を生成します。Workload と SLO を与えると、throughput ではなく goodput で deploy を gate する CI/CD-ready な benchmark recipe を出力します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Generate a distribution with 1% tail spike. How does goodput change when you tighten P99 TPOT from 30 ms to 15 ms?
-2. A vendor quotes "15,000 tok/s on Llama 3.3 70B H100". Name three questions to ask before trusting it.
-3. Why does chunked prefill protect P99 TPOT but not mean TPOT?
-4. Construct a consumer SLO for a voice assistant (first token is heard, not read). Which metric is most user-visible?
-5. Read the LLMPerf README and the GenAI-Perf docs. Identify three other metrics where the tools disagree.
+1. `code/main.py` を実行してください。1% の tail spike を持つ分布を生成します。P99 TPOT を 30 ms から 15 ms に厳しくすると goodput はどう変わりますか。
+2. Vendor が「Llama 3.3 70B H100 で 15,000 tok/s」と言っています。信用する前に尋ねるべき 3 つの質問を挙げてください。
+3. Chunked prefill は P99 TPOT を守るのに、mean TPOT には効きにくいのはなぜですか。
+4. Voice assistant 向けの consumer SLO を作ってください（first token は読まれるのではなく聞こえる）。どのメトリクスが最もユーザーに見えますか。
+5. LLMPerf README と GenAI-Perf docs を読んでください。ツール間で定義が一致しない他の 3 つのメトリクスを特定してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| TTFT | "time to first token" | Queue + network + prefill; dominated by prefill at long prompts |
-| TPOT | "time per output token" | Memory-bound decode cost per token after first |
-| ITL | "inter-token latency" | Same as TPOT in most tools (not all — see GenAI-Perf) |
-| E2E | "end to end" | TTFT + TPOT * output_len; response-side network on top |
-| Throughput | "tok/s" | Fleet efficiency; useless without latency percentiles |
-| Goodput | "SLO-met rate" | Fraction of requests meeting every SLO constraint simultaneously |
-| P99 | "tail" | 1-in-100 worst-case latency; the user experience metric |
-| SLO multi-constraint | "the joint" | AND of all three latency bounds; a request fails if any one is violated |
-| GenAI-Perf vs LLMPerf | "the tool trap" | Tools disagree on whether ITL includes TTFT |
+| Term | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| TTFT | "time to first token" | Queue + network + prefill。長い prompt では prefill が支配的 |
+| TPOT | "time per output token" | 最初の token 後の、token あたりの memory-bound な decode cost |
+| ITL | "inter-token latency" | 多くのツールでは TPOT と同じ（すべてではない — GenAI-Perf を参照） |
+| E2E | "end to end" | TTFT + TPOT * output_len。さらに response-side network が乗る |
+| Throughput | "tok/s" | Fleet efficiency。latency percentile なしでは役に立たない |
+| Goodput | "SLO-met rate" | すべての SLO 制約を同時に満たしたリクエストの割合 |
+| P99 | "tail" | 100 件に 1 件の worst-case latency。ユーザー体験のメトリクス |
+| SLO multi-constraint | "the joint" | 3 つすべての latency bound の AND。どれか 1 つでも違反すると失敗 |
+| GenAI-Perf vs LLMPerf | "the tool trap" | ITL に TTFT を含めるかどうかでツールが一致しない |
 
-## Further Reading
+## 参考資料
 
-- [NVIDIA NIM — LLM Benchmarking Metrics](https://docs.nvidia.com/nim/benchmarking/llm/latest/metrics.html) — canonical definition of TTFT, ITL, TPOT.
-- [Anyscale — LLM Serving Benchmarking Metrics](https://docs.anyscale.com/llm/serving/benchmarking/metrics) — alternative definitions and measurement recipe.
-- [BentoML — LLM Inference Metrics](https://bentoml.com/llm/inference-optimization/llm-inference-metrics) — applied measurement on real deployments.
-- [LLMPerf](https://github.com/ray-project/llmperf) — Ray-based open-source benchmark.
-- [GenAI-Perf](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/client/src/c++/perf_analyzer/genai-perf/README.html) — NVIDIA's benchmark tool.
-- [MLPerf Inference](https://mlcommons.org/benchmarks/inference-datacenter/) — the industry-accepted goodput-based benchmark.
+- [NVIDIA NIM — LLM Benchmarking Metrics](https://docs.nvidia.com/nim/benchmarking/llm/latest/metrics.html) — TTFT、ITL、TPOT の標準的な定義。
+- [Anyscale — LLM Serving Benchmarking Metrics](https://docs.anyscale.com/llm/serving/benchmarking/metrics) — 別定義と測定レシピ。
+- [BentoML — LLM Inference Metrics](https://bentoml.com/llm/inference-optimization/llm-inference-metrics) — 実デプロイへの適用測定。
+- [LLMPerf](https://github.com/ray-project/llmperf) — Ray-based open-source benchmark。
+- [GenAI-Perf](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/client/src/c++/perf_analyzer/genai-perf/README.html) — NVIDIA の benchmark tool。
+- [MLPerf Inference](https://mlcommons.org/benchmarks/inference-datacenter/) — 業界で受け入れられている goodput-based benchmark。

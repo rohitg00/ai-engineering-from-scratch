@@ -1,30 +1,30 @@
-# Image Generation — GANs
+# 画像生成 — GANs
 
-> A GAN is two neural networks in a fixed game. One draws, one critiques. They get better together until the drawings fool the critic.
+> GAN は固定されたゲームを行う 2 つの neural networks です。一方が描き、もう一方が批評します。両者は一緒に上達し、やがて描いたものが批評者をだませるようになります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 03 (CNNs), Phase 3 Lesson 06 (Optimizers), Phase 3 Lesson 07 (Regularization)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 03 (CNNs), Phase 3 Lesson 06 (Optimizers), Phase 3 Lesson 07 (Regularization)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Explain the minimax game between generator and discriminator and why the equilibrium corresponds to p_model = p_data
-- Implement a DCGAN in PyTorch and get it to generate coherent 32x32 synthetic images in under 60 lines
-- Stabilise GAN training with the three standard tricks: non-saturating loss, spectral norm, TTUR (two-timescale update rule)
-- Read training curves that distinguish healthy convergence from mode collapse, oscillation, and discriminator-wins-completely
+- generator と discriminator の minimax game を説明し、その equilibrium がなぜ p_model = p_data に対応するかを説明する
+- PyTorch で DCGAN を実装し、60 行未満で一貫した 32x32 synthetic images を生成できるようにする
+- non-saturating loss、spectral norm、TTUR (two-timescale update rule) という 3 つの標準テクニックで GAN training を安定化する
+- healthy convergence と mode collapse、oscillation、discriminator-wins-completely を区別する training curves を読む
 
-## The Problem
+## 問題
 
-Classification teaches a network to map images to labels. Generation inverts the problem: sample new images that look like they came from the same distribution. There is no "correct" output you can diff against; there is only a distribution you want to mimic.
+Classification は images を labels に写像するよう network に教えます。Generation はこの問題を反転します。同じ distribution から来たように見える新しい images を sample します。差分を取れる「正しい」出力はありません。真似したい distribution があるだけです。
 
-The standard loss functions (MSE, cross-entropy) cannot measure "did this sample come from the real distribution." Minimising per-pixel error produces blurry averages, not realistic samples. The breakthrough was to learn the loss: train a second network whose job is to tell real from fake, and use its judgement to push the generator.
+標準的な loss functions（MSE、cross-entropy）は、「この sample は real distribution から来たか」を測れません。per-pixel error を最小化すると、リアルな samples ではなく、ぼやけた平均が生まれます。ブレークスルーは loss を学習することでした。real と fake を見分けることを仕事にする 2 つ目の network を学習し、その判断で generator を押します。
 
-GANs (Goodfellow et al., 2014) defined that framework. By 2018 StyleGAN was producing 1024x1024 faces indistinguishable from photographs. Diffusion models have since taken the throne on quality and controllability, but every trick that makes diffusion practical — normalisation choices, latent spaces, feature losses — was first understood on GANs.
+GANs (Goodfellow et al., 2014) はこの枠組みを定義しました。2018 年には StyleGAN が写真と見分けがつかない 1024x1024 の顔を生成していました。品質と controllability では diffusion models が現在の主役ですが、diffusion を実用的にするほぼすべての工夫、つまり normalisation choices、latent spaces、feature losses は、まず GANs 上で理解されました。
 
-## The Concept
+## コンセプト
 
-### The two networks
+### 2 つの networks
 
 ```mermaid
 flowchart LR
@@ -39,44 +39,44 @@ flowchart LR
     style OUT fill:#dcfce7,stroke:#16a34a
 ```
 
-The **generator** G takes a vector of noise `z` and outputs an image. The **discriminator** D takes an image and outputs a single scalar: the probability that the image is real.
+**generator** G は noise vector `z` を受け取り、image を出力します。**discriminator** D は image を受け取り、その image が real である確率を表す single scalar を出力します。
 
-### The game
+### ゲーム
 
-G wants D to be wrong. D wants to be right. Formally:
+G は D に間違ってほしい。D は正しくありたい。形式的には次の通りです。
 
 ```
 min_G max_D  E_x[log D(x)] + E_z[log(1 - D(G(z)))]
 ```
 
-Read right to left: D is maximising accuracy on real (`log D(real)`) and fake (`log (1 - D(fake))`) images. G is minimising D's accuracy on fakes — it wants `D(G(z))` to be high.
+右から左に読みます。D は real images（`log D(real)`）と fake images（`log (1 - D(fake))`）での正答率を最大化します。G は fake に対する D の正答率を最小化します。つまり `D(G(z))` を高くしたいのです。
 
-Goodfellow proved that this minimax has a global equilibrium where `p_G = p_data`, D outputs 0.5 everywhere, and the Jensen-Shannon divergence between generated and real distributions is zero. The hard part is getting there.
+Goodfellow は、この minimax には `p_G = p_data`、D が everywhere 0.5 を出力し、generated distribution と real distribution の Jensen-Shannon divergence がゼロになる global equilibrium があることを証明しました。難しいのはそこに到達することです。
 
 ### Non-saturating loss
 
-The form above is numerically unstable. Early in training, `D(G(z))` is near zero for every fake, so `log(1 - D(G(z)))` has vanishing gradients with respect to G. The fix: flip G's loss.
+上の形式は数値的に不安定です。学習初期には、すべての fake に対して `D(G(z))` がほぼゼロなので、`log(1 - D(G(z)))` は G に関する勾配が消えます。修正は G の loss を反転することです。
 
 ```
 L_D = -E_x[log D(x)] - E_z[log(1 - D(G(z)))]
 L_G = -E_z[log D(G(z))]                          # non-saturating
 ```
 
-Now when `D(G(z))` is near zero, G's loss is large and its gradient is informative. Every modern GAN trains with this variant.
+これで `D(G(z))` がほぼゼロのとき、G の loss は大きくなり、勾配は情報を持ちます。現代の GAN はすべてこの variant で学習します。
 
 ### DCGAN architecture rules
 
-Radford, Metz, Chintala (2015) distilled years of failed experiments into five rules that make GAN training stable:
+Radford、Metz、Chintala (2015) は、何年もの失敗実験から GAN training を安定させる 5 つのルールを抽出しました。
 
-1. Replace pooling with strided convs (both nets).
-2. Use batch norm in both generator and discriminator, except output of G and input of D.
-3. Remove fully connected layers on deeper architectures.
-4. G uses ReLU on all layers except output (tanh for output in [-1, 1]).
-5. D uses LeakyReLU (negative_slope=0.2) on all layers.
+1. pooling を strided convs に置き換える（両方の nets）。
+2. generator と discriminator の両方で batch norm を使う。ただし G の出力と D の入力は除く。
+3. 深い architectures では fully connected layers を削除する。
+4. G は出力以外の全 layers で ReLU を使う（出力は [-1, 1] の tanh）。
+5. D は全 layers で LeakyReLU（negative_slope=0.2）を使う。
 
-Every modern conv-based GAN (StyleGAN, BigGAN, GigaGAN) still starts from these rules and replaces pieces one at a time.
+現代の conv-based GAN（StyleGAN、BigGAN、GigaGAN）も、いまだにこれらのルールから始め、部品を 1 つずつ置き換えています。
 
-### Failure modes and their signatures
+### 失敗モードとシグネチャ
 
 ```mermaid
 flowchart LR
@@ -89,26 +89,26 @@ flowchart LR
     style M3 fill:#fecaca,stroke:#dc2626
 ```
 
-- **Mode collapse**: G finds one image that fools D and produces only that. Fix: add minibatch discrimination, spectral norm, or label-conditioning.
-- **Discriminator wins**: D becomes too strong too fast, G's gradients vanish. Fix: smaller D, lower D learning rate, or apply label smoothing on the real labels.
-- **Oscillation**: the two nets trade wins without ever approaching equilibrium. Fix: TTUR (D learns faster than G by a factor of 2-4), or switch to Wasserstein loss.
+- **Mode collapse**: G が D をだませる 1 つの image を見つけ、それだけを生成します。修正: minibatch discrimination、spectral norm、label-conditioning を追加する。
+- **Discriminator wins**: D が強くなりすぎるのが速く、G の勾配が消えます。修正: D を小さくする、D の learning rate を下げる、real labels に label smoothing を適用する。
+- **Oscillation**: 2 つの nets が equilibrium に近づかず、勝ち負けを交換し続けます。修正: TTUR（D が G より 2-4 倍速く学習）、または Wasserstein loss に切り替える。
 
-### Evaluation
+### 評価
 
-GANs have no ground truth, so how do you know they are working?
+GANs には ground truth がありません。では、うまく動いているかをどう知るのでしょうか。
 
-- **Sample inspection** — just look at 64 samples at the end of every epoch. Non-negotiable.
-- **FID (Fréchet Inception Distance)** — distance between Inception-v3 feature distributions of real and generated sets. Lower is better. Community standard.
-- **Inception Score** — older, more brittle; prefer FID.
-- **Precision/Recall for generative models** — measures quality (precision) and coverage (recall) separately. More informative than FID alone.
+- **Sample inspection** — 各 epoch の終わりに 64 samples を見る。これは必須。
+- **FID (Fréchet Inception Distance)** — real set と generated set の Inception-v3 feature distributions 間の距離。低いほど良い。community standard。
+- **Inception Score** — 古く、壊れやすい。FID を優先する。
+- **Precision/Recall for generative models** — quality（precision）と coverage（recall）を別々に測る。FID 単独より情報量が多い。
 
-For a small synthetic-data run, sample inspection is enough.
+小さな synthetic-data run では sample inspection で十分です。
 
-## Build It
+## 実装
 
 ### Step 1: Generator
 
-A small DCGAN generator that takes 64-dim noise and produces a 32x32 image.
+64-dim noise を受け取り、32x32 image を生成する小さな DCGAN generator です。
 
 ```python
 import torch
@@ -135,11 +135,11 @@ class Generator(nn.Module):
         return self.net(z.view(z.size(0), -1, 1, 1))
 ```
 
-Four transposed convs, each with `kernel_size=4, stride=2, padding=1` so they cleanly double spatial size. Output activations in [-1, 1] via tanh.
+4 つの transposed convs があり、それぞれ `kernel_size=4, stride=2, padding=1` なので spatial size をきれいに 2 倍にします。出力 activation は tanh により [-1, 1] です。
 
 ### Step 2: Discriminator
 
-Mirror of the generator. LeakyReLU, strided convs, ends with a scalar logit.
+generator の鏡像です。LeakyReLU と strided convs を使い、最後は scalar logit で終わります。
 
 ```python
 class Discriminator(nn.Module):
@@ -161,11 +161,11 @@ class Discriminator(nn.Module):
         return self.net(x).view(-1)
 ```
 
-The last conv reduces a `4x4` feature map to `1x1`. Output is a single scalar per image; apply sigmoid only during loss computation.
+最後の conv は `4x4` feature map を `1x1` に縮小します。出力は image ごとに single scalar です。sigmoid は loss computation の中だけで適用します。
 
 ### Step 3: Training step
 
-Alternate: update D once, then G once, every batch.
+各 batch で D を 1 回更新し、次に G を 1 回更新します。
 
 ```python
 import torch.nn.functional as F
@@ -193,9 +193,9 @@ def train_step(G, D, real, z, opt_g, opt_d, device):
     return loss_d.item(), loss_g.item()
 ```
 
-`G(z).detach()` in the D step is critical: we do not want gradients flowing into G during its update. Forgetting that is the classic beginner bug.
+D step の `G(z).detach()` は重要です。この更新では G に勾配を流したくありません。これを忘れるのが典型的な beginner bug です。
 
-### Step 4: Full training loop on synthetic shapes
+### Step 4: synthetic shapes での完全な training loop
 
 ```python
 from torch.utils.data import DataLoader, TensorDataset
@@ -230,7 +230,7 @@ for epoch in range(10):
     print(f"epoch {epoch}  D {ld:.3f}  G {lg:.3f}")
 ```
 
-`Adam(lr=2e-4, betas=(0.5, 0.999))` is the DCGAN default — the low beta1 keeps the momentum term from stabilising the adversarial game too much.
+`Adam(lr=2e-4, betas=(0.5, 0.999))` は DCGAN のデフォルトです。低い beta1 により、momentum term が adversarial game を過度に安定化しないようにします。
 
 ### Step 5: Sampling
 
@@ -244,11 +244,11 @@ def sample(G, n=16, z_dim=64, device="cpu"):
     return imgs.clamp(0, 1)
 ```
 
-Always switch to eval mode before sampling. For DCGAN this matters because batch norm running stats are used instead of the batch's stats.
+sampling の前には必ず eval mode に切り替えます。DCGAN では、batch norm が batch の stats ではなく running stats を使うため重要です。
 
 ### Step 6: Spectral normalisation
 
-A drop-in replacement for BN in the discriminator that guarantees the network is 1-Lipschitz. Fixes most "D wins too hard" failures.
+discriminator 内の BN の drop-in replacement で、network が 1-Lipschitz であることを保証します。ほとんどの「D wins too hard」失敗を直します。
 
 ```python
 from torch.nn.utils import spectral_norm
@@ -265,46 +265,46 @@ def build_sn_discriminator(img_channels=3, feat=64):
     )
 ```
 
-Swap `Discriminator` for `build_sn_discriminator()` and you often do not need the TTUR trick. Spectral norm is the easiest single robustness upgrade you can apply.
+`Discriminator` を `build_sn_discriminator()` に置き換えると、多くの場合 TTUR trick は不要です。Spectral norm は適用できる最も簡単な単一の robustness upgrade です。
 
-## Use It
+## 使う
 
-For serious generation, use pretrained weights or switch to diffusion. Two standard libraries:
+本格的な generation では pretrained weights を使うか diffusion に切り替えます。標準的な libraries は 2 つあります。
 
-- `torch_fidelity` computes FID / IS on your generator without writing custom eval code.
-- `pytorch-gan-zoo` (legacy) and `StudioGAN` ship tested implementations of DCGAN, WGAN-GP, SN-GAN, StyleGAN, and BigGAN.
+- `torch_fidelity` は custom eval code なしで generator の FID / IS を計算します。
+- `pytorch-gan-zoo`（legacy）と `StudioGAN` は DCGAN、WGAN-GP、SN-GAN、StyleGAN、BigGAN の検証済み実装を提供します。
 
-In 2026, GANs are still the best choice for: real-time image generation (latency <10 ms), style transfer, image-to-image translation with precise control (Pix2Pix, CycleGAN). Diffusion wins on photorealism and text conditioning.
+2026 年でも、GANs は real-time image generation（latency <10 ms）、style transfer、精密制御を伴う image-to-image translation（Pix2Pix、CycleGAN）で最良の選択肢です。Photorealism と text conditioning では diffusion が勝ちます。
 
-## Ship It
+## 成果物
 
-This lesson produces:
+この lesson は次を生成します。
 
-- `outputs/prompt-gan-training-triage.md` — a prompt that reads a training curve description and picks the failure mode (mode collapse, D-wins, oscillation) plus the single recommended fix.
-- `outputs/skill-dcgan-scaffold.md` — a skill that writes a DCGAN scaffold from `z_dim`, target `image_size`, and `num_channels`, including training loop and sample saver.
+- `outputs/prompt-gan-training-triage.md` — training curve description を読み、失敗モード（mode collapse、D-wins、oscillation）と推奨する単一の修正を選ぶ prompt。
+- `outputs/skill-dcgan-scaffold.md` — `z_dim`、target `image_size`、`num_channels` から、training loop と sample saver を含む DCGAN scaffold を書く skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Train the DCGAN above on the synthetic circle dataset and save a grid of 16 samples at the end of each epoch. By which epoch do the generated circles become clearly circular?
-2. **(Medium)** Replace the discriminator's batch norm with spectral norm. Train both versions side by side. Which one converges faster? Which one has lower variance across three seeds?
-3. **(Hard)** Implement a conditional DCGAN: feed the class label into both G and D (concat one-hot to the noise in G, concat a class embedding channel in D). Train on the synthetic "circles vs squares" dataset from lesson 7 and show that class conditioning works by sampling with specific labels.
+1. **(Easy)** 上の DCGAN を synthetic circle dataset で学習し、各 epoch の終わりに 16 samples の grid を保存してください。生成された circles は何 epoch 目で明確に円形になりますか？
+2. **(Medium)** discriminator の batch norm を spectral norm に置き換えてください。両方の版を side by side で学習してください。どちらが速く収束しますか？3 seeds で variance が低いのはどちらですか？
+3. **(Hard)** conditional DCGAN を実装してください。class label を G と D の両方に入力します（G では one-hot を noise に concat、D では class embedding channel を concat）。lesson 7 の synthetic "circles vs squares" dataset で学習し、specific labels で sampling して class conditioning が機能することを示してください。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Generator (G) | "The draws-stuff net" | Maps noise to images; trained to fool the discriminator |
-| Discriminator (D) | "The critic" | Binary classifier; trained to distinguish real from generated images |
-| Minimax | "The game" | min over G, max over D of an adversarial loss; equilibrium is p_G = p_data |
-| Non-saturating loss | "The numerically sane version" | G's loss is -log(D(G(z))) instead of log(1 - D(G(z))) to avoid vanishing gradients early in training |
-| Mode collapse | "Generator makes one thing" | G produces only a small subset of the data distribution; fix with SN, minibatch discrimination, or larger batch |
-| TTUR | "Two learning rates" | D learns faster than G, typically by a factor of 2-4; stabilises training |
-| Spectral norm | "1-Lipschitz layer" | A weight-normalisation that bounds each layer's Lipschitz constant; stops D from becoming arbitrarily steep |
-| FID | "Fréchet Inception Distance" | Distance between Inception-v3 feature distributions of real and generated sets; the standard evaluation metric |
+| Generator (G) | 「描く側の net」 | noise を images に写像し、discriminator をだますよう学習される |
+| Discriminator (D) | 「批評者」 | real images と generated images を区別する binary classifier |
+| Minimax | 「ゲーム」 | adversarial loss の G に関する min、D に関する max。equilibrium は p_G = p_data |
+| Non-saturating loss | 「数値的にまともな版」 | 学習初期の vanishing gradients を避けるため、G の loss は log(1 - D(G(z))) ではなく -log(D(G(z))) |
+| Mode collapse | 「Generator が 1 種類だけ作る」 | G が data distribution の小さな subset だけを生成する。SN、minibatch discrimination、大きな batch で修正する |
+| TTUR | 「2 つの learning rates」 | D が G より速く、通常 2-4 倍で学習する。training を安定化する |
+| Spectral norm | 「1-Lipschitz layer」 | 各 layer の Lipschitz constant を制限する weight-normalisation。D が任意に急峻になることを防ぐ |
+| FID | 「Fréchet Inception Distance」 | real set と generated set の Inception-v3 feature distributions 間の距離。標準評価 metric |
 
-## Further Reading
+## 参考文献
 
-- [Generative Adversarial Networks (Goodfellow et al., 2014)](https://arxiv.org/abs/1406.2661) — the paper that started it all
-- [DCGAN (Radford, Metz, Chintala, 2015)](https://arxiv.org/abs/1511.06434) — the architecture rules that made GANs trainable
-- [Spectral Normalization for GANs (Miyato et al., 2018)](https://arxiv.org/abs/1802.05957) — the single most useful stabilisation trick
-- [StyleGAN3 (Karras et al., 2021)](https://arxiv.org/abs/2106.12423) — the SOTA GAN; reads like a greatest-hits album of every trick from the last decade
+- [Generative Adversarial Networks (Goodfellow et al., 2014)](https://arxiv.org/abs/1406.2661) — すべての始まりとなった論文
+- [DCGAN (Radford, Metz, Chintala, 2015)](https://arxiv.org/abs/1511.06434) — GANs を学習可能にした architecture rules
+- [Spectral Normalization for GANs (Miyato et al., 2018)](https://arxiv.org/abs/1802.05957) — 最も有用な単一の stabilisation trick
+- [StyleGAN3 (Karras et al., 2021)](https://arxiv.org/abs/2106.12423) — SOTA GAN。過去 10 年のあらゆる trick の greatest-hits album のように読める

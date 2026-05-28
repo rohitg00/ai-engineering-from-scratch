@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which two flow directions does a Pipecat pipeline use?",
+      "question": "Pipecat pipelineが使う2つのflow directionはどれですか?",
       "options": [
-        "Read and write",
-        "DOWNSTREAM (source to sink) and UPSTREAM (feedback, cancel, barge-in)",
-        "Inbound and outbound",
-        "Hot and cold"
+        "readとwrite",
+        "DOWNSTREAM (source to sink) とUPSTREAM (feedback、cancel、barge-in)",
+        "inboundとoutbound",
+        "hotとcold"
       ],
       "correct": 1,
-      "explanation": "Frames flow downstream source-to-sink and upstream for control and cancellation."
+      "explanation": "frameはsource-to-sinkへdownstreamに流れ、controlとcancellationのためにupstreamへ流れます。"
     },
     {
       "stage": "pre",
-      "question": "What is the canonical Pipecat voice pipeline?",
+      "question": "canonicalなPipecat voice pipelineは何ですか?",
       "options": [
         "VAD -> STT -> LLM -> TTS -> transport",
         "TTS -> STT -> LLM -> VAD",
@@ -24,67 +24,67 @@
         "Audio -> JSON -> SQL -> response"
       ],
       "correct": 0,
-      "explanation": "VAD detects voice activity, STT transcribes, LLM responds, TTS speaks, transport delivers."
+      "explanation": "VADがvoice activityをdetectし、STTがtranscribeし、LLMがrespondし、TTSがspeakし、transportがdeliverします。"
     },
     {
       "stage": "check",
-      "question": "Which two voice agent classes does LiveKit Agents ship?",
+      "question": "LiveKit Agentsがshipする2つのvoice agent classはどれですか?",
       "options": [
-        "MultimodalAgent (direct audio) and VoicePipelineAgent (STT/LLM/TTS cascade)",
+        "MultimodalAgent (direct audio) とVoicePipelineAgent (STT/LLM/TTS cascade)",
         "BatchAgent and StreamAgent",
         "TextAgent and SpeechAgent",
         "LocalAgent and CloudAgent"
       ],
       "correct": 0,
-      "explanation": "MultimodalAgent uses direct audio (Realtime-style); VoicePipelineAgent uses STT->LLM->TTS for text-level control."
+      "explanation": "MultimodalAgentはdirect audio (Realtime-style) を使います。VoicePipelineAgentはtext-level controlのためにSTT->LLM->TTSを使います。"
     },
     {
       "stage": "check",
-      "question": "What is barge-in and how is it handled?",
+      "question": "barge-inとは何で、どのように処理されますか?",
       "options": [
-        "An LLM cost spike; reduce tokens",
-        "The user interrupts while the agent is speaking; UPSTREAM cancel frames stop TTS mid-utterance",
-        "A provider outage; switch regions",
-        "Captcha failure; retry"
+        "LLM cost spike。tokenを減らす",
+        "agentが話している途中でuserが割り込むこと。UPSTREAM cancel framesがTTSをutterance途中で止める",
+        "provider outage。regionを切り替える",
+        "CAPTCHA failure。retryする"
       ],
       "correct": 1,
-      "explanation": "Barge-in is user interruption; UPSTREAM cancellation is how Pipecat handles it cleanly."
+      "explanation": "barge-inはuser interruptionです。UPSTREAM cancellationにより、Pipecatはそれをcleanに処理します。"
     },
     {
       "stage": "check",
-      "question": "What end-to-end latency does the lesson describe as premium?",
+      "question": "このlessonがpremiumと説明するend-to-end latencyはどれですか?",
       "options": [
-        "About 50 ms",
-        "About 450-600 ms",
-        "About 1500 ms",
-        "About 5000 ms"
+        "約50 ms",
+        "約450-600 ms",
+        "約1500 ms",
+        "約5000 ms"
       ],
       "correct": 1,
-      "explanation": "Premium stacks land around 450-600 ms; 800-1200 ms is common; over 1500 ms feels broken."
+      "explanation": "premium stackは約450-600 msに収まります。800-1200 msは一般的で、1500 ms超は壊れているように感じられます。"
     },
     {
       "stage": "post",
-      "question": "What goes wrong if STT confidence is ignored?",
+      "question": "STT confidenceを無視すると何が問題になりますか?",
       "options": [
-        "Latency improves",
-        "Low-confidence transcripts feed the LLM as if gospel, producing wrong answers; gate on confidence or ask for confirmation",
-        "TTS gets faster",
-        "Calls get cheaper"
+        "latencyが改善する",
+        "low-confidence transcriptsが真実のようにLLMへ渡され、誤答を生む。confidenceでgateするかconfirmationを求めるべき",
+        "TTSが速くなる",
+        "callが安くなる"
       ],
       "correct": 1,
-      "explanation": "Treating low-confidence STT as truth is a top voice-agent failure mode."
+      "explanation": "low-confidence STTをtruthとして扱うことは、voice-agentの主要failure modeです。"
     },
     {
       "stage": "post",
-      "question": "Why does the lesson recommend summing component latencies before shipping?",
+      "question": "なぜこのlessonはship前にcomponent latenciesを合計することを推奨していますか?",
       "options": [
-        "Providers bill by latency",
-        "Every component adds 50-200 ms; the sum determines whether the experience feels broken",
-        "It satisfies a compliance requirement",
-        "Latency is required by WebRTC"
+        "providerがlatencyで課金するため",
+        "すべてのcomponentが50-200 msを追加し、その合計が体験を壊れていると感じるかどうかを決めるため",
+        "compliance requirementを満たすため",
+        "WebRTCでlatencyが必須のため"
       ],
       "correct": 1,
-      "explanation": "Sum the chain (VAD + STT + LLM + TTS + transport) before shipping; targets are tight."
+      "explanation": "ship前にchain (VAD + STT + LLM + TTS + transport) を合計してください。targetは厳しいです。"
     }
   ]
 }

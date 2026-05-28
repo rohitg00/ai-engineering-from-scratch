@@ -1,56 +1,56 @@
 # BERT — Masked Language Modeling
 
-> GPT predicts the next word. BERT predicts a missing word. One sentence of difference — and half a decade of everything embedding-shaped.
+> GPT は次の単語を予測します。BERT は欠けた単語を予測します。違いはたった 1 文ですが、embedding 系のあらゆる仕事を 5 年分変えました。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-In 2018 every NLP task — sentiment, NER, QA, entailment — trained its own model from scratch on its own labeled data. There was no pre-trained "understand English" checkpoint you could fine-tune. ELMo (2018) showed you could pre-train contextual embeddings with a bidirectional LSTM; it helped but did not generalize.
+2018 年当時、sentiment、NER、QA、entailment など、すべての NLP task はそれぞれの labeled data で独自 model を scratch から学習していました。fine-tune できる事前学習済みの「英語を理解する」checkpoint はありませんでした。ELMo (2018) は、bidirectional LSTM で contextual embedding を pre-train できることを示しました。効果はありましたが、十分には generalize しませんでした。
 
-BERT (Devlin et al. 2018) asked: what if we took a transformer encoder, trained it on every sentence on the internet, and forced it to predict missing words from context on both sides? Then you fine-tune one head on your downstream task. Parameter efficiency was a revelation.
+BERT (Devlin et al. 2018) はこう問いかけました。transformer encoder を取り、internet 上のあらゆる sentence で学習し、両側の context から欠けた単語を予測させたらどうなるか。その後、downstream task 用の head を 1 つ fine-tune します。parameter efficiency は衝撃的でした。
 
-The result: within 18 months BERT and its variants (RoBERTa, ALBERT, ELECTRA) dominated every NLP leaderboard that existed. By 2020 every search engine, content moderation pipeline, and semantic-search system on earth had a BERT inside.
+結果として、18 か月以内に BERT とその variants (RoBERTa、ALBERT、ELECTRA) は存在する NLP leaderboard を席巻しました。2020 年までに、地球上のあらゆる search engine、content moderation pipeline、semantic-search system の内部に BERT が入りました。
 
-In 2026 encoder-only models are still the right tool for classification, retrieval, and structured extraction — they run 5–10× faster per token than decoders and their embeddings are the backbone of every modern retrieval stack. ModernBERT (Dec 2024) pushed the architecture to 8K context with Flash Attention + RoPE + GeGLU.
+2026 年でも encoder-only model は classification、retrieval、structured extraction に適した道具です。decoder より token あたり 5–10× 高速に動き、embedding は現代的 retrieval stack の backbone です。ModernBERT (Dec 2024) は Flash Attention + RoPE + GeGLU により、architecture を 8K context まで押し上げました。
 
-## The Concept
+## コンセプト
 
 ![Masked language modeling: pick tokens, mask them, predict originals](../assets/bert-mlm.svg)
 
-### The training signal
+### Training signal
 
-Take a sentence: `the quick brown fox jumps over the lazy dog`.
+文を 1 つ取ります: `the quick brown fox jumps over the lazy dog`.
 
-Mask 15% of tokens randomly:
+token の 15% を random に mask します。
 
 ```
 input:  the [MASK] brown fox jumps [MASK] the lazy dog
 target: the  quick brown fox jumps  over  the lazy dog
 ```
 
-Train the model to predict the original tokens at masked positions. Because the encoder is bidirectional, predicting `[MASK]` at position 1 can use `brown fox jumps` at positions 2+. That is the thing GPT cannot do.
+masked position の original token を予測するように model を学習します。encoder は bidirectional なので、position 1 の `[MASK]` を予測するときに position 2 以降の `brown fox jumps` を使えます。これが GPT にはできないことです。
 
-### The BERT mask rules
+### BERT mask rules
 
-Of the 15% of tokens selected for prediction:
+prediction 用に選ばれた 15% の token について:
 
-- 80% are replaced with `[MASK]`.
-- 10% are replaced with a random token.
-- 10% are left unchanged.
+- 80% は `[MASK]` に置き換える。
+- 10% は random token に置き換える。
+- 10% は変更しない。
 
-Why not always `[MASK]`? Because `[MASK]` never appears at inference time. Training the model to expect `[MASK]` at 100% of masked positions would create a distribution shift between pretraining and fine-tuning. The 10% random + 10% unchanged keeps the model honest.
+なぜ常に `[MASK]` にしないのでしょうか。`[MASK]` は inference time には出現しないからです。masked position の 100% で `[MASK]` を期待するように model を学習すると、pretraining と fine-tuning の間に distribution shift が生じます。10% random + 10% unchanged によって、model を現実に近い入力に慣らします。
 
-### Next Sentence Prediction (NSP) — and why it was dropped
+### Next Sentence Prediction (NSP) — そして落とされた理由
 
-Original BERT also trained on NSP: given two sentences A and B, predict if B follows A. RoBERTa (2019) ablated it and showed NSP hurt, not helped. Modern encoders skip it.
+Original BERT は NSP も学習しました。2 つの sentence A と B が与えられ、B が A の次に続くかを予測します。RoBERTa (2019) はこれを ablation し、NSP は役に立たずむしろ悪化させることを示しました。現代の encoder はこれを使いません。
 
-### What changed in 2026: ModernBERT
+### 2026 年に何が変わったか: ModernBERT
 
-The 2024 ModernBERT paper rebuilt the block with 2026 primitives:
+2024 年の ModernBERT paper は、2026 年の primitives で block を組み直しました。
 
 | Component | Original BERT (2018) | ModernBERT (2024) |
 |-----------|----------------------|-------------------|
@@ -61,23 +61,23 @@ The 2024 ModernBERT paper rebuilt the block with 2026 primitives:
 | Context length | 512 | 8192 |
 | Tokenizer | WordPiece | BPE |
 
-And unlike the 2018 stack, it is Flash-Attention-native. Inference is 2–3× faster at sequence length 8K than DeBERTa-v3 with better GLUE scores.
+さらに 2018 年の stack と違い、Flash-Attention-native です。sequence length 8K での inference は DeBERTa-v3 より 2–3× 高速で、GLUE score も高くなっています。
 
-### Use cases that still pick an encoder in 2026
+### 2026 年でも encoder を選ぶ use case
 
-| Task | Why encoder beats decoder |
+| Task | decoder より encoder が勝つ理由 |
 |------|---------------------------|
-| Retrieval / semantic search embeddings | Bidirectional context = better embedding quality per token |
-| Classification (sentiment, intent, toxicity) | One forward pass; no generation overhead |
-| NER / token labeling | Per-position output, natively bidirectional |
-| Zero-shot entailment (NLI) | Classifier head on top of encoder |
-| Reranker for RAG | Cross-encoder scoring, 10x faster than LLM rerankers |
+| Retrieval / semantic search embeddings | Bidirectional context = token あたりの embedding quality が高い |
+| Classification (sentiment, intent, toxicity) | 1 回の forward pass。generation overhead がない |
+| NER / token labeling | position ごとの output。自然に bidirectional |
+| Zero-shot entailment (NLI) | encoder の上に classifier head |
+| Reranker for RAG | Cross-encoder scoring。LLM reranker より 10x 高速 |
 
-## Build It
+## 作ってみる
 
 ### Step 1: masking logic
 
-See `code/main.py`. The function `create_mlm_batch` takes a list of token IDs, a vocab size, and a mask probability. Returns input IDs (with masks applied) and labels (only at masked positions, -100 elsewhere — PyTorch's ignore index convention).
+`code/main.py` を見てください。`create_mlm_batch` function は token ID の list、vocab size、mask probability を受け取ります。mask 適用後の input IDs と labels を返します。labels は masked position のみで、それ以外は -100 です。これは PyTorch の ignore index convention です。
 
 ```python
 def create_mlm_batch(tokens, vocab_size, mask_prob=0.15, rng=None):
@@ -95,19 +95,19 @@ def create_mlm_batch(tokens, vocab_size, mask_prob=0.15, rng=None):
     return input_ids, labels
 ```
 
-### Step 2: run MLM prediction on a tiny corpus
+### Step 2: tiny corpus で MLM prediction を走らせる
 
-Train a 2-layer encoder + MLM head on a vocabulary of 20 words, 200 sentences. No gradient — we do forward-pass sanity checks. Full training needs PyTorch.
+20 語の vocabulary、200 sentences で、2-layer encoder + MLM head を学習します。gradient は使わず、forward-pass sanity check だけをします。本格的な training には PyTorch が必要です。
 
-### Step 3: compare mask types
+### Step 3: mask type を比較する
 
-Show how the three-way rule keeps the model usable without `[MASK]`. Predict on an unmasked sentence and on a masked sentence. Both should produce reasonable token distributions because the model saw both patterns in training.
+3-way rule により、`[MASK]` がなくても model が使えることを示します。unmasked sentence と masked sentence で予測します。model は両方の pattern を training で見ているため、どちらも妥当な token distribution を出すはずです。
 
 ### Step 4: fine-tune head
 
-Replace the MLM head with a classification head on a toy sentiment dataset. Only the head trains; the encoder is frozen. This is the pattern every BERT application follows.
+MLM head を toy sentiment dataset 用の classification head に置き換えます。学習するのは head だけで、encoder は frozen です。これはすべての BERT application が従う pattern です。
 
-## Use It
+## 使ってみる
 
 ```python
 from transformers import AutoModel, AutoTokenizer
@@ -120,39 +120,39 @@ inputs = tok(text, return_tensors="pt")
 out = model(**inputs).last_hidden_state   # (1, N, 768)
 ```
 
-**Embedding models are fine-tuned BERT.** `sentence-transformers` models like `all-MiniLM-L6-v2` are BERTs trained with contrastive loss. The encoder is the same. The loss changed.
+**Embedding models are fine-tuned BERT.** `sentence-transformers` の `all-MiniLM-L6-v2` のような model は、contrastive loss で学習された BERT です。encoder は同じで、loss が変わっています。
 
-**Cross-encoder rerankers are also fine-tuned BERT.** Pair-classification on `[CLS] query [SEP] doc [SEP]`. The bidirectional attention between query and doc is exactly what gives cross-encoders their quality edge over biencoders.
+**Cross-encoder rerankers are also fine-tuned BERT.** `[CLS] query [SEP] doc [SEP]` に対する pair-classification です。query と doc の間の bidirectional attention こそが、cross-encoder が biencoder より品質面で有利な理由です。
 
-**When not to pick BERT in 2026.** Anything generative. The encoder has no sensible way to autoregressively produce tokens. Also: anything under 1B params where a small decoder can match quality with more flexibility (Phi-3-Mini, Qwen2-1.5B).
+**2026 年に BERT を選ばない場面。** 生成を伴うものすべてです。encoder には token を autoregressive に生成する自然な方法がありません。また、1B params 未満で小さな decoder がより柔軟に同等品質を出せる場合 (Phi-3-Mini、Qwen2-1.5B) も該当します。
 
 ## Ship It
 
-See `outputs/skill-bert-finetuner.md`. The skill scopes a BERT fine-tune (backbone choice, head spec, data, eval, stopping) for a new classification or extraction task.
+`outputs/skill-bert-finetuner.md` を見てください。この skill は、新しい classification または extraction task に対する BERT fine-tune を scope します (backbone choice、head spec、data、eval、stopping)。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py` and print the mask distribution across 10,000 tokens. Confirm ~15% are selected, and of those ~80% become `[MASK]`.
-2. **Medium.** Implement whole-word masking: if a word is tokenized into subwords, mask all subwords together or none. Measure whether this improves MLM accuracy on a 500-sentence corpus.
-3. **Hard.** Train a tiny (2-layer, d=64) BERT on 10,000 sentences from a public dataset. Fine-tune the `[CLS]` token for SST-2 sentiment. Compare against a decoder-only baseline at matched params — which wins?
+1. **Easy.** `code/main.py` を実行し、10,000 tokens に対する mask distribution を出力してください。約 15% が選ばれ、そのうち約 80% が `[MASK]` になることを確認します。
+2. **Medium.** whole-word masking を実装してください。ある word が subword に tokenized される場合、すべての subword をまとめて mask するか、どれも mask しないようにします。500-sentence corpus で MLM accuracy が改善するか測ります。
+3. **Hard.** public dataset の 10,000 sentences で tiny (2-layer, d=64) BERT を学習してください。SST-2 sentiment 用に `[CLS]` token を fine-tune します。同じ params に合わせた decoder-only baseline と比較し、どちらが勝つか確認します。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| MLM | "Masked language modeling" | Training signal: randomly replace 15% of tokens with `[MASK]`, predict the originals. |
-| Bidirectional | "Looks both ways" | Encoder attention has no causal mask — every position sees every other position. |
-| `[CLS]` | "The pooler token" | A special token prepended to every sequence; its final embedding is used as the sentence-level representation. |
-| `[SEP]` | "Segment separator" | Separates paired sequences (e.g. query/doc, sentence A/B). |
-| NSP | "Next sentence prediction" | BERT's second pretraining task; shown to be useless in RoBERTa, dropped after 2019. |
-| Fine-tuning | "Adapt to a task" | Keep the encoder mostly frozen; train a small head on top for the downstream task. |
-| Cross-encoder | "A reranker" | A BERT that takes both query and doc as input, outputs a relevance score. |
-| ModernBERT | "2024 refresh" | Encoder rebuilt with RoPE, RMSNorm, GeGLU, alternating local/global attention, 8K context. |
+| MLM | 「Masked language modeling」 | 15% の token を random に `[MASK]` へ置換し、original を予測する training signal。 |
+| Bidirectional | 「両側を見る」 | Encoder attention には causal mask がない。すべての position が他のすべての position を見る。 |
+| `[CLS]` | 「Pooler token」 | すべての sequence の先頭に置く special token。final embedding が sentence-level representation として使われる。 |
+| `[SEP]` | 「Segment separator」 | paired sequence を区切る (例: query/doc、sentence A/B)。 |
+| NSP | 「Next sentence prediction」 | BERT の 2 つ目の pretraining task。RoBERTa で無意味と示され、2019 年以降は dropped。 |
+| Fine-tuning | 「task に適応する」 | encoder はほぼ frozen のまま、downstream task 用に上の small head を学習する。 |
+| Cross-encoder | 「reranker」 | query と doc の両方を input に取り、relevance score を出す BERT。 |
+| ModernBERT | 「2024 refresh」 | RoPE、RMSNorm、GeGLU、alternating local/global attention、8K context で組み直した encoder。 |
 
-## Further Reading
+## 参考文献
 
-- [Devlin et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805) — original paper.
-- [Liu et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach](https://arxiv.org/abs/1907.11692) — how to train BERT right; kills NSP.
-- [Clark et al. (2020). ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators](https://arxiv.org/abs/2003.10555) — replaced-token detection beats MLM at matched compute.
-- [Warner et al. (2024). Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder](https://arxiv.org/abs/2412.13663) — ModernBERT paper.
-- [HuggingFace `modeling_bert.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/bert/modeling_bert.py) — canonical encoder reference.
+- [Devlin et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805) — original paper。
+- [Liu et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach](https://arxiv.org/abs/1907.11692) — BERT を正しく学習する方法。NSP を退場させた。
+- [Clark et al. (2020). ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators](https://arxiv.org/abs/2003.10555) — 同じ compute なら replaced-token detection が MLM を上回る。
+- [Warner et al. (2024). Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder](https://arxiv.org/abs/2412.13663) — ModernBERT paper。
+- [HuggingFace `modeling_bert.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/bert/modeling_bert.py) — canonical encoder reference。

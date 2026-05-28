@@ -4,43 +4,43 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core role of an AI gateway in the lesson?",
+      "question": "この lesson における AI gateway の中核的な役割は何ですか？",
       "options": [
-        "A model fine-tuning service",
-        "A vector database for retrieval",
-        "A logging-only sidecar",
-        "A process sitting between apps and model providers that consolidates routing, fallback, retries, rate limits, secret references, observability, and guardrails behind one API"
+        "model fine-tuning service",
+        "retrieval 用 vector database",
+        "logging-only sidecar",
+        "apps と model providers の間に置かれ、routing、fallback、retries、rate limits、secret references、observability、guardrails を1つの API の背後に集約する process"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What scale ceiling does Kong's benchmark report for LiteLLM?",
+      "question": "Kong の benchmark は LiteLLM についてどの scale ceiling を報告していますか？",
       "options": [
-        "It tops out at 50 RPS",
-        "It breaks down around ~2000 RPS with 8 GB memory and cascading failures under sustained load",
-        "It scales linearly past 10k RPS",
-        "LiteLLM cannot be benchmarked"
+        "50 RPS で頭打ち",
+        "約2000 RPS 付近で、8 GB memory と sustained load 下の cascading failures により崩れる",
+        "10k RPS を超えて線形に scale する",
+        "LiteLLM は benchmark できない"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Per the Kong benchmark on equivalent CPU, how much faster is Kong AI Gateway than Portkey and LiteLLM?",
+      "question": "同等 CPU 上の Kong benchmark によると、Kong AI Gateway は Portkey と LiteLLM よりどれだけ速いですか？",
       "options": [
-        "228% faster than Portkey and 859% faster than LiteLLM",
-        "About 10% and 20% faster",
-        "Identical",
-        "Slower than both"
+        "Portkey より228%速く、LiteLLM より859%速い",
+        "約10%と20%速い",
+        "同一",
+        "両方より遅い"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which gateway does the lesson position with 20-40 ms latency overhead and guardrails / PII redaction / jailbreak detection focus?",
+      "question": "この lesson が 20-40 ms の latency overhead と guardrails / PII redaction / jailbreak detection focus で位置づける gateway はどれですか？",
       "options": [
         "Kong AI Gateway",
         "LiteLLM",
@@ -52,11 +52,11 @@
     },
     {
       "stage": "post",
-      "question": "What does the lesson say is the forcing function for self-hosted vs managed gateway decisions?",
+      "question": "この lesson は self-hosted vs managed gateway decision の forcing function を何だと述べていますか？",
       "options": [
-        "Whether the gateway is open source",
-        "Number of supported providers",
-        "Cost per request",
+        "gateway が open source かどうか",
+        "supported providers の数",
+        "request ごとの cost",
         "Data residency requirements"
       ],
       "correct": 3,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Which gateways stay within budget when the SLA is TTFT P99 < 100 ms?",
+      "question": "SLA が TTFT P99 < 100 ms の場合、budget 内に残る gateway はどれですか？",
       "options": [
-        "Any gateway",
-        "Only Portkey",
-        "Only LiteLLM",
-        "Kong (~3-8 ms) or Cloudflare/Vercel edge gateways (~1-3 ms); Portkey at 20-40 ms is too heavy"
+        "どの gateway でもよい",
+        "Portkey のみ",
+        "LiteLLM のみ",
+        "Kong（約3-8 ms）または Cloudflare/Vercel edge gateways（約1-3 ms）。Portkey の20-40 ms は重すぎる"
       ],
       "correct": 3,
       "explanation": ""

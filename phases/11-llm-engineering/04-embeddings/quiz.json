@@ -1,37 +1,62 @@
 [
   {
-    "question": "What problem do embeddings solve that keyword search cannot?",
-    "options": ["Embeddings are faster", "Embeddings capture semantic meaning, matching 'payment didn't go through' with 'charge was declined' even though they share no words", "Embeddings use less storage", "Embeddings work offline"],
+    "question": "embeddings は keyword search では解けないどの問題を解決しますか？",
+    "options": [
+      "Embeddings のほうが速い",
+      "Embeddings は意味を捉えるため、共有語がなくても 'payment didn't go through' と 'charge was declined' を一致させられる",
+      "Embeddings は storage を減らす",
+      "Embeddings は offline で動く"
+    ],
     "correct": 1,
-    "explanation": "Keyword search treats words as independent symbols. Embeddings map text to high-dimensional vectors where semantic similarity = geometric proximity. Texts with the same meaning cluster together regardless of word choice.",
+    "explanation": "Keyword search は単語を独立した記号として扱います。Embeddings は text を high-dimensional vectors に写像し、semantic similarity = geometric proximity になるようにします。同じ意味を持つ text は語彙が違っても近くに集まります。",
     "stage": "pre"
   },
   {
-    "question": "What does cosine similarity measure between two embedding vectors?",
-    "options": ["The Euclidean distance", "The angle between the vectors, indicating how similar their directions are regardless of magnitude", "The sum of their components", "The number of matching dimensions"],
+    "question": "cosine similarity は 2 つの embedding vectors の何を測りますか？",
+    "options": [
+      "Euclidean distance",
+      "vectors の角度であり、magnitude に関係なく方向の類似度を示す",
+      "components の合計",
+      "一致する dimensions の数"
+    ],
     "correct": 1,
-    "explanation": "Cosine similarity = dot(A,B) / (|A|*|B|). It ranges from -1 (opposite) to 1 (identical direction). Two texts with the same meaning will have vectors pointing in nearly the same direction, giving cosine similarity near 1.",
+    "explanation": "Cosine similarity = dot(A,B) / (|A|*|B|) です。-1 (反対) から 1 (同一方向) の範囲を取ります。同じ意味の 2 つの text はほぼ同じ方向を向く vectors になり、cosine similarity は 1 に近づきます。",
     "stage": "pre"
   },
   {
-    "question": "What is the typical dimensionality of modern text embedding models?",
-    "options": ["2-10 dimensions", "50-100 dimensions", "768-3072 dimensions", "100,000+ dimensions"],
+    "question": "現代の text embedding models の典型的な dimensionality はどれくらいですか？",
+    "options": [
+      "2-10 dimensions",
+      "50-100 dimensions",
+      "768-3072 dimensions",
+      "100,000+ dimensions"
+    ],
     "correct": 2,
-    "explanation": "Modern embedding models (OpenAI text-embedding-3, BGE, E5) produce vectors with 768 to 3072 dimensions. Higher dimensions capture more nuance but cost more to store and search.",
+    "explanation": "現代の embedding models (OpenAI text-embedding-3、BGE、E5) は 768 から 3072 dimensions の vectors を生成します。dimensions が多いほど nuance を捉えやすい一方、保存と検索のコストが上がります。",
     "stage": "post"
   },
   {
-    "question": "Why should you evaluate embedding quality using retrieval benchmarks rather than just inspecting similarity scores?",
-    "options": ["Similarity scores are always wrong", "Absolute similarity values vary by model; what matters is whether relevant documents rank higher than irrelevant ones (precision@k, recall)", "Retrieval benchmarks are faster", "Similarity scores don't use cosine distance"],
+    "question": "similarity scores を眺めるだけでなく retrieval benchmarks で embedding quality を評価すべき理由は何ですか？",
+    "options": [
+      "Similarity scores は常に間違っているから",
+      "絶対的な similarity values はモデルごとに異なるため、重要なのは relevant documents が irrelevant ones より上位に来るか (precision@k, recall) だから",
+      "Retrieval benchmarks のほうが速いから",
+      "Similarity scores は cosine distance を使わないから"
+    ],
     "correct": 1,
-    "explanation": "A cosine similarity of 0.85 might mean 'very similar' for one model and 'somewhat similar' for another. Retrieval metrics (precision@k, recall) measure what actually matters: does the right document come back?",
+    "explanation": "cosine similarity 0.85 が、あるモデルでは 'very similar'、別のモデルでは 'somewhat similar' を意味することがあります。Retrieval metrics (precision@k、recall) は本当に重要なこと、つまり正しい document が返るかを測ります。",
     "stage": "post"
   },
   {
-    "question": "When would you use a local/open-source embedding model instead of an API-based one?",
-    "options": ["Local models are always better", "When you need data privacy, offline operation, lower cost at scale, or domain-specific fine-tuning", "Local models produce higher quality embeddings", "API models don't support batching"],
+    "question": "API ベースではなく local/open-source embedding model を使うのはどんな場合ですか？",
+    "options": [
+      "Local models は常に優れている",
+      "data privacy、offline operation、scale 時の低コスト、domain-specific fine-tuning が必要な場合",
+      "Local models はより高品質な embeddings を生成する",
+      "API models は batching をサポートしない"
+    ],
     "correct": 1,
-    "explanation": "API embeddings (OpenAI, Cohere) are easy but send your data externally. Local models (BGE, E5, Nomic) keep data private, eliminate per-call costs at scale, and can be fine-tuned on domain-specific data.",
+    "explanation": "API embeddings (OpenAI、Cohere) は簡単ですが、データを外部へ送ります。Local models (BGE、E5、Nomic) は data privacy を保ち、大規模時の per-call costs をなくし、domain-specific data で fine-tuning できます。",
     "stage": "post"
   }
 ]

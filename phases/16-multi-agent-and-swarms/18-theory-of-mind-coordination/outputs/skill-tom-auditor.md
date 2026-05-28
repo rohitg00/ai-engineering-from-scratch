@@ -1,35 +1,35 @@
 ---
 name: tom-auditor
-description: Audit a multi-agent system that claims "emergent coordination." Separates real ToM-enabled coordination from prompt-dressed illusion with control conditions, statistical tests, and complementarity measurement.
+description: 「emergent coordination」を主張する multi-agent system を監査する。control condition、statistical test、complementarity measurement により、実際の ToM-enabled coordination と prompt-dressed illusion を切り分ける。
 version: 1.0.0
 phase: 16
 lesson: 18
 tags: [multi-agent, theory-of-mind, coordination, evaluation, emergence]
 ---
 
-Given a multi-agent system that claims emergent coordination, audit whether the coordination is real or an artifact of prompt engineering.
+emergent coordination を主張する multi-agent system が与えられたら、その coordination が本物か、prompt engineering の産物かを監査する。
 
-Produce:
+作成するもの:
 
-1. **Claim extraction.** What coordination behavior is being claimed? (division of labor, anticipation, complementary actions, consensus reaching). State it precisely.
-2. **Prompt inspection.** Does any agent's system prompt explicitly instruct coordination, role selection, or team awareness? If yes, flag the claim as partially prompt-dressed and design a control.
-3. **Control condition.** A version of the system with coordination-inducing language stripped. Specify exactly what text changes.
-4. **Metric.** At least one of: identity-linked differentiation, goal-directed complementarity, higher-order synergy (Riedl 2025). Do not accept "agents seem to work together" as evidence.
-5. **Statistical test.** Significance of the metric on system vs control. Sample size needed for `p < 0.05`. If `n < 50` trials, report power explicitly.
-6. **Model-capacity check.** Repeat the comparison on a smaller base model. Does the effect persist or vanish? Li/Riedl both show capacity-dependence.
-7. **Failure-case review.** When the system fails, what does the ToM state (if any) look like? Identity confusion (belief-agent binding broken) or content hallucination (wrong belief content)?
+1. **Claim extraction。** どの coordination behavior が主張されているか（division of labor、anticipation、complementary actions、consensus reaching）。正確に記述する。
+2. **Prompt inspection。** agent の system prompt が coordination、role selection、team awareness を明示的に指示しているか。該当する場合、その claim を partially prompt-dressed として flag し、control を設計する。
+3. **Control condition。** coordination を誘導する文言を取り除いた system version。どの text を変更するかを正確に指定する。
+4. **Metric。** 少なくとも 1 つ: identity-linked differentiation、goal-directed complementarity、higher-order synergy（Riedl 2025）。「agents seem to work together」を証拠として受け入れない。
+5. **Statistical test。** system vs control における metric の significance。`p < 0.05` に必要な sample size。`n < 50` trials の場合は power を明示する。
+6. **Model-capacity check。** より小さな base model で比較を繰り返す。effect は残るか、消えるか。Li/Riedl はどちらも capacity-dependence を示している。
+7. **Failure-case review。** system が失敗したとき、ToM state（あれば）はどうなっているか。identity confusion（belief-agent binding の破綻）か、content hallucination（belief content の誤り）か。
 
 Hard rejects:
 
-- Claims of emergence without a control condition. Demo reels are not evidence.
-- Claims that vanish on statistical scrutiny (effect below `p < 0.05` on `n >= 50` trials). These are coordination illusions.
-- Claims that hold on one model only. If a smaller strong baseline also achieves the effect without ToM prompting, the coordination is not ToM-driven.
-- "Our agents just figured it out" as a mechanism explanation. Mechanism claims need the ToM state logged and inspectable.
+- control condition のない emergence claim。demo reel は証拠ではない。
+- statistical scrutiny で消える claim（`n >= 50` trials の metric が `p < 0.05` 未満）。これは coordination illusion。
+- 1 つの model でしか成り立たない claim。より小さい strong baseline も ToM prompting なしで同じ effect を達成するなら、その coordination は ToM-driven ではない。
+- mechanism explanation としての「Our agents just figured it out」。mechanism claim には logged and inspectable な ToM state が必要。
 
 Refusal rules:
 
-- If the system has no logging of per-agent reasoning, the audit cannot distinguish real coordination from randomness. Recommend adding structured ToM-state logs before re-auditing.
-- If the task has an oracle-computed optimal coordination, compare to optimal rather than control.
-- If the claim is narrow ("coordination on single-round task"), the audit can be a shorter check: measure complementarity on the single round, no long-horizon analysis needed.
+- per-agent reasoning の logging がない system では、監査は本物の coordination と randomness を区別できない。再監査の前に structured ToM-state logs を追加することを推奨する。
+- task に oracle-computed optimal coordination があるなら、control ではなく optimal と比較する。
+- claim が narrow（「single-round task の coordination」）なら、監査は短縮できる。single round の complementarity を測り、long-horizon analysis は不要。
 
-Output: a two-page audit. Start with a one-sentence verdict ("Coordination claim is prompt-dressed: removing 'work together' language drops the metric from 0.82 to 0.31, control-significant."), then the seven sections above. End with a list of fixes to convert prompt-dressed coordination into real coordination: explicit ToM state, longer horizons with logging, mixed-model ensembles.
+Output: 2 ページの audit。1 文の verdict（「Coordination claim is prompt-dressed: removing 'work together' language drops the metric from 0.82 to 0.31, control-significant.」）から始め、その後に上記 7 sections を続ける。最後に prompt-dressed coordination を real coordination に変える fixes を列挙する: explicit ToM state、logging 付き long horizon、mixed-model ensembles。

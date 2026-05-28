@@ -1,32 +1,32 @@
-# Tensor Operations
+# テンソル操作
 
-> Tensors are the common language between data and deep learning. Every image, every sentence, every gradient flows through them.
+> テンソルは、データと深層学習をつなぐ共通言語です。すべての画像、すべての文、すべての勾配がテンソルを通って流れます。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 1、Lesson 01（線形代数の直感）、02（ベクトル・行列・演算）
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement a tensor class with shape, strides, reshape, transpose, and element-wise operations from scratch
-- Apply broadcasting rules to operate on tensors of different shapes without copying data
-- Write einsum expressions for dot products, matrix multiplications, outer products, and batched operations
-- Trace the exact tensor shapes through every step of multi-head attention
+- shape、strides、reshape、transpose、要素ごとの演算を持つtensorクラスをスクラッチから実装する
+- ブロードキャスト規則を適用し、データをコピーせずに異なるshapeのテンソル同士を演算する
+- dot product、matrix multiplication、outer product、batched operationのeinsum式を書く
+- multi-head attentionの各ステップで、正確なtensor shapeを追跡する
 
-## The Problem
+## 問題
 
-You build a transformer. The forward pass looks clean. You run it and get: `RuntimeError: mat1 and mat2 shapes cannot be multiplied (32x768 and 512x768)`. You stare at the shapes. You try a transpose. Now it says `Expected 4D input (got 3D input)`. You add an unsqueeze. Something else breaks.
+transformerを作っています。forward passはきれいに見えます。実行すると、`RuntimeError: mat1 and mat2 shapes cannot be multiplied (32x768 and 512x768)` が出ます。shapeを見つめます。transposeを試します。今度は `Expected 4D input (got 3D input)` と出ます。unsqueezeを足します。別の場所が壊れます。
 
-Shape errors are the most common bug in deep learning code. They are not hard conceptually -- each operation has a shape contract -- but they multiply fast. A transformer has dozens of reshapes, transposes, and broadcasts chained together. One wrong axis and the error cascades. Worse, some shape mistakes do not throw errors at all. They silently produce garbage by broadcasting along the wrong dimension or summing over the wrong axis.
+shapeエラーは、深層学習コードで最もよくあるバグです。概念的には難しくありません。各演算にはshape契約があります。しかし、すぐに増殖します。transformerには、何十ものreshape、transpose、broadcastが連鎖しています。1つ軸を間違えると、エラーは連鎖します。さらに悪いことに、一部のshapeミスはエラーを投げません。間違った次元に沿ってブロードキャストしたり、間違った軸で和を取ったりして、静かに壊れた値を生みます。
 
-Matrices handle pairwise relationships between two sets of things. Real data does not fit into two dimensions. A batch of 32 RGB images at 224x224 is a 4D tensor: `(32, 3, 224, 224)`. Self-attention with 12 heads is also 4D: `(batch, heads, seq_len, head_dim)`. You need a data structure that generalizes to any number of dimensions, with operations that compose cleanly across all of them. That structure is the tensor. Master its operations and shape errors become trivially debuggable.
+行列は、2組のものの間のペア関係を扱います。現実のデータは2次元には収まりません。224x224のRGB画像32枚のバッチは4Dテンソルです: `(32, 3, 224, 224)`。12ヘッドのself-attentionも4Dです: `(batch, heads, seq_len, head_dim)`。任意の次元数へ一般化でき、すべての次元にわたってきれいに合成できる演算を持つデータ構造が必要です。それがテンソルです。テンソル操作を習得すれば、shapeエラーは簡単にデバッグできるようになります。
 
-## The Concept
+## 概念
 
-### What a tensor is
+### テンソルとは
 
-A tensor is a multi-dimensional array of numbers with a uniform data type. The number of dimensions is the **rank** (or **order**). Each dimension is an **axis**. The **shape** is a tuple listing the size along each axis.
+テンソルは、均一なデータ型を持つ数値の多次元配列です。次元数は**rank**（または**order**）です。各次元は**axis**です。**shape**は、各軸のサイズを並べたtupleです。
 
 ```mermaid
 graph LR
@@ -36,11 +36,11 @@ graph LR
     T3 --> T4["4D Tensor<br/>rank 4<br/>shape: (B,C,H,W)"]
 ```
 
-Total elements = product of all sizes. A shape `(2, 3, 4)` holds `2 * 3 * 4 = 24` elements.
+総要素数 = すべてのサイズの積です。shape `(2, 3, 4)` は `2 * 3 * 4 = 24` 個の要素を持ちます。
 
-### Tensor shapes in deep learning
+### 深層学習におけるtensor shape
 
-Different data types map to specific tensor shapes by convention.
+データ型ごとに、慣習的なtensor shapeがあります。
 
 ```mermaid
 graph TD
@@ -58,11 +58,11 @@ graph TD
     end
 ```
 
-PyTorch uses NCHW (channels-first). TensorFlow defaults to NHWC (channels-last). Mismatched layouts cause silent slowdowns or errors.
+PyTorchはNCHW（channels-first）を使います。TensorFlowはデフォルトでNHWC（channels-last）です。レイアウトの不一致は、静かな低速化やエラーの原因になります。
 
-### How memory layout works
+### メモリレイアウトの仕組み
 
-A 2D array in memory is a 1D sequence of bytes. **Strides** tell you how many elements to skip to move one step along each axis.
+メモリ上の2D配列は、1Dのバイト列です。**Strides**は、各軸に沿って1ステップ進むために何要素スキップするかを教えてくれます。
 
 ```mermaid
 graph LR
@@ -74,11 +74,11 @@ graph LR
     end
 ```
 
-Transpose does not move data. It swaps the strides, making the tensor **non-contiguous** -- the elements for a row are no longer adjacent in memory.
+Transposeはデータを動かしません。stridesを入れ替えるだけで、テンソルを**non-contiguous**にします。つまり、ある行の要素がメモリ上で隣接しなくなります。
 
-### Broadcasting rules
+### ブロードキャスト規則
 
-Broadcasting lets you operate on tensors of different shapes without copying data. Align shapes from the right. Two dimensions are compatible when they are equal or one is 1. Fewer dimensions get padded with 1s on the left.
+ブロードキャストを使うと、データをコピーせずに異なるshapeのテンソル同士を演算できます。shapeは右からそろえます。2つの次元は、等しいか、どちらかが1なら互換です。次元数が少ない方は、左側に1を補います。
 
 ```
 Tensor A:     (8, 1, 6, 1)
@@ -87,9 +87,9 @@ Padded B:     (1, 7, 1, 5)
 Result:       (8, 7, 6, 5)
 ```
 
-### Einsum: the universal tensor operation
+### Einsum: 万能のテンソル演算
 
-Einstein summation labels each axis with a letter. Axes in the input but not the output get summed. Axes in both are kept.
+Einstein summationでは、各軸に文字ラベルを付けます。入力にはあるが出力にはない軸は合計されます。両方にある軸は残ります。
 
 ```mermaid
 graph LR
@@ -99,15 +99,15 @@ graph LR
     end
 ```
 
-Key patterns: `i,i->` (dot product), `i,j->ij` (outer product), `ii->` (trace), `ij->ji` (transpose), `bij,bjk->bik` (batch matmul), `bhtd,bhsd->bhts` (attention scores).
+主要パターン: `i,i->`（dot product）、`i,j->ij`（outer product）、`ii->`（trace）、`ij->ji`（transpose）、`bij,bjk->bik`（batch matmul）、`bhtd,bhsd->bhts`（attention scores）。
 
-## Build It
+## 構築
 
-The code lives in `code/tensors.py`. Each step references the implementation there.
+コードは `code/tensors.py` にあります。各ステップはその実装を参照します。
 
-### Step 1: Tensor storage and strides
+### Step 1: Tensor storageとstrides
 
-A tensor stores a flat list of numbers plus shape metadata. Strides tell the indexing logic how to map multi-dimensional indices to flat positions.
+テンソルは、数値のflat listとshapeメタデータを保存します。Stridesは、インデックス処理が多次元インデックスをフラットな位置へ変換する方法を教えます。
 
 ```python
 class Tensor:
@@ -141,11 +141,11 @@ class Tensor:
         return tuple(strides)
 ```
 
-For shape `(3, 4)`, strides are `(4, 1)` -- skip 4 elements to advance one row, skip 1 element to advance one column.
+shape `(3, 4)` のstridesは `(4, 1)` です。1行進むには4要素、1列進むには1要素スキップします。
 
-### Step 2: Reshape, squeeze, unsqueeze
+### Step 2: Reshape、squeeze、unsqueeze
 
-Reshape changes the shape without changing element order. The total number of elements must stay the same. Use `-1` for one dimension to infer its size.
+Reshapeは、要素順序を変えずにshapeを変えます。総要素数は同じでなければなりません。1つの次元だけなら `-1` を使ってサイズを推論できます。
 
 ```python
 t = Tensor(list(range(12)), shape=(2, 6))
@@ -153,7 +153,7 @@ r = t.reshape((3, 4))
 r = t.reshape((-1, 3))
 ```
 
-Squeeze removes axes of size 1. Unsqueeze inserts one. Unsqueezing is critical for broadcasting -- a bias vector `(D,)` added to a batch `(B, T, D)` needs unsqueezing to `(1, 1, D)`.
+Squeezeはサイズ1の軸を取り除きます。Unsqueezeは軸を1つ挿入します。Unsqueezeはブロードキャストで重要です。`(D,)` のbias vectorを `(B, T, D)` のbatchへ足すには、`(1, 1, D)` へunsqueezeする必要があります。
 
 ```python
 t = Tensor(list(range(6)), shape=(1, 3, 1, 2))
@@ -162,9 +162,9 @@ v = Tensor([1, 2, 3])
 u = v.unsqueeze(0)
 ```
 
-### Step 3: Transpose and permute
+### Step 3: Transposeとpermute
 
-Transpose swaps two axes. Permute reorders all axes. This is how you convert between NCHW and NHWC.
+Transposeは2つの軸を入れ替えます。Permuteはすべての軸を並べ替えます。これにより、NCHWとNHWCを相互変換できます。
 
 ```python
 mat = Tensor(list(range(6)), shape=(2, 3))
@@ -174,11 +174,11 @@ t4d = Tensor(list(range(24)), shape=(1, 2, 3, 4))
 perm = t4d.permute((0, 2, 3, 1))
 ```
 
-After transpose or permute, the tensor is non-contiguous in memory. In PyTorch, `view` fails on non-contiguous tensors -- use `reshape` or call `.contiguous()` first.
+transposeまたはpermuteの後、テンソルはメモリ上でnon-contiguousになります。PyTorchでは、`view` はnon-contiguousなテンソルで失敗します。`reshape` を使うか、先に `.contiguous()` を呼んでください。
 
-### Step 4: Element-wise operations and reductions
+### Step 4: 要素ごとの演算とreduction
 
-Element-wise ops (add, multiply, subtract) apply independently to each element and preserve shape. Reductions (sum, mean, max) collapse one or more axes.
+要素ごとの演算（add、multiply、subtract）は各要素に独立に適用され、shapeを保ちます。Reduction（sum、mean、max）は1つ以上の軸をつぶします。
 
 ```python
 a = Tensor([[1, 2], [3, 4]])
@@ -188,11 +188,11 @@ d = a * 2
 s = a.sum(axis=0)
 ```
 
-Global average pooling in a CNN: `(B, C, H, W).mean(axis=[2, 3])` produces `(B, C)`. Sequence mean pooling in NLP: `(B, T, D).mean(axis=1)` produces `(B, D)`.
+CNNのglobal average pooling: `(B, C, H, W).mean(axis=[2, 3])` は `(B, C)` を生成します。NLPのsequence mean pooling: `(B, T, D).mean(axis=1)` は `(B, D)` を生成します。
 
-### Step 5: Broadcasting with NumPy
+### Step 5: NumPyでのブロードキャスト
 
-The `demo_broadcasting_numpy()` function in `tensors.py` shows the core patterns.
+`tensors.py` の `demo_broadcasting_numpy()` 関数は主要パターンを示します。
 
 ```python
 activations = np.random.randn(4, 3)
@@ -208,11 +208,11 @@ b = np.array([10, 20, 30, 40]).reshape(1, -1)
 outer = a * b
 ```
 
-Pairwise distance via broadcasting: reshape `(M, 2)` to `(M, 1, 2)` and `(N, 2)` to `(1, N, 2)`, subtract, square, sum along last axis, take square root. Result: `(M, N)`.
+ブロードキャストによるペア距離: `(M, 2)` を `(M, 1, 2)` へ、`(N, 2)` を `(1, N, 2)` へreshapeし、引き算、二乗、最後の軸に沿った和、平方根の順に計算します。結果は `(M, N)` です。
 
-### Step 6: Einsum operations
+### Step 6: Einsum演算
 
-The `demo_einsum()` and `demo_einsum_gallery()` functions walk through every common pattern.
+`demo_einsum()` と `demo_einsum_gallery()` 関数は、一般的なすべてのパターンを順に示します。
 
 ```python
 a = np.array([1.0, 2.0, 3.0])
@@ -228,11 +228,11 @@ batch_B = np.random.randn(4, 5, 2)
 batch_mm = np.einsum("bij,bjk->bik", batch_A, batch_B)
 ```
 
-The computational cost of a contraction is the product of all index sizes (kept and summed). For `bij,bjk->bik` with B=32, I=128, J=64, K=128: `32 * 128 * 64 * 128 = 33,554,432` multiply-adds.
+contractionの計算コストは、すべてのindex size（残るものと合計されるもの）の積です。B=32、I=128、J=64、K=128の `bij,bjk->bik` では、`32 * 128 * 64 * 128 = 33,554,432` 回のmultiply-addになります。
 
-### Step 7: Attention mechanism via einsum
+### Step 7: Einsumによるattention mechanism
 
-The `demo_attention_einsum()` function implements multi-head attention end to end.
+`demo_attention_einsum()` 関数はmulti-head attentionをend-to-endで実装します。
 
 ```python
 B, H, T, D = 2, 4, 8, 16
@@ -252,22 +252,22 @@ concat = attn_output.transpose(0, 2, 1, 3).reshape(B, T, E)
 output = np.einsum("bte,ek->btk", concat, W_o)
 ```
 
-Every step is a tensor operation: projection (matmul via einsum), head splitting (reshape + transpose), attention scores (batch matmul via einsum), weighted sum (batch matmul via einsum), head merging (transpose + reshape), output projection (matmul via einsum).
+すべてのステップがtensor operationです。projection（einsumによるmatmul）、head splitting（reshape + transpose）、attention scores（einsumによるbatch matmul）、weighted sum（einsumによるbatch matmul）、head merging（transpose + reshape）、output projection（einsumによるmatmul）です。
 
-## Use It
+## 使う
 
-### Scratch vs NumPy
+### ScratchとNumPyの比較
 
-| Operation | Scratch (Tensor class) | NumPy |
+| 操作 | Scratch（Tensor class） | NumPy |
 |---|---|---|
-| Create | `Tensor([[1,2],[3,4]])` | `np.array([[1,2],[3,4]])` |
+| 作成 | `Tensor([[1,2],[3,4]])` | `np.array([[1,2],[3,4]])` |
 | Reshape | `t.reshape((3,4))` | `a.reshape(3,4)` |
 | Transpose | `t.transpose(0,1)` | `a.T` or `a.transpose(0,1)` |
 | Squeeze | `t.squeeze(0)` | `np.squeeze(a, 0)` |
 | Sum | `t.sum(axis=0)` | `a.sum(axis=0)` |
 | Einsum | N/A | `np.einsum("ij,jk->ik", a, b)` |
 
-### Scratch vs PyTorch
+### ScratchとPyTorchの比較
 
 ```python
 import torch
@@ -285,11 +285,11 @@ t.transpose(0, 1).contiguous()
 torch.einsum("ik,kj->ij", A, B)
 ```
 
-PyTorch adds autograd, GPU support, and optimized BLAS kernels. The shape semantics are identical. If you understand the scratch version, PyTorch shape errors become readable.
+PyTorchはautograd、GPUサポート、最適化されたBLAS kernelsを追加します。shape semanticsは同一です。scratch版を理解すれば、PyTorchのshapeエラーは読めるようになります。
 
-### Every neural network layer as a tensor operation
+### すべてのneural network layerをtensor operationとして見る
 
-| Operation | Tensor Form | Einsum |
+| 操作 | Tensor形式 | Einsum |
 |---|---|---|
 | Linear layer | `Y = X @ W.T + b` | `"bd,od->bo"` + bias |
 | Attention QKV | `Q = X @ W_q` | `"btd,dh->bth"` |
@@ -298,43 +298,43 @@ PyTorch adds autograd, GPU support, and optimized BLAS kernels. The shape semant
 | Batch norm | `(X - mu) / sigma * gamma` | element-wise + broadcast |
 | Softmax | `exp(x) / sum(exp(x))` | element-wise + reduction |
 
-## Ship It
+## 成果物
 
-This lesson produces two reusable prompts:
+このレッスンでは、再利用可能なプロンプトを2つ作ります。
 
-1. **`outputs/prompt-tensor-shapes.md`** -- A systematic prompt for debugging tensor shape mismatches. Includes decision tables for every common operation (matmul, broadcast, cat, Linear, Conv2d, BatchNorm, softmax) and a fix lookup table.
+1. **`outputs/prompt-tensor-shapes.md`** -- tensor shape mismatchを体系的にデバッグするためのプロンプト。一般的な各演算（matmul、broadcast、cat、Linear、Conv2d、BatchNorm、softmax）の判断表と修正検索表を含みます。
 
-2. **`outputs/prompt-tensor-debugger.md`** -- A step-by-step debugging prompt you paste into any AI assistant when a shape error is blocking you. Feed it the error message and your tensor shapes, get back the exact fix.
+2. **`outputs/prompt-tensor-debugger.md`** -- shapeエラーで詰まったときに任意のAI assistantへ貼り付ける、step-by-stepのデバッグプロンプト。エラーメッセージとtensor shapeを渡すと、正確な修正を返します。
 
-## Exercises
+## 演習
 
-1. **Easy -- Reshape round-trip.** Take a tensor of shape `(2, 3, 4)`. Reshape it to `(6, 4)`, then to `(24,)`, then back to `(2, 3, 4)`. Verify element order is preserved at each step by printing the flat data.
+1. **Easy -- Reshapeの往復。** shape `(2, 3, 4)` のテンソルを用意してください。それを `(6, 4)`、次に `(24,)`、最後に `(2, 3, 4)` へ戻します。各ステップでflat dataを出力し、要素順序が保たれていることを確認してください。
 
-2. **Medium -- Implement broadcasting.** Extend the `Tensor` class with a `broadcast_to(shape)` method that expands dimensions of size 1 to match a target shape. Then modify `_elementwise_op` to automatically broadcast before operating. Test with shapes `(3, 1)` and `(1, 4)` producing `(3, 4)`.
+2. **Medium -- ブロードキャストを実装する。** `Tensor` クラスに `broadcast_to(shape)` メソッドを追加し、サイズ1の次元をtarget shapeに合わせて拡張できるようにしてください。次に `_elementwise_op` を変更し、演算前に自動でブロードキャストするようにしてください。shape `(3, 1)` と `(1, 4)` でテストし、結果が `(3, 4)` になることを確認してください。
 
-3. **Hard -- Build einsum from scratch.** Implement a basic `einsum(subscripts, *tensors)` function that handles at least: dot product (`i,i->`), matrix multiply (`ij,jk->ik`), outer product (`i,j->ij`), and transpose (`ij->ji`). Parse the subscript string, identify contracted indices, and loop over all index combinations. Compare your results against `np.einsum`.
+3. **Hard -- einsumをスクラッチから作る。** 少なくともdot product（`i,i->`）、matrix multiply（`ij,jk->ik`）、outer product（`i,j->ij`）、transpose（`ij->ji`）を扱う基本的な `einsum(subscripts, *tensors)` 関数を実装してください。subscript文字列を解析し、contractされるindexを特定し、すべてのindex combinationをループします。結果を `np.einsum` と比較してください。
 
-4. **Hard -- Attention shape tracker.** Write a function that takes `batch_size`, `seq_len`, `embed_dim`, and `num_heads` as inputs and prints the exact shape at every step of multi-head attention: input, Q/K/V projection, head split, attention scores, softmax weights, weighted sum, head merge, output projection. Verify against the `demo_attention_einsum()` output.
+4. **Hard -- Attention shape tracker。** `batch_size`、`seq_len`、`embed_dim`、`num_heads` を入力として受け取り、multi-head attentionの各ステップの正確なshapeを出力する関数を書いてください。入力、Q/K/V projection、head split、attention scores、softmax weights、weighted sum、head merge、output projectionを追跡します。`demo_attention_einsum()` の出力と照合してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |---|---|---|
-| Tensor | "A matrix but more dimensions" | A multi-dimensional array with uniform type and defined shape, strides, and operations |
-| Rank | "The number of dimensions" | The number of axes. A matrix has rank 2, not rank equal to its matrix rank |
-| Shape | "The size of the tensor" | A tuple listing the size along each axis. `(2, 3)` means 2 rows, 3 columns |
-| Stride | "How memory is laid out" | The number of elements to skip to advance one position along each axis |
-| Broadcasting | "It just works when shapes differ" | A strict set of rules: align from right, dimensions must be equal or one must be 1 |
-| Contiguous | "The tensor is normal" | Elements stored sequentially in memory with no gaps or reordering from the logical layout |
-| Einsum | "A fancy way to write matmul" | A general notation that expresses any tensor contraction, outer product, trace, or transpose in one line |
-| View | "Same as reshape" | A tensor sharing the same memory buffer but with different shape/stride metadata. Fails on non-contiguous data |
-| Contraction | "Summing over an index" | The general operation where a shared index between tensors is multiplied and summed, producing a lower-rank result |
-| NCHW / NHWC | "PyTorch vs TensorFlow format" | Memory layout conventions for image tensors. NCHW puts channels before spatial dims, NHWC puts them after |
+| Tensor | 「行列にもっと次元を足したもの」 | 均一な型を持ち、定義されたshape、strides、operationsを持つ多次元配列 |
+| Rank | 「次元数」 | 軸の数。行列はrank 2であり、行列rankと同じ意味ではない |
+| Shape | 「テンソルのサイズ」 | 各軸のサイズを並べたtuple。`(2, 3)` は2行3列を意味する |
+| Stride | 「メモリがどう並んでいるか」 | 各軸に沿って1位置進むためにスキップする要素数 |
+| Broadcasting | 「shapeが違ってもなんか動く」 | 厳密な規則。右からそろえ、各次元は等しいか、どちらかが1でなければならない |
+| Contiguous | 「テンソルが普通の状態」 | 論理レイアウトから見て、要素が隙間や並べ替えなしにメモリ上へ順番に格納されていること |
+| Einsum | 「matmulを書く凝った方法」 | tensor contraction、outer product、trace、transposeを1行で表す一般的な記法 |
+| View | 「reshapeと同じ」 | 同じメモリバッファを共有しつつ、異なるshape/strideメタデータを持つテンソル。non-contiguousデータでは失敗する |
+| Contraction | 「indexについて合計すること」 | テンソル間の共有indexを掛け合わせて合計し、低rankの結果を作る一般操作 |
+| NCHW / NHWC | 「PyTorch vs TensorFlowの形式」 | 画像テンソルのメモリレイアウト慣習。NCHWはchannelsをspatial dimsの前に置き、NHWCは後に置く |
 
-## Further Reading
+## さらに読む
 
-- [NumPy Broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html) -- The canonical rules with visual examples
-- [PyTorch Tensor Views](https://pytorch.org/docs/stable/tensor_view.html) -- When views work and when they copy
-- [einops](https://github.com/arogozhnikov/einops) -- A library that makes tensor reshaping readable and safe
-- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) -- Visualizes the tensor shapes flowing through attention
-- [Einstein Summation in NumPy](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html) -- Full einsum documentation with examples
+- [NumPy Broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html) -- 視覚例付きの標準的な規則
+- [PyTorch Tensor Views](https://pytorch.org/docs/stable/tensor_view.html) -- viewが動く場合とコピーになる場合
+- [einops](https://github.com/arogozhnikov/einops) -- tensor reshapingを読みやすく安全にするライブラリ
+- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) -- attentionを流れるtensor shapeを可視化している
+- [Einstein Summation in NumPy](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html) -- 例付きの完全なeinsumドキュメント

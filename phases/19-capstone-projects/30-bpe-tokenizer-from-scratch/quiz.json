@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a byte-level BPE tokenizer start from a 256-symbol alphabet?",
+      "question": "byte-level BPE tokenizer が 256-symbol alphabet から始めるのはなぜですか？",
       "options": [
-        "It guarantees any UTF-8 input can be represented before any merge is learned",
-        "It is the smallest alphabet that supports the English language",
-        "It matches the GPU warp size on most accelerators",
-        "It removes the need to store a merge table"
+        "merge が 1 つも学習される前から、任意の UTF-8 input を表現できることを保証するため",
+        "English language を support する最小 alphabet だから",
+        "多くの accelerator の GPU warp size と一致するから",
+        "merge table を保存する必要をなくすから"
       ],
       "correct": 0,
-      "explanation": "The 256 raw byte ids cover every possible UTF-8 input. No unknown token is ever required because any input can be expressed as a sequence of bytes."
+      "explanation": "256 個の raw byte id はすべての UTF-8 input を cover します。どんな input も byte sequence として表現できるため、unknown token は不要です。"
     },
     {
       "stage": "check",
-      "question": "What does each BPE training step do?",
+      "question": "各 BPE training step は何をしますか？",
       "options": [
-        "Splits a random word and assigns it a new id",
-        "Counts adjacent symbol pairs across the corpus and merges the most frequent one",
-        "Decreases the vocabulary by removing the least common id",
-        "Trains a small neural network to score subwords"
+        "random word を split して新しい id を割り当てる",
+        "corpus 全体で adjacent symbol pair を数え、最頻 pair を merge する",
+        "最も少ない id を削除して vocabulary を減らす",
+        "subword を score する小さな neural network を train する"
       ],
       "correct": 1,
-      "explanation": "Each step finds the highest-frequency adjacent pair across the corpus, merges it into a new symbol, and records the merge."
+      "explanation": "各 step は corpus 全体で最高頻度の adjacent pair を見つけ、それを新しい symbol に merge し、merge を記録します。"
     },
     {
       "stage": "check",
-      "question": "When encoding new text, in what order are merges applied?",
+      "question": "新しい text を encode するとき、merge はどの順序で適用されますか？",
       "options": [
-        "In random order until none apply",
-        "By position in the input, left to right, regardless of training rank",
-        "By the rank the merge received during training, lowest rank first",
-        "By the bytes of the pair, sorted alphabetically"
+        "適用できなくなるまで random order",
+        "training rank に関係なく input 内の position を left to right",
+        "training 中に merge が受け取った rank 順。lowest rank first",
+        "pair の byte を alphabetically に sort した順"
       ],
       "correct": 2,
-      "explanation": "Inference applies merges in the order they were learned. The earliest merge in the table wins when multiple merges could apply."
+      "explanation": "inference は merge を学習された順に適用します。複数の merge が適用可能な場合、table 内で最も早い merge が勝ちます。"
     },
     {
       "stage": "check",
-      "question": "What is the encoder's behavior on a special-token string when allow_special is False?",
+      "question": "allow_special が False のとき、special-token string に対する encoder の behavior は何ですか？",
       "options": [
-        "It raises an error",
-        "It maps the string to its reserved id",
-        "It encodes the literal bytes of the string",
-        "It silently skips the string"
+        "error を raise する",
+        "string を reserved id に map する",
+        "string の literal bytes を encode する",
+        "string を黙って skip する"
       ],
       "correct": 2,
-      "explanation": "With allow_special off, a string like <|endoftext|> is treated as raw bytes and goes through the merge loop like any other input."
+      "explanation": "allow_special が off の場合、<|endoftext|> のような string は raw bytes として扱われ、他の input と同じように merge loop を通ります。"
     },
     {
       "stage": "post",
-      "question": "Why does the decoder never need an unknown-token id?",
+      "question": "decoder が unknown-token id を必要としないのはなぜですか？",
       "options": [
-        "Every learned token is the concatenation of two known tokens, recursing down to single bytes",
-        "The encoder strips unknown tokens before decoding",
-        "The model rejects unknown ids during sampling",
-        "The decoder always returns the empty string for unknown ids"
+        "すべての learned token は、既知 token 2 つの concatenation であり、最終的には single byte に再帰的に到達するから",
+        "encoder が decoding 前に unknown token を strip するから",
+        "model が sampling 中に unknown id を reject するから",
+        "decoder は unknown id に対して常に empty string を返すから"
       ],
       "correct": 0,
-      "explanation": "Every id resolves either to a raw byte or to two previously known ids. Recursive expansion always terminates in bytes, which decode to UTF-8."
+      "explanation": "すべての id は raw byte または以前から known な 2 つの id に resolve されます。recursive expansion は必ず bytes で終わり、それが UTF-8 に decode されます。"
     },
     {
       "stage": "post",
-      "question": "What happens to the encoded length of a fixed sentence as the target vocabulary grows?",
+      "question": "target vocabulary が大きくなると、固定された sentence の encoded length はどうなりますか？",
       "options": [
-        "It increases linearly with the vocabulary size",
-        "It stays constant because each id encodes a single byte",
-        "It tends to decrease because larger vocabularies cover more subwords",
-        "It oscillates randomly because BPE is non-deterministic"
+        "vocabulary size に比例して増える",
+        "各 id が single byte を encode するため一定のまま",
+        "より大きな vocabulary がより多くの subword を cover するため、短くなる傾向がある",
+        "BPE は non-deterministic なので random に oscillate する"
       ],
       "correct": 2,
-      "explanation": "Larger vocabularies learn more merges, so common subwords collapse into single ids and the encoded sequence gets shorter."
+      "explanation": "大きな vocabulary はより多くの merge を学習するため、common subword が single id に collapse し、encoded sequence は短くなります。"
     }
   ]
 }

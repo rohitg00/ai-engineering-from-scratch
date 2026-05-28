@@ -1,39 +1,39 @@
 ---
 name: topology-picker
-description: Pick a multi-agent debate topology (star / chain / tree / graph), an N of agents, a heterogeneity profile, and a round bound for a given task.
+description: 与えられた task に対して multi-agent debate topology (star / chain / tree / graph)、agent 数 N、heterogeneity profile、round bound を選ぶ。
 version: 1.0.0
 phase: 16
 lesson: 15
 tags: [multi-agent, debate, topology, voting, self-consistency]
 ---
 
-Given a task description, recommend a multi-agent topology and sizing.
+task description を受け取り、multi-agent topology と sizing を推奨する。
 
 Produce:
 
-1. **Task fingerprint.** Research (long-horizon, open-ended), fast-factual (closed-form answer), stepwise-refinement (staged pipeline), or opinion (no ground truth). Pick one; if it spans two, pick the dominant shape.
-2. **Topology.** Star, chain, tree, or graph. Justify from the fingerprint:
+1. **Task fingerprint.** research (long-horizon、open-ended)、fast-factual (closed-form answer)、stepwise-refinement (staged pipeline)、opinion (ground truth なし) のどれかを選ぶ。2つにまたがる場合は dominant shape を選ぶ。
+2. **Topology.** star、chain、tree、graph。fingerprint から理由を述べる:
    - research → graph (any-to-any critique)
    - fast-factual → star (hub aggregates)
-   - stepwise-refinement → chain (or tree if divide-and-conquer)
-   - opinion → none of the above; recommend single agent + human decision
-3. **N of agents.** 3 is the cheapest useful ensemble; 5 is the common sweet spot; 7+ is specialty. Above 5 on graph topology, warn about coordination tax.
-4. **Heterogeneity profile.** At least one agent must come from a different base model family if monoculture matters (research, reasoning). Prefer 3 different base models at N=5.
-5. **Round bound.** 1 round = vote. 2 rounds = one refinement. 3 rounds = maximum before conformity dominates. Never unbounded.
-6. **Aggregation.** Plurality (cheap), confidence-weighted (CP-WBFT from Lesson 14), geometric median (DecentLLMs), or judge-scored. Default to confidence-weighted unless cost constraints dictate plurality.
-7. **Escalation.** Below-threshold consensus → escalate where? Human, another ensemble with different base models, or abstention?
+   - stepwise-refinement → chain (または divide-and-conquer なら tree)
+   - opinion → 上記なし。single agent + human decision を推奨
+3. **N of agents.** 3 は最安の useful ensemble。5 は一般的な sweet spot。7+ は specialty。graph topology で 5 を超えるなら coordination tax を警告する。
+4. **Heterogeneity profile.** monoculture が問題になる場合 (research、reasoning)、少なくとも1 agent は異なる base model family から来る必要がある。N=5 では3つの異なる base model を優先する。
+5. **Round bound.** 1 round = vote。2 rounds = 1回の refinement。3 rounds = conformity が支配する前の最大値。unbounded は禁止。
+6. **Aggregation.** plurality (安い)、confidence-weighted (Lesson 14 の CP-WBFT)、geometric median (DecentLLMs)、judge-scored。cost constraint が plurality を要求しない限り、default は confidence-weighted。
+7. **Escalation.** below-threshold consensus はどこに escalate するか。human、異なる base model の別 ensemble、または abstention。
 
 Hard rejects:
 
-- Any recommendation of 10+ agents on graph topology. Coordination tax dominates; measure first.
-- Star topology for open research questions. Star loses the benefit of any-to-any critique.
-- Any recommendation that runs the same base model N times and calls it multi-agent. That is self-consistency in disguise; label it correctly.
-- Unbounded rounds. Rewards conformity; the longer debate runs, the more agents agree by pressure rather than logic.
+- graph topology で 10+ agents を推奨すること。coordination tax が支配する。先に測定する。
+- open research question に star topology を使うこと。star は any-to-any critique の利益を失う。
+- 同じ base model を N 回走らせて multi-agent と呼ぶ recommendation。それは self-consistency であり、正しく label する。
+- unbounded rounds。conformity に報酬を与える。debate が長くなるほど、agent は論理ではなく pressure によって同意する。
 
 Refusal rules:
 
-- If the task has no ground truth (opinion, synthesis, creative), state that voting is advisory. Recommend single agent + human decision.
-- If the user lacks access to multiple base models, flag the monoculture ceiling and recommend self-consistency with temperature variation as a fallback.
-- If the task is simple (single factual lookup, < 100 tokens of reasoning), recommend a single agent with self-consistency N=5.
+- task に ground truth がない場合 (opinion、synthesis、creative)、voting は advisory だと述べる。single agent + human decision を推奨する。
+- user が複数 base model に access できない場合、monoculture ceiling を flag し、fallback として temperature variation 付き self-consistency を推奨する。
+- task が simple (single factual lookup、reasoning < 100 tokens) の場合、self-consistency N=5 付き single agent を推奨する。
 
-Output: a one-page brief. Start with a single-sentence recommendation ("Graph topology, N=5 agents from 3 different base models, 2 rounds, confidence-weighted aggregation, escalate to human on below-threshold."), then the seven sections above. End with a budget estimate: expected tokens per query and expected latency in seconds.
+Output: 1ページの brief。single-sentence recommendation ("Graph topology, N=5 agents from 3 different base models, 2 rounds, confidence-weighted aggregation, escalate to human on below-threshold.") で始め、上の7 section を続ける。最後に budget estimate を書く: query ごとの expected tokens と expected latency in seconds。

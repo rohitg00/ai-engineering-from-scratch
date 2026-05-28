@@ -1,60 +1,60 @@
 {
   "lesson": "11-multi-region-kv-locality",
-  "title": "Multi-Region LLM Serving and KV Cache Locality",
+  "title": "Multi-Region LLM Serving と KV Cache Locality",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is round-robin load balancing actively harmful for cached LLM inference?",
+      "question": "Round-robin load balancing が cached LLM inference で積極的に有害なのはなぜですか？",
       "options": [
-        "A request that does not land on the node holding its prefix pays full prefill cost instead of a cache hit",
-        "Round-robin requires sticky sessions",
-        "Round-robin breaks TLS",
-        "Round-robin is only valid for stateful databases"
+        "Prefix を持つ node に着地しない request は cache hit ではなく full prefill cost を支払うため",
+        "Round-robin は sticky sessions を必要とするため",
+        "Round-robin は TLS を壊すため",
+        "Round-robin は stateful databases にしか有効でないため"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What two inputs does a cache-aware router consume?",
+      "question": "Cache-aware router が消費する 2 つの input は何ですか？",
       "options": [
-        "Random shuffles and request size",
-        "Only the user_id and tenant_id",
-        "Round-robin counters and TLS keys",
-        "KV-cache events from replicas and a prefix hash on the incoming request"
+        "Random shuffles と request size",
+        "user_id と tenant_id のみ",
+        "Round-robin counters と TLS keys",
+        "Replicas からの KV-cache events と incoming request の prefix hash"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly what is the TTFT gap between a cache hit and a cold prefill on a 2K-token prompt for Llama 3.3 70B FP8?",
+      "question": "Llama 3.3 70B FP8 の 2K-token prompt で、cache hit と cold prefill の TTFT gap はおおよそどのくらいですか？",
       "options": [
-        "Identical",
-        "About 10x (~80 ms vs ~800 ms)",
-        "About 1.1x",
-        "About 1000x"
+        "同じ",
+        "約 10x（約 80 ms vs 約 800 ms）",
+        "約 1.1x",
+        "約 1000x"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does cross-region routing not always beat regional routing for cache hits?",
+      "question": "Cache hit があっても cross-region routing が常に regional routing に勝つわけではないのはなぜですか？",
       "options": [
-        "Cache-aware routing is impossible across regions",
-        "GORGO research found cache hits do not help latency",
-        "Inter-region routing is forbidden by all hyperscalers",
-        "Saved prefill can be dwarfed by network RTT, e.g. 440 ms round-trip can dwarf an 800-to-80 ms prefill saving"
+        "Cache-aware routing は regions をまたいでは不可能だから",
+        "GORGO research が cache hits は latency に効かないと示したから",
+        "Inter-region routing はすべての hyperscalers で禁じられているから",
+        "Saved prefill が network RTT によって薄まることがあるため。例: 440 ms round-trip は 800-to-80 ms prefill saving を上回り得る"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the lesson cite as the 32% LLM DR failure driver?",
+      "question": "このレッスンが 32% の LLM DR failure driver として挙げるものは何ですか？",
       "options": [
-        "Backups that include weights but miss tokenizer files or quantization configs",
+        "Weights は含むが tokenizer files や quantization configs を欠く backups",
         "Region quota exhaustion",
         "Misconfigured load balancers",
         "Unencrypted backups"
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "What does the lesson say about commercial cross-region inference offerings such as Bedrock CRI?",
+      "question": "Bedrock CRI などの commercial cross-region inference offerings について、このレッスンは何と言っていますか？",
       "options": [
-        "They are KV-cache-aware and replace app-layer routing",
-        "They only work in us-east-1",
-        "They optimize availability, not TTFT, and treat inference as opaque — you still need an app-layer cache-aware router",
-        "They are forbidden under GDPR"
+        "KV-cache-aware であり app-layer routing を置き換える",
+        "us-east-1 でしか動かない",
+        "Availability を最適化するが TTFT ではなく、inference を opaque に扱うため、app-layer cache-aware router はまだ必要",
+        "GDPR で禁じられている"
       ],
       "correct": 2,
       "explanation": ""

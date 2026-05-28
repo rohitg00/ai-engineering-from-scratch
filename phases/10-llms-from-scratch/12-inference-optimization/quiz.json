@@ -1,37 +1,37 @@
 [
   {
-    "question": "What are the two phases of LLM inference?",
-    "options": ["Training and evaluation", "Prefill (processes the prompt in parallel, compute-bound) and decode (generates tokens one at a time, memory-bound)", "Encoding and decoding", "Forward and backward"],
+    "question": "LLM 推論の 2つの phase は何ですか？",
+    "options": ["Training と evaluation", "Prefill (prompt を並列に処理し、compute-bound) と decode (tokens を 1つずつ生成し、memory-bound)", "Encoding と decoding", "Forward と backward"],
     "correct": 1,
-    "explanation": "Prefill processes all prompt tokens in parallel (limited by compute). Decode generates tokens autoregressively one at a time (limited by memory bandwidth for loading model weights). Different optimizations target each phase.",
+    "explanation": "Prefill はすべての prompt tokens を並列に処理します (compute に制限される)。Decode は tokens を autoregressive に 1つずつ生成します (model weights を読み込む memory bandwidth に制限される)。それぞれの phase に対して異なる最適化が効きます。",
     "stage": "pre"
   },
   {
-    "question": "What does KV-cache eliminate during autoregressive generation?",
-    "options": ["The need for attention masks", "Redundant recomputation of key and value vectors for all previous tokens at each generation step", "The embedding lookup", "The softmax computation"],
+    "question": "KV-cache は autoregressive generation 中に何を取り除きますか？",
+    "options": ["attention masks の必要性", "各 generation step で過去すべての tokens の key/value vectors を冗長に再計算すること", "embedding lookup", "softmax computation"],
     "correct": 1,
-    "explanation": "Without KV-cache, generating token N requires recomputing attention keys and values for all N-1 previous tokens. KV-cache stores these vectors, so each new token only computes its own K and V, saving O(N) computation per step.",
+    "explanation": "KV-cache がない場合、token N を生成するには過去 N-1 tokens すべての attention keys/values を再計算する必要があります。KV-cache はこれらの vectors を保存するため、新しい token は自分自身の K/V だけを計算すればよく、step ごとに O(N) の計算を節約できます。",
     "stage": "pre"
   },
   {
-    "question": "What is continuous batching and why does it improve throughput?",
-    "options": ["Processing all requests in one large batch", "Dynamically adding and removing requests from the running batch as they start and finish, instead of waiting for the entire batch to complete", "Using larger batch sizes", "Batching across multiple models"],
+    "question": "continuous batching とは何で、なぜ throughput を改善するのですか？",
+    "options": ["すべての requests を 1つの大きな batch で処理すること", "batch 全体の完了を待つのではなく、requests の開始・終了に応じて running batch へ動的に追加・削除すること", "より大きな batch size を使うこと", "複数 models にまたがって batching すること"],
     "correct": 1,
-    "explanation": "In static batching, a short request holds its batch slot until the longest request finishes. Continuous batching immediately fills completed slots with new requests, keeping the GPU busy and improving overall throughput.",
+    "explanation": "static batching では、短い request も最長 request が終わるまで batch slot を占有します。continuous batching は完了した slot を新しい requests ですぐ埋めるため、GPU を稼働させ続け、全体 throughput を改善します。",
     "stage": "post"
   },
   {
-    "question": "What problem does PagedAttention (used in vLLM) solve?",
-    "options": ["It speeds up the attention computation", "It manages KV-cache memory in fixed-size blocks like virtual memory, eliminating fragmentation from variable-length sequences", "It reduces model size", "It improves tokenization speed"],
+    "question": "vLLM で使われる PagedAttention はどの問題を解決しますか？",
+    "options": ["attention computation を高速化する", "virtual memory のように KV-cache memory を固定サイズ blocks で管理し、可変長 sequences による fragmentation をなくす", "model size を小さくする", "tokenization speed を改善する"],
     "correct": 1,
-    "explanation": "KV-cache for variable-length sequences causes memory fragmentation (wasted gaps between allocations). PagedAttention allocates KV-cache in fixed blocks and maps them with a page table, like OS virtual memory.",
+    "explanation": "可変長 sequences の KV-cache は memory fragmentation (allocations 間の無駄な隙間) を引き起こします。PagedAttention は OS の virtual memory のように、KV-cache を固定 blocks に割り当て、page table で対応付けます。",
     "stage": "post"
   },
   {
-    "question": "What is speculative decoding?",
-    "options": ["Generating multiple responses and picking the best", "Using a small draft model to propose multiple tokens that the large model verifies in parallel, speeding up generation", "Predicting which tokens the user wants", "Caching frequently generated sequences"],
+    "question": "speculative decoding とは何ですか？",
+    "options": ["複数の responses を生成して最良のものを選ぶこと", "小さな draft model で複数 tokens を提案し、大きな model がそれらを並列に検証して generation を高速化すること", "ユーザーが望む tokens を予測すること", "頻繁に生成される sequences を cache すること"],
     "correct": 1,
-    "explanation": "A small fast model generates N candidate tokens. The large model verifies all N in a single forward pass (parallel). If K tokens are accepted, you've generated K tokens in the time of roughly 1 large-model step.",
+    "explanation": "小さく高速な model が N 個の candidate tokens を生成します。大きな model は N 個すべてを単一 forward pass で並列に検証します。K 個の tokens が受理されれば、おおよそ大きな model の 1 step 分の時間で K tokens を生成したことになります。",
     "stage": "post"
   }
 ]

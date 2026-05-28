@@ -1,30 +1,30 @@
 # Build a Complete Vision Pipeline — Capstone
 
-> A production vision system is a chain of models and rules stitched with data contracts. The pieces are already in this phase; the capstone wires them together end-to-end.
+> 本番のvision systemは、modelとruleをdata contractで縫い合わせたchainです。部品はこのphaseですでに学びました。capstoneでは、それらをend-to-endに接続します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lessons 01-15
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 4 Lessons 01-15
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Design a production vision pipeline that detects objects, classifies them, and emits structured JSON — with every failure path handled
-- Plug a detector (Mask R-CNN or YOLO), a classifier (ConvNeXt-Tiny), and a data contract (Pydantic) into one service
-- Benchmark the end-to-end pipeline and identify the first bottleneck (usually preprocessing, then the detector)
-- Ship a minimal FastAPI service that accepts an image upload, runs the pipeline, and returns detections with classifications
+- objectを検出し、分類し、structured JSONを出力する本番vision pipelineを設計する。すべてのfailure pathを処理する
+- detector（Mask R-CNNまたはYOLO）、classifier（ConvNeXt-Tiny）、data contract（Pydantic）を1つのserviceへ接続する
+- end-to-end pipelineをbenchmarkし、最初のbottleneckを特定する（通常はpreprocessing、その次にdetector）
+- image uploadを受け取り、pipelineを実行し、classification付きdetectionsを返す最小FastAPI serviceを出荷する
 
-## The Problem
+## 問題
 
-Individual vision models are useful; vision products are chains of them. A retail shelf audit is a detector plus a product classifier plus a price-OCR pipeline. Autonomous driving is a 2D detector plus a 3D detector plus a segmenter plus a tracker plus a planner. A medical pre-screen is a segmenter plus a region classifier plus a clinician UI.
+個別のvision modelは有用ですが、vision productはそれらのchainです。retail shelf auditはdetector + product classifier + price-OCR pipelineです。autonomous drivingは2D detector + 3D detector + segmenter + tracker + plannerです。medical pre-screenはsegmenter + region classifier + clinician UIです。
 
-Wiring those chains is the part that separates a ML prototype from a product. Every interface between models is a new place for bugs. Every coordinate transform, every normalisation, every mask resize is a silent-failure candidate. A pipeline is as strong as its weakest interface.
+そのchainを配線する部分が、ML prototypeとproductを分けます。model間のinterfaceはすべて新しいbugの場所です。coordinate transform、normalisation、mask resizeのどれもがsilent failureの候補です。pipelineは最も弱いinterfaceと同じ強さしかありません。
 
-This capstone sets up the minimum viable pipeline: detection + classification + structured output + a serving layer. Everything else in Phase 4 slots into this skeleton: swap Mask R-CNN for YOLOv8, add a OCR head, add a segmentation branch, add a tracker. The architecture is stable; the pieces are pluggable.
+このcapstoneでは、最小限の実用pipelineを作ります。detection + classification + structured output + serving layerです。Phase 4の他の要素はすべてこのskeletonへ差し替えられます。Mask R-CNNをYOLOv8に替える、OCR headを追加する、segmentation branchを追加する、trackerを追加する。architectureは安定しており、部品はpluggableです。
 
-## The Concept
+## コンセプト
 
-### The pipeline
+### pipeline
 
 ```mermaid
 flowchart LR
@@ -43,11 +43,11 @@ flowchart LR
     style SCHEMA fill:#dcfce7,stroke:#16a34a
 ```
 
-Seven stages. The two model stages are expensive; the five other stages are where the bugs live.
+7 stagesです。2つのmodel stageは高コストです。残り5つのstageにbugが潜みます。
 
-### Data contracts with Pydantic
+### Pydanticによるdata contract
 
-Every model boundary becomes a typed object. This turns silent failures into loud ones.
+すべてのmodel boundaryをtyped objectにします。これによりsilent failureがloud failureになります。
 
 ```
 Detection(
@@ -65,33 +65,33 @@ PipelineResult(
 )
 ```
 
-When a detector returns boxes in `(cx, cy, w, h)` instead of `(x1, y1, x2, y2)`, Pydantic's validation fails at the boundary and you find out immediately instead of debugging a downstream crop that silently returns empty regions.
+detectorが `(x1, y1, x2, y2)` ではなく `(cx, cy, w, h)` のboxを返した場合、Pydantic validationがboundaryで失敗します。downstreamのcropが空領域を黙って返すdebugに入る前に気付けます。
 
-### Where latency goes
+### latencyはどこへ行くか
 
-Three truths hold in nearly every vision pipeline:
+ほぼすべてのvision pipelineで、次の3つは成り立ちます。
 
-1. **Preprocessing is often the biggest single block.** Decoding JPEGs, converting colour spaces, resizing — these are CPU-bound and easy to forget.
-2. **The detector dominates GPU time.** 70-90% of GPU time is in the detection forward pass.
-3. **Postprocessing (NMS, RLE encode/decode) is cheap on GPU, expensive on CPU.** Always profile with the actual target.
+1. **Preprocessingが最大の単一blockになることが多い。** JPEG decode、colour space conversion、resizeはCPU-boundで、忘れられがちです。
+2. **detectorがGPU timeを支配する。** GPU timeの70-90%はdetection forward passにあります。
+3. **Postprocessing（NMS、RLE encode/decode）はGPUでは安いがCPUでは高い。** 必ず実targetでprofileします。
 
-Knowing the distribution is what turns optimisation into a prioritised list.
+分布を知ることで、optimizationは優先順位付きlistになります。
 
-### Failure modes
+### failure modes
 
-- **Empty detections** — return empty list, do not crash. Log.
-- **Out-of-bounds boxes** — clamp to image size before cropping.
-- **Tiny crops** — skip classification for boxes smaller than the classifier's minimum input.
-- **Corrupt upload** — 400 response with a specific error code, not 500.
-- **Model load failure** — fail at service startup, not at first request.
+- **Empty detections** — crashせずempty listを返す。logする。
+- **Out-of-bounds boxes** — crop前にimage sizeへclampする。
+- **Tiny crops** — classifierの最小inputより小さいboxはclassificationをskipする。
+- **Corrupt upload** — 500ではなくspecific error code付き400 responseを返す。
+- **Model load failure** — first requestではなくservice startupで失敗させる。
 
-A production pipeline handles each of these without writing generic `try/except` that hides the failure. Every failure gets a named code and a response.
+本番pipelineは、failureを隠すgeneric `try/except` なしでこれらを処理します。各failureはnamed codeとresponseを持ちます。
 
 ### Batching
 
-A production service serves multiple clients. Batching detections and classifications across requests multiplies throughput. The trade-off: extra latency from waiting for a batch to fill. Typical setup: collect requests for up to 20ms, batch together, process, distribute responses. `torchserve` and `triton` do this natively; small services with predictable load roll their own micro-batcher.
+production serviceは複数clientへ応答します。requestをまたいでdetectionやclassificationをbatchingするとthroughputが何倍にもなります。trade-offは、batchが埋まるのを待つ追加latencyです。典型設定では最大20ms requestを集め、まとめて処理し、responseを配ります。`torchserve` と `triton` はこれをnativeに扱います。予測可能な負荷の小規模serviceではmicro-batcherを自作することもあります。
 
-## Build It
+## 作ってみる
 
 ### Step 1: Data contracts
 
@@ -120,9 +120,9 @@ class PipelineResult(BaseModel):
     inference_ms: float
 ```
 
-Five seconds of code saves an hour of debugging on any serious pipeline.
+5秒のcodeが、本格的なpipelineで1時間のdebugを節約します。
 
-### Step 2: A minimal Pipeline class
+### Step 2: 最小Pipeline class
 
 ```python
 import time
@@ -211,9 +211,9 @@ class VisionPipeline:
         )
 ```
 
-Every interface is typed. Every failure path has a specific handling decision.
+すべてのinterfaceがtypedです。すべてのfailure pathに具体的なhandling decisionがあります。
 
-### Step 3: Wire a detector and a classifier
+### Step 3: detectorとclassifierを接続する
 
 ```python
 from torchvision.models.detection import maskrcnn_resnet50_fpn_v2
@@ -261,9 +261,9 @@ async def detect_endpoint(file: UploadFile):
     return result.model_dump()
 ```
 
-Run with `uvicorn main:app --host 0.0.0.0 --port 8000`. Test with `curl -F 'file=@dog.jpg' http://localhost:8000/detect`.
+`uvicorn main:app --host 0.0.0.0 --port 8000` で実行します。`curl -F 'file=@dog.jpg' http://localhost:8000/detect` でtestします。
 
-### Step 5: Benchmark the pipeline
+### Step 5: pipelineをbenchmarkする
 
 ```python
 import time
@@ -302,49 +302,49 @@ def benchmark(pipe, num_runs=20, image_size=(400, 600)):
         print(f"{stage:12s}  p50={times[len(times)//2]:7.1f} ms  p95={times[int(len(times)*0.95)]:7.1f} ms")
 ```
 
-Typical output on CPU: preprocess ~3 ms, detect 300-500 ms, classify 20-40 ms, total 350-550 ms. On GPU, detect is 20-40 ms and the preprocess + classify start to matter more in relative terms.
+CPUでの典型出力は、preprocess ~3 ms、detect 300-500 ms、classify 20-40 ms、total 350-550 msです。GPUではdetectが20-40 msになり、preprocess + classifyが相対的に重要になります。
 
-## Use It
+## 使ってみる
 
-Production templates converge to the same structure, plus:
+production templateは同じ構造に収束し、さらに次を加えます。
 
-- **Model versioning** — always log the model name and weights hash in the response.
-- **Per-request trace IDs** — log every stage timing for every request so you can correlate slow responses with stages.
-- **Fallback path** — if the classifier times out, return detections without classifications rather than failing the whole request.
-- **Safety filters** — NSFW / PII filters run after classification, before the response leaves the service.
-- **Batch endpoint** — a `/detect_batch` accepting a list of image URLs for bulk processing.
+- **Model versioning** — responseには常にmodel nameとweights hashをlogする。
+- **Per-request trace IDs** — 各requestの全stage timingをlogし、遅いresponseをstageと相関させる。
+- **Fallback path** — classifierがtimeoutした場合、request全体を失敗させずclassificationなしのdetectionsを返す。
+- **Safety filters** — NSFW / PII filterはclassification後、responseがserviceを出る前に実行する。
+- **Batch endpoint** — bulk processing用に、image URLのlistを受け取る `/detect_batch`。
 
-For production serving, `torchserve`, `Triton Inference Server`, and `BentoML` handle batching, versioning, metrics, and health checks out of the box. Running `FastAPI` directly is fine for prototypes and small-scale products.
+production servingでは、`torchserve`、`Triton Inference Server`、`BentoML` がbatching、versioning、metrics、health checkを標準で扱います。prototypeや小規模productなら `FastAPI` を直接動かしても問題ありません。
 
-## Ship It
+## 出荷する
 
-This lesson produces:
+このlessonが生成するもの:
 
-- `outputs/prompt-vision-service-shape-reviewer.md` — a prompt that reviews a vision service's code for contract/response shape violations and names the first breaking bug.
-- `outputs/skill-pipeline-budget-planner.md` — a skill that, given target latency and throughput, assigns a time budget to every pipeline stage and flags which stage will miss its budget first.
+- `outputs/prompt-vision-service-shape-reviewer.md` — vision serviceのcodeをcontract/response shape違反の観点でreviewし、最初の破壊的bugを指摘するprompt。
+- `outputs/skill-pipeline-budget-planner.md` — target latencyとthroughputから各pipeline stageへtime budgetを割り当て、どのstageが最初にbudget未達になるか示すskill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Run the pipeline on 10 images from any open dataset. Report the average time per stage and the distribution of detection counts per image.
-2. **(Medium)** Add a mask output field to `Detection` and encode it as RLE. Verify the JSON stays under 1MB even for a 10-object image.
-3. **(Hard)** Add a micro-batcher in front of the classifier: collect crops for up to 10 ms, classify them all in one GPU call, return results per request. Measure the throughput gain at 5 concurrent requests per second and the latency added.
+1. **(Easy)** 任意のopen datasetから10 imagesをpipelineで実行してください。stageごとのaverage timeと、imageごとのdetection count分布を報告してください。
+2. **(Medium)** `Detection` にmask output fieldを追加し、RLEとしてencodeしてください。10-object imageでもJSONが1MB未満に収まることを検証してください。
+3. **(Hard)** classifierの前にmicro-batcherを追加してください。最大10 ms cropsを集め、1回のGPU callでまとめてclassifyし、requestごとに結果を返します。5 concurrent requests per secondでthroughput gainと追加latencyを測定してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Pipeline | "The system" | An ordered chain of preprocessing, inference, and postprocessing steps with a typed interface between each pair |
-| Data contract | "The schema" | Pydantic / dataclass definitions that every stage input and output conforms to; catches integration bugs at the boundary |
-| Preprocessing | "Before the model" | Decoding, colour conversion, resizing, normalising; usually the biggest CPU time sink |
-| Postprocessing | "After the model" | NMS, mask resize, threshold, RLE encode; cheap on GPU, expensive on CPU |
-| Microbatcher | "Collect then forward" | Aggregator that waits a fixed window for multiple requests, runs a single batched forward pass |
-| Trace ID | "Request id" | Per-request identifier logged at every stage so slow requests can be traced end-to-end |
-| Failure code | "Named error" | Specific error code per failure class instead of generic 500; enables client retry logic |
-| Health check | "Readiness probe" | Cheap endpoint that reports whether the service can answer; loadbalancers rely on this |
+| Pipeline | "The system" | preprocessing、inference、postprocessing stepsの順序付きchain。各pairの間にtyped interfaceを持つ |
+| Data contract | "The schema" | 各stage input/outputが従うPydantic / dataclass定義。boundaryでintegration bugを捕まえる |
+| Preprocessing | "Before the model" | decode、colour conversion、resize、normalising。通常最大のCPU time sink |
+| Postprocessing | "After the model" | NMS、mask resize、threshold、RLE encode。GPUでは安く、CPUでは高い |
+| Microbatcher | "Collect then forward" | 複数requestを固定windowだけ待って集約し、1回のbatched forward passを実行するaggregator |
+| Trace ID | "Request id" | 各stageでlogされるrequestごとのidentifier。遅いrequestをend-to-endに追跡できる |
+| Failure code | "Named error" | generic 500ではなくfailure classごとのspecific error code。client retry logicを可能にする |
+| Health check | "Readiness probe" | serviceが応答可能か報告する安価なendpoint。load balancerが依存する |
 
-## Further Reading
+## 参考文献
 
-- [Full Stack Deep Learning — Deploying Models](https://fullstackdeeplearning.com/course/2022/lecture-5-deployment/) — the canonical overview of production ML deployment
-- [BentoML docs](https://docs.bentoml.com) — serving framework with batching, versioning, and metrics
-- [torchserve docs](https://pytorch.org/serve/) — PyTorch's official serving library
-- [NVIDIA Triton Inference Server](https://developer.nvidia.com/triton-inference-server) — high-throughput serving with batching and multi-model support
+- [Full Stack Deep Learning — Deploying Models](https://fullstackdeeplearning.com/course/2022/lecture-5-deployment/) — production ML deploymentの標準的overview
+- [BentoML docs](https://docs.bentoml.com) — batching、versioning、metricsを備えたserving framework
+- [torchserve docs](https://pytorch.org/serve/) — PyTorch公式serving library
+- [NVIDIA Triton Inference Server](https://developer.nvidia.com/triton-inference-server) — batchingとmulti-model supportを備えたhigh-throughput serving

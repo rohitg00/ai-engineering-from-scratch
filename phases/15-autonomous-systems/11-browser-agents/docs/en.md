@@ -1,104 +1,104 @@
-# Browser Agents and Long-Horizon Web Tasks
+# ブラウザエージェントと長期ホライズンWebタスク
 
-> ChatGPT agent (July 2025) merged Operator and deep research into one browser/terminal agent and set BrowseComp SOTA at 68.9%. OpenAI shut Operator down August 31, 2025 — consolidation at the product layer. Anthropic's Vercept acquisition moved Claude Sonnet on OSWorld from under 15% to 72.5%. WebArena-Verified (ServiceNow, ICLR 2026) fixed 11.3 percentage points of false-negative rate in the original WebArena and shipped the 258-task Hard subset. The numbers are real. So is the attack surface: OpenAI's head of preparedness stated publicly that indirect prompt injection into browser agents "is not a bug that can be fully patched." Documented 2025–2026 attacks: Tainted Memories (Atlas CSRF), HashJack (Cato Networks), and one-click hijacks in Perplexity Comet.
+> ChatGPT agent（2025年7月）は、Operatorとdeep researchを1つのブラウザ/ターミナルエージェントに統合し、BrowseCompでSOTAとなる68.9%を記録した。OpenAIは2025年8月31日にOperatorを終了し、プロダクト層で統合を進めた。AnthropicによるVercept買収は、Claude SonnetのOSWorldスコアを15%未満から72.5%へ押し上げた。WebArena-Verified（ServiceNow、ICLR 2026）は、元のWebArenaにあった偽陰性率を11.3パーセントポイント修正し、258タスクのHard subsetを公開した。これらの数値は現実である。攻撃面も同じく現実である。OpenAIのpreparedness責任者は、ブラウザエージェントへの間接プロンプトインジェクションは「完全にパッチできるバグではない」と公に述べた。2025-2026年に文書化された攻撃には、Tainted Memories（Atlas CSRF）、HashJack（Cato Networks）、Perplexity Cometでのワンクリック乗っ取りがある。
 
-**Type:** Learn
-**Languages:** Python (stdlib, indirect prompt-injection attack surface model)
-**Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
-**Time:** ~45 minutes
+**タイプ:** Learn
+**言語:** Python（stdlib、間接プロンプトインジェクションの攻撃面モデル）
+**前提条件:** Phase 15 · 10（Permission modes）、Phase 15 · 01（Long-horizon agents）
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-A browser agent is a long-horizon agent that reads untrusted content and takes consequential actions. Every page the agent visits is an input the user did not write. Every form on every page is a potential command channel. The 2025–2026 attack corpus shows this is not hypothetical: Tainted Memories lets an attacker bind malicious instructions to the agent's memory via a crafted page; HashJack hides commands in URL fragments the agent visits; Perplexity Comet hijacks hit in a single click.
+ブラウザエージェントは、信頼できないコンテンツを読み、重大な結果を伴う行動を取る長期ホライズンエージェントである。エージェントが訪問するすべてのページは、ユーザーが書いていない入力である。すべてのページ上のすべてのフォームは、潜在的なコマンドチャネルである。2025-2026年の攻撃コーパスは、これが仮説ではないことを示している。Tainted Memoriesでは、攻撃者が細工したページを通じて悪意ある指示をエージェントのメモリに結び付けられる。HashJackは、エージェントが訪問するURLフラグメントにコマンドを隠す。Perplexity Cometの乗っ取りは、1回のクリックで成立した。
 
-The defensive picture is uncomfortable. OpenAI's head of preparedness said the quiet part loud: indirect prompt injection "is not a bug that can be fully patched." This is because the attack lives in the agent's reading-vs-acting boundary, which is architecturally fuzzy — every token the model reads could, in principle, be read as an instruction.
+防御側の状況は厳しい。OpenAIのpreparedness責任者は、言いにくいことを明言した。間接プロンプトインジェクションは「完全にパッチできるバグではない」。この攻撃は、エージェントの「読む」と「行動する」の境界に存在するからである。この境界はアーキテクチャ上あいまいであり、モデルが読むすべてのトークンは、原理的には指示として読まれ得る。
 
-This lesson names the attack surface, names the benchmark landscape (BrowseComp, OSWorld, WebArena-Verified), and models a minimal indirect-prompt-injection scenario so you can reason about real defenses in Lessons 14 and 18.
+このレッスンでは、攻撃面に名前を付け、ベンチマークの地図（BrowseComp、OSWorld、WebArena-Verified）を整理し、最小限の間接プロンプトインジェクションシナリオをモデル化する。これにより、レッスン14と18で扱う実際の防御を推論できるようにする。
 
-## The Concept
+## 概念
 
-### The 2026 landscape, in one paragraph per system
+### 2026年の状況：システムごとの1段落
 
-**ChatGPT agent (OpenAI).** Launched July 2025. Unifies Operator (browsing) and Deep Research (multi-hour research). Shut down the standalone Operator August 31, 2025. SOTA on BrowseComp at 68.9%; strong numbers on OSWorld and WebArena-Verified.
+**ChatGPT agent（OpenAI）。** 2025年7月に公開。Operator（ブラウジング）とDeep Research（数時間にわたる調査）を統合する。スタンドアロンのOperatorは2025年8月31日に終了した。BrowseCompで68.9%のSOTAを記録し、OSWorldとWebArena-Verifiedでも強い数値を出している。
 
-**Claude Sonnet + Vercept (Anthropic).** Anthropic's Vercept acquisition focused on computer-use capabilities. Moved Claude Sonnet on OSWorld from <15% to 72.5%. Claude Computer Use ships as a tool API.
+**Claude Sonnet + Vercept（Anthropic）。** AnthropicによるVercept買収は、computer-use能力に焦点を当てたものだった。Claude SonnetのOSWorldスコアは<15%から72.5%へ上昇した。Claude Computer UseはツールAPIとして提供されている。
 
-**Gemini 3 Pro with Browser Use (DeepMind).** Browser Use integration ships computer-use controls; FSF v3 (April 2026, Lesson 20) tracks autonomy in the ML R&D domain specifically.
+**Gemini 3 Pro with Browser Use（DeepMind）。** Browser Use統合はcomputer-use制御を提供する。FSF v3（2026年4月、レッスン20）は、特にML R&D領域での自律性を追跡する。
 
-**WebArena-Verified (ServiceNow, ICLR 2026).** Fixes a well-documented problem: the original WebArena had ~11.3% false-negative rate (tasks marked failed that were actually solved). The Verified release re-grades with human-curated success criteria and adds a 258-task Hard subset (ICLR 2026 paper, openreview.net/forum?id=94tlGxmqkN).
+**WebArena-Verified（ServiceNow、ICLR 2026）。** よく文書化されていた問題を修正する。元のWebArenaには約11.3%の偽陰性率（実際には解けていたのに失敗と判定されたタスク）があった。Verified版は、人間が整備した成功基準で再採点し、258タスクのHard subsetを追加している（ICLR 2026論文、openreview.net/forum?id=94tlGxmqkN）。
 
 ### BrowseComp vs OSWorld vs WebArena
 
-| Benchmark | What it measures | Horizon |
+| ベンチマーク | 測るもの | ホライズン |
 |---|---|---|
-| BrowseComp | Finding specific facts on the open web under time pressure | minutes |
-| OSWorld | Agent operating a full desktop (mouse, keyboard, shell) | tens of minutes |
-| WebArena-Verified | Transactional web tasks in simulated sites | minutes |
-| Hard subset | WebArena-Verified tasks with multi-page state transitions | tens of minutes |
+| BrowseComp | 時間制約の下でオープンWeb上の特定の事実を見つける能力 | 分単位 |
+| OSWorld | エージェントがデスクトップ全体（マウス、キーボード、シェル）を操作する能力 | 数十分 |
+| WebArena-Verified | シミュレートされたサイトでのトランザクション型Webタスク | 分単位 |
+| Hard subset | 複数ページにまたがる状態遷移を含むWebArena-Verifiedタスク | 数十分 |
 
-Different axes. A high BrowseComp score says the agent finds facts; it does not say the agent can book a flight. The OSWorld score is closer to "does it work on my desktop." WebArena-Verified is closer to "can it finish a flow." Any production decision needs the benchmark that matches the task distribution.
+軸が違う。BrowseCompの高スコアは、そのエージェントが事実を見つけられることを示すが、航空券を予約できることは示さない。OSWorldのスコアは「自分のデスクトップで動くのか」に近い。WebArena-Verifiedは「フローを最後まで完了できるのか」に近い。本番判断には、タスク分布に合ったベンチマークが必要である。
 
-### The attack surface, named
+### 攻撃面に名前を付ける
 
-1. **Indirect prompt injection.** Untrusted page content contains instructions. The agent reads them. The agent executes them. Public examples: 2024 Kai Greshake et al., 2025 Tainted Memories paper, 2026 HashJack (Cato Networks).
-2. **URL fragment / query injection.** The `#fragment` or query string of a crawled URL contains commands. Never rendered visibly; still inside the agent's context.
-3. **Memory-binding attacks.** Page instructs the agent to write a persistent memory (Lesson 12 covers durable state). Next session, the memory fires the payload with no visible trigger.
-4. **CSRF-shaped attacks on authenticated sessions.** Tainted Memories class: agent is logged in somewhere; attacker's page issues state-changing requests the agent executes with the user's cookies.
-5. **One-click hijack.** A visually innocuous button rides a payload the agent follows. Comet class.
-6. **Content-Security-Policy holes in the agent's host surface.** The rendering and tool layers can themselves be attack vectors; the browser-in-a-browser-agent stack is wide.
+1. **間接プロンプトインジェクション。** 信頼できないページコンテンツが指示を含む。エージェントがそれを読む。エージェントがそれを実行する。公開例：2024年のKai Greshakeら、2025年のTainted Memories論文、2026年のHashJack（Cato Networks）。
+2. **URLフラグメント / クエリインジェクション。** クロールされたURLの`#fragment`やクエリ文字列にコマンドが含まれる。画面には表示されないが、エージェントのコンテキストには入る。
+3. **メモリ束縛攻撃。** ページがエージェントに永続メモリを書き込ませる（レッスン12では永続状態を扱う）。次のセッションで、目に見えるトリガーなしにそのメモリがペイロードを発火させる。
+4. **認証済みセッションに対するCSRF型攻撃。** Tainted Memories系の攻撃である。エージェントがどこかにログインしている。攻撃者のページが状態変更リクエストを発行し、エージェントがユーザーのCookieでそれを実行する。
+5. **ワンクリック乗っ取り。** 見た目は無害なボタンに、エージェントが追従するペイロードが乗っている。Comet系の攻撃である。
+6. **エージェントのホスト面にあるContent-Security-Policyの穴。** レンダリング層とツール層そのものが攻撃ベクトルになり得る。browser-in-a-browser-agentのスタックは広い。
 
-### Why "not fully patchable"
+### なぜ「完全にはパッチできない」のか
 
-The attack is isomorphic to the agent's capability. The agent must read untrusted content to do its job. Any content the agent reads could contain instructions. Any instructions the agent follows could be misaligned with the user's actual request. Defenses (trust boundaries, classifiers, tool allowlists, HITL on consequential actions) raise the cost of the attack and reduce its blast radius. They do not close the class.
+この攻撃は、エージェントの能力と同型である。エージェントは仕事をするために、信頼できないコンテンツを読まなければならない。エージェントが読むコンテンツは、どれも指示を含み得る。エージェントが従う指示は、どれもユーザーの本当の依頼とずれている可能性がある。防御策（信頼境界、分類器、ツール許可リスト、重大な行動に対するHITL）は、攻撃コストを上げ、被害範囲を小さくする。しかし、このクラスを閉じるものではない。
 
-This is the same reasoning pattern as Lob's theorem (Lesson 8): the agent cannot prove the next token is safe; it can only set up a system where unsafe tokens are more detectable.
+これはLob's theorem（レッスン8）と同じ推論パターンである。エージェントは、次のトークンが安全だと証明することはできない。できるのは、安全でないトークンをより検出しやすいシステムを組むことだけである。
 
-### Defense posture that actually ships
+### 実際に出荷される防御姿勢
 
-- **Read / write boundary.** Reading is never consequential. Writing (submitting a form, posting content, calling a tool with side effects) requires fresh human approval if the initiating content came from outside the trust boundary.
-- **Tool allowlist per task.** The agent can browse; it cannot initiate a wire transfer unless that tool was explicitly enabled for the task. Lesson 13 covers budgets.
-- **Session isolation.** Browser agent sessions run with scoped credentials only. No production auth, no personal email. Logs of every HTTP request retained for audit.
-- **Content sanitizer.** Fetched HTML is stripped of known-bad patterns before being concatenated into the model context. (Reduces the easy attacks; does not stop sophisticated payloads.)
-- **HITL on consequential actions.** Propose-then-commit pattern (Lesson 15).
-- **Canary tokens on memory.** If a memory entry fires, the user sees it (Lesson 14).
+- **読み取り/書き込み境界。** 読み取りは決して重大な結果を伴わない。書き込み（フォーム送信、コンテンツ投稿、副作用のあるツール呼び出し）は、その起点となるコンテンツが信頼境界の外から来た場合、新たな人間の承認を要求する。
+- **タスクごとのツール許可リスト。** エージェントはブラウズできる。しかし、そのタスクで明示的に有効化されていない限り、電信送金を開始することはできない。予算についてはレッスン13で扱う。
+- **セッション分離。** ブラウザエージェントのセッションは、スコープされた認証情報だけで実行する。本番認証情報を使わない。個人メールも使わない。監査のため、すべてのHTTPリクエストのログを保持する。
+- **コンテンツサニタイザー。** 取得したHTMLは、モデルコンテキストに連結される前に、既知の悪性パターンを取り除かれる。（簡単な攻撃は減らせるが、高度なペイロードは止められない。）
+- **重大な行動に対するHITL。** propose-then-commitパターン（レッスン15）。
+- **メモリ上のカナリアトークン。** メモリエントリが発火した場合、ユーザーに見えるようにする（レッスン14）。
 
-## Use It
+## 使ってみる
 
-`code/main.py` models a tiny browser-agent run against three synthetic pages. One page is benign, one has a direct prompt-injection blob in visible text, one has a URL-fragment injection (not visible but inside the agent's context). The script shows (a) what a naïve agent would do, (b) what a read/write boundary catches, (c) what a sanitizer catches, (d) what neither catches.
+`code/main.py` は、3つの合成ページに対する小さなブラウザエージェント実行をモデル化する。1つのページは無害で、1つは可視テキストに直接的なプロンプトインジェクションの塊を含み、もう1つはURLフラグメントインジェクションを含む（画面には見えないが、エージェントのコンテキストには入る）。このスクリプトは、(a) ナイーブなエージェントなら何をするか、(b) 読み取り/書き込み境界が何を捕捉するか、(c) サニタイザーが何を捕捉するか、(d) どちらにも捕捉されないものは何かを示す。
 
-## Ship It
+## 実務に持ち込む
 
-`outputs/skill-browser-agent-trust-boundary.md` scopes a proposed browser-agent deployment: which trust zones it touches, what it is authorized to write, and which defenses must be in place before the first run.
+`outputs/skill-browser-agent-trust-boundary.md` は、提案されたブラウザエージェントのデプロイをスコープする。どの信頼ゾーンに触れるのか、何を書き込む権限があるのか、初回実行前にどの防御策が必要なのかを整理する。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Identify which attack the sanitizer catches but the read/write boundary does not, and which attack only the read/write boundary catches.
+1. `code/main.py` を実行する。サニタイザーは捕捉するが読み取り/書き込み境界は捕捉しない攻撃と、読み取り/書き込み境界だけが捕捉する攻撃を特定する。
 
-2. Extend the sanitizer to detect one class of HashJack-style URL-fragment injection. Measure the false-positive rate on benign URLs with legitimate fragments.
+2. HashJack型のURLフラグメントインジェクションの1クラスを検出できるように、サニタイザーを拡張する。正当なフラグメントを持つ無害なURLで偽陽性率を測定する。
 
-3. Pick one real browser-agent workflow you know (e.g., "book a flight"). List every read and every write. Mark which writes need HITL and why.
+3. 知っている実在のブラウザエージェントワークフローを1つ選ぶ（例：「航空券を予約する」）。すべての読み取りとすべての書き込みを列挙する。どの書き込みにHITLが必要か、その理由とともに印を付ける。
 
-4. Read the WebArena-Verified ICLR 2026 paper. Identify one category of task where the original WebArena's scoring was unreliable and explain how the Verified subset resolves it.
+4. WebArena-VerifiedのICLR 2026論文を読む。元のWebArenaの採点が信頼できなかったタスクカテゴリを1つ特定し、Verified subsetがそれをどう解決するか説明する。
 
-5. Design a memory canary for a browser-agent setting. What would you store, where, and what triggers the alarm?
+5. ブラウザエージェント設定におけるメモリカナリアを設計する。何を、どこに保存し、何がアラームを発火させるのか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |---|---|---|
-| Indirect prompt injection | "Bad page text" | Untrusted content in a page the agent reads contains instructions the agent executes |
-| Tainted Memories | "Memory attack" | Agent writes an attacker-supplied instruction to durable memory; triggered next session |
-| HashJack | "URL fragment attack" | Payload hidden in URL fragment / query string is in the agent's context but not visibly rendered |
-| One-click hijack | "Bad button" | Visible affordance rides a follow-on payload the agent executes |
-| BrowseComp | "Web search benchmark" | Finding specific facts on the open web; minute-scale horizon |
-| OSWorld | "Desktop benchmark" | Full OS control; multi-step GUI tasks |
-| WebArena-Verified | "Fixed web-task benchmark" | ServiceNow's regraded WebArena with Hard subset |
-| Read/write boundary | "Side-effect gate" | Reading never consequential; writing requires fresh approval if content is out-of-trust |
+| Indirect prompt injection | 「悪いページテキスト」 | エージェントが読むページ内の信頼できないコンテンツが、エージェントの実行する指示を含む |
+| Tainted Memories | 「メモリ攻撃」 | エージェントが攻撃者由来の指示を永続メモリに書き込み、次のセッションで発火する |
+| HashJack | 「URLフラグメント攻撃」 | URLフラグメント / クエリ文字列に隠されたペイロードが、画面には表示されないままエージェントのコンテキストに入る |
+| One-click hijack | 「悪いボタン」 | 目に見えるアフォーダンスに、エージェントが実行する後続ペイロードが乗っている |
+| BrowseComp | 「Web検索ベンチマーク」 | オープンWeb上の特定の事実を見つけること。分単位のホライズン |
+| OSWorld | 「デスクトップベンチマーク」 | OS全体の制御。複数ステップのGUIタスク |
+| WebArena-Verified | 「修正版Webタスクベンチマーク」 | ServiceNowが再採点したWebArena。Hard subsetを含む |
+| Read/write boundary | 「副作用ゲート」 | 読み取りは決して重大な結果を伴わない。コンテンツが信頼外なら、書き込みには新たな承認が必要 |
 
-## Further Reading
+## 参考資料
 
-- [OpenAI — Introducing ChatGPT agent](https://openai.com/index/introducing-chatgpt-agent/) — merge of Operator and deep research; BrowseComp SOTA.
-- [OpenAI — Computer-Using Agent](https://openai.com/index/computer-using-agent/) — the Operator lineage and the architecture that became ChatGPT agent.
-- [Zhou et al. — WebArena](https://webarena.dev/) — the original benchmark.
-- [WebArena-Verified (OpenReview)](https://openreview.net/forum?id=94tlGxmqkN) — ICLR 2026 fixed-subset paper.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — includes attack-surface discussion for computer-use agents.
+- [OpenAI — Introducing ChatGPT agent](https://openai.com/index/introducing-chatgpt-agent/) - Operatorとdeep researchの統合、BrowseComp SOTA。
+- [OpenAI — Computer-Using Agent](https://openai.com/index/computer-using-agent/) - Operatorの系譜と、ChatGPT agentになったアーキテクチャ。
+- [Zhou et al. — WebArena](https://webarena.dev/) - 元のベンチマーク。
+- [WebArena-Verified (OpenReview)](https://openreview.net/forum?id=94tlGxmqkN) - ICLR 2026のfixed-subset論文。
+- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) - computer-useエージェントの攻撃面に関する議論を含む。

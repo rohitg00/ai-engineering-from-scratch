@@ -1,74 +1,74 @@
-# Prompt Caching and Semantic Caching Economics
+# Prompt Caching と Semantic Caching の経済性
 
-> **Pricing snapshot dated 2026-04.** Numeric claims below reflect vendor rate cards captured at this lesson's publication; verify against the linked docs before quoting them downstream.
+> **Pricing snapshot dated 2026-04.** 以下の数値は、このレッスン公開時に取得した vendor rate cards に基づきます。下流で引用する前に、linked docs で確認してください。
 
-> Caching happens at two layers. L2 (provider-level) prompt/prefix caching reuses attention KV for repeated prefixes — Anthropic's prompt-caching docs advertise up to 90% cost reduction and 85% latency reduction on long prompts; for Claude 3.5 Sonnet cache reads are $0.30/M vs $3.00/M fresh with a 5-minute TTL and a 2x write premium for the 1-hour TTL option (docs.anthropic.com, 2026-04). OpenAI prompt caching applies automatically for prompts ≥1024 tokens and prices cached input at roughly a 90% discount vs fresh (platform.openai.com, 2026-04); the exact per-model cached rate depends on the live rate card. L1 (app-level) semantic caching skips the LLM entirely on embedding similarity hits. Vendor "95% accuracy" refers to match correctness, not hit rate — reported production hit rates range from 10% (open-ended chat) up to 70% (structured FAQ); neither provider publishes an official baseline, so treat these as community telemetry rather than guarantees. The production pitfalls: parallelization kills caching (N parallel requests issued before the first cache write can inflate spend several-fold), and dynamic content inside the prefix prevents cache hits entirely. ProjectDiscovery reported moving from 7% to 74% hit rate (2025-11) by moving dynamic text out of the cacheable prefix.
+> Caching は 2 つの layer で起こります。L2（provider-level）prompt/prefix caching は、繰り返される prefix に対して attention KV を再利用します。Anthropic の prompt-caching docs は、長い prompt で最大 90% cost reduction と 85% latency reduction をうたっています。Claude 3.5 Sonnet では cache read が $0.30/M、fresh が $3.00/M で、5-minute TTL と 1-hour TTL option の 2x write premium があります（docs.anthropic.com、2026-04）。OpenAI prompt caching は prompts ≥1024 tokens に自動適用され、cached input は fresh に比べておおむね 90% discount で価格付けされます（platform.openai.com、2026-04）。Model ごとの正確な cached rate は live rate card に依存します。L1（app-level）semantic caching は、embedding similarity hit 時に LLM を完全に skip します。Vendor の「95% accuracy」は match correctness を指し、hit rate ではありません。報告されている production hit rates は、open-ended chat の 10% から structured FAQ の 70% まであります。どの provider も公式 baseline を公開していないため、これらは guarantees ではなく community telemetry として扱ってください。Production pitfalls: parallelization は caching を壊します（最初の cache write 前に発行された N parallel requests は spend を数倍に膨らませます）。また dynamic content が prefix 内にあると cache hit は完全に防がれます。ProjectDiscovery は、dynamic text を cacheable prefix から外すことで hit rate を 7% から 74% に改善したと報告しました（2025-11）。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy two-layer cache simulator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 06 (SGLang RadixAttention)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib、toy two-layer cache simulator)
+**前提条件:** Phase 17 · 04 (vLLM Serving Internals), Phase 17 · 06 (SGLang RadixAttention)
+**所要時間:** 約 60 分
 
-## Learning Objectives
+## 学習目標
 
-- Distinguish L2 prompt/prefix caching (KV reuse at provider) from L1 semantic caching (LLM bypass on similar prompts).
-- Explain Anthropic's `cache_control` explicit marking and the two TTL options (5-min vs 1-hour) with their price multipliers.
-- Compute expected monthly savings given hit rate, prompt/response mix, and token prices.
-- Name the parallelization anti-pattern that inflates bills by 5-10x and the dynamic-content anti-pattern that collapses hit rate.
+- L2 prompt/prefix caching（provider での KV reuse）と L1 semantic caching（similar prompts で LLM bypass）を区別できる。
+- Anthropic の `cache_control` explicit marking と 2 つの TTL options（5-min vs 1-hour）、それぞれの price multipliers を説明できる。
+- Hit rate、prompt/response mix、token prices に基づいて expected monthly savings を計算できる。
+- Bills を 5-10x 膨らませる parallelization anti-pattern と、hit rate を collapse させる dynamic-content anti-pattern を説明できる。
 
-## The Problem
+## 問題
 
-You add prompt caching to your RAG service. The bill stays flat. You measure the hit rate; it is 7%. Your prompts look static but they are not — the system prompt includes the current date formatted to the minute, a request ID, and a randomized example reorder for diversity. Every request writes a new cache entry, reads zero.
+RAG service に prompt caching を追加しました。Bill は変わりません。Hit rate を測ると 7% です。Prompt は static に見えますが、実際は違います。System prompt には分単位で format された current date、request ID、diversity のために randomized example reorder が含まれています。すべての request が新しい cache entry を write し、read はゼロです。
 
-Separately, your agent runs ten parallel tool calls per user question. All ten arrive at the provider before the first cache write completes. Ten writes, zero reads. Your bill is 5-10x what "with caching" was supposed to cost.
+別に、agent は user question ごとに 10 個の parallel tool calls を実行します。10 個すべてが最初の cache write が完了する前に provider に到着します。10 writes、0 reads です。Bill は「caching あり」で想定した額の 5-10x になります。
 
-Caching is a protocol, not a flag. Two layers, two different failure modes.
+Caching は flag ではなく protocol です。2 つの layer と 2 つの異なる failure mode があります。
 
-## The Concept
+## コンセプト
 
 ### L2 — provider prompt/prefix caching
 
-Provider stores the attention KV for a cacheable prefix and reuses it on the next request that matches the prefix. You pay a write cost once, reads nearly free.
+Provider は cacheable prefix の attention KV を保存し、同じ prefix の次の request で再利用します。Write cost は一度だけ支払い、reads はほぼ無料です。
 
-**Anthropic (Claude 3.5 / 3.7 / 4 series)**: explicit `cache_control` marker in the request. You tag which blocks are cacheable. TTL: 5-minute (write costs 1.25x base) or 1-hour (write costs 2x base). Cache reads: $0.30/M on Claude 3.5 Sonnet vs $3.00/M fresh — 10x cheaper (docs.anthropic.com, as of 2026-04). Rates differ per model (Opus/Haiku published separately); always cross-check the live pricing page.
+**Anthropic（Claude 3.5 / 3.7 / 4 series）**: request 内の explicit `cache_control` marker。どの blocks が cacheable かを tag します。TTL は 5-minute（write cost は base の 1.25x）または 1-hour（write cost は base の 2x）。Cache reads は Claude 3.5 Sonnet で $0.30/M、fresh が $3.00/M なので 10x cheaper です（docs.anthropic.com、2026-04 時点）。Rates は model により異なります（Opus/Haiku は別途公開）。必ず live pricing page を確認してください。
 
-**OpenAI**: automatic caching for prompts ≥1024 tokens (platform.openai.com, 2026-04). No explicit flag. Cached input is roughly 10x cheaper than fresh on current gpt-4o/gpt-5 rate cards. Neither docs nor release notes publish an official hit-rate baseline; community reports cluster around 30–60% with careful prompt design. Monitor `usage.cached_tokens` to measure your own.
+**OpenAI**: prompts ≥1024 tokens に automatic caching（platform.openai.com、2026-04）。Explicit flag はありません。Current gpt-4o/gpt-5 rate cards では cached input は fresh のおおむね 10x cheaper です。Docs も release notes も official hit-rate baseline を公開していません。Careful prompt design で community reports は 30–60% 付近に集まります。自分の値は `usage.cached_tokens` で monitor してください。
 
-**Google (Gemini)**: context caching via explicit API; 1M-token context means caching pays even more.
+**Google（Gemini）**: explicit API による context caching。1M-token context では caching の効果がさらに大きくなります。
 
-**Self-hosted (vLLM, SGLang)**: Phase 17 · 06 covers RadixAttention — same pattern at your own compute.
+**Self-hosted（vLLM、SGLang）**: Phase 17 · 06 で RadixAttention を扱います。自前 compute で同じ pattern です。
 
 ### L1 — app-level semantic caching
 
-Before calling the LLM at all, hash the prompt, embed it, and look for a similar cached request (cosine similarity above threshold, typically 0.95+). On hit, return the cached response. On miss, call LLM and cache the result.
+LLM を呼ぶ前に prompt を hash し、embedding し、似た cached request（cosine similarity が threshold、通常 0.95+ を超える）を探します。Hit したら cached response を返します。Miss したら LLM を呼び、結果を cache します。
 
-Open-source: Redis Vector Similarity, GPTCache, Qdrant. Commercial: Portkey Cache, Helicone Cache.
+Open-source: Redis Vector Similarity、GPTCache、Qdrant。Commercial: Portkey Cache、Helicone Cache。
 
-Vendor accuracy claims refer to how often the returned cached response was semantically appropriate — not how often you hit. Production hit rates:
+Vendor accuracy claims は、返した cached response が semantically appropriate だった頻度を指します。Hit する頻度ではありません。Production hit rates:
 
-- Open-ended chat: 10-15%.
-- Structured FAQ / support: 40-70%.
-- Code questions: 20-30% (small variants kill hits).
-- Voice agents repeating prompts: 50-80% (voice normalization fixed set).
+- Open-ended chat: 10-15%。
+- Structured FAQ / support: 40-70%。
+- Code questions: 20-30%（小さな variants が hits を壊す）。
+- Voice agents repeating prompts: 50-80%（voice normalization fixed set）。
 
-### The parallelization anti-pattern
+### Parallelization anti-pattern
 
-Your agent makes 10 tool calls in parallel. All 10 have the same 4K-token system prompt. Anthropic cache writes are per-request; the first cache-write completes around 300 ms after the provider sees the prompt. Requests 2-10 arrive in the same millisecond window and each sees cache miss. You pay 10 write premiums, 0 read discounts.
+Agent が 10 tool calls を parallel に実行します。10 個すべてが同じ 4K-token system prompt を持ちます。Anthropic cache writes は per-request です。最初の cache-write は provider が prompt を見てから約 300 ms 後に完了します。Requests 2-10 は同じ millisecond window に到着し、それぞれ cache miss になります。10 write premiums、0 read discounts を支払います。
 
-Fix: batch with sequential-first — make request 1 alone, then fire 2-10 once 1's cache has populated. Adds 300 ms to the first tool call; saves 5-10x the bill.
+修正: sequential-first で batch します。Request 1 だけを先に実行し、1 の cache が populate されてから 2-10 を fire します。最初の tool call に 300 ms を追加しますが、bill を 5-10x 節約します。
 
-### The dynamic content anti-pattern
+### Dynamic content anti-pattern
 
-Your system prompt looks like:
+System prompt が次のように見えます。
 
 ```
 You are a helpful assistant. The current time is 14:32:17.
 User ID: abc123. Today is Tuesday...
 ```
 
-Every request is unique. Every request writes. Zero hits.
+すべての request が unique です。すべてが write です。Hit はゼロです。
 
-Fix: move everything truly static to the cacheable prefix; append dynamic content after the cache boundary:
+修正: 本当に static なものは cacheable prefix に移し、dynamic content は cache boundary の後に付けます。
 
 ```
 [cacheable]
@@ -78,57 +78,57 @@ You are a helpful assistant. [rules, examples, instructions]
 Current time: 14:32:17. User: abc123.
 ```
 
-ProjectDiscovery moved from 7% to 74% cache hit rate this way and published the anatomy.
+ProjectDiscovery はこの方法で cache hit rate を 7% から 74% に改善し、その anatomy を公開しました。
 
-### Stack batch + cache for overnight workloads
+### Overnight workloads では batch + cache を重ねる
 
-Batch APIs (Phase 17 · 15) give 50% discount at 24-hour turnaround. Cached input on top gets you ~10x on top of that. Overnight classification, labeling, and report generation workloads can drop to ~10% of synchronous-uncached cost by stacking.
+Batch APIs（Phase 17 · 15）は 24-hour turnaround で 50% discount を与えます。その上に cached input を載せるとさらに約 10x です。Overnight classification、labeling、report generation workloads は、stacking により synchronous-uncached cost の約 10% まで下げられます。
 
-### Numbers you should remember
+### 覚えておくべき数値
 
-Pricing points are captured 2026-04 from the linked vendor docs and drift every few months — re-check before relying on them.
+Pricing points は linked vendor docs から 2026-04 に取得したもので、数か月ごとに変動します。依存する前に再確認してください。
 
-- Anthropic cached read: $0.30/M on Claude 3.5 Sonnet, roughly 10x cheaper than fresh input (docs.anthropic.com).
-- Anthropic cache write premium: 1.25x (5-min TTL) or 2x (1-hour TTL).
-- OpenAI auto-cache: applies to prompts ≥1024 tokens; cached input priced at roughly 10% of fresh input on current rate cards (platform.openai.com).
-- Semantic cache hit rate (community-reported): ~10% open chat; up to ~70% structured FAQ. Not a vendor-documented baseline.
-- ProjectDiscovery: 7% → 74% hit rate by moving dynamic out of prefix (project blog, 2025-11).
-- Parallelization anti-pattern: typical reports of 5–10x bill inflation when N parallel requests miss the first cache write.
+- Anthropic cached read: Claude 3.5 Sonnet で $0.30/M、fresh input よりおおむね 10x cheaper（docs.anthropic.com）。
+- Anthropic cache write premium: 1.25x（5-min TTL）または 2x（1-hour TTL）。
+- OpenAI auto-cache: prompts ≥1024 tokens に適用。Current rate cards では cached input は fresh input のおおむね 10%（platform.openai.com）。
+- Semantic cache hit rate（community-reported）: open chat で約 10%、structured FAQ で最大約 70%。Vendor-documented baseline ではない。
+- ProjectDiscovery: dynamic を prefix から外して 7% → 74% hit rate（project blog、2025-11）。
+- Parallelization anti-pattern: N parallel requests が最初の cache write を miss すると、bill inflation は典型的に 5–10x と報告される。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates L1 + L2 caching on mixed workloads. Reports hit rates, bill, and shows the parallelization penalty.
+`code/main.py` は mixed workloads 上で L1 + L2 caching を simulate します。Hit rates、bill を報告し、parallelization penalty を示します。
 
 ## Ship It
 
-This lesson produces `outputs/skill-cache-auditor.md`. Given prompt template and traffic, audits cacheability and recommends restructure.
+このレッスンは `outputs/skill-cache-auditor.md` を生成します。Prompt template と traffic を与えると cacheability を audit し、restructure を推奨します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Toggle the parallelization flag. How much does the bill change?
-2. Your system prompt has a date. Move it out. Show before/after hit rate math.
-3. Calculate break-even for 1-hour TTL (2x write) vs 5-minute TTL (1.25x write) given your request arrival rate.
-4. Semantic cache at 0.95 threshold hits 20%. At 0.85 it hits 50% but you see incorrect cached responses. Pick the right threshold and justify.
-5. You batch 10 parallel sub-queries per user question. Rewrite for cache-friendliness without adding end-to-end latency.
+1. `code/main.py` を実行してください。Parallelization flag を切り替えます。Bill はどのくらい変わりますか。
+2. System prompt に date があります。外に移してください。Before/after の hit rate math を示してください。
+3. Request arrival rate を前提に、1-hour TTL（2x write）と 5-minute TTL（1.25x write）の break-even を計算してください。
+4. Semantic cache は 0.95 threshold で 20% hit します。0.85 では 50% hit しますが、incorrect cached responses が見えます。正しい threshold を選び、理由を述べてください。
+5. User question ごとに 10 parallel sub-queries を batch しています。End-to-end latency を増やさずに cache-friendly に書き換えてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| L2 prompt cache | "prefix cache" | Provider stores KV for repeated prefix |
-| `cache_control` | "Anthropic cache marker" | Explicit attribute marking cacheable blocks |
-| Cache write premium | "write tax" | Extra cost for first miss-to-cache (1.25x or 2x) |
-| L1 semantic cache | "embedding cache" | App-level hash-and-embed before calling LLM |
-| GPTCache | "LLM caching lib" | Popular OSS L1 cache library |
-| Cache hit rate | "hits / total" | Fraction of requests served from cache |
-| Parallelization anti-pattern | "the N-write trap" | N parallel requests miss cache N times |
-| Dynamic content trap | "the time-in-prompt trap" | Dynamic bytes in prefix kill hit rate |
-| RadixAttention | "intra-replica cache" | SGLang's prefix-cache implementation |
+| Term | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| L2 prompt cache | "prefix cache" | Provider が repeated prefix の KV を保存 |
+| `cache_control` | "Anthropic cache marker" | Cacheable blocks を明示する attribute |
+| Cache write premium | "write tax" | 最初の miss-to-cache にかかる追加 cost（1.25x または 2x） |
+| L1 semantic cache | "embedding cache" | LLM 呼び出し前に app-level で hash-and-embed |
+| GPTCache | "LLM caching lib" | 人気の OSS L1 cache library |
+| Cache hit rate | "hits / total" | Cache から served された requests の割合 |
+| Parallelization anti-pattern | "the N-write trap" | N parallel requests が cache を N 回 miss する |
+| Dynamic content trap | "the time-in-prompt trap" | Prefix 内の dynamic bytes が hit rate を壊す |
+| RadixAttention | "intra-replica cache" | SGLang の prefix-cache implementation |
 
-## Further Reading
+## 参考資料
 
-- [Anthropic Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) — official `cache_control` semantics and TTLs.
-- [OpenAI Prompt Caching](https://platform.openai.com/docs/guides/prompt-caching) — automatic caching behavior and eligibility.
+- [Anthropic Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) — official `cache_control` semantics and TTLs。
+- [OpenAI Prompt Caching](https://platform.openai.com/docs/guides/prompt-caching) — automatic caching behavior and eligibility。
 - [TianPan — Semantic Caching for LLMs Production](https://tianpan.co/blog/2026-04-10-semantic-caching-llm-production)
 - [ProjectDiscovery — Cut LLM Costs 59% With Prompt Caching](https://projectdiscovery.io/blog/how-we-cut-llm-cost-with-prompt-caching)
 - [DigitalOcean / Anthropic — Prompt Caching](https://www.digitalocean.com/blog/prompt-caching-with-digital-ocean)

@@ -1,26 +1,26 @@
 # Semantic Segmentation — U-Net
 
-> Segmentation is classification at every pixel. U-Net makes it work by pairing a downsampling encoder with an upsampling decoder and wiring skip connections between them.
+> Segmentation は pixel ごとの classification です。U-Net は downsampling encoder と upsampling decoder を組み合わせ、その間を skip connections でつなぐことで機能します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Distinguish semantic, instance, and panoptic segmentation and pick the right task for a given problem
-- Build a U-Net from scratch in PyTorch with encoder blocks, a bottleneck, a decoder with transposed convolutions, and skip connections
-- Implement pixel-wise cross-entropy, Dice loss, and the combined loss that is the current default for medical and industrial segmentation
-- Read IoU and Dice metrics per class and diagnose whether a bad score comes from small-object recall, boundary accuracy, or class imbalance
+- semantic、instance、panoptic segmentation を区別し、problem に合う task を選ぶ
+- encoder blocks、bottleneck、transposed convolutions 付き decoder、skip connections を持つ U-Net を PyTorch で scratch から作る
+- pixel-wise cross-entropy、Dice loss、medical/industrial segmentation の current default である combined loss を実装する
+- class ごとの IoU と Dice metrics を読み、bad score が small-object recall、boundary accuracy、class imbalance のどれに由来するか診断する
 
-## The Problem
+## 問題
 
-Classification outputs one label per image. Detection outputs a handful of boxes per image. Segmentation outputs one label per pixel. For an input of size `H x W`, the output is a tensor of shape `H x W` (semantic) or `H x W x N_instances` (instance). That is millions of predictions per image, not one.
+Classification は image ごとに 1 label を出します。Detection は image ごとにいくつかの boxes を出します。Segmentation は pixel ごとに 1 label を出します。input size が `H x W` なら output は semantic では `H x W`、instance では `H x W x N_instances` です。これは image ごとに 1 prediction ではなく、数百万 predictions です。
 
-The structure of segmentation is why it powers almost every dense-prediction vision product: medical imaging (tumour masks), autonomous driving (road, lane, obstacle), satellite (building footprints, crop boundaries), document parsing (layout zones), robotics (graspable regions). None of those tasks can be solved by putting a box around the object; they need the exact silhouette.
+segmentation は dense-prediction vision products の多くを支えています。medical imaging（tumour masks）、autonomous driving（road、lane、obstacle）、satellite（building footprints、crop boundaries）、document parsing（layout zones）、robotics（graspable regions）などです。これらの task は object の周りに box を置くだけでは解けず、正確な silhouette が必要です。
 
-The architectural problem is simple to state and not simple to solve: you need the network to see the global context of an image (what kind of scene is this) and the local pixel detail (exactly which pixel is road vs pavement) simultaneously. A standard CNN compresses spatially to gain context, which throws away the detail. U-Net was the design that got both.
+architectural problem は簡単に言えます。network は global context（これはどんな scene か）と local pixel detail（どの pixel が road でどの pixel が pavement か）を同時に見る必要があります。standard CNN は context を得るために spatially compress しますが、その過程で detail を失います。U-Net はその両方を得る設計です。
 
 ## The Concept
 
@@ -37,11 +37,11 @@ flowchart LR
     style PAN fill:#dcfce7,stroke:#16a34a
 ```
 
-- **Semantic** says "this pixel is road, that pixel is car." Two cars next to each other collapse into a single blob.
-- **Instance** says "this pixel is car #3, that pixel is car #5." Ignores background stuff ("stuff" = sky, road, grass).
-- **Panoptic** unifies both: every pixel gets a class label, every instance gets a unique id, stuff and things both segmented.
+- **Semantic** は「この pixel は road、あの pixel は car」と言います。隣り合う 2 台の cars は 1 つの blob に collapse します。
+- **Instance** は「この pixel は car #3、あの pixel は car #5」と言います。background stuff（sky、road、grass など）は無視します。
+- **Panoptic** は両方を統合し、すべての pixel に class label を、各 instance に unique id を与えます。stuff と things の両方を segment します。
 
-This lesson covers semantic. The next lesson (Mask R-CNN) covers instance.
+この lesson は semantic を扱います。次の lesson（Mask R-CNN）は instance を扱います。
 
 ### The U-Net shape
 
@@ -72,74 +72,75 @@ flowchart LR
     style DEC fill:#dcfce7,stroke:#16a34a
 ```
 
-The encoder halves spatial resolution four times and doubles channels. The decoder reverses: doubles spatial resolution four times and halves channels. The skip connections concatenate matching encoder features with decoder features at every resolution. The final 1x1 conv maps `64 -> num_classes` at full resolution.
+encoder は spatial resolution を 4 回半分にし、channels を倍にします。decoder は逆に spatial resolution を 4 回倍にし、channels を半分にします。skip connections は各 resolution で matching encoder features と decoder features を concatenate します。最後の 1x1 conv は full resolution で `64 -> num_classes` に写像します。
 
-Why skip connections are necessary: the decoder has seen only small feature maps by the time it tries to output pixel-level predictions. Without the skips it cannot localise edges accurately because that information was compressed away in the encoder. Skip connections hand it the high-resolution feature maps the encoder computed on the way down.
+skip connections が必要なのは、decoder が pixel-level predictions を出す時点で小さな feature maps しか見ていないからです。skip がないと、encoder で圧縮された edge information を復元できず、boundary がぼやけます。
 
 ### Transposed vs bilinear upsample
 
-The decoder has to expand spatial dimensions. Two options:
+Decoder は spatial dimensions を拡大する必要があります。代表的な選択肢は 2 つです。
 
-- **Transposed convolution** (`nn.ConvTranspose2d`) — learnable upsample. Historical U-Net default. Can produce checkerboard artifacts if stride and kernel size do not divide evenly.
-- **Bilinear upsample + 3x3 conv** — smooth upsample followed by a conv. Fewer artifacts, fewer parameters, now the modern default.
+- **Transposed convolution** (`nn.ConvTranspose2d`) — learnable upsample。historical U-Net default。stride と kernel size がきれいに割れないと checkerboard artifacts が出ることがあります。
+- **Bilinear upsample + 3x3 conv** — smooth upsample の後に conv。artifacts が少なく parameters も少ないため、今の default です。
 
-Both appear in the wild. For a first U-Net, bilinear is safer.
+どちらも実務で見ます。first U-Net では bilinear が安全です。
 
 ### Cross-entropy on a pixel grid
 
-For semantic segmentation with C classes, the model output is `(N, C, H, W)`. The target is `(N, H, W)` with integer class IDs. Cross-entropy is identical to the classification case, just applied at every spatial position:
+C classes の semantic segmentation では、model output は `(N, C, H, W)`、target は integer class IDs を持つ `(N, H, W)` です。Cross-entropy は classification と同じで、各 spatial position に適用されるだけです。
 
 ```
 Loss = mean over (n, h, w) of -log( softmax(logits[n, :, h, w])[target[n, h, w]] )
 ```
 
-`F.cross_entropy` in PyTorch handles this shape natively. No reshape needed.
+PyTorch の `F.cross_entropy` はこの shape を native に処理します。reshape は不要です。
 
 ### Dice loss and why you need it
 
-Cross-entropy treats every pixel equally. That is wrong when one class dominates the frame (medical imaging: 99% background, 1% tumour). The network can score 99% accuracy by predicting background everywhere and still be useless.
+Cross-entropy はすべての pixels を等しく扱います。1 class が frame を支配する場合、これは不適切です。medical imaging で 99% background、1% tumour なら、network は background を常に予測するだけで 99% accuracy を得ますが、実用上は無価値です。
 
-Dice loss solves this by directly optimising the overlap between predicted and true mask:
+Dice loss は predicted mask と true mask の overlap を直接最適化します。
 
 ```
 Dice(p, y) = 2 * sum(p * y) / (sum(p) + sum(y) + epsilon)
 Dice_loss = 1 - Dice
 ```
 
-where `p` is the sigmoid/softmax probability map for a class and `y` is the binary ground-truth mask. The loss is zero only when the overlap is perfect. Because it is ratio-based, class imbalance is irrelevant.
+`p` は class の sigmoid/softmax probability map、`y` は binary ground-truth mask です。ratio-based なので class imbalance の影響を受けにくくなります。
 
-In practice, use the **combined loss**:
+実務では **combined loss** を使います。
 
 ```
 L = L_cross_entropy + lambda * L_dice       (lambda ~ 1)
 ```
 
-Cross-entropy gives stable gradients early in training; Dice focuses the tail of training on actually matching the mask shape. This combination is the medical-imaging default and hard to beat on any class-imbalanced dataset.
+Cross-entropy は early training で安定した gradients を与え、Dice は後半で mask shape の一致に集中します。この組み合わせは medical-imaging default で、class-imbalanced dataset では非常に強い baseline です。
 
 ### Evaluation metrics
 
-- **Pixel accuracy** — percent of pixels predicted correctly. Cheap. Broken on imbalanced data for the same reason as accuracy in classification.
-- **IoU per class** — intersection over union for each class's mask; average across classes = mIoU.
-- **Dice (F1 on pixels)** — similar to IoU; `Dice = 2 * IoU / (1 + IoU)`. Medical imaging prefers Dice, driving community prefers IoU; they are monotonically related.
-- **Boundary F1** — measures how close predicted boundaries are to ground-truth boundaries, penalising even small shifts. Important for high-precision tasks like semiconductor inspection.
+- **Pixel accuracy** — 正しく予測された pixels の割合。cheap ですが、classification の accuracy と同様に imbalanced data では壊れます。
+- **IoU per class** — class ごとの mask intersection over union。平均が mIoU です。
+- **Dice (F1 on pixels)** — IoU に近い metric。`Dice = 2 * IoU / (1 + IoU)`。medical imaging は Dice、driving community は IoU を好みますが、monotonic に関係します。
+- **Boundary F1** — predicted boundaries が ground-truth boundaries にどれだけ近いかを測ります。semiconductor inspection のような high-precision tasks で重要です。
 
-Report IoU per class, not just mIoU. Mean IoU hides a class at 15% when nine others are at 85%.
+mIoU だけでなく class ごとの IoU を報告してください。mean は、9 classes が 85% で 1 class が 15% という失敗を隠します。
 
 ### Input resolution trade-off
 
-U-Net's encoder halves resolution four times, so the input must be divisible by 16. Medical images are often 512x512 or 1024x1024. Autonomous-driving crops are 2048x1024. The memory cost of U-Net scales with `H * W * C_max`, and at 1024x1024 with 1024 bottleneck channels the forward pass already uses gigabytes of VRAM.
+U-Net の encoder は resolution を 4 回半分にするため、input は 16 で割り切れる必要があります。memory cost は `H * W * C_max` に比例し、1024x1024 で bottleneck channels が 1024 なら forward pass だけで GB 単位の VRAM を使います。
 
-Two standard workarounds:
-1. Tile the input — process 256x256 tiles with overlap and stitch.
-2. Replace the bottleneck with dilated convolutions that keep spatial resolution higher but widen receptive field (the DeepLab family).
+標準的な回避策は 2 つです。
 
-For a first model, a 256x256 input with a 64-channel-base U-Net trains comfortably on 8 GB VRAM.
+1. input を tile し、overlap 付きの 256x256 tiles として処理して stitch する。
+2. bottleneck を dilated convolutions に置き換え、spatial resolution を高く保ちながら receptive field を広げる（DeepLab family）。
 
-## Build It
+first model では 256x256 input と 64-channel-base U-Net が 8 GB VRAM で扱いやすい設定です。
+
+## 実装
 
 ### Step 1: Encoder block
 
-Two 3x3 convs with batch norm and ReLU. The first conv changes channel count; the second keeps it.
+3x3 conv を 2 回、batch norm と ReLU 付きで使います。最初の conv は channel count を変え、2 つ目は維持します。
 
 ```python
 import torch
@@ -162,7 +163,7 @@ class DoubleConv(nn.Module):
         return self.net(x)
 ```
 
-This block is reused throughout. `bias=False` because BN's beta handles the bias.
+この block は全体で再利用します。`bias=False` は BN の beta が bias を担うためです。
 
 ### Step 2: Down and up blocks
 
@@ -193,7 +194,7 @@ class Up(nn.Module):
         return self.conv(x)
 ```
 
-The spatial-only shape check (`shape[-2:]`) handles inputs whose dimensions are not divisible by 16; a safe `F.interpolate` aligns the tensor before the concat. Comparing the full shape would also trigger on channel-count differences, which should be a loud error, not a silent interpolate.
+`shape[-2:]` の spatial-only check は、input dimensions が 16 で割り切れない場合にも concat 前に安全に揃えます。full shape を比較すると channel-count differences でも interpolate してしまうため、そこは loud error にするべきです。
 
 ### Step 3: The U-Net
 
@@ -230,7 +231,7 @@ print(f"output: {net(x).shape}")
 print(f"params: {sum(p.numel() for p in net.parameters()):,}")
 ```
 
-Output shape `(1, 2, 256, 256)` — same spatial size as the input, `num_classes` channels. About 7.7M parameters at `base=32`.
+output shape は `(1, 2, 256, 256)` で、input と同じ spatial size、`num_classes` channels です。`base=32` では約 7.7M parameters です。
 
 ### Step 4: Losses
 
@@ -251,7 +252,7 @@ def combined_loss(logits, targets, num_classes, lam=1.0):
     return ce + lam * dc, {"ce": ce.item(), "dice": dc.item()}
 ```
 
-Dice is computed per class then averaged (macro Dice). The `eps` prevents division by zero on classes absent from the batch.
+Dice は class ごとに計算して平均します（macro Dice）。`eps` は batch に存在しない class で division by zero を防ぎます。
 
 ### Step 5: IoU metric
 
@@ -269,11 +270,11 @@ def iou_per_class(logits, targets, num_classes):
     return ious
 ```
 
-Returns a vector of length C. `nan` marks classes absent from the batch — do not average over those when computing mIoU.
+length C の vector を返します。`nan` は batch に存在しない class を示します。mIoU を計算するときはそれらを平均に入れないでください。
 
 ### Step 6: Synthetic dataset for end-to-end verification
 
-Generate shapes on coloured backgrounds so the network has to learn shape, not pixel colour.
+network が pixel colour ではなく shape を学ぶよう、coloured backgrounds 上に shapes を生成します。
 
 ```python
 import numpy as np
@@ -319,7 +320,7 @@ class SegDataset(Dataset):
         return img, mask
 ```
 
-Three classes: background (0), circles (1), squares (2). The network must learn to distinguish shape.
+3 classes です。background (0)、circles (1)、squares (2)。network は shape を区別する必要があります。
 
 ### Step 7: Training loop
 
@@ -341,11 +342,11 @@ def train_one_epoch(model, loader, optimizer, device, num_classes):
     return loss_sum / total, iou_sum / len(loader)
 ```
 
-Run this for 10-30 epochs on the synthetic dataset and watch mIoU climb past 0.9 for the shape classes. Note the `nan_to_num(0)` treats classes absent from a batch as zero; for accurate per-class IoU, mask by presence and use `torch.nanmean` across batches at evaluation time rather than averaging here.
+synthetic dataset で 10-30 epochs 回すと shape classes の mIoU が 0.9 を超えて上がるのを確認できます。`nan_to_num(0)` は batch に存在しない classes を zero として扱います。正確な per-class IoU では presence mask を使い、evaluation 時に batches across で `torch.nanmean` してください。
 
 ## Use It
 
-For production, `segmentation_models_pytorch` ("smp") wraps every standard segmentation architecture with any torchvision or timm backbone. Three lines:
+production では `segmentation_models_pytorch`（"smp"）が、standard segmentation architecture と torchvision/timm backbone をまとめて扱えます。
 
 ```python
 import segmentation_models_pytorch as smp
@@ -358,42 +359,43 @@ model = smp.Unet(
 )
 ```
 
-Also worth knowing for real work:
-- **DeepLabV3+** replaces max-pool-based downsampling with dilated convs so the bottleneck keeps resolution; faster boundaries on satellite and driving data.
-- **SegFormer** swaps the conv encoder for a hierarchical transformer; current SOTA on many benchmarks.
-- **Mask2Former** / **OneFormer** unify semantic, instance, and panoptic segmentation in a single architecture.
+実務で重要な選択肢は次の通りです。
 
-All three are drop-in replacements in `smp` or `transformers` with the same data loader.
+- **DeepLabV3+** は max-pool-based downsampling を dilated convs に置き換え、bottleneck resolution を保ちます。satellite や driving data の boundaries で有効です。
+- **SegFormer** は conv encoder を hierarchical transformer に置き換えます。多くの benchmark で current SOTA です。
+- **Mask2Former** / **OneFormer** は semantic、instance、panoptic segmentation を 1 つの architecture に統合します。
+
+いずれも `smp` または `transformers` で同じ data loader から drop-in replacement として使えます。
 
 ## Ship It
 
-This lesson produces:
+この lesson で作るもの:
 
-- `outputs/prompt-segmentation-task-picker.md` — a prompt that picks between semantic, instance, and panoptic segmentation and names the architecture for a given task.
-- `outputs/skill-segmentation-mask-inspector.md` — a skill that reports class distribution, predicted-mask statistics, and the classes that are under-predicted or boundary-blurred.
+- `outputs/prompt-segmentation-task-picker.md` — semantic、instance、panoptic segmentation を選び、task に合う architecture を指定する prompt。
+- `outputs/skill-segmentation-mask-inspector.md` — class distribution、predicted-mask statistics、under-predicted または boundary-blurred の classes を報告する skill。
 
 ## Exercises
 
-1. **(Easy)** Implement `bce_dice_loss` for a binary segmentation task (foreground vs background). Verify on a synthetic two-class dataset that the combined loss converges faster than BCE alone when the foreground is 5% of pixels.
-2. **(Medium)** Replace the `nn.Upsample + conv` up-block with a `nn.ConvTranspose2d` up-block. Train both on the synthetic dataset and compare mIoU. Observe where checkerboard artifacts appear in the transposed-conv version.
-3. **(Hard)** Take a real segmentation dataset (Oxford-IIIT Pets, Cityscapes mini split, or a medical subset) and train the U-Net to within 2 IoU points of the `smp.Unet` reference. Report per-class IoU and identify which classes benefit most from adding Dice to the loss.
+1. **(Easy)** binary segmentation task（foreground vs background）用の `bce_dice_loss` を実装してください。foreground が 5% の synthetic two-class dataset で、combined loss が BCE alone より速く収束することを確認します。
+2. **(Medium)** `nn.Upsample + conv` up-block を `nn.ConvTranspose2d` up-block に置き換えてください。両方を synthetic dataset で train し、mIoU を比較します。transposed-conv version のどこに checkerboard artifacts が出るか観察してください。
+3. **(Hard)** real segmentation dataset（Oxford-IIIT Pets、Cityscapes mini split、medical subset など）で U-Net を train し、`smp.Unet` reference の 2 IoU points 以内に近づけてください。per-class IoU を報告し、loss に Dice を追加して最も benefit を受ける classes を特定します。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Semantic segmentation | "Label every pixel" | Per-pixel classification into C classes; instances of the same class merge |
-| Instance segmentation | "Label every object" | Separates distinct instances of the same class; foreground-only |
-| Panoptic segmentation | "Semantic + instance" | Every pixel gets a class; every thing instance also gets a unique id |
-| Skip connection | "U-Net bridge" | Concatenation of encoder features into matching-resolution decoder features; preserves high-frequency detail |
-| Transposed conv | "Deconvolution" | Learnable upsampling; can produce checkerboard artifacts |
-| Dice loss | "Overlap loss" | 1 - 2|A ∩ B| / (|A| + |B|); optimises mask overlap directly and is robust to class imbalance |
-| mIoU | "Mean intersection over union" | Average IoU across classes; the community-standard metric for segmentation |
-| Boundary F1 | "Boundary accuracy" | F1 score computed on boundary pixels only; matters for precision-critical tasks |
+| Semantic segmentation | "Label every pixel" | C classes への per-pixel classification。同じ class の instances は merge される |
+| Instance segmentation | "Label every object" | 同じ class の distinct instances を分離する。foreground-only |
+| Panoptic segmentation | "Semantic + instance" | すべての pixel に class を付け、thing instance には unique id も付ける |
+| Skip connection | "U-Net bridge" | matching-resolution decoder features へ encoder features を concatenate し、高周波 detail を保つ |
+| Transposed conv | "Deconvolution" | learnable upsampling。checkerboard artifacts を生むことがある |
+| Dice loss | "Overlap loss" | 1 - 2|A ∩ B| / (|A| + |B|)。mask overlap を直接最適化し、class imbalance に強い |
+| mIoU | "Mean intersection over union" | classes across の平均 IoU。segmentation の community-standard metric |
+| Boundary F1 | "Boundary accuracy" | boundary pixels のみで計算する F1 score。precision-critical tasks で重要 |
 
-## Further Reading
+## 参考文献
 
-- [U-Net: Convolutional Networks for Biomedical Image Segmentation (Ronneberger et al., 2015)](https://arxiv.org/abs/1505.04597) — the original paper; the figure everyone copies is on page 2
-- [Fully Convolutional Networks (Long et al., 2015)](https://arxiv.org/abs/1411.4038) — the paper that first made segmentation an end-to-end conv problem
-- [segmentation_models_pytorch](https://github.com/qubvel/segmentation_models.pytorch) — the reference for production segmentation; every standard architecture plus every standard loss
-- [Lessons learned from training SOTA segmentation (kaggle.com competitions)](https://www.kaggle.com/code/iafoss/carvana-unet-pytorch) — a walkthrough of why TTA, pseudo-labeling, and class weights matter on real data
+- [U-Net: Convolutional Networks for Biomedical Image Segmentation (Ronneberger et al., 2015)](https://arxiv.org/abs/1505.04597) — original paper。多くの図が参照する figure は page 2 にあります
+- [Fully Convolutional Networks (Long et al., 2015)](https://arxiv.org/abs/1411.4038) — segmentation を end-to-end conv problem にした paper
+- [segmentation_models_pytorch](https://github.com/qubvel/segmentation_models.pytorch) — production segmentation の reference。standard architecture と standard loss を広く揃えています
+- [Lessons learned from training SOTA segmentation (kaggle.com competitions)](https://www.kaggle.com/code/iafoss/carvana-unet-pytorch) — TTA、pseudo-labeling、class weights が real data でなぜ重要かの walkthrough

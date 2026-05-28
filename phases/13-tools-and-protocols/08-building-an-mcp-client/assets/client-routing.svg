@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,16 +10,16 @@
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
       .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">multi-server client namespace merge</text>
+  <text x="480" y="26" text-anchor="middle" class="title">複数server clientのnamespace統合</text>
 
   <rect x="40" y="60" width="880" height="60" class="cold"/>
-  <text x="480" y="84" text-anchor="middle" class="head">client: one merged tool namespace</text>
+  <text x="480" y="84" text-anchor="middle" class="head">client: 1つに統合したtool namespace</text>
   <text x="480" y="108" text-anchor="middle" class="small">create | read | files/search | search | list_issues | open_pr</text>
 
   <path d="M200,120 L200,170" class="edge" marker-end="url(#arrow)"/>
@@ -29,7 +29,7 @@
   <rect x="60" y="180" width="280" height="160" class="cool"/>
   <text x="200" y="202" text-anchor="middle" class="head">server: notes</text>
   <text x="74" y="228" class="step">tools:</text>
-  <text x="74" y="246" class="small">  search       (wins, first-come)</text>
+  <text x="74" y="246" class="small">  search       (先着で採用)</text>
   <text x="74" y="262" class="small">  create</text>
   <text x="74" y="294" class="step">caps: tools</text>
   <text x="74" y="314" class="step">transport: stdio child process</text>
@@ -38,8 +38,8 @@
   <text x="480" y="202" text-anchor="middle" class="head">server: files</text>
   <text x="374" y="228" class="step">tools:</text>
   <text x="374" y="246" class="small">  read</text>
-  <text x="374" y="262" class="small">  search (collision)</text>
-  <text x="374" y="278" class="small">    renamed files/search</text>
+  <text x="374" y="262" class="small">  search (衝突)</text>
+  <text x="374" y="278" class="small">    files/searchに改名</text>
   <text x="374" y="310" class="step">caps: tools, resources</text>
 
   <rect x="620" y="180" width="280" height="160" class="cold"/>
@@ -47,15 +47,15 @@
   <text x="634" y="228" class="step">tools:</text>
   <text x="634" y="246" class="small">  list_issues</text>
   <text x="634" y="262" class="small">  open_pr</text>
-  <text x="634" y="278" class="small">  search (collision)</text>
-  <text x="634" y="294" class="small">    renamed github/search</text>
+  <text x="634" y="278" class="small">  search (衝突)</text>
+  <text x="634" y="294" class="small">    github/searchに改名</text>
   <text x="634" y="326" class="step">caps: tools</text>
 
   <rect x="40" y="360" width="880" height="140" class="box"/>
-  <text x="480" y="382" text-anchor="middle" class="head">collision resolution policies</text>
-  <text x="60" y="408" class="step">prefix-on-collision  : second server's tool renamed `files/search`, `github/search`</text>
+  <text x="480" y="382" text-anchor="middle" class="head">衝突解決ポリシー</text>
+  <text x="60" y="408" class="step">prefix-on-collision  : 2番目のserver toolを `files/search`, `github/search` に改名</text>
   <text x="60" y="426" class="small">                         Claude Desktop, VS Code.</text>
-  <text x="60" y="446" class="step">reject-on-collision  : second server's tool refused, user notified</text>
-  <text x="60" y="464" class="small">                         Cursor. Safer; clearer errors.</text>
-  <text x="60" y="484" class="step">silent-overwrite     : last-loaded wins. Never use. Hides registries.</text>
+  <text x="60" y="446" class="step">reject-on-collision  : 2番目のserver toolを拒否し、userに通知</text>
+  <text x="60" y="464" class="small">                         Cursor。より安全でerrorが明確。</text>
+  <text x="60" y="484" class="step">silent-overwrite     : 最後に読んだものが勝つ。使わない。衝突を隠す。</text>
 </svg>

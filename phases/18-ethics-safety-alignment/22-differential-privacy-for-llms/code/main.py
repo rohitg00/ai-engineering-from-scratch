@@ -1,8 +1,8 @@
-"""DP-SGD toy on binary logistic regression — stdlib Python.
+"""binary logistic regression による DP-SGD toy — stdlib Python.
 
-Sweeps noise multiplier sigma, reports accuracy vs (epsilon, delta) budget.
-Illustrates the privacy-utility tradeoff without a real privacy accountant;
-the displayed epsilon is a Gaussian-mechanism analytical proxy.
+noise multiplier sigma を sweep し、accuracy と (epsilon, delta) budget を報告する。
+real privacy accountant なしで privacy-utility tradeoff を示す。
+表示される epsilon は Gaussian mechanism の analytical proxy である。
 
 Usage: python3 code/main.py
 """
@@ -48,7 +48,7 @@ def dp_sgd(data, epochs: int, lr: float, sigma: float, C: float) -> list[float]:
             grad_b = err
             grad_w = clip(grad_w, C)
             grad_b = max(-C, min(C, grad_b))
-            # add noise proportional to sigma * C.
+            # sigma * C に比例する noise を加える。
             noise_w = [random.gauss(0.0, sigma * C) for _ in range(2)]
             noise_b = random.gauss(0.0, sigma * C)
             w = [wi - lr * (gi + ni) for wi, gi, ni in zip(w, grad_w, noise_w)]
@@ -67,9 +67,9 @@ def accuracy(model, data) -> float:
 
 
 def analytical_epsilon(sigma: float, steps: int, delta: float = 1e-5) -> float:
-    """Rough Gaussian-mechanism composition proxy.
-    Each step contributes roughly 1/(2*sigma^2); composition bounds epsilon
-    by sum. Real accountants (RDP, Moments) give tighter bounds."""
+    """粗い Gaussian-mechanism composition proxy。
+    各 step はおおむね 1/(2*sigma^2) を寄与する。composition は epsilon を
+    sum で bound する。実際の accountants (RDP, Moments) はより tight な bound を返す。"""
     return math.sqrt(2 * math.log(1.25 / delta)) * math.sqrt(steps) / sigma
 
 
@@ -91,11 +91,11 @@ def main() -> None:
         print(f"  sigma={sigma:4.1f}  approx-epsilon={eps:7.2f}  test-accuracy={acc:.3f}")
 
     print("\n" + "=" * 70)
-    print("TAKEAWAY: sigma=0 is standard SGD with no privacy (infinite epsilon).")
-    print("increasing sigma adds noise, shrinks epsilon, and costs accuracy.")
-    print("real deployments target epsilon in [1, 10] via accountants like")
-    print("Moments Accountant. Nasr et al. 2025 shows extraction-based threats")
-    print("persist under moderate epsilon -- DP is necessary but not sufficient.")
+    print("TAKEAWAY: sigma=0 は privacy のない standard SGD である (infinite epsilon)。")
+    print("sigma を増やすと noise が増え、epsilon は小さくなり、accuracy cost が生じる。")
+    print("real deployments は Moments Accountant などの accountants で epsilon in [1, 10]")
+    print("を target にする。Nasr et al. 2025 は、moderate epsilon の下でも")
+    print("extraction-based threats が残ることを示す。DP は必要だが十分ではない。")
     print("=" * 70)
 
 

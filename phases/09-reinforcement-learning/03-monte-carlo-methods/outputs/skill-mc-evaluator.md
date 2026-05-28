@@ -1,18 +1,18 @@
 ---
 name: mc-evaluator
-description: Evaluate a policy via Monte Carlo rollouts and produce a convergence report with DP-comparison if available.
+description: Monte Carlo rollouts で方策を評価し、可能なら DP 比較付きの収束レポートを作成する。
 version: 1.0.0
 phase: 9
 lesson: 3
 tags: [rl, monte-carlo, evaluation]
 ---
 
-Given an environment (episodic, with reset+step API) and a policy, output:
+環境（episodic で reset+step API を持つ）と方策が与えられたら、次を出力する。
 
-1. Method. First-visit vs every-visit MC. Reason.
-2. Episode budget. Target number, variance diagnostic, expected standard error.
-3. Exploration plan. ε schedule (if needed) or exploring starts.
-4. Gold-standard comparison. DP-optimal V* if tabular; otherwise a bound from a Q-learning / PPO baseline.
-5. Termination check. Max-step cap, timeouts, handling of non-terminating trajectories.
+1. Method。First-visit MC か every-visit MC か。理由。
+2. Episode budget。目標本数、分散診断、期待される標準誤差。
+3. Exploration plan。必要なら `ε` schedule、または exploring starts。
+4. Gold-standard comparison。表形式なら DP-optimal V*、そうでなければ Q-learning / PPO baseline からの bound。
+5. Termination check。Max-step cap、timeouts、非終端軌跡の扱い。
 
-Refuse to run MC on non-episodic tasks without a finite horizon cap. Refuse to report V^π estimates from fewer than 100 episodes per state for tabular tasks. Flag any policy with zero-variance actions as an exploration risk.
+有限ホライズン上限なしに、非 episodic タスクで MC を実行することを拒否する。表形式タスクで、状態あたり100エピソード未満から `V^π` 推定を報告することを拒否する。ゼロ分散の行動を持つ方策は探索リスクとして指摘する。

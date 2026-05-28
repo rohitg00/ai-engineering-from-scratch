@@ -1,26 +1,26 @@
-# Capstone: Ship a Reusable Agent Workbench Pack
+# Capstone: 再利用可能な Agent Workbench Pack を出荷する
 
-> The mini-track ends with a pack you drop into any repo. Eleven lessons of surfaces compressed into a directory you can `cp -r` and have an agent working reliably the next morning. The capstone is the artifact this curriculum trades on.
+> mini-track の最後は、どの repo にも drop できる pack です。11 lesson 分の surface を 1 つの directory に圧縮し、`cp -r` すれば翌朝には agent が信頼性高く動き始めます。この capstone が、この curriculum の実用 artifact です。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phases 14 · 31 to 14 · 41
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python (stdlib)
+**前提:** Phases 14 · 31 to 14 · 41
+**時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Package the seven workbench surfaces into one drop-in directory.
-- Pin the schemas, scripts, and templates so a new repo gets a known-good baseline.
-- Add a single installer script that lays down the pack idempotently.
-- Decide what stays in the pack and what stays out, defending the cut for each.
+- 7 つの workbench surface を 1 つの drop-in directory に package する。
+- 新しい repo が known-good baseline を得られるように、schema、script、template を pin する。
+- pack を idempotent に配置する単一の installer script を追加する。
+- pack に何を入れ、何を外すかを決め、それぞれの判断を説明する。
 
-## The Problem
+## 問題
 
-A workbench that lives in a Google Doc, a chat history, and three half-remembered scripts is a workbench that gets rebuilt every quarter. The cure is a versioned pack: a repo or directory with the surfaces, the schemas, the scripts, and a one-command installer.
+Google Doc、chat history、半分だけ覚えている 3 つの script に分散している workbench は、四半期ごとに作り直される workbench です。解決策は versioned pack です。surface、schema、script、one-command installer を持つ repo または directory です。
 
-You will end this lesson with `outputs/agent-workbench-pack/` shipped on disk and a `bin/install.sh` that drops it into any target repo.
+この lesson の終わりには、`outputs/agent-workbench-pack/` がディスク上に出荷され、`bin/install.sh` が任意の target repo にそれを配置できるようになります。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart TD
@@ -32,7 +32,7 @@ flowchart TD
   Repo --> Surfaces[all seven workbench surfaces wired]
 ```
 
-### The pack layout
+### pack layout
 
 ```
 outputs/agent-workbench-pack/
@@ -56,99 +56,99 @@ outputs/agent-workbench-pack/
 └── README.md
 ```
 
-### What stays in, what stays out
+### 何を入れ、何を外すか
 
-In:
+入れるもの:
 
-- Surface schemas. They are the contract.
-- The four scripts above. They are the runtime.
-- The four docs. They are the rules and the rubric.
+- Surface schema。これが contract です。
+- 上記 4 つの script。これが runtime です。
+- 4 つの doc。これが rule と rubric です。
 
-Out:
+外すもの:
 
-- Project-specific tasks. Tasks belong on the target repo's board, not in the pack.
-- Vendor SDK calls. The pack is framework-agnostic.
-- Onboarding prose. The pack lives next to the team's existing onboarding, not inside it.
+- Project-specific task。task は target repo の board に属し、pack には属しません。
+- Vendor SDK call。pack は framework-agnostic です。
+- Onboarding prose。pack は team 既存の onboarding の隣に置かれるもので、その中に住むものではありません。
 
-### The installer
+### installer
 
-A short `bin/install.sh` (or `bin/install.py`):
+短い `bin/install.sh` (または `bin/install.py`):
 
-1. Refuses to install over an existing pack without `--force`.
-2. Copies the pack into the target repo.
-3. Wires up CI if a `.github/workflows/` exists.
-4. Prints next steps: fill in the board, set acceptance commands, run the init script.
+1. `--force` なしで既存 pack を上書きしない。
+2. target repo に pack を copy する。
+3. `.github/workflows/` が存在する場合は CI を wire する。
+4. next steps を出力する: board を埋め、acceptance command を設定し、init script を実行する。
 
-### Versioning
+### versioning
 
-The pack carries a `VERSION` file. Schema bumps and script changes that require migrations bump the major. Doc-only changes bump the patch. The target repo's `agent_state.json` records which pack version it was initialized against.
+pack は `VERSION` file を持ちます。migration が必要な schema bump と script change は major を上げます。doc-only change は patch を上げます。target repo の `agent_state.json` は、どの pack version に対して初期化されたかを記録します。
 
-## Build It
+## 作ってみる
 
-`code/main.py` assembles the pack into `outputs/agent-workbench-pack/` next to the lesson, seeded with the schemas and scripts from the previous lessons in this mini-track and the docs you already wrote.
+`code/main.py` は pack を組み立て、lesson の隣にある `outputs/agent-workbench-pack/` に置きます。前 lesson で作った schema と script、すでに書いた doc を seed として使います。
 
-Run it:
+実行します。
 
 ```
 python3 code/main.py
 ```
 
-The script copies and pins the surfaces, writes the README, prints the pack tree, and exits zero. Re-running is idempotent.
+script は surface を copy and pin し、README を書き、pack tree を表示し、zero exit します。再実行しても idempotent です。
 
 ## Production patterns in the wild
 
-A pack is only valuable if it survives forks, updates, and an unfriendly upstream. Four patterns make that work.
+pack は fork、update、扱いづらい upstream に耐えられて初めて価値があります。次の 4 pattern がそれを支えます。
 
-**`VERSION` is the contract, not the marketing.** Major bumps require a state migration. Minor bumps require a checker re-run. Patch bumps are doc-only. The installer writes `.workbench-version` into the target repo on every install; `lint_pack.py` refuses to ship if the target's lock disagrees with the pack's `VERSION`. This is how `npm`, `Cargo`, and `pyproject.toml` survive 10 years of churn; nothing about agents changes the rules.
+**`VERSION` is the contract, not the marketing.** major bump は state migration を必要とします。minor bump は checker re-run を必要とします。patch bump は doc-only です。installer は install のたびに target repo に `.workbench-version` を書きます。`lint_pack.py` は target の lock が pack の `VERSION` と一致しなければ出荷を拒否します。`npm`、`Cargo`、`pyproject.toml` が 10 年の churn に耐えた方法です。agent だからといって rule は変わりません。
 
-**Single source for cross-tool distribution.** Nx ships one `nx ai-setup` that lays down `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, `.github/copilot-instructions.md`, and an MCP server from a single config. The pack should do the same; the installer emits the symlinks (`ln -s AGENTS.md CLAUDE.md`) so a single source of truth fans out to every coding agent. Forking the pack to support one tool over another is a failure mode.
+**Single source for cross-tool distribution.** Nx は単一 config から `AGENTS.md`、`CLAUDE.md`、`.cursor/rules/`、`.github/copilot-instructions.md`、MCP server を配置する `nx ai-setup` を出荷しています。pack も同じことをすべきです。installer は symlink (`ln -s AGENTS.md CLAUDE.md`) を発行し、single source of truth をすべての coding agent に fan out します。1 つの tool に対応するために pack を fork すること自体が failure mode です。
 
-**`uninstall.sh` that refuses on non-trivial state.** Uninstalling the pack must not delete the user's `agent_state.json`, `task_board.json`, or `outputs/`. The uninstaller removes the schemas, scripts, docs, and `AGENTS.md` (with `--keep-agents-md` opt-out) and refuses to proceed if state files have any uncommitted changes. State belongs to the user; the pack does not own it.
+**`uninstall.sh` that refuses on non-trivial state.** pack の uninstall は user の `agent_state.json`、`task_board.json`、`outputs/` を削除してはいけません。uninstaller は schema、script、doc、`AGENTS.md` (`--keep-agents-md` opt-out つき) だけを削除し、state file に未 commit の変更がある場合は続行を拒否します。state は user のものです。pack はそれを所有しません。
 
-**Skill-as-publishable. SkillKit-style distribution.** The pack ships as a SkillKit skill: `skillkit install agent-workbench-pack` lays it down across 32 AI agents from a single source. The pack repo is the source of truth; SkillKit is the distribution channel. Vendor lock-in collapses; the seven surfaces stay the same.
+**Skill-as-publishable. SkillKit-style distribution.** pack は SkillKit skill として出荷されます。`skillkit install agent-workbench-pack` が single source から 32 種類の AI agent に配置します。pack repo が source of truth で、SkillKit が distribution channel です。vendor lock-in は崩れ、7 つの surface は同じままです。
 
-## Use It
+## 使い方
 
-Three places the pack ships:
+pack の出荷先は 3 つあります。
 
-- **As a directory you drop into a repo.** `cp -r outputs/agent-workbench-pack /path/to/repo`.
-- **As a public template repo.** Fork-and-customize, with `VERSION` controlling drift.
-- **As a SkillKit skill.** Wired into your agent product so a single command lays it down.
+- **repo に drop する directory として。** `cp -r outputs/agent-workbench-pack /path/to/repo`。
+- **public template repo として。** fork-and-customize し、`VERSION` で drift を制御します。
+- **SkillKit skill として。** agent product に wire し、single command で配置します。
 
-The pack is the recipe. Each install is a serving.
+pack は recipe です。install のたびに 1 つの serving になります。
 
-## Ship It
+## 出荷する
 
-`outputs/skill-workbench-pack.md` generates a project-tuned pack: rules sharpened to the team's history, scope globs matched to the repo, rubric dimensions extended with one domain-specific entry.
+`outputs/skill-workbench-pack.md` は project-tuned pack を生成します。team の history に合わせて rule を鋭くし、scope glob を repo に合わせ、rubric dimension に domain-specific entry を 1 つ追加します。
 
-## Exercises
+## 演習
 
-1. Decide which optional fifth doc deserves promotion into the canonical pack. Defend the cut.
-2. Rewrite the installer as Python with a `--dry-run` flag. Compare ergonomics against bash.
-3. Add a `bin/uninstall.sh` that safely removes the pack and refuses if state files have non-trivial history. What counts as non-trivial?
-4. Add a `lint_pack.py` that fails when the pack drifts from `VERSION`. Wire it into CI for the pack's own repo.
-5. Author the migration runbook from a hand-rolled workbench to this pack. What is the order of operations that minimizes downtime?
+1. optional な 5 つ目の doc のうち、canonical pack に昇格すべきものを決めてください。その判断を説明してください。
+2. installer を `--dry-run` flag つきの Python に書き換えてください。bash と ergonomics を比較してください。
+3. pack を安全に削除し、state file に non-trivial history がある場合は拒否する `bin/uninstall.sh` を追加してください。何を non-trivial と見なしますか。
+4. pack が `VERSION` から drift したら fail する `lint_pack.py` を追加してください。pack 自身の repo の CI に wire してください。
+5. hand-rolled workbench からこの pack へ移行する runbook を書いてください。downtime を最小化する operation order は何ですか。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Workbench pack | "The starter kit" | A versioned directory carrying all seven surfaces |
-| Installer | "Setup script" | `bin/install.sh` that lays the pack down idempotently |
-| Pack version | "VERSION" | Major bumps for schema/script changes, patch for doc-only |
-| Drop-in pack | "cp -r and go" | Pack works without per-repo customization on day one |
-| Forkable template | "GitHub template" | Public repo that GitHub's "Use this template" can clone from |
+| Workbench pack | 「starter kit」 | 7 つの surface すべてを運ぶ versioned directory |
+| Installer | 「setup script」 | pack を idempotent に配置する `bin/install.sh` |
+| Pack version | 「VERSION」 | schema/script change は major、doc-only は patch |
+| Drop-in pack | 「cp -r and go」 | day one から per-repo customization なしで動く pack |
+| Forkable template | 「GitHub template」 | GitHub の "Use this template" から clone できる public repo |
 
-## Further Reading
+## 参考文献
 
-- Phases 14 · 31 to 14 · 41 — every surface this pack bundles
-- [SkillKit](https://github.com/rohitg00/skillkit) — install this skill across 32 AI agents
-- [Nx Blog, Teach Your AI Agent How to Work in a Monorepo](https://nx.dev/blog/nx-ai-agent-skills) — single-source generator across six tools
-- [agents.md — the open spec](https://agents.md/) — what your pack's router must implement
-- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — reference implementation of a pack-equivalent
-- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) — Redis-backed reference with eval suite
-- [Augment Code, A good AGENTS.md is a model upgrade](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files) — pack docs quality bar
+- Phases 14 · 31 to 14 · 41 — この pack が bundle するすべての surface
+- [SkillKit](https://github.com/rohitg00/skillkit) — この skill を 32 AI agent に install する
+- [Nx Blog, Teach Your AI Agent How to Work in a Monorepo](https://nx.dev/blog/nx-ai-agent-skills) — 6 tool にまたがる single-source generator
+- [agents.md — the open spec](https://agents.md/) — pack の router が実装すべきもの
+- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — pack-equivalent の reference implementation
+- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) — eval suite を備えた Redis-backed reference
+- [Augment Code, A good AGENTS.md is a model upgrade](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files) — pack docs の品質基準
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 - [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps)
-- Phase 14 · 30 — eval-driven agent development that consumes the pack's verification gate
-- Phase 14 · 41 — the before/after benchmark this pack improves on
+- Phase 14 · 30 — pack の verification gate を consume する eval-driven agent development
+- Phase 14 · 41 — この pack が改善する before/after benchmark

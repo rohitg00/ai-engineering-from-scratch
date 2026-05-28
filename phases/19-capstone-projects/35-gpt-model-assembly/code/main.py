@@ -1,12 +1,8 @@
-"""Assemble the lesson 34 transformer block into a 124M parameter GPT model.
+"""lesson 34 の transformer block を 124M parameter GPT model に組み立てます。
 
-Twelve blocks, a token embedding, a learned position embedding, a final LayerNorm,
-and a language model head that ties to the token embedding. Parameter count
-lands on ~124M at the reference configuration. The demo also runs a tiny
-configuration end to end and exercises generation with temperature, top-k, and
-multinomial sampling under a sliding window context.
+12個の block、token embedding、learned position embedding、final LayerNorm、weight-tied LM head を含む構成です。
 
-Run: python3 code/main.py
+Run: Python3 code/main.py
 """
 
 from __future__ import annotations
@@ -21,7 +17,7 @@ import torch.nn.functional as F
 
 @dataclass
 class GPTConfig:
-    """Reference 124M configuration matches the GPT-2 small architecture."""
+    """reference 124M configuration は GPT-2 small architecture と一致します。"""
 
     vocab_size: int = 50257
     context_length: int = 1024
@@ -105,7 +101,7 @@ class FeedForward(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    """Pre-LN block. Lesson 34 explains both configurations; the GPT-2 reference is pre-LN."""
+    """pre-LN block。lesson 34 では両構成を説明しますが、GPT-2 reference は pre-LN です。"""
 
     def __init__(self, cfg: GPTConfig) -> None:
         super().__init__()
@@ -121,7 +117,7 @@ class TransformerBlock(nn.Module):
 
 
 class GPTModel(nn.Module):
-    """A decoder only transformer language model with weight tied LM head."""
+    """weight-tied LM head を持つ decoder-only transformer language model。"""
 
     def __init__(self, cfg: GPTConfig) -> None:
         super().__init__()
@@ -173,7 +169,7 @@ class GPTModel(nn.Module):
 
 
 def count_parameters(model: nn.Module) -> int:
-    """Count unique parameters. Weight tied tensors are counted once."""
+    """unique parameters を数えます。weight-tied tensors は1回だけ数えます。"""
     seen: dict[int, int] = {}
     for param in model.parameters():
         seen[id(param)] = param.numel()
@@ -197,7 +193,7 @@ def generate(
     top_k: int | None = None,
     seed: int | None = None,
 ) -> torch.Tensor:
-    """Autoregressive generation with multinomial sampling, temperature, top-k.
+    """multinomial sampling、temperature、top-k による autoregressive generation。
 
     Holds the active window to model.cfg.context_length by sliding the oldest
     tokens out when the running sequence overflows.
@@ -228,18 +224,18 @@ def generate(
 def demo() -> None:
     torch.manual_seed(0)
 
-    print("Building 124M reference GPT...")
+    print("124M reference GPT を構築...")
     ref_cfg = GPTConfig()
     ref_model = GPTModel(ref_cfg)
     ref_params = count_parameters(ref_model)
     print(f"  reference params         : {ref_params:,}")
-    print(f"  expected near 124M       : within 5% target {abs(ref_params - 124_000_000) / 124_000_000:.2%}")
+    print(f"  expected near 124M       : target の5%以内 {abs(ref_params - 124_000_000) / 124_000_000:.2%}")
 
     head_tied = ref_model.lm_head.weight.data_ptr() == ref_model.tok_embed.weight.data_ptr()
     print(f"  weight tying enforced    : {head_tied}")
-    assert head_tied, "weight tying should share storage"
+    assert head_tied, "weight tying は storage を共有する必要があります"
 
-    print("\nUntying and re-counting to confirm the 38M delta...")
+    print("\nweight tying を外して 38M delta を再確認...")
     untied_cfg = GPTConfig(weight_tying=False)
     untied_model = GPTModel(untied_cfg)
     untied_params = count_parameters(untied_model)
@@ -250,14 +246,14 @@ def demo() -> None:
     print(f"  expected (vocab*d_model) : {expected_delta:,}")
     assert delta == expected_delta
 
-    print("\nSingle forward through 124M reference, batch 1, seq 32...")
+    print("\n124M reference に batch 1, seq 32 で single forward...")
     tokens = torch.randint(0, ref_cfg.vocab_size, (1, 32))
     with torch.no_grad():
         logits = ref_model(tokens)
     print(f"  logits shape             : {tuple(logits.shape)}")
     assert logits.shape == (1, 32, ref_cfg.vocab_size)
 
-    print("\nGenerating with a tiny model end to end (faster demo)...")
+    print("\ntiny model で end-to-end generation（高速デモ）...")
     tiny_cfg = GPTConfig(
         vocab_size=512,
         context_length=64,
@@ -283,13 +279,13 @@ def demo() -> None:
     print(f"  generated tokens         : {generated.tolist()[0]}")
     assert generated.shape == (1, prompt.shape[1] + 12)
 
-    print("\nSliding window check: prompt longer than context...")
+    print("\nsliding window check: prompt が context より長い場合...")
     long_prompt = torch.randint(0, tiny_cfg.vocab_size, (1, 80))
     generated_long = generate(tiny_model, long_prompt, max_new_tokens=4, temperature=1.0, top_k=10, seed=0)
     print(f"  long prompt shape        : {tuple(long_prompt.shape)}")
     print(f"  generated shape          : {tuple(generated_long.shape)}")
     assert generated_long.shape == (1, 84)
-    print("\nModel assembly check passed.")
+    print("\nmodel assembly check passed。")
 
 
 if __name__ == "__main__":

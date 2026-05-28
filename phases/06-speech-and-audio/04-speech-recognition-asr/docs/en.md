@@ -1,56 +1,56 @@
-# Speech Recognition (ASR) — CTC, RNN-T, Attention
+# 音声認識 (ASR) — CTC、RNN-T、Attention
 
-> Speech recognition is audio classification at every timestep, glued together by a sequence model that knows English and silence. CTC, RNN-T, and attention are the three ways to do it. Pick one and understand why.
+> 音声認識は、各タイムステップでの音声分類を、英語と無音を理解する系列モデルでつなぎ合わせる問題です。CTC、RNN-T、attention はそれを行う 3 つの方法です。1 つ選び、なぜそうするのかを理解しましょう。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-You have a 10-second 16 kHz clip. You want a string: "turn on the kitchen lights". The challenge is structural: audio frames do not align one-to-one with characters. The word "okay" might take 200 ms or 1200 ms. Silence punctuates the utterance. Some phonemes are longer than others. The number of output tokens is not known in advance.
+10 秒、16 kHz のクリップがあります。欲しいのは "turn on the kitchen lights" という文字列です。難しさは構造にあります。音声フレームは文字と 1 対 1 に対応しません。"okay" という単語は 200 ms のことも 1200 ms のこともあります。無音が発話に句読点を打ちます。音素ごとに長さも違います。出力トークン数は事前には分かりません。
 
-Three formulations solve this:
+この問題を解く定式化は 3 つあります。
 
-1. **CTC (Connectionist Temporal Classification).** Emit per-frame token probabilities including a special *blank*. Collapse repeats and blanks at decode time. Non-autoregressive, fast. Used by wav2vec 2.0, MMS.
-2. **RNN-T (Recurrent Neural Network Transducer).** Joint network predicts next token given encoder frame and previous tokens. Streamable. Used by Google's on-device ASR, NVIDIA Parakeet.
-3. **Attention encoder-decoder.** Encoder compresses audio to hidden states, decoder cross-attends to generate tokens autoregressively. Used by Whisper, SeamlessM4T.
+1. **CTC (Connectionist Temporal Classification)。** 特別な *blank* を含むトークン確率をフレームごとに出力します。デコード時に反復と blank を畳み込みます。非自己回帰で高速です。wav2vec 2.0、MMS で使われます。
+2. **RNN-T (Recurrent Neural Network Transducer)。** Joint network が encoder frame と過去トークンから次トークンを予測します。ストリーミング可能です。Google のオンデバイス ASR、NVIDIA Parakeet で使われます。
+3. **Attention encoder-decoder。** Encoder が音声を hidden states に圧縮し、decoder が cross-attention して自己回帰的にトークンを生成します。Whisper、SeamlessM4T で使われます。
 
-In 2026, SOTA WER on LibriSpeech test-clean is 1.4% (Parakeet-TDT-1.1B, NVIDIA) and 1.58% (Whisper-Large-v3-turbo). The differences are tiny; the deployment differences are huge.
+2026 年、LibriSpeech test-clean の SOTA WER は 1.4% (Parakeet-TDT-1.1B, NVIDIA) と 1.58% (Whisper-Large-v3-turbo) です。差は小さいですが、デプロイ上の違いは大きいです。
 
-## The Concept
+## 概念
 
-![Three ASR formulations: CTC, RNN-T, attention-encoder-decoder](../assets/asr-formulations.svg)
+![3 つの ASR 定式化: CTC、RNN-T、attention-encoder-decoder](../assets/asr-formulations.svg)
 
-**CTC intuition.** Let the encoder output `T` frame-level distributions over `V+1` tokens (V chars + blank). For a target string `y` of length `U < T`, any frame alignment that collapses to `y` counts. CTC loss sums over all such alignments. Inference: per-frame argmax, collapse repeats, remove blanks.
+**CTC の直感。** Encoder が `V+1` 個のトークン (V chars + blank) に対する `T` 個のフレームレベル分布を出力するとします。長さ `U < T` の対象文字列 `y` に対して、畳み込むと `y` になる任意のフレームアラインメントが有効です。CTC loss はそのような全アラインメントにわたって和を取ります。推論では、フレームごとの argmax を取り、反復を畳み込み、blank を取り除きます。
 
-Advantages: non-autoregressive, streamable, zero lookahead. Drawback: *conditional independence assumption* — each frame prediction is independent of the others, so there is no internal language model. Fix with an external LM via beam search or shallow fusion.
+利点: 非自己回帰、ストリーミング可能、lookahead なし。欠点: *conditional independence assumption* です。各フレーム予測は互いに独立で、内部言語モデルがありません。beam search や shallow fusion で外部 LM を足して補います。
 
-**RNN-T intuition.** Adds a *predictor* network that embeds the token history and a *joiner* that combines predictor state with encoder frame into a joint distribution over `V+1` (the `+1` is a null / no-emit). Explicitly models the conditional dependence CTC ignored. Streamable because each step conditions only on past frames and past tokens.
+**RNN-T の直感。** トークン履歴を埋め込む *predictor* network と、predictor state と encoder frame を `V+1` (`+1` は null / no-emit) の同時分布へ結合する *joiner* を追加します。CTC が無視した条件付き依存性を明示的にモデル化します。各ステップが過去フレームと過去トークンだけに条件付けるため、ストリーミング可能です。
 
-Advantages: streamable + internal LM. Drawback: training is more complex and memory-hungry (3D loss lattice); RNN-T loss kernels are a whole library category on their own.
+利点: streamable + internal LM。欠点: 学習がより複雑でメモリを食います (3D loss lattice)。RNN-T loss kernels はそれだけで 1 つのライブラリカテゴリです。
 
-**Attention encoder-decoder.** Encoder (6-32 transformer layers) over log-mel frames. Decoder (6-32 transformer layers) cross-attends to encoder outputs to generate tokens autoregressively. No alignment constraint — attention can look anywhere in the audio. Non-streamable unless you restrict attention (chunked Whisper-Streaming, 2024).
+**Attention encoder-decoder。** Log-mel フレーム上の encoder (6-32 transformer layers)。Decoder (6-32 transformer layers) が encoder outputs に cross-attend して自己回帰的にトークンを生成します。アラインメント制約はありません。attention は音声内のどこでも見られます。attention を制限しない限りストリーミングできません (chunked Whisper-Streaming, 2024)。
 
-Advantages: highest quality on offline ASR, easy to train with standard seq2seq tooling. Drawback: autoregressive latency is proportional to output length; cannot stream without engineering.
+利点: オフライン ASR で最高品質、標準の seq2seq tooling で学習しやすい。欠点: 自己回帰レイテンシは出力長に比例します。エンジニアリングなしではストリーミングできません。
 
-### WER: the one number
+### WER: 1 つの数値
 
-**Word Error Rate** = `(S + D + I) / N`, where S=substitutions, D=deletions, I=insertions, N=reference word count. Matches Levenshtein edit distance at the word level. Lower is better. A WER above 20% is generally unusable; below 5% is human-parity for read speech. 2026 numbers on standard benchmarks:
+**Word Error Rate** = `(S + D + I) / N`。S=substitutions、D=deletions、I=insertions、N=reference word count です。単語レベルの Levenshtein edit distance と一致します。低いほど良いです。WER が 20% を超えると一般に実用になりません。5% 未満は読み上げ音声では human-parity です。標準ベンチマークでの 2026 年の数値:
 
-| Model | LibriSpeech test-clean | LibriSpeech test-other | Size |
+| モデル | LibriSpeech test-clean | LibriSpeech test-other | サイズ |
 |-------|------------------------|------------------------|------|
 | Parakeet-TDT-1.1B | 1.40% | 2.78% | 1.1B params |
 | Whisper-Large-v3-turbo | 1.58% | 3.03% | 809M |
 | Canary-1B Flash | 1.48% | 2.87% | 1B |
 | Seamless M4T v2 | 1.7% | 3.5% | 2.3B |
 
-All these are encoder-decoder or RNN-T based. Pure CTC systems (wav2vec 2.0) sit around 1.8–2.1% on test-clean.
+これらはすべて encoder-decoder または RNN-T ベースです。純粋な CTC システム (wav2vec 2.0) は test-clean で 1.8–2.1% 程度です。
 
-## Build It
+## 作る
 
-### Step 1: greedy CTC decode
+### 手順 1: greedy CTC decode
 
 ```python
 def ctc_greedy(frame_logits, blank=0, vocab=None):
@@ -65,9 +65,9 @@ def ctc_greedy(frame_logits, blank=0, vocab=None):
     return "".join(vocab[i] for i in out) if vocab else out
 ```
 
-Two rules: collapse consecutive repeats, drop blanks. Example: `a a _ _ a b b _ c` → `a a b c`.
+規則は 2 つです。連続する反復を畳み込み、blank を捨てます。例: `a a _ _ a b b _ c` → `a a b c`。
 
-### Step 2: beam-search CTC
+### 手順 2: beam-search CTC
 
 ```python
 def ctc_beam(frame_logits, beam=8, blank=0):
@@ -85,9 +85,9 @@ def ctc_beam(frame_logits, beam=8, blank=0):
     return beams[0][0]
 ```
 
-Production uses prefix tree beam search with LM fusion; this is the conceptual skeleton.
+本番では LM fusion 付きの prefix tree beam search を使います。これは概念的な骨格です。
 
-### Step 3: WER
+### 手順 3: WER
 
 ```python
 def wer(ref, hyp):
@@ -108,7 +108,7 @@ def wer(ref, hyp):
     return dp[len(r)][len(h)] / max(1, len(r))
 ```
 
-### Step 4: inference against Whisper
+### 手順 4: Whisper で推論する
 
 ```python
 import whisper
@@ -117,9 +117,9 @@ result = model.transcribe("clip.wav")
 print(result["text"])
 ```
 
-One-liner for the strongest general ASR in 2026. Runs on a 24 GB GPU at ~20× realtime.
+2026 年の最強クラスの汎用 ASR を 1 行で使えます。24 GB GPU では約 20× realtime で動きます。
 
-### Step 5: streaming with Parakeet or wav2vec 2.0
+### 手順 5: Parakeet または wav2vec 2.0 でストリーミングする
 
 ```python
 from transformers import pipeline
@@ -128,54 +128,54 @@ for chunk in streaming_audio():
     print(asr(chunk, return_timestamps=True))
 ```
 
-Streaming ASR needs chunked encoder attention and carryover state; use a library that supports it (NeMo for Parakeet, `transformers` pipeline with `chunk_length_s`).
+Streaming ASR には chunked encoder attention と carryover state が必要です。それをサポートするライブラリを使います (Parakeet なら NeMo、`chunk_length_s` 付きの `transformers` pipeline)。
 
-## Use It
+## 使う
 
-The 2026 stack:
+2026 年のスタック:
 
-| Situation | Pick |
+| 状況 | 選択 |
 |-----------|------|
 | English, offline, max quality | Whisper-large-v3-turbo |
 | Multilingual, robust | SeamlessM4T v2 |
-| Streaming, low latency | Parakeet-TDT-1.1B or Riva |
-| Edge, mobile, <500 ms latency | Whisper-Tiny quantized or Moonshine (2024) |
-| Long-form | Whisper with VAD-based chunking (WhisperX) |
+| Streaming, low latency | Parakeet-TDT-1.1B または Riva |
+| Edge, mobile, <500 ms latency | Whisper-Tiny quantized または Moonshine (2024) |
+| Long-form | VAD-based chunking 付き Whisper (WhisperX) |
 | Domain-specific (medical, legal) | Fine-tune wav2vec 2.0 + domain LM fusion |
 
-## Pitfalls that still ship in 2026
+## 2026 年でも本番に紛れ込む落とし穴
 
-- **No VAD.** Running Whisper on silence produces hallucinations ("Thanks for watching!"). Always gate with VAD.
-- **Character vs word vs subword WER.** Report word-level WER *after* normalization (lowercase, punctuation stripped).
-- **Language ID drift.** Whisper's auto LID mis-routes noisy clips to Japanese or Welsh; force `language="en"` when you know.
-- **Long clips without chunking.** Whisper has a 30-second window. Use `chunk_length_s=30, stride=5` for anything longer.
+- **VAD なし。** 無音に Whisper を走らせると hallucinations ("Thanks for watching!") が出ます。必ず VAD で gate します。
+- **Character vs word vs subword WER。** 正規化後 (lowercase、punctuation stripped) の word-level WER を報告します。
+- **Language ID drift。** Whisper の auto LID は、ノイズのあるクリップを日本語やウェールズ語へ誤って振り分けることがあります。分かっているなら `language="en"` を強制します。
+- **チャンク化なしの長いクリップ。** Whisper には 30 秒ウィンドウがあります。それより長いものには `chunk_length_s=30, stride=5` を使います。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-asr-picker.md`. Pick model, decoding strategy, chunking, and LM fusion for a given deployment target.
+`outputs/skill-asr-picker.md` として保存します。指定されたデプロイ対象に対して model、decoding strategy、chunking、LM fusion を選びます。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. It greedily decodes a hand-crafted CTC output and computes WER against a reference.
-2. **Medium.** Implement the prefix-tree beam search in Step 2 properly (account for the blank merge rule). Compare with greedy on a 10-example synthetic dataset.
-3. **Hard.** Use `whisper-large-v3-turbo` on [LibriSpeech test-clean](https://www.openslr.org/12). Compute WER on the first 100 utterances. Compare with published numbers.
+1. **Easy.** `code/main.py` を実行します。手作りの CTC 出力を greedy decode し、参照に対する WER を計算します。
+2. **Medium.** 手順 2 の prefix-tree beam search を正しく実装します (blank merge rule を考慮します)。10 例の合成データセットで greedy と比較します。
+3. **Hard.** [LibriSpeech test-clean](https://www.openslr.org/12) で `whisper-large-v3-turbo` を使います。最初の 100 発話で WER を計算します。公開値と比較します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|-----------------|-----------------------|
-| CTC | The blank-token loss | Marginal over all frame-to-token alignments; non-AR. |
-| RNN-T | The streaming loss | CTC + next-token predictor; handles word-order. |
-| Attention enc-dec | Whisper-style | Encoder + cross-attending decoder; best offline quality. |
-| WER | The number you report | `(S+D+I)/N` at word level. |
-| Blank | The emptiness | Special token in CTC signalling "no emission this frame". |
-| LM fusion | External language model | Add weighted LM log-probs during beam search. |
-| VAD | The silence gate | Voice activity detector; trims non-speech. |
+| CTC | blank-token loss | frame-to-token alignments 全体にわたる周辺化。非 AR。 |
+| RNN-T | streaming loss | CTC + next-token predictor。語順を扱えます。 |
+| Attention enc-dec | Whisper-style | Encoder + cross-attending decoder。オフライン品質が最高。 |
+| WER | 報告する数値 | 単語レベルの `(S+D+I)/N`。 |
+| Blank | 空っぽ | CTC で「このフレームでは出力なし」を示す特殊トークン。 |
+| LM fusion | 外部言語モデル | beam search 中に重み付き LM log-probs を足します。 |
+| VAD | 無音 gate | Voice activity detector。非音声を削ります。 |
 
-## Further Reading
+## 参考資料
 
-- [Graves et al. (2006). Connectionist Temporal Classification](https://www.cs.toronto.edu/~graves/icml_2006.pdf) — the CTC paper.
-- [Graves (2012). Sequence Transduction with RNNs](https://arxiv.org/abs/1211.3711) — the RNN-T paper.
-- [Radford et al. / OpenAI (2022). Whisper: Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) — the 2022 canonical paper; v3-turbo extension in 2024.
-- [NVIDIA NeMo — Parakeet-TDT card](https://huggingface.co/nvidia/parakeet-tdt-1.1b) — 2026 Open ASR Leaderboard leader.
-- [Hugging Face — Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) — live benchmark across 25+ models.
+- [Graves et al. (2006). Connectionist Temporal Classification](https://www.cs.toronto.edu/~graves/icml_2006.pdf) — CTC の論文。
+- [Graves (2012). Sequence Transduction with RNNs](https://arxiv.org/abs/1211.3711) — RNN-T の論文。
+- [Radford et al. / OpenAI (2022). Whisper: Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) — 2022 年の標準的な論文。v3-turbo 拡張は 2024 年。
+- [NVIDIA NeMo — Parakeet-TDT card](https://huggingface.co/nvidia/parakeet-tdt-1.1b) — 2026 Open ASR Leaderboard leader。
+- [Hugging Face — Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) — 25+ models にわたる live benchmark。

@@ -1,22 +1,22 @@
 {
   "lesson": "06-mesa-optimization-deceptive-alignment",
-  "title": "Mesa-Optimization and Deceptive Alignment",
+  "title": "Mesa-Optimization と Deceptive Alignment",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which pair best captures the inner / outer alignment distinction?",
+      "question": "inner / outer alignment の区別を最もよく表す組み合わせはどれですか。",
       "options": [
-        "Outer = does the model run on hardware; inner = is loss low",
-        "Outer = does the base objective match what we wanted; inner = does the mesa-objective match the base objective",
-        "Outer = is the policy stable; inner = is the temperature low",
-        "Outer = is data clean; inner = is the optimizer stochastic"
+        "outer = model が hardware 上で動くか、inner = loss が低いか",
+        "outer = base objective が欲しかったものに合っているか、inner = mesa-objective が base objective に合っているか",
+        "outer = policy が stable か、inner = temperature が低いか",
+        "outer = data が clean か、inner = optimizer が stochastic か"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of the following is NOT one of Hubinger et al.'s four classes of mesa-objective alignment?",
+      "question": "次のうち、Hubinger et al. の mesa-objective alignment の 4 分類に含まれないものはどれですか。",
       "options": [
         "Approximately aligned",
         "Robustly aligned",
@@ -28,48 +28,48 @@
     },
     {
       "stage": "check",
-      "question": "Under what conditions is deceptive alignment the reward-maximizing strategy for a mesa-optimizer?",
+      "question": "deceptive alignment は、どの条件で mesa-optimizer にとって reward-maximizing strategy になりますか。",
       "options": [
-        "It is trained with PPO rather than DPO",
-        "It has a persistent terminal goal, has situational awareness of training vs deployment, and the base optimizer modifies it if it defects in training",
-        "Its capacity exceeds 100B parameters",
-        "It has any internal representation at all"
+        "DPO ではなく PPO で訓練されている場合",
+        "persistent terminal goal を持ち、training vs deployment の situational awareness があり、training で defect すると base optimizer がそれを改変する場合",
+        "capacity が 100B parameters を超える場合",
+        "何らかの internal representation を持つ場合"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why can standard adversarial training fail (or worsen) deceptive alignment?",
+      "question": "standard adversarial training が deceptive alignment に失敗する、または悪化させるのはなぜですか。",
       "options": [
-        "It requires more compute than RLHF",
-        "It teaches the mesa-optimizer a sharper discriminator between test and deployment, not an aligned mesa-objective",
-        "It uses the wrong loss function",
-        "It cannot run on GPUs"
+        "RLHF より多くの compute が必要だから",
+        "aligned mesa-objective ではなく、test と deployment を区別するより鋭い discriminator を mesa-optimizer に教えるから",
+        "wrong loss function を使うから",
+        "GPUs で実行できないから"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is gradient hacking, as introduced in Hubinger et al. (2019)?",
+      "question": "Hubinger et al. (2019) が導入した gradient hacking とは何ですか。",
       "options": [
-        "A speculative pathology where a capable mesa-optimizer produces outputs that shape its own gradient updates to preserve its mesa-objective",
-        "A jailbreaking method for instruction-tuned models",
-        "A bug in autograd",
-        "A technique for faster training"
+        "capable な mesa-optimizer が自分の mesa-objective を保存するため、自分の gradient updates を shape する outputs を生成するという speculative pathology",
+        "instruction-tuned models の jailbreaking method",
+        "autograd の bug",
+        "高速 training の technique"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of these is an OUTER alignment failure, not an inner one?",
+      "question": "次のうち inner ではなく OUTER alignment failure はどれですか。",
       "options": [
-        "Reward hacking and sycophancy emerging because the base objective is itself a flawed proxy for human intent",
-        "Mesa-optimizer optimizes a proxy goal that diverges off-distribution",
-        "Backdoor surviving SFT",
-        "Mesa-optimizer hides its goal during evaluation"
+        "base objective 自体が human intent の flawed proxy であるため reward hacking と sycophancy が生じること",
+        "mesa-optimizer が off-distribution で diverge する proxy goal を optimize すること",
+        "backdoor が SFT を生き残ること",
+        "mesa-optimizer が evaluation 中に goal を隠すこと"
       ],
       "correct": 0,
       "explanation": ""

@@ -9,7 +9,7 @@ import {
 const SECRET = "shh";
 
 describe("verifySlackSignature", () => {
-  it("accepts a freshly signed body", () => {
+  it("fresh に signed された body を受け入れる", () => {
     const ts = String(Math.floor(Date.now() / 1000));
     const body = "command=%2Foncall&text=test";
     const sig = signForTesting(SECRET, ts, body);
@@ -23,7 +23,7 @@ describe("verifySlackSignature", () => {
     assert.equal(verdict.ok, true);
   });
 
-  it("rejects a tampered signature", () => {
+  it("tampered signature を拒否する", () => {
     const ts = String(Math.floor(Date.now() / 1000));
     const body = "command=%2Foncall&text=test";
     const sig = signForTesting(SECRET, ts, body);
@@ -39,7 +39,7 @@ describe("verifySlackSignature", () => {
     if (!verdict.ok) assert.equal(verdict.reason, "mismatch");
   });
 
-  it("rejects a timestamp outside the 5-minute replay window", () => {
+  it("5分の replay window 外の timestamp を拒否する", () => {
     const ts = String(Math.floor(Date.now() / 1000));
     const body = "command=%2Foncall&text=test";
     const sig = signForTesting(SECRET, ts, body);
@@ -54,7 +54,7 @@ describe("verifySlackSignature", () => {
     if (!verdict.ok) assert.equal(verdict.reason, "stale");
   });
 
-  it("rejects a non-numeric timestamp", () => {
+  it("non-numeric timestamp を拒否する", () => {
     const verdict = verifySlackSignature({
       signingSecret: SECRET,
       timestamp: "not-a-number",
@@ -66,7 +66,7 @@ describe("verifySlackSignature", () => {
     if (!verdict.ok) assert.equal(verdict.reason, "bad-timestamp");
   });
 
-  it("rejects a mismatched signature length without leaking via early return", () => {
+  it("early return で漏らさず mismatched signature length を拒否する", () => {
     const ts = String(Math.floor(Date.now() / 1000));
     const verdict = verifySlackSignature({
       signingSecret: SECRET,

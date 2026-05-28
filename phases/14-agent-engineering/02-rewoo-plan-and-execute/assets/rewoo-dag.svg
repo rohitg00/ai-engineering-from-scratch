@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,8 +10,8 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -23,19 +23,19 @@
 
   <rect x="40" y="60" width="170" height="80" class="cool"/>
   <text x="125" y="88" text-anchor="middle" class="step">Planner</text>
-  <text x="125" y="108" text-anchor="middle" class="small">one call; sees only</text>
-  <text x="125" y="124" text-anchor="middle" class="small">the user question</text>
+  <text x="125" y="108" text-anchor="middle" class="small">1回のcall;</text>
+  <text x="125" y="124" text-anchor="middle" class="small">user questionだけを見る</text>
 
   <rect x="260" y="60" width="460" height="320" class="box"/>
-  <text x="490" y="84" text-anchor="middle" class="head">plan DAG and workers</text>
+  <text x="490" y="84" text-anchor="middle" class="head">plan DAGとworkers</text>
 
   <rect x="290" y="110" width="160" height="60" class="cold"/>
   <text x="370" y="134" text-anchor="middle" class="step">E1 = search</text>
-  <text x="370" y="152" text-anchor="middle" class="small">capital of France</text>
+  <text x="370" y="152" text-anchor="middle" class="small">フランスの首都</text>
 
   <rect x="530" y="110" width="160" height="60" class="cold"/>
   <text x="610" y="134" text-anchor="middle" class="step">E2 = search</text>
-  <text x="610" y="152" text-anchor="middle" class="small">population of #E1</text>
+  <text x="610" y="152" text-anchor="middle" class="small">#E1の人口</text>
 
   <rect x="410" y="220" width="160" height="60" class="hot"/>
   <text x="490" y="244" text-anchor="middle" class="step">E3 = round_million</text>
@@ -51,37 +51,37 @@
 
   <rect x="750" y="60" width="170" height="80" class="cool"/>
   <text x="835" y="88" text-anchor="middle" class="step">Solver</text>
-  <text x="835" y="108" text-anchor="middle" class="small">one call; reads</text>
-  <text x="835" y="124" text-anchor="middle" class="small">evidence + plan</text>
+  <text x="835" y="108" text-anchor="middle" class="small">1回のcall;</text>
+  <text x="835" y="124" text-anchor="middle" class="small">evidence + planを読む</text>
 
   <line x1="720" y1="335" x2="790" y2="140" class="edge" marker-end="url(#arrow)"/>
 
   <rect x="40" y="160" width="170" height="220" class="box"/>
-  <text x="125" y="184" text-anchor="middle" class="head">why ReWOO</text>
-  <text x="50" y="206" class="small">no observation in planner</text>
-  <text x="50" y="222" class="small">means no feedback noise</text>
-  <text x="50" y="246" class="small">workers fan out in parallel</text>
-  <text x="50" y="262" class="small">along independent branches</text>
-  <text x="50" y="286" class="small">fewer tokens:</text>
+  <text x="125" y="184" text-anchor="middle" class="head">ReWOOを使う理由</text>
+  <text x="50" y="206" class="small">plannerにobservationなし</text>
+  <text x="50" y="222" class="small">つまりfeedback noiseなし</text>
+  <text x="50" y="246" class="small">workersを並列にfan out</text>
+  <text x="50" y="262" class="small">独立branchに沿って実行</text>
+  <text x="50" y="286" class="small">tokensを削減:</text>
   <text x="50" y="302" class="small">1 planner + N small worker</text>
   <text x="50" y="318" class="small">prompts + 1 solver call</text>
-  <text x="50" y="342" class="small">paper: 5x reduction</text>
-  <text x="50" y="358" class="small">on HotpotQA, +4 accuracy</text>
+  <text x="50" y="342" class="small">論文: 5x reduction</text>
+  <text x="50" y="358" class="small">HotpotQAでaccuracy +4</text>
 
   <rect x="750" y="160" width="170" height="220" class="box"/>
-  <text x="835" y="184" text-anchor="middle" class="head">when to pick it</text>
-  <text x="760" y="206" class="small">task shape is structured</text>
-  <text x="760" y="222" class="small">tools are known up front</text>
-  <text x="760" y="246" class="small">evidence is parallelizable</text>
-  <text x="760" y="262" class="small">token budget matters</text>
-  <text x="760" y="286" class="small">else prefer ReAct for</text>
-  <text x="760" y="302" class="small">unknown environments or</text>
-  <text x="760" y="318" class="small">Plan-and-Act for 30+ step</text>
-  <text x="760" y="334" class="small">web/mobile trajectories</text>
+  <text x="835" y="184" text-anchor="middle" class="head">選ぶ場面</text>
+  <text x="760" y="206" class="small">task shapeが構造化済み</text>
+  <text x="760" y="222" class="small">toolsが事前に既知</text>
+  <text x="760" y="246" class="small">evidenceを並列化できる</text>
+  <text x="760" y="262" class="small">token budgetが重要</text>
+  <text x="760" y="286" class="small">unknown environmentなら</text>
+  <text x="760" y="302" class="small">ReActを優先</text>
+  <text x="760" y="318" class="small">30+ stepのweb/mobileなら</text>
+  <text x="760" y="334" class="small">Plan-and-Actを優先</text>
 
   <rect x="40" y="400" width="880" height="100" class="box"/>
-  <text x="480" y="424" text-anchor="middle" class="head">distillation angle (ReWOO section 4)</text>
-  <text x="60" y="446" class="small">planner sees no observations, so its training signal is clean; LLaMA 7B can be fine-tuned from</text>
-  <text x="60" y="462" class="small">GPT-3.5 planner traces and match planner quality. 2026 production: small planner + large executor</text>
-  <text x="60" y="478" class="small">(or vice versa) via model router (Mastra) or dynamic handoff (OpenAI Agents SDK).</text>
+  <text x="480" y="424" text-anchor="middle" class="head">distillationの観点 (ReWOO section 4)</text>
+  <text x="60" y="446" class="small">plannerはobservationを見ないためtraining signalがclean。LLaMA 7BをGPT-3.5 planner tracesで</text>
+  <text x="60" y="462" class="small">fine-tuneしplanner qualityに近づけられる。2026 production: small planner + large executor</text>
+  <text x="60" y="478" class="small">(または逆) をmodel router (Mastra) やdynamic handoff (OpenAI Agents SDK)で構成。</text>
 </svg>

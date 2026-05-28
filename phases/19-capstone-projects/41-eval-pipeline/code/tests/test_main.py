@@ -1,4 +1,4 @@
-"""Tests for the eval-pipeline lesson."""
+"""eval-pipeline lesson の tests。"""
 
 from __future__ import annotations
 

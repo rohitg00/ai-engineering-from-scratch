@@ -1,40 +1,40 @@
 ---
 name: browser-agent-trust-boundary
-description: Scope a proposed browser-agent deployment — trust zones, authorized writes, required defenses — before the agent touches a real site.
+description: 提案されたブラウザエージェントのデプロイについて、エージェントが実サイトに触れる前に、信頼ゾーン、許可された書き込み、必要な防御策をスコープする。
 version: 1.0.0
 phase: 15
 lesson: 11
 tags: [browser-agents, prompt-injection, trust-boundary, osworld, webarena]
 ---
 
-Given a proposed browser-agent workflow, produce a trust-boundary scoping document that enumerates every read, every write, and the minimum defense stack required for first run.
+提案されたブラウザエージェントワークフローを受け取り、すべての読み取り、すべての書き込み、初回実行に必要な最小防御スタックを列挙した信頼境界スコープ文書を作成する。
 
-Produce:
+作成するもの:
 
-1. **Read surface.** List every origin the agent will fetch. Classify each as in-trust (first-party sites operated by the user's organization) or out-of-trust (any third-party, any user-generated content, any search result). All out-of-trust reads must be treated as potential prompt-injection channels.
-2. **Write surface.** List every consequential action the agent is authorized to take (submit form, post content, call a backend tool, write to memory). For each, state the blast radius and whether the action is reversible.
-3. **Required defenses.** Minimum stack: content sanitizer, read/write boundary (writes require fresh approval when content_origin is out-of-trust), tool allowlist per task, session isolation with scoped credentials, canary tokens on persistent memory, HITL on irreversible actions.
-4. **Benchmark-to-distribution fit.** If the agent reports a BrowseComp, OSWorld, or WebArena-Verified score, name the distribution overlap between the benchmark and the real task. A high BrowseComp score does not predict booking-flow reliability.
-5. **Known-attack checklist.** Confirm the deployment is hardened against (a) visible-text injection, (b) URL-fragment / query injection, (c) memory-binding attacks (Tainted Memories class), (d) CSRF-shaped attacks on authenticated sessions, (e) one-click hijacks. For each, name the specific defense and where it fires.
+1. **読み取り面。** エージェントが取得するすべてのoriginを列挙する。それぞれをin-trust（ユーザー組織が運営するファーストパーティサイト）またはout-of-trust（任意のサードパーティ、任意のユーザー生成コンテンツ、任意の検索結果）に分類する。すべてのout-of-trust読み取りは、潜在的なプロンプトインジェクションチャネルとして扱う。
+2. **書き込み面。** エージェントが実行を許可されている、重大な結果を伴うすべての行動（フォーム送信、コンテンツ投稿、バックエンドツール呼び出し、メモリへの書き込み）を列挙する。それぞれについて、被害範囲と、その行動が可逆かどうかを述べる。
+3. **必要な防御策。** 最小スタック：コンテンツサニタイザー、読み取り/書き込み境界（`content_origin`がout-of-trustのとき、書き込みには新たな承認が必要）、タスクごとのツール許可リスト、スコープされた認証情報によるセッション分離、永続メモリ上のカナリアトークン、不可逆な行動に対するHITL。
+4. **ベンチマークと分布の適合。** エージェントがBrowseComp、OSWorld、WebArena-Verifiedのスコアを報告している場合、ベンチマークと実タスクの分布がどこで重なるかを明示する。BrowseCompの高スコアは、予約フローの信頼性を予測しない。
+5. **既知攻撃チェックリスト。** デプロイが (a) 可視テキストインジェクション、(b) URLフラグメント / クエリインジェクション、(c) メモリ束縛攻撃（Tainted Memories系）、(d) 認証済みセッションに対するCSRF型攻撃、(e) ワンクリック乗っ取り に対して強化されていることを確認する。それぞれについて、具体的な防御策と、それがどこで発火するかを示す。
 
-Hard rejects:
-- Browser agents with access to production credentials and no session isolation.
-- Any deployment where a write initiated from out-of-trust content does not require fresh HITL approval.
-- Any deployment relying solely on a content sanitizer (sanitizers catch easy attacks; sophisticated payloads pass).
-- Persistent memory with no canary entries.
-- Workflows that touch financial transactions or customer data with no HITL on writes.
+強制却下:
+- 本番認証情報にアクセスでき、セッション分離がないブラウザエージェント。
+- out-of-trustコンテンツから開始された書き込みに、新たなHITL承認を要求しないデプロイ。
+- コンテンツサニタイザーだけに依存するデプロイ（サニタイザーは簡単な攻撃を捕捉するが、高度なペイロードは通過する）。
+- カナリエントリのない永続メモリ。
+- 金融取引または顧客データに触れるのに、書き込みに対するHITLがないワークフロー。
 
-Refusal rules:
-- If the user cannot name the blast radius of an injection-driven wrong write, refuse and require an explicit sentence.
-- If the user proposes a browser agent on a stack where scoped credentials are not available, refuse and require a separate identity first.
-- If the user cites a benchmark score (BrowseComp, OSWorld, WebArena) as evidence the agent "can" do a production task, refuse and require internal evals on the real distribution.
+拒否ルール:
+- ユーザーが、インジェクションによって誤った書き込みが発生した場合の被害範囲を明示できないなら、拒否し、明示的な1文を要求する。
+- ユーザーが、スコープされた認証情報を利用できないスタック上でブラウザエージェントを提案するなら、拒否し、まず分離されたIDを要求する。
+- ユーザーが、エージェントが本番タスクを「できる」根拠としてベンチマークスコア（BrowseComp、OSWorld、WebArena）を挙げるなら、拒否し、実際の分布に対する内部評価を要求する。
 
-Output format:
+出力形式:
 
-Return a trust-boundary memo with:
-- **Read surface table** (origin, in-trust / out-of-trust)
-- **Write surface table** (action, blast radius, reversible y/n)
-- **Defense stack** (bulleted list of configured layers)
-- **Benchmark-fit note** (if applicable)
-- **Known-attack checklist** (five rows, defense named per row)
-- **Deployment verdict** (production / staging / research-only)
+以下を含む信頼境界メモを返す:
+- **読み取り面テーブル**（origin、in-trust / out-of-trust）
+- **書き込み面テーブル**（action、blast radius、reversible y/n）
+- **防御スタック**（設定済みレイヤーの箇条書き）
+- **ベンチマーク適合メモ**（該当する場合）
+- **既知攻撃チェックリスト**（5行、各行に防御策名を記載）
+- **デプロイ判定**（production / staging / research-only）

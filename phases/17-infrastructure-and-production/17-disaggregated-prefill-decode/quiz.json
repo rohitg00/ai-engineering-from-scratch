@@ -4,58 +4,58 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do prefill and decode want different optimal GPU configurations?",
+      "question": "prefill と decode が異なる最適 GPU 構成を求めるのはなぜですか？",
       "options": [
-        "Prefill must run on AMD and decode on NVIDIA",
-        "Prefill is compute-bound on matmul throughput; decode is memory-bound on HBM bandwidth, so colocating them wastes one resource",
-        "They use different model weights",
-        "Decode requires more network bandwidth"
+        "Prefill は AMD、decode は NVIDIA でなければならないから",
+        "Prefill は matmul throughput に対して compute-bound、decode は HBM bandwidth に対して memory-bound なので、同じ場所に置くと一方の resource を無駄にするから",
+        "異なる model weights を使うから",
+        "Decode はより多くの network bandwidth を必要とするから"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What transport does NVIDIA Dynamo use to move KV cache between the prefill and decode pools?",
+      "question": "NVIDIA Dynamo は prefill pool と decode pool の間で KV cache を移動するためにどの transport を使いますか？",
       "options": [
         "Plain HTTP",
-        "gRPC bidi only",
-        "Shared filesystem on NFS",
-        "NIXL (RDMA/InfiniBand when available, TCP fallback)"
+        "gRPC bidi のみ",
+        "NFS 上の shared filesystem",
+        "NIXL（利用可能なら RDMA/InfiniBand、TCP fallback）"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "When does disaggregation NOT pay off according to the lesson?",
+      "question": "この lesson によると、disaggregation が割に合わないのはいつですか？",
       "options": [
-        "MoE workloads on Blackwell",
-        "Multi-tenant serving with shared system prompts",
-        "RAG with 8K+ prefixes",
-        "Prompts under 512 tokens and outputs under 200 tokens, where the KV transfer tax dominates the gain"
+        "Blackwell 上の MoE workload",
+        "shared system prompts を持つ multi-tenant serving",
+        "8K+ prefixes を持つ RAG",
+        "512 tokens 未満の prompt と200 tokens 未満の output で、KV transfer tax が gain を支配する場合"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the core architectural difference between Dynamo and llm-d?",
+      "question": "Dynamo と llm-d の中核的な architecture の違いは何ですか？",
       "options": [
-        "Dynamo is open source; llm-d is closed",
-        "Dynamo runs on CPU; llm-d on GPU",
-        "Dynamo is a stack-above orchestrator over vLLM/SGLang/TRT-LLM; llm-d is Kubernetes-native with prefill/decode/router as independent Services",
-        "Dynamo requires AMD; llm-d requires NVIDIA"
+        "Dynamo は open source、llm-d は closed である",
+        "Dynamo は CPU、llm-d は GPU で動く",
+        "Dynamo は vLLM/SGLang/TRT-LLM 上の stack-above orchestrator、llm-d は prefill/decode/router を独立 Services とする Kubernetes-native stack である",
+        "Dynamo は AMD、llm-d は NVIDIA を必要とする"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which Dynamo components automatically tune the prefill:decode ratio for an SLO?",
+      "question": "SLO に合わせて prefill:decode ratio を自動調整する Dynamo components はどれですか？",
       "options": [
-        "Sidecar proxy and Envoy filter",
-        "Planner Profiler and SLA Planner",
+        "Sidecar proxy と Envoy filter",
+        "Planner Profiler と SLA Planner",
         "Cluster Autoscaler",
         "Marlin kernels"
       ],
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "How does disaggregation interact with cache-aware routing from Phase 17 · 11?",
+      "question": "disaggregation は Phase 17 · 11 の cache-aware routing とどう相互作用しますか？",
       "options": [
-        "Disaggregation disables KV cache reuse entirely",
-        "The cache-aware router can land a request on the decode pool already holding its prefix; on miss it flows prefill -> decode, so the two compound",
-        "They are mutually exclusive",
-        "Cache-aware routing is only for colocated serving"
+        "disaggregation は KV cache reuse を完全に無効化する",
+        "cache-aware router は prefix を保持している decode pool に request を着地させられる。miss では prefill -> decode に流れるため、両者は相乗効果を持つ",
+        "両者は相互排他的である",
+        "cache-aware routing は colocated serving 専用である"
       ],
       "correct": 1,
       "explanation": ""

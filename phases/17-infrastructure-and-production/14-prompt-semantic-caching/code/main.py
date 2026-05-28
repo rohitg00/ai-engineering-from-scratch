@@ -1,7 +1,7 @@
-"""Two-layer caching simulator — stdlib Python.
+"""Two-layer caching simulator — stdlib Python。
 
-Models L1 (semantic) + L2 (prompt-prefix) caching on a mixed workload.
-Reports bill, hit rates, and the parallelization penalty.
+Mixed workload 上で L1（semantic）+ L2（prompt-prefix）caching を model 化します。
+Bill、hit rates、parallelization penalty を報告します。
 """
 
 from __future__ import annotations
@@ -10,11 +10,11 @@ from dataclasses import dataclass
 import random
 
 
-BASE_INPUT = 3.00       # $/M input tokens (Claude Sonnet-class)
+BASE_INPUT = 3.00       # $/M input tokens（Claude Sonnet-class）
 BASE_OUTPUT = 15.00     # $/M output tokens
-CACHED_INPUT = 0.30     # 10x cheaper read
-CACHE_WRITE_5MIN = 1.25 * BASE_INPUT  # write premium 5-min TTL
-CACHE_WRITE_1HR = 2.00 * BASE_INPUT   # write premium 1-hour TTL
+CACHED_INPUT = 0.30     # read は 10x cheaper
+CACHE_WRITE_5MIN = 1.25 * BASE_INPUT  # 5-min TTL の write premium
+CACHE_WRITE_1HR = 2.00 * BASE_INPUT   # 1-hour TTL の write premium
 
 
 @dataclass
@@ -29,10 +29,10 @@ class Request:
 class Config:
     l1_enabled: bool
     l2_enabled: bool
-    parallel_penalty: bool  # N parallel arrivals miss cache together
+    parallel_penalty: bool  # N parallel arrivals がまとめて cache miss
     l1_threshold: float
     l1_hit_prob: float
-    ttl: str                # "5min" or "1hr"
+    ttl: str                # "5min" または "1hr"
 
 
 def make_workload(n: int = 500, seed: int = 7) -> list[Request]:
@@ -41,7 +41,7 @@ def make_workload(n: int = 500, seed: int = 7) -> list[Request]:
     prefixes = [f"prefix_{i}" for i in range(12)]
     now = 0.0
     for i in range(n):
-        # 60% individual arrivals, 40% parallel waves of 5
+        # 60% は individual arrivals、40% は 5 件の parallel waves
         if rng.random() < 0.4:
             for _ in range(5):
                 reqs.append(Request(rng.choice([2000, 4000, 8000]),
@@ -102,7 +102,7 @@ def report(label: str, cfg: Config, reqs: list[Request]) -> None:
 
 def main() -> None:
     print("=" * 95)
-    print("PROMPT + SEMANTIC CACHING — 500 requests, Claude Sonnet-class pricing")
+    print("PROMPT + SEMANTIC CACHING — 500 requests、Claude Sonnet-class pricing")
     print("=" * 95)
     base = make_workload()
     reqs = [Request(r.prompt_tokens, r.prefix_hash, r.is_parallel_wave, r.arrived_at) for r in base]
@@ -123,7 +123,7 @@ def main() -> None:
            Config(l1_enabled=True, l2_enabled=True, parallel_penalty=False, l1_threshold=0.95, l1_hit_prob=0.70, ttl="1hr"),
            reqs)
 
-    print("\nRead: caching is a protocol. Structure your prompts and batching for it to pay off.")
+    print("\nRead: caching は protocol です。効果を出すには prompts と batching の構造を整えてください。")
 
 
 if __name__ == "__main__":

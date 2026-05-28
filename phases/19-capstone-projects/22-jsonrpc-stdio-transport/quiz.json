@@ -1,34 +1,34 @@
 {
   "lesson": "22-jsonrpc-stdio-transport",
-  "title": "JSON-RPC 2.0 over Newline-Delimited Stdio",
+  "title": "Newline-Delimited Stdio 上の JSON-RPC 2.0",
   "questions": [
     {
       "stage": "pre",
-      "question": "What distinguishes a JSON-RPC notification from a request on the wire?",
+      "question": "wire 上で JSON-RPC notification と request を区別するものは何ですか？",
       "options": [
-        "Different jsonrpc version field",
-        "Notifications omit the id field; servers must not respond to them",
-        "Notifications use a different method namespace",
-        "Notifications are wrapped in an array"
+        "異なる jsonrpc version field",
+        "notification は id field を省略し、server は response を返してはいけない",
+        "notification は異なる method namespace を使う",
+        "notification は array で wrap される"
       ],
       "correct": 1,
-      "explanation": "Absence of id is the only marker. Servers do not respond, because there is no id to correlate against."
+      "explanation": "id がないことだけが marker です。server は response を返しません。対応づける id がないからです。"
     },
     {
       "stage": "pre",
-      "question": "Why is newline-delimited JSON sufficient for stdio framing?",
+      "question": "newline-delimited JSON が stdio framing に十分なのはなぜですか？",
       "options": [
-        "Because JSON does not allow literal newlines inside strings without escaping, so each object can be one line",
-        "Because pipes guarantee newline atomicity",
-        "Because UTF-8 has no newline byte",
-        "Because the spec mandates it"
+        "JSON では string 内の literal newline は escape なしに書けないため、各 object を 1 line にできるから",
+        "pipe は newline atomicity を保証するから",
+        "UTF-8 には newline byte がないから",
+        "spec がそれを mandate しているから"
       ],
       "correct": 0,
-      "explanation": "json.dumps emits a single line per object; literal newlines inside strings are escaped. That makes \\n a safe record separator."
+      "explanation": "json.dumps は object ごとに 1 line を emit します。string 内の literal newline は escape されます。そのため \\n を安全な record separator にできます。"
     },
     {
       "stage": "check",
-      "question": "Which error code does the transport return when JSON parsing fails?",
+      "question": "JSON parsing に失敗したとき、transport はどの error code を返しますか？",
       "options": [
         "-32600",
         "-32700",
@@ -36,55 +36,55 @@
         "-32601"
       ],
       "correct": 1,
-      "explanation": "-32700 is Parse error. The response id is null because no id could be extracted."
+      "explanation": "-32700 は Parse error です。id を取り出せないため response id は null です。"
     },
     {
       "stage": "check",
-      "question": "If a handler raises a plain ValueError, what does the transport return?",
+      "question": "handler が plain ValueError を raise した場合、transport は何を返しますか？",
       "options": [
         "Method not found (-32601)",
         "Invalid params (-32602)",
-        "Internal error (-32603) with the exception class name in data",
-        "It does not return; the connection drops"
+        "Internal error (-32603) と data 内の exception class name",
+        "何も返さず connection が落ちる"
       ],
       "correct": 2,
-      "explanation": "Unmapped exceptions surface as -32603. data.exception preserves the class name for the client."
+      "explanation": "未 map の exception は -32603 として surface します。data.exception が client 向けに class name を保持します。"
     },
     {
       "stage": "check",
-      "question": "What does the server return when a batch contains only notifications?",
+      "question": "batch が notification だけを含む場合、server は何を返しますか？",
       "options": [
-        "An empty array",
-        "Nothing — no bytes are written",
-        "One null per notification",
-        "A single null response"
+        "empty array",
+        "何も返さない。byte は書かれない",
+        "notification ごとに null 1 つ",
+        "単一の null response"
       ],
       "correct": 1,
-      "explanation": "Spec rule: if every entry is a notification, the server stays silent."
+      "explanation": "spec rule: すべての entry が notification なら server は silent のままです。"
     },
     {
       "stage": "post",
-      "question": "A line with broken JSON arrives in the middle of a session. What happens to subsequent lines?",
+      "question": "session の途中で broken JSON の line が届いた場合、後続 line はどうなりますか？",
       "options": [
-        "The transport closes the stream",
-        "They are buffered until the broken line is retried",
-        "The transport writes a -32700 response and continues reading the next line as fresh",
-        "They are all rejected with -32600"
+        "transport は stream を close する",
+        "broken line が retry されるまで buffer される",
+        "transport は -32700 response を書き、次の line を新しく読み続ける",
+        "すべて -32600 で reject される"
       ],
       "correct": 2,
-      "explanation": "The framing layer must not poison the stream. One parse error means one error response and the loop continues."
+      "explanation": "framing layer は stream を汚染してはいけません。1 つの parse error は 1 つの error response で、loop は続行します。"
     },
     {
       "stage": "post",
-      "question": "Why does the transport not consult the tool registry directly?",
+      "question": "transport が tool registry を直接参照しないのはなぜですか？",
       "options": [
-        "Because the registry is async",
-        "To keep the transport layer JSON-RPC-shaped only; the handler stitches transport to registry",
-        "Because the registry holds secrets",
-        "Because the transport runs in a different process"
+        "registry は async だから",
+        "transport layer を JSON-RPC の形だけに保つため。handler が transport と registry をつなぐ",
+        "registry は secret を保持しているから",
+        "transport は別 process で動くから"
       ],
       "correct": 1,
-      "explanation": "The transport speaks the wire. The dispatcher (next lesson) is where transport meets registry meets timeout."
+      "explanation": "transport は wire を話します。dispatcher（次 lesson）が transport、registry、timeout が出会う場所です。"
     }
   ]
 }

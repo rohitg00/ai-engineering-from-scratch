@@ -1,41 +1,41 @@
-# Activation Functions
+# 活性化関数
 
-> Without nonlinearity, your 100-layer network is a fancy matrix multiply. Activations are the gates that let neural networks think in curves.
+> 非線形性がなければ、100層のネットワークも凝った行列乗算にすぎません。活性化関数は、ニューラルネットワークが曲線で考えるためのゲートです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Lesson 03.03 (Backpropagation)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** レッスン 03.03（Backpropagation）
+**時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Implement sigmoid, tanh, ReLU, Leaky ReLU, GELU, Swish, and softmax with their derivatives from scratch
-- Diagnose the vanishing gradient problem by measuring activation magnitudes through 10+ layers with different activations
-- Detect dead neurons in a ReLU network and explain why GELU avoids this failure mode
-- Select the correct activation function for a given architecture (transformer, CNN, RNN, output layer)
+- sigmoid、tanh、ReLU、Leaky ReLU、GELU、Swish、softmax とそれぞれの導関数をゼロから実装する
+- 異なる活性化関数で10層以上を通したときの活性値の大きさを測定し、勾配消失問題を診断する
+- ReLU ネットワーク内の dead neuron を検出し、GELU がこの故障モードを避けられる理由を説明する
+- 与えられたアーキテクチャ（transformer、CNN、RNN、出力層）に対して正しい活性化関数を選ぶ
 
-## The Problem
+## 問題
 
-Stack two linear transformations: y = W2(W1x + b1) + b2. Expand it: y = W2W1x + W2b1 + b2. That's just y = Ax + c -- a single linear transformation. No matter how many linear layers you stack, the result collapses to one matrix multiply. Your 100-layer network has the same representational power as a single layer.
+2つの線形変換を重ねてみます: y = W2(W1x + b1) + b2。展開すると、y = W2W1x + W2b1 + b2。これは単なる y = Ax + c、つまり1つの線形変換です。線形層を何層重ねても、結果は1回の行列乗算に潰れます。100層のネットワークでも、表現力は1層と同じです。
 
-This is not a theoretical curiosity. It means a deep linear network literally cannot learn XOR, cannot classify a spiral dataset, cannot recognize a face. Without activation functions, depth is an illusion.
+これは理論上の小ネタではありません。深い線形ネットワークは、文字どおり XOR を学習できず、渦巻き状のデータセットを分類できず、顔を認識できないという意味です。活性化関数がなければ、深さは錯覚です。
 
-Activation functions break the linearity. They warp the output of each layer through a nonlinear function, giving the network the ability to bend decision boundaries, approximate arbitrary functions, and actually learn. But pick the wrong activation and your gradients vanish to zero (sigmoid in deep networks), explode to infinity (unbounded activations without careful initialization), or your neurons die permanently (ReLU with large negative biases). The choice of activation function directly determines whether your network learns at all.
+活性化関数は線形性を断ち切ります。各層の出力を非線形関数で歪ませることで、ネットワークは決定境界を曲げ、任意の関数を近似し、実際に学習できるようになります。ただし活性化関数の選択を誤ると、勾配がゼロへ消えたり（深いネットワークでの sigmoid）、無限大へ爆発したり（注意深い初期化を伴わない非有界な活性化）、ニューロンが永久に死んだりします（大きな負のバイアスを持つ ReLU）。活性化関数の選択は、ネットワークがそもそも学習できるかを直接決めます。
 
-## The Concept
+## 概念
 
-### Why Nonlinearity Is Necessary
+### なぜ非線形性が必要なのか
 
-Matrix multiplication is composable. Multiplying a vector by matrix A then matrix B is identical to multiplying by AB. This means stacking ten linear layers is mathematically equivalent to one linear layer with one big matrix. All those parameters, all that depth -- wasted. You need something to break the chain. That's what activation functions do.
+行列乗算は合成できます。ベクトルに行列 A を掛け、次に行列 B を掛けることは、AB を掛けることと同じです。つまり線形層を10層積んでも、数学的には1つの大きな行列を持つ1つの線形層と等価です。大量のパラメータも深さも、すべて無駄になります。この連鎖を断ち切る何かが必要です。それが活性化関数です。
 
-Here is the proof. A linear layer computes f(x) = Wx + b. Stack two:
+証明はこうです。線形層は f(x) = Wx + b を計算します。2層を重ねます。
 
 ```
 Layer 1: h = W1 * x + b1
 Layer 2: y = W2 * h + b2
 ```
 
-Substitute:
+代入します。
 
 ```
 y = W2 * (W1 * x + b1) + b2
@@ -43,153 +43,153 @@ y = (W2 * W1) * x + (W2 * b1 + b2)
 y = A * x + c
 ```
 
-One layer. Insert a nonlinear activation g() between layers:
+1層です。層の間に非線形な活性化 g() を挟みます。
 
 ```
 h = g(W1 * x + b1)
 y = W2 * h + b2
 ```
 
-Now the substitution breaks. W2 * g(W1 * x + b1) + b2 cannot be reduced to a single linear transformation. The network can represent nonlinear functions. Each additional layer with an activation adds representational capacity.
+これで代入による簡約は壊れます。W2 * g(W1 * x + b1) + b2 は単一の線形変換には還元できません。ネットワークは非線形関数を表現できます。活性化を伴う層を追加するたびに表現能力が増します。
 
 ### Sigmoid
 
-The original activation function for neural networks.
+ニューラルネットワークで使われた元祖の活性化関数です。
 
 ```
 sigmoid(x) = 1 / (1 + e^(-x))
 ```
 
-Output range: (0, 1). Smooth, differentiable, maps any real number to a probability-like value.
+出力範囲: (0, 1)。滑らかで微分可能で、任意の実数を確率のような値に写します。
 
-The derivative:
+導関数:
 
 ```
 sigmoid'(x) = sigmoid(x) * (1 - sigmoid(x))
 ```
 
-The maximum value of this derivative is 0.25, occurring at x = 0. In backpropagation, gradients multiply through layers. Ten layers of sigmoid means the gradient gets multiplied by at most 0.25 ten times:
+この導関数の最大値は x = 0 での 0.25 です。バックプロパゲーションでは、勾配は層を通るたびに掛け合わされます。sigmoid が10層あると、勾配は最大でも 0.25 を10回掛けられます。
 
 ```
 0.25^10 = 0.000000953674
 ```
 
-Less than one millionth of the original signal. This is the vanishing gradient problem. Gradients in early layers become so small that weights barely update. The network appears to learn -- loss decreases in later layers -- but the first layers are frozen. Deep sigmoid networks simply do not train.
+元の信号の100万分の1未満です。これが勾配消失問題です。初期層の勾配が非常に小さくなり、重みがほとんど更新されません。ネットワークは学習しているように見えます（後段の層では損失が下がる）が、最初の層は凍りついています。深い sigmoid ネットワークは、単純に訓練できません。
 
-Additional problem: sigmoid outputs are always positive (0 to 1), which means gradients on weights are always the same sign. This causes zig-zagging during gradient descent.
+追加の問題として、sigmoid の出力は常に正（0から1）なので、重みに対する勾配の符号が常に同じ向きになりがちです。これにより勾配降下中にジグザグの動きが起きます。
 
 ### Tanh
 
-The centered version of sigmoid.
+sigmoid を中心化した版です。
 
 ```
 tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))
 ```
 
-Output range: (-1, 1). Zero-centered, which eliminates the zig-zag problem.
+出力範囲: (-1, 1)。ゼロ中心なので、ジグザグ問題を解消します。
 
-The derivative:
+導関数:
 
 ```
 tanh'(x) = 1 - tanh(x)^2
 ```
 
-Maximum derivative is 1.0 at x = 0 -- four times better than sigmoid. But the vanishing gradient problem still exists. For large positive or negative inputs, the derivative approaches zero. Ten layers still crush the gradient, just less aggressively.
+最大の導関数は x = 0 で 1.0 です。sigmoid より4倍良い値です。ただし勾配消失問題はまだ存在します。大きな正または負の入力では、導関数はゼロに近づきます。10層あれば、sigmoid ほど激しくないにせよ、勾配はやはり押し潰されます。
 
-### ReLU: The Breakthrough
+### ReLU: ブレイクスルー
 
-Rectified Linear Unit. Popularized for deep learning by Nair and Hinton in 2010 (the function itself dates to Fukushima's 1969 work), it changed everything.
+Rectified Linear Unit です。2010年に Nair と Hinton によって深層学習で広く使われるようになり（関数自体は Fukushima の1969年の研究まで遡ります）、状況を一変させました。
 
 ```
 relu(x) = max(0, x)
 ```
 
-Output range: [0, infinity). The derivative is trivially simple:
+出力範囲: [0, infinity)。導関数は非常に単純です。
 
 ```
 relu'(x) = 1  if x > 0
             0  if x <= 0
 ```
 
-No vanishing gradient for positive inputs. The gradient is exactly 1, passed straight through. This is why deep networks became trainable -- ReLU preserves gradient magnitude across layers.
+正の入力では勾配が消えません。勾配はちょうど1で、そのまま通過します。深いネットワークが訓練可能になった理由はここにあります。ReLU は層をまたいで勾配の大きさを保ちます。
 
-But there is a failure mode: the dead neuron problem. If a neuron's weighted input is always negative (due to a large negative bias or unfortunate weight initialization), its output is always zero, its gradient is always zero, and it never updates. It is permanently dead. In practice, 10-40% of neurons in a ReLU network can die during training.
+ただし故障モードがあります。dead neuron 問題です。あるニューロンの重み付き入力が常に負（大きな負のバイアスや不運な重み初期化が原因）だと、出力は常にゼロ、勾配も常にゼロになり、二度と更新されません。永久に死んだ状態です。実務では、ReLU ネットワークの10-40%のニューロンが訓練中に死ぬことがあります。
 
 ### Leaky ReLU
 
-The simplest fix for dead neurons.
+dead neuron への最も単純な対策です。
 
 ```
 leaky_relu(x) = x        if x > 0
                 alpha * x if x <= 0
 ```
 
-Where alpha is a small constant, typically 0.01. The negative side has a small slope instead of zero, so dead neurons still get a gradient signal and can recover.
+alpha は小さな定数で、通常は 0.01 です。負側にゼロではなく小さな傾きを持たせるため、死んだニューロンにも勾配信号が届き、回復できる可能性があります。
 
-### GELU: The Modern Default
+### GELU: 現代のデフォルト
 
-Gaussian Error Linear Unit. Introduced by Hendrycks and Gimpel in 2016. Default activation in BERT, GPT, and most modern transformers.
+Gaussian Error Linear Unit です。Hendrycks と Gimpel が2016年に導入しました。BERT、GPT、そして現代の多くの transformer のデフォルト活性化関数です。
 
 ```
 gelu(x) = x * Phi(x)
 ```
 
-Where Phi(x) is the cumulative distribution function of the standard normal distribution. The approximation used in practice:
+ここで Phi(x) は標準正規分布の累積分布関数です。実務で使われる近似は次のとおりです。
 
 ```
 gelu(x) ~= 0.5 * x * (1 + tanh(sqrt(2/pi) * (x + 0.044715 * x^3)))
 ```
 
-GELU is smooth everywhere, allows small negative values (unlike ReLU which hard-clips to zero), and has a probabilistic interpretation: it weights each input by how likely it is to be positive under a Gaussian distribution. This smooth gating outperforms ReLU in transformer architectures because it provides better gradient flow and avoids the dead neuron problem entirely.
+GELU は全域で滑らかで、（負値をゼロに強制的に切り落とす ReLU と異なり）小さな負の値を許し、確率的な解釈も持ちます。つまり、各入力がガウス分布の下で正であるらしさによって重み付けします。この滑らかなゲーティングは、より良い勾配の流れを与え、dead neuron 問題を完全に避けるため、transformer アーキテクチャでは ReLU を上回ります。
 
 ### Swish / SiLU
 
-Self-gated activation discovered by Ramachandran et al. in 2017 through automated search.
+Ramachandran らが2017年に自動探索で発見した自己ゲート型の活性化関数です。
 
 ```
 swish(x) = x * sigmoid(x)
 ```
 
-Swish is formally x * sigmoid(x). Google discovered it through automated search over activation function space -- a neural network designing parts of neural networks.
+Swish は形式的には x * sigmoid(x) です。Google は活性化関数の探索空間を自動探索してこれを見つけました。ニューラルネットワークが、ニューラルネットワークの部品を設計したわけです。
 
-Like GELU, it is smooth, non-monotonic, and allows small negative values. The difference is subtle: Swish uses sigmoid for gating while GELU uses the Gaussian CDF. In practice, performance is nearly identical. Swish is used in EfficientNet and some vision models. GELU dominates in language models.
+GELU と同様に、滑らかで、非単調で、小さな負の値を許します。違いは微妙です。Swish はゲーティングに sigmoid を使い、GELU はガウス CDF を使います。実務上の性能はほぼ同じです。Swish は EfficientNet や一部の vision モデルで使われます。言語モデルでは GELU が主流です。
 
-### Softmax: The Output Activation
+### Softmax: 出力の活性化
 
-Not used in hidden layers. Softmax converts a vector of raw scores (logits) into a probability distribution.
+隠れ層では使いません。Softmax は、生のスコア（logits）のベクトルを確率分布に変換します。
 
 ```
 softmax(x_i) = e^(x_i) / sum(e^(x_j) for all j)
 ```
 
-Every output is between 0 and 1. All outputs sum to 1. This makes it the standard final activation for multi-class classification. The largest logit gets the highest probability, but unlike argmax, softmax is differentiable and preserves information about relative confidence.
+各出力は0から1の間になります。全出力の合計は1です。そのため、多クラス分類の標準的な最終活性化関数です。最大の logit が最も高い確率になりますが、argmax と異なり softmax は微分可能で、相対的な確信度の情報を保持します。
 
-### Comparison of Shapes
+### 形状の比較
 
 ```mermaid
 graph LR
-    subgraph "Activation Functions"
-        S["Sigmoid<br/>Range: (0,1)<br/>Saturates both ends"]
-        T["Tanh<br/>Range: (-1,1)<br/>Zero-centered"]
-        R["ReLU<br/>Range: [0,inf)<br/>Dead neurons"]
-        G["GELU<br/>Range: ~(-0.17,inf)<br/>Smooth gating"]
+    subgraph "活性化関数"
+        S["Sigmoid<br/>範囲: (0,1)<br/>両端で飽和"]
+        T["Tanh<br/>範囲: (-1,1)<br/>ゼロ中心"]
+        R["ReLU<br/>範囲: [0,inf)<br/>Dead neurons"]
+        G["GELU<br/>範囲: ~(-0.17,inf)<br/>滑らかなゲーティング"]
     end
-    S -->|"Vanishing gradient"| Problem["Deep networks<br/>don't train"]
-    T -->|"Less severe but<br/>still vanishes"| Problem
-    R -->|"Gradient = 1<br/>for x > 0"| Solution["Deep networks<br/>train fast"]
-    G -->|"Smooth gradient<br/>everywhere"| Solution
+    S -->|"勾配消失"| Problem["深いネットワーク<br/>訓練できない"]
+    T -->|"軽いが<br/>やはり消える"| Problem
+    R -->|"x > 0 で<br/>勾配 = 1"| Solution["深いネットワーク<br/>高速に訓練できる"]
+    G -->|"全域で<br/>滑らかな勾配"| Solution
 ```
 
-### Gradient Flow Comparison
+### 勾配の流れの比較
 
 ```mermaid
 graph TD
-    Input["Input Signal"] --> L1["Layer 1"]
-    L1 --> L5["Layer 5"]
-    L5 --> L10["Layer 10"]
-    L10 --> Output["Output"]
+    Input["入力信号"] --> L1["第1層"]
+    L1 --> L5["第5層"]
+    L5 --> L10["第10層"]
+    L10 --> Output["出力"]
 
-    subgraph "Gradient at Layer 1"
+    subgraph "第1層の勾配"
         SigGrad["Sigmoid: ~0.000001"]
         TanhGrad["Tanh: ~0.001"]
         ReluGrad["ReLU: ~1.0"]
@@ -197,30 +197,30 @@ graph TD
     end
 ```
 
-### Which Activation When
+### どの活性化関数をいつ使うか
 
 ```mermaid
 flowchart TD
-    Start["What are you building?"] --> Hidden{"Hidden layers<br/>or output?"}
+    Start["何を作っていますか?"] --> Hidden{"隠れ層<br/>それとも出力?"}
 
-    Hidden -->|"Hidden layers"| Arch{"Architecture?"}
-    Hidden -->|"Output layer"| Task{"Task type?"}
+    Hidden -->|"隠れ層"| Arch{"アーキテクチャ?"}
+    Hidden -->|"出力層"| Task{"タスク種別?"}
 
-    Arch -->|"Transformer / NLP"| GELU["Use GELU"]
-    Arch -->|"CNN / Vision"| ReLU["Use ReLU or Swish"]
-    Arch -->|"RNN / LSTM"| Tanh["Use Tanh"]
-    Arch -->|"Simple MLP"| ReLU2["Use ReLU"]
+    Arch -->|"Transformer / NLP"| GELU["GELU を使う"]
+    Arch -->|"CNN / Vision"| ReLU["ReLU または Swish を使う"]
+    Arch -->|"RNN / LSTM"| Tanh["Tanh を使う"]
+    Arch -->|"単純な MLP"| ReLU2["ReLU を使う"]
 
-    Task -->|"Binary classification"| Sigmoid["Use Sigmoid"]
-    Task -->|"Multi-class classification"| Softmax["Use Softmax"]
-    Task -->|"Regression"| Linear["Use Linear (no activation)"]
+    Task -->|"二値分類"| Sigmoid["Sigmoid を使う"]
+    Task -->|"多クラス分類"| Softmax["Softmax を使う"]
+    Task -->|"回帰"| Linear["Linear を使う（活性化なし）"]
 ```
 
-## Build It
+## 作ってみる
 
-### Step 1: Implement All Activation Functions with Derivatives
+### Step 1: 導関数付きで全活性化関数を実装する
 
-Each function takes a single float and returns a float. Each derivative function takes the same input and returns the gradient.
+各関数は単一の float を受け取り、float を返します。各導関数も同じ入力を受け取り、勾配を返します。
 
 ```python
 import math
@@ -274,9 +274,9 @@ def softmax(xs):
     return [e / total for e in exps]
 ```
 
-### Step 2: Visualize Where Gradients Die
+### Step 2: 勾配がどこで死ぬかを可視化する
 
-Compute the gradient at 100 evenly-spaced points from -5 to 5. Print a text histogram showing where each activation's gradient is near-zero.
+-5 から 5 までの等間隔な100点で勾配を計算します。各活性化関数の勾配がゼロに近い領域を、テキストのヒストグラムで表示します。
 
 ```python
 def gradient_scan(name, derivative_fn, start=-5, end=5, n=100):
@@ -301,9 +301,9 @@ gradient_scan("GELU", gelu_derivative)
 gradient_scan("Swish", swish_derivative)
 ```
 
-### Step 3: Vanishing Gradient Experiment
+### Step 3: 勾配消失の実験
 
-Forward-pass a signal through N layers using sigmoid vs ReLU. Measure how the activation magnitude changes.
+sigmoid と ReLU を使って、信号を N 層の順伝播に通します。活性値の大きさがどう変化するかを測定します。
 
 ```python
 import random
@@ -327,9 +327,9 @@ vanishing_gradient_experiment(relu, "ReLU")
 vanishing_gradient_experiment(gelu, "GELU")
 ```
 
-### Step 4: Dead Neuron Detector
+### Step 4: Dead Neuron 検出器
 
-Create a ReLU network, pass random inputs through it, count how many neurons never fire.
+ReLU ネットワークを作り、ランダム入力を通して、一度も発火しないニューロンの数を数えます。
 
 ```python
 def dead_neuron_detector(n_inputs=5, hidden_size=20, n_samples=1000):
@@ -364,9 +364,9 @@ def dead_neuron_detector(n_inputs=5, hidden_size=20, n_samples=1000):
 dead_neuron_detector()
 ```
 
-### Step 5: Training Comparison -- Sigmoid vs ReLU vs GELU
+### Step 5: 訓練比較 -- Sigmoid vs ReLU vs GELU
 
-Train the same two-layer network on the circle dataset (points inside a circle = class 1, outside = class 0) with three different activations. Compare convergence speed.
+円データセット（円の内側の点 = class 1、外側 = class 0）で同じ2層ネットワークを3種類の活性化関数で訓練します。収束速度を比較します。
 
 ```python
 def make_circle_data(n=200, seed=42):
@@ -457,9 +457,9 @@ for name, losses in results.items():
     print(f"  {name:10s}: start={losses[0]:.4f} -> end={losses[-1]:.4f} (improvement: {(1 - losses[-1]/losses[0])*100:.1f}%)")
 ```
 
-## Use It
+## 使ってみる
 
-PyTorch provides all of these as both functional and module forms:
+PyTorch は、これらすべてを functional 形式と module 形式の両方で提供しています。
 
 ```python
 import torch
@@ -485,48 +485,48 @@ model = nn.Sequential(
 )
 ```
 
-Hidden layers in a transformer: GELU. Hidden layers in a CNN: ReLU. Output layer for classification: softmax. Output layer for regression: none (linear). Output layer for probabilities: sigmoid. That's it. Start with these defaults. Change them only when you have evidence.
+transformer の隠れ層なら GELU。CNN の隠れ層なら ReLU。分類の出力層なら softmax。回帰の出力層ならなし（linear）。確率の出力層なら sigmoid。以上です。まずはこれらのデフォルトから始めます。証拠がある場合にだけ変更してください。
 
-RNNs and LSTMs use tanh for hidden state and sigmoid for gates, but if you're building from scratch today, you're probably not using RNNs. If neurons are dying in your ReLU network, switch to GELU. Don't reach for Leaky ReLU unless you have a specific reason -- GELU solves the dead neuron problem and gives better gradient flow.
+RNN や LSTM は隠れ状態に tanh、ゲートに sigmoid を使いますが、今日ゼロから作るなら、おそらく RNN は使っていないでしょう。ReLU ネットワークでニューロンが死んでいるなら、GELU に切り替えます。特別な理由がない限り Leaky ReLU に飛びつかないでください。GELU は dead neuron 問題を解決し、より良い勾配の流れを与えます。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-activation-selector.md` -- a reusable prompt that helps you pick the right activation function for any architecture
+このレッスンで作るもの:
+- `outputs/prompt-activation-selector.md` -- 任意のアーキテクチャに適した活性化関数を選ぶための再利用可能なプロンプト
 
-## Exercises
+## 演習
 
-1. Implement Parametric ReLU (PReLU) where the negative slope alpha is a learnable parameter. Train it on the circle dataset and compare to fixed Leaky ReLU.
+1. 負側の傾き alpha を学習可能なパラメータにした Parametric ReLU（PReLU）を実装してください。円データセットで訓練し、固定の Leaky ReLU と比較してください。
 
-2. Run the vanishing gradient experiment with 50 layers instead of 10. Plot the magnitude at each layer for sigmoid, tanh, ReLU, and GELU. At which layer does each activation's signal effectively reach zero?
+2. 勾配消失の実験を10層ではなく50層で実行してください。sigmoid、tanh、ReLU、GELU について各層の大きさをプロットしてください。各活性化関数の信号は、どの層で実質的にゼロになりますか?
 
-3. Implement the ELU (Exponential Linear Unit): elu(x) = x if x > 0, alpha * (e^x - 1) if x <= 0. Compare its dead neuron rate to ReLU on the same network.
+3. ELU（Exponential Linear Unit）を実装してください: elu(x) = x if x > 0, alpha * (e^x - 1) if x <= 0。同じネットワークで、dead neuron の割合を ReLU と比較してください。
 
-4. Build a "gradient health monitor" that runs during training: at each epoch, compute the average gradient magnitude at each layer. Print a warning when any layer's gradient drops below 0.001 or exceeds 100.
+4. 訓練中に動作する「勾配ヘルスモニター」を作ってください。各 epoch で各層の平均勾配の大きさを計算します。いずれかの層の勾配が 0.001 未満、または 100 を超えたら警告を出してください。
 
-5. Modify the training comparison to use the XOR dataset from Lesson 01 instead of circles. Which activation converges fastest on XOR? Why does this differ from the circle results?
+5. 訓練比較を、円ではなくレッスン01の XOR データセットで行うように変更してください。XOR で最も速く収束する活性化関数はどれですか? なぜ円の結果と異なるのでしょうか?
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Activation function | "The nonlinear part" | A function applied to each neuron's output that breaks linearity, enabling the network to learn nonlinear mappings |
-| Vanishing gradient | "Gradients disappear in deep networks" | Gradients shrink exponentially through layers when the activation's derivative is less than 1, making early layers untrainable |
-| Exploding gradient | "Gradients blow up" | Gradients grow exponentially through layers when the effective multiplier exceeds 1, causing unstable training |
-| Dead neuron | "A neuron that stopped learning" | A ReLU neuron whose input is permanently negative, producing zero output and zero gradient |
-| Sigmoid | "Squishes values to 0-1" | The logistic function 1/(1+e^-x), historically important but causes vanishing gradients in deep networks |
-| ReLU | "Clips negatives to zero" | max(0, x) -- the activation that made deep learning practical by preserving gradient magnitude |
-| GELU | "The transformer activation" | Gaussian Error Linear Unit, a smooth activation that weights inputs by their probability of being positive |
-| Swish/SiLU | "Self-gated ReLU" | x * sigmoid(x), discovered through automated search, used in EfficientNet |
-| Softmax | "Turns scores into probabilities" | Normalizes a vector of logits into a probability distribution where all values are in (0,1) and sum to 1 |
-| Leaky ReLU | "ReLU that doesn't die" | max(alpha*x, x) where alpha is small (0.01), preventing dead neurons by allowing small negative gradients |
-| Saturation | "The flat part of sigmoid" | Regions where an activation's derivative approaches zero, blocking gradient flow |
-| Logit | "The raw score before softmax" | The unnormalized output of the final layer before applying softmax or sigmoid |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Activation function | 「非線形の部分」 | 各ニューロンの出力に適用される関数。線形性を破り、ネットワークが非線形写像を学習できるようにする |
+| Vanishing gradient | 「深いネットワークで勾配が消える」 | 活性化関数の導関数が1未満のとき、勾配が層を通るたび指数的に小さくなり、初期層が訓練不能になること |
+| Exploding gradient | 「勾配が爆発する」 | 有効な倍率が1を超えると、勾配が層を通るたび指数的に大きくなり、訓練が不安定になること |
+| Dead neuron | 「学習を止めたニューロン」 | 入力が恒久的に負で、出力と勾配がゼロになる ReLU ニューロン |
+| Sigmoid | 「値を0-1に潰す」 | ロジスティック関数 1/(1+e^-x)。歴史的に重要だが、深いネットワークでは勾配消失を引き起こす |
+| ReLU | 「負値をゼロに切る」 | max(0, x)。勾配の大きさを保つことで深層学習を実用化した活性化関数 |
+| GELU | 「transformer の活性化関数」 | Gaussian Error Linear Unit。入力が正である確率によって入力を重み付けする滑らかな活性化関数 |
+| Swish/SiLU | 「自己ゲート型 ReLU」 | x * sigmoid(x)。自動探索で発見され、EfficientNet で使われる |
+| Softmax | 「スコアを確率に変える」 | logits のベクトルを、すべての値が (0,1) にあり合計が1になる確率分布へ正規化する |
+| Leaky ReLU | 「死なない ReLU」 | alpha が小さい値（0.01）である max(alpha*x, x)。小さな負の勾配を許して dead neuron を防ぐ |
+| Saturation | 「sigmoid の平らな部分」 | 活性化関数の導関数がゼロに近づき、勾配の流れを妨げる領域 |
+| Logit | 「softmax 前の生スコア」 | softmax や sigmoid を適用する前の最終層の未正規化出力 |
 
-## Further Reading
+## 参考資料
 
-- Nair & Hinton, "Rectified Linear Units Improve Restricted Boltzmann Machines" (2010) -- the paper that introduced ReLU and enabled training of deep networks
-- Hendrycks & Gimpel, "Gaussian Error Linear Units (GELUs)" (2016) -- introduced the activation function that became the default for transformers
-- Ramachandran et al., "Searching for Activation Functions" (2017) -- used automated search to discover Swish, showing that activation design can be automated
-- Glorot & Bengio, "Understanding the difficulty of training deep feedforward neural networks" (2010) -- the paper that diagnosed vanishing/exploding gradients and proposed Xavier initialization
-- Goodfellow, Bengio, Courville, "Deep Learning" Chapter 6.3 (https://www.deeplearningbook.org/) -- rigorous treatment of hidden units and activation functions
+- Nair & Hinton, "Rectified Linear Units Improve Restricted Boltzmann Machines" (2010) -- ReLU を導入し、深いネットワークの訓練を可能にした論文
+- Hendrycks & Gimpel, "Gaussian Error Linear Units (GELUs)" (2016) -- transformer のデフォルトになった活性化関数を導入した論文
+- Ramachandran et al., "Searching for Activation Functions" (2017) -- 自動探索を使って Swish を発見し、活性化関数の設計を自動化できることを示した論文
+- Glorot & Bengio, "Understanding the difficulty of training deep feedforward neural networks" (2010) -- 勾配消失/爆発を診断し、Xavier 初期化を提案した論文
+- Goodfellow, Bengio, Courville, "Deep Learning" Chapter 6.3 (https://www.deeplearningbook.org/) -- 隠れユニットと活性化関数の厳密な解説

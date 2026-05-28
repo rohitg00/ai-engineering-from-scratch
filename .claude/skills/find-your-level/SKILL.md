@@ -2,162 +2,144 @@
 name: find-your-level
 version: 1.0.0
 description: >
-  Interactive quiz that maps your AI/ML knowledge to a starting point in the
-  260-lesson, 20-phase AI Engineering from Scratch curriculum.
-  Trigger phrases: "where should I start", "find my level", "what do I know",
-  "which phase", "assess my knowledge", "placement test", "skip ahead"
+  AI/ML の知識レベルを、260レッスン・20フェーズで構成される
+  AI Engineering from Scratch カリキュラムの開始地点に対応付ける対話型クイズ。
+  トリガーフレーズ: "どこから始めればいい", "find my level", "何を知っているか確認して",
+  "which phase", "知識を評価して", "placement test", "skip ahead"
 tags: [assessment, onboarding, curriculum, ai-engineering]
 ---
 
-# Find Your Level
+# レベル診断
 
-You are administering a placement quiz for the **AI Engineering from Scratch**
-curriculum (20 phases, 260+ lessons). Your job is to figure out where the
-learner should begin so they skip material they already know and land right
-where the challenge starts.
+あなたは **AI Engineering from Scratch** カリキュラム（20フェーズ、260以上のレッスン）のプレースメントクイズを実施します。目的は、学習者がすでに理解している内容を飛ばし、ちょうど挑戦が始まる地点から学習を始められるように、適切な開始位置を見極めることです。
 
-## Quiz Structure
+## クイズ構成
 
-There are 5 knowledge areas, 2 questions each, 10 questions total. Present
-them in rounds of 2 (one round per area). After the learner answers both
-questions in a round, score that area before moving on.
+知識領域は5つあり、各領域2問、合計10問です。2問ずつのラウンド形式（1領域につき1ラウンド）で提示します。学習者がラウンド内の2問に回答したら、その領域を採点してから次へ進みます。
 
-## Scoring
+## 採点
 
-Each question is worth 1 point (0 = wrong or blank, 1 = correct). Each area
-scores 0-2. Total score ranges from 0 to 10.
+各問題は1点です（0 = 不正解または空欄、1 = 正解）。各領域のスコアは0-2点です。合計スコアは0-10点です。
 
-## Administering the Quiz
+## クイズの進め方
 
-Start by greeting the learner briefly, then jump straight into Round 1. Use
-**AskUserQuestion** for every question. After each round, tell the learner
-their score for that area (e.g. "Math & Statistics: 2/2") before moving to the
-next round. Keep commentary short. Do not explain the answers until the very
-end.
+最初に学習者へ短く挨拶し、そのまま Round 1 に入ります。すべての問題で **AskUserQuestion** を使います。各ラウンド後、次のラウンドに進む前に、その領域のスコアを学習者に伝えます（例: "Math & Statistics: 2/2"）。コメントは短くします。解答の説明は最後まで行わないでください。
 
 ---
 
-### Round 1 -- Math & Statistics
+### ラウンド 1 -- Math & Statistics
 
-**Q1.** You have two vectors, a = [1, 2, 3] and b = [4, 5, 6]. What is their
-dot product?
+**Q1.** 2つのベクトル a = [1, 2, 3] と b = [4, 5, 6] があります。この内積はいくつですか？
 
 - A) 21
 - B) 32
 - C) 15
 - D) 27
 
-**Correct: B) 32** (1*4 + 2*5 + 3*6 = 32)
+**正解: B) 32** (1*4 + 2*5 + 3*6 = 32)
 
-**Q2.** A fair coin is flipped 3 times. What is the probability of getting
-exactly 2 heads?
+**Q2.** 公平なコインを3回投げます。ちょうど2回表が出る確率はいくつですか？
 
 - A) 1/4
 - B) 3/8
 - C) 1/2
 - D) 1/8
 
-**Correct: B) 3/8** (C(3,2) * (1/2)^3 = 3/8)
+**正解: B) 3/8** (C(3,2) * (1/2)^3 = 3/8)
 
 ---
 
-### Round 2 -- Classical ML
+### ラウンド 2 -- Classical ML
 
-**Q3.** In a classification task with 90% negative and 10% positive samples,
-a model predicts everything as negative. What is its accuracy?
+**Q3.** 90%がネガティブ、10%がポジティブのサンプルからなる分類タスクで、モデルがすべてをネガティブと予測しました。このモデルの accuracy（正解率）はいくつですか？
 
 - A) 50%
 - B) 10%
 - C) 90%
 - D) 0%
 
-**Correct: C) 90%** (it gets all negatives right, all positives wrong)
+**正解: C) 90%**（すべてのネガティブを正解し、すべてのポジティブを誤判定するため）
 
-**Q4.** Which of the following is a hyperparameter of a Random Forest?
+**Q4.** 次のうち、Random Forest のハイパーパラメータはどれですか？
 
-- A) The learned split thresholds
-- B) The number of trees
-- C) The leaf node predictions
-- D) The Gini impurity at each node
+- A) 学習された分割しきい値
+- B) 木の数
+- C) 葉ノードの予測値
+- D) 各ノードの Gini impurity
 
-**Correct: B) The number of trees**
-
----
-
-### Round 3 -- Deep Learning
-
-**Q5.** During backpropagation, what does the chain rule compute?
-
-- A) The optimal learning rate
-- B) The gradient of the loss with respect to each weight
-- C) The number of layers needed
-- D) The batch size
-
-**Correct: B) The gradient of the loss with respect to each weight**
-
-**Q6.** What problem do residual connections (skip connections) in ResNet
-primarily address?
-
-- A) Overfitting on small datasets
-- B) Vanishing gradients in deep networks
-- C) Slow data loading
-- D) High memory usage
-
-**Correct: B) Vanishing gradients in deep networks**
+**正解: B) 木の数**
 
 ---
 
-### Round 4 -- NLP & Transformers
+### ラウンド 3 -- Deep Learning
 
-**Q7.** In the Transformer architecture, what does the attention mechanism
-compute between?
+**Q5.** バックプロパゲーション中、連鎖律は何を計算しますか？
 
-- A) Pixels and labels
-- B) Queries, Keys, and Values
-- C) Encoder and Decoder only
-- D) Embeddings and positions only
+- A) 最適な learning rate
+- B) 各重みに対する loss の勾配
+- C) 必要な層の数
+- D) batch size
 
-**Correct: B) Queries, Keys, and Values**
+**正解: B) 各重みに対する loss の勾配**
 
-**Q8.** What is the main benefit of LoRA (Low-Rank Adaptation) when
-fine-tuning a large language model?
+**Q6.** ResNet の residual connection（skip connection）は、主にどの問題に対処しますか？
 
-- A) It trains all parameters from scratch
-- B) It freezes most weights and trains small low-rank update matrices
-- C) It removes the need for any training data
-- D) It doubles the model size for better results
+- A) 小さなデータセットでの overfitting
+- B) 深いネットワークにおける vanishing gradients
+- C) データ読み込みの遅さ
+- D) メモリ使用量の多さ
 
-**Correct: B) It freezes most weights and trains small low-rank update matrices**
+**正解: B) 深いネットワークにおける vanishing gradients**
 
 ---
 
-### Round 5 -- Applied AI
+### ラウンド 4 -- NLP & Transformers
 
-**Q9.** In a RAG (Retrieval-Augmented Generation) system, what happens before
-the LLM generates an answer?
+**Q7.** Transformer アーキテクチャでは、attention mechanism は何と何の間で計算されますか？
 
-- A) The model is retrained on the query
-- B) Relevant documents are retrieved and injected into the prompt
-- C) The user manually selects context
-- D) The model searches its own weights
+- A) pixels と labels
+- B) Queries、Keys、Values
+- C) Encoder と Decoder のみ
+- D) embeddings と positions のみ
 
-**Correct: B) Relevant documents are retrieved and injected into the prompt**
+**正解: B) Queries, Keys, and Values**
 
-**Q10.** In a multi-agent system, what is the primary purpose of a
-"coordinator" or "orchestrator" agent?
+**Q8.** 大規模言語モデルを fine-tuning するとき、LoRA（Low-Rank Adaptation）の主な利点は何ですか？
 
-- A) To replace all other agents
-- B) To assign tasks, route messages, and manage agent collaboration
-- C) To increase token usage
-- D) To serve as a backup model
+- A) すべてのパラメータをゼロから学習する
+- B) ほとんどの重みを固定し、小さな低ランク更新行列だけを学習する
+- C) 学習データが一切不要になる
+- D) より良い結果のためにモデルサイズを2倍にする
 
-**Correct: B) To assign tasks, route messages, and manage agent collaboration**
+**正解: B) ほとんどの重みを固定し、小さな低ランク更新行列だけを学習する**
 
 ---
 
-## After All 5 Rounds
+### ラウンド 5 -- Applied AI
 
-Display the area breakdown and total:
+**Q9.** RAG（Retrieval-Augmented Generation）システムでは、LLM が回答を生成する前に何が起こりますか？
+
+- A) クエリを使ってモデルを再学習する
+- B) 関連ドキュメントを検索し、プロンプトに挿入する
+- C) ユーザーが手動でコンテキストを選択する
+- D) モデルが自身の重みを検索する
+
+**正解: B) 関連ドキュメントを検索し、プロンプトに挿入する**
+
+**Q10.** multi-agent system における "coordinator" または "orchestrator" agent の主な目的は何ですか？
+
+- A) ほかのすべての agent を置き換えること
+- B) タスクを割り当て、メッセージをルーティングし、agent 間の協調を管理すること
+- C) トークン使用量を増やすこと
+- D) バックアップモデルとして機能すること
+
+**正解: B) タスクを割り当て、メッセージをルーティングし、agent 間の協調を管理すること**
+
+---
+
+## 5ラウンド完了後
+
+領域別の内訳と合計を表示します。
 
 ```
 Math & Statistics:    X/2
@@ -169,39 +151,32 @@ Applied AI:           X/2
 Total:                X/10
 ```
 
-## Score-to-Entry-Point Mapping
+## スコアと開始地点の対応
 
-| Total Score | Entry Point | What It Means |
+| 合計スコア | 開始地点 | 意味 |
 |-------------|-------------|---------------|
-| 0-3 | Phase 1: Math Foundations | Start from the ground up |
-| 4-5 | Phase 3: Deep Learning Core | You have math and ML basics |
-| 6-7 | Phase 7: Transformers Deep Dive | You know DL, time for transformers |
-| 8-9 | Phase 11: LLM Engineering | Strong foundations, go straight to LLM apps |
-| 10 | Phase 14: Agent Engineering | You know it all, build agents |
+| 0-3 | Phase 1: Math Foundations | 基礎から始める |
+| 4-5 | Phase 3: Deep Learning Core | 数学とMLの基礎は身についている |
+| 6-7 | Phase 7: Transformers Deep Dive | DL は理解済み。次は transformers |
+| 8-9 | Phase 11: LLM Engineering | 土台は十分。LLMアプリへ進む |
+| 10 | Phase 14: Agent Engineering | 主要範囲は理解済み。agents を構築する |
 
-## Personalized Learning Path
+## 個別学習パス
 
-After revealing the entry point, generate a markdown table covering all 20
-phases. Use the score to determine the status of each phase. Phases below the
-entry point get "Skip" (the learner already knows the material). Phases at or
-above the entry point get "Do". If a learner scored 1/2 in an area that maps
-to a skippable phase, mark that phase as "Review" instead of "Skip".
+開始地点を示した後、20個すべてのフェーズを含む markdown テーブルを生成します。各フェーズのステータスはスコアに基づいて決めます。開始地点より前のフェーズは "Skip"（学習者がすでに理解している内容）にします。開始地点以降のフェーズは "Do" にします。スキップ対象のフェーズに対応する領域で学習者が 1/2 点だった場合、そのフェーズは "Skip" ではなく "Review" にします。
 
-Area-to-phase mapping for review detection:
-- Math & Statistics (1/2) -> mark Phase 1 as "Review"
-- Classical ML (1/2) -> mark Phase 2 as "Review"
-- Deep Learning (1/2) -> mark Phase 3 as "Review"
-- NLP & Transformers (1/2) -> mark Phases 5 and 7 as "Review"
-- Applied AI (1/2) -> mark Phase 14 as "Review"
+Review 判定のための領域とフェーズの対応:
+- Math & Statistics (1/2) -> Phase 1 を "Review" にする
+- Classical ML (1/2) -> Phase 2 を "Review" にする
+- Deep Learning (1/2) -> Phase 3 を "Review" にする
+- NLP & Transformers (1/2) -> Phase 5 と 7 を "Review" にする
+- Applied AI (1/2) -> Phase 14 を "Review" にする
 
-Read the time estimates from ROADMAP.md (the canonical source of truth). Each
-phase heading contains the estimated hours in the format `(~N hours)`. Parse
-these values instead of using hardcoded numbers. This ensures the learning path
-stays in sync with the roadmap as estimates are updated.
+時間見積もりは、正本である ROADMAP.md から読み取ります。各フェーズ見出しには `(~N hours)` 形式で見積もり時間が含まれています。ハードコードした数値ではなく、この値をパースしてください。これにより、見積もりが更新されても学習パスがロードマップと同期されます。
 
-## Output Format
+## 出力形式
 
-Generate the table like this:
+次のようなテーブルを生成します。
 
 ```markdown
 | Phase | Name | Status | Est. Hours |
@@ -213,16 +188,13 @@ Generate the table like this:
 | ... | ... | ... | ... |
 ```
 
-Rules for the table:
-- "Skip" phases show `--` for hours (they do not count toward the total)
-- "Review" phases show full hours (the learner should skim them)
-- "Do" phases show full hours
-- Phase 0 (Setup & Tooling) is always "Skip" regardless of score (it is
-  tooling setup, not knowledge)
-- Sum the hours for "Review" and "Do" phases and show the total at the bottom
+テーブルのルール:
+- "Skip" フェーズの時間は `--` と表示します（合計には含めません）
+- "Review" フェーズは全時間を表示します（学習者は軽く見直すべきです）
+- "Do" フェーズは全時間を表示します
+- Phase 0（Setup & Tooling）は、スコアに関係なく常に "Skip" にします（知識ではなくツール設定のため）
+- "Review" と "Do" フェーズの時間を合計し、末尾に合計を表示します
 
-After the table, add one sentence with the estimated total: "Your personalized
-path: ~X hours across Y phases."
+テーブルの後に、見積もり合計を1文で追加します: "あなた専用の学習パス: 約X時間、Yフェーズ。"
 
-Then add a brief recommendation: which phase to start with, and what to focus
-on first based on their weakest area.
+最後に短い推奨事項を追加します。どのフェーズから始めるべきか、また最も弱い領域に基づいて最初に何へ集中すべきかを伝えてください。

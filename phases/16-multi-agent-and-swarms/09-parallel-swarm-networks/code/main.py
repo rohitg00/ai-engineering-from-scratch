@@ -1,11 +1,11 @@
-"""Swarm architecture demo: workers pull from a shared queue.
+"""Swarm architecture demo: worker が共有 queue から task を pull する。
 
-Compares three scheduling strategies on a variable-duration workload:
-  - sequential (1 worker processes all tasks)
-  - fixed assignment (each task pre-assigned to a specific worker)
-  - swarm (4 workers pull from a shared queue)
+所要時間がばらつく workload で、3つの scheduling strategy を比較する:
+  - sequential (1 worker がすべての task を処理)
+  - fixed assignment (各 task を特定 worker に事前割り当て)
+  - swarm (4 workers が共有 queue から pull)
 
-Swarm balances load automatically; fixed assignment leaves fast workers idle.
+swarm は load を自動で balance する。fixed assignment では速い worker が idle になる。
 """
 from __future__ import annotations
 
@@ -37,7 +37,7 @@ def run_sequential(tasks: list[Task]) -> tuple[float, dict[int, int]]:
 
 
 def run_fixed_assignment(tasks: list[Task], n_workers: int) -> tuple[float, dict[int, int]]:
-    """Each task is pre-assigned to worker id. Worker processes its tasks serially."""
+    """各 task は worker id に事前割り当てされる。worker は自分の task を直列処理する。"""
     per_worker: dict[int, list[Task]] = {i: [] for i in range(n_workers)}
     for t in tasks:
         per_worker[t.pre_assigned].append(t)
@@ -58,7 +58,7 @@ def run_fixed_assignment(tasks: list[Task], n_workers: int) -> tuple[float, dict
 
 
 def run_swarm(tasks: list[Task], n_workers: int) -> tuple[float, dict[int, int]]:
-    """Workers pull from a shared queue."""
+    """worker が共有 queue から pull する。"""
     q: queue.Queue = queue.Queue()
     for t in tasks:
         q.put(t)
@@ -86,8 +86,8 @@ def run_swarm(tasks: list[Task], n_workers: int) -> tuple[float, dict[int, int]]
 
 
 def make_tasks(n_workers: int = 4) -> list[Task]:
-    """8 tasks: half fast (0.1s), half slow (0.4s). Pre-assignment is pessimal:
-    worker 0 gets all slow tasks, others get fast ones."""
+    """8 task: 半分は fast (0.1s)、半分は slow (0.4s)。
+    事前割り当ては最悪ケースで、worker 0 がすべての slow task を取り、他は fast task を取る。"""
     tasks: list[Task] = []
     for i in range(8):
         is_slow = i < 4
@@ -102,33 +102,33 @@ def make_tasks(n_workers: int = 4) -> list[Task]:
 
 
 def main() -> None:
-    print("Swarm architecture demo — variable-duration workload")
+    print("Swarm architecture demo - 所要時間がばらつく workload")
     print("-" * 56)
     n_workers = 4
 
     tasks = make_tasks(n_workers)
     total_work = sum(t.duration for t in tasks)
     print(f"{len(tasks)} tasks, 4 slow (0.4s) + 4 fast (0.1s)")
-    print(f"Total work-seconds: {total_work:.2f}s")
-    print(f"Ideal parallel time with {n_workers} workers: {total_work / n_workers:.2f}s")
+    print(f"総 work-seconds: {total_work:.2f}s")
+    print(f"{n_workers} workers での理想 parallel time: {total_work / n_workers:.2f}s")
 
     seq_time, seq_counts = run_sequential(tasks)
     print(f"\nSequential (1 worker):      wall={seq_time:.2f}s, counts={seq_counts}")
 
     fixed_time, fixed_counts = run_fixed_assignment(tasks, n_workers)
     print(f"Fixed assignment ({n_workers} workers): wall={fixed_time:.2f}s, counts={fixed_counts}")
-    print("  worker 0 got all 4 slow tasks; other workers idle after their fast ones.")
+    print("  worker 0 が 4 つの slow task をすべて取得。他 worker は fast task 後に idle。")
 
     swarm_time, swarm_counts = run_swarm(tasks, n_workers)
     print(f"Swarm ({n_workers} workers):            wall={swarm_time:.2f}s, counts={swarm_counts}")
-    print("  load balances automatically — slow workers finish first, fast pull next job.")
+    print("  load は自動で balance される。slow task を終えた worker から、fast worker が次の job を pull。")
 
     speedup_vs_seq = seq_time / swarm_time if swarm_time > 0 else float("inf")
     speedup_vs_fixed = fixed_time / swarm_time if swarm_time > 0 else float("inf")
     print(f"\nSwarm speedup vs sequential: {speedup_vs_seq:.2f}x")
     print(f"Swarm speedup vs fixed:      {speedup_vs_fixed:.2f}x")
-    print("\nTakeaway: swarm wins when duration varies and assignment is hard to predict.")
-    print("Tradeoff: no central trace; debugging requires per-task IDs and durable logs.")
+    print("\nTakeaway: duration がばらつき、assignment 予測が難しいとき swarm は勝つ。")
+    print("Tradeoff: central trace がないため、debug には task ごとの ID と durable log が必要。")
 
 
 if __name__ == "__main__":

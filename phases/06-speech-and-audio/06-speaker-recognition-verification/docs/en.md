@@ -1,41 +1,41 @@
-# Speaker Recognition & Verification
+# Speaker Recognition と Verification
 
-> ASR asks "what did they say?" Speaker recognition asks "who said it?" The math looks the same — embeddings plus cosine — but every production decision hinges on a single EER number.
+> ASR は「何と言ったか」を問います。speaker recognition は「誰が言ったか」を問います。数式は embeddings と cosine で同じように見えますが、本番での判断はすべて 1 つの EER に依存します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
-**Time:** ~45 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
+**時間:** 約 45 分
 
-## The Problem
+## 問題
 
-A user says a passphrase. You want to know: is this the person they claim to be (*verification*, 1:1), or is it the first person in your enrollment bank (*identification*, 1:N)? Or neither — is this an unknown speaker (*open-set*)?
+ユーザーが passphrase を話します。知りたいのは、その人が主張している本人か (*verification*, 1:1)、それとも enrollment bank の中の誰かか (*identification*, 1:N) です。あるいはどちらでもなく、未知の話者 (*open-set*) かもしれません。
 
-Pre-2018: GMM-UBM + i-vectors. Reasonable EER but fragile to channel shift (phone vs laptop) and emotion. 2018–2022: x-vectors (TDNN backbone trained with angular margin). 2022+: ECAPA-TDNN and WavLM-large embeddings. By 2026 the field is dominated by three models and one metric.
+2018 年以前は GMM-UBM + i-vectors でした。EER はそこそこ良いものの、channel shift (電話と laptop など) や感情に弱い方式です。2018-2022 年は x-vectors (angular margin で学習した TDNN backbone) が中心でした。2022 年以降は ECAPA-TDNN と WavLM-large embeddings です。2026 年には、この分野は 3 つのモデルと 1 つの metric にほぼ集約されています。
 
-The metric is **EER** — Equal Error Rate. Set your decision threshold so False Accept Rate = False Reject Rate. The crossover is EER. Used in every paper, every leaderboard, every procurement call.
+その metric が **EER**、Equal Error Rate です。False Accept Rate = False Reject Rate になるよう decision threshold を設定します。その交点が EER です。すべての論文、leaderboard、調達の会話で使われます。
 
-## The Concept
+## コンセプト
 
 ![Enrollment + verification pipeline with embedding + cosine + EER](../assets/speaker-verification.svg)
 
-**The pipeline.** Enrollment: record 5–30 seconds of the target speaker; compute a fixed-dimension embedding (192-d for ECAPA-TDNN, 256-d for WavLM-large). Verification: get the test utterance embedding; compute cosine similarity; compare to a threshold.
+**パイプライン。** Enrollment: 対象話者の音声を 5-30 秒録音し、固定次元 embedding (ECAPA-TDNN なら 192-d、WavLM-large なら 256-d) を計算します。Verification: test utterance の embedding を取得し、cosine similarity を計算し、threshold と比較します。
 
-**ECAPA-TDNN (2020, still dominant 2026).** Emphasized Channel Attention, Propagation and Aggregation - Time-Delay Neural Network. 1D conv blocks with squeeze-excitation, multi-head attention pooling, followed by a linear layer to 192-d. Trained on VoxCeleb 1+2 (2,700 speakers, 1.1M utterances) with Additive Angular Margin loss (AAM-softmax).
+**ECAPA-TDNN (2020, 2026 年も主流)。** Emphasized Channel Attention, Propagation and Aggregation - Time-Delay Neural Network。squeeze-excitation、multi-head attention pooling を持つ 1D conv blocks の後に、192-d への linear layer が続きます。VoxCeleb 1+2 (2,700 speakers, 1.1M utterances) で Additive Angular Margin loss (AAM-softmax) により学習されました。
 
-**WavLM-SV (2022+).** Fine-tune a pretrained WavLM-large SSL backbone with AAM loss. Higher quality but slower — 300+ MB vs 15 MB.
+**WavLM-SV (2022+)。** 事前学習済み WavLM-large SSL backbone を AAM loss で fine-tune します。品質は高いですが遅く、300+ MB に対して ECAPA は 15 MB です。
 
-**x-vector (baseline).** TDNN + statistics pooling. Classic; still useful on CPU / edge.
+**x-vector (baseline)。** TDNN + statistics pooling。古典的ですが、CPU / edge では今でも有用です。
 
-**AAM-softmax.** Standard softmax with added margin `m` in the angular space: `cos(θ + m)` for the correct class. Forces inter-class angular separation. Typical `m=0.2`, scale `s=30`.
+**AAM-softmax。** angular space で正解 class に margin `m` を加える標準 softmax です。式は `cos(θ + m)`。class 間の角度分離を強制します。典型値は `m=0.2`、scale `s=30` です。
 
-### Scoring
+### スコアリング
 
-- **Cosine** between enrollment and test embeddings. Threshold-based decision.
-- **PLDA (Probabilistic LDA).** Project embeddings into a latent space where same-speaker vs different-speaker has a closed-form likelihood ratio. Added on top of cosine for +10–20% EER reduction. Standard pre-2020; now used only in closed-set setups.
-- **Score normalization.** `S-norm` or `AS-norm`: normalize each score against a cohort of imposter means and stds. Essential for cross-domain eval.
+- **Cosine** は enrollment embedding と test embedding の間で計算します。threshold による判定です。
+- **PLDA (Probabilistic LDA)。** embeddings を、same-speaker と different-speaker の closed-form likelihood ratio を持つ latent space に射影します。cosine の上に載せると EER が 10-20% 改善します。2020 年以前は標準でしたが、現在は主に closed-set setup で使われます。
+- **Score normalization。** `S-norm` または `AS-norm`: imposter cohort の means と stds に対して各 score を正規化します。cross-domain eval では必須です。
 
-### Numbers you should know (2026)
+### 知っておくべき数値 (2026)
 
 | Model | VoxCeleb1-O EER | Params | Throughput (A100) |
 |-------|-----------------|--------|-------------------|
@@ -47,11 +47,11 @@ The metric is **EER** — Equal Error Rate. Set your decision threshold so False
 
 ### Diarization
 
-"Who spoke when" in a multi-speaker clip. Pipeline: VAD → segment → embed each segment → cluster (agglomerative or spectral) → smooth boundaries. Modern stack: `pyannote.audio` 3.1, which bundles speaker segmentation + embedding + clustering behind one call. 2026 SOTA DER on AMI is ~15% (down from 23% in 2022).
+複数話者のクリップで「誰がいつ話したか」を推定します。パイプラインは VAD → segment → 各 segment を embed → clustering (agglomerative または spectral) → boundary smoothing です。現代的なスタックは `pyannote.audio` 3.1 で、speaker segmentation + embedding + clustering を 1 つの call の裏にまとめています。2026 年の AMI における SOTA DER は約 15% です (2022 年の 23% から改善)。
 
-## Build It
+## 作ってみる
 
-### Step 1: toy embedding from MFCC statistics
+### Step 1: MFCC 統計量から toy embedding を作る
 
 ```python
 def embed_mfcc_stats(signal, sr):
@@ -64,9 +64,9 @@ def embed_mfcc_stats(signal, sr):
     return mean + std  # 26-d
 ```
 
-Not SOTA by a mile — for teaching only. `code/main.py` uses this as a proof-of-concept on synthetic speaker data.
+SOTA にはまったく届きません。教育用です。`code/main.py` は synthetic speaker data 上の proof-of-concept としてこれを使います。
 
-### Step 2: cosine similarity + threshold
+### Step 2: cosine similarity と threshold
 
 ```python
 def cosine(a, b):
@@ -79,7 +79,7 @@ def verify(enroll, test, threshold=0.75):
     return cosine(enroll, test) >= threshold
 ```
 
-### Step 3: EER from similarity pairs
+### Step 3: similarity pairs から EER を求める
 
 ```python
 def eer(same_scores, diff_scores):
@@ -93,9 +93,9 @@ def eer(same_scores, diff_scores):
     return (best[0] + best[1]) / 2, best[2]
 ```
 
-Returns (eer, threshold_at_eer). Report both.
+戻り値は (eer, threshold_at_eer) です。両方を報告します。
 
-### Step 4: production with SpeechBrain
+### Step 4: SpeechBrain で本番相当の処理
 
 ```python
 from speechbrain.pretrained import EncoderClassifier
@@ -109,7 +109,7 @@ score = clf.similarity(enroll, clf.encode_batch(load("test.wav"))).item()
 verdict = score > 0.25   # ECAPA typical threshold; tune on your data
 ```
 
-### Step 5: diarize with pyannote
+### Step 5: pyannote で diarize する
 
 ```python
 from pyannote.audio import Pipeline
@@ -120,9 +120,9 @@ for turn, _, speaker in diarization.itertracks(yield_label=True):
     print(f"{turn.start:.1f}–{turn.end:.1f}  {speaker}")
 ```
 
-## Use It
+## 使いどころ
 
-The 2026 stack:
+2026 年のスタック:
 
 | Situation | Pick |
 |-----------|------|
@@ -132,41 +132,41 @@ The 2026 stack:
 | Anti-spoofing (replay / deepfake detection) | AASIST or RawNet2 |
 | Tiny embedded (KWS + enrollment) | Titanet-Small (NeMo) |
 
-## Pitfalls
+## 落とし穴
 
-- **Channel mismatch.** Model trained on VoxCeleb (web video) ≠ phone-call audio. Always evaluate on target channel.
-- **Short utterances.** EER degrades sharply below 3 seconds of test audio.
-- **Enrollment with noise.** One noisy enrollment poisons the anchor. Use ≥3 clean samples and average.
-- **Fixed threshold across conditions.** Always tune the threshold on a held-out dev set from the target domain.
-- **Cosine on non-normalized embeddings.** L2-normalize first; otherwise the magnitude dominates.
+- **Channel mismatch。** VoxCeleb (web video) で学習したモデルは phone-call audio とは異なります。必ず対象 channel で評価してください。
+- **Short utterances。** test audio が 3 秒未満になると EER は急激に悪化します。
+- **ノイズのある enrollment。** ノイズの多い enrollment が 1 つあるだけで anchor が汚染されます。3 つ以上の clean samples を使い、平均してください。
+- **条件をまたいだ固定 threshold。** threshold は必ず対象 domain の held-out dev set で調整します。
+- **非正規化 embeddings で cosine。** 先に L2-normalize してください。そうしないと magnitude が支配します。
 
-## Ship It
+## 提出物
 
-Save as `outputs/skill-speaker-verifier.md`. Pick model, enrollment protocol, threshold-tuning plan, and fraud safeguards.
+`outputs/skill-speaker-verifier.md` として保存してください。model、enrollment protocol、threshold-tuning plan、fraud safeguards を選びます。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. Builds synthetic "speakers" (different tone profiles), enrolls, computes EER on a 100-pair trial list.
-2. **Medium.** Use SpeechBrain ECAPA on 30 VoxCeleb1 utterances (5 speakers × 6 each). Compute EER with cosine vs PLDA.
-3. **Hard.** Build the full enroll → diarize → verify pipeline with `pyannote.audio`. Evaluate DER on AMI dev set.
+1. **Easy.** `code/main.py` を実行してください。synthetic "speakers" (異なる tone profiles) を作り、enroll し、100-pair trial list で EER を計算します。
+2. **Medium.** 30 個の VoxCeleb1 utterances (5 speakers × 6 each) に SpeechBrain ECAPA を使ってください。cosine と PLDA の EER を計算します。
+3. **Hard.** `pyannote.audio` で enroll → diarize → verify の完全な pipeline を作ります。AMI dev set で DER を評価します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| EER | The headline metric | Threshold where False Accept = False Reject. |
-| Verification | 1:1 | "Is this Alice?" |
-| Identification | 1:N | "Who is speaking?" |
-| Open-set | Unknown possible | Test set can contain unenrolled speakers. |
-| Enrollment | Registering | Computing a speaker's reference embedding. |
-| AAM-softmax | The loss | Softmax with additive angular margin; forces cluster separation. |
-| PLDA | Classic scoring | Probabilistic LDA; likelihood-ratio scoring on top of embeddings. |
-| DER | Diarization metric | Diarization Error Rate — miss + false alarm + confusion. |
+| Term | よく言われる意味 | 実際の意味 |
+|------|-----------------|------------|
+| EER | 代表指標 | False Accept = False Reject となる threshold。 |
+| Verification | 1:1 | 「これは Alice か？」 |
+| Identification | 1:N | 「誰が話しているか？」 |
+| Open-set | Unknown possible | test set に未登録話者が含まれうる。 |
+| Enrollment | 登録 | 話者の reference embedding を計算すること。 |
+| AAM-softmax | loss | additive angular margin 付き softmax。cluster separation を強制する。 |
+| PLDA | 古典的 scoring | Probabilistic LDA。embeddings の上で likelihood-ratio scoring を行う。 |
+| DER | Diarization metric | Diarization Error Rate - miss + false alarm + confusion。 |
 
-## Further Reading
+## 参考資料
 
-- [Snyder et al. (2018). X-Vectors: Robust DNN Embeddings for Speaker Recognition](https://www.danielpovey.com/files/2018_icassp_xvectors.pdf) — the classic deep-embedding paper.
-- [Desplanques et al. (2020). ECAPA-TDNN](https://arxiv.org/abs/2005.07143) — dominant architecture 2020–2026.
-- [Chen et al. (2022). WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing](https://arxiv.org/abs/2110.13900) — SSL backbone for SV and diarization.
-- [Bredin et al. (2023). pyannote.audio 3.1](https://github.com/pyannote/pyannote-audio) — production diarization + embedding stack.
-- [VoxCeleb leaderboard (updated 2026)](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) — current EER standings across models.
+- [Snyder et al. (2018). X-Vectors: Robust DNN Embeddings for Speaker Recognition](https://www.danielpovey.com/files/2018_icassp_xvectors.pdf) - 古典的な deep-embedding paper。
+- [Desplanques et al. (2020). ECAPA-TDNN](https://arxiv.org/abs/2005.07143) - 2020-2026 年の主流 architecture。
+- [Chen et al. (2022). WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing](https://arxiv.org/abs/2110.13900) - SV と diarization の SSL backbone。
+- [Bredin et al. (2023). pyannote.audio 3.1](https://github.com/pyannote/pyannote-audio) - production diarization + embedding stack。
+- [VoxCeleb leaderboard (updated 2026)](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/) - モデル横断の現在の EER standings。

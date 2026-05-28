@@ -1,8 +1,8 @@
-"""Production scaling demo: checkpoints, queues, async vs threads.
+"""Production scaling demo: checkpoints、queues、async vs threads。
 
-All stdlib. CheckpointStore uses SQLite. AgentQueue is a per-agent state
-machine with 3 states. async vs threads benchmark runs 500 concurrent
-simulated LLM calls.
+すべて stdlib。CheckpointStore は SQLite を使う。AgentQueue は 3 states を持つ
+per-agent state machine。async vs threads benchmark は 500 concurrent の
+simulated LLM calls を走らせる。
 """
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ class CheckpointStore:
 
 def run_agent_with_checkpoint(store: CheckpointStore, thread_id: str,
                               start: int = 0, crash_at: int | None = None, goal: int = 5) -> int:
-    """Run a tiny 5-step agent; optionally crash at a given step."""
+    """小さな 5-step agent を走らせ、必要なら指定 step で crash させる。"""
     restored = store.latest(thread_id)
     if restored:
         super_step, state = restored
@@ -100,7 +100,7 @@ class AgentQueue:
 
 def demo_queue() -> None:
     print("\n" + "=" * 72)
-    print("PER-AGENT QUEUE — 3-state machine (idle / processing / response)")
+    print("PER-AGENT QUEUE — 3-state machine（idle / processing / response）")
     print("=" * 72)
     a = AgentQueue("agent-a")
     a.enqueue({"task": "compress logs"})
@@ -139,7 +139,7 @@ def bench_threads(n: int) -> float:
 
 def demo_async_vs_threads() -> None:
     print("\n" + "=" * 72)
-    print("ASYNC vs THREADS — 500 concurrent 'LLM calls' (50ms each)")
+    print("ASYNC vs THREADS — 500 concurrent 'LLM calls'（各 50ms）")
     print("=" * 72)
 
     async_elapsed = asyncio.run(bench_async(500))
@@ -148,21 +148,21 @@ def demo_async_vs_threads() -> None:
     thread_elapsed = bench_threads(500)
     print(f"  threads:          {thread_elapsed:.3f} s")
 
-    print("  ratio: threads are {:.1f}x slower (and allocate ~1MB per thread stack)".format(
+    print("  ratio: threads は {:.1f}x 遅い（かつ thread stack ごとに ~1MB 確保）".format(
         thread_elapsed / async_elapsed if async_elapsed > 0 else float("inf")
     ))
 
 
 def demo_checkpoint_resume() -> None:
     print("=" * 72)
-    print("CHECKPOINT RESUME — worker crashes mid-run, second worker resumes")
+    print("CHECKPOINT RESUME — worker が mid-run で crash し、second worker が resume")
     print("=" * 72)
     with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
         db_path = f.name
     try:
         store = CheckpointStore(db_path)
 
-        print("  worker 1 starts thread t-1, targeting counter=5")
+        print("  worker 1 が thread t-1 を開始し、counter=5 を target")
         try:
             run_agent_with_checkpoint(store, "t-1", crash_at=3, goal=5)
         except RuntimeError:
@@ -172,9 +172,9 @@ def demo_checkpoint_resume() -> None:
         assert last is not None
         print(f"  last checkpoint: super_step={last[0]}, state={last[1]}")
 
-        print("  worker 2 resumes thread t-1")
+        print("  worker 2 が thread t-1 を resume")
         final = run_agent_with_checkpoint(store, "t-1", goal=5)
-        print(f"  worker 2 completed; final counter = {final}")
+        print(f"  worker 2 が完了。final counter = {final}")
     finally:
         os.unlink(db_path)
 
@@ -183,11 +183,11 @@ def main() -> None:
     demo_checkpoint_resume()
     demo_queue()
     demo_async_vs_threads()
-    print("\nTakeaways:")
-    print("  durable execution = persist state per super-step + idempotent resume.")
-    print("  per-agent queues with 3-state machines scale to thousands of concurrent agents.")
-    print("  async is structural for I/O-bound LLM workloads, not just an optimization.")
-    print("  Bedi's rule: FastAPI + Postgres covers most teams; escalate on measured need.")
+    print("\n要点:")
+    print("  durable execution = super-step ごとの state persist + idempotent resume。")
+    print("  3-state machines を持つ per-agent queues は thousands of concurrent agents に scale します。")
+    print("  async は I/O-bound LLM workloads にとって構造であり、単なる optimization ではありません。")
+    print("  Bedi's rule: FastAPI + Postgres は多くの teams をカバーします。measured need で escalate します。")
 
 
 if __name__ == "__main__":

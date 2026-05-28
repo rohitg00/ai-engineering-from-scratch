@@ -1,57 +1,57 @@
-# Multilingual NLP
+# 多言語NLP
 
-> One model, 100+ languages, zero training data for most of them. Cross-lingual transfer is the practical miracle of the 2020s.
+> 1つのモデル、100以上の言語、その大半では学習データがゼロ。クロスリンガル転移は、2020年代の実用上の奇跡です。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python
+**前提:** Phase 5 · 04（GloVe、FastText、Subword）、Phase 5 · 11（Machine Translation）
+**時間:** 約45分
 
-## The Problem
+## 問題
 
-English has billions of labeled examples. Urdu has thousands. Maithili has almost none. Any practical NLP system that serves a global audience has to work on the long tail of languages where task-specific training data does not exist.
+英語には数十億件のラベル付き例があります。ウルドゥー語には数千件あります。マイティリー語にはほとんどありません。世界中のユーザーに提供する実用的なNLPシステムは、タスク固有の学習データが存在しない言語のロングテールでも動かなければなりません。
 
-Multilingual models solve this by training one model on many languages simultaneously. The shared representation lets the model transfer skills learned in high-resource languages to low-resource ones. Fine-tune the model on English sentiment analysis, and it produces surprisingly good sentiment predictions on Urdu out of the box. That is zero-shot cross-lingual transfer, and it has reshaped how NLP ships to the world.
+多言語モデルは、1つのモデルを多くの言語で同時に学習することでこの問題を解きます。共有表現により、高リソース言語で学んだスキルを低リソース言語へ転移できます。英語の感情分析でモデルをファインチューニングすると、追加学習なしでもウルドゥー語で驚くほど良い感情予測が出ます。これがゼロショット・クロスリンガル転移であり、NLPを世界に出荷する方法を作り替えました。
 
-This lesson names the tradeoffs, the canonical models, and the one decision that trips up teams new to multilingual work: picking a source language for transfer.
+このレッスンでは、トレードオフ、代表的なモデル、そして多言語対応に慣れていないチームがつまずきやすい1つの判断を扱います。転移に使うソース言語の選び方です。
 
-## The Concept
+## コンセプト
 
-![Cross-lingual transfer via shared multilingual embedding space](../assets/multilingual.svg)
+![共有された多言語埋め込み空間によるクロスリンガル転移](../assets/multilingual.svg)
 
-**Shared vocabulary.** Multilingual models use a SentencePiece or WordPiece tokenizer trained on text from all target languages. The vocabulary is shared: the same subword unit represents the same morpheme across related languages. `anti-` in English and Italian gets the same token.
+**共有語彙。** 多言語モデルは、すべての対象言語のテキストで学習したSentencePieceまたはWordPiece tokenizerを使います。語彙は共有されます。関連言語間では、同じsubword単位が同じ形態素を表します。英語とイタリア語の `anti-` は同じトークンになります。
 
-**Shared representation.** A transformer pretrained on masked language modeling across many languages learns that semantically similar sentences in different languages produce similar hidden states. mBERT, XLM-R, and NLLB all exhibit this. Embeddings for "cat" in English cluster near "chat" in French and "gato" in Spanish, and so do full-sentence embeddings.
+**共有表現。** 多くの言語にまたがるmasked language modelingで事前学習したtransformerは、異なる言語でも意味的に似た文が似たhidden stateを生むことを学びます。mBERT、XLM-R、NLLBはいずれもこれを示します。英語の "cat" の埋め込みは、フランス語の "chat" やスペイン語の "gato" の近くに集まり、全文埋め込みでも同じことが起きます。
 
-**Zero-shot transfer.** Fine-tune the model on labeled data in one language (usually English). At inference, run it on any other language the model supports. No target-language labels needed. Results are strong for typologically related languages and weaker for distant ones.
+**ゼロショット転移。** 1つの言語（通常は英語）のラベル付きデータでモデルをファインチューニングします。推論時には、そのモデルが対応する任意の別言語で実行します。対象言語のラベルは不要です。類型的に近い言語では結果が強く、遠い言語では弱くなります。
 
-**Few-shot fine-tuning.** Add 100-500 labeled examples in the target language. Accuracy jumps to 95-98% of the English baseline on classification tasks. This is the single most cost-effective lever in multilingual NLP.
+**few-shotファインチューニング。** 対象言語のラベル付き例を100-500件追加します。分類タスクでは、精度が英語ベースラインの95-98%まで跳ね上がります。これは多言語NLPで最も費用対効果の高いレバーです。
 
-## The models
+## モデル
 
-| Model | Year | Coverage | Notes |
+| モデル | 年 | カバレッジ | 注記 |
 |-------|------|----------|-------|
-| mBERT | 2018 | 104 languages | Trained on Wikipedia. First practical multilingual LM. Weak on low-resource. |
-| XLM-R | 2019 | 100 languages | Trained on CommonCrawl (much larger than Wikipedia). Sets the cross-lingual baseline. Base 270M, Large 550M. |
-| XLM-V | 2023 | 100 languages | XLM-R with 1M-token vocabulary (vs 250k). Better on low-resource. |
-| mT5 | 2020 | 101 languages | T5 architecture for multilingual generation. |
-| NLLB-200 | 2022 | 200 languages | Meta's translation model; includes 55 low-resource languages. |
-| BLOOM | 2022 | 46 languages + 13 programming | Open 176B LLM trained multilingually. |
-| Aya-23 | 2024 | 23 languages | Cohere's multilingual LLM. Strong on Arabic, Hindi, Swahili. |
+| mBERT | 2018 | 104言語 | Wikipediaで学習。最初の実用的な多言語LM。低リソースには弱い。 |
+| XLM-R | 2019 | 100言語 | CommonCrawl（Wikipediaよりはるかに大規模）で学習。クロスリンガルのベースラインを作った。Base 270M、Large 550M。 |
+| XLM-V | 2023 | 100言語 | 1M-token語彙を持つXLM-R（250kに対して）。低リソースでより強い。 |
+| mT5 | 2020 | 101言語 | 多言語生成向けのT5アーキテクチャ。 |
+| NLLB-200 | 2022 | 200言語 | Metaの翻訳モデル。55の低リソース言語を含む。 |
+| BLOOM | 2022 | 46言語 + 13プログラミング言語 | 多言語で学習されたオープンな176B LLM。 |
+| Aya-23 | 2024 | 23言語 | Cohereの多言語LLM。アラビア語、ヒンディー語、スワヒリ語に強い。 |
 
-Pick by use case. Classification works well with XLM-R-base as the sane default. Generation tasks call for mT5 or NLLB depending on translation vs open generation. LLM-style work pairs with Aya-23 or Claude using explicit multilingual prompting.
+ユースケースに応じて選びます。分類では、現実的なデフォルトとしてXLM-R-baseがよく機能します。生成タスクでは、翻訳か自由生成かに応じてmT5またはNLLBを使います。LLM型の作業では、Aya-23またはClaudeに明示的な多言語プロンプトを組み合わせます。
 
-## The source-language decision (2026 research)
+## ソース言語の判断（2026年の研究）
 
-Most teams default to English as the fine-tuning source. Recent research (2026) shows this is often wrong.
+ほとんどのチームは、ファインチューニング用ソースとして英語をデフォルトにします。最近の研究（2026年）は、それがしばしば間違いであることを示しています。
 
-Language similarity predicts transfer quality better than raw corpus size. For Slavic targets, German or Russian often beat English. For Indic targets, Hindi often beats English. The **qWALS** similarity metric (2026, based on World Atlas of Language Structures features) quantifies this. **LANGRANK** (Lin et al., ACL 2019) is a separate, earlier method that ranks candidate source languages from a combination of linguistic similarity, corpus size, and genetic relatedness.
+言語の類似性は、生コーパスサイズよりも転移品質をよく予測します。スラブ系の対象言語では、ドイツ語やロシア語が英語に勝つことがよくあります。インド系の対象言語では、ヒンディー語が英語に勝つことがよくあります。**qWALS** 類似度指標（2026年、World Atlas of Language Structuresの特徴に基づく）はこれを定量化します。**LANGRANK**（Lin et al., ACL 2019）は別の、より古い手法で、言語的類似性、コーパスサイズ、系統的近さの組み合わせから候補ソース言語をランク付けします。
 
-Practical rule: if your target language has a typologically close high-resource relative, try fine-tuning on that one first, then compare to English fine-tune.
+実践上のルールは単純です。対象言語に類型的に近い高リソース言語があるなら、まずその言語でファインチューニングし、その後で英語ファインチューニングと比較します。
 
-## Build It
+## 作ってみる
 
-### Step 1: zero-shot cross-lingual classification
+### Step 1: ゼロショット・クロスリンガル分類
 
 ```python
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -78,9 +78,9 @@ print(classify("मुझे यह उत्पाद पसंद है!", ["
 print(classify("J'adore ce produit !", ["positive", "negative", "neutral"]))
 ```
 
-One model, three languages, same API. XLM-R trained on NLI data transfers well to classification via the entailment trick.
+1つのモデル、3つの言語、同じAPIです。NLIデータで学習したXLM-Rは、含意のトリックによって分類へうまく転移します。
 
-### Step 2: multilingual embedding space
+### Step 2: 多言語埋め込み空間
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -102,9 +102,9 @@ for eng, other in pairs:
     print(f"  {eng!r} <-> {other!r}: cos={sim:.3f}")
 ```
 
-Translations land close in embedding space. A different English sentence lands further. This is what makes cross-lingual retrieval, clustering, and similarity work.
+翻訳文は埋め込み空間で近くに配置されます。別の英語文はより遠くに配置されます。これにより、クロスリンガル検索、クラスタリング、類似度計算が機能します。
 
-### Step 3: few-shot fine-tuning strategy
+### Step 3: few-shotファインチューニング戦略
 
 ```python
 from transformers import TrainingArguments, Trainer
@@ -132,88 +132,88 @@ def few_shot_finetune(base_model, base_tokenizer, examples):
     return base_model
 ```
 
-For 100-500 target-language examples, `num_train_epochs=5` and `learning_rate=2e-5` are the safe defaults. Higher learning rates cause the multilingual alignment to collapse and you get an English-only model.
+対象言語の例が100-500件ある場合、`num_train_epochs=5` と `learning_rate=2e-5` が安全なデフォルトです。より高い学習率では多言語アラインメントが崩壊し、英語専用モデルになってしまいます。
 
-## Evaluation that actually works
+## 実際に機能する評価
 
-- **Per-language accuracy on held-out sets.** Not aggregated. The aggregate hides the long tail.
-- **Benchmark against monolingual baseline.** For languages with enough data, a monolingual model trained from scratch sometimes beats the multilingual one. Test.
-- **Entity-level tests.** Named entities in the target language. Multilingual models often have weak tokenization for scripts far from Latin.
-- **Cross-lingual consistency.** Same meaning in two languages should produce the same prediction. Measure the gap.
+- **ホールドアウトセットでの言語別精度。** 集計ではありません。集計値はロングテールを隠します。
+- **単言語ベースラインとの比較。** 十分なデータがある言語では、ゼロから学習した単言語モデルが多言語モデルを上回ることがあります。テストしてください。
+- **エンティティレベルのテスト。** 対象言語の固有表現をテストします。多言語モデルは、ラテン文字から遠い文字体系でtokenizationが弱いことがよくあります。
+- **クロスリンガル一貫性。** 2つの言語で同じ意味なら、同じ予測になるべきです。その差を測定します。
 
-## Use It
+## 使ってみる
 
-The 2026 stack:
+2026年のスタックは次のとおりです。
 
-| Task | Recommended |
+| タスク | 推奨 |
 |-----|-------------|
-| Classification, 100 languages | XLM-R-base (~270M) fine-tuned |
-| Zero-shot text classification | `joeddav/xlm-roberta-large-xnli` |
-| Multilingual sentence embeddings | `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` |
-| Translation, 200 languages | `facebook/nllb-200-distilled-600M` (see lesson 11) |
-| Generative multilingual | Claude, GPT-4, Aya-23, mT5-XXL |
-| Low-resource language NLP | XLM-V or a domain-specific fine-tune on related high-resource language |
+| 100言語の分類 | ファインチューニング済みXLM-R-base（~270M） |
+| ゼロショットテキスト分類 | `joeddav/xlm-roberta-large-xnli` |
+| 多言語文埋め込み | `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` |
+| 200言語の翻訳 | `facebook/nllb-200-distilled-600M`（lesson 11を参照） |
+| 生成型多言語 | Claude、GPT-4、Aya-23、mT5-XXL |
+| 低リソース言語NLP | XLM-V、または関連する高リソース言語でのドメイン特化ファインチューニング |
 
-Always budget for fine-tuning in the target language if performance matters. Zero-shot is a starting point, not a final answer.
+性能が重要なら、対象言語でのファインチューニング予算を必ず確保してください。ゼロショットは出発点であって、最終回答ではありません。
 
-### The tokenization tax (what goes wrong for low-resource languages)
+### トークン化税（低リソース言語で何が壊れるか）
 
-Multilingual models share one tokenizer across all their languages. That vocabulary is trained on a corpus dominated by English, French, Spanish, Chinese, German. For any language outside the dominant set, three taxes compound silently:
+多言語モデルは、すべての言語で1つのtokenizerを共有します。その語彙は、英語、フランス語、スペイン語、中国語、ドイツ語が支配的なコーパスで学習されています。支配的な集合の外にある言語では、3つの税が静かに積み重なります。
 
-- **Fertility tax.** Low-resource language text tokenizes into far more tokens per word than English. A Hindi sentence can need 3-5x the tokens of an equivalent English sentence. That 3-5x eats your context window, training efficiency, and latency.
-- **Variant recovery tax.** Every typo, diacritic variant, Unicode normalization mismatch, or case variation becomes a cold-start unrelated sequence in embedding space. The model cannot learn orthographic correspondences that a native speaker takes as obvious.
-- **Capacity spillover tax.** Taxes 1 and 2 consume context positions, layer depth, and embedding dimensions. What remains for actual reasoning is systematically smaller than what a high-resource language gets from the same model.
+- **fertility tax。** 低リソース言語のテキストは、英語よりも1単語あたりはるかに多くのトークンに分割されます。ヒンディー語の文は、同等の英語文に比べて3-5倍のトークンを必要とすることがあります。その3-5倍が、コンテキストウィンドウ、学習効率、レイテンシを消費します。
+- **variant recovery tax。** タイポ、ダイアクリティカルマークの変種、Unicode正規化の不一致、大文字小文字の揺れがすべて、埋め込み空間でコールドスタートの無関係な系列になります。ネイティブ話者には明らかな正書法上の対応を、モデルは学習できません。
+- **capacity spillover tax。** 税1と2は、コンテキスト位置、層の深さ、埋め込み次元を消費します。実際の推論に残るものは、同じモデルで高リソース言語が得るものより体系的に小さくなります。
 
-The practical symptom: your model trains normally on Hindi, the loss curve looks right, eval perplexity looks reasonable, and production outputs are subtly wrong. Morphology collapses mid-sentence. Rare inflections stay unrecoverable. **You cannot data-scale your way out of a broken tokenizer.**
+実務上の症状はこうです。モデルはヒンディー語で普通に学習し、loss curveは正しく見え、評価perplexityも妥当に見えます。それでも本番出力は微妙に間違っています。文の途中で形態論が崩れます。まれな屈折は回復できないままです。**壊れたtokenizerを、データ量だけで乗り越えることはできません。**
 
-Mitigations: pick a tokenizer with good coverage for your target language (XLM-V's 1M-token vocabulary is a direct fix); verify tokenization fertility on held-out target text before training; use byte-level fallback (SentencePiece `byte_fallback=True`, GPT-2-style byte-level BPE) for truly long-tail scripts so nothing is ever OOV.
+緩和策: 対象言語を十分にカバーするtokenizerを選びます（XLM-Vの1M-token語彙は直接的な修正です）。学習前にホールドアウトした対象テキストでtokenization fertilityを検証します。本当にロングテールな文字体系では、byte-level fallback（SentencePiece `byte_fallback=True`、GPT-2型のbyte-level BPE）を使い、何もOOVにならないようにします。
 
-## Ship It
+## 仕上げ
 
-Save as `outputs/skill-multilingual-picker.md`:
+`outputs/skill-multilingual-picker.md` として保存します。
 
 ```markdown
 ---
 name: multilingual-picker
-description: Pick source language, target model, and evaluation plan for a multilingual NLP task.
+description: 多言語NLPタスク向けに、ソース言語、対象モデル、評価計画を選ぶ。
 version: 1.0.0
 phase: 5
 lesson: 18
 tags: [nlp, multilingual, cross-lingual]
 ---
 
-Given requirements (target languages, task type, available labeled data per language), output:
+要件（対象言語、タスク種別、言語ごとに利用可能なラベル付きデータ）が与えられたら、次を出力する。
 
-1. Source language for fine-tuning. Default English; check LANGRANK or qWALS if target language has a typologically close high-resource language.
-2. Base model. XLM-R (classification), mT5 (generation), NLLB (translation), Aya-23 (generative LLM).
-3. Few-shot budget. Start with 100-500 target-language examples if available. Zero-shot only if labeling is infeasible.
-4. Evaluation plan. Per-language accuracy (not aggregate), cross-lingual consistency, entity-level F1 on non-Latin scripts.
+1. ファインチューニング用のソース言語。デフォルトは英語。対象言語に類型的に近い高リソース言語がある場合は、LANGRANKまたはqWALSを確認する。
+2. ベースモデル。XLM-R（分類）、mT5（生成）、NLLB（翻訳）、Aya-23（生成型LLM）。
+3. few-shot予算。利用可能なら対象言語の例を100-500件から始める。ゼロショットはラベル付けが現実的でない場合だけにする。
+4. 評価計画。言語別の精度（集計値ではない）、クロスリンガル一貫性、非ラテン文字体系でのエンティティレベルF1。
 
-Refuse to ship a multilingual model without per-language evaluation — aggregate metrics hide long-tail failures. Flag scripts with low tokenization coverage (Amharic, Tigrinya, many African languages) as needing a model with byte-fallback (SentencePiece with byte_fallback=True, or byte-level tokenizer like GPT-2).
+言語別評価なしに多言語モデルを出荷してはいけない。集計指標はロングテールの失敗を隠す。トークン化カバレッジが低い文字体系（アムハラ語、ティグリニャ語、多くのアフリカ諸語）は、byte-fallbackを持つモデル（byte_fallback=True の SentencePiece、または GPT-2 のようなバイトレベルtokenizer）が必要だと明示する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Run the zero-shot classification pipeline on 10 sentences per language across English, French, Hindi, and Arabic. Report accuracy on each. You should see strong French, decent Hindi, variable Arabic.
-2. **Medium.** Use `paraphrase-multilingual-MiniLM-L12-v2` to build a cross-lingual retriever over a small mixed-language corpus. Query in English, retrieve documents in any language. Measure recall@5.
-3. **Hard.** Compare English-source and Hindi-source fine-tuning for a Hindi classification task. Use 500 target-language examples for few-shot fine-tuning under both regimes. Report which source produces better Hindi accuracy and by how much. This is the LANGRANK thesis in miniature.
+1. **Easy.** 英語、フランス語、ヒンディー語、アラビア語について、各言語10文でゼロショット分類pipelineを実行してください。それぞれの精度を報告します。フランス語は強く、ヒンディー語はまずまず、アラビア語はばらつくはずです。
+2. **Medium.** `paraphrase-multilingual-MiniLM-L12-v2` を使って、小さな混合言語コーパス上にクロスリンガルretrieverを構築してください。英語でクエリし、任意の言語の文書を取得します。recall@5を測定します。
+3. **Hard.** ヒンディー語分類タスクで、英語ソースとヒンディー語ソースのファインチューニングを比較してください。両方の設定で、few-shotファインチューニング用に対象言語の例を500件使います。どちらのソースがより良いヒンディー語精度を出したか、どれだけ差があるかを報告します。これはLANGRANKの主張を小さく再現したものです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | 一般に言うこと | 実際の意味 |
 |------|-----------------|-----------------------|
-| Multilingual model | One model, many languages | Shared vocabulary and parameters across languages. |
-| Cross-lingual transfer | Train on one language, run on another | Fine-tune on source, evaluate on target without target-language labels. |
-| Zero-shot | No target-language labels | Transfer without fine-tuning on the target language. |
-| Few-shot | Small target labels | 100-500 target-language examples used for fine-tuning. |
-| mBERT | First multilingual LM | 104-language BERT pretrained on Wikipedia. |
-| XLM-R | Standard cross-lingual baseline | 100-language RoBERTa pretrained on CommonCrawl. |
-| NLLB | Meta's 200-language MT | No Language Left Behind. Includes 55 low-resource languages. |
+| Multilingual model | 1つのモデル、多くの言語 | 言語間で語彙とパラメータを共有する。 |
+| Cross-lingual transfer | 1つの言語で学習し、別の言語で実行する | ソースでファインチューニングし、対象言語ラベルなしでターゲットを評価する。 |
+| Zero-shot | 対象言語ラベルなし | 対象言語でファインチューニングせずに転移する。 |
+| Few-shot | 少量の対象言語ラベル | ファインチューニングに使う対象言語の例100-500件。 |
+| mBERT | 最初の多言語LM | Wikipediaで事前学習された104言語BERT。 |
+| XLM-R | 標準的なクロスリンガルベースライン | CommonCrawlで事前学習された100言語RoBERTa。 |
+| NLLB | Metaの200言語MT | No Language Left Behind。55の低リソース言語を含む。 |
 
-## Further Reading
+## 参考文献
 
-- [Conneau et al. (2019). Unsupervised Cross-lingual Representation Learning at Scale](https://arxiv.org/abs/1911.02116) — the XLM-R paper.
-- [Pires, Schlinger, Garrette (2019). How Multilingual is Multilingual BERT?](https://arxiv.org/abs/1906.01502) — the analysis paper that started the cross-lingual transfer research line.
-- [Costa-jussà et al. (2022). No Language Left Behind](https://arxiv.org/abs/2207.04672) — NLLB-200 paper.
-- [Üstün et al. (2024). Aya Model: An Instruction Finetuned Open-Access Multilingual Language Model](https://arxiv.org/abs/2402.07827) — Aya, Cohere's multilingual LLM.
-- [Language Similarity Predicts Cross-Lingual Transfer Learning Performance (2026)](https://www.mdpi.com/2504-4990/8/3/65) — the qWALS / LANGRANK source-language paper.
+- [Conneau et al. (2019). Unsupervised Cross-lingual Representation Learning at Scale](https://arxiv.org/abs/1911.02116) — XLM-Rの論文。
+- [Pires, Schlinger, Garrette (2019). How Multilingual is Multilingual BERT?](https://arxiv.org/abs/1906.01502) — クロスリンガル転移研究の流れを始めた分析論文。
+- [Costa-jussà et al. (2022). No Language Left Behind](https://arxiv.org/abs/2207.04672) — NLLB-200の論文。
+- [Üstün et al. (2024). Aya Model: An Instruction Finetuned Open-Access Multilingual Language Model](https://arxiv.org/abs/2402.07827) — Cohereの多言語LLM、Aya。
+- [Language Similarity Predicts Cross-Lingual Transfer Learning Performance (2026)](https://www.mdpi.com/2504-4990/8/3/65) — qWALS / LANGRANKのソース言語に関する論文。

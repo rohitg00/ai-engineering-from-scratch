@@ -1,10 +1,10 @@
-"""DevOps troubleshooting agent — K8s knowledge graph + HITL approval gate.
+"""DevOps troubleshooting agent — K8s knowledge graph + HITL approval gate。
 
-The hard architectural primitives are (a) a K8s knowledge graph that lets
-root-cause analysis walk from an alerted object to its neighbors with
-telemetry overlays, and (b) a read-only-by-default tool surface where every
-destructive command is gated by a human-in-the-loop approval and every
-considered command is audit-logged. This scaffold implements both.
+難しい architectural primitive は2つです。(a) alert された object から
+telemetry overlay 付きで neighbor へ root-cause analysis が歩ける K8s
+knowledge graph、(b) すべての destructive command が human-in-the-loop approval
+で gate され、すべての considered command が audit log される read-only-by-default
+tool surface。この scaffold は両方を実装します。
 
 Run:  python main.py
 """
@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 
 
 # ---------------------------------------------------------------------------
-# K8s knowledge graph  --  objects + telemetry overlay edges
+# K8s knowledge graph  --  object + telemetry overlay edge
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -96,22 +96,21 @@ class Hypothesis:
 
 
 def root_cause(g: Graph, alerted: str) -> list[Hypothesis]:
-    """Walk outward from the alerted object, collect telemetry,
-    and propose ranked hypotheses."""
+    """alerted object から外側へ歩き、telemetry を集め、ranked hypothesis を提案する。"""
     hyps: list[Hypothesis] = []
-    # nearest telemetry siblings
+    # 最も近い telemetry sibling
     telemetry: list[Node] = []
     for rel, neighbor_key in g.neighbors(alerted):
         n = g.nodes.get(neighbor_key)
         if n and n.kind in ("Prom", "Loki", "Tempo"):
             telemetry.append(n)
 
-    # hypothesis: bad rollout if recent deploy + observing error surge
+    # hypothesis: recent deploy + error surge が見えるなら bad rollout
     dep = g.nodes.get(alerted)
     if dep and dep.kind == "Deployment":
         mins = int(str(dep.attrs.get("deployed_at", "?")).split("m")[0]) if "m" in str(dep.attrs.get("deployed_at", "")) else 999
         hyps.append(Hypothesis(
-            title=f"bad rollout: image {dep.attrs.get('image')} fails /healthz",
+            title=f"bad rollout: image {dep.attrs.get('image')} が /healthz で失敗",
             citations=[t.name for t in telemetry],
             recency_mins=mins,
             specificity=0.82,
@@ -122,7 +121,7 @@ def root_cause(g: Graph, alerted: str) -> list[Hypothesis]:
     nodes = [g.nodes[dst] for _, dst in g.neighbors(alerted) if dst.startswith("Node/")]
     if nodes:
         hyps.append(Hypothesis(
-            title=f"node-level pressure on {nodes[0].name} (kernel={nodes[0].attrs.get('kernel')})",
+            title=f"{nodes[0].name} の node-level pressure (kernel={nodes[0].attrs.get('kernel')})",
             citations=[n.name for n in nodes],
             recency_mins=30,
             specificity=0.45,
@@ -131,7 +130,7 @@ def root_cause(g: Graph, alerted: str) -> list[Hypothesis]:
 
     # hypothesis: service mesh / DNS
     hyps.append(Hypothesis(
-        title="DNS flap in kube-system/coredns",
+        title="kube-system/coredns の DNS flap",
         citations=[],
         recency_mins=60,
         specificity=0.2,
@@ -142,7 +141,7 @@ def root_cause(g: Graph, alerted: str) -> list[Hypothesis]:
 
 
 # ---------------------------------------------------------------------------
-# approval gate + audit log  --  every considered command tracked
+# approval gate + audit log  --  すべての considered command を追跡
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -174,9 +173,9 @@ class Agent:
                 ev.approved = True
                 ev.approver = approver
                 ev.executed = True
-                ev.result = f"executed by {approver}"
+                ev.result = f"{approver} により実行済み"
             else:
-                ev.result = "blocked: no slack approval"
+                ev.result = "blocked: Slack approval がありません"
         else:
             ev.result = "blocked: unknown tool"
         self.audit.append(ev)
@@ -184,7 +183,7 @@ class Agent:
 
 
 # ---------------------------------------------------------------------------
-# demo  --  full alert -> graph walk -> ranked hypotheses -> slack gate
+# demo  --  alert -> graph walk -> ranked hypotheses -> slack gate
 # ---------------------------------------------------------------------------
 
 def main() -> None:
@@ -194,7 +193,7 @@ def main() -> None:
     alerted = "Deployment/checkout-api"
     print(f"=== alert received: {alerted} (error rate 14%) ===")
 
-    # agent pulls read-only telemetry first
+    # agent はまず read-only telemetry を取得する
     agent.call("promql", {"query": "rate(http_requests_total{status=~'5..'}[5m])"})
     agent.call("logql", {"query": '{app="checkout-api"} |~ "stack"'})
 
@@ -204,12 +203,12 @@ def main() -> None:
         print(f"  #{i} score={h.score():.3f}  {h.title}")
         print(f"     citations: {h.citations}")
 
-    # agent proposes rollback but must wait for slack approval
-    print("\nproposing remediation:")
+    # agent は rollback を提案するが Slack approval を待つ必要がある
+    print("\nremediation を提案:")
     ev = agent.call("argocd_rollback", {"app": "checkout-api", "to_revision": 41})
     print(f"  {ev.tool}: {ev.result}")
 
-    # slack approved -> agent executes
+    # Slack approval 後に agent が実行する
     print("\nslack approval granted by alice@sre")
     ev = agent.call("argocd_rollback",
                     {"app": "checkout-api", "to_revision": 41},

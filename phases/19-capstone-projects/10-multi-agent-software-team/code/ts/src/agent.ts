@@ -43,9 +43,9 @@ export class PlannerAgent extends Agent {
     super.receive(inbound);
     if (inbound.topic === "issue.opened" && !this.planned) {
       const plan = [
-        "1. parse failing test in test_payments.py",
-        "2. patch refund rounding in refunds.py",
-        "3. add regression test test_refund_rounding",
+        "1. test_payments.py の failing test を parse する",
+        "2. refunds.py の refund rounding を patch する",
+        "3. regression test test_refund_rounding を追加する",
       ].join("\n");
       workspace.write("PLAN.md", plan, this.role);
       this.planned = true;
@@ -56,7 +56,7 @@ export class PlannerAgent extends Agent {
         workspace,
         "coder",
         "plan.amended",
-        `re-plan based on reviewer note: ${inbound.body}`,
+        `reviewer note に基づいて re-plan: ${inbound.body}`,
       );
     }
     return null;
@@ -72,7 +72,7 @@ export class CoderAgent extends Agent {
       const file = workspace.read("refunds.py");
       const next =
         (file?.contents ?? "def refund(x):\n    return x\n") +
-        "\n# rounding fix\n";
+        "\n# 丸め修正\n";
       workspace.write("refunds.py", next, this.role);
       workspace.write(
         "tests/test_refund_rounding.py",
@@ -105,7 +105,7 @@ export class ReviewerAgent extends Agent {
           workspace,
           "planner",
           "review.changes_requested",
-          "missing plan or refunds.py",
+          "plan または refunds.py がありません",
         );
       }
       if (this.reviews === 1) {
@@ -113,10 +113,10 @@ export class ReviewerAgent extends Agent {
           workspace,
           "planner",
           "review.changes_requested",
-          "test asserts True with no failure case",
+          "test が failure case なしで True を assert しています",
         );
       }
-      return this.emit(workspace, "broadcast", "review.approved", "lgtm");
+      return this.emit(workspace, "broadcast", "review.approved", "承認");
     }
     return null;
   }

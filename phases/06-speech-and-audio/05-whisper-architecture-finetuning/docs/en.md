@@ -1,52 +1,52 @@
-# Whisper — Architecture & Fine-Tuning
+# Whisper - アーキテクチャとファインチューニング
 
-> Whisper is a 30-second-window transformer encoder-decoder, trained on 680k hours of multilingual weakly-supervised audio-text pairs. One architecture, multiple tasks, robust across 99 languages. The 2026 reference ASR.
+> Whisper は、30 秒ウィンドウの transformer encoder-decoder です。68 万時間の多言語・弱教師あり音声テキストペアで学習されました。1 つのアーキテクチャで複数タスクに対応し、99 言語で堅牢に動きます。2026 年の基準となる ASR です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
+**時間:** 約 75 分
 
-## The Problem
+## 問題
 
-Whisper, released by OpenAI in September 2022, was the first ASR model to ship as a commodity: paste audio, get text, 99 languages, robust to noise, runs on a laptop. By 2024 OpenAI had shipped Large-v3 and Turbo variants; by 2026, Whisper is the default baseline for everything from podcast transcription to voice assistants to YouTube subtitles.
+OpenAI が 2022 年 9 月に公開した Whisper は、コモディティとして配布された最初の ASR モデルでした。音声を渡すとテキストが得られ、99 言語に対応し、ノイズに強く、ノート PC でも動きます。2024 年までに OpenAI は Large-v3 と Turbo 系を出荷しました。2026 年時点では、Whisper はポッドキャスト文字起こしから音声アシスタント、YouTube 字幕まで、あらゆる場面のデフォルト基準になっています。
 
-But Whisper is not a pipeline you can treat as a black box forever. Domain shift kills it — technical jargon, speaker accents, proper nouns, short clips, silence. You need to know:
+しかし Whisper は、いつまでもブラックボックスとして扱えるパイプラインではありません。ドメインシフトは性能を大きく落とします。専門用語、話者のアクセント、固有名詞、短いクリップ、無音が典型例です。知っておくべきことは次の通りです。
 
-1. What it actually is inside.
-2. How to give it chunked, streaming, or long-form audio correctly.
-3. When to fine-tune and how.
+1. 内部で実際に何が起きているか。
+2. チャンク化、ストリーミング、長尺音声を正しく渡す方法。
+3. いつ、どのようにファインチューニングするか。
 
-## The Concept
+## コンセプト
 
 ![Whisper encoder-decoder, tasks, chunked inference, fine-tune](../assets/whisper.svg)
 
-**Architecture.** Standard transformer encoder-decoder.
+**アーキテクチャ。** 標準的な transformer encoder-decoder です。
 
-- Input: 30-second log-mel spectrogram, 80 mels, 10 ms hop → 3000 frames. Clips shorter are zero-padded, clips longer are chunked.
-- Encoder: conv-downsample (stride 2) + `N` transformer blocks. For Large-v3: 32 layers, 1280-dim, 20 heads.
-- Decoder: `N` transformer blocks with causal self-attn + cross-attn to encoder output. Same size as encoder.
-- Output: BPE tokens over a 51,865-token vocab.
+- 入力: 30 秒の log-mel spectrogram、80 mels、10 ms hop → 3000 frames。短いクリップはゼロパディングされ、長いクリップはチャンク化されます。
+- Encoder: conv-downsample (stride 2) + `N` transformer blocks。Large-v3 では 32 layers、1280-dim、20 heads。
+- Decoder: causal self-attn と encoder 出力への cross-attn を持つ `N` transformer blocks。encoder と同じサイズです。
+- 出力: 51,865-token vocab 上の BPE tokens。
 
-Large-v3 has 1.55B params. Turbo uses a 4-layer decoder (from 32), cutting latency 8× with a <1% WER hit.
+Large-v3 は 1.55B params です。Turbo は decoder を 32 層から 4 層に減らし、WER の悪化を 1% 未満に抑えながらレイテンシを 8 倍改善します。
 
-**The prompt format.** Whisper is a multitask model steered by special tokens in the decoder prompt:
+**プロンプト形式。** Whisper は decoder prompt 内の special tokens で制御される multitask model です。
 
 ```
 <|startoftranscript|><|en|><|transcribe|><|notimestamps|> Hello world.<|endoftext|>
 ```
 
-- `<|en|>` — language tag; forces translation-vs-transcription behavior.
-- `<|transcribe|>` or `<|translate|>` — translate English output from any-language input, or verbatim.
-- `<|notimestamps|>` — skip word-level timestamps (faster).
+- `<|en|>` - language tag。translation と transcription の挙動を制御します。
+- `<|transcribe|>` または `<|translate|>` - 任意言語入力から英語出力へ翻訳するか、逐語的に文字起こしするかを指定します。
+- `<|notimestamps|>` - word-level timestamps を省略します。高速です。
 
-The prompt is what lets one model do many tasks. Change `<|en|>` to `<|fr|>` and it transcribes French.
+このプロンプトにより、1 つのモデルで多くのタスクを扱えます。`<|en|>` を `<|fr|>` に変えれば、フランス語を文字起こしします。
 
-**30-second window.** Everything is pinned to 30 seconds. Longer clips need chunking; shorter clips are padded. Windows are not streamed natively — this is why WhisperX, Whisper-Streaming, and faster-whisper exist.
+**30 秒ウィンドウ。** すべては 30 秒に固定されています。長いクリップはチャンク化が必要で、短いクリップはパディングされます。ウィンドウはネイティブにはストリーミングされません。これが WhisperX、Whisper-Streaming、faster-whisper が存在する理由です。
 
-**Log-mel normalization.** `(log_mel - mean) / std` where the stats come from Whisper's own training corpus. You *must* use Whisper's preprocessing (`whisper.audio.log_mel_spectrogram`), not `librosa.feature.melspectrogram`.
+**Log-mel normalization。** `(log_mel - mean) / std` の形で、統計量は Whisper 自身の学習コーパスに由来します。`librosa.feature.melspectrogram` ではなく、Whisper の前処理 (`whisper.audio.log_mel_spectrogram`) を必ず使ってください。
 
-### Variants in 2026
+### 2026 年のバリアント
 
 | Variant | Params | Latency (A100) | WER (LibriSpeech-clean) |
 |---------|--------|----------------|------------------------|
@@ -58,21 +58,21 @@ The prompt is what lets one model do many tasks. Change `<|en|>` to `<|fr|>` and
 | Large-v3-turbo | 809M | 8× | 1.58% |
 | Whisper-Streaming (2024) | 1.55B | streaming | 2.0% |
 
-### Fine-tuning
+### ファインチューニング
 
-Canonical workflow in 2026:
+2026 年の標準的なワークフローは次の通りです。
 
-1. Collect 10–100 hours of target-domain audio with aligned transcripts.
-2. Run `transformers.Seq2SeqTrainer` with `generate_with_loss` callback.
-3. Parameter-efficient: LoRA on `q_proj`, `k_proj`, `v_proj` of attention layers reduces GPU memory 4× with <0.3 WER cost.
-4. Freeze the encoder if you have <10 hours. Only tune the decoder.
-5. Use Whisper's own tokenizer and prompt format; never swap tokenizers.
+1. 対象ドメインの音声と対応する transcript を 10-100 時間集めます。
+2. `generate_with_loss` callback 付きで `transformers.Seq2SeqTrainer` を実行します。
+3. パラメータ効率を高めるには、attention layers の `q_proj`, `k_proj`, `v_proj` に LoRA を入れます。GPU メモリを 4 分の 1 にし、WER コストは 0.3 未満に抑えられます。
+4. データが 10 時間未満なら encoder を freeze します。decoder だけを調整します。
+5. Whisper 自身の tokenizer と prompt format を使います。tokenizer は絶対に差し替えません。
 
-Community results: fine-tuning Medium on 20 hours of medical dictation drops WER from 12% to 4.5% on medical vocabulary. Fine-tuning Turbo on 4 hours of Icelandic drops WER from 18% to 6%.
+コミュニティの結果では、医療ディクテーション 20 時間で Medium をファインチューニングすると、医療語彙で WER が 12% から 4.5% に下がりました。アイスランド語 4 時間で Turbo をファインチューニングすると、WER が 18% から 6% に下がりました。
 
-## Build It
+## 作ってみる
 
-### Step 1: run Whisper out of the box
+### Step 1: Whisper をそのまま実行する
 
 ```python
 import whisper
@@ -89,9 +89,9 @@ for seg in result["segments"]:
     print(f"[{seg['start']:.2f}–{seg['end']:.2f}] {seg['text']}")
 ```
 
-Key defaults you should always override: `temperature=0.0` (sampling defaults to 0.0 → 0.2 → 0.4 … fallback chain), `condition_on_previous_text=False` (prevents the cascading hallucination problem), and `no_speech_threshold=0.6` (silence detection).
+必ず上書きすべき重要なデフォルトは、`temperature=0.0` (sampling は 0.0 → 0.2 → 0.4 … の fallback chain がデフォルト)、`condition_on_previous_text=False` (連鎖的な hallucination を防ぐ)、`no_speech_threshold=0.6` (無音検出) です。
 
-### Step 2: chunked long-form
+### Step 2: チャンク化した長尺処理
 
 ```python
 # whisperx is the 2026 reference for long-form with word-level timestamps
@@ -100,9 +100,9 @@ model = whisperx.load_model("large-v3-turbo", device="cuda", compute_type="float
 segments = model.transcribe("1hour.mp3", batch_size=16, chunk_size=30)
 ```
 
-WhisperX adds (1) Silero VAD gating, (2) word-level alignment via wav2vec 2.0, (3) diarization via `pyannote.audio`. The 2026 workhorse for production transcription.
+WhisperX は、(1) Silero VAD gating、(2) wav2vec 2.0 による word-level alignment、(3) `pyannote.audio` による diarization を追加します。2026 年の本番 transcription で使われる実用的な定番です。
 
-### Step 3: fine-tune with LoRA
+### Step 3: LoRA でファインチューニングする
 
 ```python
 from transformers import WhisperForConditionalGeneration, WhisperProcessor
@@ -117,9 +117,9 @@ model = get_peft_model(model, lora)
 # model.print_trainable_parameters()  -> ~3M trainable / 809M total
 ```
 
-Then standard Trainer loop. Checkpoint every 1000 steps. Evaluate with WER on held-out.
+あとは標準的な Trainer loop です。1000 steps ごとに checkpoint を保存します。held-out データの WER で評価します。
 
-### Step 4: inspect what each layer learns
+### Step 4: 各層が何を学ぶかを調べる
 
 ```python
 # Grab cross-attention weights during decode to see what the decoder attends to.
@@ -132,11 +132,11 @@ with torch.inference_mode():
 # out.cross_attentions: layer × head × step × src_len
 ```
 
-Visualize with a heatmap — you will see diagonal alignment as decoder steps scan through encoder frames. That diagonal is Whisper's notion of word timestamps.
+heatmap で可視化すると、decoder steps が encoder frames を走査するにつれて斜めの alignment が見えます。この斜め線が Whisper における word timestamps の考え方です。
 
-## Use It
+## 使いどころ
 
-The 2026 stack:
+2026 年のスタック:
 
 | Situation | Pick |
 |-----------|------|
@@ -147,41 +147,41 @@ The 2026 stack:
 | Streaming (2 s latency) | Whisper-Streaming or Parakeet-TDT |
 | Word-level timestamps | WhisperX (forced alignment via wav2vec 2.0) |
 
-`faster-whisper` (CTranslate2 backend) is the fastest CPU+GPU inference runtime in 2026 — 4× faster than vanilla with identical output.
+`faster-whisper` (CTranslate2 backend) は 2026 年時点で最速の CPU+GPU inference runtime です。vanilla より 4 倍速く、出力は同一です。
 
-## Pitfalls that still ship in 2026
+## 2026 年でも出荷されがちな落とし穴
 
-- **Hallucinated text on silence.** Whisper trained on captions includes "Thanks for watching!", "Subscribe!", song lyrics. Always VAD-gate before calling.
-- **`condition_on_previous_text` cascade.** One hallucination pollutes subsequent windows. Set `False` unless you need fluency across chunks.
-- **Short-clip padding.** A 2-second clip padded to 30 seconds can hallucinate in the trailing silence. Use `pad=False` or VAD-gate.
-- **Wrong mel stats.** Using librosa's mels instead of Whisper's produces near-random output. Use `whisper.audio.log_mel_spectrogram`.
+- **無音で hallucinated text が出る。** Whisper は captions で学習しているため、"Thanks for watching!", "Subscribe!", song lyrics のような文を出すことがあります。呼び出す前に必ず VAD-gate します。
+- **`condition_on_previous_text` の連鎖。** 1 つの hallucination が後続ウィンドウを汚染します。チャンク間の流暢さが必要でない限り `False` にします。
+- **短いクリップのパディング。** 2 秒のクリップを 30 秒にパディングすると、末尾の無音で hallucination が起きることがあります。`pad=False` または VAD-gate を使います。
+- **誤った mel 統計量。** Whisper のものではなく librosa の mels を使うと、ほぼランダムな出力になります。`whisper.audio.log_mel_spectrogram` を使ってください。
 
-## Ship It
+## 提出物
 
-Save as `outputs/skill-whisper-tuner.md`. Design a Whisper fine-tune or inference pipeline for a given domain.
+`outputs/skill-whisper-tuner.md` として保存してください。特定ドメイン向けの Whisper fine-tune または inference pipeline を設計します。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. It tokenizes a Whisper-style prompt, computes decoded shape budgets, and prints the chunk schedule for a 10-minute clip.
-2. **Medium.** Install `faster-whisper`, transcribe a 10-minute podcast, compare WER against a human transcript. Try `language="auto"` vs forced `language="en"`.
-3. **Hard.** Using HF `datasets`, pick a language Whisper struggles with (e.g., Urdu), fine-tune Medium with LoRA for 2 epochs on 2 hours, and report WER delta.
+1. **Easy.** `code/main.py` を実行してください。Whisper 形式の prompt を token 化し、decode の shape budget を計算し、10 分クリップの chunk schedule を出力します。
+2. **Medium.** `faster-whisper` をインストールし、10 分の podcast を文字起こしして、人手 transcript と WER を比較してください。`language="auto"` と強制 `language="en"` を試します。
+3. **Hard.** HF `datasets` を使い、Whisper が苦手な言語 (例: Urdu) を選び、2 時間分のデータで Medium を LoRA により 2 epochs ファインチューニングし、WER delta を報告してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| 30-sec window | Whisper's limit | Hard input cap; chunk longer audio. |
-| SOT | Start-of-transcript | `<\|startoftranscript\|>` kicks off the decoder prompt. |
-| Timestamps token | Temporal alignment | Every 0.02 s offset is a special token in the 51k vocab. |
-| Turbo | The fast variant | 4-decoder layers, 8× faster, <1% WER regression. |
-| WhisperX | The long-form wrapper | VAD + Whisper + wav2vec alignment + diarization. |
-| LoRA fine-tune | Efficient tuning | Add low-rank adapters to attention; train ~0.3% of params. |
-| Hallucination | The silent failure | Whisper produces fluent English from noise/silence. |
+| Term | よく言われる意味 | 実際の意味 |
+|------|-----------------|------------|
+| 30-sec window | Whisper の制限 | 硬い入力上限。長い音声は chunk する。 |
+| SOT | Start-of-transcript | `<\|startoftranscript\|>` が decoder prompt を開始する。 |
+| Timestamps token | 時間 alignment | 0.02 s ごとの offset が 51k vocab 内の special token になっている。 |
+| Turbo | 高速バリアント | decoder 4 層、8 倍高速、WER 回帰は 1% 未満。 |
+| WhisperX | 長尺用 wrapper | VAD + Whisper + wav2vec alignment + diarization。 |
+| LoRA fine-tune | 効率的な調整 | attention に low-rank adapter を追加し、params の約 0.3% を学習する。 |
+| Hallucination | 無音時の失敗 | Whisper がノイズや無音から流暢な英語を生成する。 |
 
-## Further Reading
+## 参考資料
 
-- [Radford et al. (2022). Whisper paper](https://arxiv.org/abs/2212.04356) — the original architecture and training recipe.
-- [OpenAI (2024). Whisper Large-v3-turbo release](https://github.com/openai/whisper/discussions/2363) — 4-layer decoder, 8× speedup.
-- [Bain et al. (2023). WhisperX](https://arxiv.org/abs/2303.00747) — long-form, word-aligned, diarized.
-- [Systran — faster-whisper repo](https://github.com/SYSTRAN/faster-whisper) — CTranslate2-backed, 4× faster.
-- [HuggingFace — Whisper fine-tune tutorial](https://huggingface.co/blog/fine-tune-whisper) — canonical LoRA / full-FT walkthrough.
+- [Radford et al. (2022). Whisper paper](https://arxiv.org/abs/2212.04356) - 元の architecture と training recipe。
+- [OpenAI (2024). Whisper Large-v3-turbo release](https://github.com/openai/whisper/discussions/2363) - 4-layer decoder、8 倍の高速化。
+- [Bain et al. (2023). WhisperX](https://arxiv.org/abs/2303.00747) - 長尺、word-aligned、diarized。
+- [Systran - faster-whisper repo](https://github.com/SYSTRAN/faster-whisper) - CTranslate2 backed、4 倍高速。
+- [HuggingFace - Whisper fine-tune tutorial](https://huggingface.co/blog/fine-tune-whisper) - 標準的な LoRA / full-FT walkthrough。

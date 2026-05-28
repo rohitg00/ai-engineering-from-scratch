@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,27 +9,27 @@
       .sub { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .hook { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .store { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">Claude Agent SDK — harness with subagents, hooks, session store</text>
+  <text x="480" y="26" text-anchor="middle" class="title">Claude Agent SDK — subagents, hooks, session store付きharness</text>
 
   <rect x="40" y="50" width="880" height="220" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">orchestrator spawns three subagents; each runs in its own context</text>
+  <text x="480" y="72" text-anchor="middle" class="head">orchestratorが3 subagentsをspawnし、それぞれ独自contextで実行</text>
 
   <rect x="60" y="90" width="220" height="160" class="orch"/>
   <text x="170" y="112" text-anchor="middle" class="head">orchestrator</text>
   <text x="78" y="136" class="small">session: session_main</text>
-  <text x="78" y="154" class="small">context bounded — only results return</text>
+  <text x="78" y="154" class="small">context bounded — resultsだけ戻る</text>
   <text x="78" y="172" class="small">tool calls: list_dir(/project)</text>
-  <text x="78" y="190" class="small">spawn 3 subs; wait for results</text>
-  <text x="78" y="208" class="small">aggregate; emit final response</text>
-  <text x="78" y="226" class="small">session persists through SessionStore</text>
+  <text x="78" y="190" class="small">3 subsをspawn; resultsをwait</text>
+  <text x="78" y="208" class="small">aggregate; final responseをemit</text>
+  <text x="78" y="226" class="small">sessionはSessionStoreでpersist</text>
 
   <rect x="300" y="90" width="200" height="70" class="sub"/>
   <text x="400" y="112" text-anchor="middle" class="step">subagent 1</text>
@@ -48,7 +48,7 @@
 
   <rect x="740" y="130" width="160" height="70" class="box"/>
   <text x="820" y="152" text-anchor="middle" class="step">aggregator</text>
-  <text x="758" y="170" class="small">merge 3 results</text>
+  <text x="758" y="170" class="small">3 resultsをmerge</text>
   <text x="758" y="186" class="small">orchestrator context +=</text>
 
   <line x1="280" y1="170" x2="300" y2="125" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -81,10 +81,10 @@
   <rect x="520" y="392" width="380" height="26" class="box"/>
   <text x="538" y="410" class="step">list_sessions()</text>
   <rect x="520" y="424" width="380" height="26" class="box"/>
-  <text x="538" y="442" class="step">delete(session_id)  cascades to subagent sessions</text>
+  <text x="538" y="442" class="step">delete(session_id)  subagent sessionsへcascade</text>
   <rect x="520" y="456" width="380" height="46" class="box"/>
   <text x="538" y="478" class="step">list_subkeys(parent) + --session-mirror</text>
-  <text x="538" y="496" class="small">full TypeScript parity in the Python SDK</text>
+  <text x="538" y="496" class="small">Python SDKでもfull TypeScript parity</text>
 
-  <text x="480" y="540" text-anchor="middle" class="caption">W3C trace context propagates into CLI subprocess; entire multi-process run is one trace.</text>
+  <text x="480" y="540" text-anchor="middle" class="caption">W3C trace contextがCLI subprocessへ伝播; multi-process run全体が1 traceになる。</text>
 </svg>

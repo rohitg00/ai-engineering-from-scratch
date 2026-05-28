@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the planner's responsibility in a plan-execute agent?",
+      "question": "plan-execute agent における planner の責務は何ですか？",
       "options": [
-        "To call the dispatcher on each step",
-        "To produce an ordered list of typed steps the executor will run",
-        "To enforce timeouts",
-        "To handle the JSON-RPC transport"
+        "各 step で dispatcher を呼ぶこと",
+        "executor が実行する typed step の ordered list を作ること",
+        "timeout を enforce すること",
+        "JSON-RPC transport を扱うこと"
       ],
       "correct": 1,
-      "explanation": "Planner emits structured plans. The executor runs them. Mixing the two is the chain-of-thought trap this lesson is moving away from."
+      "explanation": "planner は structured plan を emit します。executor がそれを実行します。2 つを混ぜるのが、この lesson で避ける chain-of-thought trap です。"
     },
     {
       "stage": "pre",
-      "question": "Why is expected_outcome part of the Step shape even though the executor does not check it?",
+      "question": "executor が check しないのに expected_outcome が Step shape に入っているのはなぜですか？",
       "options": [
-        "Because the dispatcher uses it as a cache key",
-        "Because it gives the replanner and tracers a stated success condition to read",
-        "Because the registry requires it",
-        "Because the model trains on it"
+        "dispatcher が cache key として使うから",
+        "replanner と tracer が読める明示的な success condition になるから",
+        "registry が要求するから",
+        "model がそれで train されるから"
       ],
       "correct": 1,
-      "explanation": "The replanner reads it when revising. The tracer renders it on the timeline. It is a human-readable contract on the step."
+      "explanation": "replanner は revision 時にそれを読みます。tracer は timeline に表示します。step に対する human-readable contract です。"
     },
     {
       "stage": "check",
-      "question": "When a step fails and the replanner returns a new plan, what does the executor emit on the event stream?",
+      "question": "step が失敗し、replanner が新しい plan を返したとき、executor は event stream に何を emit しますか？",
       "options": [
-        "Nothing — replan is silent",
-        "session.complete with status=failed",
-        "plan.diff with removed/added/revised step ids",
-        "tool.error followed by session.start"
+        "何も emit しない。replan は silent",
+        "status=failed の session.complete",
+        "removed/added/revised step id を持つ plan.diff",
+        "tool.error のあと session.start"
       ],
       "correct": 2,
-      "explanation": "plan.diff makes the revision visible. A silent rewrite is the bug we are avoiding."
+      "explanation": "plan.diff は revision を visible にします。silent rewrite は避けたい bug です。"
     },
     {
       "stage": "check",
-      "question": "Why have both max_steps and max_replans as separate budgets?",
+      "question": "max_steps と max_replans を別々の budget にするのはなぜですか？",
       "options": [
-        "Because they measure different units. Steps cap total execution; replans cap how many times the planner is called.",
-        "Because asyncio requires both",
-        "Because the dispatcher rejects unbounded plans",
-        "Because the registry counts replans"
+        "測る単位が違うから。Steps は total execution を cap し、replans は planner が呼ばれる回数を cap する。",
+        "asyncio が両方を要求するから",
+        "dispatcher が unbounded plan を拒否するから",
+        "registry が replan を数えるから"
       ],
       "correct": 0,
-      "explanation": "max_replans catches a planner that keeps returning the same broken plan. max_steps catches a runaway plan that keeps growing."
+      "explanation": "max_replans は同じ broken plan を返し続ける planner を捕まえます。max_steps は増え続ける runaway plan を捕まえます。"
     },
     {
       "stage": "check",
-      "question": "Which reason is returned when the planner returns an empty list on the first call?",
+      "question": "planner が初回 call で empty list を返した場合、どの reason が返りますか？",
       "options": [
         "step_budget",
         "replan_budget",
@@ -60,23 +60,23 @@
         "no_plan"
       ],
       "correct": 3,
-      "explanation": "No plan, no execution. The session ends with reason=no_plan and status=failed."
+      "explanation": "plan がなければ execution もありません。session は reason=no_plan、status=failed で終わります。"
     },
     {
       "stage": "post",
-      "question": "What is in PlanDiff.revised?",
+      "question": "PlanDiff.revised には何が入りますか？",
       "options": [
-        "Step ids that were in the old plan and are not in the new",
-        "Step ids in the new plan that were not in the old",
-        "Step ids whose tool_name or args changed between revisions",
-        "Step ids the planner asked to skip"
+        "old plan にはあったが new plan にはない step id",
+        "new plan にはあるが old plan にはなかった step id",
+        "revision 間で tool_name または args が変わった step id",
+        "planner が skip を求めた step id"
       ],
       "correct": 2,
-      "explanation": "revised is the set of ids whose (tool_name, args) signature changed across the revision."
+      "explanation": "revised は revision をまたいで (tool_name, args) signature が変わった id の set です。"
     },
     {
       "stage": "post",
-      "question": "When the executor exhausts max_replans, what is the resulting SessionResult.reason?",
+      "question": "executor が max_replans を使い切った場合、resulting SessionResult.reason は何ですか？",
       "options": [
         "goal_met",
         "step_budget",
@@ -84,7 +84,7 @@
         "no_plan"
       ],
       "correct": 2,
-      "explanation": "replan_budget. The status is failed. History carries every step that ran, including the failures that triggered replans."
+      "explanation": "replan_budget です。status は failed です。history には、replan を trigger した failure を含む、実行済みの全 step が残ります。"
     }
   ]
 }

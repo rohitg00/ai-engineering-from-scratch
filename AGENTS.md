@@ -1,18 +1,18 @@
 # AGENTS.md
 
-Operating manual for contributors and AI agents touching this repo. Read it before opening a PR.
+このリポジトリを扱うコントリビューターと AI エージェント向けの運用マニュアルです。PR を開く前に読んでください。
 
-The repo is a curriculum, not a SaaS app. The lessons are the product. Every rule below keeps 435 lessons coherent over time.
-
----
-
-## Philosophy
-
-435 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported. You write backprop, the tokenizer, the attention mechanism, and the agent loop by hand in Python, TypeScript, Rust, or Julia. Then you run the same operation through the production library so the framework stops being a black box. The "Build It / Use It" split is the spine. Each lesson ships a reusable artifact you can plug into your daily workflow.
+このリポジトリは SaaS アプリではなく、カリキュラムです。プロダクトはレッスンそのものです。以下のルールは、435 レッスンの一貫性を長期的に保つためのものです。
 
 ---
 
-## Repo layout
+## 哲学
+
+435 レッスン。20 フェーズ。どのアルゴリズムも、フレームワークを 1 つでも import する前に、生の数学から組み立てます。backprop、tokenizer、attention mechanism、agent loop を Python、TypeScript、Rust、Julia のいずれかで手書きします。その後、同じ操作を本番用ライブラリで実行し、フレームワークをブラックボックスではなくします。"作る / 使う" の分割が背骨です。各レッスンは、日々のワークフローに差し込める再利用可能な成果物を出荷します。
+
+---
+
+## リポジトリ構成
 
 ```
 phases/
@@ -35,32 +35,32 @@ scripts/                      # automation
 
 ---
 
-## Hard rules
+## 厳格なルール
 
-1. **One commit per lesson directory.** Never batch multiple lessons into one commit. A 10-lesson PR has 10 commits.
-2. **Conventional commit subjects** ≤72 chars: `feat(phase-NN/MM): <slug>`. Body explains why, not what.
-3. **Mermaid or SVG only** for diagrams. No ASCII / Unicode box-drawing.
-4. **Every fenced code block needs a language tag.** Use `text`, `json`, `python`, `typescript`, `rust`, `julia`, `bash`, `console`, `mermaid`, `yaml` as appropriate.
-5. **Original implementations only.** Don't cite external curriculum repos in docs, code comments, or commit text. Cite RFCs, official specs, and academic papers when they are the canonical source.
-6. **Dependency allowlist** (see `Dependencies` below). Stdlib-first.
-7. **Never commit generated files**: `catalog.json` is gitignored, `site/data.js` is rebuilt by CI, `package-lock.json` is never tracked.
+1. **レッスンディレクトリごとに 1 コミット。** 複数のレッスンを 1 コミットにまとめないでください。10 レッスンの PR には 10 コミットが必要です。
+2. **Conventional commit の件名** は 72 文字以下: `feat(phase-NN/MM): <slug>`。本文では「何を」ではなく「なぜ」を説明します。
+3. 図は **Mermaid または SVG のみ**。ASCII / Unicode box-drawing は使いません。
+4. **すべての fenced code block に language tag が必要です。** 必要に応じて `text`、`json`、`python`、`typescript`、`rust`、`julia`、`bash`、`console`、`mermaid`、`yaml` を使います。
+5. **実装はオリジナルのみ。** ドキュメント、コードコメント、コミット文で外部カリキュラムリポジトリを引用しないでください。正典となる情報源が RFC、公式仕様、学術論文である場合は、それらを引用します。
+6. **依存関係の allowlist**（下の「依存関係」を参照）。stdlib-first。
+7. **生成ファイルを commit しない:** `catalog.json` は gitignored、`site/data.js` は CI で再ビルド、`package-lock.json` は追跡しません。
 
 ---
 
-## Dependencies
+## 依存関係
 
-| Language   | Allowed                                                                  |
+| 言語       | 許可されるもの                                                           |
 |------------|--------------------------------------------------------------------------|
 | Python     | `numpy`, `torch`, `h5py`, `zstandard`, `safetensors`, stdlib              |
-| TypeScript | `hono`, `zod`, `ws` (only when WebSockets needed), `@hono/node-server`, Node 20+ stdlib |
-| Rust       | stdlib only (single-file `rustc --edition 2021`)                          |
+| TypeScript | `hono`, `zod`, `ws`（WebSockets が必要な場合のみ）, `@hono/node-server`, Node 20+ stdlib |
+| Rust       | stdlib のみ（single-file `rustc --edition 2021`）                         |
 | Julia      | `Random`, `Statistics`, `LinearAlgebra`, `Printf` (Julia stdlib)          |
 
-If a finding suggests a banned dep, skip it with the reason "stays stdlib-first for educational clarity."
+指摘が禁止された依存関係を提案している場合は、理由を "stays stdlib-first for educational clarity." としてスキップしてください。
 
 ---
 
-## Lesson contract
+## レッスンの契約
 
 ### docs/en.md frontmatter
 
@@ -69,16 +69,16 @@ If a finding suggests a banned dep, skip it with the reason "stays stdlib-first 
 
 > <One-line hook>
 
-**Type:** <Learn | Build | Reference>
-**Languages:** <comma-list matching the main.* files in code/>
-**Prerequisites:** <comma-list of upstream lessons, or "None">
-**Time:** ~<estimate in minutes>
+**種別:** <Learn | Build | Reference>
+**言語:** <comma-list matching the main.* files in code/>
+**前提条件:** <comma-list of upstream lessons, or "None">
+**所要時間:** ~<estimate in minutes>
 
 ## Learning Objectives
 - <4-6 bullet points starting with a verb>
 ```
 
-The `**Languages:**` field must match the languages with a `main.*` file in `code/`.
+`**言語:**` フィールドは、`code/` にある `main.*` ファイルの言語と一致していなければなりません。
 
 ### quiz.json schema
 
@@ -97,24 +97,24 @@ The `**Languages:**` field must match the languages with a `main.*` file in `cod
 }
 ```
 
-Exactly 6 questions: 1 pre + 3 check + 2 post. `correct` is zero-indexed. The site renderer only understands this shape — legacy `q/choices/answer` schemas crash silently.
+問題数は正確に 6 問です: pre 1 問 + check 3 問 + post 2 問。`correct` はゼロ始まりです。サイトレンダラーが理解できるのはこの形だけです。古い `q/choices/answer` スキーマは静かにクラッシュします。
 
 ### code/
 
-- Runs end-to-end and exits 0 on the canonical command for the language.
-- Self-terminating demo. No infinite stdin loops, no hangs on missing API keys.
-- 4-6 line header comment citing the lesson's `docs/en.md` path and any spec or RFC sources.
+- その言語の標準コマンドでエンドツーエンドに実行でき、終了コード 0 で終わること。
+- デモは自分で終了すること。無限の stdin ループや、API キー不足によるハングを入れないこと。
+- レッスンの `docs/en.md` パスと、仕様または RFC の出典を示す 4-6 行のヘッダーコメントを含めること。
 
 ### code/tests/
 
-- 5+ unit tests minimum.
-- Runs via the language's stdlib runner (`python3 -m unittest discover`, `npx tsx --test`, Rust/Julia inline).
+- 最低 5 件の unit tests。
+- その言語の stdlib runner で実行すること（`python3 -m unittest discover`、`npx tsx --test`、Rust/Julia inline）。
 
 ---
 
-## Per-PR validation
+## PR ごとの検証
 
-Run locally before pushing:
+push 前にローカルで実行してください。
 
 ```bash
 python3 scripts/audit_lessons.py
@@ -125,40 +125,40 @@ cd phases/NN-phase/MM-lesson/code
 python3 main.py && python3 -m unittest discover tests -v   # or the lang equivalent
 ```
 
-CI gates (`.github/workflows/curriculum.yml`):
+CI ゲート（`.github/workflows/curriculum.yml`）:
 
-| Job                              | Trigger      | Behavior                                              |
+| ジョブ                           | トリガー     | 挙動                                                  |
 |----------------------------------|--------------|-------------------------------------------------------|
-| `audit`                          | push + PR    | Runs `audit_lessons.py`. Blocking.                    |
-| `readme-counts-sync` (main only) | push to main | Rebuilds catalog + auto-fixes README counts.         |
-| `site-rebuild` (main only)       | push to main | Re-runs `node site/build.js`, commits `site/data.js`. |
-| `readme-counts-drift`            | PR           | Advisory only — main self-heals on merge.             |
+| `audit`                          | push + PR    | `audit_lessons.py` を実行。必須。                    |
+| `readme-counts-sync` (main only) | push to main | catalog を再ビルドし、README counts を自動修正。     |
+| `site-rebuild` (main only)       | push to main | `node site/build.js` を再実行し、`site/data.js` を commit。 |
+| `readme-counts-drift`            | PR           | 助言のみ。main は merge 時に自己修復。                |
 
 ---
 
-## Automation contract
+## 自動化の契約
 
-**CI handles automatically — do not touch in your PR:**
+**CI が自動処理します。PR では触らないでください。**
 
-| Surface              | Bot                            | When                |
+| 対象                 | 処理                           | タイミング          |
 |----------------------|--------------------------------|---------------------|
-| `catalog.json`       | rebuilt on demand (gitignored) | every CI job        |
-| `README.md` counts   | `readme-counts-sync`           | on push to main     |
-| `site/data.js`       | `site-rebuild`                 | on push to main     |
+| `catalog.json`       | 必要時に再ビルド（gitignored） | すべての CI job     |
+| `README.md` counts   | `readme-counts-sync`           | main への push 時   |
+| `site/data.js`       | `site-rebuild`                 | main への push 時   |
 
-**You handle:**
+**あなたが対応するもの:**
 
-| Surface                       | When                                                             |
+| 対象                          | タイミング                                                       |
 |-------------------------------|------------------------------------------------------------------|
-| `README.md` lesson-link rows  | when adding a new lesson — link `[Title](phases/NN-phase/MM-lesson/)` |
-| `ROADMAP.md` status           | when marking a lesson complete or WIP                            |
-| `glossary/terms.md`           | when introducing a term used by more than one lesson             |
+| `README.md` lesson-link rows  | 新しいレッスンを追加するとき。`[Title](phases/NN-phase/MM-lesson/)` でリンクする |
+| `ROADMAP.md` status           | レッスンを complete または WIP にするとき                        |
+| `glossary/terms.md`           | 複数レッスンで使う用語を導入するとき                             |
 
-**Common bug**: if `grep -c 'tree/main/phases/NN-' site/data.js` is 0 after merge, the Phase NN README rows are plain text and missing the `[Title](phases/NN-...)` markdown link. `site/build.js` derives the URL from that link.
+**よくあるバグ**: merge 後に `grep -c 'tree/main/phases/NN-' site/data.js` が 0 の場合、Phase NN の README 行がプレーンテキストで、`[Title](phases/NN-...)` の markdown link がありません。`site/build.js` はそのリンクから URL を導出します。
 
 ---
 
-## Conflict resolution
+## コンフリクト解決
 
 ```bash
 git fetch origin main
@@ -182,11 +182,11 @@ git add site/data.js && git commit --no-edit
 git push origin <your-branch>
 ```
 
-Avoid `git push --force` to a branch with open review comments. Force-push detaches them.
+未解決の review comments があるブランチへ `git push --force` するのは避けてください。force-push するとそれらが切り離されます。
 
 ---
 
-## New-lesson onboarding
+## 新規レッスンのオンボーディング
 
 ```bash
 mkdir -p phases/NN-phase-slug/MM-new-lesson/{docs,code/tests,outputs}
@@ -211,8 +211,8 @@ git push -u origin <your-branch>
 gh pr create --title "feat(phase-NN/MM): add <slug>" --body "<5-line summary>"
 ```
 
-`site/data.js` regenerates on merge — leave it for CI.
+`site/data.js` は merge 時に再生成されます。CI に任せてください。
 
 ---
 
-Last reviewed: 2026-05-27.
+最終レビュー: 2026-05-27。

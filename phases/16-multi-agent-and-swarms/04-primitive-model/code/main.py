@@ -1,4 +1,4 @@
-"""Four multi-agent primitives, stdlib only.
+"""4 つの multi-agent primitives。stdlib only。
 
 Primitives:
   - Agent(name, system_prompt, tools, policy)
@@ -6,9 +6,9 @@ Primitives:
   - SharedState (thread-safe message pool)
   - Orchestrator (Static, Handoff-driven, LLM-selected)
 
-Runs the same three-agent pipeline (researcher -> writer -> reviewer) under
-three orchestrator types. Agents are scripted policies, not LLM calls -- the
-point is the coordination structure.
+同じ 3-agent pipeline (researcher -> writer -> reviewer) を 3 種類の
+orchestrator で実行する。agents は LLM calls ではなく scripted policies。
+焦点は coordination structure。
 """
 from __future__ import annotations
 
@@ -55,32 +55,32 @@ class Agent:
 
 def researcher_policy(state: SharedState) -> Message:
     n = len([m for m in state.snapshot() if m["from"] == "researcher"])
-    notes = f"note {n + 1}: FIPA-ACL ratified 2000; 20 performatives."
+    notes = f"note {n + 1}: FIPA-ACL は 2000 年に ratified。20 performatives。"
     return {"content": notes, "handoff": "writer" if n == 0 else "done"}
 
 
 def writer_policy(state: SharedState) -> Message:
     research = [m["content"] for m in state.snapshot() if m["from"] == "researcher"]
-    draft = "Draft summarizing: " + " | ".join(research) if research else "Draft with no research yet."
+    draft = "要約 draft: " + " | ".join(research) if research else "research なしの draft。"
     return {"content": draft, "handoff": "reviewer"}
 
 
 def reviewer_policy(state: SharedState) -> Message:
     last = state.last_by("writer")
-    verdict = "approved" if last and "summarizing" in last["content"] else "needs revision"
+    verdict = "approved" if last and "要約" in last["content"] else "needs revision"
     return {"content": f"Review verdict: {verdict}.", "handoff": "done"}
 
 
 def make_team() -> dict[str, Agent]:
     return {
-        "researcher": Agent("researcher", "Gather facts.", researcher_policy),
-        "writer": Agent("writer", "Draft from research.", writer_policy),
-        "reviewer": Agent("reviewer", "Critique the draft.", reviewer_policy),
+        "researcher": Agent("researcher", "facts を集める。", researcher_policy),
+        "writer": Agent("writer", "research から draft する。", writer_policy),
+        "reviewer": Agent("reviewer", "draft を critique する。", reviewer_policy),
     }
 
 
 class StaticOrchestrator:
-    """Fixed sequential order, LangGraph-style deterministic edges."""
+    """固定の sequential order。LangGraph-style deterministic edges。"""
 
     def __init__(self, order: list[str]) -> None:
         self.order = order
@@ -92,7 +92,7 @@ class StaticOrchestrator:
 
 
 class HandoffOrchestrator:
-    """OpenAI Swarm-style: the current agent returns its own handoff target."""
+    """OpenAI Swarm-style: current agent が自分の handoff target を返す。"""
 
     def __init__(self, start: str) -> None:
         self.start = start
@@ -111,8 +111,8 @@ class HandoffOrchestrator:
 
 
 class LLMSelectorOrchestrator:
-    """AutoGen GroupChat-style speaker selection. The selector function is
-    scripted here, but in production it would be an LLM call reading the pool."""
+    """AutoGen GroupChat-style speaker selection。selector function はここでは
+    scripted だが、production では pool を読む LLM call になる。"""
 
     def __init__(self, start: str, selector: Callable[[SharedState, dict[str, Agent]], Optional[str]]) -> None:
         self.start = start
@@ -147,7 +147,7 @@ def render_pool(label: str, state: SharedState) -> None:
 
 
 def main() -> None:
-    print("Four multi-agent primitives demo")
+    print("4 つの multi-agent primitives demo")
     print("-" * 42)
 
     team = make_team()
@@ -165,8 +165,8 @@ def main() -> None:
     LLMSelectorOrchestrator("researcher", round_robin_selector).run(team, state_c)
     render_pool("LLM-selected (AutoGen-style)", state_c)
 
-    print("\nTakeaway: agents and state are identical across runs;")
-    print("only the orchestrator choice changes who speaks when.")
+    print("\nTakeaway: agents と state は run 間で同一。")
+    print("変わるのは、誰がいつ話すかを決める orchestrator choice だけです。")
 
 
 if __name__ == "__main__":

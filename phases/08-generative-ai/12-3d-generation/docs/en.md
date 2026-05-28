@@ -1,67 +1,68 @@
-# 3D Generation
+# 3D 生成
 
-> 3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstruction on top to produce objects and scenes from a single prompt or photo.
+> 3D は、2D-to-3D の leverage が最も強い modality です。2023 年のブレイクスルーは 3D Gaussian Splatting でした。2024-2026 年の生成系の流れは、その上に multi-view diffusion + 3D reconstruction を重ね、単一の prompt や photo から object と scene を生成することです。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
+**所要時間:** 約45分
 
-## The Problem
+## 課題
 
-3D content is painful:
+3D content は扱いが難しいです。
 
-- **Representation.** Meshes, point clouds, voxel grids, signed distance fields (SDFs), neural radiance fields (NeRFs), 3D Gaussians. Each has trade-offs.
-- **Data scarcity.** ImageNet has 14M images. The largest clean 3D dataset (Objaverse-XL, 2023) has ~10M objects, most low quality.
-- **Memory.** A 512³ voxel grid is 128M voxels; a useful scene NeRF needs 1M samples/ray. Generation is harder than reconstruction.
-- **Supervision.** For a 2D image you have the pixels. For 3D you usually have a handful of 2D views and have to lift to 3D.
+- **Representation.** Meshes、point clouds、voxel grids、signed distance fields (SDFs)、neural radiance fields (NeRFs)、3D Gaussians。それぞれにトレードオフがあります。
+- **Data scarcity.** ImageNet には 14M images があります。最大級のクリーンな 3D dataset (Objaverse-XL, 2023) は約 10M objects ですが、多くは低品質です。
+- **Memory.** 512³ voxel grid は 128M voxels です。有用な scene NeRF には 1M samples/ray が必要です。生成は再構成より難しいです。
+- **Supervision.** 2D 画像では pixels があります。3D では通常、少数の 2D views しかなく、それを 3D に lift する必要があります。
 
-The 2026 stack separates the two problems. First, generate *2D multi-view images* with a diffusion model. Second, fit a *3D representation* (usually Gaussian splatting) to those images.
+2026 年の stack は 2 つの問題を分けます。まず、拡散モデルで *2D multi-view images* を生成します。次に、それらの画像に *3D representation*、通常は Gaussian splatting、を fit します。
 
-## The Concept
+## コンセプト
 
 ![3D generation: multi-view diffusion + 3D reconstruction](../assets/3d-generation.svg)
 
 ### Representation: 3D Gaussian Splatting (Kerbl et al., 2023)
 
-Represent a scene as a cloud of ~1M 3D Gaussians. Each has 59 parameters: position (3), covariance (6, or quaternion 4 + scale 3), opacity (1), spherical-harmonics color (48 at degree 3, 3 at degree 0).
+scene を約 1M 個の 3D Gaussians の cloud として表現します。各 Gaussian は 59 parameters を持ちます。position (3)、covariance (6、または quaternion 4 + scale 3)、opacity (1)、spherical-harmonics color (degree 3 で 48、degree 0 で 3) です。
 
-Rendering = projection + alpha-compositing. Fast (~100 fps at 1080p on a 4090). Differentiable. Fit by gradient descent against ground-truth photos. A scene fits in 5-30 minutes on a consumer GPU.
+Rendering = projection + alpha-compositing です。高速で、4090 上の 1080p で約 100 fps。微分可能です。ground-truth photos に対して gradient descent で fit します。consumer GPU で scene を 5-30 分で fit できます。
 
-Two 2023-2024 innovations on top:
-- **Generative Gaussian splats.** Models like LGM, LRM, InstantMesh predict a Gaussian cloud directly from one or a few images.
-- **4D Gaussian Splatting.** Gaussians with per-frame offsets for dynamic scenes.
+その上にある 2023-2024 年の 2 つの革新:
+
+- **Generative Gaussian splats.** LGM、LRM、InstantMesh のようなモデルは、1 枚または少数の画像から Gaussian cloud を直接予測します。
+- **4D Gaussian Splatting.** 動的 scene のために、フレームごとの offset を持つ Gaussians です。
 
 ### Multi-view diffusion
 
-Fine-tune a pretrained image diffusion model to generate multiple consistent views of the same object from a text prompt or single image. Zero123 (Liu et al., 2023), MVDream (Shi et al., 2023), SV3D (Stability, 2024), CAT3D (Google, 2024). Usually output 4-16 views around the object, lifted to 3D via Gaussian splatting or NeRF.
+事前訓練済み画像拡散モデルを fine-tune し、テキストプロンプトまたは単一画像から、同じ object の複数の一貫した view を生成します。Zero123 (Liu et al., 2023)、MVDream (Shi et al., 2023)、SV3D (Stability, 2024)、CAT3D (Google, 2024)。通常は object 周囲の 4-16 views を出力し、それを Gaussian splatting または NeRF で 3D に lift します。
 
 ### Text-to-3D pipelines
 
-| Model | Input | Output | Time |
+| モデル | 入力 | 出力 | 時間 |
 |-------|-------|--------|------|
 | DreamFusion (2022) | text | NeRF via SDS | ~1 hour per asset |
-| Magic3D | text | mesh + texture | ~40 min |
-| Shap-E (OpenAI, 2023) | text | implicit 3D | ~1 min |
-| SJC / ProlificDreamer | text | NeRF / mesh | ~30 min |
+| Magic3D | text | mesh + texture | 約40分 |
+| Shap-E (OpenAI, 2023) | text | implicit 3D | 約1分 |
+| SJC / ProlificDreamer | text | NeRF / mesh | 約30分 |
 | LRM (Meta, 2023) | image | triplane | ~5 s |
 | InstantMesh (2024) | image | mesh | ~10 s |
-| SV3D (Stability, 2024) | image | novel views | ~2 min |
-| CAT3D (Google, 2024) | 1-64 images | 3D NeRF | ~1 min |
+| SV3D (Stability, 2024) | image | novel views | 約2分 |
+| CAT3D (Google, 2024) | 1-64 images | 3D NeRF | 約1分 |
 | TripoSR (2024) | image | mesh | ~1 s |
 | Meshy 4 (2025) | text + image | PBR mesh | ~30 s |
 | Rodin Gen-1.5 (2025) | text + image | PBR mesh | ~60 s |
 | Tencent Hunyuan3D 2.0 (2025) | image | mesh | ~30 s |
 
-2025-2026 direction: direct text-to-mesh models with PBR materials suitable for game engines. Multi-view diffusion intermediate step is still the best-performing recipe for general objects.
+2025-2026 年の方向性は、game engines に適した PBR materials を持つ direct text-to-mesh models です。一般的な objects では、multi-view diffusion を中間ステップにするレシピが、まだ最も性能のよい方法です。
 
-### NeRF (for context)
+### NeRF (文脈として)
 
-Neural Radiance Field (Mildenhall et al., 2020). A tiny MLP takes `(x, y, z, view direction)` and outputs `(color, density)`. Render by integrating along rays. Beats mesh-based novel-view synthesis in quality but is 100-1000x slower to render. Superseded by Gaussian splatting for most real-time use but still dominant in research.
+Neural Radiance Field (Mildenhall et al., 2020)。小さな MLP が `(x, y, z, view direction)` を受け取り、`(color, density)` を出力します。ray に沿って積分して render します。mesh-based novel-view synthesis より品質は高いですが、render は 100-1000 倍遅いです。ほとんどの real-time use では Gaussian splatting に置き換えられましたが、研究では依然として主要です。
 
-## Build It
+## 実装
 
-`code/main.py` implements a toy 2D "Gaussian splatting" fit: represent a synthetic target image (a smooth gradient) as a sum of 2D Gaussian splats. Optimize positions, colors, and covariances by gradient descent to match the target. You see the two core operations: forward render (splat + alpha-composite) and fit by gradient descent.
+`code/main.py` は、toy 2D "Gaussian splatting" fit を実装しています。合成 target image、滑らかな gradient、を 2D Gaussian splats の和として表現します。target に合うよう、positions、colors、covariances を gradient descent で最適化します。forward render (splat + alpha-composite) と gradient descent による fit という 2 つの中核操作を確認できます。
 
 ### Step 1: 2D Gaussian splat
 
@@ -73,7 +74,7 @@ def gaussian_at(x, y, gaussian):
     return math.exp(-d2 / (2 * sigma * sigma))
 ```
 
-### Step 2: render by summing splats
+### Step 2: splats を足し合わせて render する
 
 ```python
 def render(image_size, gaussians):
@@ -85,9 +86,9 @@ def render(image_size, gaussians):
     return img
 ```
 
-Real 3D Gaussian splatting sorts Gaussians by depth and alpha-composites in order. Our 2D toy just sums.
+実際の 3D Gaussian splatting は、Gaussians を depth で sort し、順番に alpha-composite します。この 2D toy は単純に足し合わせます。
 
-### Step 3: fit by gradient descent
+### Step 3: gradient descent で fit する
 
 ```python
 for step in range(steps):
@@ -97,67 +98,67 @@ for step in range(steps):
     update(gaussians, gradients, lr)
 ```
 
-## Pitfalls
+## 落とし穴
 
-- **View inconsistency.** If you generate 4 views independently and they disagree about object structure, the 3D fit is blurry. Fix: multi-view diffusion with shared attention.
-- **Back-side hallucination.** Single-image → 3D has to invent the unseen side. Quality varies wildly.
-- **Gaussian splat explosion.** Unconstrained training grows to 10M splats and overfits. Densification + pruning heuristics (from 3D-GS original paper) are essential.
-- **Topology issues.** Meshes from implicit fields (SDFs) often have holes or self-intersections. Run a remesher (e.g. blender's voxel remesh) before shipping.
-- **License of training data.** Objaverse has mixed licenses; commercial use varies per model.
+- **View inconsistency.** 4 views を独立に生成し、それらが object structure について矛盾していると、3D fit はぼやけます。対策: shared attention を持つ multi-view diffusion。
+- **Back-side hallucination.** Single-image → 3D では、見えていない裏側を発明する必要があります。品質は大きくばらつきます。
+- **Gaussian splat explosion.** 制約なしの訓練では 10M splats まで増え、overfit します。3D-GS original paper の densification + pruning heuristics が不可欠です。
+- **Topology issues.** implicit fields (SDFs) からの meshes は、穴や self-intersections を持つことがよくあります。出荷前に remesher、たとえば blender の voxel remesh、を実行します。
+- **License of training data.** Objaverse は mixed licenses です。商用利用可否はモデルごとに異なります。
 
-## Use It
+## 使いどころ
 
-| Task | 2026 pick |
+| タスク | 2026 年の選択 |
 |------|-----------|
-| Scene reconstruction from photos | Gaussian splatting (3DGS, Gsplat, Scaniverse) |
-| Text-to-3D object for games | Meshy 4 or Rodin Gen-1.5 (PBR output) |
-| Image-to-3D | Hunyuan3D 2.0, TripoSR, InstantMesh |
-| Novel-view synthesis from few images | CAT3D, SV3D |
+| 写真からの scene reconstruction | Gaussian splatting (3DGS, Gsplat, Scaniverse) |
+| games 向け text-to-3D object | Meshy 4 または Rodin Gen-1.5 (PBR output) |
+| Image-to-3D | Hunyuan3D 2.0、TripoSR、InstantMesh |
+| 少数画像からの novel-view synthesis | CAT3D、SV3D |
 | Dynamic scene reconstruction | 4D Gaussian Splatting |
-| Avatar / clothed human | Gaussian Avatar, HUGS |
-| Research / SOTA | Whatever dropped last week |
+| Avatar / clothed human | Gaussian Avatar、HUGS |
+| Research / SOTA | 先週出たもの |
 
-For shipping production 3D in a game or e-commerce pipeline: Meshy 4 or Rodin Gen-1.5 output PBR meshes that go straight into Unity / Unreal.
+game や e-commerce pipeline で本番 3D を出荷するなら、正解は Meshy 4 または Rodin Gen-1.5 です。Unity / Unreal にそのまま入る PBR meshes を出力します。
 
-## Ship It
+## 出荷
 
-Save `outputs/skill-3d-pipeline.md`. Skill takes a 3D brief (input: text / one image / few images; output: mesh / splat / NeRF; usage: render / game / VR) and outputs: pipeline (multi-view diffusion + fit, or direct mesh model), base model, iteration budget, topology post-processing, material channels needed.
+`outputs/skill-3d-pipeline.md` を保存します。このスキルは、3D brief (input: text / one image / few images; output: mesh / splat / NeRF; usage: render / game / VR) を受け取り、pipeline (multi-view diffusion + fit, or direct mesh model)、base model、iteration budget、topology post-processing、必要な material channels を出力します。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py` with 4, 16, 64 Gaussians. Report final MSE vs target.
-2. **Medium.** Extend to color Gaussians (RGB). Confirm reconstruction matches the target color pattern.
-3. **Hard.** Using gsplat or Nerfstudio, reconstruct a real object from a 50-photo capture. Report fit time and final SSIM on held-out views.
+1. **Easy.** 4、16、64 Gaussians で `code/main.py` を実行してください。target に対する final MSE を報告してください。
+2. **Medium.** color Gaussians (RGB) に拡張してください。再構成が target color pattern と一致することを確認してください。
+3. **Hard.** gsplat または Nerfstudio を使い、50-photo capture から実物体を再構成してください。fit time と held-out views 上の final SSIM を報告してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| 3D Gaussian Splatting | "3DGS" | Scene as a cloud of 3D Gaussians; differentiable alpha-composite render. |
-| NeRF | "Neural radiance field" | MLP that outputs color + density at a 3D point; render by ray integration. |
-| Triplane | "Three 2-D planes" | Factor 3D into three 2-D axis-aligned feature grids; cheaper than volumetric. |
-| SDS | "Score distillation sampling" | Train 3D model by using 2D-diffusion score as pseudo-gradient. |
-| Multi-view diffusion | "Many views at once" | Diffusion model that outputs a batch of consistent camera views. |
-| PBR | "Physically-based rendering" | Material with albedo, roughness, metallic, normal channels. |
-| Densification | "Grow splats" | 3DGS training heuristic: split / clone splats in high-gradient regions. |
+| 3D Gaussian Splatting | "3DGS" | 3D Gaussians の cloud として scene を表す。微分可能な alpha-composite render。 |
+| NeRF | "Neural radiance field" | 3D point で color + density を出力する MLP。ray integration で render する。 |
+| Triplane | "Three 2-D planes" | 3D を 3 つの axis-aligned 2-D feature grids に分解する。volumetric より安価。 |
+| SDS | "Score distillation sampling" | 2D-diffusion score を pseudo-gradient として使い、3D model を訓練する。 |
+| Multi-view diffusion | "Many views at once" | 一貫した camera views の batch を出力する diffusion model。 |
+| PBR | "Physically-based rendering" | albedo、roughness、metallic、normal channels を持つ material。 |
+| Densification | "Grow splats" | 3DGS training heuristic。高 gradient 領域で splats を split / clone する。 |
 
-## Production note: 3D has no shared substrate yet
+## 本番メモ: 3D にはまだ共有基盤がない
 
-Unlike image (latent diffusion + DiT) and video (spatiotemporal DiT), 3D has no single dominant runtime in 2026. The production decision tree forks on the representation:
+image (latent diffusion + DiT) や video (spatiotemporal DiT) と異なり、2026 年の 3D には単一の支配的 runtime がありません。本番の意思決定ツリーは representation によって分岐します。
 
-- **NeRF / triplane.** Inference is ray-marching + an MLP forward per sample. A 512² render requires millions of MLP forwards. Batch the ray samples aggressively; SDPA/xformers applies.
-- **Multi-view diffusion + LRM reconstruction.** Two-stage pipeline. Stage 1 (multi-view DiT) is a diffusion server just like Lesson 07. Stage 2 (LRM transformer) is a one-shot forward pass over the views. The overall latency profile is "diffusion + one-shot" — pick per-stage serving primitives accordingly.
-- **SDS / DreamFusion.** Per-asset optimization, not inference. Build jobs, not request handlers.
+- **NeRF / triplane.** 推論は ray-marching + sample ごとの MLP forward です。512² render には数百万回の MLP forwards が必要です。ray samples を積極的に batch します。SDPA/xformers が適用できます。
+- **Multi-view diffusion + LRM reconstruction.** 2 段階パイプラインです。Stage 1 (multi-view DiT) は Lesson 07 と同じ diffusion server です。Stage 2 (LRM transformer) は views に対する one-shot forward pass です。全体の latency profile は "diffusion + one-shot" なので、stage ごとに serving primitives を選びます。
+- **SDS / DreamFusion.** per-asset optimization であり、inference ではありません。request handlers ではなく jobs を作ります。
 
-For most 2026 products, the right answer is "run a multi-view diffusion model on request, reconstruct to 3DGS asynchronously, serve the 3DGS for real-time viewing". This splits the workload cleanly between a GPU-inference server (fast) and an offline optimizer (slow).
+2026 年の大半のプロダクトでは、正解は「リクエスト時に multi-view diffusion model を実行し、非同期で 3DGS に reconstruct し、real-time viewing 用に 3DGS を serve する」です。これにより、GPU-inference server (fast) と offline optimizer (slow) の間で workload をきれいに分割できます。
 
-## Further Reading
+## 参考文献
 
-- [Mildenhall et al. (2020). NeRF: Representing Scenes as Neural Radiance Fields](https://arxiv.org/abs/2003.08934) — NeRF.
-- [Kerbl et al. (2023). 3D Gaussian Splatting for Real-Time Radiance Field Rendering](https://arxiv.org/abs/2308.04079) — 3DGS.
-- [Poole et al. (2022). DreamFusion: Text-to-3D using 2D Diffusion](https://arxiv.org/abs/2209.14988) — SDS.
-- [Liu et al. (2023). Zero-1-to-3: Zero-shot One Image to 3D Object](https://arxiv.org/abs/2303.11328) — Zero123.
-- [Shi et al. (2023). MVDream](https://arxiv.org/abs/2308.16512) — multi-view diffusion.
-- [Hong et al. (2023). LRM: Large Reconstruction Model for Single Image to 3D](https://arxiv.org/abs/2311.04400) — LRM.
-- [Gao et al. (2024). CAT3D: Create Anything in 3D with Multi-View Diffusion Models](https://arxiv.org/abs/2405.10314) — CAT3D.
-- [Stability AI (2024). Stable Video 3D (SV3D)](https://stability.ai/research/sv3d) — SV3D.
+- [Mildenhall et al. (2020). NeRF: Representing Scenes as Neural Radiance Fields](https://arxiv.org/abs/2003.08934) — NeRF。
+- [Kerbl et al. (2023). 3D Gaussian Splatting for Real-Time Radiance Field Rendering](https://arxiv.org/abs/2308.04079) — 3DGS。
+- [Poole et al. (2022). DreamFusion: Text-to-3D using 2D Diffusion](https://arxiv.org/abs/2209.14988) — SDS。
+- [Liu et al. (2023). Zero-1-to-3: Zero-shot One Image to 3D Object](https://arxiv.org/abs/2303.11328) — Zero123。
+- [Shi et al. (2023). MVDream](https://arxiv.org/abs/2308.16512) — multi-view diffusion。
+- [Hong et al. (2023). LRM: Large Reconstruction Model for Single Image to 3D](https://arxiv.org/abs/2311.04400) — LRM。
+- [Gao et al. (2024). CAT3D: Create Anything in 3D with Multi-View Diffusion Models](https://arxiv.org/abs/2405.10314) — CAT3D。
+- [Stability AI (2024). Stable Video 3D (SV3D)](https://stability.ai/research/sv3d) — SV3D。

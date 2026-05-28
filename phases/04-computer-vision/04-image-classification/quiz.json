@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Your model outputs raw logits of shape (N, C). You write `loss = cross_entropy(softmax(logits), y)`. What goes wrong?",
-      "options": ["Nothing — that is the correct API", "cross_entropy re-applies softmax inside, so you end up computing softmax(softmax(logits)), producing nearly-uniform probabilities and useless gradients", "cross_entropy raises a ValueError about the shape", "Accuracy drops by exactly 1/C"],
+      "question": "モデルが shape (N, C) の raw logits を出力しています。あなたは `loss = cross_entropy(softmax(logits), y)` と書きました。何が問題になりますか？",
+      "options": ["何も問題ありません。これが正しい API です", "cross_entropy は内部で softmax をもう一度適用するため、softmax(softmax(logits)) を計算することになり、ほぼ一様な確率と役に立たない勾配が生まれます", "cross_entropy は shape に関する ValueError を送出します", "Accuracy が正確に 1/C だけ下がります"],
       "correct": 1,
-      "explanation": "PyTorch's cross_entropy expects raw logits — it fuses log_softmax and NLL internally for numerical stability. Applying softmax first gives softmax(softmax(x)), which compresses logits toward uniform and makes gradients nearly zero. Training loss looks plausible for a few steps then stalls. Always pass raw logits."
+      "explanation": "PyTorch の cross_entropy は raw logits を期待します。数値安定性のために log_softmax と NLL を内部で融合しています。先に softmax を適用すると softmax(softmax(x)) になり、logits が一様分布へ押し縮められて勾配がほぼゼロになります。Training loss は数 step はそれらしく見えますが、その後止まります。常に raw logits を渡してください。"
     },
     {
       "stage": "pre",
-      "question": "You evaluate a 10-class classifier and get 92% accuracy. Class 0 has 9,000 examples; classes 1-9 share 1,000 examples (roughly 111 each, 10,000 total). What does the headline number hide?",
-      "options": ["Nothing — accuracy is accuracy", "The model could be predicting class 0 for every input and still score 90% (9000/10000); the remaining 2% could come from any other class. Per-class precision/recall tells you what is really happening", "The validation loss is wrong", "The model is definitely over-fitting"],
+      "question": "10 クラス分類器を評価したところ、92% accuracy が得られました。Class 0 には 9000 examples があり、classes 1-9 は 1000 examples を共有しています（各 class 約 111、合計 10000）。この headline number は何を隠していますか？",
+      "options": ["何も隠していません。accuracy は accuracy です", "モデルはすべての input を class 0 と予測しても 90%（9000/10000）を達成できます。残り 2% はどの他 class から来ていてもおかしくありません。Per-class precision/recall が実際に起きていることを教えてくれます", "validation loss が間違っています", "モデルは間違いなく over-fitting しています"],
       "correct": 1,
-      "explanation": "On a 9000/1000 split (90/10 imbalance with 10,000 total examples), always predicting the majority class gets 9000/10000 = 90% accuracy. A 92% number could hide nine minority classes at roughly 20% accuracy each. Per-class precision, recall, F1, and the confusion matrix are the diagnostics that surface this, which is why aggregate accuracy alone never justifies shipping a classifier."
+      "explanation": "9000/1000 split（合計 10000 examples の 90/10 imbalance）では、常に majority class を予測するだけで 9000/10000 = 90% accuracy になります。92% という数値は、9 つの minority class がそれぞれ約 20% accuracy である状況を隠せます。Per-class precision、recall、F1、confusion matrix はこれを表に出す diagnostics です。だから aggregate accuracy だけで classifier の出荷を正当化することはできません。"
     },
     {
       "stage": "post",
-      "question": "Mixup replaces one-hot labels with interpolated soft targets like lambda * y_i + (1-lambda) * y_j. Why does this help generalisation?",
-      "options": ["It doubles the effective batch size", "The model is forced to produce smooth predictions between classes instead of memorising hard one-hot targets, which improves both calibration and test accuracy", "It lets you train with a larger learning rate", "It guarantees zero train loss"],
+      "question": "Mixup は one-hot labels を lambda * y_i + (1-lambda) * y_j のような補間された soft targets に置き換えます。なぜこれが generalisation を助けるのでしょうか？",
+      "options": ["effective batch size が 2 倍になるからです", "モデルが hard one-hot targets を暗記するのではなく、クラス間で滑らかな予測を出すよう強制され、calibration と test accuracy の両方が改善するからです", "より大きな learning rate で訓練できるからです", "train loss が必ずゼロになるからです"],
       "correct": 1,
-      "explanation": "Training against hard one-hot targets pushes logits to be arbitrarily sharp at each training point, which hurts calibration and invites overfitting. Mixup's convex combination of inputs and labels forces the classifier to behave smoothly between training points, which is a reasonable prior for natural image classes and consistently improves test accuracy without extra data."
+      "explanation": "hard one-hot targets に対して訓練すると、各 training point で logits が際限なく鋭くなる方向に押され、calibration が悪化し、overfitting を招きます。Mixup の inputs と labels の convex combination は、classifier が training points の間で滑らかに振る舞うことを強制します。これは natural image classes に対する妥当な prior であり、追加 data なしに test accuracy を一貫して改善します。"
     },
     {
       "stage": "post",
-      "question": "You swap `RandomCrop(32, padding=4, padding_mode='zeros')` for `padding_mode='reflect'` on CIFAR-10. Why is reflect better here?",
-      "options": ["Reflect pad is faster", "Zero padding creates hard black borders that the model learns to depend on; reflect pad mirrors the edge pixels so augmented crops look like natural photographs", "Reflect pad changes the output size", "Reflect pad is required by batch normalization"],
+      "question": "CIFAR-10 で `RandomCrop(32, padding=4, padding_mode='zeros')` を `padding_mode='reflect'` に差し替えました。ここで reflect の方が良い理由は何ですか？",
+      "options": ["Reflect pad の方が高速だからです", "Zero padding は硬い黒い境界を作り、モデルがそれに依存するよう学んでしまいます。reflect pad は端の pixels を鏡映するため、augmented crops が自然な写真のように見えます", "Reflect pad は output size を変えるからです", "Reflect pad は batch normalization に必須だからです"],
       "correct": 1,
-      "explanation": "Zero-padded crops have visible black borders that leak information about crop position into the features. The network can learn to look at the corner and implicitly undo the augmentation. Reflect pad mirrors real content, so every crop still looks like a natural image and the network cannot cheat on the augmentation."
+      "explanation": "Zero-padded crops には目に見える黒い境界があり、crop position に関する情報が features に漏れます。network は corner を見て augmentation を暗黙に取り消すことを学べてしまいます。Reflect pad は実際の content を鏡映するので、どの crop も自然な image に見え続け、network は augmentation をずるく回避できません。"
     },
     {
       "stage": "post",
-      "question": "You train a classifier and the confusion matrix shows most errors are class 3 predicted as class 5 and class 5 predicted as class 3. What is the single most impactful next step?",
-      "options": ["Add more training data across all classes equally", "Increase batch size", "Look at a sample of class-3 and class-5 images that confuse the model; the two classes may be genuinely ambiguous, mislabelled, or visually similar in a way that calls for a targeted augmentation or a re-labelled training set", "Switch from SGD to Adam"],
+      "question": "分類器を訓練したところ、confusion matrix では多くの error が class 3 を class 5 と予測したもの、および class 5 を class 3 と予測したものに集中していました。最も効果の大きい次の step は何ですか？",
+      "options": ["全 class に同じ量の training data を追加する", "batch size を増やす", "モデルが混同している class-3 と class-5 images の sample を見る。この 2 class は本当に曖昧か、mislabelled か、targeted augmentation または re-labelled training set が必要な形で視覚的に似ている可能性があります", "SGD から Adam に切り替える"],
       "correct": 2,
-      "explanation": "A confusion matrix concentrated on one off-diagonal pair means the failure mode is specific. The right action is to inspect those images: you often find mislabelled data, near-duplicate classes, or a simple invariance the model has not learnt. Blanket changes (more data, new optimizer) rarely help when the failure is this localised."
+      "explanation": "confusion matrix が 1 つの off-diagonal pair に集中しているなら、failure mode は局所的です。正しい action はそれらの images を検査することです。mislabelled data、ほぼ重複した classes、またはモデルがまだ学んでいない単純な invariance が見つかることがよくあります。failure がここまで localized している場合、more data や new optimizer のような blanket changes はめったに効きません。"
     }
   ]
 }

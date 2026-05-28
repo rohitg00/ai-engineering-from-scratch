@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What advantage does SVD have over eigendecomposition?",
-      "options": ["SVD is always faster to compute", "SVD works on any matrix of any shape, while eigendecomposition requires square matrices with full eigenvector sets", "SVD produces smaller output matrices", "SVD does not require numerical computation"],
+      "question": "SVDには固有分解に対してどのような利点がありますか？",
+      "options": ["SVDは常に計算が速い", "SVDは任意の形の任意の行列に使える一方、固有分解には完全な固有ベクトル集合を持つ正方行列が必要である", "SVDはより小さい出力行列を生成する", "SVDには数値計算が不要である"],
       "correct": 1,
-      "explanation": "Eigendecomposition only works on square matrices that have n linearly independent eigenvectors. SVD decomposes ANY m x n matrix into U * Sigma * V^T with no restrictions on shape or rank."
+      "explanation": "固有分解は、n個の線形独立な固有ベクトルを持つ正方行列にしか使えません。SVDは形やrankに制限なく、任意のm x n行列を U * Sigma * V^T に分解します。"
     },
     {
       "stage": "pre",
-      "question": "What does 'low-rank approximation' mean?",
-      "options": ["Removing rows with low values from a matrix", "Approximating a matrix by keeping only its most important components, producing a simpler matrix with fewer independent directions", "Converting a matrix to a lower precision data type", "Sorting the rows of a matrix by their magnitude"],
+      "question": "「低rank近似」とは何を意味しますか？",
+      "options": ["値が小さい行を行列から削除すること", "最も重要な成分だけを残して行列を近似し、独立方向が少ないより単純な行列を作ること", "行列を低精度のデータ型へ変換すること", "行列の行を大きさ順に並べ替えること"],
       "correct": 1,
-      "explanation": "A rank-k approximation keeps only the top k singular values and their vectors, discarding the rest. The Eckart-Young theorem proves this is the BEST possible approximation of that rank."
+      "explanation": "rank-k近似は、上位k個の特異値と対応するベクトルだけを残し、残りを捨てます。Eckart-Youngの定理は、これがそのrankで可能な最良近似であることを証明します。"
     },
     {
       "stage": "post",
-      "question": "In SVD A = U * Sigma * V^T, what geometric operation does each factor represent?",
-      "options": ["U scales, Sigma rotates, V^T translates", "V^T rotates in input space, Sigma scales along principal axes, U rotates into output space", "U compresses, Sigma expands, V^T normalizes", "All three factors perform the same operation: rotation"],
+      "question": "SVD A = U * Sigma * V^T において、それぞれの因子はどの幾何学的操作を表しますか？",
+      "options": ["Uはスケール、Sigmaは回転、V^Tは平行移動を行う", "V^Tは入力空間で回転し、Sigmaは主軸に沿ってスケールし、Uは出力空間へ回転する", "Uは圧縮、Sigmaは展開、V^Tは正規化を行う", "3つの因子はすべて同じ操作、つまり回転を行う"],
       "correct": 1,
-      "explanation": "SVD reveals that every matrix performs: (1) V^T rotates inputs to align with principal directions, (2) Sigma stretches/compresses along each axis, (3) U rotates the result into the output space. Rotate, scale, rotate."
+      "explanation": "SVDは、すべての行列が (1) V^Tで入力を主方向へそろえるように回転し、(2) Sigmaで各軸に沿って伸縮し、(3) Uで結果を出力空間へ回転することを示します。回転、スケール、回転です。"
     },
     {
       "stage": "post",
-      "question": "Why does sklearn implement PCA using SVD instead of eigendecomposition of the covariance matrix?",
-      "options": ["SVD produces different results that are more accurate for ML", "SVD works directly on the data matrix without forming the covariance matrix, avoiding squaring the condition number and improving numerical stability", "SVD is easier to parallelize on GPUs", "SVD does not require centering the data"],
+      "question": "sklearnが共分散行列の固有分解ではなくSVDでPCAを実装しているのはなぜですか？",
+      "options": ["SVDはMLにおいて異なる結果を生成し、その方が正確だから", "SVDは共分散行列を作らずにデータ行列へ直接作用でき、条件数の二乗を避けて数値安定性を高めるから", "SVDはGPUで並列化しやすいから", "SVDではデータの中心化が不要だから"],
       "correct": 1,
-      "explanation": "Forming A^T*A squares the singular values (and condition number). If A has singular values [1000, 0.001], A^T*A has eigenvalues [10^6, 10^-6] -- 6 digits of precision lost. SVD avoids this by working directly on A."
+      "explanation": "A^T*Aを作ると特異値（および条件数）が二乗されます。Aの特異値が [1000, 0.001] なら、A^T*Aの固有値は [10^6, 10^-6] となり、6桁の精度を失います。SVDはAに直接作用することでこれを避けます。"
     },
     {
       "stage": "post",
-      "question": "How does truncated SVD enable recommendation systems to predict missing ratings?",
-      "options": ["It fills missing entries with the average rating", "It decomposes the ratings matrix into latent user and movie profiles; the dot product of a user profile with a movie profile predicts the missing rating", "It clusters similar users together and copies their ratings", "It trains a neural network on the observed ratings"],
+      "question": "切り詰めSVDは、推薦システムで欠損評価をどのように予測可能にしますか？",
+      "options": ["欠損要素を平均評価で埋める", "評価行列を潜在的なユーザーおよび映画プロファイルへ分解し、ユーザープロファイルと映画プロファイルの内積で欠損評価を予測する", "似たユーザーをクラスタリングし、その評価をコピーする", "観測済み評価でニューラルネットワークを訓練する"],
       "correct": 1,
-      "explanation": "SVD decomposes the ratings matrix into user profiles (U), latent factor importance (Sigma), and movie profiles (V^T). The low-rank reconstruction fills in missing entries based on the latent factors (genre, era, style) that explain user preferences."
+      "explanation": "SVDは評価行列を、ユーザープロファイル（U）、潜在因子の重要度（Sigma）、映画プロファイル（V^T）へ分解します。低rank再構成は、ユーザー嗜好を説明する潜在因子（ジャンル、時代、スタイル）に基づいて欠損要素を埋めます。"
     }
   ]
 }

@@ -1,9 +1,9 @@
-"""Byte-Pair Encoding tokenizer from scratch.
+"""Byte-Pair Encoding tokenizer を scratch から作る。
 
-Trains a byte-level BPE vocabulary on a small built-in corpus, encodes a
-held-out sentence, decodes it back, and prints both.
+小さな built-in corpus で byte-level BPE vocabulary を train し、held-out sentence を
+encode して decode し、両方を print する。
 
-Stdlib + nothing else. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -22,10 +22,10 @@ WORD_SPLIT_RE = re.compile(r"\S+|\s+")
 
 @dataclass
 class BPETokenizer:
-    """Byte-level BPE tokenizer.
+    """byte-level BPE tokenizer。
 
-    The first 256 ids map to raw bytes. Special tokens occupy a small block
-    above that. Learned merges fill the rest of the vocabulary.
+    最初の 256 ids は raw byte に map される。special token はその上の小さな block を占める。
+    learned merge が vocabulary の残りを埋める。
     """
 
     vocab: dict[int, bytes] = field(default_factory=dict)
@@ -47,7 +47,7 @@ class BPETokenizer:
         return token_id
 
     def initialize(self, specials: Iterable[str] = DEFAULT_SPECIALS) -> None:
-        """Lay out the byte alphabet and reserve special-token ids."""
+        """byte alphabet を配置し、special-token id を reserve する。"""
         self.vocab.clear()
         self.inv_vocab.clear()
         self.merges.clear()
@@ -64,11 +64,11 @@ class BPETokenizer:
 
 
 def _pretokenize(text: str) -> list[str]:
-    """Split text on whitespace/non-whitespace runs.
+    """text を whitespace / non-whitespace run で split する。
 
-    Each chunk becomes one BPE training unit. Merges never cross chunk
-    boundaries. Whitespace runs are preserved as their own chunks so the
-    decoder can rebuild the original string by concatenation.
+    各 chunk は 1 つの BPE training unit になる。merge は chunk boundary をまたがない。
+    whitespace run は独自 chunk として保持されるため、decoder は concatenation で
+    original string を復元できる。
     """
     return WORD_SPLIT_RE.findall(text)
 
@@ -107,11 +107,10 @@ def train(
     target_vocab_size: int,
     specials: Iterable[str] = DEFAULT_SPECIALS,
 ) -> None:
-    """Train BPE merges on `corpus` until the vocabulary reaches `target_vocab_size`.
+    """vocabulary が `target_vocab_size` に達するまで `corpus` 上で BPE merge を train する。
 
-    The training loop is deterministic given the corpus. Ties on pair counts
-    are broken by sorting on the pair itself so two runs over the same input
-    produce the same merge table.
+    training loop は corpus が同じなら deterministic。pair count の tie は pair 自体で
+    sort して解決するため、同じ input に対する 2 つの run は同じ merge table を作る。
     """
     tokenizer.initialize(specials)
     units = _build_initial_units(corpus)
@@ -184,10 +183,10 @@ def encode(
     text: str,
     allow_special: bool = False,
 ) -> list[int]:
-    """Encode `text` to a list of token ids.
+    """`text` を token id の list に encode する。
 
-    When `allow_special` is True, literal special-token strings in the input
-    are mapped to their reserved ids and skipped by the merge loop.
+    `allow_special` が True の場合、input 内の literal special-token string は reserved id に
+    map され、merge loop から skip される。
     """
     if not allow_special:
         return _encode_pretokenized(tokenizer, text)
@@ -218,20 +217,20 @@ def _encode_pretokenized(tokenizer: BPETokenizer, text: str) -> list[int]:
 
 
 def decode(tokenizer: BPETokenizer, ids: list[int]) -> str:
-    """Decode `ids` back to a string. Inverse of `encode` for round-trip safe input."""
+    """`ids` を string に decode する。round-trip safe input に対する `encode` の逆。"""
     pieces: list[bytes] = []
     for token_id in ids:
         if token_id in tokenizer.id_to_special:
             pieces.append(tokenizer.id_to_special[token_id].encode("utf-8"))
             continue
         if token_id not in tokenizer.vocab:
-            raise KeyError(f"unknown token id: {token_id}")
+            raise KeyError(f"未知の token id: {token_id}")
         pieces.append(tokenizer.vocab[token_id])
     return b"".join(pieces).decode("utf-8", errors="replace")
 
 
 def save(tokenizer: BPETokenizer, path: str) -> None:
-    """Serialize the tokenizer to a JSON file."""
+    """tokenizer を JSON file に serialize する。"""
     payload = {
         "vocab": {
             str(token_id): list(token_bytes)
@@ -248,7 +247,7 @@ def save(tokenizer: BPETokenizer, path: str) -> None:
 
 
 def load(path: str) -> BPETokenizer:
-    """Restore a tokenizer previously written with `save`."""
+    """以前 `save` で書いた tokenizer を restore する。"""
     with open(path, "r", encoding="utf-8") as f:
         payload = json.load(f)
     tokenizer = BPETokenizer()
@@ -307,28 +306,28 @@ def main() -> int:
     _print_section("Vocabulary summary")
     print(f"target size       : {target}")
     print(f"final vocab size  : {tokenizer.vocab_size}")
-    print(f"merges learned    : {len(tokenizer.merges)}")
+    print(f"learned merges    : {len(tokenizer.merges)}")
     print(f"special tokens    : {list(tokenizer.special_to_id)}")
 
     held_out = "the fox is quick and the dog is lazy"
     ids = encode(tokenizer, held_out)
     roundtrip = decode(tokenizer, ids)
 
-    _print_section("Encoding a held-out sentence")
+    _print_section("held-out sentence の encoding")
     print(f"input             : {held_out!r}")
     print(f"encoded ids       : {ids}")
     print(f"id count          : {len(ids)} (vs {len(held_out.encode('utf-8'))} raw bytes)")
     print(f"decoded back      : {roundtrip!r}")
-    assert roundtrip == held_out, "round trip must be lossless"
+    assert roundtrip == held_out, "round trip は lossless である必要があります"
 
-    _print_section("Highest-rank learned merges")
+    _print_section("rank が高い learned merges")
     for rank, (pair, new_id) in enumerate(list(tokenizer.merges.items())[:8]):
         left = _format_byte_token(tokenizer.vocab[pair[0]])
         right = _format_byte_token(tokenizer.vocab[pair[1]])
         merged = _format_byte_token(tokenizer.vocab[new_id])
         print(f"  rank {rank:>2}: ({left!s:>8}, {right!s:>8}) -> {merged}")
 
-    _print_section("Special-token handling")
+    _print_section("special-token handling")
     with_specials = "doc one<|endoftext|>doc two"
     ids_special = encode(tokenizer, with_specials, allow_special=True)
     assert tokenizer.special_to_id["<|endoftext|>"] in ids_special
@@ -336,7 +335,7 @@ def main() -> int:
     print(f"encoded ids       : {ids_special}")
     print(f"decoded back      : {decode(tokenizer, ids_special)!r}")
 
-    print("\nDemo OK.")
+    print("\nデモ OK.")
     return 0
 
 

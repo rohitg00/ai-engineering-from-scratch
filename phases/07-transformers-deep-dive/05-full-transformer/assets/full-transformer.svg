@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,20 +9,20 @@
       .norm { fill: #e7edd9; stroke: #1a1a1a; stroke-width: 1; }
       .ffn { fill: #d7e3ee; stroke: #1a1a1a; stroke-width: 1; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">encoder block vs decoder block — the 2026 skeleton</text>
+  <text x="450" y="30" text-anchor="middle" class="title">エンコーダブロック vs デコーダブロック — 2026年の骨格</text>
 
   <!-- Encoder column -->
   <rect x="40" y="60" width="360" height="450" class="box"/>
-  <text x="220" y="85" text-anchor="middle" class="label">encoder block (bidirectional)</text>
+  <text x="220" y="85" text-anchor="middle" class="label">エンコーダブロック (双方向)</text>
 
   <rect x="140" y="110" width="160" height="32" class="hot"/>
-  <text x="220" y="131" text-anchor="middle" class="content">input x  (N, d)</text>
+  <text x="220" y="131" text-anchor="middle" class="content">入力 x  (N, d)</text>
 
   <line x1="220" y1="142" x2="220" y2="165" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
@@ -32,7 +32,7 @@
   <line x1="220" y1="193" x2="220" y2="215" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="110" y="215" width="220" height="32" class="hot"/>
-  <text x="220" y="236" text-anchor="middle" class="content">multi-head self-attention</text>
+  <text x="220" y="236" text-anchor="middle" class="content">マルチヘッド自己注意</text>
 
   <line x1="220" y1="247" x2="220" y2="272" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
@@ -41,7 +41,7 @@
 
   <!-- residual arc -->
   <path d="M 140 126 Q 60 126 60 288 Q 60 288 207 288" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="50" y="200" class="caption">residual</text>
+  <text x="50" y="200" class="caption">残差</text>
 
   <line x1="220" y1="302" x2="220" y2="325" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
@@ -62,14 +62,14 @@
 
   <line x1="220" y1="462" x2="220" y2="482" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <rect x="140" y="482" width="160" height="22" class="hot"/>
-  <text x="220" y="498" text-anchor="middle" class="content">out (N, d)</text>
+  <text x="220" y="498" text-anchor="middle" class="content">出力 (N, d)</text>
 
   <!-- Decoder column -->
   <rect x="450" y="60" width="410" height="450" class="box"/>
-  <text x="655" y="85" text-anchor="middle" class="label">decoder block (causal + cross-attn)</text>
+  <text x="655" y="85" text-anchor="middle" class="label">デコーダブロック (因果 + cross-attn)</text>
 
   <rect x="560" y="110" width="190" height="32" class="hot"/>
-  <text x="655" y="131" text-anchor="middle" class="content">input x  (M, d)</text>
+  <text x="655" y="131" text-anchor="middle" class="content">入力 x  (M, d)</text>
 
   <line x1="655" y1="142" x2="655" y2="160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
@@ -79,7 +79,7 @@
   <line x1="655" y1="184" x2="655" y2="202" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="530" y="202" width="250" height="30" class="hot"/>
-  <text x="655" y="222" text-anchor="middle" class="content">masked self-attention</text>
+  <text x="655" y="222" text-anchor="middle" class="content">マスク付き自己注意</text>
 
   <line x1="655" y1="232" x2="655" y2="250" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <circle cx="655" cy="264" r="10" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
@@ -93,7 +93,7 @@
   <line x1="655" y1="316" x2="655" y2="334" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="520" y="334" width="270" height="30" class="hot"/>
-  <text x="655" y="354" text-anchor="middle" class="content">cross-attention (Q:dec, KV:enc)</text>
+  <text x="655" y="354" text-anchor="middle" class="content">クロス注意 (Q:dec, KV:enc)</text>
 
   <!-- arrow in from encoder -->
   <line x1="400" y1="349" x2="520" y2="349" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -116,5 +116,5 @@
   <line x1="655" y1="482" x2="655" y2="495" stroke="#1a1a1a" stroke-width="1.5"/>
   <circle cx="655" cy="502" r="8" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
 
-  <text x="450" y="544" text-anchor="middle" class="caption">encoder: 2 sublayers per block. decoder: 3 sublayers per block. residuals are dashed, additions are circles.</text>
+  <text x="450" y="544" text-anchor="middle" class="caption">エンコーダは各ブロック2サブレイヤ。デコーダは3サブレイヤ。破線が残差、円が加算。</text>
 </svg>

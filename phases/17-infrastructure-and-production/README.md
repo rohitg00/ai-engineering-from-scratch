@@ -1,5 +1,5 @@
-# Phase 17: Infrastructure & Production
+# Phase 17: インフラと本番運用
 
-> Ship AI to the real world. Scale, monitor, optimize.
+> AIを現実世界へ出荷する。スケールさせ、監視し、最適化する。
 
-See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.
+全レッスン計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。

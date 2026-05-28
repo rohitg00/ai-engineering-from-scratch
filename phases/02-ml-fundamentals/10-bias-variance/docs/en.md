@@ -1,34 +1,34 @@
-# Bias-Variance Tradeoff
+# バイアス-分散トレードオフ
 
-> Every model error comes from one of three sources: bias, variance, or noise. You can only control the first two.
+> すべてのモデル誤差は、バイアス、分散、ノイズのいずれかから生まれます。制御できるのは最初の 2 つだけです。
 
-**Type:** Learn
-**Language:** Python
-**Prerequisites:** Phase 2, Lessons 01-09 (ML basics, regression, classification, evaluation)
-**Time:** ~75 minutes
+**種類:** Learn
+**言語:** Python
+**前提:** Phase 2, Lessons 01-09 (ML basics, regression, classification, evaluation)
+**時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Derive the bias-variance decomposition of expected prediction error and explain the role of irreducible noise
-- Diagnose whether a model suffers from high bias or high variance using training and test error patterns
-- Explain how regularization techniques (L1, L2, dropout, early stopping) trade bias for variance
-- Implement experiments that visualize the bias-variance tradeoff across models of increasing complexity
+- 期待予測誤差のバイアス-分散分解を導出し、既約ノイズの役割を説明する
+- training error と test error のパターンから、モデルが high bias または high variance に苦しんでいるか診断する
+- regularization 手法（L1、L2、dropout、early stopping）が bias と variance をどうトレードオフするか説明する
+- 複雑さが増すモデル群に対して、バイアス-分散トレードオフを可視化する実験を実装する
 
-## The Problem
+## 問題
 
-You trained a model. It has some error on test data. Where does that error come from?
+モデルを学習しました。test data 上で誤差があります。その誤差はどこから来るのでしょうか？
 
-If your model is too simple (linear regression on a curved dataset), it will consistently miss the true pattern. That is bias. If your model is too complex (degree-20 polynomial on 15 data points), it will fit the training data perfectly but give wildly different predictions on new data. That is variance.
+モデルが単純すぎる場合（曲線データに linear regression を当てるなど）、真のパターンを一貫して外します。これが bias です。モデルが複雑すぎる場合（15 個のデータ点に 20 次多項式を当てるなど）、training data には完璧に合いますが、新しいデータでは予測が大きくぶれます。これが variance です。
 
-You cannot minimize both at the same time for a fixed model capacity. Push bias down and variance goes up. Push variance down and bias goes up. Understanding this tradeoff is the single most useful diagnostic skill in machine learning. It tells you whether to make your model more complex or less complex, whether to get more data or engineer better features, whether to regularize more or less.
+固定されたモデル容量では、両方を同時に最小化することはできません。bias を下げると variance が上がります。variance を下げると bias が上がります。このトレードオフを理解することは、機械学習で最も役に立つ診断スキルです。モデルをより複雑にするべきか、単純にするべきか、より多くのデータを集めるべきか、より良い特徴量を作るべきか、regularization を強めるべきか弱めるべきかを教えてくれます。
 
-## The Concept
+## コンセプト
 
-### Bias: Systematic Error
+### Bias: 系統的誤差
 
-Bias measures how far off your model's average prediction is from the true value. If you trained the same model on many different training sets drawn from the same distribution and averaged the predictions, bias is the gap between that average and the truth.
+Bias は、モデルの平均予測が真の値からどれだけ離れているかを測ります。同じ分布から引いた多くの異なる training set で同じモデルを学習し、その予測を平均したとき、bias はその平均と真値の差です。
 
-High bias means the model is too rigid to capture the real pattern. A straight line fit to a parabola will always miss the curve, no matter how much data you give it. This is underfitting.
+High bias は、モデルが硬すぎて実際のパターンを捉えられないことを意味します。放物線に直線を当てはめると、どれだけ多くのデータを与えても曲線を外します。これが underfitting です。
 
 ```
 High bias (underfitting):
@@ -38,11 +38,11 @@ High bias (underfitting):
   Gap between them: SMALL
 ```
 
-### Variance: Sensitivity to Training Data
+### Variance: Training Data への感度
 
-Variance measures how much your predictions change when you train on different subsets of data. If small changes in the training set cause large changes in the model, variance is high.
+Variance は、異なるデータ部分集合で学習したときに予測がどれだけ変わるかを測ります。training set の小さな変化がモデルの大きな変化を引き起こすなら、variance は高いです。
 
-High variance means the model is fitting noise in the training data, not the underlying signal. A degree-20 polynomial will thread through every training point but oscillate wildly between them. This is overfitting.
+High variance は、モデルが training data 内のノイズに合っており、背後にある信号に合っていないことを意味します。20 次多項式はすべての training point を通りますが、その間で激しく振動します。これが overfitting です。
 
 ```
 High variance (overfitting):
@@ -52,9 +52,9 @@ High variance (overfitting):
   Gap between them: LARGE
 ```
 
-### The Decomposition
+### 分解
 
-For any point x, the expected prediction error under squared loss decomposes exactly:
+任意の点 x について、二乗損失のもとでの期待予測誤差は正確に次のように分解できます。
 
 ```
 Expected Error = Bias^2 + Variance + Irreducible Noise
@@ -65,14 +65,14 @@ where:
   Noise    = E[(y - f(x))^2]             (sigma^2)
 ```
 
-- `f(x)` is the true function
-- `f_hat(x)` is your model's prediction
-- `E[...]` is the expectation over different training sets
-- `y` is the observed label (true function plus noise)
+- `f(x)` は真の関数です
+- `f_hat(x)` はモデルの予測です
+- `E[...]` は異なる training set にわたる期待値です
+- `y` は観測されたラベル（真の関数にノイズを加えたもの）です
 
-The noise term is irreducible. No model can do better than sigma^2 on noisy data. Your job is to find the right balance between bias^2 and variance.
+ノイズ項は既約です。ノイズを含むデータでは、どんなモデルも sigma^2 より良くはなれません。あなたの仕事は、bias^2 と variance の適切なバランスを見つけることです。
 
-### Model Complexity vs Error
+### モデル複雑度と誤差
 
 ```mermaid
 graph LR
@@ -84,28 +84,28 @@ graph LR
     style C fill:#f99,stroke:#333
 ```
 
-The classic U-shaped curve:
+古典的な U 字型の曲線です。
 
-| Complexity | Bias | Variance | Total Error |
+| 複雑度 | Bias | Variance | 総誤差 |
 |-----------|------|----------|-------------|
-| Too low | HIGH | LOW | HIGH (underfitting) |
-| Just right | MODERATE | MODERATE | LOWEST |
-| Too high | LOW | HIGH | HIGH (overfitting) |
+| 低すぎる | HIGH | LOW | HIGH (underfitting) |
+| ちょうど良い | MODERATE | MODERATE | LOWEST |
+| 高すぎる | LOW | HIGH | HIGH (overfitting) |
 
-### Regularization as Bias-Variance Control
+### Bias-Variance 制御としての Regularization
 
-Regularization deliberately increases bias to reduce variance. It constrains the model so it cannot chase noise.
+Regularization は、variance を下げるために意図的に bias を増やします。モデルに制約をかけ、ノイズを追いかけられないようにします。
 
-- **L2 (Ridge):** Shrinks all weights toward zero. Keeps all features but reduces their influence.
-- **L1 (Lasso):** Pushes some weights exactly to zero. Performs feature selection.
-- **Dropout:** Randomly disables neurons during training. Forces redundant representations.
-- **Early stopping:** Stops training before the model fully fits the training data.
+- **L2 (Ridge):** すべての重みをゼロに近づけます。すべての特徴量を残しつつ、その影響を弱めます。
+- **L1 (Lasso):** 一部の重みを正確にゼロにします。feature selection を行います。
+- **Dropout:** 学習中に neuron をランダムに無効化します。冗長な表現を強制します。
+- **Early stopping:** モデルが training data に完全に合う前に学習を止めます。
 
-The regularization strength (lambda, dropout rate, number of epochs) directly controls where you sit on the bias-variance curve. More regularization means more bias, less variance.
+regularization strength（lambda、dropout rate、epoch 数）は、バイアス-分散曲線上の位置を直接制御します。regularization を強めるほど bias は増え、variance は減ります。
 
-### Double Descent: The Modern Perspective
+### Double Descent: 現代的な見方
 
-Classical theory says: after the sweet spot, more complexity always hurts. But research since 2019 has shown something unexpected. If you keep increasing model capacity far past the interpolation threshold (where the model has enough parameters to perfectly fit training data), test error can decrease again.
+古典理論では、sweet spot を越えると、複雑さを増すほど必ず悪化するとされます。しかし 2019 年以降の研究は、予想外の現象を示しました。モデル容量を interpolation threshold（モデルが training data を完璧に当てはめるのに十分なパラメータを持つ地点）よりはるかに増やし続けると、test error は再び下がることがあります。
 
 ```mermaid
 graph LR
@@ -119,25 +119,25 @@ graph LR
     style D fill:#dfd,stroke:#333
 ```
 
-This "double descent" phenomenon explains why massively overparameterized neural networks (with far more parameters than training examples) still generalize well. The classical bias-variance tradeoff is not wrong, but it is incomplete for the modern regime.
+この「double descent」現象は、training example よりはるかに多いパラメータを持つ巨大な overparameterized neural network が、それでもうまく汎化する理由を説明します。古典的なバイアス-分散トレードオフは間違いではありませんが、現代的な領域では不完全です。
 
-Key observations about double descent:
-- It happens in linear models, decision trees, and neural networks
-- More data can actually hurt in the interpolation region (sample-wise double descent)
-- More training epochs can cause it too (epoch-wise double descent)
-- Regularization smooths out the peak but does not eliminate it
+Double descent に関する重要な観察:
+- linear model、decision tree、neural network で起きる
+- interpolation 領域では、データを増やすことが実際には悪化につながる場合がある（sample-wise double descent）
+- 学習 epoch を増やすことでも起きる場合がある（epoch-wise double descent）
+- regularization はピークをなだらかにするが、消し去るわけではない
 
-Why does this happen? At the interpolation threshold, the model has just enough capacity to fit all training points. It is forced into a very specific solution that threads through every point, and small perturbations in the data cause large changes in the fit. This is where variance peaks. Past the threshold, the model has many possible solutions that fit the data perfectly. The learning algorithm (e.g., gradient descent with implicit regularization) tends to pick the simplest one among them. This implicit bias toward simple solutions is why overparameterized models generalize.
+なぜこれが起きるのでしょうか。interpolation threshold では、モデルはすべての training point を当てはめるのにちょうど十分な容量を持っています。すべての点を通る非常に特定の解に押し込まれ、データの小さな揺らぎが fit の大きな変化を引き起こします。ここで variance がピークになります。threshold を越えると、データを完璧に当てはめる解が多数存在します。学習アルゴリズム（例: implicit regularization を伴う gradient descent）は、その中で最も単純な解を選ぶ傾向があります。この単純な解への implicit bias が、overparameterized model が汎化する理由です。
 
-| Regime | Parameters vs Samples | Behavior |
+| 領域 | Parameters と Samples | 挙動 |
 |--------|----------------------|----------|
-| Underparameterized | p << n | Classical tradeoff applies |
-| Interpolation threshold | p ~ n | Variance peaks, test error spikes |
-| Overparameterized | p >> n | Implicit regularization kicks in, test error drops |
+| Underparameterized | p << n | 古典的なトレードオフが当てはまる |
+| Interpolation threshold | p ~ n | variance がピークになり、test error が跳ね上がる |
+| Overparameterized | p >> n | implicit regularization が働き、test error が下がる |
 
-For practical purposes: if you are using neural networks or large tree ensembles, do not stop at the interpolation threshold. Either stay well below it (with explicit regularization) or go well past it. The worst place to be is right at the threshold.
+実務上は、neural network や大規模な tree ensemble を使っているなら interpolation threshold で止めないでください。十分に下に留まる（明示的な regularization を使う）か、十分に先まで進みます。最悪なのは threshold ちょうどにいることです。
 
-### Diagnosing Your Model
+### モデルを診断する
 
 ```mermaid
 flowchart TD
@@ -152,50 +152,50 @@ flowchart TD
     F --> I[Deploy]
 ```
 
-| Symptom | Diagnosis | Fix |
+| 症状 | 診断 | 対処 |
 |---------|-----------|-----|
-| High train error, high test error | Bias | More features, complex model, less regularization |
-| Low train error, high test error | Variance | More data, regularization, simpler model, dropout |
-| Low train error, low test error | Good fit | Ship it |
-| Train error decreasing, test error increasing | Overfitting in progress | Early stopping |
+| train error が高く、test error も高い | Bias | 特徴量を増やす、複雑なモデルを使う、regularization を弱める |
+| train error が低く、test error が高い | Variance | データを増やす、regularization、より単純なモデル、dropout |
+| train error が低く、test error も低い | Good fit | そのまま進める |
+| train error が下がり、test error が上がっている | Overfitting 進行中 | Early stopping |
 
-### Practical Strategies
+### 実践的な戦略
 
-**When bias is the problem:**
-- Add polynomial or interaction features
-- Use a more flexible model (tree ensemble instead of linear)
-- Reduce regularization strength
-- Train longer (if not yet converged)
+**bias が問題の場合:**
+- polynomial feature や interaction feature を追加する
+- より柔軟なモデルを使う（linear の代わりに tree ensemble など）
+- regularization strength を下げる
+- まだ収束していないなら、より長く学習する
 
-**When variance is the problem:**
-- Get more training data
-- Use bagging (random forests)
-- Increase regularization (higher lambda, more dropout)
-- Feature selection (remove noisy features)
-- Use cross-validation to detect it early
+**variance が問題の場合:**
+- training data を増やす
+- bagging を使う（Random Forest）
+- regularization を強める（より高い lambda、より多い dropout）
+- feature selection を行う（ノイズの多い特徴量を取り除く）
+- cross-validation を使って早期に検出する
 
-### Ensemble Methods and Variance Reduction
+### Ensemble Method と Variance Reduction
 
-Ensemble methods are the most practical tool for fighting variance.
+Ensemble method は、variance と戦うための最も実用的な道具です。
 
-**Bagging (Bootstrap Aggregating)** trains multiple models on different bootstrap samples of the training data, then averages their predictions. Each individual model has high variance, but the average has much lower variance. Random forests are bagging applied to decision trees.
+**Bagging (Bootstrap Aggregating)** は、training data の異なる bootstrap sample 上で複数のモデルを学習し、その予測を平均します。個々のモデルは high variance でも、平均ははるかに低い variance を持ちます。Random Forest は decision tree に bagging を適用したものです。
 
-Why it works mathematically: if you average N independent predictions, each with variance sigma^2, the variance of the average is sigma^2 / N. The models are not truly independent (they all see similar data), so the reduction is less than 1/N, but it is still substantial.
+数学的に機能する理由は、variance sigma^2 を持つ独立した予測 N 個を平均すると、平均の variance は sigma^2 / N になるからです。モデル同士は完全には独立していません（似たデータを見ているため）ので、削減量は 1/N より小さくなりますが、それでも大きな効果があります。
 
-**Boosting** reduces bias by building models sequentially, where each new model focuses on the errors of the ensemble so far. Gradient boosting and AdaBoost are the main examples. Boosting can overfit if you add too many models, so you need early stopping or regularization.
+**Boosting** はモデルを逐次的に構築し、新しい各モデルがこれまでの ensemble の誤差に注目することで bias を減らします。主な例は Gradient Boosting と AdaBoost です。モデルを増やしすぎると boosting は overfit するため、early stopping や regularization が必要です。
 
-| Method | Primary Effect | Bias Change | Variance Change |
+| 手法 | 主な効果 | Bias の変化 | Variance の変化 |
 |--------|---------------|-------------|-----------------|
-| Bagging | Reduces variance | No change | Decreases |
-| Boosting | Reduces bias | Decreases | Can increase |
-| Stacking | Reduces both | Depends on meta-learner | Depends on base models |
-| Dropout | Implicit bagging | Slight increase | Decreases |
+| Bagging | variance を減らす | 変化なし | 減少 |
+| Boosting | bias を減らす | 減少 | 増えることがある |
+| Stacking | 両方を減らす | meta-learner に依存 | base model に依存 |
+| Dropout | 暗黙的な bagging | わずかに増加 | 減少 |
 
-**Practical rule:** if your base model has high variance (deep trees, high-degree polynomials), use bagging. If your base model has high bias (shallow stumps, simple linear models), use boosting.
+**実践ルール:** base model が high variance（deep tree、high-degree polynomial）なら bagging を使います。base model が high bias（shallow stump、simple linear model）なら boosting を使います。
 
-### Learning Curves
+### Learning Curve
 
-Learning curves plot training and validation error as a function of training set size. They are the most practical diagnostic tool you have. Unlike a single train/test comparison, learning curves show you the trajectory of your model and tell you whether more data will help.
+Learning curve は、training set size の関数として training error と validation error をプロットします。これは最も実用的な診断ツールです。単一の train/test 比較とは違い、learning curve はモデルの軌跡を示し、データを増やすことが役立つかを教えてくれます。
 
 ```mermaid
 flowchart TD
@@ -221,27 +221,27 @@ flowchart TD
     end
 ```
 
-How to read them:
+読み方:
 
-| Scenario | Training Error | Validation Error | Gap | What It Means | What to Do |
+| シナリオ | Training Error | Validation Error | Gap | 意味 | 対処 |
 |----------|---------------|-----------------|-----|---------------|------------|
-| High bias | High | High | Small | Model cannot capture the pattern | More features, complex model, less regularization |
-| High variance | Low | High | Large | Model memorizes training data | More data, regularization, simpler model |
-| Good fit | Moderate | Moderate | Small | Model generalizes well | Ship it |
-| High variance, improving | Low | Decreasing with more data | Shrinking | Variance problem that data can fix | Collect more data |
-| High bias, flat | High | High and flat | Small and flat | More data will NOT help | Change model architecture |
+| High bias | 高い | 高い | 小さい | モデルがパターンを捉えられない | 特徴量を増やす、複雑なモデル、regularization を弱める |
+| High variance | 低い | 高い | 大きい | モデルが training data を暗記している | データを増やす、regularization、より単純なモデル |
+| Good fit | 中程度 | 中程度 | 小さい | モデルがよく汎化している | そのまま進める |
+| High variance, improving | 低い | データ増加で低下 | 縮小 | データで直せる variance 問題 | データをさらに集める |
+| High bias, flat | 高い | 高く平坦 | 小さく平坦 | データを増やしても役に立たない | model architecture を変える |
 
-The critical insight: if both curves have plateaued and the gap is small but both errors are high, more data is useless. You need a better model. If the gap is large and still shrinking, more data will help.
+重要な洞察は、両方の曲線が plateau し、gap が小さいのに両方の error が高いなら、データを増やしても無駄だということです。より良いモデルが必要です。gap が大きく、まだ縮んでいるなら、データを増やすことが役に立ちます。
 
-### How to Generate Learning Curves
+### Learning Curve の生成方法
 
-There are two approaches:
+2 つのアプローチがあります。
 
-**Approach 1: Vary training set size, fixed model.** Hold the model and hyperparameters constant. Train on increasingly large subsets of the training data. Measure training error and validation error at each size. This is the standard learning curve.
+**アプローチ 1: training set size を変え、model は固定する。** モデルと hyperparameter を一定に保ちます。training data のサイズを段階的に増やしながら学習します。各サイズで training error と validation error を測ります。これが標準的な learning curve です。
 
-**Approach 2: Vary model complexity, fixed data.** Hold the data constant. Sweep a complexity parameter (polynomial degree, tree depth, number of layers). Measure training error and validation error at each complexity. This is a validation curve and shows the bias-variance tradeoff directly.
+**アプローチ 2: model complexity を変え、data は固定する。** データを一定に保ちます。複雑さのパラメータ（polynomial degree、tree depth、layer 数）を sweep します。各複雑度で training error と validation error を測ります。これは validation curve であり、バイアス-分散トレードオフを直接示します。
 
-Both approaches complement each other. The first tells you if more data will help. The second tells you if a different model will help. Run both before making decisions about your next step.
+2 つのアプローチは互いに補完します。1 つ目は、データを増やすことが役立つかを教えます。2 つ目は、別のモデルが役立つかを教えます。次の一手を決める前に両方を実行してください。
 
 ```mermaid
 flowchart TD
@@ -254,13 +254,13 @@ flowchart TD
     G --> H[Try more complex model]
 ```
 
-## Build It
+## 作る
 
-The code in `code/bias_variance.py` runs the full bias-variance decomposition experiment. Here is the approach, step by step.
+`code/bias_variance.py` のコードは、完全なバイアス-分散分解実験を実行します。手順は次の通りです。
 
-### Step 1: Generate Synthetic Data from a Known Function
+### Step 1: 既知の関数から合成データを生成する
 
-We use `f(x) = sin(1.5x) + 0.5x` with Gaussian noise. Knowing the true function lets us compute exact bias and variance.
+Gaussian noise を加えた `f(x) = sin(1.5x) + 0.5x` を使います。真の関数が分かっているため、正確な bias と variance を計算できます。
 
 ```python
 def true_function(x):
@@ -273,9 +273,9 @@ def generate_data(n_samples=30, noise_std=0.5, x_range=(-3, 3), seed=None):
     return x, y
 ```
 
-### Step 2: Bootstrap Sampling and Polynomial Fitting
+### Step 2: Bootstrap Sampling と Polynomial Fitting
 
-For each polynomial degree, we draw many bootstrap training sets, fit the polynomial, and record predictions on a fixed test grid. This gives us a distribution of predictions at each test point.
+各 polynomial degree について、多数の bootstrap training set を引き、polynomial を fit し、固定された test grid 上の予測を記録します。これにより、各 test point における予測の分布が得られます。
 
 ```python
 def fit_polynomial(x_train, y_train, degree, lam=0.0):
@@ -289,11 +289,11 @@ def fit_polynomial(x_train, y_train, degree, lam=0.0):
     return w
 ```
 
-We fit on 200 different bootstrap samples. Each bootstrap sample is drawn from the same underlying distribution but contains different points.
+200 個の異なる bootstrap sample に fit します。各 bootstrap sample は同じ背後の分布から引かれますが、含まれる点は異なります。
 
-### Step 3: Computing Bias^2, Variance Decomposition
+### Step 3: Bias^2 と Variance Decomposition を計算する
 
-With 200 sets of predictions at each test point, we can compute the decomposition directly from the definition:
+各 test point で 200 セットの予測があるため、定義から直接分解を計算できます。
 
 ```python
 mean_pred = predictions.mean(axis=0)
@@ -302,14 +302,14 @@ variance = np.mean(predictions.var(axis=0))
 total_error = np.mean(np.mean((predictions - y_true) ** 2, axis=1))
 ```
 
-- `mean_pred` is E[f_hat(x)] estimated from bootstrap samples
-- `bias_sq` is the squared gap between average prediction and truth
-- `variance` is the average spread of predictions across bootstrap samples
-- `total_error` should approximately equal bias^2 + variance + noise
+- `mean_pred` は bootstrap sample から推定した E[f_hat(x)] です
+- `bias_sq` は平均予測と真値の差の二乗です
+- `variance` は bootstrap sample 全体における予測の平均的な広がりです
+- `total_error` は bias^2 + variance + noise におおよそ等しくなるはずです
 
-### Step 4: Learning Curves
+### Step 4: Learning Curve
 
-Learning curves sweep training set size while holding model complexity fixed. They show whether your model is data-limited or capacity-limited.
+Learning curve は、model complexity を固定したまま training set size を sweep します。モデルが data-limited なのか capacity-limited なのかを示します。
 
 ```python
 def demo_learning_curves():
@@ -331,16 +331,16 @@ def demo_learning_curves():
         # Average over runs gives the learning curve point
 ```
 
-For a high-variance model (degree 5 with small data), you see:
-- Training error starts low and increases as more data makes memorization harder
-- Test error starts high and decreases as the model gets more signal
-- The gap shrinks with more data
+high-variance model（小さいデータに対する degree 5）では、次のようになります。
+- training error は低く始まり、データが増えて暗記しにくくなるにつれて上がる
+- test error は高く始まり、モデルがより多くの信号を得るにつれて下がる
+- データが増えるにつれて gap が縮む
 
-For a high-bias model (degree 1), both errors converge quickly to the same high value and more data does not help.
+high-bias model（degree 1）では、両方の error がすぐ同じ高い値に収束し、データを増やしても役に立ちません。
 
 ### Step 5: Regularization Sweep
 
-The code also includes `demo_regularization_sweep()`, which fixes a high-degree polynomial (degree 15) and sweeps Ridge regularization strength from 0.001 to 100. This shows the bias-variance tradeoff from a different angle: instead of varying model complexity, we vary the constraint strength.
+コードには `demo_regularization_sweep()` も含まれています。これは high-degree polynomial（degree 15）を固定し、Ridge regularization strength を 0.001 から 100 まで sweep します。これは、model complexity を変える代わりに制約の強さを変えて、別の角度からバイアス-分散トレードオフを示します。
 
 ```python
 def demo_regularization_sweep():
@@ -351,15 +351,15 @@ def demo_regularization_sweep():
         print(f"alpha={alpha:.3f}  bias={r['bias_sq']:.4f}  var={r['variance']:.4f}")
 ```
 
-At low alpha, the degree-15 polynomial is nearly unconstrained. Variance dominates because the model chases noise in each bootstrap sample. At high alpha, the penalty is so strong that the model effectively becomes a near-constant function. Bias dominates. The optimal alpha sits between these extremes.
+低い alpha では、degree-15 polynomial はほぼ制約されていません。モデルが各 bootstrap sample のノイズを追いかけるため、variance が支配的になります。高い alpha では、penalty が強すぎて、モデルは実質的にほぼ定数関数になります。bias が支配的になります。最適な alpha はこの両極端の間にあります。
 
-This is the same U-curve from varying polynomial degree, but controlled by a continuous knob instead of a discrete one. In practice, regularization is the preferred way to control the tradeoff because it allows fine-grained control without changing the feature set.
+これは polynomial degree を変えたときと同じ U-curve ですが、離散的なつまみではなく連続的なつまみで制御されています。実務では、feature set を変えずに細かく制御できるため、regularization がトレードオフ制御の好ましい方法です。
 
-## Use It
+## 使う
 
-sklearn provides `learning_curve` and `validation_curve` to automate these diagnostics without writing bootstrap loops.
+sklearn は `learning_curve` と `validation_curve` を提供しており、bootstrap loop を書かなくてもこれらの診断を自動化できます。
 
-### Validation Curve: Sweep Model Complexity
+### Validation Curve: Model Complexity を Sweep する
 
 ```python
 from sklearn.model_selection import validation_curve
@@ -381,9 +381,9 @@ for d in degrees:
     val_scores_all.append(-val_scores.mean())
 ```
 
-This gives you the bias-variance tradeoff curve directly. Where the validation score is worst relative to train score, variance dominates. Where both are bad, bias dominates.
+これにより、バイアス-分散トレードオフ曲線が直接得られます。validation score が train score に比べて最も悪いところでは variance が支配的です。両方が悪いところでは bias が支配的です。
 
-### Learning Curve: Sweep Training Set Size
+### Learning Curve: Training Set Size を Sweep する
 
 ```python
 from sklearn.model_selection import learning_curve
@@ -397,9 +397,9 @@ train_mse = -train_scores.mean(axis=1)
 val_mse = -val_scores.mean(axis=1)
 ```
 
-Plot `train_mse` and `val_mse` against `train_sizes`. The shape tells you everything about your model.
+`train_mse` と `val_mse` を `train_sizes` に対してプロットします。形状がモデルについて必要なことをすべて教えてくれます。
 
-### Cross-Validation with Regularization Sweep
+### Regularization Sweep を使った Cross-Validation
 
 ```python
 from sklearn.model_selection import cross_val_score
@@ -411,53 +411,53 @@ for alpha in alphas:
     print(f"alpha={alpha:>7.3f}  MSE={-scores.mean():.4f} +/- {scores.std():.4f}")
 ```
 
-This sweeps regularization strength for a fixed model complexity. You will see the same bias-variance tradeoff: low alpha means high variance, high alpha means high bias.
+これは固定された model complexity に対して regularization strength を sweep します。同じバイアス-分散トレードオフが見えます。低い alpha は high variance、高い alpha は high bias を意味します。
 
-### Putting It All Together: A Complete Diagnostic Workflow
+### すべてをまとめる: 完全な診断ワークフロー
 
-In practice, you run these diagnostics in sequence:
+実務では、これらの診断を順番に実行します。
 
-1. Train your model. Compute train and test error.
-2. If both are high: you have a bias problem. Skip to step 4.
-3. If train is low but test is high: you have a variance problem. Generate a learning curve to see if more data will help. If not, regularize.
-4. Generate a validation curve sweeping your main complexity parameter. Find the sweet spot.
-5. At the sweet spot, generate a learning curve. If the gap is still large, you need more data or regularization.
-6. Try Ridge/Lasso with different alpha values using `cross_val_score`. Pick the alpha where cross-validated error is lowest.
+1. モデルを学習する。train error と test error を計算する。
+2. 両方が高い場合: bias 問題がある。step 4 に進む。
+3. train が低く test が高い場合: variance 問題がある。データを増やすことが役立つか確認するため learning curve を生成する。役立たないなら regularize する。
+4. 主要な complexity parameter を sweep する validation curve を生成する。sweet spot を見つける。
+5. sweet spot で learning curve を生成する。gap がまだ大きいなら、より多くのデータまたは regularization が必要。
+6. `cross_val_score` を使い、異なる alpha 値で Ridge/Lasso を試す。cross-validation error が最も低い alpha を選ぶ。
 
-This takes 10-15 minutes of compute for most tabular datasets and saves hours of guessing.
+ほとんどの tabular dataset では 10-15 分の計算で済み、何時間もの推測を省けます。
 
-## Ship It
+## 成果物
 
-This lesson produces: `outputs/prompt-model-diagnostics.md`
+このレッスンは `outputs/prompt-model-diagnostics.md` を生成します。
 
-## Exercises
+## 演習
 
-1. Run the decomposition with `noise_std=0` (no noise). What happens to the irreducible error term? Does the optimal complexity change?
+1. `noise_std=0`（ノイズなし）で分解を実行してください。既約誤差項はどうなりますか？最適な複雑度は変わりますか？
 
-2. Increase the training set size from 30 to 300. How does this affect the variance component? Does the optimal polynomial degree shift?
+2. training set size を 30 から 300 に増やしてください。variance component はどう変わりますか？最適な polynomial degree は移動しますか？
 
-3. Add L2 regularization (Ridge regression) to the experiment. For a fixed high-degree polynomial (degree 15), sweep lambda from 0 to 100. Plot bias^2 and variance as functions of lambda.
+3. 実験に L2 regularization（Ridge regression）を追加してください。固定された high-degree polynomial（degree 15）について、lambda を 0 から 100 まで sweep します。lambda の関数として bias^2 と variance をプロットしてください。
 
-4. Modify the true function from a polynomial to `sin(x)`. How does the bias-variance decomposition change? Is there still a clear optimal degree?
+4. 真の関数を polynomial から `sin(x)` に変更してください。バイアス-分散分解はどう変わりますか？明確な最適 degree はまだありますか？
 
-5. Implement a simple bootstrap aggregating (bagging) wrapper: train 10 models on bootstrap samples and average predictions. Show that this reduces variance without increasing bias much.
+5. 単純な bootstrap aggregating（bagging）wrapper を実装してください。bootstrap sample 上で 10 個のモデルを学習し、予測を平均します。bias をあまり増やさずに variance が下がることを示してください。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Bias | "The model is too simple" | Systematic error from wrong assumptions. The gap between the average model prediction and truth. |
-| Variance | "The model is overfitting" | Error from sensitivity to training data. How much predictions change across different training sets. |
-| Irreducible error | "Noise in the data" | Error from randomness in the true data-generating process. No model can eliminate it. |
-| Underfitting | "Not learning enough" | Model has high bias. It misses the real pattern even on training data. |
-| Overfitting | "Memorizing the data" | Model has high variance. It fits noise in training data that does not generalize. |
-| Regularization | "Constraining the model" | Adding a penalty to reduce model complexity, trading bias for lower variance. |
-| Double descent | "More parameters can help" | Test error decreases again when model capacity far exceeds the interpolation threshold. |
-| Model complexity | "How flexible the model is" | The capacity of a model to fit arbitrary patterns. Controlled by architecture, features, or regularization. |
+| Bias | 「モデルが単純すぎる」 | 誤った仮定から生じる系統的誤差。平均的なモデル予測と真値の差。 |
+| Variance | 「モデルが overfit している」 | training data への感度から生じる誤差。異なる training set 間で予測がどれだけ変わるか。 |
+| Irreducible error | 「データ内のノイズ」 | 真のデータ生成過程におけるランダム性から生じる誤差。どんなモデルも消せない。 |
+| Underfitting | 「十分に学習していない」 | モデルが high bias を持つ。training data 上でさえ実際のパターンを外す。 |
+| Overfitting | 「データを暗記している」 | モデルが high variance を持つ。training data 内の汎化しないノイズに合っている。 |
+| Regularization | 「モデルに制約をかける」 | model complexity を下げる penalty を追加し、bias と引き換えに variance を下げること。 |
+| Double descent | 「パラメータを増やすと役立つ場合がある」 | model capacity が interpolation threshold を大きく超えると、test error が再び下がること。 |
+| Model complexity | 「モデルがどれだけ柔軟か」 | 任意のパターンに fit するモデルの容量。architecture、features、regularization で制御される。 |
 
-## Further Reading
+## 参考文献
 
-- [Hastie, Tibshirani, Friedman: Elements of Statistical Learning, Ch. 7](https://hastie.su.domains/ElemStatLearn/) -- the definitive treatment of bias-variance decomposition
-- [Belkin et al., Reconciling modern machine learning practice and the bias-variance trade-off (2019)](https://arxiv.org/abs/1812.11118) -- the double descent paper
-- [Nakkiran et al., Deep Double Descent (2019)](https://arxiv.org/abs/1912.02292) -- epoch-wise and sample-wise double descent
-- [Scott Fortmann-Roe: Understanding the Bias-Variance Tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html) -- clear visual explanation
+- [Hastie, Tibshirani, Friedman: Elements of Statistical Learning, Ch. 7](https://hastie.su.domains/ElemStatLearn/) -- バイアス-分散分解の決定版
+- [Belkin et al., Reconciling modern machine learning practice and the bias-variance trade-off (2019)](https://arxiv.org/abs/1812.11118) -- double descent の論文
+- [Nakkiran et al., Deep Double Descent (2019)](https://arxiv.org/abs/1912.02292) -- epoch-wise と sample-wise の double descent
+- [Scott Fortmann-Roe: Understanding the Bias-Variance Tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html) -- 分かりやすい視覚的説明

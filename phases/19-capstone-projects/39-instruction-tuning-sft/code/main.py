@@ -1,17 +1,17 @@
 """
-Instruction tuning by supervised fine-tuning (SFT).
+supervised fine-tuning (SFT) による instruction tuning。
 
 See: phases/19-capstone-projects/39-instruction-tuning-sft/docs/en.md
 
-Builds:
-  - byte-level tokenizer with INST / RESP / PAD specials
-  - SFT dataset over 200 instruction-response pairs
-  - collate function that masks instruction + pad tokens with -100
-  - TinyGPT (decoder-only transformer) body and LM head
-  - SFT loop, greedy generator, exact-match metric
-  - run_demo that trains for 20 epochs and prints per-category exact-match.
+以下を作ります。
+  - INST / RESP / PAD specials 付き byte-level tokenizer
+  - 200件の instruction-response pair 上の SFT dataset
+  - instruction と pad tokens を -100 で mask する collate function
+  - TinyGPT body と LM head
+  - SFT loop、greedy generator、exact-match metric
+  - 20 epochs 学習して category 別 exact-match を表示する run_demo
 
-Exits 0 when the trained model beats the random baseline of 0.0 on the held-out set.
+trained model が held-out set で random baseline 0.0 を上回れば exit 0 です。
 """
 
 from __future__ import annotations
@@ -30,12 +30,12 @@ from torch.utils.data import DataLoader, Dataset
 
 
 # ---------------------------------------------------------------------------
-# Tokeniser
+# tokenizer
 # ---------------------------------------------------------------------------
 
 
 class InstructionTokenizer:
-    """Byte-level tokenizer with INST, RESP, PAD specials."""
+    """INST、RESP、PAD specials を持つ byte-level tokenizer。"""
 
     INST_ID = 256
     RESP_ID = 257
@@ -44,14 +44,12 @@ class InstructionTokenizer:
     IGNORE_INDEX = -100
 
     def encode_pair(self, instruction: str, response: str, max_len: int) -> Tuple[List[int], int]:
-        """Return (token_ids, response_start_index). Truncates to max_len if
-        needed but always keeps the RESP marker plus at least one response
-        token so SFT collation never produces fully-masked labels."""
+        """(token_ids, response_start_index) を返します。 必要なら max_len に切り詰めますが、RESP marker と少なくとも1つの response token は常に残すため、SFT collation が全 mask labels を作ることはありません。"""
         if max_len < 3:
             raise ValueError("max_len must be >= 3 to fit INST, RESP, and one response token")
         inst_bytes = list(instruction.encode("utf-8", errors="ignore"))
         resp_bytes = list(response.encode("utf-8", errors="ignore"))
-        # Reserve 2 control tokens + at least 1 response byte.
+        # 2つの control tokens + 少なくとも1 response byte を確保。
         max_inst = max_len - 3
         inst_bytes = inst_bytes[:max_inst]
         ids = [self.INST_ID] + inst_bytes + [self.RESP_ID]
@@ -60,8 +58,7 @@ class InstructionTokenizer:
         return ids, resp_start
 
     def encode_prefix(self, instruction: str, max_len: int) -> List[int]:
-        """Encode just the instruction prefix for generation. Always keeps the
-        RESP marker so the model sees the same boundary as during training."""
+        """generation 用に instruction prefix だけを encode します。 RESP marker を常に残すため、model は training 時と同じ boundary を見ます。"""
         if max_len < 2:
             raise ValueError("max_len must be >= 2 to fit INST and RESP")
         inst_bytes = list(instruction.encode("utf-8", errors="ignore"))[: max_len - 2]
@@ -69,7 +66,7 @@ class InstructionTokenizer:
         return ids
 
     def decode_response(self, ids: Sequence[int]) -> str:
-        """Decode a generated response, dropping specials."""
+        """specials を除いて generated response を decode します。"""
         chunk = bytes(i for i in ids if i < 256)
         return chunk.decode("utf-8", errors="replace")
 
@@ -144,21 +141,21 @@ class TinyGPT(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# Instruction fixture
+# instruction fixture
 # ---------------------------------------------------------------------------
 
 
 CAPITALS = [
-    ("France", "Paris"),
-    ("Spain", "Madrid"),
-    ("Italy", "Rome"),
-    ("Japan", "Tokyo"),
-    ("Egypt", "Cairo"),
-    ("Brazil", "Brasilia"),
-    ("Canada", "Ottawa"),
-    ("Australia", "Canberra"),
-    ("Kenya", "Nairobi"),
-    ("Sweden", "Stockholm"),
+    ("フランス", "パリ"),
+    ("スペイン", "マドリード"),
+    ("イタリア", "ローマ"),
+    ("日本", "東京"),
+    ("エジプト", "カイロ"),
+    ("ブラジル", "ブラジリア"),
+    ("カナダ", "オタワ"),
+    ("オーストラリア", "キャンベラ"),
+    ("ケニア", "ナイロビ"),
+    ("スウェーデン", "ストックホルム"),
 ]
 
 ARITHMETIC = [
@@ -175,55 +172,55 @@ ARITHMETIC = [
 ]
 
 LIST_NAMES = [
-    ("colors", ["red", "green", "blue"]),
-    ("planets", ["mercury", "venus", "earth"]),
-    ("vowels", ["a", "e", "i"]),
-    ("seasons", ["spring", "summer", "autumn"]),
-    ("metals", ["iron", "gold", "silver"]),
-    ("primes", ["2", "3", "5"]),
-    ("oceans", ["pacific", "atlantic", "indian"]),
-    ("languages", ["python", "rust", "go"]),
-    ("instruments", ["guitar", "piano", "drums"]),
-    ("fruits", ["apple", "banana", "cherry"]),
+    ("色", ["赤", "緑", "青"]),
+    ("惑星", ["水星", "gold星", "地球"]),
+    ("母音", ["a", "e", "i"]),
+    ("季節", ["春", "夏", "秋"]),
+    ("gold属", ["鉄", "gold", "銀"]),
+    ("素数", ["2", "3", "5"]),
+    ("海洋", ["太平洋", "大西洋", "インド洋"]),
+    ("言語", ["Python", "Rust", "go"]),
+    ("楽器", ["ギター", "ピアノ", "ドラム"]),
+    ("果物", ["りんご", "バナナ", "さくらんぼ"]),
 ]
 
 SUMMARIES = [
-    ("the sun rises in the east and sets in the west.", "the sun moves east to west."),
-    ("water boils at one hundred degrees celsius at sea level.", "water boils at 100c."),
-    ("the moon orbits the earth roughly every 27 days.", "the moon orbits earth in 27 days."),
-    ("light travels at about 300000 km per second.", "light moves at 300000 km/s."),
-    ("the human body has 206 bones in adulthood.", "adults have 206 bones."),
-    ("plants make food using sunlight, water, and co2.", "plants use sun, water, and co2."),
-    ("dna stores genetic information in cells.", "dna stores genes."),
-    ("the heart pumps blood through the body.", "the heart pumps blood."),
-    ("electricity flows through conductors easily.", "current flows in conductors."),
-    ("bees pollinate flowers as they collect nectar.", "bees pollinate flowers."),
+    ("太陽は東から昇り西へ沈む。", "太陽は東から西へ動く。"),
+    ("水は海面高度で摂氏百度で沸騰する。", "水は100度で沸騰する。"),
+    ("月はおよそ27日で地球を回る。", "月は27日で地球を回る。"),
+    ("光は秒速約300000キロメートルで進む。", "光は秒速300000キロメートルで進む。"),
+    ("成人の人体には206個の骨がある。", "成人には206個の骨がある。"),
+    ("植物は日光、水、二酸化炭素を使って食べ物を作る。", "植物は日光、水、二酸化炭素を使う。"),
+    ("DNAは細胞内の遺伝情報を保存する。", "DNAは遺伝情報を保存する。"),
+    ("心臓は体全体へ血液を送り出す。", "心臓は血液を送り出す。"),
+    ("電気は導体を通って流れやすい。", "電流は導体を流れる。"),
+    ("蜂は蜜を集めながら花粉を運ぶ。", "蜂は花粉を運ぶ。"),
 ]
 
 CODE = [
-    ("print hello world", "print('hello world')"),
-    ("print the number 42", "print(42)"),
-    ("sort a list named items ascending", "items.sort()"),
-    ("reverse a list named items", "items.reverse()"),
-    ("get the length of items", "len(items)"),
-    ("open a file in read mode", "open('f.txt', 'r')"),
-    ("get the keys of a dict d", "d.keys()"),
-    ("return the absolute value of x", "abs(x)"),
-    ("round x to two decimals", "round(x, 2)"),
-    ("convert x to a string", "str(x)"),
+    ("hello world を表示する", "print('hello world')"),
+    ("数値42を表示する", "print(42)"),
+    ("items というリストを昇順にソートする", "items.sort()"),
+    ("items というリストを反転する", "items.reverse()"),
+    ("items の長さを取得する", "len(items)"),
+    ("ファイルを読み取りモードで開く", "open('f.txt', 'r')"),
+    ("辞書 d の keys を取得する", "d.keys()"),
+    ("x の絶対値を返す", "abs(x)"),
+    ("x を小数2桁に丸める", "round(x, 2)"),
+    ("x を文字列に変換する", "str(x)"),
 ]
 
 DEFINITIONS = [
-    ("variable", "a name bound to a value in memory."),
-    ("function", "a reusable block of code that takes inputs and returns an output."),
-    ("loop", "a control structure that repeats a block of code."),
-    ("class", "a template for creating objects with shared structure."),
-    ("list", "an ordered, mutable sequence of values."),
-    ("dict", "a mapping from keys to values."),
-    ("string", "a sequence of characters."),
-    ("integer", "a whole number without a fractional part."),
-    ("float", "a number with a fractional part stored in binary."),
-    ("module", "a file of python code that can be imported."),
+    ("variable", "メモリ内の値に束縛された名前。"),
+    ("function", "入力を受け取り出力を返す再利用可能なコードブロック。"),
+    ("loop", "コードブロックを繰り返す制御構造。"),
+    ("class", "共通の構造を持つ object を作るための template。"),
+    ("list", "順序を持つ mutable な値の sequence。"),
+    ("dict", "key から value への mapping。"),
+    ("string", "文字の sequence。"),
+    ("integer", "小数部を持たない整数。"),
+    ("float", "小数部を持つ数値を binary で保存したもの。"),
+    ("module", "import できる Python code の file。"),
 ]
 
 
@@ -240,23 +237,23 @@ def _arithmetic_response(a: int, b: int, op: str) -> str:
 
 
 def make_dataset(seed: int = 0) -> Tuple[List[Dict[str, str]], List[str]]:
-    """Returns (pairs, categories). Each pair has instruction, response."""
+    """(pairs, categories) を返します。各 pair は instruction と response を持ちます。"""
     rng = random.Random(seed)
     pairs: List[Dict[str, str]] = []
     categories: List[str] = []
 
-    # Capitals (40 pairs: 10 base x 4 templates)
+    # 首都 (40 pairs: 10 base x 4 templates)
     cap_templates = [
-        "What is the capital of {country}?",
-        "Name the capital city of {country}.",
-        "Capital of {country}?",
-        "Tell me the capital of {country}.",
+        "{country}の首都は何ですか?",
+        "{country}の首都名を答えてください。",
+        "{country}の首都は?",
+        "{country}の首都を教えてください。",
     ]
     cap_resp_templates = [
-        "the capital of {country} is {city}.",
-        "{city} is the capital of {country}.",
+        "{country}の首都は{city}です。",
+        "{city}は{country}の首都です。",
         "{city}.",
-        "the answer is {city}.",
+        "答えは{city}です。",
     ]
     for country, city in CAPITALS:
         for i, t in enumerate(cap_templates):
@@ -268,10 +265,10 @@ def make_dataset(seed: int = 0) -> Tuple[List[Dict[str, str]], List[str]]:
             )
             categories.append("capitals")
 
-    # Arithmetic (30 pairs: 10 base x 3 templates)
+    # 算術 (30 pairs: 10 base x 3 templates)
     arith_templates = [
-        "Compute {a} {op} {b}.",
-        "What is {a} {op} {b}?",
+        "{a} {op} {b} を計算してください。",
+        "{a} {op} {b} はいくつですか?",
         "{a} {op} {b}?",
     ]
     for a, b, op in ARITHMETIC:
@@ -284,11 +281,11 @@ def make_dataset(seed: int = 0) -> Tuple[List[Dict[str, str]], List[str]]:
             )
             categories.append("arithmetic")
 
-    # Lists (30 pairs: 10 base x 3 templates)
+    # リスト (30 pairs: 10 base x 3 templates)
     list_templates = [
-        "List three {name}.",
-        "Give me three {name}.",
-        "Name three {name}.",
+        "{name}を3つ挙げてください。",
+        "{name}を3つください。",
+        "{name}を3つ答えてください。",
     ]
     for name, items in LIST_NAMES:
         for t in list_templates:
@@ -300,41 +297,41 @@ def make_dataset(seed: int = 0) -> Tuple[List[Dict[str, str]], List[str]]:
             )
             categories.append("lists")
 
-    # Summaries (30 pairs: 10 base x 3 templates)
+    # 要約 (30 pairs: 10 base x 3 templates)
     sum_templates = [
-        "Summarise: {text}",
-        "One-sentence summary of: {text}",
-        "TLDR: {text}",
+        "要約してください: {text}",
+        "一文で要約: {text}",
+        "要約: {text}",
     ]
     for text, summary in SUMMARIES:
         for t in sum_templates:
             pairs.append({"instruction": t.format(text=text), "response": summary})
             categories.append("summaries")
 
-    # Code (30 pairs: 10 base x 3 templates)
+    # コード (30 pairs: 10 base x 3 templates)
     code_templates = [
-        "Write python code to {task}.",
+        "Write Python code to {task}.",
         "Python: {task}.",
-        "Code that will {task}.",
+        "{task} コード。",
     ]
     for task, code in CODE:
         for t in code_templates:
             pairs.append({"instruction": t.format(task=task), "response": code})
             categories.append("code")
 
-    # Definitions (40 pairs: 10 base x 4 templates)
+    # 定義 (40 pairs: 10 base x 4 templates)
     def_templates = [
-        "Define {term}.",
-        "What is a {term}?",
-        "Explain the term {term}.",
-        "{term}: what is it?",
+        "{term}を定義してください。",
+        "{term}とは何ですか?",
+        "{term}という用語を説明してください。",
+        "{term}: それは何ですか?",
     ]
     for term, defn in DEFINITIONS:
         for t in def_templates:
             pairs.append({"instruction": t.format(term=term), "response": defn})
             categories.append("definitions")
 
-    # Total = 40 + 30 + 30 + 30 + 30 + 40 = 200. Shuffle and return.
+    # total = 40 + 30 + 30 + 30 + 30 + 40 = 200。shuffle して返します。
     order = list(range(len(pairs)))
     rng.shuffle(order)
     return [pairs[i] for i in order], [categories[i] for i in order]
@@ -346,7 +343,7 @@ def split_dataset(
     test_frac: float = 0.2,
     seed: int = 0,
 ) -> Tuple[List[Dict[str, str]], List[str], List[Dict[str, str]], List[str]]:
-    """Stratified split by category."""
+    """category による stratified split。"""
     rng = random.Random(seed)
     by_cat: Dict[str, List[int]] = {}
     for i, c in enumerate(cats):
@@ -370,7 +367,7 @@ def split_dataset(
 
 
 # ---------------------------------------------------------------------------
-# Dataset and collate
+# dataset と collate
 # ---------------------------------------------------------------------------
 
 
@@ -399,7 +396,7 @@ def sft_collate(
     pad_id: int = InstructionTokenizer.PAD_ID,
     ignore_index: int = InstructionTokenizer.IGNORE_INDEX,
 ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-    """Pad to longest in batch and build labels with -100 mask on instruction + pad."""
+    """batch 内の最長に padding し、instruction + pad に -100 mask を置いた labels を作ります。"""
     max_t = max(len(x[0]) for x in batch)
     input_ids: List[List[int]] = []
     labels: List[List[int]] = []
@@ -408,15 +405,15 @@ def sft_collate(
         seq_len = len(ids)
         pad = [pad_id] * (max_t - seq_len)
         padded = list(ids) + pad
-        # The label at position i is what input_ids[i+1] should be; we then
-        # mask out positions corresponding to instruction and to padding.
+        # position i の label は input_ids[i+1] が何であるべきかを示します。その後
+        # instruction と padding に対応する positions を mask します。
         lbl: List[int] = list(padded)
         for i in range(len(lbl)):
             if i < resp_start:
-                # Instruction or boundary token: do not train on predicting these.
+                # instruction または boundary token: これらの予測では学習しません。
                 lbl[i] = ignore_index
             elif i >= seq_len:
-                # Padding region.
+                # padding region。
                 lbl[i] = ignore_index
         am = [1] * seq_len + [0] * (max_t - seq_len)
         input_ids.append(padded)
@@ -432,8 +429,8 @@ def sft_collate(
 def shifted_loss(
     logits: torch.Tensor, labels: torch.Tensor, ignore_index: int = InstructionTokenizer.IGNORE_INDEX
 ) -> torch.Tensor:
-    """Standard causal LM loss: predict next token, ignore the masked positions."""
-    # Position i predicts position i+1 in labels.
+    """標準的な causal LM loss: next token を予測し、masked positions は無視します。"""
+    # position i は labels の position i+1 を予測します。
     pred = logits[:, :-1, :].contiguous()
     target = labels[:, 1:].contiguous()
     return F.cross_entropy(
@@ -444,7 +441,7 @@ def shifted_loss(
 
 
 # ---------------------------------------------------------------------------
-# Training and generation
+# training と generation
 # ---------------------------------------------------------------------------
 
 
@@ -520,7 +517,7 @@ def generate(
     max_new_tokens: int = 64,
     seed: int = 0,
 ) -> str:
-    """Greedy (temperature=0) or sampled generation. Stops on two consecutive sentence-ends."""
+    """greedy (temperature=0) または sampled generation。sentence-end が2連続したら停止します。"""
     model.eval()
     rng = torch.Generator()
     rng.manual_seed(seed)
@@ -542,7 +539,7 @@ def generate(
         if next_id == tok.PAD_ID:
             break
         if next_id == tok.INST_ID or next_id == tok.RESP_ID:
-            # Model produced a control token. Stop.
+            # model が control token を生成したら停止します。
             break
         ids.append(next_id)
         out_chars.append(next_id)
@@ -556,7 +553,7 @@ def generate(
 
 
 # ---------------------------------------------------------------------------
-# Metrics
+# metrics
 # ---------------------------------------------------------------------------
 
 
@@ -602,7 +599,7 @@ def per_category_em(
 
 
 # ---------------------------------------------------------------------------
-# Demo
+# demo
 # ---------------------------------------------------------------------------
 
 
@@ -645,7 +642,7 @@ def run_demo(cfg: Optional[SFTConfig] = None) -> int:
     )
 
     print("")
-    print("[per-category exact-match on held-out]")
+    print("[held-out の category 別 exact-match]")
     cat_em = per_category_em(model, tok, te_pairs, te_cats, cfg.max_len)
     for cat in sorted(cat_em):
         print(f"  {cat:>12s}: {cat_em[cat]:.3f}")
@@ -663,7 +660,7 @@ def run_demo(cfg: Optional[SFTConfig] = None) -> int:
     print(f"FINAL EXACT MATCH = {report.final_em:.3f}  (baseline was {initial_em:.3f})")
 
     if report.final_em <= initial_em:
-        print("ERROR: training did not improve EM over the untrained baseline", file=sys.stderr)
+        print("ERROR: training が untrained baseline から EM を改善しませんでした", file=sys.stderr)
         return 1
     return 0
 

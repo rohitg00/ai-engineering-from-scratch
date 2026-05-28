@@ -1,30 +1,30 @@
 ---
 name: task-store-designer
-description: Design the task store for a long-running MCP tool: state shape, ttl, durability, cancellation, crash recovery.
+description: long-running MCP tool の task store を設計する。state shape、ttl、durability、cancellation、crash recovery を扱う。
 version: 1.0.0
 phase: 13
 lesson: 13
 tags: [mcp, tasks, durable-store, long-running, sep-1686]
 ---
 
-Given a long-running tool (research, build, export, report generation), design the task store that backs SEP-1686 task augmentation.
+long-running tool（research、build、export、report generation）に対して、SEP-1686 task augmentation を支える task store を設計してください。
 
-Produce:
+作成するもの:
 
-1. State shape. Minimum fields: `id`, `state`, `progress`, `result`, `error`, `ttl`, `created_at`. Optional: `request_meta`, `parent_task_id` (for future subtasks).
-2. Durability choice. Filesystem for toy; SQLite for single-process; Redis for multi-replica. Justify.
-3. taskSupport flag. `forbidden`, `optional`, or `required` per tool; one-line justification.
-4. Cancellation plan. How the worker checks a cancel signal; what happens on partial progress.
-5. Crash recovery. Boot-time reload rule; what `CRASH_RECOVERY` failures look like to the client.
+1. State shape。minimum fields: `id`、`state`、`progress`、`result`、`error`、`ttl`、`created_at`。optional: `request_meta`、`parent_task_id`（future subtasks 用）。
+2. Durability choice。toy なら filesystem、single-process なら SQLite、multi-replica なら Redis。理由を示す。
+3. taskSupport flag。tool ごとに `forbidden`、`optional`、または `required`。1 行で理由を示す。
+4. Cancellation plan。worker が cancel signal を確認する方法と、partial progress の扱い。
+5. Crash recovery。boot-time reload rule と、`CRASH_RECOVERY` failures が client にどう見えるか。
 
-Hard rejects:
-- Any store that loses completed results within ttl.
-- Any task state without explicit terminal states (`completed`, `failed`, `cancelled`).
-- Any cancellation that is not idempotent.
+強制拒否:
+- ttl 内に completed results を失う store。
+- explicit terminal states（`completed`、`failed`、`cancelled`）を持たない task state。
+- idempotent ではない cancellation。
 
-Refusal rules:
-- If the tool runs under 5 seconds, refuse to promote to a task. Synchronous is simpler.
-- If the task would generate more than 10 MB of result, refuse and recommend streaming content blocks.
-- If the server does not have a process capable of persisting state (stateless edge function), refuse and recommend moving to a durable runtime.
+拒否ルール:
+- tool が 5 秒未満で終わる場合、task への昇格を拒否する。synchronous のほうが単純。
+- task が 10 MB を超える result を生成する場合、拒否して streaming content blocks を推奨する。
+- server に state を persist できる process がない場合（stateless edge function）、拒否して durable runtime への移行を推奨する。
 
-Output: a one-page store design with state shape, durability choice, taskSupport flag, cancellation plan, and crash-recovery rule. End with one-line advice on whether SEP-1686 subtasks will affect this design when they ship.
+Output: state shape、durability choice、taskSupport flag、cancellation plan、crash-recovery rule を含む one-page store design。最後に、SEP-1686 subtasks が shipped されたときにこの design へ影響するかを 1 行で助言する。

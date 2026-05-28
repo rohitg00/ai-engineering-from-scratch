@@ -2,14 +2,14 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { decodeFrame, encodeFrame } from "../src/protocol.ts";
 
-test("encodeFrame + decodeFrame: round-trips event frame", () => {
+test("encodeFrame + decodeFrame: event frame を round-trip する", () => {
   const f = { type: "event" as const, line: "100ms LISTENING" };
   const raw = encodeFrame(f);
   const back = decodeFrame(raw);
   assert.deepEqual(back, f);
 });
 
-test("encodeFrame + decodeFrame: round-trips summary frame", () => {
+test("encodeFrame + decodeFrame: summary frame を round-trip する", () => {
   const f = {
     type: "summary" as const,
     turnCompleteMs: 1000,
@@ -23,10 +23,10 @@ test("encodeFrame + decodeFrame: round-trips summary frame", () => {
   assert.deepEqual(back, f);
 });
 
-test("decodeFrame: rejects unknown type via zod discriminated union", () => {
+test("decodeFrame: unknown type を zod discriminated union で拒否する", () => {
   assert.throws(() => decodeFrame(JSON.stringify({ type: "garbage" })));
 });
 
-test("decodeFrame: rejects missing fields", () => {
+test("decodeFrame: missing field を拒否する", () => {
   assert.throws(() => decodeFrame(JSON.stringify({ type: "summary" })));
 });

@@ -1,29 +1,29 @@
 ---
 name: framework-diff
-description: Compare a new safety framework or release note against RSP v3.0, PF v2, FSF v3.0.
+description: 新しい safety framework または release note を RSP v3.0、PF v2、FSF v3.0 と比較する。
 version: 1.0.0
 phase: 18
 lesson: 18
 tags: [rsp, pf, fsf, frontier-safety, safety-case]
 ---
 
-Given a new safety framework, policy, or release note, compare it against Anthropic RSP v3.0, OpenAI PF v2, DeepMind FSF v3.0 along the five structural axes.
+新しい safety framework、policy、release note が与えられたら、Anthropic RSP v3.0、OpenAI PF v2、DeepMind FSF v3.0 と5つの structural axes で比較する。
 
-Produce:
+生成する内容:
 
-1. Tier structure. Does the framework define discrete capability thresholds? Are they per-domain (FSF-style) or global (RSP-style)?
-2. CBRN threshold. What CBRN evaluation is required? Does it reference WMDP (Lesson 17) or an equivalent? Does it include an elicitation study?
-3. AI R&D threshold. Is there a model-autonomous-research threshold? Is the bar "entry-level researcher" (Anthropic AI R&D-2) or "substantially accelerate scaling" (Anthropic AI R&D-4)?
-4. Competitor-adjustment. Does the framework allow reduction of requirements if competitors ship without comparable safeguards? Frame as race-dynamic or as incentive-compatibility, as appropriate.
-5. Safety-case structure. Is a written safety case required? Does it target monitoring, illegibility, or incapability? What is the evidence bar?
+1. Tier structure。framework は discrete capability thresholds を定義しているか。per-domain (FSF-style) か global (RSP-style) か。
+2. CBRN threshold。どの CBRN evaluation が required か。WMDP (Lesson 17) または同等のものを参照しているか。elicitation study を含むか。
+3. AI R&D threshold。model-autonomous-research threshold はあるか。bar は "entry-level researcher" (Anthropic AI R&D-2) か "substantially accelerate scaling" (Anthropic AI R&D-4) か。
+4. Competitor-adjustment。competitors が comparable safeguards なしで ship した場合に requirements を下げられるか。文脈に応じて race-dynamic または incentive-compatibility として framing する。
+5. Safety-case structure。written safety case は required か。monitoring、illegibility、incapability のどれを target にしているか。evidence bar は何か。
 
-Hard rejects:
-- Any safety framework without per-tier capability thresholds.
-- Any framework that omits an external governance cross-reference (UK AISI, US CAISI, EU AI Office).
-- Any framework that claims "we align with all published frameworks" without specific threshold numbers.
+強い却下条件:
+- per-tier capability thresholds のない safety framework。
+- external governance cross-reference (UK AISI、US CAISI、EU AI Office) を省く framework。
+- specific threshold numbers なしに「we align with all published frameworks」と主張する framework。
 
-Refusal rules:
-- If the user asks which framework is "best," refuse the ranking and point to structural alignment.
-- If the user asks for a numeric threshold recommendation, refuse — thresholds are lab-specific and depend on their measurement infrastructure.
+拒否ルール:
+- ユーザーがどの framework が「best」か尋ねたら、ranking を拒否し、structural alignment を示す。
+- ユーザーが numeric threshold recommendation を求めたら拒否する。thresholds は lab-specific であり、measurement infrastructure に依存する。
 
-Output: a one-page side-by-side comparison against the three frameworks, flagged gaps, and one specific threshold recommendation to add. Cite RSP v3.0, PF v2, FSF v3.0 once each.
+出力: 3つの frameworks との1ページ side-by-side comparison、flagged gaps、追加すべき specific threshold recommendation を1つ。RSP v3.0、PF v2、FSF v3.0 をそれぞれ1回引用する。

@@ -1,116 +1,116 @@
 # Anthropic's Workflow Patterns: Simple Over Complex
 
-> Schluntz and Zhang (Anthropic, Dec 2024) distinguish workflows (predefined paths) from agents (dynamic tool-use). Five workflow patterns cover most cases. Start with direct API calls. Add agents only when steps cannot be predicted.
+> Schluntz and Zhang (Anthropic, Dec 2024) は workflows (predefined paths) と agents (dynamic tool-use) を区別しました。5 つの workflow patterns が大半の case を cover します。Direct API calls から始めます。Steps が予測できないときだけ agents を追加します。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop)
-**Time:** ~60 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 01 (Agent Loop)
+**所要時間:** 約60分
 
 ## Learning Objectives
 
-- Name Anthropic's five workflow patterns: prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer.
-- Explain the agent-vs-workflow distinction and the engineering cost of each.
-- Identify when to pick a workflow over an agent (and vice versa).
-- Implement all five patterns in stdlib against a scripted LLM.
+- Anthropic の 5 つの workflow patterns を挙げる: prompt chaining、routing、parallelization、orchestrator-workers、evaluator-optimizer。
+- Agent-vs-workflow の違いと、それぞれの engineering cost を説明する。
+- Workflow を agent より選ぶべき時期 (およびその逆) を特定する。
+- Scripted LLM に対して 5 つすべての patterns を stdlib で実装する。
 
-## The Problem
+## 問題
 
-Teams reach for multi-agent frameworks for problems that want a single function call. The cost is real: frameworks add layers that obscure prompts, hide control flow, and invite premature complexity. Schluntz and Zhang's Dec 2024 post is the most-cited industry pushback: start simple, add complexity only when it earns its cost.
+Team は single function call で済む問題に multi-agent framework を持ち込みがちです。Cost は本物です。Framework は layer を追加し、prompt を見えにくくし、control flow を隠し、premature complexity を招きます。Schluntz and Zhang の 2024 年 12 月の post は、industry で最も引用される pushback です。Simple に始め、complexity が cost に見合うときだけ追加します。
 
 ## The Concept
 
 ### Workflows vs agents
 
-- **Workflow.** LLMs and tools orchestrated through predefined code paths. Engineers own the graph.
-- **Agent.** LLMs dynamically direct their own tools and take their own steps. The model owns the graph.
+- **Workflow.** LLMs と tools を predefined code paths で orchestrate する。Engineers が graph を所有する。
+- **Agent.** LLMs が自分の tools と steps を動的に direct する。Model が graph を所有する。
 
-Both have their place. Workflows are cheaper, faster, and easier to debug. Agents unlock open-ended problems but make failure modes harder to reason about.
+どちらにも役割があります。Workflows は cheaper、faster、debug しやすい。Agents は open-ended problems を unlock しますが、failure modes を推論しにくくします。
 
 ### The augmented LLM
 
-Foundation for all five patterns: one LLM with three capabilities wired in — search (retrieval), tools (actions), memory (persistence). Any API call can use these.
+5 patterns すべての foundation: search (retrieval)、tools (actions)、memory (persistence) の 3 capabilities を wire した 1 つの LLM。任意の API call がこれらを使えます。
 
 ### The five patterns
 
-1. **Prompt chaining.** Output of call 1 is input to call 2. Use when a task has a clean linear decomposition. Optional programmatic gates between steps.
+1. **Prompt chaining.** Call 1 の output が call 2 の input になる。Task が clean linear decomposition を持つときに使う。Step 間に optional programmatic gates を置ける。
 
-2. **Routing.** A classifier LLM picks which downstream LLM or tool to invoke. Use when categorically different inputs need different handling (tier-1 support vs refund vs bug vs sales).
+2. **Routing.** Classifier LLM が downstream LLM または tool のどれを invoke するかを選ぶ。Categorically different inputs が異なる handling を必要とするときに使う (tier-1 support vs refund vs bug vs sales)。
 
-3. **Parallelization.** Run N LLM calls concurrently, aggregate results. Two shapes: sectioning (different chunks) and voting (same prompt, N runs, majority/synthesis).
+3. **Parallelization.** N 個の LLM calls を concurrent に走らせ、results を aggregate する。2 つの shape がある: sectioning (different chunks) と voting (same prompt, N runs, majority/synthesis)。
 
-4. **Orchestrator-workers.** An orchestrator LLM dynamically decides which workers (also LLMs) to run and synthesizes their output. Similar to agent loops but the orchestrator does not loop indefinitely.
+4. **Orchestrator-workers.** Orchestrator LLM がどの workers (これも LLMs) を実行するかを動的に決め、output を synthesize する。Agent loops に似ているが、orchestrator は無期限には loop しない。
 
-5. **Evaluator-optimizer.** One LLM proposes an answer, another LLM evaluates it. Iterate until the evaluator passes. This is Self-Refine (Lesson 05) generalized.
+5. **Evaluator-optimizer.** 1 つの LLM が answer を propose し、別の LLM が evaluate する。Evaluator が pass するまで iterate する。これは Self-Refine (Lesson 05) の一般化です。
 
 ### Where workflows beat agents
 
-- **Predictable tasks.** If you can enumerate the steps, you should.
-- **Cost-bound tasks.** Workflows have bounded step counts; agents can spiral.
-- **Compliance-bound tasks.** Auditors want to read the graph, not infer it from trajectories.
+- **Predictable tasks.** Steps を enumerate できるなら、そうすべきです。
+- **Cost-bound tasks.** Workflows は step counts が bounded です。Agents は spiral する可能性があります。
+- **Compliance-bound tasks.** Auditors は trajectory から推測するより graph を読みたい。
 
 ### Where agents beat workflows
 
-- **Open-ended research.** When the next step depends on what the last step returned.
-- **Variable-length tasks.** Minutes to hours of work where step count is unknown.
-- **Novel domains.** When you don't yet know the right workflow — exploration first, codify later.
+- **Open-ended research.** 次の step が前の step の返り値に依存する場合。
+- **Variable-length tasks.** Step count が未知な、minutes to hours の作業。
+- **Novel domains.** まだ正しい workflow が分からない場合。まず exploration、後で codify。
 
 ### The context-engineering companion
 
-"Effective context engineering for AI agents" (Anthropic 2025) formalizes the adjacent discipline: the 200k window is a budget, not a container. What to include, when to compact, when to let context grow. Covered in detail in Phase 14 lesson on context compression (Phase 14 earlier lesson 06 in this curriculum before the renumber).
+"Effective context engineering for AI agents" (Anthropic 2025) は隣接 discipline を formalize します。200k window は container ではなく budget です。何を含めるか、いつ compact するか、いつ context を伸ばすか。この curriculum では context compression に関する Phase 14 の lesson (renumber 前の Phase 14 lesson 06) で詳しく扱います。
 
-## Build It
+## 実装
 
-`code/main.py` implements all five workflow patterns against a `ScriptedLLM`:
+`code/main.py` は `ScriptedLLM` に対して 5 つの workflow patterns すべてを実装します。
 
-- `prompt_chain(input, steps)` — sequential.
-- `route(input, classifier, handlers)` — classification + dispatch.
-- `parallel_vote(prompt, n, aggregator)` — N runs, aggregate.
-- `orchestrator_workers(task, workers)` — orchestrator picks workers.
-- `evaluator_optimizer(task, proposer, evaluator, max_iter)` — loop until pass.
+- `prompt_chain(input, steps)` — sequential。
+- `route(input, classifier, handlers)` — classification + dispatch。
+- `parallel_vote(prompt, n, aggregator)` — N runs, aggregate。
+- `orchestrator_workers(task, workers)` — orchestrator が workers を選ぶ。
+- `evaluator_optimizer(task, proposer, evaluator, max_iter)` — pass するまで loop。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-Each pattern prints its trace. Total lines of code per pattern is ~10-15; the cost of a framework is measured in thousands.
+各 pattern が trace を出力します。Pattern ごとの code はおよそ 10-15 lines です。Framework の cost は thousands of lines で測られます。
 
 ## Use It
 
-- Direct API calls for most tasks.
-- Framework only when the pattern genuinely needs durable state (LangGraph), actor-model concurrency (AutoGen v0.4), or role templating (CrewAI).
-- Reach for the Claude Agent SDK when you want the Claude Code harness shape without rebuilding it.
+- ほとんどの task では direct API calls。
+- Pattern が本当に durable state (LangGraph)、actor-model concurrency (AutoGen v0.4)、role templating (CrewAI) を必要とする場合だけ framework。
+- Claude Code harness 形を自作せず使いたいときは Claude Agent SDK を使う。
 
 ## Ship It
 
-`outputs/skill-workflow-picker.md` picks the right pattern for a given task description, including the decision rationale and the refactor path to an agent if workflows fall short.
+`outputs/skill-workflow-picker.md` は、task description に対して正しい pattern を選びます。Decision rationale と、workflow が足りない場合に agent へ refactor する path も含みます。
 
 ## Exercises
 
-1. Implement routing with a confidence threshold. Below threshold -> escalate to human. Where does the threshold land for a tier-1 support use case?
-2. Add a timeout to `parallel_vote`. What happens when one call hangs? How do you aggregate with missing votes?
-3. Turn `evaluator_optimizer` into a bandit: keep the top-2 outputs across iterations so a late good result doesn't get overwritten by a late bad one.
-4. Combine prompt chaining with routing: a router picks one of three chains. Measure token cost vs a single big-prompt alternative.
-5. Pick one of your production features. Draw the workflow graph. Count steps. Would an agent actually be better here?
+1. Confidence threshold 付き routing を実装する。Threshold 未満なら human に escalate する。Tier-1 support use case では threshold はどこに置くか。
+2. `parallel_vote` に timeout を追加する。1 call が hang したらどうなるか。Missing votes 付きでどう aggregate するか。
+3. `evaluator_optimizer` を bandit に変える。Late good result が late bad result に上書きされないよう、iterations をまたいで top-2 outputs を保持する。
+4. Prompt chaining と routing を組み合わせる。Router が 3 chains の 1 つを選ぶ。Single big-prompt alternative と token cost を比較する。
+5. 自分の production features の 1 つを選ぶ。Workflow graph を描く。Steps を数える。Agent の方が本当に良いか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Workflow | "Predefined flow" | Engineer-owned graph of LLM and tool calls |
-| Agent | "Autonomous AI" | Model-owned graph; dynamic tool direction |
-| Augmented LLM | "LLM with tools" | LLM + search + tools + memory; the atomic unit |
-| Prompt chaining | "Sequential calls" | Output of call N is input to call N+1 |
-| Routing | "Classifier dispatch" | Pick which chain/model handles the input |
-| Parallelization | "Fan out" | N concurrent calls; aggregate by sectioning or voting |
-| Orchestrator-workers | "Dispatcher agent" | Orchestrator LLM picks specialist LLMs dynamically |
-| Evaluator-optimizer | "Proposer + judge" | Iterate until evaluator passes; Self-Refine generalized |
+| Workflow | 「Predefined flow」 | Engineer-owned graph of LLM and tool calls |
+| Agent | 「Autonomous AI」 | Model-owned graph。Dynamic tool direction |
+| Augmented LLM | 「LLM with tools」 | LLM + search + tools + memory。Atomic unit |
+| Prompt chaining | 「Sequential calls」 | Call N の output が call N+1 の input になる |
+| Routing | 「Classifier dispatch」 | Input をどの chain/model が扱うか選ぶ |
+| Parallelization | 「Fan out」 | N concurrent calls。Sectioning または voting で aggregate |
+| Orchestrator-workers | 「Dispatcher agent」 | Orchestrator LLM が specialist LLMs を動的に選ぶ |
+| Evaluator-optimizer | 「Proposer + judge」 | Evaluator が pass するまで iterate。Self-Refine の一般化 |
 
-## Further Reading
+## 参考文献
 
-- [Anthropic, Building Effective Agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — the five workflow patterns
-- [Anthropic, Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — the companion discipline
-- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — when stateful graphs earn their cost
-- [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) — the orchestrator-workers pattern, productized
+- [Anthropic, Building Effective Agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — 5 つの workflow patterns
+- [Anthropic, Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — companion discipline
+- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — stateful graphs が cost に見合うとき
+- [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) — productized orchestrator-workers pattern

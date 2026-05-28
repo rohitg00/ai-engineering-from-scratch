@@ -1,60 +1,60 @@
-# Linear Algebra Intuition
+# 線形代数の直感
 
-> Every AI model is just matrix math wearing a fancy hat.
+> すべてのAIモデルは、凝った帽子をかぶった行列計算にすぎません。
 
-**Type:** Learn
-**Languages:** Python, Julia
-**Prerequisites:** Phase 0
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python, Julia
+**前提条件:** Phase 0
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Implement vector and matrix operations (addition, dot product, matrix multiply) from scratch in Python
-- Explain geometrically what the dot product, projection, and Gram-Schmidt process do
-- Determine linear independence, rank, and basis of a set of vectors using row reduction
-- Connect linear algebra concepts to their AI applications: embeddings, attention scores, and LoRA
+- Pythonでベクトル演算と行列演算（加算、内積、行列積）をスクラッチ実装する
+- 内積、射影、Gram-Schmidtの直交化が幾何学的に何をしているかを説明する
+- 行基本変形を使って、ベクトル集合の線形独立性、ランク、基底を判定する
+- 線形代数の概念を、埋め込み、アテンションスコア、LoRAなどのAI応用へ結びつける
 
-## The Problem
+## 問題
 
-Open any ML paper. Within the first page, you'll see vectors, matrices, dot products, and transformations. Without linear algebra intuition, these are just symbols. With it, you can see what a neural network is actually doing -- moving points around in space.
+どの機械学習論文を開いても、最初の1ページでベクトル、行列、内積、変換が出てきます。線形代数の直感がなければ、それらはただの記号です。直感があれば、ニューラルネットワークが実際に何をしているのか、つまり空間内の点を動かしていることが見えてきます。
 
-You don't need to be a mathematician. You need to see what these operations mean geometrically, then code them yourself.
+数学者になる必要はありません。必要なのは、これらの演算が幾何学的に何を意味するかを見て、それを自分でコードにすることです。
 
-## The Concept
+## 概念
 
-### Vectors Are Points (and Directions)
+### ベクトルは点であり方向でもある
 
-A vector is just a list of numbers. But those numbers mean something -- they're coordinates in space.
+ベクトルは数値のリストです。ただし、その数値には意味があります。空間内の座標です。
 
-**2D vector [3, 2]:**
+**2Dベクトル [3, 2]:**
 
-| x | y | Point |
+| x | y | 点 |
 |---|---|-------|
-| 3 | 2 | The vector points from origin (0,0) to (3, 2) on the plane |
+| 3 | 2 | ベクトルは平面上で原点 (0,0) から (3, 2) を指す |
 
-The vector has magnitude sqrt(3^2 + 2^2) = sqrt(13) and points up and to the right.
+このベクトルの大きさは sqrt(3^2 + 2^2) = sqrt(13) で、右上を向いています。
 
-In AI, vectors represent everything:
-- A word → a vector of 768 numbers (its "meaning" in embedding space)
-- An image → a vector of millions of pixel values
-- A user → a vector of preferences
+AIでは、ベクトルがあらゆるものを表します。
+- 単語 → 768個の数値からなるベクトル（埋め込み空間での「意味」）
+- 画像 → 何百万ものピクセル値からなるベクトル
+- ユーザー → 好みを表すベクトル
 
-### Matrices Are Transformations
+### 行列は変換である
 
-A matrix transforms one vector into another. It can rotate, scale, stretch, or project.
+行列は、あるベクトルを別のベクトルに変換します。回転、拡大縮小、引き伸ばし、射影ができます。
 
 ```mermaid
 graph LR
-    subgraph Before
-        A["Point A"]
-        B["Point B"]
+    subgraph Before["変換前"]
+        A["点 A"]
+        B["点 B"]
     end
-    subgraph Matrix["Matrix Multiplication"]
-        M["M (transformation)"]
+    subgraph Matrix["行列積"]
+        M["M (変換)"]
     end
-    subgraph After
-        A2["Point A'"]
-        B2["Point B'"]
+    subgraph After["変換後"]
+        A2["点 A'"]
+        B2["点 B'"]
     end
     A --> M
     B --> M
@@ -62,32 +62,32 @@ graph LR
     M --> B2
 ```
 
-In AI, matrices ARE the model:
-- Neural network weights → matrices that transform input into output
-- Attention scores → matrices that decide what to focus on
-- Embeddings → matrices that map words to vectors
+AIでは、行列そのものがモデルです。
+- ニューラルネットワークの重み → 入力を出力へ変換する行列
+- アテンションスコア → 何に注目するかを決める行列
+- 埋め込み → 単語をベクトルへ写す行列
 
-### The Dot Product Measures Similarity
+### 内積は類似度を測る
 
-The dot product of two vectors tells you how similar they are.
+2つのベクトルの内積は、それらがどれだけ似ているかを教えてくれます。
 
 ```
 a · b = a₁×b₁ + a₂×b₂ + ... + aₙ×bₙ
 
-Same direction:      a · b > 0  (similar)
-Perpendicular:       a · b = 0  (unrelated)
-Opposite direction:  a · b < 0  (dissimilar)
+同じ方向:    a · b > 0  (似ている)
+直交:        a · b = 0  (無関係)
+反対方向:    a · b < 0  (似ていない)
 ```
 
-This is literally how search engines, recommendation systems, and RAG work -- find vectors with high dot products.
+これは検索エンジン、推薦システム、RAGが実際にやっていることです。内積が大きいベクトルを見つけます。
 
-### Linear Independence
+### 線形独立
 
-Vectors are linearly independent if no vector in the set can be written as a combination of the others. If v1, v2, v3 are independent, they span a 3D space. If one is a combination of the others, they only span a plane.
+集合内のどのベクトルも他のベクトルの組み合わせとして書けないとき、そのベクトルたちは線形独立です。v1、v2、v3が独立なら、それらは3D空間を張ります。どれか1つが他の組み合わせなら、張るのは平面だけです。
 
-Why it matters for AI: your feature matrix should have linearly independent columns. If two features are perfectly correlated (linearly dependent), the model cannot distinguish their effects. This causes multicollinearity in regression -- the weight matrix becomes unstable, and small input changes produce wild output swings.
+AIでなぜ重要か: 特徴量行列の列は線形独立であるべきです。2つの特徴量が完全に相関している（線形従属である）場合、モデルはそれぞれの効果を区別できません。これは回帰で多重共線性を引き起こします。重み行列が不安定になり、小さな入力変化が出力を大きく揺らします。
 
-**Concrete example:**
+**具体例:**
 
 ```
 v1 = [1, 0, 0]
@@ -95,72 +95,72 @@ v2 = [0, 1, 0]
 v3 = [2, 1, 0]   # v3 = 2*v1 + v2
 ```
 
-v1 and v2 are independent -- neither is a scalar multiple or combination of the other. But v3 = 2*v1 + v2, so {v1, v2, v3} is a dependent set. These three vectors all lie in the xy-plane. No matter how you combine them, you cannot reach [0, 0, 1]. You have three vectors but only two dimensions of freedom.
+v1とv2は独立です。どちらも相手のスカラー倍でも組み合わせでもありません。しかし v3 = 2*v1 + v2 なので、{v1, v2, v3} は従属な集合です。この3つのベクトルはすべてxy平面上にあります。どのように組み合わせても [0, 0, 1] には到達できません。ベクトルは3本ありますが、自由度は2次元分だけです。
 
-In a dataset: if feature_3 = 2*feature_1 + feature_2, adding feature_3 gives the model zero new information. Worse, it makes the normal equations singular -- there is no unique solution for the weights.
+データセットでいえば、feature_3 = 2*feature_1 + feature_2 なら、feature_3を加えてもモデルに新しい情報はまったく増えません。さらに悪いことに、正規方程式が特異になります。つまり、重みに対する一意な解がありません。
 
-### Basis and Rank
+### 基底とランク
 
-A basis is a minimal set of linearly independent vectors that span the entire space. The number of basis vectors is the dimension of the space.
+基底とは、空間全体を張る線形独立なベクトルの最小集合です。基底ベクトルの数が、その空間の次元です。
 
-The standard basis for 3D space is {[1,0,0], [0,1,0], [0,0,1]}. But any three independent vectors in 3D form a valid basis. The choice of basis is a choice of coordinate system.
+3D空間の標準基底は {[1,0,0], [0,1,0], [0,0,1]} です。ただし、3D内の任意の3本の独立なベクトルも有効な基底になります。基底を選ぶことは、座標系を選ぶことです。
 
-Rank of a matrix = number of linearly independent columns = number of linearly independent rows. If rank < min(rows, cols), the matrix is rank-deficient. This means:
-- The system has infinitely many solutions (or none)
-- Information is lost in the transformation
-- The matrix cannot be inverted
+行列のランク = 線形独立な列の数 = 線形独立な行の数です。rank < min(rows, cols) の場合、その行列はランク落ちしています。これは次を意味します。
+- その系には無限に多くの解がある（または解がない）
+- 変換で情報が失われる
+- 行列を逆行列にできない
 
-| Situation | Rank | What it means for ML |
+| 状況 | ランク | MLでの意味 |
 |-----------|------|---------------------|
-| Full rank (rank = min(m, n)) | Maximum possible | Unique least-squares solution exists. Model is well-conditioned. |
-| Rank deficient (rank < min(m, n)) | Below maximum | Features are redundant. Infinitely many weight solutions. Regularization needed. |
-| Rank 1 | 1 | Every column is a scaled copy of one vector. All data lies on a line. |
-| Near rank-deficient (small singular values) | Numerically low | Matrix is ill-conditioned. Tiny input noise causes large output changes. Use SVD truncation or ridge regression. |
+| フルランク (rank = min(m, n)) | 可能な最大値 | 一意な最小二乗解が存在する。モデルの条件が良い。 |
+| ランク落ち (rank < min(m, n)) | 最大値より小さい | 特徴量が冗長。重み解が無限にある。正則化が必要。 |
+| ランク1 | 1 | すべての列が1つのベクトルのスケール違い。全データが直線上にある。 |
+| ほぼランク落ち (小さい特異値) | 数値的に低い | 行列の条件が悪い。ごく小さな入力ノイズが大きな出力変化を生む。SVDの打ち切りやリッジ回帰を使う。 |
 
-### Projection
+### 射影
 
-Projecting vector **a** onto vector **b** gives the component of **a** in the direction of **b**:
+ベクトル **a** をベクトル **b** に射影すると、**a** のうち **b** 方向の成分が得られます。
 
 ```
 proj_b(a) = (a dot b / b dot b) * b
 ```
 
-The residual (a - proj_b(a)) is perpendicular to b. This orthogonal decomposition is the foundation of least-squares fitting.
+残差 (a - proj_b(a)) は b に垂直です。この直交分解が、最小二乗フィッティングの土台です。
 
-Projection is everywhere in ML:
-- Linear regression minimizes the distance from observations to the column space -- the solution IS a projection
-- PCA projects data onto the directions of maximum variance
-- Attention in transformers computes projections of queries onto keys
+射影は機械学習の至るところにあります。
+- 線形回帰は、観測値から列空間までの距離を最小化する。解そのものが射影である
+- PCAは、データを分散が最大になる方向へ射影する
+- トランスフォーマーのアテンションは、クエリをキーへ射影する計算を行う
 
 ```mermaid
 graph LR
-    subgraph Projection["Projection of a onto b"]
+    subgraph Projection["a の b への射影"]
         direction TB
-        O["Origin"] --> |"b (direction)"| B["b"]
-        O --> |"a (original)"| A["a"]
-        O --> |"proj_b(a)"| P["projection"]
-        A -.-> |"residual (perpendicular)"| P
+        O["原点"] --> |"b (方向)"| B["b"]
+        O --> |"a (元のベクトル)"| A["a"]
+        O --> |"proj_b(a)"| P["射影"]
+        A -.-> |"残差 (垂直)"| P
     end
 ```
 
-**Example:** a = [3, 4], b = [1, 0]
+**例:** a = [3, 4], b = [1, 0]
 
 proj_b(a) = (3*1 + 4*0) / (1*1 + 0*0) * [1, 0] = 3 * [1, 0] = [3, 0]
 
-The projection drops the y-component. This is dimensionality reduction in its simplest form -- throw away the directions you don't care about.
+この射影はy成分を落とします。これは最も単純な形の次元削減です。関心のない方向を捨てているのです。
 
-### Gram-Schmidt Process
+### Gram-Schmidtの直交化
 
-Converting any set of independent vectors into an orthonormal basis. Orthonormal means every vector has length 1 and every pair is perpendicular.
+独立なベクトル集合を、正規直交基底へ変換する手続きです。正規直交とは、すべてのベクトルの長さが1で、すべてのペアが垂直であることを意味します。
 
-The algorithm:
-1. Take the first vector, normalize it
-2. Take the second vector, subtract its projection onto the first, normalize
-3. Take the third vector, subtract its projections onto all previous vectors, normalize
-4. Repeat for remaining vectors
+アルゴリズム:
+1. 最初のベクトルを取り、正規化する
+2. 2番目のベクトルから、最初のベクトルへの射影を引き、正規化する
+3. 3番目のベクトルから、それ以前のすべてのベクトルへの射影を引き、正規化する
+4. 残りのベクトルについて繰り返す
 
 ```
-Input:  v1, v2, v3, ... (linearly independent)
+入力:  v1, v2, v3, ... (線形独立)
 
 u1 = v1 / |v1|
 
@@ -170,17 +170,17 @@ u2 = w2 / |w2|
 w3 = v3 - (v3 dot u1) * u1 - (v3 dot u2) * u2
 u3 = w3 / |w3|
 
-Output: u1, u2, u3, ... (orthonormal basis)
+出力: u1, u2, u3, ... (正規直交基底)
 ```
 
-This is how QR decomposition works internally. Q is the orthonormal basis, R captures the projection coefficients. QR decomposition is used in:
-- Solving linear systems (more stable than Gaussian elimination)
-- Computing eigenvalues (QR algorithm)
-- Least-squares regression (the standard numerical method)
+これはQR分解が内部で行っていることです。Qは正規直交基底、Rは射影係数を捉えます。QR分解は次で使われます。
+- 線形方程式系を解く（ガウス消去より安定）
+- 固有値を計算する（QRアルゴリズム）
+- 最小二乗回帰（標準的な数値計算法）
 
-## Build It
+## 作ってみる
 
-### Step 1: Vectors from scratch (Python)
+### ステップ 1: スクラッチでベクトル (Python)
 
 ```python
 class Vector:
@@ -220,7 +220,7 @@ print(f"|a| = {a.magnitude():.4f}")
 print(f"cosine similarity = {a.cosine_similarity(b):.4f}")
 ```
 
-### Step 2: Matrices from scratch (Python)
+### ステップ 2: スクラッチで行列 (Python)
 
 ```python
 class Matrix:
@@ -263,7 +263,7 @@ print(f"Original: {point}")
 print(f"Rotated 90°: {rotated}")
 ```
 
-### Step 3: Why this matters for AI
+### ステップ 3: これがAIで重要な理由
 
 ```python
 import random
@@ -278,7 +278,7 @@ print(f"Output (2D): {output}")
 print("This is what a neural network layer does -- matrix multiplication.")
 ```
 
-### Step 4: Julia version
+### ステップ 4: Julia版
 
 ```julia
 a = [1.0, 2.0, 3.0]
@@ -296,7 +296,7 @@ println("Wx = ", W * x)
 println("This is a neural network layer.")
 ```
 
-### Step 5: Linear independence and projection from scratch (Python)
+### ステップ 5: 線形独立と射影をスクラッチ実装する (Python)
 
 ```python
 def is_linearly_independent(vectors):
@@ -355,9 +355,9 @@ print(f"u1 · u3 = {basis[0].dot(basis[2]):.6f}")
 print(f"u2 · u3 = {basis[1].dot(basis[2]):.6f}")
 ```
 
-## Use It
+## 使ってみる
 
-Now the same thing with NumPy -- what you'll actually use in practice:
+同じことをNumPyで行います。実務で実際に使うのはこちらです。
 
 ```python
 import numpy as np
@@ -375,7 +375,7 @@ x = np.array([1.0, 0.5, -0.3])
 print(f"Wx = {W @ x}")
 ```
 
-### Rank, Projection, and QR with NumPy
+### NumPyでランク、射影、QRを扱う
 
 ```python
 import numpy as np
@@ -393,7 +393,7 @@ print(f"Q is orthogonal: {np.allclose(Q @ Q.T, np.eye(3))}")
 print(f"R is upper triangular: {np.allclose(R, np.triu(R))}")
 ```
 
-### PyTorch -- Tensors Are Vectors with Autodiff
+### PyTorch - テンソルはAutodiff付きのベクトル
 
 ```python
 import torch
@@ -410,50 +410,50 @@ print(f"dot product = {similarity.item():.4f}")
 print(f"d(dot)/dx = {x.grad}")
 ```
 
-The gradient of the dot product with respect to x is just y. PyTorch computed this automatically. Every operation in a neural network is built from operations like this -- matrix multiplies, dot products, projections -- and autodiff tracks gradients through all of them.
+xに関する内積の勾配は、単にyです。PyTorchはこれを自動で計算しました。ニューラルネットワーク内のすべての演算は、このような演算、つまり行列積、内積、射影から組み立てられています。そしてautodiffは、それらすべてを通じて勾配を追跡します。
 
-You just built from scratch what NumPy does in one line. Now you know what's happening under the hood.
+NumPyが1行で行うことを、あなたはスクラッチで作りました。これで内部で何が起きているかが分かります。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-linear-algebra-tutor.md` -- a prompt for AI assistants to teach linear algebra through geometric intuition
+このレッスンでは次を作ります。
+- `outputs/prompt-linear-algebra-tutor.md` - 幾何学的な直感を通じて線形代数を教えるAIアシスタント用プロンプト
 
-## Connections
+## 関連
 
-Everything in this lesson connects to specific parts of modern AI:
+このレッスンのすべては、現代AIの具体的な部分につながっています。
 
-| Concept | Where it shows up |
+| 概念 | 現れる場所 |
 |---------|------------------|
-| Dot product | Attention scores in transformers, cosine similarity in RAG |
-| Matrix multiply | Every neural network layer, every linear transformation |
-| Linear independence | Feature selection, avoiding multicollinearity |
-| Rank | Determining if a system is solvable, LoRA (low-rank adaptation) |
-| Projection | Linear regression (projecting onto column space), PCA |
-| Gram-Schmidt / QR | Numerical solvers, eigenvalue computation |
-| Orthonormal basis | Stable numerical computation, whitening transforms |
+| 内積 | トランスフォーマーのアテンションスコア、RAGのコサイン類似度 |
+| 行列積 | すべてのニューラルネットワーク層、すべての線形変換 |
+| 線形独立 | 特徴選択、多重共線性の回避 |
+| ランク | 系が解けるかの判定、LoRA（low-rank adaptation） |
+| 射影 | 線形回帰（列空間への射影）、PCA |
+| Gram-Schmidt / QR | 数値ソルバー、固有値計算 |
+| 正規直交基底 | 安定した数値計算、ホワイトニング変換 |
 
-LoRA deserves special mention. It fine-tunes large language models by decomposing weight updates into low-rank matrices. Instead of updating a 4096x4096 weight matrix (16M parameters), LoRA updates two matrices of size 4096x16 and 16x4096 (131K parameters). The rank-16 constraint means LoRA assumes the weight update lives in a 16-dimensional subspace of the full 4096-dimensional space. That is linear algebra doing real work.
+LoRAは特に重要です。LoRAは重み更新を低ランク行列に分解することで、大規模言語モデルをファインチューニングします。4096x4096の重み行列（16Mパラメータ）を更新する代わりに、LoRAは 4096x16 と 16x4096 の2つの行列（131Kパラメータ）を更新します。rank-16という制約は、重み更新が完全な4096次元空間ではなく、16次元部分空間にあると仮定していることを意味します。これは線形代数が実際に仕事をしている例です。
 
-## Exercises
+## 演習
 
-1. Implement `Vector.angle_between(other)` that returns the angle in degrees between two vectors
-2. Create a 2D scaling matrix that doubles the x-coordinate and triples the y-coordinate, then apply it to the vector [1, 1]
-3. Given 5 random word-like vectors (dimension 50), find the two most similar using cosine similarity
-4. Verify that the Gram-Schmidt output is truly orthonormal: check that every pair has dot product 0 and every vector has magnitude 1
-5. Create a 3x3 matrix with rank 2. Verify using the `rank()` method. Then explain what geometric object the columns span.
-6. Project the vector [1, 2, 3] onto [1, 1, 1]. What does the result represent geometrically?
+1. 2つのベクトルの間の角度を度数で返す `Vector.angle_between(other)` を実装してください
+2. x座標を2倍、y座標を3倍にする2Dスケーリング行列を作り、ベクトル [1, 1] に適用してください
+3. 単語らしいランダムなベクトルを5個（次元50）作り、コサイン類似度で最も似ている2つを見つけてください
+4. Gram-Schmidtの出力が本当に正規直交であることを検証してください。すべてのペアの内積が0で、すべてのベクトルの大きさが1であることを確認します
+5. ランク2の3x3行列を作ってください。`rank()` メソッドで検証し、その列が張る幾何学的対象を説明してください
+6. ベクトル [1, 2, 3] を [1, 1, 1] に射影してください。その結果は幾何学的に何を表していますか？
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Vector | "An arrow" | A list of numbers representing a point or direction in n-dimensional space |
-| Matrix | "A table of numbers" | A transformation that maps vectors from one space to another |
-| Dot product | "Multiply and sum" | A measure of how aligned two vectors are -- the core of similarity search |
-| Embedding | "Some AI magic" | A vector that represents the meaning of something (word, image, user) |
-| Linear independence | "They don't overlap" | No vector in the set can be written as a combination of the others |
-| Rank | "How many dimensions" | The number of linearly independent columns (or rows) in a matrix |
-| Projection | "The shadow" | The component of one vector in the direction of another |
-| Basis | "The coordinate axes" | A minimal set of independent vectors that span the space |
-| Orthonormal | "Perpendicular unit vectors" | Vectors that are mutually perpendicular and each have length 1 |
+| ベクトル | 「矢印」 | n次元空間の点または方向を表す数値のリスト |
+| 行列 | 「数値の表」 | ベクトルをある空間から別の空間へ写す変換 |
+| 内積 | 「掛けて足す」 | 2つのベクトルがどれだけ同じ方向を向いているかの尺度。類似度検索の中核 |
+| 埋め込み | 「AIの魔法のようなもの」 | 単語、画像、ユーザーなど何かの意味を表すベクトル |
+| 線形独立 | 「重なっていない」 | 集合内のどのベクトルも、他のベクトルの組み合わせとして書けないこと |
+| ランク | 「何次元か」 | 行列内の線形独立な列（または行）の数 |
+| 射影 | 「影」 | あるベクトルの、別のベクトル方向の成分 |
+| 基底 | 「座標軸」 | 空間を張る独立なベクトルの最小集合 |
+| 正規直交 | 「垂直な単位ベクトル」 | 互いに垂直で、それぞれの長さが1のベクトル |

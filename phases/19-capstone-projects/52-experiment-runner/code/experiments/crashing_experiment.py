@@ -1,6 +1,6 @@
-"""Mock experiment that exits with a non zero code and writes no metrics.
+"""non-zero code で exit し、metrics を書かない mock experiment。
 
-Used by the runner tests to verify the crash terminal label.
+runner tests が crash terminal label を検証するために使います。
 """
 
 from __future__ import annotations
@@ -10,7 +10,7 @@ import sys
 
 
 def main() -> int:
-    print(json.dumps({"step": 0, "note": "about to fail"}))
+    print(json.dumps({"step": 0, "note": "まもなく失敗します"}))
     print("trace: simulated failure", file=sys.stderr)
     return 3
 

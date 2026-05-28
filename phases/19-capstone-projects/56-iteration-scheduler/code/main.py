@@ -1,12 +1,12 @@
-"""Auto-research orchestrator: hypothesis queue, parallel slots, UCB scoring, fan-out.
+"""auto-research orchestrator: hypothesis queue、parallel slots、UCB scoring、fan-out。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
-- Phase 19 lesson 54 (paper writer; receives paper.trigger fan-out)
-- Phase 19 lesson 55 (critic loop; consumes results downstream)
+概念参照:
+- ./docs/en.md (この lesson)
+- Phase 19 lesson 54 (paper writer; paper.trigger fan-out を受け取る)
+- Phase 19 lesson 55 (critic loop; downstream で results を消費する)
 - Phase 19 lessons 50-53 (earlier auto-research stages)
 
-Stdlib + numpy only. Run: python3 code/main.py
+stdlib + numpy のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -112,7 +112,7 @@ def ucb_score(branch_stats: BranchStats, total_runs: int, c: float) -> float:
 
 
 class IterationScheduler:
-    """Drives a hypothesis queue across N parallel asyncio slots with UCB picking."""
+    """UCB picking により hypothesis queue を N 個の parallel asyncio slots で駆動します。"""
 
     def __init__(
         self,
@@ -300,7 +300,7 @@ def make_deterministic_runner(
     delay_ms: float = 5.0,
     seed: int = 0,
 ) -> Runner:
-    """Build an async experiment runner whose reward is base_reward + N(0, noise)."""
+    """reward が base_reward + N(0, noise) になる async experiment runner を作ります。"""
     rng = np.random.default_rng(seed)
 
     async def run(hyp: Hypothesis) -> Result:
@@ -317,7 +317,7 @@ def make_deterministic_runner(
 
 
 def deterministic_expander(result: Result) -> list[Hypothesis]:
-    """Spawn two follow-up hypotheses on the same branch with a monotonic id."""
+    """同じ branch 上に monotonic id を持つ二つの follow-up hypotheses を生成します。"""
     return [
         Hypothesis(id=f"{result.hypothesis_id}-f{i}", branch=result.branch,
                    payload={"parent": result.hypothesis_id})

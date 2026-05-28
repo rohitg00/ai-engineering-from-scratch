@@ -1,11 +1,11 @@
-"""Plan-and-execute agent with replan on failure, plan diffs, and dual budgets.
+"""failure 時の replan、plan diff、dual budget を備えた plan-and-execute agent。
 
 Conceptual references:
 - ./docs/en.md (this lesson)
 - Phase 14 lesson 01 (agent loop fundamentals)
 - Phase 13 lesson 02 (tool protocols overview)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -96,7 +96,7 @@ def _diff_plans(old: list[Step], new: list[Step], revision: int) -> PlanDiff:
 
 
 class PlanExecuteAgent:
-    """Sequential plan executor with replan on failure."""
+    """failure 時に replan する sequential plan executor。"""
 
     def __init__(
         self,
@@ -196,21 +196,21 @@ def _summarize(plan: list[Step]) -> list[dict]:
 
 
 def make_deterministic_planner(fail_step_id: int | None, recovery: str = "route_around") -> Planner:
-    """Planner used in the demo and tests.
+    """demo と test で使う planner。
 
-    When ``fail_step_id`` is given, the planner inserts a ``_force_fail`` marker
-    into that step's args on the initial plan. Executors that honor the marker
-    raise on that step, exercising the replan path. The marker is removed on the
-    revised plan so the route-around can succeed.
+    ``fail_step_id`` が与えられると、planner は initial plan のその step の args に
+    ``_force_fail`` marker を入れる。その marker を尊重する executor はその step で
+    raise し、replan path を exercise する。revised plan では marker を外すので
+    route-around が成功できる。
     """
 
     def planner(goal: str, history: list[Step], last_error: str | None) -> list[Step]:
         if last_error is None:
             initial = [
-                Step(1, "fetch", {"key": "input"}, "loaded user input"),
-                Step(2, "transform", {"mode": "v1"}, "computed v1 form"),
-                Step(3, "render", {}, "rendered output"),
-                Step(4, "submit", {}, "submitted to backend"),
+                Step(1, "fetch", {"key": "input"}, "user input を読み込んだ"),
+                Step(2, "transform", {"mode": "v1"}, "v1 形式を計算した"),
+                Step(3, "render", {}, "output を render した"),
+                Step(4, "submit", {}, "backend に submit した"),
             ]
             if fail_step_id is not None:
                 for s in initial:
@@ -219,14 +219,14 @@ def make_deterministic_planner(fail_step_id: int | None, recovery: str = "route_
             return initial
         if recovery == "route_around" and "transform" in last_error:
             return [
-                Step(2, "transform", {"mode": "v2"}, "computed via fallback"),
-                Step(3, "render", {}, "rendered output"),
-                Step(4, "submit", {}, "submitted to backend"),
+                Step(2, "transform", {"mode": "v2"}, "fallback で計算した"),
+                Step(3, "render", {}, "output を render した"),
+                Step(4, "submit", {}, "backend に submit した"),
             ]
         if recovery == "give_up":
             return [
-                Step(98, "log_failure", {"why": last_error or ""}, "logged failure"),
-                Step(99, "notify_user", {}, "told the user"),
+                Step(98, "log_failure", {"why": last_error or ""}, "failure を log した"),
+                Step(99, "notify_user", {}, "user に伝えた"),
             ]
         return []
 
@@ -239,13 +239,13 @@ def _demo() -> None:
     def executor(tool: str, args: dict) -> Any:
         if args.get("_force_fail"):
             counters["transform_v1_calls"] += 1
-            raise ToolFailure(f"{tool} marker-forced failure")
+            raise ToolFailure(f"{tool} は marker により failure")
         if tool == "fetch":
             return {"k": "v"}
         if tool == "transform":
             if args.get("mode") == "v1":
                 counters["transform_v1_calls"] += 1
-                raise ToolFailure("transform v1 backend down")
+                raise ToolFailure("transform v1 backend が down")
             return {"ok": True}
         if tool == "render":
             return "html"
@@ -253,14 +253,14 @@ def _demo() -> None:
             return {"id": 1}
         if tool in ("log_failure", "notify_user"):
             return "logged"
-        raise ToolFailure(f"unknown tool {tool}")
+        raise ToolFailure(f"未知の tool {tool}")
 
     agent = PlanExecuteAgent(
         planner=make_deterministic_planner(fail_step_id=2, recovery="route_around"),
         executor=executor,
         max_steps=12, max_replans=5,
     )
-    res = agent.run("ship the report")
+    res = agent.run("report を出荷する")
     print(json.dumps({
         "status": res.status,
         "reason": res.reason,

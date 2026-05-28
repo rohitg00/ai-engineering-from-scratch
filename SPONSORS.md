@@ -1,143 +1,103 @@
-# Sponsorship
+# スポンサーシップ
 
-`ai-engineering-from-scratch` is a free, MIT-licensed curriculum. 428 lessons across 20
-phases. The work is built and maintained by [Rohit Ghumare](https://github.com/rohitg00).
+`ai-engineering-from-scratch` は無料で公開されている MIT ライセンスのカリキュラムです。20 フェーズにわたる 428 レッスンで構成されています。この取り組みは [Rohit Ghumare](https://github.com/rohitg00) が作成し、保守しています。
 
-Sponsorships fund the time it takes to ship lessons, keep the site running, and reply to the
-issue queue. Cash only. Credits-in-kind, equity, or "we'll write your content" arrangements
-are not accepted, see [Hard rules](#hard-rules) below.
+スポンサーシップは、レッスンの公開、サイト運用、issue キューへの対応に必要な時間を支えます。現金のみ受け付けます。クレジット提供、株式、「コンテンツはこちらで書く」といった取り決めは受け付けません。詳しくは下の [Hard rules](#hard-rules) を参照してください。
 
-If you or your company want to support the curriculum, this page is the rate card.
+あなたやあなたの会社がこのカリキュラムを支援したい場合、このページが料金表です。
 
-## How to sponsor
+## スポンサーになる方法
 
 - **GitHub Sponsors:** [github.com/sponsors/rohitg00](https://github.com/sponsors/rohitg00)
 
-GitHub Sponsors handles billing, receipts, and tax forms. 0% platform fee on personal
-sponsorships, up to 6% on organization sponsorships, per [GitHub's policy](https://docs.github.com/en/sponsors/receiving-sponsorships-through-github-sponsors/about-github-sponsors-for-open-source-contributors).
+GitHub Sponsors が請求、領収書、税務フォームを処理します。[GitHub のポリシー](https://docs.github.com/en/sponsors/receiving-sponsorships-through-github-sponsors/about-github-sponsors-for-open-source-contributors) によると、個人スポンサーシップのプラットフォーム手数料は 0%、組織スポンサーシップは最大 6% です。
 
-For clarity: the curriculum has no token, no coin, no NFT, no wallet, and no chain
-partnership. The maintainer does not endorse, promote, partner with, or accept
-payment from any crypto project. The funding link above is the only channel;
-anything else using this project's name is unaffiliated.
+明確にしておきます。このカリキュラムには、トークン、コイン、NFT、ウォレット、チェーン提携はありません。メンテナーは、いかなる暗号資産プロジェクトについても、支持、宣伝、提携、支払いの受領を行いません。上記の資金提供リンクだけが正式な窓口です。このプロジェクト名を使うそれ以外のものは無関係です。
 
-## Reach
+## リーチ
 
-These are real numbers, not pitch decks. Verified 2026-05-14 from the official analytics
-dashboard, screenshots available on request.
+これは営業資料ではなく、実数です。公式分析ダッシュボードで 2026-05-14 に確認済みで、スクリーンショットはリクエストがあれば共有できます。
 
-| Window | Visitors | Page views | Growth |
+| 期間 | 訪問者 | ページビュー | 成長率 |
 |---|---|---|---|
-| Last 7 days | 33,569 | 53,917 | +450% / +399% |
-| Last 30 days | 55,593 | 90,709 | +335% / +403% |
+| 直近 7 日 | 33,569 | 53,917 | +450% / +399% |
+| 直近 30 日 | 55,593 | 90,709 | +335% / +403% |
 
-- **GitHub stars:** 7,500+ and growing
-- **Top referrers (30d):** X / Twitter (18K), Google (7.1K), GitHub (5.3K), Instagram (1.2K),
+- **GitHub stars:** 7,500+、現在も増加中
+- **主な参照元（30d）:** X / Twitter (18K), Google (7.1K), GitHub (5.3K), Instagram (1.2K),
   Brave (505), LinkedIn (470)
-- **Top pages:** `/` (63K views), `/index.html` (15K), `/prereqs.html` (5.5K),
+- **主なページ:** `/` (63K ビュー), `/index.html` (15K), `/prereqs.html` (5.5K),
   `/catalog.html` (4.9K), `/glossary.html` (2K)
-- **Cross-platform amplification:** Twitter/X is the #1 acquisition channel; Gold and
-  Platinum sponsors get co-amplified on the same channel via release-note threads.
+- **クロスプラットフォームでの拡散:** Twitter/X は獲得チャネル第 1 位です。Gold と
+  Platinum スポンサーは、同じチャネルでリリースノートのスレッドを通じて共同拡散されます。
 
-A sponsor placement at this scale is in the same range as a paid slot in a 50-100K monthly
-dev newsletter or a mid-tier independent dev blog.
+この規模でのスポンサー枠は、月間 50-100K 規模の有料開発者向けニュースレター枠や、中堅の独立系開発者ブログの枠と同等のレンジです。
 
-## Tier ladder
+## ティア一覧
 
-| Tier | $/mo | Min term | What you get |
+| ティア | $/mo | 最短期間 | 得られるもの |
 |------|------|----------|---|
-| **Backer** | $25 | month-to-month | Name in [BACKERS.md](BACKERS.md), Sponsors badge on your GitHub profile |
-| **Bronze** | $250 | 3 months | Text-only row in the README sponsor block, name in BACKERS.md, one launch-day tweet thanking the tier |
-| **Silver** | $750 | 6 months | Small logo (max 120×40) in the README sponsor row, listed as one supported provider in API lessons where applicable, quarterly thank-you in release notes |
-| **Gold** | $2,000 | 6 months | Medium logo (max 200×60) in README + dedicated row on the sponsor page of the curriculum site + one X / LinkedIn co-feature per quarter |
-| **Platinum** | $5,000 | 12 months, max 1 partner | Hero logo above the fold + named in every release-notes post for the term + one dedicated integration lesson under Phase 11 or Phase 14, written by the maintainer to the same editorial standard as the rest of the curriculum |
+| **Backer** | $25 | 月単位 | [BACKERS.md](BACKERS.md) への名前掲載、GitHub プロフィール上の Sponsors バッジ |
+| **Bronze** | $250 | 3 か月 | README のスポンサーブロックにテキストのみで 1 行掲載、BACKERS.md への名前掲載、ローンチ日にそのティアへの感謝ツイートを 1 回 |
+| **Silver** | $750 | 6 か月 | README のスポンサー行に小型ロゴ（最大 120×40）を掲載、該当する API レッスンでサポート対象プロバイダーの 1 つとして掲載、四半期ごとにリリースノートで謝辞 |
+| **Gold** | $2,000 | 6 か月 | README に中型ロゴ（最大 200×60）+ カリキュラムサイトのスポンサーページに専用行 + 四半期ごとに X / LinkedIn で 1 回共同紹介 |
+| **Platinum** | $5,000 | 12 か月、最大 1 パートナー | ファーストビューにヒーローロゴ + 期間中のすべてのリリースノート投稿で名前掲載 + Phase 11 または Phase 14 の専用連携レッスンを 1 本。メンテナーが他のカリキュラムと同じ編集基準で執筆 |
 
-Diamond / Title tiers ($10,000+/mo) are not offered today. Reasonable to revisit once
-monthly visitors clear 250K or there is verified Fortune-500 enterprise dependency.
+Diamond / Title ティア（$10,000+/mo）は現在提供していません。月間訪問者が 250K を超えるか、Fortune-500 企業での依存関係が検証できた時点で、再検討するのが妥当です。
 
-Pricing is calibrated against the public sponsor pages of comparable open-source
-projects, the analytics above, and standard dev-blog sponsor rates at the 50-100K monthly
-visitor scale (see [Pricing anchors](#pricing-anchors) below).
+価格は、比較可能なオープンソースプロジェクトの公開スポンサー情報、上記の分析値、月間 50-100K 訪問者規模の標準的な開発者ブログスポンサー料金をもとに調整しています（下の [Pricing anchors](#pricing-anchors) を参照）。
 
 ## Hard rules
 
-These rules are non-negotiable. Sponsors who cannot accept them are politely declined.
+このルールは交渉不可です。受け入れられないスポンサーは丁重にお断りします。
 
-1. **No lesson-body placements.** Logos appear in the README sponsor block, on the
-   curriculum site's sponsor page, and in BACKERS.md only. Never inside `phases/**/docs/en.md`,
-   `outputs/`, code samples, or anywhere a learner is reading the curriculum content itself.
-2. **"Supported provider" does not mean "recommended."** Every API lesson shows three or
-   more providers behind the same interface. Sponsors get listed alongside the others; they
-   are never marked as the default, the preferred choice, or the answer to "which should I
-   use."
-3. **No sponsor-authored content.** The maintainer writes every lesson. Sponsors review
-   integration PRs for technical accuracy only; they do not propose narratives, frame
-   trade-offs, or veto comparisons.
-4. **No roadmap veto.** Platinum sponsors may submit roadmap suggestions like anyone else.
-   The maintainer decides what ships.
-5. **30-day editorial-conflict exit.** If a sponsor pressures the maintainer to bias content,
-   the sponsorship terminates within 30 days with a pro-rata refund. The logo drops on the
-   next site deploy.
-6. **Conflict refusal.** The curriculum declines sponsors whose product directly contradicts
-   curriculum principles (closed-loop vibe-coding tools, vendor lock-in evangelism, agent
-   products that ignore observability or refuse to ship with open formats). Refusal is at
-   the maintainer's sole discretion.
-7. **Cash only.** Credits-in-kind, equity, free hardware, "we'll do your DevRel for you,"
-   and bundle deals are not accepted. They are too easy to undervalue and too hard to
-   account for cleanly.
+1. **レッスン本文への掲載なし。** ロゴは README のスポンサーブロック、カリキュラムサイトのスポンサーページ、BACKERS.md にのみ掲載します。`phases/**/docs/en.md`、
+   `outputs/`、コードサンプル、その他学習者がカリキュラム本文を読んでいる場所には絶対に掲載しません。
+2. **「サポート対象プロバイダー」は「推奨」を意味しません。** すべての API レッスンは、同じインターフェイスの背後に 3 つ以上のプロバイダーを示します。スポンサーは他のプロバイダーと並んで掲載されますが、デフォルト、優先選択肢、「どれを使うべきか」への答えとして扱われることはありません。
+3. **スポンサー執筆コンテンツなし。** すべてのレッスンはメンテナーが書きます。スポンサーは連携 PR を技術的正確性の観点からのみレビューします。物語の方向性を提案したり、トレードオフの見せ方を決めたり、比較を拒否したりすることはできません。
+4. **ロードマップの拒否権なし。** Platinum スポンサーは他の人と同じようにロードマップ提案を送れます。何を公開するかはメンテナーが決めます。
+5. **編集上の利害衝突は 30 日で終了。** スポンサーが内容を偏らせるようメンテナーに圧力をかけた場合、スポンサーシップは 30 日以内に終了し、日割りで返金します。ロゴは次回のサイトデプロイで削除されます。
+6. **衝突するスポンサーは拒否。** カリキュラムの原則に直接反するプロダクト（閉ループ型 vibe-coding ツール、ベンダーロックインの布教、可観測性を無視する、またはオープン形式での出荷を拒むエージェント製品など）を持つスポンサーは辞退します。拒否はメンテナーの単独裁量です。
+7. **現金のみ。** クレジット提供、株式、無償ハードウェア、「DevRel を代行する」という提案、抱き合わせ取引は受け付けません。価値を低く見積もりやすく、会計上もきれいに扱いにくいためです。
 
-## Counter-proposals from prospective sponsors
+## 見込みスポンサーからの逆提案
 
-If your company has a different ask, the right move is to read the tier ladder and the
-hard rules, then propose a specific tier and term in your first email. Do not open with
-"how about we trade you free credits for a hero placement" or "we'd like to write the
-integration ourselves" — those are pre-declined under the hard rules above and the email
-will end with a link back to this page.
+会社として別の希望がある場合は、ティア一覧と Hard rules を読んだうえで、最初のメールで具体的なティアと期間を提案してください。「無料クレジットとヒーロー掲載を交換しませんか」や「連携部分は自社で書きたい」といった話から始めないでください。これらは上記の Hard rules により事前に辞退済みであり、メールへの返答はこのページへのリンクで終わります。
 
 ## Pricing anchors
 
-The tier amounts above are anchored against (a) public sponsor pages of comparable
-open-source projects, and (b) standard sponsor-slot rates for 50-100K monthly visitor dev
-publications. Verified 2026-05.
+上記のティア金額は、(a) 比較可能なオープンソースプロジェクトの公開スポンサー情報、(b) 月間 50-100K 訪問者の開発者向け媒体における標準的なスポンサー枠料金を基準にしています。2026-05 に確認済みです。
 
-Comparable open-source rate cards:
+比較可能なオープンソースの料金表:
 
-- **Open-source baseline** — [Drupal AI Developer Assistant](https://opencollective.com/drupal-ai-initiative/projects/aidev),
+- **オープンソースの基準値** — [Drupal AI Developer Assistant](https://opencollective.com/drupal-ai-initiative/projects/aidev),
   [Babel](https://opencollective.com/babel), [Parcel](https://opencollective.com/parcel),
-  [Vue.js](https://opencollective.com/vuejs) all open Bronze at $100/mo with text-only
-  recognition. Bronze here sits at $250 because the curriculum carries the audience traffic
-  none of those repos individually carry.
-- **$750 Silver** sits above Babel Silver ($500) and Drupal AI Gold ($500); below Vue
-  Platinum ($2,000). Defensible at the curriculum's monthly traffic.
-- **$2,000 Gold** matches Babel Base Support (billed yearly at $24K = $2K/mo) and Vue
-  Platinum.
-- **$5,000 Platinum** matches Vue Diamond. At 7.5K stars + 55K monthly visitors + the
-  current growth slope, the dedicated lesson + hero placement is what justifies the price.
-- **Diamond / Title ($10K+)** is skipped. Reasonable to revisit once monthly visitors
-  clear 250K.
+  [Vue.js](https://opencollective.com/vuejs) はいずれも Bronze を $100/mo から開始し、テキストのみで謝辞を掲載します。このカリキュラムの Bronze が $250 なのは、各リポジトリ単体にはない規模の読者トラフィックをカリキュラムが持っているためです。
+- **$750 Silver** は Babel Silver（$500）と Drupal AI Gold（$500）より上、Vue
+  Platinum（$2,000）より下に位置します。このカリキュラムの月間トラフィックを考えれば妥当です。
+- **$2,000 Gold** は Babel Base Support（年 $24K = $2K/mo 請求）および Vue
+  Platinum と同等です。
+- **$5,000 Platinum** は Vue Diamond と同等です。7.5K stars、月間 55K 訪問者、現在の成長勾配を踏まえると、専用レッスンとヒーロー掲載がこの価格の根拠です。
+- **Diamond / Title（$10K+）** は見送っています。月間訪問者が 250K を超えた時点で再検討するのが妥当です。
 
-## What sponsorship pays for
+## スポンサー料の使い道
 
-Listed in order of how the next dollar gets spent:
+次の 1 ドルがどこに使われるかを、優先順に並べます。
 
-1. Maintainer time on new lessons and on the issue queue.
-2. Site hosting, domain, and CDN (Vercel + custom domains).
-3. Diagram authoring tools, font licensing, design assets.
-4. One-time research or content fees for guest lesson reviewers when a phase covers
-   territory outside the maintainer's depth.
-5. Contributor bounties on specific issues that have been open longer than 30 days.
+1. 新しいレッスンと issue キューに対応するメンテナーの時間。
+2. サイトホスティング、ドメイン、CDN（Vercel + custom domains）。
+3. 図の作成ツール、フォントライセンス、デザインアセット。
+4. フェーズがメンテナーの専門範囲を超える領域を扱う場合の、ゲストレッスンレビュアー向けの単発リサーチ費またはコンテンツ費。
+5. 30 日を超えて未解決の特定 issue に対するコントリビューター報奨金。
 
-## Becoming a sponsor
+## スポンサーになる
 
-1. Pick a tier above.
-2. Subscribe via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
-3. For Silver and above, email the maintainer with: your logo (SVG preferred), the URL
-   you want it linked to, and the term length you've committed to.
-4. The logo lands in the next site deploy, usually within 48 hours.
-5. Receipts and invoices are issued by GitHub Sponsors automatically.
+1. 上のティアを選ぶ。
+2. [GitHub Sponsors](https://github.com/sponsors/rohitg00) で購読する。
+3. Silver 以上の場合は、ロゴ（SVG 推奨）、リンク先にしたい URL、確約した期間をメンテナーへメールする。
+4. 通常 48 時間以内に、次回のサイトデプロイでロゴが掲載されます。
+5. 領収書と請求書は GitHub Sponsors から自動発行されます。
 
-## Becoming an ex-sponsor
+## 元スポンサーになる
 
-Cancellation is one click in your GitHub Sponsors dashboard. The logo drops on the next
-site deploy after the current billing period ends. No clawback, no exit interview, no hard
-feelings. Sponsorships fund the curriculum; they do not buy a relationship.
+キャンセルは GitHub Sponsors ダッシュボードからワンクリックで行えます。現在の請求期間が終わった後、次回のサイトデプロイでロゴが削除されます。返還請求、退会面談、後腐れはありません。スポンサーシップはカリキュラムに資金を提供するものであり、関係性を買うものではありません。

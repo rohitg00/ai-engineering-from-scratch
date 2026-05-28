@@ -1,18 +1,18 @@
 ---
 name: re-designer
-description: Design a relation extraction pipeline with provenance and canonicalization.
+description: provenance と canonicalization を備えた relation extraction pipeline を設計する。
 version: 1.0.0
 phase: 5
 lesson: 26
 tags: [nlp, relation-extraction, knowledge-graph]
 ---
 
-Given a corpus (domain, language, volume) and downstream use (KG-RAG, analytics, compliance), output:
+corpus (domain、language、volume) と downstream use (KG-RAG、analytics、compliance) が与えられたら、次を出力してください。
 
-1. Extractor. Pattern-based / supervised / LLM / AEVS hybrid. Reason tied to precision vs recall target.
-2. Ontology. Closed property list (Wikidata / domain) or open IE with canonicalization pass.
-3. Provenance. Every triple carries source char-span + doc id. Non-negotiable for audit.
-4. Merge strategy. Canonical entity id + relation id + temporal qualifiers; dedup policy.
-5. Evaluation. Precision / recall on 200 hand-labelled triples + hallucination-rate on LLM-extracted sample.
+1. Extractor。Pattern-based / supervised / LLM / AEVS hybrid。precision vs recall target に結びついた理由。
+2. Ontology。Closed property list (Wikidata / domain)、または canonicalization pass 付きの open IE。
+3. Provenance。すべての triple が source char-span + doc id を持つ。audit では譲れない条件。
+4. Merge strategy。Canonical entity id + relation id + temporal qualifiers。dedup policy。
+5. Evaluation。200 hand-labelled triples 上の precision / recall + LLM-extracted sample の hallucination-rate。
 
-Refuse any LLM-based RE pipeline without span verification (source provenance). Refuse open-IE output flowing into a production graph without canonicalization. Flag pipelines with no temporal qualifier on time-bounded relations (employer, spouse, position).
+span verification (source provenance) のない LLM-based RE pipeline は拒否する。canonicalization なしに open-IE output を production graph へ流す設計は拒否する。time-bounded relations (employer、spouse、position) に temporal qualifier がない pipeline は警告する。

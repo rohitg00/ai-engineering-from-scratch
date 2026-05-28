@@ -1,69 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 11px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
-      .dim { fill: #999; font-size: 10px; font-family: 'Menlo', monospace; }
+      .dim { fill: #999; font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">three embedding modes — same passage, three vectors</text>
+  <text x="450" y="30" text-anchor="middle" class="title">3つの埋め込み方式 — 同じ文章、3本のベクトル</text>
 
   <!-- Input passage -->
   <rect x="40" y="55" width="820" height="40" class="box"/>
-  <text x="450" y="80" text-anchor="middle" class="content">"Apple released the first iPhone on June 29, 2007."</text>
+  <text x="450" y="80" text-anchor="middle" class="content">"Appleは2007年6月29日に初代iPhoneを発売した。"</text>
 
   <!-- Dense column -->
   <rect x="40" y="115" width="260" height="260" class="box"/>
-  <text x="170" y="140" text-anchor="middle" class="label">dense</text>
-  <text x="170" y="160" text-anchor="middle" class="caption">one vector, fixed size</text>
+  <text x="170" y="140" text-anchor="middle" class="label">密ベクトル</text>
+  <text x="170" y="160" text-anchor="middle" class="caption">固定長の1ベクトル</text>
 
   <rect x="60" y="180" width="220" height="30" class="hot"/>
   <text x="170" y="200" text-anchor="middle" class="content">[0.23, -0.11, ..., 0.08]</text>
   <text x="170" y="225" text-anchor="middle" class="dim">dim = 1024 (BGE-M3)</text>
 
-  <text x="170" y="260" text-anchor="middle" class="caption">cosine similarity ranks</text>
-  <text x="170" y="278" text-anchor="middle" class="caption">passages by meaning</text>
-  <text x="170" y="310" text-anchor="middle" class="label">Matryoshka option:</text>
-  <text x="170" y="328" text-anchor="middle" class="content">truncate to 256 dim</text>
-  <text x="170" y="346" text-anchor="middle" class="content">≈ 1% accuracy loss</text>
-  <text x="170" y="364" text-anchor="middle" class="content">6x storage savings</text>
+  <text x="170" y="260" text-anchor="middle" class="caption">コサイン類似度で</text>
+  <text x="170" y="278" text-anchor="middle" class="caption">意味が近い文章を順位付け</text>
+  <text x="170" y="310" text-anchor="middle" class="label">Matryoshkaオプション:</text>
+  <text x="170" y="328" text-anchor="middle" class="content">256次元に切り詰め</text>
+  <text x="170" y="346" text-anchor="middle" class="content">精度低下は約1%</text>
+  <text x="170" y="364" text-anchor="middle" class="content">ストレージを6分の1に</text>
 
   <!-- Sparse column -->
   <rect x="320" y="115" width="260" height="260" class="box"/>
-  <text x="450" y="140" text-anchor="middle" class="label">sparse (SPLADE-style)</text>
-  <text x="450" y="160" text-anchor="middle" class="caption">one weight per vocab token</text>
+  <text x="450" y="140" text-anchor="middle" class="label">疎ベクトル（SPLADE式）</text>
+  <text x="450" y="160" text-anchor="middle" class="caption">語彙トークンごとに1重み</text>
 
   <rect x="340" y="180" width="220" height="30" class="hot"/>
   <text x="450" y="200" text-anchor="middle" class="content">{iPhone: 2.1, Apple: 1.8, ...}</text>
-  <text x="450" y="225" text-anchor="middle" class="dim">mostly zeros, |vocab| slots</text>
+  <text x="450" y="225" text-anchor="middle" class="dim">ほぼ0、|vocab|枠</text>
 
-  <text x="450" y="260" text-anchor="middle" class="caption">learned BM25 —</text>
-  <text x="450" y="278" text-anchor="middle" class="caption">term weights from transformer</text>
-  <text x="450" y="310" text-anchor="middle" class="label">strength:</text>
-  <text x="450" y="328" text-anchor="middle" class="content">keyword-heavy queries,</text>
-  <text x="450" y="346" text-anchor="middle" class="content">named entities,</text>
-  <text x="450" y="364" text-anchor="middle" class="content">rare terms</text>
+  <text x="450" y="260" text-anchor="middle" class="caption">学習型BM25 —</text>
+  <text x="450" y="278" text-anchor="middle" class="caption">Transformer由来の語重み</text>
+  <text x="450" y="310" text-anchor="middle" class="label">得意:</text>
+  <text x="450" y="328" text-anchor="middle" class="content">キーワード重視のクエリ,</text>
+  <text x="450" y="346" text-anchor="middle" class="content">固有表現,</text>
+  <text x="450" y="364" text-anchor="middle" class="content">希少語</text>
 
   <!-- Multi-vector column -->
   <rect x="600" y="115" width="260" height="260" class="box"/>
-  <text x="730" y="140" text-anchor="middle" class="label">multi-vector (ColBERT)</text>
-  <text x="730" y="160" text-anchor="middle" class="caption">one vector per token</text>
+  <text x="730" y="140" text-anchor="middle" class="label">マルチベクトル (ColBERT)</text>
+  <text x="730" y="160" text-anchor="middle" class="caption">トークンごとに1ベクトル</text>
 
   <rect x="620" y="180" width="220" height="30" class="hot"/>
-  <text x="730" y="200" text-anchor="middle" class="content">[v_Apple, v_released, ...]</text>
+  <text x="730" y="200" text-anchor="middle" class="content">[v_Apple, v_発売, ...]</text>
   <text x="730" y="225" text-anchor="middle" class="dim">(n_tokens, 128)</text>
 
-  <text x="730" y="260" text-anchor="middle" class="caption">MaxSim: for each q-token</text>
-  <text x="730" y="278" text-anchor="middle" class="caption">take best d-token match</text>
-  <text x="730" y="310" text-anchor="middle" class="label">tradeoff:</text>
-  <text x="730" y="328" text-anchor="middle" class="content">larger index,</text>
-  <text x="730" y="346" text-anchor="middle" class="content">better recall on long</text>
-  <text x="730" y="364" text-anchor="middle" class="content">and specialized queries</text>
+  <text x="730" y="260" text-anchor="middle" class="caption">MaxSim: 各qトークンで</text>
+  <text x="730" y="278" text-anchor="middle" class="caption">最良のdトークン一致を取る</text>
+  <text x="730" y="310" text-anchor="middle" class="label">トレードオフ:</text>
+  <text x="730" y="328" text-anchor="middle" class="content">インデックス大,</text>
+  <text x="730" y="346" text-anchor="middle" class="content">長いクエリや</text>
+  <text x="730" y="364" text-anchor="middle" class="content">専門クエリで再現率向上</text>
 
-  <text x="450" y="405" text-anchor="middle" class="caption">BGE-M3 emits all three from one forward pass — fuse with weighted sum or RRF</text>
+  <text x="450" y="405" text-anchor="middle" class="caption">BGE-M3は1回のフォワードパスで3種すべてを出力 — 加重和またはRRFで融合</text>
 </svg>

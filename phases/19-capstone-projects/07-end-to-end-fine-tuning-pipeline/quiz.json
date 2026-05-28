@@ -1,46 +1,46 @@
 {
   "lesson": "07-end-to-end-fine-tuning-pipeline",
-  "title": "Capstone 07 — End-to-End Fine-Tuning Pipeline (Data to SFT to DPO to Serve)",
+  "title": "Capstone 07 — End-to-End Fine-Tuning Pipeline (Data から SFT、DPO、Serve へ)",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the contamination check guard against during data preparation?",
+      "question": "data preparation 中の contamination check は何を防ぎますか？",
       "options": [
-        "Tokenizer drift between SFT and DPO stages",
-        "GPU driver mismatches between training and serving",
-        "GGUF version skew across llama.cpp builds",
-        "Test-set leakage from public benchmarks such as MMLU-Pro and MT-Bench-v2 into training data"
+        "SFT stage と DPO stage の tokenizer drift",
+        "training と serving の間の GPU driver mismatch",
+        "llama.cpp build 間の GGUF version skew",
+        "MMLU-Pro や MT-Bench-v2 など public benchmark の test-set leakage が training data に混入すること"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Why does the pipeline compose SFT then DPO (or GRPO) rather than DPO alone?",
+      "question": "pipeline が DPO 単独ではなく SFT の後に DPO (または GRPO) を組み合わせる理由は何ですか？",
       "options": [
-        "Axolotl does not implement DPO",
-        "SFT establishes domain behavior on labeled completions while DPO or GRPO aligns the model against preference pairs or verifiable rewards",
-        "DPO requires a separate base model architecture",
-        "DPO cannot run on quantized weights"
+        "Axolotl は DPO を実装していないため",
+        "SFT は labeled completions 上で domain behavior を確立し、DPO や GRPO は preference pairs や verifiable rewards に対して model を align するため",
+        "DPO は別の base model architecture を必要とするため",
+        "DPO は quantized weights 上で実行できないため"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does EAGLE-3 contribute to the vLLM serving stage?",
+      "question": "EAGLE-3 は vLLM serving stage に何をもたらしますか？",
       "options": [
-        "A new prompt-caching layer",
-        "An OPA policy for tool calls",
-        "An automatic data dedup step",
-        "Draft heads that predict N tokens ahead; the target verifies in one pass for 2-3x throughput"
+        "新しい prompt-caching layer",
+        "tool call 用の OPA policy",
+        "自動 data dedup step",
+        "N token 先を予測する draft heads。target が1 pass で verify し、throughput を 2-3x にする"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which metric reports how well a speculative-decoding draft aligns with the target model?",
+      "question": "speculative-decoding draft が target model とどれだけ合っているかを示す metric はどれですか？",
       "options": [
         "Acceptance rate",
         "Coverage delta",
@@ -52,11 +52,11 @@
     },
     {
       "stage": "check",
-      "question": "Which trio of quants does the pipeline ship for deployment flexibility?",
+      "question": "deployment flexibility のために pipeline が出荷する quant の trio はどれですか？",
       "options": [
         "ONNX, CoreML, TFLite",
         "GPTQ-INT4-Marlin, AWQ-INT4, and GGUF-Q4_K_M",
-        "INT8 only across three runtimes",
+        "3 runtime すべて INT8 only",
         "FP32, FP16, BF16"
       ],
       "correct": 1,
@@ -64,19 +64,19 @@
     },
     {
       "stage": "post",
-      "question": "Which framework convention does the 2026 model card follow in this capstone?",
+      "question": "この capstone の 2026 model card はどの framework convention に従いますか？",
       "options": [
         "Datasheets for Datasets",
-        "Model Openness Framework (MOF) 2026 template covering data, training, eval, safety, license, and reproducibility",
-        "HuggingFace YAML front-matter only",
-        "OpenAI's model card format"
+        "data、training、eval、safety、license、reproducibility を扱う Model Openness Framework (MOF) 2026 template",
+        "HuggingFace YAML front-matter のみ",
+        "OpenAI の model card format"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which HPA metric is used to autoscale the serving replicas?",
+      "question": "serving replica を autoscale するために使われる HPA metric はどれですか？",
       "options": [
         "Queue-wait time",
         "CPU utilization",

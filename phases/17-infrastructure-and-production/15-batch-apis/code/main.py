@@ -1,10 +1,10 @@
-"""Batch vs synchronous cost simulator — stdlib Python.
+"""Batch と同期実行のコストシミュレーター — stdlib Python.
 
-Models a 50k-document pipeline across four configurations:
-  SYNC              : no discount, no cache
-  SYNC + CACHE      : system prompt cached after first call
-  BATCH             : 50% discount, no cache
-  BATCH + CACHE     : stacked (~10% of SYNC bill)
+50k-document pipeline を4つの構成で model 化する:
+  SYNC              : discount なし、cache なし
+  SYNC + CACHE      : system prompt は初回 call 後に cache
+  BATCH             : 50% discount、cache なし
+  BATCH + CACHE     : 重ね掛け（SYNC bill の約10%）
 """
 
 from __future__ import annotations
@@ -52,20 +52,20 @@ def run(label: str, docs: int, prefix: int, per_doc: int, output: int) -> None:
     print(f"\n{label}")
     print(f"  docs={docs}, prefix={prefix}, per_doc={per_doc}, output={output}")
     print(f"  SYNC            : ${sc:10.2f}  (baseline)")
-    print(f"  SYNC + CACHE    : ${scc:10.2f}  ({scc/sc*100:5.1f}% of baseline)")
-    print(f"  BATCH           : ${bc:10.2f}  ({bc/sc*100:5.1f}% of baseline)")
-    print(f"  BATCH + CACHE   : ${bcc:10.2f}  ({bcc/sc*100:5.1f}% of baseline)")
+    print(f"  SYNC + CACHE    : ${scc:10.2f}  (baseline の {scc/sc*100:5.1f}%)")
+    print(f"  BATCH           : ${bc:10.2f}  (baseline の {bc/sc*100:5.1f}%)")
+    print(f"  BATCH + CACHE   : ${bcc:10.2f}  (baseline の {bcc/sc*100:5.1f}%)")
 
 
 def main() -> None:
     print("=" * 80)
-    print("BATCH API ECONOMICS — stack batch with prompt caching for ~10% of sync bill")
+    print("BATCH API ECONOMICS — batch と prompt caching を重ねて sync bill の約10%へ")
     print("=" * 80)
-    run("Nightly doc summarization (50k docs)",
+    run("夜間の文書要約 (50k docs)",
         docs=50_000, prefix=4000, per_doc=2000, output=200)
-    run("Content classification (200k items, short per item)",
+    run("コンテンツ分類 (200k items, short per item)",
         docs=200_000, prefix=1500, per_doc=300, output=50)
-    run("Large report draft (small N, heavy per item)",
+    run("大きなレポート草案 (small N, heavy per item)",
         docs=1_000, prefix=6000, per_doc=15_000, output=2000)
 
 

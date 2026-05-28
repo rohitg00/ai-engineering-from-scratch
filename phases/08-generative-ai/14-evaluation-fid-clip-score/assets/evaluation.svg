@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,56 +9,56 @@
       .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
       .content { font-size: 12px; fill: #333; }
-      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="450" y="28" text-anchor="middle" class="title">three-pillar evaluation of generative models</text>
+  <text x="450" y="28" text-anchor="middle" class="title">生成モデル評価の3本柱</text>
 
   <!-- FID column -->
   <rect x="30" y="60" width="270" height="200" class="box"/>
-  <text x="165" y="85" text-anchor="middle" class="label">FID (sample quality)</text>
+  <text x="165" y="85" text-anchor="middle" class="label">FID (sample品質)</text>
   <text x="165" y="110" text-anchor="middle" class="mono">||&#956;_r - &#956;_g||&#178; + Tr(&#931;_r + &#931;_g - 2&#8730;&#931;_r&#931;_g)</text>
-  <text x="165" y="140" text-anchor="middle" class="caption">Fr&#233;chet distance between</text>
-  <text x="165" y="158" text-anchor="middle" class="caption">Gaussian fits in Inception-v3 space</text>
-  <text x="165" y="188" text-anchor="middle" class="caption">use N &#8805; 10k or numbers lie</text>
-  <text x="165" y="206" text-anchor="middle" class="caption">ImageNet-biased; use FD-DINO or</text>
-  <text x="165" y="224" text-anchor="middle" class="caption">CMMD out of domain</text>
-  <text x="165" y="252" text-anchor="middle" class="caption">lower = better</text>
+  <text x="165" y="140" text-anchor="middle" class="caption">Inception-v3空間でfitした</text>
+  <text x="165" y="158" text-anchor="middle" class="caption">Gaussian間のFr&#233;chet距離</text>
+  <text x="165" y="188" text-anchor="middle" class="caption">N &#8805; 10kを使わないと数字が嘘をつく</text>
+  <text x="165" y="206" text-anchor="middle" class="caption">ImageNet biasあり。OODでは</text>
+  <text x="165" y="224" text-anchor="middle" class="caption">FD-DINOやCMMDを使う</text>
+  <text x="165" y="252" text-anchor="middle" class="caption">低いほど良い</text>
 
   <!-- CLIP column -->
   <rect x="315" y="60" width="270" height="200" class="box"/>
-  <text x="450" y="85" text-anchor="middle" class="label">CLIP score (adherence)</text>
+  <text x="450" y="85" text-anchor="middle" class="label">CLIP score (prompt追従)</text>
   <text x="450" y="110" text-anchor="middle" class="mono">cos( CLIP_image(x), CLIP_text(p) )</text>
-  <text x="450" y="140" text-anchor="middle" class="caption">how well does output match prompt?</text>
-  <text x="450" y="170" text-anchor="middle" class="caption">compositional failures slip through</text>
-  <text x="450" y="188" text-anchor="middle" class="caption">short prompts score higher mechanically</text>
-  <text x="450" y="206" text-anchor="middle" class="caption">CMMD + VQA tests cover CLIP blind spots</text>
-  <text x="450" y="252" text-anchor="middle" class="caption">higher = better</text>
+  <text x="450" y="140" text-anchor="middle" class="caption">出力がpromptにどれだけ合うか</text>
+  <text x="450" y="170" text-anchor="middle" class="caption">構成的な失敗はすり抜ける</text>
+  <text x="450" y="188" text-anchor="middle" class="caption">短いpromptほど機械的に高くなる</text>
+  <text x="450" y="206" text-anchor="middle" class="caption">CMMD + VQA testsでCLIPの盲点を補う</text>
+  <text x="450" y="252" text-anchor="middle" class="caption">高いほど良い</text>
 
   <!-- preference column -->
   <rect x="600" y="60" width="270" height="200" class="box"/>
-  <text x="735" y="85" text-anchor="middle" class="label">human preference (truth)</text>
-  <text x="735" y="110" text-anchor="middle" class="mono">Elo from pairwise wins</text>
-  <text x="735" y="140" text-anchor="middle" class="caption">A vs B on same prompt</text>
+  <text x="735" y="85" text-anchor="middle" class="label">人間の選好 (真値)</text>
+  <text x="735" y="110" text-anchor="middle" class="mono">pairwise勝敗からElo</text>
+  <text x="735" y="140" text-anchor="middle" class="caption">同じpromptでA vs B</text>
   <text x="735" y="158" text-anchor="middle" class="caption">HPSv2 / ImageReward / PickScore</text>
-  <text x="735" y="188" text-anchor="middle" class="caption">as automated proxies</text>
-  <text x="735" y="206" text-anchor="middle" class="caption">Chatbot-Arena-style image arenas</text>
-  <text x="735" y="252" text-anchor="middle" class="caption">higher win rate = better</text>
+  <text x="735" y="188" text-anchor="middle" class="caption">自動proxyとして使う</text>
+  <text x="735" y="206" text-anchor="middle" class="caption">Chatbot-Arena式image arena</text>
+  <text x="735" y="252" text-anchor="middle" class="caption">勝率が高いほど良い</text>
 
   <!-- failure modes -->
   <rect x="30" y="285" width="840" height="100" class="hot"/>
-  <text x="450" y="310" text-anchor="middle" class="label">each metric has a known game</text>
-  <text x="450" y="333" text-anchor="middle" class="caption">FID: overfit Inception prior &#8594; low FID, same quality</text>
-  <text x="450" y="353" text-anchor="middle" class="caption">CLIP: saturate with 'masterpiece, 4k' &#8594; inflated score</text>
-  <text x="450" y="373" text-anchor="middle" class="caption">preference: prompt set overlap with training &#8594; rigged</text>
+  <text x="450" y="310" text-anchor="middle" class="label">各metricには既知の抜け道がある</text>
+  <text x="450" y="333" text-anchor="middle" class="caption">FID: Inception priorへoverfit &#8594; 品質同じでも低FID</text>
+  <text x="450" y="353" text-anchor="middle" class="caption">CLIP: 'masterpiece, 4k'で飽和 &#8594; score水増し</text>
+  <text x="450" y="373" text-anchor="middle" class="caption">preference: prompt setが学習と重複 &#8594; 不正に有利</text>
 
   <!-- production report -->
   <rect x="30" y="410" width="840" height="100" class="cold"/>
-  <text x="450" y="435" text-anchor="middle" class="label">production eval report</text>
-  <text x="450" y="458" text-anchor="middle" class="caption">1. FID on 10-30k + 2. CLIP / CMMD on the same pool +</text>
-  <text x="450" y="478" text-anchor="middle" class="caption">3. 200+ blind human-pair Elo + 4. qualitative failure audit on 50 outputs</text>
-  <text x="450" y="498" text-anchor="middle" class="caption">one metric = marketing; four = evidence</text>
+  <text x="450" y="435" text-anchor="middle" class="label">production評価レポート</text>
+  <text x="450" y="458" text-anchor="middle" class="caption">1. 10-30kでFID + 2. 同じpoolでCLIP / CMMD +</text>
+  <text x="450" y="478" text-anchor="middle" class="caption">3. 200+ blind human-pair Elo + 4. 50出力の定性失敗audit</text>
+  <text x="450" y="498" text-anchor="middle" class="caption">metric 1つならmarketing。4つならevidence</text>
 </svg>

@@ -1,36 +1,36 @@
 ---
 name: simulation-designer
-description: Design a generative-agent simulation (Smallville-style) for a given scenario. Specifies memory schema, reflection cadence, plan horizon, spatial/social constraints, and evaluation metrics.
+description: 指定シナリオ向けに、Smallville 形式の generative-agent simulation を設計する。memory schema、reflection cadence、plan horizon、空間・社会制約、評価指標を定義する。
 version: 1.0.0
 phase: 16
 lesson: 17
 tags: [multi-agent, simulation, generative-agents, emergence, memory]
 ---
 
-Given a scenario that requires emergent behavior from a population of agents (social simulation, game NPCs, policy rehearsal, market dynamics), design the simulation.
+エージェント集団から創発的な振る舞いが必要なシナリオ（社会シミュレーション、ゲーム NPC、政策リハーサル、市場ダイナミクス）が与えられたら、そのシミュレーションを設計する。
 
-Produce:
+作成するもの:
 
-1. **Population size and heterogeneity.** N agents; which share a base model vs different; prompt families; role distribution. Smallville used 25 homogeneous agents with individualized personas; larger populations benefit from heterogeneity.
-2. **Memory schema.** Fields per entry: `(ts, kind, content, importance, embedding_ref, source_ids)`. Recency-decay constant; importance scoring procedure; relevance metric (cosine with embedding model X). Retention policy for compaction.
-3. **Reflection cadence.** Trigger: sum of unprocessed importance > threshold, or every N observations, or periodic tick. Number of reflections per trigger. Reflection prompt template.
-4. **Plan horizon.** Day / hour / action levels. Which are mandatory; which optional. Revision trigger: a new observation with importance > threshold that contradicts the active plan.
-5. **World model.** Spatial grid, social graph, resource constraints. What constitutes an observation (line-of-sight, conversation, notification). What normative constraints the architecture does NOT learn and must be encoded explicitly (capacity limits, closed hours, private spaces).
-6. **Seed goals.** Which agents are seeded with which priorities. Overlapping goals that may compete; non-competing goals that should coexist.
-7. **Budget.** Per-tick LLM calls per agent (observe + retrieve + reflect + plan + act). Expected tokens per tick per agent. Total simulation cost for T ticks.
-8. **Evaluation metric.** Believability (human-rater), goal achievement rate, coordination events counted, spatial-norm violations as a failure signal.
+1. **集団サイズと異質性。** N 体のエージェント。どれが同じ base model を共有し、どれが異なるか。prompt family、役割分布。Smallville は個別 persona を持つ 25 体の同質エージェントを使った。より大きな集団では異質性が効く。
+2. **Memory schema。** 各 entry の field: `(ts, kind, content, importance, embedding_ref, source_ids)`。recency decay 定数、importance 採点手順、relevance metric（embedding model X との cosine）。compaction の retention policy。
+3. **Reflection cadence。** trigger: 未処理 memory の importance 合計 > threshold、N observations ごと、または periodic tick。trigger ごとの reflection 数。reflection prompt template。
+4. **Plan horizon。** day / hour / action レベル。必須と任意を分ける。revision trigger: active plan と矛盾する importance > threshold の新 observation。
+5. **World model。** spatial grid、social graph、resource constraints。observation と見なすもの（line-of-sight、conversation、notification）。アーキテクチャが学習しないため明示的にエンコードすべき normative constraints（capacity limit、closed hours、private spaces）。
+6. **Seed goals。** どのエージェントにどの priority を seed するか。競合し得る重複 goal、共存すべき非競合 goal。
+7. **Budget。** agent ごとの per-tick LLM calls（observe + retrieve + reflect + plan + act）。agent ごとの tick あたり期待 token。T ticks の総 simulation cost。
+8. **Evaluation metric。** Believability（human-rater）、goal achievement rate、coordination event 数、failure signal としての spatial-norm violations。
 
 Hard rejects:
 
-- Designs without explicit spatial / social norm encoding. The architecture will violate them (closed-store, single-bathroom failures from Park 2023).
-- Designs with mutable memory. Memory must be append-only; corrections are new entries.
-- Designs that run reflection every tick. This is budget-inefficient; reflection is expensive and triggers should be threshold-based.
-- Simulations at large N (> 50) without a memory-compaction strategy. Retrieval cost grows with stream length.
+- 明示的な spatial / social norm encoding がない設計。アーキテクチャはそれらを破る（Park 2023 の closed-store、single-bathroom failure）。
+- mutable memory を持つ設計。memory は append-only でなければならず、correction は新しい entry として追加する。
+- 毎 tick reflection を実行する設計。budget 非効率である。reflection は高価なので threshold-based trigger にする。
+- memory-compaction strategy なしの large N（> 50）simulation。stream length とともに retrieval cost が増える。
 
 Refusal rules:
 
-- If the scenario requires emergent *task execution* rather than emergent *social behavior*, recommend the supervisor / roles / primitives patterns instead (Phase 16 · 05-08). Smallville is for social simulation.
-- If budget allows < 100 LLM calls per tick total, recommend N = 3-5 with dense interactions rather than larger populations.
-- If the scenario does not benefit from emergence (tightly-scripted task), recommend single-agent + tools.
+- シナリオが創発的な *social behavior* ではなく創発的な *task execution* を必要とする場合は、代わりに supervisor / roles / primitives pattern を推奨する（Phase 16 · 05-08）。Smallville は social simulation 向け。
+- budget が tick あたり total 100 LLM calls 未満なら、大きな集団ではなく N = 3-5 の dense interaction を推奨する。
+- シナリオが emergence の恩恵を受けない（tightly-scripted task）なら、single-agent + tools を推奨する。
 
-Output: a one-page design brief. Start with a single-sentence summary ("Smallville-style simulation: 15 heterogeneous agents, reflection at importance sum > 120, 3-level plan horizon, spatial grid with capacity constraints, measured by believability + coordination events."), then the eight sections above. End with the expected emergent behaviors and the first three failure modes to watch for.
+Output: 1 ページの design brief。1 文の summary（「Smallville-style simulation: 15 heterogeneous agents, reflection at importance sum > 120, 3-level plan horizon, spatial grid with capacity constraints, measured by believability + coordination events.」）から始め、その後に上記 8 sections を続ける。最後に期待される emergent behaviors と、最初に監視すべき 3 つの failure modes を書く。

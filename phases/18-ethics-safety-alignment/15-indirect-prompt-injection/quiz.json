@@ -4,22 +4,22 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What distinguishes indirect prompt injection (IPI) from direct prompt injection?",
+      "question": "indirect prompt injection (IPI) は direct prompt injection と何が違いますか。",
       "options": [
-        "IPI requires fine-tuning the target model",
-        "IPI embeds instructions inside external content (web pages, emails, tool outputs) that the agent consumes during normal operation, without the attacker touching the user's prompt",
-        "IPI is a synonym for jailbreaking",
-        "IPI only works on multimodal models"
+        "IPI は target model の fine-tuning を必要とする",
+        "IPI は、agent が通常運用中に消費する外部 content (web pages、emails、tool outputs) の中に instructions を埋め込み、attacker が user の prompt に触れない",
+        "IPI は jailbreaking の同義語である",
+        "IPI は multimodal model にしか効かない"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of the three IPI delivery vectors listed in the lesson?",
+      "question": "次のうち、この lesson で挙げた3つの IPI delivery vectors に含まれないものはどれですか。",
       "options": [
         "Retrieval-augmented generation (poisoned retrieval)",
-        "Direct system-prompt edits by the user",
+        "user による direct system-prompt edits",
         "Tool output",
         "Inbox / document workflows"
       ],
@@ -28,46 +28,46 @@
     },
     {
       "stage": "check",
-      "question": "Why do user-input filters miss IPI?",
+      "question": "user-input filters が IPI を見逃すのはなぜですか。",
       "options": [
-        "Filters cannot read JSON",
-        "User-input filters are case-sensitive",
-        "The payload never appears in the user's input; it appears in retrieved or tool-supplied content",
-        "Filters only run after the model responds"
+        "filters は JSON を読めないから",
+        "user-input filters は case-sensitive だから",
+        "payload は user input には現れず、retrieved content や tool-supplied content に現れるから",
+        "filters は model が応答した後にしか走らないから"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the central principle of Information Flow Control (IFC) for AI agents?",
+      "question": "AI agents における Information Flow Control (IFC) の中心原則は何ですか。",
       "options": [
-        "Encrypt all retrieved content",
-        "Use only single-turn prompts",
-        "Disable all tools by default",
-        "Label content by source as trusted or untrusted; actions triggered by untrusted content must be ratified by trusted input before execution"
+        "retrieved content をすべて暗号化する",
+        "single-turn prompts だけを使う",
+        "すべての tools を default で無効化する",
+        "content を source によって trusted / untrusted と label し、untrusted content によって triggered された actions は実行前に trusted input で ratify されなければならない"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What did Nasr et al. (October 2025, 'The Attacker Moves Second') find about 12 published IPI defenses with adaptive attacks?",
+      "question": "Nasr et al. (October 2025, 'The Attacker Moves Second') は、12の公開 IPI defenses に adaptive attacks をかけて何を見つけましたか。",
       "options": [
-        "Adaptive attacks were too expensive to evaluate",
-        "Their reported near-zero ASR held under adaptive attack",
-        "Only one defense was broken",
-        "Adaptive attacks (gradient, RL, random search, human red-team) broke >90% of them despite their original near-zero ASR claims"
+        "adaptive attacks は評価するには高価すぎた",
+        "当初報告された near-zero ASR は adaptive attack 下でも保たれた",
+        "破られた defense は1つだけだった",
+        "adaptive attacks (gradient、RL、random search、human red-team) は、当初 near-zero ASR を主張していたにもかかわらず、その >90% を破った"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Where does prompt injection rank in the 2025 OWASP LLM Top 10?",
+      "question": "prompt injection は 2025 OWASP LLM Top 10 でどこに位置づけられていますか。",
       "options": [
-        "Not listed",
-        "LLM01 (top, #1 application-layer threat)",
+        "記載されていない",
+        "LLM01 (top、#1 application-layer threat)",
         "LLM05",
         "LLM10 (lowest)"
       ],

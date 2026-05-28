@@ -1,45 +1,45 @@
-# Calculus for Machine Learning
+# 機械学習のための微分積分
 
-> Derivatives tell you which way is downhill. That is all a neural network needs to learn.
+> 導関数は、どちらへ進めば下り坂かを教えてくれる。ニューラルネットワークが学習するために必要なのはそれだけです。
 
-**Type:** Learn
-**Language:** Python
-**Prerequisites:** Phase 1, Lessons 01-03
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** フェーズ1、レッスン01-03
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Compute numerical and analytical derivatives for common ML functions (x^2, sigmoid, cross-entropy)
-- Implement gradient descent from scratch to minimize a loss function in 1D and 2D
-- Derive the gradient of a linear regression model and train it via manual weight updates
-- Explain the Hessian matrix, Taylor series approximations, and their connection to optimization methods
+- 機械学習でよく使う関数（x^2、sigmoid、cross-entropy）の数値微分と解析的微分を計算する
+- 損失関数を1次元・2次元で最小化する勾配降下法をスクラッチで実装する
+- 線形回帰モデルの勾配を導出し、手動の重み更新で学習させる
+- ヘッセ行列、テイラー展開近似、それらと最適化手法の関係を説明する
 
-## The Problem
+## 問題
 
-You have a neural network with millions of weights. Each weight is a knob. You need to figure out which direction to turn every single knob to make the model slightly less wrong. Calculus gives you that direction.
+何百万もの重みを持つニューラルネットワークを考えます。各重みは1つのつまみです。モデルの間違いを少しだけ減らすには、すべてのつまみをどちら向きに回せばよいかを知る必要があります。微分積分はその方向を与えてくれます。
 
-Without calculus, training a neural network would mean trying random changes and hoping for the best. With derivatives, you know exactly how each weight affects the error. You turn every knob the right way, every time.
+微分積分がなければ、ニューラルネットワークの学習はランダムな変更を試してうまくいくことを願うだけになります。導関数があれば、各重みが誤差にどう影響するかを正確に知ることができます。毎回、すべてのつまみを正しい方向に回せます。
 
-## The Concept
+## 概念
 
-### What is a derivative?
+### 導関数とは何か
 
-A derivative measures the rate of change. For a function y = f(x), the derivative f'(x) tells you: if you nudge x by a tiny amount, how much does y change?
+導関数は変化率を測ります。関数 y = f(x) について、導関数 f'(x) は「x をごく少し動かすと、y はどれだけ変わるか」を教えてくれます。
 
-Geometrically, the derivative is the slope of the tangent line at a point.
+幾何学的には、導関数はある点における接線の傾きです。
 
 **f(x) = x^2:**
 
-| x | f(x) | f'(x) (slope) |
+| x | f(x) | f'(x)（傾き） |
 |---|------|---------------|
-| 0 | 0    | 0 (flat, at the bottom) |
+| 0 | 0    | 0（平ら、底にいる） |
 | 1 | 1    | 2 |
-| 2 | 4    | 4 (tangent line slope at this point) |
+| 2 | 4    | 4（この点での接線の傾き） |
 | 3 | 9    | 6 |
 
-At x=2, the slope is 4. If you move x a tiny bit to the right, y increases by about 4 times that amount. At x=0, the slope is 0. You are at the bottom of the bowl.
+x=2 では傾きは 4 です。x をほんの少し右に動かすと、y はその約4倍だけ増えます。x=0 では傾きは 0 です。お椀の底にいる状態です。
 
-The formal definition:
+形式的な定義は次のとおりです。
 
 ```
 f'(x) = lim   f(x + h) - f(x)
@@ -47,11 +47,11 @@ f'(x) = lim   f(x + h) - f(x)
                      h
 ```
 
-In code, you skip the limit and just use a very small h. That is the numerical derivative.
+コードでは極限をそのまま扱わず、とても小さい h を使います。これが数値微分です。
 
-### Partial derivatives: one variable at a time
+### 偏導関数: 1回に1つの変数だけを見る
 
-Real functions have many inputs. A neural network loss depends on thousands of weights. A partial derivative holds all variables constant except one, then takes the derivative with respect to that one.
+実際の関数には多くの入力があります。ニューラルネットワークの損失は何千もの重みに依存します。偏導関数では、1つの変数以外をすべて定数として固定し、その1つについて微分します。
 
 ```
 f(x, y) = x^2 + 3xy + y^2
@@ -60,32 +60,32 @@ df/dx = 2x + 3y     (treat y as a constant)
 df/dy = 3x + 2y     (treat x as a constant)
 ```
 
-Each partial derivative answers: if I nudge just this one weight, how does the loss change?
+それぞれの偏導関数は「この重みだけを少し動かしたら、損失はどう変わるか」に答えます。
 
-### The gradient: vector of all partial derivatives
+### 勾配: すべての偏導関数を集めたベクトル
 
-The gradient collects every partial derivative into one vector. For a function f(x, y, z), the gradient is:
+勾配はすべての偏導関数を1つのベクトルにまとめたものです。関数 f(x, y, z) の勾配は次のようになります。
 
 ```
 grad f = [ df/dx, df/dy, df/dz ]
 ```
 
-The gradient points in the direction of steepest ascent. To minimize a function, go in the opposite direction.
+勾配は最急上昇の方向を指します。関数を最小化するには、その反対方向へ進みます。
 
-**Contour plot of f(x,y) = x^2 + y^2:**
+**f(x,y) = x^2 + y^2 の等高線図:**
 
-The function forms a bowl shape with concentric circles as contour lines. The minimum is at (0, 0).
+この関数はお椀のような形をしており、等高線は同心円になります。最小値は (0, 0) です。
 
-| Point | grad f | -grad f (descent direction) |
+| 点 | grad f | -grad f（降下方向） |
 |-------|--------|----------------------------|
-| (1, 1) | [2, 2] (points uphill, away from minimum) | [-2, -2] (points downhill, toward minimum) |
-| (0, 0) | [0, 0] (flat, at the minimum) | [0, 0] |
+| (1, 1) | [2, 2]（最小値から離れる上り方向を指す） | [-2, -2]（最小値へ向かう下り方向を指す） |
+| (0, 0) | [0, 0]（平ら、最小値） | [0, 0] |
 
-This is gradient descent in a picture. Compute the gradient, negate it, take a step.
+これが図で見た勾配降下法です。勾配を計算し、符号を反転し、一歩進みます。
 
-### The connection to optimization
+### 最適化とのつながり
 
-Training a neural network is optimization. You have a loss function L(w1, w2, ..., wn) that measures how wrong the model is. You want to minimize it.
+ニューラルネットワークの学習は最適化です。モデルがどれだけ間違っているかを測る損失関数 L(w1, w2, ..., wn) があり、それを最小化したいのです。
 
 ```
 Gradient descent update rule:
@@ -98,27 +98,27 @@ For every weight:
   3. Repeat
 ```
 
-The learning rate controls step size. Too big and you overshoot. Too small and you crawl.
+学習率はステップ幅を制御します。大きすぎると行き過ぎ、小さすぎるとなかなか進みません。
 
-**Loss landscape (1D slice):**
+**損失ランドスケープ（1次元の断面）:**
 
-The loss function L(w) forms a curve with peaks and valleys as the weight w varies.
+損失関数 L(w) は、重み w に応じて山や谷を持つ曲線になります。
 
-| Feature | Description |
+| 特徴 | 説明 |
 |---------|-------------|
-| Global minimum | The lowest point on the entire curve -- the best solution |
-| Local minimum | A valley that is lower than its neighbors but not the lowest overall |
-| Slope | Gradient descent follows the slope downhill from any starting point |
+| 大域的最小値 | 曲線全体で最も低い点、つまり最良の解 |
+| 局所最小値 | 周囲より低い谷だが、全体で最も低いとは限らない点 |
+| 傾き | 勾配降下法は任意の開始点から傾きに沿って下る |
 
-Gradient descent follows the slope downhill. It can get stuck in local minima, but in high-dimensional spaces (millions of weights) this is rarely a practical problem.
+勾配降下法は傾きに沿って下ります。局所最小値にはまることはありますが、何百万もの重みを持つ高次元空間では、実用上はあまり問題になりません。
 
-### Numerical vs analytical derivatives
+### 数値微分と解析的微分
 
-There are two ways to compute a derivative.
+導関数を計算する方法は2つあります。
 
-Analytical: apply calculus rules by hand. For f(x) = x^2, the derivative is f'(x) = 2x. Exact. Fast.
+解析的: 微分の規則を手で適用します。f(x) = x^2 なら導関数は f'(x) = 2x です。正確で高速です。
 
-Numerical: approximate using the definition. Compute f(x+h) and f(x-h) for a tiny h, then use the difference.
+数値的: 定義を使って近似します。小さな h について f(x+h) と f(x-h) を計算し、その差を使います。
 
 ```
 Numerical (central difference):
@@ -130,11 +130,11 @@ f'(x) ~= f(x + h) - f(x - h)
 h = 0.0001 works well in practice
 ```
 
-Numerical derivatives are slower but work for any function. Analytical derivatives are fast but require you to derive the formula. Neural network frameworks use a third approach: automatic differentiation, which computes exact derivatives mechanically. You will see that in Phase 3.
+数値微分は遅い一方で、どんな関数にも使えます。解析的微分は速い一方で、式を導出する必要があります。ニューラルネットワークのフレームワークは第3の方法である自動微分を使い、厳密な導関数を機械的に計算します。これはフェーズ3で扱います。
 
-### Derivatives by hand for simple functions
+### 簡単な関数を手で微分する
 
-These are the derivatives you will see over and over in ML.
+次の導関数は機械学習で何度も出てきます。
 
 ```
 Function        Derivative       Used in
@@ -148,7 +148,7 @@ f(x) = ln(x)   f'(x) = 1/x     Cross-entropy loss
 f(x) = 1/(1+e^-x)  f'(x) = f(x)(1-f(x))   Sigmoid activation
 ```
 
-For f(x) = x^2:
+f(x) = x^2 の場合:
 
 ```
 f(x) = x^2    f'(x) = 2x
@@ -161,7 +161,7 @@ f(x) = x^2    f'(x) = 2x
    2    4       4      slope tilts right (increasing)
 ```
 
-For f(w) = wx + b with x=3, b=1:
+x=3、b=1 の f(w) = wx + b の場合:
 
 ```
 f(w) = 3w + 1    f'(w) = 3
@@ -170,9 +170,9 @@ The derivative with respect to w is just x.
 If x is big, a small change in w causes a big change in output.
 ```
 
-### The chain rule
+### 連鎖律
 
-When functions are composed, the chain rule tells you how to differentiate.
+関数が合成されているときは、連鎖律で微分します。
 
 ```
 If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x)
@@ -183,34 +183,34 @@ Example: y = (3x + 1)^2
   dy/dx = 2(3x + 1) * 3 = 6(3x + 1)
 ```
 
-Neural networks are chains of functions: input -> linear -> activation -> linear -> activation -> loss. Backpropagation is the chain rule applied repeatedly from output to input. That is the entire algorithm.
+ニューラルネットワークは関数の連鎖です。input -> linear -> activation -> linear -> activation -> loss。バックプロパゲーションは、出力から入力へ向かって連鎖律を繰り返し適用することです。アルゴリズム全体はこれに尽きます。
 
-### The Hessian Matrix
+### ヘッセ行列
 
-The gradient tells you the slope. The Hessian tells you the curvature.
+勾配は傾きを教えてくれます。ヘッセ行列は曲率を教えてくれます。
 
-The Hessian is the matrix of second-order partial derivatives. For a function f(x1, x2, ..., xn), entry (i, j) of the Hessian is:
+ヘッセ行列は2階偏導関数を並べた行列です。関数 f(x1, x2, ..., xn) について、ヘッセ行列の (i, j) 成分は次のとおりです。
 
 ```
 H[i][j] = d^2f / (dx_i * dx_j)
 ```
 
-For a 2-variable function f(x, y):
+2変数関数 f(x, y) の場合:
 
 ```
 H = | d^2f/dx^2    d^2f/dxdy |
     | d^2f/dydx    d^2f/dy^2 |
 ```
 
-**What the Hessian tells you at a critical point (where gradient = 0):**
+**臨界点（gradient = 0）でヘッセ行列から分かること:**
 
-| Hessian property | Meaning | Example surface |
+| ヘッセ行列の性質 | 意味 | 表面の例 |
 |-----------------|---------|-----------------|
-| Positive definite (all eigenvalues > 0) | Local minimum | Bowl pointing up |
-| Negative definite (all eigenvalues < 0) | Local maximum | Bowl pointing down |
-| Indefinite (mixed eigenvalues) | Saddle point | Horse saddle shape |
+| 正定値（すべての固有値 > 0） | 局所最小値 | 上向きのお椀 |
+| 負定値（すべての固有値 < 0） | 局所最大値 | 下向きのお椀 |
+| 不定（固有値の符号が混在） | 鞍点 | 馬の鞍のような形 |
 
-**Example:** f(x, y) = x^2 - y^2 (a saddle function)
+**例:** f(x, y) = x^2 - y^2（鞍型関数）
 
 ```
 df/dx = 2x       df/dy = -2y
@@ -223,7 +223,7 @@ Eigenvalues: 2 and -2 (one positive, one negative)
 --> Saddle point at (0, 0)
 ```
 
-Compare with f(x, y) = x^2 + y^2 (a bowl):
+f(x, y) = x^2 + y^2（お椀）と比較します。
 
 ```
 H = | 2  0 |
@@ -233,46 +233,46 @@ Eigenvalues: 2 and 2 (both positive)
 --> Local minimum at (0, 0)
 ```
 
-**Why the Hessian matters in ML:**
+**機械学習でヘッセ行列が重要な理由:**
 
-Newton's method uses the Hessian to take better optimization steps than gradient descent. Instead of just following the slope, it accounts for curvature:
+ニュートン法はヘッセ行列を使い、勾配降下法より良い最適化ステップを取ります。単に傾きに従うのではなく、曲率を考慮します。
 
 ```
 Newton's update:    w_new = w_old - H^(-1) * gradient
 Gradient descent:   w_new = w_old - lr * gradient
 ```
 
-Newton's method converges faster because the Hessian "rescales" the gradient -- steep directions get smaller steps, flat directions get larger steps.
+ニュートン法は、ヘッセ行列が勾配を「再スケーリング」するため速く収束します。急な方向では小さく進み、平らな方向では大きく進みます。
 
-The catch: for a neural network with N parameters, the Hessian is N x N. A model with 1 million parameters would need a 1 trillion-entry matrix. That is why we use approximations.
+ただし問題があります。N 個のパラメータを持つニューラルネットワークでは、ヘッセ行列は N x N です。100万パラメータのモデルには1兆要素の行列が必要になります。そのため近似を使います。
 
-| Method | What it uses | Cost | Convergence |
+| 手法 | 使うもの | コスト | 収束 |
 |--------|-------------|------|-------------|
-| Gradient descent | First derivatives only | O(N) per step | Slow (linear) |
-| Newton's method | Full Hessian | O(N^3) per step | Fast (quadratic) |
-| L-BFGS | Approximate Hessian from gradient history | O(N) per step | Medium (superlinear) |
-| Adam | Per-parameter adaptive rates (diagonal Hessian approx) | O(N) per step | Medium |
-| Natural gradient | Fisher information matrix (statistical Hessian) | O(N^2) per step | Fast |
+| 勾配降下法 | 1階導関数のみ | 1ステップあたり O(N) | 遅い（線形） |
+| ニュートン法 | 完全なヘッセ行列 | 1ステップあたり O(N^3) | 速い（二次） |
+| L-BFGS | 勾配履歴から近似したヘッセ行列 | 1ステップあたり O(N) | 中程度（超線形） |
+| Adam | パラメータごとの適応的な率（対角ヘッセ近似） | 1ステップあたり O(N) | 中程度 |
+| 自然勾配 | フィッシャー情報行列（統計的なヘッセ行列） | 1ステップあたり O(N^2) | 速い |
 
-In practice, Adam is the default optimizer for deep learning. It approximates second-order information cheaply by tracking the running mean and variance of gradients per parameter.
+実務では、深層学習のデフォルトのオプティマイザは Adam です。Adam は各パラメータの勾配の移動平均と分散を追跡することで、2階情報を安価に近似します。
 
-### Taylor Series Approximation
+### テイラー展開近似
 
-Any smooth function can be approximated locally by a polynomial:
+滑らかな関数は、局所的に多項式で近似できます。
 
 ```
 f(x + h) = f(x) + f'(x)*h + (1/2)*f''(x)*h^2 + (1/6)*f'''(x)*h^3 + ...
 ```
 
-The more terms you include, the better the approximation -- but only near the point x.
+項を多く含めるほど近似は良くなります。ただし点 x の近くでだけ有効です。
 
-**Why Taylor series matter for ML:**
+**機械学習でテイラー展開が重要な理由:**
 
-- **First-order Taylor = gradient descent.** When you use f(x + h) ~ f(x) + f'(x)*h, you are making a linear approximation. Gradient descent minimizes this linear model to choose h = -lr * f'(x).
+- **1階テイラー = 勾配降下法。** f(x + h) ~ f(x) + f'(x)*h を使うと、線形近似をしていることになります。勾配降下法はこの線形モデルを最小化するように h = -lr * f'(x) を選びます。
 
-- **Second-order Taylor = Newton's method.** Using f(x + h) ~ f(x) + f'(x)*h + (1/2)*f''(x)*h^2, you get a quadratic model. Minimizing it gives h = -f'(x)/f''(x) -- Newton's step.
+- **2階テイラー = ニュートン法。** f(x + h) ~ f(x) + f'(x)*h + (1/2)*f''(x)*h^2 を使うと、二次モデルが得られます。それを最小化すると h = -f'(x)/f''(x)、つまりニュートンステップになります。
 
-- **Loss function design.** MSE and cross-entropy are smooth, which means their Taylor expansions are well-behaved. This is not an accident. Smooth losses make optimization predictable.
+- **損失関数の設計。** MSE とクロスエントロピーは滑らかなので、テイラー展開が扱いやすくなります。これは偶然ではありません。滑らかな損失は最適化を予測しやすくします。
 
 ```
 Approximation order    What it captures    Optimization method
@@ -283,49 +283,49 @@ Approximation order    What it captures    Optimization method
 Higher orders          Finer structure     Rarely used in ML
 ```
 
-The key insight: all gradient-based optimization is really about approximating the loss function locally and stepping to the minimum of that approximation.
+重要な洞察は、勾配ベースの最適化はすべて、損失関数を局所的に近似し、その近似の最小値へ進むことだという点です。
 
-### Integrals in ML
+### 機械学習における積分
 
-Derivatives tell you rates of change. Integrals compute accumulations -- area under a curve.
+導関数は変化率を教えます。積分は蓄積、つまり曲線の下の面積を計算します。
 
-In ML, you rarely compute integrals by hand, but the concept is everywhere:
+機械学習で積分を手計算することは多くありませんが、概念は至るところに現れます。
 
-**Probability.** For a continuous random variable with density p(x):
+**確率。** 密度 p(x) を持つ連続確率変数について:
 ```
 P(a < X < b) = integral from a to b of p(x) dx
 ```
-The area under the probability density curve between a and b is the probability of landing in that range.
+a と b の間の確率密度曲線の下の面積が、その範囲に入る確率です。
 
-**Expected value.** The average outcome weighted by probability:
+**期待値。** 確率で重み付けした平均的な結果:
 ```
 E[f(X)] = integral of f(x) * p(x) dx
 ```
-The expected loss over a data distribution is an integral. Training minimizes an empirical approximation of this.
+データ分布上の期待損失は積分です。学習ではこれの経験的近似を最小化します。
 
-**KL divergence.** Measures how different two distributions are:
+**KLダイバージェンス。** 2つの分布がどれだけ異なるかを測ります。
 ```
 KL(p || q) = integral of p(x) * log(p(x) / q(x)) dx
 ```
-Used in VAEs, knowledge distillation, and Bayesian inference.
+VAE、知識蒸留、ベイズ推論で使われます。
 
-**Normalization constants.** In Bayesian inference:
+**正規化定数。** ベイズ推論では:
 ```
 p(w | data) = p(data | w) * p(w) / integral of p(data | w) * p(w) dw
 ```
-The denominator is an integral over all possible parameter values. It is often intractable, which is why we use approximations like MCMC and variational inference.
+分母はあり得るすべてのパラメータ値にわたる積分です。多くの場合これは扱いにくいため、MCMC や変分推論のような近似を使います。
 
-| Integral concept | Where it appears in ML |
+| 積分の概念 | 機械学習で現れる場所 |
 |-----------------|----------------------|
-| Area under curve | Probability from density functions |
-| Expected value | Loss functions, risk minimization |
-| KL divergence | VAEs, policy optimization, distillation |
-| Normalization | Bayesian posteriors, softmax denominator |
-| Marginal likelihood | Model comparison, evidence lower bound (ELBO) |
+| 曲線下の面積 | 密度関数から得る確率 |
+| 期待値 | 損失関数、リスク最小化 |
+| KLダイバージェンス | VAE、方策最適化、蒸留 |
+| 正規化 | ベイズ事後分布、softmax の分母 |
+| 周辺尤度 | モデル比較、エビデンス下界（ELBO） |
 
-### Multivariable Chain Rule in a Computation Graph
+### 計算グラフにおける多変数の連鎖律
 
-The chain rule does not just apply to scalar functions in a line. In a neural network, variables fan out and merge. Here is how derivatives flow through a simple forward pass:
+連鎖律は、一直線に並んだスカラー関数だけに適用されるものではありません。ニューラルネットワークでは、変数が分岐して合流します。単純な順伝播で導関数がどう流れるかを見てみます。
 
 ```mermaid
 graph LR
@@ -335,7 +335,7 @@ graph LR
     a -->|"loss fn"| L["L = -(y*log(a) + (1-y)*log(1-a))"]
 ```
 
-The backward pass computes gradients right to left:
+逆伝播は右から左へ勾配を計算します。
 
 ```mermaid
 graph RL
@@ -345,15 +345,15 @@ graph RL
     dz2 -->|"dz2/db = 1"| db["dL/db = dL/dz2 * 1"]
 ```
 
-Each arrow multiplies by the local derivative. The gradient for any parameter is the product of all local derivatives along the path from loss to that parameter. When paths branch and merge, you sum the contributions (multivariate chain rule).
+各矢印では局所的な導関数を掛けます。任意のパラメータの勾配は、損失からそのパラメータへ至る経路上のすべての局所導関数の積です。経路が分岐して合流する場合は、寄与を足し合わせます（多変数の連鎖律）。
 
-This is all backpropagation is: the chain rule applied systematically through a computation graph, from output to inputs.
+バックプロパゲーションとは、これだけです。計算グラフ上で出力から入力へ、連鎖律を体系的に適用します。
 
-### The Jacobian matrix
+### ヤコビ行列
 
-When a function maps a vector to a vector (like a neural network layer), its derivative is a matrix. The Jacobian contains every partial derivative of every output with respect to every input.
+関数がベクトルをベクトルへ写す場合（ニューラルネットワークの層のように）、その導関数は行列になります。ヤコビ行列には、すべての出力のすべての入力に対する偏導関数が入ります。
 
-For f: R^n -> R^m, the Jacobian J is an m x n matrix:
+f: R^n -> R^m について、ヤコビ行列 J は m x n 行列です。
 
 | | x1 | x2 | ... | xn |
 |---|---|---|---|---|
@@ -362,11 +362,11 @@ For f: R^n -> R^m, the Jacobian J is an m x n matrix:
 | ... | ... | ... | ... | ... |
 | fm | dfm/dx1 | dfm/dx2 | ... | dfm/dxn |
 
-You will not compute Jacobians by hand for neural networks. PyTorch handles it. But knowing it exists helps you understand shapes in backpropagation: if a layer maps R^n to R^m, its Jacobian is m x n. The gradient flows backward through the transpose of this matrix.
+ニューラルネットワークのヤコビ行列を手で計算することはありません。PyTorch が処理します。ただし、その存在を知っているとバックプロパゲーションの形状を理解しやすくなります。ある層が R^n から R^m へ写すなら、そのヤコビ行列は m x n です。勾配はこの行列の転置を通って逆向きに流れます。
 
-### Why this matters for neural networks
+### これがニューラルネットワークで重要な理由
 
-Every weight in a neural network gets a gradient. The gradient tells you how to adjust that weight to reduce the loss.
+ニューラルネットワークのすべての重みには勾配があります。勾配は、損失を減らすためにその重みをどう調整すればよいかを教えてくれます。
 
 ```mermaid
 graph LR
@@ -382,15 +382,15 @@ graph RL
     end
 ```
 
-Each weight update:
+各重み更新は次のようになります。
 - `W1 = W1 - lr * dL/dW1`
 - `W2 = W2 - lr * dL/dW2`
 
-The forward pass computes the prediction and loss. The backward pass computes the gradient of the loss with respect to every weight. Then every weight takes a small step downhill. Repeat for millions of steps. That is deep learning.
+順伝播は予測と損失を計算します。逆伝播はすべての重みに対する損失の勾配を計算します。その後、各重みが下り方向へ小さく一歩進みます。これを何百万ステップも繰り返します。これが深層学習です。
 
-## Build It
+## 作ってみる
 
-### Step 1: Numerical derivative from scratch
+### Step 1: スクラッチで数値微分
 
 ```python
 def numerical_derivative(f, x, h=1e-7):
@@ -405,9 +405,9 @@ for x in [-2, -1, 0, 1, 2]:
     print(f"x={x:2d}  f'(x) numerical={numerical:.6f}  analytical={analytical:.1f}")
 ```
 
-The numerical derivative matches the analytical one to many decimal places.
+数値微分は解析的な導関数と小数点以下の多くの桁まで一致します。
 
-### Step 2: Partial derivatives and gradients
+### Step 2: 偏導関数と勾配
 
 ```python
 def numerical_gradient(f, point, h=1e-7):
@@ -430,7 +430,7 @@ print(f"Numerical gradient at (1,2): {[f'{g:.4f}' for g in grad]}")
 print(f"Analytical gradient at (1,2): [2*1+3*2, 3*1+2*2] = [{2*1+3*2}, {3*1+2*2}]")
 ```
 
-### Step 3: Gradient descent to find the minimum of f(x) = x^2
+### Step 3: f(x) = x^2 の最小値を勾配降下法で探す
 
 ```python
 x = 5.0
@@ -441,9 +441,9 @@ for step in range(20):
     print(f"step {step:2d}  x={x:8.4f}  f(x)={x**2:10.6f}")
 ```
 
-Starting at x=5, each step moves closer to x=0 (the minimum).
+x=5 から始めると、各ステップで x=0（最小値）に近づきます。
 
-### Step 4: Gradient descent on a 2D function
+### Step 4: 2次元関数での勾配降下法
 
 ```python
 def f_2d(point):
@@ -460,7 +460,7 @@ for step in range(30):
         print(f"step {step:2d}  point=({point[0]:7.4f}, {point[1]:7.4f})  f={loss:.6f}")
 ```
 
-### Step 5: Comparing numerical and analytical derivatives
+### Step 5: 数値微分と解析的微分の比較
 
 ```python
 import math
@@ -483,7 +483,7 @@ for name, f, df in test_functions:
     print(f"{name:<12} {num:12.6f} {ana:12.6f} {err:12.2e}")
 ```
 
-### Step 6: Computing the Hessian numerically
+### Step 6: ヘッセ行列を数値的に計算する
 
 ```python
 def hessian_2d(f, x, y, h=1e-5):
@@ -504,9 +504,9 @@ print(f"Saddle Hessian: {H_saddle}")  # [[2, 0], [0, -2]] -- mixed signs
 print(f"Bowl Hessian:   {H_bowl}")    # [[2, 0], [0, 2]]  -- both positive
 ```
 
-The Hessian of the saddle function has eigenvalues 2 and -2 (mixed signs, confirming a saddle point). The bowl has eigenvalues 2 and 2 (both positive, confirming a minimum).
+鞍型関数のヘッセ行列は固有値 2 と -2 を持ちます（符号が混在しており、鞍点であることを確認できます）。お椀型の関数は固有値 2 と 2 を持ちます（どちらも正で、最小値であることを確認できます）。
 
-### Step 7: Taylor approximation in action
+### Step 7: テイラー近似を実際に使う
 
 ```python
 import math
@@ -527,9 +527,9 @@ for h in [0.1, 0.5, 1.0, 2.0]:
     print(f"h={h:.1f}  sin(h)={true_val:.4f}  order1={t1:.4f}  order2={t2:.4f}")
 ```
 
-Near x0=0, sin(x) ~ x (first-order Taylor). The approximation is excellent for small h but breaks down for large h. This is why gradient descent works best with small learning rates -- each step assumes the linear approximation is accurate.
+x0=0 の近くでは sin(x) ~ x（1階テイラー）です。h が小さいと近似は非常に良いですが、h が大きいと崩れます。勾配降下法が小さな学習率で最もうまく働くのはこのためです。各ステップでは線形近似が正確だと仮定しています。
 
-### Step 8: Why this matters for a neural network
+### Step 8: これがニューラルネットワークで重要な理由
 
 ```python
 import random
@@ -565,11 +565,11 @@ print(f"\nLearned: y = {w:.2f}x + {b:.2f}")
 print(f"Actual:  y = 2x + 1")
 ```
 
-Every gradient-based training loop follows this pattern: predict, compute loss, compute gradients, update weights.
+勾配ベースの学習ループはすべてこのパターンに従います。予測し、損失を計算し、勾配を計算し、重みを更新します。
 
-## Use It
+## 使ってみる
 
-With NumPy, the same operations are faster and more concise:
+NumPy を使うと、同じ操作をより高速かつ簡潔に書けます。
 
 ```python
 import numpy as np
@@ -592,32 +592,32 @@ for epoch in range(200):
 print(f"Learned: y = {w:.2f}x + {b:.2f}")
 ```
 
-You just built gradient descent from scratch. PyTorch automates the gradient computation, but the update loop is identical.
+あなたは勾配降下法をスクラッチで作りました。PyTorch は勾配計算を自動化しますが、更新ループは同じです。
 
-## Exercises
+## 演習
 
-1. Implement `numerical_second_derivative(f, x)` using `numerical_derivative` called twice. Verify that the second derivative of x^3 at x=2 is 12.
-2. Use gradient descent to find the minimum of f(x, y) = (x - 3)^2 + (y + 1)^2. Start from (0, 0). The answer should converge to (3, -1).
-3. Add momentum to the gradient descent loop: maintain a velocity vector that accumulates past gradients. Compare convergence speed with and without momentum on f(x) = x^4 - 3x^2.
+1. `numerical_derivative` を2回呼び出して `numerical_second_derivative(f, x)` を実装してください。x^3 の x=2 における2階導関数が 12 になることを確認してください。
+2. 勾配降下法を使って f(x, y) = (x - 3)^2 + (y + 1)^2 の最小値を探してください。(0, 0) から始めます。答えは (3, -1) に収束するはずです。
+3. 勾配降下法のループにモメンタムを追加してください。過去の勾配を蓄積する速度ベクトルを維持します。f(x) = x^4 - 3x^2 で、モメンタムあり・なしの収束速度を比較してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|----------------|----------------------|
-| Derivative | "The slope" | The rate of change of a function at a point. Tells you how much the output changes per unit change in input. |
-| Partial derivative | "Derivative of one variable" | The derivative with respect to one variable while all others are held constant. |
-| Gradient | "Direction of steepest ascent" | A vector of all partial derivatives. Points in the direction that increases the function fastest. |
-| Gradient descent | "Go downhill" | Subtract the gradient (times a learning rate) from the parameters to reduce the loss. The core of neural network training. |
-| Learning rate | "Step size" | A scalar that controls how big each gradient descent step is. Too large: diverge. Too small: converge slowly. |
-| Chain rule | "Multiply the derivatives" | The rule for differentiating composed functions: df/dx = df/dg * dg/dx. The mathematical basis of backpropagation. |
-| Jacobian | "Matrix of derivatives" | When a function maps vectors to vectors, the Jacobian is the matrix of all partial derivatives of outputs with respect to inputs. |
-| Numerical derivative | "Finite differences" | Approximating a derivative by evaluating the function at two nearby points and computing the slope between them. |
-| Backpropagation | "Reverse-mode autodiff" | Computing gradients layer by layer from output to input using the chain rule. How neural networks learn. |
-| Hessian | "Matrix of second derivatives" | The matrix of all second-order partial derivatives. Describes the curvature of a function. Positive definite Hessian at a critical point means local minimum. |
-| Taylor series | "Polynomial approximation" | Approximating a function near a point using its derivatives: f(x+h) ~ f(x) + f'(x)h + (1/2)f''(x)h^2 + ... The basis for understanding why gradient descent and Newton's method work. |
-| Integral | "Area under the curve" | The accumulation of a quantity over a range. In ML, integrals define probabilities, expected values, and KL divergence. |
+| 導関数 | 「傾き」 | ある点での関数の変化率。入力が1単位変わったときに出力がどれだけ変わるかを示す。 |
+| 偏導関数 | 「1つの変数の導関数」 | 他のすべての変数を定数として固定し、1つの変数について取る導関数。 |
+| 勾配 | 「最急上昇方向」 | すべての偏導関数からなるベクトル。関数を最も速く増加させる方向を指す。 |
+| 勾配降下法 | 「下り坂へ進む」 | 損失を減らすために、パラメータから勾配（に学習率を掛けたもの）を引く。ニューラルネットワーク学習の中核。 |
+| 学習率 | 「ステップ幅」 | 各勾配降下ステップの大きさを制御するスカラー。大きすぎると発散し、小さすぎると収束が遅い。 |
+| 連鎖律 | 「導関数を掛ける」 | 合成関数を微分する規則: df/dx = df/dg * dg/dx。バックプロパゲーションの数学的基盤。 |
+| ヤコビ行列 | 「導関数の行列」 | 関数がベクトルをベクトルへ写すとき、ヤコビ行列は出力の入力に対するすべての偏導関数からなる行列。 |
+| 数値微分 | 「有限差分」 | 近い2点で関数を評価し、その間の傾きを計算して導関数を近似すること。 |
+| バックプロパゲーション | 「逆モード自動微分」 | 連鎖律を使い、出力から入力へ層ごとに勾配を計算すること。ニューラルネットワークが学習する仕組み。 |
+| ヘッセ行列 | 「2階導関数の行列」 | すべての2階偏導関数からなる行列。関数の曲率を表す。臨界点で正定値ヘッセ行列なら局所最小値を意味する。 |
+| テイラー展開 | 「多項式近似」 | 導関数を使い、ある点の近くで関数を近似すること: f(x+h) ~ f(x) + f'(x)h + (1/2)f''(x)h^2 + ...。勾配降下法やニュートン法がなぜ働くかを理解する基盤。 |
+| 積分 | 「曲線下の面積」 | ある範囲で量を蓄積すること。機械学習では、積分が確率、期待値、KLダイバージェンスを定義する。 |
 
-## Further Reading
+## 参考資料
 
-- [3Blue1Brown: Essence of Calculus](https://www.3blue1brown.com/topics/calculus) - visual intuition for derivatives, integrals, and the chain rule
-- [Stanford CS231n: Backpropagation](https://cs231n.github.io/optimization-2/) - how gradients flow through neural network layers
+- [3Blue1Brown: Essence of Calculus](https://www.3blue1brown.com/topics/calculus) - 導関数、積分、連鎖律を視覚的に理解するための資料
+- [Stanford CS231n: Backpropagation](https://cs231n.github.io/optimization-2/) - ニューラルネットワークの層を勾配がどう流れるか

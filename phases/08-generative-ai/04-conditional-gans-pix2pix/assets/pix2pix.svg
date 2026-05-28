@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,22 +9,22 @@
       .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
       .content { font-size: 12px; fill: #333; }
-      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="450" y="28" text-anchor="middle" class="title">Pix2Pix — U-Net generator, PatchGAN discriminator</text>
+  <text x="450" y="28" text-anchor="middle" class="title">Pix2Pix — U-Net生成器、PatchGAN識別器</text>
 
   <!-- input image -->
   <rect x="30" y="90" width="90" height="70" class="box"/>
-  <text x="75" y="120" text-anchor="middle" class="content">input x</text>
-  <text x="75" y="140" text-anchor="middle" class="caption">edge map</text>
+  <text x="75" y="120" text-anchor="middle" class="content">入力 x</text>
+  <text x="75" y="140" text-anchor="middle" class="caption">エッジmap</text>
 
   <!-- U-Net generator -->
   <rect x="140" y="60" width="420" height="140" class="cold"/>
-  <text x="350" y="82" text-anchor="middle" class="label">U-Net generator  G(x)</text>
+  <text x="350" y="82" text-anchor="middle" class="label">U-Net生成器  G(x)</text>
 
   <!-- encoder blocks -->
   <rect x="160" y="100" width="40" height="80" class="box"/>
@@ -42,18 +42,18 @@
   <path d="M 230,110 Q 310,80 460,110" fill="none" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="4,3"/>
   <path d="M 280,120 Q 330,95 410,120" fill="none" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="4,3"/>
 
-  <text x="350" y="195" text-anchor="middle" class="caption">skip connections preserve high-freq detail</text>
+  <text x="350" y="195" text-anchor="middle" class="caption">skip connectionが高周波ディテールを保つ</text>
 
   <line x1="540" y1="130" x2="580" y2="130" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
 
   <!-- output -->
   <rect x="580" y="95" width="90" height="70" class="box"/>
-  <text x="625" y="125" text-anchor="middle" class="content">output y&#770;</text>
-  <text x="625" y="145" text-anchor="middle" class="caption">photo</text>
+  <text x="625" y="125" text-anchor="middle" class="content">出力 y&#770;</text>
+  <text x="625" y="145" text-anchor="middle" class="caption">写真</text>
 
   <!-- real target -->
   <rect x="680" y="95" width="90" height="70" class="box"/>
-  <text x="725" y="125" text-anchor="middle" class="content">target y</text>
+  <text x="725" y="125" text-anchor="middle" class="content">目標 y</text>
 
   <!-- L1 loss -->
   <rect x="780" y="95" width="80" height="70" class="hot"/>
@@ -66,9 +66,9 @@
   <!-- PatchGAN D -->
   <rect x="30" y="250" width="220" height="100" class="hot"/>
   <text x="140" y="273" text-anchor="middle" class="label">PatchGAN D(x, y&#770;)</text>
-  <text x="140" y="295" text-anchor="middle" class="caption">output is an N &#215; N grid</text>
-  <text x="140" y="315" text-anchor="middle" class="caption">each cell judges ~70&#215;70 patch</text>
-  <text x="140" y="335" text-anchor="middle" class="caption">averaged &#8594; real / fake score</text>
+  <text x="140" y="295" text-anchor="middle" class="caption">出力はN &#215; Nグリッド</text>
+  <text x="140" y="315" text-anchor="middle" class="caption">各セルが約70&#215;70パッチを判定</text>
+  <text x="140" y="335" text-anchor="middle" class="caption">平均 &#8594; 本物 / 偽物スコア</text>
 
   <line x1="75" y1="160" x2="75" y2="250" stroke="#1a1a1a" stroke-width="1.2"/>
   <line x1="75" y1="250" x2="30" y2="280" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
@@ -76,15 +76,15 @@
 
   <!-- objective -->
   <rect x="290" y="250" width="570" height="100" class="box"/>
-  <text x="575" y="275" text-anchor="middle" class="label">objective</text>
+  <text x="575" y="275" text-anchor="middle" class="label">目的関数</text>
   <text x="575" y="298" text-anchor="middle" class="mono">L_G = -log D(x, G(x)) + 100 &#183; ||y - G(x)||_1</text>
   <text x="575" y="320" text-anchor="middle" class="mono">L_D = -log D(x, y) - log (1 - D(x, G(x)))</text>
-  <text x="575" y="340" text-anchor="middle" class="caption">L1 stabilizes + sharp edges; adv term fights blur</text>
+  <text x="575" y="340" text-anchor="middle" class="caption">L1で安定化 + 鋭いエッジ。adv項でぼけに対抗</text>
 
   <!-- CycleGAN callout -->
   <rect x="30" y="380" width="830" height="100" class="box"/>
-  <text x="445" y="403" text-anchor="middle" class="label">CycleGAN (unpaired): add a second G and a cycle-consistency loss</text>
+  <text x="445" y="403" text-anchor="middle" class="label">CycleGAN (非ペア): 2つ目のGとcycle-consistency lossを追加</text>
   <text x="445" y="425" text-anchor="middle" class="mono">G: X -&gt; Y,  F: Y -&gt; X,  loss += ||F(G(x)) - x||_1 + ||G(F(y)) - y||_1</text>
-  <text x="445" y="447" text-anchor="middle" class="caption">no paired data needed; horses &lt;-&gt; zebras, summer &lt;-&gt; winter</text>
-  <text x="445" y="465" text-anchor="middle" class="caption">2026: mostly superseded by ControlNet + IP-Adapter over diffusion</text>
+  <text x="445" y="447" text-anchor="middle" class="caption">ペアデータ不要。horses &lt;-&gt; zebras、summer &lt;-&gt; winter</text>
+  <text x="445" y="465" text-anchor="middle" class="caption">2026年: ほぼControlNet + IP-Adapter over diffusionに置き換え</text>
 </svg>

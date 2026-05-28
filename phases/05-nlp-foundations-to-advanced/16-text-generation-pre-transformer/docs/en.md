@@ -1,52 +1,52 @@
-# Text Generation Before Transformers — N-gram Language Models
+# Transformer 以前のテキスト生成 — N-gram 言語モデル
 
-> If a word is surprising, the model is bad. Perplexity makes surprise a number. Smoothing keeps it finite.
+> ある単語が予想外なら、そのモデルは悪いモデルです。Perplexity は予想外さを数値にします。Smoothing はそれを有限に保ちます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
-**Time:** ~45 minutes
+**種類:** 構築
+**言語:** Python
+**前提:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-Before transformers, before RNNs, before word embeddings, a language model predicted the next word by counting how often it followed the previous `n-1` words. Count "the cat" → "sat" 47 times, "the cat" → "jumped" 12 times, "the cat" → "refrigerator" 0 times. Normalize to get a probability distribution.
+transformer より前、RNN より前、単語埋め込みより前の言語モデルは、直前の `n-1` 語のあとに次の語がどれだけ頻繁に続いたかを数えて次単語を予測していました。"the cat" → "sat" が47回、"the cat" → "jumped" が12回、"the cat" → "refrigerator" が0回、と数えます。それを正規化して確率分布を得ます。
 
-That is an n-gram language model. It ran every speech recognizer, every spell checker, and every phrase-based machine translation system from 1980 through 2015. It still runs when you need cheap on-device language modeling.
+これが n-gram 言語モデルです。1980年から2015年ごろまで、あらゆる音声認識器、スペルチェッカー、フレーズベース機械翻訳システムを支えていました。安価なオンデバイス言語モデリングが必要な場面では、今でも動いています。
 
-The interesting problem is what to do about unseen n-grams. A raw count-based model assigns zero probability to anything it has not seen, which is catastrophic because sentences are long and almost every long sentence contains at least one unseen sequence. Fifty years of smoothing research fixed that. Kneser-Ney smoothing is the result, and modern deep learning inherited its empirical tradition.
+面白い問題は、未観測の n-gram をどう扱うかです。生のカウントベースのモデルは、見たことがないものに確率0を割り当てます。文は長く、ほぼすべての長文には少なくとも1つの未観測系列が含まれるため、これは致命的です。50年にわたる smoothing 研究がこれを解決しました。その到達点が Kneser-Ney smoothing であり、現代の深層学習もその実証的な伝統を受け継いでいます。
 
-## The Concept
+## コンセプト
 
-![N-gram model: count, smooth, generate](../assets/ngram.svg)
+![N-gram モデル: 数える、平滑化する、生成する](../assets/ngram.svg)
 
-**N-gram probability:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`. Fix `n` (typically 3 for trigrams, 4 for 4-grams). Compute from counts:
+**N-gram 確率:** `P(w_i | w_{i-n+1}, ..., w_{i-1})`。`n` を固定します（典型的には trigram なら3、4-gram なら4）。カウントから次のように計算します。
 
 ```text
 P(w | context) = count(context, w) / count(context)
 ```
 
-**The zero-count problem.** Any n-gram not seen in training gets probability zero. A 2007 study on the Brown corpus found that even a 4-gram model had 30% of held-out 4-grams unseen in training. You cannot evaluate on any real text without smoothing.
+**ゼロカウント問題。** 訓練中に見なかった n-gram は確率0になります。Brown corpus に関する2007年の研究では、4-gram モデルでさえ、ホールドアウトされた 4-gram の30%が訓練中に未観測でした。smoothing なしでは、現実のテキストを評価できません。
 
-**Smoothing approaches, in order of sophistication:**
+**Smoothing 手法。洗練度の順に並べると次のとおりです。**
 
-1. **Laplace (add-one).** Add 1 to every count. Simple, terrible on rare events.
-2. **Good-Turing.** Reallocate probability mass from higher-frequency events to unseen ones based on frequency-of-frequencies.
-3. **Interpolation.** Combine n-gram, (n-1)-gram, etc., estimates with tunable weights.
-4. **Backoff.** If n-gram has count zero, fall back to (n-1)-gram. Katz backoff normalizes this.
-5. **Absolute discounting.** Subtract a fixed discount `D` from all counts, redistribute to unseen.
-6. **Kneser-Ney.** Absolute discounting plus a clever choice for the lower-order model: use *continuation probability* (how many contexts a word appears in) instead of raw frequency.
+1. **Laplace (add-one)。** すべてのカウントに1を足します。単純ですが、希少イベントでは非常に悪いです。
+2. **Good-Turing。** frequency-of-frequencies に基づいて、高頻度イベントから未観測イベントへ確率質量を再配分します。
+3. **Interpolation。** n-gram、(n-1)-gram などの推定値を、調整可能な重みで組み合わせます。
+4. **Backoff。** n-gram のカウントが0なら、(n-1)-gram にフォールバックします。Katz backoff はこれを正規化します。
+5. **Absolute discounting。** すべてのカウントから固定の割引値 `D` を引き、未観測へ再配分します。
+6. **Kneser-Ney。** Absolute discounting に加え、低次モデルの選び方を工夫します。生の頻度ではなく、*continuation probability*（その単語がいくつの文脈に現れるか）を使います。
 
-The Kneser-Ney insight is deep. "San Francisco" is a common bigram. Unigram "Francisco" appears mostly after "San." Naive absolute discounting gives "Francisco" high unigram probability (because the count is high). Kneser-Ney notices that "Francisco" appears in only one context and lowers its continuation probability accordingly. Result: a novel bigram ending in "Francisco" gets the appropriate low probability.
+Kneser-Ney の洞察は深いものです。"San Francisco" は一般的な bigram です。Unigram の "Francisco" はほとんど "San" の後に現れます。素朴な absolute discounting では、カウントが高いため "Francisco" に高い unigram 確率を与えます。Kneser-Ney は、"Francisco" が1つの文脈にしか現れないことに気づき、それに応じて continuation probability を下げます。結果として、"Francisco" で終わる新しい bigram には適切に低い確率が与えられます。
 
-**Evaluation: perplexity.** The exponent of the average negative log-likelihood per word on a held-out test set. Lower is better. A perplexity of 100 means the model is as confused as it would be choosing uniformly among 100 words.
+**評価: perplexity。** ホールドアウトされたテストセット上で、単語あたり平均負対数尤度を指数化したものです。低いほど良いです。perplexity が100であるとは、そのモデルが100語の中から一様に選ぶ場合と同じくらい迷っている、という意味です。
 
 ```text
 perplexity = exp(- (1/N) * Σ log P(w_i | context_i))
 ```
 
-## Build It
+## 構築
 
-### Step 1: trigram counts
+### Step 1: trigram カウント
 
 ```python
 from collections import Counter, defaultdict
@@ -72,7 +72,7 @@ def raw_probability(ngrams, contexts, context, word):
     return ngrams.get(ctx + (word,), 0) / contexts[ctx]
 ```
 
-Input is a list of tokenized sentences. Output is n-gram counts and context counts. `<s>` and `</s>` are sentence boundaries.
+入力はトークン化済み文のリストです。出力は n-gram カウントと文脈カウントです。`<s>` と `</s>` は文境界です。
 
 ### Step 2: Laplace smoothing
 
@@ -84,9 +84,9 @@ def laplace_probability(ngrams, contexts, vocab_size, context, word):
     return numerator / denominator
 ```
 
-Add 1 to every count. Smooths but over-allocates mass to unseen events, hurting rare-known events too.
+すべてのカウントに1を足します。平滑化はできますが、未観測イベントに確率質量を割り当てすぎるため、観測済みの希少イベントにも悪影響を与えます。
 
-### Step 3: Kneser-Ney (bigram, interpolated)
+### Step 3: Kneser-Ney（bigram、補間版）
 
 ```python
 def kneser_ney_bigram_model(corpus_tokens, discount=0.75):
@@ -128,9 +128,9 @@ def kneser_ney_bigram_model(corpus_tokens, discount=0.75):
     return prob
 ```
 
-Three moving parts. `continuation_prob` captures "how many different contexts does this word appear in?" (the Kneser-Ney innovation). `lambda_prev` is the mass freed by the discount, used to weight the backoff. The final probability is the discounted main term plus the weighted continuation term.
+動く部品は3つです。`continuation_prob` は「この単語はいくつの異なる文脈に現れるか」を捉えます（Kneser-Ney の新規性）。`lambda_prev` は割引によって解放された確率質量で、backoff の重み付けに使われます。最終的な確率は、割引された主項と、重み付き continuation 項の和です。
 
-### Step 4: generating text with sampling
+### Step 4: サンプリングによるテキスト生成
 
 ```python
 import random
@@ -154,7 +154,7 @@ def generate(prob_fn, vocab, prefix, max_len=30, seed=0):
     return tokens
 ```
 
-Sampling proportional to probability. Always gives different output per seed. For beam-search-like output, pick the argmax at each step (greedy) and add a small randomness knob (temperature).
+確率に比例してサンプリングします。seed ごとに常に異なる出力になります。beam search 風の出力が欲しい場合は、各ステップで argmax を選び（greedy）、小さなランダム性のつまみ（temperature）を追加します。
 
 ### Step 5: perplexity
 
@@ -174,57 +174,57 @@ def perplexity(prob_fn, sentences):
     return math.exp(-total_log_prob / total_tokens)
 ```
 
-Lower is better. For Brown corpus, a well-tuned 4-gram KN model hits perplexity around 140. A transformer LM hits 15-30 on the same test set. The gap is about 10x. That gap is why the field moved on.
+低いほど良いです。Brown corpus では、よく調整された 4-gram KN モデルが perplexity 約140に到達します。同じテストセットで transformer LM は15から30に到達します。差は約10倍です。この差が、分野が次へ進んだ理由です。
 
-## Use It
+## 使いどころ
 
-- **Classical NLP teaching.** The clearest exposure to smoothing, MLE, and perplexity you can get.
-- **KenLM.** Production n-gram library. Used as a rescorer in speech and MT systems where low latency matters.
-- **On-device autocomplete.** Trigram models in keyboards. Still.
-- **Baselines.** Always compute an n-gram LM perplexity before declaring your neural LM good. If your transformer does not beat KN by a wide margin, something is wrong.
+- **古典的 NLP の教育。** smoothing、MLE、perplexity をもっとも明快に学べる題材です。
+- **KenLM。** 本番向け n-gram ライブラリです。低レイテンシが重要な音声認識や MT システムで、リスコアラーとして使われます。
+- **オンデバイス補完。** キーボード内の trigram モデルです。今でも使われています。
+- **ベースライン。** ニューラル LM が良いと宣言する前に、必ず n-gram LM の perplexity を計算します。transformer が KN を大きく上回らないなら、何かがおかしいです。
 
-## Ship It
+## 仕上げ
 
-Save as `outputs/prompt-lm-baseline.md`:
+`outputs/prompt-lm-baseline.md` として保存します。
 
 ```markdown
 ---
 name: lm-baseline
-description: Build a reproducible n-gram language model baseline before training a neural LM.
+description: ニューラル LM を訓練する前に、再現可能な n-gram 言語モデルのベースラインを構築する。
 phase: 5
 lesson: 16
 ---
 
-Given a corpus and target use (next-word prediction, rescoring, perplexity baseline), output:
+コーパスと目的（次単語予測、リスコアリング、パープレキシティのベースライン）が与えられたら、次を出力する。
 
-1. N-gram order. Trigram for general English, 4-gram if corpus is large, 5-gram for speech rescoring.
-2. Smoothing. Modified Kneser-Ney is the default; Laplace only for teaching.
-3. Library. `kenlm` for production, `nltk.lm` for teaching, roll your own only to learn.
-4. Evaluation. Held-out perplexity with consistent tokenization between train and test sets.
+1. N-gram の次数。一般的な英語なら trigram、コーパスが大きければ 4-gram、音声認識のリスコアリングなら 5-gram。
+2. Smoothing。デフォルトは Modified Kneser-Ney。Laplace は教育用に限る。
+3. ライブラリ。本番では `kenlm`、教育用途では `nltk.lm`、自作は学習目的に限る。
+4. 評価。訓練セットとテストセットで一貫したトークン化を使い、ホールドアウトの perplexity を測る。
 
-Refuse to report perplexity computed with different tokenization between systems being compared — perplexity numbers are comparable only under identical tokenization. Flag OOV rate in test set; KN handles OOV poorly unless you reserve a special <UNK> token during training.
+比較対象のシステム間で異なるトークン化を使って計算された perplexity は報告しない。perplexity の値は、同一のトークン化の下でのみ比較できる。テストセットの OOV 率を指摘する。訓練時に特別な <UNK> トークンを予約していない限り、KN は OOV をうまく扱えない。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Train a trigram LM on a 1,000-sentence Shakespeare corpus. Generate 20 sentences. They will be locally plausible but globally incoherent. This is the canonical demo.
-2. **Medium.** Implement perplexity for your KN model on a held-out Shakespeare split. Compare against Laplace. You should see KN lower perplexity by 30-50%.
-3. **Hard.** Build a trigram spell corrector: given a misspelled word and its context, generate corrections and rank by context probability under the LM. Evaluate on the Birkbeck spelling corpus (public).
+1. **Easy。** 1,000文の Shakespeare コーパスで trigram LM を訓練します。20文を生成します。局所的にはもっともらしいが、大域的には一貫性のない文になるはずです。これは定番のデモです。
+2. **Medium。** ホールドアウトした Shakespeare split で、自分の KN モデルの perplexity を実装します。Laplace と比較します。KN によって perplexity が30から50%下がるはずです。
+3. **Hard。** trigram スペル修正器を構築します。誤綴りの単語とその文脈が与えられたら、修正候補を生成し、LM の文脈確率で順位付けします。Birkbeck spelling corpus（公開）で評価します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる意味 | 実際の意味 |
 |------|-----------------|-----------------------|
-| N-gram | Word sequence | Sequence of `n` consecutive tokens. |
-| Smoothing | Avoiding zeros | Reallocating probability mass so unseen events get non-zero probability. |
-| Perplexity | LM quality metric | `exp(-average log-prob)` on held-out data. Lower is better. |
-| Backoff | Fallback to shorter context | If trigram count is zero, use bigram. Katz backoff formalizes this. |
-| Kneser-Ney | Best smoothing for n-grams | Absolute discounting + continuation probability for the lower-order model. |
-| Continuation probability | KN-specific | `P(w)` weighted by number of contexts `w` appears in, not by raw count. |
+| N-gram | 単語列 | `n` 個の連続するトークンの列。 |
+| Smoothing | ゼロを避けること | 未観測イベントが非ゼロ確率を得るように、確率質量を再配分すること。 |
+| Perplexity | LM の品質指標 | ホールドアウトデータ上の `exp(-average log-prob)`。低いほど良い。 |
+| Backoff | 短い文脈へのフォールバック | trigram カウントが0なら bigram を使う。Katz backoff はこれを形式化したもの。 |
+| Kneser-Ney | n-gram に最良の smoothing | Absolute discounting + 低次モデルに対する continuation probability。 |
+| Continuation probability | KN 固有 | 生カウントではなく、`w` が現れる文脈数で重み付けした `P(w)`。 |
 
-## Further Reading
+## 参考資料
 
-- [Jurafsky and Martin — Speech and Language Processing, Chapter 3 (2026 draft)](https://web.stanford.edu/~jurafsky/slp3/3.pdf) — the canonical treatment of n-gram LMs and smoothing.
-- [Chen and Goodman (1998). An Empirical Study of Smoothing Techniques for Language Modeling](https://dash.harvard.edu/handle/1/25104739) — the paper that settled Kneser-Ney as the best n-gram smoother.
-- [Kneser and Ney (1995). Improved Backing-off for M-gram Language Modeling](https://ieeexplore.ieee.org/document/479394) — the original KN paper.
-- [KenLM](https://kheafield.com/code/kenlm/) — fast production n-gram LM, still used in 2026 for latency-sensitive applications.
+- [Jurafsky and Martin — Speech and Language Processing, Chapter 3 (2026 draft)](https://web.stanford.edu/~jurafsky/slp3/3.pdf) — n-gram LM と smoothing の標準的な解説。
+- [Chen and Goodman (1998). An Empirical Study of Smoothing Techniques for Language Modeling](https://dash.harvard.edu/handle/1/25104739) — Kneser-Ney を最良の n-gram smoothing として定着させた論文。
+- [Kneser and Ney (1995). Improved Backing-off for M-gram Language Modeling](https://ieeexplore.ieee.org/document/479394) — 元の KN 論文。
+- [KenLM](https://kheafield.com/code/kenlm/) — 高速な本番向け n-gram LM。2026年でもレイテンシに敏感なアプリケーションで使われている。

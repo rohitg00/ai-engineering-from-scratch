@@ -1,58 +1,58 @@
 {
   "lesson": "03-realtime-voice-assistant",
-  "title": "Capstone 03 — Real-Time Voice Assistant (ASR to LLM to TTS)",
+  "title": "Capstone 03 — Real-Time Voice Assistant (ASR から LLM、TTS へ)",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why can a voice agent not be built by stitching three blocking REST calls?",
+      "question": "voice agent を3つの blocking REST call のつなぎ合わせで作れない理由は何ですか？",
       "options": [
-        "REST endpoints have a 30-second hard timeout",
-        "REST is incompatible with WebRTC",
-        "JSON serialization is too slow for audio data",
-        "End-to-end latency below 800ms requires pipelined streaming at every stage"
+        "REST endpoint には30秒の hard timeout があるため",
+        "REST は WebRTC と互換性がないため",
+        "JSON serialization は audio data には遅すぎるため",
+        "800ms 未満の end-to-end latency には、すべての stage で pipelined streaming が必要なため"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What is the role of the turn-detector alongside VAD?",
+      "question": "VAD と並んで turn-detector が担う役割は何ですか？",
       "options": [
-        "Trains a custom voice clone for the agent",
-        "Reads partial transcripts and scores whether the user has actually finished their utterance",
-        "Detects which speaker is talking in a multi-party call",
-        "Mixes background music into the output stream"
+        "agent 用の custom voice clone を train する",
+        "partial transcript を読み、user が実際に発話を終えたかを score する",
+        "multi-party call で誰が話しているかを検出する",
+        "background music を output stream に mix する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "When the user starts speaking while the agent is mid-response, what must happen for barge-in to feel right?",
+      "question": "agent の応答中に user が話し始めたとき、barge-in を自然に感じさせるには何が必要ですか？",
       "options": [
-        "The TTS finishes the current sentence before yielding",
-        "The pipeline buffers user audio until TTS completes",
-        "The TTS is canceled immediately, remaining LLM output is dropped, and ASR re-arms",
-        "The agent raises the TTS volume to assert priority"
+        "TTS が現在の文を最後まで読み上げてから譲る",
+        "pipeline が TTS 完了まで user audio を buffer する",
+        "TTS を即座に cancel し、残りの LLM output を捨て、ASR を再 arm する",
+        "agent が優先権を示すために TTS volume を上げる"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is a short filler such as \"one second, let me check\" emitted when a tool exceeds about 300ms?",
+      "question": "tool が約300msを超えるときに \"one second, let me check\" のような短い filler を出す理由は何ですか？",
       "options": [
-        "It avoids silence so the conversation does not stall while the side-channel tool runs",
-        "It triggers a fallback ASR model",
-        "It resets the WebRTC jitter buffer",
-        "It improves WER on the next utterance"
+        "side-channel tool が走る間も会話が止まらないよう、沈黙を避けるため",
+        "fallback ASR model を trigger するため",
+        "WebRTC jitter buffer を reset するため",
+        "次の発話の WER を改善するため"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "The first audio chunk must leave the server within roughly how long of the first LLM token?",
+      "question": "first audio chunk は first LLM token からおおよそどれくらい以内に server を出る必要がありますか？",
       "options": [
         "20ms",
         "800ms",
@@ -64,7 +64,7 @@
     },
     {
       "stage": "post",
-      "question": "Which metric directly measures inappropriate barge-in or over-eager turn closure?",
+      "question": "不適切な barge-in や早すぎる turn closure を直接測る metric はどれですか？",
       "options": [
         "WER",
         "MOS",
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "Under 3% packet loss, which two adaptive behaviors does the pipeline rely on?",
+      "question": "3% packet loss 下で pipeline が依存する2つの adaptive behavior はどれですか？",
       "options": [
-        "Switching to a larger LLM and disabling TTS",
-        "Falling back to PSTN audio codecs",
-        "Holding partial transcripts and raising the VAD speech-gate threshold",
-        "Restarting the LiveKit room"
+        "より大きな LLM に切り替え、TTS を無効にする",
+        "PSTN audio codec に fallback する",
+        "partial transcript を保持し、VAD speech-gate threshold を上げる",
+        "LiveKit room を restart する"
       ],
       "correct": 2,
       "explanation": ""

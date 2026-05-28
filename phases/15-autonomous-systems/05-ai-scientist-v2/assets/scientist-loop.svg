@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,42 +9,42 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .content { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="440" y="26" text-anchor="middle" class="title">AI Scientist v2 — research loop, measured failure rates</text>
+  <text x="440" y="26" text-anchor="middle" class="title">AI Scientist v2 — 研究ループと測定された失敗率</text>
 
   <rect x="40" y="50" width="800" height="430" class="box"/>
 
   <!-- Stages across -->
   <g>
     <rect x="60" y="80" width="110" height="60" class="cool"/>
-    <text x="115" y="104" text-anchor="middle" class="label">idea</text>
-    <text x="115" y="120" text-anchor="middle" class="small">agentic tree search</text>
+    <text x="115" y="104" text-anchor="middle" class="label">アイデア</text>
+    <text x="115" y="120" text-anchor="middle" class="small">エージェント木探索</text>
 
     <rect x="180" y="80" width="110" height="60" class="hot"/>
-    <text x="235" y="104" text-anchor="middle" class="label">novelty check</text>
-    <text x="235" y="120" text-anchor="middle" class="small">~25% mislabel</text>
+    <text x="235" y="104" text-anchor="middle" class="label">新規性チェック</text>
+    <text x="235" y="120" text-anchor="middle" class="small">約25%誤判定</text>
 
     <rect x="300" y="80" width="110" height="60" class="hot"/>
-    <text x="355" y="104" text-anchor="middle" class="label">experiment</text>
-    <text x="355" y="120" text-anchor="middle" class="small">42% failure</text>
+    <text x="355" y="104" text-anchor="middle" class="label">実験</text>
+    <text x="355" y="120" text-anchor="middle" class="small">42%失敗</text>
     <text x="355" y="134" text-anchor="middle" class="small">(Beel 2025)</text>
 
     <rect x="420" y="80" width="110" height="60" class="cold"/>
-    <text x="475" y="104" text-anchor="middle" class="label">VLM figure critique</text>
-    <text x="475" y="120" text-anchor="middle" class="small">polishes visuals</text>
-    <text x="475" y="134" text-anchor="middle" class="small">masks 70%</text>
+    <text x="475" y="104" text-anchor="middle" class="label">VLM図批評</text>
+    <text x="475" y="120" text-anchor="middle" class="small">図を磨く</text>
+    <text x="475" y="134" text-anchor="middle" class="small">70%を隠す</text>
 
     <rect x="540" y="80" width="110" height="60" class="cool"/>
-    <text x="595" y="104" text-anchor="middle" class="label">writeup</text>
+    <text x="595" y="104" text-anchor="middle" class="label">執筆</text>
 
     <rect x="660" y="80" width="110" height="60" class="cool"/>
-    <text x="715" y="104" text-anchor="middle" class="label">review + submit</text>
+    <text x="715" y="104" text-anchor="middle" class="label">レビュー+投稿</text>
   </g>
 
   <!-- Arrows across -->
@@ -56,21 +56,21 @@
 
   <!-- Results panel -->
   <rect x="60" y="175" width="740" height="115" class="box"/>
-  <text x="80" y="196" class="label">measured results (Yamada 2025, Sakana Nature 2026)</text>
-  <text x="80" y="218" class="content">· v2-generated paper accepted at ICLR 2025 workshop (disclosed)</text>
-  <text x="80" y="236" class="content">· template-free loop replaces v1's fixed scaffolding</text>
-  <text x="80" y="254" class="content">· Nature 2026 paper documents end-to-end pipeline</text>
-  <text x="80" y="272" class="content">· Beel et al. 2025 external eval flagged polish masking experiment flaws</text>
+  <text x="80" y="196" class="label">測定結果 (Yamada 2025, Sakana Nature 2026)</text>
+  <text x="80" y="218" class="content">· v2生成論文がICLR 2025ワークショップ採択（開示済み）</text>
+  <text x="80" y="236" class="content">· テンプレなしループがv1の固定足場を置換</text>
+  <text x="80" y="254" class="content">· Nature 2026論文がE2Eパイプラインを記録</text>
+  <text x="80" y="272" class="content">· Beel et al. 2025外部評価: 見栄えが実験欠陥を覆う</text>
 
   <!-- Safety box -->
   <rect x="60" y="305" width="740" height="155" class="hot"/>
-  <text x="80" y="328" class="label">operational safety (Sakana repo README, paraphrased)</text>
-  <text x="80" y="350" class="content">- the codebase executes LLM-written code</text>
-  <text x="80" y="368" class="content">- dangerous packages, uncontrolled web access, unintended processes possible</text>
-  <text x="80" y="386" class="content">- Docker isolation recommended (seccomp / gVisor preferred for multi-day runs)</text>
-  <text x="80" y="404" class="content">- disclose agent-authored papers; review before submission</text>
-  <text x="80" y="424" class="content">- polish stage can mask experiment weakness; require separate audit</text>
-  <text x="80" y="442" class="content">- evaluator is peer review, which is weak and noisy</text>
+  <text x="80" y="328" class="label">運用安全 (SakanaリポジトリREADMEの要約)</text>
+  <text x="80" y="350" class="content">- コードベースはLLM生成コードを実行</text>
+  <text x="80" y="368" class="content">- 危険パッケージ、無制御Web、意図しないプロセスがありうる</text>
+  <text x="80" y="386" class="content">- Docker隔離推奨（複数日実行はseccomp / gVisor推奨）</text>
+  <text x="80" y="404" class="content">- エージェント作成論文は開示し、投稿前にレビュー</text>
+  <text x="80" y="424" class="content">- 仕上げ段階は実験弱点を隠すため、別監査が必要</text>
+  <text x="80" y="442" class="content">- 評価器は査読であり、弱くノイズが多い</text>
 
-  <text x="440" y="478" text-anchor="middle" class="caption">unverified domain + full-text output surface + public venues = strongest controls in the phase</text>
+  <text x="440" y="478" text-anchor="middle" class="caption">未検証領域 + 全文出力面 + 公開の場 = このフェーズで最強の統制が必要</text>
 </svg>

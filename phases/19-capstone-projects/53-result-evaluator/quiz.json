@@ -1,34 +1,34 @@
 {
   "lesson": "53-result-evaluator",
-  "title": "Result Evaluator",
+  "title": "結果評価器",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the evaluator use a paired t test instead of comparing two single numbers?",
+      "question": "evaluator が二つの単一数値を比較せず paired t test を使う理由は何ですか?",
       "options": [
-        "Because numpy requires paired arrays",
-        "Because pairing the same seed across candidate and baseline isolates the configuration change from random initialisation noise",
-        "Because the runner cannot emit a single number",
-        "Because t tests are always required by IRB"
+        "numpy が paired array を要求するため",
+        "candidate と baseline で同じ seed を pair にすると、configuration change と random initialisation noise を分離できるため",
+        "runner が単一数値を出せないため",
+        "t test が IRB に常に要求されるため"
       ],
       "correct": 1,
-      "explanation": "Pairing by seed cancels out random initialisation effects. The remaining difference is attributable to the configuration change, which is what the test measures."
+      "explanation": "seed で pairing すると random initialisation の影響を相殺できます。残る差分が configuration change に帰属し、test はそれを測ります。"
     },
     {
       "stage": "pre",
-      "question": "Why does the evaluator carry a direction field on every metric?",
+      "question": "evaluator が各 metric に direction field を持つ理由は何ですか?",
       "options": [
-        "Because accuracy and loss point in opposite ways; the sign of the improvement depends on which direction is better for the metric being compared",
-        "Because the runner requires it",
-        "Because numpy needs the direction for variance",
-        "Because the parser expects it"
+        "accuracy と loss は良い方向が逆であり、improvement の符号は比較する metric の良い方向に依存するため",
+        "runner がそれを要求するため",
+        "numpy が variance に direction を必要とするため",
+        "parser がそれを期待するため"
       ],
       "correct": 0,
-      "explanation": "Higher is better metrics improve when they go up; lower is better metrics improve when they go down. The direction field tells the improvement function which sign convention to apply."
+      "explanation": "higher is better metric は上がると改善し、lower is better metric は下がると改善します。direction field は improvement function に符号規約を伝えます。"
     },
     {
       "stage": "check",
-      "question": "What does the verdict path return when |improvement| is below the threshold even if the p value is significant?",
+      "question": "|improvement| が threshold 未満だが p value は有意な場合、verdict path は何を返しますか?",
       "options": [
         "improved",
         "regressed",
@@ -36,43 +36,43 @@
         "failed"
       ],
       "correct": 2,
-      "explanation": "A statistically significant change that is too small to act on is still noise from the loop's point of view. The threshold gate runs before the significance gate."
+      "explanation": "統計的に有意でも、行動するには小さすぎる変化は loop の観点では noise です。threshold gate は significance gate より先に走ります。"
     },
     {
       "stage": "check",
-      "question": "Why does the evaluator transform log scaled metrics before computing improvement?",
+      "question": "evaluator が improvement 計算前に log scaled metric を変換する理由は何ですか?",
       "options": [
-        "Because numpy logs are faster",
-        "Because perplexity and similar metrics grow exponentially with loss; transforming to log space makes a threshold like two percent meaningful across linear and log metrics",
-        "Because the p value depends on it",
-        "Because the runner only emits log scaled metrics"
+        "numpy の log が速いため",
+        "perplexity などは loss に対して exponential に増えるため、log space にすると2%のような threshold を linear metric と比較しやすくなるため",
+        "p value がそれに依存するため",
+        "runner が log scaled metric しか出さないため"
       ],
       "correct": 1,
-      "explanation": "Perplexity is exp(loss). A small loss change is a large perplexity change. Taking the log keeps relative improvements comparable to linear metrics under one threshold."
+      "explanation": "perplexity は exp(loss) です。小さな loss 変化が大きな perplexity 変化になります。log を取ると一つの threshold の下で linear metric と relative improvement を比較しやすくなります。"
     },
     {
       "stage": "check",
-      "question": "When does the paired t test helper return p_value = None?",
+      "question": "paired t test helper が p_value = None を返すのはいつですか?",
       "options": [
-        "When the means are equal",
-        "When fewer than two paired samples are available",
-        "When the variance is zero",
-        "When the metric scale is log"
+        "means が等しいとき",
+        "paired sample が二つ未満のとき",
+        "variance がゼロのとき",
+        "metric scale が log のとき"
       ],
       "correct": 1,
-      "explanation": "The t distribution needs at least one degree of freedom. With n less than two there is no variance estimate and the helper returns None so the verdict path can mark the run as noise."
+      "explanation": "t distribution には少なくとも一つの degree of freedom が必要です。n が2未満では variance estimate がなく、helper は None を返して verdict path が noise と判定できるようにします。"
     },
     {
       "stage": "check",
-      "question": "What happens if even one candidate result has a terminal label other than ok?",
+      "question": "candidate result の一つでも terminal label が ok 以外なら何が起きますか?",
       "options": [
-        "The evaluator drops that seed and proceeds",
-        "The evaluator returns a failed verdict and records the bad terminals in the rationale",
-        "The evaluator retries the run",
-        "The evaluator falls back to a one sided test"
+        "evaluator はその seed を落として続行する",
+        "evaluator は failed verdict を返し、bad terminal を rationale に記録する",
+        "evaluator は run を retry する",
+        "evaluator は one sided test に fallback する"
       ],
       "correct": 1,
-      "explanation": "A failed run invalidates the candidate set. The evaluator short circuits the verdict path and returns failed with the offending terminals listed, so the orchestrator does not draw a conclusion from a crashed run."
+      "explanation": "failed run は candidate set を無効化します。evaluator は verdict path を short-circuit して failed を返し、crashed run から結論を引かないようにします。"
     }
   ]
 }

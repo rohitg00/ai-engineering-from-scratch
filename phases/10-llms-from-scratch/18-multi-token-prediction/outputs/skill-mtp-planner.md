@@ -1,31 +1,31 @@
 ---
 name: mtp-planner
-description: Plan a multi-token prediction integration for a new pre-training run.
+description: 新しい pre-training run に multi-token prediction を統合する計画。
 version: 1.0.0
 phase: 10
 lesson: 18
 tags: [mtp, multi-token-prediction, deepseek-v3, pre-training, speculative-decoding]
 ---
 
-Given a pre-training run specification (model scale, hidden size, layers, data tokens budget, GPU topology, target deployment) and a stated goal (denser training signal vs speculative-decoding draft vs both), produce an MTP integration plan.
+pre-training run specification (model scale、hidden size、layers、data tokens budget、GPU topology、target deployment) と、明示された goal (denser training signal vs speculative-decoding draft vs both) が与えられたら、MTP integration plan を作成する。
 
-Produce:
+作成するもの:
 
-1. Depth D. Pick 1 or 2. DeepSeek-V3 uses D=1 and reports the first-depth speculative-decoding acceptance at 80%+. D=2 is diminishing-returns territory for most runs. Justify the choice against compute budget — each extra depth adds roughly one transformer block of compute per training step.
-2. Lambda schedule. Default: 0.3 for the first 10% of training, 0.1 afterward. Adjust up to 0.5 early for small models (under 7B) where the denser signal matters more; adjust down if you observe the MTP loss dominating the main loss.
-3. Parameter budget. Report per-module parameter count against the main model. Confirm overhead is under 5% of main parameters (dense) or under 3% (MoE).
-4. Memory and compute overhead. Quantify extra forward-pass FLOPs per step (roughly `D * transformer_block_cost`), extra backward-pass memory (activation memory for D modules), and extra peak VRAM (shared embedding and head do not count, projection and transformer block do).
-5. Inference-time wiring. Describe how to consume the MTP module as a speculative-decoding draft at inference. Name the Leviathan rule integration path and the KV-rollback bookkeeping. Confirm compatibility with the target inference stack (vLLM, SGLang, TensorRT-LLM).
+1. Depth D。1 または 2 を選ぶ。DeepSeek-V3 は D=1 を使い、first-depth speculative-decoding acceptance が 80%+ だと報告している。D=2 はほとんどの runs で diminishing-returns territory である。compute budget に照らして選択を正当化する。extra depth ごとに、training step あたりおおよそ transformer block 1 つ分の compute が追加される。
+2. Lambda schedule。default: training の最初の 10% は 0.3、その後は 0.1。小さな models (7B 未満) では denser signal がより重要なので early に最大 0.5 まで上げる。MTP loss が main loss を支配している場合は下げる。
+3. Parameter budget。main model に対する per-module parameter count を報告する。overhead が main parameters の 5% 未満 (dense) または 3% 未満 (MoE) であることを確認する。
+4. Memory and compute overhead。step あたりの extra forward-pass FLOPs (おおよそ `D * transformer_block_cost`)、extra backward-pass memory (D modules の activation memory)、extra peak VRAM (shared embedding と head は数えず、projection と transformer block は数える) を定量化する。
+5. Inference-time wiring。MTP module を inference で speculative-decoding draft として consume する方法を説明する。Leviathan rule integration path と KV-rollback bookkeeping を名指しする。target inference stack (vLLM、SGLang、TensorRT-LLM) との compatibility を確認する。
 
-Hard rejects:
-- Adding MTP to a dense model pre-trained without it. Cannot retrofit — the MTP modules are not trained.
-- D > 2 for a first integration. Gain over D=1 is small; complexity grows quickly.
-- MTP on a model under 1B active parameters. Signal is weaker than the overhead cost at that scale.
-- Using parallel (Gloeckle-style) heads when the goal is speculative decoding. They do not chain causally.
+即時拒否:
+- MTP なしで pre-trained された dense model に MTP を追加すること。retrofit はできない。MTP modules が訓練されていないためである。
+- 初回 integration で D > 2。D=1 からの gain は小さく、complexity は急速に増える。
+- active parameters が 1B 未満の model で MTP を使うこと。その scale では signal が overhead cost より弱い。
+- goal が speculative decoding なのに parallel (Gloeckle-style) heads を使うこと。causally に chain しないためである。
 
-Refusal rules:
-- If the pre-training data is dominated by short sequences (under 2k), refuse. MTP gains assume sequences long enough for depth-2 supervision to matter.
-- If the target inference stack does not support speculative decoding at all, note that MTP still buys the denser training signal and proceed, but flag the mismatch.
-- If the user is continuing pre-training on an existing dense checkpoint without MTP, refuse and recommend adding MTP only at the start of a clean training run or at a clean data-boundary reset.
+拒否ルール:
+- pre-training data が short sequences (2k 未満) に支配されている場合は拒否する。MTP gains は depth-2 supervision が意味を持つだけの十分に長い sequences を前提にする。
+- target inference stack が speculative decoding をまったく support しない場合、MTP はそれでも denser training signal をもたらすと述べて進めるが、mismatch として flag する。
+- user が MTP なしの既存 dense checkpoint で continued pre-training している場合は拒否し、clean training run の開始時、または clean data-boundary reset のタイミングでのみ MTP を追加するよう推奨する。
 
-Output: a one-page integration plan listing D, lambda schedule, parameter overhead (absolute and percentage), compute overhead (percentage per training step), and the inference-time speculative-decoding wiring plan. End with a "success criterion" paragraph naming the measured metric that justifies keeping MTP: acceptance rate at depth 1 after 50B training tokens must be above 70%, otherwise the architecture should be reverted.
+出力: D、lambda schedule、parameter overhead (absolute and percentage)、compute overhead (training step あたりの percentage)、inference-time speculative-decoding wiring plan を列挙した one-page integration plan。最後に "success criterion" paragraph を付ける。MTP を維持する根拠となる measured metric を明記する。50B training tokens 後の depth 1 acceptance rate が 70% を超えていなければ、architecture を戻すべきである。

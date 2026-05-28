@@ -1,40 +1,40 @@
 ---
 name: societal-risk-review
-description: Review a deployment for societal-scale-risk posture using the CAIS four-risk framework and CAISI / SB-53 regulatory context.
+description: CAISの4リスクフレームワークとCAISI / SB-53の規制文脈を使って、デプロイの社会規模リスク姿勢をレビューする。
 version: 1.0.0
 phase: 15
 lesson: 22
 tags: [cais, caisi, four-risk-framework, organizational-risk, sb-53, societal-risk]
 ---
 
-Given a proposed or operating AI deployment, produce a societal-scale-risk review that tags the deployment against the CAIS four-risk framework, inventories organizational-risk sub-levers, and names the regulatory surface.
+提案中または稼働中のAIデプロイを受け取り、CAISの4リスクフレームワークに照らしてタグ付けし、組織リスクのサブレバーを棚卸しし、規制上の接面を名指しする社会規模リスクレビューを作成する。
 
-Produce:
+作成するもの:
 
-1. **Four-risk tagging.** For each of the four categories (malicious use, AI races, organizational risks, rogue AIs), state whether the deployment touches it and how. A deployment can touch multiple categories; "does not apply" must be justified in one sentence.
-2. **Organizational-risk inventory.** Score the deployment against the four sub-levers: safety culture, audit rigor, multi-layered defenses, information security. Any lever scored "missing" is a flagged gap.
-3. **Regulatory surface.** Name the applicable regulatory frameworks: EU AI Act (if in EU or serving EU users), California SB-53 (if signed and applicable), CAISI voluntary agreements (if the lab has signed one). Compliance is a deployment gate, not a deployment nice-to-have.
-4. **External-evaluation posture.** Name the external evaluations the deployment or its base model has undergone (METR, CAISI, Apollo, Gray Swan, etc.). No external evaluation is a flagged gap for long-horizon autonomous deployments.
-5. **Structural-force exposure.** Estimate how much competitive-deployment pressure the organization is under and how that trades against the organizational-risk levers. Teams under heavy race pressure de-prioritize audit first; this is the CAIS finding.
+1. **4リスクタグ付け。** 4カテゴリ（悪用、AI競争、組織リスク、ローグAI）のそれぞれについて、そのデプロイが該当するか、どのように該当するかを述べる。デプロイは複数カテゴリに触れうる。「該当しない」は1文で理由を示さなければならない。
+2. **組織リスク目録。** 4つのサブレバー、安全文化、監査の厳密さ、多層防御、情報セキュリティに照らしてデプロイを採点する。「missing」と採点されたレバーはすべてフラグ付きギャップである。
+3. **規制上の接面。** 適用される規制フレームワークを名指しする。EUまたはEUユーザー向けなら EU AI Act、署名済みかつ適用対象なら California SB-53、研究所が署名しているならCAISI任意協定。コンプライアンスはデプロイのゲートであり、あると嬉しいものではない。
+4. **外部評価姿勢。** デプロイまたはその基盤モデルが受けた外部評価を名指しする（METR、CAISI、Apollo、Gray Swanなど）。長期ホライズンの自律デプロイで外部評価がないことは、フラグ付きギャップである。
+5. **構造的圧力への露出。** 組織がどの程度の競争的デプロイ圧力を受けているか、その圧力が組織リスクのレバーとどうトレードオフするかを見積もる。強い競争圧力を受けるチームは、まず監査の優先度を下げる。これはCAISの知見である。
 
-Hard rejects:
-- Deployments touching harmful-capability categories without a hardcoded-prohibition layer (Lesson 17).
-- Deployments in competitive-race conditions with no independent audit.
-- Long-horizon autonomous deployments with no external capability evaluation.
-- EU deployments with no Article 14 HITL (Lesson 15).
-- California deployments with no incident-reporting process if SB-53 is signed.
+強い却下条件:
+- 有害能力カテゴリに触れるにもかかわらず、ハードコードされた禁止層（レッスン17）がないデプロイ。
+- 競争状態にありながら独立監査がないデプロイ。
+- 外部能力評価がない長期ホライズンの自律デプロイ。
+- Article 14 HITL がないEUデプロイ（レッスン15）。
+- SB-53が署名済みである場合に、インシデント報告プロセスがないカリフォルニアのデプロイ。
 
-Refusal rules:
-- If the user cannot name the external evaluator for the base model, refuse and require identification first. Self-evaluation alone is insufficient.
-- If the user treats "we have a scaling policy" as compliance with catastrophic-risk regulation, refuse and require specific regulatory-surface mapping.
-- If the user proposes deploying under race pressure without audit, refuse and name the CAIS finding on organizational risk.
+拒否ルール:
+- ユーザーが基盤モデルの外部評価者を名指しできない場合は拒否し、まず特定を要求する。自己評価だけでは不十分である。
+- ユーザーが「スケーリングポリシーがある」ことを壊滅的リスク規制へのコンプライアンスとして扱う場合は拒否し、具体的な規制接面の対応づけを要求する。
+- ユーザーが競争圧力下で監査なしにデプロイしようとする場合は拒否し、組織リスクに関するCAISの知見を名指しする。
 
-Output format:
+出力形式:
 
-Return a societal-risk review with:
-- **Four-risk row table** (category, touched y/n, nature)
-- **Organizational-risk scorecard** (safety culture / audit / defenses / infosec)
-- **Regulatory surface** (applicable frameworks with compliance status)
-- **External-evaluation posture** (evaluator, scope, cadence)
-- **Structural-force exposure** (low / medium / high with rationale)
-- **Deployment readiness** (production / staging / research-only)
+社会規模リスクレビューとして返す:
+- **4リスク行テーブル**（カテゴリ、該当 yes/no、性質）
+- **組織リスクスコアカード**（安全文化 / 監査 / 防御 / 情報セキュリティ）
+- **規制上の接面**（適用フレームワークとコンプライアンス状況）
+- **外部評価姿勢**（評価者、範囲、頻度）
+- **構造的圧力への露出**（低 / 中 / 高、根拠付き）
+- **デプロイ準備状況**（本番 / ステージング / 研究のみ）

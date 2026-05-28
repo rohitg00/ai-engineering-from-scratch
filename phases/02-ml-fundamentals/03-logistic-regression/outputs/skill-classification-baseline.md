@@ -1,81 +1,81 @@
 ---
 name: skill-classification-baseline
-description: Establish a strong classification baseline before reaching for complex models
+description: 複雑なモデルへ進む前に強力な分類ベースラインを確立する
 version: 1.0.0
 phase: 2
 lesson: 3
 tags: [classification, logistic-regression, baseline, preprocessing]
 ---
 
-# Classification Baseline Guide
+# 分類ベースラインガイド
 
-Before trying complex models, establish a baseline with logistic regression. It trains in seconds, produces probabilities, and is fully interpretable. A surprising number of real-world problems never need anything fancier.
+複雑なモデルを試す前に、ロジスティック回帰でベースラインを確立してください。数秒で学習でき、確率を出力し、完全に解釈可能です。現実世界の問題の多くは、それ以上に複雑なものを必要としません。
 
-## Decision Checklist
+## 判断チェックリスト
 
-1. Is the decision boundary likely linear?
-   - Yes: logistic regression will probably be sufficient
-   - No: you still want it as a baseline to measure improvement
+1. 決定境界は線形になりそうですか？
+   - はい: ロジスティック回帰でおそらく十分
+   - いいえ: それでも改善幅を測るためのベースラインとして使う
 
-2. How many features do you have?
-   - Under 50: standard logistic regression works fine
-   - 50 to 10,000: add L2 regularization (Ridge)
-   - Over 10,000 (e.g., TF-IDF text features): use L1 regularization (Lasso) or LinearSVC
+2. 特徴量はいくつありますか？
+   - 50 未満: 標準的なロジスティック回帰で十分
+   - 50 から 10,000: L2 正則化（Ridge）を追加する
+   - 10,000 超（例: TF-IDF テキスト特徴量）: L1 正則化（Lasso）または LinearSVC を使う
 
-3. Is the dataset imbalanced?
-   - Under 5:1 ratio: probably fine without adjustment
-   - 5:1 to 50:1: use `class_weight="balanced"` in sklearn
-   - Over 50:1: combine class weighting with appropriate metric (precision, recall, or F1)
+3. データセットは不均衡ですか？
+   - 5:1 未満: おそらく調整なしで問題ない
+   - 5:1 から 50:1: sklearn で `class_weight="balanced"` を使う
+   - 50:1 超: クラス重み付けと適切な指標（precision、recall、F1）を組み合わせる
 
-4. Are features on different scales?
-   - Always standardize before logistic regression. It uses gradient-based optimization, and unscaled features slow convergence or distort the decision boundary.
+4. 特徴量のスケールは異なりますか？
+   - ロジスティック回帰の前には必ず標準化します。勾配ベースの最適化を使うため、スケールされていない特徴量は収束を遅くしたり、決定境界を歪めたりします。
 
-5. Are there missing values?
-   - Impute before fitting. Logistic regression cannot handle NaNs.
-   - Use median imputation for numeric columns, mode for categorical.
+5. 欠損値はありますか？
+   - 学習前に補完します。ロジスティック回帰は NaN を扱えません。
+   - 数値列には中央値補完、カテゴリ列には最頻値補完を使います。
 
-## When logistic regression is good enough
+## ロジスティック回帰で十分な場合
 
-- Binary classification with mostly linear feature relationships
-- You need probability outputs (not just class labels)
-- Interpretability is required (coefficients indicate feature importance direction and relative magnitude after standardization)
-- Training data is small (hundreds to low thousands of samples)
-- You need a fast model for real-time serving (single dot product at inference)
-- Regulatory or compliance requirements demand explainability
+- 特徴量の関係がほぼ線形な二値分類
+- クラスラベルだけでなく確率出力が必要
+- 解釈性が必要（標準化後の係数は、特徴量重要度の方向と相対的な大きさを示す）
+- 訓練データが小さい（数百から数千程度のサンプル）
+- リアルタイム配信向けに高速なモデルが必要（推論は単一の内積）
+- 規制またはコンプライアンス要件で説明可能性が求められる
 
-## When to upgrade
+## より強力なモデルへ進む場合
 
-- Accuracy plateaus well below the target and you have tried feature engineering
-- The relationship between features and target is clearly nonlinear (check residual plots)
-- You have large tabular data (10k+ rows): try gradient boosting (XGBoost or LightGBM)
-- Features have complex interactions that polynomial features cannot capture
-- You have image, text, or sequential data: logistic regression on raw inputs will not work
+- 精度が目標を大きく下回ったまま頭打ちで、特徴量エンジニアリングも試した
+- 特徴量とターゲットの関係が明らかに非線形（残差プロットを確認する）
+- 大きな表形式データがある（10k 行以上）: 勾配ブースティング（XGBoost または LightGBM）を試す
+- 多項式特徴量では捉えられない複雑な特徴量相互作用がある
+- 画像、テキスト、系列データがある: 生の入力に対するロジスティック回帰は機能しない
 
-## Preprocessing steps for a classification baseline
+## 分類ベースラインの前処理手順
 
-1. **Train/test split** first, before any preprocessing. This prevents data leakage.
-2. **Handle missing values**: median impute numeric, mode impute categorical.
-3. **Encode categoricals**: one-hot for low cardinality (under 10 values), target encoding for higher. Fit target encoding only on training folds (use out-of-fold encoding to prevent leakage).
-4. **Scale numerics**: StandardScaler (zero mean, unit variance). Fit on train, transform both.
-5. **Fit logistic regression** with `C=1.0` (default regularization).
-6. **Evaluate**: confusion matrix, precision, recall, F1. Not just accuracy.
-7. **Tune threshold**: default 0.5 is rarely optimal. Sweep 0.1 to 0.9 and pick the threshold that matches your precision/recall priority.
+1. **Train/test split** を、すべての前処理より先に行う。これでデータリークを防ぎます。
+2. **欠損値を処理する**: 数値は中央値補完、カテゴリは最頻値補完。
+3. **カテゴリをエンコードする**: カーディナリティが低い（10 値未満）場合は one-hot、高い場合はターゲットエンコーディング。ターゲットエンコーディングは訓練 fold だけで fit する（リーク防止のため out-of-fold エンコーディングを使う）。
+4. **数値をスケーリングする**: StandardScaler（平均 0、分散 1）。train で fit し、両方に transform する。
+5. **ロジスティック回帰を学習する**。`C=1.0`（デフォルト正則化）を使う。
+6. **評価する**: confusion matrix、precision、recall、F1。accuracy だけで評価しない。
+7. **しきい値を調整する**: デフォルトの 0.5 が最適であることはまれです。0.1 から 0.9 を走査し、precision/recall の優先度に合うしきい値を選ぶ。
 
-## Common mistakes
+## よくある間違い
 
-- Evaluating only accuracy on imbalanced data (a model predicting the majority class scores high but is useless)
-- Forgetting to scale features (logistic regression with unscaled features trains slowly and converges to a worse solution)
-- Using the test set to tune the decision threshold (use validation or cross-validation)
-- Skipping the baseline and jumping straight to XGBoost (you lose interpretability and have no reference point)
-- Not checking for multicollinearity (highly correlated features inflate coefficient variance)
+- 不均衡データで accuracy だけを評価する（多数派クラスを予測するモデルは高得点でも役に立たない）
+- 特徴量スケーリングを忘れる（スケールされていない特徴量でのロジスティック回帰は学習が遅く、より悪い解に収束する）
+- 決定しきい値の調整にテストセットを使う（検証または交差検証を使う）
+- ベースラインを省略してすぐ XGBoost に進む（解釈性を失い、比較基準もなくなる）
+- 多重共線性を確認しない（強く相関した特徴量は係数の分散を膨らませる）
 
-## Quick reference
+## クイックリファレンス
 
-| Scenario | Model | Regularization | Key setting |
+| シナリオ | モデル | 正則化 | 主要設定 |
 |----------|-------|---------------|-------------|
-| Few features, interpretable | LogisticRegression | L2 (default) | C=1.0 |
-| Many features, some irrelevant | LogisticRegression | L1 | penalty="l1", solver="saga" |
-| High-dim sparse (text) | SGDClassifier | L1 or ElasticNet | loss="log_loss" |
-| Imbalanced classes | LogisticRegression | L2 | class_weight="balanced" |
-| Need probabilities | LogisticRegression | L2 | predict_proba() |
-| Need class labels only | LinearSVC | L2 | Faster than LR for large data |
+| 少数特徴量、解釈可能 | LogisticRegression | L2（デフォルト） | C=1.0 |
+| 特徴量が多く、一部は不要 | LogisticRegression | L1 | penalty="l1", solver="saga" |
+| 高次元スパース（テキスト） | SGDClassifier | L1 または ElasticNet | loss="log_loss" |
+| クラス不均衡 | LogisticRegression | L2 | class_weight="balanced" |
+| 確率が必要 | LogisticRegression | L2 | predict_proba() |
+| クラスラベルだけが必要 | LinearSVC | L2 | 大規模データでは LR より高速 |

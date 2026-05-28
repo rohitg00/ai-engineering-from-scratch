@@ -1,8 +1,9 @@
-"""PSO for LLM parameter optimization and ACO for agent routing, stdlib only.
+"""LLM parameter optimization のための PSO と agent routing のための ACO。stdlib のみ。
 
-PSO runs on a 2D parameter space (temperature, top_k_weight) with a scripted
-fitness proxy. AMRO-S simulates 3 agents handling 4 task types with a
-pheromone matrix that strengthens on quality, decays over time.
+PSO は scripted fitness proxy を使い、2D parameter space
+（temperature, top_k_weight）上で動く。AMRO-S は 4 task types を扱う
+3 agents を simulate し、quality で強化され time とともに decay する
+pheromone matrix を使う。
 """
 from __future__ import annotations
 
@@ -22,8 +23,8 @@ class Particle:
 
 
 def fitness(x: list[float]) -> float:
-    """Rastrigin-style fitness: narrow peak at (0.72, 0.40) with ripples.
-    Chosen to be harder than a plain bowl so PSO convergence is visible."""
+    """Rastrigin-style fitness: (0.72, 0.40) に ripples 付きの narrow peak。
+    plain bowl より難しくし、PSO convergence が見えるようにしている。"""
     cx, cy = 0.72, 0.40
     dx, dy = x[0] - cx, x[1] - cy
     dist2 = dx * dx + dy * dy
@@ -125,7 +126,7 @@ def run_amro_s(n_tasks: int = 200, seed: int = 0) -> tuple[float, float, Pheromo
     for i in range(n_tasks):
         tt = task_types[i % len(task_types)]
 
-        # Random baseline
+        # random baseline
         rand_agent = rng.choice(agents)
         rq = simulate_task(rand_agent, tt, rng)
         random_router_quality += rq
@@ -164,14 +165,14 @@ def main() -> None:
     print(f"  ACO routing    avg quality: {aco_quality:.3f}")
     print(f"  improvement: {(aco_quality - rand_quality) / rand_quality * 100:+.1f}%")
 
-    # Show the pheromone table from the run we just measured
+    # いま測定した run の pheromone table を表示する
     print("\n  final pheromone table (after 200 tasks):")
     print_pheromone_table(router)
 
-    print("\nTakeaways:")
-    print("  PSO converges to the fitness peak without gradients, using only fitness evals.")
-    print("  ACO pheromone trails surface interpretable evidence for who routes where.")
-    print("  quality-gated deposits (threshold=0.6) prevent fast-but-wrong agents from locking in.")
+    print("\n要点:")
+    print("  PSO は gradients なし、fitness evals だけで fitness peak に収束します。")
+    print("  ACO pheromone trails は誰をどこへ route するかの interpretable evidence を表面化します。")
+    print("  quality-gated deposits（threshold=0.6）は fast-but-wrong agents の lock-in を防ぎます。")
 
 
 if __name__ == "__main__":

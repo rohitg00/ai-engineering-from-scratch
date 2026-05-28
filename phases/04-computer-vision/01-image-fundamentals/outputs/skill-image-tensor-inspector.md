@@ -1,47 +1,47 @@
 ---
 name: skill-image-tensor-inspector
-description: Inspect any image-shaped tensor or array and report dtype, layout, range, and whether it looks raw, normalized, or standardized
+description: 任意の image-shaped tensor または array を調べ、dtype、layout、range、raw / normalized / standardized のどれに見えるかを報告する
 version: 1.0.0
 phase: 4
 lesson: 1
 tags: [computer-vision, debugging, preprocessing, tensors]
 ---
 
-# Image Tensor Inspector
+# 画像テンソルインスペクター
 
-A diagnostic skill for any point in a vision pipeline where you are holding an image-shaped array and need to know exactly what state it is in.
+vision pipeline の任意の地点で image-shaped array を保持していて、それがどの状態にあるのかを正確に知る必要があるときの診断 skill です。
 
-## When to use
+## 使うタイミング
 
-- A pretrained model returns garbage predictions and you suspect the preprocessing.
-- Migrating a pipeline between OpenCV and torchvision and the channel order is unclear.
-- Stacking layers from multiple frameworks and the batch axis keeps appearing in the wrong place.
-- Debugging a training loop where loss is stuck at `log(num_classes)`.
+- pretrained model が意味のない予測を返しており、preprocessing を疑っている。
+- pipeline を OpenCV と torchvision の間で移行していて、channel order が曖昧である。
+- 複数の framework の layer を stack していて、batch axis が間違った場所に現れ続ける。
+- loss が `log(num_classes)` に張り付いた training loop を debug している。
 
-## Inputs
+## 入力
 
-- `x`: any 2-D, 3-D, or 4-D array-like (NumPy, PyTorch, JAX).
-- Optional `expected`: a dict of invariants to check against, e.g. `{"layout": "CHW", "range": "standardized"}`.
+- `x`: 任意の 2-D、3-D、または 4-D array-like（NumPy、PyTorch、JAX）。
+- 任意の `expected`: 照合する invariant の dict。例: `{"layout": "CHW", "range": "standardized"}`。
 
-## Steps
+## 手順
 
-1. **Resolve backend** — detect whether `x` is NumPy, Torch, or JAX. Convert to NumPy for inspection without altering the original.
+1. **backend を解決する** — `x` が NumPy、Torch、JAX のどれかを検出する。元の入力を変更せずに、調査用に NumPy へ変換する。
 
-2. **Classify rank**:
-   - rank 2 -> single-channel image (H, W).
-   - rank 3 -> `HWC` if the last axis is 1, 3, or 4 and is strictly smaller than the other two; otherwise `CHW`.
-   - rank 4 -> prefer `NCHW` if axis 1 is in {1, 3, 4} **and** either axis 2 or axis 3 is larger than 16; otherwise prefer `NHWC`. Pure axis-1 check misclassifies small-image NHWC batches like `(3, 4, 224, 3)`.
-   - Always flag ambiguous cases (e.g. `(1, 3, 3, 3)`) as `ambiguous` rather than guessing; require the caller to provide `expected`.
+2. **rank を分類する**:
+   - rank 2 -> single-channel image (H, W)。
+   - rank 3 -> 最後の axis が 1、3、4 のいずれかで、他の 2 つより明確に小さい場合は `HWC`。それ以外は `CHW`。
+   - rank 4 -> axis 1 が {1, 3, 4} に含まれ、**かつ** axis 2 または axis 3 が 16 より大きい場合は `NCHW` を優先する。それ以外は `NHWC` を優先する。axis 1 だけを見ると、`(3, 4, 224, 3)` のような small-image NHWC batch を誤分類する。
+   - `(1, 3, 3, 3)` のような曖昧な case は常に推測せず `ambiguous` として flag し、caller に `expected` の提供を求める。
 
-3. **Classify dtype and range**:
-   - `uint8` in [0, 255] -> `raw`.
-   - `float*` with min >= 0 and max <= 1.01 -> `normalized`.
-   - `float*` with min < 0 and |mean| < 0.5 and 0.5 <= std <= 1.5 -> `standardized`.
-   - Anything else -> `unusual`, print the histogram.
+3. **dtype と range を分類する**:
+   - [0, 255] の `uint8` -> `raw`。
+   - min >= 0 かつ max <= 1.01 の `float*` -> `normalized`。
+   - min < 0、|mean| < 0.5、0.5 <= std <= 1.5 の `float*` -> `standardized`。
+   - それ以外 -> `unusual`、histogram を出力する。
 
-4. **Per-channel stats** — report mean and std per channel. Compare against ImageNet mean/std if the array looks standardized and surface a match confidence.
+4. **channel ごとの stats** — channel ごとの mean と std を報告する。array が standardized に見える場合は ImageNet mean/std と比較し、match confidence を表面化する。
 
-5. **Report** in this exact block:
+5. **報告** はこの正確な block で行う:
 
 ```
 [inspector]
@@ -58,14 +58,14 @@ A diagnostic skill for any point in a vision pipeline where you are holding an i
   likely target:    display | training | inference
 ```
 
-6. **Recommend next action** based on the `likely target`:
-   - For `display`: transpose to HWC, clip, convert to uint8.
-   - For `training`: standardize with dataset stats, transpose to CHW, add batch axis.
-   - For `inference`: match the exact invariants in the model card.
+6. `likely target` に基づいて **次の action を推奨する**:
+   - `display` の場合: HWC に transpose し、clip して uint8 に変換する。
+   - `training` の場合: dataset stats で standardize し、CHW に transpose して batch axis を追加する。
+   - `inference` の場合: model card の正確な invariant に合わせる。
 
-## Rules
+## ルール
 
-- Never mutate the input. Print diagnostics only.
-- If `expected` is provided, flag every mismatch with `[expected X got Y]`.
-- Call out silent-failure risks when the layout or channel order is ambiguous.
-- Recommend one action at a time, not a list of options.
+- 入力を絶対に mutate しない。diagnostics のみを出力する。
+- `expected` が与えられた場合、すべての mismatch を `[expected X got Y]` で flag する。
+- layout または channel order が曖昧な場合は、silent-failure risk を明示する。
+- 複数 option の list ではなく、1 つずつ action を推奨する。

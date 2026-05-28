@@ -1,74 +1,74 @@
 # vLLM Serving Internals: PagedAttention, Continuous Batching, Chunked Prefill
 
-> vLLM's dominance in 2026 rests on three compounding defaults, not a single trick. PagedAttention is always on. Continuous batching injects new requests into the active batch between decode iterations. Chunked prefill slices long prompts so decode tokens never starve. Turn all three on and a Llama 3.3 70B FP8 on one H100 SXM5 pushes 2,200-2,400 tok/s at 128 concurrent — roughly 25% above vLLM's own default and 3-4x a naive PyTorch loop. This lesson reads the scheduler and attention kernel at a level you can diagram, and ends with a toy continuous batcher in `code/main.py` that schedules prefill and decode the way vLLM does.
+> 2026 年の vLLM の強さは、1 つの trick ではなく、相互に効く 3 つの default にあります。PagedAttention は常に有効です。Continuous batching は decode iteration の間に新しい request を active batch へ差し込みます。Chunked prefill は long prompt を分割し、decode token が飢えないようにします。3 つをすべて有効にすると、1 枚の H100 SXM5 上の Llama 3.3 70B FP8 は 128 concurrent で 2,200-2,400 tok/s を出し、vLLM default より約 25%、naive PyTorch loop より 3-4x 高くなります。この lesson では scheduler と attention kernel を diagram できる粒度で読み、最後に `code/main.py` の toy continuous batcher で vLLM 方式の prefill/decode scheduling を実装します。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy continuous batching scheduler)
-**Prerequisites:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
-**Time:** ~75 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy continuous batching scheduler)
+**前提条件:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Explain PagedAttention as a KV cache allocator: blocks, block tables, and why fragmentation stays under 4% at production load.
-- Diagram continuous batching at the iteration level: how finished sequences leave the batch and new ones join without draining.
-- Describe chunked prefill in one sentence and name which latency metric it protects (hint: it is TTFT tail, not mean throughput).
-- Name the 2026 vLLM v0.18.0 gotcha that bites teams enabling every optimization at once.
+- PagedAttention を KV cache allocator として説明する: blocks、block tables、本番 load で fragmentation が 4% 未満に収まる理由。
+- Continuous batching を iteration level で diagram する: finished sequence が batch から抜け、新しい sequence が drain なしに入る仕組み。
+- Chunked prefill を 1 文で説明し、守る latency metric を言えるようにする (hint: mean throughput ではなく TTFT tail)。
+- すべての optimization を同時に有効化した team を刺す 2026 vLLM v0.18.0 gotcha を言えるようにする。
 
-## The Problem
+## 問題
 
-A naive PyTorch serve loop runs one request at a time: tokenize, prefill, decode until EOS, return. At one user this works. At one hundred, it is a queue of patient people. The obvious fix — static batching — pads every request to the longest prompt in the window, pads every decode to the longest expected output, and stalls the whole batch on the slowest sequence. You pay for padding you never use, and fast requests wait for slow ones.
+naive PyTorch serve loop は 1 request ずつ処理します。tokenize、prefill、EOS まで decode、return。1 user なら動きます。100 user では、忍耐強い人の queue になります。明 obvious な fix である static batching は、window 内の最長 prompt に合わせてすべてを pad し、想定最長 output に合わせて decode も pad し、最も遅い sequence で batch 全体を stall させます。使わない padding に cost を払い、fast request は slow request を待ちます。
 
-vLLM solves three problems at once. PagedAttention stops KV cache fragmentation from eating 60-80% of GPU memory the way classic contiguous allocation does. Continuous batching lets requests join and leave the batch between each decode iteration, so the batch is always full of real work. Chunked prefill breaks a 32k-token prompt into ~512-token slices that interleave with decode, so a long prompt does not freeze every decode token on the GPU.
+vLLM は 3 つの問題を同時に解きます。PagedAttention は classic contiguous allocation で 60-80% の GPU memory を食う KV cache fragmentation を止めます。Continuous batching は各 decode iteration の間に request を batch へ出し入れし、batch を常に real work で埋めます。Chunked prefill は 32k-token prompt を約 512-token slice に分割して decode と interleave するため、long prompt が GPU 上の全 decode token を freeze しません。
 
-The 2026 production default is all three on. You need to understand what each one does because the failure modes are all on the scheduler, not the model.
+2026 年の production default はこの 3 つすべてです。それぞれが何をするかを理解する必要があります。failure mode は model ではなく scheduler 側にあるからです。
 
 ## The Concept
 
-### PagedAttention as a virtual memory system
+### virtual memory system としての PagedAttention
 
-A KV cache is `num_layers × 2 × num_heads × head_dim × seq_len × bytes_per_element` per sequence. For Llama 3.3 70B at 8192 tokens, that is roughly 1.25 GB per sequence in BF16. If you pre-reserve 8192 slots for every request but the average request only uses 1500 tokens, you waste roughly 82% of the HBM you reserved. Classic batching pays this waste.
+KV cache は sequence ごとに `num_layers × 2 × num_heads × head_dim × seq_len × bytes_per_element` です。Llama 3.3 70B で 8192 tokens の場合、BF16 では sequence ごとに約 1.25 GB になります。すべての request に 8192 slots を pre-reserve し、平均 request が 1500 tokens しか使わないなら、reserved HBM の約 82% を浪費します。classic batching はこの waste を払います。
 
-PagedAttention borrows the idea from OS virtual memory. KV cache is not contiguous per sequence. It is allocated in fixed-size blocks (default 16 tokens). Each sequence has a block table that maps its logical token positions to physical block IDs. When a sequence grows past its allocated blocks, one more block is added. When it finishes, its blocks return to the pool.
+PagedAttention は OS virtual memory の idea を借ります。KV cache は sequence ごとに contiguous ではありません。fixed-size blocks (default 16 tokens) で allocate されます。各 sequence は logical token position を physical block ID に map する block table を持ちます。sequence が割り当て済み block を超えて伸びたら block を 1 つ追加します。完了したら block は pool に戻ります。
 
-Fragmentation drops from 60-80% (classic) to under 4% (PagedAttention). You do not enable PagedAttention with a flag — it is the only allocator vLLM ships. The knob is `--gpu-memory-utilization` (default 0.9), which tells vLLM how much HBM to reserve for KV blocks after loading weights and activations.
+fragmentation は classic の 60-80% から PagedAttention では 4% 未満に落ちます。PagedAttention は flag で有効化するものではありません。vLLM が出荷する allocator はこれだけです。knob は `--gpu-memory-utilization` (default 0.9) で、weights と activations を load した後に HBM のどれだけを KV blocks 用に reserve するかを指定します。
 
-### Continuous batching at the iteration level
+### iteration level の continuous batching
 
-The old "dynamic batching" waited for a window (say 10 ms) to fill a batch, then ran prefill + decode + decode + decode until every sequence finished. Fast sequences left early and sat idle while the GPU finished the slow ones.
+旧来の "dynamic batching" は batch を満たすために window (例: 10 ms) を待ち、その後 prefill + decode + decode + decode を全 sequence が終わるまで走らせました。fast sequence は早く終わっても idle になり、GPU は slow sequence を処理し続けます。
 
-Continuous batching operates between each decode step. Call the set of running sequences the `RUNNING` list. At each iteration:
+Continuous batching は各 decode step の間で動きます。running sequences の集合を `RUNNING` list とします。各 iteration:
 
-1. Any sequence in `RUNNING` that just hit EOS or max_tokens is removed.
-2. The scheduler looks at the waiting queue. If there are free KV blocks, it admits new sequences (prefill or resumed).
-3. The forward pass runs on whatever is now in `RUNNING`, emitting one new token per sequence.
+1. `RUNNING` 内で EOS または max_tokens に達した sequence を取り除く。
+2. scheduler が waiting queue を見る。free KV blocks があれば、新しい sequence (prefill または resumed) を admit する。
+3. 現在の `RUNNING` 上で forward pass を実行し、sequence ごとに 1 new token を emit する。
 
-The batch size is never padded to a fixed number. Sequences at different positions in their output share one fused forward. In 2026 vLLM this is called the `V1 scheduler`. The key invariant: the scheduler runs once per decode iteration, not once per request.
+batch size は固定数へ pad されません。output position が異なる sequence が 1 つの fused forward を共有します。2026 vLLM ではこれを `V1 scheduler` と呼びます。key invariant: scheduler は request ごとではなく decode iteration ごとに 1 回走ります。
 
-### Chunked prefill protects TTFT tail
+### Chunked prefill は TTFT tail を守る
 
-Prefill is compute-bound. A 32k-token prompt on Llama 3.3 70B takes ~800 ms of pure prefill on one H100. While prefill runs, decode tokens for every other sequence in the batch wait. In a serving loop, the first-token latency (TTFT) of one long prompt becomes the inter-token latency (ITL) blip for dozens of other users.
+prefill は compute-bound です。1 枚の H100 上で Llama 3.3 70B に 32k-token prompt を prefill すると、純粋な prefill だけで約 800 ms かかります。prefill 中、batch 内の他 sequence の decode token は待ちます。serving loop では、1 つの long prompt の first-token latency (TTFT) が、何十人もの user の inter-token latency (ITL) blip になります。
 
-Chunked prefill splits prefill into fixed-size chunks (default 512 tokens) and schedules each chunk as a unit. Between chunks the scheduler can advance decode sequences by one token. You trade a small absolute prefill latency hit (a few ms per chunk) for much lower decode-time jitter. P99 ITL under mixed load drops from ~50 ms to ~15 ms in published benchmarks.
+Chunked prefill は prefill を fixed-size chunks (default 512 tokens) に分け、chunk ごとに schedule します。chunk の間で scheduler は decode sequence を 1 token 進められます。少しの absolute prefill latency hit (chunk ごとに数 ms) と引き換えに、decode-time jitter を大きく減らします。published benchmark では、mixed load の P99 ITL は chunked prefill なしの約 50 ms から、ありでは約 15 ms に落ちます。
 
-### The three defaults interact
+### 3 つの default は相互作用する
 
-All three features assume each other. PagedAttention gives the scheduler a fine-grained KV resource to trade against. Continuous batching needs that fine-grained resource so admitting a new sequence does not force a global reshuffle. Chunked prefill is a decision the scheduler makes on the same `RUNNING` list — it is one more scheduler policy, not a separate system.
+3 機能は互いを前提にしています。PagedAttention は scheduler が取引できる fine-grained KV resource を与えます。Continuous batching は、新しい sequence を admit しても global reshuffle が不要になるよう、その fine-grained resource を必要とします。Chunked prefill は同じ `RUNNING` list 上で scheduler が行う decision です。別 system ではなく、scheduler policy の 1 つです。
 
-You do not need to know every flag. You need to know what the scheduler optimizes: goodput under KV-block budget, subject to chunked prefill slicing.
+すべての flag を覚える必要はありません。scheduler が何を optimize しているかを知れば十分です。KV-block budget の下で goodput を最大化し、chunked prefill slicing を制約として扱っています。
 
-### The 2026 v0.18.0 gotcha
+### 2026 v0.18.0 gotcha
 
-In vLLM v0.18.0 you cannot combine `--enable-chunked-prefill` with draft-model speculative decoding (`--speculative-model`). The documented exception is N-gram GPU speculative decoding in the V1 scheduler. Teams that flip every flag on without reading the release notes get a run-time error at startup, not a soft regression. If your speculative gain was worth enabling chunked prefill for, revisit the choice — the right answer in 2026 is often EAGLE-3 without chunked prefill, not a draft model plus chunked prefill that does not compile.
+vLLM v0.18.0 では、`--enable-chunked-prefill` と draft-model speculative decoding (`--speculative-model`) を組み合わせられません。documented exception は V1 scheduler の N-gram GPU speculative decoding です。release notes を読まずにすべての flag を on にする team は、soft regression ではなく startup 時の run-time error を受けます。speculative gain が chunked prefill を有効化する価値を持つなら選択を見直してください。2026 年の正解は、多くの場合、compile しない draft model + chunked prefill ではなく、chunked prefill なしの EAGLE-3 です。
 
-### Numbers you should remember
+### 覚えるべき数字
 
-- Llama 3.3 70B FP8, H100 SXM5, 128 concurrent, all three on: 2,200-2,400 tok/s.
-- Same model, default vLLM (no chunked prefill): ~1,800 tok/s.
-- Same model, naive PyTorch forward loop: ~600 tok/s.
-- KV fragmentation waste under PagedAttention at production load: <4%.
-- P99 ITL under mixed load: ~15 ms with chunked prefill, ~50 ms without.
+- Llama 3.3 70B FP8、H100 SXM5、128 concurrent、3 つすべて on: 2,200-2,400 tok/s。
+- 同じ model、default vLLM (chunked prefill なし): 約 1,800 tok/s。
+- 同じ model、naive PyTorch forward loop: 約 600 tok/s。
+- production load における PagedAttention の KV fragmentation waste: <4%。
+- mixed load の P99 ITL: chunked prefill あり約 15 ms、なし約 50 ms。
 
-### What the scheduler looks like
+### scheduler の形
 
 ```
 while True:
@@ -91,49 +91,49 @@ while True:
     run_forward(batch)                            # one fused GPU call
 ```
 
-`code/main.py` is exactly this loop in stdlib Python with fake token counts and fake forward latency. Running it shows how chunked prefill keeps decode sequences alive during a long prefill.
+`code/main.py` はこの loop を stdlib Python でそのまま実装し、fake token counts と fake forward latency を使います。実行すると、chunked prefill が long prefill 中にも decode sequence を生かし続ける様子が見えます。
 
 ## Use It
 
-`code/main.py` simulates a vLLM-style scheduler with toggleable features. Run it to see:
+`code/main.py` は vLLM-style scheduler を toggleable features つきで simulate します。実行すると次を比較できます。
 
-- `NAIVE` mode: one request at a time, no batching.
-- `STATIC` mode: pad and wait, classic batching.
-- `CONTINUOUS` mode: iteration-level admission and release.
-- `CONTINUOUS + CHUNKED` mode: prefill slices interleaved with decode.
+- `NAIVE` mode: 1 request ずつ、batching なし。
+- `STATIC` mode: pad and wait、classic batching。
+- `CONTINUOUS` mode: iteration-level admission and release。
+- `CONTINUOUS + CHUNKED` mode: prefill slice を decode と interleave。
 
-The output shows total throughput (tokens per virtual second), TTFT mean, and P99 ITL. The `CONTINUOUS + CHUNKED` row should dominate on mixed traffic.
+output は total throughput (virtual second あたり tokens)、TTFT mean、P99 ITL を表示します。mixed traffic では `CONTINUOUS + CHUNKED` row が勝つはずです。
 
 ## Ship It
 
-This lesson produces `outputs/skill-vllm-scheduler-reader.md`. Given a serving config (batch size, KV memory utilization, chunked prefill size, speculative config), it produces a scheduler diagnosis that names which of the three defaults is bottlenecking and what to tune.
+この lesson は `outputs/skill-vllm-scheduler-reader.md` を生成します。serving config (batch size、KV memory utilization、chunked prefill size、speculative config) を与えると、3 つの default のどれが bottleneck か、何を tune すべきかを naming する scheduler diagnosis を作ります。
 
 ## Exercises
 
-1. Run `code/main.py`. Compare `STATIC` to `CONTINUOUS` on a workload with mixed short and long requests. Where does the throughput gap come from — prefill efficiency, decode efficiency, or tail latency?
-2. Modify the toy scheduler to add `--max-num-batched-tokens`. What is the right value for an H100 running Llama 3.3 70B FP8? (Hint: it is a function of KV block size and number of free blocks, not raw HBM.)
-3. Re-read the vLLM v0.18.0 release notes. Which combinations of flags are mutually exclusive? List them.
-4. Compute the KV cache fragmentation waste for a trace of 1,000 requests with mean 1,500 output tokens, std 600 tokens, under (a) contiguous per-request allocation at 8192 max, (b) PagedAttention with 16-token blocks.
-5. Explain in one paragraph why chunked prefill helps P99 ITL but not throughput in isolation. Where does the throughput win come from in practice?
+1. `code/main.py` を実行してください。short request と long request が混ざる workload で `STATIC` と `CONTINUOUS` を比較してください。throughput gap は prefill efficiency、decode efficiency、tail latency のどこから来ていますか。
+2. toy scheduler に `--max-num-batched-tokens` を追加してください。Llama 3.3 70B FP8 を H100 で動かす場合の正しい値は何ですか。(Hint: raw HBM ではなく、KV block size と free block 数の関数です。)
+3. vLLM v0.18.0 release notes を読み直してください。mutually exclusive な flag の組み合わせはどれですか。列挙してください。
+4. 平均 1,500 output tokens、std 600 tokens の 1,000 requests trace で KV cache fragmentation waste を計算してください。(a) 8192 max の contiguous per-request allocation、(b) 16-token blocks の PagedAttention。
+5. chunked prefill が P99 ITL には効くが、単体では throughput を増やさない理由を 1 段落で説明してください。実際の throughput win はどこから来ますか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| PagedAttention | "the KV trick" | Fixed-size block allocator for KV cache; fragmentation <4% |
-| Block table | "the page table" | Per-sequence map from logical token position to physical KV block |
-| Continuous batching | "dynamic batching, but right" | Admit/release decisions made every decode iteration |
-| Chunked prefill | "prefill splitting" | Break long prefill into 512-token slices interleaved with decode |
-| TTFT | "first token time" | Prefill + queue + network; dominated by prefill at long prompts |
-| ITL | "inter-token latency" | Time between consecutive decode tokens; dominated by batch size |
-| Goodput | "throughput that meets SLO" | Tokens/sec where every request still hit TTFT and ITL targets |
-| V1 scheduler | "the new scheduler" | vLLM's 2026 scheduler; N-gram spec decode is the chunked-prefill-compatible path |
-| `--gpu-memory-utilization` | "the memory knob" | Fraction of HBM reserved for KV blocks after weights and activations |
+| PagedAttention | 「KV trick」 | KV cache 用 fixed-size block allocator。fragmentation <4% |
+| Block table | 「page table」 | logical token position から physical KV block への sequence ごとの map |
+| Continuous batching | 「正しい dynamic batching」 | decode iteration ごとに admit/release decision を行う |
+| Chunked prefill | 「prefill splitting」 | long prefill を 512-token slice に分け decode と interleave する |
+| TTFT | 「first token time」 | prefill + queue + network。long prompt では prefill が支配 |
+| ITL | 「inter-token latency」 | 連続 decode token 間の時間。batch size が支配 |
+| Goodput | 「SLO を満たす throughput」 | すべての request が TTFT と ITL target を満たす tokens/sec |
+| V1 scheduler | 「new scheduler」 | vLLM の 2026 scheduler。N-gram spec decode が chunked-prefill-compatible path |
+| `--gpu-memory-utilization` | 「memory knob」 | weights と activations 後に KV blocks 用へ reserve する HBM fraction |
 
-## Further Reading
+## 参考文献
 
-- [vLLM documentation — Speculative Decoding](https://docs.vllm.ai/en/latest/features/spec_decode/) — official source on chunked-prefill and speculative-decoding compatibility.
-- [vLLM Release Notes (NVIDIA)](https://docs.nvidia.com/deeplearning/frameworks/vllm-release-notes/index.html) — 2026 release cadence and version-specific behavior.
-- [vLLM Blog — PagedAttention](https://blog.vllm.ai/2023/06/20/vllm.html) — the original write-up that still defines how to think about the allocator.
-- [PagedAttention paper (arXiv:2309.06180)](https://arxiv.org/abs/2309.06180) — fragmentation analysis and scheduler design.
-- [Aleksa Gordic — Inside vLLM](https://www.aleksagordic.com/blog/vllm) — detailed V1 scheduler walkthrough with flame graphs.
+- [vLLM documentation — Speculative Decoding](https://docs.vllm.ai/en/latest/features/spec_decode/) — chunked-prefill と speculative-decoding compatibility の official source。
+- [vLLM Release Notes (NVIDIA)](https://docs.nvidia.com/deeplearning/frameworks/vllm-release-notes/index.html) — 2026 release cadence と version-specific behavior。
+- [vLLM Blog — PagedAttention](https://blog.vllm.ai/2023/06/20/vllm.html) — allocator の考え方を今も定義する original write-up。
+- [PagedAttention paper (arXiv:2309.06180)](https://arxiv.org/abs/2309.06180) — fragmentation analysis と scheduler design。
+- [Aleksa Gordic — Inside vLLM](https://www.aleksagordic.com/blog/vllm) — flame graph つきの detailed V1 scheduler walkthrough。

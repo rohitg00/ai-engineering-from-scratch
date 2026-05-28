@@ -1,114 +1,114 @@
-# Batch APIs — the 50% Discount as Industry Standard
+# Batch APIs — 業界標準としての50%割引
 
-> Every major provider ships an async batch API with a 50% discount and ~24-hour turnaround. OpenAI, Anthropic, Google, and most of the inference platforms (Fireworks batch tier, Together batch) implement the same pattern. Stack batch with prompt caching and overnight pipelines drop to ~10% of synchronous-uncached cost. The rule is brutally simple: if it is not interactive, it belongs on batch. Content generation pipelines, document classification, data extraction, report generation, bulk labeling, catalog tagging — anything tolerant of 24-hour latency is money left on the table until it moves to batch. The 2026 production pattern is to triage every new LLM workload into three lanes: interactive (synchronous with caching), semi-interactive (async queue with fallback), batch (overnight, cached input stacked). Workloads that pretend to be interactive but tolerate minutes of latency waste most.
+> 主要プロバイダーはどこも非同期の Batch API を提供し、50%割引とおおむね24時間以内の完了を約束している。OpenAI、Anthropic、Google、そして多くの推論プラットフォーム（Fireworks の batch tier、Together batch）は同じパターンを実装している。batch と prompt caching を重ねると、夜間パイプラインのコストは同期・非キャッシュ実行の約10%まで下がる。ルールは単純だ。インタラクティブでなければ batch に載せる。コンテンツ生成、文書分類、データ抽出、レポート生成、大量ラベリング、カタログタグ付けなど、24時間のレイテンシを許容できるものは、batch に移すまでコストを取りこぼしている。2026年の本番パターンは、新しい LLM ワークロードをすべて3つのレーンに仕分けることだ。interactive（キャッシュ付き同期）、semi-interactive（fallback 付き async queue）、batch（夜間実行、キャッシュ済み入力を併用）。本当は数分待てるのに interactive を装うワークロードが最も無駄を出す。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy batch-vs-sync cost simulator)
-**Prerequisites:** Phase 17 · 14 (Prompt & Semantic Caching)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy batch-vs-sync cost simulator)
+**前提条件:** Phase 17 · 14 (Prompt & Semantic Caching)
+**所要時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Name the three provider batch APIs (OpenAI, Anthropic, Google) and the common 50% discount + 24h turnaround guarantees.
-- Compute the cost for stacking batch + cached-input on an overnight classification workload and compare to synchronous-uncached baseline.
-- Triage a workload into interactive / semi-interactive / batch and justify the lane.
-- Name the two traps: partial interactivity (user expects faster than 24h) and output-schema drift (batch file format differs per provider).
+- OpenAI、Anthropic、Google の3つの provider batch API と、共通する50%割引 + 24h turnaround の保証を説明する。
+- 夜間の分類ワークロードで batch + cached-input を重ねた場合のコストを計算し、同期・非キャッシュの baseline と比較する。
+- ワークロードを interactive / semi-interactive / batch に仕分け、そのレーンを正当化する。
+- 2つの落とし穴を説明する。partial interactivity（ユーザーが24hより早い応答を期待している）と output-schema drift（batch ファイル形式が provider ごとに違う）。
 
-## The Problem
+## 課題
 
-Your team ships a nightly report generation pipeline. 50,000 documents, summarize each, cluster the summaries, draft an executive brief. Running synchronously it takes 4 hours at $2,000/night. You hear about batch APIs.
+あなたのチームは夜間レポート生成パイプラインを運用している。50,000件の文書をそれぞれ要約し、要約をクラスタリングし、経営向けブリーフを下書きする。同期実行では4時間かかり、$2,000/night かかる。そこで Batch API の話を聞いた。
 
-The batch gets you 50% off. You also enable prompt caching on the system prompt (shared across all 50k calls). Stacked, the bill drops to $180/night — ~9% of baseline. Same pipeline, three config changes.
+batch にすると50%割引になる。さらに全50k call で共有される system prompt に prompt caching を有効化する。重ねると請求額は $180/night、baseline の約9%まで下がる。同じパイプラインでも、3つの設定変更だけでこうなる。
 
-Batch is the cheapest lever in the LLM cost toolkit that nobody pulls. The reason is mostly organizational: teams think "real-time" when the SLA actually is "by morning." This lesson is about not leaving 90% of the bill on the table.
+batch は LLM コスト削減の道具箱の中で、誰も引こうとしない最も安いレバーだ。理由はほぼ組織的なものだ。SLA が実際には「朝まで」なのに、チームは「real-time」だと思い込む。この lesson は、請求額の90%を取りこぼさないためのものだ。
 
-## The Concept
+## コンセプト
 
-### The three batch APIs
+### 3つの Batch API
 
-**OpenAI Batch API**: JSONL file upload with a list of requests. Promised 24-hour turnaround (usually ~2-8 hours in practice). 50% discount on input and output tokens. `/v1/batches` endpoint. Cache-eligible inputs also get cached-input pricing on top.
+**OpenAI Batch API**: request の一覧を含む JSONL ファイルを upload する。24-hour turnaround を約束する（実務では多くの場合 ~2-8 hours）。input token と output token が50%割引。`/v1/batches` endpoint。cache 対象の input は cached-input pricing も上乗せで適用される。
 
-**Anthropic Message Batches**: JSONL upload. 24-hour turnaround. 50% discount. Supports `cache_control` — cache writes are explicit, reads happen automatically within the batch.
+**Anthropic Message Batches**: JSONL upload。24-hour turnaround。50%割引。`cache_control` をサポートする。cache write は明示的で、read は batch 内で自動的に起きる。
 
-**Google Vertex AI Batch Prediction**: BigQuery or GCS input. Similar 50% discount for Gemini. Integrates with Vertex pipelines.
+**Google Vertex AI Batch Prediction**: BigQuery または GCS input。Gemini で同様の50%割引。Vertex pipelines と統合される。
 
-### Semantic: asynchronous, not slow
+### 意味: 非同期であり、遅いわけではない
 
-Batch is "I promise to return within 24 hours" — not "this will take 24 hours." Typical P50 is 2-6 hours. Provider schedules your batch during off-peak windows when GPU inventory is underutilized.
+batch は「24時間以内に返すと約束する」であって、「24時間かかる」という意味ではない。典型的な P50 は2-6時間だ。provider は GPU inventory が余っている off-peak window に batch をスケジューリングする。
 
-### Stack with caching
+### caching と重ねる
 
-A 50k-document summarization with the same 4K-token system prompt:
+同じ 4K-token system prompt を使う50k-document summarization:
 
-- Synchronous uncached: 50000 × ($input × 4000 + $output × 200) at full rates.
-- Synchronous cached: system prompt cached after first write; remaining 49999 get 10x cheaper input.
-- Batch cached: all of the above plus 50% discount on both read and write.
+- Synchronous uncached: full rate で 50000 × ($input × 4000 + $output × 200)。
+- Synchronous cached: 初回 write 後に system prompt が cache され、残り49999件は input が10倍安くなる。
+- Batch cached: 上記に加えて read / write の両方が50%割引。
 
-The stack: batch + cache = ~10% of sync uncached bill. Any workload that runs overnight and has a shared system prompt should use this.
+stack は batch + cache = sync uncached bill の約10%。夜間に走り、共有 system prompt を持つワークロードはこれを使うべきだ。
 
-### Workload triage
+### ワークロードの仕分け
 
-**Interactive** — user waits for the response. TTFT matters. Synchronous call with prompt caching. Cannot batch.
+**Interactive** — ユーザーが応答を待っている。TTFT が重要。prompt caching 付きの synchronous call。batch 不可。
 
-**Semi-interactive** — user submits a task, checks back in minutes. Async queue with fallback to sync if batch not available. Think moderate-volume RAG indexing.
+**Semi-interactive** — ユーザーが task を投入し、数分後に確認する。batch が使えない場合に sync へ fallback できる async queue。中規模の RAG indexing をイメージするとよい。
 
-**Batch** — user expects results "by morning" or "next hour." Content pipelines, classification at scale, offline analysis. Always batch, always stack caching.
+**Batch** — ユーザーが結果を「朝まで」または「次の1時間まで」に期待している。content pipeline、大規模分類、offline analysis。常に batch、常に caching を重ねる。
 
-Common mistake: classifying everything as interactive because the pipeline is production. Production is not a latency spec — SLA is.
+よくある間違いは、pipeline が production だからすべて interactive に分類することだ。production は latency spec ではない。SLA が latency spec だ。
 
-### The partial-interactivity trap
+### partial-interactivity の罠
 
-Some features look interactive but tolerate 5-10 minutes. Example: a nightly customer health report with "refresh" button. User clicks refresh; wait 10 minutes is fine. Team ships it as synchronous. 50 concurrent refreshes cost 10x what batched-and-delivered-via-email would cost.
+interactive に見えても5-10分待てる機能がある。例: 「refresh」ボタン付きの夜間 customer health report。ユーザーが refresh をクリックする。10分待てる。チームはこれを synchronous で出荷する。50 concurrent refresh は、batch して email delivery する場合の10倍のコストになる。
 
-The question to ask: "What does 24-hour mean for this user?" If the answer is "they wouldn't notice," batch it.
+問うべき質問は「このユーザーにとって24時間とは何を意味するか？」だ。答えが「気づかない」なら batch にする。
 
-### The output-schema trap
+### output-schema の罠
 
-Batch file formats differ per provider:
+batch ファイル形式は provider ごとに異なる。
 
-- OpenAI: JSONL, one request per line.
-- Anthropic: JSONL, one message per line; response format embedded.
-- Vertex: BigQuery table or GCS prefix with TFRecord.
+- OpenAI: JSONL、1 request per line。
+- Anthropic: JSONL、1 message per line。response format は埋め込み。
+- Vertex: BigQuery table または GCS prefix with TFRecord。
 
-Writing "one batch client" across providers means adapter code per provider. Gateways that advertise multi-provider batch (Portkey, LiteLLM some tiers) still thin-wrap the raw format.
+provider 横断の「one batch client」を書くには、provider ごとの adapter code が必要だ。multi-provider batch を宣伝する gateway（Portkey、LiteLLM の一部 tier）も、raw format を薄く wrap しているだけである。
 
-### Numbers you should remember
+### 覚えておくべき数字
 
-- Batch discount across providers: 50% flat on input + output.
-- Turnaround SLA: 24 hours guaranteed, 2-6 hours typical P50.
-- Stacked batch + cached input: ~10% of sync uncached cost.
-- Workload triage rule: if 24h latency acceptable, always batch.
+- provider 横断の batch discount: input + output に一律50%。
+- Turnaround SLA: 24時間 guaranteed、典型 P50 は2-6 hours。
+- Stacked batch + cached input: sync uncached cost の約10%。
+- Workload triage rule: 24h latency が許容できるなら常に batch。
 
-## Use It
+## 使ってみる
 
-`code/main.py` computes costs across sync, sync+cache, batch, and batch+cache for a 50k-document workload. Reports savings in $ and percent.
+`code/main.py` は50k-document workload について、sync、sync+cache、batch、batch+cache のコストを計算する。節約額を $ と percent で report する。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-batch-triager.md`. Given workload characteristics, triages into interactive/semi/batch and estimates savings.
+この lesson は `outputs/skill-batch-triager.md` を生成する。workload characteristics を受け取り、interactive/semi/batch に仕分け、saving を見積もる。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. For a 100k-doc pipeline with 3K-token system prompt and 500-token output, compute the savings of full stack (batch + cache) vs sync baseline.
-2. Pick three features in a real product you know. Triage each into interactive/semi/batch.
-3. A user complains their report took 3 hours. Was that a batch mis-triage or a legitimate interactive? Write the decision criterion.
-4. Your batch API return SLA is 24h but P99 is 20 hours. How do you communicate this to the user — what is the downstream system behavior on the edge case?
-5. Compute break-even: at what shared-prefix length does batch + cache become cheaper than running overnight on your own reserved GPU?
+1. `code/main.py` を実行する。100k-doc pipeline、3K-token system prompt、500-token output の条件で、full stack（batch + cache）が sync baseline に対してどれだけ節約するか計算する。
+2. あなたが知っている実プロダクトの機能を3つ選び、それぞれ interactive/semi/batch に仕分ける。
+3. ユーザーが「レポートに3時間かかった」と苦情を言った。それは batch の mis-triage か、正当な interactive か。判断基準を書く。
+4. Batch API の return SLA は24h だが P99 が20 hours である。これをユーザーにどう伝えるか。edge case で downstream system はどう振る舞うべきか。
+5. break-even を計算する。どれだけの shared-prefix length から、batch + cache が自前の reserved GPU で夜間実行するより安くなるか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| Batch API | "async discount" | 50% off with 24h turnaround |
-| JSONL | "batch format" | One JSON request per line; OpenAI/Anthropic standard |
-| Message Batches | "Anthropic batch" | Anthropic's batch API product name |
-| Batch prediction | "Vertex batch" | Vertex AI's batch API product |
-| Turnaround SLA | "24h promise" | Guarantee, not typical; typical is 2-6h |
-| Workload triage | "interactivity decision" | Interactive / semi / batch routing decision |
-| Output schema | "response format" | Per-provider JSONL layout; not portable |
-| Stacked discount | "batch + cache" | ~10% of uncached sync bill when both apply |
+| Batch API | "async discount" | 24h turnaround 付きの50%割引 |
+| JSONL | "batch format" | 1行に1 JSON request。OpenAI/Anthropic の標準 |
+| Message Batches | "Anthropic batch" | Anthropic の Batch API product name |
+| Batch prediction | "Vertex batch" | Vertex AI の Batch API product |
+| Turnaround SLA | "24h promise" | 保証であり典型値ではない。典型は2-6h |
+| Workload triage | "interactivity decision" | Interactive / semi / batch の routing decision |
+| Output schema | "response format" | provider ごとの JSONL layout。portable ではない |
+| Stacked discount | "batch + cache" | 両方が効くと uncached sync bill の約10% |
 
-## Further Reading
+## 参考資料
 
 - [OpenAI Batch API](https://platform.openai.com/docs/guides/batch) — JSONL format and `/v1/batches` semantics.
 - [Anthropic Message Batches](https://docs.anthropic.com/en/docs/build-with-claude/batch-processing) — batch format and `cache_control` interaction.

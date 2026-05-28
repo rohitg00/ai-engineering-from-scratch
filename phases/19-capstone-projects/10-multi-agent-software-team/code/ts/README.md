@@ -1,19 +1,16 @@
 # Multi-agent software team (TypeScript skeleton)
 
-Multi-file TypeScript skeleton for the multi-agent software team capstone.
-Planner, coder, and reviewer agents share a workspace and rotate through a
-coordinator. A worktree stub launches child processes via execFile with a
-denylist and a shell-metachar refusal.
+multi-agent software team capstone 用の multi-file TypeScript skeleton です。Planner、coder、reviewer agent が workspace を共有し、coordinator を通じて rotate します。worktree stub は denylist と shell-metachar refusal を持ち、execFile で child process を起動します。
 
 ## Layout
 
-- `src/index.ts` — demo runner.
-- `src/agent.ts` — base `Agent` class plus `PlannerAgent`, `CoderAgent`, `ReviewerAgent`.
-- `src/coordinator.ts` — round-robin loop and rotation tracking.
-- `src/workspace.ts` — shared in-memory filesystem and message log.
-- `src/runtime.ts` — `child_process.execFile` worktree stub with denylist.
-- `src/types.ts` — shared types.
-- `tests/*.test.ts` — `node --test` style tests via `tsx`.
+- `src/index.ts` — demo runner。
+- `src/agent.ts` — base `Agent` class と `PlannerAgent`, `CoderAgent`, `ReviewerAgent`。
+- `src/coordinator.ts` — round-robin loop と rotation tracking。
+- `src/workspace.ts` — shared in-memory filesystem と message log。
+- `src/runtime.ts` — denylist 付き `child_process.execFile` worktree stub。
+- `src/types.ts` — shared types。
+- `tests/*.test.ts` — `tsx` 経由の `node --test` style tests。
 
 ## Install
 

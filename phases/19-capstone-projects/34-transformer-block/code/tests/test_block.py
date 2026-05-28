@@ -1,4 +1,4 @@
-"""Unit tests for the transformer block components."""
+"""transformer block components のユニットテスト。"""
 
 from __future__ import annotations
 

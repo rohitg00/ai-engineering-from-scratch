@@ -2,66 +2,66 @@
   {
     "id": "logreg-pre-1",
     "stage": "pre",
-    "question": "What is the range of the sigmoid function's output?",
+    "question": "シグモイド関数の出力範囲はどれですか？",
     "options": [
-      "Negative infinity to positive infinity",
-      "0 to 1 (exclusive)",
-      "-1 to 1",
-      "0 to positive infinity"
+      "負の無限大から正の無限大",
+      "0 から 1（端点を含まない）",
+      "-1 から 1",
+      "0 から正の無限大"
     ],
     "correct": 1,
-    "explanation": "The sigmoid function 1/(1+e^(-z)) outputs values strictly between 0 and 1, which can be interpreted as probabilities."
+    "explanation": "シグモイド関数 1/(1+e^(-z)) は 0 より大きく 1 より小さい値を出力し、確率として解釈できます。"
   },
   {
     "id": "logreg-pre-2",
     "stage": "pre",
-    "question": "Why is logistic regression called 'regression' even though it is used for classification?",
+    "question": "ロジスティック回帰は分類に使われるのに、なぜ「回帰」と呼ばれるのですか？",
     "options": [
-      "It predicts continuous values that are then rounded",
-      "The name comes from the logistic (sigmoid) function it uses, not from regression analysis",
-      "It was originally designed for regression and later adapted",
-      "It minimizes mean squared error like linear regression"
+      "連続値を予測してから丸めるため",
+      "名前は回帰分析ではなく、使用するロジスティック（シグモイド）関数に由来するため",
+      "もともと回帰向けに設計され、後から分類に適応されたため",
+      "線形回帰のように平均二乗誤差を最小化するため"
     ],
     "correct": 1,
-    "explanation": "The name comes from the logistic function (sigmoid). Despite the name, logistic regression is a classification algorithm that outputs class probabilities."
+    "explanation": "名前はロジスティック関数（シグモイド）に由来します。名前に反して、ロジスティック回帰はクラス確率を出力する分類アルゴリズムです。"
   },
   {
     "id": "logreg-post-1",
     "stage": "post",
-    "question": "Why is binary cross-entropy used instead of MSE for logistic regression?",
+    "question": "ロジスティック回帰で MSE ではなく二値交差エントロピーを使うのはなぜですか？",
     "options": [
-      "Cross-entropy is faster to compute",
-      "MSE with sigmoid creates a non-convex cost surface with local minima, while cross-entropy is convex",
-      "MSE can only be used with linear models",
-      "Cross-entropy works only when the dataset is balanced"
+      "交差エントロピーの方が計算が速いから",
+      "シグモイドと組み合わせた MSE は局所最小値を持つ非凸のコスト面を作る一方、交差エントロピーは凸だから",
+      "MSE は線形モデルでしか使えないから",
+      "交差エントロピーはデータセットが均衡している場合にしか機能しないから"
     ],
     "correct": 1,
-    "explanation": "MSE combined with the sigmoid activation creates a non-convex cost surface with many local minima. Binary cross-entropy with sigmoid is convex, guaranteeing a single global minimum."
+    "explanation": "シグモイド活性化と組み合わせた MSE は、多くの局所最小値を持つ非凸のコスト面を作ります。シグモイドと二値交差エントロピーの組み合わせは凸で、単一の大域的最小値が保証されます。"
   },
   {
     "id": "logreg-post-2",
     "stage": "post",
-    "question": "A spam filter has precision = 0.95 and recall = 0.60. What does this mean in practical terms?",
+    "question": "スパムフィルタの precision = 0.95、recall = 0.60 でした。実務上これは何を意味しますか？",
     "options": [
-      "95% of all emails are correctly classified, and 60% of spam is caught",
-      "When it flags an email as spam, it is correct 95% of the time, but it only catches 60% of actual spam",
-      "60% of flagged emails are spam, and 95% of all spam is caught",
-      "The model is 95% accurate on the test set and 60% on the training set"
+      "全メールの 95% が正しく分類され、スパムの 60% を捕捉している",
+      "メールをスパムと判定したとき 95% の確率で正しいが、実際のスパムの 60% しか捕捉できていない",
+      "判定されたメールの 60% がスパムで、全スパムの 95% を捕捉している",
+      "モデルはテストセットで 95%、訓練セットで 60% の精度である"
     ],
     "correct": 1,
-    "explanation": "Precision = 0.95 means 95% of emails predicted as spam are actually spam (few false alarms). Recall = 0.60 means only 60% of actual spam is caught (40% slips through)."
+    "explanation": "Precision = 0.95 は、スパムと予測されたメールの 95% が実際にスパムであること（誤警報が少ないこと）を意味します。Recall = 0.60 は、実際のスパムの 60% しか捕捉できていないこと（40% がすり抜けること）を意味します。"
   },
   {
     "id": "logreg-post-3",
     "stage": "post",
-    "question": "In softmax regression for 4 classes, what is true about the output probabilities?",
+    "question": "4 クラスのソフトマックス回帰で、出力確率について正しい説明はどれですか？",
     "options": [
-      "Each class gets an independent probability between 0 and 1",
-      "The four output probabilities sum to 1, and the class with the highest probability is the prediction",
-      "Only the top-2 classes receive nonzero probabilities",
-      "The outputs are raw scores, not probabilities"
+      "各クラスに 0 から 1 の独立した確率が割り当てられる",
+      "4 つの出力確率の合計は 1 になり、最も確率が高いクラスが予測になる",
+      "上位 2 クラスだけが非ゼロの確率を受け取る",
+      "出力は確率ではなく生のスコアである"
     ],
     "correct": 1,
-    "explanation": "Softmax converts a vector of raw scores into probabilities that sum to 1. The predicted class is the one with the highest probability."
+    "explanation": "ソフトマックスは生のスコアのベクトルを、合計が 1 になる確率へ変換します。予測クラスは、最も確率が高いクラスです。"
   }
 ]

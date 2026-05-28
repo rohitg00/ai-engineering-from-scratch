@@ -1,22 +1,22 @@
 {
   "lesson": "31-tokenized-dataset-sliding-window",
-  "title": "Tokenized Dataset with Sliding Window",
+  "title": "スライディングウィンドウによるトークン化済み Dataset",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the shape contract for a causal LM training batch?",
+      "question": "因果 LM の学習バッチの shape contract はどれですか?",
       "options": [
-        "(B, T) input ids and (B, T) target ids where target is the input shifted left by one",
-        "(B, V) one-hot vectors over the vocabulary",
-        "(B, T, T) attention masks with the input ids on the diagonal",
-        "(B, 2) input id and label pairs"
+        "(B, T) の input ids と、input を1つ左にずらした (B, T) の target ids",
+        "語彙全体に対する (B, V) の one-hot vectors",
+        "対角に input ids を置いた (B, T, T) の attention masks",
+        "(B, 2) の input id と label のペア"
       ],
       "correct": 0,
-      "explanation": "Causal LM training reads (B, T) input ids and predicts the same shape of target ids, where target[t] = input[t+1]."
+      "explanation": "因果 LM は (B,T) の input ids を読み、target[t] = input[t+1] となる同じ shape の target ids を予測します。"
     },
     {
       "stage": "check",
-      "question": "How many windows of length T+1 fit in an id stream of length N with stride S?",
+      "question": "長さ N の id stream に、長さ T+1 の window は stride S で何個入りますか?",
       "options": [
         "N // (T + 1)",
         "max(0, 1 + (N - (T + 1)) // S)",
@@ -24,55 +24,55 @@
         "N - T - S"
       ],
       "correct": 1,
-      "explanation": "The first window starts at 0. Subsequent windows start at multiples of S. The last window must still cover T+1 ids."
+      "explanation": "最初の window は0から始まり、以後は S の倍数から始まります。最後の window も T+1 個の ids を含む必要があります。"
     },
     {
       "stage": "check",
-      "question": "What effect does halving the stride have on the dataset?",
+      "question": "stride を半分にすると dataset にはどんな影響がありますか?",
       "options": [
-        "It halves the number of training examples per epoch",
-        "It roughly doubles the number of training examples per epoch",
-        "It has no effect because windows never overlap",
-        "It removes overlap between consecutive windows"
+        "epoch あたりの training examples が半分になる",
+        "epoch あたりの training examples が概ね2倍になる",
+        "window は重ならないので影響しない",
+        "連続 window の重なりがなくなる"
       ],
       "correct": 1,
-      "explanation": "A smaller stride produces more overlapping windows, increasing the example count and the boundary diversity at the cost of more compute per epoch."
+      "explanation": "小さい stride は重なる window を増やし、例数と境界の多様性を増やしますが、epoch あたりの計算量も増えます。"
     },
     {
       "stage": "check",
-      "question": "Why pass an explicit torch.Generator to the DataLoader?",
+      "question": "DataLoader に明示的な torch.Generator を渡す理由は何ですか?",
       "options": [
-        "It speeds up data loading",
-        "It removes the need for batch padding",
-        "It makes the shuffle deterministic across runs with the same seed",
-        "It enables multi-GPU training"
+        "data loading を高速化するため",
+        "batch padding を不要にするため",
+        "同じ seed の run で shuffle を deterministic にするため",
+        "multi-GPU training を有効にするため"
       ],
       "correct": 2,
-      "explanation": "A seeded generator reproduces the same shuffle. Reruns with the same seed see batches in the same order, which is required for fair hyperparameter comparison."
+      "explanation": "seed された generator は同じ shuffle を再現します。公平な hyperparameter 比較には同じ順序が必要です。"
     },
     {
       "stage": "post",
-      "question": "Why does the dataset return (input[:-1], input[1:]) from each window of size T+1?",
+      "question": "各 T+1 window から (input[:-1], input[1:]) を返す理由は何ですか?",
       "options": [
-        "It throws away one id to save memory",
-        "It implements the shift-by-one target so the loss measures next-token prediction",
-        "It removes a special token from the input",
-        "It is a quirk of PyTorch tensor indexing"
+        "1つの id を捨ててメモリを節約するため",
+        "next-token prediction の shift-by-one target を実装するため",
+        "特殊 token を input から除くため",
+        "PyTorch indexing の都合"
       ],
       "correct": 1,
-      "explanation": "The target at position t is the input at position t+1. Slicing the window into [:-1] and [1:] expresses that contract."
+      "explanation": "位置 t の target は input の t+1 です。window を [:-1] と [1:] に分けるとこの契約になります。"
     },
     {
       "stage": "post",
-      "question": "Why does the lesson drop incomplete trailing windows rather than padding them?",
+      "question": "不完全な末尾 window を padding せず捨てる理由は何ですか?",
       "options": [
-        "Padding would change the vocabulary size",
-        "Dropping keeps every example the same length so no loss mask is needed",
-        "Padded tokens are not supported by the model",
-        "Dropped data is recovered by the next epoch"
+        "padding すると vocabulary size が変わるため",
+        "全例を同じ長さに保ち、loss mask を不要にするため",
+        "model が padded tokens を扱えないため",
+        "捨てた data は次 epoch で復元されるため"
       ],
       "correct": 1,
-      "explanation": "All examples are exactly T tokens long by construction, so the batch is a clean rectangular tensor and the loss applies uniformly without a mask."
+      "explanation": "全例が構築時点でちょうど T tokens になるため、batch はきれいな矩形 tensor になり、mask なしで loss を適用できます。"
     }
   ]
 }

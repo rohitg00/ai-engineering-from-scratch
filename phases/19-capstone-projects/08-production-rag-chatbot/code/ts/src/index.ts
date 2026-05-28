@@ -1,5 +1,5 @@
 // Capstone 08 entrypoint: production RAG chatbot SSE chat UI.
-// Source: ../../docs/en.md (citation-anchored response streamed via SSE).
+// Source: ../../docs/en.md (SSE で stream する citation-anchored response)。
 // References:
 //   Server-Sent Events (WHATWG)  https://html.spec.whatwg.org/multipage/server-sent-events.html
 //   text/event-stream (MDN)      https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
@@ -73,7 +73,7 @@ async function runDemo(): Promise<void> {
   );
   console.log(`  has done=${events1.some((e) => e.event === "done")}`);
 
-  console.log(`\nGET /chat/stream (same session, second turn)`);
+  console.log(`\nGET /chat/stream (同じ session、2 turn 目)`);
   const stream2 = await Promise.resolve(
     app.request(
       "/chat/stream?sessionId=s-1&role=analyst&jurisdiction=GDPR&q=access%20confirmation",

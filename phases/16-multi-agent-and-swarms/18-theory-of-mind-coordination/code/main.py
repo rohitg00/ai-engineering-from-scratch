@@ -1,9 +1,9 @@
-"""ToM-aware vs zeroth-order agents on a token-collection task, stdlib only.
+"""token-collection task における ToM-aware agents と zeroth-order agents。stdlib のみ。
 
-Three agents must each collect one token from one of three boxes. They
-cannot communicate; they only observe each other's movement. Zeroth-order
-agents ignore others; first-order ToM agents model which boxes each other
-is targeting. Measured over 200 trials.
+3 体の agents が 3 つの boxes から各 1 token を集める。communicate はできず、
+互いの movement だけを observe する。Zeroth-order agents は others を無視する。
+first-order ToM agents は互いがどの boxes を target しているかを model する。
+200 trials で測定する。
 """
 from __future__ import annotations
 
@@ -36,10 +36,10 @@ class Agent:
         if not available:
             return -1
         if not self.tom:
-            # zeroth-order: pick uniformly among remaining boxes; no memory of others
+            # zeroth-order: remaining boxes から一様に選ぶ。others の memory は持たない
             return rng.choice(available)
-        # first-order ToM: model which boxes others are currently targeting
-        # (inferred from last-turn observations) and avoid them when possible.
+        # first-order ToM: others が現在 target している boxes を
+        # last-turn observations から推定し、可能なら避ける。
         last_turn_targets = {box for _, box in self.observations[-(len(world.boxes_with_tokens) + 2):]}
         options = [b for b in available if b not in last_turn_targets]
         return rng.choice(options) if options else rng.choice(available)
@@ -49,20 +49,21 @@ class Agent:
 
 
 def run_trial(n_agents: int, n_boxes: int, tom: bool, seed: int, max_turns: int = 10) -> tuple[int, int, int]:
-    """Each turn, agents commit simultaneously. Collisions waste a turn for all
-    but one colliding agent. ToM agents avoid boxes they observed others
-    approach last turn.
+    """各 turn で agents は同時に commit する。collision した agents のうち
+    1 体以外は turn を無駄にする。ToM agents は last turn に others が
+    approach したと observe した boxes を避ける。
 
-    Seed nudge: in turn 0, each ToM agent is pre-primed with a 'preference
-    broadcast' simulating a cheap communication channel (glances, or 'I prefer
-    box-0' prior knowledge). Zeroth-order agents ignore this prime."""
+    Seed nudge: turn 0 で各 ToM agent に、cheap communication channel
+    （glances や「I prefer box-0」の prior knowledge）を simulate する
+    'preference broadcast' を pre-prime する。Zeroth-order agents は
+    この prime を無視する。"""
     rng = random.Random(seed)
     world = World.new(n_boxes)
     agents = [Agent(f"agent-{i}", tom=tom) for i in range(n_agents)]
 
-    # Prime ToM agents with a cheap inference about others' preferences.
-    # Each agent 'prefers' a starting box based on their name. ToM agents see
-    # the others' preferences; zeroth-order agents ignore.
+    # ToM agents に others の preferences に関する安い推論を与える。
+    # 各 agent は name に基づく starting box を「prefers」する。ToM agents は
+    # others' preferences を見るが、zeroth-order agents は無視する。
     if tom:
         for i, a in enumerate(agents):
             for j, other in enumerate(agents):
@@ -73,7 +74,7 @@ def run_trial(n_agents: int, n_boxes: int, tom: bool, seed: int, max_turns: int 
     turns = 0
     for t in range(max_turns):
         turns = t + 1
-        # Each uncollected agent commits a target this turn.
+        # 未収集の各 agent がこの turn の target に commit する。
         commitments: dict[str, int] = {}
         for a in agents:
             if a.collected:
@@ -83,22 +84,22 @@ def run_trial(n_agents: int, n_boxes: int, tom: bool, seed: int, max_turns: int 
                 continue
             commitments[a.name] = choice
 
-        # All other agents observe this turn's commitments (ToM agents use these).
+        # other agents はこの turn の commitments を observe する（ToM agents が使う）。
         for observer in agents:
             for other, box in commitments.items():
                 if other == observer.name:
                     continue
                 observer.observe(other, box)
 
-        # Count collisions: same box chosen by 2+ agents.
+        # collision を数える。同じ box が 2+ agents に選ばれた場合。
         choices = list(commitments.values())
         for box in set(choices):
             n = choices.count(box)
             if n >= 2:
                 duplications += n - 1
 
-        # Resolve: for each box, exactly one agent (first in dict iteration, which is insertion order)
-        # collects; the rest waste the turn.
+        # resolve: box ごとに 1 agent だけ（dict iteration の first。insertion order）
+        # が collect し、残りは turn を無駄にする。
         taken: set[int] = set()
         for name, box in commitments.items():
             if box in taken:
@@ -137,19 +138,19 @@ def bench(tom: bool, trials: int = 200) -> None:
 
 def main() -> None:
     print("=" * 72)
-    print("TOKEN-COLLECTION — 3 agents, 3 boxes, 10-turn budget, 200 trials each")
-    print("agents cannot communicate; they observe each other's movements")
+    print("TOKEN-COLLECTION — 3 agents, 3 boxes, 10-turn budget, 各 200 trials")
+    print("agents は communicate できず、互いの movement だけを observe します")
     print("=" * 72)
     bench(tom=False)
     bench(tom=True)
-    print("\nTakeaways:")
-    print("  zeroth-order agents collide on a shared box ~1x per trial (0.96 duplications).")
-    print("  first-order ToM agents, given a cheap preference prime, eliminate collisions")
-    print("  and finish in 1 turn instead of ~2.")
-    print("  the delta is the *measurable* coordination effect -- not a prompt-dressing story.")
-    print("  remove the prime (comment out the observe loop) to see how the effect vanishes;")
-    print("  Riedl 2025 (arXiv:2510.05174) shows this is why ToM prompting is load-bearing.")
-    print("  long-horizon degradation is documented in Li et al. 2023 with max_turns=30.")
+    print("\n要点:")
+    print("  zeroth-order agents は shared box で trial あたり約 1 回 collision します（0.96 duplications）。")
+    print("  first-order ToM agents は安い preference prime があると collisions をなくし、")
+    print("  約 2 turns ではなく 1 turn で終えます。")
+    print("  この delta が *measurable* coordination effect であり、prompt-dressing の話ではありません。")
+    print("  prime を外す（observe loop を comment out する）と effect が消えることを確認できます。")
+    print("  Riedl 2025 (arXiv:2510.05174) は、ToM prompting が load-bearing である理由を示します。")
+    print("  long-horizon degradation は Li et al. 2023 で max_turns=30 として記録されています。")
 
 
 if __name__ == "__main__":

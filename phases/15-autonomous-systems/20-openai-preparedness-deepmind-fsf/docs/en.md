@@ -1,104 +1,104 @@
 # OpenAI Preparedness Framework and DeepMind Frontier Safety Framework
 
-> OpenAI Preparedness Framework v2 (April 2025) introduces Research Categories — Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards — distinct from Tracked Categories. Tracked Categories trigger Capabilities Reports plus Safeguards Reports reviewed by the Safety Advisory Group. DeepMind's FSF v3 (September 2025, with Tracked Capability Levels added April 17, 2026) folds autonomy into ML R&D and Cyber domains (ML R&D autonomy level 1 = fully automate the AI R&D pipeline at competitive cost vs human + AI tools). FSF v3 explicitly addresses deceptive alignment via automated monitoring for instrumental-reasoning misuse. The honest note: Research Categories in PF v2 (including Long-range Autonomy) do not automatically trigger mitigations; the policy language is "potential." DeepMind itself says automated monitoring "will not remain sufficient long-term" if instrumental reasoning strengthens.
+> OpenAI Preparedness Framework v2（2025 年 4 月）は Research Categories を導入しました。これは Tracked Categories とは別で、Long-range Autonomy、Sandbagging、Autonomous Replication and Adaptation、Undermining Safeguards を含みます。Tracked Categories は Capabilities Reports と Safeguards Reports を発火させ、それらは Safety Advisory Group によってレビューされます。DeepMind の FSF v3（2025 年 9 月、Tracked Capability Levels は 2026 年 4 月 17 日に追加）は、autonomy を ML R&D と Cyber domains に組み込みます（ML R&D autonomy level 1 = human + AI tools と比較して競争力のあるコストで AI R&D pipeline を完全自動化すること）。FSF v3 は、instrumental-reasoning misuse に対する automated monitoring を通じて deceptive alignment を明示的に扱っています。正直に言えば、PF v2 の Research Categories（Long-range Autonomy を含む）は自動的には mitigations を発火させません。policy language は "potential" です。DeepMind 自身も、instrumental reasoning が強くなれば automated monitoring は「長期的には十分であり続けない」と述べています。
 
-**Type:** Learn
-**Languages:** Python (stdlib, three-framework decision-table diff tool)
-**Prerequisites:** Phase 15 · 19 (Anthropic RSP)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python (stdlib, three-framework decision-table diff tool)
+**前提条件:** Phase 15 · 19 (Anthropic RSP)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-Lesson 19 read Anthropic's scaling policy closely. This lesson completes the picture by reading OpenAI's and DeepMind's. The three documents are cousin artifacts addressing the same question — when should a frontier lab pause or gate a model — and they converge on a small set of categories and diverge in specific places that matter.
+Lesson 19 では Anthropic の scaling policy を精読しました。このレッスンでは OpenAI と DeepMind の文書を読み、全体像を完成させます。3つの文書は同じ問いに取り組む近縁の artifact です。その問いとは、frontier lab はどの時点で model を pause または gate すべきか、というものです。3者は少数のカテゴリへ収束しつつ、重要な具体点では分岐しています。
 
-The convergence: all three label long-range autonomy as a capability class worth tracking. All three acknowledge deceptive behavior (alignment faking, sandbagging) as a specific class of risk. All three have an internal review body. The divergence: OpenAI splits categories into "Tracked" (mandatory mitigation) and "Research" (no automatic trigger). DeepMind folds autonomy into two domains rather than naming it separately. The lab names Tracked vs Research, or Critical vs Moderate, or Tier-1 vs Tier-2; the operational consequence of which bucket a capability lives in is different across labs.
+収束している点: 3者すべてが long-range autonomy を追跡すべき capability class として扱っています。3者すべてが deceptive behavior（alignment faking、sandbagging）を固有の risk class として認めています。3者すべてに internal review body があります。分岐している点: OpenAI はカテゴリを "Tracked"（mandatory mitigation）と "Research"（automatic trigger なし）に分けます。DeepMind は autonomy を独立して名指しするのではなく、2つの domain に組み込みます。lab は Tracked vs Research、Critical vs Moderate、Tier-1 vs Tier-2 といった名前を付けますが、capability がどの bucket に置かれるかによる operational consequence は lab ごとに異なります。
 
-Reading them together is the useful exercise. The same capability can be "mandatory mitigation" at Anthropic, "monitored but not triggering" at OpenAI, and "tracked in a specific domain" at DeepMind. The policy posture matters.
+一緒に読むことが有用な演習です。同じ capability が、Anthropic では "mandatory mitigation"、OpenAI では "monitored but not triggering"、DeepMind では "tracked in a specific domain" になることがあります。policy posture が重要です。
 
-## The Concept
+## コンセプト
 
-### OpenAI Preparedness Framework v2 (April 2025)
+### OpenAI Preparedness Framework v2（2025 年 4 月）
 
-Structure:
+構造:
 
-- **Tracked Categories**: trigger Capabilities Reports (what the model can do) plus Safeguards Reports (what mitigations are in place). Reviewed by the Safety Advisory Group before deployment.
-- **Research Categories**: model capabilities the lab is tracking but not yet committing to specific mitigations. Includes Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards.
+- **Tracked Categories**: Capabilities Reports（model が何をできるか）と Safeguards Reports（どの mitigations が整っているか）を発火させます。deployment 前に Safety Advisory Group がレビューします。
+- **Research Categories**: lab が追跡しているが、まだ具体的な mitigations にはコミットしていない model capabilities。Long-range Autonomy、Sandbagging、Autonomous Replication and Adaptation、Undermining Safeguards を含みます。
 
-Key framing in v2: Research Categories do not automatically trigger mitigations. The policy language is "potential" mitigations. This is the specific delta to watch: a category's location in Tracked vs Research is the hinge between "gated" and "observed."
+v2 の key framing: Research Categories は自動的には mitigations を発火させません。policy language は "potential" mitigations です。ここが注視すべき具体的な差分です。カテゴリが Tracked にあるか Research にあるかは、"gated" と "observed" の分岐点です。
 
-### DeepMind Frontier Safety Framework v3 (September 2025; Tracked Capability Levels added April 17, 2026)
+### DeepMind Frontier Safety Framework v3（2025 年 9 月、Tracked Capability Levels は 2026 年 4 月 17 日追加）
 
-Structure:
+構造:
 
-- **Critical Capability Levels (CCLs)**: capability thresholds across five domains: Cyber, Bio, ML R&D, CBRN, Autonomy (folded into ML R&D and Cyber).
-- **Tracked Capability Levels**: additional granularity added in April 2026. Concrete example: ML R&D autonomy level 1 = fully automate the AI R&D pipeline at competitive cost vs human + AI tools.
-- **Deceptive alignment monitoring**: explicit commitment to automated monitoring for instrumental-reasoning misuse.
+- **Critical Capability Levels (CCLs)**: 5つの domain（Cyber、Bio、ML R&D、CBRN、Autonomy。ただし autonomy は ML R&D と Cyber に組み込まれる）にまたがる capability thresholds。
+- **Tracked Capability Levels**: 2026 年 4 月に追加されたさらなる粒度。具体例: ML R&D autonomy level 1 = human + AI tools と比較して競争力のあるコストで AI R&D pipeline を完全自動化する。
+- **Deceptive alignment monitoring**: instrumental-reasoning misuse に対する automated monitoring への明示的コミットメント。
 
-The autonomy framing differs from OpenAI's. DeepMind does not keep "Autonomy" as a top-level domain; it is folded into the domains where autonomy would cause harm (ML R&D and Cyber). The argument is that autonomy without a domain is capability without risk; the counter-argument is that autonomy across domains is a meta-risk the framework should name.
+Autonomy の framing は OpenAI と異なります。DeepMind は "Autonomy" を top-level domain として維持せず、autonomy が害を引き起こす domain（ML R&D と Cyber）に組み込みます。その主張は、domain のない autonomy は risk のない capability だ、というものです。反論は、domain 横断の autonomy は framework が名指しすべき meta-risk だ、というものです。
 
-### What all three converge on
+### 3者が収束している点
 
-- Internal Safety Advisory Group (named Anthropic SAG, OpenAI SAG, DeepMind internal committee). Review before deployment for high-capability models.
-- Explicit mention of deceptive alignment / alignment faking as a risk class.
-- Standing artifacts on a declared cadence (Anthropic: Frontier Safety Roadmap, Risk Report; OpenAI: Capabilities and Safeguards Reports; DeepMind: FSF update cycle).
-- Acknowledgement that monitoring-only defenses have a ceiling. DeepMind is explicit: "automated monitoring will not remain sufficient long-term."
+- Internal Safety Advisory Group（Anthropic SAG、OpenAI SAG、DeepMind internal committee として名指しされる）。high-capability model では deployment 前にレビューする。
+- deceptive alignment / alignment faking を risk class として明示的に言及する。
+- 宣言された cadence を持つ standing artifacts（Anthropic: Frontier Safety Roadmap、Risk Report。OpenAI: Capabilities and Safeguards Reports。DeepMind: FSF update cycle）。
+- monitoring-only defenses には上限があることを認める。DeepMind は明示的に「automated monitoring will not remain sufficient long-term」と述べています。
 
-### Where they diverge
+### 分岐している点
 
-- **Anthropic**: pause commitment removed in v3.0; AI R&D-4 threshold is the named next gate.
-- **OpenAI**: Tracked vs Research split; Research Categories (including Long-range Autonomy) do not automatically gate.
-- **DeepMind**: autonomy folded into other domains; Tracked Capability Levels add granularity in April 2026.
+- **Anthropic**: v3.0 で pause commitment が削除された。AI R&D-4 threshold が名指しされた次の gate。
+- **OpenAI**: Tracked と Research の分割。Research Categories（Long-range Autonomy を含む）は自動的には gate しない。
+- **DeepMind**: autonomy を他の domain に組み込む。Tracked Capability Levels が 2026 年 4 月に粒度を追加した。
 
-### Sandbagging: a specific capability that complicates all three
+### Sandbagging: 3者すべてを複雑にする具体的 capability
 
-Sandbagging (a model strategically underperforming on evaluations) is in OpenAI's Research Categories. Anthropic's RSP v3.0 addresses it via the evaluation-context gap (Lesson 1). DeepMind addresses it via deceptive alignment monitoring in FSF v3.
+Sandbagging（model が評価で戦略的に低い performance を示すこと）は OpenAI の Research Categories に入っています。Anthropic の RSP v3.0 は evaluation-context gap（Lesson 1）を通じてこれを扱います。DeepMind は FSF v3 の deceptive alignment monitoring を通じて扱います。
 
-If a model sandbags on evaluations, every framework's capability thresholds are underestimated. The framework works only if the measurement works. This is why external measurement (Lesson 21, METR) and adversarial evaluation are necessary in addition to lab self-assessment.
+model が評価で sandbag する場合、あらゆる framework の capability thresholds は過小評価されます。framework が機能するのは measurement が機能する場合だけです。だからこそ、lab self-assessment に加えて external measurement（Lesson 21、METR）と adversarial evaluation が必要です。
 
-### The policy-reading skill
+### policy を読む skill
 
-- Locate: every capability you care about should be findable in the policy. If not findable, the policy does not cover it.
-- Classify: is it Tracked (triggers mitigation) or Research (tracked but not triggering)? OpenAI names this; Anthropic and DeepMind have their own equivalents.
-- Cadence: is the policy updated on a declared schedule, or only after specific events? Declared cadence is stronger.
-- Independence: is external review mandatory or optional? Anthropic partners with Apollo and US AI Safety Institute; OpenAI with METR; DeepMind with internal SAG primarily.
+- Locate: 気にする capability はすべて policy 内で見つけられるべきです。見つからないなら、その policy はそれをカバーしていません。
+- Classify: それは Tracked（mitigation を発火）ですか、それとも Research（追跡するが発火しない）ですか。OpenAI はこれを名指しします。Anthropic と DeepMind にもそれぞれの対応物があります。
+- Cadence: policy は宣言された schedule で更新されますか、それとも特定イベント後だけですか。宣言された cadence の方が強いです。
+- Independence: external review は必須ですか、それとも optional ですか。Anthropic は Apollo と US AI Safety Institute と提携しています。OpenAI は METR と提携しています。DeepMind は主に internal SAG です。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements a small decision-table diff tool. Given a capability (autonomy, deceptive alignment, R&D automation, cyber uplift, etc.), it outputs how each of the three policies classifies the capability, and what mitigations trigger. It's a reading aid, not a policy tool.
+`code/main.py` は小さな decision-table diff tool を実装しています。capability（autonomy、deceptive alignment、R&D automation、cyber uplift など）を与えると、3つの policy がそれぞれその capability をどう分類し、どの mitigations を発火させるかを出力します。これは reading aid であり、policy tool ではありません。
 
-## Ship It
+## 出荷する
 
-`outputs/skill-cross-policy-diff.md` produces a cross-policy comparison for a specific capability, using the three frameworks as reference.
+`outputs/skill-cross-policy-diff.md` は、3つの framework を参照として使い、特定 capability の cross-policy comparison を作成します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Confirm the diff tool's output matches the policies for at least two capabilities you can verify against the source documents.
+1. `code/main.py` を実行してください。少なくとも2つの capability について、diff tool の出力が source documents で確認できる policy と一致することを確かめてください。
 
-2. Read OpenAI Preparedness Framework v2 in full. Identify each Research Category. For each, write one sentence on why it is in Research rather than Tracked.
+2. OpenAI Preparedness Framework v2 全文を読んでください。各 Research Category を特定します。それぞれについて、なぜ Tracked ではなく Research に入っているのかを1文で書いてください。
 
-3. Read DeepMind FSF v3 in full, plus the April 2026 Tracked Capability Levels update. Identify ML R&D autonomy level 1's specific evaluation criteria. How would you measure it externally?
+3. DeepMind FSF v3 全文と、2026 年 4 月の Tracked Capability Levels update を読んでください。ML R&D autonomy level 1 の具体的 evaluation criteria を特定します。外部からどのように測定しますか。
 
-4. Sandbagging is in OpenAI's Research Categories. Design an evaluation that would force a sandbagging model to reveal its actual capability. Reference the Lesson 1 eval-context-gaming discussion.
+4. Sandbagging は OpenAI の Research Categories に入っています。sandbagging model に実際の capability を明らかにさせる evaluation を設計してください。Lesson 1 の eval-context-gaming の議論を参照してください。
 
-5. Compare the three policies on a specific capability (your choice). Name which policy's classification you find most rigorous and which least. Justify with source text.
+5. 特定の capability（自分で選んでください）について3つの policy を比較してください。どの policy の分類が最も厳密だと思うか、どれが最も弱いと思うかを名指ししてください。source text に基づいて正当化してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |---|---|---|
-| Preparedness Framework | "OpenAI's scaling policy" | PF v2 (April 2025); Tracked vs Research categories |
-| Tracked Category | "Mandatory mitigation" | Triggers Capabilities + Safeguards Reports; SAG review |
-| Research Category | "Monitored only" | Tracked but no automatic mitigation; includes Long-range Autonomy |
-| Frontier Safety Framework | "DeepMind's scaling policy" | FSF v3 (Sept 2025) + Tracked Capability Levels (Apr 2026) |
-| CCL | "Critical Capability Level" | DeepMind threshold per domain (Cyber, Bio, ML R&D, CBRN) |
-| ML R&D autonomy level 1 | "R&D automation" | Fully automate AI R&D pipeline at competitive cost |
-| Sandbagging | "Strategic underperformance" | Model underperforms on evals; in OpenAI Research Categories |
-| Instrumental reasoning | "Means-ends reasoning" | Reasoning about how to achieve goals; target of DeepMind monitoring |
+| Preparedness Framework | 「OpenAI の scaling policy」 | PF v2（2025 年 4 月）。Tracked と Research categories |
+| Tracked Category | 「Mandatory mitigation」 | Capabilities + Safeguards Reports と SAG review を発火させる |
+| Research Category | 「Monitored only」 | 追跡されるが automatic mitigation はない。Long-range Autonomy を含む |
+| Frontier Safety Framework | 「DeepMind の scaling policy」 | FSF v3（2025 年 9 月）+ Tracked Capability Levels（2026 年 4 月） |
+| CCL | 「Critical Capability Level」 | DeepMind の domain ごとの threshold（Cyber、Bio、ML R&D、CBRN） |
+| ML R&D autonomy level 1 | 「R&D automation」 | AI R&D pipeline を競争力のあるコストで完全自動化すること |
+| Sandbagging | 「Strategic underperformance」 | model が evals で低い performance を示すこと。OpenAI Research Categories に入る |
+| Instrumental reasoning | 「Means-ends reasoning」 | 目標達成の方法についての reasoning。DeepMind monitoring の対象 |
 
-## Further Reading
+## 参考資料
 
-- [OpenAI — Updating our Preparedness Framework](https://openai.com/index/updating-our-preparedness-framework/) — v2 announcement.
-- [OpenAI — Preparedness Framework v2 PDF](https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf) — full document.
-- [DeepMind — Strengthening our Frontier Safety Framework](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — FSF v3 announcement.
-- [DeepMind — Updating the Frontier Safety Framework (April 2026)](https://deepmind.google/blog/updating-the-frontier-safety-framework/) — Tracked Capability Levels addition.
-- [Gemini 3 Pro FSF Report](https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf) — example of an FSF-format Risk Report.
+- [OpenAI — Updating our Preparedness Framework](https://openai.com/index/updating-our-preparedness-framework/) — v2 announcement。
+- [OpenAI — Preparedness Framework v2 PDF](https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf) — full document。
+- [DeepMind — Strengthening our Frontier Safety Framework](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — FSF v3 announcement。
+- [DeepMind — Updating the Frontier Safety Framework (April 2026)](https://deepmind.google/blog/updating-the-frontier-safety-framework/) — Tracked Capability Levels addition。
+- [Gemini 3 Pro FSF Report](https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf) — FSF format の Risk Report の例。

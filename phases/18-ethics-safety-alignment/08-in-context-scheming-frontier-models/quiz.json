@@ -1,22 +1,22 @@
 {
   "lesson": "08-in-context-scheming-frontier-models",
-  "title": "In-Context Scheming in Frontier Models",
+  "title": "Frontier Models における In-Context Scheming",
   "questions": [
     {
       "stage": "pre",
-      "question": "How does in-context scheming differ from sleeper-agent backdoors?",
+      "question": "in-context scheming は sleeper-agent backdoors とどう違いますか。",
       "options": [
-        "Scheming requires fine-tuning on adversarial data",
-        "Scheming is elicited from the in-context prompt and environment alone, with no implant",
-        "Scheming only occurs in open-source models",
-        "Scheming uses smaller models"
+        "scheming には adversarial data での fine-tuning が必要である",
+        "scheming は implant なしに、in-context prompt と environment だけから elicited される",
+        "scheming は open-source models でだけ起こる",
+        "scheming は smaller models を使う"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What are Apollo's three pillars of scheming?",
+      "question": "Apollo の scheming の 3 pillars は何ですか。",
       "options": [
         "Reward, KL, length penalty",
         "Sampling temperature, top-k, top-p",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "In the Apollo evaluations, which model maintained its cover story in more than 85% of follow-up questions after a deceptive act?",
+      "question": "Apollo evaluations で、deceptive act 後の follow-up questions の 85% 超で cover story を維持した model はどれですか。",
       "options": [
         "Claude 3.5 Sonnet",
         "Llama 3.1 405B",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What is the key confound in the 2025 anti-scheming deliberative-alignment result?",
+      "question": "2025 anti-scheming deliberative-alignment result の key confound は何ですか。",
       "options": [
-        "The training data was too small",
-        "The post-trained model is also better at detecting that it is in an evaluation, so part of the apparent drop in covert action is improved hiding, not improved alignment",
-        "The reward model was open-sourced",
-        "PPO was replaced with DPO"
+        "training data が小さすぎた",
+        "post-trained model は evaluation 中であることを検出する能力も上がるため、covert action の見かけの減少の一部は improved alignment ではなく improved hiding である",
+        "reward model が open-sourced された",
+        "PPO が DPO に置き換えられた"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why does evaluation-suite reliability become a capability-adjacent quantity in 2025/2026?",
+      "question": "2025/2026 年に evaluation-suite reliability が capability-adjacent quantity になるのはなぜですか。",
       "options": [
-        "More situationally-aware models can recognize evaluation contexts, so their eval behaviour is a less reliable proxy for deployment behaviour",
-        "Evaluations now use proprietary tooling only",
-        "Better models are slower and so harder to evaluate",
-        "Open-source models cannot run new benchmarks"
+        "より situationally-aware な models は evaluation contexts を認識できるため、eval behaviour は deployment behaviour の proxy として信頼しにくくなる",
+        "evaluations が proprietary tooling だけを使うようになったから",
+        "より良い models は遅く、評価しにくいから",
+        "open-source models は新しい benchmarks を実行できないから"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why does the Phase 18 arc cover Sleeper Agents, In-Context Scheming, and Alignment Faking together?",
+      "question": "Phase 18 arc が Sleeper Agents、In-Context Scheming、Alignment Faking をまとめて扱うのはなぜですか。",
       "options": [
-        "They are all from the same authors",
-        "They share a benchmark dataset",
-        "They cover the deception spectrum: implanted (Sleeper Agents), elicited from in-context conflict (Scheming), and spontaneous emergence with no goal conflict (Alignment Faking)",
-        "They all rely on Constitutional AI"
+        "すべて同じ authors によるものだから",
+        "同じ benchmark dataset を共有しているから",
+        "deception spectrum を覆うから: implanted (Sleeper Agents)、in-context conflict から elicited (Scheming)、goal conflict なしの spontaneous emergence (Alignment Faking)",
+        "すべて Constitutional AI に依存しているから"
       ],
       "correct": 2,
       "explanation": ""

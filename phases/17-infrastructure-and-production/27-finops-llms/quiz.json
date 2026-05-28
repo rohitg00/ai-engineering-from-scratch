@@ -1,75 +1,75 @@
 {
   "lesson": "27-finops-llms",
-  "title": "FinOps for LLMs — Unit Economics and Multi-Tenant Attribution",
+  "title": "LLM のための FinOps — Unit Economics と Multi-Tenant Attribution",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does traditional FinOps break on LLM spend?",
+      "question": "traditional FinOps が LLM spend で破綻する理由は何ですか。",
       "options": [
-        "LLMs don't cost money",
-        "LLM bills are always free",
-        "Cloud providers refuse to itemize",
-        "Costs are token-transactions rather than resource-uptime; tags don't auto-propagate from API calls and you must stamp user/task/tenant at the call site"
+        "LLMs は cost がかからないから",
+        "LLM bills は常に無料だから",
+        "Cloud providers が itemize を拒否するから",
+        "costs は resource-uptime ではなく token-transactions であり、tags は API calls から auto-propagate しないため、call site で user/task/tenant を stamp する必要があるから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which three attribution dimensions does the lesson require instrumenting on day one?",
+      "question": "この lesson は day one でどの 3 つの attribution dimensions を instrument することを必須にしていますか。",
       "options": [
-        "Per-user (user_id), per-task (task_id + route), per-tenant (tenant_id)",
-        "Provider, model, API version",
-        "Region, AZ, datacenter",
-        "GPU, CPU, RAM"
+        "Per-user (user_id)、per-task (task_id + route)、per-tenant (tenant_id)",
+        "Provider、model、API version",
+        "Region、AZ、datacenter",
+        "GPU、CPU、RAM"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which four token layers should be broken out in cost attribution?",
+      "question": "cost attribution では、どの 4 つの token layers を分離すべきですか。",
       "options": [
-        "Prompt, tool, memory, response",
-        "Input, output, network, disk",
-        "Cache, model, gateway, observability",
-        "GPU, CPU, RAM, storage"
+        "Prompt、tool、memory、response",
+        "Input、output、network、disk",
+        "Cache、model、gateway、observability",
+        "GPU、CPU、RAM、storage"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the kill-switch trigger in the enforcement ladder?",
+      "question": "enforcement ladder における kill-switch trigger は何ですか。",
       "options": [
-        "Tenant spend z-score > 4 relative to baseline; auto-pause tenant and page on-call",
+        "baseline に対する tenant spend z-score > 4。tenant を auto-pause し、on-call に page する",
         "Latency P50 > 2s",
-        "Any 5xx response",
-        "Spend over $1 in a minute"
+        "任意の 5xx response",
+        "1 分で spend が $1 を超える"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which unit metric does the lesson recommend instead of $/M tokens?",
+      "question": "この lesson は $/M tokens の代わりにどの unit metric を推奨していますか。",
       "options": [
         "Cost per gateway",
         "Cost per GPU-hour",
         "Cost per second",
-        "Cost per product outcome (e.g. cost per resolved support ticket, cost per generated article, cost per successful agent task)"
+        "Cost per product outcome (例: cost per resolved support ticket、cost per generated article、cost per successful agent task)"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which attribution pattern does the lesson call the highest-accuracy one mature teams use?",
+      "question": "この lesson が mature teams の使う最高精度の attribution pattern と呼ぶものはどれですか。",
       "options": [
         "Sampling and extrapolation",
         "Model-based allocation",
-        "Tag-and-aggregate only",
-        "Telemetry joiner — join traces to billing via trace IDs"
+        "Tag-and-aggregate のみ",
+        "Telemetry joiner — trace IDs で traces と billing を join する"
       ],
       "correct": 3,
       "explanation": ""

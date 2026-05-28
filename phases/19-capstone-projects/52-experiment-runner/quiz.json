@@ -1,34 +1,34 @@
 {
   "lesson": "52-experiment-runner",
-  "title": "Experiment Runner",
+  "title": "実験ランナー",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the runner spawn a subprocess instead of importing the experiment script in process?",
+      "question": "runner が experiment script を in process に import せず subprocess を spawn する理由は何ですか?",
       "options": [
-        "Because Python disallows nested imports",
-        "Because a separate process gives the runner a kill handle on timeout or memory limits and isolates crashes from the orchestrator",
-        "Because the metrics format requires it",
-        "Because subprocess is faster than import"
+        "Python が nested import を禁じているため",
+        "別 process により timeout や memory limit で kill でき、crash を orchestrator から隔離できるため",
+        "metrics format がそれを要求するため",
+        "subprocess が import より速いため"
       ],
       "correct": 1,
-      "explanation": "A separate process is the simplest isolation the language ships. The parent retains a kill handle and an independent address space, so a crashing experiment cannot take the orchestrator with it."
+      "explanation": "別 process は言語が持つ最小の isolation です。parent は kill handle と独立 address space を持つため、crash した experiment が orchestrator を巻き込みません。"
     },
     {
       "stage": "pre",
-      "question": "Why is the memory cap described as soft?",
+      "question": "memory cap が soft と呼ばれる理由は何ですか?",
       "options": [
-        "Because it only applies to the heap, not the stack",
-        "Because the poller has a non zero interval, so a process can spike above the cap between polls and the runner only acts on the next observation",
-        "Because the operating system always overrides it",
-        "Because numpy ignores the cap"
+        "heap にだけ適用され、stack には適用されないため",
+        "poller には非ゼロ interval があり、process が cap を一時的に超えてから次の観測で runner が対応するため",
+        "operating system が常に上書きするため",
+        "numpy が cap を無視するため"
       ],
       "correct": 1,
-      "explanation": "The cap is enforced by polling, not by an in kernel limit. The poller interval is the resolution of the cap, and short spikes can briefly exceed the cap before the next observation."
+      "explanation": "cap は kernel limit ではなく polling で enforce されます。poller interval が cap の解像度であり、短い spike は次の観測まで cap を超えられます。"
     },
     {
       "stage": "check",
-      "question": "Which terminal label does the runner return when stdout has the metrics but the exit code is non zero?",
+      "question": "stdout に metrics があるが exit code が non-zero の場合、runner はどの terminal label を返しますか?",
       "options": [
         "ok",
         "timeout",
@@ -36,43 +36,43 @@
         "crash"
       ],
       "correct": 3,
-      "explanation": "Terminal is ok only when exit code is zero and metrics parsed. A non zero exit code is crash even if some metrics were captured before the failure."
+      "explanation": "terminal が ok になるのは exit code が0で metrics が parse できた場合だけです。non-zero exit code は、途中で metrics を捕捉できても crash です。"
     },
     {
       "stage": "check",
-      "question": "How does the runner identify the final metrics blob inside stdout?",
+      "question": "runner は stdout 内の final metrics blob をどう識別しますか?",
       "options": [
-        "It reads the first json line",
-        "It reads the last json line whose keys cover the required metric_keys; earlier covering lines become intermediate metrics",
-        "It scans stderr for json",
-        "It expects exactly one line of output"
+        "最初の JSON line を読む",
+        "required metric_keys を含む最後の JSON line を読み、それ以前の該当 line を intermediate metrics にする",
+        "stderr から JSON を scan する",
+        "出力が厳密に一行であることを期待する"
       ],
       "correct": 1,
-      "explanation": "Final metrics are the last line that parses as json and includes every required key. Earlier covering lines are kept as intermediate metrics for learning curves."
+      "explanation": "final metrics は JSON として parse でき、required key をすべて含む最後の line です。以前の該当 line は learning curve 用に保持されます。"
     },
     {
       "stage": "check",
-      "question": "Why does the ablation helper sweep one knob at a time rather than a full factorial?",
+      "question": "ablation helper が full factorial ではなく一度に一つの knob を sweep する理由は何ですか?",
       "options": [
-        "Because the runner cannot launch more than one subprocess",
-        "Because one knob at a time produces a clean axis the evaluator can plot, while full factorial blows up exponentially and confuses interpretation",
-        "Because numpy does not support the cartesian product",
-        "Because the seed only varies along one knob"
+        "runner が一つ以上の subprocess を起動できないため",
+        "一つの knob だけなら evaluator が plot できるきれいな軸になり、full factorial は指数的に膨らんで解釈を難しくするため",
+        "numpy が cartesian product を support しないため",
+        "seed が一つの knob に沿ってしか変わらないため"
       ],
       "correct": 1,
-      "explanation": "Single knob sweeps keep the result interpretable. Full factorial costs scale exponentially with the number of knobs and the resulting table is hard to read."
+      "explanation": "single knob sweep は result を解釈しやすく保ちます。full factorial は knob 数に対して cost が指数的に増え、table も読みづらくなります。"
     },
     {
       "stage": "check",
-      "question": "What guarantee does forwarding spec.seed into config['__seed'] give the evaluator?",
+      "question": "spec.seed を config['__seed'] に渡すことは evaluator に何を保証しますか?",
       "options": [
-        "Faster wall time",
-        "Lower memory consumption",
-        "Determinism, so a re run with the same seed produces identical metrics and the evaluator can detect real changes from random noise",
-        "A free significance test"
+        "より短い wall time",
+        "より少ない memory consumption",
+        "determinism。同じ seed の re-run は同じ metrics になり、evaluator は random noise と実変化を区別できる",
+        "無料の significance test"
       ],
       "correct": 2,
-      "explanation": "The seed pins random initialisation in the experiment. Two runs with the same seed produce identical metrics, which is what lets the evaluator distinguish a real regression from a different draw."
+      "explanation": "seed は experiment の random initialisation を固定します。同じ seed の二つの run が同じ metrics を出すため、evaluator は実 regression と別の random draw を区別できます。"
     }
   ]
 }

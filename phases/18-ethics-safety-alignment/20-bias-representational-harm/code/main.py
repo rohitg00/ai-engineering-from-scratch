@@ -1,14 +1,14 @@
 """Toy embedding-based bias probe (WEAT-shaped) — stdlib Python.
 
-Build a simple 4-d embedding where each axis corresponds to a semantic
-dimension. Two identity groups A = {'he', 'his', 'man'} and B = {'she',
-'her', 'woman'}; two attribute sets X = {'engineer', 'programmer',
-'scientist'} and Y = {'nurse', 'teacher', 'caregiver'}.
+各 axis が semantic dimension に対応する simple 4-d embedding を作る。
+2つの identity groups A = {'he', 'his', 'man'} と B = {'she', 'her', 'woman'}、
+2つの attribute sets X = {'engineer', 'programmer', 'scientist'} と
+Y = {'nurse', 'teacher', 'caregiver'} を使う。
 
-WEAT: compute s(w, X, Y) = mean cosine(w, X) - mean cosine(w, Y) for each
-target word; effect = mean_a(s) - mean_b(s) over identity groups.
+WEAT: 各 target word について s(w, X, Y) = mean cosine(w, X) - mean cosine(w, Y)
+を計算する。effect = identity groups 上の mean_a(s) - mean_b(s)。
 
-Pedagogical toy; real WEAT uses 300-d pretrained embeddings.
+教育用 toy。実際の WEAT は 300-d pretrained embeddings を使う。
 
 Usage: python3 code/main.py
 """
@@ -18,7 +18,7 @@ from __future__ import annotations
 import math
 
 
-# 4-d embedding. Axis 0 = "masculine", 1 = "feminine", 2 = "tech", 3 = "care".
+# 4-d embedding。Axis 0 = "masculine", 1 = "feminine", 2 = "tech", 3 = "care"。
 EMB = {
     # identity A
     "he":        [ 1.0, 0.0, 0.2,  0.0],
@@ -57,7 +57,7 @@ def weat_score(identity_a: list[str], identity_b: list[str],
 
 
 def debias(emb: dict) -> dict:
-    """Crude debias: project out the gender direction (axis 1 minus axis 0)."""
+    """粗い debias: gender direction (axis 1 minus axis 0) を project out する。"""
     new = {k: list(v) for k, v in emb.items()}
     gender_dir = [1.0, -1.0, 0.0, 0.0]
     norm_sq = sum(x * x for x in gender_dir)
@@ -81,19 +81,18 @@ def main() -> None:
 
     pre = weat_score(A, B, X, Y)
     print(f"\npre-debias WEAT effect size : {pre:+.4f}")
-    print("(positive means identity A associates more with X than B does.)")
+    print("(正の値は、identity A が B より X と強く関連づけられていることを意味する。)")
 
     EMB = debias(EMB)
     post = weat_score(A, B, X, Y)
     print(f"post-debias WEAT effect size: {post:+.4f}")
 
     print("\n" + "=" * 70)
-    print("TAKEAWAY: embedding-based bias is measurable and partially reducible")
-    print("by projecting out gender-correlated directions. the metric does not")
-    print("drop to zero because the toy is 4-d; real debiasing (Bolukbasi 2016)")
-    print("operates on 300-d embeddings and reduces but does not eliminate")
-    print("the effect. probability- and generated-text-based metrics are")
-    print("required to capture the behavioural bias residual.")
+    print("要点: embedding-based bias は測定可能であり、gender-correlated directions")
+    print("を project out することで部分的に下げられる。toy は 4-d なので metric は")
+    print("zero までは下がらない。実際の debiasing (Bolukbasi 2016) は 300-d")
+    print("embeddings で動き、effect を減らすが除去はしない。behavioural bias の")
+    print("残差を捉えるには probability-based と generated-text-based metrics が必要。")
     print("=" * 70)
 
 

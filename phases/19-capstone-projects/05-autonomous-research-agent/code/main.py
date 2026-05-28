@@ -1,10 +1,10 @@
-"""Autonomous research agent — plan/execute/verify tree search scaffold.
+"""Autonomous research agent — plan/execute/verify tree search scaffold。
 
-The hard architectural primitive is best-first tree search over experiment
-nodes with budgeted expansion, per-node sandboxed execution, and a novelty x
-quality x budget scoring function. The LLM planner and the actual PyTorch
-experiments are stubbed so the tree-search skeleton is observable end to end
-without real compute.
+難しい architectural primitive は experiment node 上の best-first tree search
+です。budgeted expansion、per-node sandboxed execution、novelty × quality ×
+budget scoring function を備えます。LLM planner と実際の PyTorch experiment は
+stub されているため、real compute なしで tree-search skeleton を end to end に
+観測できます。
 
 Run:  python main.py
 """
@@ -39,21 +39,21 @@ class Node:
 
 
 # ---------------------------------------------------------------------------
-# stub planner  --  proposes child nodes by small-edit expansion
+# stub planner  --  small-edit expansion で child node を提案する
 # ---------------------------------------------------------------------------
 
 def expand(node: Node, next_id: int) -> list[Node]:
-    """Propose children by varying one config dimension at a time."""
+    """config dimension を一度に1つ変えて child を提案する。"""
     children: list[Node] = []
     base_cfg = node.config
-    # vary sparsity
+    # sparsity を変える
     for sp in (4, 8, 16):
         cfg = dict(base_cfg, sparsity_top=sp)
         children.append(Node(node_id=next_id, parent=node.node_id,
                              hypothesis=f"sparsity top-{sp}",
                              config=cfg))
         next_id += 1
-    # vary learning rate
+    # learning rate を変える
     for lr in (3e-4, 1e-3):
         cfg = dict(base_cfg, lr=lr)
         children.append(Node(node_id=next_id, parent=node.node_id,
@@ -64,17 +64,17 @@ def expand(node: Node, next_id: int) -> list[Node]:
 
 
 # ---------------------------------------------------------------------------
-# sandbox execution  --  stubbed; returns fake but reproducible metrics
+# sandbox execution  --  stub。fake だが reproducible な metric を返す
 # ---------------------------------------------------------------------------
 
 def run_experiment(node: Node, rng: random.Random) -> None:
-    """Simulates running the experiment in a sandboxed container.
-    A real build shells out to:
+    """sandboxed container 内で experiment を実行する simulation。
+    real build では次を shell out する:
       docker run --network=none --memory=8g --cpus=2 --read-only ...
-    and captures stdout + metrics files from a mounted output volume."""
+    そして mounted output volume から stdout と metrics files を capture する。"""
     sp = node.config.get("sparsity_top", 8)
     lr = node.config.get("lr", 3e-4)
-    # fabricate a loss based on hyperparams (smaller sparsity better to a point)
+    # hyperparam に基づいて loss を生成する (小さい sparsity はある程度まで良い)
     ideal_sp = 8
     loss = 3.0 - 0.3 * (1 - abs(sp - ideal_sp) / 16) + rng.gauss(0, 0.05)
     loss += 0.0001 * abs(lr - 3e-4) * 1000
@@ -82,14 +82,14 @@ def run_experiment(node: Node, rng: random.Random) -> None:
     node.cost_usd = 1.2 + rng.uniform(0, 0.4)
     node.quality = max(0.0, 1.0 - (loss - 2.5) / 1.5)
     node.novelty = 0.5 + rng.uniform(-0.1, 0.2)
-    # simulate occasional failure
+    # ときどき failure を simulate する
     if rng.random() < 0.1:
         node.failure = "oom_killed_by_cgroup"
         node.quality = 0.0
 
 
 # ---------------------------------------------------------------------------
-# verify step  --  sanity check results before scoring
+# verify step  --  scoring 前に result を sanity check する
 # ---------------------------------------------------------------------------
 
 def verify(node: Node) -> bool:
@@ -102,7 +102,7 @@ def verify(node: Node) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# tree search  --  best-first with budget and max depth
+# tree search  --  budget と max depth 付き best-first
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -141,7 +141,7 @@ def tree_search(seed: str, rng: random.Random) -> Tree:
         if cur is None:
             break
         if tree.spent >= tree.budget:
-            print(f"    BUDGET EXHAUSTED at ${tree.spent:.2f}")
+            print(f"    BUDGET を使い切りました: ${tree.spent:.2f}")
             break
         if cur.node_id != 0:
             run_experiment(cur, rng)
@@ -153,7 +153,7 @@ def tree_search(seed: str, rng: random.Random) -> Tree:
                   f"$={cur.cost_usd:.2f}  cum=${tree.spent:.2f}")
             if not ok:
                 continue
-        # expand the top promising nodes
+        # promising な node を expand する
         children = expand(cur, next_id)
         next_id += len(children)
         for ch in children:
@@ -163,7 +163,7 @@ def tree_search(seed: str, rng: random.Random) -> Tree:
 
 
 # ---------------------------------------------------------------------------
-# best-branch selection and write-up stub
+# best-branch selection と write-up stub
 # ---------------------------------------------------------------------------
 
 def best_branch(tree: Tree) -> list[Node]:
@@ -171,7 +171,7 @@ def best_branch(tree: Tree) -> list[Node]:
     if not done:
         return []
     best = max(done, key=lambda n: n.quality)
-    # walk back to root
+    # root まで戻る
     chain = [best]
     while chain[-1].parent is not None:
         chain.append(tree.nodes[chain[-1].parent])
@@ -181,20 +181,20 @@ def best_branch(tree: Tree) -> list[Node]:
 def main() -> None:
     print("=== autonomous research agent: tree search (budget $30) ===")
     rng = random.Random(7)
-    seed = "investigate sparsity patterns in attention maps of sub-1B transformers"
+    seed = "sub-1B transformer の attention map における sparsity pattern を調べる"
     tree = tree_search(seed, rng)
     print()
-    print(f"nodes explored : {len(tree.nodes)}")
-    print(f"budget spent   : ${tree.spent:.2f} of ${tree.budget:.2f}")
-    print(f"failed nodes   : {sum(1 for n in tree.nodes.values() if n.failure)}")
+    print(f"探索した nodes : {len(tree.nodes)}")
+    print(f"使用 budget    : ${tree.spent:.2f} / ${tree.budget:.2f}")
+    print(f"失敗 nodes     : {sum(1 for n in tree.nodes.values() if n.failure)}")
 
     branch = best_branch(tree)
-    print(f"\nbest branch (length {len(branch)}):")
+    print(f"\nbest branch (長さ {len(branch)}):")
     for n in branch:
         print(f"  #{n.node_id:02d} {n.hypothesis}   q={n.quality:.2f}  loss={n.result.get('loss','?')}")
 
-    print("\n(writer + reviewer + red-team steps would run here; "
-          "stubbed for the scaffold)")
+    print("\n(writer + reviewer + red-team step はここで走る想定です。"
+          "scaffold では stub しています)")
 
 
 if __name__ == "__main__":

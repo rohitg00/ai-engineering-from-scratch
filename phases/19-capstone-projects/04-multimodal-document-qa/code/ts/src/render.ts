@@ -18,11 +18,11 @@ export function renderIndex(): string {
     )
     .join("\n");
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Document QA viewer</title>
+<html lang="ja"><head><meta charset="utf-8"><title>Document QA viewer</title>
 <style>body{font-family:system-ui,sans-serif;max-width:720px;margin:2rem auto;color:#222}</style>
 </head><body>
 <h1>Capstone 04 viewer</h1>
-<p>Pick a document. Cited regions render as canvas overlays on the page image.</p>
+<p>document を選んでください。cited region は page image 上の canvas overlay として描画されます。</p>
 <ul>${items}</ul>
 </body></html>`;
 }
@@ -44,7 +44,7 @@ export function renderDocument(doc: DocumentFixture): string {
   const halfW = doc.pageWidth / 2;
   const halfH = doc.pageHeight / 2;
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>${escapeHtml(doc.title)}</title>
+<html lang="ja"><head><meta charset="utf-8"><title>${escapeHtml(doc.title)}</title>
 <style>
   body { font-family: system-ui, sans-serif; max-width: 980px; margin: 2rem auto; color: #222; }
   .stage { position: relative; border: 1px solid #ddd; display: inline-block; }

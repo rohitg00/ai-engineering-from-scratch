@@ -1,22 +1,22 @@
 {
   "lesson": "42-agent-workbench-capstone",
-  "title": "Capstone: Ship a Reusable Agent Workbench Pack",
+  "title": "Capstone: 再利用可能な Agent Workbench Pack を出荷する",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the capstone produce?",
+      "question": "capstone は何を生成しますか。",
       "options": [
-        "A research paper",
-        "A versioned drop-in directory (agent-workbench-pack/) with the seven surfaces plus a bin/install.sh that lays them down idempotently",
-        "A new LLM",
-        "A monitoring dashboard"
+        "research paper",
+        "7 つの surface と、それらを idempotent に配置する bin/install.sh を含む versioned drop-in directory (agent-workbench-pack/)",
+        "新しい LLM",
+        "monitoring dashboard"
       ],
       "correct": 1,
-      "explanation": "The pack is the recipe; each install is a serving."
+      "explanation": "pack は recipe です。install のたびに 1 つの serving になります。"
     },
     {
       "stage": "pre",
-      "question": "Which is NOT part of the pack layout?",
+      "question": "pack layout に含まれないものはどれですか。",
       "options": [
         "AGENTS.md + docs/",
         "schemas/",
@@ -24,67 +24,67 @@
         "vendor_proprietary_weights/"
       ],
       "correct": 3,
-      "explanation": "Pack layout is AGENTS.md, docs/, schemas/, scripts/, bin/, README.md. The pack is framework- and vendor-agnostic."
+      "explanation": "pack layout は AGENTS.md、docs/、schemas/、scripts/、bin/、README.md です。pack は framework-agnostic かつ vendor-agnostic です。"
     },
     {
       "stage": "check",
-      "question": "Why does the pack carry a VERSION file?",
+      "question": "pack が VERSION file を持つ理由は何ですか。",
       "options": [
-        "For SEO",
-        "Major bumps for schema/script changes that require migrations; minor for additions; patch for doc-only; the target repo records which version it was installed against",
-        "To track agent IQ",
-        "To advertise on Hacker News"
+        "SEO のため",
+        "migration が必要な schema/script change は major、追加は minor、doc-only は patch とし、target repo が install された version を記録するため",
+        "agent IQ を追跡するため",
+        "Hacker News で宣伝するため"
       ],
       "correct": 1,
-      "explanation": "Same shape as npm, Cargo, pyproject.toml; VERSION is the contract, not the marketing."
+      "explanation": "npm、Cargo、pyproject.toml と同じ形です。VERSION は marketing ではなく contract です。"
     },
     {
       "stage": "check",
-      "question": "What does cross-tool distribution look like in this pack?",
+      "question": "この pack における cross-tool distribution はどのような形ですか。",
       "options": [
-        "Hard-code each tool's path",
-        "One source file with symlinks (ln -s AGENTS.md CLAUDE.md, .cursor/rules/, .github/copilot-instructions.md) so the same source fans out to every coding agent",
-        "Manual copy per tool",
-        "A vendor lock per tool"
+        "tool ごとの path を hard-code する",
+        "1 つの source file と symlink (ln -s AGENTS.md CLAUDE.md, .cursor/rules/, .github/copilot-instructions.md) により、同じ source をすべての coding agent に fan out する",
+        "tool ごとに手動 copy する",
+        "tool ごとに vendor lock をかける"
       ],
       "correct": 1,
-      "explanation": "Nx's nx ai-setup is the reference; the pack's installer does the same with symlinks."
+      "explanation": "Nx の nx ai-setup が reference です。pack の installer も同じことを symlink で行います。"
     },
     {
       "stage": "check",
-      "question": "How does the lesson recommend the uninstaller behave?",
+      "question": "lesson は uninstaller にどのような挙動を推奨していますか。",
       "options": [
-        "Delete everything including state",
-        "Refuse on non-trivial state; never delete user agent_state.json, task_board.json, or outputs/; only remove schemas, scripts, docs, and AGENTS.md (with opt-out)",
-        "Delete only docs",
-        "Disable git"
+        "state を含めてすべて削除する",
+        "non-trivial state では拒否し、user の agent_state.json、task_board.json、outputs/ は決して削除しない。schema、script、doc、AGENTS.md だけを削除する (opt-out つき)",
+        "doc だけを削除する",
+        "git を無効化する"
       ],
       "correct": 1,
-      "explanation": "State belongs to the user; the pack does not own it."
+      "explanation": "state は user のものです。pack はそれを所有しません。"
     },
     {
       "stage": "post",
-      "question": "What stays OUT of the pack?",
+      "question": "pack から外すものは何ですか。",
       "options": [
-        "Schemas",
-        "Project-specific tasks, vendor SDK calls, team onboarding prose — the pack is framework-agnostic and lives next to onboarding, not inside it",
-        "Scripts",
-        "The installer"
+        "schema",
+        "project-specific task、vendor SDK call、team onboarding prose。pack は framework-agnostic で、onboarding の中ではなく隣に置かれる",
+        "script",
+        "installer"
       ],
       "correct": 1,
-      "explanation": "Tasks belong on the target repo's board, not the pack; vendor SDK calls would lock the pack to one framework."
+      "explanation": "task は target repo の board に属します。vendor SDK call は pack を 1 つの framework に lock してしまいます。"
     },
     {
       "stage": "post",
-      "question": "Through what channel does the pack ship to many coding agents at once?",
+      "question": "pack を多数の coding agent へ一度に出荷する channel は何ですか。",
       "options": [
-        "Hand-copy",
-        "SkillKit-style distribution (skillkit install agent-workbench-pack) lays it down across 32 AI agents from a single source",
-        "Email attachment",
-        "GitHub release notes only"
+        "手動 copy",
+        "SkillKit-style distribution (skillkit install agent-workbench-pack) が single source から 32 AI agent へ配置する",
+        "email attachment",
+        "GitHub release note のみ"
       ],
       "correct": 1,
-      "explanation": "Pack repo is the source of truth; SkillKit is the distribution channel; vendor lock-in collapses."
+      "explanation": "pack repo が source of truth で、SkillKit が distribution channel です。vendor lock-in は崩れます。"
     }
   ]
 }

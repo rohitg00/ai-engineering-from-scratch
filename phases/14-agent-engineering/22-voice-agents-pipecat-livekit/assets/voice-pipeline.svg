@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -8,8 +8,8 @@
       .stage { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .upstream { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .latency { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -49,17 +49,17 @@
   <line x1="640" y1="120" x2="660" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <line x1="790" y1="120" x2="810" y2="120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <text x="480" y="180" text-anchor="middle" class="small">context alternates user/assistant; every stage can carry partial output</text>
+  <text x="480" y="180" text-anchor="middle" class="small">contextはuser/assistantで交互; 各stageはpartial outputを運べる</text>
   <text x="480" y="200" text-anchor="middle" class="small">transports: Daily, LiveKit, SmallWebRTCTransport, FastAPI WebSocket, WhatsApp, SIP</text>
 
   <rect x="40" y="240" width="880" height="120" class="upstream"/>
   <text x="480" y="262" text-anchor="middle" class="head">UPSTREAM  cancel, metrics, barge-in</text>
   <rect x="60" y="278" width="840" height="30" class="box"/>
-  <text x="78" y="298" class="step">transport detects interrupt  cancel frame propagates back: TTS  LLM  STT</text>
+  <text x="78" y="298" class="step">transportがinterrupt検出  cancel frameが逆方向へ伝播: TTS  LLM  STT</text>
   <rect x="60" y="312" width="840" height="30" class="box"/>
-  <text x="78" y="332" class="step">TTS drops pending audio; LLM cancels inference; STT resets for new turn</text>
+  <text x="78" y="332" class="step">TTSはpending audioをdrop; LLMはinference cancel; STTはnew turnへreset</text>
   <rect x="60" y="342" width="840" height="14" class="box"/>
-  <text x="78" y="354" class="step">without UPSTREAM: agent keeps talking over the user</text>
+  <text x="78" y="354" class="step">UPSTREAMなし: agentがuserに被せて話し続ける</text>
 
   <rect x="40" y="380" width="880" height="130" class="latency"/>
   <text x="480" y="402" text-anchor="middle" class="head">end-to-end latency budget</text>
@@ -68,7 +68,7 @@
   <rect x="60" y="452" width="840" height="30" class="box"/>
   <text x="78" y="472" class="step">common stack: 800-1200ms</text>
   <rect x="60" y="486" width="840" height="20" class="box"/>
-  <text x="78" y="502" class="step">&gt; 1500ms feels broken. sum your chain before shipping.</text>
+  <text x="78" y="502" class="step">&gt; 1500msは壊れているように感じる。shipping前にchainを合計する。</text>
 
-  <text x="480" y="540" text-anchor="middle" class="caption">LiveKit Agents: MultimodalAgent (direct audio) vs VoicePipelineAgent (cascade with text control).</text>
+  <text x="480" y="540" text-anchor="middle" class="caption">LiveKit Agents: MultimodalAgent (direct audio) vs VoicePipelineAgent (text control付きcascade).</text>
 </svg>

@@ -1,102 +1,102 @@
 {
   "lesson": "04-glove-fasttext-subword",
-  "title": "GloVe, FastText, and Subword Embeddings",
+  "title": "GloVe、FastText、サブワード埋め込み",
   "questions": [
     {
       "stage": "pre",
-      "question": "What did GloVe contribute over Word2Vec?",
+      "question": "GloVeはWord2Vecに対して何を貢献しましたか?",
       "options": [
-        "Direct factorization of the word-word co-occurrence matrix with a weighted loss",
-        "Byte-level tokenization",
-        "A deeper neural network",
-        "Subword n-gram embeddings"
+        "重み付き損失による単語-単語共起行列の直接分解",
+        "byte-level tokenization",
+        "より深いニューラルネットワーク",
+        "サブワードn-gram埋め込み"
       ],
       "correct": 0,
-      "explanation": "GloVe factorizes the global co-occurrence matrix with a thoughtfully weighted log-loss."
+      "explanation": "GloVeは、慎重に重み付けされたlog-lossでグローバルな共起行列を分解します。"
     },
     {
       "stage": "pre",
-      "question": "What problem does FastText solve that Word2Vec and GloVe do not?",
+      "question": "FastTextは、Word2VecとGloVeが解けないどの問題を解決しますか?",
       "options": [
-        "Reducing training cost",
-        "Multilingual transfer",
-        "Producing vectors for unseen words by composing character n-grams",
-        "Polysemy disambiguation"
+        "学習コストの削減",
+        "多言語転移",
+        "文字n-gramを合成して未知語のベクトルを生成すること",
+        "多義性の曖昧性解消"
       ],
       "correct": 2,
-      "explanation": "FastText composes a word vector from its subword n-grams, so OOV words still get a sensible vector."
+      "explanation": "FastTextはサブワードn-gramから単語ベクトルを合成するため、OOV語にも妥当なベクトルを与えられます。"
     },
     {
       "stage": "check",
-      "question": "In GloVe, what role does the weighting function f(x) = (x/x_max)^alpha play?",
+      "question": "GloVeで、重み関数 f(x) = (x/x_max)^alpha はどの役割を果たしますか?",
       "options": [
-        "Downweights extremely frequent pairs so they do not dominate the loss",
-        "Selects negative samples",
-        "Initializes weights randomly",
-        "Normalizes vectors to unit length"
+        "極端に頻出するペアの重みを下げ、損失を支配しないようにする",
+        "負例サンプルを選ぶ",
+        "重みをランダムに初期化する",
+        "ベクトルを単位長に正規化する"
       ],
       "correct": 0,
-      "explanation": "The weighting prevents ubiquitous co-occurrences like (the, and) from dominating training."
+      "explanation": "この重み付けにより、(the, and) のような遍在的な共起が学習を支配するのを防ぎます。"
     },
     {
       "stage": "check",
-      "question": "How does the BPE merge step pick which pair to combine next?",
+      "question": "BPEのmergeステップは、次に結合するペアをどのように選びますか?",
       "options": [
-        "A random pair",
-        "The lexicographically first pair",
-        "The most frequent adjacent token pair across the corpus",
-        "The pair with highest IDF"
+        "ランダムなペア",
+        "辞書順で最初のペア",
+        "コーパス全体で最も頻度の高い隣接tokenペア",
+        "IDFが最も高いペア"
       ],
       "correct": 2,
-      "explanation": "BPE iteratively merges the most frequent adjacent pair."
+      "explanation": "BPEは、最も頻度の高い隣接ペアを反復的にマージします。"
     },
     {
       "stage": "check",
-      "question": "Why does GPT-2 use byte-level BPE?",
+      "question": "GPT-2がbyte-level BPEを使うのはなぜですか?",
       "options": [
-        "Byte BPE skips merge training",
-        "The base vocabulary of 256 bytes covers any input, eliminating out-of-vocabulary entirely",
-        "Bytes train faster than characters",
-        "Bytes preserve casing implicitly"
+        "Byte BPEではmerge学習を省略できるから",
+        "256個のbyteからなる基本語彙があらゆる入力をカバーし、語彙外を完全になくすから",
+        "byteは文字より速く学習できるから",
+        "byteは大文字小文字を暗黙に保持するから"
       ],
       "correct": 1,
-      "explanation": "Starting from 256 bytes means every UTF-8 string tokenizes; nothing is OOV."
+      "explanation": "256個のbyteから始めることで、あらゆるUTF-8文字列をtoken化できます。OOVはありません。"
     },
     {
       "stage": "post",
-      "question": "Which tokenizer should you use when fine-tuning a pretrained transformer?",
+      "question": "事前学習済みtransformerをfine-tuningするとき、どのtokenizerを使うべきですか?",
       "options": [
-        "Always SentencePiece",
-        "The exact tokenizer the model shipped with; mismatch breaks the embeddings",
-        "Whichever has the largest vocabulary",
-        "Always byte-level BPE"
+        "常にSentencePiece",
+        "モデルに同梱された正確なtokenizer。不一致は埋め込みを壊す",
+        "語彙が最も大きいもの",
+        "常にbyte-level BPE"
       ],
       "correct": 1,
-      "explanation": "Tokenizer-model mismatch silently corrupts inputs; always pair the shipped tokenizer with its model."
+      "explanation": "tokenizerとモデルの不一致は入力を静かに壊します。必ず同梱されたtokenizerをそのモデルと組み合わせてください。"
     },
     {
       "stage": "post",
-      "question": "When would you pick FastText over GloVe for pretrained word vectors?",
+      "question": "事前学習済み単語ベクトルで、GloVeではなくFastTextを選ぶのはどのような場合ですか?",
       "options": [
-        "When you need a 50d model",
-        "For morphologically rich languages or domains with frequent neologisms and misspellings",
-        "When latency is tightest",
-        "When the corpus is very small"
+        "50dモデルが必要な場合",
+        "形態的に豊かな言語、または新語やスペルミスが頻出するドメインを扱う場合",
+        "レイテンシが最も厳しい場合",
+        "コーパスが非常に小さい場合"
       ],
       "correct": 1,
-      "explanation": "FastText's subword composition handles inflections, neologisms, and misspellings that GloVe cannot."
+      "explanation": "FastTextのサブワード合成は、GloVeでは扱えない活用、新語、スペルミスを処理できます。"
     },
     {
       "stage": "post",
-      "question": "What unit forms the base of WordPiece, BPE, and SentencePiece vocabularies?",
+      "question": "WordPiece、BPE、SentencePiece語彙の基礎になる単位は何ですか?",
       "options": [
-        "Sentences",
-        "Whole words",
-        "Paragraphs",
-        "Subword pieces (characters, n-grams, or learned merges) below the word level"
+        "文",
+        "完全な単語",
+        "段落",
+        "単語より小さいサブワード片 (文字、n-gram、または学習されたmerge)"
       ],
       "correct": 3,
-      "explanation": "All three are subword tokenizers; they differ in how merges or pieces are learned, not in being subword."
+      "explanation": "3つともサブワードtokenizerです。違いはmergeやpieceの学習方法であり、サブワードである点は同じです。"
     }
   ]
 }

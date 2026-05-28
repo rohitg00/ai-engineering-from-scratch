@@ -1,102 +1,102 @@
 {
   "lesson": "21-nli-textual-entailment",
-  "title": "Natural Language Inference — Textual Entailment",
+  "title": "自然言語推論 — テキスト含意",
   "questions": [
     {
       "stage": "pre",
-      "question": "What three labels does NLI assign to a (premise, hypothesis) pair?",
+      "question": "NLI は (premise, hypothesis) ペアにどの 3 つのラベルを割り当てますか。",
       "options": [
-        "Positive / negative / neutral",
-        "True / false / unknown",
-        "Entailment / contradiction / neutral",
-        "Cause / effect / unrelated"
+        "ポジティブ / ネガティブ / 中立",
+        "真 / 偽 / 不明",
+        "含意 / 矛盾 / 中立",
+        "原因 / 結果 / 無関係"
       ],
       "correct": 2,
-      "explanation": "NLI is a 3-way classification over entailment, contradiction, and neutral."
+      "explanation": "NLI は含意 (entailment)、矛盾 (contradiction)、中立 (neutral) の 3-way 分類です。"
     },
     {
       "stage": "pre",
-      "question": "How is NLI used as a zero-shot text classifier?",
+      "question": "NLI はどのようにゼロショットテキスト分類器として使われますか。",
       "options": [
-        "Verbalize each candidate label as a hypothesis (e.g. 'This text is about sports') and pick the label with the highest entailment score",
-        "By averaging embeddings",
-        "By computing TF-IDF",
-        "By prompting an LLM"
+        "各候補ラベルを仮説として言語化し (例: 'This text is about sports')、含意スコアが最も高いラベルを選ぶ",
+        "embedding を平均する",
+        "TF-IDF を計算する",
+        "LLM にプロンプトを送る"
       ],
       "correct": 0,
-      "explanation": "NLI-as-classifier turns labels into hypotheses; the model picks the max-entailment label."
+      "explanation": "分類器としての NLI はラベルを仮説に変換し、モデルが最大含意のラベルを選びます。"
     },
     {
       "stage": "check",
-      "question": "Why is NLI a faithfulness check for RAG outputs?",
+      "question": "NLI が RAG 出力の忠実性チェックになるのはなぜですか。",
       "options": [
-        "It uses tokenizers",
-        "Checking whether the retrieved context entails each answer claim is exactly the formulation NLI was trained on",
-        "It is cheap",
-        "It is multilingual"
+        "tokenizer を使うから",
+        "検索されたコンテキストが各回答主張を含意するかを確認することは、NLI が訓練された定式化そのものだから",
+        "安価だから",
+        "多言語だから"
       ],
       "correct": 1,
-      "explanation": "Hallucination = answer claims not entailed by retrieved context; NLI directly measures entailment."
+      "explanation": "ハルシネーション = 検索コンテキストに含意されない回答主張です。NLI は含意を直接測定します。"
     },
     {
       "stage": "check",
-      "question": "What does the hypothesis-only baseline expose?",
+      "question": "仮説のみベースラインは何を明らかにしますか。",
       "options": [
-        "Multilingual gaps",
-        "Slow inference",
-        "Datasets where the hypothesis alone (without the premise) is predictive of the label, signalling label leakage",
-        "Tokenizer drift"
+        "多言語での不足",
+        "遅い推論",
+        "前提なしでも仮説だけでラベルを予測できるデータセット、つまりラベル漏れの兆候",
+        "tokenizer のドリフト"
       ],
       "correct": 2,
-      "explanation": "A high hypothesis-only score on SNLI revealed annotation artifacts; useful for debugging your data."
+      "explanation": "SNLI で高い仮説のみスコアが出たことでアノテーション由来のアーティファクトが明らかになりました。自分のデータのデバッグに役立ちます。"
     },
     {
       "stage": "check",
-      "question": "Which NLI model family tops 2026 leaderboards as the standard workhorse?",
+      "question": "2026 年のリーダーボードで標準的な主力として上位にいる NLI モデルファミリーはどれですか。",
       "options": [
         "fastText",
         "Plain Word2Vec",
-        "DeBERTa-v3 variants fine-tuned on MNLI/FEVER/ANLI",
+        "MNLI/FEVER/ANLI でファインチューニングされた DeBERTa-v3 variants",
         "GPT-2"
       ],
       "correct": 2,
-      "explanation": "DeBERTa-v3 fine-tuned on MNLI and related corpora is the open NLI workhorse in 2026."
+      "explanation": "MNLI と関連コーパスでファインチューニングされた DeBERTa-v3 は、2026 年時点のオープンな NLI の主力です。"
     },
     {
       "stage": "post",
-      "question": "Why do sentence-level NLI models drop accuracy on document-length premises?",
+      "question": "単文レベルの NLI モデルは、文書長の前提でなぜ精度が落ちるのですか。",
       "options": [
-        "They were trained on short premises and fail at multi-sentence and multi-hop inference; DocNLI-tuned models handle longer inputs",
-        "Larger inputs run slower",
-        "Documents trigger tokenizer drift",
-        "Cosine similarity decays"
+        "短い前提で訓練されており、複数文やマルチホップ推論に失敗するから。DocNLI で調整されたモデルは長い入力を扱える",
+        "入力が大きいほど実行が遅いから",
+        "文書が tokenizer ドリフトを引き起こすから",
+        "cosine similarity が減衰するから"
       ],
       "correct": 0,
-      "explanation": "Training distribution mismatch: single-sentence NLI models lose 20+ F1 on document-length inputs."
+      "explanation": "訓練分布の不一致です。単文 NLI モデルは文書長入力で 20+ F1 を失います。"
     },
     {
       "stage": "post",
-      "question": "Why can zero-shot accuracy swing 10+ points based on the hypothesis template?",
+      "question": "仮説テンプレートによってゼロショット精度が 10 ポイント以上動くことがあるのはなぜですか。",
       "options": [
-        "Models are sensitive to phrasing; e.g. 'This text is about {label}' vs '{label}' alone shifts entailment probabilities",
-        "Templates change tokenizer behavior",
-        "Templates affect model weights",
-        "Templates change the label set"
+        "モデルは言い回しに敏感であり、たとえば 'This text is about {label}' と '{label}' だけでは含意確率が変わるから",
+        "テンプレートが tokenizer の挙動を変えるから",
+        "テンプレートがモデル重みを変えるから",
+        "テンプレートがラベル集合を変えるから"
       ],
       "correct": 0,
-      "explanation": "Template wording materially shifts entailment scores; tune it on a small held-out set."
+      "explanation": "テンプレートの文言は含意スコアを実質的に動かします。小さなホールドアウトセットで調整してください。"
     },
     {
       "stage": "post",
-      "question": "What is a safe limit to claim about NLI for hallucination detection?",
+      "question": "ハルシネーション検出における NLI について、安全に主張できる範囲はどれですか。",
       "options": [
-        "It only works on English",
-        "It reduces hallucination as a faithfulness signal but does not eliminate it; combine with retrieval recall and human review",
-        "It eliminates hallucination",
-        "It requires LLMs"
+        "英語でしか機能しない",
+        "忠実性シグナルとしてハルシネーションを減らすが、なくすわけではない。検索 recall や人間レビューと組み合わせる",
+        "ハルシネーションをなくす",
+        "LLM が必要である"
       ],
       "correct": 1,
-      "explanation": "NLI is a useful signal but not a complete solution; pair with retrieval metrics and human spot-checks."
+      "explanation": "NLI は有用なシグナルですが完全な解決策ではありません。検索メトリクスや人間の抜き取り確認と組み合わせてください。"
     }
   ]
 }

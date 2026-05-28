@@ -1,10 +1,10 @@
-"""Hypothesis generator: temperature ramped sampling, novelty filter, ranked queue.
+"""仮説ジェネレーター: temperature ramped sampling、novelty filter、ranked queue。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
+概念参照:
+- ./docs/en.md (この lesson)
 - Phase 19 Track A lessons 20-29 (agent harness primitives)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -56,7 +56,7 @@ class Hypothesis:
 
 
 class ParserError(ValueError):
-    """Raised when a sampler response does not match the hypothesis tag schema."""
+    """sampler response が hypothesis tag schema に一致しないときに raise されます。"""
 
 
 def _tokenise(text: str) -> list[str]:
@@ -64,7 +64,7 @@ def _tokenise(text: str) -> list[str]:
 
 
 def hashed_embed(text: str, dim: int = HASH_DIM) -> list[float]:
-    """Hashed bag of tokens embedding, L2 normalised. Deterministic stdlib only."""
+    """hashed bag-of-tokens embedding。L2 正規化済みで stdlib だけの決定的実装です。"""
     vec = [0.0] * dim
     for tok in _tokenise(text):
         h = hashlib.md5(tok.encode("utf-8")).digest()
@@ -108,7 +108,7 @@ def parse_response(raw: str) -> dict:
 
 
 def temperature_bucket(temperature: float) -> int:
-    """Map a continuous temperature to a discrete bucket index."""
+    """連続値の temperature を離散 bucket index に map します。"""
     if temperature < 0.35:
         return 0
     if temperature < 0.65:
@@ -119,11 +119,11 @@ def temperature_bucket(temperature: float) -> int:
 
 
 class MockLLM:
-    """Scripted sampler keyed on (prompt_signature, temperature_bucket).
+    """(prompt_signature, temperature_bucket) を key にした scripted sampler。
 
-    The seed is folded into the response so identical prompts and buckets with
-    different seeds yield distinct drafts. Unknown keys return an unparseable
-    fallback so the parser-failure path is reachable from tests.
+    seed を response selection に混ぜるため、同じ prompt と bucket でも
+    seed が違えば別 draft になります。未知 key では parse 不能な fallback を
+    返し、parser-failure path を tests から到達可能にします。
     """
 
     def __init__(self, scripts: dict[tuple[str, int], list[str]]) -> None:
@@ -183,7 +183,7 @@ class GenerationLog:
 
 
 class HypothesisGenerator:
-    """Drives the mock LLM over a temperature schedule and ranks the survivors."""
+    """temperature schedule に沿って mock LLM を動かし、採用候補を rank します。"""
 
     def __init__(
         self,
@@ -256,13 +256,13 @@ class HypothesisGenerator:
 
 
 def build_demo_scripts() -> dict[tuple[str, int], list[str]]:
-    """Scripted responses for the demo seed prompt across temperature buckets."""
+    """demo seed prompt 用の temperature bucket 別 scripted responses。"""
     seed_prompt = "Investigate attention sparsity in small transformers"
     sig = MockLLM.prompt_signature(seed_prompt)
     return {
         (sig, 0): [
             "<hypothesis>"
-            "<text>Lowering attention head count from 8 to 4 raises validation loss by less than 2 percent on a 12M parameter model.</text>"
+            "<text>12M parameter model で attention head count を 8 から 4 に下げても validation loss の増加は 2 percent 未満である。</text>"
             "<variables>head_count, validation_loss</variables>"
             "<metric>validation_loss</metric>"
             "<baseline>head_count_8</baseline>"
@@ -270,7 +270,7 @@ def build_demo_scripts() -> dict[tuple[str, int], list[str]]:
         ],
         (sig, 1): [
             "<hypothesis>"
-            "<text>Top-k sparse attention with k equal to 16 matches dense attention on perplexity at 12M parameters.</text>"
+            "<text>k=16 の Top-k sparse attention は 12M parameters で perplexity が dense attention と同等になる。</text>"
             "<variables>k, perplexity, parameter_count</variables>"
             "<metric>perplexity</metric>"
             "<baseline>dense_attention</baseline>"
@@ -278,7 +278,7 @@ def build_demo_scripts() -> dict[tuple[str, int], list[str]]:
         ],
         (sig, 2): [
             "<hypothesis>"
-            "<text>Routing attention through a learned gate reduces flops by 30 percent without harming downstream accuracy.</text>"
+            "<text>learned gate で attention を routing すると downstream accuracy を損なわず flops を 30 percent 削減できる。</text>"
             "<variables>gate_temperature, flops, accuracy</variables>"
             "<metric>downstream_accuracy</metric>"
             "<baseline>dense_attention</baseline>"
@@ -286,7 +286,7 @@ def build_demo_scripts() -> dict[tuple[str, int], list[str]]:
         ],
         (sig, 3): [
             "<hypothesis>"
-            "<text>Block sparse attention with block size 32 lowers wall clock training time by 18 percent on consumer GPUs.</text>"
+            "<text>block size 32 の block sparse attention は consumer GPUs 上の wall clock training time を 18 percent 短縮する。</text>"
             "<variables>block_size, training_seconds, hardware</variables>"
             "<metric>training_seconds</metric>"
             "<baseline>dense_attention</baseline>"

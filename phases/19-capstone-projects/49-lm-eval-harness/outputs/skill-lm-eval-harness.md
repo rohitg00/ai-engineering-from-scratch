@@ -1,37 +1,37 @@
 ---
 name: lm-eval-harness
-description: Minimal language model evaluation harness with JSONL task spec, five metrics, swappable adapter, and leaderboard JSON output.
+description: JSONL task spec、5 つの metric、差し替え可能な adapter、leaderboard JSON 出力を持つ最小 language model evaluation harness。
 version: 1.0.0
 phase: 19
 lesson: 49
 tags: [evaluation, metrics, leaderboard, harness]
 ---
 
-## When to use
+## 使う場面
 
-Compare two models, two checkpoints, or two prompt templates against a fixed set of tasks. Anything that ships and that you need to monitor over time.
+2 つの model、checkpoint、prompt template を固定 task set で比較し、時間を追って監視したいときに使う。
 
 ## Task spec
 
-One JSONL line per example:
+1 example 1 JSONL line:
 
 ```json
 {"id": "ex-001", "prompt": "...", "targets": ["..."], "metric": "exact_match", "extras": {}}
 ```
 
-All examples in a file share a metric. The file name is the task name.
+1 file の全 example は同じ metric を共有する。file name が task name である。
 
 ## Metrics
 
-| Metric | Signature | Use for |
-|--------|-----------|---------|
-| exact_match | normalize lower + whitespace, equality | Arithmetic, factoid answers |
-| substring_contains | target must appear in normalized prediction | Free-form generation with anchor words |
-| multiple_choice | first letter match | A/B/C/D style questions |
-| rouge_l | LCS F1 over tokenized text | Summary, paraphrase |
-| code_exec | run prediction's `f` on io_pairs, count matches | Code generation |
+| Metric | Signature | 用途 |
+|--------|-----------|------|
+| exact_match | lower + whitespace 正規化後に equality | arithmetic、factoid answer |
+| substring_contains | 正規化後 prediction に target が含まれる | anchor word を持つ free-form generation |
+| multiple_choice | first letter match | A/B/C/D 形式の question |
+| rouge_l | tokenized text の LCS F1 | summary、paraphrase |
+| code_exec | prediction の `f` を io_pairs で実行 | code generation |
 
-All metrics return float in [0.0, 1.0]. Task score is the mean.
+すべての metric は [0.0, 1.0] の float を返す。task score は平均である。
 
 ## Adapter
 
@@ -41,15 +41,15 @@ class Adapter(Protocol):
     def generate(self, prompts: list[str]) -> list[str]: ...
 ```
 
-The adapter is the only model-specific code.
+adapter は唯一の model-specific code である。
 
 ## Leaderboard JSON
 
-Schema string, timestamp, per-task scores and latency, overall mean. Include per-example records when comparing runs so prediction-level regressions are visible.
+schema string、timestamp、per-task score と latency、overall mean を含める。run を比較するときは per-example record も入れ、prediction-level regression を見えるようにする。
 
 ## Failure modes
 
-- Metric returns outside [0, 1]: overall score becomes uninterpretable.
-- Mixed metrics in one task file: assertion fires; keep one metric per file.
-- code_exec without restricted namespace: arbitrary code execution.
-- No schema string: format evolution breaks downstream dashboards.
+- metric が [0, 1] の外を返す: overall score が解釈不能になる。
+- 1 task file に複数 metric を混ぜる: assertion が発火する。
+- restricted namespace なしの `code_exec`: 任意コード実行になる。
+- schema string がない: downstream dashboard の format evolution が壊れる。

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,15 +7,15 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .axis { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
       .bar { stroke: #1a1a1a; stroke-width: 1.0; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Scalable oversight: PGR and the three mechanisms</text>
+  <text x="480" y="24" text-anchor="middle" class="title">Scalable oversight: PGRと3つのmechanisms</text>
 
   <rect x="40" y="60" width="420" height="330" class="box"/>
   <text x="250" y="82" text-anchor="middle" class="head">Performance Gap Recovered (PGR)</text>
@@ -38,25 +38,25 @@
   <text x="390" y="155" text-anchor="middle" class="small">0.83</text>
 
   <rect x="480" y="60" width="440" height="220" class="box"/>
-  <text x="700" y="82" text-anchor="middle" class="head">three scalable-oversight mechanisms</text>
+  <text x="700" y="82" text-anchor="middle" class="head">3つのscalable-oversight mechanisms</text>
   <rect x="500" y="100" width="400" height="50" class="cold"/>
   <text x="700" y="122" text-anchor="middle" class="step">debate (Irving 2018)</text>
-  <text x="700" y="140" text-anchor="middle" class="small">two U's argue; weak judge picks. mixed 2024 evidence.</text>
+  <text x="700" y="140" text-anchor="middle" class="small">2つのUが議論し、weak judgeが選ぶ。2024 evidenceはmixed。</text>
   <rect x="500" y="160" width="400" height="50" class="cold"/>
   <text x="700" y="182" text-anchor="middle" class="step">recursive reward modeling (Leike 2018)</text>
-  <text x="700" y="200" text-anchor="middle" class="small">U helps train RM for U+1. overseer tracks U.</text>
+  <text x="700" y="200" text-anchor="middle" class="small">UがU+1用RM trainingを支援。overseerはUを追跡。</text>
   <rect x="500" y="220" width="400" height="50" class="cold"/>
   <text x="700" y="242" text-anchor="middle" class="step">task decomposition (Christiano 2018)</text>
-  <text x="700" y="260" text-anchor="middle" class="small">break hard task into checkable sub-tasks.</text>
+  <text x="700" y="260" text-anchor="middle" class="small">hard taskをcheck可能なsub-tasksに分解。</text>
 
   <rect x="480" y="300" width="440" height="90" class="box"/>
-  <text x="700" y="325" text-anchor="middle" class="head">complementarity with W2SG</text>
-  <text x="500" y="350" class="small">scalable oversight: improves label quality.</text>
-  <text x="500" y="368" class="small">W2SG: closes gap from whatever labels.</text>
-  <text x="500" y="386" class="small">combined (Lang 2025): better PGR on NLP tasks.</text>
+  <text x="700" y="325" text-anchor="middle" class="head">W2SGとのcomplementarity</text>
+  <text x="500" y="350" class="small">scalable oversight: label qualityを改善。</text>
+  <text x="500" y="368" class="small">W2SG: 与えられたlabelsからgapを閉じる。</text>
+  <text x="500" y="386" class="small">combined (Lang 2025): NLP tasksでPGR改善。</text>
 
   <rect x="40" y="410" width="880" height="80" class="box"/>
-  <text x="60" y="435" class="small">PGR is a measurable, not a solution. Burns et al. 2023 are explicit: the weak-strong gap they study is capability-shaped.</text>
-  <text x="60" y="455" class="small">superalignment question -- can humans oversee superhuman models? -- depends on whether the gap transfers to alignment-shaped settings.</text>
-  <text x="60" y="475" class="small">organizational: OpenAI Superalignment dissolved 05/2024; agenda continues at Anthropic, MATS, Redwood, Apollo, METR.</text>
+  <text x="60" y="435" class="small">PGRはmeasurableでありsolutionではない。Burns et al. 2023は明示する: 彼らのweak-strong gapはcapability-shaped。</text>
+  <text x="60" y="455" class="small">superalignment question -- humanはsuperhuman modelsをoverseeできるか -- はgapがalignment-shaped settingsへ移るかに依存。</text>
+  <text x="60" y="475" class="small">組織面: OpenAI Superalignmentは2024-05に解散。agendaはAnthropic、MATS、Redwood、Apollo、METRで継続。</text>
 </svg>

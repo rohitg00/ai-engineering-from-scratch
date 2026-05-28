@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which two sublayers live inside a single decoder transformer block?",
+      "question": "1つの decoder transformer block に入る2つの sublayers はどれですか?",
       "options": [
-        "Convolution and recurrent gate",
-        "Multi head causal attention and a position wise MLP, each wrapped in a residual connection",
-        "Embedding lookup and softmax",
-        "RNN encoder and decoder"
+        "Convolution と recurrent gate",
+        "Multi-head causal attention と position-wise MLP。それぞれ residual connection で包まれる",
+        "Embedding lookup と softmax",
+        "RNN encoder と decoder"
       ],
       "correct": 1,
-      "explanation": "Every modern decoder LLM block is attention plus MLP, each with its own residual path and its own LayerNorm."
+      "explanation": "現代の decoder LLM block は attention と MLP で、それぞれ residual path と LayerNorm を持ちます。"
     },
     {
       "stage": "check",
-      "question": "What is the key difference between pre-LN and post-LN at depth?",
+      "question": "深い stack での pre-LN と post-LN の主な違いは何ですか?",
       "options": [
-        "Pre-LN uses different attention math",
-        "Pre-LN keeps the residual signal unnormalized so gradients propagate cleanly to the embedding; post-LN puts the norm after the residual add, which shrinks gradients at depth and needs warmup",
-        "Post-LN is faster on GPU",
-        "Pre-LN works only for encoders"
+        "pre-LN は attention math が異なる",
+        "pre-LN は residual signal を unnormalized のまま保ち勾配が embedding へ届きやすい。post-LN は norm を residual add 後に置くため深さで勾配が弱まり warmup が必要になりやすい",
+        "post-LN は GPU で速い",
+        "pre-LN は encoder 専用"
       ],
       "correct": 1,
-      "explanation": "Pre-LN trains stably without warmup at common learning rates; post-LN is what the 2017 paper shipped and needed warmup."
+      "explanation": "pre-LN は一般的な learning rate で warmup なしでも安定しやすく、post-LN は 2017 年論文の構成です。"
     },
     {
       "stage": "check",
-      "question": "What does the causal mask in multi head attention do?",
+      "question": "multi-head attention の causal mask は何をしますか?",
       "options": [
-        "Drops random tokens",
-        "Sets the upper triangle of the attention logits to negative infinity so token i cannot attend to tokens at positions greater than i",
-        "Normalizes the attention scores",
-        "Picks the longest sequence in the batch"
+        "random tokens を drop する",
+        "attention logits の上三角を negative infinity にして token i が i より後の token を読めないようにする",
+        "attention scores を正規化する",
+        "batch 内の最長 sequence を選ぶ"
       ],
       "correct": 1,
-      "explanation": "Forgetting the causal mask trains a model that can read future tokens; the mask is the only piece that enforces causality."
+      "explanation": "causal mask を忘れると、未来 token を読める model を学習してしまいます。"
     },
     {
       "stage": "check",
-      "question": "Why use a fused QKV projection instead of three separate linears?",
+      "question": "3つの separate linears ではなく fused QKV projection を使う理由は何ですか?",
       "options": [
-        "It changes the model expressivity",
-        "One linear of width 3 times d_model collapses three kernel launches and three matmuls into one, faster on every accelerator and matches the reference GPT-2 implementation",
-        "It avoids a softmax",
-        "It removes the residual"
+        "model expressivity を変えるため",
+        "幅 3*d_model の1つの linear が3回の kernel launch と matmul を1回にまとめ、GPT-2 などの実装にも合うため",
+        "softmax を避けるため",
+        "residual を取り除くため"
       ],
       "correct": 1,
-      "explanation": "Same math, fewer kernels; reference implementations of GPT-2, LLaMA, and Mistral all ship the fused projection."
+      "explanation": "数学は同じで kernel が少なくなります。"
     },
     {
       "stage": "post",
-      "question": "Where should dropout NOT be placed in a transformer block?",
+      "question": "transformer block 内で dropout を置くべきではない場所はどこですか?",
       "options": [
-        "On the attention softmax output",
-        "On the residual identity path itself, since that breaks the additive identity that lets the gradient flow at depth",
-        "After the second MLP linear",
-        "Inside the feed forward expansion"
+        "attention softmax output",
+        "residual identity path 自体。深さ方向の gradient flow を支える additive identity を壊すため",
+        "2つ目の MLP linear の後",
+        "feed-forward expansion の中"
       ],
       "correct": 1,
-      "explanation": "Dropout belongs on the attention output and on the MLP residual update, never on the identity branch of the residual."
+      "explanation": "dropout は attention output と MLP update 側に置き、identity branch には置きません。"
     },
     {
       "stage": "post",
-      "question": "Why register the causal mask as a buffer rather than allocating it per forward call?",
+      "question": "causal mask を forward ごとに作らず buffer として登録する理由は何ですか?",
       "options": [
-        "Buffers are encrypted",
-        "The mask depends only on the maximum context length, so allocating it once at construction and slicing the active window per call avoids an allocator hot spot at long context",
-        "Buffers run on GPU only",
-        "Buffers improve numerical accuracy"
+        "buffer は暗号化されるため",
+        "mask は maximum context length だけに依存するので、構築時に一度作って各 call で active window を slice すれば長い context で allocator hot spot を避けられるため",
+        "buffer は GPU 専用だから",
+        "数値精度が上がるから"
       ],
       "correct": 1,
-      "explanation": "Allocate once with register_buffer, slice per forward; otherwise the mask becomes a per-call allocation cost."
+      "explanation": "register_buffer で一度確保し、forward では slice します。"
     }
   ]
 }

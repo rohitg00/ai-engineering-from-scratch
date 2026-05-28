@@ -1,6 +1,6 @@
-"""Unit tests for the HDF5 tokenized corpus pipeline.
+"""HDF5 tokenized corpus pipeline の unit tests。
 
-Run with: python3 -m unittest discover code/tests -v
+実行: python3 -m unittest discover code/tests -v
 """
 
 from __future__ import annotations
@@ -203,15 +203,15 @@ class JSONLSourceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as out_dir:
             path = Path(out_dir) / "docs.jsonl"
             payload = (
-                '{"text": "good document one"}\n'
-                "not json at all\n"
+                '{"text": "良い document 1"}\n'
+                "まったく JSON ではない\n"
                 '{"other": "missing text"}\n'
-                '{"text": "good document two"}\n'
+                '{"text": "良い document 2"}\n'
             )
             path.write_text(payload, encoding="utf-8")
             source = JSONLSource(path)
             collected = list(source)
-            self.assertEqual(collected, ["good document one", "good document two"])
+            self.assertEqual(collected, ["良い document 1", "良い document 2"])
             self.assertEqual(source.dropped_lines, 2)
 
 

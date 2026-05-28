@@ -1,102 +1,102 @@
 {
   "lesson": "13-question-answering",
-  "title": "Question Answering Systems",
+  "title": "質問応答システム",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does extractive QA predict?",
+      "question": "抽出型QAは何を予測しますか？",
       "options": [
-        "A generated natural-language answer",
-        "A confidence score only",
-        "Start and end token indices of the answer span within a given passage",
-        "A retrieved passage ID"
+        "生成された自然言語の答え",
+        "信頼度スコアだけ",
+        "与えられた文章内にある答え範囲の開始トークンインデックスと終了トークンインデックス",
+        "検索された文章ID"
       ],
       "correct": 2,
-      "explanation": "Extractive QA outputs the span of the passage that contains the answer."
+      "explanation": "抽出型QAは、答えを含む文章中の範囲を出力します。"
     },
     {
       "stage": "pre",
-      "question": "What two components define a basic RAG pipeline?",
+      "question": "基本的なRAGパイプラインを定義する2つの構成要素は何ですか？",
       "options": [
-        "An encoder and a decoder trained jointly",
-        "A reranker and a translator",
-        "Tokenizer and POS tagger",
-        "A retriever (find relevant passages) and a reader (extract or generate the answer)"
+        "同時に訓練されるエンコーダーとデコーダー",
+        "rerankerとtranslator",
+        "TokenizerとPOS tagger",
+        "retriever (関連文章を見つける) とreader (答えを抽出または生成する)"
       ],
       "correct": 3,
-      "explanation": "RAG = retriever (finds relevant context) plus reader (answers from it)."
+      "explanation": "RAG = 関連する文脈を見つけるretriever + その文脈から答えるreaderです。"
     },
     {
       "stage": "check",
-      "question": "On SQuAD, what does Exact Match (EM) measure?",
+      "question": "SQuADにおけるExact Match (EM) は何を測りますか？",
       "options": [
-        "Edit distance",
-        "Per-word overlap",
-        "Whether the prediction matches the reference exactly after normalization (lowercase, strip punctuation, remove articles)",
-        "Token-level F1"
+        "編集距離",
+        "単語ごとの重なり",
+        "正規化後 (小文字化、句読点除去、冠詞除去) に予測が参照答えと完全一致するか",
+        "トークンレベルのF1"
       ],
       "correct": 2,
-      "explanation": "EM is strict equality after a defined normalization step; partial matches score zero."
+      "explanation": "EMは定義された正規化後の厳密一致です。部分一致は0点になります。"
     },
     {
       "stage": "check",
-      "question": "What does deepset/roberta-base-squad2 add over a SQuAD 1.1 model?",
+      "question": "deepset/roberta-base-squad2 はSQuAD 1.1モデルに比べて何を追加していますか？",
       "options": [
-        "Multilingual support",
-        "Training on unanswerable questions so the model can predict a null answer",
-        "Bigger context window",
-        "Cross-lingual retrieval"
+        "多言語対応",
+        "答えられない質問での訓練により、モデルがnull answerを予測できること",
+        "より大きなコンテキストウィンドウ",
+        "クロスリンガル検索"
       ],
       "correct": 1,
-      "explanation": "SQuAD 2.0 includes unanswerable items; models trained on it can predict 'no answer'."
+      "explanation": "SQuAD 2.0には答えられない項目が含まれます。そのデータで訓練されたモデルは 'no answer' を予測できます。"
     },
     {
       "stage": "check",
-      "question": "Which RAGAS dimension targets hallucinations specifically?",
+      "question": "RAGASのどの次元が、特に幻覚を対象にしていますか？",
       "options": [
         "Answer relevance",
         "Context recall",
-        "Faithfulness, measured by NLI entailment between answer claims and retrieved context",
+        "Faithfulness。答えの主張と検索された文脈の間のNLI含意で測る",
         "Context precision"
       ],
       "correct": 2,
-      "explanation": "Faithfulness checks each answer claim against retrieved context via NLI entailment."
+      "explanation": "Faithfulnessは、答えの各主張を検索された文脈に照らしてNLI含意で確認します。"
     },
     {
       "stage": "post",
-      "question": "Why should you measure retrieval recall before evaluating reader accuracy?",
+      "question": "readerの精度を評価する前に検索recallを測るべきなのはなぜですか？",
       "options": [
-        "Required by transformers",
-        "Recall determines ROUGE",
-        "Reader latency depends on it",
-        "If the correct passage is not in the top-k, the reader cannot succeed regardless of how good it is"
+        "transformersで必須だから",
+        "recallがROUGEを決めるから",
+        "readerのレイテンシがそれに依存するから",
+        "正しい文章がtop-kに入っていなければ、readerがどれほど優秀でも成功できないから"
       ],
       "correct": 3,
-      "explanation": "A reader cannot answer when the right passage is missing; retrieval recall bounds reader performance."
+      "explanation": "正しい文章が欠けているとreaderは答えられません。検索recallはreader性能の上限を決めます。"
     },
     {
       "stage": "post",
-      "question": "Which prompt pattern reduces hallucinations in RAG generation?",
+      "question": "RAG生成で幻覚を減らすプロンプトパターンはどれですか？",
       "options": [
-        "Telling the model to answer only from the provided context and to reply 'I don't know' when the context is insufficient",
-        "Including more passages",
-        "Asking the model to be creative",
-        "Removing the question"
+        "与えられた文脈だけから答えるように指示し、文脈が不十分な場合は 'I don't know' と返すように指示する",
+        "より多くの文章を含める",
+        "創造的に答えるようモデルに依頼する",
+        "質問を削除する"
       ],
       "correct": 0,
-      "explanation": "Grounding + explicit refusal instructions cuts hallucination rates substantially."
+      "explanation": "根拠づけと明示的な拒否指示は、幻覚率を大きく下げます。"
     },
     {
       "stage": "post",
-      "question": "When is extractive QA still preferred over generative RAG in 2026?",
+      "question": "2026年に、生成型RAGより抽出型QAがなお好まれるのはどのような場合ですか？",
       "options": [
-        "Conversational QA",
-        "Regulated domains (legal, medical, audit) where literal quotation from authoritative sources is required",
-        "Multilingual support",
-        "Open-domain trivia"
+        "会話型QA",
+        "権威ある情報源からの逐語的な引用が必要な規制領域 (法務、医療、監査)",
+        "多言語対応",
+        "オープンドメインの雑学"
       ],
       "correct": 1,
-      "explanation": "Extractive QA gives verbatim quotes from an authoritative corpus, which compliance contexts demand."
+      "explanation": "抽出型QAは権威あるコーパスから逐語的な引用を返せるため、コンプライアンス領域で求められます。"
     }
   ]
 }

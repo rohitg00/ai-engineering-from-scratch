@@ -1,37 +1,37 @@
 [
   {
-    "question": "What mathematical operation does a perceptron perform on its inputs before applying the activation function?",
-    "options": ["Matrix inversion", "Weighted sum plus bias", "Fourier transform", "Eigenvalue decomposition"],
+    "question": "パーセプトロンは、活性化関数を適用する前に入力に対してどの数学的操作を行いますか？",
+    "options": ["行列の逆行列計算", "重み付き和にバイアスを足す", "フーリエ変換", "固有値分解"],
     "correct": 1,
-    "explanation": "A perceptron computes the dot product of inputs and weights, adds a bias term, then passes the result through a step function. This weighted sum plus bias is the core computation.",
+    "explanation": "パーセプトロンは入力と重みのドット積を計算し、バイアス項を足してから、その結果をステップ関数に通します。この重み付き和とバイアスが中心的な計算です。",
     "stage": "pre"
   },
   {
-    "question": "What does 'linearly separable' mean for a classification problem?",
-    "options": ["The data can be sorted in order", "A single straight line (or hyperplane) can perfectly separate the classes", "The features have a linear relationship with the label", "The data has only two dimensions"],
+    "question": "分類問題における「線形分離可能」とは何を意味しますか？",
+    "options": ["データを順番に並べられること", "1本の直線（または超平面）でクラスを完全に分離できること", "特徴量がラベルと線形関係を持つこと", "データが2次元だけであること"],
     "correct": 1,
-    "explanation": "A dataset is linearly separable when you can draw a single hyperplane that perfectly divides the input space into the correct classes. AND and OR are linearly separable; XOR is not.",
+    "explanation": "データセットが線形分離可能であるとは、入力空間を正しいクラスに完全に分ける1つの超平面を引けるということです。ANDとORは線形分離可能ですが、XORはそうではありません。",
     "stage": "pre"
   },
   {
-    "question": "Why does a single perceptron fail to learn the XOR function?",
-    "options": ["The learning rate is too low", "XOR has too many inputs", "XOR is not linearly separable -- no single line can separate the classes", "The step function prevents gradient flow"],
+    "question": "単一のパーセプトロンがXOR関数を学習できないのはなぜですか？",
+    "options": ["learning rateが低すぎるため", "XORの入力が多すぎるため", "XORは線形分離可能ではなく、クラスを分ける1本の直線が存在しないため", "ステップ関数が勾配の流れを妨げるため"],
     "correct": 2,
-    "explanation": "XOR places [0,1] and [1,0] on one side and [0,0] and [1,1] on the other. No single straight line can separate these groups, so a single perceptron, which can only draw one linear boundary, cannot solve XOR.",
+    "explanation": "XORでは [0,1] と [1,0] が一方の側に、[0,0] と [1,1] がもう一方の側にあります。これらのグループを1本の直線で分けることはできないため、1つの線形境界しか引けない単一のパーセプトロンではXORを解けません。",
     "stage": "post"
   },
   {
-    "question": "In the perceptron learning rule, what happens when the prediction matches the target?",
-    "options": ["Weights are doubled", "Weights are set to zero", "Nothing changes -- error is zero so the update is zero", "The learning rate is halved"],
+    "question": "パーセプトロンの学習ルールでは、予測がターゲットと一致したとき何が起きますか？",
+    "options": ["重みが2倍になる", "重みがゼロに設定される", "何も変わらない。errorがゼロなので更新もゼロになる", "learning rateが半分になる"],
     "correct": 2,
-    "explanation": "The update rule is w_i = w_i + lr * error * x_i. When prediction equals target, error = 0, so all weight updates are zero. The perceptron only adjusts when it makes a mistake.",
+    "explanation": "更新ルールは w_i = w_i + lr * error * x_i です。予測がターゲットと等しい場合、error = 0 なので、すべての重み更新はゼロになります。パーセプトロンは間違えたときだけ調整されます。",
     "stage": "post"
   },
   {
-    "question": "How is XOR solved using multiple perceptrons?",
-    "options": ["By using a larger learning rate on a single perceptron", "By combining OR, NAND, and AND perceptrons in two layers", "By adding more inputs to a single perceptron", "By removing the bias term"],
+    "question": "複数のパーセプトロンを使うと、XORはどのように解けますか？",
+    "options": ["単一のパーセプトロンでlearning rateを大きくする", "OR、NAND、ANDパーセプトロンを2層で組み合わせる", "単一のパーセプトロンに入力を追加する", "バイアス項を取り除く"],
     "correct": 1,
-    "explanation": "XOR = (x1 OR x2) AND NOT(x1 AND x2). A hidden layer with an OR neuron and a NAND neuron feeds into an output AND neuron, creating a nonlinear decision boundary from linear components.",
+    "explanation": "XOR = (x1 OR x2) AND NOT(x1 AND x2) です。隠れ層のORニューロンとNANDニューロンを出力層のANDニューロンへ接続することで、線形部品から非線形の決定境界を作れます。",
     "stage": "post"
   }
 ]

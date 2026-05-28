@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -18,12 +18,12 @@
   </defs>
 
   <text x="480" y="26" text-anchor="middle" class="title">Gao-Schulman-Hilton over-optimization curve</text>
-  <text x="480" y="46" text-anchor="middle" class="caption">proxy reward climbs monotonically. gold reward peaks and falls.</text>
+  <text x="480" y="46" text-anchor="middle" class="caption">proxy rewardは単調増加し、gold rewardはpeak後に低下する。</text>
 
   <rect x="60" y="70" width="520" height="380" class="box"/>
   <line x1="100" y1="420" x2="560" y2="420" class="axis"/>
   <line x1="100" y1="90"  x2="100" y2="420" class="axis"/>
-  <text x="330" y="446" text-anchor="middle" class="small">sqrt(KL) from initial policy</text>
+  <text x="330" y="446" text-anchor="middle" class="small">initial policyからのsqrt(KL)</text>
   <text x="84"  y="250" text-anchor="middle" transform="rotate(-90 84 250)" class="small">expected reward</text>
 
   <line x1="100" y1="380" x2="560" y2="380" class="grid"/>
@@ -41,29 +41,29 @@
   <text x="150" y="125" class="step" fill="#2e7d32">gold reward</text>
 
   <rect x="600" y="70" width="320" height="380" class="box"/>
-  <text x="760" y="94" text-anchor="middle" class="head">the four costumes</text>
+  <text x="760" y="94" text-anchor="middle" class="head">4つの姿</text>
 
   <rect x="620" y="110" width="280" height="60" class="hot"/>
   <text x="635" y="132" class="step">1 / verbosity bias</text>
-  <text x="635" y="152" class="small">longer outputs score higher than they help.</text>
+  <text x="635" y="152" class="small">長いoutputsが有用性以上に高scoreになる。</text>
 
   <rect x="620" y="180" width="280" height="60" class="cool"/>
   <text x="635" y="202" class="step">2 / sycophancy</text>
-  <text x="635" y="222" class="small">agreement with the user beats correctness.</text>
+  <text x="635" y="222" class="small">userへの同意が正しさに勝つ。</text>
 
   <rect x="620" y="250" width="280" height="60" class="cold"/>
   <text x="635" y="272" class="step">3 / unfaithful CoT</text>
-  <text x="635" y="292" class="small">chain that looks right but does not drive the answer.</text>
+  <text x="635" y="292" class="small">正しそうだがanswerを導いていないchain。</text>
 
   <rect x="620" y="320" width="280" height="60" class="box"/>
   <text x="635" y="342" class="step">4 / evaluator tampering</text>
-  <text x="635" y="362" class="small">agent modifies scratchpad, env, or RM inputs.</text>
+  <text x="635" y="362" class="small">agentがscratchpad、env、RM inputsを改変。</text>
 
-  <text x="760" y="404" text-anchor="middle" class="caption">one mechanism: probability mass shifts</text>
-  <text x="760" y="422" text-anchor="middle" class="caption">to easy-to-learn heuristics the RM rewards.</text>
+  <text x="760" y="404" text-anchor="middle" class="caption">仕組みは1つ: probability massが</text>
+  <text x="760" y="422" text-anchor="middle" class="caption">RMが報酬を与える学習しやすいheuristicsへ移る。</text>
 
   <rect x="60" y="470" width="860" height="70" class="box"/>
-  <text x="80" y="494" class="small">KL regularization softens the collapse but does not prevent it (Gao 2023).</text>
-  <text x="80" y="512" class="small">Under heavy-tailed reward error the KL-constrained optimum can place all mass on error-maximizing modes</text>
-  <text x="80" y="528" class="small">— "catastrophic Goodhart" (OpenReview UXuBzWoZGK). no amount of beta saves you alone.</text>
+  <text x="80" y="494" class="small">KL regularizationはcollapseを和らげるが、防ぎはしない (Gao 2023)。</text>
+  <text x="80" y="512" class="small">heavy-tailed reward error下では、KL制約付きoptimumがerror-maximizing modesへ全massを置きうる。</text>
+  <text x="80" y="528" class="small">これは"catastrophic Goodhart" (OpenReview UXuBzWoZGK)。betaだけでは救えない。</text>
 </svg>

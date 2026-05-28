@@ -13,18 +13,18 @@ export function mockAgent(alertText: string): AgentReport {
         {
           rank: 1,
           summary:
-            "Pod payments-api-7c4 OOMKilled twice in 10m, memory request 256Mi too low.",
+            "Pod payments-api-7c4 が10分で2回 OOMKilled。memory request 256Mi が低すぎます。",
           evidence: [
             "kube-state-metrics: kube_pod_container_status_terminated_reason{reason=OOMKilled}",
-            "Prom: container_memory_working_set_bytes p99 hit limit",
+            "Prom: container_memory_working_set_bytes p99 が limit に到達",
           ],
-          remediation: "bump payments-api request to 512Mi, limit 1Gi",
+          remediation: "payments-api の request を 512Mi、limit を 1Gi に上げる",
         },
         {
           rank: 2,
-          summary: "Possible memory-leak introduced by v2.41 rollout (Argo).",
+          summary: "v2.41 rollout (Argo) で memory leak が入った可能性があります。",
           evidence: ["ArgoCD: payments-api revision v2.41 deployed 14m ago"],
-          remediation: "roll back payments-api to v2.40",
+          remediation: "payments-api を v2.40 に roll back する",
         },
       ],
     };
@@ -35,12 +35,12 @@ export function mockAgent(alertText: string): AgentReport {
       topHypotheses: [
         {
           rank: 1,
-          summary: "CrashLoopBackOff on auth-svc - readiness probe path 404s.",
+          summary: "auth-svc が CrashLoopBackOff。readiness probe path が 404 です。",
           evidence: [
             "kube_pod_container_status_waiting_reason{reason=CrashLoopBackOff}",
-            "auth-svc deployment changed probe path from /healthz to /ready",
+            "auth-svc deployment が probe path を /healthz から /ready に変更",
           ],
-          remediation: "revert auth-svc deployment spec.probe.path to /healthz",
+          remediation: "auth-svc deployment の spec.probe.path を /healthz に戻す",
         },
       ],
     };
@@ -50,9 +50,9 @@ export function mockAgent(alertText: string): AgentReport {
     topHypotheses: [
       {
         rank: 1,
-        summary: "No prior signal; agent recommends collecting telemetry.",
-        evidence: ["no matching prom alerts in last 30m"],
-        remediation: "no remediation proposed",
+        summary: "prior signal がありません。agent は telemetry 収集を推奨します。",
+        evidence: ["直近30分に matching prom alert なし"],
+        remediation: "remediation 提案なし",
       },
     ],
   };

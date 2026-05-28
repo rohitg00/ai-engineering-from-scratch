@@ -1,57 +1,57 @@
 # Multi-Agent RL
 
-> Single-agent RL assumes the environment is stationary. Put two learning agents in the same world and that assumption breaks: each agent is part of the other's environment, and both are changing. Multi-agent RL is the set of tricks to make learning converge when the Markov assumption no longer holds.
+> Single-agent RL は環境が stationary であると仮定する。同じ世界に2つの学習エージェントを置くと、その仮定は壊れる。各エージェントは相手の環境の一部であり、どちらも変化しているからだ。Multi-agent RL は、Markov 仮定が成り立たなくなっても学習を収束させるための技法群である。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
-**Time:** ~45 minutes
+**タイプ:** Build
+**言語:** Python
+**前提条件:** Phase 9 · 04 (Q-learning)、Phase 9 · 06 (REINFORCE)、Phase 9 · 07 (Actor-Critic)
+**時間:** 約45分
 
-## The Problem
+## 問題
 
-A robot learning to navigate a room is a single-agent RL problem. A soccer team is not. AlphaStar vs StarCraft opponents is not. A marketplace of bidding agents is not. Two cars negotiating a four-way stop is not. Many-on-many real-world problems are not.
+部屋を移動することを学ぶロボットは single-agent RL 問題である。サッカーチームは違う。AlphaStar 対 StarCraft の対戦相手も違う。入札エージェントの marketplace も違う。四方向停止で交渉する2台の車も違う。現実の many-on-many 問題の多くは single-agent ではない。
 
-In every multi-agent setting, from the perspective of any one agent, the other agents *are* part of the environment. As they learn and change their behavior, the environment becomes non-stationary. The Markov property — "next state depends only on current state and my action" — gets violated because the next state also depends on what the *other* agents chose, and their policies are moving targets.
+あらゆる multi-agent setting では、ある1つの agent から見て、他の agent は*環境*の一部である。他の agent が学習して行動を変えるにつれ、環境は non-stationary になる。Markov property、つまり「次状態は現在状態と自分の action だけに依存する」という性質は破られる。次状態は*他の* agent が選んだものにも依存し、その policy は動く標的だからだ。
 
-This breaks tabular convergence proofs (Q-learning's guarantee assumes a stationary environment). It breaks naive deep RL too: agents chase each other in loops, never converge to a stable policy. You need multi-agent-specific techniques: centralized training / decentralized execution, counterfactual baselines, league play, self-play.
+これは tabular convergence proof を壊す。Q-learning の保証は stationary environment を仮定している。素朴な deep RL も壊れる。agent 同士がループ状に追いかけ合い、安定した policy に収束しない。必要なのは multi-agent 専用の技法である。centralized training / decentralized execution、counterfactual baseline、league play、self-play などだ。
 
-2026 applications: robot swarms, traffic routing, autonomous vehicle fleets, market simulators, multi-agent LLM systems (Phase 16), and any game with more than one intelligent player.
+2026年の応用: robot swarm、traffic routing、自律車両 fleet、market simulator、multi-agent LLM system (Phase 16)、そして複数の知的プレイヤーを持つあらゆるゲーム。
 
-## The Concept
+## コンセプト
 
 ![Four MARL regimes: indep, centralized critic, self-play, league](../assets/marl.svg)
 
-**Formalism: Markov Game.** A generalization of MDP: states `S`, a joint action `a = (a_1, …, a_n)`, transition `P(s' | s, a)`, and per-agent rewards `R_i(s, a, s')`. Each agent `i` maximizes its own return under its own policy `π_i`. If rewards are identical, it is **fully cooperative**. If zero-sum, it is **adversarial**. If mixed, it is **general-sum**.
+**形式化: Markov Game。** MDP の一般化である。状態 `S`、joint action `a = (a_1, …, a_n)`、遷移 `P(s' | s, a)`、agent ごとの報酬 `R_i(s, a, s')` を持つ。各 agent `i` は自分の policy `π_i` の下で自分の return を最大化する。報酬が同一なら **fully cooperative**。zero-sum なら **adversarial**。混在するなら **general-sum** である。
 
-**Core challenges:**
+**主要な課題:**
 
-- **Non-stationarity.** `P(s' | s, a_i)` from agent `i`'s view depends on `π_{-i}`, which is changing.
-- **Credit assignment.** With a shared reward, which agent caused it?
-- **Exploration coordination.** Agents must explore complementary strategies, not redundantly explore the same state.
-- **Scalability.** The joint action space grows exponentially in `n`.
-- **Partial observability.** Each agent sees only its own observation; the global state is hidden.
+- **Non-stationarity。** agent `i` から見た `P(s' | s, a_i)` は、変化中の `π_{-i}` に依存する。
+- **Credit assignment。** shared reward の場合、どの agent がそれを引き起こしたのか。
+- **Exploration coordination。** agent は同じ状態を重複して探索するのではなく、相補的な strategy を探索しなければならない。
+- **Scalability。** joint action space は `n` に対して指数的に増える。
+- **Partial observability。** 各 agent は自分の observation しか見ない。global state は隠れている。
 
-**Four dominant regimes:**
+**4つの支配的な regime:**
 
-**1. Independent Q-learning / independent PPO (IQL, IPPO).** Each agent learns its own Q or policy, treating others as part of the environment. Simple, sometimes it works (especially with experience replay acting as a smoothing agent-modeling trick). Theoretical convergence: none. In practice: fine for loosely-coupled tasks, bad for tightly-coupled ones.
+**1. Independent Q-learning / independent PPO (IQL, IPPO)。** 各 agent が他者を環境の一部として扱い、自分の Q または policy を学習する。単純で、時には機能する。特に experience replay が smoothing agent-modeling trick として効く場合はそうだ。理論的収束性はない。実務では loosely-coupled task には十分なことがあり、tightly-coupled task には弱い。
 
-**2. Centralized training, decentralized execution (CTDE).** Most common modern paradigm. Each agent has its own *policy* `π_i` that conditions on local observation `o_i` — standard decentralized execution at deployment. During *training*, a centralized critic `Q(s, a_1, …, a_n)` conditions on the full global state and joint action. Examples:
-- **MADDPG** (Lowe et al. 2017): DDPG with a centralized critic per agent.
-- **COMA** (Foerster et al. 2017): counterfactual baseline — ask "what would my reward have been if I'd taken action `a'` instead?" — isolates my contribution.
-- **MAPPO** / **IPPO** with shared critic (Yu et al. 2022): PPO with a centralized value function. Dominant in 2026 for cooperative MARL.
-- **QMIX** (Rashid et al. 2018): value decomposition — `Q_tot(s, a) = f(Q_1(s, a_1), …, Q_n(s, a_n))` with monotonic mixing.
+**2. Centralized training, decentralized execution (CTDE)。** 現代で最も一般的な paradigma。各 agent は local observation `o_i` に条件づけられた自分の*policy* `π_i` を持ち、deployment では標準的な decentralized execution を行う。一方、*training* 中は centralized critic `Q(s, a_1, …, a_n)` が full global state と joint action に条件づけられる。例:
+- **MADDPG** (Lowe et al. 2017): agent ごとに centralized critic を持つ DDPG。
+- **COMA** (Foerster et al. 2017): counterfactual baseline。「もし自分が action `a'` を取っていたら reward はどうだったか」と問い、自分の寄与を分離する。
+- **MAPPO** / **IPPO** with shared critic (Yu et al. 2022): centralized value function を使う PPO。2026年の cooperative MARL で支配的。
+- **QMIX** (Rashid et al. 2018): value decomposition。`Q_tot(s, a) = f(Q_1(s, a_1), …, Q_n(s, a_n))` を monotonic mixing で構成する。
 
-**3. Self-play.** Two copies of the same agent play each other. The opponent's policy *is* my policy from a past snapshot. AlphaGo / AlphaZero / MuZero. OpenAI Five. Works best for zero-sum games; the training signal is symmetric.
+**3. Self-play。** 同じ agent の2つのコピーが互いに対戦する。opponent の policy は、過去 snapshot の自分の policy である。AlphaGo / AlphaZero / MuZero。OpenAI Five。zero-sum game で最もよく機能し、training signal は対称的である。
 
-**4. League play.** An extension of self-play to general-sum / adversarial environments: keep a population of past and current policies, sample an opponent from the league, train against them. Adds exploiters (specialize in beating the current best) and main exploiters (specialize in beating exploiters). AlphaStar (StarCraft II). Needed when the game admits "rock-paper-scissors" strategy cycles.
+**4. League play。** self-play を general-sum / adversarial environment に拡張したもの。過去と現在の policy の population を保持し、league から opponent を sample して訓練する。exploiter (現在の best を倒すことに特化) と main exploiter (exploiter を倒すことに特化) を加える。AlphaStar (StarCraft II)。ゲームに「rock-paper-scissors」型の strategy cycle がある場合に必要となる。
 
-**Communication.** Allow agents to send learned messages `m_i` to each other. Works in cooperative settings. Foerster et al. (2016) showed that differentiable inter-agent communication can be trained end-to-end. Today's LLM-based multi-agent systems (Phase 16) essentially communicate in natural language.
+**Communication。** agent 同士が学習済み message `m_i` を送り合えるようにする。cooperative setting で機能する。Foerster et al. (2016) は differentiable inter-agent communication を end-to-end で訓練できることを示した。現在の LLM-based multi-agent system (Phase 16) は、本質的に自然言語で communication している。
 
-## Build It
+## 作るもの
 
-This lesson uses a 6×6 GridWorld with two cooperative agents. They start in opposite corners and must reach a shared goal. Shared reward: `-1` per step while either agent is still moving, `+10` when both arrive. See `code/main.py`.
+このレッスンでは、2体の cooperative agent を持つ 6×6 GridWorld を使う。agent は反対側の角から開始し、shared goal に到達しなければならない。shared reward は、どちらかがまだ動いている間は step ごとに `-1`、両方が到着すると `+10`。`code/main.py` を参照。
 
-### Step 1: the multi-agent env
+### Step 1: multi-agent env
 
 ```python
 class CoopGridWorld:
@@ -71,11 +71,11 @@ class CoopGridWorld:
         return (new1, new2), reward, done
 ```
 
-The *joint* action space is `|A|² = 16`. The global state is two positions.
+*joint* action space は `|A|² = 16`。global state は2つの位置である。
 
 ### Step 2: independent Q-learning
 
-Each agent runs its own Q-table keyed on joint state. At each step: both pick ε-greedy actions, collect joint transition, each updates its own Q with the shared reward.
+各 agent は joint state を key にした自分の Q-table を実行する。各 step で、両方が ε-greedy action を選び、joint transition を集め、shared reward でそれぞれの Q を更新する。
 
 ```python
 def independent_q(env, episodes, alpha, gamma, epsilon):
@@ -93,92 +93,92 @@ def independent_q(env, episodes, alpha, gamma, epsilon):
             s = s_next
 ```
 
-Works on this task because rewards are dense and aligned. Fails on tightly-coupled tasks (e.g., where one agent has to *wait* for the other).
+この task では reward が dense で aligned なので機能する。tightly-coupled task、たとえば一方の agent が他方を*待つ*必要がある場合には失敗する。
 
-### Step 3: centralized Q with decomposed-value update
+### Step 3: decomposed-value update 付き centralized Q
 
-Use one Q over joint actions `Q(s, a_1, a_2)`. Update from shared reward. Decentralize at execution by marginalizing: `π_i(s) = argmax_{a_i} max_{a_{-i}} Q(s, a_1, a_2)`. Trades exponential joint action space for a *correct* global view.
+joint action 上の単一 Q `Q(s, a_1, a_2)` を使う。shared reward から更新する。execution 時は marginalize して decentralize する: `π_i(s) = argmax_{a_i} max_{a_{-i}} Q(s, a_1, a_2)`。指数的な joint action space と引き換えに、*正しい* global view を得る。
 
 ### Step 4: simple self-play (adversarial 2-agent)
 
-Same agent, two roles. Train agent A against agent B; after `K` episodes, copy A's weights into B. Symmetric training, consistent progress. The AlphaZero recipe in miniature.
+同じ agent、2つの role。agent A を agent B に対して訓練し、`K` episode ごとに A の weights を B にコピーする。対称的な訓練で、一貫した進歩を得る。AlphaZero recipe の縮小版である。
 
-## Pitfalls
+## 落とし穴
 
-- **Non-stationary replay.** Experience replay with independent agents is worse than single-agent because old transitions were generated by now-obsolete opponents. Fix: relabel or weight by recency.
-- **Credit assignment ambiguity.** Shared reward after a long episode; no clear way to say which agent contributed. Fix: counterfactual baselines (COMA), or reward shaping per agent.
-- **Policy drift / chasing.** Each agent's best response changes with each other's update. Fix: centralized critic, slow learning rates, or freeze-one-at-a-time.
-- **Reward hacking via coordination.** Agents find coordinated exploits the designer did not anticipate. Auction agents converge to bid zero. Fix: careful reward design, behavioral constraints.
-- **Exploration redundancy.** Both agents explore the same state-action pairs. Fix: entropy bonuses per-agent, or role-conditioning.
-- **League cycles.** Pure self-play can get stuck in a dominance cycle. Fix: league play with diverse opponents.
-- **Sample explosion.** `n` agents × state space × joint actions. Approximate with function approximation; factored action spaces (one policy output head per agent).
+- **Non-stationary replay。** independent agent での experience replay は single-agent より悪化する。古い transition は、いまでは obsolete な opponent によって生成されたものだからだ。対策: relabel する、または recency で重み付けする。
+- **Credit assignment ambiguity。** 長い episode の後に shared reward が来ると、どの agent が貢献したか明確でない。対策: counterfactual baseline (COMA)、または agent ごとの reward shaping。
+- **Policy drift / chasing。** 各 agent の best response は、相手の更新ごとに変わる。対策: centralized critic、遅い learning rate、または一方ずつ freeze する。
+- **coordination による reward hacking。** agent が設計者の予期しない coordinated exploit を見つける。auction agent が bid zero に収束する。対策: careful reward design、behavioral constraints。
+- **Exploration redundancy。** 両方の agent が同じ state-action pair を探索する。対策: agent ごとの entropy bonus、または role-conditioning。
+- **League cycles。** pure self-play は dominance cycle にはまりうる。対策: diverse opponents を持つ league play。
+- **Sample explosion。** `n` agents × state space × joint actions。function approximation で近似し、factored action space (agent ごとに1つの policy output head) を使う。
 
-## Use It
+## 使いどころ
 
-The 2026 MARL application map:
+2026年の MARL application map:
 
 | Domain | Method | Notes |
 |--------|--------|-------|
-| Cooperative navigation / manipulation | MAPPO / QMIX | CTDE; shared critic + decentralized actors. |
-| Two-player games (chess, Go, poker) | Self-play with MCTS (AlphaZero) | Zero-sum; symmetric training. |
-| Complex multiplayer (Dota, StarCraft) | League play + imitation pretraining | OpenAI Five, AlphaStar. |
-| Autonomous-vehicle fleets | CTDE MAPPO / PPO with attention | Partial obs; variable team sizes. |
-| Auction markets | Game-theoretic equilibrium + RL | Mean-field RL when `n` → ∞. |
-| LLM multi-agent systems (Phase 16) | Natural-language comm + role conditioning | RL loop at the agent-planning layer. |
+| Cooperative navigation / manipulation | MAPPO / QMIX | CTDE; shared critic + decentralized actors。 |
+| Two-player games (chess, Go, poker) | Self-play with MCTS (AlphaZero) | Zero-sum; symmetric training。 |
+| Complex multiplayer (Dota, StarCraft) | League play + imitation pretraining | OpenAI Five, AlphaStar。 |
+| Autonomous-vehicle fleets | CTDE MAPPO / PPO with attention | Partial obs; variable team sizes。 |
+| Auction markets | Game-theoretic equilibrium + RL | `n` → ∞ のとき mean-field RL。 |
+| LLM multi-agent systems (Phase 16) | Natural-language comm + role conditioning | agent-planning layer での RL loop。 |
 
-In 2026, MARL's biggest growth area is LLM-based: swarms of language-model agents negotiating, debating, building software. The RL shows up as preference optimization on *trajectory-level* outputs, not token-level (Phase 16 · 03).
+2026年における MARL 最大の成長領域は LLM-based である。言語モデル agent の swarm が交渉し、討論し、ソフトウェアを作る。RL は token-level ではなく*trajectory-level* output 上の preference optimization として現れる (Phase 16 · 03)。
 
-## Ship It
+## 出荷するもの
 
-Save as `outputs/skill-marl-architect.md`:
+`outputs/skill-marl-architect.md` として保存する:
 
 ```markdown
 ---
 name: marl-architect
-description: Pick the right multi-agent RL regime (IPPO, CTDE, self-play, league) for a given task.
+description: 与えられた task に対して適切な multi-agent RL regime (IPPO, CTDE, self-play, league) を選ぶ。
 version: 1.0.0
 phase: 9
 lesson: 10
 tags: [rl, multi-agent, marl, self-play]
 ---
 
-Given a task with `n` agents, output:
+`n` 体の agent を持つ task を受け取り、次を出力する:
 
-1. Regime classification. Cooperative / adversarial / general-sum. Justify.
-2. Algorithm. IPPO / MAPPO / QMIX / self-play / league. Reason tied to coupling tightness and reward structure.
-3. Information access. Centralized training (what global info goes to the critic)? Decentralized execution?
-4. Credit assignment. Counterfactual baseline, value decomposition, or reward shaping.
-5. Exploration plan. Per-agent entropy, population-based training, or league.
+1. Regime classification。Cooperative / adversarial / general-sum。根拠を示す。
+2. Algorithm。IPPO / MAPPO / QMIX / self-play / league。coupling の強さと reward structure に結びつけて理由を述べる。
+3. Information access。Centralized training (critic に渡す global info は何か)? Decentralized execution?
+4. Credit assignment。Counterfactual baseline、value decomposition、または reward shaping。
+5. Exploration plan。Per-agent entropy、population-based training、または league。
 
-Refuse independent Q-learning on tightly-coupled cooperative tasks. Refuse to recommend self-play for general-sum with cycle risks. Flag any MARL pipeline without a fixed-opponent eval (cherry-picked self-play numbers are common).
+Tightly-coupled cooperative task で independent Q-learning を拒否する。cycle risk のある general-sum に self-play を推奨することを拒否する。fixed-opponent eval のない MARL pipeline は flag する (cherry-picked self-play numbers はよくある)。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Train independent Q-learning on the 2-agent cooperative GridWorld. How many episodes until mean return > 0? Plot the joint learning curve.
-2. **Medium.** Add a "coordination" task: the goal is reached only when both agents step onto it on the same turn. Does independent Q still converge? What breaks?
-3. **Hard.** Implement a centralized critic for MAPPO-style training and compare convergence speed to independent PPO on the coordination task.
+1. **Easy。** 2-agent cooperative GridWorld で independent Q-learning を訓練する。mean return > 0 まで何 episode かかるか。joint learning curve を plot する。
+2. **Medium。** 「coordination」task を追加する。両方の agent が同じ turn に goal に乗ったときだけ goal に到達したとする。independent Q はまだ収束するか。何が壊れるか。
+3. **Hard。** MAPPO-style training 向けの centralized critic を実装し、coordination task で independent PPO と convergence speed を比較する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる表現 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Markov game | "Multi-agent MDP" | `(S, A_1, …, A_n, P, R_1, …, R_n)`; each agent has its own reward. |
-| CTDE | "Centralized training, decentralized execution" | Joint critic at training time; each agent's policy uses only local obs. |
-| IPPO | "Independent PPO" | Each agent runs PPO separately. Simple baseline; often underrated. |
-| MAPPO | "Multi-agent PPO" | PPO with a centralized value function conditioned on global state. |
-| QMIX | "Monotonic value decomposition" | `Q_tot = f_monotone(Q_1, …, Q_n)` allows decentralized argmax. |
-| COMA | "Counterfactual multi-agent" | Advantage = my Q minus expected Q marginalizing over my action. |
-| Self-play | "Agent vs past self" | Single agent, two roles; standard for zero-sum games. |
-| League play | "Population training" | Cache past policies, sample opponents from the pool; handles strategy cycles. |
+| Markov game | 「Multi-agent MDP」 | `(S, A_1, …, A_n, P, R_1, …, R_n)`; 各 agent が自分の reward を持つ。 |
+| CTDE | 「Centralized training, decentralized execution」 | training 時は joint critic、各 agent の policy は local obs だけを使う。 |
+| IPPO | 「Independent PPO」 | 各 agent が PPO を別々に実行する。単純な baseline だが、しばしば過小評価される。 |
+| MAPPO | 「Multi-agent PPO」 | global state に条件づけた centralized value function を使う PPO。 |
+| QMIX | 「Monotonic value decomposition」 | `Q_tot = f_monotone(Q_1, …, Q_n)` により decentralized argmax が可能。 |
+| COMA | 「Counterfactual multi-agent」 | Advantage = 自分の Q から、自分の action で marginalize した expected Q を引いたもの。 |
+| Self-play | 「Agent vs past self」 | 単一 agent、2つの role。zero-sum game の標準。 |
+| League play | 「Population training」 | past policy を cache し、pool から opponent を sample する。strategy cycle を扱う。 |
 
-## Further Reading
+## 参考文献
 
-- [Lowe et al. (2017). Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments (MADDPG)](https://arxiv.org/abs/1706.02275) — CTDE with a centralized critic.
-- [Foerster et al. (2017). Counterfactual Multi-Agent Policy Gradients (COMA)](https://arxiv.org/abs/1705.08926) — counterfactual baselines for credit assignment.
-- [Rashid et al. (2018). QMIX: Monotonic Value Function Factorisation](https://arxiv.org/abs/1803.11485) — value decomposition with monotonicity.
-- [Yu et al. (2022). The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games (MAPPO)](https://arxiv.org/abs/2103.01955) — PPO is surprisingly strong for MARL.
-- [Vinyals et al. (2019). Grandmaster level in StarCraft II using multi-agent reinforcement learning (AlphaStar)](https://www.nature.com/articles/s41586-019-1724-z) — league play at scale.
-- [Silver et al. (2017). Mastering the game of Go without human knowledge (AlphaGo Zero)](https://www.nature.com/articles/nature24270) — pure self-play in zero-sum games.
-- [Sutton & Barto (2018). Ch. 15 — Neuroscience & Ch. 17 — Frontiers](http://incompleteideas.net/book/RLbook2020.pdf) — includes the textbook's short treatment of multi-agent settings and the non-stationarity problem that CTDE is designed to solve.
-- [Zhang, Yang & Başar (2021). Multi-Agent Reinforcement Learning: A Selective Overview](https://arxiv.org/abs/1911.10635) — survey covering cooperative, competitive, and mixed MARL with convergence results.
+- [Lowe et al. (2017). Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments (MADDPG)](https://arxiv.org/abs/1706.02275) — centralized critic を使う CTDE。
+- [Foerster et al. (2017). Counterfactual Multi-Agent Policy Gradients (COMA)](https://arxiv.org/abs/1705.08926) — credit assignment 向け counterfactual baseline。
+- [Rashid et al. (2018). QMIX: Monotonic Value Function Factorisation](https://arxiv.org/abs/1803.11485) — monotonicity を持つ value decomposition。
+- [Yu et al. (2022). The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games (MAPPO)](https://arxiv.org/abs/2103.01955) — PPO は MARL でも驚くほど強い。
+- [Vinyals et al. (2019). Grandmaster level in StarCraft II using multi-agent reinforcement learning (AlphaStar)](https://www.nature.com/articles/s41586-019-1724-z) — 大規模 league play。
+- [Silver et al. (2017). Mastering the game of Go without human knowledge (AlphaGo Zero)](https://www.nature.com/articles/nature24270) — zero-sum game における pure self-play。
+- [Sutton & Barto (2018). Ch. 15 — Neuroscience & Ch. 17 — Frontiers](http://incompleteideas.net/book/RLbook2020.pdf) — textbook による multi-agent setting と、CTDE が解く non-stationarity 問題の短い扱い。
+- [Zhang, Yang & Başar (2021). Multi-Agent Reinforcement Learning: A Selective Overview](https://arxiv.org/abs/1911.10635) — cooperative、competitive、mixed MARL と convergence result を扱うサーベイ。

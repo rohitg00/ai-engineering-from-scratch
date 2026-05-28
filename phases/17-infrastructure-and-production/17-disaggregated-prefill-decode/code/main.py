@@ -1,16 +1,17 @@
-"""Colocated vs disaggregated serving simulator — stdlib Python.
+"""Colocated と disaggregated serving のシミュレーター — stdlib Python.
 
-Models one request through colocated (same GPU) vs disaggregated (prefill pool + decode pool + KV transfer).
-Sweeps prompt length to find the crossover.
+1つの request を colocated（同じ GPU）と disaggregated
+（prefill pool + decode pool + KV transfer）で model 化する。
+prompt length を sweep して crossover を探す。
 """
 
 from __future__ import annotations
 
 
-# illustrative 2026 constants for 70B FP8 on H100 class
-PREFILL_TOK_PER_MS = 40.0         # prefill throughput per GPU per ms
+# H100 class 上の 70B FP8 に対する illustrative 2026 constants
+PREFILL_TOK_PER_MS = 40.0         # GPU 1枚あたり ms ごとの prefill throughput
 DECODE_TOK_PER_MS_COLOCATED = 0.10
-DECODE_TOK_PER_MS_DECODE_GPU = 0.18   # memory-optimized pool (H200-like)
+DECODE_TOK_PER_MS_DECODE_GPU = 0.18   # memory-optimized pool（H200-like）
 KV_BYTES_PER_TOKEN_70B_FP8 = 125_000
 NIXL_RDMA_GB_S = 100
 NIXL_TCP_GB_S = 10
@@ -33,7 +34,7 @@ def ms_disaggregated(prompt: int, output: int, use_rdma: bool = True) -> float:
 
 def main() -> None:
     print("=" * 95)
-    print("DISAGGREGATED vs COLOCATED — same request, different GPU placement")
+    print("DISAGGREGATED vs COLOCATED — 同じ request、異なる GPU placement")
     print("=" * 95)
     header = f"{'prompt':>7}  {'output':>7}  {'colocated (ms)':>15}  {'disagg RDMA (ms)':>17}  {'disagg TCP (ms)':>16}  Winner"
     print(header)
@@ -50,9 +51,9 @@ def main() -> None:
         print(f"{prompt:>7}  {output:>7}  {colo:>14.1f}  {rdma:>17.1f}  {tcp:>16.1f}  {winner}")
 
     print()
-    print("Read: disaggregation wins at longer prompts where decode throughput improvement")
-    print("on memory-optimized pool outweighs the KV transfer tax. TCP transport raises the")
-    print("break-even; RDMA makes disaggregation profitable earlier.")
+    print("読み方: 長い prompt では memory-optimized pool による decode throughput 改善が")
+    print("KV transfer tax を上回るため、disaggregation が勝つ。TCP transport は")
+    print("break-even を押し上げ、RDMA は disaggregation をより早く黒字化する。")
 
 
 if __name__ == "__main__":

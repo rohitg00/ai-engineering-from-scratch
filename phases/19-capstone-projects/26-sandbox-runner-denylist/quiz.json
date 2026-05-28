@@ -1,78 +1,78 @@
 {
   "lesson": "phase-19/26-sandbox-runner-denylist",
-  "title": "Sandbox Runner with Denylist and Path Jail",
+  "title": "Denylist と Path Jail つき Sandbox Runner",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: what is the strongest reason a sandbox checks argv shapes for interpreter invocations like python3 -c?",
+      "question": "lesson を読む前に: sandbox が python3 -c のような interpreter invocation の argv shape を check する最も強い理由は何ですか？",
       "options": [
-        "Interpreters are slow and waste agent budget.",
-        "An interpreter with -c is a shell call by another name and bypasses the executable denylist.",
-        "Interpreters cannot be safely sandboxed at all.",
-        "The model writes better code without them."
+        "interpreter は遅く、agent budget を無駄にするから。",
+        "-c つき interpreter は別名の shell call であり、executable denylist を bypass するから。",
+        "interpreter はまったく安全に sandbox できないから。",
+        "model は interpreter がない方が良い code を書くから。"
       ],
       "correct": 1,
-      "explanation": "python3 -c, bash -c, node -e, and friends are functionally identical to giving the model a shell. Blocking the executable name is not enough."
+      "explanation": "python3 -c、bash -c、node -e などは、model に shell を与えるのと機能的に同じです。executable name を block するだけでは不十分です。"
     },
     {
       "stage": "check",
-      "question": "The sandbox is configured with project_root=/work. A path argument arrives as ./src/main.py. How is the jail check performed?",
+      "question": "sandbox は project_root=/work で設定されています。path argument が ./src/main.py として届きました。jail check はどう行われますか？",
       "options": [
-        "Literal string prefix match against /work.",
-        "os.path.realpath of the joined absolute path is checked for a /work prefix.",
-        "The sandbox refuses every relative path.",
-        "The sandbox spawns the subprocess and checks the working directory after the fact."
+        "/work に対する literal string prefix match。",
+        "join した absolute path の os.path.realpath を取り、/work prefix かどうかを check する。",
+        "sandbox はすべての relative path を拒否する。",
+        "sandbox は subprocess を spawn し、あとから working directory を check する。"
       ],
       "correct": 1,
-      "explanation": "realpath resolves symlinks. A literal prefix check is bypassed by a symlink inside the project root pointing outside. realpath plus prefix-or-equal is the safe check."
+      "explanation": "realpath は symlink を resolve します。literal prefix check は、project root 内の symlink が外を指す場合に bypass されます。realpath と prefix-or-equal の組み合わせが安全な check です。"
     },
     {
       "stage": "check",
-      "question": "A SandboxResult comes back with denied=True, timed_out=False, exit_code=-100. What is the canonical interpretation?",
+      "question": "SandboxResult が denied=True, timed_out=False, exit_code=-100 で返りました。canonical interpretation は何ですか？",
       "options": [
-        "The subprocess started and was killed by SIGKILL.",
-        "The sandbox never spawned the subprocess; the call was refused before exec.",
-        "The subprocess returned -100 explicitly.",
-        "The wall-clock timeout fired."
+        "subprocess は started し、SIGKILL で kill された。",
+        "sandbox は subprocess を spawn しなかった。call は exec 前に拒否された。",
+        "subprocess が明示的に -100 を返した。",
+        "wall-clock timeout が発火した。"
       ],
       "correct": 1,
-      "explanation": "The sentinel exit_code -100 paired with denied=True means the sandbox short-circuited before subprocess.run was called."
+      "explanation": "sentinel exit_code -100 と denied=True の組み合わせは、sandbox が subprocess.run を呼ぶ前に short-circuit したことを意味します。"
     },
     {
       "stage": "check",
-      "question": "Why does the sandbox prefer shell=False by default and refuse shell metacharacters?",
+      "question": "sandbox が default で shell=False を好み、shell metacharacter を拒否するのはなぜですか？",
       "options": [
-        "shell=True is slower in CPython.",
-        "Shell parsing exposes the entire shell DSL to the model, which is the surface the sandbox is trying to shrink.",
-        "subprocess does not accept shell=True on macOS.",
-        "It makes the test suite simpler."
+        "shell=True は CPython で遅いから。",
+        "shell parsing は sandbox が縮小しようとしている shell DSL 全体を model に expose するから。",
+        "subprocess は macOS で shell=True を受け付けないから。",
+        "test suite が簡単になるから。"
       ],
       "correct": 1,
-      "explanation": "shell=True turns argv into a shell-interpreted string. Pipes, redirects, command substitution, and globbing all become available. The sandbox cannot meaningfully refuse a payload once shell parsing runs."
+      "explanation": "shell=True は argv を shell-interpreted string に変えます。pipe、redirect、command substitution、globbing がすべて使えるようになります。shell parsing が走ったあとでは、sandbox は payload を意味のある形で拒否できません。"
     },
     {
       "stage": "post",
-      "question": "You want to add a per-process memory limit to the sandbox. The lesson's sandbox does not implement this. What is the correct next step?",
+      "question": "sandbox に per-process memory limit を追加したいとします。この lesson の sandbox は実装していません。正しい next step は何ですか？",
       "options": [
-        "Use os.setrlimit(RLIMIT_AS) in a preexec_fn passed to subprocess.run.",
-        "Add the limit to the denylist as a string.",
-        "Increase the wall-clock timeout to compensate.",
-        "Skip it: a denylist is sufficient for memory bombs."
+        "subprocess.run に渡す preexec_fn で os.setrlimit(RLIMIT_AS) を使う。",
+        "limit を denylist に string として追加する。",
+        "補うために wall-clock timeout を増やす。",
+        "skip する。denylist は memory bomb に十分だから。"
       ],
       "correct": 0,
-      "explanation": "subprocess.run accepts preexec_fn (POSIX) or a similar mechanism. setrlimit(RLIMIT_AS) caps the address space of the child. The sandbox in this lesson does not ship this; lesson 29's end-to-end demo discusses how to layer container-level limits on top."
+      "explanation": "subprocess.run は preexec_fn（POSIX）または類似の mechanism を受け取れます。setrlimit(RLIMIT_AS) は child の address space を cap します。この lesson の sandbox はこれを同梱しません。lesson 29 の end-to-end demo では container-level limit を上に重ねる方法を議論します。"
     },
     {
       "stage": "post",
-      "question": "The model invokes the sandbox with argv=['cat', 'src/../src/main.py']. The file exists under project_root. Should the call pass the path jail?",
+      "question": "model が argv=['cat', 'src/../src/main.py'] で sandbox を呼びました。file は project_root 配下に存在します。この call は path jail を通るべきですか？",
       "options": [
-        "No, any .. in a path is an automatic refusal.",
-        "Yes: realpath collapses src/../src to src and the resolved path is inside project_root.",
-        "No: argv is rejected by the regex gate before the sandbox sees it.",
-        "It depends on whether the user is root."
+        "いいえ。path に .. が含まれれば自動 refusal。",
+        "はい。realpath が src/../src を src に畳み、resolved path は project_root 内だから。",
+        "いいえ。sandbox が見る前に argv は regex gate で reject される。",
+        "user が root かどうかによる。"
       ],
       "correct": 1,
-      "explanation": "realpath normalises the path. The sandbox does not blanket-refuse .. tokens; it checks the resolved target. This is intentional: legitimate paths sometimes go through .. legitimately."
+      "explanation": "realpath は path を normalize します。sandbox は .. token を一律拒否しません。resolved target を check します。正当な path が正当に .. を通ることもあるため、これは意図的です。"
     }
   ]
 }

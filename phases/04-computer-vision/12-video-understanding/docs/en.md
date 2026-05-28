@@ -1,30 +1,30 @@
 # Video Understanding — Temporal Modeling
 
-> A video is a sequence of images plus the physics that connects them. Every video model either treats time as an extra axis (3D conv), a sequence to attend over (transformer), or a feature to extract once and pool (2D+pool).
+> video は images の sequence と、それらをつなぐ physics です。すべての video model は、time を extra axis として扱う（3D conv）、attention する sequence として扱う（transformer）、または一度 feature を抽出して pool する（2D+pool）のいずれかです。
 
-**Type:** Learn + Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification)
-**Time:** ~45 minutes
+**種別:** 学習 + 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification)
+**所要時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Distinguish the three main video-modelling approaches (2D+pool, 3D conv, spatio-temporal transformer) and predict their cost and accuracy trade-offs
-- Implement frame sampling, temporal pooling, and a 2D+pool baseline classifier in PyTorch
-- Explain why I3D's "inflated" 3D kernels transfer well from ImageNet weights and what a factorised (2+1)D conv does differently
-- Read the standard action-recognition datasets and metrics: Kinetics-400/600, UCF101, Something-Something V2; top-1 accuracy at the clip and video level
+- 3 つの主要な video-modelling approaches（2D+pool、3D conv、spatio-temporal transformer）を区別し、それぞれの cost と accuracy trade-offs を予測する
+- PyTorch で frame sampling、temporal pooling、2D+pool baseline classifier を実装する
+- I3D の "inflated" 3D kernels が ImageNet weights からうまく transfer する理由と、factorised (2+1)D conv が何を違った形で行うかを説明する
+- 標準的な action-recognition datasets と metrics を読む: Kinetics-400/600、UCF101、Something-Something V2、clip と video level の top-1 accuracy
 
-## The Problem
+## 問題
 
-A 30-second video at 30 fps is 900 images. Naively, video classification is image classification run 900 times followed by some kind of aggregation. That works when the action is visible in almost every frame (sports, cooking, exercise videos) and fails badly when the action is defined by motion itself: "pushing something from left to right" looks like two still objects in every single frame.
+30 fps の 30 秒 video は 900 images です。単純には、video classification は image classification を 900 回実行し、何らかの aggregation を行うことです。action がほぼすべての frame に見えている場合（sports、cooking、exercise videos）はこれで動きます。しかし action が motion そのもので定義される場合、たとえば "pushing something from left to right" は、どの single frame でも 2 つの静止物体に見えるだけなので大きく失敗します。
 
-The core question for every video architecture is: when does temporal structure get modelled, and how? The answer drives everything else — compute cost, pretraining strategy, whether you can reuse ImageNet weights, what datasets the model trains on.
+すべての video architecture の中心的な問いは、temporal structure をいつ、どのように model 化するかです。その答えが、compute cost、pretraining strategy、ImageNet weights を再利用できるか、どの datasets で学習するかを決めます。
 
-This lesson is deliberately shorter than the static-image lessons. The core image machinery is already in place, and video understanding is mostly about the temporal story: sampling, modelling, and aggregating.
+この lesson は static-image lessons より意図的に短くなっています。core image machinery はすでに揃っており、video understanding は主に temporal story、つまり sampling、modelling、aggregating の問題だからです。
 
-## The Concept
+## コンセプト
 
-### The three architectural families
+### 3 つの architectural families
 
 ```mermaid
 flowchart LR
@@ -43,85 +43,86 @@ flowchart LR
 
 ### 2D + pool
 
-Take a 2D CNN (ResNet, EfficientNet, ViT). Run it independently on every sampled frame. Average (or max-pool, or attention-pool) the per-frame embeddings. Feed the pooled vector to a classifier.
+2D CNN（ResNet、EfficientNet、ViT）を取り、sampled frame ごとに独立に実行します。per-frame embeddings を average（または max-pool、attention-pool）します。pooled vector を classifier に入力します。
 
 Pros:
-- ImageNet pretraining transfers directly.
-- Simplest to implement.
-- Cheap: T frames * single-image inference cost.
+- ImageNet pretraining が直接 transfer する。
+- 実装が最も簡単。
+- 安価: T frames * single-image inference cost。
 
 Cons:
-- Cannot model motion. Action = aggregate of appearances.
-- Temporal pooling is order-invariant; "open door" and "close door" look the same.
+- motion を model 化できない。Action = appearances の aggregate になる。
+- temporal pooling は order-invariant なので、"open door" と "close door" が同じに見える。
 
-When to use: appearance-heavy tasks, transfer learning on small video datasets, initial baselines.
+使う場面: appearance-heavy tasks、小さな video datasets での transfer learning、初期 baseline。
 
 ### 3D convolutions
 
-Replace 2D (H, W) kernels with 3D (T, H, W) kernels. The network convolves over both space and time. Early family: C3D, I3D, SlowFast.
+2D (H, W) kernels を 3D (T, H, W) kernels に置き換えます。network は space と time の両方に convolve します。初期 family は C3D、I3D、SlowFast です。
 
-I3D trick: take a pretrained 2D ImageNet model, "inflate" each 2D kernel by copying it along a new time axis. A 3x3 2D conv becomes a 3x3x3 3D conv. This gives the 3D model strong pretrained weights instead of training from scratch.
+I3D trick: pretrained 2D ImageNet model を取り、各 2D kernel を新しい time axis に沿ってコピーして "inflate" します。3x3 の 2D conv は 3x3x3 の 3D conv になります。これにより、3D model は scratch からではなく強い pretrained weights から始められます。
 
 Pros:
-- Directly models motion.
-- I3D inflation gives free transfer learning.
+- motion を直接 model 化する。
+- I3D inflation により transfer learning が無料で得られる。
 
 Cons:
-- T/8 more FLOPs than the 2D counterpart (for temporal kernel of 3 stacked 3 times).
-- Temporal kernels are small; long-range motion needs a pyramid or dual-stream approach.
+- 2D counterpart より T/8 多い FLOPs（temporal kernel 3 を 3 回積む場合）。
+- temporal kernels は小さい。long-range motion には pyramid または dual-stream approach が必要。
 
-When to use: action recognition where motion is the signal (Something-Something V2, Kinetics with motion-heavy classes).
+使う場面: motion が signal である action recognition（Something-Something V2、motion-heavy classes を含む Kinetics）。
 
 ### Spatio-temporal transformers
 
-Tokenise the video into a grid of space-time patches and attend across all of them. TimeSformer, ViViT, Video Swin, VideoMAE.
+video を space-time patches の grid に tokenise し、すべてに attention します。TimeSformer、ViViT、Video Swin、VideoMAE などです。
 
-Attention patterns that matter:
-- **Joint** — one big attention over (t, h, w). Quadratic in `T*H*W`; expensive.
-- **Divided** — two attentions per block: one over time, one over space. Linear-ish scaling.
-- **Factorised** — time attention alternates with space attention across blocks.
+重要な attention patterns:
+- **Joint** — (t, h, w) 全体に 1 つの大きな attention。`T*H*W` に対して quadratic で高価。
+- **Divided** — block ごとに 2 つの attentions。time に 1 つ、space に 1 つ。おおむね linear に近く scaling する。
+- **Factorised** — blocks の中で time attention と space attention を交互に行う。
 
 Pros:
-- SOTA accuracy on every major benchmark.
-- Transfers from image transformers (ViT) via patch inflation.
-- Supports long-context video via sparse attention.
+- 主要 benchmark で SOTA accuracy。
+- patch inflation により image transformers（ViT）から transfer できる。
+- sparse attention により long-context video を扱える。
 
 Cons:
-- Compute-hungry.
-- Requires careful attention pattern choice or runtime balloons.
+- compute-hungry。
+- attention pattern choice を慎重に選ばないと runtime が膨らむ。
 
-When to use: large datasets, high-fidelity video understanding, multi-modal video+text tasks.
+使う場面: 大規模 datasets、高 fidelity video understanding、multi-modal video+text tasks。
 
 ### Frame sampling
 
-A 10-second clip at 30 fps is 300 frames; feeding all 300 to any model is wasteful. Standard strategies:
+30 fps の 10 秒 clip は 300 frames です。300 frames すべてを model に入れるのは無駄です。標準的な strategies は次の通りです。
 
-- **Uniform sampling** — pick T frames evenly across the clip. Default for 2D+pool.
-- **Dense sampling** — random contiguous T-frame window. Common for 3D convs because motion requires neighbouring frames.
-- **Multi-clip** — sample multiple T-frame windows from the same video, classify each, average predictions at test time.
+- **Uniform sampling** — clip 全体から T frames を等間隔に選ぶ。2D+pool のデフォルト。
+- **Dense sampling** — random contiguous T-frame window。motion には隣接 frames が必要なので 3D convs で一般的。
+- **Multi-clip** — 同じ video から複数の T-frame windows を sample し、test time に各 prediction を平均する。
 
-T is usually 8, 16, 32, or 64. Higher T = more temporal signal at more compute.
+T は通常 8、16、32、64 です。T が大きいほど temporal signal は増えますが compute も増えます。
 
-### Evaluation
+### 評価
 
-Two levels:
-- **Clip-level accuracy** — model sees one T-frame clip, reports top-k.
-- **Video-level accuracy** — average clip-level predictions across multiple clips per video; higher and more stable.
+2 つの level があります。
 
-Always report both. A model that scores 78% clip / 82% video is relying heavily on test-time averaging; one that scores 80% / 81% is more robust per-clip.
+- **Clip-level accuracy** — model が 1 つの T-frame clip を見て top-k を報告する。
+- **Video-level accuracy** — video ごとに複数 clips の clip-level predictions を平均する。より高く安定する。
 
-### Datasets you will meet
+必ず両方を報告します。78% clip / 82% video の model は test-time averaging に強く依存しています。80% / 81% の model は per-clip でより robust です。
 
-- **Kinetics-400 / 600 / 700** — the general-purpose action dataset. 400k clips; YouTube URLs (many now dead).
-- **Something-Something V2** — motion-defined actions ("moving X from left to right"). Cannot be solved by 2D+pool.
-- **UCF-101**, **HMDB-51** — older, smaller, still reported.
-- **AVA** — action *localisation* in space and time; harder than classification.
+### 出会う datasets
 
-## Build It
+- **Kinetics-400 / 600 / 700** — general-purpose action dataset。400k clips。YouTube URLs（現在は多くが dead）。
+- **Something-Something V2** — motion-defined actions（"moving X from left to right"）。2D+pool では解けない。
+- **UCF-101**, **HMDB-51** — 古く小さいが、今も報告される。
+- **AVA** — space と time における action *localisation*。classification より難しい。
+
+## 実装
 
 ### Step 1: Frame sampler
 
-Uniform and dense samplers that work on a list of frames (or a video tensor).
+frames の list（または video tensor）で動く uniform と dense samplers です。
 
 ```python
 import numpy as np
@@ -141,11 +142,11 @@ def sample_dense(num_frames_total, T, rng=None):
     return list(range(start, start + T))
 ```
 
-Both return `T` indices that you use to slice the video tensor.
+どちらも video tensor を slice するための `T` indices を返します。
 
-### Step 2: A 2D+pool baseline
+### Step 2: 2D+pool baseline
 
-Run a 2D ResNet-18 over every frame, average-pool features, classify.
+各 frame に 2D ResNet-18 を走らせ、features を average-pool して classify します。
 
 ```python
 import torch
@@ -174,11 +175,11 @@ print(f"output: {model(x).shape}")
 print(f"params: {sum(p.numel() for p in model.parameters()):,}")
 ```
 
-Eleven million parameters, ImageNet pretrained, runs per-frame, averages, classifies. This baseline is often within 5-10 points of proper 3D models on appearance-heavy tasks — sometimes better, because it reuses a stronger ImageNet backbone.
+11 million parameters、ImageNet pretrained、per-frame に実行して average し、classify します。この baseline は appearance-heavy tasks では proper 3D models の 5-10 points 以内に入ることが多く、より強い ImageNet backbone を再利用するため、ときには上回ります。
 
-### Step 3: An I3D-style inflated 3D conv
+### Step 3: I3D-style inflated 3D conv
 
-Turn a single 2D conv into a 3D conv by repeating weights along a new time axis.
+2D conv 1 つを、新しい time axis に沿って weights を繰り返すことで 3D conv に変換します。
 
 ```python
 def inflate_2d_to_3d(conv2d, time_kernel=3):
@@ -200,11 +201,11 @@ x = torch.randn(1, 3, 8, 56, 56)
 print(f"3D output shape:  {tuple(conv3d(x).shape)}")
 ```
 
-The division by `time_kernel` keeps the activation magnitudes roughly constant — important for not breaking batch-norm statistics on the first pass.
+`time_kernel` で割ることで activation magnitudes をおおむね一定に保ちます。これは初回 pass で batch-norm statistics を壊さないために重要です。
 
 ### Step 4: Factorised (2+1)D conv
 
-Split a 3D conv into a 2D (spatial) and a 1D (temporal) conv. Same receptive field, fewer parameters, better accuracy on some benchmarks.
+3D conv を 2D（spatial）conv と 1D（temporal）conv に分割します。同じ receptive field、より少ない parameters、いくつかの benchmarks ではより良い accuracy です。
 
 ```python
 class Conv2Plus1D(nn.Module):
@@ -227,46 +228,46 @@ x = torch.randn(1, 3, 8, 56, 56)
 print(f"(2+1)D output: {tuple(c(x).shape)}")
 ```
 
-A full R(2+1)D network is the same as a ResNet-18 with every 3x3 conv replaced by `Conv2Plus1D`.
+full R(2+1)D network は、ResNet-18 のすべての 3x3 conv を `Conv2Plus1D` に置き換えたものです。
 
-## Use It
+## 使う
 
-Two libraries cover production video work:
+production video work をカバーする libraries は 2 つあります。
 
-- `torchvision.models.video` — R(2+1)D, MViT, Swin3D with pretrained Kinetics weights. Same API as image models.
-- `pytorchvideo` (Meta) — model zoo, data loaders for Kinetics / SSv2 / AVA, standard transforms.
+- `torchvision.models.video` — R(2+1)D、MViT、Swin3D と pretrained Kinetics weights。image models と同じ API。
+- `pytorchvideo`（Meta）— model zoo、Kinetics / SSv2 / AVA 用 data loaders、standard transforms。
 
-For Vision-Language video models (video captioning, video QA), use `transformers` (`VideoMAE`, `VideoLLaMA`, `InternVideo`).
+Vision-Language video models（video captioning、video QA）では `transformers`（`VideoMAE`、`VideoLLaMA`、`InternVideo`）を使います。
 
-## Ship It
+## 成果物
 
-This lesson produces:
+この lesson は次を生成します。
 
-- `outputs/prompt-video-architecture-picker.md` — a prompt that picks 2D+pool / I3D / (2+1)D / transformer based on appearance-vs-motion, dataset size, and compute budget.
-- `outputs/skill-frame-sampler-auditor.md` — a skill that inspects a video pipeline's sampler and flags common bugs: off-by-one index, uneven sampling when `num_frames < T`, lack of aspect-preserving crop, etc.
+- `outputs/prompt-video-architecture-picker.md` — appearance-vs-motion、dataset size、compute budget に基づいて 2D+pool / I3D / (2+1)D / transformer を選ぶ prompt。
+- `outputs/skill-frame-sampler-auditor.md` — video pipeline の sampler を検査し、off-by-one index、`num_frames < T` の uneven sampling、aspect-preserving crop の欠如などの common bugs を flag する skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Compute FLOPs (approximate) for FramePool with T=8 vs an I3D-style 3D ResNet with T=8. Justify why 2D+pool is 3-5x cheaper.
-2. **(Medium)** Generate a synthetic video dataset: random balls moving in random directions, labelled by direction of motion ("left-to-right", "right-to-left", "diagonal-up"). Train FramePool on it. Show that it achieves near-chance accuracy, proving appearance alone is insufficient for motion tasks.
-3. **(Hard)** Build an R(2+1)D-18 by replacing every Conv2d in a ResNet-18 with `Conv2Plus1D`. Inflate the first conv's weights from an ImageNet-pretrained ResNet-18. Train on the motion dataset from exercise 2 and beat FramePool.
+1. **(Easy)** T=8 の FramePool と T=8 の I3D-style 3D ResNet の FLOPs（概算）を計算してください。なぜ 2D+pool が 3-5x 安いのかを説明してください。
+2. **(Medium)** synthetic video dataset を生成してください。random balls が random directions に動き、motion direction（"left-to-right"、"right-to-left"、"diagonal-up"）で label されます。FramePool を学習してください。appearance だけでは motion tasks に不十分であることを示すため、near-chance accuracy になることを示してください。
+3. **(Hard)** ResNet-18 のすべての Conv2d を `Conv2Plus1D` に置き換えて R(2+1)D-18 を作ってください。ImageNet-pretrained ResNet-18 から first conv の weights を inflate します。exercise 2 の motion dataset で学習し、FramePool を上回ってください。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| 2D + pool | "Per-frame classifier" | Run a 2D CNN on every sampled frame, average-pool features across time, classify |
-| 3D convolution | "Spatio-temporal kernel" | Kernel that convolves over (T, H, W); can model motion natively |
-| Inflation | "Lift 2D weights to 3D" | Initialise 3D conv weights by repeating a 2D conv's weights along the new time axis, then divide by kernel_T to preserve activation scale |
-| (2+1)D | "Factorised conv" | Split 3D into 2D spatial + 1D temporal; fewer parameters, extra non-linearity between |
-| Divided attention | "Time then space" | Transformer block with two attentions per layer: one over tokens at the same frame, one over tokens at the same position |
-| Clip | "T-frame window" | A sampled subsequence of T frames; the unit a video model consumes |
-| Clip vs video accuracy | "Two eval settings" | Clip = one sample per video, video = average across multiple sampled clips |
-| Kinetics | "The ImageNet of video" | 400-700 action classes, 300k+ YouTube clips, the standard video pretraining corpus |
+| 2D + pool | 「Per-frame classifier」 | sampled frame ごとに 2D CNN を実行し、time 方向に features を average-pool して classify する |
+| 3D convolution | 「Spatio-temporal kernel」 | (T, H, W) に convolve する kernel。motion を native に model 化できる |
+| Inflation | 「2D weights を 3D に持ち上げる」 | 2D conv weights を新しい time axis に沿って繰り返し、kernel_T で割って activation scale を保つことで 3D conv weights を初期化する |
+| (2+1)D | 「Factorised conv」 | 3D を 2D spatial + 1D temporal に分割する。parameters が少なく、間に追加 non-linearity が入る |
+| Divided attention | 「Time then space」 | layer ごとに 2 つの attentions を持つ transformer block。同じ frame の tokens への attention と、同じ position の tokens への attention |
+| Clip | 「T-frame window」 | T frames の sampled subsequence。video model が消費する単位 |
+| Clip vs video accuracy | 「2 つの eval settings」 | Clip = video ごとに 1 sample、video = 複数 sampled clips の平均 |
+| Kinetics | 「video の ImageNet」 | 400-700 action classes、300k+ YouTube clips、標準的な video pretraining corpus |
 
-## Further Reading
+## 参考文献
 
-- [I3D: Quo Vadis, Action Recognition (Carreira & Zisserman, 2017)](https://arxiv.org/abs/1705.07750) — introduces inflation and the Kinetics dataset
-- [R(2+1)D: A Closer Look at Spatiotemporal Convolutions (Tran et al., 2018)](https://arxiv.org/abs/1711.11248) — factorised conv, still a strong baseline
-- [TimeSformer: Is Space-Time Attention All You Need? (Bertasius et al., 2021)](https://arxiv.org/abs/2102.05095) — the first strong video transformer
-- [VideoMAE (Tong et al., 2022)](https://arxiv.org/abs/2203.12602) — masked autoencoder pretraining for video; current dominant pretraining recipe
+- [I3D: Quo Vadis, Action Recognition (Carreira & Zisserman, 2017)](https://arxiv.org/abs/1705.07750) — inflation と Kinetics dataset を導入
+- [R(2+1)D: A Closer Look at Spatiotemporal Convolutions (Tran et al., 2018)](https://arxiv.org/abs/1711.11248) — factorised conv。今でも強い baseline
+- [TimeSformer: Is Space-Time Attention All You Need? (Bertasius et al., 2021)](https://arxiv.org/abs/2102.05095) — 最初の強力な video transformer
+- [VideoMAE (Tong et al., 2022)](https://arxiv.org/abs/2203.12602) — video の masked autoencoder pretraining。現在主流の pretraining recipe

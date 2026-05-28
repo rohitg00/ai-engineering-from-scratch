@@ -20,7 +20,7 @@ export class PlanState {
       done: "x",
       failed: "!",
     };
-    const lines = [`GOAL: ${this.goal}`];
+    const lines = [`目標: ${this.goal}`];
     for (const it of this.items) {
       lines.push(`  [${mark[it.status]}] ${it.id}. ${it.description}`);
     }
@@ -38,7 +38,7 @@ export class Budget {
 
   step(tokens: number, dollars: number): void {
     if (tokens < 0 || dollars < 0) {
-      throw new RangeError("Budget.step requires non-negative tokens and dollars");
+      throw new RangeError("Budget.step には non-negative tokens and dollars が必要です");
     }
     this.turnsUsed += 1;
     this.tokensUsed += tokens;

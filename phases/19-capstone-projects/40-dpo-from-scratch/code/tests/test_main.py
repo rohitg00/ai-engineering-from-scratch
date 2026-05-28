@@ -1,4 +1,4 @@
-"""Tests for the DPO lesson."""
+"""DPO lesson のテスト。"""
 
 from __future__ import annotations
 
@@ -44,16 +44,16 @@ class FixtureTests(unittest.TestCase):
 
 class LossMathTests(unittest.TestCase):
     def test_zero_margin_loss_is_log_two(self) -> None:
-        # When all four log-probs cancel, the sigmoid argument is zero and
-        # the loss is -log(sigmoid(0)) = -log(0.5) = log(2).
+        # 4つの log-probs がすべて打ち消すと sigmoid argument は0になり、
+        # loss は -log(sigmoid(0)) = -log(0.5) = log(2) になります。
         z = torch.zeros(())
         loss, margin = dpo_loss(z, z, z, z, beta=1.0)
         self.assertAlmostEqual(loss.item(), math.log(2.0), places=6)
         self.assertEqual(margin.item(), 0.0)
 
     def test_positive_margin_lowers_loss(self) -> None:
-        # If chosen log-prob is higher under the policy and equal under the
-        # reference, the margin is positive and the loss is below log(2).
+        # policy 下で chosen log-prob が高く、reference 下では
+        # 等しい場合、margin は正で loss は log(2) 未満です。
         lp_w_pol = torch.tensor(1.0)
         lp_w_ref = torch.tensor(0.0)
         lp_l_pol = torch.tensor(0.0)
@@ -63,8 +63,8 @@ class LossMathTests(unittest.TestCase):
         self.assertLess(loss.item(), math.log(2.0))
 
     def test_negative_margin_raises_loss(self) -> None:
-        # If chosen log-prob is below rejected under the policy (with reference
-        # equal), the margin is negative and loss is above log(2).
+        # policy 下で chosen log-prob が rejected より低く（reference は
+        # 等しい）、margin は負で loss は log(2) より大きくなります。
         lp_w_pol = torch.tensor(-1.0)
         lp_w_ref = torch.tensor(0.0)
         lp_l_pol = torch.tensor(0.0)
@@ -74,8 +74,8 @@ class LossMathTests(unittest.TestCase):
         self.assertGreater(loss.item(), math.log(2.0))
 
     def test_reference_cancels_when_chosen_and_rejected_offsets_match(self) -> None:
-        # If reference log-probs are shifted by the same amount for chosen and
-        # rejected, the shift cancels (it appears in both diffs).
+        # reference log-probs が chosen と rejected で同じ量だけ shift されると、
+        # shift は両方の diff に現れるため打ち消されます。
         lp_w_pol = torch.tensor(2.0)
         lp_l_pol = torch.tensor(1.0)
         loss_a, margin_a = dpo_loss(lp_w_pol, lp_l_pol, torch.tensor(0.0), torch.tensor(0.0), beta=1.0)
@@ -86,8 +86,8 @@ class LossMathTests(unittest.TestCase):
 
 class GradientTests(unittest.TestCase):
     def test_gradient_increases_chosen_logprob(self) -> None:
-        # The gradient of L wrt logp_w_pol should be negative, meaning the
-        # optimiser will push the chosen log-prob up.
+        # logp_w_pol に対する L の gradient は負であるべきです。つまり
+        # optimizer は chosen log-prob を押し上げます。
         lp_w_pol = torch.tensor(0.0, requires_grad=True)
         lp_w_ref = torch.tensor(0.0)
         lp_l_pol = torch.tensor(0.0)
@@ -122,11 +122,11 @@ class SequenceLogProbTests(unittest.TestCase):
         prompt = tok.encode_prompt("hi")
         completion = tok.encode_completion("bye")
         lp = sequence_log_prob(policy, prompt, completion).item()
-        # Log-probabilities of any non-empty event are <= 0.
+        # 空でない event の log-probabilities は <= 0 です。
         self.assertLessEqual(lp, 0.0)
 
     def test_log_prob_sums_independently_of_dummy_batch(self) -> None:
-        # Run twice and check determinism (same model, same input).
+        # 2回実行して determinism を確認します（同じ model、同じ input）。
         cfg = DPOConfig(hidden=32, heads=2, depth=1, max_len=24, seed=0)
         _, policy = build_models(cfg)
         tok = InstructionTokenizer()
@@ -179,7 +179,7 @@ class IPOTests(unittest.TestCase):
             self.assertGreaterEqual(loss.item(), 0.0)
 
     def test_ipo_minimum_at_target_margin(self) -> None:
-        # At margin = 1/(2*beta) the IPO loss equals zero.
+        # margin = 1/(2*beta) では IPO loss は0です。
         beta = 0.5
         target = 1.0 / (2.0 * beta)
         loss, _ = ipo_loss(
@@ -210,7 +210,7 @@ class MarginTableTests(unittest.TestCase):
         self.assertEqual(len(rows), 3)
         for row in rows:
             self.assertIsInstance(row, MarginRow)
-            # Margin equals chosen_logprob - rejected_logprob.
+            # margin は chosen_logprob - rejected_logprob と一致します。
             self.assertAlmostEqual(row.margin, row.chosen_logprob - row.rejected_logprob, places=5)
 
 
@@ -230,7 +230,7 @@ class TrainingTests(unittest.TestCase):
         reference, policy = build_models(cfg)
         tok = InstructionTokenizer()
         triples = make_preferences()[:6]
-        # Unfreeze reference so warmup actually trains it (build_models freezes by default).
+        # warmup が実際に reference を学習するよう unfreeze します（build_models は default で freeze）。
         for p in reference.parameters():
             p.requires_grad = True
         reference.train()

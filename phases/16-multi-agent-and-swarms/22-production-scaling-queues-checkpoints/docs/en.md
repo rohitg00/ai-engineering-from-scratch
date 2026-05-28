@@ -1,35 +1,35 @@
 # Production Scaling — Queues, Checkpoints, Durability
 
-> Scaling multi-agent systems to thousands of concurrent runs requires **durable execution**. LangGraph's runtime writes a checkpoint after each super-step keyed by `thread_id` (Postgres by default); worker crashes release a lease and another worker resumes. Agents can sleep indefinitely waiting for human input. **MegaAgent** (arXiv:2408.09955) ran a per-agent producer-consumer queue with three states (Idle / Processing / Response) and two-layer coordination (intra-group chat + inter-group admin chat). **Fiber/async** beats thread-per-job for LLM streaming: threads sit idle 99% of the time waiting for tokens, fibers cooperatively yield on I/O. Counterpoint: Ashpreet Bedi's "Scaling Agentic Software" argues for **FastAPI + Postgres + nothing else** until load proves otherwise — simple architectures go further than expected. This lesson builds a durable checkpoint log, a per-agent work queue with state transitions, an async-vs-thread demo, and lands the pragmatic "start simple" rule.
+> multi-agent systems を thousands of concurrent runs へ scale するには **durable execution** が必要である。LangGraph runtime は `thread_id` で key された checkpoint を各 super-step 後に書き込む（default は Postgres）。worker crash は lease を release し、別 worker が resume する。agents は human input を待って無期限に sleep できる。**MegaAgent**（arXiv:2408.09955）は per-agent producer-consumer queue を 3 states（Idle / Processing / Response）で走らせ、two-layer coordination（intra-group chat + inter-group admin chat）を使った。LLM streaming では fiber/async が thread-per-job に勝つ。threads は tokens を待つ間 99% idle であるため、fibers は I/O で cooperatively yield する。counterpoint として、Ashpreet Bedi の「Scaling Agentic Software」は load が証明されるまで **FastAPI + Postgres + nothing else** を主張する。simple architectures は予想以上に遠くまで行ける。この lesson では durable checkpoint log、state transitions 付き per-agent work queue、async-vs-thread demo を構築し、pragmatic な「start simple」rule を定着させる。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib, `asyncio`, `sqlite3`)
-**Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib, `asyncio`, `sqlite3`)
+**前提条件:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
+**所要時間:** 約75分
 
-## Problem
+## 問題
 
-A prototype multi-agent system works on one laptop with three agents in an in-memory event loop. You move to production:
+prototype multi-agent system は 1 台の laptop、3 agents、in-memory event loop で動く。production に移すと:
 
-- Agents sometimes run for hours (long research, human-in-the-loop waits).
-- Worker processes crash. Restarting loses state.
-- Peak load is 10x average; you need horizontal scaling.
-- Users pay per agent-run; you need exactly-once semantics for charging.
+- Agents は数時間走ることがある（long research、human-in-the-loop waits）。
+- Worker processes が crash する。restart すると state が失われる。
+- peak load は average の 10x。horizontal scaling が必要。
+- users は agent-run ごとに支払う。charging には exactly-once semantics が必要。
 
-The in-memory event loop does none of these. You need a durable execution layer underneath. The 2026 canonical options are:
+in-memory event loop はこれらのどれも満たさない。下層に durable execution layer が必要である。2026 年の canonical options は:
 
-1. A workflow engine with checkpoints (Temporal, LangGraph runtime).
-2. A message queue with a state store (Postgres + SQS/RabbitMQ).
-3. Actor-model frameworks (MegaAgent's producer-consumer per agent).
-4. Hand-rolled FastAPI + Postgres (Bedi's argument).
+1. checkpoints を持つ workflow engine（Temporal、LangGraph runtime）。
+2. state store を持つ message queue（Postgres + SQS/RabbitMQ）。
+3. actor-model frameworks（MegaAgent の per-agent producer-consumer）。
+4. hand-rolled FastAPI + Postgres（Bedi の argument）。
 
-This lesson builds a miniature of each.
+この lesson はそれぞれの miniature を作る。
 
-## Concept
+## コンセプト
 
-### Durable execution, the pattern
+### Durable execution という pattern
 
-A durable-execution engine persists the full program state after each "step" (super-step, in LangGraph's language). On crash:
+durable-execution engine は各「step」（LangGraph の用語では super-step）の後に full program state を persist する。crash 時:
 
 ```
 worker crashes mid-step
@@ -39,23 +39,23 @@ worker crashes mid-step
   -> no duplicate side effects
 ```
 
-Requirements for this to work:
+これが機能するための requirements:
 
-- **Serializable state.** All agent state has to be persistable. Function closures with live database connections do not survive.
-- **Deterministic resume.** Given the same state and same inputs, the agent produces the same actions (or defers to an external deterministic oracle for LLM calls).
-- **Idempotent side effects.** External calls (tool calls, payments) must be idempotent or use a deduplication key.
+- **Serializable state。** 全 agent state は persistable でなければならない。live database connections を持つ function closures は survive しない。
+- **Deterministic resume。** 同じ state と同じ inputs が与えられたら、agent は同じ actions を生む（または LLM calls について external deterministic oracle に defer する）。
+- **Idempotent side effects。** external calls（tool calls、payments）は idempotent であるか deduplication key を使う必要がある。
 
-LangGraph writes a checkpoint after each super-step; Temporal writes after each activity; Restate uses event-sourced journals. All three implement the same pattern.
+LangGraph は各 super-step 後に checkpoint を書き、Temporal は各 activity 後に書き、Restate は event-sourced journals を使う。3 つとも同じ pattern を実装している。
 
-### LangGraph's runtime
+### LangGraph runtime
 
-Each agent has a `thread_id`; state is a typed dict; each super-step writes a row to the checkpoints table. On resume, the runtime replays from the last checkpoint, not from scratch. Agents can `interrupt()` waiting for human input; the runtime persists and releases the worker. When input arrives, any worker can resume.
+各 agent は `thread_id` を持つ。state は typed dict。各 super-step は checkpoints table に row を書く。resume 時、runtime は最初からではなく last checkpoint から replay する。agents は human input を待つために `interrupt()` でき、runtime は persist して worker を release する。input が来たらどの worker でも resume できる。
 
-This is the reference production design in April 2026.
+これは 2026 年 4 月時点の reference production design である。
 
-### MegaAgent's per-agent queue
+### MegaAgent の per-agent queue
 
-arXiv:2408.09955 describes a scale experiment: thousands of concurrent agents in one cluster. Architecture:
+arXiv:2408.09955 は scale experiment を記述している。1 cluster 内に thousands of concurrent agents。Architecture:
 
 ```
 agent i:
@@ -68,62 +68,62 @@ coordinators:
   inter-group admin chat  (high-level routing)
 ```
 
-The two-layer coordination lets intra-group conversation happen densely while inter-group stays sparse — the pattern used for keeping cost linear in thousands of agents.
+two-layer coordination により、intra-group conversation は dense に、inter-group は sparse に保てる。これは thousands of agents で cost を linear に保つための pattern である。
 
 ### Async vs thread-per-job
 
-LLM calls are I/O-bound. A thread waiting for the next token is idle 99% of the time. Threads cost ~1MB RAM each; at 10,000 concurrent calls, that is 10GB just for stacks.
+LLM calls は I/O-bound である。next token を待つ thread は 99% idle である。threads はそれぞれ約 1MB RAM を消費する。10,000 concurrent calls では stack だけで 10GB になる。
 
-Fibers (Python `asyncio`, Go goroutines, Rust `tokio`) cooperatively yield on I/O. The same 10,000 calls fit comfortably in process. At LLM-agent scale, async is not an optimization — it is the architecture.
+Fibers（Python `asyncio`、Go goroutines、Rust `tokio`）は I/O で cooperatively yield する。同じ 10,000 calls が process 内に無理なく収まる。LLM-agent scale では、async は optimization ではなく architecture である。
 
-Exception: CPU-bound post-processing (embedding, tokenizer tricks) still wants threads or processes. Separate your I/O layer from your CPU layer.
+例外: CPU-bound post-processing（embedding、tokenizer tricks）は still threads or processes を必要とする。I/O layer と CPU layer を分ける。
 
-### Bedi's counterpoint
+### Bedi の counterpoint
 
-"Scaling Agentic Software" (Ashpreet Bedi, 2026) argues that most teams over-engineer before they have measured load. The pragmatic default:
+「Scaling Agentic Software」（Ashpreet Bedi, 2026）は、多くの teams が measured load を得る前に over-engineer していると主張する。pragmatic default:
 
-- FastAPI + Postgres.
-- Each agent run is a row; state updated in-place with optimistic concurrency.
-- Background jobs via `pg_notify` or a simple Celery worker.
-- Retry policy in application code.
+- FastAPI + Postgres。
+- 各 agent run は row。state は optimistic concurrency で in-place update。
+- background jobs は `pg_notify` または simple Celery worker。
+- retry policy は application code。
 
-For loads under ~100 concurrent agent-runs on manageable tasks, this is often all you need. Upgrade when you measure it failing.
+~100 concurrent agent-runs 未満で manageable tasks なら、これだけで十分なことが多い。測定して failure が出たときに upgrade する。
 
-The rule: adopt durable-execution frameworks when you hit a concrete problem that simple architectures cannot solve. Premature adoption burns time on ceremonies that do not pay off.
+rule: simple architectures が解決できない concrete problem に当たったとき、durable-execution frameworks を採用する。premature adoption は payoff のない ceremonies に時間を燃やす。
 
 ### Exactly-once semantics
 
-For paid agent runs, you need "exactly-once effective" (at-least-once delivery + idempotent consumer). The engineering moves:
+paid agent runs では「exactly-once effective」（at-least-once delivery + idempotent consumer）が必要である。engineering moves:
 
-- **Dedup key per run.** Include it in every side-effect call.
-- **Outbox pattern.** Side effects write to a table first, then a separate process executes them. Both steps idempotent.
-- **Compensating transactions.** When a side effect succeeds but its tracking write fails, schedule a compensate.
+- **Dedup key per run。** すべての side-effect call に含める。
+- **Outbox pattern。** side effects をまず table に書き、別 process が実行する。両 steps は idempotent。
+- **Compensating transactions。** side effect が成功したが tracking write が失敗した場合、compensate を schedule する。
 
-These are database-engineering patterns, not LLM-specific. The LLM tax is only that LLM calls are slow; everything else is standard distributed systems.
+これらは database-engineering patterns であり、LLM-specific ではない。LLM tax は LLM calls が遅いことだけで、他は standard distributed systems である。
 
 ### Rainbow deployment
 
-Anthropic's multi-agent research system uses "rainbow deployments": multiple versions of the agent runtime run concurrently so long-running agents do not have to be killed on every code deploy. Canary new versions on a slice of traffic; retire old versions when their agents finish.
+Anthropic の multi-agent research system は「rainbow deployments」を使う。agent runtime の複数 versions を同時に走らせ、long-running agents を code deploy のたびに kill しなくてよいようにする。new versions は traffic の一部で canary し、old versions は agents が終わったら retire する。
 
-This is standard for long-running stateful systems; the 2026 adaptation is that agents can live for hours, so deployment cycles must accommodate.
+これは long-running stateful systems では standard である。2026 年の adaptation は、agents が何時間も生きる可能性があるため、deployment cycles がそれに対応しなければならないという点である。
 
-### The canonical production checklist
+### canonical production checklist
 
-- Durable state (checkpoints, snapshots, or outbox + replayable log).
-- Idempotent side effects.
-- Async I/O layer for LLM calls.
-- At-least-once delivery with dedup.
-- Rainbow/canary deployment for stateful workloads.
-- Observability: per-agent traces, super-step audit, retry counter.
+- Durable state（checkpoints、snapshots、または outbox + replayable log）。
+- Idempotent side effects。
+- LLM calls 向け async I/O layer。
+- dedup 付き at-least-once delivery。
+- stateful workloads 向け rainbow/canary deployment。
+- Observability: per-agent traces、super-step audit、retry counter。
 
-## Build It
+## 実装
 
-`code/main.py` implements:
+`code/main.py` は次を実装する:
 
-- `CheckpointStore` — SQLite-backed checkpoint log with thread-id keys. Each super-step appends a row.
-- `run_with_checkpoint(agent, thread_id)` — simulates a crash mid-run; a second worker resumes from last checkpoint.
-- `AgentQueue` — per-agent Idle / Processing / Response state machine with a small work queue.
-- `demo_async_vs_threads()` — runs 500 concurrent simulated "LLM calls" via asyncio and via threads; reports wall-clock and peak memory (approximated).
+- `CheckpointStore` — SQLite-backed checkpoint log。thread-id keys を持つ。各 super-step が row を append する。
+- `run_with_checkpoint(agent, thread_id)` — mid-run crash を simulate し、second worker が last checkpoint から resume する。
+- `AgentQueue` — per-agent Idle / Processing / Response state machine と小さな work queue。
+- `demo_async_vs_threads()` — 500 concurrent simulated「LLM calls」を asyncio と threads で走らせ、wall-clock と peak memory（近似）を報告する。
 
 Run:
 
@@ -131,49 +131,49 @@ Run:
 python3 code/main.py
 ```
 
-Expected output: checkpoint resume succeeds after simulated crash; async version handles 500 concurrent calls in < 1s; thread version takes several seconds and uses orders of magnitude more memory per concurrent unit.
+期待される出力: simulated crash 後に checkpoint resume が成功する。async version は 500 concurrent calls を < 1s で扱う。thread version は数秒かかり、concurrent unit あたり桁違いに多い memory を使う。
 
 ## Use It
 
-`outputs/skill-scaling-advisor.md` advises on durable-execution choice: FastAPI + Postgres, LangGraph runtime, Temporal, or custom. Calibrated by load, state-retention needs, and deploy frequency.
+`outputs/skill-scaling-advisor.md` は durable-execution choice について助言する。FastAPI + Postgres、LangGraph runtime、Temporal、custom のどれを、load、state-retention needs、deploy frequency に応じて選ぶかを calibrate する。
 
 ## Ship It
 
-Canonical production hardening:
+canonical production hardening:
 
-- **Start simple (Bedi's rule).** FastAPI + Postgres until you measure it failing.
-- **Instrument everything before optimizing.** Per-run latency histogram, per-step time, retry count, failure categorization.
-- **Outbox pattern for side effects.** Especially payments and external API calls.
-- **Rainbow deploys.** Never kill in-flight agent runs during deploys.
-- **Adopt durable-execution engines (Temporal / LangGraph / Restate) when** you hit specific problems: hour-long human-in-the-loop waits, cross-region coordination, complex retry/compensation policies.
-- **Async for the I/O layer.** Threads only for CPU-bound post-processing.
+- **Start simple（Bedi's rule）。** FastAPI + Postgres で始め、測定して failure が出るまで維持する。
+- **最適化の前にすべて instrument する。** per-run latency histogram、per-step time、retry count、failure categorization。
+- **side effects には outbox pattern。** 特に payments と external API calls。
+- **Rainbow deploys。** deploy 中に in-flight agent runs を kill しない。
+- **durable-execution engines（Temporal / LangGraph / Restate）は、specific problems に当たったとき採用する:** hour-long human-in-the-loop waits、cross-region coordination、complex retry/compensation policies。
+- **I/O layer は async。** threads は CPU-bound post-processing だけ。
 
 ## Exercises
 
-1. Run `code/main.py`. Confirm checkpoint resume works; measure async vs thread concurrency difference.
-2. Implement an **outbox** table: every tool call writes to outbox first, then a separate goroutine/task executes. Verify idempotency by running the tool call twice.
-3. Simulate a **rainbow deploy**: two concurrent runtime versions; route half of new thread_ids to each; confirm that in-flight threads on the old version are not interrupted.
-4. Read LangGraph's runtime doc (linked below). Identify which features of the runtime would take the longest to replicate in a hand-rolled FastAPI + Postgres version. Is that a reason to adopt, or can you defer?
-5. Read MegaAgent (arXiv:2408.09955) Section 3. The two-layer coordination (intra-group + inter-group admin chat) is explicit. Sketch how you would map this to a message queue with two queue families.
+1. `code/main.py` を実行する。checkpoint resume が動くことを確認し、async vs thread concurrency difference を測る。
+2. **outbox** table を実装する。すべての tool call はまず outbox に書き、その後 separate goroutine/task が実行する。tool call を 2 回走らせて idempotency を verify する。
+3. **rainbow deploy** を simulate する。2 つの concurrent runtime versions。new thread_ids の半分をそれぞれに route し、old version 上の in-flight threads が interrupt されないことを確認する。
+4. 下記の LangGraph runtime doc を読む。hand-rolled FastAPI + Postgres version で再現するのに最も時間がかかる runtime features はどれか。採用理由になるか、それとも defer できるか。
+5. MegaAgent（arXiv:2408.09955）Section 3 を読む。two-layer coordination（intra-group + inter-group admin chat）は explicit である。これを 2 つの queue families を持つ message queue にどう map するか sketch する。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Durable execution | "Persist the program state" | Engine writes state after each super-step; crash recovery is deterministic. |
-| Super-step | "Transactional boundary" | Unit of work between checkpoints. LangGraph term. |
-| thread_id | "Agent run identifier" | Key that binds checkpoints and resume logic. |
-| Idempotency | "Safe to retry" | Repeating a side effect produces the same result as one attempt. |
-| Outbox pattern | "Decouple side effects" | Write intent to a table; a separate executor performs and marks done. |
-| At-least-once delivery | "Possible duplicates" | Message queue semantics; dedup key makes consumer effective-once. |
-| Rainbow deploy | "Overlapping versions" | Multiple runtime versions concurrent during long-running workloads. |
-| Async fiber | "Cooperative yielding" | User-mode concurrency; cheap compared to threads for I/O-bound loads. |
-| Checkpoint | "State snapshot" | Serialized state at a super-step boundary; key for resume. |
+| Durable execution | 「program state を persist する」 | engine が各 super-step 後に state を書く。crash recovery は deterministic。 |
+| Super-step | 「transactional boundary」 | checkpoints 間の work unit。LangGraph term。 |
+| thread_id | 「agent run identifier」 | checkpoints と resume logic を bind する key。 |
+| Idempotency | 「retry しても安全」 | side effect を繰り返しても 1 回の試行と同じ result になる。 |
+| Outbox pattern | 「side effects を decouple する」 | intent を table に書き、separate executor が実行して done にする。 |
+| At-least-once delivery | 「duplicates があり得る」 | message queue semantics。dedup key により consumer は effective-once になる。 |
+| Rainbow deploy | 「overlapping versions」 | long-running workloads 中に複数 runtime versions が concurrent。 |
+| Async fiber | 「cooperative yielding」 | user-mode concurrency。I/O-bound loads では threads より安い。 |
+| Checkpoint | 「state snapshot」 | super-step boundary での serialized state。resume の key。 |
 
-## Further Reading
+## 参考文献
 
 - [LangChain — The runtime behind production deep agents](https://www.langchain.com/conceptual-guides/runtime-behind-production-deep-agents) — LangGraph runtime design
-- [MegaAgent](https://arxiv.org/abs/2408.09955) — per-agent producer-consumer queue; two-layer coordination at thousands of concurrent agents
-- [Matrix](https://arxiv.org/abs/2511.21686) — decentralized framework with message queues as the coordination substrate
-- [Temporal docs](https://docs.temporal.io/) — the reference workflow engine for durable execution
-- [Anthropic — Multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) — production lessons including rainbow deployment
+- [MegaAgent](https://arxiv.org/abs/2408.09955) — per-agent producer-consumer queue。thousands of concurrent agents での two-layer coordination
+- [Matrix](https://arxiv.org/abs/2511.21686) — coordination substrate として message queues を使う decentralized framework
+- [Temporal docs](https://docs.temporal.io/) — durable execution の reference workflow engine
+- [Anthropic — Multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) — rainbow deployment を含む production lessons

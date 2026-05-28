@@ -1,36 +1,36 @@
 ---
 name: workbench-pack
-description: Generate a project-tuned drop-in agent workbench pack — rules sharpened to the team's history, scope globs matched to the repo, rubric dimensions extended with one domain-specific entry.
+description: project-tuned な drop-in agent workbench pack を生成する。team history に合わせて rules を鋭くし、scope glob を repo に合わせ、rubric dimension に domain-specific entry を 1 つ追加する。
 version: 1.0.0
 phase: 14
 lesson: 42
 tags: [capstone, workbench-pack, installer, schemas, drop-in]
 ---
 
-Given a repo, the team's incident history, and the agent product running inside it, emit a tuned agent-workbench-pack and an installer.
+repo、team の incident history、その中で動く agent product が与えられたら、tuned agent-workbench-pack と installer を出力してください。
 
-Produce:
+生成するもの:
 
-1. `agent-workbench-pack/` directory matching the canonical layout: AGENTS.md, docs/, schemas/, scripts/, bin/, README.md, VERSION.
-2. A `bin/install.sh` that refuses to clobber an existing pack without `--force` and writes `.workbench-version` into the target repo.
-3. Project-tuned versions of `agent-rules.md` (with at least one rule per category derived from the team's last six incidents), `reviewer-rubric.md` (with a sixth domain dimension), and `scope_contract.schema.json` (with project-specific globs).
-4. A `lint_pack.py` script that fails on drift between scripts and schemas or between VERSION and the schemas' `schema_version`.
-5. Optional CI integration that installs the pack on demo branches and runs the verification gate against a known-good task.
+1. canonical layout に合う `agent-workbench-pack/` directory: AGENTS.md, docs/, schemas/, scripts/, bin/, README.md, VERSION。
+2. 既存 pack を `--force` なしに clobber せず、target repo に `.workbench-version` を書く `bin/install.sh`。
+3. project-tuned 版の `agent-rules.md` (team の直近 6 incidents から各 category 最低 1 rule)、`reviewer-rubric.md` (6 つ目の domain dimension つき)、`scope_contract.schema.json` (project-specific glob つき)。
+4. script と schema の drift、または VERSION と schema の `schema_version` の不一致で fail する `lint_pack.py` script。
+5. demo branch に pack を install し、known-good task に対して verification gate を走らせる optional CI integration。
 
-Hard rejects:
+ハード拒否条件:
 
-- A pack containing project-specific tasks. Tasks live on the target repo's board.
-- A pack tied to a single vendor SDK. Framework-agnostic only; SDK wiring is the target repo's job.
-- An installer that mutates state files. The installer is idempotent surface-only; state belongs to the agent and humans.
-- Rules without a corresponding check function. Aspirational rules belong in onboarding, not in the pack.
+- project-specific task を含む pack。task は target repo の board に置きます。
+- 単一 vendor SDK に結びついた pack。framework-agnostic のみです。SDK wiring は target repo の仕事です。
+- state file を mutate する installer。installer は idempotent な surface-only で、state は agent と human のものです。
+- 対応する check function のない rule。aspirational rule は pack ではなく onboarding に置いてください。
 
-Refusal rules:
+拒否ルール:
 
-- If incident history is empty, refuse to ship a tuned `agent-rules.md`. Use the canonical default and surface the gap.
-- If the target repo's CI is incompatible with the install (no `.github/workflows/`, no equivalent), refuse the optional CI step and document the manual path.
-- If the team uses a private fork of the pack, refuse to write a public installer. Private installers carry private invariants.
+- incident history が空の場合、tuned `agent-rules.md` の出荷を拒否してください。canonical default を使い、gap を明示してください。
+- target repo の CI が install と互換性を持たない場合 (`.github/workflows/` も equivalent もない場合)、optional CI step を拒否し、manual path を document してください。
+- team が private fork の pack を使っている場合、public installer の作成を拒否してください。private installer は private invariant を含みます。
 
-Output structure:
+出力構成:
 
 ```
 agent-workbench-pack/
@@ -44,8 +44,8 @@ agent-workbench-pack/
 └── README.md
 ```
 
-End with "what to read next" pointing to:
+最後に "what to read next" を置き、次を指してください。
 
-- Lesson 41 for the before/after benchmark this pack improves on.
-- Lesson 30 (Eval-Driven Agent Development) for the eval loop that consumes the pack's verdicts.
-- [SkillKit](https://github.com/rohitg00/skillkit) for distributing the pack across 32 AI agents.
+- Lesson 41: この pack が改善する before/after benchmark。
+- Lesson 30 (Eval-Driven Agent Development): pack の verdict を consume する eval loop。
+- [SkillKit](https://github.com/rohitg00/skillkit): pack を 32 AI agent に配布するための仕組み。

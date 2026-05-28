@@ -1,32 +1,32 @@
-# Unsupervised Learning
+# 教師なし学習
 
-> No labels, no teacher. The algorithm finds structure on its own.
+> ラベルも教師もありません。アルゴリズムが自力で構造を見つけます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 1 (Norms & Distances, Probability & Distributions), Phase 2 Lessons 1-6
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 1 (Norms & Distances, Probability & Distributions)、Phase 2 Lessons 1-6
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement K-Means, DBSCAN, and Gaussian Mixture Models from scratch and compare their clustering behavior
-- Evaluate cluster quality using the silhouette score and the elbow method to select the optimal K
-- Explain when DBSCAN outperforms K-Means and identify which algorithm handles non-spherical clusters and outliers
-- Build an anomaly detection pipeline using clustering methods to flag points that deviate from normal patterns
+- K-Means、DBSCAN、Gaussian Mixture Models をゼロから実装し、それぞれのクラスタリング挙動を比較する
+- silhouette score と elbow method を使ってクラスタ品質を評価し、最適な K を選ぶ
+- DBSCAN が K-Means より有効になる場面を説明し、非球状クラスタや外れ値を扱えるアルゴリズムを見分ける
+- クラスタリング手法を使った異常検知パイプラインを構築し、通常のパターンから外れた点を検出する
 
-## The Problem
+## 問題
 
-Every ML lesson so far has assumed labeled data: "here is an input, here is the correct output." In the real world, labels are expensive. A hospital has millions of patient records but no one has manually tagged each one with a disease category. An e-commerce site has millions of user sessions but no one has hand-labeled customer segments. A security team has network logs but nobody has flagged every anomaly.
+ここまでの ML レッスンでは、「これが入力で、これが正しい出力」というラベル付きデータを前提にしてきました。現実世界では、ラベル付けにはコストがかかります。病院には数百万件の患者記録があっても、一つひとつに疾患カテゴリが手作業で付けられているとは限りません。EC サイトには数百万件のユーザーセッションがあっても、顧客セグメントが人手でラベル付けされているわけではありません。セキュリティチームにはネットワークログがあっても、すべての異常にフラグが付いているわけではありません。
 
-Unsupervised learning finds patterns without being told what to look for. It groups similar data points, discovers hidden structures, and surfaces anomalies. If supervised learning is learning from a textbook with an answer key, unsupervised learning is staring at raw data until the patterns reveal themselves.
+教師なし学習は、何を探すべきかを教えられなくてもパターンを見つけます。似たデータ点をグループ化し、隠れた構造を発見し、異常を浮かび上がらせます。教師あり学習が解答付きの教科書で学ぶことだとすれば、教師なし学習はパターンが姿を現すまで生データを観察し続けることです。
 
-The catch: without labels, you cannot directly measure "right" or "wrong." You need different tools to evaluate whether the structure your algorithm found is meaningful.
+難しい点は、ラベルがないため「正しい」「間違っている」を直接測れないことです。アルゴリズムが見つけた構造に意味があるかどうかを評価するには、別の道具が必要です。
 
-## The Concept
+## コンセプト
 
-### Clustering: Grouping Similar Things Together
+### クラスタリング: 似たものをまとめる
 
-Clustering assigns each data point to a group (cluster) so that points within the same group are more similar to each other than to points in other groups. The question is always: what does "similar" mean?
+クラスタリングは、同じグループ内の点どうしが他のグループの点より似るように、各データ点をグループ（クラスタ）へ割り当てます。常に問うべきことは、「似ている」とは何を意味するのか、です。
 
 ```mermaid
 flowchart LR
@@ -41,90 +41,90 @@ flowchart LR
     F --> J[Soft assignments, elliptical clusters]
 ```
 
-### K-Means: The Workhorse
+### K-Means: 定番の手法
 
-K-Means partitions data into exactly K clusters. Each cluster has a centroid (its center of mass), and every point belongs to the nearest centroid.
+K-Means はデータをちょうど K 個のクラスタに分割します。各クラスタには centroid（重心）があり、すべての点はいちばん近い centroid に属します。
 
 Lloyd's algorithm:
 
-1. Pick K random points as initial centroids
-2. Assign each data point to the nearest centroid
-3. Recompute each centroid as the mean of its assigned points
-4. Repeat steps 2-3 until assignments stop changing
+1. 初期 centroid として K 個の点をランダムに選ぶ
+2. 各データ点を最も近い centroid に割り当てる
+3. 各 centroid を、割り当てられた点の平均として再計算する
+4. 割り当てが変わらなくなるまでステップ 2-3 を繰り返す
 
-The objective function (inertia) measures the total squared distance from each point to its assigned centroid. K-Means minimizes this, but only finds a local minimum. Different initializations can give different results.
+目的関数（inertia）は、各点から割り当て先 centroid までの二乗距離の合計を測ります。K-Means はこれを最小化しますが、見つけるのは局所最小です。初期化が違えば結果も変わることがあります。
 
-### Choosing K
+### K の選び方
 
-Two standard methods:
+標準的な方法は 2 つあります。
 
-**Elbow method:** Run K-Means for K = 1, 2, 3, ..., n. Plot inertia vs K. Look for the "elbow" where adding more clusters stops reducing inertia significantly.
+**Elbow method:** K = 1, 2, 3, ..., n で K-Means を実行します。inertia と K の関係をプロットし、クラスタを増やしても inertia が大きく下がらなくなる「肘」の位置を探します。
 
-**Silhouette score:** For each point, measure how similar it is to its own cluster (a) versus the nearest other cluster (b). The silhouette coefficient is (b - a) / max(a, b), ranging from -1 (wrong cluster) to +1 (well-clustered). Average across all points for a global score.
+**Silhouette score:** 各点について、自分のクラスタ内での近さ (a) と、最も近い別クラスタまでの近さ (b) を比べます。silhouette coefficient は (b - a) / max(a, b) で、-1（誤ったクラスタ）から +1（よくクラスタリングされている）までの値を取ります。全点で平均したものを全体スコアとして使います。
 
-### DBSCAN: Density-Based Clustering
+### DBSCAN: 密度ベースのクラスタリング
 
-K-Means assumes clusters are spherical and requires you to pick K upfront. DBSCAN makes neither assumption. It finds clusters as dense regions separated by sparse regions.
+K-Means はクラスタが球状であることを仮定し、事前に K を選ぶ必要があります。DBSCAN はそのどちらも仮定しません。疎な領域で区切られた密な領域としてクラスタを見つけます。
 
-Two parameters:
-- **eps**: the radius of a neighborhood
-- **min_samples**: the minimum number of points needed to form a dense region
+2 つのパラメータがあります。
+- **eps**: 近傍の半径
+- **min_samples**: 密な領域を形成するために必要な最小点数
 
-Three types of points:
-- **Core point**: has at least min_samples points within eps distance
-- **Border point**: within eps of a core point but not itself a core point
-- **Noise point**: neither core nor border. These are outliers.
+点は 3 種類に分かれます。
+- **Core point**: eps 距離以内に少なくとも min_samples 個の点を持つ点
+- **Border point**: core point の eps 以内にあるが、それ自体は core point ではない点
+- **Noise point**: core でも border でもない点。これらは外れ値です。
 
-DBSCAN connects core points that are within eps of each other into the same cluster. Border points join the cluster of a nearby core point. Noise points belong to no cluster.
+DBSCAN は、互いに eps 以内にある core point を同じクラスタとしてつなげます。border point は近くの core point のクラスタに入ります。noise point はどのクラスタにも属しません。
 
-Strengths: finds clusters of any shape, automatically determines the number of clusters, identifies outliers. Weakness: struggles with clusters of varying densities.
+強みは、任意の形のクラスタを見つけ、クラスタ数を自動的に決め、外れ値を識別できることです。弱みは、密度が大きく異なるクラスタが混在すると苦戦することです。
 
-### Hierarchical Clustering
+### 階層的クラスタリング
 
-Builds a tree (dendrogram) of nested clusters.
+入れ子になったクラスタの木（dendrogram）を構築します。
 
-Agglomerative (bottom-up):
-1. Start with each point as its own cluster
-2. Merge the two closest clusters
-3. Repeat until only one cluster remains
-4. Cut the dendrogram at the desired level to get K clusters
+凝集型（bottom-up）:
+1. 各点をそれぞれ独立したクラスタとして開始する
+2. 最も近い 2 つのクラスタを結合する
+3. クラスタが 1 つだけになるまで繰り返す
+4. 目的のレベルで dendrogram を切り、K 個のクラスタを得る
 
-The "closeness" between clusters can be measured as:
-- **Single linkage**: minimum distance between any two points in the two clusters
-- **Complete linkage**: maximum distance between any two points
-- **Average linkage**: average distance between all pairs
-- **Ward's method**: the merge that causes the smallest increase in total within-cluster variance
+クラスタ間の「近さ」は次のように測れます。
+- **Single linkage**: 2 つのクラスタ内の任意の 2 点間の最小距離
+- **Complete linkage**: 任意の 2 点間の最大距離
+- **Average linkage**: すべての点ペア間距離の平均
+- **Ward's method**: クラスタ内分散の合計の増加が最も小さくなる結合
 
 ### Gaussian Mixture Models (GMM)
 
-K-Means gives hard assignments: each point belongs to exactly one cluster. GMM gives soft assignments: each point has a probability of belonging to each cluster.
+K-Means は hard assignment を返します。各点は必ず 1 つのクラスタだけに属します。GMM は soft assignment を返します。各点が各クラスタに属する確率を持ちます。
 
-GMM assumes the data is generated from a mixture of K Gaussian distributions, each with its own mean and covariance. The Expectation-Maximization (EM) algorithm alternates between:
+GMM は、データが K 個の Gaussian distribution の混合から生成されたと仮定します。それぞれの分布は独自の平均と共分散を持ちます。Expectation-Maximization (EM) algorithm は次を交互に実行します。
 
-- **E-step**: compute the probability that each point belongs to each Gaussian
-- **M-step**: update the mean, covariance, and mixing weight of each Gaussian to maximize the likelihood of the data
+- **E-step**: 各点が各 Gaussian に属する確率を計算する
+- **M-step**: データの likelihood が最大になるように、各 Gaussian の平均・共分散・混合重みを更新する
 
-GMM can model elliptical clusters (not just spherical like K-Means) and naturally handles overlapping clusters.
+GMM は K-Means のような球状クラスタだけでなく楕円形クラスタもモデル化でき、重なり合うクラスタも自然に扱えます。
 
-### When to Use Which
+### どれを使うべきか
 
-| Method | Best for | Avoid when |
+| 手法 | 向いている場面 | 避ける場面 |
 |--------|----------|------------|
-| K-Means | Large datasets, spherical clusters, known K | Irregular shapes, outliers present |
-| DBSCAN | Unknown K, arbitrary shapes, outlier detection | Varying densities, very high dimensions |
-| Hierarchical | Small datasets, need dendrogram, unknown K | Large datasets (O(n^2) memory) |
-| GMM | Overlapping clusters, soft assignments needed | Very large datasets, too many dimensions |
+| K-Means | 大規模データセット、球状クラスタ、K が既知 | 不規則な形状、外れ値がある場合 |
+| DBSCAN | K が未知、任意形状、外れ値検出 | 密度が異なる場合、非常に高次元 |
+| Hierarchical | 小規模データセット、dendrogram が必要、K が未知 | 大規模データセット (O(n^2) memory) |
+| GMM | 重なり合うクラスタ、soft assignment が必要 | 非常に大規模なデータセット、次元が多すぎる場合 |
 
-### Anomaly Detection with Clustering
+### クラスタリングによる異常検知
 
-Clustering naturally supports anomaly detection:
-- **K-Means**: points far from any centroid are anomalies
-- **DBSCAN**: noise points are anomalies by definition
-- **GMM**: points with low probability under all Gaussians are anomalies
+クラスタリングは異常検知と相性がよいです。
+- **K-Means**: どの centroid からも遠い点を異常とみなす
+- **DBSCAN**: noise point は定義上、異常とみなせる
+- **GMM**: すべての Gaussian で確率が低い点を異常とみなす
 
-## Build It
+## 実装する
 
-### Step 1: K-Means from scratch
+### Step 1: K-Means をゼロから実装する
 
 ```python
 import math
@@ -174,7 +174,7 @@ def kmeans(data, k, max_iterations=100, seed=42):
     return assignments, centroids
 ```
 
-### Step 2: Elbow method and silhouette score
+### Step 2: Elbow method と silhouette score
 
 ```python
 def compute_inertia(data, assignments, centroids):
@@ -240,7 +240,7 @@ def find_best_k(data, max_k=10):
     return inertias
 ```
 
-### Step 3: DBSCAN from scratch
+### Step 3: DBSCAN をゼロから実装する
 
 ```python
 def dbscan(data, eps, min_samples):
@@ -359,7 +359,7 @@ def gmm(data, k, max_iterations=100, seed=42):
     return assignments, means, weights, responsibilities
 ```
 
-### Step 5: Generate test data and run everything
+### Step 5: テストデータを生成してすべて実行する
 
 ```python
 def make_blobs(centers, n_per_cluster=50, spread=0.5, seed=42):
@@ -450,9 +450,9 @@ if __name__ == "__main__":
         print(f"    Point {[round(v, 2) for v in a]}")
 ```
 
-## Use It
+## 使ってみる
 
-With scikit-learn, the same algorithms are one-liners:
+scikit-learn を使うと、同じアルゴリズムは 1 行で実行できます。
 
 ```python
 from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering
@@ -465,33 +465,33 @@ agg = AgglomerativeClustering(n_clusters=3).fit(data)
 gmm_model = GaussianMixture(n_components=3, random_state=42).fit(data)
 ```
 
-The from-scratch versions show you exactly what these libraries compute. K-Means iterates between assigning and recomputing. DBSCAN grows clusters from dense seeds. GMM alternates between expectation and maximization. The library versions add numerical stability, smarter initialization (K-Means++), and GPU acceleration, but the core logic is the same.
+ゼロから実装した版を見ると、これらのライブラリが何を計算しているのかが正確にわかります。K-Means は割り当てと再計算を反復します。DBSCAN は密な seed からクラスタを広げます。GMM は expectation と maximization を交互に行います。ライブラリ版は数値安定性、より賢い初期化（K-Means++）、GPU アクセラレーションなどを追加しますが、中核となるロジックは同じです。
 
-## Ship It
+## 成果物
 
-This lesson produces working implementations of K-Means, DBSCAN, and GMM from scratch. The clustering code can be reused as a foundation for more advanced unsupervised methods.
+このレッスンでは、K-Means、DBSCAN、GMM の動作するゼロからの実装を作ります。クラスタリングコードは、より高度な教師なし手法の土台として再利用できます。
 
-## Exercises
+## 演習
 
-1. Implement K-Means++ initialization: instead of picking random centroids, pick the first randomly and each subsequent centroid with probability proportional to its squared distance from the nearest existing centroid. Compare convergence speed to random initialization.
-2. Add hierarchical agglomerative clustering to the code. Implement Ward's linkage and produce a dendrogram (as a nested list of merges). Cut it at different levels and compare to K-Means results.
-3. Build a simple anomaly detection pipeline: run DBSCAN and GMM on the same data, flag points that both methods agree are outliers (noise in DBSCAN, low probability in GMM). Measure the overlap and discuss when the methods disagree.
+1. K-Means++ 初期化を実装してください。ランダムに centroid を選ぶ代わりに、最初の centroid はランダムに選び、以降の centroid は既存の最も近い centroid からの二乗距離に比例した確率で選びます。ランダム初期化と収束速度を比較してください。
+2. 階層的凝集クラスタリングをコードに追加してください。Ward's linkage を実装し、結合の入れ子リストとして dendrogram を生成します。異なるレベルで切り、K-Means の結果と比較してください。
+3. 単純な異常検知パイプラインを構築してください。同じデータに DBSCAN と GMM を実行し、両手法が外れ値だと一致した点（DBSCAN では noise、GMM では低確率）にフラグを立てます。重なりを測定し、手法間で判断が分かれる場面を議論してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Clustering | "Grouping similar things" | Partitioning data into subsets where within-group similarity exceeds between-group similarity, measured by a specific distance metric |
-| Centroid | "The center of a cluster" | The mean of all points assigned to a cluster; used by K-Means as the cluster representative |
-| Inertia | "How tight the clusters are" | Sum of squared distances from each point to its assigned centroid; lower is tighter |
-| Silhouette score | "How well-separated clusters are" | For each point, (b - a) / max(a, b) where a is mean intra-cluster distance and b is mean nearest-cluster distance |
-| Core point | "A point in a dense region" | A point with at least min_samples neighbors within eps distance, in DBSCAN |
-| EM algorithm | "Soft K-Means" | Expectation-Maximization: iteratively compute membership probabilities (E-step) and update distribution parameters (M-step) |
-| Dendrogram | "A tree of clusters" | A tree diagram showing the order and distance at which clusters were merged in hierarchical clustering |
-| Anomaly | "An outlier" | A data point that does not conform to the expected pattern, identified as noise by DBSCAN or low-probability by GMM |
+| Clustering | 「似たものをまとめる」 | 特定の距離尺度で測ったとき、グループ内の類似度がグループ間の類似度を上回るようにデータを部分集合へ分割すること |
+| Centroid | 「クラスタの中心」 | クラスタに割り当てられたすべての点の平均。K-Means ではクラスタの代表として使われる |
+| Inertia | 「クラスタがどれだけ締まっているか」 | 各点から割り当て先 centroid までの二乗距離の合計。低いほど密 |
+| Silhouette score | 「クラスタがどれだけよく分離しているか」 | 各点について (b - a) / max(a, b)。a はクラスタ内平均距離、b は最も近い別クラスタまでの平均距離 |
+| Core point | 「密な領域にある点」 | DBSCAN において、eps 距離以内に少なくとも min_samples 個の近傍を持つ点 |
+| EM algorithm | 「Soft K-Means」 | Expectation-Maximization。所属確率を計算し（E-step）、分布パラメータを更新する（M-step）処理を反復する |
+| Dendrogram | 「クラスタの木」 | 階層的クラスタリングで、クラスタが結合された順序と距離を示す木構造の図 |
+| Anomaly | 「外れ値」 | 期待されるパターンに従わないデータ点。DBSCAN では noise、GMM では低確率として識別される |
 
-## Further Reading
+## 参考資料
 
-- [Stanford CS229 - Unsupervised Learning](https://cs229.stanford.edu/notes2022fall/main_notes.pdf) - Andrew Ng's lecture notes on clustering and EM
-- [scikit-learn Clustering Guide](https://scikit-learn.org/stable/modules/clustering.html) - practical comparison of all clustering algorithms with visual examples
-- [DBSCAN original paper (Ester et al., 1996)](https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf) - the paper that introduced density-based clustering
+- [Stanford CS229 - Unsupervised Learning](https://cs229.stanford.edu/notes2022fall/main_notes.pdf) - クラスタリングと EM に関する Andrew Ng の講義ノート
+- [scikit-learn Clustering Guide](https://scikit-learn.org/stable/modules/clustering.html) - すべてのクラスタリングアルゴリズムを視覚例付きで実用的に比較したガイド
+- [DBSCAN original paper (Ester et al., 1996)](https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf) - 密度ベースクラスタリングを導入した論文

@@ -1,17 +1,17 @@
 /**
- * Prompt + semantic caching — TypeScript port.
+ * Prompt + semantic caching — TypeScript port。
  *
- * Three pieces:
- *   1. LRU cache with TTL (the L2 prompt-prefix layer's interface — provider does
- *      this; we model it).
- *   2. Semantic cache with cosine-similarity threshold (L1 layer). Uses a
- *      deterministic word-hash "embedding" so the demo is reproducible and
- *      requires no model. Swap embed() with a real embedding call in prod.
- *   3. Two-layer simulator matching main.py, exercising the parallel-write
- *      anti-pattern with 5-min vs 1-hour TTL premiums.
+ * 3 つの部分があります:
+ *   1. TTL 付き LRU cache（L2 prompt-prefix layer の interface。実際には provider が
+ *      行うものをここでは model 化します）。
+ *   2. Cosine-similarity threshold を持つ semantic cache（L1 layer）。Demo を再現可能にし、
+ *      model 不要にするため deterministic word-hash "embedding" を使います。Production では
+ *      embed() を real embedding call に差し替えます。
+ *   3. main.py と同じ two-layer simulator。5-min vs 1-hour TTL premiums で
+ *      parallel-write anti-pattern を動かします。
  *
- * Pricing snapshot: 2026-04, captured from docs.anthropic.com / platform.openai.com
- * via docs/en.md. Verify rate cards before quoting.
+ * Pricing snapshot: 2026-04。docs/en.md 経由で docs.anthropic.com /
+ * platform.openai.com から取得。引用前に rate cards を確認してください。
  *
  * Citations:
  *   - Anthropic prompt-caching: docs.anthropic.com/en/docs/build-with-claude/prompt-caching
@@ -19,22 +19,22 @@
  *   - ProjectDiscovery 7%→74% by moving dynamic content out of prefix
  *     https://projectdiscovery.io/blog/how-we-cut-llm-cost-with-prompt-caching
  *
- * Runs on Node 20+ stdlib. No npm deps.
+ * Node 20+ stdlib で動作します。npm deps は不要です。
  */
 
 import { createHash } from "node:crypto";
 
-// -- Pricing constants (2026-04) -------------------------------------------
+// -- Pricing constants（2026-04）--------------------------------------------
 
-const BASE_INPUT = 3.0; // $/M input tokens (Claude Sonnet class)
+const BASE_INPUT = 3.0; // $/M input tokens（Claude Sonnet class）
 const BASE_OUTPUT = 15.0; // $/M output tokens
-const CACHED_INPUT = 0.3; // ~10x cheaper read
+const CACHED_INPUT = 0.3; // read は約 10x cheaper
 const CACHE_WRITE_5MIN = 1.25 * BASE_INPUT;
 const CACHE_WRITE_1HR = 2.0 * BASE_INPUT;
 
 // -- LRU cache with TTL ----------------------------------------------------
 
-// Map preserves insertion order in JS; we exploit that for LRU.
+// JS の Map は insertion order を保持するため、LRU に利用します。
 class LRUCache<K, V> {
   private readonly map = new Map<K, { value: V; expiresAt: number }>();
   private readonly capacity: number;
@@ -55,7 +55,7 @@ class LRUCache<K, V> {
       this.map.delete(key);
       return undefined;
     }
-    // Refresh LRU position.
+    // LRU position を更新します。
     this.map.delete(key);
     this.map.set(key, entry);
     return entry.value;
@@ -81,9 +81,9 @@ class LRUCache<K, V> {
 
 // -- Semantic cache --------------------------------------------------------
 
-// Toy deterministic embedding: bucket each lowercased word into 64 dims by hash.
-// This is enough to demonstrate cosine threshold behavior; replace with a real
-// embedding provider for production (text-embedding-3-small, voyage-3, etc.).
+// Toy deterministic embedding: lowercased word ごとに hash で 64 dims へ bucket します。
+// Cosine threshold behavior を示すには十分です。Production では real embedding provider
+//（text-embedding-3-small、voyage-3 など）に置き換えてください。
 const EMBED_DIM = 64;
 
 function embed(text: string): Float32Array {
@@ -96,11 +96,11 @@ function embed(text: string): Float32Array {
   for (const tok of tokens) {
     const h = createHash("sha256").update(tok).digest();
     const idx = h.readUInt16BE(0) % EMBED_DIM;
-    // Sign bit from second pair so we get spread, not pure positive.
+    // Pure positive ではなく spread を得るため、second pair から sign bit を取ります。
     const sign = h[2] & 1 ? 1 : -1;
     vec[idx] += sign;
   }
-  // L2-normalize so cosine = dot product.
+  // Cosine = dot product になるよう L2-normalize します。
   let norm = 0;
   for (let i = 0; i < EMBED_DIM; i++) norm += vec[i] * vec[i];
   norm = Math.sqrt(norm);
@@ -129,7 +129,7 @@ class SemanticCache {
     this.capacity = capacity;
   }
 
-  // Returns best match above threshold, or undefined.
+  // Threshold を超える best match、または undefined を返します。
   lookup(prompt: string): { response: string; similarity: number } | undefined {
     const q = embed(prompt);
     let bestSim = -1;
@@ -187,7 +187,7 @@ function makeWorkload(n = 500, seed = 7): Request[] {
   const rng = makeRng(seed);
   const reqs: Request[] = [];
   const prefixes = Array.from({ length: 12 }, (_, i) => `prefix_${i}`);
-  // A small set of FAQ-style canonical queries — drives L1 hit rate.
+  // 小さな FAQ-style canonical queries の集合。L1 hit rate を生みます。
   const faqs = [
     "what is your refund policy",
     "how do I reset my password",
@@ -238,18 +238,18 @@ type SimResult = {
 };
 
 function simulate(reqs: readonly Request[], cfg: Config): SimResult {
-  // L2 modeled as a set of prefix hashes seen "long enough ago" to be cached.
-  // L2 LRU here exists to demonstrate the API; the simulator uses a simpler
-  // set + parallel-wave flag (matches main.py's semantics).
+  // L2 は「cache されるのに十分前に見た」prefix hashes の set として model 化します。
+  // ここでの L2 LRU は API の demonstration 用です。Simulator はより単純な
+  // set + parallel-wave flag（main.py と同じ semantics）を使います。
   const _l2Lru = new LRUCache<string, true>(
     1024,
     cfg.ttl === "5min" ? 5 * 60_000 : 60 * 60_000,
   );
-  void _l2Lru; // referenced so the cache is exercised; behavior tied to set below
+  void _l2Lru; // cache を exercise するために参照します。挙動は下の set に紐づきます
   const l2Cache = new Set<string>();
   const semantic = new SemanticCache(cfg.l1Threshold);
 
-  // Pre-warm semantic cache with canned answers for FAQ keys so we get hits.
+  // Hits が得られるよう、FAQ keys の canned answers で semantic cache を pre-warm します。
   semantic.store("what is your refund policy", "Refunds within 30 days.");
   semantic.store("how do I reset my password", "Use the forgot-password link.");
   semantic.store("what are your office hours", "Mon–Fri 9–5 PT.");
@@ -262,11 +262,11 @@ function simulate(reqs: readonly Request[], cfg: Config): SimResult {
   const rng = makeRng(11);
 
   for (const r of reqs) {
-    // L1 layer.
+    // L1 layer。
     if (cfg.l1Enabled) {
-      // Inject randomized hit ratio per the simulator contract:
-      // l1HitProb fraction of requests is "semantically close enough" to a
-      // pre-warmed FAQ entry; we look it up to keep the path real.
+      // Simulator contract に従って randomized hit ratio を注入します。
+      // l1HitProb fraction の requests は pre-warmed FAQ entry に
+      // "semantically close enough" であり、path を現実的に保つため lookup します。
       if (rng() < cfg.l1HitProb) {
         const hit = semantic.lookup(r.semanticKey);
         if (hit) {
@@ -276,7 +276,7 @@ function simulate(reqs: readonly Request[], cfg: Config): SimResult {
       }
     }
 
-    // L2 layer.
+    // L2 layer。
     if (cfg.l2Enabled) {
       if (l2Cache.has(r.prefixHash)) {
         l2Reads++;
@@ -294,7 +294,7 @@ function simulate(reqs: readonly Request[], cfg: Config): SimResult {
       cost += (r.promptTokens / 1e6) * BASE_INPUT;
     }
 
-    // Output cost — held constant at 200 tokens.
+    // Output cost — 200 tokens で固定します。
     cost += (200 / 1e6) * BASE_OUTPUT;
   }
 
@@ -315,7 +315,7 @@ function report(label: string, cfg: Config, reqs: readonly Request[]): void {
 function main(): void {
   console.log("=".repeat(95));
   console.log(
-    "PROMPT + SEMANTIC CACHING — 500 requests, Claude Sonnet-class pricing (2026-04)",
+    "PROMPT + SEMANTIC CACHING — 500 requests、Claude Sonnet-class pricing（2026-04）",
   );
   console.log("=".repeat(95));
   const reqs = makeWorkload();
@@ -381,15 +381,15 @@ function main(): void {
     reqs,
   );
 
-  // Demonstrate the LRU + TTL primitive directly so the API is visible.
+  // API が見えるよう、LRU + TTL primitive を直接示します。
   console.log("\n--- LRU+TTL primitive demo ---");
   const lru = new LRUCache<string, number>(2, 1000);
   lru.set("a", 1);
   lru.set("b", 2);
-  lru.set("c", 3); // evicts "a"
+  lru.set("c", 3); // "a" を evict
   console.log(`after inserting a,b,c with cap=2: has(a)=${lru.has("a")}, has(b)=${lru.has("b")}, has(c)=${lru.has("c")}`);
 
-  // Demonstrate semantic cache cosine behavior — same-meaning paraphrases.
+  // Semantic cache cosine behavior を示します。同じ意味の paraphrase です。
   console.log("\n--- Semantic cache cosine threshold demo ---");
   const sc = new SemanticCache(0.5);
   sc.store("how do I reset my password", "Use forgot-password link.");
@@ -403,7 +403,7 @@ function main(): void {
   );
 
   console.log(
-    "\nRead: caching is a protocol. Structure your prompts and batching for it to pay off.",
+    "\nRead: caching は protocol です。効果を出すには prompts と batching の構造を整えてください。",
   );
 }
 

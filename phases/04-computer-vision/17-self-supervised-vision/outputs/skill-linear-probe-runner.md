@@ -1,6 +1,6 @@
 ---
 name: skill-linear-probe-runner
-description: Write the complete linear-probe evaluation for any frozen encoder and labelled dataset
+description: 任意の frozen encoder と labelled dataset に対する完全な linear-probe evaluation を書く
 version: 1.0.0
 phase: 4
 lesson: 17
@@ -9,30 +9,30 @@ tags: [self-supervised, evaluation, linear-probe, pytorch]
 
 # Linear Probe Runner
 
-Evaluate a frozen encoder's features by training a single linear classifier on top. The standard evaluation for every self-supervised paper.
+frozen encoder の特徴を評価するため、その上に単一の linear classifier を学習します。すべての self-supervised paper における標準評価です。
 
 ## When to use
 
-- Comparing self-supervised checkpoints.
-- Tracking feature quality over pretraining epochs.
-- Deciding whether a pretrained encoder is good enough for a downstream task without fine-tuning.
+- self-supervised checkpoints を比較する。
+- pretraining epochs にわたって feature quality を追跡する。
+- pretrained encoder が downstream task に対して fine-tuning なしで十分かを判断する。
 
 ## Inputs
 
-- `encoder`: frozen `nn.Module` returning a fixed-dim feature per image.
-- `feature_dim`: dimensionality of the encoder output.
-- `train_dataset`: labelled dataset (image, class_id).
-- `val_dataset`: held-out set.
-- `num_classes`: task classes.
-- `epochs`: typically 100 for ImageNet-scale, 50 for smaller datasets.
+- `encoder`: 画像ごとに fixed-dim feature を返す frozen `nn.Module`。
+- `feature_dim`: encoder output の dimensionality。
+- `train_dataset`: labelled dataset (image, class_id)。
+- `val_dataset`: held-out set。
+- `num_classes`: task classes。
+- `epochs`: 通常 ImageNet-scale では 100、小さな datasets では 50。
 
 ## Steps
 
-1. Set encoder to eval mode and `requires_grad=False` on every parameter.
-2. Feature-extract both train and val sets once. Store as numpy arrays or a memory-mapped file.
-3. Train a `nn.Linear(feature_dim, num_classes)` on the cached features with SGD + cosine schedule.
-4. Standard hyperparameters: `lr=0.1`, `momentum=0.9`, `weight_decay=0`, `batch_size=1024`. Linear probe is surprisingly sensitive to `lr` — sweep if accuracy is poor.
-5. Report top-1 accuracy on val at the end of training.
+1. encoder を eval mode にし、すべての parameter で `requires_grad=False` にする。
+2. train と val sets の両方から一度だけ feature-extract する。numpy arrays または memory-mapped file として保存する。
+3. cached features の上で SGD + cosine schedule により `nn.Linear(feature_dim, num_classes)` を学習する。
+4. 標準 hyperparameters: `lr=0.1`, `momentum=0.9`, `weight_decay=0`, `batch_size=1024`。Linear probe は意外に `lr` に敏感です。accuracy が低ければ sweep してください。
+5. 学習終了時に val の top-1 accuracy を報告する。
 
 ## Output template
 
@@ -98,7 +98,7 @@ def linear_probe(encoder, feature_dim, train_loader, val_loader,
 
 ## Rules
 
-- Never update encoder weights during linear probe; that would be a fine-tune, not a probe.
-- Precompute features once; retraining the encoder on every epoch wastes 100x compute.
-- Use SGD with cosine schedule and no weight decay; Adam sometimes underperforms here.
-- Sweep learning rates at least once per encoder family; the optimum varies across SSL methods.
+- linear probe 中に encoder weights を更新しないこと。それは probe ではなく fine-tune です。
+- features は一度だけ precompute すること。毎 epoch encoder を再実行すると compute を 100x 無駄にします。
+- SGD with cosine schedule と weight decay なしを使うこと。ここでは Adam が劣る場合があります。
+- encoder family ごとに少なくとも一度は learning rates を sweep すること。最適値は SSL methods によって変わります。

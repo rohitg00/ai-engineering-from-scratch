@@ -1,39 +1,39 @@
-# Function Calling & Tool Use
+# Function Calling と Tool Use
 
-> LLMs cannot do anything. They generate text. That is the entire capability. They cannot check the weather, query a database, send an email, run code, or read a file. Every "AI agent" you have ever seen is an LLM generating JSON that says which function to call -- and then your code actually calling it. The model is the brain. Tools are the hands. Function calling is the nervous system connecting them.
+> LLM 自体は何も実行できません。できるのは text を生成することだけです。天気を確認したり、database に query したり、email を送ったり、code を実行したり、file を読むことはできません。あなたが見てきた「AI agent」の実体は、どの function を呼ぶべきかを示す JSON を LLM が生成し、その後で実際にはあなたの code が呼び出している仕組みです。model は脳、tools は手、function calling はその間をつなぐ神経系です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 11 Lesson 03 (Structured Outputs)
-**Time:** ~75 minutes
-**Related:** Phase 11 · 14 (Model Context Protocol) — when a tool is shared across hosts, graduate from inline function-calling to an MCP server. This lesson covers the inline case; MCP covers the protocol case.
+**種別:** 構築
+**言語:** Python
+**前提:** Phase 11 Lesson 03 (Structured Outputs)
+**時間:** 約 75 分
+**関連:** Phase 11 · 14 (Model Context Protocol) — host をまたいで tool を共有するなら、inline function calling から MCP server に発展させます。この lesson は inline の場合を扱い、MCP は protocol の場合を扱います。
 
-## Learning Objectives
+## 学習目標
 
-- Implement a function calling loop: define tool schemas, parse the model's tool-call JSON, execute functions, and return results
-- Design tool schemas with clear descriptions and typed parameters that the model can reliably invoke
-- Build a multi-turn agent loop that chains multiple function calls to answer complex queries
-- Handle function calling edge cases: parallel tool calls, error propagation, and preventing infinite tool loops
+- tool schema を定義し、model の tool-call JSON を parse し、function を実行して結果を返す function calling loop を実装する
+- model が安定して呼び出せるように、明確な description と型付き parameter を持つ tool schema を設計する
+- 複数の function call をつなげて複雑な query に答える multi-turn agent loop を構築する
+- parallel tool calls、error propagation、無限 tool loop の防止など、function calling の edge case を扱う
 
-## The Problem
+## 問題
 
-You build a chatbot. A user asks: "What's the weather in Tokyo right now?"
+chatbot を作ったとします。user が「東京の今の天気は？」と尋ねます。
 
-The model responds: "I don't have access to real-time weather data, but based on the season, Tokyo is likely around 15 degrees Celsius..."
+model はこう答えます。「real-time weather data にはアクセスできませんが、季節から考えると東京はおそらく 15 度前後です...」
 
-That is a hallucination dressed in a disclaimer. The model does not know the weather. It never will. Weather changes every hour. The model's training data is months old.
+これは disclaimer をまとった hallucination です。model は天気を知りません。今後も知りません。天気は毎時間変わり、model の training data は何か月も前のものです。
 
-The correct answer requires calling the OpenWeatherMap API, getting the current temperature, and returning the real number. The model cannot call APIs. Your code can. The missing piece: a structured protocol that lets the model say "I need to call the weather API with these arguments" and lets your code execute it and feed the result back.
+正しい答えには OpenWeatherMap API を呼び、現在の気温を取得し、実際の数値を返す必要があります。model は API を呼べません。あなたの code は呼べます。欠けているのは、model が「この引数で weather API を呼ぶ必要がある」と言え、あなたの code がそれを実行して結果を戻せる structured protocol です。
 
-This is function calling. The model outputs structured JSON describing which function to invoke with what arguments. Your application executes the function. The result goes back into the conversation. The model uses the result to produce its final answer.
+これが function calling です。model はどの function をどの arguments で呼び出すかを表す structured JSON を出力します。application が function を実行します。結果は conversation に戻されます。model はその結果を使って最終回答を作ります。
 
-Without function calling, LLMs are encyclopedias. With it, they become agents.
+function calling がなければ LLM は百科事典です。function calling があれば agent になります。
 
-## The Concept
+## コンセプト
 
-### The Function Calling Loop
+### Function Calling Loop
 
-Every tool-use interaction follows the same 5-step loop.
+すべての tool-use interaction は同じ 5 step の loop に従います。
 
 ```mermaid
 sequenceDiagram
@@ -52,13 +52,13 @@ sequenceDiagram
     A->>U: Final response
 ```
 
-Step 1: the user sends a message. Step 2: the model receives the message along with tool definitions (JSON Schema describing available functions). Step 3: instead of responding with text, the model outputs a tool call -- a structured JSON object with the function name and arguments. Step 4: your code executes the function and captures the result. Step 5: the result goes back to the model, which now has real data to produce its final answer.
+Step 1: user が message を送ります。Step 2: model は message と tool definitions (利用可能な functions を表す JSON Schema) を受け取ります。Step 3: text で応答する代わりに、model は function name と arguments を持つ structured JSON object として tool call を出力します。Step 4: あなたの code が function を実行し、result を取得します。Step 5: result が model に戻り、model は実 data を使って最終回答を生成します。
 
-The model never executes anything. It only decides what to call and with what arguments. Your code is the executor.
+model は何も実行しません。何をどの arguments で呼ぶかを決めるだけです。executor はあなたの code です。
 
-### Tool Definitions: The JSON Schema Contract
+### Tool Definitions: JSON Schema Contract
 
-Each tool is defined by a JSON Schema that tells the model what the function does, what arguments it takes, and what types those arguments must be.
+各 tool は JSON Schema で定義します。これは function が何をするか、どの arguments を取るか、それらの type が何であるべきかを model に伝えます。
 
 ```json
 {
@@ -85,34 +85,34 @@ Each tool is defined by a JSON Schema that tells the model what the function doe
 }
 ```
 
-The `description` fields are critical. The model reads them to decide when and how to use the tool. A vague description like "gets weather" produces worse tool selection than "Get current weather for a city. Returns temperature in Celsius and conditions." The description is a prompt for tool selection.
+`description` fields は極めて重要です。model はそれを読んで、いつ、どのように tool を使うかを判断します。"gets weather" のような曖昧な description は、"Get current weather for a city. Returns temperature in Celsius and conditions." より悪い tool selection を生みます。description は tool selection のための prompt です。
 
-### Provider Comparison
+### Provider 比較
 
-Every major provider supports function calling, but the API surface differs.
+主要 provider はすべて function calling を support していますが、API surface は異なります。
 
-| Provider | API Parameter | Tool Call Format | Parallel Calls | Forced Calling |
+| Provider | API parameter | Tool call format | Parallel calls | Forced calling |
 |----------|--------------|-----------------|---------------|----------------|
 | OpenAI (GPT-5, o4) | `tools` | `tool_calls[].function` | Yes (multiple per turn) | `tool_choice="required"` |
 | Anthropic (Claude 4.6/4.7) | `tools` | `content[].type="tool_use"` | Yes (multiple blocks) | `tool_choice={"type":"any"}` |
 | Google (Gemini 3) | `function_declarations` | `functionCall` | Yes | `function_calling_config` |
 | Open-weight (Llama 4, Qwen3, DeepSeek-V3) | Native `tools` on Llama 4; Hermes or ChatML on others | Mixed | Model-dependent | Prompt-based or `tool_choice` if supported |
 
-By 2026 the three closed providers have converged on near-identical JSON-Schema-based formats. Llama 4 ships with a native `tools` field that matches OpenAI's shape. Open-weight fine-tunes still vary — the Hermes format (NousResearch) is the most common for third-party fine-tunes. For shared tools across hosts, prefer MCP (Phase 11 · 14) over inline function-calling — the server is the same for all of them.
+2026 年時点では、3 つの closed provider はほぼ同一の JSON-Schema-based format に収束しています。Llama 4 は OpenAI の形に合う native `tools` field を備えています。open-weight fine-tune はまだばらつきがあり、third-party fine-tune では Hermes format (NousResearch) が最も一般的です。host をまたいで tool を共有する場合は、inline function calling より MCP (Phase 11 · 14) を優先します。server を共通化できるからです。
 
-### Tool Choice: Auto, Required, Specific
+### Tool Choice: Auto、Required、Specific
 
-You control when the model uses tools.
+model がいつ tool を使うかは制御できます。
 
-**Auto** (default): the model decides whether to call a tool or respond directly. "What's 2+2?" -- responds directly. "What's the weather?" -- calls the tool.
+**Auto** (default): tool を呼ぶか直接応答するかを model が決めます。「2+2 は？」なら直接応答し、「天気は？」なら tool を呼びます。
 
-**Required**: the model must call at least one tool. Use this when you know the user's intent requires a tool. Prevents the model from guessing instead of looking up real data.
+**Required**: model は少なくとも 1 つの tool を呼ばなければなりません。user intent が tool を必要とすることが分かっている場合に使います。実 data を lookup せずに model が推測するのを防ぎます。
 
-**Specific function**: force the model to call a particular function. `tool_choice={"type":"function", "function": {"name": "get_weather"}}` guarantees the weather tool is called, regardless of the query. Use this for routing -- when upstream logic already determined which tool is needed.
+**Specific function**: 特定の function を呼ぶよう model に強制します。`tool_choice={"type":"function", "function": {"name": "get_weather"}}` は query に関係なく weather tool を呼ばせます。upstream logic が必要な tool を既に決めている routing に使います。
 
 ### Parallel Function Calling
 
-GPT-4o and Claude can call multiple functions in a single turn. A user asks: "What's the weather in Tokyo and New York?" The model outputs two tool calls simultaneously:
+GPT-4o と Claude は 1 turn で複数の function を呼べます。user が「東京とニューヨークの天気は？」と尋ねると、model は 2 つの tool call を同時に出力します。
 
 ```json
 [
@@ -121,37 +121,37 @@ GPT-4o and Claude can call multiple functions in a single turn. A user asks: "Wh
 ]
 ```
 
-Your code executes both (ideally concurrently), returns both results, and the model synthesizes a single response. This cuts round trips from 2 to 1. For agents with 5-10 tool calls per query, parallel calling reduces latency by 60-80%.
+あなたの code は両方を実行し (理想的には concurrent に)、両方の results を返し、model が 1 つの response に統合します。これにより round trip は 2 回から 1 回になります。1 query あたり 5-10 tool calls を行う agent では、parallel calling により latency を 60-80% 減らせます。
 
-### Structured Outputs vs Function Calling
+### Structured Outputs と Function Calling
 
-Lesson 03 covered structured outputs. Function calling uses the same JSON Schema machinery, but for a different purpose.
+Lesson 03 では structured outputs を扱いました。function calling は同じ JSON Schema machinery を使いますが、目的が違います。
 
-**Structured outputs**: force the model to produce data in a specific shape. The output is the final product. Example: extract product info from text as `{name, price, in_stock}`.
+**Structured outputs**: model に特定の形の data を生成させます。output は最終成果物です。例: text から product info を `{name, price, in_stock}` として抽出する。
 
-**Function calling**: the model declares an intent to execute an action. The output is an intermediate step. Example: `get_weather(city="Tokyo")` -- the model is requesting an action, not producing the final answer.
+**Function calling**: model が action を実行したい意図を宣言します。output は intermediate step です。例: `get_weather(city="Tokyo")` は final answer ではなく、model が action を要求している状態です。
 
-Use structured outputs when you want data extraction. Use function calling when you want the model to interact with external systems.
+data extraction には structured outputs を使います。external systems と model をやり取りさせたい場合は function calling を使います。
 
-### Security: The Non-Negotiable Rules
+### Security: 妥協できない rules
 
-Function calling is the most dangerous capability you can give an LLM. The model chooses what to execute. If your tool set includes database queries, the model constructs the queries. If it includes shell commands, the model writes them.
+function calling は LLM に与えられる最も危険な capability です。何を実行するかを model が選びます。tool set に database query があれば model が query を組み立てます。shell command があれば model が command を書きます。
 
-**Rule 1: Never pass model-generated SQL directly to a database.** The model can and will generate DROP TABLE, UNION injections, or queries that return every row. Always parameterize. Always validate. Always use an allowlist of operations.
+**Rule 1: model-generated SQL を database に直接渡さない。** model は DROP TABLE、UNION injection、全 row を返す query を生成し得ます。必ず parameterize し、validate し、operation allowlist を使います。
 
-**Rule 2: Allowlist functions.** The model can only call functions you explicitly define. Never build a generic "execute any function by name" tool. If you have 50 internal functions, expose only the 5 the user needs.
+**Rule 2: functions を allowlist する。** model が呼べるのは明示的に定義した functions だけです。「任意の function name を実行する」汎用 tool は作ってはいけません。internal functions が 50 個あっても、user に必要な 5 個だけ expose します。
 
-**Rule 3: Validate arguments.** The model might pass a city name of `"; DROP TABLE users; --"`. Validate every argument against expected types, ranges, and formats before execution.
+**Rule 3: arguments を validate する。** model は city name として `"; DROP TABLE users; --"` を渡すかもしれません。実行前にすべての argument を expected types、ranges、formats に照らして validate します。
 
-**Rule 4: Sanitize tool results.** If a tool returns sensitive data (API keys, PII, internal errors), filter it before sending it back to the model. The model will include tool results in its response verbatim.
+**Rule 4: tool results を sanitize する。** tool が sensitive data (API keys、PII、internal errors) を返す場合、model に戻す前に filter します。model は tool results を response にそのまま含める可能性があります。
 
-**Rule 5: Rate limit tool calls.** A model in a loop can call tools hundreds of times. Set a maximum (10-20 calls per conversation is reasonable). Break infinite loops.
+**Rule 5: tool calls を rate limit する。** loop に入った model は tool を何百回も呼ぶことがあります。最大回数を設定します (conversation あたり 10-20 calls が妥当)。infinite loop を切ります。
 
 ### Error Handling
 
-Tools fail. APIs time out. Databases go down. Files do not exist. The model needs to know when a tool fails and why.
+tools は失敗します。API は timeout します。database は落ちます。file は存在しないことがあります。model には tool がいつ、なぜ失敗したかを知らせる必要があります。
 
-Return errors as structured tool results, not exceptions:
+error は exception ではなく structured tool result として返します。
 
 ```json
 {
@@ -161,21 +161,21 @@ Return errors as structured tool results, not exceptions:
 }
 ```
 
-The model reads this, adjusts its arguments, and retries. Models are good at self-correcting from structured error messages. They are bad at recovering from empty responses or generic "something went wrong" errors.
+model はこれを読み、arguments を調整して retry します。models は structured error messages からの self-correction が得意です。empty response や generic な "something went wrong" error からの復帰は苦手です。
 
 ### MCP: Model Context Protocol
 
-MCP is Anthropic's open standard for tool interoperability. Instead of every application defining its own tools, MCP provides a universal protocol: tools are served by MCP servers, consumed by MCP clients (like Claude Code, Cursor, or your application).
+MCP は tool interoperability のための Anthropic の open standard です。各 application が独自に tools を定義する代わりに、MCP は universal protocol を提供します。tools は MCP servers から提供され、Claude Code、Cursor、あなたの application のような MCP clients が利用します。
 
-One MCP server can expose tools to any compatible client. A Postgres MCP server gives any MCP-compatible agent database access. A GitHub MCP server gives any agent repository access. The tools are defined once, used everywhere.
+1 つの MCP server は互換 client すべてに tools を expose できます。Postgres MCP server は MCP-compatible agent に database access を与えます。GitHub MCP server は agent に repository access を与えます。tools は一度定義し、どこでも使えます。
 
-MCP is to function calling what HTTP is to networking. It standardizes the transport layer so tools become portable.
+function calling における MCP は networking における HTTP のようなものです。transport layer を標準化し、tools を portable にします。
 
-## Build It
+## 実装
 
-### Step 1: Define the Tool Registry
+### Step 1: Tool Registry を定義する
 
-Build a registry that stores tool definitions and their implementations. Each tool has a JSON Schema definition (what the model sees) and a Python function (what your code executes).
+tool definitions と implementations を保存する registry を作ります。各 tool は JSON Schema definition (model が見るもの) と Python function (code が実行するもの) を持ちます。
 
 ```python
 import json
@@ -201,9 +201,9 @@ def register_tool(name, description, parameters, function):
     }
 ```
 
-### Step 2: Implement 5 Tools
+### Step 2: 5 つの Tools を実装する
 
-Build a calculator, weather lookup, web search simulator, file reader, and code runner.
+calculator、weather lookup、web search simulator、file reader、code runner を作ります。
 
 ```python
 def calculator(expression, precision=2):
@@ -299,7 +299,7 @@ def run_code(code, language="python"):
         return {"error": True, "message": f"{type(e).__name__}: {e}"}
 ```
 
-### Step 3: Register All Tools
+### Step 3: すべての Tools を登録する
 
 ```python
 def register_all_tools():
@@ -330,9 +330,9 @@ def register_all_tools():
     )
 ```
 
-### Step 4: Build the Function Calling Loop
+### Step 4: Function Calling Loop を構築する
 
-This is the core engine. It simulates the model deciding which tool to call, executes the tool, and feeds results back.
+ここが core engine です。どの tool を呼ぶかを model が決める流れを simulate し、tool を実行して results を戻します。
 
 ```python
 def simulate_model_decision(user_message, tools, conversation_history):
@@ -429,7 +429,7 @@ def run_function_calling_loop(user_message, max_iterations=5):
 
 ### Step 5: Argument Validation
 
-Build a validator that checks tool call arguments against the JSON Schema before execution.
+実行前に tool call arguments を JSON Schema と照合する validator を作ります。
 
 ```python
 def validate_tool_arguments(tool_name, arguments):
@@ -466,7 +466,7 @@ def validate_tool_arguments(tool_name, arguments):
     return errors
 ```
 
-### Step 6: Run the Demo
+### Step 6: Demo を実行する
 
 ```python
 def run_demo():
@@ -555,7 +555,7 @@ def run_demo():
         print(f"  {tool_name}({list(args.values())[0][:40]}): {'BLOCKED' if blocked else 'ALLOWED'}")
 ```
 
-## Use It
+## 使い方
 
 ### OpenAI Function Calling
 
@@ -602,7 +602,7 @@ def run_demo():
 # print(final.choices[0].message.content)
 ```
 
-OpenAI returns tool calls as `response.choices[0].message.tool_calls`. Each call has an `id` you must include when returning the result. The model uses this ID to match results to calls. GPT-4o can return multiple tool calls in a single response -- iterate and execute all of them.
+OpenAI は tool calls を `response.choices[0].message.tool_calls` として返します。各 call には `id` があり、result を返すときに含める必要があります。model はこの ID で results と calls を対応付けます。GPT-4o は 1 つの response で複数の tool calls を返せるため、iterate してすべて実行します。
 
 ### Anthropic Tool Use
 
@@ -644,7 +644,7 @@ OpenAI returns tool calls as `response.choices[0].message.tool_calls`. Each call
 # )
 ```
 
-Anthropic returns tool calls as content blocks with `type: "tool_use"`. The tool result goes in a user message with `type: "tool_result"`. Note the key difference: Anthropic uses `input_schema` for tool parameter definitions, while OpenAI uses `parameters`.
+Anthropic は tool calls を `type: "tool_use"` の content blocks として返します。tool result は `type: "tool_result"` の user message に入れます。重要な違いとして、Anthropic は tool parameter definitions に `input_schema` を使い、OpenAI は `parameters` を使います。
 
 ### MCP Integration
 
@@ -669,48 +669,48 @@ Anthropic returns tool calls as content blocks with `type: "tool_use"`. The tool
 #         result = await session.call_tool("query", {"sql": "SELECT count(*) FROM users"})
 ```
 
-MCP decouples tool implementation from tool consumption. The Postgres server knows SQL. The GitHub server knows the API. Your agent just discovers and calls tools -- it does not need provider-specific code for each integration.
+MCP は tool implementation と tool consumption を分離します。Postgres server は SQL を知っています。GitHub server は API を知っています。agent は tools を discover して call するだけで、integration ごとに provider-specific code を持つ必要がありません。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/prompt-tool-designer.md` -- a reusable prompt template for designing tool definitions. Give it a description of what you want a tool to do, and it produces the complete JSON Schema definition with descriptions, types, and constraints.
+この lesson は `outputs/prompt-tool-designer.md` を生成します。これは tool definitions を設計するための reusable prompt template です。tool に何をしてほしいかを description として渡すと、descriptions、types、constraints を含む完全な JSON Schema definition を生成します。
 
-It also produces `outputs/skill-function-calling-patterns.md` -- a decision framework for implementing function calling in production, covering tool design, error handling, security, and provider-specific patterns.
+また `outputs/skill-function-calling-patterns.md` も生成します。これは production で function calling を実装するための decision framework で、tool design、error handling、security、provider-specific patterns を扱います。
 
-## Exercises
+## 演習
 
-1. **Add a 6th tool: database query.** Implement a simulated SQL tool with an in-memory table. The tool accepts a table name and filter conditions (not raw SQL). Validate that the table name is in an allowlist and that filter operators are restricted to `=`, `>`, `<`, `>=`, `<=`. Return matching rows as JSON.
+1. **6 つ目の tool: database query を追加する。** in-memory table を使った simulated SQL tool を実装します。tool は table name と filter conditions (raw SQL ではない) を受け取ります。table name が allowlist にあり、filter operators が `=`, `>`, `<`, `>=`, `<=` に制限されていることを validate します。matching rows を JSON として返します。
 
-2. **Implement retry with error feedback.** When a tool call fails (e.g., city not found), feed the error message back to the model decision function and let it correct its arguments. Track how many retries each call takes. Set a maximum of 3 retries per tool call.
+2. **error feedback 付き retry を実装する。** tool call が失敗した場合 (例: city not found)、error message を model decision function に戻し、arguments を修正させます。各 call が何回 retry したかを track します。tool call ごとの最大 retry 回数を 3 に設定します。
 
-3. **Build a multi-step agent.** Some queries require chaining tool calls: "Read the config file and tell me what model is configured, then search the web for that model's pricing." Implement a loop that runs until the model decides no more tools are needed, passing accumulated results into each decision step. Limit to 10 iterations to prevent infinite loops.
+3. **multi-step agent を構築する。** 一部の query は tool calls の連鎖を必要とします。「config file を読んで configured model を教え、その model の pricing を web search して」のような場合です。model がこれ以上 tools は不要と判断するまで loop を回し、accumulated results を各 decision step に渡します。infinite loops を防ぐため 10 iterations に制限します。
 
-4. **Measure tool selection accuracy.** Create 30 test queries with expected tool names. Run your decision function on all 30 and measure what percentage of the time it selects the correct tool. Identify which queries cause the most confusion between tools.
+4. **tool selection accuracy を測定する。** expected tool names を持つ 30 個の test queries を作成します。全 30 件で decision function を実行し、正しい tool を選んだ割合を測定します。tools 間の混同が最も起きる queries を特定します。
 
-5. **Implement tool call caching.** If the same tool is called with identical arguments within 60 seconds, return the cached result instead of re-executing. Use a dictionary keyed by `(tool_name, frozenset(args.items()))`. Measure cache hit rates across a conversation with 20 queries.
+5. **tool call caching を実装する。** 同じ tool が 60 秒以内に同一 arguments で呼ばれた場合、再実行せず cached result を返します。`(tool_name, frozenset(args.items()))` を key にした dictionary を使います。20 queries の conversation で cache hit rate を測定します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Function calling | "Tool use" | The model outputs structured JSON describing a function to invoke with specific arguments -- your code executes it, not the model |
-| Tool definition | "Function schema" | A JSON Schema object describing a tool's name, purpose, parameters, and types -- the model reads this to decide when and how to use the tool |
-| Tool choice | "Calling mode" | Controls whether the model must call a tool (required), may call a tool (auto), or must call a specific tool (named) |
-| Parallel calling | "Multi-tool" | The model outputs multiple tool calls in a single turn, reducing round trips -- GPT-4o and Claude both support this |
-| Tool result | "Function output" | The return value from executing a tool, sent back to the model as a message so it can use real data in its response |
-| Argument validation | "Input checking" | Verifying that model-generated arguments match the expected types, ranges, and constraints before executing the tool |
-| MCP | "Tool protocol" | Model Context Protocol -- Anthropic's open standard for exposing tools via servers that any compatible client can discover and call |
-| Agent loop | "ReAct loop" | The iterative cycle of model-decides-tool, code-executes-tool, result-feeds-back until the model has enough information to respond |
-| Tool poisoning | "Prompt injection via tools" | An attack where tool results contain instructions that manipulate the model's behavior -- sanitize all tool outputs |
-| Rate limiting | "Call budget" | Setting a maximum number of tool calls per conversation to prevent infinite loops and runaway API costs |
+| Function calling | "Tool use" | model が特定 arguments で呼び出す function を structured JSON として出力し、実行は model ではなくあなたの code が行う仕組み |
+| Tool definition | "Function schema" | tool の name、purpose、parameters、types を記述する JSON Schema object。model はこれを読んでいつ、どう tool を使うかを判断する |
+| Tool choice | "Calling mode" | model が tool を必ず呼ぶ (required)、呼んでもよい (auto)、特定 tool を必ず呼ぶ (named) の制御 |
+| Parallel calling | "Multi-tool" | model が 1 turn で複数の tool calls を出力し、round trip を減らす仕組み。GPT-4o と Claude はどちらも対応 |
+| Tool result | "Function output" | tool を実行した return value。message として model に戻し、response で real data を使えるようにする |
+| Argument validation | "Input checking" | model-generated arguments が expected types、ranges、constraints に合うかを tool 実行前に検証すること |
+| MCP | "Tool protocol" | Model Context Protocol。互換 client が discover/call できる servers 経由で tools を expose する Anthropic の open standard |
+| Agent loop | "ReAct loop" | model が tool を決め、code が tool を実行し、result を戻す iterative cycle。model が応答に十分な情報を得るまで続く |
+| Tool poisoning | "Prompt injection via tools" | tool results に model behavior を操作する instructions が含まれる攻撃。すべての tool outputs を sanitize する |
+| Rate limiting | "Call budget" | infinite loops と runaway API costs を防ぐため、conversation ごとの tool call 最大回数を設定すること |
 
-## Further Reading
+## 参考資料
 
-- [OpenAI Function Calling Guide](https://platform.openai.com/docs/guides/function-calling) -- the definitive reference for tool use with GPT-4o, including parallel calls, forced calling, and structured arguments
-- [Anthropic Tool Use Guide](https://docs.anthropic.com/en/docs/tool-use) -- Claude's tool use implementation with input_schema, multi-tool responses, and tool_choice configuration
-- [Model Context Protocol Specification](https://modelcontextprotocol.io) -- the open standard for tool interoperability across AI applications, with server/client architecture
-- [Schick et al., 2023 -- "Toolformer: Language Models Can Teach Themselves to Use Tools"](https://arxiv.org/abs/2302.04761) -- the foundational paper on training LLMs to decide when and how to call external tools
-- [Patil et al., 2023 -- "Gorilla: Large Language Model Connected with Massive APIs"](https://arxiv.org/abs/2305.15334) -- fine-tuning LLMs for accurate API calls across 1,645 APIs with hallucination reduction
-- [Berkeley Function Calling Leaderboard](https://gorilla.cs.berkeley.edu/leaderboard.html) -- real-time benchmark comparing function calling accuracy across GPT-4o, Claude, Gemini, and open models
-- [Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023)](https://arxiv.org/abs/2210.03629) -- the Thought-Action-Observation loop that is the outer agent loop around every tool call; where this lesson ends, Phase 14 picks up.
-- [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) -- five composable patterns (prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer) built from the single tool-use primitive.
+- [OpenAI Function Calling Guide](https://platform.openai.com/docs/guides/function-calling) — GPT-4o での tool use の definitive reference。parallel calls、forced calling、structured arguments を含む
+- [Anthropic Tool Use Guide](https://docs.anthropic.com/en/docs/tool-use) — `input_schema`、multi-tool responses、`tool_choice` configuration を含む Claude の tool use 実装
+- [Model Context Protocol Specification](https://modelcontextprotocol.io) — server/client architecture を持つ、AI applications 間の tool interoperability の open standard
+- [Schick et al., 2023 — "Toolformer: Language Models Can Teach Themselves to Use Tools"](https://arxiv.org/abs/2302.04761) — LLM に external tools をいつ、どう呼ぶかを学習させる foundational paper
+- [Patil et al., 2023 — "Gorilla: Large Language Model Connected with Massive APIs"](https://arxiv.org/abs/2305.15334) — 1,645 APIs に対する accurate API calls と hallucination reduction のための LLM fine-tuning
+- [Berkeley Function Calling Leaderboard](https://gorilla.cs.berkeley.edu/leaderboard.html) — GPT-4o、Claude、Gemini、open models の function calling accuracy を比較する real-time benchmark
+- [Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023)](https://arxiv.org/abs/2210.03629) — すべての tool call の外側にある agent loop である Thought-Action-Observation loop。この lesson の先は Phase 14 で扱う
+- [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — single tool-use primitive から構成される 5 つの composable patterns (prompt chaining、routing、parallelization、orchestrator-workers、evaluator-optimizer)

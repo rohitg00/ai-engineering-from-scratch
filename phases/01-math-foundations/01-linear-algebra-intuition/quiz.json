@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the dot product of two vectors measure?",
-      "options": ["The distance between the two vectors", "How similar or aligned the two vectors are", "The angle between the vectors in degrees", "The number of dimensions the vectors share"],
+      "question": "2つのベクトルの内積は何を測るものですか？",
+      "options": ["2つのベクトルの距離", "2つのベクトルがどれだけ似ているか、または同じ方向を向いているか", "ベクトル間の角度を度数で表したもの", "ベクトルが共有している次元の数"],
       "correct": 1,
-      "explanation": "The dot product measures alignment: positive means same direction (similar), zero means perpendicular (unrelated), negative means opposite direction (dissimilar). This is the basis of similarity search in AI."
+      "explanation": "内積は向きのそろい方を測ります。正なら同じ方向（似ている）、0なら直交（無関係）、負なら反対方向（似ていない）です。これはAIにおける類似度検索の基礎です。"
     },
     {
       "stage": "pre",
-      "question": "In AI, what does 'embedding' refer to?",
-      "options": ["Inserting one model inside another", "A vector representation that captures the meaning of something (word, image, user)", "A technique for compressing model weights", "The process of converting code to machine instructions"],
+      "question": "AIにおける「embedding（埋め込み）」とは何を指しますか？",
+      "options": ["あるモデルを別のモデルの中に挿入すること", "単語、画像、ユーザーなどの意味を捉えるベクトル表現", "モデルの重みを圧縮する技術", "コードを機械語命令に変換する処理"],
       "correct": 1,
-      "explanation": "An embedding maps discrete objects (words, images, users) to continuous vectors in a high-dimensional space where similar items are close together. It is the bridge between real-world concepts and mathematical operations."
+      "explanation": "埋め込みは、単語、画像、ユーザーなどの離散的な対象を、似たもの同士が近くに配置される高次元空間の連続ベクトルへ写します。現実世界の概念と数学的な演算をつなぐ橋渡しです。"
     },
     {
       "stage": "post",
-      "question": "Three vectors v1=[1,0,0], v2=[0,1,0], v3=[2,1,0] are given. Are they linearly independent?",
-      "options": ["Yes, because there are three vectors in 3D space", "No, because v3 = 2*v1 + v2, so v3 is a linear combination of the others", "Yes, because none of the vectors are identical", "No, because they all have a zero component"],
+      "question": "3つのベクトル v1=[1,0,0], v2=[0,1,0], v3=[2,1,0] が与えられています。これらは線形独立ですか？",
+      "options": ["はい。3D空間に3つのベクトルがあるからです", "いいえ。v3 = 2*v1 + v2 なので、v3 は他のベクトルの線形結合です", "はい。どのベクトルも同一ではないからです", "いいえ。すべてに0成分があるからです"],
       "correct": 1,
-      "explanation": "v3 = 2*v1 + v2, making the set linearly dependent. All three vectors lie in the xy-plane and cannot reach [0,0,1]. Despite having 3 vectors in 3D, they only span a 2D subspace."
+      "explanation": "v3 = 2*v1 + v2 なので、この集合は線形従属です。3つのベクトルはすべてxy平面上にあり、[0,0,1] には到達できません。3D空間に3本のベクトルがあっても、張っているのは2次元部分空間だけです。"
     },
     {
       "stage": "post",
-      "question": "What does the rank of a matrix tell you in the context of machine learning?",
-      "options": ["How fast the matrix can be multiplied", "The number of linearly independent columns, indicating how many dimensions of useful information it contains", "The maximum value in the matrix", "The number of non-zero entries in the matrix"],
+      "question": "機械学習の文脈で、行列のランクは何を教えてくれますか？",
+      "options": ["その行列をどれだけ速く掛け算できるか", "線形独立な列の数であり、有用な情報が何次元分含まれるかを示す", "行列内の最大値", "行列内の非ゼロ要素の数"],
       "correct": 1,
-      "explanation": "Rank equals the number of linearly independent columns. In ML, a rank-deficient feature matrix means redundant features, infinitely many weight solutions, and the need for regularization."
+      "explanation": "ランクは線形独立な列の数に等しいです。機械学習では、ランク落ちした特徴量行列は冗長な特徴量、無限に多くの重み解、そして正則化の必要性を意味します。"
     },
     {
       "stage": "post",
-      "question": "How does LoRA (Low-Rank Adaptation) use linear algebra to efficiently fine-tune large language models?",
-      "options": ["It removes unused rows from weight matrices to shrink the model", "It decomposes weight updates into two small low-rank matrices instead of updating the full weight matrix", "It converts all weights from float32 to int8", "It freezes the embedding layer and only trains the output head"],
+      "question": "LoRA（Low-Rank Adaptation）は、線形代数を使ってどのように大規模言語モデルを効率よくファインチューニングしますか？",
+      "options": ["重み行列から未使用の行を削除してモデルを小さくする", "完全な重み行列を更新する代わりに、重み更新を2つの小さな低ランク行列に分解する", "すべての重みをfloat32からint8に変換する", "埋め込み層を凍結し、出力ヘッドだけを訓練する"],
       "correct": 1,
-      "explanation": "LoRA decomposes a 4096x4096 weight update into two matrices of size 4096x16 and 16x4096 (rank-16), reducing trainable parameters from 16M to 131K by assuming updates live in a low-dimensional subspace."
+      "explanation": "LoRAは、4096x4096の重み更新を 4096x16 と 16x4096 の2つの行列（rank-16）に分解します。更新が低次元部分空間にあると仮定することで、訓練可能パラメータを16Mから131Kに減らします。"
     }
   ]
 }

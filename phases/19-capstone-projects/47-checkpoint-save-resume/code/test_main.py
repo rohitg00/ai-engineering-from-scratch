@@ -1,4 +1,4 @@
-"""Tests for full checkpoint, atomic save, and sharded resume."""
+"""完全 checkpoint、atomic save、sharded resume の tests。"""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ class AtomicSaveTests(unittest.TestCase):
             self.assertTrue(target.exists())
             siblings = [p.name for p in Path(tmp).iterdir() if p.name != target.name]
             for name in siblings:
-                self.assertFalse(name.endswith(".tmp"), f"orphan tmp file left: {name}")
+                self.assertFalse(name.endswith(".tmp"), f"孤立した tmp file が残っています: {name}")
 
     def test_atomic_write_json_round_trip(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -66,7 +66,7 @@ class CheckpointResumeTests(unittest.TestCase):
             for (k, v1), (_, v2) in zip(
                 model.state_dict().items(), model2.state_dict().items(), strict=True
             ):
-                self.assertTrue(torch.allclose(v1, v2), f"param diverged: {k}")
+                self.assertTrue(torch.allclose(v1, v2), f"parameter が diverge しました: {k}")
 
     def test_mid_epoch_resume_continues_deterministically(self):
         with tempfile.TemporaryDirectory() as tmp:

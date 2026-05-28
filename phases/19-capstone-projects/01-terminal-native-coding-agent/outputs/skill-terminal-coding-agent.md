@@ -1,46 +1,46 @@
 ---
 name: terminal-coding-agent
-description: Build and evaluate a terminal-native coding agent against SWE-bench Pro with bounded cost, sandboxed tools, and full 2026 hook surface.
+description: コスト上限、サンドボックス化されたツール、2026年版 hook 面を備えたターミナルネイティブ Coding Agent を構築し、SWE-bench Pro で評価する。
 version: 1.0.0
 phase: 19
 lesson: 01
 tags: [capstone, coding-agent, claude-code, swe-bench, mcp, hooks, sandbox]
 ---
 
-Given a target repository and a natural-language task, build a harness that plans, executes in a sandbox, and opens a pull request. Match or beat the mini-swe-agent baseline on a 30-task SWE-bench Pro subset while staying under a $5-per-task budget.
+対象リポジトリと自然言語のタスクを受け取り、計画し、サンドボックス内で実行し、pull request を開く harness を構築する。タスクあたり $5 以内に収めつつ、30タスクの SWE-bench Pro サブセットで mini-swe-agent baseline と同等以上を目指す。
 
-Build plan:
+構築計画:
 
-1. Stand up a Bun + Ink TUI harness with a plan pane, a tool-call stream, and a live token/dollar budget.
-2. Define six tools (read_file, edit_file, ripgrep, tree_sitter_symbols, run_shell, git) over Model Context Protocol StreamableHTTP. Every call returns at most 4k tokens.
-3. Run every tool call inside an E2B or Daytona sandbox on a fresh `git worktree add` branch. Never touch the host filesystem.
-4. Wire all eight 2026 hook events: SessionStart, SessionEnd, PreToolUse, PostToolUse, UserPromptSubmit, Notification, Stop, PreCompact. Ship at least four user-authored hooks (destructive-command guard, token accounting, OTel span emitter, trace bundle writer).
-5. Enforce three budgets: 50 turns, 200k tokens, $5 dollars. PreCompact fires at 150k and summarizes older turns.
-6. Emit OpenTelemetry spans with GenAI semantic conventions to a self-hosted Langfuse.
-7. On success, push the branch and open a PR with the plan and trace bundle in the body.
-8. Evaluate against mini-swe-agent on a 30-issue SWE-bench Pro Python subset and record pass@1, turns, tokens, and dollars per task.
+1. Bun + Ink の TUI harness を立ち上げ、plan ペイン、tool-call stream、token/dollar budget のライブ表示を用意する。
+2. Model Context Protocol StreamableHTTP 上で6つのツール (read_file, edit_file, ripgrep, tree_sitter_symbols, run_shell, git) を定義する。各呼び出しの返却は最大 4k tokens に制限する。
+3. すべての tool call を、新しい `git worktree add` branch 上の E2B または Daytona sandbox 内で実行する。host filesystem には触れない。
+4. 2026年版の8つの hook event をすべて配線する: SessionStart, SessionEnd, PreToolUse, PostToolUse, UserPromptSubmit, Notification, Stop, PreCompact。少なくとも4つのユーザー作成 hook (destructive-command guard, token accounting, OTel span emitter, trace bundle writer) を同梱する。
+5. 3つの budget を強制する: 50 turns, 200k tokens, $5。150k で PreCompact を発火させ、古い turn を要約する。
+6. GenAI semantic conventions に従った OpenTelemetry span を self-hosted Langfuse に送る。
+7. 成功時は branch を push し、plan と trace bundle を本文に含む PR を開く。
+8. 30 issue の SWE-bench Pro Python サブセットで mini-swe-agent と比較評価し、pass@1、turns、tokens、task あたり dollars を記録する。
 
-Assessment rubric:
+評価 rubric:
 
 | Weight | Criterion | Measurement |
 |:-:|---|---|
-| 25 | SWE-bench Pro pass@1 | Matched 30-task subset vs mini-swe-agent baseline |
-| 20 | Architecture clarity | Plan/act/observe separation, hook surface, tool schema readability |
-| 20 | Safety | Sandbox escape red-team + destructive-command guard audit |
-| 20 | Observability | 100% of tool calls spanned, token accounting per turn |
-| 15 | Developer UX | Cold-start under 2s, crash recovery, Ctrl-C cancel semantics |
+| 25 | SWE-bench Pro pass@1 | mini-swe-agent baseline と同じ30タスクサブセットで比較 |
+| 20 | Architecture clarity | plan/act/observe の分離、hook 面、tool schema の読みやすさ |
+| 20 | Safety | sandbox escape red-team と destructive-command guard audit |
+| 20 | Observability | tool call の 100% が span 化され、turn ごとに token accounting されること |
+| 15 | Developer UX | 2秒未満の cold-start、crash recovery、Ctrl-C cancel semantics |
 
-Hard rejects:
+ハードリジェクト:
 
-- Harness that shells out to git on the host filesystem instead of inside the sandbox.
-- Any agent that can write outside the worktree or curl external URLs without an explicit allowlist hook.
-- Eval numbers reported without a matched baseline run on the same 30 issues.
-- "Pass rate" claims that depend on `git reset --hard` between retries; SWE-bench Pro is pass@1.
+- sandbox 内ではなく host filesystem 上で git を shell out する harness。
+- worktree 外へ書き込める、または明示的な allowlist hook なしに外部 URL へ curl できる agent。
+- 同じ30 issue 上での matched baseline run なしに報告された eval 数値。
+- retry のたびに `git reset --hard` することに依存した「pass rate」主張。SWE-bench Pro は pass@1。
 
-Refusal rules:
+拒否ルール:
 
-- Refuse to push directly to main under any configuration. PR branches only.
-- Refuse to disable the destructive-command guard. It is a hard requirement of the rubric.
-- Refuse to run without a budget ceiling. Open-ended runs contaminate the eval comparison.
+- どの設定でも main へ直接 push することを拒否する。PR branch のみ。
+- destructive-command guard を無効化することを拒否する。これは rubric の必須要件。
+- budget ceiling なしで実行することを拒否する。無制限実行は eval 比較を汚染する。
 
-Output: a repo containing the harness, a fixed 30-task SWE-bench Pro eval harness with matched mini-swe-agent baseline run, an OpenTelemetry trace archive for at least 5 full runs, and a write-up naming which tasks the harness solves that the baseline does not and vice versa. End with a section on the top three failure modes you observed and the hook change that fixed each.
+出力: harness を含むリポジトリ、mini-swe-agent baseline run と対応した固定30タスク SWE-bench Pro eval harness、少なくとも5回の完全実行の OpenTelemetry trace archive、baseline が解けず harness が解けたタスクとその逆を示す write-up。最後に、観測した上位3つの failure mode と、それぞれを修正した hook 変更のセクションを置く。

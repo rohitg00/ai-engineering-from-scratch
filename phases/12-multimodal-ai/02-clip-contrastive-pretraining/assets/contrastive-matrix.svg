@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -6,27 +6,27 @@
       .neg { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1; }
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">CLIP similarity matrix — positives on the diagonal, negatives everywhere else</text>
+  <text x="480" y="24" text-anchor="middle" class="title">CLIP類似度行列 — 対角が正例、それ以外が負例</text>
 
   <rect x="40" y="50" width="440" height="480" class="box"/>
-  <text x="260" y="72" text-anchor="middle" class="head">similarity matrix S (N=4)</text>
+  <text x="260" y="72" text-anchor="middle" class="head">類似度行列 S (N=4)</text>
   <text x="260" y="88" text-anchor="middle" class="small">S[i,j] = cos(img_i, txt_j) / tau</text>
 
-  <text x="80" y="118" class="step">txt 0</text>
-  <text x="150" y="118" class="step">txt 1</text>
-  <text x="220" y="118" class="step">txt 2</text>
-  <text x="290" y="118" class="step">txt 3</text>
+  <text x="80" y="118" class="step">テキスト0</text>
+  <text x="150" y="118" class="step">テキスト1</text>
+  <text x="220" y="118" class="step">テキスト2</text>
+  <text x="290" y="118" class="step">テキスト3</text>
 
   <g>
-    <text x="60" y="150" class="step">img 0</text>
+    <text x="60" y="150" class="step">画像0</text>
     <rect x="100" y="130" width="60" height="40" class="diag"/>
     <rect x="170" y="130" width="60" height="40" class="neg"/>
     <rect x="240" y="130" width="60" height="40" class="neg"/>
@@ -37,7 +37,7 @@
     <text x="340" y="155" text-anchor="middle" class="small">-0.22</text>
   </g>
   <g>
-    <text x="60" y="190" class="step">img 1</text>
+    <text x="60" y="190" class="step">画像1</text>
     <rect x="100" y="170" width="60" height="40" class="neg"/>
     <rect x="170" y="170" width="60" height="40" class="diag"/>
     <rect x="240" y="170" width="60" height="40" class="neg"/>
@@ -48,7 +48,7 @@
     <text x="340" y="195" text-anchor="middle" class="small">+0.09</text>
   </g>
   <g>
-    <text x="60" y="230" class="step">img 2</text>
+    <text x="60" y="230" class="step">画像2</text>
     <rect x="100" y="210" width="60" height="40" class="neg"/>
     <rect x="170" y="210" width="60" height="40" class="neg"/>
     <rect x="240" y="210" width="60" height="40" class="diag"/>
@@ -59,7 +59,7 @@
     <text x="340" y="235" text-anchor="middle" class="small">-0.03</text>
   </g>
   <g>
-    <text x="60" y="270" class="step">img 3</text>
+    <text x="60" y="270" class="step">画像3</text>
     <rect x="100" y="250" width="60" height="40" class="neg"/>
     <rect x="170" y="250" width="60" height="40" class="neg"/>
     <rect x="240" y="250" width="60" height="40" class="neg"/>
@@ -71,41 +71,41 @@
   </g>
 
   <text x="260" y="320" text-anchor="middle" class="head">InfoNCE = - sum log softmax(diag)</text>
-  <text x="260" y="340" text-anchor="middle" class="small">each row pushes the diagonal up, negatives down</text>
-  <text x="260" y="356" text-anchor="middle" class="small">symmetric: also do it column-wise</text>
+  <text x="260" y="340" text-anchor="middle" class="small">各行で対角を上げ、負例を下げる</text>
+  <text x="260" y="356" text-anchor="middle" class="small">対称: 列方向にも行う</text>
 
   <rect x="60" y="380" width="400" height="130" class="cool"/>
-  <text x="260" y="402" text-anchor="middle" class="head">training ingredients</text>
-  <text x="80" y="424" class="small">· 400M image-text pairs (CLIP), 10B+ for SigLIP 2</text>
-  <text x="80" y="442" class="small">· batch 32k-512k</text>
-  <text x="80" y="460" class="small">· learnable temperature tau (init 0.07)</text>
-  <text x="80" y="478" class="small">· dual encoder: ViT + small text transformer</text>
-  <text x="80" y="496" class="small">· normalize both embeddings before cosine</text>
+  <text x="260" y="402" text-anchor="middle" class="head">学習材料</text>
+  <text x="80" y="424" class="small">· 400M画像-テキストペア (CLIP)、SigLIP 2は10B+</text>
+  <text x="80" y="442" class="small">· バッチ 32k-512k</text>
+  <text x="80" y="460" class="small">· 学習可能温度tau (初期0.07)</text>
+  <text x="80" y="478" class="small">· dual エンコーダ: ViT + 小型テキストtransformer</text>
+  <text x="80" y="496" class="small">· cosine前に両埋め込みを正規化</text>
 
   <rect x="500" y="50" width="420" height="480" class="box"/>
-  <text x="710" y="72" text-anchor="middle" class="head">softmax vs sigmoid loss</text>
+  <text x="710" y="72" text-anchor="middle" class="head">softmaxとsigmoid損失の比較</text>
 
   <rect x="520" y="92" width="380" height="200" class="diag"/>
   <text x="540" y="114" class="step">InfoNCE (CLIP)</text>
-  <text x="540" y="134" class="small">per row: softmax normalizes across N</text>
-  <text x="540" y="150" class="small">needs full similarity matrix in sync</text>
-  <text x="540" y="166" class="small">distributed: all-gather every batch</text>
-  <text x="540" y="186" class="small">comm cost: O(world_size x batch x D)</text>
+  <text x="540" y="134" class="small">行ごと: softmaxがN全体で正規化</text>
+  <text x="540" y="150" class="small">完全な類似度行列を同期して持つ</text>
+  <text x="540" y="166" class="small">分散学習: バッチごとにall-gather</text>
+  <text x="540" y="186" class="small">通信コスト: O(world_size x バッチ x D)</text>
   <text x="540" y="206" class="step">loss_i2t = CE(S, eye)</text>
   <text x="540" y="224" class="step">loss_t2i = CE(S^T, eye)</text>
   <text x="540" y="242" class="step">loss = (loss_i2t + loss_t2i) / 2</text>
-  <text x="540" y="268" class="small">temperature controls sharpness</text>
-  <text x="540" y="284" class="small">scale ceiling: 32k batch before comm dominates</text>
+  <text x="540" y="268" class="small">温度が鋭さを制御</text>
+  <text x="540" y="284" class="small">スケール上限: 通信支配前は32k バッチ</text>
 
   <rect x="520" y="300" width="380" height="210" class="cool"/>
-  <text x="540" y="322" class="step">Sigmoid pairwise (SigLIP)</text>
-  <text x="540" y="342" class="small">per pair: independent BCE</text>
-  <text x="540" y="358" class="small">y=1 on diagonal, y=0 off-diagonal</text>
+  <text x="540" y="322" class="step">Sigmoidペア単位 (SigLIP)</text>
+  <text x="540" y="342" class="small">ペアごと: 独立BCE</text>
+  <text x="540" y="358" class="small">対角はy=1、非対角はy=0</text>
   <text x="540" y="376" class="small">loss = -y log sig(S+b) - (1-y) log sig(-S-b)</text>
-  <text x="540" y="394" class="small">no all-gather; local blocks only</text>
-  <text x="540" y="412" class="small">comm cost: O(world_size x D)</text>
-  <text x="540" y="432" class="step">scale ceiling: 512k+ batch feasible</text>
-  <text x="540" y="454" class="small">extra bias parameter b handles class imbalance</text>
-  <text x="540" y="472" class="small">SigLIP 2 (2025) ships with NaFlex</text>
-  <text x="540" y="490" class="small">+ multilingual (100+ langs)</text>
+  <text x="540" y="394" class="small">all-gatherなし; ローカルブロックだけ</text>
+  <text x="540" y="412" class="small">通信コスト: O(world_size x D)</text>
+  <text x="540" y="432" class="step">スケール上限: 512k+ バッチが現実的</text>
+  <text x="540" y="454" class="small">追加bias bでクラス不均衡を扱う</text>
+  <text x="540" y="472" class="small">SigLIP 2 (2025) はNaFlex同梱</text>
+  <text x="540" y="490" class="small">+ 多言語 (100+言語)</text>
 </svg>

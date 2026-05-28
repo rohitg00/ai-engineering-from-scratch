@@ -1,140 +1,140 @@
-# From CLIP to BLIP-2 — Q-Former as Modality Bridge
+# CLIP から BLIP-2 へ — Modality Bridge としての Q-Former
 
-> CLIP aligns image and text but cannot generate captions, answer questions, or hold a conversation. BLIP-2 (Salesforce, 2023) solved that with a small trainable bridge: 32 learnable query vectors attend over a frozen ViT's features via cross-attention, then slot directly into a frozen LLM's input stream. 188M parameters of bridge connected an 11B LLM to a ViT-g/14. Every adapter-based VLM through 2026 — MiniGPT-4, InstructBLIP, LLaVA's cousins — is a descendant. This lesson reads the Q-Former's architecture, explains its two-stage training, and builds a toy version that feeds visual tokens into a frozen text decoder.
+> CLIP は image と text を align しますが、caption を生成したり、質問に答えたり、会話を続けたりはできません。BLIP-2 (Salesforce, 2023) は、小さな trainable bridge でこれを解決しました。32 個の learnable query vector が frozen ViT の feature に cross-attention し、そのまま frozen LLM の input stream に入ります。188M parameters の bridge が、11B LLM と ViT-g/14 を接続しました。2026 年までの adapter-based VLM、MiniGPT-4、InstructBLIP、LLaVA の親戚は、すべてこの子孫です。この lesson では Q-Former architecture を読み、two-stage training を説明し、visual token を frozen text decoder へ渡す toy version を作ります。
 
-**Type:** Build
-**Languages:** Python (stdlib, cross-attention + learnable-query demo)
-**Prerequisites:** Phase 12 · 02 (CLIP), Phase 7 (Transformers)
-**Time:** ~180 minutes
+**種別:** 構築
+**言語:** Python (stdlib、cross-attention + learnable-query demo)
+**前提条件:** Phase 12 · 02 (CLIP)、Phase 7 (Transformers)
+**所要時間:** ~180 分
 
-## Learning Objectives
+## 学習目標
 
-- Explain why a trainable bottleneck between a frozen vision encoder and frozen LLM beats end-to-end finetuning in cost and stability.
-- Implement a cross-attention block where a fixed set of learnable queries attend to external image features.
-- Walk through BLIP-2's two-stage pretraining: representation (ITC + ITM + ITG) then generative (LM loss with frozen decoder).
-- Compare Q-Former to the simpler MLP projector used in LLaVA and argue when each choice wins.
+- frozen vision encoder と frozen LLM の間に trainable bottleneck を置くと、end-to-end finetuning より cost と stability で有利になる理由を説明する。
+- 固定個数の learnable query が external image features に attend する cross-attention block を実装する。
+- BLIP-2 の two-stage pretraining、representation (ITC + ITM + ITG) の後に generative (frozen decoder での LM loss) をたどる。
+- Q-Former と LLaVA が使うより単純な MLP projector を比較し、どちらが勝つかを議論する。
 
-## The Problem
+## 問題
 
-You have a frozen ViT that produces 256 patch tokens of dim 1408 per image. You have a frozen 7B LLM that expects token embeddings of dim 4096. The obvious bridge — a linear layer from 1408 to 4096 — works, but feeding all 256 patch tokens into the LLM's context costs 256 extra tokens per image. Over a batch of 32 images that is 8192 tokens consumed by the visual modality alone.
+image ごとに dim 1408 の 256 patch token を出す frozen ViT があります。token embedding dim 4096 を期待する frozen 7B LLM があります。明らかな bridge は 1408 から 4096 への linear layer です。これは機能しますが、256 個の patch token をすべて LLM context に入れるため、image あたり 256 extra token を消費します。batch 32 images では、visual modality だけで 8192 token を使います。
 
-The BLIP-2 question: can you compress the 256-token image representation into far fewer tokens (say 32) while preserving enough information for the LLM to caption, answer questions, and reason about the image? And can you train this bridge without touching the frozen backbones, keeping the training cost at just the bridge's parameters?
+BLIP-2 の問いはこうです。256-token の image representation を、caption、question answering、image reasoning に十分な情報を保ったまま、もっと少ない token (たとえば 32) へ圧縮できるか。そして frozen backbone には触れず、bridge parameter だけの training cost でこの bridge を train できるか。
 
-The answer: a Q-Former. 32 learnable "query" vectors that cross-attend to the ViT's patch tokens, producing a 32-token visual summary that the LLM consumes. 188M parameters total. Trained with contrastive, matching, and generative objectives before ever touching the LLM.
+答えは Q-Former です。32 個の learnable "query" vector が ViT の patch token に cross-attend し、LLM が消費する 32-token visual summary を生成します。total 188M parameters。LLM に触れる前に、contrastive、matching、generative objectives で train します。
 
-## The Concept
+## 概念
 
 ### Learnable queries
 
-The Q-Former's core trick: instead of letting the LLM's text tokens attend to image patches, introduce a new set of 32 learnable query vectors `Q` and let *them* attend to image patches. The queries are parameters of the model — they are learned during training and the same 32 queries are used for every image.
+Q-Former の core trick は、LLM の text token を image patch に attend させるのではなく、32 個の learnable query vector `Q` を導入し、それらを image patch に attend させることです。query は model の parameter であり、training 中に学習され、同じ 32 query がすべての image に使われます。
 
-After cross-attention, each query holds a compressed summary of the image — "describe the main object", "describe the background", "count the objects", etc. The queries do not literally specialize on semantic labels; they learn whatever encoding makes downstream losses drop.
+cross-attention 後、各 query は画像の圧縮 summary を保持します。「main object を説明する」「background を説明する」「object を数える」などです。query が literal に semantic label へ specialize するわけではありません。downstream loss を下げる encoding を学習します。
 
 ### Architecture
 
-The Q-Former is a small transformer (12 layers, ~100M params) with two paths:
+Q-Former は 2 つの path を持つ small transformer (12 layers、約 100M params) です。
 
-1. Query path: 32 query vectors flow through self-attention (among themselves), then cross-attention over the frozen ViT's patch tokens, then FFN.
-2. Text path: a BERT-like text encoder shares the self-attention and FFN weights with the query path. Cross-attention is disabled for the text path.
+1. Query path: 32 個の query vector が self-attention (query 同士)、frozen ViT patch token への cross-attention、FFN を通る。
+2. Text path: BERT-like text encoder が query path と self-attention / FFN weight を共有する。text path では cross-attention は disabled。
 
-At training time both paths run. The queries and text interact through shared self-attention, which means the queries can condition on text for tasks that need it (ITM, ITG). At inference time for VLM handoff, only the queries flow through, yielding 32 visual tokens.
+training 時には両 path が動きます。query と text は shared self-attention を通じて相互作用するため、ITM や ITG のように必要な task では query が text に condition できます。VLM handoff の inference 時には query だけが流れ、32 visual token を出します。
 
 ### Two-stage training
 
-BLIP-2 pretrains in two stages:
+BLIP-2 は 2 stage で pretrain します。
 
-Stage 1: representation learning (no LLM). Three losses:
-- ITC (image-text contrastive): CLIP-style contrastive between pooled query tokens and text CLS token.
-- ITM (image-text matching): binary classifier — is this image-text pair a match? Hard-negative-mined.
-- ITG (image-grounded text generation): causal LM head on text, conditioned on the queries. Forces queries to encode text-generatable content.
+Stage 1: representation learning (LLM なし)。3 つの loss:
+- ITC (image-text contrastive): pooled query token と text CLS token の CLIP-style contrastive。
+- ITM (image-text matching): binary classifier。この image-text pair は match しているか。hard-negative-mined。
+- ITG (image-grounded text generation): query に condition した text の causal LM head。query に text-generatable content を encode させる。
 
-Only the Q-Former trains. The ViT is frozen. No LLM involved.
+train するのは Q-Former だけです。ViT は frozen。LLM は関与しません。
 
-Stage 2: generative learning. Attach a frozen LLM (OPT-2.7B or Flan-T5-XL, etc.). Project the 32 query outputs to the LLM's embedding dim via a small linear layer. Prepend them to the text prompt. Train only the linear projection and the Q-Former on LM loss over the concatenated prompt + image + caption sequence.
+Stage 2: generative learning。frozen LLM (OPT-2.7B、Flan-T5-XL など) を接続します。32 query output を小さな linear layer で LLM embedding dim へ project します。それを text prompt の前に prepend します。concatenated prompt + image + caption sequence の LM loss で、linear projection と Q-Former だけを train します。
 
-After stage 2, the Q-Former + projection is the full visual adapter. At inference: image → ViT → Q-Former → linear proj → prepended to text → frozen LLM emits output.
+stage 2 の後、Q-Former + projection が full visual adapter になります。inference では image -> ViT -> Q-Former -> linear proj -> text の前に prepend -> frozen LLM が output を生成、という流れです。
 
 ### Parameter economics
 
-BLIP-2 with ViT-g/14 (1.1B, frozen) + OPT-6.7B (6.7B, frozen) + Q-Former (188M, trained) = 8B total, 188M trained. The Q-Former alone is ~2.4% of the full stack's parameters. Training cost reflects this: days on a handful of A100s vs weeks for end-to-end.
+BLIP-2 with ViT-g/14 (1.1B, frozen) + OPT-6.7B (6.7B, frozen) + Q-Former (188M, trained) = total 8B、trained 188M。Q-Former 単体は full stack parameter の約 2.4% です。training cost もこれを反映します。少数の A100 で数日、end-to-end なら数週間です。
 
-Quality: BLIP-2 matches or beats Flamingo-80B on zero-shot VQA while being 50x smaller. The bridge works.
+quality: BLIP-2 は zero-shot VQA で Flamingo-80B に匹敵または上回りながら、50x smaller です。この bridge は機能します。
 
 ### InstructBLIP and the instruction-aware Q-Former
 
-InstructBLIP (2023) extends the Q-Former with an extra input: the instruction text itself. At cross-attention time, the queries now have access to both the image patches and the instruction. The queries can specialize per-instruction ("count the cars", "describe the mood") rather than learning a single fixed summary. Benchmark gains on held-out tasks.
+InstructBLIP (2023) は Q-Former に追加 input として instruction text 自体を入れます。cross-attention 時に query は image patch と instruction の両方へ access できます。query は固定 summary を 1 つ学習するのではなく、instruction ごとに specialize できます ("count the cars"、"describe the mood")。held-out task の benchmark が改善します。
 
 ### MiniGPT-4 and the projector-only approach
 
-MiniGPT-4 kept the Q-Former but trained only the output linear projection while freezing everything else. Cheap, but cost is quality — the queries were BLIP-2's, not yours. Good for rapid iteration, not the best architecture.
+MiniGPT-4 は Q-Former を残しましたが、それ以外を凍結し、output linear projection だけを train しました。安い一方、quality の cost があります。query は BLIP-2 のものであって、自分のものではありません。rapid iteration には良いですが、best architecture ではありません。
 
 ### Why LLaVA went simpler
 
-LLaVA (2023, Lesson 12.05) replaced the Q-Former with a plain 2-layer MLP that projects every ViT patch token into LLM space — 576 tokens per image for a 24x24 grid, all fed to the LLM. Worse compression but lets the LLM attend over raw patches. At the time this was controversial; by late 2023 it was dominant because visual instruction data (LLaVA-Instruct-150k) proved that the MLP could be trained to preserve enough signal. The tradeoff: LLaVA's context fills faster, but it scales naturally to multi-image and video.
+LLaVA (2023, Lesson 12.05) は Q-Former を plain 2-layer MLP に置き換えました。すべての ViT patch token を LLM space へ project し、24x24 grid なら image あたり 576 token を全部 LLM に渡します。compression は悪いですが、LLM は raw patch に attend できます。当時これは議論を呼びましたが、2023 年後半には visual instruction data (LLaVA-Instruct-150k) により、MLP が十分な signal を保持するよう train できることが示され、支配的になりました。tradeoff は、LLaVA は context を速く埋めるが、multi-image や video へ自然に scale することです。
 
-By 2026 the field split: Q-Former survives where token budget matters (long video, many images); MLP projector dominates where raw quality per token is the priority.
+2026 年時点で field は分かれています。Q-Former は token budget が重要な場面 (long video、多数 image) で生き残り、MLP projector は raw quality per token が優先の場面を支配しています。
 
 ### Gated cross-attention: Flamingo, the ancestor
 
-Flamingo (Lesson 12.04) predated BLIP-2 and used the same cross-attention idea but at every frozen LLM layer, not as a single bridge. BLIP-2 showed you can compress to the input layer only and still work. Gemini and Idefics combine both: interleaved input tokens plus optional gated cross-attention for in-context few-shot.
+Flamingo (Lesson 12.04) は BLIP-2 に先行し、同じ cross-attention idea を使いましたが、single bridge ではなく frozen LLM のすべての layer で使いました。BLIP-2 は input layer だけに圧縮しても機能することを示しました。Gemini と Idefics は両方を組み合わせます。interleaved input token と、in-context few-shot のための optional gated cross-attention です。
 
 ### The 2026 descendants
 
-- Q-Former: BLIP-2, InstructBLIP, MiniGPT-4, and most video-language models for token budget reasons.
-- Perceiver resampler: Flamingo's variant (Lesson 12.04); Idefics family, Eagle, OmniMAE.
-- MLP projector: LLaVA, LLaVA-NeXT, LLaVA-OneVision, Cambrian-1.
-- Attention pool: VILA, PaliGemma.
+- Q-Former: BLIP-2、InstructBLIP、MiniGPT-4、token budget の理由から多くの video-language models。
+- Perceiver resampler: Flamingo variant (Lesson 12.04)、Idefics family、Eagle、OmniMAE。
+- MLP projector: LLaVA、LLaVA-NeXT、LLaVA-OneVision、Cambrian-1。
+- Attention pool: VILA、PaliGemma。
 
-All four are valid. The deciding question is whether you are constrained on token budget or on quality-per-token.
+4 つすべてが valid です。決める問いは、token budget に制約されているのか、quality-per-token に制約されているのかです。
 
-## Use It
+## 使ってみる
 
-`code/main.py` builds a stdlib Q-Former-style cross-attention:
+`code/main.py` は stdlib の Q-Former-style cross-attention を作ります。
 
-1. Simulate 256 image patch tokens (dim 128).
-2. Instantiate 32 learnable queries (dim 128).
-3. Run scaled-dot-product cross-attention (Q from queries, K/V from patches).
-4. Project to LLM-dim (512) via a linear layer.
-5. Output the 32 LLM-ready visual tokens.
+1. 256 個の image patch token (dim 128) を simulate。
+2. 32 個の learnable query (dim 128) を instantiate。
+3. scaled-dot-product cross-attention を実行 (Q は query、K/V は patch)。
+4. linear layer で LLM-dim (512) へ project。
+5. 32 個の LLM-ready visual token を出力。
 
-All math in pure Python (nested loops over vectors). Toy but correct shape. The attention-weight matrix is printed so you can see which patches each query pulled from.
+math はすべて pure Python (vector の nested loop) です。toy ですが shape は正しいです。attention-weight matrix が表示されるので、各 query がどの patch から情報を取ったか確認できます。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-modality-bridge-picker.md`. Given a target VLM configuration (vision encoder token count, LLM context budget, deployment constraints, quality target), it recommends Q-Former vs MLP vs Perceiver resampler with a short justification and a parameter-count estimate for each bridge.
+この lesson は `outputs/skill-modality-bridge-picker.md` を作ります。target VLM configuration (vision encoder token count、LLM context budget、deployment constraints、quality target) が与えられると、Q-Former、MLP、Perceiver resampler のどれを使うべきか、短い justification と各 bridge の parameter-count estimate 付きで推奨します。
 
-## Exercises
+## 演習
 
-1. Implement the cross-attention block in PyTorch. Verify that with 32 queries and 256 keys/values, the attention-weight matrix is 32 x 256 and each row sums to 1 after softmax.
+1. PyTorch で cross-attention block を実装してください。32 queries と 256 keys/values のとき、attention-weight matrix が 32 x 256 で、softmax 後に各 row が 1 に sum することを確認してください。
 
-2. In BLIP-2 stage 1 the Q-Former runs three losses simultaneously: ITC, ITM, ITG. Write the forward signature for each in pseudo-code. Which one requires the text encoder path to be active?
+2. BLIP-2 stage 1 では Q-Former が ITC、ITM、ITG の 3 loss を同時に走らせます。それぞれの forward signature を pseudo-code で書いてください。text encoder path を active にする必要があるのはどれですか。
 
-3. Compare parameter counts: Q-Former (12 layers, 768 hidden) vs a 2-layer MLP projector (1408 → 4096, two layers). At what LLM scale does the 188M Q-Former cost pay back in training efficiency?
+3. parameter count を比較してください。Q-Former (12 layers, 768 hidden) と 2-layer MLP projector (1408 -> 4096, two layers)。どの LLM scale で 188M Q-Former の cost が training efficiency として回収されますか。
 
-4. Read Section 3.2 of the BLIP-2 paper (arXiv:2301.12597) on how the Q-Former is initialized. Explain why initializing from BERT-base (not random) accelerates convergence.
+4. BLIP-2 paper (arXiv:2301.12597) の Section 3.2、Q-Former の initialization を読んでください。BERT-base から initialize すること (random ではなく) が convergence を速める理由を説明してください。
 
-5. For a 10-minute video at 1 FPS sampled to 60 frames, compute the per-frame token cost at (Q-Former → 32 tokens/frame) vs (MLP projector → 576 tokens/frame). Which fits into a 128k-token LLM context window?
+5. 10 分 video を 1 FPS で sampling して 60 frames にした場合、(Q-Former -> 32 tokens/frame) と (MLP projector -> 576 tokens/frame) の per-frame token cost を計算してください。128k-token LLM context window に入るのはどちらですか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| Q-Former | "Querying transformer" | Small transformer with 32 learnable query vectors that cross-attend to frozen ViT features |
-| Learnable queries | "Soft prompt for vision" | A fixed set of parameters that serve as the query side of cross-attention; learned per model, shared across all inputs |
-| Cross-attention | "Q from here, K/V from there" | Attention where query, key, and value come from different sources; how the queries pull from ViT patches |
-| ITC | "Image-text contrastive" | CLIP-style loss applied to Q-Former pooled queries vs text CLS |
-| ITM | "Image-text matching" | Binary classifier on hard-negative-mined pairs; forces the queries to discriminate fine-grained mismatches |
-| ITG | "Image-grounded text generation" | Causal LM loss where text is generated conditioned on queries; forces queries to encode text-decodable content |
-| Two-stage pretraining | "Representation then generative" | Stage 1 trains Q-Former alone (ITC/ITM/ITG); Stage 2 attaches frozen LLM and trains only the projection + Q-Former |
-| Frozen backbone | "Do not finetune" | The vision encoder and LLM weights are fixed; only the bridge trains |
-| Projection head | "Linear to LLM dim" | Final linear layer mapping Q-Former output to the LLM's embedding dimension |
-| Perceiver resampler | "Flamingo's version" | Similar learnable-query cross-attention, used by Flamingo at every layer rather than as a single bridge |
+| Q-Former | 「Querying transformer」 | frozen ViT feature に cross-attend する 32 個の learnable query vector を持つ small transformer |
+| Learnable queries | 「Soft prompt for vision」 | cross-attention の query 側として機能する fixed parameter set。model ごとに学習され、すべての input で共有 |
+| Cross-attention | 「Q from here, K/V from there」 | query、key、value が異なる source から来る attention。query が ViT patch から情報を引く方法 |
+| ITC | 「Image-text contrastive」 | Q-Former pooled query と text CLS に適用する CLIP-style loss |
+| ITM | 「Image-text matching」 | hard-negative-mined pair に対する binary classifier。query に fine-grained mismatch を識別させる |
+| ITG | 「Image-grounded text generation」 | query に condition して text を生成する causal LM loss。query に text-decodable content を encode させる |
+| Two-stage pretraining | 「Representation then generative」 | Stage 1 は Q-Former だけを train (ITC/ITM/ITG)。Stage 2 は frozen LLM を接続し、projection + Q-Former だけを train |
+| Frozen backbone | 「Do not finetune」 | vision encoder と LLM の weight は固定。bridge だけを train |
+| Projection head | 「Linear to LLM dim」 | Q-Former output を LLM embedding dimension へ mapping する final linear layer |
+| Perceiver resampler | 「Flamingo's version」 | 類似した learnable-query cross-attention。single bridge ではなく Flamingo では各 layer で使用 |
 
-## Further Reading
+## 参考文献
 
-- [Li et al. — BLIP-2 (arXiv:2301.12597)](https://arxiv.org/abs/2301.12597) — the core paper.
-- [Li et al. — BLIP (arXiv:2201.12086)](https://arxiv.org/abs/2201.12086) — the predecessor with the ITC/ITM/ITG trio.
-- [Li et al. — ALBEF (arXiv:2107.07651)](https://arxiv.org/abs/2107.07651) — "align before fuse" — the conceptual ancestor of stage 1 training.
-- [Dai et al. — InstructBLIP (arXiv:2305.06500)](https://arxiv.org/abs/2305.06500) — instruction-aware Q-Former.
-- [Zhu et al. — MiniGPT-4 (arXiv:2304.10592)](https://arxiv.org/abs/2304.10592) — projector-only approach.
-- [Jaegle et al. — Perceiver IO (arXiv:2107.14795)](https://arxiv.org/abs/2107.14795) — general architecture for learnable-query cross-attention.
+- [Li et al. — BLIP-2 (arXiv:2301.12597)](https://arxiv.org/abs/2301.12597) — core paper。
+- [Li et al. — BLIP (arXiv:2201.12086)](https://arxiv.org/abs/2201.12086) — ITC/ITM/ITG trio を持つ predecessor。
+- [Li et al. — ALBEF (arXiv:2107.07651)](https://arxiv.org/abs/2107.07651) — "align before fuse"、stage 1 training の conceptual ancestor。
+- [Dai et al. — InstructBLIP (arXiv:2305.06500)](https://arxiv.org/abs/2305.06500) — instruction-aware Q-Former。
+- [Zhu et al. — MiniGPT-4 (arXiv:2304.10592)](https://arxiv.org/abs/2304.10592) — projector-only approach。
+- [Jaegle et al. — Perceiver IO (arXiv:2107.14795)](https://arxiv.org/abs/2107.14795) — learnable-query cross-attention の general architecture。

@@ -1,35 +1,35 @@
-# Text Summarization
+# テキスト要約
 
-> Extractive systems tell you what the document said. Abstractive systems tell you what the author meant. Different tasks, different pitfalls.
+> 抽出的システムは、文書が何を述べたかを伝える。抽象的システムは、著者が何を意味したかを伝える。別のタスクであり、落とし穴も別である。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
+**時間:** 約 75 分
 
-## The Problem
+## 問題
 
-A 2,000-word news article lands in your feed. You need 120 words that capture it. You can either pick the three most important sentences from the article (extractive) or rewrite the content in your own words (abstractive). Both are called summarization. They are completely different problems.
+2,000 語のニュース記事が feed に流れてくる。それを 120 語で要点が伝わるようにしたい。記事から最も重要な 3 文を選ぶこともできる (extractive) し、内容を自分の言葉で書き直すこともできる (abstractive)。どちらも要約と呼ばれるが、完全に異なる問題である。
 
-Extractive summarization is a ranking problem. Score every sentence, return the top-`k`. The output is always grammatical because it is lifted verbatim. The risk is missing content that is distributed across the article.
+Extractive summarization は ranking 問題である。すべての文に score を付け、上位 `k` 件を返す。出力は原文からそのまま抜き出されるため常に文法的である。リスクは、記事全体に分散している内容を取り落とすことだ。
 
-Abstractive summarization is a generation problem. A transformer produces new text conditioned on the input. The output is fluent and compressive but may hallucinate facts that were not in the source. The risk is confident fabrication.
+Abstractive summarization は generation 問題である。transformer が入力に条件付けられた新しいテキストを生成する。出力は流暢で圧縮的だが、原文にない事実を hallucinate することがある。リスクは、自信に満ちた捏造である。
 
-This lesson builds both, with the failure mode each one owns.
+このレッスンでは両方を作り、それぞれ固有の失敗モードを扱う。
 
-## The Concept
+## コンセプト
 
 ![Extractive TextRank vs abstractive transformer](../assets/summarization.svg)
 
-**Extractive.** Treat the article as a graph where nodes are sentences and edges are similarities. Run PageRank (or something like it) over the graph to score sentences by how connected they are to everything else. Highest-scoring sentences are the summary. The canonical implementation is **TextRank** (Mihalcea and Tarau, 2004).
+**Extractive。** 記事を graph として扱う。node は文、edge は類似度である。その graph 上で PageRank あるいはそれに近いものを走らせ、各文が他の文とどれだけつながっているかで score を付ける。score の高い文が要約になる。標準的な実装は **TextRank** (Mihalcea and Tarau, 2004) である。
 
-**Abstractive.** Fine-tune a transformer encoder-decoder (BART, T5, Pegasus) on document-summary pairs. At inference, the model reads the document and generates the summary token-by-token via cross-attention. Pegasus in particular uses a gap-sentence pretraining objective that makes it excellent at summarization without much fine-tuning.
+**Abstractive。** transformer encoder-decoder (BART, T5, Pegasus) を document-summary pair で fine-tune する。推論時には、モデルが文書を読み、cross-attention を通じて summary を token-by-token で生成する。特に Pegasus は gap-sentence pretraining objective を使っており、あまり fine-tuning しなくても要約に強い。
 
-Evaluation with **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation). ROUGE-1 and ROUGE-2 score unigram and bigram overlap. ROUGE-L scores longest common subsequence. Higher is better but 40 ROUGE-L is "good" and 50 is "exceptional." Every paper reports all three. Use the `rouge-score` package.
+評価には **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation) を使う。ROUGE-1 と ROUGE-2 は unigram と bigram の overlap を score にする。ROUGE-L は longest common subsequence を score にする。高いほどよいが、40 ROUGE-L は「良い」、50 は「例外的」である。すべての論文がこの 3 つを報告する。`rouge-score` package を使う。
 
-## Build It
+## 作ってみる
 
-### Step 1: TextRank (extractive)
+### ステップ 1: TextRank (extractive)
 
 ```python
 import math
@@ -81,9 +81,9 @@ def textrank(text, top_k=3, damping=0.85, iterations=50, epsilon=1e-4):
     return [sentences[i] for i in ranked]
 ```
 
-Two things worth naming. The similarity function uses log-normalized word overlap, which is the original TextRank variant. Cosine of TF-IDF vectors works too. The damping factor 0.85 and iteration count are the PageRank defaults.
+ここで名前を付けておくべきことが 2 つある。similarity function は log-normalized word overlap を使っており、これは元の TextRank variant である。TF-IDF vector の cosine を使ってもよい。damping factor 0.85 と iteration count は PageRank の default である。
 
-### Step 2: abstractive with BART
+### ステップ 2: BART による abstractive summarization
 
 ```python
 from transformers import pipeline
@@ -96,9 +96,9 @@ summary = summarizer(article, max_length=120, min_length=60, do_sample=False)
 print(summary[0]["summary_text"])
 ```
 
-BART-large-CNN is fine-tuned on the CNN/DailyMail corpus. It produces news-style summaries out of the box. For other domains (scientific papers, dialog, legal), use the corresponding Pegasus checkpoint or fine-tune on your target data.
+BART-large-CNN は CNN/DailyMail corpus で fine-tune されている。ニュース風の要約をそのまま生成できる。別ドメイン (scientific papers、dialog、legal) では、対応する Pegasus checkpoint を使うか、target data で fine-tune する。
 
-### Step 3: ROUGE evaluation
+### ステップ 3: ROUGE 評価
 
 ```python
 from rouge_score import rouge_scorer
@@ -108,98 +108,98 @@ scores = scorer.score(reference_summary, generated_summary)
 print({k: round(v.fmeasure, 3) for k, v in scores.items()})
 ```
 
-Always use stemming. Without it, "running" and "run" count as different words and ROUGE undercounts.
+必ず stemming を使うこと。使わないと "running" と "run" が別語として数えられ、ROUGE が一致を過小評価する。
 
-### Beyond ROUGE (2026 summarization eval)
+### ROUGE を超えて (2026 年の要約評価)
 
-ROUGE has been the dominant summarization metric for twenty years and it is insufficient on its own in 2026. A large-scale meta-analysis of NLG papers showed:
+ROUGE は 20 年にわたり要約 metric の中心だったが、2026 年には単独では不十分である。NLG 論文の大規模 meta-analysis は次のことを示した。
 
-- **BERTScore** (contextual embedding similarity) gained ground through 2023 and is now reported alongside ROUGE in most summarization papers.
-- **BARTScore** treats evaluation as generation: score the summary by how likely a pretrained BART assigns it given the source.
-- **MoverScore** (Earth Mover's Distance over contextual embeddings) reached the top spot in 2025 summarization benchmarks because it captures semantic overlap better than ROUGE.
-- **FactCC** and **QA-based faithfulness** were common 2021-2023, now often replaced by **G-Eval** (a GPT-4 prompt chain that scores coherence, consistency, fluency, relevance with chain-of-thought reasoning).
-- **G-Eval** and similar LLM-judge approaches match human judgment ~80% of the time when rubrics are well-designed.
+- **BERTScore** (contextual embedding similarity) は 2023 年までに採用が広がり、現在では多くの要約論文で ROUGE と並んで報告される。
+- **BARTScore** は評価を generation として扱う。source が与えられたとき、pretrained BART が summary にどれだけ高い likelihood を割り当てるかで score を付ける。
+- **MoverScore** (contextual embedding 上の Earth Mover's Distance) は semantic overlap を ROUGE よりうまく捉えるため、2025 年の要約 benchmark で最上位に達した。
+- **FactCC** と **QA-based faithfulness** は 2021-2023 年に一般的だったが、現在は **G-Eval** (coherence、consistency、fluency、relevance を chain-of-thought reasoning で採点する GPT-4 prompt chain) に置き換えられることが多い。
+- **G-Eval** と類似の LLM-judge 手法は、rubric が適切に設計されていれば約 80% のケースで人間評価と一致する。
 
-Production recommendation: report ROUGE-L for legacy comparison, BERTScore for semantic overlap, G-Eval for coherence and factuality. Calibrate against 50-100 human-labeled summaries.
+本番での推奨は、過去比較に ROUGE-L、semantic overlap に BERTScore、coherence と factuality に G-Eval を報告すること。50-100 件の人手ラベル付き要約に対して calibration する。
 
-### Step 4: the factuality problem
+### ステップ 4: factuality 問題
 
-Abstractive summaries are prone to hallucination. Extractive summaries carry a much lower hallucination risk because the output is lifted verbatim from the source, though they can still mislead if source sentences are decontextualized, outdated, or quoted out of order. This is the single biggest reason production systems still prefer extractive methods for compliance-adjacent content.
+Abstractive summary は hallucination を起こしやすい。Extractive summary は原文からそのまま抜き出すため hallucination risk はかなり低いが、source sentence が文脈から切り離されていたり、古かったり、引用の順序が変わったりすると、それでも誤解を招くことはある。これは、compliance-adjacent content で本番システムが今でも extractive methods を好む最大の理由である。
 
-Hallucination types to name:
+名前を付けるべき hallucination の種類:
 
-- **Entity swap.** Source says "John Smith." Summary says "John Brown."
-- **Number drift.** Source says "25,000." Summary says "25 million."
-- **Polarity flip.** Source says "rejected the offer." Summary says "accepted the offer."
-- **Fact invention.** Source does not mention the CEO. Summary says the CEO approved.
+- **Entity swap。** Source は "John Smith" と言っているのに、summary は "John Brown" と言う。
+- **Number drift。** Source は "25,000" と言っているのに、summary は "25 million" と言う。
+- **Polarity flip。** Source は "rejected the offer" と言っているのに、summary は "accepted the offer" と言う。
+- **Fact invention。** Source は CEO に触れていないのに、summary は CEO が承認したと言う。
 
-Evaluation approaches that work:
+有効な評価アプローチ:
 
-- **FactCC.** A binary classifier trained on entailment between source sentence and summary sentence. Predicts factual/not-factual.
-- **QA-based factuality.** Ask a QA model questions whose answers are in the source. If the summary supports different answers, flag.
-- **Entity-level F1.** Compare named entities in source vs summary. Entities present only in the summary are suspect.
+- **FactCC。** source sentence と summary sentence の entailment で学習された binary classifier。factual / not-factual を予測する。
+- **QA-based factuality。** source に答えがある質問を QA model に尋ねる。summary が別の答えを支持する場合は flag する。
+- **Entity-level F1。** source と summary の named entities を比較する。summary にだけ存在する entity は疑わしい。
 
-For anything user-facing where factuality matters (news, medical, legal, financial), extractive is the safer default. Abstractive needs a factuality check in the loop.
+factuality が重要なユーザー向け用途 (news、medical、legal、financial) では、extractive がより安全な default である。Abstractive では factuality check を loop に入れる必要がある。
 
-## Use It
+## 使ってみる
 
-The 2026 stack:
+2026 年のスタック:
 
-| Use case | Recommended |
+| ユースケース | 推奨 |
 |---------|-------------|
-| News, 3-5 sentence summary, English | `facebook/bart-large-cnn` |
-| Scientific papers | `google/pegasus-pubmed` or a tuned T5 |
-| Multi-document, long-form | Any LLM with 32k+ context, prompted |
+| News、3-5 文要約、英語 | `facebook/bart-large-cnn` |
+| Scientific papers | `google/pegasus-pubmed` または tuned T5 |
+| Multi-document、long-form | 32k+ context を持つ任意の LLM、prompted |
 | Dialog summarization | `philschmid/bart-large-cnn-samsum` |
-| Extractive, low hallucination risk by construction | TextRank or `sumy`'s LSA / LexRank |
+| Extractive、構造上 hallucination risk が低い | TextRank または `sumy` の LSA / LexRank |
 
-LLMs with long context often beat specialized models in 2026 when compute is not a constraint. The tradeoff is cost and reproducibility; specialized models give more consistent outputs.
+2026 年には、compute が制約でなければ long context LLM が専用モデルを上回ることが多い。トレードオフは cost と reproducibility であり、専用モデルはより一貫した出力を返す。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-summary-picker.md`:
+`outputs/skill-summary-picker.md` として保存する:
 
 ```markdown
 ---
 name: summary-picker
-description: Pick extractive or abstractive, named library, factuality check.
+description: extractive か abstractive かを選び、library 名と factuality check を示す。
 version: 1.0.0
 phase: 5
 lesson: 12
 tags: [nlp, summarization]
 ---
 
-Given a task (document type, compliance requirement, length, compute budget), output:
+task (document type、compliance requirement、length、compute budget) が与えられたら、次を出力する:
 
-1. Approach. Extractive or abstractive. Explain in one sentence why.
-2. Starting model / library. Name it. `sumy.TextRankSummarizer`, `facebook/bart-large-cnn`, `google/pegasus-pubmed`, or an LLM prompt.
-3. Evaluation plan. ROUGE-1, ROUGE-2, ROUGE-L (use rouge-score with stemming). Plus factuality check if abstractive.
-4. One failure mode to probe. Entity swap is the most common in abstractive news summarization; flag samples where source entities do not appear in summary.
+1. 方法。Extractive または abstractive。理由を 1 文で説明する。
+2. 出発点となる model / library。名前を挙げる。`sumy.TextRankSummarizer`、`facebook/bart-large-cnn`、`google/pegasus-pubmed`、または LLM prompt。
+3. 評価計画。ROUGE-1、ROUGE-2、ROUGE-L (`rouge-score` with stemming を使う)。abstractive の場合は factuality check も加える。
+4. 調べるべき failure mode を 1 つ。abstractive news summarization で最も一般的なのは entity swap である。source entities が summary に現れない sample を flag する。
 
-Refuse abstractive summarization for medical, legal, financial, or regulated content without a factuality gate. Flag input over the model's context window as needing chunked map-reduce summarization (not just truncation).
+medical、legal、financial、regulated content では、factuality gate なしに abstractive summarization を使ってはならない。input が model の context window を超える場合は、単なる truncation ではなく chunked map-reduce summarization が必要だと flag する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Run TextRank on 5 news articles. Compare the top-3 sentences to a reference summary. Measure ROUGE-L. You should see 30-45 ROUGE-L on CNN/DailyMail-style articles.
-2. **Medium.** Implement entity-level factuality: extract named entities from source and summary (spaCy), compute recall of source entities in summary and precision of summary entities against source. High precision and low recall mean safe but terse; low precision means hallucinated entities.
-3. **Hard.** Compare BART-large-CNN against an LLM (Claude or GPT-4) on 50 CNN/DailyMail articles. Report ROUGE-L, factuality (by entity F1), and cost per summary. Document where each wins.
+1. **初級。** 5 本のニュース記事に TextRank を実行する。top-3 sentences を reference summary と比較し、ROUGE-L を測る。CNN/DailyMail 風の記事では 30-45 ROUGE-L になるはずである。
+2. **中級。** entity-level factuality を実装する。source と summary から named entities を抽出し (spaCy)、summary に含まれる source entities の recall と、source に対する summary entities の precision を計算する。高 precision かつ低 recall は安全だが簡潔すぎることを意味し、低 precision は hallucinated entities を意味する。
+3. **上級。** 50 本の CNN/DailyMail 記事で BART-large-CNN と LLM (Claude または GPT-4) を比較する。ROUGE-L、factuality (entity F1)、summary あたりの cost を報告する。それぞれがどこで勝つかを文書化する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Extractive | Pick sentences | Return sentences verbatim from the source. Never hallucinates. |
-| Abstractive | Rewrite | Generate new text conditioned on source. Can hallucinate. |
-| ROUGE | Summary metric | N-gram / LCS overlap between system output and reference. |
-| TextRank | Graph-based extractive | PageRank over sentence similarity graph. |
-| Factuality | Is it right | Whether summary claims are supported by the source. |
-| Hallucination | Made-up content | Content in the summary that the source does not support. |
+| Extractive | 文を選ぶ | source から文をそのまま返す。hallucination は起こさない。 |
+| Abstractive | 書き直す | source に条件付けて新しいテキストを生成する。hallucination しうる。 |
+| ROUGE | 要約 metric | system output と reference の n-gram / LCS overlap。 |
+| TextRank | Graph-based extractive | 文類似度 graph 上の PageRank。 |
+| Factuality | 正しいか | summary の主張が source に裏付けられているか。 |
+| Hallucination | 作り話の内容 | source が裏付けていない summary 内の内容。 |
 
-## Further Reading
+## 参考文献
 
-- [Mihalcea and Tarau (2004). TextRank: Bringing Order into Texts](https://aclanthology.org/W04-3252/) — the extractive canonical paper.
-- [Lewis et al. (2019). BART: Denoising Sequence-to-Sequence Pre-training](https://arxiv.org/abs/1910.13461) — the BART paper.
-- [Zhang et al. (2019). PEGASUS: Pre-training with Extracted Gap-sentences](https://arxiv.org/abs/1912.08777) — Pegasus and the gap-sentence objective.
-- [Lin (2004). ROUGE: A Package for Automatic Evaluation of Summaries](https://aclanthology.org/W04-1013/) — ROUGE paper.
-- [Maynez et al. (2020). On Faithfulness and Factuality in Abstractive Summarization](https://arxiv.org/abs/2005.00661) — the factuality landscape paper.
+- [Mihalcea and Tarau (2004). TextRank: Bringing Order into Texts](https://aclanthology.org/W04-3252/) — extractive の標準的な論文。
+- [Lewis et al. (2019). BART: Denoising Sequence-to-Sequence Pre-training](https://arxiv.org/abs/1910.13461) — BART 論文。
+- [Zhang et al. (2019). PEGASUS: Pre-training with Extracted Gap-sentences](https://arxiv.org/abs/1912.08777) — Pegasus と gap-sentence objective。
+- [Lin (2004). ROUGE: A Package for Automatic Evaluation of Summaries](https://aclanthology.org/W04-1013/) — ROUGE 論文。
+- [Maynez et al. (2020). On Faithfulness and Factuality in Abstractive Summarization](https://arxiv.org/abs/2005.00661) — factuality landscape 論文。

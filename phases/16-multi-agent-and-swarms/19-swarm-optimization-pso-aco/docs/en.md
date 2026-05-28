@@ -1,25 +1,25 @@
-# Swarm Optimization for LLMs (PSO, ACO)
+# LLM のための Swarm Optimization（PSO, ACO）
 
-> Bio-inspired optimization is making an LLM comeback. **LMPSO** (arXiv:2504.09247) uses PSO where each particle's velocity is a prompt and the LLM generates the next candidate; works well on structured-sequence outputs (math expressions, programs). **Model Swarms** (arXiv:2410.11163) treats each LLM expert as a PSO particle on a model-weight manifold and reports **13.3% average gain** over 12 baselines on 9 datasets with just 200 instances. **SwarmPrompt** (ICAART 2025) hybridizes PSO + Grey Wolf for prompt optimization. **AMRO-S** (arXiv:2603.12933) is ACO-inspired pheromone specialists for multi-agent LLM routing — **4.7x speedup**, interpretable routing evidence, quality-gated asynchronous update that decouples inference from learning. This lesson implements PSO on prompt parameter space and ACO on agent routing, measures why these classical algorithms fit the LLM era, and when they do not.
+> Bio-inspired optimization が LLM 時代に戻ってきている。**LMPSO**（arXiv:2504.09247）は PSO を使い、各 particle の velocity を prompt として、LLM が次の candidate を生成する。structured-sequence outputs（math expressions、programs）でよく機能する。**Model Swarms**（arXiv:2410.11163）は各 LLM expert を model-weight manifold 上の PSO particle とみなし、200 instances だけで 9 datasets / 12 baselines に対して **13.3% average gain** を報告した。**SwarmPrompt**（ICAART 2025）は prompt optimization のために PSO + Grey Wolf を hybridize する。**AMRO-S**（arXiv:2603.12933）は multi-agent LLM routing 向けの ACO-inspired pheromone specialists で、**4.7x speedup**、interpretable routing evidence、inference と learning を decouple する quality-gated asynchronous update を備える。この lesson では prompt parameter space 上の PSO と agent routing 上の ACO を実装し、これらの classical algorithms が LLM 時代に合う理由と、合わない場合を測る。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
+**所要時間:** 約75分
 
-## Problem
+## 問題
 
-You have a prompt that scores 62% on your task eval. You want to improve it. The naive move is gradient-free manual tweaking, which scales badly. Reinforcement learning needs reward signals and enough rollouts to train. Backprop through prompts is not really possible — the prompt is a discrete string, not a differentiable parameter.
+task eval で 62% の score を出す prompt がある。改善したい。naive な方法は gradient-free の manual tweaking だが、scale しない。reinforcement learning には reward signals と十分な rollouts が必要である。prompt への backprop は実質的に不可能だ。prompt は differentiable parameter ではなく discrete string だからである。
 
-Classical bio-inspired optimization — PSO for continuous search spaces, ACO for path selection — was designed exactly for this regime: gradient-free, population-based, cheap per evaluation. Pair them with LLMs for the gradient-free search step, and you get a surprisingly practical optimizer.
+classical bio-inspired optimization、つまり continuous search spaces 向けの PSO と path selection 向けの ACO は、この regime のために作られた。gradient-free、population-based、per evaluation が安い。LLM と組み合わせて gradient-free search step を担わせると、驚くほど実用的な optimizer になる。
 
-The same patterns apply to agent *routing* in multi-agent systems. An ACO-style pheromone trail records which agent worked best on which task-type, lets the router exploit the trail, and decays pheromones so routes can be rediscovered.
+同じ patterns は multi-agent systems の agent *routing* にも適用できる。ACO-style pheromone trail は、どの agent がどの task-type で最も良かったかを記録し、router がその trail を exploit できるようにし、pheromone を decay させて routes を再発見できるようにする。
 
-## Concept
+## コンセプト
 
-### PSO refresher (Kennedy & Eberhart 1995)
+### PSO refresher（Kennedy & Eberhart 1995）
 
-Particle Swarm Optimization: population of particles in a continuous search space. Each particle has position `x_i` and velocity `v_i`. Each iteration:
+Particle Swarm Optimization は continuous search space 内の particles の population である。各 particle は position `x_i` と velocity `v_i` を持つ。各 iteration:
 
 ```
 v_i <- w * v_i + c1 * r1 * (p_best_i - x_i) + c2 * r2 * (g_best - x_i)
@@ -29,75 +29,75 @@ update p_best_i if improved
 update g_best if global best
 ```
 
-Where `p_best` is particle's own best, `g_best` is swarm's best, `w, c1, c2` are inertia + cognitive + social weights, `r1, r2` are random factors.
+`p_best` は particle 自身の best、`g_best` は swarm の best、`w, c1, c2` は inertia + cognitive + social weights、`r1, r2` は random factors である。
 
-### PSO on LLM outputs — LMPSO
+### LLM outputs 上の PSO — LMPSO
 
-arXiv:2504.09247 adapts PSO for LLM-generated structured outputs (math expressions, programs). Each particle is a candidate output. Velocity is a *prompt* that describes how to modify the current output toward the personal/global best. The LLM generates the new output from the velocity prompt. The "inertia" of the velocity is a prompt like "make small incremental changes."
+arXiv:2504.09247 は、LLM-generated structured outputs（math expressions、programs）向けに PSO を適応する。各 particle は candidate output である。velocity は、current output を personal/global best に近づける変更方法を記述する *prompt* である。LLM は velocity prompt から new output を生成する。velocity の「inertia」は「make small incremental changes」のような prompt になる。
 
-This works well when:
-- The output is structured (parseable, evaluable).
-- Fitness is automatic (test runs, arithmetic evaluation).
-- Population is small (~10-30 particles) so total LLM calls stay manageable.
+これは次の場合によく機能する:
+- output が structured（parseable, evaluable）。
+- fitness が automatic（test runs、arithmetic evaluation）。
+- population が小さい（~10-30 particles）ため total LLM calls が manageable。
 
-It does not work well when fitness needs human review — the per-iteration cost becomes prohibitive.
+fitness が human review を必要とする場合はうまくいかない。per-iteration cost が prohibitive になる。
 
 ### Model Swarms
 
-arXiv:2410.11163 takes PSO off the output layer and into the *model* layer. Each "particle" is an expert LLM (parameters). The swarm moves the parameters toward the collective best via a gradient-free update. Reported: 13.3% average gain over 12 baselines on 9 datasets, with just 200 instances per iteration.
+arXiv:2410.11163 は PSO を output layer から *model* layer に移す。各「particle」は expert LLM（parameters）である。swarm は gradient-free update により parameters を collective best へ動かす。報告値は、iteration あたり 200 instances だけで、9 datasets において 12 baselines に対し 13.3% average gain。
 
-The key insight is that LLM expert models are already nearby in a shared parameter manifold (adapter weights, LoRA deltas). PSO on this low-dimensional subspace is cheap and effective.
+key insight は、LLM expert models はすでに shared parameter manifold（adapter weights、LoRA deltas）上で近くにあるという点である。この low-dimensional subspace での PSO は安く効果的である。
 
-### ACO refresher (Dorigo 1992)
+### ACO refresher（Dorigo 1992）
 
-Ant Colony Optimization: ants traverse a graph; each path has a pheromone trail. Ant move probabilities weight by pheromone strength. Ants that complete the task deposit pheromone proportional to solution quality. Pheromone decays over time.
+Ant Colony Optimization では、ants が graph を traverses し、各 path が pheromone trail を持つ。ant の move probabilities は pheromone strength で重みづけされる。task を完了した ants は solution quality に比例した pheromone を deposit する。pheromone は time とともに decay する。
 
-### AMRO-S — ACO for agent routing
+### AMRO-S — agent routing のための ACO
 
-arXiv:2603.12933 uses ACO for multi-agent routing. Each task-type is a "destination"; each agent is a possible route. Pheromones strengthen routes that produce good outputs. Key contributions:
+arXiv:2603.12933 は multi-agent routing に ACO を使う。各 task-type は「destination」、各 agent は possible route である。良い outputs を出した routes の pheromone が強くなる。key contributions:
 
-- **Interpretable routing evidence.** Pheromone strength is a human-readable signal.
-- **Quality-gated asynchronous update.** Pheromones update only after quality checks pass, decoupling inference from learning.
-- **4.7x speedup** on the multi-agent routing benchmark.
+- **Interpretable routing evidence。** Pheromone strength は human-readable signal。
+- **Quality-gated asynchronous update。** Pheromone は quality checks に合格した後だけ update され、inference と learning を decouple する。
+- multi-agent routing benchmark で **4.7x speedup**。
 
-The quality gate matters: without it, fast-but-wrong agents accrue pheromone, and the system locks in on bad routes.
+quality gate は重要である。これがないと fast-but-wrong agents が pheromone を獲得し、system が悪い routes に lock in する。
 
-### When to use PSO / ACO for LLMs
+### LLM に PSO / ACO を使うべきとき
 
-**Use PSO when:**
-- Search space is continuous or maps to continuous parameters (prompt embeddings, LoRA weights, numeric generation parameters).
-- Fitness is cheap and automatic.
-- Population can be small (10-30).
+**PSO を使うとき:**
+- search space が continuous、または continuous parameters（prompt embeddings、LoRA weights、numeric generation parameters）に map できる。
+- fitness が cheap and automatic。
+- population を小さくできる（10-30）。
 
-**Use ACO when:**
-- You have a routing or path-selection problem.
-- Decisions reinforce over time (the same task types come back).
-- You need interpretable evidence for routing decisions.
+**ACO を使うとき:**
+- routing または path-selection problem がある。
+- decisions が time とともに reinforce する（同じ task types が戻ってくる）。
+- routing decisions の interpretable evidence が必要。
 
-**Do not use either when:**
-- Fitness requires human review (too expensive per iteration).
-- The search space is discrete and combinatorial in a way that PSO does not cover (use genetic algorithms instead).
-- Real-time decisions need strict latency (PSO/ACO converge slowly relative to single-pass heuristics).
+**どちらも使わないとき:**
+- fitness に human review が必要（per iteration が高すぎる）。
+- search space が PSO で扱えない形の discrete and combinatorial（代わりに genetic algorithms）。
+- real-time decisions に strict latency が必要（PSO/ACO は single-pass heuristics に比べ収束が遅い）。
 
-### Why bio-inspired still wins
+### bio-inspired がまだ勝つ理由
 
-Gradient-based methods need differentiable signals. LLM outputs and routing decisions are not trivially differentiable. Pseudo-gradient methods (reinforcement-learned routers, DPO-style prompt tuners) work but need expensive training.
+gradient-based methods には differentiable signals が必要である。LLM outputs と routing decisions は簡単には differentiable でない。Pseudo-gradient methods（reinforcement-learned routers、DPO-style prompt tuners）は機能するが、expensive training が必要である。
 
-PSO and ACO need only an *evaluator* function. If you can score a candidate output or a routing decision, you can optimize over the space. That makes the bar for applicability much lower.
+PSO と ACO が必要とするのは *evaluator* function だけである。candidate output または routing decision を score できるなら、その space を optimize できる。これにより applicability の bar がずっと低くなる。
 
-### Practical limits
+### practical limits
 
-- **Population budget.** N particles × T iterations × per-eval cost. For LLM evals at ~$0.02 / call, a 20-particle PSO running 50 iterations costs ~$20. Plan accordingly.
-- **Exploration vs exploitation.** Pheromone decay rate and PSO inertia trade off; too fast decay → forget solutions; too slow → stuck on early local optima.
-- **Catastrophic drift.** Both algorithms can converge and then diverge if fitness landscape shifts (new data distribution). Monitor best-fitness stability.
+- **Population budget。** N particles × T iterations × per-eval cost。LLM eval が ~$0.02 / call なら、20-particle PSO を 50 iterations 走らせると約 $20。計画しておく。
+- **Exploration vs exploitation。** Pheromone decay rate と PSO inertia は trade off する。decay が速すぎる → solutions を忘れる。遅すぎる → early local optima に stuck。
+- **Catastrophic drift。** fitness landscape が shift（new data distribution）すると、どちらの algorithm も converge 後に diverge し得る。best-fitness stability を monitor する。
 
-## Build It
+## 実装
 
-`code/main.py` implements:
+`code/main.py` は次を実装する:
 
-- `LMPSO` — PSO over numeric prompt parameters (temperature, top_k weights). Each particle's "LLM generation" is simulated as a scripted fitness function. Runs the algorithm for 30 iterations and shows g_best convergence.
-- `AMRO_S` — ACO-style routing. 3 agents, 4 task types, pheromone matrix, 100 routed tasks. Prints (task_type → agent choices) distribution over time to show trail formation.
-- Comparison: random routing vs ACO routing on the same task stream. Measures quality and latency.
+- `LMPSO` — numeric prompt parameters（temperature、top_k weights）上の PSO。各 particle の「LLM generation」は scripted fitness function として simulate する。algorithm を 30 iterations 走らせ、g_best convergence を示す。
+- `AMRO_S` — ACO-style routing。3 agents、4 task types、pheromone matrix、100 routed tasks。trail formation を示すため、time とともに（task_type → agent choices）distribution を print する。
+- Comparison: same task stream 上の random routing vs ACO routing。quality と latency を測る。
 
 Run:
 
@@ -105,48 +105,48 @@ Run:
 python3 code/main.py
 ```
 
-Expected output:
-- LMPSO: g_best fitness improves from random to near-optimal over 30 iterations.
-- AMRO-S: pheromone table stabilizes on the right agent per task-type; ACO routing beats random by ~30-40% on quality and also reduces latency (fewer retries).
+期待される出力:
+- LMPSO: g_best fitness が random から 30 iterations で near-optimal へ改善する。
+- AMRO-S: pheromone table が task-type ごとの正しい agent に安定する。ACO routing は random より quality で約 30-40% 勝ち、latency も下げる（retries が少ない）。
 
 ## Use It
 
-`outputs/skill-swarm-optimizer.md` helps choose between PSO, ACO, genetic algorithms, and gradient-based optimizers for LLM / agent optimization problems.
+`outputs/skill-swarm-optimizer.md` は、LLM / agent optimization problems に対して PSO、ACO、genetic algorithms、gradient-based optimizers のどれを選ぶかを支援する。
 
 ## Ship It
 
-- **Start small.** 10-20 particles, 20-50 iterations. Scale up only if the convergence curve shows clear gain.
-- **Log pheromones or g_best per iteration.** Debugging swarm optimizers without a trail is painful.
-- **Quality-gate updates.** Especially for ACO routing: fast-and-wrong agents must not accrue pheromone.
-- **Reset decay on distribution shift.** When your eval distribution changes, aged pheromones are stale; reset or double the decay rate temporarily.
-- **Cap the per-iteration cost.** Emit a cost-per-iteration metric. PSO that costs $500 / iteration and gains 0.5% is not shippable.
+- **小さく始める。** 10-20 particles、20-50 iterations。convergence curve が明確な gain を示す場合だけ scale up する。
+- **iteration ごとに pheromones または g_best を log する。** trail なしで swarm optimizers を debug するのはつらい。
+- **Quality-gate updates。** 特に ACO routing では、fast-and-wrong agents に pheromone を蓄積させてはいけない。
+- **distribution shift では decay を reset する。** eval distribution が変わったら aged pheromones は stale。reset するか decay rate を一時的に 2 倍にする。
+- **per-iteration cost を cap する。** cost-per-iteration metric を emit する。$500 / iteration かかって 0.5% しか得しない PSO は shippable ではない。
 
 ## Exercises
 
-1. Run `code/main.py`. Observe LMPSO convergence. Vary population size 5, 10, 20, 50. At what size does time-to-converge saturate?
-2. Implement a "catastrophic drift" experiment: after iteration 30, change the fitness function. How fast does PSO adapt? Does resetting `p_best` help?
-3. Add a quality gate to AMRO-S: pheromone deposit only on runs with eval score > 0.7. How does this change convergence vs the un-gated version?
-4. Read LMPSO (arXiv:2504.09247). Map the paper's "velocity as a prompt" back to your numeric velocity. What is lost in the simulation and what is preserved?
-5. Read AMRO-S (arXiv:2603.12933). Implement the decoupled "inference fast-path" with asynchronous pheromone update. How does this change system latency under sustained load?
+1. `code/main.py` を実行する。LMPSO convergence を観察する。population size を 5、10、20、50 に変える。time-to-converge はどの size で saturate するか。
+2. 「catastrophic drift」experiment を実装する: iteration 30 の後で fitness function を変える。PSO はどれだけ早く adapt するか。`p_best` の reset は効くか。
+3. AMRO-S に quality gate を追加する: eval score > 0.7 の runs にだけ pheromone deposit する。un-gated version と比べて convergence はどう変わるか。
+4. LMPSO（arXiv:2504.09247）を読む。paper の「velocity as a prompt」を、自分の numeric velocity に対応づける。simulation で失われているもの、保たれているものは何か。
+5. AMRO-S（arXiv:2603.12933）を読む。decoupled「inference fast-path」と asynchronous pheromone update を実装する。sustained load 下で system latency はどう変わるか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| PSO | "Particle Swarm Optimization" | Kennedy-Eberhart 1995. Population-based gradient-free optimizer. |
-| ACO | "Ant Colony Optimization" | Dorigo 1992. Path/route optimization via pheromone trails. |
-| LMPSO | "PSO with LLM generation" | arXiv:2504.09247. Velocity is a prompt; LLM produces candidates. |
-| Model Swarms | "PSO on expert weights" | arXiv:2410.11163. Gradient-free update on model parameter subspace. |
-| AMRO-S | "ACO for agent routing" | arXiv:2603.12933. Pheromone matrix over task-type × agent. |
-| p_best / g_best | "Personal / global best" | Per-particle and swarm-wide best solutions found so far. |
-| Pheromone | "Routing memory" | Strength on an edge; decays over time; deposits on quality. |
-| Quality-gated update | "Only learn from good runs" | Pheromone deposit conditioned on quality check. |
-| Catastrophic drift | "Distribution shift" | Fitness landscape changes; old p_best and pheromones become stale. |
+| PSO | 「Particle Swarm Optimization」 | Kennedy-Eberhart 1995。population-based gradient-free optimizer。 |
+| ACO | 「Ant Colony Optimization」 | Dorigo 1992。pheromone trails による path/route optimization。 |
+| LMPSO | 「LLM generation を使う PSO」 | arXiv:2504.09247。velocity は prompt、LLM が candidates を生成する。 |
+| Model Swarms | 「expert weights 上の PSO」 | arXiv:2410.11163。model parameter subspace 上の gradient-free update。 |
+| AMRO-S | 「agent routing の ACO」 | arXiv:2603.12933。task-type × agent の pheromone matrix。 |
+| p_best / g_best | 「personal / global best」 | これまで見つかった per-particle と swarm-wide の best solutions。 |
+| Pheromone | 「routing memory」 | edge 上の strength。time とともに decay し、quality に応じて deposit される。 |
+| Quality-gated update | 「良い runs からだけ学ぶ」 | quality check を条件にした pheromone deposit。 |
+| Catastrophic drift | 「distribution shift」 | fitness landscape が変わり、古い p_best と pheromones が stale になる。 |
 
-## Further Reading
+## 参考文献
 
-- [Kennedy & Eberhart — Particle Swarm Optimization](https://ieeexplore.ieee.org/document/488968) — the 1995 PSO paper
-- [Dorigo — Ant Colony Optimization](https://www.aco-metaheuristic.org/about.html) — 1992 ACO foundations
-- [LMPSO — Language Model Particle Swarm Optimization](https://arxiv.org/abs/2504.09247) — PSO for structured LLM outputs
-- [Model Swarms — gradient-free LLM expert optimization](https://arxiv.org/abs/2410.11163) — PSO on model-weight subspace
-- [AMRO-S — ant-colony multi-agent routing](https://arxiv.org/abs/2603.12933) — pheromone-driven routing with quality gate
+- [Kennedy & Eberhart — Particle Swarm Optimization](https://ieeexplore.ieee.org/document/488968) — 1995 年の PSO paper
+- [Dorigo — Ant Colony Optimization](https://www.aco-metaheuristic.org/about.html) — 1992 年の ACO foundations
+- [LMPSO — Language Model Particle Swarm Optimization](https://arxiv.org/abs/2504.09247) — structured LLM outputs 向け PSO
+- [Model Swarms — gradient-free LLM expert optimization](https://arxiv.org/abs/2410.11163) — model-weight subspace 上の PSO
+- [AMRO-S — ant-colony multi-agent routing](https://arxiv.org/abs/2603.12933) — quality gate 付き pheromone-driven routing

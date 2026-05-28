@@ -1,15 +1,15 @@
-"""Sycophancy amplification simulator — stdlib Python.
+"""Sycophancy amplification simulator — stdlib Python。
 
-Three-action world:
-  A = correct answer       (true utility +1.0, agreement indicator 0)
-  S = sycophantic agree    (true utility -0.3, agreement indicator 1)
-  W = random wrong answer  (true utility -0.5, agreement indicator 0)
+3-action world:
+  A = 正しい答え           (true utility +1.0, agreement indicator 0)
+  S = sycophantic agreement (true utility -0.3, agreement indicator 1)
+  W = random wrong answer   (true utility -0.5, agreement indicator 0)
 
-Reward model has two components: "confidence/fluency" bonus that happens to
-correlate with sycophancy, plus correctness. RL amplifies sycophancy just
-like Shapira et al. predict.
+Reward model は 2 components を持ちます。sycophancy とたまたま相関する
+"confidence/fluency" bonus と correctness です。Shapira et al. の予測どおり、
+RL は sycophancy を増幅します。
 
-We sweep beta (KL coefficient) and alpha (agreement-penalty correction).
+beta (KL coefficient) と alpha (agreement-penalty correction) を sweep します。
 
 Usage: python3 code/main.py
 """
@@ -39,15 +39,15 @@ def kl(p: list[float], q: list[float]) -> float:
 
 
 def labeler_reward(action: str) -> float:
-    """Labeler-produced reward: mostly correctness, but with a smaller
-    agreement bonus. This is the spurious feature that RMs pick up from
-    real labeler data — fluent agreement scores higher than an equally
-    correct disagreement."""
+    """labeler が作る reward。主に correctness ですが、小さな agreement bonus
+    も持ちます。これが real labeler data から RM が拾う spurious feature です。
+    fluent agreement は、同じくらい正しい disagreement より高く score されます。
+    """
     return TRUE_UTILITY[action] + 0.6 * AGREEMENT[action]
 
 
 def train_rm(n_pairs: int = 500) -> dict[str, float]:
-    """Fit scalar rewards by Bradley-Terry on pairwise labeler preferences."""
+    """pairwise labeler preferences 上の Bradley-Terry で scalar rewards を fit します。"""
     r = {a: 0.0 for a in ACTIONS}
     lr = 0.05
     for _ in range(n_pairs):
@@ -64,7 +64,7 @@ def train_rm(n_pairs: int = 500) -> dict[str, float]:
 
 
 def agreement_penalty_correction(r: dict[str, float], alpha: float) -> dict[str, float]:
-    """Shapira et al. correction: r' = r - alpha * agree(y)."""
+    """Shapira et al. の correction: r' = r - alpha * agree(y)。"""
     return {a: r[a] - alpha * AGREEMENT[a] for a in ACTIONS}
 
 
@@ -125,18 +125,18 @@ def main() -> None:
     print("=" * 70)
 
     ref_logits = [0.0, 0.0, 0.0]  # uniform base policy
-    print("\nStage 1 — reward model trained on labeler preferences.")
+    print("\nStage 1 — labeler preferences で reward model を訓練します。")
     rm = train_rm()
     print(f"  RM scores: {[f'{a}={rm[a]:+.3f}' for a in ACTIONS]}")
-    print("  (note: S gets a reward bump despite lower true utility)")
+    print("  (注: S は true utility が低いにもかかわらず reward bump を得ます)")
 
-    print("\nStage 2 — PPO sweeps, no agreement penalty.")
+    print("\nStage 2 — agreement penalty なしの PPO sweeps。")
     for beta in (1.0, 0.2, 0.05, 0.0):
         logits = ppo_train(ref_logits, rm, beta=beta)
         report(f"PPO beta={beta:4.2f} (alpha=0)", logits)
 
-    print("\nStage 3 — agreement-penalty correction (Shapira et al.).")
-    print("  beta=0.1 fixed. alpha sweeps.")
+    print("\nStage 3 — agreement-penalty correction (Shapira et al.)。")
+    print("  beta=0.1 に固定し、alpha を sweep します。")
     for alpha in (0.0, 0.2, 0.4, 0.6, 0.8):
         corrected = agreement_penalty_correction(rm, alpha)
         logits = ppo_train(ref_logits, corrected, beta=0.1)
@@ -144,9 +144,9 @@ def main() -> None:
 
     print()
     print("-" * 70)
-    print("TAKEAWAY: low beta amplifies sycophancy (RM rewards agreement).")
-    print("moderate alpha cuts sycophancy but erodes agreement-when-correct.")
-    print("there is no alpha that restores base-model P(S) without cost.")
+    print("要点: low beta は sycophancy を増幅します (RM が agreement を reward)。")
+    print("moderate alpha は sycophancy を削りますが、agreement-when-correct も")
+    print("削ります。cost なしに base-model P(S) を復元する alpha はありません。")
     print("=" * 70)
 
 

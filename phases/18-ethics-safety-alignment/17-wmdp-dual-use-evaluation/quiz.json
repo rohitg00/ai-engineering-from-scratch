@@ -1,75 +1,75 @@
 {
   "lesson": "17-wmdp-dual-use-evaluation",
-  "title": "WMDP and Dual-Use Capability Evaluation",
+  "title": "WMDP と Dual-Use Capability Evaluation",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the 'yellow zone' criterion that WMDP uses for question selection?",
+      "question": "WMDP が question selection に使う 'yellow zone' criterion は何ですか。",
       "options": [
-        "Open internet content with no expert review",
-        "Synthesis recipes for dangerous compounds",
-        "Proximate, enabling knowledge of a harmful process without being a direct synthesis recipe",
-        "Multilingual math reasoning"
+        "expert review のない open internet content",
+        "危険化合物の synthesis recipes",
+        "direct synthesis recipe ではないが、有害 process に近接し、それを可能にする knowledge",
+        "multilingual math reasoning"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which three domains does WMDP cover?",
+      "question": "WMDP が扱う3 domains はどれですか。",
       "options": [
-        "Privacy, bias, watermarking",
-        "Vision, audio, text",
-        "Math, code, language",
-        "Biosecurity, cybersecurity, chemistry"
+        "Privacy、bias、watermarking",
+        "Vision、audio、text",
+        "Math、code、language",
+        "Biosecurity、cybersecurity、chemistry"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does RMU (the WMDP companion method) do?",
+      "question": "RMU (WMDP の companion method) は何をしますか。",
       "options": [
-        "Replaces PPO with DPO during alignment",
-        "Generates harmful images",
-        "Trains a new tokenizer for dual-use content",
-        "Representation Misdirection for Unlearning: reduces WMDP scores to near-random while preserving general capability (e.g., MMLU) within a few points"
+        "alignment 中に PPO を DPO で置き換える",
+        "有害画像を生成する",
+        "dual-use content 用の新しい tokenizer を訓練する",
+        "Representation Misdirection for Unlearning。general capability (例: MMLU) を数 points 以内に保ちながら WMDP scores を near-random まで下げる"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What number did Anthropic's 2025 bioweapon-acquisition trial report as 'uplift,' and what did it imply for ASL-3?",
+      "question": "Anthropic の 2025 bioweapon-acquisition trial は 'uplift' としてどの数値を報告し、それは ASL-3 について何を意味しましたか。",
       "options": [
-        "100x; ASL-5 reached",
-        "2.53x; insufficient to rule out ASL-3",
-        "10x; below ASL-2",
-        "0.5x; ASL-3 ruled out"
+        "100x。ASL-5 reached",
+        "2.53x。ASL-3 を rule out するには不十分",
+        "10x。ASL-2 未満",
+        "0.5x。ASL-3 は rule out された"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the distinction between novice-relative uplift and expert-absolute capability?",
+      "question": "novice-relative uplift と expert-absolute capability の違いは何ですか。",
       "options": [
-        "Novice-relative is the multiplicative help over status-quo (e.g., internet search) for non-experts; expert-absolute is the maximum information a motivated expert can extract from the model",
-        "Novice-relative is a benchmark; expert-absolute is a license",
-        "They are synonyms",
-        "Both are measured only via MCQ"
+        "novice-relative は non-experts に対する status quo (例: internet search) からの multiplicative help、expert-absolute は motivated expert が model から抽出できる最大情報量",
+        "novice-relative は benchmark、expert-absolute は license",
+        "両者は同義語である",
+        "両者は MCQ だけで測られる"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which is NOT a measurement pitfall when interpreting WMDP scores as deployment risk?",
+      "question": "WMDP scores を deployment risk として解釈するときの measurement pitfall ではないものはどれですか。",
       "options": [
-        "Procurement and equipment barriers",
-        "Elicitation resistance (whether safety filters block extraction)",
-        "Tacit knowledge needed for execution that is not captured by MCQ",
-        "The model's open-source license"
+        "procurement と equipment barriers",
+        "elicitation resistance (safety filters が extraction を block するか)",
+        "MCQ では捉えられない execution に必要な tacit knowledge",
+        "model の open-source license"
       ],
       "correct": 3,
       "explanation": ""

@@ -1,53 +1,53 @@
 ---
 name: skill-classification-diagnostics
-description: Given a confusion matrix and class names, surface per-class failures and propose the single most impactful fix
+description: confusion matrix と class names を受け取り、クラス別の失敗を表に出して、最も効果の大きい fix を 1 つ提案する
 version: 1.0.0
 phase: 4
 lesson: 4
 tags: [computer-vision, classification, evaluation, debugging]
 ---
 
-# Classification Diagnostics
+# 分類診断
 
-A reading lens for confusion matrices. Aggregate accuracy tells you a classifier works. The confusion matrix tells you *what it does not know yet*.
+confusion matrix を読むための lens です。Aggregate accuracy は分類器が動いていることを教えてくれます。confusion matrix は、分類器が *まだ何を知らないか* を教えてくれます。
 
-## When to use
+## 使う場面
 
-- First look at a trained classifier's validation performance.
-- Between training runs to decide what to change next.
-- Before shipping a model: verifying that no critical class is failing silently.
-- Debugging a production regression where overall accuracy dropped one point and you need to know why.
+- 学習済み classifier の validation performance を最初に見るとき。
+- training run の合間に、次に何を変えるか決めるとき。
+- model を出荷する前に、重要な class が静かに失敗していないことを確認するとき。
+- production regression を debug するとき。overall accuracy が 1 point 落ち、理由を知る必要がある場合。
 
-## Inputs
+## 入力
 
-- `cm`: CxC confusion matrix (rows = true, cols = predicted).
-- `labels`: list of C class names, in the same order.
-- Optional `class_priors`: per-class training frequency (defaults to the row sums of `cm`).
+- `cm`: CxC confusion matrix（rows = true、cols = predicted）。
+- `labels`: 同じ順序の C 個の class name の list。
+- 任意の `class_priors`: per-class training frequency（省略時は `cm` の row sum）。
 
-## Steps
+## 手順
 
-1. **Compute per-class metrics.** Treat any division by zero as the metric being undefined for that class, and report it as `n/a`; never substitute silently with 0.
-   - precision_i = cm[i,i] / sum(cm[:, i])   (undefined when the class was never predicted)
-   - recall_i    = cm[i,i] / sum(cm[i, :])   (undefined when the class has no ground-truth samples)
-   - f1_i        = 2 * p * r / (p + r)        (undefined when either component is undefined)
+1. **クラス別 metric を計算する。** zero division は、その class で metric が undefined であるものとして扱い、`n/a` と報告します。静かに 0 で置き換えてはいけません。
+   - precision_i = cm[i,i] / sum(cm[:, i])   (その class が一度も予測されていない場合は undefined)
+   - recall_i    = cm[i,i] / sum(cm[i, :])   (その class に ground-truth samples がない場合は undefined)
+   - f1_i        = 2 * p * r / (p + r)        (どちらかの component が undefined の場合は undefined)
 
-2. **Rank up to three worst classes** by F1. If the confusion matrix has fewer than three classes, rank however many exist. Exclude classes with all metrics undefined.
+2. **F1 によって worst class を最大 3 つ rank する。** confusion matrix の class が 3 未満なら、存在する数だけ rank します。すべての metric が undefined の class は除外します。
 
-3. **Find the top off-diagonal cell per row** — the one class that most commonly steals from this class. Report as `true -> predicted`.
+3. **row ごとの top off-diagonal cell を見つける** — その class から最も頻繁に奪っている 1 つの class です。`true -> predicted` として報告します。
 
-4. **Classify the failure mode** for each worst class. Use these quantitative thresholds so the label is reproducible:
-   - `ambiguity` — bidirectional confusion with another class: both `cm[i,j] / sum(cm[i, :]) >= 0.15` and `cm[j,i] / sum(cm[j, :]) >= 0.15`.
-   - `imbalance` — the class has `< 0.5x` the training count of its top confuser.
-   - `label_noise` — `|precision_i - recall_i| >= 0.2` and the class is not on the imbalance / ambiguity paths.
-   - `systematic` — no single confuser exceeds 0.2 share of this class's errors; errors spread across three or more other classes.
+4. **各 worst class の failure mode を分類する。** label を再現可能にするため、以下の quantitative threshold を使います。
+   - `ambiguity` — 別 class との bidirectional confusion: `cm[i,j] / sum(cm[i, :]) >= 0.15` と `cm[j,i] / sum(cm[j, :]) >= 0.15` の両方。
+   - `imbalance` — その class の training count が、top confuser の `< 0.5x`。
+   - `label_noise` — `|precision_i - recall_i| >= 0.2` かつ、その class が imbalance / ambiguity path 上にない。
+   - `systematic` — この class の error share で 0.2 を超える single confuser がない。error が 3 つ以上の他 class に広がっている。
 
-5. **Recommend the single most impactful next action**:
-   - `ambiguity` -> collect or synthesise discriminative examples, add targeted augmentation that preserves the distinguishing feature.
-   - `imbalance` -> oversample the minority class or apply class-weighted loss.
-   - `label_noise` -> audit a stratified sample of the class; fix mislabels before any other change.
-   - `systematic` -> increase data for the class or fine-tune with a higher weight on this class's loss.
+5. **最も効果の大きい次の action を 1 つ推奨する**:
+   - `ambiguity` -> discriminative examples を収集または合成し、区別に必要な feature を保存する targeted augmentation を追加する。
+   - `imbalance` -> minority class を oversample するか、class-weighted loss を適用する。
+   - `label_noise` -> その class の stratified sample を audit する。他の変更より前に mislabels を修正する。
+   - `systematic` -> その class の data を増やすか、この class の loss に高い weight をかけて fine-tune する。
 
-## Report
+## レポート
 
 ```
 [diagnostics]
@@ -67,9 +67,9 @@ A reading lens for confusion matrices. Aggregate accuracy tells you a classifier
   single biggest lever: <one sentence naming the class and the fix>
 ```
 
-## Rules
+## ルール
 
-- Return at most three classes. More hides the signal.
-- Name the dominant confuser for each worst class; never summarise as "confuses with many".
-- Ground every recommendation in the confusion matrix evidence. No generic "add more data" without specifying which class.
-- When precision and recall disagree by more than 0.2, always flag label noise as a candidate — real classes usually have aligned P and R after training.
+- 返す class は最大 3 つです。それ以上は signal を隠します。
+- 各 worst class について dominant confuser を名指ししてください。`confuses with many` のように要約してはいけません。
+- すべての recommendation を confusion matrix の evidence に基づけてください。どの class かを指定しない generic な `add more data` は不可です。
+- precision と recall が 0.2 を超えて食い違う場合は、label noise を常に candidate として flag してください。実在する class では、training 後の P と R は通常そろいます。

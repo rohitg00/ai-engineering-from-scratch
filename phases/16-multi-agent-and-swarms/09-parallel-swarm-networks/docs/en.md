@@ -1,19 +1,19 @@
 # Parallel / Swarm / Networked Architectures
 
-> Contrast with supervisor: no central decider. Agents read a shared event bus, pick up work asynchronously, write results back. LangGraph explicitly supports "Swarm Architecture" for decentralized, dynamic environments. Matrix (arXiv:2511.21686) represents both control and data flow as serialized messages passed through distributed queues to eliminate the orchestrator bottleneck. The tradeoff is explicit: determinism and traceability for scalability. Swarm fits tasks with many independent sub-problems; it does not fit tasks that need a single coherent plan.
+> supervisor との対比: 中央の意思決定者を置かない。agent は共有 event bus を読み、非同期に作業を取り、結果を書き戻す。LangGraph は、分散型で動的な環境向けに「Swarm Architecture」を明示的にサポートしている。Matrix (arXiv:2511.21686) は control flow と data flow の両方を、分散 queue を流れる直列化された message として表現し、orchestrator のボトルネックをなくす。トレードオフは明確だ。scalability と引き換えに determinism と traceability を手放す。swarm は、多数の独立した sub-problem を持つタスクに合う。一貫した単一の plan が必要なタスクには合わない。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`, `queue`)
-**Prerequisites:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib, `threading`, `queue`)
+**前提条件:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
+**所要時間:** 約75分
 
-## Problem
+## 問題
 
-Supervisor scales to a few workers. What about hundreds? The supervisor itself becomes the bottleneck: every decision about who does what funnels through one agent. One slow plan step stalls the whole system.
+supervisor は数人の worker まではスケールする。では数百人ならどうか。supervisor 自身がボトルネックになる。誰が何をするかという判断が、すべて1つの agent を通るからだ。1つの遅い plan step が、システム全体を止める。
 
-Swarm architectures flip the design. Instead of a central planner dispatching work, workers pick work off a shared queue. The "coordination" is baked into the event bus semantics. No orchestrator; the system scales until the queue does.
+swarm architecture は設計を反転させる。中央 planner が作業を dispatch する代わりに、worker が共有 queue から作業を取る。「coordination」は event bus の semantics に埋め込まれる。orchestrator はいない。システムは queue が耐えられるところまでスケールする。
 
-## Concept
+## コンセプト
 
 ### The shape
 
@@ -31,52 +31,52 @@ Swarm architectures flip the design. Instead of a central planner dispatching wo
             results pool
 ```
 
-No orchestrator. Each worker repeats: pull a task, process, write result (and optionally enqueue follow-ups).
+orchestrator はいない。各 worker は、task を取り、処理し、result を書き込む。必要なら follow-up も enqueue する。この繰り返しだ。
 
 ### When swarm fits
 
-- **Many independent tasks.** Scraping, transforming, classifying. Tasks do not depend on each other.
-- **Variable-duration work.** If some tasks take 100ms and others take 10s, a swarm balances load automatically — fast workers pull next jobs. A supervisor has to anticipate duration.
-- **Throughput over determinism.** You care about total completion time, not strict ordering.
+- **独立した task が多数ある。** scraping、変換、分類。task 同士が依存しない。
+- **所要時間がばらつく work。** 100ms の task と 10s の task が混在するなら、swarm は自動で load balance する。速い worker が次の job を取る。supervisor は所要時間を事前に見積もらなければならない。
+- **determinism より throughput。** 厳密な順序より、全体の完了時間が重要な場合。
 
 ### When swarm fails
 
-- **Ordered workflows.** If step 3 needs step 2's output, a swarm risks step 3 firing before step 2 is done.
-- **Global-plan tasks.** Complex research questions benefit from a planner. A swarm of researchers produces independent facts, not a coherent report.
-- **Debugging.** With no central log and asynchronous work, reproducing a bug is expensive.
+- **順序付き workflow。** step 3 が step 2 の output を必要とするなら、swarm では step 2 の完了前に step 3 が走る危険がある。
+- **global plan が必要な task。** 複雑な research question には planner が効く。researcher の swarm は独立した fact を生むが、一貫した report にはならない。
+- **debugging。** 中央 log がなく非同期に動くため、bug の再現が高くつく。
 
 ### Matrix (arXiv:2511.21686)
 
-Matrix is the 2025 paper that takes swarm to its natural conclusion: both control flow and data flow are serialized messages on distributed queues. No central coordinator. Fault tolerance comes from message durability. Scalability is the message broker's problem, not the system's.
+Matrix は、swarm を自然な結論まで押し進めた 2025 年の paper だ。control flow と data flow の両方が、分散 queue 上の直列化 message になる。中央 coordinator はいない。fault tolerance は message durability から得られる。scalability は system ではなく message broker の問題になる。
 
-Contribution: a programming model where multi-agent coordination is "what message topic does this agent subscribe to?" rather than "which agent does the supervisor pick next?" This makes the system look like a pub/sub event mesh.
+貢献は、multi-agent coordination を「supervisor が次にどの agent を選ぶか」ではなく「この agent はどの message topic を subscribe するか」として扱う programming model だ。これにより、system は pub/sub event mesh のように見える。
 
 ### LangGraph's Swarm Architecture
 
-LangGraph 2025 docs explicitly describe "Swarm Architecture" as one of the multi-agent patterns: agents are nodes, but edges form a directed graph with cycles and any node can be activated from the pool. A worker picks from available work by condition, not by supervisor assignment.
+LangGraph 2025 docs は、multi-agent pattern の1つとして「Swarm Architecture」を明示的に説明している。agents は node だが、edge は cycle を持つ directed graph を形成し、任意の node が pool から activate され得る。worker は supervisor assignment ではなく、condition によって available work を選ぶ。
 
 ### Failure mode: starvation and hot-spotting
 
-If all workers pull the fastest-available task, long-running tasks never get picked until they are the only ones left. Classic queue starvation.
+すべての worker が最も早く取れる task を引くと、long-running task は最後の1つになるまで選ばれない。典型的な queue starvation だ。
 
-Mitigations:
-- Priority queues with explicit aging (increase priority with wait time).
-- Worker specialization: some workers only take "long" tasks.
-- Back-pressure: limit how many fast tasks enter the queue.
+mitigation:
+- explicit aging 付き priority queue (待ち時間に応じて priority を上げる)。
+- worker specialization: 一部の worker は "long" task だけを取る。
+- back-pressure: queue に入る fast task の数を制限する。
 
 ### The content-based routing link
 
-Swarm pairs naturally with content-based routing (Lesson 22). Instead of a generic queue, have one queue per message type. Specialist workers subscribe only to their type. This is the basis for message-bus architectures that scale to thousands of agents.
+swarm は content-based routing (Lesson 22) と自然に組み合わさる。generic queue の代わりに、message type ごとに queue を持つ。specialist worker は自分の type だけを subscribe する。これが、数千 agent までスケールする message-bus architecture の土台になる。
 
-## Build It
+## 実装
 
-`code/main.py` implements a swarm of 4 worker threads pulling from a shared `queue.Queue`. Tasks have variable durations (some fast, some slow). The demo contrasts:
+`code/main.py` は、共有 `queue.Queue` から task を取る4つの worker thread による swarm を実装する。task には所要時間のばらつきがある (速い task と遅い task)。demo は次を比較する:
 
-- **Sequential baseline:** one worker processes all tasks serially.
-- **Fixed assignment:** each task pre-assigned to a specific worker (supervisor-style).
-- **Swarm:** workers pull from a shared queue.
+- **Sequential baseline:** 1つの worker がすべての task を直列処理する。
+- **Fixed assignment:** 各 task が特定 worker に事前割り当てされる (supervisor-style)。
+- **Swarm:** worker が共有 queue から task を取る。
 
-Swarm balances load automatically; fixed assignment leaves fast workers idle when their assigned task is slow.
+swarm は自動で load balance する。fixed assignment では、割り当てられた task が遅い worker を待つ間、速い worker が idle になる。
 
 Run:
 
@@ -84,46 +84,46 @@ Run:
 python3 code/main.py
 ```
 
-Output shows per-worker task counts (swarm distributes unevenly but optimally) and wall-clock times.
+output には worker ごとの task count (swarm は不均等だが最適に分散する) と wall-clock time が表示される。
 
 ## Use It
 
-`outputs/skill-swarm-fit.md` evaluates whether a task should use swarm vs supervisor. Inputs: task independence, duration variance, ordering requirements, debuggability needs.
+`outputs/skill-swarm-fit.md` は、ある task が swarm と supervisor のどちらを使うべきかを評価する。input は task independence、duration variance、ordering requirement、debuggability need。
 
 ## Ship It
 
 Checklist:
 
-- **Priority queue with aging.** Prevent long-task starvation.
-- **Worker idempotency.** A task may be pulled more than once if a worker crashes mid-run. Workers must be idempotent.
-- **Durable queue.** Use Kafka, Redis Streams, or a database-backed queue for production. `queue.Queue` is in-memory only.
-- **Observability per task.** Every task has a trace ID; every worker logs start/end with it.
-- **Back-pressure.** If the queue grows faster than workers drain it, slow the producer.
+- **aging 付き priority queue。** long-task starvation を防ぐ。
+- **worker idempotency。** worker が途中で crash すると、task は複数回取られることがある。worker は idempotent でなければならない。
+- **durable queue。** production では Kafka、Redis Streams、database-backed queue を使う。`queue.Queue` は in-memory のみ。
+- **task ごとの observability。** すべての task に trace ID を持たせ、すべての worker が start/end をそれ付きで log する。
+- **back-pressure。** worker が処理するより queue が速く増えるなら、producer を遅くする。
 
 ## Exercises
 
-1. Run `code/main.py`. How much faster is swarm than sequential on the variable-duration workload? How much faster than fixed assignment?
-2. Add a priority queue variant (use `queue.PriorityQueue`). Assign priority by task "importance" field. Observe whether low-priority tasks ever starve under continuous load.
-3. Implement a hot-spot detector: log when any worker processes 3× more tasks than the slowest worker. What does that indicate about task-duration distribution?
-4. Read the Matrix paper (arXiv:2511.21686) abstract and Section 3. Identify one specific tradeoff Matrix accepts (scalability gain) and one it gives up (traceability, determinism).
-5. Convert the swarm demo to use a `queue.Queue` of (task_type, payload) tuples, with workers subscribing only to specific types. What routing rules make sense when tasks are heterogeneous?
+1. `code/main.py` を実行する。variable-duration workload で、swarm は sequential よりどれくらい速いか。fixed assignment よりどれくらい速いか。
+2. priority queue 版を追加する (`queue.PriorityQueue` を使う)。task の "importance" field で priority を割り当てる。continuous load の下で low-priority task が starvation するか観察する。
+3. hot-spot detector を実装する。ある worker が最も遅い worker の3倍以上の task を処理したら log する。それは task-duration distribution について何を示しているか。
+4. Matrix paper (arXiv:2511.21686) の abstract と Section 3 を読む。Matrix が受け入れる具体的な tradeoff (scalability gain) と、手放すもの (traceability、determinism) を1つずつ挙げる。
+5. swarm demo を `(task_type, payload)` tuple の `queue.Queue` に変換し、worker が特定 type だけを subscribe するようにする。task が heterogeneous な場合、どんな routing rule が妥当か。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Swarm architecture | "Decentralized agents" | Workers pull from shared queue; no central orchestrator. |
-| Event bus | "Agents subscribe to topics" | Message broker that routes tasks to workers by type or content. |
-| Starvation | "Task never runs" | Low-priority task never gets picked because higher-priority work arrives continuously. |
-| Hot-spotting | "One worker drowns" | Load imbalance where one worker gets most tasks. |
-| Back-pressure | "Slow down the producer" | Mechanism that signals upstream to stop producing when the queue fills up. |
-| Idempotent worker | "Safe to re-run" | A task processed twice produces the same result. Required because workers may crash mid-run. |
-| Durable queue | "Survives crashes" | Queue backed by disk or replicated storage; tasks are not lost when a worker crashes. |
-| Matrix framework | "Full message-passing swarm" | Both data and control flow are serialized messages on distributed queues. |
+| Swarm architecture | "Decentralized agents" | worker が shared queue から pull する。central orchestrator はいない。 |
+| Event bus | "Agents subscribe to topics" | type や content によって task を worker に route する message broker。 |
+| Starvation | "Task never runs" | 高 priority の work が継続的に到着するため、低 priority task が選ばれない。 |
+| Hot-spotting | "One worker drowns" | 1つの worker に task が集中する load imbalance。 |
+| Back-pressure | "Slow down the producer" | queue が満杯になったとき、upstream に production 停止を伝える mechanism。 |
+| Idempotent worker | "Safe to re-run" | 同じ task を2回処理しても同じ result になる。worker が途中で crash し得るため必須。 |
+| Durable queue | "Survives crashes" | disk または replicated storage に backed された queue。worker crash で task が失われない。 |
+| Matrix framework | "Full message-passing swarm" | data flow と control flow の両方が distributed queue 上の serialized message。 |
 
-## Further Reading
+## 参考文献
 
 - [LangGraph workflows and agents — Swarm Architecture](https://docs.langchain.com/oss/python/langgraph/workflows-agents) — explicit swarm support
 - [Matrix — A Decentralized Framework for Multi-Agent Systems](https://arxiv.org/abs/2511.21686) — full message-passing swarm
 - [Anthropic engineering — why supervisor not swarm in Research](https://www.anthropic.com/engineering/multi-agent-research-system) — why a specific production system explicitly chose supervisor over swarm
-- [AutoGen v0.4 actor-model docs](https://microsoft.github.io/autogen/stable/) — the event-driven actor rewrite, closer to swarm than v0.2's GroupChat
+- [AutoGen v0.4 actor-model docs](https://microsoft.github.io/autogen/stable/) — event-driven actor rewrite。v0.2 の GroupChat より swarm に近い

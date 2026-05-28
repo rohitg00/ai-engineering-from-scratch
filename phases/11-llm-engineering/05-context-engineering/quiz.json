@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the difference between prompt engineering and context engineering?",
-    "options": ["They are the same thing", "A prompt is the user's query; context is everything in the model's window: system prompt, tools, retrieved docs, history, and the prompt itself", "Context engineering is about database design", "Prompt engineering is more advanced"],
+    "question": "prompt engineeringとcontext engineeringの違いは何ですか。",
+    "options": [
+      "同じものです",
+      "promptはユーザーのクエリです。contextはmodel window内のすべて、つまりsystem prompt、tools、retrieved docs、history、prompt自体を含みます",
+      "context engineeringはdatabase設計のことです",
+      "prompt engineeringの方が高度です"
+    ],
     "correct": 1,
-    "explanation": "Prompt engineering focuses on crafting the user instruction. Context engineering manages the entire input to the model: what goes in, what stays out, in what order, and how to allocate the limited context window.",
+    "explanation": "prompt engineeringはユーザー指示の作り方に集中します。context engineeringはモデルへの入力全体、つまり何を入れ、何を除き、どの順序にし、限られたcontext windowをどう配分するかを管理します。",
     "stage": "pre"
   },
   {
-    "question": "Why does context window order matter for LLM performance?",
-    "options": ["It doesn't -- LLMs process all tokens equally", "LLMs have recency and primacy biases, paying more attention to the beginning and end of the context window", "Alphabetical order helps the model search faster", "Order only matters for code"],
+    "question": "context windowの順序がLLM性能に影響するのはなぜですか。",
+    "options": [
+      "影響しません。LLMはすべてのtokenを等しく処理します",
+      "LLMにはrecency biasとprimacy biasがあり、context windowの先頭と末尾により注意を払うためです",
+      "アルファベット順だとモデルが速く検索できます",
+      "順序が重要なのはcodeだけです"
+    ],
     "correct": 1,
-    "explanation": "Research shows LLMs attend more to the start and end of the context window ('lost in the middle' phenomenon). Placing the most important information at the beginning or end of context improves utilization.",
+    "explanation": "研究では、LLMはcontext windowの先頭と末尾により注意することが示されています（lost in the middle現象）。最重要情報をcontextの先頭または末尾に置くと利用効率が上がります。",
     "stage": "pre"
   },
   {
-    "question": "A coding assistant uses 22,700 tokens of a 128K context window. Why is budget management still important?",
-    "options": ["128K should be enough for any use case", "Long conversations, large code files, and retrieved documentation can quickly fill the window; without budget management, critical context gets truncated", "Token counting is inaccurate", "Only the prompt matters"],
+    "question": "coding assistantが128K context windowのうち22,700 tokensを使っています。なぜ予算管理がまだ重要なのですか。",
+    "options": [
+      "128Kはどんなuse caseにも十分なはずです",
+      "長い会話、大きなcode files、retrieved documentationはすぐwindowを埋めます。予算管理がないと重要なcontextが切り捨てられます",
+      "token countingは不正確だからです",
+      "promptだけが重要だからです"
+    ],
     "correct": 1,
-    "explanation": "22,700 tokens is the baseline. A 50-turn conversation adds 30K+ tokens. Retrieving a large codebase adds 50K+. Tool call results add more. Without active management, the window fills and oldest context is lost.",
+    "explanation": "22,700 tokensはbaselineです。50ターンの会話は30K+ tokensを追加します。大きなcodebaseの検索は50K+を追加します。tool call resultsも増えます。能動的に管理しないとwindowが埋まり、古いcontextが失われます。",
     "stage": "post"
   },
   {
-    "question": "What is the sliding window strategy for conversation history?",
-    "options": ["Moving the model to a different server", "Keeping only the N most recent turns in context and dropping older turns, optionally summarizing them first", "Processing the conversation in fixed-size chunks", "Expanding the context window dynamically"],
+    "question": "conversation historyにおけるsliding window戦略とは何ですか。",
+    "options": [
+      "モデルを別サーバーへ移すこと",
+      "直近Nターンだけをcontextに残し、古いターンを削除すること。必要に応じて先に要約します",
+      "会話を固定サイズchunkで処理すること",
+      "context windowを動的に拡張すること"
+    ],
     "correct": 1,
-    "explanation": "Sliding window keeps the K most recent conversation turns in full context. Older turns are either dropped or replaced with a summary. This bounds memory usage while preserving the most relevant recent context.",
+    "explanation": "sliding windowは直近Kターンの会話を完全なcontextとして保持します。古いターンは削除されるか要約に置き換えられます。これにより、最も関連しやすい最近の文脈を保ちながらmemory usageを制限できます。",
     "stage": "post"
   },
   {
-    "question": "How should a context assembler allocate tokens across components?",
-    "options": ["Equal allocation to each component", "Dynamically based on query type: a simple question needs less retrieval context; a complex question needs more, with generation headroom always reserved", "Maximize retrieval context always", "Minimize system prompt tokens"],
+    "question": "context assemblerはcomponents間でtokensをどう配分すべきですか。",
+    "options": [
+      "各componentに均等配分する",
+      "query typeに基づいて動的に配分します。単純な質問はretrieval contextを少なく、複雑な質問は多くし、generation headroomは常に予約します",
+      "常にretrieval contextを最大化する",
+      "system prompt tokensを最小化する"
+    ],
     "correct": 1,
-    "explanation": "A simple factual question might need 500 tokens of retrieved context. A complex analysis might need 10,000. A good context assembler adjusts allocation dynamically while always reserving headroom for the model's response.",
+    "explanation": "単純な事実質問には500 tokensのretrieved contextで足りるかもしれません。複雑な分析には10,000 tokensが必要なこともあります。良いcontext assemblerは配分を動的に調整しつつ、モデル応答用の余裕を常に残します。",
     "stage": "post"
   }
 ]

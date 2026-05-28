@@ -1,10 +1,10 @@
-"""Experiment runner: subprocess sandbox with timeout, memory poller, ablation table.
+"""実験ランナー: timeout、memory poller、ablation table を持つ subprocess sandbox。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
+概念参照:
+- ./docs/en.md (この lesson)
 - Phase 19 Track A lessons 20-29 (agent harness primitives)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -79,7 +79,7 @@ class ExperimentResult:
 
 
 def _rss_mb(pid: int) -> float | None:
-    """Best effort RSS read in MB. Returns None on unsupported platforms."""
+    """RSS を MB で best effort に読みます。非対応 platform では None を返します。"""
     proc_status = f"/proc/{pid}/status"
     if os.path.exists(proc_status):
         try:
@@ -107,7 +107,7 @@ def _rss_mb(pid: int) -> float | None:
 
 
 class _MemoryPoller(threading.Thread):
-    """Polls subprocess RSS in MB; kills the process if it crosses the cap."""
+    """subprocess RSS を MB 単位で poll し、cap を超えたら process を kill します。"""
 
     def __init__(self, proc: subprocess.Popen, cap_mb: int, interval_s: float = 0.05) -> None:
         super().__init__(daemon=True)
@@ -146,10 +146,10 @@ class _MemoryPoller(threading.Thread):
 
 
 def _scan_intermediates(stdout: str, metric_keys: list[str]) -> tuple[dict, list[dict]]:
-    """Walk stdout lines and pull every json line whose keys cover metric_keys.
+    """stdout の各行を歩き、metric_keys を満たす JSON line をすべて抜き出します。
 
-    The last covering line is treated as the final metrics. Earlier lines are
-    returned as intermediates so the evaluator can plot learning curves.
+    最後に見つかった line を final metrics として扱います。それ以前の line は
+    evaluator が learning curve を plot できるよう intermediate として返します。
     """
     intermediates: list[dict] = []
     final: dict = {}
@@ -173,7 +173,7 @@ def _scan_intermediates(stdout: str, metric_keys: list[str]) -> tuple[dict, list
 
 
 class ExperimentRunner:
-    """Spawn a subprocess, enforce timeout and memory cap, return an ExperimentResult."""
+    """subprocess を spawn し、timeout と memory cap を enforce して ExperimentResult を返します。"""
 
     def __init__(self, python_path: str | None = None, poll_interval_s: float = 0.05) -> None:
         self._python = python_path or sys.executable

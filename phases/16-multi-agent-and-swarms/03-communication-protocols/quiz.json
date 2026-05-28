@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What problem does MCP (Model Context Protocol) solve for AI agents?",
-      "options": ["It provides a standard format for training data", "It gives agents a standard way to discover and use tools exposed by external servers, without hardcoding tool implementations", "It encrypts communication between agents", "It compresses large context windows to fit in smaller models"],
+      "question": "MCP (Model Context Protocol) は AI agents にとってどんな問題を解きますか?",
+      "options": ["training data の standard format を提供する", "tool implementations を hardcode せずに、external servers が expose する tools を agents が discover して use する標準的な方法を与える", "agents 間の communication を encrypt する", "large context windows を smaller models に収まるよう圧縮する"],
       "correct": 1,
-      "explanation": "MCP standardizes tool access: a server exposes tools with JSON schemas, and any MCP-compatible agent can discover and call them. This decouples tool implementation from agent code."
+      "explanation": "MCP は tool access を standardize します。server が JSON schemas 付きで tools を expose し、MCP-compatible agent がそれらを discover して call できます。これにより tool implementation と agent code が decouple されます。"
     },
     {
       "stage": "pre",
-      "question": "What is the difference between MCP and A2A?",
-      "options": ["MCP is for Python agents and A2A is for JavaScript agents", "MCP connects agents to tools (agent-to-tool), while A2A connects agents to other agents (agent-to-agent) for task delegation", "MCP is synchronous and A2A is asynchronous", "MCP is open source and A2A is proprietary"],
+      "question": "MCP と A2A の違いは何ですか?",
+      "options": ["MCP は Python agents 用で A2A は JavaScript agents 用", "MCP は agents を tools に接続し (agent-to-tool)、A2A は task delegation のために agents を other agents に接続する (agent-to-agent)", "MCP は synchronous で A2A は asynchronous", "MCP は open source で A2A は proprietary"],
       "correct": 1,
-      "explanation": "MCP is the protocol for tool access (an agent calls a tool). A2A is the protocol for agent collaboration (an agent delegates a task to another agent). They solve different layers of the communication problem."
+      "explanation": "MCP は tool access の protocol です (agent が tool を call する)。A2A は agent collaboration の protocol です (agent が別の agent に task を delegate する)。communication problem の異なる layers を解いています。"
     },
     {
       "stage": "post",
-      "question": "In A2A, what is an 'agent card' and why is it important?",
-      "options": ["A visual dashboard showing agent performance metrics", "A JSON document at a well-known URL that describes an agent's capabilities, skills, and endpoint, enabling other agents to discover and delegate tasks to it", "A security credential that authenticates an agent's identity", "A configuration file that sets the agent's system prompt"],
+      "question": "A2A における 'agent card' とは何で、なぜ重要ですか?",
+      "options": ["agent performance metrics を示す visual dashboard", "well-known URL に置かれ、agent の capabilities、skills、endpoint を記述する JSON document。ほかの agents が discover し task を delegate できるようにする", "agent の identity を authenticate する security credential", "agent の system prompt を設定する configuration file"],
       "correct": 1,
-      "explanation": "The agent card (hosted at /.well-known/agent.json) is how agents advertise themselves. It lists skills, supported input/output formats, and the task endpoint. Other agents read this card to decide whether and how to delegate work."
+      "explanation": "agent card (/.well-known/agent.json に hosted) は agents が自分を advertise する方法です。skills、supported input/output formats、task endpoint を列挙します。ほかの agents はこの card を読んで、work を delegate できるか、どう delegate するかを判断します。"
     },
     {
       "stage": "post",
-      "question": "Why do multi-agent systems need structured communication protocols instead of just passing strings between agents?",
-      "options": ["Strings are too large to send over HTTP", "Structured protocols provide type safety, discoverability, error handling, and interoperability between agents built by different teams with different frameworks", "String parsing is computationally expensive for LLMs", "Structured protocols are required by all cloud providers"],
+      "question": "multi-agent systems で agents 間にただ strings を渡すだけでなく、structured communication protocols が必要なのはなぜですか?",
+      "options": ["strings は HTTP で送るには大きすぎるから", "structured protocols は type safety、discoverability、error handling、異なる teams や frameworks で作られた agents 間の interoperability を提供するから", "string parsing は LLMs にとって計算コストが高いから", "structured protocols はすべての cloud providers で必須だから"],
       "correct": 1,
-      "explanation": "Without structured contracts, agents from different teams misinterpret each other's output, error handling is ad-hoc, and there is no way to discover what another agent can do. Protocols provide the shared language that makes multi-agent systems reliable."
+      "explanation": "structured contracts がないと、異なる teams の agents は互いの output を misinterpret し、error handling は ad-hoc になり、別 agent が何をできるか discover できません。protocols は multi-agent systems を reliable にする shared language を提供します。"
     },
     {
       "stage": "post",
-      "question": "How does ACP (Agent Communication Protocol) differ from A2A in its design goals?",
-      "options": ["ACP is faster than A2A for real-time applications", "ACP focuses on enterprise auditability with full message history and compliance tracking, while A2A focuses on lightweight task delegation", "ACP only works within a single organization while A2A works across organizations", "ACP uses WebSockets while A2A uses HTTP"],
+      "question": "ACP (Agent Communication Protocol) は design goals において A2A とどう違いますか?",
+      "options": ["ACP は real-time applications で A2A より速い", "ACP は full message history と compliance tracking による enterprise auditability に重点を置き、A2A は lightweight task delegation に重点を置く", "ACP は single organization 内でしか動かず A2A は organizations をまたげる", "ACP は WebSockets を使い A2A は HTTP を使う"],
       "correct": 1,
-      "explanation": "ACP was designed for enterprise environments where every agent interaction must be auditable, traceable, and compliant. A2A is simpler and focuses on getting tasks done. ACP adds the governance layer that regulated industries require."
+      "explanation": "ACP は、すべての agent interaction が auditable、traceable、compliant でなければならない enterprise environments 向けに設計されました。A2A はより simple で tasks を完了することに重点を置きます。ACP は regulated industries が必要とする governance layer を追加します。"
     }
   ]
 }

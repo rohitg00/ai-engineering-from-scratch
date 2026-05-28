@@ -1,46 +1,46 @@
 {
   "lesson": "phase-19/38-classifier-finetuning",
-  "title": "Classifier Fine-Tuning by Head Swap",
+  "title": "Head Swap による Classifier Fine-Tuning",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading: a pretrained language model has a body with 5M parameters and an output head that projects to a 30K vocabulary. You want a 2-class classifier. Which is the most defensible first move?",
+      "question": "pretrained LM body があり、2-class classifier が必要です。最初の一手として最も妥当なのはどれですか?",
       "options": [
-        "Discard the body and train a new transformer from scratch on the 800-example labelled set.",
-        "Replace only the head with a 2-class linear layer and decide later whether to train the body.",
-        "Keep the original head but mask all but two output logits.",
-        "Freeze the head and train only the body."
+        "body を捨て、800例で新しい transformer を scratch から学習する",
+        "head だけを2-class linear layer に置き換え、body を学習するかは後で決める",
+        "元の head を残し2つ以外の logits を mask する",
+        "head を凍結し body だけを学習する"
       ],
       "correct": 1,
-      "explanation": "The body is the expensive part and encodes useful structure from pretraining. Swap the head first. Whether to freeze the body is a separate decision driven by data size and domain drift."
+      "explanation": "高価なのは body で、pretraining の有用な構造を持っています。まず head を交換します。"
     },
     {
       "stage": "check",
-      "question": "Why does the lesson use mean pooling with an attention-mask weighting instead of a plain mean across the sequence axis?",
+      "question": "plain mean ではなく attention-mask weighted mean pooling を使う理由は何ですか?",
       "options": [
-        "Plain mean is mathematically undefined for transformers.",
-        "Padding positions contribute irrelevant hidden states that would pull the pooled vector toward zero.",
-        "Mean pool requires masking by convention even when there are no pads.",
-        "Plain mean ignores the batch dimension."
+        "plain mean は transformer では定義されないため",
+        "padding positions の hidden states が pooled vector を壊すため",
+        "pad がなくても慣習で mask が必要だから",
+        "plain mean は batch dimension を無視するため"
       ],
       "correct": 1,
-      "explanation": "Padding tokens carry no signal but the body still produces hidden states for them. Without masking, padded positions corrupt the pooled representation, especially on short sequences in a batch padded to the longest example."
+      "explanation": "pad token 自体に信号はありませんが body は hidden states を出すため、mask なしでは短い sequence が特に影響を受けます。"
     },
     {
       "stage": "check",
-      "question": "In `train_classifier`, the optimiser is constructed with `[p for p in model.parameters() if p.requires_grad]`. What does this idiom enforce?",
+      "question": "`[p for p in model.parameters() if p.requires_grad]` で optimiser を作る idiom は何を保証しますか?",
       "options": [
-        "It silently ignores the head when the body is frozen.",
-        "It tells PyTorch to autograd through frozen parameters anyway.",
-        "It builds the param group from only the trainable subset, so the head-only and full-FT cases share the same code path.",
-        "It is required by the Adam constructor."
+        "body frozen 時に head を無視する",
+        "frozen parameters にも autograd させる",
+        "trainable subset だけで param group を作り、head-only と full-FT が同じ code path を共有できる",
+        "Adam constructor に必須"
       ],
       "correct": 2,
-      "explanation": "The optimiser only updates the parameters in its param list. By filtering on `requires_grad`, the same training function works for both regimes; the toggle is the freeze call, not the loop."
+      "explanation": "optimizer は渡された parameters だけを更新します。toggle は freeze call で行います。"
     },
     {
       "stage": "check",
-      "question": "Precision is 0.9 and recall is 0.6 on the spam class. What is the F1?",
+      "question": "spam class の precision が0.9、recall が0.6 のとき F1 は?",
       "options": [
         "0.75",
         "0.72",
@@ -48,31 +48,31 @@
         "0.30"
       ],
       "correct": 1,
-      "explanation": "F1 is the harmonic mean of precision and recall: 2 * 0.9 * 0.6 / (0.9 + 0.6) = 1.08 / 1.5 = 0.72."
+      "explanation": "F1 = 2 * 0.9 * 0.6 / (0.9 + 0.6) = 0.72 です。"
     },
     {
       "stage": "post",
-      "question": "You retrain the model with full fine-tuning at the same learning rate as head-only training. F1 collapses to 0.55 from 0.90. What is the most likely cause?",
+      "question": "full fine-tuning を head-only と同じ learning rate で行うと F1 が0.90から0.55に崩れました。最もありそうな原因は?",
       "options": [
-        "The body parameters needed a smaller learning rate than the head.",
-        "Adam is incompatible with classification objectives.",
-        "Cross-entropy loss is not defined for two-class problems.",
-        "PyTorch silently disables gradients during full fine-tuning."
+        "body parameters には head より小さい learning rate が必要だった",
+        "Adam は classification objectives と互換性がない",
+        "cross-entropy loss は2-class 問題に定義されない",
+        "PyTorch が full fine-tuning 中に gradient を無効化した"
       ],
       "correct": 0,
-      "explanation": "A pretrained body usually needs a smaller learning rate than a fresh head. A common pattern is two parameter groups: high LR on the head, smaller LR on the body. The same LR for both destroys pretraining signal."
+      "explanation": "pretrained body は新しい head より小さい LR にするのが一般的です。"
     },
     {
       "stage": "post",
-      "question": "Your team wants to deploy the classifier and asks how to record which regime produced the production checkpoint. Which artifact answers that question reproducibly?",
+      "question": "production checkpoint がどの regime で作られたかを再現可能に記録する artifact はどれですか?",
       "options": [
-        "The final loss value, since head-only loss is always higher than full-FT loss.",
-        "The `trainable` count in `TrainReport`, which differs by orders of magnitude between regimes.",
-        "The confusion matrix, which uniquely identifies the regime.",
-        "The precision-recall-F1 triple."
+        "final loss value",
+        "TrainReport の trainable count。regime 間で桁違いに異なる",
+        "confusion matrix",
+        "precision-recall-F1 triple"
       ],
       "correct": 1,
-      "explanation": "`trainable` records the number of parameters that received gradients during training. Head-only has on the order of `hidden * num_classes`; full FT has the whole model. The number is the audit trail."
+      "explanation": "trainable は gradient を受けた parameter 数を記録するため audit trail になります。"
     }
   ]
 }

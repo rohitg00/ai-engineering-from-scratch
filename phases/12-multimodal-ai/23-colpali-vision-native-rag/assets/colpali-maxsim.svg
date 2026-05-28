@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,83 +9,83 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">ColPali — vision-native document RAG with ColBERT late interaction</text>
+  <text x="480" y="24" text-anchor="middle" class="title">ColPali — ColBERT late interactionによるvision-native文書RAG</text>
 
   <rect x="30" y="50" width="900" height="230" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">indexing: PDF -&gt; page images -&gt; patch embeddings (cached)</text>
+  <text x="480" y="72" text-anchor="middle" class="head">索引化: PDF -&gt; ページ画像 -&gt; patch 埋め込み (キャッシュ)</text>
 
   <rect x="50" y="90" width="200" height="170" class="hot"/>
-  <text x="150" y="112" text-anchor="middle" class="step">PDF pages</text>
-  <text x="150" y="130" text-anchor="middle" class="small">figures, tables,</text>
-  <text x="150" y="146" text-anchor="middle" class="small">layout, fonts</text>
-  <text x="150" y="162" text-anchor="middle" class="small">all preserved</text>
-  <text x="150" y="182" text-anchor="middle" class="step">no OCR</text>
-  <text x="150" y="202" text-anchor="middle" class="small">no text extraction</text>
-  <text x="150" y="218" text-anchor="middle" class="small">no chunking</text>
+  <text x="150" y="112" text-anchor="middle" class="step">PDFページ</text>
+  <text x="150" y="130" text-anchor="middle" class="small">図、表、</text>
+  <text x="150" y="146" text-anchor="middle" class="small">レイアウト、フォント</text>
+  <text x="150" y="162" text-anchor="middle" class="small">すべて保持</text>
+  <text x="150" y="182" text-anchor="middle" class="step">OCRなし</text>
+  <text x="150" y="202" text-anchor="middle" class="small">テキスト抽出なし</text>
+  <text x="150" y="218" text-anchor="middle" class="small">チャンク化なし</text>
 
   <path d="M 255 170 L 295 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="300" y="90" width="220" height="170" class="cool"/>
   <text x="410" y="112" text-anchor="middle" class="step">PaliGemma / Qwen-VL</text>
-  <text x="410" y="130" text-anchor="middle" class="small">vision-language encoder</text>
-  <text x="410" y="146" text-anchor="middle" class="small">each patch -&gt; D-dim vector</text>
-  <text x="410" y="162" text-anchor="middle" class="small">N_p vectors per page</text>
-  <text x="410" y="182" text-anchor="middle" class="step">storage</text>
+  <text x="410" y="130" text-anchor="middle" class="small">視覚言語エンコーダ</text>
+  <text x="410" y="146" text-anchor="middle" class="small">各patch -&gt; D次元ベクトル</text>
+  <text x="410" y="162" text-anchor="middle" class="small">ページあたりN_p ベクトル</text>
+  <text x="410" y="182" text-anchor="middle" class="step">保存量</text>
   <text x="410" y="202" text-anchor="middle" class="small">729 x 128 x 4 = 365 KB</text>
-  <text x="410" y="218" text-anchor="middle" class="small">PQ compressed ~46 KB</text>
+  <text x="410" y="218" text-anchor="middle" class="small">PQ圧縮後 ~46 KB</text>
 
   <path d="M 525 170 L 565 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="570" y="90" width="340" height="170" class="cold"/>
-  <text x="740" y="112" text-anchor="middle" class="step">vector index (all pages)</text>
-  <text x="740" y="130" text-anchor="middle" class="small">50-page report -&gt; ~2 MB PQ</text>
-  <text x="740" y="146" text-anchor="middle" class="small">1M pages -&gt; ~45 GB PQ</text>
-  <text x="740" y="162" text-anchor="middle" class="small">stays on one node</text>
-  <text x="740" y="182" text-anchor="middle" class="step">ready for MaxSim query</text>
-  <text x="740" y="202" text-anchor="middle" class="small">one table, multi-vector</text>
-  <text x="740" y="218" text-anchor="middle" class="small">per-page grouped</text>
+  <text x="740" y="112" text-anchor="middle" class="step">ベクトル インデックス (全ページ)</text>
+  <text x="740" y="130" text-anchor="middle" class="small">50ページレポート -&gt; ~2 MB PQ</text>
+  <text x="740" y="146" text-anchor="middle" class="small">100万ページ -&gt; ~45 GB PQ</text>
+  <text x="740" y="162" text-anchor="middle" class="small">1 ノードに収まる</text>
+  <text x="740" y="182" text-anchor="middle" class="step">MaxSim クエリに準備済み</text>
+  <text x="740" y="202" text-anchor="middle" class="small">1表にmulti-ベクトル</text>
+  <text x="740" y="218" text-anchor="middle" class="small">ページごとにグループ化</text>
 
   <rect x="30" y="300" width="900" height="210" class="box"/>
-  <text x="480" y="322" text-anchor="middle" class="head">retrieval: MaxSim over query tokens and page patches</text>
+  <text x="480" y="322" text-anchor="middle" class="head">検索: クエリトークンとページpatch上のMaxSim</text>
 
   <rect x="60" y="340" width="220" height="160" class="reg"/>
-  <text x="170" y="362" text-anchor="middle" class="step">query tokens</text>
+  <text x="170" y="362" text-anchor="middle" class="step">クエリトークン</text>
   <text x="170" y="382" text-anchor="middle" class="small">"Q3 revenue growth"</text>
-  <text x="170" y="398" text-anchor="middle" class="small">4-6 token embeddings</text>
-  <text x="170" y="416" text-anchor="middle" class="small">same encoder as index</text>
-  <text x="170" y="442" text-anchor="middle" class="step">compute at query time</text>
-  <text x="170" y="462" text-anchor="middle" class="small">batch with kv cache</text>
-  <text x="170" y="482" text-anchor="middle" class="caption">~10 ms per query</text>
+  <text x="170" y="398" text-anchor="middle" class="small">4-6個のトークン埋め込み</text>
+  <text x="170" y="416" text-anchor="middle" class="small">インデックスと同じエンコーダ</text>
+  <text x="170" y="442" text-anchor="middle" class="step">クエリ時に計算</text>
+  <text x="170" y="462" text-anchor="middle" class="small">kv キャッシュでバッチ</text>
+  <text x="170" y="482" text-anchor="middle" class="caption">クエリあたり~10 ms</text>
 
   <path d="M 285 420 L 325 420" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="330" y="340" width="290" height="160" class="hot"/>
-  <text x="475" y="362" text-anchor="middle" class="step">MaxSim = sum over query tokens</text>
-  <text x="475" y="378" text-anchor="middle" class="step">of max over patches</text>
-  <text x="475" y="398" text-anchor="middle" class="small">each query token "picks" its best patch</text>
-  <text x="475" y="414" text-anchor="middle" class="small">selective: irrelevant patches ignored</text>
-  <text x="475" y="430" text-anchor="middle" class="small">doc score = sum of those maxes</text>
-  <text x="475" y="452" text-anchor="middle" class="step">beats bi-encoder recall</text>
-  <text x="475" y="472" text-anchor="middle" class="small">catches chart data, table cells,</text>
-  <text x="475" y="488" text-anchor="middle" class="small">figure captions as patches</text>
+  <text x="475" y="362" text-anchor="middle" class="step">MaxSim = クエリトークン上の合計</text>
+  <text x="475" y="378" text-anchor="middle" class="step">patch最大値の合計</text>
+  <text x="475" y="398" text-anchor="middle" class="small">各クエリトークンが最良patchを選ぶ</text>
+  <text x="475" y="414" text-anchor="middle" class="small">選択的: 無関係patchは無視</text>
+  <text x="475" y="430" text-anchor="middle" class="small">文書スコア = max値のsum</text>
+  <text x="475" y="452" text-anchor="middle" class="step">bi-encoder 再現率を上回る</text>
+  <text x="475" y="472" text-anchor="middle" class="small">chart データ、表セル、</text>
+  <text x="475" y="488" text-anchor="middle" class="small">図キャプションをpatchで拾う</text>
 
   <path d="M 625 420 L 665 420" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="670" y="340" width="240" height="160" class="cool"/>
-  <text x="790" y="362" text-anchor="middle" class="step">top-k pages + VLM answer</text>
-  <text x="790" y="382" text-anchor="middle" class="small">send top-3 page images</text>
-  <text x="790" y="398" text-anchor="middle" class="small">+ original query</text>
-  <text x="790" y="414" text-anchor="middle" class="small">to Qwen2.5-VL or Claude</text>
-  <text x="790" y="434" text-anchor="middle" class="step">benchmarks</text>
+  <text x="790" y="362" text-anchor="middle" class="step">top-k ページ + VLM回答</text>
+  <text x="790" y="382" text-anchor="middle" class="small">top-3 ページ画像を送る</text>
+  <text x="790" y="398" text-anchor="middle" class="small">+ 元クエリ</text>
+  <text x="790" y="414" text-anchor="middle" class="small">Qwen2.5-VLまたはClaudeへ</text>
+  <text x="790" y="434" text-anchor="middle" class="step">ベンチマーク</text>
   <text x="790" y="454" text-anchor="middle" class="small">ViDoRe nDCG@5: ColPali ~80</text>
-  <text x="790" y="470" text-anchor="middle" class="small">text-RAG ~55</text>
-  <text x="790" y="486" text-anchor="middle" class="small">end-to-end +20-40 pts</text>
+  <text x="790" y="470" text-anchor="middle" class="small">テキストRAG ~55</text>
+  <text x="790" y="486" text-anchor="middle" class="small">end-to-end +20-40点</text>
 </svg>

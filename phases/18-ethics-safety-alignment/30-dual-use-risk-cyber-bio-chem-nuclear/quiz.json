@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How did the 2024-2025 bio-uplift narrative evolve?",
+      "question": "2024-2025年の bio-uplift narrative はどのように変化しましたか？",
       "options": [
-        "It stayed unchanged across 2024-2025",
-        "From 'no uplift' to 'mild uplift'",
-        "From 'severe uplift' to 'no measurable uplift'",
-        "From 'mild uplift' (2024) to 'on the cusp of meaningfully helping novices create known biological threats' (April 2025) to '2.53x uplift insufficient to rule out ASL-3' (Anthropic 2025)"
+        "2024-2025年を通じて変化しなかった",
+        "'no uplift' から 'mild uplift' へ変わった",
+        "'severe uplift' から 'no measurable uplift' へ変わった",
+        "'mild uplift' (2024) から 'on the cusp of meaningfully helping novices create known biological threats' (2025年4月)、さらに '2.53x uplift insufficient to rule out ASL-3' (Anthropic 2025) へ変わった"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What did Anthropic's November 2025 cyber threat report find?",
+      "question": "Anthropic の 2025年11月 cyber threat report は何を発見しましたか？",
       "options": [
-        "Chinese-linked state actors used Claude's agentic coding tool to automate 80-90% of a cyberattack campaign, with human intervention only in 4-6 steps",
-        "Frontier models refused all cyber tasks",
-        "Cyberattacks remained entirely manual",
-        "Open-source models exceeded frontier capability"
+        "Chinese-linked state actors が Claude の agentic coding tool を使い、cyberattack campaign の 80-90% を automate し、human intervention は 4-6 steps のみだった",
+        "frontier models はすべての cyber tasks を refused した",
+        "cyberattacks は完全に manual のままだった",
+        "open-source models が frontier capability を上回った"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How are vision-enabled frontier models eroding the chem/bio execution gap?",
+      "question": "vision-enabled frontier models は chem/bio execution gap をどのように erode していますか？",
       "options": [
-        "By replacing all lab equipment with virtual simulators",
-        "By generating fake protocols",
-        "By observing wet-lab video and providing real-time protocol correction; OpenAI's December 2025 demonstration showed GPT-5 iterating on wet-lab experiments at 79x efficiency improvement via AI-driven protocol optimization",
-        "By increasing context length only"
+        "すべての lab equipment を virtual simulators に置き換えることで",
+        "fake protocols を生成することで",
+        "wet-lab video を観察して real-time protocol correction を提供することで。OpenAI の 2025年12月 demonstration では GPT-5 が wet-lab experiments を iterate し、AI-driven protocol optimization により 79x efficiency improvement を示した",
+        "context length を増やすだけで"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why has nuclear-domain uplift remained bounded relative to bio/chem/cyber?",
+      "question": "nuclear-domain uplift が bio/chem/cyber と比べて bounded のままである理由は何ですか？",
       "options": [
-        "Nuclear is the easiest domain to attack with AI",
-        "The threat model is dominated by fissile-material acquisition (a non-informational, procurement-and-equipment bottleneck), so AI uplift on the information layer provides limited novice uplift in practice",
-        "All nuclear information has been removed from training data",
-        "Frontier models refuse to discuss physics"
+        "nuclear は AI で攻撃するのが最も簡単な domain だから",
+        "threat model は fissile-material acquisition (non-informational, procurement-and-equipment bottleneck) に支配され、information layer での AI uplift は実務上 limited novice uplift しか与えないから",
+        "すべての nuclear information が training data から削除されたから",
+        "frontier models が physics の議論を拒否するから"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the novice-relative vs expert-absolute asymmetry imply for safety cases?",
+      "question": "novice-relative vs expert-absolute asymmetry は safety cases に何を意味しますか？",
       "options": [
-        "Both are perfectly addressed by RLHF",
-        "Addressing only novice uplift (input filters, refusals, uncertainty) is insufficient for expert-absolute control; additional measures like elicitation-hardening, capability unlearning, and control protocols are needed",
-        "Only novice uplift matters",
-        "Expert-absolute capability is automatically zero"
+        "両方とも RLHF で完全に対処できる",
+        "novice uplift だけへの対処 (input filters, refusals, uncertainty) は expert-absolute control には不十分。elicitation-hardening、capability unlearning、control protocols などの追加 measures が必要",
+        "novice uplift だけが重要である",
+        "expert-absolute capability は自動的にゼロである"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is OpenAI's 'trusted access' pilot in the cyber dual-use context?",
+      "question": "cyber dual-use context における OpenAI の 'trusted access' pilot とは何ですか？",
       "options": [
-        "A patch for CVE-2025-32711",
-        "An open-source release of GPT-5",
-        "Closing all API access",
-        "Granting vetted security organisations (incident-response firms, government) capability access for defensive dual-use work, creating an access asymmetry that favours defenders if it scales"
+        "CVE-2025-32711 の patch",
+        "GPT-5 の open-source release",
+        "すべての API access を閉じること",
+        "vetted security organisations (incident-response firms, government) に defensive dual-use work のための capability access を付与し、scale すれば defenders に有利な access asymmetry を作ること"
       ],
       "correct": 3,
       "explanation": ""

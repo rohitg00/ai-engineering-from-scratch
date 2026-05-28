@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,18 +9,18 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">voice pipeline — target p50 first-audio-out &lt; 800ms</text>
+  <text x="480" y="24" text-anchor="middle" class="title">voice pipeline - target p50 first-audio-out &lt; 800ms</text>
 
   <rect x="40" y="50" width="880" height="90" class="box"/>
-  <text x="480" y="70" text-anchor="middle" class="head">streaming stages (all pipelined)</text>
+  <text x="480" y="70" text-anchor="middle" class="head">streaming stages (全てpipelined)</text>
   <rect x="60" y="84" width="150" height="48" class="cool"/>
   <text x="135" y="104" text-anchor="middle" class="step">audio in (WebRTC)</text>
   <text x="135" y="122" text-anchor="middle" class="small">20ms PCM frames</text>
@@ -41,32 +41,32 @@
   <text x="480" y="180" text-anchor="middle" class="head">latency budget (800ms total)</text>
   <rect x="60" y="200" width="830" height="40" class="cool"/>
   <text x="80" y="220" class="step">ASR partial + VAD silence detect: ~320ms</text>
-  <text x="80" y="236" class="small">Silero runs per 20ms frame; turn-detector reads partial when silence &gt;= 500ms</text>
+  <text x="80" y="236" class="small">Sileroは20ms frameごとにrun。silence &gt;= 500msでturn-detectorがpartialを読む</text>
   <rect x="60" y="246" width="830" height="40" class="hot"/>
   <text x="80" y="266" class="step">turn completion decision: 40ms</text>
-  <text x="80" y="282" class="small">completion score from partial transcript, threshold 0.6; else keep listening</text>
+  <text x="80" y="282" class="small">partial transcriptからcompletion score、threshold 0.6。それ以外はlisten継続</text>
   <rect x="60" y="292" width="830" height="40" class="cold"/>
   <text x="80" y="312" class="step">LLM time-to-first-token: 140ms</text>
-  <text x="80" y="328" class="small">streaming completion; 1M context supported; short system prompt cached</text>
+  <text x="80" y="328" class="small">streaming completion。1M context対応。short system promptはcache</text>
   <rect x="60" y="338" width="830" height="40" class="dsk"/>
 
   <rect x="40" y="360" width="440" height="180" class="box"/>
   <text x="260" y="382" text-anchor="middle" class="head">barge-in arbitration</text>
   <rect x="60" y="394" width="400" height="36" class="hot"/>
   <text x="260" y="416" text-anchor="middle" class="step">VAD speech-on during TTS -&gt; cancel</text>
-  <text x="260" y="440" text-anchor="middle" class="small">drop remaining LLM output, clear TTS buffer</text>
-  <text x="260" y="456" text-anchor="middle" class="small">re-arm ASR for new turn</text>
+  <text x="260" y="440" text-anchor="middle" class="small">残りのLLM outputをdropし、TTS bufferをclear</text>
+  <text x="260" y="456" text-anchor="middle" class="small">new turn用にASRをre-arm</text>
   <text x="260" y="480" text-anchor="middle" class="small">publish tts_canceled span (OpenTelemetry)</text>
   <text x="260" y="504" text-anchor="middle" class="small">false-cutoff rate target &lt; 3%</text>
-  <text x="260" y="524" text-anchor="middle" class="caption">Hamming VAD benchmark measures this</text>
+  <text x="260" y="524" text-anchor="middle" class="caption">Hamming VAD benchmarkで測る</text>
 
   <rect x="500" y="360" width="420" height="180" class="box"/>
   <text x="710" y="382" text-anchor="middle" class="head">tool side channel</text>
   <rect x="520" y="394" width="380" height="36" class="cold"/>
   <text x="710" y="416" text-anchor="middle" class="step">mid-conversation call (weather, calendar)</text>
-  <text x="710" y="440" text-anchor="middle" class="small">runs concurrent to LLM stream</text>
-  <text x="710" y="456" text-anchor="middle" class="small">if &gt; 300ms: emit filler &quot;one second, let me check&quot;</text>
-  <text x="710" y="480" text-anchor="middle" class="small">resume LLM on tool return, splice result into prompt</text>
+  <text x="710" y="440" text-anchor="middle" class="small">LLM streamとconcurrentにrun</text>
+  <text x="710" y="456" text-anchor="middle" class="small">&gt; 300msなら filler &quot;one second, let me check&quot;</text>
+  <text x="710" y="480" text-anchor="middle" class="small">tool returnでLLMをresumeし、resultをpromptへsplice</text>
   <text x="710" y="504" text-anchor="middle" class="small">FastMCP transport, per-tool timeout</text>
-  <text x="710" y="524" text-anchor="middle" class="caption">never stall the audio stream</text>
+  <text x="710" y="524" text-anchor="middle" class="caption">audio streamをstallさせない</text>
 </svg>

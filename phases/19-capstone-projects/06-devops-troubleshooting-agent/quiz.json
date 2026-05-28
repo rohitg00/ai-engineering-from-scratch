@@ -1,87 +1,87 @@
 {
   "lesson": "06-devops-troubleshooting-agent",
-  "title": "Capstone 06 — DevOps Troubleshooting Agent for Kubernetes",
+  "title": "Capstone 06 — Kubernetes 向け DevOps Troubleshooting Agent",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the default permission posture for the troubleshooting agent's RBAC surface?",
+      "question": "troubleshooting agent の RBAC surface における default permission posture は何ですか？",
       "options": [
-        "Read-only by default, with destructive verbs gated behind a separate server and human approval",
-        "Namespace-admin in the affected namespace only",
-        "Equivalent to the on-call engineer",
-        "Cluster-admin so it can self-heal"
+        "default は read-only で、destructive verbs は別 server と human approval の背後で gate する",
+        "affected namespace 内だけの namespace-admin",
+        "on-call engineer と同等",
+        "self-heal できるよう cluster-admin"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What is the knowledge graph the agent walks during root cause analysis?",
+      "question": "root cause analysis 中に agent がたどる knowledge graph とは何ですか？",
       "options": [
-        "Nodes are K8s objects plus telemetry sources; edges encode ownership, scheduling, and observation",
-        "A flat list of recently restarted pods",
-        "Prometheus metric names organized by team",
-        "A graph of GitHub commits and PR reviews"
+        "node は K8s object と telemetry source、edge は ownership、scheduling、observation を表す",
+        "最近 restart された pod の flat list",
+        "team ごとに整理された Prometheus metric name",
+        "GitHub commit と PR review の graph"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How are root-cause hypotheses ranked for the Slack brief?",
+      "question": "Slack brief 用の root-cause hypothesis はどのように rank されますか？",
       "options": [
-        "By an evidence score combining recency, specificity, graph-path length, and citation count",
-        "By model log-probability alone",
-        "By alphabetic alert name",
-        "By the order they were generated"
+        "recency、specificity、graph-path length、citation count を組み合わせた evidence score による",
+        "model log-probability のみによる",
+        "alert name の alphabetic order による",
+        "生成された順序による"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the audit log record commands the agent considered as well as those executed?",
+      "question": "audit log が executed command だけでなく agent が considered した command も記録する理由は何ですか？",
       "options": [
-        "Reviewers can catch near-misses where the agent almost ran a destructive command",
-        "ArgoCD only accepts considered commands",
-        "The Slack API needs both for delivery",
-        "Replay attacks require both lists"
+        "agent が destructive command をほぼ実行しかけた near-miss を reviewer が検出できるため",
+        "ArgoCD は considered command だけを受け付けるため",
+        "Slack API の配信に両方が必要なため",
+        "replay attack には両方の list が必要なため"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which mechanism prevents the agent from rolling back unilaterally on a bad deploy?",
+      "question": "bad deploy に対して agent が unilateral に rollback するのを防ぐ mechanism はどれですか？",
       "options": [
-        "Destructive tools live on a separate MCP server behind an approval token from a Slack card",
-        "A second LLM-judge votes on the rollback",
-        "Branch protection on the GitOps repo",
-        "PagerDuty automatically pauses the deployment"
+        "destructive tools は Slack card からの approval token の背後にある別 MCP server に置かれる",
+        "2つ目の LLM-judge が rollback に投票する",
+        "GitOps repo の branch protection",
+        "PagerDuty が自動的に deployment を pause する"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the p50 time-to-hypothesis target the rubric measures?",
+      "question": "rubric が測る p50 time-to-hypothesis target は何ですか？",
       "options": [
-        "Under the next on-call shift",
-        "Under 1 hour",
-        "Under 5 minutes from alert to Slack brief",
-        "Under 30 seconds"
+        "次の on-call shift まで",
+        "1時間未満",
+        "alert から Slack brief まで5分未満",
+        "30秒未満"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How big is the synthetic incident suite used to score RCA accuracy?",
+      "question": "RCA accuracy の採点に使う synthetic incident suite の規模はどれくらいですか？",
       "options": [
-        "1 scripted demo incident",
+        "scripted demo incident 1件",
         "5 scenarios",
-        "100 randomly sampled production alerts",
-        "20 scenarios covering OOMKill, DNS flap, HPA thrash, PVC fill, and more"
+        "production alert から random sample した100件",
+        "OOMKill、DNS flap、HPA thrash、PVC fill などを含む20 scenarios"
       ],
       "correct": 3,
       "explanation": ""

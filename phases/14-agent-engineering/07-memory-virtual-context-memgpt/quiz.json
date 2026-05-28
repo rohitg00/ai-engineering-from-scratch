@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What OS analogy does MemGPT build on?",
+      "question": "MemGPT はどの OS analog を土台にしていますか?",
       "options": [
         "Processes and threads",
-        "Virtual memory: main context as RAM, external store as disk, memory tools as page in and out",
+        "Virtual memory: main context を RAM、external store を disk、memory tools を page in/out とみなす",
         "Network sockets",
         "File descriptors"
       ],
       "correct": 1,
-      "explanation": "MemGPT maps prompt to RAM, external store to disk, and memory tools to page-fault-style transfers."
+      "explanation": "MemGPT は prompt を RAM、external store を disk、memory tools を page-fault 風の転送に対応づけます。"
     },
     {
       "stage": "pre",
-      "question": "Why do bigger context windows not fully solve memory?",
+      "question": "Context window を大きくしても memory 問題を完全には解決できないのはなぜですか?",
       "options": [
-        "Providers cap them at 4k tokens",
-        "Overflow, dilution of attention, and lack of cross-session persistence still bite even with 128k windows",
-        "Long context costs nothing",
-        "The model refuses long input"
+        "Provider が 4k tokens に制限しているから",
+        "128k window でも overflow、attention dilution、cross-session persistence の欠如が残るから",
+        "Long context は一切 cost がかからないから",
+        "Model が long input を拒否するから"
       ],
       "correct": 1,
-      "explanation": "Mem0 measured 128k-window baselines still missing facts a 4k agent with external memory catches; overflow, dilution, and persistence remain."
+      "explanation": "Mem0 は、external memory を持つ 4k agent が拾える fact を 128k-window baseline が取り逃がすことを測定しました。Overflow、dilution、persistence は残ります。"
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of MemGPT's canonical memory tools?",
+      "question": "次のうち MemGPT の canonical memory tools ではないものはどれですか?",
       "options": [
         "core_memory_append",
         "archival_memory_search",
@@ -36,23 +36,23 @@
         "gradient_memory_update"
       ],
       "correct": 3,
-      "explanation": "There is no gradient memory tool; the surface is core/archival/conversation operations."
+      "explanation": "Gradient memory tool は存在しません。Surface は core / archival / conversation operations です。"
     },
     {
       "stage": "check",
-      "question": "What does the interrupt pattern do in MemGPT?",
+      "question": "MemGPT の interrupt pattern は何をしますか?",
       "options": [
-        "It halts the entire agent run on any error",
-        "Mid-conversation the agent invokes a memory tool, the runtime executes it, and the result splices into the next turn",
-        "It bypasses the context window entirely",
-        "It triggers a model retrain"
+        "任意の error で agent run 全体を停止する",
+        "会話途中で agent が memory tool を呼び、runtime が実行し、結果を次 turn に差し込む",
+        "Context window を完全に迂回する",
+        "Model retrain を trigger する"
       ],
       "correct": 1,
-      "explanation": "Memory-as-interrupt: invoke memory tool, runtime fetches, result returns as a new observation on the next turn (like a Unix read())."
+      "explanation": "Memory-as-interrupt では、memory tool を呼び、runtime が fetch し、その結果が次 turn の新しい observation として返ります。Unix read() に似ています。"
     },
     {
       "stage": "check",
-      "question": "Which production system did MemGPT evolve into in 2024?",
+      "question": "MemGPT は 2024 年にどの production system へ発展しましたか?",
       "options": [
         "Mem0",
         "Letta",
@@ -60,31 +60,31 @@
         "Pinecone"
       ],
       "correct": 1,
-      "explanation": "MemGPT became Letta in September 2024; the research repo cpacker/MemGPT still exists as the origin."
+      "explanation": "MemGPT は 2024 年 9 月に Letta になりました。Research repo cpacker/MemGPT は origin として残っています。"
     },
     {
       "stage": "post",
-      "question": "What is memory poisoning in this context?",
+      "question": "この文脈での memory poisoning とは何ですか?",
       "options": [
-        "A bug that corrupts vector indices",
-        "An attacker's content gets stored as a memory note and is re-ingested on future recalls",
-        "Reading from disk when RAM is available",
+        "Vector index を破損させる bug",
+        "攻撃者の content が memory note として保存され、将来の recall で再摂取されること",
+        "RAM が使えるのに disk から読むこと",
         "Embedding model version drift"
       ],
       "correct": 1,
-      "explanation": "External memory is retrieved text; if attacker-reachable content lands in a memory note the agent re-ingests it next session."
+      "explanation": "External memory は retrieved text です。Attacker-reachable content が memory note に入ると、次 session で agent が再摂取します。"
     },
     {
       "stage": "post",
-      "question": "Why does the lesson say production memory systems are MemGPT variants?",
+      "question": "この lesson が production memory systems を MemGPT variants と呼ぶ理由は何ですか?",
       "options": [
-        "They use the same vector DB",
-        "Letta, Mem0, Assistants threads, and Claude Agent SDK all run the two-tier (or more) paged-memory pattern; differences are operational shape",
-        "MemGPT owns the trademark",
-        "They share weights"
+        "同じ vector DB を使っているから",
+        "Letta、Mem0、Assistants threads、Claude Agent SDK はいずれも 2-tier 以上の paged-memory pattern を走らせており、違いは operational shape だから",
+        "MemGPT が trademark を持っているから",
+        "Weights を共有しているから"
       ],
       "correct": 1,
-      "explanation": "Pick by operational shape, not pattern; all share the MemGPT page in/out skeleton."
+      "explanation": "Pattern ではなく operational shape で選びます。どれも MemGPT の page in/out skeleton を共有しています。"
     }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: skill-physical-plausibility-checks
-description: Automated checks for object permanence, gravity, and continuity on any generated video before shipping
+description: ship 前に任意の generated video に対して object permanence、gravity、continuity の automated checks を行う
 version: 1.0.0
 phase: 4
 lesson: 28
@@ -9,40 +9,40 @@ tags: [video-generation, quality, physics, evaluation]
 
 # Physical Plausibility Checks
 
-Production deployments of generated video need automated guardrails. Human review does not scale; physics checks catch the classic failure modes.
+generated video の production deployment には automated guardrails が必要である。human review は scale しない。physics checks は古典的な failure modes を捕捉する。
 
-## When to use
+## 使用する場面
 
-- Any product that generates video from text or image prompts.
-- Automating QA on a video generation API endpoint.
-- Monitoring a video model's quality drift after fine-tuning or a base-model update.
+- text または image prompts から video を生成する任意の product。
+- video generation API endpoint の QA を自動化するとき。
+- fine-tuning または base-model update 後に video model の quality drift を monitor するとき。
 
-## Inputs
+## 入力
 
-- `video`: a tensor `(T, H, W, 3)` or a path to an mp4.
-- Optional reference info: expected number of objects, initial scene description.
+- `video`: tensor `(T, H, W, 3)` または mp4 への path。
+- optional reference info: expected number of objects、initial scene description。
 
-## Checks
+## checks
 
 ### 1. Object permanence
-Track every detection across frames with SAM 3.1 Object Multiplex. Flag when a stable track disappears for <=3 frames and reappears — the model lost the object temporarily. Hard fail when an object disappears near the frame centre (not at an edge); soft fail at edges.
+SAM 3.1 Object Multiplex で detection を frames across に track する。stable track が <=3 frames 消えて再出現したら flag する。model が一時的に object を失っている。frame centre 付近で object が消える場合は hard fail、edge では soft fail。
 
 ### 2. Motion smoothness
-Optical flow between consecutive frames should be mostly continuous. Sudden per-pixel flow spikes indicate teleportation. Compute flow with RAFT; flag frames where the 99th-percentile flow magnitude exceeds the median by a factor > 10.
+consecutive frames 間の optical flow は概ね continuous であるべき。sudden per-pixel flow spikes は teleportation を示す。RAFT で flow を計算し、99th-percentile flow magnitude が median の 10 倍を超える frames を flag する。
 
 ### 3. Gravity / support
-For objects detected as solid (food, balls, tools), check that their vertical position is non-increasing in the absence of a lifting action. Flag upward drift unless a "grasping hand" is detected near the object.
+solid として検出された objects (food、balls、tools) について、lifting action がない場合は vertical position が non-increasing であることを確認する。object 付近に "grasping hand" が検出されない限り、upward drift を flag する。
 
 ### 4. Identity consistency
-For people or characters, use a face-recognition embedding across frames. Cosine similarity should stay > 0.8 across 5-frame windows for a persistent identity. Below threshold means the character morphed.
+people または characters には、frames across で face-recognition embedding を使う。persistent identity では 5-frame windows にわたり cosine similarity が > 0.8 を保つべきである。threshold 未満なら character が morph したことを意味する。
 
 ### 5. Hands and limbs
-Run a pose estimator (Lesson 21). Flag frames where a hand has > 5 or < 4 visible fingers; where an arm length doubles between frames; where limbs intersect the body through a surface.
+pose estimator (Lesson 21) を実行する。hand に visible fingers が > 5 または < 4 しかない frames、arm length が frames 間で 2 倍になる frames、limbs が surface を通って body と交差する frames を flag する。
 
 ### 6. Text rendering (if prompt asked for text)
-If the user prompt included a string in quotes, OCR the generated frames and compute CER against the requested string. Flag > 20% CER.
+user prompt に quotes 内の string が含まれる場合、generated frames を OCR し、requested string に対する CER を計算する。> 20% CER を flag する。
 
-## Report
+## report
 
 ```
 [plausibility]
@@ -61,10 +61,10 @@ If the user prompt included a string in quotes, OCR the generated frames and com
   frame ranges where each failure occurred
 ```
 
-## Rules
+## ルール
 
-- Do not hard-block on any single check; aggregate scores and hold the video for review when total anomalies exceed a threshold.
-- Weight identity drift and permanence violations highest — users notice them first.
-- Log per-check failure rates over time; a rising trend usually means the base model was updated or the prompt distribution shifted.
-- Never delete the flagged video; keep it for model debugging and post-mortems.
-- For sensitive content (people, children, public figures), require human review of every video regardless of score.
+- single check だけで hard-block しない。scores を aggregate し、total anomalies が threshold を超えた場合に video を review に hold する。
+- identity drift と permanence violations の weight を最も高くする。users はこれらに最初に気づく。
+- per-check failure rates を時系列で log する。rising trend は通常、base model update または prompt distribution shift を意味する。
+- flagged video を削除しない。model debugging と post-mortems のために保持する。
+- sensitive content (people、children、public figures) では、score にかかわらずすべての video に human review を要求する。

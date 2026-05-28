@@ -1,16 +1,8 @@
-"""Training loop and evaluation harness for the lesson 35 GPT model.
+"""lesson 35 GPT model 用の training loop と evaluation harness。
 
-Implements: batch construction with input/target shift by one, cross entropy
-loss in `calc_loss_batch`, held-out evaluation in `evaluate_model`, a qualitative
-generation probe in `generate_and_print_sample`, AdamW with a decay/no-decay
-split, a linear-warmup-plus-cosine learning rate schedule, gradient norm
-clipping, and a JSONL log of per step loss in `outputs/losses.jsonl`.
+input/target の shift、`calc_loss_batch` の cross entropy、held-out evaluation、sample generation、AdamW decay split、warmup + cosine schedule、JSONL logging を実装します。
 
-The demo trains a tiny model on synthetic byte-level tokens for a small number
-of steps, writes the JSONL log, and prints eval losses and generated samples
-at the probe points. End to end runs in well under a minute on CPU.
-
-Run: python3 code/main.py
+Run: Python3 code/main.py
 """
 
 from __future__ import annotations
@@ -33,7 +25,7 @@ LOG_PATH = OUTPUTS / "losses.jsonl"
 
 @dataclass
 class TrainConfig:
-    """Training and evaluation hyperparameters for the demo run."""
+    """demo run 用の training/evaluation hyperparameters。"""
 
     batch_size: int = 4
     context_length: int = 32
@@ -184,7 +176,7 @@ def make_batches(
     context_length: int,
     seed: int = 0,
 ) -> Iterator[tuple[torch.Tensor, torch.Tensor]]:
-    """Yield (input, target) batches where target is input shifted by one position.
+    """target が input を1 position ずらした (input, target) batches を生成します。
 
     Sampling is uniform random over valid start positions. With a fixed seed the
     sequence of batches is reproducible across runs.
@@ -211,7 +203,7 @@ def calc_loss_batch(
     inputs: torch.Tensor,
     targets: torch.Tensor,
 ) -> torch.Tensor:
-    """Forward, flatten across batch and time, return scalar cross entropy."""
+    """forward し、batch と time を flatten して scalar cross entropy を返します。"""
     logits = model(inputs)
     return F.cross_entropy(
         logits.reshape(-1, logits.size(-1)),
@@ -225,7 +217,7 @@ def evaluate_model(
     val_loader: Iterator[tuple[torch.Tensor, torch.Tensor]],
     max_batches: int,
 ) -> float:
-    """Mean cross entropy over `max_batches` validation batches; no grad, no dropout."""
+    """`max_batches` 個の validation batches に対する mean cross entropy。gradient と dropout は使いません。"""
     was_training = model.training
     model.eval()
     total = 0.0
@@ -250,7 +242,7 @@ def generate_and_print_sample(
     top_k: int = 40,
     seed: int = 0,
 ) -> list[int]:
-    """Print a short generated continuation from a fixed prompt and return the tokens."""
+    """固定 prompt から短い continuation を生成して表示し、tokens を返します。"""
     sample_gen = torch.Generator(device=prompt.device).manual_seed(seed)
     was_training = model.training
     model.eval()
@@ -277,7 +269,7 @@ def generate_and_print_sample(
 
 
 def build_param_groups(model: nn.Module, weight_decay: float) -> list[dict]:
-    """Split parameters: matrix-shaped tensors get decay; scale/bias/embedding biases do not."""
+    """parameters を分けます: matrix-shaped tensors は decay、scale/bias/embedding bias は no decay。"""
     decay: list[nn.Parameter] = []
     no_decay: list[nn.Parameter] = []
     for name, param in model.named_parameters():
@@ -300,7 +292,7 @@ def cosine_with_warmup(
     max_lr: float,
     min_lr: float,
 ) -> float:
-    """Linear warmup then cosine decay to min_lr over the remaining steps."""
+    """linear warmup の後、残り steps で min_lr へ cosine decay。"""
     if step < warmup_steps:
         return max_lr * (step + 1) / max(warmup_steps, 1)
     progress = (step - warmup_steps) / max(total_steps - warmup_steps, 1)
@@ -317,7 +309,7 @@ def train(
     prompt: torch.Tensor,
     log_path: Path = LOG_PATH,
 ) -> list[dict]:
-    """Run the training loop, persist losses.jsonl, return the in-memory log."""
+    """training loop を実行し losses.jsonl を保存して in-memory log を返します。"""
     torch.manual_seed(cfg.seed)
     optimizer = torch.optim.AdamW(
         build_param_groups(model, cfg.weight_decay),
@@ -367,10 +359,9 @@ def train(
 
 
 def _synthetic_byte_tokens(length: int, vocab_size: int, seed: int) -> torch.Tensor:
-    """Deterministic synthetic tokens.
+    """deterministic な synthetic tokens。
 
-    Bytes drawn from a small repeating pattern so the model has structure to learn
-    in a handful of steps; the eval loss should drop visibly during the demo.
+    小さな繰り返し pattern から bytes を作るため、model は数 step で学べる構造を持ちます。デモ中に eval loss が目に見えて下がるはずです。
     """
     rng = torch.Generator().manual_seed(seed)
     base = torch.randint(0, vocab_size, (32,), generator=rng)
@@ -404,20 +395,20 @@ def demo() -> None:
     model = GPTModel(mcfg)
     prompt = torch.tensor([[7, 11, 13, 17]], dtype=torch.long)
 
-    print("\nTraining run:")
+    print("\ntraining run:")
     records = train(model, train_tokens, val_tokens, cfg, prompt)
 
-    print("\nFinal log records (last 3):")
+    print("\n最後の log records（last 3）:")
     for record in records[-3:]:
         print(" ", record)
-    print(f"\nWrote losses to {LOG_PATH}")
+    print(f"\nlosses を書き込みました: {LOG_PATH}")
 
     first_loss = records[0]["train_loss"]
     last_loss = records[-1]["train_loss"]
-    print(f"First step train_loss  : {first_loss:.4f}")
-    print(f"Last step train_loss   : {last_loss:.4f}")
-    assert last_loss < first_loss, "training loss should decrease across the demo run"
-    print("Training loop check passed.")
+    print(f"first step train_loss   : {first_loss:.4f}")
+    print(f"last step train_loss    : {last_loss:.4f}")
+    assert last_loss < first_loss, "demo run 中に training loss は下がる必要があります"
+    print("training loop check passed。")
 
 
 if __name__ == "__main__":

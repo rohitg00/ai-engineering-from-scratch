@@ -1,12 +1,12 @@
-"""Lay down the three-file minimal agent workbench and run a single turn.
+"""3 file の minimal agent workbench を配置し、single turn を実行する。
 
-Files written:
-  workdir/AGENTS.md         short router into state + board + deeper docs
+書き込む files:
+  workdir/AGENTS.md         state + board + deeper docs への短い router
   workdir/agent_state.json  active task, touched files, blockers, next action
-  workdir/task_board.json   queue of tasks with status + acceptance
+  workdir/task_board.json   status + acceptance を持つ tasks queue
 
 Run: python3 code/main.py
-Re-run to see the second turn pick up where the first stopped.
+再実行すると、second turn が first turn の停止地点から再開する様子を確認できる。
 """
 
 from __future__ import annotations
@@ -20,15 +20,15 @@ ROOT = Path(__file__).parent / "workdir"
 
 AGENTS_MD = """# AGENTS.md
 
-This repo runs with a workbench. Read these before acting:
+この repo は workbench とともに動く。acting 前に以下を読む:
 
-1. `agent_state.json` — where the last session stopped.
-2. `task_board.json` — what is in flight, what is next.
-3. `docs/agent-rules.md` — startup, scope, definition of done (load on demand).
+1. `agent_state.json` — last session が停止した場所。
+2. `task_board.json` — in flight の work と次の work。
+3. `docs/agent-rules.md` — startup, scope, definition of done (必要時に load)。
 
-Definition of done: the task referenced by `agent_state.active_task_id` has
-`status == "done"` on `task_board.json` and the verification command listed in
-its `acceptance` has exited 0.
+Definition of done: `agent_state.active_task_id` が参照する task が
+`task_board.json` で `status == "done"` になり、`acceptance` に listed された
+verification command が exit 0 で終わっていること。
 
 Verification command: `python3 -m pytest -x`
 """.lstrip()
@@ -61,15 +61,15 @@ def write_initial(state_path: Path, board_path: Path, agents_path: Path) -> None
         board = [
             Task(
                 id="T-001",
-                goal="add input validation to /signup",
+                goal="/signup に input validation を追加する",
                 owner="builder",
                 acceptance=["pytest test_app.py::test_signup_rejects_short_password"],
             ),
             Task(
                 id="T-002",
-                goal="document the new /signup contract",
+                goal="新しい /signup contract を document する",
                 owner="builder",
-                acceptance=["docs/api.md mentions /signup constraints"],
+                acceptance=["docs/api.md が /signup constraints に言及している"],
             ),
         ]
         board_path.write_text(json.dumps([asdict(t) for t in board], indent=2) + "\n")
@@ -96,32 +96,32 @@ def run_one_turn(state: AgentState, board: list[Task]) -> tuple[AgentState, list
     if state.active_task_id is None:
         nxt = next((t for t in board if t.status == "todo"), None)
         if nxt is None:
-            state.next_action = "no work on the board, idle"
+            state.next_action = "board に work がないため idle"
             return state, board
         nxt.status = "in_progress"
         state.active_task_id = nxt.id
-        state.next_action = f"start work on {nxt.id}: {nxt.goal}"
+        state.next_action = f"{nxt.id} の作業を開始する: {nxt.goal}"
         return state, board
 
     active = next((t for t in board if t.id == state.active_task_id), None)
     if active is None:
         state.active_task_id = None
-        state.next_action = f"active task missing from board; resetting and picking new work"
+        state.next_action = "active task が board にないため reset して新しい work を選ぶ"
         return state, board
     if "app.py" not in state.touched_files:
         state.touched_files.append("app.py")
-        state.next_action = f"add test for {active.id} acceptance"
+        state.next_action = f"{active.id} の acceptance 用 test を追加する"
         return state, board
 
     if "test_app.py" not in state.touched_files:
         state.touched_files.append("test_app.py")
-        state.next_action = f"run verification command for {active.id}"
+        state.next_action = f"{active.id} の verification command を実行する"
         return state, board
 
     active.status = "done"
     state.active_task_id = None
     state.touched_files = []
-    state.next_action = "pick next task from board"
+    state.next_action = "board から次の task を選ぶ"
     return state, board
 
 
@@ -135,16 +135,16 @@ def main() -> None:
     state = load_state(state_path)
     board = load_board(board_path)
 
-    print("before turn:")
+    print("turn 前:")
     print(f"  active task : {state.active_task_id}")
     print(f"  next action : {state.next_action!r}")
-    print(f"  todo on board: {[t.id for t in board if t.status == 'todo']}")
+    print(f"  board の todo: {[t.id for t in board if t.status == 'todo']}")
 
     state, board = run_one_turn(state, board)
     save_state(state_path, state)
     save_board(board_path, board)
 
-    print("\nafter turn:")
+    print("\nturn 後:")
     print(f"  active task : {state.active_task_id}")
     print(f"  touched     : {state.touched_files}")
     print(f"  next action : {state.next_action!r}")

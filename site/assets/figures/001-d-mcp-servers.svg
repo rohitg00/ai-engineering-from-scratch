@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.D — MCP server exposing tools, resources, prompts">
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.D — tools、resources、promptsを公開するMCP server">
   <defs>
     <style>
       .bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
@@ -13,11 +13,11 @@
 
   <text class="mono bp-fill" x="8" y="14" font-size="6.5" letter-spacing="1.5">FIG_001.D</text>
 
-  <!-- server rack body -->
+  <!-- server rack 本体 -->
   <rect class="face" x="24" y="30" width="50" height="70"/>
   <rect class="bp" x="24" y="30" width="50" height="70" stroke-width="1.5"/>
 
-  <!-- three rack units -->
+  <!-- 3 つの rack unit -->
   <rect class="face-strong" x="28" y="38" width="42" height="14"/>
   <rect class="bp" x="28" y="38" width="42" height="14" stroke-width="1.2"/>
   <circle class="bp-fill" cx="34" cy="45" r="1.6"/>
@@ -33,12 +33,12 @@
   <circle class="bp-fill" cx="34" cy="81" r="1.6"/>
   <line class="bp" x1="40" y1="81" x2="64" y2="81" stroke-width="1"/>
 
-  <!-- labels for the three rack rows: TOOLS / RESOURCES / PROMPTS -->
-  <text class="mono bp-fill" x="78" y="48" font-size="5.5" letter-spacing="1">TOOLS</text>
-  <text class="mono bp-fill" x="78" y="66" font-size="5.5" letter-spacing="1">RES</text>
-  <text class="mono bp-fill" x="78" y="84" font-size="5.5" letter-spacing="1">PROMPTS</text>
+  <!-- 3 つの rack row の label: ツール / リソース / プロンプト -->
+  <text class="mono bp-fill" x="78" y="48" font-size="5.5" letter-spacing="0">ツール</text>
+  <text class="mono bp-fill" x="78" y="66" font-size="5.5" letter-spacing="0">リソース</text>
+  <text class="mono bp-fill" x="78" y="84" font-size="5.5" letter-spacing="0">プロンプト</text>
 
-  <!-- JSON-RPC wire emerging top -->
+  <!-- 上に出る JSON-RPC wire -->
   <line class="bp" x1="49" y1="30" x2="49" y2="20" stroke-width="1.5"/>
   <line class="bp" x1="44" y1="20" x2="54" y2="20" stroke-width="1.5"/>
 

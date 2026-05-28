@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -7,25 +7,25 @@
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .wave { fill: none; stroke: #1a1a1a; stroke-width: 1.3; }
     </style>
   </defs>
 
-  <text x="440" y="30" text-anchor="middle" class="title">the four-step ladder every audio model climbs</text>
+  <text x="440" y="30" text-anchor="middle" class="title">すべての音声モデルが登る4段のはしご</text>
 
-  <!-- Step 1: Waveform -->
+  <!-- Step 1: waveform -->
   <rect x="40" y="60" width="180" height="140" class="box"/>
-  <text x="130" y="82" text-anchor="middle" class="label">1. waveform</text>
+  <text x="130" y="82" text-anchor="middle" class="label">1. 波形</text>
   <path class="wave" d="M55,140 Q70,85 85,140 T115,140 T145,140 T175,140 T205,140"/>
-  <text x="130" y="175" text-anchor="middle" class="caption">T samples in [-1, 1]</text>
-  <text x="130" y="192" text-anchor="middle" class="caption">10 s at 16 kHz = 160,000</text>
+  <text x="130" y="175" text-anchor="middle" class="caption">[-1, 1]内のTサンプル</text>
+  <text x="130" y="192" text-anchor="middle" class="caption">16 kHz で 10 s = 160,000</text>
 
   <!-- arrow -->
   <line x1="225" y1="130" x2="248" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="237" y="120" text-anchor="middle" class="caption" font-size="10">frame+FFT</text>
+  <text x="237" y="120" text-anchor="middle" class="caption" font-size="10">フレーム+FFT</text>
 
   <!-- Step 2: STFT -->
   <rect x="255" y="60" width="180" height="140" class="box"/>
@@ -40,12 +40,12 @@
   <rect x="368" y="120" width="12" height="60" fill="#eed9a8"/>
   <rect x="382" y="130" width="12" height="50" fill="#eed9a8"/>
   <rect x="396" y="140" width="12" height="40" fill="#faf6ef" stroke="#aaa"/>
-  <text x="345" y="190" text-anchor="middle" class="caption">|FFT| per 25 ms frame, 10 ms hop</text>
+  <text x="345" y="190" text-anchor="middle" class="caption">25 msフレームごとの|FFT|、10 msホップ</text>
 
   <line x1="440" y1="130" x2="463" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="452" y="120" text-anchor="middle" class="caption" font-size="10">filterbank</text>
+  <text x="452" y="120" text-anchor="middle" class="caption" font-size="10">フィルタバンク</text>
 
-  <!-- Step 3: Mel spectrogram -->
+  <!-- Step 3: mel spectrogram -->
   <rect x="470" y="60" width="180" height="140" class="hot"/>
   <text x="560" y="82" text-anchor="middle" class="label">3. log-mel</text>
   <rect x="485" y="100" width="12" height="78" fill="#c0392b" opacity="0.9"/>
@@ -58,14 +58,14 @@
   <rect x="583" y="110" width="12" height="68" fill="#d4a74c"/>
   <rect x="597" y="115" width="12" height="63" fill="#d4a74c"/>
   <rect x="611" y="120" width="12" height="58" fill="#eed9a8"/>
-  <text x="560" y="190" text-anchor="middle" class="caption">80 mels, log scale, [T, 80]</text>
+  <text x="560" y="190" text-anchor="middle" class="caption">80 mels、log scale、[T, 80]</text>
 
   <line x1="655" y1="130" x2="678" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <text x="668" y="120" text-anchor="middle" class="caption" font-size="10">DCT (opt)</text>
 
   <!-- Step 4: MFCC or model input -->
   <rect x="685" y="60" width="180" height="140" class="box"/>
-  <text x="775" y="82" text-anchor="middle" class="label">4. model input</text>
+  <text x="775" y="82" text-anchor="middle" class="label">4. モデル入力</text>
   <text x="775" y="110" text-anchor="middle" class="content">Whisper: log-mel</text>
   <text x="775" y="128" text-anchor="middle" class="content">Parakeet: log-mel</text>
   <text x="775" y="146" text-anchor="middle" class="content">ECAPA: log-mel</text>
@@ -74,7 +74,7 @@
 
   <!-- Mel scale curve -->
   <rect x="40" y="235" width="400" height="220" class="box"/>
-  <text x="240" y="258" text-anchor="middle" class="label">mel scale is log-perception of pitch</text>
+  <text x="240" y="258" text-anchor="middle" class="label">mel scale は pitch 知覚の log 表現</text>
   <line x1="80" y1="420" x2="420" y2="420" stroke="#1a1a1a" stroke-width="1"/>
   <line x1="80" y1="420" x2="80" y2="280" stroke="#1a1a1a" stroke-width="1"/>
   <path d="M80,420 Q140,380 200,340 T320,300 T420,282" class="wave" stroke="#c0392b" stroke-width="2"/>
@@ -89,9 +89,9 @@
   <text x="380" y="437" text-anchor="middle" class="caption">8 kHz</text>
   <text x="240" y="395" text-anchor="middle" class="content" font-size="11">m = 2595 · log10(1 + f / 700)</text>
 
-  <!-- Filterbank visualization -->
+  <!-- フィルタバンク visualization -->
   <rect x="460" y="235" width="400" height="220" class="box"/>
-  <text x="660" y="258" text-anchor="middle" class="label">triangular mel filterbank</text>
+  <text x="660" y="258" text-anchor="middle" class="label">三角形のmelフィルタバンク</text>
   <line x1="480" y1="420" x2="840" y2="420" stroke="#1a1a1a" stroke-width="1"/>
   <line x1="480" y1="420" x2="480" y2="300" stroke="#1a1a1a" stroke-width="1"/>
   <polyline points="480,420 490,300 500,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
@@ -101,6 +101,6 @@
   <polyline points="580,420 615,300 650,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
   <polyline points="635,420 685,300 735,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
   <polyline points="710,420 780,300 820,420" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-  <text x="660" y="437" text-anchor="middle" class="caption">Hz (linear)  — triangles widen with frequency</text>
-  <text x="660" y="395" text-anchor="middle" class="content" font-size="11">each mel bin = weighted sum of FFT bins</text>
+  <text x="660" y="437" text-anchor="middle" class="caption">Hz (linear) — 高周波ほど三角形が広がる</text>
+  <text x="660" y="395" text-anchor="middle" class="content" font-size="11">各 mel bin = FFT bins の重み付き和</text>
 </svg>

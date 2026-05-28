@@ -1,21 +1,21 @@
 # Lesson 13 - Internal MCP Server (TypeScript)
 
-TypeScript half of the capstone. The Python side (`code/main.py`) ships the
-registry and policy gate; this project is the MCP transport: hand-rolled
-newline-delimited JSON-RPC 2.0 over stdio with three mock incident tools. No
-`@modelcontextprotocol/sdk`; you get to see every byte on the wire.
+Capstone の TypeScript 側。Python 側 (`code/main.py`) は registry と policy gate を
+提供する。この project は MCP transport であり、3 つの mock incident tool を持つ
+stdio 上の hand-rolled newline-delimited JSON-RPC 2.0 である。
+`@modelcontextprotocol/sdk` は使わず、wire 上の byte をすべて見られる。
 
-## Layout
+## 構成
 
 ```text
 src/
-  index.ts      entry: fixture demo (default) or stdio loop (--serve)
+  index.ts      entry: fixture demo (default) または stdio loop (--serve)
   transport.ts  stdin readline + fixture replay
   protocol.ts   initialize / tools/list / tools/call / shutdown
-  tools.ts      three incident tools + executors
+  tools.ts      3 つの incident tool + executors
   types.ts      JSON-RPC + tool shapes
 tests/
-  protocol.test.ts  roundtrip, list shape, dispatch, parse error
+  protocol.test.ts  roundtrip、list shape、dispatch、parse error
 ```
 
 ## Run
@@ -24,6 +24,6 @@ tests/
 npm install
 npm run typecheck
 npm test
-npm start            # self-terminating fixture demo
-npm run serve        # real stdio loop (waits on stdin)
+npm start            # 自動終了する fixture demo
+npm run serve        # 実際の stdio loop (stdin を待つ)
 ```

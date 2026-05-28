@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the effective batch identity that gradient accumulation expresses?",
+      "question": "gradient accumulation が表す effective batch identity はどれか。",
       "options": [
         "effective_batch = micro_batch / accum_steps",
         "effective_batch = micro_batch * accum_steps",
@@ -12,67 +12,67 @@
         "effective_batch = world_size only"
       ],
       "correct": 1,
-      "explanation": "Micro batch is what fits in memory; accumulation steps are how many forward + backward passes pile gradients into the same buffer before one optimizer step."
+      "explanation": "micro batch は memory に入る量、accum_steps は 1 optimizer step 前に gradient を積む forward/backward の回数である。"
     },
     {
       "stage": "pre",
-      "question": "Why must the loss be divided by accum_steps before backward on each micro batch?",
+      "question": "各 micro batch の backward 前に loss を accum_steps で割る必要があるのはなぜか。",
       "options": [
-        "It makes the loss curve prettier",
-        "PyTorch sums gradients into param.grad by default, so without the division the accumulated gradient is N times too large and the optimizer step is N times too aggressive",
-        "It avoids NaNs",
-        "It is required for mixed precision only"
+        "loss curve がきれいになるから。",
+        "PyTorch は `param.grad` に加算するため、割らないと accumulated gradient が N 倍になり step が強すぎるから。",
+        "NaN を避けるため。",
+        "mixed precision だけで必要だから。"
       ],
       "correct": 1,
-      "explanation": "The accumulation buffer is a sum. Per-micro-batch scaling by 1/N pushes that sum back into the same scale a single full-batch backward would produce."
+      "explanation": "accumulation buffer は sum なので、各 micro loss を 1/N にすると full-batch backward と同じ scale になる。"
     },
     {
       "stage": "check",
-      "question": "When does the optimizer step run inside the accumulation loop?",
+      "question": "accumulation loop 内で optimizer step はいつ走るか。",
       "options": [
-        "After every micro batch",
-        "Only after the last micro batch in the accumulation window",
-        "Twice per window for safety",
-        "Never; the optimizer is replaced"
+        "micro batch ごと。",
+        "accumulation window の最後の micro batch の後だけ。",
+        "安全のため window ごとに 2 回。",
+        "走らない。optimizer は置き換えられる。"
       ],
       "correct": 1,
-      "explanation": "Stepping mid-accumulation contaminates every parameter the rest of the run depends on. The optimizer step fires once per effective batch."
+      "explanation": "途中で step すると残りの backward が別 parameter に対して行われ、run が汚染される。"
     },
     {
       "stage": "check",
-      "question": "What does the no_sync context wrap on a real multi-GPU run?",
+      "question": "real multi-GPU run で `no_sync` context は何を wrap するか。",
       "options": [
-        "The forward pass",
-        "The optimizer step",
-        "The non-final micro batches, so the gradient all-reduce only fires after the last backward instead of N times",
-        "The data loader"
+        "forward pass。",
+        "optimizer step。",
+        "非最終 micro batch。gradient all-reduce を最後の backward だけにするため。",
+        "data loader。"
       ],
       "correct": 2,
-      "explanation": "DDP's no_sync skips the gradient collective. Wrapping all but the last micro batch turns N collectives per effective step into one."
+      "explanation": "DDP の no_sync は gradient collective を skip する。最後以外を包むと N 回の collective が 1 回になる。"
     },
     {
       "stage": "check",
-      "question": "What does the equivalence_check function in main.py assert?",
+      "question": "main.py の `equivalence_check` は何を assert するか。",
       "options": [
-        "That the loss converges",
-        "That a single full-batch backward and an accum_steps chunked backward with loss / N produce the same gradient buffer and the same post-step parameters up to a small tolerance",
-        "That throughput is constant",
-        "That gradients are zero"
+        "loss が収束すること。",
+        "full-batch backward と loss/N 付き chunked backward が、gradient buffer と post-step parameter を小さい tolerance 内で一致させること。",
+        "throughput が一定であること。",
+        "gradient が zero であること。"
       ],
       "correct": 1,
-      "explanation": "The assertion bound is max-abs-diff under 1e-4. Without the loss scaling the diff blows up; with the scaling it sits at floating point noise."
+      "explanation": "scaling なしでは diff が大きくなり、scaling ありでは floating point noise に収まる。"
     },
     {
       "stage": "post",
-      "question": "Reading the throughput against effective batch curve, what stays roughly constant and what scales?",
+      "question": "effective batch curve を読むと、何がほぼ一定で何が scale するか。",
       "options": [
-        "Samples per second drops with larger effective batch",
-        "Samples per second saturates near the hardware limit while wall time per optimizer step scales linearly with accum_steps; optimizer steps per second is what falls",
-        "Both metrics scale linearly with accum",
-        "Throughput goes up because the model gets faster"
+        "samples/sec は batch が大きいほど下がる。",
+        "samples/sec は hardware limit 近くで飽和し、optimizer step あたり wall time は accum_steps にほぼ比例する。落ちるのは optimizer steps/sec。",
+        "両方が線形に scale する。",
+        "model が速くなるので throughput が上がる。"
       ],
       "correct": 1,
-      "explanation": "Each micro batch costs the same forward + backward. Accumulation buys statistical smoothing per optimizer step, not raw throughput; the curve is a useful reality check against folklore."
+      "explanation": "accumulation は optimizer step あたりの統計的 smoothing を買うもので、生 throughput を無料で増やさない。"
     }
   ]
 }

@@ -1,150 +1,150 @@
 # Audio-Language Models: the Whisper to Audio Flamingo 3 Arc
 
-> Whisper (Radford et al., December 2022) settled speech recognition — 680k hours of weakly-supervised multilingual speech, a simple encoder-decoder transformer, a benchmark that made every subsequent ASR release cite it. But recognition is not reasoning. Asking "what instruments are in this recording" or "what emotion is the speaker expressing" or "what happened at minute 3" requires audio understanding, not transcription. Qwen-Audio, SALMONN, LTU, and NVIDIA's Audio Flamingo 3 (AF3, July 2025) progressively built that stack: keep Whisper-class encoders, bolt on Q-formers, train on audio-text instruction data, add chain-of-thought reasoning. This lesson walks the arc.
+> Whisper (Radford et al., 2022年12月) は speech recognition を一段落させました。680k hours の weakly-supervised multilingual speech、単純な encoder-decoder transformer、そして以後の ASR release が必ず引用する benchmark です。しかし recognition は reasoning ではありません。「この録音に含まれる楽器は何か」「話者はどんな感情を表しているか」「3分時点で何が起きたか」と問うには、transcription ではなく audio understanding が必要です。Qwen-Audio、SALMONN、LTU、NVIDIA の Audio Flamingo 3 (AF3、2025年7月) は、この stack を段階的に作りました。Whisper-class encoders を保ち、Q-formers を接続し、audio-text instruction data で訓練し、chain-of-thought reasoning を加える流れです。この lesson ではその arc をたどります。
 
-**Type:** Build
-**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)
-**Prerequisites:** Phase 6 (Speech and Audio), Phase 12 · 03 (Q-Former)
-**Time:** ~180 minutes
+**種別:** 構築
+**言語:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)
+**前提条件:** Phase 6 (Speech and Audio), Phase 12 · 03 (Q-Former)
+**所要時間:** 約180分
 
-## Learning Objectives
+## 学習目標
 
-- Compute a log-Mel spectrogram from a waveform: windowing, FFT, filter banks, log transform.
-- Compare encoder options: Whisper encoder, BEATs, AF-Whisper hybrid. When each wins.
-- Build an audio Q-former: N learnable queries cross-attending to spectrogram patches.
-- Explain cascaded (Whisper-then-LLM) vs end-to-end audio-LLM training: why end-to-end scales better for reasoning.
+- waveform から log-Mel spectrogram を計算する。windowing、FFT、filter banks、log transform を扱う。
+- encoder options、Whisper encoder、BEATs、AF-Whisper hybrid を比較し、それぞれが勝つ場面を説明する。
+- audio Q-former を作る。N learnable queries が spectrogram patches に cross-attend する。
+- cascaded (Whisper-then-LLM) と end-to-end audio-LLM training を説明し、reasoning では end-to-end がより scale する理由を述べる。
 
-## The Problem
+## 問題
 
-Speech recognition was solved by Whisper. OCR-of-audio is a commodity. But "commodity" stops at transcription. If the model cannot reason over what it heard — timing, speakers, emotion, music structure, environmental sounds — transcription alone cannot drive product features.
+speech recognition は Whisper により解かれました。audio の OCR は commodity です。しかし「commodity」は transcription で止まります。model が聞いた内容、timing、speakers、emotion、music structure、environmental sounds について reasoning できなければ、transcription だけでは product feature を動かせません。
 
-Three obvious routes:
+明らかな route は3つあります。
 
-1. Cascade: Whisper transcribes, LLM reasons over the transcript. Works for pure-speech scenarios. Fails for music, environmental audio, multi-speaker overlap, emotion.
+1. Cascade: Whisper が transcribe し、LLM が transcript 上で reasoning する。pure-speech scenario では機能します。music、environmental audio、multi-speaker overlap、emotion では失敗します。
 
-2. End-to-end audio-LLM: an audio encoder feeds audio tokens directly into an LLM, skipping transcription. Preserves acoustic information (emotion, speaker, environment). Needs new training data.
+2. End-to-end audio-LLM: audio encoder が audio tokens を transcription なしで直接 LLM に渡す。acoustic information (emotion、speaker、environment) を保持します。新しい training data が必要です。
 
-3. Hybrid: audio encoder + text decoder that can both transcribe and reason. Qwen-Audio and Audio Flamingo pick this route.
+3. Hybrid: transcribe と reason の両方ができる audio encoder + text decoder。Qwen-Audio と Audio Flamingo はこの route を選びます。
 
-## The Concept
+## コンセプト
 
 ### Log-Mel spectrogram: the input feature
 
-Every audio encoder starts with the same feature: a log-Mel spectrogram.
+すべての audio encoder は同じ feature、log-Mel spectrogram から始まります。
 
-1. Resample to 16 kHz.
-2. Short-time Fourier transform with 25ms windows, 10ms hop.
-3. Take magnitude of the FFT result.
-4. Apply Mel filter banks (typically 80 filters log-spaced 0-8000 Hz) to warp to perceptual frequency.
-5. Log compress (log(1 + x)) for dynamic range.
+1. 16 kHz に resample する。
+2. 25ms window、10ms hop で short-time Fourier transform を行う。
+3. FFT result の magnitude を取る。
+4. Mel filter banks (通常 0-8000 Hz を log-space した 80 filters) を適用し、perceptual frequency に warp する。
+5. dynamic range のために log compress (log(1 + x)) する。
 
-Result: a 2D array of shape (T, 80) where T is the number of time frames. For a 30-second clip at 100 Hz frame rate: (3000, 80).
+結果は shape (T, 80) の 2D array です。T は time frames の数です。100 Hz frame rate の30秒 clip なら (3000, 80) です。
 
 ### Whisper's encoder
 
-Whisper's encoder is a 12-layer ViT-style transformer processing the log-Mel spectrogram as a sequence of time frames. Output: one hidden-state vector per time frame.
+Whisper の encoder は 12-layer の ViT-style transformer で、log-Mel spectrogram を time frame の sequence として処理します。output は time frame ごとに1つの hidden-state vector です。
 
-For ASR, Whisper's decoder is a cross-attention transformer that generates text tokens conditioned on the encoder output. Standard encoder-decoder.
+ASR では、Whisper の decoder は encoder output に condition された text tokens を生成する cross-attention transformer です。標準的な encoder-decoder です。
 
-For ALMs (audio-LLMs), you want the encoder output as input to a different LLM. The pattern: Whisper encoder frozen, Q-former trainable, LLM frozen or tuned.
+ALM (audio-LLM) では、encoder output を別の LLM の input にしたい。pattern は、Whisper encoder は frozen、Q-former は trainable、LLM は frozen または tuned です。
 
 ### BEATs and audio-specific encoders
 
-Whisper was trained on speech-dominant data. It is weaker for music and environmental audio.
+Whisper は speech-dominant data で訓練されました。そのため music や environmental audio では弱くなります。
 
-BEATs (Chen et al., 2022) is a self-supervised transformer trained on AudioSet. Captures music and environmental sounds better than Whisper at the same parameter count.
+BEATs (Chen et al., 2022) は AudioSet で訓練された self-supervised transformer です。同じ parameter count なら、Whisper よりも music と environmental sounds をよく捉えます。
 
-AF-Whisper (Audio Flamingo 3's hybrid): concat Whisper + BEATs features as the audio input. Whisper carries linguistic signal, BEATs carries acoustic signal.
+AF-Whisper (Audio Flamingo 3 の hybrid): Whisper + BEATs features を concat して audio input にします。Whisper は linguistic signal、BEATs は acoustic signal を担います。
 
 ### Audio Q-former
 
-Same pattern as BLIP-2's visual Q-former. A fixed number of learnable queries (often 32 or 64) cross-attend over the audio encoder's output frames. The queries become audio tokens consumed by the LLM.
+BLIP-2 の visual Q-former と同じ pattern です。固定数の learnable queries (多くは 32 または 64) が audio encoder の output frames に cross-attend します。その queries が LLM に消費される audio tokens になります。
 
-Training alignment stage: Q-former alone, contrastive + captioning losses on audio-text pairs (AudioCaps, Clotho). Instruction stage: end-to-end, unfreeze LLM, train on instruction data.
+training alignment stage では、Q-former だけを audio-text pairs (AudioCaps、Clotho) の contrastive + captioning losses で訓練します。instruction stage では end-to-end で LLM を unfreeze し、instruction data で訓練します。
 
-### The arc — SALMONN, Qwen-Audio, AF3
+### arc — SALMONN, Qwen-Audio, AF3
 
-SALMONN (Tang et al., 2023): Whisper + BEATs + Q-former + LLaMA. The first open audio-LLM with serious reasoning ability. Benchmarks on MMAU show ~0.55 composite.
+SALMONN (Tang et al., 2023): Whisper + BEATs + Q-former + LLaMA。serious reasoning ability を持つ最初期の open audio-LLM です。MMAU benchmark では composite が約 0.55 です。
 
-Qwen-Audio (Chu et al., 2023): similar architecture, trained on a richer dataset, tuned for multi-turn dialogue. MMAU ~0.60.
+Qwen-Audio (Chu et al., 2023): 似た architecture で、より豊かな dataset で訓練され、multi-turn dialogue 向けに tuned されています。MMAU は約 0.60 です。
 
-LTU — Listen, Think, Understand (Gong et al., 2023): explicit reasoning data, focus on chain-of-thought over audio clips. Smaller but more focused.
+LTU、Listen, Think, Understand (Gong et al., 2023): explicit reasoning data を使い、audio clips 上の chain-of-thought に焦点を当てます。小さいが focused しています。
 
-Audio Flamingo 3 (Goel et al., July 2025): the current open SOTA. 8B LLM backbone (Qwen2 7B), Whisper-large encoder concat BEATs, 64-query Q-former, training on 1M+ audio-text instruction pairs. MMAU 0.72, matches proprietary frontier on some sub-tasks.
+Audio Flamingo 3 (Goel et al., 2025年7月): 現在の open SOTA です。8B LLM backbone (Qwen2 7B)、Whisper-large encoder concat BEATs、64-query Q-former、1M+ audio-text instruction pairs での training。MMAU は 0.72 で、一部の sub-tasks では proprietary frontier と同等です。
 
-AF3 also introduces on-demand chain-of-thought for audio: the model can optionally emit thinking tokens ("let me identify the instruments first: ...") before the final answer. Accuracy on complex reasoning tasks lifts 3-5 points when thinking is enabled.
+AF3 は audio 向けの on-demand chain-of-thought も導入します。model は final answer の前に、必要に応じて thinking tokens (「まず楽器を特定します: ...」) を出せます。thinking を有効にすると、complex reasoning tasks の accuracy が 3-5 points 上がります。
 
 ### Cascaded vs end-to-end
 
 Cascaded pipeline:
 
-1. Whisper transcribes audio → text.
-2. LLM reasons over text.
+1. Whisper が audio を transcribe して text にする。
+2. LLM が text 上で reasoning する。
 
-Works perfectly for "summarize this podcast." Fails for:
-- "What's the mood of this song?" — mood is in the sound, not words.
-- "Who is speaking, Alice or Bob?" — requires speaker identification.
-- "At what second does the explosion happen?" — temporal grounding lost in text.
-- "Is this real or generated audio?" — deepfake detection needs acoustic features.
+「この podcast を要約して」には完全に機能します。失敗する例:
+- 「この曲の mood は何か」: mood は words ではなく sound にあります。
+- 「Alice と Bob のどちらが話しているか」: speaker identification が必要です。
+- 「爆発は何秒時点で起きるか」: text では temporal grounding が失われます。
+- 「これは real audio か generated audio か」: deepfake detection には acoustic features が必要です。
 
-End-to-end preserves acoustic signal. Qwen-Audio and AF3 handle music, environment, and emotion natively.
+End-to-end は acoustic signal を保持します。Qwen-Audio と AF3 は music、environment、emotion を native に扱えます。
 
-### 2026 production recipe
+### 2026年の production recipe
 
-For a new audio-understanding product:
+新しい audio-understanding product では次のように選びます。
 
-- Cascaded if: transcription is the goal, no music, no emotion inference.
-- AF3 / Qwen-Audio-family if: music, emotion, multi-speaker, or complex audio reasoning.
+- Cascaded: transcription が目的で、music も emotion inference もない場合。
+- AF3 / Qwen-Audio-family: music、emotion、multi-speaker、complex audio reasoning がある場合。
 
-Cascaded is cheaper and simpler. End-to-end is more capable.
+Cascaded は安く単純です。End-to-end はより高機能です。
 
 ### MMAU — the audio reasoning benchmark
 
-MMAU (Massive Multimodal Audio Understanding) is the 2024-2025 audio reasoning benchmark:
+MMAU (Massive Multimodal Audio Understanding) は 2024-2025 年の audio reasoning benchmark です。
 
-- 10,000 audio-text QA pairs across speech, music, environmental sounds.
-- Covers classification, temporal reasoning, causal reasoning, open-ended QA.
-- Tests what cascaded pipelines systematically miss.
+- speech、music、environmental sounds にわたる 10,000 audio-text QA pairs。
+- classification、temporal reasoning、causal reasoning、open-ended QA をカバー。
+- cascaded pipeline が体系的に見落とすものをテストする。
 
-Open SOTA (AF3) at 0.72; proprietary frontier ~0.78 (Gemini 2.5 Pro, Claude Opus 4.7). The gap is smaller than VideoMME's open-vs-closed delta, indicating audio-LLMs are maturing.
+Open SOTA (AF3) は 0.72、proprietary frontier は約 0.78 (Gemini 2.5 Pro、Claude Opus 4.7) です。この gap は VideoMME の open-vs-closed delta より小さく、audio-LLM が成熟していることを示します。
 
-## Use It
+## 使ってみる
 
 `code/main.py`:
 
-- Implements log-Mel spectrogram computation in stdlib: windowing, naive DFT, Mel filter-bank.
-- Audio Q-former skeleton: given encoder output frames, compute Q, K, V, attention, and emit N tokens.
-- Cascaded-vs-end-to-end comparison on a toy task.
+- stdlib で log-Mel spectrogram computation を実装します。windowing、naive DFT、Mel filter-bank を含みます。
+- Audio Q-former skeleton: encoder output frames を受け取り、Q、K、V、attention を計算し、N tokens を出力します。
+- toy task で cascaded-vs-end-to-end comparison を行います。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-audio-llm-pipeline-picker.md`. Given an audio task (transcription, music tagging, emotion inference, multi-speaker diarization, environment classification), it picks cascaded, end-to-end AF3, or a hybrid.
+この lesson は `outputs/skill-audio-llm-pipeline-picker.md` を生成します。audio task (transcription、music tagging、emotion inference、multi-speaker diarization、environment classification) を受け取り、cascaded、end-to-end AF3、hybrid のいずれかを選びます。
 
-## Exercises
+## 演習
 
-1. Compute the log-Mel spectrogram dimension for a 30-second clip at 16kHz, 25ms window, 10ms hop, 80 Mel bins. How does this change at 48kHz?
+1. 16kHz、25ms window、10ms hop、80 Mel bins の30秒 clip について、log-Mel spectrogram dimension を計算してください。48kHz ではどう変わりますか。
 
-2. Why does Whisper underperform on music? What audio features does BEATs capture that Whisper does not?
+2. Whisper はなぜ music で underperform するのでしょうか。BEATs は Whisper が捉えないどんな audio features を捉えますか。
 
-3. Audio Q-former with 64 queries vs 32: at what task complexity does 64 pay off? 32 save compute for what?
+3. Audio Q-former の 64 queries と 32 queries を比較してください。どの task complexity で 64 が効きますか。32 は何の compute を節約しますか。
 
-4. Read AF3 Section 4 on on-demand thinking. Propose three audio tasks where chain-of-thought helps the most.
+4. AF3 の Section 4、on-demand thinking を読んでください。chain-of-thought が最も役立つ audio task を3つ提案してください。
 
-5. Implement a minimal diarization pipeline using AF3's output. How do you signal speaker changes?
+5. AF3 の output を使って minimal diarization pipeline を実装してください。speaker changes をどう signal しますか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |------|-----------------|------------------------|
-| Log-Mel spectrogram | "Mel features" | 2D (time, frequency) array of log-magnitude values after Mel filter banks |
-| Audio Q-former | "Audio Perceiver" | Cross-attention bottleneck from audio encoder output to fixed-length queries feeding the LLM |
-| Cascaded | "ASR-then-LLM" | Pipeline where Whisper transcribes and a text LLM reasons; loses acoustic information |
-| End-to-end | "Audio-LLM" | Audio features enter the LLM directly via Q-former; preserves acoustic signal |
-| BEATs | "Audio AudioSet encoder" | SSL transformer trained on AudioSet; strong on music + environmental sounds |
-| MMAU | "Audio reasoning bench" | 10k QA pairs across speech, music, environment; 2024 eval standard |
-| On-demand thinking | "Audio CoT" | Model can optionally emit reasoning tokens before final answer, lifts accuracy 3-5 pts |
+| Log-Mel spectrogram | 「Mel features」 | Mel filter banks 後の log-magnitude values からなる 2D (time, frequency) array |
+| Audio Q-former | 「Audio Perceiver」 | audio encoder output から LLM に入る fixed-length queries への cross-attention bottleneck |
+| Cascaded | 「ASR-then-LLM」 | Whisper が transcribe し text LLM が reasoning する pipeline。acoustic information を失う |
+| End-to-end | 「Audio-LLM」 | audio features が Q-former 経由で LLM に直接入る。acoustic signal を保持する |
+| BEATs | 「Audio AudioSet encoder」 | AudioSet で訓練された SSL transformer。music + environmental sounds に強い |
+| MMAU | 「Audio reasoning bench」 | speech、music、environment にまたがる 10k QA pairs。2024年の eval standard |
+| On-demand thinking | 「Audio CoT」 | model が final answer 前に reasoning tokens を任意で出せる仕組み。accuracy を 3-5 pts 上げる |
 
-## Further Reading
+## 参考文献
 
 - [Radford et al. — Whisper (arXiv:2212.04356)](https://arxiv.org/abs/2212.04356)
 - [Chu et al. — Qwen-Audio (arXiv:2311.07919)](https://arxiv.org/abs/2311.07919)

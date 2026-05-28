@@ -11,7 +11,7 @@ import { turnCompletionScore } from "./vad.ts";
 export const WEATHER: Tool = {
   name: "weather.tokyo_tomorrow",
   latencyMs: 420,
-  result: "68/52 partly cloudy",
+  result: "68/52、一部曇り",
 };
 
 export function newMetrics(): Metrics {
@@ -63,7 +63,7 @@ export function runSession(frames: AudioChunk[], opts: SessionOptions): Metrics 
       f.isSpeech
     ) {
       m.bargeIns += 1;
-      log(`${f.tMs}ms BARGE-IN: cancel TTS, re-arm ASR`);
+      log(`${f.tMs}ms BARGE-IN: TTS を cancel し、ASR を再 arm`);
       state = "LISTENING";
       silenceRunMs = 0;
       finalPartial = "";
@@ -98,7 +98,7 @@ export function runSession(frames: AudioChunk[], opts: SessionOptions): Metrics 
               `${f.tMs}ms TURN COMPLETE (score=${score.toFixed(2)}) partial='${finalPartial}'`,
             );
           } else {
-            log(`${f.tMs}ms SILENCE but score=${score.toFixed(2)}, waiting`);
+            log(`${f.tMs}ms SILENCE だが score=${score.toFixed(2)}、待機`);
           }
         }
       }
@@ -113,7 +113,7 @@ export function runSession(frames: AudioChunk[], opts: SessionOptions): Metrics 
       } else {
         llmStartedAt = f.tMs + 140;
         state = "THINKING";
-        log(`${f.tMs}ms LLM call fired`);
+        log(`${f.tMs}ms LLM call を発火`);
       }
       continue;
     }
@@ -122,7 +122,7 @@ export function runSession(frames: AudioChunk[], opts: SessionOptions): Metrics 
       if (toolPhase === "running") {
         if (!fillerEmitted && f.tMs - toolStartedAt >= 300) {
           fillerEmitted = true;
-          log(`${f.tMs}ms filler 'one second, let me check'`);
+          log(`${f.tMs}ms filler '少々お待ちください。確認します'`);
         }
         if (f.tMs - toolStartedAt >= WEATHER.latencyMs) {
           toolPhase = "done";

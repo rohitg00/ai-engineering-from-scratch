@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Invariant checks across every lesson directory.
+"""すべてのレッスンディレクトリに対する不変条件チェック。
 
-Usage:
+使い方:
     python scripts/audit_lessons.py [--phase N] [--json] [--strict]
 
-Exit codes:
-    0 — clean
-    1 — issues found
+終了コード:
+    0 — 問題なし
+    1 — issueあり
 """
 
 from __future__ import annotations
@@ -88,7 +88,7 @@ def check_lesson_dir_pattern(audit: Audit, lesson: Path) -> bool:
             "L001",
             lesson,
             None,
-            f"lesson dir name does not match NN-slug pattern: {lesson.name!r}",
+            f"lesson dir名がNN-slugパターンに一致しません: {lesson.name!r}",
         )
         return False
     return True
@@ -97,22 +97,22 @@ def check_lesson_dir_pattern(audit: Audit, lesson: Path) -> bool:
 def check_docs_en_md(audit: Audit, lesson: Path) -> str | None:
     doc = lesson / "docs" / "en.md"
     if not doc.is_file():
-        audit.add("L002", lesson, doc, "missing docs/en.md")
+        audit.add("L002", lesson, doc, "docs/en.md がありません")
         return None
     try:
         text = doc.read_text(encoding="utf-8")
     except UnicodeDecodeError:
-        audit.add("L002", lesson, doc, "docs/en.md is not valid UTF-8")
+        audit.add("L002", lesson, doc, "docs/en.md が有効なUTF-8ではありません")
         return None
     if len(text.encode("utf-8")) < MIN_DOC_BYTES:
         audit.add(
             "L003",
             lesson,
             doc,
-            f"docs/en.md shorter than {MIN_DOC_BYTES} bytes (got {len(text)})",
+            f"docs/en.md が {MIN_DOC_BYTES} bytes 未満です（got {len(text)}）",
         )
     if not H1_RE.search(text):
-        audit.add("L004", lesson, doc, "docs/en.md missing top-level H1")
+        audit.add("L004", lesson, doc, "docs/en.md にトップレベルH1がありません")
     return text
 
 
@@ -123,7 +123,7 @@ def check_code_main(audit: Audit, lesson: Path) -> None:
     for path in code_dir.rglob("*"):
         if path.is_file() and path.name not in CODE_IGNORED_NAMES:
             return
-    audit.add("L005", lesson, code_dir, "code/ is empty (no source or config files)")
+    audit.add("L005", lesson, code_dir, "code/ が空です（source/config fileなし）")
 
 
 def check_quiz(audit: Audit, lesson: Path) -> None:
@@ -134,7 +134,7 @@ def check_quiz(audit: Audit, lesson: Path) -> None:
         raw = quiz.read_text(encoding="utf-8")
         data = json.loads(raw)
     except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-        audit.add("L006", lesson, quiz, f"quiz.json not valid JSON: {exc}")
+        audit.add("L006", lesson, quiz, f"quiz.json が有効なJSONではありません: {exc}")
         return
     if isinstance(data, list):
         questions = data
@@ -147,12 +147,12 @@ def check_quiz(audit: Audit, lesson: Path) -> None:
             "L006",
             lesson,
             quiz,
-            "quiz.json must be a non-empty array or a dict with non-empty questions[]",
+            "quiz.json は非空array、または非空 questions[] を持つdictである必要があります",
         )
         return
     for idx, q in enumerate(questions):
         if not isinstance(q, dict):
-            audit.add("L006", lesson, quiz, f"question[{idx}] is not an object")
+            audit.add("L006", lesson, quiz, f"question[{idx}] がobjectではありません")
             continue
         legacy = LEGACY_QUIZ_KEYS & q.keys()
         if legacy:
@@ -160,8 +160,8 @@ def check_quiz(audit: Audit, lesson: Path) -> None:
                 "L007",
                 lesson,
                 quiz,
-                f"question[{idx}] uses legacy schema keys {sorted(legacy)} "
-                f"(canonical: {sorted(CANONICAL_QUIZ_KEYS)})",
+                f"question[{idx}] がlegacy schema keys {sorted(legacy)} を使用しています "
+                f"（canonical: {sorted(CANONICAL_QUIZ_KEYS)}）",
             )
             continue
         missing = CANONICAL_QUIZ_KEYS - q.keys()
@@ -170,7 +170,7 @@ def check_quiz(audit: Audit, lesson: Path) -> None:
                 "L006",
                 lesson,
                 quiz,
-                f"question[{idx}] missing keys {sorted(missing)}",
+                f"question[{idx}] にkeys {sorted(missing)} がありません",
             )
             continue
         options = q.get("options")
@@ -179,8 +179,8 @@ def check_quiz(audit: Audit, lesson: Path) -> None:
                 "L008",
                 lesson,
                 quiz,
-                f"question[{idx}] options length must be {MIN_OPTIONS}..{MAX_OPTIONS} "
-                f"(got {len(options) if isinstance(options, list) else type(options).__name__})",
+                f"question[{idx}] のoptions lengthは {MIN_OPTIONS}..{MAX_OPTIONS} である必要があります "
+                f"（got {len(options) if isinstance(options, list) else type(options).__name__}）",
             )
             continue
         correct = q.get("correct")
@@ -189,7 +189,7 @@ def check_quiz(audit: Audit, lesson: Path) -> None:
                 "L009",
                 lesson,
                 quiz,
-                f"question[{idx}] correct={correct!r} not a valid index in options[0..{len(options) - 1}]",
+                f"question[{idx}] correct={correct!r} は options[0..{len(options) - 1}] の有効なindexではありません",
             )
 
 
@@ -208,7 +208,7 @@ def check_internal_links(audit: Audit, lesson: Path, text: str) -> None:
         else:
             target = (doc.parent / href).resolve()
         if not target.exists():
-            audit.add("L010", lesson, doc, f"internal link does not resolve: {href!r}")
+            audit.add("L010", lesson, doc, f"internal linkが解決できません: {href!r}")
 
 
 def audit_lesson(audit: Audit, lesson: Path) -> None:
@@ -227,15 +227,15 @@ def render_report(audit: Audit) -> str:
     for issue in audit.issues:
         by_rule[issue.rule] = by_rule.get(issue.rule, 0) + 1
     lines = [
-        f"audit_lessons.py — {audit.lessons_checked} lesson(s) checked, "
-        f"{len(audit.issues)} issue(s)",
+        f"audit_lessons.py — {audit.lessons_checked} レッスンをチェック、"
+        f"{len(audit.issues)} 件のissue",
     ]
     if audit.issues:
         lines.append("")
         for issue in audit.issues:
             lines.append(f"  [{issue.rule}] {issue.file}: {issue.message}")
         lines.append("")
-        lines.append("Summary by rule:")
+        lines.append("ルール別サマリー:")
         for rule in sorted(by_rule):
             lines.append(f"  {rule}: {by_rule[rule]}")
     return "\n".join(lines)
@@ -243,12 +243,12 @@ def render_report(audit: Audit) -> str:
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--phase", type=int, default=None, help="restrict to a single phase number")
-    parser.add_argument("--json", action="store_true", help="emit JSON report on stdout")
+    parser.add_argument("--phase", type=int, default=None, help="指定したフェーズ番号だけに限定")
+    parser.add_argument("--json", action="store_true", help="JSONレポートをstdoutへ出力")
     parser.add_argument(
         "--strict",
         action="store_true",
-        help="treat warnings as errors (currently equivalent to default; reserved)",
+        help="警告をエラーとして扱う（現在はdefaultと同等、予約済み）",
     )
     args = parser.parse_args(argv)
 

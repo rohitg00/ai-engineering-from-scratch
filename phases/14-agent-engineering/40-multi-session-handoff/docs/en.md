@@ -1,26 +1,26 @@
 # Multi-Session Handoff
 
-> The session is going to end. The work is not. The handoff packet is the artifact that turns "the agent worked for an hour" into "the next session is productive in the first minute." Build it on purpose, not as an afterthought.
+> session は終わります。work は終わりません。handoff packet は、「agent が1時間作業した」を「次の session が最初の1分から productive になる」に変える artifact です。後付けではなく、意図して作ります。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
-**Time:** ~50 minutes
+**種類:** Build
+**言語:** Python (stdlib)
+**前提:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
+**時間:** 約50分
 
-## Learning Objectives
+## 学習目標
 
-- Identify the seven fields every handoff packet needs.
-- Generate a handoff from the workbench artifacts without hand-writing prose.
-- Trim large feedback logs into a handoff-sized summary.
-- Make the next session's first action deterministic.
+- すべての handoff packet に必要な7つの fields を特定する。
+- prose を手書きせず、workbench artifacts から handoff を生成する。
+- 大きな feedback logs を handoff size の summary に trim する。
+- 次 session の最初の action を deterministic にする。
 
-## The Problem
+## 問題
 
-The session ends. The agent says "great, we made progress." The next session opens. The next agent asks "where did we leave off?" The first agent's answer is gone. The next agent rediscovers, re-runs the same commands, re-asks the human the same questions, and burns thirty minutes recovering the last thirty seconds of the previous session.
+session が終わります。agent は「進捗がありました」と言います。次の session が開きます。次の agent は「どこまで進んでいましたか？」と尋ねます。最初の agent の答えは消えています。次の agent は再発見し、同じ command を再実行し、同じ質問を人間に聞き直し、前 session の最後の30秒を取り戻すために30分を燃やします。
 
-The cost of a bad handoff is paid every session for the life of the task. The fix is a packet generated automatically at session end: what changed, why, what was tried, what failed, what is left, what to do first next time.
+悪い handoff の cost は、その task が続く限り毎 session 支払われます。修正は、session end に自動生成される packet です。何が変わったか、なぜ変えたか、何を試したか、何が失敗したか、何が残っているか、次回最初に何をするか。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart LR
@@ -32,106 +32,106 @@ flowchart LR
   Handoff --> Next[Next Session]
 ```
 
-### Seven fields every handoff carries
+### すべての handoff が持つ7つの fields
 
-| Field | Question it answers |
-|-------|---------------------|
-| `summary` | One paragraph of what was done |
-| `changed_files` | The diff at a glance |
-| `commands_run` | What was actually executed |
-| `failed_attempts` | What was tried and why it did not work |
-| `open_risks` | What could bite next session, with severity |
-| `next_action` | The first concrete step next session takes |
-| `verdict_pointer` | Path to the verification + review reports |
+| Field | 答える問い |
+|-------|------------|
+| `summary` | 何をしたかの1段落 |
+| `changed_files` | diff の一覧 |
+| `commands_run` | 実際に実行されたもの |
+| `failed_attempts` | 何を試し、なぜうまくいかなかったか |
+| `open_risks` | 次 session で問題になり得るもの。severity 付き |
+| `next_action` | 次 session が最初に取る具体的な step |
+| `verdict_pointer` | verification + review reports への path |
 
-The `next_action` field is the load-bearing one. A handoff with everything except `next_action` is a status report, not a handoff.
+`next_action` field が load-bearing です。`next_action` 以外がすべて揃った handoff は status report であり、handoff ではありません。
 
-### Handoffs are generated, not written
+### handoff は書くのではなく生成する
 
-A hand-written handoff is a handoff that gets skipped on a hard day. The generator reads the workbench artifacts and emits the packet. The agent's job is to leave the workbench in a state the generator can summarize, not to write the summary.
+手書きの handoff は、厳しい日に skip される handoff です。generator は workbench artifacts を読み、packet を emit します。agent の仕事は summary を書くことではなく、generator が summarize できる state に workbench を残すことです。
 
-### Two forms: human-readable and machine-readable
+### 2つの形式: human-readable と machine-readable
 
-`handoff.md` is what the human reads. `handoff.json` is what the next agent loads. Both come from the same source artifacts. If they diverge, the JSON wins.
+`handoff.md` は人間が読むものです。`handoff.json` は次の agent が load するものです。どちらも同じ source artifacts から生成されます。食い違った場合は JSON が勝ちます。
 
-### Feedback log trimming
+### feedback log trimming
 
-The full `feedback_record.jsonl` may be hundreds of entries. The handoff carries only the last K plus every entry with a non-zero exit. The next session loads the full log if it needs to, but the packet stays small.
+完全な `feedback_record.jsonl` は数百 entries になるかもしれません。handoff は最後の K 件と、non-zero exit のすべての entry だけを含みます。次の session は必要なら full log を load できますが、packet は小さいままです。
 
-## Build It
+## 作ってみる
 
-`code/main.py` implements:
+`code/main.py` は次を実装しています。
 
-- A loader that gathers state, verdict, review, and feedback into a single `WorkbenchSnapshot`.
-- A `generate_handoff(snapshot) -> (markdown, payload)` function.
-- A filter that picks the last K feedback entries plus all non-zero exits.
-- A demo run that writes `handoff.md` and `handoff.json` next to the script.
+- state、verdict、review、feedback を1つの `WorkbenchSnapshot` に集める loader。
+- `generate_handoff(snapshot) -> (markdown, payload)` function。
+- 最後の K feedback entries とすべての non-zero exits を選ぶ filter。
+- `handoff.md` と `handoff.json` を script の隣に書く demo run。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-Output: a printed handoff body, plus both files on disk.
+出力: handoff body が表示され、両方の file が disk に書かれます。
 
-## Production patterns in the wild
+## 現場の production pattern
 
-Codex CLI, Claude Code, and OpenCode each ship a different compaction story; the structured handoff packet sits on top of all three.
+Codex CLI、Claude Code、OpenCode はそれぞれ異なる compaction story を持っています。structured handoff packet はその3つすべての上に乗ります。
 
-**Compaction strategies vary; the packet schema does not.** Codex CLI's POST /v1/responses/compact is a server-side opaque AES blob (fast path for OpenAI models); the fallback is a local "handoff summary" appended as a `_summary` user-role message. Claude Code runs five-stage progressive compaction at 95% of context. OpenCode does timestamp-based message hiding plus a 5-heading LLM summary. Three different mechanisms, same need: serialize what survives compression into a portable artifact. The packet is that artifact.
+**compaction strategy は変わっても packet schema は変わらない。** Codex CLI の POST /v1/responses/compact は server-side opaque AES blob です (OpenAI models 用の fast path)。fallback は local の「handoff summary」を `_summary` user-role message として append します。Claude Code は context の 95% で five-stage progressive compaction を実行します。OpenCode は timestamp-based message hiding と 5-heading LLM summary を使います。mechanism は3通りでも、必要なことは同じです。compression を生き残るものを portable artifact に serialize すること。packet がその artifact です。
 
-**Fresh-session handoff is not compaction.** Compaction extends a session; handoff closes one cleanly and starts the next. The Hermes Issue #20372 framing (April 2026) is right: when in-place compression starts degrading, the agent should write a compact handoff, end the session, and resume in fresh context. The packet is what makes that transition cheap. The mistake is to keep compressing until quality collapses; the fix is to budget for an early, clean handoff.
+**fresh-session handoff は compaction ではない。** compaction は session を伸ばします。handoff は session を clean に閉じ、次を開始します。Hermes Issue #20372 の framing (2026年4月) は正しいです。in-place compression が劣化し始めたら、agent は compact handoff を書き、session を終わらせ、fresh context で resume すべきです。その transition を安くするのが packet です。mistake は quality が崩れるまで compress し続けることです。fix は、早く clean に handoff する budget を取ることです。
 
-**One active handoff per branch and topic.** Multi-agent coordination breaks down on stale handoffs more than on bad model output. Always include `branch`, `last_known_good_commit`, and a `status` of `active | superseded | archived`. Stale handoffs are archived; only the active one drives the next session. This is the difference between handoff-as-notes and handoff-as-state.
+**branch と topic ごとに active handoff は1つ。** Multi-agent coordination は bad model output より stale handoff で壊れます。必ず `branch`、`last_known_good_commit`、`active | superseded | archived` の `status` を含めます。stale handoffs は archived にし、active なものだけが次 session を駆動します。これが handoff-as-notes と handoff-as-state の違いです。
 
-**Wrap up before 50-75% context, not at the wall.** The hand-written-pattern playbook (CLAUDE.md + HANDOVER.md) reports best results when the session ends at 50-75% context budget instead of 95%. The packet generator runs cleanly before compression artifacts pollute the source state. Cheap to write while context is intact; expensive when the model is already losing its place.
+**context の壁ではなく 50-75% の前に wrap up する。** hand-written-pattern playbook (CLAUDE.md + HANDOVER.md) は、session を context budget の 95% ではなく 50-75% で終えるのが最良だと報告しています。packet generator は、compression artifact が source state を汚す前に clean に動きます。context が intact な間は書くのが安く、model がすでに位置を見失ってからでは高くつきます。
 
-## Use It
+## 使い方
 
-Production patterns:
+Production pattern:
 
-- **Session-end hook.** The runtime fires the generator when the user closes the chat. The packet goes into `outputs/handoff/<session_id>/`.
-- **PR template.** The generator's markdown is also a PR body. Reviewers read it without opening five other files.
-- **Cross-agent handoff.** Build with one product (Claude Code), continue with another (Codex). The packet is the lingua franca.
+- **Session-end hook。** user が chat を閉じると runtime が generator を起動します。packet は `outputs/handoff/<session_id>/` に入ります。
+- **PR template。** generator の markdown は PR body としても使えます。reviewer は5つの別 file を開かずに読めます。
+- **Cross-agent handoff。** ある product (Claude Code) で build し、別の product (Codex) で続けます。packet は lingua franca です。
 
-The packet is small, regular, and cheap to produce. The cost saving compounds with every session.
+packet は小さく、規則的で、安く作れます。cost saving は session のたびに複利で効きます。
 
-## Ship It
+## 出荷する
 
-`outputs/skill-handoff-generator.md` produces a generator tuned to a project's artifact paths, an end-of-session hook that runs it, and a `handoff.json` schema the next agent reads on startup.
+`outputs/skill-handoff-generator.md` は、project の artifact paths に合わせた generator、それを実行する end-of-session hook、次の agent が startup で読む `handoff.json` schema を生成します。
 
-## Exercises
+## 演習
 
-1. Add an `assumptions_to_validate` field that surfaces every assumption the builder logged but the reviewer did not score above 1.
-2. Trim the feedback summary differently for failing runs versus passing ones. Defend the asymmetry.
-3. Include a "questions for the human" list. What is the threshold for a question to make it into the packet versus into a chat message?
-4. Make the generator idempotent: running it twice produces the same packet. What needs to be stable for that to hold?
-5. Add a "next session prereqs" section listing exactly the artifacts the next session must load before acting.
+1. builder が log したが reviewer が 1 を超えて score しなかった assumption をすべて surface する `assumptions_to_validate` field を追加する。
+2. failing run と passing run で feedback summary の trim 方法を変える。その asymmetry を説明する。
+3. "questions for the human" list を含める。packet に入れる question と chat message にする question の threshold は何か。
+4. generator を idempotent にする。2回実行して同じ packet を生成する。何が stable である必要があるか。
+5. "next session prereqs" section を追加し、次 session が action 前に load すべき artifacts を正確に列挙する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Handoff packet | "Session summary" | Generated artifact carrying the seven fields, both markdown and JSON |
-| Next action | "What to do first" | The one concrete step that starts the next session |
-| Feedback trim | "Log summary" | Last K records plus every non-zero exit |
-| Status report | "What we did" | A document missing `next_action`; useful, but not a handoff |
-| Verdict pointer | "Receipt" | Path to the verification + review reports for traceability |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Handoff packet | 「Session summary」 | 7つの fields を持ち、markdown と JSON の両方で生成される artifact |
+| Next action | 「最初に何をするか」 | 次 session を始める1つの具体的 step |
+| Feedback trim | 「Log summary」 | 最後の K records とすべての non-zero exit |
+| Status report | 「何をしたか」 | `next_action` を欠く document。有用だが handoff ではない |
+| Verdict pointer | 「Receipt」 | traceability のための verification + review reports への path |
 
-## Further Reading
+## 参考文献
 
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 - [OpenAI Agents SDK handoffs](https://platform.openai.com/docs/guides/agents-sdk/handoffs)
-- [Codex Blog, Codex CLI Context Compaction: Architecture, Configuration, Managing Long Sessions](https://codex.danielvaughan.com/2026/03/31/codex-cli-context-compaction-architecture/) — POST /v1/responses/compact and local fallback
-- [Justin3go, Shedding Heavy Memories: Context Compaction in Codex, Claude Code, OpenCode](https://justin3go.com/en/posts/2026/04/09-context-compaction-in-codex-claude-code-and-opencode) — three-vendor compaction comparison
-- [JD Hodges, Claude Handoff Prompt: How to Keep Context Across Sessions (2026)](https://www.jdhodges.com/blog/ai-session-handoffs-keep-context-across-conversations/) — CLAUDE.md + HANDOVER.md, 50-75% context budget
+- [Codex Blog, Codex CLI Context Compaction: Architecture, Configuration, Managing Long Sessions](https://codex.danielvaughan.com/2026/03/31/codex-cli-context-compaction-architecture/) — POST /v1/responses/compact と local fallback
+- [Justin3go, Shedding Heavy Memories: Context Compaction in Codex, Claude Code, OpenCode](https://justin3go.com/en/posts/2026/04/09-context-compaction-in-codex-claude-code-and-opencode) — 3 vendor の compaction 比較
+- [JD Hodges, Claude Handoff Prompt: How to Keep Context Across Sessions (2026)](https://www.jdhodges.com/blog/ai-session-handoffs-keep-context-across-conversations/) — CLAUDE.md + HANDOVER.md、50-75% context budget
 - [Mervin Praison, Managing Handoffs in Multi-Agent Coding Sessions: Fresh Context Without Losing Continuity](https://mer.vin/2026/04/managing-handoffs-in-multi-agent-coding-sessions-fresh-context-without-losing-continuity/) — distributed-systems framing
 - [Hermes Issue #20372 — automatic fresh-session handoff when compression becomes risky](https://github.com/NousResearch/hermes-agent/issues/20372)
-- [Hermes Issue #499 — Context Compaction Quality Overhaul](https://github.com/NousResearch/hermes-agent/issues/499) — handoff-oriented prompts in Codex CLI
+- [Hermes Issue #499 — Context Compaction Quality Overhaul](https://github.com/NousResearch/hermes-agent/issues/499) — Codex CLI の handoff-oriented prompts
 - [Microsoft Agent Framework, Compaction](https://learn.microsoft.com/en-us/agent-framework/agents/conversations/compaction)
 - [OpenCode, Context Management and Compaction](https://deepwiki.com/sst/opencode/2.4-context-management-and-compaction)
 - [LangChain, Context Engineering for Agents](https://www.langchain.com/blog/context-engineering-for-agents)
-- Phase 14 · 34 — the state file the generator reads
-- Phase 14 · 38 — the verification verdict the packet points at
-- Phase 14 · 39 — the reviewer report bundled into the packet
+- Phase 14 · 34 — generator が読む state file
+- Phase 14 · 38 — packet が指す verification verdict
+- Phase 14 · 39 — packet に bundle される reviewer report

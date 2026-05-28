@@ -1,110 +1,110 @@
-# TensorRT-LLM on Blackwell with FP8 and NVFP4
+# FP8 と NVFP4 を使う Blackwell 上の TensorRT-LLM
 
-> TensorRT-LLM is NVIDIA-only but it wins on Blackwell. On GB200 NVL72 with Dynamo orchestration, SemiAnalysis InferenceX measured $0.012 per million tokens on a 120B model in Q1-Q2 2026, against $0.09/M on H100 + vLLM — a 7x economic gap. The stack is three floating-point regimes compounded: FP8 stays critical for KV cache and attention kernels because it has the dynamic range they need; NVFP4 (4-bit microscaling) handles weights and activations; multi-token prediction (MTP) and disaggregated prefill/decode add another 2-3x on top. Day-0 model support loads FP4 weights directly without post-training conversion. The catch for 2026 engineering teams: TRT-LLM is a closed NVIDIA stack, so adopting it trades portability for throughput. Run the math on your mix of models and hardware before committing.
+> TensorRT-LLM は NVIDIA-only ですが、Blackwell では勝ちます。GB200 NVL72 と Dynamo orchestration では、SemiAnalysis InferenceX が 2026 年 Q1-Q2 に 120B model で $0.012 per million tokens を測定しました。H100 + vLLM の $0.09/M に対して 7x の economic gap です。この stack は 3 つの floating-point regime が重なっています。FP8 は必要な dynamic range を持つため KV cache と attention kernels で critical のままです。NVFP4 (4-bit microscaling) は weights と activations を扱います。multi-token prediction (MTP) と disaggregated prefill/decode がさらに 2-3x を積みます。Day-0 model support は post-training conversion なしに FP4 weights を直接 load します。2026 年の engineering team にとっての catch は、TRT-LLM が closed NVIDIA stack であり、採用は portability と throughput の tradeoff になることです。commit する前に、自分たちの model/hardware mix で math を走らせてください。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
-**Prerequisites:** Phase 17 · 04 (vLLM Serving Internals), Phase 10 · 13 (Quantization)
-**Time:** ~75 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**前提条件:** Phase 17 · 04 (vLLM Serving Internals), Phase 10 · 13 (Quantization)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Explain why FP8 stays critical for KV cache and attention even when weights are in NVFP4.
-- Compute the HBM footprint of a frontier model under BF16, FP8, and NVFP4 and reason about where the savings come from.
-- Name the Blackwell-specific features TRT-LLM exploits (day-0 FP4, MTP, disaggregated serving, all-to-all primitives).
-- Decide when TRT-LLM's NVIDIA-lock is worth the 7x cost gap vs vLLM on Hopper.
+- weights が NVFP4 でも、KV cache と attention で FP8 が critical のままなのはなぜか説明する。
+- BF16、FP8、NVFP4 における frontier model の HBM footprint を計算し、saving がどこから来るか reason する。
+- TRT-LLM が利用する Blackwell-specific features (day-0 FP4、MTP、disaggregated serving、all-to-all primitives) を naming する。
+- TRT-LLM の NVIDIA-lock が Hopper 上の vLLM に対する 7x cost gap に見合う場面を判断する。
 
-## The Problem
+## 問題
 
-The frontier of inference economics in 2026 is "how many tokens per dollar". The answer depends on four stacked choices: hardware generation (Hopper H100/H200 vs Blackwell B200/GB200), precision (BF16 → FP8 → NVFP4), serving engine (vLLM vs SGLang vs TRT-LLM), and orchestration (plain vs disaggregated vs Dynamo).
+2026 年の inference economics の frontier は「dollar あたり tokens 数」です。答えは 4 つの選択の stack に依存します。hardware generation (Hopper H100/H200 vs Blackwell B200/GB200)、precision (BF16 → FP8 → NVFP4)、serving engine (vLLM vs SGLang vs TRT-LLM)、orchestration (plain vs disaggregated vs Dynamo) です。
 
-On Hopper with vLLM, a 120B MoE runs at ~$0.09 per million tokens. On Blackwell with TRT-LLM + Dynamo, the same model runs at ~$0.012 — 7x cheaper. Some of that gap is hardware (Blackwell is 11-15x per-GPU LLM throughput vs Hopper). Some is the stack: FP4 weights, MTP draft, disaggregated prefill/decode, and NVLink 5 all-to-all for MoE expert communication.
+Hopper + vLLM では、120B MoE は約 $0.09 per million tokens で動きます。Blackwell + TRT-LLM + Dynamo では、同じ model が約 $0.012、つまり 7x cheap に動きます。gap の一部は hardware です (Blackwell は Hopper に対して per-GPU LLM throughput が 11-15x)。一部は stack です。FP4 weights、MTP draft、disaggregated prefill/decode、MoE expert communication 向け NVLink 5 all-to-all です。
 
-You cannot replicate this outside NVIDIA's stack. That is the tradeoff — portability for economics. Understanding which stack choices give which share of the gap is the point of this lesson.
+これは NVIDIA stack 外では再現できません。つまり tradeoff は portability と economics です。gap のどの share がどの stack choice から来るのか理解することが、この lesson の目的です。
 
 ## The Concept
 
-### Why FP8 is still the floor for KV cache
+### KV cache では FP8 がまだ floor である理由
 
-A common mistake in 2026: assuming NVFP4 applies everywhere. It does not. KV cache needs FP8 (8-bit floating point) because it stores attention keys and values that span a wide dynamic range. Quantizing KV to FP4 causes catastrophic accuracy loss — the tail of the distribution drops off and attention scores collapse. FP8's exponent bits give KV cache the range it needs.
+2026 年の common mistake は、NVFP4 が everywhere に適用できると思うことです。できません。KV cache は FP8 (8-bit floating point) を必要とします。attention keys と values は wide dynamic range にまたがるからです。KV を FP4 に quantize すると catastrophic accuracy loss が起きます。distribution tail が落ち、attention scores が collapse します。FP8 の exponent bits が KV cache に必要な range を与えます。
 
-NVFP4 (2025-2026) applies to weights and activations. Microscaling: each block of weights has its own scale factor so small blocks can span different dynamic ranges without per-tensor scale loss. For activations, FP4 holds up because activations are small-range within a layer.
+NVFP4 (2025-2026) は weights と activations に適用されます。microscaling では、weights block ごとに独自の scale factor を持たせます。small blocks が per-tensor scale loss なしに異なる dynamic range を持てるようにするためです。activations は layer 内で small-range なので FP4 でも持ちます。
 
-The typical Blackwell config:
+typical Blackwell config:
 
-- Weights: NVFP4 (4-bit microscaling).
-- Activations: NVFP4.
-- KV cache: FP8.
-- Attention accumulator: FP32 (softmax stability).
+- Weights: NVFP4 (4-bit microscaling)。
+- Activations: NVFP4。
+- KV cache: FP8。
+- Attention accumulator: FP32 (softmax stability)。
 
-### The Blackwell-specific primitives TRT-LLM uses
+### TRT-LLM が使う Blackwell-specific primitives
 
-- **Day-0 FP4 weights**: model providers ship FP4 weights directly; TRT-LLM loads without post-training conversion. No AWQ / GPTQ step for FP4.
-- **Multi-token prediction (MTP)**: same idea as EAGLE (Phase 17 · 05) but integrated into the TRT-LLM build.
-- **Disaggregated serving**: prefill and decode on separate GPU pools, KV cache transferred over NVLink or InfiniBand. Same idea as Dynamo (Phase 17 · 20).
-- **All-to-all communication primitives**: NVLink 5 cut MoE expert communication latency by 3x vs Hopper. TRT-LLM's MoE kernels are tuned for this.
-- **NVFP4 + MXFP8 microscaling**: hardware-accelerated scale-factor handling on Blackwell Tensor Cores.
+- **Day-0 FP4 weights**: model providers が FP4 weights を直接出荷し、TRT-LLM は post-training conversion なしに load します。FP4 用の AWQ / GPTQ step は不要です。
+- **Multi-token prediction (MTP)**: EAGLE (Phase 17 · 05) と同じ idea ですが、TRT-LLM build に integrated されています。
+- **Disaggregated serving**: prefill と decode を separate GPU pools に置き、KV cache を NVLink または InfiniBand で転送します。Dynamo (Phase 17 · 20) と同じ idea です。
+- **All-to-all communication primitives**: NVLink 5 は Hopper 比で MoE expert communication latency を 3x 削減しました。TRT-LLM の MoE kernels はこれに tune されています。
+- **NVFP4 + MXFP8 microscaling**: Blackwell Tensor Cores 上で scale-factor handling が hardware-accelerated されています。
 
-### The numbers you should memorize
+### 覚えるべき数字
 
-- HGX B200 at $0.02/M tokens on GPT-OSS-120B via TRT-LLM.
-- GB200 NVL72 at $0.012/M tokens via Dynamo (orchestrating TRT-LLM).
-- H100 + vLLM ≈ $0.09/M tokens on comparable workload.
-- 2.8x throughput gain in three months of TRT-LLM updates (2026).
-- 11-15x per-GPU LLM throughput, Blackwell vs Hopper.
-- MLPerf Inference v6.0 (April 2026): Blackwell dominates every submitted task.
+- HGX B200 は TRT-LLM で GPT-OSS-120B を $0.02/M tokens。
+- GB200 NVL72 は Dynamo (TRT-LLM orchestration) で $0.012/M tokens。
+- H100 + vLLM は comparable workload で約 $0.09/M tokens。
+- 2026 年の TRT-LLM updates 3 か月で throughput gain 2.8x。
+- Blackwell vs Hopper は per-GPU LLM throughput 11-15x。
+- MLPerf Inference v6.0 (2026 年 4 月): Blackwell は submitted task すべてで dominant。
 
-### What FP4 actually costs in quality
+### FP4 が quality に与える実際の cost
 
-NVFP4 is aggressive. On reasoning-heavy workloads (chain-of-thought, math, code-gen with long context), FP4 weights degrade visibly. Per-block calibration mitigates but does not eliminate. Teams shipping reasoning models often use FP8 weights + FP4 activations as a compromise, or stick to H200 with FP8 throughout.
+NVFP4 は aggressive です。reasoning-heavy workloads (chain-of-thought、math、long context の code-gen) では FP4 weights は visibly に degrade します。per-block calibration は緩和しますが消しません。reasoning model を出荷する team は、compromise として FP8 weights + FP4 activations を使うか、H200 で throughout FP8 に留まることがあります。
 
-The rule: always validate task quality on your eval set before committing to NVFP4 weights.
+rule: NVFP4 weights に commit する前に、必ず eval set で task quality を validate してください。
 
-### Why this is an NVIDIA-lock decision
+### なぜ NVIDIA-lock decision なのか
 
-TRT-LLM is C++ + CUDA + closed-source kernels. Models need to be compiled for a specific GPU SKU. No AMD, no Intel, no ARM. If your infra strategy is multi-vendor, TRT-LLM is a non-starter for the TRT-LLM-served tier — you can still serve from vLLM on mixed hardware. If you are NVIDIA-only, the 7x gap pays for the lock.
+TRT-LLM は C++ + CUDA + closed-source kernels です。model は specific GPU SKU 向けに compile する必要があります。AMD なし、Intel なし、ARM なし。infra strategy が multi-vendor なら、TRT-LLM-served tier に TRT-LLM は non-starter です。mixed hardware では vLLM で serve できます。NVIDIA-only なら 7x gap が lock-in の代金を払います。
 
 ### 2026 practical recipe
 
-For a $100M+ annual inference bill, running on Hopper + vLLM leaves 7-10x on the table. Migrate cost-dominant workloads to Blackwell + TRT-LLM + Dynamo. Keep experimentation tier on H100 + vLLM for model iteration speed. Validate quality on each NVFP4-converted model before production.
+年間 inference bill が $100M+ なら、Hopper + vLLM のままでは 7-10x を table に残しています。cost-dominant workload を Blackwell + TRT-LLM + Dynamo へ migrate します。model iteration speed のために experimentation tier は H100 + vLLM に残します。本番前に各 NVFP4-converted model の quality を validate します。
 
-### The disaggregation bonus
+### disaggregation bonus
 
-TRT-LLM's disaggregated serving (separate prefill and decode pools) is covered in depth in Phase 17 · 20. On Blackwell, the multiplier stacks: FP4 weights × MTP speedup × disaggregated placement × cache-aware routing. The 7x number assumes this full stack.
+TRT-LLM の disaggregated serving (separate prefill and decode pools) は Phase 17 · 20 で詳しく扱います。Blackwell では multiplier が stack します。FP4 weights × MTP speedup × disaggregated placement × cache-aware routing です。7x の数字はこの full stack を仮定しています。
 
 ## Use It
 
-`code/main.py` computes HBM footprint, decode throughput (memory-bound regime), and $/M-tokens for a model across three stacks: H100 + BF16 + vLLM, H100 + FP8 + vLLM, B200 + NVFP4/FP8 + TRT-LLM. Run it to see the compounding effect and the share of the gap each change contributes.
+`code/main.py` は HBM footprint、decode throughput (memory-bound regime)、$/M-tokens を 3 stack で計算します。H100 + BF16 + vLLM、H100 + FP8 + vLLM、B200 + NVFP4/FP8 + TRT-LLM です。実行すると compounding effect と、gap の各 share が見えます。
 
 ## Ship It
 
-This lesson produces `outputs/skill-trtllm-blackwell-advisor.md`. Given a workload, model size, and annual token volume, it decides whether the Blackwell + TRT-LLM stack is worth the NVIDIA-lock.
+この lesson は `outputs/skill-trtllm-blackwell-advisor.md` を生成します。workload、model size、annual token volume が与えられると、Blackwell + TRT-LLM stack が NVIDIA-lock に見合うかを判断します。
 
 ## Exercises
 
-1. Run `code/main.py`. On a 120B MoE with 30% active parameters, compute the memory-bandwidth-limited decode throughput on H100 BF16, H100 FP8, and B200 NVFP4/FP8. Where does the biggest jump come from?
-2. A customer spends $2M/year on H100 + vLLM. What is the break-even number of Blackwell GPUs they need to buy to amortize a migration to TRT-LLM in 12 months, given the 7x economic gap?
-3. You see accuracy drop 3 points on MATH after NVFP4 weight conversion. Name two recovery paths: one quality-first (keep FP8 weights), one cost-first (calibrate with in-domain data).
-4. Read the MLPerf v6.0 inference results. Which task has the smallest Blackwell-over-Hopper gap, and why?
-5. Compute the HBM needed for a 405B model at NVFP4 weights + FP8 KV cache at 128k context. Does it fit on a single GB200 NVL72 node?
+1. `code/main.py` を実行してください。active parameters 30% の 120B MoE で、H100 BF16、H100 FP8、B200 NVFP4/FP8 の memory-bandwidth-limited decode throughput を計算してください。最大の jump はどこから来ますか。
+2. customer が H100 + vLLM に年間 $2M を使っています。7x economic gap を前提に、12 か月で TRT-LLM migration を amortize するには Blackwell GPU を何台買う必要がありますか。
+3. NVFP4 weight conversion 後に MATH accuracy が 3 points 落ちました。recovery path を 2 つ挙げてください。quality-first (FP8 weights を維持) と cost-first (in-domain data で calibrate) です。
+4. MLPerf v6.0 inference results を読んでください。Blackwell-over-Hopper gap が最小の task はどれで、なぜですか。
+5. 405B model を NVFP4 weights + FP8 KV cache、128k context で動かす HBM を計算してください。single GB200 NVL72 node に収まりますか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| FP8 | "eight-bit float" | 8-bit floating point; used for KV cache and attention due to dynamic range |
-| NVFP4 | "four-bit micro" | NVIDIA's 4-bit microscaling FP format; weights and activations on Blackwell |
-| MXFP8 | "MX eight" | Microscaling FP8 variant; hardware-accelerated on Blackwell Tensor Cores |
-| Day-0 FP4 | "ship FP4 weights" | Model providers release weights already in FP4; no post-train conversion step |
-| MTP | "multi-token prediction" | TRT-LLM's integrated speculative-decoding draft (Phase 17 · 05) |
-| Disaggregated serving | "split prefill/decode" | Prefill and decode on separate GPU pools; KV transferred over NVLink/IB |
-| All-to-all | "MoE expert comm" | Communication pattern routing tokens to expert GPUs; NVLink 5 cuts 3x |
-| InferenceX | "SemiAnalysis inference bench" | The 2026 industry-accepted cost-per-token benchmark |
+| FP8 | 「eight-bit float」 | 8-bit floating point。dynamic range のため KV cache と attention に使う |
+| NVFP4 | 「four-bit micro」 | NVIDIA の 4-bit microscaling FP format。Blackwell 上の weights と activations |
+| MXFP8 | 「MX eight」 | microscaling FP8 variant。Blackwell Tensor Cores で hardware-accelerated |
+| Day-0 FP4 | 「FP4 weights を出荷」 | model providers が FP4 weights を既に release し、post-train conversion が不要 |
+| MTP | 「multi-token prediction」 | TRT-LLM の integrated speculative-decoding draft (Phase 17 · 05) |
+| Disaggregated serving | 「prefill/decode を分離」 | prefill と decode を separate GPU pools へ置き、KV を NVLink/IB で転送 |
+| All-to-all | 「MoE expert comm」 | tokens を expert GPUs に route する communication pattern。NVLink 5 が 3x 削減 |
+| InferenceX | 「SemiAnalysis inference bench」 | 2026 年の industry-accepted cost-per-token benchmark |
 
-## Further Reading
+## 参考文献
 
-- [NVIDIA — Blackwell Ultra MLPerf Inference v6.0](https://developer.nvidia.com/blog/nvidia-blackwell-ultra-sets-new-inference-records-in-mlperf-debut/) — April 2026 MLPerf results.
-- [NVIDIA — MoE Inference on Blackwell](https://developer.nvidia.com/blog/delivering-massive-performance-leaps-for-mixture-of-experts-inference-on-nvidia-blackwell/) — NVLink 5 all-to-all and MoE kernels.
-- [TensorRT-LLM Overview](https://nvidia.github.io/TensorRT-LLM/overview.html) — official engine documentation.
-- [NVIDIA — Introducing Dynamo](https://developer.nvidia.com/blog/introducing-nvidia-dynamo-a-low-latency-distributed-inference-framework-for-scaling-reasoning-ai-models/) — disaggregated orchestration above TRT-LLM.
-- [MLPerf Inference](https://mlcommons.org/benchmarks/inference-datacenter/) — the benchmark suite that publishes Blackwell numbers.
+- [NVIDIA — Blackwell Ultra MLPerf Inference v6.0](https://developer.nvidia.com/blog/nvidia-blackwell-ultra-sets-new-inference-records-in-mlperf-debut/) — 2026 年 4 月 MLPerf results。
+- [NVIDIA — MoE Inference on Blackwell](https://developer.nvidia.com/blog/delivering-massive-performance-leaps-for-mixture-of-experts-inference-on-nvidia-blackwell/) — NVLink 5 all-to-all と MoE kernels。
+- [TensorRT-LLM Overview](https://nvidia.github.io/TensorRT-LLM/overview.html) — 公式エンジンドキュメント。
+- [NVIDIA — Introducing Dynamo](https://developer.nvidia.com/blog/introducing-nvidia-dynamo-a-low-latency-distributed-inference-framework-for-scaling-reasoning-ai-models/) — TRT-LLM 上の disaggregated orchestration。
+- [MLPerf Inference](https://mlcommons.org/benchmarks/inference-datacenter/) — Blackwell numbers を publish する benchmark suite。

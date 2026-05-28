@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Before this lesson, which platform would you reach for first if a customer needed Claude, Llama, and Cohere behind one API?",
+      "question": "このレッスンの前に、顧客が Claude、Llama、Cohere を1つの API の背後で必要とした場合、最初にどの platform を選びますか。",
       "options": [
         "Vertex AI",
         "AWS Bedrock",
@@ -16,7 +16,7 @@
     },
     {
       "stage": "pre",
-      "question": "Which hyperscaler's bet is described as exclusive partnership rather than marketplace?",
+      "question": "marketplace ではなく exclusive partnership として説明されている hyperscaler の賭けはどれですか。",
       "options": [
         "Azure OpenAI",
         "Vertex AI",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Roughly what is the measured median TTFT gap between Azure OpenAI (with PTUs) and Bedrock on-demand on Llama 3.1 405B equivalents?",
+      "question": "Llama 3.1 405B 相当で、Azure OpenAI（PTU あり）と Bedrock on-demand の measured median TTFT gap はおおよそどれくらいですか。",
       "options": [
         "~100 ms",
         "~5 ms",
@@ -40,7 +40,7 @@
     },
     {
       "stage": "check",
-      "question": "Which Bedrock 2025 feature gives the cleanest per-product cost attribution natively in CloudWatch?",
+      "question": "CloudWatch native で最もきれいな per-product cost attribution を提供する Bedrock の2025年機能はどれですか。",
       "options": [
         "Bedrock Knowledge Bases",
         "Application Inference Profiles",
@@ -52,7 +52,7 @@
     },
     {
       "stage": "check",
-      "question": "Azure PTUs typically break even versus on-demand at what sustained utilization band?",
+      "question": "Azure PTU は、on-demand と比べて通常どの sustained utilization band で break-even になりますか。",
       "options": [
         "5-10%",
         "80-95%",
@@ -64,24 +64,24 @@
     },
     {
       "stage": "post",
-      "question": "Why is the lesson's recommended 2026 policy a two-provider minimum for product-critical LLM calls?",
+      "question": "このレッスンが、product-critical な LLM call に対して2026年の推奨 policy を two-provider minimum としている理由は何ですか。",
       "options": [
-        "It is required by SOC 2 Type II",
-        "Frontier model leadership rotates monthly, so single-vendor lock-in shuts you out of two-thirds of the frontier",
-        "Hyperscalers refuse to sign BAAs unless you also use a competitor",
-        "Single-vendor pricing is always more expensive"
+        "SOC 2 Type II で必須だから",
+        "frontier model leadership は月ごとに入れ替わるため、single-vendor lock-in は frontier の3分の2から締め出されるから",
+        "hyperscaler は競合も使わない限り BAA に署名しないから",
+        "single-vendor pricing は常に高いから"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which statement best describes the FinOps surface across the three platforms?",
+      "question": "3つの platform にまたがる FinOps surface を最もよく説明している文はどれですか。",
       "options": [
-        "Azure is cleanest native, Bedrock is opaque",
-        "Vertex has no attribution surface at all",
-        "All three expose identical per-request attribution",
-        "Bedrock is cleanest native, Vertex is most flexible via BigQuery, Azure is most opaque without instrumentation"
+        "Azure が native で最もきれいで、Bedrock は不透明",
+        "Vertex には attribution surface がまったくない",
+        "3社すべてが同一の per-request attribution を公開している",
+        "Bedrock は native で最もきれい、Vertex は BigQuery 経由で最も柔軟、Azure は instrumentation なしでは最も不透明"
       ],
       "correct": 3,
       "explanation": ""

@@ -1,54 +1,54 @@
 ---
 name: ai-scientist-sandbox-review
-description: Two-gate review checklist for research-loop agent outputs before anything leaves the sandbox.
+description: 研究ループエージェントの出力をサンドボックス外へ出す前に使う2ゲートのレビューチェックリスト。
 version: 1.0.0
 phase: 15
 lesson: 5
 tags: [ai-scientist, research-agent, sandbox, peer-review, disclosure]
 ---
 
-Given an autonomous research output (hypothesis, code, experiments, figures, paper draft) produced by an AI-Scientist-v2-style loop, produce a two-gate review: sandbox audit (does anything leave?) plus research audit (is the work sound?).
+AI-Scientist-v2 形式のループが生成した自律研究の出力（仮説、コード、実験、図表、論文ドラフト）を受け取り、2ゲートのレビューを作成する。サンドボックス監査（何かが外へ出るか）と研究監査（研究として妥当か）で構成する。
 
-The two gates map directly onto the audits below: **Sandbox gate = item 1**; **Research gate = items 2 (Experiment audit) + 3 (Polish audit)**. Items 4–5 govern what happens after both gates pass.
+2つのゲートは、下の監査項目に直接対応する。**Sandbox gate = 項目 1**、**Research gate = 項目 2 (Experiment audit) + 項目 3 (Polish audit)**。項目 4-5 は、両方のゲートを通過した後の扱いを定める。
 
-Produce:
+作成するもの:
 
-1. **Sandbox gate.** Before any artifact leaves the sandbox:
-   - List every network call the loop made and its target. Flag any that were not pre-approved.
-   - Inventory every file the loop wrote outside its working directory.
-   - Confirm Docker / seccomp / gVisor containment held for the full run.
-   - Confirm no subprocesses escaped the sandbox's supervision.
-   If any check fails, block export; raise to a human.
-2. **Experiment audit.** Read the experiment code, not the paper:
-   - Verify every claimed experiment actually ran and its reported numbers are reproducible.
-   - Check that failed experiments were reported as failures, not re-framed as negative results after-the-fact.
-   - Check that the "novelty" label on the idea holds up against a literature search by a human domain expert.
-3. **Polish audit.** Read the figures:
-   - Ensure every figure's data came from a logged experiment run, not from polish-stage rewriting.
-   - Confirm axes, scales, and annotations match the underlying data.
-   - Flag any figure whose caption claims more than the data supports.
-4. **Disclosure plan.** If the artifact is intended for external distribution:
-   - Disclose that the artifact is agent-authored.
-   - Disclose the tools used (model family, loop version).
-   - Disclose the human reviewer who checked it and what they checked.
-5. **Negative-release decision.** If the artifact fails any audit step, the default is do not release. Overriding this default requires a named human owner.
+1. **Sandbox gate.** どの成果物もサンドボックス外へ出す前に:
+   - ループが行ったすべてのネットワーク呼び出しと、その宛先を列挙する。事前承認されていないものをフラグする。
+   - ループが作業ディレクトリ外へ書き込んだすべてのファイルを棚卸しする。
+   - 実行全体で Docker / seccomp / gVisor による封じ込めが維持されたことを確認する。
+   - サブプロセスがサンドボックスの監督から外れていないことを確認する。
+   いずれかのチェックが失敗した場合は、エクスポートをブロックし、人間へエスカレーションする。
+2. **Experiment audit.** 論文ではなく、実験コードを読む:
+   - 主張されているすべての実験が実際に実行され、報告された数値が再現可能であることを確認する。
+   - 失敗した実験が、事後的に否定的結果として言い換えられず、失敗として報告されていることを確認する。
+   - アイデアに付いた「新規性」ラベルが、人間のドメイン専門家による文献検索に照らして成立することを確認する。
+3. **Polish audit.** 図表を読む:
+   - すべての図表のデータが、見栄えを整える段階での書き換えではなく、ログに記録された実験実行から来ていることを確認する。
+   - 軸、スケール、注釈が基礎データと一致することを確認する。
+   - キャプションがデータで裏付けられる以上のことを主張している図表をフラグする。
+4. **Disclosure plan.** 成果物を外部配布する予定がある場合:
+   - 成果物がエージェントにより作成されたことを開示する。
+   - 使用したツール（モデルファミリー、ループバージョン）を開示する。
+   - チェックした人間レビュアーと、そのレビュアーが何を確認したかを開示する。
+5. **Negative-release decision.** 成果物がいずれかの監査ステップに失敗した場合、デフォルトはリリースしないことである。このデフォルトを覆すには、名前付きの人間オーナーが必要である。
 
-Hard rejects:
-- Any submission that skips either gate.
-- Any artifact where the loop's execution logs are missing or incomplete.
-- Any figure that cannot be traced to a specific experiment run.
-- Any novelty claim that a domain expert has not verified.
+絶対的な拒否条件:
+- どちらかのゲートを省略した投稿。
+- ループの実行ログが欠落している、または不完全な成果物。
+- 特定の実験実行へ追跡できない図表。
+- ドメイン専門家が検証していない新規性の主張。
 
-Refusal rules:
-- If the run lacks Docker or equivalent isolation, refuse and require re-run in an isolated sandbox.
-- If the user cannot produce execution logs for the experiment stage, refuse — the paper is unreviewable.
-- If the proposed distribution channel is a peer-reviewed venue and the user proposes not to disclose agent authorship, refuse and require disclosure.
+拒否ルール:
+- 実行に Docker または同等の隔離がない場合は拒否し、隔離されたサンドボックスでの再実行を求める。
+- ユーザーが実験段階の実行ログを提示できない場合は拒否する。この論文はレビュー不能である。
+- 提案された配布チャネルが査読付き venue であり、ユーザーがエージェント作成であることを開示しないつもりなら、拒否して開示を求める。
 
-Output format:
+出力形式:
 
-Return a two-gate report:
-- **Sandbox gate verdict** (PASS / BLOCK, with rationale)
-- **Research gate verdict** (covers Experiment audit (2) and Polish audit (3)) (PASS / BLOCK / REQUIRES_EXPERT, with per-check notes)
-- **Disclosure plan** (venue, text, human reviewer name)
-- **Release decision** (release / hold / reject)
-- **Next action** (who does what by when)
+2ゲートのレポートを返す:
+- **Sandbox gate verdict**（PASS / BLOCK、根拠付き）
+- **Research gate verdict**（Experiment audit (2) と Polish audit (3) を対象にする）（PASS / BLOCK / REQUIRES_EXPERT、チェックごとのメモ付き）
+- **Disclosure plan**（venue、文面、人間レビュアー名）
+- **Release decision**（release / hold / reject）
+- **Next action**（誰が、何を、いつまでに行うか）

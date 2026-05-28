@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,7 +7,7 @@
       .fail { fill: #fce4ec; stroke: #c0392b; stroke-width: 1; }
       .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
       .content { font-size: 11px; fill: #333; }
-      .mono { font-size: 10px; fill: #333; font-family: 'Menlo', monospace; }
+      .mono { font-size: 10px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .cell-pass { fill: #2e7d32; }
@@ -16,10 +16,10 @@
     </style>
   </defs>
 
-  <text x="450" y="28" text-anchor="middle" class="title">needle-in-haystack grid — depth × length pass rate</text>
+  <text x="450" y="28" text-anchor="middle" class="title">NIAHグリッド — 深さ×長さの合格率</text>
 
   <!-- Grid -->
-  <text x="200" y="70" text-anchor="middle" class="label">NIAH pass-rate heatmap</text>
+  <text x="200" y="70" text-anchor="middle" class="label">NIAH合格率ヒートマップ</text>
 
   <!-- Column headers -->
   <text x="120" y="100" class="mono">4k</text>
@@ -29,7 +29,7 @@
   <text x="330" y="100" class="mono">1M</text>
 
   <!-- Row: depth 0.1 -->
-  <text x="70" y="125" class="mono">depth 0.1</text>
+  <text x="70" y="125" class="mono">深さ0.1</text>
   <rect x="110" y="110" width="40" height="25" class="pass"/>
   <rect x="160" y="110" width="40" height="25" class="pass"/>
   <rect x="215" y="110" width="40" height="25" class="pass"/>
@@ -37,7 +37,7 @@
   <rect x="320" y="110" width="40" height="25" class="partial"/>
 
   <!-- Row: depth 0.3 -->
-  <text x="70" y="155" class="mono">depth 0.3</text>
+  <text x="70" y="155" class="mono">深さ0.3</text>
   <rect x="110" y="140" width="40" height="25" class="pass"/>
   <rect x="160" y="140" width="40" height="25" class="pass"/>
   <rect x="215" y="140" width="40" height="25" class="pass"/>
@@ -45,7 +45,7 @@
   <rect x="320" y="140" width="40" height="25" class="fail"/>
 
   <!-- Row: depth 0.5 -->
-  <text x="70" y="185" class="mono">depth 0.5</text>
+  <text x="70" y="185" class="mono">深さ0.5</text>
   <rect x="110" y="170" width="40" height="25" class="pass"/>
   <rect x="160" y="170" width="40" height="25" class="partial"/>
   <rect x="215" y="170" width="40" height="25" class="fail"/>
@@ -53,7 +53,7 @@
   <rect x="320" y="170" width="40" height="25" class="fail"/>
 
   <!-- Row: depth 0.7 -->
-  <text x="70" y="215" class="mono">depth 0.7</text>
+  <text x="70" y="215" class="mono">深さ0.7</text>
   <rect x="110" y="200" width="40" height="25" class="pass"/>
   <rect x="160" y="200" width="40" height="25" class="pass"/>
   <rect x="215" y="200" width="40" height="25" class="partial"/>
@@ -61,7 +61,7 @@
   <rect x="320" y="200" width="40" height="25" class="fail"/>
 
   <!-- Row: depth 0.9 -->
-  <text x="70" y="245" class="mono">depth 0.9</text>
+  <text x="70" y="245" class="mono">深さ0.9</text>
   <rect x="110" y="230" width="40" height="25" class="pass"/>
   <rect x="160" y="230" width="40" height="25" class="pass"/>
   <rect x="215" y="230" width="40" height="25" class="pass"/>
@@ -70,32 +70,32 @@
 
   <!-- Legend -->
   <rect x="110" y="275" width="20" height="15" class="pass"/>
-  <text x="135" y="287" class="caption">pass ≥ 90%</text>
+  <text x="135" y="287" class="caption">合格 ≥ 90%</text>
   <rect x="210" y="275" width="20" height="15" class="partial"/>
-  <text x="235" y="287" class="caption">partial 60-90%</text>
+  <text x="235" y="287" class="caption">一部 60-90%</text>
   <rect x="310" y="275" width="20" height="15" class="fail"/>
-  <text x="335" y="287" class="caption">fail &lt; 60%</text>
+  <text x="335" y="287" class="caption">失敗 &lt; 60%</text>
 
-  <text x="200" y="325" text-anchor="middle" class="caption">middle depths degrade first — "lost in the middle"</text>
+  <text x="200" y="325" text-anchor="middle" class="caption">中央付近が先に劣化 — "lost in the middle"</text>
 
   <!-- Right side: bigger picture -->
   <rect x="450" y="70" width="410" height="350" class="box"/>
-  <text x="655" y="95" text-anchor="middle" class="label">beyond NIAH</text>
+  <text x="655" y="95" text-anchor="middle" class="label">NIAHの先へ</text>
 
-  <text x="465" y="130" class="content"><tspan font-weight="700">RULER</tspan> — 13 tasks: multi-needle, variable</text>
-  <text x="465" y="148" class="content">tracing, aggregation, QA. Exposes models</text>
-  <text x="465" y="166" class="content">that saturate NIAH but fail multi-hop.</text>
+  <text x="465" y="130" class="content"><tspan font-weight="700">RULER</tspan> — 13タスク: 複数の針、可変</text>
+  <text x="465" y="148" class="content">トレース、集約、QA。NIAHで飽和しても</text>
+  <text x="465" y="166" class="content">多段推論で失敗するモデルを発見。</text>
 
-  <text x="465" y="200" class="content"><tspan font-weight="700">LongBench v2</tspan> — 503 multiple-choice Qs,</text>
-  <text x="465" y="218" class="content">8k–2M context, six real-world categories.</text>
+  <text x="465" y="200" class="content"><tspan font-weight="700">LongBench v2</tspan> — 503問の多肢選択、</text>
+  <text x="465" y="218" class="content">8k–2M文脈、6つの実世界カテゴリ。</text>
 
-  <text x="465" y="252" class="content"><tspan font-weight="700">MRCR 8-needle</tspan> — Gemini 3 Pro advertises</text>
-  <text x="465" y="270" class="content">10M; scores 77% at 128k, 26.3% at 1M.</text>
+  <text x="465" y="252" class="content"><tspan font-weight="700">MRCR 8-needle</tspan> — Gemini 3 Proは</text>
+  <text x="465" y="270" class="content">10Mを掲げるが、128kで77%、1Mで26.3%。</text>
 
-  <text x="465" y="304" class="content"><tspan font-weight="700">NoLiMa / BABILong</tspan> — non-lexical needle</text>
-  <text x="465" y="322" class="content">and reasoning-in-haystack — hardest variants.</text>
+  <text x="465" y="304" class="content"><tspan font-weight="700">NoLiMa / BABILong</tspan> — 非語彙の針と</text>
+  <text x="465" y="322" class="content">長文内推論 — 最難関の派生。</text>
 
-  <text x="655" y="370" text-anchor="middle" class="label">report two numbers, not one:</text>
-  <text x="655" y="390" text-anchor="middle" class="caption">effective retrieval length &amp; effective reasoning length</text>
-  <text x="655" y="408" text-anchor="middle" class="caption">(usually 25-50% of advertised window)</text>
+  <text x="655" y="370" text-anchor="middle" class="label">1つでなく2つの数値を報告:</text>
+  <text x="655" y="390" text-anchor="middle" class="caption">有効検索長 &amp; 有効推論長</text>
+  <text x="655" y="408" text-anchor="middle" class="caption">(通常は公称ウィンドウの25-50%)</text>
 </svg>

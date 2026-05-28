@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How does the lesson split the 2026 LLM observability market?",
+      "question": "このレッスンは 2026 年の LLM observability market をどのように分けていますか？",
       "options": [
-        "Development platforms (bundled with evals/prompts/sessions) versus gateway/telemetry tools",
-        "On-prem versus cloud",
-        "Vendor versus open source",
-        "Python versus TypeScript"
+        "Development platforms（evals/prompts/sessions を含む）と gateway/telemetry tools",
+        "On-prem と cloud",
+        "Vendor と open source",
+        "Python と TypeScript"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which tool does the lesson position as MIT-licensed core with strong self-host story and 50K events/month free cloud tier?",
+      "question": "MIT-licensed core、強い self-host story、50K events/month の free cloud tier を持つと、このレッスンが位置づける tool はどれですか？",
       "options": [
         "LangSmith",
         "Phoenix",
@@ -28,11 +28,11 @@
     },
     {
       "stage": "check",
-      "question": "What is Arize AX's main scale claim relative to monolithic observability stacks like Datadog?",
+      "question": "Datadog のような monolithic observability stacks に対する Arize AX の主な scale claim は何ですか？",
       "options": [
-        "Always more expensive",
-        "Roughly 100x cheaper at scale via zero-copy Iceberg/Parquet integration",
-        "Free under 1M events/day",
+        "常により高価",
+        "Zero-copy Iceberg/Parquet integration により scale でおおむね 100x cheaper",
+        "1M events/day 未満では無料",
         "10% cheaper"
       ],
       "correct": 1,
@@ -40,23 +40,23 @@
     },
     {
       "stage": "check",
-      "question": "What does the lesson call the wrong instrumentation layer for portability?",
+      "question": "Portability の観点で、このレッスンが間違った instrumentation layer と呼ぶものは何ですか？",
       "options": [
-        "Instrumenting inside your agent framework, since it couples you to that framework",
-        "Sampling at 5% on successes",
-        "Using OpenTelemetry GenAI semantic conventions",
-        "Instrumenting at the HTTP/OpenAI-SDK layer"
+        "Agent framework 内で instrument すること。Framework に coupling するため",
+        "Successes を 5% sample すること",
+        "OpenTelemetry GenAI semantic conventions を使うこと",
+        "HTTP/OpenAI-SDK layer で instrument すること"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which OpenTelemetry conventions does the lesson identify as the 2026 interop layer between observability tools?",
+      "question": "このレッスンが observability tools 間の 2026 年の interop layer として挙げる OpenTelemetry conventions はどれですか？",
       "options": [
         "OTel messaging semantic conventions",
         "OTel database semantic conventions",
-        "GenAI semantic conventions (gen_ai.system, gen_ai.request.model, gen_ai.usage.input_tokens)",
+        "GenAI semantic conventions（gen_ai.system、gen_ai.request.model、gen_ai.usage.input_tokens）",
         "OTel HTTP semantic conventions"
       ],
       "correct": 2,
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the lesson argue full-trace retention does not scale past 1M requests/day?",
+      "question": "このレッスンが 1M requests/day を超えると full-trace retention は scale しないと論じる理由は何ですか？",
       "options": [
-        "Retention storage costs more than the LLM calls themselves; teams must sample (e.g. 100% errors, 100% high-cost, 5% successes)",
-        "OpenTelemetry caps trace volume",
-        "Vendors block it",
-        "Phoenix only supports 1M traces"
+        "Retention storage cost が LLM calls 自体より高くなるため。Teams は sample する必要がある（例: 100% errors、100% high-cost、5% successes）",
+        "OpenTelemetry が trace volume に上限を設けるため",
+        "Vendors がそれを block するため",
+        "Phoenix は 1M traces しか support しないため"
       ],
       "correct": 0,
       "explanation": ""

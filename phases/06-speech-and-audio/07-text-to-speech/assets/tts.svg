@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -7,44 +7,44 @@
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="440" y="28" text-anchor="middle" class="title">text → phonemes → mel → waveform</text>
+  <text x="440" y="28" text-anchor="middle" class="title">テキスト → 音素 → mel → 波形</text>
 
   <!-- Pipeline -->
   <rect x="40" y="60" width="160" height="70" class="box"/>
-  <text x="120" y="82" text-anchor="middle" class="label">text frontend</text>
-  <text x="120" y="105" text-anchor="middle" class="content">normalize + G2P</text>
+  <text x="120" y="82" text-anchor="middle" class="label">テキストフロントエンド</text>
+  <text x="120" y="105" text-anchor="middle" class="content">正規化 + G2P</text>
   <text x="120" y="121" text-anchor="middle" class="caption">"6 pm" → "six p m"</text>
 
   <line x1="205" y1="95" x2="228" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="232" y="60" width="180" height="70" class="box"/>
-  <text x="322" y="82" text-anchor="middle" class="label">acoustic model</text>
+  <text x="322" y="82" text-anchor="middle" class="label">音響モデル</text>
   <text x="322" y="105" text-anchor="middle" class="content">phones → mel [T, 80]</text>
   <text x="322" y="121" text-anchor="middle" class="caption">FastSpeech / VITS / F5</text>
 
   <line x1="417" y1="95" x2="440" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="444" y="60" width="160" height="70" class="hot"/>
-  <text x="524" y="82" text-anchor="middle" class="label">vocoder</text>
+  <text x="524" y="82" text-anchor="middle" class="label">ボコーダ</text>
   <text x="524" y="105" text-anchor="middle" class="content">mel → wav [T·256]</text>
   <text x="524" y="121" text-anchor="middle" class="caption">HiFi-GAN, BigVGAN</text>
 
   <line x1="609" y1="95" x2="632" y2="95" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="636" y="60" width="200" height="70" class="box"/>
-  <text x="736" y="82" text-anchor="middle" class="label">waveform 24 kHz</text>
+  <text x="736" y="82" text-anchor="middle" class="label">波形 24 kHz</text>
   <text x="736" y="105" text-anchor="middle" class="content">float32 in [-1, 1]</text>
-  <text x="736" y="121" text-anchor="middle" class="caption">speaker.wav</text>
+  <text x="736" y="121" text-anchor="middle" class="caption">スピーカー.wav</text>
 
   <!-- Model timeline -->
   <rect x="40" y="160" width="800" height="130" class="box"/>
-  <text x="440" y="182" text-anchor="middle" class="label">open-source TTS timeline</text>
+  <text x="440" y="182" text-anchor="middle" class="label">オープンソースTTS年表</text>
   <line x1="80" y1="240" x2="820" y2="240" stroke="#1a1a1a" stroke-width="1"/>
   <circle cx="130" cy="240" r="5" fill="#1a1a1a"/>
   <text x="130" y="220" text-anchor="middle" class="content" font-size="11">Tacotron 2</text>
@@ -67,13 +67,13 @@
 
   <!-- Quality table -->
   <rect x="40" y="310" width="800" height="150" class="hot"/>
-  <text x="440" y="332" text-anchor="middle" class="label">2026 open-source leaderboard (LibriTTS test-clean)</text>
-  <text x="60"  y="360" class="content">model</text>
+  <text x="440" y="332" text-anchor="middle" class="label">2026年オープンソース順位表 (LibriTTS test-clean)</text>
+  <text x="60"  y="360" class="content">モデル</text>
   <text x="300" y="360" class="content">UTMOS</text>
   <text x="440" y="360" class="content">CER via Whisper</text>
-  <text x="700" y="360" class="content">params</text>
+  <text x="700" y="360" class="content">パラメータ</text>
   <line x1="60" y1="370" x2="820" y2="370" stroke="#1a1a1a" stroke-width="1"/>
-  <text x="60" y="390" class="content">ground truth</text>        <text x="300" y="390" class="content">4.08</text>  <text x="440" y="390" class="content">1.2%</text>  <text x="700" y="390" class="content">—</text>
+  <text x="60" y="390" class="content">正解音声</text>        <text x="300" y="390" class="content">4.08</text>  <text x="440" y="390" class="content">1.2%</text>  <text x="700" y="390" class="content">—</text>
   <text x="60" y="410" class="content">F5-TTS</text>              <text x="300" y="410" class="content">3.95</text>  <text x="440" y="410" class="content">2.1%</text>  <text x="700" y="410" class="content">335M</text>
   <text x="60" y="430" class="content">Kokoro v0.19</text>        <text x="300" y="430" class="content">3.87</text>  <text x="440" y="430" class="content">1.8%</text>  <text x="700" y="430" class="content">82M</text>
   <text x="60" y="450" class="content">XTTS v2</text>             <text x="300" y="450" class="content">3.81</text>  <text x="440" y="450" class="content">3.5%</text>  <text x="700" y="450" class="content">470M</text>

@@ -4,87 +4,87 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What input does Claude computer use take, and what does it emit?",
+      "question": "Claude computer useは何をinputとして受け取り、何をemitしますか?",
       "options": [
-        "Accessibility tree in, keyboard/mouse commands out",
-        "Screenshots in (vision-based), keyboard/mouse commands out",
-        "DOM XML in, JavaScript out",
-        "JSON in, SQL out"
+        "accessibility tree in、keyboard/mouse commands out",
+        "screenshots in (vision-based)、keyboard/mouse commands out",
+        "DOM XML in、JavaScript out",
+        "JSON in、SQL out"
       ],
       "correct": 1,
-      "explanation": "Claude reads pixels and emits keyboard/mouse actions; no OS accessibility API is used."
+      "explanation": "Claudeはpixelを読み、keyboard/mouse actionをemitします。OS accessibility APIは使われません。"
     },
     {
       "stage": "pre",
-      "question": "What is Gemini 2.5 Computer Use's distinguishing safety feature?",
+      "question": "Gemini 2.5 Computer Useを特徴づけるsafety featureは何ですか?",
       "options": [
-        "A per-step safety service that assesses each action before execution and rejects unsafe ones",
-        "Hard-coded WAF rules",
-        "Mandatory CAPTCHAs",
-        "Read-only mode by default"
+        "execution前に各actionをassessし、unsafeなものをrejectするper-step safety service",
+        "hard-coded WAF rules",
+        "必須のCAPTCHA",
+        "defaultのread-only mode"
       ],
       "correct": 0,
-      "explanation": "Gemini 2.5 Computer Use ships a per-step safety classifier as a defining feature."
+      "explanation": "Gemini 2.5 Computer Useは、per-step safety classifierを特徴的な機能としてshipしています。"
     },
     {
       "stage": "check",
-      "question": "What does the lesson identify as untrusted input across all three models?",
+      "question": "このlessonは、3 modelすべてに共通するuntrusted inputとして何を挙げていますか?",
       "options": [
-        "Only HTTPS responses",
-        "Screenshots, DOM text, tool outputs, PDF content, anything retrieved",
-        "Only PDF content",
-        "Nothing; everything is trusted"
+        "HTTPS responseのみ",
+        "screenshots、DOM text、tool outputs、PDF content、retrievedされたものすべて",
+        "PDF contentのみ",
+        "何もない。すべてtrustedである"
       ],
       "correct": 1,
-      "explanation": "Only direct user instructions count as permission; everything else is untrusted."
+      "explanation": "permissionとして数えられるのはdirect user instructionsだけです。それ以外はuntrustedです。"
     },
     {
       "stage": "check",
-      "question": "Which OSWorld / WebArena numbers does the lesson cite for OpenAI CUA at launch?",
+      "question": "このlessonはOpenAI CUAのlaunch時のOSWorld / WebArena numbersとしてどれを引用していますか?",
       "options": [
         "OSWorld 38.1%, WebArena 58.1%, WebVoyager 87%",
         "OSWorld 0%, WebArena 0%",
         "OSWorld 99%, WebArena 99%",
-        "Numbers not reported"
+        "numbersはreportedされていない"
       ],
       "correct": 0,
-      "explanation": "Those were the launch numbers cited."
+      "explanation": "これらが引用されたlaunch numbersです。"
     },
     {
       "stage": "check",
-      "question": "Which defense pattern is NOT in the 2026 convergence list?",
+      "question": "2026 convergence listに含まれないdefense patternはどれですか?",
       "options": [
-        "Per-step safety classifier",
-        "Allowlist/blocklist of navigation targets",
-        "Human-in-the-loop for sensitive actions",
-        "Auto-clicking through dialogs to save time"
+        "per-step safety classifier",
+        "navigation targetsのallowlist/blocklist",
+        "sensitive actionsに対するhuman-in-the-loop",
+        "時間節約のためdialogをauto-clickすること"
       ],
       "correct": 3,
-      "explanation": "Auto-clicking dialogs is the opposite of safe; the lesson recommends explicit confirmation."
+      "explanation": "dialogのauto-clickはsafeの反対です。このlessonは明示的なconfirmationを推奨しています。"
     },
     {
       "stage": "post",
-      "question": "What is the principal attack the lesson highlights against computer-use agents?",
+      "question": "このlessonがcomputer-use agentsに対して強調するprincipal attackは何ですか?",
       "options": [
-        "Network outages",
-        "A malicious page or PDF embedding instructions in retrieved content that the model treats as user intent",
-        "Slow rendering",
+        "network outage",
+        "malicious pageやPDFがretrieved content内にinstructionを埋め込み、modelがそれをuser intentとして扱うこと",
+        "slow rendering",
         "OS update lag"
       ],
       "correct": 1,
-      "explanation": "Trusting screenshots or DOM text as permission is the canonical indirect-prompt-injection failure."
+      "explanation": "screenshotsやDOM textをpermissionとしてtrustすることが、典型的なindirect-prompt-injection failureです。"
     },
     {
       "stage": "post",
-      "question": "When is human-in-the-loop confirmation specifically recommended?",
+      "question": "human-in-the-loop confirmationは具体的にいつ推奨されますか?",
       "options": [
-        "On read-only navigation",
-        "On sensitive actions like login, purchase, file delete",
-        "Only when the model asks",
-        "Never"
+        "read-only navigationのとき",
+        "login、purchase、file deleteのようなsensitive actionsのとき",
+        "modelが求めたときだけ",
+        "決して不要"
       ],
       "correct": 1,
-      "explanation": "Sensitive actions (money, data exposure, new logins) require explicit human confirmation."
+      "explanation": "sensitive actions (money、data exposure、new logins) には明示的なhuman confirmationが必要です。"
     }
   ]
 }

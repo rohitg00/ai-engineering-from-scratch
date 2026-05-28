@@ -1,4 +1,4 @@
-"""End-to-end tests for the composed agent + harness."""
+"""compose された agent + harness の end-to-end tests。"""
 
 from __future__ import annotations
 
@@ -98,8 +98,8 @@ class SandboxTests(unittest.TestCase):
     def test_sandbox_runs_echo_in_repo(self) -> None:
         repo = prepare_scratch_repo()
         sb = Sandbox(project_root=repo)
-        # Smoke-test that we can spawn a process. Use python -m to avoid
-        # invoking the interpreter directly through its own check.
+        # process を spawn できることの smoke test。interpreter 自身の check を避けるため
+        # python -m を使う。
         result = sb.run([sys.executable, "-V"])
         self.assertEqual(result.exit_code, 0, msg=result.stderr)
 
@@ -117,7 +117,7 @@ class FixtureRepoTests(unittest.TestCase):
         self.assertTrue(os.path.isfile(src))
         with open(src, "r", encoding="utf-8") as fh:
             text = fh.read()
-        # Off-by-one: range(1, n) instead of range(1, n + 1).
+        # off-by-one: range(1, n + 1) ではなく range(1, n)。
         self.assertIn("range(1, n)", text)
         self.assertNotIn("range(1, n + 1)", text)
 

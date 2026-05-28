@@ -1,102 +1,102 @@
 {
   "lesson": "15-topic-modeling",
-  "title": "Topic Modeling — LDA and BERTopic",
+  "title": "トピックモデリング — LDA と BERTopic",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does LDA assume about each document?",
+      "question": "LDA は各文書について何を仮定しますか。",
       "options": [
-        "Each document belongs to exactly one topic",
-        "Documents are sentences",
-        "Each document is a mixture of topics; each topic is a distribution over words",
-        "Documents are independent of topics"
+        "各文書はちょうど1つのトピックに属する",
+        "文書は文である",
+        "各文書はトピックの混合であり、各トピックは単語上の分布である",
+        "文書はトピックから独立している"
       ],
       "correct": 2,
-      "explanation": "LDA's generative story is mixed-membership: each doc has a topic distribution, each topic a word distribution."
+      "explanation": "LDA の生成ストーリーは mixed-membership です。各文書はトピック分布を持ち、各トピックは単語分布を持ちます。"
     },
     {
       "stage": "pre",
-      "question": "What does BERTopic use to form topic clusters?",
+      "question": "BERTopic は何を使ってトピッククラスタを形成しますか。",
       "options": [
-        "Direct softmax over the vocabulary",
-        "Encode docs with a sentence transformer, reduce dimensionality with UMAP, then cluster with HDBSCAN",
-        "Run BM25 followed by k-means",
-        "Train an LSTM end-to-end"
+        "語彙全体に対する直接の softmax",
+        "文書を sentence transformer でエンコードし、UMAP で次元削減してから HDBSCAN でクラスタリングする",
+        "BM25 を実行してから k-means を使う",
+        "LSTM をエンドツーエンドで訓練する"
       ],
       "correct": 1,
-      "explanation": "BERTopic = embeddings + UMAP + HDBSCAN, with class-based TF-IDF for topic words."
+      "explanation": "BERTopic は embeddings + UMAP + HDBSCAN であり、トピック語には class-based TF-IDF を使います。"
     },
     {
       "stage": "check",
-      "question": "Why does scikit-learn's LDA expect raw counts (CountVectorizer), not TF-IDF?",
+      "question": "scikit-learn の LDA が TF-IDF ではなく生のカウント（CountVectorizer）を前提とするのはなぜですか。",
       "options": [
-        "TF-IDF is too slow",
-        "LDA's probabilistic model is defined over integer term counts; TF-IDF distorts the underlying distribution",
-        "LDA cannot handle floats",
-        "Memory limits"
+        "TF-IDF は遅すぎるから",
+        "LDA の確率モデルは整数の語カウント上で定義されており、TF-IDF は基礎となる分布を歪めるから",
+        "LDA は浮動小数点数を扱えないから",
+        "メモリ制限のため"
       ],
       "correct": 1,
-      "explanation": "LDA likelihood assumes counts; feeding TF-IDF values violates the model assumption."
+      "explanation": "LDA の尤度はカウントを仮定します。TF-IDF 値を入力すると、そのモデル仮定に反します。"
     },
     {
       "stage": "check",
-      "question": "What does HDBSCAN's -1 label mean in a BERTopic output?",
+      "question": "BERTopic の出力における HDBSCAN の -1 ラベルは何を意味しますか。",
       "options": [
-        "A reserved category",
-        "An outlier cluster of documents the density-based algorithm could not confidently assign",
-        "Stopword cluster",
-        "Top topic"
+        "予約済みカテゴリ",
+        "密度ベースのアルゴリズムが確信を持って割り当てられなかった文書の外れ値クラスタ",
+        "ストップワードクラスタ",
+        "最上位トピック"
       ],
       "correct": 1,
-      "explanation": "HDBSCAN marks unclustered points with -1; in BERTopic these are documents that did not fit any topic."
+      "explanation": "HDBSCAN はクラスタに入らない点を -1 でマークします。BERTopic では、どのトピックにも合わなかった文書です。"
     },
     {
       "stage": "check",
-      "question": "Which coherence metric is the common default for topic-model evaluation?",
+      "question": "トピックモデル評価で一般的なデフォルトのコヒーレンス指標はどれですか。",
       "options": [
         "BLEU",
         "Accuracy",
-        "Perplexity only",
-        "c_v coherence via NPMI over sliding windows of top topic words"
+        "Perplexity のみ",
+        "上位トピック語のスライディングウィンドウ上の NPMI に基づく c_v coherence"
       ],
       "correct": 3,
-      "explanation": "c_v coherence (Roder et al., 2015) is the canonical automatic topic-coherence metric."
+      "explanation": "c_v coherence（Roder et al., 2015）は、標準的な自動トピックコヒーレンス指標です。"
     },
     {
       "stage": "post",
-      "question": "When is LDA usually a better fit than BERTopic?",
+      "question": "LDA が BERTopic より適していることが多いのはどのような場合ですか。",
       "options": [
-        "On short tweets",
-        "Long documents where mixed-membership topic distributions are useful and embeddings would truncate input",
-        "When embeddings are noisy",
-        "When you need a single topic per document"
+        "短いツイートの場合",
+        "mixed-membership のトピック分布が有用で、埋め込みでは入力が切り捨てられる長文の場合",
+        "埋め込みがノイズを含む場合",
+        "文書ごとに単一トピックが必要な場合"
       ],
       "correct": 1,
-      "explanation": "Long documents benefit from LDA's mixed-membership model; BERT encoders truncate inputs."
+      "explanation": "長文は LDA の mixed-membership モデルの恩恵を受けます。BERT エンコーダは入力を切り捨てます。"
     },
     {
       "stage": "post",
-      "question": "Why does BERTopic typically win on short text (tweets, headlines)?",
+      "question": "BERTopic が短いテキスト（ツイート、見出し）で強いことが多いのはなぜですか。",
       "options": [
-        "Short text has fewer topics",
-        "It is faster",
-        "Semantic similarity in embedding space captures meaning where bag-of-words counts are too sparse",
-        "It supports more languages"
+        "短いテキストはトピック数が少ないから",
+        "より高速だから",
+        "bag-of-words のカウントが疎すぎる場面でも、埋め込み空間の意味的類似性が意味を捉えられるから",
+        "より多くの言語をサポートしているから"
       ],
       "correct": 2,
-      "explanation": "BERT embeddings provide semantic similarity for short text where word-overlap statistics fail."
+      "explanation": "BERT 埋め込みは、単語重複の統計がうまく働かない短いテキストに対して意味的類似性を提供します。"
     },
     {
       "stage": "post",
-      "question": "What is a common LDA failure mode for which you should monitor topics?",
+      "question": "トピックを監視するときに注意すべき、LDA の一般的な失敗モードは何ですか。",
       "options": [
-        "Document mixtures that sum to 1",
-        "Topics that match labeled categories perfectly",
-        "Junk topics that absorb stopwords or extremely frequent terms",
-        "Topics with too few documents"
+        "和が1になる文書混合",
+        "ラベル付きカテゴリに完全一致するトピック",
+        "ストップワードや極端な高頻度語を吸収するジャンクトピック",
+        "文書数が少なすぎるトピック"
       ],
       "correct": 2,
-      "explanation": "LDA can create junk topics that absorb stopwords; tighter min_df/max_df and stopword filtering mitigate."
+      "explanation": "LDA はストップワードを吸収するジャンクトピックを作ることがあります。より厳しい min_df/max_df とストップワードフィルタで軽減できます。"
     }
   ]
 }

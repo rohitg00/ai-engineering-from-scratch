@@ -1,47 +1,47 @@
-# Hypothesis Generator
+# 仮説ジェネレーター
 
-> A research agent that asks the same question twice is wasting tokens. The trick is forcing each draft to land somewhere new.
+> 同じ問いを二度たずねる研究エージェントはトークンを無駄にしています。重要なのは、各ドラフトを前回とは違う場所に着地させることです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 19 Track A lessons 20-29
-**Time:** ~90 minutes
+**種別:** Build
+**言語:** Python
+**前提:** Phase 19 Track A lessons 20-29
+**時間:** 約90分
 
-## Learning Objectives
-- Drive a sampler from a seed prompt and turn its outputs into typed hypothesis records.
-- Ramp the sampler temperature on each pass so the next draft drifts further from the last.
-- Filter near duplicates with a small embedding model and a cosine distance threshold.
-- Rank the survivors with a scoring function that blends novelty, specificity, and testability.
-- Hold every step deterministic so the same seed always produces the same queue.
+## 学習目標
+- シードプロンプトから sampler を動かし、出力を型付きの `Hypothesis` レコードへ変換する。
+- 各パスで temperature を上げ、次のドラフトを前回からさらに離れやすくする。
+- 小さな embedding モデルと cosine distance のしきい値で近重複を除外する。
+- novelty、specificity、testability を混ぜたスコア関数で候補を順位付けする。
+- 同じ seed なら常に同じ queue になるよう、全ステップを決定的に保つ。
 
-## Why generate, then filter
+## なぜ生成してからフィルタするのか
 
-A planner that asks one model one time gets one hypothesis. That is fine for a worked example. For a research loop it is the wrong shape. The loop wants a ranked queue with depth, so when the first hypothesis fails the runner has the next one ready without paying for another full sampling pass.
+プランナーがモデルを一度だけ呼ぶと仮説は一つだけです。例としては十分ですが、研究ループには浅すぎます。最初の仮説が失敗したとき、追加のサンプリングを待たずに次を実行できる、深さのある順位付き queue が必要です。
 
-Two ideas combine to produce that queue. The first is temperature ramping: each pass through the sampler raises the temperature a notch, so later drafts are encouraged to wander. The second is novelty filtering: after each draft, the generator measures the embedding distance from every prior survivor and rejects anything inside the cluster.
+この queue は二つの考え方で作ります。一つ目は temperature ramping です。sampler の各パスで temperature を少しずつ上げ、後半のドラフトほど探索的にします。二つ目は novelty filtering です。各ドラフトの embedding を、すでに採用した候補すべてと比較し、近すぎるものを落とします。
 
-The lesson ships a mock language model that returns scripted token sequences for fixed prompts. The mock is enough to exercise the full path: seed prompt in, temperature ramp applied, candidates parsed, novelty filter run, ranked queue out.
+このレッスンには固定プロンプトに対してスクリプト済みの token sequence を返す mock language model が含まれます。これだけで、seed prompt 入力、temperature ramp 適用、候補 parse、novelty filter、ranked queue 出力までの全経路をテストできます。
 
-## The Hypothesis shape
+## Hypothesis の形
 
 ```text
 Hypothesis
-  id             : int           (monotonic within a run)
-  text           : str           (the claim)
-  variables      : list[str]     (what changes between conditions)
-  metric         : str           (what the runner will measure)
-  baseline_ref   : str | None    (which paper or run the comparison cites)
-  draft_pass     : int           (which sampler pass produced this)
-  temperature    : float         (the sampler setting at draft time)
-  novelty_score  : float         (distance from prior survivors, 0..1)
-  rank_score     : float         (weighted sum used for ordering)
+  id             : int           (run 内で単調増加)
+  text           : str           (主張)
+  variables      : list[str]     (条件間で変えるもの)
+  metric         : str           (runner が測定するもの)
+  baseline_ref   : str | None    (比較対象の論文または run)
+  draft_pass     : int           (どの sampler pass で生成されたか)
+  temperature    : float         (生成時の sampler 設定)
+  novelty_score  : float         (既存採用候補からの距離、0..1)
+  rank_score     : float         (並べ替えに使う重み付き合計)
 ```
 
-`variables` and `metric` are not free text. The parser pulls them from a tagged response. The runner in lesson fifty-two reads these fields directly when it builds the experiment config.
+`variables` と `metric` は自由文ではありません。parser はタグ付き応答からこれらを抜き出します。lesson 52 の runner は実験設定を作るときにこのフィールドを直接読みます。
 
-`baseline_ref` is optional but recommended. The evaluator in lesson fifty-three needs a baseline to compare against. If the hypothesis omits one, the evaluator falls back to the previous run on the same metric.
+`baseline_ref` は任意ですが推奨です。lesson 53 の evaluator は比較用 baseline を必要とします。仮説に含まれない場合は、同じ metric の前回 run にフォールバックします。
 
-## Architecture
+## アーキテクチャ
 
 ```mermaid
 flowchart TD
@@ -57,19 +57,19 @@ flowchart TD
     I --> J[hypothesis queue]
 ```
 
-The loop is straight forward. The interesting part is each box has a hard contract.
+ループ自体は単純です。重要なのは、各箱が明確な contract を持つことです。
 
 ## Temperature ramp
 
-Start at `t_min`, end at `t_max`, step `(t_max - t_min) / (n_passes - 1)`. Each pass calls the sampler at the current temperature, producing `n_passes` evenly spaced values from `GeneratorConfig.schedule()`. The mock model honors temperature by switching between a small set of scripted responses keyed on `(prompt, temp_bucket)`. The buckets are open intervals so a small change in temperature picks a different bucket and produces a different draft. In production the sampler would be a real model with `temperature=t` passed through.
+`t_min` から始めて `t_max` で終わり、step は `(t_max - t_min) / (n_passes - 1)` です。各パスは現在の temperature で sampler を呼び、`GeneratorConfig.schedule()` から等間隔の `n_passes` 個の値を生成します。mock model は `(prompt, temp_bucket)` をキーにした応答を返すことで temperature を反映します。本番では実モデルに `temperature=t` を渡します。
 
-The default schedule is six passes from `0.2` to `1.2`. Six is enough to fill the queue without paying for samples that the novelty filter will reject anyway. Below `0.2` the model parrots the seed back. Above `1.2` the responses tend to drift off topic and fail the parser.
+デフォルトは `0.2` から `1.2` までの6パスです。`0.2` 未満では seed をそのまま繰り返しがちで、`1.2` を超えると話題から外れて parser に失敗しやすくなります。
 
 ## Novelty filter
 
-After each draft is parsed, the generator embeds the text and compares against every accepted hypothesis. The embedding is a small hashed bag of word tokens, normalised to unit length. Cosine distance between two unit vectors is `1 - dot(a, b)`. A draft passes if its minimum distance to any prior survivor is above `novelty_threshold`. Default is `0.25`.
+各ドラフトを parse したあと、generator は text を embed し、すべての採用済み仮説と比較します。embedding は単語 token の hashed bag で、unit length に正規化されます。二つの unit vector の cosine distance は `1 - dot(a, b)` です。既存候補への最小距離が `novelty_threshold` を超える場合だけ採用します。デフォルトは `0.25` です。
 
-The hashed embedding is not fancy. It is deterministic, has zero dependencies, and is enough to catch the obvious case: two drafts that share most of their nouns. A production deployment would swap in a small sentence model. The interface stays the same.
+この hashed embedding は高度ではありませんが、決定的で依存関係がなく、名詞の大半を共有する重複ドラフトを捕まえるには十分です。本番では小さな sentence model に差し替えられます。interface は変わりません。
 
 ## Rank score
 
@@ -79,9 +79,9 @@ rank_score = w_novelty * novelty_score
            + w_testability * testability_score
 ```
 
-Three sub scores. `novelty_score` is the minimum embedding distance from prior survivors. `specificity_score` is the count of concrete variables in the hypothesis divided by a target count. `testability_score` is one if the hypothesis specifies both a metric and a baseline, half if it only has a metric, zero otherwise.
+`novelty_score` は既存採用候補からの最小 embedding distance です。`specificity_score` は仮説内の具体的 variable 数を目標数で割ったものです。`testability_score` は metric と baseline の両方があれば1、metric だけなら0.5、それ以外は0です。
 
-Default weights are `0.4`, `0.3`, `0.3`. The weights live in the generator config so a downstream lesson can shift them without forking the code.
+デフォルト重みは `0.4`, `0.3`, `0.3` です。重みは generator config にあるため、後続レッスンはコードを fork せず調整できます。
 
 ## Mock language model
 
@@ -91,22 +91,22 @@ class MockLLM:
         ...
 ```
 
-The sampler is deterministic given a `(prompt, temperature, seed)` triple. The mock keeps a scripted response table keyed on `(prompt_signature, temperature_bucket)`. If the table has no entry for a key, the sampler returns a fallback that fails the parser. The fallback path is exercised by one of the tests.
+sampler は `(prompt, temperature, seed)` の組に対して決定的です。mock は `(prompt_signature, temperature_bucket)` をキーにした応答表を持ちます。キーが存在しない場合は parser に失敗する fallback を返します。この経路もテストで扱います。
 
-The seed is mixed into the response so the same `(prompt, temperature)` pair with different seeds produces different drafts. In tests we pin the seed to keep results reproducible. In a real deployment the seed would come from a system clock or a counter.
+seed は応答選択に混ぜ込まれるため、同じ `(prompt, temperature)` でも seed が違えば別のドラフトになります。テストでは再現性のため seed を固定します。本番では system clock や counter から seed を得ます。
 
 ## Output queue
 
-The output is a list of `Hypothesis` records sorted by `rank_score` descending. The runner in lesson fifty-two pops the head, runs the experiment, and the evaluator in lesson fifty-three writes a verdict back. If the verdict says the hypothesis was wrong, the runner pops the next one.
+出力は `rank_score` 降順に並んだ `Hypothesis` レコードの list です。lesson 52 の runner は先頭を pop して実験し、lesson 53 の evaluator は verdict を書き戻します。仮説が誤りなら runner は次を pop します。
 
-The queue is finite. When it is empty the orchestrator can either widen the seed prompt and run the generator again or stop and report the budget exhausted.
+queue は有限です。空になったら orchestrator は seed prompt を広げて generator を再実行するか、budget exhausted として停止します。
 
-## How to read the code
+## コードの読み方
 
-`code/main.py` defines `Hypothesis`, `MockLLM`, `HypothesisGenerator`, and a deterministic demo. The generator exposes a single `run(seed_prompt)` method that returns a sorted queue; the pass count is read from `GeneratorConfig.n_passes` rather than passed as an argument. The embedding is a hashed bag of tokens. The novelty filter is a single function. The rank score is a single function. Nothing depends on `numpy`; the embedding math is pure stdlib so the lesson stays portable.
+`code/main.py` は `Hypothesis`, `MockLLM`, `HypothesisGenerator`, 決定的 demo を定義します。generator は `run(seed_prompt)` だけを公開し、pass 数は `GeneratorConfig.n_passes` から読みます。embedding は token の hashed bag、novelty filter と rank score はそれぞれ単一関数です。`numpy` には依存しません。
 
-`code/tests/test_generator.py` covers the linear path, the duplicate rejection path, the parser failure path, the temperature ramp boundaries, and the rank ordering.
+`code/tests/test_generator.py` は通常経路、重複拒否、parser failure、temperature ramp の境界、rank ordering を確認します。
 
-## Where this slots in
+## 位置づけ
 
-Lesson fifty produces the queue. Lesson fifty-one takes the head of the queue and runs a literature search to confirm or refute it. Lesson fifty-two takes the same head and runs an actual experiment. Lesson fifty-three reads both outputs and writes a verdict. The four lessons compose into a research loop with no human in it; a human can step in at any boundary.
+lesson 50 は queue を生成します。lesson 51 は queue の先頭に対して literature search を実行し、既存研究が確認または反証していないかを見ます。lesson 52 は同じ先頭で実験を走らせます。lesson 53 は両方の出力を読んで verdict を書きます。四つのレッスンが、人間を挟まない研究ループとして合成されます。

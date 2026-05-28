@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,15 +10,15 @@
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">Multi-agent debate — full mesh vs sparse star</text>
+  <text x="480" y="26" text-anchor="middle" class="title">Multi-agent debate — full meshとsparse star</text>
 
   <rect x="40" y="50" width="420" height="260" class="box"/>
-  <text x="250" y="72" text-anchor="middle" class="head">full mesh  everyone reads everyone</text>
+  <text x="250" y="72" text-anchor="middle" class="head">full mesh  全員が全員を読む</text>
   <circle cx="140" cy="160" r="36" fill="#e6f4ea" stroke="#2e7d32" stroke-width="1.5"/>
   <text x="140" y="164" text-anchor="middle" class="step">alpha</text>
   <circle cx="360" cy="160" r="36" fill="#e6f4ea" stroke="#2e7d32" stroke-width="1.5"/>
@@ -46,18 +46,18 @@
   <line x1="795" y1="135" x2="735" y2="165" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="625" y1="255" x2="685" y2="205" stroke="#1a1a1a" stroke-width="1.5"/>
   <line x1="795" y1="255" x2="735" y2="205" stroke="#1a1a1a" stroke-width="1.5"/>
-  <text x="710" y="310" text-anchor="middle" class="small">N=5, R=2  16 critique ops (vs 40 full mesh)</text>
+  <text x="710" y="310" text-anchor="middle" class="small">N=5, R=2  16 critique ops (full meshなら40)</text>
 
   <rect x="40" y="330" width="880" height="180" class="box"/>
-  <text x="480" y="352" text-anchor="middle" class="head">when debate helps vs when it hurts</text>
+  <text x="480" y="352" text-anchor="middle" class="head">debateが効く場合 / 害になる場合</text>
   <rect x="60" y="370" width="840" height="30" class="agent"/>
-  <text x="78" y="390" class="step">HELPS: factuality (cross-check), rule-following (chess), open-ended reasoning</text>
+  <text x="78" y="390" class="step">効く: factuality (cross-check), rule-following (chess), open-ended reasoning</text>
   <rect x="60" y="404" width="840" height="30" class="hub"/>
-  <text x="78" y="424" class="step">HURTS: latency-sensitive UX, cost-bound flows, simple factual lookup</text>
+  <text x="78" y="424" class="step">害: latency-sensitive UX, cost-bound flows, simple factual lookup</text>
   <rect x="60" y="438" width="840" height="30" class="box"/>
-  <text x="78" y="458" class="step">Society of Minds: cross-model (ChatGPT + Bard) beats either alone</text>
+  <text x="78" y="458" class="step">Society of Minds: cross-model (ChatGPT + Bard) は単体より強い</text>
   <rect x="60" y="472" width="840" height="30" class="box"/>
-  <text x="78" y="492" class="step">sparse topology: matches accuracy at fraction of token cost</text>
+  <text x="78" y="492" class="step">sparse topology: token costを抑えつつaccuracyに近づく</text>
 
-  <text x="480" y="540" text-anchor="middle" class="caption">reach for debate when single-shot is wrong &gt; 5% of the time; otherwise cheaper patterns win.</text>
+  <text x="480" y="540" text-anchor="middle" class="caption">single-shotの誤りが &gt; 5% のときdebateを使う。それ以外は安いpatternが勝つ。</text>
 </svg>

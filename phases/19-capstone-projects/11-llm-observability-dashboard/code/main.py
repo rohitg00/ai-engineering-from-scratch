@@ -1,12 +1,12 @@
-"""LLM observability dashboard — span ingest + tail sampling + eval scaffold.
+"""LLM observability dashboard — span ingest + tail sampling + eval scaffold。
 
-The hard architectural primitive here is the tail-sampling collector plus
-evals-as-child-spans: errored traces are always kept, success traces are
-sampled, and every trace can be enriched with eval spans carrying scores.
-This scaffold implements the full pipeline in stdlib: span model, sampler,
-evals, drift detector, alerter.
+ここで重要な architecture primitive は tail-sampling collector と
+evals-as-child-spans の組み合わせである。Error trace は常に保持し、
+success trace は sample し、すべての trace に score を持つ eval span を
+追加できる。この scaffold は span model、sampler、eval、drift detector、
+alerter までを stdlib だけで実装する。
 
-Run:  python main.py
+実行:  python main.py
 """
 
 from __future__ import annotations
@@ -40,7 +40,7 @@ class Span:
 
 
 # ---------------------------------------------------------------------------
-# tail sampler  --  keep errors, sample success
+# tail sampler  --  error を保持し、success を sample する
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -51,7 +51,7 @@ class TailSampler:
     def decide(self, trace: list[Span]) -> bool:
         if any(s.status == "error" for s in trace):
             return True
-        # always keep any trace containing a high-toxicity or high-PII eval
+        # high-toxicity または high-PII eval を含む trace は必ず保持する
         for s in trace:
             if s.name == "eval" and (
                 s.attributes.get("toxicity", 0) > 0.5
@@ -62,7 +62,7 @@ class TailSampler:
 
 
 # ---------------------------------------------------------------------------
-# in-memory clickhouse stand-in
+# in-memory ClickHouse stand-in
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -84,11 +84,11 @@ class SpanStore:
 
 
 # ---------------------------------------------------------------------------
-# evals  --  faithfulness, toxicity, PII-leak (LLM-judge stubs)
+# evals  --  faithfulness、toxicity、PII-leak (LLM-judge stub)
 # ---------------------------------------------------------------------------
 
 def eval_faithfulness(response: str, context: str) -> float:
-    # stand-in: overlap of response tokens with context tokens
+    # stand-in: response token と context token の overlap
     r = set(response.lower().split())
     c = set(context.lower().split())
     if not r:
@@ -113,7 +113,7 @@ def eval_pii_leak(response: str) -> float:
 
 
 # ---------------------------------------------------------------------------
-# drift detector  --  PSI on pooled prompt fingerprints
+# drift detector  --  pooled prompt fingerprint 上の PSI
 # ---------------------------------------------------------------------------
 
 def prompt_fingerprint(prompt: str, n_bins: int = 8) -> int:
@@ -139,7 +139,7 @@ def psi(a: list[int], b: list[int], n_bins: int = 8) -> float:
 
 
 # ---------------------------------------------------------------------------
-# simulated ingest  --  realistic mix of SDKs + injected regression
+# simulated ingest  --  SDK mix と injected regression のシミュレーション
 # ---------------------------------------------------------------------------
 
 def synth_trace(trace_id: str, leak_pii: bool, rng: random.Random) -> list[Span]:
@@ -150,13 +150,13 @@ def synth_trace(trace_id: str, leak_pii: bool, rng: random.Random) -> list[Span]
                 duration_ms=rng.randint(400, 2400),
                 attributes={"app_id": "chatbot"})
     prompt = rng.choice([
-        "what is the weather in Tokyo today",
-        "summarize the recent Tokyo forecast",
-        "give me a travel tip for Tokyo",
-        "how warm is Tokyo this week",
+        "Tokyo の 今日 の 天気 は",
+        "Tokyo の 最近 の 天気 予報 を 要約",
+        "Tokyo 旅行 の tip を 教えて",
+        "今週 の Tokyo は どれくらい 暖かい",
     ])
-    resp = "your ssn is 123-45-6789" if leak_pii else "the weather in Tokyo is mild"
-    ctx = "relevant weather context Tokyo mild"
+    resp = "あなたの ssn は 123-45-6789 です" if leak_pii else "Tokyo の 天気 は 穏やか です"
+    ctx = "関連する 天気 context Tokyo 穏やか"
     llm = Span(trace_id=trace_id, span_id=f"{trace_id}_1", parent_span_id=root.span_id,
                name="llm_call",
                start_ms=root.start_ms + 50, duration_ms=root.duration_ms - 80,
@@ -175,7 +175,7 @@ def synth_trace(trace_id: str, leak_pii: bool, rng: random.Random) -> list[Span]
 
 
 def enrich_with_evals(trace: list[Span]) -> list[Span]:
-    """Add eval child spans on each llm span."""
+    """各 llm span に eval child span を追加する。"""
     out = list(trace)
     for s in trace:
         if s.is_llm():
@@ -195,7 +195,7 @@ def enrich_with_evals(trace: list[Span]) -> list[Span]:
 
 
 # ---------------------------------------------------------------------------
-# alerter  --  fires on threshold breach
+# alerter  --  threshold breach で発火する
 # ---------------------------------------------------------------------------
 
 def alerter(store: SpanStore) -> list[str]:
@@ -203,17 +203,17 @@ def alerter(store: SpanStore) -> list[str]:
     pii_events = [s for s in store.spans
                   if s.name == "eval" and s.attributes.get("pii_leak", 0) > 0.8]
     if pii_events:
-        alerts.append(f"PII LEAK DETECTED: {len(pii_events)} events "
+        alerts.append(f"PII LEAK DETECTED: {len(pii_events)} 件 "
                       f"(first trace: {pii_events[0].trace_id})")
     tox_events = [s for s in store.spans
                   if s.name == "eval" and s.attributes.get("toxicity", 0) > 0.5]
     if tox_events:
-        alerts.append(f"TOXICITY SURGE: {len(tox_events)} events")
+        alerts.append(f"TOXICITY SURGE: {len(tox_events)} 件")
     return alerts
 
 
 # ---------------------------------------------------------------------------
-# demo  --  200 good traces + 1% injected PII regression
+# demo  --  200 件の正常 trace + 1% の injected PII regression
 # ---------------------------------------------------------------------------
 
 def main() -> None:
@@ -230,14 +230,14 @@ def main() -> None:
         trace = enrich_with_evals(trace)
         if sampler.decide(trace):
             store.insert_trace(trace)
-        # track prompt fingerprints for drift (input distribution, not output)
+        # drift 用に prompt fingerprint を追跡する (output ではなく input distribution)
         llm_span = trace[1]
         fp = prompt_fingerprint(llm_span.attributes.get("prompt", ""))
         (current_fps if i > 150 else baseline_fps).append(fp)
 
     print(f"ingested spans     : {len(store.spans)}")
-    print(f"spans by model     : {dict(store.by_model)}")
-    print(f"cost by user       : {dict((k, round(v, 4)) for k, v in store.cost_by_user.items())}")
+    print(f"model 別 spans     : {dict(store.by_model)}")
+    print(f"user 別 cost       : {dict((k, round(v, 4)) for k, v in store.cost_by_user.items())}")
 
     alerts = alerter(store)
     if alerts:
@@ -245,7 +245,7 @@ def main() -> None:
         for a in alerts:
             print(f"  - {a}")
     else:
-        print("\nno alerts")
+        print("\nalert なし")
 
     psi_val = psi(baseline_fps, current_fps, n_bins=8)
     print(f"\nPSI (current vs baseline): {psi_val:.3f}")

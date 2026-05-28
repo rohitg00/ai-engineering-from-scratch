@@ -1,6 +1,6 @@
-"""Unit tests for gradient clipping and mixed-precision training.
+"""gradient clipping と mixed-precision training の unit tests。
 
-Run with: python3 -m unittest discover code/tests -v
+実行: python3 -m unittest discover code/tests -v
 """
 
 from __future__ import annotations

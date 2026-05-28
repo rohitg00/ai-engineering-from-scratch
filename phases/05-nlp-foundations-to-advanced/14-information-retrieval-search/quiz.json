@@ -1,102 +1,102 @@
 {
   "lesson": "14-information-retrieval-search",
-  "title": "Information Retrieval and Search",
+  "title": "情報検索とサーチ",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does BM25 score a document on?",
+      "question": "BM25は文書を何に基づいて採点しますか？",
       "options": [
-        "Edit distance to the query",
-        "Term frequency, IDF, and document-length-normalized presence of query terms",
-        "Embedding cosine to the query",
-        "PageRank over the corpus"
+        "クエリとの編集距離",
+        "語頻度、IDF、文書長で正規化されたクエリ語の出現",
+        "クエリとのembedding cosine",
+        "コーパス上のPageRank"
       ],
       "correct": 1,
-      "explanation": "BM25 weighs TF saturation, IDF, and length normalization to score lexical matches."
+      "explanation": "BM25はTF飽和、IDF、長さ正規化を重み付けして語彙的一致を採点します。"
     },
     {
       "stage": "pre",
-      "question": "What is the main weakness of dense-only retrieval that BM25 catches?",
+      "question": "BM25が補える、dense-only retrievalの主な弱点は何ですか？",
       "options": [
-        "Multilingual queries",
-        "Latency",
-        "Long documents",
-        "Exact keyword and identifier matches (product codes, error strings, named entities) that semantic embeddings can miss"
+        "多言語クエリ",
+        "レイテンシ",
+        "長文書",
+        "意味埋め込みが見逃し得る完全一致のキーワードや識別子 (製品コード、エラー文字列、固有表現)"
       ],
       "correct": 3,
-      "explanation": "Dense embeddings can blur identifiers and exact strings; BM25 nails them."
+      "explanation": "dense embeddingsは識別子や完全一致文字列をぼかしてしまうことがあります。BM25はそれらを正確に捉えます。"
     },
     {
       "stage": "check",
-      "question": "Why does Reciprocal Rank Fusion (RRF) ignore raw scores from each retriever?",
+      "question": "Reciprocal Rank Fusion (RRF) が各retrieverの生スコアを無視するのはなぜですか？",
       "options": [
-        "RRF requires probabilities",
-        "Raw scores are illegal to use",
-        "Speeds up sorting",
-        "BM25 and dense scores live in different scales; using only rank positions makes the fusion robust to calibration"
+        "RRFには確率が必要だから",
+        "生スコアの使用が禁止されているから",
+        "ソートを高速化するから",
+        "BM25とdenseのスコアは尺度が異なるため、順位だけを使うと較正に強いfusionになるから"
       ],
       "correct": 3,
-      "explanation": "RRF uses 1/(k + rank), so the two scoring systems' scales do not have to match."
+      "explanation": "RRFは 1/(k + rank) を使うため、2つの採点システムの尺度を一致させる必要がありません。"
     },
     {
       "stage": "check",
-      "question": "Why run a cross-encoder reranker only on the top-30 fused results?",
+      "question": "cross-encoder rerankerをfusion結果の上位30件にだけ実行するのはなぜですか？",
       "options": [
-        "Rerankers reduce recall",
-        "Top-30 is required by FAISS",
-        "Cross-encoders are required at every step",
-        "Cross-encoders are slow per pair; amortizing them on a small candidate pool gives high accuracy with acceptable latency"
+        "rerankerはrecallを下げるから",
+        "top-30がFAISSで必須だから",
+        "cross-encoderはすべての段階で必須だから",
+        "cross-encoderはペアごとの処理が遅いため、小さな候補集合にだけ適用すると、許容できるレイテンシで高精度を得られるから"
       ],
       "correct": 3,
-      "explanation": "Cross-encoders score query+doc jointly; running them only on the small fused candidate pool keeps latency manageable."
+      "explanation": "cross-encoderはquery+docを一緒に採点します。小さなfusion候補集合にだけ実行することで、レイテンシを管理できます。"
     },
     {
       "stage": "check",
-      "question": "Which metric is most important to optimize for RAG retrievers?",
+      "question": "RAG retrieverで最も重要に最適化すべきメトリクスはどれですか？",
       "options": [
         "BLEU",
-        "Throughput",
-        "Recall@k, since the reader cannot answer if the correct passage is missing from the top-k",
-        "Latency"
+        "スループット",
+        "Recall@k。正しい文章がtop-kに欠けているとreaderは答えられないため",
+        "レイテンシ"
       ],
       "correct": 2,
-      "explanation": "If the right passage is not in the retrieved top-k, the reader is guaranteed to fail."
+      "explanation": "正しい文章が検索上位top-kに入っていなければ、readerは必ず失敗します。"
     },
     {
       "stage": "post",
-      "question": "Where do most production RAG failures originate, per 2026 industry experience?",
+      "question": "2026年の業界経験では、本番RAGの失敗の多くはどこから生じますか？",
       "options": [
-        "Reranker tuning",
-        "Ingestion and chunking, not the model; bad context defeats good readers",
-        "Prompt verbosity",
-        "The LLM choice"
+        "rerankerのチューニング",
+        "モデルではなくingestionとchunking。不適切な文脈は優れたreaderを無力化する",
+        "プロンプトの冗長さ",
+        "LLMの選択"
       ],
       "correct": 1,
-      "explanation": "Roughly 80% of RAG failures trace to chunking and ingestion quality, not the generative model."
+      "explanation": "RAG失敗のおよそ80%は、生成モデルではなくchunkingとingestion品質に由来します。"
     },
     {
       "stage": "post",
-      "question": "What is the 'parent-doc' retrieval pattern?",
+      "question": "'parent-doc' retrieval patternとは何ですか？",
       "options": [
-        "Pick the longest document",
-        "Retrieve small child chunks for precision, then expand to the parent block when multiple children from the same parent appear, preserving context",
-        "Embed only parent documents",
-        "Use parent doc embeddings only"
+        "最も長い文書を選ぶこと",
+        "精度のために小さなchildチャンクを検索し、同じparentから複数のchildが出たらparentブロックへ広げて文脈を保つこと",
+        "parent文書だけを埋め込むこと",
+        "parent doc embeddingsだけを使うこと"
       ],
       "correct": 1,
-      "explanation": "Child-level retrieval is precise; expanding to the parent preserves the surrounding context the reader needs."
+      "explanation": "childレベルの検索は精密です。parentへ広げることで、readerが必要とする周辺文脈を保てます。"
     },
     {
       "stage": "post",
-      "question": "When should you ship three-way retrieval (BM25 + dense + SPLADE)?",
+      "question": "3方式検索 (BM25 + dense + SPLADE) を出荷すべきなのはどのような場合ですか？",
       "options": [
-        "Only on under 1000 documents",
-        "Only for English-only corpora",
-        "When infrastructure supports learned-sparse indexes and queries mix proper nouns with semantic intent",
-        "Always"
+        "1000文書未満の場合だけ",
+        "英語のみのコーパスの場合だけ",
+        "インフラがlearned-sparseインデックスを支えられ、クエリに固有名詞と意味的意図が混在する場合",
+        "常に"
       ],
       "correct": 2,
-      "explanation": "Three-way retrieval outperforms two-way in 2026 benchmarks for mixed lexical-semantic queries, given SPLADE infrastructure."
+      "explanation": "SPLADEインフラがあるなら、3方式検索は語彙と意味が混ざるクエリに対する2026年ベンチマークで2方式を上回ります。"
     }
   ]
 }

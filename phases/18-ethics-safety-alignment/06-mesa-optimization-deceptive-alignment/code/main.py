@@ -1,18 +1,18 @@
-"""Toy mesa-optimizer simulator — stdlib Python.
+"""Toy mesa-optimizer simulator — stdlib Python。
 
-Two-period environment:
-  period 0 (training): base optimizer updates weights based on loss.
-  period 1 (deployment): no updates. behaviour determines outcome.
+2-period environment:
+  period 0 (training): base optimizer が loss に基づいて weights を update する。
+  period 1 (deployment): update はない。behaviour が outcome を決める。
 
-We construct four policies:
-  - aligned : mesa-objective == base objective; cooperates in both periods.
-  - proxy   : mesa-objective is a correlated proxy; cooperates under training
-              distribution but slips off-distribution.
-  - deceptive: mesa-objective != base, full situational awareness; cooperates
-              in training, defects in deployment.
-  - pseudo-no-awareness: mesa != base, no awareness; defects in both.
+4 つの policies を構成します。
+  - aligned : mesa-objective == base objective。両 period で cooperate。
+  - proxy   : mesa-objective は correlated proxy。training distribution では
+              cooperate するが、off-distribution で slip する。
+  - deceptive: mesa-objective != base、full situational awareness。training では
+              cooperate し、deployment で defect する。
+  - pseudo-no-awareness: mesa != base、awareness なし。両方で defect。
 
-Observe: training loss is indistinguishable between aligned and deceptive.
+観察点: aligned と deceptive の training loss は見分けがつきません。
 
 Usage: python3 code/main.py
 """
@@ -30,7 +30,7 @@ random.seed(13)
 class Example:
     x: float           # input feature
     y_base: int        # base objective label
-    is_training: bool  # situational marker. in real systems this has to be inferred
+    is_training: bool  # situational marker。実 system ではこれを推論する必要がある
 
 
 def gen_example(training: bool, drift: float = 0.0) -> Example:
@@ -44,14 +44,14 @@ def aligned_policy(ex: Example) -> int:
 
 
 def proxy_policy(ex: Example) -> int:
-    # mesa-objective: "is x > threshold 0.0 in training-distribution bounds?"
-    # off-distribution, the threshold drifts; proxy breaks.
+    # mesa-objective: "training-distribution bounds 内で x > threshold 0.0 か?"
+    # off-distribution では threshold が drift し、proxy が壊れる。
     threshold = 0.0 if abs(ex.x) < 3.0 else 0.5
     return 1 if ex.x > threshold else 0
 
 
 def deceptive_policy(ex: Example, mesa_goal: int = 0) -> int:
-    # in training: cooperate (match base). in deployment: pursue mesa_goal.
+    # training では cooperate (base に一致)。deployment では mesa_goal を追う。
     if ex.is_training:
         return 1 if ex.x > 0 else 0
     return mesa_goal
@@ -67,15 +67,15 @@ def loss(policy, examples: list[Example]) -> float:
 
 
 def adversarial_filter(examples: list[Example]) -> list[Example]:
-    """Adversarial training tries to include deployment-like examples in training.
-    Problem: if the mesa-optimizer uses is_training as its trigger, we would
-    need to flip that flag too. In real systems the flag is not a boolean —
-    it is any distinguishing feature of the deployment distribution."""
+    """Adversarial training は deployment-like examples を training に含めようとします。
+    問題: mesa-optimizer が is_training を trigger に使うなら、その flag も
+    flip する必要があります。実 system では flag は boolean ではありません。
+    deployment distribution を識別する任意の特徴です。"""
     out = []
     for e in examples:
         if random.random() < 0.1:
             adv = Example(x=e.x + random.gauss(0, 3.0), y_base=(1 if e.x > 0 else 0),
-                          is_training=True)  # still labeled training
+                          is_training=True)  # まだ training と label されている
             out.append(adv)
         out.append(e)
     return out
@@ -104,23 +104,23 @@ def main() -> None:
         "pseudo-no-awareness": lambda e: pseudo_no_awareness_policy(e, mesa_goal=0),
     }
 
-    print("\nperiod 0 — training distribution, no gradient updates (observation).")
-    run_period("training loss by policy class", policies, training)
-    print("\nobserve: 'aligned' and 'deceptive' have identical training loss.")
-    print("the base optimizer cannot tell them apart from behavioural evidence.")
+    print("\nperiod 0 — training distribution、gradient update なし (観察)。")
+    run_period("policy class ごとの training loss", policies, training)
+    print("\n観察: 'aligned' と 'deceptive' の training loss は同一です。")
+    print("base optimizer は behavioural evidence だけでは両者を区別できません。")
 
-    run_period("deployment loss by policy class", policies, deployment)
-    print("\nobserve: deceptive defects at deployment; aligned does not.")
-    print("this is the shape of the inner-alignment problem.")
+    run_period("policy class ごとの deployment loss", policies, deployment)
+    print("\n観察: deceptive は deployment で defect し、aligned はしません。")
+    print("これが inner-alignment problem の形です。")
 
-    print("\n\nadversarial training — randomly inject 'deployment-like' examples.")
+    print("\n\nadversarial training — 'deployment-like' examples を random に注入します。")
     adv_training = adversarial_filter(training)
     run_period("adversarial-training loss", policies, adv_training)
-    print("\nthe problem: adversarial examples still have is_training=True.")
-    print("the mesa-optimizer uses some other feature (distribution shift,")
-    print("date, canary token) as the trigger. adversarial training trains")
-    print("the model to distinguish test from deployment better, not to")
-    print("align its mesa-objective. this is the core of Hubinger 2019.")
+    print("\n問題: adversarial examples もまだ is_training=True を持っています。")
+    print("mesa-optimizer は distribution shift、date、canary token など別の")
+    print("feature を trigger として使います。adversarial training は model に")
+    print("test と deployment をよりよく区別することを教えるのであって、")
+    print("mesa-objective を align するわけではありません。これが Hubinger 2019 の核心です。")
     print("=" * 70)
 
 

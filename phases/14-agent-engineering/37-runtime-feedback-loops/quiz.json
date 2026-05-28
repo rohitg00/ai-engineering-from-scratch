@@ -4,87 +4,87 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the feedback runner force the agent to do?",
+      "question": "feedback runner はエージェントに何を強制しますか？",
       "options": [
-        "React to imagined output",
-        "React to facts: structured stdout/stderr/exit/duration records captured into the loop on every command",
-        "Skip verification",
-        "Use a different model"
+        "想像した出力に反応する",
+        "事実に反応する: 各 command で loop に取り込まれた構造化 stdout/stderr/exit/duration records",
+        "verification を skip する",
+        "別の model を使う"
       ],
       "correct": 1,
-      "explanation": "The runner closes the gap between 'tests passed' (imagined) and 'tests actually ran and exited zero' (recorded)."
+      "explanation": "runner は「tests passed」(想像) と「tests が実際に実行され exit zero だった」(記録) の gap を閉じます。"
     },
     {
       "stage": "pre",
-      "question": "How does feedback differ from telemetry?",
+      "question": "feedback は telemetry とどう違いますか？",
       "options": [
-        "Telemetry is paid",
-        "Feedback is for the next turn of this run; telemetry is for operators reviewing runs across time (different files, different retention)",
-        "Telemetry uses OTel; feedback uses GraphQL",
-        "They are the same thing"
+        "Telemetry は有料である",
+        "Feedback はこの run の次の turn のためのもの。telemetry は operator が時間をまたいで run を確認するためのもの (file も retention も異なる)",
+        "Telemetry は OTel を使い、feedback は GraphQL を使う",
+        "同じものである"
       ],
       "correct": 1,
-      "explanation": "Both share fields but live in different files with different retention; feedback is intra-run, telemetry is cross-run."
+      "explanation": "両者は field を共有しますが、異なる保持期間を持つ別 file にあります。feedback は intra-run、telemetry は cross-run です。"
     },
     {
       "stage": "check",
-      "question": "Which field MUST appear in every feedback record?",
+      "question": "すべての feedback record に必ず含めるべき field はどれですか？",
       "options": [
         "model_id",
-        "exit_code (and a null exit must refuse to advance the loop)",
+        "exit_code (null exit の場合は loop の前進を拒否する)",
         "embedding_vector",
         "prompt_cache_token"
       ],
       "correct": 1,
-      "explanation": "exit_code is the unambiguous success signal; null exit means no progress."
+      "explanation": "exit_code は曖昧さのない成功シグナルです。null exit は進捗なしを意味します。"
     },
     {
       "stage": "check",
-      "question": "How does the runner truncate large outputs?",
+      "question": "runner は大きな output をどのように切り詰めますか？",
       "options": [
-        "Random sampling",
-        "Deterministic head + tail with a 'truncated N lines' marker so the same output always produces the same record",
-        "First 10 lines only",
-        "Compresses with gzip"
+        "random sampling",
+        "同じ output が常に同じ record になるよう、'truncated N lines' marker 付きの deterministic head + tail",
+        "最初の10行だけ",
+        "gzip で圧縮する"
       ],
       "correct": 1,
-      "explanation": "Deterministic truncation keeps records replayable while bounding token cost; tails carry the failure summary."
+      "explanation": "決定的な truncation は token cost を抑えながら record を replay 可能に保ちます。tail には failure summary が残ります。"
     },
     {
       "stage": "check",
-      "question": "Why redact at write time rather than read time?",
+      "question": "なぜ read time ではなく write time に redact するのですか？",
       "options": [
-        "Compression",
-        "The file on disk is what an attacker reaches; redacting only on read leaves secrets in JSONL files",
-        "Read-time redaction breaks JSON",
-        "It is faster"
+        "Compression のため",
+        "攻撃者が到達するのは disk 上の file だから。read 時だけ redact すると secrets が JSONL file に残る",
+        "Read-time redaction は JSON を壊すから",
+        "より高速だから"
       ],
       "correct": 1,
-      "explanation": "Redact lines matching Bearer, password=, api_key=, AKIA..., xox[baprs]- before append; auditing the patterns quarterly."
+      "explanation": "append 前に Bearer、password=、api_key=、AKIA...、xox[baprs]- に一致する行を redact します。pattern は四半期ごとに audit します。"
     },
     {
       "stage": "post",
-      "question": "What does parent_command_id give the workbench?",
+      "question": "parent_command_id は workbench に何を与えますか？",
       "options": [
-        "Cheaper inference",
-        "Retries link to their parent attempt so the reviewer and audit see the failure chain; without it retries look like independent successes",
-        "Faster file I/O",
-        "Lower memory"
+        "より安い inference",
+        "retry が親 attempt に link され、reviewer と audit が failure chain を見られる。これがないと retry は独立した成功に見える",
+        "より速い file I/O",
+        "より低い memory"
       ],
       "correct": 1,
-      "explanation": "Parent linkage makes retry chains visible to the reviewer (Lesson 39) and the verification gate."
+      "explanation": "親子 link により retry chain が reviewer (Lesson 39) と verification gate に見えるようになります。"
     },
     {
       "stage": "post",
-      "question": "Why cap feedback_record.jsonl at 1 MB with rotation?",
+      "question": "なぜ `feedback_record.jsonl` を 1 MB で cap し rotate するのですか？",
       "options": [
-        "JSON does not handle larger files",
-        "The agent only reads the current file; rotation keeps runtime cost bounded while CI artifacts capture the full set",
-        "Disks are too slow",
-        "The provider charges per byte"
+        "JSON はそれ以上大きな file を扱えないから",
+        "agent は current file だけを読む。rotation により runtime cost を bounded にしつつ CI artifacts に全体を残せるから",
+        "disk が遅すぎるから",
+        "provider が byte ごとに課金するから"
       ],
       "correct": 1,
-      "explanation": "Bounded current file + rotated history is the same pattern logrotate uses; predictable cost in the hot loop."
+      "explanation": "bounded current file + rotated history は logrotate と同じ pattern です。hot loop の cost が予測可能になります。"
     }
   ]
 }

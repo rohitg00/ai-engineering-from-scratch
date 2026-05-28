@@ -1,37 +1,37 @@
-# Question Answering Systems
+# 質問応答システム
 
-> Three systems shaped modern QA. Extractive found spans. Retrieval-augmented grounded them in documents. Generative produced answers. Every modern AI assistant is a mix of the three.
+> 現代のQAは3つのシステムに形づくられてきました。抽出型は範囲を見つけます。検索拡張型は文書に根拠づけます。生成型は答えを生成します。現代のAIアシスタントは、どれもこの3つの組み合わせです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
-**Time:** ~75 minutes
+**種類:** 構築
+**言語:** Python
+**前提:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-A user types "When did the first iPhone launch?" and expects "June 29, 2007." Not "Apple's history is long and varied." Not "2007" sitting in isolation with no sentence. A direct, grounded, correct answer.
+ユーザーが "When did the first iPhone launch?" と入力したら、期待する答えは "June 29, 2007." です。"Apple's history is long and varied." ではありません。文にもなっていない "2007" だけでもありません。直接的で、根拠があり、正しい答えが必要です。
 
-Three architectures have dominated QA over the last decade.
+この10年、QAでは3つのアーキテクチャが主流でした。
 
-- **Extractive QA.** Given a question and a passage that is known to contain the answer, find the start and end indices of the answer span in the passage. SQuAD is the canonical benchmark.
-- **Open-domain QA.** The passage is not given. Retrieve the relevant passage first, then extract or generate an answer. This is the bedrock of every RAG pipeline today.
-- **Generative / Closed-book QA.** A large language model answers from its parametric memory. No retrieval. Fastest at inference, least reliable on facts.
+- **抽出型QA。** 答えを含むことが分かっている質問と文章が与えられたとき、文章内の答え範囲の開始インデックスと終了インデックスを見つけます。SQuADが代表的なベンチマークです。
+- **オープンドメインQA。** 文章は与えられません。まず関連する文章を検索し、そのうえで答えを抽出または生成します。これは今日のあらゆるRAGパイプラインの基盤です。
+- **生成型 / クローズドブックQA。** 大規模言語モデルがパラメトリックメモリから答えます。検索はありません。推論は最速ですが、事実については最も信頼しにくい方式です。
 
-The trend in 2026 is hybrid: retrieve the best few passages, then prompt a generative model to answer grounded in those passages. That is RAG, and lesson 14 covers the retrieval half in depth. This lesson builds the QA half.
+2026年の流れはハイブリッドです。上位の少数の文章を検索し、その文章に根拠づけて答えるよう生成モデルにプロンプトを渡します。これがRAGであり、レッスン14では検索側を詳しく扱います。このレッスンではQA側を構築します。
 
-## The Concept
+## コンセプト
 
 ![QA architectures: extractive, retrieval-augmented, generative](../assets/qa.svg)
 
-**Extractive.** Encode question and passage together with a transformer (BERT family). Train two heads that predict start and end token indices of the answer. Loss is cross-entropy over valid positions. Output is a span from the passage. Never hallucinates (by construction), never handles questions the passage cannot answer (by construction).
+**抽出型。** 質問と文章をまとめてTransformer (BERT系) でエンコードします。答えの開始トークンインデックスと終了トークンインデックスを予測する2つのヘッドを訓練します。損失は有効な位置に対するクロスエントロピーです。出力は文章から切り出した範囲になります。構造上、幻覚は起こしません。一方で、構造上、文章で答えられない質問には対応できません。
 
-**Retrieval-augmented (RAG).** Two stages. First, a retriever finds the top-`k` passages from a corpus. Second, a reader (extractive or generative) produces the answer using those passages. The retriever-reader split lets each be trained and evaluated independently. Modern RAG often adds a reranker between them.
+**検索拡張型 (RAG)。** 2段階です。まずretrieverがコーパスから上位`k`件の文章を見つけます。次にreader (抽出型または生成型) がその文章を使って答えを作ります。retrieverとreaderを分けることで、それぞれを独立に訓練・評価できます。現代のRAGでは、その間にrerankerを追加することもよくあります。
 
-**Generative.** A decoder-only LLM (GPT, Claude, Llama) answers from learned weights. No retrieval step. Excellent on common knowledge, catastrophic on rare or recent facts. The hallucination rate is inversely correlated with fact frequency in the pretraining data.
+**生成型。** デコーダーのみのLLM (GPT, Claude, Llama) が学習済みの重みから答えます。検索ステップはありません。一般知識には非常に強い一方、珍しい事実や最近の事実では破綻しやすくなります。幻覚率は、事実が事前学習データに出現する頻度と反比例します。
 
-## Build It
+## 構築
 
-### Step 1: extractive QA with a pretrained model
+### Step 1: 事前学習済みモデルによる抽出型QA
 
 ```python
 from transformers import pipeline
@@ -52,9 +52,9 @@ print(answer)
 {'score': 0.98, 'start': 57, 'end': 70, 'answer': 'June 29, 2007'}
 ```
 
-`deepset/roberta-base-squad2` is trained on SQuAD 2.0, which includes unanswerable questions. By default, the `question-answering` pipeline returns the highest-scoring span even when the model's null score wins — it does *not* automatically return an empty answer. To get explicit "no answer" behavior, pass `handle_impossible_answer=True` to the pipeline call: the pipeline then returns an empty answer only when the null score exceeds every span score. Always check the `score` field either way.
+`deepset/roberta-base-squad2` は、答えられない質問を含むSQuAD 2.0で訓練されています。デフォルトでは、`question-answering` pipelineはモデルのnull scoreが勝っている場合でも、最もスコアの高い範囲を返します。空の答えを自動的には返しません。明示的な「答えなし」の挙動が必要なら、pipeline呼び出しに `handle_impossible_answer=True` を渡します。その場合、null scoreがすべての範囲スコアを上回るときだけ空の答えを返します。どちらの場合でも、必ず `score` フィールドを確認してください。
 
-### Step 2: a retrieval-augmented pipeline (sketch)
+### Step 2: 検索拡張パイプライン (スケッチ)
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -87,9 +87,9 @@ def answer(question):
 print(answer("When was the first iPhone released?"))
 ```
 
-Two-stage pipeline. Dense retriever (Sentence-BERT) finds relevant passages by semantic similarity. Extractive reader (RoBERTa-SQuAD) pulls the answer span from the combined top passages. Works on small corpora. For a million-document corpus, use FAISS or a vector database.
+2段階のパイプラインです。Dense retriever (Sentence-BERT) が意味的類似度で関連文章を見つけます。抽出型reader (RoBERTa-SQuAD) が、結合した上位文章から答えの範囲を抜き出します。小規模コーパスでは機能します。100万文書規模のコーパスでは、FAISSまたはベクトルデータベースを使います。
 
-### Step 3: generative with RAG
+### Step 3: RAGによる生成
 
 ```python
 def rag_generate(question, llm):
@@ -104,90 +104,90 @@ Answer using only the context above. If the context does not contain the answer,
     return llm(prompt)
 ```
 
-The prompt pattern matters. Explicitly telling the model to ground in the context and return "I don't know" when the context is insufficient cuts hallucination rates by 40-60% compared to naive prompting. More elaborate patterns add citations, confidence scores, and structured extraction.
+プロンプトパターンは重要です。モデルに文脈に根拠づけること、文脈が不十分な場合は "I don't know" と返すことを明示すると、素朴なプロンプトに比べて幻覚率を40-60%下げられます。より手の込んだパターンでは、引用、信頼度スコア、構造化抽出を追加します。
 
-### Step 4: evaluation that reflects the real world
+### Step 4: 現実を反映した評価
 
-SQuAD uses **Exact Match (EM)** and **token-level F1**. EM is a strict match after normalization (lowercase, strip punctuation, remove articles) — either the prediction matches exactly or it scores 0. F1 is computed over token overlap between prediction and reference and gives partial credit. Both under-credit paraphrases: "June 29, 2007" vs "June 29th, 2007" typically gets 0 EM (the ordinal breaks normalization) but still earns substantial F1 from overlapping tokens.
+SQuADは **Exact Match (EM)** と **token-level F1** を使います。EMは正規化後 (小文字化、句読点除去、冠詞除去) の厳密一致です。予測が完全に一致すれば得点が入り、そうでなければ0です。F1は予測と参照のトークン重なりで計算され、部分点を与えます。どちらも言い換えを過小評価します。"June 29, 2007" と "June 29th, 2007" では通常、序数が正規化で吸収されないためEMは0になりますが、重なるトークンが多いのでF1はかなり高くなります。
 
-For production QA:
+本番QAでは次を見ます。
 
-- **Answer accuracy** (LLM-judged or human-judged, since metrics do not capture semantic equivalence).
-- **Citation accuracy.** Does the cited passage actually support the answer? Trivial to check automatically with string match between generated citations and retrieved passages.
-- **Refusal calibration.** When the answer is not in the retrieved passages, does the system correctly say "I don't know"? Measure false confidence rate.
-- **Retrieval recall.** Before evaluating the reader, measure whether the retriever gets the right passage into the top-`k`. A reader cannot fix a missing passage.
+- **回答精度。** メトリクスだけでは意味的同等性を捉えられないため、LLM判定または人手判定を使います。
+- **引用精度。** 引用された文章が実際に答えを支持しているか。生成された引用と検索済み文章の文字列一致で、自動的に確認するのは簡単です。
+- **拒否の較正。** 検索された文章内に答えがないとき、システムは正しく "I don't know" と言えるか。過信の偽陽性率を測ります。
+- **検索recall。** readerを評価する前に、retrieverが正しい文章を上位`k`件に入れられているかを測ります。文章が欠けていれば、readerには修正できません。
 
-### RAGAS: the 2026 production eval framework
+### RAGAS: 2026年の本番評価フレームワーク
 
-`RAGAS` is purpose-built for RAG systems and is the shipping default in 2026. It scores four dimensions without requiring gold references:
+`RAGAS` はRAGシステム専用に作られており、2026年の出荷時デフォルトです。正解参照を必要とせず、4つの次元を採点します。
 
-- **Faithfulness.** Does each claim in the answer come from the retrieved context? Measured by NLI-based entailment. Your primary hallucination metric.
-- **Answer relevance.** Does the answer address the question? Measured by generating hypothetical questions from the answer and comparing to the real question.
-- **Context precision.** Of the retrieved chunks, what fraction were actually relevant? Low precision = noise in prompt.
-- **Context recall.** Did the retrieved set contain all needed information? Low recall = reader cannot succeed.
+- **Faithfulness。** 答えの各主張が検索された文脈に由来しているか。NLIベースの含意で測ります。主要な幻覚メトリクスです。
+- **Answer relevance。** 答えが質問に対応しているか。答えから仮想的な質問を生成し、実際の質問と比較して測ります。
+- **Context precision。** 検索されたチャンクのうち、実際に関連していた割合はどれくらいか。低いprecisionはプロンプト内のノイズを意味します。
+- **Context recall。** 検索結果に必要な情報がすべて含まれていたか。低いrecallではreaderは成功できません。
 
-Reference-free scoring lets you evaluate on live production traffic without curated gold answers. Layer LLM-as-judge on top for open-ended questions where exact-match metrics are useless.
+参照なしの採点により、整備済みの正解データなしでも本番トラフィック上で評価できます。完全一致メトリクスが役に立たない自由回答の質問には、その上にLLM-as-judgeを重ねます。
 
-`pip install ragas`. Plug your retriever + reader. Get four scalars per query. Alert on regressions.
+`pip install ragas`。retrieverとreaderを接続します。クエリごとに4つのスカラーが得られます。回帰にアラートを出します。
 
-## Use It
+## 使いどころ
 
-The 2026 stack.
+2026年のスタックです。
 
-| Use case | Recommended |
+| ユースケース | 推奨 |
 |---------|-------------|
-| Given passage, find answer span | `deepset/roberta-base-squad2` |
-| Over a fixed corpus, closed-book not acceptable | RAG: dense retriever + LLM reader |
-| Real-time over a document store | RAG with hybrid (BM25 + dense) retriever + reranker (lesson 14) |
-| Conversational QA (follow-up questions) | LLM with conversation history + RAG on each turn |
-| Highly factual, regulated domains | Extractive over an authoritative corpus; never generative alone |
+| 与えられた文章から答えの範囲を見つける | `deepset/roberta-base-squad2` |
+| 固定コーパス上で、クローズドブックが許容できない | RAG: dense retriever + LLM reader |
+| 文書ストアに対するリアルタイム処理 | hybrid (BM25 + dense) retriever + rerankerを使うRAG (レッスン14) |
+| 会話型QA (フォローアップ質問) | 会話履歴 + 各ターンでのRAGを使うLLM |
+| 事実性が非常に重要な規制領域 | 権威あるコーパス上の抽出型。生成型だけにはしない |
 
-Extractive QA is unfashionable in 2026 because RAG with LLMs handles more cases. It still ships in contexts where literal quotation is required: legal research, regulatory compliance, audit tools.
+抽出型QAは、LLMを使ったRAGのほうが多くのケースに対応できるため、2026年には流行ではありません。それでも、法務調査、規制対応、監査ツールのように逐語的な引用が必要な場面では使われ続けています。
 
-## Ship It
+## 出荷
 
-Save as `outputs/skill-qa-architect.md`:
+`outputs/skill-qa-architect.md` として保存します。
 
 ```markdown
 ---
 name: qa-architect
-description: Choose QA architecture, retrieval strategy, and evaluation plan.
+description: QAアーキテクチャ、検索戦略、評価計画を選ぶ。
 version: 1.0.0
 phase: 5
 lesson: 13
 tags: [nlp, qa, rag]
 ---
 
-Given requirements (corpus size, question type, factuality constraint, latency budget), output:
+要件 (コーパスサイズ、質問タイプ、事実性制約、レイテンシ予算) が与えられたら、次を出力する。
 
-1. Architecture. Extractive, RAG with extractive reader, RAG with generative reader, or closed-book LLM. One-sentence reason.
-2. Retriever. None, BM25, dense (name the encoder), or hybrid.
-3. Reader. SQuAD-tuned model, LLM by name, or "domain-fine-tuned DistilBERT."
-4. Evaluation. EM + F1 for extractive benchmarks; answer accuracy + citation accuracy + refusal calibration for production. Name what you are measuring and how you are measuring it.
+1. アーキテクチャ。抽出型、抽出型readerを使うRAG、生成型readerを使うRAG、またはクローズドブックLLM。理由を1文で述べる。
+2. Retriever。なし、BM25、dense (エンコーダー名を挙げる)、またはhybrid。
+3. Reader。SQuADで調整されたモデル、名前付きのLLM、または "domain-fine-tuned DistilBERT"。
+4. 評価。抽出型ベンチマークにはEM + F1。本番には回答精度 + 引用精度 + 拒否の較正。何を、どのように測るかを明記する。
 
-Refuse closed-book LLM answers for regulatory or compliance-sensitive questions. Refuse any QA system without a retrieval-recall baseline (you cannot evaluate the reader without knowing the retriever surfaced the right passage). Flag questions that require multi-hop reasoning as needing specialized multi-hop retrievers like HotpotQA-trained systems.
+規制またはコンプライアンスに関わる質問では、クローズドブックLLMの回答を拒否する。検索recallのベースラインがないQAシステムは拒否する (retrieverが正しい文章を提示できたか分からなければ、readerを評価できない)。multi-hop reasoningを必要とする質問は、HotpotQAで訓練されたシステムのような専用のmulti-hop retrieverが必要だと指摘する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Set up the SQuAD extractive pipeline above on 10 Wikipedia passages. Hand-craft 10 questions. Measure how often the answer is correct. You should see 7-9 correct if passages and questions are clean.
-2. **Medium.** Add a refusal classifier. When the top retrieval score is below a threshold (say 0.3 cosine), return "I don't know" instead of calling the reader. Tune the threshold on a held-out set.
-3. **Hard.** Build a RAG pipeline over a 10,000-document corpus of your choice. Implement hybrid retrieval (BM25 + dense) with RRF fusion (see lesson 14). Measure answer accuracy with and without the hybrid step. Document which question types benefit most.
+1. **Easy。** 上のSQuAD抽出型パイプラインを10件のWikipedia文章でセットアップしてください。質問を10個手作りします。答えが正しい頻度を測ってください。文章と質問がきれいなら、7-9問は正解するはずです。
+2. **Medium。** 拒否分類器を追加してください。上位検索スコアが閾値 (たとえばcosine 0.3) を下回る場合、readerを呼ぶ代わりに "I don't know" を返します。保留データセットで閾値を調整してください。
+3. **Hard。** 任意の10,000文書コーパス上にRAGパイプラインを構築してください。RRF fusionを使うhybrid retrieval (BM25 + dense) を実装します (レッスン14参照)。hybridステップあり・なしで回答精度を測ります。どの質問タイプが最も恩恵を受けるかを記録してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Extractive QA | Find the answer span | Predict start and end indices of the answer within a given passage. |
-| Open-domain QA | QA over a corpus | No given passage; must retrieve then answer. |
-| RAG | Retrieve then generate | Retrieval-augmented generation. Retriever + reader pipeline. |
-| SQuAD | Canonical benchmark | Stanford Question Answering Dataset. EM + F1 metrics. |
-| Hallucination | Made-up answer | Reader output not supported by retrieved context. |
-| Refusal calibration | Know when to shut up | System correctly says "I don't know" when unable to answer. |
+| Extractive QA | 答えの範囲を見つける | 与えられた文章内で、答えの開始インデックスと終了インデックスを予測する。 |
+| Open-domain QA | コーパス上のQA | 文章は与えられない。検索してから答える必要がある。 |
+| RAG | 検索してから生成する | Retrieval-augmented generation。retriever + readerのパイプライン。 |
+| SQuAD | 代表的なベンチマーク | Stanford Question Answering Dataset。EM + F1メトリクス。 |
+| Hallucination | 作り話の答え | 検索された文脈に支持されていないreader出力。 |
+| Refusal calibration | 黙るべき時を知る | 答えられないときに、システムが正しく "I don't know" と言うこと。 |
 
-## Further Reading
+## 参考資料
 
-- [Rajpurkar et al. (2016). SQuAD: 100,000+ Questions for Machine Comprehension of Text](https://arxiv.org/abs/1606.05250) — the benchmark paper.
-- [Karpukhin et al. (2020). Dense Passage Retrieval for Open-Domain QA](https://arxiv.org/abs/2004.04906) — DPR, the canonical dense retriever for QA.
-- [Lewis et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401) — the paper that named RAG.
-- [Gao et al. (2023). Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/abs/2312.10997) — comprehensive RAG survey.
+- [Rajpurkar et al. (2016). SQuAD: 100,000+ Questions for Machine Comprehension of Text](https://arxiv.org/abs/1606.05250) — ベンチマーク論文。
+- [Karpukhin et al. (2020). Dense Passage Retrieval for Open-Domain QA](https://arxiv.org/abs/2004.04906) — QAにおける代表的なdense retrieverであるDPR。
+- [Lewis et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401) — RAGという名前を与えた論文。
+- [Gao et al. (2023). Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/abs/2312.10997) — 包括的なRAGサーベイ。

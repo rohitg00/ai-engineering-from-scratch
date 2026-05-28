@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -6,8 +6,8 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -15,7 +15,7 @@
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">async cloud coding agent — label to PR workflow</text>
+  <text x="480" y="24" text-anchor="middle" class="title">async cloud coding agent - labelからPRまでのworkflow</text>
 
   <rect x="40" y="60" width="190" height="80" class="cool"/>
   <text x="135" y="82" text-anchor="middle" class="step">GitHub issue label</text>
@@ -65,18 +65,18 @@
   <path d="M560,230 L580,230" class="edge"/>
   <path d="M720,230 L740,230" class="edge"/>
 
-  <text x="80" y="296" class="small">budget caps enforced per task:</text>
+  <text x="80" y="296" class="small">taskごとにbudget capsをenforce:</text>
   <text x="80" y="314" class="small">  $20 / turn cap 30 / 30 min wall-clock</text>
-  <text x="80" y="332" class="small">coverage delta &lt; -2% -&gt; label `needs-review` but still open PR</text>
-  <text x="80" y="350" class="small">CI red or cap hit -&gt; no PR, failure log with rationale</text>
+  <text x="80" y="332" class="small">coverage delta &lt; -2% -&gt; label `needs-review` だがPRはopen</text>
+  <text x="80" y="350" class="small">CI redまたはcap hit -&gt; PRなし、rationale付きfailure log</text>
 
   <rect x="40" y="390" width="440" height="120" class="box"/>
   <text x="260" y="412" text-anchor="middle" class="head">safety</text>
   <text x="260" y="432" text-anchor="middle" class="small">GitHub App: fine-grained token, expires 1h</text>
-  <text x="260" y="450" text-anchor="middle" class="small">no force-push, no write on main</text>
-  <text x="260" y="468" text-anchor="middle" class="small">branch protection on main enforced</text>
-  <text x="260" y="486" text-anchor="middle" class="small">log scrub for secrets before archival</text>
-  <text x="260" y="504" text-anchor="middle" class="caption">per-repo daily $ + PR count ceilings</text>
+  <text x="260" y="450" text-anchor="middle" class="small">force-pushなし、mainへのwriteなし</text>
+  <text x="260" y="468" text-anchor="middle" class="small">mainのbranch protectionをenforce</text>
+  <text x="260" y="486" text-anchor="middle" class="small">archive前にsecretsをlog scrub</text>
+  <text x="260" y="504" text-anchor="middle" class="caption">repoごとのdaily $ + PR count ceilings</text>
 
   <rect x="500" y="390" width="420" height="120" class="box"/>
   <text x="710" y="412" text-anchor="middle" class="head">compare-vs-hosted</text>
@@ -84,5 +84,5 @@
   <text x="710" y="450" text-anchor="middle" class="small">pass@1 / $ / latency vs:</text>
   <text x="710" y="468" text-anchor="middle" class="small">Cursor Background Agents</text>
   <text x="710" y="486" text-anchor="middle" class="small">AWS Remote SWE Agents</text>
-  <text x="710" y="504" text-anchor="middle" class="caption">publish side-by-side matrix</text>
+  <text x="710" y="504" text-anchor="middle" class="caption">side-by-side matrixを公開</text>
 </svg>

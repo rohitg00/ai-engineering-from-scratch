@@ -1,60 +1,60 @@
 ---
 name: skill-gradient-computation
-description: Compute gradients of common ML loss functions and choose the right derivative approach
+description: よく使う機械学習の損失関数の勾配を計算し、適切な微分方法を選ぶ
 version: 1.0.0
 phase: 1
 lesson: 4
 tags: [calculus, gradients, backpropagation]
 ---
 
-# Gradient Computation for ML
+# 機械学習のための勾配計算
 
-Practical reference for computing gradients of loss functions, activation functions, and layer operations used in neural networks.
+ニューラルネットワークで使われる損失関数、活性化関数、層の演算について勾配を計算するための実用リファレンスです。
 
-## Decision Checklist
+## 判断チェックリスト
 
-1. Is the function composed of simple primitives (power, exp, log, trig)? Use analytical derivatives and the chain rule.
-2. Is the function a custom or black-box operation? Use numerical differentiation: `(f(x+h) - f(x-h)) / (2h)` with h = 1e-7.
-3. Is the function built from tensor operations in PyTorch/JAX? Let autograd handle it. Verify with numerical check.
-4. Do you need the gradient of a scalar loss w.r.t. a matrix of weights? Apply the chain rule through the computation graph, one node at a time.
-5. Is there a non-differentiable operation (argmax, rounding, sampling)? Use a straight-through estimator or reparameterization trick.
+1. 関数は単純なプリミティブ（power、exp、log、trig）の合成ですか。解析的微分と連鎖律を使います。
+2. 関数はカスタム演算またはブラックボックス演算ですか。数値微分を使います: h = 1e-7 として `(f(x+h) - f(x-h)) / (2h)`。
+3. 関数は PyTorch/JAX のテンソル演算で構成されていますか。autograd に任せます。数値チェックで検証します。
+4. スカラー損失の重み行列に対する勾配が必要ですか。計算グラフを通して、ノードごとに連鎖律を適用します。
+5. 微分不能な演算（argmax、rounding、sampling）がありますか。straight-through estimator または reparameterization trick を使います。
 
-## When to use each approach
+## 各手法を使う場面
 
-| Approach | When to use | Cost |
+| 手法 | 使う場面 | コスト |
 |---|---|---|
-| Analytical (hand-derived) | Simple functions, verifying autograd output | Free at runtime |
-| Numerical (finite differences) | Debugging, gradient checking, black-box functions | 2n forward passes for n parameters |
-| Automatic differentiation | Any differentiable computation graph (the default) | One backward pass |
-| Symbolic (SymPy, Mathematica) | Deriving closed-form gradients for papers | Compile time only |
+| 解析的（手で導出） | 単純な関数、autograd 出力の検証 | 実行時はほぼ無料 |
+| 数値的（有限差分） | デバッグ、勾配チェック、ブラックボックス関数 | n 個のパラメータに対して 2n 回の順伝播 |
+| 自動微分 | 任意の微分可能な計算グラフ（デフォルト） | 1回の逆伝播 |
+| 記号微分（SymPy、Mathematica） | 論文用の閉形式勾配の導出 | コンパイル時のみ |
 
-## Quick reference: common derivatives
+## クイックリファレンス: よく使う導関数
 
-| Function | f(x) | f'(x) | ML context |
+| 関数 | f(x) | f'(x) | 機械学習での文脈 |
 |---|---|---|---|
-| MSE loss | (1/n) sum(y_hat - y)^2 | (2/n)(y_hat - y) | Regression |
-| Cross-entropy (binary) | -(y log(p) + (1-y) log(1-p)) | p - y (after sigmoid) | Binary classification |
-| Cross-entropy (multi) | -log(p_true_class) | p - one_hot(y) (after softmax) | Multi-class classification |
-| Sigmoid | 1 / (1 + e^(-x)) | sigma(x) * (1 - sigma(x)) | Output gates, binary output |
-| Tanh | (e^x - e^(-x)) / (e^x + e^(-x)) | 1 - tanh(x)^2 | Hidden activations (legacy) |
-| ReLU | max(0, x) | 1 if x > 0, 0 if x < 0 | Default hidden activation |
-| Leaky ReLU | max(0.01x, x) | 1 if x > 0, 0.01 if x < 0 | Avoiding dead neurons |
-| GELU | x * Phi(x) | Phi(x) + x * phi(x) | Transformers |
-| Softmax_i | e^(x_i) / sum(e^(x_j)) | s_i(1 - s_i) for i=j, -s_i*s_j for i!=j | Output layer (Jacobian) |
-| Log-softmax | x_i - log(sum(e^(x_j))) | 1 - softmax(x_i) for the i-th entry | Numerically stable CE |
-| Linear layer | y = Wx + b | dL/dW = dL/dy * x^T, dL/db = dL/dy | Every layer |
-| L2 regularization | lambda * sum(w^2) | 2 * lambda * w | Weight decay |
-| L1 regularization | lambda * sum(\|w\|) | lambda * sign(w) | Sparsity |
+| MSE loss | (1/n) sum(y_hat - y)^2 | (2/n)(y_hat - y) | 回帰 |
+| Cross-entropy（binary） | -(y log(p) + (1-y) log(1-p)) | p - y（sigmoid 後） | 二値分類 |
+| Cross-entropy（multi） | -log(p_true_class) | p - one_hot(y)（softmax 後） | 多クラス分類 |
+| Sigmoid | 1 / (1 + e^(-x)) | sigma(x) * (1 - sigma(x)) | 出力ゲート、二値出力 |
+| Tanh | (e^x - e^(-x)) / (e^x + e^(-x)) | 1 - tanh(x)^2 | 隠れ層の活性化（従来型） |
+| ReLU | max(0, x) | x > 0 なら 1、x < 0 なら 0 | 標準的な隠れ層の活性化 |
+| Leaky ReLU | max(0.01x, x) | x > 0 なら 1、x < 0 なら 0.01 | dead neuron の回避 |
+| GELU | x * Phi(x) | Phi(x) + x * phi(x) | Transformer |
+| Softmax_i | e^(x_i) / sum(e^(x_j)) | i=j なら s_i(1 - s_i)、i!=j なら -s_i*s_j | 出力層（ヤコビアン） |
+| Log-softmax | x_i - log(sum(e^(x_j))) | i 番目の要素では 1 - softmax(x_i) | 数値的に安定な CE |
+| Linear layer | y = Wx + b | dL/dW = dL/dy * x^T, dL/db = dL/dy | すべての層 |
+| L2 regularization | lambda * sum(w^2) | 2 * lambda * w | weight decay |
+| L1 regularization | lambda * sum(\|w\|) | lambda * sign(w) | 疎性 |
 
-## Common mistakes
+## よくある間違い
 
-- Forgetting the 1/n factor in batch-averaged losses (MSE, cross-entropy). The gradient is scaled by batch size.
-- Computing softmax gradient as a vector when it is actually a Jacobian matrix. For cross-entropy + softmax combined, the gradient simplifies to (p - y), which avoids the full Jacobian.
-- Applying the chain rule in the wrong order. Work backward from the loss: dL/dW = dL/dy * dy/dW.
-- Using h that is too large (h = 0.1) or too small (h = 1e-15) for numerical derivatives. Stick to h = 1e-7 for float64.
-- Forgetting that ReLU has undefined gradient at exactly x = 0. In practice, set it to 0 or 0.5.
+- バッチ平均された損失（MSE、cross-entropy）で 1/n 係数を忘れる。勾配はバッチサイズでスケールされます。
+- softmax の勾配を、実際にはヤコビ行列なのにベクトルとして計算する。cross-entropy + softmax を組み合わせると、勾配は (p - y) に簡約され、完全なヤコビアンを避けられます。
+- 連鎖律を間違った順序で適用する。損失から逆向きに作業します: dL/dW = dL/dy * dy/dW。
+- 数値微分で大きすぎる h（h = 0.1）または小さすぎる h（h = 1e-15）を使う。float64 では h = 1e-7 を使います。
+- ReLU はちょうど x = 0 で勾配が未定義であることを忘れる。実務では 0 または 0.5 に設定します。
 
-## Gradient checking recipe
+## 勾配チェックの手順
 
 ```
 For each parameter w:
@@ -64,4 +64,4 @@ For each parameter w:
   assert relative_error < 1e-5
 ```
 
-Relative error above 1e-3 means something is wrong. Between 1e-5 and 1e-3, investigate.
+相対誤差が 1e-3 を超えるなら何かが間違っています。1e-5 から 1e-3 の間なら調査してください。

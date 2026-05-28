@@ -1,29 +1,29 @@
-# Caching, Rate Limiting & Cost Optimization
+# Caching、Rate Limiting、Cost Optimization
 
-> Most AI startups do not die from bad models. They die from bad unit economics. A single GPT-4o call costs fractions of a cent. Ten thousand users making ten calls per day costs $250 in input tokens alone -- before you charge a single dollar. The companies that survive are the ones that treat every API call as a financial transaction, not a function call.
+> 多くの AI startups は bad models で死ぬのではありません。bad unit economics で死にます。1 回の GPT-4o call は 1 cent 未満に見えます。1 万 users が 1 日 10 calls すると、1 ドルも課金する前に input tokens だけで $250 かかります。生き残る companies は、すべての API call を function call ではなく financial transaction として扱う companies です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 11 Lesson 09 (Function Calling)
-**Time:** ~45 minutes
-**Related:** Phase 11 · 15 (Prompt Caching) — this lesson covers application-layer caching (semantic cache, exact hash cache, model routing). Lesson 15 covers provider-layer prompt caching (Anthropic cache_control, OpenAI automatic, Gemini CachedContent). Combine both for 50-95% cost reduction.
+**種別:** 構築
+**言語:** Python
+**前提:** Phase 11 Lesson 09 (Function Calling)
+**時間:** 約 45 分
+**関連:** Phase 11 · 15 (Prompt Caching) — この lesson は application-layer caching (semantic cache、exact hash cache、model routing) を扱います。Lesson 15 は provider-layer prompt caching (Anthropic cache_control、OpenAI automatic、Gemini CachedContent) を扱います。両方を組み合わせると 50-95% の cost reduction が可能です。
 
-## Learning Objectives
+## 学習目標
 
-- Implement semantic caching that serves repeated or similar queries from cache instead of making a new API call
-- Calculate per-request costs across providers and implement token-aware rate limiting and budget alerts
-- Build a cost optimization layer with prompt compression, model routing (expensive vs cheap), and response caching
-- Design a tiered caching strategy using exact match, semantic similarity, and prefix caching for different query types
+- repeated または similar queries を new API call ではなく cache から serve する semantic caching を実装する
+- providers across で per-request costs を計算し、token-aware rate limiting と budget alerts を実装する
+- prompt compression、model routing (expensive vs cheap)、response caching を持つ cost optimization layer を構築する
+- query type ごとに exact match、semantic similarity、prefix caching を使う tiered caching strategy を設計する
 
-## The Problem
+## 問題
 
-You build a RAG chatbot. It works beautifully. Users love it.
+RAG chatbot を作ったとします。美しく動きます。users も気に入ります。
 
-Then the invoice arrives.
+そして invoice が届きます。
 
-GPT-5 costs $5 per million input tokens and $15 per million output. Claude Opus 4.7 costs $15 input / $75 output. Gemini 3 Pro costs $1.25 input / $5 output. GPT-5-mini is $0.25/$2. Prices below are illustrative; always check the provider's current pricing page.
+GPT-5 は 1M input tokens あたり $5、1M output tokens あたり $15 です。Claude Opus 4.7 は input $15 / output $75。Gemini 3 Pro は input $1.25 / output $5。GPT-5-mini は $0.25/$2。以下の prices は illustrative です。必ず provider の current pricing page を確認してください。
 
-Here is the math that kills startups:
+startups を殺す計算はこうです。
 
 - 10,000 daily active users
 - 10 queries per user per day
@@ -34,17 +34,17 @@ Here is the math that kills startups:
 **Daily output cost:** 10,000 x 10 x 500 / 1,000,000 x $10.00 = **$500/day**
 **Monthly total:** **$22,500/month**
 
-That is just the LLM. Add embeddings, vector database hosting, infrastructure. You are looking at $30,000/month for a chatbot.
+これは LLM だけです。embeddings、vector database hosting、infrastructure を加えると、chatbot に月 $30,000 かかる計算になります。
 
-The brutal part: 40-60% of those queries are near-duplicates. Users ask the same questions in slightly different words. Your system prompt -- identical across every request -- gets billed every single time. Context documents retrieved by RAG repeat across users who ask about the same topic.
+厳しいのは、その queries の 40-60% が near-duplicates であることです。users は同じ質問を少し違う言葉で聞きます。system prompt は every request で identical なのに毎回 bill されます。同じ topic を聞く users across で、RAG が retrieve する context documents も繰り返されます。
 
-You are paying full price for redundant computation.
+あなたは redundant computation に full price を払っています。
 
-## The Concept
+## コンセプト
 
-### The Cost Anatomy of an LLM Call
+### LLM Call の Cost Anatomy
 
-Every API call has five cost components.
+すべての API call には 5 つの cost components があります。
 
 ```mermaid
 graph LR
@@ -58,11 +58,11 @@ graph LR
     F --> G[Output Cost<br/>$10.00/1M tokens]
 ```
 
-System prompts are the silent killer. A 1,500-token system prompt sent with every request costs $3.75 per million requests just for that prefix. At 100K requests per day, that is $375/day -- $11,250/month -- for text that never changes.
+system prompts は silent killer です。1,500-token system prompt を every request で送ると、その prefix だけで 1M requests あたり $3.75 かかります。1 日 100K requests なら $375/day、つまり $11,250/month です。しかもその text は変わりません。
 
 ### Provider Caching: Built-in Discounts
 
-All three major providers offer provider-side prompt caching in 2026, but the mechanics differ. See Phase 11 · 15 for the deep dive.
+2026 年時点で主要 3 providers は provider-side prompt caching を提供していますが、mechanics は異なります。deep dive は Phase 11 · 15 を参照してください。
 
 | Provider | Mechanism | Discount | Minimum | Cache Duration |
 |----------|-----------|----------|---------|----------------|
@@ -70,15 +70,15 @@ All three major providers offer provider-side prompt caching in 2026, but the me
 | OpenAI | Automatic prefix matching | 50% on cache hits | 1,024 tokens | Best-effort up to 1 hour |
 | Google Gemini | Explicit CachedContent API | ~75% reduction (plus storage) | 4,096 (Flash) / 32,768 (Pro) | User-configurable TTL |
 
-**Anthropic's approach** is explicit. You mark sections of your prompt with `cache_control: {"type": "ephemeral"}`. The first request pays a 25% write premium. Subsequent requests with the same prefix get a 90% discount. A 2,000-token system prompt that costs $0.005 normally costs $0.000625 on cache hits. Over 100K requests, that saves $437.50/day.
+**Anthropic の approach** は explicit です。prompt の sections に `cache_control: {"type": "ephemeral"}` を mark します。最初の request は 25% write premium を払います。同じ prefix の subsequent requests は 90% discount になります。通常 $0.005 かかる 2,000-token system prompt は cache hit では $0.000625 になります。100K requests では $437.50/day の節約です。
 
-**OpenAI's approach** is automatic. Any prompt prefix that matches a previous request gets a 50% discount. No markers needed. The tradeoff: less discount, less control, but zero implementation effort.
+**OpenAI の approach** は automatic です。previous request と match する prompt prefix は 50% discount になります。markers は不要です。tradeoff は discount が小さく control も少ない一方、implementation effort が zero であることです。
 
-### Semantic Caching: Your Custom Layer
+### Semantic Caching: Custom Layer
 
-Provider caching only works for identical prefixes. Semantic caching handles the harder case: different queries with the same meaning.
+provider caching は identical prefixes にしか効きません。semantic caching はより難しい case、つまり意味は同じだが異なる queries を扱います。
 
-"What is the return policy?" and "How do I return an item?" are different strings but identical intent. A semantic cache embeds both queries, computes cosine similarity, and returns the cached response if similarity exceeds a threshold (typically 0.92-0.95).
+"What is the return policy?" と "How do I return an item?" は異なる strings ですが intent は identical です。semantic cache は両方の queries を embed し、cosine similarity を計算し、similarity が threshold (通常 0.92-0.95) を超えたら cached response を返します。
 
 ```mermaid
 flowchart TD
@@ -91,24 +91,24 @@ flowchart TD
     D --> G
 ```
 
-The embedding costs are negligible. OpenAI's text-embedding-3-small costs $0.02 per million tokens. Checking the cache costs almost nothing compared to a full LLM call.
+embedding costs は negligible です。OpenAI の text-embedding-3-small は 1M tokens あたり $0.02 です。cache check は full LLM call と比べるとほぼ無料です。
 
 ### Exact Caching: Hash and Match
 
-For deterministic calls (temperature=0, same model, same prompt), exact caching is simpler and faster. Hash the full prompt, check the cache, return if found.
+deterministic calls (temperature=0、same model、same prompt) では、exact caching の方が simple で fast です。full prompt を hash し、cache を check し、見つかれば返します。
 
-This works perfectly for:
-- System prompt + fixed context + identical user queries
-- Function calling with identical tool definitions
-- Batch processing where the same document gets processed multiple times
+これは次に非常によく効きます。
+- system prompt + fixed context + identical user queries
+- identical tool definitions を使う function calling
+- same document が multiple times 処理される batch processing
 
-### Rate Limiting: Protecting Your Budget
+### Rate Limiting: Budget を守る
 
-Rate limiting is not just about fairness. It is about survival.
+rate limiting は fairness だけの話ではありません。survival の話です。
 
-**Token bucket algorithm:** each user gets a bucket of N tokens that refills at rate R per second. A request consumes tokens from the bucket. If the bucket is empty, the request is rejected. This allows bursts (use the full bucket at once) while enforcing an average rate.
+**Token bucket algorithm:** 各 user は N tokens の bucket を持ち、毎秒 rate R で refill されます。request は bucket から tokens を消費します。bucket が空なら request は reject されます。これにより burst (bucket 全量を一度に使う) を許しつつ average rate を enforce できます。
 
-**Per-user quotas:** set daily/monthly token limits per user tier.
+**Per-user quotas:** user tier ごとに daily/monthly token limits を設定します。
 
 | Tier | Daily Token Limit | Max Requests/min | Model Access |
 |------|------------------|------------------|-------------|
@@ -118,9 +118,9 @@ Rate limiting is not just about fairness. It is about survival.
 
 ### Model Routing: Right Model for the Right Job
 
-Not every query needs GPT-4o.
+すべての query に GPT-4o が必要なわけではありません。
 
-"What time does the store close?" does not require a $10/M-output model. GPT-4o-mini at $0.60/M output handles it perfectly. Claude Haiku at $1.25/M output handles it. A simple classifier routes cheap queries to cheap models and complex queries to expensive models.
+"What time does the store close?" に $10/M-output model は不要です。$0.60/M output の GPT-4o-mini で十分です。$1.25/M output の Claude Haiku でも十分です。simple classifier が cheap queries を cheap models へ、complex queries を expensive models へ route します。
 
 ```mermaid
 flowchart TD
@@ -130,11 +130,11 @@ flowchart TD
     B -->|Complex: reasoning, code| E[GPT-4o / Claude Opus<br/>$2.50/$10.00+]
 ```
 
-A well-tuned router saves 40-70% on model costs alone.
+よく tuned された router は model costs だけで 40-70% 節約します。
 
-### Cost Tracking: Know Where the Money Goes
+### Cost Tracking: お金の流れを知る
 
-You cannot optimize what you do not measure. Log every API call with:
+測っていないものは optimize できません。すべての API call を次の項目で log します。
 
 - Timestamp
 - Model name
@@ -146,32 +146,32 @@ You cannot optimize what you do not measure. Log every API call with:
 - Cache hit/miss
 - Request category
 
-This data reveals which features are expensive, which users are heavy consumers, and where caching has the most impact.
+この data は、どの features が expensive か、どの users が heavy consumers か、どこで caching が最も効くかを明らかにします。
 
 ### Batching: Bulk Discounts
 
-OpenAI's Batch API processes requests asynchronously at a 50% discount. You submit a batch of up to 50,000 requests, and results come back within 24 hours.
+OpenAI の Batch API は requests を asynchronous に処理し、50% discount を提供します。最大 50,000 requests の batch を submit し、results は 24 時間以内に返ります。
 
-Use batching for:
-- Nightly document processing
-- Bulk classification
-- Evaluation runs
-- Data enrichment pipelines
+batching を使う用途:
+- nightly document processing
+- bulk classification
+- evaluation runs
+- data enrichment pipelines
 
-Not for: real-time user-facing queries (latency matters).
+向かない用途: real-time user-facing queries (latency が重要)。
 
-### Budget Alerts and Circuit Breakers
+### Budget Alerts と Circuit Breakers
 
-A circuit breaker stops spending when you hit a limit. Without one, a bug or abuse can burn through your monthly budget in hours.
+circuit breaker は limit に達したときに spending を止めます。これがないと bug や abuse によって monthly budget が数時間で燃え尽きます。
 
-Set three thresholds:
-1. **Warning** (70% of budget): send an alert
-2. **Throttle** (85% of budget): switch to cheaper models only
-3. **Stop** (95% of budget): reject new requests, return cached responses only
+3 つの thresholds を設定します。
+1. **Warning** (budget の 70%): alert を送る
+2. **Throttle** (budget の 85%): cheaper models のみに切り替える
+3. **Stop** (budget の 95%): new requests を reject し、cached responses のみ返す
 
-### The Optimization Stack
+### Optimization Stack
 
-Apply these techniques in order. Each layer compounds on the previous ones.
+これらの techniques を順番に適用します。各 layer は前の layer に積み上がります。
 
 | Layer | Technique | Typical Savings | Implementation Effort |
 |-------|-----------|----------------|----------------------|
@@ -183,11 +183,11 @@ Apply these techniques in order. Each layer compounds on the previous ones.
 | 6 | Prompt compression | 10-30% | Medium (rewrite prompts) |
 | 7 | Batching | 50% on eligible | Low (batch API) |
 
-A RAG app applying layers 1-5 typically reduces costs from $22,500/month to $4,000-6,000/month. That is the difference between burning runway and building a business.
+layers 1-5 を適用した RAG app は、通常 costs を $22,500/month から $4,000-6,000/month に減らせます。これは runway を燃やすか、business を作るかの差です。
 
 ### Real Savings: Before and After
 
-Here is a real breakdown for a RAG chatbot serving 10,000 DAU.
+10,000 DAU を serve する RAG chatbot の実例 breakdown です。
 
 | Metric | Before Optimization | After Optimization | Savings |
 |--------|--------------------|--------------------|---------|
@@ -199,13 +199,13 @@ Here is a real breakdown for a RAG chatbot serving 10,000 DAU.
 | Monthly embedding cost | $0 | $180 | (new cost) |
 | Total monthly cost | $22,500 | $5,380 | 76% |
 
-The embedding cost for semantic caching ($180/month) pays for itself within the first hour of cache hits.
+semantic caching の embedding cost ($180/month) は、cache hits の最初の 1 時間で元が取れます。
 
-## Build It
+## 実装
 
 ### Step 1: Cost Calculator
 
-Build a token cost calculator that knows current pricing for major models.
+major models の current pricing を知っている token cost calculator を作ります。
 
 ```python
 import hashlib
@@ -255,7 +255,7 @@ def calculate_cost(model, input_tokens, output_tokens, cached_input_tokens=0):
 
 ### Step 2: Exact Cache
 
-Hash the full prompt and return cached responses for identical requests.
+full prompt を hash し、identical requests には cached responses を返します。
 
 ```python
 class ExactCache:
@@ -310,7 +310,7 @@ class ExactCache:
 
 ### Step 3: Semantic Cache
 
-Embed queries and return cached responses when similarity exceeds a threshold.
+queries を embed し、similarity が threshold を超えたら cached responses を返します。
 
 ```python
 def simple_embed(text):
@@ -384,7 +384,7 @@ class SemanticCache:
 
 ### Step 4: Rate Limiter
 
-Token bucket rate limiter with per-user quotas.
+per-user quotas を持つ token bucket rate limiter です。
 
 ```python
 class TokenBucketRateLimiter:
@@ -454,7 +454,7 @@ class TokenBucketRateLimiter:
 
 ### Step 5: Cost Tracker
 
-Log every call and compute running totals.
+すべての call を log し、running totals を計算します。
 
 ```python
 class CostTracker:
@@ -536,7 +536,7 @@ class CostTracker:
 
 ### Step 6: Model Router
 
-Route queries to the cheapest model that can handle them.
+query を処理できる最も安い model に route します。
 
 ```python
 SIMPLE_KEYWORDS = ["what time", "hours", "address", "phone", "price", "return policy", "hello", "hi", "thanks", "yes", "no"]
@@ -563,7 +563,7 @@ def route_model(query, tier="pro"):
     return {"query": query, "complexity": complexity, "model": model, "tier": tier}
 ```
 
-### Step 7: Run the Demo
+### Step 7: Demo を実行する
 
 ```python
 def simulate_llm_call(model, query):
@@ -748,7 +748,7 @@ if __name__ == "__main__":
     run_demo()
 ```
 
-## Use It
+## 使い方
 
 ### Anthropic Prompt Caching
 
@@ -775,7 +775,7 @@ if __name__ == "__main__":
 # print(f"Cache read tokens: {response.usage.cache_read_input_tokens}")
 ```
 
-The first call writes to the cache (25% premium). Every subsequent call with the same system prompt prefix reads from the cache (90% discount). The cache lasts 5 minutes and resets the timer on every hit.
+最初の call は cache に書き込みます (25% premium)。同じ system prompt prefix の subsequent calls は cache から読みます (90% discount)。cache は 5 分持続し、hit するたびに timer が reset されます。
 
 ### OpenAI Automatic Caching
 
@@ -797,7 +797,7 @@ The first call writes to the cache (25% premium). Every subsequent call with the
 # print(f"Completion tokens: {response.usage.completion_tokens}")
 ```
 
-OpenAI caches automatically. Any prompt prefix of 1,024+ tokens that matches a recent request gets a 50% discount. No code changes needed -- just check `prompt_tokens_details.cached_tokens` in the response to verify it is working.
+OpenAI は automatic に cache します。recent request と match する 1,024+ tokens の prompt prefix は 50% discount になります。code change は不要です。動作確認は response の `prompt_tokens_details.cached_tokens` を見ればできます。
 
 ### OpenAI Batch API
 
@@ -828,7 +828,7 @@ OpenAI caches automatically. Any prompt prefix of 1,024+ tokens that matches a r
 # print(f"Batch ID: {batch.id}, Status: {batch.status}")
 ```
 
-Batch API gives a flat 50% discount on all tokens. Results arrive within 24 hours. Perfect for non-real-time workloads: evaluations, data labeling, bulk summarization.
+Batch API はすべての tokens に flat 50% discount を提供します。results は 24 時間以内に届きます。evaluations、data labeling、bulk summarization など non-real-time workloads に最適です。
 
 ### Production Semantic Cache with Redis
 
@@ -859,50 +859,50 @@ Batch API gives a flat 50% discount on all tokens. Results arrive within 24 hour
 #     return None
 ```
 
-In production, replace the linear scan with a vector index (Redis Vector Search, Pinecone, or pgvector). Linear scan works for <1,000 entries. Beyond that, use ANN (approximate nearest neighbor) for O(log n) lookup.
+production では linear scan を vector index (Redis Vector Search、Pinecone、pgvector) に置き換えます。linear scan は <1,000 entries なら動きます。それ以上では O(log n) lookup のため ANN (approximate nearest neighbor) を使います。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/prompt-cost-optimizer.md` -- a reusable prompt that analyzes your LLM application and recommends specific cost optimizations with projected savings.
+この lesson は `outputs/prompt-cost-optimizer.md` を生成します。これは LLM application を分析し、projected savings 付きの specific cost optimizations を提案する reusable prompt です。
 
-It also produces `outputs/skill-cost-patterns.md` -- a decision framework for choosing the right caching strategy, rate limiting configuration, and model routing rules for your use case.
+また `outputs/skill-cost-patterns.md` も生成します。これは use case に合った caching strategy、rate limiting configuration、model routing rules を選ぶための decision framework です。
 
-## Exercises
+## 演習
 
-1. **Implement LRU eviction for the semantic cache.** Replace the oldest-first eviction with least-recently-used. Track the last access time for each entry and evict the entry with the oldest access time when the cache is full. Compare hit rates between the two strategies over 100 queries.
+1. **semantic cache に LRU eviction を実装する。** oldest-first eviction を least-recently-used に置き換えます。各 entry の last access time を track し、cache が full のとき oldest access time の entry を evict します。100 queries で 2 strategies の hit rates を比較します。
 
-2. **Build a cost projection tool.** Given a log of API calls (the CostTracker logs), project the monthly cost based on the trailing 7-day average. Account for weekday/weekend patterns. Trigger an alert if the projected monthly cost exceeds the budget by more than 20%.
+2. **cost projection tool を構築する。** API calls の log (CostTracker logs) が与えられたら、trailing 7-day average に基づいて monthly cost を予測します。weekday/weekend patterns を考慮します。projected monthly cost が budget を 20% 超過する場合に alert を trigger します。
 
-3. **Implement tiered semantic caching.** Use two similarity thresholds: 0.98 for high-confidence hits (return immediately) and 0.90 for medium-confidence hits (return with a disclaimer: "Based on a similar previous question..."). Track which tier each hit came from and measure user satisfaction differences.
+3. **tiered semantic caching を実装する。** 2 つの similarity thresholds を使います。0.98 は high-confidence hits (すぐ返す)、0.90 は medium-confidence hits ("Based on a similar previous question..." という disclaimer 付きで返す) です。各 hit がどの tier から来たかを track し、user satisfaction differences を測定します。
 
-4. **Build a model routing classifier.** Replace the keyword-based classifier with an embedding-based one. Embed 50 labeled queries (simple/medium/complex), then classify new queries by finding the nearest labeled example. Measure classification accuracy against a test set of 20 queries.
+4. **model routing classifier を構築する。** keyword-based classifier を embedding-based なものに置き換えます。50 labeled queries (simple/medium/complex) を embed し、nearest labeled example を見つけて new queries を classify します。20 queries の test set に対する classification accuracy を測定します。
 
-5. **Implement a circuit breaker with degradation levels.** At 70% budget, log a warning. At 85%, automatically switch all routing to the cheapest model (gpt-4o-mini). At 95%, serve only cached responses and reject new queries. Test by simulating 1,000 requests against a $1.00 budget and verify each threshold triggers correctly.
+5. **degradation levels 付き circuit breaker を実装する。** budget 70% で warning を log します。85% で all routing を cheapest model (gpt-4o-mini) に自動切替します。95% で cached responses のみ serve し、new queries を reject します。$1.00 budget に対して 1,000 requests を simulate し、各 threshold が正しく trigger することを検証します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Prompt caching | "Cache the system prompt" | Provider-level caching where repeated prompt prefixes get a discount (90% Anthropic, 50% OpenAI) -- no code changes for OpenAI, explicit markers for Anthropic |
-| Semantic caching | "Smart caching" | Embedding the query, computing similarity to past queries, and returning the cached response if similarity exceeds a threshold -- catches paraphrases that exact matching misses |
-| Exact caching | "Hash caching" | Hashing the full prompt (model + messages + temperature) and returning the cached response for identical inputs -- only works for temperature=0 deterministic calls |
-| Token bucket | "Rate limiter" | An algorithm where each user has a bucket of N tokens that refills at rate R per second -- allows bursts up to N while enforcing an average rate of R |
-| Model routing | "Cheapskate routing" | Using a classifier to send simple queries to cheap models (GPT-4o-mini, Haiku) and complex queries to expensive models (GPT-4o, Opus) -- saves 40-70% on model costs |
-| Cost tracking | "Metering" | Logging every API call with model, tokens, latency, cost, and user ID so you know exactly where money goes and which features are expensive |
-| Circuit breaker | "Kill switch" | Automatically degrading service (cheaper models, cached-only) or stopping requests entirely when spending approaches the budget limit |
-| Batch API | "Bulk discount" | OpenAI's asynchronous processing at 50% discount -- submit up to 50,000 requests, get results within 24 hours |
-| Prompt compression | "Token diet" | Rewriting system prompts and context to use fewer tokens while preserving meaning -- shorter prompts cost less and often perform better |
-| Cache hit rate | "Cache efficiency" | The percentage of requests served from cache instead of calling the LLM -- 40-60% is typical for production chatbots, saves proportionally on cost |
+| Prompt caching | "Cache the system prompt" | repeated prompt prefixes が discount される provider-level caching (Anthropic 90%、OpenAI 50%)。OpenAI は code changes 不要、Anthropic は explicit markers |
+| Semantic caching | "Smart caching" | query を embed し、past queries との similarity を計算し、threshold を超えたら cached response を返す。exact matching が見逃す paraphrases を捉える |
+| Exact caching | "Hash caching" | full prompt (model + messages + temperature) を hash し、identical inputs に cached response を返す。temperature=0 deterministic calls でのみ有効 |
+| Token bucket | "Rate limiter" | 各 user が rate R per second で refill される N tokens の bucket を持つ algorithm。N までの bursts を許しつつ average rate R を enforce |
+| Model routing | "Cheapskate routing" | classifier で simple queries を cheap models (GPT-4o-mini、Haiku) に、complex queries を expensive models (GPT-4o、Opus) に送る。model costs を 40-70% 節約 |
+| Cost tracking | "Metering" | model、tokens、latency、cost、user ID を含めて全 API call を log し、お金がどこに流れどの features が expensive かを把握すること |
+| Circuit breaker | "Kill switch" | spending が budget limit に近づいたときに service を自動 degrade (cheaper models、cached-only) または requests を停止する仕組み |
+| Batch API | "Bulk discount" | OpenAI の asynchronous processing を 50% discount で使う仕組み。最大 50,000 requests を submit し、24 時間以内に results を得る |
+| Prompt compression | "Token diet" | meaning を保ちながら system prompts と context を少ない tokens に書き換えること。短い prompts は安く、多くの場合 performance も良い |
+| Cache hit rate | "Cache efficiency" | LLM を呼ぶ代わりに cache から serve された requests の割合。production chatbots では 40-60% が典型で、cost が比例して下がる |
 
-## Further Reading
+## 参考資料
 
-- [Anthropic Prompt Caching Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) -- the official docs for Anthropic's explicit cache_control markers, pricing, and cache lifetime behavior
-- [OpenAI Prompt Caching](https://platform.openai.com/docs/guides/prompt-caching) -- OpenAI's automatic caching, how to verify cache hits via usage fields, and minimum prefix lengths
-- [OpenAI Batch API](https://platform.openai.com/docs/guides/batch) -- 50% discount for asynchronous processing, JSONL format, 24-hour completion window, and 50K request limits
-- [GPTCache](https://github.com/zilliztech/GPTCache) -- open-source semantic caching library supporting multiple embedding backends, vector stores, and eviction policies
-- [Martian Model Router](https://docs.withmartian.com) -- production model routing that automatically selects the cheapest model capable of handling each query
-- [Not Diamond](https://www.notdiamond.ai) -- ML-based model router that learns from your traffic patterns to optimize cost/quality tradeoffs across providers
-- [Helicone](https://www.helicone.ai) -- LLM observability platform with cost tracking, caching, rate limiting, and budget alerts as a proxy layer
-- [Dean & Barroso, "The Tail at Scale" (CACM 2013)](https://research.google/pubs/the-tail-at-scale/) -- latency, throughput, TTFT/TPOT percentiles, and hedged requests; the cost model behind "pick the cheapest model that still meets P95."
-- [Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention" (SOSP 2023)](https://arxiv.org/abs/2309.06180) -- the vLLM paper; why paged KV-cache + continuous batching beat naive servers 24× on throughput, the infra layer under "caching and cost."
-- [Dao et al., "FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning" (ICLR 2024)](https://arxiv.org/abs/2307.08691) -- kernel-level cost reduction orthogonal to prompt caching; read alongside speculative decoding and GQA for the full cost-curve picture.
+- [Anthropic Prompt Caching Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) — Anthropic の explicit `cache_control` markers、pricing、cache lifetime behavior の公式 docs
+- [OpenAI Prompt Caching](https://platform.openai.com/docs/guides/prompt-caching) — OpenAI の automatic caching、usage fields による cache hits の確認方法、minimum prefix lengths
+- [OpenAI Batch API](https://platform.openai.com/docs/guides/batch) — asynchronous processing の 50% discount、JSONL format、24-hour completion window、50K request limits
+- [GPTCache](https://github.com/zilliztech/GPTCache) — multiple embedding backends、vector stores、eviction policies を support する open-source semantic caching library
+- [Martian Model Router](https://docs.withmartian.com) — 各 query を処理できる cheapest model を自動選択する production model routing
+- [Not Diamond](https://www.notdiamond.ai) — traffic patterns から学習し、providers across の cost/quality tradeoffs を optimize する ML-based model router
+- [Helicone](https://www.helicone.ai) — proxy layer として cost tracking、caching、rate limiting、budget alerts を提供する LLM observability platform
+- [Dean & Barroso, "The Tail at Scale" (CACM 2013)](https://research.google/pubs/the-tail-at-scale/) — latency、throughput、TTFT/TPOT percentiles、hedged requests。"P95 を満たす最安 model を選ぶ" ための cost model
+- [Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention" (SOSP 2023)](https://arxiv.org/abs/2309.06180) — vLLM paper。paged KV-cache + continuous batching が naive servers に対して throughput 24x を出す理由。caching and cost の infra layer
+- [Dao et al., "FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning" (ICLR 2024)](https://arxiv.org/abs/2307.08691) — prompt caching と直交する kernel-level cost reduction。full cost-curve picture には speculative decoding と GQA とあわせて読む

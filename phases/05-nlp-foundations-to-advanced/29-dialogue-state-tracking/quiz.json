@@ -4,99 +4,99 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does dialogue state tracking maintain across turns?",
+      "question": "Dialogue state tracking は turns をまたいで何を維持しますか？",
       "options": [
-        "A free-text history only",
-        "A slot-value dictionary representing the user's current goal, updated after every turn",
-        "An embedding of the conversation",
-        "A POS-tagged transcript"
+        "free-text history のみ",
+        "user の現在の goal を表す slot-value dictionary。turn ごとに更新される",
+        "conversation の embedding",
+        "POS-tagged transcript"
       ],
       "correct": 1,
-      "explanation": "DST keeps a structured slot-value map that the backend can act on."
+      "explanation": "DST は backend が実行できる structured slot-value map を維持します。"
     },
     {
       "stage": "pre",
-      "question": "What does Joint Goal Accuracy (JGA) measure?",
+      "question": "Joint Goal Accuracy (JGA) は何を測りますか？",
       "options": [
-        "Fraction of turns where every slot is exactly correct (all-or-nothing)",
-        "Average slot accuracy",
-        "Latency per turn",
+        "すべての slot が完全に正しい turns の割合（all-or-nothing）",
+        "平均 slot accuracy",
+        "turn ごとの latency",
         "Cosine similarity"
       ],
       "correct": 0,
-      "explanation": "JGA is the strict per-turn match across all slots; per-slot accuracy is more lenient."
+      "explanation": "JGA はすべての slots について turn ごとに strict match を見る指標です。per-slot accuracy より厳しいです。"
     },
     {
       "stage": "check",
-      "question": "Why does regenerating the whole state from history each turn handle user corrections naturally?",
+      "question": "毎 turn、history から whole state を regenerate すると user corrections を自然に扱えるのはなぜですか？",
       "options": [
-        "It uses fewer tokens",
-        "It runs on GPU",
-        "It avoids embeddings",
-        "Reading the full history lets the model re-derive the final state including 'actually...' corrections without explicit rollback logic"
+        "より少ない tokens で済むから",
+        "GPU 上で動くから",
+        "embeddings を避けられるから",
+        "full history を読むことで、明示的な rollback logic なしに 'actually...' corrections を含む final state を再導出できるから"
       ],
       "correct": 3,
-      "explanation": "Full-history regeneration absorbs corrections by recomputing the final state from the entire conversation."
+      "explanation": "Full-history regeneration は、会話全体から final state を再計算することで corrections を吸収します。"
     },
     {
       "stage": "check",
-      "question": "Which 2026 pattern gives a guaranteed-valid slot dict in 5 lines of code?",
+      "question": "2026 年のどの pattern が、5 lines of code で guaranteed-valid slot dict を与えますか？",
       "options": [
-        "Hand-written regex",
+        "hand-written regex",
         "BM25 retrieval",
-        "LLM + Instructor + Pydantic schema with constrained or validated output",
+        "constrained または validated output を伴う LLM + Instructor + Pydantic schema",
         "TF-IDF classifier"
       ],
       "correct": 2,
-      "explanation": "Pydantic schema + Instructor validates the LLM's state output against the slot ontology automatically."
+      "explanation": "Pydantic schema + Instructor は、LLM の state output を slot ontology に対して自動的に validate します。"
     },
     {
       "stage": "check",
-      "question": "Why version your DST schema?",
+      "question": "DST schema を version 管理するのはなぜですか？",
       "options": [
-        "Adding new slots post-hoc invalidates older training data and breaks longitudinal evaluation",
-        "Required by JSON",
-        "Reduce token count",
-        "Speed gains"
+        "後から new slots を追加すると older training data が無効になり、longitudinal evaluation が壊れるから",
+        "JSON で必須だから",
+        "token count を減らすため",
+        "speed gains のため"
       ],
       "correct": 0,
-      "explanation": "Unversioned schema changes silently break training data alignment and eval comparability."
+      "explanation": "version 管理されていない schema changes は、training data alignment と eval comparability を静かに壊します。"
     },
     {
       "stage": "post",
-      "question": "Why must DST for compliance-sensitive domains include a rule-based check alongside LLM extraction?",
+      "question": "compliance-sensitive domains の DST で、LLM extraction と併せて rule-based check が必要なのはなぜですか？",
       "options": [
-        "Rules avoid embeddings",
-        "LLM-only DST can mis-extract destructive parameters (amount, account, date); a rules layer enforces deterministic constraints",
-        "LLMs are slower",
-        "Rules are multilingual"
+        "Rules は embeddings を避けるから",
+        "LLM-only DST は destructive parameters（amount、account、date）を誤抽出する可能性があり、rules layer が deterministic constraints を強制するから",
+        "LLMs は遅いから",
+        "Rules は multilingual だから"
       ],
       "correct": 1,
-      "explanation": "Compliance domains require deterministic enforcement; rules catch slot errors that LLMs introduce."
+      "explanation": "compliance domains では deterministic enforcement が必要です。rules は LLM が持ち込む slot errors を捕捉します。"
     },
     {
       "stage": "post",
-      "question": "What is the cost concern with regenerating state on every turn via LLM?",
+      "question": "LLM で毎 turn state を regenerate する場合の cost concern は何ですか？",
       "options": [
-        "Re-reading the full history each turn yields O(n^2) total token usage; cap or summarize older turns",
-        "More embeddings",
-        "Cosine costs",
+        "毎 turn full history を読み直すと total token usage が O(n^2) になるため、古い turns を cap または summarize する必要がある",
+        "embeddings が増えること",
+        "cosine costs",
         "Embedding drift"
       ],
       "correct": 0,
-      "explanation": "Full-history regeneration is quadratic in turns; cap history or use rolling summaries."
+      "explanation": "Full-history regeneration は turns 数に対して二次になります。history を cap するか rolling summaries を使います。"
     },
     {
       "stage": "post",
-      "question": "Why are explicit confirmation flows required before destructive backend actions?",
+      "question": "destructive backend actions の前に explicit confirmation flows が必要なのはなぜですか？",
       "options": [
         "Latency",
-        "Confirmation increases JGA",
-        "Required by tokenizers",
-        "Even good DST has nonzero slot-error rates; a deterministic confirmation prevents wrong-account or wrong-amount actions"
+        "Confirmation が JGA を上げるから",
+        "tokenizers で必須だから",
+        "良い DST でも slot-error rate はゼロではないため、deterministic confirmation が wrong-account や wrong-amount actions を防ぐから"
       ],
       "correct": 3,
-      "explanation": "Destructive actions need user confirmation because DST is never error-free."
+      "explanation": "DST は完全には error-free ではないため、destructive actions には user confirmation が必要です。"
     }
   ]
 }

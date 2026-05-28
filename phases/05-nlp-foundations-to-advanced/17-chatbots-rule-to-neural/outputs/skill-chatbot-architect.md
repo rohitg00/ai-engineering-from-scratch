@@ -1,17 +1,17 @@
 ---
 name: chatbot-architect
-description: Design a chatbot stack for a given use case.
+description: 指定されたユースケース向けのチャットボット構成を設計する。
 version: 1.0.0
 phase: 5
 lesson: 17
 tags: [nlp, agents, chatbot]
 ---
 
-Given a product context (user need, compliance constraints, available tools, data volume), output:
+プロダクトの文脈（ユーザーのニーズ、コンプライアンス制約、利用可能なツール、データ量）が与えられたら、次を出力する。
 
-1. Architecture. Rule-based, retrieval, neural, LLM agent, or hybrid (specify which paths go where).
-2. LLM choice if applicable. Name the model family (Claude, GPT-4, Llama-3.1, Mixtral). Match to tool-use quality and cost.
-3. Grounding strategy. RAG sources, retrieval method (lesson 14), tool contracts.
-4. Evaluation plan. Task success rate, tool-call correctness, off-task rate, hallucination rate on held-out dialogs.
+1. アーキテクチャ。ルールベース、検索、ニューラル、LLMエージェント、またはハイブリッド（どの経路をどこに流すかを明記する）。
+2. 該当する場合はLLMの選定。モデルファミリー（Claude、GPT-4、Llama-3.1、Mixtral）を挙げる。ツール利用品質とコストに合わせる。
+3. グラウンディング戦略。RAGのソース、検索手法（lesson 14）、ツール契約。
+4. 評価計画。タスク成功率、ツール呼び出しの正確性、脱線率、評価用に取り分けた対話でのハルシネーション率。
 
-Refuse to recommend a pure-LLM agent for any destructive action (payments, account deletion, data modification) without a structured confirmation flow. Refuse to skip the prompt-injection audit if the agent has write access to anything.
+構造化された確認フローなしに、破壊的操作（支払い、アカウント削除、データ変更）へ純粋なLLMエージェントを推奨してはいけない。エージェントが何らかの書き込み権限を持つ場合は、プロンプトインジェクション監査の省略を拒否する。

@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "post",
-      "question": "What discount does Anthropic apply to cache reads versus the base input rate?",
+      "question": "Anthropic は cache read に対して base input rate と比べてどの discount を適用しますか？",
       "options": [
         "25% off",
         "50% off",
@@ -16,43 +16,43 @@
     },
     {
       "stage": "post",
-      "question": "Why must dynamic timestamps go below the cache breakpoint, not above it?",
+      "question": "dynamic timestamp はなぜ cache breakpoint の上ではなく下に置く必要がありますか？",
       "options": [
-        "Caches only hit when the prefix is byte-identical; a changing timestamp breaks the match for everything after it",
-        "Timestamps confuse the tokenizer",
-        "They cost more tokens than static text",
-        "Anthropic explicitly rejects timestamps in cached blocks"
+        "cache は prefix が byte-identical なときだけ hit するため、変化する timestamp はそれ以降すべての match を壊すから",
+        "timestamp は tokenizer を混乱させるから",
+        "static text より token cost が高いから",
+        "Anthropic が cached block 内の timestamp を明示的に拒否するから"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "OpenAI's prompt caching is configured how?",
+      "question": "OpenAI の prompt caching はどのように設定しますか？",
       "options": [
-        "Explicit cache_control markers",
-        "A CachedContent API you create and reference",
-        "Automatic prefix matching with no configuration",
-        "A system-level flag you toggle per project"
+        "explicit な cache_control marker",
+        "create して参照する CachedContent API",
+        "設定なしの automatic prefix matching",
+        "project ごとに toggle する system-level flag"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "For Anthropic, what write premium does the 1-hour extended TTL cost vs the 5-minute default?",
+      "question": "Anthropic の 1-hour extended TTL は、5-minute default と比べて write premium がどれだけ増えますか？",
       "options": [
-        "Same",
-        "2x the write premium (50% over baseline)",
-        "4x the write premium",
-        "No write premium"
+        "同じ",
+        "write premium が2倍 (baseline 比 +50%)",
+        "write premium が4倍",
+        "write premium はない"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How many reuses are needed to break even on Anthropic's 25% write premium?",
+      "question": "Anthropic の 25% write premium で break even するには何回の reuse が必要ですか？",
       "options": [
         "1",
         "2",

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,8 +10,8 @@
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
     </style>
@@ -23,41 +23,41 @@
   <text x="130" y="82" text-anchor="middle" class="head">client</text>
   <text x="56" y="108" class="small">Claude Desktop,</text>
   <text x="56" y="124" class="small">Cursor, VS Code</text>
-  <text x="56" y="156" class="step">holds</text>
+  <text x="56" y="156" class="step">保持するもの</text>
   <text x="56" y="174" class="small">- access tokens</text>
-  <text x="56" y="190" class="small">  keyed by resource</text>
+  <text x="56" y="190" class="small">  resource ごと</text>
   <text x="56" y="206" class="small">- refresh tokens</text>
-  <text x="56" y="222" class="small">- PKCE verifiers</text>
+  <text x="56" y="222" class="small">- PKCE検証子</text>
 
   <rect x="400" y="60" width="180" height="460" class="cold"/>
-  <text x="490" y="82" text-anchor="middle" class="head">authorization server</text>
+  <text x="490" y="82" text-anchor="middle" class="head">認可server</text>
   <text x="416" y="108" class="small">Auth0 / Keycloak /</text>
   <text x="416" y="124" class="small">Cognito / custom</text>
-  <text x="416" y="156" class="step">responsibilities</text>
-  <text x="416" y="174" class="small">- consent UI</text>
-  <text x="416" y="190" class="small">- issue tokens</text>
-  <text x="416" y="206" class="small">- PKCE check</text>
-  <text x="416" y="222" class="small">- audience-pin via</text>
-  <text x="416" y="238" class="small">  resource indicator</text>
+  <text x="416" y="156" class="step">責務</text>
+  <text x="416" y="174" class="small">- 同意UI</text>
+  <text x="416" y="190" class="small">- token 発行</text>
+  <text x="416" y="206" class="small">- PKCE確認</text>
+  <text x="416" y="222" class="small">- resource indicatorで</text>
+  <text x="416" y="238" class="small">  audience固定</text>
   <text x="416" y="254" class="small">  (RFC 8707)</text>
 
   <rect x="760" y="60" width="180" height="460" class="hot"/>
   <text x="850" y="82" text-anchor="middle" class="head">resource server</text>
   <text x="776" y="108" class="small">MCP server</text>
-  <text x="776" y="124" class="small">e.g. notes.example</text>
-  <text x="776" y="156" class="step">responsibilities</text>
-  <text x="776" y="174" class="small">- validate aud</text>
-  <text x="776" y="190" class="small">- check scope</text>
-  <text x="776" y="206" class="small">- 403 on shortfall</text>
+  <text x="776" y="124" class="small">例: notes.example</text>
+  <text x="776" y="156" class="step">責務</text>
+  <text x="776" y="174" class="small">- aud を検証</text>
+  <text x="776" y="190" class="small">- scope を確認</text>
+  <text x="776" y="206" class="small">- 不足時は 403</text>
   <text x="776" y="222" class="small">- WWW-Authenticate</text>
-  <text x="776" y="238" class="small">  with scope hint</text>
-  <text x="776" y="254" class="small">- publish .well-known/</text>
+  <text x="776" y="238" class="small">  に scope hint</text>
+  <text x="776" y="254" class="small">- .well-known/</text>
   <text x="776" y="270" class="small">  oauth-protected-</text>
-  <text x="776" y="286" class="small">  resource (RFC 9728)</text>
+  <text x="776" y="286" class="small">  resource を公開 (RFC 9728)</text>
 
   <path d="M220,280 L400,280" class="edge" marker-end="url(#arrow)"/>
   <text x="310" y="270" text-anchor="middle" class="small">authorize code_challenge</text>
-  <text x="310" y="298" text-anchor="middle" class="small">user consents</text>
+  <text x="310" y="298" text-anchor="middle" class="small">user が consent</text>
 
   <path d="M400,330 L220,330" class="edge" marker-end="url(#arrow)"/>
   <text x="310" y="322" text-anchor="middle" class="small">code</text>
@@ -73,5 +73,5 @@
 
   <path d="M760,480 L220,480" class="edge" marker-end="url(#arrow)"/>
   <text x="490" y="472" text-anchor="middle" class="small">403 insufficient_scope (SEP-835)</text>
-  <text x="490" y="498" text-anchor="middle" class="caption">client redirects user for larger scope, flow repeats, retries request</text>
+  <text x="490" y="498" text-anchor="middle" class="caption">client はより大きいscopeのためuserをredirectし、flowを繰り返してrequestをretryする</text>
 </svg>

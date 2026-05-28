@@ -1,37 +1,37 @@
 [
   {
-    "question": "What training objective does GPT use during pre-training?",
-    "options": ["Masked language modeling (predicting masked tokens)", "Next-token prediction: given previous tokens, predict the next one", "Sentence classification", "Image-text alignment"],
+    "question": "GPT は事前訓練中にどの訓練目的を使いますか？",
+    "options": ["Masked language modeling (マスクされたトークンの予測)", "Next-token prediction: それまでのトークンから次のトークンを予測する", "文分類", "画像とテキストの対応付け"],
     "correct": 1,
-    "explanation": "GPT is a causal (autoregressive) language model trained with next-token prediction. Given tokens [t1, t2, ..., tn], it learns to predict tn+1. The loss is cross-entropy between predicted and actual next tokens.",
+    "explanation": "GPT は next-token prediction で訓練される causal (autoregressive) language model です。トークン [t1, t2, ..., tn] が与えられると、tn+1 を予測するよう学習します。損失は予測された次トークンと実際の次トークンの間の cross-entropy です。",
     "stage": "pre"
   },
   {
-    "question": "How many transformer layers, attention heads, and embedding dimensions does GPT-2 Small (124M) have?",
+    "question": "GPT-2 Small (124M) は、いくつの transformer layers、attention heads、embedding dimensions を持っていますか？",
     "options": ["6 layers, 6 heads, 512 dims", "12 layers, 12 heads, 768 dims", "24 layers, 16 heads, 1024 dims", "48 layers, 25 heads, 1600 dims"],
     "correct": 1,
-    "explanation": "GPT-2 Small has 12 transformer layers, 12 attention heads per layer, and 768-dimensional embeddings. This architecture has 124 million parameters and can be trained on a single GPU in a few hours.",
+    "explanation": "GPT-2 Small は 12 個の transformer layers、各 layer に 12 個の attention heads、768 次元の embeddings を持ちます。このアーキテクチャは 1 億 2400 万パラメータを持ち、単一 GPU でも数時間で訓練できます。",
     "stage": "pre"
   },
   {
-    "question": "What is the role of the causal attention mask in GPT?",
-    "options": ["It prevents attention to padding tokens", "It prevents each token from attending to future tokens, ensuring the model can only use past context for predictions", "It masks out low-confidence attention scores", "It reduces memory usage during training"],
+    "question": "GPT における causal attention mask の役割は何ですか？",
+    "options": ["padding tokens への attention を防ぐ", "各トークンが未来のトークンに attention するのを防ぎ、予測に過去の文脈だけを使うようにする", "信頼度の低い attention scores をマスクする", "訓練中のメモリ使用量を減らす"],
     "correct": 1,
-    "explanation": "The causal mask is a triangular matrix that sets future positions to -infinity before softmax. Token at position 5 can attend to positions 1-5 but not 6+. This ensures the model generates tokens left-to-right.",
+    "explanation": "causal mask は、softmax の前に未来位置を -infinity に設定する三角行列です。位置 5 のトークンは位置 1-5 に attention できますが、6 以降には attention できません。これにより、モデルは左から右へトークンを生成します。",
     "stage": "post"
   },
   {
-    "question": "What does 'temperature' control during text generation?",
-    "options": ["The speed of generation", "The randomness of token selection: lower temperature makes outputs more deterministic, higher makes them more diverse", "The number of tokens generated", "The model's confidence threshold"],
+    "question": "テキスト生成中の 'temperature' は何を制御しますか？",
+    "options": ["生成速度", "トークン選択のランダム性。低い temperature は出力をより決定的にし、高い temperature はより多様にする", "生成されるトークン数", "モデルの信頼度しきい値"],
     "correct": 1,
-    "explanation": "Temperature divides logits before softmax. Temperature=0.1 makes the distribution very peaked (nearly deterministic). Temperature=1.0 is the training distribution. Temperature>1.0 flattens it, increasing randomness.",
+    "explanation": "temperature は softmax の前に logits を割る値です。Temperature=0.1 は分布を非常に鋭くします (ほぼ決定的)。Temperature=1.0 は訓練時の分布です。Temperature>1.0 は分布を平坦にし、ランダム性を高めます。",
     "stage": "post"
   },
   {
-    "question": "Why does pre-training require significantly more compute than fine-tuning?",
-    "options": ["Pre-training uses larger batch sizes", "Pre-training processes trillions of tokens from scratch to learn general language patterns, while fine-tuning adjusts an already-capable model on thousands of examples", "Pre-training uses a different architecture", "Fine-tuning doesn't use gradients"],
+    "question": "事前訓練が fine-tuning より大幅に多くの計算量を必要とするのはなぜですか？",
+    "options": ["事前訓練はより大きな batch sizes を使うから", "事前訓練は、一般的な言語パターンを学ぶためにゼロから数兆トークンを処理する一方、fine-tuning はすでに能力のあるモデルを数千例で調整するだけだから", "事前訓練は異なるアーキテクチャを使うから", "fine-tuning では勾配を使わないから"],
     "correct": 1,
-    "explanation": "Pre-training builds all language knowledge from random weights over trillions of tokens. Fine-tuning starts from these learned weights and adjusts them on a much smaller dataset (thousands to millions of examples).",
+    "explanation": "事前訓練はランダムな重みから出発し、数兆トークンを通じてすべての言語知識を構築します。fine-tuning はこれらの学習済み重みから始め、はるかに小さなデータセット (数千から数百万例) で調整します。",
     "stage": "post"
   }
 ]

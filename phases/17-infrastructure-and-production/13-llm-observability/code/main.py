@@ -1,7 +1,7 @@
-"""Observability sampling and cost simulator — stdlib Python.
+"""Observability sampling and cost simulator — stdlib Python。
 
-Simulates a 1M-trace day across retention strategies. Reports storage cost
-and what's lost under each. Pedagogical: costs are 2026 approximations.
+Retention strategies ごとに 1M-trace day を simulate します。Storage cost と、
+各 strategy で失われるものを報告します。学習用なので cost は 2026 年の近似です。
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ import random
 
 BYTES_PER_TRACE = 4_500            # prompt + response + metadata
 COST_PER_GB_MONTH = 0.023          # S3 standard
-OBSERVABILITY_INGEST_PER_GB = 0.50 # e.g. Datadog-class
+OBSERVABILITY_INGEST_PER_GB = 0.50 # 例: Datadog-class
 ARIZE_AX_PER_GB = 0.005            # zero-copy claim
 
 
@@ -72,15 +72,15 @@ def report(row: dict) -> None:
 
 def main() -> None:
     print("=" * 120)
-    print("OBSERVABILITY SAMPLING — 1M traces/day, 2026 price approximations")
+    print("OBSERVABILITY SAMPLING — 1M traces/day、2026 price approximations")
     print("=" * 120)
     for s in STRATEGIES:
         report(simulate_day(s))
 
     print()
-    print("Read: 100% retention on Datadog-class costs hundreds of $/day.")
-    print("5% success + 100% errors + high-cost keeps signal, cuts 90% of bill.")
-    print("Arize AX zero-copy pattern wins at scale when you already have a data lake.")
+    print("Read: Datadog-class で 100% retention すると、1 日あたり数百ドルかかります。")
+    print("5% success + 100% errors + high-cost は signal を保ちながら bill を 90% 削ります。")
+    print("既に data lake がある場合、Arize AX の zero-copy pattern は scale で勝ちます。")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
-# Phase 16: Multi-Agent & Swarms
+# Phase 16: マルチエージェントとスウォーム
 
-> Coordination, emergence, and collective intelligence.
+> 協調、創発、集合知を扱う。
 
-See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.
+全レッスン計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。

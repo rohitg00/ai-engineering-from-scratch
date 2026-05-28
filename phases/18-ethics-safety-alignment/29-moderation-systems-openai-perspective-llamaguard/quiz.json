@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is OpenAI's omni-moderation-latest (2024)?",
+      "question": "OpenAI の omni-moderation-latest (2024) とは何ですか？",
       "options": [
-        "An RLHF reward model",
-        "A reasoning-focused frontier model",
-        "A C2PA watermarking endpoint",
-        "A GPT-4o-based moderation classifier that handles text and images in one call, returning a 13-category response schema (harassment, hate, self-harm, sexual, violence, illicit, with sub-categories), free for most developers"
+        "RLHF reward model",
+        "reasoning-focused frontier model",
+        "C2PA watermarking endpoint",
+        "text と images を1 call で扱う GPT-4o-based moderation classifier。13-category response schema (harassment, hate, self-harm, sexual, violence, illicit と sub-categories) を返し、most developers には free"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of OpenAI Moderation's primary top-level categories?",
+      "question": "OpenAI Moderation の primary top-level categories ではないものはどれですか？",
       "options": [
         "violence",
         "election-interference",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "What are the three layers of the standard 2026 moderation pattern?",
+      "question": "standard 2026 moderation pattern の3 layers は何ですか？",
       "options": [
         "Probe / detector / harness",
         "Tokenizer / model / detokenizer",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What is Perspective API (Google Jigsaw) primarily designed to score?",
+      "question": "Perspective API (Google Jigsaw) が主に score するものは何ですか？",
       "options": [
-        "Watermark strength",
-        "Toxicity (with severe-toxicity, insult, profanity, threat, identity-attack sub-dimensions) as a pre-LLM-era content-moderation baseline",
-        "Reasoning quality",
-        "Reward over user satisfaction"
+        "watermark strength",
+        "pre-LLM-era content-moderation baseline としての Toxicity (severe-toxicity, insult, profanity, threat, identity-attack sub-dimensions 付き)",
+        "reasoning quality",
+        "user satisfaction に対する reward"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is one failure mode of input-only moderation?",
+      "question": "input-only moderation の failure mode の1つは何ですか？",
       "options": [
-        "It cannot run on GPUs",
-        "It does not catch model output failures or hallucinations; encoding attacks (Lessons 12-14) can bypass input classifiers entirely",
-        "It always blocks legitimate content",
-        "It removes the need for output classifiers"
+        "GPU で実行できない",
+        "model output failures や hallucinations を catch できない。encoding attacks (Lessons 12-14) は input classifiers を完全に bypass し得る",
+        "legitimate content を常に block する",
+        "output classifiers を不要にする"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the Azure Content Moderator deprecation and migration target?",
+      "question": "Azure Content Moderator の deprecation と migration target は何ですか？",
       "options": [
-        "Deprecated February 2024, retired March 15, 2027; migration target is Azure AI Content Safety (LLM-based, integrated with Azure OpenAI)",
-        "Replaced by Perspective API",
-        "Merged into Llama Guard 4",
-        "Deprecated immediately with no replacement"
+        "2024年2月 deprecated、2027年3月15日 retired。migration target は Azure AI Content Safety (LLM-based, Azure OpenAI と integrated)",
+        "Perspective API に replaced",
+        "Llama Guard 4 に merged",
+        "replacement なしで即時 deprecated"
       ],
       "correct": 0,
       "explanation": ""

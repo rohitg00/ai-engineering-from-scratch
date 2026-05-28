@@ -4,69 +4,69 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the pipeline combine a deterministic substrate with an agent layer rather than using just one?",
+      "question": "pipeline が deterministic substrate と agent layer の片方だけでなく両方を組み合わせる理由は何ですか？",
       "options": [
-        "OpenRewrite or libcst handles 70-80% of mechanical rewrites safely and cheaply, leaving the agent for the ambiguous long tail",
-        "Agents alone are faster than recipes",
-        "Deterministic recipes are slower than LLMs",
-        "Determinism is needed only for the build system"
+        "OpenRewrite や libcst は mechanical rewrite の 70-80% を安全かつ安価に処理し、ambiguous long tail を agent に残せるため",
+        "agent 単独の方が recipe より速いため",
+        "deterministic recipe は LLM より遅いため",
+        "determinism は build system にだけ必要なため"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What signal does the pipeline use as ground truth for a successful migration?",
+      "question": "pipeline は successful migration の ground truth としてどの signal を使いますか？",
       "options": [
-        "Agent self-grading on a rubric",
-        "Reviewer approval on the PR",
-        "Diff size below a hard limit",
-        "Green CI in the sandbox without a coverage regression beyond a small threshold"
+        "rubric 上の agent self-grading",
+        "PR に対する reviewer approval",
+        "hard limit 未満の diff size",
+        "sandbox 内で green CI になり、小さな threshold を超える coverage regression がないこと"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which budget caps does the agent loop enforce per repo?",
+      "question": "agent loop は repo ごとにどの budget cap を強制しますか？",
       "options": [
-        "Unlimited time and cost; abort only on errors",
-        "No turn limit, $100 ceiling",
-        "1 hour wall-clock and 100 turns",
-        "30 minutes wall-clock, $8 cost, and 20 agent turns"
+        "time と cost は無制限で、error のときだけ abort",
+        "turn limit なし、$100 ceiling",
+        "1時間 wall-clock と100 turns",
+        "30分 wall-clock、$8 cost、20 agent turns"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What gate fires when coverage drops more than about 2% after migration?",
+      "question": "migration 後に coverage が約2%を超えて下がった場合、どの gate が発火しますか？",
       "options": [
-        "The reviewer is bypassed",
-        "The repo gets filed under a coverage_regression failure class instead of opening a clean PR",
-        "The deterministic substrate replays its recipes",
-        "The agent automatically force-pushes a fix"
+        "reviewer が bypass される",
+        "clean PR を開かず、repo は coverage_regression failure class に分類される",
+        "deterministic substrate が recipe を replay する",
+        "agent が自動的に fix を force-push する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is the failure taxonomy treated as a deliverable rather than a side artifact?",
+      "question": "failure taxonomy が side artifact ではなく deliverable として扱われる理由は何ですか？",
       "options": [
-        "It replaces the test suite",
-        "It groups failed repos by class so future recipe authors can target the top failure modes",
-        "It is required by GitHub branch protection",
-        "It satisfies a compliance checklist"
+        "test suite の代わりになるため",
+        "failed repo を class ごとに group 化し、future recipe author が上位 failure mode を狙えるため",
+        "GitHub branch protection に必須なため",
+        "compliance checklist を満たすため"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which public benchmark does the capstone target for Java 8 to 17 migration?",
+      "question": "Java 8 から17への migration でこの capstone が対象にする public benchmark はどれですか？",
       "options": [
-        "MigrationBench from Amazon",
+        "Amazon の MigrationBench",
         "SWE-bench Pro",
         "MMLU-Pro",
         "ViDoRe v3"
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "What does the agent integration rubric measure about the fix distribution?",
+      "question": "agent integration rubric は fix distribution について何を測りますか？",
       "options": [
-        "Tokenization speed of the source file",
-        "The number of force-pushes per repo",
-        "Number of dependencies pinned",
-        "The fraction of fixes handled by OpenRewrite versus authored by the agent layer"
+        "source file の tokenization speed",
+        "repo あたりの force-push 数",
+        "pin された dependency 数",
+        "OpenRewrite が処理した fix と agent layer が作成した fix の割合"
       ],
       "correct": 3,
       "explanation": ""

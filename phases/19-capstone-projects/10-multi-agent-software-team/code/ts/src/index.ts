@@ -1,24 +1,24 @@
 /**
- * Multi-Agent Software Team: capstone skeleton entry point (TypeScript).
+ * Multi-Agent Software Team: capstone skeleton entry point (TypeScript)。
  *
- * Mirrors the role split from docs/en.md (planner / coder / reviewer plus a
- * coordinator that rotates them round-robin) and the worktree-launch step
- * (Daytona sandbox per branch in production; here an execFile stub that
- * refuses denylisted shell commands). Shared workspace is in-memory.
+ * docs/en.md の role split (planner / coder / reviewer と round-robin で rotate
+ * する coordinator) と worktree-launch step に対応します。production では branch ごとの
+ * Daytona sandbox、ここでは denylist された shell command を拒否する execFile stub です。
+ * shared workspace は in-memory です。
  *
  * Source: phases/19-capstone-projects/10-multi-agent-software-team/docs/en.md
- * Stack references: SWE-AF factory, MetaGPT roles, AutoGen 0.4 actor graph.
+ * Stack reference: SWE-AF factory、MetaGPT roles、AutoGen 0.4 actor graph。
  */
 
 import { Coordinator } from "./coordinator.js";
 import { launchWorktree } from "./runtime.js";
 
 async function worktreeDemo(): Promise<void> {
-  console.log("[team] worktree stub: execFile with denylist");
+  console.log("[team] worktree stub: denylist 付き execFile");
   const ok = await launchWorktree({
     branch: "feature/refund-rounding",
     command: "node",
-    argv: ["-e", "console.log('coder sandbox ready: ' + process.env.BRANCH)"],
+    argv: ["-e", "console.log('coder sandbox 準備完了: ' + process.env.BRANCH)"],
   });
   console.log("  node stdout:", ok.stdout.trim());
   if (ok.stderr) console.log("  node stderr:", ok.stderr.trim());
@@ -39,13 +39,13 @@ async function worktreeDemo(): Promise<void> {
 }
 
 function teamDemo(): void {
-  console.log("[team] coordinator demo: issue to merged diff");
+  console.log("[team] coordinator demo: issue から merged diff へ");
   const coordinator = new Coordinator();
   const result = coordinator.run({
     from: "user",
     to: "planner",
     topic: "issue.opened",
-    body: "refund amounts off-by-one cent on edge rounding cases",
+    body: "edge rounding case で refund amount が 1 cent ずれる",
     ts: Date.now(),
   });
   console.log("  approved:", result.approved, "turns:", result.turns);

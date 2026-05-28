@@ -1,31 +1,31 @@
-<!-- Thanks for contributing. Fill out what applies. Delete sections that don't. -->
+<!-- コントリビューションありがとうございます。該当する項目を埋め、不要な節は削除してください。 -->
 
-## What this PR does
+## このPRの内容
 
-<!-- One-sentence summary. -->
+<!-- 1文で要約してください。 -->
 
-## Kind of change
+## 変更の種類
 
-- [ ] New lesson
-- [ ] Fix to an existing lesson
-- [ ] Translation
-- [ ] New output (prompt, skill, agent, MCP server)
+- [ ] 新規レッスン
+- [ ] 既存レッスンの修正
+- [ ] 翻訳
+- [ ] 新規成果物 (prompt, skill, agent, MCP server)
 - [ ] Docs / website / tooling
 
-## Checklist
+## チェックリスト
 
-- [ ] Code runs without errors with the listed dependencies
-- [ ] No comments in code files (docs explain, code is self-explanatory)
-- [ ] Built from scratch first, then shown with a framework (for new lessons)
-- [ ] Lesson folder matches `LESSON_TEMPLATE.md` structure
-- [ ] ROADMAP.md row for the lesson is a markdown link (`[Name](phases/...)`), not bare text
-- [ ] One lesson per commit (atomic per-lesson rule)
-- [ ] Tested locally / code output matches what `docs/en.md` claims
+- [ ] 記載された依存関係でコードがエラーなく動く
+- [ ] コードファイルにコメントを入れていない (説明はdocsに書き、コードは自明にする)
+- [ ] まず from scratch で作り、その後にframeworkを示した (新規レッスンの場合)
+- [ ] レッスンフォルダが `LESSON_TEMPLATE.md` の構造に一致している
+- [ ] ROADMAP.md の該当行は生テキストではなく markdown link (`[Name](phases/...)`) になっている
+- [ ] 1コミットにつき1レッスン (atomic per-lesson rule)
+- [ ] ローカルでテスト済み / コード出力が `docs/en.md` の説明と一致している
 
 ## Phase / lesson
 
 <!-- e.g. Phase 5 · 03-tokenizers -->
 
-## Notes for reviewer
+## レビュー担当者へのメモ
 
-<!-- Anything surprising, any deviations from the template, open questions. -->
+<!-- 意外な点、テンプレートから外れた点、未解決の質問があれば書いてください。 -->

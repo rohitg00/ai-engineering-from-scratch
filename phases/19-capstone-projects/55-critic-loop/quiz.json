@@ -1,78 +1,78 @@
 {
   "lesson": "55-critic-loop",
-  "title": "Critic Loop",
+  "title": "批評ループ",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the critic score across five fixed dimensions instead of returning a freeform paragraph?",
+      "question": "critic が freeform paragraph ではなく五つの固定 dimension で score する理由は何ですか?",
       "options": [
-        "Because models cannot generate paragraphs reliably",
-        "Because a fixed vector lets the harness detect per-dimension regressions across rounds",
-        "Because LaTeX requires a score field",
-        "Because the reviser only accepts JSON"
+        "model が paragraph を安定生成できないため",
+        "固定 vector により harness が round 間の dimension ごとの regression を検出できるため",
+        "LaTeX が score field を要求するため",
+        "reviser が JSON しか受け取らないため"
       ],
       "correct": 1,
-      "explanation": "A fixed dimension vector turns critique into structured data the harness can compare across rounds. Freeform criticism is unverifiable; vectors make regressions visible."
+      "explanation": "固定 dimension vector は critique を round 間で比較できる structured data にします。freeform criticism は検証しにくく、vector は regression を見える化します。"
     },
     {
       "stage": "pre",
-      "question": "In what order does the loop check stop conditions at the end of a round?",
+      "question": "round 終了時に loop は stop condition をどの順序で確認しますか?",
       "options": [
-        "Budget, then plateau, then target",
-        "Target, then plateau, then budget",
-        "Plateau, then target, then budget",
-        "Whichever fires first by random tie-break"
+        "Budget、plateau、target",
+        "Target、plateau、budget",
+        "Plateau、target、budget",
+        "random tie-break で先に発火したもの"
       ],
       "correct": 1,
-      "explanation": "Target met wins (the work is done). Then plateau (no more progress is achievable). Then budget (hard cap). The order makes the result deterministic when more than one condition could fire."
+      "explanation": "target met が最優先です。次が plateau、最後が hard cap の budget です。この順序により複数条件が同時に成立しても deterministic です。"
     },
     {
       "stage": "check",
-      "question": "Why does plateau detection require two consecutive flat rounds rather than one?",
+      "question": "plateau detection が一回ではなく二回連続の flat round を要求する理由は何ですか?",
       "options": [
-        "Because the dataclass requires a list",
-        "Because deterministic scoring still has noise per round; one flat round is not enough signal",
-        "Because the model returns nondeterministic scores",
-        "Because the dashboard expects two points"
+        "dataclass が list を要求するため",
+        "deterministic scoring でも round ごとに揺れがあり、一回の flat round だけでは十分な signal でないため",
+        "model が nondeterministic score を返すため",
+        "dashboard が二点を期待するため"
       ],
       "correct": 1,
-      "explanation": "Even a deterministic scorer's output changes round to round depending on which suggestions were applied. Requiring two flat rounds filters that noise."
+      "explanation": "deterministic scorer でも、どの suggestion が適用されたかで出力は round ごとに変わります。二回連続を要求するとその noise を除けます。"
     },
     {
       "stage": "check",
-      "question": "What does the reviser receive as input each round?",
+      "question": "reviser は各 round で何を input として受け取りますか?",
       "options": [
-        "The full Critique object including scores",
-        "The paper and the list of Suggestion records",
-        "A model-generated paragraph",
-        "The raw LaTeX source"
+        "score を含む full Critique object",
+        "paper と Suggestion records の list",
+        "model-generated paragraph",
+        "raw LaTeX source"
       ],
       "correct": 1,
-      "explanation": "Reviser.__call__ takes (paper, suggestions). Each Suggestion carries a dimension, target section, and an edit instruction. The reviser does not see scores. That separation lets either side be swapped without touching the other."
+      "explanation": "Reviser.__call__ は (paper, suggestions) を受け取ります。各 Suggestion は dimension、target section、edit instruction を持ちます。"
     },
     {
       "stage": "post",
-      "question": "What does the trace contain for each round?",
+      "question": "trace は各 round について何を含みますか?",
       "options": [
-        "Just the final paper draft",
-        "Round number, score vector, mean, suggestions applied, verdict",
-        "The model prompt and completion",
-        "Only the convergence verdict"
+        "final paper draft だけ",
+        "round number、score vector、mean、suggestions applied、verdict",
+        "model prompt と completion",
+        "convergence verdict だけ"
       ],
       "correct": 1,
-      "explanation": "The trace is the per-round event log. Dashboards render it as a score-over-time chart; the next stage reads it to decide whether the branch is worth keeping."
+      "explanation": "trace は per-round event log です。dashboard は score-over-time chart として描き、次 stage は branch を残す価値の判断に使えます。"
     },
     {
       "stage": "post",
-      "question": "A critic that keeps emitting suggestions that never improve any score will produce which terminal verdict?",
+      "question": "score を一切改善しない suggestion を出し続ける critic はどの terminal verdict になりますか?",
       "options": [
-        "target, because the budget hides the bug",
-        "plateau or budget, because the harness will catch the lack of progress",
-        "converged, because suggestions were applied",
-        "An exception, because the loop crashes"
+        "budget が bug を隠すため target",
+        "progress 不足を harness が捕捉するため plateau または budget",
+        "suggestion が適用されたため converged",
+        "loop が crash するため exception"
       ],
       "correct": 1,
-      "explanation": "Either plateau (two flat rounds) or budget (hard cap) fires. Both verdicts surface the bug. The loop never silently succeeds."
+      "explanation": "plateau または hard cap の budget が発火します。どちらも bug を見える化し、loop が黙って成功することはありません。"
     }
   ]
 }

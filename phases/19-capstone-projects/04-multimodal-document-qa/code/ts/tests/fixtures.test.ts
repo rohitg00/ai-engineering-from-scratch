@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import { FIXTURES, getFixture, listFixtures } from "../src/fixtures.js";
 
 describe("fixtures", () => {
-  it("exposes the 10-K and Nature fixtures", () => {
+  it("10-K と Nature の fixture を expose する", () => {
     const ids = listFixtures().map((d) => d.id).sort();
     assert.deepEqual(ids, ["10k-acme-2025", "nature-paper-2026"]);
   });
 
-  it("getFixture returns a known doc", () => {
+  it("getFixture は known doc を返す", () => {
     const doc = getFixture("10k-acme-2025");
     assert.ok(doc);
     assert.equal(doc.title, "Acme 10-K FY2025, Table 4");
@@ -16,15 +16,15 @@ describe("fixtures", () => {
     assert.ok(doc.evidence.length >= 1);
   });
 
-  it("getFixture returns undefined for unknown id", () => {
+  it("getFixture は unknown id に undefined を返す", () => {
     assert.equal(getFixture("missing-doc-id"), undefined);
   });
 
-  it("each evidence region has a positive-area bbox + score in [0,1]", () => {
+  it("各 evidence region は positive-area bbox と [0,1] の score を持つ", () => {
     for (const doc of Object.values(FIXTURES)) {
       for (const e of doc.evidence) {
-        assert.ok(e.bbox.w > 0 && e.bbox.h > 0, `bbox area must be > 0 in ${doc.id}`);
-        assert.ok(e.score >= 0 && e.score <= 1, `score out of range in ${doc.id}`);
+        assert.ok(e.bbox.w > 0 && e.bbox.h > 0, `${doc.id} の bbox area は > 0 である必要があります`);
+        assert.ok(e.score >= 0 && e.score <= 1, `${doc.id} の score が範囲外です`);
       }
     }
   });

@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "In Bayes' theorem, what is the 'prior'?",
-      "options": ["The probability of the evidence", "Your belief about a hypothesis before observing any evidence", "The probability of the evidence given the hypothesis", "The final updated probability after seeing evidence"],
+      "question": "ベイズの定理における「事前確率」とは何ですか？",
+      "options": ["証拠の確率", "証拠を観測する前に持っている、ある仮説についての信念", "仮説が与えられたときの証拠の確率", "証拠を見た後の最終的な更新後確率"],
       "correct": 1,
-      "explanation": "The prior P(A) represents your initial belief about hypothesis A before seeing any data. It gets updated to the posterior P(A|B) after observing evidence B."
+      "explanation": "事前確率 P(A) は、データを見る前に仮説Aについて持っている初期の信念を表します。証拠Bを観測した後、それは事後確率 P(A|B) に更新されます。"
     },
     {
       "stage": "pre",
-      "question": "A rare disease affects 1 in 10,000 people. A 99% accurate test returns positive. What is the approximate probability you have the disease?",
-      "options": ["99%", "About 1%", "50%", "10%"],
+      "question": "まれな病気が1万人に1人に影響します。99%正確な検査で陽性になりました。あなたがその病気であるおおよその確率はどれくらいですか？",
+      "options": ["99%", "約1%", "50%", "10%"],
       "correct": 1,
-      "explanation": "Despite 99% test accuracy, the disease is so rare (0.01%) that most positive results come from healthy people (false positives). Bayes' theorem gives P(sick|positive) = ~0.98%, not 99%."
+      "explanation": "検査精度が99%でも、その病気は非常にまれ（0.01%）なので、陽性結果の多くは健康な人から出る偽陽性です。ベイズの定理では P(sick|positive) = 約0.98% となり、99%ではありません。"
     },
     {
       "stage": "post",
-      "question": "What is Laplace smoothing in a Naive Bayes classifier and why is it necessary?",
-      "options": ["It normalizes feature values to have zero mean and unit variance", "It adds a small count to every feature to prevent zero probabilities from unseen words, which would zero out the entire product", "It smooths the decision boundary between classes", "It reduces the dimensionality of the feature space"],
+      "question": "ナイーブベイズ分類器におけるラプラス平滑化とは何で、なぜ必要ですか？",
+      "options": ["特徴量の平均を0、分散を1に正規化すること", "未観測単語によるゼロ確率で積全体がゼロになるのを防ぐため、すべての特徴量に小さなカウントを加えること", "クラス間の決定境界を滑らかにすること", "特徴空間の次元を減らすこと"],
       "correct": 1,
-      "explanation": "Without smoothing, a word never seen in spam training data gets P(word|spam)=0, making the entire product zero regardless of other strong spam indicators. Adding 1 to each count prevents this."
+      "explanation": "平滑化がないと、訓練データのスパムに一度も現れなかった単語は P(word|spam)=0 になり、他に強いスパム指標があっても積全体がゼロになります。各カウントに1を足すことでこれを防ぎます。"
     },
     {
       "stage": "post",
-      "question": "How does MAP (Maximum A Posteriori) estimation differ from MLE (Maximum Likelihood Estimation)?",
-      "options": ["MAP uses a larger dataset than MLE", "MAP incorporates a prior distribution over parameters, equivalent to adding regularization, while MLE only uses the likelihood", "MAP is faster to compute than MLE", "MLE always produces better results than MAP"],
+      "question": "MAP（Maximum A Posteriori）推定は、MLE（Maximum Likelihood Estimation）とどう違いますか？",
+      "options": ["MAPはMLEより大きなデータセットを使う", "MAPはパラメータに対する事前分布を組み込み、正則化の追加と等価である一方、MLEは尤度だけを使う", "MAPはMLEより計算が速い", "MLEは常にMAPよりよい結果を出す"],
       "correct": 1,
-      "explanation": "MAP maximizes P(data|params) * P(params) while MLE maximizes P(data|params) alone. The prior P(params) acts as regularization -- a Gaussian prior equals L2 regularization, a Laplace prior equals L1."
+      "explanation": "MAPは P(data|params) * P(params) を最大化し、MLEは P(data|params) だけを最大化します。事前分布 P(params) は正則化として働きます。ガウス事前分布はL2正則化に、ラプラス事前分布はL1に対応します。"
     },
     {
       "stage": "post",
-      "question": "In sequential Bayesian updating, you start with Beta(1,1) and observe 7 heads and 3 tails. What is the posterior?",
+      "question": "逐次ベイズ更新で Beta(1,1) から始め、表7回、裏3回を観測しました。事後分布は何ですか？",
       "options": ["Beta(7, 3)", "Beta(8, 4)", "Beta(1.7, 1.3)", "Normal(0.7, 0.1)"],
       "correct": 1,
-      "explanation": "The Beta-Binomial conjugate update adds successes to the first parameter and failures to the second: Beta(1+7, 1+3) = Beta(8, 4). The posterior mean is 8/12 = 0.667."
+      "explanation": "Beta-Binomialの共役更新では、成功回数を第1パラメータに、失敗回数を第2パラメータに足します。Beta(1+7, 1+3) = Beta(8, 4) です。事後平均は 8/12 = 0.667 です。"
     }
   ]
 }

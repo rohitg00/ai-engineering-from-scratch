@@ -9,43 +9,43 @@ tags: [keypoint, pose, subpixel, inference]
 
 # Heatmap to Coords
 
-Turn raw keypoint heatmaps into sub-pixel precise coordinates. The cheapest accuracy upgrade in every pose pipeline.
+生の keypoint heatmaps を sub-pixel 精度の座標に変換する。あらゆる pose pipeline で最も安価な accuracy upgrade である。
 
-## When to use
+## 使う場面
 
-- Deploying a heatmap-based keypoint model.
-- Benchmarking pose metrics — OKS is extremely sensitive to sub-pixel accuracy.
-- Porting pose code from one framework to another.
+- heatmap-based keypoint model を deploy するとき。
+- pose metrics を benchmark するとき。OKS は sub-pixel accuracy に非常に敏感である。
+- pose code をある framework から別の framework へ移植するとき。
 
-## Inputs
+## 入力
 
-- `heatmaps`: `(N, K, H, W)` tensor, per-keypoint heatmaps from the model.
-- `confidence_threshold`: discard keypoints whose peak is below this value.
+- `heatmaps`: `(N, K, H, W)` tensor。model からの keypoint ごとの heatmaps。
+- `confidence_threshold`: peak がこの値を下回る keypoint を破棄する。
 
-## Steps
+## 手順
 
-1. **Argmax** each heatmap to find the integer peak location.
-2. **First-difference offset** — estimate sub-pixel offset from neighbouring pixels. The `0.25` coefficient is a heuristic calibrated for Gaussian heatmaps with `sigma >= 1`; for principled sub-pixel recovery, use a full quadratic fit (DARK) or a Gaussian fit.
+1. 各 heatmap に **Argmax** を適用して integer peak location を見つける。
+2. **First-difference offset** — 近傍 pixel から sub-pixel offset を推定する。`0.25` coefficient は `sigma >= 1` の Gaussian heatmaps に合わせた heuristic である。より原理的な sub-pixel recovery には、full quadratic fit (DARK) または Gaussian fit を使う。
 
 ```
 dx = 0.25 * sign(heatmap[y, x+1] - heatmap[y, x-1])
 dy = 0.25 * sign(heatmap[y+1, x] - heatmap[y-1, x])
 ```
 
-For the DARK / quadratic variant, approximate using a local quadratic:
+DARK / quadratic variant では、local quadratic を使って近似する。
 
 ```
 dx = -0.5 * (heatmap[y, x+1] - heatmap[y, x-1])
         / (heatmap[y, x+1] - 2 * heatmap[y, x] + heatmap[y, x-1] + eps)
 ```
 
-The quadratic fit is more accurate on peaked heatmaps; the sign-based offset is the safer default when heatmaps are noisy.
+Quadratic fit は peak の鋭い heatmap でより正確である。sign-based offset は heatmap が noisy な場合のより安全な default である。
 
-3. **Add offset** to the integer peak.
-4. **Confidence** — return the peak value per keypoint; clients use it to mask low-confidence predictions.
-5. **Boundary case** — when the peak lands on the first or last pixel along an axis, one of the neighbours is clamped; the offset collapses to zero, which is the safest fallback.
+3. integer peak に **offset を加える**。
+4. **Confidence** — keypoint ごとに peak value を返す。client はこれを使って low-confidence predictions を mask する。
+5. **Boundary case** — peak が axis 上の最初または最後の pixel に落ちた場合、近傍の一方は clamp される。offset は zero に潰れるが、これが最も安全な fallback である。
 
-## Output template
+## 出力テンプレート
 
 ```python
 import torch
@@ -89,7 +89,7 @@ def heatmap_to_coords_subpixel(heatmaps, threshold=0.2):
     return coords, conf, mask
 ```
 
-## Report
+## レポート
 
 ```
 [subpixel decode]
@@ -98,9 +98,9 @@ def heatmap_to_coords_subpixel(heatmaps, threshold=0.2):
   valid_rate:  fraction of keypoints above threshold
 ```
 
-## Rules
+## ルール
 
-- Always clamp neighbour indices to valid range; off-edge keypoints have zero-difference offset but no crash.
-- Return confidence alongside coordinates so clients can mask low-confidence points.
-- Sub-pixel refinement only helps when the heatmap is smooth around the peak — check that training used a Gaussian target with sigma >= 1.
-- For very small heatmap resolutions (< 48x48), consider upsampling the heatmap to full image size before extracting coordinates; the sub-pixel offset scales with the stride.
+- neighbour indices は必ず valid range に clamp する。edge 外の keypoint は zero-difference offset になるが crash しない。
+- client が low-confidence points を mask できるよう、coordinates と一緒に confidence を返す。
+- Sub-pixel refinement が効くのは、heatmap が peak 周辺で smooth な場合だけである。training が sigma >= 1 の Gaussian target を使っていることを確認する。
+- 非常に小さな heatmap resolutions (< 48x48) では、coordinate を抽出する前に heatmap を full image size へ upsample することを検討する。sub-pixel offset は stride に合わせて scale する。

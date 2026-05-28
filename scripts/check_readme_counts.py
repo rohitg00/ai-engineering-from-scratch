@@ -1,27 +1,26 @@
 #!/usr/bin/env python3
-"""Verify that hardcoded counts in README.md match catalog.json totals.
+"""README.md内のハードコードされた件数がcatalog.json totalsと一致するか検証する。
 
-Requires Python 3.10+. Stdlib only.
+Python 3.10+ が必要。stdlibのみ。
 
-catalog.json is filesystem-truth (rebuilt by scripts/build_catalog.py and
-checked in CI). The README, however, sprinkles hardcoded counts ("428
-lessons", "373 skills, 99 prompts, ...") that drift every time the
-curriculum grows or shrinks. This script pins each hardcoded count to a
-field in catalog.json's `totals` block and fails when they disagree.
+catalog.jsonはファイルシステム上の真実である（scripts/build_catalog.pyで再構築され、
+CIで確認される）。一方READMEには、カリキュラムが増減するたびにずれやすい
+ハードコード件数（"428 lessons"、"373 skills, 99 prompts, ..."など）が散在する。
+このscriptは各ハードコード件数をcatalog.jsonの `totals` ブロックのfieldに固定し、
+一致しない場合に失敗する。
 
-Usage:
-    python3 scripts/check_readme_counts.py            # exit 1 on any drift
-    python3 scripts/check_readme_counts.py --json     # machine-readable report
-    python3 scripts/check_readme_counts.py --fix      # rewrite README to match catalog
+使い方:
+    python3 scripts/check_readme_counts.py            # driftがあればexit 1
+    python3 scripts/check_readme_counts.py --json     # 機械可読レポート
+    python3 scripts/check_readme_counts.py --fix      # catalogに合わせてREADMEを書き換え
 
-The --fix flag is opt-in. CI runs the script without --fix and fails the
-build on any mismatch, surfacing the drift in the workflow log.
+--fix は明示指定が必要。CIでは--fixなしで実行し、不一致があればbuildを失敗させ、
+workflow logにdriftを出す。
 
-Patterns are deliberately anchored to README context (badge URLs, alt
-attributes, specific prose) so per-phase counts like `<code>22 lessons</code>`
-in the Contents table are NOT touched. Each pattern declares its catalog
-field and a short human description; mismatches are reported with line
-numbers and surrounding text.
+patternはREADMEの文脈（badge URL、alt属性、特定の本文）に意図的にanchorしているため、
+Contents table内の `<code>22 lessons</code>` のようなフェーズ別件数は触らない。
+各patternはcatalog fieldと短い人間向け説明を宣言し、不一致は行番号と周辺テキスト付きで
+報告される。
 """
 
 from __future__ import annotations
@@ -40,7 +39,7 @@ README_PATH = ROOT / "README.md"
 
 @dataclass(frozen=True)
 class CountPattern:
-    """A single hardcoded count in README pinned to a catalog totals field."""
+    """README内の単一ハードコード件数をcatalog totals fieldに固定する。"""
 
     regex: re.Pattern[str]
     field: str  # totals.<field>
@@ -59,22 +58,22 @@ PATTERNS: tuple[CountPattern, ...] = (
         description="lesson-count badge alt text",
     ),
     CountPattern(
-        regex=re.compile(r"^> (\d+) lessons\. \d+ phases\.", re.MULTILINE),
+        regex=re.compile(r"^> (\d+) (?:lessons|レッスン)[\.。]\s*\d+ (?:phases|フェーズ)[\.。]", re.MULTILINE),
         field="lessons",
         description="hero blockquote lesson count",
     ),
     CountPattern(
-        regex=re.compile(r"^> \d+ lessons\. (\d+) phases\.", re.MULTILINE),
+        regex=re.compile(r"^> \d+ (?:lessons|レッスン)[\.。]\s*(\d+) (?:phases|フェーズ)[\.。]", re.MULTILINE),
         field="phases",
         description="hero blockquote phase count",
     ),
     CountPattern(
-        regex=re.compile(r"This curriculum is the spine\. (\d+) phases,"),
+        regex=re.compile(r"(?:This curriculum is the spine|このカリキュラムは背骨です)[\.。]\s*(\d+) (?:phases|フェーズ)[,、]"),
         field="phases",
         description="'spine' prose phase count",
     ),
     CountPattern(
-        regex=re.compile(r"This curriculum is the spine\. \d+ phases, (\d+) lessons,"),
+        regex=re.compile(r"(?:This curriculum is the spine|このカリキュラムは背骨です)[\.。]\s*\d+ (?:phases|フェーズ)[,、]\s*(\d+) (?:lessons|レッスン)[,、]"),
         field="lessons",
         description="'spine' prose lesson count",
     ),
@@ -89,22 +88,22 @@ PATTERNS: tuple[CountPattern, ...] = (
         description="phase-count badge alt text",
     ),
     CountPattern(
-        regex=re.compile(r"portfolio of (\d+) artifacts"),
+        regex=re.compile(r"(?:portfolio of|理解できる)\s+(\d+)\s+(?:artifacts|個の成果物 portfolio)"),
         field="lessons",
         description="'portfolio of N artifacts' (one artifact per lesson)",
     ),
     CountPattern(
-        regex=re.compile(r"The repo ships (\d+) skills"),
+        regex=re.compile(r"(?:The repo ships|このリポジトリは).*?(\d+)\s+(?:skills|個の skill)"),
         field="skills",
         description="toolkit section skill count",
     ),
     CountPattern(
-        regex=re.compile(r"The repo ships \d+ skills and (\d+) prompts"),
+        regex=re.compile(r"(?:The repo ships|このリポジトリは).*?\d+\s+(?:skills|個の skill)(?: and| と)\s+(\d+)\s+(?:prompts|個の prompt)"),
         field="prompts",
         description="toolkit section prompt count",
     ),
     CountPattern(
-        regex=re.compile(r"MIT-licensed, (\d+) lessons\."),
+        regex=re.compile(r"MIT[- ]licensed[,、]\s*(\d+)\s+(?:lessons\.|レッスン。)"),
         field="lessons",
         description="sponsor section lesson count",
     ),
@@ -125,7 +124,7 @@ def load_totals() -> dict[str, int]:
         catalog = json.load(fh)
     totals = catalog.get("totals")
     if not isinstance(totals, dict):
-        raise SystemExit("catalog.json is missing the 'totals' block")
+        raise SystemExit("catalog.json に 'totals' ブロックがありません")
     return totals
 
 
@@ -146,7 +145,7 @@ def find_mismatches(readme_text: str, totals: dict[str, int]) -> list[Mismatch]:
     for pattern in PATTERNS:
         expected = totals.get(pattern.field)
         if expected is None:
-            raise SystemExit(f"catalog.json totals is missing field: {pattern.field}")
+            raise SystemExit(f"catalog.json totals にfieldがありません: {pattern.field}")
         matched_any = False
         for match in pattern.regex.finditer(readme_text):
             matched_any = True
@@ -163,9 +162,9 @@ def find_mismatches(readme_text: str, totals: dict[str, int]) -> list[Mismatch]:
                 )
         if not matched_any:
             raise SystemExit(
-                f"pattern did not match README at all: {pattern.description} "
-                f"({pattern.regex.pattern!r}). The README structure has changed; "
-                f"update scripts/check_readme_counts.py."
+                f"patternがREADMEにまったく一致しません: {pattern.description} "
+                f"({pattern.regex.pattern!r}). README構造が変わっています。"
+                f"scripts/check_readme_counts.py を更新してください。"
             )
     return mismatches
 
@@ -186,8 +185,8 @@ def apply_fixes(readme_text: str, totals: dict[str, int]) -> str:
 
 def render_text_report(mismatches: list[Mismatch]) -> str:
     if not mismatches:
-        return "README.md counts match catalog.json totals.\n"
-    out = [f"README.md drift detected: {len(mismatches)} mismatch(es).\n"]
+        return "README.md の件数は catalog.json totals と一致しています。\n"
+    out = [f"README.md のdriftを検出: {len(mismatches)} 件の不一致。\n"]
     for m in mismatches:
         out.append(
             f"  README.md:{m.line}  {m.pattern.description}\n"
@@ -195,7 +194,7 @@ def render_text_report(mismatches: list[Mismatch]) -> str:
             f"    >>> {m.snippet}\n"
         )
     out.append(
-        "\nRun `python3 scripts/check_readme_counts.py --fix` to update README.md.\n"
+        "\nREADME.mdを更新するには `python3 scripts/check_readme_counts.py --fix` を実行してください。\n"
     )
     return "".join(out)
 
@@ -221,11 +220,11 @@ def render_json_report(mismatches: list[Mismatch], totals: dict[str, int]) -> st
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("--json", action="store_true", help="emit JSON report on stdout")
+    parser.add_argument("--json", action="store_true", help="JSONレポートをstdoutへ出力")
     parser.add_argument(
         "--fix",
         action="store_true",
-        help="rewrite README.md so hardcoded counts match catalog.json",
+        help="ハードコード件数がcatalog.jsonと一致するようREADME.mdを書き換える",
     )
     args = parser.parse_args(argv)
 
@@ -238,7 +237,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.json:
                 sys.stdout.write(render_json_report([], totals))
             else:
-                sys.stdout.write("README.md already matches catalog.json totals.\n")
+                sys.stdout.write("README.md は既に catalog.json totals と一致しています。\n")
             return 0
         new_text = apply_fixes(readme_text, totals)
         README_PATH.write_text(new_text, encoding="utf-8")
@@ -246,7 +245,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.json:
             sys.stdout.write(render_json_report(remaining, totals))
         else:
-            sys.stdout.write("README.md updated to match catalog.json totals.\n")
+            sys.stdout.write("README.md を catalog.json totals に合わせて更新しました。\n")
             if remaining:
                 sys.stdout.write(render_text_report(remaining))
         return 1 if remaining else 0

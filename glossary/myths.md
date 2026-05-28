@@ -1,167 +1,167 @@
-# AI Myths Busted
+# AIにまつわる誤解を解く
 
-Common misconceptions about AI, ML, and deep learning. Each one explained with what's actually going on.
-
----
-
-## "AI understands language"
-
-**Reality:** LLMs predict the next token based on statistical patterns in training data. They have no understanding, no beliefs, no world model (that we can prove). They're very good at pattern matching across billions of examples. The output looks like understanding because the patterns are rich enough to cover most situations.
-
-**Why it matters:** If you treat an LLM as a reasoning engine, you'll be surprised when it confidently says wrong things. If you treat it as a pattern matcher, you'll design better systems around it.
+AI、ML、deep learning に関するよくある誤解を取り上げ、それぞれについて実際に何が起きているのかを説明します。
 
 ---
 
-## "More parameters = smarter model"
+## 「AIは言語を理解している」
 
-**Reality:** A 7B parameter model trained on high-quality data with good techniques can outperform a 70B model trained on garbage. Chinchilla showed that most models were over-parameterized and under-trained. The quality and quantity of training data matters as much as model size. Phi-2 (2.7B) beat models 10x its size on many benchmarks.
+**実際:** LLMは、学習データ内の統計的パターンに基づいて次のトークンを予測します。理解も信念も、証明可能な world model も持っていません。数十億の例にまたがるパターンマッチングが非常に得意なのです。出力が理解しているように見えるのは、そのパターンがほとんどの状況を覆えるほど豊かだからです。
 
-**Why it matters:** Don't default to the biggest model. Match model size to your task and budget.
-
----
-
-## "Neural networks are black boxes"
-
-**Reality:** We have tools to understand what neural networks learn. Attention visualization shows what tokens the model focuses on. Probing classifiers reveal what information is stored in hidden representations. Mechanistic interpretability is finding actual circuits (induction heads, feature detectors). It's not complete transparency, but it's not a black box either.
-
-**Why it matters:** You can debug neural networks. Gradient analysis, activation visualization, and attention maps are real tools covered in this course.
+**なぜ重要か:** LLMを reasoning engine として扱うと、自信たっぷりに間違ったことを言ったときに驚くことになります。pattern matcher として扱えば、それを前提にしたより良いシステムを設計できます。
 
 ---
 
-## "AI will replace programmers"
+## 「parameters が多いほど賢いモデルになる」
 
-**Reality:** AI changed programming, it didn't replace it. AI writes boilerplate. Humans design systems, make architectural decisions, review correctness, and handle the cases AI gets wrong. The role shifted from "write every line" to "review, direct, and architect." The best engineers use AI as a tool, not fear it as a replacement.
+**実際:** 高品質なデータと優れた手法で学習した 7B parameter model は、質の低いデータで学習した 70B model を上回ることがあります。Chinchilla は、多くのモデルが over-parameterized かつ under-trained だったことを示しました。学習データの質と量は、モデルサイズと同じくらい重要です。Phi-2（2.7B）は、多くの benchmark で10倍のサイズのモデルを上回りました。
 
-**Why it matters:** You're learning AI engineering, which is programming + AI. Both skills together are more valuable than either alone.
-
----
-
-## "You need a PhD in math to do AI"
-
-**Reality:** You need high school math plus the specific topics in Phase 1 of this course. Linear algebra, calculus, probability, and optimization. You don't need proofs. You need intuition for what operations do and why they matter. If you can multiply matrices and take derivatives, you can build neural networks.
-
-**Why it matters:** Phase 1 exists to give you exactly the math you need, nothing more.
+**なぜ重要か:** 何でも最大のモデルを選ぶべきではありません。タスクと予算に合わせてモデルサイズを選びます。
 
 ---
 
-## "GPT stands for General Purpose Technology"
+## 「ニューラルネットワークはブラックボックスだ」
 
-**Reality:** GPT stands for Generative Pre-trained Transformer. Generative = it produces text. Pre-trained = trained once on a large corpus before being adapted. Transformer = the architecture from the 2017 "Attention Is All You Need" paper.
+**実際:** ニューラルネットワークが何を学んでいるかを理解するためのツールはあります。attention visualization はモデルがどの tokens に注目しているかを示します。probing classifiers は hidden representations にどの情報が保存されているかを明らかにします。mechanistic interpretability は実際の circuits（induction heads、feature detectors）を見つけつつあります。完全に透明ではありませんが、完全なブラックボックスでもありません。
 
----
-
-## "Temperature makes the AI more creative"
-
-**Reality:** Temperature scales the logits before softmax. Higher temperature = flatter probability distribution = more random token selection. Lower temperature = sharper distribution = more deterministic. It's not creativity, it's randomness. A high-temperature model doesn't think harder, it just considers less likely tokens.
-
-**Why it matters:** When your output is too repetitive, raise temperature. When it's too chaotic, lower it. It's a randomness knob, nothing more.
+**なぜ重要か:** ニューラルネットワークはデバッグできます。gradient analysis、activation visualization、attention maps は、このコースで扱う実用的なツールです。
 
 ---
 
-## "Fine-tuning teaches the model new knowledge"
+## 「AIはプログラマーを置き換える」
 
-**Reality:** Fine-tuning adjusts how the model uses existing knowledge, not what it knows. If information wasn't in the pre-training data, fine-tuning won't reliably add it. Fine-tuning is better for changing behavior (style, format, tone, task-specific patterns) than for adding facts. For new knowledge, use RAG.
+**実際:** AIはプログラミングを変えましたが、置き換えたわけではありません。AIは boilerplate を書けます。人間はシステムを設計し、アーキテクチャ上の判断をし、正しさをレビューし、AIが間違えるケースに対処します。役割は「すべての行を書く」から「レビューし、指示し、設計する」へ移りました。優れたエンジニアは、AIを代替物として恐れるのではなくツールとして使います。
 
-**Why it matters:** If you need the model to know about your company's internal docs, use RAG. If you need it to respond in a specific format, fine-tune.
-
----
-
-## "Bigger context window = better"
-
-**Reality:** Models degrade on long contexts. The "lost in the middle" problem means models pay more attention to the beginning and end of long prompts and less to the middle. A 200K context window doesn't mean the model uses all 200K tokens equally well. Also, longer contexts cost more and are slower.
-
-**Why it matters:** Don't dump everything into the context. Be selective. RAG with targeted retrieval beats stuffing the full document in.
+**なぜ重要か:** 学んでいるのはAIエンジニアリングであり、つまりプログラミング + AI です。2つのスキルを組み合わせることは、どちらか一方だけよりも価値があります。
 
 ---
 
-## "AI agents are autonomous"
+## 「AIをやるには数学のPhDが必要だ」
 
-**Reality:** Current AI agents run in a loop: think, act, observe, repeat. They follow the pattern the harness defines. They don't have goals, plans, or self-awareness. They're reactive systems that use LLMs to decide what tool to call next. The "autonomy" comes from the loop, not from the AI.
+**実際:** 必要なのは高校数学と、このコースの Phase 1 で扱う特定のトピックです。linear algebra、calculus、probability、optimization です。証明は不要です。必要なのは、各操作が何をしていて、なぜ重要なのかについての直感です。行列を掛け算でき、微分ができれば、ニューラルネットワークを作れます。
 
-**Why it matters:** When building agents, you're building the loop, the tools, and the guardrails. The LLM is just the decision-making component inside your system.
-
----
-
-## "Transformers understand order because of positional encoding"
-
-**Reality:** Transformers have no inherent sense of order. Self-attention treats input as a set, not a sequence. Positional encoding is a hack to inject order information by adding position-dependent vectors to the input. Different methods (sinusoidal, learned, RoPE, ALiBi) handle this differently. None of them truly give the model sequential understanding the way RNNs had it.
-
-**Why it matters:** This is why positional encoding research is still active. It's a solved-enough problem for most uses, but it's fundamentally a workaround.
+**なぜ重要か:** Phase 1 は、必要な数学だけを過不足なく身につけるためにあります。
 
 ---
 
-## "Pre-training is just reading the internet"
+## 「GPTは General Purpose Technology の略だ」
 
-**Reality:** Pre-training is next-token prediction on a massive corpus. The model learns to predict what comes next given what came before. Through this simple objective, it learns grammar, facts, reasoning patterns, code structure, and more. But it also learns internet nonsense, biases, and incorrect information. The data curation, filtering, and deduplication matter enormously.
-
-**Why it matters:** Garbage in, garbage out. The quality of pre-training data is one of the biggest differentiators between models.
+**実際:** GPT は Generative Pre-trained Transformer の略です。Generative = テキストを生成する。Pre-trained = 適応前に大規模 corpus で一度学習している。Transformer = 2017年の論文 "Attention Is All You Need" に由来するアーキテクチャです。
 
 ---
 
-## "RLHF aligns AI with human values"
+## 「Temperature を上げるとAIがより創造的になる」
 
-**Reality:** RLHF aligns AI with the preferences of the specific humans who provided feedback. Those humans disagree with each other, have biases, and can't cover every situation. RLHF makes the model helpful and harmless in the ways the raters defined, not aligned with some universal human value system.
+**実際:** Temperature は softmax の前に logits をスケーリングします。高い temperature = 平坦な確率分布 = よりランダムな token selection です。低い temperature = 鋭い分布 = より決定的です。これは創造性ではなくランダム性です。high-temperature のモデルは深く考えているのではなく、単に確率の低い tokens も候補に入れているだけです。
 
-**Why it matters:** RLHF is a training technique, not a solution to alignment. It's one tool in a larger toolkit.
-
----
-
-## "Embeddings capture meaning"
-
-**Reality:** Embeddings capture statistical co-occurrence patterns. Words that appear in similar contexts get similar vectors. This correlates with meaning well enough to be useful, but it's not semantic understanding. "King - Man + Woman = Queen" works because of distributional patterns, not because the model understands monarchy or gender.
-
-**Why it matters:** Embeddings are powerful for similarity search, clustering, and retrieval. But don't over-interpret what "similar" means.
+**なぜ重要か:** 出力が反復的すぎるなら temperature を上げます。混沌としすぎるなら下げます。これはランダム性のノブであり、それ以上のものではありません。
 
 ---
 
-## "Zero-shot means no training"
+## 「Fine-tuning はモデルに新しい知識を教える」
 
-**Reality:** Zero-shot means no task-specific examples at inference time. The model was still trained on billions of tokens. It just hasn't seen examples of this specific task format. It generalizes from pre-training patterns. Few-shot means giving a few examples in the prompt. Neither means the model learned without training.
+**実際:** Fine-tuning が調整するのは、モデルが既存の知識をどう使うかであって、何を知っているかではありません。pre-training data に入っていなかった情報を、fine-tuning で信頼性高く追加することはできません。Fine-tuning は事実の追加よりも、振る舞い（style、format、tone、task-specific patterns）を変えるのに向いています。新しい知識には RAG を使います。
 
----
-
-## "AI models learn like humans"
-
-**Reality:** Humans learn from few examples, generalize across domains, and update beliefs continuously. Neural networks need millions of examples, generalize within their training distribution, and have fixed weights after training. The learning analogy is loose at best. Backpropagation is nothing like how biological neurons learn.
-
-**Why it matters:** Don't anthropomorphize models. It leads to wrong expectations about what they can and can't do.
+**なぜ重要か:** モデルに会社の内部文書を知ってほしいなら RAG を使います。特定の形式で応答してほしいなら fine-tune します。
 
 ---
 
-## "Scaling laws mean bigger is always better"
+## 「context window は大きいほど良い」
 
-**Reality:** Scaling laws describe predictable relationships between compute, data, and model size. They show diminishing returns: doubling parameters doesn't double performance. They also assume you scale data proportionally. Many practical improvements come from better architectures, training techniques, and data quality, not just scale.
+**実際:** 長い context ではモデルの性能が落ちます。"lost in the middle" 問題とは、モデルが長い prompt の冒頭と末尾により注意を払い、中盤への注意が弱くなることです。200K context window があるからといって、モデルが200K tokens すべてを同じようにうまく使えるわけではありません。また、長い context はコストが高く、遅くなります。
 
-**Why it matters:** A 7B model with good engineering can solve your problem. Don't reach for 70B by default.
-
----
-
-## "Open source AI is the same as open weights"
-
-**Reality:** Most "open source" models are open weights. You get the model files but not the training data, training code, or data pipeline. True open source (like OLMo) releases everything: data, code, intermediate checkpoints, evaluation. Open weights is useful but not the same commitment as open source.
-
-**Why it matters:** Know what you're getting. Open weights let you run and fine-tune. True open source lets you reproduce and understand.
+**なぜ重要か:** 何でも context に詰め込まないでください。選別が必要です。対象を絞って取得する RAG は、文書全体を詰め込むより優れています。
 
 ---
 
-## "Prompt engineering is not real engineering"
+## 「AI agents は自律的だ」
 
-**Reality:** Prompt engineering is system design. You're designing the interface between human intent and model behavior. Good prompt engineering requires understanding tokenization, attention patterns, context window limits, and output parsing. It's closer to API design than to "talking nicely to the AI."
+**実際:** 現在の AI agents は、think、act、observe、repeat のループで動きます。harness が定義したパターンに従っているだけです。目標、計画、自己認識を持っているわけではありません。次にどのツールを呼ぶかをLLMで決める reactive systems です。「自律性」はAIそのものではなく、ループから来ています。
 
-**Why it matters:** This course teaches prompt engineering as a real engineering discipline in Phase 11.
-
----
-
-## "CNNs are outdated, everything is transformers now"
-
-**Reality:** Vision Transformers (ViT) beat CNNs on many benchmarks, but CNNs are still used extensively. They're faster for inference, work well on mobile/edge, need less data, and have useful inductive biases (translation invariance, local patterns). Many production vision systems still use CNNs. The best architectures often combine both.
-
-**Why it matters:** Learn both (Phases 4 and 7). Use what works for your constraints.
+**なぜ重要か:** agents を作るとき、作っているのは loop、tools、guardrails です。LLMはシステム内部の意思決定コンポーネントにすぎません。
 
 ---
 
-## "You need massive compute to train useful models"
+## 「Transformers は positional encoding によって順序を理解している」
 
-**Reality:** You need massive compute to pre-train foundation models. But fine-tuning, LoRA, and transfer learning let you adapt models on a single GPU. Many useful AI applications don't require training at all, just good prompting and RAG. The "compute barrier" is for building foundation models, not for using them.
+**実際:** Transformers には本来、順序の感覚がありません。Self-attention は入力を sequence ではなく set として扱います。Positional encoding は、位置に依存するベクトルを入力に加えることで順序情報を注入する workaround です。sinusoidal、learned、RoPE、ALiBi などの方法は、それぞれ異なる形でこれを扱います。どれも RNN が持っていたような逐次的理解を、モデルに本当に与えているわけではありません。
 
-**Why it matters:** You can build real AI applications with a laptop. This course proves it.
+**なぜ重要か:** これが positional encoding の研究が今も続いている理由です。多くの用途では十分に解けた問題ですが、根本的には workaround です。
+
+---
+
+## 「Pre-training はインターネットを読むだけだ」
+
+**実際:** Pre-training は巨大な corpus に対する next-token prediction です。モデルは、それまでに来たものをもとに次に何が来るかを予測するよう学習します。この単純な目的を通じて、文法、事実、reasoning patterns、コード構造などを学びます。一方で、インターネット上の無意味な情報、バイアス、誤情報も学びます。data curation、filtering、deduplication は極めて重要です。
+
+**なぜ重要か:** Garbage in, garbage out です。pre-training data の品質は、モデル間の最も大きな差別化要因の1つです。
+
+---
+
+## 「RLHF はAIを人間の価値観に alignment する」
+
+**実際:** RLHF がAIを合わせるのは、feedback を提供した特定の人間の preferences です。その人たちは互いに意見が違い、バイアスを持ち、すべての状況を網羅できません。RLHF は、raters が定義した範囲でモデルを helpful かつ harmless にするものであり、普遍的な人間の価値体系に alignment するものではありません。
+
+**なぜ重要か:** RLHF は training technique であって、alignment の解決策ではありません。大きな toolkit の中の1つの道具です。
+
+---
+
+## 「Embeddings は意味を捉えている」
+
+**実際:** Embeddings が捉えるのは統計的な共起パターンです。似た context に現れる単語は似た vectors になります。これは有用なほど意味と相関しますが、semantic understanding ではありません。"King - Man + Woman = Queen" が成り立つのは distributional patterns のためであって、モデルが君主制やジェンダーを理解しているからではありません。
+
+**なぜ重要か:** Embeddings は similarity search、clustering、retrieval に強力です。ただし、「似ている」が何を意味するのかを過剰に解釈しないでください。
+
+---
+
+## 「Zero-shot は学習していないという意味だ」
+
+**実際:** Zero-shot とは、推論時に task-specific examples がないという意味です。モデル自体は数十億 tokens で学習済みです。ただ、その特定のタスク形式の例を見ていないだけです。pre-training patterns から汎化します。Few-shot は prompt 内に少数の例を与えることです。どちらも、モデルが学習なしに身につけたという意味ではありません。
+
+---
+
+## 「AI models は人間のように学習する」
+
+**実際:** 人間は少数の例から学び、domains をまたいで汎化し、beliefs を継続的に更新します。ニューラルネットワークは何百万もの例を必要とし、training distribution の範囲内で汎化し、学習後は weights が固定されます。「学習」という類推は、せいぜい大まかなものです。Backpropagation は、生物学的なニューロンの学習とはまったく異なります。
+
+**なぜ重要か:** モデルを擬人化しないでください。何ができて何ができないかについて、誤った期待につながります。
+
+---
+
+## 「Scaling laws は大きいほど常に良いという意味だ」
+
+**実際:** Scaling laws は、compute、data、model size の間にある予測可能な関係を説明します。そこから分かるのは diminishing returns です。parameters を2倍にしても performance は2倍になりません。また、データも比例して増やすことを前提にしています。実用上の改善の多くは、規模だけでなく、より良い architectures、training techniques、data quality から生まれます。
+
+**なぜ重要か:** 優れたエンジニアリングを施した 7B model で問題を解けることがあります。最初から 70B に飛びつく必要はありません。
+
+---
+
+## 「Open source AI と open weights は同じだ」
+
+**実際:** 多くの "open source" models は open weights です。手に入るのはモデルファイルであり、training data、training code、data pipeline は含まれません。真の open source（OLMo など）は、data、code、intermediate checkpoints、evaluation まですべて公開します。Open weights は有用ですが、open source と同じコミットメントではありません。
+
+**なぜ重要か:** 何を手に入れているのかを把握してください。Open weights があれば実行と fine-tune ができます。真の open source なら、再現し理解できます。
+
+---
+
+## 「Prompt engineering は本物の engineering ではない」
+
+**実際:** Prompt engineering は system design です。人間の意図とモデルの振る舞いの間にある interface を設計しています。良い prompt engineering には、tokenization、attention patterns、context window limits、output parsing の理解が必要です。「AIにうまく話しかける」よりも API design に近いものです。
+
+**なぜ重要か:** このコースでは Phase 11 で、prompt engineering を実際の engineering discipline として教えます。
+
+---
+
+## 「CNNs は時代遅れで、今はすべて transformers だ」
+
+**実際:** Vision Transformers（ViT）は多くの benchmark で CNNs を上回りますが、CNNs は今も広く使われています。推論が速く、mobile/edge でうまく動き、必要なデータが少なく、有用な inductive biases（translation invariance、local patterns）を持っています。多くの production vision systems は今も CNNs を使っています。最良の architectures は両方を組み合わせることも多いです。
+
+**なぜ重要か:** 両方を学んでください（Phases 4 and 7）。自分の制約でうまく機能するものを使います。
+
+---
+
+## 「有用なモデルを学習するには巨大な compute が必要だ」
+
+**実際:** foundation models を pre-train するには巨大な compute が必要です。しかし fine-tuning、LoRA、transfer learning を使えば、1枚のGPUでモデルを適応できます。多くの有用なAIアプリケーションでは学習自体が不要で、良い prompting と RAG だけで十分です。「compute barrier」は foundation models を作るためのものであり、使うためのものではありません。
+
+**なぜ重要か:** ラップトップでも実用的なAIアプリケーションは作れます。このコースがそれを示します。

@@ -1,37 +1,37 @@
 [
   {
-    "question": "How much VRAM does a 70B parameter model in FP16 require just for weights?",
+    "question": "70B パラメータモデルを FP16 で保持する場合、重みだけでどれだけの VRAM が必要ですか？",
     "options": ["35 GB", "70 GB", "140 GB", "280 GB"],
     "correct": 2,
-    "explanation": "70 billion parameters * 2 bytes per FP16 parameter = 140 billion bytes = 140 GB. This exceeds a single A100 (80GB), requiring at least two GPUs just to load the weights.",
+    "explanation": "700億パラメータ * FP16 パラメータあたり 2 bytes = 1,400億 bytes = 140 GB です。これは単一 A100 (80GB) を超えるため、重みをロードするだけでも少なくとも 2枚の GPU が必要です。",
     "stage": "pre"
   },
   {
-    "question": "What is quantization in the context of LLMs?",
-    "options": ["Removing unused model layers", "Reducing the numerical precision of weights (e.g., FP16 to INT4) to decrease memory usage and increase inference speed", "Compressing the training data", "Reducing the vocabulary size"],
+    "question": "LLM における量子化とは何ですか？",
+    "options": ["使われていないモデル層を削除すること", "重みの数値精度を下げて (例: FP16 から INT4) メモリ使用量を減らし、推論速度を上げること", "学習データを圧縮すること", "語彙サイズを小さくすること"],
     "correct": 1,
-    "explanation": "Quantization maps high-precision floating point weights to lower-precision integers. INT4 quantization stores each weight in 4 bits instead of 16, reducing memory by 4x with minimal accuracy loss.",
+    "explanation": "量子化は高精度の浮動小数点重みを低精度の整数へ写します。INT4 量子化では各重みを 16 bits ではなく 4 bits で保存するため、精度低下を最小限にしながらメモリを 4分の1 にできます。",
     "stage": "pre"
   },
   {
-    "question": "What is the key difference between post-training quantization (PTQ) and quantization-aware training (QAT)?",
-    "options": ["PTQ is more accurate", "PTQ quantizes after training with no retraining; QAT simulates quantization during training so the model learns to tolerate reduced precision", "QAT doesn't use gradients", "PTQ requires more data"],
+    "question": "Post-training quantization (PTQ) と quantization-aware training (QAT) の主な違いは何ですか？",
+    "options": ["PTQ の方が高精度である", "PTQ は再学習なしで学習後に量子化し、QAT は学習中に量子化をシミュレートしてモデルが低精度に耐えられるようにする", "QAT は勾配を使わない", "PTQ はより多くのデータを必要とする"],
     "correct": 1,
-    "explanation": "PTQ is fast (just calibrate and quantize) but can lose accuracy. QAT includes fake quantization during training, allowing the model to adjust its weights to be more robust to precision loss. QAT usually gives better accuracy.",
+    "explanation": "PTQ は calibration と量子化だけなので高速ですが、精度を失うことがあります。QAT は学習中に fake quantization を含めるため、モデルは precision loss により頑健になるよう重みを調整できます。通常、QAT の方が高い精度を得られます。",
     "stage": "post"
   },
   {
-    "question": "What does 'per-channel' quantization mean and why is it better than 'per-tensor'?",
-    "options": ["It quantizes each output channel separately, using different scale/zero-point for each, reducing quantization error", "It processes one color channel at a time", "It uses separate GPUs per channel", "It's a type of data parallelism"],
+    "question": "'per-channel' 量子化とは何で、なぜ 'per-tensor' より良いのですか？",
+    "options": ["各 output channel を別々に量子化し、それぞれ異なる scale/zero-point を使うことで量子化誤差を減らす", "一度に 1つの color channel を処理する", "channel ごとに別々の GPU を使う", "data parallelism の一種である"],
     "correct": 0,
-    "explanation": "Per-tensor uses one scale factor for the entire weight matrix. Per-channel uses a separate scale for each output channel (row). Since different channels have different value ranges, per-channel captures them more accurately.",
+    "explanation": "Per-tensor は重み行列全体に 1つの scale factor を使います。Per-channel は output channel (row) ごとに別々の scale を使います。channel ごとに値の範囲が異なるため、per-channel の方がそれらをより正確に捉えられます。",
     "stage": "post"
   },
   {
-    "question": "Why do 95% of weights in Llama 3 70B fall between -0.1 and +0.1?",
-    "options": ["The model is poorly trained", "Weight decay and normalization during training push weights toward small values, making the full FP16 range wasteful", "The weights haven't converged yet", "This is specific to the Llama architecture"],
+    "question": "Llama 3 70B の重みの 95% が -0.1 から +0.1 の間に入るのはなぜですか？",
+    "options": ["モデルの学習が不十分だから", "学習中の weight decay と normalization が重みを小さい値へ寄せるため、FP16 の全範囲が無駄になりやすいから", "重みがまだ収束していないから", "これは Llama architecture に固有だから"],
     "correct": 1,
-    "explanation": "Weight decay regularization shrinks weights toward zero. Layer normalization keeps activations centered. Combined, they produce weight distributions concentrated near zero, making low-precision quantization effective.",
+    "explanation": "Weight decay regularization は重みをゼロ方向へ縮めます。Layer normalization は activations を中心付近に保ちます。この組み合わせにより重み分布はゼロ付近に集中し、低精度量子化が有効になります。",
     "stage": "post"
   }
 ]

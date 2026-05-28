@@ -1,48 +1,48 @@
-# Dynamic Programming — Policy Iteration & Value Iteration
+# Dynamic Programming — Policy Iteration と Value Iteration
 
-> Dynamic programming is RL with cheating. You already know the transition and reward functions; you just iterate the Bellman equation until `V` or `π` stops moving. It is the benchmark every sampling-based method tries to approach.
+> 動的計画法は、ずるができる RL です。遷移関数と報酬関数をすでに知っているので、`V` または `π` が動かなくなるまで Bellman 方程式を反復するだけです。これは、すべてのサンプリングベース手法が近づこうとするベンチマークです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 9 · 01 (MDPs)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 9 · 01 (MDPs)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-You have an MDP with a known model: you can query `P(s' | s, a)` and `R(s, a, s')` for any state-action pair. An inventory manager knows the demand distribution. A board game has deterministic transitions. A gridworld is four lines of Python. You have a *model*.
+既知モデルを持つ MDP があるとします。任意の状態行動ペアについて `P(s' | s, a)` と `R(s, a, s')` を問い合わせられます。在庫管理者は需要分布を知っています。ボードゲームは決定的遷移を持ちます。gridworld は4行の Python です。つまり、あなたには *モデル* があります。
 
-Model-free RL (Q-learning, PPO, REINFORCE) was invented for the case where you don't have a model — you can only sample from the environment. But when you do have one, there are faster, better methods: dynamic programming. Bellman designed them in 1957. They still define correctness: when people say "optimal policy for this MDP," they mean the policy DP would return.
+Model-free RL（Q-learning、PPO、REINFORCE）は、モデルがない場合、つまり環境からサンプルすることしかできない場合のために発明されました。しかしモデルがあるなら、より速く、より良い手法があります。動的計画法です。Bellman は1957年にそれを設計しました。いまでも正しさの基準を定義しています。人が「この MDP の最適方策」と言うとき、それは DP が返す方策を意味します。
 
-You need them in 2026 for three reasons. First, every tabular environment in RL research (GridWorld, FrozenLake, CliffWalking) is solved with DP to produce the gold-standard policy. Second, exact values let you *debug* sampling methods: if Q-learning's estimate for `V*(s_0)` disagrees with the DP answer by 30%, your Q-learning has a bug. Third, modern offline RL and planning methods (MCTS, AlphaZero's search, model-based RL in Phase 9 · 10) all iterate a Bellman backup over a learned or given model.
+2026年にこれが必要な理由は3つあります。第一に、RL 研究のすべての表形式環境（GridWorld、FrozenLake、CliffWalking）は、ゴールドスタンダード方策を作るために DP で解かれます。第二に、厳密な価値はサンプリング手法の *デバッグ* に使えます。Q-learning の `V*(s_0)` 推定が DP の答えから30%ずれているなら、Q-learning 側にバグがあります。第三に、現代の offline RL と planning 手法（MCTS、AlphaZero の探索、Phase 9 · 10 の model-based RL）はすべて、学習済みまたは与えられたモデル上で Bellman backup を反復します。
 
-## The Concept
+## コンセプト
 
 ![Policy iteration and value iteration, side by side](../assets/dp.svg)
 
-**Two algorithms, both fixed-point iteration on Bellman.**
+**2つのアルゴリズム。どちらも Bellman 上の固定点反復です。**
 
-**Policy iteration.** Alternates two steps until the policy stops changing.
+**Policy iteration。** 方策が変わらなくなるまで、2つのステップを交互に行います。
 
-1. *Evaluation:* given policy `π`, compute `V^π` by repeatedly applying `V(s) ← Σ_a π(a|s) Σ_{s',r} P(s',r|s,a) [r + γ V(s')]` until it converges.
-2. *Improvement:* given `V^π`, make `π` greedy w.r.t. `V^π`: `π(s) ← argmax_a Σ_{s',r} P(s',r|s,a) [r + γ V(s')]`.
+1. *Evaluation:* 方策 `π` が与えられたら、`V(s) ← Σ_a π(a|s) Σ_{s',r} P(s',r|s,a) [r + γ V(s')]` を収束まで繰り返し適用して `V^π` を計算します。
+2. *Improvement:* `V^π` が与えられたら、`V^π` に関して `π` を greedy にします。`π(s) ← argmax_a Σ_{s',r} P(s',r|s,a) [r + γ V(s')]`。
 
-Convergence is guaranteed because (a) each improvement step either keeps `π` the same or strictly increases `V^π` for some state, (b) the space of deterministic policies is finite. Usually converges in ~5–20 outer iterations even for large state spaces.
+収束は保証されています。理由は、(a) 各 improvement ステップは `π` を同じままにするか、ある状態の `V^π` を厳密に増やす、(b) 決定的方策の空間は有限だからです。大きな状態空間でも、通常は外側の反復が ~5–20 回で収束します。
 
-**Value iteration.** Collapses evaluation and improvement into one sweep. Apply the Bellman *optimality* equation:
+**Value iteration。** Evaluation と improvement を1回のスイープにまとめます。Bellman *optimality* 方程式を適用します。
 
 `V(s) ← max_a Σ_{s',r} P(s',r|s,a) [r + γ V(s')]`
 
-Repeat until `max_s |V_{new}(s) - V(s)| < ε`. Extract the policy at the end by taking the greedy action. Strictly faster per iteration — no inner evaluation loop — but typically needs more iterations to converge.
+`max_s |V_{new}(s) - V(s)| < ε` になるまで繰り返します。最後に greedy 行動を取って方策を抽出します。反復ごとは明らかに速いです。内側の evaluation ループがないためです。ただし通常、収束までの反復回数は多くなります。
 
-**Generalized policy iteration (GPI).** The unifying framing. Value function and policy are locked in a two-way improvement loop; any method that drives both toward mutual consistency (async value iteration, modified policy iteration, Q-learning, actor-critic, PPO) is an instance of GPI.
+**Generalized policy iteration (GPI)。** 統一的な見方です。価値関数と方策は双方向の改善ループに閉じ込められています。両者を相互整合へ向ける任意の手法（async value iteration、modified policy iteration、Q-learning、actor-critic、PPO）は GPI の一例です。
 
-**Why `γ < 1` matters.** The Bellman operator is a `γ`-contraction in the sup-norm: `||T V - T V'||_∞ ≤ γ ||V - V'||_∞`. Contraction implies unique fixed point and geometric convergence. Drop `γ < 1` and you lose the guarantee — you need a finite horizon or an absorbing terminal state.
+**`γ < 1` が重要な理由。** Bellman operator は sup-norm で `γ`-contraction です。`||T V - T V'||_∞ ≤ γ ||V - V'||_∞`。Contraction は一意な固定点と幾何収束を意味します。`γ < 1` を外すと保証を失います。有限ホライズンか吸収終端状態が必要です。
 
-## Build It
+## 作る
 
-### Step 1: build the GridWorld MDP model
+### Step 1: GridWorld MDP モデルを作る
 
-Use the same 4×4 GridWorld from Lesson 01. We add a stochastic variant: with probability `0.1` the agent slips to a random perpendicular direction.
+Lesson 01 と同じ 4×4 GridWorld を使います。ここでは確率的なバリエーションを加えます。確率 `0.1` で、エージェントはランダムな垂直方向に滑ります。
 
 ```python
 SLIP = 0.1
@@ -56,11 +56,11 @@ def transitions(state, action):
     return outcomes
 ```
 
-`transitions(s, a)` returns a list of `(s', r, p)`. This is the entire model.
+`transitions(s, a)` は `(s', r, p)` のリストを返します。これがモデル全体です。
 
 ### Step 2: policy evaluation
 
-Given a policy `π(s) = {action: prob}`, iterate the Bellman equation until `V` stops moving:
+方策 `π(s) = {action: prob}` が与えられたら、`V` が動かなくなるまで Bellman 方程式を反復します。
 
 ```python
 def policy_evaluation(policy, gamma=0.99, tol=1e-6):
@@ -79,7 +79,7 @@ def policy_evaluation(policy, gamma=0.99, tol=1e-6):
 
 ### Step 3: policy improvement
 
-Replace `π` with the greedy policy w.r.t. `V`. If `π` did not change, return — we are at the optimum.
+`V` に関して greedy な方策で `π` を置き換えます。`π` が変わらなければ戻ります。最適に到達しています。
 
 ```python
 def policy_improvement(V, gamma=0.99):
@@ -94,7 +94,7 @@ def policy_improvement(V, gamma=0.99):
     return new_policy
 ```
 
-### Step 4: stitch them together
+### Step 4: つなぎ合わせる
 
 ```python
 def policy_iteration(gamma=0.99):
@@ -107,9 +107,9 @@ def policy_iteration(gamma=0.99):
         policy = new_policy
 ```
 
-Typical convergence on 4×4: 4–6 outer iterations. Outputs `V*(0,0) ≈ -6` and a policy that strictly decreases the step count.
+4×4 での典型的な収束は外側の反復 4–6 回です。`V*(0,0) ≈ -6` と、ステップ数を厳密に減らす方策を出力します。
 
-### Step 5: value iteration (the one-loop version)
+### Step 5: value iteration（1ループ版）
 
 ```python
 def value_iteration(gamma=0.99, tol=1e-6):
@@ -128,33 +128,33 @@ def value_iteration(gamma=0.99, tol=1e-6):
     return V, policy
 ```
 
-Same fixed point, fewer lines of code.
+同じ固定点に到達し、コード行数は少なくなります。
 
-## Pitfalls
+## 落とし穴
 
-- **Forgetting to handle terminals.** If you apply Bellman to an absorbing state, it still picks up a "best action" that changes nothing. Guard with `if s == terminal: V[s] = 0`.
-- **Sup-norm vs L2 convergence.** Use `max |V_new - V|`, not average. The theoretical guarantee is on the sup-norm.
-- **In-place vs synchronous updates.** Updating `V[s]` in-place (Gauss-Seidel) converges faster than a separate `V_new` dict (Jacobi). Production code uses in-place.
-- **Policy ties.** If two actions have equal Q-value, `argmax` may break ties differently each iteration, causing the "policy stable" check to oscillate. Use a stable tie-break (first action in fixed order).
-- **State-space explosion.** DP is `O(|S| · |A|)` per sweep. Works up to ~10⁷ states. Beyond that, you need function approximation (Phase 9 · 05 onwards).
+- **終端処理を忘れる。** 吸収状態に Bellman を適用すると、何も変えない「最良行動」を拾い続けます。`if s == terminal: V[s] = 0` で守ります。
+- **Sup-norm と L2 収束。** 平均ではなく `max |V_new - V|` を使います。理論保証は sup-norm に対するものです。
+- **In-place と同期更新。** `V[s]` を in-place に更新する（Gauss-Seidel）方が、別の `V_new` dict を使う（Jacobi）より速く収束します。本番コードは in-place を使います。
+- **方策の同値タイ。** 2つの行動が同じ Q-value を持つと、`argmax` が反復ごとに異なるタイブレークをし、「policy stable」チェックが振動することがあります。固定順の最初の行動を使うなど、安定したタイブレークを使ってください。
+- **状態空間爆発。** DP はスイープごとに `O(|S| · |A|)` です。~10⁷ 状態までは動きます。それを超えると function approximation が必要です（Phase 9 · 05 以降）。
 
-## Use It
+## 使う
 
-In 2026, DP is the correctness baseline and the inner loop of planners:
+2026年の DP は、正しさのベースラインであり、planning の内側ループです。
 
-| Use case | Method |
+| ユースケース | 手法 |
 |----------|--------|
-| Solve a small tabular MDP exactly | Value iteration (simpler) or policy iteration (fewer outer steps) |
-| Verify a Q-learning / PPO implementation | Compare to DP-optimal V* on a toy environment |
-| Model-based RL (Phase 9 · 10) | Bellman backup on a learned transition model |
-| Planning in AlphaZero / MuZero | Monte Carlo Tree Search = async Bellman backup |
-| Offline RL (CQL, IQL) | Conservative Q-iteration — DP with a penalty on OOD actions |
+| 小さな表形式 MDP を厳密に解く | Value iteration（より単純）または policy iteration（外側ステップが少ない） |
+| Q-learning / PPO 実装を検証する | toy 環境で DP-optimal V* と比較する |
+| Model-based RL (Phase 9 · 10) | 学習済み遷移モデル上の Bellman backup |
+| AlphaZero / MuZero の planning | Monte Carlo Tree Search = async Bellman backup |
+| Offline RL (CQL, IQL) | Conservative Q-iteration。OOD 行動にペナルティを持つ DP |
 
-Every time someone says "the optimal value function," they mean "the DP fixed point." When you see `V*` or `Q*` in a paper, picture this loop.
+誰かが「最適価値関数」と言うたびに、それは「DP の固定点」を意味します。論文で `V*` や `Q*` を見たら、このループを思い浮かべてください。
 
 ## Ship It
 
-Save as `outputs/skill-dp-solver.md`:
+`outputs/skill-dp-solver.md` として保存します。
 
 ```markdown
 ---
@@ -177,28 +177,28 @@ Given an MDP with a known model, output:
 Refuse to run DP on state spaces > 10⁷. Refuse to claim convergence without a sup-norm check. Flag any γ ≥ 1 on an infinite-horizon task as a guarantee violation.
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Run value iteration on the 4×4 GridWorld with `γ ∈ {0.9, 0.99}`. How many sweeps until `max |ΔV| < 1e-6`? Print `V*` as a 4×4 grid.
-2. **Medium.** Compare policy iteration vs value iteration on the *stochastic* GridWorld (slip probability `0.1`). Count: sweeps, wall-clock time, final `V*(0,0)`. Which converges faster in iterations? In wall-clock?
-3. **Hard.** Build modified policy iteration: in the evaluation step, run only `k` sweeps instead of to convergence. Plot `V*(0,0)` error vs `k` for `k ∈ {1, 2, 5, 10, 50}`. What does the curve tell you about the evaluation/improvement tradeoff?
+1. **Easy.** 4×4 GridWorld で `γ ∈ {0.9, 0.99}` の value iteration を実行してください。`max |ΔV| < 1e-6` になるまで何スイープ必要ですか。`V*` を 4×4 グリッドとして出力してください。
+2. **Medium.** *確率的* GridWorld（slip probability `0.1`）で policy iteration と value iteration を比較してください。スイープ数、wall-clock time、最終 `V*(0,0)` を数えます。反復回数ではどちらが速く収束しますか。wall-clock ではどうですか。
+3. **Hard.** modified policy iteration を作ってください。evaluation ステップでは、収束までではなく `k` スイープだけ実行します。`k ∈ {1, 2, 5, 10, 50}` について `V*(0,0)` の誤差をプロットしてください。この曲線は evaluation/improvement のトレードオフについて何を示していますか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Policy iteration | "DP algorithm" | Alternating evaluation (`V^π`) and improvement (greedy `π` w.r.t. `V^π`) until the policy stops changing. |
-| Value iteration | "Faster DP" | Bellman optimality backup applied in one sweep; converges to `V*` geometrically. |
-| Bellman operator | "The recursion" | `(T V)(s) = max_a Σ P (r + γ V(s'))`; a `γ`-contraction in sup-norm. |
-| Contraction | "Why DP converges" | Any operator `T` with `\|\|T x - T y\|\| ≤ γ \|\|x - y\|\|` has a unique fixed point. |
-| GPI | "Everything is DP" | Generalized Policy Iteration: any method driving `V` and `π` to mutual consistency. |
-| Synchronous update | "Jacobi-style" | Use old `V` throughout a sweep; cleanly analyzable but slower. |
-| In-place update | "Gauss-Seidel-style" | Use `V` as it's being updated; converges faster in practice. |
+| Policy iteration | 「DP アルゴリズム」 | 方策が変わらなくなるまで、評価（`V^π`）と改善（`V^π` に関して greedy な `π`）を交互に行う。 |
+| Value iteration | 「より速い DP」 | Bellman optimality backup を1スイープで適用する。`V*` へ幾何収束する。 |
+| Bellman operator | 「再帰」 | `(T V)(s) = max_a Σ P (r + γ V(s'))`。sup-norm で `γ`-contraction。 |
+| Contraction | 「DP が収束する理由」 | `\|\|T x - T y\|\| ≤ γ \|\|x - y\|\|` を満たす任意の operator は一意な固定点を持つ。 |
+| GPI | 「すべては DP」 | Generalized Policy Iteration。`V` と `π` を相互整合へ向ける任意の手法。 |
+| Synchronous update | 「Jacobi-style」 | スイープ中ずっと古い `V` を使う。解析しやすいが遅い。 |
+| In-place update | 「Gauss-Seidel-style」 | 更新中の `V` をそのまま使う。実務ではより速く収束する。 |
 
-## Further Reading
+## 参考資料
 
-- [Sutton & Barto (2018). Ch. 4 — Dynamic Programming](http://incompleteideas.net/book/RLbook2020.pdf) — the canonical presentation of policy iteration and value iteration.
-- [Bertsekas (2019). Reinforcement Learning and Optimal Control](http://www.athenasc.com/rlbook.html) — rigorous treatment of contraction-mapping arguments.
-- [Puterman (2005). Markov Decision Processes](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470316887) — modified policy iteration and its convergence analysis.
-- [Howard (1960). Dynamic Programming and Markov Processes](https://mitpress.mit.edu/9780262582300/dynamic-programming-and-markov-processes/) — the original policy iteration paper.
-- [Bertsekas & Tsitsiklis (1996). Neuro-Dynamic Programming](http://www.athenasc.com/ndpbook.html) — the bridge from DP to approximate-DP / deep RL used by every subsequent lesson.
+- [Sutton & Barto (2018). Ch. 4 — Dynamic Programming](http://incompleteideas.net/book/RLbook2020.pdf) — policy iteration と value iteration の標準的な説明です。
+- [Bertsekas (2019). Reinforcement Learning and Optimal Control](http://www.athenasc.com/rlbook.html) — contraction mapping 議論の厳密な扱いです。
+- [Puterman (2005). Markov Decision Processes](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470316887) — modified policy iteration と収束解析を扱います。
+- [Howard (1960). Dynamic Programming and Markov Processes](https://mitpress.mit.edu/9780262582300/dynamic-programming-and-markov-processes/) — policy iteration の原典です。
+- [Bertsekas & Tsitsiklis (1996). Neuro-Dynamic Programming](http://www.athenasc.com/ndpbook.html) — DP から approximate-DP / deep RL への橋渡しであり、以降のすべてのレッスンで使われます。

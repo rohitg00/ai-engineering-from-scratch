@@ -1,16 +1,16 @@
 """
-Full evaluation pipeline for a tiny language model.
+小さな language model 用の完全な evaluation pipeline。
 
-See: phases/19-capstone-projects/41-eval-pipeline/docs/en.md
+参照: phases/19-capstone-projects/41-eval-pipeline/docs/en.md
 
-Implements:
+実装内容:
   - perplexity_eval (held-out language modelling)
-  - exact_match_eval (short-form factual)
+  - exact_match_eval (短い事実回答)
   - token_f1_eval (open-form similarity)
-  - judge_eval (mock LLM-as-judge with deterministic scoring)
-  - Aggregator (per-eval normalisation + weighted mean)
-  - run_demo: trains a tiny TinyGPT briefly, runs all four evals, writes
-    report.json next to this file, exits 0 on success.
+  - judge_eval (deterministic scoring の mock LLM-as-judge)
+  - Aggregator (eval ごとの正規化と重み付き平均)
+  - run_demo: 小さな TinyGPT を短く学習し、4 つの eval を実行し、
+    この file の横に report.json を書く。成功時は 0 で終了する。
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ from torch.utils.data import DataLoader, Dataset
 
 
 # ---------------------------------------------------------------------------
-# Tokeniser and TinyGPT (shared across lessons 38-41).
+# Tokenizer と TinyGPT (lessons 38-41 で共有)。
 # ---------------------------------------------------------------------------
 
 
@@ -165,7 +165,7 @@ class EvalResult:
 
 
 # ---------------------------------------------------------------------------
-# Normalisation and string utilities
+# 正規化と string utility
 # ---------------------------------------------------------------------------
 
 
@@ -195,22 +195,22 @@ def tokenize_text(text: str) -> List[str]:
 
 
 # ---------------------------------------------------------------------------
-# Fixtures
+# Fixture
 # ---------------------------------------------------------------------------
 
 
 LM_CORPUS = [
-    "the quick brown fox jumps over the lazy dog.",
-    "to be or not to be, that is the question.",
-    "all that glitters is not gold; some of it is yellow.",
-    "the rain in spain stays mainly in the plain.",
-    "an apple a day keeps the doctor away from your door.",
+    "すばやい茶色の狐がのんびりした犬を飛び越える。",
+    "生きるべきか否か、それが問題である。",
+    "光るものすべてが金ではない。黄色いだけのものもある。",
+    "スペインの雨は主に平野に降る。",
+    "1 日 1 個のりんごは医者を遠ざける。",
     "the early bird catches the worm, but the second mouse gets the cheese.",
-    "actions speak louder than words in almost every case.",
-    "rome was not built in a day, but the romans worked at it daily.",
+    "ほとんどの場合、行動は言葉より雄弁である。",
+    "ローマ was not built in a day, but the romans worked at it daily.",
     "a stitch in time saves nine future stitches, every tailor agrees.",
     "the pen is mightier than the sword in the hands of an editor.",
-    "every cloud has a silver lining if you wait long enough.",
+    "どんな雲にも銀の縁取りがある。",
     "birds of a feather flock together near the same trees.",
     "do not count your chickens before they hatch under the hen.",
     "absence makes the heart grow fonder of letters and small notes.",
@@ -219,139 +219,139 @@ LM_CORPUS = [
     "fortune favours the bold, the brave, and occasionally the foolish.",
     "great minds think alike but fools seldom differ either.",
     "honesty is the best policy in most negotiations and contracts.",
-    "patience is a virtue that takes time to acquire and to keep.",
+    "忍耐は身につけ保つのに時間がかかる美徳である。",
 ]
 
 
 EM_PAIRS = [
-    ("What is the capital of France?", "paris"),
-    ("What is the capital of Japan?", "tokyo"),
-    ("What is the capital of Italy?", "rome"),
-    ("What is the capital of Spain?", "madrid"),
-    ("What is the capital of Brazil?", "brasilia"),
-    ("Compute 2 + 3.", "5"),
-    ("Compute 7 + 8.", "15"),
-    ("Compute 9 - 4.", "5"),
-    ("Compute 6 * 3.", "18"),
-    ("Compute 20 / 5.", "4"),
-    ("Name the largest planet.", "jupiter"),
-    ("Name the smallest planet.", "mercury"),
-    ("Define variable.", "a name bound to a value"),
-    ("Define function.", "a reusable block of code"),
-    ("Define loop.", "a control structure that repeats"),
-    ("Python: print 42.", "print(42)"),
-    ("Python: print hi.", "print('hi')"),
-    ("Python: length of x.", "len(x)"),
-    ("What colour is the sky on a clear day?", "blue"),
-    ("What gas do plants breathe in?", "carbon dioxide"),
+    ("フランスの首都は何ですか?", "パリ"),
+    ("日本の首都は何ですか?", "東京"),
+    ("イタリアの首都は何ですか?", "ローマ"),
+    ("スペインの首都は何ですか?", "マドリード"),
+    ("ブラジルの首都は何ですか?", "ブラジリア"),
+    ("2 + 3 を計算してください。", "5"),
+    ("7 + 8 を計算してください。", "15"),
+    ("9 - 4 を計算してください。", "5"),
+    ("6 * 3 を計算してください。", "18"),
+    ("20 / 5 を計算してください。", "4"),
+    ("最大の惑星を答えてください。", "木星"),
+    ("最小の惑星を答えてください。", "水星"),
+    ("variable を定義してください。", "値に束縛された名前"),
+    ("function を定義してください。", "再利用可能な code block"),
+    ("loop を定義してください。", "繰り返しを行う control structure"),
+    ("Python: 42 を print してください。", "print(42)"),
+    ("Python: こんにちは を print してください。", "print('こんにちは')"),
+    ("Python: x の長さ。", "len(x)"),
+    ("晴れた日の空の色は何ですか?", "青"),
+    ("植物が取り込む気体は何ですか?", "二酸化炭素"),
 ]
 
 
 F1_PAIRS = [
     (
-        "Summarise: the sun rises in the east and sets in the west.",
+        "要約: the sun rises in the east and sets in the west.",
         "the sun moves from east to west across the sky.",
     ),
     (
-        "Summarise: water boils at one hundred degrees celsius at sea level.",
+        "要約: water boils at one hundred degrees celsius at sea level.",
         "water boils at 100 degrees at sea level.",
     ),
     (
-        "Summarise: the moon orbits the earth roughly every 27 days.",
+        "要約: the moon orbits the earth roughly every 27 days.",
         "the moon takes about 27 days to orbit earth.",
     ),
     (
-        "Summarise: light travels at three hundred thousand kilometres per second.",
+        "要約: light travels at three hundred thousand kilometres per second.",
         "light moves at 300000 km per second.",
     ),
     (
-        "Summarise: bees pollinate flowers as they collect nectar.",
+        "要約: bees pollinate flowers as they collect nectar.",
         "bees pollinate flowers while gathering nectar.",
     ),
     (
-        "Summarise: dna stores genetic information in cells.",
+        "要約: dna stores genetic information in cells.",
         "dna holds the genetic code inside cells.",
     ),
     (
-        "Summarise: the heart pumps blood through arteries and veins.",
+        "要約: the heart pumps blood through arteries and veins.",
         "the heart moves blood through veins and arteries.",
     ),
     (
-        "Summarise: the great wall of china stretches thousands of kilometres.",
+        "要約: the great wall of china stretches thousands of kilometres.",
         "the great wall extends thousands of kilometres across china.",
     ),
     (
-        "Summarise: shakespeare wrote plays and sonnets in elizabethan english.",
+        "要約: shakespeare は plays and sonnets in elizabethan english.",
         "shakespeare authored plays and sonnets in old english.",
     ),
     (
-        "Summarise: photosynthesis converts sunlight into chemical energy.",
+        "要約: photosynthesis converts sunlight into chemical energy.",
         "plants convert sunlight into chemical energy via photosynthesis.",
     ),
     (
-        "Summarise: electricity flows easily through metals like copper and silver.",
+        "要約: electricity flows easily through metals like copper and silver.",
         "electricity travels well through copper and silver wires.",
     ),
     (
-        "Summarise: the human body has 206 bones in adulthood.",
+        "要約: the human body has 206 bones in adulthood.",
         "adults have 206 bones in the human body.",
     ),
     (
-        "Summarise: gravity pulls objects toward the centre of the earth.",
+        "要約: gravity pulls objects toward the centre of the earth.",
         "gravity attracts objects toward the earth centre.",
     ),
     (
-        "Summarise: vaccines train the immune system to recognise pathogens.",
+        "要約: vaccines train the immune system to recognise pathogens.",
         "vaccines teach the immune system to identify germs.",
     ),
     (
-        "Summarise: tectonic plates move slowly across the earth's surface.",
+        "要約: tectonic plates move slowly across the earth's surface.",
         "tectonic plates drift slowly across the surface.",
     ),
     (
-        "Summarise: the equator is the imaginary line around the middle of earth.",
+        "要約: the equator is the imaginary line around the middle of earth.",
         "the equator is the line around the middle of the planet.",
     ),
     (
-        "Summarise: octopuses have three hearts and blue blood.",
-        "octopuses possess three hearts and blue blood.",
+        "要約: octopuses have three hearts and 青 blood.",
+        "octopuses possess three hearts and 青 blood.",
     ),
     (
-        "Summarise: honey never spoils due to its low water content.",
+        "要約: honey never spoils due to its low water content.",
         "honey does not spoil because of low water.",
     ),
     (
-        "Summarise: deserts can be cold or hot but are always dry.",
+        "要約: deserts can be cold or hot but are always dry.",
         "deserts may be cold or hot but are dry places.",
     ),
     (
-        "Summarise: the brain consumes around twenty percent of body energy.",
+        "要約: the brain consumes around twenty percent of body energy.",
         "the brain uses about twenty percent of the body energy.",
     ),
 ]
 
 
 JUDGE_SET = [
-    ("Name the capital of France.", "the capital of france is paris."),
-    ("Name the capital of Japan.", "the capital of japan is tokyo."),
-    ("Define variable.", "a variable is a name that holds a value."),
-    ("Compute 3 + 4.", "the result is 7."),
+    ("フランスの首都を答えてください。", "the capital of france is パリ."),
+    ("日本の首都を答えてください。", "the capital of japan is 東京."),
+    ("variable を定義してください。", "a variable is a name that holds a value."),
+    ("3 + 4 を計算してください。", "the result is 7."),
     ("Python: print 100.", "print(100) prints the integer 100."),
-    ("List three colors.", "red, green, and blue are three colors."),
-    ("Define function.", "a function is a reusable block of code."),
-    ("Compute 11 - 4.", "the result is 7."),
-    ("Name the largest planet.", "the largest planet is jupiter."),
+    ("色を 3 つ挙げてください。", "red, green, and 青 are three colors."),
+    ("function を定義してください。", "a function is 再利用可能な code block."),
+    ("11 - 4 を計算してください。", "the result is 7."),
+    ("最大の惑星を答えてください。", "the largest planet is 木星."),
     ("Python: length of items.", "len(items) returns the length of the list."),
-    ("List three vowels.", "a, e, and i are vowels."),
-    ("Compute 6 * 5.", "the result is 30."),
-    ("Define loop.", "a loop is a control structure that repeats."),
-    ("Name the smallest ocean.", "the smallest ocean is the arctic ocean."),
-    ("Compute 8 / 2.", "the result is 4."),
+    ("母音を 3 つ挙げてください。", "a, e, and i are vowels."),
+    ("6 * 5 を計算してください。", "the result is 30."),
+    ("loop を定義してください。", "a loop is 繰り返しを行う control structure."),
+    ("最小の海を答えてください。", "the smallest ocean is the arctic ocean."),
+    ("8 / 2 を計算してください。", "the result is 4."),
     ("Python: open f in read mode.", "open('f.txt', 'r') opens a file in read mode."),
-    ("Define string.", "a string is a sequence of characters."),
-    ("Name the longest river.", "the longest river is the nile."),
-    ("List three fruits.", "apple, banana, and cherry are fruits."),
-    ("Compute 9 + 6.", "the result is 15."),
+    ("string を定義してください。", "a string is a sequence of characters."),
+    ("最長の川を答えてください。", "the longest river is the nile."),
+    ("果物を 3 つ挙げてください。", "apple, banana, and cherry are fruits."),
+    ("9 + 6 を計算してください。", "the result is 15."),
 ]
 
 
@@ -560,10 +560,10 @@ class JudgeVerdict:
 
 
 def mock_judge(instruction: str, prediction: str, reference: str) -> JudgeVerdict:
-    """Deterministic judge: scores prediction on a 1-5 scale.
+    """Deterministic judge: prediction を 1-5 で採点する。
 
-    The scoring rules are:
-      5: normalised prediction equals normalised reference.
+    採点 rule:
+      5: 正規化後 prediction が正規化後 reference と一致.
       4: token-F1 >= 0.8
       3: token-F1 in [0.5, 0.8)
       2: token-F1 in [0.2, 0.5)
@@ -572,7 +572,7 @@ def mock_judge(instruction: str, prediction: str, reference: str) -> JudgeVerdic
     norm_pred = normalise_for_em(prediction)
     norm_ref = normalise_for_em(reference)
     if norm_pred == norm_ref:
-        return JudgeVerdict(score=5, rationale="exact match after normalisation")
+        return JudgeVerdict(score=5, rationale="正規化後に完全一致")
     f1 = token_f1_score(prediction, reference)
     if f1 >= 0.8:
         return JudgeVerdict(score=4, rationale=f"high token overlap (F1={f1:.2f})")
@@ -580,7 +580,7 @@ def mock_judge(instruction: str, prediction: str, reference: str) -> JudgeVerdic
         return JudgeVerdict(score=3, rationale=f"moderate token overlap (F1={f1:.2f})")
     if f1 >= 0.2:
         return JudgeVerdict(score=2, rationale=f"weak token overlap (F1={f1:.2f})")
-    return JudgeVerdict(score=1, rationale=f"low token overlap (F1={f1:.2f})")
+    return JudgeVerdict(score=1, rationale=f"token overlap が低い (F1={f1:.2f})")
 
 
 def judge_eval(
@@ -622,7 +622,7 @@ DEFAULT_WEIGHTS = {
 
 
 def normalise_metric(name: str, value: float) -> float:
-    """Map a raw metric onto [0, 1]."""
+    """raw metric を [0, 1] に写像する。"""
     if name == "perplexity":
         if value <= 0 or math.isinf(value) or math.isnan(value):
             return 0.0
@@ -659,7 +659,7 @@ def aggregate(results: Sequence[EvalResult], weights: Optional[Dict[str, float]]
     # Normalise weights so they sum to 1.
     total_w = sum(weights.get(r.name, 0.0) for r in results)
     if total_w <= 0:
-        raise ValueError("no positive weights match the eval names")
+        raise ValueError("eval name に一致する正の weight がありません")
     norm_weights = {r.name: weights.get(r.name, 0.0) / total_w for r in results}
     per_eval = {r.name: r.metric for r in results}
     normalised = {r.name: normalise_metric(r.name, r.metric) for r in results}
@@ -713,7 +713,7 @@ class EvalConfig:
 
 
 def train_small(model: TinyGPT, tok: InstructionTokenizer, cfg: EvalConfig) -> List[float]:
-    """A short pretraining pass on the LM corpus + EM pairs so the model is non-random.
+    """model が完全な random にならないよう LM corpus + EM pairs で短く pretraining する。
 
     This is enough to make all four metrics non-trivial without locking in a
     specific quality bar.
@@ -757,7 +757,7 @@ def run_demo(cfg: Optional[EvalConfig] = None, write_json: bool = True) -> int:
     tok = InstructionTokenizer()
     model = TinyGPT(cfg.vocab, cfg.hidden, cfg.heads, cfg.depth, cfg.max_len)
 
-    print(f"[training] {cfg.train_epochs} epochs over the LM + EM combined corpus...")
+    print(f"[training] {cfg.train_epochs} epochs over LM + EM combined corpus...")
     losses = train_small(model, tok, cfg)
     print(f"           final epoch loss = {losses[-1]:.4f}")
     print("")
@@ -788,7 +788,7 @@ def run_demo(cfg: Optional[EvalConfig] = None, write_json: bool = True) -> int:
         with open(out_path, "w", encoding="utf-8") as fh:
             json.dump(report.to_dict(), fh, indent=2, default=str)
         print("")
-        print(f"wrote {out_path}")
+        print(f"書き込みました: {out_path}")
 
     if report.aggregate <= 0.0 or math.isnan(report.aggregate):
         print("ERROR: aggregate score is not positive", file=sys.stderr)

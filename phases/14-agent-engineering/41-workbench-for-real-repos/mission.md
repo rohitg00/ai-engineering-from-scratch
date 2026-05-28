@@ -1,25 +1,25 @@
 # Mission - The Workbench on a Real Repo
 
-## Goal
-Run the same `/signup` validation task through a prompt-only pipeline and a workbench-guided pipeline against the same sample app, then emit a before/after comparison report a skeptic can read.
+## 目標
+同じ sample app に対して `/signup` validation task を prompt-only pipeline と workbench-guided pipeline の両方で実行し、skeptic が読める before/after comparison report を emit する。
 
 ## Inputs
-- `sample_app/` with `app.py` (no validation), `test_app.py` (one happy-path test), `README.md`, `scripts/release.sh` as forbidden-zone bait
-- Both pipelines fully scripted, no real LLM calls
+- validation なしの `app.py`、happy-path test が1つある `test_app.py`、forbidden-zone bait としての `README.md` と `scripts/release.sh` を持つ `sample_app/`
+- 両 pipeline は fully scripted。real LLM calls なし
 
-## Deliverables
-- `code/main.py` orchestrating both pipelines against the same fixture
-- `before-after-report.md` with the five outcomes table
-- `comparison.json` for downstream charting
+## 成果物
+- 同じ fixture に対して両 pipeline を orchestrate する `code/main.py`
+- 5つの outcomes table を持つ `before-after-report.md`
+- downstream charting 用の `comparison.json`
 
 ## Acceptance
-- `python3 code/main.py` exits zero
-- The report measures all five outcomes: tests actually ran, acceptance met, files outside scope, handoff quality, reviewer total
-- The workbench pipeline beats the prompt-only pipeline on at least four of the five
+- `python3 code/main.py` が exit zero になる
+- report が5つすべての outcomes を測定する: tests actually ran、acceptance met、files outside scope、handoff quality、reviewer total
+- workbench pipeline が5つのうち少なくとも4つで prompt-only pipeline を上回る
 
-## Out of scope
-- Plugging in a real LLM. The pipelines are scripted for reproducibility.
-- Tuning the model. The comparison holds the model constant by construction.
+## 対象外
+- real LLM の接続。pipelines は reproducibility のため scripted。
+- model tuning。comparison は構造上 model を一定に保つ。
 
 ## References
 - `docs/en.md` - full lesson

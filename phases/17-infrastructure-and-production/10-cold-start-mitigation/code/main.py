@@ -1,13 +1,13 @@
-"""Cold-start mitigation path simulator — stdlib Python.
+"""Cold-start mitigation path simulator — stdlib Python。
 
-Models a 70B model cold-start with different mitigation stacks:
-  RAW              : no mitigations (nominal baseline)
+70B model の cold-start を、異なる mitigation stack で model 化します:
+  RAW              : mitigation なし（nominal baseline）
   PRE_SEEDED       : + Bottlerocket pre-seeded node image
   STREAMER         : + NVIDIA Run:ai Model Streamer
   GPU_SNAPSHOT     : + Modal-style GPU snapshots
-  WARM_POOL        : min_workers=1 (no cold start at all on warm path)
+  WARM_POOL        : min_workers=1（warm path では cold start なし）
 
-Reports per-layer seconds and totals. Also computes warm-pool break-even.
+Layer ごとの秒数と total を報告し、warm-pool break-even も計算します。
 """
 
 from __future__ import annotations
@@ -19,9 +19,9 @@ from dataclasses import dataclass
 class Phase:
     name: str
     raw_sec: float
-    pre_seeded_sec: float    # 0 if eliminated
-    streamer_sec: float      # replaces raw if streamer active
-    snapshot_sec: float      # replaces all if snapshot active
+    pre_seeded_sec: float    # 消える場合は 0
+    streamer_sec: float      # streamer active なら raw を置き換える
+    snapshot_sec: float      # snapshot active ならすべてを置き換える
 
 
 PHASES_70B = [
@@ -64,7 +64,7 @@ def warm_pool_break_even(gpu_hourly: float, cold_seconds: float, sla_tolerated_d
     print("=" * 80)
     print(f"GPU cost: ${gpu_hourly:.2f}/hr  |  cold start: {cold_seconds:.0f}s  |  drop budget: {sla_tolerated_drops_per_day}/day\n")
     warm_monthly = gpu_hourly * 24 * 30
-    print(f"Warm pool (min_workers=1) monthly cost: ${warm_monthly:.2f}")
+    print(f"Warm pool（min_workers=1）monthly cost: ${warm_monthly:.2f}")
     print()
     print(f"{'Req/hr':>8}  {'Expected cold starts/day':>24}  {'Drops over budget':>20}  {'Warm better?':>15}")
     for rate in (1, 5, 10, 25, 50, 100, 250):
@@ -77,7 +77,7 @@ def warm_pool_break_even(gpu_hourly: float, cold_seconds: float, sla_tolerated_d
 
 def main() -> None:
     print("=" * 80)
-    print("COLD START MITIGATION — 70B model on fresh H100 node")
+    print("COLD START MITIGATION — fresh H100 node 上の 70B model")
     print("=" * 80)
     print(f"{'Stack':20}  {'Total':>8}             Stack composition")
     print("-" * 80)
@@ -88,7 +88,7 @@ def main() -> None:
     report_stack("+ PRE_SEEDED + STREAMER",  {"pre_seeded", "streamer"})
     report_stack("+ GPU_SNAPSHOT",           {"gpu_snapshot"})
 
-    print("\n(WARM_POOL avoids cold start entirely on the warm path; cost is 24x7 GPU rental)")
+    print("\n(WARM_POOL は warm path で cold start を完全に避けます。cost は 24x7 GPU rental です)")
 
     warm_pool_break_even(gpu_hourly=4.50, cold_seconds=328, sla_tolerated_drops_per_day=5)
 

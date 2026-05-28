@@ -1,15 +1,13 @@
 """
-Classifier fine-tuning by head swap.
+head swap による classifier fine-tuning。
 
 See: phases/19-capstone-projects/38-classifier-finetuning/docs/en.md
 
-Compares two strategies on a synthetic spam/ham fixture:
-  - Head-only: body frozen, only the linear classification head trains.
-  - Full FT:   body and head both train.
+synthetic spam/ham fixture で2つの戦略を比較します。
+  - Head-only: body を freeze し classifier head だけを学習
+  - Full fine-tuning: body と head をまとめて学習
 
-The demo at the bottom pretrains a tiny transformer body briefly, then
-fine-tunes under both regimes and prints precision, recall, F1, and the
-confusion matrix for each. Exits 0 on success.
+デモは precision、recall、F1、confusion matrix を表示します。
 """
 
 from __future__ import annotations
@@ -28,18 +26,18 @@ from torch.utils.data import DataLoader, Dataset
 
 
 # ---------------------------------------------------------------------------
-# Tokeniser
+# tokenizer
 # ---------------------------------------------------------------------------
 
 
 class ByteTokenizer:
-    """Maps printable bytes to ids 0..255. Reserves PAD as id 256."""
+    """printable bytes を ids 0..255 に対応付け、PAD を id 256 として予約します。"""
 
     PAD_ID = 256
-    VOCAB = 260  # leave headroom for future specials
+    VOCAB = 260  # 将来の specials 用に余裕を残す
 
     def encode(self, text: str, max_len: int) -> Tuple[List[int], List[int]]:
-        """Return (ids, attention_mask). Pads to max_len."""
+        """(ids, attention_mask) を返します。max_len まで padding します。"""
         raw = list(text.encode("utf-8", errors="ignore"))[:max_len]
         attn = [1] * len(raw)
         while len(raw) < max_len:
@@ -52,7 +50,7 @@ class ByteTokenizer:
 
 
 # ---------------------------------------------------------------------------
-# Tiny transformer body
+# tiny transformer body
 # ---------------------------------------------------------------------------
 
 
@@ -71,11 +69,11 @@ class MultiHeadAttention(nn.Module):
         qkv = self.qkv(x).view(B, T, 3, self.heads, self.head_dim).permute(2, 0, 3, 1, 4)
         q, k, v = qkv[0], qkv[1], qkv[2]
         att = (q @ k.transpose(-2, -1)) / math.sqrt(self.head_dim)
-        # mask: B x T, 1 for real, 0 for pad. broadcast to B x 1 x 1 x T.
+        # mask: B x T、real は1、pad は0。B x 1 x 1 x T に broadcast。
         m = mask.view(B, 1, 1, T).to(att.dtype)
         att = att.masked_fill(m == 0, float("-inf"))
         weights = F.softmax(att, dim=-1)
-        # Replace nan rows (all-pad keys, never happens for valid input) with zeros.
+        # nan row（全 pad keys。有効 input では起きない）を zero に置換。
         weights = torch.nan_to_num(weights, nan=0.0)
         ctx = (weights @ v).transpose(1, 2).contiguous().view(B, T, D)
         return self.out(ctx)
@@ -106,7 +104,7 @@ class Block(nn.Module):
 
 
 class LMBody(nn.Module):
-    """Embedding + position + N transformer blocks. Returns hidden states."""
+    """embedding + position + N transformer blocks。hidden states を返します。"""
 
     def __init__(self, vocab: int, hidden: int, heads: int, depth: int, max_len: int):
         super().__init__()
@@ -126,12 +124,12 @@ class LMBody(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# Pooling and classifier head
+# pooling と classifier head
 # ---------------------------------------------------------------------------
 
 
 def mean_pool(hidden: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
-    """Mask-weighted mean across the sequence dimension."""
+    """sequence dimension に沿った mask-weighted mean。"""
     m = mask.unsqueeze(-1).to(hidden.dtype)
     summed = (hidden * m).sum(dim=1)
     counts = m.sum(dim=1).clamp(min=1.0)
@@ -152,7 +150,7 @@ class Classifier(nn.Module):
 
 
 class LMHead(nn.Module):
-    """Token-prediction head, used during the brief pretraining pass."""
+    """短い pretraining pass で使う token-prediction head。"""
 
     def __init__(self, body: LMBody, vocab: int):
         super().__init__()
@@ -166,12 +164,12 @@ class LMHead(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# Freeze toggles
+# freeze toggle
 # ---------------------------------------------------------------------------
 
 
 def freeze_body(model: Classifier) -> int:
-    """Set requires_grad=False on every body parameter. Returns count frozen."""
+    """body の全 parameter に requires_grad=False を設定し、frozen count を返します。"""
     n = 0
     for p in model.body.parameters():
         p.requires_grad = False
@@ -192,46 +190,46 @@ def trainable_params(model: nn.Module) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Synthetic spam/ham fixture
+# synthetic spam/ham fixture
 # ---------------------------------------------------------------------------
 
 
 SPAM_TEMPLATES = [
-    "FREE entry in {n}wkly comp to win FA Cup",
-    "URGENT call {phone} to claim your prize",
-    "WINNER claim your {amount} pound award now",
-    "Congrats you won {prize} reply YES",
-    "Click {url} for {discount} percent off",
-    "Cheap loans available call {phone}",
-    "Hot singles in {city} text NOW",
-    "Earn money working from home click {url}",
-    "You have been selected for a {amount} pound voucher",
-    "Limited offer reply STOP to opt out",
+    "FAカップが当たる{n}週間キャンペーン無料応募",
+    "至急 {phone} に電話して賞品を受け取ってください",
+    "当選 {amount}ポンドの賞goldを今すぐ請求",
+    "おめでとう {prize} が当たりました YES と返信",
+    "{discount}パーセント割引は {url} をクリック",
+    "格安ローン受付中 {phone} へ電話",
+    "{city} の出会い NOW と送信",
+    "在宅で稼ぐには {url} をクリック",
+    "{amount}ポンドのクーポン当選者に選ばれました",
+    "限定案内 停止は STOP と返信",
 ]
 
 HAM_TEMPLATES = [
-    "are you home for dinner tonight",
-    "see you at {time} tomorrow",
-    "can you pick up {item} on the way",
-    "the meeting moved to {time}",
-    "thanks for the {item} yesterday",
-    "let me know when you are free",
-    "running late by {n} minutes sorry",
-    "have a good day at work",
-    "did you watch the match last night",
-    "happy birthday hope you have fun",
+    "今夜は家で夕飯を食べる?",
+    "明日 {time} に会おう",
+    "帰りに {item} を買ってきてくれる?",
+    "会議は {time} に変更になった",
+    "昨日は {item} ありがとう",
+    "空いている時間を教えて",
+    "{n}分遅れますごめん",
+    "仕事がんばってね",
+    "昨夜の試合見た?",
+    "誕生日おめでとう楽しんでね",
 ]
 
 SLOTS = {
     "n": ["1", "2", "3", "5", "10"],
     "phone": ["09061701461", "08000839402", "09058091870"],
     "amount": ["100", "250", "500", "1000", "5000"],
-    "prize": ["a holiday", "an iPhone", "a laptop", "cash"],
-    "url": ["http://bit.ly/free", "http://win.now/cash", "http://promo.io"],
+    "prize": ["旅行", "iPhone", "ノートPC", "現gold"],
+    "url": ["http://bit.ly/free", "http://win.now/現gold", "http://promo.io"],
     "discount": ["20", "30", "50", "70"],
-    "city": ["London", "Manchester", "Leeds", "Bristol"],
+    "city": ["ロンドン", "マンチェスター", "リーズ", "ブリストル"],
     "time": ["6pm", "7pm", "noon", "9am"],
-    "item": ["milk", "bread", "the kids", "the dog", "groceries"],
+    "item": ["牛乳", "パン", "子どもたち", "犬", "食料品"],
 }
 
 
@@ -253,7 +251,7 @@ def make_dataset(n_per_class: int = 400, seed: int = 0) -> Tuple[List[str], List
         labels.append(1)
         texts.append(fill(rng.choice(HAM_TEMPLATES), rng))
         labels.append(0)
-    # Shuffle deterministically.
+    # deterministic に shuffle。
     order = list(range(len(texts)))
     rng.shuffle(order)
     return [texts[i] for i in order], [labels[i] for i in order]
@@ -285,7 +283,7 @@ def stratified_split(
 
 
 # ---------------------------------------------------------------------------
-# Datasets
+# datasets
 # ---------------------------------------------------------------------------
 
 
@@ -309,7 +307,7 @@ class ClassificationDataset(Dataset):
 
 
 class LMDataset(Dataset):
-    """Causal LM dataset over the spam/ham strings. Used for the warm-up pretraining."""
+    """spam/ham strings 上の causal LM dataset。warm-up pretraining に使います。"""
 
     def __init__(self, texts: Sequence[str], tok: ByteTokenizer, max_len: int):
         self.texts = list(texts)
@@ -328,7 +326,7 @@ class LMDataset(Dataset):
 
 
 # ---------------------------------------------------------------------------
-# Training loops
+# training loops
 # ---------------------------------------------------------------------------
 
 
@@ -342,7 +340,7 @@ def pretrain_quick(
     lr: float = 3e-3,
     seed: int = 0,
 ) -> List[float]:
-    """A short LM pretraining pass to give the body non-trivial weights."""
+    """body に非自明な weights を与える短い LM pretraining pass。"""
     torch.manual_seed(seed)
     head = LMHead(body, vocab=tok.VOCAB)
     ds = LMDataset(texts, tok, max_len)
@@ -355,7 +353,7 @@ def pretrain_quick(
         n_batches = 0
         for ids, mask in dl:
             logits = head(ids, mask)
-            # Shift one for next-token prediction.
+            # next-token prediction のために1つ shift。
             target = ids[:, 1:].contiguous()
             tgt_mask = mask[:, 1:].contiguous()
             logits = logits[:, :-1, :].contiguous()
@@ -393,7 +391,7 @@ def train_classifier(
     torch.manual_seed(seed)
     params = [p for p in model.parameters() if p.requires_grad]
     if not params:
-        raise ValueError("No trainable parameters. Did you freeze the head as well?")
+        raise ValueError("trainable parameters がありません。head も freeze していませんか?")
     opt = torch.optim.Adam(params, lr=lr)
     losses: List[float] = []
     model.train()
@@ -413,7 +411,7 @@ def train_classifier(
 
 
 # ---------------------------------------------------------------------------
-# Evaluation
+# evaluation
 # ---------------------------------------------------------------------------
 
 
@@ -463,7 +461,7 @@ def evaluate(model: Classifier, loader: DataLoader, positive: int = 1) -> Metric
 
 
 # ---------------------------------------------------------------------------
-# Configuration and demo
+# configuration と demo
 # ---------------------------------------------------------------------------
 
 
@@ -505,7 +503,7 @@ class DemoReport:
     full_ft_trainable: int
 
     def passed(self) -> bool:
-        # Both regimes should beat random (F1 > 0.5) on this fixture.
+        # この fixture では両 regime が random (F1 > 0.5) を上回るはずです。
         return self.head_only.f1 > 0.5 and self.full_ft.f1 > 0.5
 
 
@@ -526,7 +524,7 @@ def run_demo(cfg: Config | None = None) -> int:
     print("CLASSIFIER FINE-TUNING DEMO")
     print(f"train={len(train_ds)} test={len(test_ds)} max_len={cfg.max_len}")
     print("")
-    print("[1/3] pretraining body briefly on the corpus text...")
+    print("[1/3] corpus text で body を短く pretrain...")
     body_for_pretrain = LMBody(
         vocab=cfg.vocab,
         hidden=cfg.hidden,
@@ -545,12 +543,12 @@ def run_demo(cfg: Config | None = None) -> int:
     )
     print(f"      pretrain final loss = {pre_losses[-1]:.4f}")
 
-    # Two classifiers share the same pretrained body weights (copied to keep regimes independent).
+    # 2つの classifier は同じ pretrained body weights から始めます（regime を独立にするため copy）。
     head_only_model = Classifier(_clone_body(body_for_pretrain), num_classes=2)
     full_ft_model = Classifier(_clone_body(body_for_pretrain), num_classes=2)
 
     print("")
-    print("[2/3] training head-only (body frozen)...")
+    print("[2/3] head-only を学習（body frozen）...")
     freeze_body(head_only_model)
     head_report = train_classifier(
         head_only_model,
@@ -566,7 +564,7 @@ def run_demo(cfg: Config | None = None) -> int:
     print(head_metrics.confusion())
 
     print("")
-    print("[3/3] training full fine-tuning (body unfrozen)...")
+    print("[3/3] full fine-tuning を学習（body unfrozen）...")
     unfreeze_body(full_ft_model)
     full_report = train_classifier(
         full_ft_model,
@@ -595,13 +593,13 @@ def run_demo(cfg: Config | None = None) -> int:
     print(f"  head-only:  trainable={report.head_only_trainable:>6d} F1={report.head_only.f1:.3f}")
     print(f"  full-FT:    trainable={report.full_ft_trainable:>6d} F1={report.full_ft.f1:.3f}")
     if not report.passed():
-        print("ERROR: at least one regime did not beat random F1=0.5", file=sys.stderr)
+        print("ERROR: 少なくとも1つの regime が random F1=0.5 を上回りませんでした", file=sys.stderr)
         return 1
     return 0
 
 
 def _clone_body(body: LMBody) -> LMBody:
-    """Deep-copy a body so two regimes start from the same pretrained weights."""
+    """2つの regime が同じ pretrained weights から始まるよう body を deep-copy します。"""
     clone = LMBody(
         vocab=body.tok.num_embeddings,
         hidden=body.ln_f.normalized_shape[0],

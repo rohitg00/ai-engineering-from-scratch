@@ -1,22 +1,22 @@
 {
   "lesson": "07-pos-tagging-parsing",
-  "title": "POS Tagging and Syntactic Parsing",
+  "title": "POSタグ付けと構文解析",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the goal of POS tagging?",
+      "question": "POSタグ付けの目的は何ですか？",
       "options": [
-        "Detect sentiment",
-        "Translate the sentence",
-        "Extract named entities",
-        "Assign a grammatical category (noun, verb, etc.) to each token"
+        "感情を検出すること",
+        "文を翻訳すること",
+        "固有表現を抽出すること",
+        "各トークンに文法カテゴリ (名詞、動詞など) を割り当てること"
       ],
       "correct": 3,
-      "explanation": "POS tagging labels each token with its part of speech."
+      "explanation": "POSタグ付けは、各トークンに品詞をラベル付けします。"
     },
     {
       "stage": "pre",
-      "question": "Which tagset is the default for cross-lingual work?",
+      "question": "クロスリンガル処理で標準となるタグセットはどれですか？",
       "options": [
         "Penn Treebank",
         "Stanford Dependencies",
@@ -24,79 +24,79 @@
         "CoNLL-2003"
       ],
       "correct": 2,
-      "explanation": "Universal Dependencies provides a coarser, language-agnostic 17-tag set."
+      "explanation": "Universal Dependenciesは、より粗く、言語非依存な17タグのセットを提供します。"
     },
     {
       "stage": "check",
-      "question": "What does a bigram HMM POS tagger model?",
+      "question": "bigram HMM POSタガーは何をモデル化しますか？",
       "options": [
-        "P(tags) only",
-        "Dependency parses",
-        "Embedding similarities",
-        "P(tag | previous tag) transitions plus P(word | tag) emissions, decoded with Viterbi"
+        "P(tags) のみ",
+        "依存構造解析",
+        "埋め込みの類似度",
+        "P(tag | previous tag) の遷移と P(word | tag) の出力を使い、Viterbiで復号する"
       ],
       "correct": 3,
-      "explanation": "Bigram HMM uses tag transitions and word emissions; Viterbi finds the highest-probability sequence."
+      "explanation": "bigram HMMはタグ遷移と単語出力を使います。Viterbiは最も確率の高い系列を見つけます。"
     },
     {
       "stage": "check",
-      "question": "What does the Viterbi algorithm compute for an HMM tagger?",
+      "question": "HMMタガーにおいて、Viterbiアルゴリズムは何を計算しますか？",
       "options": [
-        "The single highest-probability tag sequence via dynamic programming over the tag lattice",
-        "The transition matrix",
-        "The marginal probability of each tag",
-        "The forward probabilities only"
+        "タグ格子上の動的計画法により、単一の最尤タグ系列を求める",
+        "遷移行列",
+        "各タグの周辺確率",
+        "forward確率のみ"
       ],
       "correct": 0,
-      "explanation": "Viterbi finds the argmax sequence with O(n * |T|^2) dynamic programming."
+      "explanation": "Viterbiは O(n * |T|^2) の動的計画法でargmax系列を見つけます。"
     },
     {
       "stage": "check",
-      "question": "What does dependency parsing produce?",
+      "question": "依存構造解析は何を生成しますか？",
       "options": [
-        "A tree where each word has one head word and a labeled grammatical relation",
-        "A flat BIO sequence",
-        "A constituency tree of NP/VP/PP labels",
-        "A coreference chain"
+        "各単語が1つの主辞を持ち、ラベル付き文法関係を持つ木",
+        "平坦なBIO系列",
+        "NP/VP/PPラベルからなる句構造木",
+        "共参照チェーン"
       ],
       "correct": 0,
-      "explanation": "Dependency parses give per-word (head, relation) edges; constituency parses give nested phrase structures."
+      "explanation": "依存構造解析は単語ごとの (主辞, 関係) 辺を与えます。句構造解析は入れ子の句構造を与えます。"
     },
     {
       "stage": "post",
-      "question": "Why is the accuracy ceiling on PTB POS tagging around 97-98%?",
+      "question": "PTBのPOSタグ付けで精度の上限が97〜98%程度になるのはなぜですか？",
       "options": [
-        "Models cannot exceed 98% in any task",
-        "Universal Dependencies caps at 98%",
-        "Human annotators only agree about 97% of the time, so models above ~98% may be overfitting test data",
-        "Hardware limitations"
+        "どのタスクでもモデルは98%を超えられないから",
+        "Universal Dependenciesが98%で上限を設けているから",
+        "人間のアノテータ同士の一致率が約97%であり、98%前後を超えるモデルはテストデータに過剰適合している可能性があるから",
+        "ハードウェアの制限があるから"
       ],
       "correct": 2,
-      "explanation": "Annotator disagreement bounds the achievable accuracy; very high numbers often signal overfitting."
+      "explanation": "アノテータ間の不一致が達成可能な精度を制限します。非常に高い数値は過剰適合の兆候であることがあります。"
     },
     {
       "stage": "post",
-      "question": "Why does POS tagging still matter in 2026 LLM pipelines?",
+      "question": "2026年のLLMパイプラインでもPOSタグ付けが重要なのはなぜですか？",
       "options": [
-        "LLMs cannot run without it",
-        "Lemmatization, aspect-based sentiment, query decomposition, structured-output validation, and cross-lingual transfer all still consume POS or dependency parses",
-        "Required for tokenization",
-        "Replaces transformers"
+        "LLMはPOSタグなしでは実行できないから",
+        "見出し語化、アスペクトベース感情分析、クエリ分解、構造化出力の検証、クロスリンガル転移が今でもPOSや依存構造解析を使うから",
+        "トークン化に必須だから",
+        "Transformerを置き換えるから"
       ],
       "correct": 1,
-      "explanation": "POS and dependency parses feed many structured downstream tasks even when LLMs generate the prose."
+      "explanation": "LLMが文章を生成する場合でも、POSと依存構造解析は多くの構造化された下流タスクに使われます。"
     },
     {
       "stage": "post",
-      "question": "Which library should you reach for in most production POS / parse tasks?",
+      "question": "ほとんどの本番POS / 構文解析タスクでは、どのライブラリを選ぶべきですか？",
       "options": [
         "scikit-learn",
         "NumPy",
-        "spaCy (or stanza/trankit for top accuracy or wider language coverage)",
-        "Roll your own parser"
+        "spaCy (最高精度やより広い言語対応が必要ならstanza/trankit)",
+        "独自パーサーを作る"
       ],
       "correct": 2,
-      "explanation": "spaCy ships fast production-grade POS + dependency parsers; stanza/trankit cover broader languages."
+      "explanation": "spaCyは高速な本番品質のPOS + 依存構造パーサーを提供します。stanza/trankitはより広い言語を扱えます。"
     }
   ]
 }

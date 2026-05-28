@@ -1,46 +1,46 @@
 ---
 name: mcp-server-platform
-description: Deploy a production MCP server with StreamableHTTP, OAuth 2.1 scopes, OPA policy, human-approval gate for destructive tools, and a registry for discovery.
+description: StreamableHTTP、OAuth 2.1 scopes、OPA policy、destructive tool 用 human-approval gate、discovery 用 registry を備えた production MCP server を deploy する。
 version: 1.0.0
 phase: 19
 lesson: 13
 tags: [capstone, mcp, fastmcp, streamablehttp, oauth, opa, registry, governance]
 ---
 
-Given an enterprise environment, ship an MCP server with 10 internal tools, a registry service for discovery, and a governance layer that gates destructive tools via Slack approval.
+Enterprise environment を対象に、10 個の internal tool を持つ MCP server、discovery 用 registry service、destructive tool を Slack approval で gate する governance layer を ship する。
 
 Build plan:
 
-1. FastMCP server exposing 10 read-only tools (Postgres, S3, Jira, Linear, Datadog, PagerDuty, GitHub, Notion, Slack, Salesforce), each with typed schema and required scope.
-2. StreamableHTTP transport, stateless behind a load balancer.
-3. OAuth 2.1 token introspection middleware; workload identity via SPIFFE / SPIRE.
-4. OPA / Rego policy decisions on every tool call: scope enforcement, PII redaction, payload size caps.
-5. Destructive tools (Jira create, Linear create, Postgres write) on a separate MCP server requiring scope `approved:by:human` elevated via Slack card within 15 minutes.
-6. Registry service that polls `.well-known/mcp-capabilities` from each server, validates with JSON Schema, and exposes a list/search/validate/enable UI.
-7. Per-tenant JSONL audit log with Presidio PII redaction before write.
-8. 100-client load test demonstrating horizontal scale; pass MCP conformance suite.
+1. FastMCP server で 10 個の read-only tool (Postgres、S3、Jira、Linear、Datadog、PagerDuty、GitHub、Notion、Slack、Salesforce) を expose する。各 tool は typed schema と required scope を持つ。
+2. StreamableHTTP transport。Load balancer 背後で stateless にする。
+3. OAuth 2.1 token introspection middleware。Workload identity は SPIFFE / SPIRE。
+4. すべての tool call に OPA / Rego policy decision を適用する: scope enforcement、PII redaction、payload size cap。
+5. Destructive tool (Jira create、Linear create、Postgres write) は separate MCP server に置き、15 分以内に Slack card で elevation された scope `approved:by:human` を必須にする。
+6. 各 server から `.well-known/mcp-capabilities` を poll し、JSON Schema で validate し、list/search/validate/enable UI を提供する registry service。
+7. Write 前に Presidio PII redaction を行う per-tenant JSONL audit log。
+8. Horizontal scale を demonstrate する 100-client load test。MCP conformance suite を pass する。
 
 Assessment rubric:
 
 | Weight | Criterion | Measurement |
 |:-:|---|---|
-| 25 | Spec conformance | StreamableHTTP + capability manifest passes MCP conformance tests |
-| 20 | Security | Scope enforcement, OPA coverage across every tool, secret hygiene |
-| 20 | Observability | Per-tool-call audit log with PII redaction on write |
-| 20 | Scale | 100-client load test with horizontal scale demonstration |
-| 15 | Registry UX | Discover / validate / enable-disable workflow exercised |
+| 25 | Spec conformance | StreamableHTTP + capability manifest が MCP conformance test を pass |
+| 20 | Security | Scope enforcement、全 tool の OPA coverage、secret hygiene |
+| 20 | Observability | Write 時に PII redaction する per-tool-call audit log |
+| 20 | Scale | Horizontal scale demonstration 付き 100-client load test |
+| 15 | Registry UX | Discover / validate / enable-disable workflow を実行 |
 
 Hard rejects:
 
-- Servers that require stateful sessions (violates 2026 StreamableHTTP stateless contract).
-- Single-server topology where destructive tools share the same auth surface as read-only.
-- Audit logs that persist raw PII.
-- Ignoring the capability manifest; registry integration is a hard requirement.
+- Stateful session を必須にする server (2026 StreamableHTTP stateless contract 違反)。
+- Destructive tool が read-only と同じ auth surface を共有する single-server topology。
+- Raw PII を persist する audit log。
+- Capability manifest を無視すること。Registry integration は必須要件。
 
 Refusal rules:
 
-- Refuse to deploy without OAuth; anonymous access is disqualifying.
-- Refuse to ship destructive tools without the Slack approval flow.
-- Refuse to expose a tool whose scope or description is not in the capability manifest.
+- OAuth なしでは deploy しない。Anonymous access は失格。
+- Slack approval flow なしで destructive tool を ship しない。
+- Scope または description が capability manifest に載っていない tool は expose しない。
 
-Output: a repo containing the two MCP servers (read-only + destructive), the registry service, the Slack approval integration, the OPA policies, the 100-client load-test harness, conformance-test results, and a write-up describing which tools you considered exposing but did not (and why) plus the top three OPA rules that caught near-misses during dry-run.
+Output: 2 つの MCP server (read-only + destructive)、registry service、Slack approval integration、OPA policies、100-client load-test harness、conformance-test results、expose を検討したが見送った tool とその理由、dry-run 中の near-miss を捕まえた OPA rule top 3 を説明する write-up を含む repo。

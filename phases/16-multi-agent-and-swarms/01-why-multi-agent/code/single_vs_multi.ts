@@ -33,32 +33,32 @@ async function fakeLLMCall(
   await new Promise((resolve) => setTimeout(resolve, 50));
 
   return {
-    output: `[Response to: ${userMessage.slice(0, 80)}...]`,
+    output: `[応答: ${userMessage.slice(0, 80)}...]`,
     tokens: simulatedTokens,
     calls: Math.floor(Math.random() * 5) + 1,
   };
 }
 
 async function singleAgentApproach(task: string): Promise<AgentResult> {
-  const systemPrompt = `You are a full-stack developer. You must:
-1. Research the requirements
-2. Write the code
-3. Review the code for bugs
-4. Write tests
-Do ALL of these in a single conversation.`;
+  const systemPrompt = `あなたは full-stack developer です。必ず次を行ってください:
+1. 要件を調査する
+2. code を書く
+3. bugs がないか code を review する
+4. tests を書く
+これらをすべて 1 つの conversation で行ってください。`;
 
   const contextWindow: string[] = [];
   let totalTokens = 0;
   let totalToolCalls = 0;
 
-  const research = await fakeLLMCall(systemPrompt, `Research: ${task}`);
+  const research = await fakeLLMCall(systemPrompt, `調査: ${task}`);
   contextWindow.push(research.output);
   totalTokens += research.tokens;
   totalToolCalls += research.calls;
 
   const code = await fakeLLMCall(
     systemPrompt,
-    `Given this research:\n${contextWindow.join("\n")}\n\nNow write code for: ${task}`
+    `この調査に基づいて:\n${contextWindow.join("\n")}\n\n次の code を書いてください: ${task}`
   );
   contextWindow.push(code.output);
   totalTokens += code.tokens;
@@ -66,7 +66,7 @@ Do ALL of these in a single conversation.`;
 
   const review = await fakeLLMCall(
     systemPrompt,
-    `Given all previous context:\n${contextWindow.join("\n")}\n\nReview the code.`
+    `これまでの context に基づいて:\n${contextWindow.join("\n")}\n\ncode を review してください。`
   );
   contextWindow.push(review.output);
   totalTokens += review.tokens;
@@ -99,17 +99,17 @@ function createSpecialist(
 
 const researcher = createSpecialist(
   "researcher",
-  "You are a technical researcher. Read documentation, find patterns, and summarize findings. Output only the facts needed for implementation."
+  "あなたは technical researcher です。documentation を読み、patterns を見つけ、findings を要約してください。implementation に必要な facts だけを出力してください。"
 );
 
 const coder = createSpecialist(
   "coder",
-  "You are a senior TypeScript developer. Given requirements and research notes, write clean, tested code. Nothing else."
+  "あなたは senior TypeScript developer です。requirements と research notes に基づいて、clean で tested な code だけを書いてください。"
 );
 
 const reviewer = createSpecialist(
   "reviewer",
-  "You are a code reviewer. Find bugs, security issues, and logic errors. Be specific. Cite line numbers."
+  "あなたは code reviewer です。bugs、security issues、logic errors を見つけてください。具体的に、line numbers を示してください。"
 );
 
 async function multiAgentPipeline(task: string): Promise<AgentResult> {
@@ -129,7 +129,7 @@ async function multiAgentPipeline(task: string): Promise<AgentResult> {
 
   const coderInput = messages
     .filter((m) => m.to === "coder")
-    .map((m) => `[From ${m.from}]: ${m.content}`)
+    .map((m) => `[${m.from} から]: ${m.content}`)
     .join("\n");
 
   const codeResult = await coder.run(coderInput);
@@ -144,7 +144,7 @@ async function multiAgentPipeline(task: string): Promise<AgentResult> {
 
   const reviewerInput = messages
     .filter((m) => m.to === "reviewer")
-    .map((m) => `[From ${m.from}]: ${m.content}`)
+    .map((m) => `[${m.from} から]: ${m.content}`)
     .join("\n");
 
   const reviewResult = await reviewer.run(reviewerInput);
@@ -172,11 +172,11 @@ async function multiAgentFanOut(task: string): Promise<AgentResult> {
   let totalToolCalls = 0;
 
   const [researchResult, requirementsResult] = await Promise.all([
-    researcher.run(`Research technical approach for: ${task}`),
+    researcher.run(`technical approach を調査してください: ${task}`),
     createSpecialist(
       "requirements",
-      "You are a requirements analyst. Extract functional and non-functional requirements. Be exhaustive."
-    ).run(`Analyze requirements for: ${task}`),
+      "あなたは requirements analyst です。functional requirements と non-functional requirements を抽出してください。網羅的に行ってください。"
+    ).run(`requirements を分析してください: ${task}`),
   ]);
 
   messages.push({
@@ -196,7 +196,7 @@ async function multiAgentFanOut(task: string): Promise<AgentResult> {
 
   const coderInput = messages
     .filter((m) => m.to === "coder")
-    .map((m) => `[From ${m.from}]: ${m.content}`)
+    .map((m) => `[${m.from} から]: ${m.content}`)
     .join("\n");
 
   const codeResult = await coder.run(coderInput);
@@ -223,35 +223,35 @@ async function multiAgentFanOut(task: string): Promise<AgentResult> {
 }
 
 async function main() {
-  const task = "Build a rate limiter middleware for an Express.js API";
+  const task = "Express.js API 用の rate limiter middleware を作る";
 
   console.log("=== SINGLE AGENT APPROACH ===\n");
   const singleResult = await singleAgentApproach(task);
-  console.log(`Tokens used: ${singleResult.tokensUsed}`);
+  console.log(`使用 tokens: ${singleResult.tokensUsed}`);
   console.log(`Tool calls: ${singleResult.toolCalls}`);
-  console.log(`Context: everything in one window\n`);
+  console.log(`Context: すべてが 1 つの window に入る\n`);
 
   console.log("=== MULTI-AGENT PIPELINE ===\n");
   const pipelineResult = await multiAgentPipeline(task);
-  console.log(`Tokens used: ${pipelineResult.tokensUsed}`);
+  console.log(`使用 tokens: ${pipelineResult.tokensUsed}`);
   console.log(`Tool calls: ${pipelineResult.toolCalls}`);
-  console.log(`Context: each agent gets only what it needs\n`);
+  console.log(`Context: 各 agent は必要なものだけを受け取る\n`);
 
   console.log("=== MULTI-AGENT FAN-OUT ===\n");
   const fanOutResult = await multiAgentFanOut(task);
-  console.log(`Tokens used: ${fanOutResult.tokensUsed}`);
+  console.log(`使用 tokens: ${fanOutResult.tokensUsed}`);
   console.log(`Tool calls: ${fanOutResult.toolCalls}`);
-  console.log(`Context: researcher + requirements run in parallel\n`);
+  console.log(`Context: researcher + requirements が parallel に走る\n`);
 
   console.log("=== COMPARISON ===\n");
   console.log(
-    `Single agent context pollution: all ${singleResult.tokensUsed} tokens in one window`
+    `Single agent context pollution: ${singleResult.tokensUsed} tokens すべてが 1 つの window に入る`
   );
   console.log(
-    `Multi-agent isolation: ${pipelineResult.tokensUsed} total tokens across 3 isolated windows`
+    `Multi-agent isolation: ${pipelineResult.tokensUsed} total tokens が 3 つの isolated windows に分かれる`
   );
   console.log(
-    `Fan-out parallelism: research + requirements ran simultaneously`
+    `Fan-out parallelism: research + requirements が同時に走った`
   );
 }
 

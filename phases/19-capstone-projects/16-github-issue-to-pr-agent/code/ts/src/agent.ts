@@ -29,7 +29,7 @@ export function dispatchAgent(
     action: "dispatched_agent",
     repo,
     issue: issueNumber,
-    note: `would clone ${repo}, spin sandbox, branch=${draftBranch}, title="${title}"`,
+    note: `${repo} を clone し、sandbox を起動し、branch=${draftBranch}, title="${title}" とする想定`,
   });
   audit.log({
     ts: Date.now(),
@@ -37,7 +37,7 @@ export function dispatchAgent(
     action: "stub_pr_created",
     repo,
     issue: issueNumber,
-    note: `would open PR ${repo}#PR draft from ${draftBranch} -> main`,
+    note: `${draftBranch} -> main の draft PR を ${repo} に開く想定`,
   });
   return draftBranch;
 }

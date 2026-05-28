@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -16,24 +16,24 @@
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">one host, one JSON-RPC session, three primitives</text>
+  <text x="450" y="30" text-anchor="middle" class="title">1つのホスト、1つのJSON-RPCセッション、3つのprimitive</text>
 
   <!-- Host -->
   <rect x="40" y="70" width="240" height="300" class="host"/>
-  <text x="160" y="95" text-anchor="middle" class="label">Host (LLM app)</text>
+  <text x="160" y="95" text-anchor="middle" class="label">Host (LLMアプリ)</text>
   <text x="160" y="113" text-anchor="middle" class="tag">Claude Desktop / Claude Code / ChatGPT</text>
 
   <rect x="70" y="135" width="180" height="55" class="box"/>
-  <text x="160" y="155" text-anchor="middle" class="sub">LLM runtime</text>
-  <text x="160" y="175" text-anchor="middle" class="tag">model + prompt + context</text>
+  <text x="160" y="155" text-anchor="middle" class="sub">LLMランタイム</text>
+  <text x="160" y="175" text-anchor="middle" class="tag">モデル + プロンプト + コンテキスト</text>
 
   <rect x="70" y="205" width="180" height="55" class="box"/>
-  <text x="160" y="225" text-anchor="middle" class="sub">MCP client</text>
-  <text x="160" y="245" text-anchor="middle" class="tag">one per server mounted</text>
+  <text x="160" y="225" text-anchor="middle" class="sub">MCPクライアント</text>
+  <text x="160" y="245" text-anchor="middle" class="tag">mountされたサーバごとに1つ</text>
 
   <rect x="70" y="275" width="180" height="55" class="box"/>
-  <text x="160" y="295" text-anchor="middle" class="sub">user UI / approval</text>
-  <text x="160" y="315" text-anchor="middle" class="tag">slash commands, confirms</text>
+  <text x="160" y="295" text-anchor="middle" class="sub">ユーザーUI / 承認</text>
+  <text x="160" y="315" text-anchor="middle" class="tag">slash command、確認</text>
 
   <!-- Wire -->
   <path d="M280 235 L500 235" class="line" marker-end="url(#arrow)"/>
@@ -42,26 +42,26 @@
 
   <!-- Server -->
   <rect x="500" y="70" width="360" height="300" class="server"/>
-  <text x="680" y="95" text-anchor="middle" class="label">Server</text>
-  <text x="680" y="113" text-anchor="middle" class="tag">your code: FastMCP / SDK / custom</text>
+  <text x="680" y="95" text-anchor="middle" class="label">サーバ</text>
+  <text x="680" y="113" text-anchor="middle" class="tag">あなたのコード: FastMCP / SDK / custom</text>
 
   <rect x="525" y="140" width="310" height="60" class="primitive"/>
-  <text x="680" y="161" text-anchor="middle" class="sub">Tools</text>
-  <text x="680" y="181" text-anchor="middle" class="tag">functions the model calls; JSON Schema input</text>
+  <text x="680" y="161" text-anchor="middle" class="sub">ツール</text>
+  <text x="680" y="181" text-anchor="middle" class="tag">モデルが呼ぶ関数。JSON Schema入力</text>
 
   <rect x="525" y="215" width="310" height="60" class="primitive"/>
-  <text x="680" y="236" text-anchor="middle" class="sub">Resources</text>
-  <text x="680" y="256" text-anchor="middle" class="tag">URI-addressed read-only content</text>
+  <text x="680" y="236" text-anchor="middle" class="sub">リソース</text>
+  <text x="680" y="256" text-anchor="middle" class="tag">URIで指定する読み取り専用コンテンツ</text>
 
   <rect x="525" y="290" width="310" height="60" class="primitive"/>
-  <text x="680" y="311" text-anchor="middle" class="sub">Prompts</text>
-  <text x="680" y="331" text-anchor="middle" class="tag">user-invoked templates (slash commands)</text>
+  <text x="680" y="311" text-anchor="middle" class="sub">プロンプト</text>
+  <text x="680" y="331" text-anchor="middle" class="tag">ユーザーが起動するテンプレート (slash commands)</text>
 
   <!-- Caption -->
   <text x="450" y="410" text-anchor="middle" class="tag">
-    spec revision 2025-06-18 adds streamable HTTP transport; every host/server pins a protocol version in initialize.
+    2025-06-18仕様改訂でstreamable HTTP transportが追加。host/serverはinitializeでprotocol versionを固定する。
   </text>
   <text x="450" y="435" text-anchor="middle" class="tag">
-    destructive tools set destructiveHint: true so the host can gate on human approval.
+    破壊的toolはdestructiveHint: trueを設定し、hostが人間承認でgateできるようにする。
   </text>
 </svg>

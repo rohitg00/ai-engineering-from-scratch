@@ -1,25 +1,25 @@
 # Mission - Runtime Feedback Loops
 
-## Goal
-Build `run_with_feedback` that wraps `subprocess.run`, captures stdout, stderr, exit code, and duration, truncates output deterministically, and appends a JSONL record the next turn and the verification gate both read.
+## 目標
+`subprocess.run` を wrap し、stdout、stderr、exit code、duration を取り込み、output を決定的に切り詰め、次の turn と verification gate の両方が読む JSONL record を append する `run_with_feedback` を構築する。
 
 ## Inputs
-- Three demo commands to exercise the runner: one success, one failure, one slow
-- Token budget: deterministic head plus tail with a `...truncated N lines...` marker
+- runner を試す3つの demo command: success、failure、slow
+- Token budget: deterministic head plus tail と `...truncated N lines...` marker
 
-## Deliverables
-- `run_with_feedback(command, agent_note)` writing to `feedback_record.jsonl`
-- A loader that streams the JSONL into a Python list
-- A printer that shows the last record per command
+## 成果物
+- `feedback_record.jsonl` に書き込む `run_with_feedback(command, agent_note)`
+- JSONL を Python list に stream する loader
+- command ごとの最後の record を表示する printer
 
 ## Acceptance
-- `python3 code/main.py` exits zero
-- `feedback_record.jsonl` accumulates one record per command across re-runs
-- A command with `exit_code: null` cannot be marked successful by the loop
+- `python3 code/main.py` が exit zero になる
+- `feedback_record.jsonl` が再実行をまたいで command ごとに1 record を蓄積する
+- `exit_code: null` の command を loop が successful と mark できない
 
-## Out of scope
-- Telemetry pipelines (OTel, Langfuse). Feedback is for the next turn; telemetry is for the operator.
-- Redaction passes and rotation policy. Lesson exercise prompts cover those.
+## 対象外
+- Telemetry pipelines (OTel, Langfuse)。Feedback は次の turn のためのもの、telemetry は operator のためのもの。
+- Redaction passes と rotation policy。lesson exercise prompts がそれらを扱う。
 
 ## References
 - `docs/en.md` - full lesson

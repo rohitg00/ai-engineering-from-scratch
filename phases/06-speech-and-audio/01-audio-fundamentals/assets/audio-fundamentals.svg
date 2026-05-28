@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -7,7 +7,7 @@
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .wave { fill: none; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -15,17 +15,17 @@
     </style>
   </defs>
 
-  <text x="440" y="28" text-anchor="middle" class="title">waveform &#8594; samples &#8594; spectrum</text>
+  <text x="440" y="28" text-anchor="middle" class="title">波形 &#8594; サンプル &#8594; スペクトル</text>
 
-  <!-- Continuous waveform -->
+  <!-- 連続波形 -->
   <rect x="40" y="60" width="260" height="160" class="box"/>
-  <text x="170" y="84" text-anchor="middle" class="label">continuous pressure</text>
+  <text x="170" y="84" text-anchor="middle" class="label">連続的な圧力</text>
   <path class="wave" d="M60,170 Q85,110 110,170 T160,170 T210,170 T260,170 T280,170"/>
-  <text x="170" y="205" text-anchor="middle" class="caption">microphone output, smooth in time</text>
+  <text x="170" y="205" text-anchor="middle" class="caption">マイク出力。時間方向には滑らか</text>
 
-  <!-- Sampled waveform -->
+  <!-- サンプリング後の波形 -->
   <rect x="320" y="60" width="240" height="160" class="box"/>
-  <text x="440" y="84" text-anchor="middle" class="label">sampled at sr Hz</text>
+  <text x="440" y="84" text-anchor="middle" class="label">sr Hz でサンプリング</text>
   <path class="wave" d="M340,170 Q365,110 390,170 T440,170 T490,170 T540,170"/>
   <circle class="dot" cx="340" cy="170" r="2.5"/>
   <circle class="dot" cx="355" cy="140" r="2.5"/>
@@ -40,11 +40,11 @@
   <circle class="dot" cx="490" cy="125" r="2.5"/>
   <circle class="dot" cx="505" cy="140" r="2.5"/>
   <circle class="dot" cx="520" cy="170" r="2.5"/>
-  <text x="440" y="205" text-anchor="middle" class="caption">float array, indexed by n / sr</text>
+  <text x="440" y="205" text-anchor="middle" class="caption">float 配列。n / sr で index される</text>
 
-  <!-- Spectrum -->
+  <!-- スペクトル -->
   <rect x="580" y="60" width="260" height="160" class="box"/>
-  <text x="710" y="84" text-anchor="middle" class="label">DFT magnitude</text>
+  <text x="710" y="84" text-anchor="middle" class="label">DFT の振幅</text>
   <line x1="605" y1="195" x2="605" y2="195" stroke="#1a1a1a" stroke-width="1.5"/>
   <rect x="615" y="160" width="4" height="35" fill="#1a1a1a"/>
   <rect x="640" y="120" width="4" height="75" fill="#c0392b"/>
@@ -57,17 +57,17 @@
   <line x1="605" y1="195" x2="820" y2="195" stroke="#1a1a1a" stroke-width="1"/>
   <text x="610" y="213" class="content">0</text>
   <text x="800" y="213" class="content" text-anchor="end">sr/2</text>
-  <text x="710" y="205" text-anchor="middle" class="caption" dy="18">energy per frequency bin</text>
+  <text x="710" y="205" text-anchor="middle" class="caption" dy="18">周波数 bin ごとの energy</text>
 
   <line x1="305" y1="140" x2="318" y2="140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
   <line x1="565" y1="140" x2="578" y2="140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <text x="312" y="132" text-anchor="start" class="caption" font-size="10">sample</text>
+  <text x="312" y="132" text-anchor="start" class="caption" font-size="10">サンプル</text>
   <text x="572" y="132" text-anchor="start" class="caption" font-size="10">DFT</text>
 
-  <!-- Aliasing panel -->
+  <!-- aliasing panel -->
   <rect x="40" y="250" width="400" height="180" class="hot"/>
-  <text x="240" y="274" text-anchor="middle" class="label">aliasing — energy above Nyquist folds</text>
+  <text x="240" y="274" text-anchor="middle" class="label">aliasing — Nyquist 超えの energy が折り返す</text>
   <line x1="60" y1="370" x2="420" y2="370" stroke="#1a1a1a" stroke-width="1"/>
   <line x1="240" y1="280" x2="240" y2="380" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
   <text x="240" y="395" text-anchor="middle" class="caption" fill="#c0392b">sr/2 (Nyquist)</text>
@@ -76,15 +76,15 @@
   <path d="M340,330 Q290,300 240,330 T140,330" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
   <circle class="dot" cx="140" cy="330" r="4"/>
   <text x="92" y="324" class="content" font-size="11">alias = 3 kHz</text>
-  <text x="240" y="420" text-anchor="middle" class="caption">fix: low-pass before downsample</text>
+  <text x="240" y="420" text-anchor="middle" class="caption">対策: downsample 前に low-pass</text>
 
-  <!-- Bit depth / sample rate table -->
+  <!-- bit depth / sample rate table -->
   <rect x="460" y="250" width="380" height="180" class="box"/>
-  <text x="650" y="274" text-anchor="middle" class="label">2026 sample rates</text>
-  <text x="480" y="300" class="content">8 kHz</text><text x="560" y="300" class="caption">telephony — avoid for ASR</text>
-  <text x="480" y="322" class="content">16 kHz</text><text x="560" y="322" class="caption">ASR standard (Whisper, Parakeet)</text>
-  <text x="480" y="344" class="content">24 kHz</text><text x="560" y="344" class="caption">modern TTS (Kokoro, F5, xTTS)</text>
-  <text x="480" y="366" class="content">44.1 kHz</text><text x="560" y="366" class="caption">CD audio, music</text>
-  <text x="480" y="388" class="content">48 kHz</text><text x="560" y="388" class="caption">film, pro audio, hi-fi TTS</text>
-  <text x="650" y="420" text-anchor="middle" class="caption">first question before any ML pipeline</text>
+  <text x="650" y="274" text-anchor="middle" class="label">2026年の sample rate</text>
+  <text x="480" y="300" class="content">8 kHz</text><text x="560" y="300" class="caption">電話品質 — ASR では避ける</text>
+  <text x="480" y="322" class="content">16 kHz</text><text x="560" y="322" class="caption">ASR 標準 (Whisper, Parakeet)</text>
+  <text x="480" y="344" class="content">24 kHz</text><text x="560" y="344" class="caption">現代 TTS (Kokoro, F5, xTTS)</text>
+  <text x="480" y="366" class="content">44.1 kHz</text><text x="560" y="366" class="caption">CD音質、音楽</text>
+  <text x="480" y="388" class="content">48 kHz</text><text x="560" y="388" class="caption">映画、プロ音声、hi-fi TTS</text>
+  <text x="650" y="420" text-anchor="middle" class="caption">MLパイプライン前に最初に決める問い</text>
 </svg>

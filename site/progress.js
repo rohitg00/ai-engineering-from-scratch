@@ -1,10 +1,10 @@
 /**
- * Local-only progress tracker.
+ * ローカル専用の進捗トラッカー。
  *
- * Stores everything in the user's own browser (localStorage). No network,
- * no account, no server. Data never leaves the device.
+ * すべてをユーザー自身のブラウザー (localStorage) に保存します。
+ * ネットワーク、アカウント、サーバーは使いません。データは端末から出ません。
  *
- * Schema (versioned so we can migrate later without nuking users):
+ * スキーマ。後でユーザーデータを壊さず移行できるよう versioned にしています:
  *
  *   aifs:progress:v1 = {
  *     lessons: {
@@ -17,10 +17,11 @@
  *     updatedAt: number
  *   }
  *
- * "<lesson-path>" matches the path used in lesson.html?path=... and in
- * data.js urls (e.g. "phases/00-setup-and-tooling/01-dev-environment").
+ * "<lesson-path>" は lesson.html?path=... と data.js の URL で使う path に一致します
+ * (例: "phases/00-setup-and-tooling/01-dev-environment")。
  *
- * "<qid>" is "<stage>-q<index>" e.g. "pre-q0", to match the quiz renderer.
+ * "<qid>" は quiz renderer に合わせた "<stage>-q<index>" 形式です
+ * (例: "pre-q0")。
  */
 (function () {
   var STORAGE_KEY = 'aifs:progress:v1';
@@ -47,7 +48,7 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch (e) {
-      // quota or disabled storage; fail silently
+      // 容量超過または storage 無効化。静かに失敗します。
     }
     for (var i = 0; i < listeners.length; i++) {
       try { listeners[i](state); } catch (_) {}
@@ -108,8 +109,8 @@
   }
 
   /**
-   * Given a list of lesson urls (full GitHub urls from data.js), count how
-   * many the user has completed. Match by the trailing "phases/.../..." path.
+   * data.js 由来のレッスン URL (完全な GitHub URL) のリストから、
+   * ユーザーが完了した数を数えます。末尾の "phases/.../..." path で照合します。
    */
   function countCompletedFromUrls(urls) {
     var state = read();
@@ -147,8 +148,8 @@
     if (typeof fn === 'function') listeners.push(fn);
   }
 
-  // Cross-tab sync: if user clears or updates progress in another tab,
-  // refresh listeners here too.
+  // タブ間同期: 別タブで進捗が消去または更新された場合、
+  // こちらの listener も更新します。
   window.addEventListener('storage', function (e) {
     if (e.key !== STORAGE_KEY) return;
     var state = read();

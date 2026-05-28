@@ -1,6 +1,6 @@
 ---
 name: skill-mask-rcnn-head-swapper
-description: Generate the exact code for swapping box and mask heads on a torchvision Mask R-CNN for a custom num_classes
+description: custom num_classes 用に torchvision Mask R-CNN の box head と mask head を差し替える正確な code を生成する
 version: 1.0.0
 phase: 4
 lesson: 8
@@ -9,34 +9,34 @@ tags: [computer-vision, mask-rcnn, fine-tuning, torchvision]
 
 # Mask R-CNN Head Swapper
 
-Produces the head-swap boilerplate for Mask R-CNN specifically. The template below assumes `model.roi_heads.box_predictor` and `model.roi_heads.mask_predictor`, which exist on `maskrcnn_resnet50_fpn` and `maskrcnn_resnet50_fpn_v2` only. Faster R-CNN has a box predictor but no mask predictor; RetinaNet uses `RetinaNetHead` and has no `roi_heads` at all — both require different skills.
+Mask R-CNN 専用の head-swap boilerplate を生成します。下の template は `model.roi_heads.box_predictor` と `model.roi_heads.mask_predictor` を前提にしており、これは `maskrcnn_resnet50_fpn` と `maskrcnn_resnet50_fpn_v2` にだけ存在します。Faster R-CNN には box predictor はありますが mask predictor はありません。RetinaNet は `RetinaNetHead` を使い `roi_heads` がありません。どちらも別の skill が必要です。
 
 ## When to use
 
-- Fine-tuning `maskrcnn_resnet50_fpn` or `maskrcnn_resnet50_fpn_v2` on a custom class set.
-- Porting a Mask R-CNN checkpoint trained on COCO to a non-COCO class count.
-- Debugging a Mask R-CNN training run that crashes on `cls_score.out_features` or `mask_predictor` mismatch.
+- custom class set で `maskrcnn_resnet50_fpn` または `maskrcnn_resnet50_fpn_v2` を fine-tuning するとき。
+- COCO で学習した Mask R-CNN checkpoint を non-COCO class count に porting するとき。
+- `cls_score.out_features` または `mask_predictor` mismatch で落ちる Mask R-CNN training run を debugging するとき。
 
 ## Out of scope
 
-- `fasterrcnn_*` — no mask_predictor. Swap only `box_predictor`; use a separate Faster R-CNN head-swap recipe.
-- `retinanet_*` — no `roi_heads`; classifier + regression heads live under `model.head.classification_head` and `model.head.regression_head`. Use a RetinaNet-specific skill.
-- `keypointrcnn_*` — uses `keypoint_predictor` instead of `mask_predictor`.
+- `fasterrcnn_*` — `mask_predictor` がない。`box_predictor` だけを swap する。別の Faster R-CNN head-swap recipe を使う。
+- `retinanet_*` — `roi_heads` がない。classifier + regression heads は `model.head.classification_head` と `model.head.regression_head` の下にある。RetinaNet-specific skill を使う。
+- `keypointrcnn_*` — `mask_predictor` ではなく `keypoint_predictor` を使う。
 
 ## Inputs
 
-- `model_name`: torchvision detection model constructor, e.g. `maskrcnn_resnet50_fpn_v2`.
-- `num_classes`: including background. A 4-object-class dataset means `num_classes=5`.
-- `freeze`: one of `backbone`, `backbone_fpn`, `none`.
+- `model_name`: torchvision detection model constructor。例: `maskrcnn_resnet50_fpn_v2`。
+- `num_classes`: background を含む。4-object-class dataset なら `num_classes=5`。
+- `freeze`: `backbone`, `backbone_fpn`, `none` のいずれか。
 
 ## Steps
 
-1. Import the model constructor and the two predictor classes (`FastRCNNPredictor`, `MaskRCNNPredictor`).
-2. Load the default-weights pretrained model.
-3. Replace `model.roi_heads.box_predictor` with a new `FastRCNNPredictor(in_features, num_classes)`.
-4. Replace `model.roi_heads.mask_predictor` with a new `MaskRCNNPredictor(in_features_mask, hidden_layer=256, num_classes)`.
-5. Apply the requested freeze policy.
-6. Print a confirmation block listing trainable params per module.
+1. model constructor と 2 つの predictor classes（`FastRCNNPredictor`, `MaskRCNNPredictor`）を import する。
+2. default-weights pretrained model を load する。
+3. `model.roi_heads.box_predictor` を新しい `FastRCNNPredictor(in_features, num_classes)` に置き換える。
+4. `model.roi_heads.mask_predictor` を新しい `MaskRCNNPredictor(in_features_mask, hidden_layer=256, num_classes)` に置き換える。
+5. requested freeze policy を適用する。
+6. module ごとの trainable params を listed した confirmation block を print する。
 
 ## Output code template
 
@@ -85,7 +85,7 @@ Where `{FREEZE_BLOCK}` is:
 
 ## Rules
 
-- Never recommend `num_classes` without the background included; always remind the user.
-- Always use the `_v2` variants of torchvision detection models when available; they have better pretrained weights than the legacy ones.
-- Do not instantiate the model inside this skill — produce the code block and let the user run it.
-- If the user requests `freeze backbone` on a dataset larger than 10,000 images, suggest they consider fine-tuning the backbone too.
+- background を含めずに `num_classes` を推奨しない。必ず user に reminder を出す。
+- torchvision detection models では、利用可能なら必ず `_v2` variants を使う。legacy ones より pretrained weights が良い。
+- この skill の中では model を instantiate しない。code block を生成し、user に実行してもらう。
+- user が 10,000 images を超える dataset で `freeze backbone` を要求した場合は、backbone も fine-tuning することを検討するよう提案する。

@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a Language Server Protocol (LSP)?",
-      "options": ["A protocol for transferring files between editors", "A standard for editors to receive type info, completions, and diagnostics from a language-specific server", "A compression format for source code files", "A network protocol for remote pair programming"],
+      "question": "Language Server Protocol (LSP) とは何ですか。",
+      "options": [
+        "editor 間で file を転送する protocol",
+        "editor が language-specific server から type info、completion、diagnostic を受け取るための standard",
+        "source code file 用の compression format",
+        "remote pair programming 用の network protocol"
+      ],
       "correct": 1,
-      "explanation": "LSP is a standardized protocol that lets editors communicate with language servers for features like autocomplete, type checking, and error diagnostics, regardless of the editor used."
+      "explanation": "LSP は standardized protocol です。どの editor を使っていても、autocomplete、type checking、error diagnostic などの機能のために editor が language server と通信できます。"
     },
     {
       "stage": "pre",
-      "question": "Why is format-on-save useful for team projects?",
-      "options": ["It reduces file sizes by removing whitespace", "It ensures consistent code style across all contributors without manual formatting", "It catches runtime bugs before the code is executed", "It compresses the code for faster git operations"],
+      "question": "team project で format-on-save が役立つのはなぜですか。",
+      "options": [
+        "whitespace を削って file size を減らすから",
+        "manual formatting なしに、すべての contributor の code style を一貫させるから",
+        "code 実行前に runtime bug を捕まえるから",
+        "git operation を速くするために code を compress するから"
+      ],
       "correct": 1,
-      "explanation": "Format-on-save runs a formatter (like Black or Ruff) every time you save, ensuring all code follows the same style conventions regardless of who wrote it."
+      "explanation": "format-on-save は保存のたびに Black や Ruff のような formatter を実行し、誰が書いた code でも同じ style convention に従うようにします。"
     },
     {
       "stage": "post",
-      "question": "Which VS Code extension enables editing code on a remote GPU machine as if it were local?",
-      "options": ["GitLens", "Pylance", "Remote SSH", "Debugpy"],
+      "question": "remote GPU machine 上の code を local のように編集できる VS Code extension はどれですか。",
+      "options": [
+        "GitLens",
+        "Pylance",
+        "Remote SSH",
+        "Debugpy"
+      ],
       "correct": 2,
-      "explanation": "Remote SSH installs a lightweight VS Code server on the remote machine and streams the UI to your local editor, letting you edit files, run terminals, and debug remotely."
+      "explanation": "Remote SSH は remote machine に軽量な VS Code server を install し、UI を local editor に stream します。remote で file edit、terminal 実行、debug ができます。"
     },
     {
       "stage": "post",
-      "question": "Why should 'notebook.output.scrolling' be enabled in VS Code settings for AI work?",
-      "options": ["It enables horizontal scrolling for wide dataframes", "It prevents training loop output (thousands of lines) from exploding the output panel", "It allows scrolling between notebook cells with the mouse wheel", "It enables smooth scrolling animations in the editor"],
+      "question": "AI work のために VS Code settings で `notebook.output.scrolling` を enable すべきなのはなぜですか。",
+      "options": [
+        "wide dataframe の horizontal scrolling を有効にするから",
+        "training loop output (数千行) が output panel を膨張させるのを防ぐから",
+        "mouse wheel で notebook cell 間を scroll できるようにするから",
+        "editor の smooth scrolling animation を有効にするから"
+      ],
       "correct": 1,
-      "explanation": "Training loops can print thousands of lines of output. Without output scrolling, the notebook output panel grows unbounded, making the notebook unusable."
+      "explanation": "training loop は数千行の output を出すことがあります。output scrolling がないと notebook output panel が無制限に伸び、notebook が使いにくくなります。"
     },
     {
       "stage": "post",
-      "question": "What does setting 'python.analysis.typeCheckingMode' to 'basic' in VS Code accomplish?",
-      "options": ["It enables syntax highlighting for Python files", "It catches wrong argument types and tensor shape mismatches before running the code", "It formats Python code according to PEP 8 standards", "It enables Python 3.12 language features"],
+      "question": "VS Code で `python.analysis.typeCheckingMode` を `basic` にすると何ができますか。",
+      "options": [
+        "Python file の syntax highlighting を有効にする",
+        "実行前に wrong argument type や tensor shape mismatch を検出する",
+        "PEP 8 standard に従って Python code を format する",
+        "Python 3.12 language feature を有効にする"
+      ],
       "correct": 1,
-      "explanation": "Basic type checking with Pylance flags type mismatches, wrong argument types, and incorrect API parameters at edit time, catching bugs before you run a potentially expensive training script."
+      "explanation": "Pylance の basic type checking は、type mismatch、wrong argument type、incorrect API parameter を edit 時点で flag し、高価な training script を走らせる前に bug を捕まえます。"
     }
   ]
 }

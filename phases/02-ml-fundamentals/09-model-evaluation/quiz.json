@@ -2,20 +2,20 @@
   {
     "id": "eval-pre-1",
     "stage": "pre",
-    "question": "Why should you never tune hyperparameters based on test set performance?",
+    "question": "test set の性能に基づいて hyperparameter を調整してはいけないのはなぜですか？",
     "options": [
-      "The test set is too small for reliable estimates",
-      "Adjusting the model based on test results effectively trains on the test set, making reported performance meaningless",
-      "Hyperparameters cannot be changed after training",
-      "The test set always has different features than the training set"
+      "test set は信頼できる推定には小さすぎるから",
+      "test 結果に基づいてモデルを調整すると、実質的に test set で学習したことになり、報告性能が無意味になるから",
+      "hyperparameter は学習後に変更できないから",
+      "test set は常に training set と異なる特徴量を持つから"
     ],
     "correct": 1,
-    "explanation": "Every time you adjust your model based on test performance, you leak test information into your modeling decisions. The test set must be used exactly once at the end for an unbiased estimate."
+    "explanation": "test performance に基づいてモデルを調整するたびに、test 情報がモデリング上の意思決定へ漏れます。偏りのない推定のため、test set は最後に一度だけ使う必要があります。"
   },
   {
     "id": "eval-pre-2",
     "stage": "pre",
-    "question": "A dataset has 95% negative and 5% positive samples. A model predicts 'negative' for every sample. What is its accuracy?",
+    "question": "データセットには 95% の negative sample と 5% の positive sample があります。モデルがすべての sample を 'negative' と予測した場合、accuracy はいくつですか？",
     "options": [
       "50%",
       "5%",
@@ -23,45 +23,45 @@
       "0%"
     ],
     "correct": 2,
-    "explanation": "Accuracy = correct predictions / total = 950/1000 = 95%. This shows why accuracy is misleading for imbalanced data -- a useless model looks great."
+    "explanation": "Accuracy = correct predictions / total = 950/1000 = 95% です。これは imbalanced data で accuracy が誤解を招く理由を示しています。役に立たないモデルが優秀に見えてしまいます。"
   },
   {
     "id": "eval-post-1",
     "stage": "post",
-    "question": "In K-fold cross-validation with K=5, how many times is each data point used for validation?",
+    "question": "K=5 の K-fold cross-validation では、各データ点は validation に何回使われますか？",
     "options": [
-      "5 times",
-      "Exactly once",
-      "It depends on the random seed",
-      "Never -- all data is used for training"
+      "5 回",
+      "ちょうど 1 回",
+      "random seed による",
+      "一度も使われない。すべてのデータが training に使われる"
     ],
     "correct": 1,
-    "explanation": "In K-fold CV, data is split into K equal folds. Each fold is used as the validation set exactly once while the remaining K-1 folds are used for training."
+    "explanation": "K-fold CV では、データを K 個の同じ大きさの fold に分けます。各 fold はちょうど 1 回 validation set として使われ、残りの K-1 個の fold が training に使われます。"
   },
   {
     "id": "eval-post-2",
     "stage": "post",
-    "question": "A learning curve shows training score = 0.95 and validation score = 0.60 that does not improve with more data. What should you try?",
+    "question": "learning curve で training score = 0.95、validation score = 0.60 であり、データを増やしても改善しません。何を試すべきですか？",
     "options": [
-      "Collect more training data",
-      "Use a simpler model or add regularization to reduce variance (overfitting)",
-      "Remove the validation set to give the model more training data",
-      "Increase the learning rate"
+      "training data をさらに集める",
+      "より単純なモデルを使うか、regularization を追加して variance（overfitting）を減らす",
+      "validation set を削除して、モデルにより多くの training data を与える",
+      "learning rate を上げる"
     ],
     "correct": 1,
-    "explanation": "A large gap between training (high) and validation (low) scores is high variance (overfitting). The fix is a simpler model, more regularization, or techniques like dropout -- not more data if the gap persists."
+    "explanation": "training score が高く validation score が低い大きな差は、high variance（overfitting）を示します。対策は、より単純なモデル、より強い regularization、dropout のような手法です。差が残り続けるなら、単にデータを増やすことではありません。"
   },
   {
     "id": "eval-post-3",
     "stage": "post",
-    "question": "AUC-ROC = 0.5 for a binary classifier. What does this indicate?",
+    "question": "binary classifier で AUC-ROC = 0.5 です。これは何を示しますか？",
     "options": [
-      "The model perfectly separates the two classes",
-      "The model performs no better than random guessing at ranking positives above negatives",
-      "The model has 50% accuracy",
-      "The model has equal precision and recall"
+      "モデルが 2 つのクラスを完全に分離している",
+      "positive を negative より上位に並べる能力がランダム推測と変わらない",
+      "モデルの accuracy が 50% である",
+      "モデルの precision と recall が等しい"
     ],
     "correct": 1,
-    "explanation": "AUC-ROC = 0.5 means the model's ranking of positive and negative examples is no better than random. AUC = 1.0 would be perfect separation. The metric is threshold-independent."
+    "explanation": "AUC-ROC = 0.5 は、positive と negative の例を順位付けするモデルの能力がランダムと変わらないことを意味します。AUC = 1.0 なら完全分離です。この metric は threshold に依存しません。"
   }
 ]

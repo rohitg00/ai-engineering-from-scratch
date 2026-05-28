@@ -1,110 +1,110 @@
-# Weight Initialization and Training Stability
+# 重み初期化と学習の安定性
 
-> Initialize wrong and training never starts. Initialize right and 50 layers train as smoothly as 3.
+> 初期化を間違えると学習は始まりません。正しく初期化すると、50 層でも 3 層のように滑らかに学習できます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
+**時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Implement zero, random, Xavier/Glorot, and Kaiming/He initialization strategies and measure their effect on activation magnitudes through 50 layers
-- Derive why Xavier init uses Var(w) = 2/(fan_in + fan_out) and Kaiming uses Var(w) = 2/fan_in
-- Demonstrate the symmetry problem with zero initialization and explain why random scale alone is insufficient
-- Match the correct initialization strategy to the activation function: Xavier for sigmoid/tanh, Kaiming for ReLU/GELU
+- zero、random、Xavier/Glorot、Kaiming/He initialization strategies を実装し、50 layers を通じて activation magnitudes に与える影響を測定する
+- Xavier init が Var(w) = 2/(fan_in + fan_out) を使い、Kaiming が Var(w) = 2/fan_in を使う理由を導出する
+- zero initialization の symmetry problem を実演し、random scale だけでは不十分な理由を説明する
+- activation function に正しい initialization strategy を対応させる: sigmoid/tanh には Xavier、ReLU/GELU には Kaiming
 
-## The Problem
+## 問題
 
-Initialize all weights to zero. Nothing learns. Every neuron computes the same function, receives the same gradient, and updates identically. After 10,000 epochs, your 512-neuron hidden layer is still 512 copies of the same neuron. You paid for 512 parameters and got 1.
+すべての重みをゼロに初期化してください。何も学習しません。すべてのニューロンが同じ関数を計算し、同じ gradient を受け取り、同一に更新されます。10,000 epochs 後でも、512-neuron hidden layer は同じニューロンの 512 個のコピーのままです。512 個のパラメータに払ったのに、得られたのは 1 個分です。
 
-Initialize them too large. Activations explode through the network. By layer 10, values hit 1e15. By layer 20, they overflow to infinity. Gradients follow the same trajectory in reverse.
+重みを大きくしすぎて初期化してください。Activations はネットワークを通るにつれて爆発します。Layer 10 では値が 1e15 に達します。Layer 20 では infinity に overflow します。Gradients は逆向きに同じ軌跡をたどります。
 
-Initialize them randomly from a standard normal distribution. Works for 3 layers. At 50 layers, the signal collapses to zero or detonates to infinity depending on whether the random scale was slightly too small or slightly too large. The boundary between "works" and "broken" is razor-thin.
+標準正規分布からランダムに初期化してください。3 layers なら動きます。50 layers では、random scale がわずかに小さすぎるか大きすぎるかに応じて、signal はゼロに崩壊するか infinity に爆発します。「動く」と「壊れる」の境界は紙一重です。
 
-Weight initialization is the most underrated decision in deep learning. Architecture gets papers. Optimizers get blog posts. Initialization gets a footnote. But get it wrong and nothing else matters -- your network is dead before training begins.
+重み初期化は、deep learning で最も過小評価されている判断です。Architecture は論文になります。Optimizers はブログ記事になります。Initialization は脚注になります。しかし間違えると、他のすべては意味を失います。ネットワークは学習が始まる前に死んでいます。
 
-## The Concept
+## 概念
 
-### The Symmetry Problem
+### 対称性の問題
 
-Every neuron in a layer has the same structure: multiply inputs by weights, add bias, apply activation. If all weights start at the same value (zero is the extreme case), every neuron computes the same output. During backpropagation, every neuron receives the same gradient. During the update step, every neuron changes by the same amount.
+ある layer 内のすべてのニューロンは同じ構造を持ちます。入力に重みを掛け、bias を足し、activation を適用します。すべての重みが同じ値から始まると（ゼロはその極端な例です）、すべてのニューロンが同じ出力を計算します。Backpropagation では、すべてのニューロンが同じ gradient を受け取ります。Update step では、すべてのニューロンが同じ量だけ変化します。
 
-You're stuck. The network has hundreds of parameters, but they all move in lockstep. This is called symmetry, and random initialization is the brute-force way to break it. Each neuron starts at a different point in weight space, so each learns a different feature.
+身動きが取れません。ネットワークには数百のパラメータがありますが、すべてが足並みをそろえて動きます。これを symmetry と呼び、random initialization はそれを破る力技です。各ニューロンは weight space の異なる点から始まるため、それぞれが異なる feature を学びます。
 
-But "random" is not enough. The *scale* of the randomness determines whether the network trains.
+しかし「ランダム」だけでは不十分です。ランダム性の *scale* が、ネットワークが学習できるかどうかを決めます。
 
-### Variance Propagation Through Layers
+### Layers を通る variance propagation
 
-Consider a single layer with fan_in inputs:
+fan_in 個の入力を持つ単一 layer を考えます。
 
 ```
 z = w1*x1 + w2*x2 + ... + w_n*x_n
 ```
 
-If each weight wi is drawn from a distribution with variance Var(w) and each input xi has variance Var(x), the output variance is:
+各 weight wi が variance Var(w) の分布から引かれ、各 input xi が variance Var(x) を持つなら、出力 variance は次のようになります。
 
 ```
 Var(z) = fan_in * Var(w) * Var(x)
 ```
 
-If Var(w) = 1 and fan_in = 512, the output variance is 512x the input variance. After 10 layers: 512^10 = 1.2e27. Your signal has exploded.
+Var(w) = 1 で fan_in = 512 なら、出力 variance は入力 variance の 512 倍です。10 layers 後: 512^10 = 1.2e27。signal は爆発しています。
 
-If Var(w) = 0.001, the output variance shrinks by 0.001 * 512 = 0.512 per layer. After 10 layers: 0.512^10 = 0.00013. Your signal has vanished.
+Var(w) = 0.001 なら、出力 variance は layer ごとに 0.001 * 512 = 0.512 倍に縮みます。10 layers 後: 0.512^10 = 0.00013。signal は消えています。
 
-The goal: choose Var(w) so that Var(z) = Var(x). Signal magnitude stays constant across layers.
+目標は、Var(z) = Var(x) になるように Var(w) を選ぶことです。Signal magnitude が layers をまたいでも一定に保たれます。
 
 ### Xavier/Glorot Initialization
 
-Glorot and Bengio (2010) derived the solution for sigmoid and tanh activations. To keep variance constant in both the forward and backward pass:
+Glorot and Bengio (2010) は、sigmoid と tanh activations 向けの解を導きました。forward pass と backward pass の両方で variance を一定に保つには:
 
 ```
 Var(w) = 2 / (fan_in + fan_out)
 ```
 
-In practice, weights are drawn from:
+実務では、weights は次から引きます。
 
 ```
 w ~ Uniform(-limit, limit)  where limit = sqrt(6 / (fan_in + fan_out))
 ```
 
-or:
+または:
 
 ```
 w ~ Normal(0, sqrt(2 / (fan_in + fan_out)))
 ```
 
-This works because sigmoid and tanh are roughly linear near zero, where properly initialized activations live. The variance stays stable through dozens of layers.
+これは、sigmoid と tanh がゼロ近傍ではほぼ線形であり、適切に初期化された activations はその領域にあるため機能します。Variance は何十 layers を通っても安定します。
 
 ### Kaiming/He Initialization
 
-ReLU kills half the outputs (everything negative becomes zero). The effective fan_in is halved because on average half the inputs are zeroed. Xavier init doesn't account for this -- it underestimates the variance needed.
+ReLU は出力の半分を殺します（負の値はすべてゼロになります）。平均的には入力の半分がゼロになるため、実効的な fan_in は半分になります。Xavier init はこれを考慮しないため、必要な variance を過小評価します。
 
-He et al. (2015) adjusted the formula:
+He et al. (2015) は式を調整しました。
 
 ```
 Var(w) = 2 / fan_in
 ```
 
-Weights are drawn from:
+Weights は次から引きます。
 
 ```
 w ~ Normal(0, sqrt(2 / fan_in))
 ```
 
-The factor of 2 compensates for ReLU zeroing half the activations. Without it, the signal shrinks by ~0.5x per layer. With 50 layers: 0.5^50 = 8.8e-16. Kaiming init prevents this.
+2 という係数は、ReLU が activations の半分をゼロにすることを補正します。これがないと、signal は layer ごとに約 0.5x に縮みます。50 layers では 0.5^50 = 8.8e-16 です。Kaiming init はこれを防ぎます。
 
 ### Transformer Initialization
 
-GPT-2 introduced a different pattern. Residual connections add the output of each sub-layer to its input:
+GPT-2 は別のパターンを導入しました。Residual connections は各 sub-layer の出力を入力に足します。
 
 ```
 x = x + sublayer(x)
 ```
 
-Each addition increases variance. With N residual layers, variance grows proportionally to N. GPT-2 scales the weights of residual layers by 1/sqrt(2N), where N is the number of layers. This keeps the accumulated signal magnitude stable.
+各加算は variance を増やします。N 個の residual layers があると、variance は N に比例して増えます。GPT-2 は residual layers の weights を 1/sqrt(2N) でスケールします。ここで N は layers の数です。これにより、蓄積された signal magnitude が安定します。
 
-Llama 3 (405B parameters, 126 layers) uses a similar scheme. Without this scaling, the residual stream would grow unbounded through 126 layers of attention and feedforward blocks.
+Llama 3（405B parameters、126 layers）も似た仕組みを使います。この scaling がなければ、residual stream は 126 layers の attention と feedforward blocks を通る間に際限なく大きくなります。
 
 ```mermaid
 flowchart TD
@@ -127,7 +127,7 @@ flowchart TD
     end
 ```
 
-### Activation Magnitude Through 50 Layers
+### 50 Layers を通る activation magnitude
 
 ```mermaid
 graph LR
@@ -144,7 +144,7 @@ graph LR
     end
 ```
 
-### Choosing the Right Init
+### 正しい Init を選ぶ
 
 ```mermaid
 flowchart TD
@@ -161,11 +161,11 @@ flowchart TD
     GPT --> Check
 ```
 
-## Build It
+## 作ってみる
 
 ### Step 1: Initialization Strategies
 
-Four ways to initialize a weight matrix. Each returns a list of lists (a 2D matrix) with fan_in columns and fan_out rows.
+weight matrix を初期化する 4 つの方法です。それぞれ、fan_in columns と fan_out rows を持つ list of lists（2D matrix）を返します。
 
 ```python
 import math
@@ -192,7 +192,7 @@ def kaiming_init(fan_in, fan_out):
 
 ### Step 2: Activation Functions
 
-We need sigmoid, tanh, and ReLU to test each init strategy with its intended activation.
+各 init strategy を意図された activation と組み合わせてテストするために、sigmoid、tanh、ReLU が必要です。
 
 ```python
 def sigmoid(x):
@@ -208,9 +208,9 @@ def relu(x):
     return max(0.0, x)
 ```
 
-### Step 3: Forward Pass Through 50 Layers
+### Step 3: 50 Layers を通す Forward Pass
 
-Pass random data through a deep network and measure mean activation magnitude at each layer.
+deep network に random data を通し、各 layer の mean activation magnitude を測定します。
 
 ```python
 def forward_deep(init_fn, activation_fn, n_layers=50, width=64, n_samples=100):
@@ -241,9 +241,9 @@ def forward_deep(init_fn, activation_fn, n_layers=50, width=64, n_samples=100):
     return layer_magnitudes
 ```
 
-### Step 4: The Experiment
+### Step 4: 実験
 
-Run all combinations: zero init, random N(0,1), random N(0,0.01), Xavier with sigmoid, Xavier with tanh, Kaiming with ReLU. Print the magnitude at key layers.
+すべての組み合わせを実行します。zero init、random N(0,1)、random N(0,0.01)、Xavier with sigmoid、Xavier with tanh、Kaiming with ReLU。主要な layers での magnitude を表示します。
 
 ```python
 def run_experiment():
@@ -275,7 +275,7 @@ def run_experiment():
 
 ### Step 5: Symmetry Demonstration
 
-Show that zero init produces identical neurons.
+zero init が同一のニューロンを生むことを示します。
 
 ```python
 def symmetry_demo():
@@ -297,9 +297,9 @@ def symmetry_demo():
     print(f"  Effective parameters: 1 (not {len(weights) * len(weights[0])})")
 ```
 
-### Step 6: Layer-by-Layer Magnitude Report
+### Step 6: Layer ごとの magnitude report
 
-Print a visual bar chart of activation magnitudes through 50 layers.
+50 layers を通る activation magnitudes の視覚的な bar chart を表示します。
 
 ```python
 def magnitude_report(name, magnitudes):
@@ -316,9 +316,9 @@ def magnitude_report(name, magnitudes):
             print(f"  Layer {i+1:3d}: {bar} ({mag:.6f})")
 ```
 
-## Use It
+## 使ってみる
 
-PyTorch provides these as built-in functions:
+PyTorch はこれらを built-in functions として提供しています。
 
 ```python
 import torch
@@ -335,45 +335,45 @@ nn.init.kaiming_normal_(layer.weight, nonlinearity='relu')
 nn.init.zeros_(layer.bias)
 ```
 
-When you call `nn.Linear(512, 256)`, PyTorch defaults to Kaiming uniform initialization. That's why most simple networks "just work" -- PyTorch already made the right choice. But when you build custom architectures or go deeper than 20 layers, you need to understand what's happening and potentially override the default.
+`nn.Linear(512, 256)` を呼ぶと、PyTorch はデフォルトで Kaiming uniform initialization を使います。多くの単純なネットワークが「そのまま動く」のは、PyTorch がすでに正しい選択をしているからです。ただし custom architectures を作る場合や 20 layers を超えて深くする場合は、何が起きているかを理解し、必要ならデフォルトを上書きする必要があります。
 
-For transformers, HuggingFace models typically handle initialization in their `_init_weights` method. GPT-2's implementation scales residual projections by 1/sqrt(N). If you're building a transformer from scratch, you need to add this yourself.
+Transformers では、HuggingFace models は通常 `_init_weights` method 内で initialization を処理します。GPT-2 の実装は residual projections を 1/sqrt(N) でスケールします。transformer をゼロから作るなら、これを自分で追加する必要があります。
 
-## Ship It
+## 完成物
 
-This lesson produces:
-- `outputs/prompt-init-strategy.md` -- a prompt that diagnoses weight initialization problems and recommends the right strategy
+このレッスンで作るもの:
+- `outputs/prompt-init-strategy.md` - 重み初期化の問題を診断し、適切な戦略を推奨するプロンプト
 
-## Exercises
+## 演習
 
-1. Add LeCun initialization (Var = 1/fan_in, designed for SELU activation). Run the 50-layer experiment with LeCun init + tanh and compare to Xavier + tanh.
+1. LeCun initialization（Var = 1/fan_in、SELU activation 向けに設計）を追加してください。LeCun init + tanh で 50-layer experiment を実行し、Xavier + tanh と比較してください。
 
-2. Implement the GPT-2 residual scaling: multiply the output of each layer by 1/sqrt(2*N) before adding to the residual stream. Run 50 layers with and without scaling, measure how fast the residual magnitude grows.
+2. GPT-2 residual scaling を実装してください。residual stream に加える前に、各 layer の出力に 1/sqrt(2*N) を掛けます。scaling あり・なしで 50 layers を実行し、residual magnitude がどれだけ速く増えるかを測定してください。
 
-3. Create an "init health check" function that takes a network's layer dimensions and activation type, then recommends the correct initialization and warns if the current init will cause problems.
+3. ネットワークの layer dimensions と activation type を受け取り、正しい initialization を推奨し、現在の init が問題を起こす場合は警告する "init health check" function を作成してください。
 
-4. Run the experiment with fan_in = 16 vs fan_in = 1024. Xavier and Kaiming adapt to fan_in, but random init doesn't. Show how the gap between "works" and "breaks" widens with larger layers.
+4. fan_in = 16 と fan_in = 1024 で実験を実行してください。Xavier と Kaiming は fan_in に適応しますが、random init は適応しません。層が大きくなるほど「動く」と「壊れる」の差がどれだけ広がるかを示してください。
 
-5. Implement orthogonal initialization (generate a random matrix, compute its SVD, use the orthogonal matrix U). Compare to Kaiming for ReLU networks at 50 layers.
+5. orthogonal initialization を実装してください（random matrix を生成し、その SVD を計算し、orthogonal matrix U を使います）。50 layers の ReLU networks で Kaiming と比較してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Weight initialization | "Set starting weights randomly" | The strategy for choosing initial weight values that determines whether a network can train at all |
-| Symmetry breaking | "Make neurons different" | Using random initialization to ensure neurons learn distinct features instead of computing identical functions |
-| Fan-in | "Number of inputs to a neuron" | The number of incoming connections, which determines how input variance accumulates in the weighted sum |
-| Fan-out | "Number of outputs from a neuron" | The number of outgoing connections, relevant for maintaining gradient variance during backpropagation |
-| Xavier/Glorot init | "The sigmoid initialization" | Var(w) = 2/(fan_in + fan_out), designed to preserve variance through sigmoid and tanh activations |
-| Kaiming/He init | "The ReLU initialization" | Var(w) = 2/fan_in, accounts for ReLU zeroing half the activations |
-| Variance propagation | "How signals grow or shrink through layers" | The mathematical analysis of how activation variance changes layer by layer based on weight scale |
-| Residual scaling | "GPT-2's init trick" | Scaling residual connection weights by 1/sqrt(2N) to prevent variance growth through N transformer layers |
-| Dead network | "Nothing trains" | A network where poor initialization causes all gradients to be zero or all activations to saturate |
-| Exploding activations | "Values go to infinity" | When weight variance is too high, causing activation magnitudes to grow exponentially through layers |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Weight initialization | 「開始時の重みをランダムに設定する」 | ネットワークがそもそも学習できるかを決める初期 weight values の選び方 |
+| Symmetry breaking | 「ニューロンを違うものにする」 | random initialization により、ニューロンが同じ関数を計算するのではなく異なる features を学ぶようにすること |
+| Fan-in | 「ニューロンへの入力数」 | incoming connections の数。weighted sum で input variance がどのように蓄積するかを決める |
+| Fan-out | 「ニューロンからの出力数」 | outgoing connections の数。backpropagation 中の gradient variance を保つ際に関係する |
+| Xavier/Glorot init | 「sigmoid 用の初期化」 | Var(w) = 2/(fan_in + fan_out)。sigmoid と tanh activations を通して variance を保つために設計された |
+| Kaiming/He init | 「ReLU 用の初期化」 | Var(w) = 2/fan_in。ReLU が activations の半分をゼロにすることを考慮する |
+| Variance propagation | 「layers を通じて signals が増えるか縮むか」 | weight scale に基づいて activation variance が layer ごとにどう変化するかの数学的分析 |
+| Residual scaling | 「GPT-2 の init trick」 | N 個の transformer layers を通じた variance growth を防ぐため、residual connection weights を 1/sqrt(2N) でスケールすること |
+| Dead network | 「何も学習しない」 | 悪い initialization により、すべての gradients がゼロになる、またはすべての activations が飽和するネットワーク |
+| Exploding activations | 「値が infinity に向かう」 | weight variance が高すぎて、activation magnitudes が layers を通じて指数的に増えること |
 
-## Further Reading
+## 参考文献
 
-- Glorot & Bengio, "Understanding the difficulty of training deep feedforward neural networks" (2010) -- the original Xavier initialization paper with variance analysis
-- He et al., "Delving Deep into Rectifiers" (2015) -- introduced Kaiming initialization for ReLU networks
-- Radford et al., "Language Models are Unsupervised Multitask Learners" (2019) -- GPT-2 paper with residual scaling initialization
-- Mishkin & Matas, "All You Need is a Good Init" (2016) -- layer-sequential unit-variance initialization, an empirical alternative to analytical formulas
+- Glorot & Bengio, "Understanding the difficulty of training deep feedforward neural networks" (2010) - variance analysis を含む元の Xavier initialization 論文
+- He et al., "Delving Deep into Rectifiers" (2015) - ReLU networks 向けの Kaiming initialization を導入した
+- Radford et al., "Language Models are Unsupervised Multitask Learners" (2019) - residual scaling initialization を含む GPT-2 論文
+- Mishkin & Matas, "All You Need is a Good Init" (2016) - layer-sequential unit-variance initialization。解析的な式に対する経験的な代替手法

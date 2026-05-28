@@ -1,8 +1,8 @@
-# Lesson Template
+# レッスンテンプレート
 
-Use this template when creating a new lesson. Copy the folder structure and fill in the content.
+新しいレッスンを作成するときは、このテンプレートを使ってください。フォルダ構造をコピーし、内容を埋めます。
 
-## Folder Structure
+## フォルダ構造
 
 ```
 NN-lesson-name/
@@ -20,19 +20,19 @@ NN-lesson-name/
     └── skill-*.md          (skills produced by this lesson)
 ```
 
-## Documentation Format (docs/en.md)
+## ドキュメント形式（docs/en.md）
 
 ```markdown
 # [Lesson Title]
 
 > [One-line motto — the core idea that sticks]
 
-**Type:** Build | Learn
-**Languages:** Python, TypeScript, Rust, Julia (list what's used)
-**Prerequisites:** [List prior lessons needed]
-**Time:** ~[estimated time] minutes
+**種別:** 構築 | Learn
+**言語:** Python, TypeScript, Rust, Julia (list what's used)
+**前提条件:** [List prior lessons needed]
+**所要時間:** ~[estimated time] minutes
 
-## The Problem
+## 問題
 
 [2-3 paragraphs. What can't you do without this? Why should you care?
 Make it concrete — show a scenario where not knowing this hurts.]
@@ -43,7 +43,7 @@ Make it concrete — show a scenario where not knowing this hurts.]
 Use ASCII diagrams, tables, or link to visuals in the web app.
 Build mental models before implementation.]
 
-## Build It
+## 実装
 
 [Step-by-step implementation from scratch.
 Start with the simplest version, then add complexity.
@@ -87,24 +87,24 @@ Include it here and save it in the outputs/ folder.]
 |------|----------------|----------------------|
 | [term] | [common misconception] | [actual definition] |
 
-## Further Reading
+## 参考文献
 
 - [Resource 1](url) — [why it's worth reading]
 - [Resource 2](url) — [why it's worth reading]
 ```
 
-## Code File Guidelines
+## コードファイルのガイドライン
 
-- Code must run without errors
-- No comments — code should be self-explanatory
-- Use the language that fits best for the topic
-- Include a `requirements.txt` or equivalent if there are dependencies
-- Start simple, build up complexity
-- Every function and class should have a clear purpose
+- コードはエラーなく実行できること
+- コメントは入れない。コード自体で意図が伝わるようにすること
+- トピックに最も合う言語を使うこと
+- 依存関係がある場合は `requirements.txt` または同等のファイルを含めること
+- 単純な形から始め、段階的に複雑さを加えること
+- すべての関数とクラスに明確な目的を持たせること
 
-## Output File Format
+## 出力ファイルの形式
 
-### Prompts
+### プロンプト
 
 ```markdown
 ---
@@ -117,7 +117,7 @@ lesson: [lesson number]
 [Prompt content]
 ```
 
-### Skills
+### スキル
 
 ```markdown
 ---

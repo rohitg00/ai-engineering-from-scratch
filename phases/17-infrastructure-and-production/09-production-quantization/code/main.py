@@ -1,12 +1,12 @@
-"""Toy quantization memory and throughput calculator — stdlib Python.
+"""Toy quantization memory and throughput calculator — stdlib Python。
 
-For a set of quantization formats and model sizes, compute:
+Quantization format と model size の集合に対して、次を計算します:
   - weight memory
-  - KV cache memory (separate, scales with concurrency and context)
-  - activations memory (approximate)
-  - relative decode throughput (memory-bandwidth-limited shape)
+  - KV cache memory（別物で、concurrency と context に比例）
+  - activations memory（近似）
+  - relative decode throughput（memory-bandwidth-limited な形）
 
-Formats are represented by effective weight bits and KV bits. Pedagogical.
+Format は effective weight bits と KV bits で表します。学習用です。
 """
 
 from __future__ import annotations
@@ -37,13 +37,13 @@ FORMATS = [
 def memory_breakdown(params_b: float, fmt: Format,
                      concurrency: int = 128, ctx: int = 2048) -> dict:
     weight_gb = params_b * fmt.weight_bits / 8
-    # KV cache approximation: num_layers * 2 * kv_heads * head_dim * ctx * bytes/element
+    # KV cache 近似: num_layers * 2 * kv_heads * head_dim * ctx * bytes/element
     layers = 64 * (params_b / 70.0)**0.5
     kv_heads = 8
     head_dim = 128
     per_seq_kv_gb = layers * 2 * kv_heads * head_dim * ctx * (fmt.kv_bits / 8) / 1e9
     kv_total = per_seq_kv_gb * concurrency
-    activations_gb = 0.05 * params_b       # rough constant
+    activations_gb = 0.05 * params_b       # 粗い定数
     return {
         "weight": weight_gb,
         "kv": kv_total,
@@ -53,8 +53,8 @@ def memory_breakdown(params_b: float, fmt: Format,
 
 
 def relative_throughput(fmt: Format) -> float:
-    """Decode is memory-bandwidth-limited. Fewer weight bytes per token = higher throughput.
-    Normalize to BF16 = 1.0."""
+    """Decode は memory-bandwidth-limited です。token あたりの weight bytes が少ないほど throughput は高くなります。
+    BF16 = 1.0 に normalize します。"""
     return 16 / fmt.weight_bits
 
 
@@ -83,7 +83,7 @@ def print_scenario(params_b: float, concurrency: int, ctx: int) -> None:
 
 def main() -> None:
     print("=" * 98)
-    print("TOY QUANTIZATION CALCULATOR — memory and relative throughput by format")
+    print("TOY QUANTIZATION CALCULATOR — format ごとの memory と relative throughput")
     print("=" * 98)
     print()
 
@@ -95,12 +95,12 @@ def main() -> None:
     print("=" * 98)
     print("KEY FINDINGS")
     print("-" * 98)
-    print("  1. KV cache grows linearly with concurrency x context.")
-    print("     At 256 conc / 8k ctx on 70B, KV alone dwarfs weight savings.")
-    print("  2. AWQ vs GPTQ = same 4-bit footprint; choice is about LoRA support and kernels.")
-    print("  3. NVFP4 + FP8 KV stacks: shrink weights AND KV ; Blackwell-only.")
-    print("  4. For reasoning workloads, FP8 is the safe default despite higher memory.")
-    print("  5. GGUF wins on CPU ; ~93 tok/s in vLLM is not a bug, it is the wrong engine.")
+    print("  1. KV cache は concurrency x context に比例して増えます。")
+    print("     70B の 256 conc / 8k ctx では、KV だけで weight savings を圧倒します。")
+    print("  2. AWQ vs GPTQ = 同じ 4-bit footprint。選択は LoRA support と kernels の問題です。")
+    print("  3. NVFP4 + FP8 KV を積むと weights と KV の両方を縮小します。ただし Blackwell-only。")
+    print("  4. Reasoning workloads では、memory が増えても FP8 が安全な default です。")
+    print("  5. GGUF は CPU で勝ちます。vLLM で ~93 tok/s なのは bug ではなく、engine が違います。")
 
 
 if __name__ == "__main__":

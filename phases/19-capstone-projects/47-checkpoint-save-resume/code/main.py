@@ -1,8 +1,8 @@
-"""Checkpoint save and resume from scratch.
+"""checkpoint save and resume を from scratch で実装する。
 
-Full checkpoint dict: model state, optimizer state, scheduler state,
-loss history, current step, RNG state (python random, numpy, torch CPU,
-torch CUDA if present). Atomic save by writing to a temp file and then
+完全 checkpoint dict: model state、optimizer state、scheduler state、
+loss history、current step、RNG state (python random、numpy、torch CPU、
+torch CUDA があればそれも含む)。temp file に書いてから rename する atomic save。
 renaming. Sharded save splits the model state by parameter group so a
 single shard is small enough to load on demand. Resume continues mid
 epoch with deterministic loss within tolerance.
@@ -213,7 +213,7 @@ def load_checkpoint(
 
 
 def shard_keys_by_prefix(state_dict: Dict[str, torch.Tensor], num_shards: int) -> Dict[int, List[str]]:
-    """Round-robin allocate parameter keys across shards.
+    """parameter key を shard に round-robin で割り当てる。
 
     Production sharding usually goes by parameter group or by layer. The
     round robin keeps the shards roughly the same size for the demo and
@@ -452,7 +452,7 @@ def main() -> int:
     args = parse_args()
     with tempfile.TemporaryDirectory(prefix="ckpt-demo-") as scratch:
         scratch_dir = Path(scratch)
-        print("running resume demo (single file checkpoint)")
+        print("resume demo を実行します (single file checkpoint)")
         single = run_resume_demo(
             total_steps=args.total_steps,
             interrupt_at=args.interrupt_at,
@@ -461,9 +461,9 @@ def main() -> int:
             seed=args.seed,
         )
         print(json.dumps({k: v for k, v in single.items() if k not in ("full_losses", "resumed_losses")}, indent=2))
-        assert single["max_loss_diff_after_resume"] < 1e-4, "loss drifted after single-file resume"
+        assert single["max_loss_diff_after_resume"] < 1e-4, "single-file resume 後に loss が drift しました"
 
-        print("running resume demo (sharded checkpoint)")
+        print("resume demo を実行します (sharded checkpoint)")
         sharded = run_resume_demo(
             total_steps=args.total_steps,
             interrupt_at=args.interrupt_at,
@@ -473,7 +473,7 @@ def main() -> int:
             seed=args.seed,
         )
         print(json.dumps({k: v for k, v in sharded.items() if k not in ("full_losses", "resumed_losses")}, indent=2))
-        assert sharded["max_loss_diff_after_resume"] < 1e-4, "loss drifted after sharded resume"
+        assert sharded["max_loss_diff_after_resume"] < 1e-4, "sharded resume 後に loss が drift しました"
 
     summary = {
         "schema": "resume-demo.v1",
@@ -490,7 +490,7 @@ def main() -> int:
         },
     }
     atomic_write_json(summary, OUT_DIR / "resume-demo.json")
-    print(f"wrote {OUT_DIR / 'resume-demo.json'}")
+    print(f"書き込みました: {OUT_DIR / 'resume-demo.json'}")
     return 0
 
 

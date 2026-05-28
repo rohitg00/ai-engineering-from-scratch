@@ -1,40 +1,40 @@
 # Anomaly Detection
 
-> Normal is easy to define. Abnormal is whatever doesn't fit.
+> 正常は定義しやすい。異常とは、そこに当てはまらないものです。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 2, Lessons 01-09
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 2, Lessons 01-09
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Implement Z-score, IQR, and Isolation Forest anomaly detection methods from scratch
-- Distinguish between point, contextual, and collective anomalies and select the appropriate detection method for each
-- Explain why anomaly detection is framed as modeling normal data rather than classifying anomalies
-- Compare unsupervised anomaly detection with supervised classification and evaluate the tradeoff between novel anomaly coverage and precision
+- Z-score、IQR、Isolation Forest による異常検知手法をゼロから実装する
+- 点異常、文脈異常、集合異常を区別し、それぞれに適した検知手法を選ぶ
+- 異常検知が、異常を分類する問題ではなく正常データをモデル化する問題として扱われる理由を説明する
+- 教師なし異常検知と教師あり分類を比較し、新しい異常への対応範囲と precision のトレードオフを評価する
 
-## The Problem
+## 問題
 
-A credit card is used in New York at 2pm, then in Tokyo at 2:05pm. A factory sensor reads 150 degrees when the normal range is 80-120. A server sends 50,000 requests per second when the daily average is 200.
+クレジットカードが午後 2 時にニューヨークで使われ、その 5 分後の午後 2 時 5 分に東京で使われました。工場センサーが、通常範囲 80-120 のところ 150 度を示しました。サーバーが、1 日平均 200 request per second のところ 50,000 request per second を送信しました。
 
-These are anomalies. Finding them matters. Fraud costs billions. Equipment failures cost downtime. Network intrusions cost data.
+これらは異常です。そして、それを見つけることには意味があります。不正利用は何十億もの損失を生みます。設備故障はダウンタイムを発生させます。ネットワーク侵入はデータを失わせます。
 
-The challenge: you rarely have labeled examples of anomalies. Fraud makes up 0.1% of transactions. Equipment failures happen a few times per year. You cannot train a standard classifier because there is almost nothing in the "anomaly" class to learn from. Even if you have some labels, the anomalies you have seen are not the only types you will encounter. Tomorrow's fraud scheme looks different from today's.
+難しいのは、異常のラベル付き例がほとんどないことです。fraud は transaction の 0.1% しかありません。設備故障は年に数回しか起きません。学習できる「anomaly」class がほとんどないため、標準的な分類器は訓練できません。たとえ一部のラベルがあっても、これまで見た異常だけが将来遭遇する異常ではありません。明日の fraud scheme は今日のものとは違います。
 
-Anomaly detection flips the problem. Instead of learning what is abnormal, learn what is normal. Anything that deviates from normal is suspicious. This works without labels, adapts to new types of anomalies, and scales to massive datasets.
+異常検知は問題を反転します。異常とは何かを学ぶのではなく、正常とは何かを学びます。正常から外れるものは疑わしいものとして扱います。これはラベルなしで機能し、新しい種類の異常に適応でき、大規模データセットにもスケールします。
 
 ## The Concept
 
 ### Types of Anomalies
 
-Not all anomalies are the same:
+すべての異常が同じではありません。
 
-- **Point anomalies.** A single data point that is unusual regardless of context. A temperature reading of 500 degrees. A transaction of $50,000 from an account that normally spends $50.
-- **Contextual anomalies.** A data point that is unusual given its context. A temperature of 90 degrees is normal in summer, anomalous in winter. Same value, different context.
-- **Collective anomalies.** A sequence of data points that is unusual as a group, even though each individual point might be normal. Five login failures is normal. Fifty in a row is a brute-force attack.
+- **Point anomalies.** 文脈に関係なく、単一のデータ点が異常なもの。500 度の温度値。普段は $50 程度しか使わないアカウントからの $50,000 の transaction。
+- **Contextual anomalies.** 文脈を踏まえると異常なデータ点。90 度は夏には正常でも冬には異常です。同じ値でも文脈が違います。
+- **Collective anomalies.** 個々の点は正常に見えても、グループとしては異常なデータ点の系列。5 回の login failures は正常でも、連続 50 回なら brute-force attack です。
 
-Most methods detect point anomalies. Contextual anomalies need time or location features. Collective anomalies need sequence-aware methods.
+多くの手法は point anomalies を検出します。Contextual anomalies には時間や場所の特徴量が必要です。Collective anomalies には系列を考慮する手法が必要です。
 
 ```mermaid
 flowchart TD
@@ -53,55 +53,55 @@ flowchart TD
 
 ### The Unsupervised Framing
 
-In standard classification, you have labels for both classes. In anomaly detection, you typically have one of three situations:
+標準的な分類では、両方のクラスにラベルがあります。異常検知では、通常は次の 3 つの状況のいずれかです。
 
-1. **Fully unsupervised.** No labels at all. You fit the detector on all data and hope anomalies are rare enough not to corrupt the "normal" model.
-2. **Semi-supervised.** You have a clean dataset of normal data only. You fit on this clean set and score everything else. This is the strongest setup when possible.
-3. **Weakly supervised.** You have a few labeled anomalies. Use them for evaluation, not training. Train unsupervised, then measure precision/recall on the labeled subset.
+1. **Fully unsupervised.** ラベルがまったくない。すべてのデータで detector を fit し、異常が十分まれで「normal」model を壊さないことを期待します。
+2. **Semi-supervised.** 正常データだけのクリーンなデータセットがある。このクリーンなセットで fit し、他のすべてを score します。可能なら最も強い設定です。
+3. **Weakly supervised.** 少数のラベル付き異常がある。それらは training ではなく evaluation に使います。教師なしで学習し、ラベル付き subset で precision/recall を測ります。
 
-The key insight: anomaly detection is fundamentally different from classification. You are modeling the distribution of normal data, not the decision boundary between two classes.
+重要な洞察は、異常検知は分類とは根本的に違うということです。2 クラス間の decision boundary ではなく、正常データの分布をモデル化しています。
 
 ### Supervised vs Unsupervised: The Tradeoff
 
-If you do have labeled anomalies, should you use them for training (supervised classification) or for evaluation only (unsupervised detection)?
+ラベル付き異常がある場合、それを training に使うべきでしょうか（教師あり分類）、それとも evaluation のみに使うべきでしょうか（教師なし検知）。
 
-**Supervised (treat as classification):**
-- Catches the exact types of anomalies you have seen before
-- Higher precision on known anomaly types
-- Misses novel anomaly types entirely
-- Requires retraining when new anomaly types emerge
-- Needs enough anomaly examples (often too few)
+**Supervised（classification として扱う）:**
+- 以前に見たことがある正確な種類の異常を捕捉できる
+- 既知の異常タイプでは precision が高い
+- 新しい異常タイプを完全に見逃す
+- 新しい異常タイプが現れたら再学習が必要
+- 十分な異常例が必要（多くの場合少なすぎる）
 
-**Unsupervised (model normal, flag deviations):**
-- Catches any deviation from normal, including novel types
-- Does not require labeled anomalies
-- Higher false positive rate (not everything unusual is bad)
-- More robust to distribution shift
+**Unsupervised（正常をモデル化し、逸脱をフラグする）:**
+- 新しいタイプを含む、正常からのあらゆる逸脱を捕捉する
+- ラベル付き異常を必要としない
+- false positive rate が高い（異常に見えるものすべてが悪いわけではない）
+- distribution shift によりロバスト
 
-In practice, the best systems combine both: unsupervised detection for broad coverage, supervised models for known high-priority anomaly types, and human review for ambiguous cases.
+実務では、最良のシステムは両方を組み合わせます。広いカバレッジには教師なし検知を使い、既知の高優先度の異常タイプには教師ありモデルを使い、曖昧なケースは人間がレビューします。
 
 ### Z-Score Method
 
-The simplest approach. Compute the mean and standard deviation of each feature. Flag any point more than k standard deviations from the mean.
+最も単純な方法です。各特徴量の mean と standard deviation を計算します。mean から k standard deviations を超える点をフラグします。
 
 ```text
 z_score = (x - mean) / std
 anomaly if |z_score| > threshold
 ```
 
-The default threshold is 3.0 (99.7% of normal data falls within 3 standard deviations for a Gaussian distribution).
+デフォルトの threshold は 3.0 です（Gaussian distribution では正常データの 99.7% が 3 standard deviations 以内に入ります）。
 
-**Strengths:** Simple. Fast. Interpretable ("this value is 4.5 standard deviations from normal").
+**Strengths:** 単純。高速。解釈しやすい（「この値は正常から 4.5 standard deviations 離れている」）。
 
-**Weaknesses:** Assumes data is normally distributed. Sensitive to outliers in the training data (the outliers shift the mean and inflate the std, making them harder to detect). Fails on multimodal distributions.
+**Weaknesses:** データが正規分布していることを仮定する。training data 内の outliers に敏感（outliers が mean をずらし std を膨らませるため、検出しにくくなる）。multimodal distributions では失敗する。
 
-**When it works well:** Single-feature monitoring where data is roughly bell-shaped. Server response times, manufacturing tolerances, sensor readings with stable baselines.
+**When it works well:** データがおおむねベル型の単一特徴量監視。server response times、manufacturing tolerances、安定した baseline を持つ sensor readings。
 
-**When it fails:** Multi-cluster data (two office locations with different baseline temperatures), skewed data (transaction amounts where $1000 is rare but not anomalous), data with outliers in the training set.
+**When it fails:** multi-cluster data（baseline temperatures が異なる 2 つの office locations）、skewed data（$1000 がまれだが異常ではない transaction amounts）、training set に outliers が含まれるデータ。
 
 ### IQR Method
 
-More robust than Z-score. Uses the interquartile range instead of mean and standard deviation.
+Z-score よりロバストです。mean と standard deviation の代わりに interquartile range を使います。
 
 ```
 Q1 = 25th percentile
@@ -112,17 +112,17 @@ upper_bound = Q3 + factor * IQR
 anomaly if x < lower_bound or x > upper_bound
 ```
 
-The default factor is 1.5.
+デフォルトの factor は 1.5 です。
 
-**Strengths:** Robust to outliers (percentiles are not affected by extreme values). Works on skewed distributions. No normality assumption.
+**Strengths:** outliers にロバスト（percentiles は極端な値の影響を受けない）。skewed distributions でも機能する。normality assumption がない。
 
-**Weaknesses:** Univariate only (applies per feature independently). Cannot detect anomalies that are unusual only when features are considered together (a point might be normal in each feature individually but anomalous in the joint space).
+**Weaknesses:** 単変量のみ（各特徴量に独立に適用）。特徴量を一緒に見たときだけ異常になるケースを検出できない（個々の特徴量では正常でも joint space では異常な点）。
 
-**Practical note:** The 1.5 factor in IQR corresponds to the whiskers in a box plot. Points outside the whiskers are potential outliers. Using 3.0 instead of 1.5 makes the detector more conservative (fewer flags, fewer false positives). The right factor depends on your tolerance for false alarms.
+**Practical note:** IQR の 1.5 factor は box plot の whiskers に対応します。whiskers の外側の点は potential outliers です。1.5 ではなく 3.0 を使うと detector はより保守的になります（flag が少なく、false positives も少ない）。適切な factor は false alarms への許容度に依存します。
 
 ### Isolation Forest
 
-The key insight: anomalies are few and different. In a random partitioning of the data, anomalies are easier to isolate -- they need fewer random splits to be separated from the rest.
+重要な洞察は、異常は少数で異質だということです。データをランダムに分割すると、異常は孤立させやすく、他の点から分離するのに必要な random splits が少なくなります。
 
 ```mermaid
 flowchart TD
@@ -139,50 +139,50 @@ flowchart TD
 ```
 
 **How it works:**
-1. Build many random trees (an isolation forest)
-2. At each node, pick a random feature and a random split value between the feature's min and max
-3. Keep splitting until every point is isolated (in its own leaf)
-4. Anomalies have shorter average path lengths across all trees
+1. 多数の random trees（isolation forest）を構築する
+2. 各 node で random feature と、その feature の min と max の間の random split value を選ぶ
+3. すべての点が孤立する（自分だけの leaf に入る）まで分割する
+4. 異常はすべての trees での average path lengths が短い
 
-**Why it works:** Normal points live in dense regions. Many random splits are needed to isolate one from its neighbors. Anomalies live in sparse regions. One or two random splits are enough to isolate them.
+**Why it works:** 正常点は密な領域にあります。近傍から 1 点を孤立させるには多くの random splits が必要です。異常は疎な領域にあります。1 回か 2 回の random splits で孤立できます。
 
-The anomaly score is based on the average path length across all trees, normalized by the expected path length of a random binary search tree:
+anomaly score は、すべての trees にわたる average path length を、random binary search tree の expected path length で正規化したものです。
 
 ```
 score(x) = 2^(-average_path_length(x) / c(n))
 ```
 
-Where `c(n)` is the expected path length for n samples. Score near 1 means anomaly. Score near 0.5 means normal. Score near 0 means very normal (deep in dense clusters).
+ここで `c(n)` は n samples に対する expected path length です。Score が 1 に近いほど anomaly、0.5 に近いほど normal、0 に近いほど非常に normal（dense clusters の深い位置）です。
 
-**Strengths:** No distribution assumptions. Works in high dimensions. Scales well (sublinear in sample size because each tree uses a subsample). Handles mixed feature types.
+**Strengths:** 分布仮定がない。高次元で機能する。よくスケールする（各 tree が subsample を使うため sample size に対して sublinear）。mixed feature types を扱える。
 
-**Weaknesses:** Struggles with anomalies in dense regions (masking effect). Random splitting is less effective when many features are irrelevant.
+**Weaknesses:** dense regions 内の異常に弱い（masking effect）。無関係な特徴量が多いと random splitting の効果が下がる。
 
 **Key hyperparameters:**
-- `n_estimators`: Number of trees. 100 is usually enough. More trees give more stable scores but slower computation.
-- `max_samples`: Number of samples per tree. 256 is the default in the original paper. Smaller values make individual trees less accurate but increase diversity. The subsampling is what makes Isolation Forest fast -- each tree sees a small fraction of the data.
-- `contamination`: Expected fraction of anomalies. Used only for setting the threshold. Does not affect the scores themselves.
+- `n_estimators`: trees の数。通常 100 で十分。増やすと scores は安定するが計算は遅くなる。
+- `max_samples`: tree あたりの samples 数。元論文のデフォルトは 256。小さい値は個々の tree の精度を下げるが多様性を増やす。この subsampling が Isolation Forest を高速にしている。
+- `contamination`: 期待される anomalies の割合。threshold 設定にのみ使われる。scores 自体には影響しない。
 
 ### Local Outlier Factor (LOF)
 
-LOF compares the local density around a point to the density around its neighbors. A point in a sparse region surrounded by dense regions is anomalous.
+LOF は、ある点の周囲の局所密度を、その近傍の密度と比較します。密な領域に囲まれた疎な領域の点は異常です。
 
 **How it works:**
-1. For each point, find its k nearest neighbors
-2. Compute the local reachability density (how dense is the neighborhood)
-3. Compare each point's density to its neighbors' densities
-4. If a point has much lower density than its neighbors, it is an outlier
+1. 各点について k nearest neighbors を見つける
+2. local reachability density（近傍がどれだけ密か）を計算する
+3. 各点の density を neighbors の densities と比較する
+4. ある点の density が neighbors より大幅に低ければ outlier とする
 
 **LOF score:**
-- LOF close to 1.0 means similar density as neighbors (normal)
-- LOF greater than 1.0 means lower density than neighbors (potentially anomalous)
-- LOF much greater than 1.0 (e.g., 2.0+) means significantly lower density (likely anomaly)
+- LOF が 1.0 に近い: neighbors と同程度の density（normal）
+- LOF が 1.0 より大きい: neighbors より低密度（potentially anomalous）
+- LOF がかなり大きい（例: 2.0+）: 著しく低密度（likely anomaly）
 
-The "local" part is critical. Consider a dataset with two clusters: a dense cluster of 1000 points and a sparse cluster of 50 points. A point on the edge of the sparse cluster is not globally unusual -- it has 50 neighbors. But it is locally unusual if its immediate neighbors are denser than it is. LOF captures this nuance that global methods miss.
+「local」の部分が重要です。2 つの clusters を持つデータセットを考えます。1000 点の dense cluster と 50 点の sparse cluster です。sparse cluster の端にある点は globally unusual ではありません。50 個の neighbors があるからです。しかし immediate neighbors がその点より密なら locally unusual です。LOF は global methods が見逃すこのニュアンスを捉えます。
 
-**Strengths:** Detects local anomalies (points that are unusual in their neighborhood, even if they are not globally unusual). Works on clusters of different densities.
+**Strengths:** local anomalies（全体としては異常でなくても、その近傍では異常な点）を検出する。密度の異なる clusters で機能する。
 
-**Weaknesses:** Slow on large datasets (O(n^2) for naive implementation). Sensitive to the choice of k. Does not work well in very high dimensions (curse of dimensionality affects distance calculations).
+**Weaknesses:** 大規模データセットでは遅い（naive implementation は O(n^2)）。k の選択に敏感。非常に高次元ではうまく機能しない（curse of dimensionality が distance calculations に影響する）。
 
 ### Comparison
 
@@ -195,11 +195,11 @@ The "local" part is critical. Consider a dataset with two clusters: a dense clus
 
 ### Evaluation Challenges
 
-Evaluating anomaly detectors is harder than evaluating classifiers:
+異常検知器の評価は、分類器の評価より難しくなります。
 
-- **Extreme class imbalance.** With 0.1% anomalies, predicting "normal" for everything gives 99.9% accuracy. Accuracy is useless.
-- **AUROC is misleading.** With heavy imbalance, AUROC can look good even when the model misses most anomalies at practical thresholds.
-- **Better metrics:** Precision@k (of the top k flagged items, how many are real anomalies), AUPRC (area under precision-recall curve), and recall at a fixed false positive rate.
+- **Extreme class imbalance.** 異常が 0.1% の場合、すべてを「normal」と予測するだけで 99.9% accuracy になります。Accuracy は役に立ちません。
+- **AUROC is misleading.** 重い不均衡では、実用的なしきい値で大半の異常を見逃していても AUROC が良く見えることがあります。
+- **Better metrics:** Precision@k（上位 k 件の flag items のうち本当の異常はいくつか）、AUPRC（area under precision-recall curve）、固定 false positive rate での recall。
 
 ```mermaid
 flowchart LR
@@ -215,21 +215,21 @@ flowchart LR
 
 ### Anomaly Detection Pipeline
 
-In practice, anomaly detection follows this workflow:
+実務では、異常検知は次の workflow に従います。
 
-1. **Collect baseline data.** Ideally, a period where you know there are no (or very few) anomalies.
-2. **Feature engineering.** Raw features plus derived features (rolling statistics, time features, ratios).
-3. **Train the detector.** Fit on the baseline data. The model learns what "normal" looks like.
-4. **Score new data.** Each new observation gets an anomaly score.
-5. **Threshold selection.** Choose the score cutoff. This is a business decision: higher threshold means fewer false alarms but more missed anomalies.
-6. **Alert and investigate.** Flagged points go to human review or automated response.
-7. **Feedback collection.** Record whether flagged items were true anomalies or false alarms. Use this data to evaluate the detector and tune the threshold over time.
+1. **Collect baseline data.** 理想的には、異常がない（または非常に少ない）ことが分かっている期間のデータ。
+2. **Feature engineering.** raw features と derived features（rolling statistics、time features、ratios）。
+3. **Train the detector.** baseline data で fit する。model は「normal」がどう見えるかを学ぶ。
+4. **Score new data.** 新しい observation ごとに anomaly score を付ける。
+5. **Threshold selection.** score cutoff を選ぶ。これは business decision です。高い threshold は false alarms を減らしますが、missed anomalies を増やします。
+6. **Alert and investigate.** flag された点を human review または automated response に回す。
+7. **Feedback collection.** flag items が true anomalies だったか false alarms だったかを記録する。このデータで detector を評価し、時間とともに threshold を調整する。
 
-The pipeline is never "done." Data distributions shift, new anomaly types emerge, and thresholds need adjustment. Treat anomaly detection as a living system, not a one-time model.
+pipeline は決して「完了」しません。データ分布は変わり、新しい異常タイプが現れ、threshold は調整が必要です。異常検知は一度きりの model ではなく、生きている system として扱います。
 
-## Build It
+## 実装
 
-The code in `code/anomaly_detection.py` implements Z-score, IQR, and Isolation Forest from scratch.
+`code/anomaly_detection.py` のコードは、Z-score、IQR、Isolation Forest をゼロから実装します。
 
 ### Z-Score Detector
 
@@ -242,7 +242,7 @@ def zscore_detect(X, threshold=3.0):
     return z.max(axis=1) > threshold
 ```
 
-Simple and vectorized. Flags a point if any feature exceeds the threshold.
+単純で vectorized されています。任意の特徴量が threshold を超えたら、その点を flag します。
 
 ### IQR Detector
 
@@ -260,7 +260,7 @@ def iqr_detect(X, factor=1.5):
 
 ### Isolation Forest from Scratch
 
-The from-scratch implementation builds isolation trees that randomly partition the feature space:
+ゼロからの実装では、feature space をランダムに分割する isolation trees を構築します。
 
 ```python
 class IsolationTree:
@@ -288,9 +288,9 @@ class IsolationTree:
         return self
 ```
 
-The path length to isolate a point determines its anomaly score. Shorter paths mean more anomalous.
+点を孤立させるまでの path length が anomaly score を決めます。path が短いほど、より異常です。
 
-The `IsolationForest` class wraps multiple trees:
+`IsolationForest` class は複数の trees をラップします。
 
 ```python
 class IsolationForest:
@@ -313,21 +313,21 @@ class IsolationForest:
         return scores
 ```
 
-The normalization factor `c(n)` is the expected path length of an unsuccessful search in a binary search tree with n elements. It equals `2 * H(n-1) - 2*(n-1)/n` where `H` is the harmonic number. This normalization ensures scores are comparable across datasets of different sizes.
+正規化係数 `c(n)` は、n elements を持つ binary search tree における unsuccessful search の expected path length です。`H` を harmonic number とすると `2 * H(n-1) - 2*(n-1)/n` に等しくなります。この正規化により、異なるサイズのデータセット間で scores を比較できます。
 
 ### Demo Scenarios
 
-The code generates multiple test scenarios:
+コードは複数の test scenarios を生成します。
 
-1. **Single cluster with outliers.** A 2D Gaussian cluster with anomalies injected far from the center. All methods should work here.
-2. **Multimodal data.** Three clusters of different sizes and densities. Points between clusters are anomalous. Z-score struggles because the per-feature ranges are wide.
-3. **High-dimensional data.** 50 features, but anomalies differ in only 5 of them. Tests whether methods can find anomalies in a subset of features.
+1. **Single cluster with outliers.** 2D Gaussian cluster に、中心から遠い anomalies を注入します。ここではすべての手法が機能するはずです。
+2. **Multimodal data.** サイズと密度の異なる 3 つの clusters。clusters の間の点は anomalous です。Z-score は feature ごとの範囲が広いため苦戦します。
+3. **High-dimensional data.** 50 features ですが、anomalies はそのうち 5 つでだけ異なります。特徴量 subset 内の anomalies を見つけられるかをテストします。
 
-Each demo compares all methods using precision, recall, F1, and Precision@k.
+各 demo は precision、recall、F1、Precision@k を使ってすべての手法を比較します。
 
 ## Use It
 
-With sklearn (using library implementations, not from-scratch):
+sklearn で使う場合（ゼロからの実装ではなく library implementations）。
 
 ```python
 from sklearn.ensemble import IsolationForest
@@ -342,24 +342,24 @@ lof.fit(X_train)
 predictions = lof.predict(X_test)
 ```
 
-Note `contamination` sets the expected fraction of anomalies. Setting it correctly matters -- too low misses anomalies, too high creates false alarms.
+`contamination` は期待される anomalies の割合を設定することに注意してください。正しく設定することが重要です。低すぎると anomalies を見逃し、高すぎると false alarms が増えます。
 
-The code in `anomaly_detection.py` compares from-scratch implementations against sklearn on the same data.
+`anomaly_detection.py` のコードは、同じデータ上でゼロからの実装と sklearn を比較します。
 
 ### sklearn Contamination Parameter
 
-The `contamination` parameter in sklearn determines the threshold for converting continuous anomaly scores into binary predictions. It does not change the underlying scores.
+sklearn の `contamination` parameter は、連続的な anomaly scores を binary predictions に変換するための threshold を決めます。underlying scores は変わりません。
 
 ```python
 iso_5 = IsolationForest(contamination=0.05)
 iso_10 = IsolationForest(contamination=0.10)
 ```
 
-Both produce the same anomaly scores. But `iso_5` flags the top 5% while `iso_10` flags the top 10%. If you do not know the true anomaly rate (you usually do not), set contamination to "auto" and work with the raw scores directly. Set your own threshold based on the cost tradeoff between false positives and false negatives.
+どちらも同じ anomaly scores を生成します。ただし `iso_5` は上位 5% を flag し、`iso_10` は上位 10% を flag します。真の anomaly rate が分からない場合（通常は分かりません）、contamination を "auto" にして raw scores を直接扱います。false positives と false negatives の cost tradeoff に基づいて、自分で threshold を設定します。
 
 ### One-Class SVM
 
-Another unsupervised anomaly detector worth knowing. One-Class SVM fits a boundary around normal data in a high-dimensional feature space (using the kernel trick).
+知っておく価値のある別の教師なし anomaly detector です。One-Class SVM は（kernel trick を使って）高次元 feature space 内で正常データを囲む boundary を fit します。
 
 ```python
 from sklearn.svm import OneClassSVM
@@ -369,91 +369,91 @@ oc_svm.fit(X_train)
 predictions = oc_svm.predict(X_test)
 ```
 
-The `nu` parameter approximates the fraction of anomalies. One-Class SVM works well on small to medium datasets but does not scale to very large data (the kernel matrix grows quadratically).
+`nu` parameter は anomalies の割合を近似します。One-Class SVM は小〜中規模データセットではうまく機能しますが、非常に大きなデータにはスケールしません（kernel matrix が二次的に増えるため）。
 
 ### Autoencoder Approach (Preview)
 
-Autoencoders are neural networks that learn to compress and reconstruct data. Train on normal data. At test time, anomalies have high reconstruction error because the network learned to reconstruct normal patterns only.
+Autoencoders はデータを圧縮して復元することを学ぶ neural networks です。正常データで学習します。test time では、network は正常パターンだけを復元するよう学んでいるため、anomalies は reconstruction error が高くなります。
 
-This is covered in Phase 3 (Deep Learning), but the principle is the same: model what is normal, flag what deviates.
+これは Phase 3（Deep Learning）で扱いますが、原理は同じです。正常をモデル化し、逸脱をフラグします。
 
 ### Ensemble Anomaly Detection
 
-Just as ensemble methods improve classification (Lesson 11), combining multiple anomaly detectors improves detection. The simplest approach:
+ensemble methods が classification を改善するのと同じように（Lesson 11）、複数の anomaly detectors を組み合わせると検知が改善します。最も単純な方法は次の通りです。
 
-1. Run multiple detectors (Z-score, IQR, Isolation Forest, LOF)
-2. Normalize each detector's scores to [0, 1]
-3. Average the normalized scores
-4. Flag points above the threshold on the average score
+1. 複数の detectors（Z-score、IQR、Isolation Forest、LOF）を実行する
+2. 各 detector の scores を [0, 1] に正規化する
+3. 正規化された scores の平均を取る
+4. 平均 score が threshold を超えた点を flag する
 
-This reduces false positives because different methods have different failure modes. A point flagged by all four methods is almost certainly anomalous. A point flagged by only one might be a quirk of that method.
+手法ごとに failure modes が異なるため、これにより false positives が減ります。4 手法すべてに flag された点はほぼ確実に anomalous です。1 手法だけに flag された点は、その手法固有の癖かもしれません。
 
-More sophisticated ensembles weight each detector by its estimated reliability (measured on a validation set with known anomalies, if available).
+より洗練された ensembles は、各 detector の推定 reliability（ラベル付き anomalies を持つ validation set があればそこで測定）によって重み付けします。
 
 ### Production Considerations
 
-1. **Threshold drift.** As data distribution shifts, a fixed threshold becomes outdated. Monitor the distribution of anomaly scores and adjust periodically.
-2. **Alert fatigue.** Too many false alarms and operators stop paying attention. Start with a high threshold (fewer, more reliable alerts) and lower it as trust builds.
-3. **Ensemble approach.** In production, combine multiple detectors. Flag a point only if multiple methods agree it is anomalous. This reduces false positives significantly.
-4. **Feature engineering.** Raw features are rarely enough. Add rolling statistics, ratios, time-since-last-event, and domain-specific features. A good feature set matters more than the choice of detector.
-5. **Feedback loop.** When operators investigate flagged items and confirm or dismiss them, feed this back into the system. Accumulate labeled data over time to evaluate and improve the detector.
+1. **Threshold drift.** データ分布が変わると、固定 threshold は古くなる。anomaly scores の分布を監視し、定期的に調整する。
+2. **Alert fatigue.** false alarms が多すぎると operators は注意を払わなくなる。高い threshold（少数で信頼性の高い alerts）から始め、信頼が高まるにつれて下げる。
+3. **Ensemble approach.** 本番では複数の detectors を組み合わせる。複数手法が anomalous と合意した場合だけ flag する。これにより false positives が大きく減る。
+4. **Feature engineering.** Raw features だけではほとんど不十分。rolling statistics、ratios、time-since-last-event、domain-specific features を追加する。良い feature set は detector の選択より重要です。
+5. **Feedback loop.** operators が flag items を調査して確認または却下したら、その結果を system に戻す。時間をかけて labeled data を蓄積し、detector の評価と改善に使う。
 
 ## Ship It
 
-This lesson produces:
-- `outputs/skill-anomaly-detector.md` -- a decision skill for choosing the right detector
-- `code/anomaly_detection.py` -- Z-score, IQR, and Isolation Forest from scratch, with sklearn comparison
+この lesson の成果物は次の通りです。
+- `outputs/skill-anomaly-detector.md` -- 適切な detector を選ぶための decision skill
+- `code/anomaly_detection.py` -- Z-score、IQR、Isolation Forest のゼロからの実装と sklearn 比較
 
 ### Choosing a Threshold
 
-The anomaly score is continuous. You need a threshold to make binary decisions. This is a business decision, not a technical one.
+anomaly score は連続値です。binary decisions を行うには threshold が必要です。これは技術的な判断ではなく business decision です。
 
-Consider two scenarios:
-- **Fraud detection.** Missing fraud is expensive (chargebacks, customer trust). False alarms cost a human analyst 5 minutes to investigate. Set the threshold low to catch more fraud, accept more false alarms.
-- **Equipment maintenance.** A false alarm means an unnecessary shutdown costing $50,000. A missed failure means a $500,000 repair. Set the threshold to balance these costs.
+2 つの scenarios を考えます。
+- **Fraud detection.** fraud の見逃しは高コストです（chargebacks、customer trust）。false alarm は human analyst の 5 分の調査コストです。より多くの fraud を捕捉するため threshold を低くし、false alarms を多めに受け入れます。
+- **Equipment maintenance.** false alarm は $50,000 の不要な shutdown を意味します。missed failure は $500,000 の repair を意味します。これらのコストのバランスを取る threshold にします。
 
-In both cases, the optimal threshold depends on the cost ratio between false positives and false negatives. Plot precision and recall at different thresholds, overlay the cost function, and pick the minimum-cost point.
+どちらの場合も、最適な threshold は false positives と false negatives の cost ratio に依存します。異なる thresholds で precision と recall を plot し、cost function を重ね、最小 cost の点を選びます。
 
 ### Scaling to Production
 
-For real-time anomaly detection in production:
+本番の real-time anomaly detection では次のようにします。
 
-1. **Batch training, online scoring.** Train the model periodically (daily, weekly) on recent normal data. Score each new observation as it arrives.
-2. **Feature computation must match.** If you trained with rolling statistics over 30 days, you need 30 days of history to compute features for a new observation. Buffer the required history.
-3. **Score distribution monitoring.** Track the distribution of anomaly scores over time. If the median score drifts upward, either the data is changing or the model is stale.
-4. **Explainability.** When you flag an anomaly, say why. Z-score: "Feature X is 4.2 standard deviations above normal." Isolation Forest: "This point was isolated in 3.1 splits on average (normal points take 8.5)."
+1. **Batch training, online scoring.** 直近の normal data で model を定期的（daily, weekly）に train する。新しい observation が到着するたびに score する。
+2. **Feature computation must match.** 30 日 rolling statistics で学習したなら、新しい observation の features を計算するには 30 日の履歴が必要。必要な履歴を buffer する。
+3. **Score distribution monitoring.** anomaly scores の分布を時間とともに追跡する。median score が上昇している場合、データが変化しているか model が古くなっている。
+4. **Explainability.** anomaly を flag するときは理由を示す。Z-score: "Feature X is 4.2 standard deviations above normal." Isolation Forest: "This point was isolated in 3.1 splits on average (normal points take 8.5)."
 
 ## Exercises
 
-1. **Threshold tuning.** Run the Z-score detector with thresholds from 1.0 to 5.0 in steps of 0.5. Plot precision and recall at each threshold. Where is the sweet spot for your data?
+1. **Threshold tuning.** Z-score detector を thresholds 1.0 から 5.0 まで 0.5 刻みで実行します。各 threshold の precision と recall を plot します。あなたのデータでは sweet spot はどこですか？
 
-2. **Multivariate anomalies.** Create 2D data where each feature individually looks normal, but the combination is anomalous (e.g., points far from the main cluster diagonal). Show that Z-score per feature misses these but Isolation Forest catches them.
+2. **Multivariate anomalies.** 各特徴量単体では正常に見えるが、組み合わせると異常になる 2D data を作成します（例: main cluster diagonal から遠い点）。Z-score per feature がこれを見逃し、Isolation Forest が捕捉することを示します。
 
-3. **LOF from scratch.** Implement Local Outlier Factor using k-nearest neighbors. Compare against sklearn's LocalOutlierFactor on the same data. Use k=10 and k=50 -- how does the choice of k affect results?
+3. **LOF from scratch.** k-nearest neighbors を使って Local Outlier Factor を実装します。同じデータで sklearn の LocalOutlierFactor と比較します。k=10 と k=50 を使い、k の選択が結果にどう影響するか確認します。
 
-4. **Streaming anomaly detection.** Modify the Z-score detector to work in a streaming setting: update the running mean and variance as new points arrive (Welford's online algorithm). Compare to batch Z-score on the same data.
+4. **Streaming anomaly detection.** Z-score detector を streaming setting で動くように変更します。新しい点が到着するたびに running mean と variance を更新します（Welford's online algorithm）。同じデータで batch Z-score と比較します。
 
-5. **Real-world evaluation.** Take a dataset with known anomalies (credit card fraud from Kaggle, for example). Evaluate all four methods using precision@100, precision@500, and AUPRC. Which method works best? Why?
+5. **Real-world evaluation.** known anomalies を持つデータセット（例: Kaggle の credit card fraud）を使います。precision@100、precision@500、AUPRC ですべての手法を評価します。どの手法が最も良いですか？なぜですか？
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Anomaly | "Outlier, unusual point" | A data point that deviates significantly from the expected pattern of normal data |
-| Point anomaly | "A single weird value" | An individual observation that is unusual regardless of context |
-| Contextual anomaly | "Normal value, wrong context" | An observation that is unusual given its context (time, location, etc.) but might be normal in another context |
-| Isolation Forest | "Random splits to find outliers" | An ensemble of random trees that isolates anomalies with fewer splits than normal points |
-| Local Outlier Factor | "Compare density to neighbors" | A method that flags points whose local density is much lower than their neighbors' density |
-| Z-score | "Standard deviations from mean" | (x - mean) / std, measuring how far a point is from the center in units of standard deviation |
-| IQR | "Interquartile range" | Q3 - Q1, measuring the spread of the middle 50% of data, used for robust outlier detection |
-| Contamination | "Expected fraction of anomalies" | A hyperparameter telling the detector what proportion of the data it should flag as anomalous |
-| Precision@k | "Of the top k flags, how many are real" | Precision computed on only the k most suspicious points, useful for imbalanced anomaly detection |
-| AUPRC | "Area under precision-recall curve" | A metric that summarizes precision-recall performance across all thresholds, better than AUROC for imbalanced data |
+| Anomaly | "Outlier, unusual point" | 正常データの期待パターンから大きく逸脱するデータ点 |
+| Point anomaly | "A single weird value" | 文脈に関係なく異常な個別 observation |
+| Contextual anomaly | "Normal value, wrong context" | 時刻や場所などの文脈を踏まえると異常だが、別の文脈では正常かもしれない observation |
+| Isolation Forest | "Random splits to find outliers" | 正常点より少ない分割で anomalies を孤立させる random trees の ensemble |
+| Local Outlier Factor | "Compare density to neighbors" | local density が neighbors の density より大幅に低い点を flag する手法 |
+| Z-score | "Standard deviations from mean" | (x - mean) / std。点が中心から standard deviation 単位でどれだけ離れているかを測る |
+| IQR | "Interquartile range" | Q3 - Q1。データ中央 50% の広がりを測り、robust outlier detection に使う |
+| Contamination | "Expected fraction of anomalies" | データのどの割合を anomalous として flag すべきかを detector に伝える hyperparameter |
+| Precision@k | "Of the top k flags, how many are real" | 上位 k 件の最も疑わしい点だけで計算する precision。不均衡な anomaly detection で有用 |
+| AUPRC | "Area under precision-recall curve" | すべての thresholds にわたる precision-recall performance を要約する metric。不均衡データでは AUROC より適切 |
 
-## Further Reading
+## 参考文献
 
-- [Liu et al., Isolation Forest (2008)](https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/icdm08b.pdf) -- the original Isolation Forest paper
-- [Breunig et al., LOF: Identifying Density-Based Local Outliers (2000)](https://dl.acm.org/doi/10.1145/342009.335388) -- the original LOF paper
-- [scikit-learn Outlier Detection docs](https://scikit-learn.org/stable/modules/outlier_detection.html) -- overview of all sklearn anomaly detectors
-- [Chandola et al., Anomaly Detection: A Survey (2009)](https://dl.acm.org/doi/10.1145/1541880.1541882) -- comprehensive survey of anomaly detection methods
-- [Goldstein and Uchida, A Comparative Evaluation of Unsupervised Anomaly Detection Algorithms (2016)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0152173) -- empirical comparison of 10 methods on real datasets
+- [Liu et al., Isolation Forest (2008)](https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/icdm08b.pdf) -- original Isolation Forest paper
+- [Breunig et al., LOF: Identifying Density-Based Local Outliers (2000)](https://dl.acm.org/doi/10.1145/342009.335388) -- original LOF paper
+- [scikit-learn Outlier Detection docs](https://scikit-learn.org/stable/modules/outlier_detection.html) -- sklearn anomaly detectors の概要
+- [Chandola et al., Anomaly Detection: A Survey (2009)](https://dl.acm.org/doi/10.1145/1541880.1541882) -- anomaly detection methods の包括的 survey
+- [Goldstein and Uchida, A Comparative Evaluation of Unsupervised Anomaly Detection Algorithms (2016)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0152173) -- 実データセット上の 10 手法の empirical comparison

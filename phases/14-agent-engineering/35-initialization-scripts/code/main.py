@@ -1,8 +1,8 @@
-"""Deterministic agent initialization script.
+"""deterministic な agent initialization script。
 
-Runs probes (runtime, deps, test command, env, state freshness, last-known-good
-diff, timing budget), writes init_report.json, supports prereqs.lock TTL
-short-circuit, and exits non-zero when any block-severity probe fails.
+probes (runtime, deps, test command, env, state freshness, last-known-good
+diff, timing budget) を実行し、init_report.json を書き、prereqs.lock TTL
+short-circuit を support し、block-severity probe が失敗すると non-zero exit する。
 
 Run: python3 code/main.py
 """
@@ -67,7 +67,7 @@ def probe_runtime() -> Probe:
     major, minor = sys.version_info[:2]
     if (major, minor) >= REQUIRED_PYTHON:
         return Probe("runtime", "pass", f"python {major}.{minor}")
-    return Probe("runtime", "fail", f"need >= {REQUIRED_PYTHON}, have {major}.{minor}")
+    return Probe("runtime", "fail", f">= {REQUIRED_PYTHON} が必要、現在 {major}.{minor}")
 
 
 @_timed
@@ -75,14 +75,14 @@ def probe_dependencies() -> Probe:
     missing = [dep for dep in REQUIRED_DEPS if importlib.util.find_spec(dep) is None]
     if missing:
         return Probe("dependencies", "fail", f"missing: {missing}")
-    return Probe("dependencies", "pass", f"all of {REQUIRED_DEPS} importable")
+    return Probe("dependencies", "pass", f"{REQUIRED_DEPS} はすべて import 可能")
 
 
 @_timed
 def probe_test_command() -> Probe:
     if shutil.which(REQUIRED_TEST_COMMAND):
-        return Probe("test_command", "pass", f"{REQUIRED_TEST_COMMAND} resolvable on PATH")
-    return Probe("test_command", "fail", f"{REQUIRED_TEST_COMMAND} not on PATH")
+        return Probe("test_command", "pass", f"{REQUIRED_TEST_COMMAND} は PATH で解決可能")
+    return Probe("test_command", "fail", f"{REQUIRED_TEST_COMMAND} が PATH にない")
 
 
 @_timed
@@ -90,50 +90,50 @@ def probe_env() -> Probe:
     missing = [k for k in REQUIRED_ENV_VARS if not os.environ.get(k)]
     if missing:
         return Probe("env", "fail", f"missing env vars: {missing}")
-    return Probe("env", "pass", f"all of {REQUIRED_ENV_VARS or '[]'} present")
+    return Probe("env", "pass", f"{REQUIRED_ENV_VARS or '[]'} はすべて present")
 
 
 @_timed
 def probe_state_freshness() -> Probe:
     if not STATE_PATH.exists():
-        return Probe("state_freshness", "warn", "no state file yet; first run")
+        return Probe("state_freshness", "warn", "state file はまだない; first run")
     age = time.time() - STATE_PATH.stat().st_mtime
     if age > STATE_FRESHNESS_SECONDS:
         hours = int(age // 3600)
-        return Probe("state_freshness", "warn", f"state is {hours}h old; confirm before continuing")
-    return Probe("state_freshness", "pass", f"state is {int(age)}s old")
+        return Probe("state_freshness", "warn", f"state は {hours}h old; 続行前に確認")
+    return Probe("state_freshness", "pass", f"state は {int(age)}s old")
 
 
 @_timed
 def probe_lkg_diff() -> Probe:
-    """Refuse to launch when diff against last-known-good exceeds the file budget.
+    """last-known-good との差分が file budget を超えたら launch を拒否する。
 
-    Anchors every session against the same baseline so drift cannot compound.
+    drift が compound しないよう、すべての session を同じ baseline に anchor する。
     """
     if not LKG_PATH.exists():
-        return Probe("lkg_diff", "warn", "no last_known_good.json; pin one after first successful merge")
+        return Probe("lkg_diff", "warn", "last_known_good.json がない; first successful merge 後に pin する")
     try:
         lkg = json.loads(LKG_PATH.read_text())
         baseline = lkg.get("commit")
         if not baseline:
-            return Probe("lkg_diff", "warn", "lkg file present but commit field empty")
+            return Probe("lkg_diff", "warn", "lkg file はあるが commit field が空")
     except json.JSONDecodeError as exc:
-        return Probe("lkg_diff", "fail", f"lkg file unreadable: {exc}")
+        return Probe("lkg_diff", "fail", f"lkg file を読めない: {exc}")
     if not isinstance(baseline, str) or not SHA_PATTERN.match(baseline):
-        return Probe("lkg_diff", "warn", "lkg commit invalid; skipped")
+        return Probe("lkg_diff", "warn", "lkg commit が invalid; skipped")
     try:
         out = subprocess.run(
             ["git", "diff", "--name-only", baseline, "HEAD"],
             capture_output=True, text=True, timeout=2.0, cwd=HERE,
         )
     except (FileNotFoundError, subprocess.TimeoutExpired):
-        return Probe("lkg_diff", "warn", "git unavailable or slow; skipped")
+        return Probe("lkg_diff", "warn", "git が unavailable または slow; skipped")
     if out.returncode != 0:
-        return Probe("lkg_diff", "warn", f"git diff failed: {out.stderr.strip()[:60]}")
+        return Probe("lkg_diff", "warn", f"git diff が失敗: {out.stderr.strip()[:60]}")
     changed = [ln for ln in out.stdout.splitlines() if ln.strip()]
     if len(changed) > LKG_FILE_DIFF_BUDGET:
-        return Probe("lkg_diff", "fail", f"{len(changed)} files changed since {baseline[:7]} (budget {LKG_FILE_DIFF_BUDGET})")
-    return Probe("lkg_diff", "pass", f"{len(changed)} files changed since {baseline[:7]}")
+        return Probe("lkg_diff", "fail", f"{baseline[:7]} 以降に {len(changed)} files changed (budget {LKG_FILE_DIFF_BUDGET})")
+    return Probe("lkg_diff", "pass", f"{baseline[:7]} 以降に {len(changed)} files changed")
 
 
 def _deps_fingerprint() -> str:
@@ -146,9 +146,9 @@ def _deps_fingerprint() -> str:
 
 
 def lock_is_fresh() -> bool:
-    """Cache pattern: re-use prior probe pass when nothing material changed.
+    """cache pattern: material change がなければ前回の probe pass を再利用する。
 
-    Same shape as Docker layer caches: idempotent probe + content hash = skip.
+    Docker layer caches と同じ形: idempotent probe + content hash = skip。
     """
     if not LOCK_PATH.exists():
         return False
@@ -187,8 +187,8 @@ def run_probes() -> list[Probe]:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--no-cache", action="store_true", help="ignore prereqs.lock and run every probe")
-    ap.add_argument("--write-lkg", action="store_true", help="pin current HEAD as last-known-good")
+    ap.add_argument("--no-cache", action="store_true", help="prereqs.lock を無視して every probe を実行する")
+    ap.add_argument("--write-lkg", action="store_true", help="current HEAD を last-known-good として pin する")
     args = ap.parse_args(argv)
 
     WORK.mkdir(exist_ok=True)
@@ -197,14 +197,14 @@ def main(argv: list[str] | None = None) -> int:
         try:
             head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=HERE, text=True, timeout=2.0).strip()
             LKG_PATH.write_text(json.dumps({"commit": head, "written_at": time.time()}, indent=2) + "\n")
-            print(f"pinned LKG -> {head[:7]}")
+            print(f"LKG を pin -> {head[:7]}")
             return 0
         except (FileNotFoundError, subprocess.CalledProcessError) as exc:
-            print(f"lkg pin failed: {exc}", file=sys.stderr)
+            print(f"lkg pin が失敗: {exc}", file=sys.stderr)
             return 1
 
     if not args.no_cache and lock_is_fresh():
-        print(f"prereqs.lock fresh (TTL {LOCK_TTL_SECONDS}s); skipping probes")
+        print(f"prereqs.lock は fresh (TTL {LOCK_TTL_SECONDS}s); probes を skip")
         return 0
 
     probes = run_probes()
@@ -220,7 +220,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  {p.name:<{width}}  {p.status:>4}  {p.duration_ms:>4}ms  {p.detail}")
 
     if not report["ok"]:
-        print("\ninit failed; refuse to launch agent", file=sys.stderr)
+        print("\ninit failed; agent launch を拒否", file=sys.stderr)
         return 1
     write_lock()
     print("\ninit ok (lock refreshed)")

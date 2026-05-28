@@ -1,24 +1,24 @@
-# APIs & Keys
+# APIとキー
 
-> Every AI API works the same way: send a request, get a response. The details change, the pattern doesn't.
+> すべてのAI APIは同じ仕組みです。リクエストを送り、レスポンスを受け取る。細部は変わっても、パターンは変わりません。
 
-**Type:** Build
-**Languages:** Python, TypeScript
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~30 minutes
+**タイプ:** 作ってみる
+**言語:** Python, TypeScript
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約30分
 
-## Learning Objectives
+## 学習目標
 
-- Store API keys securely using environment variables and `.env` files
-- Make an LLM API call using both the Anthropic Python SDK and raw HTTP
-- Compare SDK-based and raw HTTP request/response formats for debugging
-- Identify and handle common API errors including authentication and rate limits
+- 環境変数と `.env` ファイルを使ってAPIキーを安全に保存する
+- Anthropic Python SDKと生のHTTPの両方でLLM APIを呼び出す
+- デバッグのために、SDKベースと生HTTPのリクエスト/レスポンス形式を比較する
+- 認証やレート制限を含む、よくあるAPIエラーを特定して処理する
 
-## The Problem
+## 課題
 
-Starting from Phase 11, you'll call LLM APIs (Anthropic, OpenAI, Google). In Phase 13-16 you'll build agents that use these APIs in loops. You need to know how API keys work, how to store them safely, and how to make your first API call.
+フェーズ11から、LLM API（Anthropic、OpenAI、Google）を呼び出します。フェーズ13〜16では、これらのAPIをループ内で使うエージェントを構築します。APIキーがどのように機能するか、安全に保存する方法、最初のAPI呼び出しの方法を知っておく必要があります。
 
-## The Concept
+## 考え方
 
 ```mermaid
 sequenceDiagram
@@ -28,31 +28,31 @@ sequenceDiagram
     S->>C: HTTP Response (JSON)
 ```
 
-Every API call has:
-1. An endpoint (URL)
-2. An API key (authentication)
-3. A request body (what you want)
-4. A response body (what you get back)
+すべてのAPI呼び出しには次があります。
+1. エンドポイント（URL）
+2. APIキー（認証）
+3. リクエスト本文（欲しいもの）
+4. レスポンス本文（返ってくるもの）
 
-## Build It
+## 作ってみる
 
-### Step 1: Store API keys safely
+### ステップ1: APIキーを安全に保存する
 
-Never put API keys in code. Use environment variables.
+APIキーをコードに書いてはいけません。環境変数を使います。
 
 ```bash
 export ANTHROPIC_API_KEY="sk-ant-..."
 export OPENAI_API_KEY="sk-..."
 ```
 
-Or use a `.env` file (add it to `.gitignore`):
+または `.env` ファイルを使います（`.gitignore` に追加してください）。
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
 ```
 
-### Step 2: First API call (Python)
+### ステップ2: 最初のAPI呼び出し（Python）
 
 ```python
 import anthropic
@@ -68,7 +68,7 @@ response = client.messages.create(
 print(response.content[0].text)
 ```
 
-### Step 3: First API call (TypeScript)
+### ステップ3: 最初のAPI呼び出し（TypeScript）
 
 ```typescript
 import Anthropic from "@anthropic-ai/sdk";
@@ -84,7 +84,7 @@ const response = await client.messages.create({
 console.log(response.content[0].text);
 ```
 
-### Step 4: Raw HTTP (no SDK)
+### ステップ4: 生HTTP（SDKなし）
 
 ```python
 import os
@@ -109,36 +109,36 @@ with urllib.request.urlopen(req) as resp:
     print(result["content"][0]["text"])
 ```
 
-This is what the SDKs do under the hood. Understanding the raw HTTP call helps when debugging.
+これはSDKが内部で行っていることです。生HTTP呼び出しを理解しておくと、デバッグ時に役立ちます。
 
-## Use It
+## 使ってみる
 
-For this course:
+このコースでは、次のように使います。
 
-| API | When you need it | Free tier |
+| API | 必要になる場面 | 無料枠 |
 |-----|-----------------|-----------|
-| Anthropic (Claude) | Phases 11-16 (agents, tools) | $5 credit on signup |
-| OpenAI | Phase 11 (comparison) | $5 credit on signup |
-| Hugging Face | Phases 4-10 (models, datasets) | Free |
+| Anthropic (Claude) | フェーズ11〜16（エージェント、ツール） | サインアップ時に$5クレジット |
+| OpenAI | フェーズ11（比較） | サインアップ時に$5クレジット |
+| Hugging Face | フェーズ4〜10（モデル、データセット） | 無料 |
 
-You don't need all of them right now. Set them up when the lesson requires it.
+今すぐすべてを用意する必要はありません。レッスンで必要になったときに設定してください。
 
-## Ship It
+## 形にして届ける
 
-This lesson produces:
-- `outputs/prompt-api-troubleshooter.md` - diagnose common API errors
+このレッスンで作るもの:
+- `outputs/prompt-api-troubleshooter.md` - よくあるAPIエラーを診断する
 
-## Exercises
+## 演習
 
-1. Get an Anthropic API key and make your first API call
-2. Try the raw HTTP version and compare the response format to the SDK version
-3. Intentionally use a wrong API key and read the error message
+1. Anthropic APIキーを取得し、最初のAPI呼び出しを行う
+2. 生HTTP版を試し、レスポンス形式をSDK版と比較する
+3. 意図的に間違ったAPIキーを使い、エラーメッセージを読む
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| API key | "Password for the API" | A unique string that identifies your account and authorizes requests |
-| Rate limit | "They're throttling me" | Maximum requests per minute/hour to prevent abuse and ensure fair usage |
-| Token | "A word" (in API context) | A billing unit: input and output tokens are counted and charged separately |
-| Streaming | "Real-time responses" | Getting the response word by word instead of waiting for the full response |
+| API key | 「APIのパスワード」 | アカウントを識別し、リクエストを認可する一意の文字列 |
+| Rate limit | 「制限されている」 | 不正利用を防ぎ公平性を保つための、1分/1時間あたりの最大リクエスト数 |
+| Token | 「単語」（APIの文脈） | 課金単位。入力トークンと出力トークンは別々に数えられ、課金される |
+| Streaming | 「リアルタイム応答」 | 完全なレスポンスを待たず、単語ごとに応答を受け取ること |

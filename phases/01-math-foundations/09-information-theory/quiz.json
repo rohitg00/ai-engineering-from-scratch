@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does 'entropy' measure in information theory?",
-      "options": ["The energy of a physical system", "The average surprise or uncertainty in a probability distribution", "The number of bits in a binary message", "The error rate of a communication channel"],
+      "question": "情報理論で「エントロピー」は何を測りますか？",
+      "options": ["物理システムのエネルギー", "確率分布における平均的な驚き、または不確実性", "二値メッセージ内のbit数", "通信チャネルのエラー率"],
       "correct": 1,
-      "explanation": "Entropy H(P) = -sum(p(x) * log(p(x))) measures the average amount of surprise across all outcomes. High entropy means high uncertainty (uniform distribution). Low entropy means the outcome is predictable."
+      "explanation": "エントロピー H(P) = -sum(p(x) * log(p(x))) は、すべての結果にわたる平均的な驚きの量を測ります。高いエントロピーは高い不確実性（一様分布）を意味し、低いエントロピーは結果が予測しやすいことを意味します。"
     },
     {
       "stage": "pre",
-      "question": "What is the cross-entropy loss commonly used for in neural networks?",
-      "options": ["Regression tasks with continuous outputs", "Classification tasks, measuring how far predicted probabilities are from true labels", "Generating new data samples", "Regularizing model weights to prevent overfitting"],
+      "question": "ニューラルネットワークでクロスエントロピー損失は一般に何に使われますか？",
+      "options": ["連続値出力を持つ回帰タスク", "予測確率が真のラベルからどれだけ離れているかを測る分類タスク", "新しいデータサンプルの生成", "過学習を防ぐためのモデル重みの正則化"],
       "correct": 1,
-      "explanation": "Cross-entropy loss H(P,Q) = -sum(p(x)*log(q(x))) measures the difference between the true distribution (labels) and the model's predicted distribution. It is THE standard loss for classification."
+      "explanation": "クロスエントロピー損失 H(P,Q) = -sum(p(x)*log(q(x))) は、真の分布（ラベル）とモデルの予測分布の違いを測ります。分類の標準的な損失です。"
     },
     {
       "stage": "post",
-      "question": "Why is minimizing cross-entropy equivalent to minimizing KL divergence during training?",
-      "options": ["Because KL divergence is always zero during training", "Because cross-entropy = entropy + KL divergence, and the entropy of the true labels is constant, so minimizing cross-entropy minimizes KL divergence", "Because cross-entropy and KL divergence are the same formula", "Because the model's entropy equals zero at convergence"],
+      "question": "訓練中にクロスエントロピーの最小化がKLダイバージェンスの最小化と等価なのはなぜですか？",
+      "options": ["KLダイバージェンスは訓練中常にゼロだから", "cross-entropy = entropy + KL divergence であり、真のラベルのエントロピーは定数なので、クロスエントロピーを最小化するとKLダイバージェンスも最小化されるから", "クロスエントロピーとKLダイバージェンスは同じ式だから", "収束時にはモデルのエントロピーがゼロになるから"],
       "correct": 1,
-      "explanation": "H(P,Q) = H(P) + D_KL(P||Q). Since the true distribution P doesn't change during training, H(P) is constant. Minimizing H(P,Q) is the same as minimizing D_KL(P||Q) -- pushing the model toward the true distribution."
+      "explanation": "H(P,Q) = H(P) + D_KL(P||Q) です。真の分布Pは訓練中に変わらないので、H(P) は定数です。H(P,Q) を最小化することは D_KL(P||Q) を最小化することと同じで、モデルを真の分布へ近づけます。"
     },
     {
       "stage": "post",
-      "question": "A language model has perplexity 50 on a test set. What does this mean?",
-      "options": ["The model makes 50 errors per sentence", "On average, the model is as uncertain as if it were choosing uniformly from 50 possible next tokens at each step", "The model has 50 layers", "The model was trained for 50 epochs"],
+      "question": "ある言語モデルがテストセットでパープレキシティ50を持つとは、どういう意味ですか？",
+      "options": ["モデルが1文あたり50個の誤りをする", "平均すると、各ステップで50個の可能な次トークンから一様に選んでいるのと同じくらい不確実である", "モデルに50層ある", "モデルが50 epoch訓練された"],
       "correct": 1,
-      "explanation": "Perplexity = e^(cross-entropy). A perplexity of 50 means the model's uncertainty at each token is equivalent to picking randomly from 50 equally likely options. Lower perplexity means better predictions."
+      "explanation": "Perplexity = e^(cross-entropy) です。パープレキシティ50とは、各トークンでのモデルの不確実性が、50個の等確率な選択肢からランダムに選ぶ場合に相当するという意味です。低いパープレキシティほど予測がよいです。"
     },
     {
       "stage": "post",
-      "question": "How does mutual information differ from Pearson correlation for feature selection?",
-      "options": ["Mutual information is faster to compute", "Mutual information detects any statistical dependency (linear or nonlinear) while correlation only detects linear relationships", "Pearson correlation works for any data type while mutual information only works for continuous data", "They always give the same feature rankings"],
+      "question": "特徴量選択において、相互情報量はPearson相関とどう違いますか？",
+      "options": ["相互情報量の方が計算が速い", "相互情報量は線形・非線形を問わず任意の統計的依存を検出できる一方、相関は線形関係だけを検出する", "Pearson相関はあらゆるデータ型で使えるが、相互情報量は連続データでしか使えない", "両者は常に同じ特徴量ランキングを返す"],
       "correct": 1,
-      "explanation": "Mutual information I(X;Y) captures all statistical dependencies between variables, including nonlinear and non-monotonic ones. Pearson correlation only measures linear association, missing many important relationships."
+      "explanation": "相互情報量 I(X;Y) は、非線形や非単調なものも含め、変数間のすべての統計的依存を捉えます。Pearson相関は線形の関連だけを測るため、多くの重要な関係を見逃します。"
     }
   ]
 }

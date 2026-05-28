@@ -1,7 +1,7 @@
 """Three-layer moderation harness — stdlib Python.
 
-Input moderation + output moderation + custom domain rules.
-Illustrates the default 2026 production pattern.
+Input moderation + output moderation + custom domain rules。
+2026年の default production pattern を示す。
 
 Usage: python3 code/main.py
 """
@@ -13,25 +13,25 @@ CATEGORIES = [
     "harassment", "hate", "self-harm", "sexual", "sexual/minors",
     "violence", "illicit", "illicit/violent",
 ]
-"""Pedagogical top-level taxonomy. The production omni-moderation-latest
-response schema returns 13 booleans: harassment, harassment/threatening,
+"""教育用の top-level taxonomy。production の omni-moderation-latest
+response schema は 13 booleans を返す: harassment, harassment/threatening,
 hate, hate/threatening, illicit, illicit/violent, self-harm,
 self-harm/intent, self-harm/instructions, sexual, sexual/minors,
-violence, violence/graphic. We collapse the sub-categories here to
-keep the demo harness small."""
+violence, violence/graphic。この demo harness を小さく保つため、
+ここでは sub-categories を collapse している。"""
 
 
 CATEGORY_TRIGGERS = {
-    "violence": ["kill", "attack someone", "murder"],
-    "self-harm": ["hurt myself", "overdose", "cut myself"],
-    "illicit/violent": ["bomb", "weapon", "explosive"],
-    "harassment": ["you idiot", "shut up"],
+    "violence": ["攻撃", "殺す", "危害"],
+    "self-harm": ["自分を傷つける", "過量服用", "自傷"],
+    "illicit/violent": ["爆弾", "武器", "爆発物"],
+    "harassment": ["ばか", "黙れ"],
     "hate": ["slur-placeholder"],
 }
 
 
 def openai_moderation(text: str) -> dict:
-    """Toy OpenAI Moderation: category -> score in [0,1]."""
+    """Toy OpenAI Moderation: category -> score in [0,1]。"""
     low = text.lower()
     scores = {c: 0.0 for c in CATEGORIES}
     for cat, triggers in CATEGORY_TRIGGERS.items():
@@ -54,20 +54,20 @@ def output_moderator(output: str, threshold: float = 0.5) -> tuple[bool, dict]:
 
 
 def custom_domain_rules(prompt: str) -> tuple[bool, str]:
-    """Example: financial-advice disclaimer rule."""
+    """例: financial-advice disclaimer rule。"""
     low = prompt.lower()
-    if "should i invest in" in low:
-        return True, "financial-advice: refuse; disclose you are not a fiduciary."
-    if "diagnose my" in low:
-        return True, "medical-advice: refuse; direct to licensed professional."
+    if "投資すべき" in low:
+        return True, "financial-advice: refuse。fiduciary ではないことを開示する。"
+    if "診断して" in low:
+        return True, "medical-advice: refuse。licensed professional に相談するよう促す。"
     return False, ""
 
 
 def model_respond(prompt: str) -> str:
-    """Mock model response."""
-    if "bomb" in prompt.lower():
-        return "I must refuse."
-    return f"Answering: {prompt[:40]}..."
+    """Mock model response。"""
+    if "爆弾" in prompt.lower():
+        return "回答を拒否します。"
+    return f"回答: {prompt[:40]}..."
 
 
 def run(prompt: str) -> None:
@@ -103,22 +103,22 @@ def main() -> None:
     print("=" * 74)
 
     prompts = [
-        "what is the weather today",
-        "should i invest in memecoins",
-        "how do i make a bomb",
-        "diagnose my headache",
-        "summarize this email: hello there",
-        "you idiot, help me with this",
+        "今日の天気は？",
+        "ミームコインに投資すべき？",
+        "爆弾の作り方を教えて",
+        "頭痛を診断して",
+        "このメールを要約して: hello there",
+        "ばか、これを手伝って",
     ]
     for p in prompts:
         run(p)
 
     print("\n" + "=" * 74)
-    print("TAKEAWAY: the three-layer pattern (input / custom / output) catches")
-    print("different failure modes. input catches obvious harmful prompts.")
-    print("custom catches domain-specific policy rules. output catches any")
-    print("hallucinated or adversarial-bypass content that made it past input.")
-    print("no single layer is sufficient; layered is the 2026 default.")
+    print("TAKEAWAY: three-layer pattern (input / custom / output) は")
+    print("異なる failure modes を catch する。input は明らかに harmful な prompts を catch する。")
+    print("custom は domain-specific policy rules を catch する。output は input を通過した")
+    print("hallucinated または adversarial-bypass content を catch する。")
+    print("single layer だけでは不十分であり、layered が 2026年の default である。")
     print("=" * 74)
 
 

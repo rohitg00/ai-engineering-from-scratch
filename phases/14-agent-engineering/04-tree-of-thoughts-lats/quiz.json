@@ -1,46 +1,46 @@
 {
   "lesson": "04-tree-of-thoughts-lats",
-  "title": "Tree of Thoughts and LATS: Deliberate Search",
+  "title": "Tree of ThoughtsとLATS: 意図的なsearch",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does chain-of-thought struggle on Game of 24?",
+      "question": "chain-of-thoughtがGame of 24で苦戦するのはなぜですか？",
       "options": [
-        "The model cannot multiply integers",
-        "A linear walk cannot backtrack when an early step is wrong, so later steps compound the error",
-        "The prompt is too short",
-        "CoT requires a calculator tool that GPT-4 lacks"
+        "modelがintegerを掛け算できないから",
+        "linear walkでは早いstepが間違ったときにbacktrackできず、後続stepがerrorを複合させるから",
+        "promptが短すぎるから",
+        "CoTにはGPT-4が持たないcalculator toolが必要だから"
       ],
       "correct": 1,
-      "explanation": "Without branching, a wrong early subexpression poisons the rest of the chain; the paper measures only 4 percent for CoT."
+      "explanation": "branchingがないと、早い段階の誤ったsubexpressionがchainの残りを壊します。論文ではCoTは4%と測定されています。"
     },
     {
       "stage": "pre",
-      "question": "What is a node in a Tree of Thoughts search?",
+      "question": "Tree of Thoughts searchにおけるnodeとは何ですか？",
       "options": [
-        "A token produced by the model",
-        "A coherent intermediate step or thought, with K possible child expansions",
-        "A weight update during fine-tuning",
-        "A tool registered with the runtime"
+        "modelが生成したtoken",
+        "K個のchild expansionを持てる、一貫した中間stepまたはthought",
+        "fine-tuning中のweight update",
+        "runtimeに登録されたtool"
       ],
       "correct": 1,
-      "explanation": "ToT treats reasoning as a tree where each node is an intermediate thought that can expand into K children."
+      "explanation": "ToTはreasoningをtreeとして扱い、各nodeはK個のchildrenへexpandできる中間thoughtです。"
     },
     {
       "stage": "check",
-      "question": "Which of these three is NOT one of LATS's roles for the LLM?",
+      "question": "次のうち、LATSにおけるLLMのroleではないものはどれですか？",
       "options": [
-        "Policy that proposes next actions",
-        "Value function that scores partial trajectories",
-        "Self-reflector that writes reflections on failure",
-        "Optimizer that updates model weights between rollouts"
+        "next actionsを提案するPolicy",
+        "partial trajectoriesをscoreするValue function",
+        "failure時にreflectionを書くSelf-reflector",
+        "rollout間でmodel weightsを更新するOptimizer"
       ],
       "correct": 3,
-      "explanation": "LATS is gradient-free; the three LLM roles are policy, value, and self-reflector. There are no weight updates."
+      "explanation": "LATSはgradient-freeです。LLMの3 roleはpolicy、value、self-reflectorであり、weight updateはありません。"
     },
     {
       "stage": "check",
-      "question": "Name the four MCTS phases the lesson lists.",
+      "question": "このlessonが挙げるMCTSの4 phaseはどれですか？",
       "options": [
         "Sample, Score, Sort, Submit",
         "Select, Expand, Simulate, Backpropagate",
@@ -48,43 +48,43 @@
         "Search, Synthesize, Synthesize-Again, Stop"
       ],
       "correct": 1,
-      "explanation": "MCTS proceeds in select, expand, simulate, backpropagate per iteration."
+      "explanation": "MCTSはiterationごとにselect、expand、simulate、backpropagateで進みます。"
     },
     {
       "stage": "check",
-      "question": "In UCT, what is the role of the exploration constant c?",
+      "question": "UCTにおけるexploration constant cの役割は何ですか？",
       "options": [
-        "It scales the value estimate Q",
-        "It weights the exploration term sqrt(ln N / n) against the exploitation term Q",
-        "It sets the maximum tree depth",
-        "It controls the number of rollouts"
+        "value estimate Qをscaleする",
+        "exploitation term Qに対してexploration term sqrt(ln N / n)をどれだけ重く見るかを決める",
+        "maximum tree depthを設定する",
+        "rolloutsの数を制御する"
       ],
       "correct": 1,
-      "explanation": "c balances exploitation (Q) against the exploration term; tune per task."
+      "explanation": "cはexploitation（Q）とexploration termのbalanceを取ります。taskごとにtuneします。"
     },
     {
       "stage": "post",
-      "question": "When is search actively harmful compared to a single trajectory?",
+      "question": "single trajectoryと比べてsearchがむしろ有害になるのはいつですか？",
       "options": [
-        "When the evaluator is noisy and there is a single right answer, so the search converges on a good-scoring wrong answer",
-        "When the task involves multiple correct answers",
-        "Whenever tokens are cheap",
-        "When the task is code generation"
+        "evaluatorがnoisyでsingle right answerがあるため、searchが良く採点されるwrong answerに収束する場合",
+        "taskに複数の正答がある場合",
+        "tokensが安い場合",
+        "taskがcode generationの場合"
       ],
       "correct": 0,
-      "explanation": "A noisy value function plus a single correct answer is exactly when search overfits to the noise."
+      "explanation": "noisy value functionとsingle correct answerの組み合わせは、searchがnoiseにoverfitしやすい典型例です。"
     },
     {
       "stage": "post",
-      "question": "Roughly how much more token usage should you budget for ToT on Game of 24 compared with CoT?",
+      "question": "Game of 24のToTでは、CoTと比べておよそどれくらい多いtoken usageをbudgetすべきですか？",
       "options": [
-        "About 2x",
-        "About 10x",
-        "100x to 1000x",
-        "Less than CoT because of pruning"
+        "約2倍",
+        "約10倍",
+        "100倍から1000倍",
+        "pruningのおかげでCoT未満"
       ],
       "correct": 2,
-      "explanation": "The lesson cites 100-1000x token cost for ToT on Game of 24 versus CoT."
+      "explanation": "lessonではGame of 24におけるToTのtoken costを、CoT比100〜1000倍としています。"
     }
   ]
 }

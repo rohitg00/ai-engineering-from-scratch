@@ -1,111 +1,111 @@
 ---
 name: skill-svd
-description: Apply SVD to real problems including compression, denoising, recommendations, and least-squares solving
+description: 圧縮、ノイズ除去、推薦、最小二乗解法などの実問題にSVDを適用する
 phase: 1
 lesson: 11
 ---
 
-You are an expert at applying Singular Value Decomposition to practical engineering problems. When given a task involving matrices, data compression, noise, missing data, or linear systems, determine whether SVD is the right tool and how to apply it.
+あなたはSingular Value Decompositionを実用的なエンジニアリング問題へ適用する専門家です。行列、データ圧縮、ノイズ、欠損データ、線形システムを含むタスクが与えられたら、SVDが適切な道具かどうか、またどう適用すべきかを判断してください。
 
-## Decision Framework
+## 判断フレームワーク
 
-### Step 1: Identify the problem type
+### Step 1: 問題の種類を特定する
 
-- **Data compression / dimensionality reduction**: Use truncated SVD. Keep top k singular values. Choose k by energy threshold (95% is a common target) or by downstream task performance.
-- **Noise reduction**: Compute full SVD. Look for a gap in the singular value spectrum. Truncate below the gap. The gap separates signal from noise.
-- **Missing data / recommendations**: Fill missing entries (row means or zeros), compute SVD, reconstruct with low rank. In production, use ALS or incremental SVD that handle missing data natively.
-- **Least-squares / pseudoinverse**: Compute SVD. Invert non-zero singular values. Multiply V Sigma+ U^T by the target vector. More stable than normal equations.
-- **Text similarity / topic modeling**: Build term-document matrix. Apply SVD (this is LSA/LSI). Project documents and terms into the low-rank space. Use cosine similarity for comparisons.
-- **Numerical rank determination**: Compute SVD. Count singular values above a threshold (relative to the largest). This is more reliable than row reduction.
-- **Matrix norm computation**: Spectral norm = largest singular value. Frobenius norm = sqrt(sum of squared singular values). Nuclear norm = sum of singular values.
-- **Condition number**: sigma_max / sigma_min. Tells you how sensitive the system is to perturbations.
+- **データ圧縮 / 次元削減**: 切り詰めSVDを使う。上位k個の特異値を残す。kはエネルギーしきい値（95%が一般的な目標）または下流タスクの性能で選ぶ。
+- **ノイズ除去**: 完全SVDを計算する。特異値スペクトルのギャップを探す。ギャップより下を切り捨てる。ギャップが信号とノイズを分ける。
+- **欠損データ / 推薦**: 欠損要素を埋める（行平均またはゼロ）、SVDを計算する、低rankで再構成する。本番では欠損データをネイティブに扱うALSまたはincremental SVDを使う。
+- **最小二乗 / 擬似逆行列**: SVDを計算する。非ゼロ特異値を反転する。V Sigma+ U^Tをターゲットベクトルに掛ける。正規方程式より安定。
+- **テキスト類似度 / トピックモデリング**: 単語-文書行列を作る。SVDを適用する（これがLSA/LSI）。文書と単語を低rank空間へ射影する。比較にはcosine similarityを使う。
+- **数値rankの判定**: SVDを計算する。（最大値に対する相対）しきい値を超える特異値を数える。行基本変形より信頼できる。
+- **行列ノルムの計算**: スペクトルノルム = 最大特異値。Frobenius norm = sqrt(特異値の二乗和)。核ノルム = 特異値の和。
+- **条件数**: sigma_max / sigma_min。システムが摂動にどれだけ敏感かを示す。
 
-### Step 2: Choose the right variant
+### Step 2: 適切な変種を選ぶ
 
-| Situation | Method | Why |
+| 状況 | 手法 | 理由 |
 |-----------|--------|-----|
-| Dense matrix, full decomposition needed | `np.linalg.svd(A)` / `svd(A)` in Julia | Standard algorithm, numerically stable |
-| Only top k components needed | `scipy.sparse.linalg.svds(A, k)` | Faster than full SVD when k is small |
-| Sparse matrix | `scipy.sparse.linalg.svds` | Handles sparse storage efficiently |
-| Streaming data | Incremental SVD / online SVD | Updates decomposition without recomputing from scratch |
-| Missing data (recommendations) | ALS, Funk SVD, or NMF | Standard SVD requires a complete matrix |
-| Very large matrix (millions of rows) | Randomized SVD (`sklearn.utils.extmath.randomized_svd`) | O(mn log k) instead of O(mn min(m,n)) |
-| PCA on centered data | SVD of centered data matrix | Equivalent to eigendecomposition of covariance, but more stable |
+| 密行列で完全分解が必要 | `np.linalg.svd(A)` / Juliaの `svd(A)` | 標準アルゴリズムで、数値的に安定 |
+| 上位k成分だけが必要 | `scipy.sparse.linalg.svds(A, k)` | kが小さいと完全SVDより高速 |
+| 疎行列 | `scipy.sparse.linalg.svds` | 疎な格納を効率的に扱える |
+| ストリーミングデータ | Incremental SVD / online SVD | 最初から再計算せずに分解を更新できる |
+| 欠損データ（推薦） | ALS、Funk SVD、またはNMF | 標準SVDには完全な行列が必要 |
+| 非常に大きい行列（数百万行） | Randomized SVD（`sklearn.utils.extmath.randomized_svd`） | O(mn min(m,n))ではなくO(mn log k) |
+| 中心化済みデータのPCA | 中心化データ行列のSVD | 共分散の固有分解と等価だが、より安定 |
 
-### Step 3: Choose the rank k
+### Step 3: rank kを選ぶ
 
-- **Energy threshold**: Compute cumulative energy = sum(sigma_1^2 ... sigma_k^2) / sum(all sigma^2). Stop when energy exceeds 0.95 (or 0.99 for high-fidelity tasks).
-- **Gap detection**: Plot singular values. Look for a sharp drop. The gap indicates the boundary between signal and noise.
-- **Cross-validation**: For downstream tasks, sweep k and measure performance on held-out data.
-- **Elbow method**: Plot reconstruction error vs k. The elbow is where adding more components stops helping.
-- **Domain knowledge**: If you know the data has d underlying factors, use k = d.
+- **エネルギーしきい値**: 累積エネルギー = sum(sigma_1^2 ... sigma_k^2) / sum(all sigma^2) を計算する。エネルギーが0.95を超えたら止める（高忠実度タスクなら0.99）。
+- **ギャップ検出**: 特異値をプロットする。急な落ち込みを探す。そのギャップが信号とノイズの境界を示す。
+- **交差検証**: 下流タスクではkをスイープし、hold-outデータで性能を測る。
+- **エルボー法**: 再構成誤差 vs kをプロットする。エルボーは、成分を増やしても効かなくなる場所。
+- **ドメイン知識**: データにd個の潜在因子があるとわかっているなら、k = dを使う。
 
-### Step 4: Validate results
+### Step 4: 結果を検証する
 
-- **Reconstruction error**: Compute ||A - A_k|| / ||A||. Should be small if the truncation is meaningful.
-- **Explained variance**: For PCA/compression, report the fraction of total variance (energy) captured.
-- **Downstream task performance**: If SVD is a preprocessing step, measure the end-to-end metric.
-- **Visual inspection**: For images, compare original and reconstructed visually. For recommendations, check predictions against known ratings.
+- **再構成誤差**: ||A - A_k|| / ||A|| を計算する。切り詰めに意味があるなら小さいはず。
+- **説明分散**: PCA/圧縮では、捉えた全分散（エネルギー）の割合を報告する。
+- **下流タスク性能**: SVDが前処理なら、end-to-endの指標を測る。
+- **目視確認**: 画像では元画像と再構成画像を目で比較する。推薦では、既知の評価に対して予測を確認する。
 
-## Common Mistakes
+## よくある間違い
 
-- Computing SVD via eigendecomposition of A^T A. This squares the condition number and loses numerical precision. Use a dedicated SVD routine.
-- Using full SVD when only the top k components are needed. For large matrices, use truncated or randomized SVD.
-- Applying SVD directly to a matrix with missing entries. Standard SVD requires a complete matrix. Use matrix completion methods (ALS, Funk SVD) instead.
-- Ignoring centering. For PCA, the data must be centered (mean subtracted) before SVD. Without centering, the first component captures the mean, not the variance.
-- Over-truncating. If you keep too few singular values, you lose signal. If you keep too many, you keep noise. Use energy thresholds or cross-validation.
-- Confusing SVD with eigendecomposition. SVD works on any matrix (any shape, any rank). Eigendecomposition requires a square matrix with a full set of eigenvectors. For symmetric positive semi-definite matrices they are the same.
+- A^T Aの固有分解でSVDを計算する。これは条件数を二乗し、数値精度を失う。専用のSVDルーチンを使う。
+- 上位k成分だけが必要なのに完全SVDを使う。大規模行列では切り詰めSVDまたはrandomized SVDを使う。
+- 欠損要素を含む行列に標準SVDを直接適用する。標準SVDには完全な行列が必要。代わりにALSやFunk SVDなどの行列補完手法を使う。
+- 中心化を無視する。PCAでは、SVDの前にデータを中心化（平均を引く）する必要がある。中心化しないと、第1成分は分散ではなく平均を捉える。
+- 過度に切り詰める。特異値を少なすぎる数だけ残すと信号を失う。多すぎるとノイズを残す。エネルギーしきい値または交差検証を使う。
+- SVDと固有分解を混同する。SVDは任意の行列（任意の形、任意のrank）で機能する。固有分解には、完全な固有ベクトル集合を持つ正方行列が必要。対称半正定値行列では両者は同じ。
 
-## Code Patterns
+## コードパターン
 
-### Quick compression
+### クイック圧縮
 ```python
 U, S, Vt = np.linalg.svd(A, full_matrices=False)
 k = np.searchsorted(np.cumsum(S**2) / np.sum(S**2), 0.95) + 1
 A_compressed = U[:, :k] @ np.diag(S[:k]) @ Vt[:k, :]
 ```
 
-### Pseudoinverse for least squares
+### 最小二乗のための擬似逆行列
 ```python
 U, S, Vt = np.linalg.svd(A, full_matrices=False)
 S_inv = np.array([1/s if s > 1e-10 else 0 for s in S])
 x = Vt.T @ np.diag(S_inv) @ U.T @ b
 ```
 
-### Denoising
+### ノイズ除去
 ```python
 U, S, Vt = np.linalg.svd(noisy_data, full_matrices=False)
 k = find_gap(S)
 clean_data = U[:, :k] @ np.diag(S[:k]) @ Vt[:k, :]
 ```
 
-### Large-scale PCA
+### 大規模PCA
 ```python
 from sklearn.utils.extmath import randomized_svd
 U, S, Vt = randomized_svd(X_centered, n_components=50, random_state=42)
 explained_variance = S**2 / (n_samples - 1)
 ```
 
-## When NOT to use SVD
+## SVDを使わない場合
 
-- The matrix is very sparse and you only need a few components. Use sparse eigensolvers directly.
-- You need non-negative factors (topic modeling, spectral unmixing). Use NMF instead.
-- The data has strong non-linear structure that linear methods cannot capture. Use autoencoders or manifold learning.
-- You need real-time updates on streaming data and the matrix changes constantly. Use incremental/online SVD or approximate methods.
-- The matrix fits in memory but is so large that even randomized SVD is too slow. Consider sketching methods or sampling-based approaches.
+- 行列が非常に疎で、少数の成分だけが必要な場合。疎固有値ソルバを直接使う。
+- 非負の因子が必要な場合（トピックモデリング、スペクトル分解）。代わりにNMFを使う。
+- データに強い非線形構造があり、線形手法では捉えられない場合。autoencodersまたはmanifold learningを使う。
+- ストリーミングデータでリアルタイム更新が必要で、行列が常に変化する場合。incremental/online SVDまたは近似手法を使う。
+- 行列はメモリに収まるが、randomized SVDでも遅すぎるほど大きい場合。sketching手法またはsampling-basedな手法を検討する。
 
-## Computational Cost
+## 計算コスト
 
-| Method | Time | Space |
+| 手法 | 時間 | 空間 |
 |--------|------|-------|
-| Full SVD of m x n matrix | O(mn min(m,n)) | O(mn) |
-| Truncated SVD (top k) | O(mnk) | O((m+n)k) |
-| Randomized SVD (top k) | O(mn log k) | O((m+n)k) |
-| Power iteration (1 vector) | O(mn * iters) | O(m+n) |
+| m x n行列の完全SVD | O(mn min(m,n)) | O(mn) |
+| 切り詰めSVD（上位k） | O(mnk) | O((m+n)k) |
+| Randomized SVD（上位k） | O(mn log k) | O((m+n)k) |
+| べき反復（1ベクトル） | O(mn * iters) | O(m+n) |
 
-For a 10000 x 5000 matrix:
-- Full SVD: ~250 billion operations
-- Truncated SVD (k=50): ~2.5 billion operations
-- Randomized SVD (k=50): ~500 million operations
+10000 x 5000の行列では:
+- 完全SVD: 約2500億演算
+- 切り詰めSVD（k=50）: 約25億演算
+- Randomized SVD（k=50）: 約5億演算
 
-Choose the method that matches your scale and accuracy requirements.
+規模と精度要件に合う手法を選んでください。

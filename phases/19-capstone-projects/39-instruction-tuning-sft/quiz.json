@@ -1,78 +1,78 @@
 {
   "lesson": "phase-19/39-instruction-tuning-sft",
-  "title": "Instruction Tuning by Supervised Fine-Tuning",
+  "title": "Supervised Fine-Tuning による Instruction Tuning",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading: you give a vanilla base model the prompt 'What is the capital of France?'. It outputs 'And what about Italy and Spain too?'. Which best diagnoses the gap?",
+      "question": "vanilla base model に「フランスの首都は?」と与えると質問を続けました。何が不足していますか?",
       "options": [
-        "The model is missing the fact about Paris.",
-        "The model has the language model behaviour but no instruction-following format contract.",
-        "The model needs a larger vocabulary.",
-        "The base model must be reset and pretrained again."
+        "Paris の事実を知らない",
+        "language model behaviour はあるが instruction-following format contract がない",
+        "vocabulary が小さすぎる",
+        "base model を reset して pretrain し直す必要がある"
       ],
       "correct": 1,
-      "explanation": "The base model can extend text but has never been shown that an instruction expects a corresponding response. SFT teaches the format contract: see instruction, emit response."
+      "explanation": "base model は text continuation はできますが、instruction に response を返す形式を学んでいません。"
     },
     {
       "stage": "check",
-      "question": "The collate function sets labels[i] = -100 on instruction positions and on padding positions. Why does PyTorch cross-entropy treat these positions correctly?",
+      "question": "collate が instruction と padding positions の labels を -100 にします。PyTorch cross-entropy がこれを正しく扱う理由は?",
       "options": [
-        "Cross-entropy silently drops any negative target.",
-        "ignore_index=-100 is honoured by F.cross_entropy: those positions contribute zero loss and zero gradient.",
-        "The model output at those positions is set to NaN automatically.",
-        "PyTorch normalises by sequence length so masked positions cancel out."
+        "negative target は自動で落とされる",
+        "F.cross_entropy の ignore_index=-100 により、その位置は loss と gradient が0になる",
+        "model output が自動で NaN になる",
+        "sequence length で正規化され mask が相殺される"
       ],
       "correct": 1,
-      "explanation": "ignore_index is a documented argument of F.cross_entropy. Targets equal to it contribute zero to loss and zero to gradients. -100 is the conventional default value."
+      "explanation": "ignore_index は documented argument で、-100 は慣習的な default です。"
     },
     {
       "stage": "check",
-      "question": "Why does `shifted_loss` slice `logits[:, :-1, :]` and `labels[:, 1:]` instead of using them at the same positions?",
+      "question": "`shifted_loss` が同じ位置ではなく `logits[:, :-1, :]` と `labels[:, 1:]` を使う理由は?",
       "options": [
-        "To make the tensors the same size after the collate step.",
-        "Because the model at position i predicts the token at position i+1 under the causal next-token objective.",
-        "To exclude the final padding position automatically.",
-        "It is an optional optimisation; using same-position labels also works."
+        "collate 後に tensor size を揃えるため",
+        "causal next-token objective では position i が token i+1 を予測するため",
+        "final padding position を自動除外するため",
+        "optional optimization で same-position labels でも動く"
       ],
       "correct": 1,
-      "explanation": "Causal LM trains position i to predict token i+1. The slice aligns the prediction at position i with the gold label at position i+1, which is the standard next-token objective."
+      "explanation": "prediction at position i と gold label at position i+1 を合わせます。"
     },
     {
       "stage": "check",
-      "question": "You train without the mask: labels are equal to input_ids with no -100. The model trains but exact-match on the response is worse than with the mask. The most likely cause?",
+      "question": "mask なしで学習すると response の exact-match が悪くなりました。最もありそうな原因は?",
       "options": [
-        "The optimiser overfits the response tokens.",
-        "Most of the gradient signal goes to predicting the instruction (the largest masked region was holding it back).",
-        "Cross-entropy is unstable when the loss includes specials.",
-        "The model cannot learn the boundary token without the mask."
+        "optimizer が response tokens に overfit した",
+        "gradient の多くが instruction 予測に使われ、response にかかる有効 learning rate が下がった",
+        "cross-entropy は specials を含むと不安定",
+        "model は mask なしでは boundary token を学べない"
       ],
       "correct": 1,
-      "explanation": "When instruction positions count toward the loss, they dominate the gradient because there are usually more of them than response tokens. The effective learning rate on the part you care about (the response) drops, and the model spends capacity reconstructing inputs the user always supplies."
+      "explanation": "instruction positions が loss に入ると通常 response より多く、目的がずれます。"
     },
     {
       "stage": "post",
-      "question": "Exact-match is 0.85 on the held-out set. A reviewer says the model paraphrases correct answers and exact-match misses those. Which metric do you add to capture this?",
+      "question": "exact-match が0.85です。正しい paraphrase を拾う metric として何を足しますか?",
       "options": [
-        "Loss on the held-out set.",
-        "Token-level F1 against the reference, which credits overlap even when not character-identical.",
-        "Average sequence length.",
-        "Cross-entropy of the reference under the model."
+        "held-out loss",
+        "reference との token-level F1。表面が完全一致しなくても overlap を評価できる",
+        "average sequence length",
+        "model 下の reference cross-entropy"
       ],
       "correct": 1,
-      "explanation": "Token-level F1 (counted between predicted and reference tokens after normalisation) credits the model for getting most of the answer right even when surface form differs. This is lesson 41's job."
+      "explanation": "token-level F1 は正規化後の token overlap を評価します。"
     },
     {
       "stage": "post",
-      "question": "You want to use the SFT model in a chatbot that supports multi-turn dialogue. What is the minimum change required to the data and the mask?",
+      "question": "multi-turn chatbot に SFT model を使う最小変更は何ですか?",
       "options": [
-        "None: SFT models always handle multi-turn out of the box.",
-        "Add a USER and ASSISTANT marker per turn, concatenate turns, and mask everything except the assistant turn currently being trained on.",
-        "Switch the loss to mean-squared error.",
-        "Increase the vocabulary."
+        "不要。SFT model は常に multi-turn を扱える",
+        "turn ごとに USER と ASSISTANT marker を追加し、turns を concat し、学習対象の assistant turn 以外を mask する",
+        "loss を mean-squared error に変える",
+        "vocabulary を増やす"
       ],
       "correct": 1,
-      "explanation": "Multi-turn SFT generalises the single-turn template. Each turn gets a role marker. The mask is the union of all non-assistant positions plus padding. The training objective is unchanged."
+      "explanation": "single-turn template を role marker 付き multi-turn template に一般化します。"
     }
   ]
 }

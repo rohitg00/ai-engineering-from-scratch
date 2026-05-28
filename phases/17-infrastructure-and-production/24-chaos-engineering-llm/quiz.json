@@ -1,72 +1,72 @@
 {
   "lesson": "24-chaos-engineering-llm",
-  "title": "Chaos Engineering for LLM Production",
+  "title": "LLM Production のための Chaos Engineering",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which five prerequisites does the lesson require before running chaos in production?",
+      "question": "この lesson は production で chaos を実行する前に、どの 5 つの prerequisites を必須にしていますか。",
       "options": [
-        "Slack channel, sticker pack, mascot, hashtag, blog post",
-        "SLI/SLO, observability, automated rollback, structured runbooks, on-call",
-        "Vector database only",
-        "Three frontier models"
+        "Slack channel、sticker pack、mascot、hashtag、blog post",
+        "SLI/SLO、observability、automated rollback、structured runbooks、on-call",
+        "Vector database のみ",
+        "3 つの frontier models"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which four planes does the chaos architecture have, plus the feedback loop?",
+      "question": "chaos architecture には、feedback loop に加えてどの 4 つの planes がありますか。",
       "options": [
-        "Ingest, transform, store, serve",
-        "Train, eval, deploy, archive",
-        "Control, target, safety, observability — with feedback into SLO adjustments",
-        "Frontend, backend, mobile, web"
+        "Ingest、transform、store、serve",
+        "Train、eval、deploy、archive",
+        "Control、target、safety、observability。SLO adjustments への feedback つき",
+        "Frontend、backend、mobile、web"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the burn-rate alert guardrail do during chaos experiments?",
+      "question": "chaos experiments 中、burn-rate alert guardrail は何をしますか。",
       "options": [
-        "Disables observability",
-        "Auto-promotes the experiment to production",
-        "Speeds up the experiment",
-        "Pauses the experiment when daily error-budget burn exceeds roughly 2x expected"
+        "observability を無効化する",
+        "experiment を production に auto-promote する",
+        "experiment を高速化する",
+        "daily error-budget burn が想定のおよそ 2 倍を超えたら experiment を pause する"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which is an LLM-specific chaos experiment listed in the lesson?",
+      "question": "この lesson に挙げられている LLM-specific chaos experiment はどれですか。",
       "options": [
-        "Drop all DNS",
-        "Random fan-speed reduction",
-        "KV eviction storm that forces vLLM block-budget saturation",
-        "Reboot the entire datacenter"
+        "すべての DNS を落とす",
+        "fan-speed をランダムに下げる",
+        "vLLM block-budget saturation を強制する KV eviction storm",
+        "datacenter 全体を reboot する"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which cadence does the lesson recommend for chaos exercises?",
+      "question": "この lesson は chaos exercises にどの cadence を推奨していますか。",
       "options": [
-        "Weekly small canary, monthly game day with postmortem, quarterly cross-team resilience audit",
-        "Daily full-prod outages",
-        "Never",
-        "Yearly only"
+        "weekly small canary、postmortem つき monthly game day、quarterly cross-team resilience audit",
+        "毎日の full-prod outages",
+        "実行しない",
+        "年 1 回のみ"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What LLM-specific failure mode does the malformed-prompt experiment uncover?",
+      "question": "malformed-prompt experiment はどの LLM-specific failure mode を明らかにしますか。",
       "options": [
-        "Tokenizer stalls that lock up a worker on inputs like deeply nested unicode or huge UTF-8 codepoints",
+        "deeply nested unicode や huge UTF-8 codepoints のような input で worker を lock up させる tokenizer stalls",
         "Disk I/O contention",
         "GPU undervolt",
         "Network packet loss"

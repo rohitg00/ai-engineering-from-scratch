@@ -1,4 +1,4 @@
-"""Unit tests for the assembled GPT model and generation pipeline."""
+"""組み立てた GPT model と generation pipeline のユニットテスト。"""
 
 from __future__ import annotations
 

@@ -13,7 +13,7 @@ export function buildApp(): Hono {
   app.get("/document/:id", (c: Context) => {
     const id = c.req.param("id") ?? "";
     if (!id || !/^[A-Za-z0-9_-]+$/.test(id)) {
-      return c.json({ error: "bad document id" }, 400);
+      return c.json({ error: "document id が不正です" }, 400);
     }
     const doc = getFixture(id);
     if (!doc) {

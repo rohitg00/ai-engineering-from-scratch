@@ -4,25 +4,25 @@ export const KB: KbEntry[] = [
   {
     docId: "GDPR-Art-15",
     page: 1,
-    text: "The data subject has the right to obtain confirmation as to whether personal data are being processed.",
+    text: "data subject は personal data が処理されているかについて confirmation を得る権利を持ちます。",
     tag: "GDPR",
   },
   {
     docId: "GDPR-Art-17",
     page: 1,
-    text: "The data subject shall have the right to obtain erasure of personal data without undue delay.",
+    text: "data subject は undue delay なしに personal data の erasure を得る権利を持ちます。",
     tag: "GDPR",
   },
   {
     docId: "HIPAA-164.502",
     page: 14,
-    text: "Covered entity may not use or disclose protected health information except as permitted.",
+    text: "covered entity は許可されている場合を除き protected health information を使用または開示できません。",
     tag: "HIPAA",
   },
   {
     docId: "SOC2-CC6.1",
     page: 7,
-    text: "Logical access controls restrict access to information assets to authorized users.",
+    text: "logical access control は information asset への access を authorized user に制限します。",
     tag: "SOC2",
   },
 ];
@@ -55,12 +55,12 @@ export function tokenizeAnswer(query: string, citations: Citation[]): string[] {
   const first = citations[0];
   const lead =
     first === undefined
-      ? `No matching policy found for "${query}".`
-      : `Per ${first.docId}, ${first.snippet}`;
+      ? `"${query}" に一致する policy は見つかりませんでした。`
+      : `${first.docId} によると、${first.snippet}`;
   const rest = citations.slice(1);
   const tail =
     rest.length > 0
-      ? ` See also ${rest.map((c) => c.docId).join(", ")}.`
+      ? ` 関連: ${rest.map((c) => c.docId).join(", ")}。`
       : "";
   return (lead + tail).split(/(\s+)/).filter((t) => t.length > 0);
 }

@@ -1,29 +1,28 @@
 #!/usr/bin/env python3
-"""Validate external HTTP/HTTPS links in every markdown doc.
+"""すべてのMarkdown doc内の外部HTTP/HTTPSリンクを検証する。
 
-Requires Python 3.10+ (PEP 604 union types).
+Python 3.10+ が必要（PEP 604 union types）。
 
-Walks every `*.md` file under the repo (excluding `.git/`, `node_modules/`,
-`outputs/`), extracts `https?://` URLs from markdown link syntax and bare URLs,
-deduplicates, and validates each unique URL by HEAD request (falling back to
-GET on 405/501). Results are cached for 7 days at `.link-cache.json` (repo
-root, gitignored) so re-runs do not hammer external services.
+repo配下のすべての `*.md` ファイル（`.git/`、`node_modules/`、`outputs/` は除外）を
+走査し、Markdownリンク構文とbare URLから `https?://` URLを抽出し、重複排除したうえで、
+各unique URLをHEADリクエストで検証する（405/501ではGETへfallback）。結果はrepo rootの
+`.link-cache.json`（gitignored）に7日間cacheし、再実行で外部サービスを叩きすぎないようにする。
 
-Stdlib only. No `requests`, no `httpx`.
+stdlibのみ。`requests` も `httpx` も使わない。
 
-Usage:
-    python3 scripts/link_check.py                       # full check, group by file
-    python3 scripts/link_check.py --phase 14            # one phase
-    python3 scripts/link_check.py --path README.md      # one file
-    python3 scripts/link_check.py --path phases/14-... # one directory
-    python3 scripts/link_check.py --strict              # exit 1 on any broken link
-    python3 scripts/link_check.py --json                # machine-readable
-    python3 scripts/link_check.py --cache 0             # bypass cache for this run
-    python3 scripts/link_check.py --timeout 15          # per-request timeout (sec)
-    python3 scripts/link_check.py --concurrency 16      # worker threads
+使い方:
+    python3 scripts/link_check.py                       # 全チェック、file別にgroup
+    python3 scripts/link_check.py --phase 14            # 1フェーズ
+    python3 scripts/link_check.py --path README.md      # 1ファイル
+    python3 scripts/link_check.py --path phases/14-... # 1ディレクトリ
+    python3 scripts/link_check.py --strict              # broken linkがあればexit 1
+    python3 scripts/link_check.py --json                # 機械可読
+    python3 scripts/link_check.py --cache 0             # このrunではcacheを無視
+    python3 scripts/link_check.py --timeout 15          # requestごとのtimeout（秒）
+    python3 scripts/link_check.py --concurrency 16      # worker thread数
 
-Companion to `scripts/audit_lessons.py` (rule L010 validates *internal* links);
-this script handles the external HTTP/HTTPS surface.
+`scripts/audit_lessons.py` の対になるscript（rule L010は内部リンクを検証）。
+このscriptは外部HTTP/HTTPS面を扱う。
 """
 
 from __future__ import annotations
@@ -153,7 +152,7 @@ def strip_trailing_punct(url: str) -> str:
 
 
 def extract_urls(text: str) -> list[tuple[str, int]]:
-    """Return list of (url, line_number) tuples preserving order."""
+    """順序を保った (url, line_number) tuple のlistを返す。"""
     out: list[tuple[str, int]] = []
     seen_per_line: set[tuple[int, str]] = set()
     for lineno, line in enumerate(text.splitlines(), start=1):
@@ -195,7 +194,7 @@ def save_cache(entries: dict[str, dict[str, object]]) -> None:
     try:
         CACHE_PATH.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     except OSError as exc:
-        print(f"warning: could not write {CACHE_PATH.name}: {exc}", file=sys.stderr)
+        print(f"警告: {CACHE_PATH.name} に書き込めませんでした: {exc}", file=sys.stderr)
 
 
 def cache_is_fresh(entry: dict[str, object], cache_days: int) -> bool:
@@ -385,7 +384,7 @@ def run(args: argparse.Namespace) -> int:
         json.dump(report.to_dict(), sys.stdout, indent=2, sort_keys=True)
         sys.stdout.write("\n")
     else:
-        print(f"checked {report.checked_files} markdown files", file=sys.stderr)
+        print(f"{report.checked_files} 個のMarkdownファイルをチェック", file=sys.stderr)
         print(f"unique urls: {report.unique_urls}", file=sys.stderr)
         print(f"requested:   {report.requested}", file=sys.stderr)
         print(f"cache hits:  {report.cached_hits}", file=sys.stderr)
@@ -406,29 +405,29 @@ def run(args: argparse.Namespace) -> int:
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Validate external HTTP/HTTPS links across markdown docs.",
+        description="Markdown doc内の外部HTTP/HTTPSリンクを検証する。",
     )
-    parser.add_argument("--phase", type=int, default=None, help="restrict to phase NN")
-    parser.add_argument("--path", default=None, help="restrict to one file or directory")
-    parser.add_argument("--strict", action="store_true", help="exit 1 if any link is broken")
-    parser.add_argument("--json", action="store_true", help="emit machine-readable report")
+    parser.add_argument("--phase", type=int, default=None, help="phase NNだけに限定")
+    parser.add_argument("--path", default=None, help="1ファイルまたは1ディレクトリだけに限定")
+    parser.add_argument("--strict", action="store_true", help="broken linkがあればexit 1")
+    parser.add_argument("--json", action="store_true", help="機械可読レポートを出力")
     parser.add_argument(
         "--timeout",
         type=int,
         default=DEFAULT_TIMEOUT,
-        help=f"per-request timeout in seconds (default: {DEFAULT_TIMEOUT})",
+        help=f"requestごとのtimeout秒数（default: {DEFAULT_TIMEOUT}）",
     )
     parser.add_argument(
         "--concurrency",
         type=int,
         default=DEFAULT_CONCURRENCY,
-        help=f"worker threads (default: {DEFAULT_CONCURRENCY})",
+        help=f"worker thread数（default: {DEFAULT_CONCURRENCY}）",
     )
     parser.add_argument(
         "--cache",
         type=int,
         default=DEFAULT_CACHE_DAYS,
-        help=f"cache TTL in days; 0 disables (default: {DEFAULT_CACHE_DAYS})",
+        help=f"cache TTL日数。0で無効（default: {DEFAULT_CACHE_DAYS}）",
     )
     return parser.parse_args(argv)
 

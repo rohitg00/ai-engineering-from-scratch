@@ -1,17 +1,17 @@
 ---
 name: skill-prompt-patterns
-description: Decision framework for choosing the right prompt pattern based on task type, reliability requirements, and target model
+description: タスク種別、信頼性要件、対象モデルに基づいて適切なプロンプトパターンを選ぶための判断フレームワーク
 version: 1.0.0
 phase: 11
 lesson: 01
 tags: [prompt-engineering, patterns, llm, temperature, cross-model, few-shot, chain-of-thought]
 ---
 
-# Prompt Pattern Selection Guide
+# プロンプトパターン選択ガイド
 
-When building an LLM-powered feature, choose your prompt pattern before writing the prompt. The pattern determines the structure. The content fills it in.
+LLM を使った機能を作るときは、プロンプトを書く前にプロンプトパターンを選びます。パターンが構造を決め、内容はそこに流し込みます。
 
-## Pattern Decision Matrix
+## パターン判断マトリクス
 
 | Task Type | Primary Pattern | Secondary Pattern | Temperature | Few-Shot Needed? |
 |-----------|----------------|-------------------|-------------|-----------------|
@@ -26,54 +26,54 @@ When building an LLM-powered feature, choose your prompt pattern before writing 
 | Content moderation | Guardrail + Boundary | Few-Shot | 0.0 | Yes (5+ examples) |
 | Translation/adaptation | Audience Adapt | Few-Shot | 0.3 | Yes (2-3 examples) |
 
-## When to Use Each Pattern
+## 各パターンを使う場面
 
-**Persona Pattern**: use for every prompt as a baseline. The only question is how specific to make the role. For generic tasks, a broad role suffices. For domain-specific tasks, the role should name the domain, seniority level, and context.
+**Persona Pattern**: すべてのプロンプトの土台として使います。論点はロールをどこまで具体化するかだけです。汎用タスクなら広いロールで十分です。ドメイン固有タスクでは、ドメイン、熟練度、文脈をロールに含めます。
 
-**Few-Shot Pattern**: use when output format matters more than content. If the model needs to produce a specific JSON shape, CSV format, or classification label, examples are more effective than instructions. Rule of thumb: 2-3 examples for simple formats, 5+ for complex or ambiguous formats.
+**Few-Shot Pattern**: 内容より出力形式が重要なときに使います。特定の JSON 形状、CSV 形式、分類ラベルを出したい場合、説明より例のほうが効果的です。目安は、単純な形式なら 2-3 例、複雑または曖昧な形式なら 5 例以上です。
 
-**Chain-of-Thought Pattern**: use for math, logic, multi-step analysis, and any task where the model needs to "show its work." Improves accuracy by 10-40% on reasoning tasks (Wei et al., 2022). Do NOT use for simple factual lookups or extraction -- it wastes tokens.
+**Chain-of-Thought Pattern**: 数学、論理、多段階分析、モデルに「途中式」を示させたいタスクで使います。推論タスクでは精度を 10-40% 改善します (Wei et al., 2022)。単純な事実検索や抽出には使わないでください。トークンを浪費します。
 
-**Template Fill Pattern**: use for structured extraction where every output must have the same shape. Works best with temperature=0.0 and explicit "N/A" handling for missing fields.
+**Template Fill Pattern**: すべての出力を同じ形にしたい構造化抽出で使います。temperature=0.0 と、欠損フィールドに対する明示的な `N/A` 処理と相性がよいです。
 
-**Critique Pattern**: use when quality matters more than speed. The model generates, critiques, and improves. Roughly doubles token cost but significantly improves accuracy and completeness. Best for high-stakes outputs (reports, recommendations, public-facing content).
+**Critique Pattern**: 速度より品質が重要なときに使います。モデルが生成し、批評し、改善します。トークンコストはおよそ 2 倍になりますが、正確性と網羅性が大きく改善します。レポート、推奨、公開向けコンテンツなど高リスク出力に向きます。
 
-**Guardrail Pattern**: use for any user-facing system. Always include: scope boundaries, refusal behavior for out-of-scope requests, and explicit "I don't know" handling. Combine with input validation on the application side.
+**Guardrail Pattern**: ユーザー向けシステムでは必ず使います。含めるものは、スコープ境界、スコープ外要求への拒否動作、明示的な「わからない」処理です。アプリケーション側の入力検証と組み合わせます。
 
-**Meta-Prompt Pattern**: use to generate prompts for new tasks. Instead of writing a prompt from scratch, describe the task and let the model write the prompt. Then test and iterate. Saves time on initial prompt development.
+**Meta-Prompt Pattern**: 新しいタスク用のプロンプトを生成するときに使います。ゼロから書く代わりにタスクを説明し、モデルにプロンプトを書かせます。その後、テストして反復します。初期プロンプト開発の時間を節約できます。
 
-**Decomposition Pattern**: use for complex problems that benefit from divide-and-conquer. The model breaks the problem into parts, solves each, and combines. Most effective for tasks with 3-7 sub-problems.
+**Decomposition Pattern**: 分割統治が効く複雑な問題で使います。モデルが問題を分解し、各部分を解き、統合します。3-7 個のサブ問題を持つタスクで最も有効です。
 
-**Audience Adaptation Pattern**: use when the same content needs to serve different audiences. Specify the audience explicitly -- do not rely on the model guessing from context.
+**Audience Adaptation Pattern**: 同じ内容を異なる読者に合わせる必要があるときに使います。読者を明示してください。文脈からモデルに推測させないでください。
 
-**Boundary Pattern**: use for production systems that must NEVER answer certain types of questions. Stronger than guardrails because it defines a hard scope with an exact refusal message. Essential for compliance-sensitive domains.
+**Boundary Pattern**: 絶対に答えてはいけない種類の質問がある本番システムで使います。正確な拒否メッセージ付きの厳密なスコープを定義するため、通常のガードレールより強力です。コンプライアンスが重要な領域では必須です。
 
-## Cross-Model Compatibility
+## モデル横断の互換性
 
-Patterns ranked by how consistently they work across GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3:
+GPT-4o、Claude 3.5 Sonnet、Gemini 1.5 Pro、Llama 3 で一貫して機能する度合いによるランキングです。
 
 | Pattern | Cross-Model Consistency | Notes |
 |---------|------------------------|-------|
-| Few-Shot | Very high | Examples transfer well across all models |
-| Template Fill | Very high | Explicit structure leaves little room for divergence |
-| Chain-of-Thought | High | All major models support "think step by step" |
-| Persona | High | Works everywhere but different models respond to different role specificity levels |
-| Guardrail | Moderate | Claude follows guardrails most strictly; GPT-4o sometimes drifts in long conversations |
-| Critique | Moderate | Quality of self-critique varies significantly by model |
-| Meta-Prompt | Moderate | GPT-4o and Claude produce different prompt styles |
-| Boundary | Low-Moderate | Refusal behavior varies; test per model |
+| Few-Shot | Very high | 例はすべてのモデルに移植しやすい |
+| Template Fill | Very high | 明示的な構造により差異が出にくい |
+| Chain-of-Thought | High | 主要モデルはすべて「think step by step」に対応する |
+| Persona | High | どこでも効くが、モデルごとに最適な具体度は異なる |
+| Guardrail | Moderate | Claude は最も厳密に従う。GPT-4o は長い会話で逸れることがある |
+| Critique | Moderate | 自己批評の品質はモデル差が大きい |
+| Meta-Prompt | Moderate | GPT-4o と Claude は異なるプロンプトスタイルを生成する |
+| Boundary | Low-Moderate | 拒否動作はばらつくためモデルごとにテストする |
 
-## Common Mistakes
+## よくある間違い
 
-1. **Using Chain-of-Thought for everything**: CoT adds tokens and latency. Only use it when reasoning steps are needed.
-2. **Too many constraints**: more than 5-7 constraints and the model starts dropping some. Prioritize the 3 most important.
-3. **Contradictory persona + constraints**: "You are a creative writer" + "Never use metaphors" confuses the model.
-4. **No temperature specification**: leaving temperature at default (usually 1.0) when you need deterministic output.
-5. **Copy-pasting prompts across models**: always test. A prompt tuned for GPT-4o may underperform on Claude and vice versa.
-6. **Ignoring system message**: putting everything in the user message instead of using the system message for persistent rules.
-7. **Over-relying on negative constraints**: "Do NOT do X, Y, Z, A, B, C" is less effective than "ONLY do W." Positive framing gives the model a clear target.
+1. **何にでも Chain-of-Thought を使う**: CoT はトークンとレイテンシを増やします。推論ステップが必要なときだけ使います。
+2. **制約が多すぎる**: 5-7 個を超える制約は落とされ始めます。最重要の 3 個を優先してください。
+3. **ペルソナと制約が矛盾している**: 「創造的な作家」かつ「比喩を絶対に使わない」はモデルを混乱させます。
+4. **temperature を指定しない**: 決定的な出力が必要なのにデフォルト (多くは 1.0) のままにする失敗です。
+5. **モデル間でプロンプトをそのままコピーする**: 必ずテストします。GPT-4o 用に調整したプロンプトが Claude で劣ることも、その逆もあります。
+6. **system message を無視する**: 継続的なルールを system message に置かず、すべて user message に入れてしまう失敗です。
+7. **否定制約に頼りすぎる**: 「X, Y, Z, A, B, C をしない」より「W だけをする」のほうが明確な目標になります。
 
-## Reliability Targets
+## 信頼性目標
 
 | Use Case | Pattern Combination | Expected Accuracy | Token Cost |
 |----------|-------------------|-------------------|------------|

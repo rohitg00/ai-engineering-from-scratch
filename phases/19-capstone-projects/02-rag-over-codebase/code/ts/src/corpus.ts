@@ -9,7 +9,7 @@ export const SAMPLE_CORPUS: Chunk[] = [
     symbol: "AbortMultipartOnFail",
     body: "if ctx.Err() != nil { return abort() }; decrement bucket budget; retry with backoff",
     summary:
-      "aborts an in-flight S3 multipart upload and decrements the per-bucket retry budget",
+      "進行中の S3 multipart upload を abort し、bucket ごとの retry budget を減らす",
   },
   {
     repo: "uploader",
@@ -19,7 +19,7 @@ export const SAMPLE_CORPUS: Chunk[] = [
     symbol: "bucket_budget",
     body: "per_bucket_budget: 64; backoff_ms: [100, 500, 2500]; abort_threshold: 3",
     summary:
-      "declares the retry budget and exponential backoff schedule per S3 bucket",
+      "S3 bucket ごとの retry budget と exponential backoff schedule を宣言する",
   },
   {
     repo: "client",
@@ -28,7 +28,7 @@ export const SAMPLE_CORPUS: Chunk[] = [
     endLine: 61,
     symbol: "abortUpload",
     body: "await s3.abortMultipartUpload({Bucket, Key, UploadId}); metrics.inc('s3.abort')",
-    summary: "client-side S3 multipart abort with metrics instrumentation",
+    summary: "metrics instrumentation 付きの client-side S3 multipart abort",
   },
   {
     repo: "auth",
@@ -38,7 +38,7 @@ export const SAMPLE_CORPUS: Chunk[] = [
     symbol: "check_permission",
     body: "def check_permission(user, resource, action): return policy.evaluate(user, resource, action)",
     summary:
-      "central authorization gateway evaluating an OPA policy for user-resource-action",
+      "user-resource-action に対して OPA policy を評価する central authorization gateway",
   },
   {
     repo: "auth",
@@ -47,7 +47,7 @@ export const SAMPLE_CORPUS: Chunk[] = [
     endLine: 110,
     symbol: "evaluate",
     body: "def evaluate(user, resource, action): return self.engine.query('authz', input=...)",
-    summary: "OPA policy engine query wrapper for authorization checks",
+    summary: "authorization check 用の OPA policy engine query wrapper",
   },
   {
     repo: "catalog",
@@ -56,6 +56,6 @@ export const SAMPLE_CORPUS: Chunk[] = [
     endLine: 240,
     symbol: "rank_fusion",
     body: "pub fn rank_fusion(dense: Vec<Hit>, sparse: Vec<Hit>) -> Vec<Hit>",
-    summary: "reciprocal rank fusion of dense and sparse retrieval results",
+    summary: "dense と sparse retrieval result の reciprocal rank fusion",
   },
 ];

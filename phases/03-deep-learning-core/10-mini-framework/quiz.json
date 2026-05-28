@@ -1,37 +1,37 @@
 [
   {
-    "question": "What three responsibilities does the Module abstraction have in a deep learning framework?",
-    "options": ["Load data, preprocess data, augment data", "forward() for computation, backward() for gradients, parameters() for trainable weights", "Compile, optimize, deploy", "Tokenize, embed, decode"],
+    "question": "deep learning framework における Module abstraction の 3 つの責務は何ですか？",
+    "options": ["data を load する、data を preprocess する、data を augment する", "forward() で計算し、backward() で gradients を計算し、parameters() で trainable weights を返す", "compile する、optimize する、deploy する", "tokenize する、embed する、decode する"],
     "correct": 1,
-    "explanation": "Every Module implements forward() to compute output, backward() to propagate gradients, and parameters() to expose trainable weights. This uniform interface lets any module be composed with any other.",
+    "explanation": "すべての Module は、output を計算する forward()、gradients を伝播する backward()、trainable weights を公開する parameters() を実装します。この統一 interface により、任意の module を他の module と組み合わせられます。",
     "stage": "pre"
   },
   {
-    "question": "Why does Sequential process modules in reverse order during the backward pass?",
-    "options": ["It's arbitrary -- either direction works", "Gradients flow from the loss backward through the network, so the last layer computes gradients first", "Reverse order uses less memory", "It prevents gradient explosion"],
+    "question": "Sequential が backward pass で modules を逆順に処理するのはなぜですか？",
+    "options": ["任意であり、どちらの方向でも動くから", "gradients は loss から network を逆向きに流れるため、last layer が最初に gradients を計算するから", "逆順のほうが memory 使用量が少ないから", "gradient explosion を防ぐから"],
     "correct": 1,
-    "explanation": "The backward pass starts at the loss and propagates gradients toward the input. The last layer receives the loss gradient first, computes its local gradients, and passes them to the previous layer.",
+    "explanation": "backward pass は loss から始まり、input に向かって gradients を伝播します。last layer は loss gradient を最初に受け取り、自分の local gradients を計算して previous layer へ渡します。",
     "stage": "pre"
   },
   {
-    "question": "Why is optimizer.zero_grad() a separate call instead of being done automatically?",
-    "options": ["It's a PyTorch design mistake", "It allows gradient accumulation across multiple batches before taking a single optimizer step", "It saves memory", "It makes debugging easier"],
+    "question": "optimizer.zero_grad() が自動で実行されず、独立した呼び出しになっているのはなぜですか？",
+    "options": ["PyTorch の設計ミスだから", "1 回の optimizer step の前に複数 batches にわたって gradient accumulation できるようにするため", "memory を節約するため", "debugging を簡単にするため"],
     "correct": 1,
-    "explanation": "Separating zero_grad from step enables gradient accumulation: you can run backward() multiple times (across mini-batches) and sum the gradients before calling step(). This simulates larger batch sizes.",
+    "explanation": "zero_grad と step を分けることで gradient accumulation が可能になります。複数回 backward() を実行して（mini-batches 全体で）gradients を合計し、その後に step() を呼べます。これにより、より大きな batch size を模倣できます。",
     "stage": "post"
   },
   {
-    "question": "What is the correct order of operations in a training loop?",
+    "question": "training loop における正しい処理順序はどれですか？",
     "options": ["backward, forward, zero_grad, step", "forward, loss, zero_grad, backward, step", "zero_grad, forward, loss, backward, step", "forward, zero_grad, backward, loss, step"],
     "correct": 2,
-    "explanation": "The standard pattern: zero_grad (clear old gradients), forward (compute predictions), loss (compute scalar loss), backward (compute gradients), step (update parameters). Getting this order wrong causes subtle bugs.",
+    "explanation": "標準 pattern は、zero_grad（古い gradients を消す）、forward（predictions を計算する）、loss（scalar loss を計算する）、backward（gradients を計算する）、step（parameters を更新する）です。この順序を間違えると subtle bugs が起きます。",
     "stage": "post"
   },
   {
-    "question": "What is the role of the DataLoader in the framework?",
-    "options": ["It trains the model", "It splits data into batches and optionally shuffles between epochs for mini-batch gradient descent", "It computes the loss function", "It initializes the weights"],
+    "question": "framework における DataLoader の役割は何ですか？",
+    "options": ["model を学習する", "data を batches に分割し、mini-batch gradient descent のために必要なら epochs 間で shuffle する", "loss function を計算する", "weights を初期化する"],
     "correct": 1,
-    "explanation": "The DataLoader handles two practical concerns: batching (you can't fit all data in memory) and shuffling (random order prevents the model from memorizing data sequence).",
+    "explanation": "DataLoader は 2 つの実用上の問題を扱います。batching（すべての data を memory に載せられない）と shuffling（random order により model が data sequence を記憶するのを防ぐ）です。",
     "stage": "post"
   }
 ]

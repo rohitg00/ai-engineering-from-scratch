@@ -1,62 +1,62 @@
-# Matrix Transformations
+# 行列変換
 
-> A matrix is a machine that reshapes space. Learn what it does to every point, and you understand the whole transformation.
+> 行列は空間を変形する機械です。すべての点に何をするかを理解すれば、変換全体を理解できます。
 
-**Type:** Build
-**Languages:** Python, Julia
-**Prerequisites:** Phase 1, Lessons 01-02 (Linear Algebra Intuition, Vectors & Matrices Operations)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python, Julia
+**前提条件:** Phase 1, Lessons 01-02 (Linear Algebra Intuition, Vectors & Matrices Operations)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Construct rotation, scaling, shearing, and reflection matrices and apply them to 2D and 3D points
-- Compose multiple transformations by matrix multiplication and verify that order matters
-- Compute eigenvalues and eigenvectors of 2x2 matrices from the characteristic equation
-- Explain why eigenvalues determine PCA directions, RNN stability, and spectral clustering behavior
+- 回転、スケーリング、せん断、反射の行列を構成し、2Dおよび3Dの点へ適用する
+- 複数の変換を行列積で合成し、順序が重要であることを検証する
+- 特性方程式から2x2行列の固有値と固有ベクトルを計算する
+- 固有値がPCAの方向、RNNの安定性、スペクトルクラスタリングの挙動を決める理由を説明する
 
-## The Problem
+## 問題
 
-You read about PCA and see "find the eigenvectors of the covariance matrix." You read about model stability and see "check if all eigenvalues have magnitude less than 1." You read about data augmentation and see "apply a random rotation." None of this makes sense until you understand what matrices do to space geometrically.
+PCAについて読むと、「共分散行列の固有ベクトルを見つける」と書かれています。モデルの安定性について読むと、「すべての固有値の大きさが1未満か確認する」と書かれています。データ拡張について読むと、「ランダムな回転を適用する」と書かれています。行列が空間に対して幾何学的に何をするかを理解するまで、これらはどれも意味を持ちません。
 
-Matrices are not just grids of numbers. They are spatial machines. A rotation matrix spins points. A scaling matrix stretches them. A shearing matrix tilts them. Every transformation a neural network applies to data is one of these operations or a composition of them. This lesson makes those operations concrete.
+行列は単なる数値の格子ではありません。空間を扱う機械です。回転行列は点を回します。スケーリング行列は点を引き伸ばします。せん断行列は点を傾けます。ニューラルネットワークがデータに適用するすべての変換は、これらの操作のいずれか、またはそれらの合成です。このレッスンでは、その操作を具体的にします。
 
-## The Concept
+## 概念
 
-### Transformations as matrices
+### 行列としての変換
 
-Every linear transformation in 2D can be written as a 2x2 matrix. The matrix tells you exactly where the basis vectors [1, 0] and [0, 1] end up. Everything else follows.
+2Dのすべての線形変換は、2x2行列として書けます。その行列は、基底ベクトル [1, 0] と [0, 1] がどこへ移るかを正確に教えてくれます。残りはすべてそこから決まります。
 
 ```mermaid
 graph LR
-    subgraph Before["Standard Basis"]
-        e1["e1 = [1, 0] (along x)"]
-        e2["e2 = [0, 1] (along y)"]
+    subgraph Before["標準基底"]
+        e1["e1 = [1, 0] (x方向)"]
+        e2["e2 = [0, 1] (y方向)"]
     end
-    subgraph Transform["Matrix M"]
-        M["M = columns are new basis vectors"]
+    subgraph Transform["行列 M"]
+        M["M = 列が新しい基底ベクトル"]
     end
-    subgraph After["After Transformation M"]
-        e1p["e1' = new x-basis"]
-        e2p["e2' = new y-basis"]
+    subgraph After["変換 M の後"]
+        e1p["e1' = 新しいx基底"]
+        e2p["e2' = 新しいy基底"]
     end
     e1 --> M --> e1p
     e2 --> M --> e2p
 ```
 
-### Rotation
+### 回転
 
-A 2D rotation by angle theta keeps distances and angles intact. It moves every point along a circular arc.
+角度 theta による2D回転は、距離と角度を保ちます。すべての点を円弧に沿って動かします。
 
 ```mermaid
 graph LR
-    subgraph Before["Before Rotation"]
+    subgraph Before["回転前"]
         A["A(2, 1)"]
         B["B(0, 2)"]
     end
-    subgraph Rot["Rotate 45 degrees"]
+    subgraph Rot["45度回転"]
         R["R(θ) = [[cos θ, -sin θ], [sin θ, cos θ]]"]
     end
-    subgraph After["After Rotation"]
+    subgraph After["回転後"]
         Ap["A'(0.71, 2.12)"]
         Bp["B'(-1.41, 1.41)"]
     end
@@ -64,36 +64,36 @@ graph LR
     B --> R --> Bp
 ```
 
-In 3D, you rotate around an axis. Each axis has its own rotation matrix:
+3Dでは、ある軸の周りに回転します。各軸には、それぞれの回転行列があります。
 
 ```
-Rz(theta) = | cos  -sin  0 |     Rotate around z-axis
-            | sin   cos  0 |     (x-y plane spins, z stays)
+Rz(theta) = | cos  -sin  0 |     z軸まわりに回転
+            | sin   cos  0 |     (x-y平面が回り, zは変わらない)
             |  0     0   1 |
 
-Rx(theta) = | 1   0     0    |   Rotate around x-axis
-            | 0  cos  -sin   |   (y-z plane spins, x stays)
+Rx(theta) = | 1   0     0    |   x軸まわりに回転
+            | 0  cos  -sin   |   (y-z平面が回り, xは変わらない)
             | 0  sin   cos   |
 
-Ry(theta) = |  cos  0  sin |     Rotate around y-axis
-            |   0   1   0  |     (x-z plane spins, y stays)
+Ry(theta) = |  cos  0  sin |     y軸まわりに回転
+            |   0   1   0  |     (x-z平面が回り, yは変わらない)
             | -sin  0  cos |
 ```
 
-### Scaling
+### スケーリング
 
-Scaling stretches or compresses along each axis independently.
+スケーリングは、各軸に沿って独立に引き伸ばしたり縮めたりします。
 
 ```mermaid
 graph LR
-    subgraph Before["Before Scaling"]
+    subgraph Before["スケーリング前"]
         A["A(2, 1)"]
         B["B(0, 2)"]
     end
-    subgraph Scale["Scale sx=2, sy=0.5"]
+    subgraph Scale["sx=2, sy=0.5でスケーリング"]
         S["S = [[2, 0], [0, 0.5]]"]
     end
-    subgraph After["After Scaling"]
+    subgraph After["スケーリング後"]
         Ap["A'(4, 0.5)"]
         Bp["B'(0, 1)"]
     end
@@ -101,140 +101,140 @@ graph LR
     B --> S --> Bp
 ```
 
-### Shearing
+### せん断
 
-Shearing tilts one axis while keeping the other fixed. It turns rectangles into parallelograms.
+せん断は、一方の軸を固定したまま、もう一方の軸を傾けます。長方形を平行四辺形に変えます。
 
 ```mermaid
 graph LR
-    subgraph Before["Before Shear"]
+    subgraph Before["せん断前"]
         A["A(1, 0)"]
         B["B(0, 1)"]
     end
-    subgraph Shear["Shear in x, k=1"]
+    subgraph Shear["x方向のせん断, k=1"]
         Sh["Shx = [[1, k], [0, 1]]"]
     end
-    subgraph After["After Shear"]
-        Ap["A(1, 0) unchanged"]
-        Bp["B'(1, 1) shifted"]
+    subgraph After["せん断後"]
+        Ap["A(1, 0) 変化なし"]
+        Bp["B'(1, 1) ずれる"]
     end
     A --> Sh --> Ap
     B --> Sh --> Bp
 ```
 
-Shear matrices:
-- `Shx = [[1, k], [0, 1]]` shifts x by k * y
-- `Shy = [[1, 0], [k, 1]]` shifts y by k * x
+せん断行列:
+- `Shx = [[1, k], [0, 1]]` は x を k * y だけずらす
+- `Shy = [[1, 0], [k, 1]]` は y を k * x だけずらす
 
-### Reflection
+### 反射
 
-Reflection mirrors points across an axis or line.
+反射は、点を軸または直線に関して鏡映します。
 
 ```mermaid
 graph LR
-    subgraph Before["Before Reflection"]
+    subgraph Before["反射前"]
         A["A(2, 1)"]
     end
-    subgraph Reflect["Reflect across y-axis"]
+    subgraph Reflect["y軸に関して反射"]
         R["[[-1, 0], [0, 1]]"]
     end
-    subgraph After["After Reflection"]
+    subgraph After["反射後"]
         Ap["A'(-2, 1)"]
     end
     A --> R --> Ap
 ```
 
-Reflection matrices:
-- Reflect across y-axis: `[[-1, 0], [0, 1]]`
-- Reflect across x-axis: `[[1, 0], [0, -1]]`
+反射行列:
+- y軸に関して反射: `[[-1, 0], [0, 1]]`
+- x軸に関して反射: `[[1, 0], [0, -1]]`
 
-### Composition: chaining transformations
+### 合成: 変換をつなぐ
 
-Applying transformation A then B is the same as multiplying their matrices: `result = B @ A @ point`. Order matters. Rotate then scale gives different results than scale then rotate.
-
-```mermaid
-graph LR
-    subgraph Path1["Rotate 90 then Scale (2, 0.5)"]
-        P1["(1, 0)"] -->|"Rotate 90"| P2["(0, 1)"] -->|"Scale"| P3["(0, 0.5)"]
-    end
-```
-
-Composed: `S @ R = [[0, -2], [0.5, 0]]`
+変換Aを適用してからBを適用することは、それらの行列を掛けることと同じです。`result = B @ A @ point`。順序は重要です。回転してからスケーリングする場合と、スケーリングしてから回転する場合では結果が異なります。
 
 ```mermaid
 graph LR
-    subgraph Path2["Scale (2, 0.5) then Rotate 90"]
-        Q1["(1, 0)"] -->|"Scale"| Q2["(2, 0)"] -->|"Rotate 90"| Q3["(0, 2)"]
+    subgraph Path1["90度回転してからスケーリング (2, 0.5)"]
+        P1["(1, 0)"] -->|"90度回転"| P2["(0, 1)"] -->|"スケーリング"| P3["(0, 0.5)"]
     end
 ```
 
-Composed: `R @ S = [[0, -0.5], [2, 0]]`
+合成: `S @ R = [[0, -2], [0.5, 0]]`
 
-Different results. Matrix multiplication is not commutative.
+```mermaid
+graph LR
+    subgraph Path2["スケーリング (2, 0.5) してから90度回転"]
+        Q1["(1, 0)"] -->|"スケーリング"| Q2["(2, 0)"] -->|"90度回転"| Q3["(0, 2)"]
+    end
+```
 
-### Eigenvalues and eigenvectors
+合成: `R @ S = [[0, -0.5], [2, 0]]`
 
-Most vectors change direction when a matrix hits them. Eigenvectors are special: the matrix only scales them, never rotates them. The scaling factor is the eigenvalue.
+結果は異なります。行列積は可換ではありません。
+
+### 固有値と固有ベクトル
+
+ほとんどのベクトルは、行列を掛けると方向が変わります。固有ベクトルは特別です。行列はそれをスケールするだけで、回転させません。そのスケール係数が固有値です。
 
 ```
 A @ v = lambda * v
 
-v is the eigenvector (direction that survives)
-lambda is the eigenvalue (how much it stretches)
+v は固有ベクトル (変換後も残る方向)
+lambda は固有値 (どれだけ引き伸ばすか)
 
-Example: A = | 2  1 |
-             | 1  2 |
+例: A = | 2  1 |
+        | 1  2 |
 
-Eigenvector [1, 1] with eigenvalue 3:
-  A @ [1,1] = [3, 3] = 3 * [1, 1]     (same direction, scaled by 3)
+固有値3を持つ固有ベクトル [1, 1]:
+  A @ [1,1] = [3, 3] = 3 * [1, 1]     (同じ方向, 3倍にスケール)
 
-Eigenvector [1, -1] with eigenvalue 1:
-  A @ [1,-1] = [1, -1] = 1 * [1, -1]  (same direction, unchanged)
+固有値1を持つ固有ベクトル [1, -1]:
+  A @ [1,-1] = [1, -1] = 1 * [1, -1]  (同じ方向, 変化なし)
 ```
 
-The matrix stretches space by 3x along [1, 1] and keeps [1, -1] unchanged. Every other direction is a mix of these two.
+この行列は [1, 1] 方向に空間を3倍引き伸ばし、[1, -1] 方向は変えずに保ちます。それ以外の方向は、この2つの混合です。
 
-### Eigendecomposition
+### 固有分解
 
-If a matrix has n linearly independent eigenvectors, it can be decomposed:
+行列がn本の線形独立な固有ベクトルを持つなら、次のように分解できます。
 
 ```
 A = V @ D @ V^(-1)
 
-V = matrix whose columns are eigenvectors
-D = diagonal matrix of eigenvalues
-V^(-1) = inverse of V
+V = 固有ベクトルを列に持つ行列
+D = 固有値の対角行列
+V^(-1) = Vの逆行列
 
-This says: rotate into eigenvector coordinates, scale along each axis, rotate back.
+これは「固有ベクトル座標へ回転し、各軸に沿ってスケーリングし、元へ戻す」と言っている。
 ```
 
-### Why eigenvalues matter
+### 固有値が重要な理由
 
-**PCA.** The eigenvectors of the covariance matrix are the principal components. The eigenvalues tell you how much variance each component captures. Sort by eigenvalue, keep the top k, and you have dimensionality reduction.
+**PCA。** 共分散行列の固有ベクトルが主成分です。固有値は、それぞれの成分がどれだけ分散を捉えているかを教えてくれます。固有値で並べ、上位k個を残せば、次元削減になります。
 
-**Stability.** In recurrent networks and dynamical systems, eigenvalues with magnitude > 1 cause outputs to explode. Magnitude < 1 causes them to vanish. This is the vanishing/exploding gradient problem stated in one sentence.
+**安定性。** リカレントネットワークや力学系では、大きさが1より大きい固有値は出力を爆発させます。1より小さいと消失させます。これは勾配消失/勾配爆発問題を1文で表したものです。
 
-**Spectral methods.** Graph neural networks use eigenvalues of the adjacency matrix. Spectral clustering uses eigenvalues of the Laplacian. The eigenvectors reveal the structure of the graph.
+**スペクトル法。** グラフニューラルネットワークは隣接行列の固有値を使います。スペクトルクラスタリングはラプラシアンの固有値を使います。固有ベクトルはグラフの構造を明らかにします。
 
-### Determinant as volume scaling factor
+### 体積スケーリング係数としての行列式
 
-The determinant of a transformation matrix tells you how much it scales area (2D) or volume (3D).
+変換行列の行列式は、面積（2D）または体積（3D）をどれだけスケールするかを教えてくれます。
 
 ```
-det = 1:   area preserved (rotation)
-det = 2:   area doubled
-det = 0:   space crushed to lower dimension (singular)
-det = -1:  area preserved but orientation flipped (reflection)
+det = 1:   面積を保つ (回転)
+det = 2:   面積を2倍にする
+det = 0:   空間を低次元へつぶす (特異)
+det = -1:  面積は保つが向きを反転する (反射)
 
-| det(Rotation) | = 1        (always)
+| det(Rotation) | = 1        (常に)
 | det(Scale sx, sy) | = sx * sy
-| det(Shear) | = 1           (area preserved)
-| det(Reflection) | = -1     (orientation flipped)
+| det(Shear) | = 1           (面積を保つ)
+| det(Reflection) | = -1     (向きを反転する)
 ```
 
-## Build It
+## 作ってみる
 
-### Step 1: Transformation matrices from scratch (Python)
+### ステップ 1: 変換行列をスクラッチ実装する (Python)
 
 ```python
 import math
@@ -285,7 +285,7 @@ reflected = mat_vec_mul(reflection_y(), [2.0, 1.0])
 print(f"Reflect (2,1) across y: ({reflected[0]:.1f}, {reflected[1]:.1f})")
 ```
 
-### Step 2: Composition of transformations
+### ステップ 2: 変換の合成
 
 ```python
 R = rotation_2d(math.pi / 2)
@@ -303,9 +303,9 @@ print(f"Scale then rotate 90: ({result2[0]:.2f}, {result2[1]:.2f})")
 print(f"Same? {result1 == result2}")
 ```
 
-### Step 3: Eigenvalues from scratch (2x2)
+### ステップ 3: 固有値をスクラッチで求める (2x2)
 
-For a 2x2 matrix `[[a, b], [c, d]]`, eigenvalues solve the characteristic equation: `lambda^2 - (a+d)*lambda + (ad - bc) = 0`.
+2x2行列 `[[a, b], [c, d]]` について、固有値は特性方程式 `lambda^2 - (a+d)*lambda + (ad - bc) = 0` を解くことで得られます。
 
 ```python
 def eigenvalues_2x2(matrix):
@@ -350,7 +350,7 @@ for val in vals:
     print(f"    l*v = {[round(x,4) for x in scaled]}")
 ```
 
-### Step 4: Determinant as volume scaling factor
+### ステップ 4: 体積スケーリング係数としての行列式
 
 ```python
 def det_2x2(matrix):
@@ -366,9 +366,9 @@ print(f"det(singular)     = {det_2x2(singular):.1f}")
 print("Singular: columns are proportional, space collapses to a line.")
 ```
 
-## Use It
+## 使ってみる
 
-NumPy handles all of this with optimized routines.
+NumPyは、これらすべてを最適化済みルーチンで処理します。
 
 ```python
 import numpy as np
@@ -407,7 +407,7 @@ print(f"Original:\n{B}")
 print(f"Reconstructed:\n{reconstructed}")
 ```
 
-### 3D rotations with NumPy
+### NumPyによる3D回転
 
 ```python
 def rotation_3d_z(theta):
@@ -427,35 +427,35 @@ print(f"Rotate 90 around z: {np.round(rotated_z, 4)}")
 print(f"Rotate 90 around x: {np.round(rotated_x, 4)}")
 ```
 
-## Ship It
+## 成果物
 
-This lesson builds the geometric foundation for PCA (Phase 2) and neural network weight analysis. The eigenvalue/eigenvector code built here is the same algorithm that powers dimensionality reduction, spectral clustering, and stability analysis in production ML systems.
+このレッスンでは、PCA（Phase 2）とニューラルネットワークの重み解析に必要な幾何学的基礎を作ります。ここで作る固有値/固有ベクトルのコードは、本番の機械学習システムで次元削減、スペクトルクラスタリング、安定性解析を支えるものと同じアルゴリズムです。
 
-## Exercises
+## 演習
 
-1. Apply rotation, scaling, and shearing to a unit square (corners at [0,0], [1,0], [1,1], [0,1]). Print the transformed corners for each. Verify that rotation preserves distances between corners.
+1. 単位正方形（頂点は [0,0], [1,0], [1,1], [0,1]）に、回転、スケーリング、せん断を適用してください。それぞれについて変換後の頂点を出力してください。回転が頂点間の距離を保つことを検証してください。
 
-2. Find the eigenvalues of the matrix [[4, 2], [1, 3]] by hand using the characteristic equation. Then verify with your from-scratch function and with NumPy.
+2. 行列 [[4, 2], [1, 3]] の固有値を、特性方程式を使って手で求めてください。その後、自作関数とNumPyで検証してください。
 
-3. Create a composition of three transformations (rotate 30 degrees, scale by [1.5, 0.8], shear with kx=0.3) and apply it to 8 points arranged in a circle. Print before and after coordinates. Compute the determinant of the composed matrix and verify it equals the product of the individual determinants.
+3. 3つの変換（30度回転、[1.5, 0.8] によるスケーリング、kx=0.3のせん断）を合成し、円周上に並べた8個の点へ適用してください。変換前後の座標を出力してください。合成行列の行列式を計算し、それが個々の行列式の積と等しいことを検証してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Rotation matrix | "Spins things" | An orthogonal matrix that moves points along circular arcs while preserving distances and angles. Determinant is always 1. |
-| Scaling matrix | "Makes things bigger" | A diagonal matrix that stretches or compresses independently along each axis. Determinant is the product of scale factors. |
-| Shearing matrix | "Slants things" | A matrix that shifts one coordinate proportionally to another, turning rectangles into parallelograms. Determinant is 1. |
-| Reflection | "Mirrors things" | A matrix that flips space across an axis or plane. Determinant is -1. |
-| Composition | "Do two things" | Multiplying transformation matrices to chain operations. Order matters: B @ A means apply A first, then B. |
-| Eigenvector | "Special direction" | A direction that the matrix only scales, never rotates. The transformation's fingerprint. |
-| Eigenvalue | "How much it stretches" | The scalar factor by which the matrix scales its eigenvector. Can be negative (flip) or complex (rotation). |
-| Eigendecomposition | "Break the matrix apart" | Writing a matrix as V @ D @ V^(-1), separating it into its fundamental scaling directions and magnitudes. |
-| Determinant | "A single number from a matrix" | The factor by which the transformation scales area (2D) or volume (3D). Zero means the transformation is irreversible. |
-| Characteristic equation | "Where eigenvalues come from" | det(A - lambda * I) = 0. The polynomial whose roots are the eigenvalues. |
+| 回転行列 | 「ものを回す」 | 距離と角度を保ちながら点を円弧に沿って動かす直交行列。行列式は常に1。 |
+| スケーリング行列 | 「ものを大きくする」 | 各軸に沿って独立に引き伸ばしたり縮めたりする対角行列。行列式はスケール係数の積。 |
+| せん断行列 | 「斜めにする」 | ある座標を別の座標に比例してずらし、長方形を平行四辺形に変える行列。行列式は1。 |
+| 反射 | 「鏡映する」 | 軸または平面に関して空間を反転する行列。行列式は-1。 |
+| 合成 | 「2つのことをする」 | 変換行列を掛けて操作をつなげること。順序が重要: B @ A は先にAを適用し、次にBを適用することを意味する。 |
+| 固有ベクトル | 「特別な方向」 | 行列が回転させず、スケールだけする方向。変換の指紋。 |
+| 固有値 | 「どれだけ引き伸ばすか」 | 行列が固有ベクトルをスケールする倍率。負（反転）や複素数（回転）になることもある。 |
+| 固有分解 | 「行列を分解する」 | 行列を V @ D @ V^(-1) と書き、基本的なスケーリング方向と大きさに分けること。 |
+| 行列式 | 「行列から得られる1つの数」 | 変換が面積（2D）または体積（3D）をスケールする倍率。0なら変換は不可逆。 |
+| 特性方程式 | 「固有値の出どころ」 | det(A - lambda * I) = 0。根が固有値になる多項式。 |
 
-## Further Reading
+## 参考資料
 
-- [3Blue1Brown: Linear Transformations](https://www.3blue1brown.com/lessons/linear-transformations) -- visual intuition for how matrices reshape space
-- [3Blue1Brown: Eigenvectors and Eigenvalues](https://www.3blue1brown.com/lessons/eigenvalues) -- the best visual explanation of what eigenvectors mean geometrically
-- [MIT 18.06 Lecture 21: Eigenvalues and Eigenvectors](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) -- Gilbert Strang's classic treatment
+- [3Blue1Brown: Linear Transformations](https://www.3blue1brown.com/lessons/linear-transformations) -- 行列が空間をどう変形するかの視覚的な直感
+- [3Blue1Brown: Eigenvectors and Eigenvalues](https://www.3blue1brown.com/lessons/eigenvalues) -- 固有ベクトルの幾何学的意味に関する最高の視覚的説明
+- [MIT 18.06 Lecture 21: Eigenvalues and Eigenvectors](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) -- Gilbert Strangによる古典的な扱い

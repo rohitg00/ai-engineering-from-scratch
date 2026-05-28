@@ -1,26 +1,26 @@
-# Capstone 03 — Real-Time Voice Assistant (ASR to LLM to TTS)
+# Capstone 03 — Real-Time Voice Assistant (ASR から LLM、TTS へ)
 
-> A voice agent that feels right has end-to-end latency under 800ms, knows when you have stopped talking, handles barge-in, and can call a tool without stalling. Retell, Vapi, LiveKit Agents, and Pipecat all hit this bar in 2026. They do it with the same shape: a streaming ASR, a turn-detector, a streaming LLM, and a streaming TTS, all wired through WebRTC with aggressive latency budgets at every hop. Build one, measure WER and MOS and false-cutoff rate, and run it under packet loss.
+> 自然に感じる voice agent は end-to-end latency が 800ms 未満で、user が話し終えたタイミングを理解し、barge-in を処理し、tool call でも止まりません。Retell、Vapi、LiveKit Agents、Pipecat は2026年にこの基準へ到達しています。仕組みは同じです: streaming ASR、turn-detector、streaming LLM、streaming TTS を WebRTC で結び、各 hop に厳しい latency budget を置きます。これを作り、WER、MOS、false-cutoff rate を測り、packet loss 下で動かします。
 
-**Type:** Capstone
-**Languages:** Python (agent + pipeline), TypeScript (web client)
-**Prerequisites:** Phase 6 (speech and audio), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 17 (infrastructure)
+**種別:** Capstone
+**言語:** Python (agent + pipeline), TypeScript (web client)
+**前提条件:** Phase 6 (speech and audio), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 17 (infrastructure)
 **Phases exercised:** P6 · P7 · P11 · P13 · P14 · P17
-**Time:** 30 hours
+**所要時間:** 30時間
 
-## Problem
+## 問題
 
-Voice has been the fastest-moving AI UX category of 2025-2026. The technical ceiling dropped each quarter. OpenAI Realtime API, Gemini 2.5 Live, Cartesia Sonic-2, ElevenLabs Flash v3, LiveKit Agents 1.0, and Pipecat 0.0.70 all put sub-800ms first-audio-out within reach. The bar is not latency alone. It is the interaction feel: not cutting the user off, not getting cut off, recovering from a mid-sentence interruption, calling a tool mid-conversation without stalling the audio, surviving jittery mobile networks.
+voice は2025-2026年で最も速く進んだ AI UX category です。technical ceiling は四半期ごとに下がりました。OpenAI Realtime API、Gemini 2.5 Live、Cartesia Sonic-2、ElevenLabs Flash v3、LiveKit Agents 1.0、Pipecat 0.0.70 は、sub-800ms first-audio-out を現実的にしました。基準は latency だけではありません。user を遮らない、agent が遮られたら回復する、文の途中の interruption に対応する、会話中の tool call で audio が止まらない、jitter のある mobile network に耐える、という interaction feel です。
 
-You cannot get there by stitching three REST calls. The architecture is pipelined streaming end to end. Build it and the failure modes become visible: a VAD tuned for phone audio firing on background TV, a turn-detector waiting for punctuation that never comes, a TTS that buffers 400ms before emitting. The capstone is to fix these one at a time under load and publish a latency-and-quality report.
+3つの REST call をつなげても到達できません。architecture は end to end の pipelined streaming です。作って初めて failure mode が見えます。phone audio 用に調整した VAD が background TV に反応する、turn-detector が来ない punctuation を待つ、TTS が発話前に 400ms buffer する。capstone ではこれらを load 下で1つずつ直し、latency-and-quality report を公開します。
 
-## Concept
+## コンセプト
 
-The pipeline has five streaming stages: **audio in** (WebRTC from browser or PSTN), **ASR** (streaming partial transcripts from Deepgram Nova-3 or faster-whisper), **turn detection** (VAD plus a small turn-detector model that reads partial transcripts for completion cues), **LLM** (streaming tokens as soon as the turn is judged complete), **TTS** (streaming audio out within ~200ms of the first LLM token).
+pipeline には5つの streaming stage があります。**audio in** (browser または PSTN から WebRTC)、**ASR** (Deepgram Nova-3 または faster-whisper の streaming partial transcript)、**turn detection** (VAD と partial transcript から完了 cue を読む小さな turn-detector model)、**LLM** (turn complete と判断した瞬間から token を stream)、**TTS** (first LLM token から約200ms以内に audio out)。
 
-Three cross-cutting concerns. **Barge-in**: when the user starts speaking while the agent is speaking, the TTS cancels and the ASR picks up immediately. **Tool use**: mid-conversation function calls (weather, calendar) must run on a side channel without stalling the audio; the agent pre-fills an acknowledgement token ("one second...") if latency exceeds 300ms. **Backpressure**: under packet loss, partial transcripts are held, VAD raises the speech-gate threshold, and the agent avoids speaking over an unacknowledged message.
+横断的な concern は3つです。**Barge-in**: agent が話している最中に user が話し始めたら TTS を cancel し、ASR が即座に拾います。**Tool use**: weather や calendar の function call は side channel で走らせ、audio を止めません。300ms を超える場合、agent は「少々お待ちください」のような acknowledgment token を先に出します。**Backpressure**: packet loss 下では partial transcript を保持し、VAD の speech-gate threshold を上げ、未 ack の message の上から話さないようにします。
 
-The measurement bar is quantitative. WER under 8% on the Hamming VAD benchmark at 15 dB SNR. First-audio-out p50 under 800ms on 100 measured calls. False-cutoff rate under 3%. MOS above 4.2 on TTS. 50 concurrent calls on a single g5.xlarge. These numbers are the deliverable.
+測定基準は定量です。15 dB SNR の Hamming VAD benchmark で WER 8% 未満、100 measured calls の first-audio-out p50 が 800ms 未満、false-cutoff rate 3% 未満、TTS MOS 4.2 以上、single g5.xlarge で 50 concurrent calls。これらの数値が deliverable です。
 
 ## Architecture
 
@@ -60,34 +60,34 @@ browser / Twilio PSTN
 
 ## Stack
 
-- Transport: LiveKit Agents 1.0 (WebRTC) plus Twilio PSTN gateway; Pipecat 0.0.70 as the alternate framework
-- ASR: Deepgram Nova-3 (streaming, sub-300ms first partial) or faster-whisper Whisper-v3-turbo self-hosted
-- VAD: Silero VAD v5 plus the LiveKit turn-detector (small transformer that reads partial transcripts)
-- LLM: OpenAI GPT-4o-realtime for tight integration, Gemini 2.5 Flash Live, or cascaded Claude Haiku 4.5 (streaming completions, separate audio path)
-- TTS: Cartesia Sonic-2 (lowest first-byte), ElevenLabs Flash v3, or open-source Orpheus for self-host
-- Tools: FastMCP side-channel for weather/calendar/booking; agent pre-emits filler if tool takes >300ms
-- Observability: OpenTelemetry voice spans, Langfuse voice traces with audio replay
-- Deployment: single g5.xlarge (24GB VRAM) for self-hosted Whisper + Orpheus; hosted APIs for lowest latency
+- Transport: LiveKit Agents 1.0 (WebRTC) + Twilio PSTN gateway。代替 framework は Pipecat 0.0.70
+- ASR: Deepgram Nova-3 (streaming、sub-300ms first partial) または self-hosted faster-whisper Whisper-v3-turbo
+- VAD: Silero VAD v5 + LiveKit turn-detector (partial transcript を読む小さな transformer)
+- LLM: tight integration 用 OpenAI GPT-4o-realtime、Gemini 2.5 Flash Live、または cascaded Claude Haiku 4.5
+- TTS: lowest first-byte の Cartesia Sonic-2、ElevenLabs Flash v3、self-host 用 open-source Orpheus
+- Tools: weather/calendar/booking 用 FastMCP side-channel。tool が 300ms 超なら agent が filler を先に出す
+- Observability: OpenTelemetry voice spans、audio replay 付き Langfuse voice traces
+- Deployment: self-hosted Whisper + Orpheus には single g5.xlarge (24GB VRAM)、lowest latency には hosted APIs
 
-## Build It
+## 実装
 
-1. **WebRTC session.** Stand up a LiveKit room and a web client that streams microphone audio. On the server, attach an agent worker that joins the room.
+1. **WebRTC session.** LiveKit room と microphone audio を stream する web client を立てます。server では room に参加する agent worker を attach します。
 
-2. **ASR streaming.** Feed 20ms PCM frames to Deepgram Nova-3 (or faster-whisper on GPU). Subscribe to partial and final transcripts. Log per-partial latency.
+2. **ASR streaming.** 20ms PCM frame を Deepgram Nova-3 (または GPU 上の faster-whisper) に渡します。partial と final transcript を購読し、partial ごとの latency を log します。
 
-3. **VAD and turn detector.** Run Silero VAD v5 on the frame stream. On speech-end event, fire the LiveKit turn-detector against the latest partial transcript. Only commit to "turn complete" when VAD says silence for 500ms and the turn-detector scores completion > 0.6.
+3. **VAD and turn detector.** frame stream 上で Silero VAD v5 を実行します。speech-end event で最新 partial transcript を LiveKit turn-detector にかけます。VAD が500ms silence と言い、turn-detector が completion > 0.6 と score したときだけ "turn complete" とします。
 
-4. **LLM stream.** On turn complete, start the LLM call with the running conversation plus the final transcript. Stream tokens out. At the first token, hand off to TTS.
+4. **LLM stream.** turn complete になったら、running conversation と final transcript を渡して LLM call を開始します。token を stream し、first token で TTS に渡します。
 
-5. **TTS stream.** Cartesia Sonic-2 streams audio chunks back. The first chunk must leave the server within 200ms of the first LLM token. Emit chunks to LiveKit room; client plays through WebRTC jitter buffer.
+5. **TTS stream.** Cartesia Sonic-2 が audio chunk を stream back します。first chunk は first LLM token から 200ms 以内に server を出る必要があります。chunk を LiveKit room に emit し、client は WebRTC jitter buffer 経由で再生します。
 
-6. **Barge-in.** When VAD detects new user speech while TTS is playing, cancel the TTS stream immediately, drop the remaining LLM output, and re-arm the ASR. Publish a `tts_canceled` span.
+6. **Barge-in.** TTS 再生中に VAD が新しい user speech を検出したら、TTS stream を即座に cancel し、残りの LLM output を捨て、ASR を再 arm します。`tts_canceled` span を publish します。
 
-7. **Tool side channel.** Register weather and calendar as function-calling tools. When invoked, fire the call concurrently; if it does not resolve within 300ms, have the LLM emit "one second, let me check" as a filler; resume once the tool returns.
+7. **Tool side channel.** weather と calendar を function-calling tools として登録します。invoke されたら call を concurrent に発火し、300ms 以内に返らなければ LLM に filler を出させ、tool が返ったら resume します。
 
-8. **Eval harness.** Record 100 calls. Compute WER (against a held-out transcript), false-cutoff rate (TTS cancelled while user was mid-sentence), first-audio-out p50, TTS MOS (human or NISQA), and a jitter-loss test (drop 3% of packets).
+8. **Eval harness.** 100 calls を record します。WER (held-out transcript 対比)、false-cutoff rate (user の文中で TTS cancel した率)、first-audio-out p50、TTS MOS (human または NISQA)、jitter-loss test (3% packet drop) を計算します。
 
-9. **Load test.** Drive 50 concurrent calls on a single g5.xlarge with a synthetic caller. Measure sustained first-audio-out p95.
+9. **Load test.** synthetic caller で single g5.xlarge 上の 50 concurrent calls を駆動します。sustained first-audio-out p95 を測ります。
 
 ## Use It
 
@@ -104,46 +104,46 @@ turn latency: 1040ms user-stop -> audio-out
 
 ## Ship It
 
-`outputs/skill-voice-agent.md` is the deliverable. Given a domain (customer support, scheduling, or kiosk), it stands up a LiveKit agent with the ASR/VAD/LLM/TTS pipeline tuned to the measurement bar. Rubric:
+`outputs/skill-voice-agent.md` が deliverable です。domain (customer support、scheduling、kiosk など) を受け取り、measurement bar に合わせて調整した ASR/VAD/LLM/TTS pipeline を持つ LiveKit agent を立てます。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
-| 25 | End-to-end latency | p50 first-audio-out under 800ms across 100 recorded calls |
-| 20 | Turn-taking quality | False-cutoff rate under 3% on the Hamming VAD benchmark |
-| 20 | Tool-use correctness | Mid-conversation tool calls that return the right data without stalling audio |
-| 20 | Reliability under packet loss | WER and turn-taking stability with 3% packet drop injected |
-| 15 | Eval harness completeness | Reproducible measurements with public config |
+| 25 | End-to-end latency | 100 recorded calls で p50 first-audio-out が 800ms 未満 |
+| 20 | Turn-taking quality | Hamming VAD benchmark で false-cutoff rate が 3% 未満 |
+| 20 | Tool-use correctness | 会話中 tool call が audio を止めず正しい data を返すこと |
+| 20 | Reliability under packet loss | 3% packet drop 注入時の WER と turn-taking stability |
+| 15 | Eval harness completeness | public config で再現可能な measurements |
 | **100** | | |
 
 ## Exercises
 
-1. Swap Deepgram Nova-3 for faster-whisper v3 turbo on a g5.xlarge. Measure the latency and WER gap. Identify where CPU-vs-GPU decisions matter.
+1. Deepgram Nova-3 を g5.xlarge 上の faster-whisper v3 turbo に差し替えます。latency と WER gap を測り、CPU-vs-GPU decision が効く箇所を特定します。
 
-2. Add an interruption-arbitration policy: what does the agent do when the user barges in during a tool call? Compare three policies (hard cancel, finish-tool-then-stop, queue next turn).
+2. interruption-arbitration policy を追加します。tool call 中に user が barge in したら agent はどうするべきか。hard cancel、finish-tool-then-stop、queue next turn の3 policy を比較します。
 
-3. Run an adversarial turn-detector test: give the user long pauses mid-sentence. Tune the VAD silence threshold and the turn-detector score threshold for lowest false-cutoff without blowing past 900ms.
+3. adversarial turn-detector test を走らせます。user に文中の長い pause を与えます。false-cutoff を最小にしつつ 900ms を超えないよう、VAD silence threshold と turn-detector score threshold を調整します。
 
-4. Deploy the same agent on PSTN via Twilio. Compare PSTN first-audio-out to WebRTC. Explain the jitter-buffer and codec differences.
+4. 同じ agent を Twilio 経由で PSTN に deploy します。PSTN first-audio-out と WebRTC を比較し、jitter-buffer と codec の違いを説明します。
 
-5. Add voice activity detection for non-English languages (Japanese, Spanish). Measure the Silero VAD v5 false-trigger rate versus language-specific fine-tunes.
+5. 日本語・スペイン語など non-English language の voice activity detection を追加します。Silero VAD v5 の false-trigger rate と language-specific fine-tunes を比較します。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| Turn detection | "End of utterance" | Classifier that, given VAD silence and a partial transcript, decides the user is done speaking |
-| Barge-in | "Interruption handling" | Canceling TTS mid-playback when VAD detects new user speech |
-| First-audio-out | "Latency" | Time from user stops speaking to the first audio packet leaving the server |
-| VAD | "Speech gate" | Model classifying audio frames as speech vs silence; Silero VAD v5 is the 2026 default |
-| Jitter buffer | "Audio smoothing" | Client-side buffer that holds packets briefly to absorb network variance |
-| Filler | "Acknowledgment token" | Short phrase the agent emits to avoid silence when a tool is slow |
-| MOS | "Mean opinion score" | Perceptual speech quality rating; NISQA is the automated proxy |
+| Turn detection | 「End of utterance」 | VAD silence と partial transcript を受け取り、user が話し終えたか判定する classifier |
+| Barge-in | 「Interruption handling」 | VAD が新しい user speech を検出したとき TTS を mid-playback で cancel すること |
+| First-audio-out | 「Latency」 | user が話し終えてから、最初の audio packet が server を出るまでの時間 |
+| VAD | 「Speech gate」 | audio frame を speech / silence に分類する model。Silero VAD v5 が2026年の default |
+| Jitter buffer | 「Audio smoothing」 | network variance を吸収するため、packet を短時間保持する client-side buffer |
+| Filler | 「Acknowledgment token」 | tool が遅いときに沈黙を避けるため agent が出す短い phrase |
+| MOS | 「Mean opinion score」 | perceptual speech quality rating。NISQA は automated proxy |
 
-## Further Reading
+## 参考文献
 
 - [LiveKit Agents 1.0](https://github.com/livekit/agents) — reference WebRTC agent framework
 - [Pipecat](https://github.com/pipecat-ai/pipecat) — alternate Python-first streaming agent framework
-- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — reference for integrated speech models
+- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — integrated speech models の reference
 - [Deepgram Nova-3 documentation](https://developers.deepgram.com/docs) — streaming ASR reference
 - [Silero VAD v5](https://github.com/snakers4/silero-vad) — VAD reference model
 - [Cartesia Sonic-2](https://docs.cartesia.ai) — low-latency TTS reference

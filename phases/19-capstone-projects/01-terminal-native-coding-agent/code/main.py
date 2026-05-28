@@ -1,11 +1,11 @@
-"""Terminal-native coding agent — minimal plan/act/observe loop scaffold.
+"""ターミナルネイティブ Coding Agent の最小 plan/act/observe loop scaffold。
 
-The hard architectural primitive in a 2026 coding agent is not the model call
-or any single tool. It is the plan-act-observe-recover loop with bounded
-context, a structured plan state, a sandboxed tool dispatcher, and hook
-callbacks at every lifecycle point. This file implements that loop end to end
-in stdlib Python. The LLM is stubbed out with a deterministic script so the
-loop logic stays observable and testable without network calls.
+2026年の coding agent で難しい architectural primitive は model call や
+単体の tool ではありません。bounded context、structured plan state、
+sandboxed tool dispatcher、各 lifecycle point の hook callback を備えた
+plan-act-observe-recover loop です。このファイルはその loop を stdlib Python
+だけで end to end に実装します。LLM は deterministic script で stub し、
+network call なしでも loop logic を観測・test できるようにしています。
 
 Run:  python main.py
 """
@@ -22,7 +22,7 @@ from typing import Any, Callable
 
 
 # ---------------------------------------------------------------------------
-# plan state  --  TodoWrite shape, rewritten whole each turn
+# plan state  --  TodoWrite 形状。毎 turn 全体を書き換える
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -39,7 +39,7 @@ class PlanState:
     items: list[TodoItem] = field(default_factory=list)
 
     def summary(self) -> str:
-        lines = [f"GOAL: {self.goal}"]
+        lines = [f"目標: {self.goal}"]
         for it in self.items:
             mark = {"pending": " ", "in_progress": ">", "done": "x", "failed": "!"}[it.status]
             lines.append(f"  [{mark}] {it.id}. {it.description}")
@@ -47,7 +47,7 @@ class PlanState:
 
 
 # ---------------------------------------------------------------------------
-# budget  --  hard ceilings on turns, tokens, dollars
+# budget  --  turns, tokens, dollars の hard ceiling
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -75,7 +75,7 @@ class Budget:
 
 
 # ---------------------------------------------------------------------------
-# hooks  --  2026 eight-event surface (Pre/PostToolUse, SessionStart/End, etc)
+# hooks  --  2026年版の8 event surface (Pre/PostToolUse, SessionStart/End など)
 # ---------------------------------------------------------------------------
 
 HookFn = Callable[[dict[str, Any]], dict[str, Any]]
@@ -98,7 +98,7 @@ class HookBus:
 
 
 # ---------------------------------------------------------------------------
-# tool surface  --  six tools, each sandboxed, each returns truncated text
+# tool surface  --  各 tool は sandbox 化され、truncated text を返す
 # ---------------------------------------------------------------------------
 
 TRUNCATE_BYTES = 4096
@@ -107,7 +107,7 @@ TRUNCATE_BYTES = 4096
 def tool_read_file(sandbox: str, path: str) -> str:
     full = os.path.join(sandbox, path)
     if not os.path.realpath(full).startswith(os.path.realpath(sandbox)):
-        raise RuntimeError("path escapes sandbox")
+        raise RuntimeError("path が sandbox 外へ出ています")
     with open(full, "r", encoding="utf-8", errors="replace") as fh:
         return fh.read()[:TRUNCATE_BYTES]
 
@@ -126,30 +126,30 @@ TOOLS: dict[str, Callable[..., str]] = {
 
 
 # ---------------------------------------------------------------------------
-# stub model  --  deterministic script so loop is testable without LLM
+# stub model  --  LLM なしで loop を test できる deterministic script
 # ---------------------------------------------------------------------------
 
 SCRIPT = [
-    {"plan": [("locate target file", "in_progress"),
-              ("read and diagnose", "pending"),
-              ("apply fix and verify", "pending")],
+    {"plan": [("対象ファイルを探す", "in_progress"),
+              ("読み取って診断する", "pending"),
+              ("修正を適用して検証する", "pending")],
      "tool": ("run_shell", {"cmd": "ls"}),
      "tokens": 1200, "cost": 0.02},
-    {"plan": [("locate target file", "done"),
-              ("read and diagnose", "in_progress"),
-              ("apply fix and verify", "pending")],
+    {"plan": [("対象ファイルを探す", "done"),
+              ("読み取って診断する", "in_progress"),
+              ("修正を適用して検証する", "pending")],
      "tool": ("read_file", {"path": "README.md"}),
      "tokens": 900, "cost": 0.02},
-    {"plan": [("locate target file", "done"),
-              ("read and diagnose", "done"),
-              ("apply fix and verify", "done")],
-     "tool": None,  # terminal turn
+    {"plan": [("対象ファイルを探す", "done"),
+              ("読み取って診断する", "done"),
+              ("修正を適用して検証する", "done")],
+     "tool": None,  # 終了 turn
      "tokens": 600, "cost": 0.01},
 ]
 
 
 def model_step(plan: PlanState, turn: int) -> dict[str, Any]:
-    """Stubbed model: returns a plan rewrite and (optionally) a tool call."""
+    """stub model: plan rewrite と必要なら tool call を返す。"""
     if turn >= len(SCRIPT):
         return {"plan": plan.items, "tool": None, "tokens": 200, "cost": 0.005}
     s = SCRIPT[turn]
@@ -158,14 +158,14 @@ def model_step(plan: PlanState, turn: int) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
-# main loop  --  plan / act / observe / recover with full hook integration
+# main loop  --  hook 統合付き plan / act / observe / recover
 # ---------------------------------------------------------------------------
 
 def destructive_guard(payload: dict[str, Any]) -> dict[str, Any]:
     cmd = payload.get("args", {}).get("cmd", "")
     if "rm -rf" in cmd or "shutdown" in cmd:
         payload["blocked"] = True
-        payload["reason"] = "destructive command blocked by PreToolUse hook"
+        payload["reason"] = "破壊的なコマンドは PreToolUse hook でブロックされました"
     return payload
 
 
@@ -225,7 +225,7 @@ def run_agent(task: str, sandbox: str) -> dict[str, Any]:
 
 
 def main() -> None:
-    task = "demonstrate the plan-act-observe loop without network calls"
+    task = "network call なしで plan-act-observe loop をデモする"
     sandbox = os.path.dirname(os.path.abspath(__file__))
     result = run_agent(task, sandbox)
     print(result["plan"])
@@ -234,7 +234,7 @@ def main() -> None:
           f"tokens={result['budget']['tokens_used']} "
           f"dollars=${result['budget']['dollars_used']:.3f}")
     print("---")
-    print(f"trace events: {len(result['trace'])}")
+    print(f"trace event 数: {len(result['trace'])}")
     for ev in result["trace"]:
         print(" ", json.dumps(ev, default=str))
 

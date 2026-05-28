@@ -1,6 +1,6 @@
 ---
 name: skill-llm-evaluation
-description: Decision framework for choosing the right LLM evaluation strategy based on task type, budget, and requirements
+description: task type、budget、requirements に基づいて適切な LLM evaluation strategy を選ぶための decision framework
 version: 1.0.0
 phase: 10
 lesson: 10
@@ -9,48 +9,48 @@ tags: [evaluation, evals, benchmarks, llm-as-judge, elo, metrics]
 
 # LLM Evaluation Strategy
 
-When evaluating an LLM system, apply this decision framework to choose the right approach.
+LLM system を評価するときは、この decision framework を適用して適切な approach を選ぶ。
 
-## When to use each eval type
+## 各 eval type をいつ使うか
 
-**Benchmarks (MMLU, HumanEval, SWE-bench):** You are doing initial model selection. You need to narrow 10 candidate models to 3. Benchmarks give rough ranking at zero cost. Do not use benchmarks as your final evaluation.
+**Benchmarks (MMLU, HumanEval, SWE-bench):** 初期の model selection をしている。10 個の candidate models を 3 個に絞りたい。benchmarks はゼロコストで粗い ranking を与える。final evaluation として benchmarks を使ってはならない。
 
-**Custom evals:** You are building for production. You have a specific task with specific failure modes. Custom evals are the only evaluation that predicts real-world performance. Minimum 50 test cases for prototype, 200+ for production.
+**Custom evals:** production 向けに構築している。specific failure modes を持つ specific task がある。custom evals は real-world performance を予測する唯一の評価である。prototype では最低 50 test cases、production では 200+。
 
-**LLM-as-judge:** Your task is open-ended (summarization, writing, conversation). Exact match and token overlap metrics are too rigid. LLM-as-judge costs ~$0.01 per judgment and agrees with humans ~80% of the time. Always use a rubric, not a vague prompt.
+**LLM-as-judge:** task が open-ended (summarization, writing, conversation) である。exact match や token overlap metrics は硬すぎる。LLM-as-judge は judgment あたり約 $0.01 で、人間と約 80% の割合で一致する。曖昧な prompt ではなく、必ず rubric を使う。
 
-**Human evals:** The stakes are high and automated metrics disagree. Human eval is the ground truth but costs $0.10-$2.00 per judgment. Reserve for ambiguous cases and periodic calibration of automated metrics.
+**Human evals:** stakes が高く、automated metrics が一致しない。human eval は ground truth だが、judgment あたり $0.10-$2.00 かかる。ambiguous cases と automated metrics の定期 calibration に限定する。
 
-**ELO from pairwise comparisons:** You are comparing multiple models on the same task. Pairwise is more reliable than absolute scoring because humans (and LLM judges) are better at relative judgments.
+**ELO from pairwise comparisons:** 同じ task で複数 models を比較している。humans と LLM judges は relative judgments のほうが得意なため、pairwise は absolute scoring より信頼できる。
 
 ## Scoring function selection
 
-- **Exact match**: classification, entity extraction, structured outputs with known answers
-- **Token F1**: extraction tasks where partial credit matters
-- **ROUGE-L**: summarization, translation
+- **Exact match**: classification、entity extraction、known answers を持つ structured outputs
+- **Token F1**: partial credit が重要な extraction tasks
+- **ROUGE-L**: summarization、translation
 - **BLEU**: machine translation
-- **LLM-as-judge**: open-ended generation, conversational quality, helpfulness
-- **Execution-based**: code generation (run the code, check if tests pass)
-- **Schema compliance**: structured outputs (does the JSON match the schema?)
+- **LLM-as-judge**: open-ended generation、conversational quality、helpfulness
+- **Execution-based**: code generation (code を実行し、tests に通るか確認する)
+- **Schema compliance**: structured outputs (JSON が schema に一致するか)
 
-## Red flags in eval design
+## Eval design の red flags
 
-- Eval set smaller than 50 cases: results are statistically meaningless
-- No edge cases: you are measuring happy-path performance, which is always higher than real-world
-- Single metric: different metrics tell different stories, use at least two
-- No versioning: you cannot track improvement without versioned eval sets
-- Eval set contamination: never include eval examples in fine-tuning data or few-shot prompts
-- Testing only one model: you need a baseline (even a simple heuristic) for comparison
+- Eval set が 50 cases 未満: results は統計的に意味を持たない
+- Edge cases がない: happy-path performance を測っているだけで、これは常に real-world より高い
+- Single metric: metrics ごとに異なる story があるため、少なくとも 2 つ使う
+- Versioning がない: versioned eval sets なしでは improvement を追跡できない
+- Eval set contamination: eval examples を fine-tuning data や few-shot prompts に絶対に含めない
+- 1 つの model だけをテストしている: comparison のための baseline が必要。単純な heuristic でもよい
 
 ## Eval pipeline checklist
 
-1. Define the task precisely (not "answer questions" but "classify support tickets into 5 categories")
-2. Create test cases across happy path, edge cases, and known regressions
-3. Select 2-3 scoring functions appropriate for the task type
-4. Set pass/fail thresholds based on production requirements
-5. Automate execution: one command runs the full suite
-6. Version everything: test cases, scoring functions, prompts, model versions
-7. Run on every change: prompt updates, model swaps, code deployments
-8. Track trends: a single score is noise, a trendline is signal
-9. Calibrate against human judgment quarterly
-10. Add regression cases whenever a production failure is discovered
+1. task を正確に定義する ("answer questions" ではなく "classify support tickets into 5 categories")
+2. happy path、edge cases、known regressions にまたがる test cases を作る
+3. task type に適した 2-3 個の scoring functions を選ぶ
+4. production requirements に基づいて pass/fail thresholds を設定する
+5. execution を自動化する。1 コマンドで full suite が走る
+6. すべてを version 管理する: test cases、scoring functions、prompts、model versions
+7. すべての change で実行する: prompt updates、model swaps、code deployments
+8. trends を追跡する。single score は noise、trendline は signal
+9. 四半期ごとに human judgment と calibration する
+10. production failure が見つかるたびに regression cases を追加する

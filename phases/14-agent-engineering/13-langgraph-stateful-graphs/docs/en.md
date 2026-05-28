@@ -1,121 +1,121 @@
 # LangGraph: Stateful Graphs and Durable Execution
 
-> LangGraph is the 2026 reference for low-level stateful orchestration. Agent is a state machine; nodes are functions; edges are transitions; state is immutable and checkpointed after every step. Resume from any failure exactly where it left off.
+> LangGraphは、2026年時点の低レベルなstateful orchestrationの基準です。Agentはstate machine、nodeは関数、edgeは遷移、stateはimmutableで各step後にcheckpointされます。どの失敗からでも、止まった場所から正確に再開できます。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Describe LangGraph's core model: state machine with immutable state, function nodes, conditional edges, and post-step checkpoints.
-- Name the four capabilities the docs highlight: durable execution, streaming, human-in-the-loop, comprehensive memory.
-- Explain the three orchestration topologies LangGraph supports: supervisor, peer-to-peer (swarm), hierarchical (nested subgraphs).
-- Implement a stdlib state graph with immutable state, conditional edges, and a checkpoint/resume cycle.
+- LangGraphの中核モデルを説明する: immutable stateを持つstate machine、関数node、conditional edge、step後checkpoint。
+- docsが強調する4つのcapabilityを挙げる: durable execution、streaming、human-in-the-loop、comprehensive memory。
+- LangGraphが支援する3つのorchestration topologyを説明する: supervisor、peer-to-peer (swarm)、hierarchical (nested subgraphs)。
+- immutable state、conditional edge、checkpoint/resume cycleを備えたstdlib state graphを実装する。
 
-## The Problem
+## 問題
 
-Agents and workflows share a problem: when a 40-step run fails at step 38, you want to resume from step 38, not start over. Second-class state models leave operators hacking retries around a library that assumes fresh runs.
+Agentとworkflowには共通の問題があります。40 stepのrunが38 step目で失敗したら、最初からやり直すのではなく38 step目から再開したいはずです。stateを二級扱いするモデルでは、毎回fresh runを前提にするlibraryの外側にoperatorがretry処理を貼り付けることになります。
 
-LangGraph's design answer: state is a first-class typed object, mutations are explicit, and checkpoints persist after every node. Resume is a `load_state(session_id)` call.
+LangGraphの設計上の答えは、stateをfirst-classなtyped objectにし、mutationを明示し、各node後にcheckpointを永続化することです。再開は`load_state(session_id)`呼び出しになります。
 
 ## The Concept
 
 ### The graph
 
-A graph is defined by:
+graphは次で定義されます。
 
-- **State type.** A typed dict (or Pydantic model) that every node reads and mutates.
-- **Nodes.** Pure functions `(state) -> state_update`. Updates are merged into state after return.
-- **Edges.** Conditional or direct transitions between nodes.
-- **Entry and exit.** `START` and `END` sentinel nodes mark the boundary.
+- **State type.** すべてのnodeが読み、変更するtyped dict (またはPydantic model)。
+- **Nodes.** pure function `(state) -> state_update`。返り値のupdateはstateへmergeされる。
+- **Edges.** node間のconditionalまたはdirect transition。
+- **Entry and exit.** `START`と`END`のsentinel nodeが境界を示す。
 
-Example: an agent with `classify`, `refund`, `bug`, `sales`, `done` nodes — a routing workflow as a graph.
+例: `classify`、`refund`、`bug`、`sales`、`done` nodeを持つagent。これはrouting workflowをgraphとして表したものです。
 
 ### Durable execution
 
-After each node returns, the runtime serializes the state and writes it to a checkpointer (SQLite, Postgres, Redis, custom). On failure at step N, the runtime can `resume(session_id)` and pick up from step N+1 with exact state.
+各nodeが返った後、runtimeはstateをserializeし、checkpointer (SQLite、Postgres、Redis、custom)へ書き込みます。step Nで失敗した場合、runtimeは`resume(session_id)`でstep N+1から正確なstateを使って続行できます。
 
-The LangGraph docs explicitly highlight production users where this matters: Klarna, Uber, J.P. Morgan. The claim isn't the graph shape; it's that the graph shape plus checkpointing makes recovery cheap.
+LangGraph docsは、この性質が重要になるproduction userとしてKlarna、Uber、J.P. Morganを明示しています。主張の中心はgraph shapeそのものではありません。graph shapeにcheckpointingを組み合わせることでrecoveryが安くなる、という点です。
 
 ### Streaming
 
-Every node can yield partial output. The graph streams per-node-delta events to the caller so UIs update as the graph runs.
+各nodeはpartial outputをyieldできます。graphはnodeごとの差分eventをcallerへstreamするため、UIはgraphの実行中に更新できます。
 
 ### Human-in-the-loop
 
-Inspect and modify state between nodes. Implementations: pause before a critical node, surface state to a human, accept modifications, resume. The checkpointer makes this easy because state is already serialized.
+node間でstateをinspectし、変更します。実装は、critical nodeの前でpauseし、stateをhumanに提示し、修正を受け入れてresumeする形です。stateはすでにserializeされているため、checkpointerがこれを簡単にします。
 
 ### Memory
 
-Short-term (within a run — conversation history in state) and long-term (across runs — persistent via the checkpointer plus a separate long-term store). LangGraph integrates with external memory systems (Mem0, custom) via tools.
+short-term (1 run内のconversation historyをstateに持つ) とlong-term (runをまたぐ永続memory。checkpointerと別のlong-term storeで保持) があります。LangGraphはtool経由で外部memory system (Mem0、customなど) と統合します。
 
 ### Three topologies
 
-1. **Supervisor.** Central router LLM dispatches to specialist subagents. `create_supervisor()` in `langgraph-supervisor` (though the LangChain team in 2026 recommends doing this through tool calls directly for more context control).
-2. **Swarm / peer-to-peer.** Agents hand off directly via a shared tool surface. No central router.
-3. **Hierarchical.** Supervisors managing sub-supervisors, implemented as nested subgraphs.
+1. **Supervisor.** central router LLMがspecialist subagentsへdispatchする。`langgraph-supervisor`の`create_supervisor()` (ただし2026年のLangChain teamは、context controlを高めるためdirect tool callで実装することを推奨している)。
+2. **Swarm / peer-to-peer.** agentがshared tool surface経由で直接handoffする。central routerはない。
+3. **Hierarchical.** supervisorがsub-supervisorを管理する。nested subgraphsとして実装する。
 
 ### Where this pattern goes wrong
 
-- **Checkpoints too small.** Only checkpointing conversation turns leaves tool state and memory writes unrecoverable. Full state must serialize.
-- **Non-deterministic nodes.** Resume assumes node inputs produce the same state update. Random seeds, wall-clock, external APIs must be captured.
-- **Over-use of conditional edges.** A graph with every edge conditional is a state machine that cannot be reasoned about. Prefer linear chains with occasional branches.
+- **Checkpointが小さすぎる。** conversation turnだけをcheckpointすると、tool stateとmemory writeはrecover不能になります。full stateをserializeする必要があります。
+- **非決定的なnode。** resumeは、同じnode inputが同じstate updateを生む前提です。random seed、wall-clock、external APIはcapturedにする必要があります。
+- **conditional edgeの使いすぎ。** すべてのedgeがconditionalなgraphは、reasoningできないstate machineになります。基本はlinear chainにし、ときどきbranchする程度にします。
 
-## Build It
+## 実装
 
-`code/main.py` implements a stdlib stateful graph:
+`code/main.py`はstdlib stateful graphを実装しています。
 
-- `State` — a typed dict with `messages`, `step`, `route`, `output`, `human_approval`.
-- `Node` — callable taking state and returning an update dict.
-- `StateGraph` — nodes + edges + conditional edges + run + resume.
-- `SQLiteCheckpointer` (in-memory fake) — serializes state after every node; `load(session_id)` restores.
-- A demo graph: classify -> branch(refund / bug / sales) -> human gate -> send.
+- `State` — `messages`、`step`、`route`、`output`、`human_approval`を持つtyped dict。
+- `Node` — stateを受け取りupdate dictを返すcallable。
+- `StateGraph` — nodes + edges + conditional edges + run + resume。
+- `SQLiteCheckpointer` (in-memory fake) — 各node後にstateをserializeする。`load(session_id)`でrestoreする。
+- demo graph: classify -> branch(refund / bug / sales) -> human gate -> send。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-The trace shows the first run failing at the human gate, persistence, then resume producing the final output.
+traceでは、最初のrunがhuman gateで失敗し、永続化され、その後resumeしてfinal outputを生成する様子が見えます。
 
 ## Use It
 
-- **LangGraph** — the reference, production-ready. Use `create_react_agent`, `create_supervisor`, or build your own graph.
-- **AutoGen v0.4** (Lesson 14) — actor model alternative for high-concurrency scenarios.
-- **Claude Agent SDK** (Lesson 17) — managed harness with built-in session store.
-- **Custom** — when you need exact control over state shape or checkpointer backend.
+- **LangGraph** — referenceでありproduction-ready。`create_react_agent`、`create_supervisor`を使うか、自分でgraphを作る。
+- **AutoGen v0.4** (Lesson 14) — high-concurrency scenario向けのactor model alternative。
+- **Claude Agent SDK** (Lesson 17) — built-in session storeを持つmanaged harness。
+- **Custom** — state shapeやcheckpointer backendを厳密に制御したい場合。
 
 ## Ship It
 
-`outputs/skill-state-graph.md` generates a LangGraph-shaped state graph in any target runtime with checkpointing and resume wired in.
+`outputs/skill-state-graph.md`は、任意のtarget runtimeに対して、checkpointingとresumeを組み込んだLangGraph型のstate graphを生成します。
 
 ## Exercises
 
-1. Add a conditional edge from `classify` to `end` when classification confidence is below a threshold. Resume the run after a human sets `route` manually.
-2. Swap the SQLite-like fake for a real SQLite checkpointer. Measure per-step serialization overhead.
-3. Implement parallel edges: two nodes run concurrently, merge by a custom reducer. What does immutable state buy here?
-4. Read `langgraph-supervisor` reference. Port the toy to `create_supervisor`. Compare the trace shapes.
-5. Add streaming: each node yields partial state while it runs. Print the deltas as they arrive.
+1. classification confidenceがthreshold未満のとき、`classify`から`end`へ進むconditional edgeを追加する。humanが`route`を手動設定した後でrunをresumeする。
+2. SQLite風のfakeを実際のSQLite checkpointerに差し替える。stepごとのserialization overheadを測る。
+3. parallel edgeを実装する。2つのnodeをconcurrentlyに実行し、custom reducerでmergeする。immutable stateはここで何をもたらすか。
+4. `langgraph-supervisor` referenceを読む。toyを`create_supervisor`へportする。trace shapeを比較する。
+5. streamingを追加する。各nodeが実行中にpartial stateをyieldする。deltaが届いたらprintする。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| State graph | "Agent as state machine" | Typed state + nodes + edges + reducers |
-| Checkpointer | "Persistence backend" | Serializes state after every node; enables resume |
-| Reducer | "State merger" | Function that combines current state with a node's update |
-| Conditional edge | "Branch" | Edge chosen by a function of state |
-| Subgraph | "Nested graph" | A graph used as a node inside another graph |
-| Durable execution | "Resume from failure" | Restart at the last successful node with exact state |
-| Supervisor | "Router LLM" | Central dispatcher for specialist subagents |
-| Swarm | "P2P agents" | Agents hand off via shared tools; no central router |
+| State graph | 「Agent as state machine」 | typed state + nodes + edges + reducers |
+| Checkpointer | 「Persistence backend」 | 各node後にstateをserializeし、resumeを可能にする |
+| Reducer | 「State merger」 | current stateとnode updateを結合する関数 |
+| Conditional edge | 「Branch」 | stateの関数で選ばれるedge |
+| Subgraph | 「Nested graph」 | 別のgraph内のnodeとして使われるgraph |
+| Durable execution | 「Resume from failure」 | 最後に成功したnodeから正確なstateで再開する |
+| Supervisor | 「Router LLM」 | specialist subagents向けのcentral dispatcher |
+| Swarm | 「P2P agents」 | shared tools経由でagentがhandoffする。central routerはない |
 
-## Further Reading
+## 参考文献
 
-- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — the reference docs
+- [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — reference docs
 - [langgraph-supervisor reference](https://reference.langchain.com/python/langgraph/supervisor/) — supervisor pattern API
 - [AutoGen v0.4, Microsoft Research](https://www.microsoft.com/en-us/research/articles/autogen-v0-4-reimagining-the-foundation-of-agentic-ai-for-scale-extensibility-and-robustness/) — actor-model alternative
 - [Claude Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview) — session store and subagents

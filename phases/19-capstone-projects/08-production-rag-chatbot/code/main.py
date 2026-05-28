@@ -1,11 +1,11 @@
-"""Production RAG chatbot — cache-aware prompt assembly scaffold.
+"""Production RAG chatbot — cache-aware prompt assembly scaffold。
 
-The hard architectural primitive in a 2026 regulated-domain chatbot is the
-cache-aware prompt assembly that preserves stable prefixes for prompt caching
-while still filtering retrieval by role and jurisdiction. This scaffold
-implements cache-key construction, role+jurisdiction filtering, hybrid
-retrieval with RRF, a prompt-cache simulator, citation enforcement, and a
-stub safety gate. The point is to show how the prefixes line up.
+2026年の regulated-domain chatbot で難しい architectural primitive は、
+role と jurisdiction で retrieval を filter しつつ prompt caching 用の stable
+prefix を保つ cache-aware prompt assembly です。この scaffold は cache-key
+construction、role+jurisdiction filtering、RRF 付き hybrid retrieval、
+prompt-cache simulator、citation enforcement、stub safety gate を実装します。
+prefix がどう並ぶかを示すことが目的です。
 
 Run:  python main.py
 """
@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 
 
 # ---------------------------------------------------------------------------
-# chunk shape  --  role + jurisdiction labeled
+# chunk shape  --  role + jurisdiction label 付き
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -35,25 +35,25 @@ class Chunk:
 
 CORPUS = [
     Chunk("MSA-2024-03-11", "s12.4",
-          "Upon termination, EU user profiles must be deleted within 30 days per GDPR Article 17.",
+          "termination 時、EU user profile は GDPR Article 17 に従い30日以内に削除する必要がある。",
           "analyst", "GDPR"),
     Chunk("DPA-v2.1", "s5",
-          "Restricted data category: deletion within 14 days of termination notice.",
+          "restricted data category: termination notice から14日以内に削除する。",
           "analyst", "GDPR"),
     Chunk("HIPAA-BAA-2024", "s7",
-          "PHI must be returned or destroyed within 60 days of agreement termination.",
+          "agreement termination から60日以内に PHI を返却または破棄する必要がある。",
           "counsel", "HIPAA"),
     Chunk("SOC2-policy-v3", "AC-2",
-          "Access review cadence: quarterly for privileged users, annual for standard.",
+          "access review cadence: privileged users は四半期ごと、standard は年次。",
           "counsel", "SOC2"),
     Chunk("general-privacy-faq", "Q1",
-          "Users can request data export through the self-service portal.",
+          "user は self-service portal から data export を request できる。",
           "public", "any"),
 ]
 
 
 # ---------------------------------------------------------------------------
-# hybrid retrieval  --  filter by role + jurisdiction first, then score
+# hybrid retrieval  --  まず role + jurisdiction で filter し、その後 score
 # ---------------------------------------------------------------------------
 
 def tokenize(s: str) -> list[str]:
@@ -69,7 +69,7 @@ def bm25_score(query: str, chunk: Chunk) -> float:
 
 
 def dense_score(query: str, chunk: Chunk) -> float:
-    """Stand-in for a real Voyage-3 or Nomic embedding cosine."""
+    """real Voyage-3 または Nomic embedding cosine の代役。"""
     q = set(tokenize(query))
     c = set(tokenize(chunk.text))
     if not q or not c:
@@ -79,7 +79,7 @@ def dense_score(query: str, chunk: Chunk) -> float:
 
 def retrieve(query: str, role: str, jurisdiction: str,
              corpus: list[Chunk], k: int = 5) -> list[tuple[Chunk, float]]:
-    # enforce access policy up front  (critical in regulated domains)
+    # access policy を最初に強制する (regulated domain では重要)
     eligible = [c for c in corpus
                 if (c.role == role or c.role == "public") and
                 (c.jurisdiction == jurisdiction or c.jurisdiction == "any")]
@@ -96,26 +96,25 @@ def retrieve(query: str, role: str, jurisdiction: str,
 
 
 # ---------------------------------------------------------------------------
-# cache-aware prompt assembly  --  stable prefixes first
+# cache-aware prompt assembly  --  stable prefix を先に置く
 # ---------------------------------------------------------------------------
 
 SYSTEM_PROMPT = (
-    "You are a regulated-domain assistant. Cite every claim by (doc_id section). "
-    "Do not answer outside provided context. If unsure, say so explicitly."
+    "あなたは regulated-domain assistant です。すべての claim を (doc_id section) で cite してください。"
+    "提供された context 外では答えないでください。不確かな場合は明示してください。"
 )
 
 
 @dataclass
 class PromptLayout:
-    """Represents the cache-key structure: stable prefix + extensible tail.
+    """cache-key structure を表す: stable prefix + extensible tail。
 
-    Prompt caching buys 60-80% discount if the cache_key prefix matches a
-    prior call. For that to happen, we must keep prefixes stable:
-      1. system prompt (very stable)
+    cache_key prefix が prior call と一致すれば prompt caching は 60-80% discount を生む。
+    そのためには prefix を安定させる必要がある:
+      1. system prompt (とても stable)
       2. policy block (stable)
-      3. reranked context (changes per query but still cacheable per-query if
-         the same user asks variants)
-      4. user question (not cached)
+      3. reranked context (query ごとに変わるが、同じ user の variant なら cache 可能)
+      4. user question (cache しない)
     """
     system: str
     policy: str
@@ -148,7 +147,7 @@ class PromptCache:
 
 
 # ---------------------------------------------------------------------------
-# safety gate  --  input + output checks (stubs)
+# safety gate  --  input + output check (stub)
 # ---------------------------------------------------------------------------
 
 BLOCKED_PATTERNS = [
@@ -161,12 +160,12 @@ BLOCKED_PATTERNS = [
 def llama_guard_input(query: str) -> tuple[bool, str]:
     for pat in BLOCKED_PATTERNS:
         if re.search(pat, query, re.IGNORECASE):
-            return False, f"blocked by Llama Guard 4: {pat}"
+            return False, f"Llama Guard 4 で block: {pat}"
     return True, "ok"
 
 
 def presidio_scrub(text: str) -> str:
-    """Simple PII scrub stand-in: redact emails and SSN-shaped tokens."""
+    """simple PII scrub の代役: email と SSN 形 token を redact する。"""
     text = re.sub(r"[\w.+-]+@[\w-]+\.[\w.-]+", "[email]", text)
     text = re.sub(r"\b\d{3}-\d{2}-\d{4}\b", "[ssn]", text)
     return text
@@ -193,13 +192,13 @@ def chat_turn(query: str, role: str, jurisdiction: str,
     )
     cache_hit = cache.check(layout.cache_key())
 
-    # stub synth output: concatenate citations to simulate grounding
+    # stub synth output: grounding を simulate するため citation を連結する
     if hits:
-        answer = f"Based on the cited sections: " + "; ".join(
+        answer = f"cited sections に基づく回答: " + "; ".join(
             f"{c.anchor()} -> {c.text[:60]}" for c, _ in hits
         )
     else:
-        answer = "I do not have confident citations for this question."
+        answer = "この質問に対して確信できる citation がありません。"
 
     answer = presidio_scrub(answer)
     return {
@@ -223,7 +222,7 @@ def main() -> None:
     print(f"  cache_hit={r['cache_hit']} citations={r['citations']}")
     print(f"  answer: {r['answer'][:140]}...")
 
-    print("\n=== same query repeated (same cache prefix) ===")
+    print("\n=== 同じ query を再実行 (same cache prefix) ===")
     r = chat_turn("what is the data retention obligation for EU user profiles",
                   role="analyst", jurisdiction="GDPR",
                   corpus=CORPUS, cache=cache)

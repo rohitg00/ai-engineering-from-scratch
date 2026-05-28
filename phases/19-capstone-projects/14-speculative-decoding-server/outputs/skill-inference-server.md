@@ -1,47 +1,47 @@
 ---
 name: inference-server
-description: Ship a speculative-decoding inference server with EAGLE-3 or P-EAGLE drafts, K8s autoscaling, and a full throughput/latency/cost report.
+description: EAGLE-3 または P-EAGLE draft、K8s autoscaling、完全な throughput/latency/cost report を備えた speculative-decoding inference server を ship する。
 version: 1.0.0
 phase: 19
 lesson: 14
 tags: [capstone, inference, vllm, sglang, eagle-3, p-eagle, speculative-decoding, quantization, hpa]
 ---
 
-Given two open target models (Llama 3.3 70B and Qwen3-Coder-30B MoE or GPT-OSS-120B), ship a production serving stack with speculative decoding, quantization, and Kubernetes autoscaling. Publish measured speedups and tail-latency numbers.
+2 つの open target model (Llama 3.3 70B と Qwen3-Coder-30B MoE または GPT-OSS-120B) を対象に、speculative decoding、quantization、Kubernetes autoscaling を備えた production serving stack を ship する。Measured speedup と tail-latency number を公開する。
 
 Build plan:
 
-1. Deploy target models under vLLM 0.7 (or SGLang 0.4) with FP8 Marlin quantization.
-2. Load an aligned EAGLE-3 draft from Red Hat Speculators (or train one via SpecForge).
-3. Baseline numbers: tokens/s and p50/p99 latency at batch 1/8/32 without speculation.
-4. Enable EAGLE-3. Rerun the same benchmark. Report speedup, acceptance rate, p99 tail-latency delta.
-5. Enable P-EAGLE parallel speculation; report the inflection where deeper trees help vs hurt.
-6. Run the benchmarks across distributions: ShareGPT, HumanEval, domain data. Publish acceptance-rate drift.
-7. Repeat on the second target model (MoE); identify routing-noise sensitivity in draft acceptance.
-8. Deploy on Kubernetes with HPA tracking `queue_wait_ms`. Demonstrate scale-out when load triples.
-9. Compare $/1M tokens vs Anthropic Claude Sonnet 4.7 and OpenAI GPT-5.4 on matched evals.
+1. Target model を vLLM 0.7 (または SGLang 0.4) の下で FP8 Marlin quantization 付きで deploy する。
+2. Red Hat Speculators から aligned EAGLE-3 draft を load する (または SpecForge で学習する)。
+3. Baseline numbers: speculation なしで batch 1/8/32 の tokens/s と p50/p99 latency。
+4. EAGLE-3 を有効化し、同じ benchmark を再実行する。Speedup、acceptance rate、p99 tail-latency delta を報告する。
+5. P-EAGLE parallel speculation を有効化し、deeper tree が効く/悪化する inflection を報告する。
+6. ShareGPT、HumanEval、domain data の distribution 横断で benchmark を実行する。Acceptance-rate drift を公開する。
+7. 2 つ目の target model (MoE) で繰り返し、draft acceptance に対する routing-noise sensitivity を特定する。
+8. `queue_wait_ms` を追跡する HPA 付きで Kubernetes に deploy する。Load が 3 倍になったときの scale-out を demonstrate する。
+9. Matched eval 上で Anthropic Claude Sonnet 4.7 と OpenAI GPT-5.4 に対する $/1M tokens を比較する。
 
 Assessment rubric:
 
 | Weight | Criterion | Measurement |
 |:-:|---|---|
-| 25 | Measured speedup vs baseline | 2.5x+ throughput at matched quality on both models |
-| 20 | Acceptance rate on realistic traffic | Per-distribution acceptance-rate report |
-| 20 | P99 tail-latency discipline | p99 at batch 1/8/32 with and without speculation |
-| 20 | Ops | K8s deploy, HPA on queue-wait, smooth rollout, drain-first upgrade |
-| 15 | Write-up and methodology | Clear derivation of metrics, matched baselines |
+| 25 | Measured speedup vs baseline | 両 model で matched quality のまま 2.5x+ throughput |
+| 20 | Acceptance rate on realistic traffic | Distribution ごとの acceptance-rate report |
+| 20 | P99 tail-latency discipline | Speculation あり/なしの batch 1/8/32 p99 |
+| 20 | Ops | K8s deploy、queue-wait HPA、smooth rollout、drain-first upgrade |
+| 15 | Write-up and methodology | Metric derivation と matched baseline が明確 |
 
 Hard rejects:
 
-- Reporting steady-state throughput without tail latency.
-- HPA on CPU instead of queue-wait. Will thrash under GPU saturation.
-- Ignoring draft-target version alignment. Drifted drafts cost more than no speculation.
-- Cost comparisons that omit the hosted APIs' prompt-caching discounts.
+- Tail latency なしで steady-state throughput だけを報告すること。
+- Queue-wait ではなく CPU で HPA すること。GPU saturation 下では thrash する。
+- Draft-target version alignment を無視すること。Drifted draft は no speculation より高くつく。
+- Hosted API の prompt-caching discount を省いた cost comparison。
 
 Refusal rules:
 
-- Refuse to serve without a rollout drain. Upgrading in-place while requests are in flight is disqualifying.
-- Refuse to report acceptance rate aggregated across distributions. Per-distribution is mandatory.
-- Refuse to claim speculative-decoding wins at bs=32 without a matched non-speculative number.
+- Rollout drain なしでは serve しない。In-flight request 中の in-place upgrade は失格。
+- Distribution をまたいで aggregate した acceptance rate を報告しない。Per-distribution が必須。
+- Matched non-speculative number なしで bs=32 における speculative-decoding の勝利を主張しない。
 
-Output: a repo containing the vLLM / SGLang configs, the EAGLE-3 draft download script, K8s deployment manifests, HPA config on queue-wait, the benchmark harness for ShareGPT / HumanEval / domain data, a $/1M tokens comparison table, and a write-up naming the three tail-latency regressions speculative decoding introduced and the mitigation (batch gating, ngram fallback, quantization tweak) that fixed each.
+Output: vLLM / SGLang configs、EAGLE-3 draft download script、K8s deployment manifests、queue-wait HPA config、ShareGPT / HumanEval / domain data 用 benchmark harness、$/1M tokens comparison table、speculative decoding が導入した tail-latency regression top 3 と、それぞれを直した mitigation (batch gating、ngram fallback、quantization tweak) を記した write-up を含む repo。

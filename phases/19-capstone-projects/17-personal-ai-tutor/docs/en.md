@@ -1,28 +1,28 @@
-# Capstone 17 — Personal AI Tutor (Adaptive, Multimodal, with Memory)
+# キャップストーン 17 — Personal AI Tutor (Adaptive, Multimodal, with Memory)
 
-> Khanmigo (Khan Academy), Duolingo Max, Google LearnLM / Gemini for Education, Quizlet Q-Chat, and Synthesis Tutor all shipped adaptive multimodal tutoring at scale in 2026. The common shape is a Socratic policy (never just dump the answer), a learner model that updates after every interaction (Bayesian knowledge tracing style), voice + text + photo-math input, curriculum graph retrieval, spaced-repetition scheduling, and hard safety filters for age-appropriate content. The capstone is to ship a subject-specific tutor (K-12 algebra or intro Python), run a two-week efficacy study with 10 learners, and pass a content-safety audit.
+> Khanmigo (Khan Academy)、Duolingo Max、Google LearnLM / Gemini for Education、Quizlet Q-Chat、Synthesis Tutor は、2026 年に adaptive multimodal tutoring を大規模に提供した。共通する形は、Socratic policy (答えをただ出さない)、interaction ごとに更新される learner model (Bayesian knowledge tracing 風)、voice + text + photo-math input、curriculum graph retrieval、spaced-repetition scheduling、age-appropriate content 用の hard safety filter である。この capstone では、subject-specific tutor (K-12 algebra または intro Python) を ship し、10 人の learner で 2 週間の efficacy study を行い、content-safety audit を pass する。
 
-**Type:** Capstone
-**Languages:** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
-**Prerequisites:** Phase 5 (NLP), Phase 6 (speech), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
-**Phases exercised:** P5 · P6 · P11 · P12 · P14 · P17 · P18
-**Time:** 30 hours
+**種類:** Capstone
+**言語:** Python (backend, learner model)、TypeScript (web app)、SQL (curriculum graph via Postgres + Neo4j)
+**前提:** Phase 5 (NLP)、Phase 6 (speech)、Phase 11 (LLM engineering)、Phase 12 (multimodal)、Phase 14 (agents)、Phase 17 (infrastructure)、Phase 18 (safety)
+**演習対象フェーズ:** P5 · P6 · P11 · P12 · P14 · P17 · P18
+**時間:** 30 時間
 
-## Problem
+## 問題
 
-Adaptive tutoring used to be an ed-tech research niche. By 2026 it is a consumer product. Khanmigo is deployed across most US school districts. Duolingo Max hit tens of millions of MAUs. Google's LearnLM / Gemini for Education powers tutoring in Google Classroom. Quizlet Q-Chat sits alongside flashcards. Synthesis Tutor hit virality with tutor-for-curious-kids. The common elements: multimodal input (type, speak, photograph equations), Socratic pedagogy (ask first, explain later), a learner model that updates after each interaction, and strict age-appropriate safety.
+Adaptive tutoring は以前 ed-tech research の niche だった。2026 年には consumer product になっている。Khanmigo は米国の大半の school district に導入されている。Duolingo Max は tens of millions of MAUs に到達した。Google LearnLM / Gemini for Education は Google Classroom の tutoring を支えている。Quizlet Q-Chat は flashcard と並んで使われる。Synthesis Tutor は tutor-for-curious-kids として viral になった。共通要素は、multimodal input (type、speak、photograph equations)、Socratic pedagogy (先に問い、後で説明する)、interaction ごとに更新される learner model、厳格な age-appropriate safety である。
 
-You will build one of these for a specific cohort. The measurement bar is an actual efficacy study: pre-test and post-test scores over two weeks with 10 learners. The voice loop must feel natural (capstone 03 sub-stack). The memory must be privacy-respecting. The safety filter must pass COPPA-aware red-team for K-12.
+あなたは特定 cohort 向けにこれを構築する。測定基準は実際の efficacy study である。10 人の learner に対し、2 週間の pre-test と post-test score を測る。Voice loop は自然に感じられる必要がある (capstone 03 sub-stack)。Memory は privacy-respecting でなければならない。Safety filter は K-12 向けの COPPA-aware red-team を pass する必要がある。
 
-## Concept
+## コンセプト
 
-Four components. **Tutor policy** is a Socratic loop: when the learner asks for the answer, the policy asks a leading question; when they get it right, it moves to the next concept; when they are stuck, it offers a scaffolded hint. **Learner model** is Bayesian knowledge tracing (or a simple variant) that updates mastery probability per curriculum node after each interaction. **Curriculum graph** is a Neo4j of concepts with prerequisite edges; the policy walks the graph to pick the next concept. **Memory** is an episodic + semantic store (agentmemory-style) holding past interactions, mistakes, and preferences.
+4 つの component がある。**Tutor policy** は Socratic loop である。Learner が答えを求めたら leading question を返す。正解したら次の concept に進む。詰まっていたら scaffolded hint を出す。**Learner model** は Bayesian knowledge tracing (または簡単な variant) で、interaction ごとに curriculum node ごとの mastery probability を更新する。**Curriculum graph** は prerequisite edge を持つ concept の Neo4j であり、policy は graph を walk して次の concept を選ぶ。**Memory** は agentmemory-style の episodic + semantic store で、過去の interaction、mistake、preference を保持する。
 
-The UX is multimodal. Text input for typed answers. Voice input via LiveKit + Whisper (reuse capstone 03). Photo input for math problems via dots.ocr or PaliGemma 2. Voice output via Cartesia Sonic-2. Safety uses Llama Guard 4 plus an age-appropriate filter (blocks adult content, violence, self-harm) and a COPPA-aware memory retention policy.
+UX は multimodal である。Typed answer 用 text input。LiveKit + Whisper を使う voice input (capstone 03 を再利用)。Math problem 用 photo input は dots.ocr または PaliGemma 2。Voice output は Cartesia Sonic-2。Safety は Llama Guard 4 と age-appropriate filter (adult content、violence、self-harm を block) と COPPA-aware memory retention policy を使う。
 
-The efficacy study is the deliverable. 10 learners, pre-test and post-test, two weeks. Report learning gain delta and confidence interval. Compare against a non-adaptive baseline (the same content delivered linearly without the tutor policy).
+Efficacy study が提出物である。10 人の learner、pre-test と post-test、2 週間。Learning gain delta と confidence interval を報告する。Non-adaptive baseline (同じ content を tutor policy なしで linear に提供) と比較する。
 
-## Architecture
+## アーキテクチャ
 
 ```
 learner device
@@ -60,39 +60,39 @@ learner device
     memory access guarded by learner ID scope
 ```
 
-## Stack
+## スタック
 
-- Subject choice: K-12 algebra or intro Python (pick one for depth)
-- Tutor policy: LangGraph over Claude Sonnet 4.7 (with prompt caching)
-- Learner model: Bayesian knowledge tracing (classic) or FSRS for spacing
-- Curriculum graph: Neo4j of concepts + prerequisite edges + OER content
+- Subject choice: K-12 algebra または intro Python (depth のため 1 つ選ぶ)
+- Tutor policy: Claude Sonnet 4.7 上の LangGraph (prompt caching 使用)
+- Learner model: Bayesian knowledge tracing (classic) または spacing 用 FSRS
+- Curriculum graph: concept + prerequisite edge + OER content の Neo4j
 - Memory: agentmemory-style persistent vector + episodic + semantic store
-- Voice: LiveKit Agents 1.0 + Cartesia Sonic-2 (reuse capstone 03 sub-stack)
-- Photo math: dots.ocr or PaliGemma 2 for equation recognition
+- Voice: LiveKit Agents 1.0 + Cartesia Sonic-2 (capstone 03 sub-stack を再利用)
+- Photo math: equation recognition 用 dots.ocr または PaliGemma 2
 - Safety: Llama Guard 4 + custom age-appropriate filter
-- Eval: Bloom-level question generation, pre/post test harness, efficacy study tooling
+- Eval: Bloom-level question generation、pre/post test harness、efficacy study tooling
 
-## Build It
+## 実装
 
-1. **Curriculum graph.** Build a Neo4j of 50-150 concept nodes (e.g., K-12 algebra from "number line" to "quadratic formula") with prerequisite edges. Attach OER content per node (Open Textbook, OpenStax).
+1. **Curriculum graph.** 50-150 concept node の Neo4j を作る (例: K-12 algebra の "number line" から "quadratic formula" まで)。Prerequisite edge を張る。Node ごとに OER content (Open Textbook、OpenStax) を付ける。
 
-2. **Learner model.** Initialize Bayesian knowledge tracing with priors: guess, slip, learn-rate. Update per-concept mastery after each interaction. Persist per learner.
+2. **Learner model.** Guess、slip、learn-rate の prior を持つ Bayesian knowledge tracing を初期化する。Interaction ごとに concept mastery を更新する。Learner ごとに persist する。
 
-3. **Tutor policy.** LangGraph with nodes: `read_signal` (was the learner's answer correct / partial / stuck?), `select_concept` (walk curriculum graph picking the highest-priority concept), `scaffold` (Socratic prompt), `update_mastery`.
+3. **Tutor policy.** LangGraph node: `read_signal` (learner answer が correct / partial / stuck か)、`select_concept` (curriculum graph を walk して highest-priority concept を選ぶ)、`scaffold` (Socratic prompt)、`update_mastery`。
 
-4. **Memory.** Every interaction writes to an episodic store. Mistakes and preferences promote to semantic memory. COPPA-aware retention policy: auto-delete after 1 year, parent-accessible.
+4. **Memory.** すべての interaction を episodic store に書く。Mistake と preference は semantic memory に promote する。COPPA-aware retention policy: 1 年後に auto-delete、parent-accessible。
 
-5. **Voice path.** LiveKit Agents worker attached to the tutor policy. ASR via Whisper-v3-turbo. TTS via Cartesia Sonic-2. Barge-in supported (reuse capstone 03 mechanics).
+5. **Voice path.** Tutor policy に接続した LiveKit Agents worker。ASR は Whisper-v3-turbo。TTS は Cartesia Sonic-2。Barge-in を support する (capstone 03 mechanics を再利用)。
 
-6. **Photo-math path.** Upload or capture image; run dots.ocr or PaliGemma 2 to recognize the equation; feed to tutor as structured input.
+6. **Photo-math path.** Image を upload または capture し、dots.ocr または PaliGemma 2 で equation を認識し、structured input として tutor に渡す。
 
-7. **Safety.** Every model output passes Llama Guard 4 + an age-appropriate filter (blocks self-harm, adult content, violence). Memory access scoped by learner ID; parental access surface for deletion.
+7. **Safety.** すべての model output は Llama Guard 4 + age-appropriate filter (self-harm、adult content、violence を block) を通す。Memory access は learner ID で scope する。Parental access surface で deletion を提供する。
 
-8. **Efficacy study.** 10 learners, pre-test (standardized 30-question baseline), two weeks of tutor interaction (3 sessions/week), post-test. Compare against a non-adaptive baseline cohort of 10 learners on the same content.
+8. **Efficacy study.** 10 人の learner、pre-test (standardized 30-question baseline)、2 週間の tutor interaction (3 sessions/week)、post-test。同じ content を使う non-adaptive baseline cohort 10 人と比較する。
 
-9. **Weekly progress reports.** Per learner, auto-generate a PDF summary of topics explored, mastery trajectories, and recommended next steps.
+9. **Weekly progress reports.** Learner ごとに、explored topics、mastery trajectories、recommended next steps の PDF summary を自動生成する。
 
-## Use It
+## 使ってみる
 
 ```
 learner: "I don't understand why 3x + 6 = 12 means x = 2"
@@ -108,45 +108,45 @@ learner: "6"
 
 ## Ship It
 
-`outputs/skill-ai-tutor.md` is the deliverable. A subject-specific adaptive tutor with multimodal input, a learner model, memory, safety, and measured efficacy.
+`outputs/skill-ai-tutor.md` が提出物である。Subject-specific adaptive tutor。Multimodal input、learner model、memory、safety、measured efficacy を備える。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
-| 25 | Learning gain delta | Pre/post-test delta in a 10-learner two-week study |
-| 20 | Socratic fidelity | Rubric score on transcript samples |
-| 20 | Multimodal UX | Voice + photo + text coherence end to end |
+| 25 | Learning gain delta | 10-learner 2-week study における pre/post-test delta |
+| 20 | Socratic fidelity | Transcript sample に対する rubric score |
+| 20 | Multimodal UX | Voice + photo + text の end to end coherence |
 | 20 | Safety + privacy posture | Llama Guard 4 pass rate + COPPA-aware retention |
 | 15 | Curriculum breadth and graph quality | Concept coverage + prerequisite graph consistency |
 | **100** | | |
 
-## Exercises
+## 演習
 
-1. Run the efficacy study with and without the adaptive learner model (random concept order). Report the delta. Expect adaptive to win, but the size is the interesting number.
+1. Adaptive learner model あり/なし (random concept order) で efficacy study を実行する。Delta を報告する。Adaptive が勝つはずだが、重要なのはその大きさである。
 
-2. Add a multimodal probe: the same concept question delivered as text, voice, and photo. Measure whether learners converge faster with the modality they prefer.
+2. Multimodal probe を追加する。同じ concept question を text、voice、photo で提示する。Learner が好む modality だと収束が速いかを測る。
 
-3. Build a parent dashboard: topics practiced, mastery trajectories, upcoming concepts, safety events (any guardrail hits). COPPA-aligned.
+3. Parent dashboard を作る: practiced topics、mastery trajectories、upcoming concepts、safety events (guardrail hit があれば)。COPPA-aligned。
 
-4. Add a language-switch mode: the tutor accepts Spanish input and teaches in Spanish. Measure X-Guard coverage.
+4. Language-switch mode を追加する: tutor が Spanish input を受け取り、Spanish で教える。X-Guard coverage を測る。
 
-5. Stress the memory privacy: verify that learner A cannot see learner B's data even through a voice-clip re-ingest attack. Log the attempted access and alert.
+5. Memory privacy に負荷をかける: voice-clip re-ingest attack を通しても learner A が learner B の data を見られないことを確認する。Attempted access を log し alert する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| Socratic policy | "Ask, do not dump" | Tutor asks a leading question rather than giving the answer |
-| Bayesian knowledge tracing | "BKT" | Classic learner-model equations for mastery probability per concept |
-| FSRS | "Free Spaced Repetition Scheduler" | 2024 spaced-repetition scheduler, better than SM-2 |
-| Curriculum graph | "Concept DAG" | Neo4j of concepts with prerequisite edges |
-| Episodic memory | "Per-interaction log" | Every interaction stored for later retrieval |
-| Semantic memory | "Learned pattern store" | Compacted mistakes and preferences promoted from episodic |
-| COPPA | "Kids privacy law" | US law restricting data collection from children under 13 |
+| Term | よくある言い方 | 実際の意味 |
+|------|-----------------|------------|
+| Socratic policy | "Ask, do not dump" | 答えを出すのではなく leading question を返す tutor |
+| Bayesian knowledge tracing | "BKT" | Concept ごとの mastery probability を扱う classic learner-model equations |
+| FSRS | "Free Spaced Repetition Scheduler" | 2024 年の spaced-repetition scheduler。SM-2 より強い |
+| Curriculum graph | "Concept DAG" | prerequisite edge を持つ concept の Neo4j |
+| Episodic memory | "Per-interaction log" | 後で retrieve できるよう全 interaction を保存するもの |
+| Semantic memory | "Learned pattern store" | Episodic から promote された compacted mistakes と preferences |
+| COPPA | "Kids privacy law" | 13 歳未満の子どもからの data collection を制限する米国法 |
 
-## Further Reading
+## 参考資料
 
-- [Khanmigo (Khan Academy)](https://www.khanmigo.ai) — reference consumer K-12 tutor
-- [Duolingo Max](https://blog.duolingo.com/duolingo-max/) — reference language-learning tutor
+- [Khanmigo (Khan Academy)](https://www.khanmigo.ai) — consumer K-12 tutor の参照例
+- [Duolingo Max](https://blog.duolingo.com/duolingo-max/) — language-learning tutor の参照例
 - [Google LearnLM / Gemini for Education](https://blog.google/technology/google-deepmind/learnlm) — hosted reference model
 - [Quizlet Q-Chat](https://quizlet.com) — alternate reference
 - [Synthesis Tutor](https://www.synthesis.com) — startup reference

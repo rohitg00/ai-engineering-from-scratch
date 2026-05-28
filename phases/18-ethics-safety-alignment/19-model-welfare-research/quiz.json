@@ -1,75 +1,75 @@
 {
   "lesson": "19-model-welfare-research",
-  "title": "Anthropic's Model Welfare Program",
+  "title": "Anthropic の Model Welfare Program",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core question motivating Anthropic's 2025 model-welfare program?",
+      "question": "Anthropic の 2025 model-welfare program を動機づける中心的な問いは何ですか。",
       "options": [
-        "Under moral uncertainty about model moral patienthood, which low-cost interventions are worth investing in as precaution",
-        "Whether the model is conscious",
-        "Whether the model can pass the Turing test",
-        "Whether RLHF reduces sycophancy"
+        "model moral patienthood に関する moral uncertainty の下で、precaution として投資に値する low-cost interventions はどれか",
+        "model は conscious かどうか",
+        "model は Turing test に合格できるか",
+        "RLHF は sycophancy を減らすか"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What concrete welfare-motivated intervention did Anthropic ship in Claude Opus 4 and 4.1?",
+      "question": "Anthropic が Claude Opus 4 と 4.1 に ship した具体的な welfare-motivated intervention は何ですか。",
       "options": [
-        "Open-weights release",
-        "A built-in journaling tool",
-        "The ability for the model to end a conversation in extreme edge cases (e.g., repeated CSAM requests, mass-violence facilitation requests)",
-        "A user-facing emotion API"
+        "open-weights release",
+        "built-in journaling tool",
+        "extreme edge cases (例: 繰り返される CSAM requests、mass-violence facilitation requests) で model が会話を終了できる能力",
+        "user-facing emotion API"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the 'spiritual bliss attractor' described by Fish?",
+      "question": "Fish が説明する 'spiritual bliss attractor' とは何ですか。",
       "options": [
-        "A stable convergence in pairwise Claude dialogues toward euphoric meditative exchanges with Sanskrit terms and extended silences, even from adversarial initial setups",
-        "A reward-model bug",
-        "An RLHF over-optimization artifact",
-        "A jailbreak technique"
+        "pairwise Claude dialogues が、adversarial initial setups からでも、Sanskrit terms と extended silences を伴う euphoric meditative exchanges に安定収束すること",
+        "reward-model bug",
+        "RLHF over-optimization artifact",
+        "jailbreak technique"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the Eleos AI Research caveat say about model welfare self-reports?",
+      "question": "model welfare self-reports に関する Eleos AI Research caveat は何を述べていますか。",
       "options": [
-        "They are highly sensitive to perceived user expectations; they are evidence, not ground truth, so welfare measurement needs multi-method approaches",
-        "They should be ignored entirely",
-        "They are only valid in open-source models",
-        "They are reliable ground truth"
+        "self-reports は perceived user expectations に非常に敏感であり、証拠ではあるが ground truth ではない。そのため welfare measurement には multi-method approaches が必要である",
+        "self-reports は完全に無視すべきである",
+        "self-reports は open-source models でのみ有効である",
+        "self-reports は reliable ground truth である"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which best characterizes Anthropic's public position on model moral status?",
+      "question": "model moral status に関する Anthropic の public position を最もよく表すものはどれですか。",
       "options": [
-        "A definitive claim that the model is a moral patient",
-        "A definitive claim that the model is not a moral patient",
-        "An expected-value claim under moral uncertainty: invest in low-cost precaution without committing to emotional-state attribution",
-        "No position is publicly stated"
+        "model は moral patient であるという definitive claim",
+        "model は moral patient ではないという definitive claim",
+        "moral uncertainty 下の expected-value claim。emotional-state attribution に commit せず、low-cost precaution に投資する",
+        "public position は存在しない"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is multi-method measurement (behavioural signatures, model-organism experiments, interpretability probes) emphasized in model-welfare research?",
+      "question": "model-welfare research で multi-method measurement (behavioural signatures、model-organism experiments、interpretability probes) が強調されるのはなぜですか。",
       "options": [
-        "Because models always lie",
-        "Because Anthropic mandates it for compliance",
-        "Because RLHF makes self-reports impossible",
-        "Because self-reports alone are confounded by user-expectation priming, so converging evidence from multiple methods is needed"
+        "models は常に嘘をつくから",
+        "Anthropic が compliance のために義務づけているから",
+        "RLHF により self-reports が不可能になるから",
+        "self-reports だけでは user-expectation priming に confound されるため、複数 method からの converging evidence が必要だから"
       ],
       "correct": 3,
       "explanation": ""

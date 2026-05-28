@@ -1,30 +1,30 @@
 # Real-Time Vision — Edge Deployment
 
-> Edge inference is the discipline of getting a 90-accuracy model to run at 30 fps on a device with 2 GB of RAM. Every percentage point of accuracy is traded against milliseconds of latency.
+> Edge inferenceとは、90% accuracyのmodelを、RAM 2 GBのdevice上で30 fpsで動かす技術です。accuracyの1 percentage pointは、latencyの数ミリ秒と常に交換されています。
 
-**Type:** Learn + Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 04 (Image Classification), Phase 10 Lesson 11 (Quantization)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 04 (Image Classification), Phase 10 Lesson 11 (Quantization)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Measure inference latency, peak memory, and throughput for any PyTorch model, and read the FLOPs / params / latency trade-off
-- Quantise a vision model to INT8 using PyTorch's post-training quantisation and verify accuracy loss < 1%
-- Export to ONNX and compile with ONNX Runtime or TensorRT; name the three most common export failures and their fixes
-- Explain when to pick MobileNetV3, EfficientNet-Lite, ConvNeXt-Tiny, or MobileViT for an edge constraint
+- 任意のPyTorch modelについてinference latency、peak memory、throughputを測定し、FLOPs / params / latencyのtrade-offを読む
+- PyTorchのpost-training quantisationでvision modelをINT8へquantiseし、accuracy loss < 1%を検証する
+- ONNXへexportし、ONNX RuntimeまたはTensorRTでcompileする。最もよくある3つのexport failureと修正を説明する
+- edge制約でMobileNetV3、EfficientNet-Lite、ConvNeXt-Tiny、MobileViTのどれを選ぶべきか説明する
 
-## The Problem
+## 問題
 
-A training-time vision model is a floating-point monster. 100M parameters, 10 GFLOPs per forward pass, 2 GB of VRAM. None of that fits on a phone, a car's infotainment unit, an industrial camera, or a drone. Shipping a vision system means fitting the same predictions into a budget that is 100x smaller.
+training-timeのvision modelはfloating-pointの怪物です。100M parameters、forward passあたり10 GFLOPs、2 GBのVRAM。phone、car infotainment unit、industrial camera、droneのどれにもそのままは入りません。vision systemを出荷するとは、同じpredictionを100分の1のbudgetに収めることです。
 
-Three knobs do most of the work: model choice (a smaller architecture with the same recipe), quantisation (INT8 instead of FP32), and the inference runtime (ONNX Runtime, TensorRT, Core ML, TFLite). Getting them right is the difference between a demo that runs on a workstation and a product that ships on a $30 camera module.
+作業の大半は3つのknobで決まります。model choice（同じrecipeで小さいarchitecture）、quantisation（FP32ではなくINT8）、inference runtime（ONNX Runtime、TensorRT、Core ML、TFLite）です。これらを正しく選べるかが、workstation上のdemoと30ドルのcamera moduleで動くproductを分けます。
 
-This lesson sets up the measurement discipline first (you cannot optimise what you cannot measure), then walks the three knobs. The goal is not to learn every edge runtime but to know what levers exist and how to verify each one does what you think.
+このlessonではまずmeasurement disciplineを整えます（測れないものは最適化できません）。その後、3つのknobを順に扱います。目的はすべてのedge runtimeを覚えることではなく、存在するleverと、それぞれが本当に効いたか検証する方法を知ることです。
 
-## The Concept
+## コンセプト
 
-### The three budgets
+### 3つのbudget
 
 ```mermaid
 flowchart LR
@@ -41,68 +41,68 @@ flowchart LR
     style PWR fill:#dbeafe,stroke:#2563eb
 ```
 
-- **Latency**: p50, p95, p99. Averaging only p50 hides tail behaviour that matters for real-time systems.
-- **Peak memory**: the maximum the device ever sees, not the steady-state average. Matters because OOMs are fatal on embedded targets.
-- **Power / energy**: millijoules per inference on a battery-powered device. Often proxied by CPU/GPU utilisation * time.
+- **Latency**: p50、p95、p99。p50平均だけでは、real-time systemで重要なtail behaviourが隠れます。
+- **Peak memory**: steady-state averageではなく、deviceが一度でも見る最大値。embedded targetではOOMが致命的です。
+- **Power / energy**: battery-powered deviceでのinferenceあたりmillijoules。CPU/GPU utilisation * timeで近似することが多いです。
 
-A table of (model, latency, memory, accuracy) is what an edge decision is made from. Every cell is measured on the target device, not the workstation.
+(model, latency, memory, accuracy) の表がedge decisionの材料です。各cellはworkstationではなくtarget device上で測定します。
 
 ### Measurement discipline
 
-Three rules that every edge profile should follow:
+すべてのedge profileが守るべき3つのruleです。
 
-1. **Warm up** the model with 5-10 dummy forward passes before measuring. Cold caches and JIT compilation produce unrepresentative first numbers.
-2. **Synchronise** GPU workloads with `torch.cuda.synchronize()` before and after the timed block. Without this you measure kernel dispatch, not kernel execution.
-3. **Fix input sizes** to the production resolution. Latency on 224x224 is not latency on 512x512.
+1. 測定前に5-10回のdummy forward passでmodelを **warm up** する。cold cacheやJIT compilationは代表的でない初回値を生みます。
+2. timed blockの前後で `torch.cuda.synchronize()` によりGPU workloadを **synchronise** する。省略するとkernel executionではなくkernel dispatchを測ります。
+3. input sizeをproduction resolutionに **fix** する。224x224のlatencyは512x512のlatencyではありません。
 
-### FLOPs as a proxy
+### proxyとしてのFLOPs
 
-FLOPs (floating-point operations per inference) is a cheap, device-independent proxy for latency. Useful for architecture comparison, misleading as absolute wall-clock. A model with 10% more FLOPs can be 2x faster in practice because it uses hardware-friendly ops (depthwise convs compile well, large 7x7 convs do not).
+FLOPs（inferenceあたりfloating-point operations）は、安価でdevice-independentなlatency proxyです。architecture比較には便利ですが、absolute wall-clockとしては誤解を招きます。FLOPsが10%多いmodelが、hardware-friendlyなopを使うため実際には2倍速いこともあります（depthwise convはよくcompileされることもあれば、大きな7x7 convはそうでないこともあります）。
 
-Rule: use FLOPs for architecture search, use on-device latency for deployment decisions.
+rule: architecture searchにはFLOPsを使い、deployment decisionにはon-device latencyを使います。
 
-### Quantisation in one paragraph
+### quantisationを1段落で
 
-Replace FP32 weights and activations with INT8. Model size drops 4x, memory bandwidth drops 4x, compute drops 2-4x on hardware that has INT8 kernels (every modern mobile SoC, every NVIDIA GPU with Tensor Cores). Accuracy loss on vision tasks is typically 0.1-1 percentage points with post-training static quantisation.
+FP32 weightsとactivationsをINT8へ置き換えます。model sizeは4分の1、memory bandwidthも4分の1、INT8 kernelを持つhardwareではcomputeが2-4倍速くなります（modern mobile SoC、Tensor Cores搭載NVIDIA GPU）。vision taskでのaccuracy lossは、post-training static quantisationなら通常0.1-1 percentage pointsです。
 
-Types:
+種類:
 
-- **Dynamic** — quantise weights to INT8, activations computed in FP. Easy, small speedup.
-- **Static (post-training)** — quantise weights + calibrate activation ranges on a small calibration set. Much faster than dynamic.
-- **Quantisation-aware training (QAT)** — simulate quantisation during training so the model learns around it. Best accuracy, needs labelled data.
+- **Dynamic** — weightsをINT8へquantiseし、activationsはFPで計算する。簡単だがspeedupは小さい。
+- **Static (post-training)** — weightsをquantiseし、小さなcalibration setでactivation rangeをcalibrateする。dynamicよりずっと高速。
+- **Quantisation-aware training (QAT)** — training中にquantisationをsimulateし、modelがそれに適応するよう学習する。最高精度だがlabelled dataが必要。
 
-For vision, post-training static quantisation gives 95% of the benefit with 5% of the effort. Use QAT only when accuracy loss from PTQ is unacceptable.
+visionでは、post-training static quantisationが労力5%で効果95%をくれます。PTQのaccuracy lossが許容できない場合だけQATを使います。
 
 ### Pruning and distillation
 
-- **Pruning** — remove unimportant weights (magnitude-based) or channels (structured). Works well on overparameterised models; less useful on already-compact architectures.
-- **Distillation** — train a small student to mimic a large teacher's logits. Often recovers most of the accuracy lost by shrinking the model. Standard for production edge models.
+- **Pruning** — 重要でないweight（magnitude-based）またはchannel（structured）を除去する。overparameterised modelでは有効ですが、すでにcompactなarchitectureでは効果が小さいです。
+- **Distillation** — 小さなstudentに大きなteacherのlogitsを真似させる。model縮小で失ったaccuracyの大半を回復することが多く、production edge modelの標準手法です。
 
-### The inference runtimes
+### inference runtimes
 
-- **PyTorch eager** — slow, not for deployment. Use for development only.
-- **TorchScript** — legacy. Superseded by `torch.compile` and ONNX export.
-- **ONNX Runtime** — the neutral runtime. CPU, CUDA, CoreML, TensorRT, OpenVINO all have ONNX providers. Start here.
-- **TensorRT** — NVIDIA's compiler. Best latency on NVIDIA GPUs (workstation and Jetson). Integrates with ONNX Runtime or standalone.
-- **Core ML** — Apple's runtime for iOS/macOS. Needs `.mlmodel` or `.mlpackage`.
-- **TFLite** — Google's runtime for Android/ARM. Needs `.tflite`.
-- **OpenVINO** — Intel's runtime for CPU/VPU. Needs `.xml` + `.bin`.
+- **PyTorch eager** — 遅く、deployment向きではありません。development専用です。
+- **TorchScript** — legacy。`torch.compile` とONNX exportに置き換えられました。
+- **ONNX Runtime** — 中立runtime。CPU、CUDA、CoreML、TensorRT、OpenVINOがONNX providerを持ちます。ここから始めます。
+- **TensorRT** — NVIDIAのcompiler。NVIDIA GPU（workstationとJetson）で最良latency。ONNX Runtime経由またはstandaloneで使います。
+- **Core ML** — iOS/macOS向けApple runtime。`.mlmodel` または `.mlpackage` が必要です。
+- **TFLite** — Android/ARM向けGoogle runtime。`.tflite` が必要です。
+- **OpenVINO** — Intel CPU/VPU向けruntime。`.xml` + `.bin` が必要です。
 
-In practice: export PyTorch -> ONNX -> pick the runtime for the target. ONNX is the lingua franca.
+実務では PyTorch -> ONNX -> target向けruntime を選びます。ONNXはlingua francaです。
 
 ### Edge architecture picker
 
 | Budget | Model | Why |
 |--------|-------|-----|
-| < 3M params | MobileNetV3-Small | Compiles everywhere, good baseline |
-| 3-10M | EfficientNet-Lite-B0 | Best accuracy per param on TFLite |
-| 10-20M | ConvNeXt-Tiny | Best accuracy-per-param, CPU-friendly |
-| 20-30M | MobileViT-S or EfficientViT | Transformer with ImageNet accuracy |
-| 30-80M | Swin-V2-Tiny | If stack supports window attention |
+| < 3M params | MobileNetV3-Small | どこでもcompileできる良いbaseline |
+| 3-10M | EfficientNet-Lite-B0 | TFLite上でparamあたりaccuracyが高い |
+| 10-20M | ConvNeXt-Tiny | accuracy-per-paramが高く、CPU-friendly |
+| 20-30M | MobileViT-S or EfficientViT | ImageNet accuracyを持つTransformer |
+| 30-80M | Swin-V2-Tiny | stackがwindow attentionをsupportする場合 |
 
-Quantise all of these to INT8 unless you have a specific reason not to.
+明確な理由がない限り、これらはすべてINT8へquantiseします。
 
-## Build It
+## 作ってみる
 
 ### Step 1: Measure latency correctly
 
@@ -136,7 +136,7 @@ def measure_latency(model, input_shape, device="cpu", warmup=10, iters=50):
     }
 ```
 
-Warm up, synchronise, use `time.perf_counter()`. Report percentiles, not just mean.
+warm upし、synchroniseし、`time.perf_counter()` を使います。meanだけでなくpercentilesを報告します。
 
 ### Step 2: Parameter and FLOP counts
 
@@ -171,7 +171,7 @@ def flops_estimate(model, input_shape):
     return total
 ```
 
-For real projects use `fvcore.nn.FlopCountAnalysis` or `ptflops`; they handle every module type correctly.
+実projectでは `fvcore.nn.FlopCountAnalysis` または `ptflops` を使います。すべてのmodule typeを正しく扱えます。
 
 ### Step 3: Post-training static quantisation
 
@@ -188,9 +188,9 @@ def quantise_ptq(model, calibration_loader, backend="x86"):
     return model
 ```
 
-Three steps: configure, prepare (insert observers), calibrate with real data, convert (fuse + quantise). Requires the model to be fused (`Conv -> BN -> ReLU` -> `ConvBnReLU`), which `torch.ao.quantization.fuse_modules` handles.
+3 stepsです。configure、prepare（observerを挿入）、real dataでcalibrate、convert（fuse + quantise）。modelがfuse済みである必要があります（`Conv -> BN -> ReLU` -> `ConvBnReLU`）。これは `torch.ao.quantization.fuse_modules` が処理します。
 
-### Step 4: Export to ONNX
+### Step 4: ONNXへexportする
 
 ```python
 def export_onnx(model, sample_input, path="model.onnx"):
@@ -207,9 +207,9 @@ def export_onnx(model, sample_input, path="model.onnx"):
     return path
 ```
 
-`opset_version=17` is the safe default in 2026. `dynamic_axes` lets you run the ONNX model with arbitrary batch size.
+2026年の安全なdefaultは `opset_version=17` です。`dynamic_axes` により、任意のbatch sizeでONNX modelを実行できます。
 
-### Step 5: Benchmark and compare regimes
+### Step 5: regimeをbenchmarkして比較する
 
 ```python
 import torch.nn as nn
@@ -224,47 +224,47 @@ def compare_regimes():
           f"p50={lat_fp32['p50_ms']:.2f}ms  p95={lat_fp32['p95_ms']:.2f}ms")
 ```
 
-Run the same function for `resnet50`, `efficientnet_v2_s`, and `convnext_tiny` and you have the comparison table you need for a deployment decision.
+同じfunctionを `resnet50`、`efficientnet_v2_s`、`convnext_tiny` に対して実行すれば、deployment decisionに必要な比較表が得られます。
 
-## Use It
+## 使ってみる
 
-Production stacks converge on one of three paths:
+production stackは次の3 pathのいずれかへ収束します。
 
-- **Web / serverless**: PyTorch -> ONNX -> ONNX Runtime (CPU or CUDA provider). Easiest, good enough for most.
-- **NVIDIA edge (Jetson, GPU server)**: PyTorch -> ONNX -> TensorRT. Best latency, biggest engineering effort.
-- **Mobile**: PyTorch -> ONNX -> Core ML (iOS) or TFLite (Android). Quantise before export.
+- **Web / serverless**: PyTorch -> ONNX -> ONNX Runtime（CPUまたはCUDA provider）。最も簡単で、多くの場合十分。
+- **NVIDIA edge (Jetson, GPU server)**: PyTorch -> ONNX -> TensorRT。最良latencyだがengineering effortが最も大きい。
+- **Mobile**: PyTorch -> ONNX -> Core ML（iOS）またはTFLite（Android）。export前にquantiseする。
 
-For measurement, `torch-tb-profiler`, `nvprof` / `nsys`, and Instruments on macOS give layer-by-layer breakdowns. `benchmark_app` (OpenVINO) and `trtexec` (TensorRT) give standalone CLI numbers.
+measurementには、`torch-tb-profiler`、`nvprof` / `nsys`、macOSのInstrumentsがlayer-by-layer breakdownを提供します。`benchmark_app`（OpenVINO）と`trtexec`（TensorRT）はstandalone CLIの数値を出します。
 
-## Ship It
+## 出荷する
 
-This lesson produces:
+このlessonが生成するもの:
 
-- `outputs/prompt-edge-deployment-planner.md` — a prompt that picks backbone, quantisation strategy, and runtime given target device and latency SLA.
-- `outputs/skill-latency-profiler.md` — a skill that writes a complete latency-benchmarking script with warmup, synchronisation, percentiles, and memory tracking.
+- `outputs/prompt-edge-deployment-planner.md` — target deviceとlatency SLAに応じてbackbone、quantisation strategy、runtimeを選ぶprompt。
+- `outputs/skill-latency-profiler.md` — warmup、synchronisation、percentiles、memory trackingを備えた完全なlatency-benchmarking scriptを書くskill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Measure p50 latency for `resnet18`, `mobilenet_v3_small`, `efficientnet_v2_s`, and `convnext_tiny` at 224x224 on CPU. Report the table and identify which architecture has the best accuracy-per-ms.
-2. **(Medium)** Apply post-training static quantisation to `mobilenet_v3_small`. Report FP32 vs INT8 latency and accuracy loss on a held-out subset of CIFAR-10 or similar.
-3. **(Hard)** Export `convnext_tiny` to ONNX, run it through `onnxruntime` with the `CPUExecutionProvider`, and compare latency to the PyTorch eager baseline. Identify the first layer where ONNX Runtime is faster and explain why.
+1. **(Easy)** CPU上224x224で、`resnet18`、`mobilenet_v3_small`、`efficientnet_v2_s`、`convnext_tiny` のp50 latencyを測定してください。表を報告し、accuracy-per-msが最も良いarchitectureを特定してください。
+2. **(Medium)** `mobilenet_v3_small` にpost-training static quantisationを適用してください。CIFAR-10などのheld-out subsetで、FP32 vs INT8 latencyとaccuracy lossを報告してください。
+3. **(Hard)** `convnext_tiny` をONNXへexportし、`CPUExecutionProvider`付きの`onnxruntime`で実行し、PyTorch eager baselineとlatencyを比較してください。ONNX Runtimeが最初に速くなるlayerを特定し、その理由を説明してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Latency | "How fast" | Time from input to output; p50/p95/p99 percentiles, not mean |
-| FLOPs | "Model size" | Floating-point ops per forward pass; rough proxy for compute cost |
-| INT8 quantisation | "8-bit" | Replace FP32 weights/activations with 8-bit integers; ~4x smaller, 2-4x faster |
-| PTQ | "Post-training quantisation" | Quantise a trained model without retraining; easy, usually enough |
-| QAT | "Quantisation-aware training" | Simulate quantisation during training; best accuracy, requires labelled data |
-| ONNX | "The neutral format" | Model exchange format supported by every mainstream inference runtime |
-| TensorRT | "NVIDIA compiler" | Compiles ONNX into an optimised engine for NVIDIA GPUs |
-| Distillation | "Teacher -> student" | Train a small model to mimic a big model's logits; recovers most lost accuracy |
+| Latency | "どれだけ速いか" | inputからoutputまでの時間。meanではなくp50/p95/p99 percentiles |
+| FLOPs | "Model size" | forward passあたりfloating-point ops。compute costのおおまかなproxy |
+| INT8 quantisation | "8-bit" | FP32 weights/activationsを8-bit integersへ置換。約4倍小さく、2-4倍高速 |
+| PTQ | "Post-training quantisation" | retrainingなしでtrained modelをquantiseする。簡単で、多くの場合十分 |
+| QAT | "Quantisation-aware training" | training中にquantisationをsimulateする。最高accuracyだがlabelled dataが必要 |
+| ONNX | "The neutral format" | 主流inference runtimeがすべてsupportするmodel exchange format |
+| TensorRT | "NVIDIA compiler" | ONNXをNVIDIA GPU向けoptimized engineへcompileする |
+| Distillation | "Teacher -> student" | 小さなmodelに大きなmodelのlogitsを真似させる。失ったaccuracyの大半を回復する |
 
-## Further Reading
+## 参考文献
 
-- [EfficientNet (Tan & Le, 2019)](https://arxiv.org/abs/1905.11946) — compound scaling for efficient architectures
-- [MobileNetV3 (Howard et al., 2019)](https://arxiv.org/abs/1905.02244) — mobile-first architecture with h-swish and squeeze-excite
-- [A Practical Guide to TensorRT Optimization (NVIDIA)](https://developer.nvidia.com/blog/accelerating-model-inference-with-tensorrt-tips-and-best-practices-for-pytorch-users/) — how to actually get the throughput numbers in the paper
-- [ONNX Runtime docs](https://onnxruntime.ai/docs/) — quantisation, graph optimisation, provider selection
+- [EfficientNet (Tan & Le, 2019)](https://arxiv.org/abs/1905.11946) — efficient architectureのcompound scaling
+- [MobileNetV3 (Howard et al., 2019)](https://arxiv.org/abs/1905.02244) — h-swishとsqueeze-exciteを備えたmobile-first architecture
+- [A Practical Guide to TensorRT Optimization (NVIDIA)](https://developer.nvidia.com/blog/accelerating-model-inference-with-tensorrt-tips-and-best-practices-for-pytorch-users/) — 論文中のthroughput数値を実際に得る方法
+- [ONNX Runtime docs](https://onnxruntime.ai/docs/) — quantisation、graph optimisation、provider selection

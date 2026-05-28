@@ -1,41 +1,41 @@
-# Spectrograms, Mel Scale & Audio Features
+# スペクトログラム、Mel スケール、音声特徴量
 
-> Neural nets do not consume raw waveforms well. They consume spectrograms. They consume mel spectrograms even better. Every ASR, TTS, and audio classifier in 2026 lives or dies by this single preprocessing choice.
+> ニューラルネットは生波形をうまく直接消費できません。スペクトログラムを消費します。Mel スペクトログラムならさらにうまく扱えます。2026 年のあらゆる ASR、TTS、音声分類器は、この 1 つの前処理選択に成否を左右されます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 6 · 01 (Audio Fundamentals)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 6 · 01 (Audio Fundamentals)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-Take a 10-second 16 kHz clip. That is 160,000 floats, all in `[-1, 1]`, almost perfectly uncorrelated with the label "dog barking" or "the word cat". The raw waveform has the information but in a form the model cannot easily extract. Two identical phonemes spoken 100 ms apart have completely different raw samples.
+10 秒、16 kHz のクリップを考えます。これは `[-1, 1]` に収まる 160,000 個の float であり、ラベル "dog barking" や "the word cat" とはほぼ完全に相関していません。生波形には情報がありますが、モデルが簡単に取り出せる形ではありません。100 ms 離れて発話された同一音素は、生サンプルとしてはまったく違う値になります。
 
-A spectrogram fixes this. It collapses the temporal detail where human perception ignores it (microsecond jitter) and preserves the structure where perception attends (which frequencies are energetic, over time windows of ~10–25 ms).
+スペクトログラムはこれを直します。人間の知覚が無視する時間的な細部 (マイクロ秒単位の揺らぎ) を畳み込み、知覚が注目する構造 (どの周波数に、約 10–25 ms の時間窓でどれだけエネルギーがあるか) を保ちます。
 
-Mel spectrograms push further. Humans perceive pitch logarithmically: 100 Hz vs 200 Hz sounds "the same distance apart" as 1000 Hz vs 2000 Hz. The mel scale warps the frequency axis to match. A mel-scaled spectrogram is the single most important feature in speech ML from 2010 through 2026.
+Mel スペクトログラムはさらに進みます。人間はピッチを対数的に知覚します。100 Hz と 200 Hz の差は、1000 Hz と 2000 Hz の差と「同じ距離」に聞こえます。Mel スケールはこの知覚に合わせて周波数軸を歪ませます。Mel スケールのスペクトログラムは、2010 年から 2026 年までの音声 ML で最も重要な特徴量です。
 
-## The Concept
+## 概念
 
-![Waveform to STFT to mel spectrogram to MFCC ladder](../assets/mel-features.svg)
+![波形から STFT、Mel スペクトログラム、MFCC への段階](../assets/mel-features.svg)
 
-**STFT (Short-Time Fourier Transform).** Slice the waveform into overlapping frames (typical: 25 ms window, 10 ms hop = 400 samples / 160 samples at 16 kHz). Multiply each frame by a window function (Hann is the default; Hamming slightly different tradeoff). FFT each frame. Stack the magnitude spectra into a matrix of shape `(n_frames, n_freq_bins)`. That is your spectrogram.
+**STFT (Short-Time Fourier Transform)。** 波形を重なり合うフレームに切ります (典型例: 25 ms 窓、10 ms hop = 16 kHz で 400 samples / 160 samples)。各フレームに窓関数を掛けます (Hann がデフォルト、Hamming は少し違うトレードオフ)。各フレームを FFT します。大きさスペクトルを積み重ねて shape `(n_frames, n_freq_bins)` の行列にします。これがスペクトログラムです。
 
-**Log-magnitude.** Raw magnitudes span 5-6 orders of magnitude. Take `log(|X| + 1e-6)` or `20 * log10(|X|)` to compress dynamic range. Every production pipeline uses log-magnitude, not raw magnitude.
+**対数振幅。** 生の大きさは 5-6 桁にわたります。`log(|X| + 1e-6)` または `20 * log10(|X|)` を取ってダイナミックレンジを圧縮します。本番パイプラインはすべて、生の大きさではなく log-magnitude を使います。
 
-**Mel scale.** Frequency `f` in Hz maps to mel `m` by `m = 2595 * log10(1 + f / 700)`. The mapping is roughly linear below 1 kHz and roughly logarithmic above. 80 mel bins covering 0–8 kHz is the standard ASR input.
+**Mel スケール。** Hz 単位の周波数 `f` は `m = 2595 * log10(1 + f / 700)` で Mel `m` に写像されます。この写像は 1 kHz 未満ではおおむね線形、1 kHz より上ではおおむね対数的です。0–8 kHz を覆う 80 個の Mel ビンが ASR 入力の標準です。
 
-**Mel filterbank.** A set of triangular filters spaced equally on the mel scale. Each filter is a weighted sum of adjacent FFT bins. Multiplying the STFT magnitude by the filterbank matrix gives the mel spectrogram in one matmul.
+**Mel フィルタバンク。** Mel スケール上で等間隔に並んだ三角フィルタの集合です。各フィルタは隣接する FFT ビンの重み付き和です。STFT の大きさにフィルタバンク行列を掛けると、1 回の matmul で Mel スペクトログラムが得られます。
 
-**Log-mel spectrogram.** `log(mel_spec + 1e-10)`. Whisper's input. Parakeet's input. SeamlessM4T's input. The universal 2026 audio frontend.
+**Log-mel スペクトログラム。** `log(mel_spec + 1e-10)`。Whisper の入力。Parakeet の入力。SeamlessM4T の入力。2026 年における汎用オーディオフロントエンドです。
 
-**MFCCs.** Take the log-mel spectrogram, apply a DCT (type II), keep the first 13 coefficients. Decorrelates the features and compresses further. Dominant feature until about 2015 when CNNs/Transformers on raw log-mels caught up. Still used in speaker recognition (x-vectors, ECAPA).
+**MFCC。** Log-mel スペクトログラムに DCT (type II) を適用し、最初の 13 係数を残します。特徴量を非相関化し、さらに圧縮します。生の log-mels 上の CNN/Transformer が追いつく 2015 年頃までは支配的な特徴量でした。今でも話者認識 (x-vectors, ECAPA) で使われます。
 
-**Resolution trade.** Larger FFT = better frequency resolution but worse time resolution. 25 ms / 10 ms is the audio-ML default; 50 ms / 12.5 ms for music; 5 ms / 2 ms for transient detection (drum hits, plosives).
+**解像度のトレードオフ。** FFT を大きくすると周波数解像度は上がりますが、時間解像度は下がります。25 ms / 10 ms は音声 ML のデフォルトです。音楽では 50 ms / 12.5 ms、過渡検出 (ドラムヒット、破裂音) では 5 ms / 2 ms を使います。
 
-## Build It
+## 作る
 
-### Step 1: frame the waveform
+### 手順 1: 波形をフレーム化する
 
 ```python
 def frame(signal, frame_len, hop):
@@ -43,9 +43,9 @@ def frame(signal, frame_len, hop):
     return [signal[i * hop : i * hop + frame_len] for i in range(n)]
 ```
 
-A 10-second 16 kHz clip with `frame_len=400, hop=160` yields 998 frames.
+`frame_len=400, hop=160` のとき、10 秒 16 kHz のクリップは 998 フレームになります。
 
-### Step 2: Hann window
+### 手順 2: Hann 窓
 
 ```python
 import math
@@ -54,9 +54,9 @@ def hann(N):
     return [0.5 * (1 - math.cos(2 * math.pi * n / (N - 1))) for n in range(N)]
 ```
 
-Multiply element-wise before the FFT. Removes spectral leakage caused by truncating at non-zero endpoints.
+FFT の前に要素ごとに掛けます。ゼロでない端点で切り詰めることによるスペクトル漏れを取り除きます。
 
-### Step 3: STFT magnitude
+### 手順 3: STFT の大きさ
 
 ```python
 def stft_magnitude(signal, frame_len=400, hop=160):
@@ -65,9 +65,9 @@ def stft_magnitude(signal, frame_len=400, hop=160):
     return [magnitudes(dft([w * s for w, s in zip(win, f)])) for f in frames]
 ```
 
-Production uses `torch.stft` or `librosa.stft` (FFT-backed, vectorized). The loop here is pedagogical; it runs on short clips in `code/main.py`.
+本番では `torch.stft` または `librosa.stft` を使います (FFT ベースでベクトル化済み)。ここでのループは教育用で、`code/main.py` の短いクリップでは動きます。
 
-### Step 4: mel filterbank
+### 手順 4: Mel フィルタバンク
 
 ```python
 def hz_to_mel(f):
@@ -91,18 +91,18 @@ def mel_filterbank(n_mels, n_fft, sr, fmin=0, fmax=None):
     return fb
 ```
 
-80 mels covering 0–8 kHz with `n_fft=400` gives an `(80, 201)` matrix. Multiply the `(n_frames, 201)` STFT magnitude by the transpose to get `(n_frames, 80)` mel spectrogram.
+`n_fft=400` で 0–8 kHz を覆う 80 mels は `(80, 201)` 行列になります。`(n_frames, 201)` の STFT 大きさにその転置を掛けると、`(n_frames, 80)` の Mel スペクトログラムが得られます。
 
-### Step 5: log-mel
+### 手順 5: log-mel
 
 ```python
 def log_mel(mel_spec, eps=1e-10):
     return [[math.log(max(v, eps)) for v in frame] for frame in mel_spec]
 ```
 
-Common alternatives: `librosa.power_to_db` (reference-normalized dB), `10 * log10(power + eps)`. Whisper uses a more involved clip + normalize routine (see Whisper's `log_mel_spectrogram`).
+一般的な代替は `librosa.power_to_db` (参照で正規化された dB)、`10 * log10(power + eps)` です。Whisper はより複雑な clip + normalize ルーチンを使います (Whisper の `log_mel_spectrogram` を参照)。
 
-### Step 6: MFCCs
+### 手順 6: MFCC
 
 ```python
 def dct_ii(x, n_coeffs):
@@ -113,58 +113,58 @@ def dct_ii(x, n_coeffs):
     ]
 ```
 
-Apply DCT to each log-mel frame, keep the first 13 coefficients. That is your MFCC matrix. The first coefficient is usually dropped (it encodes overall energy).
+各 log-mel フレームに DCT を適用し、最初の 13 係数を残します。これが MFCC 行列です。最初の係数は通常は捨てます (全体エネルギーを符号化するため)。
 
-## Use It
+## 使う
 
-The 2026 stack:
+2026 年のスタック:
 
-| Task | Features |
+| タスク | 特徴量 |
 |------|----------|
 | ASR (Whisper, Parakeet, SeamlessM4T) | 80 log-mels, 10 ms hop, 25 ms window |
-| TTS acoustic model (VITS, F5-TTS, Kokoro) | 80 mels, 5–12 ms hop for fine temporal control |
+| TTS acoustic model (VITS, F5-TTS, Kokoro) | 80 mels, fine temporal control には 5–12 ms hop |
 | Audio classification (AST, PANNs, BEATs) | 128 log-mels, 10 ms hop |
-| Speaker embedding (ECAPA-TDNN, WavLM) | 80 log-mels or raw-waveform SSL |
-| Music (MusicGen, Stable Audio 2) | EnCodec discrete tokens (not mels) |
-| Keyword spotting | 40 MFCCs for tiny devices |
+| Speaker embedding (ECAPA-TDNN, WavLM) | 80 log-mels または raw-waveform SSL |
+| Music (MusicGen, Stable Audio 2) | EnCodec discrete tokens (mels ではない) |
+| Keyword spotting | 小型デバイス向け 40 MFCCs |
 
-Rule of thumb: **if you are not working on music, start with 80 log-mels.** The burden of proof is on any deviation.
+経験則: **音楽を扱っていないなら、80 log-mels から始める**。そこから外れるなら、その妥当性を示す責任があります。
 
-## Pitfalls that still ship in 2026
+## 2026 年でも本番に紛れ込む落とし穴
 
-- **Mel count mismatch.** Training with 80 mels, inference with 128 mels. Silent failure. Log the feature shape at both ends.
-- **Sample-rate mismatch upstream.** Mels computed at 22.05 kHz look different from 16 kHz. Fix SR *before* featurization.
-- **dB vs log.** Whisper expects log-mel, not dB-mel. Some HF pipelines autodetect; your custom code will not.
-- **Normalization drift.** Per-utterance normalization during training, global normalization during inference. Production bug that doubles WER.
-- **Leakage from padding.** Zero-padding the end of a clip produces a flat spectrum in the trailing frames. Pad symmetrically or replicate.
+- **Mel 数の不一致。** 学習は 80 mels、推論は 128 mels。静かに失敗します。両端で feature shape をログに出します。
+- **上流のサンプルレート不一致。** 22.05 kHz で計算した mels は 16 kHz のものと違って見えます。特徴量化の *前* に SR を直します。
+- **dB vs log。** Whisper が期待するのは log-mel であり、dB-mel ではありません。一部の HF pipeline は自動検出しますが、自作コードはしません。
+- **正規化ドリフト。** 学習時は発話ごとの正規化、推論時はグローバル正規化。WER を倍にする本番バグです。
+- **padding からの漏れ。** クリップ末尾のゼロパディングは、後続フレームに平坦なスペクトルを生みます。対称に pad するか replicate します。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-feature-extractor.md`. The skill picks feature type, mel count, frame/hop, and normalization for a given model target.
+`outputs/skill-feature-extractor.md` として保存します。このスキルは、対象モデルに合わせて feature type、mel count、frame/hop、normalization を選びます。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. It synthesizes a chirp (frequency swept 200 → 4000 Hz) and prints the argmax mel bin per frame. Plot (optional) and confirm it matches the sweep.
-2. **Medium.** Re-run with `n_mels` in `{40, 80, 128}` and `frame_len` in `{200, 400, 800}`. Measure sharp-peak bandwidth across the time axis. Which combo resolves the chirp the best?
-3. **Hard.** Implement `power_to_db` and compare ASR accuracy of a tiny CNN classifier on AudioMNIST using (a) raw log-mel, (b) dB-mel with `ref=max`, (c) MFCC-13 + delta + delta-delta. Report top-1 accuracy.
+1. **Easy.** `code/main.py` を実行します。chirp (200 → 4000 Hz に周波数掃引) を合成し、フレームごとの argmax Mel ビンを出力します。プロットし (任意)、掃引と一致することを確認します。
+2. **Medium.** `n_mels` を `{40, 80, 128}`、`frame_len` を `{200, 400, 800}` にして再実行します。時間軸に沿った sharp-peak bandwidth を測定します。どの組み合わせが chirp を最もよく分解しますか。
+3. **Hard.** `power_to_db` を実装し、AudioMNIST 上の小さな CNN 分類器で ASR accuracy を比較します: (a) raw log-mel、(b) `ref=max` の dB-mel、(c) MFCC-13 + delta + delta-delta。top-1 accuracy を報告します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Frame | A slice | 25 ms chunk of waveform fed to one FFT. |
-| Hop | Stride | Samples between consecutive frames; 10 ms is ASR default. |
-| Window | Hann/Hamming thing | Point-wise multiplier that tapers the frame edges to zero. |
-| STFT | Spectrogram generator | Framed + windowed FFT; yields time × frequency matrix. |
-| Mel | Warped frequency | Log-perception scale; `m = 2595·log10(1 + f/700)`. |
-| Filterbank | The matrix | Triangular filters that project STFT onto mel bins. |
-| Log-mel | Whisper's input | `log(mel_spec + eps)`; standardized in 2026. |
-| MFCC | Old-school feature | DCT of log-mel; 13 coeffs, decorrelated. |
+| Frame | ひと切れ | 1 回の FFT に渡す 25 ms の波形チャンク。 |
+| Hop | ストライド | 連続フレーム間のサンプル数。ASR のデフォルトは 10 ms。 |
+| Window | Hann/Hamming のやつ | フレーム端をゼロへなだらかにする点ごとの乗数。 |
+| STFT | スペクトログラム生成器 | フレーム化 + 窓掛け FFT。時間 × 周波数行列を出します。 |
+| Mel | 歪めた周波数 | 対数知覚スケール。`m = 2595·log10(1 + f/700)`。 |
+| Filterbank | 行列 | STFT を Mel ビンへ射影する三角フィルタ。 |
+| Log-mel | Whisper の入力 | `log(mel_spec + eps)`。2026 年の標準形式。 |
+| MFCC | 旧来の特徴量 | log-mel の DCT。13 係数、非相関化済み。 |
 
-## Further Reading
+## 参考資料
 
-- [Davis, Mermelstein (1980). Comparison of parametric representations for monosyllabic word recognition](https://ieeexplore.ieee.org/document/1163420) — the MFCC paper.
-- [Stevens, Volkmann, Newman (1937). A Scale for the Measurement of the Psychological Magnitude Pitch](https://pubs.aip.org/asa/jasa/article-abstract/8/3/185/735757/) — the original mel scale.
-- [OpenAI — Whisper source, log_mel_spectrogram](https://github.com/openai/whisper/blob/main/whisper/audio.py) — read the reference implementation.
-- [librosa feature extraction docs](https://librosa.org/doc/main/feature.html) — reference for `mfcc`, `melspectrogram`, and hop/window.
-- [NVIDIA NeMo — audio preprocessing](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/asr_all.html#featurizers) — production-scale pipeline for Parakeet + Canary models.
+- [Davis, Mermelstein (1980). Comparison of parametric representations for monosyllabic word recognition](https://ieeexplore.ieee.org/document/1163420) — MFCC の論文。
+- [Stevens, Volkmann, Newman (1937). A Scale for the Measurement of the Psychological Magnitude Pitch](https://pubs.aip.org/asa/jasa/article-abstract/8/3/185/735757/) — 元の Mel スケール。
+- [OpenAI — Whisper source, log_mel_spectrogram](https://github.com/openai/whisper/blob/main/whisper/audio.py) — リファレンス実装を読んでください。
+- [librosa feature extraction docs](https://librosa.org/doc/main/feature.html) — `mfcc`、`melspectrogram`、hop/window の参照。
+- [NVIDIA NeMo — audio preprocessing](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/asr_all.html#featurizers) — Parakeet + Canary models 向けの本番規模パイプライン。

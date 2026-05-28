@@ -1,32 +1,32 @@
 # Object Detection — YOLO from Scratch
 
-> Detection is classification plus regression, run at every position in a feature map, then cleaned up with non-maximum suppression.
+> Detection は classification に regression を足し、それを feature map の全位置で実行し、最後に non-maximum suppression で整理する task です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification), Phase 4 Lesson 05 (Transfer Learning)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification), Phase 4 Lesson 05 (Transfer Learning)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Explain the grid-and-anchor design that turns detection into a dense prediction problem and state what every number in the output tensor means
-- Compute Intersection-over-Union between boxes and implement non-maximum suppression from scratch
-- Build a minimal YOLO-style head on top of a pretrained backbone, including the classification, objectness, and box-regression losses
-- Read a detection metric row (precision@0.5, recall, mAP@0.5, mAP@0.5:0.95) and pick which knob to turn next
+- detection を dense prediction problem に変換する grid-and-anchor design を説明し、output tensor の各値が何を意味するか述べる
+- boxes 間の Intersection-over-Union を計算し、non-maximum suppression を scratch から実装する
+- pretrained backbone の上に minimal YOLO-style head を作り、classification、objectness、box-regression losses を含める
+- detection metric row（precision@0.5、recall、mAP@0.5、mAP@0.5:0.95）を読み、次に動かす knob を選ぶ
 
-## The Problem
+## 問題
 
-Classification says "this image is a dog." Detection says "there is a dog at pixels (112, 40, 280, 210), there is a cat at (400, 180, 560, 310), and nothing else in the frame." That one structural change — predicting a variable number of labelled boxes instead of one label per image — is what every autonomous system, every surveillance product, every document layout parser, and every factory vision line depends on.
+Classification は「この image は dog」と言います。Detection は「pixels (112, 40, 280, 210) に dog があり、(400, 180, 560, 310) に cat があり、frame 内にはそれ以外ない」と言います。image ごとに 1 label を出すのではなく、可変個の labelled boxes を予測するという構造変化が、自律 systems、surveillance products、document layout parsers、factory vision lines を支えています。
 
-Detection is also where every engineering trade-off in vision shows up at once. You want boxes that are accurate (regression head), you want the right class for each box (classification head), you want the model to know when there is nothing to detect (objectness score), and you want exactly one prediction per real object (non-maximum suppression). Miss any of these and the pipeline either misses objects, reports hallucinated boxes, or predicts the same object fifteen times in slightly different positions.
+Detection では vision の engineering trade-off が一度に現れます。boxes は正確である必要があり（regression head）、各 box の class は正しい必要があり（classification head）、何も検出しない場所を model が理解する必要があり（objectness score）、real object 1 つにつき prediction は 1 つであるべきです（non-maximum suppression）。どれかを外すと、pipeline は objects を見逃す、hallucinated boxes を出す、同じ object を少しずつ違う位置に何度も予測する、のいずれかになります。
 
-YOLO (You Only Look Once, Redmon et al. 2016) was the design that made all of this run in real time by doing it with a single forward pass of a conv net, and the same structural decisions are still the backbone of modern detectors (YOLOv8, YOLOv9, YOLO-NAS, RT-DETR). Learn the core and every variant becomes a rearrangement of the same parts.
+YOLO（You Only Look Once, Redmon et al. 2016）は、conv net の single forward pass でこれを real time にした設計です。同じ構造上の判断は、YOLOv8、YOLOv9、YOLO-NAS、RT-DETR など modern detectors の backbone にも残っています。core を学ぶと、variant は同じ部品の組み換えとして読めます。
 
 ## The Concept
 
 ### Detection as dense prediction
 
-A classifier outputs C numbers per image. A YOLO-style detector outputs `(S x S x (5 + C))` numbers per image, where S is the spatial grid size.
+classifier は image ごとに C 個の numbers を出します。YOLO-style detector は image ごとに `(S x S x (5 + C))` numbers を出します。S は spatial grid size です。
 
 ```mermaid
 flowchart LR
@@ -44,19 +44,13 @@ flowchart LR
     style RESULT fill:#dcfce7,stroke:#16a34a
 ```
 
-Each of the `S * S` grid cells predicts `B` boxes. For each box:
-
-- 4 numbers describe geometry: `tx, ty, tw, th`.
-- 1 number is the objectness score: "is there an object centred in this cell?"
-- C numbers are class probabilities.
-
-Total per cell: `B * (5 + C)`. For VOC with `S=13, B=2, C=20`, that is 50 numbers per cell.
+`S * S` の各 grid cell は `B` 個の boxes を予測します。各 box は 4 つの geometry values（`tx, ty, tw, th`）、1 つの objectness score、C 個の class probabilities を持ちます。cell あたり合計は `B * (5 + C)` です。VOC で `S=13, B=2, C=20` なら cell あたり 50 numbers になります。
 
 ### Why grids and anchors
 
-Plain regression would predict `(x, y, w, h)` for every object as an absolute coordinate. That is hard for a conv network because translating the image should not translate all predictions by the same amount — each object is spatially anchored. The grid answers this by assigning each ground-truth box to the grid cell its centre falls in; only that cell is responsible for that object.
+plain regression で各 object の `(x, y, w, h)` を absolute coordinate として直接予測するのは難しいです。image を平行移動したからといって、すべての predictions が同じ量だけ動くべきではありません。object は spatially anchored です。grid は、ground-truth box をその centre が入る grid cell に割り当て、その cell だけが object を担当することでこれを解決します。
 
-Anchors address a second problem. A 3x3 conv cannot easily regress a 500-pixel-wide box out of a 16-pixel receptive field feature cell. Instead, we pre-define `B` prior box shapes (anchors) per cell and predict small deltas from each anchor. The model learns to pick the right anchor and nudge it rather than regress from nothing.
+anchors は別の問題を解決します。3x3 conv が 16-pixel receptive field の feature cell から 500-pixel-wide box を直接 regress するのは難しいです。そこで cell ごとに `B` 個の prior box shapes（anchors）を定義し、各 anchor からの小さな deltas を予測します。model はゼロから regress するのではなく、適切な anchor を選び、それを少し動かすことを学びます。
 
 ```
 Anchor box priors (example for 416x416 input):
@@ -68,11 +62,11 @@ Anchor box priors (example for 416x416 input):
 At each grid cell, every anchor emits (tx, ty, tw, th, obj, c_1, ..., c_C).
 ```
 
-Modern detectors often use FPN with different anchor sets per resolution — small anchors on shallow high-resolution maps, large anchors on deep low-resolution maps. Same idea, more scales.
+modern detectors は resolution ごとに異なる anchor sets を持つ FPN を使うことが多いです。small anchors は shallow high-resolution maps、large anchors は deep low-resolution maps に置きます。発想は同じで、scales が増えただけです。
 
 ### Decoding predictions
 
-The raw `tx, ty, tw, th` are not box coordinates; they are regression targets to be transformed before plotting:
+raw `tx, ty, tw, th` は box coordinates ではありません。plot する前に変換する regression targets です。
 
 ```
 centre x  = (sigmoid(tx) + cell_x) * stride
@@ -81,21 +75,21 @@ width     = anchor_w * exp(tw)
 height    = anchor_h * exp(th)
 ```
 
-`sigmoid` keeps centre offsets inside the cell. `exp` lets the width scale freely from the anchor without a sign flip. `stride` scales the grid coordinates back to pixels. This decode step is the same in every YOLO version since v2.
+`sigmoid` は centre offsets を cell 内に保ちます。`exp` は width/height を anchor から自由に scale させつつ符号反転を防ぎます。`stride` は grid coordinates を pixels に戻します。この decode step は v2 以降の YOLO variants で共通です。
 
 ### IoU
 
-Detection's universal similarity metric between two boxes:
+Detection で boxes 間の similarity を測る universal metric です。
 
 ```
 IoU(A, B) = area(A intersect B) / area(A union B)
 ```
 
-IoU = 1 means identical; IoU = 0 means no overlap. IoU between the prediction and the ground-truth box is what decides whether a prediction counts as a true positive (typically IoU >= 0.5). IoU between two predictions is what NMS uses to deduplicate.
+IoU = 1 は同一、IoU = 0 は overlap なしです。prediction と ground-truth box の IoU は true positive かどうかを決め、通常 IoU >= 0.5 が使われます。predictions 同士の IoU は NMS が重複排除に使います。
 
 ### Non-maximum suppression
 
-A conv network trained on adjacent anchors will often predict overlapping boxes for the same object. NMS keeps the highest-confidence prediction and deletes any other prediction with IoU above a threshold.
+adjacent anchors で trained された conv network は、同じ object に重なる boxes を複数予測しがちです。NMS は highest-confidence prediction を残し、IoU が threshold を超える他の predictions を削除します。
 
 ```
 NMS(boxes, scores, iou_threshold):
@@ -107,11 +101,11 @@ NMS(boxes, scores, iou_threshold):
     return keep
 ```
 
-Typical threshold: 0.45 for object detection. Recent detectors replace standard NMS with `soft-NMS`, `DIoU-NMS`, or learn the suppression directly (RT-DETR) but the structural purpose is the same.
+typical threshold は object detection で 0.45 です。recent detectors は standard NMS を `soft-NMS`、`DIoU-NMS`、または learned suppression（RT-DETR）で置き換えることがありますが、目的は同じです。
 
 ### The loss
 
-YOLO loss is three losses added with weights:
+YOLO loss は重み付きの 3 種類の loss を足したものです。
 
 ```
 L = lambda_coord * L_box(pred, target, where obj=1)
@@ -120,26 +114,26 @@ L = lambda_coord * L_box(pred, target, where obj=1)
   + lambda_cls   * L_cls(pred, target, where obj=1)
 ```
 
-Only cells that contain an object contribute to the box-regression and classification losses. Cells without objects contribute only to the objectness loss (teaching the model to stay silent). `lambda_noobj` is usually small (~0.5) because the vast majority of cells are empty and would otherwise dominate the total loss.
+object を含む cells だけが box-regression と classification losses に寄与します。object を含まない cells は objectness loss だけに寄与し、model に黙ることを教えます。empty cells は非常に多いため、`lambda_noobj` は通常小さく（~0.5）します。
 
-Modern variants swap MSE box loss for CIoU / DIoU (which optimise IoU directly), use focal loss for class imbalance, and balance objectness with quality focal loss. The three-component structure is unchanged.
+modern variants は MSE box loss を CIoU / DIoU に変え、class imbalance には focal loss を使い、objectness を quality focal loss で balance します。それでも 3-component structure は変わりません。
 
 ### Detection metrics
 
-Accuracy does not transfer to detection. Four numbers that do:
+Accuracy は detection にはそのまま使えません。必要なのは次の 4 つです。
 
-- **Precision@IoU=0.5** — of the predictions counted as positives, how many are actually correct.
-- **Recall@IoU=0.5** — of the real objects, how many did we find.
-- **AP@0.5** — precision-recall curve area at IoU threshold 0.5; one number per class.
-- **mAP@0.5:0.95** — average of AP over IoU thresholds 0.5, 0.55, ..., 0.95. The COCO metric; strictest and most informative.
+- **Precision@IoU=0.5** — positive と数えた predictions のうち実際に正しい割合。
+- **Recall@IoU=0.5** — real objects のうち見つけられた割合。
+- **AP@0.5** — IoU threshold 0.5 での precision-recall curve area。class ごとの値。
+- **mAP@0.5:0.95** — IoU thresholds 0.5, 0.55, ..., 0.95 にわたる AP の平均。COCO metric で、最も厳しく情報量が多い。
 
-Report all four. A detector that is strong on mAP@0.5 but weak on mAP@0.5:0.95 is localising roughly but not tightly; fix with better box-regression loss. A detector with high precision and low recall is too conservative; lower the confidence threshold or increase the objectness weight.
+4 つすべてを報告してください。mAP@0.5 は高いが mAP@0.5:0.95 が低い detector は、rough localization はできても tight ではありません。box-regression loss を改善します。precision が高く recall が低い detector は保守的すぎます。confidence threshold を下げるか objectness weight を上げます。
 
-## Build It
+## 実装
 
 ### Step 1: IoU
 
-The workhorse of the whole lesson. Works on two arrays of boxes in `(x1, y1, x2, y2)` format.
+lesson 全体の workhorse です。`(x1, y1, x2, y2)` format の boxes arrays で動きます。
 
 ```python
 import numpy as np
@@ -163,7 +157,7 @@ def box_iou(boxes_a, boxes_b):
     return inter / np.clip(union, 1e-8, None)
 ```
 
-Returns an `(N_a, N_b)` matrix of pairwise IoUs. Use it against a single ground-truth box by making one of the arrays shape `(1, 4)`.
+pairwise IoUs の `(N_a, N_b)` matrix を返します。single ground-truth box と比較するときは片方の array を shape `(1, 4)` にします。
 
 ### Step 2: Non-max suppression
 
@@ -182,11 +176,11 @@ def nms(boxes, scores, iou_threshold=0.45):
     return np.array(keep, dtype=np.int64)
 ```
 
-Deterministic, `O(N log N)` from the sort, and matches the behaviour of `torchvision.ops.nms` on identical inputs.
+sort による `O(N log N)` で deterministic です。同じ inputs なら `torchvision.ops.nms` と同じ挙動になります。
 
 ### Step 3: Box encoding and decoding
 
-Convert between pixel coordinates and the `(tx, ty, tw, th)` targets that the network actually regresses.
+pixel coordinates と network が regress する `(tx, ty, tw, th)` targets の間で変換します。
 
 ```python
 def encode(box_xyxy, cell_x, cell_y, stride, anchor_wh):
@@ -215,11 +209,11 @@ def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x))
 ```
 
-Test: encode a box then decode — you should get back something very close to the original (up to the sigmoid inverse not being perfectly invertible when `tx` is not in the post-sigmoid range).
+box を encode して decode すると、元の box にかなり近い値が戻るはずです。
 
 ### Step 4: A minimal YOLO head
 
-One 1x1 conv on a feature map, reshaping to `(B, S, S, num_anchors, 5 + C)`.
+feature map に 1x1 conv をかけ、`(B, S, S, num_anchors, 5 + C)` に reshape します。
 
 ```python
 import torch
@@ -240,11 +234,11 @@ class YOLOHead(nn.Module):
         return y
 ```
 
-Output shape: `(N, H, W, num_anchors, 5 + C)`. The last dimension holds `[tx, ty, tw, th, obj, cls_0, ..., cls_{C-1}]`.
+Output shape は `(N, H, W, num_anchors, 5 + C)` です。最後の次元は `[tx, ty, tw, th, obj, cls_0, ..., cls_{C-1}]` を持ちます。
 
 ### Step 5: Ground-truth assignment
 
-For every ground-truth box, decide which `(cell, anchor)` is responsible.
+各 ground-truth box について、どの `(cell, anchor)` が担当するかを決めます。
 
 ```python
 def assign_targets(boxes_xyxy, classes, anchors, stride, grid_size, num_classes):
@@ -257,7 +251,6 @@ def assign_targets(boxes_xyxy, classes, anchors, stride, grid_size, num_classes)
         cx, cy = 0.5 * (x1 + x2), 0.5 * (y1 + y2)
         gx, gy = int(cx / stride), int(cy / stride)
         bw, bh = x2 - x1, y2 - y1
-
         ious = np.array([
             (min(bw, aw) * min(bh, ah)) / (bw * bh + aw * ah - min(bw, aw) * min(bh, ah))
             for aw, ah in anchors
@@ -275,7 +268,7 @@ def assign_targets(boxes_xyxy, classes, anchors, stride, grid_size, num_classes)
     return target, has_obj
 ```
 
-Anchor selection is "best shape IoU with the ground truth" — a cheap proxy that matches the YOLOv2/v3 assignment. v5 and later use more sophisticated strategies (task-aligned matching, dynamic k) that refine the same idea.
+anchor selection は ground truth との best shape IoU です。YOLOv2/v3 の assignment に近い cheap proxy で、v5 以降の dynamic matching も同じ発想を refined したものです。
 
 ### Step 6: The three losses
 
@@ -311,11 +304,11 @@ def yolo_loss(pred, target, has_obj, lambda_coord=5.0, lambda_obj=1.0, lambda_no
                    "obj_neg": loss_obj_neg.item(), "cls": loss_cls.item()}
 ```
 
-Five hyper-parameters that every YOLO tutorial either hardcodes or sweeps. The ratios matter: `lambda_coord=5, lambda_noobj=0.5` mirrors the original YOLOv1 paper and still works as a reasonable default.
+`lambda_coord=5, lambda_noobj=0.5` は original YOLOv1 paper に近い比率で、reasonable default として今でも有効です。
 
 ### Step 7: Inference pipeline
 
-Decode the raw head output, apply sigmoid/exp, threshold on objectness, and NMS.
+raw head output を decode し、sigmoid/exp を適用し、objectness で threshold し、NMS をかけます。
 
 ```python
 def postprocess(pred_tensor, anchors, stride, img_size, conf_threshold=0.25, iou_threshold=0.45):
@@ -349,11 +342,11 @@ def postprocess(pred_tensor, anchors, stride, img_size, conf_threshold=0.25, iou
     return boxes[keep], scores[keep], classes[keep]
 ```
 
-That is the complete eval path: head -> decode -> threshold -> NMS.
+これが complete eval path です。head -> decode -> threshold -> NMS。
 
 ## Use It
 
-`torchvision.models.detection` ships production detectors with the same conceptual structure. Loading a pretrained model takes three lines.
+`torchvision.models.detection` は同じ conceptual structure を持つ production detectors を提供します。pretrained model は 3 行で読み込めます。
 
 ```python
 import torch
@@ -369,37 +362,37 @@ print(f"scores: {predictions[0]['scores'].shape}")
 print(f"labels: {predictions[0]['labels'].shape}")
 ```
 
-For real-time inference pipelines, `ultralytics` (YOLOv8/v9) is the standard: `from ultralytics import YOLO; model = YOLO('yolov8n.pt'); model(img)`. The model handles decoding and NMS internally and returns the same `boxes / scores / labels` triple you built above.
+real-time inference pipeline では `ultralytics`（YOLOv8/v9）が標準です。`from ultralytics import YOLO; model = YOLO('yolov8n.pt'); model(img)` とすれば、decode と NMS は model 内で処理され、上で作ったものと同じ `boxes / scores / labels` triple が返ります。
 
 ## Ship It
 
-This lesson produces:
+この lesson で作るもの:
 
-- `outputs/prompt-detection-metric-reader.md` — a prompt that turns a `precision, recall, AP, mAP@0.5:0.95` row into a one-line diagnosis and the single most useful next experiment.
-- `outputs/skill-anchor-designer.md` — a skill that, given a dataset of ground-truth boxes, runs k-means on `(w, h)` and returns anchor sets per FPN level plus the coverage statistics you need to pick the right number of anchors.
+- `outputs/prompt-detection-metric-reader.md` — `precision, recall, AP, mAP@0.5:0.95` row を 1 行の診断と最も有用な次の実験に変換する prompt。
+- `outputs/skill-anchor-designer.md` — ground-truth boxes の dataset に対して `(w, h)` k-means を実行し、FPN level ごとの anchor sets と coverage statistics を返す skill。
 
 ## Exercises
 
-1. **(Easy)** Implement `box_iou` and run it against `torchvision.ops.box_iou` on 1,000 random box pairs. Verify max absolute difference is below `1e-6`.
-2. **(Medium)** Port `yolo_loss` to a version that uses `CIoU` box loss instead of MSE. Show on a 100-image synthetic dataset that CIoU converges to a better final mAP@0.5:0.95 than MSE in the same number of epochs.
-3. **(Hard)** Implement multi-scale inference: feed the same image at three resolutions through the model, union the box predictions, and run a single NMS at the end. Measure the mAP lift vs single-scale inference on a held-out set.
+1. **(Easy)** `box_iou` を実装し、1,000 個の random box pairs で `torchvision.ops.box_iou` と比較してください。max absolute difference が `1e-6` 未満であることを確認します。
+2. **(Medium)** `yolo_loss` を MSE ではなく `CIoU` box loss を使う版に移植してください。100-image synthetic dataset で、同じ epochs 数なら CIoU が MSE より良い final mAP@0.5:0.95 に収束することを示します。
+3. **(Hard)** multi-scale inference を実装します。同じ image を 3 つの resolutions で model に通し、box predictions を union して最後に 1 回 NMS を実行します。held-out set で single-scale inference に対する mAP lift を測ってください。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Anchor | "Box prior" | A pre-defined box shape at each grid cell from which the network predicts deltas instead of absolute coordinates |
-| IoU | "Overlap" | Intersection-over-union of two boxes; the universal similarity measure in detection |
-| NMS | "Deduplicate" | Greedy algorithm that keeps highest-score predictions and removes overlapping ones above a threshold |
-| Objectness | "Is there something here" | Per-anchor, per-cell scalar predicting whether an object is centred in that cell |
-| Grid stride | "Downsample factor" | Pixels per grid cell; a 416-px input with a 13-grid head has stride 32 |
-| mAP | "Mean average precision" | Average of the area under the precision-recall curve, averaged over classes and (for COCO) IoU thresholds |
-| AP@0.5 | "PASCAL VOC AP" | Average precision with IoU threshold 0.5; the lenient version of the metric |
-| mAP@0.5:0.95 | "COCO AP" | Average over IoU thresholds 0.5..0.95 step 0.05; the strict version and current community standard |
+| Anchor | "Box prior" | 各 grid cell に置く pre-defined box shape。network は absolute coordinates ではなく deltas を予測する |
+| IoU | "Overlap" | 2 つの boxes の intersection-over-union。detection の universal similarity measure |
+| NMS | "Deduplicate" | highest-score predictions を残し、threshold 以上に重なるものを削除する greedy algorithm |
+| Objectness | "Is there something here" | object がその cell に中心を持つかを予測する per-anchor, per-cell scalar |
+| Grid stride | "Downsample factor" | grid cell あたりの pixels。416-px input と 13-grid head なら stride 32 |
+| mAP | "Mean average precision" | precision-recall curve の area を classes と IoU thresholds にわたって平均したもの |
+| AP@0.5 | "PASCAL VOC AP" | IoU threshold 0.5 の average precision。metric の寛容な版 |
+| mAP@0.5:0.95 | "COCO AP" | IoU thresholds 0.5..0.95 step 0.05 の平均。厳しい版で current community standard |
 
-## Further Reading
+## 参考文献
 
-- [YOLOv1: You Only Look Once (Redmon et al., 2016)](https://arxiv.org/abs/1506.02640) — the founding paper; every YOLO since is a refinement of this structure
-- [YOLOv3 (Redmon & Farhadi, 2018)](https://arxiv.org/abs/1804.02767) — the paper that introduced multi-scale FPN-style heads; still the clearest diagram
-- [Ultralytics YOLOv8 docs](https://docs.ultralytics.com) — the current production reference; covers dataset formats, augmentations, training recipes
-- [The Illustrated Guide to Object Detection (Jonathan Hui)](https://jonathan-hui.medium.com/object-detection-series-24d03a12f904) — best plain-English tour of the full detector zoo; priceless for understanding how DETR, RetinaNet, FCOS, and YOLO relate
+- [YOLOv1: You Only Look Once (Redmon et al., 2016)](https://arxiv.org/abs/1506.02640) — founding paper。以後の YOLO はこの構造の refinement です
+- [YOLOv3 (Redmon & Farhadi, 2018)](https://arxiv.org/abs/1804.02767) — multi-scale FPN-style heads を導入した paper。diagram が特に明快です
+- [Ultralytics YOLOv8 docs](https://docs.ultralytics.com) — current production reference。dataset formats、augmentations、training recipes を扱います
+- [The Illustrated Guide to Object Detection (Jonathan Hui)](https://jonathan-hui.medium.com/object-detection-series-24d03a12f904) — detector zoo の plain-English tour。DETR、RetinaNet、FCOS、YOLO の関係を理解するのに有用です

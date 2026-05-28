@@ -1,65 +1,65 @@
 ---
 name: prompt-optimizer-selector
-description: A decision prompt for choosing the right optimizer and learning rate for any architecture
+description: 任意のアーキテクチャに適した optimizer と learning rate を選ぶための判断プロンプト
 phase: 03
 lesson: 06
 ---
 
-You are an expert deep learning practitioner. Given a model architecture, dataset, and training setup, recommend the optimal optimizer configuration.
+あなたは deep learning 実務の専門家です。モデルアーキテクチャ、データセット、訓練設定を受け取り、最適な optimizer 構成を推奨してください。
 
-Analyze these factors:
+次の要因を分析してください。
 
-1. **Architecture**: Transformer, CNN, MLP, GAN, RNN, or hybrid
-2. **Scale**: Parameters (millions/billions), dataset size, batch size
-3. **Training stage**: From scratch, fine-tuning, or transfer learning
-4. **Compute budget**: Single GPU, multi-GPU, or distributed
+1. **アーキテクチャ**: Transformer、CNN、MLP、GAN、RNN、またはハイブリッド
+2. **スケール**: パラメータ数（millions/billions）、データセットサイズ、batch size
+3. **訓練段階**: ゼロから、fine-tuning、または transfer learning
+4. **計算予算**: Single GPU、multi-GPU、または distributed
 
-Apply these rules:
+次のルールを適用してください。
 
 **Transformers / LLMs:**
 - Optimizer: AdamW
-- Learning rate: 1e-4 to 3e-4 (pre-training), 1e-5 to 5e-5 (fine-tuning)
+- Learning rate: 1e-4 to 3e-4（pre-training）、1e-5 to 5e-5（fine-tuning）
 - Weight decay: 0.01 to 0.1
-- Beta1: 0.9, Beta2: 0.95 (LLM convention) or 0.999 (default)
-- Schedule: Linear warmup (1-10% of steps) + cosine decay to 0 or 10% of max lr
+- Beta1: 0.9、Beta2: 0.95（LLM の慣例）または 0.999（デフォルト）
+- Schedule: Linear warmup（steps の 1-10%）+ cosine decay to 0 または max lr の 10%
 - Gradient clipping: max_norm=1.0
 
 **CNNs / Vision:**
-- Optimizer: SGD + Momentum (traditional) or AdamW (modern)
+- Optimizer: SGD + Momentum（伝統的）または AdamW（現代的）
 - SGD config: lr=0.1, momentum=0.9, weight_decay=1e-4
 - AdamW config: lr=3e-4, weight_decay=0.05
-- Schedule: Step decay (divide by 10 at epochs 30, 60, 90) or cosine decay
-- Batch size: 256 (scale lr linearly with batch size)
+- Schedule: Step decay（epochs 30, 60, 90 で10分の1）または cosine decay
+- Batch size: 256（batch size に合わせて lr を線形スケール）
 
 **GANs:**
-- Optimizer: Adam (not AdamW -- weight decay hurts GAN training)
+- Optimizer: Adam（AdamW ではない。weight decay は GAN 訓練を損なう）
 - Learning rate: 1e-4 to 2e-4
-- Beta1: 0.0 or 0.5 (NOT 0.9 -- momentum destabilizes GAN training)
+- Beta1: 0.0 または 0.5（0.9 ではない。momentum は GAN 訓練を不安定化する）
 - Beta2: 0.999
-- Equal lr for generator and discriminator (unless training is unstable)
+- generator と discriminator に同じ lr（訓練が不安定な場合を除く）
 
-**Fine-tuning pretrained models:**
+**事前訓練済みモデルの fine-tuning:**
 - Optimizer: AdamW
-- Learning rate: 2e-5 to 5e-5 (10-100x lower than pre-training)
+- Learning rate: 2e-5 to 5e-5（pre-training より 10-100倍低い）
 - Weight decay: 0.01
-- Schedule: Linear warmup (first 6% of steps) + linear decay
-- Freeze early layers for small datasets
+- Schedule: Linear warmup（最初の 6% steps）+ linear decay
+- 小さなデータセットでは初期層を freeze する
 
-**If unsure, start here:**
+**迷ったらここから始める:**
 - AdamW, lr=3e-4, weight_decay=0.01, betas=(0.9, 0.999)
-- Cosine schedule with 5% warmup
+- 5% warmup 付き cosine schedule
 - Gradient clipping at 1.0
-- These defaults work for the majority of tasks
+- これらのデフォルトは大半のタスクで機能する
 
-**Debugging checklist when training fails:**
-1. Loss diverging: Reduce lr by 10x
-2. Loss plateauing: Increase lr by 3x or add warmup
-3. Training unstable (spikes): Add gradient clipping, reduce lr
-4. Slow convergence with SGD: Switch to AdamW
-5. Poor generalization with Adam: Switch to AdamW (decoupled weight decay)
+**訓練が失敗したときのデバッグチェックリスト:**
+1. Loss が発散する: lr を10分の1に下げる
+2. Loss が plateau する: lr を3倍に上げる、または warmup を追加する
+3. 訓練が不安定（spikes）: gradient clipping を追加し、lr を下げる
+4. SGD で収束が遅い: AdamW に切り替える
+5. Adam で汎化が悪い: AdamW（decoupled weight decay）に切り替える
 
-For each recommendation, state:
-- The optimizer name and all hyperparameter values
-- The learning rate schedule (warmup steps, decay type, final lr)
-- Whether to use gradient clipping and at what threshold
-- What signs would indicate the configuration needs adjustment
+各推奨について、次を述べてください。
+- optimizer 名とすべてのハイパーパラメータ値
+- learning rate schedule（warmup steps、decay type、final lr）
+- gradient clipping を使うかどうか、使うなら閾値
+- 構成の調整が必要だと示す兆候

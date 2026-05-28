@@ -1,38 +1,38 @@
 {
   "lesson": "10-cold-start-mitigation",
-  "title": "Cold Start Mitigation for Serverless LLMs",
+  "title": "Serverless LLM の Cold Start Mitigation",
   "questions": [
     {
       "stage": "pre",
-      "question": "Roughly how long does a cold start typically take for a 70B model on a fresh node without mitigations?",
+      "question": "Mitigation なしの fresh node で、70B model の cold start は通常どのくらいかかりますか？",
       "options": [
-        "Over 1 hour",
-        "30-60 seconds",
-        "3-8 minutes",
-        "Under 10 seconds"
+        "1 時間超",
+        "30-60 秒",
+        "3-8 分",
+        "10 秒未満"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which AWS-side feature does the lesson recommend for pre-seeding container images so step-2 image pull disappears?",
+      "question": "Step-2 の image pull を消すために container images を pre-seed する AWS 側の feature として、このレッスンが推奨するものはどれですか？",
       "options": [
-        "Bottlerocket dual-volume architecture referenced from EC2NodeClass",
+        "EC2NodeClass から参照される Bottlerocket dual-volume architecture",
         "ECS task definitions",
         "Spot fleet placement",
-        "EBS volume snapshots only"
+        "EBS volume snapshots のみ"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which Modal feature provides the closest thing to a \"warm GPU boot in seconds\" by deserializing post-load state directly into HBM?",
+      "question": "Post-load state を HBM へ直接 deserialize することで「秒単位の warm GPU boot」に最も近いものを提供する Modal feature はどれですか？",
       "options": [
         "Tiered NVMe-to-DRAM loading",
         "Live migration",
-        "GPU memory snapshots (checkpoints)",
+        "GPU memory snapshots（checkpoints）",
         "Run:ai Model Streamer"
       ],
       "correct": 2,
@@ -40,21 +40,21 @@
     },
     {
       "stage": "check",
-      "question": "Why does live migration transfer input tokens rather than KV cache between nodes?",
+      "question": "Live migration が nodes 間で KV cache ではなく input tokens を転送するのはなぜですか？",
       "options": [
-        "Live migration is required by GDPR",
-        "Input tokens have larger entropy",
-        "KV cache is encrypted and cannot move",
-        "Recomputing KV on the destination is cheaper than transferring GB of KV cache over the network"
+        "Live migration は GDPR で必須だから",
+        "Input tokens の方が entropy が大きいから",
+        "KV cache は暗号化されており移動できないから",
+        "GB 単位の KV cache を network 越しに転送するより、destination で KV を recompute する方が安いから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which serverless layer trades direct GPU cost for predictable readiness by keeping at least one replica live?",
+      "question": "少なくとも 1 replica を live に保つことで、直接的な GPU cost と予測可能な readiness を交換する serverless layer はどれですか？",
       "options": [
-        "Warm pool with min_workers >= 1",
+        "min_workers >= 1 の warm pool",
         "Tiered loading",
         "Bottlerocket pre-seeding",
         "Live migration"
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the lesson say cold-start mitigation must be stacked across layers rather than picked as a single tool?",
+      "question": "このレッスンが cold-start mitigation は単一 tool ではなく layer を積み重ねる必要があると言う理由は何ですか？",
       "options": [
-        "No single layer eliminates every step (node provision, image pull, weights load, engine init); stacking layers compresses each step",
-        "It is a regulatory requirement",
-        "Modal owns the entire stack",
-        "All five layers are bundled in vLLM"
+        "単一の layer ではすべての step（node provision、image pull、weights load、engine init）を消せないため、各 step を layers で圧縮する必要がある",
+        "規制上の要求だから",
+        "Modal が stack 全体を所有しているから",
+        "5 つの layer すべてが vLLM に同梱されているから"
       ],
       "correct": 0,
       "explanation": ""

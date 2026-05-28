@@ -1,78 +1,78 @@
 {
   "lesson": "56-iteration-scheduler",
-  "title": "Iteration Scheduler",
+  "title": "反復スケジューラー",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the scheduler use UCB scoring instead of always picking the current best branch?",
+      "question": "scheduler が常に current best branch を選ばず UCB scoring を使う理由は何ですか?",
       "options": [
-        "Because UCB is faster to compute",
-        "Because greedy picks never explore; UCB balances exploitation with exploration",
-        "Because asyncio requires UCB",
-        "Because the queue cannot be sorted otherwise"
+        "UCB の方が計算が速いため",
+        "greedy pick は exploration しないため、UCB は exploitation と exploration の balance を取る",
+        "asyncio が UCB を要求するため",
+        "queue はそれ以外で sort できないため"
       ],
       "correct": 1,
-      "explanation": "Greedy locks onto the first lead. Uniform never exploits. UCB picks the leader while reserving capacity for less-explored branches via the sqrt(ln N / n) term."
+      "explanation": "greedy は最初の lead に固定されます。uniform は exploit しません。UCB は leader を選びつつ、sqrt(ln N / n) term で未探索 branch に capacity を残します。"
     },
     {
       "stage": "pre",
-      "question": "What score does a branch with zero completed runs receive under UCB1?",
+      "question": "UCB1 で completed runs がゼロの branch はどの score を受け取りますか?",
       "options": [
-        "Zero",
-        "The exploration constant c",
-        "Positive infinity, so untried branches are always picked first",
-        "The mean reward of all other branches"
+        "ゼロ",
+        "exploration constant c",
+        "正の無限大。未試行 branch が必ず最初に選ばれる",
+        "他 branch の mean reward"
       ],
       "correct": 2,
-      "explanation": "The lesson assigns +inf for runs=0. This guarantees every branch is tried at least once before any branch is revisited."
+      "explanation": "この lesson は runs=0 に +inf を割り当てます。これにより、どの branch も再訪前に少なくとも一回試されます。"
     },
     {
       "stage": "check",
-      "question": "How does the scheduler keep multiple slots busy?",
+      "question": "scheduler は複数 slot をどうやって busy に保ちますか?",
       "options": [
-        "It runs the runner in a thread pool",
-        "It uses asyncio.create_task per dispatched hypothesis and awaits FIRST_COMPLETED on the in-flight set",
-        "It uses multiprocessing",
-        "It blocks the event loop on a sleep"
+        "thread pool で runner を動かす",
+        "dispatched hypothesis ごとに asyncio.create_task を使い、in-flight set に FIRST_COMPLETED を await する",
+        "multiprocessing を使う",
+        "event loop を sleep で block する"
       ],
       "correct": 1,
-      "explanation": "Each dispatched hypothesis becomes a task. The main loop waits on FIRST_COMPLETED so a finished slot is freed immediately and another hypothesis is dispatched."
+      "explanation": "各 dispatched hypothesis は task になります。main loop は FIRST_COMPLETED を待つため、slot が空いたらすぐ次の hypothesis を dispatch できます。"
     },
     {
       "stage": "check",
-      "question": "When does the scheduler emit a paper.trigger for a branch?",
+      "question": "scheduler はいつ branch に paper.trigger を emit しますか?",
       "options": [
-        "Every time a result lands on that branch",
-        "On the first result whose branch mean meets or exceeds the paper threshold, and only once per branch",
-        "Only at the end of the run",
-        "When the prune floor is hit"
+        "その branch に result が届くたび",
+        "branch mean が paper threshold 以上になった最初の result で、一 branch 一回だけ",
+        "run の最後だけ",
+        "prune floor に達したとき"
       ],
       "correct": 1,
-      "explanation": "The trigger fires once per branch, the first time the branch's mean crosses the threshold. The paper_triggered flag on BranchStats prevents repeats."
+      "explanation": "trigger は branch mean が threshold を初めて超えたときに一度だけ発火します。BranchStats の paper_triggered flag が repeat を防ぎます。"
     },
     {
       "stage": "post",
-      "question": "What happens to a branch whose mean reward stays below the prune floor after the minimum-runs threshold?",
+      "question": "minimum-runs threshold 後も mean reward が prune floor 未満の branch はどうなりますか?",
       "options": [
-        "Nothing; UCB will eventually pick another branch",
-        "The branch is marked pruned and remaining hypotheses on that branch are removed from the queue",
-        "The scheduler raises an exception",
-        "The reward floor is lowered automatically"
+        "何も起きない。UCB がやがて別 branch を選ぶ",
+        "branch は pruned と mark され、その branch の残り hypothesis は queue から除かれる",
+        "scheduler が exception を raise する",
+        "reward floor が自動的に下がる"
       ],
       "correct": 1,
-      "explanation": "Pruning removes the branch from future scheduling. Pruning is separate from the picker: UCB ranks, pruning culls."
+      "explanation": "pruning は branch を future scheduling から外します。UCB は rank し、pruning は cull する別の仕組みです。"
     },
     {
       "stage": "post",
-      "question": "Which two budgets does the scheduler enforce as hard limits?",
+      "question": "scheduler が hard limit として enforce する二つの budget はどれですか?",
       "options": [
-        "Memory and CPU",
-        "max_experiments (total runs) and max_seconds (wall clock)",
-        "slots and queue depth",
-        "paper triggers and prune count"
+        "Memory と CPU",
+        "max_experiments (total runs) と max_seconds (wall clock)",
+        "slots と queue depth",
+        "paper triggers と prune count"
       ],
       "correct": 1,
-      "explanation": "Both fire as stop reasons. max_experiments caps total work. max_seconds caps wall time. The trace records which one stopped the run."
+      "explanation": "どちらも stop reason として発火します。max_experiments は total work、max_seconds は wall time を制限します。"
     }
   ]
 }

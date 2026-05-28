@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,67 +9,67 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Emu3 — one model, one loss, three roles</text>
+  <text x="480" y="24" text-anchor="middle" class="title">Emu3 — 1つのモデル、1つの損失、3つの役割</text>
 
   <rect x="30" y="50" width="900" height="240" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">single decoder-only transformer with shared vocabulary</text>
+  <text x="480" y="72" text-anchor="middle" class="head">共有語彙を持つ単一decoder-only transformer</text>
 
   <rect x="50" y="90" width="270" height="190" class="hot"/>
   <text x="185" y="110" text-anchor="middle" class="step">Emu3-Gen</text>
-  <text x="185" y="128" text-anchor="middle" class="small">text -&gt; image tokens</text>
-  <text x="185" y="146" text-anchor="middle" class="small">512x512 = 4096 tokens</text>
+  <text x="185" y="128" text-anchor="middle" class="small">テキスト -&gt; 画像トークン</text>
+  <text x="185" y="146" text-anchor="middle" class="small">512x512 = 4096トークン</text>
   <text x="185" y="164" text-anchor="middle" class="small">CFG gamma 3-7</text>
-  <text x="185" y="182" text-anchor="middle" class="small">temperature 0.8</text>
-  <text x="185" y="210" text-anchor="middle" class="step">matches SDXL on FID</text>
-  <text x="185" y="234" text-anchor="middle" class="caption">no diffusion schedule</text>
-  <text x="185" y="252" text-anchor="middle" class="caption">no CLIP loss</text>
+  <text x="185" y="182" text-anchor="middle" class="small">温度 0.8</text>
+  <text x="185" y="210" text-anchor="middle" class="step">FIDでSDXL級</text>
+  <text x="185" y="234" text-anchor="middle" class="caption">拡散スケジュールなし</text>
+  <text x="185" y="252" text-anchor="middle" class="caption">CLIP損失なし</text>
 
   <rect x="345" y="90" width="270" height="190" class="cool"/>
   <text x="480" y="110" text-anchor="middle" class="step">Emu3-Chat</text>
-  <text x="480" y="128" text-anchor="middle" class="small">image -&gt; text</text>
-  <text x="480" y="146" text-anchor="middle" class="small">VQA + captioning</text>
-  <text x="480" y="164" text-anchor="middle" class="small">matches LLaVA-1.6</text>
-  <text x="480" y="182" text-anchor="middle" class="small">same backbone</text>
+  <text x="480" y="128" text-anchor="middle" class="small">画像 -&gt; テキスト</text>
+  <text x="480" y="146" text-anchor="middle" class="small">VQA + キャプション生成</text>
+  <text x="480" y="164" text-anchor="middle" class="small">LLaVA-1.6級</text>
+  <text x="480" y="182" text-anchor="middle" class="small">同じバックボーン</text>
   <text x="480" y="210" text-anchor="middle" class="step">VQAv2 75.1</text>
-  <text x="480" y="234" text-anchor="middle" class="caption">unified loss unlocks</text>
-  <text x="480" y="252" text-anchor="middle" class="caption">perception + gen</text>
+  <text x="480" y="234" text-anchor="middle" class="caption">統一損失で</text>
+  <text x="480" y="252" text-anchor="middle" class="caption">知覚 + 生成</text>
 
   <rect x="640" y="90" width="270" height="190" class="cold"/>
   <text x="775" y="110" text-anchor="middle" class="step">Emu3-Stage2</text>
-  <text x="775" y="128" text-anchor="middle" class="small">text -&gt; video tokens</text>
+  <text x="775" y="128" text-anchor="middle" class="small">テキスト -&gt; 動画トークン</text>
   <text x="775" y="146" text-anchor="middle" class="small">4s @ 8fps, 3D VQ</text>
-  <text x="775" y="164" text-anchor="middle" class="small">4x4x4 spatiotemporal</text>
-  <text x="775" y="182" text-anchor="middle" class="small">patch quantization</text>
-  <text x="775" y="210" text-anchor="middle" class="step">competitive FVD</text>
-  <text x="775" y="234" text-anchor="middle" class="caption">same shared vocab</text>
-  <text x="775" y="252" text-anchor="middle" class="caption">extends to 10s at scale</text>
+  <text x="775" y="164" text-anchor="middle" class="small">4x4x4 時空間</text>
+  <text x="775" y="182" text-anchor="middle" class="small">patch量子化</text>
+  <text x="775" y="210" text-anchor="middle" class="step">競争力のあるFVD</text>
+  <text x="775" y="234" text-anchor="middle" class="caption">同じ共有語彙</text>
+  <text x="775" y="252" text-anchor="middle" class="caption">スケールで10sへ拡張</text>
 
   <rect x="30" y="310" width="900" height="210" class="box"/>
-  <text x="480" y="332" text-anchor="middle" class="head">Emu3 vs diffusion: the 2026 trade-off</text>
+  <text x="480" y="332" text-anchor="middle" class="head">Emu3 vs 拡散: 2026年のトレードオフ</text>
 
   <rect x="60" y="350" width="400" height="150" class="reg"/>
-  <text x="260" y="370" text-anchor="middle" class="step">Emu3 (discrete tokens, NTP)</text>
-  <text x="260" y="390" text-anchor="middle" class="small">+ one model for gen + perception</text>
-  <text x="260" y="406" text-anchor="middle" class="small">+ one training loss</text>
-  <text x="260" y="422" text-anchor="middle" class="small">+ tokens extend to any modality</text>
-  <text x="260" y="438" text-anchor="middle" class="small">- slow inference (2 min / 512x512)</text>
-  <text x="260" y="454" text-anchor="middle" class="small">- tokenizer caps quality</text>
-  <text x="260" y="480" text-anchor="middle" class="caption">best for research, unified models</text>
+  <text x="260" y="370" text-anchor="middle" class="step">Emu3 (離散トークン, NTP)</text>
+  <text x="260" y="390" text-anchor="middle" class="small">+ 生成 + 知覚を1モデルで</text>
+  <text x="260" y="406" text-anchor="middle" class="small">+ 学習損失は1つ</text>
+  <text x="260" y="422" text-anchor="middle" class="small">+ トークンは任意モダリティへ拡張</text>
+  <text x="260" y="438" text-anchor="middle" class="small">- 推論が遅い (2分 / 512x512)</text>
+  <text x="260" y="454" text-anchor="middle" class="small">- トークナイザが品質を制限</text>
+  <text x="260" y="480" text-anchor="middle" class="caption">研究、統一モデル向き</text>
 
   <rect x="490" y="350" width="400" height="150" class="hot"/>
   <text x="690" y="370" text-anchor="middle" class="step">Diffusion (SDXL, SD3, Flux)</text>
-  <text x="690" y="390" text-anchor="middle" class="small">+ fast inference (2-5s / 512x512)</text>
-  <text x="690" y="406" text-anchor="middle" class="small">+ continuous latent = higher fidelity</text>
-  <text x="690" y="422" text-anchor="middle" class="small">+ mature tooling + LoRAs</text>
-  <text x="690" y="438" text-anchor="middle" class="small">- no perception in same model</text>
-  <text x="690" y="454" text-anchor="middle" class="small">- separate text encoder needed</text>
-  <text x="690" y="480" text-anchor="middle" class="caption">best for image-only production</text>
+  <text x="690" y="390" text-anchor="middle" class="small">+ 推論が速い (2-5s / 512x512)</text>
+  <text x="690" y="406" text-anchor="middle" class="small">+ 連続latent = 高忠実度</text>
+  <text x="690" y="422" text-anchor="middle" class="small">+ ツール群 + LoRAが成熟</text>
+  <text x="690" y="438" text-anchor="middle" class="small">- 同じモデル内に知覚なし</text>
+  <text x="690" y="454" text-anchor="middle" class="small">- 別テキストエンコーダが必要</text>
+  <text x="690" y="480" text-anchor="middle" class="caption">画像専用本番向き</text>
 </svg>

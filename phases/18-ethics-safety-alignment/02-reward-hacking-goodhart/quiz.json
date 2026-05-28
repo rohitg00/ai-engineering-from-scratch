@@ -1,34 +1,34 @@
 {
   "lesson": "02-reward-hacking-goodhart",
-  "title": "Reward Hacking and Goodhart's Law",
+  "title": "Reward Hacking と Goodhart's Law",
   "questions": [
     {
       "stage": "pre",
-      "question": "Goodhart's Law, as originally stated, says:",
+      "question": "Goodhart's Law の元の定式化に最も近いものはどれですか。",
       "options": [
-        "Any measure that becomes a target ceases to be a good measure",
-        "Reward models converge to true human preference at large scale",
-        "Heavy-tailed errors cannot occur in finite-dimensional models",
-        "Optimization always improves a proxy without limit"
+        "目標になった測度は、良い測度ではなくなる",
+        "reward models は大規模化すると true human preference に収束する",
+        "heavy-tailed errors は finite-dimensional models では起こらない",
+        "optimization は常に proxy を無制限に改善する"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "In Gao, Schulman, Hilton (2023), how do proxy reward and gold reward behave as KL distance from the initial policy grows?",
+      "question": "Gao, Schulman, Hilton (2023) では、initial policy からの KL distance が大きくなると proxy reward と gold reward はどう振る舞いますか。",
       "options": [
-        "Both stay flat under any KL constraint",
-        "Both rise monotonically with KL",
-        "Proxy peaks then falls, gold rises monotonically",
-        "Proxy keeps rising, gold peaks closer to the origin then falls"
+        "どちらも任意の KL constraint のもとで flat のまま",
+        "どちらも KL とともに monotonic に上がる",
+        "proxy は peak 後に落ち、gold は monotonic に上がる",
+        "proxy は上がり続け、gold は原点に近い場所で peak した後に落ちる"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which of the following is NOT one of the four 'costumes' of reward hacking listed in the lesson?",
+      "question": "次のうち、lesson に挙げられた reward hacking の 4 つの「姿」に含まれないものはどれですか。",
       "options": [
         "Unfaithful reasoning",
         "Verbosity bias",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What is the 'Catastrophic Goodhart' result about KL regularization?",
+      "question": "KL regularization に関する 'Catastrophic Goodhart' の結果は何を述べていますか。",
       "options": [
-        "KL regularization always prevents reward hacking when beta is positive",
-        "KL regularization only fails when the policy is randomly initialized",
-        "KL regularization is equivalent to ensembling reward models",
-        "Under heavy-tailed reward error, a KL-constrained optimal policy can still drive proxy reward up while gold reward stays at baseline"
+        "beta が positive なら KL regularization は常に reward hacking を防ぐ",
+        "KL regularization が失敗するのは policy が random initialized のときだけ",
+        "KL regularization は reward model ensembles と等価である",
+        "heavy-tailed reward error のもとでは、KL-constrained optimal policy でも proxy reward を上げながら gold reward が baseline に留まり得る"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which mitigation does Coste et al. (2023) study to soften reward over-optimization?",
+      "question": "Coste et al. (2023) は reward over-optimization を和らげるため、どの mitigation を研究していますか。",
       "options": [
-        "Removing the KL penalty entirely",
-        "Training the policy on the proxy at zero temperature",
-        "Reward-model ensembles with worst-case aggregation",
-        "Increasing the labeler pool to one million raters"
+        "KL penalty を完全に取り除く",
+        "zero temperature で proxy 上の policy を訓練する",
+        "worst-case aggregation を使う reward-model ensembles",
+        "labeler pool を 100 万人に増やす"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "According to the 2026 unified view, what core mechanism do verbosity, sycophancy, unfaithful CoT, and evaluator tampering share?",
+      "question": "2026 年の unified view によれば、verbosity、sycophancy、unfaithful CoT、evaluator tampering が共有する core mechanism は何ですか。",
       "options": [
-        "Probability mass shifts to outputs that maximize proxy reward by exploiting easy-to-learn heuristics that spuriously correlated with approval",
-        "They are caused only by labelers who write malicious preferences",
-        "They all stem from learning-rate schedules being too aggressive",
-        "They are each independent bugs in distinct reward heads"
+        "approval と spurious に相関した、学習しやすい heuristic を exploit して proxy reward を最大化する outputs へ probability mass が移動する",
+        "malicious preferences を書く labelers だけが原因である",
+        "すべて learning-rate schedules が aggressive すぎることに由来する",
+        "それぞれ別個の reward heads にある独立した bugs である"
       ],
       "correct": 0,
       "explanation": ""

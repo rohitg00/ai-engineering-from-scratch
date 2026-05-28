@@ -1,52 +1,52 @@
-# Monte Carlo Methods — Learning from Complete Episodes
+# Monte Carlo Methods — 完全なエピソードから学習する
 
-> Dynamic programming needs a model. Monte Carlo needs nothing but episodes. Run the policy, watch the returns, average them. The simplest idea in RL — and the one that unlocks everything downstream.
+> 動的計画法にはモデルが必要です。Monte Carlo に必要なのはエピソードだけです。方策を実行し、リターンを観測し、平均します。RL で最も単純な発想であり、下流のすべてを開く発想です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-Dynamic programming is elegant, but it assumes you can query `P(s' | s, a)` for every state and action. Almost nothing in the real world works that way. A robot cannot analytically compute the distribution over camera pixels after a joint torque. A pricing algorithm cannot integrate over every possible customer reaction. An LLM cannot enumerate all possible continuations after a token.
+動的計画法は美しいですが、すべての状態と行動について `P(s' | s, a)` を問い合わせられることを仮定します。現実世界では、ほとんど何もそのようには動きません。ロボットは関節トルクをかけた後のカメラ画素の分布を解析的に計算できません。価格設定アルゴリズムは、あらゆる顧客反応を積分できません。LLM は、あるトークンの後に続きうるすべての継続を列挙できません。
 
-You need a method that only needs the ability to *sample* from the environment. Run the policy. Get a trajectory `s_0, a_0, r_1, s_1, a_1, r_2, …, s_T`. Use it to estimate values. That is Monte Carlo.
+環境から *サンプル* できる能力だけを必要とする手法が必要です。方策を実行します。軌跡 `s_0, a_0, r_1, s_1, a_1, r_2, …, s_T` を得ます。それを使って価値を推定します。これが Monte Carlo です。
 
-The shift from DP to MC is philosophically important: we move from *known model + exact backup* to *sampled rollouts + averaged return*. The variance jumps, but the applicability explodes. Every RL algorithm after this lesson — TD, Q-learning, REINFORCE, PPO, GRPO — is a Monte Carlo estimator at heart, sometimes with bootstrapping layered on top.
+DP から MC への移行は哲学的に重要です。*既知モデル + 厳密 backup* から *サンプルされた rollout + 平均リターン* へ移ります。分散は跳ね上がりますが、適用範囲は大きく広がります。この後のすべての RL アルゴリズム、TD、Q-learning、REINFORCE、PPO、GRPO は、根本では Monte Carlo 推定器です。ときどき、その上に bootstrapping が重ねられます。
 
-## The Concept
+## コンセプト
 
 ![Monte Carlo: rollout, compute returns, average; first-visit vs every-visit](../assets/monte-carlo.svg)
 
-**The core idea, in one line:** `V^π(s) = E_π[G_t | s_t = s] ≈ (1/N) Σ_i G^{(i)}(s)` where `G^{(i)}(s)` are observed returns following visits to `s` under policy `π`.
+**中心アイデアを1行で書くと:** `V^π(s) = E_π[G_t | s_t = s] ≈ (1/N) Σ_i G^{(i)}(s)` です。ここで `G^{(i)}(s)` は、方策 `π` のもとで `s` を訪問した後に観測されたリターンです。
 
-**First-visit vs every-visit MC.** Given an episode that visits state `s` multiple times, first-visit MC only counts the return from the first visit; every-visit MC counts all visits. Both are unbiased in the limit. First-visit is simpler to analyze (iid samples). Every-visit uses more data per episode and typically converges faster in practice.
+**First-visit と every-visit MC。** 状態 `s` を複数回訪問するエピソードがあるとき、first-visit MC は最初の訪問からのリターンだけを数えます。every-visit MC はすべての訪問を数えます。どちらも極限では不偏です。First-visit は解析しやすい（iid サンプル）です。Every-visit は1エピソードあたりより多くのデータを使うため、実務ではたいてい速く収束します。
 
-**Incremental mean.** Instead of storing all returns, update the running average:
+**逐次平均。** すべてのリターンを保存する代わりに、running average を更新します。
 
 `V_n(s) = V_{n-1}(s) + (1/n) [G_n - V_{n-1}(s)]`
 
-Reorganize: `V_new = V_old + α · (target - V_old)` with `α = 1/n`. Swap `1/n` for a constant step-size `α ∈ (0, 1)` and you get a non-stationary MC estimator that tracks changes in `π`. That move is the entire jump from MC to TD to every modern RL algorithm.
+並べ替えると `V_new = V_old + α · (target - V_old)` で、`α = 1/n` です。`1/n` を定数ステップサイズ `α ∈ (0, 1)` に置き換えると、`π` の変化を追跡する非定常 MC 推定器になります。この一手が、MC から TD、そしてすべての現代的 RL アルゴリズムへの飛躍です。
 
-**Exploration is now a problem.** DP touched every state by enumeration. MC only sees states the policy visits. If `π` is deterministic, whole regions of the state space never get sampled, and their value estimates stay at zero forever. Three fixes, in historical order:
+**探索が問題になる。** DP は列挙によってすべての状態に触れました。MC は方策が訪れる状態しか見ません。`π` が決定的なら、状態空間の領域全体が一度もサンプルされず、その価値推定は永遠にゼロのままです。歴史順に3つの対処があります。
 
-1. **Exploring starts.** Start each episode from a random (s, a) pair. Guarantees coverage; unrealistic in practice (you cannot "reset" a robot into an arbitrary state).
-2. **ε-greedy.** Act greedy w.r.t. current Q, but with probability `ε` pick a random action. All state-action pairs get sampled asymptotically.
-3. **Off-policy MC.** Collect data under a behavior policy `μ`, learn about target policy `π` via importance sampling. High variance, but it's the bridge to replay-buffer methods like DQN.
+1. **Exploring starts。** 各エピソードをランダムな (s, a) ペアから開始します。カバレッジを保証しますが、実務では非現実的です（ロボットを任意状態に「リセット」することはできません）。
+2. **ε-greedy。** 現在の Q に関して greedy に行動しつつ、確率 `ε` でランダム行動を選びます。すべての状態行動ペアが漸近的にサンプルされます。
+3. **Off-policy MC。** behavior policy `μ` のもとでデータを集め、importance sampling によって target policy `π` について学習します。高分散ですが、DQN のような replay-buffer 手法への橋渡しです。
 
-**Monte Carlo Control.** Evaluate → improve → evaluate, just like policy iteration, but evaluation is sampling-based:
+**Monte Carlo Control。** Policy iteration と同じように evaluate → improve → evaluate しますが、evaluation はサンプリングベースです。
 
-1. Run `π`, get an episode.
-2. Update `Q(s, a)` from observed returns.
-3. Make `π` ε-greedy w.r.t. `Q`.
-4. Repeat.
+1. `π` を実行してエピソードを得る。
+2. 観測されたリターンから `Q(s, a)` を更新する。
+3. `Q` に関して `π` を ε-greedy にする。
+4. 繰り返す。
 
-Converges to `Q*` and `π*` with probability 1 under mild conditions (every pair visited infinitely often, `α` satisfies Robbins-Monro).
+穏やかな条件（すべてのペアが無限回訪問され、`α` が Robbins-Monro を満たす）のもとで、確率1で `Q*` と `π*` に収束します。
 
-## Build It
+## 作る
 
-### Step 1: rollout → list of (s, a, r)
+### Step 1: rollout → (s, a, r) のリスト
 
 ```python
 def rollout(env, policy, max_steps=200):
@@ -62,9 +62,9 @@ def rollout(env, policy, max_steps=200):
     return trajectory
 ```
 
-No model, only `env.reset()` and `env.step(s, a)`. Same interface as a gym environment but stripped down.
+モデルはありません。あるのは `env.reset()` と `env.step(s, a)` だけです。gym 環境と同じインターフェースですが、必要最小限に削っています。
 
-### Step 2: compute returns (reverse sweep)
+### Step 2: リターンを計算する（逆向きスイープ）
 
 ```python
 def returns_from(trajectory, gamma):
@@ -76,7 +76,7 @@ def returns_from(trajectory, gamma):
     return list(reversed(returns))
 ```
 
-One pass, `O(T)`. The backward recurrence `G_t = r_{t+1} + γ G_{t+1}` avoids re-summing.
+1パス、`O(T)` です。後ろ向き再帰 `G_t = r_{t+1} + γ G_{t+1}` により、再合計を避けます。
 
 ### Step 3: first-visit MC evaluation
 
@@ -97,9 +97,9 @@ def mc_policy_evaluation(env, policy, episodes, gamma=0.99):
     return V
 ```
 
-Three lines do the work: mark state as seen on first visit, increment count, update running mean.
+実際に働いているのは3行です。初回訪問で状態を seen に入れ、カウントを増やし、running mean を更新します。
 
-### Step 4: ε-greedy MC control (on-policy)
+### Step 4: ε-greedy MC control（on-policy）
 
 ```python
 def mc_control(env, episodes, gamma=0.99, epsilon=0.1):
@@ -124,36 +124,36 @@ def mc_control(env, episodes, gamma=0.99, epsilon=0.1):
     return Q, policy
 ```
 
-### Step 5: compare to DP gold standard
+### Step 5: DP のゴールドスタンダードと比較する
 
-Your MC estimate of `V^π` should agree with the DP result from Lesson 02 as episodes → ∞. In practice: 50,000 episodes on 4×4 GridWorld gets you within `~0.1` of the DP answer.
+`V^π` の MC 推定は、エピソード数 → ∞ で Lesson 02 の DP 結果に一致するはずです。実務上は、4×4 GridWorld で50,000エピソード実行すれば、DP の答えから `~0.1` 以内に入ります。
 
-## Pitfalls
+## 落とし穴
 
-- **Infinite episodes.** MC requires episodes to *terminate*. If your policy can loop forever, cap `max_steps` and treat the cap as implicit failure. GridWorld with a random policy routinely times out — that is normal, just make sure you count it correctly.
-- **Variance.** MC uses full returns. On long episodes, variance is huge — one unlucky reward at the end shifts `V(s_0)` by the same amount. TD methods (Lesson 04) cut this by bootstrapping.
-- **State coverage.** Greedy MC on a fresh Q with ties will only ever try one action. You *must* explore (ε-greedy, exploring starts, UCB).
-- **Non-stationary policies.** If `π` changes (as in MC control), old returns are from a different policy. Constant-α MC handles this; sample-average MC does not.
-- **Off-policy importance sampling.** The weights `π(a|s)/μ(a|s)` multiply across a trajectory. Variance explodes with horizon. Cap with per-decision weighted IS or switch to TD.
+- **無限エピソード。** MC はエピソードが *終端する* ことを要求します。方策が永遠にループしうるなら、`max_steps` で上限を設け、その上限を暗黙の失敗として扱います。ランダム方策の GridWorld が頻繁にタイムアウトするのは普通です。ただし正しく数えてください。
+- **分散。** MC は完全なリターンを使います。長いエピソードでは分散が巨大です。最後の不運な報酬1つが `V(s_0)` を同じだけ動かします。TD 手法（Lesson 04）は bootstrapping によってこれを削ります。
+- **状態カバレッジ。** まっさらな Q に対する greedy MC は、タイがあると1つの行動しか試しません。必ず探索してください（ε-greedy、exploring starts、UCB）。
+- **非定常な方策。** MC control のように `π` が変化する場合、古いリターンは別の方策から来ています。Constant-α MC はこれを扱えますが、sample-average MC は扱えません。
+- **Off-policy importance sampling。** 重み `π(a|s)/μ(a|s)` は軌跡全体で掛け合わされます。ホライズンとともに分散が爆発します。per-decision weighted IS で抑えるか、TD に切り替えてください。
 
-## Use It
+## 使う
 
-The 2026 role of Monte Carlo methods:
+2026年における Monte Carlo 手法の役割は次のとおりです。
 
-| Use case | Why MC |
+| ユースケース | MC を使う理由 |
 |----------|--------|
-| Short-horizon games (blackjack, poker) | Episodes terminate naturally; returns are clean. |
-| Offline evaluation of a logged policy | Average discounted returns over stored trajectories. |
-| Monte Carlo Tree Search (AlphaZero) | MC rollouts from tree leaves guide selection. |
-| LLM RL evaluation | Compute average reward over sampled completions for a given policy. |
-| Baseline estimation in PPO | The advantage target `A_t = G_t - V(s_t)` uses an MC `G_t`. |
-| Teaching RL | Simplest algorithm that actually works — strip bootstrapping to see the core. |
+| 短ホライズンのゲーム（blackjack、poker） | エピソードが自然に終端し、リターンが明確。 |
+| ログ済み方策のオフライン評価 | 保存済み軌跡上の割引リターンを平均する。 |
+| Monte Carlo Tree Search (AlphaZero) | 木の葉からの MC rollout が選択を導く。 |
+| LLM RL 評価 | ある方策について sampled completions の平均報酬を計算する。 |
+| PPO の baseline 推定 | advantage target `A_t = G_t - V(s_t)` が MC の `G_t` を使う。 |
+| RL 教育 | 実際に動く最も単純なアルゴリズム。bootstrapping を外して核を見る。 |
 
-Modern deep-RL algorithms (PPO, SAC) interpolate between pure MC (full returns) and pure TD (one-step bootstrap) via `n`-step returns or GAE. Both endpoints are instances of the same estimator.
+現代の deep-RL アルゴリズム（PPO、SAC）は、`n`-step returns や GAE によって、純粋な MC（完全リターン）と純粋な TD（1ステップ bootstrap）の間を補間します。どちらの端点も同じ推定器のインスタンスです。
 
 ## Ship It
 
-Save as `outputs/skill-mc-evaluator.md`:
+`outputs/skill-mc-evaluator.md` として保存します。
 
 ```markdown
 ---
@@ -176,29 +176,29 @@ Given an environment (episodic, with reset+step API) and a policy, output:
 Refuse to run MC on non-episodic tasks without a finite horizon cap. Refuse to report V^π estimates from fewer than 100 episodes per state for tabular tasks. Flag any policy with zero-variance actions as an exploration risk.
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement first-visit MC evaluation of the uniform-random policy on 4×4 GridWorld. Run 10,000 episodes. Plot `V(0,0)` as a function of episode count against the DP answer.
-2. **Medium.** Implement ε-greedy MC control with `ε ∈ {0.01, 0.1, 0.3}`. Compare mean return after 20,000 episodes. What does the curve look like? Where does the bias-variance tradeoff live?
-3. **Hard.** Implement *off-policy* MC with importance sampling: collect data under uniform-random policy `μ`, estimate `V^π` for the deterministic optimal policy `π`. Compare plain IS vs per-decision IS vs weighted IS. Which has lowest variance?
+1. **Easy.** 4×4 GridWorld の一様ランダム方策に対して first-visit MC evaluation を実装してください。10,000エピソード実行します。`V(0,0)` をエピソード数の関数として、DP の答えと並べてプロットしてください。
+2. **Medium.** `ε ∈ {0.01, 0.1, 0.3}` の ε-greedy MC control を実装してください。20,000エピソード後の平均リターンを比較します。曲線はどのような形ですか。bias-variance tradeoff はどこにありますか。
+3. **Hard.** importance sampling を使う *off-policy* MC を実装してください。一様ランダム方策 `μ` のもとでデータを集め、決定的最適方策 `π` の `V^π` を推定します。plain IS、per-decision IS、weighted IS を比較してください。どれが最も低分散ですか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Monte Carlo | "Random sampling" | Estimate expectations by averaging over iid samples from the distribution. |
-| Return `G_t` | "Future reward" | Sum of discounted rewards from step `t` to episode end: `Σ_{k≥0} γ^k r_{t+k+1}`. |
-| First-visit MC | "Count each state once" | Only the first visit in an episode contributes to the value estimate. |
-| Every-visit MC | "Use all visits" | Every visit contributes; slightly biased but more sample-efficient. |
-| ε-greedy | "Exploration noise" | Pick greedy action with prob `1-ε`; random action with prob `ε`. |
-| Importance sampling | "Correcting for sampling from the wrong distribution" | Reweight returns by `π(a\|s)/μ(a\|s)` products to estimate `V^π` from `μ` data. |
-| On-policy | "Learn from my own data" | Target policy = behavior policy. Vanilla MC, PPO, SARSA. |
-| Off-policy | "Learn from someone else's data" | Target policy ≠ behavior policy. Importance-sampled MC, Q-learning, DQN. |
+| Monte Carlo | 「ランダムサンプリング」 | 分布からの iid サンプルを平均して期待値を推定すること。 |
+| Return `G_t` | 「未来の報酬」 | ステップ `t` からエピソード終端までの割引報酬和: `Σ_{k≥0} γ^k r_{t+k+1}`。 |
+| First-visit MC | 「各状態を1回だけ数える」 | エピソード中の最初の訪問だけが価値推定に寄与する。 |
+| Every-visit MC | 「すべての訪問を使う」 | すべての訪問が寄与する。わずかにバイアスがあるが、サンプル効率が高い。 |
+| ε-greedy | 「探索ノイズ」 | 確率 `1-ε` で greedy 行動、確率 `ε` でランダム行動を選ぶ。 |
+| Importance sampling | 「誤った分布からのサンプルを補正する」 | `μ` のデータから `V^π` を推定するため、`π(a\|s)/μ(a\|s)` の積でリターンを重み付けする。 |
+| On-policy | 「自分のデータから学ぶ」 | Target policy = behavior policy。Vanilla MC、PPO、SARSA。 |
+| Off-policy | 「他者のデータから学ぶ」 | Target policy ≠ behavior policy。Importance-sampled MC、Q-learning、DQN。 |
 
-## Further Reading
+## 参考資料
 
-- [Sutton & Barto (2018). Ch. 5 — Monte Carlo Methods](http://incompleteideas.net/book/RLbook2020.pdf) — the canonical treatment.
-- [Singh & Sutton (1996). Reinforcement Learning with Replacing Eligibility Traces](https://link.springer.com/article/10.1007/BF00114726) — first-visit vs every-visit analysis.
-- [Precup, Sutton, Singh (2000). Eligibility Traces for Off-Policy Policy Evaluation](http://incompleteideas.net/papers/PSS-00.pdf) — off-policy MC and variance control.
-- [Mahmood et al. (2014). Weighted Importance Sampling for Off-Policy Learning](https://arxiv.org/abs/1404.6362) — modern low-variance IS estimators.
-- [Tesauro (1995). TD-Gammon, A Self-Teaching Backgammon Program](https://dl.acm.org/doi/10.1145/203330.203343) — the first large-scale empirical demonstration of MC/TD self-play converging to superhuman play; conceptual precursor to every lesson in the second half of this phase.
+- [Sutton & Barto (2018). Ch. 5 — Monte Carlo Methods](http://incompleteideas.net/book/RLbook2020.pdf) — 標準的な扱いです。
+- [Singh & Sutton (1996). Reinforcement Learning with Replacing Eligibility Traces](https://link.springer.com/article/10.1007/BF00114726) — first-visit と every-visit の解析です。
+- [Precup, Sutton, Singh (2000). Eligibility Traces for Off-Policy Policy Evaluation](http://incompleteideas.net/papers/PSS-00.pdf) — off-policy MC と分散制御です。
+- [Mahmood et al. (2014). Weighted Importance Sampling for Off-Policy Learning](https://arxiv.org/abs/1404.6362) — 現代的な低分散 IS 推定器です。
+- [Tesauro (1995). TD-Gammon, A Self-Teaching Backgammon Program](https://dl.acm.org/doi/10.1145/203330.203343) — MC/TD self-play が超人的なプレイに収束することを示した最初期の大規模な実証です。このフェーズ後半の全レッスンの概念的な前身です。

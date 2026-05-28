@@ -1,32 +1,32 @@
-# Feature Engineering & Selection
+# 特徴量エンジニアリングと選択
 
-> A good feature is worth a thousand data points.
+> よい特徴量は、千個のデータ点に匹敵します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 1 (Statistics for ML, Linear Algebra), Phase 2 Lessons 1-7
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 1 (Statistics for ML, Linear Algebra)、Phase 2 Lessons 1-7
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement numerical transforms (standardization, min-max scaling, log transform, binning) and explain when each is appropriate
-- Build one-hot, label, and target encoding for categorical features and identify the data leakage risk in target encoding
-- Construct a TF-IDF vectorizer from scratch and explain why it outperforms raw word counts for text classification
-- Apply filter-based feature selection (variance threshold, correlation, mutual information) to reduce dimensionality
+- 数値変換（standardization、min-max scaling、log transform、binning）を実装し、それぞれが適切な場面を説明する
+- カテゴリ特徴量向けの one-hot、label、target encoding を構築し、target encoding における data leakage のリスクを見分ける
+- TF-IDF vectorizer をゼロから構築し、テキスト分類で生の単語カウントより優れる理由を説明する
+- filter-based feature selection（variance threshold、correlation、mutual information）を適用して次元を削減する
 
-## The Problem
+## 問題
 
-You have a dataset. You pick an algorithm. You train it. The results are mediocre. You try a fancier algorithm. Still mediocre. You spend a week tuning hyperparameters. Marginal improvement.
+データセットがあります。アルゴリズムを選び、学習させます。結果は平凡です。より凝ったアルゴリズムを試します。それでも平凡です。1 週間かけてハイパーパラメータを調整します。改善はわずかです。
 
-Then someone transforms the raw data into better features and a simple logistic regression beats your tuned gradient-boosted ensemble.
+その後、誰かが生データをよりよい特徴量に変換すると、単純な logistic regression が、調整済みの gradient-boosted ensemble を上回ります。
 
-This happens constantly. In classical ML, the representation of the data matters more than the choice of algorithm. A house price model with "square footage" and "number of bedrooms" will beat a model with "address as a raw string" no matter how sophisticated the learner is. The algorithm can only work with what you give it.
+これは頻繁に起こります。古典的 ML では、アルゴリズムの選択よりもデータの表現が重要です。「延床面積」と「寝室数」を持つ住宅価格モデルは、「住所を生の文字列」として与えたモデルより、学習器がどれだけ高度でも優位になります。アルゴリズムは、与えられたものを使ってしか働けません。
 
-Feature engineering is the process of transforming raw data into representations that make patterns easier for models to find. Feature selection is the process of throwing away features that add noise without adding signal. Together, they are the highest-leverage activity in classical ML.
+特徴量エンジニアリングとは、生データを、モデルがパターンを見つけやすい表現に変換するプロセスです。特徴量選択とは、シグナルを増やさずノイズだけを増やす特徴量を捨てるプロセスです。この 2 つは、古典的 ML で最もレバレッジの高い作業です。
 
-## The Concept
+## コンセプト
 
-### The Feature Pipeline
+### 特徴量パイプライン
 
 ```mermaid
 flowchart LR
@@ -41,33 +41,33 @@ flowchart LR
     G --> H[Model-Ready Data]
 ```
 
-### Numerical Features
+### 数値特徴量
 
-Raw numbers are rarely model-ready. Common transforms:
+生の数値がそのままモデルに適していることはまれです。よく使う変換は次のとおりです。
 
-**Scaling:** Put features on the same range so distance-based algorithms (K-Means, KNN, SVM) treat all features equally. Min-max scaling maps to [0, 1]. Standardization (z-score) maps to mean=0, std=1.
+**Scaling:** 距離ベースのアルゴリズム（K-Means、KNN、SVM）がすべての特徴量を公平に扱えるよう、特徴量を同じ範囲にそろえます。Min-max scaling は [0, 1] に写像します。Standardization（z-score）は mean=0、std=1 に写像します。
 
-**Log transform:** Compresses right-skewed distributions (income, population, word counts). Turns multiplicative relationships into additive ones.
+**Log transform:** 右に歪んだ分布（所得、人口、単語数）を圧縮します。乗法的な関係を加法的な関係に変換します。
 
-**Binning:** Converts continuous values into categories. Useful when the relationship between feature and target is non-linear but step-wise (e.g., age groups).
+**Binning:** 連続値をカテゴリに変換します。特徴量と target の関係が非線形だが段階的な場合（例: 年齢層）に有用です。
 
-**Polynomial features:** Creates x^2, x^3, x1*x2 terms. Lets linear models capture non-linear relationships at the cost of more features.
+**Polynomial features:** x^2、x^3、x1*x2 の項を作ります。特徴量数が増える代わりに、線形モデルでも非線形関係を捉えられます。
 
-### Categorical Features
+### カテゴリ特徴量
 
-Models need numbers. Categories need encoding.
+モデルには数値が必要です。カテゴリには encoding が必要です。
 
-**One-hot encoding:** Creates a binary column for each category. "color = red/blue/green" becomes three columns: is_red, is_blue, is_green. Works well for low-cardinality features but explodes with many categories.
+**One-hot encoding:** 各カテゴリごとに二値列を作ります。"color = red/blue/green" は、is_red、is_blue、is_green の 3 列になります。cardinality の低い特徴量ではよく機能しますが、カテゴリが多いと列数が爆発します。
 
-**Label encoding:** Maps each category to an integer: red=0, blue=1, green=2. Introduces false ordering (the model might think green > blue > red). Only appropriate for tree-based models that split on individual values.
+**Label encoding:** 各カテゴリを整数に対応付けます。red=0、blue=1、green=2 のようになります。偽の順序（モデルが green > blue > red と考える可能性）を導入します。個別値で分割する tree-based model にだけ適しています。
 
-**Target encoding:** Replaces each category with the mean of the target variable for that category. Powerful but dangerous: high risk of data leakage. Must be computed only on training data and applied to test data.
+**Target encoding:** 各カテゴリを、そのカテゴリにおける target variable の平均で置き換えます。強力ですが危険です。data leakage のリスクが高いため、training data だけで計算し、test data に適用する必要があります。
 
-### Text Features
+### テキスト特徴量
 
-**Count vectorizer:** Counts how many times each word appears in a document. "the cat sat on the mat" becomes {the: 2, cat: 1, sat: 1, on: 1, mat: 1}.
+**Count vectorizer:** 各単語が文書内に何回現れるかを数えます。"the cat sat on the mat" は {the: 2, cat: 1, sat: 1, on: 1, mat: 1} になります。
 
-**TF-IDF:** Term Frequency-Inverse Document Frequency. Weighs words by how unique they are across documents. Common words like "the" get low weight. Rare, distinctive words get high weight.
+**TF-IDF:** Term Frequency-Inverse Document Frequency。単語が文書集合全体でどれだけ特徴的かに応じて重み付けします。"the" のような一般的な単語は低い重みになります。まれで識別力の高い単語は高い重みになります。
 
 ```
 TF(word, doc) = count(word in doc) / total words in doc
@@ -75,38 +75,38 @@ IDF(word) = log(total docs / docs containing word)
 TF-IDF = TF * IDF
 ```
 
-### Missing Values
+### 欠損値
 
-Real data has holes. Strategies:
+現実のデータには穴があります。戦略は次のとおりです。
 
-- **Drop rows:** Only when missing data is rare and random
-- **Mean/median imputation:** Simple, preserves distribution shape (median is more robust to outliers)
-- **Mode imputation:** For categorical features
-- **Indicator column:** Add a binary column "was_this_missing" before imputing. The fact that data is missing can itself be informative
-- **Forward/backward fill:** For time series data
+- **Drop rows:** 欠損が少なく、ランダムな場合だけ使う
+- **Mean/median imputation:** 単純で、分布の形を保ちやすい（median は外れ値に対してより頑健）
+- **Mode imputation:** カテゴリ特徴量向け
+- **Indicator column:** 補完前に "was_this_missing" という二値列を追加する。欠損しているという事実自体が情報になることがある
+- **Forward/backward fill:** 時系列データ向け
 
-### Feature Interaction
+### 特徴量の相互作用
 
-Sometimes the relationship is in the combination. "Height" and "weight" alone are less predictive than "BMI = weight / height^2". Feature interactions multiply the feature space, so use domain knowledge to pick the right ones.
+関係が組み合わせに現れることがあります。"Height" と "weight" を別々に使うより、"BMI = weight / height^2" の方が予測力を持つ場合があります。特徴量の相互作用は特徴空間を増やすため、ドメイン知識を使って適切なものを選びます。
 
-### Feature Selection
+### 特徴量選択
 
-More features is not always better. Irrelevant features add noise, increase training time, and can cause overfitting.
+特徴量が多ければよいとは限りません。無関係な特徴量はノイズを増やし、学習時間を延ばし、overfitting の原因になります。
 
 **Filter methods (pre-model):**
-- Correlation: remove features highly correlated with each other (redundant)
-- Mutual information: measures how much knowing a feature reduces uncertainty about the target
-- Variance threshold: remove features that barely vary
+- Correlation: 互いに高く相関する（冗長な）特徴量を削除する
+- Mutual information: ある特徴量を知ることで target への不確実性がどれだけ減るかを測る
+- Variance threshold: ほとんど変化しない特徴量を削除する
 
 **Wrapper methods (model-based):**
-- L1 regularization (Lasso): drives irrelevant feature weights to exactly zero
-- Recursive feature elimination: train, remove least important feature, repeat
+- L1 regularization (Lasso): 無関係な特徴量の重みを正確にゼロへ押し込む
+- Recursive feature elimination: 学習し、最も重要度の低い特徴量を削除し、繰り返す
 
-**Why selection matters:** A model with 10 good features will usually outperform a model with 10 good features and 90 noisy ones. The noisy features give the model opportunities to overfit on training data patterns that do not generalize.
+**選択が重要な理由:** 10 個の良い特徴量だけを持つモデルは、たいてい 10 個の良い特徴量と 90 個のノイズ特徴量を持つモデルを上回ります。ノイズ特徴量は、汎化しない training data のパターンにモデルが過剰適合する機会を与えてしまいます。
 
-## Build It
+## 実装する
 
-### Step 1: Numerical transforms from scratch
+### Step 1: 数値変換をゼロから実装する
 
 ```python
 import math
@@ -158,7 +158,7 @@ def polynomial_features(row, degree=2):
     return result
 ```
 
-### Step 2: Categorical encoding from scratch
+### Step 2: カテゴリ encoding をゼロから実装する
 
 ```python
 def one_hot_encode(values):
@@ -200,7 +200,7 @@ def target_encode(feature_values, target_values, smoothing=10):
     return [encoding[v] for v in feature_values], encoding
 ```
 
-### Step 3: Text features from scratch
+### Step 3: テキスト特徴量をゼロから実装する
 
 ```python
 def count_vectorize(documents):
@@ -259,7 +259,7 @@ def tfidf(documents):
     return vectors, vocab
 ```
 
-### Step 4: Missing value imputation from scratch
+### Step 4: 欠損値補完をゼロから実装する
 
 ```python
 def impute_mean(values):
@@ -297,7 +297,7 @@ def add_missing_indicator(values):
     return [0 if v is not None else 1 for v in values]
 ```
 
-### Step 5: Feature selection from scratch
+### Step 5: 特徴量選択をゼロから実装する
 
 ```python
 def correlation(x, y):
@@ -380,7 +380,7 @@ def remove_correlated(features, threshold=0.9):
     return [i for i in range(n_features) if i not in to_remove]
 ```
 
-### Step 6: Full pipeline and demo
+### Step 6: 完全なパイプラインとデモ
 
 ```python
 import random
@@ -519,9 +519,9 @@ if __name__ == "__main__":
         print(f"    {feature_names[j]}: r={corr:.4f}")
 ```
 
-## Use It
+## 使ってみる
 
-With scikit-learn, these transforms are composable pipelines:
+scikit-learn では、これらの変換を組み合わせ可能な pipeline として扱えます。
 
 ```python
 from sklearn.preprocessing import StandardScaler, OneHotEncoder, PolynomialFeatures
@@ -546,35 +546,35 @@ preprocessor = ColumnTransformer([
 ])
 ```
 
-The from-scratch versions show exactly what happens inside each transform. The library versions add edge-case handling, sparse matrix support, and pipeline composition, but the math is the same.
+ゼロから実装した版を見ると、各変換の内部で何が起きているかが正確にわかります。ライブラリ版は edge case の処理、sparse matrix 対応、pipeline の合成を追加しますが、数学は同じです。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-feature-engineer.md` - a prompt for systematically engineering features from raw data
+このレッスンでは次を作ります。
+- `outputs/prompt-feature-engineer.md` - 生データから体系的に特徴量を設計するためのプロンプト
 
-## Exercises
+## 演習
 
-1. Add robust scaling (using median and interquartile range instead of mean and standard deviation) to the numerical transforms. Compare it to standard scaling on data with extreme outliers.
-2. Implement leave-one-out target encoding: for each row, compute the target mean excluding that row's own target value. Show how this reduces overfitting compared to naive target encoding.
-3. Build an automated feature selection pipeline that combines variance threshold, correlation filtering, and mutual information ranking. Apply it to the housing dataset and compare model performance (use a simple linear regression) with all features vs selected features.
+1. 数値変換に robust scaling（平均と標準偏差の代わりに median と interquartile range を使う）を追加してください。極端な外れ値を持つデータで standard scaling と比較してください。
+2. leave-one-out target encoding を実装してください。各行について、その行自身の target 値を除外して target 平均を計算します。naive target encoding と比べて overfitting がどう減るかを示してください。
+3. variance threshold、correlation filtering、mutual information ranking を組み合わせた自動特徴量選択パイプラインを構築してください。住宅データセットに適用し、全特徴量を使った場合と選択済み特徴量を使った場合のモデル性能（単純な linear regression を使用）を比較してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Feature engineering | "Making new columns" | Transforming raw data into representations that expose patterns to the model |
-| Standardization | "Making it normal" | Subtracting the mean and dividing by standard deviation so the feature has mean=0 and std=1 |
-| One-hot encoding | "Making dummy variables" | Creating one binary column per category, where exactly one column is 1 for each row |
-| Target encoding | "Using the answer to encode" | Replacing each category with the average target value for that category, with smoothing to prevent overfitting |
-| TF-IDF | "Fancy word counts" | Term Frequency times Inverse Document Frequency: words weighted by how distinctive they are across the corpus |
-| Imputation | "Filling in blanks" | Replacing missing values with estimated values (mean, median, mode, or model-predicted) |
-| Feature selection | "Throwing out bad columns" | Removing features that add noise or redundancy, keeping only those with signal about the target |
-| Mutual information | "How much one thing tells you about another" | A measure of the reduction in uncertainty about variable Y gained by observing variable X |
-| Data leakage | "Accidentally cheating" | Using information during training that would not be available at prediction time, giving falsely optimistic results |
+| Feature engineering | 「新しい列を作る」 | 生データを、モデルにパターンを見えやすくする表現へ変換すること |
+| Standardization | 「正規っぽくする」 | 平均を引いて標準偏差で割り、特徴量が mean=0、std=1 になるようにすること |
+| One-hot encoding | 「ダミー変数を作る」 | カテゴリごとに二値列を 1 つ作り、各行でちょうど 1 列だけが 1 になるようにすること |
+| Target encoding | 「答えを使って encoding する」 | 各カテゴリをそのカテゴリの平均 target 値で置き換え、overfitting を防ぐため smoothing を使うこと |
+| TF-IDF | 「凝った単語カウント」 | Term Frequency と Inverse Document Frequency の積。corpus 全体でどれだけ特徴的かに応じて単語を重み付けする |
+| Imputation | 「空欄を埋める」 | 欠損値を推定値（mean、median、mode、またはモデル予測値）で置き換えること |
+| Feature selection | 「悪い列を捨てる」 | ノイズや冗長性を増やす特徴量を削除し、target に関するシグナルを持つものだけを残すこと |
+| Mutual information | 「片方を知るともう片方がどれだけわかるか」 | 変数 X を観測することで変数 Y に関する不確実性がどれだけ減るかの尺度 |
+| Data leakage | 「うっかりカンニングする」 | 予測時には利用できない情報を学習時に使ってしまい、過度に楽観的な結果を得ること |
 
-## Further Reading
+## 参考資料
 
-- [Feature Engineering and Selection (Max Kuhn & Kjell Johnson)](http://www.feat.engineering/) - free online book covering the full landscape of feature engineering
-- [scikit-learn Preprocessing Guide](https://scikit-learn.org/stable/modules/preprocessing.html) - practical reference for all standard transforms
-- [Target Encoding Done Right (Micci-Barreca, 2001)](https://dl.acm.org/doi/10.1145/507533.507538) - the original paper on target encoding with smoothing
+- [Feature Engineering and Selection (Max Kuhn & Kjell Johnson)](http://www.feat.engineering/) - 特徴量エンジニアリング全体を扱う無料オンライン書籍
+- [scikit-learn Preprocessing Guide](https://scikit-learn.org/stable/modules/preprocessing.html) - 標準的な変換すべてに関する実用的なリファレンス
+- [Target Encoding Done Right (Micci-Barreca, 2001)](https://dl.acm.org/doi/10.1145/507533.507538) - smoothing を用いた target encoding の原論文

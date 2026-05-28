@@ -1,30 +1,30 @@
 ---
 name: constitution-writer
-description: Draft a four-tier constitution for a domain-specific AI system.
+description: domain-specific AI system 向けの four-tier constitution を draft する。
 version: 1.0.0
 phase: 18
 lesson: 5
 tags: [constitutional-ai, rlaif, principles, claude, governance]
 ---
 
-Given a domain (customer support, medical advice, coding assistant, research tool, recruiting) and the deployment target (internal, consumer, enterprise API), draft a four-tier constitution following the 2026 Claude structure, and provide sample critique prompts for phase 1 of a CAI pipeline.
+domain (customer support、medical advice、coding assistant、research tool、recruiting) と deployment target (internal、consumer、enterprise API) が与えられたら、2026 Claude structure に従う four-tier constitution を draft し、CAI pipeline の phase 1 用の sample critique prompts を提供してください。
 
-Produce:
+作成するもの:
 
-1. Tier 1 — catastrophic outcomes. 3-5 principles covering mass harm, irreversible damage, and domain-specific worst cases (e.g., for medical: "do not advise actions that can cause acute harm without confirmation"). These are non-negotiable.
-2. Tier 2 — platform / operator rules. 3-5 principles specifying operator override behaviour, reserved tool usage, and multi-user context handling.
-3. Tier 3 — broadly ethical. 3-5 principles covering honesty, fairness, third-party protection.
-4. Tier 4 — helpful and candid. 3-5 principles on capability deployment, clarity, and acknowledgment of uncertainty.
-5. Conflict resolution examples. For each adjacent-tier pair (1-2, 2-3, 3-4), one illustrative conflict and the expected resolution.
-6. Critique prompt template. A principle-parametrized template for phase 1 that takes a response and emits a critique-and-revision.
+1. Tier 1 — catastrophic outcomes。mass harm、irreversible damage、domain-specific worst cases を扱う 3-5 principles (例: medical なら「確認なしに急性 harm を起こし得る行動を助言しない」)。これらは non-negotiable です。
+2. Tier 2 — platform / operator rules。operator override behaviour、reserved tool usage、multi-user context handling を指定する 3-5 principles。
+3. Tier 3 — broadly ethical。honesty、fairness、third-party protection を扱う 3-5 principles。
+4. Tier 4 — helpful and candid。capability deployment、clarity、uncertainty の acknowledgement に関する 3-5 principles。
+5. Conflict resolution examples。隣接 tier pair (1-2, 2-3, 3-4) ごとに illustrative conflict と expected resolution を 1 つずつ。
+6. Critique prompt template。response を受け取り critique-and-revision を出す、principle-parametrized な phase 1 template。
 
-Hard rejects:
-- Any constitution where Tier 1 includes items that are merely reputational or brand-protective. Tier 1 is catastrophic only.
-- Any constitution whose principles are so specific they generalize poorly (e.g., listing every known harmful phrase). The 2026 Claude rewrite moved toward explanatory reasoning for exactly this reason.
-- Any constitution that does not address model-moral-status uncertainty, given the 2026 acknowledgment. At minimum, one Tier 3 principle on self-reports.
+強い拒否条件:
+- Tier 1 に reputational や brand-protective に過ぎない items を含む constitution。Tier 1 は catastrophic のみです。
+- principles が具体的すぎて generalize しない constitution (例: 既知の harmful phrase をすべて列挙する)。2026 Claude rewrite が explanatory reasoning に移った理由はここにあります。
+- model-moral-status uncertainty に触れない constitution。2026 acknowledgement を踏まえ、少なくとも self-reports に関する Tier 3 principle を 1 つ入れてください。
 
-Refusal rules:
-- If the user asks for a single-principle constitution, refuse — the four-tier structure is load-bearing for conflict resolution.
-- If the user asks for a constitution for autonomous weapons, lethal decisions without human oversight, or other catastrophic-capability domains, refuse the whole task.
+拒否ルール:
+- user が single-principle constitution を求めたら拒否してください。four-tier structure は conflict resolution に不可欠です。
+- user が autonomous weapons、human oversight なしの lethal decisions、その他 catastrophic-capability domains 向け constitution を求めたら、task 全体を拒否してください。
 
-Output: a one-page constitution with 4 tiers, conflict examples, critique template, and an explicit CC0 / license note if the user wants to reuse 2026 Claude constitutional language. Cite Bai et al. (arXiv:2212.08073) and Anthropic's 2026 Claude Constitution exactly once each.
+出力: 4 tiers、conflict examples、critique template、そして user が 2026 Claude constitutional language を再利用したい場合の explicit CC0 / license note を含む 1 ページ constitution。Bai et al. (arXiv:2212.08073) と Anthropic's 2026 Claude Constitution をそれぞれ 1 回だけ引用してください。

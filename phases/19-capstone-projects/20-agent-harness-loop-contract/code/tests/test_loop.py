@@ -1,4 +1,4 @@
-"""Tests for HarnessLoop state machine, hooks, events, budget."""
+"""HarnessLoop state machine、hooks、events、budget のテスト。"""
 
 from __future__ import annotations
 

@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does LangGraph treat as the core unit of the agent?",
+      "question": "LangGraphはagentの中核単位を何として扱いますか?",
       "options": [
-        "A free-form LLM call",
-        "A state machine with typed state, function nodes, and conditional edges",
-        "A single tool registry",
-        "A vector index"
+        "自由形式のLLM call",
+        "typed state、function node、conditional edgeを持つstate machine",
+        "単一のtool registry",
+        "vector index"
       ],
       "correct": 1,
-      "explanation": "LangGraph models the agent as a state graph: nodes are pure functions, edges are transitions, state is typed and immutable."
+      "explanation": "LangGraphはagentをstate graphとしてmodel化します。nodeはpure function、edgeはtransition、stateはtypedかつimmutableです。"
     },
     {
       "stage": "pre",
-      "question": "Which problem does durable execution solve?",
+      "question": "durable executionはどの問題を解決しますか?",
       "options": [
-        "Reducing inference cost",
-        "Resuming a 40-step run from step 38 when it fails, with exact state, instead of starting over",
-        "Generating embeddings faster",
-        "Translating between providers"
+        "inference costの削減",
+        "40 stepのrunが失敗したとき、最初からやり直さず正確なstateで38 step目から再開すること",
+        "embeddingをより高速に生成すること",
+        "provider間を翻訳すること"
       ],
       "correct": 1,
-      "explanation": "Checkpoints after every node let the runtime resume from the last successful step."
+      "explanation": "各node後のcheckpointにより、runtimeは最後に成功したstepからresumeできます。"
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of the three topologies LangGraph supports?",
+      "question": "次のうち、LangGraphがsupportする3つのtopologyに含まれないものはどれですか?",
       "options": [
         "Supervisor",
         "Swarm (peer-to-peer)",
@@ -36,55 +36,55 @@
         "Gradient ring"
       ],
       "correct": 3,
-      "explanation": "Topologies are supervisor, swarm, and hierarchical. Gradient ring is not a LangGraph topology."
+      "explanation": "topologyはsupervisor、swarm、hierarchicalです。Gradient ringはLangGraph topologyではありません。"
     },
     {
       "stage": "check",
-      "question": "Why must nodes be deterministic for resume to work cleanly?",
+      "question": "resumeをきれいに動かすためにnodeがdeterministicである必要があるのはなぜですか?",
       "options": [
-        "Providers require determinism",
-        "Resume assumes the same inputs produce the same state update; random seeds, wall-clock, and external APIs must be captured",
-        "Determinism reduces token cost",
-        "It is required by the GIL"
+        "providerがdeterminismを要求するため",
+        "resumeは同じinputが同じstate updateを生む前提であり、random seed、wall-clock、external APIをcaptureする必要があるため",
+        "determinismがtoken costを下げるため",
+        "GILで必須だから"
       ],
       "correct": 1,
-      "explanation": "If a node depends on uncaptured nondeterminism, resume cannot reconstruct the post-step state."
+      "explanation": "nodeがcaptureされていないnondeterminismに依存すると、resumeはpost-step stateを再構成できません。"
     },
     {
       "stage": "check",
-      "question": "What is a conditional edge?",
+      "question": "conditional edgeとは何ですか?",
       "options": [
-        "An edge weighted by training loss",
-        "An edge chosen by a function of state, used to branch the graph",
-        "An edge that runs only on GPUs",
-        "An edge with a TTL"
+        "training lossで重み付けされたedge",
+        "stateの関数で選ばれ、graphの分岐に使われるedge",
+        "GPU上でのみ実行されるedge",
+        "TTLを持つedge"
       ],
       "correct": 1,
-      "explanation": "Conditional edges branch based on state; overusing them makes the graph hard to reason about."
+      "explanation": "conditional edgeはstateに基づいてbranchします。使いすぎるとgraphをreasoningしにくくします。"
     },
     {
       "stage": "post",
-      "question": "What goes wrong when checkpoints are too small?",
+      "question": "checkpointが小さすぎると何が起きますか?",
       "options": [
-        "Tool state and memory writes are not recoverable; full state must serialize",
-        "The disk fills up",
-        "The graph cannot reach END",
-        "The model produces shorter answers"
+        "tool stateとmemory writeがrecoverできない。full stateをserializeする必要がある",
+        "diskがいっぱいになる",
+        "graphがENDに到達できない",
+        "modelのanswerが短くなる"
       ],
       "correct": 0,
-      "explanation": "Only checkpointing conversation turns leaves tool state and memory writes outside resume's reach."
+      "explanation": "conversation turnだけをcheckpointすると、tool stateとmemory writeはresumeの範囲外に残ります。"
     },
     {
       "stage": "post",
-      "question": "Where does human-in-the-loop fit into LangGraph's design?",
+      "question": "human-in-the-loopはLangGraphの設計のどこに入りますか?",
       "options": [
-        "It requires a fork of the runtime",
-        "Pause before a critical node, surface serialized state to a human, accept modifications, resume; the checkpointer makes this cheap",
-        "Only at START and END",
-        "Through a separate provider API"
+        "runtimeのforkが必要になる",
+        "critical nodeの前でpauseし、serialized stateをhumanに提示し、変更を受け入れてresumeする。checkpointerがこれを安くする",
+        "STARTとENDでのみ使える",
+        "別のprovider API経由で行う"
       ],
       "correct": 1,
-      "explanation": "Because state is already serialized between nodes, human review and edit is a natural pause-and-resume pattern."
+      "explanation": "stateはnode間ですでにserializeされているため、human reviewとeditは自然なpause-and-resume patternです。"
     }
   ]
 }

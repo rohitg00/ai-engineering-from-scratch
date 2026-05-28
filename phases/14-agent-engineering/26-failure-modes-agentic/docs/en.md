@@ -1,128 +1,128 @@
-# Failure Modes: Why Agents Break
+# 失敗モード: エージェントはなぜ壊れるのか
 
-> MASFT (Berkeley, 2025) catalogs 14 multi-agent failure modes in 3 categories. Microsoft's Taxonomy documents how existing AI failures amplify in agentic settings. Industry field data converges on five recurring modes: hallucinated actions, scope creep, cascading errors, context loss, tool misuse.
+> MASFT (Berkeley, 2025) は multi-agent failure modes を 3 カテゴリ 14 種に整理する。Microsoft の Taxonomy は、既存の AI failure が agentic setting でどのように増幅されるかを文書化している。業界の現場データは、hallucinated actions、scope creep、cascading errors、context loss、tool misuse という 5 つの反復モードに収束している。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
-**Time:** ~60 minutes
+**種類:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
+**時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Name MASFT's three failure categories and at least four specific modes in each.
-- Explain why agentic failure amplifies existing AI failure modes (bias, hallucination).
-- Describe the five industry-recurring modes and their mitigations.
-- Implement a stdlib detector that tags agent traces with failure-mode labels.
+- MASFT の 3 つの failure category と、それぞれ少なくとも 4 つの具体的な mode を挙げる。
+- agentic failure が既存の AI failure modes (bias, hallucination) を増幅する理由を説明する。
+- 業界で繰り返し現れる 5 つの modes とその mitigations を説明する。
+- agent traces に failure-mode labels を付ける stdlib detector を実装する。
 
-## The Problem
+## 問題
 
-Teams ship agents that work on 90% of traces. The 10% failures are not random noise — they fall into a small number of recurring categories. Once you can name them, you can monitor for them and fix them.
+teams は 90% の traces で動く agents を出荷する。残り 10% の失敗はランダムノイズではない。少数の繰り返しカテゴリに分類できる。名前を付けられるようになると、それを監視し、修正できるようになる。
 
-## The Concept
+## コンセプト
 
 ### MASFT (Berkeley, arXiv:2503.13657)
 
-Multi-Agent System Failure Taxonomy. 14 failure modes clustered into 3 categories. Inter-annotator Cohen's Kappa 0.88 — the categories are reliably distinguishable.
+Multi-Agent System Failure Taxonomy。14 個の failure modes を 3 カテゴリにまとめる。annotator 間の Cohen's Kappa は 0.88 で、カテゴリは信頼できる形で区別できる。
 
-Central claim: failures are fundamental design flaws in multi-agent systems, not LLM limitations to be fixed with better base models.
+中心主張: failure は、より良い base model で直る LLM limitation ではなく、multi-agent systems における根本的な設計欠陥である。
 
 ### Microsoft Taxonomy of Failure Mode in Agentic AI Systems
 
-- Existing AI failures (bias, hallucination, data leakage) amplify in agentic settings.
-- New failures emerge from autonomy: unintended action at scale, tool misuse, mission drift.
-- The whitepaper is the risk register for agentic products.
+- 既存の AI failures (bias, hallucination, data leakage) は agentic setting で増幅される。
+- autonomy により新しい failures が現れる: scale した unintended action、tool misuse、mission drift。
+- この whitepaper は agentic products の risk register である。
 
 ### Characterizing Faults in Agentic AI (arXiv:2603.06847)
 
-- Failures arise from orchestration, internal state evolution, and environment interaction.
-- Not just "bad code" or "bad model output."
+- failures は orchestration、internal state evolution、environment interaction から生じる。
+- 単なる「悪い code」や「悪い model output」ではない。
 
 ### LLM Agent Hallucinations Survey (arXiv:2509.18970)
 
-Two primary manifestations:
+主な現れ方は 2 つ:
 
-1. **Instruction-following Deviation** — agent doesn't follow the system prompt.
-2. **Long-range Contextual Misuse** — agent forgets or misapplies context from earlier turns.
+1. **Instruction-following Deviation** — agent が system prompt に従わない。
+2. **Long-range Contextual Misuse** — agent が以前の turn の context を忘れる、または誤用する。
 
-Sub-intention errors: Omission (missed step), Redundancy (repeated step), Disorder (out-of-order steps).
+Sub-intention errors: Omission (手順漏れ)、Redundancy (手順の重複)、Disorder (手順順序の誤り)。
 
-### The five industry-recurring modes
+### 業界で繰り返し現れる 5 つの mode
 
-Arize, Galileo, NimbleBrain 2024-2026 field analyses converge on:
+Arize、Galileo、NimbleBrain の 2024-2026 年の現場分析は、次に収束している。
 
-1. **Hallucinated actions.** Agent invokes a tool that doesn't exist or fabricates arguments.
-2. **Scope creep.** Agent expands task beyond the user's ask (creates extra PRs, sends extra emails).
-3. **Cascading errors.** One wrong call triggers downstream effects. A phantom SKU hallucination triggers four API calls — a multi-system incident.
-4. **Context loss.** Long-horizon tasks forget early-turn constraints.
-5. **Tool misuse.** Calls the right tool with wrong arguments, or the wrong tool entirely.
+1. **Hallucinated actions。** Agent が存在しない tool を呼ぶ、または arguments を捏造する。
+2. **Scope creep。** Agent が user の依頼を越えて task を拡張する (余分な PR を作る、余分な emails を送る)。
+3. **Cascading errors。** 1 つの誤った call が下流効果を引き起こす。幻の SKU hallucination が 4 つの API calls を誘発し、multi-system incident になる。
+4. **Context loss。** 長期 task で、初期 turn の constraints を忘れる。
+5. **Tool misuse。** 正しい tool に間違った arguments を渡す、または完全に間違った tool を呼ぶ。
 
-Cascading is the killer. Agents cannot distinguish "I failed" from "the task is impossible" and often hallucinate a success message on 400 errors to close the loop.
+Cascading は最も危険である。Agents は「失敗した」と「task が不可能」を区別できず、400 errors に対して success message を hallucinate して loop を閉じることが多い。
 
-### Mitigation: gates at every step
+### Mitigation: すべての step に gate を置く
 
-Automated verification gates at every step of a reasoning chain, checking factual grounding against environment state. Concretely:
+reasoning chain の各 step に自動 verification gates を置き、environment state に対する factual grounding を確認する。具体的には:
 
-- Per-step safety classifier (Lesson 21).
-- Tool-call argument validation (Lesson 06).
-- Cross-check retrieved content against known facts (Lesson 05, CRITIC).
-- Detect success hallucination by re-probing state (was the file actually created?).
+- step ごとの safety classifier (Lesson 21)。
+- Tool-call argument validation (Lesson 06)。
+- retrieved content と既知 facts の cross-check (Lesson 05, CRITIC)。
+- state を再確認して success hallucination を検出する (file は実際に作られたか)。
 
-### Where failure monitoring goes wrong
+### failure monitoring が失敗するところ
 
-- **Tagging only crashes.** Most agent failures produce valid-looking output. Need content-level checks.
-- **No baseline.** Drift detection needs a last-known-good; without it you cannot say "this is getting worse."
-- **Over-alerting.** Every failure produces a page. Cluster and rate-limit.
+- **crash だけを tag する。** ほとんどの agent failures は valid-looking output を生成する。content-level checks が必要。
+- **baseline がない。** Drift detection には last-known-good が必要で、それがないと「悪化している」と言えない。
+- **over-alerting。** すべての failure が page になる。cluster して rate-limit する。
 
-## Build It
+## 構築
 
-`code/main.py` implements a stdlib failure-mode tagger:
+`code/main.py` は stdlib の failure-mode tagger を実装する。
 
-- A synthetic trace dataset covering the five modes.
-- Detector functions per mode (signature patterns on tool calls, outputs, repeat actions).
-- A tagger that labels each trace and reports mode distribution.
+- 5 つの modes を網羅する synthetic trace dataset。
+- mode ごとの detector functions (tool calls、outputs、repeat actions 上の signature patterns)。
+- 各 trace に label を付け、mode distribution を報告する tagger。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-Output: per-trace labels + aggregate distribution, a cheap reproduction of what Phoenix's trace clustering surfaces.
+出力: trace ごとの labels + aggregate distribution。Phoenix の trace clustering が表面化するものの安価な再現。
 
-## Use It
+## 利用
 
-- **Phoenix** for production drift clustering (Lesson 24).
-- **Langfuse** for session replay + annotation.
-- **Custom** for domain-specific signatures your observability platform can't detect.
+- production drift clustering には **Phoenix** (Lesson 24)。
+- session replay + annotation には **Langfuse**。
+- observability platform では検出できない domain-specific signatures には **Custom**。
 
-## Ship It
+## 出荷
 
-`outputs/skill-failure-detector.md` generates failure-mode detectors tailored to your domain, wired to a trace store.
+`outputs/skill-failure-detector.md` は、trace store に接続された domain 向け failure-mode detectors を生成する。
 
-## Exercises
+## 演習
 
-1. Add a detector for "success hallucination": agent returns success but the target state is unchanged.
-2. Tag 100 real traces from a product you've built. Which mode dominates? What's the cost of fixing it?
-3. Implement a "cascade radius" metric: given a failure at step N, how many downstream steps did it affect?
-4. Read MASFT's 14 failure modes. Pick three that apply to your product. Write detectors.
-5. Wire one detector into a CI job: fail the build if >=5% of traces tag a mode.
+1. 「success hallucination」の detector を追加する。agent は success を返すが target state は変わっていない。
+2. 自分が作った product から real traces を 100 件 tag する。どの mode が支配的か。それを修正する cost は何か。
+3. 「cascade radius」metric を実装する。step N の failure が、何個の downstream steps に影響したか。
+4. MASFT の 14 failure modes を読む。自分の product に当てはまる 3 つを選び、detectors を書く。
+5. detector を 1 つ CI job に接続する。>=5% の traces が mode を tag したら build を失敗させる。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| MASFT | "Multi-agent failure taxonomy" | Berkeley 14-mode categorization |
-| Cascading error | "Ripple failure" | One early mistake propagates through N steps |
-| Context loss | "Forgot the constraint" | Long-horizon turn drops early-turn facts |
-| Tool misuse | "Wrong tool / wrong args" | Valid call, wrong invocation |
-| Success hallucination | "Faked completion" | Agent claims success on a 400; state unchanged |
-| Scope creep | "Overreach" | Agent does more than asked |
-| Instruction-following deviation | "Disobedience" | Ignores system prompt or user constraint |
-| Sub-intention errors | "Plan bugs" | Omission, redundancy, disorder in plan execution |
+| 用語 | よく言われる表現 | 実際の意味 |
+|------|----------------|------------|
+| MASFT | "Multi-agent failure taxonomy" | Berkeley の 14-mode categorization |
+| Cascading error | "Ripple failure" | 早い段階の 1 つの誤りが N steps に伝播する |
+| Context loss | "Forgot the constraint" | 長期 turn で初期 facts を落とす |
+| Tool misuse | "Wrong tool / wrong args" | valid call だが invocation が間違っている |
+| Success hallucination | "Faked completion" | agent が 400 で success を主張し、state は未変更 |
+| Scope creep | "Overreach" | agent が頼まれた以上のことをする |
+| Instruction-following deviation | "Disobedience" | system prompt または user constraint を無視する |
+| Sub-intention errors | "Plan bugs" | plan execution における omission、redundancy、disorder |
 
-## Further Reading
+## 参考文献
 
-- [Cemri et al., MASFT (arXiv:2503.13657)](https://arxiv.org/abs/2503.13657) — 14 failure modes, 3 categories
+- [Cemri et al., MASFT (arXiv:2503.13657)](https://arxiv.org/abs/2503.13657) — 14 failure modes、3 categories
 - [Microsoft, Taxonomy of Failure Mode in Agentic AI Systems](https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Taxonomy-of-Failure-Mode-in-Agentic-AI-Systems-Whitepaper.pdf) — risk register
-- [Arize Phoenix](https://docs.arize.com/phoenix) — drift clustering in practice
-- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — when simpler patterns avoid modes entirely
+- [Arize Phoenix](https://docs.arize.com/phoenix) — 実運用での drift clustering
+- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — より単純な patterns が modes 全体を避ける場面

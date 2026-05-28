@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
@@ -18,46 +18,46 @@
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">mentions → clusters → entities</text>
+  <text x="450" y="30" text-anchor="middle" class="title">メンション → クラスタ → エンティティ</text>
 
   <!-- Input document -->
   <rect x="40" y="55" width="820" height="140" class="doc"/>
-  <text x="50" y="80" class="label">document</text>
+  <text x="50" y="80" class="label">文書</text>
 
   <text x="50" y="110" class="content">
-    <tspan class="span1">Tim Cook</tspan> walked onto the stage.
-    <tspan class="span1">He</tspan> announced the new iPhone.
+    <tspan class="span1">Tim Cook</tspan> がステージに上がった。
+    <tspan class="span1">彼</tspan> は新しい iPhone を発表した。
   </text>
   <text x="50" y="135" class="content">
-    <tspan class="span2">The company</tspan> also showed a laptop.
-    <tspan class="span2">It</tspan> will ship in June.
+    <tspan class="span2">同社</tspan> はノートPCも披露した。
+    <tspan class="span2">同社</tspan> は6月に出荷する。
   </text>
   <text x="50" y="160" class="content">
-    <tspan class="span3">Mary Chen</tspan> leads the AI team.
-    <tspan class="span3">She</tspan> built the voice assistant.
+    <tspan class="span3">Mary Chen</tspan> はAIチームを率いる。
+    <tspan class="span3">彼女</tspan> は音声アシスタントを作った。
   </text>
-  <text x="50" y="185" class="caption">three entities, seven mentions across three sentences</text>
+  <text x="50" y="185" class="caption">3つのエンティティ、3文に7メンション</text>
 
   <!-- Clusters -->
-  <text x="450" y="230" text-anchor="middle" class="label">coreference clustering</text>
+  <text x="450" y="230" text-anchor="middle" class="label">共参照クラスタリング</text>
 
   <rect x="60" y="250" width="240" height="130" class="ent1"/>
-  <text x="180" y="278" text-anchor="middle" class="label">Entity #1</text>
+  <text x="180" y="278" text-anchor="middle" class="label">エンティティ#1</text>
   <text x="180" y="300" text-anchor="middle" class="content">Tim Cook</text>
-  <text x="180" y="320" text-anchor="middle" class="content">He</text>
-  <text x="180" y="355" text-anchor="middle" class="caption">type: PERSON</text>
+  <text x="180" y="320" text-anchor="middle" class="content">彼</text>
+  <text x="180" y="355" text-anchor="middle" class="caption">型: PERSON</text>
 
   <rect x="330" y="250" width="240" height="130" class="ent2"/>
-  <text x="450" y="278" text-anchor="middle" class="label">Entity #2</text>
-  <text x="450" y="300" text-anchor="middle" class="content">The company</text>
-  <text x="450" y="320" text-anchor="middle" class="content">It</text>
-  <text x="450" y="355" text-anchor="middle" class="caption">type: ORG</text>
+  <text x="450" y="278" text-anchor="middle" class="label">エンティティ#2</text>
+  <text x="450" y="300" text-anchor="middle" class="content">同社</text>
+  <text x="450" y="320" text-anchor="middle" class="content">同社</text>
+  <text x="450" y="355" text-anchor="middle" class="caption">型: ORG</text>
 
   <rect x="600" y="250" width="240" height="130" class="ent3"/>
-  <text x="720" y="278" text-anchor="middle" class="label">Entity #3</text>
+  <text x="720" y="278" text-anchor="middle" class="label">エンティティ#3</text>
   <text x="720" y="300" text-anchor="middle" class="content">Mary Chen</text>
-  <text x="720" y="320" text-anchor="middle" class="content">She</text>
-  <text x="720" y="355" text-anchor="middle" class="caption">type: PERSON</text>
+  <text x="720" y="320" text-anchor="middle" class="content">彼女</text>
+  <text x="720" y="355" text-anchor="middle" class="caption">型: PERSON</text>
 
-  <text x="450" y="420" text-anchor="middle" class="caption">resolved clusters feed IE, QA, summarization — downstream tasks see one entity, not many mentions</text>
+  <text x="450" y="420" text-anchor="middle" class="caption">解決済みクラスタはIE・QA・要約へ — 下流タスクは複数メンションを1エンティティとして扱う</text>
 </svg>

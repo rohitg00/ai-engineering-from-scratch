@@ -10,7 +10,7 @@ function freshJob(createdAt: number): Job {
   return store.create("t-1", "vid", "q", createdAt);
 }
 
-test("pending right after creation", () => {
+test("作成直後は pending", () => {
   const created = 1_000_000_000_000;
   const job = freshJob(created);
   advanceJob(job, created);
@@ -18,7 +18,7 @@ test("pending right after creation", () => {
   assert.ok(job.stages.every((s) => s.status === "pending"));
 });
 
-test("running while first stage in progress", () => {
+test("first stage の進行中は running", () => {
   const created = 1_000_000_000_000;
   const job = freshJob(created);
   advanceJob(job, created + 600);
@@ -28,7 +28,7 @@ test("running while first stage in progress", () => {
   assert.equal(overallStatus(job), "running");
 });
 
-test("done once total elapsed exceeds sum of durations", () => {
+test("total elapsed が duration 合計を超えると done", () => {
   const created = 1_000_000_000_000;
   const job = freshJob(created);
   const total = STAGES.reduce((acc, s) => acc + STAGE_DURATIONS_MS[s], 0);
@@ -37,7 +37,7 @@ test("done once total elapsed exceeds sum of durations", () => {
   assert.ok(job.stages.every((s) => s.status === "done"));
 });
 
-test("seedFixture populates store with three jobs", () => {
+test("seedFixture は store に 3 job を投入する", () => {
   const store = new JobStore();
   seedFixture(store);
   assert.equal(store.list().length, 3);
@@ -46,7 +46,7 @@ test("seedFixture populates store with three jobs", () => {
   assert.equal(detail.id, "job-001");
 });
 
-test("detail returns null for unknown id", () => {
+test("unknown id の detail は null を返す", () => {
   const store = new JobStore();
   seedFixture(store);
   assert.equal(store.detail("missing"), null);

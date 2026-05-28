@@ -1,36 +1,36 @@
-# POS Tagging and Syntactic Parsing
+# POSタグ付けと構文解析
 
-> Grammar was unfashionable for a while. Then every LLM pipeline needed to validate structured extraction, and it came back.
+> 文法はしばらく流行遅れだった。それから、あらゆるLLMパイプラインが構造化抽出を検証する必要に迫られ、また戻ってきた。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-Lesson 01 promised that lemmatization needs a part-of-speech tag. Without knowing `running` is a verb, a lemmatizer cannot reduce it to `run`. Without knowing `better` is an adjective, it cannot reduce to `good`.
+レッスン01では、見出し語化には品詞タグが必要だと約束した。`running` が動詞だと分からなければ、見出し語化器はそれを `run` に戻せない。`better` が形容詞だと分からなければ、`good` に戻せない。
 
-That promise hid a whole subfield. Part-of-speech tagging assigns grammatical categories. Syntactic parsing recovers the sentence's tree structure: which word modifies which, which verb governs which arguments. Classical NLP spent twenty years refining both. Then deep learning collapsed them into a token-classification task on top of a pretrained transformer, and the research community moved on.
+その約束の裏には、ひとつの大きな研究分野が隠れていた。品詞タグ付けは文法カテゴリを割り当てる。構文解析は文の木構造を復元する。どの単語がどの単語を修飾するのか、どの動詞がどの引数を支配するのかを明らかにする。古典的NLPは、この2つを20年かけて洗練してきた。その後、深層学習が事前学習済みTransformer上のトークン分類タスクへと押し込み、研究コミュニティは先へ進んだ。
 
-Not the applied community. Every structured-extraction pipeline still uses POS and dependency trees under the hood. LLM-generated JSON gets validated against grammatical constraints. Question-answering systems decompose queries using dependency parses. Machine translation quality evaluators check alignment of parse trees.
+しかし応用の現場は違う。構造化抽出パイプラインは今でも内部でPOSと依存木を使う。LLMが生成したJSONは文法制約に照らして検証される。質問応答システムは依存構造解析でクエリを分解する。機械翻訳の品質評価器は構文木の対応を確認する。
 
-Worth knowing. This lesson introduces the tagsets, the baselines, and the point where you stop implementing from scratch and call spaCy.
+知っておく価値がある。このレッスンでは、タグセット、ベースライン、そして自前実装をやめてspaCyを呼ぶべき地点を扱う。
 
-## The Concept
+## コンセプト
 
-**POS tagging** labels each token with a grammatical category. The **Penn Treebank (PTB)** tagset is the English default. 36 tags with distinctions the casual reader finds fussy: `NN` singular noun, `NNS` plural noun, `NNP` proper noun singular, `VBD` verb past tense, `VBZ` verb 3rd person singular present, and so on. The **Universal Dependencies (UD)** tagset is coarser (17 tags) and language-agnostic; it became the default for cross-lingual work.
+**POS tagging** は各トークンに文法カテゴリをラベル付けする。**Penn Treebank (PTB)** タグセットは英語の標準だ。36個のタグがあり、普通の読者には細かすぎるように見える区別を持つ。`NN` は単数名詞、`NNS` は複数名詞、`NNP` は単数固有名詞、`VBD` は過去形動詞、`VBZ` は三人称単数現在の動詞、という具合だ。**Universal Dependencies (UD)** タグセットはより粗く、17タグで、言語非依存である。クロスリンガル処理の標準になった。
 
 ```
 The/DET cats/NOUN were/AUX running/VERB at/ADP 3pm/NOUN ./PUNCT
 ```
 
-**Syntactic parsing** produces a tree. Two major styles:
+**構文解析** は木を生成する。主な形式は2つある。
 
-- **Constituency parsing.** Noun phrases, verb phrases, prepositional phrases nest inside each other. Output is a tree of non-terminal categories (NP, VP, PP) with words as leaves.
-- **Dependency parsing.** Each word has a single head word it depends on, labeled with a grammatical relation. Output is a tree where every edge is a (head, dependent, relation) triple.
+- **句構造解析。** 名詞句、動詞句、前置詞句が互いに入れ子になる。出力は非終端カテゴリ (NP, VP, PP) の木で、単語が葉になる。
+- **依存構造解析。** 各単語は依存先となる単一の主辞を持ち、文法関係でラベル付けされる。出力は、すべての辺が (主辞, 従属語, 関係) の三つ組である木になる。
 
-Dependency parsing won in the 2010s because it generalizes cleanly across languages, especially free-word-order ones.
+依存構造解析は、特に語順の自由度が高い言語に対して言語横断で自然に一般化できるため、2010年代に主流になった。
 
 ```
 running is ROOT
@@ -40,11 +40,11 @@ at is prep of running
 3pm is pobj of at
 ```
 
-## Build It
+## 作ってみる
 
-### Step 1: most-frequent-tag baseline
+### Step 1: 最頻タグベースライン
 
-The dumbest POS tagger that works. For each word, predict the tag it had most often in training.
+動く中で最も単純なPOSタガー。各単語について、訓練時に最も頻繁に持っていたタグを予測する。
 
 ```python
 from collections import Counter, defaultdict
@@ -66,17 +66,17 @@ def predict_mft(tokens, word_best, default_tag):
     return [word_best.get(t.lower(), default_tag) for t in tokens]
 ```
 
-On the Brown corpus, this baseline hits ~85% accuracy. Not good, but the floor below which no serious model should fall.
+Brown corpusでは、このベースラインだけで約85%の精度に届く。良くはないが、真面目なモデルが下回ってはいけない床である。
 
-### Step 2: bigram HMM tagger
+### Step 2: bigram HMMタガー
 
-Model the joint probability of the sequence:
+系列の同時確率をモデル化する。
 
 ```
 P(tags, words) = prod P(tag_i | tag_{i-1}) * P(word_i | tag_i)
 ```
 
-Two tables: transition probabilities (tag given previous tag), emission probabilities (word given tag). Estimate both from counts with Laplace smoothing. Decode with Viterbi (dynamic programming over the tag lattice).
+表は2つ。遷移確率 (直前のタグが与えられたときのタグ) と、出力確率 (タグが与えられたときの単語) だ。どちらもカウントからLaplace平滑化で推定する。復号にはViterbiを使う。これはタグの格子上で動的計画法を行う方法だ。
 
 ```python
 import math
@@ -142,22 +142,22 @@ def viterbi(tokens, transitions, emissions, tags, vocab, alpha=0.01):
     return [tags_list[j] for j in reversed(path)]
 ```
 
-Bigram HMM on Brown hits ~93% accuracy. The jump from 85% to 93% is mostly transition probabilities — the model learns `DET NOUN` is common and `NOUN DET` is rare.
+Brownでbigram HMMを使うと約93%の精度に届く。85%から93%への上昇の大部分は遷移確率によるものだ。モデルは `DET NOUN` がよくあり、`NOUN DET` はまれだと学習する。
 
-### Step 3: why modern taggers beat this
+### Step 3: なぜ現代のタガーはこれを上回るのか
 
-Transition + emission probabilities are local. They cannot capture that `saw` is a noun in "I bought a saw" but a verb in "I saw the movie." A CRF with arbitrary features (suffix, word shape, word before and after, word itself) hits ~97%. A BiLSTM-CRF or transformer hits ~98%+.
+遷移確率と出力確率は局所的だ。`saw` が "I bought a saw" では名詞で、"I saw the movie." では動詞だという事実を捉えられない。任意の特徴量 (接尾辞、単語の形、前後の単語、単語そのもの) を使うCRFなら約97%に届く。BiLSTM-CRFやTransformerなら98%以上に届く。
 
-The ceiling on this task is set by annotator disagreement. Human annotators agree about 97% of the time on Penn Treebank. Models past 98% are probably overfitting the test set.
+このタスクの上限はアノテータ間の不一致で決まる。Penn Treebankで人間のアノテータが一致するのは約97%だ。98%を超えるモデルは、テストセットに過剰適合している可能性が高い。
 
-### Step 4: dependency parsing sketch
+### Step 4: 依存構造解析の見取り図
 
-Full dependency parsing from scratch is out of scope; the canonical textbook treatment is in Jurafsky and Martin. Two classical families to know:
+依存構造解析を完全にゼロから実装するのは範囲外だ。定番の教科書的説明はJurafsky and Martinにある。知っておくべき古典的な系統は2つ。
 
-- **Transition-based** parsers (arc-eager, arc-standard) act like a shift-reduce parser: they read tokens, shift them onto a stack, and apply reduce actions that create arcs. Greedy decoding is fast. Classic implementation is MaltParser. Modern neural version: Chen and Manning's transition-based parser.
-- **Graph-based** parsers (Eisner's algorithm, Dozat-Manning biaffine) score every possible head-dependent edge and pick the maximum spanning tree. Slower but more accurate.
+- **遷移ベース** パーサー (arc-eager, arc-standard) はshift-reduceパーサーのように動く。トークンを読み、スタックへshiftし、arcを作るreduce操作を適用する。貪欲復号は高速。古典的実装はMaltParser。現代的なニューラル版はChen and Manningの遷移ベースパーサー。
+- **グラフベース** パーサー (Eisnerのアルゴリズム、Dozat-Manning biaffine) は、あり得るすべての主辞-従属語の辺にスコアを付け、最大全域木を選ぶ。遅いが、より高精度だ。
 
-For most applied work, call spaCy:
+ほとんどの応用ではspaCyを呼べばよい。
 
 ```python
 import spacy
@@ -178,69 +178,69 @@ at         tag=IN    pos=ADP    dep=prep       head=running
 .          tag=.     pos=PUNCT  dep=punct      head=running
 ```
 
-Read the `dep` column bottom to top and the sentence's grammatical structure falls out.
+`dep` 列を下から上へ読むと、文の文法構造が見えてくる。
 
-## Use It
+## 使ってみる
 
-Every production NLP library ships POS and dependency parsers as part of a standard pipeline.
+本番向けNLPライブラリはどれも、標準パイプラインの一部としてPOSタガーと依存構造パーサーを同梱している。
 
-- **spaCy** (`en_core_web_sm` / `md` / `lg` / `trf`). Fast, accurate, integrated with tokenization + NER + lemmatization. `token.tag_` (Penn), `token.pos_` (UD), `token.dep_` (dependency relation).
-- **Stanford NLP (stanza)**. Stanford's successor to CoreNLP. State-of-the-art on 60+ languages.
-- **trankit**. Transformer-based, good UD accuracy.
-- **NLTK**. `pos_tag`. Usable, slow, older. Fine for teaching.
+- **spaCy** (`en_core_web_sm` / `md` / `lg` / `trf`)。高速で高精度。トークン化 + NER + 見出し語化と統合されている。`token.tag_` (Penn)、`token.pos_` (UD)、`token.dep_` (依存関係)。
+- **Stanford NLP (stanza)**。CoreNLPの後継。60以上の言語で最先端級。
+- **trankit**。Transformerベース。UD精度が高い。
+- **NLTK**。`pos_tag`。使えるが遅く、古い。教育用途には十分。
 
-### Where this still matters in 2026
+### 2026年でもこれが重要な場所
 
-- **Lemmatization.** Lesson 01 needs POS to lemmatize correctly. Always.
-- **Structured extraction from LLM outputs.** Validate that a generated sentence respects grammatical constraints (e.g., subject-verb agreement, required modifiers).
-- **Aspect-based sentiment.** Dependency parses tell you which adjective modifies which noun.
-- **Query understanding.** "movies directed by Wes Anderson starring Bill Murray" decomposes into structured constraints via the parse.
-- **Cross-lingual transfer.** UD tags and dependency relations are language-agnostic, enabling zero-shot structured analysis of new languages.
-- **Low-compute pipelines.** If you cannot ship a transformer, POS + dependency parse + gazetteer gets you surprisingly far.
+- **見出し語化。** レッスン01では、正しく見出し語化するためにPOSが必要だった。これは常に必要だ。
+- **LLM出力からの構造化抽出。** 生成された文が文法制約 (主語と動詞の一致、必須修飾語など) を満たすか検証する。
+- **アスペクトベース感情分析。** 依存構造解析は、どの形容詞がどの名詞を修飾するかを教えてくれる。
+- **クエリ理解。** "movies directed by Wes Anderson starring Bill Murray" は、構文解析によって構造化制約に分解される。
+- **クロスリンガル転移。** UDタグと依存関係は言語非依存なので、新しい言語に対するゼロショットの構造化分析を可能にする。
+- **低計算量パイプライン。** Transformerを配布できない場合でも、POS + 依存構造解析 + gazetteer だけで驚くほど遠くまで行ける。
 
-## Ship It
+## 提出物
 
-Save as `outputs/skill-grammar-pipeline.md`:
+`outputs/skill-grammar-pipeline.md` として保存する。
 
 ```markdown
 ---
 name: grammar-pipeline
-description: Design a classical POS + dependency pipeline for a downstream NLP task.
+description: 下流NLPタスク向けに古典的なPOS + 依存構造パイプラインを設計する。
 version: 1.0.0
 phase: 5
 lesson: 07
 tags: [nlp, pos, parsing]
 ---
 
-Given a downstream task (information extraction, rewrite validation, query decomposition, lemmatization), you output:
+下流タスク (情報抽出、書き換え検証、クエリ分解、見出し語化) が与えられたら、次を出力する。
 
-1. Tagset to use. Penn Treebank for English-only legacy pipelines, Universal Dependencies for multilingual or cross-lingual.
-2. Library. spaCy for most production, stanza for academic-grade multilingual, trankit for highest UD accuracy. Name the specific model ID.
-3. Integration pattern. Show the 3-5 lines that call the library and consume the needed attributes (`.pos_`, `.dep_`, `.head`).
-4. Failure mode to test. Noun-verb ambiguity (`saw`, `book`, `can`) and PP-attachment ambiguity are the classical traps. Sample 20 outputs and eyeball.
+1. 使用するタグセット。英語のみのレガシーパイプラインならPenn Treebank、多言語またはクロスリンガルならUniversal Dependencies。
+2. ライブラリ。ほとんどの本番用途ではspaCy、学術品質の多言語処理ではstanza、最高レベルのUD精度が必要ならtrankit。具体的なモデルIDを挙げる。
+3. 統合パターン。ライブラリを呼び、必要な属性 (`.pos_`, `.dep_`, `.head`) を消費する3〜5行を示す。
+4. テストすべき失敗モード。名詞/動詞の曖昧性 (`saw`, `book`, `can`) とPP attachmentの曖昧性は古典的な落とし穴。20件の出力をサンプリングして目視する。
 
-Refuse to recommend rolling your own parser. Building parsers from scratch is a research project, not an application task. Flag any pipeline that consumes POS tags without handling lowercase/uppercase variants as fragile.
+独自パーサーの実装は推奨しない。パーサーをゼロから作るのは研究プロジェクトであり、アプリケーション作業ではない。小文字/大文字の揺れを扱わずにPOSタグを消費するパイプラインは壊れやすいと指摘する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Using the most-frequent-tag baseline on a small tagged corpus (e.g., NLTK's Brown subset), measure accuracy on held-out sentences. Verify the ~85% result.
-2. **Medium.** Train the bigram HMM above and report per-tag precision/recall. Which tags does the HMM confuse most?
-3. **Hard.** Use spaCy's dependency parse to extract subject-verb-object triples from a 1000-sentence sample. Evaluate on 50 manually labeled triples. Document where extraction fails (often passives, coordinations, and elided subjects).
+1. **易しい。** 小さなタグ付きコーパス (例: NLTKのBrown subset) で最頻タグベースラインを使い、hold-out文の精度を測定する。約85%という結果を確認する。
+2. **普通。** 上のbigram HMMを訓練し、タグごとのprecision/recallを報告する。HMMが最も混同するタグはどれか。
+3. **難しい。** spaCyの依存構造解析を使い、1000文のサンプルから主語-動詞-目的語の三つ組を抽出する。手作業でラベル付けした50個の三つ組で評価する。抽出が失敗する箇所を記録する。よくあるのは受動態、等位接続、省略された主語だ。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|-----------------|-----------------------|
-| POS tag | Word's type | Grammatical category. PTB has 36; UD has 17. |
-| Penn Treebank | Standard tagset | English-specific. Fine-grained verb tenses and noun number. |
-| Universal Dependencies | Multilingual tagset | Coarser than PTB; language-neutral; defaults for cross-lingual work. |
-| Dependency parse | Sentence tree | Each word has one head, each edge has a grammatical relation. |
-| Viterbi | Dynamic programming | Finds the highest-probability tag sequence given emissions and transitions. |
+| POS tag | 単語の種類 | 文法カテゴリ。PTBには36個、UDには17個ある。 |
+| Penn Treebank | 標準タグセット | 英語特化。動詞の時制や名詞の数を細かく区別する。 |
+| Universal Dependencies | 多言語タグセット | PTBより粗い。言語中立で、クロスリンガル処理の標準。 |
+| Dependency parse | 文の木 | 各単語が1つの主辞を持ち、各辺が文法関係を持つ。 |
+| Viterbi | 動的計画法 | 出力確率と遷移確率から、最も確率の高いタグ系列を見つける。 |
 
-## Further Reading
+## さらに読む
 
-- [Jurafsky and Martin — Speech and Language Processing, chapters 8 and 18](https://web.stanford.edu/~jurafsky/slp3/) — the canonical textbook treatment of POS and parsing.
-- [Universal Dependencies project](https://universaldependencies.org/) — the cross-lingual tagset and treebank collection used by every multilingual parser.
-- [spaCy linguistic features guide](https://spacy.io/usage/linguistic-features) — practical reference for every attribute exposed on `Token`.
-- [Chen and Manning (2014). A Fast and Accurate Dependency Parser using Neural Networks](https://nlp.stanford.edu/pubs/emnlp2014-depparser.pdf) — the paper that brought neural parsers into the mainstream.
+- [Jurafsky and Martin — Speech and Language Processing, chapters 8 and 18](https://web.stanford.edu/~jurafsky/slp3/) — POSと構文解析の定番教科書的説明。
+- [Universal Dependencies project](https://universaldependencies.org/) — すべての多言語パーサーで使われるクロスリンガルなタグセットとtreebank集。
+- [spaCy linguistic features guide](https://spacy.io/usage/linguistic-features) — `Token` で公開される各属性の実用的なリファレンス。
+- [Chen and Manning (2014). A Fast and Accurate Dependency Parser using Neural Networks](https://nlp.stanford.edu/pubs/emnlp2014-depparser.pdf) — ニューラルパーサーを主流へ押し上げた論文。

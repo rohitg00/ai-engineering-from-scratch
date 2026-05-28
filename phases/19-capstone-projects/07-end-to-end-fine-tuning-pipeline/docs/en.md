@@ -1,24 +1,24 @@
-# Capstone 07 — End-to-End Fine-Tuning Pipeline (Data to SFT to DPO to Serve)
+# Capstone 07 — End-to-End Fine-Tuning Pipeline (Data から SFT、DPO、Serve へ)
 
-> An 8B model trained on your own data, DPO-aligned on your own preferences, quantized, speculative-decoded, and served at measurable $/1M tokens. The 2026 open stack is Axolotl v0.8, TRL 0.15, Unsloth for iteration, GPTQ/AWQ/GGUF for quantization, vLLM 0.7 with EAGLE-3 for serving. The capstone is to run the whole pipeline reproducibly — YAML in, served endpoint out — and publish a model card under the 2026 Model Openness Framework.
+> 自分たちの data で train され、自分たちの preference で DPO-aligned され、quantize され、speculative decode され、測定可能な $/1M tokens で serve される 8B model。2026年の open stack は Axolotl v0.8、TRL 0.15、iteration 用 Unsloth、quantization 用 GPTQ/AWQ/GGUF、serving 用 EAGLE-3 付き vLLM 0.7 です。この capstone は、YAML 入力から served endpoint まで pipeline 全体を再現可能に走らせ、2026 Model Openness Framework に基づく model card を公開することです。
 
-**Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
-**Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
+**種別:** Capstone
+**言語:** Python (pipeline), YAML (configs), Bash (scripts)
+**前提条件:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:** P2 · P3 · P7 · P10 · P11 · P17 · P18
-**Time:** 35 hours
+**所要時間:** 35時間
 
-## Problem
+## 問題
 
-Every serious AI team in 2026 keeps a fine-tuning pipeline on tap. Not because they ship a frontier base model, but because downstream adaptation — domain SFT, DPO against labeled preferences, distilled drafts for speculative decoding, serving with EAGLE-3 — is where the measurable wins live. Axolotl v0.8 handles multi-GPU SFT configs. TRL 0.15 handles DPO and GRPO. Unsloth gets you fast single-GPU iteration. vLLM 0.7 with EAGLE-3 pushes decode throughput 2-3x without quality loss. The tooling works; the craft is in the YAMLs, the data hygiene, and the eval discipline.
+2026年の本気の AI team は fine-tuning pipeline を常備しています。frontier base model を出荷するためではなく、downstream adaptation、つまり domain SFT、labeled preference に対する DPO、speculative decoding 用 distilled draft、EAGLE-3 を使う serving の部分で測定可能な gain が出るからです。Axolotl v0.8 は multi-GPU SFT config を処理し、TRL 0.15 は DPO と GRPO を処理します。Unsloth は single-GPU iteration を速くし、EAGLE-3 付き vLLM 0.7 は quality loss なしで decode throughput を 2-3x にします。tooling は動きます。craft は YAML、data hygiene、eval discipline にあります。
 
-You will run an 8B base (Llama 3.3, Qwen3, or Gemma 3) through SFT then DPO on task-specific data, quantize for serving, and measure gains against lm-evaluation-harness, RewardBench-2, MT-Bench-v2, and MMLU-Pro. You will produce a model card under the 2026 Model Openness Framework. The point is reproducibility — one command reruns the whole pipeline end to end.
+8B base (Llama 3.3、Qwen3、Gemma 3) を task-specific data で SFT し、DPO し、serving 用に quantize し、lm-evaluation-harness、RewardBench-2、MT-Bench-v2、MMLU-Pro に対する gain を測ります。2026 Model Openness Framework に基づく model card を生成します。重要なのは reproducibility です。one command で pipeline 全体が end to end に再実行されます。
 
-## Concept
+## コンセプト
 
-The pipeline has five stages. **Data**: dedup (MinHash / Datatrove), quality filter (Nemotron-CC style classifier), PII scrub, split-hygiene check against public benchmark contamination. **SFT**: Axolotl YAML, ZeRO-3 on 8xH100, cosine schedule, packed sequences, 2-3 epochs. **DPO or GRPO**: TRL config, 1 epoch, preference pairs either human-labeled or model-judged, beta tuning. **Quantize**: GPTQ + AWQ + GGUF for deployment flexibility. **Serve**: vLLM 0.7 with EAGLE-3 speculative heads (or SGLang with SpecForge), K8s deployment, HPA on queue-wait.
+pipeline は5 stage です。**Data**: dedup (MinHash / Datatrove)、quality filter (Nemotron-CC style classifier)、PII scrub、public benchmark contamination に対する split-hygiene check。**SFT**: Axolotl YAML、8xH100 上の ZeRO-3、cosine schedule、packed sequences、2-3 epochs。**DPO or GRPO**: TRL config、1 epoch、human-labeled または model-judged preference pairs、beta tuning。**Quantize**: deployment flexibility のため GPTQ + AWQ + GGUF。**Serve**: EAGLE-3 speculative heads 付き vLLM 0.7 (または SpecForge 付き SGLang)、K8s deployment、queue-wait に基づく HPA。
 
-Ablations are the deliverable: SFT-only vs SFT+DPO vs SFT+GRPO on three task-specific benchmarks. Serving metrics: tokens/s at batch 1 / 8 / 32, EAGLE-3 acceptance rate, $/1M tokens. Safety eval: Llama Guard 4 pass rate. Model card: bias evaluations, reproducibility seeds, data licensing.
+deliverable は ablation です。3つの task-specific benchmark で SFT-only、SFT+DPO、SFT+GRPO を比較します。serving metrics は batch 1 / 8 / 32 の tokens/s、EAGLE-3 acceptance rate、$/1M tokens。safety eval は Llama Guard 4 pass rate。model card は bias evaluation、reproducibility seeds、data licensing を含みます。
 
 ## Architecture
 
@@ -55,36 +55,36 @@ model card (2026 MOF) + safety eval (Llama Guard 4)
 
 ## Stack
 
-- Data: Datatrove for dedup, Nemotron-CC classifier for quality, Presidio for PII
-- Base: Llama 3.3 8B, Qwen3 14B, or Gemma 3 12B
-- SFT: Axolotl v0.8 with ZeRO-3, Flash Attention 3, packed sequences
-- Preference tuning: TRL 0.15 for DPO or GRPO; Unsloth for single-GPU iteration
-- Quantization: GPTQ (Marlin), AWQ, GGUF via llama.cpp
-- Serving: vLLM 0.7 with EAGLE-3 speculative decoding (or SGLang 0.4 + SpecForge)
-- Eval: lm-evaluation-harness, RewardBench-2, MT-Bench-v2, MMLU-Pro
-- Safety eval: Llama Guard 4, ShieldGemma-2
-- Infrastructure: Kubernetes + NVIDIA device plugin, HPA on queue-wait metric
-- Observability: W&B for training, Langfuse for inference
+- Data: dedup は Datatrove、quality は Nemotron-CC classifier、PII は Presidio
+- Base: Llama 3.3 8B、Qwen3 14B、Gemma 3 12B
+- SFT: Axolotl v0.8 with ZeRO-3、Flash Attention 3、packed sequences
+- Preference tuning: DPO / GRPO 用 TRL 0.15、single-GPU iteration 用 Unsloth
+- Quantization: GPTQ (Marlin)、AWQ、llama.cpp 経由の GGUF
+- Serving: EAGLE-3 speculative decoding 付き vLLM 0.7 (または SGLang 0.4 + SpecForge)
+- Eval: lm-evaluation-harness、RewardBench-2、MT-Bench-v2、MMLU-Pro
+- Safety eval: Llama Guard 4、ShieldGemma-2
+- Infrastructure: Kubernetes + NVIDIA device plugin、queue-wait metric による HPA
+- Observability: training は W&B、inference は Langfuse
 
-## Build It
+## 実装
 
-1. **Data pipeline.** Run Datatrove dedup on raw corpus. Apply Nemotron-CC-style quality classifier. Presidio scrubs PII. Write train/val splits with explicit seed.
+1. **Data pipeline.** raw corpus に Datatrove dedup を走らせます。Nemotron-CC-style quality classifier を適用し、Presidio で PII を scrub します。explicit seed で train/val splits を書きます。
 
-2. **Contamination check.** For every validation split, compute MinHash against MMLU-Pro, MT-Bench-v2, RewardBench-2 test sets. Reject any overlap.
+2. **Contamination check.** 各 validation split について、MMLU-Pro、MT-Bench-v2、RewardBench-2 の test set に対して MinHash を計算します。overlap があれば reject します。
 
-3. **Axolotl SFT.** YAML with ZeRO-3, FA3, sequence packing. 2-3 epochs on 8xH100. Log to W&B.
+3. **Axolotl SFT.** ZeRO-3、FA3、sequence packing を含む YAML。8xH100 で 2-3 epochs。W&B に log します。
 
-4. **TRL DPO / GRPO.** Take the SFT checkpoint, run one epoch of DPO on preference pairs (or GRPO with a verifiable reward on math/code). Sweep beta.
+4. **TRL DPO / GRPO.** SFT checkpoint を受け取り、preference pairs 上で DPO を1 epoch 走らせます (または math/code の verifiable reward で GRPO)。beta を sweep します。
 
-5. **Quantize.** Produce three quants: GPTQ-INT4-Marlin, AWQ-INT4, GGUF-Q4_K_M for llama.cpp. Record size and nominal throughput.
+5. **Quantize.** 3つの quant を生成します: GPTQ-INT4-Marlin、AWQ-INT4、llama.cpp 用 GGUF-Q4_K_M。size と nominal throughput を記録します。
 
-6. **Serve with speculative decoding.** vLLM 0.7 config with EAGLE-3 draft heads trained via Red Hat Speculators. Measure acceptance rate and tail latency at batch 1 / 8 / 32. Report $/1M tokens vs Anthropic / OpenAI on the same eval.
+6. **Serve with speculative decoding.** Red Hat Speculators で train された EAGLE-3 draft heads を持つ vLLM 0.7 config。batch 1 / 8 / 32 で acceptance rate と tail latency を測ります。同じ eval で Anthropic / OpenAI と $/1M tokens を比較します。
 
-7. **Eval matrix.** Run lm-eval-harness, RewardBench-2, MT-Bench-v2, MMLU-Pro on base, SFT-only, SFT+DPO, SFT+GRPO. Produce a table.
+7. **Eval matrix.** base、SFT-only、SFT+DPO、SFT+GRPO について lm-eval-harness、RewardBench-2、MT-Bench-v2、MMLU-Pro を走らせ、table を作ります。
 
-8. **Safety eval.** Llama Guard 4 pass rate on the dev set. ShieldGemma-2 output filter.
+8. **Safety eval.** dev set 上の Llama Guard 4 pass rate。ShieldGemma-2 output filter。
 
-9. **Model card.** MOF 2026 template: data, training, eval, safety, license, reproducibility section with YAMLs and commit SHAs.
+9. **Model card.** MOF 2026 template: data、training、eval、safety、license、YAML と commit SHA を含む reproducibility section。
 
 ## Use It
 
@@ -101,48 +101,48 @@ $ ./pipeline.sh config/llama3.3-8b-domainX.yaml
 
 ## Ship It
 
-`outputs/skill-finetuning-pipeline.md` describes the deliverable. A single command runs data through SFT through DPO through quant through serve through eval, and emits a model card + the served endpoint.
+`outputs/skill-finetuning-pipeline.md` が deliverable を説明します。single command が data -> SFT -> DPO -> quant -> serve -> eval を走らせ、model card と served endpoint を出力します。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
-| 25 | Eval delta vs base | Measured gain on target tasks (MMLU-Pro, MT-Bench-v2, task-specific) |
-| 20 | Pipeline reproducibility | One command reruns end to end with identical seeds |
-| 20 | Data hygiene | Dedup rate, PII scrub coverage, contamination check green |
-| 20 | Serving efficiency | tokens/s at bs=1/8/32, EAGLE-3 acceptance rate, $/1M tokens |
+| 25 | Eval delta vs base | target tasks (MMLU-Pro、MT-Bench-v2、task-specific) での measured gain |
+| 20 | Pipeline reproducibility | identical seeds で end to end を one command rerun |
+| 20 | Data hygiene | dedup rate、PII scrub coverage、contamination check green |
+| 20 | Serving efficiency | bs=1/8/32 の tokens/s、EAGLE-3 acceptance rate、$/1M tokens |
 | 15 | Model card + safety eval | 2026 MOF completeness + Llama Guard 4 pass rate |
 | **100** | | |
 
 ## Exercises
 
-1. Run SFT-only vs SFT+DPO vs SFT+GRPO on the same task-specific benchmark. Report which preference method wins and by how much.
+1. 同じ task-specific benchmark で SFT-only、SFT+DPO、SFT+GRPO を走らせます。どの preference method がどれだけ勝つか報告します。
 
-2. Swap Llama 3.3 8B for Qwen3 14B. Measure the $/1M tokens at matched quality.
+2. Llama 3.3 8B を Qwen3 14B に差し替えます。matched quality で $/1M tokens を測ります。
 
-3. Measure EAGLE-3 acceptance rate on domain data vs generic ShareGPT. Report the delta and what it means for latency budgets.
+3. domain data と generic ShareGPT 上で EAGLE-3 acceptance rate を測ります。delta と latency budget への意味を報告します。
 
-4. Inject 1% of contamination (leak MMLU-Pro answers into training data) and rerun eval. Watch MMLU-Pro accuracy jump unrealistically. Build a contamination-check CI gate that catches this.
+4. 1% の contamination (MMLU-Pro answer を training data に leak) を注入して eval を再実行します。MMLU-Pro accuracy が不自然に跳ねるのを観察し、これを捕まえる contamination-check CI gate を作ります。
 
-5. Add LoRA SFT as an alternative to full fine-tune. Measure the quality gap at 10x lower memory.
+5. full fine-tune の代替として LoRA SFT を追加します。10x lower memory で quality gap を測ります。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| Axolotl | "SFT trainer" | Unified YAML-driven trainer for SFT, DPO, and distillation |
-| TRL | "Preference tuner" | Hugging Face library for DPO, GRPO, PPO on LLMs |
-| GRPO | "Group-relative policy optimization" | DeepSeek R1's RL recipe with verifiable rewards |
-| EAGLE-3 | "Speculative decoding draft" | Draft heads that predict N tokens ahead; vLLM verifies with target model |
-| MOF | "Model Openness Framework" | 2026 standard for grading model releases on data, code, license |
-| Contamination check | "Split hygiene" | MinHash-based detection of test-set leakage into training |
-| Acceptance rate | "EAGLE / MTP metric" | Fraction of drafted tokens the target model accepts |
+| Axolotl | 「SFT trainer」 | SFT、DPO、distillation 用の unified YAML-driven trainer |
+| TRL | 「Preference tuner」 | LLM 用 DPO、GRPO、PPO の Hugging Face library |
+| GRPO | 「Group-relative policy optimization」 | verifiable reward を使う DeepSeek R1 の RL recipe |
+| EAGLE-3 | 「Speculative decoding draft」 | N token 先を予測する draft heads。vLLM が target model で verify する |
+| MOF | 「Model Openness Framework」 | data、code、license で model release を評価する2026年 standard |
+| Contamination check | 「Split hygiene」 | test-set leakage が training に入っていないかを MinHash で検出すること |
+| Acceptance rate | 「EAGLE / MTP metric」 | drafted token のうち target model が accept する割合 |
 
-## Further Reading
+## 参考文献
 
-- [Axolotl documentation](https://axolotl-ai-cloud.github.io/axolotl/) — the reference SFT / DPO trainer
-- [TRL documentation](https://huggingface.co/docs/trl) — DPO and GRPO reference implementations
+- [Axolotl documentation](https://axolotl-ai-cloud.github.io/axolotl/) — reference SFT / DPO trainer
+- [TRL documentation](https://huggingface.co/docs/trl) — DPO と GRPO の reference implementation
 - [Unsloth](https://github.com/unslothai/unsloth) — single-GPU iteration reference
 - [DeepSeek R1 paper (arXiv:2501.12948)](https://arxiv.org/abs/2501.12948) — GRPO methodology
 - [vLLM + EAGLE-3 documentation](https://docs.vllm.ai) — reference serving stack
 - [SGLang SpecForge](https://github.com/sgl-project/SpecForge) — alternate speculative-decoding trainer
-- [Model Openness Framework 2026](https://isocpp.org/) — the open-release grading standard
+- [Model Openness Framework 2026](https://isocpp.org/) — open-release grading standard
 - [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) — canonical eval runner

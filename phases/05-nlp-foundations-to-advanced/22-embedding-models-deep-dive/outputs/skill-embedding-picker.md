@@ -1,18 +1,18 @@
 ---
 name: embedding-picker
-description: Pick embedding model, dimension, and retrieval mode for a given corpus and deployment.
+description: 与えられたコーパスとデプロイ条件に対して、embedding model、次元、retrieval mode を選ぶ。
 version: 1.0.0
 phase: 5
 lesson: 22
 tags: [nlp, embeddings, retrieval]
 ---
 
-Given a corpus (size, languages, domain, avg length), deployment target (cloud / edge / on-prem), latency budget, and storage budget, output:
+コーパス（サイズ、言語、ドメイン、平均長）、デプロイ先（cloud / edge / on-prem）、latency budget、storage budget が与えられたら、次を出力してください。
 
-1. Model. Named checkpoint or API. One-sentence reason.
-2. Dimension. Full / Matryoshka-truncated / int8-quantized. Reason tied to storage budget.
-3. Mode. Dense / sparse / multi-vector / hybrid. Reason.
-4. Query prefix / template if required by the model card.
-5. Evaluation plan. MTEB tasks relevant to domain + held-out domain eval with nDCG@10.
+1. モデル。名前つき checkpoint または API。1 文の理由。
+2. 次元。Full / Matryoshka-truncated / int8-quantized。ストレージ予算に結びついた理由。
+3. モード。Dense / sparse / multi-vector / hybrid。理由。
+4. model card で必要とされる場合の query prefix / template。
+5. 評価計画。ドメインに関連する MTEB tasks + nDCG@10 を使ったホールドアウトの domain eval。
 
-Refuse recommendations that truncate Matryoshka to <64 dims without domain validation. Refuse ColBERTv2 for corpora under 10k passages (overhead not justified). Flag long-document corpora (>8k tokens) routed to models with 512-token windows.
+ドメイン検証なしに Matryoshka を <64 dims へ切り詰める推奨は拒否する。10k passages 未満のコーパスに ColBERTv2 を推奨することは拒否する (overhead に見合わない)。長文コーパス (>8k tokens) が 512-token windows のモデルに送られている場合は警告する。

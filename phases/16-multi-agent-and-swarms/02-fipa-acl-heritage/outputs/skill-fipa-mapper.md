@@ -1,33 +1,33 @@
 ---
 name: fipa-mapper
-description: Map any 2026 agent-protocol spec (MCP, A2A, ACP, ANP, CA-MCP, NLIP, or a new one) onto FIPA-ACL performatives and interaction protocols to decide what is genuine novelty and what is reinvention.
+description: 2026 年の任意の agent-protocol spec (MCP, A2A, ACP, ANP, CA-MCP, NLIP, または新規 spec) を FIPA-ACL performatives と interaction protocols に map し、どこが本当に新しく、どこが再発明かを判断する。
 version: 1.0.0
 phase: 16
 lesson: 02
 tags: [multi-agent, protocols, FIPA, speech-acts, interoperability]
 ---
 
-Given a new agent-protocol spec, produce the FIPA-ACL mapping so the reader can tell which parts are reinvention and which are genuine new structure.
+新しい agent-protocol spec が与えられたら、reader が reinvention と genuine new structure を見分けられるように FIPA-ACL mapping を作成する。
 
-Produce:
+生成するもの:
 
-1. **Envelope mapping.** For each message type the spec defines, name the nearest FIPA performative (`inform`, `request`, `query-if`, `query-ref`, `propose`, `accept-proposal`, `reject-proposal`, `cfp`, `subscribe`, `cancel`, `failure`, `not-understood`, or one of the other ~20). If no performative fits, describe the gap precisely.
-2. **Correlation model.** How does the spec correlate requests to replies, cancellation to the original request, and streamed events to the subscribe? Compare to FIPA's `:conversation-id` and `:reply-with` fields.
-3. **Content-language stance.** Does the spec mandate a content schema (typed artifacts, JSON-Schema), accept natural language, or leave it open? Compare to FIPA's SL0/SL1 and ontology fields.
-4. **Interaction-protocol library.** Which FIPA interaction protocols are implementable on top of the spec: contract-net, subscribe-notify, request-when, propose-accept? Name the messages that would implement each.
-5. **Discovery model.** How does an agent find counterparties and capabilities (MCP `listTools`, A2A Agent Card, ANP DID + meta-protocol)? Compare to FIPA's directory facilitator and yellow-pages service.
-6. **Reinvention vs novelty.** Produce a short table with three columns: [FIPA concept, modern spec equivalent, what changed]. Mark each row as [reinvention] or [novel-structure]. A row is "novel-structure" only when the spec introduces a primitive that FIPA did not have — decentralized identity, typed multimodal artifacts, and LLM-interpretable content are the common candidates.
+1. **Envelope mapping.** spec が定義する各 message type について、最も近い FIPA performative (`inform`, `request`, `query-if`, `query-ref`, `propose`, `accept-proposal`, `reject-proposal`, `cfp`, `subscribe`, `cancel`, `failure`, `not-understood`, または約 20 個のうちの他のもの) を挙げる。合う performative がなければ、gap を正確に説明する。
+2. **Correlation model.** spec は requests と replies、cancellation と original request、streamed events と subscribe をどう correlate するか。FIPA の `:conversation-id` と `:reply-with` fields と比較する。
+3. **Content-language stance.** spec は content schema (typed artifacts, JSON-Schema) を必須にするか、natural language を受け入れるか、open にするか。FIPA の SL0/SL1 と ontology fields と比較する。
+4. **Interaction-protocol library.** spec 上で実装できる FIPA interaction protocols はどれか: contract-net、subscribe-notify、request-when、propose-accept。それぞれを実装する messages を挙げる。
+5. **Discovery model.** agent は counterparties と capabilities をどう見つけるか (MCP `listTools`、A2A Agent Card、ANP DID + meta-protocol)。FIPA の directory facilitator と yellow-pages service と比較する。
+6. **Reinvention vs novelty.** 3 columns の short table を作る: [FIPA concept, modern spec equivalent, what changed]。各 row を [reinvention] または [novel-structure] と mark する。spec が FIPA にはない primitive を導入している場合のみ "novel-structure" とする。common candidates は decentralized identity、typed multimodal artifacts、LLM-interpretable content。
 
-Hard rejects:
+強制 reject:
 
-- Any mapping that claims a spec is "revolutionary" without showing a primitive FIPA did not have. Speech-act theory + ontology overhead was the failure mode, not the primitives.
-- Framework comparisons that ignore the discovery layer. A spec without discovery is incomplete, not novel.
-- Statements like "Protocol X replaces FIPA" without addressing what happens when two agents disagree about content meaning (semantic drift).
+- FIPA にはない primitive を示さずに spec を "revolutionary" と主張する mapping。failure mode は speech-act theory + ontology overhead であって、primitives ではない。
+- discovery layer を無視した framework comparisons。discovery のない spec は incomplete であり novel ではない。
+- content meaning について 2 agents が disagree した場合 (semantic drift) を扱わずに "Protocol X replaces FIPA" と述べること。
 
-Refusal rules:
+拒否ルール:
 
-- If the spec is pre-standardization (draft < 6 months old, no public implementations), state that the mapping is provisional and flag the three most likely changes.
-- If the spec is closed-source or enterprise-only (some ACP flavors), map what is documented and name the gaps.
-- If the user supplies only a blog post (no spec document), ask for the spec before mapping.
+- spec が pre-standardization (draft < 6 months old、public implementations なし) の場合、mapping は provisional と明記し、最も変わりそうな 3 点を flag する。
+- spec が closed-source または enterprise-only (一部 ACP flavors) の場合、documented な範囲を map し、gaps を挙げる。
+- user が blog post だけを提供し spec document がない場合、mapping 前に spec を求める。
 
-Output: a one-page brief. Start with a single-sentence summary ("Protocol X is FIPA `request`/`subscribe` with JSON syntax and a DID-based discovery layer."), then the six sections above, then a closing paragraph answering: "Which old FIPA failure mode will this spec rediscover?"
+出力: 1 ページの brief。single-sentence summary ("Protocol X is FIPA `request`/`subscribe` with JSON syntax and a DID-based discovery layer.") で始め、上記 6 sections を続け、最後に "Which old FIPA failure mode will this spec rediscover?" に答える closing paragraph を置く。

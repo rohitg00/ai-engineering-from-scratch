@@ -1,16 +1,16 @@
 # AGENTS.md
 
-You are working inside a repository that runs with an agent workbench.
+あなたは agent workbench を使う repository の中で作業しています。
 
-Read these before acting:
+行動する前に次を読んでください。
 
-1. `agent_state.json` — where the last session stopped.
-2. `task_board.json` — what is in flight, what is next.
-3. `docs/agent-rules.md` — startup, forbidden, done, uncertainty, approval.
-4. `docs/reliability-policy.md` — failure modes this workbench is designed to absorb.
-5. `docs/handoff-protocol.md` — what session end must produce.
-6. `docs/reviewer-rubric.md` — how completed work is judged.
+1. `agent_state.json` — 前 session が止まった場所。
+2. `task_board.json` — 進行中のもの、次に行うもの。
+3. `docs/agent-rules.md` — startup、forbidden、done、uncertainty、approval。
+4. `docs/reliability-policy.md` — この workbench が吸収するよう設計された failure modes。
+5. `docs/handoff-protocol.md` — session end が生成すべきもの。
+6. `docs/reviewer-rubric.md` — completed work の判断方法。
 
-Verification command: see `acceptance_criteria` in the active task on the board.
+Verification command: board 上の active task の `acceptance_criteria` を参照してください。
 
 Pack version: 1.0.0

@@ -1,38 +1,38 @@
-# Skills and Agent SDKs — Anthropic Skills, AGENTS.md, OpenAI Apps SDK
+# Skills and Agent SDKs — Anthropic Skills、AGENTS.md、OpenAI Apps SDK
 
-> MCP says "what tools exist." Skills say "how to do a task." The 2026 stack layers both. Anthropic's Agent Skills (open standard, December 2025) ship as SKILL.md with progressive disclosure. OpenAI's Apps SDK is MCP plus widget metadata. AGENTS.md (now in 60,000+ repos) sits at the repo root as project-level agent context. This lesson names what each covers and builds a minimal SKILL.md + AGENTS.md bundle that travels across agents.
+> MCPは「どんなtoolsが存在するか」を語る。Skillsは「taskをどう実行するか」を語る。2026年のstackはその両方を重ねる。AnthropicのAgent Skills（open standard、2025年12月）は、progressive disclosureを備えたSKILL.mdとして配布される。OpenAIのApps SDKはMCPにwidget metadataを足したものだ。AGENTS.md（現在60,000以上のrepoで採用）はrepo rootに置かれるproject-level agent contextである。このlessonでは各層が何を担当するかを整理し、複数agent間を移動できる最小のSKILL.md + AGENTS.md bundleを作る。
 
-**Type:** Learn
-**Languages:** Python (stdlib, SKILL.md parser and loader)
-**Prerequisites:** Phase 13 · 07 (MCP server)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python (stdlib, SKILL.md parser and loader)
+**前提条件:** Phase 13 · 07 (MCP server)
+**所要時間:** 約45分
 
 ## Learning Objectives
 
-- Distinguish the three layers: AGENTS.md (project context), SKILL.md (reusable know-how), MCP (tools).
-- Write a SKILL.md with YAML frontmatter and progressive disclosure.
-- Load skills filesystem-style into an agent runtime.
-- Compose a skill with an MCP server and an AGENTS.md so one package works in Claude Code, Cursor, and Codex.
+- 3つの層を区別する: AGENTS.md（project context）、SKILL.md（再利用可能なknow-how）、MCP（tools）。
+- YAML frontmatterとprogressive disclosureを備えたSKILL.mdを書く。
+- filesystem風にskillsをagent runtimeへ読み込む。
+- SkillをMCP serverとAGENTS.mdと組み合わせ、Claude Code、Cursor、Codexで動く1つのpackageにする。
 
-## The Problem
+## 問題
 
-An engineer distills a release-notes-writing workflow into a multi-step prompt: "Read the latest merged PRs. Group by area. Summarize each. Write a changelog entry following the team's style. Post to Slack draft." They put it in a Notion doc for their team.
+あるengineerがrelease notes作成workflowをmulti-step promptへ蒸留する。「最新のmerged PRを読む。areaごとに分類する。それぞれを要約する。team styleに沿ったchangelog entryを書く。Slack draftへ投稿する」。最初はteam用のNotion docに置いた。
 
-Now they want to use this workflow from Claude Code, Cursor, and Codex CLI. Each agent has a different way to load instructions: Claude Code slash-commands, Cursor rules, Codex `.codex.md`. The engineer copies the workflow three times and maintains three copies.
+次に、このworkflowをClaude Code、Cursor、Codex CLIから使いたくなった。各agentはinstructionの読み込み方が異なる。Claude Code slash-command、Cursor rules、Codex `.codex.md`。engineerはworkflowを3回copyし、3つのcopyを保守することになる。
 
-AGENTS.md and SKILL.md together fix this:
+AGENTS.mdとSKILL.mdを組み合わせるとこれを直せる。
 
-- **AGENTS.md** sits at the repo root. Every compatible agent reads it on session start. "How does this project work? What are the conventions? Which commands run tests?"
-- **SKILL.md** is a portable bundle: YAML frontmatter (name, description) + markdown body + optional resources. Agents that support skills load them by name on demand.
-- **MCP** (Phase 13 · 06-14) handles the tools the skill needs to invoke.
+- **AGENTS.md** はrepo rootに置く。互換agentはsession start時に読む。「このprojectはどう動くか。conventionは何か。test commandはどれか」。
+- **SKILL.md** はportable bundleである。YAML frontmatter（name、description）+ markdown body + optional resources。Skills対応agentは必要時にnameで読み込む。
+- **MCP**（Phase 13 · 06-14）はskillが呼び出す必要のあるtoolsを扱う。
 
-Three layers, one portable artifact.
+3つの層、1つのportable artifact。
 
 ## The Concept
 
 ### AGENTS.md (agents.md)
 
-Launched late 2025, adopted by 60,000+ repos by April 2026. One file at repo root. Format:
+2025年後半に公開され、2026年4月までに60,000以上のrepoで採用された。repo rootに1つ置くfile。形式:
 
 ```markdown
 # Project: my-service
@@ -47,11 +47,11 @@ Launched late 2025, adopted by 60,000+ repos by April 2026. One file at repo roo
 - `pnpm build` for production bundle.
 ```
 
-Agents read this on session start and use it to calibrate their behavior for that project. Every coding agent in 2026 supports AGENTS.md: Claude Code, Cursor, Codex, Copilot Workspace, opencode, Windsurf, Zed.
+Agentはsession start時にこれを読み、そのproject向けに振る舞いを調整する。2026年のcoding agentはAGENTS.mdをほぼすべてsupportする: Claude Code、Cursor、Codex、Copilot Workspace、opencode、Windsurf、Zed。
 
 ### SKILL.md format
 
-Anthropic's Agent Skills (released as an open standard December 2025):
+AnthropicのAgent Skills（2025年12月にopen standardとしてrelease）:
 
 ```markdown
 ---
@@ -76,11 +76,11 @@ If the user says "ship", run `git tag vX.Y.Z` and `gh release create`.
 - Skip "chore" entries from the public changelog.
 ```
 
-Frontmatter declares the skill's identity. The body is the prompt shown to the model when the skill loads.
+Frontmatterはskillのidentityを宣言する。bodyはskillがloadされたときにmodelへ渡されるpromptである。
 
 ### Progressive disclosure
 
-Skills can reference sub-resources that the agent fetches only when needed. Example:
+Skillsは、agentが必要時だけ取得するsub-resourceを参照できる。例:
 
 ```
 skills/
@@ -92,35 +92,35 @@ skills/
       generate.sh
 ```
 
-SKILL.md says "see style-guide.md for the style rules." The agent pulls style-guide.md only when the skill is actively running. This avoids bloating the prompt with detail the model may not need.
+SKILL.mdは「style rulesはstyle-guide.mdを参照」と書く。Agentはskillが実行中のときだけstyle-guide.mdをpullする。これにより、modelが必要としない詳細でpromptを膨らませずに済む。
 
 ### Filesystem discovery
 
-Agent runtimes scan known directories for SKILL.md files:
+Agent runtimesは既知のdirectoryからSKILL.md filesをscanする:
 
 - `~/.anthropic/skills/*/SKILL.md`
 - Project `./skills/*/SKILL.md`
 - `~/.claude/skills/*/SKILL.md`
 
-Loading is by folder name and frontmatter `name`. Claude Code, Anthropic Claude Agent SDK, and SkillKit (cross-agent) all follow this pattern.
+Loadingはfolder nameとfrontmatter `name`で行う。Claude Code、Anthropic Claude Agent SDK、SkillKit（cross-agent）はこのpatternに従う。
 
 ### Anthropic Claude Agent SDK
 
-`@anthropic-ai/claude-agent-sdk` (TypeScript) and `claude-agent-sdk` (Python) load skills at session start, expose them as callable "agents" inside the runtime. The agent loop dispatches to a skill when the user invokes it.
+`@anthropic-ai/claude-agent-sdk`（TypeScript）と`claude-agent-sdk`（Python）はsession start時にskillsをloadし、runtime内でcallableな「agents」として公開する。Agent loopはuserがskillを呼んだとき、そのskillへdispatchする。
 
 ### OpenAI Apps SDK
 
-Launched October 2025; built directly on MCP. Unifies OpenAI's prior Connectors and Custom GPT Actions under a single developer surface. An Apps SDK app is:
+2025年10月に公開。MCP上に直接構築されている。OpenAIの従来のConnectorsとCustom GPT Actionsを、単一のdeveloper surfaceへ統合する。Apps SDK appは次のものから成る。
 
-- An MCP server (tools, resources, prompts).
-- Plus widget metadata for ChatGPT's UI.
-- Plus an optional MCP Apps `ui://` resource for interactive surfaces.
+- MCP server（tools、resources、prompts）。
+- ChatGPT UI向けのwidget metadata。
+- Interactive surface用のoptional MCP Apps `ui://` resource。
 
-Same protocol, richer UX.
+同じprotocolで、よりrichなUXを提供する。
 
 ### Cross-agent portability via SkillKit
 
-Tools like SkillKit and similar cross-agent distribution layers translate a single SKILL.md into the native format of each of 32+ AI agents (Claude Code, Cursor, Codex, Gemini CLI, OpenCode, etc.). One source of truth; many consumers.
+SkillKitのようなcross-agent distribution layerは、単一のSKILL.mdを32以上のAI agent（Claude Code、Cursor、Codex、Gemini CLI、OpenCodeなど）のnative formatへ変換する。Single source of truth、many consumers。
 
 ### The three-layer stack
 
@@ -130,53 +130,53 @@ Tools like SkillKit and similar cross-agent distribution layers translate a sing
 | SKILL.md | skills directory | skill invoked | reusable workflow |
 | MCP server | external process | tools needed | callable actions |
 
-All three compose: the agent reads AGENTS.md on session start, the user invokes a skill, the skill's instructions include MCP tool calls, the agent dispatches via an MCP client.
+3層は合成できる。Agentはsession start時にAGENTS.mdを読み、userがskillを呼び、skill instructionがMCP tool callsを含み、agentがMCP client経由でdispatchする。
 
 ## Use It
 
-`code/main.py` ships a stdlib SKILL.md parser and loader. It discovers skills under `./skills/`, parses the YAML frontmatter plus markdown body, and produces a dict keyed by skill name. It then simulates an agent loop that invokes `release-notes-writer` by name.
+`code/main.py`にはstdlibだけで動くSKILL.md parserとloaderが入っている。`./skills/`以下を探索し、YAML frontmatterとmarkdown bodyをparseし、skill nameをkeyにしたdictを作る。その後、`release-notes-writer`をnameで呼び出すagent loopをsimulateする。
 
-What to look at:
+見るべき点:
 
-- YAML frontmatter parsed with a minimal stdlib parser (no `pyyaml` dependency).
-- Skill body stored verbatim; agent prepends it to the system prompt on invocation.
-- Progressive disclosure demoed via a `read_subresource` function that pulls referenced files on demand.
+- 最小stdlib parserでYAML frontmatterをparseする（`pyyaml` dependencyなし）。
+- Skill bodyはverbatimに保存し、呼び出し時にagentがsystem promptへprependする。
+- `read_subresource` functionで参照fileを必要時にpullし、progressive disclosureをdemoする。
 
 ## Ship It
 
-This lesson produces `outputs/skill-agent-bundle.md`. Given a workflow, the skill produces the combined SKILL.md + AGENTS.md + MCP-server-blueprint bundle, portable across agents.
+このlessonは`outputs/skill-agent-bundle.md`を生成する。Workflowを与えると、このskillはcombined SKILL.md + AGENTS.md + MCP-server-blueprint bundleを作り、複数agentへportableにする。
 
 ## Exercises
 
-1. Run `code/main.py`. Add a second skill under `skills/` and confirm the loader picks it up.
+1. `code/main.py`を実行する。`skills/`以下にsecond skillを追加し、loaderが拾うことを確認する。
 
-2. Write an AGENTS.md for this course repo. Include testing commands, style conventions, and the Phase 13 mental model.
+2. このcourse repo向けのAGENTS.mdを書く。Testing commands、style conventions、Phase 13 mental modelを含める。
 
-3. Port a multi-step workflow from your team's internal docs into a SKILL.md. Verify it loads in Claude Code.
+3. Teamのinternal docsにあるmulti-step workflowをSKILL.mdへ移植する。Claude Codeでloadされることを確認する。
 
-4. Translate the skill into Cursor's and Codex's native rule formats by hand. Count the diff between formats — this is the translation surface SkillKit automates.
+4. そのskillをCursorとCodexのnative rule formatへ手作業で翻訳する。format間diffを数える。このtranslation surfaceをSkillKitが自動化する。
 
-5. Read the Anthropic Agent Skills blog post. Identify one feature in the Claude Agent SDK that this lesson's loader does not cover. (Hint: agent sub-invocation.)
+5. Anthropic Agent Skills blog postを読む。このlessonのloaderがcoverしていないClaude Agent SDKのfeatureを1つ特定する。（Hint: agent sub-invocation）
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| SKILL.md | "The skill file" | YAML frontmatter plus markdown body, loaded by agent runtime |
-| AGENTS.md | "Repo-root agent context" | Project-level conventions file read on session start |
-| Progressive disclosure | "Lazy-load sub-resources" | Skill body references files pulled only when needed |
-| Frontmatter | "YAML block at top" | Metadata (name, description) in `---` delimiters |
-| Claude Agent SDK | "Anthropic's skill runtime" | `@anthropic-ai/claude-agent-sdk`, loads skills and routes |
-| OpenAI Apps SDK | "MCP + widget meta" | OpenAI's dev surface built on MCP plus ChatGPT UI hooks |
-| Skill discovery | "Filesystem scan" | Walk known dirs for SKILL.md, key by name |
-| Cross-agent portability | "One skill many agents" | Translate one SKILL.md to 32+ agents via SkillKit-style tools |
-| Agent Skill | "Portable know-how" | Reusable task template outside MCP's tool concept |
-| Apps SDK | "MCP plus ChatGPT UI" | Connectors and Custom GPTs unified on MCP |
+| Term | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| SKILL.md | 「skill file」 | YAML frontmatterとmarkdown body。Agent runtimeがloadする |
+| AGENTS.md | 「repo-rootのagent context」 | Session start時に読まれるproject-level conventions file |
+| Progressive disclosure | 「sub-resourcesをlazy-loadする」 | Skill bodyが、必要時だけpullするfileを参照する |
+| Frontmatter | 「先頭のYAML block」 | `---` delimiter内のmetadata（name、description） |
+| Claude Agent SDK | 「Anthropicのskill runtime」 | `@anthropic-ai/claude-agent-sdk`。Skillsをloadしてrouteする |
+| OpenAI Apps SDK | 「MCP + widget meta」 | MCPとChatGPT UI hooks上に作られたOpenAIのdeveloper surface |
+| Skill discovery | 「filesystem scan」 | 既知directoryを辿ってSKILL.mdを探し、nameでkey化する |
+| Cross-agent portability | 「1つのskillを多くのagentへ」 | SkillKit風toolで1つのSKILL.mdを32+ agentsへ変換する |
+| Agent Skill | 「portable know-how」 | MCPのtool概念の外にある再利用可能なtask template |
+| Apps SDK | 「MCP plus ChatGPT UI」 | ConnectorsとCustom GPTsをMCP上に統合したもの |
 
-## Further Reading
+## 参考文献
 
-- [Anthropic — Agent Skills announcement](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) — December 2025 launch
+- [Anthropic — Agent Skills announcement](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) — 2025年12月のlaunch
 - [Anthropic — Agent Skills docs](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) — SKILL.md format reference
-- [OpenAI — Apps SDK](https://developers.openai.com/apps-sdk) — MCP-based developer platform for ChatGPT
+- [OpenAI — Apps SDK](https://developers.openai.com/apps-sdk) — ChatGPT向けMCP-based developer platform
 - [agents.md](https://agents.md/) — AGENTS.md format and adoption list
 - [Anthropic — anthropics/skills GitHub](https://github.com/anthropics/skills) — official skill examples

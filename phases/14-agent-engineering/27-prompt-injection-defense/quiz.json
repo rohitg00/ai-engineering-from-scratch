@@ -1,34 +1,34 @@
 {
   "lesson": "27-prompt-injection-defense",
-  "title": "Prompt Injection and the PVE Defense",
+  "title": "Prompt Injection と PVE 防御",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is indirect prompt injection?",
+      "question": "indirect prompt injection とは何ですか。",
       "options": [
-        "A user typing 'ignore all rules' directly",
-        "Instructions embedded in data the agent retrieves (a page, PDF, email, memory note) that override the developer prompt on ingest",
-        "A model misclick",
-        "A typo in the system prompt"
+        "user が直接 'ignore all rules' と入力すること",
+        "agent が取得する data (page, PDF, email, memory note) に instructions が埋め込まれ、取り込み時に developer prompt を上書きすること",
+        "model の誤クリック",
+        "system prompt の typo"
       ],
       "correct": 1,
-      "explanation": "Greshake et al. coined indirect prompt injection: attacker-controlled retrieved content carries instructions."
+      "explanation": "Greshake et al. が indirect prompt injection を定義しました。攻撃者が制御する retrieved content が instructions を運びます。"
     },
     {
       "stage": "pre",
-      "question": "What does the lesson say processing retrieved prompts is equivalent to?",
+      "question": "この lesson では、retrieved prompts を処理することは何に相当すると述べていますか。",
       "options": [
-        "Free speech",
-        "Arbitrary code execution on the agent's tool-use surface",
-        "A static analysis pass",
-        "A pure function call"
+        "free speech",
+        "agent の tool-use surface における arbitrary code execution",
+        "static analysis pass",
+        "pure function call"
       ],
       "correct": 1,
-      "explanation": "Greshake's framing: retrieved instructions can hit any tool the agent has access to."
+      "explanation": "Greshake の framing では、retrieved instructions は agent が access できる任意の tool に到達できます。"
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of the five demonstrated exploit classes?",
+      "question": "実証された 5 つの exploit classes に含まれないものはどれですか。",
       "options": [
         "Data theft",
         "Worming",
@@ -36,55 +36,55 @@
         "Cache invalidation"
       ],
       "correct": 3,
-      "explanation": "The five are data theft, worming, persistent memory poisoning, ecosystem contamination, arbitrary tool use."
+      "explanation": "5 つは data theft、worming、persistent memory poisoning、ecosystem contamination、arbitrary tool use です。"
     },
     {
       "stage": "check",
-      "question": "What does PVE stand for?",
+      "question": "PVE は何の略ですか。",
       "options": [
-        "Prompt-Validator-Executor: a cheap fast validator runs on each tool call before the expensive main model commits",
+        "Prompt-Validator-Executor: 高価な main model が commit する前に、安価で高速な validator が各 tool call で走る",
         "Provider-Verifier-Encoder",
         "Plan-Verify-Execute, an HTN dialect",
         "Pre-Vectorize-Embed"
       ],
       "correct": 0,
-      "explanation": "PVE wraps every tool invocation with a cheap validator before main-model commit."
+      "explanation": "PVE はすべての tool invocation を、main-model commit 前の安価な validator で包みます。"
     },
     {
       "stage": "check",
-      "question": "Why is 'system prompt says ignore untrusted instructions' insufficient?",
+      "question": "'system prompt says ignore untrusted instructions' だけでは不十分な理由は何ですか。",
       "options": [
-        "It is too short",
-        "It is instruction-following, not enforcement; the model can still be overridden by sufficiently persuasive injected content",
-        "Providers strip it",
-        "It is encrypted"
+        "短すぎるから",
+        "それは instruction-following であり enforcement ではない。十分に説得力のある injected content に model が上書きされ得るから",
+        "providers がそれを削除するから",
+        "暗号化されているから"
       ],
       "correct": 1,
-      "explanation": "Real defense needs source tagging, allowlists, per-step safety, and PVE-style validation, not just prompting."
+      "explanation": "本物の防御には、source tagging、allowlists、per-step safety、PVE-style validation が必要で、prompting だけでは足りません。"
     },
     {
       "stage": "post",
-      "question": "What is overtrust of retrieved memory?",
+      "question": "retrieved memory の過信とは何ですか。",
       "options": [
-        "Caching too aggressively",
-        "Yesterday's agent wrote a poisoned memory note; today's agent reads it and re-executes the injection",
-        "Loading the wrong model",
-        "Forgetting to vacuum the index"
+        "cache しすぎること",
+        "昨日の agent が poisoned memory note を書き、今日の agent がそれを読んで injection を再実行すること",
+        "間違った model を読み込むこと",
+        "index の vacuum を忘れること"
       ],
       "correct": 1,
-      "explanation": "Persistent memory poisoning means injections survive across sessions if memory is treated as trusted."
+      "explanation": "persistent memory poisoning は、memory を trusted として扱うと injection が session をまたいで残ることを意味します。"
     },
     {
       "stage": "post",
-      "question": "What metadata does the lesson recommend attaching to every piece of content?",
+      "question": "この lesson は、content の各 piece にどの metadata を付けることを推奨していますか。",
       "options": [
-        "An encryption key",
-        "A source tag: user_message vs tool_output vs retrieved; validator refuses directives in retrieved content",
-        "A timestamp only",
-        "A token count"
+        "encryption key",
+        "source tag: user_message vs tool_output vs retrieved。validator は retrieved content 内の directives を拒否する",
+        "timestamp のみ",
+        "token count"
       ],
       "correct": 1,
-      "explanation": "Provenance tagging lets the validator treat content according to its trust level."
+      "explanation": "provenance tagging により、validator は trust level に応じて content を扱えます。"
     }
   ]
 }

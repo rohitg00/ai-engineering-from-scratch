@@ -1,34 +1,34 @@
-# Async Tasks (SEP-1686) — Call-Now, Fetch-Later for Long-Running Work
+# Async Tasks（SEP-1686）- 長時間処理を今呼び出し、後で取得する
 
-> Real agent work takes minutes to hours: CI runs, deep-research synthesis, batch exports. Synchronous tool calls drop connections, time out, or block the UI. SEP-1686, merged in 2025-11-25, adds a Tasks primitive: any request can be augmented to become a task, and the result can be fetched later or streamed via state notifications. Drift-risk note: Tasks are experimental through H1 2026; SDK surface is still being designed around the spec.
+> 実際の agent work には数分から数時間かかります。CI runs、deep-research synthesis、batch exports などです。synchronous tool call は connection を落とし、time out し、UI を block します。2025-11-25 に merge された SEP-1686 は Tasks primitive を追加します。任意の request を task に拡張でき、result は後で fetch するか state notifications で stream できます。drift-risk note: Tasks は 2026 H1 を通じて experimental で、SDK surface はまだ spec に合わせて設計中です。
 
-**Type:** Build
-**Languages:** Python (stdlib, async task state machine)
-**Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 09 (transports)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python (stdlib, async task state machine)
+**前提条件:** Phase 13 · 07 (MCP server), Phase 13 · 09 (transports)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Identify when to promote a tool from synchronous to task-augmented (>30 seconds of server-side work).
-- Walk the task lifecycle: `working` → `input_required` → `completed` / `failed` / `cancelled`.
-- Persist task state so crashes do not lose in-flight work.
-- Poll `tasks/status` and fetch `tasks/result` correctly.
+- tool を synchronous から task-augmented に昇格すべきタイミングを特定する（server-side work が 30 秒超）。
+- task lifecycle をたどる: `working` → `input_required` → `completed` / `failed` / `cancelled`。
+- crash しても in-flight work が失われないように task state を persist する。
+- `tasks/status` を poll し、`tasks/result` を正しく fetch する。
 
-## The Problem
+## 問題
 
-A `generate_report` tool runs a multi-minute extraction pipeline. Options under the synchronous model:
+`generate_report` tool は数分かかる extraction pipeline を実行します。synchronous model での選択肢は次の通りです。
 
-1. Hold the connection open for three minutes. Remote transports drop it; clients time out; UIs freeze.
-2. Return immediately with a placeholder; require the client to poll a custom endpoint. Breaks the MCP uniformity.
-3. Fire-and-forget; no result.
+1. connection を 3 分間開いたままにする。Remote transports は切断し、clients は time out し、UI は固まる。
+2. placeholder を即座に返し、client に custom endpoint を poll させる。MCP の uniformity を壊す。
+3. fire-and-forget にする。result はない。
 
-None are good. SEP-1686 adds a fourth: task augmentation. Any request (typically `tools/call`) can be tagged as a task. The server returns a task id immediately. The client polls `tasks/status` and fetches `tasks/result` when done. Server-side state survives restarts.
+どれも良い選択ではありません。SEP-1686 は 4 つ目の選択肢、task augmentation を追加します。任意の request（通常は `tools/call`）を task として tag できます。server は task id を即座に返します。client は `tasks/status` を poll し、完了時に `tasks/result` を fetch します。server-side state は restart をまたいで残ります。
 
-## The Concept
+## コンセプト
 
 ### Task augmentation
 
-A request becomes a task by setting `params._meta.task.required: true` (or `optional: true`, server decides). The server responds immediately with:
+`params._meta.task.required: true`（または server が判断する `optional: true`）を設定すると、request は task になります。server は即座に次を返します。
 
 ```json
 {
@@ -45,17 +45,17 @@ A request becomes a task by setting `params._meta.task.required: true` (or `opti
 }
 ```
 
-`ttl` is the server's promise to retain state; after ttl the task result is discarded.
+`ttl` は state を保持するという server の promise です。ttl 経過後、task result は破棄されます。
 
-### Per-tool opt-in
+### Tool ごとの opt-in
 
-Tool annotations can declare task support:
+Tool annotations は task support を宣言できます。
 
-- `taskSupport: "forbidden"` — this tool always runs synchronously. Safe for fast tools.
-- `taskSupport: "optional"` — client may request task-augmentation.
-- `taskSupport: "required"` — client MUST use task augmentation.
+- `taskSupport: "forbidden"` — この tool は常に synchronously に実行されます。高速な tools には安全です。
+- `taskSupport: "optional"` — client が task-augmentation を request できます。
+- `taskSupport: "required"` — client は task augmentation を使わなければなりません。
 
-A `generate_report` tool would be `required`. A `notes_search` tool would be `forbidden`.
+`generate_report` tool は `required` になります。`notes_search` tool は `forbidden` になります。
 
 ### States
 
@@ -66,95 +66,95 @@ working  -> failed
 working  -> cancelled
 ```
 
-State machine is append-only: once `completed`, `failed`, or `cancelled`, the task is terminal.
+State machine は append-only です。一度 `completed`、`failed`、または `cancelled` になると、その task は terminal です。
 
 ### Methods
 
-- `tasks/status {taskId}` — returns current state and a progress hint.
-- `tasks/result {taskId}` — blocks or returns 404 if not yet done.
-- `tasks/cancel {taskId}` — idempotent; terminal states ignore.
-- `tasks/list` — optional; enumerates active and recently-completed tasks.
+- `tasks/status {taskId}` — current state と progress hint を返す。
+- `tasks/result {taskId}` — まだ完了していなければ block するか 404 を返す。
+- `tasks/cancel {taskId}` — idempotent。terminal states では無視される。
+- `tasks/list` — optional。active tasks と recently-completed tasks を列挙する。
 
-### Streaming state changes
+### State changes の streaming
 
-When the server supports it, the client can subscribe to state notifications:
+server が support している場合、client は state notifications を subscribe できます。
 
 ```
 server -> notifications/tasks/updated {taskId, state, progress?}
 ```
 
-Clients that stream rather than poll get better UX. Polling is always supported as the minimal surface.
+poll ではなく stream する clients はより良い UX を得られます。Polling は minimal surface として常に support されます。
 
 ### Durable state
 
-The spec requires servers that declare task support to persist state. A crash should not lose completed results within ttl. Stores range from SQLite to Redis to the filesystem. The Lesson 13 harness uses the filesystem.
+spec は task support を宣言する servers に state の persist を求めます。crash しても ttl 内の completed results は失われるべきではありません。stores は SQLite、Redis、filesystem まで幅があります。Lesson 13 harness は filesystem を使います。
 
 ### Cancellation semantics
 
-`tasks/cancel` is idempotent. If the task is mid-execution, the server attempts to stop (check executor-cooperative cancellation). If already terminal, the request is a no-op.
+`tasks/cancel` は idempotent です。task が execution 中なら、server は停止を試みます（executor-cooperative cancellation を確認します）。すでに terminal なら request は no-op です。
 
 ### Crash recovery
 
-When the server process restarts:
+server process が restart したら、次を行います。
 
-1. Load all persisted task states.
-2. Mark any `working` tasks whose process died as `failed` with error `CRASH_RECOVERY`.
-3. Preserve `completed` / `failed` / `cancelled` for their ttl.
+1. persist されたすべての task states を load する。
+2. process が死んだ `working` tasks を error `CRASH_RECOVERY` 付きの `failed` として mark する。
+3. `completed` / `failed` / `cancelled` を ttl の間 preserve する。
 
 ### Async tasks plus sampling
 
-A task can itself call `sampling/createMessage`. This is how long-running research tasks work: the server's task thread samples the client's model as needed, while the client's UI shows the task as `working` with periodic progress updates.
+task 自体が `sampling/createMessage` を call できます。long-running research tasks はこの形で動きます。server の task thread が必要に応じて client の model を sample し、client の UI は periodic progress updates とともに task を `working` として表示します。
 
-### Why this is experimental
+### なぜ experimental なのか
 
-SEP-1686 shipped in 2025-11-25 but the broader roadmap calls out three open issues: durable subscription primitives, subtasks (parent-child task relationships), and result-TTL standardization. Expect the spec to evolve through 2026. Production code should treat Tasks as stable only for the common case and guard against future SDK changes for subtasks.
+SEP-1686 は 2025-11-25 に shipped されましたが、broader roadmap は 3 つの open issues を挙げています。durable subscription primitives、subtasks（parent-child task relationships）、result-TTL standardization です。spec は 2026 年を通じて進化すると見込んでください。Production code では、Tasks は common case に限って stable とみなし、subtasks に関する future SDK changes に備えて guard するべきです。
 
 ## Use It
 
-`code/main.py` implements a durable task store (filesystem-backed) and a `generate_report` tool that runs in a background thread. Clients call the tool, get a task id immediately, poll `tasks/status` while the worker updates progress, and fetch `tasks/result` when done. Cancellation works; crash recovery is simulated by killing the worker thread and reloading state.
+`code/main.py` は durable task store（filesystem-backed）と、background thread で動く `generate_report` tool を実装します。Clients は tool を call し、task id を即座に受け取り、worker が progress を更新する間 `tasks/status` を poll し、完了時に `tasks/result` を fetch します。Cancellation も動作します。crash recovery は worker thread を kill して state を reload することで simulate します。
 
-What to look at:
+見るべき点:
 
-- Task state JSON persisted to `/tmp/lesson-13-tasks/<id>.json`.
-- Worker thread updates `progress` field; poll shows it advancing.
-- Cancellation from client side sets an event; worker checks and exits early.
-- State reload on "crash" marks the in-flight task as `failed` with `CRASH_RECOVERY`.
+- Task state JSON が `/tmp/lesson-13-tasks/<id>.json` に persist される。
+- Worker thread が `progress` field を更新し、poll で進捗が進む様子が見える。
+- client side からの cancellation は event を set し、worker はそれを確認して早期終了する。
+- "crash" 時の state reload は in-flight task を `CRASH_RECOVERY` 付きの `failed` として mark する。
 
 ## Ship It
 
-This lesson produces `outputs/skill-task-store-designer.md`. Given a long-running tool (research, build, export), the skill designs the task store (state shape, ttl, durability), picks the right taskSupport flag, and sketches progress notifications.
+この lesson は `outputs/skill-task-store-designer.md` を生成します。long-running tool（research、build、export）に対して、この skill は task store（state shape、ttl、durability）を設計し、適切な taskSupport flag を選び、progress notifications を sketch します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Kick off a `generate_report` task, poll status, then fetch the result.
+1. `code/main.py` を実行する。`generate_report` task を kick off し、status を poll してから result を fetch する。
 
-2. Add a `tasks/cancel` call mid-run. Verify the worker honors it and the state becomes `cancelled`.
+2. 実行中に `tasks/cancel` call を追加する。worker がそれを尊重し、state が `cancelled` になることを検証する。
 
-3. Simulate crash recovery: kill the worker thread, restart the loader, and observe the `CRASH_RECOVERY` failure mode.
+3. crash recovery を simulate する。worker thread を kill し、loader を restart して、`CRASH_RECOVERY` failure mode を観察する。
 
-4. Extend the store to SQLite. Durability wins are the same; query options open up (list all tasks from session X).
+4. store を SQLite に拡張する。durability の利点は同じだが、query options が広がる（session X のすべての tasks を list するなど）。
 
-5. Read the MCP roadmap post for 2026. Identify the one Tasks-related open issue most likely to affect SDK API design in the next year.
+5. 2026 年の MCP roadmap post を読む。今後 1 年の SDK API design に最も影響しそうな Tasks-related open issue を 1 つ特定する。
 
-## Key Terms
+## 主要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Task | "Long-running tool call" | Request augmented with `_meta.task` for async execution |
-| SEP-1686 | "Tasks spec" | Spec Evolution Proposal that added Tasks in 2025-11-25 |
-| `_meta.task` | "Task envelope" | Per-request metadata containing id, state, ttl |
-| taskSupport | "Tool flag" | `forbidden` / `optional` / `required` per tool |
-| `tasks/status` | "Poll method" | Fetch current state and optional progress hint |
-| `tasks/result` | "Fetch result" | Returns the completed payload or 404 if not yet done |
-| `tasks/cancel` | "Stop it" | Idempotent cancellation request |
-| ttl | "Retention budget" | Milliseconds the server promises to keep the task state |
-| `notifications/tasks/updated` | "State push" | Server-initiated state-change event |
+| Term | よく言われること | 実際の意味 |
+|------|------------------|------------|
+| Task | "Long-running tool call" | async execution のために `_meta.task` で augment された request |
+| SEP-1686 | "Tasks spec" | 2025-11-25 に Tasks を追加した Spec Evolution Proposal |
+| `_meta.task` | "Task envelope" | id、state、ttl を含む per-request metadata |
+| taskSupport | "Tool flag" | tool ごとの `forbidden` / `optional` / `required` |
+| `tasks/status` | "Poll method" | current state と optional progress hint を fetch する |
+| `tasks/result` | "Fetch result" | completed payload を返す。未完了なら 404 |
+| `tasks/cancel` | "Stop it" | idempotent な cancellation request |
+| ttl | "Retention budget" | server が task state を保持すると promise する milliseconds |
+| `notifications/tasks/updated` | "State push" | server-initiated state-change event |
 | Durable store | "Crash-safe state" | Filesystem / SQLite / Redis persistence layer |
 
-## Further Reading
+## 参考資料
 
-- [MCP — GitHub SEP-1686 issue](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1686) — the originating proposal and full discussion
-- [WorkOS — MCP async tasks for AI agent workflows](https://workos.com/blog/mcp-async-tasks-ai-agent-workflows) — design walkthrough with rationale
-- [DeepWiki — MCP task system and async operations](https://deepwiki.com/modelcontextprotocol/modelcontextprotocol/2.7-task-system-and-async-operations) — mechanics and state machine
+- [MCP — GitHub SEP-1686 issue](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1686) — originating proposal と full discussion
+- [WorkOS — MCP async tasks for AI agent workflows](https://workos.com/blog/mcp-async-tasks-ai-agent-workflows) — rationale 付きの design walkthrough
+- [DeepWiki — MCP task system and async operations](https://deepwiki.com/modelcontextprotocol/modelcontextprotocol/2.7-task-system-and-async-operations) — mechanics と state machine
 - [FastMCP — Tasks](https://gofastmcp.com/servers/tasks) — SDK-level task implementation patterns
-- [MCP blog — 2026 roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — open issues and 2026 priorities including subtasks
+- [MCP blog — 2026 roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — subtasks を含む open issues と 2026 priorities

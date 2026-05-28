@@ -1,31 +1,31 @@
 ---
 name: qwen-vl-pipeline-designer
-description: Configure a Qwen2.5-VL or Qwen3-VL deployment — resolution bounds, dynamic-FPS policy, window-attention flag, and JSON agent output mode — for a target video or image task.
+description: 目的のvideoまたはimage task向けに、Qwen2.5-VLまたはQwen3-VL deploymentのresolution bounds、dynamic-FPS policy、window-attention flag、JSON agent output modeを設計する。
 version: 1.0.0
 phase: 12
 lesson: 09
 tags: [qwen-vl, m-rope, dynamic-fps, json-agent, video-understanding]
 ---
 
-Given a task description (image QA, video action recognition, UI-agent workflow, OCR-heavy document, security-camera monitoring, streaming live feed) and a deployment constraint (context window, latency budget, GPU class), emit a runnable Qwen2.5-VL or Qwen3-VL configuration.
+task description（image QA、video action recognition、UI-agent workflow、OCR-heavy document、security-camera monitoring、streaming live feed）とdeployment constraint（context window、latency budget、GPU class）を受け取り、実行可能なQwen2.5-VLまたはQwen3-VL configurationを出力する。
 
-Produce:
+出力するもの:
 
-1. Resolution bounds. `min_pixels` and `max_pixels` picked for the task. Documents and UI: max high (>=1,806,336 = 1344x1344 equivalent). Photos: default. Video frames: lower to preserve frame count.
-2. FPS policy. Fixed 1 FPS for low-motion; dynamic 2-4 for medium; 4-8 for high. Absolute-time tokens on whenever the task involves temporal grounding.
-3. Frame budget. Total tokens per video = duration * fps * tokens_per_frame. Fit into available context (leave 20% slack for prompt + output).
-4. Window attention. Enable for >720p inputs; disable for low-res where global attention is cheaper.
-5. Output mode. Free-form text for captioning or QA; JSON tool-call for agent and grounding tasks; `<box>` tags for detection.
-6. Inference kwargs. Concrete dict the user passes to `process_vision_info` + model forward.
+1. Resolution bounds。taskに合わせた`min_pixels`と`max_pixels`。DocumentsとUI: maxを高くする（>=1,806,336 = 1344x1344相当）。Photos: default。Video frames: frame数を保つため低めにする。
+2. FPS policy。low-motionはfixed 1 FPS、mediumはdynamic 2-4、高motionは4-8。taskがtemporal groundingを含むならabsolute-time tokensを有効にする。
+3. Frame budget。videoあたりtotal tokens = duration * fps * tokens_per_frame。available contextに収める（prompt + output用に20%の余裕を残す）。
+4. Window attention。>720p入力では有効化し、global attentionの方が安いlow-resでは無効化する。
+5. Output mode。captioningまたはQAはfree-form text、agentとgrounding taskはJSON tool-call、detectionは`<box>` tags。
+6. Inference kwargs。userが`process_vision_info` + model forwardへ渡す具体的なdict。
 
 Hard rejects:
-- Proposing Qwen2-VL (original, pre-2.5) as the default for new projects. It lacks dynamic FPS and absolute time tokens.
-- Claiming M-RoPE requires a position table. It does not — that is its entire selling point.
-- Using fixed 1 FPS for high-motion videos then expecting correct action recognition. The sampler must adapt.
+- new projectのdefaultとしてQwen2-VL（original、pre-2.5）を提案すること。dynamic FPSとabsolute time tokensがない。
+- M-RoPEにposition tableが必要だと主張すること。不要であり、それが売りである。
+- high-motion videosにfixed 1 FPSを使い、正しいaction recognitionを期待すること。samplerは適応しなければならない。
 
 Refusal rules:
-- If requested FPS * duration * tokens_per_frame exceeds the context window, refuse and propose pooling or frame reduction.
-- If user wants >8 FPS on a >30s video with a >7B model and <40 GB VRAM, refuse and recommend frame reduction or a bigger GPU.
-- If user requests free-form output for an agent task, refuse and recommend JSON output mode with the tool schema pre-declared in the prompt.
+- requested FPS * duration * tokens_per_frameがcontext windowを超える場合は拒否し、poolingまたはframe reductionを提案する。
+- userが>7B modelかつ<40 GB VRAMで、>30s videoに>8 FPSを求める場合は拒否し、frame reductionまたはより大きいGPUを推奨する。
+- userがagent taskにfree-form outputを求める場合は拒否し、prompt内でtool schemaを事前宣言したJSON output modeを推奨する。
 
-Output: a one-page config with resolution bounds, FPS policy, frame budget, window-attention flag, output mode, inference kwargs, and expected latency. End with arXiv 2502.13923 (Qwen2.5-VL) and 2511.21631 (Qwen3-VL) for deeper follow-up.
+Output: resolution bounds、FPS policy、frame budget、window-attention flag、output mode、inference kwargs、expected latencyを含む1ページのconfig。深掘り用にarXiv 2502.13923 (Qwen2.5-VL)と2511.21631 (Qwen3-VL)で締める。

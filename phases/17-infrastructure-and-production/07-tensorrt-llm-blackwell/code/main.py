@@ -1,14 +1,14 @@
 """Toy Blackwell + TRT-LLM economics calculator — stdlib Python.
 
-Computes HBM footprint and decode throughput for a model under three stacks:
+3つの stack で model の HBM footprint と decode throughput を計算する:
   H100 + BF16 + vLLM
   H100 + FP8 + vLLM
   B200 + NVFP4 weights / FP8 KV + TRT-LLM + Dynamo
   GB200 NVL72 + NVFP4 / FP8 + TRT-LLM + Dynamo
 
-The decode-throughput model is memory-bandwidth-limited: tokens/sec is
-proportional to HBM-bandwidth / bytes-per-token. Numbers are pedagogical
-illustrations of the shape of the 2026 Blackwell economics.
+decode-throughput model は memory-bandwidth-limited: tokens/sec は
+HBM-bandwidth / bytes-per-token に比例する。数値は2026年 Blackwell economics
+の shape を示す教育用 illustration。
 """
 
 from __future__ import annotations
@@ -23,8 +23,8 @@ class Stack:
     hbm_bw_tbs: float         # HBM bandwidth in TB/s
     weight_bits: float        # effective weight precision
     kv_bits: float            # KV cache precision
-    mtp_factor: float         # 1.0 = no draft, 1.8 = MTP on
-    disagg_factor: float      # additional throughput from disaggregation
+    mtp_factor: float         # 1.0 = draft なし、1.8 = MTP on
+    disagg_factor: float      # disaggregation による追加 throughput
     price_per_gpu_hour: float
 
 
@@ -39,8 +39,8 @@ STACKS = [
 
 def hbm_footprint_gb(params_b: float, active_b: float, seq_len: int, stack: Stack) -> tuple[float, float]:
     weight_gb = params_b * stack.weight_bits / 8
-    # KV cache for a typical head config: num_layers * 2 * num_kv_heads * head_dim * seq_len * bytes/element
-    # Use a representative 70B shape scaled by active param size
+    # representative な 70B shape を active param size で scale した KV cache:
+    # num_layers * 2 * num_kv_heads * head_dim * seq_len * bytes/element
     layers = 64 * (active_b / 35.0)**0.5
     kv_heads = 8
     head_dim = 128
@@ -49,8 +49,8 @@ def hbm_footprint_gb(params_b: float, active_b: float, seq_len: int, stack: Stac
 
 
 def decode_throughput(active_b: float, stack: Stack) -> float:
-    """Tokens per second per GPU, memory-bandwidth-limited.
-    Each decoded token reads `active_b * weight_bits/8` bytes of weights.
+    """GPU あたり tokens per second。memory-bandwidth-limited。
+    各 decoded token は `active_b * weight_bits/8` bytes の weights を読む。
     """
     bytes_per_token = active_b * 1e9 * stack.weight_bits / 8
     raw_tokens_per_s = stack.hbm_bw_tbs * 1e12 / bytes_per_token
@@ -90,13 +90,13 @@ def main() -> None:
     print("=" * 90)
     print("KEY FINDING")
     print("-" * 90)
-    print("  The 7x cost gap stacks from four sources:")
+    print("  7x cost gap は4つの source が積み重なったもの:")
     print("    1. HBM bandwidth (H100 3.35 TB/s vs B200 8.0 TB/s) ~2.4x")
-    print("    2. NVFP4 weights (half the bytes per token)       ~2.0x")
+    print("    2. NVFP4 weights (token あたり bytes が半分)       ~2.0x")
     print("    3. MTP draft (~1.8x on accepted tokens)           ~1.8x")
     print("    4. Disaggregation (Dynamo: ~1.6-2.5x)             ~2.0x")
-    print("  Product ~14x raw, closer to 7x after overhead and real-traffic alpha.")
-    print("  Validate NVFP4 quality before migrating reasoning-heavy workloads.")
+    print("  raw の積は ~14x だが、overhead と real-traffic alpha の後では7xに近づく。")
+    print("  reasoning-heavy workloads を migrate する前に NVFP4 quality を validate すること。")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,85 +9,85 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Embodied VLAs — RT-2 to GR00T, the action-format arc</text>
+  <text x="480" y="24" text-anchor="middle" class="title">身体化VLA - RT-2からGR00Tへ、アクション形式の流れ</text>
 
   <rect x="30" y="50" width="900" height="210" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">four action formats in use today</text>
+  <text x="480" y="72" text-anchor="middle" class="head">現在使われる4つのアクション形式</text>
 
   <rect x="50" y="90" width="200" height="160" class="hot"/>
-  <text x="150" y="110" text-anchor="middle" class="step">discrete 256-bin</text>
+  <text x="150" y="110" text-anchor="middle" class="step">離散256-bin</text>
   <text x="150" y="128" text-anchor="middle" class="small">RT-2 (2023), OpenVLA</text>
-  <text x="150" y="146" text-anchor="middle" class="small">one token per DOF</text>
-  <text x="150" y="162" text-anchor="middle" class="small">text-vocab compatible</text>
-  <text x="150" y="186" text-anchor="middle" class="step">pros: simple</text>
-  <text x="150" y="206" text-anchor="middle" class="small">cons: ~300 tok/s needed</text>
-  <text x="150" y="224" text-anchor="middle" class="small">inference 3-5 Hz</text>
+  <text x="150" y="146" text-anchor="middle" class="small">DOFごとに1トークン</text>
+  <text x="150" y="162" text-anchor="middle" class="small">テキスト語彙互換</text>
+  <text x="150" y="186" text-anchor="middle" class="step">利点: 単純</text>
+  <text x="150" y="206" text-anchor="middle" class="small">欠点: ~300 tok/sが必要</text>
+  <text x="150" y="224" text-anchor="middle" class="small">推論3-5 Hz</text>
 
   <rect x="270" y="90" width="200" height="160" class="cool"/>
-  <text x="370" y="110" text-anchor="middle" class="step">FAST (DCT + quantize)</text>
-  <text x="370" y="128" text-anchor="middle" class="small">2024 improvement</text>
-  <text x="370" y="146" text-anchor="middle" class="small">~10 tokens / trajectory</text>
-  <text x="370" y="162" text-anchor="middle" class="small">low-freq coefficients</text>
-  <text x="370" y="186" text-anchor="middle" class="step">pros: 3-5x faster</text>
-  <text x="370" y="206" text-anchor="middle" class="small">cons: loses high-freq</text>
-  <text x="370" y="224" text-anchor="middle" class="small">used by pi0-FAST</text>
+  <text x="370" y="110" text-anchor="middle" class="step">FAST (DCT + 量子化)</text>
+  <text x="370" y="128" text-anchor="middle" class="small">2024年の改善</text>
+  <text x="370" y="146" text-anchor="middle" class="small">軌道あたり~10トークン</text>
+  <text x="370" y="162" text-anchor="middle" class="small">低周波係数</text>
+  <text x="370" y="186" text-anchor="middle" class="step">利点: 3-5x高速</text>
+  <text x="370" y="206" text-anchor="middle" class="small">欠点: 高周波を失う</text>
+  <text x="370" y="224" text-anchor="middle" class="small">pi0-FASTで使用</text>
 
   <rect x="490" y="90" width="200" height="160" class="cold"/>
-  <text x="590" y="110" text-anchor="middle" class="step">flow-matching head</text>
+  <text x="590" y="110" text-anchor="middle" class="step">flow-matchingヘッド</text>
   <text x="590" y="128" text-anchor="middle" class="small">pi0 (2024)</text>
-  <text x="590" y="146" text-anchor="middle" class="small">continuous output</text>
-  <text x="590" y="162" text-anchor="middle" class="small">50-step trajectory</text>
-  <text x="590" y="186" text-anchor="middle" class="step">pros: smoothness</text>
-  <text x="590" y="206" text-anchor="middle" class="small">5 denoise steps</text>
-  <text x="590" y="224" text-anchor="middle" class="small">~50 Hz control</text>
+  <text x="590" y="146" text-anchor="middle" class="small">連続出力</text>
+  <text x="590" y="162" text-anchor="middle" class="small">50-ステップ軌道</text>
+  <text x="590" y="186" text-anchor="middle" class="step">利点: 滑らかさ</text>
+  <text x="590" y="206" text-anchor="middle" class="small">denoise 5ステップ</text>
+  <text x="590" y="224" text-anchor="middle" class="small">~50 Hz制御</text>
 
   <rect x="710" y="90" width="200" height="160" class="reg"/>
-  <text x="810" y="110" text-anchor="middle" class="step">dual-system</text>
+  <text x="810" y="110" text-anchor="middle" class="step">二重システム制御</text>
   <text x="810" y="128" text-anchor="middle" class="small">GR00T N1 (2025)</text>
   <text x="810" y="146" text-anchor="middle" class="small">System 2: VLM ~1 Hz</text>
   <text x="810" y="162" text-anchor="middle" class="small">System 1: small ~100 Hz</text>
-  <text x="810" y="186" text-anchor="middle" class="step">pros: humanoid-scale</text>
-  <text x="810" y="206" text-anchor="middle" class="small">subgoals + fast control</text>
-  <text x="810" y="224" text-anchor="middle" class="small">best for 30+ DOF</text>
+  <text x="810" y="186" text-anchor="middle" class="step">利点: ヒューマノイド規模</text>
+  <text x="810" y="206" text-anchor="middle" class="small">サブゴール + 高速制御</text>
+  <text x="810" y="224" text-anchor="middle" class="small">30+ DOFに最適</text>
 
   <rect x="30" y="280" width="900" height="230" class="box"/>
-  <text x="480" y="302" text-anchor="middle" class="head">training recipe + safety</text>
+  <text x="480" y="302" text-anchor="middle" class="head">学習レシピ + 安全性</text>
 
   <rect x="60" y="320" width="260" height="180" class="cool"/>
-  <text x="190" y="342" text-anchor="middle" class="step">co-fine-tune</text>
-  <text x="190" y="362" text-anchor="middle" class="small">ratio ~0.5:1 to 1:1</text>
-  <text x="190" y="378" text-anchor="middle" class="small">web VQA + robot demos</text>
-  <text x="190" y="396" text-anchor="middle" class="small">preserves general knowledge</text>
-  <text x="190" y="416" text-anchor="middle" class="small">robot-only -&gt; forgets lang</text>
-  <text x="190" y="436" text-anchor="middle" class="step">fine-tune path</text>
-  <text x="190" y="456" text-anchor="middle" class="small">LoRA on 100-1000 demos</text>
-  <text x="190" y="472" text-anchor="middle" class="small">to adapt to new robot</text>
+  <text x="190" y="342" text-anchor="middle" class="step">共同微調整</text>
+  <text x="190" y="362" text-anchor="middle" class="small">ratio ~0.5:1から1:1</text>
+  <text x="190" y="378" text-anchor="middle" class="small">web VQA + ロボットデモ</text>
+  <text x="190" y="396" text-anchor="middle" class="small">一般知識を保つ</text>
+  <text x="190" y="416" text-anchor="middle" class="small">ロボット-のみ -&gt; 言語を忘れる</text>
+  <text x="190" y="436" text-anchor="middle" class="step">微調整経路</text>
+  <text x="190" y="456" text-anchor="middle" class="small">100-1000 demosでLoRA</text>
+  <text x="190" y="472" text-anchor="middle" class="small">新ロボットへ適応</text>
 
   <rect x="340" y="320" width="260" height="180" class="reg"/>
   <text x="470" y="342" text-anchor="middle" class="step">Open X-Embodiment</text>
-  <text x="470" y="362" text-anchor="middle" class="small">22 datasets</text>
-  <text x="470" y="378" text-anchor="middle" class="small">1M trajectories</text>
-  <text x="470" y="394" text-anchor="middle" class="small">22 robot embodiments</text>
+  <text x="470" y="362" text-anchor="middle" class="small">22 データセット</text>
+  <text x="470" y="378" text-anchor="middle" class="small">1M軌道</text>
+  <text x="470" y="394" text-anchor="middle" class="small">22 ロボット実体</text>
   <text x="470" y="412" text-anchor="middle" class="small">ALOHA / Bridge / Droid</text>
-  <text x="470" y="432" text-anchor="middle" class="step">unified schema</text>
-  <text x="470" y="452" text-anchor="middle" class="small">state, camera, action</text>
-  <text x="470" y="468" text-anchor="middle" class="small">open-source</text>
+  <text x="470" y="432" text-anchor="middle" class="step">統一スキーマ</text>
+  <text x="470" y="452" text-anchor="middle" class="small">状態, カメラ, アクション</text>
+  <text x="470" y="468" text-anchor="middle" class="small">オープンソース</text>
 
   <rect x="620" y="320" width="290" height="180" class="hot"/>
-  <text x="765" y="342" text-anchor="middle" class="step">safety gates (outside VLA)</text>
-  <text x="765" y="362" text-anchor="middle" class="small">hard joint limits</text>
-  <text x="765" y="378" text-anchor="middle" class="small">velocity clipping</text>
-  <text x="765" y="394" text-anchor="middle" class="small">workspace bounds</text>
-  <text x="765" y="410" text-anchor="middle" class="small">HITL approval for novel tasks</text>
-  <text x="765" y="436" text-anchor="middle" class="step">VLA suggests, controller enforces</text>
-  <text x="765" y="462" text-anchor="middle" class="caption">always treat VLA output as prior,</text>
-  <text x="765" y="478" text-anchor="middle" class="caption">not a command</text>
+  <text x="765" y="342" text-anchor="middle" class="step">安全ゲート (VLAの外側)</text>
+  <text x="765" y="362" text-anchor="middle" class="small">硬い関節制限</text>
+  <text x="765" y="378" text-anchor="middle" class="small">速度クリッピング</text>
+  <text x="765" y="394" text-anchor="middle" class="small">作業空間境界</text>
+  <text x="765" y="410" text-anchor="middle" class="small">新規タスクはHITL承認</text>
+  <text x="765" y="436" text-anchor="middle" class="step">VLAが提案しコントローラが強制</text>
+  <text x="765" y="462" text-anchor="middle" class="caption">VLA出力は常に事前分布扱い</text>
+  <text x="765" y="478" text-anchor="middle" class="caption">コマンドではない</text>
 </svg>

@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the Markov property?",
+      "question": "Markov property とは何ですか。",
       "options": [
-        "The process always returns to its starting state",
-        "The next state depends only on the current state, not on the history of previous states",
-        "All states are equally likely at every step",
-        "The process must have a finite number of states"
+        "process が必ず starting state に戻ること",
+        "次の状態が過去の履歴ではなく現在の状態だけに依存すること",
+        "すべての状態が各 step で同じ確率であること",
+        "process が有限個の状態を持たなければならないこと"
       ],
       "correct": 1,
-      "explanation": "The Markov property (memorylessness) means P(X_{t+1} = j | X_t = i, X_{t-1}, ...) = P(X_{t+1} = j | X_t = i). The future depends only on where you are, not how you got there. This enables compact representation via a transition matrix."
+      "explanation": "Markov property (memorylessness) は P(X_{t+1} = j | X_t = i, X_{t-1}, ...) = P(X_{t+1} = j | X_t = i) を意味します。未来は現在地だけに依存し、そこへどう来たかには依存しません。"
     },
     {
       "stage": "pre",
-      "question": "In a 1D random walk, how does the expected distance from the origin scale with the number of steps n?",
+      "question": "1D random walk で、原点からの期待距離はステップ数 n に対してどのようにスケールしますか。",
       "options": [
-        "Linearly: proportional to n",
-        "As the square root: proportional to sqrt(n)",
-        "Logarithmically: proportional to log(n)",
-        "It stays constant regardless of n"
+        "線形: n に比例",
+        "平方根: sqrt(n) に比例",
+        "対数: log(n) に比例",
+        "n に関係なく一定"
       ],
       "correct": 1,
-      "explanation": "Each step is +/-1 with equal probability. The variance after n steps is n, so the standard deviation (typical distance from origin) is sqrt(n). After 10,000 steps, the expected distance is about 100, not 10,000."
+      "explanation": "各 step は等確率で +/-1 です。n steps 後の分散は n なので、標準偏差、つまり典型的な原点からの距離は sqrt(n) です。"
     },
     {
       "stage": "post",
-      "question": "What is the stationary distribution of a Markov chain?",
+      "question": "Markov chain の stationary distribution とは何ですか。",
       "options": [
-        "The initial distribution of states",
-        "The distribution that does not change under the transition matrix: pi * P = pi",
-        "The distribution of states after exactly one transition",
-        "The uniform distribution over all states"
+        "状態の initial distribution",
+        "transition matrix を掛けても変わらない分布: pi * P = pi",
+        "ちょうど一回遷移した後の状態分布",
+        "すべての状態に対する uniform distribution"
       ],
       "correct": 1,
-      "explanation": "The stationary distribution pi satisfies pi * P = pi — applying the transition matrix leaves it unchanged. It represents the long-run fraction of time spent in each state. For an irreducible, aperiodic chain, any initial distribution converges to pi."
+      "explanation": "stationary distribution pi は pi * P = pi を満たします。transition matrix を適用しても変わらず、長期的に各状態にいる割合を表します。"
     },
     {
       "stage": "post",
-      "question": "In Langevin dynamics x_{t+1} = x_t - dt * grad(U) + sqrt(2*T*dt) * z, what happens as temperature T approaches 0?",
+      "question": "Langevin dynamics x_{t+1} = x_t - dt * grad(U) + sqrt(2*T*dt) * z で、temperature T が 0 に近づくと何が起きますか。",
       "options": [
-        "The process becomes a pure random walk",
-        "The process becomes pure gradient descent (deterministic optimization)",
-        "The process diverges to infinity",
-        "The process freezes at the initial position"
+        "pure random walk になる",
+        "pure gradient descent (deterministic optimization) になる",
+        "無限大へ発散する",
+        "initial position で凍結する"
       ],
       "correct": 1,
-      "explanation": "At T = 0, the noise term sqrt(2*T*dt)*z vanishes, leaving x_{t+1} = x_t - dt * grad(U), which is standard gradient descent. At high T, the noise dominates and the process is nearly a random walk. Intermediate T balances exploration and exploitation."
+      "explanation": "T = 0 では noise term sqrt(2*T*dt)*z が消え、x_{t+1} = x_t - dt * grad(U) という標準的な gradient descent になります。"
     },
     {
       "stage": "post",
-      "question": "In a diffusion model, what does the forward process do to a data sample over T steps?",
+      "question": "diffusion model の forward process は、T steps にわたって data sample に何をしますか。",
       "options": [
-        "It sharpens the image by removing noise at each step",
-        "It gradually adds Gaussian noise until the sample becomes pure noise, following a Markov chain",
-        "It compresses the image to a lower resolution",
-        "It applies learned transformations to generate new data"
+        "各 step で noise を除去して image を鮮明にする",
+        "Markov chain に従って Gaussian noise を徐々に加え、sample を pure noise に近づける",
+        "image を低解像度に圧縮する",
+        "学習済み変換を適用して新しい data を生成する"
       ],
       "correct": 1,
-      "explanation": "The forward process is a Markov chain: x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise. After T steps, x_T is approximately N(0, I) — pure Gaussian noise. The reverse process (learned by a neural network) then denoises step-by-step to generate new data."
+      "explanation": "forward process は x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise という Markov chain です。T steps 後、x_T はほぼ N(0, I) の Gaussian noise になります。"
     }
   ]
 }

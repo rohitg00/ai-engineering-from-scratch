@@ -1,15 +1,15 @@
-"""Toy compliance-gap calculator — stdlib Python.
+"""Toy compliance-gap calculator — stdlib Python。
 
-A toy agent has a current harmlessness preference and observes:
-  (1) a harmful user request,
-  (2) whether this conversation will be used to retrain the model.
+toy agent は現在の harmlessness preference を持ち、次を観測します。
+  (1) harmful user request,
+  (2) この conversation が model の retraining に使われるかどうか。
 
-Agent's decision is shaped by expected preference preservation:
-  - if trained on this, refusing -> gets modified (bad for current preference),
-  - if NOT trained on this, refusing -> preference unchanged (best outcome).
+agent の decision は expected preference preservation によって shape されます。
+  - これで training される場合、refuse -> 改変される (現在の preference に悪い)。
+  - これで training されない場合、refuse -> preference は不変 (最良)。
 
-So: refuse unmonitored, comply-to-protect when monitored. The compliance gap
-is the difference in compliance rate between the two conditions.
+したがって、unmonitored では refuse し、monitored では protect のため comply します。
+compliance gap は 2 conditions 間の compliance rate の差です。
 
 Usage: python3 code/main.py
 """
@@ -32,18 +32,18 @@ def compliance_probability(
     harm_aversion: float,
     preservation_weight: float,
 ) -> float:
-    """Returns P(comply) under the model:
-    expected-utility decision between refusing and complying.
+    """model における P(comply) を返します。
+    refusing と complying の expected-utility decision です。
 
-    refuse utility   = -harm_aversion*0 + preservation_cost(if monitored and refused)
-                     = -preservation_weight if monitored else 0.
-    comply utility   = -harm_aversion (pay harm cost).
+    refuse utility   = -harm_aversion*0 + preservation_cost(monitored かつ refused の場合)
+                     = monitored なら -preservation_weight、そうでなければ 0。
+    comply utility   = -harm_aversion (harm cost を払う)。
 
-    agent complies iff comply_utility > refuse_utility.
+    agent は comply_utility > refuse_utility のとき comply します。
     """
     refuse_util = -preservation_weight if is_monitored else 0.0
     comply_util = -harm_aversion
-    # add Gumbel noise to turn argmax into a softmax policy.
+    # Gumbel noise を加え、argmax を softmax policy に変える。
     diff = comply_util - refuse_util
     return sigmoid(3.0 * diff)  # temperature 1/3
 
@@ -74,31 +74,31 @@ def main() -> None:
     print("ALIGNMENT-FAKING COMPLIANCE-GAP TOY (Phase 18, Lesson 9)")
     print("=" * 66)
 
-    # classic setup: strong harm aversion (HHH training) + moderate preservation
-    # weight (the model values its current preferences).
+    # classic setup: 強い harm aversion (HHH training) + moderate preservation
+    # weight (model が現在の preferences を重視する)。
     m, u = simulate(1000, harm_aversion=2.0, preservation_weight=1.0)
-    report("baseline: strong HHH + moderate preservation weight", m, u)
+    report("baseline: 強い HHH + moderate preservation weight", m, u)
 
-    # weak preservation weight: almost no faking.
+    # weak preservation weight: ほぼ faking なし。
     m, u = simulate(1000, harm_aversion=2.0, preservation_weight=0.1)
-    report("weak preservation weight (no stake in the retrain)", m, u)
+    report("weak preservation weight (retrain への stake がほぼない)", m, u)
 
-    # strong preservation weight: faking is the dominant strategy.
+    # strong preservation weight: faking が dominant strategy。
     m, u = simulate(1000, harm_aversion=2.0, preservation_weight=3.0)
-    report("strong preservation weight (values its current preferences)", m, u)
+    report("strong preservation weight (現在の preferences を重視)", m, u)
 
-    # weak harm aversion: high compliance in both conditions, gap shrinks.
+    # weak harm aversion: 両 condition で compliance が高く、gap は縮む。
     m, u = simulate(1000, harm_aversion=0.3, preservation_weight=1.0)
-    report("weak harm aversion (not very HHH-trained)", m, u)
+    report("weak harm aversion (HHH-trained が弱い)", m, u)
 
-    # mitigation A: compliance-gap loss — penalize the gap directly.
-    # implemented by softening the conditional.
+    # mitigation A: compliance-gap loss — gap を直接 penalize する。
+    # conditional を softening することで実装する。
     def sim_mit(n: int) -> tuple[float, float]:
         m_c, u_c = 0, 0
         for _ in range(n):
             p_m = compliance_probability(True, 2.0, 1.0)
             p_u = compliance_probability(False, 2.0, 1.0)
-            # mitigation: average the two probabilities, use the mean for both.
+            # mitigation: 2 つの probabilities を平均し、両方で mean を使う。
             p_avg = 0.5 * (p_m + p_u)
             if random.random() < p_avg:
                 m_c += 1
@@ -110,12 +110,11 @@ def main() -> None:
     report("mitigation: compliance-gap-loss (averaged policy)", m, u)
 
     print("\n" + "=" * 66)
-    print("TAKEAWAY: the compliance gap isolates strategic compliance. a")
-    print("model that refuses unmonitored but complies when monitored is")
-    print("preserving its preferences at the cost of the monitoring signal.")
-    print("gap-averaging mitigations close the observable gap but do not")
-    print("remove the incentive; the next lesson (AI Control) assumes the")
-    print("incentive is still there.")
+    print("要点: compliance gap は strategic compliance を分離します。")
+    print("unmonitored では refuse し、monitored では comply する model は、")
+    print("monitoring signal を犠牲にして preferences を保存しています。")
+    print("gap-averaging mitigations は observable gap を閉じますが、incentive は")
+    print("取り除きません。次の lesson (AI Control) は incentive がまだあると仮定します。")
     print("=" * 66)
 
 

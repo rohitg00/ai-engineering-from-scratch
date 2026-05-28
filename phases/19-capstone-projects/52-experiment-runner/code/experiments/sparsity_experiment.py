@@ -1,13 +1,13 @@
-"""Mock experiment script: reads a config json, prints intermediate and final metrics.
+"""mock experiment script: config JSON を読み、intermediate と final metrics を出力します。
 
-Honoured knobs:
-    k          : int    sparsity setting; higher k drops perplexity (synthetic)
-    steps      : int    number of inner training steps to simulate
-    sleep_s    : float  sleep per step; used to force timeouts in tests
-    allocate_mb: int    extra bytes to hold; used to force the memory poller
-    __seed     : int    deterministic seed for the numpy random pass
+尊重される knobs:
+    k          : int    sparsity setting。大きい k は perplexity を下げる (synthetic)
+    steps      : int    simulate する inner training steps 数
+    sleep_s    : float  step ごとの sleep。tests で timeout を強制するために使う
+    allocate_mb: int    保持する追加 MB。memory poller を強制するために使う
+    __seed     : int    numpy random pass 用 deterministic seed
 
-Stdlib + numpy. The script is intentionally small; the lesson is the runner.
+stdlib + numpy。この script は意図的に小さく、lesson の主役は runner です。
 """
 
 from __future__ import annotations

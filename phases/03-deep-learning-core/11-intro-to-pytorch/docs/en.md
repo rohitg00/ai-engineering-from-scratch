@@ -1,46 +1,46 @@
-# Introduction to PyTorch
+# PyTorch 入門
 
-> You built the engine from pistons and crankshafts. Now learn the one everyone actually drives.
+> あなたは pistons と crankshafts から engine を作りました。今度は、実際に誰もが運転しているものを学びます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Lesson 03.10 (Build Your Own Mini Framework)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Lesson 03.10 (Build Your Own Mini Framework)
+**時間:** 約 75 分
 
-## Learning Objectives
+## 学習目標
 
-- Build and train neural networks using PyTorch's nn.Module, nn.Sequential, and autograd
-- Use PyTorch tensors, GPU acceleration, and the standard training loop (zero_grad, forward, loss, backward, step)
-- Convert your from-scratch mini framework components to their PyTorch equivalents
-- Profile and compare training speed between your pure-Python framework and PyTorch on the same task
+- PyTorch の nn.Module、nn.Sequential、autograd を使って neural networks を構築し、学習する
+- PyTorch tensors、GPU acceleration、標準 training loop（zero_grad、forward、loss、backward、step）を使う
+- ゼロから作った mini framework components を PyTorch equivalents に変換する
+- 同じ task で pure-Python framework と PyTorch の training speed を profile して比較する
 
-## The Problem
+## 問題
 
-You have a working mini framework. Linear layers, ReLU, dropout, batch norm, Adam, a DataLoader, a training loop. It trains a 4-layer network on a circle classification problem in pure Python.
+あなたには動く mini framework があります。Linear layers、ReLU、dropout、batch norm、Adam、DataLoader、training loop。pure Python で circle classification problem の 4-layer network を学習できます。
 
-It is also 500x slower than PyTorch on the same problem.
+ただし、同じ問題では PyTorch より 500 倍遅いです。
 
-Your mini framework processes one sample at a time with nested Python loops. PyTorch dispatches the same operations to optimized C++/CUDA kernels that run on GPU. On a single NVIDIA A100, PyTorch trains a ResNet-50 (25.6M parameters) on ImageNet (1.28M images) in about 6 hours. Your framework would take roughly 3,000 hours on the same task -- if it didn't run out of memory first.
+mini framework は nested Python loops で 1 sample ずつ処理します。PyTorch は同じ operations を、GPU 上で動く optimized C++/CUDA kernels に dispatch します。単一の NVIDIA A100 では、PyTorch は ImageNet（1.28M images）上で ResNet-50（25.6M parameters）を約 6 時間で学習します。あなたの framework で同じ task を行うと、memory が先に尽きなければ、およそ 3,000 時間かかります。
 
-Speed is not the only gap. Your framework has no GPU support. No automatic differentiation -- you hand-wrote backward() for every module. No serialization. No distributed training. No mixed precision. No way to debug gradient flow without print statements.
+差は速度だけではありません。あなたの framework には GPU support がありません。automatic differentiation もありません。すべての module に backward() を手書きしました。serialization もありません。distributed training もありません。mixed precision もありません。print statements なしに gradient flow を debug する手段もありません。
 
-PyTorch fills every one of these gaps. And it does so while keeping the exact same mental model you already built: Module, forward(), parameters(), backward(), optimizer.step(). The concepts transfer one-to-one. The syntax is nearly identical. The difference is that PyTorch wraps a decade of systems engineering behind the same interface you designed from scratch.
+PyTorch はこれらの gap をすべて埋めます。しかも、あなたがすでに作った mental model と同じものを保ったままです。Module、forward()、parameters()、backward()、optimizer.step()。概念は 1 対 1 で移行できます。syntax もほぼ同じです。違いは、PyTorch が decade of systems engineering を、あなたがゼロから設計したものと同じ interface の裏に包んでいることです。
 
-## The Concept
+## 概念
 
-### Why PyTorch Won
+### PyTorch が勝った理由
 
-In 2015, TensorFlow required you to define a static computation graph before running anything. You built the graph, compiled it, then fed data through it. Debugging meant staring at graph visualizations. Changing the architecture meant rebuilding the graph from scratch.
+2015 年の TensorFlow では、何かを実行する前に static computation graph を定義する必要がありました。graph を作り、compile し、そこに data を流し込みます。debugging は graph visualizations とにらめっこすることでした。architecture を変えるには graph をゼロから作り直す必要がありました。
 
-PyTorch launched in 2017 with a different philosophy: eager execution. You write Python. It runs immediately. `y = model(x)` actually computes y right now, not "add a node to a graph that will compute y later." This meant standard Python debugging tools worked. print() worked. pdb worked. if/else in your forward pass worked.
+PyTorch は 2017 年に異なる哲学で登場しました。eager execution です。Python を書けば、すぐに実行されます。`y = model(x)` は「後で y を計算する node を graph に追加する」のではなく、今この場で実際に y を計算します。これにより標準の Python debugging tools が使えました。print() が動きました。pdb が動きました。forward pass の if/else が動きました。
 
-By 2020, the market had spoken. PyTorch's share in ML research papers went from 7% (2017) to over 75% (2022). Meta, Google DeepMind, OpenAI, Anthropic, and Hugging Face all use PyTorch as their primary framework. TensorFlow 2.x adopted eager execution in response -- tacit admission that PyTorch's design was correct.
+2020 年までに市場の答えは出ていました。ML research papers における PyTorch の share は、7%（2017）から 75% 超（2022）へ増えました。Meta、Google DeepMind、OpenAI、Anthropic、Hugging Face はすべて PyTorch を primary framework として使っています。TensorFlow 2.x はこれに応えて eager execution を採用しました。これは PyTorch の design が正しかったことを暗に認めたものです。
 
-The lesson: developer experience compounds. A framework that is 10% slower but 50% faster to debug wins every time.
+教訓: developer experience は複利で効きます。10% 遅くても debug が 50% 速い framework は、毎回勝ちます。
 
 ### Tensors
 
-A tensor is a multi-dimensional array with three critical properties: shape, dtype, and device.
+tensor は、shape、dtype、device という 3 つの重要な properties を持つ multi-dimensional array です。
 
 ```python
 import torch
@@ -50,18 +50,18 @@ x = torch.randn(2, 3, 224, 224) # batch of 2 RGB images, 224x224
 x = torch.tensor([1, 2, 3])     # from a Python list
 ```
 
-**Shape** is the dimensionality. A scalar is shape (), a vector is (n,), a matrix is (m, n), a batch of images is (batch, channels, height, width).
+**Shape** は dimensionality です。scalar は shape ()、vector は (n,)、matrix は (m, n)、images の batch は (batch, channels, height, width) です。
 
-**Dtype** controls precision and memory.
+**Dtype** は precision と memory を制御します。
 
 | dtype | Bits | Range | Use case |
 |-------|------|-------|----------|
-| float32 | 32 | ~7 decimal digits | Default training |
-| float16 | 16 | ~3.3 decimal digits | Mixed precision |
-| bfloat16 | 16 | Same range as float32, less precision | LLM training |
+| float32 | 32 | 約 7 decimal digits | Default training |
+| float16 | 16 | 約 3.3 decimal digits | Mixed precision |
+| bfloat16 | 16 | float32 と同じ range、低い precision | LLM training |
 | int8 | 8 | -128 to 127 | Quantized inference |
 
-**Device** determines where computation happens.
+**Device** は computation がどこで起きるかを決めます。
 
 ```python
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -70,9 +70,9 @@ x = x.to("cuda")
 x = x.cpu()
 ```
 
-Every operation requires all tensors on the same device. This is the #1 PyTorch error beginners hit: `RuntimeError: Expected all tensors to be on the same device`. Fix it by moving everything to the same device before computation.
+すべての operation では、関連する tensors が同じ device 上にある必要があります。これは beginner が最もよく遭遇する PyTorch error です: `RuntimeError: Expected all tensors to be on the same device`。computation の前にすべてを同じ device へ移すことで直します。
 
-**Reshaping** is constant-time -- it changes the metadata, not the data.
+**Reshaping** は constant-time です。data ではなく metadata を変えるだけです。
 
 ```python
 x = torch.randn(2, 3, 4)
@@ -85,7 +85,7 @@ x.squeeze()        # remove size-1 dimensions
 
 ### Autograd
 
-Your mini framework required you to implement backward() for every module. PyTorch does not. It records every operation on tensors into a directed acyclic graph (the computational graph) and then traverses that graph in reverse to compute gradients automatically.
+mini framework では、すべての module に backward() を実装する必要がありました。PyTorch では不要です。PyTorch は tensors に対するすべての operation を directed acyclic graph（computational graph）として記録し、その graph を逆向きにたどって gradients を自動計算します。
 
 ```mermaid
 graph LR
@@ -100,7 +100,7 @@ graph LR
     mul --> |"grad"| w
 ```
 
-The key difference from your framework: PyTorch uses tape-based autodiff. Every operation appends to a "tape" during the forward pass. Calling `.backward()` replays the tape in reverse.
+あなたの framework との重要な違い: PyTorch は tape-based autodiff を使います。forward pass 中のすべての operation が「tape」に追加されます。`.backward()` を呼ぶと、tape を逆向きに再生します。
 
 ```python
 x = torch.randn(3, requires_grad=True)
@@ -110,15 +110,15 @@ z.backward()
 print(x.grad)  # dz/dx = 2x + 3
 ```
 
-Three rules of autograd:
+autograd の 3 つのルール:
 
-1. Only leaf tensors with `requires_grad=True` accumulate gradients
-2. Gradients accumulate by default -- call `optimizer.zero_grad()` before each backward pass
-3. `torch.no_grad()` disables gradient tracking (use during evaluation)
+1. `requires_grad=True` の leaf tensors だけが gradients を蓄積する
+2. gradients は default で蓄積されるため、各 backward pass の前に `optimizer.zero_grad()` を呼ぶ
+3. `torch.no_grad()` は gradient tracking を無効化する（evaluation 中に使う）
 
 ### nn.Module
 
-`nn.Module` is the base class for every neural network component in PyTorch. You already built this abstraction in Lesson 10. PyTorch's version adds automatic parameter registration, recursive module discovery, device management, and state dict serialization.
+`nn.Module` は PyTorch におけるすべての neural network component の base class です。あなたは Lesson 10 でこの abstraction をすでに作りました。PyTorch 版は automatic parameter registration、recursive module discovery、device management、state dict serialization を追加しています。
 
 ```python
 import torch.nn as nn
@@ -137,49 +137,49 @@ class MLP(nn.Module):
         return x
 ```
 
-When you assign an `nn.Module` or `nn.Parameter` as an attribute in `__init__`, PyTorch automatically registers it. `model.parameters()` recursively collects every registered parameter. This is why you never have to manually gather weights like you did in the mini framework.
+`__init__` の中で `nn.Module` または `nn.Parameter` を attribute として割り当てると、PyTorch はそれを自動的に register します。`model.parameters()` は登録されたすべての parameter を recursively に集めます。mini framework のように手動で weights を集めなくてよいのはこのためです。
 
-Key building blocks:
+主要な building blocks:
 
-| Module | What it does | Parameters |
+| Module | 何をするか | Parameters |
 |--------|-------------|------------|
 | nn.Linear(in, out) | Wx + b | in*out + out |
 | nn.Conv2d(in_ch, out_ch, k) | 2D convolution | in_ch*out_ch*k*k + out_ch |
-| nn.BatchNorm1d(features) | Normalize activations | 2 * features |
-| nn.Dropout(p) | Random zeroing | 0 |
+| nn.BatchNorm1d(features) | activations を正規化する | 2 * features |
+| nn.Dropout(p) | random zeroing | 0 |
 | nn.ReLU() | max(0, x) | 0 |
 | nn.GELU() | Gaussian error linear | 0 |
-| nn.Embedding(vocab, dim) | Lookup table | vocab * dim |
-| nn.LayerNorm(dim) | Per-sample normalization | 2 * dim |
+| nn.Embedding(vocab, dim) | lookup table | vocab * dim |
+| nn.LayerNorm(dim) | per-sample normalization | 2 * dim |
 
 ### Loss Functions and Optimizers
 
-PyTorch ships production-ready versions of everything you built.
+PyTorch には、あなたが作ったものの production-ready 版が含まれています。
 
-**Loss functions** (from `torch.nn`):
+**Loss functions**（`torch.nn` から）:
 
 | Loss | Task | Input |
 |------|------|-------|
-| nn.MSELoss() | Regression | Any shape |
-| nn.CrossEntropyLoss() | Multi-class classification | Logits (not softmax) |
-| nn.BCEWithLogitsLoss() | Binary classification | Logits (not sigmoid) |
-| nn.L1Loss() | Regression (robust) | Any shape |
+| nn.MSELoss() | Regression | 任意の shape |
+| nn.CrossEntropyLoss() | Multi-class classification | Logits（softmax ではない） |
+| nn.BCEWithLogitsLoss() | Binary classification | Logits（sigmoid ではない） |
+| nn.L1Loss() | Regression（robust） | 任意の shape |
 | nn.CTCLoss() | Sequence alignment | Log probabilities |
 
-Note: `CrossEntropyLoss` combines `LogSoftmax` + `NLLLoss` internally. Pass raw logits, not softmax outputs. This is a common mistake that produces wrong gradients silently.
+注意: `CrossEntropyLoss` は内部で `LogSoftmax` + `NLLLoss` を組み合わせています。softmax outputs ではなく raw logits を渡してください。これは wrong gradients を静かに生むよくある mistake です。
 
-**Optimizers** (from `torch.optim`):
+**Optimizers**（`torch.optim` から）:
 
-| Optimizer | When to use | Typical LR |
+| Optimizer | いつ使うか | Typical LR |
 |-----------|-------------|-----------|
-| SGD(params, lr, momentum) | CNNs, well-tuned pipelines | 0.01--0.1 |
+| SGD(params, lr, momentum) | CNNs、よく tuning された pipelines | 0.01--0.1 |
 | Adam(params, lr) | Default starting point | 1e-3 |
-| AdamW(params, lr, weight_decay) | Transformers, fine-tuning | 1e-4--1e-3 |
-| LBFGS(params) | Small-scale, second-order | 1.0 |
+| AdamW(params, lr, weight_decay) | Transformers、fine-tuning | 1e-4--1e-3 |
+| LBFGS(params) | Small-scale、second-order | 1.0 |
 
-### The Training Loop
+### Training Loop
 
-Every PyTorch training loop follows the same 5-step pattern. You already know this from Lesson 10.
+すべての PyTorch training loop は同じ 5-step pattern に従います。Lesson 10 ですでに知っているものです。
 
 ```mermaid
 sequenceDiagram
@@ -198,7 +198,7 @@ sequenceDiagram
     end
 ```
 
-The canonical pattern:
+標準 pattern:
 
 ```python
 for epoch in range(num_epochs):
@@ -212,11 +212,11 @@ for epoch in range(num_epochs):
         optimizer.step()
 ```
 
-Five lines inside the batch loop. Five lines that trained GPT-4, Stable Diffusion, and LLaMA. The architecture changes. The data changes. These five lines do not.
+batch loop の中は 5 行です。GPT-4、Stable Diffusion、LLaMA を学習した 5 行です。architecture は変わります。data も変わります。この 5 行は変わりません。
 
 ### Dataset and DataLoader
 
-PyTorch's `Dataset` is an abstract class with two methods: `__len__` and `__getitem__`. `DataLoader` wraps it with batching, shuffling, and multi-process data loading.
+PyTorch の `Dataset` は、`__len__` と `__getitem__` という 2 つの methods を持つ abstract class です。`DataLoader` はこれに batching、shuffling、multi-process data loading を追加します。
 
 ```python
 from torch.utils.data import Dataset, DataLoader
@@ -235,24 +235,24 @@ class MNISTDataset(Dataset):
 loader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=4)
 ```
 
-`num_workers=4` spawns 4 processes to load data in parallel while the GPU trains on the current batch. On disk-bound workloads (large images, audio), this alone can double training speed.
+`num_workers=4` は、GPU が current batch を学習している間に data を並列に load する 4 processes を起動します。disk-bound workloads（大きな images、audio）では、これだけで training speed が 2 倍になることがあります。
 
 ### GPU Training
 
-Moving a model to GPU:
+model を GPU へ移す:
 
 ```python
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 ```
 
-This recursively moves every parameter and buffer to the GPU. Then move each batch during training:
+これはすべての parameters と buffers を recursively に GPU へ移します。その後、training 中に各 batch も移します。
 
 ```python
 inputs, targets = inputs.to(device), targets.to(device)
 ```
 
-**Mixed precision** halves memory usage and doubles throughput on modern GPUs (A100, H100, RTX 4090) by running forward/backward in float16 while keeping the master weights in float32:
+**Mixed precision** は、modern GPUs（A100、H100、RTX 4090）で forward/backward を float16 で実行し、master weights を float32 に保つことで、memory usage を半分にし、throughput を 2 倍にします。
 
 ```python
 from torch.amp import autocast, GradScaler
@@ -272,23 +272,23 @@ for inputs, targets in loader:
 
 | Feature | Mini Framework (L10) | PyTorch | JAX |
 |---------|---------------------|---------|-----|
-| Autodiff | Manual backward() | Tape-based autograd | Functional transforms |
-| Execution | Eager (Python loops) | Eager (C++ kernels) | Traced + JIT compiled |
-| GPU support | No | Yes (CUDA, ROCm, MPS) | Yes (CUDA, TPU) |
+| Autodiff | 手動 backward() | Tape-based autograd | Functional transforms |
+| Execution | Eager（Python loops） | Eager（C++ kernels） | Traced + JIT compiled |
+| GPU support | なし | あり（CUDA、ROCm、MPS） | あり（CUDA、TPU） |
 | Speed (MNIST MLP) | ~300s/epoch | ~0.5s/epoch | ~0.3s/epoch |
-| Module system | Custom Module class | nn.Module | Stateless functions (Flax/Equinox) |
-| Debugging | print() | print(), pdb, breakpoint() | Harder (JIT tracing breaks print) |
-| Ecosystem | None | Hugging Face, Lightning, timm | Flax, Optax, Orbax |
-| Learning curve | You built it | Moderate | Steep (functional paradigm) |
-| Production use | Toy problems | Meta, OpenAI, Anthropic, HF | Google DeepMind, Midjourney |
+| Module system | Custom Module class | nn.Module | Stateless functions（Flax/Equinox） |
+| Debugging | print() | print(), pdb, breakpoint() | 難しい（JIT tracing が print を壊す） |
+| Ecosystem | なし | Hugging Face、Lightning、timm | Flax、Optax、Orbax |
+| Learning curve | 自分で作った | 中程度 | 急（functional paradigm） |
+| Production use | toy problems | Meta、OpenAI、Anthropic、HF | Google DeepMind、Midjourney |
 
-## Build It
+## 作ってみる
 
-A 3-layer MLP trained on MNIST using only PyTorch primitives. No high-level wrappers. No `torchvision.datasets`. We download and parse the raw data ourselves.
+PyTorch primitives だけを使って MNIST で学習する 3-layer MLP です。high-level wrappers は使いません。`torchvision.datasets` も使いません。raw data を自分で download して parse します。
 
-### Step 1: Load MNIST From Raw Files
+### Step 1: Raw Files から MNIST を Load する
 
-MNIST ships as 4 gzipped files: training images (60,000 x 28 x 28), training labels, test images (10,000 x 28 x 28), test labels. We download them and parse the binary format.
+MNIST は 4 つの gzipped files として配布されています: training images（60,000 x 28 x 28）、training labels、test images（10,000 x 28 x 28）、test labels。これらを download し、binary format を parse します。
 
 ```python
 import torch
@@ -328,9 +328,9 @@ def load_labels(filepath):
     return labels
 ```
 
-### Step 2: Define the Model
+### Step 2: Model を定義する
 
-A 3-layer MLP: 784 -> 256 -> 128 -> 10. ReLU activations. Dropout for regularization. No batch norm to keep it simple.
+3-layer MLP: 784 -> 256 -> 128 -> 10。ReLU activations。regularization のための Dropout。単純さを保つため batch norm は使いません。
 
 ```python
 class MNISTModel(nn.Module):
@@ -350,13 +350,13 @@ class MNISTModel(nn.Module):
         return self.net(x)
 ```
 
-The output layer produces 10 raw logits (one per digit). No softmax -- `CrossEntropyLoss` handles that internally.
+output layer は 10 個の raw logits（digit ごとに 1 つ）を出します。softmax は不要です。`CrossEntropyLoss` が内部で処理します。
 
-Parameter count: 784*256 + 256 + 256*128 + 128 + 128*10 + 10 = 235,146. Tiny by modern standards. GPT-2 small has 124M. This trains in seconds.
+Parameter count: 784*256 + 256 + 256*128 + 128 + 128*10 + 10 = 235,146。現代の基準では非常に小さいです。GPT-2 small は 124M です。これは数秒で学習できます。
 
 ### Step 3: Training Loop
 
-The canonical forward-loss-backward-step pattern.
+標準的な forward-loss-backward-step pattern です。
 
 ```python
 def train_one_epoch(model, loader, criterion, optimizer, device):
@@ -395,9 +395,9 @@ def evaluate(model, loader, criterion, device):
     return total_loss / total, correct / total
 ```
 
-Note `torch.no_grad()` during evaluation. This disables autograd, reducing memory usage and speeding up inference. Without it, PyTorch builds a computational graph you never use.
+evaluation 中の `torch.no_grad()` に注目してください。これは autograd を無効化し、memory usage を下げ、inference を速くします。これがないと、PyTorch は使わない computational graph を構築します。
 
-### Step 4: Wire Everything Together
+### Step 4: すべてを接続する
 
 ```python
 def main():
@@ -447,9 +447,9 @@ def main():
     print(f"Final test accuracy: {test_acc:.4f}")
 ```
 
-Expected output after 10 epochs: ~97.8% test accuracy. Training time on CPU: ~30 seconds. On GPU: ~5 seconds. On your mini framework with the same architecture: ~45 minutes.
+10 epochs 後の expected output は、test accuracy 約 97.8% です。CPU での training time は約 30 秒。GPU では約 5 秒。同じ architecture を mini framework で動かすと約 45 分です。
 
-## Use It
+## 使ってみる
 
 ### Quick Comparison: Mini Framework vs PyTorch
 
@@ -460,12 +460,12 @@ Expected output after 10 epochs: ~97.8% test accuracy. Training time on CPU: ~30
 | `optimizer.zero_grad()` | `optimizer.zero_grad()` |
 | `grad = criterion.backward()` then `model.backward(grad)` | `loss.backward()` |
 | `optimizer.step()` | `optimizer.step()` |
-| No GPU | `model.to("cuda")` |
-| Manual backward for every module | Autograd handles everything |
+| GPU なし | `model.to("cuda")` |
+| すべての module に手動 backward | Autograd がすべて処理する |
 
-The interface is nearly identical. The difference is everything under the hood.
+interface はほぼ同じです。違いは hood の下にあるすべてです。
 
-### Saving and Loading Models
+### Models の Save and Load
 
 ```python
 torch.save(model.state_dict(), "model.pt")
@@ -475,7 +475,7 @@ model.load_state_dict(torch.load("model.pt", weights_only=True))
 model.eval()
 ```
 
-Always save `state_dict()` (the parameter dictionary), not the model object. Saving the model object uses pickle, which breaks when you refactor code. State dicts are portable.
+model object ではなく、必ず `state_dict()`（parameter dictionary）を保存してください。model object の保存は pickle を使うため、code を refactor すると壊れます。State dicts は portable です。
 
 ### Learning Rate Scheduling
 
@@ -488,45 +488,45 @@ for epoch in range(10):
     scheduler.step()
 ```
 
-PyTorch ships 15+ schedulers: StepLR, ExponentialLR, CosineAnnealingLR, OneCycleLR, ReduceLROnPlateau. All plug into the same optimizer interface.
+PyTorch には 15 以上の schedulers があります。StepLR、ExponentialLR、CosineAnnealingLR、OneCycleLR、ReduceLROnPlateau。すべて同じ optimizer interface に plug in できます。
 
-## Ship It
+## 成果物
 
-This lesson produces two artifacts:
+この lesson で作る artifacts は 2 つです。
 
-- `outputs/prompt-pytorch-debugger.md` -- a prompt for diagnosing common PyTorch training failures
-- `outputs/skill-pytorch-patterns.md` -- a skill reference for PyTorch training patterns
+- `outputs/prompt-pytorch-debugger.md` -- 一般的な PyTorch training failures を診断するための prompt
+- `outputs/skill-pytorch-patterns.md` -- PyTorch training patterns の skill reference
 
-## Exercises
+## 演習
 
-1. **Add batch normalization.** Insert `nn.BatchNorm1d` after each linear layer (before the activation). Compare test accuracy and training speed vs the dropout-only version. Batch norm should reach 98%+ in fewer epochs.
+1. **batch normalization を追加してください。** 各 linear layer の後（activation の前）に `nn.BatchNorm1d` を挿入します。dropout-only version と test accuracy および training speed を比較してください。Batch norm はより少ない epochs で 98%+ に到達するはずです。
 
-2. **Implement a learning rate finder.** Train for one epoch with exponentially increasing learning rate (from 1e-7 to 1.0). Plot loss vs LR. The optimal LR is just before the loss starts climbing. Use this to pick a better LR for the MNIST model.
+2. **learning rate finder を実装してください。** 1 epoch の間に learning rate を指数的に増やします（1e-7 から 1.0）。loss vs LR を plot します。optimal LR は loss が上がり始める直前です。これを使って MNIST model により良い LR を選んでください。
 
-3. **Port to GPU with mixed precision.** Add `torch.amp.autocast` and `GradScaler` to the training loop. Measure throughput (samples/second) with and without mixed precision on GPU. On an A100, expect ~2x speedup.
+3. **mixed precision 付きで GPU に移植してください。** training loop に `torch.amp.autocast` と `GradScaler` を追加します。GPU 上で mixed precision あり/なしの throughput（samples/second）を測定してください。A100 では約 2x speedup が期待できます。
 
-4. **Build a custom Dataset.** Download Fashion-MNIST (same format as MNIST but with clothing items). Implement a `FashionMNISTDataset(Dataset)` class with `__getitem__` and `__len__`. Train the same MLP and compare accuracy. Fashion-MNIST is harder -- expect ~88% vs ~98%.
+4. **custom Dataset を作ってください。** Fashion-MNIST（MNIST と同じ format だが clothing items）を download します。`__getitem__` と `__len__` を持つ `FashionMNISTDataset(Dataset)` class を実装します。同じ MLP を学習し、accuracy を比較してください。Fashion-MNIST はより難しく、約 98% に対して約 88% が期待値です。
 
-5. **Replace Adam with SGD + momentum.** Train with `SGD(params, lr=0.01, momentum=0.9)`. Compare convergence curves. Then add a `CosineAnnealingLR` scheduler and see if SGD catches up to Adam by epoch 10.
+5. **Adam を SGD + momentum に置き換えてください。** `SGD(params, lr=0.01, momentum=0.9)` で学習します。convergence curves を比較してください。その後 `CosineAnnealingLR` scheduler を追加し、SGD が epoch 10 までに Adam に追いつくか確認してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Tensor | "A multi-dimensional array" | A typed, device-aware array with automatic differentiation support baked into every operation |
-| Autograd | "Automatic backprop" | A tape-based system that records operations during forward pass, then replays them in reverse to compute exact gradients |
-| nn.Module | "A layer" | The base class for any differentiable computation block -- registers parameters, supports nesting, handles train/eval modes |
-| state_dict | "The model weights" | An OrderedDict mapping parameter names to tensors -- the portable, serializable representation of a trained model |
-| .backward() | "Compute gradients" | Traverse the computational graph in reverse, computing and accumulating gradients for every leaf tensor with requires_grad=True |
-| .to(device) | "Move to GPU" | Recursively transfer all parameters and buffers to the specified device (CPU, CUDA, MPS) |
-| DataLoader | "The data pipeline" | An iterator that batches, shuffles, and optionally parallelizes data loading from a Dataset |
-| Mixed precision | "Use float16" | Train with float16 forward/backward for speed while keeping float32 master weights for numerical stability |
-| Eager execution | "Run it now" | Operations execute immediately when called, not deferred to a later compilation step -- the core design choice that differentiates PyTorch from TF 1.x |
-| zero_grad | "Reset gradients" | Set all parameter gradients to zero before the next backward pass, since PyTorch accumulates gradients by default |
+| Tensor | "A multi-dimensional array" | すべての operation に automatic differentiation support が組み込まれた、型付きで device-aware な array |
+| Autograd | "Automatic backprop" | forward pass 中に operations を記録し、逆向きに再生して exact gradients を計算する tape-based system |
+| nn.Module | "A layer" | 任意の differentiable computation block の base class。parameters を register し、nesting を support し、train/eval modes を扱う |
+| state_dict | "The model weights" | parameter names から tensors への OrderedDict。trained model の portable で serializable な表現 |
+| .backward() | "Compute gradients" | computational graph を逆向きにたどり、requires_grad=True のすべての leaf tensor について gradients を計算・蓄積する |
+| .to(device) | "Move to GPU" | すべての parameters と buffers を指定 device（CPU、CUDA、MPS）へ recursively に転送する |
+| DataLoader | "The data pipeline" | Dataset からの data loading を batch 化し、shuffle し、必要なら parallelize する iterator |
+| Mixed precision | "Use float16" | numerical stability のため float32 master weights を保ちながら、speed のため float16 forward/backward で学習する |
+| Eager execution | "Run it now" | operations を呼び出し時に即座に実行する。後の compilation step へ defer しない。PyTorch を TF 1.x から区別する中心的 design choice |
+| zero_grad | "Reset gradients" | PyTorch は default で gradients を蓄積するため、次の backward pass の前にすべての parameter gradients を 0 にすること |
 
-## Further Reading
+## 参考資料
 
-- Paszke et al., "PyTorch: An Imperative Style, High-Performance Deep Learning Library" (2019) -- the original paper explaining PyTorch's design tradeoffs
-- PyTorch Tutorials: "Learning PyTorch with Examples" (https://pytorch.org/tutorials/beginner/pytorch_with_examples.html) -- the official path from tensors to nn.Module
-- PyTorch Performance Tuning Guide (https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html) -- mixed precision, DataLoader workers, pinned memory, and other production optimizations
-- Horace He, "Making Deep Learning Go Brrrr" (https://horace.io/brrr_intro.html) -- why GPU training is fast, with PyTorch-specific optimization strategies
+- Paszke et al., "PyTorch: An Imperative Style, High-Performance Deep Learning Library" (2019) -- PyTorch の design tradeoffs を説明する original paper
+- PyTorch Tutorials: "Learning PyTorch with Examples" (https://pytorch.org/tutorials/beginner/pytorch_with_examples.html) -- tensors から nn.Module までの official path
+- PyTorch Performance Tuning Guide (https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html) -- mixed precision、DataLoader workers、pinned memory、その他 production optimizations
+- Horace He, "Making Deep Learning Go Brrrr" (https://horace.io/brrr_intro.html) -- GPU training が速い理由を、PyTorch-specific optimization strategies とともに説明する

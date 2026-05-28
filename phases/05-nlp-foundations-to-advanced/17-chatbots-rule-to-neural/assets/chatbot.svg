@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -7,7 +7,7 @@
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 11px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .stage { font-size: 11px; fill: #c0392b; font-style: italic; text-anchor: middle; }
       .note { font-size: 10px; fill: #666; font-style: italic; }
       .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
@@ -15,59 +15,59 @@
   </defs>
 
   <rect class="box" x="20" y="30" width="200" height="300" rx="4"/>
-  <text class="label" x="120" y="55" text-anchor="middle">rule-based</text>
-  <text class="note" x="35" y="78">1960s → today for safety-critical</text>
-  <text class="content" x="35" y="105">IF matches "i want"</text>
-  <text class="content" x="35" y="125">THEN "why do you want"</text>
-  <text class="content" x="35" y="165">intent classifier</text>
-  <text class="content" x="35" y="183">+ slot filling</text>
-  <text class="content" x="35" y="201">+ state machine</text>
-  <text class="note" x="35" y="235">pro: predictable,</text>
-  <text class="note" x="35" y="250">deterministic,</text>
-  <text class="note" x="35" y="265">no hallucination</text>
-  <text class="note" x="35" y="290">con: narrow scope</text>
-  <text class="note" x="35" y="305">doesn't handle novel inputs</text>
+  <text class="label" x="120" y="55" text-anchor="middle">ルールベース</text>
+  <text class="note" x="35" y="78">1960年代→現在も安全重視で</text>
+  <text class="content" x="35" y="105">IF 「ほしい」に一致</text>
+  <text class="content" x="35" y="125">THEN 「なぜほしいの？」</text>
+  <text class="content" x="35" y="165">意図分類器</text>
+  <text class="content" x="35" y="183">+ スロット抽出</text>
+  <text class="content" x="35" y="201">+ 状態機械</text>
+  <text class="note" x="35" y="235">利点: 予測可能、</text>
+  <text class="note" x="35" y="250">決定的、</text>
+  <text class="note" x="35" y="265">幻覚なし</text>
+  <text class="note" x="35" y="290">弱点: 範囲が狭い</text>
+  <text class="note" x="35" y="305">新規入力に弱い</text>
 
   <rect class="box" x="240" y="30" width="200" height="300" rx="4"/>
-  <text class="label" x="340" y="55" text-anchor="middle">retrieval-based</text>
-  <text class="note" x="255" y="78">2010s. still ships for FAQs</text>
-  <text class="content" x="255" y="105">encode utterance,</text>
-  <text class="content" x="255" y="123">find nearest match,</text>
-  <text class="content" x="255" y="141">return stored response</text>
-  <text class="content" x="255" y="180">threshold for refusal</text>
-  <text class="note" x="255" y="220">pro: handles paraphrase,</text>
-  <text class="note" x="255" y="235">no hallucination,</text>
-  <text class="note" x="255" y="250">scales cheaply</text>
-  <text class="note" x="255" y="280">con: can't combine info,</text>
-  <text class="note" x="255" y="295">can't do multi-turn</text>
-  <text class="note" x="255" y="310">reasoning</text>
+  <text class="label" x="340" y="55" text-anchor="middle">検索ベース</text>
+  <text class="note" x="255" y="78">2010年代。FAQで現役</text>
+  <text class="content" x="255" y="105">発話をエンコード、</text>
+  <text class="content" x="255" y="123">最近傍を検索、</text>
+  <text class="content" x="255" y="141">保存応答を返す</text>
+  <text class="content" x="255" y="180">拒否しきい値</text>
+  <text class="note" x="255" y="220">利点: 言い換えに強い、</text>
+  <text class="note" x="255" y="235">幻覚なし、</text>
+  <text class="note" x="255" y="250">低コストに拡張</text>
+  <text class="note" x="255" y="280">弱点: 情報統合が苦手、</text>
+  <text class="note" x="255" y="295">複数ターン推論が</text>
+  <text class="note" x="255" y="310">苦手</text>
 
   <rect class="box" x="460" y="30" width="200" height="300" rx="4"/>
-  <text class="label" x="560" y="55" text-anchor="middle">neural (seq2seq)</text>
-  <text class="note" x="475" y="78">2014-2019. rarely solo now</text>
-  <text class="content" x="475" y="105">encoder-decoder on</text>
-  <text class="content" x="475" y="123">conversation logs</text>
-  <text class="content" x="475" y="141">generates from scratch</text>
-  <text class="note" x="475" y="180">pro: fluent phrasing</text>
-  <text class="note" x="475" y="220">con: generic outputs</text>
-  <text class="note" x="475" y="235">("I don't know"),</text>
-  <text class="note" x="475" y="250">factual drift, no grounding,</text>
-  <text class="note" x="475" y="265">no tool use</text>
-  <text class="note" x="475" y="290">used inside hybrids today,</text>
-  <text class="note" x="475" y="305">not solo</text>
+  <text class="label" x="560" y="55" text-anchor="middle">ニューラル (系列変換)</text>
+  <text class="note" x="475" y="78">2014-2019。今は単独少ない</text>
+  <text class="content" x="475" y="105">会話ログで学習した</text>
+  <text class="content" x="475" y="123">エンコーダ-デコーダ</text>
+  <text class="content" x="475" y="141">ゼロから生成</text>
+  <text class="note" x="475" y="180">利点: 流暢な表現</text>
+  <text class="note" x="475" y="220">弱点: 汎用的な返答</text>
+  <text class="note" x="475" y="235">（「わかりません」）、</text>
+  <text class="note" x="475" y="250">事実ずれ、根拠なし、</text>
+  <text class="note" x="475" y="265">ツール利用なし</text>
+  <text class="note" x="475" y="290">現在はハイブリッド内で</text>
+  <text class="note" x="475" y="305">使われる</text>
 
   <rect class="hot" x="680" y="30" width="200" height="300" rx="4"/>
-  <text class="label" x="780" y="55" text-anchor="middle">LLM agent loop</text>
-  <text class="note" x="695" y="78">2023 → 2026 production</text>
-  <text class="content" x="695" y="105">plan → call tool</text>
-  <text class="content" x="695" y="123">   → observe → decide</text>
-  <text class="content" x="695" y="141">   → ... → answer</text>
-  <text class="content" x="695" y="175">RAG grounding</text>
-  <text class="content" x="695" y="195">tool contracts</text>
-  <text class="content" x="695" y="215">eval + observability</text>
-  <text class="note" x="695" y="245">pro: takes actions,</text>
-  <text class="note" x="695" y="260">handles novelty</text>
-  <text class="note" x="695" y="290">con: harder to reason about,</text>
-  <text class="note" x="695" y="305">prompt injection,</text>
-  <text class="note" x="695" y="320">infinite loops</text>
+  <text class="label" x="780" y="55" text-anchor="middle">LLM エージェントループ</text>
+  <text class="note" x="695" y="78">2023→2026 本番運用</text>
+  <text class="content" x="695" y="105">計画 → ツール呼び出し</text>
+  <text class="content" x="695" y="123">   → 観察 → 判断</text>
+  <text class="content" x="695" y="141">   → ... → 回答</text>
+  <text class="content" x="695" y="175">RAG グラウンディング</text>
+  <text class="content" x="695" y="195">ツール契約</text>
+  <text class="content" x="695" y="215">評価 + 可観測性</text>
+  <text class="note" x="695" y="245">利点: 行動できる、</text>
+  <text class="note" x="695" y="260">新規入力に強い</text>
+  <text class="note" x="695" y="290">弱点: 挙動理解が難しい、</text>
+  <text class="note" x="695" y="305">プロンプトインジェクション、</text>
+  <text class="note" x="695" y="320">無限ループ</text>
 </svg>

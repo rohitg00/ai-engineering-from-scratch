@@ -1,31 +1,31 @@
 ---
 name: rollout-runbook
-description: Design a shadow → canary → A/B → 100% rollout plan for a new LLM model or prompt template, with five canary gates, noise-floor-aware thresholds, and a seconds-fast rollback path.
+description: 新しい LLM model または prompt template の shadow → canary → A/B → 100% rollout plan を設計する。5つの canary gates、noise-floor-aware thresholds、数秒で戻せる rollback path を含める。
 version: 1.0.0
 phase: 17
 lesson: 20
 tags: [rollout, canary, shadow, progressive-delivery, feature-flags, argo-rollouts, flagger, kserve]
 ---
 
-Given a candidate change (new model, new prompt template, new router policy), baseline production metrics, and risk tolerance, produce a rollout runbook.
+candidate change（new model、new prompt template、new router policy）、baseline production metrics、risk tolerance が与えられたら、rollout runbook を作成する。
 
-Produce:
+作成するもの:
 
-1. Shadow plan. Duration (24-72 hours). Metrics logged: outputs, token counts, latency, refusal, error. Alert on: >20% cost shift, >30% output length shift, any schema violation.
-2. Canary progression. Stages (1% → 10% → 25% → 50% → 75% → 100%). Duration per stage (30m-24h based on traffic volume; ensure each stage has enough data for statistical confidence).
-3. Five gates. Specify the exact thresholds for latency P99, cost/request, error/refusal, output-length P99, thumbs-down rate. Set above noise floor (expect 15% irreducible variance).
-4. Tooling. Name the rollout controller (Argo Rollouts, Flagger, KServe) and the feature flag system for instant rollback.
-5. Rollback path. Document the three actions: flip flag → revert pinned digest → verify. Target time: under 60 seconds end to end.
-6. Skip A/B? Justify. Improved-variant changes skip A/B; distinctly different changes (new behavior, new cost curve) require A/B.
+1. Shadow plan. duration（24-72 hours）。logged metrics: outputs、token counts、latency、refusal、error。alert on: >20% cost shift、>30% output length shift、any schema violation。
+2. Canary progression. stages（1% → 10% → 25% → 50% → 75% → 100%）。stage ごとの duration（traffic volume に応じて30m-24h。各 stage に statistical confidence に十分な data を確保する）。
+3. Five gates. latency P99、cost/request、error/refusal、output-length P99、thumbs-down rate の正確な threshold を指定する。noise floor より上に設定する（15% irreducible variance を想定）。
+4. Tooling. rollout controller（Argo Rollouts、Flagger、KServe）と instant rollback 用 feature flag system を命名する。
+5. Rollback path. 3 actions を document する: flip flag → revert pinned digest → verify。target time: end to end で60秒未満。
+6. Skip A/B? 正当化する。improved-variant change は A/B を skip。distinctly different change（new behavior、new cost curve）は A/B が必要。
 
-Hard rejects:
-- Skipping shadow mode. Refuse — cost spikes and length regressions slip past offline eval.
-- Gates tighter than 15% variance. Refuse — false alarms will halt legitimate rollouts.
-- Rollback that requires redeploy. Refuse — it is not a rollback, it is a damage report.
+強い拒否条件:
+- shadow mode を skip する。拒否する。cost spike と length regression は offline eval をすり抜ける。
+- 15% variance より厳しい gates。拒否する。false alarm が legitimate rollout を止める。
+- redeploy が必要な rollback。拒否する。それは rollback ではなく damage report である。
 
-Refusal rules:
-- If the change is safety-critical (e.g., PII handling change), require explicit additional gate: zero PII leakage in shadow sample before starting canary.
-- If traffic volume is <100 req/hour, require extended canary stages — otherwise gate noise overwhelms signal.
-- If the team cannot provide baseline metrics for the five canary gates, refuse the rollout — baseline is prerequisite.
+拒否ルール:
+- change が safety-critical（例: PII handling change）の場合、追加 gate を明示的に要求する: canary 前に shadow sample で zero PII leakage。
+- traffic volume が <100 req/hour の場合、extended canary stages を必須にする。そうでなければ gate noise が signal を圧倒する。
+- team が5つの canary gates の baseline metrics を提供できない場合、rollout を拒否する。baseline は prerequisite。
 
-Output: a one-page runbook with shadow, canary, gates, tooling, rollback, A/B posture. End with a rollback drill requirement: rehearse rollback once before first real deploy.
+出力: shadow、canary、gates、tooling、rollback、A/B posture を含む1ページ runbook。最後に rollback drill requirement を置く: 初回 real deploy 前に rollback を一度 rehearse する。

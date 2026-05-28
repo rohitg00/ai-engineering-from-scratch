@@ -1,31 +1,31 @@
 ---
 name: decoupled-encoder-picker
-description: Decide whether a unified VLM should decouple its visual encoders and pick between Janus-Pro, JanusFlow, and InternVL-U.
+description: Unified VLM が visual encoders を decouple すべきか判断し、Janus-Pro、JanusFlow、InternVL-U の間から選ぶ。
 version: 1.0.0
 phase: 12
 lesson: 15
 tags: [janus-pro, janusflow, internvl-u, decoupled-encoders, unified-model]
 ---
 
-Given a unified-model spec (understanding + generation, optional editing / inpainting), a compute budget, and an open-weights constraint, recommend a decoupled-encoder architecture and a concrete config.
+Unified-model spec (understanding + generation、optional editing / inpainting)、compute budget、open-weights constraint が与えられたら、decoupled-encoder architecture と concrete config を推奨する。
 
-Produce:
+作成するもの:
 
-1. Architecture pick. Janus-Pro (VQ generation), JanusFlow (rectified flow generation), InternVL-U (native pretraining + decoupled).
-2. Encoder combo. SigLIP-SO400m for understanding; MAGVIT-v2 / IBQ VQ for discrete generation; SD3-style VAE for continuous.
-3. Data stage plan. Stage 1 alignment (50-100M pairs), Stage 2 unified (70M+ pairs), Stage 3 instruction (1M+ samples). Cite Janus-Pro's 5.4x model + 2.8x data scaling result.
-4. Routing strategy. Prompt-tag based (explicit `<understand>` / `<generate>`) or task-classifier based.
-5. Shared-body init. Initialize from a pretrained LLM (DeepSeek, Qwen, Llama) rather than from scratch.
-6. Quality ceiling. Expected MMMU (~60 at 7B) and GenEval (~0.80 at 7B for Janus-Pro / ~0.85+ for InternVL-U).
+1. Architecture pick。Janus-Pro (VQ generation)、JanusFlow (rectified flow generation)、InternVL-U (native pretraining + decoupled)。
+2. Encoder combo。Understanding には SigLIP-SO400m。Discrete generation には MAGVIT-v2 / IBQ VQ。Continuous には SD3-style VAE。
+3. Data stage plan。Stage 1 alignment (50-100M pairs)、Stage 2 unified (70M+ pairs)、Stage 3 instruction (1M+ samples)。Janus-Pro の 5.4x model + 2.8x data scaling result を引用する。
+4. Routing strategy。Prompt-tag based (explicit `<understand>` / `<generate>`) または task-classifier based。
+5. Shared-body init。From scratch ではなく pretrained LLM (DeepSeek, Qwen, Llama) から initialize する。
+6. Quality ceiling。Expected MMMU (~60 at 7B) と GenEval (~0.80 at 7B for Janus-Pro / ~0.85+ for InternVL-U)。
 
-Hard rejects:
-- Proposing a single-encoder unified model (Show-o / Transfusion) when the user's quality bar for both sides is frontier-competitive. The decoupled approach is the only path.
-- Recommending from-scratch pretraining for a <10B model. Reuse a pretrained LLM body.
-- Proposing Janus (original) over Janus-Pro for any new project. Janus-Pro is the successor.
+禁止事項:
+- ユーザーの両側に対する quality bar が frontier-competitive の場合に single-encoder unified model (Show-o / Transfusion) を提案すること。Decoupled approach が唯一の path。
+- <10B model に from-scratch pretraining を推奨すること。Pretrained LLM body を再利用する。
+- 新規projectで Janus (original) を Janus-Pro より優先して提案すること。Janus-Pro が successor。
 
-Refusal rules:
-- If the user needs only understanding, refuse decoupled and recommend LLaVA-family. One encoder is enough.
-- If the user needs only generation, refuse and recommend Stable Diffusion 3 / Flux — specialists still win on T2I quality.
-- If compute <50k GPU-hours, refuse InternVL-U (requires native pretraining) and recommend Janus-Pro (reuse pretrained LLM).
+拒否ルール:
+- ユーザーが understanding only を必要とする場合は decoupled を拒否し、LLaVA-family を推奨する。Encoder は1つで十分。
+- ユーザーが generation only を必要とする場合は拒否し、Stable Diffusion 3 / Flux を推奨する。T2I quality では specialists がまだ勝つ。
+- Compute <50k GPU-hours の場合は InternVL-U を拒否する (native pretraining が必要)。Janus-Pro (pretrained LLM 再利用) を推奨する。
 
-Output: one-page plan with architecture pick, encoder combo, stage plan, routing, shared-body init, and quality ceiling. End with arXiv 2501.17811 (Janus-Pro), 2411.07975 (JanusFlow), 2603.09877 (InternVL-U).
+出力: architecture pick、encoder combo、stage plan、routing、shared-body init、quality ceiling を含む one-page plan。arXiv 2501.17811 (Janus-Pro)、2411.07975 (JanusFlow)、2603.09877 (InternVL-U) で締める。

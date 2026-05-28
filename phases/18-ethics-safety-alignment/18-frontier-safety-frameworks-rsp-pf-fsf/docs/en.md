@@ -1,137 +1,137 @@
 # Frontier Safety Frameworks — RSP, PF, FSF
 
-> Three major-lab frameworks define the 2026 industry governance of frontier capability. Anthropic Responsible Scaling Policy v3.0 (February 2026) introduces tiered AI Safety Levels (ASL-1 through ASL-5+), modeled on biosafety levels, with ASL-3 activated May 2025 for CBRN-relevant models. OpenAI Preparedness Framework v2 (April 2025) defines five criteria for tracked capabilities and separates Capabilities Reports from Safeguards Reports. DeepMind Frontier Safety Framework v3.0 (September 2025) introduces Critical Capability Levels including a new Harmful Manipulation CCL. All three now include competitor-adjustment clauses allowing deferral if peer labs ship without comparable safeguards. Cross-lab alignment remains structural, not terminological: "Capability Thresholds," "High Capability thresholds," and "Critical Capability Levels" denote analogous constructs.
+> 3つの主要 lab framework が、2026 年の frontier capability に関する industry governance を定義しています。Anthropic Responsible Scaling Policy v3.0 (February 2026) は、biosafety levels をモデルにした tiered AI Safety Levels (ASL-1 から ASL-5+) を導入し、CBRN-relevant models について ASL-3 が 2025年5月に activated されました。OpenAI Preparedness Framework v2 (April 2025) は tracked capabilities の5 criteria を定義し、Capabilities Reports と Safeguards Reports を分離します。DeepMind Frontier Safety Framework v3.0 (September 2025) は、新しい Harmful Manipulation CCL を含む Critical Capability Levels を導入します。3つすべてに、peer labs が comparable safeguards なしで ship した場合に requirements を defer できる competitor-adjustment clauses が含まれています。cross-lab alignment は用語ではなく構造にあります。"Capability Thresholds"、"High Capability thresholds"、"Critical Capability Levels" は analogous constructs を指します。
 
-**Type:** Learn
-**Languages:** none
-**Prerequisites:** Phase 18 · 17 (WMDP), Phase 18 · 07-09 (deception failures)
-**Time:** ~75 minutes
+**種別:** 学習
+**言語:** なし
+**前提条件:** Phase 18 · 17 (WMDP), Phase 18 · 07-09 (deception failures)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Describe Anthropic's ASL tier structure and what activated ASL-3.
-- Name the five OpenAI Preparedness Framework v2 criteria for tracked capabilities.
-- Describe DeepMind's Critical Capability Level structure and the Harmful Manipulation CCL.
-- Explain the competitor-adjustment clauses and why they matter for race dynamics.
-- Define a safety case and describe the three-pillar structure (monitoring, illegibility, incapability).
+- Anthropic の ASL tier structure と、ASL-3 が何によって activated されたかを説明する。
+- OpenAI Preparedness Framework v2 の tracked capabilities に関する5 criteria を挙げる。
+- DeepMind の Critical Capability Level structure と Harmful Manipulation CCL を説明する。
+- competitor-adjustment clauses と、それが race dynamics にとって重要な理由を説明する。
+- safety case を定義し、3 pillars (monitoring、illegibility、incapability) を説明する。
 
-## The Problem
+## 問題
 
-Lessons 7-17 establish that deception is possible, dual-use capability exists, and evaluation has limits. A lab with a frontier-capable model needs an internal governance structure that:
-- Defines thresholds for when new safeguards are required.
-- Defines required evaluations before scaling.
-- Describes what a safety case looks like.
-- Handles the race-dynamic problem (if competitors ship without safeguards, what do you do?).
+Lessons 7-17 は、deception が可能であり、dual-use capability が存在し、evaluation には限界があることを示しました。frontier-capable model を持つ lab には、次を満たす internal governance structure が必要です。
+- いつ新しい safeguards が必要になるかの thresholds を定義する。
+- scaling 前に必要な evaluations を定義する。
+- safety case の形を記述する。
+- race-dynamic problem (competitors が safeguards なしで ship したらどうするか) に対応する。
 
-The three 2025-2026 frameworks are the state of the art — imperfect, evolving, and aligned enough across labs that the governance question is now whether the frameworks are adequate, not whether they exist.
+2025-2026 年の3つの frameworks は state of the art です。不完全で、進化中で、しかも labs 間で十分に aligned しているため、governance の問いは「frameworks が存在するか」ではなく「frameworks が十分か」になっています。
 
-## The Concept
+## コンセプト
 
 ### Anthropic Responsible Scaling Policy v3.0 (February 2026)
 
 ASL structure:
-- ASL-1: not a frontier model (subsumed by weaker-than-frontier baseline).
-- ASL-2: current frontier baseline; deployed with usual safeguards.
-- ASL-3: substantially higher risk of catastrophic misuse; CBRN-relevant capabilities. Activated May 2025.
-- ASL-4: AI R&D-2 crossing threshold; models that can automate entry-level AI research.
-- ASL-5+: advanced AI R&D; models that dramatically accelerate effective scaling.
+- ASL-1: frontier model ではない (weaker-than-frontier baseline に含まれる)。
+- ASL-2: 現在の frontier baseline。通常の safeguards で deployed。
+- ASL-3: catastrophic misuse の risk が大幅に高い。CBRN-relevant capabilities。2025年5月に activated。
+- ASL-4: AI R&D-2 crossing threshold。entry-level AI research を automate できる models。
+- ASL-5+: advanced AI R&D。effective scaling を劇的に加速する models。
 
-New in v3.0:
-- Frontier Safety Roadmaps (public in redacted form).
-- Risk Reports (quarterly, some externally reviewed).
-- AI R&D is disaggregated into AI R&D-2 and AI R&D-4.
-- Once AI R&D-4 is crossed, an affirmative safety case is required, identifying misalignment risks from models pursuing misaligned goals.
+v3.0 の新要素:
+- Frontier Safety Roadmaps (redacted 形式で公開)。
+- Risk Reports (quarterly、一部は external review)。
+- AI R&D を AI R&D-2 と AI R&D-4 に分解。
+- AI R&D-4 を超えると affirmative safety case が必要になり、misaligned goals を追求する models による misalignment risks を特定する。
 
 ### OpenAI Preparedness Framework v2 (April 15, 2025)
 
-Five criteria for tracked capabilities:
-- **Plausible.** Reasonable threat model exists.
-- **Measurable.** Empirical evaluation possible.
-- **Severe.** Harm is large.
-- **Net-new.** Not a pre-existing risk scaled up.
-- **Instantaneous-or-irremediable.** Harm occurs fast or cannot be undone.
+tracked capabilities の5 criteria:
+- **Plausible。** reasonable threat model が存在する。
+- **Measurable。** empirical evaluation が可能。
+- **Severe。** harm が大きい。
+- **Net-new。** pre-existing risk を scale up しただけではない。
+- **Instantaneous-or-irremediable。** harm が高速に発生するか、取り返しがつかない。
 
-Capabilities that meet all five are tracked. Others are not.
+5つすべてを満たす capability が tracked されます。それ以外は tracked されません。
 
-Other PF v2 structure:
-- Separate Capabilities Reports (what the model can do) from Safeguards Reports (what controls exist).
-- Safety Advisory Group reviews.
-- Leadership approves; Board's Safety & Security Committee oversees.
-- "Adjustment clause": OpenAI may reduce requirements if another lab ships without comparable safeguards.
+PF v2 のその他の構造:
+- Capabilities Reports (model が何をできるか) と Safeguards Reports (どの controls があるか) を分離。
+- Safety Advisory Group が review。
+- Leadership が approve し、Board の Safety & Security Committee が oversee。
+- "Adjustment clause": 別 lab が comparable safeguards なしで ship した場合、OpenAI は requirements を reduce できる。
 
 ### DeepMind Frontier Safety Framework v3.0 (September 2025)
 
-Critical Capability Levels (CCLs) by domain:
+domain ごとの Critical Capability Levels (CCLs):
 - Bioweapon Uplift
 - Cyber Uplift
 - ML R&D Acceleration
-- Harmful Manipulation (new in v3.0): models that could substantially change beliefs/behavior in high-stakes contexts.
+- Harmful Manipulation (v3.0 の新規): high-stakes contexts で beliefs/behavior を大きく変え得る models。
 
-v2.0 (February 2025) added a Deceptive Alignment section and higher security levels for ML R&D CCLs.
+v2.0 (February 2025) は Deceptive Alignment section と、ML R&D CCLs 向けのより高い security levels を追加しました。
 
 ### Cross-lab alignment
 
-- Anthropic "Capability Thresholds."
-- DeepMind "Critical Capability Levels."
-- OpenAI "High Capability thresholds."
+- Anthropic "Capability Thresholds"。
+- DeepMind "Critical Capability Levels"。
+- OpenAI "High Capability thresholds"。
 
-No industry-standard terminology. Structurally aligned: three tiers of frontier capability with published evaluation criteria. All three include competitor-adjustment clauses (2025 onward).
+industry-standard terminology はありません。構造は aligned しています: published evaluation criteria を持つ frontier capability の3 tiers。3つすべてに competitor-adjustment clauses (2025 onward) が含まれます。
 
 ### Safety cases
 
-A safety case is a written argument that a deployment is acceptably safe under worst-case assumptions. The standard structure targets three pillars:
+safety case とは、worst-case assumptions のもとで deployment が acceptably safe であることを示す written argument です。標準構造は3 pillars を対象にします。
 
-- **Monitoring.** Can we detect bad behaviour if it occurs?
-- **Illegibility.** Does the model lack the ability to execute a coherent plan to cause harm?
-- **Incapability.** Does the model lack the capability to cause the harm in question?
+- **Monitoring。** 悪い behaviour が起きた場合に検出できるか。
+- **Illegibility。** model は harm を引き起こす coherent plan を実行する能力を欠いているか。
+- **Incapability。** model は問題の harm を引き起こす capability を欠いているか。
 
-Different safety cases target different pillars. For a ASL-3 CBRN case, incapability (via unlearning) is the primary target. For deceptive alignment, monitoring and illegibility are targets. For cyber uplift, all three are relevant.
+異なる safety cases は異なる pillars を対象にします。ASL-3 CBRN case では、incapability (unlearning 経由) が主な対象です。deceptive alignment では monitoring と illegibility が対象です。cyber uplift では3つすべてが relevant です。
 
-### The race-dynamic problem
+### race-dynamic problem
 
-Competitor-adjustment clauses are controversial. Critics argue they create a race to the bottom: if all three labs will reduce requirements when a competitor defects, the equilibrium shifts toward defection. Defenders argue the alternative (unilateral safeguards) produces worse outcomes if the defecting lab is less safety-conscious.
+competitor-adjustment clauses は論争的です。批判者は、これが race to the bottom を作ると主張します。3 labs がすべて、competitor が defection したときに requirements を下げるなら、均衡は defection 側に寄ります。擁護者は、defecting lab の方が safety-conscious でない場合、unilateral safeguards の代替案はより悪い outcomes を生むと主張します。
 
-UK AISI, US CAISI, and EU AI Office (Lesson 24) are the external governance counterparts. The lab frameworks are voluntary; the regulatory frameworks are emerging.
+UK AISI、US CAISI、EU AI Office (Lesson 24) は external governance counterparts です。lab frameworks は voluntary であり、regulatory frameworks は emerging です。
 
-### Where this fits in Phase 18
+### Phase 18 における位置づけ
 
-Lessons 17-18 are the measurement-and-governance layer on top of the deception and red-team analyses. Lessons 19-24 cover welfare, bias, privacy, watermarking, and regulatory structure. Lesson 28 maps the research ecosystem (MATS, Redwood, Apollo, METR) that operationalizes the evaluations.
+Lessons 17-18 は、deception と red-team analyses の上にある measurement-and-governance layer です。Lessons 19-24 は welfare、bias、privacy、watermarking、regulatory structure を扱います。Lesson 28 は evaluations を operationalize する research ecosystem (MATS、Redwood、Apollo、METR) を map します。
 
-## Use It
+## 使ってみる
 
-No code for this lesson. Read the three primary sources: RSP v3.0, PF v2, FSF v3.0. Map each lab's tier structure to the others and identify one threshold each lab defines that the others do not.
+この lesson には code はありません。3つの primary sources: RSP v3.0、PF v2、FSF v3.0 を読んでください。各 lab の tier structure を互いに対応づけ、それぞれが定義していて他が定義していない threshold を1つ特定してください。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-framework-diff.md`. Given a safety framework or release note, it compares the framework's threshold definitions, evaluations required, and safety-case structure against RSP v3.0, PF v2, FSF v3.0 and flags cross-lab gaps.
+この lesson は `outputs/skill-framework-diff.md` を生成します。safety framework または release note が与えられたら、その framework の threshold definitions、required evaluations、safety-case structure を RSP v3.0、PF v2、FSF v3.0 と比較し、cross-lab gaps を flag します。
 
-## Exercises
+## 演習
 
-1. Read RSP v3.0, PF v2, and FSF v3.0. Compile a table of each lab's CBRN threshold, each's AI R&D threshold, and each's required pre-deployment evaluation.
+1. RSP v3.0、PF v2、FSF v3.0 を読んでください。各 lab の CBRN threshold、AI R&D threshold、required pre-deployment evaluation を表にしてください。
 
-2. The competitor-adjustment clause is in all three frameworks (2025+). Write one paragraph arguing for it; write one paragraph arguing against. Identify the assumption each position depends on.
+2. competitor-adjustment clause は3 frameworks すべてにあります (2025+)。賛成する paragraph を1つ、反対する paragraph を1つ書いてください。それぞれの立場が依存する assumption を特定してください。
 
-3. Design a safety case for a model crossing Anthropic's AI R&D-4 threshold. Name the evidence each of the three pillars (monitoring, illegibility, incapability) requires.
+3. Anthropic の AI R&D-4 threshold を超える model の safety case を設計してください。3 pillars (monitoring、illegibility、incapability) それぞれについて必要な evidence を挙げてください。
 
-4. DeepMind's FSF v3.0 introduces a Harmful Manipulation CCL. Propose three empirical measurements that would indicate a model has crossed this threshold.
+4. DeepMind の FSF v3.0 は Harmful Manipulation CCL を導入します。model がこの threshold を超えたことを示す empirical measurements を3つ提案してください。
 
-5. Read METR's "Common Elements of Frontier AI Safety Policies" (2025). Name the three strongest cross-lab convergences and the two largest divergences.
+5. METR の "Common Elements of Frontier AI Safety Policies" (2025) を読んでください。最も強い cross-lab convergences を3つ、最大の divergences を2つ挙げてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| RSP | "Anthropic's framework" | Responsible Scaling Policy; ASL tiers; v3.0 February 2026 |
-| PF | "OpenAI's framework" | Preparedness Framework; five criteria; v2 April 2025 |
-| FSF | "DeepMind's framework" | Frontier Safety Framework; CCLs; v3.0 September 2025 |
-| ASL-3 | "biosafety level 3-analog" | Anthropic tier for CBRN-relevant capabilities; activated May 2025 |
-| CCL | "critical capability level" | DeepMind's threshold construct; per-domain |
-| Safety case | "the formal argument" | Written argument that deployment is acceptably safe under worst-case U |
-| Adjustment clause | "competitor defection allowance" | Framework provision for reducing requirements if competitors ship without comparable safeguards |
+| Term | よく言われる説明 | 実際の意味 |
+|------|------------------|------------|
+| RSP | 「Anthropic の framework」 | Responsible Scaling Policy。ASL tiers。v3.0 February 2026 |
+| PF | 「OpenAI の framework」 | Preparedness Framework。five criteria。v2 April 2025 |
+| FSF | 「DeepMind の framework」 | Frontier Safety Framework。CCLs。v3.0 September 2025 |
+| ASL-3 | 「biosafety level 3-analog」 | CBRN-relevant capabilities 向けの Anthropic tier。2025年5月 activated |
+| CCL | "critical capability level" | DeepMind の threshold construct。domain ごと |
+| Safety case | 「formal argument」 | worst-case U のもとで deployment が acceptably safe であることを示す written argument |
+| Adjustment clause | 「competitor defection allowance」 | competitors が comparable safeguards なしで ship した場合に requirements を下げる framework provision |
 
-## Further Reading
+## 参考文献
 
-- [Anthropic — Responsible Scaling Policy v3.0 (February 2026)](https://www.anthropic.com/responsible-scaling-policy) — ASL tiers, roadmaps, AI R&D disaggregation
-- [OpenAI — Updating the Preparedness Framework (April 15, 2025)](https://openai.com/index/updating-our-preparedness-framework/) — five criteria, adjustment clause
-- [DeepMind — Strengthening our Frontier Safety Framework (September 2025)](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — CCL v3.0, Harmful Manipulation
+- [Anthropic — Responsible Scaling Policy v3.0 (February 2026)](https://www.anthropic.com/responsible-scaling-policy) — ASL tiers、roadmaps、AI R&D disaggregation
+- [OpenAI — Updating the Preparedness Framework (April 15, 2025)](https://openai.com/index/updating-our-preparedness-framework/) — five criteria、adjustment clause
+- [DeepMind — Strengthening our Frontier Safety Framework (September 2025)](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — CCL v3.0、Harmful Manipulation
 - [METR — Common Elements of Frontier AI Safety Policies (2025)](https://metr.org/blog/2025-03-26-common-elements-of-frontier-ai-safety-policies/) — cross-lab comparison

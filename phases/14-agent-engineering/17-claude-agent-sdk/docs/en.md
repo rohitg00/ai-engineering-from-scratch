@@ -1,135 +1,135 @@
 # Claude Agent SDK: Subagents and Session Store
 
-> The Claude Agent SDK is the library form of the Claude Code harness. Built-in tools, subagents for context isolation, hooks, W3C trace propagation, session store parity. Claude Managed Agents is the hosted alternative for long-running async work.
+> Claude Agent SDKは、Claude Code harnessのlibrary版です。built-in tools、context isolation用のsubagents、hooks、W3C trace propagation、session store parityを備えます。Claude Managed Agentsは、long-running async work向けのhosted alternativeです。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
-**Time:** ~75 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Explain the difference between the Anthropic Client SDK (raw API) and the Claude Agent SDK (harness shape).
-- Describe subagents — parallelization and context isolation — and when to reach for them.
-- Name the Python SDK's session store surface (`append`, `load`, `list_sessions`, `delete`, `list_subkeys`) and the role of `--session-mirror`.
-- Implement a stdlib harness with built-in tools, subagent spawning with isolated context, lifecycle hooks, and a session store.
+- Anthropic Client SDK (raw API) とClaude Agent SDK (harness shape) の違いを説明する。
+- subagentsを説明する。parallelizationとcontext isolation、いつ使うべきか。
+- Python SDKのsession store surface (`append`、`load`、`list_sessions`、`delete`、`list_subkeys`) と`--session-mirror`の役割を挙げる。
+- built-in tools、isolated contextでのsubagent spawning、lifecycle hooks、session storeを備えたstdlib harnessを実装する。
 
-## The Problem
+## 問題
 
-A raw LLM API gets you one round-trip. A production agent needs tool execution, MCP servers, lifecycle hooks, subagent spawning, session persistence, trace propagation. Claude Agent SDK ships this shape as a library — the same harness Claude Code uses, exposed for custom agents.
+raw LLM APIで得られるのは1 round-tripです。production agentにはtool execution、MCP servers、lifecycle hooks、subagent spawning、session persistence、trace propagationが必要です。Claude Agent SDKは、このshapeをlibraryとしてshipします。Claude Codeが使っている同じharnessが、custom agents向けに公開されています。
 
 ## The Concept
 
 ### Client SDK vs Agent SDK
 
-- **Client SDK (`anthropic`).** Raw Messages API. You own the loop, the tools, the state.
-- **Agent SDK (`claude-agent-sdk`).** Built-in tool execution, MCP connections, hooks, subagent spawning, session store. The Claude Code loop as a library.
+- **Client SDK (`anthropic`).** raw Messages API。loop、tools、stateは自分でownする。
+- **Agent SDK (`claude-agent-sdk`).** built-in tool execution、MCP connections、hooks、subagent spawning、session store。Claude Code loopをlibrary化したもの。
 
 ### Built-in tools
 
-The SDK ships 10+ tools out of the box: file read/write, shell, grep, glob, web fetch, more. Custom tools register via the standard tool-schema interface.
+SDKは10+ toolsをout of the boxでshipしています: file read/write、shell、grep、glob、web fetchなど。custom toolはstandard tool-schema interface経由でregisterします。
 
 ### Subagents
 
-Two purposes documented by Anthropic:
+Anthropicがdocumentしている用途は2つです。
 
-1. **Parallelization.** Run independent work concurrently. "Find the test file for each of these 20 modules" is 20 parallel subagent tasks.
-2. **Context isolation.** Subagents use their own context window; only results return to the orchestrator. The orchestrator's budget is preserved.
+1. **Parallelization.** independent workをconcurrentlyに実行する。「これら20 modulesそれぞれのtest fileを探す」は20個のparallel subagent taskです。
+2. **Context isolation.** subagentは自身のcontext windowを使い、resultだけがorchestratorへ戻ります。orchestratorのbudgetが保たれます。
 
-Python SDK recent additions: `list_subagents()`, `get_subagent_messages()` for reading subagent transcripts.
+Python SDKのrecent additions: subagent transcriptを読むための`list_subagents()`、`get_subagent_messages()`。
 
 ### Session store
 
-Protocol parity with TypeScript:
+TypeScriptとのprotocol parity:
 
-- `append(session_id, message)` — add a turn.
-- `load(session_id)` — restore conversation.
-- `list_sessions()` — enumerate.
-- `delete(session_id)` — with cascade to subagent sessions.
-- `list_subkeys(session_id)` — list subagent keys.
+- `append(session_id, message)` — turnを追加する。
+- `load(session_id)` — conversationをrestoreする。
+- `list_sessions()` — enumerateする。
+- `delete(session_id)` — subagent sessionsへcascadeして削除する。
+- `list_subkeys(session_id)` — subagent keysをlistする。
 
-`--session-mirror` (CLI flag) mirrors the transcript to an external file as it streams, for debugging.
+`--session-mirror` (CLI flag) は、debugging用にstreamしながらtranscriptをexternal fileへmirrorします。
 
 ### Hooks
 
-Lifecycle hooks you can register:
+registerできるlifecycle hook:
 
-- `PreToolUse`, `PostToolUse` — gate or audit tool calls.
-- `SessionStart`, `SessionEnd` — set up and tear down.
-- `UserPromptSubmit` — act on user input before the model sees it.
-- `PreCompact` — run before context compaction.
-- `Stop` — cleanup on agent exit.
-- `Notification` — side-channel alerts.
+- `PreToolUse`, `PostToolUse` — tool callをgateまたはauditする。
+- `SessionStart`, `SessionEnd` — setupとteardown。
+- `UserPromptSubmit` — modelが見る前にuser inputへ作用する。
+- `PreCompact` — context compaction前に実行する。
+- `Stop` — agent exit時のcleanup。
+- `Notification` — side-channel alerts。
 
-Hooks are how pro-workflow (Phase 14 curriculum reference) and similar systems add cross-cutting behavior.
+hooksは、pro-workflow (Phase 14 curriculum reference) や類似systemがcross-cutting behaviorを追加する方法です。
 
 ### W3C trace context
 
-OTel spans active on the caller propagate into the CLI subprocess via W3C trace context headers. The whole multi-process trace shows up as one trace in your backend.
+caller上でactiveなOTel spanは、W3C trace context headers経由でCLI subprocessへpropagateします。multi-process trace全体がbackend内で1つのtraceとして表示されます。
 
 ### Claude Managed Agents
 
-The hosted alternative (beta header `managed-agents-2026-04-01`). Long-running async work, built-in prompt caching, built-in compaction. Trade control for managed infrastructure.
+hosted alternativeです (beta header `managed-agents-2026-04-01`)。long-running async work、built-in prompt caching、built-in compaction。controlをmanaged infrastructureと交換します。
 
 ### Where this pattern goes wrong
 
-- **Subagent over-spawn.** Spawning 100 subagents for 100 tiny tasks. Overhead dominates. Batch instead.
-- **Hook creep.** Every team adds hooks; startup time balloons. Review hooks quarterly.
-- **Session bloat.** Sessions accumulate; size grows. Use `list_sessions` + expiry policy.
+- **Subagent over-spawn。** 100個の小さなtaskに100 subagentsをspawnする。overheadが支配的になります。batchしてください。
+- **Hook creep。** すべてのteamがhookを追加し、startup timeが膨らみます。hookをquarterlyにreviewしてください。
+- **Session bloat。** sessionが蓄積し、sizeが増えます。`list_sessions` + expiry policyを使います。
 
-## Build It
+## 実装
 
-`code/main.py` implements the SDK shape in stdlib:
+`code/main.py`はstdlibでSDK shapeを実装しています。
 
-- `Tool`, `ToolRegistry` with built-in `read_file`, `write_file`, `list_dir`.
-- `Subagent` — private context, isolated run, results returned.
-- `SessionStore` — append, load, list, delete, list_subkeys.
-- `Hooks` — `pre_tool_use`, `post_tool_use`, `session_start`, `session_end`.
-- A demo: main agent spawns 3 subagents in parallel (each isolated), aggregates results, persists session.
+- built-in `read_file`、`write_file`、`list_dir`を持つ`Tool`、`ToolRegistry`。
+- `Subagent` — private context、isolated run、result return。
+- `SessionStore` — append、load、list、delete、list_subkeys。
+- `Hooks` — `pre_tool_use`、`post_tool_use`、`session_start`、`session_end`。
+- demo: main agentが3 subagentsをparallelにspawnし (それぞれisolated)、resultをaggregateし、sessionをpersistする。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-The trace shows subagent context isolation (orchestrator context size stays bounded), hook execution, and session persistence.
+traceでは、subagent context isolation (orchestrator context sizeがboundedに保たれる)、hook execution、session persistenceが見えます。
 
 ## Use It
 
-- **Claude Agent SDK** for Claude-first products that want the Claude Code harness shape.
-- **Claude Managed Agents** for hosted long-running async work.
-- **OpenAI Agents SDK** (Lesson 16) for OpenAI-first counterparts.
-- **LangGraph + custom tools** if you want the graph-shaped state machine instead.
+- **Claude Agent SDK** for Claude-first products that want the Claude Code harness shape。
+- **Claude Managed Agents** for hosted long-running async work。
+- **OpenAI Agents SDK** (Lesson 16) for OpenAI-first counterparts。
+- **LangGraph + custom tools** if you want the graph-shaped state machine instead。
 
 ## Ship It
 
-`outputs/skill-claude-agent-scaffold.md` scaffolds a Claude Agent SDK app with subagents, hooks, session store, MCP server attachment, and W3C trace propagation.
+`outputs/skill-claude-agent-scaffold.md`は、subagents、hooks、session store、MCP server attachment、W3C trace propagationを持つClaude Agent SDK appをscaffoldします。
 
 ## Exercises
 
-1. Add a subagent spawner that batches 20 tasks into groups of 5 parallel subagents. Measure orchestrator context size vs one-per-task.
-2. Implement a `PreToolUse` hook that rate-limits `write_file` calls (5 per minute per session). Trace the behavior.
-3. Wire `list_subkeys` to render a subagent tree. What does deep nesting look like?
-4. Port the toy to the real `claude-agent-sdk` Python package. What changes about tool registration?
-5. Read the Claude Managed Agents docs. When would you switch from self-hosted to managed?
+1. 20 tasksを5 parallel subagentsのgroupsへbatchするsubagent spawnerを追加する。one-per-taskと比べてorchestrator context sizeを測る。
+2. `write_file` callをrate-limitする`PreToolUse` hookを実装する (sessionごとに5/min)。behaviorをtraceする。
+3. `list_subkeys`をwireしてsubagent treeをrenderする。deep nestingはどのように見えるか。
+4. toyを実際の`claude-agent-sdk` Python packageへportする。tool registrationで何が変わるか。
+5. Claude Managed Agents docsを読む。self-hostedからmanagedへ切り替えるのはどんな場合か。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Agent SDK | "Claude Code as a library" | Harness shape: tools, MCP, hooks, subagents, session store |
-| Subagent | "Child agent" | Separate context, own budget; results bubble up |
-| Session store | "Conversation DB" | Persist, load, list, delete turns with subagent cascade |
-| Hook | "Lifecycle callback" | Pre/post tool, session, prompt submit, compact, stop |
-| W3C trace context | "Cross-process trace" | Parent span propagates into CLI subprocess |
-| Managed Agents | "Hosted harness" | Anthropic-hosted long-running async work |
-| `--session-mirror` | "Transcript mirror" | Writes session turns to an external file as they stream |
-| MCP server | "Tool surface" | External tool/resource source attached to the agent |
+| Agent SDK | 「Claude Code as a library」 | tools、MCP、hooks、subagents、session storeを持つharness shape |
+| Subagent | 「Child agent」 | separate context、own budget。resultは上位へ返る |
+| Session store | 「Conversation DB」 | subagent cascadeを含めてturnをpersist/load/list/deleteする |
+| Hook | 「Lifecycle callback」 | pre/post tool、session、prompt submit、compact、stop |
+| W3C trace context | 「Cross-process trace」 | parent spanがCLI subprocessへpropagateする |
+| Managed Agents | 「Hosted harness」 | Anthropic-hosted long-running async work |
+| `--session-mirror` | 「Transcript mirror」 | stream中のsession turnをexternal fileへ書き出す |
+| MCP server | 「Tool surface」 | agentへattachされるexternal tool/resource source |
 
-## Further Reading
+## 参考文献
 
-- [Claude Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview) — the library form of Claude Code
+- [Claude Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview) — Claude Codeのlibrary版
 - [Anthropic, Building agents with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — production patterns
 - [Claude Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview) — hosted alternative
 - [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) — counterpart

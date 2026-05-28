@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the reference GPT-2 small configuration this lesson reproduces?",
+      "question": "このレッスンが再現する GPT-2 small の reference configuration はどれですか?",
       "options": [
         "vocab 30000, context 512, d_model 512, 6 heads, 6 layers",
         "vocab 50257, context 1024, d_model 768, 12 heads, 12 layers, parameters near 124 million",
@@ -12,67 +12,67 @@
         "vocab 50000, context 4096, d_model 4096, 32 heads, 32 layers"
       ],
       "correct": 1,
-      "explanation": "GPT-2 small is the 124M parameter configuration; matching it confirms the wiring is correct."
+      "explanation": "GPT-2 small は 124M parameter 構成です。これに合うことは配線確認になります。"
     },
     {
       "stage": "check",
-      "question": "What does weight tying mean in the model assembly?",
+      "question": "model assembly における weight tying とは何ですか?",
       "options": [
-        "The token embedding and LM head share the exact same parameter tensor; the optimizer updates one matrix that serves both lookups and the output projection",
-        "Two different tensors with the same shape that get copied each step",
-        "A bias term shared across layers",
-        "A constraint on attention heads"
+        "token embedding と LM head が同じ parameter tensor を共有し、optimizer が両方の役割を持つ1つの matrix を更新すること",
+        "同じ shape の2つの異なる tensor を各 step で copy すること",
+        "layer 間で bias term を共有すること",
+        "attention heads への制約"
       ],
       "correct": 0,
-      "explanation": "Setting lm_head.weight = tok_embed.weight shares storage; copying does not. Saves vocab times d_model parameters."
+      "explanation": "lm_head.weight = tok_embed.weight は storage を共有します。copy ではありません。"
     },
     {
       "stage": "check",
-      "question": "How does generation slide its context window?",
+      "question": "generation は context window をどう slide しますか?",
       "options": [
-        "Truncates to half the context every step",
-        "Each step takes the last context_length tokens of the running sequence (prompt plus generated) and feeds those to the model",
-        "Pads to the maximum context with zeros",
-        "Restarts from the prompt every step"
+        "毎 step context の半分に truncation する",
+        "各 step で実行中の sequence の末尾 context_length tokens を model に入れる",
+        "maximum context まで zero padding する",
+        "毎 step prompt からやり直す"
       ],
       "correct": 1,
-      "explanation": "Sliding window drops the oldest tokens once the running sequence overflows the context length."
+      "explanation": "sliding window は context length を超えたら最古 token を落とします。"
     },
     {
       "stage": "check",
-      "question": "Why initialize the attention output projection and the second MLP linear at a smaller std than the rest?",
+      "question": "attention output projection と2つ目の MLP linear を他より小さい std で初期化する理由は何ですか?",
       "options": [
-        "It saves memory",
-        "Both feed directly into a residual add. Scaling their std by 1 over sqrt of 2 times num_layers keeps the residual stream in scale through twelve layers",
-        "The dataset requires it",
-        "Top-k sampling needs smaller weights"
+        "memory を節約するため",
+        "どちらも residual add に直接入るため。std を 1/sqrt(2*num_layers) で縮小すると12層を通じて residual stream の scale が保たれる",
+        "dataset が要求するため",
+        "top-k sampling に小さい weight が必要だから"
       ],
       "correct": 1,
-      "explanation": "Without the scaling, the residual stream grows with depth and pushes the final LayerNorm into a hot regime."
+      "explanation": "scale しないと residual stream が深さとともに大きくなります。"
     },
     {
       "stage": "post",
-      "question": "What does temperature do at sampling time?",
+      "question": "sampling 時の temperature は何をしますか?",
       "options": [
-        "Selects the optimizer learning rate",
-        "Divides the logits before softmax. T less than 1 sharpens the distribution toward greedy, T equal to 1 keeps the natural model distribution, T greater than 1 flattens",
-        "Adds dropout to the head",
-        "Scales the embeddings"
+        "optimizer learning rate を選ぶ",
+        "softmax 前に logits を割る。T<1 は分布を鋭くし、T=1 は自然な分布、T>1 は平坦化する",
+        "head に dropout を追加する",
+        "embeddings を scale する"
       ],
       "correct": 1,
-      "explanation": "Temperature is the simplest knob; combined with top-k it controls how exploratory the generation is."
+      "explanation": "temperature は sampling の探索度を調整する基本的な knob です。"
     },
     {
       "stage": "post",
-      "question": "What does top-k filtering do before sampling?",
+      "question": "sampling 前の top-k filtering は何をしますか?",
       "options": [
-        "Picks the lowest k logits",
-        "Keeps the k logits with the highest values, masks the rest to negative infinity, then softmax over the survivors so multinomial sampling only sees the top k tokens",
-        "Removes all logits below zero",
-        "Caps the logits at k"
+        "最小の k logits を選ぶ",
+        "最大 k 個の logits を残し、残りを negative infinity に mask してから softmax する",
+        "0未満の logits を全て消す",
+        "logits を k で cap する"
       ],
       "correct": 1,
-      "explanation": "Top-k truncates the long tail before softmax; top_k=1 is greedy, larger k retains more diversity."
+      "explanation": "top-k は softmax 前に long tail を切ります。top_k=1 は greedy です。"
     }
   ]
 }

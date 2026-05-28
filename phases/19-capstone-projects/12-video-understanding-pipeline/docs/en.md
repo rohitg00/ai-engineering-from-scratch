@@ -1,28 +1,28 @@
-# Capstone 12 — Video Understanding Pipeline (Scene, QA, Search)
+# キャップストーン 12 — Video Understanding Pipeline (Scene, QA, Search)
 
-> Twelve Labs productized Marengo + Pegasus. VideoDB shipped the CRUD-for-video API. AI2's Molmo 2 published open VLM checkpoints. Gemini long-context handles hours of video natively. TimeLens-100K defined temporal grounding at scale. The 2026 pipeline is settled: scene segmentation, per-scene caption + embedding, transcript alignment, multi-vector index, and a query that answers with (start, end) timestamps plus frame previews. The capstone is ingesting 100 hours, hitting public benchmarks, and measuring hallucination on counting and action questions.
+> Twelve Labs は Marengo + Pegasus を productize した。VideoDB は CRUD-for-video API を出した。AI2 の Molmo 2 は open VLM checkpoint を公開した。Gemini の long-context は数時間の video を native に扱える。TimeLens-100K は大規模な temporal grounding を定義した。2026 年の pipeline は固まっている: scene segmentation、scene ごとの caption + embedding、transcript alignment、multi-vector index、そして (start, end) timestamp と frame preview 付きで答える query。キャップストーンでは 100 時間を ingest し、public benchmark を満たし、counting と action question における hallucination を測定する。
 
-**Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
-**Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
-**Phases exercised:** P4 · P6 · P7 · P11 · P12 · P17
-**Time:** 30 hours
+**種類:** Capstone
+**言語:** Python (pipeline)、TypeScript (UI)
+**前提:** Phase 4 (CV)、Phase 6 (speech)、Phase 7 (transformers)、Phase 11 (LLM engineering)、Phase 12 (multimodal)、Phase 17 (infrastructure)
+**演習対象フェーズ:** P4 · P6 · P7 · P11 · P12 · P17
+**時間:** 30 時間
 
-## Problem
+## 問題
 
-Long-form video QA is the most bandwidth-hungry multimodal problem at 2026 scale. Gemini 2.5 Pro can read a 2-hour video natively, but ingesting 100 hours of video into a queryable corpus still requires a scene-level index. The production shape combines scene segmentation (TransNetV2 or PySceneDetect), per-scene captioning with a VLM (Gemini 2.5, Qwen3-VL-Max, or Molmo 2), transcript alignment (Whisper-v3-turbo with word timestamps), and a multi-vector index that stores caption, frame embedding, and transcript side by side. The query pipeline answers with (start, end) timestamps plus frame previews.
+Long-form video QA は、2026 年規模でもっとも bandwidth を消費する multimodal problem である。Gemini 2.5 Pro は 2 時間の video を native に読めるが、100 時間の video を queryable corpus として取り込むには、依然として scene-level index が必要だ。本番構成は、scene segmentation (TransNetV2 または PySceneDetect)、VLM による scene ごとの captioning (Gemini 2.5、Qwen3-VL-Max、Molmo 2)、transcript alignment (word timestamp 付き Whisper-v3-turbo)、caption、frame embedding、transcript を並べて持つ multi-vector index を組み合わせる。Query pipeline は (start, end) timestamp と frame preview 付きで回答する。
 
-Benchmarks are public (ActivityNet-QA, NeXT-GQA) plus your own 100-query custom set. Hallucination on counting and action-type questions is the known-hard failure class; the capstone explicitly measures it.
+Benchmark は public な ActivityNet-QA、NeXT-GQA に加え、自分で作る 100-query custom set を使う。Counting ("how many people enter the room?") と action-type ("does the chef pour before stirring?") の質問は既知の難所なので、この capstone では明示的に測定する。
 
-## Concept
+## コンセプト
 
-Three pipelines run in parallel at ingest. **Scene segmentation** cuts the video into scenes. **VLM captioning** generates a caption per scene and a frame embedding from a keyframe. **ASR alignment** produces word-level timestamps. The three streams are joined by (scene_id, time range). Each scene gets three vector types in a multi-vector index (Qdrant): caption embedding, keyframe embedding, transcript embedding.
+Ingest では 3 つの pipeline が並列に走る。**Scene segmentation** は video を scene に分割する。**VLM captioning** は scene ごとに caption を生成し、keyframe から frame embedding を作る。**ASR alignment** は word-level timestamp を生成する。3 つの stream は (scene_id, time range) で join される。各 scene は multi-vector index (Qdrant) に 3 種類の vector を持つ: caption embedding、keyframe embedding、transcript embedding。
 
-At query time, the natural-language question fires against all three vectors; results merge with RRF; a temporal-grounding adapter (TimeLens-style) refines the (start, end) window within the top scene. The VLM synthesizer (Gemini 2.5 Pro or Qwen3-VL-Max) takes query + top scenes + cropped frames and answers with cited timestamps and a frame preview.
+Query 時には、natural-language question を 3 種類すべての vector に投げ、結果を RRF で merge し、TimeLens-style の temporal-grounding adapter が top scene 内の (start, end) window を refined する。VLM synthesizer (Gemini 2.5 Pro または Qwen3-VL-Max) は query + top scenes + cropped frames を受け取り、timestamp citation と frame preview 付きで回答する。
 
-The hallucination measurement matters. Counting ("how many people enter the room?") and action-type ("does the chef pour before stirring?") questions are notoriously unreliable. Report accuracy separately from descriptive questions.
+Hallucination measurement は重要だ。Counting ("how many people enter the room?") と action-type ("does the chef pour before stirring?") の質問は VLM で特に信頼しにくい。Descriptive question とは別に accuracy を報告する。
 
-## Architecture
+## アーキテクチャ
 
 ```
 video file / URL
@@ -51,38 +51,38 @@ VLM synth: query + top scenes + frame previews
 answer + (start, end) timestamps + frame thumbs + citations
 ```
 
-## Stack
+## スタック
 
-- Scene segmentation: TransNetV2 (state-of-the-art 2024-26) or PySceneDetect
-- ASR: Whisper-v3-turbo via faster-whisper with word timestamps
-- VLM captioner + answerer: Gemini 2.5 Pro or Qwen3-VL-Max or Molmo 2
-- Temporal grounding: TimeLens-100K-trained adapter or VideoITG
-- Index: Qdrant with multi-vector support (caption / frame / transcript)
-- UI: Next.js 15 with HTML5 video player and scene thumbnails
-- Eval: ActivityNet-QA, NeXT-GQA, custom 100-question hand-labeled set
-- Hallucination benchmark: counting and action-type subsets with hand labels
+- Scene segmentation: TransNetV2 (2024-26 の state-of-the-art) または PySceneDetect
+- ASR: word timestamp 付き Whisper-v3-turbo via faster-whisper
+- VLM captioner + answerer: Gemini 2.5 Pro または Qwen3-VL-Max または Molmo 2
+- Temporal grounding: TimeLens-100K-trained adapter または VideoITG
+- Index: multi-vector support 付き Qdrant (caption / frame / transcript)
+- UI: HTML5 video player と scene thumbnail を備えた Next.js 15
+- Eval: ActivityNet-QA、NeXT-GQA、hand-labeled custom 100-question set
+- Hallucination benchmark: hand label を持つ counting subset と action-type subset
 
-## Build It
+## 実装
 
-1. **Ingest walker.** Accept YouTube URLs or local MP4s. Downscale to 720p if needed. Persist `{video_id, file_path}`.
+1. **Ingest walker.** YouTube URL または local MP4 を受け付ける。必要なら 720p に downscale する。`{video_id, file_path}` を永続化する。
 
-2. **Scene segmentation.** Run TransNetV2 or PySceneDetect to produce `[{scene_id, start_ms, end_ms, keyframe_path}]`. Target 100 hours: ~6k-8k scenes.
+2. **Scene segmentation.** TransNetV2 または PySceneDetect を走らせ、`[{scene_id, start_ms, end_ms, keyframe_path}]` を生成する。100 時間ではおよそ 6k-8k scenes が目安。
 
-3. **ASR pass.** Run Whisper-v3-turbo on audio; export word-level timestamps; split into per-scene transcript slices.
+3. **ASR pass.** Audio に Whisper-v3-turbo を実行し、word-level timestamp を export する。Transcript を scene ごとに slice する。
 
-4. **VLM captioning.** Per scene, call Gemini 2.5 Pro (or Qwen3-VL-Max) with the keyframe and a short caption template. Produce caption + frame embedding.
+4. **VLM captioning.** Scene ごとに、keyframe と短い caption template を使って Gemini 2.5 Pro (または Qwen3-VL-Max) を呼ぶ。Caption + frame embedding を作る。
 
-5. **Multi-vector index.** Qdrant collection with three named vectors. Payload: `{video_id, scene_id, start_ms, end_ms, keyframe_url}`.
+5. **Multi-vector index.** 3 つの named vector を持つ Qdrant collection。Payload は `{video_id, scene_id, start_ms, end_ms, keyframe_url}`。
 
-6. **Query.** Natural-language question fires three dense queries; merge with reciprocal rank fusion; top-k=5 scenes.
+6. **Query.** Natural-language question を 3 本の dense query として投げる。Reciprocal rank fusion で merge し、top-k=5 scenes を得る。
 
-7. **Temporal grounding.** Run TimeLens-style adapter on the top scene to refine the (start, end) window within the scene.
+7. **Temporal grounding.** Top scene に TimeLens-style adapter を実行し、scene 内の (start, end) window を refined する。
 
-8. **VLM synth.** Call Gemini 2.5 Pro with query + top-3 scene clips (as images or short clips) + transcripts. Require `(video_id, start_ms, end_ms)` citations.
+8. **VLM synth.** Query + top-3 scene clips (image または short clip) + transcripts を与えて Gemini 2.5 Pro を呼ぶ。`(video_id, start_ms, end_ms)` citation を必須にする。
 
-9. **Eval.** Run ActivityNet-QA and NeXT-GQA. Build a 100-query custom set. Report overall accuracy + per-class breakdown (counting, action, descriptive).
+9. **Eval.** ActivityNet-QA と NeXT-GQA を実行する。100-query custom set を作る。Overall accuracy と question class ごとの breakdown (counting、action、descriptive) を報告する。
 
-## Use It
+## 使ってみる
 
 ```
 $ video-qa ask --url=https://youtube.com/watch?v=X "how many cars pass the intersection in the first minute?"
@@ -99,46 +99,46 @@ citations: [scene 3: 00:12-00:58]
 
 ## Ship It
 
-`outputs/skill-video-qa.md` is the deliverable. Given a YouTube URL or uploaded video, the pipeline indexes scenes and answers questions with timestamped citations.
+`outputs/skill-video-qa.md` が提出物である。YouTube URL または uploaded video を与えると、pipeline が scene を index し、timestamped citation 付きで質問に答える。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
-| 25 | Temporal grounding IoU | Intersection-over-union on held-out grounding set |
-| 20 | QA accuracy | NeXT-GQA and custom 100-query |
-| 20 | Ingest throughput | Hours of video per dollar spent |
-| 20 | UI and citation UX | Timestamp links, thumbnail strip, jump-to-frame |
-| 15 | Hallucination rate | Counting and action-type accuracy separately |
+| 25 | Temporal grounding IoU | Held-out grounding set 上の intersection-over-union |
+| 20 | QA accuracy | NeXT-GQA と custom 100-query |
+| 20 | Ingest throughput | 1 dollar あたりの video hours |
+| 20 | UI and citation UX | Timestamp link、thumbnail strip、jump-to-frame |
+| 15 | Hallucination rate | Counting と action-type の accuracy を別々に報告 |
 | **100** | | |
 
-## Exercises
+## 演習
 
-1. Swap Gemini 2.5 Pro for Qwen3-VL-Max on the captioning pass. Report caption quality delta on a human-rated 50-scene sample.
+1. Captioning pass で Gemini 2.5 Pro を Qwen3-VL-Max に差し替える。Human-rated 50-scene sample で caption quality delta を報告する。
 
-2. Reduce per-scene frame embedding to one pooled vector instead of multi-vector. Measure the retrieval regression.
+2. Scene ごとの frame embedding を multi-vector ではなく 1 つの pooled vector に減らす。Retrieval regression を測定する。
 
-3. Build a "counting strict" mode: the synthesizer extracts each counted instance with a timestamp and the user clicks to verify. Measure whether user-verification reduces hallucination.
+3. "counting strict" mode を作る: synthesizer が count した各 instance を timestamp 付きで抽出し、user が click して検証する。User-verification が hallucination を減らすか測る。
 
-4. Benchmark ingest cost: hours-of-video-per-dollar across three VLM choices. Pick the sweet spot.
+4. Ingest cost を benchmark する: 3 つの VLM choice で hours-of-video-per-dollar を比較し、sweet spot を選ぶ。
 
-5. Add speaker-diarized transcript: run pyannote speaker diarization on the audio and embed per-speaker transcripts. Demonstrate "what did Alice say about X?" queries.
+5. Speaker-diarized transcript を追加する: audio に pyannote speaker diarization を実行し、speaker ごとの transcript を embed する。"what did Alice say about X?" query を実演する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| Scene segmentation | "Shot detection" | Cutting video into scenes at shot boundaries |
-| Multi-vector index | "Caption + frame + transcript" | Qdrant collection with named vectors per representation |
-| Temporal grounding | "When exactly did it happen" | Refining the (start, end) window for a query answer |
-| Frame embedding | "Visual representation" | A vector embedding of a keyframe; used for scene-visual similarity |
-| RRF fusion | "Reciprocal rank fusion" | Merge strategy across multiple ranked lists; a classic hybrid-retrieval trick |
-| Counting hallucination | "Miscount" | Known failure mode of VLMs on "how many X" questions |
+| Term | よくある言い方 | 実際の意味 |
+|------|-----------------|------------|
+| Scene segmentation | "Shot detection" | Shot boundary で video を scene に分割すること |
+| Multi-vector index | "Caption + frame + transcript" | representation ごとに named vector を持つ Qdrant collection |
+| Temporal grounding | "When exactly did it happen" | Query answer 用の (start, end) window を refine すること |
+| Frame embedding | "Visual representation" | Keyframe の vector embedding。Scene visual similarity に使う |
+| RRF fusion | "Reciprocal rank fusion" | 複数の ranked list を merge する戦略。古典的な hybrid-retrieval technique |
+| Counting hallucination | "Miscount" | "how many X" 質問で VLM が数え間違える既知の failure mode |
 | ActivityNet-QA | "Video-QA benchmark" | Long-form video QA accuracy benchmark |
 
-## Further Reading
+## 参考資料
 
-- [AI2 Molmo 2](https://allenai.org/blog/molmo2) — open VLM checkpoints
-- [TimeLens (CVPR 2026)](https://github.com/TencentARC/TimeLens) — temporal grounding at scale
-- [Gemini Video long-context](https://deepmind.google/technologies/gemini) — the hosted reference
+- [AI2 Molmo 2](https://allenai.org/blog/molmo2) — open VLM checkpoint
+- [TimeLens (CVPR 2026)](https://github.com/TencentARC/TimeLens) — 大規模 temporal grounding
+- [Gemini Video long-context](https://deepmind.google/technologies/gemini) — hosted reference
 - [VideoDB](https://videodb.io) — CRUD-for-video API reference
 - [Twelve Labs Marengo + Pegasus](https://www.twelvelabs.io) — commercial reference
 - [TransNetV2](https://github.com/soCzech/TransNetV2) — scene segmentation model

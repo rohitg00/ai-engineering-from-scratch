@@ -1,52 +1,52 @@
-# Building a Production LLM Application
+# Production LLM Applicationを構築する
 
-> You have built prompts, embeddings, RAG pipelines, function calling, caching layers, and guardrails. Separately. In isolation. Like practicing guitar scales without ever playing a song. This lesson is the song. You will wire every component from Lessons 01-12 into a single production-ready service. Not a toy. Not a demo. A system that handles real traffic, fails gracefully, streams tokens, tracks costs, and survives its first 10,000 users.
+> あなたはprompts、embeddings、RAG pipelines、function calling、caching layers、guardrailsを作ってきました。別々に。孤立して。曲を一度も弾かずに音階だけ練習しているようなものです。このlessonがその曲です。Lessons 01-12のすべてのcomponentを、単一のproduction-ready serviceへ配線します。toyではありません。demoでもありません。real trafficを処理し、gracefullyに失敗し、tokensをstreamし、costを追跡し、最初の10,000 usersに耐えるsystemです。
 
-**Type:** Build (Capstone)
-**Languages:** Python
-**Prerequisites:** Phase 11 Lessons 01-15
-**Time:** ~120 minutes
-**Related:** Phase 11 · 14 (MCP) for replacing bespoke tool schemas with a shared protocol; Phase 11 · 15 (Prompt Caching) for 50-90% cost reduction on stable prefixes. Both are expected in every serious 2026 production stack.
+**種別:** 構築（Capstone）
+**言語:** Python
+**前提条件:** Phase 11 Lessons 01-15
+**所要時間:** 約120分
+**Related:** bespoke tool schemasをshared protocolで置き換えるPhase 11 · 14 (MCP)、stable prefixesで50-90% cost reductionを狙うPhase 11 · 15 (Prompt Caching)。2026年の本気のproduction stackではどちらも前提です。
 
-## Learning Objectives
+## 学習目標
 
-- Wire all Phase 11 components (prompts, RAG, function calling, caching, guardrails) into a single production-ready service
-- Implement streaming token delivery, graceful error handling, and request timeout management
-- Build observability into the application: request logging, cost tracking, latency percentiles, and error rate dashboards
-- Deploy the application with health checks, rate limiting, and a fallback strategy for provider outages
+- Phase 11の全component (prompts、RAG、function calling、caching、guardrails) を単一のproduction-ready serviceへ配線する
+- streaming token delivery、graceful error handling、request timeout managementを実装する
+- applicationにobservabilityを組み込む: request logging、cost tracking、latency percentiles、error rate dashboards
+- health checks、rate limiting、provider outages向けfallback strategyを備えてapplicationをdeployする
 
-## The Problem
+## 問題
 
-Building an LLM feature takes an afternoon. Shipping an LLM product takes months.
+LLM featureを作るのは午後で終わります。LLM productをshipするには数か月かかります。
 
-The gap is not intelligence. It is infrastructure. Your prototype calls OpenAI, gets a response, prints it. Works on your laptop. Then reality arrives:
+差はintelligenceではありません。infrastructureです。prototypeはOpenAIを呼び、responseを受け取り、表示します。laptopでは動きます。その後、現実が来ます。
 
-- A user sends a 50,000-token document. Your context window overflows.
-- Two users ask the same question 4 seconds apart. You pay for both.
-- The API returns a 500 error at 2am. Your service crashes.
-- A user asks the model to generate SQL. The model outputs `DROP TABLE users`.
-- Your monthly bill hits $12,000 and you have no idea which feature caused it.
-- Response time averages 8 seconds. Users leave after 3.
+- userが50,000-token documentを送ります。context windowがoverflowします。
+- 2人のuserが4秒差で同じ質問をします。あなたは両方に課金されます。
+- APIが午前2時に500 errorを返します。serviceがcrashします。
+- userがmodelにSQL生成を頼みます。modelが `DROP TABLE users` を出力します。
+- 月額billが$12,000に達します。どのfeatureが原因かわかりません。
+- response timeの平均が8秒です。userは3秒で離脱します。
 
-Every LLM application in production today -- Perplexity, Cursor, ChatGPT, Notion AI -- solved these problems. Not by being smarter about prompts. By being rigorous about engineering.
+今日productionで動くLLM application、Perplexity、Cursor、ChatGPT、Notion AIは、すべてこれらの問題を解いています。promptを賢くしたからではありません。engineeringを厳密にしたからです。
 
-This is the capstone. You will build a complete production LLM service that integrates prompt management (L01-02), embeddings and vector search (L04-07), function calling (L09), evaluation (L10), caching (L11), guardrails (L12), streaming, error handling, observability, and cost tracking. One service. Every component wired together.
+これはcapstoneです。prompt management (L01-02)、embeddings and vector search (L04-07)、function calling (L09)、evaluation (L10)、caching (L11)、guardrails (L12)、streaming、error handling、observability、cost trackingを統合した完全なproduction LLM serviceを作ります。1つのservice。すべてのcomponentをつなぎます。
 
-## The Concept
+## 概念
 
-### Production Architecture
+### 本番Architecture
 
-Every serious LLM application follows the same flow. The details vary. The structure does not.
+本気のLLM applicationはすべて同じflowに従います。詳細は変わります。構造は変わりません。
 
 ```mermaid
 graph LR
     Client["Client<br/>(Web, Mobile, API)"]
     GW["API Gateway<br/>Auth + Rate Limit"]
-    PR["Prompt Router<br/>Template Selection"]
-    Cache["Semantic Cache<br/>Embedding Lookup"]
+    PR["Prompt Router<br/>Template選択"]
+    Cache["Semantic Cache<br/>Embedding検索"]
     LLM["LLM Call<br/>Streaming"]
     Guard["Guardrails<br/>Input + Output"]
-    Eval["Eval Logger<br/>Quality Tracking"]
+    Eval["Eval Logger<br/>品質Tracking"]
     Cost["Cost Tracker<br/>Token Accounting"]
     Resp["Response<br/>SSE Stream"]
 
@@ -60,28 +60,28 @@ graph LR
     Eval --> Cost --> Resp
 ```
 
-The request enters through an API gateway that handles authentication and rate limiting. Input guardrails check for prompt injection and banned content before the prompt router selects the right template. A semantic cache checks if a similar question was answered recently. On a cache miss, the LLM is called with streaming enabled. Output guardrails validate the response. The eval logger records quality metrics. The cost tracker accounts for every token. The response streams back to the client.
+requestはauthenticationとrate limitingを扱うAPI gatewayから入ります。prompt routerが正しいtemplateを選ぶ前に、input guardrailsがprompt injectionとbanned contentを確認します。semantic cacheは、似た質問が最近回答済みかどうかを確認します。cache missなら、streaming enabledでLLMを呼びます。output guardrailsがresponseをvalidateします。eval loggerがquality metricsを記録します。cost trackerがすべてのtokenをaccountします。responseはclientへstreamされます。
 
-Seven components. Each one is a lesson you already completed. The engineering is in the wiring.
+7つのcomponents。それぞれはすでに完了したlessonです。engineeringは配線にあります。
 
-### The Stack
+### Stack構成
 
-| Component | Lesson | Technology | Purpose |
-|-----------|--------|------------|---------|
-| API Server | -- | FastAPI + Uvicorn | HTTP endpoints, SSE streaming, health checks |
-| Prompt Templates | L01-02 | Jinja2 / string templates | Versioned prompt management with variable injection |
-| Embeddings | L04 | text-embedding-3-small | Semantic similarity for cache and RAG |
-| Vector Store | L06-07 | In-memory (prod: Pinecone/Qdrant) | Nearest neighbor search for context retrieval |
-| Function Calling | L09 | Tool registry + JSON Schema | External data access, structured actions |
-| Evaluation | L10 | Custom metrics + logging | Response quality, latency, accuracy tracking |
-| Caching | L11 | Semantic cache (embedding-based) | Avoid redundant LLM calls, reduce cost and latency |
-| Guardrails | L12 | Regex + classifier rules | Block prompt injection, PII, unsafe content |
-| Cost Tracker | L11 | Token counter + pricing table | Per-request and aggregate cost accounting |
-| Streaming | -- | Server-Sent Events (SSE) | Token-by-token delivery, sub-second first token |
+| Component | Lesson | Technology | 目的 |
+|-----------|--------|------------|------|
+| API Server | -- | FastAPI + Uvicorn | HTTP endpoints、SSE streaming、health checks |
+| Prompt Templates | L01-02 | Jinja2 / string templates | variable injection付きversioned prompt management |
+| Embeddings | L04 | text-embedding-3-small | cacheとRAGのsemantic similarity |
+| Vector Store | L06-07 | In-memory (prod: Pinecone/Qdrant) | context retrieval用nearest neighbor search |
+| Function Calling | L09 | Tool registry + JSON Schema | external data access、structured actions |
+| Evaluation | L10 | Custom metrics + logging | response quality、latency、accuracy tracking |
+| Caching | L11 | Semantic cache (embedding-based) | redundant LLM callsを避け、cost/latencyを下げる |
+| Guardrails | L12 | Regex + classifier rules | prompt injection、PII、unsafe contentをblock |
+| Cost Tracker | L11 | Token counter + pricing table | request単位とaggregateのcost accounting |
+| Streaming | -- | Server-Sent Events (SSE) | token-by-token delivery、sub-second first token |
 
-### Streaming: Why It Matters
+### Streaming: なぜ重要か
 
-A GPT-5 response with 500 output tokens takes 3-8 seconds to fully generate. Without streaming, the user stares at a spinner for the entire duration. With streaming, the first token arrives in 200-500ms. The total time is the same. The perceived latency drops by 90%.
+500 output tokensのGPT-5 responseは完全生成に3-8秒かかります。streamingなしでは、userはその間ずっとspinnerを見ます。streamingありならfirst tokenは200-500msで届きます。total timeは同じです。perceived latencyは90%下がります。
 
 ```mermaid
 sequenceDiagram
@@ -97,90 +97,90 @@ sequenceDiagram
     S-->>C: SSE: data: {"token": " capital"}
     L-->>S: token: " of"
     S-->>C: SSE: data: {"token": " of"}
-    Note over L,S: ...continues token by token...
+    Note over L,S: ...tokenごとに継続...
     L-->>S: [DONE]
     S-->>C: SSE: data: [DONE]
 ```
 
-Three protocols for streaming:
+streamingには3つのprotocolがあります。
 
-| Protocol | Latency | Complexity | When to Use |
-|----------|---------|------------|-------------|
-| Server-Sent Events (SSE) | Low | Low | Most LLM apps. Unidirectional, HTTP-based, works everywhere |
-| WebSockets | Low | Medium | Bidirectional needs: voice, real-time collaboration |
-| Long Polling | High | Low | Legacy clients that cannot handle SSE or WebSockets |
+| Protocol | Latency | Complexity | 使う場面 |
+|----------|---------|------------|----------|
+| Server-Sent Events (SSE) | Low | Low | ほとんどのLLM apps。unidirectional、HTTP-based、どこでも動く |
+| WebSockets | Low | Medium | bidirectional needs: voice、real-time collaboration |
+| Long Polling | High | Low | SSE/WebSocketsを扱えないlegacy clients |
 
-SSE is the default choice. OpenAI, Anthropic, and Google all stream via SSE. Your server receives chunks from the LLM API and forwards them to the client as SSE events. The client uses `EventSource` (browser) or `httpx` (Python) to consume the stream.
+SSEがdefault choiceです。OpenAI、Anthropic、GoogleはすべてSSEでstreamします。serverはLLM APIからchunksを受け取り、SSE eventsとしてclientへforwardします。clientは `EventSource` (browser) または `httpx` (Python) でstreamをconsumeします。
 
-### Error Handling: The Three Layers
+### Error Handling: 3つのlayer
 
-Production LLM apps fail in three distinct ways. Each requires a different recovery strategy.
+production LLM appsは3つの異なる形で失敗します。それぞれ別のrecovery strategyが必要です。
 
-**Layer 1: API failures.** The LLM provider returns 429 (rate limit), 500 (server error), or times out. Solution: exponential backoff with jitter. Start at 1 second, double each retry, add random jitter to prevent thundering herd. Maximum 3 retries.
+**Layer 1: API failures。** LLM providerが429 (rate limit)、500 (server error) を返す、またはtimeoutします。solution: jitter付きexponential backoff。1秒から始め、retryごとに倍にし、thundering herdを防ぐためrandom jitterを加えます。最大3 retries。
 
 ```
 Attempt 1: immediate
 Attempt 2: 1s + random(0, 0.5s)
 Attempt 3: 2s + random(0, 1.0s)
 Attempt 4: 4s + random(0, 2.0s)
-Give up: return fallback response
+諦める: fallback responseを返す
 ```
 
-**Layer 2: Model failures.** The model returns malformed JSON, hallucinates a function name, or produces an output that fails validation. Solution: retry with a corrected prompt. Include the error in the retry message so the model can self-correct.
+**Layer 2: Model failures。** modelがmalformed JSONを返す、function nameをhallucinateする、またはvalidationに失敗するoutputを生成します。solution: corrected promptでretryします。modelがself-correctできるように、retry messageへerrorを含めます。
 
-**Layer 3: Application failures.** A downstream service is unreachable, the vector store is slow, a guardrail throws an exception. Solution: graceful degradation. If RAG context is unavailable, proceed without it. If the cache is down, bypass it. Never let a secondary system crash the primary flow.
+**Layer 3: Application failures。** downstream serviceに到達できない、vector storeが遅い、guardrailがexceptionを投げる。solution: graceful degradation。RAG contextが利用できなければ、それなしで進みます。cacheが落ちていればbypassします。secondary systemにprimary flowをcrashさせてはいけません。
 
 | Failure | Retry? | Fallback | User Impact |
 |---------|--------|----------|-------------|
-| API 429 (rate limit) | Yes, with backoff | Queue the request | "Processing, please wait..." |
-| API 500 (server error) | Yes, 3 attempts | Switch to fallback model | Transparent to user |
-| API timeout (>30s) | Yes, 1 attempt | Shorter prompt, smaller model | Slightly lower quality |
-| Malformed output | Yes, with error context | Return raw text | Minor formatting issues |
-| Guardrail block | No | Explain why request was blocked | Clear error message |
-| Vector store down | No retry on vector store | Skip RAG context | Lower quality, still functional |
-| Cache down | No retry on cache | Direct LLM call | Higher latency, higher cost |
+| API 429 (rate limit) | yes、backoff付き | requestをqueue | "Processing, please wait..." |
+| API 500 (server error) | yes、3 attempts | fallback modelへ切替 | userには透明 |
+| API timeout (>30s) | yes、1 attempt | 短いprompt、小さいmodel | qualityが少し下がる |
+| Malformed output | yes、error context付き | raw textを返す | 軽微なformatting issue |
+| Guardrail block | no | requestがblockされた理由を説明 | clear error message |
+| Vector store down | vector storeはretryなし | RAG contextをskip | quality低下、機能は継続 |
+| Cache down | cacheはretryなし | direct LLM call | latency/cost増加 |
 
-**Fallback model chain.** When your primary model is unavailable, fall through a chain:
+**Fallback model chain。** primary modelが利用できないときはchainを順にfall throughします。
 
 ```
 claude-sonnet-4-20250514 -> gpt-4o -> gpt-4o-mini -> cached response -> "Service temporarily unavailable"
 ```
 
-Each step trades quality for availability. The user always gets something.
+各stepはqualityをavailabilityと交換します。userは常に何かを受け取ります。
 
-### Observability: What to Measure
+### Observability: 何を測るか
 
-You cannot improve what you cannot see. Every production LLM app needs three pillars of observability.
+見えないものは改善できません。すべてのproduction LLM appにはobservabilityの3本柱が必要です。
 
-**Structured logging.** Every request produces a JSON log entry with: request ID, user ID, prompt template name, model used, input tokens, output tokens, latency (ms), cache hit/miss, guardrail pass/fail, cost (USD), and any errors.
+**Structured logging。** すべてのrequestは、request ID、user ID、prompt template name、used model、input tokens、output tokens、latency (ms)、cache hit/miss、guardrail pass/fail、cost (USD)、errorsを含むJSON log entryを生成します。
 
-**Tracing.** A single user request touches 5-8 components. OpenTelemetry traces let you see the full journey: how long did embedding take? Was it a cache hit? How long was the LLM call? Did the guardrail add latency? Without tracing, debugging production issues is guesswork.
+**Tracing。** 1つのuser requestは5-8 componentsに触れます。OpenTelemetry tracesにより全journeyが見えます。embeddingに何msかかったか。cache hitだったか。LLM callは何秒か。guardrailはlatencyを増やしたか。tracingなしのproduction debuggingは当て推量です。
 
-**Metrics dashboard.** The five numbers every LLM team watches:
+**Metrics dashboard。** すべてのLLM teamが見る5つの数字:
 
-| Metric | Target | Why |
-|--------|--------|-----|
-| P50 latency | < 2s | Median user experience |
-| P99 latency | < 10s | Tail latency drives churn |
-| Cache hit rate | > 30% | Direct cost savings |
-| Guardrail block rate | < 5% | Too high = false positives annoying users |
-| Cost per request | < $0.01 | Unit economics viability |
+| Metric | Target | 理由 |
+|--------|--------|------|
+| P50 latency | < 2s | median user experience |
+| P99 latency | < 10s | tail latencyはchurnを生む |
+| Cache hit rate | > 30% | direct cost savings |
+| Guardrail block rate | < 5% | 高すぎる = false positivesでuserを困らせる |
+| Cost per request | < $0.01 | unit economicsの成立性 |
 
-### A/B Testing Prompts in Production
+### ProductionでPromptをA/B Testする
 
-Your prompt is not finished when it works. It is finished when you have data proving it outperforms the alternative.
+promptは動いた時点では完成していません。alternativeより優れていることをdataで証明したときに完成します。
 
-**Shadow mode.** Run a new prompt on 100% of traffic but only log the results -- do not show them to users. Compare quality metrics against the current prompt. No user risk, full data.
+**Shadow mode。** 新しいpromptをtrafficの100%で実行しますが、結果はlogするだけでuserには見せません。current promptとquality metricsを比較します。user riskなしでfull dataを得られます。
 
-**Percentage rollout.** Route 10% of traffic to the new prompt. Monitor metrics. If quality holds, increase to 25%, then 50%, then 100%. If quality drops, instant rollback.
+**Percentage rollout。** trafficの10%を新promptへrouteします。metricsをmonitorします。qualityが保てば25%、50%、100%へ増やします。qualityが落ちたら即rollbackします。
 
 ```mermaid
 graph TD
-    R["Incoming Request"]
+    R["受信Request"]
     H["Hash(user_id) mod 100"]
     A["Prompt v1 (90%)"]
     B["Prompt v2 (10%)"]
-    L["Log Both Results"]
+    L["両方の結果をlog"]
     
     R --> H
     H -->|0-89| A
@@ -189,94 +189,94 @@ graph TD
     B --> L
 ```
 
-Use a deterministic hash of the user ID, not random selection. This ensures each user gets a consistent experience across requests within the same experiment.
+random selectionではなくuser IDのdeterministic hashを使います。これにより同じexperiment内で各userがrequestをまたいで一貫したexperienceを得られます。
 
-### Real Architecture Examples
+### 実際のArchitecture例
 
-**Perplexity.** User query enters. A search engine retrieves 10-20 web pages. Pages are chunked, embedded, and reranked. Top 5 chunks become RAG context. The LLM generates an answer with citations, streamed back in real-time. Two models: a fast one for search query reformulation, a strong one for answer synthesis. Estimated 50M+ queries/day.
+**Perplexity。** user queryが入ります。search engineが10-20 web pagesをretrieveします。pagesはchunk化、embedding、rerankされます。top 5 chunksがRAG contextになります。LLMがcitations付きanswerを生成し、real-timeでstreamされます。2つのmodels: search query reformulation用のfast modelと、answer synthesis用のstrong model。推定50M+ queries/day。
 
-**Cursor.** The open file, surrounding files, recent edits, and terminal output form the context. A prompt router decides: small model for autocomplete (Cursor-small, ~20ms), large model for chat (Claude Sonnet 4.6 / GPT-5, ~3s). Context is aggressively compressed -- only relevant code sections, not entire files. Codebase embeddings provide long-range context. Speculative edits stream diffs, not full files. MCP integration lets third-party tools plug in without per-tool code changes.
+**Cursor。** open file、surrounding files、recent edits、terminal outputがcontextを形成します。prompt routerが判断します: autocompleteにはsmall model (Cursor-small, ~20ms)、chatにはlarge model (Claude Sonnet 4.6 / GPT-5, ~3s)。contextはaggressivelyにcompressされます。entire filesではなくrelevant code sectionsだけです。codebase embeddingsがlong-range contextを提供します。speculative editsはfull filesではなくdiffsをstreamします。MCP integrationにより、third-party toolsをper-tool code変更なしでplug inできます。
 
-**ChatGPT.** Plugins, function calling, and MCP servers let the model access the web, run code, generate images, and query databases. A routing layer decides which capabilities to invoke. Memory persists user preferences across sessions. The system prompt is 1,500+ tokens of behavioral rules, cached via prompt caching. Multiple models serve different features: GPT-5 for chat, GPT-Image for images, Whisper for voice, o4-mini for deep reasoning.
+**ChatGPT。** plugins、function calling、MCP serversにより、modelはweb access、code execution、image generation、database queryができます。routing layerがどのcapabilityをinvokeするか決めます。Memoryはsessionをまたいでuser preferencesをpersistします。system promptは1,500+ tokensのbehavioral rulesで、prompt cachingでcacheされます。複数modelsが異なるfeaturesを担当します: chatにはGPT-5、imagesにはGPT-Image、voiceにはWhisper、deep reasoningにはo4-mini。
 
 ### Scaling
 
 | Scale | Architecture | Infra |
 |-------|-------------|-------|
-| 0-1K DAU | Single FastAPI server, sync calls | 1 VM, $50/month |
-| 1K-10K DAU | Async FastAPI, semantic cache, queue | 2-4 VMs + Redis, $500/month |
-| 10K-100K DAU | Horizontal scaling, load balancer, async workers | Kubernetes, $5K/month |
-| 100K+ DAU | Multi-region, model routing, dedicated inference | Custom infra, $50K+/month |
+| 0-1K DAU | single FastAPI server、sync calls | 1 VM、$50/month |
+| 1K-10K DAU | Async FastAPI、semantic cache、queue | 2-4 VMs + Redis、$500/month |
+| 10K-100K DAU | horizontal scaling、load balancer、async workers | Kubernetes、$5K/month |
+| 100K+ DAU | multi-region、model routing、dedicated inference | custom infra、$50K+/month |
 
-Key scaling patterns:
+重要なscaling patterns:
 
-- **Async everywhere.** Never block a web server thread on an LLM call. Use `asyncio` and `httpx.AsyncClient`.
-- **Queue-based processing.** For non-real-time tasks (summarization, analysis), push to a queue (Redis, SQS) and process with workers. Return a job ID, let the client poll.
-- **Connection pooling.** Reuse HTTP connections to LLM providers. Creating a new TLS connection per request adds 100-200ms.
-- **Horizontal scaling.** LLM apps are I/O bound, not CPU bound. A single async server handles 100+ concurrent requests. Scale servers, not cores.
+- **Async everywhere。** LLM callでweb server threadをblockしてはいけません。`asyncio` と `httpx.AsyncClient` を使います。
+- **Queue-based processing。** non-real-time tasks (summarization、analysis) はqueue (Redis、SQS) にpushし、workersでprocessします。job IDを返し、clientにpollさせます。
+- **Connection pooling。** LLM providersへのHTTP connectionsを再利用します。requestごとに新しいTLS connectionを作ると100-200ms増えます。
+- **Horizontal scaling。** LLM appsはCPU boundではなくI/O boundです。単一のasync serverが100+ concurrent requestsを処理します。coresではなくserversをscaleします。
 
-### Cost Projection
+### Cost見積もり
 
-Before you ship, estimate your monthly cost. This spreadsheet decides if your business model works.
+ship前に月額costを見積もります。このspreadsheetがbusiness modelの成立を決めます。
 
 | Variable | Value | Source |
 |----------|-------|--------|
 | Daily Active Users (DAU) | 10,000 | Analytics |
-| Queries per user per day | 5 | Product analytics |
-| Avg input tokens per query | 1,500 | Measured (system + context + user) |
-| Avg output tokens per query | 400 | Measured |
-| Input price per 1M tokens | $5.00 | OpenAI GPT-5 pricing |
-| Output price per 1M tokens | $15.00 | OpenAI GPT-5 pricing |
-| Cache hit rate | 35% | Measured from cache metrics |
+| userあたりqueries per day | 5 | Product analytics |
+| queryあたりavg input tokens | 1,500 | Measured (system + context + user) |
+| queryあたりavg output tokens | 400 | Measured |
+| 1M tokensあたりinput price | $5.00 | OpenAI GPT-5 pricing |
+| 1M tokensあたりoutput price | $15.00 | OpenAI GPT-5 pricing |
+| Cache hit rate | 35% | cache metricsから測定 |
 | Effective daily queries | 32,500 | 50,000 * (1 - 0.35) |
 
 **Monthly LLM cost:**
 - Input: 32,500 queries/day x 1,500 tokens x 30 days / 1M x $2.50 = **$3,656**
 - Output: 32,500 queries/day x 400 tokens x 30 days / 1M x $10.00 = **$3,900**
-- **Total: $7,556/month** (with caching saving ~$4,070/month)
+- **Total: $7,556/month** (cachingにより~$4,070/monthを節約)
 
-Without caching, the same traffic costs $11,625/month. A 35% cache hit rate saves 35% on LLM costs. This is why Lesson 11 exists.
+cachingなしでは同じtrafficが$11,625/monthかかります。35%のcache hit rateはLLM costsを35%節約します。これがLesson 11の存在理由です。
 
-### The Deployment Checklist
+### Deployment Checklist
 
-15 items. Ship nothing until every box is checked.
+15項目です。すべてのboxがcheckedになるまで何もshipしません。
 
 | # | Item | Category |
 |---|------|----------|
-| 1 | API keys stored in environment variables, not code | Security |
-| 2 | Rate limiting per user (10-50 req/min default) | Protection |
-| 3 | Input guardrails active (prompt injection, PII) | Safety |
-| 4 | Output guardrails active (content filtering, format validation) | Safety |
+| 1 | API keysはcodeではなくenvironment variablesに保存 | Security |
+| 2 | user単位rate limiting (default 10-50 req/min) | Protection |
+| 3 | Input guardrails active (prompt injection、PII) | Safety |
+| 4 | Output guardrails active (content filtering、format validation) | Safety |
 | 5 | Semantic cache configured and tested | Cost |
-| 6 | Streaming enabled for all chat endpoints | UX |
-| 7 | Exponential backoff on all LLM API calls | Reliability |
+| 6 | すべてのchat endpointsでstreaming enabled | UX |
+| 7 | すべてのLLM API callsでexponential backoff | Reliability |
 | 8 | Fallback model chain configured | Reliability |
-| 9 | Structured logging with request IDs | Observability |
-| 10 | Cost tracking per request and per user | Business |
-| 11 | Health check endpoint returning dependency status | Ops |
-| 12 | Max token limits on input and output | Cost/Safety |
-| 13 | Timeout on all external calls (30s default) | Reliability |
-| 14 | CORS configured for production domains only | Security |
-| 15 | Load test with 100 concurrent users passing | Performance |
+| 9 | request IDs付きstructured logging | Observability |
+| 10 | request単位/user単位cost tracking | Business |
+| 11 | dependency statusを返すhealth check endpoint | Ops |
+| 12 | input/outputのmax token limits | Cost/Safety |
+| 13 | すべてのexternal callsにtimeout (default 30s) | Reliability |
+| 14 | CORSはproduction domainsのみに設定 | Security |
+| 15 | 100 concurrent usersのload testにpass | Performance |
 
-## Build It
+## 実装
 
-This is the capstone. One file. Every component wired together.
+これはcapstoneです。1ファイル。すべてのcomponentを配線します。
 
-The code builds a complete production LLM service with:
-- FastAPI server with health checks and CORS
-- Prompt template management with versioning and A/B testing
-- Semantic caching using cosine similarity on embeddings
-- Input and output guardrails (prompt injection, PII, content safety)
-- Simulated LLM calls with streaming (SSE)
-- Exponential backoff with jitter and fallback model chain
-- Cost tracking per request and aggregate
-- Structured logging with request IDs
-- Evaluation logging for quality tracking
+codeは次を備えたcomplete production LLM serviceを構築します。
+- health checksとCORS付きFastAPI server
+- versioningとA/B testing付きprompt template management
+- embeddingsのcosine similarityを使うsemantic caching
+- input/output guardrails (prompt injection、PII、content safety)
+- streaming (SSE) 付きsimulated LLM calls
+- jitter付きexponential backoffとfallback model chain
+- request単位/aggregateのcost tracking
+- request IDs付きstructured logging
+- quality tracking用evaluation logging
 
 ### Step 1: Core Infrastructure
 
-The foundation. Configuration, logging, and the data structures every component depends on.
+foundationです。configuration、logging、すべてのcomponentが依存するdata structuresを定義します。
 
 ```python
 import asyncio
@@ -365,7 +365,7 @@ class CostTracker:
 
 ### Step 2: Prompt Management
 
-Versioned prompt templates with A/B testing support. Each template has a name, version, and the template string. The router selects based on request context and experiment assignment.
+version付きprompt templatesとA/B testing supportです。各templateはname、version、template stringを持ちます。routerはrequest contextとexperiment assignmentに基づいて選択します。
 
 ```python
 @dataclass
@@ -458,7 +458,7 @@ def select_prompt(template_name, user_id, variables):
 
 ### Step 3: Semantic Cache
 
-Embedding-based cache that matches semantically similar queries. Two questions phrased differently but meaning the same thing will hit the cache.
+semantically similarなqueriesをmatchするembedding-based cacheです。言い回しが違っても意味が同じ2つの質問はcache hitします。
 
 ```python
 def simple_embedding(text, dim=64):
@@ -541,7 +541,7 @@ class SemanticCache:
 
 ### Step 4: Guardrails
 
-Input validation catches prompt injection and PII before the LLM sees it. Output validation catches unsafe content before the user sees it. Two walls. Nothing passes unchecked.
+input validationはLLMが見る前にprompt injectionとPIIを捕捉します。output validationはuserが見る前にunsafe contentを捕捉します。2つの壁です。uncheckedで通るものはありません。
 
 ```python
 INJECTION_PATTERNS = [
@@ -614,9 +614,9 @@ def check_output_guardrails(text):
     return GuardrailResult(passed=True)
 ```
 
-### Step 5: LLM Caller with Retry and Streaming
+### Step 5: RetryとStreaming付きLLM Caller
 
-The core LLM interface. Exponential backoff with jitter on failures. Fallback through the model chain. Streaming support for token-by-token delivery.
+core LLM interfaceです。failure時はjitter付きexponential backoff。model chainでfallback。token-by-token deliveryのためのstreaming support。
 
 ```python
 def estimate_tokens(text):
@@ -716,9 +716,9 @@ async def stream_response(text):
         await asyncio.sleep(random.uniform(0.02, 0.08))
 ```
 
-### Step 6: The Request Pipeline
+### Step 6: Request Pipeline
 
-The orchestrator. Takes a raw user request, runs it through every component, and returns a structured result.
+orchestratorです。raw user requestを受け取り、すべてのcomponentに通し、structured resultを返します。
 
 ```python
 class ProductionLLMService:
@@ -883,7 +883,7 @@ class ProductionLLMService:
         }
 ```
 
-### Step 7: Run the Full Demo
+### Step 7: Full Demoを実行する
 
 ```python
 async def run_production_demo():
@@ -998,11 +998,11 @@ if __name__ == "__main__":
     main()
 ```
 
-## Use It
+## 使う
 
 ### FastAPI Server (Production Deployment)
 
-The demo above runs as a script. For production, wrap it in FastAPI with proper endpoints.
+上のdemoはscriptとして動きます。productionでは、適切なendpointsを持つFastAPIでwrapします。
 
 ```python
 # from fastapi import FastAPI, HTTPException
@@ -1054,11 +1054,11 @@ The demo above runs as a script. For production, wrap it in FastAPI with proper 
 #     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-To run this as a real server, uncomment and install dependencies: `pip install fastapi uvicorn`. Hit `http://localhost:8000/docs` for auto-generated API docs.
+real serverとして実行するには、comment outを外してdependenciesをinstallします: `pip install fastapi uvicorn`。auto-generated API docsは `http://localhost:8000/docs` で確認できます。
 
 ### Real API Integration
 
-Replace the simulated LLM calls with actual provider SDKs.
+simulated LLM callsを実際のprovider SDKsに置き換えます。
 
 ```python
 # import openai
@@ -1101,51 +1101,51 @@ Replace the simulated LLM calls with actual provider SDKs.
 # CMD ["uvicorn", "production_app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
 ```
 
-Four workers. Each handles async I/O. A single box with 4 workers serves 400+ concurrent LLM requests because they are all waiting on network I/O, not CPU.
+4 workersです。それぞれがasync I/Oを処理します。4 workersのsingle boxで400+ concurrent LLM requestsをさばけます。CPUではなくnetwork I/O待ちだからです。
 
 ## Ship It
 
-This lesson produces `outputs/prompt-architecture-reviewer.md` -- a reusable prompt that reviews the architecture of any LLM application against the production checklist. Give it a description of your system and it returns a gap analysis.
+このlessonは `outputs/prompt-architecture-reviewer.md` を生成します。任意のLLM application architectureをproduction checklistに照らしてreviewするreusable promptです。systemのdescriptionを渡すとgap analysisを返します。
 
-It also produces `outputs/skill-production-checklist.md` -- a decision framework for shipping LLM applications to production, covering every component from this lesson with specific thresholds and pass/fail criteria.
+また `outputs/skill-production-checklist.md` も生成します。LLM applicationをproductionへshipするためのdecision frameworkで、このlessonのすべてのcomponentを具体的なthresholdとpass/fail criteriaで扱います。
 
-## Exercises
+## 演習
 
-1. **Add RAG integration.** Build a simple in-memory vector store with 20 documents. When the template is `rag_answer`, embed the query, find the 3 most similar documents, and inject them as context. Measure how response quality changes with and without RAG context. Track retrieval latency separately from LLM latency.
+1. **RAG integrationを追加する。** 20 documentsを持つsimple in-memory vector storeを作ります。templateが `rag_answer` のときqueryをembedし、最もsimilarな3 documentsを見つけ、contextとしてinjectします。RAG contextあり/なしでresponse qualityがどう変わるか測定します。retrieval latencyはLLM latencyと別にtrackします。
 
-2. **Implement real function calling.** Add a tool registry (from Lesson 09) to the service. When a user asks a question that requires external data (weather, calculation, search), the pipeline should detect this, execute the tool, and include the result in the prompt. Add a `tools_used` field to the response.
+2. **実際のfunction callingを実装する。** serviceにtool registry (Lesson 09) を追加します。userがexternal data (weather、calculation、search) を必要とする質問をしたら、pipelineがそれを検出し、toolを実行し、resultをpromptに含めます。responseに `tools_used` fieldを追加します。
 
-3. **Build a cost alerting system.** Track cost per user per day. When a user exceeds $0.50/day, switch them to `gpt-4o-mini`. When total daily cost exceeds $100, activate emergency mode: cache-only responses for repeated queries, `gpt-4o-mini` for everything else, reject requests over 2,000 input tokens. Test with a simulated traffic spike.
+3. **cost alerting systemを作る。** userごとの1日costをtrackします。userが$0.50/dayを超えたら `gpt-4o-mini` へ切り替えます。total daily costが$100を超えたらemergency modeを有効にします: repeated queriesにはcache-only responses、それ以外は `gpt-4o-mini`、2,000 input tokens超のrequestはreject。simulated traffic spikeでtestします。
 
-4. **Implement prompt versioning with rollback.** Store all prompt versions with timestamps. Add an endpoint that shows quality metrics (latency, user ratings, error rate) per prompt version. Implement automatic rollback: if a new prompt version has 2x the error rate of the previous version over 100 requests, automatically revert.
+4. **rollback付きprompt versioningを実装する。** すべてのprompt versionsをtimestamps付きで保存します。prompt versionごとのquality metrics (latency、user ratings、error rate) を表示するendpointを追加します。automatic rollbackを実装します: new prompt versionのerror rateが100 requestsでprevious versionの2倍なら自動的にrevertします。
 
-5. **Add OpenTelemetry tracing.** Instrument every component (cache lookup, guardrail check, LLM call, cost calculation) as a separate span. Each span records its duration. Export traces to the console. Show the full trace for a single request, with each component's contribution to total latency visible.
+5. **OpenTelemetry tracingを追加する。** すべてのcomponent (cache lookup、guardrail check、LLM call、cost calculation) を別spanとしてinstrumentします。各spanはdurationを記録します。tracesをconsoleへexportします。単一requestのfull traceを表示し、各componentがtotal latencyにどれだけ寄与したか見えるようにします。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| API Gateway | "The frontend" | The entry point that handles authentication, rate limiting, CORS, and request routing before any LLM logic runs |
-| Prompt Router | "Template selector" | Logic that picks the right prompt template based on request type, A/B experiment assignment, and user context |
-| Semantic Cache | "Smart cache" | A cache keyed by embedding similarity rather than exact string match -- two differently-phrased identical questions return the same cached response |
-| SSE (Server-Sent Events) | "Streaming" | A unidirectional HTTP protocol where the server pushes events to the client -- used by OpenAI, Anthropic, and Google for token-by-token delivery |
-| Exponential Backoff | "Retry logic" | Waiting 1s, 2s, 4s, 8s between retries (doubling each time) with random jitter to prevent all clients retrying simultaneously |
-| Fallback Chain | "Model cascade" | An ordered list of models tried in sequence -- when the primary fails, fall through to cheaper or more available alternatives |
-| Graceful Degradation | "Partial failure handling" | When a secondary component fails (cache, RAG, guardrails), the system continues with reduced functionality rather than crashing |
-| Cost Per Request | "Unit economics" | The total LLM spend (input tokens + output tokens at model pricing) for a single user request -- the number that determines if your business model works |
-| Shadow Mode | "Dark launch" | Running a new prompt or model on real traffic but only logging results, not showing them to users -- risk-free A/B testing |
-| Health Check | "Readiness probe" | An endpoint that returns the status of all dependencies (cache, LLM availability, guardrails) -- used by load balancers and Kubernetes to route traffic |
+| Term | 俗に言うこと | 実際の意味 |
+|------|---------------|------------|
+| API Gateway | "The frontend" | LLM logicが走る前にauthentication、rate limiting、CORS、request routingを扱うentry point |
+| Prompt Router | "Template selector" | request type、A/B experiment assignment、user contextに基づいて正しいprompt templateを選ぶlogic |
+| Semantic Cache | "Smart cache" | exact string matchではなくembedding similarityをkeyにしたcache。言い回しが違う同じ質問が同じcached responseを返す |
+| SSE (Server-Sent Events) | "Streaming" | serverがclientへeventsをpushするunidirectional HTTP protocol。OpenAI、Anthropic、Googleがtoken-by-token deliveryに使う |
+| Exponential Backoff | "Retry logic" | retries間で1s、2s、4s、8sと待ち (毎回倍増)、random jitterで全clientの同時retryを防ぐ |
+| Fallback Chain | "Model cascade" | 順番に試すmodelsのordered list。primaryが失敗したら、より安い/availableなalternativeへfall throughする |
+| Graceful Degradation | "Partial failure handling" | secondary component (cache、RAG、guardrails) が失敗しても、systemがcrashせず機能低下で継続する |
+| Cost Per Request | "Unit economics" | single user requestのtotal LLM spend (input tokens + output tokens at model pricing)。business modelが成立するかを決める数字 |
+| Shadow Mode | "Dark launch" | new prompt/modelをreal trafficで実行するが、結果はlogだけしてuserには見せない。risk-free A/B testing |
+| Health Check | "Readiness probe" | すべてのdependencies (cache、LLM availability、guardrails) のstatusを返すendpoint。load balancersとKubernetesがtraffic routingに使う |
 
-## Further Reading
+## 参考文献
 
-- [FastAPI Documentation](https://fastapi.tiangolo.com/) -- the async Python framework used in this lesson, with native SSE streaming and automatic OpenAPI docs
-- [OpenAI Production Best Practices](https://platform.openai.com/docs/guides/production-best-practices) -- rate limits, error handling, and scaling guidance from the largest LLM API provider
-- [Anthropic API Reference](https://docs.anthropic.com/en/api/messages-streaming) -- streaming implementation details for Claude, including server-sent events and tool use during streaming
-- [OpenTelemetry Python SDK](https://opentelemetry.io/docs/languages/python/) -- the standard for distributed tracing, used to instrument every component of an LLM pipeline
-- [Semantic Caching with GPTCache](https://github.com/zilliztech/GPTCache) -- production semantic caching library that implements the concepts from this lesson at scale
-- [Hamel Husain, "Your AI Product Needs Evals"](https://hamel.dev/blog/posts/evals/) -- the definitive guide on evaluation-driven development for LLM applications, complementing the eval component in this capstone
-- [Eugene Yan, "Patterns for Building LLM-based Systems"](https://eugeneyan.com/writing/llm-patterns/) -- architectural patterns (guardrails, RAG, caching, routing) seen across production LLM deployments at major tech companies
-- [vLLM documentation](https://docs.vllm.ai/) -- PagedAttention-based serving: the default self-hosted inference layer used under the FastAPI capstone in this lesson.
-- [Hugging Face TGI](https://huggingface.co/docs/text-generation-inference/index) -- Text Generation Inference: Rust server with continuous batching, Flash Attention, and Medusa speculative decoding; the HF-native alternative to vLLM.
-- [NVIDIA TensorRT-LLM documentation](https://nvidia.github.io/TensorRT-LLM/) -- the highest-throughput path on NVIDIA hardware; quantization, in-flight batching, and FP8 kernels for enterprise deployments.
-- [Hamel Husain -- Optimizing Latency: TGI vs vLLM vs CTranslate2 vs mlc](https://hamel.dev/notes/llm/inference/03_inference.html) -- measured comparison of throughput and latency across the main serving frameworks.
+- [FastAPI Documentation](https://fastapi.tiangolo.com/) -- このlessonで使うasync Python framework。native SSE streamingとautomatic OpenAPI docsを持つ
+- [OpenAI Production Best Practices](https://platform.openai.com/docs/guides/production-best-practices) -- 最大級のLLM API providerによるrate limits、error handling、scaling guidance
+- [Anthropic API Reference](https://docs.anthropic.com/en/api/messages-streaming) -- Claudeのstreaming implementation details。server-sent eventsとstreaming中tool useを含む
+- [OpenTelemetry Python SDK](https://opentelemetry.io/docs/languages/python/) -- distributed tracingのstandard。LLM pipelineの全componentをinstrumentするために使う
+- [Semantic Caching with GPTCache](https://github.com/zilliztech/GPTCache) -- このlessonのconceptsをscaleして実装するproduction semantic caching library
+- [Hamel Husain, "Your AI Product Needs Evals"](https://hamel.dev/blog/posts/evals/) -- LLM applicationsのevaluation-driven developmentに関する定番guide。このcapstoneのeval componentを補完する
+- [Eugene Yan, "Patterns for Building LLM-based Systems"](https://eugeneyan.com/writing/llm-patterns/) -- major tech companiesのproduction LLM deploymentsで見られるarchitectural patterns (guardrails、RAG、caching、routing)
+- [vLLM documentation](https://docs.vllm.ai/) -- PagedAttention-based serving。このlessonのFastAPI capstone下で使うdefault self-hosted inference layer
+- [Hugging Face TGI](https://huggingface.co/docs/text-generation-inference/index) -- Text Generation Inference。continuous batching、Flash Attention、Medusa speculative decodingを備えたRust server。vLLMのHF-native alternative
+- [NVIDIA TensorRT-LLM documentation](https://nvidia.github.io/TensorRT-LLM/) -- NVIDIA hardwareでhighest-throughputを狙うpath。enterprise deployments向けquantization、in-flight batching、FP8 kernels
+- [Hamel Husain -- Optimizing Latency: TGI vs vLLM vs CTranslate2 vs mlc](https://hamel.dev/notes/llm/inference/03_inference.html) -- main serving frameworks間のthroughput/latency実測比較

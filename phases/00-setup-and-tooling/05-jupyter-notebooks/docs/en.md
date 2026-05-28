@@ -1,28 +1,28 @@
 # Jupyter Notebooks
 
-> Notebooks are the lab bench of AI engineering. You prototype here, then move what works into production.
+> notebookはAIエンジニアリングの実験台です。ここで試作し、うまくいったものを本番用コードへ移します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~30 minutes
+**タイプ:** 作ってみる
+**言語:** Python
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約30分
 
-## Learning Objectives
+## 学習目標
 
-- Install and launch JupyterLab, Jupyter Notebook, or VS Code with the Jupyter extension
-- Use magic commands (`%timeit`, `%%time`, `%matplotlib inline`) to benchmark and visualize inline
-- Distinguish when to use notebooks vs scripts and apply the "explore in notebooks, ship in scripts" workflow
-- Identify and avoid common notebook traps: out-of-order execution, hidden state, and memory leaks
+- JupyterLab、Jupyter Notebook、またはJupyter拡張付きVS Codeをインストールして起動する
+- マジックコマンド（`%timeit`, `%%time`, `%matplotlib inline`）を使って、インラインでベンチマークと可視化を行う
+- notebookとscriptを使い分け、「notebookで探索し、scriptで届ける」ワークフローを適用する
+- 順不同実行、隠れた状態、メモリリークといったnotebookの落とし穴を特定して避ける
 
-## The Problem
+## 課題
 
-Every AI paper, tutorial, and Kaggle competition uses Jupyter notebooks. They let you run code in pieces, see outputs inline, mix code with explanations, and iterate fast. If you try to learn AI without notebooks, you're doing math homework without scratch paper.
+あらゆるAI論文、チュートリアル、KaggleコンペでJupyter notebookが使われます。コードを小分けに実行し、出力をインラインで確認し、コードと説明を混ぜ、素早く反復できます。notebookなしでAIを学ぼうとするのは、メモ用紙なしで数学の宿題をするようなものです。
 
-But notebooks have real traps. People use them for everything, including things they're terrible at. Knowing when to use a notebook and when to use a script will save you from debugging nightmares later.
+ただしnotebookには本物の落とし穴があります。不得意な用途まで含めて、何にでもnotebookを使ってしまう人がいます。notebookを使うべき時とscriptを使うべき時を知っておくと、後でデバッグ地獄を避けられます。
 
-## The Concept
+## 考え方
 
-A notebook is a list of cells. Each cell is either code or text.
+notebookはcellのリストです。各cellはコードまたはテキストです。
 
 ```mermaid
 graph TD
@@ -30,7 +30,7 @@ graph TD
     B --> C["**Code Cell** ► Run\nplt.plot(losses)\n---\nOutput: inline plot"]
 ```
 
-The kernel is a Python process running in the background. When you run a cell, it sends the code to the kernel, which executes it and sends back the result. All cells share the same kernel, so variables persist between cells.
+kernelはバックグラウンドで動くPythonプロセスです。cellを実行すると、notebookはコードをkernelに送り、kernelが実行して結果を返します。すべてのcellは同じkernelを共有するため、変数はcell間で残ります。
 
 ```mermaid
 graph LR
@@ -40,57 +40,57 @@ graph LR
     B --> E[Dies when you restart it]
 ```
 
-That "whatever order you click" part is both the superpower and the foot-gun.
+この「クリックした順に何でも実行できる」性質が、notebookの強みでもあり、事故の原因でもあります。
 
-## Build It
+## 作ってみる
 
-### Step 1: Pick your interface
+### ステップ1: インターフェースを選ぶ
 
-Three options, one format:
+3つの選択肢がありますが、ファイル形式は1つです。
 
-| Interface | Install | Best for |
+| インターフェース | インストール | 向いている用途 |
 |-----------|---------|----------|
-| JupyterLab | `pip install jupyterlab` then `jupyter lab` | Full IDE experience, multiple tabs, file browser, terminal |
-| Jupyter Notebook | `pip install notebook` then `jupyter notebook` | Simple, lightweight, one notebook at a time |
-| VS Code | Install "Jupyter" extension | Already in your editor, git integration, debugging |
+| JupyterLab | `pip install jupyterlab` の後に `jupyter lab` | フルIDE体験、複数タブ、ファイルブラウザ、ターミナル |
+| Jupyter Notebook | `pip install notebook` の後に `jupyter notebook` | シンプル、軽量、1度に1 notebook |
+| VS Code | "Jupyter" 拡張をインストール | 既存のエディタ内、git連携、デバッグ |
 
-All three read and write the same `.ipynb` file. Pick whatever you like. JupyterLab is the most common in AI work.
+3つとも同じ `.ipynb` ファイルを読み書きします。好きなものを選んでください。AIの作業ではJupyterLabが最も一般的です。
 
 ```bash
 pip install jupyterlab
 jupyter lab
 ```
 
-### Step 2: Keyboard shortcuts that matter
+### ステップ2: 重要なキーボードショートカット
 
-You operate in two modes. Press `Escape` for command mode (blue bar on the left), `Enter` for edit mode (green bar).
+操作には2つのモードがあります。コマンドモード（左の青いバー）には `Escape`、編集モード（緑のバー）には `Enter` を押します。
 
-**Command mode (most used):**
+**コマンドモード（最もよく使う）:**
 
-| Key | Action |
+| キー | 操作 |
 |-----|--------|
-| `Shift+Enter` | Run cell, move to next |
-| `A` | Insert cell above |
-| `B` | Insert cell below |
-| `DD` | Delete cell |
-| `M` | Convert to markdown |
-| `Y` | Convert to code |
-| `Z` | Undo cell operation |
-| `Ctrl+Shift+H` | Show all shortcuts |
+| `Shift+Enter` | cellを実行し、次へ移動 |
+| `A` | 上にcellを挿入 |
+| `B` | 下にcellを挿入 |
+| `DD` | cellを削除 |
+| `M` | markdownへ変換 |
+| `Y` | codeへ変換 |
+| `Z` | cell操作を取り消す |
+| `Ctrl+Shift+H` | すべてのショートカットを表示 |
 
-**Edit mode:**
+**編集モード:**
 
-| Key | Action |
+| キー | 操作 |
 |-----|--------|
-| `Tab` | Autocomplete |
-| `Shift+Tab` | Show function signature |
-| `Ctrl+/` | Toggle comment |
+| `Tab` | 補完 |
+| `Shift+Tab` | 関数シグネチャを表示 |
+| `Ctrl+/` | コメントを切り替え |
 
-`Shift+Enter` is the one you'll use a thousand times a day. Learn it first.
+`Shift+Enter` は1日に何度も使います。最初に覚えてください。
 
-### Step 3: Cell types
+### ステップ3: cellの種類
 
-**Code cells** run Python and show the output:
+**Code cell** はPythonを実行し、出力を表示します。
 
 ```python
 import numpy as np
@@ -98,56 +98,56 @@ data = np.random.randn(1000)
 data.mean(), data.std()
 ```
 
-Output: `(0.0032, 0.9987)`
+出力: `(0.0032, 0.9987)`
 
-**Markdown cells** render formatted text. Use them to document what you're doing and why. Supports headers, bold, italic, LaTeX math (`$E = mc^2$`), tables, and images.
+**Markdown cell** は整形済みテキストを表示します。何をしているのか、なぜそうするのかを記録するために使います。見出し、太字、斜体、LaTeX数式（`$E = mc^2$`）、表、画像に対応しています。
 
-### Step 4: Magic commands
+### ステップ4: マジックコマンド
 
-These aren't Python. They're Jupyter-specific commands that start with `%` (line magic) or `%%` (cell magic).
+これはPythonではありません。`%`（line magic）または `%%`（cell magic）で始まる、Jupyter固有のコマンドです。
 
-**Time your code:**
+**コードの時間を測る:**
 
 ```python
 %timeit np.random.randn(10000)
 ```
 
-Output: `45.2 us +/- 1.3 us per loop`
+出力: `45.2 us +/- 1.3 us per loop`
 
 ```python
 %%time
 model.fit(X_train, y_train, epochs=10)
 ```
 
-Output: `Wall time: 2.34 s`
+出力: `Wall time: 2.34 s`
 
-`%timeit` runs the code many times and averages. `%%time` runs it once. Use `%timeit` for microbenchmarks, `%%time` for training runs.
+`%timeit` はコードを何度も実行して平均を取ります。`%%time` は1回だけ実行します。マイクロベンチマークには `%timeit`、学習実行には `%%time` を使います。
 
-**Enable inline plots:**
+**インラインプロットを有効にする:**
 
 ```python
 %matplotlib inline
 ```
 
-Every `plt.plot()` or `plt.show()` now renders directly in the notebook.
+これで、すべての `plt.plot()` や `plt.show()` がnotebook内に直接描画されます。
 
-**Install packages without leaving the notebook:**
+**notebookを離れずにパッケージをインストールする:**
 
 ```python
 !pip install scikit-learn
 ```
 
-The `!` prefix runs any shell command.
+`!` プレフィックスは任意のshellコマンドを実行します。
 
-**Check environment variables:**
+**環境変数を確認する:**
 
 ```python
 %env CUDA_VISIBLE_DEVICES
 ```
 
-### Step 5: Display rich output inline
+### ステップ5: リッチな出力をインライン表示する
 
-Notebooks auto-display the last expression in a cell. But you can control it:
+notebookはcell内の最後の式を自動表示します。ただし、制御することもできます。
 
 ```python
 import pandas as pd
@@ -160,7 +160,7 @@ df = pd.DataFrame({
 df
 ```
 
-This renders a formatted HTML table, not a text dump. Same with plots:
+これはテキストのダンプではなく、整形されたHTML表として表示されます。プロットも同じです。
 
 ```python
 import matplotlib.pyplot as plt
@@ -171,81 +171,81 @@ plt.title("Inline Plot")
 plt.show()
 ```
 
-The plot appears right below the cell. This is why notebooks dominate AI work. You see the data, the plot, and the code together.
+プロットはcellのすぐ下に表示されます。これが、AI作業でnotebookが主流である理由です。データ、プロット、コードをまとめて見られます。
 
-For images:
+画像の場合:
 
 ```python
 from IPython.display import Image, display
 display(Image(filename="architecture.png"))
 ```
 
-### Step 6: Google Colab
+### ステップ6: Google Colab
 
-Colab is a free Jupyter notebook in the cloud. It gives you a GPU, pre-installed libraries, and Google Drive integration. No setup required.
+Colabはクラウド上の無料Jupyter notebookです。GPU、プリインストール済みライブラリ、Google Drive連携を提供します。セットアップは不要です。
 
-1. Go to [colab.research.google.com](https://colab.research.google.com)
-2. Upload any `.ipynb` file from this course
-3. Runtime > Change runtime type > T4 GPU (free)
+1. [colab.research.google.com](https://colab.research.google.com) を開く
+2. このコースの任意の `.ipynb` ファイルをアップロードする
+3. Runtime > Change runtime type > T4 GPU（無料）を選ぶ
 
-Colab differences from local Jupyter:
-- Files don't persist between sessions (save to Drive or download)
-- Pre-installed: numpy, pandas, matplotlib, torch, tensorflow, sklearn
-- `from google.colab import files` to upload/download files
-- `from google.colab import drive; drive.mount('/content/drive')` for persistent storage
-- Sessions time out after 90 minutes of inactivity (free tier)
+ローカルJupyterとの違い:
+- ファイルはセッション間で保持されません（Driveに保存するかダウンロードする）
+- プリインストール済み: numpy, pandas, matplotlib, torch, tensorflow, sklearn
+- ファイルのアップロード/ダウンロードには `from google.colab import files`
+- 永続ストレージには `from google.colab import drive; drive.mount('/content/drive')`
+- 無料枠では90分間操作がないとセッションがタイムアウトする
 
-## Use It
+## 使ってみる
 
-### Notebooks vs Scripts: When to use which
+### Notebooks vs Scripts: どちらをいつ使うか
 
-| Use notebooks for | Use scripts for |
+| notebookを使う用途 | scriptを使う用途 |
 |-------------------|-----------------|
-| Exploring a dataset | Training pipelines |
-| Prototyping a model | Reusable utilities |
-| Visualizing results | Anything with `if __name__` |
-| Explaining your work | Code that runs on a schedule |
-| Quick experiments | Production code |
-| Course exercises | Packages and libraries |
+| データセットの探索 | 学習パイプライン |
+| モデルの試作 | 再利用可能なユーティリティ |
+| 結果の可視化 | `if __name__` を含むもの |
+| 作業の説明 | スケジュール実行されるコード |
+| 素早い実験 | 本番コード |
+| コース演習 | パッケージとライブラリ |
 
-The rule: **explore in notebooks, ship in scripts**.
+ルール: **notebookで探索し、scriptで届ける**。
 
-A common workflow in AI:
-1. Explore data in a notebook
-2. Prototype your model in the notebook
-3. Once it works, move the code to `.py` files
-4. Import those `.py` files back into the notebook for further experiments
+AIでよくあるワークフロー:
+1. notebookでデータを探索する
+2. notebookでモデルを試作する
+3. 動いたらコードを `.py` ファイルへ移す
+4. 追加実験のために、その `.py` ファイルをnotebookへimportする
 
-### Common traps
+### よくある落とし穴
 
-**Out-of-order execution.** You run cell 5, then cell 2, then cell 7. The notebook works on your machine but breaks when someone runs it top to bottom. Fix: Kernel > Restart & Run All before sharing.
+**順不同実行。** cell 5を実行し、次にcell 2、その次にcell 7を実行する。自分のマシンでは動きますが、他の人が上から下へ実行すると壊れます。修正: 共有前に Kernel > Restart & Run All。
 
-**Hidden state.** You delete a cell but the variable it created is still in memory. The notebook looks clean but depends on a ghost cell. Fix: Restart the kernel regularly.
+**隠れた状態。** cellを削除しても、そのcellが作った変数はメモリに残っています。notebookはきれいに見えても、存在しないcellに依存しています。修正: 定期的にkernelを再起動する。
 
-**Memory leaks.** Loading a 4GB dataset, training a model, loading another dataset. Nothing gets freed. Fix: `del variable_name` and `gc.collect()`, or restart the kernel.
+**メモリリーク。** 4GBのデータセットを読み込み、モデルを学習し、別のデータセットを読み込む。何も解放されません。修正: `del variable_name` と `gc.collect()`、またはkernelを再起動します。
 
-## Ship It
+## 形にして届ける
 
-This lesson produces:
-- `outputs/prompt-notebook-helper.md` for debugging notebook issues
+このレッスンで作るもの:
+- notebook問題のデバッグ用 `outputs/prompt-notebook-helper.md`
 
-## Exercises
+## 演習
 
-1. Open JupyterLab, create a notebook, and use `%timeit` to compare list comprehension vs numpy for creating an array of 100,000 random numbers
-2. Create a notebook with both markdown and code cells that loads a CSV, displays a dataframe, and plots a chart. Then run Kernel > Restart & Run All to verify it works top to bottom
-3. Take the code from `code/notebook_tips.py`, paste it into a Colab notebook, and run it with a free GPU
+1. JupyterLabを開き、notebookを作成し、`%timeit` を使って10万個の乱数配列を作るlist comprehensionとnumpyを比較する
+2. CSVを読み込み、dataframeを表示し、グラフを描くmarkdown cellとcode cell入りのnotebookを作成する。その後 Kernel > Restart & Run All を実行し、上から下まで動くことを確認する
+3. `code/notebook_tips.py` のコードをColab notebookへ貼り付け、無料GPUで実行する
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Kernel | "The thing running my code" | A separate Python process that executes cells and keeps variables in memory |
-| Cell | "A code block" | An independently runnable unit in a notebook, either code or markdown |
-| Magic command | "Jupyter tricks" | Special commands prefixed with `%` or `%%` that control the notebook environment |
-| `.ipynb` | "Notebook file" | A JSON file containing cells, outputs, and metadata. Stands for IPython Notebook |
+| Kernel | 「コードを動かしているもの」 | cellを実行し、変数をメモリに保持する別プロセスのPython |
+| Cell | 「コードブロック」 | notebook内の独立して実行できる単位。codeまたはmarkdown |
+| Magic command | 「Jupyterの便利技」 | `%` や `%%` で始まり、notebook環境を制御する特別なコマンド |
+| `.ipynb` | 「notebookファイル」 | cell、出力、metadataを含むJSONファイル。IPython Notebookの略 |
 
-## Further Reading
+## さらに読む
 
-- [JupyterLab Docs](https://jupyterlab.readthedocs.io/) for the full feature set
-- [Google Colab FAQ](https://research.google.com/colaboratory/faq.html) for Colab-specific limits and features
-- [28 Jupyter Notebook Tips](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/) for power-user shortcuts
+- [JupyterLab Docs](https://jupyterlab.readthedocs.io/) - 全機能の説明
+- [Google Colab FAQ](https://research.google.com/colaboratory/faq.html) - Colab固有の制限と機能
+- [28 Jupyter Notebook Tips](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/) - 上級者向けショートカット

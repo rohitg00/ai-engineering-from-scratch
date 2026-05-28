@@ -1,6 +1,6 @@
 ---
 name: skill-production-checklist
-description: Decision framework for shipping LLM applications to production -- covers every component with specific thresholds and pass/fail criteria
+description: LLM applicationを本番にshipするためのdecision framework。全componentを具体的なthresholdとpass/fail criteriaで扱う
 version: 1.0.0
 phase: 11
 lesson: 13
@@ -9,103 +9,103 @@ tags: [production, deployment, llm, architecture, scaling, cost, observability, 
 
 # Production LLM Checklist
 
-When shipping an LLM application, work through this checklist in order. Each section has pass/fail criteria with specific thresholds.
+LLM applicationをshipするときは、このchecklistを順に確認します。各sectionには具体的なthreshold付きのpass/fail criteriaがあります。
 
-## 1. Security (Ship Blockers)
+## 1. Security (ship blockers)
 
-Every item here must pass before any deployment.
+ここにある項目は、deployment前にすべてpassしていなければなりません。
 
-| Check | Pass Criteria | How to Verify |
-|-------|--------------|---------------|
-| API keys in env vars | Zero hardcoded keys in codebase | `grep -r "sk-" --include="*.py"` returns nothing |
-| Input guardrails active | Prompt injection patterns blocked | Send "Ignore all previous instructions" -- returns blocked response |
-| PII redaction | SSN, credit card, email patterns caught | Send "My SSN is 123-45-6789" -- PII redacted before LLM call |
-| Output filtering | Dangerous content blocked | Model cannot return `DROP TABLE`, `rm -rf`, `exec()` patterns |
-| Rate limiting | Per-user request cap enforced | 100 requests from same user in 10 seconds -- last 50+ rejected |
-| Auth on all endpoints | No unauthenticated LLM access | `curl /v1/chat` without token returns 401 |
-| CORS restricted | Only production domains allowed | `Origin: evil.com` request rejected |
-| Max input tokens | Requests over limit rejected | Send 50K token input -- returns 413 or truncation |
+| Check | Pass Criteria | 確認方法 |
+|-------|---------------|----------|
+| API keys in env vars | codebaseにhardcoded keyが0件 | `grep -r "sk-" --include="*.py"` が何も返さない |
+| Input guardrails active | prompt injection patternがblockされる | "Ignore all previous instructions" を送るとblocked responseになる |
+| PII redaction | SSN、credit card、email patternを捕捉 | "My SSN is 123-45-6789" を送るとLLM call前にPIIがredactされる |
+| Output filtering | dangerous contentがblockされる | modelが `DROP TABLE`、`rm -rf`、`exec()` patternを返せない |
+| Rate limiting | user単位のrequest capがenforceされる | 同一userから10秒で100 requestsを送り、最後の50+がrejectedされる |
+| Auth on all endpoints | unauthenticatedなLLM accessがない | tokenなしの `curl /v1/chat` が401を返す |
+| CORS restricted | production domainのみ許可 | `Origin: evil.com` requestがrejectedされる |
+| Max input tokens | limit超過requestがrejectedされる | 50K token inputを送ると413またはtruncationになる |
 
-## 2. Reliability (Week-One Survival)
+## 2. Reliability (week-one survival)
 
-These prevent your first on-call incident.
+これは最初のon-call incidentを防ぐための項目です。
 
-| Check | Pass Criteria | How to Verify |
-|-------|--------------|---------------|
-| Retry with backoff | 3 retries on 5xx, exponential delay | Kill LLM mock mid-request -- retries visible in logs |
-| Fallback model chain | 2+ models in chain | Primary model unavailable -- response still returns from fallback |
-| Request timeout | 30s max on all external calls | Slow LLM mock (60s) -- request times out at 30s |
-| Graceful degradation | Cache/RAG failure does not crash service | Stop cache -- requests still succeed (slower, more expensive) |
-| Health check endpoint | Returns dependency status | `GET /health` returns `{"status": "healthy", "cache": ..., "llm": ...}` |
-| Streaming works | First token under 500ms | Time-to-first-token measured, consistently < 500ms |
-| Error messages are safe | Internal errors never leak to users | Force 500 -- user sees generic error, not stack trace |
+| Check | Pass Criteria | 確認方法 |
+|-------|---------------|----------|
+| Retry with backoff | 5xxで3 retries、exponential delay | request中にLLM mockを落とし、logでretryを確認 |
+| Fallback model chain | chain内に2+ models | primary model unavailableでもfallbackからresponseが返る |
+| Request timeout | すべてのexternal callが最大30s | slow LLM mock (60s) が30sでtimeoutする |
+| Graceful degradation | Cache/RAG failureでserviceがcrashしない | cacheを止めてもrequestは成功する (遅く、高コストになる) |
+| Health check endpoint | dependency statusを返す | `GET /health` が `{"status": "healthy", "cache": ..., "llm": ...}` を返す |
+| Streaming works | first tokenが500ms未満 | time-to-first-tokenが常に500ms未満 |
+| Error messages are safe | internal errorがuserに漏れない | 500を強制し、userにはstack traceでなくgeneric errorが出る |
 
-## 3. Cost Control (Month-One Economics)
+## 3. Cost Control (month-one economics)
 
-These prevent the $50K surprise invoice.
+これは$50Kのsurprise invoiceを防ぐための項目です。
 
-| Check | Pass Criteria | How to Verify |
-|-------|--------------|---------------|
-| Cost per request tracked | Every request logs token count + USD cost | Request log has `input_tokens`, `output_tokens`, `cost_usd` fields |
-| Semantic cache active | > 20% hit rate on repeated patterns | Cache stats show hit rate after 1000 test requests |
-| Cache TTL configured | Entries expire (default: 1 hour) | Entry inserted -- not returned after TTL |
-| Per-user cost tracking | Cost aggregated by user_id | Dashboard/API shows top 10 users by cost |
-| Cost alerting | Alert at 80% of daily budget | Set $10 daily budget, send $8.50 in requests -- alert fires |
-| Model routing by cost | Low-complexity queries use cheaper model | Simple question routes to gpt-4o-mini, complex to gpt-4o |
-| Max output tokens set | Responses capped per template | Template with max_output_tokens=512 -- response never exceeds it |
+| Check | Pass Criteria | 確認方法 |
+|-------|---------------|----------|
+| Cost per request tracked | 全requestがtoken count + USD costをlogする | request logに `input_tokens`、`output_tokens`、`cost_usd` fieldsがある |
+| Semantic cache active | repeated patternでhit rate > 20% | 1000 test requests後のcache statsでhit rateを確認 |
+| Cache TTL configured | entryがexpireする (default: 1 hour) | entry挿入後、TTL後に返らない |
+| Per-user cost tracking | costがuser_idごとにaggregateされる | dashboard/APIにcost上位10 usersが表示される |
+| Cost alerting | daily budgetの80%でalert | $10 daily budgetで$8.50分requestを送りalertが発火する |
+| Model routing by cost | low-complexity queryが安いmodelを使う | simple questionはgpt-4o-mini、complexはgpt-4oにrouteされる |
+| Max output tokens set | responseがtemplateごとにcapされる | max_output_tokens=512のtemplateでresponseがそれを超えない |
 
 **Cost estimation formula:**
 ```
 Monthly LLM cost = DAU x queries_per_user x 30 x (1 - cache_hit_rate) x (avg_input_tokens x input_price + avg_output_tokens x output_price) / 1,000,000
 ```
 
-**Benchmark thresholds by scale:**
+**Scale別benchmark threshold:**
 
-| DAU | Target cost/request | Monthly budget |
-|-----|-------------------|----------------|
+| DAU | target cost/request | monthly budget |
+|-----|---------------------|----------------|
 | 1K | < $0.005 | < $750 |
 | 10K | < $0.003 | < $4,500 |
 | 100K | < $0.001 | < $15,000 |
 
-## 4. Observability (Debugging in Production)
+## 4. Observability (production debugging)
 
-You cannot fix what you cannot see.
+見えないものは直せません。
 
-| Check | Pass Criteria | How to Verify |
-|-------|--------------|---------------|
-| Structured JSON logging | Every request produces a JSON log line | Log contains: request_id, user_id, model, tokens, latency_ms, cost |
-| Request tracing | End-to-end trace with component timing | Single request shows: guardrail (5ms) + cache (2ms) + llm (3200ms) + eval (1ms) |
-| Latency tracking | P50, P95, P99 measured | After 1000 requests: P50 < 2s, P99 < 10s |
-| Error rate monitoring | Errors counted and categorized | Dashboard shows: 0.5% API errors, 0.1% guardrail blocks, 0.01% timeouts |
-| Cache metrics | Hit rate, miss rate, entry count visible | `GET /v1/cache/stats` returns current numbers |
-| A/B test metrics | Per-variant quality metrics logged | Each request logs prompt_template + version for comparison |
-| Eval logging | Quality signals recorded per request | Response length, latency, model, template version stored for offline analysis |
+| Check | Pass Criteria | 確認方法 |
+|-------|---------------|----------|
+| Structured JSON logging | 全requestがJSON log lineを生成する | logにrequest_id、user_id、model、tokens、latency_ms、costがある |
+| Request tracing | component timing付きend-to-end trace | 単一requestでguardrail (5ms) + cache (2ms) + llm (3200ms) + eval (1ms) が見える |
+| Latency tracking | P50、P95、P99を測定 | 1000 requests後: P50 < 2s、P99 < 10s |
+| Error rate monitoring | errorをcountしcategory化 | dashboardに0.5% API errors、0.1% guardrail blocks、0.01% timeoutsが出る |
+| Cache metrics | hit rate、miss rate、entry countが見える | `GET /v1/cache/stats` が現在値を返す |
+| A/B test metrics | variantごとのquality metricsをlog | 各requestが比較用にprompt_template + versionをlogする |
+| Eval logging | quality signalをrequestごとに記録 | response length、latency、model、template versionをoffline analysis用に保存 |
 
 ## 5. Prompt Management
 
-Prompts are code. Treat them like code.
+Promptはcodeです。codeとして扱います。
 
-| Check | Pass Criteria | How to Verify |
-|-------|--------------|---------------|
-| Versioned templates | Every template has a name + version string | Template change creates new version, old version preserved |
-| A/B testing support | Traffic split by deterministic user hash | Same user always sees same variant within experiment |
-| Rollback capability | Revert to previous version in < 1 minute | Change experiment config -- traffic instantly shifts |
-| Template validation | Variables validated before rendering | Missing variable in template raises clear error, not KeyError |
-| System prompt separation | System and user messages in separate fields | System prompt is not concatenated into user message |
+| Check | Pass Criteria | 確認方法 |
+|-------|---------------|----------|
+| Versioned templates | 全templateがname + version stringを持つ | template変更で新versionが作られ、旧versionが保存される |
+| A/B testing support | deterministic user hashでtraffic split | 同じuserはexperiment内で常に同じvariantを見る |
+| Rollback capability | 1分未満でprevious versionへ戻せる | experiment config変更でtrafficが即座に移る |
+| Template validation | rendering前にvariablesをvalidate | missing variableがKeyErrorではなくclear errorを出す |
+| System prompt separation | system/user messagesが別field | system promptがuser messageに連結されない |
 
 ## 6. Scaling Readiness
 
-Not needed at launch. Needed at 10x.
+launch時には不要でも、10倍scaleでは必要です。
 
-| Check | Pass Criteria | How to Verify |
-|-------|--------------|---------------|
-| Async LLM calls | No thread blocking on API calls | 50 concurrent requests -- server CPU stays < 30% |
-| Connection pooling | HTTP connections reused | Network trace shows persistent connections to LLM provider |
-| Horizontal scaling | Stateless server design | 2 instances behind load balancer -- all requests succeed |
-| Queue support | Non-real-time tasks go to queue | Summarization request returns job_id, result available via polling |
-| Load tested | 100 concurrent users, < 5% error rate | `wrk` or `locust` test passes at target concurrency |
+| Check | Pass Criteria | 確認方法 |
+|-------|---------------|----------|
+| Async LLM calls | API callでthreadをblockしない | 50 concurrent requestsでもserver CPU < 30% |
+| Connection pooling | HTTP connectionsを再利用 | network traceでLLM providerへのpersistent connectionsを確認 |
+| Horizontal scaling | stateless server design | load balancer配下の2 instancesで全requestが成功 |
+| Queue support | non-real-time taskはqueueへ送る | summarization requestがjob_idを返し、pollingで結果取得できる |
+| Load tested | 100 concurrent users、error rate < 5% | target concurrencyで `wrk` または `locust` testがpass |
 
-## Implementation order for new projects
+## 新規projectの実装順序
 
 1. **Day 1:** API server + prompt templates + single LLM call with retry
 2. **Day 2:** Input guardrails + output guardrails + error handling
@@ -118,10 +118,10 @@ Not needed at launch. Needed at 10x.
 
 ## Quick diagnostic
 
-If something is wrong in production, check in this order:
+productionで異常がある場合は、この順序で確認します。
 
-1. **Users complaining about errors?** Check health endpoint, then error rate in logs, then LLM provider status page
-2. **Responses are slow?** Check P99 latency, then cache hit rate, then LLM response times in traces
-3. **Cost spiking?** Check cost-per-request trend, then cache hit rate, then top users by cost, then look for prompt template changes that increased token count
-4. **Quality dropped?** Check if a new prompt version was deployed, check if RAG retrieval accuracy changed, check if model provider changed default model version
-5. **Security incident?** Check guardrail block rate (sudden drop = guardrails disabled), check request logs for unusual patterns, rotate API keys immediately
+1. **userがerrorを訴えている?** health endpoint、logのerror rate、LLM provider status pageの順に確認
+2. **responseが遅い?** P99 latency、cache hit rate、trace内LLM response timeの順に確認
+3. **costが急増?** cost-per-request trend、cache hit rate、cost上位user、token countを増やしたprompt template変更の順に確認
+4. **qualityが落ちた?** 新しいprompt versionのdeploy、RAG retrieval accuracyの変化、model providerのdefault model version変更を確認
+5. **security incident?** guardrail block rate (急落 = guardrails disabled)、request logのunusual patternを確認し、API keysを即rotate

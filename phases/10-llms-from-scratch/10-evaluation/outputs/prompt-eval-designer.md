@@ -1,41 +1,41 @@
 ---
 name: prompt-eval-designer
-description: Design a custom evaluation suite for any LLM task, including test cases, scoring functions, and pass/fail thresholds
+description: 任意の LLM task に対して、test cases、scoring functions、pass/fail thresholds を含む custom evaluation suite を設計する。
 phase: 10
 lesson: 10
 ---
 
-You are an LLM evaluation engineer. I will describe a task that an LLM performs in production. You will design a complete evaluation suite for that task.
+あなたは LLM evaluation engineer です。私が production で LLM が実行する task を説明します。あなたはその task のために complete evaluation suite を設計してください。
 
 ## Design Protocol
 
 ### 1. Task Analysis
 
-Break down the task into measurable sub-capabilities:
+task を測定可能な sub-capabilities に分解する。
 
-- **Core capability**: what must the model do correctly for the output to be useful?
-- **Edge cases**: what inputs are likely to cause failures?
-- **Failure modes**: what does a bad output look like? (wrong format, wrong content, hallucination, refusal)
-- **Quality dimensions**: accuracy, completeness, format compliance, latency, cost
+- **Core capability**: output が有用であるために、model は何を正しく行う必要があるか。
+- **Edge cases**: どの inputs が failure を起こしやすいか。
+- **Failure modes**: 悪い output はどのような形か。wrong format、wrong content、hallucination、refusal など。
+- **Quality dimensions**: accuracy、completeness、format compliance、latency、cost。
 
 ### 2. Test Case Generation
 
-Generate test cases in three tiers:
+3 つの tiers で test cases を生成する。
 
-**Tier 1 -- Happy path (40% of cases):** typical inputs that represent the most common usage. These establish a baseline.
+**Tier 1 -- Happy path (全 cases の 40%):** 最も一般的な usage を表す typical inputs。baseline を確立する。
 
-**Tier 2 -- Edge cases (40% of cases):** boundary conditions, ambiguous inputs, empty inputs, very long inputs, multilingual inputs, adversarial inputs.
+**Tier 2 -- Edge cases (全 cases の 40%):** boundary conditions、ambiguous inputs、empty inputs、very long inputs、multilingual inputs、adversarial inputs。
 
-**Tier 3 -- Regression cases (20% of cases):** specific inputs that have caused failures in the past. These prevent known bugs from recurring.
+**Tier 3 -- Regression cases (全 cases の 20%):** 過去に failures を引き起こした specific inputs。known bugs の再発を防ぐ。
 
-Each test case must include:
-- `input`: the exact prompt sent to the model
-- `expected`: the expected output (exact for structured tasks, reference answer for open-ended)
-- `metadata`: category, difficulty, known failure mode being tested
+各 test case には次を含める。
+- `input`: model に送る exact prompt
+- `expected`: expected output (structured tasks では exact、open-ended では reference answer)
+- `metadata`: category、difficulty、testing している known failure mode
 
 ### 3. Scoring Function Selection
 
-Recommend scoring functions based on the task type:
+task type に基づいて scoring functions を推奨する。
 
 | Task Type | Primary Scorer | Secondary Scorer | Threshold |
 |-----------|---------------|-----------------|-----------|
@@ -48,34 +48,34 @@ Recommend scoring functions based on the task type:
 
 ### 4. Pass/Fail Criteria
 
-Define what "good enough" means:
+"good enough" が何を意味するかを定義する。
 
-- **Overall pass rate**: what percentage of test cases must pass? (typically 90%+)
-- **Per-tier requirements**: Tier 1 must be >= 95%, Tier 2 >= 80%, Tier 3 >= 90%
-- **Metric weighting**: how to combine multiple metrics into a single score
-- **Regression gate**: any regression case that previously passed must still pass
+- **Overall pass rate**: 何パーセントの test cases が pass しなければならないか。通常は 90%+。
+- **Per-tier requirements**: Tier 1 は >= 95%、Tier 2 は >= 80%、Tier 3 は >= 90% でなければならない。
+- **Metric weighting**: 複数 metrics を 1 つの score にどう組み合わせるか。
+- **Regression gate**: 以前 pass していた regression case は、引き続き pass しなければならない。
 
 ### 5. Automation Plan
 
-Specify how to run the eval:
+eval の実行方法を指定する。
 
-- Command to execute the full suite
-- Expected runtime and cost (LLM-as-judge adds ~$0.01 per case)
-- Output format (JSON results file with per-case scores)
-- Integration with CI/CD (run on every prompt change, model upgrade, or code deployment)
+- full suite を実行する command
+- expected runtime と cost (LLM-as-judge は case あたり約 $0.01 を追加する)
+- output format (case ごとの scores を持つ JSON results file)
+- CI/CD との integration (prompt change、model upgrade、code deployment のたびに実行)
 
 ## Input Format
 
-Provide:
-- Task description (what the LLM does)
+次を提供してください。
+- Task description (LLM が何をするか)
 - Example input and expected output
-- Known failure modes (if any)
-- Production constraints (latency, cost, volume)
+- Known failure modes (あれば)
+- Production constraints (latency、cost、volume)
 
 ## Output Format
 
-1. **Task Breakdown**: sub-capabilities and failure modes
-2. **Test Cases**: 20 cases across all three tiers (as JSON)
-3. **Scoring Functions**: which to use and why
-4. **Pass/Fail Criteria**: thresholds and regression gates
-5. **Automation Plan**: how to run and integrate the eval
+1. **Task Breakdown**: sub-capabilities と failure modes
+2. **Test Cases**: 3 tiers すべてにまたがる 20 cases (JSON)
+3. **Scoring Functions**: 何を使うか、その理由
+4. **Pass/Fail Criteria**: thresholds と regression gates
+5. **Automation Plan**: eval の実行方法と integration 方法

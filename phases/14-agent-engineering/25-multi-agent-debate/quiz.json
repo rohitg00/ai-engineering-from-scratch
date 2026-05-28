@@ -1,90 +1,90 @@
 {
   "lesson": "25-multi-agent-debate",
-  "title": "Multi-Agent Debate and Collaboration",
+  "title": "マルチエージェント討論と協調",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the Society of Minds protocol have N model instances do?",
+      "question": "Society of Minds protocol では、N 個のモデルインスタンスに何をさせますか。",
       "options": [
-        "Each runs a different benchmark",
-        "Independently propose answers, then over R rounds read and critique each other's proposals until they converge",
-        "Train on a shared dataset",
-        "Negotiate prices"
+        "それぞれ別の benchmark を実行する",
+        "独立して回答案を出し、その後 R ラウンドにわたって互いの提案を読み批評し、収束するまで続ける",
+        "共有 dataset で学習する",
+        "価格交渉をする"
       ],
       "correct": 1,
-      "explanation": "N proposers, R rounds, cross-critique, convergence is the canonical Du et al. debate."
+      "explanation": "N 人の提案者、R ラウンド、相互批評、収束が Du et al. の標準的な debate です。"
     },
     {
       "stage": "pre",
-      "question": "Why does cross-model debate (e.g. ChatGPT + Bard) outperform single-model debate?",
+      "question": "なぜ cross-model debate (例: ChatGPT + Bard) は single-model debate より良い結果を出すのですか。",
       "options": [
-        "Different vendors negotiate prices",
-        "Heterogeneity reduces shared blind spots so cross-critique catches more errors",
-        "It is cheaper",
-        "Vendors share weights"
+        "異なる vendor が価格交渉するから",
+        "異質性により共有された盲点が減り、相互批評でより多くの誤りを捕まえられるから",
+        "より安いから",
+        "vendor 同士が weights を共有するから"
       ],
       "correct": 1,
-      "explanation": "Mixing models brings independent error distributions, which raises the ceiling of debate."
+      "explanation": "モデルを混ぜると独立した誤り分布が得られ、debate の上限が上がります。"
     },
     {
       "stage": "check",
-      "question": "What is the main token-cost win of a sparse topology over full mesh?",
+      "question": "full mesh と比べた sparse topology の主な token-cost 上の利点は何ですか。",
       "options": [
-        "Sparse topology requires no models",
-        "Each debater reads only a subset of peers, so critique-op count drops while accuracy often matches",
-        "Sparse topology doubles the rounds",
-        "It removes the LLM"
+        "sparse topology は models を必要としない",
+        "各討論者がピアの一部だけを読むため、critique-op 数が減りつつ、精度はしばしば同等になる",
+        "sparse topology は rounds を 2 倍にする",
+        "LLM を取り除く"
       ],
       "correct": 1,
-      "explanation": "Sparse (star, ring, hub-and-spoke) reduces critique ops without losing accuracy on many tasks."
+      "explanation": "Sparse (star, ring, hub-and-spoke) は、多くの task で精度を落とさず critique ops を減らします。"
     },
     {
       "stage": "check",
-      "question": "Which case does the lesson list as where debate hurts?",
+      "question": "この lesson が debate が悪化させる場面として挙げているものはどれですか。",
       "options": [
-        "Open-ended reasoning",
-        "A simple factual lookup, because one lookup is cheaper than five debates",
+        "オープンエンドな推論",
+        "単純な factual lookup。1 回の lookup のほうが 5 回の debate より安いから",
         "Chess move validity",
         "Biography generation"
       ],
       "correct": 1,
-      "explanation": "Latency- and cost-sensitive trivial lookups do not benefit from N x R debate."
+      "explanation": "latency と cost に敏感な trivial lookup は、N x R debate の恩恵を受けません。"
     },
     {
       "stage": "check",
-      "question": "What is convergence collapse?",
+      "question": "convergence collapse とは何ですか。",
       "options": [
-        "Network outage",
-        "All agents converge on the first wrong answer; mitigate with required disagreement rounds",
-        "Process crash",
+        "network outage",
+        "すべての agents が最初の誤答に収束すること。必須の不一致ラウンドで緩和する",
+        "process crash",
         "TLS handshake failure"
       ],
       "correct": 1,
-      "explanation": "Early agreement on a wrong answer is mitigated by forcing distinct round-1 proposals."
+      "explanation": "誤答への早期合意は、round 1 で異なる提案を強制することで緩和します。"
     },
     {
       "stage": "post",
-      "question": "Why does prompt homogenization undermine debate?",
+      "question": "prompt homogenization はなぜ debate を損なうのですか。",
       "options": [
-        "It violates Apache 2.0",
-        "Identical prompts produce nearly identical answers, removing the cross-critique signal",
-        "It uses too many tokens",
-        "It bypasses the supervisor"
+        "Apache 2.0 に違反するから",
+        "同一 prompt はほぼ同一の回答を生み、相互批評のシグナルを失わせるから",
+        "token を使いすぎるから",
+        "supervisor を迂回するから"
       ],
       "correct": 1,
-      "explanation": "Diverse prompts (and ideally diverse models) keep the proposal distribution wide."
+      "explanation": "多様な prompts (理想的には多様な models) によって、proposal distribution を広く保てます。"
     },
     {
       "stage": "post",
-      "question": "Which production pattern is a debate variant per the lesson?",
+      "question": "この lesson によると、debate variant である production pattern はどれですか。",
       "options": [
-        "Anthropic orchestrator-workers with a synthesis step",
-        "Pure single-shot RAG",
-        "Cron-only schedule",
-        "Vector indexing"
+        "synthesis step を持つ Anthropic orchestrator-workers",
+        "純粋な single-shot RAG",
+        "cron-only schedule",
+        "vector indexing"
       ],
       "correct": 0,
-      "explanation": "Orchestrator-workers with synthesis is a debate-shaped pattern in production."
+      "explanation": "synthesis を伴う orchestrator-workers は、production における debate 型の pattern です。"
     }
   ]
 }

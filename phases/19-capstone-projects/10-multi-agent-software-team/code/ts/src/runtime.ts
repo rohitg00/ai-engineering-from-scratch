@@ -48,7 +48,7 @@ function commandBasename(command: string): string {
 export function refuseReason(args: LaunchArgs): string | null {
   const base = commandBasename(args.command);
   if (COMMAND_DENYLIST.has(base)) {
-    return `command ${args.command} is denylisted in the worktree stub`;
+    return `command ${args.command} は worktree stub の denylist に含まれています`;
   }
   if (INTERPRETERS.has(base)) {
     for (let i = 0; i < args.argv.length; i++) {
@@ -56,11 +56,11 @@ export function refuseReason(args: LaunchArgs): string | null {
       if (INTERPRETER_FLAGS.has(flag)) {
         const script = (args.argv[i + 1] ?? "") + " " + args.argv.slice(i + 2).join(" ");
         if (hasShellMetachars(script)) {
-          return `interpreter ${base} script contains shell metacharacters`;
+          return `interpreter ${base} script に shell metacharacter が含まれています`;
         }
         for (const token of script.split(/\s+/)) {
           if (COMMAND_DENYLIST.has(commandBasename(token))) {
-            return `interpreter ${base} script invokes denylisted command ${token}`;
+            return `interpreter ${base} script が denylist command ${token} を呼び出しています`;
           }
         }
       }
@@ -68,7 +68,7 @@ export function refuseReason(args: LaunchArgs): string | null {
   }
   for (const arg of args.argv) {
     if (hasShellMetachars(arg)) {
-      return `arg ${arg} contains shell metacharacters`;
+      return `arg ${arg} に shell metacharacter が含まれています`;
     }
   }
   return null;

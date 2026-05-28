@@ -1,5 +1,5 @@
-# Phase 7: Transformers Deep Dive
+# Phase 7: Transformer詳解
 
-> The architecture that changed everything. Understand every layer.
+> すべてを変えたアーキテクチャ。その各層を理解する。
 
-See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.
+全レッスン計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。

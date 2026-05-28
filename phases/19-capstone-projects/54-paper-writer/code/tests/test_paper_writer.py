@@ -1,4 +1,4 @@
-"""Tests for the paper writer: skeleton render, figure injection, validation gates, manifest contract."""
+"""paper writer の tests: skeleton render、figure injection、validation gates、manifest contract。"""
 
 from __future__ import annotations
 

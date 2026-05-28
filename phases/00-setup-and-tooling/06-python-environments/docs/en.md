@@ -1,33 +1,33 @@
-# Python Environments
+# Python環境
 
-> Dependency hell is real. Virtual environments are the cure.
+> 依存関係地獄は実在します。仮想環境はその治療法です。
 
-**Type:** Build
-**Languages:** Shell
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~30 minutes
+**タイプ:** 作ってみる
+**言語:** Shell
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約30分
 
-## Learning Objectives
+## 学習目標
 
-- Create isolated virtual environments using `uv`, `venv`, or `conda`
-- Write a `pyproject.toml` with optional dependency groups and generate lockfiles for reproducibility
-- Diagnose and fix common pitfalls: global installs, pip/conda mixing, CUDA version mismatches
-- Implement a per-phase environment strategy for projects with conflicting dependencies
+- `uv`、`venv`、`conda` を使って分離された仮想環境を作成する
+- 任意の依存関係グループを持つ `pyproject.toml` を書き、再現性のためにlockfileを生成する
+- global install、pip/condaの混在、CUDAバージョン不一致などのよくある落とし穴を診断して修正する
+- 依存関係が衝突するプロジェクトのために、フェーズごとの環境戦略を実装する
 
-## The Problem
+## 課題
 
-You install PyTorch 2.4 for a fine-tuning project. Next week, a different project needs PyTorch 2.1 because its CUDA build is pinned. You upgrade globally, and the first project breaks. You downgrade, and the second one breaks.
+fine-tuningプロジェクト用にPyTorch 2.4をインストールしたとします。翌週、別のプロジェクトがCUDAビルドを固定しているためPyTorch 2.1を必要とします。globalにアップグレードすると最初のプロジェクトが壊れます。ダウングレードすると2つ目が壊れます。
 
-This is dependency hell. It happens constantly in AI/ML work because:
+これが依存関係地獄です。AI/ML作業では常に起こります。理由は次のとおりです。
 
-- PyTorch, JAX, and TensorFlow each ship their own CUDA bindings
-- Model libraries pin specific framework versions
-- A global `pip install` overwrites whatever was there before
-- CUDA 11.8 builds don't work with CUDA 12.x drivers (and vice versa)
+- PyTorch、JAX、TensorFlowはそれぞれ独自のCUDA bindingsを同梱している
+- モデルライブラリは特定のframework versionを固定する
+- globalな `pip install` は以前そこにあったものを上書きする
+- CUDA 11.8向けbuildはCUDA 12.x driverで動かない（逆も同じ）
 
-The fix: every project gets its own isolated environment with its own packages.
+修正方法: すべてのプロジェクトに、独自のpackageを持つ分離環境を用意します。
 
-## The Concept
+## 考え方
 
 ```mermaid
 graph TD
@@ -45,11 +45,11 @@ graph TD
     end
 ```
 
-## Build It
+## 作ってみる
 
-### Option 1: uv venv (Recommended)
+### 選択肢1: uv venv（推奨）
 
-`uv` is the fastest Python package manager (10-100x faster than pip). It handles virtual environments, Python versions, and dependency resolution in one tool.
+`uv` は最速のPythonパッケージマネージャーです（pipより10〜100倍高速）。仮想環境、Pythonバージョン、依存関係解決を1つのツールで扱います。
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -61,13 +61,13 @@ uv venv
 source .venv/bin/activate
 ```
 
-Install packages:
+パッケージをインストールします。
 
 ```bash
 uv pip install torch numpy
 ```
 
-Create a project with `pyproject.toml` in one step:
+`pyproject.toml` 付きのプロジェクトを1ステップで作成します。
 
 ```bash
 uv init my-ai-project
@@ -75,9 +75,9 @@ cd my-ai-project
 uv add torch numpy matplotlib
 ```
 
-### Option 2: venv (Built-in)
+### 選択肢2: venv（標準搭載）
 
-If you can't install `uv`, Python ships with `venv`:
+`uv` をインストールできない場合、Pythonには `venv` が付属しています。
 
 ```bash
 python3 -m venv .venv
@@ -87,15 +87,15 @@ source .venv/bin/activate  # Linux/macOS
 pip install torch numpy
 ```
 
-Slower than `uv`, but works everywhere Python is installed.
+`uv` より遅いですが、Pythonがインストールされている場所ならどこでも動きます。
 
-### Option 3: conda (When You Need It)
+### 選択肢3: conda（必要な場合）
 
-Conda manages non-Python dependencies like CUDA toolkits, cuDNN, and C libraries. Use it when:
+CondaはCUDA toolkit、cuDNN、C libraryなどの非Python依存関係を管理します。次の場合に使います。
 
-- You need a specific CUDA toolkit version without installing it system-wide
-- You're on a shared cluster where you can't install system packages
-- A library's install instructions say "use conda"
+- システム全体にインストールせず、特定のCUDA toolkit versionが必要
+- system packageをインストールできない共有cluster上にいる
+- ライブラリのインストール手順に「condaを使う」と書かれている
 
 ```bash
 # Install miniconda (not the full Anaconda)
@@ -108,13 +108,13 @@ conda activate myproject
 conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
 ```
 
-One rule: if you use conda for an environment, use conda for all packages in that environment. Mixing `pip install` into a conda env causes dependency conflicts that are painful to debug.
+ルールは1つです。ある環境でcondaを使うなら、その環境のすべてのpackageをcondaで扱います。conda envに `pip install` を混ぜると、デバッグがつらい依存関係衝突が起きます。
 
-### For This Course: Per-Phase Strategy
+### このコースでは: フェーズごとの戦略
 
-You could create one environment for the whole course. Don't. Different phases need different (sometimes conflicting) dependencies.
+コース全体で1つの環境を作ることもできます。そうしないでください。フェーズごとに異なる、時には衝突する依存関係が必要です。
 
-Strategy:
+戦略:
 
 ```
 ai-engineering-from-scratch/
@@ -130,11 +130,11 @@ ai-engineering-from-scratch/
 │       └── .venv/            <-- API SDKs, no torch needed
 ```
 
-The script in `code/env_setup.sh` creates the base environment for this course.
+`code/env_setup.sh` のscriptは、このコースの基本環境を作成します。
 
-## pyproject.toml Basics
+## pyproject.tomlの基本
 
-Every Python project should have a `pyproject.toml`. It replaces `setup.py`, `setup.cfg`, and `requirements.txt` in one file.
+すべてのPythonプロジェクトは `pyproject.toml` を持つべきです。これは `setup.py`、`setup.cfg`、`requirements.txt` を1つのファイルで置き換えます。
 
 ```toml
 [project]
@@ -153,7 +153,7 @@ torch = ["torch>=2.3", "torchvision>=0.18"]
 llm = ["anthropic>=0.39", "openai>=1.50"]
 ```
 
-Then install:
+次のようにインストールします。
 
 ```bash
 uv pip install -e ".[torch]"    # base + PyTorch
@@ -161,9 +161,9 @@ uv pip install -e ".[llm]"     # base + LLM SDKs
 uv pip install -e ".[torch,llm]" # everything
 ```
 
-## Lockfiles
+## Lockfile
 
-A lockfile pins every dependency (including transitive ones) to exact versions. This guarantees reproducibility: anyone who installs from the lockfile gets exactly the same packages.
+lockfileは、すべての依存関係（推移的依存関係を含む）を正確なversionへ固定します。これにより再現性が保証されます。lockfileからインストールすれば、誰でもまったく同じpackageを取得します。
 
 ```bash
 # uv generates uv.lock automatically when using uv add
@@ -174,11 +174,11 @@ uv pip compile pyproject.toml -o requirements.lock
 uv pip install -r requirements.lock
 ```
 
-Commit your lockfile to git. When someone clones the repo, they install from the lockfile and get identical versions.
+lockfileはgitにcommitしてください。誰かがrepoをcloneしたら、lockfileからインストールし、同一versionを取得します。
 
-## Common Mistakes
+## よくある間違い
 
-### 1. Installing globally
+### 1. globalにインストールする
 
 ```bash
 pip install torch  # BAD: installs to system Python
@@ -187,14 +187,14 @@ source .venv/bin/activate
 pip install torch  # GOOD: installs to virtual environment
 ```
 
-Check where your packages go:
+packageのインストール先を確認します。
 
 ```bash
 which python       # should show .venv/bin/python, not /usr/bin/python
 which pip           # should show .venv/bin/pip
 ```
 
-### 2. Mixing pip and conda
+### 2. pipとcondaを混ぜる
 
 ```bash
 conda create -n myenv python=3.12
@@ -204,9 +204,9 @@ pip install some-other-package   # BAD: can break conda's dependency tracking
 conda install some-other-package # GOOD: let conda manage everything
 ```
 
-If you must use pip inside conda (some packages are pip-only), install all conda packages first, then pip packages last.
+conda内でどうしてもpipを使う必要がある場合（一部packageがpipのみの場合）、先にすべてのconda packageを入れ、最後にpip packageを入れます。
 
-### 3. Forgetting to activate
+### 3. activateし忘れる
 
 ```bash
 python train.py           # uses system Python, missing packages
@@ -214,21 +214,21 @@ source .venv/bin/activate
 python train.py           # uses project Python, packages found
 ```
 
-Your shell prompt should show the environment name:
+shell promptには環境名が表示されるはずです。
 
 ```
 (.venv) $ python train.py
 ```
 
-### 4. Committing .venv to git
+### 4. .venvをgitにcommitする
 
 ```bash
 echo ".venv/" >> .gitignore
 ```
 
-Virtual environments are 200MB-2GB. They're local, not portable between machines. Commit `pyproject.toml` and the lockfile instead.
+仮想環境は200MB〜2GBあります。ローカル専用であり、マシン間で移植できません。代わりに `pyproject.toml` とlockfileをcommitします。
 
-### 5. CUDA version mismatch
+### 5. CUDAバージョン不一致
 
 ```bash
 nvidia-smi                # shows driver CUDA version (e.g., 12.4)
@@ -238,29 +238,29 @@ python -c "import torch; print(torch.version.cuda)"  # shows PyTorch CUDA versio
 # PyTorch CUDA version must be <= driver CUDA version.
 ```
 
-## Use It
+## 使ってみる
 
-Run the setup script to create your course environment:
+setup scriptを実行して、コース用の環境を作成します。
 
 ```bash
 bash phases/00-setup-and-tooling/06-python-environments/code/env_setup.sh
 ```
 
-This creates a `.venv` at the repo root with core dependencies installed and verified.
+これはrepo rootに `.venv` を作成し、core dependenciesをインストールして検証します。
 
-## Exercises
+## 演習
 
-1. Run `env_setup.sh` and verify all checks pass
-2. Create a second virtual environment, install a different version of numpy in it, and confirm the two environments are isolated
-3. Write a `pyproject.toml` for a project that needs both PyTorch and the Anthropic SDK
-4. Deliberately install a package globally (without activating a venv), notice where it goes, then uninstall it
+1. `env_setup.sh` を実行し、すべてのcheckが通ることを確認する
+2. 2つ目の仮想環境を作成し、そこに別versionのnumpyをインストールして、2つの環境が分離されていることを確認する
+3. PyTorchとAnthropic SDKの両方を必要とするプロジェクト用の `pyproject.toml` を書く
+4. わざとvenvをactivateせずにpackageをglobal installし、どこに入るかを確認してからuninstallする
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Virtual environment | "A venv" | An isolated directory containing a Python interpreter and packages, separate from the system Python |
-| Lockfile | "Pinned dependencies" | A file listing every package and its exact version, guaranteeing identical installs across machines |
-| pyproject.toml | "The new setup.py" | The standard Python project configuration file, replacing setup.py/setup.cfg/requirements.txt |
-| Transitive dependency | "A dependency of a dependency" | Package B depends on C; if you install A which depends on B, C is a transitive dependency of A |
-| CUDA mismatch | "My GPU isn't working" | PyTorch was compiled for a different CUDA version than what your GPU driver supports |
+| Virtual environment | 「venv」 | system Pythonとは別に、Python interpreterとpackageを含む分離ディレクトリ |
+| Lockfile | 「固定された依存関係」 | すべてのpackageと正確なversionを列挙し、マシン間で同一installを保証するファイル |
+| pyproject.toml | 「新しいsetup.py」 | setup.py/setup.cfg/requirements.txtを置き換える、標準のPythonプロジェクト設定ファイル |
+| Transitive dependency | 「依存関係の依存関係」 | package BがCに依存する。Bに依存するAをinstallすると、CはAの推移的依存関係になる |
+| CUDA mismatch | 「GPUが動かない」 | PyTorchが、GPU driverが対応するCUDA versionとは違うversion向けにcompileされている状態 |

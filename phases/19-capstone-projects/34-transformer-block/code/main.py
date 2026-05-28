@@ -1,13 +1,8 @@
-"""Transformer block from scratch: LayerNorm, multi head causal attention, residual, MLP, residual.
+"""scratch からの transformer block: LayerNorm、multi-head causal attention、residual、MLP、residual。
 
-Implements both pre-LN and post-LN configurations behind a single flag. The demo
-builds a six layer stack of each, sends a single forward and backward pass through,
-and prints the gradient norm at the input embedding for each variant. The pre-LN
-stack carries an order of magnitude larger gradient at the embedding than the
-post-LN stack at identical learning rate, which is the mechanism that lets
-modern decoder LLMs train without a warmup schedule.
+1つの flag で pre-LN と post-LN の両方を実装します。デモは小さな stack に勾配を流して比較します。
 
-Run: python3 code/main.py
+Run: Python3 code/main.py
 """
 
 from __future__ import annotations
@@ -22,7 +17,7 @@ import torch.nn.functional as F
 
 @dataclass
 class BlockConfig:
-    """Hyperparameters shared across attention, MLP, and the wrapping block."""
+    """attention、MLP、wrapping block で共有する hyperparameters。"""
 
     d_model: int = 768
     num_heads: int = 12
@@ -55,7 +50,7 @@ class LayerNorm(nn.Module):
 
 
 class MultiHeadAttention(nn.Module):
-    """Multi head causal self attention with a fused QKV projection.
+    """fused QKV projection を持つ multi-head causal self-attention。
 
     Fused QKV: one linear of width 3 * d_model instead of three linears, one
     kernel launch, one matmul. The causal mask is registered as a buffer so it
@@ -112,7 +107,7 @@ class MultiHeadAttention(nn.Module):
 
 
 class FeedForward(nn.Module):
-    """Position wise MLP. No token mixing happens here; all of that lives in attention."""
+    """position-wise MLP。ここでは token mixing は起きず、それはすべて attention が担います。"""
 
     def __init__(self, cfg: BlockConfig) -> None:
         super().__init__()
@@ -131,7 +126,7 @@ class FeedForward(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    """One transformer block. Toggle pre_ln to switch between configurations.
+    """1つの transformer block。pre_ln を切り替えて構成を変えます。
 
     Pre-LN: norm inside the residual branch before each sublayer. The residual
     carries an unnormalized tensor through every block; gradients propagate
@@ -160,7 +155,7 @@ class TransformerBlock(nn.Module):
 
 
 class BlockStack(nn.Module):
-    """A small stack used by the demo. The lesson 35 GPT uses the same pattern with twelve blocks."""
+    """デモ用の小さな stack。lesson 35 の GPT は同じ pattern を12 block で使います。"""
 
     def __init__(self, cfg: BlockConfig, depth: int) -> None:
         super().__init__()
@@ -177,7 +172,7 @@ class BlockStack(nn.Module):
 
 
 def gradient_norm_at_embedding(stack: BlockStack, tokens: torch.Tensor) -> float:
-    """Send one forward and one backward through the stack, return the embedding gradient norm.
+    """stack に forward と backward を1回通し、embedding gradient norm を返します。
 
     The loss is the sum of squares of the final tensor. The magnitude is unitless;
     what matters is the ratio between pre-LN and post-LN at the same depth.
@@ -193,7 +188,7 @@ def gradient_norm_at_embedding(stack: BlockStack, tokens: torch.Tensor) -> float
 
 
 def _set_eval_mode(stack: BlockStack) -> None:
-    """Disable dropout so the comparison between pre-LN and post-LN is deterministic."""
+    """pre-LN と post-LN の比較を deterministic にするため dropout を無効化します。"""
     stack.eval()
 
 
@@ -244,8 +239,8 @@ def demo() -> None:
         print(f"Pre-LN / Post-LN ratio    : {ratio:.2f}x")
 
     n_params = sum(p.numel() for p in pre_stack.parameters())
-    print(f"Stack parameter count     : {n_params:,}")
-    print("Block check passed.")
+    print(f"stack parameter count     : {n_params:,}")
+    print("block check passed。")
 
 
 if __name__ == "__main__":

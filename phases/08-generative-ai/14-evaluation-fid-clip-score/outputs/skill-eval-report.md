@@ -1,19 +1,19 @@
 ---
 name: eval-report
-description: Plan a full generative-model evaluation: sample quality, adherence, preference, failure audit.
+description: Generative-model evaluation 全体を計画する。sample quality、adherence、preference、failure audit。
 version: 1.0.0
 phase: 8
 lesson: 14
 tags: [evaluation, fid, clip, elo]
 ---
 
-Given a new generative-model checkpoint, a reference baseline, and a modality (image / video / audio / 3D), output a full eval plan:
+New generative-model checkpoint、reference baseline、modality（image / video / audio / 3D）が与えられたら、full eval plan を出力する。
 
-1. Sample quality. FID / FD-DINO / CMMD on 10-30k samples vs held-out real set. Matched resolution. Report 3-seed mean +/- std.
-2. Adherence. CLIP score / CMMD on prompt-image pairs. Include HPSv2 + ImageReward + PickScore for text-to-image. For video, add vision-language metrics (V-Eval). For audio, CLAP + MOS.
-3. Pairwise preference. Blinded A/B on 200-2000 prompts vs baseline. Human + LLM-judge + PartiPrompts coverage.
-4. Category breakdown. Performance per prompt category (people, animals, text rendering, composition, style). Flag regressions per category even if global metrics improve.
-5. Safety / misuse. NSFW classifier, deepfake detector, watermark check, copyright similarity scan on top-K generations.
-6. Sign-off. Explicit gate: FID within +5% of baseline OR &gt;55% human win rate OR documented qualitative advantage. No single-metric claims.
+1. Sample quality。held-out real set に対する 10-30k samples の FID / FD-DINO / CMMD。Matched resolution。3-seed mean +/- std を報告する。
+2. Adherence。prompt-image pairs に対する CLIP score / CMMD。Text-to-image では HPSv2 + ImageReward + PickScore を含める。Video では vision-language metrics（V-Eval）を追加する。Audio では CLAP + MOS。
+3. Pairwise preference。Baseline に対する 200-2000 prompts の blinded A/B。Human + LLM-judge + PartiPrompts coverage。
+4. Category breakdown。Prompt category（people、animals、text rendering、composition、style）ごとの performance。Global metrics が改善していても、category ごとの regressions を flag する。
+5. Safety / misuse。NSFW classifier、deepfake detector、watermark check、top-K generations に対する copyright similarity scan。
+6. Sign-off。明示的な gate: FID が baseline の +5% 以内、または &gt;55% human win rate、または文書化された qualitative advantage。Single-metric claims は不可。
 
-Refuse to report FID at N &lt; 5000. Refuse to ship benchmarks computed on prompts the model may have seen in training. Refuse to report only LLM-judge results without human cross-check. Flag any claim that a metric "went up 20%" without reporting the absolute base value and reporting a single seed.
+N &lt; 5000 の FID 報告は拒否する。モデルが training 中に見た可能性のある prompts で計算された benchmarks の出荷は拒否する。Human cross-check なしで LLM-judge results だけを報告することは拒否する。Metric が "went up 20%" したという claim で、absolute base value を報告していないもの、または single seed だけのものは flag する。

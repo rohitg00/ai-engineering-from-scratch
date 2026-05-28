@@ -1,75 +1,75 @@
 {
   "lesson": "06-sglang-radixattention",
-  "title": "SGLang and RadixAttention for Prefix-Heavy Workloads",
+  "title": "Prefix-Heavy Workloads 向け SGLang と RadixAttention",
   "questions": [
     {
       "stage": "pre",
-      "question": "What core data structure backs SGLang's KV cache reuse?",
+      "question": "SGLang の KV cache reuse を支える core data structure は何ですか。",
       "options": [
-        "A radix tree where each node owns a token range and its KV blocks",
-        "A hash table keyed by full prompt",
-        "A skip list keyed by request id",
-        "A B-tree of attention scores"
+        "各 node が token range と KV blocks を所有する radix tree",
+        "full prompt を key にした hash table",
+        "request id を key にした skip list",
+        "attention score の B-tree"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is FCFS scheduling wrong for prefix-heavy traffic on SGLang?",
+      "question": "prefix-heavy traffic の SGLang で FCFS scheduling が間違いなのはなぜですか。",
       "options": [
-        "FCFS only works on AMD GPUs",
-        "FCFS is the recommended SGLang policy",
-        "FCFS is incompatible with PagedAttention",
-        "FCFS can evict a hot prefix branch before the next long-prefix request hits, breaking radix-tree reuse"
+        "FCFS は AMD GPU でしか動かないから",
+        "FCFS は推奨される SGLang policy だから",
+        "FCFS は PagedAttention と incompatible だから",
+        "次の long-prefix request が来る前に hot prefix branch を evict し、radix-tree reuse を壊す可能性があるから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What eviction granularity does SGLang's cache-aware scheduler use to match radix shape?",
+      "question": "SGLang の cache-aware scheduler は radix shape に合わせてどの eviction granularity を使いますか。",
       "options": [
-        "Per-request only",
-        "Whole branches, starting from shortest-used leaves",
-        "Single tokens",
-        "Random eviction"
+        "request 単位のみ",
+        "shortest-used leaves から始める whole branches",
+        "single tokens",
+        "random eviction"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the most direct engineer's lever for keeping the radix-tree shared prefix discoverable?",
+      "question": "radix-tree の shared prefix を見つけやすく保つ最も直接的な engineer の lever は何ですか。",
       "options": [
-        "Lower the GPU memory utilization knob",
-        "Fix prompt-template ordering so immutable content (system, tools, schemas) is always first",
-        "Always use static batching",
-        "Disable continuous batching"
+        "GPU memory utilization knob を下げる",
+        "immutable content (system, tools, schemas) が常に先に来るよう prompt-template ordering を固定する",
+        "常に static batching を使う",
+        "continuous batching を無効化する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which workload pattern does the lesson NOT expect RadixAttention to win on?",
+      "question": "この lesson が RadixAttention の勝ちを期待しない workload pattern はどれですか。",
       "options": [
-        "Agents with shared tool schemas",
-        "Voice workloads with repeated preambles",
-        "RAG with a shared retrieval preamble",
-        "Single-shot generation with unique prompts and no shared system prompt"
+        "shared tool schemas を持つ agents",
+        "repeated preambles を持つ voice workloads",
+        "shared retrieval preamble を持つ RAG",
+        "unique prompts で shared system prompt がない single-shot generation"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "ProjectDiscovery's deployment moved from 7% to 74% prefix-cache hit rate by doing what?",
+      "question": "ProjectDiscovery の deployment は何をして prefix-cache hit rate を 7% から 74% に上げましたか。",
       "options": [
-        "Moving dynamic content out of the cacheable prefix",
-        "Increasing GPU count from 8 to 16",
-        "Switching from vLLM to SGLang without any prompt changes",
-        "Disabling continuous batching"
+        "dynamic content を cacheable prefix から外した",
+        "GPU 数を 8 から 16 に増やした",
+        "prompt 変更なしに vLLM から SGLang へ切り替えた",
+        "continuous batching を無効化した"
       ],
       "correct": 0,
       "explanation": ""

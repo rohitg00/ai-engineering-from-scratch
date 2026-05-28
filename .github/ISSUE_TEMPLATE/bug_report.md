@@ -1,31 +1,31 @@
 ---
-name: Bug report
-about: Something in a lesson or on the site is wrong
+name: バグ報告
+about: レッスンまたはサイト内の誤りを報告する
 title: "[bug] "
 labels: bug
 ---
 
-## Where
+## 場所
 
 - Phase / lesson: <!-- e.g. Phase 4 · 06-object-detection-yolo -->
 - File / URL: <!-- e.g. phases/04-computer-vision/06-object-detection-yolo/code/main.py or aiengineeringfromscratch.com/lesson.html?path=... -->
 
-## What's wrong
+## 何が問題か
 
-<!-- One-paragraph description. What did you expect vs. what you saw. -->
+<!-- 1段落で説明してください。期待した結果と実際に見た結果を書いてください。 -->
 
-## Reproduce
+## 再現手順
 
 1.
 2.
 3.
 
-## Environment
+## 環境
 
 - OS:
-- Python / Node / other runtime version:
-- How you ran it (local, Colab, Docker, etc.):
+- Python / Node / その他ランタイムのバージョン:
+- 実行方法 (local, Colab, Docker など):
 
-## Screenshot or logs
+## スクリーンショットまたはログ
 
-<!-- Drop a screenshot or paste the traceback if you have one. -->
+<!-- スクリーンショット、または traceback があれば貼ってください。 -->

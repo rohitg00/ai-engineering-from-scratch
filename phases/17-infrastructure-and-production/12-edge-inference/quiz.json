@@ -1,14 +1,14 @@
 {
   "lesson": "12-edge-inference",
-  "title": "Edge Inference — Apple Neural Engine, Qualcomm Hexagon, WebGPU/WebLLM, Jetson",
+  "title": "Edge Inference — Apple Neural Engine、Qualcomm Hexagon、WebGPU/WebLLM、Jetson",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core constraint that makes mobile LLM inference slower than datacenter, per the lesson?",
+      "question": "このレッスンによると、mobile LLM inference が datacenter より遅くなる中核制約は何ですか？",
       "options": [
         "Wi-Fi latency",
         "Compute throughput",
-        "Memory bandwidth (mobile DRAM at 50-90 GB/s vs HBM3 at 2-3 TB/s)",
+        "Memory bandwidth（mobile DRAM は 50-90 GB/s、HBM3 は 2-3 TB/s）",
         "Storage capacity"
       ],
       "correct": 2,
@@ -16,23 +16,23 @@
     },
     {
       "stage": "check",
-      "question": "Why does Apple's Neural Engine avoid CPU-NPU copy overhead?",
+      "question": "Apple Neural Engine が CPU-NPU copy overhead を避けられるのはなぜですか？",
       "options": [
-        "It uses PCIe 5.0",
-        "Core ML disables KV cache",
-        "It transcodes weights to FP4 before copy",
-        "Apple Silicon ships unified memory — CPU and ANE share the same pool"
+        "PCIe 5.0 を使うため",
+        "Core ML が KV cache を無効化するため",
+        "Copy 前に weights を FP4 に transcode するため",
+        "Apple Silicon は unified memory を備え、CPU と ANE が同じ pool を共有するため"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which quantization format does the lesson recommend for WebGPU + WebLLM in the browser?",
+      "question": "Browser の WebGPU + WebLLM に対して、このレッスンが推奨する quantization format はどれですか？",
       "options": [
         "NVFP4",
         "FP8",
-        "Q4 MLC (q4f16_1) compiled via mlc_llm convert_weight",
+        "mlc_llm convert_weight で compile した Q4 MLC（q4f16_1）",
         "GGUF Q4_K_M"
       ],
       "correct": 2,
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "Roughly what WebGPU mobile coverage does the lesson report for 2026?",
+      "question": "このレッスンが 2026 年の WebGPU mobile coverage として報告するおおよその値はどれですか？",
       "options": [
-        "100% across all browsers",
-        "Only iOS Safari",
-        "Under 10%",
-        "About 70-75%, with Firefox Android still catching up"
+        "すべての browsers で 100%",
+        "iOS Safari のみ",
+        "10% 未満",
+        "約 70-75%。Firefox Android はまだ追いついている途中"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is keeping 128K context impractical on a typical phone?",
+      "question": "Typical phone で 128K context を維持するのが非現実的なのはなぜですか？",
       "options": [
-        "Tokenizers fail above 8K",
-        "Model weights plus KV cache for 32K tokens plus OS overhead easily exceed the 8 GB RAM budget",
-        "WebGPU caps context at 4K",
-        "iOS forbids long context"
+        "Tokenizers が 8K を超えると失敗するため",
+        "Model weights、32K tokens 用 KV cache、OS overhead の合計が 8 GB RAM budget を容易に超えるため",
+        "WebGPU が context を 4K に制限するため",
+        "iOS が long context を禁じているため"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is voice highlighted as the killer app for edge inference?",
+      "question": "Voice が edge inference の killer app として強調されるのはなぜですか？",
       "options": [
-        "Voice agents are latency-sensitive (first token < 500 ms) and local inference eliminates network latency entirely",
-        "Voice models do not need KV cache",
-        "Voice models always fit in 50 MB",
-        "Voice runs in WebAssembly only"
+        "Voice agents は latency-sensitive（first token < 500 ms）で、local inference が network latency を完全に消すため",
+        "Voice models は KV cache を必要としないため",
+        "Voice models は常に 50 MB に収まるため",
+        "Voice は WebAssembly でしか動かないため"
       ],
       "correct": 0,
       "explanation": ""

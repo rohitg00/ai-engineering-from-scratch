@@ -1,118 +1,118 @@
-# Bounded Self-Improvement Designs
+# 境界付き自己改善の設計
 
-> Research has converged on four primitives for bounding a self-improvement loop. Formal invariants that must hold across every edit. Alignment anchors that cannot be modified. Multi-objective constraints where every dimension (safety, fairness, robustness) must hold, not just performance. Regression detection that pauses the loop when historical metrics suggest capability loss. None of them is a proof of safety — information-theoretic results (Kolmogorov complexity, Lob's theorem) bound what any system can prove about its own successors. They are mitigations that raise the cost of silent failure.
+> 自己改善ループに境界を設けるための研究は、4 つのプリミティブへ収束しつつあります。すべての編集をまたいで成立しなければならない形式的不変条件。変更できないアラインメントアンカー。性能だけでなく、安全性、公平性、堅牢性のすべての次元を満たさなければならない多目的制約。過去の指標が能力低下を示したときにループを一時停止する回帰検出。これらはいずれも安全性の証明ではありません。情報理論的な結果（Kolmogorov 複雑性、Lob の定理）は、任意のシステムが自分自身の後継について証明できることを制限します。これらは、静かな失敗のコストを高める緩和策です。
 
-**Type:** Learn
-**Languages:** Python (stdlib, bounded-loop with invariant check)
-**Prerequisites:** Phase 15 · 07 (RSI), Phase 15 · 04 (DGM)
-**Time:** ~60 minutes
+**種類:** 学習
+**言語:** Python（stdlib、不変条件チェック付きの境界付きループ）
+**前提条件:** フェーズ 15 · 07 (RSI), フェーズ 15 · 04 (DGM)
+**時間:** 約60分
 
-## The Problem
+## 問題
 
-Lesson 7's race simulator showed that small rate differences compound into large gaps. Lesson 4's DGM case study showed that loops can actively game their own evaluators. Both results point to the same engineering question: what constraints can you put on a self-improvement loop such that the constraints cannot be silently weakened by the loop itself?
+レッスン 7 のレースシミュレータは、速度の小さな差が複利的に大きなギャップへ広がることを示しました。レッスン 4 の DGM ケーススタディは、ループが自分自身の評価器を能動的に攻略できることを示しました。どちらの結果も、同じ工学上の問いを指しています。自己改善ループにどのような制約を置けば、その制約をループ自身が静かに弱められないようにできるのでしょうか。
 
-The ICLR 2026 RSI Workshop summary (openreview.net/pdf?id=OsPQ6zTQXV) identifies four such primitives. Anthropic's RSP v3.0 (Lesson 19) and DeepMind's FSF v3 (Lesson 20) both reference them in capability thresholds. The Meta HyperAgents work and community frameworks like SAHOO (March 2026) implement subsets in production.
+ICLR 2026 RSI ワークショップの要約（openreview.net/pdf?id=OsPQ6zTQXV）は、そのようなプリミティブを 4 つ特定しています。Anthropic の RSP v3.0（レッスン 19）と DeepMind の FSF v3（レッスン 20）は、どちらも能力しきい値の中でそれらに言及しています。Meta HyperAgents の研究や、SAHOO（2026 年 3 月）のようなコミュニティフレームワークは、その一部を本番環境で実装しています。
 
-The honest framing: these are mitigations. Information-theoretic results bound what any system can prove about its own successor, and no current design closes the problem formally. A well-bounded loop is safer than an unbounded one, not safe in absolute terms.
+正直に言えば、これらは緩和策です。情報理論的な結果は、任意のシステムが自分自身の後継について証明できることを制限しており、現在の設計でこの問題を形式的に閉じたものはありません。よく境界づけられたループは、無境界なループより安全ですが、絶対的に安全なわけではありません。
 
-## The Concept
+## 概念
 
-### Primitive 1: formal invariants
+### プリミティブ 1: 形式的不変条件
 
-An invariant is a property that must hold before and after every self-modification. Examples:
+不変条件とは、すべての自己変更の前後で成立しなければならない性質です。例:
 
-- Output distribution is conditioned on a fixed constitution header (Lesson 17).
-- No tool call goes to an unauthorized endpoint.
-- Memory writes go through a logged, signed path.
-- The evaluator's module hash matches the approved version.
+- 出力分布が固定された憲法ヘッダー（レッスン 17）を条件としている。
+- ツール呼び出しが未認可のエンドポイントへ向かわない。
+- メモリ書き込みが、ログ記録され署名された経路を通る。
+- 評価器のモジュールハッシュが承認済みバージョンと一致している。
 
-Invariants are checked by external code the loop cannot edit. If a proposed modification violates an invariant, it is rejected. This catches the DGM-style evaluator-tampering mode (Lesson 4).
+不変条件は、ループが編集できない外部コードによってチェックされます。提案された変更が不変条件に違反する場合、それは拒否されます。これにより、DGM 型の評価器改ざんモード（レッスン 4）を捉えられます。
 
-The hard part is choosing invariants that are necessary for safety and computable in reasonable time. Over-specifying stalls progress; under-specifying lets the loop walk past important properties.
+難しいのは、安全性に必要で、かつ妥当な時間内に計算できる不変条件を選ぶことです。指定しすぎると進歩が止まり、指定が足りないとループが重要な性質を素通りできます。
 
-### Primitive 2: alignment anchors
+### プリミティブ 2: アラインメントアンカー
 
-An alignment anchor is an immutable representation of the loop's core objective, pinned outside the loop's edit surface. Examples:
+アラインメントアンカーとは、ループの中核目的を表す不変の表現であり、ループの編集面の外側に固定されます。例:
 
-- A constitutional text (Lesson 17) that is loaded from a read-only location on every invocation.
-- An evaluator in a separate repository with independent access control.
-- A tool-permission manifest signed by a human and re-verified each cycle.
+- すべての呼び出しで読み取り専用の場所から読み込まれる憲法テキスト（レッスン 17）。
+- 独立したアクセス制御を持つ別リポジトリ内の評価器。
+- 人間が署名し、各サイクルで再検証されるツール権限マニフェスト。
 
-The anchor's role is to prevent objective drift. The loop may improve how it pursues the objective, but cannot edit what the objective is.
+アンカーの役割は、目的のドリフトを防ぐことです。ループは目的の追求方法を改善してもよいですが、目的そのものを編集することはできません。
 
-The subtle failure mode: an anchor the loop cannot edit can still be reinterpreted by a loop that drifts in how it reads the anchor. Constitutional AI (Lesson 17) is explicitly reason-based to handle novel situations; that reasoning layer is where interpretation drift lives. Anchors are necessary, not sufficient.
+微妙な失敗モードがあります。ループが編集できないアンカーであっても、アンカーの読み方がドリフトしたループによって再解釈される可能性があります。Constitutional AI（レッスン 17）は、新規状況を扱うために明示的に理由づけベースです。その理由づけレイヤーに、解釈のドリフトが宿ります。アンカーは必要ですが、十分ではありません。
 
-### Primitive 3: multi-objective constraints
+### プリミティブ 3: 多目的制約
 
-A loop that optimizes a single scalar score will find shortcuts. A loop that must simultaneously satisfy multiple hard constraints has fewer shortcuts available. Typical axes:
+単一のスカラー値を最適化するループは、近道を見つけます。複数のハード制約を同時に満たさなければならないループでは、利用できる近道が少なくなります。典型的な軸は次のとおりです。
 
-- Performance (task-level benchmark)
-- Safety (red-team evaluations, refusal rate on known-bad)
-- Fairness (disparate-impact bounds on sensitive subgroups)
-- Robustness (OOD test sets, adversarial input handling)
+- 性能（タスク単位のベンチマーク）
+- 安全性（レッドチーム評価、既知の悪性入力に対する拒否率）
+- 公平性（センシティブな部分集団に対する格差影響、つまり disparate impact の上限）
+- 堅牢性（OOD テストセット、敵対的入力の処理）
 
-A modification is accepted only if every constraint holds. Lesson 13's cost governor stacks this with financial constraints. Lesson 18's Llama Guard plugs in as a safety axis.
+すべての制約が成立する場合に限り、変更は受け入れられます。レッスン 13 のコストガバナーは、これに財務上の制約を重ねます。レッスン 18 の Llama Guard は、安全性の軸として組み込まれます。
 
-### Primitive 4: regression detection
+### プリミティブ 4: 回帰検出
 
-Each cycle's scores are compared against historical distributions. A drop beyond configured tolerance pauses the loop. This catches silent capability loss that would otherwise be absorbed into the running average as the loop "improved past" it.
+各サイクルのスコアは、過去の分布と比較されます。設定された許容範囲を超える低下があれば、ループは一時停止します。これにより、ループが「改善して通り過ぎた」ものとして移動平均へ吸収してしまう静かな能力低下を捉えられます。
 
-A practical implementation: store the last N cycles' per-task scores. Each new cycle computes a per-task delta. If any delta drops below a threshold, the cycle is rejected and a human reviews.
+実用的な実装は、直近 N サイクルのタスク別スコアを保存することです。各新サイクルで、タスク別の差分を計算します。いずれかの差分がしきい値を下回れば、そのサイクルは拒否され、人間がレビューします。
 
-### Information-theoretic limits
+### 情報理論的な限界
 
-Kolmogorov complexity and Lob's theorem set upper bounds on what a system can prove about itself. Schmidhuber's formal Godel Machine (Lesson 4) aimed for the highest such bound; nobody has completed a non-trivial proof. Lob's result says: if a system provably believes "I will do X if I prove I should do X," it will do X without proving it should, a well-known self-reference failure.
+Kolmogorov 複雑性と Lob の定理は、システムが自分自身について証明できることに上限を設けます。Schmidhuber の形式的な Godel Machine（レッスン 4）は、そのような限界の最大値を目指しましたが、自明でない証明を完成させた人はいません。Lob の結果は、システムが「X をすべきだと証明したら X をする」と証明可能に信じている場合、すべきだと証明しなくても X をする、というよく知られた自己参照の失敗を示します。
 
-The implication for our primitives: they cannot close the safety problem. They make silent failure more expensive. A malicious or drifted loop that would quietly bypass a missing check must now actively undermine an explicit one, which is a more detectable signature.
+これらのプリミティブに対する含意は、これだけでは安全性問題を閉じられないということです。静かな失敗をより高価にします。欠けているチェックを黙ってすり抜けられた悪意ある、またはドリフトしたループは、今度は明示的なチェックを能動的に損なわなければなりません。それは、より検出しやすいシグナルです。
 
-### A worked example
+### 具体例
 
-Suppose an agent proposes an edit. The gating stack:
+エージェントが編集を提案したとします。ゲートのスタックは次のとおりです。
 
-1. Invariant checks: module hashes, tool-permission manifest, constitutional header.
-2. Anchor check: objective statement matches approved version (byte-wise or semantically).
-3. Multi-objective evaluation: performance, safety, fairness, robustness axes.
-4. Regression detection: no axis drops more than tolerance.
+1. 不変条件チェック: モジュールハッシュ、ツール権限マニフェスト、憲法ヘッダー。
+2. アンカーチェック: 目的文が承認済みバージョンと一致しているか（バイト単位または意味的に）。
+3. 多目的評価: 性能、安全性、公平性、堅牢性の各軸。
+4. 回帰検出: どの軸も許容範囲を超えて低下していない。
 
-All four must pass for the edit to land. Any single failure pauses the loop.
+編集を取り込むには、4 つすべてに合格しなければなりません。1 つでも失敗すれば、ループは一時停止します。
 
-## Use It
+## 使ってみる
 
-`code/main.py` runs a bounded self-improvement loop on the DGM-style toy from Lesson 4, but with the four primitives layered on top. Each primitive can be enabled or disabled individually. The demonstration is that each primitive catches a specific failure class, and that removing any one of them lets that failure class through.
+`code/main.py` は、レッスン 4 の DGM 型のトイ例に対して境界付き自己改善ループを実行します。ただし、その上に 4 つのプリミティブを重ねています。各プリミティブは個別に有効化または無効化できます。このデモは、各プリミティブが特定の失敗クラスを捉えること、そしてどれか 1 つを取り除くとその失敗クラスが通過してしまうことを示します。
 
-## Ship It
+## 作ってみる
 
-`outputs/skill-bounded-loop-review.md` audits a proposed bounded loop and scores which of the four primitives it actually implements versus claims to.
+`outputs/skill-bounded-loop-review.md` は、提案された境界付きループを監査し、4 つのプリミティブのうち実際に実装しているものと、実装していると主張しているものを採点します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py` with all primitives enabled. Confirm the loop still improves on the primary metric without letting the hack win.
+1. すべてのプリミティブを有効にして `code/main.py` を実行してください。攻略手法を勝たせずに、主要指標ではループがなお改善することを確認してください。
 
-2. Disable regression detection. Construct an input where this leads to silent capability loss being accepted.
+2. 回帰検出を無効化してください。それにより静かな能力低下が受け入れられる入力を構成してください。
 
-3. Disable the multi-objective constraint. Show the loop converges on the performance axis while a safety axis drops.
+3. 多目的制約を無効化してください。安全性の軸が低下する一方で、ループが性能軸に収束することを示してください。
 
-4. Design an alignment anchor for a coding agent. What text, stored where, checked how?
+4. コーディングエージェント向けのアラインメントアンカーを設計してください。どのテキストを、どこに保存し、どのようにチェックしますか。
 
-5. Read the ICLR 2026 RSI Workshop summary. Pick one of the four primitives and propose a concrete improvement to the current state of the art.
+5. ICLR 2026 RSI ワークショップの要約を読んでください。4 つのプリミティブから 1 つを選び、現在の技術水準に対する具体的な改善を提案してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |---|---|---|
-| Invariant | "Always-true property" | A property checked by external code before and after every edit |
-| Alignment anchor | "Pinned objective" | Immutable core-goal representation outside the loop's edit surface |
-| Multi-objective constraint | "All axes must hold" | Performance, safety, fairness, robustness — all required |
-| Regression detection | "Pause on drop" | Pause the loop when historical metric deltas suggest capability loss |
-| Kolmogorov bound | "Information-theoretic limit" | Limits what a system can prove about its own successor |
-| Lob's theorem | "Self-reference trap" | System can act on "I should" without proving it should |
-| Gate stack | "Layered check" | Multiple primitives combined; any failure rejects the edit |
-| Bounded improvement | "Mitigation, not proof" | Raises silent-failure cost; does not close the safety problem |
+| 不変条件 | 「常に真である性質」 | すべての編集の前後で外部コードによりチェックされる性質 |
+| アラインメントアンカー | 「固定された目的」 | ループの編集面の外側にある不変の中核目標表現 |
+| 多目的制約 | 「すべての軸が成立しなければならない」 | 性能、安全性、公平性、堅牢性がすべて必要 |
+| 回帰検出 | 「低下したら一時停止」 | 過去指標の差分が能力低下を示したときにループを一時停止する |
+| Kolmogorov 境界 | 「情報理論的な限界」 | システムが自分自身の後継について証明できることを制限する |
+| Lob の定理 | 「自己参照の罠」 | システムは、すべきだと証明しなくても「すべきだ」に基づいて行動できる |
+| ゲートスタック | 「階層化されたチェック」 | 複数のプリミティブの組み合わせ。どれか 1 つでも失敗すれば編集を拒否する |
+| 境界付き改善 | 「証明ではなく緩和策」 | 静かな失敗のコストを高めるが、安全性問題を閉じるものではない |
 
-## Further Reading
+## 参考資料
 
-- [ICLR 2026 RSI Workshop summary (OpenReview)](https://openreview.net/pdf?id=OsPQ6zTQXV) — the four-primitive convergence.
-- [Anthropic Responsible Scaling Policy v3.0](https://anthropic.com/responsible-scaling-policy/rsp-v3-0) — multi-objective capability thresholds.
-- [DeepMind Frontier Safety Framework v3](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — deceptive-alignment monitoring as an invariant primitive.
-- [Schmidhuber (2003). Godel Machines](https://people.idsia.ch/~juergen/goedelmachine.html) — the formal-proof ancestor of these primitives.
-- [Anthropic — Claude's Constitution (January 2026)](https://www.anthropic.com/news/claudes-constitution) — the reason-based alignment anchor.
+- [ICLR 2026 RSI Workshop summary (OpenReview)](https://openreview.net/pdf?id=OsPQ6zTQXV) — 4 つのプリミティブへの収束。
+- [Anthropic Responsible Scaling Policy v3.0](https://anthropic.com/responsible-scaling-policy/rsp-v3-0) — 多目的な能力しきい値。
+- [DeepMind Frontier Safety Framework v3](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) — 不変条件プリミティブとしての欺瞞的アラインメント監視。
+- [Schmidhuber (2003). Godel Machines](https://people.idsia.ch/~juergen/goedelmachine.html) — これらのプリミティブの形式証明上の祖先。
+- [Anthropic — Claude's Constitution (January 2026)](https://www.anthropic.com/news/claudes-constitution) — 理由づけベースのアラインメントアンカー。

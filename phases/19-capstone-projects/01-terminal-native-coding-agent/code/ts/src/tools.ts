@@ -18,10 +18,10 @@ export function toolReadFile(sandbox: string, args: ToolArgs): string {
     full = realpathSync(candidate);
     root = realpathSync(sandboxResolved);
   } catch (err) {
-    throw new Error(`path escapes sandbox: ${(err as Error).message}`);
+    throw new Error(`path が sandbox 外へ出ています: ${(err as Error).message}`);
   }
   if (full !== root && !full.startsWith(root + path.sep)) {
-    throw new Error("path escapes sandbox");
+    throw new Error("path が sandbox 外へ出ています");
   }
   const data = readFileSync(full, "utf8");
   return data.slice(0, TRUNCATE_BYTES);
@@ -31,7 +31,7 @@ export function toolRunShell(_sandbox: string, args: ToolArgs): string {
   const parsed = RunShellArgs.parse(args);
   const stub: Record<string, string> = {
     ls: "README.md\nsrc\ntests",
-    "git status": "On branch agent/demo\nnothing to commit, working tree clean",
+    "git status": "On branch agent/demo\ncommit するものはなく、working tree は clean です",
   };
   const out = stub[parsed.cmd] ?? `(stub) ran: ${parsed.cmd}`;
   return `exit=0\n${out.slice(0, TRUNCATE_BYTES)}`;

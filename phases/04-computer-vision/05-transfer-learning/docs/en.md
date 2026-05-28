@@ -1,32 +1,32 @@
 # Transfer Learning & Fine-Tuning
 
-> Somebody else spent a million GPU hours teaching a network what edges, textures, and object parts look like. You should borrow those features before training your own.
+> ほかの誰かが、edges、textures、object parts がどのように見えるかを network に教えるため、膨大な GPU 時間を使っています。自分の task を学習する前に、その features を借りるべきです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Distinguish feature extraction from fine-tuning and pick the right one based on dataset size, domain distance, and compute budget
-- Load a pretrained backbone, replace its classifier head, and train only the head to a working baseline in under 20 lines
-- Progressively unfreeze layers with discriminative learning rates so early generic features get smaller updates than late task-specific ones
-- Diagnose the three common failures: feature drift from too-high LR on unfrozen blocks, BN statistics collapse on tiny datasets, and catastrophic forgetting
+- feature extraction と fine-tuning を区別し、dataset size、domain distance、compute budget に基づいて適切な方法を選ぶ
+- pretrained backbone を読み込み、classifier head を置き換え、head だけを学習して短い code で working baseline を作る
+- progressive unfreezing と discriminative learning rates を使い、初期の汎用 features には後段の task-specific features より小さい update を与える
+- common failures である高すぎる LR による feature drift、tiny datasets での BN statistics collapse、catastrophic forgetting を診断する
 
-## The Problem
+## 問題
 
-Training a ResNet-50 on ImageNet costs around 2,000 GPU-hours. Very few teams have that budget for every task they ship. What almost every team actually ships is a pretrained backbone with a new head trained on a few hundred or few thousand task-specific images.
+ImageNet で ResNet-50 を学習するには、およそ 2,000 GPU-hours が必要です。出荷するすべての task にその予算を使える team はほとんどありません。実際に多くの team が出荷するのは、pretrained backbone に新しい head を載せ、数百から数千枚の task-specific images で head と一部の層を調整した model です。
 
-This is not a shortcut. The first conv block of any ImageNet-trained CNN learns edges and Gabor-like filters. The next few blocks learn textures and simple motifs. The middle blocks learn object parts. The final blocks learn combinations that start to look like the 1,000 ImageNet categories. The first 90% of that hierarchy transfers almost unchanged to medical imaging, industrial inspection, satellite data, and every other vision task — because nature has a limited vocabulary of edges and textures. The last 10% is what you actually train.
+これは近道ではありません。ImageNet-trained CNN の最初の conv block は edges や Gabor-like filters を学び、次の blocks は textures と simple motifs を学び、中間層は object parts を、最後の blocks は 1,000 ImageNet categories に近い組み合わせを学びます。この hierarchy の最初の 90% は、medical imaging、industrial inspection、satellite data など多くの vision task にほぼそのまま転移します。実際に強く学習する必要があるのは最後の 10% です。
 
-Getting transfer right has three bugs waiting for you: destroying pretrained features with a too-high learning rate, starving the model of information by freezing too much, and letting BatchNorm's running statistics drift toward a tiny dataset that the rest of the network never learnt from. This lesson walks each of them on purpose.
+transfer を正しく行うには、3 つの罠を避ける必要があります。高すぎる learning rate で pretrained features を壊すこと、凍結しすぎて model から情報を奪うこと、BatchNorm の running statistics を小さな dataset に drift させることです。この lesson では、それぞれを意図的に扱います。
 
 ## The Concept
 
 ### Feature extraction vs fine-tuning
 
-Two regimes, picked by how much you trust the pretrained features and how much data you have.
+どちらを使うかは、pretrained features をどれだけ信頼できるか、data がどれだけあるかで決まります。
 
 ```mermaid
 flowchart TB
@@ -47,20 +47,20 @@ Rules of thumb:
 
 | Dataset size | Domain distance | Recipe |
 |--------------|-----------------|--------|
-| < 1k images | close to ImageNet | Freeze backbone, train head only |
-| 1k-10k | close | Freeze first 2-3 stages, fine-tune the rest |
-| 10k-100k | any | Fine-tune end-to-end with discriminative LR |
-| 100k+ | far | Fine-tune everything; consider training from scratch if domain is far enough |
+| < 1k images | close to ImageNet | Backbone を凍結し、head だけを学習する |
+| 1k-10k | close | 最初の 2-3 stages を凍結し、残りを fine-tune する |
+| 10k-100k | any | discriminative LR で end-to-end fine-tuning する |
+| 100k+ | far | すべて fine-tune する。domain が十分遠ければ scratch training も検討する |
 
-"Close to ImageNet" roughly means natural RGB photos with object-like content. Medical CT scans, overhead satellite imagery, and microscopy are far domains — the features still help, but you will need to let more layers adapt.
+"Close to ImageNet" は、object-like content を含む自然な RGB 写真をおおよそ意味します。medical CT scans、overhead satellite imagery、microscopy は far domains です。features はまだ役に立ちますが、より多くの layers を適応させる必要があります。
 
 ### Why freezing works at all
 
-The ImageNet features a CNN learns are not specialised to the 1,000 categories. They are specialised to the statistics of natural images: edges at specific orientations, textures, contrast patterns, shape primitives. Those statistics are stable across almost every visual domain a human can name. That is why a model trained on ImageNet and evaluated zero-shot on CIFAR-10 with just a new linear head (no fine-tuning of the backbone) reaches 80%+ accuracy. The head is learning which of the already-learnt features to weight for this task.
+CNN が ImageNet で学ぶ features は、1,000 categories だけに特化しているわけではありません。specific orientations の edges、textures、contrast patterns、shape primitives といった自然画像の統計に特化しています。これらの統計は、人間が名前を付けられるほぼすべての visual domain で安定しています。そのため、ImageNet で trained した model に新しい linear head だけを載せ、backbone を fine-tune しなくても、CIFAR-10 のような task で高い accuracy に届きます。head は、この task でどの既存 features に重みを置くかを学んでいます。
 
 ### Discriminative learning rates
 
-When you do unfreeze, early layers should train slower than late layers. Early layers encode generic features that you want to preserve; late layers encode task-specific structure that you need to move a lot.
+unfreeze するとき、初期層は後段の層より遅く学習させます。初期層は保持したい generic features を符号化し、後段の層は大きく動かす必要がある task-specific structure を符号化しているからです。
 
 ```
 Typical recipe:
@@ -72,21 +72,21 @@ Typical recipe:
   head:                          lr = base_lr  (or slightly higher)
 ```
 
-In PyTorch this is just a list of parameter groups passed to the optimizer. One model, five learning rates, zero extra code.
+PyTorch では optimizer に parameter groups の list を渡すだけです。1 つの model、5 つの learning rates、追加 code はほぼありません。
 
 ### The BatchNorm problem
 
-BN layers hold `running_mean` and `running_var` buffers that were computed on ImageNet. If your task has a different pixel distribution — different lighting, different sensor, different colour space — those buffers are wrong. Three options in order of preference:
+BN layers は ImageNet で計算された `running_mean` と `running_var` buffers を持っています。task の pixel distribution が異なる場合、これらの buffers は誤っています。選択肢は次の 3 つです。
 
-1. **Fine-tune with BN in train mode.** Let BN update its running statistics along with everything else. Default choice when the task dataset is medium-sized (>= 5k examples).
-2. **Freeze BN in eval mode.** Keep the ImageNet statistics and train only the weights. Correct when your dataset is small enough that BN's moving average would be noisy.
-3. **Replace BN with GroupNorm.** Removes the moving-average problem entirely. Used in detection and segmentation backbones where batch size per GPU is tiny.
+1. **Fine-tune with BN in train mode.** BN に running statistics を更新させます。medium-sized dataset（>= 5k examples）での default choice です。
+2. **Freeze BN in eval mode.** ImageNet statistics を保持し、weights だけを学習します。BN の moving average が noisy になるほど dataset が小さい場合に正しい選択です。
+3. **Replace BN with GroupNorm.** moving-average problem を完全に取り除きます。GPU あたりの batch size が小さい detection や segmentation backbones で使われます。
 
-Getting this wrong silently tanks accuracy by 5-15%.
+ここを間違えると accuracy が静かに 5-15% 落ちます。
 
 ### Head design
 
-The classifier head is 1-3 linear layers plus an optional dropout. Every torchvision backbone ships a default head that you replace:
+classifier head は 1-3 個の linear layers と optional dropout です。torchvision backbone には default head があり、それを置き換えます。
 
 ```
 backbone.fc = nn.Linear(backbone.fc.in_features, num_classes)          # ResNet
@@ -94,28 +94,28 @@ backbone.classifier[1] = nn.Linear(..., num_classes)                    # Effici
 backbone.heads.head = nn.Linear(..., num_classes)                       # torchvision ViT
 ```
 
-For small datasets, a single linear layer is usually enough. Adding a hidden layer (Linear -> ReLU -> Dropout -> Linear) helps when the task distribution is farther from the backbone's training distribution.
+small datasets では single linear layer で十分なことが多いです。backbone の training distribution から task distribution が離れている場合は、hidden layer（Linear -> ReLU -> Dropout -> Linear）が効くことがあります。
 
 ### Layer-wise LR decay
 
-A smoother version of discriminative LR used in modern fine-tuning (BEiT, DINOv2, ViT-B fine-tunes). Instead of grouping layers into stages, give every layer a slightly smaller LR than the one above it:
+modern fine-tuning（BEiT、DINOv2、ViT-B fine-tunes）で使われる、discriminative LR のより滑らかな版です。layers を stages にまとめる代わりに、上の layer より少し小さい LR を各 layer に与えます。
 
 ```
 lr_layer_k = base_lr * decay^(L - k)
 ```
 
-With decay = 0.75 and L = 12 transformer blocks, the first block trains at `0.75^11 ≈ 0.04x` the head's LR. Matters more for transformer fine-tunes than for CNNs, where stage-grouped LRs are usually enough.
+decay = 0.75、L = 12 transformer blocks なら、最初の block は head の LR の `0.75^11 ≈ 0.04x` で学習します。CNN では stage-grouped LR で十分なことが多く、transformer fine-tunes でより重要です。
 
 ### What to evaluate
 
-Transfer-learning runs need two numbers you would not track on a scratch run:
+transfer-learning runs では scratch run で追わない 2 つの数字が必要です。
 
-- **Pretrained-only accuracy** — the head's accuracy with the backbone frozen. This is your floor.
-- **Fine-tuned accuracy** — the same model after end-to-end training. This is your ceiling.
+- **Pretrained-only accuracy** — backbone を凍結した head の accuracy。floor です。
+- **Fine-tuned accuracy** — end-to-end training 後の同じ model。ceiling です。
 
-If fine-tuned is less than pretrained-only, you have a learning-rate or BN bug. Always print both.
+fine-tuned が pretrained-only より低ければ、learning-rate または BN の bug です。必ず両方を表示します。
 
-## Build It
+## 実装
 
 ### Step 1: Load a pretrained backbone and inspect it
 
@@ -131,7 +131,7 @@ print("classifier head:", backbone.fc)
 print("feature dim:", backbone.fc.in_features)
 ```
 
-`ResNet18` has four stages (`layer1..layer4`) plus a stem and a `fc` head. Every torchvision classification backbone has an analogous structure.
+`ResNet18` は stem と `fc` head に加えて 4 つの stages（`layer1..layer4`）を持ちます。torchvision の分類 backbone はいずれも似た構造です。
 
 ### Step 2: Feature extraction — freeze everything, replace the head
 
@@ -150,11 +150,11 @@ print(f"trainable: {trainable:>10,}")
 print(f"frozen:    {frozen:>10,}")
 ```
 
-Only `model.fc` is trainable. The backbone is a frozen feature extractor.
+trainable なのは `model.fc` だけです。backbone は frozen feature extractor です。
 
 ### Step 3: Discriminative fine-tuning
 
-A utility that builds parameter groups with stage-specific learning rates.
+stage ごとに異なる learning rate を持つ parameter groups を作る utility です。
 
 ```python
 def discriminative_param_groups(model, base_lr=1e-3, decay=0.3):
@@ -185,11 +185,11 @@ for g in groups:
     print(f"{g['name']:>10s}  lr={g['lr']:.2e}  params={sum(p.numel() for p in g['params']):>8,}")
 ```
 
-`decay=0.3` means each stage trains at 30% of the rate of the next one. `fc` gets `base_lr`, `layer4` gets `0.3 * base_lr`, `conv1` gets `0.3^5 * base_lr ≈ 0.00243 * base_lr`. Extreme sounding; empirically it works.
+`decay=0.3` は、各 stage が次の stage の 30% の rate で学習することを意味します。`fc` は `base_lr`、`layer4` は `0.3 * base_lr`、`conv1` は `0.3^5 * base_lr ≈ 0.00243 * base_lr` です。極端に見えますが、経験的にうまく機能します。
 
 ### Step 4: BatchNorm handling
 
-Helper to freeze BN running statistics without freezing its weights.
+BN の running statistics だけを凍結する helper です。
 
 ```python
 def freeze_bn_stats(model):
@@ -201,7 +201,7 @@ def freeze_bn_stats(model):
     return model
 ```
 
-Call it after you set `model.train()` at the start of every epoch. `model.train()` flips everything to training mode; this reverses it only for BN layers.
+epoch の最初に `model.train()` を呼んだ後で使います。`model.train()` は全体を training mode に戻すため、この helper で BN layers だけを戻します。
 
 ### Step 5: A minimal end-to-end fine-tuning loop
 
@@ -247,11 +247,11 @@ def fine_tune(model, train_loader, val_loader, device, epochs=5, base_lr=1e-3, f
     return model
 ```
 
-Five epochs with the above recipe on CIFAR-10 takes `ResNet18-IMAGENET1K_V1` from ~70% zero-shot linear-probe accuracy to ~93% fine-tuned accuracy. The head alone would plateau around 86% without ever touching the backbone.
+この recipe で CIFAR-10 を 5 epochs 回すと、`ResNet18-IMAGENET1K_V1` は zero-shot linear-probe accuracy 約 70% から fine-tuned accuracy 約 93% まで上がります。head だけなら backbone に触れないため 86% 付近で plateau します。
 
 ### Step 6: Progressive unfreezing
 
-A schedule that unfreezes one stage per epoch from the end toward the beginning. Mitigates feature drift at the cost of some extra epochs.
+最後から先頭へ向かって epoch ごとに 1 stage ずつ unfreeze する schedule です。追加 epochs はかかりますが feature drift を抑えます。
 
 ```python
 def progressive_unfreeze_schedule(model):
@@ -277,11 +277,11 @@ def progressive_unfreeze_schedule(model):
     return start, unfreeze
 ```
 
-Call `start()` once before the first epoch. Call `unfreeze(epoch)` at the start of each epoch. Rebuild the optimizer whenever the set of trainable parameters changes, otherwise the frozen params still hold cached moments that confuse it.
+最初の epoch 前に `start()` を 1 回呼び、各 epoch の開始時に `unfreeze(epoch)` を呼びます。trainable parameters の集合が変わるたびに optimizer を作り直してください。そうしないと frozen params に cached moments が残り、挙動を混乱させます。
 
 ## Use It
 
-For most real tasks, `torchvision.models` + three lines is enough. The heavier machinery above matters when you run into the problems that library defaults cannot fix.
+多くの実務 task では、`torchvision.models` と数行で十分です。上の重い machinery が必要になるのは、library defaults で直せない問題に当たったときです。
 
 ```python
 from torchvision.models import resnet50, ResNet50_Weights
@@ -291,40 +291,40 @@ model.fc = nn.Linear(model.fc.in_features, num_classes)
 optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-4)
 ```
 
-Two other production-grade defaults:
+production-grade defaults として次も覚えておく価値があります。
 
-- `timm` ships ~800 pretrained vision backbones with a consistent API (`timm.create_model("resnet50", pretrained=True, num_classes=10)`). For any fine-tune beyond the torchvision zoo, it is the standard.
-- For transformers, `transformers.AutoModelForImageClassification.from_pretrained(name, num_labels=N)` gives you ViT / BEiT / DeiT with the same loading semantics as text models.
+- `timm` は一貫した API で約 800 の pretrained vision backbones を提供します（`timm.create_model("resnet50", pretrained=True, num_classes=10)`）。torchvision zoo を超える fine-tune では標準です。
+- transformers では `transformers.AutoModelForImageClassification.from_pretrained(name, num_labels=N)` が ViT / BEiT / DeiT を text models と同じ loading semantics で扱えます。
 
 ## Ship It
 
-This lesson produces:
+この lesson で作るもの:
 
-- `outputs/prompt-fine-tune-planner.md` — a prompt that picks feature-extraction vs progressive vs end-to-end fine-tuning based on dataset size, domain distance, and compute budget.
-- `outputs/skill-freeze-inspector.md` — a skill that, given a PyTorch model, reports which parameters are trainable, which BatchNorm layers are in eval mode, and whether the optimizer is actually being fed the trainable parameters.
+- `outputs/prompt-fine-tune-planner.md` — dataset size、domain distance、compute budget に基づいて feature-extraction、progressive、end-to-end fine-tuning を選ぶ prompt。
+- `outputs/skill-freeze-inspector.md` — PyTorch model を受け取り、trainable parameters、eval mode の BatchNorm layers、optimizer が trainable parameters を受け取っているかを報告する skill。
 
 ## Exercises
 
-1. **(Easy)** Train a `ResNet18` as a linear probe (backbone frozen) and as a full fine-tune on the same synthetic-CIFAR dataset. Report both accuracies side by side. Explain which gap tells you the features transfer well and which tells you they do not.
-2. **(Medium)** Introduce a bug on purpose: set `base_lr = 1e-1` on the backbone stage instead of the head. Show the training loss explode, then recover by applying the `discriminative_param_groups` helper. Record the LR at which each stage starts diverging.
-3. **(Hard)** Take a medical imaging dataset (e.g. CheXpert-small, PatchCamelyon, or HAM10000) and compare three regimes: (a) ImageNet-pretrained frozen backbone + linear head; (b) ImageNet-pretrained fine-tune end-to-end; (c) scratch training. Report accuracy and compute cost for each. At what dataset size does scratch training become competitive?
+1. **(Easy)** 同じ synthetic-CIFAR dataset で `ResNet18` を linear probe（backbone frozen）と full fine-tune として学習し、両方の accuracies を並べて報告してください。どの gap が features の転移性を示し、どの gap が転移しにくさを示すか説明してください。
+2. **(Medium)** わざと bug を入れます。head ではなく backbone stage に `base_lr = 1e-1` を設定し、training loss が explode する様子を示してください。その後 `discriminative_param_groups` helper で回復させ、各 stage が diverge し始める LR を記録してください。
+3. **(Hard)** medical imaging dataset（例: CheXpert-small、PatchCamelyon、HAM10000）で 3 regimes を比較してください。(a) ImageNet-pretrained frozen backbone + linear head、(b) ImageNet-pretrained fine-tune end-to-end、(c) scratch training。accuracy と compute cost を報告し、どの dataset size で scratch training が competitive になるか確認してください。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Feature extraction | "Freeze and train head" | Backbone parameters frozen, only the new classifier head receives gradient |
-| Fine-tuning | "Retrain end-to-end" | All parameters trainable, usually with much smaller LR than scratch training |
-| Discriminative LR | "Smaller LR for early layers" | Optimizer parameter groups where early-stage LR is a fraction of late-stage LR |
-| Layer-wise LR decay | "Smooth LR gradient" | Per-layer LR multiplied by decay^(L - k); common in transformer fine-tunes |
-| Catastrophic forgetting | "The model lost ImageNet" | A too-high LR overwrites pretrained features before the new task signal is learnt |
-| BN statistics drift | "Running mean is wrong" | BatchNorm running_mean/var computed on a different distribution than the current task, silently hurting accuracy |
-| Linear probe | "Frozen backbone + linear head" | Evaluation of pretrained features — accuracy of the best linear classifier on top of the frozen representation |
-| Catastrophic collapse | "Everything predicts one class" | Happens when fine-tuning with an LR high enough to destroy features before gradients from the head can stabilise |
+| Feature extraction | "Freeze and train head" | Backbone parameters を凍結し、新しい classifier head だけが gradient を受ける |
+| Fine-tuning | "Retrain end-to-end" | すべての parameters が trainable。通常 scratch training よりかなり小さい LR を使う |
+| Discriminative LR | "Smaller LR for early layers" | early-stage LR が late-stage LR の fraction になる optimizer parameter groups |
+| Layer-wise LR decay | "Smooth LR gradient" | layer ごとの LR に decay^(L - k) を掛ける。transformer fine-tunes で一般的 |
+| Catastrophic forgetting | "The model lost ImageNet" | 高すぎる LR が new task signal より先に pretrained features を上書きする |
+| BN statistics drift | "Running mean is wrong" | BatchNorm running_mean/var が current task と異なる distribution で計算され、accuracy を静かに悪化させる |
+| Linear probe | "Frozen backbone + linear head" | pretrained features の評価。frozen representation 上の best linear classifier の accuracy |
+| Catastrophic collapse | "Everything predicts one class" | head からの gradients が安定する前に features を壊すほど LR が高い fine-tuning で起きる |
 
-## Further Reading
+## 参考文献
 
-- [How transferable are features in deep neural networks? (Yosinski et al., 2014)](https://arxiv.org/abs/1411.1792) — the paper that quantified feature transferability across layers
-- [Universal Language Model Fine-tuning (ULMFiT, Howard & Ruder, 2018)](https://arxiv.org/abs/1801.06146) — the original discriminative LR / progressive unfreezing recipe; the ideas transfer directly to vision
-- [timm documentation](https://huggingface.co/docs/timm) — the reference for modern vision backbones and the exact fine-tune defaults they were trained with
-- [A Simple Framework for Linear-Probe Evaluation (Kornblith et al., 2019)](https://arxiv.org/abs/1805.08974) — why linear-probe accuracy matters and how to report it correctly
+- [How transferable are features in deep neural networks? (Yosinski et al., 2014)](https://arxiv.org/abs/1411.1792) — layers をまたぐ feature transferability を定量化した paper
+- [Universal Language Model Fine-tuning (ULMFiT, Howard & Ruder, 2018)](https://arxiv.org/abs/1801.06146) — discriminative LR / progressive unfreezing recipe の原型。ideas は vision に直接転用できます
+- [timm documentation](https://huggingface.co/docs/timm) — modern vision backbones と fine-tune defaults の reference
+- [A Simple Framework for Linear-Probe Evaluation (Kornblith et al., 2019)](https://arxiv.org/abs/1805.08974) — linear-probe accuracy がなぜ重要か、どう報告するか

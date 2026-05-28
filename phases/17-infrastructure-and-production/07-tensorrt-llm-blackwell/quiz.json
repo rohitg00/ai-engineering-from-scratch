@@ -1,37 +1,37 @@
 {
   "lesson": "07-tensorrt-llm-blackwell",
-  "title": "TensorRT-LLM on Blackwell with FP8 and NVFP4",
+  "title": "FP8 と NVFP4 を使う Blackwell 上の TensorRT-LLM",
   "questions": [
     {
       "stage": "pre",
-      "question": "Roughly what is the per-million-tokens cost gap the lesson reports between Blackwell + TRT-LLM + Dynamo and H100 + vLLM on a comparable 120B-class workload?",
+      "question": "comparable な 120B-class workload で、Blackwell + TRT-LLM + Dynamo と H100 + vLLM の per-million-tokens cost gap は lesson ではおよそどれくらいですか。",
       "options": [
-        "About 100x",
-        "About 7x",
-        "About 2x",
-        "About 1.1x"
+        "約 100x",
+        "約 7x",
+        "約 2x",
+        "約 1.1x"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the lesson recommend keeping KV cache in FP8 rather than NVFP4 on Blackwell?",
+      "question": "Blackwell で KV cache を NVFP4 ではなく FP8 に保つことを lesson が推奨するのはなぜですか。",
       "options": [
-        "NVFP4 KV cache is not yet supported in any engine",
-        "FP8 is the only precision NVLink 5 supports",
-        "KV cache spans a wide dynamic range; FP4 quantization causes catastrophic accuracy loss in attention scores",
-        "FP8 uses less memory than FP4"
+        "NVFP4 KV cache はどの engine でもまだ support されていないから",
+        "FP8 は NVLink 5 が support する唯一の precision だから",
+        "KV cache は wide dynamic range にまたがり、FP4 quantization は attention scores に catastrophic accuracy loss を起こすから",
+        "FP8 は FP4 より memory 使用量が少ないから"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which Blackwell feature does TRT-LLM exploit so models can be loaded without a post-training conversion step?",
+      "question": "TRT-LLM が、post-training conversion なしに model を load できるよう利用する Blackwell feature はどれですか。",
       "options": [
-        "Day-0 FP4 weights shipped by model providers",
-        "INT2 weights via bitsandbytes",
+        "model providers が出荷する Day-0 FP4 weights",
+        "bitsandbytes 経由の INT2 weights",
         "FP64 attention",
         "BF16 KV cache"
       ],
@@ -40,22 +40,22 @@
     },
     {
       "stage": "check",
-      "question": "What is the dominant tradeoff of choosing the TRT-LLM stack per the lesson?",
+      "question": "lesson によると、TRT-LLM stack を選ぶ dominant tradeoff は何ですか。",
       "options": [
-        "It cannot serve MoE models",
-        "It requires fully autonomous remediation",
-        "It locks you into NVIDIA hardware — no AMD, no Intel, no ARM",
-        "It only works at small scale"
+        "MoE model を serve できない",
+        "fully autonomous remediation が必要",
+        "NVIDIA hardware に lock-in される。AMD、Intel、ARM はない",
+        "small scale でしか動かない"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which precision combination does the lesson describe as the typical Blackwell config?",
+      "question": "lesson が typical Blackwell config として述べる precision combination はどれですか。",
       "options": [
         "Weights FP4, KV cache FP4, attention in INT8",
-        "Everything in BF16",
+        "すべて BF16",
         "Weights NVFP4, activations NVFP4, KV cache FP8, attention accumulator FP32",
         "Weights INT8, activations FP32, KV cache INT4"
       ],
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "For reasoning-heavy workloads where NVFP4 weight conversion drops MATH accuracy a few points, what does the lesson advise?",
+      "question": "NVFP4 weight conversion で MATH accuracy が数 points 落ちる reasoning-heavy workloads では、lesson は何を助言していますか。",
       "options": [
-        "Switch to AMD MI300X",
-        "Disable speculative decoding",
-        "Validate task quality on your eval set per model; teams often use FP8 weights + FP4 activations or stay on H200 with FP8 throughout",
-        "Ship NVFP4 anyway because the cost win dominates"
+        "AMD MI300X に切り替える",
+        "speculative decoding を無効化する",
+        "model ごとに eval set で task quality を validate する。team は often FP8 weights + FP4 activations を使うか、H200 で FP8 throughout に留まる",
+        "cost win が支配するので NVFP4 をそのまま出荷する"
       ],
       "correct": 2,
       "explanation": ""

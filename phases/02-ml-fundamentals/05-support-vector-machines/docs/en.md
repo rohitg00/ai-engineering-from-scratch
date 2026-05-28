@@ -1,42 +1,42 @@
-# Support Vector Machines
+# サポートベクターマシン
 
-> Find the widest street between two classes. That is the entire idea.
+> 2つのクラスの間に、できるだけ幅の広い道を見つける。それが全体の考え方です。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1 (Lessons 08 Optimization, 14 Norms and Distances, 18 Convex Optimization)
-**Time:** ~90 minutes
+**タイプ:** Build
+**言語:** Python
+**前提条件:** フェーズ1（レッスン08 最適化、14 ノルムと距離、18 凸最適化）
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement a linear SVM from scratch using hinge loss and gradient descent on the primal formulation
-- Explain the maximum margin principle and identify support vectors from a trained model
-- Compare linear, polynomial, and RBF kernels and explain how the kernel trick avoids explicit high-dimensional mapping
-- Evaluate the tradeoff controlled by the C parameter between margin width and classification errors
+- ヒンジ損失と主問題形式での勾配降下法を使って、線形SVMをゼロから実装する
+- 最大マージン原理を説明し、学習済みモデルからサポートベクトルを特定する
+- 線形、Polynomial、RBF kernelを比較し、kernel trickが明示的な高次元写像を避けるしくみを説明する
+- Cパラメータが制御する、マージン幅と分類誤りのトレードオフを評価する
 
-## The Problem
+## 問題
 
-You have two classes of data points and need to draw a line (or hyperplane) separating them. Infinitely many lines could work. Which one should you pick?
+2つのクラスのデータ点があり、それらを分ける直線（または超平面）を引く必要があります。条件を満たす線は無数にあり得ます。どれを選ぶべきでしょうか。
 
-The one with the biggest margin. The margin is the distance between the decision boundary and the nearest data points on each side. A wider margin means the classifier is more confident and generalizes better to unseen data.
+最も大きなマージンを持つものです。マージンとは、決定境界と、その両側で最も近いデータ点との距離です。マージンが広いほど分類器の確信度は高く、未知データへの汎化もよくなります。
 
-This intuition leads to Support Vector Machines, one of the most mathematically elegant algorithms in ML. SVMs were the dominant classification method before deep learning and remain the best choice for small datasets, high-dimensional data, and problems where you need a principled, well-understood model with theoretical guarantees.
+この直感から、機械学習で最も数学的に洗練されたアルゴリズムの1つであるSupport Vector Machinesが生まれます。SVMは深層学習以前に支配的だった分類手法であり、現在でも小規模データセット、高次元データ、理論的保証を持つ原理的で理解しやすいモデルが必要な問題では最良の選択肢です。
 
-SVMs connect directly to Phase 1: the optimization is convex (Lesson 18), the margin is measured with norms (Lesson 14), and the kernel trick exploits dot products to handle nonlinear boundaries without ever computing in the high-dimensional space.
+SVMはフェーズ1に直接つながっています。最適化は凸（レッスン18）で、マージンはノルムで測られ（レッスン14）、kernel trickは内積を利用して、高次元空間で明示的に計算することなく非線形境界を扱います。
 
-## The Concept
+## 概念
 
-### The maximum margin classifier
+### 最大マージン分類器
 
-Given linearly separable data with labels y_i in {-1, +1} and feature vectors x_i, we want a hyperplane w^T x + b = 0 that separates the classes.
+ラベル y_i が {-1, +1}、特徴量ベクトルが x_i である線形分離可能なデータがあるとします。クラスを分ける超平面 w^T x + b = 0 を求めます。
 
-The distance from a point x_i to the hyperplane is:
+点 x_i から超平面までの距離は次の通りです。
 
 ```
 distance = |w^T x_i + b| / ||w||
 ```
 
-For a correctly classified point: y_i * (w^T x_i + b) > 0. The margin is twice the distance from the hyperplane to the nearest point on either side.
+正しく分類された点では y_i * (w^T x_i + b) > 0 です。マージンは、超平面から両側の最近傍点までの距離の2倍です。
 
 ```mermaid
 graph LR
@@ -44,76 +44,76 @@ graph LR
         direction TB
         A["w^T x + b = +1"] ~~~ B["w^T x + b = 0"] ~~~ C["w^T x + b = -1"]
     end
-    D["+ class points"] --> A
-    E["- class points"] --> C
-    B --- F["Decision boundary"]
+    D["+ クラスの点"] --> A
+    E["- クラスの点"] --> C
+    B --- F["決定境界"]
 ```
 
-The optimization problem:
+最適化問題は次の通りです。
 
 ```
-maximize    2 / ||w||     (the margin width)
-subject to  y_i * (w^T x_i + b) >= 1  for all i
+最大化    2 / ||w||     (マージン幅)
+制約      y_i * (w^T x_i + b) >= 1  すべての i について
 ```
 
-Equivalently (minimizing ||w||^2 is easier to optimize):
+同値な形として（||w||^2 を最小化する方が最適化しやすいので）:
 
 ```
-minimize    (1/2) ||w||^2
-subject to  y_i * (w^T x_i + b) >= 1  for all i
+最小化    (1/2) ||w||^2
+制約      y_i * (w^T x_i + b) >= 1  すべての i について
 ```
 
-This is a convex quadratic program. It has a unique global solution. The data points that sit exactly on the margin boundaries (where y_i * (w^T x_i + b) = 1) are the support vectors. They are the only points that determine the decision boundary. Move or remove any non-support-vector point, and the boundary does not change.
+これは凸二次計画問題です。一意な大域解を持ちます。マージン境界上にちょうど位置するデータ点（y_i * (w^T x_i + b) = 1 となる点）がサポートベクトルです。決定境界を決めるのはこれらの点だけです。サポートベクトルでない点を動かしたり取り除いたりしても、境界は変わりません。
 
-### Support vectors: the critical few
+### サポートベクトル: 決定的に重要な少数の点
 
 ```mermaid
 graph TD
-    subgraph Classification
-        SV1["Support Vector (+ class)<br>y(w'x+b) = 1"] --- DB["Decision Boundary<br>w'x+b = 0"]
-        DB --- SV2["Support Vector (- class)<br>y(w'x+b) = 1"]
+    subgraph "分類"
+        SV1["サポートベクトル（+ クラス）<br>y(w'x+b) = 1"] --- DB["決定境界<br>w'x+b = 0"]
+        DB --- SV2["サポートベクトル（- クラス）<br>y(w'x+b) = 1"]
     end
-    O1["Other + points<br>(do not affect boundary)"] -.-> SV1
-    O2["Other - points<br>(do not affect boundary)"] -.-> SV2
+    O1["その他の + 点<br>（境界に影響しない）"] -.-> SV1
+    O2["その他の - 点<br>（境界に影響しない）"] -.-> SV2
 ```
 
-Most training points are irrelevant. Only the support vectors matter. This is why SVMs are memory-efficient at prediction time: you only need to store the support vectors, not the entire training set.
+ほとんどの訓練点は関係ありません。重要なのはサポートベクトルだけです。そのため、SVMは予測時のメモリ効率がよいモデルです。訓練セット全体ではなく、サポートベクトルだけを保存すればよいからです。
 
-The number of support vectors also gives a bound on generalization error. Fewer support vectors relative to the dataset size means better generalization.
+サポートベクトルの数は、汎化誤差の境界も与えます。データセットサイズに対してサポートベクトルが少ないほど、汎化がよいことを意味します。
 
-### Soft margin: handling noise with the C parameter
+### ソフトマージン: Cパラメータでノイズを扱う
 
-Real data is rarely perfectly separable. Some points may be on the wrong side of the boundary, or inside the margin. The soft margin formulation allows violations by introducing slack variables.
+現実のデータが完全に分離可能であることはほとんどありません。一部の点は境界の反対側にあったり、マージン内にあったりします。ソフトマージン定式化は、スラック変数を導入することで違反を許容します。
 
 ```
-minimize    (1/2) ||w||^2 + C * sum(xi_i)
-subject to  y_i * (w^T x_i + b) >= 1 - xi_i
-            xi_i >= 0  for all i
+最小化    (1/2) ||w||^2 + C * sum(xi_i)
+制約      y_i * (w^T x_i + b) >= 1 - xi_i
+          xi_i >= 0  すべての i について
 ```
 
-The slack variable xi_i measures how much point i violates the margin. C controls the trade-off:
+スラック変数 xi_i は、点 i がマージンにどれだけ違反しているかを測ります。Cはトレードオフを制御します。
 
-| C value | Behavior |
+| Cの値 | 振る舞い |
 |---------|----------|
-| Large C | Penalizes violations heavily. Narrow margin, fewer misclassifications. Overfits |
-| Small C | Allows more violations. Wide margin, more misclassifications. Underfits |
+| 大きいC | 違反を強く罰する。狭いマージン、少ない誤分類。過学習しやすい |
+| 小さいC | より多くの違反を許す。広いマージン、多い誤分類。未学習になりやすい |
 
-C is the regularization strength, inverted. Large C = less regularization. Small C = more regularization.
+Cは正則化強度の逆数に相当します。大きいC = 弱い正則化、小さいC = 強い正則化です。
 
-### Hinge loss: the SVM loss function
+### ヒンジ損失: SVMの損失関数
 
-The soft margin SVM can be rewritten as an unconstrained optimization:
-
-```
-minimize    (1/2) ||w||^2 + C * sum(max(0, 1 - y_i * (w^T x_i + b)))
-```
-
-The term max(0, 1 - y_i * f(x_i)) is the hinge loss. It is zero when the point is correctly classified and beyond the margin. It is linear when the point is inside the margin or misclassified.
+ソフトマージンSVMは、制約なし最適化として書き換えられます。
 
 ```
-Hinge loss for a single point:
+最小化    (1/2) ||w||^2 + C * sum(max(0, 1 - y_i * (w^T x_i + b)))
+```
 
-loss
+項 max(0, 1 - y_i * f(x_i)) がヒンジ損失です。点が正しく分類され、かつマージンの外側にあるときは0です。点がマージン内にある、または誤分類されているときは線形になります。
+
+```
+単一点のヒンジ損失:
+
+損失
   |
   | \
   |  \
@@ -124,48 +124,48 @@ loss
   +-----|-----|-------->  y * f(x)
        0     1
 
-Zero loss when y*f(x) >= 1 (correctly classified, outside margin).
-Linear penalty when y*f(x) < 1.
+y*f(x) >= 1（正しく分類され、マージン外側）のとき損失は0。
+y*f(x) < 1 のとき線形ペナルティ。
 ```
 
-Compare with logistic loss (logistic regression):
+ロジスティック損失（ロジスティック回帰）と比較します。
 
 ```
-Hinge:     max(0, 1 - y*f(x))          Hard cutoff at margin
-Logistic:  log(1 + exp(-y*f(x)))        Smooth, never exactly zero
+Hinge:     max(0, 1 - y*f(x))          マージンで硬いカットオフ
+Logistic:  log(1 + exp(-y*f(x)))        滑らかで、厳密には0にならない
 ```
 
-Hinge loss produces sparse solutions (only support vectors have nonzero contribution). Logistic loss uses all data points. This makes SVMs more memory-efficient at prediction time.
+ヒンジ損失は疎な解を生みます（サポートベクトルだけがゼロでない寄与を持ちます）。ロジスティック損失はすべてのデータ点を使います。そのため、SVMは予測時のメモリ効率が高くなります。
 
-### Training a linear SVM with gradient descent
+### 勾配降下法で線形SVMを学習する
 
-You can train a linear SVM using gradient descent on the hinge loss plus L2 regularization, without solving the constrained QP:
+制約付きQPを解かなくても、ヒンジ損失とL2正則化に対して勾配降下法を使うことで、線形SVMを学習できます。
 
 ```
 L(w, b) = (lambda/2) * ||w||^2 + (1/n) * sum(max(0, 1 - y_i * (w^T x_i + b)))
 
-Gradient with respect to w:
-  If y_i * (w^T x_i + b) >= 1:  dL/dw = lambda * w
-  If y_i * (w^T x_i + b) < 1:   dL/dw = lambda * w - y_i * x_i
+wに関する勾配:
+  y_i * (w^T x_i + b) >= 1 の場合:  dL/dw = lambda * w
+  y_i * (w^T x_i + b) < 1 の場合:   dL/dw = lambda * w - y_i * x_i
 
-Gradient with respect to b:
-  If y_i * (w^T x_i + b) >= 1:  dL/db = 0
-  If y_i * (w^T x_i + b) < 1:   dL/db = -y_i
+bに関する勾配:
+  y_i * (w^T x_i + b) >= 1 の場合:  dL/db = 0
+  y_i * (w^T x_i + b) < 1 の場合:   dL/db = -y_i
 ```
 
-This is called the primal formulation. It runs in O(n * d) per epoch, where n is the number of samples and d is the number of features. For large, sparse, high-dimensional data (text classification), this is fast.
+これは主問題形式と呼ばれます。1エポックあたり O(n * d) で動作します。ここで n はサンプル数、d は特徴量数です。大規模で疎な高次元データ（テキスト分類）では高速です。
 
-### The dual formulation and the kernel trick
+### 双対形式とkernel trick
 
-The Lagrangian dual of the SVM problem (from Phase 1 Lesson 18, KKT conditions) is:
+SVM問題のラグランジュ双対（フェーズ1 レッスン18のKKT条件）は次の通りです。
 
 ```
-maximize    sum(alpha_i) - (1/2) * sum_ij(alpha_i * alpha_j * y_i * y_j * (x_i . x_j))
-subject to  0 <= alpha_i <= C
-            sum(alpha_i * y_i) = 0
+最大化    sum(alpha_i) - (1/2) * sum_ij(alpha_i * alpha_j * y_i * y_j * (x_i . x_j))
+制約      0 <= alpha_i <= C
+          sum(alpha_i * y_i) = 0
 ```
 
-The dual only involves dot products x_i . x_j between data points. This is the key insight. Replace every dot product with a kernel function K(x_i, x_j) and the SVM can learn nonlinear boundaries without ever computing the transformation explicitly.
+双対問題には、データ点間の内積 x_i . x_j だけが現れます。これが重要な洞察です。すべての内積をkernel関数 K(x_i, x_j) に置き換えると、SVMは変換を明示的に計算することなく非線形境界を学習できます。
 
 ```
 Linear kernel:      K(x, z) = x . z
@@ -173,59 +173,59 @@ Polynomial kernel:  K(x, z) = (x . z + c)^d
 RBF (Gaussian):     K(x, z) = exp(-gamma * ||x - z||^2)
 ```
 
-The RBF kernel maps data into an infinite-dimensional space. Points that are close in input space have kernel value near 1. Points that are far apart have kernel value near 0. It can learn any smooth decision boundary.
+RBF kernelはデータを無限次元空間に写像します。入力空間で近い点同士はkernel値が1に近く、遠い点同士は0に近くなります。任意の滑らかな決定境界を学習できます。
 
 ```mermaid
 graph LR
-    subgraph "Input Space (not separable)"
-        A["Data points in 2D<br>circular boundary"]
+    subgraph "入力空間（分離不可）"
+        A["2Dのデータ点<br>円形の境界"]
     end
-    subgraph "Feature Space (separable)"
-        B["Data points in higher dim<br>linear boundary"]
+    subgraph "特徴空間（分離可能）"
+        B["高次元のデータ点<br>線形境界"]
     end
-    A -->|"Kernel trick<br>K(x,z) = phi(x).phi(z)"| B
+    A -->|"kernel trick<br>K(x,z) = phi(x).phi(z)"| B
 ```
 
-The kernel trick computes the dot product in the high-dimensional space without ever going there. For the polynomial kernel of degree d in D dimensions, the explicit feature space has O(D^d) dimensions. But K(x, z) is computed in O(D) time.
+kernel trickは、高次元空間に実際に移動することなく、その空間での内積を計算します。D次元で次数 d のPolynomial kernelを明示的に展開すると、特徴空間は O(D^d) 次元になります。しかし K(x, z) は O(D) 時間で計算できます。
 
-### SVM for regression (SVR)
+### 回帰のためのSVM（SVR）
 
-Support Vector Regression fits a tube of width epsilon around the data. Points inside the tube have zero loss. Points outside the tube are penalized linearly.
+Support Vector Regressionは、データの周りに幅 epsilon のチューブをフィットさせます。チューブ内の点は損失が0です。チューブ外の点は線形に罰せられます。
 
 ```
-minimize    (1/2) ||w||^2 + C * sum(xi_i + xi_i*)
-subject to  y_i - (w^T x_i + b) <= epsilon + xi_i
-            (w^T x_i + b) - y_i <= epsilon + xi_i*
-            xi_i, xi_i* >= 0
+最小化    (1/2) ||w||^2 + C * sum(xi_i + xi_i*)
+制約      y_i - (w^T x_i + b) <= epsilon + xi_i
+          (w^T x_i + b) - y_i <= epsilon + xi_i*
+          xi_i, xi_i* >= 0
 ```
 
-The epsilon parameter controls the tube width. Wider tube = fewer support vectors = smoother fit. Narrower tube = more support vectors = tighter fit.
+epsilonパラメータはチューブ幅を制御します。広いチューブ = サポートベクトルが少ない = より滑らかなフィット。狭いチューブ = サポートベクトルが多い = よりタイトなフィットです。
 
-### Why SVMs lost to deep learning (and when they still win)
+### SVMが深層学習に敗れた理由（それでも勝つ場面）
 
-SVMs dominated ML from the late 1990s through the early 2010s. Deep learning surpassed them for several reasons:
+SVMは1990年代後半から2010年代前半まで機械学習を支配しました。深層学習がSVMを上回った理由はいくつかあります。
 
-| Factor | SVMs | Deep learning |
+| 要因 | SVM | 深層学習 |
 |--------|------|---------------|
-| Feature engineering | Requires it | Learns features |
-| Scalability | O(n^2) to O(n^3) for kernel | O(n) per epoch with SGD |
-| Image/text/audio | Needs handcrafted features | Learns from raw data |
-| Large datasets (>100k) | Slow | Scales well |
-| GPU acceleration | Limited benefit | Massive speedup |
+| 特徴量エンジニアリング | 必要 | 特徴量を学習する |
+| スケーラビリティ | kernelでは O(n^2) から O(n^3) | SGDで1エポック O(n) |
+| 画像/テキスト/音声 | 手作り特徴量が必要 | 生データから学習する |
+| 大規模データセット（10万超） | 遅い | よくスケールする |
+| GPU高速化 | 利点が限定的 | 大幅に高速化 |
 
-SVMs still win in these situations:
-- Small datasets (hundreds to low thousands of samples)
-- High-dimensional sparse data (text with TF-IDF features)
-- When you need mathematical guarantees (margin bounds)
-- When training time must be minimal (linear SVM is very fast)
-- Binary classification with clear margin structure
-- Anomaly detection (one-class SVM)
+それでも、SVMは次の状況で今も有力です。
+- 小規模データセット（数百から数千程度のサンプル）
+- 高次元の疎データ（TF-IDF特徴量を持つテキストなど）
+- 数学的保証（マージン境界）が必要な場合
+- 学習時間を最小にする必要がある場合（線形SVMは非常に高速）
+- 明確なマージン構造を持つ二値分類
+- 異常検知（one-class SVM）
 
-## Build It
+## 作ってみる
 
-### Step 1: Hinge loss and gradient
+### ステップ1: ヒンジ損失と勾配
 
-The foundation. Compute hinge loss for a batch and its gradient.
+基礎部分です。バッチに対するヒンジ損失とその勾配を計算します。
 
 ```python
 def hinge_loss(X, y, w, b):
@@ -237,9 +237,9 @@ def hinge_loss(X, y, w, b):
     return total_loss / n
 ```
 
-### Step 2: Linear SVM via gradient descent
+### ステップ2: 勾配降下法による線形SVM
 
-Train by minimizing regularized hinge loss. No QP solver needed.
+正則化付きヒンジ損失を最小化して学習します。QPソルバーは不要です。
 
 ```python
 class LinearSVM:
@@ -270,9 +270,9 @@ class LinearSVM:
         return [1 if dot(self.w, x) + self.b >= 0 else -1 for x in X]
 ```
 
-### Step 3: Kernel functions
+### ステップ3: kernel関数
 
-Implement linear, polynomial, and RBF kernels.
+線形、Polynomial、RBF kernelを実装します。
 
 ```python
 def linear_kernel(x, z):
@@ -286,9 +286,9 @@ def rbf_kernel(x, z, gamma=0.5):
     return math.exp(-gamma * dot(diff, diff))
 ```
 
-### Step 4: Margin and support vector identification
+### ステップ4: マージンとサポートベクトルの特定
 
-After training, identify which points are support vectors and compute the margin width.
+学習後、どの点がサポートベクトルかを特定し、マージン幅を計算します。
 
 ```python
 def find_support_vectors(X, y, w, b, tol=1e-3):
@@ -300,11 +300,11 @@ def find_support_vectors(X, y, w, b, tol=1e-3):
     return support_vectors
 ```
 
-See `code/svm.py` for the complete implementation with all demos.
+すべてのデモを含む完全な実装は `code/svm.py` を参照してください。
 
-## Use It
+## 使ってみる
 
-With scikit-learn:
+scikit-learnでは次のように使います。
 
 ```python
 from sklearn.svm import SVC, LinearSVC, SVR
@@ -320,9 +320,9 @@ print(f"Accuracy: {clf.score(X_test, y_test):.4f}")
 print(f"Support vectors: {clf['svm'].n_support_}")
 ```
 
-Important: always scale your features before training an SVM. SVMs are sensitive to feature magnitudes because the margin depends on ||w||, and unscaled features distort the geometry.
+重要: SVMを学習する前に、必ず特徴量をスケーリングしてください。マージンは ||w|| に依存するため、SVMは特徴量の大きさに敏感です。スケーリングされていない特徴量は幾何を歪めます。
 
-For large datasets, use `LinearSVC` (primal formulation, O(n) per epoch) instead of `SVC` (dual formulation, O(n^2) to O(n^3)):
+大規模データセットでは、`SVC`（双対形式、O(n^2) から O(n^3)）ではなく `LinearSVC`（主問題形式、1エポック O(n)）を使います。
 
 ```python
 from sklearn.svm import LinearSVC
@@ -333,40 +333,40 @@ clf = Pipeline([
 ])
 ```
 
-## Exercises
+## 演習
 
-1. Generate a 2D linearly separable dataset. Train your LinearSVM and identify the support vectors. Verify that the support vectors are the points closest to the decision boundary.
+1. 2Dの線形分離可能なデータセットを生成します。自分のLinearSVMを学習し、サポートベクトルを特定してください。サポートベクトルが決定境界に最も近い点であることを確認します。
 
-2. Vary C from 0.001 to 1000 on a noisy dataset. Plot the decision boundary for each C value. Observe the transition from wide margin (underfitting) to narrow margin (overfitting).
+2. ノイズのあるデータセットで、Cを0.001から1000まで変化させます。各C値の決定境界をプロットしてください。広いマージン（未学習）から狭いマージン（過学習）への遷移を観察します。
 
-3. Create a dataset where class boundaries are circular (not linear). Show that a linear SVM fails. Compute the RBF kernel matrix and show that the classes become separable in the kernel-induced feature space.
+3. クラス境界が円形（線形ではない）になるデータセットを作ります。線形SVMが失敗することを示してください。RBF kernel行列を計算し、kernelが誘導する特徴空間でクラスが分離可能になることを示します。
 
-4. Compare hinge loss vs logistic loss on the same dataset. Train a linear SVM and logistic regression. Count how many training points contribute to each model's decision boundary (support vectors vs all points).
+4. 同じデータセットでヒンジ損失とロジスティック損失を比較します。線形SVMとロジスティック回帰を学習してください。各モデルの決定境界に寄与する訓練点の数を数えます（サポートベクトル vs 全点）。
 
-5. Implement SVR (epsilon-insensitive loss). Fit it to y = sin(x) + noise. Plot the epsilon tube around the predictions and highlight the support vectors (points outside the tube).
+5. SVR（epsilon-insensitive loss）を実装します。y = sin(x) + noise にフィットさせてください。予測の周りにepsilonチューブをプロットし、サポートベクトル（チューブ外の点）を強調します。
 
-## Key Terms
+## 重要用語
 
-| Term | What it actually means |
+| 用語 | 実際の意味 |
 |------|----------------------|
-| Support vectors | The training points closest to the decision boundary. The only points that determine the hyperplane |
-| Margin | The distance between the decision boundary and the nearest support vectors. SVMs maximize this |
-| Hinge loss | max(0, 1 - y*f(x)). Zero when correctly classified and outside the margin. Linear penalty otherwise |
-| C parameter | Trade-off between margin width and classification errors. Large C = narrow margin, small C = wide margin |
-| Soft margin | SVM formulation that allows margin violations via slack variables. Handles non-separable data |
-| Kernel trick | Computing dot products in a high-dimensional feature space without explicitly mapping to that space |
-| Linear kernel | K(x, z) = x . z. Equivalent to standard dot product. For linearly separable data |
-| RBF kernel | K(x, z) = exp(-gamma * \|\|x-z\|\|^2). Maps to infinite dimensions. Learns any smooth boundary |
-| Polynomial kernel | K(x, z) = (x . z + c)^d. Maps to a feature space of polynomial combinations |
-| Dual formulation | Reformulation of the SVM problem that depends only on dot products between data points. Enables kernels |
-| SVR | Support Vector Regression. Fits an epsilon-tube around the data. Points inside the tube have zero loss |
-| Slack variables | xi_i: measures how much a point violates the margin. Zero for correctly classified points outside margin |
-| Maximum margin | The principle of choosing the hyperplane that maximizes the distance to the nearest points of each class |
+| サポートベクトル | 決定境界に最も近い訓練点。超平面を決める唯一の点 |
+| マージン | 決定境界と最近傍のサポートベクトルとの距離。SVMはこれを最大化する |
+| ヒンジ損失 | max(0, 1 - y*f(x))。正しく分類され、マージン外側にあるときは0。それ以外では線形ペナルティ |
+| Cパラメータ | マージン幅と分類誤りのトレードオフ。大きいC = 狭いマージン、小さいC = 広いマージン |
+| ソフトマージン | スラック変数によってマージン違反を許すSVM定式化。分離不可能なデータを扱う |
+| kernel trick | 高次元特徴空間に明示的に写像せず、その空間での内積を計算すること |
+| 線形kernel | K(x, z) = x . z。通常の内積と同等。線形分離可能なデータ向け |
+| RBF kernel | K(x, z) = exp(-gamma * \|\|x-z\|\|^2)。無限次元に写像する。任意の滑らかな境界を学習する |
+| Polynomial kernel | K(x, z) = (x . z + c)^d。多項式の組み合わせからなる特徴空間に写像する |
+| 双対形式 | データ点間の内積だけに依存するSVM問題の再定式化。kernelを可能にする |
+| SVR | Support Vector Regression。データの周りにepsilonチューブをフィットさせる。チューブ内の点の損失は0 |
+| スラック変数 | xi_i: 点がマージンにどれだけ違反しているかを測る。マージン外側で正しく分類された点では0 |
+| 最大マージン | 各クラスの最近傍点までの距離を最大化する超平面を選ぶ原理 |
 
-## Further Reading
+## 参考文献
 
-- [Vapnik: The Nature of Statistical Learning Theory (1995)](https://link.springer.com/book/10.1007/978-1-4757-3264-1) - the foundational text on SVMs and statistical learning
-- [Cortes & Vapnik: Support-vector networks (1995)](https://link.springer.com/article/10.1007/BF00994018) - the original SVM paper
-- [Platt: Sequential Minimal Optimization (1998)](https://www.microsoft.com/en-us/research/publication/sequential-minimal-optimization-a-fast-algorithm-for-training-support-vector-machines/) - the SMO algorithm that made SVM training practical
-- [scikit-learn SVM documentation](https://scikit-learn.org/stable/modules/svm.html) - practical guide with implementation details
-- [LIBSVM: A Library for Support Vector Machines](https://www.csie.ntu.edu.tw/~cjlin/libsvm/) - the C++ library behind most SVM implementations
+- [Vapnik: The Nature of Statistical Learning Theory (1995)](https://link.springer.com/book/10.1007/978-1-4757-3264-1) - SVMと統計的学習の基礎文献
+- [Cortes & Vapnik: Support-vector networks (1995)](https://link.springer.com/article/10.1007/BF00994018) - SVMの元論文
+- [Platt: Sequential Minimal Optimization (1998)](https://www.microsoft.com/en-us/research/publication/sequential-minimal-optimization-a-fast-algorithm-for-training-support-vector-machines/) - SVM学習を実用的にしたSMOアルゴリズム
+- [scikit-learn SVM documentation](https://scikit-learn.org/stable/modules/svm.html) - 実装詳細を含む実践的ガイド
+- [LIBSVM: A Library for Support Vector Machines](https://www.csie.ntu.edu.tw/~cjlin/libsvm/) - 多くのSVM実装の背後にあるC++ライブラリ

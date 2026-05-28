@@ -4,87 +4,87 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does WebArena self-host its four target apps?",
+      "question": "WebArenaはなぜ4つのtarget appをself-hostするのですか?",
       "options": [
-        "To save money",
-        "To pin reproducible versions so evaluation is execution-based and not flaky",
-        "To run on GPUs",
-        "To avoid TLS"
+        "費用を節約するため",
+        "reproducibleなversionをpinし、evaluationをexecution-basedかつflakyでないものにするため",
+        "GPU上で実行するため",
+        "TLSを避けるため"
       ],
       "correct": 1,
-      "explanation": "Pinned self-hosted apps make execution-based evaluation reliable and comparable over time."
+      "explanation": "pinされたself-hosted appにより、execution-based evaluationは信頼でき、時間をまたいで比較可能になります。"
     },
     {
       "stage": "pre",
-      "question": "Why does OSWorld use real OS screenshots rather than accessibility APIs?",
+      "question": "OSWorldはなぜaccessibility APIsではなくreal OS screenshotsを使うのですか?",
       "options": [
-        "Accessibility APIs are too fast",
-        "Screenshots force the agent to do real GUI grounding in 1920x1080, matching production constraints",
-        "Accessibility APIs leak PII",
-        "Screenshots cost less"
+        "accessibility APIsが速すぎるため",
+        "screenshotにより、agentはproduction constraintsに合った1920x1080でのreal GUI groundingを強制されるため",
+        "accessibility APIsがPIIを漏らすため",
+        "screenshotの方が安いため"
       ],
       "correct": 1,
-      "explanation": "Screenshot-driven evaluation forces pixel-to-element grounding, the actual production constraint."
+      "explanation": "screenshot-driven evaluationは、実際のproduction constraintであるpixel-to-element groundingを強制します。"
     },
     {
       "stage": "check",
-      "question": "What two primary failure modes does OSWorld surface?",
+      "question": "OSWorldが明らかにする2つの主要failure modesは何ですか?",
       "options": [
-        "Latency and bandwidth",
-        "GUI grounding and operational knowledge",
-        "Embedding drift and token leakage",
-        "Hallucination and refusal"
+        "latencyとbandwidth",
+        "GUI groundingとoperational knowledge",
+        "embedding driftとtoken leakage",
+        "hallucinationとrefusal"
       ],
       "correct": 1,
-      "explanation": "Grounding (pixel-to-element) and operational knowledge (menus, shortcuts) are the headline blockers."
+      "explanation": "grounding (pixel-to-element) とoperational knowledge (menus、shortcuts) が主要blockerです。"
     },
     {
       "stage": "check",
-      "question": "What does OSWorld-Human add on top of the base benchmark?",
+      "question": "OSWorld-Humanはbase benchmarkに何を追加しますか?",
       "options": [
-        "More tasks",
-        "Manually curated gold action trajectories that surface a 1.4-2.7x agent step-inefficiency gap",
-        "A larger screen resolution",
-        "A new OS"
+        "より多くのtask",
+        "1.4-2.7xのagent step-inefficiency gapを明らかにする、手動curated gold action trajectories",
+        "より大きなscreen resolution",
+        "新しいOS"
       ],
       "correct": 1,
-      "explanation": "Gold trajectories make trajectory efficiency measurable, not just success rate."
+      "explanation": "gold trajectoriesにより、success rateだけでなくtrajectory efficiencyを測定できます。"
     },
     {
       "stage": "check",
-      "question": "Which release-time number does the lesson cite for WebArena?",
+      "question": "このlessonがWebArenaについて引用するrelease-time numberはどれですか?",
       "options": [
-        "Best GPT-4 agent 14.41% success vs human 78.24%",
-        "Best agent at 99% with human at 100%",
-        "Best agent at 50% with human at 50%",
-        "Best agent at 0% across the board"
+        "best GPT-4 agentは14.41% success、人間は78.24%",
+        "best agentは99%、人間は100%",
+        "best agentは50%、人間は50%",
+        "best agentは全体で0%"
       ],
       "correct": 0,
-      "explanation": "The 14.41% vs 78.24% gap is the WebArena release-time number."
+      "explanation": "14.41% vs 78.24%のgapが、WebArenaのrelease-time numberです。"
     },
     {
       "stage": "post",
-      "question": "What does the lesson warn happens with screenshot-only evaluation when the agent uses DOM or accessibility APIs?",
+      "question": "agentがDOMやaccessibility APIsを使う場合、screenshot-only evaluationでは何が起きるとlessonは警告していますか?",
       "options": [
-        "Nothing changes",
-        "You miss the grounding challenge OSWorld is designed to measure",
-        "You exceed the rate limit",
-        "Tests pass trivially"
+        "何も変わらない",
+        "OSWorldが測るよう設計されたgrounding challengeを見逃す",
+        "rate limitを超える",
+        "testがtriviallyにpassする"
       ],
       "correct": 1,
-      "explanation": "Evaluating an accessibility-API agent on screenshot-only benchmarks skips the grounding test."
+      "explanation": "accessibility-API agentをscreenshot-only benchmarkで評価すると、grounding testをskipしてしまいます。"
     },
     {
       "stage": "post",
-      "question": "Why is ignoring trajectory length a benchmarking failure?",
+      "question": "trajectory lengthを無視することがbenchmarking failureなのはなぜですか?",
       "options": [
-        "It hides cost and inefficiency that success rate alone misses (the 1.4-2.7x gap OSWorld-Human surfaces)",
-        "Trajectory length always matches gold",
-        "Trajectories are not measurable",
-        "Length is the only metric that matters"
+        "success rateだけでは見逃すcostとinefficiencyを隠すため (OSWorld-Humanが示す1.4-2.7x gap)",
+        "trajectory lengthは常にgoldと一致するため",
+        "trajectoryは測定できないため",
+        "lengthだけが重要なmetricであるため"
       ],
       "correct": 0,
-      "explanation": "Two agents at 60% success can differ 2-3x in steps; cost and efficiency only show up if you measure trajectory length."
+      "explanation": "60% successのagentが2つあっても、step数では2-3x違うことがあります。costとefficiencyはtrajectory lengthを測って初めて見えます。"
     }
   ]
 }

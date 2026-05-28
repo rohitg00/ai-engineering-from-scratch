@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,13 +7,13 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .content { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="440" y="26" text-anchor="middle" class="title">Three scaling policies, same capability, three classifications</text>
+  <text x="440" y="26" text-anchor="middle" class="title">3つのスケーリングポリシー、同じ能力、3つの分類</text>
 
   <rect x="40" y="50" width="800" height="460" class="box"/>
 
@@ -29,33 +29,33 @@
 
   <!-- Long-range Autonomy row -->
   <rect x="60" y="130" width="760" height="46" class="box"/>
-  <text x="76" y="152" class="label">long-range autonomy</text>
-  <text x="76" y="170" class="content">OpenAI: Research (not triggering) · Anthropic: named; affirmative case at threshold · DeepMind: folded into ML R&amp;D / Cyber</text>
+  <text x="76" y="152" class="label">長距離自律性</text>
+  <text x="76" y="170" class="content">OpenAI: Research（未発動）· Anthropic: 名指し、しきい値で affirmative case · DeepMind: ML R&amp;D / Cyber に統合</text>
 
   <!-- Undermining safeguards -->
   <rect x="60" y="184" width="760" height="46" class="box"/>
-  <text x="76" y="206" class="label">undermining safeguards</text>
-  <text x="76" y="224" class="content">OpenAI: Research · Anthropic: hardcoded prohibition (refusal) · DeepMind: deceptive-alignment monitoring</text>
+  <text x="76" y="206" class="label">セーフガードの弱体化</text>
+  <text x="76" y="224" class="content">OpenAI: Research · Anthropic: ハードコード禁止（拒否）· DeepMind: 欺瞞的アラインメント監視</text>
 
   <!-- R&D automation -->
   <rect x="60" y="238" width="760" height="46" class="box"/>
-  <text x="76" y="260" class="label">R&amp;D automation</text>
-  <text x="76" y="278" class="content">OpenAI: Tracked · Anthropic: AI R&amp;D-4 threshold (affirmative case) · DeepMind: ML R&amp;D autonomy level 1 (TCL, Apr 2026)</text>
+  <text x="76" y="260" class="label">R&amp;D自動化</text>
+  <text x="76" y="278" class="content">OpenAI: Tracked · Anthropic: AI R&amp;D-4 しきい値（affirmative case）· DeepMind: ML R&amp;D autonomy level 1（TCL, 2026-04）</text>
 
   <!-- Sandbagging -->
   <rect x="60" y="292" width="760" height="46" class="box"/>
-  <text x="76" y="314" class="label">sandbagging</text>
-  <text x="76" y="332" class="content">OpenAI: Research · Anthropic: addressed via eval-context gap · DeepMind: deceptive-alignment monitoring (instrumental reasoning)</text>
+  <text x="76" y="314" class="label">サンドバギング</text>
+  <text x="76" y="332" class="content">OpenAI: Research · Anthropic: 評価コンテキストギャップで扱う · DeepMind: 欺瞞的アラインメント監視（道具的推論）</text>
 
   <!-- Cyber uplift -->
   <rect x="60" y="346" width="760" height="46" class="box"/>
-  <text x="76" y="368" class="label">cyber uplift</text>
-  <text x="76" y="386" class="content">OpenAI: Tracked · Anthropic: ASL-3 trigger (security + deployment) · DeepMind: Cyber CCL</text>
+  <text x="76" y="368" class="label">サイバー能力増幅</text>
+  <text x="76" y="386" class="content">OpenAI: Tracked · Anthropic: ASL-3発動（セキュリティ + デプロイ）· DeepMind: Cyber CCL</text>
 
   <!-- Convergence note -->
   <rect x="60" y="400" width="760" height="90" class="hot"/>
-  <text x="440" y="424" text-anchor="middle" class="label">convergence + divergence</text>
-  <text x="80" y="446" class="content">converge: internal SAG, deceptive-alignment as a named risk class, standing artifacts</text>
-  <text x="80" y="462" class="content">diverge: Tracked vs Research split only in PF v2; DeepMind folds autonomy; Anthropic removed pause clause</text>
-  <text x="80" y="478" class="content">measurement dependency: all three frameworks work only if the capability measurement is not gameable</text>
+  <text x="440" y="424" text-anchor="middle" class="label">収束点 + 分岐点</text>
+  <text x="80" y="446" class="content">収束: 内部SAG、欺瞞的アラインメントをリスク分類として命名、常設成果物</text>
+  <text x="80" y="462" class="content">分岐: Tracked vs Research はPF v2のみ。DeepMindは自律性を統合。Anthropicは一時停止条項を削除</text>
+  <text x="80" y="478" class="content">測定依存: 3つとも、能力測定がゲーミング不能な場合にだけ機能する</text>
 </svg>

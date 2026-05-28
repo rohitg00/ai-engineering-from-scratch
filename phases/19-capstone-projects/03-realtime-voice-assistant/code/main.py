@@ -1,11 +1,11 @@
-"""Real-time voice pipeline — VAD + turn-detection + barge-in scheduler.
+"""Real-time voice pipeline — VAD + turn-detection + barge-in scheduler。
 
-The hard architectural primitive in a 2026 voice agent is not the ASR or the
-TTS. It is the streaming scheduler that arbitrates between VAD events, ASR
-partials, turn-completion scores, LLM streaming, TTS streaming, and user
-barge-in, all with bounded latency. This scaffold simulates audio frames and
-implements the scheduler in full: state machine, barge-in cancellation, tool
-side-channel with filler injection, latency accounting.
+2026年の voice agent で難しい architectural primitive は ASR や TTS では
+ありません。bounded latency の中で VAD event、ASR partial、turn-completion
+score、LLM streaming、TTS streaming、user barge-in を調停する streaming
+scheduler です。この scaffold は audio frame を simulate し、state machine、
+barge-in cancellation、filler injection 付き tool side-channel、latency
+accounting を含む scheduler 全体を実装します。
 
 Run:  python main.py
 """
@@ -19,33 +19,33 @@ from enum import Enum, auto
 
 
 # ---------------------------------------------------------------------------
-# frame stream  --  simulated 20ms audio frames
+# frame stream  --  20ms audio frame の simulation
 # ---------------------------------------------------------------------------
 
 @dataclass
 class Frame:
-    t_ms: int              # timestamp ms since session start
-    is_speech: bool        # VAD verdict (Silero v5 stand-in)
-    partial: str = ""      # ASR cumulative partial (Deepgram Nova-3 stand-in)
+    t_ms: int              # session start からの timestamp ms
+    is_speech: bool        # VAD verdict (Silero v5 の代役)
+    partial: str = ""      # ASR cumulative partial (Deepgram Nova-3 の代役)
 
 
 def synth_call(script: str, start_ms: int = 0, noise: float = 0.0) -> list[Frame]:
-    """Generate a frame stream for a simulated caller utterance."""
+    """simulated caller utterance 用の frame stream を生成する。"""
     words = script.split()
     frames: list[Frame] = []
     t = start_ms
-    # 120ms silence before speech
+    # speech 前の 120ms silence
     for _ in range(6):
         frames.append(Frame(t_ms=t, is_speech=random.random() < noise))
         t += 20
     partial = ""
     for w in words:
         partial = (partial + " " + w).strip()
-        # each word ~320ms of speech
+        # 各 word は約 320ms の speech
         for _ in range(16):
             frames.append(Frame(t_ms=t, is_speech=True, partial=partial))
             t += 20
-    # trailing silence, 2200ms (enough to cover tool + LLM + TTS)
+    # trailing silence 2200ms (tool + LLM + TTS を覆うのに十分)
     for _ in range(110):
         frames.append(Frame(t_ms=t, is_speech=False, partial=partial))
         t += 20
@@ -53,16 +53,16 @@ def synth_call(script: str, start_ms: int = 0, noise: float = 0.0) -> list[Frame
 
 
 # ---------------------------------------------------------------------------
-# turn detector  --  combines VAD silence duration and completion score
+# turn detector  --  VAD silence duration と completion score を組み合わせる
 # ---------------------------------------------------------------------------
 
 def turn_completion_score(partial: str) -> float:
-    """Tiny stand-in for the LiveKit turn-detector model."""
+    """LiveKit turn-detector model の小さな代役。"""
     if not partial:
         return 0.0
     if partial.rstrip().endswith(("?", ".", "!")):
         return 0.95
-    # heuristic: more words, more confidence the turn is done
+    # heuristic: word が多いほど turn 完了の confidence が高い
     n = len(partial.split())
     if n < 3:
         return 0.2
@@ -77,11 +77,11 @@ def turn_completion_score(partial: str) -> float:
 
 class State(Enum):
     IDLE = auto()
-    LISTENING = auto()   # user is mid-utterance
-    WAITING = auto()     # VAD says silence, checking turn score
-    THINKING = auto()    # LLM streaming but no TTS yet
-    SPEAKING = auto()    # TTS streaming out
-    TOOL = auto()        # side-channel tool in flight
+    LISTENING = auto()   # user が発話中
+    WAITING = auto()     # VAD は silence、turn score を確認中
+    THINKING = auto()    # LLM streaming 中だが TTS はまだ
+    SPEAKING = auto()    # TTS streaming 中
+    TOOL = auto()        # side-channel tool が実行中
 
 
 @dataclass
@@ -103,7 +103,7 @@ class Metrics:
 
 
 # ---------------------------------------------------------------------------
-# tool side channel  --  async weather/calendar with filler injection
+# tool side channel  --  filler injection 付き async weather/calendar
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -113,11 +113,11 @@ class Tool:
     result: str
 
 
-WEATHER = Tool("weather.tokyo_tomorrow", latency_ms=420, result="68/52 partly cloudy")
+WEATHER = Tool("weather.tokyo_tomorrow", latency_ms=420, result="68/52、一部曇り")
 
 
 # ---------------------------------------------------------------------------
-# scheduler  --  the full pipeline, streamed frame by frame
+# scheduler  --  frame ごとに stream される full pipeline
 # ---------------------------------------------------------------------------
 
 def run_session(frames: list[Frame], use_tool: bool = True,
@@ -133,12 +133,12 @@ def run_session(frames: list[Frame], use_tool: bool = True,
     filler_emitted = False
 
     for f in frames:
-        # barge-in: user starts speaking while we are SPEAKING or THINKING
+        # barge-in: SPEAKING または THINKING 中に user が話し始める
         if (barge_in_at_ms is not None and f.t_ms >= barge_in_at_ms
                 and state in (State.SPEAKING, State.THINKING)
                 and f.is_speech):
             m.barge_ins += 1
-            m.log(f"{f.t_ms}ms BARGE-IN: cancel TTS, re-arm ASR")
+            m.log(f"{f.t_ms}ms BARGE-IN: TTS を cancel し、ASR を再 arm")
             state = State.LISTENING
             tts_stream_started_at = -1
             llm_stream_started_at = -1
@@ -163,13 +163,13 @@ def run_session(frames: list[Frame], use_tool: bool = True,
                         m.log(f"{f.t_ms}ms TURN COMPLETE (score={score:.2f})"
                               f" partial='{final_partial}'")
                     else:
-                        m.log(f"{f.t_ms}ms SILENCE but score={score:.2f}, waiting")
+                        m.log(f"{f.t_ms}ms SILENCE だが score={score:.2f}、待機")
 
         if state == State.WAITING:
-            # kick off LLM
+            # LLM を開始する
             llm_stream_started_at = f.t_ms + 140  # simulated time-to-first-token
             state = State.THINKING
-            m.log(f"{f.t_ms}ms LLM call fired")
+            m.log(f"{f.t_ms}ms LLM call を発火")
             if use_tool:
                 tool_started_at = f.t_ms
                 state = State.TOOL
@@ -178,7 +178,7 @@ def run_session(frames: list[Frame], use_tool: bool = True,
             if tool_started_at >= 0 and not filler_emitted:
                 if f.t_ms - tool_started_at >= 300:
                     filler_emitted = True
-                    m.log(f"{f.t_ms}ms filler 'one second, let me check'")
+                    m.log(f"{f.t_ms}ms filler '少々お待ちください。確認します'")
             if tool_started_at >= 0 and f.t_ms - tool_started_at >= WEATHER.latency_ms:
                 tool_done_at = f.t_ms
                 m.log(f"{f.t_ms}ms tool result: {WEATHER.result}")
@@ -203,25 +203,25 @@ def run_session(frames: list[Frame], use_tool: bool = True,
 
 
 # ---------------------------------------------------------------------------
-# demo  --  runs two sessions, one clean, one with a barge-in
+# demo  --  clean session と barge-in session を1つずつ実行する
 # ---------------------------------------------------------------------------
 
 def main() -> None:
     random.seed(0)
-    print("=== session 1: clean call with tool (weather) ===")
+    print("=== session 1: tool (weather) 付きの正常 call ===")
     frames = synth_call("what is the weather in tokyo tomorrow", start_ms=0)
     m = run_session(frames, use_tool=True, barge_in_at_ms=None)
     for line in m.events:
         print(" ", line)
-    print(f"  turn_complete  @ {m.turn_complete_ms}ms")
-    print(f"  first_llm_tok  @ {m.first_llm_token_ms}ms")
+    print(f"  turn_complete   @ {m.turn_complete_ms}ms")
+    print(f"  first_llm_tok   @ {m.first_llm_token_ms}ms")
     print(f"  first_audio_out @ {m.first_audio_out_ms}ms")
-    print(f"  turn latency   = {m.latency_ms()}ms")
+    print(f"  turn latency    = {m.latency_ms()}ms")
 
     print()
-    print("=== session 2: user barges in mid-response ===")
+    print("=== session 2: user が応答途中に barge in ===")
     frames = synth_call("tell me a long story about", start_ms=0)
-    # add a few synthetic speech frames late in the trailing silence
+    # trailing silence の終盤に synthetic speech frame を少し追加する
     for i in range(8):
         idx = len(frames) - 20 + i
         if 0 <= idx < len(frames):

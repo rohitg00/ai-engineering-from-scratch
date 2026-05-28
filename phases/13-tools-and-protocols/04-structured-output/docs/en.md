@@ -1,58 +1,58 @@
-# Structured Output — JSON Schema, Pydantic, Zod, Constrained Decoding
+# Structured Output — JSON Schema、Pydantic、Zod、Constrained Decoding
 
-> "Ask the model nicely to return JSON" fails 5 to 15 percent of the time, even on frontier models. Structured outputs close that gap with constrained decoding: the model is literally prevented from emitting a token that would violate the schema. OpenAI's strict mode, Anthropic's schema-typed tool use, Gemini's `responseSchema`, Pydantic AI's `output_type`, and Zod's `.parse` are five surface forms of the same idea. This lesson builds the schema validator and the strict-mode contract learners will use for every production extraction pipeline.
+> 「JSON を返して」と丁寧に頼むだけでは、frontier model でも 5 から 15 パーセントの確率で失敗します。Structured outputs は constrained decoding でその差を埋めます。model は schema に違反する token を文字どおり出せなくなります。OpenAI の strict mode、Anthropic の schema 型付き tool use、Gemini の `responseSchema`、Pydantic AI の `output_type`、Zod の `.parse` は、同じ考え方の 5 つの表面形です。このレッスンでは、production の extraction pipeline すべてで使う schema validator と strict-mode contract を作ります。
 
-**Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
-**Prerequisites:** Phase 13 · 02 (function calling deep dive)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python (stdlib, JSON Schema 2020-12 subset)
+**前提条件:** Phase 13 · 02 (function calling deep dive)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Write a JSON Schema 2020-12 for an extraction target using the right constraints (enum, min/max, required, pattern).
-- Explain why strict mode and constrained decoding give different guarantees from "validate after generation".
-- Distinguish the three failure modes: parse error, schema violation, model refusal.
-- Ship an extraction pipeline with typed repair and typed refusal handling.
+- extraction target に対して、適切な制約 (enum、min/max、required、pattern) を使った JSON Schema 2020-12 を書く。
+- strict mode と constrained decoding が、「生成後に validate する」方式と異なる保証を与える理由を説明する。
+- 3 つの failure mode、parse error、schema violation、model refusal を区別する。
+- typed repair と typed refusal handling を備えた extraction pipeline を出荷する。
 
-## The Problem
+## 問題
 
-An agent reading a purchase-order email needs to turn free text into `{customer, line_items, total_usd}`. Three approaches.
+purchase-order email を読む agent は、自由文を `{customer, line_items, total_usd}` に変換する必要があります。方法は 3 つあります。
 
-**Approach one: prompt for JSON.** "Reply in JSON with fields customer, line_items, total_usd." Works 85 to 95 percent of the time on frontier models. Fails in six ways: missing brace, trailing comma, wrong types, hallucinated fields, truncated at token limit, leaked prose like "Here is your JSON:".
+**方法 1: JSON を prompt で頼む。** 「customer、line_items、total_usd の fields を持つ JSON で返答して」。frontier models では 85 から 95 パーセントの確率で動きます。失敗の形は 6 つあります。brace の欠落、trailing comma、wrong types、hallucinated fields、token limit による truncation、「Here is your JSON:」のような prose の混入です。
 
-**Approach two: validate after generation.** Generate freely, parse, validate against schema, retry on failure. Reliable but expensive — you pay for every retry, and truncation bugs cost one extra turn per occurrence.
+**方法 2: 生成後に validate する。** 自由に生成し、parse し、schema に対して validate し、失敗したら retry します。信頼性はありますが高コストです。retry のたびに支払いが発生し、truncation bug が起きるたびに追加の 1 turn が必要になります。
 
-**Approach three: constrained decoding.** The provider enforces the schema at decode time. Invalid tokens are masked out of the sampling distribution. The output is guaranteed to parse and guaranteed to validate. Failure collapses to one mode: refusal (the model decides the input does not fit the schema).
+**方法 3: constrained decoding。** provider が decode 時に schema を強制します。invalid token は sampling distribution から mask されます。output は parse できること、validate できることが保証されます。失敗は 1 つの mode、refusal に集約されます。model が input は schema に合わないと判断する場合です。
 
-Every 2026 frontier provider ships some form of approach three.
+2026 年の frontier provider は、いずれも方法 3 の何らかの形を提供しています。
 
-- **OpenAI.** `response_format: {type: "json_schema", strict: true}` plus `refusal` in the response if the model declines.
-- **Anthropic.** Schema enforcement on `tool_use` inputs; `stop_reason: "refusal"` is not a thing, but `end_turn` with no tool call is the signal.
-- **Gemini.** `responseSchema` at request level; in 2026 Gemini ships token-level grammar constraints for selected types.
-- **Pydantic AI.** `output_type=InvoiceModel` emits a structured `RunResult` typed to `InvoiceModel`.
-- **Zod (TypeScript).** Runtime parser that validates provider output against a Zod schema; pairs with OpenAI's `beta.chat.completions.parse`.
+- **OpenAI.** `response_format: {type: "json_schema", strict: true}` と、model が拒否した場合の response 内の `refusal`。
+- **Anthropic.** `tool_use` input に対する schema enforcement。`stop_reason: "refusal"` はありませんが、tool call なしの `end_turn` が signal です。
+- **Gemini.** request level の `responseSchema`。2026 年の Gemini は selected types 向けの token-level grammar constraints を提供します。
+- **Pydantic AI.** `output_type=InvoiceModel` が、`InvoiceModel` に型付けされた structured `RunResult` を返します。
+- **Zod (TypeScript).** provider output を Zod schema に対して validate する runtime parser。OpenAI の `beta.chat.completions.parse` と組み合わせます。
 
-The common thread: declare the schema once, enforce it end to end.
+共通点は、schema を一度宣言し、end to end で強制することです。
 
-## The Concept
+## コンセプト
 
-### JSON Schema 2020-12 — the lingua franca
+### JSON Schema 2020-12 — 共通語
 
-Every provider accepts JSON Schema 2020-12. The constructs you use most:
+すべての provider が JSON Schema 2020-12 を受け付けます。最もよく使う constructs は次のとおりです。
 
-- `type`: one of `object`, `array`, `string`, `number`, `integer`, `boolean`, `null`.
-- `properties`: map of field name to subschema.
-- `required`: list of field names that must appear.
-- `enum`: closed set of allowed values.
-- `minimum` / `maximum` (numbers), `minLength` / `maxLength` / `pattern` (strings).
-- `items`: subschema applied to every array element.
-- `additionalProperties`: `false` forbids extra fields (default varies by mode).
+- `type`: `object`、`array`、`string`、`number`、`integer`、`boolean`、`null` のいずれか。
+- `properties`: field name から subschema への map。
+- `required`: 必ず出現しなければならない field names の list。
+- `enum`: 許可値の closed set。
+- `minimum` / `maximum` (numbers)、`minLength` / `maxLength` / `pattern` (strings)。
+- `items`: すべての array element に適用される subschema。
+- `additionalProperties`: `false` は extra fields を禁止します。default は mode により異なります。
 
-OpenAI strict mode adds three requirements: every property must be listed in `required`, `additionalProperties: false` everywhere, and no unresolved `$ref`. If you break these, the API returns 400 at request time.
+OpenAI strict mode は 3 つの要件を追加します。すべての property を `required` に列挙すること、すべての object に `additionalProperties: false` を置くこと、未解決の `$ref` を使わないことです。これらに違反すると、API は request 時に 400 を返します。
 
-### Pydantic, the Python binding
+### Pydantic、Python binding
 
-Pydantic v2 generates JSON Schema from dataclass-shaped models via `model_json_schema()`. Pydantic AI wraps this so you write:
+Pydantic v2 は dataclass 風の model から `model_json_schema()` で JSON Schema を生成します。Pydantic AI はこれを wrap するので、次のように書けます。
 
 ```python
 class Invoice(BaseModel):
@@ -61,91 +61,91 @@ class Invoice(BaseModel):
     total_usd: Decimal
 ```
 
-and the agent framework translates the schema into OpenAI strict mode, Anthropic `input_schema`, or Gemini `responseSchema` at the edge. The model's output comes back as a typed `Invoice` instance. Validation errors raise `ValidationError` with typed error paths.
+すると agent framework が edge で schema を OpenAI strict mode、Anthropic `input_schema`、または Gemini `responseSchema` に変換します。model の output は typed `Invoice` instance として返ります。validation errors は typed error paths を持つ `ValidationError` を raise します。
 
-### Zod, the TypeScript binding
+### Zod、TypeScript binding
 
-Zod (`z.object({customer: z.string(), ...})`) is the TS equivalent. OpenAI's Node SDK exposes `zodResponseFormat(Invoice)` which translates to the API's JSON Schema payload.
+Zod (`z.object({customer: z.string(), ...})`) は TS での同等物です。OpenAI の Node SDK は `zodResponseFormat(Invoice)` を公開しており、これが API の JSON Schema payload に変換されます。
 
 ### Refusals
 
-Strict mode cannot force the model to answer. If the input cannot fit the schema ("the email was a poem, not an invoice"), the model emits a `refusal` field containing the reason. Your code must handle this as a first-class outcome, not a failure. The refusal is also useful as a safety signal: a model asked to extract a credit card number from a protected-content email returns a refusal with the safety reason attached.
+Strict mode は model に回答を強制できません。input が schema に合わない場合、たとえば「email は invoice ではなく poem だった」場合、model は理由を含む `refusal` field を出します。code はこれを failure ではなく first-class outcome として扱う必要があります。refusal は safety signal としても有用です。protected-content email から credit card number を抽出するよう求められた model は、safety reason 付きの refusal を返します。
 
-### Constrained decoding in the open
+### open な constrained decoding
 
-Open-weights implementations use three techniques.
+open-weights implementation は 3 つの technique を使います。
 
-1. **Grammar-based decoding** (`outlines`, `guidance`, `lm-format-enforcer`): build a deterministic finite automaton from the schema; at every step, mask the logits of tokens that would violate the FSM.
-2. **Logit masking with a JSON parser**: run a streaming JSON parser in lockstep with the model; at every step, compute the valid-next-token set.
-3. **Speculative decoding with a verifier**: cheap draft model proposes tokens, verifier enforces the schema.
+1. **Grammar-based decoding** (`outlines`, `guidance`, `lm-format-enforcer`): schema から deterministic finite automaton を作り、各 step で FSM に違反する token の logits を mask します。
+2. **JSON parser を使った logit masking**: streaming JSON parser を model と lockstep で走らせ、各 step で valid-next-token set を計算します。
+3. **verifier 付き speculative decoding**: 安価な draft model が token を提案し、verifier が schema を強制します。
 
-Commercial providers pick one of these behind the scenes. The 2026 state of the art is faster than plain generation for short structured outputs and roughly the same speed for long ones.
+commercial providers は裏側でこれらのいずれかを選びます。2026 年の state of the art は、短い structured outputs では plain generation より速く、長い output ではほぼ同じ速度です。
 
-### The three failure modes
+### 3 つの failure modes
 
-1. **Parse error.** The output is not valid JSON. Cannot happen under strict mode. Can still happen on non-strict providers.
-2. **Schema violation.** The output parses but violates the schema. Cannot happen under strict mode. Common outside it.
-3. **Refusal.** The model declines. Must be handled as a typed outcome.
+1. **Parse error.** output が valid JSON ではありません。strict mode では起きません。non-strict providers では起こり得ます。
+2. **Schema violation.** output は parse できるが schema に違反しています。strict mode では起きません。それ以外ではよく起きます。
+3. **Refusal.** model が拒否します。typed outcome として扱う必要があります。
 
 ### Retry strategy
 
-When you are outside strict mode (Anthropic tool use, non-strict OpenAI, older Gemini), the recovery pattern is:
+strict mode の外側、つまり Anthropic tool use、non-strict OpenAI、古い Gemini では、recovery pattern は次のとおりです。
 
-```
+```text
 generate -> parse -> validate -> if fail, inject error and retry, max 3x
 ```
 
-One retry is usually enough. Three retries catches weak-model flakes. Beyond three is a sign of a bad schema: the model cannot satisfy it for some inputs, and the prompt or the schema needs fixing.
+通常は 1 回の retry で十分です。3 回の retry は weak model の不安定さを拾えます。3 回を超えるなら bad schema の兆候です。model が一部の input に対して満たせないため、prompt または schema の修正が必要です。
 
 ### Small-model support
 
-Constrained decoding works on small models. A 3B-parameter open model with grammar enforcement out-performs a 70B-parameter model with raw prompting on structured tasks. This is the main reason structured outputs matter for production: it decouples reliability from model size.
+Constrained decoding は small models でも機能します。grammar enforcement を使う 3B-parameter open model は、structured tasks では raw prompting の 70B-parameter model を上回ります。これが structured outputs が production で重要な主因です。reliability を model size から切り離せるからです。
 
-## Use It
+## 使ってみる
 
-`code/main.py` ships a minimal JSON Schema 2020-12 validator in stdlib (types, required, enum, min/max, pattern, items, additionalProperties). It wraps an `Invoice` schema and runs a fake LLM output through the validator, demonstrating parse error, schema violation, and refusal paths. Swap the fake output for any provider's real response in production.
+`code/main.py` は stdlib だけで最小の JSON Schema 2020-12 validator を提供します (types、required、enum、min/max、pattern、items、additionalProperties)。`Invoice` schema を wrap し、fake LLM output を validator に通して、parse error、schema violation、refusal paths を示します。production では fake output を任意の provider の real response に差し替えてください。
 
-What to look at:
+見るべき点:
 
-- The validator returns a typed `[ValidationError]` list with path and message. That is the shape you want surfaced to the retry prompt.
-- The refusal branch does NOT retry. It logs and returns a typed refusal. Phase 14 · 09 uses refusals as a safety signal.
-- The `additionalProperties: false` check fires on the adversarial test input, showing why strict mode shuts the door on hallucinated fields.
+- validator は path と message を持つ typed `[ValidationError]` list を返します。retry prompt に見せたい shape はこれです。
+- refusal branch は retry しません。log して typed refusal を返します。Phase 14 · 09 は refusals を safety signal として使います。
+- adversarial test input では `additionalProperties: false` check が発火し、strict mode が hallucinated fields を締め出す理由を示します。
 
-## Ship It
+## 出荷物
 
-This lesson produces `outputs/skill-structured-output-designer.md`. Given a free-text extraction target (invoices, support tickets, resumes, etc.), the skill produces a JSON Schema 2020-12 that is strict-mode-compatible and a Pydantic model that mirrors it, with typed refusal and retry handling stubbed in.
+このレッスンは `outputs/skill-structured-output-designer.md` を生成します。free-text extraction target (invoices、support tickets、resumes など) が与えられると、この skill は strict-mode-compatible な JSON Schema 2020-12 と、それを mirror する Pydantic model を作り、typed refusal と retry handling の stub も含めます。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Add a fourth test case whose `total_usd` is a negative number. Confirm the validator rejects it with the `minimum` constraint path.
+1. `code/main.py` を実行してください。`total_usd` が negative number である 4 つ目の test case を追加します。validator が `minimum` constraint path で拒否することを確認してください。
 
-2. Extend the validator to support `oneOf` with a discriminator. The common case: `line_item` is either a product or a service, tagged by `kind`. Strict mode has subtle rules here; check OpenAI's structured outputs guide.
+2. discriminator 付きの `oneOf` を support するよう validator を拡張してください。よくある case は、`line_item` が product または service で、`kind` で tag されるものです。strict mode にはここで微妙な rules があります。OpenAI の structured outputs guide を確認してください。
 
-3. Write the same Invoice schema as a Pydantic BaseModel and compare `model_json_schema()` output to your hand-rolled schema. Identify the one field Pydantic sets by default that the hand-rolled version omits.
+3. 同じ Invoice schema を Pydantic BaseModel として書き、`model_json_schema()` output を手書き schema と比較してください。Pydantic が default で設定し、手書き版では省略されている field を 1 つ特定してください。
 
-4. Measure refusal rates. Construct ten inputs that should not be extractable (a song lyric, a math proof, a blank email) and run them through a real provider with strict mode. Count refusals vs hallucinated outputs. This is your ground truth for refusal-aware retries.
+4. refusal rates を測ってください。抽出できるべきではない input (song lyric、math proof、blank email) を 10 個作り、strict mode の real provider に通します。refusals と hallucinated outputs を数えてください。これが refusal-aware retries の ground truth になります。
 
-5. Read OpenAI's structured outputs guide top to bottom. Identify the one construct it explicitly forbids in strict mode that plain JSON Schema allows. Then design a schema that uses the forbidden construct non-essentially and refactor it to be strict-compatible.
+5. OpenAI の structured outputs guide を最初から最後まで読んでください。plain JSON Schema では許されるが、strict mode では明示的に禁止される construct を 1 つ特定します。その forbidden construct を本質的ではない形で使う schema を設計し、strict-compatible になるよう refactor してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| JSON Schema 2020-12 | "The schema spec" | IETF-draft schema dialect every modern provider speaks |
-| Strict mode | "Guaranteed schema" | OpenAI flag that enforces schema via constrained decoding |
-| Constrained decoding | "Logit masking" | Decode-time enforcement that masks invalid next-tokens |
-| Refusal | "Model declines" | Typed outcome when input cannot fit the schema |
-| Parse error | "Invalid JSON" | Output did not parse as JSON; impossible under strict |
-| Schema violation | "Wrong shape" | Parsed but violated types / required / enum / range |
-| `additionalProperties: false` | "No extras allowed" | Forbids unknown fields; required in OpenAI strict |
-| Pydantic BaseModel | "Typed output" | Python class that emits and validates JSON Schema |
-| Zod schema | "TypeScript output type" | TS runtime schema for provider output validation |
-| Grammar enforcement | "Open-weights constrained decode" | FSM-based logit masking, as in outlines / guidance |
+| JSON Schema 2020-12 | 「schema spec」 | すべての modern provider が話す IETF-draft schema dialect |
+| Strict mode | 「guaranteed schema」 | constrained decoding により schema を強制する OpenAI flag |
+| Constrained decoding | 「logit masking」 | invalid next-tokens を mask する decode-time enforcement |
+| Refusal | 「model declines」 | input が schema に合わないときの typed outcome |
+| Parse error | 「invalid JSON」 | output が JSON として parse できないこと。strict では不可能 |
+| Schema violation | 「wrong shape」 | parse はできたが types / required / enum / range に違反した状態 |
+| `additionalProperties: false` | 「no extras allowed」 | unknown fields を禁止する。OpenAI strict では必須 |
+| Pydantic BaseModel | 「typed output」 | JSON Schema を emit し validate する Python class |
+| Zod schema | 「TypeScript output type」 | provider output validation 用の TS runtime schema |
+| Grammar enforcement | 「open-weights constrained decode」 | outlines / guidance などの FSM-based logit masking |
 
-## Further Reading
+## 参考資料
 
-- [OpenAI — Structured outputs](https://platform.openai.com/docs/guides/structured-outputs) — strict mode, refusals, and schema requirements
-- [OpenAI — Introducing structured outputs](https://openai.com/index/introducing-structured-outputs-in-the-api/) — August 2024 launch post explaining the decoding guarantee
-- [Pydantic AI — Output](https://ai.pydantic.dev/output/) — typed output_type bindings that serialize to each provider
-- [JSON Schema — 2020-12 release notes](https://json-schema.org/draft/2020-12/release-notes) — the canonical spec
-- [Microsoft — Structured outputs in Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/structured-outputs) — enterprise deployment notes and strict-mode caveats
+- [OpenAI — Structured outputs](https://platform.openai.com/docs/guides/structured-outputs) — strict mode、refusals、schema requirements
+- [OpenAI — Introducing structured outputs](https://openai.com/index/introducing-structured-outputs-in-the-api/) — decoding guarantee を説明する 2024 年 8 月の launch post
+- [Pydantic AI — Output](https://ai.pydantic.dev/output/) — 各 provider に serialize される typed `output_type` bindings
+- [JSON Schema — 2020-12 release notes](https://json-schema.org/draft/2020-12/release-notes) — 正典仕様
+- [Microsoft — Structured outputs in Azure OpenAI](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/structured-outputs) — enterprise deployment notes と strict-mode caveats

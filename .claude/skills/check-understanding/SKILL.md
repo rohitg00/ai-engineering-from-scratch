@@ -1,32 +1,32 @@
 ---
 name: check-understanding
 version: 1.0.0
-description: Phase quiz for AI Engineering from Scratch. Trigger with "quiz me", "test phase", "check my understanding", "do I know phase 3", or `/check-understanding <phase>`.
+description: AI Engineering from Scratch のフェーズ別理解度クイズ。「quiz me」「test phase」「check my understanding」「do I know phase 3」または `/check-understanding <phase>` で起動します。
 ---
 
-# Check Understanding
+# 理解度チェック
 
-Test your knowledge of a completed phase from the AI Engineering from Scratch course.
+AI Engineering from Scratch コースで完了したフェーズの理解度を確認します。
 
-## Activation
+## 起動条件
 
-This skill activates when the user says things like:
-- `/check-understanding 3` or `/check-understanding deep-learning`
-- "quiz me on phase 2"
-- "test phase 1"
-- "check my understanding of transformers"
-- "do I know phase 3"
-- "am I ready for the next phase"
+このスキルは、ユーザーが次のように入力したときに起動します。
+- `/check-understanding 3` または `/check-understanding deep-learning`
+- "phase 2 のクイズを出して"
+- "phase 1 をテストして"
+- "transformers の理解度を確認して"
+- "phase 3 は身についている？"
+- "次のフェーズに進める？"
 
-## Input
+## 入力
 
-Accepts a phase number (0-19) or a phase name as argument. If no argument is provided, ask the user which phase they want to be tested on by listing all 20 phases.
+引数としてフェーズ番号（0-19）またはフェーズ名を受け取ります。引数がない場合は、20個すべてのフェーズを一覧表示し、どのフェーズでテストしたいかをユーザーに尋ねます。
 
-## Phase Map
+## フェーズ対応表
 
-Map the argument to the correct phase directory under `phases/`:
+引数を `phases/` 配下の正しいフェーズディレクトリに対応付けます。
 
-| Input | Directory | Phase Name |
+| 入力 | ディレクトリ | フェーズ名 |
 |-------|-----------|------------|
 | 0, setup, tooling | `00-setup-and-tooling` | Setup & Tooling |
 | 1, math, math-foundations | `01-math-foundations` | Math Foundations |
@@ -49,110 +49,110 @@ Map the argument to the correct phase directory under `phases/`:
 | 18, ethics, safety, alignment | `18-ethics-safety-alignment` | Ethics, Safety & Alignment |
 | 19, capstone, projects | `19-capstone-projects` | Capstone Projects |
 
-## Procedure
+## 手順
 
-### Step 1: Resolve the Phase
+### Step 1: フェーズを解決する
 
-Parse the argument. If it is a number, validate it is between 0 and 19 inclusive. If the number is out of range, tell the user: "Phase [N] does not exist. Valid phases are 0-19." and show the full list for them to pick from. If it is a name or keyword, look it up in the Phase Map above. If the keyword does not match any entry in the map, tell the user: "Unknown phase '[keyword]'. Pick from the list below:" and present all 20 phases. If no argument is provided, ask the user to pick from the full list.
+引数を解析します。数値の場合は、0以上19以下であることを検証します。範囲外なら、ユーザーに「フェーズ [N] は存在しません。有効なフェーズは 0-19 です。」と伝え、選べるように全フェーズの一覧を表示します。名前またはキーワードの場合は、上のフェーズ対応表で照合します。キーワードがどの項目にも一致しない場合は、「不明なフェーズ '[keyword]' です。以下の一覧から選んでください:」と伝え、20個すべてのフェーズを提示します。引数がない場合は、全一覧から選ぶようユーザーに尋ねます。
 
-### Step 2: Read the Phase Content
+### Step 2: フェーズの内容を読む
 
-Use Glob to find all lesson directories under `phases/<phase-dir>/`. For each lesson, read the `docs/en.md` file. These documents contain the teaching material you will generate questions from.
+Glob を使って `phases/<phase-dir>/` 配下のすべてのレッスンディレクトリを見つけます。各レッスンについて `docs/en.md` ファイルを読みます。これらのドキュメントには、問題作成の根拠となる教材が含まれています。
 
-Read as many lesson docs as needed to cover the full breadth of the phase. If a phase has many lessons (15+), prioritize reading a representative spread: first few, middle, and last few.
+フェーズ全体を幅広くカバーするために必要な数のレッスンドキュメントを読みます。レッスン数が多いフェーズ（15以上）の場合は、序盤・中盤・終盤から代表的なものを優先して読みます。
 
-### Step 3: Generate 8 Questions
+### Step 3: 8問を作成する
 
-Create exactly 8 multiple-choice questions drawn from the lesson content you just read:
+直前に読んだレッスン内容に基づいて、選択式問題をちょうど8問作成します。
 
-**Questions 1-4: Conceptual (What/Why)**
-These test understanding of ideas, definitions, and reasoning. Examples:
-- "What is the purpose of X?"
-- "Why does Y happen when Z?"
-- "Which statement best describes the relationship between A and B?"
-- "What problem does X solve?"
+**問題1-4: 概念理解（What/Why）**
+考え方、定義、理由付けの理解を確認します。例:
+- "X の目的は何ですか？"
+- "Z のときに Y が起こるのはなぜですか？"
+- "A と B の関係を最もよく表している説明はどれですか？"
+- "X はどの問題を解決しますか？"
 
-**Questions 5-8: Practical (How/Build)**
-These test applied knowledge and implementation awareness. Examples:
-- "How would you implement X?"
-- "Which approach correctly solves Y?"
-- "What is the correct order of steps to build Z?"
-- "If you observe X during training, what should you do?"
+**問題5-8: 実践理解（How/Build）**
+応用知識と実装上の理解を確認します。例:
+- "X をどのように実装しますか？"
+- "Y を正しく解決するアプローチはどれですか？"
+- "Z を構築する正しい手順はどれですか？"
+- "学習中に X が観測された場合、何をすべきですか？"
 
-Each question must have 3 or 4 answer options labeled A, B, C (and optionally D). Exactly one option is correct. The wrong options should be plausible but clearly incorrect to someone who studied the material.
+各問題には、A、B、C（必要ならD）でラベル付けした3個または4個の選択肢を用意します。正解は必ず1つだけにします。不正解の選択肢はもっともらしく見えるが、教材を学習した人には明確に誤りだとわかるものにします。
 
-Tag each question with the specific lesson it draws from (e.g., "Lesson 03: Matrix Transformations").
+各問題には、根拠にした具体的なレッスンをタグとして付けます（例: "Lesson 03: Matrix Transformations"）。
 
-### Step 4: Present Questions One at a Time
+### Step 4: 問題を1問ずつ提示する
 
-Use the AskUserQuestion tool (or equivalent interactive prompt) to present each question individually. Format:
-
-```
-Question 1/8 (Conceptual) -- from Lesson 03: Matrix Transformations
-
-What is the geometric interpretation of an eigenvalue?
-
-A) The angle of rotation applied by the matrix
-B) The factor by which the eigenvector is scaled during transformation
-C) The determinant of the transformation matrix
-D) The rank of the matrix after transformation
-```
-
-Wait for the user's answer before moving to the next question.
-
-### Step 5: Track and Score
-
-Keep a running tally:
-- Total correct out of 8
-- For each wrong answer, record: the question number, the user's answer, the correct answer, and which lesson it came from
-
-### Step 6: Show Results
-
-After all 8 questions, display the score and grade:
-
-**7-8 correct: Mastered**
-If the phase is 19 (Capstone Projects): "You have mastered the final phase. Congratulations, you have completed the entire curriculum."
-Otherwise: "You have a strong grasp of Phase N. You are ready to move on to Phase N+1: [next phase name]."
-
-**5-6 correct: Almost**
-"Solid foundation. Review these specific areas before moving on:"
-Then list the lessons tied to the missed questions.
-
-**3-4 correct: Developing**
-"You are building understanding but need to revisit some lessons:"
-Then list each missed question with the lesson to re-read.
-
-**0-2 correct: Start Over**
-"This phase needs more time. Work through the lessons again from the beginning, focusing on:"
-Then list all missed topics.
-
-### Step 7: Wrong Answer Breakdown
-
-For every question the user got wrong, show:
+AskUserQuestion ツール（または同等の対話プロンプト）を使い、各問題を個別に提示します。形式:
 
 ```
-Question N: [question text, abbreviated]
-Your answer: B
-Correct answer: C -- [the correct option text]
-Why: [1-2 sentence explanation of why C is correct]
-Review: Lesson NN -- [lesson name] (phases/<phase-dir>/NN-<lesson-slug>/docs/en.md)
+問題 1/8（概念理解）-- Lesson 03: Matrix Transformations より
+
+固有値の幾何学的な意味は何ですか？
+
+A) 行列によって適用される回転角
+B) 変換中に固有ベクトルが拡大・縮小される倍率
+C) 変換行列の行列式
+D) 変換後の行列のランク
 ```
 
-### Step 8: What Next?
+次の問題に進む前に、ユーザーの回答を待ちます。
 
-End by offering three choices:
+### Step 5: 記録して採点する
 
-1. **Retake this quiz** -- generate a fresh set of 8 questions from the same phase
-2. **Try another phase** -- pick a different phase to test
-3. **Explain a topic** -- ask about any concept from the questions you missed
+進行中の集計を保持します。
+- 8問中の正解数
+- 各不正解について、問題番号、ユーザーの回答、正解、根拠となったレッスンを記録
 
-Wait for the user's choice and act accordingly.
+### Step 6: 結果を表示する
 
-## Rules
+8問すべてが終わったら、スコアと評価を表示します。
 
-- Avoid repeating questions on retakes until the question pool is exhausted. Once exhausted, reshuffle or rephrase questions for subsequent retakes.
-- Questions must be directly grounded in the lesson docs, not general knowledge.
-- Do not show the correct answer until after the user responds.
-- Keep question text concise. One or two sentences max.
-- Wrong options must be plausible. No joke answers.
-- If a phase has no lesson docs written yet (no `en.md` files found), tell the user: "Phase N does not have lesson content yet. Pick a completed phase to quiz on."
+**7-8問正解: 習得済み**
+フェーズが19（Capstone Projects）の場合: "最終フェーズを習得しています。おめでとうございます。カリキュラム全体を完了しました。"
+それ以外の場合: "Phase N をしっかり理解しています。Phase N+1: [next phase name] に進む準備ができています。"
+
+**5-6問正解: あと少し**
+"土台はできています。次に進む前に、次の領域を確認しましょう:"
+続けて、不正解だった問題に対応するレッスンを一覧表示します。
+
+**3-4問正解: 発展途上**
+"理解は積み上がっていますが、いくつかのレッスンを復習する必要があります:"
+続けて、各不正解問題と読み直すべきレッスンを一覧表示します。
+
+**0-2問正解: 最初から復習**
+"このフェーズにはもう少し時間が必要です。次の点に集中しながら、レッスンを最初からやり直しましょう:"
+続けて、理解できていなかったすべてのトピックを一覧表示します。
+
+### Step 7: 不正解の内訳
+
+ユーザーが間違えた各問題について、次を表示します。
+
+```
+問題 N: [問題文の要約]
+あなたの回答: B
+正解: C -- [正しい選択肢の文]
+理由: [C が正しい理由を1-2文で説明]
+復習: Lesson NN -- [lesson name] (phases/<phase-dir>/NN-<lesson-slug>/docs/en.md)
+```
+
+### Step 8: 次にすること
+
+最後に、次の3つの選択肢を提示します。
+
+1. **このクイズを再受験する** -- 同じフェーズから新しい8問を作成する
+2. **別のフェーズを試す** -- テストする別フェーズを選ぶ
+3. **トピックを説明してもらう** -- 間違えた問題に出てきた概念について質問する
+
+ユーザーの選択を待ち、それに応じて対応します。
+
+## ルール
+
+- 再受験では、問題プールを使い切るまで同じ問題を繰り返さないでください。使い切った後は、以降の再受験で問題をシャッフルするか言い換えます。
+- 問題は一般知識ではなく、必ずレッスンドキュメントに直接基づいて作成してください。
+- ユーザーが回答するまで正解を表示しないでください。
+- 問題文は簡潔にします。最大でも1〜2文にしてください。
+- 不正解の選択肢はもっともらしくしてください。冗談の選択肢は避けます。
+- そのフェーズにまだレッスンドキュメントがない場合（`en.md` ファイルが見つからない場合）は、ユーザーに「Phase N にはまだレッスン内容がありません。クイズを受けるには、完了済みのフェーズを選んでください。」と伝えます。

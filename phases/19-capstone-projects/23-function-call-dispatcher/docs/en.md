@@ -1,22 +1,22 @@
 # Function Call Dispatcher
 
-> The dispatcher is where the harness pays for every promise the schema made. Timeouts, retries, dedupe, error mapping. All on one seam.
+> dispatcher は、schema が約束したすべてのことに harness が支払いをする場所です。timeout、retry、dedupe、error mapping。すべてを 1 つの境界に集めます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 13 lessons 01-07, Phase 14 lesson 01
+**所要時間:** 約90分
 
-## Learning Objectives
-- Wrap a tool handler in a per-call timeout that returns a typed error instead of hanging the loop.
-- Apply exponential backoff retry with jitter and a maximum attempt count.
-- Deduplicate retries on an idempotency key so a retry that races with a slow original does not run twice.
-- Map handler exceptions and transport faults onto a single error envelope the harness loop already understands.
-- Bound parallel dispatch with a concurrency limit so a fan-out of forty tool calls does not exhaust the event loop.
+## 学習目標
+- tool handler を per-call timeout で wrap し、loop を hang させる代わりに typed error を返す。
+- jitter と maximum attempt count つきの exponential backoff retry を適用する。
+- idempotency key で retry を deduplicate し、遅い original と競合した retry が二重実行されないようにする。
+- handler exception と transport fault を、harness loop がすでに理解している単一の error envelope に map する。
+- 40 個の tool call の fan-out が event loop を枯渇させないよう、parallel dispatch を concurrency limit で bound する。
 
-## Where the dispatcher sits
+## dispatcher の位置
 
-Between the harness loop (lesson twenty) and the tool registry (lesson twenty-one). The transport (lesson twenty-two) feeds the loop. The loop hands a tool call to the dispatcher. The dispatcher calls the registry, runs the handler, and returns either a result or a JSON-RPC-shaped error envelope.
+harness loop（lesson 20）と tool registry（lesson 21）の間です。transport（lesson 22）が loop に入力します。loop は tool call を dispatcher に渡します。dispatcher は registry を呼び、handler を実行し、result または JSON-RPC 形式の error envelope を返します。
 
 ```mermaid
 flowchart TD
@@ -34,17 +34,17 @@ flowchart TD
     disp -->|Ok result or DispatchError| loop
 ```
 
-The dispatcher is the only layer that knows about timers, retries, and idempotency. The loop does not. The registry does not. The handler does not. That isolation is the point.
+timer、retry、idempotency を知る唯一の layer が dispatcher です。loop は知りません。registry も知りません。handler も知りません。この分離が狙いです。
 
 ## Timeouts
 
-Each tool has a default timeout. The registry record carries `timeout_ms`. The dispatcher overrides it from a per-call override when the harness passes one. We use `asyncio.wait_for`. On timeout, the handler task is cancelled and the dispatcher returns `DispatchError(kind="timeout")`.
+各 tool には default timeout があります。registry record が `timeout_ms` を持ちます。harness が per-call override を渡した場合、dispatcher はそれで上書きします。ここでは `asyncio.wait_for` を使います。timeout 時には handler task が cancel され、dispatcher は `DispatchError(kind="timeout")` を返します。
 
-A timeout is not a retryable error by default for non-idempotent tools. A `db.write` that timed out may or may not have committed. Retrying duplicates the write. The dispatcher honors the `idempotent` flag from the registry record. Idempotent tools retry. Non-idempotent tools do not.
+timeout は、non-idempotent tool では default で retryable error ではありません。timeout した `db.write` は commit 済みかもしれないし未 commit かもしれません。retry は write を duplicate します。dispatcher は registry record の `idempotent` flag を尊重します。idempotent tool は retry します。non-idempotent tool は retry しません。
 
-## Retries with exponential backoff
+## exponential backoff つき retry
 
-The retry policy is three attempts maximum. Backoff is exponential with jitter.
+retry policy は最大 3 attempts です。backoff は jitter つき exponential です。
 
 ```text
 attempt 1  -> delay 0
@@ -52,21 +52,21 @@ attempt 2  -> delay 0.1s * (1 + random[0..0.5])
 attempt 3  -> delay 0.4s * (1 + random[0..0.5])
 ```
 
-Only `timeout` and `transient` errors retry. A `schema` error, a `not_found`, or an `internal` error does not retry. Schema errors are deterministic. Retrying does not change the outcome and burns the budget.
+retry するのは `timeout` と `transient` error だけです。`schema` error、`not_found`、`internal` error は retry しません。schema error は deterministic です。retry しても結果は変わらず budget を燃やすだけです。
 
-The retry loop respects the budget from the harness. If the caller's budget has zero remaining tool calls, the dispatcher fails fast on the first attempt and returns `kind="budget_exceeded"`.
+retry loop は harness の budget を尊重します。caller の残り tool call budget が 0 なら、dispatcher は初回 attempt で fail fast し、`kind="budget_exceeded"` を返します。
 
 ## Idempotency key dedupe
 
-A retry that fires while the original is still in flight is a real production bug. The first call hangs at four point nine seconds (just under the timeout). The retry fires at five seconds. Now two requests race against the same backend. If the tool is `payments.charge`, you charged twice.
+original がまだ in-flight の間に retry が発火するのは、現実に production bug です。最初の call は 4.9 秒（timeout 直前）で hang します。5 秒で retry が発火します。すると同じ backend に対して 2 つの request が競争します。tool が `payments.charge` なら二重課金です。
 
-The dispatcher accepts an optional `idempotency_key`. If the same key is in flight when a call arrives, the dispatcher waits on the in-flight future and returns its result. The cache holds keys for sixty seconds after completion to absorb late retries.
+dispatcher は optional な `idempotency_key` を受け取ります。同じ key が in-flight のときに call が来たら、dispatcher は in-flight future を待ち、その result を返します。cache は completion 後 60 秒 key を保持し、遅れて来た retry を吸収します。
 
-The key is the caller's responsibility. The harness derives it from the planner: `f"{step_id}:{tool_name}:{hash(args)}"`. The dispatcher does not invent keys, because deriving a key from arguments alone makes two semantically-different calls look the same.
+key は caller の責任です。harness は planner から `f"{step_id}:{tool_name}:{hash(args)}"` を導きます。dispatcher は key を発明しません。引数だけから key を導くと、意味的に異なる 2 つの call が同じに見えるからです。
 
 ## Error envelope
 
-A failed dispatch returns a single shape.
+dispatch の失敗は単一の shape を返します。
 
 ```text
 DispatchError
@@ -76,15 +76,15 @@ DispatchError
   jsonrpc_code: int   (one of -32601, -32602, -32603)
 ```
 
-The harness loop maps `kind` to the next state. `schema` and `not_found` go to `on_error` and trigger a replan. `timeout` and `transient` go to `on_error` and may or may not replan depending on attempts. `budget_exceeded` triggers `on_budget_exceeded`.
+harness loop は `kind` を次の state に map します。`schema` と `not_found` は `on_error` に進み、replan を trigger します。`timeout` と `transient` は `on_error` に進み、attempt 数に応じて replan するかどうかが決まります。`budget_exceeded` は `on_budget_exceeded` を trigger します。
 
-## Concurrency limit on fan-out
+## fan-out の concurrency limit
 
-`gather(*calls)` runs all coroutines simultaneously. With forty tool calls, that is forty open sockets or forty subprocess pipes. Most backends do not like forty parallel connections from one client.
+`gather(*calls)` はすべての coroutine を同時に走らせます。40 個の tool call なら、40 個の open socket または 40 本の subprocess pipe です。ほとんどの backend は 1 client から 40 parallel connection を受けるのを好みません。
 
-The dispatcher wraps `gather` in a semaphore. Default concurrency limit is eight. Each call acquires the semaphore before dispatching and releases on completion. The caller sees `gather`-shaped output but the actual scheduling is bounded.
+dispatcher は `gather` を semaphore で包みます。default concurrency limit は 8 です。各 call は dispatch 前に semaphore を acquire し、completion 時に release します。caller からは `gather` 形の output に見えますが、実際の scheduling は bound されています。
 
-## Flow for one call
+## 1 call の flow
 
 ```mermaid
 flowchart TD
@@ -120,16 +120,16 @@ flowchart TD
     retry --> attempt
 ```
 
-## How to read the code
+## code の読み方
 
-`code/main.py` defines `Dispatcher`, `DispatchError`, and `TransientError`. The dispatcher takes a registry on construction. The async `dispatch(name, args, ...)` is the only entry point. Per-attempt timeouts are applied inline inside `_run_with_retries` using `asyncio.wait_for`. `gather_bounded(calls)` runs many dispatches with the concurrency limit.
+`code/main.py` は `Dispatcher`, `DispatchError`, `TransientError` を定義します。dispatcher は construction 時に registry を受け取ります。async `dispatch(name, args, ...)` が唯一の entry point です。per-attempt timeout は `_run_with_retries` の中で `asyncio.wait_for` を使って inline に適用されます。`gather_bounded(calls)` は concurrency limit つきで複数の dispatch を走らせます。
 
-`code/tests/test_dispatcher.py` covers timeout firing, retry on transient, no-retry on schema error, idempotency dedupe (two concurrent calls with the same key collapse to one handler invocation), and concurrency limiting (the semaphore in action).
+`code/tests/test_dispatcher.py` は timeout の発火、transient 時の retry、schema error で retry しないこと、idempotency dedupe（同じ key の concurrent call 2 つが handler invocation 1 回に畳まれる）、concurrency limiting（semaphore が効くこと）を cover します。
 
-The tests use `asyncio.sleep(0)` and deterministic `Counter`-based handlers, so they finish in milliseconds and do not depend on wall-clock timing.
+test は `asyncio.sleep(0)` と deterministic な `Counter` ベースの handler を使うので、millisecond 単位で終わり、wall-clock timing に依存しません。
 
-## Going further
+## さらに進む
 
-Two extensions production dispatchers add. First, structured logging at every transition (which the loop's event stream already gives you, but the dispatcher should also emit `dispatch.attempt` and `dispatch.retry` events). Second, circuit breakers: after N failures in a window, a tool gets a cool-down period where dispatches return immediately with `kind="circuit_open"` instead of attempting the handler. Both fit on top of this dispatcher without changing the contract.
+production dispatcher が追加する extension は 2 つです。1 つ目は、すべての transition で structured logging することです（loop の event stream がすでに提供しますが、dispatcher も `dispatch.attempt` と `dispatch.retry` event を emit するべきです）。2 つ目は circuit breaker です。window 内で N 回失敗したら、tool は cool-down 期間に入り、dispatch は handler を試さずに `kind="circuit_open"` を即返します。どちらも contract を変えずにこの dispatcher の上へ載せられます。
 
-Lesson twenty-four glues the dispatcher to a plan-and-execute agent so you see all four pieces in motion.
+lesson 24 は dispatcher を plan-and-execute agent に接着し、4 つの piece が動くところを見せます。

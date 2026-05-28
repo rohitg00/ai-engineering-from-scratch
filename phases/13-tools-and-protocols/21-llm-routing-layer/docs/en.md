@@ -1,44 +1,44 @@
-# LLM Routing Layer — LiteLLM, OpenRouter, Portkey
+# LLM Routing Layer — LiteLLM、OpenRouter、Portkey
 
-> Provider lock-in is expensive. Different tool-calling workloads suit different models. Routing gateways give one API surface, retries, failover, cost tracking, and guardrails. Three archetypes dominate 2026: LiteLLM (open-source self-hosted), OpenRouter (managed SaaS), Portkey (production-grade, open-sourced in March 2026). This lesson names the decision criteria and walks a stdlib routing gateway.
+> Provider lock-inは高くつきます。tool-calling workloadごとに向いたmodelは異なります。Routing gatewaysは、1つのAPI surface、retries、failover、cost tracking、guardrailsを提供します。2026年に支配的な3 archetypesは、LiteLLM（open-source self-hosted）、OpenRouter（managed SaaS）、Portkey（production-grade、2026年3月にopen-sourced）です。このレッスンではdecision criteriaを整理し、stdlib routing gatewayを歩きます。
 
-**Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
-**Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python (stdlib, routing + failover + cost tracker)
+**前提条件:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
+**所要時間:** ~45分
 
-## Learning Objectives
+## 学習目標
 
-- Distinguish self-hosted, managed, and production-grade routing options.
-- Implement a fallback chain that retries on provider failures in a defined priority order.
-- Track per-request cost and token usage across providers.
-- Decide between LiteLLM, OpenRouter, and Portkey for a given production constraint.
+- self-hosted、managed、production-grade routing optionsを区別する。
+- provider failure時に定義済みpriority orderでretryするfallback chainを実装する。
+- providersをまたいでrequestごとのcostとtoken usageをtrackする。
+- production constraintに応じてLiteLLM、OpenRouter、Portkeyを選ぶ。
 
-## The Problem
+## 問題
 
-Scenarios where provider routing matters:
+provider routingが重要になるscenario:
 
-1. **Cost.** Claude Sonnet costs 3x what Haiku costs. For a triage task, Haiku is enough; for a synthesis task, Sonnet is worth it. Route per-request.
+1. **Cost。** Claude SonnetはHaikuの3倍costがかかります。triage taskにはHaikuで十分、synthesis taskにはSonnetの価値があります。requestごとにrouteします。
 
-2. **Failover.** OpenAI has a bad hour. Every request fails. You want automatic fallback to Anthropic without redeploying.
+2. **Failover。** OpenAIが1時間不調になる。すべてのrequestが失敗する。redeployせずAnthropicへautomatic fallbackしたい。
 
-3. **Latency.** A live chat UI needs fast time-to-first-token. A batch summarizer does not. Route by latency SLA.
+3. **Latency。** live chat UIにはfast time-to-first-tokenが必要です。batch summarizerには不要です。latency SLAでrouteします。
 
-4. **Compliance.** EU users must stay in EU regions. Route by region.
+4. **Compliance。** EU usersはEU regions内に留める必要があります。regionでrouteします。
 
-5. **Experimentation.** A/B two models on the same workload. Route by test bucket.
+5. **Experimentation。** 同じworkloadで2 modelsをA/Bします。test bucketでrouteします。
 
-Hand-coding all of this per integration is repetitive. A routing gateway gives one OpenAI-compatible API and handles the rest.
+これらをintegrationごとにhand-codeするのは反復的です。routing gatewayは1つのOpenAI-compatible APIを提供し、残りを処理します。
 
-## The Concept
+## コンセプト
 
 ### OpenAI-compatible proxy shape
 
-Everyone speaks OpenAI-shape. The routing gateway exposes `/v1/chat/completions`, accepts the OpenAI schema, and internally proxies to Anthropic / Gemini / Cohere / Ollama / anything. The client does not care.
+誰もがOpenAI-shapeを話します。routing gatewayは`/v1/chat/completions`を公開し、OpenAI schemaを受け取り、内部でAnthropic / Gemini / Cohere / Ollama / その他へproxyします。clientは気にしません。
 
 ### Model aliases
 
-Instead of `claude-3-5-sonnet-20251022`, your code says `our_smart_model`. The gateway maps aliases to real models. When Anthropic ships Claude 4, you change the alias server-side; your code does not touch a thing.
+code内で`claude-3-5-sonnet-20251022`と書く代わりに、`our_smart_model`と書きます。gatewayはaliasをreal modelへmapします。AnthropicがClaude 4を出したら、server-sideでaliasを変えるだけです。codeには触りません。
 
 ### Fallback chains
 
@@ -49,99 +49,99 @@ on 5xx: google/gemini-1.5-pro
 on 5xx: refuse
 ```
 
-Gateways define this in a config. Retries count against a budget so fallback cascades do not explode cost.
+gatewaysはこれをconfigで定義します。retriesにはbudgetを設け、fallback cascadeでcostが爆発しないようにします。
 
 ### Semantic caching
 
-Identical-or-near-identical prompts hit a cache instead of the provider. Savings on repeated agent loops can be 30 to 60 percent. Keys are embedding-based; near-identical prompts share a cache slot.
+同一またはほぼ同一のpromptsはproviderへ送らずcache hitにします。繰り返しagent loopsでは30-60%のsavingになり得ます。keysはembedding-basedで、near-identical promptsは同じcache slotを共有します。
 
 ### Guardrails
 
 Gateway-level:
 
-- **PII redaction.** Regex or ML-based pass before sending prompts.
-- **Policy violations.** Reject prompts with prohibited content.
-- **Output filters.** Scrub completions for leaks.
+- **PII redaction。** prompts送信前にregexまたはML-based passを行う。
+- **Policy violations。** prohibited contentを含むpromptsをrejectする。
+- **Output filters。** completionsからleaksをscrubする。
 
-Portkey and Kong both ship opinionated guardrails. LiteLLM leaves them optional.
+PortkeyとKongはopinionated guardrailsを提供します。LiteLLMではoptionalです。
 
 ### Per-key rate limits
 
-One API key = one team. Per-key budgets prevent one team from consuming the shared quota. Most gateways support this.
+1 API key = 1 teamです。keyごとのbudgetsにより、1 teamがshared quotaを使い切るのを防ぎます。ほとんどのgatewaysがsupportします。
 
 ### Self-hosted vs managed trade-offs
 
 | Factor | LiteLLM (self-hosted) | OpenRouter (managed) | Portkey (production) |
 |--------|----------------------|----------------------|----------------------|
 | Code | Open source, Python | Managed SaaS | Open source (Mar 2026) + managed |
-| Setup | Deploy a proxy | Sign up | Either |
+| Setup | proxyをdeploy | sign up | どちらも可 |
 | Providers | 100+ | 300+ | 100+ |
-| Billing | Your own keys | OpenRouter credits | Your own keys |
+| Billing | 自分のkeys | OpenRouter credits | 自分のkeys |
 | Observability | OpenTelemetry | Dashboard | Full OTel + PII redaction |
-| Best for | Teams that want full control | Rapid prototyping | Production with compliance |
+| Best for | full controlが必要なteam | rapid prototyping | compliance付きproduction |
 
-LiteLLM wins when you have an SRE team and want data sovereignty. OpenRouter wins when you want a single subscription and no infra. Portkey wins when you need guardrails and compliance out of the box.
+data sovereigntyとSRE teamがあるならLiteLLMが勝ちます。subscription 1つでinfraなしにしたいならOpenRouterです。guardrailsとcomplianceをout of the boxで必要とするならPortkeyです。
 
 ### Cost tracking
 
-Every request carries `provider`, `model`, `input_tokens`, `output_tokens`. Multiply by per-model per-token prices (pulled from a pricing sheet the gateway maintains). Per-user / per-team / per-project aggregation.
+すべてのrequestは`provider`、`model`、`input_tokens`、`output_tokens`を持ちます。gatewayが維持するpricing sheetからper-model per-token pricesを取り、掛け合わせます。per-user / per-team / per-projectでaggregateします。
 
 ### MCP plus routing
 
-A gateway can route both LLM calls AND MCP sampling requests. When a sampling request's modelPreferences prefer a specific model, the gateway translates to the right backend. This is where Phase 13 · 17 (MCP gateway) and this lesson's routing gateway sometimes merge into one service.
+gatewayはLLM callsだけでなく、MCP sampling requestsもrouteできます。sampling requestのmodelPreferencesが特定modelをpreferする場合、gatewayが適切なbackendへtranslateします。Phase 13 · 17（MCP gateway）とこのlessonのrouting gatewayは、1つのserviceにmergeされることがあります。
 
 ### Routing strategies
 
-- **Static priority.** First in list; fall back on error.
-- **Load balancing.** Round-robin or weighted.
-- **Cost-aware.** Pick the cheapest model meeting latency / quality.
-- **Latency-aware.** Pick the fastest model in the last N minutes.
-- **Task-aware.** Prompt classifier routes coding to one model, summarization to another.
+- **Static priority。** listの先頭から試し、errorでfallback。
+- **Load balancing。** round-robinまたはweighted。
+- **Cost-aware。** latency / qualityを満たす最安modelを選ぶ。
+- **Latency-aware。** 直近N分で最速のmodelを選ぶ。
+- **Task-aware。** prompt classifierがcodingをあるmodelへ、summarizationを別modelへrouteする。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements a routing gateway in ~150 lines: accepts OpenAI-shaped requests, translates to per-provider stubs, runs a priority fallback chain, tracks per-request cost, and applies a PII redaction pass on inputs. Run it with three scenarios: normal request, primary-provider outage triggering fallback, PII leakage caught by redaction.
+`code/main.py`は約150 linesでrouting gatewayを実装します。OpenAI-shaped requestsを受け取り、per-provider stubsへtranslateし、priority fallback chainを走らせ、requestごとのcostをtrackし、inputsにPII redaction passを適用します。normal request、primary-provider outageでfallbackするcase、redactionがPII leakageを捕まえるcaseの3 scenarioで実行してください。
 
-What to look at:
+見るべき箇所:
 
-- `ROUTES` dict: alias -> priority-ordered list of concrete providers.
-- Fallback loop retries on 5xx.
-- Cost tracker multiplies token usage by per-model rates.
-- PII redactor scrubs SSN-shaped patterns before forwarding.
+- `ROUTES` dict: alias -> priority-ordered list of concrete providers。
+- Fallback loopは5xxでretryする。
+- Cost trackerはtoken usageにper-model ratesを掛ける。
+- PII redactorはforward前にSSN風patternsをscrubする。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-routing-config-designer.md`. Given a workload profile (latency, cost, compliance), the skill picks LiteLLM / OpenRouter / Portkey and produces a routing config.
+このレッスンは`outputs/skill-routing-config-designer.md`を作ります。workload profile（latency、cost、compliance）を受け取り、LiteLLM / OpenRouter / Portkeyを選び、routing configを生成します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Trigger the outage scenario; confirm fallback lands on the second provider and cost is attributed correctly.
+1. `code/main.py`を実行してください。outage scenarioをtriggerし、fallbackがsecond providerに着地し、costが正しくattributedされることを確認してください。
 
-2. Add semantic caching: SHA256 of the prompt is a lookup key; cache hits return instantly. Measure cost savings on a repeated call.
+2. semantic cachingを追加してください。promptのSHA256をlookup keyにし、cache hitは即返します。repeated callでcost savingsを測ってください。
 
-3. Add a prompt classifier that routes "code ..." prompts to an alias favoring intelligence and "summarize ..." prompts to an alias favoring speed.
+3. "code ..." promptsをintelligence重視aliasへ、"summarize ..." promptsをspeed重視aliasへrouteするprompt classifierを追加してください。
 
-4. Design per-team budgets: each team has a monthly spend cap; gateway refuses requests once cap is hit. Pick an enforcement granularity (per-request or windowed).
+4. per-team budgetsを設計してください。各teamはmonthly spend capを持ち、capに達したらgatewayがrequestsを拒否します。enforcement granularity（per-requestまたはwindowed）を選んでください。
 
-5. Read LiteLLM, OpenRouter, and Portkey docs side by side. Name the one feature each ships that the other two do not.
+5. LiteLLM、OpenRouter、Portkey docsを並べて読んでください。それぞれが提供し、他2つが提供しないfeatureを1つずつ挙げてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Routing gateway | "LLM proxy" | One-API-surface layer in front of many providers |
-| OpenAI-compatible | "Speaks the OpenAI schema" | Accepts `/v1/chat/completions` shape, translates to any backend |
-| Model alias | "our_smart_model" | Name in your code that the gateway maps to a concrete model |
-| Fallback chain | "Retry list" | Ordered list of providers attempted on failure |
-| Semantic caching | "Prompt-embedding cache" | Key is embedding of the prompt; near-duplicates share a cache hit |
-| Guardrails | "Input/output filters" | Redact PII, reject policy violations |
-| Per-key rate limit | "Team budget" | Quota scoped to an API key |
-| Cost tracking | "Per-request spend" | Aggregate token usage x price per model |
-| LiteLLM | "The open proxy" | Self-hostable OSS routing gateway |
-| OpenRouter | "The managed SaaS" | Hosted gateway with credit-based billing |
-| Portkey | "The production option" | Open-source + managed with guardrails built in |
+| 用語 | よく言われる表現 | 実際の意味 |
+|------|----------------|------------|
+| Routing gateway | "LLM proxy" | 多数のprovidersの前に置くone-API-surface layer |
+| OpenAI-compatible | "Speaks the OpenAI schema" | `/v1/chat/completions` shapeを受け、任意backendへtranslateする |
+| Model alias | "our_smart_model" | code内の名前をgatewayがconcrete modelへmapする |
+| Fallback chain | "Retry list" | failure時に順に試すprovidersのordered list |
+| Semantic caching | "Prompt-embedding cache" | prompt embeddingをkeyにし、near-duplicatesがcache hitを共有する |
+| Guardrails | "Input/output filters" | PII redaction、policy violation rejection |
+| Per-key rate limit | "Team budget" | API keyに紐づくquota |
+| Cost tracking | "Per-request spend" | token usage x modelごとのpriceをaggregateする |
+| LiteLLM | "The open proxy" | self-host可能なOSS routing gateway |
+| OpenRouter | "The managed SaaS" | credit-based billing付きhosted gateway |
+| Portkey | "The production option" | built-in guardrailsを持つopen-source + managed |
 
-## Further Reading
+## 参考文献
 
 - [LiteLLM — docs](https://docs.litellm.ai/) — self-hosted routing gateway
 - [OpenRouter — quickstart](https://openrouter.ai/docs/quickstart) — managed routing SaaS

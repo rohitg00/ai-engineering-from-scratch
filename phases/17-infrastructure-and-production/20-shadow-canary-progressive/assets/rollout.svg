@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -8,53 +8,53 @@
       .gate { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">LLM rollout sequence — shadow → canary → A/B → 100%</text>
+  <text x="480" y="24" text-anchor="middle" class="title">LLM 展開シーケンス - シャドウ → カナリア → A/B → 100%</text>
 
   <rect x="40" y="50" width="280" height="180" class="shadow"/>
-  <text x="180" y="72" text-anchor="middle" class="head">1. shadow mode</text>
-  <text x="180" y="92" text-anchor="middle" class="step">zero user impact</text>
-  <text x="60" y="118" class="small">· duplicate prod requests to candidate</text>
-  <text x="60" y="136" class="small">· log outputs, token counts, latency</text>
-  <text x="60" y="154" class="small">· diff vs production output</text>
-  <text x="60" y="172" class="small">· catches: cost spikes, length shifts,</text>
-  <text x="60" y="190" class="small">  obvious refusal changes, hard errors</text>
-  <text x="180" y="214" text-anchor="middle" class="caption">not a quality test — a smoke test</text>
+  <text x="180" y="72" text-anchor="middle" class="head">1. シャドウモード</text>
+  <text x="180" y="92" text-anchor="middle" class="step">ユーザー影響ゼロ</text>
+  <text x="60" y="118" class="small">· 本番リクエストを候補へ複製</text>
+  <text x="60" y="136" class="small">· 出力、トークン数、レイテンシをログ</text>
+  <text x="60" y="154" class="small">· 本番出力との差分を見る</text>
+  <text x="60" y="172" class="small">· 検出: コスト急増、長さ変化、</text>
+  <text x="60" y="190" class="small">  明らかな拒否変化、ハードエラー</text>
+  <text x="180" y="214" text-anchor="middle" class="caption">品質テストではなくスモークテスト</text>
 
   <rect x="340" y="50" width="280" height="180" class="canary"/>
-  <text x="480" y="72" text-anchor="middle" class="head">2. canary rollout</text>
+  <text x="480" y="72" text-anchor="middle" class="head">2. カナリア展開</text>
   <text x="480" y="92" text-anchor="middle" class="step">1% → 10% → 25% → 50% → 75% → 100%</text>
-  <text x="360" y="118" class="small">· five gates at each step:</text>
-  <text x="360" y="136" class="small">  latency P99 &gt; 1.5x baseline</text>
-  <text x="360" y="154" class="small">  cost/request &gt; 1.2x baseline</text>
-  <text x="360" y="172" class="small">  error/refusal &gt; 2x baseline</text>
-  <text x="360" y="190" class="small">  output-length shift &gt; 1.4x</text>
-  <text x="360" y="208" class="small">  thumbs-down &gt; 1.5x baseline</text>
+  <text x="360" y="118" class="small">· 各段階で5つのゲート:</text>
+  <text x="360" y="136" class="small">  レイテンシ P99 &gt; 1.5x 基準</text>
+  <text x="360" y="154" class="small">  コスト/リクエスト &gt; 1.2x 基準</text>
+  <text x="360" y="172" class="small">  エラー/拒否 &gt; 2x 基準</text>
+  <text x="360" y="190" class="small">  出力-length shift &gt; 1.4x</text>
+  <text x="360" y="208" class="small">  低評価 &gt; 1.5x 基準</text>
 
   <rect x="640" y="50" width="280" height="180" class="ab"/>
-  <text x="780" y="72" text-anchor="middle" class="head">3. A/B (optional)</text>
-  <text x="780" y="92" text-anchor="middle" class="step">only for distinct alternatives</text>
-  <text x="660" y="118" class="small">· 50/50 split</text>
-  <text x="660" y="136" class="small">· run until stats significance</text>
+  <text x="780" y="72" text-anchor="middle" class="head">3. A/B (任意)</text>
+  <text x="780" y="92" text-anchor="middle" class="step">明確に違う候補だけで使う</text>
+  <text x="660" y="118" class="small">· 50/50 分割</text>
+  <text x="660" y="136" class="small">· 統計的有意まで実行</text>
   <text x="660" y="154" class="small">· CUPED / sequential / Benjamini-H</text>
-  <text x="660" y="172" class="small">· skip if just improved variant</text>
-  <text x="660" y="190" class="small">· Phase 17 · 21 covers GrowthBook +</text>
-  <text x="660" y="208" class="small">  Statsig semantics</text>
+  <text x="660" y="172" class="small">· 単なる改善版ならスキップ</text>
+  <text x="660" y="190" class="small">· Phase 17 · 21 で扱う GrowthBook +</text>
+  <text x="660" y="208" class="small">  Statsig 意味論</text>
 
   <rect x="40" y="250" width="880" height="100" class="gate"/>
-  <text x="480" y="272" text-anchor="middle" class="head">non-determinism sets the noise floor</text>
-  <text x="480" y="294" text-anchor="middle" class="step">up to 15% run-to-run variance on identical inputs</text>
-  <text x="480" y="314" text-anchor="middle" class="small">causes: GPU FP non-associativity, batch-size variance, sampling</text>
-  <text x="480" y="334" text-anchor="middle" class="caption">gates must sit above the noise floor, not at identity with baseline</text>
+  <text x="480" y="272" text-anchor="middle" class="head">非決定性がノイズ床を決める</text>
+  <text x="480" y="294" text-anchor="middle" class="step">同一入力でも実行ごと ばらつきは最大15%</text>
+  <text x="480" y="314" text-anchor="middle" class="small">原因: GPU FP非結合性、バッチ-size ばらつき、サンプリング</text>
+  <text x="480" y="334" text-anchor="middle" class="caption">ゲートは基準一致ではなく、ノイズ床より上に置く</text>
 
   <rect x="40" y="370" width="880" height="110" class="box"/>
-  <text x="480" y="392" text-anchor="middle" class="head">rollback in seconds</text>
-  <text x="480" y="414" text-anchor="middle" class="step">policy flag (feature flags) + model pin (registry digest)</text>
-  <text x="480" y="434" text-anchor="middle" class="step">rollback = flip flag + revert digest</text>
-  <text x="480" y="454" text-anchor="middle" class="small">if rollback requires redeploy you are too slow — fix the stack first</text>
-  <text x="480" y="474" text-anchor="middle" class="caption">tooling: Argo Rollouts, Flagger, Istio weighted, KServe, feature flag system</text>
+  <text x="480" y="392" text-anchor="middle" class="head">秒単位でロールバック</text>
+  <text x="480" y="414" text-anchor="middle" class="step">ポリシーフラグ (機能フラグ) + モデル固定 (レジストリdigest)</text>
+  <text x="480" y="434" text-anchor="middle" class="step">ロールバック = フラグ切替 + digest戻し</text>
+  <text x="480" y="454" text-anchor="middle" class="small">ロールバックに再デプロイが必要なら遅すぎる - まずスタックを直す</text>
+  <text x="480" y="474" text-anchor="middle" class="caption">ツール: Argo Rollouts、Flagger、Istio weighted、KServe、機能フラグシステム</text>
 </svg>

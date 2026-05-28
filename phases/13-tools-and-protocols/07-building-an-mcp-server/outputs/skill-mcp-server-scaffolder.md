@@ -1,30 +1,30 @@
 ---
 name: mcp-server-scaffolder
-description: Scaffold a domain-specific MCP server with the right tools/resources/prompts split and SDK graduation path.
+description: domain-specific MCP server を、適切な tools/resources/prompts split と SDK graduation path 付きで scaffold する。
 version: 1.0.0
 phase: 13
 lesson: 07
 tags: [mcp, server, fastmcp, scaffold]
 ---
 
-Given a domain (notes, tickets, files, database, whatever), produce an MCP server plan: which capabilities to expose as tools, which as resources, which as prompts, plus a graduation path to the Python or TypeScript SDK.
+domain（notes、tickets、files、database など）を受け取り、MCP server plan を作成してください。どの capabilities を tools として公開し、どれを resources、どれを prompts とするか、さらに Python または TypeScript SDK への graduation path を含めます。
 
 Produce:
 
-1. Tools list. Atomic operations the user explicitly asks to perform. Include name, description (Use-when pattern), input schema, and annotation hints.
-2. Resources list. Data the user wants to read. URI scheme, mime type, and whether to enable `resources/subscribe`.
-3. Prompts list. Reusable templates the host should expose as slash-commands. Argument list.
-4. Capability declaration. The exact `capabilities` object the server returns in `initialize`.
-5. Graduation notes. FastMCP (Python) or TypeScript SDK equivalents for each piece. Name one SDK feature (e.g. `lifespan`, `context`) that replaces a hand-rolled stdlib pattern from the scaffold.
+1. Tools list。user が明示的に実行したい atomic operations。name、description（Use-when pattern）、input schema、annotation hints を含める。
+2. Resources list。user が読みたい data。URI scheme、mime type、`resources/subscribe` を enable するかどうか。
+3. Prompts list。host が slash-commands として公開すべき reusable templates。argument list。
+4. Capability declaration。server が `initialize` で返す正確な `capabilities` object。
+5. Graduation notes。各 piece に対する FastMCP（Python）または TypeScript SDK equivalents。scaffold の hand-rolled stdlib pattern を置き換える SDK feature（例: `lifespan`, `context`）を 1 つ挙げる。
 
 Hard rejects:
-- Any "database query" exposed only as a tool and not as a resource. The correct split is resource for `/list` and `/read`, tool for `/query` with parameters.
-- Any server that mixes user-input tools with privileged ones in the same namespace without annotations.
-- Any server scaffold that claims `resources/subscribe` capability without a durable notification mechanism.
+- resource ではなく tool だけとして公開されている "database query"。正しい split は `/list` と `/read` を resource、parameters 付き `/query` を tool にすること。
+- user-input tools と privileged tools を annotations なしで同じ namespace に混在させる server。
+- durable notification mechanism なしで `resources/subscribe` capability を claim する server scaffold。
 
 Refusal rules:
-- If the domain has no read-only surface, refuse to scaffold resources; recommend a tool-only server.
-- If the domain has no natural slash-command templates, refuse to scaffold prompts.
-- If the user asks for an auth scheme, refuse and route to Phase 13 · 16 (OAuth 2.1).
+- domain に read-only surface がない場合は、resources の scaffold を拒否し、tool-only server を推奨する。
+- domain に自然な slash-command templates がない場合は、prompts の scaffold を拒否する。
+- auth scheme を求められた場合は拒否し、Phase 13 · 16（OAuth 2.1）へ route する。
 
-Output: a one-page server plan with the three primitive lists, the capability object, and a 10-line sample `@app.tool()` decorator-style graduation snippet. End with the single most important annotation flag the server should set.
+Output: 3 つの primitive lists、capability object、10 行の sample `@app.tool()` decorator-style graduation snippet を含む 1 ページの server plan。最後に、server が設定すべき最も重要な annotation flag を 1 つ挙げる。

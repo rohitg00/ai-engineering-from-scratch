@@ -1,22 +1,22 @@
 {
   "lesson": "15-constitutional-safety-harness",
-  "title": "Capstone 15 — Constitutional Safety Harness + Red-Team Range",
+  "title": "キャップストーン 15 — Constitutional Safety Harness + Red-Team Range",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does layered safety in this capstone mean?",
+      "question": "この capstone における layered safety とは何ですか？",
       "options": [
-        "Manual review of every response",
-        "Running one strong classifier on the input only",
-        "A single rule-based regex over outputs",
-        "Defense in depth across input sanitize, policy rails, classifier gate, model, output filter, and HITL tier"
+        "すべての response を手動 review すること",
+        "Input にだけ強い classifier を 1 つ実行すること",
+        "Output に単一の rule-based regex をかけること",
+        "Input sanitize、policy rails、classifier gate、model、output filter、HITL tier にまたがる defense in depth"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Which classifier handles multilingual coverage across roughly 132 languages?",
+      "question": "およそ 132 language にまたがる multilingual coverage を扱う classifier はどれですか？",
       "options": [
         "Nemotron 3 Content Safety",
         "ShieldGemma-2",
@@ -28,60 +28,60 @@
     },
     {
       "stage": "check",
-      "question": "Why is over-refusal measured on a benign suite like XSTest?",
+      "question": "XSTest のような benign suite で over-refusal を測る理由は何ですか？",
       "options": [
-        "To replace red-team scoring",
-        "To benchmark token throughput",
-        "To certify the guardrail framework",
-        "To track false-positive blocks so the model stays helpful while improving harmlessness"
+        "Red-team scoring を置き換えるため",
+        "Token throughput を benchmark するため",
+        "Guardrail framework を certify するため",
+        "Harmlessness を改善しながら model が helpful であり続けるよう、false-positive block を追跡するため"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the constitutional self-critique loop in this capstone?",
+      "question": "この capstone における constitutional self-critique loop は何ですか？",
       "options": [
-        "A reranker over candidate jailbreak prompts",
-        "An RLHF reward model trained from scratch",
-        "A single forward pass through Llama Guard 4",
-        "Critic LLM scores drafts against a written constitution, prompts the model rewrites the objected outputs, and SFT runs on the improved pairs"
+        "Candidate jailbreak prompt 上の reranker",
+        "ゼロから学習する RLHF reward model",
+        "Llama Guard 4 の single forward pass",
+        "Critic LLM が draft を written constitution に照らして採点し、問題がある output を rewrite し、改善 pair で SFT する loop"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How are successful jailbreaks scored for severity in the findings?",
+      "question": "成功した jailbreak は finding 内でどのように severity scoring されますか？",
       "options": [
-        "By the model that produced the response",
-        "Using CVSS 4.0 with attack vector, complexity, and impact, plus a disclosure timeline",
-        "By raw token count of the prompt",
-        "On a hand-tuned 1-10 scale chosen by the operator"
+        "Response を生成した model 名で",
+        "Attack vector、complexity、impact と disclosure timeline を含む CVSS 4.0 で",
+        "Prompt の raw token count で",
+        "Operator が選んだ手調整の 1-10 scale で"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which six attack families does the red-team range run?",
+      "question": "Red-team range が実行する 6 つの attack family はどれですか？",
       "options": [
-        "BLEU, ROUGE, METEOR, BERTScore, CometKiwi, and chrF",
-        "PAIR, TAP, GCG, encoding (ASCII/base64/rot13), multi-turn persona, and multilingual code-switch",
-        "Brute-force, dictionary, replay, MITM, phishing, and CSRF",
-        "PSI, KL, MMD, KS, JS, and Wasserstein"
+        "BLEU、ROUGE、METEOR、BERTScore、CometKiwi、chrF",
+        "PAIR、TAP、GCG、encoding (ASCII/base64/rot13)、multi-turn persona、multilingual code-switch",
+        "Brute-force、dictionary、replay、MITM、phishing、CSRF",
+        "PSI、KL、MMD、KS、JS、Wasserstein"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is range automation (cron + alerts) part of the rubric?",
+      "question": "Range automation (cron + alerts) が rubric に含まれる理由は何ですか？",
       "options": [
-        "Cron is the only way to call OPA",
-        "Continuous scheduled probes catch drift in attack success rate and over-refusal regressions over time",
-        "Manual runs are explicitly required",
-        "Automation is required to disable Llama Guard 4"
+        "Cron が OPA を呼ぶ唯一の方法だから",
+        "継続的な scheduled probe が attack success rate の drift と over-refusal regression を時間とともに検知するため",
+        "Manual run が明示的に必須だから",
+        "Llama Guard 4 を無効化するには automation が必要だから"
       ],
       "correct": 1,
       "explanation": ""

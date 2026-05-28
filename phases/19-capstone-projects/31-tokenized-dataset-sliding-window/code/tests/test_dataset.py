@@ -1,4 +1,4 @@
-"""Tests for SlidingWindowDataset and make_dataloader."""
+"""SlidingWindowDataset と make_dataloader のテスト。"""
 
 from __future__ import annotations
 

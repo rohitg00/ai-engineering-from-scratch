@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What are CrewAI's four primitives?",
+      "question": "CrewAIの4つのprimitiveは何ですか?",
       "options": [
         "Agent, Task, Crew, Process",
         "Node, Edge, Reducer, Checkpointer",
@@ -12,11 +12,11 @@
         "Tool, Prompt, Model, Memory"
       ],
       "correct": 0,
-      "explanation": "Agent, Task, Crew, and Process are the four primitives."
+      "explanation": "Agent、Task、Crew、Processが4つのprimitiveです。"
     },
     {
       "stage": "pre",
-      "question": "What is the recommended production starting point per the CrewAI docs?",
+      "question": "CrewAI docsが推奨するproductionのstarting pointは何ですか?",
       "options": [
         "Crew",
         "Flow",
@@ -24,23 +24,23 @@
         "Hierarchical process"
       ],
       "correct": 1,
-      "explanation": "The docs say start production apps with Flows; fold Crews in as sub-steps when autonomy earns its cost."
+      "explanation": "docsはproduction appではFlowから始め、autonomyがcostに見合う場合だけCrewをsub-stepとして折り込む、としています。"
     },
     {
       "stage": "check",
-      "question": "What is the difference between a Crew and a Flow?",
+      "question": "CrewとFlowの違いは何ですか?",
       "options": [
-        "Crew is paid, Flow is free",
-        "Crew is autonomous and LLM-driven; Flow is event-driven, code-owned, deterministic and testable",
-        "Crew runs on GPUs only",
-        "Flow has no agents"
+        "Crewは有料で、Flowは無料",
+        "CrewはautonomousでLLM-driven。Flowはevent-driven、code-owned、deterministicでtestable",
+        "CrewはGPU上でのみ動く",
+        "Flowにはagentがない"
       ],
       "correct": 1,
-      "explanation": "Crew is autonomy-first; Flow is determinism-first."
+      "explanation": "Crewはautonomy-first、Flowはdeterminism-firstです。"
     },
     {
       "stage": "check",
-      "question": "Which of these is NOT one of the four memory types CrewAI ships?",
+      "question": "次のうち、CrewAIがshipする4つのmemory typeに含まれないものはどれですか?",
       "options": [
         "Short-term",
         "Long-term",
@@ -48,43 +48,43 @@
         "Quantized"
       ],
       "correct": 3,
-      "explanation": "Short-term, long-term, entity, and contextual are the four. Quantized memory is not a CrewAI concept."
+      "explanation": "4つはshort-term、long-term、entity、contextualです。Quantized memoryはCrewAI conceptではありません。"
     },
     {
       "stage": "check",
-      "question": "What is backstory bloat and how does the lesson recommend handling it?",
+      "question": "backstory bloatとは何で、lessonはどう扱うことを推奨していますか?",
       "options": [
-        "Storing too many crews; archive old ones",
-        "2000-word agent backstories push out context budget; keep them tight",
-        "Too many tools; delete some",
-        "Slow Bedrock calls; switch regions"
+        "crewを保存しすぎること。古いものをarchiveする",
+        "2000-wordのagent backstoryがcontext budgetを押し出すこと。短く保つ",
+        "toolが多すぎること。いくつか削除する",
+        "Bedrock callが遅いこと。regionを切り替える"
       ],
       "correct": 1,
-      "explanation": "Backstories shape tone and judgment but eat context if oversized."
+      "explanation": "backstoryはtoneとjudgmentを形作りますが、大きすぎるとcontextを消費します。"
     },
     {
       "stage": "post",
-      "question": "When is Hierarchical process worth picking over Sequential?",
+      "question": "SequentialよりHierarchical processを選ぶ価値があるのはいつですか?",
       "options": [
-        "Always",
-        "When you have 4+ specialists that need a manager Agent to route between them",
-        "When you have one task",
-        "When you do not have any tools"
+        "常に",
+        "4+ specialistsがいて、manager Agentがそれらの間をrouteする必要があるとき",
+        "taskが1つだけのとき",
+        "toolが何もないとき"
       ],
       "correct": 1,
-      "explanation": "Hierarchical adds a manager Agent; only worthwhile when several specialists need dynamic routing."
+      "explanation": "Hierarchicalはmanager Agentを追加します。dynamic routingが必要な複数specialistがいる場合にだけ価値があります。"
     },
     {
       "stage": "post",
-      "question": "Why does the lesson caution against using a free-form Crew in production?",
+      "question": "free-form Crewをproductionで使うことにlessonが注意を促す理由は何ですか?",
       "options": [
-        "Crews are unsupported",
-        "Output variability is high and debugging is painful without a Flow wrapper",
-        "Crews cost more than Flows",
-        "Crews lack memory"
+        "Crewがunsupportedだから",
+        "Flow wrapperなしではoutput variabilityが高く、debuggingがつらいから",
+        "CrewはFlowより高価だから",
+        "Crewにはmemoryがないから"
       ],
       "correct": 1,
-      "explanation": "Crew autonomy makes prod replay and audit painful; wrap with a Flow when shipping."
+      "explanation": "Crewのautonomyはprod replayとauditをつらくします。shipするならFlowでwrapします。"
     }
   ]
 }

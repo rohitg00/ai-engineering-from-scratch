@@ -1,94 +1,94 @@
 ---
 name: skill-ensemble-builder
-description: Choose the right ensemble method and configure it for your problem
+description: 問題に適した ensemble method を選び、設定する
 version: 1.0.0
 phase: 2
 lesson: 11
 tags: [ensemble, bagging, boosting, random-forest, xgboost, stacking]
 ---
 
-# Ensemble Method Selection Guide
+# アンサンブル手法選択ガイド
 
-Ensembles combine multiple models to produce better predictions than any single model. The question is always: which kind of ensemble, and when?
+Ensemble は複数のモデルを組み合わせ、単一モデルより良い予測を作ります。常に問うべきことは、どの種類の ensemble をいつ使うかです。
 
-## Decision Checklist
+## 判断チェックリスト
 
-1. What is the main problem with your current model?
-   - High variance (overfitting): use bagging (Random Forest)
-   - High bias (underfitting): use boosting (Gradient Boosting, XGBoost)
-   - Both, or you want maximum accuracy: use stacking
+1. 現在のモデルの主な問題は何ですか？
+   - High variance（overfitting）: bagging（Random Forest）を使う
+   - High bias（underfitting）: boosting（Gradient Boosting、XGBoost）を使う
+   - 両方、または最大 accuracy が欲しい: stacking を使う
 
-2. How much data do you have?
-   - Under 1,000 rows: Random Forest (robust, hard to misconfigure)
-   - 1,000 to 100,000: XGBoost or LightGBM (best overall for tabular)
-   - Over 100,000: LightGBM (fastest gradient boosting, handles large data well)
+2. どれくらいのデータがありますか？
+   - 1,000 rows 未満: Random Forest（頑健で、misconfigure しにくい）
+   - 1,000 から 100,000: XGBoost または LightGBM（tabular では総合的に最良）
+   - 100,000 超: LightGBM（最速の gradient boosting で、大規模データをうまく扱う）
 
-3. How much tuning time can you invest?
-   - Minimal: Random Forest with defaults (almost always works)
-   - Moderate: XGBoost with learning_rate=0.1, tune n_estimators with early stopping
-   - Maximum: LightGBM or XGBoost with Bayesian hyperparameter search
+3. tuning にどれくらい時間を投資できますか？
+   - 最小: default の Random Forest（ほぼ常に機能する）
+   - 中程度: learning_rate=0.1 の XGBoost、early stopping で n_estimators を調整
+   - 最大: Bayesian hyperparameter search を使った LightGBM または XGBoost
 
-4. Do you need interpretability?
-   - Yes: single decision tree or small Random Forest with feature importance
-   - Partial: gradient boosting with SHAP values
-   - No: stacking or deep ensembles
+4. interpretability は必要ですか？
+   - Yes: 単一の decision tree、または feature importance 付きの小さな Random Forest
+   - Partial: SHAP values 付きの gradient boosting
+   - No: stacking または deep ensemble
 
-5. Is the data noisy with many outliers?
-   - Yes: Random Forest (bagging is robust to noise)
-   - No: gradient boosting (can push accuracy further on clean data)
+5. データは noisy で outlier が多いですか？
+   - Yes: Random Forest（bagging は noise に頑健）
+   - No: gradient boosting（clean data では accuracy をさらに押し上げられる）
 
-## When to use each method
+## 各手法をいつ使うか
 
-**Random Forest (Bagging)**: your safe first choice. Trains many trees on bootstrap samples and averages. Reduces variance without increasing bias. Nearly impossible to overfit on moderate data. Minimal tuning needed: set n_estimators=100-500 and leave defaults.
+**Random Forest (Bagging)**: 安全な第一候補です。bootstrap sample 上で多数の tree を学習し、平均します。bias を増やさずに variance を減らします。中規模データではほぼ overfit しません。必要な tuning は最小限で、n_estimators=100-500 を設定して default を残します。
 
-**AdaBoost**: sequential boosting with sample reweighting. Works well with simple base learners (decision stumps). Sensitive to outliers and noisy labels because it upweights misclassified points. Largely replaced by gradient boosting in practice.
+**AdaBoost**: sample reweighting を使う逐次的 boosting です。simple base learner（decision stump）とうまく機能します。誤分類された点の重みを上げるため、outlier と noisy label に敏感です。実務では大部分が gradient boosting に置き換えられました。
 
-**Gradient Boosting**: fits each new tree to the residuals of the ensemble so far. Reduces bias. The most powerful method for tabular data. Requires tuning: learning_rate, n_estimators, max_depth, min_child_weight, subsample.
+**Gradient Boosting**: 各新しい tree をそれまでの ensemble の residual に fit します。bias を減らします。tabular data に対する最も強力な手法です。learning_rate、n_estimators、max_depth、min_child_weight、subsample の tuning が必要です。
 
-**XGBoost**: gradient boosting with regularization, second-order optimization, and systems-level speedups. Handles missing values natively. The default for Kaggle competitions and production ML on tabular data.
+**XGBoost**: regularization、second-order optimization、systems-level speedup を備えた gradient boosting です。missing value を native に扱います。Kaggle competition と production tabular ML の default です。
 
-**LightGBM**: gradient boosting with leaf-wise growth (instead of level-wise). Faster than XGBoost on large datasets. Uses histogram-based splits. Best for datasets over 50k rows.
+**LightGBM**: level-wise ではなく leaf-wise growth を使う gradient boosting です。大規模 dataset では XGBoost より高速です。histogram-based split を使います。50k rows 超の dataset に最適です。
 
-**CatBoost**: gradient boosting with native categorical feature handling. No need to one-hot encode. Good when you have many categorical features.
+**CatBoost**: categorical feature を native に扱う gradient boosting です。one-hot encoding は不要です。categorical feature が多い場合に適しています。
 
-**Stacking**: trains a meta-learner on the predictions of multiple diverse base models. Use when you need the absolute best accuracy and have compute to spare. Always generate base model predictions via cross-validation to avoid leakage.
+**Stacking**: 複数の多様な base model の予測上で meta-learner を学習します。絶対的に最高の accuracy が必要で、compute に余裕がある場合に使います。leakage を避けるため、base model の予測は必ず cross-validation で生成します。
 
-**Voting**: simplest ensemble. Hard voting (majority class) or soft voting (average probabilities). Quick way to combine 2-3 diverse models without a meta-learner.
+**Voting**: 最も単純な ensemble です。hard voting（majority class）または soft voting（平均確率）を使います。meta-learner なしで 2-3 個の多様なモデルを素早く組み合わせる方法です。
 
-## Common mistakes
+## よくあるミス
 
-- Using gradient boosting without early stopping (it will overfit if you let it run too many rounds)
-- Setting learning_rate too high (above 0.3 usually causes instability)
-- Not tuning max_depth for gradient boosting (default of unlimited or very deep trees overfit)
-- Stacking with models that are all the same type (diversity is the point of stacking)
-- Using AdaBoost on noisy data (outliers get higher and higher weight each round)
-- Expecting Random Forest to fix underfitting (it reduces variance, not bias)
+- early stopping なしで gradient boosting を使う（round を多く回しすぎると overfit します）
+- learning_rate を高くしすぎる（0.3 超は通常不安定になります）
+- gradient boosting の max_depth を tuning しない（unlimited または非常に深い tree の default は overfit します）
+- すべて同じ type のモデルで stacking する（stacking の要点は diversity です）
+- noisy data に AdaBoost を使う（outlier は round ごとに重みがどんどん高くなります）
+- Random Forest が underfitting を直すと期待する（variance を減らすのであり、bias ではありません）
 
-## Tuning priorities by method
+## 手法別 tuning 優先度
 
 **Random Forest:**
-1. n_estimators: 100-500 (more is rarely worse, just slower)
-2. max_depth: None (let trees grow fully) or cap at 10-20 for speed
-3. max_features: "sqrt" for classification, "log2" or n/3 for regression
+1. n_estimators: 100-500（増やして悪くなることはまれで、遅くなるだけ）
+2. max_depth: None（tree を完全に成長させる）、または速度のため 10-20 に制限
+3. max_features: classification では "sqrt"、regression では "log2" または n/3
 
 **XGBoost / LightGBM:**
-1. learning_rate: 0.01-0.3 (lower is better if you have compute for more trees)
-2. n_estimators: use early stopping on a validation set instead of guessing
-3. max_depth: 3-8 (start with 6)
-4. min_child_weight / min_data_in_leaf: 1-20 (higher prevents overfitting)
+1. learning_rate: 0.01-0.3（より多くの tree に使う compute があるなら低い方がよい）
+2. n_estimators: 推測せず、validation set 上の early stopping を使う
+3. max_depth: 3-8（6 から始める）
+4. min_child_weight / min_data_in_leaf: 1-20（高いほど overfitting を防ぐ）
 5. subsample: 0.7-1.0
 6. colsample_bytree: 0.7-1.0
 7. reg_alpha (L1) and reg_lambda (L2): 0-10
 
-## Quick reference
+## クイックリファレンス
 
-| Method | Reduces | Speed | Tuning effort | Best for |
+| 手法 | 減らすもの | 速度 | tuning effort | 最適な用途 |
 |--------|---------|-------|--------------|----------|
-| Random Forest | Variance | Fast | Low | Noisy data, quick baseline |
-| AdaBoost | Bias | Fast | Low | Simple base learners, clean data |
-| Gradient Boosting | Bias | Medium | High | Tabular data, competitions |
-| XGBoost | Both | Fast | High | Production tabular ML |
-| LightGBM | Both | Fastest | High | Large datasets (50k+ rows) |
-| CatBoost | Both | Medium | Medium | Many categorical features |
-| Stacking | Both | Slow | High | Maximum accuracy, diverse models |
-| Voting | Variance | Fast | None | Quick combination of 2-3 models |
+| Random Forest | Variance | 速い | 低い | noisy data、quick baseline |
+| AdaBoost | Bias | 速い | 低い | simple base learner、ノイズの少ないデータ |
+| Gradient Boosting | Bias | 中程度 | 高い | 表形式データ、competition |
+| XGBoost | 両方 | 速い | 高い | 本番の tabular ML |
+| LightGBM | 両方 | 最速 | 高い | large dataset（50k+ rows） |
+| CatBoost | 両方 | 中程度 | 中程度 | categorical feature が多い |
+| Stacking | 両方 | 遅い | 高い | maximum accuracy、多様なモデル |
+| Voting | Variance | 速い | なし | 2-3 個のモデルの素早い組み合わせ |

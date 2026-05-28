@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What problem do virtual environments solve?",
-      "options": ["They make Python code run faster by optimizing the interpreter", "They isolate project dependencies so different projects can use different package versions", "They provide a graphical interface for managing Python scripts", "They automatically update packages to the latest versions"],
+      "question": "virtual environment はどの問題を解決しますか。",
+      "options": [
+        "interpreter を最適化して Python code を速くする",
+        "project dependency を隔離し、project ごとに異なる package version を使えるようにする",
+        "Python script 管理用の graphical interface を提供する",
+        "package を最新 version へ自動更新する"
+      ],
       "correct": 1,
-      "explanation": "Virtual environments give each project its own isolated set of packages. Without them, installing PyTorch 2.4 for one project would overwrite PyTorch 2.1 needed by another."
+      "explanation": "virtual environment は各 project に隔離された package set を与えます。これがないと、ある project 用に PyTorch 2.4 を install しただけで、別 project が必要とする PyTorch 2.1 を上書きしてしまいます。"
     },
     {
       "stage": "pre",
-      "question": "What is a lockfile in the context of Python dependency management?",
-      "options": ["A file that prevents other users from editing your code", "A file that pins every package to an exact version for reproducible installs", "A file that locks the Python interpreter version", "A file that encrypts your project dependencies"],
+      "question": "Python dependency management における lockfile とは何ですか。",
+      "options": [
+        "他の user が code を編集できないようにする file",
+        "reproducible install のためにすべての package を exact version に pin する file",
+        "Python interpreter version を lock する file",
+        "project dependency を encrypt する file"
+      ],
       "correct": 1,
-      "explanation": "A lockfile records the exact version of every package (including transitive dependencies) so anyone installing from it gets identical packages, ensuring reproducibility."
+      "explanation": "lockfile はすべての package (transitive dependency を含む) の exact version を記録します。そこから install する人は同一 package を得られ、reproducibility が保証されます。"
     },
     {
       "stage": "post",
-      "question": "How can you verify that your pip and python commands are using the virtual environment and not the system Python?",
-      "options": ["Run 'pip --version' and check the version number", "Run 'which python' and confirm it shows .venv/bin/python, not /usr/bin/python", "Check if the terminal background color has changed", "Run 'python --check-env' to verify"],
+      "question": "`pip` と `python` command が system Python ではなく virtual environment を使っていることをどう確認できますか。",
+      "options": [
+        "`pip --version` を実行し version number を確認する",
+        "`which python` を実行し、`/usr/bin/python` ではなく `.venv/bin/python` を指していることを確認する",
+        "terminal の背景色が変わったか確認する",
+        "`python --check-env` を実行して確認する"
+      ],
       "correct": 1,
-      "explanation": "'which python' (or 'where python' on Windows) shows the full path to the interpreter. If it points to .venv/bin/python, you are in the virtual environment."
+      "explanation": "`which python` (Windows では `where python`) は interpreter の full path を表示します。`.venv/bin/python` を指していれば virtual environment 内にいます。"
     },
     {
       "stage": "post",
-      "question": "Why is mixing pip and conda in the same environment problematic?",
-      "options": ["Pip packages are incompatible with conda's Python interpreter", "Pip installs can break conda's dependency tracking, causing hard-to-debug conflicts", "Conda cannot install packages that pip has already installed", "It doubles the disk space used by every package"],
+      "question": "同じ environment で pip と conda を混ぜることが problematic なのはなぜですか。",
+      "options": [
+        "pip package は conda の Python interpreter と incompatible だから",
+        "pip install が conda の dependency tracking を壊し、debug しにくい conflict を起こすから",
+        "conda は pip が既に install した package を install できないから",
+        "すべての package が使う disk space が 2 倍になるから"
+      ],
       "correct": 1,
-      "explanation": "Conda maintains its own dependency solver. Pip installs bypass it, so conda no longer knows the true state of the environment. This leads to dependency conflicts that are painful to resolve."
+      "explanation": "conda は独自の dependency solver を持ちます。pip install はそれを bypass するため、conda は environment の実際の状態を把握できなくなります。その結果、解決がつらい dependency conflict が起きます。"
     },
     {
       "stage": "post",
-      "question": "Your PyTorch code reports 'CUDA not available' despite having an NVIDIA GPU. What is the most likely cause?",
-      "options": ["Your GPU does not support CUDA", "PyTorch was installed with a CUDA version incompatible with your GPU driver", "You forgot to import the torch.cuda module", "Virtual environments cannot access GPU hardware"],
+      "question": "NVIDIA GPU があるのに PyTorch code が 'CUDA not available' と報告します。最も可能性が高い原因は何ですか。",
+      "options": [
+        "GPU が CUDA を support していない",
+        "PyTorch が GPU driver と incompatible な CUDA version で install されている",
+        "`torch.cuda` module の import を忘れている",
+        "virtual environment は GPU hardware に access できない"
+      ],
       "correct": 1,
-      "explanation": "PyTorch ships CUDA bindings compiled for specific CUDA versions. If the PyTorch CUDA version exceeds your driver's CUDA version, CUDA will not be available. Check with nvidia-smi and torch.version.cuda."
+      "explanation": "PyTorch は特定 CUDA version 用に compile された CUDA binding を同梱しています。PyTorch CUDA version が driver の CUDA version を超えている場合、CUDA は利用できません。`nvidia-smi` と `torch.version.cuda` で確認してください。"
     }
   ]
 }

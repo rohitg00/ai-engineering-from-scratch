@@ -1,155 +1,155 @@
-# Linear Regression
+# 線形回帰
 
-> Linear regression draws the best straight line through your data. It is the "hello world" of machine learning.
+> 線形回帰は、データを最もよく通る直線を引きます。機械学習における "hello world" です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
-**Time:** ~90 minutes
+**種類:** 構築
+**言語:** Python
+**前提条件:** Phase 1（線形代数、微積分、最適化）、Phase 2 Lesson 1
+**所要時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Derive the gradient descent update rules for mean squared error and implement linear regression from scratch
-- Compare gradient descent and the normal equation in terms of computational complexity and when to use each
-- Build a multiple linear regression model with feature standardization and interpret the learned weights
-- Explain how Ridge regression (L2 regularization) prevents overfitting by penalizing large weights
+- 平均二乗誤差に対する勾配降下法の更新式を導出し、線形回帰をゼロから実装できる
+- 勾配降下法と正規方程式を、計算量と使いどころの観点から比較できる
+- 特徴量標準化を含む重回帰モデルを構築し、学習された重みを解釈できる
+- Ridge 回帰（L2 正則化）が大きな重みに罰則を与えることで過学習を防ぐ仕組みを説明できる
 
-## The Problem
+## 問題
 
-You have data: house sizes and their sale prices. You want to predict the price of a new house given its size. You could eyeball it on a scatter plot, but you need a formula. You need a line that best fits the data so you can plug in any size and get a price prediction.
+住宅の広さと販売価格のデータがあるとします。新しい住宅の広さから価格を予測したい。散布図を見て目分量で判断することもできますが、必要なのは数式です。任意の広さを入力すれば価格予測が得られるように、データに最もよく適合する直線が必要です。
 
-Linear regression gives you that line. More importantly, it introduces the entire ML training loop: define a model, define a cost function, optimize the parameters. Every ML algorithm follows this same pattern. Master it here with the simplest case, and you will recognize it everywhere.
+線形回帰はその直線を与えてくれます。さらに重要なのは、ML の学習ループ全体を導入してくれることです。モデルを定義し、コスト関数を定義し、パラメータを最適化する。すべての ML アルゴリズムは同じパターンに従います。最も単純なケースでここを身につければ、どこでも同じ構造に気づけるようになります。
 
-This is not just for simple problems. Linear regression is used in production systems for demand forecasting, A/B test analysis, financial modeling, and as a baseline for every regression task.
+これは単純な問題だけのものではありません。線形回帰は、需要予測、A/B テスト分析、金融モデリング、そしてあらゆる回帰タスクのベースラインとして本番システムで使われています。
 
-## The Concept
+## 概念
 
-### The Model
+### モデル
 
-Linear regression assumes a linear relationship between input (x) and output (y):
+線形回帰は、入力（x）と出力（y）の間に線形関係があると仮定します。
 
 ```
 y = wx + b
 ```
 
-- `w` (weight/slope): how much y changes when x increases by 1
-- `b` (bias/intercept): the value of y when x = 0
+- `w`（重み/傾き）: x が 1 増えたときに y がどれだけ変化するか
+- `b`（バイアス/切片）: x = 0 のときの y の値
 
-For multiple inputs (features), this extends to:
+複数の入力（特徴量）がある場合は、次のように拡張されます。
 
 ```
 y = w1*x1 + w2*x2 + ... + wn*xn + b
 ```
 
-Or in vector form: `y = w^T * x + b`
+ベクトル形式では `y = w^T * x + b` です。
 
-The goal: find the values of w and b that make the predicted y as close as possible to the actual y across all training examples.
+目標は、すべての訓練例において、予測された y が実際の y にできるだけ近くなるような w と b の値を見つけることです。
 
-### The Cost Function (Mean Squared Error)
+### コスト関数（平均二乗誤差）
 
-How do you measure "as close as possible"? You need a single number that captures how wrong your predictions are. The most common choice is Mean Squared Error (MSE):
+「できるだけ近い」をどう測ればよいでしょうか。予測がどれだけ間違っているかを表す単一の数値が必要です。最も一般的な選択肢は平均二乗誤差（MSE）です。
 
 ```
 MSE = (1/n) * sum((y_predicted - y_actual)^2)
 ```
 
-Why squared? Two reasons. First, it penalizes large errors more than small errors (an error of 10 is 100x worse than an error of 1, not 10x). Second, the squared function is smooth and differentiable everywhere, which makes optimization straightforward.
+なぜ二乗するのでしょうか。理由は 2 つあります。第一に、大きな誤差を小さな誤差より強く罰します（誤差 10 は誤差 1 の 10 倍ではなく 100 倍悪い）。第二に、二乗関数は滑らかでどこでも微分可能なので、最適化が扱いやすくなります。
 
-The cost function creates a surface. For a single weight w and bias b, the MSE surface looks like a bowl (a convex paraboloid). The bottom of the bowl is where MSE is minimized. Training means finding that bottom.
+コスト関数は曲面を作ります。重み w とバイアス b が 1 つずつの場合、MSE の曲面はお椀のような形（凸放物面）になります。その底が MSE を最小にする場所です。学習とは、その底を見つけることです。
 
-### Gradient Descent
+### 勾配降下法
 
-Gradient descent finds the bottom of the bowl by taking steps downhill.
+勾配降下法は、下り坂へ一歩ずつ進むことで曲面の底を見つけます。
 
 ```mermaid
 flowchart TD
-    A[Initialize w and b randomly] --> B[Compute predictions: y_hat = wx + b]
-    B --> C[Compute cost: MSE]
-    C --> D[Compute gradients: dMSE/dw, dMSE/db]
-    D --> E[Update parameters]
-    E --> F{Cost low enough?}
-    F -->|No| B
-    F -->|Yes| G[Done: optimal w and b found]
+    A[w と b をランダムに初期化] --> B[予測を計算: y_hat = wx + b]
+    B --> C[コストを計算: MSE]
+    C --> D[勾配を計算: dMSE/dw, dMSE/db]
+    D --> E[パラメータを更新]
+    E --> F{コストは十分低いか}
+    F -->|いいえ| B
+    F -->|はい| G[完了: 最適な w と b を発見]
 ```
 
-The gradients tell you two things: which direction to move each parameter, and how much to move.
+勾配は 2 つのことを教えてくれます。各パラメータをどちらの方向へ動かすべきか、そしてどれだけ動かすべきかです。
 
-For MSE with y_hat = wx + b:
+y_hat = wx + b の MSE では次のようになります。
 
 ```
 dMSE/dw = (2/n) * sum((y_hat - y) * x)
 dMSE/db = (2/n) * sum(y_hat - y)
 ```
 
-The update rule:
+更新式は次のとおりです。
 
 ```
 w = w - learning_rate * dMSE/dw
 b = b - learning_rate * dMSE/db
 ```
 
-The learning rate controls step size. Too large: you overshoot the minimum and diverge. Too small: training takes forever. Typical starting values: 0.01, 0.001, or 0.0001.
+学習率はステップサイズを制御します。大きすぎると最小値を飛び越えて発散します。小さすぎると学習に非常に時間がかかります。典型的な初期値は 0.01、0.001、0.0001 です。
 
-### The Normal Equation (Closed-Form Solution)
+### 正規方程式（閉形式解）
 
-For linear regression specifically, there is a direct formula that gives the optimal weights without any iteration:
+線形回帰に限ると、反復なしで最適な重みを直接与える数式があります。
 
 ```
 w = (X^T * X)^(-1) * X^T * y
 ```
 
-This inverts a matrix to solve for w in one step. It works perfectly for small datasets. For large datasets (millions of rows or thousands of features), gradient descent is preferred because matrix inversion is O(n^3) in the number of features.
+これは行列を反転し、1 ステップで w を解きます。小さなデータセットでは非常によく機能します。大きなデータセット（数百万行、または数千特徴量）では、行列反転が特徴量数に対して O(n^3) になるため、勾配降下法が好まれます。
 
-### Multiple Linear Regression
+### 重回帰
 
-With multiple features, the model becomes:
+複数の特徴量がある場合、モデルは次のようになります。
 
 ```
 y = w1*x1 + w2*x2 + ... + wn*xn + b
 ```
 
-Everything works the same: MSE is the cost function, gradient descent updates all weights simultaneously. The only difference is that you are fitting a hyperplane instead of a line.
+仕組みは同じです。MSE がコスト関数で、勾配降下法がすべての重みを同時に更新します。唯一の違いは、直線ではなく超平面を当てはめていることです。
 
-Feature scaling matters here. If one feature ranges from 0 to 1 and another ranges from 0 to 1,000,000, gradient descent will struggle because the cost surface becomes elongated. Standardize features (subtract mean, divide by standard deviation) before training.
+ここでは特徴量スケーリングが重要です。一方の特徴量が 0 から 1、別の特徴量が 0 から 1,000,000 の範囲を取ると、コスト面が細長くなるため、勾配降下法は苦労します。学習前に特徴量を標準化（平均を引き、標準偏差で割る）してください。
 
-### Polynomial Regression
+### 多項式回帰
 
-What if the relationship is not linear? You can still use linear regression by creating polynomial features:
+関係が線形でない場合はどうすればよいでしょうか。多項式特徴量を作れば、それでも線形回帰を使えます。
 
 ```
 y = w1*x + w2*x^2 + w3*x^3 + b
 ```
 
-This is still "linear" regression because the model is linear in the weights (w1, w2, w3). You are just using nonlinear features of x.
+これはまだ「線形」回帰です。モデルが重み（w1, w2, w3）に関して線形だからです。単に x の非線形特徴量を使っているだけです。
 
-Higher-degree polynomials can fit more complex curves but risk overfitting. A degree-10 polynomial will pass through every point in a 10-point dataset but predict poorly on new data.
+高次の多項式はより複雑な曲線に適合できますが、過学習のリスクがあります。10 点のデータセットに 10 次多項式を使うと、すべての点を通る一方で新しいデータへの予測は悪くなります。
 
-### R-Squared Score
+### R-squared スコア
 
-MSE tells you how wrong you are, but the number depends on the scale of y. R-squared (R^2) gives a scale-independent measure:
+MSE はどれだけ間違っているかを示しますが、その数値は y のスケールに依存します。R-squared（R^2）はスケールに依存しない指標を与えます。
 
 ```
-R^2 = 1 - (sum of squared residuals) / (sum of squared deviations from mean)
+R^2 = 1 - (残差平方和) / (平均との差の平方和)
     = 1 - SS_res / SS_tot
 ```
 
-- R^2 = 1.0: perfect predictions
-- R^2 = 0.0: the model is no better than predicting the mean every time
-- R^2 < 0.0: the model is worse than predicting the mean
+- R^2 = 1.0: 完全な予測
+- R^2 = 0.0: 毎回平均を予測する場合と変わらない
+- R^2 < 0.0: 平均を予測するより悪い
 
-### Regularization Preview (Ridge Regression)
+### 正則化の予告（Ridge 回帰）
 
-When you have many features, the model can overfit by assigning large weights. Ridge regression (L2 regularization) adds a penalty:
+特徴量が多いと、モデルは大きな重みを割り当てることで過学習することがあります。Ridge 回帰（L2 正則化）は罰則を追加します。
 
 ```
 Cost = MSE + lambda * sum(w_i^2)
 ```
 
-The penalty term discourages large weights. The hyperparameter lambda controls the tradeoff: higher lambda means smaller weights and more regularization. This is covered in depth in a later lesson. For now, know that it exists and why it helps.
+罰則項は大きな重みを抑制します。ハイパーパラメータ lambda はトレードオフを制御します。lambda が高いほど重みは小さくなり、正則化は強くなります。これは後のレッスンで詳しく扱います。今は、それが存在し、なぜ役に立つのかを理解しておけば十分です。
 
-## Build It
+## 作ってみる
 
-### Step 1: Generate sample data
+### ステップ 1: サンプルデータを生成する
 
 ```python
 import random
@@ -169,7 +169,7 @@ print(f"True relationship: y = {TRUE_W}x + {TRUE_B} (+ noise)")
 print(f"First 5 points: {[(round(X[i], 2), round(y[i], 2)) for i in range(5)]}")
 ```
 
-### Step 2: Linear regression from scratch with gradient descent
+### ステップ 2: 勾配降下法で線形回帰をゼロから実装する
 
 ```python
 class LinearRegression:
@@ -222,7 +222,7 @@ print(f"True:    y = {TRUE_W}x + {TRUE_B}")
 print(f"R-squared: {model.r_squared(X, y):.4f}")
 ```
 
-### Step 3: Normal equation (closed-form solution)
+### ステップ 3: 正規方程式（閉形式解）
 
 ```python
 class LinearRegressionNormal:
@@ -258,7 +258,7 @@ print(f"Learned: y = {model_normal.w:.4f}x + {model_normal.b:.4f}")
 print(f"R-squared: {model_normal.r_squared(X, y):.4f}")
 ```
 
-### Step 4: Multiple linear regression
+### ステップ 4: 重回帰
 
 ```python
 class MultipleLinearRegression:
@@ -347,7 +347,7 @@ print(f"Bias (standardized): {multi_model.bias:.4f}")
 print(f"R-squared: {multi_model.r_squared(X_scaled, y_scaled):.4f}")
 ```
 
-### Step 5: Polynomial regression
+### ステップ 5: 多項式回帰
 
 ```python
 class PolynomialRegression:
@@ -415,7 +415,7 @@ print("\nDegree 2 fits the true curve well. Degree 5 fits training data slightly
 print("but risks overfitting on new data.")
 ```
 
-### Step 6: Ridge regression (L2 regularization)
+### ステップ 6: Ridge 回帰（L2 正則化）
 
 ```python
 class RidgeRegression:
@@ -460,9 +460,9 @@ print(f"Plain weights: {[round(w, 4) for w in multi_model.weights]}")
 print("Ridge weights are smaller (shrunk toward zero) due to the L2 penalty.")
 ```
 
-## Use It
+## 使ってみる
 
-Now the same thing with scikit-learn, which is what you will actually use in production.
+次は、本番で実際に使うことになる scikit-learn で同じことを行います。
 
 ```python
 from sklearn.linear_model import LinearRegression as SklearnLR
@@ -506,39 +506,39 @@ print(f"Ridge R-squared: {r2_score(y_test, ridge.predict(X_test_scaled)):.4f}")
 print(f"Ridge coefficient: {ridge.coef_[0]:.4f}")
 ```
 
-Your from-scratch implementation and scikit-learn produce the same results. The difference: scikit-learn handles edge cases, numerical stability, and performance optimizations. Use the library for production. Use the from-scratch version to understand what is happening.
+ゼロから実装したものと scikit-learn は同じ結果を出します。違いは、scikit-learn がエッジケース、数値安定性、性能最適化を扱ってくれることです。本番ではライブラリを使ってください。何が起きているかを理解するために、ゼロからの実装を使ってください。
 
-## Ship It
+## 仕上げる
 
-This lesson produces:
-- `outputs/skill-regression.md` - a skill for choosing the right regression approach based on the problem
+このレッスンでは次を作成します。
+- `outputs/skill-regression.md` - 問題に応じて適切な回帰手法を選ぶためのスキル
 
-## Exercises
+## 演習
 
-1. Implement batch gradient descent, stochastic gradient descent (SGD), and mini-batch gradient descent. Compare convergence speed on the same dataset. Which converges fastest? Which has the smoothest cost curve?
-2. Generate data from a cubic function (y = ax^3 + bx^2 + cx + d + noise). Fit polynomials of degree 1, 3, and 10. Compare training R^2 and test R^2. At what degree does overfitting become obvious?
-3. Implement Lasso regression (L1 regularization: penalty = alpha * sum(|w_i|)). Train on the multi-feature housing data. Compare which weights go to zero vs Ridge. Why does L1 produce sparse solutions while L2 does not?
+1. バッチ勾配降下法、確率的勾配降下法（SGD）、ミニバッチ勾配降下法を実装してください。同じデータセットで収束速度を比較してください。どれが最も速く収束しますか。どれが最も滑らかなコスト曲線になりますか。
+2. 3 次関数（y = ax^3 + bx^2 + cx + d + noise）からデータを生成してください。1 次、3 次、10 次の多項式を当てはめ、訓練 R^2 とテスト R^2 を比較してください。どの次数で過学習が明らかになりますか。
+3. Lasso 回帰（L1 正則化: penalty = alpha * sum(|w_i|)）を実装してください。複数特徴量の住宅データで学習し、Ridge と比べてどの重みがゼロになるかを比較してください。L1 はなぜスパースな解を作り、L2 はそうならないのでしょうか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Linear regression | "Draw a line through data" | Find weight w and bias b that minimize the sum of squared differences between wx+b and actual y values |
-| Cost function | "How bad the model is" | A function that maps model parameters to a single number measuring prediction error, which optimization minimizes |
-| Mean squared error | "Average of squared errors" | (1/n) * sum of (predicted - actual)^2, penalizing large errors disproportionately |
-| Gradient descent | "Walk downhill" | Iteratively adjust parameters in the direction that reduces the cost function, using partial derivatives |
-| Learning rate | "Step size" | A scalar that controls how much parameters change per gradient descent step |
-| Normal equation | "Solve it directly" | The closed-form solution w = (X^T X)^-1 X^T y that gives optimal weights without iteration |
-| R-squared | "How good the fit is" | The fraction of variance in y explained by the model, ranging from negative infinity to 1.0 |
-| Feature scaling | "Make features comparable" | Transforming features to similar ranges (e.g., zero mean, unit variance) so gradient descent converges faster |
-| Regularization | "Penalize complexity" | Adding a term to the cost function that shrinks weights, preventing overfitting |
-| Ridge regression | "L2 regularization" | Linear regression with a penalty of lambda * sum(w_i^2) added to MSE |
-| Polynomial regression | "Fitting curves with linear math" | Linear regression on polynomial features (x, x^2, x^3, ...), still linear in the weights |
-| Overfitting | "Memorizing training data" | Using a model so complex that it fits noise in training data and fails on new data |
+| Linear regression | 「データに直線を引く」 | wx+b と実際の y 値の二乗差の合計を最小化する重み w とバイアス b を見つけること |
+| Cost function | 「モデルがどれくらい悪いか」 | モデルパラメータを、予測誤差を表す単一の数値に写像する関数。最適化はこれを最小化する |
+| Mean squared error | 「二乗誤差の平均」 | (1/n) * sum of (predicted - actual)^2。大きな誤差を不釣り合いに強く罰する |
+| Gradient descent | 「下り坂を歩く」 | 偏微分を使い、コスト関数を減らす方向へパラメータを反復的に調整すること |
+| Learning rate | 「ステップサイズ」 | 勾配降下法の 1 ステップごとにパラメータをどれだけ変化させるかを制御するスカラー |
+| Normal equation | 「直接解く」 | 反復なしで最適な重みを与える閉形式解 w = (X^T X)^-1 X^T y |
+| R-squared | 「適合の良さ」 | y の分散のうちモデルが説明する割合。負の無限大から 1.0 までの範囲を取る |
+| Feature scaling | 「特徴量を比較可能にする」 | 勾配降下法がより速く収束するよう、特徴量を似た範囲（例: 平均 0、分散 1）へ変換すること |
+| Regularization | 「複雑さを罰する」 | 過学習を防ぐため、重みを縮小する項をコスト関数へ追加すること |
+| Ridge regression | 「L2 正則化」 | MSE に lambda * sum(w_i^2) の罰則を追加した線形回帰 |
+| Polynomial regression | 「線形の数学で曲線を当てはめる」 | 多項式特徴量（x, x^2, x^3, ...）に対する線形回帰。重みに関しては依然として線形 |
+| Overfitting | 「訓練データを暗記する」 | 訓練データのノイズまで適合するほど複雑なモデルを使い、新しいデータで失敗すること |
 
-## Further Reading
+## 参考文献
 
-- [An Introduction to Statistical Learning (ISLR)](https://www.statlearning.com/) -- free PDF, chapters 3 and 6 cover linear regression and regularization with practical R examples
-- [The Elements of Statistical Learning (ESL)](https://hastie.su.domains/ElemStatLearn/) -- free PDF, the more mathematical companion to ISLR with deeper treatment of ridge and lasso
-- [Stanford CS229 Lecture Notes on Linear Regression](https://cs229.stanford.edu/main_notes.pdf) -- Andrew Ng's notes deriving the normal equation and gradient descent from first principles
-- [scikit-learn LinearRegression documentation](https://scikit-learn.org/stable/modules/linear_model.html) -- practical reference for LinearRegression, Ridge, Lasso, and ElasticNet with code examples
+- [An Introduction to Statistical Learning (ISLR)](https://www.statlearning.com/) -- 無料 PDF。第 3 章と第 6 章で、線形回帰と正則化を実践的な R の例とともに扱う
+- [The Elements of Statistical Learning (ESL)](https://hastie.su.domains/ElemStatLearn/) -- 無料 PDF。ISLR のより数学的な姉妹編で、ridge と lasso をより深く扱う
+- [Stanford CS229 Lecture Notes on Linear Regression](https://cs229.stanford.edu/main_notes.pdf) -- Andrew Ng による、正規方程式と勾配降下法を第一原理から導出するノート
+- [scikit-learn LinearRegression documentation](https://scikit-learn.org/stable/modules/linear_model.html) -- LinearRegression、Ridge、Lasso、ElasticNet をコード例とともに扱う実用的リファレンス

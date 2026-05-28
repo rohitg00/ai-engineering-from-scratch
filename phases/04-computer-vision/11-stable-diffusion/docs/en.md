@@ -1,30 +1,30 @@
-# Stable Diffusion — Architecture & Fine-Tuning
+# Stable Diffusion — アーキテクチャと Fine-Tuning
 
-> Stable Diffusion is a DDPM that runs in the latent space of a pretrained VAE, conditioned on text via cross-attention, sampled with a fast deterministic ODE solver, and steered by classifier-free guidance.
+> Stable Diffusion は、pretrained VAE の latent space で動く DDPM です。text による conditioning は cross-attention で行い、高速な deterministic ODE solver で sample し、classifier-free guidance で誘導します。
 
-**Type:** Learn + Use
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 10 (Diffusion), Phase 7 Lesson 02 (Self-Attention)
-**Time:** ~75 minutes
+**種別:** 学習 + 活用
+**言語:** Python
+**前提条件:** Phase 4 Lesson 10 (Diffusion), Phase 7 Lesson 02 (Self-Attention)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Trace the five pieces of a Stable Diffusion pipeline: VAE, text encoder, U-Net, scheduler, safety checker — and what each of them actually does
-- Explain latent diffusion and why training in a 4x64x64 latent space (instead of a 3x512x512 image) reduces compute by 48x without quality loss
-- Use `diffusers` to generate images, run image-to-image, inpainting, and ControlNet-guided generation
-- Fine-tune Stable Diffusion with LoRA on a small custom dataset and load the LoRA adapter at inference
+- Stable Diffusion pipeline の 5 つの部品、VAE、text encoder、U-Net、scheduler、safety checker を追跡し、それぞれが実際に何をするかを説明する
+- latent diffusion を説明し、3x512x512 image ではなく 4x64x64 latent space で学習すると、品質を落とさず compute が 48x 減る理由を説明する
+- `diffusers` を使って image generation、image-to-image、inpainting、ControlNet-guided generation を実行する
+- 小さな custom dataset で Stable Diffusion を LoRA fine-tune し、inference で LoRA adapter を読み込む
 
-## The Problem
+## 問題
 
-Training a DDPM directly on 512x512 RGB images is expensive. Every training step backprops through a U-Net that sees 3x512x512 = 786,432 input values, and sampling takes 50+ forward passes through that same U-Net. At the quality level of Stable Diffusion 1.5 (released 2022), pixel-space diffusion would need roughly 256 GPU-months of training and 10-30 seconds per image on a consumer GPU.
+512x512 RGB images 上で DDPM を直接学習するのは高価です。各 training step は 3x512x512 = 786,432 input values を見る U-Net を backprop し、sampling は同じ U-Net を 50 回以上 forward します。Stable Diffusion 1.5（2022 年リリース）の品質水準では、pixel-space diffusion はおよそ 256 GPU-months の学習と、consumer GPU で 1 画像あたり 10-30 秒を必要とします。
 
-The trick that made open-weight text-to-image practical was **latent diffusion** (Rombach et al., CVPR 2022). Train a VAE that maps a 3x512x512 image to a 4x64x64 latent tensor and back, then do the diffusion in that latent space. Compute drops by `(3*512*512)/(4*64*64) = 48x`. Sampling drops from tens of seconds to under two seconds on the same GPU.
+open-weight text-to-image を実用化した工夫が **latent diffusion**（Rombach et al., CVPR 2022）です。3x512x512 image を 4x64x64 latent tensor に写像し戻す VAE を学習し、その latent space で diffusion を行います。compute は `(3*512*512)/(4*64*64) = 48x` 下がります。sampling は同じ GPU で数十秒から 2 秒未満になります。
 
-Almost every modern image-generation model — SDXL, SD3, FLUX, HunyuanDiT, Wan-Video — is a latent diffusion model with variations on the autoencoder, the denoiser (U-Net or DiT), and the text conditioning. Learn Stable Diffusion and you have learnt the template.
+ほぼすべての現代的 image-generation model、SDXL、SD3、FLUX、HunyuanDiT、Wan-Video は latent diffusion model であり、autoencoder、denoiser（U-Net または DiT）、text conditioning に variation があります。Stable Diffusion を学べば、その template を学んだことになります。
 
-## The Concept
+## コンセプト
 
-### The pipeline
+### Pipeline
 
 ```mermaid
 flowchart LR
@@ -45,46 +45,46 @@ flowchart LR
     style IMG fill:#dcfce7,stroke:#16a34a
 ```
 
-- **VAE** — frozen autoencoder. Encoder turns image into latents (used for img2img and training). Decoder turns latents back into an image.
-- **Text encoder** — CLIP text encoder (SD 1.x/2.x), CLIP-L + CLIP-G (SDXL), or T5-XXL (SD3/FLUX). Produces a sequence of token embeddings.
-- **U-Net** — the denoiser. Has cross-attention layers that attend from latents to the text embedding at every resolution level.
-- **Scheduler** — the sampling algorithm (DDIM, Euler, DPM-Solver++). Picks sigmas, blends predicted noise back into the latent.
-- **Safety checker** — optional NSFW / illegal-content filter on the output image.
+- **VAE** — frozen autoencoder。Encoder は image を latents に変換します（img2img と training で使用）。Decoder は latents を image に戻します。
+- **Text encoder** — CLIP text encoder（SD 1.x/2.x）、CLIP-L + CLIP-G（SDXL）、または T5-XXL（SD3/FLUX）。token embeddings の sequence を生成します。
+- **U-Net** — denoiser。各 resolution level に、latents から text embedding へ attend する cross-attention layers を持ちます。
+- **Scheduler** — sampling algorithm（DDIM、Euler、DPM-Solver++）。sigmas を選び、predicted noise を latent に戻し混ぜます。
+- **Safety checker** — output image に対する任意の NSFW / illegal-content filter。
 
 ### Classifier-free guidance (CFG)
 
-Plain text conditioning learns `epsilon_theta(x_t, t, c)` for every prompt `c`. CFG trains the same network with `c` dropped 10% of the time (replaced by an empty embedding), giving a single model that predicts both the conditional and the unconditional noise. At inference:
+通常の text conditioning は、すべての prompt `c` について `epsilon_theta(x_t, t, c)` を学びます。CFG は同じ network を、10% の確率で `c` を落とした状態（empty embedding に置換）でも学習します。これにより、単一 model が conditional と unconditional の noise を両方予測できます。inference では次の式を使います。
 
 ```
 eps = eps_uncond + w * (eps_cond - eps_uncond)
 ```
 
-`w` is the guidance scale. `w=0` is unconditional, `w=1` is plain conditional, `w>1` pushes the output toward being "more conditioned on the prompt" at the cost of diversity. SD default is `w=7.5`.
+`w` は guidance scale です。`w=0` は unconditional、`w=1` は plain conditional、`w>1` は diversity を犠牲にしつつ output を「より prompt に条件づけられた」方向へ押します。SD の default は `w=7.5` です。
 
-CFG is the reason text-to-image works at production quality. Without it, prompts bias the output weakly; with it, prompts dominate.
+CFG は text-to-image が production quality で動く理由です。これがないと prompt の影響は弱く、これがあると prompt が支配的になります。
 
 ### Latent space geometry
 
-The VAE's 4-channel latent is not just a compressed image. It is a manifold where arithmetic roughly corresponds to semantic edits (prompt engineering + interpolation both live here), and where the diffusion U-Net has been trained to spend its entire modelling budget. Decoding a random 4x64x64 latent does not produce a random-looking image — it produces garbage, because only a specific submanifold of latents decodes to valid images.
+VAE の 4-channel latent は単なる compressed image ではありません。そこは arithmetic が意味的編集におおむね対応する manifold であり、prompt engineering と interpolation はどちらもここにあります。diffusion U-Net は model budget のすべてをここに使うよう学習されています。random な 4x64x64 latent を decode しても random-looking image にはなりません。valid images に decode されるのは latent の特定の submanifold だけなので、garbage になります。
 
-Two consequences:
+2 つの帰結があります。
 
-1. **Img2img** = encode image to latent, add partial noise, run the denoiser, decode. Image structure survives because encoding is near-invertible; content changes based on the prompt.
-2. **Inpainting** = same as img2img but the denoiser only updates masked regions; unmasked regions are kept at the encoded latent.
+1. **Img2img** = image を latent に encode し、partial noise を加え、denoiser を走らせ、decode する。encoding がほぼ可逆なので image structure は残り、content は prompt に応じて変わる。
+2. **Inpainting** = img2img と同じだが、denoiser は masked regions だけを更新する。unmasked regions は encoded latent のまま保持される。
 
-### The U-Net architecture
+### U-Net architecture
 
-The SD U-Net is a big version of the TinyUNet from Lesson 10 with three additions:
+SD U-Net は Lesson 10 の TinyUNet を大きくしたものに、3 つの追加があります。
 
-- **Transformer blocks** at every spatial resolution, containing self-attention + cross-attention to the text embedding.
-- **Time embedding** via MLP on sinusoidal encoding.
-- **Skip connections** between encoder and decoder at matching resolutions.
+- 各 spatial resolution の **Transformer blocks**。self-attention + text embedding への cross-attention を含む。
+- sinusoidal encoding 上の MLP による **Time embedding**。
+- matching resolutions の encoder と decoder 間の **Skip connections**。
 
-Total parameters in SD 1.5: ~860M. SDXL: ~2.6B. FLUX: ~12B. The jump in params is mostly in attention layers.
+SD 1.5 の総 parameters は約 860M。SDXL は約 2.6B。FLUX は約 12B。parameters の増加は主に attention layers にあります。
 
 ### LoRA fine-tuning
 
-Full fine-tuning of Stable Diffusion needs 20+ GB of VRAM and updates 860M parameters. LoRA (Low-Rank Adaptation) keeps the base model frozen and injects small rank-decomposition matrices into the attention layers. A LoRA adapter for SD is typically 10-50 MB, trains in 10-60 minutes on a single consumer GPU, and loads at inference time as a drop-in modification.
+Stable Diffusion の full fine-tuning は 20+ GB の VRAM を必要とし、860M parameters を更新します。LoRA（Low-Rank Adaptation）は base model を frozen のままにし、attention layers に小さな rank-decomposition matrices を注入します。SD 用 LoRA adapter は通常 10-50 MB で、single consumer GPU で 10-60 分で学習でき、inference time に drop-in modification として読み込めます。
 
 ```
 Original: W_q : (d_in, d_out)   frozen
@@ -93,20 +93,20 @@ LoRA:     W_q + alpha * (A @ B)   where A : (d_in, r), B : (r, d_out)
 r is typically 4-32.
 ```
 
-LoRA is how almost every community fine-tune is distributed. CivitAI and Hugging Face host millions of them.
+LoRA はほぼすべての community fine-tune が配布される形式です。CivitAI と Hugging Face はそれらを大量に host しています。
 
-### Schedulers you will see
+### よく見る schedulers
 
-- **DDIM** — deterministic, ~50 steps, simple.
-- **Euler ancestral** — stochastic, 30-50 steps, slightly more creative samples.
-- **DPM-Solver++ 2M Karras** — deterministic, 20-30 steps, production default.
-- **LCM / TCD / Turbo** — consistency models and distilled variants; 1-4 steps at the cost of some quality.
+- **DDIM** — deterministic、約 50 steps、simple。
+- **Euler ancestral** — stochastic、30-50 steps、少し creative な samples。
+- **DPM-Solver++ 2M Karras** — deterministic、20-30 steps、production default。
+- **LCM / TCD / Turbo** — consistency models と distilled variants。品質を多少犠牲にして 1-4 steps。
 
-Swapping schedulers is a one-line change in `diffusers` and sometimes fixes sample issues without any retraining.
+`diffusers` では scheduler の差し替えは 1 行で、retraining なしに sample issues を直せることがあります。
 
-## Build It
+## 実装
 
-This lesson uses `diffusers` end-to-end rather than rebuilding Stable Diffusion from scratch. The pieces you would need to rebuild (VAE, text encoder, U-Net, scheduler) are topics of their own lessons; here the goal is fluency with the production API.
+この lesson では Stable Diffusion を scratch から再構築せず、`diffusers` を end-to-end で使います。再構築に必要な部品（VAE、text encoder、U-Net、scheduler）はそれぞれ別 lesson の主題です。ここでの目標は production API に慣れることです。
 
 ### Step 1: Text-to-image
 
@@ -128,9 +128,9 @@ image = pipe(
 image.save("dog.png")
 ```
 
-`float16` halves VRAM with no visible quality loss. `num_inference_steps=25` with the default DPM-Solver++ matches `num_inference_steps=50` with DDIM.
+`float16` は目に見える品質低下なしに VRAM を半分にします。default DPM-Solver++ の `num_inference_steps=25` は DDIM の `num_inference_steps=50` に匹敵します。
 
-### Step 2: Swap the scheduler
+### Step 2: Scheduler を差し替える
 
 ```python
 from diffusers import DPMSolverMultistepScheduler, EulerAncestralDiscreteScheduler
@@ -139,7 +139,7 @@ pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
 pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)
 ```
 
-Scheduler state is decoupled from U-Net weights. You can train on DDPM and sample with any scheduler.
+Scheduler state は U-Net weights から切り離されています。DDPM で学習し、任意の scheduler で sample できます。
 
 ### Step 3: Image-to-image
 
@@ -161,7 +161,7 @@ out = img2img(
 ).images[0]
 ```
 
-`strength` is how much noise to add before denoising (0.0 = unchanged, 1.0 = full regeneration). 0.5-0.7 is the standard range for style transfer.
+`strength` は denoising 前に加える noise の量です（0.0 = unchanged、1.0 = full regeneration）。style transfer では 0.5-0.7 が標準範囲です。
 
 ### Step 4: Inpainting
 
@@ -184,7 +184,7 @@ out = inpaint(
 ).images[0]
 ```
 
-White pixels in the mask are the area to regenerate. Black pixels are preserved.
+mask の white pixels が regenerate する領域です。black pixels は保持されます。
 
 ### Step 5: LoRA loading
 
@@ -195,11 +195,11 @@ pipe.fuse_lora(lora_scale=0.8)
 image = pipe(prompt="a village square in ghibli style").images[0]
 ```
 
-`lora_scale` controls strength; 0.0 = no effect, 1.0 = full effect. `fuse_lora` bakes the adapter into the weights in place for speed, but prevents swapping. Call `pipe.unfuse_lora()` before loading a different adapter.
+`lora_scale` は強さを制御します。0.0 = no effect、1.0 = full effect。`fuse_lora` は速度のため adapter を weights に in-place で焼き込みますが、差し替えを防ぎます。別の adapter を読み込む前に `pipe.unfuse_lora()` を呼びます。
 
 ### Step 6: LoRA training (sketch)
 
-Real LoRA training lives in `peft` or `diffusers.training`. The outline:
+実際の LoRA training は `peft` または `diffusers.training` にあります。概要は次の通りです。
 
 ```python
 # Pseudocode
@@ -220,48 +220,48 @@ for step, batch in enumerate(dataloader):
     optimizer.step()
 ```
 
-Only the LoRA matrices receive gradient; the base U-Net, VAE, and text encoder are frozen. With a batch size of 1 and gradient checkpointing this fits in 8 GB of VRAM.
+勾配を受け取るのは LoRA matrices だけです。base U-Net、VAE、text encoder は frozen です。batch size 1 と gradient checkpointing なら 8 GB の VRAM に収まります。
 
-## Use It
+## 使う
 
-In production, the decisions you actually make:
+production で実際に決めることは次の通りです。
 
-- **Model family**: SD 1.5 for open-source community fine-tunes, SDXL for higher fidelity, SD3 / FLUX for state of the art and strict licensing requirements.
-- **Scheduler**: DPM-Solver++ 2M Karras for 20-30 steps, LCM-LoRA when latency is under 1s.
-- **Precision**: `float16` on 4080/4090, `bfloat16` on A100 and newer, `int8` (via `bitsandbytes` or `compel`) when VRAM is tight.
-- **Conditioning**: plain text works; for stronger control, add ControlNet (canny, depth, pose) on top of the base pipeline.
+- **Model family**: open-source community fine-tunes では SD 1.5、高 fidelity では SDXL、state of the art と厳密な licensing requirements では SD3 / FLUX。
+- **Scheduler**: 20-30 steps の DPM-Solver++ 2M Karras、latency が 1s 未満なら LCM-LoRA。
+- **Precision**: 4080/4090 では `float16`、A100 以降では `bfloat16`、VRAM が厳しいときは `int8`（`bitsandbytes` または `compel` 経由）。
+- **Conditioning**: plain text は動く。より強い制御には base pipeline に ControlNet（canny、depth、pose）を追加する。
 
-For batch generation, `AUTO1111` / `ComfyUI` are the community tools; for production APIs, `diffusers` + `accelerate` or `optimum-nvidia` with TensorRT compilation.
+batch generation では `AUTO1111` / `ComfyUI` が community tools です。production APIs では `diffusers` + `accelerate`、または TensorRT compilation を伴う `optimum-nvidia` を使います。
 
-## Ship It
+## 成果物
 
-This lesson produces:
+この lesson は次を生成します。
 
-- `outputs/prompt-sd-pipeline-planner.md` — a prompt that picks SD 1.5 / SDXL / SD3 / FLUX plus scheduler and precision given a latency budget, fidelity target, and licensing constraint.
-- `outputs/skill-lora-training-setup.md` — a skill that writes a full LoRA training config for a custom dataset including captions, rank, batch size, and learning rate.
+- `outputs/prompt-sd-pipeline-planner.md` — latency budget、fidelity target、licensing constraint から SD 1.5 / SDXL / SD3 / FLUX と scheduler と precision を選ぶ prompt。
+- `outputs/skill-lora-training-setup.md` — custom dataset 用に captions、rank、batch size、learning rate を含む完全な LoRA training config を書く skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Generate the same prompt with `guidance_scale` in `[1, 3, 5, 7.5, 10, 15]`. Describe how the image changes. At what guidance value do artefacts appear?
-2. **(Medium)** Take any real photograph, run it through `StableDiffusionImg2ImgPipeline` at `strength` in `[0.2, 0.4, 0.6, 0.8, 1.0]`. Which strength preserves composition while changing style? Why does 1.0 ignore the input entirely?
-3. **(Hard)** Train a LoRA on 10-20 images of a single subject (a pet, a logo, a character) and generate novel scenes with that subject in them. Report the LoRA rank and training steps that produced the best identity preservation without overfitting to the input images.
+1. **(Easy)** 同じ prompt を `guidance_scale` in `[1, 3, 5, 7.5, 10, 15]` で生成してください。image がどう変わるか説明してください。どの guidance value で artefacts が現れますか？
+2. **(Medium)** 任意の real photograph を `StableDiffusionImg2ImgPipeline` に通し、`strength` in `[0.2, 0.4, 0.6, 0.8, 1.0]` を試してください。どの strength が composition を保持しつつ style を変えますか？なぜ 1.0 は入力を完全に無視するのですか？
+3. **(Hard)** 単一 subject（pet、logo、character）の 10-20 images で LoRA を学習し、その subject を含む新しい scenes を生成してください。input images に overfit せず identity preservation が最も良かった LoRA rank と training steps を報告してください。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Latent diffusion | "Diffuse in latents" | Run the entire DDPM in the VAE latent space (4x64x64) instead of pixel space (3x512x512); 48x compute saving |
-| VAE scale factor | "0.18215" | Constant that rescales the VAE's raw latent to roughly unit variance; hardcoded in every SD pipeline |
-| Classifier-free guidance | "CFG" | Mix conditional and unconditional noise predictions; the single most impactful inference knob |
-| Scheduler | "Sampler" | The algorithm that turns noise + model predictions into a denoised latent trajectory |
-| LoRA | "Low-rank adapter" | Small rank-decomposition matrices that fine-tune attention layers without touching base weights |
-| Cross-attention | "Text-image attention" | Attention from latent tokens to text tokens; injects prompt information at every U-Net level |
-| ControlNet | "Structure conditioning" | A separately-trained adapter that steers SD with an extra input (canny, depth, pose, segmentation) |
-| DPM-Solver++ | "The default scheduler" | Second-order deterministic ODE solver; best quality at low step counts (20-30) in 2026 |
+| Latent diffusion | 「latents で diffuse」 | pixel space（3x512x512）ではなく VAE latent space（4x64x64）で DDPM 全体を実行する。compute saving は 48x |
+| VAE scale factor | 「0.18215」 | VAE の raw latent をおおむね unit variance に rescale する定数。すべての SD pipeline に hardcoded |
+| Classifier-free guidance | 「CFG」 | conditional と unconditional の noise predictions を混ぜる。最も影響の大きい inference knob |
+| Scheduler | 「Sampler」 | noise + model predictions を denoised latent trajectory に変換する algorithm |
+| LoRA | 「Low-rank adapter」 | base weights に触れず attention layers を fine-tune する小さな rank-decomposition matrices |
+| Cross-attention | 「Text-image attention」 | latent tokens から text tokens への attention。各 U-Net level に prompt information を注入する |
+| ControlNet | 「Structure conditioning」 | 追加 input（canny、depth、pose、segmentation）で SD を誘導する separately-trained adapter |
+| DPM-Solver++ | 「default scheduler」 | second-order deterministic ODE solver。2026 年時点で低 step counts（20-30）における最良品質 |
 
-## Further Reading
+## 参考文献
 
-- [High-Resolution Image Synthesis with Latent Diffusion (Rombach et al., 2022)](https://arxiv.org/abs/2112.10752) — the Stable Diffusion paper; includes every ablation that justifies the design
-- [Classifier-Free Diffusion Guidance (Ho & Salimans, 2022)](https://arxiv.org/abs/2207.12598) — the CFG paper
-- [LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021)](https://arxiv.org/abs/2106.09685) — LoRA was NLP-first; it transferred to SD with almost no changes
-- [diffusers documentation](https://huggingface.co/docs/diffusers) — the reference for every SD / SDXL / SD3 / FLUX pipeline
+- [High-Resolution Image Synthesis with Latent Diffusion (Rombach et al., 2022)](https://arxiv.org/abs/2112.10752) — Stable Diffusion paper。設計を正当化する ablation がすべて含まれる
+- [Classifier-Free Diffusion Guidance (Ho & Salimans, 2022)](https://arxiv.org/abs/2207.12598) — CFG paper
+- [LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021)](https://arxiv.org/abs/2106.09685) — LoRA は NLP-first で、ほぼ変更なしに SD へ移植された
+- [diffusers documentation](https://huggingface.co/docs/diffusers) — すべての SD / SDXL / SD3 / FLUX pipeline の reference

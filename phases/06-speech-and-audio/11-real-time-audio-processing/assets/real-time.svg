@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -7,18 +7,18 @@
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="440" y="28" text-anchor="middle" class="title">conversational voice pipeline — every 20 ms frame</text>
+  <text x="440" y="28" text-anchor="middle" class="title">会話音声パイプライン — 20 msフレームごと</text>
 
   <!-- Pipeline chain -->
   <rect x="40" y="60" width="130" height="60" class="box"/>
   <text x="105" y="82" text-anchor="middle" class="label">mic → ring</text>
-  <text x="105" y="102" text-anchor="middle" class="content">20 ms frames</text>
+  <text x="105" y="102" text-anchor="middle" class="content">20 msフレーム</text>
   <text x="105" y="115" text-anchor="middle" class="caption">16 kHz mono</text>
 
   <line x1="175" y1="90" x2="195" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -31,7 +31,7 @@
   <line x1="315" y1="90" x2="335" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="340" y="60" width="130" height="60" class="box"/>
-  <text x="405" y="82" text-anchor="middle" class="label">streaming ASR</text>
+  <text x="405" y="82" text-anchor="middle" class="label">ストリーミングASR</text>
   <text x="405" y="102" text-anchor="middle" class="content">Parakeet-CTC 0.6B</text>
   <text x="405" y="115" text-anchor="middle" class="caption">~150 ms</text>
 
@@ -39,30 +39,30 @@
 
   <rect x="500" y="60" width="110" height="60" class="hot"/>
   <text x="555" y="82" text-anchor="middle" class="label">LLM</text>
-  <text x="555" y="102" text-anchor="middle" class="content">first-token</text>
+  <text x="555" y="102" text-anchor="middle" class="content">初回トークン</text>
   <text x="555" y="115" text-anchor="middle" class="caption">~100 ms</text>
 
   <line x1="615" y1="90" x2="635" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="640" y="60" width="120" height="60" class="box"/>
-  <text x="700" y="82" text-anchor="middle" class="label">streaming TTS</text>
+  <text x="700" y="82" text-anchor="middle" class="label">ストリーミングTTS</text>
   <text x="700" y="102" text-anchor="middle" class="content">Kokoro / EL v2.5</text>
   <text x="700" y="115" text-anchor="middle" class="caption">~100 ms</text>
 
   <line x1="765" y1="90" x2="785" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="790" y="60" width="65" height="60" class="hot"/>
-  <text x="822" y="82" text-anchor="middle" class="label">speaker</text>
+  <text x="822" y="82" text-anchor="middle" class="label">スピーカー</text>
   <text x="822" y="102" text-anchor="middle" class="content">opus</text>
   <text x="822" y="115" text-anchor="middle" class="caption">~20 ms</text>
 
   <!-- Barge-in detection arrow -->
   <path d="M255,125 Q255,180 540,180 Q620,180 700,125" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
-  <text x="470" y="175" text-anchor="middle" class="caption" fill="#c0392b">barge-in: VAD cancels LLM + TTS mid-stream</text>
+  <text x="470" y="175" text-anchor="middle" class="caption" fill="#c0392b">割り込み: VADがストリーム途中でLLM + TTSをキャンセル</text>
 
   <!-- Latency totals -->
   <rect x="40" y="210" width="800" height="120" class="hot"/>
-  <text x="440" y="234" text-anchor="middle" class="label">2026 end-to-end latency leaderboard</text>
+  <text x="440" y="234" text-anchor="middle" class="label">2026年E2E遅延順位表</text>
   <line x1="80" y1="290" x2="820" y2="290" stroke="#1a1a1a" stroke-width="1"/>
   <rect x="80" y="270" width="32" height="20" fill="#c0392b"/>
   <text x="96" y="285" text-anchor="middle" class="content" font-size="10" fill="white">200</text>
@@ -75,16 +75,16 @@
   <text x="300" y="310" text-anchor="middle" class="caption" font-size="10">LiveKit cascade</text>
   <rect x="380" y="270" width="200" height="20" fill="#eed9a8"/>
   <text x="480" y="285" text-anchor="middle" class="content" font-size="10">1500</text>
-  <text x="480" y="310" text-anchor="middle" class="caption" font-size="10">batch ASR + chat + TTS</text>
+  <text x="480" y="310" text-anchor="middle" class="caption" font-size="10">バッチASR + チャット + TTS</text>
   <rect x="620" y="270" width="200" height="20" fill="#faf6ef" stroke="#1a1a1a"/>
   <text x="720" y="285" text-anchor="middle" class="content" font-size="10">2500+</text>
-  <text x="720" y="310" text-anchor="middle" class="caption" font-size="10">2022 cascaded</text>
+  <text x="720" y="310" text-anchor="middle" class="caption" font-size="10">2022年カスケード</text>
 
   <!-- Key rules -->
   <rect x="40" y="345" width="800" height="120" class="box"/>
-  <text x="440" y="368" text-anchor="middle" class="label">rules of thumb</text>
-  <text x="60"  y="394" class="content">20 ms frames</text>    <text x="220" y="394" class="caption">320 samples @ 16 kHz; everything downstream keeps the cadence</text>
-  <text x="60"  y="414" class="content">ring buffer</text>     <text x="220" y="414" class="caption">2 s = 32 000 samples; absorbs jitter without adding floor latency</text>
-  <text x="60"  y="434" class="content">AEC mandatory</text>   <text x="220" y="434" class="caption">without it, TTS output loops back into ASR and self-triggers</text>
-  <text x="60"  y="454" class="content">warm the TTS</text>    <text x="220" y="454" class="caption">prime vocoder before first turn or users feel the 150 ms warm-up</text>
+  <text x="440" y="368" text-anchor="middle" class="label">経験則</text>
+  <text x="60"  y="394" class="content">20 msフレーム</text>    <text x="220" y="394" class="caption">16 kHzで320サンプル。下流はすべてこの周期を保つ</text>
+  <text x="60"  y="414" class="content">リングバッファ</text>     <text x="220" y="414" class="caption">2 s = 32,000サンプル。下限遅延を増やさずジッタを吸収</text>
+  <text x="60"  y="434" class="content">AEC 必須</text>        <text x="220" y="434" class="caption">ないと TTS 出力が ASR に戻り 自己発火 する</text>
+  <text x="60"  y="454" class="content">TTSを予熱</text>     <text x="220" y="454" class="caption">初回ターン前にボコーダを準備。150 ms予熱を体感させない</text>
 </svg>

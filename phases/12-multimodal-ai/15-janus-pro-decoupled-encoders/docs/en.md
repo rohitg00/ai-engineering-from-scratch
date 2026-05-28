@@ -1,133 +1,133 @@
-# Janus-Pro: Decoupled Encoders for Unified Multimodal Models
+# Janus-Pro: Unified Multimodal Models のための Decoupled Encoders
 
-> Unified multimodal models have an unavoidable tension. Understanding wants semantic features — SigLIP or DINOv2 output vectors rich with concept-level information. Generation wants reconstruction-friendly codes — VQ tokens that compose back into crisp pixels. The two goals are not compatible in a single encoder. Janus (DeepSeek, October 2024) and Janus-Pro (DeepSeek, January 2025) argue the fix is to stop trying: decouple the two encoders. Share the transformer body between tasks, but route understanding through SigLIP and generation through a VQ tokenizer. At 7B, Janus-Pro beats DALL-E 3 on GenEval while matching LLaVA on MMMU. This lesson reads why two encoders work where one fails.
+> Unified multimodal models には避けられない緊張がある。Understanding は semantic features を欲しがる。SigLIP や DINOv2 の output vectors は concept-level information が豊かだ。Generation は reconstruction-friendly codes を欲しがる。VQ tokens は crisp pixels に戻しやすい。この2つの目標は、単一の encoder では両立しない。Janus (DeepSeek, 2024年10月) と Janus-Pro (DeepSeek, 2025年1月) は、解決策は無理に両立しようとしないことだと主張する。2つの encoders を decouple する。Tasks 間で transformer body は共有するが、understanding は SigLIP 経由、generation は VQ tokenizer 経由に route する。7B では Janus-Pro は GenEval で DALL-E 3 を上回り、MMMU では LLaVA に並ぶ。このレッスンでは、なぜ1つではなく2つの encoders が機能するのかを読む。
 
-**Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
-**Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
-**Time:** ~120 minutes
+**種類:** 構築
+**言語:** Python (stdlib, dual-encoder routing + shared-body signal)
+**前提:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Explain why a single shared encoder compromises either understanding or generation quality.
-- Describe Janus-Pro's routing: SigLIP features on the input side for understanding, VQ tokens on both input and output for generation.
-- Trace the data-mix scaling that makes Janus-Pro succeed where Janus did not.
-- Compare decoupled (Janus-Pro), coupled-continuous (Transfusion), and coupled-discrete (Show-o) architectures.
+- 単一の shared encoder が understanding または generation quality のどちらかを犠牲にする理由を説明する。
+- Janus-Pro の routing を説明する。Understanding の input side では SigLIP features、generation の input/output では VQ tokens。
+- Janus では成功しなかったところを Janus-Pro で成功させた data-mix scaling を追う。
+- Decoupled (Janus-Pro)、coupled-continuous (Transfusion)、coupled-discrete (Show-o) architectures を比較する。
 
-## The Problem
+## 問題
 
-Unified models share a transformer body across understanding and generation. Previous attempts (Chameleon, Show-o, Transfusion) all use one visual tokenizer for both directions. The tokenizer is a compromise:
+Unified models は understanding と generation の間で transformer body を共有する。これまでの試み (Chameleon, Show-o, Transfusion) は全て、両方向に1つの visual tokenizer を使う。Tokenizer は compromise になる:
 
-- Optimized for reconstruction (generation): VQ-VAE captures fine-grained pixel detail but produces tokens with weak semantic coherence.
-- Optimized for semantics (understanding): SigLIP embeddings group "cat" images near "cat" tokens but do not permit good reconstruction.
+- Reconstruction (generation) に最適化: VQ-VAE は fine-grained pixel detail を捉えるが、semantic coherence が弱い tokens を出す。
+- Semantics (understanding) に最適化: SigLIP embeddings は "cat" images を "cat" tokens の近くにまとめるが、良い reconstruction はできない。
 
-Show-o and Transfusion pay for this with a visible quality tax on one direction. Janus-Pro asks: why require one tokenizer when the tasks have different needs?
+Show-o と Transfusion は、このため片方向に visible quality tax を払う。Janus-Pro は問う。Tasks が違う要求を持つなら、なぜ1つの tokenizer を要求するのか。
 
-## The Concept
+## 概念
 
-### Decoupled visual encoding
+### Decoupled visual encoding の構造
 
-Janus-Pro's architecture separates the two encoders:
+Janus-Pro の architecture は2つの encoders を分ける:
 
-- Understanding path. Input image → SigLIP-SO400m → 2-layer MLP → transformer body.
-- Generation path. Input image (if conditioning on an existing image) → VQ tokenizer → token IDs → transformer body.
-- Output generation. Image tokens predicted by the transformer → VQ decoder → pixels.
+- Understanding path。Input image → SigLIP-SO400m → 2-layer MLP → transformer body。
+- Generation path。Input image (既存imageを condition する場合) → VQ tokenizer → token IDs → transformer body。
+- Output generation。Transformer が予測した image tokens → VQ decoder → pixels。
 
-The transformer body is shared. Everything upstream and downstream of the body is task-specific.
+Transformer body は共有される。Body の upstream と downstream は全て task-specific。
 
-Inputs are disambiguated by prompt format: a `<understand>` tag routes through SigLIP; `<generate>` routes through VQ. Or the routing is implicit from task.
+Inputs は prompt format で disambiguate される。`<understand>` tag は SigLIP に route し、`<generate>` は VQ に route する。または task から routing を暗黙に決める。
 
-### Why this works
+### これが機能する理由
 
-Understanding loss gets SigLIP features, which CLIP-style pretraining has tuned for semantic similarity. The model's perception benchmarks improve over Show-o / Transfusion because the input features are better for the task.
+Understanding loss は SigLIP features を受け取る。CLIP-style pretraining により semantic similarity に tuned されている。Input features が task に合うため、model の perception benchmarks は Show-o / Transfusion より改善する。
 
-Generation loss gets VQ tokens, which a tokenizer has tuned for reconstruction. Image quality improves over Show-o because VQ codes compose back to pixels cleanly.
+Generation loss は VQ tokens を受け取る。Tokenizer は reconstruction に tuned されている。VQ codes が pixels へ clean に compose されるため、image quality は Show-o より改善する。
 
-The shared transformer body sees two input distributions (SigLIP and VQ) and learns to work with both. The claim: enough data + enough parameters, the body absorbs the switching.
+Shared transformer body は2つの input distributions (SigLIP と VQ) を見て、両方で動くことを学ぶ。主張は、十分な data と parameters があれば body が switching を吸収する、というものだ。
 
-### Data scaling — Janus vs Janus-Pro
+### Data scaling — Janus と Janus-Pro
 
-Janus (original, arXiv 2410.13848) introduced the decoupling but at small scale (1.3B params, limited data). Janus-Pro (arXiv 2501.17811) scaled:
+Janus (original, arXiv 2410.13848) は decoupling を導入したが、small scale (1.3B params, limited data) だった。Janus-Pro (arXiv 2501.17811) は scale した:
 
-- 7B params (vs 1.3B).
-- 90M image-text pairs for stage 1 (alignment) up from 72M.
-- 72M for stage 2 (unified) up from 26M.
-- Added 200k image-gen instruction samples for stage 3.
+- 7B params (1.3B から拡大)。
+- Stage 1 (alignment) の image-text pairs は 72M から 90M へ。
+- Stage 2 (unified) は 26M から 72M へ。
+- Stage 3 に 200k image-gen instruction samples を追加。
 
-The upshot: Janus-Pro-7B matches LLaVA on MMMU (60.3 vs ~58) and beats DALL-E 3 on GenEval (0.80 vs 0.67). One open model, competitive on both sides of the unified spectrum.
+結果として、Janus-Pro-7B は MMMU で LLaVA に並び (60.3 vs ~58)、GenEval で DALL-E 3 を上回る (0.80 vs 0.67)。Unified spectrum の両側で competitive な1つの open model だ。
 
 ### JanusFlow — the rectified flow variant
 
-JanusFlow (arXiv 2411.07975) swaps the VQ generation path for a rectified-flow generation path (continuous). The split becomes SigLIP-for-understanding + rectified-flow-for-generation. Quality ceilings lift further. The architecture remains decoupled-encoders-shared-body.
+JanusFlow (arXiv 2411.07975) は VQ generation path を rectified-flow generation path (continuous) に置き換える。Split は SigLIP-for-understanding + rectified-flow-for-generation になる。Quality ceilings はさらに上がる。Architecture は decoupled-encoders-shared-body のままだ。
 
-### The shared body's job
+### Shared body の役割
 
-The transformer body processes a unified sequence but with two input distributions. Its job is to:
+Transformer body は unified sequence を処理するが、2つの input distributions を持つ。その仕事は:
 
-- For understanding: consume SigLIP features + text tokens → emit text autoregressively.
-- For generation: consume text tokens + (optional image VQ tokens) → emit image VQ tokens autoregressively.
+- Understanding: SigLIP features + text tokens を消費し、text を autoregressively に emit する。
+- Generation: text tokens + (optional image VQ tokens) を消費し、image VQ tokens を autoregressively に emit する。
 
-The body has no modality-specific weights per block. It is the text-style transformer you'd expect to find inside Qwen or Llama, plus the two input adapters.
+Body は blockごとの modality-specific weights を持たない。Qwen や Llama の内側にあると想像する text-style transformer に、2つの input adapters を足したものだ。
 
-Interestingly, this means Janus-Pro's body could be initialized from a pretrained LLM. Janus-Pro does initialize from DeepSeek-MoE-7B. That choice matters: the LLM contributes reasoning ability that pure-from-scratch unified models struggle to reach.
+興味深いことに、これは Janus-Pro の body を pretrained LLM から initialize できることを意味する。Janus-Pro は DeepSeek-MoE-7B から initialize する。この選択は重要だ。LLM は reasoning ability を持ち込み、pure-from-scratch unified models が到達しにくい性能を支える。
 
-### Compared to InternVL-U
+### InternVL-U との比較
 
-InternVL-U (Lesson 12.10) is the 2026 follow-up. It combines:
+InternVL-U (Lesson 12.10) は2026年の follow-up だ。次を組み合わせる:
 
-- Native multimodal pretraining (InternVL3 backbone).
-- Decoupled-encoder routing (SigLIP in, VQ + diffusion heads out).
-- Unified understanding + generation + editing.
+- Native multimodal pretraining (InternVL3 backbone)。
+- Decoupled-encoder routing (SigLIP in, VQ + diffusion heads out)。
+- Unified understanding + generation + editing。
 
-InternVL-U subsumes Janus-Pro's architectural choice into a larger framework. The decoupled-encoder idea is now the default for unified models at scale.
+InternVL-U は Janus-Pro の architectural choice をより大きな framework に取り込む。Decoupled-encoder idea は scale した unified models の default になった。
 
-### Limitations
+### 制約
 
-Decoupled encoders add architectural complexity. Two tokenizers to train, two input paths to maintain, two sets of fail modes. For products that do not need generation, Janus-Pro is over-engineered — pick a LLaVA-family understanding model.
+Decoupled encoders は architectural complexity を増やす。Train すべき tokenizers が2つ、maintain すべき input paths が2つ、fail modes も2組ある。Generation が不要な products には Janus-Pro は over-engineered だ。LLaVA-family understanding model を選ぶ。
 
-For products that do not need understanding, Janus-Pro is overqualified — pick a Stable Diffusion 3 / Flux model.
+Understanding が不要な products には Janus-Pro は過剰だ。Stable Diffusion 3 / Flux model を選ぶ。
 
-For products that need both, Janus-Pro is now the reference open architecture.
+両方が必要な products には、Janus-Pro が現在の reference open architecture だ。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates Janus-Pro routing:
+`code/main.py` は Janus-Pro routing を simulate する:
 
-- Two mock encoders: SigLIP-like (produces 256-dim semantic vectors) and VQ-like (produces integer codes).
-- A prompt router that picks the encoder based on a task tag.
-- A shared body (stand-in) that processes token sequences regardless of which encoder produced them.
-- A switch from stage 1 (alignment) to stage 3 (instruction tune) weighted-sample schedule.
+- 2つの mock encoders: SigLIP-like (256-dim semantic vectors を生成) と VQ-like (integer codes を生成)。
+- Task tag に基づいて encoder を選ぶ prompt router。
+- どちらの encoder が生成したかに関係なく token sequences を処理する shared body (stand-in)。
+- Stage 1 (alignment) から Stage 3 (instruction tune) への weighted-sample schedule の切り替え。
 
-Print the routed paths for 3 examples: image QA, T2I, image editing.
+Image QA、T2I、image editing の3例について routed paths を表示する。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-decoupled-encoder-picker.md`. Given a product that wants unified generation + understanding at frontier-ish quality, it picks Janus-Pro, JanusFlow, or InternVL-U with a concrete data-scale recommendation.
+このレッスンは `outputs/skill-decoupled-encoder-picker.md` を作る。Frontier-ish quality で unified generation + understanding を望む product に対し、Janus-Pro、JanusFlow、InternVL-U を選び、concrete data-scale recommendation を出す。
 
-## Exercises
+## 演習
 
-1. Janus-Pro-7B beats DALL-E 3 on GenEval. Explain why a 7B open model can match a frontier proprietary model on generation but not on understanding.
+1. Janus-Pro-7B は GenEval で DALL-E 3 を上回る。7B open model が generation では frontier proprietary model に並べるのに、understanding では並べない理由を説明せよ。
 
-2. Implement a router function: given prompt text, classify as `understand` or `generate`. How do you handle ambiguous prompts like "describe and then sketch"?
+2. Router function を実装せよ。Prompt text が与えられたとき、`understand` または `generate` に分類する。"describe and then sketch" のような曖昧な prompt はどう扱うか。
 
-3. JanusFlow replaces the VQ path with rectified flow. What does the transformer body now output, and what changes in the loss?
+3. JanusFlow は VQ path を rectified flow に置き換える。Transformer body は何を出力するようになり、loss は何が変わるか。
 
-4. Propose a fourth task the Janus-Pro architecture could handle with one more decoupled encoder. Examples: image segmentation (DINO-style), depth (MiDaS-style).
+4. Janus-Pro architecture がもう1つ decoupled encoder を足すことで扱えそうな4つ目の task を提案せよ。例: image segmentation (DINO-style)、depth (MiDaS-style)。
 
-5. Read Janus-Pro Section 4.2 on data scaling. Which data stage contributes most to the T2I quality gain vs Janus?
+5. Data scaling に関する Janus-Pro Section 4.2 を読め。Janus と比べた T2I quality gain に最も寄与する data stage はどれか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|------------------------|
-| Decoupled encoding | "Two visual encoders" | Separate tokenizer or encoder per direction: semantic for understanding, reconstruction for generation |
-| Shared body | "One transformer" | Single transformer processes either encoder's output; no modality-specific weights |
-| SigLIP for understanding | "Semantic features" | CLIP-family vision tower providing rich conceptual features but poor reconstruction |
-| VQ for generation | "Reconstruction codes" | Vector-quantized tokens that decode cleanly back to pixels |
-| JanusFlow | "Rectified-flow variant" | Janus-Pro with a continuous flow-matching generation head instead of VQ |
-| Routing tag | "Task tag" | Prompt marker (`<understand>` / `<generate>`) that picks the input encoder |
+| Decoupled encoding | "Two visual encoders" | 方向ごとに別の tokenizer または encoder を使う。Understanding には semantic、generation には reconstruction |
+| Shared body | "One transformer" | 単一の transformer がどちらの encoder の output も処理する。Modality-specific weights はない |
+| SigLIP for understanding | "Semantic features" | Rich conceptual features を提供する CLIP-family vision tower。ただし reconstruction は弱い |
+| VQ for generation | "Reconstruction codes" | Pixels に clean に decode できる vector-quantized tokens |
+| JanusFlow | "Rectified-flow variant" | VQ の代わりに continuous flow-matching generation head を持つ Janus-Pro |
+| Routing tag | "Task tag" | Input encoder を選ぶ prompt marker (`<understand>` / `<generate>`) |
 
-## Further Reading
+## 参考文献
 
 - [Wu et al. — Janus (arXiv:2410.13848)](https://arxiv.org/abs/2410.13848)
 - [Chen et al. — Janus-Pro (arXiv:2501.17811)](https://arxiv.org/abs/2501.17811)

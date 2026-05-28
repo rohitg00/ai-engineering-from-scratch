@@ -1,49 +1,49 @@
-# Pre-Training a Mini GPT (124M Parameters)
+# Mini GPT を事前訓練する (124M パラメータ)
 
-> GPT-2 Small has 124 million parameters. That's 12 transformer layers, 12 attention heads, and 768-dimensional embeddings. You can train it from scratch on a single GPU in a few hours. Most people never do this. They use pre-trained checkpoints. But if you don't train one yourself, you don't actually understand what's happening inside the model you're building products on.
+> GPT-2 Small は 1 億 2400 万パラメータのモデルです。12 個の transformer レイヤー、12 個の attention head、768 次元の埋め込みを持ちます。単一 GPU でも数時間でゼロから訓練できます。ほとんどの人はこれをやりません。事前訓練済みチェックポイントを使います。しかし、自分で訓練したことがなければ、自分がプロダクト構築に使っているモデルの内部で何が起きているのかを本当には理解していません。
 
-**Type:** Build
-**Languages:** Python (with numpy)
-**Prerequisites:** Phase 10, Lessons 01-03 (Tokenizers, Building a Tokenizer, Data Pipelines)
-**Time:** ~120 minutes
+**種類:** Build
+**言語:** Python (with numpy)
+**前提条件:** Phase 10, Lessons 01-03 (Tokenizers, Building a Tokenizer, Data Pipelines)
+**時間:** 約 120 分
 
-## Learning Objectives
+## 学習目標
 
-- Implement the full GPT-2 architecture (124M parameters) from scratch: token embeddings, positional embeddings, transformer blocks, and the language model head
-- Train a GPT model on a text corpus using next-token prediction with cross-entropy loss
-- Implement autoregressive text generation with temperature sampling and top-k/top-p filtering
-- Monitor training loss curves and validate that the model learns coherent language patterns
+- GPT-2 の完全なアーキテクチャ (124M パラメータ) をゼロから実装する: token embeddings、positional embeddings、transformer blocks、language model head
+- next-token prediction と cross-entropy loss を使って、テキストコーパス上で GPT モデルを訓練する
+- temperature sampling と top-k/top-p filtering を使った自己回帰的テキスト生成を実装する
+- 訓練損失曲線を監視し、モデルが一貫した言語パターンを学習していることを確認する
 
-## The Problem
+## 課題
 
-You know what a transformer is. You have read the diagrams. You can recite "attention is all you need" and draw boxes labeled "Multi-Head Attention" on a whiteboard.
+あなたは transformer が何かを知っています。図も読んだことがあります。"attention is all you need" と暗唱でき、ホワイトボードに "Multi-Head Attention" と書かれた箱を描けます。
 
-None of that means you understand what happens when a model generates text.
+それでも、モデルがテキストを生成するときに何が起きているかを理解しているとは限りません。
 
-There are 124,438,272 parameters in GPT-2 Small (with weight tying). Every single one of them was set by running a training loop: forward pass, compute loss, backward pass, update weights. Twelve transformer blocks. Twelve attention heads per block. A 768-dimensional embedding space. A vocabulary of 50,257 tokens. Every time the model generates a token, all 124 million parameters participate in a single matrix multiplication chain that takes a sequence of token IDs and produces a probability distribution over the next token.
+GPT-2 Small には、weight tying を使った場合で 124,438,272 個のパラメータがあります。その 1 つ 1 つは、訓練ループを回すことで設定されました。forward pass、loss の計算、backward pass、重みの更新です。12 個の transformer block。各 block に 12 個の attention head。768 次元の埋め込み空間。50,257 トークンの語彙。モデルが 1 トークンを生成するたびに、1 億 2400 万個のすべてのパラメータが、トークン ID の系列を受け取って次トークンの確率分布を出す 1 本の行列乗算チェーンに参加します。
 
-If you have never built this yourself, you are working with a black box. You can use the API. You can fine-tune. But when something goes wrong -- when the model hallucinates, when it repeats itself, when it refuses to follow instructions -- you have no mental model for *why*.
+これを自分で作ったことがなければ、あなたはブラックボックスを扱っています。API は使えます。fine-tune もできます。しかし何かがうまくいかないとき、モデルが hallucination を起こすとき、同じことを繰り返すとき、指示に従わないとき、なぜそうなるのかを説明するメンタルモデルがありません。
 
-This lesson builds GPT-2 Small from scratch. Not in PyTorch. In numpy. Every matrix multiplication is visible. Every gradient is computed by your code. You will see exactly how 124 million numbers conspire to predict the next word.
+このレッスンでは GPT-2 Small をゼロから構築します。PyTorch ではありません。numpy で作ります。すべての行列乗算が見えます。すべての勾配はあなたのコードで計算されます。次の単語を予測するために 1 億 2400 万個の数値がどのように連携するのかを、正確に見ることになります。
 
-## The Concept
+## 概念
 
-### The GPT Architecture
+### GPT アーキテクチャ
 
-GPT is an autoregressive language model. "Autoregressive" means it generates one token at a time, each conditioned on all previous tokens. The architecture is a stack of transformer decoder blocks.
+GPT は自己回帰型の言語モデルです。「自己回帰」とは、1 回に 1 トークンずつ生成し、各トークンがそれ以前のすべてのトークンに条件づけられるという意味です。アーキテクチャは transformer decoder block のスタックです。
 
-Here is the full computation graph from token IDs to next-token probabilities:
+トークン ID から次トークン確率までの計算グラフ全体は次のとおりです。
 
-1. Token IDs come in. Shape: (batch_size, seq_len).
-2. Token embedding lookup. Each ID maps to a 768-dimensional vector. Shape: (batch_size, seq_len, 768).
-3. Position embedding lookup. Each position (0, 1, 2, ...) maps to a 768-dimensional vector. Same shape.
-4. Add token embeddings + position embeddings.
-5. Pass through 12 transformer blocks.
-6. Final layer normalization.
-7. Linear projection to vocabulary size. Shape: (batch_size, seq_len, vocab_size).
-8. Softmax to get probabilities.
+1. Token IDs が入ります。Shape: (batch_size, seq_len)。
+2. Token embedding lookup。各 ID が 768 次元ベクトルに対応します。Shape: (batch_size, seq_len, 768)。
+3. Position embedding lookup。各位置 (0, 1, 2, ...) が 768 次元ベクトルに対応します。同じ shape です。
+4. token embeddings + position embeddings を加算します。
+5. 12 個の transformer blocks を通します。
+6. 最後の layer normalization を適用します。
+7. 語彙サイズへの線形射影を行います。Shape: (batch_size, seq_len, vocab_size)。
+8. Softmax で確率を得ます。
 
-That is the entire model. No convolutions. No recurrence. Just embeddings, attention, feedforward networks, and layer norms stacked 12 times.
+これがモデル全体です。畳み込みはありません。再帰もありません。埋め込み、attention、feedforward networks、layer norms を 12 回積み重ねただけです。
 
 ```mermaid
 graph TD
@@ -71,27 +71,27 @@ graph TD
     style K fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-### The Transformer Block
+### Transformer Block
 
-Each of the 12 blocks follows the same pattern. Pre-norm architecture (GPT-2 uses pre-norm, not post-norm like the original transformer):
+12 個の block はすべて同じパターンに従います。pre-norm アーキテクチャです (GPT-2 は original transformer のような post-norm ではなく pre-norm を使います)。
 
 1. LayerNorm
 2. Multi-Head Self-Attention
-3. Residual connection (add input back)
+3. Residual connection (入力を足し戻す)
 4. LayerNorm
 5. Feed-Forward Network (MLP)
-6. Residual connection (add input back)
+6. Residual connection (入力を足し戻す)
 
-The residual connections are critical. Without them, gradients vanish by the time they reach block 1 during backpropagation. With them, gradients can flow directly from the loss to any layer through the "skip" path. This is why you can stack 12, 32, or even 96 blocks (GPT-4 is rumored to use 120).
+residual connection は非常に重要です。これがないと、backpropagation 中に勾配が block 1 に届くまでに消えてしまいます。これがあると、勾配は "skip" 経路を通って loss から任意の層へ直接流れられます。12、32、さらには 96 block まで積めるのはこのためです (GPT-4 は 120 block を使っているとうわさされています)。
 
-### Attention: The Core Mechanism
+### Attention: 中核メカニズム
 
-Self-attention lets every token look at every previous token and decide how much to attend to each one. Here is the math.
+self-attention により、すべてのトークンがそれ以前のすべてのトークンを見て、それぞれにどれだけ注目するかを決められます。数学は次のとおりです。
 
-For each token position, compute three vectors from the input:
-- **Query (Q)**: "What am I looking for?"
-- **Key (K)**: "What do I contain?"
-- **Value (V)**: "What information do I carry?"
+各トークン位置について、入力から 3 種類のベクトルを計算します。
+- **Query (Q)**: 「私は何を探しているのか」
+- **Key (K)**: 「私は何を含んでいるのか」
+- **Value (V)**: 「私はどんな情報を持っているのか」
 
 ```
 Q = input @ W_q    (768 -> 768)
@@ -104,9 +104,9 @@ attention_weights = softmax(attention_scores)
 output = attention_weights @ V
 ```
 
-The causal mask is what makes GPT autoregressive. Position 5 can attend to positions 0-5 but not 6, 7, 8, and so on. This prevents the model from "cheating" by looking at future tokens during training.
+causal mask が GPT を自己回帰にしています。位置 5 は位置 0-5 に注目できますが、6、7、8 などには注目できません。これにより、訓練中に未来のトークンを見る「ズル」を防ぎます。
 
-**Multi-head attention** splits the 768-dimensional space into 12 heads of 64 dimensions each. Each head learns a different attention pattern. One head might track syntactic relationships (subject-verb agreement). Another might track semantic similarity (synonyms). Another might track positional proximity (nearby words). The outputs from all 12 heads are concatenated and projected back to 768 dimensions.
+**Multi-head attention** は 768 次元空間を、それぞれ 64 次元の 12 head に分割します。各 head は異なる attention pattern を学習します。ある head は構文関係 (主語と動詞の一致) を追跡するかもしれません。別の head は意味的類似性 (同義語) を追跡するかもしれません。さらに別の head は位置的な近さ (近くの単語) を追跡するかもしれません。12 head すべての出力は連結され、768 次元へ射影し直されます。
 
 ```mermaid
 graph LR
@@ -141,25 +141,25 @@ graph LR
     style V fill:#1a1a2e,stroke:#0f3460,color:#fff
 ```
 
-The division by sqrt(d_k) -- sqrt(64) = 8 -- is scaling. Without it, the dot products grow large for high-dimensional vectors, pushing softmax into regions where gradients are nearly zero. This was one of the key insights in the original "Attention Is All You Need" paper.
+sqrt(d_k) で割ること、つまり sqrt(64) = 8 で割ることはスケーリングです。これがないと、高次元ベクトルでは dot product が大きくなり、softmax が勾配ほぼゼロの領域へ押し込まれます。これは元論文 "Attention Is All You Need" の重要な洞察の 1 つでした。
 
-### KV Cache: Why Inference Is Fast
+### KV Cache: 推論が速い理由
 
-During training, you process the entire sequence at once. During inference, you generate one token at a time. Without optimization, generating token N requires recomputing attention for all N-1 previous tokens. That is O(N^2) per generated token, or O(N^3) total for a sequence of length N.
+訓練中は系列全体を一度に処理します。推論中は 1 トークンずつ生成します。最適化なしでは、トークン N を生成するために、それ以前の N-1 個すべてのトークンについて attention を再計算する必要があります。これは生成トークンあたり O(N^2)、長さ N の系列全体では O(N^3) です。
 
-KV Cache solves this. After computing K and V for each token, store them. When generating token N+1, you only need to compute Q for the new token and look up the cached K and V from all previous tokens. This reduces per-token cost from O(N) to O(1) for the K and V computation. The attention score calculation is still O(N) because you attend to all previous positions, but you avoid redundant matrix multiplications on the input.
+KV Cache はこれを解決します。各トークンの K と V を計算したら保存します。トークン N+1 を生成するときは、新しいトークンの Q だけを計算し、以前のすべてのトークンの K と V はキャッシュから読み出せばよくなります。これにより、K と V の計算に関するトークンあたりコストは O(N) から O(1) になります。過去すべての位置に注目するため attention score の計算はまだ O(N) ですが、入力に対する重複した行列乗算は避けられます。
 
-For GPT-2 with 12 layers and 12 heads, the KV cache stores 2 (K + V) x 12 layers x 12 heads x 64 dims = 18,432 values per token. For a 1024-token sequence, that is about 75MB in FP32. For Llama 3 405B with 128 layers, the KV cache for a single sequence can exceed 10GB. This is why long-context inference is memory-bound.
+12 layers、12 heads の GPT-2 では、KV cache はトークンごとに 2 (K + V) x 12 layers x 12 heads x 64 dims = 18,432 個の値を保存します。1024 トークンの系列では、FP32 で約 75MB です。128 layers の Llama 3 405B では、単一系列の KV cache が 10GB を超えることがあります。長コンテキスト推論がメモリ律速になるのはこのためです。
 
-### Prefill vs Decode: Two Phases of Inference
+### Prefill vs Decode: 推論の 2 フェーズ
 
-When you send a prompt to an LLM, inference happens in two distinct phases.
+LLM にプロンプトを送ると、推論は 2 つの異なるフェーズで行われます。
 
-**Prefill** processes your entire prompt in parallel. All tokens are known, so the model can compute attention for all positions simultaneously. This phase is compute-bound -- the GPU is doing matrix multiplications at full throughput. For a 1000-token prompt on an A100, prefill takes roughly 20-50ms.
+**Prefill** はプロンプト全体を並列に処理します。すべてのトークンが既知なので、モデルは全位置の attention を同時に計算できます。このフェーズは計算律速です。GPU は行列乗算を最大スループットで実行しています。A100 上で 1000 トークンのプロンプトなら、prefill はおよそ 20-50ms です。
 
-**Decode** generates tokens one at a time. Each new token depends on all previous tokens. This phase is memory-bound -- the bottleneck is reading the model weights and KV cache from GPU memory, not the matrix math itself. The GPU's compute cores sit mostly idle waiting for memory reads. For GPT-2, each decode step takes about the same time regardless of how many FLOPs the matmuls require, because memory bandwidth is the constraint.
+**Decode** は 1 トークンずつ生成します。各新トークンはそれ以前のすべてのトークンに依存します。このフェーズはメモリ律速です。ボトルネックは行列計算そのものではなく、GPU メモリからモデル重みと KV cache を読み出すことです。GPU の計算コアは、メモリ読み出しを待つ時間が多くなります。GPT-2 では、各 decode step は matmul に必要な FLOPs がどれだけあるかに関係なくほぼ同じ時間がかかります。制約がメモリ帯域だからです。
 
-This distinction matters for production systems. Prefill throughput scales with GPU compute (more FLOPS = faster prefill). Decode throughput scales with memory bandwidth (faster memory = faster decode). That is why NVIDIA's H100 focused on memory bandwidth improvements over the A100 -- it directly speeds up token generation.
+この区別は本番システムでは重要です。Prefill のスループットは GPU の計算能力に比例します (FLOPS が多いほど prefill は速い)。Decode のスループットはメモリ帯域に比例します (メモリが速いほど decode は速い)。NVIDIA の H100 が A100 よりメモリ帯域の改善に重点を置いたのは、これがトークン生成を直接高速化するからです。
 
 ```mermaid
 graph LR
@@ -192,20 +192,20 @@ graph LR
     style D4 fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-### The Training Loop
+### 訓練ループ
 
-Training an LLM is next-token prediction. Given tokens [0, 1, 2, ..., N-1], predict tokens [1, 2, 3, ..., N]. The loss function is cross-entropy between the model's predicted probability distribution and the actual next token.
+LLM の訓練は next-token prediction です。トークン [0, 1, 2, ..., N-1] が与えられたら、トークン [1, 2, 3, ..., N] を予測します。損失関数は、モデルが予測した確率分布と実際の次トークンの間の cross-entropy です。
 
-One training step:
+1 回の訓練ステップは次のとおりです。
 
-1. **Forward pass**: Run the batch through all 12 blocks. Get logits (pre-softmax scores) for each position.
-2. **Compute loss**: Cross-entropy between logits and target tokens (the input shifted by one position).
-3. **Backward pass**: Compute gradients for all 124M parameters using backpropagation.
-4. **Optimizer step**: Update weights. GPT-2 uses Adam with learning rate warmup and cosine decay.
+1. **Forward pass**: batch を 12 block すべてに通します。各位置の logits (softmax 前のスコア) を得ます。
+2. **Compute loss**: logits と target tokens (入力を 1 位置ずらしたもの) の間の cross-entropy を計算します。
+3. **Backward pass**: backpropagation により 124M パラメータすべての勾配を計算します。
+4. **Optimizer step**: 重みを更新します。GPT-2 は学習率 warmup と cosine decay を伴う Adam を使います。
 
-The learning rate schedule matters more than you might expect. GPT-2 warms up from 0 to the peak learning rate over the first 2,000 steps, then decays following a cosine curve. Starting with a high learning rate causes the model to diverge. Keeping a constant high rate causes oscillation in later training. The warmup-then-decay pattern is used by every major LLM.
+learning rate schedule は想像以上に重要です。GPT-2 は最初の 2,000 steps で学習率を 0 からピーク値まで warmup し、その後 cosine curve に従って減衰させます。高い学習率で始めるとモデルは発散します。高い学習率を一定に保つと、訓練後半で振動します。warmup してから decay するパターンは、主要な LLM のすべてで使われています。
 
-### GPT-2 Small: The Numbers
+### GPT-2 Small: 数字で見る
 
 | Component | Shape | Parameters |
 |-----------|-------|------------|
@@ -218,13 +218,13 @@ The learning rate schedule matters more than you might expect. GPT-2 warms up fr
 | **Total per block** | | **7,080,960** |
 | **Total (12 blocks)** | | **85,054,464 + 39,383,808 = 124,438,272** |
 
-The output projection (logits head) shares weights with the token embedding matrix. This is called weight tying -- it reduces the parameter count by 38M and improves performance because it forces the model to use the same representation space for input and output.
+出力射影 (logits head) は token embedding matrix と重みを共有します。これは weight tying と呼ばれます。パラメータ数を 38M 減らし、性能も向上します。入力と出力で同じ表現空間を使うようモデルに強制するからです。
 
-## Build It
+## 作ってみる
 
 ### Step 1: Embedding Layer
 
-Token embeddings map each of the 50,257 possible tokens to a 768-dimensional vector. Position embeddings add information about where each token sits in the sequence. The two are summed.
+Token embeddings は、50,257 個の可能なトークンそれぞれを 768 次元ベクトルへ対応させます。Position embeddings は、各トークンが系列内のどこにあるかという情報を追加します。この 2 つを加算します。
 
 ```python
 import numpy as np
@@ -241,11 +241,11 @@ class Embedding:
         return tok_emb + pos_emb
 ```
 
-The 0.02 standard deviation for initialization comes from the GPT-2 paper. Too large and the initial forward passes produce extreme values that destabilize training. Too small and the initial outputs are nearly identical for all inputs, making early gradient signals useless.
+初期化で使っている 0.02 の標準偏差は GPT-2 論文に由来します。大きすぎると、初期の forward pass で極端な値が出て訓練が不安定になります。小さすぎると、すべての入力に対する初期出力がほぼ同じになり、初期の勾配信号が役に立たなくなります。
 
-### Step 2: Self-Attention with Causal Mask
+### Step 2: causal mask 付き self-attention
 
-Single-head attention first. The causal mask sets future positions to negative infinity before softmax, ensuring each position can only attend to itself and earlier positions.
+まずは single-head attention です。causal mask は softmax の前に未来位置を負の無限大に設定し、各位置が自分自身とそれ以前の位置だけに注目できるようにします。
 
 ```python
 def attention(Q, K, V, mask=None):
@@ -258,11 +258,11 @@ def attention(Q, K, V, mask=None):
     return weights @ V
 ```
 
-The softmax implementation subtracts the maximum before exponentiating. Without this, exp(large_number) overflows to infinity. This is a numerical stability trick that does not change the output because softmax(x - c) = softmax(x) for any constant c.
+この softmax 実装では、指数を取る前に最大値を引いています。これをしないと exp(large_number) が infinity にオーバーフローします。これは数値安定性のための工夫であり、softmax(x - c) = softmax(x) は任意の定数 c で成り立つため、出力は変わりません。
 
 ### Step 3: Multi-Head Attention
 
-Split the 768-dimensional input into 12 heads of 64 dimensions each. Each head computes attention independently. Concatenate the results and project back to 768 dimensions.
+768 次元入力を、それぞれ 64 次元の 12 head に分割します。各 head は独立に attention を計算します。結果を連結し、768 次元へ射影し直します。
 
 ```python
 class MultiHeadAttention:
@@ -291,11 +291,11 @@ class MultiHeadAttention:
         return attn_out @ self.W_out
 ```
 
-The reshape-transpose-reshape dance is the most confusing part of multi-head attention. Here is what happens: the (batch, seq_len, 768) tensor becomes (batch, seq_len, 12, 64), then (batch, 12, seq_len, 64). Now each of the 12 heads has its own (seq_len, 64) matrix to run attention on. After attention, we reverse the process: (batch, 12, seq_len, 64) becomes (batch, seq_len, 12, 64) becomes (batch, seq_len, 768).
+reshape-transpose-reshape の手順は、multi-head attention で最も混乱しやすい部分です。起きていることはこうです。(batch, seq_len, 768) テンソルが (batch, seq_len, 12, 64) になり、さらに (batch, 12, seq_len, 64) になります。これで 12 個の head それぞれが、attention を計算するための独自の (seq_len, 64) 行列を持ちます。attention の後は逆の処理をします。(batch, 12, seq_len, 64) が (batch, seq_len, 12, 64) になり、最後に (batch, seq_len, 768) へ戻ります。
 
 ### Step 4: Transformer Block
 
-One complete transformer block: LayerNorm, multi-head attention with residual, LayerNorm, feedforward with residual.
+完全な transformer block 1 つです。LayerNorm、residual 付き multi-head attention、LayerNorm、residual 付き feedforward から成ります。
 
 ```python
 class LayerNorm:
@@ -336,11 +336,11 @@ class TransformerBlock:
         return x
 ```
 
-The feedforward network expands the 768-dimensional input to 3,072 dimensions (4x), applies a nonlinearity, then projects back to 768. This expansion-contraction pattern gives the model a "wider" internal representation to work with at each position. GPT-2 uses GELU activation, but we use ReLU here for simplicity -- the difference is minor for understanding the architecture.
+feedforward network は 768 次元入力を 3,072 次元 (4x) に拡張し、非線形性を適用してから 768 次元へ戻します。この拡張と収縮のパターンにより、モデルは各位置でより「広い」内部表現を扱えます。GPT-2 は GELU activation を使いますが、ここではアーキテクチャ理解を簡単にするため ReLU を使います。この違いは理解目的では小さいものです。
 
-### Step 5: Full GPT Model
+### Step 5: 完全な GPT モデル
 
-Stack 12 transformer blocks. Add the embedding layer at the front and the output projection at the back.
+12 個の transformer blocks を積み重ねます。前段に embedding layer を追加し、後段に output projection を追加します。
 
 ```python
 class MiniGPT:
@@ -382,11 +382,11 @@ class MiniGPT:
         return total
 ```
 
-Notice the weight tying: `logits = x @ self.embedding.token_embed.T`. The output projection reuses the token embedding matrix (transposed). This is not just a parameter-saving trick. It means the model uses the same vector space for understanding tokens (embeddings) and predicting them (output).
+weight tying に注目してください。`logits = x @ self.embedding.token_embed.T` です。出力射影は token embedding matrix を転置して再利用しています。これは単なるパラメータ削減の工夫ではありません。トークンを理解するための空間 (embeddings) と、トークンを予測するための空間 (output) に同じベクトル空間を使うという意味です。
 
-### Step 6: Training Loop
+### Step 6: 訓練ループ
 
-For a real training run on 124M parameters, you would need a GPU and PyTorch. This training loop demonstrates the mechanics on a small model that runs in pure numpy. We use a tiny model (4 layers, 4 heads, 128 dims) to make it tractable.
+124M パラメータで本格的に訓練するには、GPU と PyTorch が必要です。この訓練ループは、純粋な numpy で動く小さなモデルを使って仕組みを示します。扱いやすくするため、tiny model (4 layers, 4 heads, 128 dims) を使います。
 
 ```python
 def cross_entropy_loss(logits, targets):
@@ -432,13 +432,13 @@ def train_mini_gpt(text, vocab_size=256, embed_dim=128, num_heads=4,
     return model
 ```
 
-The loss starts near ln(vocab_size) -- for a 256-token byte-level vocabulary, that is ln(256) = 5.55. A random model assigns equal probability to every token. As training progresses, the loss drops because the model learns to predict common patterns: "th" after "t", space after a period, and so on.
+loss は ln(vocab_size) 付近から始まります。256 トークンのバイトレベル語彙では ln(256) = 5.55 です。ランダムなモデルは、すべてのトークンに等しい確率を割り当てます。訓練が進むと、モデルは "t" の後に "h"、ピリオドの後にスペース、といった一般的なパターンを学習するため、loss は下がります。
 
-In production, you would use Adam optimizer with gradient accumulation, learning rate warmup, and gradient clipping. The forward-pass-loss-backward-update loop is identical. The optimizer is more sophisticated.
+本番では、gradient accumulation、learning rate warmup、gradient clipping を伴う Adam optimizer を使います。forward-pass-loss-backward-update のループは同じです。optimizer がより洗練されているだけです。
 
-### Step 7: Text Generation
+### Step 7: テキスト生成
 
-Generation uses the trained model to predict one token at a time. Each prediction is sampled from the output distribution (or taken greedily as the argmax).
+生成では、訓練済みモデルを使って 1 トークンずつ予測します。各予測は出力分布から sampling されます (または argmax として greedy に選ばれます)。
 
 ```python
 def generate(model, prompt_tokens, max_new_tokens=100, temperature=0.8):
@@ -460,13 +460,13 @@ def generate(model, prompt_tokens, max_new_tokens=100, temperature=0.8):
     return tokens
 ```
 
-Temperature controls randomness. Temperature 1.0 uses the raw distribution. Temperature 0.5 sharpens it (more deterministic -- the model picks its top choices more often). Temperature 1.5 flattens it (more random -- low-probability tokens get a bigger chance). Temperature 0.0 is greedy decoding (always pick the highest probability token).
+temperature はランダム性を制御します。Temperature 1.0 は生の分布を使います。Temperature 0.5 は分布を鋭くします (より決定的になり、モデルの上位候補がより頻繁に選ばれます)。Temperature 1.5 は分布を平坦にします (よりランダムになり、低確率トークンにも大きなチャンスが与えられます)。Temperature 0.0 は greedy decoding です (常に最高確率トークンを選びます)。
 
-The `tokens[-seq_len:]` window is necessary because the model has a maximum context length (1024 for GPT-2). Once you exceed it, you must drop the oldest tokens. This is the "context window" that everyone talks about.
+`tokens[-seq_len:]` の窓が必要なのは、モデルには最大コンテキスト長があるからです (GPT-2 では 1024)。それを超えたら、最も古いトークンを落とす必要があります。これが、誰もが話題にする「コンテキストウィンドウ」です。
 
-## Use It
+## 使ってみる
 
-### Full Training and Generation Demo
+### 完全な訓練と生成のデモ
 
 ```python
 corpus = """The transformer architecture has revolutionized natural language processing.
@@ -490,42 +490,42 @@ generated_text = bytes(output_tokens).decode("utf-8", errors="replace")
 print(f"\nGenerated: {generated_text}")
 ```
 
-On a small corpus with a small model, the generated text will be semi-coherent at best. It will learn some byte-level patterns from the training text but cannot generalize the way GPT-2 does with 40GB of training data and the full 124M parameter architecture. The point is not the output quality. The point is that you can trace every step: embedding lookup, attention computation, feedforward transformation, logit projection, softmax, and sampling. Every operation is visible.
+小さなコーパスと小さなモデルでは、生成テキストはよくても半分程度しか一貫しません。訓練テキストからバイトレベルのパターンをいくらか学習しますが、40GB の訓練データと完全な 124M パラメータアーキテクチャを使う GPT-2 のようには一般化できません。重要なのは出力品質ではありません。embedding lookup、attention computation、feedforward transformation、logit projection、softmax、sampling の各ステップを追跡できることです。すべての操作が見えます。
 
-## Ship It
+## 提出物
 
-This lesson produces `outputs/prompt-gpt-architecture-analyzer.md` -- a prompt that analyzes the architecture choices in any GPT-style model. Feed it a model card or technical report and it breaks down the parameter allocation, attention design, and scaling decisions.
+このレッスンでは `outputs/prompt-gpt-architecture-analyzer.md` を作成します。これは任意の GPT 風モデルにおけるアーキテクチャ上の選択を分析するためのプロンプトです。model card や technical report を入力すると、パラメータ配分、attention design、scaling decisions を分解します。
 
-## Exercises
+## 演習
 
-1. Modify the model to use 24 layers and 16 heads instead of 12/12. Count the parameters. How does doubling the depth compare to doubling the width (embedding dimension)?
+1. モデルを 12/12 ではなく 24 layers、16 heads に変更してください。パラメータ数を数えてください。深さを倍にすることは、幅 (embedding dimension) を倍にすることと比べてどう違いますか？
 
-2. Implement the GELU activation function (GELU(x) = x * 0.5 * (1 + erf(x / sqrt(2)))) and replace the ReLU in the feedforward network. Run training for 500 steps with each activation and compare the final loss.
+2. GELU activation function (GELU(x) = x * 0.5 * (1 + erf(x / sqrt(2)))) を実装し、feedforward network の ReLU を置き換えてください。それぞれの activation で 500 steps 訓練し、最終 loss を比較してください。
 
-3. Add a KV cache to the generation function. Store K and V tensors for each layer after the first forward pass, and reuse them for subsequent tokens. Measure the speedup: generate 200 tokens with and without the cache and compare wall-clock time.
+3. 生成関数に KV cache を追加してください。最初の forward pass の後、各 layer の K と V tensors を保存し、以後のトークンで再利用します。高速化を測定してください。cache ありとなしで 200 tokens を生成し、wall-clock time を比較します。
 
-4. Implement top-k sampling (only consider the k highest-probability tokens) and top-p sampling (nucleus sampling: consider the smallest set of tokens whose cumulative probability exceeds p). Compare the output quality at temperature 0.8 with top-k=50 vs top-p=0.95.
+4. top-k sampling (確率が高い上位 k トークンだけを考慮する) と top-p sampling (nucleus sampling: 累積確率が p を超える最小のトークン集合を考慮する) を実装してください。temperature 0.8 で top-k=50 と top-p=0.95 の出力品質を比較してください。
 
-5. Build a training loss curve plotter. Train the model for 1000 steps and plot loss vs step. Identify the three phases: rapid initial descent (learning common bytes), slower middle phase (learning byte patterns), and plateau (overfitting on the small corpus). The shape of this curve is the same whether you are training a 128-dim model or GPT-4.
+5. 訓練 loss curve plotter を作ってください。モデルを 1000 steps 訓練し、loss vs step をプロットします。3 つのフェーズを特定してください。急速な初期下降 (よくあるバイトの学習)、ゆるやかな中盤 (バイトパターンの学習)、plateau (小さなコーパスへの過学習) です。この曲線の形は、128-dim モデルでも GPT-4 でも同じです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|----------------|----------------------|
-| Autoregressive | "It generates one word at a time" | Each output token is conditioned on all previous tokens -- the model predicts P(token_n \| token_0, ..., token_{n-1}) |
-| Causal mask | "It can't see the future" | An upper-triangular matrix of -infinity values that prevents attention to future positions during training |
-| Multi-head attention | "Multiple attention patterns" | Splitting Q, K, V into parallel heads (e.g., 12 heads of 64 dims each for GPT-2) so each head can learn different relationship types |
-| KV Cache | "Caching for speed" | Storing computed Key and Value tensors from previous tokens to avoid redundant computation during autoregressive generation |
-| Prefill | "Processing the prompt" | The first inference phase where all prompt tokens are processed in parallel -- compute-bound on GPU FLOPS |
-| Decode | "Generating tokens" | The second inference phase where tokens are generated one at a time -- memory-bound on GPU bandwidth |
-| Weight tying | "Sharing embeddings" | Using the same matrix for input token embeddings and the output projection head -- saves 38M params in GPT-2 |
-| Residual connection | "Skip connection" | Adding the input directly to the output of a sublayer (x + sublayer(x)) -- enables gradient flow in deep networks |
-| Layer normalization | "Normalizing activations" | Normalizing across the feature dimension to mean 0 and variance 1, with learnable scale and bias parameters |
-| Cross-entropy loss | "How wrong the predictions are" | -log(probability assigned to the correct next token), averaged over all positions -- the standard LLM training objective |
+| Autoregressive | 「1 単語ずつ生成する」 | 各出力トークンがそれ以前のすべてのトークンに条件づけられます。モデルは P(token_n \| token_0, ..., token_{n-1}) を予測します |
+| Causal mask | 「未来が見えない」 | 訓練中に未来位置へ attention するのを防ぐ、-infinity 値の上三角行列 |
+| Multi-head attention | 「複数の attention pattern」 | Q、K、V を並列 head に分割すること (例: GPT-2 では 64 dims の head が 12 個)。各 head が異なる関係タイプを学習できます |
+| KV Cache | 「高速化のためのキャッシュ」 | 自己回帰生成中の重複計算を避けるため、過去トークンから計算済みの Key と Value tensors を保存すること |
+| Prefill | 「プロンプトの処理」 | すべての prompt tokens を並列に処理する最初の推論フェーズ。GPU FLOPS による計算律速です |
+| Decode | 「トークン生成」 | トークンを 1 つずつ生成する 2 番目の推論フェーズ。GPU memory bandwidth によるメモリ律速です |
+| Weight tying | 「埋め込みの共有」 | 入力 token embeddings と output projection head に同じ行列を使うこと。GPT-2 では 38M params を節約します |
+| Residual connection | 「Skip connection」 | sublayer の出力に入力を直接加えること (x + sublayer(x))。深い network での勾配の流れを可能にします |
+| Layer normalization | 「activation の正規化」 | feature 次元に沿って平均 0、分散 1 に正規化し、学習可能な scale と bias parameters を持たせること |
+| Cross-entropy loss | 「予測がどれだけ間違っているか」 | 正しい次トークンに割り当てられた確率の -log を全位置で平均したもの。標準的な LLM 訓練目的です |
 
-## Further Reading
+## 参考文献
 
-- [Radford et al., 2019 -- "Language Models are Unsupervised Multitask Learners" (GPT-2)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) -- the GPT-2 paper that introduced the 124M to 1.5B parameter family
-- [Vaswani et al., 2017 -- "Attention Is All You Need"](https://arxiv.org/abs/1706.03762) -- the original transformer paper with scaled dot-product attention and multi-head attention
-- [Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- how Meta scaled the GPT architecture to 405B parameters with 16K GPUs
-- [Pope et al., 2022 -- "Efficiently Scaling Transformer Inference"](https://arxiv.org/abs/2211.05102) -- the paper that formalized prefill vs decode and KV cache analysis
+- [Radford et al., 2019 -- "Language Models are Unsupervised Multitask Learners" (GPT-2)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) -- 124M から 1.5B パラメータの系列を導入した GPT-2 論文
+- [Vaswani et al., 2017 -- "Attention Is All You Need"](https://arxiv.org/abs/1706.03762) -- scaled dot-product attention と multi-head attention を導入した元祖 transformer 論文
+- [Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- Meta が 16K GPU で GPT アーキテクチャを 405B パラメータまでスケールさせた方法
+- [Pope et al., 2022 -- "Efficiently Scaling Transformer Inference"](https://arxiv.org/abs/2211.05102) -- prefill vs decode と KV cache 分析を定式化した論文

@@ -1,5 +1,5 @@
-# Phase 3: Deep Learning Core
+# Phase 3: 深層学習の中核
 
-> Neural networks from first principles. No frameworks until you build one yourself.
+> 第一原理からニューラルネットワークを理解する。自分で作るまではフレームワークに頼らない。
 
-See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.
+全レッスン計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。

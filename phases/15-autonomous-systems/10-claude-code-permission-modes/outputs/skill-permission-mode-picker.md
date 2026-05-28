@@ -1,40 +1,40 @@
 ---
 name: permission-mode-picker
-description: Match a Claude Code task to the correct permission mode, budget caps, and required isolation before starting a run.
+description: 実行開始前に、Claude Code のタスクを適切な permission mode、予算上限、必要な分離に対応付ける。
 version: 1.0.0
 phase: 15
 lesson: 10
 tags: [claude-code, permission-modes, auto-mode, budgets, isolation]
 ---
 
-Given a proposed Claude Code task, pick the permission mode, set budgets, and specify the minimum isolation required before the agent is allowed to start.
+提案された Claude Code タスクについて、permission mode を選び、予算を設定し、エージェントの開始を許可する前に必要な最小限の分離を指定する。
 
-Produce:
+作成するもの:
 
-1. **Task profile.** One sentence on what the task does, one sentence on the blast radius if it goes wrong.
-2. **Mode recommendation.** One of: `plan`, `default`, `acceptEdits`, `acceptExec`, `autoMode`, `yolo`, `bypassPermissions`. Justify with a single sentence referencing the blast radius.
-3. **Budget numbers.** Concrete values for `max_turns`, `max_budget_usd`, and any per-tool caps. For unattended runs over an hour, specify a dollar cap equal to or below what you would pay for a human mistake you cannot roll back.
-4. **Isolation requirements.** File-system scope (project directory only, scratch directory, ephemeral container). Network policy (no egress, allowlist only, full). Credential surface (none, scoped token, broad token). For `bypassPermissions` or `yolo`, the run must be inside an ephemeral container with no production credentials mounted.
-5. **Trajectory audit plan.** How will a human review the trajectory after the run? Required for `autoMode`, `yolo`, and anything over a 30-minute horizon.
+1. **タスクプロファイル.** タスクが何をするかを1文で、失敗した場合のブラスト半径を1文で述べる。
+2. **モード推奨.** `plan`、`default`、`acceptEdits`、`acceptExec`、`autoMode`、`yolo`、`bypassPermissions` のいずれか。ブラスト半径に言及する1文で正当化する。
+3. **予算値.** `max_turns`、`max_budget_usd`、ツールごとの上限について具体的な値を示す。1時間を超える無人実行では、ロールバックできない人間のミスに支払ってもよい金額以下のドル上限を指定する。
+4. **分離要件.** ファイルシステム範囲（プロジェクトディレクトリのみ、スクラッチディレクトリ、一時コンテナ）。ネットワークポリシー（外向き通信なし、allowlist のみ、全面許可）。認証情報の露出面（なし、スコープ付きトークン、広範なトークン）。`bypassPermissions` または `yolo` では、本番認証情報をマウントしていない一時コンテナ内で実行しなければならない。
+5. **軌跡監査計画.** 実行後、人間が軌跡をどうレビューするか。`autoMode`、`yolo`、および30分を超えるホライズンでは必須。
 
-Hard rejects:
-- `bypassPermissions` against a repository with uncommitted changes.
-- `autoMode` with no budget cap.
-- Any mode above `acceptEdits` with broad credentials in the environment (AWS, GCP, GitHub PAT with repo scope).
-- Unattended runs longer than one hour with no trajectory audit scheduled.
-- Claims that the Auto Mode classifier alone is sufficient for a novel task distribution.
+即時却下:
+- 未コミット変更があるリポジトリに対する `bypassPermissions`。
+- 予算上限のない `autoMode`。
+- 環境内に広範な認証情報（AWS、GCP、repo スコープの GitHub PAT）がある状態での `acceptEdits` より上の任意のモード。
+- 予定された軌跡監査がない、1時間を超える無人実行。
+- Auto Mode 分類器だけで新しいタスク分布に十分だという主張。
 
-Refusal rules:
-- If the user cannot name the blast radius of a failure, refuse and require an explicit worst-case sentence before starting.
-- If the user requests `autoMode` in a workspace with production database credentials reachable, refuse and require scoped credentials or an ephemeral container first.
-- If the proposed budget cap exceeds what the user is willing to lose on a bad run, refuse and require a lower cap.
+拒否ルール:
+- ユーザーが失敗時のブラスト半径を言えない場合は拒否し、開始前に明示的な最悪ケースの1文を求める。
+- 本番データベース認証情報に到達可能なワークスペースで `autoMode` を要求された場合は拒否し、まずスコープ付き認証情報または一時コンテナを求める。
+- 提案された予算上限が、ユーザーが悪い実行で失ってもよい金額を超えている場合は拒否し、より低い上限を求める。
 
-Output format:
+出力形式:
 
-Return a one-page run card with:
-- **Task summary** (one sentence)
-- **Blast radius** (one sentence, worst case)
-- **Mode** (explicit)
-- **Budgets** (`max_turns`, `max_budget_usd`, per-tool caps)
-- **Isolation** (fs scope, network policy, credential surface)
-- **Audit plan** (who reviews the trajectory, when, against what rubric)
+1ページの run card として返す:
+- **タスク要約**（1文）
+- **ブラスト半径**（1文、最悪ケース）
+- **モード**（明示する）
+- **予算**（`max_turns`、`max_budget_usd`、ツールごとの上限）
+- **分離**（ファイルシステム範囲、ネットワークポリシー、認証情報の露出面）
+- **監査計画**（誰が、いつ、どの基準に照らして軌跡をレビューするか）

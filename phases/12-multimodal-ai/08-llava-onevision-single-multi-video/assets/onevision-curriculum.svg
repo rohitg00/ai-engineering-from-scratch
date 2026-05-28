@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,84 +9,84 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">LLaVA-OneVision — unified token budget and three-stage curriculum</text>
+  <text x="480" y="24" text-anchor="middle" class="title">LLaVA-OneVision — 統一トークン予算と3段階カリキュラム</text>
 
   <rect x="30" y="50" width="900" height="200" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">shared visual-token budget ~4000 across three scenarios</text>
+  <text x="480" y="72" text-anchor="middle" class="head">3つのシナリオで視覚トークン予算を約4000に揃える</text>
 
   <rect x="60" y="90" width="260" height="140" class="hot"/>
-  <text x="190" y="110" text-anchor="middle" class="step">single-image</text>
-  <text x="190" y="130" text-anchor="middle" class="small">AnyRes 9 tiles + thumbnail</text>
-  <text x="190" y="146" text-anchor="middle" class="small">each tile 384, 2x pool</text>
-  <text x="190" y="162" text-anchor="middle" class="small">182 tokens per tile</text>
-  <text x="190" y="182" text-anchor="middle" class="step">total 1820 tokens</text>
-  <text x="190" y="202" text-anchor="middle" class="small">perception + OCR + detail</text>
+  <text x="190" y="110" text-anchor="middle" class="step">単一画像</text>
+  <text x="190" y="130" text-anchor="middle" class="small">AnyRes 9 タイル + サムネイル</text>
+  <text x="190" y="146" text-anchor="middle" class="small">各タイル 384, 2x プール</text>
+  <text x="190" y="162" text-anchor="middle" class="small">タイルあたり182トークン</text>
+  <text x="190" y="182" text-anchor="middle" class="step">合計1820トークン</text>
+  <text x="190" y="202" text-anchor="middle" class="small">知覚 + OCR + 詳細</text>
 
   <rect x="340" y="90" width="260" height="140" class="cool"/>
-  <text x="470" y="110" text-anchor="middle" class="step">multi-image</text>
-  <text x="470" y="130" text-anchor="middle" class="small">6 images at 384</text>
-  <text x="470" y="146" text-anchor="middle" class="small">no pooling, 729 per image</text>
-  <text x="470" y="162" text-anchor="middle" class="small">cross-image reasoning</text>
-  <text x="470" y="182" text-anchor="middle" class="step">total 4374 tokens</text>
-  <text x="470" y="202" text-anchor="middle" class="small">compare, count, diff</text>
+  <text x="470" y="110" text-anchor="middle" class="step">複数画像</text>
+  <text x="470" y="130" text-anchor="middle" class="small">384の画像を6枚</text>
+  <text x="470" y="146" text-anchor="middle" class="small">プーリングなし、画像あたり729</text>
+  <text x="470" y="162" text-anchor="middle" class="small">画像間推論</text>
+  <text x="470" y="182" text-anchor="middle" class="step">合計4374トークン</text>
+  <text x="470" y="202" text-anchor="middle" class="small">比較、数え上げ、差分</text>
 
   <rect x="620" y="90" width="280" height="140" class="cold"/>
-  <text x="760" y="110" text-anchor="middle" class="step">video</text>
-  <text x="760" y="130" text-anchor="middle" class="small">32 frames at 384</text>
-  <text x="760" y="146" text-anchor="middle" class="small">3x pool -&gt; 81 per frame</text>
-  <text x="760" y="162" text-anchor="middle" class="small">temporal grounding</text>
-  <text x="760" y="182" text-anchor="middle" class="step">total 2592 tokens</text>
-  <text x="760" y="202" text-anchor="middle" class="small">events, action recog</text>
+  <text x="760" y="110" text-anchor="middle" class="step">動画</text>
+  <text x="760" y="130" text-anchor="middle" class="small">384のフレームを32枚</text>
+  <text x="760" y="146" text-anchor="middle" class="small">3x プール -&gt; フレームあたり81</text>
+  <text x="760" y="162" text-anchor="middle" class="small">時間接地</text>
+  <text x="760" y="182" text-anchor="middle" class="step">合計2592トークン</text>
+  <text x="760" y="202" text-anchor="middle" class="small">イベント、アクション認識</text>
 
   <rect x="30" y="270" width="900" height="250" class="box"/>
-  <text x="480" y="292" text-anchor="middle" class="head">three-stage curriculum + emergent skills</text>
+  <text x="480" y="292" text-anchor="middle" class="head">3段階カリキュラム + 創発スキル</text>
 
   <rect x="60" y="310" width="200" height="190" class="reg"/>
   <text x="160" y="332" text-anchor="middle" class="step">Stage SI</text>
-  <text x="160" y="354" text-anchor="middle" class="small">single-image only</text>
-  <text x="160" y="370" text-anchor="middle" class="small">AnyRes high-res</text>
-  <text x="160" y="390" text-anchor="middle" class="small">perception base</text>
-  <text x="160" y="410" text-anchor="middle" class="small">MMMU + OCR + detail</text>
-  <text x="160" y="444" text-anchor="middle" class="caption">reverse order (video first)</text>
-  <text x="160" y="460" text-anchor="middle" class="caption">loses 2-4 MMMU</text>
-  <text x="160" y="476" text-anchor="middle" class="caption">per OneVision ablation</text>
+  <text x="160" y="354" text-anchor="middle" class="small">単一画像のみ</text>
+  <text x="160" y="370" text-anchor="middle" class="small">AnyRes高解像度</text>
+  <text x="160" y="390" text-anchor="middle" class="small">知覚ベース</text>
+  <text x="160" y="410" text-anchor="middle" class="small">MMMU + OCR + 詳細</text>
+  <text x="160" y="444" text-anchor="middle" class="caption">逆順(動画先行)だと</text>
+  <text x="160" y="460" text-anchor="middle" class="caption">MMMUが2-4落ちる</text>
+  <text x="160" y="476" text-anchor="middle" class="caption">OneVision ablationより</text>
 
   <path d="M 265 410 L 325 410" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="330" y="310" width="200" height="190" class="cool"/>
   <text x="430" y="332" text-anchor="middle" class="step">Stage OV</text>
-  <text x="430" y="354" text-anchor="middle" class="small">50% single</text>
-  <text x="430" y="370" text-anchor="middle" class="small">30% multi-image</text>
-  <text x="430" y="390" text-anchor="middle" class="small">20% video</text>
-  <text x="430" y="410" text-anchor="middle" class="small">unified budget</text>
-  <text x="430" y="444" text-anchor="middle" class="caption">cross-scenario alignment</text>
-  <text x="430" y="460" text-anchor="middle" class="caption">structural reasoning</text>
+  <text x="430" y="354" text-anchor="middle" class="small">50% 単一画像</text>
+  <text x="430" y="370" text-anchor="middle" class="small">30% 複数画像</text>
+  <text x="430" y="390" text-anchor="middle" class="small">20% 動画</text>
+  <text x="430" y="410" text-anchor="middle" class="small">統一予算</text>
+  <text x="430" y="444" text-anchor="middle" class="caption">シナリオ間整列</text>
+  <text x="430" y="460" text-anchor="middle" class="caption">構造的推論</text>
 
   <path d="M 535 410 L 595 410" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="600" y="310" width="200" height="190" class="hot"/>
   <text x="700" y="332" text-anchor="middle" class="step">Stage TT</text>
-  <text x="700" y="354" text-anchor="middle" class="small">task-specific mix</text>
-  <text x="700" y="370" text-anchor="middle" class="small">e.g., agent / doc</text>
-  <text x="700" y="390" text-anchor="middle" class="small">/ robotics / video</text>
-  <text x="700" y="410" text-anchor="middle" class="small">deployment tune</text>
-  <text x="700" y="444" text-anchor="middle" class="caption">optional, preserves base</text>
+  <text x="700" y="354" text-anchor="middle" class="small">タスク固有mix</text>
+  <text x="700" y="370" text-anchor="middle" class="small">例: agent / doc</text>
+  <text x="700" y="390" text-anchor="middle" class="small">/ ロボティクス / 動画</text>
+  <text x="700" y="410" text-anchor="middle" class="small">デプロイ向け調整</text>
+  <text x="700" y="444" text-anchor="middle" class="caption">任意、ベースを保つ</text>
 
   <rect x="820" y="310" width="100" height="190" class="reg"/>
-  <text x="870" y="332" text-anchor="middle" class="step">emergent</text>
-  <text x="870" y="354" text-anchor="middle" class="small">multi-camera</text>
-  <text x="870" y="370" text-anchor="middle" class="small">reasoning</text>
+  <text x="870" y="332" text-anchor="middle" class="step">創発スキル</text>
+  <text x="870" y="354" text-anchor="middle" class="small">複数カメラ</text>
+  <text x="870" y="370" text-anchor="middle" class="small">推論</text>
   <text x="870" y="390" text-anchor="middle" class="small">set-of-mark</text>
-  <text x="870" y="406" text-anchor="middle" class="small">prompt</text>
-  <text x="870" y="426" text-anchor="middle" class="small">iPhone screen</text>
-  <text x="870" y="442" text-anchor="middle" class="small">agent</text>
-  <text x="870" y="476" text-anchor="middle" class="caption">none trained</text>
+  <text x="870" y="406" text-anchor="middle" class="small">プロンプト</text>
+  <text x="870" y="426" text-anchor="middle" class="small">iPhone画面</text>
+  <text x="870" y="442" text-anchor="middle" class="small">エージェント</text>
+  <text x="870" y="476" text-anchor="middle" class="caption">明示学習なし</text>
 </svg>

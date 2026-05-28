@@ -1,75 +1,75 @@
 {
   "lesson": "15-batch-apis",
-  "title": "Batch APIs — the 50% Discount as Industry Standard",
+  "title": "Batch APIs — 業界標準としての50%割引",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the common batch-API offer across OpenAI, Anthropic, and Google in 2026?",
+      "question": "2026年時点で、OpenAI、Anthropic、Google に共通する Batch API の提供内容は何ですか？",
       "options": [
-        "10% discount with 1-hour turnaround",
-        "90% discount with 7-day turnaround",
-        "Free if under 1k tokens",
-        "50% discount with 24-hour turnaround"
+        "1時間 turnaround で10%割引",
+        "7日 turnaround で90%割引",
+        "1k tokens 未満なら無料",
+        "24時間 turnaround で50%割引"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does \"24-hour turnaround\" actually guarantee in the lesson's framing?",
+      "question": "この lesson の説明では、\"24-hour turnaround\" は実際に何を保証していますか？",
       "options": [
-        "24h is the cache TTL",
-        "The batch always takes 24 hours",
-        "The provider promises to return within 24 hours, with typical P50 around 2-6 hours",
-        "Only batches under 1k requests qualify"
+        "24h は cache TTL である",
+        "batch は必ず24時間かかる",
+        "provider が24時間以内に返すと約束しており、典型的な P50 は約2-6時間である",
+        "1k requests 未満の batch だけが対象である"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does stacking batch with cached input change the bill versus synchronous uncached on a shared-system-prompt workload?",
+      "question": "shared-system-prompt workload で batch と cached input を重ねると、synchronous uncached と比べて請求額はどう変わりますか？",
       "options": [
-        "It has no effect because caching is automatic",
-        "It only helps if the model is on Vertex",
-        "It can drop to roughly 10% of the synchronous-uncached baseline",
-        "It increases cost by 50%"
+        "caching は自動なので効果はない",
+        "model が Vertex 上にある場合だけ効果がある",
+        "synchronous-uncached baseline のおよそ10%まで下がることがある",
+        "cost が50%増える"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which workload-triage lane is wrong to default to in 2026 for content pipelines and offline labeling?",
+      "question": "2026年の content pipeline や offline labeling で、デフォルトにすると誤りになりやすい workload-triage lane はどれですか？",
       "options": [
-        "Interactive, because it sounds urgent",
-        "Batch, because the user does not see a 24h delay",
+        "急ぎに見えるから Interactive",
+        "ユーザーが24h delay を見ないので Batch",
         "Hybrid batch-and-cache",
-        "Semi-interactive with async queue"
+        "async queue を使う Semi-interactive"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the output-schema trap across providers?",
+      "question": "provider 横断の output-schema trap とは何ですか？",
       "options": [
-        "JSONL is unsupported by Anthropic",
-        "All providers use the same OpenAI JSONL format",
-        "Vertex requires Parquet only",
-        "Batch file formats differ per provider (OpenAI JSONL, Anthropic JSONL, Vertex BigQuery/GCS), so a portable client needs per-provider adapters"
+        "JSONL は Anthropic でサポートされていない",
+        "すべての provider が同じ OpenAI JSONL format を使う",
+        "Vertex は Parquet しか受け付けない",
+        "batch file format は provider ごとに異なる（OpenAI JSONL、Anthropic JSONL、Vertex BigQuery/GCS）ため、portable client には provider ごとの adapter が必要"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Per the lesson, what is the simplest decision rule for triaging a workload to batch?",
+      "question": "この lesson によると、workload を batch に仕分ける最も単純な判断ルールは何ですか？",
       "options": [
-        "If the prompt is under 1k tokens, batch it",
-        "If it uses tools, batch it",
-        "Batch only when the gateway requires it",
-        "If the user wouldn't notice a 24-hour delivery, always batch (and stack caching)"
+        "prompt が1k tokens 未満なら batch にする",
+        "tools を使うなら batch にする",
+        "gateway が要求する場合だけ batch にする",
+        "ユーザーが24時間後の delivery に気づかないなら、常に batch にする（そして caching を重ねる）"
       ],
       "correct": 3,
       "explanation": ""

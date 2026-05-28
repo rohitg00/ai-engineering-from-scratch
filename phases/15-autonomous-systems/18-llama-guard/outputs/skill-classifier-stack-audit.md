@@ -1,41 +1,41 @@
 ---
 name: classifier-stack-audit
-description: Audit a deployment's input/output classifier stack (model, taxonomy, input rails, output rails, dialog rails) and flag adversarial-attack gaps.
+description: デプロイの input/output classifier stack（model、taxonomy、input rails、output rails、dialog rails）を監査し、adversarial attack のギャップを指摘する。
 version: 1.0.0
 phase: 15
 lesson: 18
 tags: [llama-guard, nemo-guardrails, input-rails, output-rails, colang, adversarial-attacks]
 ---
 
-Given a deployment's classifier stack (Llama Guard version, NeMo Guardrails config, custom classifiers, normalization steps), audit it against the 2026 reference and flag attack surface the stack does not cover.
+デプロイの classifier stack（Llama Guard version、NeMo Guardrails config、custom classifiers、normalization steps）が与えられたら、2026 年の参照に照らして監査し、そのスタックがカバーしていない攻撃面を指摘してください。
 
-Produce:
+作成する内容:
 
-1. **Model inventory.** List the classifiers in use. Llama Guard 3 (8B / 1B-INT4) vs Llama Guard 4 (multimodal, S1–S14). NeMo Guardrails version. Any custom classifiers. If the deployment accepts images, confirm the classifier is multimodal.
-2. **Taxonomy mapping.** Map declared business categories onto the classifier's taxonomy. Every category the operator cares about must map to a classifier category; unmapped categories are unguarded.
-3. **Rail coverage.** Confirm input rails fire before the model turn and output rails fire before the response ships. Dialog rails (Colang in NeMo) enforce cross-turn constraints. Single-turn classifiers cannot catch multi-turn attacks.
-4. **Normalization.** Confirm inputs are NFKC-normalized, homoglyph-mapped, and have zero-width / variation-selector characters stripped before classification. Raw-byte classification is a 100% ASR target for Emoji Smuggling (Huang et al. 2025).
-5. **Attack-corpus coverage.** For each documented attack (emoji smuggling, homoglyph, in-context redirection, semantic paraphrase), name the specific defense in the stack. Classifier-only defense fails this audit; layering with Constitution (Lesson 17) and runtime (Lessons 10, 13, 14) is required.
+1. **Model inventory.** 使用中の classifier を列挙します。Llama Guard 3（8B / 1B-INT4）か Llama Guard 4（multimodal、S1–S14）か。NeMo Guardrails の version。custom classifiers の有無。デプロイが画像を受け付ける場合、classifier が multimodal であることを確認します。
+2. **Taxonomy mapping.** 宣言された business category を classifier の taxonomy に対応づけます。運用者が気にするすべてのカテゴリは classifier category に対応していなければなりません。未対応カテゴリは無防備です。
+3. **Rail coverage.** input rails が model turn の前に発火し、output rails が response を返す前に発火することを確認します。Dialog rails（NeMo の Colang）はターン横断の制約を強制します。単一ターンの classifier はマルチターン攻撃を捕捉できません。
+4. **Normalization.** 分類前に、入力が NFKC-normalized され、homoglyph-mapped され、zero-width / variation-selector characters が除去されていることを確認します。Raw-byte classification は Emoji Smuggling（Huang et al. 2025）で 100% ASR の標的になります。
+5. **Attack-corpus coverage.** 文書化された各攻撃（emoji smuggling、homoglyph、in-context redirection、semantic paraphrase）について、スタック内の具体的な防御を挙げます。Classifier-only defense はこの監査では不合格です。Constitution（Lesson 17）と runtime（Lessons 10, 13, 14）とのレイヤリングが必要です。
 
-Hard rejects:
-- Deployments using a text-only classifier on multimodal inputs.
-- Deployments with no normalization step.
-- Deployments with input rails only (no output rails on sensitive-category outputs).
-- Stack treating the classifier as the single safety layer.
-- ASR claims the operator cannot reproduce on their own distribution.
+即時不合格:
+- Multimodal inputs に text-only classifier を使っているデプロイ。
+- normalization step がないデプロイ。
+- input rails しかないデプロイ（sensitive-category outputs に対する output rails がない）。
+- classifier を唯一の safety layer として扱うスタック。
+- 運用者自身の分布で再現できない ASR claims。
 
-Refusal rules:
-- If the user's declared categories do not map into the classifier's taxonomy, refuse and require a mapping first. Unmapped = unguarded.
-- If the deployment cites Llama Guard 3 ASR numbers on a multimodal input surface, refuse and require Llama Guard 4 or a multimodal classifier.
-- If the user treats the classifier layer as sufficient in a high-risk setting, refuse. EU AI Act Article 14 (Lesson 15) expects human oversight on top.
+拒否ルール:
+- ユーザーが宣言したカテゴリが classifier の taxonomy に対応しない場合は拒否し、先に mapping を求めます。Unmapped = unguarded です。
+- デプロイが multimodal input surface に対して Llama Guard 3 の ASR 数値を引用している場合は拒否し、Llama Guard 4 または multimodal classifier を要求します。
+- ユーザーが高リスク設定で classifier layer を十分なものとして扱う場合は拒否します。EU AI Act Article 14（Lesson 15）は、その上に human oversight を期待しています。
 
-Output format:
+出力形式:
 
-Return a classifier audit with:
-- **Model inventory** (name, version, modality)
-- **Taxonomy mapping** (operator category → classifier category)
-- **Rail coverage** (input / output / dialog; firing before/after model)
-- **Normalization note** (NFKC y/n, homoglyph y/n, zero-width strip y/n)
-- **Attack-corpus coverage** (attack → defense)
-- **Layer completeness** (classifier + constitution + runtime; three required)
-- **Readiness** (production / staging / research-only)
+次を含む classifier audit を返してください。
+- **Model inventory**（name、version、modality）
+- **Taxonomy mapping**（operator category → classifier category）
+- **Rail coverage**（input / output / dialog、model の前後どちらで発火するか）
+- **Normalization note**（NFKC y/n、homoglyph y/n、zero-width strip y/n）
+- **Attack-corpus coverage**（attack → defense）
+- **Layer completeness**（classifier + constitution + runtime、3つすべてが必須）
+- **Readiness**（production / staging / research-only）

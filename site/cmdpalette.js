@@ -56,6 +56,7 @@
             summary:    lesson.summary  || '',
             keywords:   lesson.keywords || '',
             type:       lesson.type     || '',
+            typeLabel:  typeLabel(lesson.type),
             lang:       lesson.lang     || '',
             status:     lesson.status   || '',
             lessonPath: lessonPath,
@@ -107,7 +108,7 @@
     var keywords = (item.keywords || '').toLowerCase();
     var phase    = (item.phaseName || '').toLowerCase();
     var lang     = (item.lang  || '').toLowerCase();
-    var type     = (item.type  || '').toLowerCase();
+    var type     = ((item.type || '') + ' ' + (item.typeLabel || '')).toLowerCase();
     var says     = (item.says  || '').toLowerCase();
 
     var s = 0;
@@ -230,7 +231,7 @@
     el.id = PALETTE_ID;
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
-    el.setAttribute('aria-label', 'Search lessons and glossary');
+    el.setAttribute('aria-label', 'レッスンと用語集を検索');
 
     el.innerHTML =
       '<div class="cp-backdrop" id="cpBackdrop"></div>' +
@@ -243,27 +244,27 @@
             '<line x1="21" y1="21" x2="16.65" y2="16.65"/>' +
           '</svg>' +
           '<input class="cp-input" id="cpInput" type="search"' +
-          ' placeholder="Search lessons and glossary…"' +
+          ' placeholder="レッスン、成果物、用語を検索…"' +
           ' autocomplete="off" autocorrect="off"' +
           ' autocapitalize="off" spellcheck="false"' +
-          ' aria-label="Search" aria-autocomplete="list"' +
+          ' aria-label="検索" aria-autocomplete="list"' +
           ' aria-controls="cpResults">' +
           '<kbd class="cp-kbd-esc" id="cpKbdEsc">Esc</kbd>' +
         '</div>' +
         '<ul class="cp-results" id="cpResults"' +
-        ' role="listbox" aria-label="Search results"></ul>' +
+        ' role="listbox" aria-label="検索結果"></ul>' +
         '<div class="cp-footer">' +
           '<span class="cp-footer-group">' +
             '<kbd>↑</kbd><kbd>↓</kbd>' +
-            '<span class="cp-footer-label">navigate</span>' +
+            '<span class="cp-footer-label">移動</span>' +
           '</span>' +
           '<span class="cp-footer-group">' +
             '<kbd>↵</kbd>' +
-            '<span class="cp-footer-label">open</span>' +
+            '<span class="cp-footer-label">開く</span>' +
           '</span>' +
           '<span class="cp-footer-group">' +
             '<kbd>Esc</kbd>' +
-            '<span class="cp-footer-label">close</span>' +
+            '<span class="cp-footer-label">閉じる</span>' +
           '</span>' +
           '<span class="cp-footer-shortcut">' + shortcutLabel + '</span>' +
         '</div>' +
@@ -344,7 +345,7 @@
     if (!query) {
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'Type to search 435 lessons, 489 outputs, and glossary terms' +
+        'レッスン、成果物、用語を検索できます' +
         '</li>';
       _activeIdx = -1;
       return;
@@ -353,7 +354,7 @@
     if (results.length === 0) {
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'No results for <em>' + escHtml(query) + '</em>' +
+        '<em>' + escHtml(query) + '</em> に一致する結果はありません' +
         '</li>';
       _activeIdx = -1;
       return;
@@ -371,31 +372,31 @@
         dest = r.lessonPath
           ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
-        chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
+        chip = 'フェーズ ' + String(r.phaseId).padStart(2, '0');
       } else if (r.kind === 'artifact') {
         // Jump to the lesson that produced this artifact
         dest = r.lessonPath
           ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
           : ('https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + r.file);
         var ak = (r.artKind || 'artifact');
-        chip = ak.charAt(0).toUpperCase() + ak.slice(1);
+        chip = artifactKindLabel(ak);
         chipClass += ' cp-item-chip--alt';
       } else {
         // Deep-link: pre-populate glossary search with the exact term name
         // so the user lands directly on the definition, not the full list.
         dest      = 'glossary.html?q=' + encodeURIComponent(r.name);
-        chip      = 'Glossary';
+        chip      = '用語集';
         chipClass += ' cp-item-chip--alt';
       }
 
       var snippet = r.summary ? truncate(r.summary, 110) : '';
       var metaParts = [];
       if (r.kind === 'lesson') {
-        if (r.type && r.type !== '—') metaParts.push(r.type);
+        if (r.type && r.type !== '—') metaParts.push(typeLabel(r.type));
         if (r.lang && r.lang !== '—') metaParts.push(r.lang);
       } else if (r.kind === 'artifact') {
         if (r.phaseId !== undefined && r.phaseId !== null) {
-          metaParts.push('Phase ' + String(r.phaseId).padStart(2, '0'));
+          metaParts.push('フェーズ ' + String(r.phaseId).padStart(2, '0'));
         }
       }
       var meta = metaParts.join(' · '); // ·
@@ -505,6 +506,21 @@
     if (!href) return;
     close();
     window.location.href = href;
+  }
+
+  function typeLabel(type) {
+    if (type === 'Build') return '作る';
+    if (type === 'Learn') return '学ぶ';
+    if (type === 'Capstone') return '総仕上げ';
+    return type || '';
+  }
+
+  function artifactKindLabel(kind) {
+    if (kind === 'prompt') return 'プロンプト';
+    if (kind === 'skill') return 'スキル';
+    if (kind === 'agent') return 'エージェント';
+    if (kind === 'mission') return 'ミッション';
+    return '成果物';
   }
 
   // ── Global keyboard shortcut (Cmd/Ctrl+K) ────────────────────────────

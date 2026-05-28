@@ -1,11 +1,11 @@
 """vLLM production stack + LMCache simulator — stdlib Python.
 
-Compares three configs on a preemption-heavy workload:
-  NATIVE_ONLY   : vLLM with no offload, requests re-prefill on preemption
-  CPU_OFFLOAD   : native CPU offload, engine-local
-  LMCACHE       : cluster LMCache shared across 4 engines
+preemption-heavy workload に対して3つの config を比較する:
+  NATIVE_ONLY   : offload なしの vLLM。preemption 時に request を re-prefill
+  CPU_OFFLOAD   : native CPU offload、engine-local
+  LMCACHE       : 4 engines で共有する cluster LMCache
 
-Reports re-prefill count avoided, throughput gain, and break-even HBM utilization.
+avoided re-prefill count、throughput gain、break-even HBM utilization を report する。
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ KV_BLOCK_TOKENS = 16
 class Request:
     prompt_tokens: int
     output_tokens: int
-    prefix_id: str  # for reuse across engines
+    prefix_id: str  # engines をまたいで reuse するための id
 
 
 def make_workload(n: int = 200, seed: int = 7) -> list[Request]:
@@ -39,7 +39,7 @@ def make_workload(n: int = 200, seed: int = 7) -> list[Request]:
 
 
 def simulate(config: str, reqs: list[Request]) -> dict:
-    """Model a small cluster under HBM pressure."""
+    """HBM pressure 下の小さな cluster を model 化する。"""
     engines_state: list[set[str]] = [set() for _ in range(4)]
     shared_cache: set[str] = set()
     hbm_capacity_blocks_per_engine = 900
@@ -106,14 +106,14 @@ def report(row: dict, baseline: float) -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("vLLM PRODUCTION STACK + LMCACHE — preemption-heavy, 4 engines, shared prefixes")
+    print("vLLM PRODUCTION STACK + LMCACHE — preemption-heavy、4 engines、shared prefixes")
     print("=" * 80)
     base = make_workload()
     baseline = simulate("NATIVE_ONLY", [Request(r.prompt_tokens, r.output_tokens, r.prefix_id) for r in base])["total_ms"]
     for cfg in ("NATIVE_ONLY", "CPU_OFFLOAD", "LMCACHE"):
         report(simulate(cfg, [Request(r.prompt_tokens, r.output_tokens, r.prefix_id) for r in base]), baseline)
-    print("\nRead: when prefixes repeat across engines, LMCache avoids redundant prefills")
-    print("even when each engine individually evicted the cache.")
+    print("\n読み方: prefix が engines をまたいで繰り返されると、LMCache は redundant prefill を避ける")
+    print("各 engine が個別には cache を evict していた場合でも効く。")
 
 
 if __name__ == "__main__":

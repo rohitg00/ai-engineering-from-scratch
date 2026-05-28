@@ -1,10 +1,8 @@
-"""Multi-head self-attention with causal mask, single QKV projection, and
-weight inspection.
+"""causal mask、single QKV projection、weight inspection を持つ multi-head self-attention。
 
-The demo trains a tiny model (attention + token/positional embeddings + LM head)
-on a copy task and prints the loss curve plus a per-head attention heatmap.
+デモは tiny model（attention + token/positional embeddings + LM head）を copy task で学習し、loss curve と head ごとの attention heatmap を表示します。
 
-Run: python3 code/main.py
+Run: Python3 code/main.py
 """
 
 from __future__ import annotations
@@ -18,7 +16,7 @@ import torch.nn.functional as F
 
 
 class MultiHeadSelfAttention(nn.Module):
-    """Multi-head self-attention with a single QKV linear and a causal mask."""
+    """single QKV linear と causal mask を持つ multi-head self-attention。"""
 
     def __init__(
         self,
@@ -99,7 +97,7 @@ class MultiHeadSelfAttention(nn.Module):
 
 
 class TokenEmbedding(nn.Module):
-    """Vocab id to vector lookup (compact copy of lesson 32)."""
+    """vocab id から vector への lookup（lesson 32 の compact copy）。"""
 
     def __init__(self, vocab_size: int, d_model: int) -> None:
         super().__init__()
@@ -112,7 +110,7 @@ class TokenEmbedding(nn.Module):
 
 
 class SinusoidalPositionalEmbedding(nn.Module):
-    """Parameter-free sin/cos positional table (compact copy of lesson 32)."""
+    """parameter-free な sin/cos positional table（lesson 32 の compact copy）。"""
 
     def __init__(self, max_context_length: int, d_model: int, base: float = 10000.0) -> None:
         super().__init__()
@@ -143,7 +141,7 @@ class SinusoidalPositionalEmbedding(nn.Module):
 
 
 class TinyAttentionLM(nn.Module):
-    """Embedding + attention + LM head. Just enough to train a copy task."""
+    """Embedding + attention + LM head。copy task を学習するのに必要な最小構成です。"""
 
     def __init__(
         self,
@@ -194,10 +192,10 @@ class DemoConfig:
 
 
 def _make_repeat_batch(cfg: DemoConfig, generator: torch.Generator) -> tuple[torch.Tensor, torch.Tensor]:
-    """Repeat task. Pick a random id per row, repeat it across the row.
+    """repeat task。各 row で random id を1つ選び、その row 全体に繰り返します。
 
-    The model must learn that the next token is the same as the previous one.
-    A single attention head looking one token back is enough to solve it.
+    model は次 token が前 token と同じであることを学ぶ必要があります。
+    1 token 前を見る attention head が1つあれば解けます。
     """
     base = torch.randint(
         0, cfg.vocab_size, (cfg.batch_size, 1), generator=generator, dtype=torch.long
@@ -245,7 +243,7 @@ def main() -> int:
     cfg = DemoConfig()
     torch.manual_seed(cfg.seed)
 
-    _print_section("Shape contract")
+    _print_section("shape contract")
     attn = MultiHeadSelfAttention(
         d_model=cfg.d_model,
         n_heads=cfg.n_heads,
@@ -257,17 +255,17 @@ def main() -> int:
     print(f"output : {tuple(out.shape)}")
     assert out.shape == x.shape
 
-    _print_section("Causal mask check")
+    _print_section("causal mask check")
     out_with_weights, weights = attn(x, return_weights=True)
     upper = torch.triu(torch.ones(cfg.seq_len, cfg.seq_len), diagonal=1).bool()
     upper_mass = weights[0, 0][upper].abs().sum().item()
     print(f"weights shape          : {tuple(weights.shape)}")
     print(f"sum over future cells  : {upper_mass:.6f}")
-    assert upper_mass < 1e-5, "future positions must have zero weight"
+    assert upper_mass < 1e-5, "未来位置の weight は0である必要があります"
     rows = weights[0, 0].sum(dim=-1)
     print(f"row sums (head 0, batch 0): min={rows.min().item():.4f}, max={rows.max().item():.4f}")
 
-    _print_section("Train tiny model on repeat task")
+    _print_section("repeat task で tiny model を学習")
     model = TinyAttentionLM(
         vocab_size=cfg.vocab_size,
         d_model=cfg.d_model,
@@ -275,11 +273,11 @@ def main() -> int:
         max_context_length=cfg.seq_len,
     )
     initial_loss = math.log(cfg.vocab_size)
-    print(f"random-init expected loss ~ log(V) = {initial_loss:.4f}")
+    print(f"random init の期待 loss ~ log(V) = {initial_loss:.4f}")
     curve = _train(model, cfg)
-    assert curve[-1] < curve[0], "loss must fall over training"
+    assert curve[-1] < curve[0], "training 中に loss が下がる必要があります"
 
-    _print_section("Per-head attention heatmap")
+    _print_section("head ごとの attention heatmap")
     model.eval()
     with torch.no_grad():
         sample_gen = torch.Generator()
@@ -288,12 +286,12 @@ def main() -> int:
         sample_ids = base.expand(1, cfg.seq_len).contiguous()
         _, sample_weights = model(sample_ids, return_weights=True)
     head_id = 0
-    print(f"head {head_id}, query rows top-down, key cols left-to-right")
+    print(f"head {head_id}, query rows は上から下、key cols は左から右")
     for t in range(cfg.seq_len):
         row = sample_weights[0, head_id, t]
         print(f"  q={t:>2}: |{_heatmap_row(row, width=cfg.seq_len)}|")
 
-    print("\nDemo OK.")
+    print("\nデモ OK。")
     return 0
 
 

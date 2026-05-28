@@ -1,21 +1,21 @@
 /**
  * Model routing — TypeScript port + rule-based router.
  *
- * Two halves:
- *   1. ModelRouter: rule-based picker over (model catalog, request signals).
- *      Each rule scores candidates by capability fit, then weighs latency vs
- *      cost vs capability per a caller-supplied policy. Matches the four
- *      signals in docs/en.md (task class, prompt length, similarity to
- *      hard set, self-confidence).
- *   2. Cost/quality simulator matching main.py: NO_ROUTE / PRE_ROUTE /
- *      CASCADE patterns on a mixed-difficulty workload.
+ * 2つの部分:
+ *   1. ModelRouter: (model catalog, request signals) に対する rule-based picker。
+ *      各 rule は capability fit で candidates を score し、caller が渡す policy に
+ *      従って latency vs cost vs capability を重み付けする。docs/en.md の4つの
+ *      signal（task class、prompt length、hard set への similarity、
+ *      self-confidence）に対応する。
+ *   2. main.py と同じ cost/quality simulator:
+ *      mixed-difficulty workload 上で NO_ROUTE / PRE_ROUTE / CASCADE を比較する。
  *
  * Citations:
  *   - RouteLLM (LMSYS): https://github.com/lm-sys/RouteLLM
  *   - OpenRouter recommendation/routing primitives: https://openrouter.ai/
  *   - LiteLLM router config with fallback + cost-routing (referenced in docs)
  *
- * Runs on Node 20+ stdlib. No npm deps.
+ * Node 20+ stdlib で動作する。npm deps は不要。
  */
 
 // -- Pricing (2026-04 approximations) -------------------------------------
@@ -37,16 +37,16 @@ type Capability =
 
 type Model = {
   id: string;
-  // Per-million-tokens.
+  // Per-million-tokens。
   inputPrice: number;
   outputPrice: number;
-  // P50 first-token latency (ms).
+  // P50 first-token latency (ms)。
   latencyMs: number;
-  // Maximum context length (tokens).
+  // 最大 context length (tokens)。
   contextWindow: number;
-  // Capability bag. Used by router fit-scoring.
+  // Capability bag。router の fit-scoring に使う。
   capabilities: Set<Capability>;
-  // Subjective quality on a 0–1 scale per the docs' rough mapping.
+  // docs の rough mapping に基づく 0-1 scale の subjective quality。
   qualityFloor: number;
 };
 
@@ -93,22 +93,22 @@ const CATALOG: Model[] = [
 ];
 
 type RouteSignals = {
-  // Task class derived from a small upstream classifier.
+  // 小さな upstream classifier から得た task class。
   taskClass: "simple" | "medium" | "hard";
-  // Approximate prompt token count.
+  // おおよその prompt token count。
   promptTokens: number;
-  // 0–1 cosine similarity to a curated known-hard set.
+  // curated known-hard set への 0-1 cosine similarity。
   hardSetSimilarity: number;
-  // Required capabilities for this request.
+  // この request に必要な capabilities。
   required: Capability[];
 };
 
 type RoutePolicy = {
-  // Weights sum to 1; how much we care about each axis.
+  // 重みの合計は1。各 axis をどれだけ重視するか。
   weightCost: number;
   weightLatency: number;
   weightCapability: number;
-  // Quality floor any chosen model must clear.
+  // 選ばれる model が満たすべき quality floor。
   minQuality: number;
 };
 
@@ -127,8 +127,8 @@ class ModelRouter {
     this.hardSetThreshold = hardSetThreshold;
   }
 
-  // Estimate a request's blended cost on a model. Assumes 200 output tokens
-  // unless the caller threads through a real output estimate elsewhere.
+  // model 上での request の blended cost を見積もる。caller が別の場所から
+  // 実際の output estimate を渡さない限り、200 output tokens と仮定する。
   estCost(model: Model, promptTokens: number, outputTokens = 200): number {
     return (
       (promptTokens / 1e6) * model.inputPrice +
@@ -136,10 +136,10 @@ class ModelRouter {
     );
   }
 
-  // Filter the catalog down to models that:
-  //  (a) cover every required capability,
-  //  (b) fit the prompt in their context window,
-  //  (c) clear the policy quality floor.
+  // catalog を次の条件を満たす model に絞る:
+  //  (a) required capability をすべて持つ
+  //  (b) prompt が context window に収まる
+  //  (c) policy quality floor を満たす
   candidates(signals: RouteSignals, policy: RoutePolicy): Model[] {
     return this.catalog.filter((m) => {
       for (const c of signals.required) if (!m.capabilities.has(c)) return false;
@@ -149,8 +149,8 @@ class ModelRouter {
     });
   }
 
-  // Weighted pick: lower cost / lower latency / higher capability fit is better.
-  // The 'hard set' similarity short-circuits to frontier (matches docs' rule).
+  // weighted pick: lower cost / lower latency / higher capability fit が良い。
+  // 'hard set' similarity は frontier へ short-circuit する（docs の rule に対応）。
   pick(signals: RouteSignals, policy: RoutePolicy): RouteDecision {
     if (signals.hardSetSimilarity >= this.hardSetThreshold) {
       const frontier = this.catalog.find((m) => m.id === "frontier");
@@ -158,16 +158,16 @@ class ModelRouter {
         return {
           model: frontier,
           estCost: this.estCost(frontier, signals.promptTokens),
-          reasoning: `hard-set similarity ${signals.hardSetSimilarity.toFixed(2)} >= ${this.hardSetThreshold} — pinned to frontier`,
+          reasoning: `hard-set similarity ${signals.hardSetSimilarity.toFixed(2)} >= ${this.hardSetThreshold} — frontier に固定`,
         };
       }
     }
 
     const cands = this.candidates(signals, policy);
     if (cands.length === 0) {
-      throw new Error("no candidate model clears policy + required caps");
+      throw new Error("policy と required capabilities を満たす candidate model がありません");
     }
-    // Normalise for fair weighting.
+    // 公平な重み付けのために正規化する。
     const costs = cands.map((m) => this.estCost(m, signals.promptTokens));
     const latencies = cands.map((m) => m.latencyMs);
     const caps = cands.map((m) => m.capabilities.size);
@@ -325,7 +325,7 @@ function reportRow(row: SimRow, baseline: number): void {
   const save = ((baseline - row.cost) / baseline) * 100;
   console.log(
     `${row.pattern.padEnd(12)}  cost=$${row.cost.toFixed(2).padStart(7)}  ` +
-      `save=${save.toFixed(1).padStart(5)}%  ` +
+      `saving=${save.toFixed(1).padStart(5)}%  ` +
       `quality=${(row.meanQuality * 100).toFixed(1).padStart(5)}%  ` +
       `escalated=${String(row.escalated).padStart(4)}`,
   );
@@ -352,7 +352,7 @@ function routerDemo(): void {
 
   const cases: { name: string; signals: RouteSignals; policy: RoutePolicy }[] = [
     {
-      name: "FAQ-style short prompt (balanced policy)",
+      name: "FAQ風の短い prompt (balanced policy)",
       signals: {
         taskClass: "simple",
         promptTokens: 400,
@@ -362,7 +362,7 @@ function routerDemo(): void {
       policy: balanced,
     },
     {
-      name: "code-gen with tool use (balanced)",
+      name: "tool use 付き code-gen (balanced)",
       signals: {
         taskClass: "medium",
         promptTokens: 2500,
@@ -372,7 +372,7 @@ function routerDemo(): void {
       policy: balanced,
     },
     {
-      name: "math near known-hard set (auto-pin frontier)",
+      name: "known-hard set に近い math (frontier 自動固定)",
       signals: {
         taskClass: "hard",
         promptTokens: 1500,
@@ -382,7 +382,7 @@ function routerDemo(): void {
       policy: balanced,
     },
     {
-      name: "long-context 800K tokens (frontier only fits)",
+      name: "long-context 800K tokens (frontier のみ収まる)",
       signals: {
         taskClass: "hard",
         promptTokens: 800_000,
@@ -392,7 +392,7 @@ function routerDemo(): void {
       policy: balanced,
     },
     {
-      name: "FAQ-style short prompt (latency-first)",
+      name: "FAQ風の短い prompt (latency-first)",
       signals: {
         taskClass: "simple",
         promptTokens: 300,
@@ -414,7 +414,7 @@ function routerDemo(): void {
 
 function patternsDemo(): void {
   console.log("\n" + "=".repeat(80));
-  console.log("MODEL ROUTING — three patterns, 1000 requests, mixed difficulty");
+  console.log("MODEL ROUTING — 3 patterns、1000 requests、mixed difficulty");
   console.log("=".repeat(80));
   const reqs = makeWorkload();
   const baseline = simulate("NO_ROUTE", reqs).cost;
@@ -422,10 +422,10 @@ function patternsDemo(): void {
     reportRow(simulate(p, reqs), baseline);
   }
   console.log(
-    "\nRead: PRE_ROUTE saves big when the classifier is accurate. CASCADE",
+    "\n読み方: classifier が正確なら PRE_ROUTE は大きく節約する。CASCADE は",
   );
   console.log(
-    "guarantees quality floor but adds latency on escalated requests.",
+    "quality floor を保証するが、escalated requests では latency が増える。",
   );
 }
 

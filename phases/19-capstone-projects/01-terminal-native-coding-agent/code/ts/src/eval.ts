@@ -3,9 +3,9 @@ import { runAgent } from "./harness.ts";
 export type EvalCase = { task: string; expectedDone: number };
 
 export const EVAL_TASKS: EvalCase[] = [
-  { task: "diagnose worker.rs", expectedDone: 3 },
-  { task: "summarize README", expectedDone: 3 },
-  { task: "run smoke tests", expectedDone: 3 },
+  { task: "worker.rs を診断する", expectedDone: 3 },
+  { task: "README を要約する", expectedDone: 3 },
+  { task: "smoke test を実行する", expectedDone: 3 },
 ];
 
 export type EvalResult = { passed: number; failed: number };

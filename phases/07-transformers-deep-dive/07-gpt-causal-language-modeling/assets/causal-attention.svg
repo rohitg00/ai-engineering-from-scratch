@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -6,16 +6,16 @@
       .cell-off { fill: #2c3e50; }
       .cell-on  { fill: #fff1d6; stroke: #c0392b; stroke-width: 0.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">causal mask — one triangle, half a decade of progress</text>
+  <text x="450" y="30" text-anchor="middle" class="title">因果マスク — ひとつの三角形、半世代分の進歩</text>
 
   <!-- Unmasked grid (left) -->
-  <text x="170" y="75" text-anchor="middle" class="label">unmasked (BERT-style)</text>
+  <text x="170" y="75" text-anchor="middle" class="label">非マスク (BERT式)</text>
   <g transform="translate(90 90)">
     <!-- 6x6 grid all open -->
     <g fill="#fff1d6" stroke="#c0392b" stroke-width="0.5">
@@ -28,11 +28,11 @@
     </g>
   </g>
 
-  <text x="170" y="275" text-anchor="middle" class="caption">every position sees every position</text>
-  <text x="170" y="292" text-anchor="middle" class="caption">fits encoders (classification, embeddings)</text>
+  <text x="170" y="275" text-anchor="middle" class="caption">全位置が全位置を見る</text>
+  <text x="170" y="292" text-anchor="middle" class="caption">エンコーダ向き (分類、埋め込み)</text>
 
   <!-- Causal mask grid (right) -->
-  <text x="630" y="75" text-anchor="middle" class="label">causal (GPT-style)</text>
+  <text x="630" y="75" text-anchor="middle" class="label">因果 (GPT式)</text>
   <g transform="translate(550 90)">
     <!-- row 0 -->
     <rect x="0" y="0" width="26" height="26" class="cell-on"/>
@@ -78,21 +78,21 @@
     <rect x="130" y="130" width="26" height="26" class="cell-on"/>
   </g>
 
-  <text x="630" y="275" text-anchor="middle" class="caption">position i attends to positions ≤ i only</text>
-  <text x="630" y="292" text-anchor="middle" class="caption">fits decoders (GPT, Llama, Claude)</text>
+  <text x="630" y="275" text-anchor="middle" class="caption">位置iは位置≤iにだけ注意する</text>
+  <text x="630" y="292" text-anchor="middle" class="caption">デコーダ向き (GPT, Llama, Claude)</text>
 
   <!-- Training / inference axis -->
   <rect x="90" y="330" width="720" height="140" class="box"/>
-  <text x="450" y="358" text-anchor="middle" class="label">what the mask enables</text>
+  <text x="450" y="358" text-anchor="middle" class="label">マスクが可能にするもの</text>
 
-  <text x="130" y="395" class="content">training</text>
-  <text x="260" y="395" class="content">full N-token forward pass, N parallel next-token losses in one batch</text>
+  <text x="130" y="395" class="content">学習</text>
+  <text x="260" y="395" class="content">Nトークン一括forward、1バッチでN個の次トークン損失</text>
 
-  <text x="130" y="425" class="content">inference</text>
-  <text x="260" y="425" class="content">autoregressive: feed tokens 1..t, generate t+1, repeat. KV cache (lesson 12) avoids re-computation</text>
+  <text x="130" y="425" class="content">推論</text>
+  <text x="260" y="425" class="content">自己回帰: token 1..tを入れ、t+1を生成して反復。KV cacheで再計算を避ける</text>
 
-  <text x="130" y="455" class="content">loss</text>
-  <text x="260" y="455" class="content">cross-entropy shift-by-one: predict t_{i+1} from t_{0..i}</text>
+  <text x="130" y="455" class="content">損失</text>
+  <text x="260" y="455" class="content">1つずらしたクロスエントロピー: t_{0..i}からt_{i+1}を予測</text>
 
-  <text x="450" y="502" text-anchor="middle" class="caption">the mask is added before softmax; exp(-inf) = 0; masked positions get zero weight.</text>
+  <text x="450" y="502" text-anchor="middle" class="caption">マスクはsoftmax前に加える。exp(-inf)=0なので、マスク位置の重みはゼロ。</text>
 </svg>

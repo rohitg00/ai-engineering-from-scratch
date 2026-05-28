@@ -1,39 +1,39 @@
-# Text Processing — Tokenization, Stemming, Lemmatization
+# テキスト処理 — トークン化、ステミング、レンマ化
 
-> Language is continuous. Models are discrete. Preprocessing is the bridge.
+> 言語は連続的です。モデルは離散的です。前処理はその橋渡しです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 2 · 14 (Naive Bayes)
-**Time:** ~45 minutes
+**種別:** 実装
+**言語:** Python
+**前提条件:** フェーズ 2 · 14 (ナイーブベイズ)
+**所要時間:** 約 45 分
 
-## The Problem
+## 課題
 
-A model cannot read "The cats were running." It reads integers.
+モデルは "The cats were running." をそのまま読めません。モデルが読むのは整数です。
 
-Every NLP system opens with the same three questions. Where does a word start. What is the root of the word. How do we treat "run", "running", "ran" as the same thing when it helps, and as different things when it doesn't.
+どの NLP システムも、最初に同じ 3 つの問いに向き合います。単語はどこから始まるのか。単語の語根は何か。必要なときには "run"、"running"、"ran" を同じものとして扱い、そうでないときには別物として扱うにはどうすればよいのか。
 
-Get tokenization wrong and the model learns from garbage. If your tokenizer treats `don't` as one token but `do n't` as two, the training distribution splits. If your stemmer collapses `organization` and `organ` to the same stem, topic modeling dies. If your lemmatizer needs part-of-speech context but you don't pass it, verbs get treated as nouns.
+トークン化を間違えると、モデルは壊れたデータから学習します。トークナイザが `don't` を 1 トークンとして扱う一方で `do n't` を 2 トークンとして扱うなら、学習分布は分裂します。ステマーが `organization` と `organ` を同じステムに潰してしまうと、トピックモデリングは壊れます。レンマ化器が品詞コンテキストを必要としているのにそれを渡さないと、動詞が名詞として扱われます。
 
-This lesson builds the three preprocessing steps from scratch, then shows how NLTK and spaCy do the same work so you can see the tradeoffs.
+このレッスンでは、3 つの前処理ステップをゼロから実装し、その後 NLTK と spaCy が同じ処理をどう行うかを見て、トレードオフを理解します。
 
-## The Concept
+## 考え方
 
-Three operations. Each has a job and a failure mode.
+操作は 3 つです。それぞれ役割と失敗モードがあります。
 
-**Tokenization** splits a string into tokens. "Token" is deliberately vague because the right granularity depends on the task. Word-level for classical NLP. Subword for transformers. Character for languages without whitespace.
+**トークン化** は文字列をトークンに分割します。「トークン」は意図的に曖昧な言葉です。適切な粒度はタスクによって変わるからです。古典的 NLP では単語単位。Transformer ではサブワード。空白を持たない言語では文字単位です。
 
-**Stemming** chops suffixes with rules. Fast, aggressive, dumb. `running -> run`. `organization -> organ`. That second one is the failure mode.
+**ステミング** はルールで接尾辞を切り落とします。高速で、攻撃的で、単純です。`running -> run`。`organization -> organ`。後者が失敗モードです。
 
-**Lemmatization** reduces a word to its dictionary form using grammar knowledge. Slower, accurate, needs a lookup table or morphological analyzer. `ran -> run` (needs to know "ran" is past tense of "run"). `better -> good` (needs to know comparative forms).
+**レンマ化** は文法知識を使って、単語を辞書形に戻します。遅めですが正確で、ルックアップ表または形態素解析器が必要です。`ran -> run` ("ran" が "run" の過去形だと知る必要があります)。`better -> good` (比較級を知る必要があります)。
 
-Rule of thumb. Stem when speed matters and you can tolerate noise (search indexing, rough classification). Lemmatize when meaning matters (question answering, semantic search, anything the user will read).
+目安としては、速度が重要でノイズを許容できるならステミングを使います (検索インデックス、粗い分類)。意味が重要ならレンマ化を使います (質問応答、意味検索、ユーザーが読むもの全般)。
 
-## Build It
+## 作ってみる
 
-### Step 1: a regex word tokenizer
+### ステップ 1: 正規表現による単語トークナイザ
 
-The simplest useful tokenizer splits on non-alphanumeric characters while keeping punctuation as its own tokens. Not perfect, not final, but it runs in one line.
+最小限に有用なトークナイザは、英数字以外で分割しつつ、句読点を独立したトークンとして残します。完璧でも最終形でもありませんが、1 行で動きます。
 
 ```python
 import re
@@ -42,18 +42,18 @@ def tokenize(text):
     return re.findall(r"[A-Za-z]+(?:'[A-Za-z]+)?|[0-9]+|[^\sA-Za-z0-9]", text)
 ```
 
-Three patterns in order of precedence. Words with optional inner apostrophe (`don't`, `it's`). Pure numbers. Any single non-whitespace non-alphanumeric character as a standalone token (punctuation).
+優先順に 3 つのパターンがあります。内側のアポストロフィを任意で含む単語 (`don't`, `it's`)。純粋な数字。空白でも英数字でもない任意の 1 文字を単独トークンとして扱うもの (句読点)。
 
 ```python
 >>> tokenize("The cats weren't running at 3pm.")
 ['The', 'cats', "weren't", 'running', 'at', '3', 'pm', '.']
 ```
 
-Failure modes to notice. `3pm` splits to `['3', 'pm']` because we alternated between letter runs and digit runs. Good enough for most tasks. URLs, emails, hashtags all break. For production, add patterns before the general ones.
+注目すべき失敗モードがあります。`3pm` は `['3', 'pm']` に分かれます。文字列の連続と数字の連続を別パターンとして交互に見ているからです。多くのタスクでは十分です。URL、メールアドレス、ハッシュタグはすべて壊れます。本番では、汎用パターンより前にそれらのパターンを追加します。
 
-### Step 2: a Porter stemmer (step 1a only)
+### ステップ 2: Porter ステマー (step 1a のみ)
 
-The full Porter algorithm has five phases of rules. Step 1a alone covers the most frequent English suffixes and teaches the pattern.
+完全な Porter アルゴリズムには 5 段階のルールがあります。Step 1a だけでも、英語で頻出する接尾辞を扱え、このパターンを学ぶには十分です。
 
 ```python
 def stem_step_1a(word):
@@ -73,11 +73,11 @@ def stem_step_1a(word):
 ['caress', 'poni', 'caress', 'cat']
 ```
 
-Read the rules top-down. The `ies -> i` rule is why `ponies -> poni`, not `pony`. Real Porter has step 1b that would fix it. Rules compete. Earlier rules win. The order matters more than any single rule.
+ルールは上から下に読みます。`ies -> i` ルールがあるため、`ponies -> pony` ではなく `ponies -> poni` になります。本物の Porter では step 1b がこれを修正します。ルールは競合します。先に出てきたルールが勝ちます。順序は個々のルール以上に重要です。
 
-### Step 3: a lookup-based lemmatizer
+### ステップ 3: ルックアップベースのレンマ化器
 
-Lemmatization proper needs morphology. A tractable teaching version uses a small lemma table and a fallback.
+本来のレンマ化には形態論が必要です。教材として扱いやすい版では、小さなレンマ表とフォールバックを使います。
 
 ```python
 LEMMA_TABLE = {
@@ -115,9 +115,9 @@ def lemmatize(word, pos):
 'watched'
 ```
 
-The last case is the key teaching moment. `watched` is not in our table and our fallback only handles `ing`. Real lemmatization covers `ed`, irregular verbs, comparative adjectives, plurals with sound changes (`children -> child`). This is why production systems use WordNet, spaCy's morphologizer, or a full morphological analyzer.
+最後の例が重要な学びどころです。`watched` は表に存在せず、フォールバックは `ing` しか扱いません。本物のレンマ化は `ed`、不規則動詞、比較級形容詞、音変化を伴う複数形 (`children -> child`) を扱います。本番システムで WordNet、spaCy の morphologizer、または完全な形態素解析器を使う理由はここにあります。
 
-### Step 4: pipe them together
+### ステップ 4: パイプラインとしてつなぐ
 
 ```python
 def preprocess(text, pos_tagger=None):
@@ -128,11 +128,11 @@ def preprocess(text, pos_tagger=None):
     return {"tokens": tokens, "stems": stems, "lemmas": lemmas}
 ```
 
-The missing piece is a POS tagger. Phase 5 · 07 (POS Tagging) builds one. For now, default everything to `NOUN` and acknowledge the limitation.
+欠けている部品は POS タガーです。フェーズ 5 · 07 (POS Tagging) でこれを作ります。今はすべてを `NOUN` として扱い、その制約を明確にしておきます。
 
-## Use It
+## 使ってみる
 
-NLTK and spaCy ship the production versions. A few lines each.
+NLTK と spaCy には本番向けの実装が入っています。どちらも数行で使えます。
 
 ### NLTK
 
@@ -166,7 +166,7 @@ def nltk_pos_to_wordnet(tag):
 lemmas = [lemmatizer.lemmatize(t, nltk_pos_to_wordnet(tag)) for t, tag in tagged]
 ```
 
-`word_tokenize` handles contractions, Unicode, edge cases your regex misses. `PorterStemmer` runs all five phases. `WordNetLemmatizer` needs the POS tag translated from NLTK's Penn Treebank scheme to WordNet's abbreviation set. The translation wiring above is the bit most tutorials skip.
+`word_tokenize` は短縮形、Unicode、正規表現では漏れるエッジケースを扱います。`PorterStemmer` は 5 段階すべてを実行します。`WordNetLemmatizer` には、NLTK の Penn Treebank スキームの POS タグを WordNet の略号セットへ変換して渡す必要があります。上の変換部分こそ、多くのチュートリアルが省いてしまう箇所です。
 
 ### spaCy
 
@@ -188,29 +188,29 @@ running  run     VERB
 .        .       PUNCT
 ```
 
-spaCy hides the whole pipeline behind `nlp(text)`. Tokenization, POS tagging, and lemmatization all run. Faster than NLTK at scale. More accurate out of the box. The tradeoff is that you cannot easily swap individual components.
+spaCy はパイプライン全体を `nlp(text)` の背後に隠します。トークン化、POS タギング、レンマ化がすべて実行されます。大規模処理では NLTK より高速です。初期状態での精度も高めです。トレードオフは、個々のコンポーネントを簡単には差し替えられないことです。
 
-### When to pick which
+### どれを選ぶか
 
-| Situation | Pick |
+| 状況 | 選択 |
 |-----------|------|
-| Teaching, research, swapping components | NLTK |
-| Production, multi-language, speed matters | spaCy |
-| Transformer pipeline (you'll tokenize with the model's tokenizer anyway) | Use `tokenizers` / `transformers` and skip classical preprocessing |
+| 教材、研究、コンポーネントの差し替え | NLTK |
+| 本番、多言語、速度が重要 | spaCy |
+| Transformer パイプライン (いずれにせよモデルのトークナイザを使う) | `tokenizers` / `transformers` を使い、古典的前処理を省く |
 
-### The two failure modes nobody warns you about
+### 誰も警告してくれない 2 つの失敗モード
 
-Most tutorials teach the algorithms and stop. Two things will bite a real preprocessing pipeline, and they are almost never covered.
+多くのチュートリアルはアルゴリズムを教えて終わります。実際の前処理パイプラインでは 2 つの問題が噛みついてきますが、ほとんど扱われません。
 
-**Reproducibility drift.** NLTK and spaCy change tokenization and lemmatizer behavior between versions. What produced `['do', "n't"]` in spaCy 2.x may produce `["don't"]` in 3.x. Your model was trained on one distribution. Inference now runs on a different one. Accuracy quietly degrades and nobody knows why. Pin library versions in `requirements.txt`. Write a preprocessing regression test that freezes expected tokenization of 20 sample sentences. Run it on every upgrade.
+**再現性のドリフト。** NLTK と spaCy は、バージョン間でトークン化やレンマ化の挙動を変えることがあります。spaCy 2.x で `['do', "n't"]` を返していたものが、3.x では `["don't"]` になるかもしれません。モデルは一方の分布で学習されています。推論は別の分布で走ります。精度は静かに劣化し、誰も理由に気づきません。`requirements.txt` でライブラリのバージョンを固定してください。サンプル文 20 個の期待トークン化を固定する前処理回帰テストを書いてください。アップグレードのたびに実行します。
 
-**Training / inference mismatch.** Train with aggressive preprocessing (lowercase, stopword removal, stemming), deploy on raw user input, watch performance crater. This is the single most common production NLP failure. If you preprocess during training, you must run the identical function during inference. Ship preprocessing as a function inside the model package, not as a notebook cell the serving team rewrites.
+**学習 / 推論の不一致。** 学習時には強い前処理 (小文字化、ストップワード削除、ステミング) を行い、デプロイ時には生のユーザー入力を渡すと、性能は崩れます。これは本番 NLP で最もよくある失敗です。学習時に前処理するなら、推論時にも同一の関数を実行しなければなりません。前処理はモデルパッケージ内の関数として同梱し、サービングチームが書き直すノートブックのセルにしないでください。
 
-## Ship It
+## 形にして届ける
 
-A reusable prompt that helps engineers pick a preprocessing strategy without reading three textbooks.
+エンジニアが 3 冊の教科書を読まずに前処理戦略を選べるようにする、再利用可能なプロンプトです。
 
-Save as `outputs/prompt-preprocessing-advisor.md`:
+`outputs/prompt-preprocessing-advisor.md` として保存します。
 
 ```markdown
 ---
@@ -230,24 +230,24 @@ You advise on classical NLP preprocessing. Given a task description, you output:
 Refuse to recommend stemming for user-visible text. Refuse to recommend lemmatization without POS tags. Flag non-English input as needing a different pipeline.
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Extend `tokenize` to keep URLs as single tokens. Test: `tokenize("Visit https://example.com today.")` should produce one URL token.
-2. **Medium.** Implement Porter step 1b. If a word contains a vowel and ends in `ed` or `ing`, remove it. Handle the double-consonant rule (`hopping -> hop`, not `hopp`).
-3. **Hard.** Build a lemmatizer that uses WordNet as a lookup table but falls back to your Porter stemmer when WordNet has no entry. Measure accuracy on a tagged corpus against plain WordNet and plain Porter.
+1. **易しい。** URL を 1 つのトークンとして保持するように `tokenize` を拡張してください。テスト: `tokenize("Visit https://example.com today.")` が URL トークンを 1 つ生成すること。
+2. **普通。** Porter step 1b を実装してください。単語に母音が含まれ、`ed` または `ing` で終わる場合はそれを削除します。二重子音ルールも扱います (`hopping -> hop` であり、`hopp` ではありません)。
+3. **難しい。** WordNet をルックアップ表として使い、WordNet に項目がない場合は自作 Porter ステマーへフォールバックするレンマ化器を作ってください。タグ付きコーパス上で、純粋な WordNet と純粋な Porter に対する精度を測定します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる意味 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Token | A word | Whatever unit the model consumes. Can be word, subword, character, or byte. |
-| Stem | Root of a word | Result of rule-based suffix stripping. Not always a real word. |
-| Lemma | Dictionary form | The form you'd look up. Requires grammatical context to compute correctly. |
-| POS tag | Part of speech | Category like NOUN, VERB, ADJ. Needed to lemmatize accurately. |
-| Morphology | Word shape rules | How a word changes form based on tense, number, case. Lemmatization depends on it. |
+| トークン | 単語 | モデルが消費する任意の単位。単語、サブワード、文字、バイトになり得ます。 |
+| ステム | 単語の語根 | ルールベースの接尾辞削除の結果。常に実在語とは限りません。 |
+| レンマ | 辞書形 | 辞書で引く形。正しく求めるには文法コンテキストが必要です。 |
+| POS タグ | 品詞 | NOUN、VERB、ADJ のようなカテゴリ。正確なレンマ化に必要です。 |
+| 形態論 | 単語形のルール | 時制、数、格によって単語がどう形を変えるか。レンマ化はこれに依存します。 |
 
-## Further Reading
+## 参考資料
 
-- [Porter, M. F. (1980). An algorithm for suffix stripping](https://tartarus.org/martin/PorterStemmer/def.txt) — the original paper, five pages, still the clearest explanation.
-- [spaCy 101 — linguistic features](https://spacy.io/usage/linguistic-features) — how a real pipeline is wired.
-- [NLTK book, chapter 3](https://www.nltk.org/book/ch03.html) — tokenization edge cases you haven't thought of yet.
+- [Porter, M. F. (1980). An algorithm for suffix stripping](https://tartarus.org/martin/PorterStemmer/def.txt) — 原論文。5 ページで、今でも最も明快な説明です。
+- [spaCy 101 — linguistic features](https://spacy.io/usage/linguistic-features) — 実際のパイプラインがどう配線されているか。
+- [NLTK book, chapter 3](https://www.nltk.org/book/ch03.html) — まだ考えたことがないであろうトークン化のエッジケース。

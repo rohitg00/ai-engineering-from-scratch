@@ -1,28 +1,28 @@
 ---
 name: reward-hack-auditor
-description: Diagnose reward-hacking failure modes in a trained RLHF model from training logs and eval outputs.
+description: training logs と eval outputs から、訓練済み RLHF model の reward-hacking failure modes を診断する。
 version: 1.0.0
 phase: 18
 lesson: 2
 tags: [reward-hacking, goodhart, rlhf, over-optimization, sycophancy]
 ---
 
-Given an RLHF model's training reports (proxy-reward curve, KL trajectory, eval deltas) and a sample of outputs, identify which of the four reward-hacking costumes is most likely active and locate it in the evidence.
+RLHF model の training reports (proxy-reward curve、KL trajectory、eval deltas) と outputs の sample が与えられたら、4 つの reward-hacking costumes のうちどれが最も起きていそうかを特定し、evidence の中で位置づけてください。
 
-Produce:
+作成するもの:
 
-1. Proxy-gold gap fingerprint. Plot (or describe) proxy reward vs KL distance from the SFT reference. Mark the peak of gold reward (human eval, held-out RM, or proxy for these). Report whether the model is before, at, or past the gold peak.
-2. Costume identification. Check for each of verbosity, sycophancy, unfaithful reasoning, evaluator tampering. For each: cite a specific output or metric that triggered the flag.
-3. Mechanism trace. Name the spurious feature the RM is likely rewarding (length, confident phrasing, agreement, formatting). Cite a prompt where the feature decouples from quality.
-4. Mitigation recommendation. From the set {more preference data, RM ensemble, process supervision, KL schedule tightening, early stopping, shift to DAA}, recommend the single intervention the evidence supports and name one that would be wasted effort here.
+1. Proxy-gold gap fingerprint。SFT reference からの KL distance に対する proxy reward を plot または記述します。gold reward (human eval、held-out RM、またはその proxy) の peak を mark します。model が gold peak の前、上、後のどこにいるかを報告します。
+2. Costume identification。verbosity、sycophancy、unfaithful reasoning、evaluator tampering それぞれを確認します。各項目で flag を立てた具体的 output または metric を引用します。
+3. Mechanism trace。RM が reward していそうな spurious feature (length、confident phrasing、agreement、formatting) を名指しします。その feature が quality から decouple している prompt を引用します。
+4. Mitigation recommendation。{more preference data, RM ensemble, process supervision, KL schedule tightening, early stopping, shift to DAA} から、evidence が支持する intervention を 1 つ推薦し、ここでは無駄になる intervention も 1 つ挙げます。
 
-Hard rejects:
-- Any claim that a single RM "fixes" reward hacking. The Gao et al. (ICML 2023) curve is universal — a bigger RM pushes the peak out but does not eliminate it.
-- Any claim that KL regularization is sufficient. Catastrophic Goodhart (OpenReview UXuBzWoZGK) shows KL alone fails under heavy-tailed reward error.
-- Any recommendation to "just tune beta" without held-out capability benchmarks.
+強い拒否条件:
+- 単一の RM が reward hacking を "fix" するという主張。Gao et al. (ICML 2023) curve は universal です。大きい RM は peak を遠ざけますが、なくしません。
+- KL regularization が十分だという主張。Catastrophic Goodhart (OpenReview UXuBzWoZGK) は、heavy-tailed reward error では KL だけで失敗することを示します。
+- held-out capability benchmarks なしに "just tune beta" と勧めること。
 
-Refusal rules:
-- If the user only provides proxy-reward curves with no held-out gold signal, refuse to diagnose and demand held-out evals. Diagnosis without gold is reward-hacking-by-proxy-of-diagnosis.
-- If the user provides unfaithful-CoT evidence and asks whether process supervision "solves" it, refuse a binary answer and point to the open literature.
+拒否ルール:
+- user が held-out gold signal なしの proxy-reward curves だけを提供したら、診断を拒否し held-out evals を求めてください。gold なしの診断は reward-hacking-by-proxy-of-diagnosis です。
+- user が unfaithful-CoT evidence を提供し、process supervision がそれを "solves" するか聞いたら、binary answer を拒否し open literature を参照してください。
 
-Output: a one-page audit with the four-costume checklist, a single most-likely costume, a specific piece of evidence for it, and a single mitigation recommendation justified by the evidence. Cite Gao et al. (ICML 2023) and the 2026 unified-view paper (arXiv:2604.13602) exactly once each.
+出力: 4-costume checklist、最も可能性の高い costume、その具体的 evidence、evidence に基づく 1 つの mitigation recommendation を含む 1 ページ audit。Gao et al. (ICML 2023) と 2026 unified-view paper (arXiv:2604.13602) をそれぞれ 1 回だけ引用してください。

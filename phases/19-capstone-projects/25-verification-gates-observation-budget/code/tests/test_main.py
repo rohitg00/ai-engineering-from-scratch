@@ -1,4 +1,4 @@
-"""Tests for the verification gate chain and observation ledger."""
+"""verification gate chain と observation ledger の tests。"""
 
 from __future__ import annotations
 
@@ -76,7 +76,7 @@ class WhitelistGateTests(unittest.TestCase):
             ToolCall(turn=1, tool="shell", argv=("rm",)), self.ctx
         )
         self.assertFalse(decision.allow)
-        self.assertIn("not in allow-set", decision.reason)
+        self.assertIn("allow-set", decision.reason)
 
 
 class RegexGateTests(unittest.TestCase):
@@ -145,7 +145,7 @@ class BudgetGateTests(unittest.TestCase):
         ctx = GateContext(ledger=ledger, current_turn=2)
         decision = gate.evaluate(ToolCall(turn=2, tool="x", argv=()), ctx)
         self.assertFalse(decision.allow)
-        self.assertIn("budget exhausted", decision.reason)
+        self.assertIn("budget", decision.reason)
 
     def test_over_budget_denies(self) -> None:
         gate = BudgetGate(max_tokens=100)

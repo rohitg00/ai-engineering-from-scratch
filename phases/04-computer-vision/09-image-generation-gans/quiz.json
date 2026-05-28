@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does GAN training use the non-saturating generator loss -log(D(G(z))) instead of log(1 - D(G(z)))?",
-      "options": ["They are mathematically different and produce better equilibria", "Early in training D(G(z)) is near zero, so log(1 - D(G(z))) has vanishing gradient; -log(D(G(z))) has large gradient there so G receives a useful signal", "It speeds up the discriminator", "It is required by PyTorch"],
+      "question": "GAN の学習では、なぜ generator loss に log(1 - D(G(z))) ではなく non-saturating 形式の -log(D(G(z))) を使うのですか？",
+      "options": ["両者は数学的に異なり、より良い均衡を生むため", "学習初期には D(G(z)) がほぼゼロなので、log(1 - D(G(z))) は勾配が消えます。一方 -log(D(G(z))) はその領域で大きな勾配を持ち、G が有用な信号を受け取れるため", "discriminator を高速化するため", "PyTorch で必須だから"],
       "correct": 1,
-      "explanation": "The two losses share the same gradient direction but very different magnitudes when D(G(z)) is small. log(1 - D(G(z))) plateaus at zero gradient there. The non-saturating form stays informative across the whole range. Goodfellow noted this tweak in the original paper and every modern GAN uses it."
+      "explanation": "2 つの loss は同じ勾配方向を共有しますが、D(G(z)) が小さいときの大きさが大きく異なります。log(1 - D(G(z))) はそこで勾配がゼロに近い plateau になります。non-saturating 形式は全範囲で情報量のある勾配を保ちます。Goodfellow は元論文でこの調整に触れており、現代の GAN はすべてこれを使います。"
     },
     {
       "stage": "pre",
-      "question": "DCGAN's rules say to use strided convolutions instead of pooling. Why?",
-      "options": ["Pooling is slower on GPUs", "Pooling is non-learnable and throws away information the generator might need; strided convs let the network learn its own downsampling, which empirically produces sharper generated images", "Pooling breaks gradient flow", "Pooling is incompatible with batch norm"],
+      "question": "DCGAN のルールでは pooling ではなく strided convolutions を使うとされています。なぜですか？",
+      "options": ["Pooling は GPU 上で遅いため", "Pooling は学習不能で、generator が必要とする情報を捨ててしまいます。strided convs なら network が自分で downsampling を学習でき、経験的によりシャープな生成画像を生むため", "Pooling は勾配流を壊すため", "Pooling は batch norm と互換性がないため"],
       "correct": 1,
-      "explanation": "Max-pool is a hand-picked downsampling that discards everything but the max. In a generative setting the model benefits from a learned downsampling that can preserve information across the stride. Strided convolutions in D and strided transposed convolutions in G were the architectural change that made DCGANs trainable."
+      "explanation": "Max-pool は手で決めた downsampling で、最大値以外を捨てます。生成設定では、stride をまたいで情報を保持できる学習済み downsampling のほうが有利です。D の strided convolutions と G の strided transposed convolutions は、DCGAN を学習可能にしたアーキテクチャ上の変更でした。"
     },
     {
       "stage": "post",
-      "question": "You train a GAN and notice G produces almost identical samples regardless of the input noise. Which failure is this?",
-      "options": ["Vanishing gradients", "Mode collapse — G has found a narrow region of the data distribution that consistently fools D and has no incentive to explore; fixes include spectral norm, minibatch discrimination, or a larger batch", "Oscillation", "The dataset is too small"],
+      "question": "GAN を学習すると、入力 noise に関係なく G がほぼ同一のサンプルを生成することに気づきました。これはどの失敗ですか？",
+      "options": ["Vanishing gradients", "Mode collapse — G が data distribution の狭い領域を見つけ、それが D を一貫してだませるため探索する動機を失っています。修正には spectral norm、minibatch discrimination、または大きな batch が含まれます", "Oscillation", "Dataset が小さすぎる"],
       "correct": 1,
-      "explanation": "Mode collapse is the characteristic GAN failure where samples lack diversity. The diagnostic is obvious: noise in, same image out. Fixes all target the discriminator's ability to punish lack of diversity, either by making D more expressive (spectral norm, minibatch discrimination) or by giving G less room to collapse (larger batch, conditional labels)."
+      "explanation": "Mode collapse は、サンプルの多様性が失われる典型的な GAN の失敗です。診断は明白で、noise を入れても同じ画像が出ます。修正はいずれも、多様性の欠如を discriminator が罰せられるようにすることを狙います。D をより表現力豊かにする（spectral norm、minibatch discrimination）か、G が collapse しにくくする（大きな batch、conditional labels）方法です。"
     },
     {
       "stage": "post",
-      "question": "Why do DCGAN training scripts use Adam with betas=(0.5, 0.999) instead of the default (0.9, 0.999)?",
-      "options": ["The default is broken", "A lower beta1 reduces momentum; in an adversarial game, heavy momentum keeps each optimizer in the wrong direction too long when the other network's behaviour changes, which causes instability", "Adam is only supported with beta1=0.5 on CUDA", "It is a typo propagated through tutorials"],
+      "question": "DCGAN の training scripts では、なぜ Adam の default (0.9, 0.999) ではなく betas=(0.5, 0.999) を使うのですか？",
+      "options": ["default が壊れているため", "低い beta1 は momentum を減らします。adversarial game では、片方の network の挙動が変わったときに強い momentum が各 optimizer を誤った方向へ長く進ませ、不安定性を生むため", "Adam は CUDA 上で beta1=0.5 のときだけサポートされるため", "tutorial に広まった typo だから"],
       "correct": 1,
-      "explanation": "Adam's default beta1=0.9 averages gradients over roughly 10 steps. In a stationary objective that is helpful. In an adversarial game where the loss landscape shifts every D and G update, that averaging delays the optimizer's response and causes oscillation. Radford et al. found beta1=0.5 much more stable, and it is now the GAN default."
+      "explanation": "Adam の default beta1=0.9 はおよそ 10 steps にわたり勾配を平均します。静的な目的関数では有用です。しかし D と G の更新ごとに loss landscape が変わる adversarial game では、その平均化が optimizer の反応を遅らせ、oscillation を引き起こします。Radford らは beta1=0.5 がはるかに安定することを見つけ、現在では GAN のデフォルトになっています。"
     },
     {
       "stage": "post",
-      "question": "A colleague reports a GAN with D loss near zero and G loss increasing over training. What is happening and how do you fix it?",
-      "options": ["Both nets are improving correctly", "The discriminator has become too strong and drives G's gradient to zero; fixes include a smaller D, spectral norm, label smoothing on real labels (0.9 instead of 1.0), or switching to WGAN-GP", "The generator is correctly overfitting", "Nothing — this is the equilibrium"],
+      "question": "同僚が、D loss はほぼゼロで G loss は学習中に増加する GAN を報告しました。何が起きており、どう直しますか？",
+      "options": ["両方の net が正しく改善している", "discriminator が強くなりすぎて G の勾配をゼロに追いやっています。修正には小さな D、spectral norm、real labels の label smoothing（1.0 ではなく 0.9）、または WGAN-GP への切り替えが含まれます", "generator が正しく overfitting している", "何も問題ありません。これは equilibrium です"],
       "correct": 1,
-      "explanation": "D's loss near zero means D is perfect on both real and fake. At that point the BCE gradient to G vanishes: G sees a near-zero signal no matter what it outputs. The fix is to weaken D or use a loss that does not saturate. Spectral norm (limits D's Lipschitz constant) and WGAN-GP (uses Earth-Mover distance instead of BCE) are the two standard rescues."
+      "explanation": "D の loss がほぼゼロということは、D が real と fake の両方で完璧だという意味です。この時点で G への BCE gradient は消えます。G は何を出力してもほぼゼロの信号しか見ません。修正は D を弱めるか、saturate しない loss を使うことです。Spectral norm（D の Lipschitz constant を制限）と WGAN-GP（BCE の代わりに Earth-Mover distance を使用）が標準的な救済策です。"
     }
   ]
 }

@@ -1,10 +1,10 @@
-"""End-to-end fine-tuning pipeline orchestrator scaffold.
+"""End-to-end fine-tuning pipeline orchestrator scaffold。
 
-The hard architectural primitive is a reproducible pipeline DAG: data hygiene
--> SFT -> preference tuning -> quantization -> serving -> eval -> model card,
-where each stage is declaratively configured (YAML-ish dict here) and each
-stage consumes the previous stage's artifact by content hash. This scaffold
-models the DAG, the artifact manifest, and the contamination check.
+難しい architectural primitive は reproducible pipeline DAG です。
+data hygiene -> SFT -> preference tuning -> quantization -> serving -> eval ->
+model card という流れで、各 stage は declarative に configured され
+(ここでは YAML 風 dict)、前 stage の artifact を content hash で consume します。
+この scaffold は DAG、artifact manifest、contamination check を model 化します。
 
 Run:  python main.py
 """
@@ -19,7 +19,7 @@ from typing import Callable
 
 
 # ---------------------------------------------------------------------------
-# artifact + manifest  --  content-hashed bookkeeping
+# artifact + manifest  --  content hash による bookkeeping
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -51,7 +51,7 @@ class Manifest:
 
 
 # ---------------------------------------------------------------------------
-# stages  --  each returns a new Artifact given prior manifest and config
+# stages  --  prior manifest と config から新しい Artifact を返す
 # ---------------------------------------------------------------------------
 
 Stage = Callable[[Manifest, dict], Artifact]
@@ -76,7 +76,7 @@ def stage_contamination(m: Manifest, cfg: dict) -> Artifact:
     ds = m.get("dataset")
     overlap = []
     for bench in ("MMLU-Pro", "MT-Bench-v2", "RewardBench-2"):
-        # simulated MinHash check; real pipeline uses Datatrove MinHashLSH
+        # simulated MinHash check。real pipeline では Datatrove MinHashLSH を使う
         overlap.append({"bench": bench, "overlap_examples": 0})
     return Artifact("contamination_check", "report", {
         "dataset_hash": ds.content_hash(),
@@ -152,7 +152,7 @@ def stage_model_card(m: Manifest, cfg: dict) -> Artifact:
 
 
 # ---------------------------------------------------------------------------
-# DAG orchestrator  --  runs stages in order, snapshots manifest each step
+# DAG orchestrator  --  stage を順に実行し、各 step で manifest を snapshot する
 # ---------------------------------------------------------------------------
 
 PIPELINE: list[tuple[str, Stage]] = [
@@ -170,7 +170,7 @@ PIPELINE: list[tuple[str, Stage]] = [
 def run_pipeline(cfg: dict) -> Manifest:
     m = Manifest()
     for name, stage_fn in PIPELINE:
-        print(f"[{name:14s}] running...")
+        print(f"[{name:14s}] 実行中...")
         art = stage_fn(m, cfg)
         m.add(art)
         print(f"[{name:14s}] -> artifact '{art.name}' hash={art.content_hash()}")

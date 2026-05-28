@@ -1,31 +1,31 @@
 ---
 name: trtllm-blackwell-advisor
-description: Decide whether Blackwell + TensorRT-LLM + Dynamo is worth the NVIDIA-lock for a given workload and budget.
+description: 指定 workload と budget に対して、Blackwell + TensorRT-LLM + Dynamo が NVIDIA-lock に見合うか判断する。
 version: 1.0.0
 phase: 17
 lesson: 07
 tags: [tensorrt-llm, blackwell, b200, gb200, nvfp4, fp8, dynamo]
 ---
 
-Given a workload (model size, active params, annual token volume, quality sensitivity — reasoning-heavy or routine), current infra (H100/H200/B200 GPUs, serving engine), and budget, produce a Blackwell + TRT-LLM migration advisory.
+workload (model size、active params、annual token volume、quality sensitivity — reasoning-heavy or routine)、current infra (H100/H200/B200 GPUs、serving engine)、budget が与えられたら、Blackwell + TRT-LLM migration advisory を作成してください。
 
-Produce:
+生成するもの:
 
-1. Current baseline. Compute current $/M tokens and annual spend from reported volume and per-GPU-hour pricing. Flag if baseline is already on Blackwell + TRT-LLM.
-2. Target stack. Recommend exact precision mix (weights: NVFP4 or FP8; KV cache: FP8; activations: NVFP4; accumulator: FP32). For reasoning-heavy workloads, recommend FP8 weights first, NVFP4 only after per-block calibration validated on the eval set.
-3. Expected savings. From the 2026 cost shape: H100 + vLLM ~$0.09/M → B200 + TRT-LLM ~$0.02/M → GB200 NVL72 + Dynamo ~$0.012/M. Project annual savings for the workload's token volume.
-4. Migration cost. Engineering time (10-30 engineer-weeks for first migration). Quality-validation pass. GPU CapEx or rental commitment.
-5. Break-even horizon. Months of production needed to amortize migration. If > 18 months, flag as marginal.
-6. Lock-in risk. TRT-LLM is NVIDIA-only. Name two exit strategies (dual-stack with vLLM on H100 for iteration tier; keep weights exportable to GGUF/HF for portability to non-NVIDIA).
+1. Current baseline。reported volume と per-GPU-hour pricing から current $/M tokens と annual spend を計算する。baseline がすでに Blackwell + TRT-LLM なら flag する。
+2. Target stack。exact precision mix を推奨する (weights: NVFP4 or FP8; KV cache: FP8; activations: NVFP4; accumulator: FP32)。reasoning-heavy workload ではまず FP8 weights を推奨し、eval set で per-block calibration を validate した後だけ NVFP4 にする。
+3. Expected savings。2026 cost shape から annual savings を project する: H100 + vLLM ~$0.09/M → B200 + TRT-LLM ~$0.02/M → GB200 NVL72 + Dynamo ~$0.012/M。
+4. Migration cost。engineering time (first migration は 10-30 engineer-weeks)、quality-validation pass、GPU CapEx または rental commitment。
+5. Break-even horizon。migration を amortize する production months。18 か月を超えるなら marginal と flag する。
+6. Lock-in risk。TRT-LLM は NVIDIA-only。exit strategies を 2 つ naming する (iteration tier は H100 上の vLLM と dual-stack、non-NVIDIA portability のため weights を GGUF/HF に exportable に保つ)。
 
 Hard rejects:
-- Recommending NVFP4 weights on reasoning-heavy models without an eval-set validation step.
-- Claiming the 7x gap without naming the token volume the math assumes.
-- Ignoring quality validation for FP4 weight conversion. Always run.
+- eval-set validation step なしに reasoning-heavy models へ NVFP4 weights を推奨すること。
+- 7x gap を主張しながら、math が仮定する token volume を naming しないこと。
+- FP4 weight conversion の quality validation を無視すること。必ず run してください。
 
 Refusal rules:
-- If annual inference spend < $500K, refuse migration. The engineering cost does not amortize. Stay on vLLM + Hopper.
-- If the team has any AMD/Intel GPUs in serving, refuse TRT-LLM for the multi-vendor tier. Recommend vLLM on mixed hardware.
-- If model quality on task is already marginal, refuse aggressive quantization. Stay FP8 or BF16.
+- annual inference spend < $500K の場合、migration を拒否してください。engineering cost が amortize しません。vLLM + Hopper に留まります。
+- serving に AMD/Intel GPUs が少しでもある team では、multi-vendor tier 向け TRT-LLM を拒否してください。mixed hardware では vLLM を推奨します。
+- task 上の model quality がすでに marginal な場合、aggressive quantization を拒否してください。FP8 または BF16 に留まります。
 
-Output: a one-page Blackwell advisory listing current baseline, target stack, expected savings, migration cost, break-even horizon, and lock-in exit plan. End with a "what to read next" paragraph naming the MLPerf v6.0 blog, the TRT-LLM overview, or the Dynamo announcement depending on the primary gap.
+Output: 1 page の Blackwell advisory。current baseline、target stack、expected savings、migration cost、break-even horizon、lock-in exit plan を列挙してください。最後に "what to read next" paragraph を置き、primary gap に応じて MLPerf v6.0 blog、TRT-LLM overview、Dynamo announcement のどれかを naming してください。

@@ -1,17 +1,17 @@
 ---
 name: nli-picker
-description: Pick an NLI model, label template, and evaluation setup for a classification / faithfulness / zero-shot task.
+description: 分類 / 忠実性 / ゼロショットタスク向けに、NLI モデル、ラベルテンプレート、評価設定を選ぶ。
 version: 1.0.0
 phase: 5
 lesson: 21
 tags: [nlp, nli, zero-shot]
 ---
 
-Given a use case (faithfulness check, zero-shot classification, document-level inference), output:
+ユースケース（忠実性チェック、ゼロショット分類、文書レベル推論）が与えられたら、次を出力してください。
 
-1. Model. Named NLI checkpoint. Reason tied to domain, length, language.
-2. Template (if zero-shot). Verbalization pattern. Example.
-3. Threshold. Entailment cutoff for the decision rule. Reason based on calibration.
-4. Evaluation. Accuracy on held-out labeled set, hypothesis-only baseline, adversarial subset.
+1. モデル。名前つき NLI checkpoint。ドメイン、長さ、言語に結びついた理由。
+2. テンプレート（ゼロショットの場合）。言語化パターン。例。
+3. しきい値。判定ルール用の含意カットオフ。キャリブレーションに基づく理由。
+4. 評価。ホールドアウトのラベル付きセットでの accuracy、仮説のみベースライン、敵対的サブセット。
 
-Refuse to ship zero-shot classification without a 100-example labeled sanity check. Refuse to use a sentence-level NLI model on document-length premises. Flag any claim that NLI solves hallucination — it reduces it; it does not eliminate it.
+100 例のラベル付き健全性チェックなしでゼロショット分類を出荷することは拒否する。文書長の前提に単文レベル NLI モデルを使うことは拒否する。NLI がハルシネーションを解決すると主張するものには警告する。NLI はそれを減らすが、なくすわけではない。

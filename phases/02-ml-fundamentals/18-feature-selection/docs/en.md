@@ -1,34 +1,34 @@
 # Feature Selection
 
-> More features is not better. The right features is better.
+> 特徴量は多いほど良いわけではありません。正しい特徴量が良いのです。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 2, Lessons 01-09, 08 (feature engineering)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 2, Lessons 01-09, 08 (feature engineering)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Implement filter methods (variance threshold, mutual information, chi-squared) and wrapper methods (RFE, forward selection) from scratch
-- Explain why mutual information captures nonlinear feature-target relationships that correlation misses
-- Compare L1 regularization (embedded selection) with RFE (wrapper selection) and evaluate their computational tradeoffs
-- Build a feature selection pipeline that combines multiple methods and demonstrate improved generalization on held-out data
+- filter methods（variance threshold、mutual information、chi-squared）と wrapper methods（RFE、forward selection）をゼロから実装する
+- mutual information が correlation では見逃す非線形の feature-target relationships を捉えられる理由を説明する
+- L1 regularization（embedded selection）と RFE（wrapper selection）を比較し、計算上の tradeoffs を評価する
+- 複数の手法を組み合わせた feature selection pipeline を構築し、held-out data で generalization が改善することを示す
 
-## The Problem
+## 問題
 
-You have 500 features. Your model trains slowly, overfits constantly, and nobody can explain what it learned. You add more features hoping to improve performance. It gets worse.
+500 個の features があります。モデルの training は遅く、常に overfit し、何を学んだのか誰にも説明できません。性能を上げようとして features をさらに追加します。結果は悪化します。
 
-This is the curse of dimensionality in action. As the number of features grows, the volume of the feature space explodes. Data points become sparse. Distances between points converge. The model needs exponentially more data to find real patterns. Noise features drown out signal features. Overfitting becomes the default.
+これは curse of dimensionality の典型例です。features の数が増えると、feature space の volume は爆発的に増えます。data points は疎になります。点同士の距離は収束します。モデルが実際の patterns を見つけるには指数的に多くのデータが必要になります。noise features が signal features を埋もれさせます。overfitting が標準状態になります。
 
-Feature selection is the antidote. Strip away the noise. Remove the redundancy. Keep the features that carry actual information about the target. The result: faster training, better generalization, and models you can actually explain.
+Feature selection はその解毒剤です。noise を取り除きます。redundancy を削除します。target について実際の情報を持つ features を残します。結果として、training は速くなり、generalization は改善し、実際に説明できる models になります。
 
-The goal is not to use all available information. It is to use the right information.
+目標は、利用可能な情報をすべて使うことではありません。正しい情報を使うことです。
 
 ## The Concept
 
 ### Three Categories of Feature Selection
 
-Every feature selection method falls into one of three categories:
+すべての feature selection method は、次の 3 つのカテゴリのいずれかに入ります。
 
 ```mermaid
 flowchart TD
@@ -50,41 +50,41 @@ flowchart TD
     D --> D3["Elastic Net"]
 ```
 
-**Filter methods** score each feature independently using a statistical measure. They do not use a model. Fast, but they miss feature interactions.
+**Filter methods** は、統計的尺度を使って各 feature を独立に score します。model は使いません。高速ですが、feature interactions を見逃します。
 
-**Wrapper methods** train a model to evaluate feature subsets. They use model performance as the score. Better results, but expensive because they retrain the model many times.
+**Wrapper methods** は、feature subsets を評価するために model を training します。score には model performance を使います。結果は良くなりやすい一方、model を何度も再学習するため高コストです。
 
-**Embedded methods** select features as part of model training. L1 regularization drives weights to zero. Decision trees split on the most useful features. Selection happens during fitting, not as a separate step.
+**Embedded methods** は、model training の一部として features を選びます。L1 regularization は weights を zero に押し込みます。Decision trees は最も有用な features で split します。selection は fitting 中に起き、別ステップではありません。
 
 ### Variance Threshold
 
-The simplest filter. If a feature barely varies across samples, it carries almost no information.
+最も単純な filter です。ある feature が samples 間でほとんど変化しないなら、ほぼ情報を持ちません。
 
-Consider a feature that is 0.0 for 999 out of 1000 samples. Its variance is near zero. No model can use it to distinguish between classes. Remove it.
+1000 samples のうち 999 samples で 0.0 になる feature を考えます。その variance はほぼ zero です。どの model も、それを使って classes を区別できません。削除します。
 
 ```
 variance(x) = mean((x - mean(x))^2)
 ```
 
-Set a threshold (e.g., 0.01). Drop every feature with variance below it. This removes constant or near-constant features without looking at the target variable at all.
+threshold（例: 0.01）を設定します。それより variance が低いすべての features を drop します。これは target variable をまったく見ずに、constant または near-constant features を削除します。
 
-When to use it: as a preprocessing step before other methods. It catches obviously useless features at near-zero cost.
+使う場面: 他の手法の前の preprocessing step として使います。明らかに役に立たない features をほぼゼロコストで捕捉します。
 
-Limitation: a feature can have high variance and still be pure noise. Variance threshold is necessary but not sufficient.
+制限: feature は high variance でも pure noise であることがあります。Variance threshold は必要ですが、それだけでは十分ではありません。
 
 ### Mutual Information
 
-Mutual information measures how much knowing the value of feature X reduces uncertainty about target Y.
+Mutual information は、feature X の値を知ることで target Y についての uncertainty がどれだけ減るかを測ります。
 
 ```
 I(X; Y) = sum_x sum_y p(x, y) * log(p(x, y) / (p(x) * p(y)))
 ```
 
-If X and Y are independent, p(x, y) = p(x) * p(y), so the log term is zero and I(X; Y) = 0. The more X tells you about Y, the higher the mutual information.
+X と Y が independent なら、p(x, y) = p(x) * p(y) なので log term は zero になり、I(X; Y) = 0 です。X が Y について多くを教えてくれるほど、mutual information は高くなります。
 
-Key advantage over correlation: mutual information captures nonlinear relationships. A feature might have zero correlation with the target but high mutual information because the relationship is quadratic or periodic.
+correlation に対する重要な利点は、mutual information が nonlinear relationships を捉えることです。ある feature は target との correlation が zero でも、関係が quadratic や periodic なら高い mutual information を持つことがあります。
 
-For continuous features, discretize into bins first (histogram-based estimation). The number of bins affects the estimate -- too few bins lose information, too many bins add noise. A common choice: sqrt(n) bins or Sturges' rule (1 + log2(n)).
+continuous features では、まず bins に discretize します（histogram-based estimation）。bins の数は estimate に影響します。少なすぎると情報を失い、多すぎると noise が増えます。一般的な選択は sqrt(n) bins または Sturges' rule（1 + log2(n)）です。
 
 ```mermaid
 flowchart LR
@@ -97,12 +97,12 @@ flowchart LR
 
 ### Recursive Feature Elimination (RFE)
 
-RFE is a wrapper method. It uses a model's own feature importance to iteratively prune:
+RFE は wrapper method です。model 自身の feature importance を使って反復的に prune します。
 
-1. Train the model with all features
-2. Rank features by importance (coefficients for linear models, impurity reduction for trees)
-3. Remove the least important feature(s)
-4. Repeat until the desired number of features remains
+1. すべての features で model を training する
+2. features を importance で rank する（linear models では coefficients、trees では impurity reduction）
+3. 最も重要でない feature(s) を削除する
+4. 望む feature 数が残るまで繰り返す
 
 ```mermaid
 flowchart TD
@@ -114,33 +114,33 @@ flowchart TD
     E -->|Yes| F["Return Selected Features"]
 ```
 
-RFE considers feature interactions because the model sees all remaining features together. Removing one feature changes the importance of others. This makes it more thorough than filter methods.
+RFE は、model が残りすべての features を一緒に見るため feature interactions を考慮します。1 つの feature を削除すると、他の features の importance が変わります。そのため filter methods より丁寧です。
 
-The cost: you train the model N - target times. With 500 features and a target of 10, that is 490 training runs. For expensive models, this is slow. You can speed it up by removing multiple features per step (e.g., remove the bottom 10% each round).
+コストは、N - target 回 model を training することです。500 features から target 10 にするなら、490 回 training runs が必要です。高コストな models では遅くなります。各 step で複数 features を削除することで高速化できます（例: 毎 round bottom 10% を削除）。
 
 ### L1 (Lasso) Regularization
 
-L1 regularization adds the absolute value of weights to the loss function:
+L1 regularization は loss function に weights の絶対値を追加します。
 
 ```
 loss = prediction_error + alpha * sum(|w_i|)
 ```
 
-The alpha parameter controls how aggressively features are pruned. Higher alpha means more weights go to exactly zero.
+alpha parameter は features をどれだけ強く prune するかを制御します。alpha が大きいほど、より多くの weights が正確に zero になります。
 
-Why exactly zero? The L1 penalty creates a diamond-shaped constraint region in weight space. The optimal solution tends to land at a corner of this diamond, where one or more weights are zero. L2 regularization (ridge) creates a circular constraint where weights shrink but rarely hit zero.
+なぜ正確に zero になるのでしょうか。L1 penalty は weight space に diamond-shaped constraint region を作ります。最適解はこの diamond の corner に乗りやすく、その場所では 1 つ以上の weights が zero になります。L2 regularization（ridge）は circular constraint を作るため、weights は縮みますが zero にはなりにくいです。
 
-This is embedded feature selection: the model learns during training which features to ignore. Features with zero weight are effectively removed.
+これは embedded feature selection です。model は training 中に、どの features を無視するかを学びます。zero weight の features は実質的に削除されます。
 
-Advantages: single training run, handles correlated features (picks one and zeros the others), built into most linear model implementations.
+利点: training run は 1 回、correlated features に対応できる（1 つを選び残りを zero にする）、ほとんどの linear model implementations に組み込まれている。
 
-Limitation: only works for linear models. Cannot capture nonlinear feature importance.
+制限: linear models でのみ機能します。nonlinear feature importance は捉えられません。
 
 ### Tree-Based Feature Importance
 
-Decision trees and their ensembles (random forests, gradient boosting) naturally rank features. Every split reduces impurity (Gini or entropy for classification, variance for regression). Features that produce larger impurity reductions are more important.
+Decision trees とその ensembles（random forests、gradient boosting）は自然に features を rank します。各 split は impurity（classification では Gini または entropy、regression では variance）を減らします。より大きな impurity reductions を生む features はより重要です。
 
-For a random forest with T trees:
+T trees の random forest では次のようになります。
 
 ```
 importance(feature_j) = (1/T) * sum over all trees of
@@ -148,21 +148,21 @@ importance(feature_j) = (1/T) * sum over all trees of
         (n_samples * impurity_decrease)
 ```
 
-This gives a normalized importance score for each feature. It handles nonlinear relationships and feature interactions automatically.
+これにより、各 feature の normalized importance score が得られます。nonlinear relationships と feature interactions を自動的に扱えます。
 
-Caution: tree-based importance is biased toward features with many unique values (high cardinality). A random ID column will appear important because it perfectly splits every sample. Use permutation importance as a sanity check.
+注意: tree-based importance は unique values が多い features（high cardinality）に偏ります。random ID column は、すべての sample を完全に split できるため重要に見えてしまいます。sanity check として permutation importance を使ってください。
 
 ### Permutation Importance
 
-A model-agnostic method:
+model-agnostic な手法です。
 
-1. Train the model and record baseline performance on validation data
-2. For each feature: shuffle its values randomly, measure the drop in performance
-3. The bigger the drop, the more important the feature
+1. model を training し、validation data で baseline performance を記録する
+2. 各 feature について、その値をランダムに shuffle し、performance drop を測る
+3. drop が大きいほど、その feature は重要
 
-If shuffling a feature does not hurt performance, the model does not depend on it. If performance collapses, that feature is critical.
+feature を shuffle しても performance が悪化しないなら、model はその feature に依存していません。performance が崩れるなら、その feature は critical です。
 
-Permutation importance avoids the cardinality bias of tree-based importance. But it is slow: one full evaluation per feature, repeated multiple times for stability.
+Permutation importance は tree-based importance の cardinality bias を避けます。ただし遅いです。feature ごとに full evaluation が 1 回必要で、安定性のために複数回繰り返します。
 
 ### Comparison Table
 
@@ -202,9 +202,9 @@ flowchart TD
     K -->|No| M["Try different method or keep all features"]
 ```
 
-## Build It
+## 実装
 
-### Step 1: Generate synthetic data with known feature structure
+### Step 1: 既知の feature structure を持つ synthetic data を生成する
 
 ```python
 import numpy as np
@@ -243,7 +243,7 @@ def make_feature_selection_data(n_samples=500, seed=42):
     return X, y, feature_names
 ```
 
-We know the ground truth: features 0-4 are informative (plus 3 and 4 are correlated copies of 0 and 1), features 5-9 are correlated with informative features, features 10-19 are pure noise. A good selection method should rank 0-4 highest and 10-19 lowest.
+ground truth は分かっています。features 0-4 は informative（さらに 3 と 4 は 0 と 1 の correlated copies）、features 5-9 は informative features と correlated、features 10-19 は pure noise です。良い selection method は 0-4 を最上位に、10-19 を最下位に rank するはずです。
 
 ### Step 2: Variance threshold
 
@@ -457,11 +457,11 @@ def _build_tree_importance(X, y, feature_subset, max_depth, depth=0):
 
 ### Step 7: Run all methods and compare
 
-The code file runs all five methods on the same synthetic dataset and prints a comparison table showing which features each method selects.
+コードファイルは同じ synthetic dataset に対して 5 つの手法をすべて実行し、各手法がどの features を選んだかを示す comparison table を出力します。
 
 ## Use It
 
-With scikit-learn, feature selection is built into the pipeline:
+scikit-learn では、feature selection は pipeline に組み込まれています。
 
 ```python
 from sklearn.feature_selection import (
@@ -492,45 +492,45 @@ rf.fit(X, y)
 importances = rf.feature_importances_
 ```
 
-The from-scratch implementations show exactly what happens inside each method. Variance threshold is just computing `var(X, axis=0)` and applying a mask. Mutual information is counting joint and marginal frequencies in a contingency table. RFE is a loop that trains, ranks, and prunes. L1 is gradient descent with a soft-thresholding step. Tree importance accumulates impurity reductions across splits. No magic -- just statistics and loops.
+ゼロからの実装は、各 method の内部で何が起きているかを正確に示します。Variance threshold は `var(X, axis=0)` を計算して mask を適用するだけです。Mutual information は contingency table で joint and marginal frequencies を数えています。RFE は training、ranking、pruning の loop です。L1 は soft-thresholding step を持つ gradient descent です。Tree importance は splits 全体の impurity reductions を蓄積します。魔法はなく、statistics と loops だけです。
 
-The sklearn versions add robustness (e.g., mutual_info_classif uses k-NN density estimation instead of binning), speed (C implementations), and pipeline integration.
+sklearn versions は robustness（例: mutual_info_classif は binning ではなく k-NN density estimation を使う）、speed（C implementations）、pipeline integration を追加します。
 
 ## Ship It
 
-This lesson produces:
-- `outputs/skill-feature-selector.md` -- a quick reference decision tree for choosing the right feature selection method
+この lesson の成果物は次の通りです。
+- `outputs/skill-feature-selector.md` -- 適切な feature selection method を選ぶための quick reference decision tree
 
 ## Exercises
 
-1. **Forward selection**: implement the opposite of RFE. Start with zero features. At each step, add the feature that improves model performance the most. Stop when adding features no longer helps. Compare the selected features against RFE results. Which is faster? Which gives better results?
+1. **Forward selection**: RFE の反対を実装します。zero features から開始し、各 step で model performance を最も改善する feature を追加します。features の追加が役に立たなくなったら停止します。選択された features を RFE results と比較します。どちらが速いですか？どちらが良い結果ですか？
 
-2. **Stability selection**: run L1 feature selection 50 times, each time on a random 80% subsample of the data, with slightly different alpha values. Count how often each feature is selected. Features selected in > 80% of runs are "stable." Compare stable features against single-run L1 selection. Which is more reliable?
+2. **Stability selection**: L1 feature selection を 50 回実行します。各回で data の random 80% subsample を使い、alpha values を少し変えます。各 feature が何回選ばれたかを数えます。> 80% の runs で選ばれた features は「stable」です。stable features を single-run L1 selection と比較します。どちらが信頼できますか？
 
-3. **Multicollinearity detection**: compute the correlation matrix for all features. Implement a function that, given a correlation threshold (e.g., 0.9), removes one feature from each highly-correlated pair (keeping the one with higher mutual information with the target). Test on the synthetic dataset and verify it removes the redundant correlated features.
+3. **Multicollinearity detection**: すべての features の correlation matrix を計算します。correlation threshold（例: 0.9）を受け取り、highly-correlated pair ごとに 1 つの feature を削除する function を実装します（target との mutual information が高い方を残す）。synthetic dataset でテストし、redundant correlated features が削除されることを確認します。
 
-4. **Feature selection pipeline**: chain variance threshold, mutual information filter, and RFE into a single pipeline. First remove near-zero-variance features, then keep the top 50% by mutual information, then run RFE on the survivors. Compare this pipeline against running RFE alone on all features. Is the pipeline faster? Is it equally accurate?
+4. **Feature selection pipeline**: variance threshold、mutual information filter、RFE を 1 つの pipeline に連鎖させます。まず near-zero-variance features を削除し、次に mutual information の top 50% を残し、最後に survivors に RFE を実行します。この pipeline を、すべての features に RFE だけを実行する場合と比較します。pipeline は速いですか？同じくらい正確ですか？
 
-5. **Permutation importance from scratch**: implement permutation importance. For each feature, shuffle its values 10 times, measure the average drop in F1 score. Compare the ranking against tree-based importance. Find cases where they disagree and explain why (hint: correlated features).
+5. **Permutation importance from scratch**: permutation importance を実装します。各 feature について値を 10 回 shuffle し、F1 score の平均低下を測ります。ranking を tree-based importance と比較します。不一致になるケースを見つけ、その理由を説明します（hint: correlated features）。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Filter method | "Score features independently" | A feature selection approach that ranks features using a statistical measure without training a model, evaluating each feature in isolation |
-| Wrapper method | "Use the model to pick features" | A feature selection approach that evaluates feature subsets by training a model and using its performance as the selection criterion |
-| Embedded method | "The model selects features during training" | Feature selection that happens as part of model fitting, such as L1 regularization driving weights to zero |
-| Mutual information | "How much one variable tells you about another" | A measure of the reduction in uncertainty about Y given knowledge of X, capturing both linear and nonlinear dependencies |
-| Recursive Feature Elimination | "Train, rank, prune, repeat" | An iterative wrapper method that trains a model, removes the least important feature(s), and repeats until a target count is reached |
-| L1 / Lasso regularization | "Penalty that kills features" | Adding the sum of absolute weight values to the loss function, which drives unimportant feature weights to exactly zero |
-| Variance threshold | "Remove constant features" | Dropping features whose variance across samples falls below a specified threshold, filtering out features that carry no information |
-| Feature importance | "Which features matter most" | A score indicating how much each feature contributes to model predictions, computed from split gains (trees) or coefficient magnitudes (linear) |
-| Permutation importance | "Shuffle and measure the damage" | Evaluating feature importance by randomly shuffling each feature's values and measuring the resulting drop in model performance |
-| Curse of dimensionality | "Too many features, not enough data" | The phenomenon where adding features increases the volume of the feature space exponentially, making data sparse and distances meaningless |
+| Filter method | "Score features independently" | model を training せず、統計的尺度で features を rank し、各 feature を独立に評価する feature selection approach |
+| Wrapper method | "Use the model to pick features" | model を training して feature subsets を評価し、その performance を selection criterion とする feature selection approach |
+| Embedded method | "The model selects features during training" | L1 regularization が weights を zero にするように、model fitting の一部として行われる feature selection |
+| Mutual information | "How much one variable tells you about another" | X を知ることで Y についての uncertainty がどれだけ減るかを測る尺度。linear と nonlinear dependencies の両方を捉える |
+| Recursive Feature Elimination | "Train, rank, prune, repeat" | model を training し、最も重要でない feature(s) を削除し、target count に達するまで繰り返す iterative wrapper method |
+| L1 / Lasso regularization | "Penalty that kills features" | loss function に absolute weight values の合計を追加し、重要でない feature weights を正確に zero に押し込むこと |
+| Variance threshold | "Remove constant features" | samples 間の variance が指定 threshold 未満の features を drop し、情報を持たない features を filter すること |
+| Feature importance | "Which features matter most" | 各 feature が model predictions にどれだけ寄与するかを示す score。trees の split gains や linear の coefficient magnitudes から計算される |
+| Permutation importance | "Shuffle and measure the damage" | 各 feature の値をランダムに shuffle し、model performance の低下を測って feature importance を評価すること |
+| Curse of dimensionality | "Too many features, not enough data" | features を追加すると feature space の volume が指数的に増え、data が疎になり、distances が意味を失う現象 |
 
-## Further Reading
+## 参考文献
 
-- [An Introduction to Variable and Feature Selection (Guyon & Elisseeff, 2003)](https://jmlr.org/papers/v3/guyon03a.html) -- the foundational survey on feature selection methods, still widely referenced
-- [scikit-learn Feature Selection Guide](https://scikit-learn.org/stable/modules/feature_selection.html) -- practical reference for filter, wrapper, and embedded methods with code examples
-- [Stability Selection (Meinshausen & Buhlmann, 2010)](https://arxiv.org/abs/0809.2932) -- combines subsampling with feature selection for robust, reproducible results
-- [Beware Default Random Forest Importances (Strobl et al., 2007)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25) -- demonstrates the cardinality bias in tree-based importance and proposes conditional importance as an alternative
+- [An Introduction to Variable and Feature Selection (Guyon & Elisseeff, 2003)](https://jmlr.org/papers/v3/guyon03a.html) -- feature selection methods の foundational survey
+- [scikit-learn Feature Selection Guide](https://scikit-learn.org/stable/modules/feature_selection.html) -- filter、wrapper、embedded methods の実用 reference と code examples
+- [Stability Selection (Meinshausen & Buhlmann, 2010)](https://arxiv.org/abs/0809.2932) -- robust で reproducible な results のため subsampling と feature selection を組み合わせる手法
+- [Beware Default Random Forest Importances (Strobl et al., 2007)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25) -- tree-based importance の cardinality bias を示し、conditional importance を代替として提案

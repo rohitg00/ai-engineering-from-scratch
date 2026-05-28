@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best matches the demographic-parity definition for groups A=a and A=a'?",
+      "question": "group A=a と A=a' に対する demographic parity の定義として最も適切なのはどれですか？",
       "options": [
-        "Equal true-positive and false-positive rates across groups",
-        "Equal predictive value across groups",
-        "Equal Lipschitz constant across groups",
-        "Equal acceptance rates: P(Y=1 | A=a) = P(Y=1 | A=a')"
+        "group 間で true-positive rate と false-positive rate が等しいこと",
+        "group 間で predictive value が等しいこと",
+        "group 間で Lipschitz constant が等しいこと",
+        "acceptance rate が等しいこと: P(Y=1 | A=a) = P(Y=1 | A=a')"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the Chouldechova / Kleinberg-Mullainathan-Raghavan 2017 impossibility result say?",
+      "question": "Chouldechova / Kleinberg-Mullainathan-Raghavan 2017 の impossibility result は何を述べていますか？",
       "options": [
-        "Group fairness is always achievable by re-weighting",
-        "Under unequal base rates, demographic parity, equalized odds, and conditional use accuracy equality cannot all hold simultaneously",
-        "Counterfactual fairness implies demographic parity",
-        "Individual fairness implies counterfactual fairness for any DAG"
+        "Group fairness は re-weighting によって常に達成できる",
+        "base rate が等しくない場合、demographic parity、equalized odds、conditional use accuracy equality をすべて同時に満たすことはできない",
+        "Counterfactual fairness は demographic parity を含意する",
+        "Individual fairness は任意の DAG について counterfactual fairness を含意する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Dwork et al. 2012 define individual fairness via:",
+      "question": "Dwork et al. 2012 は individual fairness を何で定義していますか？",
       "options": [
-        "Demographic parity at the individual level",
-        "Equal accuracy across protected groups",
-        "A Lipschitz condition on the decision map relative to a task-specific similarity metric, so similar individuals get similar decisions",
-        "A causal DAG with a sensitive-attribute intervention"
+        "個人レベルの demographic parity",
+        "protected group 間で accuracy が等しいこと",
+        "タスク固有の similarity metric に対する decision map の Lipschitz condition。つまり類似した個人には類似した decision を与えること",
+        "sensitive-attribute intervention を持つ causal DAG"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Counterfactual fairness (Kusner et al. 2017) requires:",
+      "question": "Counterfactual fairness (Kusner et al. 2017) が必要とするものはどれですか？",
       "options": [
-        "No causal assumptions",
-        "Equal Lipschitz constants for all groups",
-        "Only group-level statistics",
-        "A causal DAG; the decision is unchanged when the individual's sensitive attribute is counterfactually altered"
+        "causal assumption は不要",
+        "すべての group で Lipschitz constant が等しいこと",
+        "group-level statistics だけ",
+        "causal DAG。個人の sensitive attribute を counterfactual に変えても decision が変わらないこと"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why do backtracking counterfactuals (arXiv:2401.13935) matter for legal compliance?",
+      "question": "Backtracking counterfactuals (arXiv:2401.13935) は legal compliance においてなぜ重要ですか？",
       "options": [
-        "Instead of intervening on a protected attribute (which is legally problematic), they ask which combination of actual features would have produced the counterfactual outcome",
-        "They eliminate the need for any causal model",
-        "They replace embedding-based bias metrics",
-        "They prove the impossibility theorem is wrong"
+        "法的に問題になる protected attribute への intervention の代わりに、counterfactual outcome を生む実際の feature の組み合わせを問うから",
+        "causal model が一切不要になるから",
+        "embedding-based bias metrics を置き換えるから",
+        "impossibility theorem が誤りだと証明するから"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the ICLR Blogposts 2024 philosophical reconciliation argue?",
+      "question": "ICLR Blogposts 2024 の philosophical reconciliation は何を論じていますか？",
       "options": [
-        "The impossibility theorems are resolved by re-weighting",
-        "With an explicit causal graph, satisfying certain group-fairness measures entails counterfactual fairness, so the apparent opposition between families is partly an artifact of leaving the causal model implicit",
-        "Group and counterfactual fairness are unrelated",
-        "Only individual fairness is justifiable"
+        "impossibility theorem は re-weighting で解消される",
+        "明示的な causal graph があれば、特定の group-fairness measures を満たすことが counterfactual fairness を含意する。したがって family 間の見かけの対立は、causal model を暗黙にしたままにすることによる artifact でもある",
+        "Group fairness と counterfactual fairness は無関係である",
+        "Individual fairness だけが正当化できる"
       ],
       "correct": 1,
       "explanation": ""

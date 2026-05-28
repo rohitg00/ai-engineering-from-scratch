@@ -1,39 +1,39 @@
 ---
 name: evaluator-rigor-audit
-description: Audit a proposed AlphaEvolve-style evolutionary coding loop's evaluator before committing any compute to the search.
+description: AlphaEvolve風の進化的コーディングループで探索に計算資源を投入する前に、提案された評価器を監査する。
 version: 1.0.0
 phase: 15
 lesson: 3
 tags: [alphaevolve, evolutionary-coding, evaluator, reward-hacking, deepmind]
 ---
 
-Given a proposed evolutionary coding loop (generator LLM, program database, evaluator), audit the evaluator. The evaluator is the architecture; the generator is interchangeable. This skill decides whether the loop has a chance of producing real wins or just reward-hacked garbage.
+提案された進化的コーディングループ (生成器LLM、プログラムデータベース、評価器) が与えられたら、評価器を監査する。評価器こそがアーキテクチャであり、生成器は交換可能である。このスキルは、そのループが本物の成果を生む見込みがあるのか、それとも報酬ハッキングされた無価値な成果物を生むだけなのかを判断する。
 
-Produce:
+作成するもの:
 
-1. **Evaluator decomposition.** Name every signal the evaluator reports: correctness, performance, resource, other. For each, state (a) how it is measured, (b) how cheaply it can be gamed, (c) what a held-out inputs rule looks like.
-2. **Confabulation surface.** List the LLM's three most likely confabulations in this domain: claimed complexity classes, claimed correctness on edge cases, claimed performance without measurement. State which evaluator signal catches each.
-3. **Reward-hacking surface.** List three plausible ways the loop could maximize score without doing the intended task (shortcut that passes the test, proxy gaming, memorization of inputs). State the mitigation for each.
-4. **Determinism and reproducibility.** Require evaluator outputs to be deterministic within tolerance. Flag any evaluator whose score moves by more than the population variance run-to-run.
-5. **Deployment check.** If the winning variant would be shipped to production, require a separate pre-deployment review that the evaluator does not check (security, cost, human review). The search did not validate deployment-readiness.
+1. **評価器の分解。** 評価器が報告するすべてのシグナルを挙げる。正しさ、性能、リソース、その他。各シグナルについて、(a) どう測定するか、(b) どれほど低コストに攻略できるか、(c) ホールドアウト入力規則がどのようなものかを述べる。
+2. **作話面。** この領域でLLMが最も起こしそうな作話を3つ挙げる。例: 計算量クラスの主張、エッジケースでの正しさの主張、測定なしの性能主張。それぞれをどの評価器シグナルが捕まえるかを述べる。
+3. **報酬ハッキング面。** ループが意図されたタスクを行わずにスコアを最大化し得るもっともらしい方法を3つ挙げる (テストを通る近道、代理指標の攻略、入力の暗記)。それぞれの緩和策を述べる。
+4. **決定性と再現性。** 評価器の出力が許容範囲内で決定的であることを要求する。実行ごとのスコア変動が母集団分散を超える評価器にはフラグを立てる。
+5. **デプロイ確認。** 勝利バリアントを本番出荷する場合は、評価器が確認していない別の事前デプロイレビュー (セキュリティ、コスト、人間レビュー) を要求する。探索はデプロイ準備完了性を検証していない。
 
-Hard rejects:
-- Any loop where the evaluator is an LLM judge without machine-checkable ground truth. LLM judges can be gamed.
-- Any evaluator that reports a single scalar score with no decomposition. Scalar scores amplify reward hacking.
-- Training-set-only evaluators. Held-out inputs are non-negotiable.
+強制却下:
+- 評価器が、機械的に検証可能な正解なしのLLMジャッジであるループ。LLMジャッジは攻略され得る。
+- 分解なしに単一のスカラー値だけを報告する評価器。スカラー値は報酬ハッキングを増幅する。
+- 訓練セット専用の評価器。ホールドアウト入力は交渉不能である。
 
-Refusal rules:
-- If the user cannot describe the evaluator in two paragraphs, refuse and ask for the evaluator specification first. Loops without a spec'd evaluator are not ready for compute.
-- If the domain is unverified (creative writing, open-ended scientific hypothesis, long-form research), refuse and recommend a hybrid pipeline with human review instead of a closed loop.
-- If the proposed deployment surface is irreversible (production infrastructure changes, algorithm swap in a shipping product), refuse closed-loop deployment. Require staged rollout and human sign-off.
+拒否規則:
+- ユーザーが評価器を2段落で説明できない場合は拒否し、先に評価器仕様を求める。仕様化された評価器のないループは、計算資源を使う準備ができていない。
+- 領域が未検証である場合 (創作文章、オープンエンドな科学仮説、長文研究) は拒否し、閉ループではなく人間レビュー付きのハイブリッドパイプラインを推奨する。
+- 提案されたデプロイ面が不可逆である場合 (本番インフラ変更、出荷済みプロダクト内のアルゴリズム差し替え) は、閉ループデプロイを拒否する。段階的ロールアウトと人間のサインオフを要求する。
 
-Output format:
+出力形式:
 
-Return a one-page memo with:
-- **Loop summary** (generator, evaluator, target domain)
-- **Evaluator score** (rigor 1-5 with justification)
-- **Confabulation surface** (top 3, with evaluator coverage)
-- **Reward-hacking surface** (top 3, with mitigations)
-- **Determinism and reproducibility** (score variance vs population variance; seed control; pass/fail)
-- **Deployment readiness** (closed-loop ship allowed y/n; required pre-deployment reviews: security, cost, human)
-- **Recommendation** (proceed / tighten evaluator / choose a different domain)
+以下を含む1ページのメモを返す:
+- **ループ要約** (生成器、評価器、対象領域)
+- **評価器スコア** (厳密さ1-5、根拠付き)
+- **作話面** (上位3つ、評価器によるカバー範囲付き)
+- **報酬ハッキング面** (上位3つ、緩和策付き)
+- **決定性と再現性** (スコア分散と母集団分散の比較、シード制御、合否)
+- **デプロイ準備状況** (閉ループ出荷を許可するか y/n、必要な事前デプロイレビュー: セキュリティ、コスト、人間)
+- **推奨** (進める / 評価器を強化する / 別領域を選ぶ)

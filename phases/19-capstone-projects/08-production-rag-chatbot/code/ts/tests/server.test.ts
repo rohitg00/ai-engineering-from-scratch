@@ -4,14 +4,14 @@ import { buildApp } from "../src/server.js";
 import { parseSseStream } from "../src/stream.js";
 
 describe("server", () => {
-  it("GET / returns the HTML client", async () => {
+  it("GET / は HTML client を返す", async () => {
     const { app } = buildApp();
     const res = await Promise.resolve(app.request("/"));
     assert.equal(res.status, 200);
     assert.match(res.headers.get("content-type") ?? "", /text\/html/);
   });
 
-  it("GET /health returns ok + session count", async () => {
+  it("GET /health は ok と session count を返す", async () => {
     const { app } = buildApp();
     const res = await Promise.resolve(app.request("/health"));
     assert.equal(res.status, 200);
@@ -20,13 +20,13 @@ describe("server", () => {
     assert.equal(body.sessions, 0);
   });
 
-  it("GET /chat/stream missing q returns 400", async () => {
+  it("GET /chat/stream は q 不足で 400 を返す", async () => {
     const { app } = buildApp();
     const res = await Promise.resolve(app.request("/chat/stream"));
     assert.equal(res.status, 400);
   });
 
-  it("GET /chat/stream emits session, citations, token, done events", async () => {
+  it("GET /chat/stream は session、citations、token、done event を emit する", async () => {
     const { app } = buildApp();
     const res = await Promise.resolve(
       app.request(
@@ -43,7 +43,7 @@ describe("server", () => {
     assert.ok(events.filter((e) => e.event === "token").length > 0);
   });
 
-  it("session persists across two turns", async () => {
+  it("session は 2 turn にまたがって persist する", async () => {
     const { app, sessions } = buildApp();
     const url = "/chat/stream?sessionId=p-1&role=analyst&jurisdiction=GDPR&q=";
     const r1 = await Promise.resolve(app.request(url + "first"));
@@ -59,7 +59,7 @@ describe("server", () => {
     assert.equal(s.turns[3]?.role, "assistant");
   });
 
-  it("GET /sessions reports stored sessions", async () => {
+  it("GET /sessions は stored session を report する", async () => {
     const { app } = buildApp();
     const r = await Promise.resolve(
       app.request("/chat/stream?sessionId=u-1&role=r&jurisdiction=GDPR&q=hi"),

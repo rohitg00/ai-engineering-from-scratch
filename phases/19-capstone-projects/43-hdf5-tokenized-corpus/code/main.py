@@ -1,17 +1,17 @@
-"""Streaming tokenization into resizable, sharded HDF5 datasets with mmap reads.
+"""mmap read 可能な resizable/sharded HDF5 dataset への streaming tokenization。
 
-Implements:
-- A byte-level deterministic Tokenizer.
-- An HDF5ShardWriter that buffers tokens to chunk size and resizes the dataset
-  in fixed-size strides, recording token_count and sha256 as dataset attributes.
-- A ShardedTokenizationPipeline that emits one HDF5 per source shard and writes
-  a shards.json index.
-- An MmapTokenStore that opens shard files in swmr mode for read access.
-- A SlidingWindowDataloader that yields fixed-length (input, target) pairs.
+実装内容:
+- byte-level deterministic Tokenizer。
+- token を chunk size まで buffer し dataset を resize する HDF5ShardWriter。
+  fixed-size stride で伸ばし、token_count と sha256 を dataset attribute に記録する。
+- source shard ごとに HDF5 を 1 つ出し、
+  shards.json index を書く ShardedTokenizationPipeline。
+- read access 用に shard file を swmr mode で開く MmapTokenStore。
+- fixed-length の (input, target) pair を返す SlidingWindowDataloader。
 
-The demo at the bottom builds an in-memory corpus, tokenizes into shards, opens
-them via memory map, runs the dataloader for a few batches, and prints the
-per-batch shape and a checksum. Run: python3 code/main.py
+末尾の demo は in-memory corpus を作り、shard に token 化し、
+memory map 経由で開き、dataloader を数 batch 実行し、
+batch ごとの shape と checksum を表示する。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ try:
     import h5py
 except ImportError as exc:
     raise SystemExit(
-        "h5py is required for this lesson. Install with: pip install h5py"
+        "この lesson には h5py が必要です。Install: pip install h5py"
     ) from exc
 
 
@@ -44,7 +44,7 @@ TOKEN_DTYPE = np.uint16
 
 @dataclass
 class ShardWriteResult:
-    """Per-shard write outcome."""
+    """shard ごとの write 結果。"""
 
     shard_id: str
     path: str
@@ -59,7 +59,7 @@ class ShardWriteResult:
 
 @dataclass
 class ShardIndexEntry:
-    """Index row used by readers to locate a shard."""
+    """reader が shard を見つけるための index row。"""
 
     shard_id: str
     path: str
@@ -73,14 +73,14 @@ class ShardIndexEntry:
 
 
 class Tokenizer:
-    """Byte-level deterministic tokenizer.
+    """Byte-level deterministic tokenizer。
 
     Vocabulary:
-        0      boundary token (separator injected by the dataloader)
-        1..256 raw byte tokens (offset by one so 0 is reserved)
+        0      boundary token (dataloader が注入する separator)
+        1..256 raw byte token (0 を予約するため 1 offset)
 
-    Real tokenizers use BPE or SentencePiece; this implementation is enough to
-    drive the streaming-write story without pulling a third-party tokenizer.
+    実際の tokenizer は BPE や SentencePiece を使う。この実装は
+    third-party tokenizer なしで streaming write の流れを示すのに十分である。
     """
 
     BOUNDARY_TOKEN = BOUNDARY_TOKEN_ID
@@ -101,10 +101,10 @@ class Tokenizer:
 
 
 class HDF5ShardWriter:
-    """Stream tokens into a resizable HDF5 dataset with chunk-sized buffering.
+    """chunk-sized buffering で resizable HDF5 dataset に token を stream する。
 
-    Open in a `with` block to guarantee the residual buffer is flushed and the
-    closing attributes (token_count, sha256) are written.
+    residual buffer の flush と closing attribute の書き込みを保証するため `with` block で開く。
+
     """
 
     def __init__(
@@ -159,7 +159,7 @@ class HDF5ShardWriter:
                 self._flush_buffer(final=False)
 
     def add_boundary(self) -> None:
-        """Inject the separator token between documents."""
+        """document 間に separator token を注入する。"""
 
         self._buffer.append(BOUNDARY_TOKEN_ID)
         if len(self._buffer) >= self.chunk_size:
@@ -167,7 +167,7 @@ class HDF5ShardWriter:
 
     def _flush_buffer(self, final: bool) -> None:
         if self._dataset is None:
-            raise RuntimeError("writer is not open")
+            raise RuntimeError("writer が open されていません")
         if not self._buffer:
             return
         size = len(self._buffer) if final else self.chunk_size
@@ -202,7 +202,7 @@ class HDF5ShardWriter:
 
 
 class ShardedTokenizationPipeline:
-    """Tokenize iterable shard inputs into HDF5 files and write a shards.json."""
+    """iterable shard input を HDF5 file に token 化し、shards.json を書く。"""
 
     def __init__(
         self,
@@ -252,9 +252,9 @@ class ShardedTokenizationPipeline:
 
 
 class MmapTokenStore:
-    """Memory-mapped read access to a sharded HDF5 token corpus.
+    """sharded HDF5 token corpus への memory-mapped read access。
 
-    The store opens each shard file once in SWMR mode. A request for
+    store は各 shard file を SWMR mode で 1 回開く。
     `get_slice(start, stop)` is routed across shards and the result is returned
     as a flat NumPy uint16 array. Reads land in the page cache; the dataloader
     pays one copy when it crosses into a training tensor.
@@ -262,7 +262,7 @@ class MmapTokenStore:
 
     def __init__(self, shard_entries: list[ShardIndexEntry]) -> None:
         if not shard_entries:
-            raise ValueError("at least one shard entry is required")
+            raise ValueError("少なくとも 1 つの shard entry が必要です")
         self._entries = shard_entries
         self._files: list[h5py.File] = []
         self._datasets: list[h5py.Dataset] = []
@@ -302,9 +302,9 @@ class MmapTokenStore:
 
     def get_slice(self, start: int, stop: int) -> np.ndarray:
         if start < 0 or stop < 0 or stop < start:
-            raise ValueError(f"bad slice: start={start} stop={stop}")
+            raise ValueError(f"不正な slice: start={start} stop={stop}")
         if stop > self._total_tokens:
-            raise ValueError(f"stop ({stop}) exceeds total tokens ({self._total_tokens})")
+            raise ValueError(f"stop ({stop}) が total tokens を超えています ({self._total_tokens})")
         if stop == start:
             return np.empty((0,), dtype=TOKEN_DTYPE)
         out = np.empty((stop - start,), dtype=TOKEN_DTYPE)
@@ -331,7 +331,7 @@ class MmapTokenStore:
 
 
 class SlidingWindowDataloader:
-    """Random sliding-window sampler over a flat token stream."""
+    """flat token stream 上の random sliding-window sampler。"""
 
     def __init__(
         self,
@@ -341,9 +341,9 @@ class SlidingWindowDataloader:
         seed: int = 0,
     ) -> None:
         if window_size <= 1:
-            raise ValueError("window_size must be greater than 1")
+            raise ValueError("window_size は 1 より大きい必要があります")
         if batch_size <= 0:
-            raise ValueError("batch_size must be positive")
+            raise ValueError("batch_size は正でなければなりません")
         if store.total_tokens <= window_size:
             raise ValueError(
                 f"store has only {store.total_tokens} tokens; need more than {window_size}"
@@ -373,7 +373,7 @@ class SlidingWindowDataloader:
 
 
 class JSONLSource:
-    """Adapter that yields documents from a JSONL file with a configurable key.
+    """configurable key で JSONL file から document を返す adapter。
 
     The downloader (Phase 19 · 42) emits JSONL where each line is a JSON object
     with a `text` field. This adapter pulls the text out and skips lines that
@@ -412,15 +412,15 @@ def pack_documents(
     documents: Iterable[str],
     max_tokens: int,
 ) -> Iterator[list[int]]:
-    """Pack tokenized documents into fixed-length groups with boundary tokens.
+    """tokenized document を boundary token 付き fixed-length group に pack する。
 
-    Yields lists of exactly max_tokens token ids. Long documents are split
+    ちょうど max_tokens 個の token id list を返す。長い document は分割される。 split
     across groups; short documents share a group separated by BOUNDARY_TOKEN_ID.
     The final group may be shorter than max_tokens and is yielded as-is.
     """
 
     if max_tokens <= 1:
-        raise ValueError("max_tokens must be greater than 1")
+        raise ValueError("max_tokens は 1 より大きい必要があります")
     buffer: list[int] = []
     for text in documents:
         token_ids = tokenizer.encode(text)
@@ -441,7 +441,7 @@ def tokenize_jsonl_path(
     chunk_size: int = DEFAULT_CHUNK_SIZE,
     text_field: str = "text",
 ) -> ShardWriteResult:
-    """Convenience wrapper: tokenize one JSONL file into one HDF5 shard."""
+    """便利 wrapper: 1 つの JSONL file を 1 つの HDF5 shard に token 化する。"""
 
     tokenizer = Tokenizer()
     pipeline = ShardedTokenizationPipeline(tokenizer, output_dir=output_dir, chunk_size=chunk_size)
@@ -450,7 +450,7 @@ def tokenize_jsonl_path(
 
 
 def load_index(index_path: Path) -> list[ShardIndexEntry]:
-    """Read shards.json and return ShardIndexEntry rows."""
+    """shards.json を読み ShardIndexEntry row を返す。"""
 
     data = json.loads(Path(index_path).read_text("utf-8"))
     entries: list[ShardIndexEntry] = []
@@ -469,7 +469,7 @@ def load_index(index_path: Path) -> list[ShardIndexEntry]:
 
 
 def validate_corpus(index_entries: list[ShardIndexEntry]) -> list[str]:
-    """Recompute each shard's sha256 over its on-disk tokens and report mismatches."""
+    """各 shard の on-disk token から sha256 を再計算し、不一致を報告する。"""
 
     failures: list[str] = []
     for entry in index_entries:
@@ -484,14 +484,14 @@ def validate_corpus(index_entries: list[ShardIndexEntry]) -> list[str]:
 
 
 def build_demo_corpus() -> dict[str, list[str]]:
-    """Two shards of synthetic documents long enough to exercise mmap reads."""
+    """mmap read を動かすのに十分な長さの synthetic document 2 shard。"""
 
     base = [
-        "the alignment problem is a story about reward functions and the things they fail to write down",
-        "attention scales better with sequence length so transformers replaced recurrent networks during the language modeling era",
-        "an evaluation harness keeps training honest by treating the test corpus as a contract that cannot drift",
-        "deduplication is upstream of tokenization because every duplicate token costs the trainer twice in compute",
-        "checkpoints record the optimizer state and the random seed so that a restart resumes exactly where it stopped",
+        "alignment problem は reward function についての話である and the things they fail to write down",
+        "attention は sequence length に対してよりよく scale するため transformer は recurrent network を置き換えた during the language modeling era",
+        "evaluation harness は drift できない contract として test corpus を扱い training を正直に保つ",
+        "deduplication は tokenization の upstream にある。duplicate token は trainer に compute を 2 回払わせるからである",
+        "checkpoint は optimizer state と random seed を記録し、restart が停止位置から正確に再開できるようにする",
     ]
     long_repeat = " ".join(base * 4)
     shards: dict[str, list[str]] = {
@@ -502,9 +502,9 @@ def build_demo_corpus() -> dict[str, list[str]]:
 
 
 def run_demo() -> int:
-    """Build a demo corpus, tokenize it, validate it, and run the dataloader.
+    """demo corpus を作り、tokenize、validate し、dataloader を実行する。
 
-    Designed to be self-terminating: the pipeline writes into a temporary
+    self-terminating に設計されている。pipeline は temp に書く。orary
     directory and the dataloader takes a small fixed number of batches so the
     script exits without external input.
     """
@@ -522,9 +522,9 @@ def run_demo() -> int:
             )
         validation_failures = validate_corpus(entries)
         if validation_failures:
-            print(f"[validate] failed: {validation_failures}")
+            print(f"[validate] が失敗しました: {validation_failures}")
             return 1
-        print(f"[validate] all {len(entries)} shards match recorded sha256")
+        print(f"[validate] 全 {len(entries)} shard が記録 sha256 と一致しました")
         with MmapTokenStore(entries) as store:
             loader = SlidingWindowDataloader(store, window_size=64, batch_size=4, seed=7)
             for batch_index, (inputs, targets) in enumerate(loader.take(10)):

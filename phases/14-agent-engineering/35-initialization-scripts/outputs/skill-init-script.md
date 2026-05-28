@@ -1,34 +1,34 @@
 ---
 name: init-script
-description: Interview a project and emit a deterministic init_agent.py with five probes plus a CI workflow that refuses to launch the agent if any probe fails.
+description: project に interview し、5 つの probes を持つ deterministic init_agent.py と、probe failure 時に agent launch を拒否する CI workflow を出力する。
 version: 1.0.0
 phase: 14
 lesson: 35
 tags: [init, probes, ci, workbench, fail-loud]
 ---
 
-Given a repo, the agent product, and its dependency surface, produce a project-specific init script and CI wiring.
+repo、agent product、その dependency surface を受け取り、project-specific init script と CI wiring を作成する。
 
 Produce:
 
-1. `tools/init_agent.py` with these probes: runtime version, listed dependencies, test command resolvability, required env vars, state file freshness.
-2. `init_report.json` schema documented next to the script. Each probe returns `(name, status: pass|warn|fail, detail)`.
-3. `.github/workflows/agent-init.yml` (or equivalent) that runs the script and blocks the agent job on any fail-severity probe.
-4. A `pre-task` hook script the agent runtime can call before each session starts.
-5. Documentation in `docs/init.md` listing every probe, its severity, and how to fix a failure.
+1. 次の probes を持つ `tools/init_agent.py`: runtime version、listed dependencies、test command resolvability、required env vars、state file freshness。
+2. script の横に document された `init_report.json` schema。各 probe は `(name, status: pass|warn|fail, detail)` を返す。
+3. script を実行し、fail-severity probe があれば agent job を block する `.github/workflows/agent-init.yml` (または equivalent)。
+4. agent runtime が各 session 開始前に呼べる `pre-task` hook script。
+5. 各 probe、severity、failure の直し方を列挙する `docs/init.md`。
 
 Hard rejects:
 
-- Probes that call out to the network without a timeout. Init must be fast and offline-safe.
-- Probes that require LLM calls. Init is deterministic plumbing.
-- A non-zero exit code that the wrapper swallows. Fail loud is the whole point.
-- Probes that touch state without idempotency. Two runs in a row must produce identical reports modulo timestamp.
+- timeout なしで network に call out する probes。init は fast かつ offline-safe でなければならない。
+- LLM calls を必要とする probes。init は deterministic plumbing。
+- wrapper が swallow する non-zero exit code。fail loud が目的。
+- idempotency なしに state に触る probes。連続 2 run は timestamp 以外同一 report を作るべき。
 
 Refusal rules:
 
-- If the project has no test command, refuse to ship the script. Add the gap to the workbench audit instead.
-- If the env var list contains secrets the script will print, refuse and force redaction. Init reports should never carry secrets.
-- If a probe takes longer than three seconds in a dry run, surface the timing finding before shipping. Long probes turn init into ceremony.
+- project に test command がない場合、script の ship を拒否する。代わりに gap を workbench audit に追加する。
+- env var list に script が print してしまう secrets が含まれる場合、拒否して redaction を強制する。init reports は secrets を運んではならない。
+- probe が dry run で 3 seconds を超える場合、ship 前に timing finding を表面化する。長い probes は init を ceremony に変える。
 
 Output structure:
 
@@ -44,7 +44,7 @@ Output structure:
         └── agent-init.yml
 ```
 
-End with "what to read next" pointing to:
+最後に "what to read next" として以下を示す:
 
 - Lesson 36 for the per-task scope contract that uses the init report's `repo_paths`.
 - Lesson 37 for the runtime feedback loop that consumes the resolved test command.

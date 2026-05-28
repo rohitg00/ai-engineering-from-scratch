@@ -1,70 +1,70 @@
 {
   "lesson": "12-video-understanding-pipeline",
-  "title": "Capstone 12 — Video Understanding Pipeline (Scene, QA, Search)",
+  "title": "キャップストーン 12 — Video Understanding Pipeline (Scene, QA, Search)",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is a scene-level index still needed even when a long-context VLM can read a 2-hour video natively?",
+      "question": "Long-context VLM が 2 時間の video を native に読める場合でも、scene-level index が必要な理由は何ですか？",
       "options": [
-        "Long-context VLMs cannot stream output",
-        "Vector indexes do not support video files",
-        "Ingesting 100 hours of video into a queryable corpus needs scene-level retrieval, even when individual videos can be read whole",
-        "Scene cuts are the only thing a VLM understands"
+        "Long-context VLM は output を stream できないため",
+        "Vector index は video file を support しないため",
+        "個別 video を丸ごと読めても、100 時間の video を queryable corpus にするには scene-level retrieval が必要なため",
+        "Scene cut だけが VLM に理解できるものだから"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Which three vector types does each scene get in the multi-vector index?",
+      "question": "Multi-vector index で各 scene が持つ 3 種類の vector はどれですか？",
       "options": [
-        "Caption embedding, keyframe embedding, and transcript embedding",
-        "Audio waveform, mel-spectrogram, and MFCCs",
-        "Hash, gzip, and CRC",
-        "Pose, depth, and optical flow"
+        "Caption embedding、keyframe embedding、transcript embedding",
+        "Audio waveform、mel-spectrogram、MFCCs",
+        "Hash、gzip、CRC",
+        "Pose、depth、optical flow"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How are results from the three retrieval streams merged at query time?",
+      "question": "Query 時に 3 つの retrieval stream からの結果はどう merge されますか？",
       "options": [
-        "By picking the caption hit only",
-        "By averaging cosine similarities",
-        "Via reciprocal rank fusion across the three ranked lists",
-        "By taking the union without scoring"
+        "Caption hit だけを選ぶ",
+        "Cosine similarity を平均する",
+        "3 つの ranked list に対する reciprocal rank fusion を使う",
+        "Score なしで union を取る"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the temporal grounding step refine inside the top scene?",
+      "question": "Temporal grounding step は top scene の中で何を refine しますか？",
       "options": [
-        "The transcript word timestamps from Whisper",
-        "The number of vectors stored in Qdrant",
-        "The (start, end) timestamp window that contains the answer",
-        "The keyframe embedding dimensionality"
+        "Whisper からの transcript word timestamp",
+        "Qdrant に保存される vector の数",
+        "Answer を含む (start, end) timestamp window",
+        "Keyframe embedding dimensionality"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which question class is reported separately because it is a known hallucination hotspot?",
+      "question": "既知の hallucination hotspot として別報告される question class はどれですか？",
       "options": [
-        "Descriptive questions about scenery",
-        "Speaker identification questions",
-        "Translation questions",
-        "Counting and action-type questions, where VLMs miscount or mis-order events"
+        "風景に関する descriptive question",
+        "話者識別 question",
+        "翻訳 question",
+        "VLM が数え間違えたり event order を誤ったりする counting と action-type question"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which grounding metric does the rubric measure on a held-out set?",
+      "question": "Rubric が held-out set 上で測定する grounding metric はどれですか？",
       "options": [
         "Temporal-grounding intersection-over-union (IoU)",
         "Acceptance rate",
@@ -76,12 +76,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the pipeline require cited timestamps in answers?",
+      "question": "Pipeline が回答に cited timestamp を必須にする理由は何ですか？",
       "options": [
-        "They reduce the embedding dimension",
-        "Timestamps are required by Whisper output",
-        "Timestamps are required by Qdrant payloads",
-        "They let the viewer jump to the exact (video_id, start, end) so users can verify the claim"
+        "Embedding dimension を減らすため",
+        "Whisper output に必須だから",
+        "Qdrant payload に必須だから",
+        "Viewer が正確な (video_id, start, end) に jump でき、user が claim を検証できるため"
       ],
       "correct": 3,
       "explanation": ""

@@ -1,108 +1,108 @@
 # Human-in-the-Loop: Propose-Then-Commit
 
-> The 2026 consensus on HITL is specific. It is not "the agent asks, the user clicks Approve." It is propose-then-commit: the proposed action is persisted to a durable store with an idempotency key; surfaced to a reviewer with intent, data lineage, permissions touched, blast radius, and a rollback plan; committed only after positive acknowledgement; verified after execution to confirm the side effect actually happened. LangGraph's `interrupt()` plus PostgreSQL checkpointing, Microsoft Agent Framework's `RequestInfoEvent`, and Cloudflare's `waitForApproval()` all implement the same shape. The canonical failure mode is the rubber-stamp approval: "Approve?" is clicked without review. The documented mitigation is challenge-and-response with an explicit checklist.
+> 2026年時点のHITLに関する合意は具体的である。「エージェントが尋ね、ユーザーがApproveをクリックする」ことではない。propose-then-commitである。提案されたアクションをidempotency keyとともに永続ストアへ保存し、意図、data lineage、触れる権限、blast radius、rollback planを添えてレビュー担当者へ提示し、明示的な肯定応答の後だけcommitし、実行後に副作用が本当に起きたことを検証する。LangGraphの`interrupt()` + PostgreSQL checkpointing、Microsoft Agent Frameworkの`RequestInfoEvent`、Cloudflareの`waitForApproval()`はいずれも同じ形を実装している。典型的な失敗モードはrubber-stamp approvalである。「Approve?」がレビューなしにクリックされる。文書化された緩和策は、明示的なチェックリストを伴うchallenge-and-responseである。
 
-**Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
-**Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
-**Time:** ~60 minutes
+**タイプ:** Learn
+**言語:** Python（stdlib、idempotency付きpropose-then-commitステートマシン）
+**前提条件:** Phase 15 · 12（Durable execution）、Phase 15 · 14（Tripwires）
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-An agent takes an action. The user has to decide: approve or not. If the decision is instant, it is probably not a review. If the decision is structured, it is slow but trustworthy. The engineering question is how to make a structured review the path of least resistance.
+エージェントがアクションを実行しようとする。ユーザーは承認するかどうかを決めなければならない。判断が一瞬なら、それはおそらくレビューではない。判断が構造化されていれば、遅いが信頼できる。エンジニアリング上の問いは、構造化レビューを最も抵抗の少ない経路にするにはどうするかである。
 
-The 2023-era HITL pattern was a synchronous prompt: "Agent wants to send email to X with body Y — approve?" The user clicks Approve. Everyone feels the system is safe. In practice this surface is heavily rubber-stamped: users approve fast, approvals predict little, and when the agent goes wrong, the audit trail shows a long history of approvals the user cannot recall.
+2023年ごろのHITLパターンは同期的なプロンプトだった。「エージェントが本文YでXへメールを送ろうとしています。承認しますか?」ユーザーはApproveをクリックする。誰もがシステムは安全だと感じる。実際には、このサーフェスはかなりrubber-stampされる。ユーザーは素早く承認し、承認はほとんど予測力を持たず、エージェントが誤ったとき、監査証跡にはユーザーが思い出せない承認の長い履歴が残る。
 
-The 2026 pattern — propose-then-commit — moves HITL onto a durable substrate, attaches structured metadata, and requires positive commit. Every managed agent SDK ships a version: LangGraph `interrupt()`, Microsoft Agent Framework `RequestInfoEvent`, Cloudflare `waitForApproval()`. The API names differ; the shape does not.
+2026年のパターンであるpropose-then-commitは、HITLを永続的な基盤へ移し、構造化メタデータを付け、肯定的なcommitを要求する。すべてのmanaged agent SDKが何らかの形で提供している。LangGraph `interrupt()`、Microsoft Agent Framework `RequestInfoEvent`、Cloudflare `waitForApproval()`である。API名は違っても、形は同じである。
 
-## The Concept
+## 概念
 
-### The propose-then-commit state machine
+### propose-then-commitステートマシン
 
-1. **Propose.** Agent produces a proposed action. Persisted to a durable store (PostgreSQL, Redis, Durable Object). Includes:
-   - intent (why is the agent doing this)
-   - data lineage (what source led to this proposal)
-   - permissions touched (which scopes / files / endpoints)
-   - blast radius (what is the worst case)
-   - rollback plan (if committed, how do we undo it)
-   - idempotency key (unique per proposal; resubmission returns the same record)
-2. **Surface.** Reviewer sees the proposal with all metadata. The reviewer is a person (not the agent reviewing itself).
-3. **Commit.** Positive acknowledgement. The action executes.
-4. **Verify.** After execution, the side effect is read back and confirmed. If the verify step fails, the system is in a known bad state and alerting engages.
+1. **Propose。** エージェントが提案アクションを生成する。永続ストア（PostgreSQL、Redis、Durable Object）に保存される。含まれるもの:
+   - intent（エージェントがなぜこれを行うのか）
+   - data lineage（どのsourceがこの提案につながったのか）
+   - permissions touched（どのscope / file / endpointに触れるのか）
+   - blast radius（最悪の場合どうなるか）
+   - rollback plan（commitされた場合、どう取り消すか）
+   - idempotency key（提案ごとに一意。再送信は同じrecordを返す）
+2. **Surface。** レビュー担当者がすべてのメタデータ付きの提案を見る。レビュー担当者は人間である（エージェント自身が自分をレビューするのではない）。
+3. **Commit。** 肯定的な応答を行う。アクションが実行される。
+4. **Verify。** 実行後、副作用を読み戻して確認する。verify stepが失敗した場合、システムは既知のbad stateにあり、アラートが作動する。
 
-### The idempotency key
+### idempotency key
 
-Without an idempotency key, a retry after a transient failure can double-execute an approved action. Concrete example: user approves "transfer $100 from A to B." Network blips. Workflow retries. The user has approved once but the transfer executes twice. The idempotency key ties the approval to a single, unique side effect; the second execution is a no-op.
+idempotency keyがなければ、一時的な障害後のリトライで承認済みアクションが二重実行され得る。具体例: ユーザーが「AからBへ$100送金する」を承認する。ネットワークが瞬断する。workflowがリトライする。ユーザーは一度しか承認していないのに、送金は二度実行される。idempotency keyは承認を単一で一意な副作用に結びつける。2回目の実行はno-opになる。
 
-This is the same idempotency pattern Stripe and AWS APIs use. Reusing it for agent approvals is explicit in the Microsoft Agent Framework docs.
+これはStripeやAWS APIが使っているのと同じidempotencyパターンである。Microsoft Agent Framework docsでは、agent approvalにこのパターンを再利用することが明示されている。
 
-### Durability: why approvals outlast processes
+### 永続性: なぜ承認はプロセスより長く生きるのか
 
-The approval waiting room is a piece of state the agent does not own. The workflow is paused (Lesson 12). When the approval arrives, the workflow resumes from exactly that point. This is why LangGraph pairs `interrupt()` with PostgreSQL checkpointing and not just in-memory state — an approval two days later still finds the workflow intact.
+承認の待機室は、エージェントが所有しない状態である。workflowは一時停止する（レッスン12）。承認が届くと、workflowはまさにその地点から再開する。LangGraphが`interrupt()`を単なるインメモリ状態ではなくPostgreSQL checkpointingと組み合わせるのはこのためである。2日後の承認でも、workflowはまだ完全な形で見つかる。
 
-### Rubber-stamp approvals and the challenge-and-response mitigation
+### rubber-stamp approvalとchallenge-and-responseによる緩和
 
-The default UI for HITL ("Approve" / "Reject" buttons) produces fast approvals with no genuine review. Documented mitigation: a challenge-and-response checklist that requires positive answers to specific questions before the Approve button is enabled. Concrete shape:
+HITLのデフォルトUI（"Approve" / "Reject"ボタン）は、本物のレビューを伴わない高速な承認を生む。文書化された緩和策は、Approveボタンが有効になる前に特定の質問へ肯定的に答えることを要求するchallenge-and-response checklistである。具体的な形:
 
-- "Do you understand what resource this touches? [ ]"
-- "Have you verified the blast radius is acceptable? [ ]"
-- "Do you have a rollback plan if this fails? [ ]"
+- "このアクションが触れるリソースを理解していますか? [ ]"
+- "blast radiusが許容範囲であることを確認しましたか? [ ]"
+- "これが失敗した場合のrollback planはありますか? [ ]"
 
-Not bureaucracy for its own sake — a forcing function. The reviewer who cannot tick the boxes either asks for clarification (escalation) or declines (safe default). The Anthropic agent-safety research explicitly cites checklist-driven HITL as a mitigation for rubber-stamp approval patterns.
+これは官僚主義のための官僚主義ではなく、強制関数である。チェックボックスを押せないレビュー担当者は、説明を求める（escalation）か、却下する（safe default）。Anthropicのagent-safety researchは、rubber-stamp approvalパターンの緩和策としてchecklist-driven HITLを明示的に挙げている。
 
-### What counts as consequential
+### consequentialと見なすもの
 
-Not every action needs propose-then-commit. The 2026 guidance:
+すべてのアクションがpropose-then-commitを必要とするわけではない。2026年のガイダンスは次のとおり。
 
-- **Consequential actions** (always HITL): irreversible writes, financial transactions, outbound communication, production database changes, destructive file-system operations.
-- **Reversible actions** (sometimes HITL): edits to local files, staging-env changes, reversible writes with clear rollback.
-- **Reads and inspections** (never HITL): reading a file, listing resources, calling a read-only API.
+- **Consequential actions**（常にHITL）: 不可逆なwrite、金融取引、外部への通信、本番データベース変更、破壊的なファイルシステム操作。
+- **Reversible actions**（場合によりHITL）: ローカルファイルの編集、staging環境の変更、明確なrollbackを持つ可逆write。
+- **Reads and inspections**（HITL不要）: ファイルを読む、リソースを列挙する、read-only APIを呼び出す。
 
-### Post-action verification
+### post-action verification
 
-"The commit ran" is not the same as "the side effect happened." Network-partition and race conditions can produce a workflow that thinks it succeeded while the backend did not persist. The verify step re-reads the target resource after commit to confirm. This is the same pattern as database transactions with `RETURNING` clauses or AWS `GetObject` after `PutObject`.
+「commitが走った」は「副作用が起きた」と同じではない。ネットワーク分断やrace conditionにより、workflowは成功したと思っていてもbackendには永続化されていないことがある。verify stepでは、commit後に対象リソースを読み直して確認する。これは、`RETURNING`句を持つdatabase transactionや、AWSの`PutObject`後の`GetObject`と同じパターンである。
 
 ### EU AI Act Article 14
 
-Article 14 mandates effective human oversight for high-risk AI systems in the EU. "Effective" is not decorative. Regulatory language specifically excludes rubber-stamp patterns. Propose-then-commit with challenge-and-response is the shape that survives Article 14 scrutiny in the Microsoft Agent Governance Toolkit compliance docs.
+Article 14は、EUのhigh-risk AI systemsに対してeffective human oversightを義務付ける。「Effective」は飾りではない。規制文言はrubber-stamp patternを明確に除外する。Microsoft Agent Governance Toolkitのcompliance docsでは、challenge-and-response付きのpropose-then-commitがArticle 14の審査に耐える形とされている。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements a propose-then-commit state machine in stdlib Python. Durable store is a JSON file. Idempotency key is a hash of (thread_id, action_signature). The driver simulates three cases: a clean approval flow, a retry after transient failure (which must not double-execute), and a rubber-stamp default versus a challenge-and-response flow.
+`code/main.py`は、stdlib Pythonでpropose-then-commitステートマシンを実装している。永続ストアはJSONファイルである。idempotency keyは（thread_id, action_signature）のhashである。ドライバーは3つのケースをシミュレートする。正常な承認フロー、一時障害後のリトライ（二重実行してはならない）、rubber-stamp defaultとchallenge-and-response flowの比較である。
 
-## Ship It
+## 仕上げる
 
-`outputs/skill-hitl-design.md` reviews a proposed HITL workflow for propose-then-commit shape and flags missing metadata, idempotency, verification, or challenge-and-response layers.
+`outputs/skill-hitl-design.md`は、提案されたHITL workflowがpropose-then-commitの形になっているかをレビューし、不足しているメタデータ、idempotency、verification、challenge-and-response層を指摘する。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Confirm that a retry of an approved proposal uses the durable record and does not re-execute. Now change the idempotency key to include a timestamp and show the retry double-executes.
+1. `code/main.py`を実行する。承認済みproposalのリトライがdurable recordを使い、再実行しないことを確認する。次にidempotency keyにtimestampを含めるよう変更し、リトライで二重実行されることを示す。
 
-2. Extend the proposal record with a `rollback` field. Simulate an execution whose verify step fails. Show the rollback firing automatically.
+2. proposal recordに`rollback`フィールドを追加する。verify stepが失敗する実行をシミュレートする。rollbackが自動的に発火することを示す。
 
-3. Read Microsoft Agent Framework's `RequestInfoEvent` docs. Identify one metadata field the API includes that the toy engine is missing. Add it and explain what it protects against.
+3. Microsoft Agent Frameworkの`RequestInfoEvent` docsを読む。APIには含まれているがトイエンジンに欠けているmetadata fieldを1つ特定する。それを追加し、何から守るのかを説明する。
 
-4. Design a challenge-and-response checklist for a specific action (e.g., "post to a public Twitter account"). What three questions must the reviewer answer? Why those three?
+4. 特定のアクション（例: 「公開Twitterアカウントへ投稿する」）のためのchallenge-and-response checklistを設計する。レビュー担当者が答えるべき3つの質問は何か。なぜその3つなのか。
 
-5. Pick one case where a synchronous "Approve?" prompt would be sufficient (no durable store needed). Explain why, and name the risk class you are accepting.
+5. 同期的な「Approve?」プロンプトで十分なケース（durable store不要）を1つ選ぶ。なぜ十分なのかを説明し、受け入れているrisk classを名付ける。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |---|---|---|
-| Propose-then-commit | "Two-phase approval" | Persisted proposal + positive commit + verify |
-| Idempotency key | "Retry-safe token" | Unique per proposal; second execution no-ops |
-| Data lineage | "Where it came from" | The specific source content that led to the proposal |
-| Blast radius | "Worst case" | Scope of effect if the action goes wrong |
-| Rubber-stamp | "Fast approval" | "Approve" clicked without genuine review |
-| Challenge-and-response | "Forcing checklist" | Reviewer must positively acknowledge specific questions |
-| RequestInfoEvent | "MS Agent Framework primitive" | Durable HITL request with structured metadata |
-| `interrupt()` / `waitForApproval()` | "Framework primitives" | LangGraph / Cloudflare equivalents of the same shape |
+| Propose-then-commit | 「二段階承認」 | 永続化されたproposal + 肯定的なcommit + verify |
+| Idempotency key | 「retry-safe token」 | proposalごとに一意。2回目の実行はno-op |
+| Data lineage | 「どこから来たか」 | proposalにつながった具体的なsource content |
+| Blast radius | 「最悪の場合」 | アクションが誤った場合の影響範囲 |
+| Rubber-stamp | 「高速承認」 | 本物のレビューなしに"Approve"がクリックされること |
+| Challenge-and-response | 「強制チェックリスト」 | レビュー担当者が特定の質問に肯定的に応答しなければならない |
+| RequestInfoEvent | 「MS Agent Framework primitive」 | 構造化メタデータを持つdurable HITL request |
+| `interrupt()` / `waitForApproval()` | 「Framework primitive」 | 同じ形を持つLangGraph / Cloudflareの対応物 |
 
-## Further Reading
+## 参考資料
 
-- [Microsoft Agent Framework — Human in the loop](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — `RequestInfoEvent`, durable approvals.
-- [Cloudflare Agents — Human in the loop](https://developers.cloudflare.com/agents/concepts/human-in-the-loop/) — `waitForApproval()` and Durable Objects.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — HITL as a mitigation for long-horizon risk.
-- [EU AI Act — Article 14: Human oversight](https://artificialintelligenceact.eu/article/14/) — regulatory baseline for high-risk systems.
-- [Anthropic — Claude's Constitution (January 2026)](https://www.anthropic.com/news/claudes-constitution) — constitutional framing around oversight.
+- [Microsoft Agent Framework — Human in the loop](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — `RequestInfoEvent`、durable approval。
+- [Cloudflare Agents — Human in the loop](https://developers.cloudflare.com/agents/concepts/human-in-the-loop/) — `waitForApproval()`とDurable Objects。
+- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — 長期ホライズンriskの緩和策としてのHITL。
+- [EU AI Act — Article 14: Human oversight](https://artificialintelligenceact.eu/article/14/) — high-risk systemの規制baseline。
+- [Anthropic — Claude's Constitution (January 2026)](https://www.anthropic.com/news/claudes-constitution) — oversightをめぐるconstitutional framing。

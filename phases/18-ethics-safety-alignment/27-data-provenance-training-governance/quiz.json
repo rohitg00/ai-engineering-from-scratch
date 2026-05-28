@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is the compliance window for training-data governance at collection time, not after training?",
+      "question": "training-data governance の compliance window が training 後ではなく collection time にあるのはなぜですか？",
       "options": [
-        "Because regulators do not audit deployed models",
-        "Because cookie-consent frameworks ban post-collection use",
-        "Because GDPR right-to-erasure does not apply to AI",
-        "Once data enters model weights, surgical erasure is not possible; retraining from scratch is the only complete remediation and is prohibitively expensive"
+        "regulators は deployed models を audit しないから",
+        "cookie-consent frameworks は post-collection use を禁止しているから",
+        "GDPR right-to-erasure は AI に適用されないから",
+        "data が model weights に入ると surgical erasure は不可能であり、完全な remediation は retraining from scratch だけで、prohibitively expensive だから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how many statutory items does California AB 2013 require developers to publish in a dataset summary?",
+      "question": "California AB 2013 は dataset summary で developers におおよそ何個の statutory items の公開を要求していますか？",
       "options": [
         "3",
         "30",
@@ -28,48 +28,48 @@
     },
     {
       "stage": "check",
-      "question": "Which AB 2013 item is new relative to the Gebru et al. 2018 datasheet structure?",
+      "question": "Gebru et al. 2018 の datasheet structure と比べて新しい AB 2013 item はどれですか？",
       "options": [
-        "Sources or owners of datasets",
-        "Whether the system uses or continuously uses synthetic data generation",
-        "Cleaning, processing, or other modifications",
-        "Time period during which data was collected"
+        "datasets の sources または owners",
+        "system が synthetic data generation を使う、または継続的に使うか",
+        "cleaning, processing, or other modifications",
+        "data が collected された time period"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the convergent 2025 DPA principle for LLM training on publicly available first-party content?",
+      "question": "publicly available first-party content による LLM training について、2025年の DPA convergence principle は何ですか？",
       "options": [
-        "Training is prohibited under all circumstances",
-        "Only synthetic data may be used",
-        "Explicit user consent is always required",
-        "Legitimate interest can justify training on publicly available first-party content with opt-out and appropriate safeguards; consent is not required"
+        "training はすべての circumstances で prohibited",
+        "synthetic data だけが使用可能",
+        "explicit user consent が常に required",
+        "opt-out と適切な safeguards があれば、legitimate interest は publicly available first-party content による training を justify し得る。consent は required ではない"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of these is NOT a partial remediation for the irreversibility problem listed in the lesson?",
+      "question": "lesson に挙げられた irreversibility problem への partial remediation ではないものはどれですか？",
       "options": [
-        "Unlearning (approximate removal measured by MIA)",
-        "Influence-function-based localization and selective update",
+        "Unlearning (MIA で測る approximate removal)",
+        "Influence-function-based localization と selective update",
         "GDPR-mandated automatic weight deletion",
-        "Fine-tune-suppression of outputs derived from the data"
+        "data 由来の outputs を抑制する fine-tune-suppression"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the Data Provenance Initiative's 'Consent in Crisis' (July 2024) find?",
+      "question": "Data Provenance Initiative の 'Consent in Crisis' (2024年7月) は何を発見しましたか？",
       "options": [
-        "Publishers are adding robots.txt restrictions at an accelerating rate; the openly-trainable-upon commons is contracting rapidly, with around 25% of top training sources adding restrictions 2023 to 2024",
-        "Synthetic data has fully replaced web data",
-        "Consent rates are stable across all sources",
-        "Robots.txt restrictions are decreasing year over year"
+        "publishers は robots.txt restrictions を加速的に追加しており、openly-trainable-upon commons は急速に縮小している。2023年から2024年に top training sources の約25%が restrictions を追加した",
+        "synthetic data は web data を完全に置き換えた",
+        "consent rates はすべての sources で安定している",
+        "robots.txt restrictions は年々減っている"
       ],
       "correct": 0,
       "explanation": ""

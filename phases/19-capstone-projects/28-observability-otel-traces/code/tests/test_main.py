@@ -1,4 +1,4 @@
-"""Tests for the OTel GenAI span builder and Prometheus exposition."""
+"""OTel GenAI span builder と Prometheus exposition の tests。"""
 
 from __future__ import annotations
 
@@ -111,11 +111,11 @@ class HistogramTests(unittest.TestCase):
 class PrometheusExpositionTests(unittest.TestCase):
     def test_counter_exposition(self) -> None:
         reg = MetricsRegistry()
-        c = reg.counter("tools_called_total", help="Total tool calls")
+        c = reg.counter("tools_called_total", help="tool call の総数")
         c.inc({"tool": "read_file"})
         c.inc({"tool": "list_dir"})
         text = prometheus_exposition(reg)
-        self.assertIn("# HELP tools_called_total Total tool calls", text)
+        self.assertIn("# HELP tools_called_total tool call の総数", text)
         self.assertIn("# TYPE tools_called_total counter", text)
         self.assertIn('tools_called_total{tool="read_file"} 1', text)
         self.assertIn('tools_called_total{tool="list_dir"} 1', text)

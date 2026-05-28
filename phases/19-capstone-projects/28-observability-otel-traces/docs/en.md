@@ -1,33 +1,33 @@
-# Capstone Lesson 28: Observability with OTel GenAI Spans and Prometheus Metrics
+# Capstone Lesson 28: OTel GenAI Span と Prometheus Metrics による Observability
 
-> An agent harness without observability is a black box that costs money. This lesson hand-rolls a span builder that emits records compliant with the OpenTelemetry GenAI semantic conventions, writes them to a JSON-Lines file one span per line, and exposes counters and histograms in Prometheus text format. The whole thing is stdlib Python and runs offline.
+> observability のない agent harness は、費用のかかる black box です。この lesson では OpenTelemetry GenAI semantic conventions に準拠した record を emit する span builder を hand-roll し、1 span 1 line の JSON-Lines file に書き、Prometheus text format で counter と histogram を expose します。すべて stdlib Python で、offline に動きます。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Build a span data class shaped to the OpenTelemetry GenAI semantic conventions.
-- Implement a JSONL exporter that writes one self-contained span per line.
-- Build counters and histograms with labels and Prometheus text-format exposition.
-- Wrap any callable in a span context manager that records duration, status, and exceptions.
-- Verify that the emitted spans roundtrip through `json.loads` and match the spec shape.
+- OpenTelemetry GenAI semantic conventions に沿った span data class を作る。
+- self-contained な span を 1 line ずつ書く JSONL exporter を実装する。
+- label つき counter と histogram、および Prometheus text-format exposition を作る。
+- 任意の callable を span context manager で wrap し、duration、status、exception を記録する。
+- emit された span が `json.loads` を roundtrip し、spec shape に合うことを検証する。
 
-## The Problem
+## 問題
 
-A coding agent in production produces three classes of artifact every turn: a model call, a tool execution, and a verification gate decision. None of these are useful without structured telemetry.
+production の coding agent は各 turn で 3 種類の artifact を生みます。model call、tool execution、verification gate decision です。structured telemetry がなければ、どれも役に立ちません。
 
-The first failure mode is the missing trace. Something went wrong on Tuesday but the only record is a 500-line chat log. There is no record of which tool ran, how long it took, how many tokens went into the prompt, or whether the gate refused anything. The agent author has to guess.
+1 つ目の failure mode は missing trace です。火曜日に何かが壊れたが、記録は 500 行の chat log だけです。どの tool が走ったのか、どれだけ時間がかかったのか、prompt に何 token 入ったのか、gate が何かを拒否したのか、記録がありません。agent author は推測するしかありません。
 
-The second failure mode is the unparseable trace. The harness wrote spans but used its own ad-hoc field names. Nothing in Grafana, Honeycomb, Jaeger, or the local CLI can read them. Whatever tooling exists in the team's stack is wasted because the spans are non-standard.
+2 つ目は unparseable trace です。harness は span を書きましたが、独自の ad-hoc field name を使いました。Grafana、Honeycomb、Jaeger、local CLI のどれも読めません。team の stack にある tooling は、span が non-standard なため無駄になります。
 
-The third failure mode is the unaggregated metric. You can see one slow tool call in the trace, but you cannot answer "what is the p95 latency of read_file calls over the last hour?" because there are no metrics, only traces.
+3 つ目は unaggregated metric です。trace 上で 1 つの遅い tool call は見えますが、「直近 1 時間の read_file call の p95 latency は？」には答えられません。metric がなく、trace しかないからです。
 
-The OpenTelemetry GenAI semantic conventions exist exactly for this. They define a small set of standard attributes that span emitters across LLM frameworks share. If your harness writes those attributes, every OTel-compatible backend can read them.
+OpenTelemetry GenAI semantic conventions はまさにこのためにあります。LLM framework 間で span emitter が共有する standard attribute の小さな set を定義します。harness がそれらの attribute を書けば、すべての OTel-compatible backend が読めます。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart TD
@@ -39,15 +39,15 @@ flowchart TD
   Metrics --> Prom[/metrics text/]
 ```
 
-Every operation in the harness produces a span. A span has a trace id (the whole agent invocation), a span id (this one operation), a name (e.g. `gen_ai.chat`, `gen_ai.tool.execution`), attributes that follow the GenAI conventions, a start and end time, and a status.
+harness 内のすべての operation が span を生みます。span には trace id（agent invocation 全体）、span id（この 1 operation）、name（例: `gen_ai.chat`, `gen_ai.tool.execution`）、GenAI conventions に従う attributes、start/end time、status があります。
 
-The GenAI conventions standardise these attribute keys: `gen_ai.system` (which provider, e.g. `anthropic`, `openai`), `gen_ai.request.model` (the model id), `gen_ai.request.max_tokens`, `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`, `gen_ai.response.model`, `gen_ai.response.id`, `gen_ai.operation.name`, plus tool-specific keys `gen_ai.tool.name` and `gen_ai.tool.call.id`.
+GenAI conventions は attribute key を standardize します。`gen_ai.system`（provider、例: `anthropic`, `openai`）、`gen_ai.request.model`（model id）、`gen_ai.request.max_tokens`、`gen_ai.usage.input_tokens`、`gen_ai.usage.output_tokens`、`gen_ai.response.model`、`gen_ai.response.id`、`gen_ai.operation.name`、tool-specific key の `gen_ai.tool.name` と `gen_ai.tool.call.id` です。
 
-The exporter writes JSONL. One JSON object per line. This is the simplest possible format that downstream tooling can stream, grep, and import. A real OTel exporter would speak OTLP gRPC; the lesson's JSONL exporter is the offline equivalent and exits zero on every workstation.
+exporter は JSONL を書きます。1 line に 1 JSON object。downstream tooling が stream、grep、import できる最も単純な format です。real OTel exporter は OTLP gRPC を話します。この lesson の JSONL exporter は offline equivalent で、どの workstation でも exit zero します。
 
-Metrics live next to traces. A counter increments on each tool call: `tools_called_total{tool="read_file"}`. A histogram records the observed latency: `tool_latency_ms{tool="read_file"}`. Both serialise into Prometheus text exposition format, which is the de-facto standard for pull-based metrics.
+metric は trace の隣にあります。tool call ごとに counter が increment します。`tools_called_total{tool="read_file"}` です。histogram は observed latency を記録します。`tool_latency_ms{tool="read_file"}` です。どちらも Prometheus text exposition format に serialize します。これは pull-based metrics の事実上の standard です。
 
-## Architecture
+## アーキテクチャ
 
 ```mermaid
 flowchart LR
@@ -57,37 +57,37 @@ flowchart LR
   Metrics --> Prom[Prometheus text<br/>exposition]
 ```
 
-The span builder is a small class with a `span(name, attrs)` method that returns a context manager. The context manager records start time on enter, records end time on exit, attaches an exception if one was raised, and pushes the finalised span to the exporter.
+span builder は `span(name, attrs)` method を持つ小さな class です。この method は context manager を返します。context manager は enter 時に start time を記録し、exit 時に end time を記録し、exception が raised されていれば attach し、finalized span を exporter に push します。
 
-The metrics registry is two dicts. Counters are `{(name, frozen_labels): int}`. Histograms keep raw samples in a list and serialise to Prometheus histogram buckets at exposition time.
+metrics registry は 2 つの dict です。Counters は `{(name, frozen_labels): int}`。Histograms は raw sample list を保持し、exposition 時に Prometheus histogram bucket に serialize します。
 
-## What you will build
+## 作るもの
 
-`main.py` ships:
+`main.py` には以下が入っています。
 
-1. `GenAISpan` dataclass: trace_id, span_id, parent_span_id, name, attributes, start_unix_nano, end_unix_nano, status, status_message, events.
-2. `SpanBuilder` class with `span(name, attrs, parent=None)` context manager.
-3. `JSONLExporter` class with `export(span)` that appends one line.
-4. `Counter` and `Histogram` classes plus `MetricsRegistry`.
-5. `prometheus_exposition(registry)` that produces text-format output.
-6. `wrap_tool_call(name)` decorator that emits a span and updates metrics.
-7. Demo: synthesises a complete agent invocation (gen_ai.chat span around tool spans), writes traces.jsonl, prints the Prometheus exposition, exits zero.
+1. `GenAISpan` dataclass: trace_id, span_id, parent_span_id, name, attributes, start_unix_nano, end_unix_nano, status, status_message, events。
+2. `SpanBuilder` class と `span(name, attrs, parent=None)` context manager。
+3. `export(span)` が 1 line append する `JSONLExporter` class。
+4. `Counter` と `Histogram` class、そして `MetricsRegistry`。
+5. text-format output を生成する `prometheus_exposition(registry)`。
+6. span を emit して metrics を更新する `wrap_tool_call(name)` decorator。
+7. demo: complete agent invocation（tool span を内包する gen_ai.chat span）を合成し、traces.jsonl を書き、Prometheus exposition を print し、exit zero する。
 
-The span id and trace id are 16-byte hex strings, generated from `os.urandom`. That matches OTel's W3C trace context. The exporter never throws; IO errors are surfaced but the harness keeps running.
+span id と trace id は `os.urandom` 由来の 16-byte hex string です。これは OTel の W3C trace context に合います。exporter は throw しません。IO error は surface しますが、harness は走り続けます。
 
-The histogram has a fixed bucket set (the OTel default for latency in milliseconds: 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, +Inf). Samples are stored as a list; exposition computes per-bucket counts on demand.
+histogram は fixed bucket set を持ちます（millisecond latency の OTel default: 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, +Inf）。sample は list として保存し、exposition は demand に応じて per-bucket count を計算します。
 
-## Why hand-rolled instead of opentelemetry-sdk
+## なぜ opentelemetry-sdk ではなく hand-rolled なのか
 
-The OTel Python SDK is a real dependency. It is also several thousand lines of code, multiple processes for the OTLP exporter, and a runtime cost that swamps a lesson budget. The hand-rolled version teaches the wire format. In production you wire the same attributes into the real SDK and get the OTLP exporter, batching, and resource detection for free.
+OTel Python SDK は本物の dependency です。数千行の code、OTLP exporter のための複数 process、lesson budget を圧迫する runtime cost もあります。hand-rolled version は wire format を教えます。production では同じ attribute を real SDK に wire し、OTLP exporter、batching、resource detection をそのまま得ます。
 
-The conventions are stable. The wire format the lesson emits will keep parsing in 2030 because OTel never breaks GenAI attribute names; they only add new ones.
+conventions は stable です。この lesson が emit する wire format は 2030 年にも parse できます。OTel は GenAI attribute name を壊しません。新しいものを追加するだけです。
 
-## How this composes with the rest of Track A
+## Track A の他 lesson との合成
 
-Lesson 25 produced the gate chain. Lesson 26 produced the sandbox. Lesson 27 produced the eval harness. Lesson 28 makes all three observable. Lesson 29 wraps every step of the end-to-end demo in spans and prints the Prometheus text at the end.
+Lesson 25 は gate chain を作りました。Lesson 26 は sandbox を作りました。Lesson 27 は eval harness を作りました。Lesson 28 はその 3 つを observable にします。Lesson 29 は end-to-end demo の各 step を span で wrap し、最後に Prometheus text を print します。
 
-## Running it
+## 実行方法
 
 ```bash
 cd phases/19-capstone-projects/28-observability-otel-traces
@@ -95,4 +95,4 @@ python3 code/main.py
 python3 -m pytest code/tests/ -v
 ```
 
-The demo emits a `traces.jsonl` in the lesson's working dir (cleaned up at the end), then prints a sample of three spans, then prints the Prometheus exposition for the counters and histograms. The tests verify that spans serialise round-trip, that the canonical GenAI attributes are present, that counters increment correctly, and that the histogram exposition contains the expected bucket counts.
+demo は lesson working dir に `traces.jsonl` を emit し（最後に cleanup）、3 span の sample を print し、counter と histogram の Prometheus exposition を print します。tests は span が round-trip serialize されること、canonical GenAI attributes が存在すること、counter が正しく increment すること、histogram exposition が expected bucket count を含むことを検証します。

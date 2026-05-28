@@ -1,42 +1,42 @@
-# Experiment Runner
+# 実験ランナー
 
-> The loop is only as honest as its measurements. Build the runner that takes a spec, executes it in a sandboxed subprocess, and emits a json metrics blob the evaluator can trust.
+> 研究ループの誠実さは測定の誠実さで決まります。spec を受け取り、sandboxed subprocess で実行し、evaluator が信頼できる JSON metrics blob を出力する runner を作ります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 19 Track A lessons 20-29
-**Time:** ~90 minutes
+**種別:** Build
+**言語:** Python
+**前提:** Phase 19 Track A lessons 20-29
+**時間:** 約90分
 
-## Learning Objectives
-- Encode an experiment as a typed spec the runner can serialise to a subprocess.
-- Launch a subprocess with a hard wall clock timeout and a soft memory cap, and surface both as terminal conditions.
-- Capture stdout, stderr, and the structured metrics blob into a single result record.
-- Build an ablation table that sweeps one configuration knob at a time over a fixed base spec.
-- Keep every result deterministic given a seed so the evaluator sees the same numbers across runs.
+## 学習目標
+- 実験を subprocess に serialise できる型付き spec として encode する。
+- hard wall clock timeout と soft memory cap 付きで subprocess を起動し、どちらも terminal condition として表す。
+- stdout、stderr、structured metrics blob を一つの result record に捕捉する。
+- 固定 base spec に対して一つの configuration knob だけを sweep する ablation table を作る。
+- seed が同じなら evaluator が毎回同じ数値を見るよう、すべての result を決定的にする。
 
-## Why a subprocess
+## なぜ subprocess なのか
 
-A research loop runs untrusted code. The hypothesis came from a sampler, the experiment script came from the same path; treating either as safe in-process is asking for a crash that takes the orchestrator down. Subprocesses are the simplest isolation the language ships: a separate process, an independent address space, a signal handle on the parent side.
+研究ループは信頼できない code を走らせます。仮説は sampler から来て、実験 script も同じ経路から来ます。in-process で安全だとみなすと、crash が orchestrator 全体を落とします。subprocess は Python が標準で持つ最小の isolation です。別 process、独立した address space、親側の signal handle が得られます。
 
-The runner here does not implement full sandboxing. There is no cgroup, no seccomp filter, no namespace remapping. What it does have is a wall clock timeout, a polling loop for memory growth, and a kill path that terminates the process on either limit. That is the runtime contract every more elaborate sandbox extends. The lesson keeps the contract small enough to read in one sitting.
+この runner は完全な sandbox ではありません。cgroup、seccomp filter、namespace remapping はありません。あるのは wall clock timeout、memory growth の polling loop、どちらかの limit で process を止める kill path です。より高度な sandbox もこの runtime contract を拡張します。
 
-## The ExperimentSpec shape
+## ExperimentSpec の形
 
 ```text
 ExperimentSpec
   spec_id        : str            (stable id, "exp_001")
-  hypothesis_id  : int            (link back to the queue from lesson 50)
-  script_path    : str            (path to the python script to run)
-  config         : dict           (passed to the script as one json arg)
-  seed           : int            (deterministic seed for the experiment)
-  wall_timeout_s : float          (hard timeout, killed on exceed)
-  memory_cap_mb  : int            (soft cap, polled; killed on exceed)
-  metric_keys    : list[str]      (which fields the evaluator will read)
+  hypothesis_id  : int            (lesson 50 の queue への link)
+  script_path    : str            (実行する python script の path)
+  config         : dict           (script に JSON arg として渡す)
+  seed           : int            (実験用 deterministic seed)
+  wall_timeout_s : float          (hard timeout、超過で kill)
+  memory_cap_mb  : int            (soft cap、polling して超過で kill)
+  metric_keys    : list[str]      (evaluator が読む field)
 ```
 
-The script lives on disk; the runner writes the config to a temp file path that the script reads. The script is expected to print a single json line on stdout whose keys are a superset of `metric_keys`. Anything else on stdout is captured but ignored by the metrics parser.
+script は disk 上にあり、runner は config を temp file に書き、その path を script が読みます。script は stdout に単一の JSON line を出すことを期待されます。その key は `metric_keys` の superset です。stdout の他の内容は捕捉されますが metrics parser では無視されます。
 
-## Architecture
+## アーキテクチャ
 
 ```mermaid
 flowchart TD
@@ -53,19 +53,19 @@ flowchart TD
     R --> O[ExperimentResult]
 ```
 
-The runner is one class with one main method. The poller is a small thread that wakes once every poll interval and reads the subprocess `psutil` equivalent from the proc filesystem when available, falling back to no op when the platform does not expose it.
+runner は一つの main method を持つ class です。poller は一定間隔で起き、可能なら proc filesystem か `ps` から subprocess RSS を読みます。platform が情報を出さない場合は no-op に fallback します。
 
-## Why a soft memory cap
+## Soft memory cap
 
-Hard memory caps need `resource.setrlimit` and only work on POSIX. The lesson ships a portable approach: poll the resident set size from the platform and kill the subprocess if it exceeds the cap. The cap is soft because the poller has a non zero interval; a process can spike above the cap between polls and then drop back. The runner records the maximum observed RSS so the evaluator can see how close the run came to the limit.
+hard memory cap には `resource.setrlimit` が必要で、POSIX でしか機能しません。この lesson は portable な方法として resident set size を polling し、cap を超えたら subprocess を kill します。polling には非ゼロ interval があるため、cap は soft です。process は poll の間に一時的に cap を超えて戻ることがあります。runner は最大観測 RSS を記録します。
 
-On systems without process inspection support, the poller logs a one time warning and disables itself. The wall clock timeout still applies. The lesson tests cover both paths.
+process inspection が使えない環境では、poller は一度だけ warning を出して無効化されます。wall clock timeout は引き続き有効です。
 
-## Capturing stdout and stderr
+## stdout と stderr の捕捉
 
-The runner reads both pipes drained on completion. Stdout is scanned line by line; the last line that parses as json with all required `metric_keys` is taken as the metrics blob. Earlier json lines are kept in the result as `intermediate_metrics`; the evaluator can use these for learning curves.
+runner は完了時に両方の pipe を drain します。stdout は行ごとに scan され、`metric_keys` をすべて含む最後の JSON line が final metrics blob です。より前の JSON line は `intermediate_metrics` として result に残され、evaluator は learning curve に使えます。
 
-Stderr is captured verbatim into the result. The runner never raises on a non zero exit code; instead it records the code in the result. Any non zero exit is labelled `"crash"` even when the script printed metrics, so the evaluator treats partial runs as failures by default.
+stderr はそのまま result に入ります。runner は non-zero exit code で例外を投げません。代わりに result に code を記録します。non-zero exit は、metrics が出ていても `"crash"` と label されます。
 
 ## Ablation table
 
@@ -74,21 +74,21 @@ def ablate(base: ExperimentSpec, knob: str, values: list[Any]) -> list[Experimen
     ...
 ```
 
-Given a base spec and a knob name, the helper returns one spec per value with `config[knob]` overridden. Each spec gets a derived `spec_id` (`f"{base.spec_id}_{knob}_{value}"`). The runner ships an `AblationRunner` that runs them in order and returns an `AblationTable` keyed by knob value.
+base spec と knob 名から、各 value で `config[knob]` を上書きした spec を一つずつ返します。各 spec は `f"{base.spec_id}_{knob}_{value}"` という派生 `spec_id` を持ちます。`AblationRunner` はそれらを順に走らせ、knob value を key にした `AblationTable` を返します。
 
-Why one knob at a time. Full factorial sweeps blow up exponentially and produce results the evaluator cannot interpret. One knob at a time produces a clean axis the evaluator can plot. The lesson supports multi knob sweeps only as repeated single knob ablations, composed by the caller.
+一度に一つの knob だけを動かす理由は interpretability です。full factorial sweep は指数的に膨らみ、evaluator が解釈しにくい result を作ります。単一 knob なら plot できるきれいな軸が得られます。
 
 ## Determinism
 
-Every spec carries a seed. The runner forwards the seed to the script via the config dict (`config["__seed"] = spec.seed`). The mock experiment scripts in `code/experiments/` honour the seed and produce identical metrics across runs. The evaluator in lesson fifty-three depends on this; without determinism a "regression" might be a different random initialisation.
+すべての spec は seed を持ちます。runner は config dict に `config["__seed"] = spec.seed` を追加して script に渡します。`code/experiments/` の mock experiment scripts は seed を尊重し、同じ metrics を返します。lesson 53 の evaluator はこれに依存します。
 
-## The mock experiment script
+## Mock experiment script
 
-The lesson ships one experiment script: `code/experiments/sparsity_experiment.py`. It is a real script that reads its config file, simulates a small training run with a numpy random pass, and prints a json metrics blob. The script honours a `sleep_s` knob for testing timeouts and an `allocate_mb` knob for testing the memory poller.
+`code/experiments/sparsity_experiment.py` は config file を読み、小さな training run 風の数値計算をシミュレートして JSON metrics blob を出す実 script です。`sleep_s` は timeout test、`allocate_mb` は memory poller test に使います。
 
-The simulation is not training anything real. It is a numerical computation that mimics the shape of a training loop: a loss curve, a final perplexity, a wall time. The point of the lesson is the runner, not the simulation. A real experiment script would import a model.
+この simulation は実際の training ではありません。loss curve、final perplexity、wall time の形だけを模倣します。この lesson の焦点は runner です。
 
-## Result shape
+## Result の形
 
 ```text
 ExperimentResult
@@ -104,16 +104,16 @@ ExperimentResult
   stderr_tail          : str
 ```
 
-The evaluator reads `metrics` and `terminal` first. If terminal is anything other than `"ok"` the experiment counts as a failed run and the evaluator's verdict is automatic. Otherwise the metrics are passed through the significance test.
+evaluator は最初に `metrics` と `terminal` を読みます。`terminal` が `"ok"` 以外なら failed run として扱われます。そうでなければ metrics は significance test に渡されます。
 
-## How to read the code
+## コードの読み方
 
-`code/main.py` defines `ExperimentSpec`, `ExperimentResult`, `ExperimentRunner`, `AblationRunner`, and a deterministic demo. The subprocess management is one class. The memory poller is a small thread. The ablation helper is a single function.
+`code/main.py` は `ExperimentSpec`, `ExperimentResult`, `ExperimentRunner`, `AblationRunner`, 決定的 demo を定義します。subprocess 管理は一つの class、memory poller は小さな thread、ablation helper は単一関数です。
 
-`code/experiments/sparsity_experiment.py` is the mock experiment used in tests. It reads its config file path from argv and writes a single json metrics line on completion.
+`code/experiments/sparsity_experiment.py` は tests で使う mock experiment です。argv から config file path を読み、完了時に JSON metrics line を出します。
 
-`code/tests/test_runner.py` covers the success path, the timeout path, the crash path, the ablation table, and the determinism check across two runs.
+`code/tests/test_runner.py` は success、timeout、crash、ablation table、二回の run 間の determinism を確認します。
 
-## Where this slots in
+## 位置づけ
 
-Lesson fifty generates the hypothesis. Lesson fifty-one filters out anything the literature already settled. Lesson fifty-two runs the experiment for what is left. Lesson fifty-three reads the result, runs the significance test, and writes the verdict the orchestrator stores against the hypothesis id.
+lesson 50 が仮説を生成し、lesson 51 が既存文献で決着済みのものを除外します。lesson 52 は残った仮説の実験を走らせます。lesson 53 は result を読み、significance test を実行して orchestrator が hypothesis id に保存する verdict を書きます。

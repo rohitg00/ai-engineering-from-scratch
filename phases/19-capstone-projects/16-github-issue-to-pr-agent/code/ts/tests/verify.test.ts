@@ -6,7 +6,7 @@ import { route } from "../src/router.js";
 
 const SECRET = "test-secret";
 
-test("expectedSig is deterministic", () => {
+test("expectedSig は deterministic", () => {
   const body = Buffer.from('{"a":1}', "utf8");
   const s1 = expectedSig(body, SECRET);
   const s2 = expectedSig(body, SECRET);
@@ -14,38 +14,38 @@ test("expectedSig is deterministic", () => {
   assert.ok(s1.startsWith("sha256="));
 });
 
-test("verifySignature accepts matching signature", () => {
+test("verifySignature は matching signature を受け付ける", () => {
   const body = Buffer.from('{"action":"opened"}', "utf8");
   const sig = expectedSig(body, SECRET);
   assert.equal(verifySignature(body, sig, SECRET), true);
 });
 
-test("verifySignature rejects tampered body", () => {
+test("verifySignature は tampered body を reject する", () => {
   const body = Buffer.from('{"action":"opened"}', "utf8");
   const sig = expectedSig(body, SECRET);
   const tampered = Buffer.from('{"action":"closed"}', "utf8");
   assert.equal(verifySignature(tampered, sig, SECRET), false);
 });
 
-test("verifySignature rejects different secret", () => {
+test("verifySignature は異なる secret を reject する", () => {
   const body = Buffer.from('{"a":1}', "utf8");
   const sig = expectedSig(body, "wrong");
   assert.equal(verifySignature(body, sig, SECRET), false);
 });
 
-test("verifySignature rejects missing header", () => {
+test("verifySignature は missing header を reject する", () => {
   const body = Buffer.from("{}", "utf8");
   assert.equal(verifySignature(body, undefined, SECRET), false);
 });
 
-test("router ping echoes zen", () => {
+test("router ping は zen を echo する", () => {
   const audit = new AuditLog();
   const r = route(audit, "ping", { zen: "Hello", hook_id: 1 });
   assert.equal(r.code, 200);
   assert.deepEqual(r.body, { pong: "Hello", hook_id: 1 });
 });
 
-test("router dispatches on issues.opened", () => {
+test("router は issues.opened で dispatch する", () => {
   const audit = new AuditLog();
   const r = route(audit, "issues", {
     action: "opened",
@@ -59,7 +59,7 @@ test("router dispatches on issues.opened", () => {
   assert.equal(audit.count(), 2);
 });
 
-test("router skips non-opened actions", () => {
+test("router は opened 以外の action を skip する", () => {
   const audit = new AuditLog();
   const r = route(audit, "issues", {
     action: "closed",
@@ -71,7 +71,7 @@ test("router skips non-opened actions", () => {
   assert.equal(audit.count(), 0);
 });
 
-test("router 422 on missing issue object", () => {
+test("router は missing issue object で 422 を返す", () => {
   const audit = new AuditLog();
   const r = route(audit, "issues", { action: "opened" });
   assert.equal(r.code, 422);

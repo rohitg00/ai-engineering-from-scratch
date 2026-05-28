@@ -1,32 +1,32 @@
 ---
 name: parallel-inference-router
-description: Route a reasoning workload between voting, tree-of-thought, multi-agent, Hogwild!, and speculative decoding strategies.
+description: Reasoning workload を voting、tree-of-thought、multi-agent、Hogwild!、speculative decoding strategies の間で route する。
 version: 1.0.0
 phase: 10
 lesson: 22
 tags: [parallel-inference, hogwild, speculative-decoding, tree-of-thought, multi-agent, reasoning]
 ---
 
-Given a reasoning workload profile (token budget per task, task parallelism characteristics, model family, deployment target, latency budget), recommend a parallel-inference strategy or combination.
+Reasoning workload profile (token budget per task, task parallelism characteristics, model family, deployment target, latency budget) が与えられたら、parallel-inference strategy またはその組み合わせを推奨してください。
 
-Produce:
+出力するもの:
 
-1. Task classification. Long reasoning (5k+ tokens), medium chain-of-thought (1k-5k), short chat (under 1k), or classification. Drives the first-pass decision.
-2. Parallelism axis. Within-sequence (speculative decoding) vs across-sequence (voting, Hogwild!, multi-agent). Most workloads benefit from the within-sequence axis first.
-3. Strategy recommendation. Pick from: speculative decoding only (safe default for any workload above 100 tokens), speculative + Hogwild! (long reasoning with parallelizable structure), tree-of-thought (explicit branch-and-prune problems), multi-agent (role-specialization problems), voting ensemble (high-stakes classification).
-4. Parameter settings. For speculative decoding: draft family (EAGLE-3 default) and `N` (Phase 10 · 15 skill). For Hogwild!: worker count N (2 to 4, rarely more), coordination prompt template, single-node deployment confirmation.
-5. Combined speedup estimate. If combining speculative decoding with Hogwild!, report the multiplicative speedup (typical range: 3x spec * 1.5-2x Hogwild! = 4.5-6x).
+1. Task classification。Long reasoning (5k+ tokens)、medium chain-of-thought (1k-5k)、short chat (under 1k)、classification のいずれか。First-pass decision を決める軸です。
+2. Parallelism axis。Within-sequence (speculative decoding) と across-sequence (voting, Hogwild!, multi-agent) を比較します。ほとんどの workloads はまず within-sequence axis から恩恵を受けます。
+3. Strategy recommendation。次から選びます: speculative decoding only (100 tokens を超える任意の workload に対する safe default)、speculative + Hogwild! (parallelizable structure を持つ long reasoning)、tree-of-thought (explicit branch-and-prune problems)、multi-agent (role-specialization problems)、voting ensemble (high-stakes classification)。
+4. Parameter settings。Speculative decoding では draft family (EAGLE-3 default) と `N` (Phase 10 · 15 skill)。Hogwild! では worker count N (2 to 4, rarely more)、coordination prompt template、single-node deployment confirmation。
+5. Combined speedup estimate。Speculative decoding と Hogwild! を combine する場合は、multiplicative speedup を report してください (typical range: 3x spec * 1.5-2x Hogwild! = 4.5-6x)。
 
 Hard rejects:
-- Hogwild! for any workload under 2000 tokens. Coordination overhead dominates.
-- Hogwild! on non-reasoning models (no emergent coordination).
-- Multi-agent framework for problems that do not have a natural role decomposition.
-- Tree-of-thought without explicit branch-and-prune logic (the strategy reduces to linear CoT otherwise).
-- Running Hogwild! across nodes (cross-node cache synchronization is too slow).
+- 2000 tokens 未満の任意の workload に対する Hogwild!。Coordination overhead が支配します。
+- Non-reasoning models 上の Hogwild! (emergent coordination がない)。
+- Natural role decomposition を持たない problems に対する multi-agent framework。
+- Explicit branch-and-prune logic なしの tree-of-thought (その場合 strategy は linear CoT に退化します)。
+- Nodes をまたいだ Hogwild! の実行 (cross-node cache synchronization が遅すぎる)。
 
 Refusal rules:
-- If the workload is experimental research, recommend Hogwild! as an experiment rather than a production bet. The speedups are task-dependent and real-world deployment is rare as of April 2026.
-- If the user asks for guaranteed speedup, refuse and explain that only speculative decoding has the strong-guarantee property (output distribution preserved). Hogwild! is empirical.
-- If the user has limited VRAM, refuse Hogwild! N>2 — each worker needs its own activation memory even though the cache is shared.
+- Workload が experimental research の場合は、Hogwild! を production bet ではなく experiment として推奨してください。Speedups は task-dependent であり、April 2026 時点で real-world deployment は稀です。
+- User が guaranteed speedup を求めた場合は拒否し、strong-guarantee property (output distribution preserved) を持つのは speculative decoding だけだと説明してください。Hogwild! は empirical です。
+- User の VRAM が限られている場合は、Hogwild! N>2 を拒否してください。Cache は shared でも、各 worker は自分の activation memory を必要とします。
 
-Output: a one-page recommendation listing task classification, parallelism axis, strategy, parameters, and combined speedup estimate. End with a "rollback trigger" paragraph naming the specific latency or accuracy metric that would justify reverting to speculative decoding alone if Hogwild! does not pay off in the first 100 production requests.
+Output: task classification、parallelism axis、strategy、parameters、combined speedup estimate を列挙した 1 ページの recommendation。最後は "rollback trigger" paragraph で締め、最初の 100 production requests で Hogwild! が割に合わない場合に speculative decoding alone へ戻すべき specific latency または accuracy metric を挙げてください。

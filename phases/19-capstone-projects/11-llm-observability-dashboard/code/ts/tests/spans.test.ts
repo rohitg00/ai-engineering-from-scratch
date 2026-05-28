@@ -2,7 +2,7 @@ import { strict as assert } from "node:assert";
 import { test } from "node:test";
 import { ObservabilityStore, RingBuffer, normaliseSpan } from "../src/spans.js";
 
-test("ring buffer holds items below capacity", () => {
+test("ring buffer は capacity 未満の item を保持する", () => {
   const rb = new RingBuffer<number>(3);
   rb.push(1);
   rb.push(2);
@@ -11,7 +11,7 @@ test("ring buffer holds items below capacity", () => {
   assert.equal(rb.isFull(), false);
 });
 
-test("ring buffer evicts oldest once full", () => {
+test("ring buffer は満杯になると最古 item を evict する", () => {
   const rb = new RingBuffer<number>(3);
   rb.push(1);
   rb.push(2);
@@ -21,18 +21,18 @@ test("ring buffer evicts oldest once full", () => {
   assert.equal(rb.isFull(), true);
 });
 
-test("ring buffer keeps eviction order after many writes", () => {
+test("ring buffer は多数の write 後も eviction order を保つ", () => {
   const rb = new RingBuffer<number>(4);
   for (let i = 0; i < 100; i++) rb.push(i);
   assert.deepEqual(rb.snapshot(), [96, 97, 98, 99]);
 });
 
-test("ring buffer rejects non-positive capacity", () => {
+test("ring buffer は non-positive capacity を reject する", () => {
   assert.throws(() => new RingBuffer<number>(0));
   assert.throws(() => new RingBuffer<number>(-1));
 });
 
-test("normaliseSpan rejects malformed input", () => {
+test("normaliseSpan は malformed input を reject する", () => {
   assert.equal(normaliseSpan(null), null);
   assert.equal(normaliseSpan({}), null);
   assert.equal(
@@ -41,7 +41,7 @@ test("normaliseSpan rejects malformed input", () => {
   );
 });
 
-test("normaliseSpan accepts a complete GenAI shape", () => {
+test("normaliseSpan は complete GenAI shape を受け付ける", () => {
   const span = normaliseSpan({
     trace_id: "t-1",
     span_id: "s-1",
@@ -61,7 +61,7 @@ test("normaliseSpan accepts a complete GenAI shape", () => {
   assert.equal(span?.attributes["gen_ai.request.model"], "gpt-4o-mini");
 });
 
-test("ObservabilityStore tracks accepted, rejected, held", () => {
+test("ObservabilityStore は accepted、rejected、held を追跡する", () => {
   const store = new ObservabilityStore(4);
   store.ingest({
     attributes: {

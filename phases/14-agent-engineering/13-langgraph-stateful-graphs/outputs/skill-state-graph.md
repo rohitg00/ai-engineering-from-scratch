@@ -1,32 +1,32 @@
 ---
 name: state-graph
-description: Build a LangGraph-shaped state machine with typed state, conditional edges, per-node checkpointing, and durable resume.
+description: typed state、conditional edge、nodeごとのcheckpointing、durable resumeを備えたLangGraph型state machineを構築する。
 version: 1.0.0
 phase: 14
 lesson: 13
 tags: [langgraph, state-machine, durable, checkpointing, human-in-the-loop]
 ---
 
-Given a target runtime, a state shape, a set of node functions, and a checkpointer backend, produce a stateful agent graph.
+target runtime、state shape、node functionの集合、checkpointer backendを受け取り、stateful agent graphを生成する。
 
-Produce:
+生成するもの:
 
-1. A typed `State` (dict or Pydantic). Document every field. Nodes read state; they return updates.
-2. A `StateGraph` with `add_node`, `add_edge`, `add_conditional_edges`, `set_entry`, plus `START`/`END` sentinels.
-3. A `Checkpointer` interface with `save(session_id, node, state)` and `load_latest(session_id)`. Default to SQLite; allow Postgres/Redis/custom.
-4. A `Runner` that steps through the graph, serializes state after every node, catches `PausedAtNode` for human-in-the-loop, and supports `resume_from` with optional `state_override`.
-5. Three topology helpers: supervisor (central router), swarm (shared-tool handoffs), hierarchical (subgraphs).
+1. typed `State` (dictまたはPydantic)。すべてのfieldをdocumentする。nodeはstateを読み、updateを返す。
+2. `add_node`、`add_edge`、`add_conditional_edges`、`set_entry`と`START`/`END` sentinelを持つ`StateGraph`。
+3. `save(session_id, node, state)`と`load_latest(session_id)`を持つ`Checkpointer` interface。defaultはSQLite。Postgres/Redis/customも許可する。
+4. graphをstep実行し、各node後にstateをserializeし、human-in-the-loop用の`PausedAtNode`をcatchし、optionalな`state_override`つき`resume_from`をsupportする`Runner`。
+5. 3つのtopology helper: supervisor (central router)、swarm (shared-tool handoffs)、hierarchical (subgraphs)。
 
 Hard rejects:
 
-- Non-deterministic nodes without explicit random-seed or wall-clock capture. Resume assumes node output is reproducible given input state.
-- A checkpointer that only saves "summary" state. Serialize the full state or resume breaks.
-- Graphs where every edge is conditional. Prefer linear chains with occasional branches.
+- explicitなrandom-seedまたはwall-clock captureがない非決定的node。resumeは、input stateが同じならnode outputも再現できることを前提にする。
+- "summary" stateだけを保存するcheckpointer。full stateをserializeしないとresumeは壊れる。
+- すべてのedgeがconditionalなgraph。基本はlinear chainにし、ときどきbranchする程度にする。
 
 Refusal rules:
 
-- If the user asks for a state graph without persistence, refuse. The whole point is durable resume; if you don't need resume, use the workflow patterns in Lesson 12.
-- If the user asks to "checkpoint only on success," refuse. Failures need state too — that's where debugging starts.
-- If the graph has more than ~30 nodes, refuse flat layout and require nested subgraphs. Flat 30-node graphs are unreviewable.
+- userがpersistenceなしのstate graphを求めたら拒否する。要点はdurable resumeであり、resumeが不要ならLesson 12のworkflow patternsを使う。
+- userが「success時だけcheckpoint」と求めたら拒否する。failureにもstateが必要です。debuggingはそこから始まります。
+- graphが約30 nodeを超える場合はflat layoutを拒否し、nested subgraphsを必須にする。flatな30-node graphはreview不能です。
 
-Output: `state.py`, `graph.py`, `checkpointer.py`, `runner.py`, `README.md` explaining the state schema, checkpointer choice, and resume semantics. End with "what to read next" pointing to Lesson 14 for actor-model alternative, Lesson 16 for handoffs/guardrails layer, or Lesson 23 for OTel spans on graph steps.
+Output: `state.py`, `graph.py`, `checkpointer.py`, `runner.py`, `README.md`。state schema、checkpointer choice、resume semanticsを説明する。最後に"what to read next"として、actor-model alternativeにはLesson 14、handoffs/guardrails layerにはLesson 16、graph step上のOTel spanにはLesson 23を示す。

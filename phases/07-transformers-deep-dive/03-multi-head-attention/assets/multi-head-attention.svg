@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -11,13 +11,13 @@
       .head3 { fill: #e4eadb; stroke: #1a1a1a; stroke-width: 1; }
       .head4 { fill: #efdce2; stroke: #1a1a1a; stroke-width: 1; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">multi-head attention — split, attend in parallel, concatenate</text>
+  <text x="450" y="30" text-anchor="middle" class="title">マルチヘッド注意 — 分割し、並列に注意し、連結</text>
 
   <!-- Input -->
   <rect x="370" y="55" width="160" height="36" class="hot"/>
@@ -37,10 +37,10 @@
   <line x1="450" y1="110" x2="595" y2="140" stroke="#1a1a1a" stroke-width="1"/>
 
   <!-- Split heads -->
-  <text x="100" y="175" class="label">split into 4 heads</text>
+  <text x="100" y="175" class="label">4ヘッドに分割</text>
 
   <!-- Q heads -->
-  <text x="305" y="170" text-anchor="middle" class="caption">Q (N, d_model) → reshape (4, N, d_head)</text>
+  <text x="305" y="170" text-anchor="middle" class="caption">Q (N, d_model) → 形状変更 (4, N, d_head)</text>
   <rect x="210" y="180" width="45" height="26" class="head1"/><text x="232" y="198" text-anchor="middle" class="content">Q_1</text>
   <rect x="260" y="180" width="45" height="26" class="head2"/><text x="282" y="198" text-anchor="middle" class="content">Q_2</text>
   <rect x="310" y="180" width="45" height="26" class="head3"/><text x="332" y="198" text-anchor="middle" class="content">Q_3</text>
@@ -57,23 +57,23 @@
   <rect x="820" y="180" width="45" height="26" class="head4"/><text x="842" y="198" text-anchor="middle" class="content">V_4</text>
 
   <!-- Parallel attention per head -->
-  <text x="450" y="240" text-anchor="middle" class="caption">softmax(Q_h K_h^T / √d_head) V_h  —  batched matmul, one op</text>
+  <text x="450" y="240" text-anchor="middle" class="caption">softmax(Q_h K_h^T / √d_head) V_h  —  バッチmatmul、1演算</text>
 
   <rect x="180" y="260" width="110" height="44" class="head1"/>
-  <text x="235" y="280" text-anchor="middle" class="content">head 1</text>
-  <text x="235" y="295" text-anchor="middle" class="caption">subject-verb</text>
+  <text x="235" y="280" text-anchor="middle" class="content">ヘッド 1</text>
+  <text x="235" y="295" text-anchor="middle" class="caption">主語-動詞</text>
 
   <rect x="310" y="260" width="110" height="44" class="head2"/>
-  <text x="365" y="280" text-anchor="middle" class="content">head 2</text>
-  <text x="365" y="295" text-anchor="middle" class="caption">positional</text>
+  <text x="365" y="280" text-anchor="middle" class="content">ヘッド 2</text>
+  <text x="365" y="295" text-anchor="middle" class="caption">位置</text>
 
   <rect x="440" y="260" width="110" height="44" class="head3"/>
-  <text x="495" y="280" text-anchor="middle" class="content">head 3</text>
-  <text x="495" y="295" text-anchor="middle" class="caption">copy / induction</text>
+  <text x="495" y="280" text-anchor="middle" class="content">ヘッド 3</text>
+  <text x="495" y="295" text-anchor="middle" class="caption">コピー / 誘導</text>
 
   <rect x="570" y="260" width="110" height="44" class="head4"/>
-  <text x="625" y="280" text-anchor="middle" class="content">head 4</text>
-  <text x="625" y="295" text-anchor="middle" class="caption">named entities</text>
+  <text x="625" y="280" text-anchor="middle" class="content">ヘッド 4</text>
+  <text x="625" y="295" text-anchor="middle" class="caption">固有表現</text>
 
   <line x1="235" y1="304" x2="450" y2="340" stroke="#1a1a1a" stroke-width="1"/>
   <line x1="365" y1="304" x2="450" y2="340" stroke="#1a1a1a" stroke-width="1"/>
@@ -82,7 +82,7 @@
 
   <!-- Concatenate -->
   <rect x="330" y="340" width="240" height="36" class="hot"/>
-  <text x="450" y="362" text-anchor="middle" class="content">concat → (N, d_model)</text>
+  <text x="450" y="362" text-anchor="middle" class="content">連結 → (N, d_model)</text>
 
   <line x1="450" y1="376" x2="450" y2="395" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
@@ -92,7 +92,7 @@
   <line x1="450" y1="425" x2="450" y2="444" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="370" y="444" width="160" height="36" class="hot"/>
-  <text x="450" y="468" text-anchor="middle" class="content">output  (N, d_model)</text>
+  <text x="450" y="468" text-anchor="middle" class="content">出力  (N, d_model)</text>
 
-  <text x="450" y="503" text-anchor="middle" class="caption">W_o is where the heads mix. until W_o, every head lives in its own subspace.</text>
+  <text x="450" y="503" text-anchor="middle" class="caption">W_oでヘッドが混ざる。W_oまでは各ヘッドが別々の部分空間にいる。</text>
 </svg>

@@ -1,41 +1,41 @@
 ---
 name: durable-execution-review
-description: Review a proposed long-running agent deployment for correct durable-execution shape (activities, determinism, checkpoint backend, human-input state, HITL-on-resume).
+description: 提案された長時間実行エージェントのデプロイについて、正しい永続実行の形（activity、決定性、チェックポイントバックエンド、人間入力状態、HITL-on-resume）になっているかレビューする。
 version: 1.0.0
 phase: 15
 lesson: 12
 tags: [durable-execution, workflows, checkpointing, temporal, langgraph, agents-sdk]
 ---
 
-Given a proposed long-running agent deployment (Temporal + OpenAI Agents SDK, LangGraph with PostgreSQL checkpointer, Microsoft Agent Framework, Claude Code Routines, Cloudflare Durable Objects, or an in-house equivalent), audit the design against the durable-execution pattern.
+提案された長時間実行エージェントのデプロイ（Temporal + OpenAI Agents SDK、PostgreSQL checkpointer付きLangGraph、Microsoft Agent Framework、Claude Code Routines、Cloudflare Durable Objects、または社内の同等実装）を受け取り、その設計を永続実行パターンに照らして監査する。
 
-Produce:
+作成するもの:
 
-1. **Activity inventory.** List every activity (LLM call, tool call, HTTP request, file write). For each, confirm it is wrapped as an activity with retry policy, timeout, and idempotency key. Raw LLM calls outside the activity envelope are a reliability hole.
-2. **Workflow determinism.** Identify every non-deterministic read inside the workflow code (wall clock, random, external state). Each must be registered as a side-effect activity so replay returns the same value. Hidden non-determinism is the most common cause of replay drift.
-3. **Checkpoint backend.** Name the backend (PostgreSQL, SQLite, Redis, Durable Objects). Confirm it survives deploys. SQLite is dev-only. Redis requires AOF or snapshot config. Cloudflare Durable Objects are transparent but require a unique key discipline.
-4. **Human-input state.** Confirm pauses for HITL are a first-class workflow state, not a polling loop. The workflow should block on an external signal (approval queue, webhook, `interrupt()` primitive) that resumes exactly when the approval arrives.
-5. **HITL-on-resume policy.** For any resume after a crash, state whether fresh HITL is required before executing the next activity. Without this, durable execution plus an approval granted before the crash may re-fire an approved action when the context has changed. Critical for long horizons.
+1. **Activityインベントリ。** すべてのactivity（LLM呼び出し、ツール呼び出し、HTTPリクエスト、ファイル書き込み）を列挙する。それぞれについて、リトライポリシー、タイムアウト、idempotency keyを備えたactivityとして包まれていることを確認する。activityの外側にある生のLLM呼び出しは、信頼性上の穴である。
+2. **Workflowの決定性。** workflowコード内のすべての非決定的読み取り（壁時計、乱数、外部状態）を特定する。それぞれはside-effect activityとして登録され、リプレイ時に同じ値を返す必要がある。隠れた非決定性は、リプレイドリフトの最も一般的な原因である。
+3. **チェックポイントバックエンド。** バックエンド（PostgreSQL、SQLite、Redis、Durable Objects）の名前を示す。デプロイをまたいで生き残ることを確認する。SQLiteは開発専用。RedisにはAOFまたはsnapshot設定が必要。Cloudflare Durable Objectsは透過的だが、一意なキー規律を要求する。
+4. **人間入力状態。** HITLのための一時停止が、ポーリングループではなく、第一級のworkflow状態であることを確認する。workflowは外部シグナル（承認キュー、webhook、`interrupt()`プリミティブ）でブロックし、承認が到着したまさにその時点で再開すべきである。
+5. **HITL-on-resumeポリシー。** クラッシュ後の再開について、次のactivityを実行する前に新たなHITLが必要かどうかを述べる。これがないと、永続実行とクラッシュ前に付与された承認の組み合わせにより、コンテキストが変わった後で承認済みアクションが再発火する可能性がある。長期ホライズンでは重要である。
 
-Hard rejects:
-- Agent SDK usage where LLM calls are not wrapped as activities.
-- Checkpoint backends that do not survive a deploy.
-- Workflows that embed wall clock or random without activity wrapping.
-- Human-input modeled as a polling loop rather than a signal.
-- Long-horizon runs (above one hour) with no HITL-on-resume policy.
-- Runs with no budget kill switch (Lesson 13) layered on top of durability.
+強制却下:
+- LLM呼び出しがactivityとして包まれていないAgent SDK利用。
+- デプロイをまたいで生き残らないチェックポイントバックエンド。
+- 壁時計や乱数を、activityで包まずに埋め込んでいるworkflow。
+- 人間入力をシグナルではなくポーリングループとしてモデル化しているもの。
+- HITL-on-resumeポリシーのない長期ホライズン実行（1時間超）。
+- 永続性の上に予算キルスイッチ（レッスン13）を重ねていない実行。
 
-Refusal rules:
-- If the user proposes a durable workflow with no explicit idempotency on side-effect activities, refuse and require idempotency keys first. Retries will double-execute otherwise.
-- If the user cannot show a replay test (run workflow, crash mid-run, replay, assert no double side effects), refuse and require that test before production.
-- If the user proposes a 24-hour unattended run with no HITL checkpoint, refuse. The 35-minute degradation (Lesson 12 notes) makes this a reliability problem even if durability is correct.
+拒否ルール:
+- ユーザーが、副作用を持つactivityに明示的な冪等性を持たない永続workflowを提案するなら、拒否し、まずidempotency keyを要求する。そうしないと、リトライで二重実行される。
+- ユーザーがリプレイテスト（workflowを実行し、途中でクラッシュさせ、リプレイし、副作用が二重に発生しないことをアサートする）を示せないなら、拒否し、本番前にそのテストを要求する。
+- ユーザーがHITLチェックポイントなしで24時間の無人実行を提案するなら、拒否する。35-minute degradation（レッスン12のノート）により、永続性が正しくても信頼性の問題になる。
 
-Output format:
+出力形式:
 
-Return a design-review memo with:
-- **Activity table** (activity, retry policy, timeout, idempotency key)
-- **Determinism audit** (non-deterministic reads and how each is handled)
-- **Checkpoint backend** (name, survives-deploy y/n, replay-test status)
-- **HITL state shape** (first-class state / polling / missing)
-- **HITL-on-resume policy** (explicit, with rationale)
-- **Readiness** (production / staging / research-only)
+以下を含む設計レビューメモを返す:
+- **Activityテーブル**（activity、retry policy、timeout、idempotency key）
+- **決定性監査**（非決定的読み取りと、それぞれの扱い）
+- **チェックポイントバックエンド**（name、survives-deploy y/n、replay-test status）
+- **HITL状態の形**（first-class state / polling / missing）
+- **HITL-on-resumeポリシー**（明示し、根拠を添える）
+- **準備状況**（production / staging / research-only）

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,39 +9,39 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">MIO — four modalities, one shared vocabulary, streaming decode</text>
+  <text x="480" y="24" text-anchor="middle" class="title">MIO — 4モダリティ、1つの共有語彙、ストリーミングデコード</text>
 
   <rect x="30" y="50" width="900" height="220" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">four tokenizers, one vocab, one transformer</text>
+  <text x="480" y="72" text-anchor="middle" class="head">4 トークナイザ、1語彙、1transformer</text>
 
   <g transform="translate(60, 90)">
     <rect x="0" y="0" width="180" height="70" class="hot"/>
-    <text x="90" y="22" text-anchor="middle" class="step">text</text>
-    <text x="90" y="42" text-anchor="middle" class="small">BPE tokenizer</text>
-    <text x="90" y="58" text-anchor="middle" class="small">ids 0..31999</text>
+    <text x="90" y="22" text-anchor="middle" class="step">テキスト</text>
+    <text x="90" y="42" text-anchor="middle" class="small">BPE トークナイザ</text>
+    <text x="90" y="58" text-anchor="middle" class="small">ID 0..31999</text>
 
     <rect x="210" y="0" width="180" height="70" class="cool"/>
-    <text x="300" y="22" text-anchor="middle" class="step">image</text>
+    <text x="300" y="22" text-anchor="middle" class="step">画像</text>
     <text x="300" y="42" text-anchor="middle" class="small">SEED-Tokenizer</text>
-    <text x="300" y="58" text-anchor="middle" class="small">ids 32000..36095</text>
+    <text x="300" y="58" text-anchor="middle" class="small">ID 32000..36095</text>
 
     <rect x="420" y="0" width="180" height="70" class="cold"/>
-    <text x="510" y="22" text-anchor="middle" class="step">speech</text>
+    <text x="510" y="22" text-anchor="middle" class="step">音声</text>
     <text x="510" y="42" text-anchor="middle" class="small">SpeechTokenizer RVQ</text>
-    <text x="510" y="58" text-anchor="middle" class="small">8 codebook layers</text>
+    <text x="510" y="58" text-anchor="middle" class="small">8コードブック層</text>
 
     <rect x="630" y="0" width="180" height="70" class="reg"/>
-    <text x="720" y="22" text-anchor="middle" class="step">music</text>
+    <text x="720" y="22" text-anchor="middle" class="step">音楽</text>
     <text x="720" y="42" text-anchor="middle" class="small">Encodec-class</text>
-    <text x="720" y="58" text-anchor="middle" class="small">8192 entries</text>
+    <text x="720" y="58" text-anchor="middle" class="small">8192エントリ</text>
   </g>
 
   <path d="M 150 170 L 480 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -50,40 +50,40 @@
   <path d="M 780 170 L 480 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="340" y="200" width="280" height="60" class="box"/>
-  <text x="480" y="222" text-anchor="middle" class="step">one transformer, one NTP loss</text>
-  <text x="480" y="240" text-anchor="middle" class="small">~48k vocabulary, text + image + speech + music</text>
-  <text x="480" y="256" text-anchor="middle" class="small">streaming friendly: token in, token out</text>
+  <text x="480" y="222" text-anchor="middle" class="step">1transformer、1 NTP損失</text>
+  <text x="480" y="240" text-anchor="middle" class="small">~48k語彙、テキスト + 画像 + 音声 + 音楽</text>
+  <text x="480" y="256" text-anchor="middle" class="small">ストリーミング向き: トークン入力、トークン出力</text>
 
   <rect x="30" y="290" width="900" height="220" class="box"/>
-  <text x="480" y="312" text-anchor="middle" class="head">four-stage curriculum + streaming decode path</text>
+  <text x="480" y="312" text-anchor="middle" class="head">4段階カリキュラム + ストリーミングデコード 経路</text>
 
   <rect x="60" y="330" width="180" height="170" class="hot"/>
-  <text x="150" y="352" text-anchor="middle" class="step">Stage 1 alignment</text>
-  <text x="150" y="370" text-anchor="middle" class="small">text-image pairs</text>
-  <text x="150" y="386" text-anchor="middle" class="small">text-speech pairs</text>
-  <text x="150" y="402" text-anchor="middle" class="small">text-music pairs</text>
-  <text x="150" y="428" text-anchor="middle" class="step">Stage 2 interleaved</text>
-  <text x="150" y="446" text-anchor="middle" class="small">multi-modality docs</text>
-  <text x="150" y="462" text-anchor="middle" class="small">cross-modal context</text>
-  <text x="150" y="480" text-anchor="middle" class="small">OBELICS + podcast</text>
+  <text x="150" y="352" text-anchor="middle" class="step">Stage 1 整列</text>
+  <text x="150" y="370" text-anchor="middle" class="small">テキスト-画像ペア</text>
+  <text x="150" y="386" text-anchor="middle" class="small">テキスト-音声ペア</text>
+  <text x="150" y="402" text-anchor="middle" class="small">テキスト-音楽ペア</text>
+  <text x="150" y="428" text-anchor="middle" class="step">Stage 2 混在</text>
+  <text x="150" y="446" text-anchor="middle" class="small">マルチモーダル文書</text>
+  <text x="150" y="462" text-anchor="middle" class="small">クロスモーダルコンテキスト</text>
+  <text x="150" y="480" text-anchor="middle" class="small">OBELICS + ポッドキャスト</text>
 
   <rect x="260" y="330" width="180" height="170" class="cool"/>
-  <text x="350" y="352" text-anchor="middle" class="step">Stage 3 speech-rich</text>
-  <text x="350" y="370" text-anchor="middle" class="small">extra audio data</text>
-  <text x="350" y="386" text-anchor="middle" class="small">speech quality lift</text>
-  <text x="350" y="402" text-anchor="middle" class="small">without text regression</text>
+  <text x="350" y="352" text-anchor="middle" class="step">Stage 3 音声重視</text>
+  <text x="350" y="370" text-anchor="middle" class="small">追加音声データ</text>
+  <text x="350" y="386" text-anchor="middle" class="small">音声品質を上げる</text>
+  <text x="350" y="402" text-anchor="middle" class="small">テキスト退行なしで</text>
   <text x="350" y="428" text-anchor="middle" class="step">Stage 4 SFT</text>
-  <text x="350" y="446" text-anchor="middle" class="small">VQA, narration</text>
-  <text x="350" y="462" text-anchor="middle" class="small">speech dialogue</text>
-  <text x="350" y="480" text-anchor="middle" class="small">any-to-any tasks</text>
+  <text x="350" y="446" text-anchor="middle" class="small">VQA, ナレーション</text>
+  <text x="350" y="462" text-anchor="middle" class="small">音声対話</text>
+  <text x="350" y="480" text-anchor="middle" class="small">任意入出力タスク</text>
 
   <rect x="460" y="330" width="460" height="170" class="reg"/>
-  <text x="690" y="352" text-anchor="middle" class="step">streaming decode path (target &lt;500 ms TTFAB)</text>
-  <text x="690" y="372" text-anchor="middle" class="small">mic -&gt; speech tokens (~40 ms)</text>
-  <text x="690" y="388" text-anchor="middle" class="small">prefill prompt (~80 ms at 8B)</text>
-  <text x="690" y="404" text-anchor="middle" class="small">first output token (~40 ms)</text>
-  <text x="690" y="420" text-anchor="middle" class="small">residual-VQ layers 1..7 parallel decode (~30 ms)</text>
-  <text x="690" y="436" text-anchor="middle" class="small">speech waveform decoder (~80 ms)</text>
-  <text x="690" y="462" text-anchor="middle" class="step">total TTFAB: ~270 ms  (GPT-4o-class)</text>
-  <text x="690" y="482" text-anchor="middle" class="caption">Moshi 160 ms, MIO 400-500 ms in published traces</text>
+  <text x="690" y="352" text-anchor="middle" class="step">ストリーミングデコード 経路 (目標 &lt;500 ms TTFAB)</text>
+  <text x="690" y="372" text-anchor="middle" class="small">マイク -&gt; 音声トークン (~40 ms)</text>
+  <text x="690" y="388" text-anchor="middle" class="small">プロンプト事前計算 (8Bで~80 ms)</text>
+  <text x="690" y="404" text-anchor="middle" class="small">初回出力トークン (~40 ms)</text>
+  <text x="690" y="420" text-anchor="middle" class="small">残差-VQ層1..7を並列デコード (~30 ms)</text>
+  <text x="690" y="436" text-anchor="middle" class="small">音声波形デコーダ (~80 ms)</text>
+  <text x="690" y="462" text-anchor="middle" class="step">合計TTFAB: ~270 ms  (GPT-4o級)</text>
+  <text x="690" y="482" text-anchor="middle" class="caption">公開トレースではMoshi 160 ms, MIO 400-500 ms</text>
 </svg>

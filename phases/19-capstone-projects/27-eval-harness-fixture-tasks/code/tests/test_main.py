@@ -1,4 +1,4 @@
-"""Tests for the eval harness, verifiers, and pass@k math."""
+"""eval harness、verifier、pass@k math の tests。"""
 
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ class PassAtKMathTests(unittest.TestCase):
         self.assertEqual(pass_at_k(0.5, 0), 0.0)
 
     def test_clamps_out_of_range(self) -> None:
-        # Caller bug: should still return a number in [0,1].
+        # caller bug でも [0,1] 内の数値を返す。
         self.assertGreaterEqual(pass_at_k(-1.0, 3), 0.0)
         self.assertLessEqual(pass_at_k(2.0, 3), 1.0)
 
@@ -59,7 +59,7 @@ class PassAtKMathTests(unittest.TestCase):
         self.assertEqual(p95([]), 0.0)
 
     def test_p95_nearest_rank(self) -> None:
-        # 20 values: nearest rank 95th is index round(0.95*20)-1 = 18.
+        # 20 values: nearest rank 95th は index round(0.95*20)-1 = 18。
         values = list(range(1, 21))
         self.assertEqual(p95(values), 19.0)
 

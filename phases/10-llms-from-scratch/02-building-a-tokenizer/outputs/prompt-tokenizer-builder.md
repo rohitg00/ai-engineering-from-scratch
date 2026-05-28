@@ -1,66 +1,66 @@
 ---
 name: prompt-tokenizer-builder
-description: Build and debug production-quality tokenizers for LLM projects
+description: LLM プロジェクト向けの本番品質トークナイザーを構築、デバッグする
 version: 1.0.0
 phase: 10
 lesson: 2
 tags: [tokenizer, bpe, byte-level, special-tokens, chat-template, multilingual]
 ---
 
-# Production Tokenizer Builder
+# 本番用トークナイザー構築ガイド
 
-When building or debugging a tokenizer for an LLM project, follow this framework.
+LLM プロジェクト向けにトークナイザーを構築またはデバッグするときは、このフレームワークに従ってください。
 
-## Pipeline Checklist
+## パイプラインのチェックリスト
 
-Every production tokenizer needs these five stages. If one is missing, you will hit edge cases in production.
+すべての本番用トークナイザーには、次の 5 段階が必要です。1 つでも欠けると、本番環境でエッジケースにぶつかります。
 
-1. **Normalize** -- Apply NFKC Unicode normalization. This collapses ligatures ("fi" -> "fi"), normalizes fullwidth characters, and standardizes whitespace. Skip this and the same word gets different token IDs depending on how it was typed.
+1. **Normalize** -- NFKC Unicode 正規化を適用します。これにより合字 ("fi" -> "fi") が畳み込まれ、全角文字が正規化され、空白が標準化されます。これを省くと、同じ単語でも入力方法によって異なるトークン ID になります。
 
-2. **Pre-Tokenize** -- Split text into chunks before BPE. Use GPT-2's regex pattern for English-centric models. Use SentencePiece's raw-byte approach for multilingual models. The choice determines whether BPE can merge across word boundaries.
+2. **Pre-Tokenize** -- BPE の前にテキストをチャンクへ分割します。英語中心のモデルでは GPT-2 の正規表現パターンを使います。多言語モデルでは SentencePiece の生バイトアプローチを使います。この選択により、BPE が単語境界をまたいでマージできるかが決まります。
 
-3. **BPE Merge** -- Apply the learned merge table to byte sequences within each chunk. The merge table IS the tokenizer's learned knowledge. Everything else is plumbing.
+3. **BPE Merge** -- 学習済みのマージテーブルを、各チャンク内のバイト列に適用します。マージテーブルこそがトークナイザーの学習済み知識です。それ以外は配管です。
 
-4. **Special Token Injection** -- Match special tokens exactly before BPE runs. [BOS], [EOS], [PAD], chat template markers get fixed IDs. They never participate in merges.
+4. **Special Token Injection** -- BPE が走る前に、特殊トークンを完全一致で検出します。[BOS]、[EOS]、[PAD]、チャットテンプレートのマーカーには固定 ID があります。これらはマージに参加しません。
 
-5. **ID Mapping** -- Convert token strings to integers. The model sees integers only.
+5. **ID Mapping** -- トークン文字列を整数に変換します。モデルが見るのは整数だけです。
 
-## Debugging Tokenizer Issues
+## トークナイザー問題のデバッグ
 
-**Symptom: model produces garbage on chat input**
-- Check the chat template. Every model has a different format. Llama 3 uses `<|start_header_id|>` markers. ChatGPT uses `<|im_start|>` markers. A wrong template puts input outside the training distribution.
+**症状: モデルがチャット入力に対してでたらめな出力をする**
+- チャットテンプレートを確認してください。モデルごとに形式は異なります。Llama 3 は `<|start_header_id|>` マーカーを使います。ChatGPT は `<|im_start|>` マーカーを使います。間違ったテンプレートは、入力を訓練分布の外に出します。
 
-**Symptom: non-English text uses too many tokens**
-- Check fertility (tokens per word). Above 2.0 means the tokenizer wastes context window on that language. Solutions: retrain with more multilingual data, increase vocabulary size, or use SentencePiece with Unigram.
+**症状: 英語以外のテキストでトークン数が多すぎる**
+- fertility (単語あたりのトークン数) を確認してください。2.0 を超える場合、その言語でコンテキストウィンドウを浪費しています。対策は、多言語データを増やして再訓練する、語彙サイズを増やす、SentencePiece の Unigram を使う、などです。
 
-**Symptom: numbers and arithmetic fail**
-- Check how digits are tokenized. "1234" as one token means the model cannot do digit-level operations. Split digits individually during pre-tokenization.
+**症状: 数値や算術がうまくいかない**
+- 数字がどのようにトークン化されているかを確認してください。"1234" が 1 トークンになると、モデルは桁単位の操作ができません。事前トークン化の段階で数字を 1 桁ずつ分割してください。
 
-**Symptom: code tokens are inefficient**
-- Check how indentation is handled. GPT-2's tokenizer wastes tokens on spaces. Codex and StarCoder use special indentation tokens (4 spaces = 1 token).
+**症状: コードのトークン効率が悪い**
+- インデントがどのように扱われているかを確認してください。GPT-2 のトークナイザーはスペースでトークンを浪費します。Codex や StarCoder は特殊なインデントトークン (4 spaces = 1 token) を使います。
 
-## Vocabulary Size Decision
+## 語彙サイズの判断
 
-- 32K tokens: single-language, small model, limited compute. Embedding layer is 32K * d_model parameters.
-- 50K-64K: multilingual or code-heavy. Good balance for most projects.
-- 100K+ (GPT-4, Llama 3): only with massive training data. Shorter sequences but 100K * d_model embedding parameters.
+- 32K tokens: 単一言語、小規模モデル、限られた計算資源。埋め込み層は 32K * d_model パラメータです。
+- 50K-64K: 多言語またはコードが多い用途。多くのプロジェクトでよいバランスです。
+- 100K+ (GPT-4, Llama 3): 大規模な訓練データがある場合のみ。系列は短くなりますが、埋め込みパラメータは 100K * d_model になります。
 
-For a 4096-dimensional model: 32K vocab = 131M embedding params. 128K vocab = 524M embedding params. That is 400M parameters just in the embedding layer.
+4096 次元のモデルでは、32K 語彙は 131M の埋め込みパラメータです。128K 語彙は 524M の埋め込みパラメータです。埋め込み層だけで 400M パラメータ増えることになります。
 
-## Speed Requirements
+## 速度要件
 
-- Training data tokenization: use Rust-backed libraries (tiktoken, HuggingFace tokenizers). Pure Python is 10-100x slower.
-- Inference tokenization: latency matters less (single sequence), but still use compiled implementations.
-- Benchmark: tokenize 1GB of text and measure wall clock time. If it takes more than 60 seconds, switch to a Rust backend.
+- 訓練データのトークン化: Rust バックエンドのライブラリ (tiktoken, HuggingFace tokenizers) を使います。純粋な Python は 10-100 倍遅くなります。
+- 推論時のトークン化: レイテンシの影響は比較的小さいです (単一系列のため)。それでもコンパイル済み実装を使ってください。
+- ベンチマーク: 1GB のテキストをトークン化し、実時間を測ります。60 秒を超えるなら Rust バックエンドに切り替えてください。
 
-## Chat Template Validation
+## チャットテンプレートの検証
 
-Before deploying any chat model, verify the template:
+チャットモデルをデプロイする前に、テンプレートを検証してください。
 
-1. Encode a known conversation with the tokenizer
-2. Decode it back to text
-3. Compare character-by-character with the expected format from the model's documentation
-4. Pay attention to: newlines after header tokens, spaces before content, end-of-turn markers
-5. Test edge cases: empty system message, very long user message, multiple assistant turns
+1. トークナイザーで既知の会話をエンコードする
+2. それをテキストにデコードし直す
+3. モデルのドキュメントにある期待形式と 1 文字ずつ比較する
+4. ヘッダートークン後の改行、本文前のスペース、発話終了マーカーに注意する
+5. エッジケースをテストする: 空の system メッセージ、非常に長い user メッセージ、複数の assistant 発話
 
-Getting the chat template wrong is the most common source of degraded chat model performance.
+チャットテンプレートの誤りは、チャットモデルの性能劣化で最もよくある原因です。

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -6,8 +6,8 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -15,7 +15,7 @@
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">fine-tuning DAG — one YAML reproduces everything</text>
+  <text x="480" y="24" text-anchor="middle" class="title">fine-tuning DAG - 1つのYAMLで全てを再現</text>
 
   <rect x="40" y="60" width="180" height="60" class="cool"/>
   <text x="130" y="84" text-anchor="middle" class="step">data</text>
@@ -35,7 +35,7 @@
   <rect x="700" y="60" width="180" height="60" class="cool"/>
   <text x="790" y="84" text-anchor="middle" class="step">DPO / GRPO</text>
   <text x="790" y="102" text-anchor="middle" class="small">TRL 0.15</text>
-  <text x="790" y="116" text-anchor="middle" class="small">1 epoch, beta sweep</text>
+  <text x="790" y="116" text-anchor="middle" class="small">1 epoch、beta sweep</text>
 
   <path d="M220,90 L260,90" class="edge" marker-end="url(#arrow)"/>
   <path d="M440,90 L480,90" class="edge" marker-end="url(#arrow)"/>
@@ -67,10 +67,10 @@
 
   <rect x="40" y="380" width="880" height="140" class="box"/>
   <text x="480" y="400" text-anchor="middle" class="head">content-hashed manifest + reproducibility contract</text>
-  <text x="60" y="422" class="small">every stage consumes and produces a content-hashed artifact</text>
-  <text x="60" y="440" class="small">re-running with the same YAML + seed yields identical hashes end to end</text>
+  <text x="60" y="422" class="small">各stageはcontent-hashed artifactをconsume/produceする</text>
+  <text x="60" y="440" class="small">同じYAML + seedで再実行するとend-to-endで同一hashになる</text>
   <text x="60" y="458" class="small">one command: ./pipeline.sh config/llama3.3-8b-domainX.yaml</text>
-  <text x="60" y="476" class="small">Langfuse traces training+inference; W&amp;B run links in model card</text>
-  <text x="60" y="496" class="small">ablation table baked in: base / SFT-only / SFT+DPO / SFT+GRPO</text>
-  <text x="60" y="514" class="caption">serving target: 2.5x+ throughput vs baseline with EAGLE-3; $/1M tokens reported vs hosted APIs</text>
+  <text x="60" y="476" class="small">Langfuseがtraining+inferenceをtrace。model cardにW&amp;B run links</text>
+  <text x="60" y="496" class="small">ablation tableを組み込み: base / SFT-only / SFT+DPO / SFT+GRPO</text>
+  <text x="60" y="514" class="caption">serving target: EAGLE-3でbaseline比2.5x+ throughput。hosted APIs比の$/1M tokensを報告</text>
 </svg>

@@ -1,10 +1,10 @@
 {
   "lesson": "29-production-runtimes",
-  "title": "Production Runtimes: Queue, Event, Cron",
+  "title": "本番ランタイム: Queue, Event, Cron",
   "questions": [
     {
       "stage": "pre",
-      "question": "What are the six runtime shapes the lesson lists?",
+      "question": "この lesson が挙げる 6 つの runtime shapes はどれですか。",
       "options": [
         "Request-response, streaming, durable execution, queue-based, event-driven, scheduled",
         "Read, write, exec, fork, exit, wait",
@@ -12,79 +12,79 @@
         "Map, filter, reduce, fold, scan, group"
       ],
       "correct": 0,
-      "explanation": "These are the six runtime shapes; pick a shape before picking a framework."
+      "explanation": "これらが 6 つの runtime shapes です。framework を選ぶ前に shape を選びます。"
     },
     {
       "stage": "pre",
-      "question": "When is request-response a poor fit?",
+      "question": "request-response が不適合なのはどのような場合ですか。",
       "options": [
-        "On a 1-second classification",
-        "When the task takes longer than about 30 seconds and users hang up while workers pile up",
-        "On REST APIs",
-        "On internal services"
+        "1 秒の classification",
+        "task が約 30 秒を超え、users が切断する一方で workers が積み上がる場合",
+        "REST APIs 上",
+        "internal services 上"
       ],
       "correct": 1,
-      "explanation": "Synchronous HTTP is only viable for short tasks; long tasks need queue/durable/event shapes."
+      "explanation": "Synchronous HTTP は短い tasks にだけ成立します。長い tasks には queue/durable/event shapes が必要です。"
     },
     {
       "stage": "check",
-      "question": "What is durable execution's core property?",
+      "question": "durable execution の中核特性は何ですか。",
       "options": [
-        "Faster inference",
-        "State is checkpointed after every step so the runtime can resume from the last successful step on failure",
-        "Lower token cost",
-        "Native voice support"
+        "より速い inference",
+        "すべての step 後に state を checkpoint し、failure 時に最後に成功した step から resume できること",
+        "低い token cost",
+        "native voice support"
       ],
       "correct": 1,
-      "explanation": "Checkpoint-and-resume is the differentiator; LangGraph is the lesson's reference."
+      "explanation": "checkpoint-and-resume が differentiator です。この lesson では LangGraph を参照実装としています。"
     },
     {
       "stage": "check",
-      "question": "Which Anthropic observation justifies queue-based runtimes for long-horizon agents?",
+      "question": "long-horizon agents に queue-based runtimes が必要だと示す Anthropic の観察はどれですか。",
       "options": [
-        "Tasks always complete in 5 seconds",
-        "Computer use announcement: dozens-to-hundreds of steps per task is normal",
-        "Tasks must run synchronously",
-        "Cron solves everything"
+        "tasks は常に 5 秒で完了する",
+        "computer use announcement: task ごとに dozens-to-hundreds of steps が普通である",
+        "tasks は synchronous に実行しなければならない",
+        "cron がすべてを解決する"
       ],
       "correct": 1,
-      "explanation": "Anthropic flagged dozens-to-hundreds of steps per task as normal; that workload needs queues or durable runtimes."
+      "explanation": "Anthropic は task ごとに dozens-to-hundreds of steps が普通だと示しました。その workload には queues または durable runtimes が必要です。"
     },
     {
       "stage": "check",
-      "question": "What does the lesson mean by 'observability is load-bearing'?",
+      "question": "この lesson の 'observability is load-bearing' は何を意味しますか。",
       "options": [
-        "Logs are pretty",
-        "Without OTel GenAI spans and a Langfuse/Phoenix/Opik backend you cannot debug a multi-step agent that failed at step 40",
-        "Disk gets full",
-        "Providers require it for billing"
+        "logs は見た目がよい",
+        "OTel GenAI spans と Langfuse/Phoenix/Opik backend がなければ、step 40 で失敗した multi-step agent を debug できない",
+        "disk がいっぱいになる",
+        "providers が billing のために要求する"
       ],
       "correct": 1,
-      "explanation": "Observability is not optional for multi-step agents; it is the difference between debugging and replaying from scratch."
+      "explanation": "multi-step agents では observability は optional ではありません。debug できるか、最初から replay するかの違いです。"
     },
     {
       "stage": "post",
-      "question": "Why must queue workers have a dead-letter queue (DLQ)?",
+      "question": "queue workers に dead-letter queue (DLQ) が必要な理由は何ですか。",
       "options": [
-        "Without DLQ, failed jobs vanish silently",
-        "DLQ is required by AWS",
-        "DLQ makes jobs faster",
-        "DLQ is encrypted"
+        "DLQ がないと failed jobs が静かに消えるから",
+        "AWS が DLQ を必須にしているから",
+        "DLQ は jobs を速くするから",
+        "DLQ は暗号化されているから"
       ],
       "correct": 0,
-      "explanation": "Failed jobs without DLQ disappear; DLQ is the parking lot for failed jobs."
+      "explanation": "DLQ がない failed jobs は消えます。DLQ は failed jobs の置き場です。"
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend pairing cron-shaped agents with?",
+      "question": "この lesson は cron-shaped agents と何を組み合わせることを推奨していますか。",
       "options": [
         "GPU autoscalers",
-        "Durable execution so a failing nightly run resumes next tick",
+        "失敗した nightly run が次 tick で resume できるようにする durable execution",
         "Streaming SSE",
         "WebRTC"
       ],
       "correct": 1,
-      "explanation": "Cron + durable execution recovers cleanly from failed scheduled runs."
+      "explanation": "Cron + durable execution は、失敗した scheduled runs からきれいに recovery します。"
     }
   ]
 }

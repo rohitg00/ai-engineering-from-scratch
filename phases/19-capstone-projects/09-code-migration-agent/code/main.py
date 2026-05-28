@@ -1,10 +1,9 @@
-"""Code migration agent — deterministic recipes + agent-loop fallback scaffold.
+"""Code migration agent — deterministic recipes + agent-loop fallback scaffold。
 
-The hard architectural primitive is the two-layer structure: deterministic
-recipe pass first (fast, auditable, safe), then agent loop for remaining
-failures with a hard budget and a failure-classification step that feeds a
-taxonomy dashboard. This scaffold implements both layers and runs a
-50-repo simulation with mixed outcomes.
+難しい architectural primitive は2層構造です。まず deterministic recipe pass
+(fast, auditable, safe)、次に残った failure に対して hard budget と
+taxonomy dashboard へ渡す failure-classification step を持つ agent loop です。
+この scaffold は両層を実装し、mixed outcome の 50-repo simulation を走らせます。
 
 Run:  python main.py
 """
@@ -52,17 +51,17 @@ class Attempt:
 
 
 # ---------------------------------------------------------------------------
-# deterministic recipe pass  --  OpenRewrite / libcst stand-in
+# deterministic recipe pass  --  OpenRewrite / libcst の代役
 # ---------------------------------------------------------------------------
 
 def run_recipes(repo: Repo) -> int:
-    """Returns number of rewrites applied."""
+    """適用された rewrite 数を返す。"""
     base = 20 + int(repo.loc / 500)
     return int(base * (1 - 0.2 * repo.hardness))
 
 
 # ---------------------------------------------------------------------------
-# agent loop  --  classify failure, apply fix, retry; budget-aware
+# agent loop  --  failure を classify し、fix を適用し、retry する。budget-aware
 # ---------------------------------------------------------------------------
 
 BUDGET_MIN = 30.0
@@ -71,12 +70,12 @@ BUDGET_TURNS = 20
 
 
 def agent_loop(attempt: Attempt, rng: random.Random) -> None:
-    """Simulates the plan-act loop until pass or budget exhaustion."""
-    # cost per turn drifts with hardness
+    """pass または budget exhaustion まで plan-act loop を simulate する。"""
+    # turn あたり cost は hardness で増える
     per_turn_min = 2.8 + attempt.repo.hardness * 2.0
     per_turn_usd = 0.45 + attempt.repo.hardness * 0.65
 
-    # probability of passing per turn depends on hardness (0.02-0.18)
+    # turn ごとの pass probability は hardness に依存する (0.02-0.18)
     turn_pass_p = max(0.02, 0.22 * (1 - attempt.repo.hardness * 0.95))
 
     while True:
@@ -106,12 +105,11 @@ def agent_loop(attempt: Attempt, rng: random.Random) -> None:
 
 
 # ---------------------------------------------------------------------------
-# classification of stuck repos  --  bucket into taxonomy
+# classification of stuck repos  --  taxonomy に分類する
 # ---------------------------------------------------------------------------
 
 def classify_failure(rng: random.Random) -> str:
-    """Stand-in for the agent's failure classifier. Real implementation
-    reads build logs and test output."""
+    """agent の failure classifier の代役。real implementation では build log と test output を読む。"""
     weights = {
         "dep_upgrade_required": 0.30,
         "build_tool_drift": 0.20,
@@ -129,14 +127,14 @@ def classify_failure(rng: random.Random) -> str:
 
 
 # ---------------------------------------------------------------------------
-# pipeline  --  recipes then agent then PR/file outcome
+# pipeline  --  recipe、agent、PR/file outcome の順に進む
 # ---------------------------------------------------------------------------
 
 def migrate(repo: Repo, rng: random.Random) -> Attempt:
     attempt = Attempt(repo=repo)
     attempt.recipe_applied = run_recipes(repo)
 
-    # easy repos often go straight to pass after recipes
+    # easy repo は recipe 後にそのまま pass することが多い
     straight_through_p = 0.55 * (1 - repo.hardness)
     if rng.random() < straight_through_p:
         delta = rng.gauss(0.0, 0.4)
@@ -146,11 +144,11 @@ def migrate(repo: Repo, rng: random.Random) -> Attempt:
         attempt.cost_usd = 0.30
         return attempt
 
-    # otherwise run the agent loop
+    # それ以外は agent loop を走らせる
     agent_loop(attempt, rng)
 
     if attempt.status == "fail" and attempt.failure_class == "budget_exhausted":
-        # classify root cause of why the budget was exhausted
+        # budget が尽きた root cause を classify する
         if rng.random() < 0.75:
             attempt.failure_class = classify_failure(rng)
     return attempt

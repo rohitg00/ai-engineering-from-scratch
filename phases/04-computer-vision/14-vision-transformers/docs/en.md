@@ -1,30 +1,30 @@
 # Vision Transformers (ViT)
 
-> Cut the image into patches, treat each patch as a word, run a standard transformer. Don't look back.
+> 画像をpatchに切り分け、各patchをwordとして扱い、standard transformerに通します。もう後戻りは不要です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 7 Lesson 02 (Self-Attention), Phase 4 Lesson 04 (Image Classification)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 7 Lesson 02 (Self-Attention), Phase 4 Lesson 04 (Image Classification)
+**所要時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Implement patch embedding, learned positional embedding, class token, and transformer encoder blocks from scratch to build a minimal ViT
-- Explain why ViT was thought to need massive pretraining data until DeiT and MAE proved otherwise
-- Compare ViT, Swin, and ConvNeXt on their architectural priors (none, local window attention, conv backbone)
-- Fine-tune a pretrained ViT on a small dataset using `timm` and the standard linear-probe / fine-tune recipe
+- patch embedding、learned positional embedding、class token、transformer encoder blockをscratchから実装し、最小ViTを作る
+- DeiTとMAEが覆すまで、ViTには巨大なpretraining dataが必要だと考えられていた理由を説明する
+- ViT、Swin、ConvNeXtをarchitectural prior（なし、local window attention、conv backbone）の観点で比較する
+- `timm` と標準的なlinear-probe / fine-tune recipeを使い、小さなdatasetで事前学習済みViTをfine-tuneする
 
-## The Problem
+## 問題
 
-For a decade, convolution was synonymous with computer vision. CNNs had strong inductive biases — locality, translation equivariance — that nobody thought you could replace. Then Dosovitskiy et al. (2020) showed that a plain transformer applied to flattened image patches, with no convolutional machinery at all, could match or beat the best CNNs at scale.
+10年間、convolutionはcomputer visionとほぼ同義でした。CNNにはlocality、translation equivarianceという強いinductive biasがあり、置き換えられないと考えられていました。そこへDosovitskiy et al. (2020)が、flattenしたimage patchに通常のtransformerを適用するだけで、convolutional machineryなしに、scaleすれば最高のCNNに並ぶか上回ることを示しました。
 
-The catch was "at scale." ViT on ImageNet-1k lost to ResNet. ViT pretrained on ImageNet-21k or JFT-300M then fine-tuned on ImageNet-1k beat it. The conclusion was that transformers lacked useful priors but could learn them from enough data. Subsequent work (DeiT, MAE, DINO) showed that with the right training recipes — strong augmentation, self-supervised pretraining, distillation — ViTs train fine on small data too.
+ただし条件は「scaleすれば」でした。ImageNet-1k上のViTはResNetに負けました。ImageNet-21kやJFT-300MでpretrainしてからImageNet-1kでfine-tuneすると勝ちました。結論は、transformerには有用なpriorが不足しているが、十分なdataがあればそれを学習できる、というものでした。その後、DeiT、MAE、DINOは、強いaugmentation、self-supervised pretraining、distillationといった正しいtraining recipeがあれば、小さなdataでもViTは問題なく学習できることを示しました。
 
-By 2026, pure CNNs are still competitive on edge devices (ConvNeXt is the strongest), but transformers dominate everything else: segmentation (Mask2Former, SegFormer), detection (DETR, RT-DETR), multimodal (CLIP, SigLIP), video (VideoMAE, VJEPA). The ViT block structure is the one to know.
+2026年でもpure CNNはedge deviceで競争力があります（ConvNeXtが最強候補）。しかしそれ以外ではtransformerが支配的です。segmentation（Mask2Former、SegFormer）、detection（DETR、RT-DETR）、multimodal（CLIP、SigLIP）、video（VideoMAE、VJEPA）などです。知っておくべき基本構造はViT blockです。
 
-## The Concept
+## コンセプト
 
-### The pipeline
+### pipeline
 
 ```mermaid
 flowchart LR
@@ -41,11 +41,11 @@ flowchart LR
     style HEAD fill:#dcfce7,stroke:#16a34a
 ```
 
-Seven steps. Patches -> tokens -> attention -> classifier. Every variant (DeiT, Swin, ConvNeXt, MAE pretraining) changes one or two of the seven and leaves the rest alone.
+7 stepsです。patch -> token -> attention -> classifier。すべてのvariant（DeiT、Swin、ConvNeXt、MAE pretraining）は、この7つのうち1つか2つを変え、残りはそのままにします。
 
 ### Patch embedding
 
-The first conv is the secret. Kernel size 16, stride 16, so a 224x224 image becomes a 14x14 grid of 16x16 patches, each projected to a 768-dim embedding. That single conv both patchifies and linearly projects.
+最初のconvが秘密です。kernel size 16、stride 16なので、224x224画像は16x16 patchの14x14 gridになり、それぞれが768次元embeddingへ射影されます。この単一のconvがpatch化と線形射影の両方を行います。
 
 ```
 Input:  (3, 224, 224)
@@ -54,31 +54,31 @@ Output: (768, 14, 14)
 Flatten spatial: (196, 768)
 ```
 
-196 patches = 196 tokens. Each token's feature dimension is 768 (ViT-B), 1024 (ViT-L), or 1280 (ViT-H).
+196 patches = 196 tokensです。各tokenのfeature dimensionは768（ViT-B）、1024（ViT-L）、1280（ViT-H）です。
 
 ### Class token
 
-A single learned vector prepended to the sequence:
+token列の先頭に1つのlearned vectorを追加します。
 
 ```
 tokens = [CLS; patch_1; patch_2; ...; patch_196]   shape (197, 768)
 ```
 
-After N transformer blocks, the `[CLS]` output is the global image representation. Classification head reads only this one vector.
+N個のtransformer block後、`[CLS]` の出力がglobal image representationになります。classification headはこの1 vectorだけを読みます。
 
 ### Positional embedding
 
-Transformers have no built-in notion of spatial position. Add a learned vector to every token:
+transformerには空間的位置の概念が組み込まれていません。そこで各tokenにlearned vectorを足します。
 
 ```
 tokens = tokens + learned_pos_embedding   (also shape (197, 768))
 ```
 
-The embedding is a parameter of the model; gradient-based training adapts it to 2D image structure. Sinusoidal 2D alternatives exist but are rarely used in practice.
+このembeddingはmodel parameterであり、gradient-based trainingによって2D画像構造に適応します。sinusoidalな2D代替案もありますが、実務ではあまり使われません。
 
 ### Transformer encoder block
 
-Standard. Multi-head self-attention, MLP, residual connections, pre-LayerNorm.
+標準的です。multi-head self-attention、MLP、residual connection、pre-LayerNormです。
 
 ```
 x = x + MSA(LN(x))
@@ -87,45 +87,45 @@ x = x + MLP(LN(x))
 MLP is two-layer with GELU: Linear(d -> 4d) -> GELU -> Linear(4d -> d)
 ```
 
-ViT-B/16 stacks 12 of these blocks, each with 12 attention heads, totalling 86M parameters.
+ViT-B/16はこのblockを12個積み、各blockは12 attention headsを持ち、合計86M parametersです。
 
 ### Why pre-LN
 
-Early transformers used post-LN (`x = LN(x + sublayer(x))`) and struggled to train past 6-8 layers without warmup. Pre-LN (`x = x + sublayer(LN(x))`) trains deeper networks stably without warmup. Every ViT and every modern LLM uses pre-LN.
+初期のtransformerはpost-LN（`x = LN(x + sublayer(x))`）を使い、warmupなしで6-8層を超えて学習するのが難しい問題がありました。Pre-LN（`x = x + sublayer(LN(x))`）は、deep networkをwarmupなしでも安定して学習できます。すべてのViTとmodern LLMはpre-LNを使います。
 
 ### Patch size trade-off
 
-- 16x16 patches -> 196 tokens, standard.
-- 32x32 patches -> 49 tokens, faster but lower resolution.
-- 8x8 patches -> 784 tokens, finer but O(n^2) attention cost scales badly.
+- 16x16 patches -> 196 tokens、標準。
+- 32x32 patches -> 49 tokens、高速だが低解像度。
+- 8x8 patches -> 784 tokens、細かいがO(n^2) attention costが厳しく増える。
 
-Bigger patches = fewer tokens = faster but less spatial detail. SwinV2 uses 4x4 patches in hierarchical windows.
+patchが大きいほどtokenが少なくなり高速ですが、空間detailは失われます。SwinV2はhierarchical window内で4x4 patchを使います。
 
 ### DeiT's recipe for training ViT on ImageNet-1k
 
-The original ViT needed JFT-300M to beat CNNs. DeiT (Touvron et al., 2020) trained ViT-B to 81.8% top-1 on ImageNet-1k alone with four changes:
+元のViTはCNNに勝つためにJFT-300Mを必要としました。DeiT（Touvron et al., 2020）は、次の4つの変更だけでImageNet-1kのみからViT-Bを81.8% top-1まで学習しました。
 
-1. Heavy augmentation: RandAugment, Mixup, CutMix, Random Erasing.
-2. Stochastic depth (drop entire blocks at random during training).
-3. Repeated augmentation (same image sampled 3 times per batch).
-4. Distillation from a CNN teacher (optional, lifts accuracy further).
+1. 強いaugmentation: RandAugment、Mixup、CutMix、Random Erasing。
+2. Stochastic depth（training中にblock全体をrandomにdropする）。
+3. Repeated augmentation（同じ画像をbatch内で3回sampleする）。
+4. CNN teacherからのdistillation（任意。accuracyをさらに上げる）。
 
-Every modern ViT training recipe descends from DeiT.
+すべてのmodern ViT training recipeはDeiTの系譜です。
 
 ### Swin vs ConvNeXt
 
-- **Swin** (Liu et al., 2021) — window-based attention. Each block attends within a local window; alternating blocks shift the window to mix information across windows. Brings back a CNN-like locality prior while keeping the attention operator.
-- **ConvNeXt** (Liu et al., 2022) — redesigned CNN that matches Swin's architecture choices (depthwise convs, LayerNorm, GELU, inverted bottleneck). Showed that the gap is not "attention vs convolution" but "modern training recipe + architecture."
+- **Swin** (Liu et al., 2021) — window-based attention。各blockはlocal window内でattentionし、交互のblockでwindowをshiftしてwindow間の情報を混ぜます。attention operatorを保ったまま、CNN的なlocality priorを戻します。
+- **ConvNeXt** (Liu et al., 2022) — Swinのarchitecture choice（depthwise conv、LayerNorm、GELU、inverted bottleneck）に合わせて再設計されたCNNです。差は「attention vs convolution」ではなく、「modern training recipe + architecture」だと示しました。
 
-In 2026, ConvNeXt-V2 and Swin-V2 are both production-grade; the right choice depends on your inference stack (ConvNeXt compiles better for edge) and pretraining corpus.
+2026年時点でConvNeXt-V2とSwin-V2はいずれもproduction-gradeです。正しい選択はinference stack（edgeではConvNeXtの方がcompileしやすい）とpretraining corpusに依存します。
 
 ### MAE pretraining
 
-Masked Autoencoder (He et al., 2022): mask 75% of patches at random, train the encoder to process only the visible 25%, train a small decoder to reconstruct the masked patches from the encoder's output. After pretraining, discard the decoder and fine-tune the encoder.
+Masked Autoencoder（He et al., 2022）: patchの75%をrandomにmaskし、encoderは見えている25%だけを処理し、小さなdecoderでmasked patchをencoder出力から再構成するように学習します。pretraining後はdecoderを捨て、encoderをfine-tuneします。
 
-MAE makes ViT trainable on ImageNet-1k alone, hits SOTA, and is the current default self-supervised recipe.
+MAEによりViTはImageNet-1kのみでも学習可能になり、SOTAに達しました。現在のdefault self-supervised recipeです。
 
-## Build It
+## 作ってみる
 
 ### Step 1: Patch embedding
 
@@ -146,11 +146,11 @@ class PatchEmbedding(nn.Module):
         return x.flatten(2).transpose(1, 2)
 ```
 
-One conv, one flatten, one transpose. That is the entire image-to-tokens step.
+1つのconv、1つのflatten、1つのtranspose。これがimage-to-tokens stepのすべてです。
 
 ### Step 2: Transformer block
 
-Pre-LN, multi-head self-attention, MLP with GELU, residual connections.
+Pre-LN、multi-head self-attention、GELU付きMLP、residual connectionsです。
 
 ```python
 class Block(nn.Module):
@@ -174,9 +174,9 @@ class Block(nn.Module):
         return x
 ```
 
-`nn.MultiheadAttention` handles the splitting into heads, the scaled dot-product, and the output projection. `batch_first=True` so shapes are `(N, seq, dim)`.
+`nn.MultiheadAttention` がhead分割、scaled dot-product、output projectionを処理します。`batch_first=True` なのでshapeは `(N, seq, dim)` です。
 
-### Step 3: The ViT
+### Step 3: ViT
 
 ```python
 class ViT(nn.Module):
@@ -211,9 +211,9 @@ print(f"output: {vit(x).shape}")
 print(f"params: {sum(p.numel() for p in vit.parameters()):,}")
 ```
 
-About 2.8M parameters — a tiny ViT tractable on CPU. Real ViT-B is 86M; same class definition with `dim=768, depth=12, num_heads=12`.
+約2.8M parametersで、CPUでも扱いやすいtiny ViTです。本物のViT-Bは86Mです。同じclass definitionで `dim=768, depth=12, num_heads=12` にします。
 
-### Step 4: Sanity check — single image inference
+### Step 4: sanity check — single image inference
 
 ```python
 logits = vit(torch.randn(1, 3, 64, 64))
@@ -221,11 +221,11 @@ print(f"logits: {logits}")
 print(f"probs:  {logits.softmax(-1)}")
 ```
 
-Should run without error. Probabilities sum to 1.
+エラーなく実行できるはずです。probabilitiesは合計1になります。
 
-## Use It
+## 使ってみる
 
-`timm` ships every ViT variant with ImageNet pretrained weights. One line:
+`timm` はImageNet事前学習済みweight付きで、あらゆるViT variantを提供します。1行です。
 
 ```python
 import timm
@@ -233,39 +233,39 @@ import timm
 model = timm.create_model("vit_base_patch16_224", pretrained=True, num_classes=10)
 ```
 
-`timm` is the production default for vision transformers in 2026. Supports ViT, DeiT, Swin, Swin-V2, ConvNeXt, ConvNeXt-V2, MaxViT, MViT, EfficientFormer, and dozens of others under the same API.
+`timm` は2026年のvision transformerにおけるproduction defaultです。同じAPIでViT、DeiT、Swin、Swin-V2、ConvNeXt、ConvNeXt-V2、MaxViT、MViT、EfficientFormerなど多数をsupportします。
 
-For multi-modal work (image + text), `transformers` ships CLIP, SigLIP, BLIP-2, LLaVA. The image encoder in all of those is a ViT variant.
+multi-modal work（image + text）では、`transformers` がCLIP、SigLIP、BLIP-2、LLaVAを提供します。それらすべてのimage encoderはViT variantです。
 
-## Ship It
+## 出荷する
 
-This lesson produces:
+このlessonが生成するもの:
 
-- `outputs/prompt-vit-vs-cnn-picker.md` — a prompt that picks between a ViT, a ConvNeXt, or a Swin based on dataset size, compute, and inference stack.
-- `outputs/skill-vit-patch-and-pos-embed-inspector.md` — a skill that verifies a ViT's patch embedding and positional embedding shapes match the model's expected sequence length, catching the most common porting bugs.
+- `outputs/prompt-vit-vs-cnn-picker.md` — dataset size、compute、inference stackに基づいてViT、ConvNeXt、Swinのどれを選ぶか決めるprompt。
+- `outputs/skill-vit-patch-and-pos-embed-inspector.md` — ViTのpatch embeddingとpositional embeddingのshapeが、modelの期待するsequence lengthに一致するか検証し、最もよくあるporting bugを捕まえるskill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Print the shapes of every intermediate tensor for a forward pass through the tiny ViT above. Confirm: input `(N, 3, 64, 64)` -> patches `(N, 16, 192)` -> with CLS `(N, 17, 192)` -> classifier input `(N, 192)` -> output `(N, num_classes)`.
-2. **(Medium)** Fine-tune a pretrained `timm` ViT-S/16 on the synthetic-CIFAR dataset from Lesson 4. Compare against ResNet-18 fine-tuning on the same data. Report training time and final accuracy.
-3. **(Hard)** Implement MAE pretraining for the tiny ViT: mask 75% of patches, train the encoder + a small decoder to reconstruct the masked patches. Evaluate linear-probe accuracy on the synthetic data before and after pretraining.
+1. **(Easy)** 上のtiny ViTのforward passで、すべての中間tensor shapeをprintしてください。input `(N, 3, 64, 64)` -> patches `(N, 16, 192)` -> with CLS `(N, 17, 192)` -> classifier input `(N, 192)` -> output `(N, num_classes)` を確認してください。
+2. **(Medium)** Lesson 4のsynthetic-CIFAR datasetで、事前学習済み`timm` ViT-S/16をfine-tuneしてください。同じdataでResNet-18 fine-tuningと比較し、training timeとfinal accuracyを報告してください。
+3. **(Hard)** tiny ViT用のMAE pretrainingを実装してください。patchの75%をmaskし、encoder + 小さなdecoderでmasked patchを再構成するように学習します。pretraining前後のsynthetic dataに対するlinear-probe accuracyを評価してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Patch embedding | "The first conv" | A conv with kernel size = stride = patch size; turns the image into a grid of token embeddings |
-| Class token | "[CLS]" | A learned vector prepended to the token sequence; its final output is the global image representation |
-| Positional embedding | "Learned pos" | A learned vector added to every token so the transformer knows where each patch came from |
-| Pre-LN | "LayerNorm before sublayer" | The stable transformer variant: `x + sublayer(LN(x))` instead of `LN(x + sublayer(x))` |
-| Multi-head attention | "Parallel attention" | Standard transformer attention split into num_heads independent subspaces, concatenated afterwards |
-| ViT-B/16 | "Base, patch 16" | The canonical size: dim=768, depth=12, heads=12, patch_size=16, image=224; ~86M params |
-| DeiT | "Data-efficient ViT" | ViT trained on ImageNet-1k alone with strong augmentation; proved large pretraining datasets are not strictly required |
-| MAE | "Masked autoencoder" | Self-supervised pretraining: mask 75% of patches, reconstruct; the dominant ViT pretraining recipe |
+| Patch embedding | "最初のconv" | kernel size = stride = patch sizeのconv。画像をtoken embeddingのgridへ変換する |
+| Class token | "[CLS]" | token列の先頭に追加されるlearned vector。その最終出力がglobal image representation |
+| Positional embedding | "Learned pos" | transformerが各patchの位置を知るため、すべてのtokenに加えるlearned vector |
+| Pre-LN | "LayerNorm before sublayer" | 安定したtransformer variant。`LN(x + sublayer(x))` ではなく `x + sublayer(LN(x))` |
+| Multi-head attention | "Parallel attention" | standard transformer attentionをnum_heads個の独立subspaceへ分割し、後でconcatenateする |
+| ViT-B/16 | "Base, patch 16" | canonical size: dim=768、depth=12、heads=12、patch_size=16、image=224。約86M params |
+| DeiT | "Data-efficient ViT" | 強いaugmentationでImageNet-1kのみから学習したViT。巨大pretraining datasetが必須でないことを示した |
+| MAE | "Masked autoencoder" | self-supervised pretraining。patchの75%をmaskして再構成する。支配的なViT pretraining recipe |
 
-## Further Reading
+## 参考文献
 
-- [An Image is Worth 16x16 Words (Dosovitskiy et al., 2020)](https://arxiv.org/abs/2010.11929) — the ViT paper
-- [DeiT: Data-efficient Image Transformers (Touvron et al., 2020)](https://arxiv.org/abs/2012.12877) — how to train ViT on ImageNet-1k alone
+- [An Image is Worth 16x16 Words (Dosovitskiy et al., 2020)](https://arxiv.org/abs/2010.11929) — ViT論文
+- [DeiT: Data-efficient Image Transformers (Touvron et al., 2020)](https://arxiv.org/abs/2012.12877) — ImageNet-1kのみでViTを学習する方法
 - [Masked Autoencoders are Scalable Vision Learners (He et al., 2022)](https://arxiv.org/abs/2111.06377) — MAE pretraining
-- [timm documentation](https://huggingface.co/docs/timm) — the reference for every vision transformer you will use in production
+- [timm documentation](https://huggingface.co/docs/timm) — productionで使うvision transformerのreference

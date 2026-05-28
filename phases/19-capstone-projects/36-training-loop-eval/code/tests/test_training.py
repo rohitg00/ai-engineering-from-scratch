@@ -1,4 +1,4 @@
-"""Unit tests for the training loop, evaluation, schedule, and decay split."""
+"""training loop、evaluation、schedule、decay split のユニットテスト。"""
 
 from __future__ import annotations
 

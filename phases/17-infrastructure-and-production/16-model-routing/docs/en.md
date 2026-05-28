@@ -1,109 +1,109 @@
-# Model Routing as a Cost-Reduction Primitive
+# コスト削減プリミティブとしての Model Routing
 
-> A dynamic broker evaluates every request (task type, token length, embedding similarity, confidence) and sends simple queries to a cheap model, escalating complex ones to a frontier model. Also called model cascading. Production case studies show 20-60% cost reduction at iso-quality across US/UK/EU deployments; a 30% routing efficiency improvement on high-volume SaaS turns into six-figure annual savings. The 2026 context is that LLM inference prices dropped ~10x per year — a GPT-4-class token went from $20/M to ~$0.40/M from late 2022 to 2026. Most of the drop is better serving stacks (Phase 17 · 04-09), not hardware. Routing is how you convert that price drop into margin without product regression. The failure mode is cheap-model drift: the route pushes 40% to a weaker model, quality drops 3-5% on reasoning tasks, no one notices for a quarter. Gate routes by online quality metrics, not just offline eval sets.
+> dynamic broker は各 request（task type、token length、embedding similarity、confidence）を評価し、単純な query は安い model に送り、複雑なものは frontier model へ escalates する。model cascading とも呼ばれる。本番事例では、US/UK/EU deployment で iso-quality のまま20-60%のコスト削減が示されている。高トラフィック SaaS で routing efficiency が30%改善すると、年間で6桁ドルの節約になる。2026年の文脈では、LLM inference price は年あたり約10x 低下した。GPT-4-class token は2022年末から2026年にかけて $20/M から約 $0.40/M になった。低下の大半は hardware ではなく、より良い serving stack（Phase 17 · 04-09）によるものだ。routing は、その価格低下を product regression なしに margin へ変換する方法である。失敗モードは cheap-model drift だ。route が40%を弱い model に押し出し、reasoning task の quality が3-5%下がり、誰も四半期の間気づかない。offline eval set だけでなく online quality metric で route を gate する。
 
-**Type:** Learn
-**Languages:** Python (stdlib, toy cascading router simulator)
-**Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 19 (AI Gateways)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib, toy cascading router simulator)
+**前提条件:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 19 (AI Gateways)
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Explain model cascading: cheap-first with confidence check, escalate on low confidence.
-- Enumerate the four routing signals (task classification, prompt length, embedding similarity to known-hard set, self-confidence from first-pass).
-- Compute expected blended cost at target routing split and quality loss tolerance.
-- Name the drift-monitoring metric (online quality gate) that catches cheap-model creep.
+- model cascading を説明する。cheap-first で confidence check を行い、low confidence なら escalate する。
+- 4つの routing signal（task classification、prompt length、known-hard set への embedding similarity、first-pass の self-confidence）を列挙する。
+- target routing split と quality loss tolerance から expected blended cost を計算する。
+- cheap-model creep を検出する drift-monitoring metric（online quality gate）を説明する。
 
-## The Problem
+## 課題
 
-Your service costs $80k/month on GPT-5. Your analytics show 70% of queries are simple: "what time is it in Paris?" "rephrase this sentence." A Haiku-class model handles those perfectly at 3% of the cost. 30% need GPT-5's reasoning — coding, math, multi-step planning.
+あなたの service は GPT-5 に月 $80k かかっている。analytics を見ると query の70%は単純だ。「パリは今何時？」「この文を言い換えて」のようなものだ。Haiku-class model はそれらを cost の3%で完璧に処理できる。残り30%は GPT-5 の reasoning が必要だ。coding、math、multi-step planning など。
 
-If you route the 70% to cheap and 30% to expensive, your bill drops ~65% at the same product quality. This is routing. The trick is building the broker without regressing quality.
+70%を cheap、30%を expensive に route できれば、product quality を保ったまま請求額は約65%下がる。これが routing だ。難しいのは、quality を退行させずに broker を作ることだ。
 
-## The Concept
+## コンセプト
 
-### Four routing signals
+### 4つの routing signal
 
-1. **Task classification**: simple/complex/codegen/math/chat. Can be a rules-based classifier, a small LLM (Haiku-class at $0.25/M), or embedding similarity to labeled buckets. Output: route = cheap / balanced / frontier.
+1. **Task classification**: simple/complex/codegen/math/chat。rules-based classifier、小さな LLM（Haiku-class at $0.25/M）、または labeled bucket への embedding similarity でよい。出力: route = cheap / balanced / frontier。
 
-2. **Prompt length**: prompts >4K tokens often need frontier for coherence. Prompts <500 tokens usually don't.
+2. **Prompt length**: 4K tokens を超える prompt は coherent に処理するため frontier が必要なことが多い。500 tokens 未満の prompt では通常不要。
 
-3. **Embedding similarity to known-hard set**: if the query is close (cosine > 0.88) to a known-hard bucket, escalate to frontier directly.
+3. **Embedding similarity to known-hard set**: query が known-hard bucket に近い（cosine > 0.88）なら、直接 frontier へ escalate する。
 
-4. **Self-confidence from first-pass**: send to cheap; if model's log-probs show low confidence OR it refuses OR outputs hedging language, retry on frontier. Adds P95 latency on ~10% of traffic but saves 50%+ on the other 90%.
+4. **Self-confidence from first-pass**: まず cheap に送る。model の log-probs が low confidence を示す、refuse する、または hedging language を出すなら frontier で retry する。traffic の約10%で P95 latency が増えるが、残り90%で50%超を節約する。
 
-### Three patterns
+### 3つの pattern
 
-**Pre-route** (classifier up front): ~5-10ms latency added; fastest overall.
+**Pre-route**（最初に classifier）: 追加 latency は約5-10ms。全体として最速。
 
-**Cascade** (cheap-first, escalate on low confidence): ~1.2x median latency (cheap run plus verify), ~2x on escalated. Best quality floor.
+**Cascade**（cheap-first、low confidence で escalate）: median latency は約1.2x（cheap run + verify）、escalated では約2x。quality floor が最も強い。
 
-**Ensemble route** (run cheap and frontier in parallel for a sample, reward-model pick): highest quality, highest cost; use only for critical A/B.
+**Ensemble route**（sample で cheap と frontier を並列実行し、reward-model が選ぶ）: quality は最高、cost も最高。critical A/B のみに使う。
 
-### Implementation
+### 実装
 
-AI gateways (Phase 17 · 19) expose routing. LiteLLM has `router` config with fallback and cost-routing. Portkey has guards + routing. Kong AI Gateway has plugin-based routing. OpenRouter's model marketplace exposes a recommendation API.
+AI gateways（Phase 17 · 19）は routing を提供する。LiteLLM は fallback と cost-routing を備えた `router` config を持つ。Portkey は guards + routing を持つ。Kong AI Gateway は plugin-based routing を持つ。OpenRouter の model marketplace は recommendation API を提供する。
 
-Open-source: RouteLLM (LMSYS), Not Diamond (commercial), Prompt Mule.
+Open-source: RouteLLM（LMSYS）、Not Diamond（commercial）、Prompt Mule。
 
-### The 2026 price curve
+### 2026年の price curve
 
 | Model class | Late 2022 | 2026 | Change |
 |-------------|-----------|------|--------|
 | GPT-4-level quality | ~$20/M | ~$0.40/M | 50x cheaper |
 | Frontier (GPT-5, Claude 4) | — | ~$3-10/M | new tier |
 
-Most of the improvement is serving efficiency — the core lessons in Phase 17 · 04-09 turned into provider-side cost drops. Routing lets you capture those gains at the app layer instead of waiting for all your users to migrate to the cheap tier.
+改善の大半は serving efficiency だ。Phase 17 · 04-09 の中核 lesson が provider-side cost drop になった。routing により、cheap tier へ全ユーザーが移行するのを待たずに、app layer でその gain を取り込める。
 
-### Drift is the real risk
+### 本当のリスクは drift
 
-Your route sends 40% to the cheap model. Over six months, the task distribution shifts (users get more sophisticated, ask longer questions). The router doesn't notice because its classifier was trained on Q1 data. Quality drops silently. Nobody complains loud enough. You find out in a competitor benchmark you lost.
+route は40%を cheap model に送っている。6か月で task distribution が変化する（ユーザーが高度化し、長い質問をするようになる）。router は Q1 data で訓練された classifier のままなので気づかない。quality は静かに落ちる。大きな苦情は出ない。競合 benchmark で負けて初めて気づく。
 
-Gate routes by online quality metrics:
+online quality metric で route を gate する:
 
-- User thumbs-up / thumbs-down per route.
-- Automated LLM-judge on a held-out sample (5%) per route.
-- Escalation rate: if cascade is kicking up-route >30%, the cheap model is being over-routed.
-- Refusal rate per route.
+- route ごとの user thumbs-up / thumbs-down。
+- route ごとの held-out sample（5%）に対する automated LLM-judge。
+- Escalation rate: cascade が >30% up-route しているなら、cheap model へ過剰 routing している。
+- route ごとの refusal rate。
 
-### Numbers you should remember
+### 覚えておくべき数字
 
-- 2026 routing savings at iso-quality: 20-60% case studies.
-- LLM price drop 2022-2026: ~10x per year aggregate.
-- GPT-4-level 2022 vs 2026: ~$20/M → ~$0.40/M.
-- Cascade latency impact: ~1.2x median, ~2x escalated (~10% of traffic).
+- 2026年の routing savings at iso-quality: 事例で20-60%。
+- 2022-2026年の LLM price drop: aggregate で年あたり約10x。
+- GPT-4-level 2022 vs 2026: ~$20/M → ~$0.40/M。
+- Cascade latency impact: median 約1.2x、escalated 約2x（traffic の約10%）。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates pre-route, cascade, and ensemble on a mixed workload. Reports blended cost, quality loss, and escalation rate.
+`code/main.py` は mixed workload 上で pre-route、cascade、ensemble を simulate する。blended cost、quality loss、escalation rate を report する。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-router-plan.md`. Given workload and quality budget, picks a routing pattern and signals.
+この lesson は `outputs/skill-router-plan.md` を生成する。workload と quality budget を受け取り、routing pattern と signal を選ぶ。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. At what accuracy floor does cascade beat pre-route?
-2. Your user base is 30% enterprise (complex queries), 70% free tier (simple). Design the routing split. What online metric gates it?
-3. A route drops quality by 2% but saves 40%. Is that a ship? Depends on product — argue both.
-4. Implement a confidence check using logprobs from OpenAI / Anthropic APIs. What's the threshold you start with?
-5. Over six months, escalation rate climbs from 8% to 22%. Diagnose three causes and the fix for each.
+1. `code/main.py` を実行する。どの accuracy floor で cascade は pre-route を上回るか。
+2. user base が30% enterprise（complex queries）、70% free tier（simple）である。routing split を設計する。どの online metric で gate するか。
+3. route により quality が2%下がるが40%節約できる。ship するか。product 次第だ。両方の主張を書く。
+4. OpenAI / Anthropic APIs の logprobs を使って confidence check を実装する。最初に置く threshold は何か。
+5. 6か月で escalation rate が8%から22%に上がった。3つの原因と、それぞれの fix を診断する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|------------------------|
-| Model routing | "cost broker" | Dynamic choice of model per request |
-| Model cascade | "cheap-first escalate" | Run cheap, fall through to frontier on low confidence |
-| Pre-route | "classify first" | Classifier up front; no re-run |
-| Ensemble route | "parallel pick" | Run multiple, reward-model picks best |
-| Escalation rate | "uprouted %" | Fraction of cascade requests that escalated |
+| Model routing | "cost broker" | request ごとに model を動的選択する |
+| Model cascade | "cheap-first escalate" | cheap を実行し、low confidence なら frontier へ fall through |
+| Pre-route | "classify first" | 先に classifier を置き、再実行しない |
+| Ensemble route | "parallel pick" | 複数を実行し、reward-model が best を選ぶ |
+| Escalation rate | "uprouted %" | cascade request のうち escalated した割合 |
 | RouteLLM | "LMSYS router" | OSS router library |
 | Not Diamond | "commercial router" | SaaS model-routing product |
-| Drift | "cheap creep" | Distribution shift without router noticing |
-| Online quality gate | "live check" | Automated LLM-judge sampling live traffic |
+| Drift | "cheap creep" | router が気づかない distribution shift |
+| Online quality gate | "live check" | live traffic を sampling する automated LLM-judge |
 
-## Further Reading
+## 参考資料
 
 - [AbhyashSuchi — Model Routing LLM 2026 Best Practices](https://abhyashsuchi.in/model-routing-llm-2026-best-practices/)
 - [Lukas Brunner — Rise of Inference Optimization 2026](https://dev.to/lukas_brunner/the-rise-of-inference-optimization-the-real-llm-infra-trend-shaping-2026-4e4o)

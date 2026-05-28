@@ -1,46 +1,46 @@
-# Neural Audio Codecs — EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split
+# Neural Audio Codecs — EnCodec、SNAC、Mimi、DAC とセマンティック・音響分離
 
-> 2026 audio generation is almost all tokens. EnCodec, SNAC, Mimi, and DAC turn continuous waveforms into discrete sequences that a transformer can predict. The semantic-vs-acoustic token split — first-codebook as semantic, rest as acoustic — is the most important architectural shift since the Transformer for audio.
+> 2026 年の音声生成は、ほぼすべてがトークンで動いています。EnCodec、SNAC、Mimi、DAC は連続的な波形を、Transformer が予測できる離散シーケンスへ変換します。セマンティックトークンと音響トークンの分離、つまり最初のコードブックをセマンティック、残りを音響として扱う設計は、音声において Transformer 以来もっとも重要なアーキテクチャ上の転換です。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
+**所要時間:** 約 60 分
 
-## The Problem
+## 問題
 
-Language models work on discrete tokens. Audio is continuous. If you want an LLM-style model for speech / music — MusicGen, Moshi, Sesame CSM, VibeVoice, Orpheus — you first need a **neural audio codec**: a learned encoder that discretizes audio into a small vocabulary of tokens, and a matching decoder that reconstructs the waveform.
+言語モデルは離散トークンを扱います。一方、音声は連続値です。MusicGen、Moshi、Sesame CSM、VibeVoice、Orpheus のような、音声や音楽向けの LLM 風モデルを作りたいなら、まず **neural audio codec** が必要です。これは音声を小さな語彙のトークンへ離散化する学習済みエンコーダと、波形を復元する対応デコーダです。
 
-Two families have emerged:
+大きく 2 つの系統があります。
 
-1. **Reconstruction-first codecs** — EnCodec, DAC. Optimize perceptual audio quality. Tokens are "acoustic" — they capture everything including speaker identity, timbre, background noise.
-2. **Semantic-first codecs** — Mimi (Kyutai), SpeechTokenizer. Force the first codebook to encode linguistic / phonetic content (often by distilling from WavLM). Subsequent codebooks are acoustic detail.
+1. **復元優先のコーデック** — EnCodec、DAC。知覚的な音質を最適化します。トークンは「音響的」で、話者性、音色、背景ノイズを含むすべてを捉えます。
+2. **セマンティック優先のコーデック** — Mimi (Kyutai)、SpeechTokenizer。最初のコードブックに言語的・音素的内容を符号化させます。多くの場合 WavLM から蒸留します。後続のコードブックは音響的な細部です。
 
-The 2024-2026 insight: **a pure reconstruction codec gives you blurry speech when you try to generate from text.** The LLM over codec tokens has to learn both language structure AND acoustic structure in the same codebook, which doesn't scale. Separating them — semantic codebook 0, acoustic codebooks 1-N — is what makes Moshi and Sesame CSM work.
+2024-2026 年の重要な発見は、**純粋な復元コーデックだけでは、テキストから生成した音声がぼやける**ということです。コーデックトークン上の LLM は、同じコードブック内で言語構造と音響構造の両方を学ぶ必要があり、これはスケールしにくいです。セマンティックコードブック 0 と音響コードブック 1-N に分けることが、Moshi や Sesame CSM を成立させています。
 
-## The Concept
+## コンセプト
 
-![Four codec landscape: EnCodec, DAC, SNAC (multi-scale), Mimi (semantic+acoustic)](../assets/codec-comparison.svg)
+![4 つのコーデックの位置づけ: EnCodec、DAC、SNAC (multi-scale)、Mimi (semantic+acoustic)](../assets/codec-comparison.svg)
 
-### The core trick: Residual Vector Quantization (RVQ)
+### 中核の仕組み: Residual Vector Quantization (RVQ)
 
-Rather than one big codebook (which would need millions of codes for good quality), all modern audio codecs use **RVQ**: a cascade of small codebooks. The first codebook quantizes the encoder output; the second quantizes the residual; etc. Each codebook is 1024 codes. 8 codebooks = effective vocabulary of 1024^8 = 10^24.
+良い品質のために何百万ものコードを持つ巨大なコードブックを 1 つ使う代わりに、現代的な音声コーデックはすべて **RVQ** を使います。これは小さなコードブックを段階的に並べたものです。最初のコードブックがエンコーダ出力を量子化し、2 番目が残差を量子化し、以降も同様です。各コードブックは 1024 個のコードを持ちます。8 個のコードブックなら有効語彙は 1024^8 = 10^24 です。
 
-At inference time, the decoder sums all chosen codes per frame to reconstruct.
+推論時には、デコーダが各フレームで選ばれたすべてのコードを合計して復元します。
 
-### The four codecs that matter in 2026
+### 2026 年に重要な 4 つのコーデック
 
-**EnCodec (Meta, 2022).** The baseline. Encoder-decoder over waveform, RVQ bottleneck. 24 kHz, 32 codebooks possible, default 4 codebooks @ 1.5 kbps. Uses `1D conv + transformer + 1D conv` architecture. Used by MusicGen.
+**EnCodec (Meta, 2022)。** ベースラインです。波形上の encoder-decoder と RVQ ボトルネックを使います。24 kHz、最大 32 コードブック、既定は 4 コードブック @ 1.5 kbps。`1D conv + transformer + 1D conv` アーキテクチャを使います。MusicGen で使われています。
 
-**DAC (Descript, 2023).** RVQ with L2-normalized codebooks, periodic activation functions, improved losses. Highest reconstruction fidelity of any open codec — sometimes indistinguishable from original speech with 12 codebooks. 44.1 kHz full-band.
+**DAC (Descript, 2023)。** L2 正規化コードブック、周期的活性化関数、改善された損失を持つ RVQ です。オープンなコーデックの中では最高水準の復元忠実度で、12 コードブックでは元の音声と区別しにくいこともあります。44.1 kHz フルバンドです。
 
-**SNAC (Hubert Siuzdak, 2024).** Multi-scale RVQ — the coarse codebooks operate at a lower frame rate than fine ones. Effectively models audio hierarchically: a coarse "sketch" at ~12 Hz plus detail at 50 Hz. Used by Orpheus-3B because the hierarchical structure maps well onto LM-based generation.
+**SNAC (Hubert Siuzdak, 2024)。** Multi-scale RVQ です。粗いコードブックは細かいコードブックより低いフレームレートで動きます。実質的に、約 12 Hz の粗い「スケッチ」と 50 Hz の細部として音声を階層的にモデル化します。この階層構造が LM ベース生成と相性がよいため、Orpheus-3B で使われています。
 
-**Mimi (Kyutai, 2024).** The 2026 game-changer. 12.5 Hz frame rate (extremely low), 8 codebooks @ 4.4 kbps. Codebook 0 is **distilled from WavLM** — trained to predict WavLM's speech-content features. Codebooks 1-7 are acoustic residuals. This split powers Moshi (Lesson 15) and Sesame CSM.
+**Mimi (Kyutai, 2024)。** 2026 年のゲームチェンジャーです。12.5 Hz という非常に低いフレームレート、8 コードブック @ 4.4 kbps。コードブック 0 は **WavLM から蒸留**され、WavLM の音声内容特徴を予測するよう訓練されています。コードブック 1-7 は音響残差です。この分離が Moshi (Lesson 15) と Sesame CSM を支えています。
 
-### Frame rates matter for language modeling
+### フレームレートは言語モデルに効く
 
-Lower frame rate = shorter sequence = faster LM.
+低いフレームレート = 短いシーケンス = 速い LM です。
 
 | Codec | Frame rate | 1 s = N frames | Good for |
 |-------|-----------|----------------|---------|
@@ -49,20 +49,20 @@ Lower frame rate = shorter sequence = faster LM.
 | SNAC-24k (coarse) | ~12 Hz | 12 | AR-LM efficient |
 | Mimi | 12.5 Hz | 12.5 | streaming speech |
 
-At 12.5 Hz, a 10-second utterance is only 125 codec frames — a transformer can easily predict them.
+12.5 Hz なら、10 秒の発話は 125 コーデックフレームだけです。Transformer はこれを容易に予測できます。
 
-### Semantic vs acoustic tokens
+### セマンティックトークンと音響トークン
 
 ```
 frame_t → [semantic_token_t, acoustic_token_0_t, acoustic_token_1_t, ..., acoustic_token_6_t]
 ```
 
-- **Semantic token (codebook 0 in Mimi).** Encodes what was said — phonemes, words, content. Distilled from WavLM via an auxiliary prediction loss.
-- **Acoustic tokens (codebooks 1-7).** Encode timbre, speaker identity, prosody, background noise, fine detail.
+- **セマンティックトークン (Mimi の codebook 0)。** 何が話されたか、つまり音素、単語、内容を符号化します。補助予測損失によって WavLM から蒸留されます。
+- **音響トークン (codebooks 1-7)。** 音色、話者性、韻律、背景ノイズ、細部を符号化します。
 
-An AR LM predicts the semantic token first (conditioned on text), then predicts acoustic tokens (conditioned on semantic + speaker reference). This factorization is why modern TTS can zero-shot-clone voices: the semantic model handles content; the acoustic model handles timbre.
+AR LM はまずテキストに条件づけてセマンティックトークンを予測し、次にセマンティックトークンと話者参照に条件づけて音響トークンを予測します。この因子分解により、現代的な TTS はゼロショットで声をクローンできます。セマンティックモデルが内容を扱い、音響モデルが音色を扱うからです。
 
-### 2026 reconstruction quality (bits per sec, lower bitrate is better)
+### 2026 年の復元品質 (bits per sec、低ビットレートほどよい)
 
 | Codec | Bitrate | PESQ | ViSQOL |
 |-------|---------|------|--------|
@@ -72,11 +72,11 @@ An AR LM predicts the semantic token first (conditioned on text), then predicts 
 | SNAC-3kbps | 3 kbps | 3.3 | 3.8 |
 | Mimi-4.4kbps | 4.4 kbps | 3.1 | 3.7 |
 
-Traditional codecs like Opus still win per bit on perceptual quality. Neural codecs win on **discrete tokens** (which Opus does not produce) and **generative-model quality** (what the LM can do with those tokens).
+Opus のような従来型コーデックは、ビットあたりの知覚品質ではまだ勝っています。ニューラルコーデックが勝つのは **離散トークン**を出せること (Opus は出せません) と、**生成モデル品質**、つまり LM がそのトークンで何をできるかです。
 
-## Build It
+## 作ってみる
 
-### Step 1: encode with EnCodec
+### Step 1: EnCodec でエンコードする
 
 ```python
 from encodec import EncodecModel
@@ -92,9 +92,9 @@ codes, scale = encoded[0]
 # codes: (1, n_codebooks, n_frames), dtype=int64
 ```
 
-`n_codebooks=8` at 6 kbps. Each code is 0-1023 (10-bit).
+6 kbps では `n_codebooks=8` です。各コードは 0-1023 (10-bit) です。
 
-### Step 2: decode and measure reconstruction
+### Step 2: デコードして復元を測る
 
 ```python
 with torch.no_grad():
@@ -106,7 +106,7 @@ import torch.nn.functional as F
 mse = F.mse_loss(wav_recon[:, :, :wav.shape[-1]], wav).item()
 ```
 
-### Step 3: the semantic-acoustic split (Mimi-style)
+### Step 3: セマンティック・音響分離 (Mimi 風)
 
 ```python
 from moshi.models import loaders
@@ -119,21 +119,21 @@ semantic = codes[:, 0]
 acoustic = codes[:, 1:]
 ```
 
-Semantic codebook 0 is WavLM-aligned. You can train a text-to-semantic transformer — much smaller vocabulary than going direct-to-audio. Then a separate acoustic-to-waveform decoder conditions on a speaker reference.
+セマンティックコードブック 0 は WavLM に整合しています。text-to-semantic Transformer を訓練できます。これは直接 audio に行くより語彙がかなり小さくなります。その後、別の acoustic-to-waveform デコーダが話者参照に条件づけて復元します。
 
-### Step 4: why AR LM over codec tokens works
+### Step 4: コーデックトークン上の AR LM が機能する理由
 
-For a 10 s speech clip at Mimi's 12.5 Hz × 8 codebooks:
+Mimi の 12.5 Hz × 8 コードブックで、10 秒の音声クリップを考えます。
 
 ```
 N_tokens = 10 * 12.5 * 8 = 1000 tokens
 ```
 
-1000 tokens is a trivial context for a transformer. A 256M-parameter transformer can generate 10 seconds of speech in milliseconds on a modern GPU.
+1000 トークンは Transformer にとって軽いコンテキストです。256M パラメータの Transformer でも、現代的な GPU なら 10 秒の音声をミリ秒単位で生成できます。
 
-## Use It
+## 使いどころ
 
-Map problem → codec:
+問題からコーデックへ対応づけます。
 
 | Task | Codec |
 |------|-------|
@@ -144,42 +144,42 @@ Map problem → codec:
 | Sound-effect library with text | EnCodec + T5 condition |
 | Fine-grained audio editing | DAC + inpainting |
 
-Rule of thumb: **if you're building a generative model, start with Mimi or SNAC. If you're building a compression pipeline, use Opus.**
+目安: **生成モデルを作るなら Mimi か SNAC から始めます。圧縮パイプラインを作るなら Opus を使います。**
 
-## Pitfalls
+## 落とし穴
 
-- **Too many codebooks.** Adding codebooks increases fidelity linearly but LM sequence length linearly too. Stop at 8-12.
-- **Frame-rate mismatch.** Training LM on 12.5 Hz Mimi then fine-tuning on 50 Hz EnCodec fails silently.
-- **Assuming all codebooks equal.** In Mimi, codebook 0 carries content; losing it destroys intelligibility. Losing codebook 7 is barely noticeable.
-- **Using reconstruction quality as the only metric.** A codec can have great reconstruction but be useless for LM-based generation if the semantic structure is bad.
+- **コードブックが多すぎる。** コードブックを増やすと忠実度は線形に上がりますが、LM のシーケンス長も線形に伸びます。8-12 で止めます。
+- **フレームレートの不一致。** 12.5 Hz の Mimi で LM を訓練し、その後 50 Hz の EnCodec で微調整すると、静かに失敗します。
+- **すべてのコードブックを同等だと思う。** Mimi では codebook 0 が内容を持ちます。これを失うと明瞭度が壊れます。codebook 7 を失ってもほとんど気づきません。
+- **復元品質だけを指標にする。** 復元が優秀なコーデックでも、セマンティック構造が悪ければ LM ベース生成には役に立たないことがあります。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-codec-picker.md`. Pick a codec for a given generative or compression task.
+`outputs/skill-codec-picker.md` として保存します。与えられた生成または圧縮タスクに対してコーデックを選びます。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. It implements a toy scalar + residual quantizer and measures reconstruction error as you add codebooks.
-2. **Medium.** Install `encodec` and compare 1, 4, 8, 32 codebooks on a held-out speech clip. Plot PESQ or MSE vs bitrate.
-3. **Hard.** Load Mimi. Encode a clip. Replace codebook 0 with random integers; decode. Then replace codebook 7 similarly. Compare the two corruptions — codebook 0 corruption should destroy intelligibility; codebook 7 corruption should barely change anything.
+1. **Easy.** `code/main.py` を実行します。トイ版の scalar + residual quantizer を実装し、コードブックを増やしたときの復元誤差を測ります。
+2. **Medium.** `encodec` をインストールし、保留した音声クリップで 1、4、8、32 コードブックを比較します。PESQ または MSE とビットレートの関係をプロットします。
+3. **Hard.** Mimi を読み込みます。クリップをエンコードします。codebook 0 をランダム整数で置き換えてデコードします。次に codebook 7 でも同じことをします。2 つの破損を比較します。codebook 0 の破損は明瞭度を壊し、codebook 7 の破損はほとんど何も変えないはずです。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| RVQ | Residual quantization | Cascade of small codebooks; each quantizes the previous residual. |
-| Frame rate | Codec speed | How many token-frames per second. Lower = faster LM. |
-| Semantic codebook | Codebook 0 (Mimi) | Codebook distilled from SSL features; encodes content. |
-| Acoustic codebooks | Everything else | Timbre, prosody, noise, fine detail. |
-| PESQ / ViSQOL | Perceptual quality | Objective metrics correlating with MOS. |
-| EnCodec | Meta codec | The RVQ baseline; used by MusicGen. |
-| Mimi | Kyutai codec | 12.5 Hz frame rate; semantic-acoustic split; powers Moshi. |
+| RVQ | 残差量子化 | 小さなコードブックのカスケード。各段が前段の残差を量子化する。 |
+| Frame rate | コーデック速度 | 1 秒あたりのトークンフレーム数。低いほど LM は速い。 |
+| Semantic codebook | Codebook 0 (Mimi) | SSL 特徴から蒸留されたコードブック。内容を符号化する。 |
+| Acoustic codebooks | それ以外すべて | 音色、韻律、ノイズ、細部。 |
+| PESQ / ViSQOL | 知覚品質 | MOS と相関する客観指標。 |
+| EnCodec | Meta codec | RVQ のベースライン。MusicGen で使われる。 |
+| Mimi | Kyutai codec | 12.5 Hz フレームレート、セマンティック・音響分離、Moshi を支える。 |
 
-## Further Reading
+## さらに読む
 
-- [Défossez et al. (2023). EnCodec](https://arxiv.org/abs/2210.13438) — the RVQ baseline.
-- [Kumar et al. (2023). Descript Audio Codec (DAC)](https://arxiv.org/abs/2306.06546) — highest-fidelity open.
-- [Siuzdak (2024). SNAC](https://arxiv.org/abs/2410.14411) — multi-scale RVQ.
-- [Kyutai (2024). Mimi codec](https://kyutai.org/codec-explainer) — semantic-acoustic split, WavLM distillation.
-- [Borsos et al. (2023). AudioLM](https://arxiv.org/abs/2209.03143) — the two-stage semantic/acoustic paradigm.
-- [Zeghidour et al. (2021). SoundStream](https://arxiv.org/abs/2107.03312) — the original streamable RVQ codec.
+- [Défossez et al. (2023). EnCodec](https://arxiv.org/abs/2210.13438) — RVQ のベースライン。
+- [Kumar et al. (2023). Descript Audio Codec (DAC)](https://arxiv.org/abs/2306.06546) — オープンな中で最高水準の忠実度。
+- [Siuzdak (2024). SNAC](https://arxiv.org/abs/2410.14411) — multi-scale RVQ。
+- [Kyutai (2024). Mimi codec](https://kyutai.org/codec-explainer) — セマンティック・音響分離と WavLM 蒸留。
+- [Borsos et al. (2023). AudioLM](https://arxiv.org/abs/2209.03143) — 2 段階のセマンティック・音響パラダイム。
+- [Zeghidour et al. (2021). SoundStream](https://arxiv.org/abs/2107.03312) — 元祖 streamable RVQ codec。

@@ -1,13 +1,13 @@
-"""End-to-end auto-research demo: seed -> scheduler -> critic loop -> paper writer.
+"""end-to-end auto-research demo: seed -> scheduler -> critic loop -> paper writer。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
+概念参照:
+- ./docs/en.md (この lesson)
 - Phase 19 lesson 54 (paper writer)
 - Phase 19 lesson 55 (critic loop)
 - Phase 19 lesson 56 (iteration scheduler)
-- Phase 19 lessons 50-53 (earlier auto-research stages; the seed/runner stub here stands in for them)
+- Phase 19 lessons 50-53 (earlier auto-research stages; ここでは seed/runner stub が代役)
 
-Stdlib + numpy only. Run: python3 code/main.py
+stdlib + numpy のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -41,7 +41,7 @@ import importlib.util
 def _load_module(name: str, file_path: str):
     spec = importlib.util.spec_from_file_location(name, file_path)
     if spec is None or spec.loader is None:
-        raise ImportError(f"cannot load {name} from {file_path}")
+        raise ImportError(f"{file_path} から {name} を load できません")
     mod = importlib.util.module_from_spec(spec)
     sys.modules[name] = mod
     spec.loader.exec_module(mod)
@@ -84,11 +84,11 @@ make_deterministic_runner = scheduler_mod.make_deterministic_runner
 
 
 class NoTriggerError(Exception):
-    """No branch crossed the paper threshold; demo cannot pick a best result."""
+    """paper threshold を超えた branch がなく、demo が best result を選べません。"""
 
 
 class BestResultError(Exception):
-    """Picker received an empty trigger list."""
+    """picker が空の trigger list を受け取りました。"""
 
 
 @dataclass
@@ -112,7 +112,7 @@ class DemoReport:
 
 
 def make_seed_hypotheses() -> list[Hypothesis]:
-    """Three seed hypotheses, one per research branch. Stand-in for lessons 50-53."""
+    """research branch ごとに一つ、計三つの seed hypotheses。lessons 50-53 の代役です。"""
     return [
         Hypothesis(id="h-alpha-1", branch="alpha", payload={"q": "method-x"}),
         Hypothesis(id="h-beta-1", branch="beta", payload={"q": "method-y"}),
@@ -121,16 +121,16 @@ def make_seed_hypotheses() -> list[Hypothesis]:
 
 
 def pick_best_branch(scheduler_report: SchedulerReport) -> tuple[str, float]:
-    """Pick the branch with the highest mean reward among triggered branches.
+    """triggered branches の中で mean reward が最大の branch を選びます。
 
-    Ties break alphabetically by branch id (deterministic).
+    tie は branch id の alphabetic order で解きます (deterministic)。
     """
     if not scheduler_report.paper_triggers:
-        raise NoTriggerError("no branch crossed the paper threshold")
+        raise NoTriggerError("paper threshold を超えた branch がありません")
     by_branch = {b.branch: b for b in scheduler_report.branches}
     triggered = [by_branch[name] for name in scheduler_report.paper_triggers if name in by_branch]
     if not triggered:
-        raise BestResultError("trigger list empty after lookup")
+        raise BestResultError("lookup 後の trigger list が空です")
     triggered.sort(key=lambda b: (-b.mean, b.branch))
     best = triggered[0]
     return best.branch, best.mean
@@ -146,10 +146,10 @@ def _originality_for_reward(reward: float) -> str:
 
 def build_mini_paper(branch: str, reward: float) -> MiniPaper:
     return MiniPaper(
-        title=f"Auto-Research Findings on Branch {branch}",
-        abstract=f"We summarise the best yielding branch {branch} from the auto-research loop.",
+        title=f"branch {branch} に関する Auto-Research Findings",
+        abstract=f"auto-research loop で最も高い yield を示した branch {branch} を要約する。",
         sections=[
-            MiniSection(id="intro", title="Introduction", body="initial observations"),
+            MiniSection(id="intro", title="Introduction", body="初期観察"),
             MiniSection(id="results", title="Results", body=""),
         ],
         originality_tag=_originality_for_reward(reward),
@@ -157,10 +157,10 @@ def build_mini_paper(branch: str, reward: float) -> MiniPaper:
 
 
 def mini_to_full_paper(mini: MiniPaper, branch: str) -> Paper:
-    """Promote a converged MiniPaper into a full Paper for the writer.
+    """converged MiniPaper を writer 用の full Paper に昇格させます。
 
-    Adds one figure and one bibliography entry per used citation key. Every
-    section's cite list is preserved; the bibliography is built from the union.
+    使用された citation key ごとに bibliography entry を追加し、figure を一つ追加します。
+    各 section の cite list は保持され、bibliography は union から作られます。
     """
     cites: list[str] = []
     for sec in mini.sections:
@@ -171,14 +171,14 @@ def mini_to_full_paper(mini: MiniPaper, branch: str) -> Paper:
     bib = [
         BibEntry(
             key=key, entry_type="article",
-            fields={"title": f"Source {key}", "author": "Synthesised", "year": "2026"},
+            fields={"title": f"出典 {key}", "author": "Synthesised", "year": "2026"},
         )
         for key in cites
     ]
     if not bib:
         bib = [BibEntry(
             key=f"{branch}-baseline", entry_type="article",
-            fields={"title": "Baseline", "author": "Synthesised", "year": "2026"},
+            fields={"title": "baseline", "author": "Synthesised", "year": "2026"},
         )]
         for sec in mini.sections:
             if sec.id == "intro":
@@ -188,7 +188,7 @@ def mini_to_full_paper(mini: MiniPaper, branch: str) -> Paper:
     fig = Figure(
         id=f"{branch}-results",
         path=f"figs/{branch}.pdf",
-        caption=f"Reward trajectory on branch {branch}",
+        caption=f"branch {branch} の reward trajectory",
     )
 
     sections = []
@@ -211,7 +211,7 @@ def mini_to_full_paper(mini: MiniPaper, branch: str) -> Paper:
 async def _run_demo_async(out_dir: str, seed: int = 11) -> DemoReport:
     seed_list = make_seed_hypotheses()
     if not seed_list:
-        raise BestResultError("seed list is empty")
+        raise BestResultError("seed list が空です")
 
     runner = make_deterministic_runner(
         base_rewards={"alpha": 0.82, "beta": 0.55, "gamma": 0.15},
@@ -239,10 +239,10 @@ async def _run_demo_async(out_dir: str, seed: int = 11) -> DemoReport:
 
     full_paper = mini_to_full_paper(critic_result.paper, branch)
     prose = MockProseGenerator(outlines={
-        "intro": f"motivation for branch {branch}",
-        "results": f"summary of reward trajectory on branch {branch}",
-        "method": "method description",
-        "related-work": "related work survey",
+        "intro": f"branch {branch} の動機",
+        "results": f"branch {branch} の reward trajectory の要約",
+        "method": "method の説明",
+        "related-work": "related work の survey",
     })
     writer = PaperWriter(prose=prose)
     manifest = writer.write(full_paper, out_dir)

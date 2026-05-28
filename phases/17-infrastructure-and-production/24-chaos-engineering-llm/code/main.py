@@ -1,6 +1,6 @@
-"""Chaos engineering runner with safety plane gates — stdlib Python.
+"""safety plane gates つき chaos engineering runner — 標準ライブラリのみの Python。
 
-Runs three LLM-specific experiments and applies burn-rate + blast-radius safety gates.
+3 つの LLM-specific experiments を実行し、burn-rate + blast-radius の safety gates を適用します。
 """
 
 from __future__ import annotations
@@ -21,9 +21,9 @@ class Experiment:
 
 
 EXPERIMENTS = [
-    Experiment("pod kill (1 decode replica)",     5, 0.002, 0.05),
-    Experiment("provider 429 fallback",           5, 0.015, 0.30),
-    Experiment("malformed prompt tokenizer stall",3, 0.040, 0.10),
+    Experiment("pod kill (1 decode replica)",      5, 0.002, 0.05),
+    Experiment("provider 429 fallback",            5, 0.015, 0.30),
+    Experiment("malformed prompt tokenizer stall", 3, 0.040, 0.10),
 ]
 
 
@@ -43,10 +43,10 @@ def run_experiment(e: Experiment) -> dict:
 
 def main() -> None:
     print("=" * 90)
-    print("CHAOS EXPERIMENT RUNNER — safety plane gates burn-rate × blast-radius")
+    print("CHAOS EXPERIMENT RUNNER — safety plane gates: burn-rate × blast-radius")
     print("=" * 90)
     print(f"SLO error budget: {ERROR_BUDGET_PER_DAY*100:.2f}%/day")
-    print(f"Expected baseline error rate: {EXPECTED_ERROR_RATE*100:.3f}%")
+    print(f"想定 baseline error rate: {EXPECTED_ERROR_RATE*100:.3f}%")
     print(f"Burn-rate gate: > 2.0x expected AND blast radius > 20%\n")
 
     header = f"{'Experiment':38}  {'mins':>4}  {'err %':>6}  {'burn×':>6}  {'blast':>6}  Status"
@@ -60,9 +60,9 @@ def main() -> None:
               f"{r['blast_radius']*100:>5.0f}%  "
               f"{r['status']}")
 
-    print("\nRead: small-blast-radius experiments run to completion even at high burn rate.")
-    print("Large-blast-radius + high burn → abort. Suppression windows + trace-ID tags")
-    print("required to dedupe alerts during experiments.")
+    print("\n読み方: small-blast-radius experiments は burn rate が高くても最後まで実行されます。")
+    print("large-blast-radius + high burn → abort。experiment 中に alerts を dedupe するには")
+    print("suppression windows + trace-ID tags が必要です。")
 
 
 if __name__ == "__main__":

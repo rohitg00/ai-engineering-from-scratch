@@ -15,7 +15,7 @@ export function renderIndexHtml(store: JobStore): string {
 <h1>video understanding jobs</h1>
 <table><thead><tr><th>id</th><th>video</th><th>question</th><th>status</th></tr></thead>
 <tbody>${rows}</tbody></table>
-<p>JSON: <a href="/jobs">/jobs</a>, single job: <code>/job/&lt;id&gt;</code></p>`;
+<p>JSON: <a href="/jobs">/jobs</a>, 単一 job: <code>/job/&lt;id&gt;</code></p>`;
 }
 
 export function buildApp(store: JobStore): Hono {
@@ -28,7 +28,7 @@ export function buildApp(store: JobStore): Hono {
   app.get("/job/:id", (c) => {
     const id = c.req.param("id");
     const body = store.detail(id);
-    if (!body) return c.json({ error: "job not found", id }, 404);
+    if (!body) return c.json({ error: "job が見つかりません", id }, 404);
     return c.json(body);
   });
 

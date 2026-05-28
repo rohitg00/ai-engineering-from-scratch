@@ -1,32 +1,32 @@
-# Self-Attention from Scratch
+# Self-Attention をゼロから作る
 
-> Attention is a lookup table where every word asks "who matters to me?" - and learns the answer.
+> Attention は、すべての単語が「自分にとって誰が重要か？」と問い、その答えを学習する lookup table です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 3 (Deep Learning Core), Phase 5 Lesson 10 (Sequence-to-Sequence)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 3 (Deep Learning Core), Phase 5 Lesson 10 (Sequence-to-Sequence)
+**所要時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Implement scaled dot-product self-attention from scratch using only NumPy, including query/key/value projections and the softmax-weighted sum
-- Build a multi-head attention layer that splits heads, computes parallel attention, and concatenates results
-- Trace how the attention matrix captures token relationships and explain why scaling by sqrt(d_k) prevents softmax saturation
-- Apply causal masking to convert bidirectional attention into autoregressive (decoder-style) attention
+- NumPy だけを使って、query/key/value projection と softmax による重み付き和を含む scaled dot-product self-attention をゼロから実装する
+- head を分割し、並列 attention を計算して結果を連結する multi-head attention 層を作る
+- attention 行列がトークン間の関係をどう捉えるかを追跡し、sqrt(d_k) によるスケーリングが softmax の飽和を防ぐ理由を説明する
+- causal masking を適用し、双方向 attention を自己回帰（decoder-style）attention に変換する
 
-## The Problem
+## 問題
 
-RNNs process sequences one token at a time. By the time you reach token 50, the information from token 1 has been squeezed through 50 compression steps. Long-range dependencies get crushed into a fixed-size hidden state - a bottleneck that no amount of LSTM gating fully solves.
+RNN は系列を 1 トークンずつ処理します。トークン 50 に到達する頃には、トークン 1 の情報は 50 回の圧縮ステップを通っています。長距離依存は固定サイズの隠れ状態に押しつぶされます。これは、どれだけ LSTM のゲートを使っても完全には解けないボトルネックです。
 
-The 2014 Bahdanau attention paper showed the fix: let the decoder look back at every encoder position and decide which ones matter for the current step. But it was still bolted onto an RNN. The 2017 "Attention Is All You Need" paper asked a sharper question: what if attention is the *only* mechanism? No recurrence. No convolution. Just attention.
+2014 年の Bahdanau attention 論文は解決策を示しました。デコーダがすべてのエンコーダ位置を振り返り、現在のステップにどれが重要かを決められるようにする、というものです。ただし、それはまだ RNN に後付けされた仕組みでした。2017 年の "Attention Is All You Need" 論文は、さらに鋭い問いを立てました。attention が*唯一の*仕組みだったらどうなるか。再帰なし。畳み込みなし。ただ attention だけ。
 
-Self-attention lets every position in a sequence attend to every other position in a single parallel step. That is what makes transformers fast, scalable, and dominant.
+Self-attention は、系列内のすべての位置が 1 回の並列ステップで他のすべての位置に attention できるようにします。これが Transformer を高速で、スケーラブルで、支配的なものにしています。
 
-## The Concept
+## コンセプト
 
-### The Database Lookup Analogy
+### データベース検索のアナロジー
 
-Think of attention as a soft database lookup:
+attention を soft なデータベース検索として考えます。
 
 ```
 Traditional database:
@@ -36,16 +36,16 @@ Attention:
   Query: "capital of France"  -->  similarity to ALL keys  -->  weighted blend of ALL values
 ```
 
-Every token generates three vectors:
-- **Query (Q)**: "What am I looking for?"
-- **Key (K)**: "What do I contain?"
-- **Value (V)**: "What information do I provide if selected?"
+すべてのトークンは 3 つのベクトルを生成します。
+- **Query (Q)**: 「自分は何を探しているか？」
+- **Key (K)**: 「自分は何を含んでいるか？」
+- **Value (V)**: 「選ばれたら、どんな情報を提供するか？」
 
-The dot product between a query and all keys produces attention scores. High score means "this key matches my query." Those scores weight the values. The output is a weighted sum of values.
+query とすべての key の内積が attention score を作ります。高いスコアは「この key は自分の query に合っている」という意味です。そのスコアで value に重みを付けます。出力は value の重み付き和です。
 
-### Q, K, V Computation
+### Q, K, V の計算
 
-Each token embedding gets projected through three learned weight matrices:
+各トークン embedding は、学習される 3 つの重み行列を通して射影されます。
 
 ```
 Input embeddings (sequence of n tokens, each d-dimensional):
@@ -78,9 +78,9 @@ Visually, for one token:
        +----[*]------> v_i    "What do I offer?"
 ```
 
-### The Attention Matrix
+### Attention 行列
 
-Once you have Q, K, V for all tokens, attention scores form a matrix:
+すべてのトークンについて Q, K, V が得られると、attention score は行列になります。
 
 ```
 Scores = Q @ K^T    shape: (n, n)
@@ -101,19 +101,19 @@ Scores = Q @ K^T    shape: (n, n)
 Each row: one token's attention over the entire sequence
 ```
 
-### Why Scale?
+### なぜスケールするのか
 
-The dot products grow with dimension dk. If dk = 64, dot products can be in the range of tens, pushing softmax into regions where gradients vanish. The fix: divide by sqrt(dk).
+内積は次元 dk とともに大きくなります。dk = 64 の場合、内積は数十の範囲になり、softmax が勾配の消える領域に押し込まれることがあります。対策は sqrt(dk) で割ることです。
 
 ```
 Scaled scores = (Q @ K^T) / sqrt(dk)
 ```
 
-This keeps values in a range where softmax produces useful gradients.
+これにより、softmax が有用な勾配を生む範囲に値を保てます。
 
-### Softmax Turns Scores into Weights
+### Softmax はスコアを重みに変える
 
-Softmax converts raw scores into a probability distribution across each row:
+Softmax は生のスコアを、各行ごとの確率分布に変換します。
 
 ```
 Raw scores for q1:   [2.1, 0.3, 0.1, 0.8, 0.2]
@@ -123,11 +123,11 @@ Raw scores for q1:   [2.1, 0.3, 0.1, 0.8, 0.2]
 Attention weights:   [0.52, 0.09, 0.07, 0.14, 0.08]   (sums to ~1.0)
 ```
 
-Now each token has a set of weights saying how much to attend to every other token.
+これで各トークンは、他の各トークンへどれくらい attention するかを表す重み集合を持ちます。
 
-### Weighted Sum of Values
+### Value の重み付き和
 
-The final output for each token is a weighted sum of all value vectors:
+各トークンの最終出力は、すべての value ベクトルの重み付き和です。
 
 ```
 output_i = sum( attention_weight[i][j] * v_j  for all j )
@@ -136,7 +136,7 @@ For token 1:
   output_1 = 0.52 * v1 + 0.09 * v2 + 0.07 * v3 + 0.14 * v4 + 0.08 * v5
 ```
 
-### Full Pipeline
+### 全体の流れ
 
 ```
                     +-------+
@@ -158,17 +158,17 @@ For token 1:
                               +-----------------+
 ```
 
-Formula in one line:
+1 行で表す式:
 
 ```
 Attention(Q, K, V) = softmax( Q @ K^T / sqrt(dk) ) @ V
 ```
 
-## Build It
+## 作ってみる
 
-### Step 1: Softmax from scratch
+### Step 1: Softmax をゼロから実装する
 
-Softmax converts raw logits into probabilities. Subtract the max for numerical stability.
+Softmax は生の logits を確率に変換します。数値安定性のために最大値を引きます。
 
 ```python
 import numpy as np
@@ -186,7 +186,7 @@ print(f"sum:     {softmax(logits).sum():.4f}")
 
 ### Step 2: Scaled dot-product attention
 
-The core function. Takes Q, K, V matrices and returns the attention output plus the weight matrix.
+中核となる関数です。Q, K, V 行列を受け取り、attention 出力と重み行列を返します。
 
 ```python
 def scaled_dot_product_attention(Q, K, V):
@@ -197,9 +197,9 @@ def scaled_dot_product_attention(Q, K, V):
     return output, weights
 ```
 
-### Step 3: Self-attention class with learned projections
+### Step 3: 学習される projection を持つ Self-attention クラス
 
-A full self-attention module with Wq, Wk, Wv weight matrices initialized with Xavier-like scaling.
+Xavier 風のスケーリングで初期化された Wq, Wk, Wv 重み行列を持つ、完全な self-attention モジュールです。
 
 ```python
 class SelfAttention:
@@ -220,9 +220,9 @@ class SelfAttention:
         return output, weights
 ```
 
-### Step 4: Run it on a sentence
+### Step 4: 文で動かす
 
-Create fake embeddings for a sentence and watch the attention weights.
+文に対する仮の embedding を作り、attention weight を観察します。
 
 ```python
 sentence = ["The", "cat", "sat", "on", "the", "mat"]
@@ -251,9 +251,9 @@ for i, token in enumerate(sentence):
     print()
 ```
 
-### Step 5: Visualize attention with ASCII heatmap
+### Step 5: ASCII ヒートマップで attention を可視化する
 
-Map attention weights to characters for a quick visual.
+attention weight を文字に対応させ、簡単に可視化します。
 
 ```python
 def ascii_heatmap(weights, tokens, chars=" ░▒▓█"):
@@ -274,9 +274,9 @@ def ascii_heatmap(weights, tokens, chars=" ░▒▓█"):
 ascii_heatmap(weights, sentence)
 ```
 
-## Use It
+## 使いどころ
 
-PyTorch's `nn.MultiheadAttention` does exactly what we built, plus multi-head splitting and output projection:
+PyTorch の `nn.MultiheadAttention` は、ここで作ったものに multi-head 分割と出力 projection を加えた処理をそのまま行います。
 
 ```python
 import torch
@@ -299,33 +299,33 @@ print(f"\nAttn weights (averaged over heads):")
 print(attn_weights[0].detach().numpy().round(3))
 ```
 
-The key difference: multi-head attention runs multiple attention functions in parallel, each with its own Q, K, V projections of size dk = d_model / n_heads, then concatenates results. This lets the model attend to different relationship types simultaneously.
+重要な違いは、multi-head attention が複数の attention 関数を並列に実行することです。それぞれが dk = d_model / n_heads サイズの独自の Q, K, V projection を持ち、最後に結果を連結します。これにより、モデルは複数の関係タイプへ同時に attention できます。
 
-## Ship It
+## 仕上げる
 
-This lesson produces:
-- `outputs/prompt-attention-explainer.md` - a prompt for explaining attention through the database lookup analogy
+このレッスンで作るもの:
+- `outputs/prompt-attention-explainer.md` - データベース検索のアナロジーで attention を説明するためのプロンプト
 
-## Exercises
+## 演習
 
-1. Modify `scaled_dot_product_attention` to accept an optional mask matrix that sets certain positions to negative infinity before softmax (this is how causal/decoder masking works)
-2. Implement multi-head attention from scratch: split Q, K, V into `n_heads` chunks, run attention on each, concatenate, and project through a final weight matrix Wo
-3. Take two different sentences of the same length, feed them through the same SelfAttention instance, and compare their attention patterns. What changes? What stays the same?
+1. `scaled_dot_product_attention` を変更し、softmax の前に特定の位置を負の無限大に設定する任意の mask 行列を受け取れるようにしてください（これが causal/decoder masking の仕組みです）。
+2. multi-head attention をゼロから実装してください。Q, K, V を `n_heads` 個のチャンクに分け、それぞれで attention を実行し、連結して、最後の重み行列 Wo を通して projection します。
+3. 同じ長さの異なる 2 つの文を取り、同じ SelfAttention インスタンスに入力して attention pattern を比較してください。何が変わり、何が変わらないでしょうか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Query (Q) | "The question vector" | A learned projection of the input that represents what information this token is looking for |
-| Key (K) | "The label vector" | A learned projection that represents what information this token contains, matched against queries |
-| Value (V) | "The content vector" | A learned projection carrying the actual information that gets aggregated based on attention scores |
-| Scaled dot-product attention | "The attention formula" | softmax(QK^T / sqrt(dk)) @ V - scaling prevents softmax saturation in high dimensions |
-| Self-attention | "The token looks at itself and others" | Attention where Q, K, V all come from the same sequence, letting every position attend to every other position |
-| Attention weights | "How much focus" | A probability distribution over positions, produced by softmax over scaled dot products |
-| Multi-head attention | "Parallel attention" | Running multiple attention functions with different projections, then concatenating results for richer representations |
+| Query (Q) | 「質問ベクトル」 | このトークンがどんな情報を探しているかを表す、入力の学習済み projection |
+| Key (K) | 「ラベルベクトル」 | このトークンがどんな情報を含むかを表し、query と照合される学習済み projection |
+| Value (V) | 「内容ベクトル」 | attention score に基づいて集約される実際の情報を運ぶ学習済み projection |
+| Scaled dot-product attention | 「attention の式」 | softmax(QK^T / sqrt(dk)) @ V。スケーリングにより高次元での softmax 飽和を防ぐ |
+| Self-attention | 「トークンが自分自身と他を見る」 | Q, K, V がすべて同じ系列から来る attention。すべての位置が他のすべての位置に attention できる |
+| Attention weights | 「どれだけ注目するか」 | scaled dot product に softmax をかけて得られる、位置上の確率分布 |
+| Multi-head attention | 「並列 attention」 | 異なる projection を持つ複数の attention 関数を実行し、結果を連結して豊かな表現を得ること |
 
-## Further Reading
+## 参考文献
 
-- [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) - the original transformer paper
-- [The Illustrated Transformer (Jay Alammar)](https://jalammar.github.io/illustrated-transformer/) - best visual walkthrough of the full architecture
-- [The Annotated Transformer (Harvard NLP)](https://nlp.seas.harvard.edu/annotated-transformer/) - line-by-line PyTorch implementation with explanations
+- [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) - 元祖 Transformer 論文
+- [The Illustrated Transformer (Jay Alammar)](https://jalammar.github.io/illustrated-transformer/) - アーキテクチャ全体を視覚的に追う最高の解説
+- [The Annotated Transformer (Harvard NLP)](https://nlp.seas.harvard.edu/annotated-transformer/) - 1 行ずつ説明された PyTorch 実装

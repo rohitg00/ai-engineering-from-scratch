@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -8,59 +8,59 @@
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">Inference metrics — throughput lies, goodput tells the truth</text>
+  <text x="480" y="24" text-anchor="middle" class="title">推論指標 — スループットは嘘をつき、グッドプットが真実を語る</text>
 
   <rect x="40" y="50" width="440" height="230" class="box"/>
-  <text x="260" y="72" text-anchor="middle" class="head">the four latencies</text>
+  <text x="260" y="72" text-anchor="middle" class="head">4つのレイテンシ</text>
   <rect x="60" y="90" width="400" height="35" class="cool"/>
-  <text x="260" y="112" text-anchor="middle" class="step">TTFT = queue + network + prefill</text>
+  <text x="260" y="112" text-anchor="middle" class="step">TTFT = キュー + ネットワーク + prefill</text>
   <rect x="60" y="130" width="400" height="35" class="cold"/>
-  <text x="260" y="152" text-anchor="middle" class="step">TPOT / ITL = decode per token after first</text>
+  <text x="260" y="152" text-anchor="middle" class="step">TPOT / ITL = 初回後のトークンごとのdecode</text>
   <rect x="60" y="170" width="400" height="35" class="dsk"/>
-  <text x="260" y="192" text-anchor="middle" class="step">E2E = TTFT + TPOT * output_len</text>
+  <text x="260" y="192" text-anchor="middle" class="step">E2E = TTFT + TPOT * 出力_len</text>
   <rect x="60" y="210" width="400" height="35" class="hot"/>
-  <text x="260" y="232" text-anchor="middle" class="step">throughput = total_tokens / elapsed</text>
-  <text x="260" y="263" text-anchor="middle" class="caption">throughput is a fleet metric, not a user metric</text>
+  <text x="260" y="232" text-anchor="middle" class="step">スループット = 総トークン / 経過時間</text>
+  <text x="260" y="263" text-anchor="middle" class="caption">スループットはfleet指標でありユーザー指標ではない</text>
 
   <rect x="500" y="50" width="420" height="230" class="box"/>
-  <text x="710" y="72" text-anchor="middle" class="head">goodput — the SLO gate</text>
+  <text x="710" y="72" text-anchor="middle" class="head">グッドプット — SLO ゲート</text>
   <rect x="520" y="90" width="380" height="115" class="cool"/>
-  <text x="710" y="112" text-anchor="middle" class="step">goodput = P[ all SLO constraints held ]</text>
+  <text x="710" y="112" text-anchor="middle" class="step">グッドプット = P[ 全SLO制約を満たす ]</text>
   <text x="710" y="132" text-anchor="middle" class="small">TTFT P99 &lt;= a  AND</text>
   <text x="710" y="150" text-anchor="middle" class="small">TPOT P99 &lt;= b  AND</text>
   <text x="710" y="168" text-anchor="middle" class="small">E2E P99 &lt;= c</text>
-  <text x="710" y="190" text-anchor="middle" class="small">a request is "good" only if every bound held</text>
+  <text x="710" y="190" text-anchor="middle" class="small">全境界を満たしたリクエストだけが"good"</text>
   <rect x="520" y="215" width="380" height="55" class="hot"/>
-  <text x="710" y="237" text-anchor="middle" class="step">target : goodput >= 99%</text>
-  <text x="710" y="256" text-anchor="middle" class="small">used in MLPerf Inference v6.0 submissions</text>
+  <text x="710" y="237" text-anchor="middle" class="step">目標: グッドプット >= 99%</text>
+  <text x="710" y="256" text-anchor="middle" class="small">MLPerf Inference v6.0 submissionsで使用</text>
 
   <rect x="40" y="300" width="440" height="230" class="box"/>
-  <text x="260" y="322" text-anchor="middle" class="head">percentiles — never mean alone</text>
+  <text x="260" y="322" text-anchor="middle" class="head">パーセンタイル — 平均だけは禁止</text>
   <rect x="60" y="340" width="400" height="35" class="cool"/>
-  <text x="260" y="362" text-anchor="middle" class="step">always P50, P90, P99</text>
+  <text x="260" y="362" text-anchor="middle" class="step">常に P50, P90, P99</text>
   <rect x="60" y="380" width="400" height="35" class="cold"/>
-  <text x="260" y="402" text-anchor="middle" class="step">LLM distributions are right-skewed</text>
+  <text x="260" y="402" text-anchor="middle" class="step">LLM 分布sは右裾が長い</text>
   <rect x="60" y="420" width="400" height="35" class="hot"/>
-  <text x="260" y="442" text-anchor="middle" class="step">mean TPOT 7 ms can hide P99 of 40 ms</text>
+  <text x="260" y="442" text-anchor="middle" class="step">平均 TPOT 7 msはP99 40 msを隠せる</text>
   <rect x="60" y="460" width="400" height="55" class="dsk"/>
-  <text x="260" y="482" text-anchor="middle" class="step">reference (Llama-3.1-8B on TRT-LLM, 2026)</text>
-  <text x="260" y="500" text-anchor="middle" class="small">TTFT 162 ms, TPOT 7.33 ms, E2E 1093 ms (mean)</text>
+  <text x="260" y="482" text-anchor="middle" class="step">参考値 (Llama-3.1-8B on TRT-LLM, 2026)</text>
+  <text x="260" y="500" text-anchor="middle" class="small">TTFT 162 ms, TPOT 7.33 ms, E2E 1093 ms (平均)</text>
 
   <rect x="500" y="300" width="420" height="230" class="box"/>
-  <text x="710" y="322" text-anchor="middle" class="head">measurement trap</text>
+  <text x="710" y="322" text-anchor="middle" class="head">測定の罠</text>
   <rect x="520" y="340" width="380" height="50" class="hot"/>
   <text x="710" y="362" text-anchor="middle" class="step">GenAI-Perf vs LLMPerf</text>
-  <text x="710" y="380" text-anchor="middle" class="small">same run, different TPOT</text>
+  <text x="710" y="380" text-anchor="middle" class="small">同じ実行でもTPOTが異なる</text>
   <rect x="520" y="395" width="380" height="55" class="cool"/>
   <text x="710" y="417" text-anchor="middle" class="step">GenAI-Perf (NVIDIA)</text>
-  <text x="710" y="435" text-anchor="middle" class="small">ITL excludes TTFT ; starts from token 2</text>
+  <text x="710" y="435" text-anchor="middle" class="small">ITLはTTFTを除外 ; token 2から開始</text>
   <rect x="520" y="455" width="380" height="55" class="cold"/>
   <text x="710" y="477" text-anchor="middle" class="step">LLMPerf (Ray / Anyscale)</text>
-  <text x="710" y="495" text-anchor="middle" class="small">ITL includes TTFT ; starts from token 1</text>
-  <text x="710" y="522" text-anchor="middle" class="caption">state tool + version in every report</text>
+  <text x="710" y="495" text-anchor="middle" class="small">ITLはTTFTを含む ; token 1から開始</text>
+  <text x="710" y="522" text-anchor="middle" class="caption">全レポートにツール + バージョンを明記</text>
 </svg>

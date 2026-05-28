@@ -44,7 +44,7 @@ export function destructiveGuard(payload: HookPayload): HookPayload {
     return {
       ...payload,
       blocked: true,
-      reason: "destructive command blocked by PreToolUse hook",
+      reason: "破壊的なコマンドは PreToolUse hook でブロックされました",
     };
   }
   return payload;

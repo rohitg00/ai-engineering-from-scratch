@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,22 +9,22 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .dot { fill: #2c5ea9; }
       .dot2 { fill: #c0392b; }
     </style>
   </defs>
-  <text x="480" y="28" text-anchor="middle" class="title">Swarm optimization for LLMs — PSO and ACO applied to prompts and routing</text>
+  <text x="480" y="28" text-anchor="middle" class="title">LLM向けスウォーム最適化 — PSO/ACOをプロンプトとルーティングへ適用</text>
 
   <rect x="40" y="60" width="420" height="210" class="cold"/>
   <text x="250" y="84" text-anchor="middle" class="head">PSO — Particle Swarm Optimization</text>
 
   <rect x="70" y="110" width="360" height="120" class="box"/>
-  <text x="250" y="130" text-anchor="middle" class="small">parameter space (2D here; in practice: prompt embedding, LoRA delta)</text>
+  <text x="250" y="130" text-anchor="middle" class="small">パラメータ空間 (ここでは2D; 実際はプロンプト埋め込み, LoRA delta)</text>
   <circle cx="290" cy="175" r="5" class="dot2"/>
-  <text x="290" y="190" text-anchor="middle" class="small">optimum</text>
+  <text x="290" y="190" text-anchor="middle" class="small">最適点</text>
   <circle cx="90" cy="150" r="4" class="dot"/>
   <circle cx="130" cy="165" r="4" class="dot"/>
   <circle cx="180" cy="160" r="4" class="dot"/>
@@ -34,37 +34,37 @@
   <circle cx="400" cy="200" r="4" class="dot"/>
   <text x="250" y="246" text-anchor="middle" class="caption">v = w*v + c1*r1*(p_best - x) + c2*r2*(g_best - x)</text>
 
-  <text x="250" y="265" text-anchor="middle" class="small">LMPSO: velocity is a prompt; Model Swarms: particles are expert weights (+13.3%)</text>
+  <text x="250" y="265" text-anchor="middle" class="small">LMPSO: 速度はプロンプト。Model Swarms: 粒子は専門家重み（+13.3%）</text>
 
   <rect x="500" y="60" width="420" height="210" class="cool"/>
   <text x="710" y="84" text-anchor="middle" class="head">ACO — Ant Colony Optimization</text>
 
   <rect x="530" y="110" width="360" height="120" class="box"/>
-  <text x="550" y="134" class="small">task_type    coder   mathematician   writer</text>
+  <text x="550" y="134" class="small">タスク種別    実装者   数学者   書き手</text>
   <text x="550" y="154" class="small">code         2.96    0.08            0.08</text>
   <text x="550" y="172" class="small">math         0.08    3.21            0.08</text>
-  <text x="550" y="190" class="small">writing      0.08    0.08            2.97</text>
-  <text x="550" y="208" class="small">planning     0.08    0.25            0.88</text>
+  <text x="550" y="190" class="small">文章        0.08    0.08            2.97</text>
+  <text x="550" y="208" class="small">計画     0.08    0.25            0.88</text>
   <text x="710" y="246" text-anchor="middle" class="caption">pheromone(t, a) *= (1 - decay); += reinforce*quality on quality-gated deposit</text>
   <text x="710" y="265" text-anchor="middle" class="small">AMRO-S: 4.7x speedup; interpretable routing evidence; async update</text>
 
   <rect x="40" y="295" width="880" height="200" class="box"/>
-  <text x="480" y="319" text-anchor="middle" class="head">when to use what</text>
+  <text x="480" y="319" text-anchor="middle" class="head">何をいつ使うか</text>
 
   <text x="60" y="352" class="step">PSO</text>
-  <text x="180" y="352" class="small">continuous numeric or low-dim continuous embedding · cheap fitness · pop 10-30</text>
+  <text x="180" y="352" class="small">連続数値 / 低次元連続埋め込み · 安価な適応度 · 個体数10-30</text>
 
   <text x="60" y="378" class="step">ACO</text>
-  <text x="180" y="378" class="small">routing / path selection · decisions reinforce over time · need interpretable evidence</text>
+  <text x="180" y="378" class="small">ルーティング / 経路選択 · 判断を時間とともに強化 · 解釈可能な根拠が必要</text>
 
   <text x="60" y="404" class="step">GA</text>
-  <text x="180" y="404" class="small">discrete symbolic / program synthesis · population-based, crossover-driven</text>
+  <text x="180" y="404" class="small">離散記号 / プログラム統合 · 個体群ベース、交叉駆動</text>
 
   <text x="60" y="430" class="step">DPO/RL</text>
-  <text x="180" y="430" class="small">differentiable reward · large budget · training-time optimization</text>
+  <text x="180" y="430" class="small">微分可能報酬 · 大予算 · 訓練時最適化</text>
 
-  <text x="60" y="456" class="step">manual</text>
-  <text x="180" y="456" class="small">budget &lt; $100 · single-digit parameters · cache hits worth more than search</text>
+  <text x="60" y="456" class="step">手動</text>
+  <text x="180" y="456" class="small">予算 &lt; $100 · 1桁パラメータ · 探索よりキャッシュヒットの価値が大きい</text>
 
-  <text x="60" y="484" class="caption">all swarm optimizers need a quality gate to avoid locking in on fast-but-wrong candidates</text>
+  <text x="60" y="484" class="caption">すべてのスウォーム最適化器は高速だが誤った候補への固定化回避に品質ゲートが必要</text>
 </svg>

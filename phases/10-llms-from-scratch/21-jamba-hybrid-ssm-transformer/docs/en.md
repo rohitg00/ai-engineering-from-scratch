@@ -1,114 +1,114 @@
 # Jamba — Hybrid SSM-Transformer
 
-> State space models (SSMs) and transformers want different things. Transformers buy quality via attention at quadratic cost. SSMs buy linear-time inference and constant memory via a recurrence but lag quality. AI21's Jamba (March 2024) and Jamba 1.5 (August 2024) put them in the same model: 1 Transformer layer for every 7 Mamba layers, MoE on every other block, and a 256k context window that fits on a single 80GB GPU. Mamba-3 (ICLR 2026) tightens the SSM side with complex-valued state spaces and MIMO projections. This lesson reads both architectures end to end and explains why the hybrid recipe has survived three years of scaling when pure-SSM and pure-Transformer long-context attempts have not.
+> State space models (SSMs) と Transformers は、得意にしたいものが違います。Transformers は attention によって品質を稼ぎますが、計算コストは二乗で増えます。SSMs は recurrence によって線形時間の推論と定数メモリを得ますが、品質では遅れがちです。AI21 の Jamba (March 2024) と Jamba 1.5 (August 2024) は、この 2 つを同じモデルに入れました。7 個の Mamba layer ごとに 1 個の Transformer layer、1 つおきの block に MoE、そして 1 枚の 80GB GPU に収まる 256k context window です。Mamba-3 (ICLR 2026) は、複素数値の state spaces と MIMO projections によって SSM 側をさらに強化します。このレッスンでは両方の architecture を端から端まで読み、pure-SSM や pure-Transformer の long-context 試行が伸び悩む中で、hybrid recipe が 3 年間の scaling を生き残った理由を説明します。
 
-**Type:** Learn
-**Languages:** Python (stdlib, layer-mix calculator)
-**Prerequisites:** Phase 10 · 14 (open-model architectures), Phase 10 · 17 (native sparse attention)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib, layer-mix calculator)
+**前提条件:** Phase 10 · 14 (open-model architectures), Phase 10 · 17 (native sparse attention)
+**所要時間:** 約60分
 
 ## Learning Objectives
 
-- Explain the three primitives in a Jamba block — Transformer layers, Mamba layers, MoE — and the 1:7:even interleaving recipe.
-- State what an SSM's recurrence looks like at a high level and why it enables constant-memory inference.
-- Compute the KV cache footprint of a Jamba model at 256k context and compare to what a pure-Transformer model would need.
-- Name the three Mamba-3 innovations (exponential-trapezoidal discretization, complex-valued state update, MIMO) and the problem each one targets.
+- Jamba block の 3 つの primitive、つまり Transformer layers、Mamba layers、MoE と、1:7:even の interleaving recipe を説明できる。
+- SSM の recurrence が大まかにどのような形か、そしてなぜ定数メモリ推論を可能にするのかを述べられる。
+- 256k context における Jamba model の KV cache footprint を計算し、pure-Transformer model が必要とする量と比較できる。
+- Mamba-3 の 3 つの innovation (exponential-trapezoidal discretization、complex-valued state update、MIMO) と、それぞれが狙う問題を挙げられる。
 
-## The Problem
+## 問題
 
-Attention is quadratic in sequence length. State space models are linear. That difference compounds: at 256k tokens, a Transformer attention map is 65B entries per head; an SSM's recurrent state is fixed-size regardless of sequence length.
+Attention は sequence length に対して二乗で増えます。State space models は線形です。この違いは積み重なると大きくなります。256k tokens では、Transformer attention map は head ごとに 65B entries になります。一方、SSM の recurrent state は sequence length に関係なく固定サイズです。
 
-Pure-SSM models (Mamba, Mamba-2) match Transformer perplexity at small scales but lag on state-tracking tasks and fail on some categories of in-context retrieval. The intuition: SSMs compress history into a fixed state, and when history is long, information leaks. Attention remembers everything exactly but pays quadratic cost.
+Pure-SSM models (Mamba, Mamba-2) は小規模では Transformer perplexity に並びますが、state-tracking tasks では遅れ、in-context retrieval の一部カテゴリでは失敗します。直感的には、SSMs は履歴を固定 state に圧縮するため、履歴が長いと情報が漏れます。Attention はすべてを正確に覚えますが、二乗コストを払います。
 
-The obvious fix: use both. Put Transformer layers where exact recall matters. Use SSM layers elsewhere. Tune the ratio. Jamba is the first production-grade model to ship this hybrid recipe at scale (52B total, 12B active, 256k context, single 80GB GPU). Jamba 1.5 extends the family to 398B total / 94B active. Mamba-3 (ICLR 2026) is the current-best pure-SSM baseline that hybrids can be rebuilt around.
+明らかな修正は、両方を使うことです。正確な recall が重要な場所には Transformer layers を置きます。それ以外では SSM layers を使います。比率を調整します。Jamba は、この hybrid recipe を scale させて production-grade model として出荷した最初の例です (52B total, 12B active, 256k context, single 80GB GPU)。Jamba 1.5 は family を 398B total / 94B active まで広げます。Mamba-3 (ICLR 2026) は、hybrids を組み直す際の現在最良の pure-SSM baseline です。
 
-This lesson reads all three papers and produces the mental model for "pick the right ratio."
+このレッスンでは 3 本の paper を読み、「適切な比率を選ぶ」ための mental model を作ります。
 
 ## The Concept
 
 ### An SSM in one page
 
-A state space model processes a sequence `x_1, ..., x_N` via a fixed-size state `h`:
+State space model は、固定サイズの state `h` を使って sequence `x_1, ..., x_N` を処理します。
 
 ```
 h_t = A h_{t-1} + B x_t
 y_t = C h_t
 ```
 
-At each step the state evolves via a linear dynamics `A`, takes input `B x_t`, and emits output `C h_t`. `A, B, C` can be learned. Note the critical property: computing `y_t` needs only `h_{t-1}` and `x_t`, not any earlier `x`. Memory is constant. Inference is O(1) per token.
+各 step で state は linear dynamics `A` によって進み、input `B x_t` を受け取り、output `C h_t` を出します。`A, B, C` は学習できます。重要な性質は、`y_t` の計算に必要なのが `h_{t-1}` と `x_t` だけで、それ以前の `x` は不要だという点です。Memory は定数です。Inference は token あたり O(1) です。
 
-The trick for modeling quality is the structure of `A`. S4 (Gu 2021) used a highly structured matrix that could be evaluated efficiently as a long convolution during training. Mamba (Gu, Dao 2023) replaced the fixed `A, B, C` with data-dependent ones (the "selective" part). Mamba-2 (2024) further simplified the structure. Mamba-3 (2026) re-adds complexity in specific places.
+Modeling quality のための trick は `A` の構造です。S4 (Gu 2021) は、training 中に long convolution として効率よく評価できる高度に構造化された matrix を使いました。Mamba (Gu, Dao 2023) は固定の `A, B, C` を data-dependent なものに置き換えました (これが "selective" な部分です)。Mamba-2 (2024) は構造をさらに単純化しました。Mamba-3 (2026) は、特定の場所に複雑さを戻します。
 
-The key property: for a decoder LLM, an SSM layer is a drop-in replacement for an attention layer, with fixed-size per-layer state instead of a growing KV cache.
+重要な性質は、decoder LLM において SSM layer は attention layer の drop-in replacement であり、増え続ける KV cache の代わりに固定サイズの per-layer state を持つことです。
 
 ### The Jamba block
 
-A Jamba block interleaves layers according to two numbers:
+Jamba block は 2 つの数値に従って layers を interleave します。
 
-- `l`: the attention-to-Mamba ratio. Jamba uses `l = 8`, meaning 1 Transformer layer for every 7 Mamba layers (7 Mamba + 1 Attention = 8 layers per group).
-- `e`: the MoE frequency. Jamba uses `e = 2`, meaning every other layer applies MoE.
+- `l`: attention-to-Mamba ratio。Jamba は `l = 8` を使います。つまり 7 Mamba layers ごとに 1 Transformer layer です (7 Mamba + 1 Attention = 8 layers per group)。
+- `e`: MoE frequency。Jamba は `e = 2` を使います。つまり 1 つおきの layer に MoE を適用します。
 
-The layer sequence within a block:
+Block 内の layer sequence は次の通りです。
 
 ```
 M  M  M  M  M  M  M  A    (7 Mamba + 1 Attention)
 |  M  |  M  |  M  |  M    (where | marks MoE applied)
 ```
 
-Each Jamba block is 8 layers. At 4 blocks deep (32 layers total), you get 28 Mamba and 4 Attention layers. 16 of those use MoE.
+各 Jamba block は 8 layers です。4 blocks deep (32 layers total) では、28 Mamba layers と 4 Attention layers になります。そのうち 16 layers が MoE を使います。
 
 ### Why the 1:7 ratio
 
-AI21 ran ablations: what ratio of attention-to-Mamba gives the best perplexity-per-parameter AND in-context recall on their long-context evals?
+AI21 は ablations を行いました。attention-to-Mamba のどの比率が、perplexity-per-parameter と long-context evals における in-context recall の両方で最良になるか、という実験です。
 
-- Too much attention (1:1): quality goes up but memory and speed degrade.
-- Too little attention (1:15): memory is great but in-context retrieval fails.
-- Sweet spot: 1:7 or 1:8.
+- Attention が多すぎる (1:1): quality は上がりますが、memory と speed が悪化します。
+- Attention が少なすぎる (1:15): memory は優秀ですが、in-context retrieval が失敗します。
+- Sweet spot: 1:7 または 1:8。
 
-The intuition: the Transformer layers handle exact recall and state tracking. The Mamba layers handle the cheap bulk of processing.
+直感的には、Transformer layers が exact recall と state tracking を担当します。Mamba layers は安価な大量処理を担当します。
 
 ### Positional encoding
 
-Mamba layers are themselves position-aware (via the recurrence). Attention layers in the original Mamba-based hybrids did not use RoPE — the SSM layers provided position info. Jamba 1.5 adds RoPE to the attention layers for longer-context generalization, a post-hoc refinement based on empirical long-context evaluation.
+Mamba layers は recurrence によって、それ自体が position-aware です。初期の Mamba-based hybrids の attention layers は RoPE を使っていませんでした。SSM layers が position info を提供していたからです。Jamba 1.5 は、longer-context generalization のために attention layers に RoPE を追加しました。これは empirical long-context evaluation に基づく post-hoc refinement です。
 
 ### The memory budget
 
-For a Jamba-1 shape (32 layers: 28 Mamba + 4 Attention, hidden 4096, 32 attention heads):
+Jamba-1 shape (32 layers: 28 Mamba + 4 Attention, hidden 4096, 32 attention heads) では次のようになります。
 
-- KV cache (attention layers only): `2 * 4 * 32 * 128 * 256k * 2 = 8.4 GB` at 256k BF16. Only the 4 attention layers contribute.
-- SSM state: `28 * hidden * state_size` per token prefix, but this is a fixed-size per layer, not scaling with sequence length. Typical Mamba state is 16 per feature, hidden 4096: `28 * 4096 * 16 * 2 = 3.7 MB` total.
+- KV cache (attention layers only): 256k BF16 で `2 * 4 * 32 * 128 * 256k * 2 = 8.4 GB`。4 個の attention layers だけが寄与します。
+- SSM state: `28 * hidden * state_size` per token prefix ですが、これは layer ごとの固定サイズであり、sequence length には比例しません。典型的な Mamba state は feature ごとに 16、hidden 4096 なので、合計で `28 * 4096 * 16 * 2 = 3.7 MB` です。
 
-Compare to a pure Transformer at 32 layers, same hidden, full MHA at 32 heads: `2 * 32 * 32 * 128 * 256k * 2 = 128 GB` at 256k BF16. An 8x reduction in KV cache. Even against the GQA(8) baseline most 2024 models use (`2 * 32 * 8 * 128 * 256k * 2 = 32 GB`), Jamba's 1:7 hybrid at 16 GB is still 2x smaller.
+同じ hidden、32 layers、32 heads の full MHA pure Transformer と比べると、256k BF16 で `2 * 32 * 32 * 128 * 256k * 2 = 128 GB` です。KV cache が 8x 削減されます。2024 年の多くの models が使う GQA(8) baseline (`2 * 32 * 8 * 128 * 256k * 2 = 32 GB`) と比べても、Jamba の 1:7 hybrid は 16 GB で、まだ 2x 小さいです。
 
-That is what AI21 means by "256k context on a single 80GB GPU." The KV cache of a full-MHA pure Transformer would not fit; even a GQA baseline leaves no room for weights and activations; Jamba's does.
+これが、AI21 が言う "256k context on a single 80GB GPU" の意味です。Full-MHA pure Transformer の KV cache は収まりません。GQA baseline でさえ weights と activations の余地をほとんど残しません。Jamba なら収まります。
 
 ### Mamba-3: the pure-SSM baseline in 2026
 
-Mamba-3 (ICLR 2026, arXiv:2603.15569) introduces three innovations on the pure-SSM side:
+Mamba-3 (ICLR 2026, arXiv:2603.15569) は pure-SSM 側に 3 つの innovation を導入します。
 
-1. **Exponential-trapezoidal discretization.** Replaces the Euler-method discretization in Mamba-2 with a more expressive recurrence. Convolution-like operation applied on the state-input within the core recurrence, rather than as an outer convolution on `x_t`.
+1. **Exponential-trapezoidal discretization.** Mamba-2 の Euler-method discretization を、より表現力のある recurrence に置き換えます。`x_t` に対する外側の convolution ではなく、core recurrence 内の state-input に convolution-like operation を適用します。
 
-2. **Complex-valued state update.** Previous Mambas reduced the state matrix from complex (S4) to real diagonal (Mamba) to scaled identity (Mamba-2). Mamba-3 re-adds complex values — equivalent to a data-dependent rotary embedding on the state. This restores state-tracking capabilities that previous real-valued simplifications cost.
+2. **Complex-valued state update.** 以前の Mambas は state matrix を complex (S4) から real diagonal (Mamba)、さらに scaled identity (Mamba-2) へ単純化していました。Mamba-3 は complex values を戻します。これは state に対する data-dependent rotary embedding と等価です。以前の real-valued simplifications で失われた state-tracking capabilities を回復します。
 
-3. **Multi-input multi-output (MIMO) projections.** Instead of per-feature scalar projections, use matrix-valued projections. Improves modeling power and inference-time hardware utilization without increasing decode latency.
+3. **Multi-input multi-output (MIMO) projections.** Per-feature scalar projections ではなく matrix-valued projections を使います。Decode latency を増やさずに modeling power と inference-time hardware utilization を改善します。
 
-At 1.5B parameters, Mamba-3 improves average downstream accuracy by 0.6 points over Gated DeltaNet; the MIMO variant adds 1.2 more for a total 1.8-point gain. At the same state size, Mamba-3 matches Mamba-2 with half the state.
+1.5B parameters では、Mamba-3 は Gated DeltaNet より downstream accuracy average を 0.6 points 改善します。MIMO variant はさらに 1.2 points を加え、合計 1.8-point gain になります。同じ state size では、Mamba-3 は Mamba-2 の半分の state で同等になります。
 
-Mamba-3 is not yet shipping in a production hybrid at scale — but it is the obvious candidate for the SSM side of the next Jamba-class model.
+Mamba-3 はまだ production hybrid として scale して出荷されていません。ただし、次の Jamba-class model の SSM 側として最も自然な候補です。
 
 ### When to reach for a hybrid
 
-Hybrids win when:
+Hybrids が勝つのは次のような場合です。
 
-- Context is long enough that pure Transformer KV cache becomes painful (64k+).
-- Tasks mix short-range structure (good for SSM) with long-range recall (needs Transformer).
-- You want to deploy on single-GPU memory budgets where the Transformer KV cache alone would not fit.
+- Context が十分長く、pure Transformer KV cache が重くなる (64k+)。
+- Tasks が short-range structure (SSM が得意) と long-range recall (Transformer が必要) を混ぜている。
+- Transformer KV cache だけでは収まらない single-GPU memory budgets で deploy したい。
 
-Hybrids lose when:
+Hybrids が負けるのは次のような場合です。
 
-- Context is short (under 16k). The SSM overhead is wasted; pure Transformer is fine.
-- Tasks need everywhere-to-everywhere attention (deep reasoning, multi-document cross-reference). The sparsity of attention layers in the hybrid hurts.
-- You are scaling to trillion-parameter frontier models. Pure-Transformer + MLA + MoE (DeepSeek-V3 style) is currently winning the capability race.
+- Context が短い (16k 未満)。SSM overhead が無駄になり、pure Transformer で十分です。
+- Tasks が everywhere-to-everywhere attention を必要とする (deep reasoning, multi-document cross-reference)。Hybrid の attention layers の疎さが不利になります。
+- Trillion-parameter frontier models へ scale している。現在の capability race では pure-Transformer + MLA + MoE (DeepSeek-V3 style) が勝っています。
 
 ### The competitive landscape
 
@@ -120,66 +120,66 @@ Hybrids lose when:
 | Mamba-3 | pure SSM | 1.5B (paper) | state-tracking restored |
 | DeepSeek-V3 | pure Transformer + MoE | 671B/37B | frontier capability |
 
-The 2026 landscape: pure-Transformer MoE dominates the frontier, but hybrids own the 256k-plus context niche. Mamba-3's state-tracking wins may push hybrid ratios lower (more SSM, less attention) in the next generation.
+2026 年の landscape では、frontier は pure-Transformer MoE が支配していますが、256k-plus context niche は hybrids が握っています。Mamba-3 の state-tracking 改善によって、次世代では hybrid ratios がより低く (more SSM, less attention) なる可能性があります。
 
 ## Use It
 
-`code/main.py` is a memory calculator for hybrid architectures. Given an SSM-Transformer ratio and a hidden-size / layer-count config, it computes:
+`code/main.py` は hybrid architectures の memory calculator です。SSM-Transformer ratio と hidden-size / layer-count config を与えると、次を計算します。
 
-- KV cache at target context.
-- SSM state memory.
-- Total memory at context N for a range of model shapes.
+- Target context における KV cache。
+- SSM state memory。
+- さまざまな model shapes について、context N での total memory。
 
-The calculator supports:
+Calculator は次をサポートします。
 
-- Pure-Transformer baseline (KV cache grows with N).
-- Jamba-style 1:7 hybrid.
-- Pure-SSM (no KV cache at all).
+- Pure-Transformer baseline (KV cache は N とともに増える)。
+- Jamba-style 1:7 hybrid。
+- Pure-SSM (KV cache なし)。
 
-The numbers are direct from the Jamba-1 and Jamba-1.5 papers for published shapes and extrapolated for hypothetical variants.
+数値は published shapes については Jamba-1 と Jamba-1.5 papers から直接取り、hypothetical variants については extrapolate しています。
 
-Integration considerations for a real deployment:
+実際の deployment での integration considerations:
 
-- Most production inference servers (vLLM, SGLang) support Jamba and Mamba. Check the specific version.
-- At 256k context, Jamba's memory advantage shows up in concurrent-request throughput. On the same VRAM you fit more Jamba sequences than Transformer sequences.
-- Mamba-3 as a standalone model is not yet shipping in production — research preview at 1.5B.
+- 多くの production inference servers (vLLM, SGLang) は Jamba と Mamba をサポートしています。具体的な version を確認してください。
+- 256k context では、Jamba の memory advantage は concurrent-request throughput に現れます。同じ VRAM で Transformer sequences より多くの Jamba sequences を載せられます。
+- Standalone model としての Mamba-3 はまだ production で出荷されていません。1.5B の research preview です。
 
 ## Ship It
 
-This lesson produces `outputs/skill-hybrid-picker.md`. Given a workload specification (context length profile, task mix, memory budget), it recommends between a pure Transformer, a Jamba-style hybrid, and a pure SSM, with explicit reasoning about the memory and quality tradeoffs.
+このレッスンは `outputs/skill-hybrid-picker.md` を生成します。Workload specification (context length profile, task mix, memory budget) が与えられると、pure Transformer、Jamba-style hybrid、pure SSM のどれを選ぶべきかを、memory と quality の tradeoffs に関する明示的な理由とともに推奨します。
 
 ## Exercises
 
-1. Run `code/main.py` to compute KV cache at 256k context for a 32-layer pure Transformer (hidden 4096, 32 heads) and for a Jamba-1 hybrid of the same shape. Verify the ~8x memory reduction the AI21 paper claims.
+1. `code/main.py` を実行し、32-layer pure Transformer (hidden 4096, 32 heads) と同じ shape の Jamba-1 hybrid について、256k context の KV cache を計算してください。AI21 paper が主張する約 8x の memory reduction を確認してください。
 
-2. Modify the calculator to model a 1:3 hybrid (4 Mamba : 1 Attention) and a 1:15 hybrid (14 Mamba : 1 Attention). Plot KV cache vs ratio. At what ratio does the KV cache equal the SSM state memory?
+2. Calculator を変更して、1:3 hybrid (4 Mamba : 1 Attention) と 1:15 hybrid (14 Mamba : 1 Attention) を model 化してください。KV cache vs ratio を plot してください。どの ratio で KV cache が SSM state memory と等しくなりますか。
 
-3. Read Section 3 of the Jamba paper (arXiv:2403.19887). Explain why AI21 uses Mamba-1 rather than Mamba-2 despite Mamba-2 being faster. Hint: the hybrid ablation section documents this.
+3. Jamba paper (arXiv:2403.19887) の Section 3 を読んでください。Mamba-2 のほうが速いにもかかわらず、AI21 がなぜ Mamba-1 を使うのかを説明してください。Hint: hybrid ablation section に記録されています。
 
-4. Compute the parameter overhead of MoE-every-other-layer in Jamba 1.5 Large (398B total, 94B active). Compare the active ratio to DeepSeek-V3 (37B/671B) and explain why Jamba's architecture pushes the active ratio higher.
+4. Jamba 1.5 Large (398B total, 94B active) において、MoE-every-other-layer の parameter overhead を計算してください。Active ratio を DeepSeek-V3 (37B/671B) と比較し、Jamba の architecture が active ratio を高く押し上げる理由を説明してください。
 
-5. Read Section 3 of the Mamba-3 paper (arXiv:2603.15569). Explain in three sentences why a complex-valued state update is equivalent to a data-dependent rotary embedding. Tie the answer to Phase 7 · Lesson 04's RoPE derivation.
+5. Mamba-3 paper (arXiv:2603.15569) の Section 3 を読んでください。Complex-valued state update が data-dependent rotary embedding と等価である理由を 3 文で説明してください。答えを Phase 7 · Lesson 04 の RoPE derivation に結び付けてください。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| State space model (SSM) | "Recurrence with a fixed state" | A layer with a learned recurrence `h_t = A h_{t-1} + B x_t`; constant memory per token |
-| Selective SSM | "Mamba's trick" | Data-dependent A, B, C parameters that give the model gating-like selectivity at linear time |
-| Attention-to-Mamba ratio | "How many attention layers" | In Jamba, `l = 8` means 1 attention layer per 7 Mamba layers |
-| Jamba block | "The 8-layer group" | One attention + seven Mamba + MoE on alternate positions |
-| SSM state | "The hidden buffer" | Fixed-size per-layer state that replaces the KV cache for Mamba layers |
-| 256k context | "Jamba's flagship number" | The sequence length Jamba-1 fits on a single 80GB GPU; pure Transformer cannot at that size |
-| Mamba-3 | "2026 pure SSM" | Current-best pure-SSM architecture with complex state + MIMO; the baseline hybrids rebuild around |
-| MIMO | "Multi-input multi-output" | Mamba-3 innovation using matrix-valued projections instead of scalar per-feature |
-| Exponential-trapezoidal discretization | "Mamba-3's recurrence" | More expressive recurrence that subsumes Mamba-2's Euler-method discretization |
-| Hybrid architecture | "Mix attention and SSM" | Any model that interleaves Transformer and SSM layers; Jamba is the production archetype |
+| State space model (SSM) | "Recurrence with a fixed state" | Learned recurrence `h_t = A h_{t-1} + B x_t` を持つ layer。Token あたり定数メモリ |
+| Selective SSM | "Mamba's trick" | Data-dependent な A, B, C parameters により、linear time で gating-like selectivity を model に与える仕組み |
+| Attention-to-Mamba ratio | "How many attention layers" | Jamba では `l = 8` が 7 Mamba layers ごとに 1 attention layer を意味する |
+| Jamba block | "The 8-layer group" | 1 attention + 7 Mamba + alternate positions の MoE |
+| SSM state | "The hidden buffer" | Mamba layers で KV cache を置き換える fixed-size per-layer state |
+| 256k context | "Jamba's flagship number" | Jamba-1 が single 80GB GPU に収める sequence length。Pure Transformer はこのサイズでは収まらない |
+| Mamba-3 | "2026 pure SSM" | Complex state + MIMO を持つ現在最良の pure-SSM architecture。Hybrids が組み直す基準 |
+| MIMO | "Multi-input multi-output" | Scalar per-feature ではなく matrix-valued projections を使う Mamba-3 innovation |
+| Exponential-trapezoidal discretization | "Mamba-3's recurrence" | Mamba-2 の Euler-method discretization を包含する、より表現力のある recurrence |
+| Hybrid architecture | "Mix attention and SSM" | Transformer と SSM layers を interleave する任意の model。Jamba は production archetype |
 
-## Further Reading
+## 参考文献
 
-- [Lieber et al. — Jamba: A Hybrid Transformer-Mamba Language Model (arXiv:2403.19887)](https://arxiv.org/abs/2403.19887) — the original Jamba paper, ratio ablations, 256k context claim
-- [AI21 — Jamba 1.5: Hybrid Transformer-Mamba at Scale (arXiv:2408.12570)](https://arxiv.org/abs/2408.12570) — the scaled-up family, 398B/94B and 12B/52B public releases
-- [Gu, Dao — Mamba: Linear-Time Sequence Modeling with Selective State Spaces (arXiv:2312.00752)](https://arxiv.org/abs/2312.00752) — the selective SSM paper Jamba builds on
-- [Dao, Gu — Mamba-2 (arXiv:2405.21060)](https://arxiv.org/abs/2405.21060) — the simplified structured-state-space successor
-- [Lahoti et al. — Mamba-3 (arXiv:2603.15569, ICLR 2026)](https://arxiv.org/abs/2603.15569) — complex-valued state, MIMO, the 2026 pure-SSM frontier
-- [Gu et al. — Efficiently Modeling Long Sequences with Structured State Spaces (arXiv:2111.00396)](https://arxiv.org/abs/2111.00396) — the S4 paper, the SSM genealogy's starting point for LLMs
+- [Lieber et al. — Jamba: A Hybrid Transformer-Mamba Language Model (arXiv:2403.19887)](https://arxiv.org/abs/2403.19887) — original Jamba paper、ratio ablations、256k context claim
+- [AI21 — Jamba 1.5: Hybrid Transformer-Mamba at Scale (arXiv:2408.12570)](https://arxiv.org/abs/2408.12570) — scaled-up family、398B/94B と 12B/52B public releases
+- [Gu, Dao — Mamba: Linear-Time Sequence Modeling with Selective State Spaces (arXiv:2312.00752)](https://arxiv.org/abs/2312.00752) — Jamba が基にしている selective SSM paper
+- [Dao, Gu — Mamba-2 (arXiv:2405.21060)](https://arxiv.org/abs/2405.21060) — simplified structured-state-space successor
+- [Lahoti et al. — Mamba-3 (arXiv:2603.15569, ICLR 2026)](https://arxiv.org/abs/2603.15569) — complex-valued state、MIMO、2026 pure-SSM frontier
+- [Gu et al. — Efficiently Modeling Long Sequences with Structured State Spaces (arXiv:2111.00396)](https://arxiv.org/abs/2111.00396) — S4 paper、LLMs における SSM genealogy の出発点

@@ -1,31 +1,31 @@
 ---
 name: dualpipe-planner
-description: Plan a pipeline parallelism strategy (1F1B, Zero Bubble, DualPipe, DualPipeV) for a training cluster.
+description: training cluster 向けに pipeline parallelism strategy (1F1B, Zero Bubble, DualPipe, DualPipeV) を計画する。
 version: 1.0.0
 phase: 10
 lesson: 19
 tags: [pipeline-parallelism, dualpipe, dualpipev, zero-bubble, expert-parallelism, distributed-training]
 ---
 
-Given a training cluster specification (total GPU count, interconnect topology, accelerator model, memory per GPU), a model shape (total params, active params, MoE or dense, expected layer count), and a target training-data volume, recommend a pipeline parallelism strategy and confirm the expected bubble fraction.
+training cluster specification (total GPU count、interconnect topology、accelerator model、memory per GPU)、model shape (total params、active params、MoE or dense、expected layer count)、target training-data volume が与えられたら、pipeline parallelism strategy を推奨し、expected bubble fraction を確認する。
 
-Produce:
+作成するもの:
 
-1. Pipeline depth P. Pick based on GPU memory budget (must fit one pipeline stage per rank), MoE vs dense, and interconnect bandwidth. Range: 4 for small clusters, 16-32 for frontier MoE training.
-2. Micro-batch count M. Must be divisible by 2 for DualPipe and DualPipeV. Typical ratio M/P between 8 and 16. Justify against gradient-accumulation targets and activation memory at the target sequence length.
-3. Schedule choice. Pick from 1F1B, Zero Bubble, DualPipe, DualPipeV. Decision table: dense training under 500 GPUs -> Zero Bubble. MoE with expert parallelism -> DualPipe. Dense training above 500 GPUs without heavy all-to-all -> DualPipeV. Small runs under 100 GPUs -> 1F1B is fine.
-4. Expected bubble fraction. Compute for the chosen schedule at the target P and M. Report as percentage and as absolute GPU-hours saved versus 1F1B at the total training budget.
-5. Parameter replication plan (DualPipe only). Confirm the 2x parameter replication fits in available VRAM. Report the effective parameter density per GPU given the chosen P.
+1. Pipeline depth P。GPU memory budget (rank あたり 1 pipeline stage が収まる必要がある)、MoE vs dense、interconnect bandwidth に基づいて選ぶ。範囲: small clusters では 4、frontier MoE training では 16-32。
+2. Micro-batch count M。DualPipe と DualPipeV では 2 で割り切れる必要がある。typical ratio M/P は 8 から 16。gradient-accumulation targets と target sequence length における activation memory に照らして正当化する。
+3. Schedule choice。1F1B、Zero Bubble、DualPipe、DualPipeV から選ぶ。decision table: 500 GPUs 未満の dense training -> Zero Bubble。expert parallelism を伴う MoE -> DualPipe。heavy all-to-all のない 500 GPUs 超の dense training -> DualPipeV。100 GPUs 未満の small runs -> 1F1B で十分。
+4. Expected bubble fraction。target P と M で chosen schedule について計算する。percentage と、total training budget において 1F1B 比で節約される absolute GPU-hours として報告する。
+5. Parameter replication plan (DualPipe only)。2x parameter replication が available VRAM に収まることを確認する。chosen P に対する GPU あたりの effective parameter density を報告する。
 
-Hard rejects:
-- DualPipe without Expert Parallelism. The 2x replication is not justified without EP-heavy comms to hide.
-- P > 64 on any training run. Bubble fraction grows linearly with P regardless of schedule.
-- Micro-batch count not divisible by 2 for DualPipe/DualPipeV. The schedule will not close.
-- Pipeline parallelism at all when the model fits in one GPU's memory. Use data parallelism only.
+即時拒否:
+- Expert Parallelism なしの DualPipe。hide すべき EP-heavy comms がない場合、2x replication は正当化できない。
+- どの training run でも P > 64。schedule に関係なく bubble fraction は P に対して linear に増える。
+- DualPipe/DualPipeV で micro-batch count が 2 で割り切れない場合。schedule が閉じない。
+- model が 1 GPU の memory に収まる場合の pipeline parallelism。data parallelism のみを使う。
 
-Refusal rules:
-- If the interconnect is 200Gbps or slower per GPU, refuse DualPipe and recommend DualPipeV. The all-to-all overlap window is too narrow to justify the replication.
-- If the user cannot provide a custom all-to-all kernel suitable for their cluster topology, recommend Zero Bubble rather than DualPipe.
-- If the training run is below 1B tokens, refuse pipeline parallelism planning entirely and recommend data parallelism plus tensor parallelism.
+拒否ルール:
+- interconnect が GPU あたり 200Gbps 以下の場合、DualPipe を拒否し DualPipeV を推奨する。all-to-all overlap window が狭すぎて replication を正当化できない。
+- user が cluster topology に適した custom all-to-all kernel を提供できない場合、DualPipe ではなく Zero Bubble を推奨する。
+- training run が 1B tokens 未満の場合、pipeline parallelism planning 全体を拒否し、data parallelism と tensor parallelism を推奨する。
 
-Output: a one-page plan listing P, M, schedule, expected bubble fraction, parameter replication cost (if DualPipe), and an all-to-all kernel recommendation. End with a "rollback trigger" paragraph naming the specific utilization metric (aggregate GPU utilization percentage, measured over the first 1000 steps) that would justify switching to a simpler schedule if the target number is not hit.
+出力: P、M、schedule、expected bubble fraction、parameter replication cost (DualPipe の場合)、all-to-all kernel recommendation を列挙した one-page plan。最後に "rollback trigger" paragraph を付ける。target number に届かない場合に simpler schedule へ切り替える根拠となる specific utilization metric (最初の 1000 steps で測定した aggregate GPU utilization percentage) を明記する。

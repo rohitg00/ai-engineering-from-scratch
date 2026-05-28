@@ -1,32 +1,32 @@
 ---
 name: hybrid-memory
-description: Generate a Mem0-shaped three-store memory system (vector + KV + graph) with a fusion scorer, scope taxonomy, and temporal invalidation.
+description: Fusion scorer、scope taxonomy、temporal invalidation を持つ Mem0 形 three-store memory system (vector + KV + graph) を生成する。
 version: 1.0.0
 phase: 14
 lesson: 09
 tags: [memory, mem0, vector, graph, kv, fusion, scope]
 ---
 
-Given a target runtime, a vector backend (Qdrant, pgvector, Chroma, sqlite-vec), a KV backend (Postgres, Redis, dict), and a graph backend (Neo4j, in-memory edges), produce a fused memory system.
+Target runtime、vector backend (Qdrant, pgvector, Chroma, sqlite-vec)、KV backend (Postgres, Redis, dict)、graph backend (Neo4j, in-memory edges) が与えられたら、fused memory system を生成する。
 
-Produce:
+生成するもの:
 
-1. Three store classes behind an `add(text, user_id, session_id, scope, importance, tags)` facade. On write, the extractor decomposes `text` into records, KV triples, and graph triples. No store is optional.
-2. A fusion scorer `score = w_rel * relevance + w_imp * importance + w_rec * recency`. Expose all three weights as config. Tune per product, not per call.
-3. Scope taxonomy: `user`, `session`, `agent`. Retrieval MUST respect scope. A user query must never leak another user's records.
-4. Temporal invalidation. Contradictions mark old edges/records invalid; never delete. Expose `search(query, as_of=timestamp)` for historical queries.
-5. An extractor interface. The default can be LLM-driven; allow a deterministic regex fallback for tests. Cap graph edges per `add()` to prevent explosion.
+1. `add(text, user_id, session_id, scope, importance, tags)` facade の背後にある 3 つの store classes。Write 時、extractor は `text` を records、KV triples、graph triples に分解する。任意省略できる store はない。
+2. Fusion scorer `score = w_rel * relevance + w_imp * importance + w_rec * recency`。3 つの weights はすべて config として expose する。Per call ではなく product ごとに tune する。
+3. Scope taxonomy: `user`, `session`, `agent`。Retrieval は必ず scope を尊重する。User query が別 user の records を leak してはならない。
+4. Temporal invalidation。Contradictions は old edges/records を invalid と mark し、delete しない。Historical queries 用に `search(query, as_of=timestamp)` を expose する。
+5. Extractor interface。Default は LLM-driven でよいが、test 用に deterministic regex fallback を許可する。Graph explosion を防ぐため `add()` ごとの graph edges 数を cap する。
 
 Hard rejects:
 
-- Single-store memory described as "Mem0-shaped." Vector-only, KV-only, graph-only products are fine but are not hybrid memory. Do not misname them.
-- Cross-scope retrieval without per-scope weights or an explicit `scope=` filter. Scope leak is a compliance and privacy incident.
-- Deleting on contradiction. Invalidate and time-stamp. Deletion hides bugs and breaks audits.
+- Single-store memory を "Mem0-shaped" と説明すること。Vector-only、KV-only、graph-only products は問題ないが hybrid memory ではない。誤命名しない。
+- Per-scope weights または明示的な `scope=` filter なしの cross-scope retrieval。Scope leak は compliance と privacy incident。
+- Contradiction で delete すること。Invalidate して timestamp を付ける。Deletion は bug を隠し audit を壊す。
 
 Refusal rules:
 
-- If the user asks for "no importance weighting," refuse. Flat relevance ranking over a million records is a retrieval failure waiting to happen.
-- If the graph backend has no conflict detector, refuse to call the resulting system "Mem0-shaped." Downgrade the name.
-- If the product involves PII (medical, legal, HR), refuse to ship with an extractor that has not been audited by the product owner.
+- User が「importance weighting なし」と依頼した場合は拒否する。Million records 上の flat relevance ranking は将来の retrieval failure。
+- Graph backend に conflict detector がない場合、その system を "Mem0-shaped" と呼ぶことを拒否する。Name を downgrade する。
+- Product が PII (medical, legal, HR) を扱う場合、product owner に audit されていない extractor で ship することを拒否する。
 
-Output: one file per store plus `memory.py` (facade), `config.py` (weights), `README.md` explaining the fusion weights, scope policy, extractor contract, and invalidation semantics. End with "what to read next" pointing to Lesson 10 if the agent needs to learn new skills, Lesson 23 if OTel spans are required on memory ops, or Lesson 27 for untrusted-input handling on retrieval.
+Output: store ごとに 1 file、`memory.py` (facade)、`config.py` (weights)、fusion weights、scope policy、extractor contract、invalidation semantics を説明する `README.md`。最後に、agent が new skills を学ぶ必要があるなら Lesson 10、memory ops に OTel spans が必要なら Lesson 23、retrieval の untrusted-input handling は Lesson 27 への "what to read next" で締める。

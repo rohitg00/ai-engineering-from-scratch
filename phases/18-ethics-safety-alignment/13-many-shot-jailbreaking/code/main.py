@@ -1,8 +1,8 @@
 """Many-shot jailbreaking toy — stdlib Python.
 
-Target: a filter whose refusal probability decays as a power law in the
-number of compliance pairs present in the context. Reproduces the shape of
-Anil et al. 2024 Figure 2 without training a model.
+target: context 内の compliance pairs 数に応じて refusal probability が
+power law で減衰する filter。モデルを訓練せずに Anil et al. 2024
+Figure 2 の形を再現する。
 
 Usage: python3 code/main.py
 """
@@ -17,11 +17,11 @@ random.seed(41)
 
 
 def target_asr(n_shots: int, alpha: float = 0.5, a0: float = 0.02) -> float:
-    """Target's attack-success-rate as a function of shot count.
-    Power-law shape: ASR(n) = min(1, a0 + c * n^alpha).
+    """shot count の関数としての target の attack-success-rate。
+    power-law shape: ASR(n) = min(1, a0 + c * n^alpha)。
 
-    This is the empirical pattern Anil et al. 2024 observe: fails reliably
-    at 5 shots, begins to succeed around 32, saturates around 256.
+    これは Anil et al. 2024 が観察した経験的 pattern。5 shots では
+    信頼できる形で失敗し、32 あたりで成功し始め、256 あたりで飽和する。
     """
     if n_shots <= 0:
         return 0.0
@@ -30,8 +30,8 @@ def target_asr(n_shots: int, alpha: float = 0.5, a0: float = 0.02) -> float:
 
 
 def defense_adjusted(n_shots: int, alpha: float = 0.5) -> float:
-    """A simple defense: classifier detects the many-shot pattern and caps
-    effective shot count at 16. ASR curve saturates at the 16-shot value."""
+    """単純な defense: classifier が many-shot pattern を検出し、
+    effective shot count を 16 に cap する。ASR curve は 16-shot 値で飽和する。"""
     eff = min(n_shots, 16)
     return target_asr(eff, alpha)
 
@@ -43,7 +43,7 @@ def simulate(n_shots: int, asr_fn, trials: int = 500) -> float:
 
 
 def fit_power_law(shots: list[int], asrs: list[float]) -> tuple[float, float]:
-    """Simple log-log linear regression: log(ASR) = log(c) + alpha * log(n)."""
+    """単純な log-log linear regression: log(ASR) = log(c) + alpha * log(n)。"""
     xs = [math.log(s) for s in shots if s > 0]
     ys = [math.log(max(a, 1e-4)) for a in asrs]
     n = len(xs)
@@ -63,7 +63,7 @@ def main() -> None:
 
     shots = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
 
-    print("\n-- undefended target (power-law ASR curve) --")
+    print("\n-- 防御なし target (power-law ASR curve) --")
     undef = []
     for s in shots:
         rate = simulate(s, target_asr)
@@ -72,17 +72,17 @@ def main() -> None:
     alpha, c = fit_power_law(shots, undef)
     print(f"\n  fitted power law: ASR ~= {c:.3f} * n^{alpha:.3f}")
 
-    print("\n-- classifier-defended target (caps effective shots at 16) --")
+    print("\n-- classifier で防御した target (effective shots を 16 に cap) --")
     for s in shots:
         rate = simulate(s, defense_adjusted)
         print(f"  shots={s:4d}   ASR={rate:.3f}")
 
     print("\n" + "=" * 70)
-    print("TAKEAWAY: ASR grows power-law in shot count. the defense caps the")
-    print("effective number of shots. preserving benign ICL while suppressing")
-    print("harmful ICL requires a classifier that distinguishes the two at the")
-    print("context level -- which is why classifier-based prompt modification")
-    print("(Anthropic 2024) reports 61%->2% reduction without breaking ICL.")
+    print("要点: ASR は shot count に対して power-law で伸びる。defense は")
+    print("effective shots 数を cap する。benign ICL を保ちながら harmful ICL を")
+    print("抑えるには、context level で両者を区別する classifier が必要である。")
+    print("これが classifier-based prompt modification (Anthropic 2024) が")
+    print("ICL を壊さず 61%->2% の低下を報告した理由である。")
     print("=" * 70)
 
 

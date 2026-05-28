@@ -1,46 +1,46 @@
 {
   "lesson": "05-constitutional-ai-rlaif",
-  "title": "Constitutional AI and RLAIF",
+  "title": "Constitutional AI と RLAIF",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core substitution in Constitutional AI versus standard RLHF?",
+      "question": "standard RLHF と比べた Constitutional AI の core substitution は何ですか。",
       "options": [
-        "It replaces the human preference labeler with an AI labeler that reads a list of principles",
-        "It replaces PPO with DPO",
-        "It uses synthetic prompts instead of real ones",
-        "It removes the reward model entirely"
+        "human preference labeler を、principles のリストを読む AI labeler に置き換える",
+        "PPO を DPO に置き換える",
+        "real prompts の代わりに synthetic prompts を使う",
+        "reward model を完全に取り除く"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the first (SFT) phase of Constitutional AI do?",
+      "question": "Constitutional AI の最初の (SFT) phase は何をしますか。",
       "options": [
-        "Trains a reward model on AI-generated preferences only",
-        "Produces an initial response, critiques it under a sampled constitution principle, then revises and uses the revision as SFT target",
-        "Generates synthetic principles by clustering labeler comments",
-        "Performs PPO with a constitution-derived reward"
+        "AI-generated preferences だけで reward model を訓練する",
+        "initial response を生成し、sampled constitution principle のもとで critique し、revise して revision を SFT target にする",
+        "labeler comments を clustering して synthetic principles を生成する",
+        "constitution-derived reward で PPO を実行する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the second (RLAIF) phase do?",
+      "question": "2 つ目の (RLAIF) phase は何をしますか。",
       "options": [
-        "Skips PPO and applies a single supervised loss",
-        "Has humans re-label the SFT outputs",
-        "Distills the constitution into the tokenizer",
-        "Trains a reward model on AI-generated preferences from a feedback model and runs PPO against it"
+        "PPO を省略し single supervised loss を適用する",
+        "humans に SFT outputs を re-label させる",
+        "constitution を tokenizer に distill する",
+        "feedback model からの AI-generated preferences で reward model を訓練し、それに対して PPO を実行する"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the tier order in Anthropic's January 2026 four-tier Claude constitution?",
+      "question": "Anthropic の 2026 年 1 月 four-tier Claude constitution の tier order はどれですか。",
       "options": [
         "Platform rules > avoid catastrophe > helpful > broadly ethical",
         "Broadly ethical > helpful > platform rules > avoid catastrophe",
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "Which failure mode is NOT necessarily fixed by switching from RLHF to RLAIF?",
+      "question": "RLHF から RLAIF に切り替えても必ずしも fix されない failure mode はどれですか。",
       "options": [
-        "Labeler psychological inconsistency",
+        "labeler psychological inconsistency",
         "Reward hacking / Goodhart's Law",
-        "Labeler cost",
-        "Labeler scarcity"
+        "labeler cost",
+        "labeler scarcity"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the headline shift between Constitutional Classifiers v1 and v2 (2026)?",
+      "question": "Constitutional Classifiers v1 と v2 (2026) の headline shift は何ですか。",
       "options": [
-        "v2 increased compute overhead from 1% to 23.7%",
-        "v2 removed the classifier and relied on constitution alone",
-        "v2 only runs on input, not output",
-        "v2 dropped compute overhead from 23.7% to about 1% with low successful attack rate"
+        "v2 は compute overhead を 1% から 23.7% に増やした",
+        "v2 は classifier を取り除き constitution だけに依存した",
+        "v2 は input のみに実行され output には実行されない",
+        "v2 は compute overhead を 23.7% から約 1% に下げ、successful attack rate も低かった"
       ],
       "correct": 3,
       "explanation": ""

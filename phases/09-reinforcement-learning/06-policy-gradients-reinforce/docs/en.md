@@ -1,60 +1,60 @@
 # Policy Gradient — REINFORCE from Scratch
 
-> Stop estimating value. Parameterize the policy directly, compute the gradient of expected return, step uphill. Williams (1992) wrote it in one theorem. It is why PPO, GRPO, and every LLM RL loop exist.
+> 価値の推定をやめる。方策を直接パラメータ化し、期待 return の勾配を計算し、上り方向へ進む。Williams (1992) はこれを1つの定理として書いた。PPO、GRPO、そしてすべての LLM RL loop が存在する理由がここにある。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-Q-learning and DQN parameterize the *value* function. You pick actions by `argmax Q`. That is fine for discrete actions and discrete states. It breaks when actions are continuous (which `argmax` over a 10-dimensional torque?) or when you want a stochastic policy (`argmax` is deterministic by construction).
+Q-learning と DQN は *value* function をパラメータ化する。行動は `argmax Q` で選ぶ。これは離散行動かつ離散状態なら問題ない。しかし、行動が連続の場合（10次元 torque に対してどの `argmax` を取るのか）や、確率的方策が欲しい場合（`argmax` は構造上決定的）には破綻する。
 
-Policy gradients parameterize the *policy* instead. `π_θ(a | s)` is a neural net that outputs a distribution over actions. Sample from it to act. Compute the gradient of expected return with respect to `θ`. Step uphill. No `argmax`. No Bellman recursion. Just gradient ascent on `J(θ) = E_{π_θ}[G]`.
+Policy gradients は代わりに *policy* をパラメータ化する。`π_θ(a | s)` は、行動上の分布を出力するニューラルネットである。そこからサンプリングして行動する。`θ` に関する期待 return の勾配を計算する。上り方向へ進む。`argmax` はない。Bellman recursion もない。`J(θ) = E_{π_θ}[G]` に対する gradient ascent だけである。
 
-The REINFORCE theorem (Williams 1992) tells you this gradient is computable: `∇J(θ) = E_π[ G · ∇_θ log π_θ(a | s) ]`. Run an episode. Compute the return. Multiply by `∇ log π_θ(a | s)` at every step. Average. Gradient-ascent. Done.
+REINFORCE theorem (Williams 1992) は、この勾配が計算可能であることを示す。`∇J(θ) = E_π[ G · ∇_θ log π_θ(a | s) ]`。Episode を実行する。Return を計算する。各ステップで `∇ log π_θ(a | s)` に掛ける。平均する。Gradient-ascent。完了。
 
-Every LLM-RL algorithm in 2026 — PPO, DPO, GRPO — is a refinement of REINFORCE. Understanding it in your fingers is the prerequisite for the rest of this phase, and for Phase 10 · 07 (RLHF implementation) and Phase 10 · 08 (DPO).
+2026年のすべての LLM-RL algorithm、PPO、DPO、GRPO は REINFORCE の改良である。これを手で理解しておくことは、この phase の残り、さらに Phase 10 · 07（RLHF implementation）と Phase 10 · 08（DPO）の前提条件である。
 
-## The Concept
+## コンセプト
 
 ![Policy gradient: softmax policy, log-π gradient, return-weighted update](../assets/policy-gradient.svg)
 
-**The policy gradient theorem.** For any policy `π_θ` parameterized by `θ`:
+**Policy gradient theorem。** `θ` でパラメータ化された任意の policy `π_θ` について、
 
 `∇J(θ) = E_{τ ~ π_θ}[ Σ_{t=0}^{T} G_t · ∇_θ log π_θ(a_t | s_t) ]`
 
-where `G_t = Σ_{k=t}^{T} γ^{k-t} r_{k+1}` is the discounted return from step `t`. The expectation is over full trajectories `τ` sampled from `π_θ`.
+ここで `G_t = Σ_{k=t}^{T} γ^{k-t} r_{k+1}` はステップ `t` からの discounted return である。期待値は `π_θ` からサンプリングされた完全な trajectory `τ` に関するもの。
 
-**The proof is short.** Differentiate `J(θ) = Σ_τ P(τ; θ) G(τ)` under the expectation. Use `∇P(τ; θ) = P(τ; θ) ∇ log P(τ; θ)` (the log-derivative trick). Factor `log P(τ; θ) = Σ log π_θ(a_t | s_t) + environment terms that do not depend on θ`. The environment terms vanish. Two lines of algebra give you the theorem.
+**証明は短い。** 期待値の内側で `J(θ) = Σ_τ P(τ; θ) G(τ)` を微分する。`∇P(τ; θ) = P(τ; θ) ∇ log P(τ; θ)`（log-derivative trick）を使う。`log P(τ; θ) = Σ log π_θ(a_t | s_t) + environment terms that do not depend on θ` と分解する。Environment terms は消える。2行の代数で定理が得られる。
 
-**Variance reduction tricks.** Vanilla REINFORCE has murderous variance — returns are noisy, `∇ log π` is noisy, their product is very noisy. Two standard fixes:
+**Variance reduction tricks。** 素の REINFORCE は非常に variance が大きい。Return はノイジーで、`∇ log π` もノイジーで、その積はさらにノイジーである。標準的な修正は2つある。
 
-1. **Baseline subtraction.** Replace `G_t` with `G_t - b(s_t)` for any baseline `b(s_t)` that does not depend on `a_t`. Unbiased because `E[b(s_t) · ∇ log π(a_t | s_t)] = 0`. Typical choice: `b(s_t) = V̂(s_t)` learned by a critic → actor-critic (Lesson 07).
-2. **Reward-to-go.** Replace `Σ_t G_t · ∇ log π_θ(a_t | s_t)` with `Σ_t G_t^{from t} · ∇ log π_θ(a_t | s_t)`. Only future returns matter for a given action — past rewards contribute zero-mean noise.
+1. **Baseline subtraction。** `G_t` を、`a_t` に依存しない任意の baseline `b(s_t)` について `G_t - b(s_t)` に置き換える。`E[b(s_t) · ∇ log π(a_t | s_t)] = 0` なので unbiased である。典型的には critic が学習した `b(s_t) = V̂(s_t)` を使う。これが actor-critic（Lesson 07）につながる。
+2. **Reward-to-go。** `Σ_t G_t · ∇ log π_θ(a_t | s_t)` を `Σ_t G_t^{from t} · ∇ log π_θ(a_t | s_t)` に置き換える。ある行動に関係するのは未来の return だけであり、過去の報酬は zero-mean noise になる。
 
-Combined, you get:
+組み合わせると次の式になる。
 
 `∇J ≈ (1/N) Σ_{i=1}^{N} Σ_{t=0}^{T_i} [ G_t^{(i)} - V̂(s_t^{(i)}) ] · ∇_θ log π_θ(a_t^{(i)} | s_t^{(i)})`
 
-which is REINFORCE with a baseline — the direct ancestor of A2C (Lesson 07) and PPO (Lesson 08).
+これは baseline 付き REINFORCE であり、A2C（Lesson 07）と PPO（Lesson 08）の直接の祖先である。
 
-**Softmax policy parameterization.** For discrete actions, the standard choice:
+**Softmax policy parameterization。** 離散行動では、標準的な選択は次である。
 
 `π_θ(a | s) = exp(f_θ(s, a)) / Σ_{a'} exp(f_θ(s, a'))`
 
-where `f_θ` is any neural net that outputs a score per action. The gradient has a clean form:
+ここで `f_θ` は各行動に score を出す任意のニューラルネットである。勾配はきれいな形になる。
 
 `∇_θ log π_θ(a | s) = ∇_θ f_θ(s, a) - Σ_{a'} π_θ(a' | s) ∇_θ f_θ(s, a')`
 
-i.e., score of the taken action minus its expected value under the policy.
+つまり、実際に取った行動の score から、policy の下での期待値を引いたものになる。
 
-**Gaussian policy for continuous actions.** `π_θ(a | s) = N(μ_θ(s), σ_θ(s))`. `∇ log N(a; μ, σ)` has a closed form. That is all Phase 9 · 07's SAC needs.
+**連続行動の Gaussian policy。** `π_θ(a | s) = N(μ_θ(s), σ_θ(s))`。`∇ log N(a; μ, σ)` には閉形式がある。Phase 9 · 07 の SAC に必要なのはこれだけである。
 
-## Build It
+## 作ってみる
 
-### Step 1: softmax policy network
+### ステップ1: softmax policy network
 
 ```python
 def policy_logits(theta, state_features):
@@ -67,9 +67,9 @@ def softmax(logits):
     return [e / Z for e in exps]
 ```
 
-Use a linear policy (one weight vector per action) for a tabular env. For Atari, swap in a CNN and keep the softmax head.
+Tabular env では linear policy（行動ごとに1つの weight vector）を使う。Atari では CNN に差し替え、softmax head はそのままにする。
 
-### Step 2: sampling and log-probability
+### ステップ2: sampling と log-probability
 
 ```python
 def sample_action(probs, rng):
@@ -85,7 +85,7 @@ def log_prob(probs, a):
     return log(probs[a] + 1e-12)
 ```
 
-### Step 3: rollout with log-probs captured
+### ステップ3: log-probs を保持した rollout
 
 ```python
 def rollout(theta, env, rng, gamma):
@@ -101,7 +101,7 @@ def rollout(theta, env, rng, gamma):
     return trajectory
 ```
 
-### Step 4: REINFORCE update
+### ステップ4: REINFORCE update
 
 ```python
 def reinforce_step(theta, trajectory, gamma, lr, baseline=0.0):
@@ -115,84 +115,84 @@ def reinforce_step(theta, trajectory, gamma, lr, baseline=0.0):
                 theta[i][j] += lr * advantage * grad_log_pi_a[i] * s[j]
 ```
 
-The gradient `∇ log π(a|s) = e_a - π(·|s)` (onehot of `a` minus probabilities) is the heart of softmax policy gradients. Burn it into muscle memory.
+勾配 `∇ log π(a|s) = e_a - π(·|s)`（`a` の onehot から確率を引く）が softmax policy gradients の核心である。体に刻み込むこと。
 
-### Step 5: baselines
+### ステップ5: baselines
 
-A running mean of `G` over recent episodes is enough variance reduction to get a 4×4 GridWorld running; it takes ~500 episodes to converge. Upgrade the baseline to a learned `V̂(s)` and you get actor-critic.
+直近 episodes の `G` の running mean だけでも、4×4 GridWorld を動かすには十分な variance reduction になり、収束には約500 episodes かかる。Baseline を学習された `V̂(s)` に上げると actor-critic になる。
 
-## Pitfalls
+## 落とし穴
 
-- **Exploding gradients.** Returns can be huge. Always normalize `G` to `~N(0, 1)` across the batch before multiplying by `∇ log π`.
-- **Entropy collapse.** The policy converges to a near-deterministic action too early, stops exploring, gets stuck. Fix: add entropy bonus `β · H(π(·|s))` to the objective.
-- **High variance.** Vanilla REINFORCE needs thousands of episodes. A critic baseline (Lesson 07) or TRPO/PPO's trust region (Lesson 08) is the standard fix.
-- **Sample inefficiency.** On-policy means you throw away every transition after one update. Off-policy corrections via importance sampling bring back data, at the cost of variance (PPO's ratio is a clipped IS weight).
-- **Non-stationary gradients.** The same gradient from 100 episodes ago uses old `π`. On-policy methods update every few rollouts for this reason.
-- **Credit assignment.** Without reward-to-go, past rewards contribute noise. Always use reward-to-go.
+- **Exploding gradients。** Return は巨大になりうる。`∇ log π` を掛ける前に、必ず batch 内で `G` を `~N(0, 1)` に normalize する。
+- **Entropy collapse。** Policy が早すぎる段階でほぼ決定的な行動に収束し、探索をやめて詰まる。修正策は、目的関数に entropy bonus `β · H(π(·|s))` を追加すること。
+- **High variance。** 素の REINFORCE は数千 episodes を必要とする。Critic baseline（Lesson 07）または TRPO/PPO の trust region（Lesson 08）が標準的な修正である。
+- **Sample inefficiency。** On-policy なので、各 transition は1回の update 後に捨てる。Importance sampling による off-policy correction でデータを再利用できるが、variance が増える（PPO の ratio は clipped IS weight である）。
+- **Non-stationary gradients。** 100 episodes 前の同じ勾配は古い `π` を使っている。そのため on-policy methods は数 rollout ごとに更新する。
+- **Credit assignment。** Reward-to-go がないと、過去の報酬が noise になる。常に reward-to-go を使う。
 
-## Use It
+## 使いどころ
 
-In 2026, REINFORCE is rarely run directly but its gradient formula is everywhere:
+2026年時点で REINFORCE がそのまま実行されることは少ないが、その勾配公式は至るところにある。
 
-| Use case | Derived method |
+| ユースケース | 派生手法 |
 |----------|---------------|
 | Continuous control | PPO / SAC with Gaussian policy |
 | LLM RLHF | PPO with KL penalty, running on token-level policy |
-| LLM reasoning (DeepSeek) | GRPO — REINFORCE with group-relative baseline, no critic |
+| LLM reasoning (DeepSeek) | GRPO — group-relative baseline を使う critic なし REINFORCE |
 | Multi-agent | Centralized-critic REINFORCE (MADDPG, COMA) |
 | Discrete action robotics | A2C, A3C, PPO |
-| Preference-only settings | DPO — REINFORCE rewritten as a preference-likelihood loss, no sampling |
+| Preference-only settings | DPO — preference-likelihood loss として書き直した REINFORCE。Sampling なし |
 
-When you read `loss = -advantage * log_prob` in a 2026 training script, that is REINFORCE with a baseline. Entire papers (DPO, GRPO, RLOO) are variance-reduction tricks on top of this one line.
+2026年の訓練スクリプトで `loss = -advantage * log_prob` を見たら、それは baseline 付き REINFORCE である。DPO、GRPO、RLOO といった論文全体が、この1行の上に積まれた variance-reduction trick である。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-policy-gradient-trainer.md`:
+`outputs/skill-policy-gradient-trainer.md` として保存する。
 
 ```markdown
 ---
 name: policy-gradient-trainer
-description: Produce a REINFORCE / actor-critic / PPO training config for a given task and diagnose variance issues.
+description: 与えられたタスク向けに REINFORCE / actor-critic / PPO training config を作成し、variance の問題を診断する。
 version: 1.0.0
 phase: 9
 lesson: 6
 tags: [rl, policy-gradient, reinforce]
 ---
 
-Given an environment (discrete / continuous actions, horizon, reward stats), output:
+環境（discrete / continuous actions、horizon、reward stats）が与えられたら、次を出力する。
 
-1. Policy head. Softmax (discrete) or Gaussian (continuous) with parameter counts.
-2. Baseline. None (vanilla), running mean, learned `V̂(s)`, or A2C critic.
-3. Variance controls. Reward-to-go on by default, return normalization, gradient clip value.
-4. Entropy bonus. Coefficient β and decay schedule.
-5. Batch size. Episodes per update; on-policy data freshness contract.
+1. Policy head。Softmax（discrete）または Gaussian（continuous）と parameter counts。
+2. Baseline。None（vanilla）、running mean、学習された `V̂(s)`、または A2C critic。
+3. Variance controls。Reward-to-go はデフォルトで有効、return normalization、gradient clip value。
+4. Entropy bonus。Coefficient β と decay schedule。
+5. Batch size。Update あたりの episodes、on-policy data freshness contract。
 
-Refuse REINFORCE-no-baseline on horizons > 500 steps. Refuse continuous-action control with a softmax head. Flag any run with `β = 0` and observed policy entropy < 0.1 as entropy-collapsed.
+Horizon が 500 steps を超える REINFORCE-no-baseline は拒否する。Softmax head を使う continuous-action control は拒否する。`β = 0` かつ observed policy entropy < 0.1 の run は entropy-collapsed として指摘する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement REINFORCE on 4×4 GridWorld with a linear softmax policy. Train for 1,000 episodes without a baseline. Plot the learning curve; measure variance (std of returns).
-2. **Medium.** Add a running-mean baseline. Train again. Compare sample efficiency and variance to the vanilla run. By how much does the baseline reduce steps to convergence?
-3. **Hard.** Add an entropy bonus `β · H(π)`. Sweep `β ∈ {0, 0.01, 0.1, 1.0}`. Plot final return and policy entropy. Where is the sweet spot on this task?
+1. **初級。** Linear softmax policy で 4×4 GridWorld に REINFORCE を実装する。Baseline なしで 1,000 episodes 訓練する。Learning curve を plot し、variance（returns の std）を測る。
+2. **中級。** Running-mean baseline を追加する。再度訓練する。Vanilla run と sample efficiency と variance を比較する。Baseline によって収束までの steps はどれだけ減るか。
+3. **上級。** Entropy bonus `β · H(π)` を追加する。`β ∈ {0, 0.01, 0.1, 1.0}` を sweep する。Final return と policy entropy を plot する。このタスクでの sweet spot はどこか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Policy gradient | "Train the policy directly" | `∇J(θ) = E[G · ∇ log π_θ(a\|s)]`; derived from the log-derivative trick. |
-| REINFORCE | "The original PG algorithm" | Williams (1992); Monte Carlo returns multiplied by log-policy gradient. |
-| Log-derivative trick | "Score function estimator" | `∇P(τ;θ) = P(τ;θ) · ∇ log P(τ;θ)`; makes gradients of expectations tractable. |
-| Baseline | "Variance reduction" | Any `b(s)` subtracted from `G`; unbiased because `E[b · ∇ log π] = 0`. |
-| Reward-to-go | "Only future returns count" | `G_t^{from t}` instead of the full `G_0`; correct and lower-variance. |
-| Entropy bonus | "Encourage exploration" | `+β · H(π(·\|s))` term keeps the policy from collapsing. |
-| On-policy | "Train on what you just saw" | Gradient expectation is w.r.t. the current policy — cannot reuse old data directly. |
-| Advantage | "How much better than average" | `A(s, a) = G(s, a) - V(s)`; the signed quantity REINFORCE-with-baseline multiplies. |
+| Policy gradient | "Train the policy directly" | `∇J(θ) = E[G · ∇ log π_θ(a\|s)]`。Log-derivative trick から導かれる。 |
+| REINFORCE | "The original PG algorithm" | Williams (1992)。Monte Carlo returns に log-policy gradient を掛ける。 |
+| Log-derivative trick | "Score function estimator" | `∇P(τ;θ) = P(τ;θ) · ∇ log P(τ;θ)`。期待値の勾配を扱いやすくする。 |
+| Baseline | "Variance reduction" | `G` から引く任意の `b(s)`。`E[b · ∇ log π] = 0` なので unbiased。 |
+| Reward-to-go | "Only future returns count" | Full `G_0` ではなく `G_t^{from t}`。正しく、variance が低い。 |
+| Entropy bonus | "Encourage exploration" | `+β · H(π(·\|s))` 項が policy collapse を防ぐ。 |
+| On-policy | "Train on what you just saw" | Gradient expectation は現在の policy に関するものなので、古いデータを直接再利用できない。 |
+| Advantage | "How much better than average" | `A(s, a) = G(s, a) - V(s)`。REINFORCE-with-baseline が掛ける符号付き量。 |
 
-## Further Reading
+## 参考文献
 
-- [Williams (1992). Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://link.springer.com/article/10.1007/BF00992696) — the original REINFORCE paper.
-- [Sutton et al. (2000). Policy Gradient Methods for Reinforcement Learning with Function Approximation](https://papers.nips.cc/paper_files/paper/1999/hash/464d828b85b0bed98e80ade0a5c43b0f-Abstract.html) — the modern policy-gradient theorem with function approximation.
-- [Sutton & Barto (2018). Ch. 13 — Policy Gradient Methods](http://incompleteideas.net/book/RLbook2020.pdf) — textbook presentation.
-- [OpenAI Spinning Up — VPG / REINFORCE](https://spinningup.openai.com/en/latest/algorithms/vpg.html) — clear pedagogical exposition with PyTorch code.
-- [Peters & Schaal (2008). Reinforcement Learning of Motor Skills with Policy Gradients](https://homes.cs.washington.edu/~todorov/courses/amath579/reading/PolicyGradient.pdf) — variance-reduction and the natural-gradient view that connects REINFORCE to the trust-region family (TRPO, PPO).
+- [Williams (1992). Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://link.springer.com/article/10.1007/BF00992696) — REINFORCE の原論文。
+- [Sutton et al. (2000). Policy Gradient Methods for Reinforcement Learning with Function Approximation](https://papers.nips.cc/paper_files/paper/1999/hash/464d828b85b0bed98e80ade0a5c43b0f-Abstract.html) — function approximation を伴う現代的な policy-gradient theorem。
+- [Sutton & Barto (2018). Ch. 13 — Policy Gradient Methods](http://incompleteideas.net/book/RLbook2020.pdf) — 教科書的説明。
+- [OpenAI Spinning Up — VPG / REINFORCE](https://spinningup.openai.com/en/latest/algorithms/vpg.html) — PyTorch code 付きの明快な教育的解説。
+- [Peters & Schaal (2008). Reinforcement Learning of Motor Skills with Policy Gradients](https://homes.cs.washington.edu/~todorov/courses/amath579/reading/PolicyGradient.pdf) — variance reduction と natural-gradient view。REINFORCE を trust-region family（TRPO、PPO）につなげる。

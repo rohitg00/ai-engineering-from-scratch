@@ -1,33 +1,33 @@
 # Capstone Lesson 25: Verification Gates and the Observation Budget
 
-> An agent harness without a verification layer is a wish in a trenchcoat. This lesson builds the deterministic gate chain that decides whether a tool call is allowed to fire, how much of its output the agent is allowed to see, and when the loop has to stop because the agent has read too much. The chain is a function of small, named gates plus an observation ledger that tracks every token the model has been shown.
+> verification layer のない agent harness は、根拠のない願いです。この lesson では deterministic な gate chain を作り、tool call を実行してよいか、agent が output のどれだけを見てよいか、agent が読みすぎたため loop を止めるべきかを判断します。chain は小さく名前のついた gate 群と、model に見せた全 token を追跡する observation ledger で構成されます。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Build a `VerificationGate` protocol with a deterministic `evaluate(call)` method.
-- Compose budget, recency, whitelist, and regex gates into a chain with short-circuit semantics.
-- Track every observation through an `ObservationLedger` keyed by tool and turn.
-- Refuse a tool call when the cumulative observation budget would be exceeded.
-- Surface a structured `GateDecision` record that downstream observability can ingest.
+- deterministic な `evaluate(call)` method を持つ `VerificationGate` protocol を作る。
+- budget、recency、whitelist、regex gate を short-circuit semantics の chain に compose する。
+- tool と turn を key に、すべての observation を `ObservationLedger` で追跡する。
+- cumulative observation budget を超える tool call を拒否する。
+- downstream observability が取り込める structured `GateDecision` record を surface する。
 
-## The Problem
+## 問題
 
-When an agent harness lets the model call tools freely, three classes of bug appear within the first hour of real use.
+agent harness が model に自由な tool call を許すと、実利用の最初の 1 時間で 3 種類の bug が出ます。
 
-The first is unbounded observation. A grep across a 200K-line repo dumps half a million tokens of output into the next turn. The model sees one match per kilobyte and the rest of the context is wasted. The token bill is large and the agent is now worse, not better, at the task.
+1 つ目は unbounded observation です。200K 行の repo に対する grep が 50 万 token の output を次 turn に流し込みます。model は 1 KB に 1 件の match を見るだけで、残りの context は無駄になります。token bill は大きくなり、agent は task に対して良くなるどころか悪くなります。
 
-The second is stale recency. A long-running task accumulates fifty tool calls. The model rereads the first read_file from turn three as if it were live state. Edits made on turn forty-seven never show up because the prompt builder serialized the earliest observations first.
+2 つ目は stale recency です。long-running task が 50 個の tool call を蓄積します。model は turn 3 の最初の read_file を live state であるかのように読み返します。turn 47 の edit は、prompt builder が最古の observation を先に serialize したせいで出てきません。
 
-The third is privilege creep. A research task starts by calling `web_search`, then somehow ends up running `shell` because the model invented a tool name and the harness defaulted to permissive. By the time anyone reads the trace, a junk file is sitting in /tmp and a curl ran against a private API.
+3 つ目は privilege creep です。research task が `web_search` を呼ぶところから始まり、model が tool name を発明し、harness が permissive default だったため、いつの間にか `shell` を実行しています。trace を誰かが読む頃には /tmp に不要ファイルがあり、private API に curl が走っています。
 
-A verification gate is the harness component that says no. It is not a model. It is not a judge. It is a deterministic function of `(call, history, ledger)` that returns either ALLOW or DENY with a reason. The reason is logged. The model is told. The loop continues or aborts.
+verification gate は no と言う harness component です。model ではありません。judge でもありません。`(call, history, ledger)` の deterministic function で、reason つきの ALLOW または DENY を返します。reason は log されます。model に伝えられます。loop は続行するか abort します。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart LR
@@ -39,18 +39,18 @@ flowchart LR
   Reason --> Loop[loop continues<br/>or aborts at threshold]
 ```
 
-A gate is anything with an `evaluate(call, ctx) -> GateDecision` method. The chain is an ordered list. Evaluation short-circuits on the first deny. Order matters: cheap structural gates run before expensive token-counting gates.
+gate は `evaluate(call, ctx) -> GateDecision` method を持つものなら何でも構いません。chain は ordered list です。最初の deny で short-circuit します。順序は重要です。安い structural gate を、高価な token-counting gate より前に走らせます。
 
-This lesson ships four gates:
+この lesson は 4 つの gate を同梱します。
 
-- `WhitelistGate`. Allowed tool names are an explicit set. Anything outside is denied. This is the cheapest gate and runs first.
-- `RegexGate`. Tool arguments are matched against a regex. Useful for refusing shell calls with `rm -rf` in them, or HTTP calls to internal IPs. Pure on the call payload.
-- `RecencyGate`. The model only sees observations from the last N turns. Older observations are masked. The gate refuses a tool call whose result would extend an observation window that has already aged out.
-- `BudgetGate`. The cumulative tokens the model has read across the session has a ceiling. When the ledger says the ceiling is reached, every further tool call is denied.
+- `WhitelistGate`。allowed tool name は明示的な set です。範囲外は deny します。最も安い gate なので最初に走ります。
+- `RegexGate`。tool arguments を regex に match します。`rm -rf` を含む shell call や internal IP への HTTP call を拒否するのに役立ちます。call payload に対して pure です。
+- `RecencyGate`。model が見る observation を直近 N turn に限定します。古い observation は mask されます。この gate は、すでに aged out した observation window をさらに延ばす tool call を拒否します。
+- `BudgetGate`。session 全体で model が読んだ cumulative tokens に ceiling を置きます。ledger が ceiling 到達を示すと、以後すべての tool call を deny します。
 
-The observation ledger is the bookkeeping. Every successful tool call writes one row: tool name, turn, tokens emitted, cumulative. The ledger answers two questions: how much has the model seen total, and how much has it seen of tool X. The budget gate reads the first. A per-tool budget gate, which you will write as an exercise, reads the second.
+observation ledger は bookkeeping です。成功した tool call ごとに 1 row、tool name、turn、emitted tokens、cumulative を書きます。ledger は 2 つの質問に答えます。model は合計でどれだけ見たか。tool X についてどれだけ見たか。budget gate は前者を読みます。exercise として書く per-tool budget gate は後者を読みます。
 
-## Architecture
+## アーキテクチャ
 
 ```mermaid
 flowchart TD
@@ -61,32 +61,32 @@ flowchart TD
   Ledger -->|record| Store[MessageStore]
 ```
 
-The harness asks the chain. The chain either nods or refuses. If it nods, the tool runs, the ledger ticks, and the result is appended to the message store. If it refuses, the model is handed the refusal as a system message and the loop decides whether to retry or abort.
+harness は chain に問い合わせます。chain はうなずくか拒否します。うなずけば tool が走り、ledger が進み、result が message store に append されます。拒否すれば、model には refusal が system message として渡され、loop は retry するか abort するかを決めます。
 
-## What you will build
+## 作るもの
 
-The implementation is a single `main.py` plus tests.
+implementation は単一の `main.py` と tests です。
 
-1. `Observation` and `ToolCall` dataclasses define the wire shapes.
-2. `ObservationLedger` records `(turn, tool, tokens)` rows and answers `cumulative()` and `per_tool(name)`.
-3. `GateDecision` carries `(allow, reason, gate_name)`.
-4. `VerificationGate` is the protocol. Each gate implements `evaluate(call, ctx)`.
-5. `GateChain` wraps an ordered list. It calls each gate, returns the first deny, or returns allow if every gate passes.
-6. The demo runs a tiny synthetic agent loop. Three turns. The third turn trips the budget gate and the loop reports a clean refusal with a non-zero refusal count.
+1. `Observation` と `ToolCall` dataclass が wire shape を定義する。
+2. `ObservationLedger` が `(turn, tool, tokens)` row を記録し、`cumulative()` と `per_tool(name)` に答える。
+3. `GateDecision` が `(allow, reason, gate_name)` を運ぶ。
+4. `VerificationGate` が protocol。各 gate が `evaluate(call, ctx)` を実装する。
+5. `GateChain` が ordered list を wrap する。各 gate を呼び、最初の deny を返すか、すべて pass すれば allow を返す。
+6. demo が小さな synthetic agent loop を走らせる。3 turn。3 turn 目で budget gate が発火し、loop は non-zero refusal count つきの clean refusal を報告する。
 
-The token counter is intentionally a stupid `len(text) // 4` heuristic. The point of this lesson is the gate plumbing, not the tokenizer. Drop in a real tokenizer in production.
+token counter は意図的に単純な `len(text) // 4` heuristic です。この lesson の狙いは gate plumbing であり tokenizer ではありません。production では real tokenizer を差し込んでください。
 
-## Why the chain order matters
+## なぜ chain order が重要なのか
 
-A deny is cheaper than an allow. `WhitelistGate` runs in O(1) hash lookup. `RegexGate` runs in O(pattern * argv). `RecencyGate` reads a small slice of the message store. `BudgetGate` reads the entire ledger. You order them by ascending cost so a denied call short-circuits before doing the expensive work.
+deny は allow より安いです。`WhitelistGate` は O(1) hash lookup です。`RegexGate` は O(pattern * argv) です。`RecencyGate` は message store の小さな slice を読みます。`BudgetGate` は ledger 全体を読みます。deny された call が高価な処理に進む前に short-circuit できるよう、ascending cost で並べます。
 
-You also order them by blast radius. Whitelist is the strongest claim: this tool is not in the contract. The regex gate is next: this argument is not in the contract. Recency comes after: the harness still cares but the call is structurally legal. Budget is last because, by definition, it only fires when everything else passed.
+blast radius の観点でも並べます。Whitelist は最も強い主張です。この tool は contract にない。regex gate が次です。この argument は contract にない。Recency はその後です。harness はまだ関心がありますが、call は構造上 legal です。Budget は最後です。定義上、他のすべてを pass したときだけ発火するからです。
 
-## How this composes with the rest of Track A
+## Track A の他 lesson との合成
 
-The previous lessons gave you the loop, the tool registry, the message store, the prompt builder, and the model router. This lesson adds the layer between the model and the tools. Lesson 26 ships the sandbox that the dispatcher hands the tool call to once the gate chain says ALLOW. Lesson 27 ships the eval harness that records refusal counts as a quality signal. Lesson 28 wires the gate decisions into OpenTelemetry spans. Lesson 29 stitches the lot into a working coding agent.
+前の lesson は loop、tool registry、message store、prompt builder、model router を作りました。この lesson は model と tool の間の layer を追加します。Lesson 26 は gate chain が ALLOW と言ったあと、dispatcher が tool call を渡す sandbox を出荷します。Lesson 27 は refusal count を quality signal として記録する eval harness を出荷します。Lesson 28 は gate decision を OpenTelemetry span に wire します。Lesson 29 はそれらをまとめて working coding agent にします。
 
-## Running it
+## 実行方法
 
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
@@ -94,4 +94,4 @@ python3 code/main.py
 python3 -m pytest code/tests/ -v
 ```
 
-The demo prints a turn-by-turn trace including every gate decision and exits zero. The tests cover the ledger, each gate in isolation, the chain short-circuit, and the synthetic loop end-to-end.
+demo は各 gate decision を含む turn-by-turn trace を print し、exit zero します。tests は ledger、各 gate 単体、chain short-circuit、synthetic loop の end-to-end を cover します。

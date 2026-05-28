@@ -1,28 +1,28 @@
-# ReWOO and Plan-and-Execute: Decoupled Planning
+# ReWOOとPlan-and-Execute: 分離されたplanning
 
-> ReAct interleaves thought and action in one stream. ReWOO separates them: one big plan up front, then execute. 5x fewer tokens, +4% accuracy on HotpotQA, and you can distill the planner into a 7B model. Plan-and-Execute generalized it; Plan-and-Act scaled it to web navigation.
+> ReActはthoughtとactionを1つのstreamで交互に進める。ReWOOはそれを分離する。最初に大きなplanを作り、その後にexecuteする。tokenは5分の1、HotpotQAでaccuracyは+4%、plannerを7B modelへdistillできる。Plan-and-Executeはこれを一般化し、Plan-and-Actはweb navigationへscaleさせた。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop)
-**Time:** ~60 minutes
+**タイプ:** 構築
+**言語:** Python（stdlib）
+**前提条件:** フェーズ 14 · 01（Agent Loop）
+**時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Explain why ReWOO's Planner / Worker / Solver split saves tokens and improves robustness over ReAct's interleaved loop.
-- Implement a plan DAG, a dependency-ordered executor, and a solver that composes worker outputs — all stdlib.
-- Decide when a task should run as plan-then-execute vs interleaved ReAct, using the 2026 "five workflow patterns" framing (Anthropic).
-- Recognize when Plan-and-Act's synthetic plan data is needed for long-horizon web or mobile tasks.
+- ReWOOのPlanner / Worker / Solver分割が、ReActのinterleaved loopよりもtokenを節約しrobustnessを高める理由を説明する。
+- plan DAG、dependency順のexecutor、worker outputを合成するsolverを、すべてstdlibで実装する。
+- 2026年の「5つのworkflow patterns」（Anthropic）の枠組みを使い、taskをplan-then-executeで実行すべきか、interleaved ReActで実行すべきか判断する。
+- long-horizon web/mobile taskでPlan-and-Actのsynthetic plan dataが必要になる場面を認識する。
 
-## The Problem
+## 課題
 
-ReAct's interleaved thought-action-observation loop is simple and flexible, but each tool call has to carry the full prior context — including every previous thought. Token usage grows quadratically with depth. Worse: when a tool fails mid-loop, the model has to re-derive the whole plan from the error observation.
+ReActのinterleaved thought-action-observation loopは単純で柔軟だが、各tool callがそれまでの全contextを運ばなければならない。以前のすべてのthoughtを含めてである。token usageはdepthに対して二次的に増える。さらに悪いことに、toolがloop途中で失敗すると、modelはerror observationからplan全体を再導出しなければならない。
 
-ReWOO (Xu et al., arXiv:2305.18323, May 2023) noticed this and made a bet: plan the whole thing up front, fetch evidence in parallel, compose the answer at the end. One LLM call to plan, N tool calls for evidence (can be parallel), one LLM call to solve. The trade is less flexibility (the plan is static) for much better token efficiency and clearer failure modes.
+ReWOO（Xuら、arXiv:2305.18323、2023年5月）はこれに気づき、別の賭けをした。最初に全体をplanし、evidenceをparallelに取得し、最後にanswerを合成する。plan用のLLM callが1回、evidence用のN tool calls（parallel可能）、solve用のLLM callが1回。柔軟性は下がる（planは静的）が、token efficiencyとfailure modeの明瞭さは大きく向上する。
 
-## The Concept
+## 考え方
 
-### The three roles
+### 3つの役割
 
 ```
 Planner:  user_question -> [plan_dag]
@@ -30,92 +30,92 @@ Workers:  [plan_dag]     -> [evidence]        (tool calls, possibly parallel)
 Solver:   user_question, plan_dag, evidence -> final_answer
 ```
 
-Planner produces a DAG. Each node names a tool, its arguments, and which earlier nodes it depends on (references like `#E1`, `#E2`). Workers execute nodes in topological order. Solver stitches everything together.
+PlannerはDAGを生成する。各nodeはtool、arguments、依存する以前のnode（`#E1`、`#E2`のようなreference）を持つ。Workersはtopological orderでnodeを実行する。Solverはすべてをつなぎ合わせる。
 
-### Why 5x fewer tokens
+### なぜtokenが5分の1になるのか
 
-ReAct grows prompt length linearly with step count. At step 10, the prompt contains thought 1 plus action 1 plus observation 1 plus thought 2 plus action 2 plus observation 2, and so on. Each intermediate step also redundantly includes the original prompt.
+ReActでは、prompt lengthはstep countに対して線形に増える。step 10では、promptにthought 1、action 1、observation 1、thought 2、action 2、observation 2……がすべて含まれる。各中間stepはoriginal promptも重複して含む。
 
-ReWOO pays one planner prompt (large), N small worker prompts (each just the tool call, no chain), and one solver prompt. On HotpotQA the paper measures ~5x fewer tokens while scoring +4 absolute accuracy.
+ReWOOは、1つのplanner prompt（大きい）、N個の小さなworker prompt（それぞれtool callだけでchainなし）、1つのsolver promptを支払う。HotpotQAでは、論文は約5分の1のtokenで、絶対値+4のaccuracyを測定している。
 
-### Why it is more robust
+### なぜよりrobustなのか
 
-If worker 3 fails in ReAct, the loop has to reason out of the error mid-stream. In ReWOO, worker 3 returns an error string; the solver sees it in context with the original plan and can degrade gracefully. Failure localization is per-node, not per-step.
+ReActでworker 3が失敗すると、loopはerrorの途中からreasoningし直さなければならない。ReWOOでは、worker 3がerror stringを返し、solverはそれをoriginal planと同じcontextで見るため、gracefulにdegradeできる。failure localizationはstep単位ではなくnode単位である。
 
 ### Planner distillation
 
-The paper's second result: because the planner does not see observations, you can fine-tune a 7B model on planner outputs from a 175B teacher. The small model handles planning; the big model is not needed at inference. This is now standard — many 2026 production agents use a small planner and a big executor or vice-versa.
+論文の2つ目の結果はこうだ。plannerはobservationを見ないため、175B teacherのplanner outputで7B modelをfine-tuneできる。small modelがplanningを担い、inferenceではbig modelを必要としない。これは今では標準的であり、2026年のproduction agentの多くはsmall planner + big executor、またはその逆を使う。
 
-### Plan-and-Execute (LangChain, 2023)
+### Plan-and-Execute（LangChain、2023）
 
-The LangChain team's August 2023 post generalized ReWOO into a pattern name: Plan-and-Execute. Up-front planner emits a step list, executor runs each step, an optional replanner can revise after observing results. This is closer to ReAct than ReWOO (the replanner brings observations back into planning) but preserves the token savings.
+LangChain teamの2023年8月の記事は、ReWOOをpattern名として一般化した。Plan-and-Executeである。up-front plannerがstep listを出し、executorが各stepを実行し、optional replannerが結果を観測した後に修正できる。これはReWOOよりReActに近い（replannerがobservationをplanningへ戻す）が、token savingは保つ。
 
-### Plan-and-Act (Erdogan et al., arXiv:2503.09572, ICML 2025)
+### Plan-and-Act（Erdoganら、arXiv:2503.09572、ICML 2025）
 
-Plan-and-Act scales the pattern to long-horizon web and mobile agents. The key contribution is synthetic plan data: a labeled trajectory generator produces training data where the plan is explicit. Used to fine-tune planner models that keep working past 30–50 steps on WebArena-like tasks where a single ReAct trajectory loses coherence.
+Plan-and-Actは、このpatternをlong-horizon web/mobile agentsへscaleさせる。主な貢献はsynthetic plan dataである。labeled trajectory generatorが、planを明示したtraining dataを生成する。single ReAct trajectoryではcoherenceを失うWebArenaのような30〜50 steps超のtaskでも動き続けるplanner modelをfine-tuneするために使われる。
 
-### When to pick which
+### どれを選ぶべきか
 
-| Pattern | When |
-|---------|------|
-| ReAct | Short tasks, unknown environment, need reactive exception handling |
-| ReWOO | Structured tasks with known tools, token-sensitive, parallelizable evidence |
-| Plan-and-Execute | Like ReWOO but with replanning after partial execution |
-| Plan-and-Act | Long-horizon (>30 steps), web/mobile/computer-use |
-| Tree of Thoughts | Search is worth paying for (Lesson 04) |
+| Pattern | 使う場面 |
+|---------|----------|
+| ReAct | short task、unknown environment、reactiveなexception handlingが必要 |
+| ReWOO | 既知のtoolsを持つstructured task、token-sensitive、parallelizable evidence |
+| Plan-and-Execute | ReWOOに似るが、partial execution後のreplanningがある |
+| Plan-and-Act | long-horizon（>30 steps）、web/mobile/computer-use |
+| Tree of Thoughts | searchに支払う価値がある（レッスン04） |
 
-Anthropic's Dec 2024 guidance: start with the simplest. If the task is one tool call plus a summary, do not build ReWOO. If the task is a 40-step research assignment, do not do ReAct alone.
+Anthropicの2024年12月の指針は、最も単純なものから始めることだ。taskが1つのtool callとsummaryだけならReWOOを作らない。taskが40-stepのresearch assignmentならReActだけで済ませない。
 
-## Build It
+## 構築
 
-`code/main.py` implements a toy ReWOO:
+`code/main.py`はtoy ReWOOを実装する。
 
-- `Planner` — a scripted policy that emits a plan DAG from a prompt.
-- `Worker` — dispatches each node's tool call via the registry.
-- `Solver` — scripted composition that reads evidence and produces a final answer.
-- Dependency resolution — references like `#E1` are substituted with earlier worker outputs.
+- `Planner` - promptからplan DAGを出すscripted policy。
+- `Worker` - registryを通じて各nodeのtool callをdispatchする。
+- `Solver` - evidenceを読みfinal answerを生成するscripted composition。
+- Dependency resolution - `#E1`のようなreferenceを以前のworker outputに置換する。
 
-The demo answers "What is the population of the capital of France, rounded to millions?" using a two-step plan: (1) look up the capital, (2) look up the population, then solve.
+demoは「フランスの首都の人口を、百万人単位に丸めると？」に、2-step planで答える。(1) 首都を調べる、(2) 人口を調べる、その後solveする。
 
-Run it:
+実行する。
 
 ```
 python3 code/main.py
 ```
 
-The trace shows the full plan first, then worker results, then solver composition. Compare the token count (we print a rough character count) to a ReAct-style interleaved run — ReWOO wins on this kind of structured task.
+traceはまずfull planを示し、その後worker results、最後にsolver compositionを示す。token count（rough character countをprintする）をReAct-style interleaved runと比較する。この種のstructured taskではReWOOが勝つ。
 
-## Use It
+## 使い方
 
-LangGraph ships Plan-and-Execute as a recipe (`create_react_agent` for ReAct, custom graphs for plan-execute). CrewAI's Flows encode the pattern directly: you define tasks up front and the Flow DAG executes them. Plan-and-Act's synthetic data approach is still mostly research; the runtime pattern (explicit plan DAG) ships in production through LangGraph and CrewAI Flows.
+LangGraphはPlan-and-Executeをrecipeとして提供している（ReActには`create_react_agent`、plan-executeにはcustom graph）。CrewAIのFlowsはこのpatternを直接encodeする。tasksを事前に定義し、Flow DAGがそれを実行する。Plan-and-Actのsynthetic data approachはまだほぼresearchだが、runtime pattern（明示的なplan DAG）はLangGraphとCrewAI Flowsを通じてproductionに出ている。
 
-## Ship It
+## 出荷
 
-`outputs/skill-rewoo-planner.md` generates a ReWOO plan DAG from a user request, given a tool catalog. It validates the plan (acyclic, every reference resolved, every tool exists) before handing off to an executor.
+`outputs/skill-rewoo-planner.md`は、tool catalogが与えられたときにuser requestからReWOO plan DAGを生成する。executorへ渡す前にplanをvalidateする（acyclic、すべてのreferenceが解決済み、すべてのtoolが存在する）。
 
-## Exercises
+## 演習
 
-1. Parallelize worker execution for independent plan nodes. What does it buy you on a 6-node DAG with 2 parallel groups?
-2. Add a replanner node that fires if any worker returns an error. What is the smallest change to ReWOO that makes it Plan-and-Execute?
-3. Replace `Planner` with a small model (7B class) and keep `Solver` on a frontier model. Compare end-to-end quality — where does the split fail?
-4. Read Section 4 of the ReWOO paper on planner distillation. Reproduce the 175B -> 7B result conceptually: what training data do you need, and how do you score plan quality?
-5. Port the toy to Plan-and-Act's trajectory shape: plan is a sequence, not a DAG. What tradeoffs change?
+1. independentなplan nodeのworker executionをparallelizeする。2つのparallel groupを持つ6-node DAGで何が得られるか。
+2. workerがerrorを返した場合に発火するreplanner nodeを追加する。ReWOOをPlan-and-Executeにする最小変更は何か。
+3. `Planner`をsmall model（7B class）に置き換え、`Solver`はfrontier modelのままにする。end-to-end qualityを比較する。この分割はどこで失敗するか。
+4. ReWOO論文のplanner distillationに関するSection 4を読む。175B -> 7Bの結果を概念的に再現するには、どんなtraining dataが必要で、plan qualityをどう採点するか。
+5. toyをPlan-and-Actのtrajectory shapeへ移植する。planはDAGではなくsequenceである。どんなtradeoffが変わるか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| ReWOO | "Reasoning without observations" | Plan, then fetch evidence in parallel, then solve — no observations in the planning prompt |
-| Plan-and-Execute | "LangChain's plan-execute pattern" | ReWOO with an optional replanner node after execution |
-| Plan-and-Act | "Scaled plan-execute" | Explicit planner/executor split with synthetic plan training data for long-horizon tasks |
-| Evidence reference | "#E1, #E2, ..." | Plan-node placeholder substituted with prior worker output at dispatch time |
-| Planner distillation | "Small planner, big executor" | Fine-tune a small model on planner traces from a large teacher |
-| Token efficiency | "Fewer round trips" | 5x fewer tokens on HotpotQA vs ReAct in the paper |
-| DAG executor | "Topological dispatcher" | Runs plan nodes in dependency order; parallel at each level |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| ReWOO | 「Reasoning without observations」 | 最初にplanし、evidenceをparallelに取得し、最後にsolveする。planning prompt内にobservationを入れない |
+| Plan-and-Execute | 「LangChainのplan-execute pattern」 | execution後にoptional replanner nodeを持つReWOO |
+| Plan-and-Act | 「scaleしたplan-execute」 | long-horizon task向けのsynthetic plan training dataを使う明示的planner/executor分割 |
+| Evidence reference | 「#E1, #E2, ...」 | dispatch時にprior worker outputへ置換されるplan-node placeholder |
+| Planner distillation | 「Small planner, big executor」 | large teacherのplanner traceでsmall modelをfine-tuneする |
+| Token efficiency | 「Fewer round trips」 | 論文ではHotpotQAでReAct比5分の1のtoken |
+| DAG executor | 「Topological dispatcher」 | dependency orderでplan nodeを実行し、各levelではparallelに実行する |
 
-## Further Reading
+## 参考資料
 
-- [Xu et al., ReWOO: Decoupling Reasoning from Observations (arXiv:2305.18323)](https://arxiv.org/abs/2305.18323) — the canonical paper
-- [Erdogan et al., Plan-and-Act (arXiv:2503.09572)](https://arxiv.org/abs/2503.09572) — scaled planner-executor with synthetic plans
-- [LangGraph Plan-and-Execute tutorial](https://docs.langchain.com/oss/python/langgraph/overview) — the framework recipe
-- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — pick the simplest pattern that works
+- [Xu et al., ReWOO: Decoupling Reasoning from Observations (arXiv:2305.18323)](https://arxiv.org/abs/2305.18323) - 標準論文
+- [Erdogan et al., Plan-and-Act (arXiv:2503.09572)](https://arxiv.org/abs/2503.09572) - synthetic plansを使うscaleしたplanner-executor
+- [LangGraph Plan-and-Execute tutorial](https://docs.langchain.com/oss/python/langgraph/overview) - framework recipe
+- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) - 動く最も単純なpatternを選ぶ

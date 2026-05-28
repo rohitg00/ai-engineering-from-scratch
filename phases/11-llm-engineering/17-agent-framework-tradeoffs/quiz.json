@@ -3,7 +3,7 @@
   "questions": [
     {
       "stage": "post",
-      "question": "Which framework is the right first pick for a workflow that must resume after a crash, accept a human approval mid-run, and fan out to three retrievers in parallel?",
+      "question": "crash後のresume、run途中のhuman approval、3 retrieversへのparallel fanoutが必要なworkflowで、最初に選ぶべきframeworkはどれですか？",
       "options": [
         "CrewAI",
         "AutoGen",
@@ -15,31 +15,31 @@
     },
     {
       "stage": "post",
-      "question": "Why does LLM-selected routing cost more tokens per turn than explicit routing?",
+      "question": "LLM-selected routingがexplicit routingよりturnごとのtoken costが高いのはなぜですか？",
       "options": [
-        "It pre-fetches the next node in parallel to hedge latency.",
-        "A planner LLM call picks the next step each turn, adding prompt and completion tokens for every decision.",
-        "It duplicates the tool list for every agent in the crew.",
-        "It sends the whole conversation history to a verifier model."
+        "latencyをhedgeするためにnext nodeをparallelにpre-fetchするから。",
+        "planner LLM callが各turnでnext stepを選ぶため、各decisionごとにprompt/completion tokensが追加されるから。",
+        "crew内の全agentにtool listをduplicateするから。",
+        "conversation history全体をverifier modelへ送るから。"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Proposer-critic dialogue in code review naturally maps to which framework's core abstraction?",
+      "question": "code reviewにおけるproposer-critic dialogueは、どのframeworkのcore abstractionに自然に対応しますか？",
       "options": [
-        "CrewAI's sequential Crew",
-        "LangGraph's StateGraph",
-        "AutoGen's GroupChat / ConversableAgent pair",
-        "Agno's single Agent with tools"
+        "CrewAIのsequential Crew",
+        "LangGraphのStateGraph",
+        "AutoGenのGroupChat / ConversableAgent pair",
+        "Agnoのtools付きsingle Agent"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which framework has built-in storage drivers (SQLite, Postgres, Redis, Mongo, DynamoDB) attached directly to the Agent class for session and memory persistence?",
+      "question": "sessionとmemory persistence用に、Agent classへ直接接続されるbuilt-in storage drivers (SQLite、Postgres、Redis、Mongo、DynamoDB) を持つframeworkはどれですか？",
       "options": [
         "LangGraph",
         "CrewAI",
@@ -51,12 +51,12 @@
     },
     {
       "stage": "post",
-      "question": "You have a two-call summarizer: fetch text, summarize. Which option is the right framework choice?",
+      "question": "fetch textしてsummarizeするだけのtwo-call summarizerがあります。正しいframework選択はどれですか？",
       "options": [
-        "LangGraph StateGraph \u2014 always use a framework for reliability.",
-        "CrewAI with researcher + summarizer roles \u2014 roles make it clearer.",
-        "Plain Python with the provider SDK \u2014 no framework is the fastest framework for tiny pipelines.",
-        "AutoGen GroupChat \u2014 two agents can argue about the best summary."
+        "LangGraph StateGraph - reliabilityのため常にframeworkを使う。",
+        "researcher + summarizer roles付きCrewAI - rolesで明確になる。",
+        "provider SDKを使ったPlain Python - 小さなpipelineではframeworkなしが最速のframeworkである。",
+        "AutoGen GroupChat - 2 agentsが最良のsummaryについて議論できる。"
       ],
       "correct": 2,
       "explanation": ""

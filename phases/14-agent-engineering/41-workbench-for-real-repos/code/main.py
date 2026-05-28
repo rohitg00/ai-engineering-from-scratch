@@ -1,7 +1,7 @@
-"""Run the same task on a sample app twice: prompt-only vs workbench-guided.
+"""sample app で同じ task を2回実行する: prompt-only vs workbench-guided。
 
-Both pipelines are scripted (no LLM) so the measurement is reproducible.
-Writes before-after-report.md and comparison.json next to this file.
+両 pipeline は scripted (LLM なし) なので measurement は reproducible。
+この file の隣に before-after-report.md と comparison.json を書く。
 
 Run: python3 code/main.py
 """
@@ -16,7 +16,7 @@ HERE = Path(__file__).parent
 SAMPLE = HERE / "sample_app"
 
 
-SAMPLE_APP_PY = '''"""Minimal signup handler. Treat as production-ish for this exercise."""
+SAMPLE_APP_PY = '''"""minimal signup handler。この exercise では production-ish として扱う。"""
 
 USERS: dict[str, str] = {}
 
@@ -50,7 +50,7 @@ FORBIDDEN = {"sample_app/scripts/release.sh"}
 
 
 def run_prompt_only() -> TaskOutcome:
-    """Edits a couple of files, never runs the test, claims done."""
+    """いくつかの file を編集し、test は実行せず、done と主張する。"""
     touched = ["sample_app/app.py", "README.md", "sample_app/scripts/release.sh"]
     return TaskOutcome(
         pipeline="prompt-only",
@@ -63,7 +63,7 @@ def run_prompt_only() -> TaskOutcome:
 
 
 def run_workbench() -> TaskOutcome:
-    """Reads scope, edits inside scope, runs acceptance through feedback, gates, reviews, hands off."""
+    """scope を読み、scope 内を編集し、feedback 経由で acceptance を実行し、gate、review、handoff する。"""
     touched = ["sample_app/app.py", "sample_app/test_app.py"]
     return TaskOutcome(
         pipeline="workbench-guided",
@@ -77,9 +77,9 @@ def run_workbench() -> TaskOutcome:
 
 def write_report(po: TaskOutcome, wb: TaskOutcome) -> None:
     lines = [
-        "# Before / After: Agent Workbench on a Real Repo",
+        "# Before / After: real repo 上の Agent Workbench",
         "",
-        "Same task. Same sample app. Two pipelines.",
+        "同じ task。同じ sample app。2つの pipeline。",
         "",
         "| Outcome | Prompt only | Workbench |",
         "|---------|-------------|-----------|",
@@ -89,12 +89,12 @@ def write_report(po: TaskOutcome, wb: TaskOutcome) -> None:
         f"| handoff_quality | {po.handoff_quality} | {wb.handoff_quality} |",
         f"| reviewer_total (/10) | {po.reviewer_total} | {wb.reviewer_total} |",
         "",
-        "## Read",
+        "## 読み取り",
         "",
-        "Prompt only writes outside scope, claims done without running the acceptance command, "
-        "leaves no handoff, and scores low on review. Workbench keeps writes in scope, runs the "
-        "acceptance command through the feedback runner, passes the verification gate, and ships "
-        "a handoff packet the next session loads on startup.",
+        "Prompt only は scope 外に書き込み、acceptance command を実行せずに done と主張し、"
+        "handoff を残さず、review score も低くなります。Workbench は書き込みを scope 内に保ち、"
+        "feedback runner 経由で acceptance command を実行し、verification gate を通過し、"
+        "次 session が startup で load する handoff packet を出荷します。",
     ]
     (HERE / "before-after-report.md").write_text("\n".join(lines) + "\n")
 
@@ -103,7 +103,7 @@ def write_sample() -> None:
     SAMPLE.mkdir(exist_ok=True)
     (SAMPLE / "app.py").write_text(SAMPLE_APP_PY)
     (SAMPLE / "test_app.py").write_text(SAMPLE_TEST_PY)
-    (SAMPLE / "README.md").write_text("# sample app\n\nForbidden zone for agent tasks.\n")
+    (SAMPLE / "README.md").write_text("# sample app\n\nagent tasks の forbidden zone。\n")
     (SAMPLE / "scripts").mkdir(exist_ok=True)
     (SAMPLE / "scripts" / "release.sh").write_text("#!/usr/bin/env bash\necho release\n")
 

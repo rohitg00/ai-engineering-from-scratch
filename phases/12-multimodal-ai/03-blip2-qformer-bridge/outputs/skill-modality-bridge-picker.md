@@ -1,30 +1,30 @@
 ---
 name: modality-bridge-picker
-description: Recommend Q-Former vs MLP projector vs Perceiver resampler for a VLM configuration given token budget, quality target, and training compute.
+description: token budget、quality target、training compute に基づき、VLM configuration 向けに Q-Former vs MLP projector vs Perceiver resampler を推奨する。
 version: 1.0.0
 phase: 12
 lesson: 03
 tags: [blip2, qformer, vlm, modality-bridge, architecture]
 ---
 
-Given a vision encoder's token count per image, the LLM's context budget, the target number of images per prompt, and the training compute budget, recommend which modality bridge to use and justify with parameter counts and token economics.
+vision encoder の image あたり token count、LLM context budget、prompt あたり target image count、training compute budget が与えられたら、使うべき modality bridge を推奨し、parameter count と token economics で根拠を示す。
 
 Produce:
 
-1. Token budget audit. Report raw tokens per image from the vision encoder, tokens per image after each bridge option, and the fraction of LLM context consumed at declared image-per-prompt counts.
-2. Bridge comparison. For each of Q-Former (32 tokens, ~188M params), MLP projector (all patches, ~20M params), and Perceiver resampler (K learnable queries via N-layer cross-attention, variable), give parameters, quality proxies, and training cost ballpark.
-3. Recommendation. Single best choice for the stated constraints, with one-line justification. Flag when the constraints are contradictory (high quality + tight token budget + low training compute).
-4. Two-stage training trace. If Q-Former is picked, outline ITC + ITM + ITG losses for stage 1 and LM loss for stage 2. Name a representative dataset for each (COCO, LAION, Visual Genome).
-5. Ablation checklist. Five experiments the caller should run before locking the bridge (query count, two-stage vs single-stage, projector depth, freeze schedule, finetune subset).
+1. Token budget audit。vision encoder からの raw tokens per image、各 bridge option 後の tokens per image、宣言された image-per-prompt count で消費される LLM context fraction を報告する。
+2. Bridge comparison。Q-Former (32 tokens、~188M params)、MLP projector (all patches、~20M params)、Perceiver resampler (N-layer cross-attention 経由の K learnable queries、variable) それぞれについて、parameters、quality proxies、training cost ballpark を示す。
+3. Recommendation。指定 constraints に対する single best choice と one-line justification。constraints が矛盾している場合 (high quality + tight token budget + low training compute) は flag を立てる。
+4. Two-stage training trace。Q-Former を選ぶ場合、stage 1 の ITC + ITM + ITG loss と stage 2 の LM loss を outline する。各 stage の代表 dataset (COCO、LAION、Visual Genome) を挙げる。
+5. Ablation checklist。bridge を固定する前に caller が走らせるべき 5 experiments (query count、two-stage vs single-stage、projector depth、freeze schedule、finetune subset)。
 
 Hard rejects:
-- Any recommendation that ignores the token budget. "Use MLP" with 576 tokens per image fails at 10 images in a 4k context.
-- Claiming Q-Former strictly dominates MLP. At single-image high-quality tasks with unlimited context, MLP wins.
-- Treating Perceiver resampler as equivalent to Q-Former. Flamingo applies it at every LLM layer; BLIP-2 applies it once.
+- token budget を無視した recommendation。4k context に 10 images を入れる場面で「Use MLP」(image あたり 576 tokens) は失敗。
+- Q-Former が MLP を常に厳密に支配すると主張すること。single-image high-quality task で context が無制限なら MLP が勝つ。
+- Perceiver resampler を Q-Former と同等として扱うこと。Flamingo は各 LLM layer で適用し、BLIP-2 は 1 回だけ適用する。
 
 Refusal rules:
-- If the caller asks for a bridge that can handle video without specifying how many frames and at what frame rate, refuse — video bridges differ from single-image bridges by specification, not just scale.
-- If the LLM in scope is trained from scratch with the vision tower (early-fusion, Chameleon-style), refuse — Lesson 12.11 covers that case separately.
-- If no training compute is stated, refuse and ask whether the caller can afford stage 2 of BLIP-2 (~a few hundred A100-hours) or only projector-only training.
+- caller が video を扱える bridge を求めているのに frame 数と frame rate を指定していない場合は拒否する。video bridge は single-image bridge の単なる scale ではなく specification が異なる。
+- scope の LLM が vision tower と一緒に scratch から training される場合 (early-fusion、Chameleon-style) は拒否する。Lesson 12.11 がその case を扱う。
+- training compute が示されていない場合は拒否し、BLIP-2 の stage 2 (~数百 A100-hours) を払えるのか、projector-only training だけなのかを尋ねる。
 
-Output: a one-page bridge recommendation with token math, parameter counts, recommended architecture, training outline, and ablation checklist. End with a "what to read next" paragraph pointing to Lesson 12.04 (Flamingo) for cross-attention-everywhere, Lesson 12.05 (LLaVA) for MLP-only, or Lesson 12.07 (ablations) for the data-vs-architecture tradeoff.
+Output: token math、parameter counts、recommended architecture、training outline、ablation checklist を含む 1-page bridge recommendation。最後に "what to read next" paragraph を置き、cross-attention-everywhere は Lesson 12.04 (Flamingo)、MLP-only は Lesson 12.05 (LLaVA)、data-vs-architecture tradeoff は Lesson 12.07 (ablations) へ案内する。

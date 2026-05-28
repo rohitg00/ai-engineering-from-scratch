@@ -1,12 +1,12 @@
-"""Cache-aware multi-region router simulator — stdlib Python.
+"""Cache-aware multi-region router simulator — stdlib Python。
 
-Three strategies on the same workload:
-  ROUND_ROBIN : blind, ignores KV cache state
-  REGIONAL    : cache-aware within region; round-robin across regions
-  GLOBAL      : cache-aware globally; considers network RTT
+同じ workload 上で 3 つの strategy を比較します:
+  ROUND_ROBIN : 盲目的で、KV cache state を無視
+  REGIONAL    : region 内で cache-aware、regions 間は round-robin
+  GLOBAL      : global に cache-aware、network RTT を考慮
 
-Reports cache hit rate, TTFT P50/P99, and cross-region bill.
-Pedagogical: timings are illustrative.
+Cache hit rate、TTFT P50/P99、cross-region bill を報告します。
+学習用なので timing は例示です。
 """
 
 from __future__ import annotations
@@ -139,7 +139,7 @@ def report(row: dict) -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("MULTI-REGION LLM ROUTING — three strategies, 1000 requests")
+    print("MULTI-REGION LLM ROUTING — 3 つの strategy、1000 requests")
     print("=" * 80)
     base = make_workload()
     header = f"{'Strategy':13}  hit         mean     P50      P99      cross   cost"
@@ -149,8 +149,8 @@ def main() -> None:
         reqs = [Request(origin_region=r.origin_region, prefix_hash=r.prefix_hash) for r in base]
         report(simulate(strategy, reqs))
 
-    print("\nRead: REGIONAL beats ROUND_ROBIN on cache hit. GLOBAL is")
-    print("only better when prefill cost dominates network latency.")
+    print("\nRead: cache hit では REGIONAL が ROUND_ROBIN に勝ちます。")
+    print("GLOBAL が良いのは、prefill cost が network latency を支配する場合だけです。")
 
 
 if __name__ == "__main__":

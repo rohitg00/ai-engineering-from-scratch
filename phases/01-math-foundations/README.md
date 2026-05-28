@@ -1,5 +1,5 @@
-# Phase 1: Math Foundations
+# Phase 1: 数学の基礎
 
-> The intuition behind every AI algorithm, through code — not textbooks.
+> すべてのAIアルゴリズムの直感を、教科書ではなくコードで身につける。
 
-See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.
+全レッスン計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。

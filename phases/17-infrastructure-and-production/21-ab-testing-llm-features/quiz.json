@@ -4,47 +4,47 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the precise distinction between evals and A/B tests in the lesson?",
+      "question": "この lesson における evals と A/B tests の正確な違いは何ですか？",
       "options": [
-        "Evals answer \"can the model do the job?\" on a labeled set; A/B tests answer \"do users care?\" with live randomized traffic",
-        "Only A/B tests are required",
-        "Evals are user-facing; A/B tests are offline",
-        "They are interchangeable"
+        "Evals は labeled set 上で \"can the model do the job?\" に答え、A/B tests は live randomized traffic で \"do users care?\" に答える",
+        "A/B tests だけが必要である",
+        "Evals は user-facing、A/B tests は offline である",
+        "両者は interchangeable である"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does CUPED do for an experiment?",
+      "question": "CUPED は experiment に何をしますか？",
       "options": [
-        "Disables multiple-comparison correction",
-        "Replaces sequential testing entirely",
-        "Regresses out pre-period variance before comparing post-period, typically reducing variance 30-70% and boosting effective sample size",
-        "Increases sample size by hiring more users"
+        "multiple-comparison correction を無効化する",
+        "sequential testing を完全に置き換える",
+        "post-period を比較する前に pre-period variance を regress out し、典型的に variance を30-70%減らして effective sample size を増やす",
+        "より多くの users を雇って sample size を増やす"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why do you need multiple-comparison corrections (Bonferroni or Benjamini-Hochberg) when running many A/Bs?",
+      "question": "多数の A/B を実行するときに multiple-comparison corrections（Bonferroni または Benjamini-Hochberg）が必要なのはなぜですか？",
       "options": [
-        "They are required by GDPR",
-        "They are only needed for sequential tests",
-        "Running 20 tests at 95% confidence produces one false positive by chance; corrections control family-wise error or false discovery rate",
-        "They speed up experiments"
+        "GDPR で必須だから",
+        "sequential tests にだけ必要だから",
+        "95% confidence で20 tests を走らせると偶然1つの false positive が出るため、corrections が family-wise error または false discovery rate を制御するから",
+        "experiment を速くするから"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does SRM (sample ratio mismatch) detect?",
+      "question": "SRM（sample ratio mismatch）は何を検出しますか？",
       "options": [
-        "Slow tokenizer performance",
-        "An assignment-hash bug producing a delivered split that diverges from the intended (e.g. 47/53 when targeting 50/50)",
-        "Memory leaks in the experiment platform",
+        "slow tokenizer performance",
+        "intended split（例: 50/50）から delivered split（例: 47/53）がずれる assignment-hash bug",
+        "experiment platform の memory leak",
         "PII leakage"
       ],
       "correct": 1,
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "Why does LLM non-determinism require buffering sample size?",
+      "question": "LLM non-determinism により sample size buffer が必要なのはなぜですか？",
       "options": [
-        "It violates IID assumptions; effective sample size drops, so multiply required size by roughly 1.3-1.5x as a safety margin",
-        "It is irrelevant to power calculations",
-        "Non-determinism reduces required samples",
-        "It only matters offline"
+        "IID assumptions を破り effective sample size が下がるため、safety margin として required size におよそ1.3-1.5xを掛ける必要がある",
+        "power calculations には無関係である",
+        "non-determinism は required samples を減らす",
+        "offline のみで重要である"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How does the lesson contrast Statsig and GrowthBook?",
+      "question": "この lesson は Statsig と GrowthBook をどう対比していますか？",
       "options": [
-        "Identical feature sets",
-        "Statsig is warehouse-native only",
-        "GrowthBook is closed source",
-        "Statsig is all-in-one SaaS (acquired by OpenAI Sept 2025, $1.1B); GrowthBook is open-source MIT, warehouse-native, with Bayesian/Frequentist/Sequential engines and CUPED/SRM/BH"
+        "feature sets は同一",
+        "Statsig は warehouse-native のみ",
+        "GrowthBook は closed source",
+        "Statsig は all-in-one SaaS（OpenAI が2025年9月に $1.1B で買収）。GrowthBook は open-source MIT、warehouse-native で、Bayesian/Frequentist/Sequential engines と CUPED/SRM/BH を持つ"
       ],
       "correct": 3,
       "explanation": ""

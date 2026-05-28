@@ -1,10 +1,10 @@
-"""Three group-fairness criteria on a toy classifier — stdlib Python.
+"""toy classifier における3つの group-fairness criteria — stdlib Python.
 
-Binary classification: sensitive attribute A in {0, 1} with unequal base rates.
-A simple logistic classifier is trained; we report:
+Binary classification: sensitive attribute A in {0, 1} は unequal base rates を持つ。
+単純な logistic classifier を学習し、以下を報告する:
   demographic parity, equalized odds, conditional use accuracy equality.
-Then apply a re-weighting targeted at demographic parity and observe the
-cost on the other two.
+その後、demographic parity を狙った re-weighting を適用し、
+他の2つへの cost を観察する。
 
 Usage: python3 code/main.py
 """
@@ -19,10 +19,10 @@ random.seed(53)
 
 
 def gen(n: int) -> list[tuple[list[float], int, int]]:
-    """Returns list of (features, label, sensitive_attribute).
+    """(features, label, sensitive_attribute) の list を返す。
 
-    Base rate differs by group: A=0 has P(y=1)=0.3; A=1 has P(y=1)=0.6.
-    Features correlate with y with some noise."""
+    Base rate は group ごとに異なる: A=0 は P(y=1)=0.3、A=1 は P(y=1)=0.6。
+    Features は noise を含みつつ y と相関する。"""
     data = []
     for _ in range(n):
         a = random.choice([0, 1])
@@ -100,7 +100,7 @@ def report(name: str, preds):
 
 def main() -> None:
     print("=" * 70)
-    print("THREE GROUP-FAIRNESS CRITERIA (Phase 18, Lesson 21)")
+    print("3つの GROUP-FAIRNESS CRITERIA (Phase 18, Lesson 21)")
     print("=" * 70)
 
     train_data = gen(1000)
@@ -110,7 +110,7 @@ def main() -> None:
     preds = predict(baseline, test_data)
     report("baseline classifier", preds)
 
-    # Reweight toward demographic parity: upweight group0 y=1 and downweight group1 y=1.
+    # Demographic parity に寄せる reweighting: group0 y=1 を重くし、group1 y=1 を軽くする。
     weights = []
     for x, y, a in train_data:
         if a == 0 and y == 1:
@@ -124,12 +124,12 @@ def main() -> None:
     report("DP-reweighted classifier", preds2)
 
     print("\n" + "=" * 70)
-    print("TAKEAWAY: equal base rates are the condition for the three criteria")
-    print("to coincide. with unequal base rates, DP-targeted reweighting")
-    print("reduces the DP gap at the cost of equalized odds and conditional")
-    print("use accuracy. this is Chouldechova / KMR 2017 in miniature. the")
-    print("choice of criterion is a policy decision; no statistical method")
-    print("can satisfy all three under unequal base rates.")
+    print("TAKEAWAY: equal base rates は、3つの criteria が一致する条件である。")
+    print("unequal base rates の下では、DP を狙った reweighting は DP gap を")
+    print("小さくする一方で、equalized odds と conditional use accuracy に cost を")
+    print("生む。これは Chouldechova / KMR 2017 の縮小版である。criterion の")
+    print("選択はポリシー判断であり、unequal base rates の下ですべてを満たす")
+    print("統計的手法は存在しない。")
     print("=" * 70)
 
 

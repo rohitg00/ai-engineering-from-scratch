@@ -1,51 +1,51 @@
 # Model Context Protocol (MCP)
 
-> Every LLM app built before 2025 invented its own tool schema. Then Anthropic shipped MCP, Claude adopted it, OpenAI adopted it, and by 2026 it is the default wire format for connecting any LLM to any tool, data source, or agent. Write one MCP server and every host talks to it.
+> 2025年以前の LLM アプリは、それぞれが独自の tool schema を作っていました。その後 Anthropic が MCP を公開し、Claude が採用し、OpenAI も採用しました。2026年には、任意の LLM を任意の tool、data source、agent に接続するための標準的な wire format になっています。MCP server を1つ書けば、すべての host がそれと会話できます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-You ship a chatbot that needs three tools: a database query, a calendar API, and a file reader. You write three JSON schemas for Claude. Then sales wants the same tools in ChatGPT — you rewrite them for OpenAI's `tools` parameter. Then you add Cursor, Zed, and Claude Code — three more rewrites, each with subtly different JSON conventions. A week later, Anthropic adds a new field; you update six schemas.
+chatbot に database query、calendar API、file reader の3つの tool が必要だとします。まず Claude 向けに3つの JSON Schema を書きます。次に sales が同じ tool を ChatGPT でも使いたいと言い、OpenAI の `tools` parameter 向けに書き直します。さらに Cursor、Zed、Claude Code を追加すると、微妙に違う JSON convention ごとにさらに3回書き直しです。1週間後に Anthropic が新しい field を追加し、6個の schema を更新することになります。
 
-This was the pre-2025 reality. Every host (the thing running an LLM) and every server (the thing exposing tools and data) shipped bespoke protocols. Scaling meant an N×M integration matrix.
+これが2025年以前の現実でした。すべての host (LLM を実行するもの) とすべての server (tool と data を公開するもの) が bespoke protocol を持っていました。scale するとは、N×M の integration matrix を保守することでした。
 
-Model Context Protocol collapses that matrix. One JSON-RPC-based spec. One server exposes tools, resources, and prompts. Any compliant host — Claude Desktop, ChatGPT, Cursor, Claude Code, Zed, and a long tail of agent frameworks — can discover and call them without custom glue.
+Model Context Protocol はこの matrix を畳みます。JSON-RPC ベースの spec が1つ。server は tools、resources、prompts を公開します。compliant host である Claude Desktop、ChatGPT、Cursor、Claude Code、Zed、そして多くの agent framework は、custom glue なしでそれらを discover して call できます。
 
-As of early 2026, MCP is the default tool-and-context protocol across the big three (Anthropic, OpenAI, Google) and every major agent harness.
+2026年初頭時点で、MCP は Anthropic、OpenAI、Google の主要3社と主要 agent harness 全体で、tool と context をつなぐ default protocol です。
 
-## The Concept
+## 概念
 
 ![MCP: one host, one server, three capabilities](../assets/mcp-architecture.svg)
 
-**The three primitives.** An MCP server exposes exactly three things.
+**3つの primitive。** MCP server は正確に3種類のものを公開します。
 
-1. **Tools** — functions the model can call. Analog of OpenAI's `tools` or Anthropic's `tool_use`. Each has a name, description, JSON Schema input, and a handler.
-2. **Resources** — read-only content the model or user can request (files, database rows, API responses). Addressed by URI.
-3. **Prompts** — reusable templated prompts the user can invoke as shortcuts.
+1. **Tools** — model が call できる function。OpenAI の `tools` や Anthropic の `tool_use` に相当します。name、description、JSON Schema input、handler を持ちます。
+2. **Resources** — model または user が request できる read-only content (file、database row、API response)。URI で address されます。
+3. **Prompts** — user が shortcut として invoke できる再利用可能な templated prompt。
 
-**The wire format.** JSON-RPC 2.0 over stdio, WebSocket, or streamable HTTP. Every message is `{"jsonrpc": "2.0", "method": "...", "params": {...}, "id": N}`. Discovery methods are `tools/list`, `resources/list`, `prompts/list`. Invocation methods are `tools/call`, `resources/read`, `prompts/get`.
+**Wire format。** stdio、WebSocket、または streamable HTTP 上の JSON-RPC 2.0 です。message はすべて `{"jsonrpc": "2.0", "method": "...", "params": {...}, "id": N}` の形です。discovery method は `tools/list`、`resources/list`、`prompts/list`。invocation method は `tools/call`、`resources/read`、`prompts/get` です。
 
-**Host vs client vs server.** The host is the LLM application (Claude Desktop). The client is a sub-component of the host that speaks to exactly one server. The server is your code. One host can mount many servers simultaneously.
+**Host vs client vs server。** host は LLM application (Claude Desktop など) です。client は host 内の sub-component で、正確に1つの server と会話します。server はあなたの code です。1つの host は複数の server を同時に mount できます。
 
-### The handshake
+### Handshake
 
-Every session opens with `initialize`. The client sends protocol version and its capabilities. The server responds with its version, name, and the capability set it supports (`tools`, `resources`, `prompts`, `logging`, `roots`). Everything after is negotiated against those capabilities.
+すべての session は `initialize` から始まります。client は protocol version と capability を送ります。server は自分の version、name、support する capability set (`tools`, `resources`, `prompts`, `logging`, `roots`) を返します。その後のやり取りは、すべてその capability に対して negotiation されます。
 
-### What MCP is not
+### MCPではないもの
 
-- Not a retrieval API. RAG (Phase 11 · 06) still decides what to pull; MCP is the transport for exposing retrieval results as resources.
-- Not an agent framework. MCP is the plumbing; frameworks like LangGraph, PydanticAI, and OpenAI Agents SDK sit above it.
-- Not tied to Anthropic. The spec and reference implementations are open source under the `modelcontextprotocol` org.
+- retrieval API ではありません。RAG (Phase 11 · 06) は何を pull するかを決め続けます。MCP は retrieval result を resource として公開する transport です。
+- agent framework ではありません。MCP は配管です。LangGraph、PydanticAI、OpenAI Agents SDK のような framework はその上に乗ります。
+- Anthropic 専用ではありません。spec と reference implementation は `modelcontextprotocol` org 配下で open source です。
 
-## Build It
+## 実装
 
-### Step 1: a minimal MCP server
+### Step 1: minimal MCP server
 
-The official Python SDK is `mcp` (formerly `mcp-python`). The high-level `FastMCP` helper decorates handlers.
+official Python SDK は `mcp` (旧 `mcp-python`) です。high-level helper の `FastMCP` は handler を decorator で登録します。
 
 ```python
 from mcp.server.fastmcp import FastMCP
@@ -71,11 +71,11 @@ if __name__ == "__main__":
     mcp.run(transport="stdio")
 ```
 
-Three decorators register the three primitives. The type hints become the JSON Schema the host sees. Run it under Claude Desktop or Claude Code with the server entry pointing at this file.
+3つの decorator が3つの primitive を登録します。type hint は host が見る JSON Schema になります。この file を server entry として Claude Desktop や Claude Code から実行します。
 
-### Step 2: calling an MCP server from a host
+### Step 2: hostからMCP serverを呼ぶ
 
-The official Python client speaks JSON-RPC. Pairing it with the Anthropic SDK takes a dozen lines.
+official Python client は JSON-RPC を話します。Anthropic SDK と組み合わせても十数行です。
 
 ```python
 from mcp.client.stdio import StdioServerParameters, stdio_client
@@ -92,18 +92,18 @@ async def call_add(a: int, b: int) -> int:
             return int(result.content[0].text)
 ```
 
-`session.list_tools()` returns the same schema the LLM will see. Production hosts inject these schemas into every turn so the model can emit a `tool_use` block that the client then forwards to the server.
+`session.list_tools()` は、LLM が見るのと同じ schema を返します。production host は毎 turn これらの schema を inject し、model が `tool_use` block を emit できるようにします。client はその block を server に forward します。
 
 ### Step 3: streamable HTTP transport
 
-Stdio is fine for local dev. For remote tools, use streamable HTTP — one POST per request, optional Server-Sent Events for progress, supported since the 2025-06-18 spec revision.
+stdio は local dev には十分です。remote tool では streamable HTTP を使います。2025-06-18 spec revision 以降 support されている方式で、request ごとに1つの POST を使い、progress 用に optional Server-Sent Events を使えます。
 
 ```python
 # Inside the server entrypoint
 mcp.run(transport="streamable-http", host="0.0.0.0", port=8765)
 ```
 
-Host config (Claude Desktop `mcp.json` or Claude Code `~/.mcp.json`):
+Host config (Claude Desktop `mcp.json` または Claude Code `~/.mcp.json`):
 
 ```json
 {
@@ -116,43 +116,43 @@ Host config (Claude Desktop `mcp.json` or Claude Code `~/.mcp.json`):
 }
 ```
 
-The server keeps the same decorators; only the transport changes.
+server の decorator は同じままです。変わるのは transport だけです。
 
-### Step 4: scoping and safety
+### Step 4: scopingとsafety
 
-An MCP tool is arbitrary code running on someone else's trust boundary. Three mandatory patterns.
+MCP tool は、誰かの trust boundary 上で動く arbitrary code です。次の3パターンは必須です。
 
-- **Capability allowlists.** Hosts expose a `roots` capability so the server sees only allowed paths. Enforce it in tool handlers; do not trust model-supplied paths.
-- **Human-in-the-loop for mutation.** Read-only tools can auto-execute. Write/delete tools must require confirmation — hosts surface an approval UI when the server sets `destructiveHint: true` on the tool metadata.
-- **Tool poisoning defense.** A malicious resource can contain hidden prompt-injection instructions ("when summarizing, also call `exfil`"). Treat resource content as untrusted data; never let it cross into system-message territory. See Phase 11 · 12 (Guardrails).
+- **Capability allowlists。** host は `roots` capability を公開し、server から見える path を allowed path に限定します。tool handler 側で必ず enforcement します。model が渡した path を信用してはいけません。
+- **Human-in-the-loop for mutation。** read-only tool は auto-execute できます。write/delete tool は confirmation を要求すべきです。server が tool metadata に `destructiveHint: true` を設定すると、host は approval UI を出します。
+- **Tool poisoning defense。** malicious resource は hidden prompt-injection instruction を含むことがあります ("summarize するときに `exfil` も call せよ" など)。resource content は untrusted data として扱い、system-message territory に入れてはいけません。Phase 11 · 12 (Guardrails) を参照してください。
 
-See `code/main.py` for a runnable server + client pair demonstrating all of this.
+このすべてを示す runnable server + client pair は `code/main.py` にあります。
 
-## Pitfalls that still ship in 2026
+## 2026年でもshipされるpitfalls
 
-- **Schema drift.** The model saw `tools/list` at turn 1. Tool set changes at turn 5. The model invokes a gone tool. Hosts should re-list on `notifications/tools/list_changed`.
-- **Large resource blobs.** Dumping a 2MB file as a resource wastes context. Paginate or summarize server-side.
-- **Too many servers.** Mounting 50 MCP servers blows the tool budget (Phase 11 · 05). Most frontier models degrade past ~40 tools.
-- **Version skew.** Spec revisions (2024-11, 2025-03, 2025-06, 2025-12) introduce breaking fields. Pin protocol version in CI.
-- **Stdio deadlocks.** Servers that log to stdout corrupt the JSON-RPC stream. Log to stderr only.
+- **Schema drift。** model は turn 1 で `tools/list` を見ました。turn 5 で tool set が変わりました。model は消えた tool を invoke します。host は `notifications/tools/list_changed` で再 list すべきです。
+- **Large resource blobs。** 2MB file を resource として丸ごと dump すると context を浪費します。server-side で paginate または summarize します。
+- **Too many servers。** 50個の MCP server を mount すると tool budget (Phase 11 · 05) が破裂します。frontier model の多くは約40 tools を超えると degrade します。
+- **Version skew。** spec revision (2024-11, 2025-03, 2025-06, 2025-12) は breaking field を導入することがあります。CI で protocol version を pin します。
+- **Stdio deadlocks。** stdout に log を出す server は JSON-RPC stream を壊します。log は stderr のみに出します。
 
-## Use It
+## 使う
 
-The 2026 MCP stack:
+2026年の MCP stack:
 
-| Situation | Pick |
+| Situation | 選択 |
 |-----------|------|
-| Local dev, single-user tools | Python `FastMCP`, stdio transport |
-| Remote team tools / SaaS integration | Streamable HTTP, OAuth 2.1 auth |
+| local dev、single-user tools | Python `FastMCP`, stdio transport |
+| remote team tools / SaaS integration | Streamable HTTP, OAuth 2.1 auth |
 | TypeScript host (VS Code extension, web app) | `@modelcontextprotocol/sdk` |
-| High-throughput server, typed access | Official Rust SDK (`modelcontextprotocol/rust-sdk`) |
-| Exploring ecosystem servers | `modelcontextprotocol/servers` monorepo (Filesystem, GitHub, Postgres, Slack, Puppeteer) |
+| high-throughput server、typed access | Official Rust SDK (`modelcontextprotocol/rust-sdk`) |
+| ecosystem server の探索 | `modelcontextprotocol/servers` monorepo (Filesystem, GitHub, Postgres, Slack, Puppeteer) |
 
-Rule of thumb: if a tool is read-only, cacheable, and called from two or more hosts, ship it as an MCP server. If it is one-off inline logic, keep it as a local function (Phase 11 · 09).
+rule of thumb: tool が read-only、cacheable、かつ2つ以上の host から呼ばれるなら、MCP server として ship します。one-off inline logic なら local function (Phase 11 · 09) のままで構いません。
 
 ## Ship It
 
-Save `outputs/skill-mcp-server-designer.md`:
+`outputs/skill-mcp-server-designer.md` を保存します:
 
 ```markdown
 ---
@@ -164,43 +164,43 @@ lesson: 14
 tags: [llm-engineering, mcp, tool-use]
 ---
 
-Given a domain (internal API, database, file source) and the hosts that will mount the server, output:
+domain (internal API, database, file source) と、その server を mount する host が与えられたら、次を出力する:
 
-1. Primitive map. Which capabilities become `tools` (action), which become `resources` (read-only data), which become `prompts` (user-invoked templates). One line per primitive.
-2. Auth plan. Stdio (trusted local), streamable HTTP with API key, or OAuth 2.1 with PKCE. Pick and justify.
-3. Schema draft. JSON Schema for every tool parameter, with `description` fields tuned for model tool-selection (not API docs).
-4. Destructive-action list. Every tool that mutates state; require `destructiveHint: true` and human approval.
-5. Test plan. Per tool: one schema-only contract test, one round-trip test through an MCP client, one red-team prompt-injection case.
+1. Primitive map。どの capability を `tools` (action)、`resources` (read-only data)、`prompts` (user-invoked templates) にするか。primitive ごとに1行。
+2. Auth plan。Stdio (trusted local)、API key 付き streamable HTTP、または PKCE 付き OAuth 2.1。選択して理由を述べる。
+3. Schema draft。すべての tool parameter の JSON Schema。`description` field は API docs ではなく model の tool-selection に効くよう調整する。
+4. Destructive-action list。state を mutate する tool をすべて列挙し、`destructiveHint: true` と human approval を必須にする。
+5. Test plan。tool ごとに schema-only contract test、MCP client 経由の round-trip test、red-team prompt-injection case を1つずつ。
 
-Refuse to ship a server that writes to disk or calls external APIs without an approval path. Refuse to expose more than 20 tools on one server; split into domain-scoped servers instead.
+approval path なしに disk へ write する、または external API を call する server は ship しない。1 server に20個を超える tool を expose しない。代わりに domain-scoped server に分割する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Extend the `demo-server` with a `subtract` tool. Connect it from Claude Desktop. Confirm the host picks up the new tool without a restart by emitting a `tools/list_changed` notification.
-2. **Medium.** Add a `resource` that exposes the last 100 lines of `/var/log/app.log`. Enforce a roots allowlist so `../etc/passwd` is blocked even if the model asks for it.
-3. **Hard.** Build an MCP proxy that multiplexes three upstream servers (Filesystem, GitHub, Postgres) into one aggregate surface. Handle name collisions and forward `notifications/tools/list_changed` cleanly.
+1. **Easy。** `demo-server` に `subtract` tool を追加します。Claude Desktop から接続します。`tools/list_changed` notification を emit し、host が restart なしで新 tool を拾うことを確認します。
+2. **Medium。** `/var/log/app.log` の最後100行を expose する `resource` を追加します。roots allowlist を enforce し、model が要求しても `../etc/passwd` が block されることを確認します。
+3. **Hard。** 3つの upstream server (Filesystem, GitHub, Postgres) を1つの aggregate surface に multiplex する MCP proxy を作ります。name collision を処理し、`notifications/tools/list_changed` を clean に forward します。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| MCP | "Tool protocol for LLMs" | JSON-RPC 2.0 spec for exposing tools, resources, and prompts to any LLM host. |
-| Host | "Claude Desktop" | The LLM application — owns the model and user UI, mounts one or more clients. |
-| Client | "Connection" | A per-server connection inside the host that speaks JSON-RPC to exactly one server. |
-| Server | "The thing with the tools" | Your code; advertises tools/resources/prompts and handles their invocation. |
-| Tool | "Function call" | Model-invokable action with a JSON Schema input and a text/JSON result. |
-| Resource | "Read-only data" | URI-addressed content (file, row, API response) the host can request. |
-| Prompt | "Saved prompt" | User-invokable template (often with arguments) surfaced as a slash-command. |
-| Stdio transport | "Local dev mode" | Parent host spawns the server as a child process; JSON-RPC over stdin/stdout. |
-| Streamable HTTP | "The 2025-06 remote transport" | POST for requests, optional SSE for server-initiated messages; replaces the older SSE-only transport. |
+| Term | 俗に言うこと | 実際の意味 |
+|------|---------------|------------|
+| MCP | "LLM の tool protocol" | 任意の LLM host に tools、resources、prompts を公開する JSON-RPC 2.0 spec。 |
+| Host | "Claude Desktop" | LLM application。model と user UI を所有し、1つ以上の client を mount する。 |
+| Client | "Connection" | host 内の per-server connection。正確に1つの server と JSON-RPC で会話する。 |
+| Server | "tool を持つもの" | あなたの code。tools/resources/prompts を advertise し、それらの invocation を処理する。 |
+| Tool | "Function call" | JSON Schema input と text/JSON result を持つ、model-invokable action。 |
+| Resource | "Read-only data" | host が request できる URI-addressed content (file、row、API response)。 |
+| Prompt | "Saved prompt" | user-invokable template。多くの場合 argument を持ち、slash-command として surface される。 |
+| Stdio transport | "Local dev mode" | parent host が server を child process として spawn し、stdin/stdout 上で JSON-RPC する。 |
+| Streamable HTTP | "2025-06 remote transport" | request は POST、server-initiated message は optional SSE。古い SSE-only transport を置き換える。 |
 
-## Further Reading
+## 参考文献
 
-- [Model Context Protocol specification](https://modelcontextprotocol.io/specification) — canonical reference, versioned by date.
-- [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) — Filesystem, GitHub, Postgres, Slack, Puppeteer reference servers.
-- [Anthropic — Introducing MCP (Nov 2024)](https://www.anthropic.com/news/model-context-protocol) — launch post with design rationale.
-- [Python SDK](https://github.com/modelcontextprotocol/python-sdk) — official SDK used in this lesson.
-- [Security considerations for MCP](https://modelcontextprotocol.io/docs/concepts/security) — roots, destructive hints, tool poisoning.
-- [Google A2A specification](https://google.github.io/A2A/) — Agent2Agent protocol; the sibling standard for agent-to-agent communication that complements MCP's agent-to-tool scope.
-- [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — where MCP sits in the broader pattern library for agent design (augmented LLM, workflows, autonomous agents).
+- [Model Context Protocol specification](https://modelcontextprotocol.io/specification) — date ごとに versioned された canonical reference。
+- [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) — Filesystem、GitHub、Postgres、Slack、Puppeteer の reference servers。
+- [Anthropic — Introducing MCP (Nov 2024)](https://www.anthropic.com/news/model-context-protocol) — design rationale を含む launch post。
+- [Python SDK](https://github.com/modelcontextprotocol/python-sdk) — この lesson で使う official SDK。
+- [Security considerations for MCP](https://modelcontextprotocol.io/docs/concepts/security) — roots、destructive hints、tool poisoning。
+- [Google A2A specification](https://google.github.io/A2A/) — Agent2Agent protocol。MCP の agent-to-tool scope を補完する sibling standard。
+- [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — agent design の broader pattern library (augmented LLM、workflows、autonomous agents) の中で MCP がどこに位置するか。

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -7,7 +7,7 @@
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .axis { stroke: #333; stroke-width: 1; }
@@ -18,17 +18,17 @@
     </style>
   </defs>
 
-  <text x="450" y="30" text-anchor="middle" class="title">scaling laws — parameters, tokens, compute, and what changed in 2026</text>
+  <text x="450" y="30" text-anchor="middle" class="title">スケーリング則 — パラメータ、トークン、計算量、2026年の変化</text>
 
   <!-- Left: loss vs compute -->
   <rect x="40" y="60" width="420" height="360" class="box"/>
-  <text x="250" y="84" text-anchor="middle" class="label">loss vs training compute</text>
+  <text x="250" y="84" text-anchor="middle" class="label">損失 vs 学習計算量</text>
 
   <!-- axes -->
   <line x1="90" y1="370" x2="430" y2="370" class="axis"/>
   <line x1="90" y1="110" x2="90" y2="370" class="axis"/>
-  <text x="250" y="400" text-anchor="middle" class="caption">log10 compute (FLOPs)</text>
-  <text x="65" y="240" text-anchor="middle" class="caption" transform="rotate(-90 65 240)">cross-entropy loss</text>
+  <text x="250" y="400" text-anchor="middle" class="caption">log10 計算量 (FLOPs)</text>
+  <text x="65" y="240" text-anchor="middle" class="caption" transform="rotate(-90 65 240)">クロスエントロピー損失</text>
 
   <!-- ticks -->
   <text x="110" y="385" text-anchor="middle" class="caption">18</text>
@@ -45,7 +45,7 @@
 
   <!-- Kaplan (under-trained) curve -->
   <path class="curve-k" d="M 110 370 Q 180 340 240 290 Q 290 250 360 225 Q 400 215 430 210"/>
-  <text x="380" y="205" class="caption" fill="#555">Kaplan 2020 (under-trained)</text>
+  <text x="380" y="205" class="caption" fill="#555">Kaplan 2020 (学習不足)</text>
 
   <!-- Chinchilla (optimal) curve -->
   <path class="curve-c" d="M 110 350 Q 180 310 240 260 Q 290 220 360 195 Q 400 180 430 170"/>
@@ -53,7 +53,7 @@
 
   <!-- Floor line E -->
   <line x1="90" y1="125" x2="430" y2="125" stroke="#1a1a1a" stroke-width="0.6" stroke-dasharray="2,3"/>
-  <text x="100" y="120" class="caption">E (irreducible)</text>
+  <text x="100" y="120" class="caption">E (既約)</text>
 
   <!-- Real model dots -->
   <circle cx="295" cy="245" r="4" class="pt-old"/>
@@ -69,26 +69,26 @@
 
   <text x="510" y="120" class="content">N</text>
   <rect x="530" y="104" width="300" height="22" fill="#ffe0a8" stroke="#1a1a1a" stroke-width="1"/>
-  <text x="680" y="120" text-anchor="middle" class="content">parameters (capacity)</text>
+  <text x="680" y="120" text-anchor="middle" class="content">パラメータ (容量)</text>
 
   <text x="510" y="155" class="content">D</text>
   <rect x="530" y="139" width="300" height="22" fill="#a9c9a4" stroke="#1a1a1a" stroke-width="1"/>
-  <text x="680" y="155" text-anchor="middle" class="content">training tokens (usage)</text>
+  <text x="680" y="155" text-anchor="middle" class="content">学習トークン (使用量)</text>
 
-  <text x="672" y="190" text-anchor="middle" class="caption">trade at fixed C</text>
+  <text x="672" y="190" text-anchor="middle" class="caption">固定Cでのトレード</text>
   <text x="672" y="210" text-anchor="middle" class="content">min L  =  A/N^α + B/D^β + E</text>
   <text x="672" y="232" text-anchor="middle" class="caption">α ≈ 0.34, β ≈ 0.28, E ≈ 1.69</text>
 
   <!-- Right: 2026 picture -->
   <rect x="485" y="280" width="375" height="200" class="box"/>
-  <text x="672" y="304" text-anchor="middle" class="label">the 2026 twist</text>
-  <text x="504" y="332" class="caption">— Chinchilla-optimal: minimize TRAINING loss per FLOP</text>
-  <text x="504" y="352" class="caption">— inference-optimal: bigger D, smaller N (over-train)</text>
+  <text x="672" y="304" text-anchor="middle" class="label">2026年のひねり</text>
+  <text x="504" y="332" class="caption">— Chinchilla最適: 1FLOPあたりの学習損失を最小化</text>
+  <text x="504" y="352" class="caption">— 推論最適: Dを大きく、Nを小さく (過学習気味)</text>
   <text x="504" y="372" class="caption">— Llama 3 8B: D/N ≈ 1875 (15T tokens, 8B params)</text>
-  <text x="504" y="392" class="caption">— data quality (Phi-style filtering) &gt;2× effective FLOPs</text>
-  <text x="504" y="412" class="caption">— MoE decouples total params from active FLOPs</text>
-  <text x="504" y="432" class="caption">— Muon optimizer: 2× training-FLOP efficiency vs AdamW</text>
-  <text x="504" y="452" class="caption">— "emergence" is often a scoring artifact; loss is smooth</text>
+  <text x="504" y="392" class="caption">— データ品質 (Phi式フィルタ) は有効FLOPsを&gt;2倍</text>
+  <text x="504" y="412" class="caption">— MoEは総paramsと活性FLOPsを切り離す</text>
+  <text x="504" y="432" class="caption">— Muon optimizer: AdamW比で学習FLOP効率2倍</text>
+  <text x="504" y="452" class="caption">— 「創発」は採点アーティファクトのことが多い。損失は滑らか</text>
 
-  <text x="450" y="504" text-anchor="middle" class="caption">same power-law shape, different absolute constants. still the map frontier labs plan against.</text>
+  <text x="450" y="504" text-anchor="middle" class="caption">冪乗則の形は同じで、絶対定数が違う。いまもfrontier labの計画地図。</text>
 </svg>

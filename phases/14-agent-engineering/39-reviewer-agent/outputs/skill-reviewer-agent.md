@@ -1,36 +1,36 @@
 ---
 name: reviewer-agent
-description: Stand up a reviewer agent role with a five-dimension rubric that reads builder artifacts, produces a structured review report, and starts human review from a written page instead of a blank one.
+description: builder artifacts を読み、構造化 review report を生成し、人間の review を blank page ではなく written page から始める five-dimension rubric 付き reviewer agent role を立ち上げる。
 version: 1.0.0
 phase: 14
 lesson: 39
 tags: [reviewer, rubric, role-separation, second-loop, review-report]
 ---
 
-Given a builder agent already producing workbench artifacts, stand up a reviewer that reads them and writes structured reports.
+builder agent がすでに workbench artifacts を生成している前提で、それらを読み構造化 reports を書く reviewer を立ち上げてください。
 
-Produce:
+作成するもの:
 
-1. `agents/reviewer.md` with the reviewer system prompt: read-only access, five-dimension rubric, must cite the artifact path for each score.
-2. `tools/reviewer.py` that loads `ReviewerInputs` from the workbench and runs the LLM scorer per dimension.
-3. `outputs/review/<task_id>.json` as the canonical review report path.
-4. `docs/reviewer-rubric.md` listing the five dimensions, the question each one answers, and the 0-1-2 anchor descriptions.
-5. CI step that posts the review report as a PR comment whenever a builder task closes.
+1. reviewer system prompt を含む `agents/reviewer.md`: read-only access、five-dimension rubric、各 score で artifact path を cite すること。
+2. workbench から `ReviewerInputs` を load し、dimension ごとに LLM scorer を実行する `tools/reviewer.py`。
+3. canonical review report path としての `outputs/review/<task_id>.json`。
+4. 5つの dimensions、それぞれが答える question、0-1-2 anchor descriptions を列挙する `docs/reviewer-rubric.md`。
+5. builder task が close するたびに review report を PR comment として投稿する CI step。
 
-Hard rejects:
+ハード拒否条件:
 
-- A reviewer with write access to the diff. The gap between builder and reviewer is the whole signal; collapsing it destroys reliability.
-- A rubric without anchor descriptions per score. "Score from 0 to 2" without anchors collapses to vibes.
-- Review reports that omit citations. Every score must point at a file or trace entry.
-- Sharing the builder's system prompt. Same model is fine; same prompt is not.
+- diff への write access を持つ reviewer。builder と reviewer の gap が signal のすべてであり、それを潰すと reliability が壊れる。
+- score ごとの anchor descriptions がない rubric。"Score from 0 to 2" だけでは vibes に崩れる。
+- citations を省略する review reports。すべての score は file または trace entry を指す必要がある。
+- builder の system prompt を共有すること。同じ model はよい。同じ prompt はだめ。
 
-Refusal rules:
+拒否ルール:
 
-- If the builder produces no verification report, refuse to run the reviewer. Acceptance must hold before judgment is worth asking for.
-- If the project has fewer than three closed tasks, refuse to claim the rubric is calibrated. Save the first reports as the calibration set.
-- If the reviewer is asked to score below a minimum confidence, refuse and surface the uncertain dimension to a human.
+- builder が verification report を生成しない場合、reviewer の実行を拒否する。judgment を尋ねる前に acceptance が成立している必要がある。
+- project の closed tasks が3件未満の場合、rubric が calibrated だと主張しない。最初の reports は calibration set として保存する。
+- reviewer が minimum confidence 未満で採点するよう求められた場合は拒否し、uncertain dimension を人間に surface する。
 
-Output structure:
+出力構成:
 
 ```
 <repo>/
@@ -42,8 +42,8 @@ Output structure:
 └── .github/workflows/review.yml
 ```
 
-End with "what to read next" pointing to:
+最後に "what to read next" として次を示してください。
 
-- Lesson 40 for the handoff packet that combines verification + review.
-- Lesson 41 for the real-style task that exercises builder/reviewer separation end to end.
-- Lesson 05 (Self-Refine and CRITIC) for the single-agent self-review baseline this lesson improves on.
+- verification + review を組み合わせる handoff packet は Lesson 40。
+- builder/reviewer separation を end to end で試す real-style task は Lesson 41。
+- この lesson が改善する single-agent self-review baseline は Lesson 05 (Self-Refine and CRITIC)。

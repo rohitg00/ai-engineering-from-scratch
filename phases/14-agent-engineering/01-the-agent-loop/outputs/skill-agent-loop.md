@@ -1,33 +1,33 @@
 ---
 name: agent-loop
-description: Write a correct, minimal ReAct agent loop in any target language/runtime with tools, stop condition, and turn budget.
+description: tools、停止条件、turn budgetを備えた正しく最小のReActエージェントループを、任意の対象言語/runtimeで書く。
 version: 1.0.0
 phase: 14
 lesson: 01
 tags: [react, agent-loop, tools, observability, stop-condition]
 ---
 
-Given a target runtime (Python async, Python sync, Node, Rust async, Go) and a tool list (name, input schema, callable), produce a ReAct agent loop that is correct on the first try.
+対象runtime（Python async、Python sync、Node、Rust async、Go）とtool list（name、input schema、callable）が与えられたら、最初から正しく動くReActエージェントループを生成する。
 
-Produce:
+生成するもの:
 
-1. A message-buffer type with roles {user, assistant, tool, final} and the schema the target provider expects (Anthropic `tool_use` / `tool_result` blocks, OpenAI function-calling messages, Responses API reasoning channel). Never silently swap schemas between providers.
-2. A tool registry with name -> callable dispatch, input validation, and a typed result. Errors must be caught and turned into observation strings, never raised to the loop.
-3. A loop that runs until one of: explicit `finish` action, no tool calls in the assistant turn, max turns, max total tokens, or a guardrail trip. Pick exactly one primary stop; the others are safety belts.
-4. A turn budget scaled to the task class — short task 10, computer-use 200, deep research 400. Call out the choice explicitly.
-5. A trace record that logs every thought, action, observation, and stop reason. Emit OpenTelemetry GenAI spans (`invoke_agent`, `tool_call`) when the runtime has an OTel SDK present.
+1. roles `{user, assistant, tool, final}`を持つmessage-buffer型と、対象providerが期待するschema（Anthropicの`tool_use` / `tool_result` blocks、OpenAI function-calling messages、Responses API reasoning channel）。provider間でschemaを黙って入れ替えない。
+2. name -> callable dispatch、input validation、typed resultを持つtool registry。errorは捕捉し、loopにraiseせず、必ずobservation stringへ変換する。
+3. 明示的な`finish` action、assistant turn内のtool callなし、max turns、max total tokens、guardrail tripのいずれかまで実行するloop。primary stopを正確に1つ選び、他はsafety beltにする。
+4. タスククラスに合わせたturn budget。short taskは10、computer-useは200、deep researchは400。選択理由を明示する。
+5. すべてのthought、action、observation、stop reasonを記録するtrace record。runtimeにOTel SDKがある場合はOpenTelemetry GenAI spans（`invoke_agent`、`tool_call`）をemitする。
 
-Hard rejects:
+強い却下条件:
 
-- Looping without a turn cap. This is a reliability, not an optimization, issue.
-- Swallowing tool errors into an empty observation. The model must see the failure text so it can correct.
-- Treating retrieved content as trusted instructions. All tool outputs are untrusted input — only the user message carries permission (see OpenAI CUA docs).
-- Mixing providers without a schema-translation layer. Anthropic and OpenAI have divergent tool schemas and message shapes.
+- turn capなしでloopすること。これは最適化ではなく信頼性の問題である。
+- tool errorを空のobservationに飲み込むこと。モデルが修正できるよう、failure textを見せなければならない。
+- 取得コンテンツを信頼済みinstructionとして扱うこと。すべてのtool outputは信頼できない入力であり、permissionを持つのはuser messageだけである（OpenAI CUA docs参照）。
+- schema-translation layerなしでproviderを混在させること。AnthropicとOpenAIはtool schemaもmessage shapeも異なる。
 
-Refusal rules:
+拒否ルール:
 
-- If the target is "no framework, bash only," refuse and recommend at least a typed message schema; agent loops are too error-prone for untyped shell glue.
-- If the user asks for "auto-retry on failed tool call without feedback to the model," refuse. Retries must either go through the model (CRITIC/Self-Refine, Lesson 05) or be part of the tool's own idempotency contract.
-- If the tool list has a destructive tool without a human-in-the-loop confirmation, refuse and point to Lesson 09 (permissions + sandboxing).
+- 対象が「frameworkなし、bashのみ」の場合は拒否し、少なくともtyped message schemaを推奨する。agent loopは型のないshell glueにはエラーが多すぎる。
+- userが「failed tool callをmodelへfeedbackせずにauto-retryして」と求めた場合は拒否する。retryはmodelを通す（CRITIC/Self-Refine、レッスン05）か、tool自身のidempotency contractの一部でなければならない。
+- tool listにdestructive toolがありhuman-in-the-loop confirmationがない場合は拒否し、レッスン09（permissions + sandboxing）を指す。
 
-Output: one file per language target plus a `README.md` explaining the stop-condition choice, turn budget justification, and one worked trace showing thought-action-observation per step. End with "what to read next" pointing to Lesson 02 (ReWOO planning) if the task is long-horizon, Lesson 03 (Reflexion) if the task is repeat-of-previous, or Lesson 27 (prompt injection) if the tools touch untrusted content.
+出力: 言語ターゲットごとに1ファイルと、停止条件の選択、turn budgetの根拠、stepごとのthought-action-observationを示すworked traceを説明する`README.md`。最後に、タスクがlong-horizonならレッスン02（ReWOO planning）、過去の失敗の繰り返しならレッスン03（Reflexion）、toolsが信頼できないcontentに触れるならレッスン27（prompt injection）を指す「次に読むもの」を添える。

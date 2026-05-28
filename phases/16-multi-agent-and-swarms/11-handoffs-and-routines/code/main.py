@@ -1,10 +1,10 @@
-"""Handoff-driven orchestration -- OpenAI Swarm in miniature.
+"""handoff-driven orchestration -- OpenAI Swarm のミニチュア。
 
-Two primitives:
+2つの primitive:
   - Agent(name, instructions, functions)
-  - handoff = a function returning an Agent
+  - handoff = Agent を返す function
 
-Run loop detects Agent-valued returns and switches the active agent.
+run loop は Agent-valued return を検出し、active agent を切り替える。
 """
 from __future__ import annotations
 
@@ -38,40 +38,40 @@ def triage_agent_factory() -> Agent:
 
     return Agent(
         name="triage",
-        instructions="Route user to: refunds, sales, or support.",
+        instructions="user を refunds、sales、support のいずれかに route する。",
         functions=[transfer_to_refunds, transfer_to_sales, transfer_to_support],
     )
 
 
 def refund_agent_factory() -> Agent:
     def process_refund(order_id: str) -> str:
-        return f"Refund processed for order {order_id}."
+        return f"order {order_id} の返金を処理しました。"
 
     return Agent(
         name="refund",
-        instructions="Handle refund requests.",
+        instructions="返金 request を扱う。",
         functions=[process_refund],
     )
 
 
 def sales_agent_factory() -> Agent:
     def quote_product(product: str) -> str:
-        return f"Quote for {product}: $99/mo."
+        return f"{product} の見積もり: $99/mo."
 
     return Agent(
         name="sales",
-        instructions="Handle sales inquiries.",
+        instructions="sales inquiry を扱う。",
         functions=[quote_product],
     )
 
 
 def support_agent_factory() -> Agent:
     def open_ticket(issue: str) -> str:
-        return f"Ticket opened for: {issue}"
+        return f"ticket を作成しました: {issue}"
 
     return Agent(
         name="support",
-        instructions="Handle technical support.",
+        instructions="technical support を扱う。",
         functions=[open_ticket],
     )
 
@@ -83,9 +83,9 @@ support_agent = support_agent_factory()
 
 
 def scripted_router(current: Agent, user_msg: str) -> Union[str, Agent]:
-    """Stands in for an LLM that reads the user message and the current agent's
-    system prompt, then either emits text or calls a tool (which may return
-    another Agent). In real Swarm this is an LLM tool call."""
+    """user message と current agent の system prompt を読み、text を出すか
+    tool を呼ぶ (別 Agent を返す場合がある) LLM の代役。
+    実際の Swarm では LLM tool call になる。"""
     text = user_msg.lower()
     if current.name == "triage":
         if "refund" in text or "money back" in text:
@@ -94,7 +94,7 @@ def scripted_router(current: Agent, user_msg: str) -> Union[str, Agent]:
             return next(f for f in current.functions if f.__name__ == "transfer_to_sales")()
         if "broken" in text or "bug" in text:
             return next(f for f in current.functions if f.__name__ == "transfer_to_support")()
-        return "Could you tell me what you need help with?"
+        return "何について手伝えばよいか教えてください。"
     if current.name == "refund":
         order = "42"
         for word in user_msg.split():
@@ -107,7 +107,7 @@ def scripted_router(current: Agent, user_msg: str) -> Union[str, Agent]:
         return next(f for f in current.functions if f.__name__ == "quote_product")(product)
     if current.name == "support":
         return next(f for f in current.functions if f.__name__ == "open_ticket")(user_msg)
-    return "[no response]"
+    return "[応答なし]"
 
 
 def run_swarm(start_agent: Agent, user_messages: list[str]) -> list[Msg]:
@@ -133,23 +133,23 @@ def render(history: list[Msg]) -> None:
 
 
 def main() -> None:
-    print("Handoff-driven orchestration -- OpenAI Swarm shape")
+    print("handoff-driven orchestration -- OpenAI Swarm shape")
     print("-" * 54)
 
     scenarios = [
         ("Refund flow", ["I need a refund on order 77"]),
         ("Sales flow", ["I want to buy the enterprise plan. what's the price?"]),
         ("Support flow", ["my dashboard is broken"]),
-        ("Ambiguous", ["hello"]),
+        ("曖昧な入力", ["hello"]),
     ]
     for label, msgs in scenarios:
         print(f"\n=== {label} ===")
         history = run_swarm(triage_agent, msgs)
         render(history)
 
-    print("\nKey insight: every handoff is a tool call returning an Agent.")
-    print("The framework's sole job is detecting Agent-valued returns and switching active agent.")
-    print("No state machine. No DSL. The agent prompts ARE the routing logic.")
+    print("\nKey insight: すべての handoff は Agent を返す tool call。")
+    print("framework の唯一の仕事は Agent-valued return を検出し、active agent を切り替えること。")
+    print("state machine も DSL もない。agent prompt そのものが routing logic。")
 
 
 if __name__ == "__main__":

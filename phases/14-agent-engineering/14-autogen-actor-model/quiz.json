@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the only legal way actors interact in AutoGen v0.4?",
+      "question": "AutoGen v0.4でactorがinteractionする唯一の正当な方法は何ですか?",
       "options": [
-        "Direct access to a shared dict",
-        "Asynchronous messages exchanged through inboxes; no shared memory",
-        "Shared SQL transactions",
-        "Mutating each other's prompts"
+        "shared dictへの直接access",
+        "inboxを通じて交換されるasynchronous message。shared memoryはない",
+        "shared SQL transaction",
+        "互いのpromptをmutateすること"
       ],
       "correct": 1,
-      "explanation": "Actors have private state and an inbox; messages are the only interaction."
+      "explanation": "actorはprivate stateとinboxを持ち、messageだけがinteractionです。"
     },
     {
       "stage": "pre",
-      "question": "What are the three API layers of AutoGen v0.4?",
+      "question": "AutoGen v0.4の3つのAPI layerは何ですか?",
       "options": [
         "Core, AgentChat, Extensions",
         "Frontend, Backend, Database",
@@ -24,23 +24,23 @@
         "Plan, Act, Reflect"
       ],
       "correct": 0,
-      "explanation": "Core is the low-level actor framework, AgentChat is the task-driven high-level API, Extensions are integrations."
+      "explanation": "Coreはlow-level actor framework、AgentChatはtask-driven high-level API、Extensionsはintegrationsです。"
     },
     {
       "stage": "check",
-      "question": "Why does decoupling delivery from handling give fault isolation?",
+      "question": "deliveryとhandlingを分離するとfault isolationが得られるのはなぜですか?",
       "options": [
-        "The runtime catches handler failures in B without crashing A; A's send() returned immediately and never blocked",
-        "Each actor runs on a separate machine",
-        "The runtime restarts the OS on failure",
-        "Handlers are pure functions"
+        "runtimeがBのhandler failureをAをcrashさせずにcatchする。Aのsend()はすぐにreturnしてblockしないため",
+        "各actorが別machineで動くため",
+        "runtimeがfailure時にOSをrestartするため",
+        "handlerがpure functionだから"
       ],
       "correct": 0,
-      "explanation": "send() puts the message in the recipient's inbox and returns; a handler crash is local to that actor."
+      "explanation": "send()はmessageをrecipientのinboxへ入れてreturnします。handler crashはそのactor内にlocalizeされます。"
     },
     {
       "stage": "check",
-      "question": "Which AgentChat topology rotates agents in a fixed order?",
+      "question": "agentをfixed orderでrotateするAgentChat topologyはどれですか?",
       "options": [
         "SelectorGroupChat",
         "RoundRobinGroupChat",
@@ -48,43 +48,43 @@
         "Supervisor"
       ],
       "correct": 1,
-      "explanation": "RoundRobinGroupChat is fixed rotation; SelectorGroupChat uses a selector to pick next."
+      "explanation": "RoundRobinGroupChatはfixed rotationです。SelectorGroupChatはselectorがnextを選びます。"
     },
     {
       "stage": "check",
-      "question": "What is Magentic-One in this lesson?",
+      "question": "このlessonにおけるMagentic-Oneとは何ですか?",
       "options": [
-        "A new LLM model",
-        "A reference multi-agent team for web browsing, code execution, and file handling built on AgentChat",
-        "A serialization format",
-        "An OTel exporter"
+        "新しいLLM model",
+        "AgentChat上に構築された、web browsing、code execution、file handling向けreference multi-agent team",
+        "serialization format",
+        "OTel exporter"
       ],
       "correct": 1,
-      "explanation": "Magentic-One is Microsoft's reference team that demonstrates the AgentChat API."
+      "explanation": "Magentic-OneはMicrosoftのreference teamで、AgentChat APIを示します。"
     },
     {
       "stage": "post",
-      "question": "What is the lesson's stated status of AutoGen v0.4 in early 2026?",
+      "question": "2026年初頭におけるAutoGen v0.4のstatusとしてlessonが述べているものはどれですか?",
       "options": [
-        "Deprecated and removed",
-        "Stable but in maintenance mode; Microsoft Agent Framework is the forward path",
-        "Just announced",
-        "Replaced by LangGraph"
+        "deprecatedで削除済み",
+        "stableだがmaintenance mode。Microsoft Agent Frameworkがforward path",
+        "発表されたばかり",
+        "LangGraphに置き換えられた"
       ],
       "correct": 1,
-      "explanation": "AutoGen v0.7.x is stable for research; active development has shifted to Microsoft Agent Framework."
+      "explanation": "AutoGen v0.7.xはresearchにはstableですが、active developmentはMicrosoft Agent Frameworkへ移っています。"
     },
     {
       "stage": "post",
-      "question": "Which observability standard does AutoGen v0.4 emit by default?",
+      "question": "AutoGen v0.4がdefaultでemitするobservability standardはどれですか?",
       "options": [
-        "Prometheus metrics only",
-        "OpenTelemetry spans with gen_ai.* attributes per the OTel GenAI semantic conventions",
+        "Prometheus metricsのみ",
+        "OTel GenAI semantic conventionsに従うgen_ai.* attributes付きOpenTelemetry span",
         "StatsD",
         "Datadog APM"
       ],
       "correct": 1,
-      "explanation": "Every message emits a span; tool calls carry gen_ai.* attributes per OTel GenAI conventions."
+      "explanation": "各messageがspanをemitし、tool callにはOTel GenAI conventionsに従うgen_ai.* attributesが付きます。"
     }
   ]
 }

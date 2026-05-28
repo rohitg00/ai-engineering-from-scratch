@@ -1,7 +1,7 @@
-"""Generate a handoff packet from workbench artifacts.
+"""workbench artifacts から handoff packet を生成する。
 
-Reads state, verdict, review, and feedback (here stubbed in-memory),
-writes handoff.md for humans and handoff.json for the next agent.
+state、verdict、review、feedback (ここでは in-memory stub) を読み、
+人間向けの handoff.md と次の agent 向けの handoff.json を書く。
 
 Run: python3 code/main.py
 """
@@ -59,19 +59,19 @@ def derive_risks(snapshot: WorkbenchSnapshot) -> list[dict[str, str]]:
         if isinstance(f, dict) and f.get("severity") in ("warn", "block"):
             risks.append({"severity": str(f.get("severity")), "detail": str(f.get("detail"))})
     for blocker in snapshot.state.get("blockers") or []:
-        risks.append({"severity": "warn", "detail": f"open blocker: {blocker}"})
+        risks.append({"severity": "warn", "detail": f"未解決 blocker: {blocker}"})
     raw_total = snapshot.review.get("total", 10)
     try:
         safe_total = int(raw_total)
     except (TypeError, ValueError):
         safe_total = 10
     if safe_total < 7:
-        risks.append({"severity": "warn", "detail": f"review total {raw_total} below 7"})
+        risks.append({"severity": "warn", "detail": f"review total {raw_total} が 7 未満"})
     return risks
 
 
 def generate_handoff(snapshot: WorkbenchSnapshot) -> tuple[str, HandoffPayload]:
-    next_action = str(snapshot.state.get("next_action") or "no next_action recorded; needs human")
+    next_action = str(snapshot.state.get("next_action") or "next_action の記録なし。人間の確認が必要")
     payload = HandoffPayload(
         task_id=snapshot.task_id,
         summary=f"task {snapshot.task_id}: review={snapshot.review.get('verdict')}, gate={snapshot.verdict.get('passed')}",
@@ -92,29 +92,29 @@ def generate_handoff(snapshot: WorkbenchSnapshot) -> tuple[str, HandoffPayload]:
     )
 
     def _bullets(items: list[str]) -> list[str]:
-        return items or ["- none"]
+        return items or ["- なし"]
 
     md_lines = [
         f"# Handoff: {payload.task_id}",
         "",
-        f"**Summary.** {payload.summary}",
+        f"**概要.** {payload.summary}",
         "",
-        "## Changed files",
+        "## 変更ファイル",
         *_bullets([f"- `{f}`" for f in payload.changed_files]),
         "",
-        "## Commands run",
+        "## 実行したコマンド",
         *_bullets([f"- `{c}`" for c in payload.commands_run]),
         "",
-        "## Failed attempts",
+        "## 失敗した試行",
         *_bullets([f"- {f}" for f in payload.failed_attempts]),
         "",
-        "## Open risks",
+        "## 未解決リスク",
         *_bullets([f"- [{r['severity']}] {r['detail']}" for r in payload.open_risks]),
         "",
-        "## Next action",
+        "## 次のアクション",
         f"{payload.next_action}",
         "",
-        "## Receipts",
+        "## 証跡",
         f"- verdict: `{payload.verdict_pointer['verdict']}`",
         f"- review:  `{payload.verdict_pointer['review']}`",
     ]
@@ -126,8 +126,8 @@ def main() -> None:
         task_id="T-001",
         state={
             "active_task_id": None,
-            "blockers": ["awaiting decision on rate-limit window"],
-            "next_action": "open PR with current diff and request review",
+            "blockers": ["rate-limit window の判断待ち"],
+            "next_action": "current diff で PR を開き review を依頼する",
         },
         verdict={"passed": True, "findings": [{"severity": "warn", "detail": "off-scope: README.md"}]},
         review={"verdict": "pass", "total": 8},

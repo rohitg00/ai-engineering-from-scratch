@@ -2,7 +2,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the imaginary unit i defined by?",
+      "question": "虚数単位 i はどの性質で定義されますか。",
       "options": [
         "i = sqrt(2)",
         "i^2 = -1",
@@ -10,11 +10,11 @@
         "i^2 = 1"
       ],
       "correct": 1,
-      "explanation": "The imaginary unit i is defined by the property i^2 = -1. It extends the real number line into a 2D plane. Geometrically, multiplying by i is a 90-degree rotation — two multiplications (i^2) give a 180-degree rotation, which is -1."
+      "explanation": "虚数単位 i は i^2 = -1 を満たす数として定義されます。幾何学的には i を掛けることは 90 度回転で、二回掛けると 180 度回転して -1 になります。"
     },
     {
       "stage": "pre",
-      "question": "What does Euler's formula e^(i*theta) equal?",
+      "question": "Euler's formula で e^(i*theta) は何に等しいですか。",
       "options": [
         "theta + i",
         "cos(theta) + i*sin(theta)",
@@ -22,11 +22,11 @@
         "i^theta"
       ],
       "correct": 1,
-      "explanation": "Euler's formula states e^(i*theta) = cos(theta) + i*sin(theta). This connects complex exponentials to trigonometry and shows that e^(i*theta) traces the unit circle as theta varies."
+      "explanation": "Euler's formula は e^(i*theta) = cos(theta) + i*sin(theta) です。複素指数関数と三角関数を結びつけ、theta が変わると単位円をたどることを示します。"
     },
     {
       "stage": "post",
-      "question": "What is the result of (3 + 2i)(1 + 4i)?",
+      "question": "(3 + 2i)(1 + 4i) の結果はどれですか。",
       "options": [
         "3 + 8i",
         "4 + 6i",
@@ -34,23 +34,23 @@
         "5 + 14i"
       ],
       "correct": 2,
-      "explanation": "Using FOIL: (3)(1) + (3)(4i) + (2i)(1) + (2i)(4i) = 3 + 12i + 2i + 8i^2 = 3 + 14i + 8(-1) = 3 + 14i - 8 = -5 + 14i."
+      "explanation": "分配法則より 3 + 12i + 2i + 8i^2 = 3 + 14i - 8 = -5 + 14i です。"
     },
     {
       "stage": "post",
-      "question": "Why are complex numbers used in Rotary Position Embedding (RoPE) for transformers?",
+      "question": "transformers の Rotary Position Embedding (RoPE) で複素数が使われる理由は何ですか。",
       "options": [
-        "Complex numbers compress the position encoding to use less memory",
-        "Multiplying query/key vectors by complex rotations encodes relative position as a rotation angle",
-        "Complex numbers are required by the attention softmax function",
-        "RoPE uses imaginary numbers to handle negative positions"
+        "position encoding のメモリ使用量を減らすため",
+        "query/key ベクトルに複素回転を掛け、相対位置を回転角として符号化するため",
+        "attention softmax 関数が複素数を必要とするため",
+        "負の位置を扱うために虚数を使うため"
       ],
       "correct": 1,
-      "explanation": "RoPE multiplies query and key vectors by complex rotation matrices e^(i*m*theta) where m is the position. The relative position between two tokens becomes a rotation angle, and attention naturally becomes sensitive to relative (not absolute) position through complex multiplication."
+      "explanation": "RoPE は位置 m に応じた e^(i*m*theta) の回転を query/key に適用します。二つの token の相対位置は回転角として現れ、attention が相対位置に敏感になります。"
     },
     {
       "stage": "post",
-      "question": "The N-th roots of unity are N equally spaced points on the unit circle. What is their sum?",
+      "question": "N-th roots of unity は単位円上の N 個の等間隔な点です。その和は何ですか。",
       "options": [
         "N",
         "1",
@@ -58,7 +58,7 @@
         "N/2"
       ],
       "correct": 2,
-      "explanation": "The N roots of unity are e^(2*pi*i*k/N) for k = 0, ..., N-1. They are symmetrically distributed around the unit circle, so their vector sum cancels out to zero. This symmetry property is what makes the DFT invertible."
+      "explanation": "N 個の roots of unity は対称に配置されるため、ベクトル和は打ち消し合って 0 になります。この対称性が DFT を可逆にする性質の一つです。"
     }
   ]
 }

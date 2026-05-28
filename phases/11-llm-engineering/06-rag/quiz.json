@@ -1,37 +1,62 @@
 [
   {
-    "question": "What does RAG stand for and what problem does it solve?",
-    "options": ["Random Augmented Generation -- generating random outputs", "Retrieval-Augmented Generation -- giving LLMs access to external knowledge they weren't trained on", "Recurrent Attention Generation -- improving attention mechanisms", "Reduced Architecture Generation -- making models smaller"],
+    "question": "RAGは何の略で、どの問題を解決しますか。",
+    "options": [
+      "Random Augmented Generation -- ランダムな出力を生成すること",
+      "Retrieval-Augmented Generation -- LLMが訓練時に見ていない外部知識へアクセスできるようにすること",
+      "Recurrent Attention Generation -- attention mechanismsを改善すること",
+      "Reduced Architecture Generation -- モデルを小さくすること"
+    ],
     "correct": 1,
-    "explanation": "RAG retrieves relevant documents from an external knowledge base and adds them to the prompt. This gives the LLM access to up-to-date, domain-specific information without retraining.",
+    "explanation": "RAGは外部knowledge baseから関連文書を取得し、それをpromptに追加します。これにより、再学習なしでLLMが最新かつdomain-specificな情報にアクセスできます。",
     "stage": "pre"
   },
   {
-    "question": "Why is RAG preferred over fine-tuning for most knowledge-grounded applications?",
-    "options": ["RAG produces better models", "RAG is cheaper, instantly updatable when documents change, and provides source attribution -- fine-tuning is expensive and becomes stale", "Fine-tuning doesn't work", "RAG uses less memory"],
+    "question": "多くのknowledge-grounded applicationsでRAGがfine-tuningより好まれるのはなぜですか。",
+    "options": [
+      "RAGはより良いモデルを作るからです",
+      "RAGは安く、文書変更時に即更新でき、source attributionを提供できます。fine-tuningは高価で古くなります",
+      "fine-tuningは動かないからです",
+      "RAGはmemoryをあまり使わないからです"
+    ],
     "correct": 1,
-    "explanation": "Fine-tuning costs thousands of dollars, produces a static model that becomes stale as documents change, and offers no source attribution. RAG updates instantly (just update the document store), costs only embedding + storage, and can cite its sources.",
+    "explanation": "fine-tuningは数千ドルかかり、文書変更で古くなる静的モデルを作り、source attributionもありません。RAGはdocument storeを更新するだけで即更新でき、embedding + storageだけの費用で、sourcesを引用できます。",
     "stage": "pre"
   },
   {
-    "question": "What is the correct order of steps in a basic RAG pipeline?",
-    "options": ["Generate, retrieve, embed, chunk", "Chunk documents, embed chunks, store in vector DB, embed query, retrieve similar chunks, generate answer with context", "Embed query, generate answer, retrieve documents", "Store documents, query the LLM, add documents to response"],
+    "question": "basic RAG pipelineの正しい手順はどれですか。",
+    "options": [
+      "Generate, retrieve, embed, chunk",
+      "Chunk documents, embed chunks, store in vector DB, embed query, retrieve similar chunks, generate answer with context",
+      "Embed query, generate answer, retrieve documents",
+      "Store documents, query the LLM, add documents to response"
+    ],
     "correct": 1,
-    "explanation": "Ingestion: chunk documents -> embed chunks -> store in vector DB. Query time: embed the user's query -> retrieve top-K similar chunks -> add chunks to prompt -> generate answer grounded in retrieved context.",
+    "explanation": "ingestionではdocumentsをchunkし、chunksをembedし、vector DBに保存します。query timeではuser queryをembedし、top-K similar chunksを取得し、chunksをpromptへ追加し、retrieved contextに基づいてanswerを生成します。",
     "stage": "post"
   },
   {
-    "question": "What is a common failure mode in basic RAG systems?",
-    "options": ["The LLM refuses to answer", "The retrieved chunks are semantically similar to the query but don't contain the actual answer (e.g., returning 'revenue strategy' when asked for 'Q3 revenue numbers')", "The vector database crashes", "The embeddings are too large"],
+    "question": "basic RAG systemsの一般的な失敗モードは何ですか。",
+    "options": [
+      "LLMが回答を拒否する",
+      "retrieved chunksがqueryと意味的には似ているが、実際の答えを含まないこと（例: 'Q3 revenue numbers'を聞いて'revenue strategy'を返す）",
+      "vector databaseがcrashする",
+      "embeddingsが大きすぎる"
+    ],
     "correct": 1,
-    "explanation": "Semantic search finds text that 'sounds like' the query, not necessarily text that 'answers' it. A query about revenue might retrieve chunks discussing revenue strategy rather than the chunk containing the actual number.",
+    "explanation": "semantic searchはqueryに『似て聞こえる』textを見つけますが、必ずしも『答える』textではありません。revenueについてのqueryが、実際の数値を含むchunkではなくrevenue strategyのchunkを取得することがあります。",
     "stage": "post"
   },
   {
-    "question": "How do you evaluate RAG quality?",
-    "options": ["By checking if the LLM produces any output", "Using both retrieval metrics (did we find the right chunks?) and generation metrics (is the answer faithful to the retrieved context?)", "By measuring response time only", "By counting the number of retrieved documents"],
+    "question": "RAG品質はどう評価しますか。",
+    "options": [
+      "LLMが何か出力したか確認する",
+      "retrieval metrics（正しいchunksを見つけたか）とgeneration metrics（回答がretrieved contextに忠実か）の両方を使う",
+      "response timeだけを測る",
+      "retrieved documentsの数を数える"
+    ],
     "correct": 1,
-    "explanation": "RAG evaluation has two parts: retrieval quality (precision/recall of retrieved chunks against ground truth) and generation quality (faithfulness to context, relevance to query, no hallucination beyond retrieved information).",
+    "explanation": "RAG評価には2つの部分があります。retrieval quality（ground truthに対するretrieved chunksのprecision/recall）とgeneration quality（contextへのfaithfulness、queryへのrelevance、retrieved informationを超えたhallucinationがないこと）です。",
     "stage": "post"
   }
 ]

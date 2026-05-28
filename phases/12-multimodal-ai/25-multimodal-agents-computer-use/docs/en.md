@@ -1,57 +1,57 @@
 # Multimodal Agents and Computer-Use (Capstone)
 
-> The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent (2024) proved the GUI-grounding primitive. Ferret-UI added mobile. ChartAgent introduced visual tool-use for charts. VisualWebArena and AgentVista (2026) are the benchmarks the frontier chases — and even Gemini 3 Pro and Claude Opus 4.7 score ~30% on AgentVista's hard tasks. This capstone pulls together every thread of Phase 12: perception (high-res VLM), reasoning (LLM with tool use), grounding (coordinate output), long-horizon memory, and evaluation.
+> 2026年の frontier product は、screenshots を読み、buttons を click し、web UI を navigate し、forms を埋め、workflow を end-to-end で完了する multimodal agent である。SeeClick と CogAgent (2024) は GUI-grounding primitive を実証した。Ferret-UI は mobile を追加した。ChartAgent は chart 向け visual tool-use を導入した。VisualWebArena と AgentVista (2026) は frontier が追う benchmark であり、Gemini 3 Pro や Claude Opus 4.7 でさえ AgentVista の hard tasks では約30%にとどまる。この capstone は Phase 12 の全要素、perception (high-res VLM)、reasoning (tool use 付き LLM)、grounding (coordinate output)、long-horizon memory、evaluation を統合する。
 
-**Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
-**Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
-**Time:** ~240 minutes
+**種別:** Capstone
+**言語:** Python (stdlib、action schema + agent loop skeleton)
+**前提条件:** Phase 12 · 05 (LLaVA)、Phase 12 · 09 (Qwen-VL JSON)、Phase 14 (Agent Engineering)
+**所要時間:** 約240分
 
-## Learning Objectives
+## 学習目標
 
-- Design a multimodal agent loop: perceive → reason → act → observe → repeat.
-- Build a GUI grounding output schema (click coordinates, type text, scroll, drag) the VLM can emit as JSON.
-- Compare screenshot-only agents vs accessibility-tree agents vs hybrid agents.
-- Set up a multimodal agent benchmark evaluation on a small VisualWebArena slice.
+- multimodal agent loop、すなわち perceive → reason → act → observe → repeat を設計する。
+- VLM が JSON として出力できる GUI grounding output schema (click coordinates、type text、scroll、drag) を作る。
+- screenshot-only agents、accessibility-tree agents、hybrid agents を比較する。
+- 小さな VisualWebArena slice で multimodal agent benchmark evaluation を組む。
 
-## The Problem
+## 問題
 
-A booking-site workflow: "find me a flight to Tokyo for April 15, aisle seat under $800, book it."
+booking-site workflow: 「4月15日の東京行き flight を、通路側 seat、$800 未満で探して予約して」。
 
-A multimodal agent needs to:
+multimodal agent が必要とする処理:
 
-1. Take a screenshot of the browser.
-2. Parse the screenshot + URL + goal into a plan.
-3. Emit a structured action: click (at x,y), type "Tokyo" (at element E), scroll down, select (radio button).
-4. Apply the action to the browser.
-5. Observe the new state (next screenshot).
-6. Repeat until the task is done.
+1. browser の screenshot を取る。
+2. screenshot + URL + goal を plan に parse する。
+3. structured action を出力する: click (x,y)、type "Tokyo" (element E)、scroll down、select (radio button)。
+4. action を browser に適用する。
+5. new state (next screenshot) を observe する。
+6. task が完了するまで繰り返す。
 
-Each step is a multimodal VLM call. The VLM output must be parseable JSON. Errors compound across steps, so recovery matters.
+各 step は multimodal VLM call である。VLM output は parse 可能な JSON でなければならない。error は step をまたいで累積するため、recovery が重要である。
 
-## The Concept
+## コンセプト
 
-### GUI grounding — the primitive
+### GUI grounding — primitive
 
-GUI grounding is: given a screenshot and a natural language instruction, output the (x, y) coordinate to click (or other action).
+GUI grounding とは、screenshot と自然言語 instruction が与えられたとき、click すべき (x, y) coordinate (または他の action) を出力することである。
 
-SeeClick (arXiv:2401.10935) was the first open result at scale: fine-tune a VLM on synthetic + real GUI data, output coordinates as plain text tokens. Works.
+SeeClick (arXiv:2401.10935) は scale した最初の open result だった。synthetic + real GUI data で VLM を fine-tune し、coordinates を plain text tokens として出力する。機能する。
 
-CogAgent (arXiv:2312.08914) added 1120x1120 high-resolution encoding for dense UIs. Score: ~84% on web navigation.
+CogAgent (arXiv:2312.08914) は dense UI 向けに 1120x1120 high-resolution encoding を追加した。web navigation で約84%を記録した。
 
-Ferret-UI (arXiv:2404.05719) focuses on mobile UIs, integrates with iOS accessibility data.
+Ferret-UI (arXiv:2404.05719) は mobile UI に集中し、iOS accessibility data と統合する。
 
-Output format is usually JSON:
+出力 format は通常 JSON である。
 
 ```json
 {"action": "click", "x": 384, "y": 220, "element_desc": "Search button"}
 ```
 
-The `element_desc` helps recovery: if coordinates drift between screenshots, the semantic hint lets the system re-ground.
+`element_desc` は recovery を助ける。screenshots 間で coordinates がずれても、semantic hint により system は re-ground できる。
 
 ### Action schemas
 
-A typical action schema has 6-10 action types:
+典型的な action schema は 6-10 種類の action type を持つ。
 
 - `click`: (x, y)
 - `type`: (text, x?, y?)
@@ -63,103 +63,103 @@ A typical action schema has 6-10 action types:
 - `wait`: (ms)
 - `done`: (success, explanation)
 
-The agent emits one action per step. The browser wrapper executes and returns the new state.
+agent は step ごとに1つの action を出力する。browser wrapper が実行し、新しい state を返す。
 
 ### Screenshot-only vs accessibility-tree
 
-Two input modes:
+入力 mode は2つある。
 
-- Screenshot-only: full image, no structural info. Most general; works on any app.
-- Accessibility tree: structured DOM / iOS accessibility info. Much more reliable for grounding; works where the tree is available.
-- Hybrid: both, with the tree as a reliable grounder for atomic actions and the screenshot for semantic context.
+- Screenshot-only: full image だけで structural info はない。最も general で、任意の app で動く。
+- Accessibility tree: structured DOM / iOS accessibility info。grounding の信頼性が大きく上がる。tree が利用できる環境で使える。
+- Hybrid: 両方を使う。tree は atomic action の reliable grounder として、screenshot は semantic context として使う。
 
-Production agents use hybrid when possible. Browser automation (Selenium + accessibility) always has the tree; desktop apps sometimes do.
+production agents は可能な限り hybrid を使う。Browser automation (Selenium + accessibility) では常に tree がある。desktop apps では場合による。
 
 ### Long-horizon memory
 
-A 20-step workflow generates 20 screenshots. The VLM's context fills up fast. Three compression strategies:
+20-step workflow は 20 screenshots を生成する。VLM context はすぐ埋まる。compression strategy は3つ。
 
-- Summary-chain: after every 5 steps, summarize what has happened, drop old screenshots.
-- Skip-frame: keep the first, last, and every 3rd screenshot.
-- Tool-recorded log: execute actions, keep a text log of what was done; don't re-look at old screenshots.
+- Summary-chain: 5 steps ごとに起きたことを summarize し、古い screenshots を落とす。
+- Skip-frame: 最初、最後、3枚ごとの screenshot を保持する。
+- Tool-recorded log: action を実行し、何をしたかの text log を保持する。古い screenshots を見返さない。
 
-Claude's computer-use API uses the log pattern. Simpler, more reliable.
+Claude の computer-use API は log pattern を使う。より単純で、より信頼できる。
 
 ### Visual tool use
 
-ChartAgent (arXiv:2510.04514) introduces visual tool use for chart understanding: crop, zoom, OCR, call external detection. The agent can output "crop to region (100, 200, 300, 400) then call OCR" as a tool call. The tool returns text; the VLM continues reasoning.
+ChartAgent (arXiv:2510.04514) は chart understanding 向けに visual tool use を導入した。crop、zoom、OCR、external detection を呼ぶ。agent は「region (100, 200, 300, 400) に crop して OCR を呼ぶ」のような tool call を出力できる。tool は text を返し、VLM は reasoning を続ける。
 
-This pattern generalizes: set-of-mark prompting, region annotation, and external detection tools all fit the same "output a tool call, receive a structured response" schema.
+この pattern は一般化できる。set-of-mark prompting、region annotation、external detection tools はすべて「tool call を出力し、structured response を受け取る」schema に収まる。
 
-### The 2026 benchmarks
+### 2026 benchmarks
 
-- ScreenSpot-Pro. GUI grounding on ~1k web screenshots. Open SOTA Qwen2.5-VL-72B ~85%. Frontier ~90%.
-- VisualWebArena. End-to-end web tasks (shop, forum, classifieds). Open SOTA ~20%. Gemini 3 Pro ~27%.
-- AgentVista (arXiv:2602.23166). The hardest 2026 benchmark. Realistic workflows across 12 domains. Frontier models score 27-40%; open models 10-20%.
-- WebArena / WebShop. Older benchmarks; saturated by frontier.
+- ScreenSpot-Pro。約1k web screenshots の GUI grounding。Open SOTA は Qwen2.5-VL-72B の約85%。frontier は約90%。
+- VisualWebArena。end-to-end web tasks (shop、forum、classifieds)。Open SOTA は約20%。Gemini 3 Pro は約27%。
+- AgentVista (arXiv:2602.23166)。2026年で最も難しい benchmark。12 domains の realistic workflows。frontier models は 27-40%、open models は 10-20%。
+- WebArena / WebShop。古い benchmark。frontier では saturate しつつある。
 
-### Why it's still hard
+### なぜまだ難しいのか
 
-Agent performance bottlenecks:
+agent performance の bottleneck:
 
-1. Visual grounding at fine scale. "Click the small X" fails often at mobile resolution.
-2. Long-horizon planning. After 10 actions, the agent drifts from the goal.
-3. Error recovery. When a click fails (wrong button), detecting + recovering is rarely trained data.
-4. Cross-page context. Jumping between tabs or long forms loses state.
+1. fine scale の visual grounding。「小さな X を click」が mobile resolution ではよく失敗する。
+2. long-horizon planning。10 actions を超えると agent は goal から drift しやすい。
+3. error recovery。click が失敗した (wrong button) ときに検出して回復する data はほとんど training されていない。
+4. cross-page context。tabs や長い forms をまたぐと state を失う。
 
-Research directions: memory architectures, explicit replanning, multimodal verification (screenshot match for action success).
+research directions: memory architectures、explicit replanning、multimodal verification (action success の screenshot match)。
 
-### The capstone build-it
+### Capstone build-it
 
-The capstone task: build a computer-use agent that:
+capstone task: 次の computer-use agent を作る。
 
-1. Reads the HTML + screenshot of a booking-site mock page.
-2. Plans a multi-step sequence: search → select → fill form → submit.
-3. Emits JSON actions matching the action schema.
-4. Evaluates on a fixed 10-task slice.
+1. booking-site mock page の HTML + screenshot を読む。
+2. multi-step sequence を plan する: search → select → fill form → submit。
+3. action schema に合う JSON actions を出力する。
+4. fixed 10-task slice で評価する。
 
-The lesson provides scaffold code that is easy to extend into a real browser.
+lesson は real browser へ拡張しやすい scaffold code を提供する。
 
-## Use It
+## 使ってみる
 
-`code/main.py` is the capstone scaffold:
+`code/main.py` は capstone scaffold である。
 
-- Action schema JSON definition (10 actions).
-- Mock browser state as dict.
-- Agent loop skeleton: receive state, emit action, apply, loop.
-- 10-task mini-benchmark (synthetic pages) to measure end-to-end success rate.
-- Error-recovery hook for when an action fails.
+- Action schema JSON definition (10 actions)。
+- dict としての mock browser state。
+- Agent loop skeleton: state を受け取り、action を出力し、適用し、loop する。
+- end-to-end success rate を測る 10-task mini-benchmark (synthetic pages)。
+- action が失敗したときの error-recovery hook。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-multimodal-agent-designer.md`. Given a computer-use product (domain, action set, evaluation target), designs the full agent loop, memory strategy, grounding mode, and expected benchmark score.
+この lesson は `outputs/skill-multimodal-agent-designer.md` を生成する。computer-use product (domain、action set、evaluation target) を受け取り、full agent loop、memory strategy、grounding mode、expected benchmark score を設計する。
 
-## Exercises
+## 演習
 
-1. Extend the action schema with a `screenshot_region` tool (crop + zoom). What tasks benefit?
+1. action schema に `screenshot_region` tool (crop + zoom) を追加せよ。どの task が恩恵を受けるか。
 
-2. Read AgentVista (arXiv:2602.23166). Describe the hardest task category and why frontier models still fail.
+2. AgentVista (arXiv:2602.23166) を読め。最も難しい task category と、frontier models がまだ失敗する理由を説明せよ。
 
-3. Long-horizon memory compression: design a summary-chain with ≤4 screenshots kept live, any number logged.
+3. Long-horizon memory compression: live に保持する screenshot を4枚以下にし、log は任意数保持する summary-chain を設計せよ。
 
-4. Build an error-recovery hook: on action failure (button not found), what does the agent do next?
+4. error-recovery hook を作れ。action failure (button not found) のとき、agent は次に何をするか。
 
-5. Compare screenshot-only Claude 4.7 to hybrid screenshot + accessibility-tree Qwen2.5-VL on 10 web tasks. Which wins on which tasks?
+5. screenshot-only Claude 4.7 と hybrid screenshot + accessibility-tree Qwen2.5-VL を10個の web tasks で比較せよ。どちらがどの task で勝つか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| GUI grounding | "Click coordinates" | Model outputs (x,y) for the target of an instruction on a screenshot |
-| Action schema | "Tool definitions" | JSON description of valid actions (click, type, scroll, drag) |
-| Accessibility tree | "Structured DOM" | Machine-readable UI hierarchy from browser/iOS APIs |
-| Hybrid agent | "Screenshot + tree" | Uses both image and structured info; more reliable than either alone |
-| Visual tool use | "Zoom/crop/detect" | Agent calls external vision tools (OCR, detection) mid-plan |
-| Summary-chain | "Memory compression" | Periodic text summaries replace long screenshot history |
-| VisualWebArena | "E2E web bench" | 2024 benchmark for end-to-end web tasks |
-| AgentVista | "2026 hard bench" | 12-domain realistic workflows; even Gemini 3 Pro scores ~30% |
+| Term | よく言われる表現 | 実際の意味 |
+|------|-----------------|------------|
+| GUI grounding | "Click coordinates" | screenshot 上で instruction の対象となる (x,y) を model が出力すること |
+| Action schema | "Tool definitions" | valid actions (click、type、scroll、drag) を定義する JSON |
+| Accessibility tree | "Structured DOM" | browser/iOS API から得られる machine-readable UI hierarchy |
+| Hybrid agent | "Screenshot + tree" | image と structured info の両方を使う agent。どちらか単独より信頼性が高い |
+| Visual tool use | "Zoom/crop/detect" | 計画途中で OCR や detection などの external vision tools を agent が呼ぶこと |
+| Summary-chain | "Memory compression" | 長い screenshot history を periodic text summary で置き換える方式 |
+| VisualWebArena | "E2E web bench" | end-to-end web tasks 向けの 2024 benchmark |
+| AgentVista | "2026 hard bench" | 12-domain realistic workflows。Gemini 3 Pro でも約30% |
 
-## Further Reading
+## 参考文献
 
 - [Cheng et al. — SeeClick (arXiv:2401.10935)](https://arxiv.org/abs/2401.10935)
 - [Hong et al. — CogAgent (arXiv:2312.08914)](https://arxiv.org/abs/2312.08914)

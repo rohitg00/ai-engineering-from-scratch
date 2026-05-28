@@ -1,42 +1,42 @@
-# Agent Workbench Engineering: Why Capable Models Still Fail
+# Agent Workbench Engineering: 高性能モデルがそれでも失敗する理由
 
-> A capable model is not enough. Reliable agents need a workbench: instructions, state, scope, feedback, verification, review, and handoff. Strip those away and even a frontier model produces work that is unsafe to ship.
+> 高性能なモデルだけでは足りません。信頼できるエージェントには workbench が必要です。instructions、state、scope、feedback、verification、review、handoff がそろって初めて、安全に出荷できる作業になります。これらを取り除くと、frontier model でさえ出荷できない危険な成果物を生みます。
 
-**Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 26 (Failure Modes)
-**Time:** ~45 minutes
+**種別:** 学習 + 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 01 (Agent Loop), Phase 14 · 26 (Failure Modes)
+**所要時間:** 約45分
 
 ## Learning Objectives
 
-- Separate model capability from execution reliability.
-- Name the seven workbench surfaces that decide whether an agent ships.
-- Compare a prompt-only run against a workbench-guided run on a small repo task.
-- Produce a failure-mode report that maps each missed surface to the symptom it caused.
+- モデル能力と実行の信頼性を分けて考える。
+- エージェントが出荷可能かどうかを決める 7 つの workbench surface を説明する。
+- 小さな repo task で、prompt-only の実行と workbench-guided の実行を比較する。
+- 欠けていた surface と、それが引き起こした症状を対応付けた failure-mode report を作る。
 
-## The Problem
+## 問題
 
-You drop a frontier model into a real repo and ask it to add input validation. It opens four files, writes plausible code, declares success, and stops. You run the tests. Two fail. A third file is touched that had nothing to do with validation. There is no record of what the agent assumed, what it tried first, or what is left to do.
+frontier model を実際の repo に入れて、入力 validation を追加するよう頼んだとします。モデルは 4 つのファイルを開き、もっともらしいコードを書き、成功を宣言して停止します。テストを実行すると 2 つ失敗します。3 つ目のファイルは validation と無関係なのに変更されています。エージェントが何を仮定し、最初に何を試し、何が残っているのかという記録はありません。
 
-The model was not wrong about Python. It was wrong about the work. It had no idea what counted as done, where it was allowed to write, what tests were authoritative, or how the next session was supposed to pick up.
+モデルが Python を間違えたわけではありません。作業を間違えたのです。何をもって完了とするのか、どこへ書いてよいのか、どのテストが authoritative なのか、次の session がどう引き継ぐべきなのかを知らなかったのです。
 
-This is not a model bug. It is a workbench bug. The surface around the agent is missing the parts that turn a one-shot generation into reliable, resumable engineering.
+これは model bug ではありません。workbench bug です。エージェントを取り巻く surface に、one-shot generation を信頼できる再開可能な engineering に変える部品が欠けています。
 
 ## The Concept
 
-A workbench is the operating environment that wraps the model during a task. It has seven surfaces:
+workbench は、タスク中にモデルを包む operating environment です。7 つの surface があります。
 
-| Surface | What it carries | Failure when missing |
-|---------|-----------------|----------------------|
-| Instructions | Startup rules, forbidden actions, definition of done | Agent guesses what shipping means |
-| State | Current task, touched files, blockers, next action | Each session restarts from zero |
-| Scope | Allowed files, forbidden files, acceptance criteria | Edits leak into unrelated code |
-| Feedback | Real command output captured into the loop | Agent declares success on a 400 |
-| Verification | Tests, lint, smoke run, scope check | "Looks good" reaches main |
-| Review | A second pass with a different role | Builder marks own homework |
-| Handoff | What changed, why, what is left | Next session re-discovers everything |
+| Surface | 運ぶもの | 欠けたときの失敗 |
+|---------|----------|------------------|
+| Instructions | 起動時のルール、禁止行為、definition of done | Agent が出荷の意味を推測する |
+| State | 現在のタスク、触ったファイル、blocker、次の action | 各 session がゼロから再開する |
+| Scope | 許可ファイル、禁止ファイル、acceptance criteria | 無関係な code に編集が漏れる |
+| Feedback | loop に取り込まれた実コマンド出力 | Agent が 400 を見ても成功を宣言する |
+| Verification | tests、lint、smoke run、scope check | "Looks good" が main に届く |
+| Review | 別ロールによる second pass | Builder が自分の宿題を採点する |
+| Handoff | 何を、なぜ変更し、何が残るか | 次の session がすべて再発見する |
 
-The workbench is independent of the model. You can swap the model and keep the surfaces. You cannot swap the surfaces and keep reliability.
+workbench はモデルから独立しています。モデルは差し替えられますが、surface は保てます。surface を差し替えて信頼性を保つことはできません。
 
 ```mermaid
 flowchart LR
@@ -50,178 +50,178 @@ flowchart LR
   Handoff --> State
 ```
 
-The loop closes on the state file, not on chat history. Chat is volatile. The repo is the system of record.
+loop は chat history ではなく state file で閉じます。chat は揮発的です。repo が system of record です。
 
 ### Workbench versus prompt engineering
 
-Prompting tells the model what you want this turn. A workbench tells the model how to do work across turns and across sessions. Most agent failure stories are workbench failures wearing prompt-engineering clothes.
+prompting は、この turn で何が欲しいかをモデルに伝えます。workbench は、turn と session をまたいでどう作業するかをモデルに伝えます。エージェント失敗談の多くは、prompt-engineering の服を着た workbench failure です。
 
 ### Workbench versus framework
 
-A framework gives you a runtime (LangGraph, AutoGen, Agents SDK). A workbench gives the agent a place to work inside that runtime. You need both. This mini-track is about the second one.
+framework は runtime を与えます (LangGraph、AutoGen、Agents SDK)。workbench は、その runtime の中でエージェントが作業する場所を与えます。両方が必要です。この mini-track は後者について扱います。
 
-### Reasoning from primitives, not from vendor taxonomies
+### ベンダー分類ではなく primitive から考える
 
-There is a lot of writing on "harness engineering" right now. Addy Osmani, OpenAI, Anthropic, LangChain, Martin Fowler, MongoDB, HumanLayer, Augment Code, Thoughtworks, the walkinglabs awesome list, and a steady drumbeat of Medium and Hacker News pieces are all carrying it. They disagree on the boundary of what a harness is, what is in scope, and which vocabulary to use. We do not need to pick a side. The seven surfaces are a UX layer; underneath every workbench is the same set of distributed-systems primitives that hold up any reliable backend.
+いま "harness engineering" について多くの文章があります。Addy Osmani、OpenAI、Anthropic、LangChain、Martin Fowler、MongoDB、HumanLayer、Augment Code、Thoughtworks、walkinglabs awesome list、そして Medium や Hacker News の記事が継続的に扱っています。harness の境界、scope、語彙については意見が割れています。どちらかを選ぶ必要はありません。7 つの surface は UX layer です。その下にある workbench はすべて、信頼できる backend を支える distributed-systems primitives の同じ集合でできています。
 
-Strip the agent label off for a moment. An agent run is computation that crosses time, processes, and machines. To make that reliable you need the same primitives any production system needs.
+少しだけ agent という label を外してください。agent run は、時間、process、machine をまたぐ computation です。信頼できるものにするには、production system と同じ primitive が必要です。
 
-| Primitive | What it is | What it carries for an agent |
-|-----------|------------|------------------------------|
-| Function | Typed handler. Pure where possible. Owns its inputs and outputs. | A tool call, a rule check, a verification step, a model invocation |
-| Worker | Long-lived process that owns one or more functions and a lifecycle | The builder, the reviewer, the verifier, an MCP server |
-| Trigger | Event source that invokes a function | Agent loop tick, HTTP request, queue message, cron, file change, hook |
-| Runtime | The boundary that decides what runs where, with what timeouts and resources | Claude Code's process, LangGraph's runtime, a worker container |
-| HTTP / RPC | The wire between caller and worker | Tool-call protocol, MCP request, model API |
-| Queue | Durable buffer between trigger and worker; back-pressure, retry, idempotency | The task board, the feedback log, the review inbox |
-| Session persistence | State that survives crashes, restarts, model swaps | `agent_state.json`, checkpoints, KV stores, the repo itself |
-| Authorization policy | Who can call what function with which scope | Allowed/forbidden files, approval boundaries, MCP capability lists |
+| Primitive | 何か | agent では何を運ぶか |
+|-----------|------|----------------------|
+| Function | 型付き handler。可能なら pure。input と output を所有する。 | tool call、rule check、verification step、model invocation |
+| Worker | 1 つ以上の function と lifecycle を所有する long-lived process | builder、reviewer、verifier、MCP server |
+| Trigger | function を起動する event source | agent loop tick、HTTP request、queue message、cron、file change、hook |
+| Runtime | 何をどこで、どの timeout と resource で実行するかを決める boundary | Claude Code の process、LangGraph runtime、worker container |
+| HTTP / RPC | caller と worker の wire | tool-call protocol、MCP request、model API |
+| Queue | trigger と worker の間の durable buffer。back-pressure、retry、idempotency | task board、feedback log、review inbox |
+| Session persistence | crash、restart、model swap を越えて残る state | `agent_state.json`、checkpoints、KV stores、repo 自体 |
+| Authorization policy | 誰が、どの scope で、どの function を呼べるか | allowed/forbidden files、approval boundaries、MCP capability lists |
 
-Now map the seven workbench surfaces onto those primitives.
+7 つの workbench surface をこれらの primitive に対応付けると次のようになります。
 
-- **Instructions** — policy + function metadata. Rules are checks (functions). The router (`AGENTS.md`) is policy attached to the runtime's startup.
-- **State** — session persistence. A keyed store the runtime reads at every step. File, KV, or DB; the persistence semantics matter, the storage backend does not.
-- **Scope** — authorization policy per task. Allowed/forbidden globs are an ACL. Approvals required are a permission lattice.
-- **Feedback** — invocation log written into a queue. Every shell call is a record, durable, replayable.
-- **Verification** — a function. Deterministic over inputs. Triggered on task close. Fails closed.
-- **Review** — a separate worker with read-only authz on builder artifacts and write-only authz on review reports.
-- **Handoff** — a durable record emitted by a session-end trigger. The next session's startup trigger reads it.
+- **Instructions** — policy + function metadata。rules は check (functions) です。router (`AGENTS.md`) は runtime startup に付与される policy です。
+- **State** — session persistence。runtime が各 step で読む keyed store です。file、KV、DB のどれでもよく、重要なのは storage backend ではなく persistence semantics です。
+- **Scope** — task ごとの authorization policy。allowed/forbidden globs は ACL です。approval required は permission lattice です。
+- **Feedback** — queue に書かれた invocation log。すべての shell call が durable で replayable な record です。
+- **Verification** — function。input に対して deterministic。task close で trigger され、fail closed します。
+- **Review** — builder artifacts に対する read-only authz と review reports に対する write-only authz を持つ別 worker。
+- **Handoff** — session-end trigger が emitted する durable record。次 session の startup trigger がそれを読みます。
 
-The agent loop itself is a worker that consumes events (user message, tool result, timer tick), calls functions (the model, then the tools the model picks), writes records (state, feedback), and emits triggers (verify, review, handoff). No mystery; the same shape as a job processor.
+agent loop そのものは、event (user message、tool result、timer tick) を消費し、function (model と、model が選んだ tools) を呼び、record (state、feedback) を書き、trigger (verify、review、handoff) を emitted する worker です。神秘はありません。job processor と同じ形です。
 
-### Patterns in circulation, translated to primitives
+### 流通している pattern を primitive に翻訳する
 
-Every popular harness pattern reduces to the eight primitives. Translation table.
+よくある harness pattern は、どれも 8 つの primitive に還元できます。翻訳表です。
 
-| Vendor or community pattern | What it actually is |
-|------------------------------|--------------------|
-| Ralph Loop (Claude Code, Codex, agentic_harness book) — re-inject original intent into a fresh context window when the agent tries to stop early | A trigger that re-enqueues a task with a clean context; session persistence carries the goal forward |
-| Plan / Execute / Verify (PEV) | Three workers, one per role, communicating via state and a queue between phases |
-| Harness-compute separation (OpenAI Agents SDK, April 2026) — split control plane from execution plane | Restating control-plane / data-plane. Predates the agent label by decades |
-| Open Agent Passport (OAP, March 2026) — sign and audit every tool call against a declarative policy before execution | An authorization policy enforced by a pre-action worker, with a signed audit queue |
-| Guides and Sensors (Birgitta Böckeler / Thoughtworks) — feedforward rules + feedback observability | Authorization policy + verification functions + observability traces |
-| Progressive compaction, 5-stage (Claude Code reverse engineering, April 2026) | A state-management worker that runs cron-like over session persistence to keep it within a budget |
-| Hooks / middleware (LangChain, Claude Code) — intercept model and tool calls | Triggers + functions wrapped around the runtime's invocation path |
-| Skills as Markdown with progressive disclosure (Anthropic, Flue) | A function registry where the function metadata is loaded into context just-in-time |
-| Sandbox agents (Codex, Sandcastle, Vercel Sandbox) | The compute plane: a runtime with isolated filesystem, network, and lifecycle |
-| MCP servers | Workers exposing functions over a stable RPC, with capability lists as authorization |
+| Vendor or community pattern | 実体 |
+|------------------------------|------|
+| Ralph Loop (Claude Code, Codex, agentic_harness book) — agent が早く止まろうとしたとき、fresh context window に original intent を再注入する | clean context で task を再 enqueue する trigger。goal は session persistence が運ぶ |
+| Plan / Execute / Verify (PEV) | role ごとの 3 worker。phase 間は state と queue で通信する |
+| Harness-compute separation (OpenAI Agents SDK, April 2026) — control plane と execution plane を分離 | control-plane / data-plane の言い換え。agent label より何十年も前からある |
+| Open Agent Passport (OAP, March 2026) — execution 前に declarative policy に照らして全 tool call を署名・監査 | pre-action worker が強制する authorization policy と signed audit queue |
+| Guides and Sensors (Birgitta Böckeler / Thoughtworks) — feedforward rules + feedback observability | authorization policy + verification functions + observability traces |
+| Progressive compaction, 5-stage (Claude Code reverse engineering, April 2026) | session persistence を budget 内に保つため cron 的に動く state-management worker |
+| Hooks / middleware (LangChain, Claude Code) — model call と tool call を intercept | runtime invocation path を包む triggers + functions |
+| Skills as Markdown with progressive disclosure (Anthropic, Flue) | function metadata を just-in-time に context へ load する function registry |
+| Sandbox agents (Codex, Sandcastle, Vercel Sandbox) | compute plane: isolated filesystem、network、lifecycle を持つ runtime |
+| MCP servers | stable RPC 越しに functions を公開する workers。capability lists は authorization |
 
-Every entry in that table is the agent community arriving at a primitive that already had a name in distributed systems and giving it a new one. Useful labels for marketing; not useful as engineering vocabulary.
+この表の各行は、agent community が distributed systems で既に名前を持っていた primitive に到達し、新しい名前を付けているだけです。marketing label としては有用ですが、engineering vocabulary としては有用ではありません。
 
-### What the receipts actually say
+### 数字が示していること
 
-The harness-over-model claim has numbers behind it now. Worth knowing, because they are also the only honest argument against "just wait for a smarter model."
+harness-over-model という主張には、いまでは数字があります。"より賢いモデルを待てばよい" への唯一の正直な反論でもあるため、知っておく価値があります。
 
-- Terminal Bench 2.0 — same model, harness change moved a coding agent from outside the top 30 to rank five (LangChain, *Anatomy of an Agent Harness*).
-- Vercel — deleted 80% of its agent's tools; success rate jumped from 80% to 100% (MongoDB).
-- Harvey — legal agents more than doubled accuracy through harness optimization alone (MongoDB).
-- 88% of enterprise AI agent projects fail to reach production. The failures cluster around runtime, not reasoning (preprints.org, *Harness Engineering for Language Agents*, March 2026).
-- A 2025 benchmark study across three popular open-source frameworks reported ~50% task completion; long-context WebAgent collapsed from 40-50% to under 10% in long-context conditions, mostly from infinite loops and goal loss (covered widely in early 2026 writeups).
+- Terminal Bench 2.0 — 同じ model で harness を変えただけで coding agent が top 30 圏外から 5 位へ上がった (LangChain, *Anatomy of an Agent Harness*)。
+- Vercel — agent の tools の 80% を削除し、success rate が 80% から 100% へ上がった (MongoDB)。
+- Harvey — legal agents は harness optimization だけで accuracy が 2 倍以上になった (MongoDB)。
+- enterprise AI agent projects の 88% は production に到達しない。失敗は reasoning ではなく runtime 周辺に集中している (preprints.org, *Harness Engineering for Language Agents*, March 2026)。
+- 2025 年の benchmark study では、人気の open-source frameworks 3 つの task completion は約 50%。long-context WebAgent は long-context 条件で 40-50% から 10% 未満に崩れ、主因は infinite loop と goal loss だった (2026 年初頭の writeups で広く扱われた)。
 
-The takeaway is not "harness wins forever." Models do absorb harness tricks over time. The takeaway is that today, the load-bearing engineering is around the model, not inside it, and the primitives that carry that load are the ones every production system has always needed.
+結論は "harness が永遠に勝つ" ではありません。モデルは時間とともに harness trick を吸収します。結論は、今日の load-bearing engineering はモデルの中ではなくモデルの周囲にあり、その負荷を支える primitive は production system が昔から必要としてきたものだということです。
 
-### Where vendor writeups stop short
+### ベンダー記事が踏み込まないところ
 
-This is the part you do not need to be polite about.
+ここは遠慮する必要のない部分です。
 
-- LangChain's *Anatomy of an Agent Harness* enumerates eleven components — prompts, tools, hooks, sandboxes, orchestration, memory, skills, subagents, and a runtime "dumb loop." It does not name queues, workers as a deployment unit, trigger semantics, session persistence as a separate concern, or authorization policy. It treats the harness as an object you configure, not as a system you deploy.
-- Addy Osmani's *Agent Harness Engineering* lands the framing `Agent = Model + Harness` and the ratchet pattern, but stops short of saying what a harness is built out of. It reads as a stance, not a spec.
-- Anthropic and OpenAI go deepest on the surfaces but stay inside their own runtimes. The "harness-compute separation" announcement in the April 2026 Agents SDK is the first vendor piece that explicitly endorses the control-plane / data-plane split. That is a primitive idea, not a new one.
-- The agentic_harness book treats harness as a config object (Jaymin West's *Agentic Engineering*, chapter 6) and the strongest line in it is "the harness is the primary security boundary in an agentic system." That is just authorization policy, restated.
-- Hacker News threads keep arriving at the same place. The April 2026 thread *The agent harness belongs outside the sandbox* argues the harness should sit "more like a hypervisor that sits outside everything and authorises access based on context and user." That is, again, authorization policy as a separate plane.
+- LangChain の *Anatomy of an Agent Harness* は prompts、tools、hooks、sandboxes、orchestration、memory、skills、subagents、runtime の "dumb loop" など 11 components を列挙します。しかし queue、deployment unit としての worker、trigger semantics、独立 concern としての session persistence、authorization policy を名指ししていません。harness を deploy する system ではなく、configure する object として扱っています。
+- Addy Osmani の *Agent Harness Engineering* は `Agent = Model + Harness` と ratchet pattern という framing を置きますが、harness が何から作られるのかまでは言いません。spec ではなく stance として読めます。
+- Anthropic と OpenAI は surface について最も深く書いていますが、自社 runtime の内側に留まります。April 2026 Agents SDK の "harness-compute separation" announcement は、control-plane / data-plane split を明示的に endorse した最初の vendor piece です。それは primitive idea であり、新しいものではありません。
+- agentic_harness book は harness を config object として扱います (Jaymin West の *Agentic Engineering*, chapter 6)。そこでもっとも強い一文は "the harness is the primary security boundary in an agentic system" です。これは authorization policy を言い換えただけです。
+- Hacker News threads も同じ場所に到達しています。April 2026 の *The agent harness belongs outside the sandbox* thread は、harness は "more like a hypervisor that sits outside everything and authorises access based on context and user" であるべきだと論じます。これも authorization policy as a separate plane です。
 
-You do not need to disagree with any of these pieces to notice the gap. They are writing UX descriptions of a system that already exists. We are writing the system. When the system is built right, the seven surfaces fall out of the primitives. When it is built wrong, no amount of `AGENTS.md` polish fixes the missing queue.
+これらの記事に反対する必要はありません。ただ gap に気づけば十分です。彼らは既に存在する system の UX description を書いています。私たちは system を書いています。system が正しく作られていれば、7 つの surface は primitive から自然に現れます。system が間違っていれば、どれだけ `AGENTS.md` を磨いても、欠けた queue は直りません。
 
-So when you hear "harness engineering" elsewhere, translate to primitives. Prompts and rules are policy and functions. Scaffolding is the runtime. Guardrails are authorization + verification. Hooks are triggers. Memory is session persistence. The Ralph Loop is requeue. Subagents are workers. Sandboxes are compute planes. The vocabulary changes; the engineering does not. The workbench is the agent-facing UX; the harness, in the sense that survives the next vendor reframe, is functions, workers, triggers, runtimes, queues, persistence, and policy wired together correctly.
+したがって他所で "harness engineering" を聞いたら primitive に翻訳してください。prompts と rules は policy と functions。scaffolding は runtime。guardrails は authorization + verification。hooks は triggers。memory は session persistence。Ralph Loop は requeue。subagents は workers。sandboxes は compute planes。語彙は変わりますが、engineering は変わりません。workbench は agent-facing UX です。次の vendor reframe を越えて残る意味での harness は、functions、workers、triggers、runtimes、queues、persistence、policy が正しく結線されたものです。
 
-## Build It
+## 実装
 
-`code/main.py` runs a tiny repo task twice. First as prompt only, then with the seven surfaces wired in. Same model, same task. The script counts which surfaces were missing on the failed run and prints a failure-mode report.
+`code/main.py` は小さな repo task を 2 回実行します。1 回目は prompt only、2 回目は 7 つの surface を結線した workbench ありです。同じ model、同じ task です。script は失敗 run で欠けていた surface を数え、failure-mode report を出力します。
 
-The repo task is small on purpose: add input validation to a one-file FastAPI-style handler and write a passing test.
+repo task は意図的に小さくしています。one-file の FastAPI 風 handler に input validation を追加し、passing test を書く task です。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-Output: a side-by-side log of the two runs, a `failure_modes.json` summarizing the prompt-only run, and a one-line verdict for the workbench run.
+出力: 2 つの run の side-by-side log、prompt-only run を要約した `failure_modes.json`、workbench run の one-line verdict。
 
-The agent is a tiny rule-based stub; the point is the surfaces, not the model. Across the rest of this mini-track you will rebuild each surface as a real, reusable artifact.
+agent は小さな rule-based stub です。ポイントは model ではなく surface です。この mini-track の残りで、各 surface を本物の再利用可能な artifact として作り直します。
 
 ## Use It
 
-Three places workbench surfaces already exist in the wild, even if no one calls them that:
+workbench surface は、そう呼ばれていなくても既に現場にあります。
 
-- **Claude Code, Codex, Cursor.** `AGENTS.md` and `CLAUDE.md` are the instructions surface. Slash commands are scope. Hooks are verification.
-- **LangGraph, OpenAI Agents SDK.** Checkpoints and session stores are the state surface. Handoffs are the handoff surface.
-- **CI on a real repo.** Tests, lint, and type-check are verification. The PR template is handoff. CODEOWNERS is review.
+- **Claude Code, Codex, Cursor.** `AGENTS.md` と `CLAUDE.md` は instructions surface です。slash commands は scope。hooks は verification です。
+- **LangGraph, OpenAI Agents SDK.** checkpoints と session stores は state surface です。handoffs は handoff surface です。
+- **実 repo の CI.** tests、lint、type-check は verification。PR template は handoff。CODEOWNERS は review です。
 
-Workbench engineering is the discipline of making those surfaces explicit and reusable, instead of leaving each team to rediscover them.
+Workbench engineering とは、各 team がそれらを再発見するのではなく、surface を explicit で reusable にする discipline です。
 
 ## Ship It
 
-`outputs/skill-workbench-audit.md` is a portable skill that audits an existing repo for the seven workbench surfaces and reports which are missing, which are partial, and which are healthy. Drop it next to any agent setup; it tells you what to fix first.
+`outputs/skill-workbench-audit.md` は、既存 repo に 7 つの workbench surface があるかを監査し、missing、partial、healthy を報告する portable skill です。どんな agent setup の横にも置けます。何を先に直すべきかを教えてくれます。
 
 ## Exercises
 
-1. Pick a repo where you already run an agent. Score the seven surfaces from 0 (missing) to 2 (healthy). What is your weakest surface?
-2. Extend `main.py` so the prompt-only run also produces a fake "success" claim. Verify the verification gate would have caught it.
-3. Add an eighth surface for your own product. Justify why it does not collapse into one of the existing seven.
-4. Re-run the script with a different stub agent that hallucinates an extra file write. Which surface catches it first?
-5. Map the five industry-recurring failure modes from Phase 14 · 26 onto the seven surfaces. Which mode is each surface designed to absorb?
+1. 既に agent を走らせている repo を 1 つ選び、7 つの surface を 0 (missing) から 2 (healthy) で採点してください。最も弱い surface は何ですか。
+2. `main.py` を拡張し、prompt-only run も fake な "success" claim を出すようにしてください。verification gate がそれを検出できることを確認してください。
+3. 自分の product 用に 8 番目の surface を追加してください。既存 7 つのどれにも畳み込めない理由を説明してください。
+4. 余計な file write を hallucinate する別の stub agent で script を再実行してください。どの surface が最初に検出しますか。
+5. Phase 14 · 26 の industry-recurring failure modes 5 つを 7 つの surface に対応付けてください。各 surface はどの mode を吸収するためのものですか。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Workbench | "The setup" | Engineered surfaces around the model that make work reliable |
-| Surface | "A doc" or "a script" | A named, machine-readable input the agent reads or writes every turn |
-| System of record | "The notes" | The file the agent treats as truth when chat history is gone |
-| Definition of done | "Acceptance" | An objective, file-backed checklist the agent cannot fake |
-| Workbench audit | "Repo readiness check" | A pass over the seven surfaces that flags missing pieces before work begins |
+| Term | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Workbench | "The setup" | work を reliable にする、model 周辺の engineered surfaces |
+| Surface | "A doc" or "a script" | agent が各 turn で読み書きする named, machine-readable input |
+| System of record | "The notes" | chat history が消えたとき agent が真実として扱う file |
+| Definition of done | "Acceptance" | agent がごまかせない objective, file-backed checklist |
+| Workbench audit | "Repo readiness check" | 作業前に 7 つの surface を巡回し、欠けた部品を示す pass |
 
-## Further Reading
+## 参考文献
 
-Read these as data points, not as authorities. Each one is a partial taxonomy. Translate every concept back to a primitive (function, worker, trigger, runtime, HTTP/RPC, queue, persistence, policy) before deciding whether to adopt it.
+権威としてではなく data point として読んでください。どれも partial taxonomy です。採用する前に、すべての概念を primitive (function, worker, trigger, runtime, HTTP/RPC, queue, persistence, policy) に戻して考えます。
 
 Vendor framings:
 
-- [Addy Osmani, Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/) — `Agent = Model + Harness` and the ratchet pattern; thin on infrastructure
-- [LangChain, The Anatomy of an Agent Harness](https://blog.langchain.com/the-anatomy-of-an-agent-harness/) — eleven components: prompts, tools, hooks, orchestration, sandboxes, memory, skills, subagents, runtime; omits queues, deployment, authz
-- [OpenAI, Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) — Codex team's view of the surfaces around their runtime
-- [OpenAI, Unrolling the Codex agent loop](https://openai.com/index/unrolling-the-codex-agent-loop/) — the agent loop reduced to a `while` over function calls
-- [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — long-horizon surfaces inside a specific runtime
+- [Addy Osmani, Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/) — `Agent = Model + Harness` と ratchet pattern。infrastructure は薄い
+- [LangChain, The Anatomy of an Agent Harness](https://blog.langchain.com/the-anatomy-of-an-agent-harness/) — 11 components: prompts, tools, hooks, orchestration, sandboxes, memory, skills, subagents, runtime。queues、deployment、authz は省かれている
+- [OpenAI, Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) — Codex team から見た runtime 周辺 surface
+- [OpenAI, Unrolling the Codex agent loop](https://openai.com/index/unrolling-the-codex-agent-loop/) — function calls 上の `while` に還元された agent loop
+- [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — 特定 runtime 内の long-horizon surfaces
 - [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) — applied design notes
 - [LangChain Deep Agents harness capabilities](https://docs.langchain.com/oss/python/deepagents/harness) — runtime config surface
 
 Practitioner pieces with usable detail:
 
-- [Martin Fowler / Birgitta Böckeler, Harness engineering for coding agent users](https://martinfowler.com/articles/harness-engineering.html) — guides (feedforward) + sensors (feedback); the cleanest control-theory framing
+- [Martin Fowler / Birgitta Böckeler, Harness engineering for coding agent users](https://martinfowler.com/articles/harness-engineering.html) — guides (feedforward) + sensors (feedback)。最も明快な control-theory framing
 - [HumanLayer, Skill Issue: Harness Engineering for Coding Agents](https://www.humanlayer.dev/blog/skill-issue-harness-engineering-for-coding-agents) — "it's not a model problem, it's a configuration problem"
-- [MongoDB, The Agent Harness: Why the LLM Is the Smallest Part of Your Agent System](https://www.mongodb.com/company/blog/technical/agent-harness-why-llm-is-smallest-part-of-your-agent-system) — receipts: Vercel 80% to 100%, Harvey 2x accuracy, Terminal Bench Top 30 to Top 5
+- [MongoDB, The Agent Harness: Why the LLM Is the Smallest Part of Your Agent System](https://www.mongodb.com/company/blog/technical/agent-harness-why-llm-is-smallest-part-of-your-agent-system) — receipts: Vercel 80% to 100%、Harvey 2x accuracy、Terminal Bench Top 30 to Top 5
 - [Augment Code, Harness Engineering for AI Coding Agents](https://www.augmentcode.com/guides/harness-engineering-ai-coding-agents) — constraint-first walkthrough
-- [Sequoia podcast, Harrison Chase on Context Engineering Long-Horizon Agents](https://sequoiacap.com/podcast/context-engineering-our-way-to-long-horizon-agents-langchains-harrison-chase/) — runtime concerns over model concerns
+- [Sequoia podcast, Harrison Chase on Context Engineering Long-Horizon Agents](https://sequoiacap.com/podcast/context-engineering-our-way-to-long-horizon-agents-langchains-harrison-chase/) — model concern より runtime concern
 
 Books, papers, and reference implementations:
 
-- [Jaymin West, Agentic Engineering — Chapter 6: Harnesses](https://www.jayminwest.com/agentic-engineering-book/6-harnesses) — book-length treatment, treats harness as the primary security boundary
-- [preprints.org, Harness Engineering for Language Agents (March 2026)](https://www.preprints.org/manuscript/202603.1756) — academic framing as control / agency / runtime
-- [walkinglabs/awesome-harness-engineering](https://github.com/walkinglabs/awesome-harness-engineering) — curated reading list across context, evaluation, observability, orchestration
+- [Jaymin West, Agentic Engineering — Chapter 6: Harnesses](https://www.jayminwest.com/agentic-engineering-book/6-harnesses) — book-length treatment。harness を primary security boundary として扱う
+- [preprints.org, Harness Engineering for Language Agents (March 2026)](https://www.preprints.org/manuscript/202603.1756) — control / agency / runtime としての academic framing
+- [walkinglabs/awesome-harness-engineering](https://github.com/walkinglabs/awesome-harness-engineering) — context、evaluation、observability、orchestration を横断する curated reading list
 - [ai-boost/awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering) — alternate curated list (tools, evals, memory, MCP, permissions)
-- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) — production-ready reference implementation with Redis-backed memory and eval suite
-- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — open agent harness with built-in personal agent
+- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) — Redis-backed memory と eval suite を備えた production-ready reference implementation
+- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — built-in personal agent を持つ open agent harness
 
 Hacker News threads worth reading for the disagreements, not the consensus:
 
 - [HN: Effective harnesses for long-running agents](https://news.ycombinator.com/item?id=46081704)
 - [HN: Improving 15 LLMs at Coding in One Afternoon. Only the Harness Changed](https://news.ycombinator.com/item?id=46988596)
-- [HN: The agent harness belongs outside the sandbox](https://news.ycombinator.com/item?id=47990675) — argues for authorization as a separate plane
+- [HN: The agent harness belongs outside the sandbox](https://news.ycombinator.com/item?id=47990675) — authorization を separate plane として論じる
 
 Cross-references inside this curriculum:
 
-- Phase 14 · 23 — OpenTelemetry GenAI conventions: the observability layer the sensors literature points at
-- Phase 14 · 26 — Failure modes catalog the seven surfaces are designed to absorb
-- Phase 14 · 27 — Prompt injection defenses that sit at the authorization-policy primitive
-- Phase 14 · 29 — Production runtimes (queue, event, cron): where the primitives in this lesson live in deployment
+- Phase 14 · 23 — OpenTelemetry GenAI conventions: sensors literature が指す observability layer
+- Phase 14 · 26 — 7 つの surface が吸収するために設計された failure modes catalog
+- Phase 14 · 27 — authorization-policy primitive に置かれる prompt injection defenses
+- Phase 14 · 29 — Production runtimes (queue, event, cron): この lesson の primitive が deployment で生きる場所

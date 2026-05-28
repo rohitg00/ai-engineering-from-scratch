@@ -23,7 +23,7 @@ function headersFor(body: string, opts: SignedOpts = {}): Record<string, string>
 }
 
 describe("server", () => {
-  it("GET /health returns ok", async () => {
+  it("GET /health は ok を返す", async () => {
     const { app } = buildApp({ signingSecret: SECRET });
     const res = await app.request("/health");
     assert.equal(res.status, 200);
@@ -31,7 +31,7 @@ describe("server", () => {
     assert.equal(body.ok, true);
   });
 
-  it("POST /slack/command with valid signature returns 200 + logs outbound", async () => {
+  it("POST /slack/command は valid signature で 200 を返し outbound を log する", async () => {
     const { app, outboundLog } = buildApp({ signingSecret: SECRET });
     const body = new URLSearchParams({
       command: "/oncall",
@@ -49,7 +49,7 @@ describe("server", () => {
     assert.equal(outboundLog.length, 1);
   });
 
-  it("POST /slack/command with tampered signature returns 401", async () => {
+  it("POST /slack/command は tampered signature で 401 を返す", async () => {
     const { app } = buildApp({ signingSecret: SECRET });
     const body = "text=hi";
     const res = await app.request("/slack/command", {
@@ -60,7 +60,7 @@ describe("server", () => {
     assert.equal(res.status, 401);
   });
 
-  it("POST /slack/command with stale timestamp returns 401", async () => {
+  it("POST /slack/command は stale timestamp で 401 を返す", async () => {
     const { app } = buildApp({ signingSecret: SECRET });
     const body = "text=hi";
     const res = await app.request("/slack/command", {
@@ -71,7 +71,7 @@ describe("server", () => {
     assert.equal(res.status, 401);
   });
 
-  it("POST /slack/interactivity approve produces an approval reply", async () => {
+  it("POST /slack/interactivity approve は approval reply を生成する", async () => {
     const { app, outboundLog } = buildApp({ signingSecret: SECRET });
     const body = new URLSearchParams({
       payload: JSON.stringify({
@@ -86,7 +86,7 @@ describe("server", () => {
     });
     assert.equal(res.status, 200);
     const json = (await res.json()) as { text?: string };
-    assert.match(json.text ?? "", /Approved remediation for inc-42/);
+    assert.match(json.text ?? "", /inc-42 の remediation を approve/);
     assert.equal(outboundLog.length, 1);
   });
 });

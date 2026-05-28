@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="473 lessons. 20 phases. Build the math, the model, the trainer, the tokenizer, and the agent loop. Once, by hand.">
+  <meta name="description" content="473レッスン、20フェーズ。数学、モデル、トレーナー、トークナイザー、エージェントループを一度は手で作るAIエンジニアリング教材。">
   <meta property="og:title" content="AI Engineering from Scratch">
-  <meta property="og:description" content="473 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand before any framework gets imported. Python, TypeScript, Rust, Julia.">
+  <meta property="og:description" content="473レッスン、20フェーズ。フレームワークを使う前に、バックプロパゲーション、トークナイザー、Attention、エージェントループを手で実装します。Python、TypeScript、Rust、Julia対応。">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <meta property="og:url" content="https://aiengineeringfromscratch.com">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Engineering from Scratch">
-  <meta name="twitter:description" content="473 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta name="twitter:description" content="473レッスン、20フェーズ。バックプロパゲーション、トークナイザー、Attention、エージェントループを手で実装します。">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -580,7 +580,7 @@
     }
 
 
-    /* Figure card (makingsoftware aesthetic) */
+    /* 図版カード（makingsoftware風） */
     .figure-card {
       border: 1px solid var(--rule-soft);
       background: var(--bg);
@@ -619,7 +619,7 @@
 </head>
 <body>
 
-  <a href="#main" class="skip-link">Skip to content</a>
+  <a href="#main" class="skip-link">本文へスキップ</a>
 
   <header class="site-header">
     <div class="header-inner">
@@ -627,17 +627,17 @@
         <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="#contents">Contents</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="prereqs.html">Roadmap</a>
-        <a href="glossary.html">Glossary</a>
+        <a href="#contents">目次</a>
+        <a href="catalog.html">カタログ</a>
+        <a href="prereqs.html">ロードマップ</a>
+        <a href="glossary.html">用語集</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+          <span class="star-count" data-loading="true" aria-label="GitHubスター数">…</span>
         </a>
       </nav>
       <button class="search-toggle" type="button" data-cmd-palette
-        aria-label="Search (⌘K)" title="Search (⌘K)">
+        aria-label="検索 (⌘K)" title="検索 (⌘K)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2.5"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -645,8 +645,8 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
-        <span class="theme-icon" id="themeIcon">N</span>
+      <button class="theme-toggle" id="themeToggle" aria-label="テーマを切り替え" type="button">
+        <span class="theme-icon" id="themeIcon">夜</span>
       </button>
     </div>
   </header>
@@ -655,21 +655,21 @@
 
     <section class="manual-masthead container">
       <div class="manual-meta-row">
-        <span>FIG_000 &middot; curriculum v1.0 · 2026</span>
-        <span class="right">open source · MIT</span>
+        <span>FIG_000 &middot; カリキュラム v1.0 · 2026</span>
+        <span class="right">オープンソース · MIT</span>
       </div>
       <h1 class="manual-title">AI Engineering<br>from Scratch</h1>
-      <p class="manual-tagline reveal">473 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported.</p>
-      <p class="manual-attribution reveal" style="--stagger-delay: 80ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
+      <p class="manual-tagline reveal">473レッスン、20フェーズ。フレームワークを使う前に、すべてのアルゴリズムを生の数学から組み立てます。</p>
+      <p class="manual-attribution reveal" style="--stagger-delay: 80ms;">Rohit Ghumare とコントリビューターがメンテナンス。自分のマシンで実行できます。</p>
       <div class="masthead-cta reveal" style="--stagger-delay: 140ms;">
-        <a class="masthead-btn masthead-btn--primary" href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" aria-label="Star ai-engineering-from-scratch on GitHub">
+        <a class="masthead-btn masthead-btn--primary" href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" aria-label="GitHubで ai-engineering-from-scratch にスターを付ける">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
-          <span>Star on GitHub</span>
+          <span>GitHubでスター</span>
           <span class="masthead-btn-count" data-gh-stars="rohitg00/ai-engineering-from-scratch" data-loading="true">…</span>
         </a>
-        <a class="masthead-btn" href="https://github.com/rohitg00" target="_blank" rel="noopener" aria-label="Follow Rohit Ghumare on GitHub">
+        <a class="masthead-btn" href="https://github.com/rohitg00" target="_blank" rel="noopener" aria-label="GitHubで Rohit Ghumare をフォロー">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          <span>Follow @rohitg00</span>
+          <span>@rohitg00 をフォロー</span>
         </a>
       </div>
       <div class="ascii-rule" style="margin-top:48px;"></div>
@@ -677,50 +677,50 @@
 
     <section class="preface container">
       <div class="preface-grid">
-        <div class="preface-eyebrow reveal reveal--left">How this works</div>
+        <div class="preface-eyebrow reveal reveal--left">この教材の進め方</div>
         <div class="preface-body reveal" style="--stagger-delay: 120ms;">
-          <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.</p>
-          <p>This curriculum is the spine. 20 phases, 473 lessons, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
-          <p>Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.</p>
+          <p>多くのAI教材は断片的です。論文があり、別の場所にファインチューニングの記事があり、さらに別の場所に派手なエージェントデモがある。部品同士はなかなかつながりません。チャットボットは出荷できても損失曲線を説明できない。エージェントに関数をつないでも、その関数を呼ぶモデルの中でAttentionが何をしているかは説明できない。</p>
+          <p>このカリキュラムは、その背骨になる教材です。20フェーズ、473レッスン、対応言語は Python、TypeScript、Rust、Julia。片端には線形代数、もう片端には自律システム。各アルゴリズムはまず生の数学から組み立てます。Backprop、Tokenizer、Attention、Agent loop。PyTorchが登場する頃には、その裏側で何が起きているかをすでに理解しています。</p>
+          <p>各レッスンは同じ流れで進みます。問題を読み、数学を導き、コードを書き、テストを走らせ、成果物を残す。5分動画も、コピペだけのデプロイも、過剰な手取り足取りもありません。無料で、オープンソースで、自分のノートPC上で動くように作られています。</p>
         </div>
       </div>
     </section>
 
 
     <section class="stat-block container">
-      <div class="stat-block-title reveal reveal--left">Current Progress</div>
+      <div class="stat-block-title reveal reveal--left">現在の進捗</div>
       <div class="stat-rows reveal" style="--stagger-delay: 100ms;" id="statRows">
         <div class="stat-row">
-          <span class="stat-row-label">Finished Lessons</span>
-          <span class="stat-row-bar" data-bar="complete" style="--bar-pct:0%;" aria-hidden="true">bar</span>
+          <span class="stat-row-label">完了レッスン</span>
+          <span class="stat-row-bar" data-bar="complete" style="--bar-pct:0%;" aria-hidden="true">バー</span>
           <span class="stat-row-value" data-stat="complete-frac">0 / 0</span>
         </div>
         <div class="stat-row">
-          <span class="stat-row-label">Phases</span>
-          <span class="stat-row-bar" data-bar="phases" style="--bar-pct:0%;" aria-hidden="true">bar</span>
+          <span class="stat-row-label">フェーズ</span>
+          <span class="stat-row-bar" data-bar="phases" style="--bar-pct:0%;" aria-hidden="true">バー</span>
           <span class="stat-row-value" data-stat="phases-frac">0 / 0</span>
         </div>
         <div class="stat-row">
-          <span class="stat-row-label">Languages</span>
-          <span class="stat-row-bar" data-bar="languages" style="--bar-pct:100%;" aria-hidden="true">bar</span>
+          <span class="stat-row-label">言語</span>
+          <span class="stat-row-bar" data-bar="languages" style="--bar-pct:100%;" aria-hidden="true">バー</span>
           <span class="stat-row-value">4</span>
         </div>
         <div class="stat-row">
-          <span class="stat-row-label">Glossary Terms</span>
-          <span class="stat-row-bar" data-bar="glossary" style="--bar-pct:100%;" aria-hidden="true">bar</span>
+          <span class="stat-row-label">用語数</span>
+          <span class="stat-row-bar" data-bar="glossary" style="--bar-pct:100%;" aria-hidden="true">バー</span>
           <span class="stat-row-value" data-stat="glossary-count">···</span>
         </div>
       </div>
     </section>
 
     <section class="toc container" id="contents">
-      <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 473 lessons</div>
-      <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
+      <div class="toc-title reveal reveal--left">カリキュラム · 20フェーズ · 473レッスン</div>
+      <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">フェーズを選ぶとレッスン一覧が開きます。数学、コード、テストがそろったものから公開されます。</div>
       <div class="toc-list" id="phasesGrid"></div>
       <div class="legend">
-        <span class="legend-item"><span class="toc-status complete"></span> Complete</span>
-        <span class="legend-item"><span class="toc-status in-progress"></span> In progress</span>
-        <span class="legend-item"><span class="toc-status planned"></span> Planned</span>
+        <span class="legend-item"><span class="toc-status complete"></span> 完了</span>
+        <span class="legend-item"><span class="toc-status in-progress"></span> 進行中</span>
+        <span class="legend-item"><span class="toc-status planned"></span> 予定</span>
       </div>
     </section>
 
@@ -736,8 +736,8 @@
         </div>
         <div class="modal-lessons" id="modalLessons"></div>
         <div class="modal-footer">
-          <span class="modal-footer-note">Progress saved in browser only</span>
-          <button class="modal-reset" id="modalReset" type="button">Reset progress</button>
+          <span class="modal-footer-note">進捗はこのブラウザ内だけに保存されます</span>
+          <button class="modal-reset" id="modalReset" type="button">進捗をリセット</button>
         </div>
       </div>
     </div>
@@ -745,12 +745,12 @@
 
     <section class="colophon container">
       <div class="colophon-grid">
-        <div class="colophon-eyebrow reveal reveal--left">Colophon</div>
+        <div class="colophon-eyebrow reveal reveal--left">補足</div>
         <div class="reveal" style="--stagger-delay: 80ms;">
-          <p>The entire curriculum is on GitHub. Clone it, fork it, learn at your own pace. No paywall, no signup. Every lesson has runnable code in Python, TypeScript, Rust, or Julia, depending on what fits the concept best.</p>
+          <p>カリキュラム全体は GitHub にあります。クローンして、フォークして、自分のペースで学べます。課金壁もサインアップもありません。各レッスンには、その概念に最も合う Python、TypeScript、Rust、Julia の実行可能コードが含まれています。</p>
           <div class="colophon-cmd">
             <code id="cloneCmd">git clone https://github.com/rohitg00/ai-engineering-from-scratch.git</code>
-            <button class="copy-btn" id="copyBtn" aria-label="Copy command" type="button">cp</button>
+            <button class="copy-btn" id="copyBtn" aria-label="コマンドをコピー" type="button">コピー</button>
           </div>
         </div>
       </div>
@@ -760,12 +760,12 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© 2026 · open source · free forever</p>
+      <p>© 2026 · オープンソース · ずっと無料</p>
       <div class="footer-links">
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="glossary.html">Glossary</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report</a>
+        <a href="catalog.html">カタログ</a>
+        <a href="glossary.html">用語集</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">報告</a>
       </div>
     </div>
   </footer>

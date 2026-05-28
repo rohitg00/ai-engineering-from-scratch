@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -6,55 +6,55 @@
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .label { font-size: 15px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 13px; fill: #333; font-family: 'Menlo', 'Courier New', monospace; }
+      .content { font-size: 13px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
       .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
     </style>
   </defs>
 
   <rect class="box" x="20" y="110" width="160" height="120" rx="4"/>
-  <text class="label" x="100" y="135" text-anchor="middle">raw text</text>
-  <text class="content" x="35" y="165">"The cats</text>
-  <text class="content" x="35" y="185">were</text>
-  <text class="content" x="35" y="205">running."</text>
+  <text class="label" x="100" y="135" text-anchor="middle">原文</text>
+  <text class="content" x="35" y="165">「猫たちは</text>
+  <text class="content" x="35" y="185">走って</text>
+  <text class="content" x="35" y="205">いた。」</text>
 
   <path class="line" d="M 180 170 L 230 170" marker-end="url(#arrow)"/>
-  <text class="stage" x="205" y="160">tokenize</text>
+  <text class="stage" x="205" y="160">トークン化</text>
 
   <rect class="box" x="230" y="110" width="170" height="120" rx="4"/>
-  <text class="label" x="315" y="135" text-anchor="middle">tokens</text>
-  <text class="content" x="245" y="165">[The, cats,</text>
-  <text class="content" x="245" y="185">were, running,</text>
-  <text class="content" x="245" y="205">.]</text>
+  <text class="label" x="315" y="135" text-anchor="middle">トークン</text>
+  <text class="content" x="245" y="165">[猫たち, は,</text>
+  <text class="content" x="245" y="185">走って, いた,</text>
+  <text class="content" x="245" y="205">。]</text>
 
   <path class="line" d="M 400 170 L 450 170" marker-end="url(#arrow)"/>
-  <text class="stage" x="425" y="160">stem</text>
+  <text class="stage" x="425" y="160">ステミング</text>
 
   <rect class="box" x="450" y="50" width="170" height="120" rx="4"/>
-  <text class="label" x="535" y="75" text-anchor="middle">stems</text>
-  <text class="content" x="465" y="105">[the, cat,</text>
-  <text class="content" x="465" y="125">were, run,</text>
-  <text class="content" x="465" y="145">.]</text>
+  <text class="label" x="535" y="75" text-anchor="middle">語幹</text>
+  <text class="content" x="465" y="105">[猫, は,</text>
+  <text class="content" x="465" y="125">走, い,</text>
+  <text class="content" x="465" y="145">。]</text>
 
   <path class="line" d="M 400 180 Q 420 240 450 250" marker-end="url(#arrow)"/>
-  <text class="stage" x="420" y="275">lemmatize</text>
+  <text class="stage" x="420" y="275">レンマ化</text>
 
   <rect class="box" x="450" y="200" width="170" height="120" rx="4"/>
-  <text class="label" x="535" y="225" text-anchor="middle">lemmas</text>
-  <text class="content" x="465" y="255">[the, cat,</text>
-  <text class="content" x="465" y="275">be, run,</text>
-  <text class="content" x="465" y="295">.]</text>
+  <text class="label" x="535" y="225" text-anchor="middle">見出し語</text>
+  <text class="content" x="465" y="255">[猫, は,</text>
+  <text class="content" x="465" y="275">走る, いる,</text>
+  <text class="content" x="465" y="295">。]</text>
 
   <rect class="box" x="670" y="110" width="170" height="160" rx="4" fill="#f3ece0"/>
-  <text class="label" x="755" y="135" text-anchor="middle">ready for the</text>
-  <text class="label" x="755" y="155" text-anchor="middle">model</text>
-  <text class="content" x="685" y="185">vector /</text>
-  <text class="content" x="685" y="205">embedding /</text>
-  <text class="content" x="685" y="225">feature row /</text>
-  <text class="content" x="685" y="245">index lookup</text>
+  <text class="label" x="755" y="135" text-anchor="middle">モデルへ</text>
+  <text class="label" x="755" y="155" text-anchor="middle">渡す形</text>
+  <text class="content" x="685" y="185">ベクトル /</text>
+  <text class="content" x="685" y="205">埋め込み /</text>
+  <text class="content" x="685" y="225">特徴行 /</text>
+  <text class="content" x="685" y="245">索引参照</text>
 
   <path class="line" d="M 620 110 Q 650 140 670 170" marker-end="url(#arrow)"/>
   <path class="line" d="M 620 260 Q 650 220 670 200" marker-end="url(#arrow)"/>
 
-  <text class="stage" x="430" y="360" text-anchor="middle">three operations. each has a job. each has a failure mode.</text>
+  <text class="stage" x="430" y="360" text-anchor="middle">3つの操作。それぞれに役割と失敗モードがある。</text>
 </svg>

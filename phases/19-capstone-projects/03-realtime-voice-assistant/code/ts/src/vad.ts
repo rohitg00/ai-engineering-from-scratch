@@ -1,7 +1,7 @@
 import type { AudioChunk } from "./types.ts";
 
 export function turnCompletionScore(partial: string): number {
-  // Tiny stand-in for the LiveKit turn-detector model.
+  // LiveKit turn-detector model の小さな代役。
   if (!partial) return 0;
   const tail = partial.trimEnd();
   if (tail.endsWith("?") || tail.endsWith(".") || tail.endsWith("!")) return 0.95;
@@ -12,8 +12,8 @@ export function turnCompletionScore(partial: string): number {
 }
 
 export function synthCall(script: string, startMs = 0, noise = 0): AudioChunk[] {
-  // Generate 20ms-frame "audio" with a leading silence, then per-word speech,
-  // then a long trailing silence so the state machine can run end to end.
+  // 20ms-frame の "audio" を生成する。leading silence、word ごとの speech、
+  // state machine が end to end に走れる長い trailing silence の順。
   const words = script.trim().split(/\s+/).filter(Boolean);
   const frames: AudioChunk[] = [];
   let t = startMs;

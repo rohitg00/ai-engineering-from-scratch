@@ -1,37 +1,37 @@
 [
   {
-    "question": "Why is neural network debugging harder than traditional software debugging?",
-    "options": ["Neural networks use different programming languages", "Networks can produce wrong outputs without any error messages or crashes -- the code runs but the results are silently incorrect", "Neural networks can't be tested", "There are no debugging tools for neural networks"],
+    "question": "neural network debugging が traditional software debugging より難しいのはなぜですか？",
+    "options": ["neural networks は異なる programming languages を使うから", "networks は error messages や crashes なしに wrong outputs を出し得るから。code は動くが results は silent に incorrect になる", "neural networks は test できないから", "neural networks には debugging tools がないから"],
     "correct": 1,
-    "explanation": "Traditional bugs crash or throw exceptions. Neural network bugs produce a number that's just wrong -- a loss that doesn't decrease, accuracy that plateaus, or outputs that are subtly incorrect. No error message tells you what went wrong.",
+    "explanation": "traditional bugs は crash するか exceptions を投げます。neural network bugs は、ただ wrong な数値を生みます。下がらない loss、plateau する accuracy、微妙に incorrect な outputs です。何が間違ったかを教える error message はありません。",
     "stage": "pre"
   },
   {
-    "question": "What is the 'overfit one batch' debugging technique?",
-    "options": ["Training on the full dataset until it overfits", "Training on a single small batch until the loss reaches near-zero, verifying the model can memorize at least a few examples", "Using a very large batch size", "Overfitting the validation set"],
+    "question": "'overfit one batch' debugging technique とは何ですか？",
+    "options": ["overfit するまで full dataset で学習すること", "loss がほぼ 0 になるまで single small batch で学習し、model が少なくとも数 examples を memorize できることを検証すること", "非常に大きな batch size を使うこと", "validation set に overfit すること"],
     "correct": 1,
-    "explanation": "If your model can't memorize a tiny batch (e.g., 4-8 samples) to near-zero loss, something is fundamentally broken: wrong architecture, broken loss function, or incorrect training loop. This is the first diagnostic to run.",
+    "explanation": "model が tiny batch（例: 4-8 samples）を near-zero loss まで memorize できないなら、何かが fundamental に壊れています。wrong architecture、broken loss function、incorrect training loop などです。これは最初に実行すべき diagnostic です。",
     "stage": "pre"
   },
   {
-    "question": "Your loss is NaN after a few training steps. What is the most likely cause?",
-    "options": ["The dataset is too small", "Exploding gradients or numerical overflow, often from a learning rate that's too high or missing gradient clipping", "The model has too few parameters", "The activation function is wrong"],
+    "question": "training steps の数回後に loss が NaN になります。最も可能性が高い原因は何ですか？",
+    "options": ["dataset が小さすぎる", "exploding gradients または numerical overflow。learning rate が高すぎる、または gradient clipping がないことが多い", "model の parameters が少なすぎる", "activation function が wrong"],
     "correct": 1,
-    "explanation": "NaN loss typically comes from numerical overflow: gradients explode, weights grow unbounded, and operations like log(0) or exp(1000) produce infinity/NaN. Lower the learning rate or add gradient clipping.",
+    "explanation": "NaN loss は通常 numerical overflow から来ます。gradients が explode し、weights が無制限に増え、log(0) や exp(1000) のような operations が infinity/NaN を生みます。learning rate を下げるか gradient clipping を追加してください。",
     "stage": "post"
   },
   {
-    "question": "Your training loss decreases but validation loss stays flat from the start. What does this indicate?",
-    "options": ["The model is overfitting", "The model is learning training data patterns but they don't generalize -- likely a data pipeline issue (train/val data mismatch) or severe overfitting", "The learning rate is too low", "The model needs more layers"],
+    "question": "training loss は下がるのに validation loss が最初から flat です。これは何を示していますか？",
+    "options": ["model が overfitting している", "model は training data patterns を学んでいるが generalize していない。train/val data mismatch などの data pipeline issue、または severe overfitting の可能性が高い", "learning rate が低すぎる", "model にはより多くの layers が必要"],
     "correct": 1,
-    "explanation": "If validation loss never improves, the model is either memorizing training noise (overfitting), or there's a data pipeline bug where train and validation distributions are fundamentally different.",
+    "explanation": "validation loss がまったく改善しない場合、model が training noise を memorizing している（overfitting）か、train と validation distributions が根本的に異なる data pipeline bug があるかのどちらかです。",
     "stage": "post"
   },
   {
-    "question": "What should you check first when your loss curve is completely flat (loss doesn't decrease at all)?",
-    "options": ["Try a different architecture", "Verify gradients are nonzero, the learning rate is high enough, and the loss function actually depends on the model's predictions", "Add more training data", "Switch to a different optimizer"],
+    "question": "loss curve が完全に flat（loss がまったく下がらない）場合、最初に何を確認すべきですか？",
+    "options": ["別の architecture を試す", "gradients が nonzero であること、learning rate が十分高いこと、loss function が model の predictions に実際に依存していることを検証する", "training data を追加する", "別の optimizer に切り替える"],
     "correct": 1,
-    "explanation": "A flat loss means the model isn't updating. Common causes: zero gradients (dead neurons, detached tensors), learning rate too small, or a loss function that doesn't flow gradients to the model (e.g., using .item() before .backward()).",
+    "explanation": "flat loss は model が更新されていないことを意味します。common causes は、zero gradients（dead neurons、detached tensors）、learning rate が小さすぎること、または gradients が model に流れない loss function（例: .backward() 前に .item() を使う）です。",
     "stage": "post"
   }
 ]

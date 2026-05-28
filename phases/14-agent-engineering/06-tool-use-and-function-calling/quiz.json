@@ -1,90 +1,90 @@
 {
   "lesson": "06-tool-use-and-function-calling",
-  "title": "Tool Use and Function Calling",
+  "title": "Tool UseとFunction Calling",
   "questions": [
     {
       "stage": "pre",
-      "question": "What signal does Toolformer use to decide whether to keep a candidate tool annotation?",
+      "question": "Toolformerはcandidate tool annotationを残すかどうかを判断するために、どのsignalを使いますか？",
       "options": [
-        "Human label agreement",
-        "Whether including the tool result reduces next-token loss on surrounding text",
-        "Whether the tool returns within 100 ms",
-        "Whether the tool emits valid JSON"
+        "human label agreement",
+        "tool resultを含めることで周辺textのnext-token lossが下がるかどうか",
+        "toolが100 ms以内に返るかどうか",
+        "toolがvalid JSONを出力するかどうか"
       ],
       "correct": 1,
-      "explanation": "Toolformer's self-supervised signal keeps annotations whose tool results lower next-token loss."
+      "explanation": "Toolformerのself-supervised signalは、tool resultによりnext-token lossが下がるannotationを残します。"
     },
     {
       "stage": "pre",
-      "question": "What is the BFCL V4 split that the lesson reports?",
+      "question": "このlessonが報告するBFCL V4のsplitはどれですか？",
       "options": [
         "100% single-turn",
-        "40% agentic, 30% multi-turn, 10% live, 10% non-live, 10% hallucination",
-        "50% live, 50% synthetic",
-        "33% agentic, 33% planning, 33% reflection"
+        "40% agentic、30% multi-turn、10% live、10% non-live、10% hallucination",
+        "50% live、50% synthetic",
+        "33% agentic、33% planning、33% reflection"
       ],
       "correct": 1,
-      "explanation": "BFCL V4 weights are 40 agentic / 30 multi-turn / 10 live / 10 non-live / 10 hallucination."
+      "explanation": "BFCL V4のweightsは、40 agentic / 30 multi-turn / 10 live / 10 non-live / 10 hallucinationです。"
     },
     {
       "stage": "check",
-      "question": "Why is a tool's description load-bearing?",
+      "question": "toolのdescriptionが不可欠なのはなぜですか？",
       "options": [
-        "It is what the user sees in the UI",
-        "The model reads it to choose the right tool; bad descriptions are the top cause of wrong-tool failures",
-        "It controls billing buckets",
-        "It is required by JSON Schema"
+        "UIでuserに表示されるものだから",
+        "modelが正しいtoolを選ぶために読むもので、悪いdescriptionはwrong-tool failureの最大原因だから",
+        "billing bucketを制御するから",
+        "JSON Schemaで必須だから"
       ],
       "correct": 1,
-      "explanation": "Tool descriptions are the model's primary signal for tool selection; poor descriptions cause wrong-tool routing."
+      "explanation": "Tool descriptionsはmodelがtoolを選ぶ主なsignalです。貧弱なdescriptionはwrong-tool routingを引き起こします。"
     },
     {
       "stage": "check",
-      "question": "What role does tool_use_id play in parallel tool calling?",
+      "question": "parallel tool callingでtool_use_idはどの役割を果たしますか？",
       "options": [
-        "It compresses the JSON payload",
-        "It correlates each tool result with its originating call so results returning out of order route correctly",
-        "It authorizes the call against an API key",
-        "It enables caching"
+        "JSON payloadを圧縮する",
+        "順不同で返るresultを正しくroutingできるよう、各tool resultを元のcallにcorrelateする",
+        "API keyに対してcallをauthorizeする",
+        "cachingを有効にする"
       ],
       "correct": 1,
-      "explanation": "tool_use_id is the correlation token; swapping them routes results to the wrong call."
+      "explanation": "tool_use_idはcorrelation tokenです。入れ替えるとresultが誤ったcallへroutingされます。"
     },
     {
       "stage": "check",
-      "question": "Which class of failure does V3 state-based evaluation try to catch?",
+      "question": "V3のstate-based evaluationはどのfailure classを捕まえようとしますか？",
       "options": [
         "Token leakage",
-        "AST-matching tool calls that look right but leave the API in the wrong state",
-        "Slow tool execution",
+        "AST上は正しく見えるtool callsだが、APIを誤ったstateに残すfailure",
+        "遅いtool execution",
         "Schema versioning drift"
       ],
       "correct": 1,
-      "explanation": "State-based evaluation checks the resulting API state (e.g. file actually created) rather than syntactic call matching."
+      "explanation": "state-based evaluationはsyntactic call matchingではなく、結果としてのAPI state（例: fileが実際に作成されたか）をcheckします。"
     },
     {
       "stage": "post",
-      "question": "Which 2026 problem does the lesson NOT list among the open ones for function calling?",
+      "question": "このlessonがfunction callingのopen problemsとして挙げていない2026年の問題はどれですか？",
       "options": [
         "Long-horizon tool chaining",
-        "Dynamic decision-making across many tools",
-        "Memory across turns",
+        "多数のtoolsをまたぐdynamic decision-making",
+        "turnsをまたぐmemory",
         "Token-level decoding speed"
       ],
       "correct": 3,
-      "explanation": "The open problems are memory, dynamic decision-making, long-horizon chains, and hallucination detection; decoding speed is not on the list."
+      "explanation": "open problemsはmemory、dynamic decision-making、long-horizon chains、hallucination detectionです。decoding speedはlistにありません。"
     },
     {
       "stage": "post",
-      "question": "Why is a generic run_shell(cmd) tool called a red flag in this lesson?",
+      "question": "このlessonでgenericなrun_shell(cmd) toolがred flagと呼ばれるのはなぜですか？",
       "options": [
-        "It is slow",
-        "It widens the sandbox boundary; specific tools like git_status() bound read/write surface and risk",
-        "It cannot be called in parallel",
-        "Providers reject it"
+        "遅いから",
+        "sandbox boundaryを広げるから。git_status()のようなspecific toolsはread/write surfaceとriskを限定する",
+        "parallelに呼べないから",
+        "providersが拒否するから"
       ],
       "correct": 1,
-      "explanation": "Narrow tools constrain the sandbox surface; a generic shell tool grants the full surface of the host."
+      "explanation": "narrow toolsはsandbox surfaceを制限します。generic shell toolはhostの広い表面を許可してしまいます。"
     }
   ]
 }

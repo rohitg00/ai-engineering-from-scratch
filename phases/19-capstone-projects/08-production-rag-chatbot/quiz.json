@@ -1,73 +1,73 @@
 {
   "lesson": "08-production-rag-chatbot",
-  "title": "Capstone 08 — Production RAG Chatbot for a Regulated Vertical",
+  "title": "Capstone 08 — Regulated Vertical 向け Production RAG Chatbot",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does prompt caching matter so much in a regulated-domain RAG chatbot?",
+      "question": "regulated-domain RAG chatbot で prompt caching が非常に重要なのはなぜですか？",
       "options": [
-        "It removes the need for a vector database",
-        "At 60-80% hit rate it cuts per-query cost 3-5x by discounting stable prefix tokens",
-        "It eliminates hallucinations",
-        "It improves recall on the rerank stage"
+        "vector database が不要になるため",
+        "60-80% の hit rate では stable prefix token の discount により query あたり cost が 3-5x 下がるため",
+        "hallucination をなくすため",
+        "rerank stage の recall を改善するため"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What goes into the cache header versus the uncached suffix of each request?",
+      "question": "各 request の cache header と uncached suffix には何が入りますか？",
       "options": [
-        "Random text padding to hit cache size",
-        "Only the retrieved documents",
-        "User question first, system prompt last",
-        "System prompt and static policies in the cache header, reranked context as cache extension, user question as the uncached suffix"
+        "cache size に合わせるための random text padding",
+        "retrieved documents のみ",
+        "user question を先、system prompt を最後",
+        "cache header には system prompt と static policies、cache extension として reranked context、uncached suffix として user question"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the retrieval layer respect jurisdiction tags like GDPR or HIPAA?",
+      "question": "retrieval layer は GDPR や HIPAA のような jurisdiction tag をどのように尊重しますか？",
       "options": [
-        "It runs a separate index per country",
-        "It blocks the response after generation only",
-        "It rewrites the user question per region",
-        "Role and jurisdiction filters apply before the hybrid search merge so chunks outside the user's scope are never reranked"
+        "country ごとに separate index を走らせる",
+        "generation 後に response だけを block する",
+        "region ごとに user question を書き換える",
+        "role と jurisdiction の filter を hybrid search merge 前に適用し、user scope 外の chunk が rerank されないようにする"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which layered guardrail combination does the synthesis stage pass output through?",
+      "question": "synthesis stage の output はどの layered guardrail combination を通過しますか？",
       "options": [
-        "Only Llama Guard 4 on input",
-        "Llama Guard 4, NeMo Guardrails policy rails, and Presidio PII scrub, plus citation enforcement",
-        "Just an output PII regex",
-        "A single LLM-judge faithfulness check"
+        "input 上の Llama Guard 4 のみ",
+        "Llama Guard 4、NeMo Guardrails policy rails、Presidio PII scrub、さらに citation enforcement",
+        "output PII regex だけ",
+        "単一の LLM-judge faithfulness check"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the drift dashboard alert on?",
+      "question": "drift dashboard は何に alert しますか？",
       "options": [
-        "A change in the underlying LLM provider",
-        "Latency above 200ms",
-        "A retrieval-quality drop, for example a 5% week-over-week dip in nDCG or citation score",
-        "Any new document added to the index"
+        "underlying LLM provider の変更",
+        "200ms を超える latency",
+        "retrieval-quality drop。たとえば nDCG や citation score の week-over-week 5% 低下",
+        "index に追加された任意の new document"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How big is the golden set used to gate the deliverable's correctness rubric?",
+      "question": "deliverable の correctness rubric を gate する golden set の規模はどれくらいですか？",
       "options": [
         "5 demo queries",
-        "200 expert-labeled question/answer pairs with citations",
+        "citation 付きの200 expert-labeled question/answer pairs",
         "20 questions",
         "2000 synthetic questions"
       ],
@@ -76,7 +76,7 @@
     },
     {
       "stage": "post",
-      "question": "Which RAGAS scores are tracked online per turn?",
+      "question": "turn ごとに online で追跡される RAGAS score はどれですか？",
       "options": [
         "Throughput, GPU utilization, and queue depth",
         "BLEU, ROUGE, and METEOR",

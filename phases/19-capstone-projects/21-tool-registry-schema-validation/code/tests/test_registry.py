@@ -1,4 +1,4 @@
-"""Tests for ToolRegistry and JSON Schema subset validator."""
+"""ToolRegistry と JSON Schema subset validator の tests。"""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ class TestRegistration(unittest.TestCase):
             "fs.read",
             schema={"type": "object", "properties": {"path": {"type": "string"}}, "required": ["path"]},
             handler=lambda path: open(path).read(),
-            description="Read file",
+            description="file を読む",
         )
         self.assertIsInstance(rec, ToolRecord)
         self.assertEqual(rec.name, "fs.read")

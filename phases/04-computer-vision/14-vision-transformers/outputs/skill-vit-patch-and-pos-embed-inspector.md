@@ -1,6 +1,6 @@
 ---
 name: skill-vit-patch-and-pos-embed-inspector
-description: Verify a ViT's patch embedding and positional embedding shapes match the model's expected sequence length
+description: ViTのpatch embeddingとpositional embeddingのshapeが、モデルの期待するsequence lengthに一致するか検証する
 version: 1.0.0
 phase: 4
 lesson: 14
@@ -9,30 +9,30 @@ tags: [vision-transformer, debugging, pytorch]
 
 # ViT Patch and Positional Embedding Inspector
 
-The most common ViT porting bug: loading a checkpoint pretrained at 224x224 into a model configured for 384x384 (or vice versa). The positional embedding has the wrong sequence length and the model silently produces garbage.
+最もよくあるViT移植バグは、224x224で事前学習されたcheckpointを384x384設定のmodelへ読み込むこと（またはその逆）です。positional embeddingのsequence lengthが合わず、modelは黙って壊れた出力を出します。
 
-## When to use
+## 使う場面
 
-- Fine-tuning a pretrained ViT at a non-default resolution.
-- Auditing why a weight port between ViT-B/16 and ViT-B/32 fails; the inspector will flag the patch-size mismatch so the caller knows to swap architectures rather than force a port.
-- Debugging a ViT that loads without error but trains poorly.
+- 事前学習済みViTをdefaultではない解像度でfine-tuningするとき。
+- ViT-B/16とViT-B/32の間でweight portが失敗する理由をauditするとき。inspectorがpatch-size mismatchを示すので、呼び出し側は無理にportするのではなくarchitectureを替えるべきだと分かる。
+- エラーなくloadできるが学習が悪いViTをdebugするとき。
 
-## Inputs
+## 入力
 
-- `model`: an instantiated ViT `nn.Module`.
-- `expected_image_size`: H x W the model will see in production.
-- `patch_size`: expected patch size.
+- `model`: instantiate済みのViT `nn.Module`。
+- `expected_image_size`: 本番でmodelが見るH x W。
+- `patch_size`: 期待するpatch size。
 
-## Steps
+## 手順
 
-1. Locate the patch embedding conv inside the model. Report its `kernel_size`, `stride`, `in_channels`, `out_channels`.
-2. Compute the expected number of patches. For a square image: `(image_size / patch_size)^2`. For a rectangle: `(H / patch_size) * (W / patch_size)`. Require `H % patch_size == 0` and `W % patch_size == 0`; otherwise flag and refuse.
-3. Locate the learned positional embedding. Report its shape `(1, N, dim)`.
-4. Compare `N` against `num_patches + 1` (with CLS) or `num_patches` (without CLS). Mismatch means the checkpoint was pretrained at a different resolution or patch size.
-5. Check that `out_channels` of the patch conv equals `dim` of the positional embedding.
-6. If the model is supposed to interpolate positional embeddings for new resolutions, verify the interpolation utility exists (most `timm` ViTs do this automatically via `resize_pos_embed`).
+1. model内のpatch embedding convを探す。その `kernel_size`、`stride`、`in_channels`、`out_channels` を報告する。
+2. 期待されるpatch数を計算する。正方形画像なら `(image_size / patch_size)^2`。長方形なら `(H / patch_size) * (W / patch_size)`。`H % patch_size == 0` かつ `W % patch_size == 0` を必須とし、満たさなければflagして拒否する。
+3. learned positional embeddingを探す。そのshape `(1, N, dim)` を報告する。
+4. `N` を `num_patches + 1`（CLSあり）または `num_patches`（CLSなし）と比較する。不一致なら、checkpointは別の解像度またはpatch sizeで事前学習されている。
+5. patch convの `out_channels` がpositional embeddingの `dim` と等しいことを確認する。
+6. 新しい解像度に対してpositional embeddingを補間する想定のmodelなら、補間utilityが存在することを確認する（ほとんどの`timm` ViTは `resize_pos_embed` 経由で自動処理する）。
 
-## Report
+## レポート
 
 ```
 [vit-inspector]
@@ -50,8 +50,8 @@ The most common ViT porting bug: loading a checkpoint pretrained at 224x224 into
   tool:    timm.models.vision_transformer.resize_pos_embed
 ```
 
-## Rules
+## ルール
 
-- Never silently interpolate without warning; surface the action so the user knows the pretrained positional structure may have shifted.
-- If patch_size mismatches, refuse to recommend interpolation — swap to the correct architecture.
-- Do not try to fix the model in place; report and suggest.
+- 警告なしに補間しない。事前学習済みの位置構造がずれた可能性をユーザーが理解できるよう、実行したactionを表面化する。
+- patch_sizeが一致しない場合、補間の推奨を拒否する。正しいarchitectureへ替える。
+- modelをその場で修正しようとしない。報告して提案する。

@@ -1,87 +1,87 @@
 {
   "lesson": "13-mcp-server-with-registry",
-  "title": "Capstone 13 — MCP Server with Registry and Governance",
+  "title": "キャップストーン 13 — MCP Server with Registry and Governance",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the 2026 MCP revision favor StreamableHTTP for production servers?",
+      "question": "2026 年の MCP revision が production server で StreamableHTTP を重視する理由は何ですか？",
       "options": [
-        "It removes the need for authentication",
-        "It is the only transport that supports tool calls",
-        "It encrypts payloads automatically",
-        "It is stateless by default, so a single endpoint behind a load balancer can scale horizontally"
+        "Authentication が不要になるため",
+        "Tool call を support する唯一の transport だから",
+        "Payload を自動で encryption するから",
+        "Default で stateless なので、load balancer 背後の単一 endpoint で horizontal scale できるため"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Which authorization model gates tool calls in this capstone?",
+      "question": "この capstone で tool call を gate する authorization model はどれですか？",
       "options": [
-        "OAuth 2.1 tokens carrying per-tool scopes, checked at tool-call time",
-        "A shared admin password",
-        "API keys per IP address",
-        "Mutual TLS without scopes"
+        "Tool ごとの scope を持つ OAuth 2.1 token を、tool-call time に検査する model",
+        "共有 admin password",
+        "IP address ごとの API key",
+        "Scope なしの mutual TLS"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the role of the .well-known/mcp-capabilities document?",
+      "question": ".well-known/mcp-capabilities document の役割は何ですか？",
       "options": [
-        "Stores audit logs for the server",
-        "Lists outbound IP ranges",
-        "Holds the OPA policy bundle",
-        "Exposes the tool manifest, transport URL, and auth requirements so the registry can validate and index the server"
+        "Server の audit log を保存する",
+        "Outbound IP range を列挙する",
+        "OPA policy bundle を保持する",
+        "Registry が server を validate し index できるように、tool manifest、transport URL、auth requirements を expose する"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why do destructive tools live on a separate MCP server in this design?",
+      "question": "この設計で destructive tool を separate MCP server に置く理由は何ですか？",
       "options": [
-        "They cannot be exposed over StreamableHTTP",
-        "They run on slower hardware",
-        "They are gated behind an approval token elevated via a Slack card within a short window",
-        "They require a different programming language"
+        "StreamableHTTP では expose できないため",
+        "より遅い hardware で動くため",
+        "短い window 内に Slack card で elevation された approval token の背後で gate するため",
+        "別の programming language が必要なため"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does OPA / Rego decide on every tool call?",
+      "question": "OPA / Rego はすべての tool call で何を判断しますか？",
       "options": [
-        "Which model to invoke",
-        "Where to write the audit log",
-        "How the server should re-rank the response",
-        "Whether the caller's scopes permit invocation, plus PII redaction and payload caps"
+        "どの model を呼ぶか",
+        "Audit log をどこに書くか",
+        "Server が response をどう re-rank するか",
+        "Caller の scope が invocation を許可するか、および PII redaction と payload cap"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which evidence demonstrates StreamableHTTP horizontal scaling in the load test?",
+      "question": "Load test で StreamableHTTP horizontal scaling を示す evidence はどれですか？",
       "options": [
-        "Reducing concurrency to one client",
-        "Switching to stdio transport",
-        "Running everything in a single process",
-        "Adding a second replica and showing the load balancer redistributing without session stickiness"
+        "Concurrency を 1 client に下げる",
+        "stdio transport に切り替える",
+        "すべてを single process で動かす",
+        "2 つ目の replica を追加し、session stickiness なしで load balancer が redistributing することを示す"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why does the audit log scrub PII via Presidio before being persisted per tenant?",
+      "question": "Per-tenant に persist する前に audit log から Presidio で PII を scrub する理由は何ですか？",
       "options": [
-        "To make logs shorter",
-        "To meet enterprise security requirements while keeping per-call lineage queryable",
-        "Presidio reduces ClickHouse write amplification",
-        "PII improves search performance"
+        "Log を短くするため",
+        "Call ごとの lineage を queryable に保ちながら enterprise security requirement を満たすため",
+        "Presidio が ClickHouse write amplification を減らすため",
+        "PII が search performance を改善するため"
       ],
       "correct": 1,
       "explanation": ""

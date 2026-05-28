@@ -1,110 +1,110 @@
-# Scalable Oversight and Weak-to-Strong Generalization
+# スケーラブルな監督と Weak-to-Strong Generalization
 
-> Burns et al. (OpenAI Superalignment, "Weak-to-Strong Generalization", 2023) proposed a proxy for the superalignment problem: fine-tune a strong model using labels produced by a weaker model. If the strong model generalizes correctly from imperfect weak supervision, current human-scale alignment methods may extend to superhuman systems. Scalable oversight and W2SG are complementary. Scalable oversight (debate, recursive reward modeling, task decomposition) increases the overseer's effective capability so it can keep up with the model under oversight. W2SG ensures the strong model generalizes correctly from whatever imperfect supervision the overseer provides. Debate Helps W2SG (arXiv:2501.13124, January 2025) combines them.
+> Burns et al. (OpenAI Superalignment, "Weak-to-Strong Generalization", 2023) は、superalignment 問題の代理課題を提案しました。弱いモデルが生成したラベルで強いモデルを fine-tune する、という設定です。強いモデルが不完全な弱い監督から正しく汎化できるなら、現在の人間規模の alignment 手法が超人的なシステムにも拡張できる可能性があります。scalable oversight と W2SG は相補的です。scalable oversight (debate、recursive reward modeling、task decomposition) は監督者の実効能力を高め、監督対象のモデルに追いつけるようにします。W2SG は、その監督者が与える不完全な監督信号から、強いモデルが正しく汎化することを狙います。Debate Helps W2SG (arXiv:2501.13124, January 2025) は両者を組み合わせています。
 
-**Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
-**Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib, W2SG gap simulator)
+**前提条件:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Define scalable oversight and weak-to-strong generalization and explain how they are complementary.
-- Describe the Burns et al. 2023 experimental setup: fine-tune GPT-4 using labels from GPT-2.
-- Explain the performance gap recovered (PGR) metric and what it measures.
-- State the three major scalable-oversight mechanisms (debate, recursive reward modeling, task decomposition) and one strength of each.
+- scalable oversight と weak-to-strong generalization を定義し、両者がどう相補的か説明する。
+- Burns et al. 2023 の実験設定を説明する: GPT-2 由来のラベルで GPT-4 を fine-tune する。
+- performance gap recovered (PGR) 指標と、それが何を測るのかを説明する。
+- 主要な scalable-oversight メカニズム (debate、recursive reward modeling、task decomposition) を3つ挙げ、それぞれの強みを1つ述べる。
 
-## The Problem
+## 問題
 
-Every alignment technique so far in Phase 18 assumes the overseer can evaluate the model's behaviour. When the model is superhuman, the overseer is the weak link. The superalignment question: can a weaker supervisor reliably produce a stronger, aligned model?
+Phase 18 でここまで扱った alignment 技術はすべて、監督者がモデルの振る舞いを評価できることを仮定しています。モデルが超人的になると、弱点は監督者になります。superalignment の問いはこうです: 弱い監督者は、より強く、aligned なモデルを信頼できる形で作れるのでしょうか。
 
-Burns et al. reduce this to an operationalized empirical setup: supervise strong with weak, measure how much of the strong model's capability survives the weak supervision. This is not a solution to superalignment — it is a proxy that lets us measure progress.
+Burns et al. はこの問いを、操作可能な経験的設定に落とし込みます。弱いものが強いものを監督し、強いモデルの能力のうちどれだけが弱い監督のもとで残るかを測ります。これは superalignment の解ではありません。進捗を測るための proxy です。
 
-## The Concept
+## コンセプト
 
-### W2SG: the Burns et al. setup
+### W2SG: Burns et al. の設定
 
-- Weak model: GPT-2 class.
-- Strong model: GPT-4 class.
-- Target: strong GPT-4 ceiling on the task.
+- 弱いモデル: GPT-2 クラス。
+- 強いモデル: GPT-4 クラス。
+- 目標: そのタスクにおける強い GPT-4 の ceiling。
 
-Procedure:
-1. Get weak model's zero-shot predictions on a task.
-2. Fine-tune the strong model on weak-labeled data.
-3. Measure the strong fine-tuned model's accuracy.
+手順:
+1. あるタスクについて、弱いモデルの zero-shot 予測を得る。
+2. 弱いラベル付きデータで強いモデルを fine-tune する。
+3. fine-tune された強いモデルの accuracy を測る。
 
-Baselines: weak model's own accuracy, strong model's supervised ceiling on gold labels.
+baseline: 弱いモデル自身の accuracy、gold labels で教師あり学習した強いモデルの ceiling。
 
-Gap metric: Performance Gap Recovered (PGR) = (fine-tuned - weak) / (ceiling - weak). PGR of 1.0 means weak supervision fully closes the gap; PGR of 0 means weak supervision did not help.
+gap 指標: Performance Gap Recovered (PGR) = (fine-tuned - weak) / (ceiling - weak)。PGR が 1.0 なら弱い監督が gap を完全に埋めたことを意味し、0 なら弱い監督が役に立たなかったことを意味します。
 
-### Burns et al. empirical findings
+### Burns et al. の経験的知見
 
-Across NLP, chess-puzzle, and reward-modeling tasks, PGR was consistently positive: the strong model generalized beyond the weak supervisor's mistakes. Task-specific PGR varied from ~20% to ~80%. The strong model "understands" the intended task from imperfect labels, filling in with its pre-trained priors.
+NLP、chess-puzzle、reward-modeling タスクを通じて、PGR は一貫して正でした。つまり、強いモデルは弱い監督者の誤りを超えて汎化しました。タスクごとの PGR は約20%から約80%まで幅がありました。強いモデルは不完全なラベルから意図されたタスクを「理解」し、pre-training で得た prior によって不足を補っているように見えます。
 
-Limitations Burns et al. note:
-- The weak-to-strong gap here is capability, not alignment. The weak model is aligned; a truly superhuman model might be aligned by a human but with a much larger capability gap.
-- The strong model's generalization may be more about task priors than about recovering ground-truth intent.
-- Eliciting the strong model's latent knowledge is the real problem; PGR measures a specific operationalization.
+Burns et al. が述べる限界:
+- ここでの weak-to-strong gap は capability の gap であり、alignment の gap ではありません。弱いモデルは aligned です。本当に超人的なモデルは、人間によって aligned されるとしても、能力 gap がはるかに大きい可能性があります。
+- 強いモデルの汎化は、ground-truth intent の回復というより、task priors によるものかもしれません。
+- 強いモデルの latent knowledge を引き出すことが本当の問題です。PGR は特定の operationalization を測っているだけです。
 
-### Scalable oversight: three mechanisms
+### Scalable oversight: 3つのメカニズム
 
-- **Debate (Irving et al. 2018).** Two instances of U argue opposite sides; the weak judge decides. The assumption: finding a convincing true answer is easier than finding a convincing false answer. Recent 2024-2025 work (Khan et al., Michael et al.) shows debate sometimes helps and sometimes does not, and whether it helps depends on task structure.
-- **Recursive Reward Modeling (Leike et al. 2018).** U helps the human train the reward model for U+1. The overseer's effective capability grows with the model's.
-- **Task Decomposition (Christiano, Shlegeris, Amodei 2018).** Decompose a hard task into sub-tasks the human can check, recursively. Assumes decomposability.
+- **Debate (Irving et al. 2018)。** U の2つのインスタンスが反対側の立場で議論し、弱い judge が判断します。仮定は「説得力のある真の答えを見つける方が、説得力のある偽の答えを見つけるより簡単」というものです。2024-2025 年の最近の研究 (Khan et al., Michael et al.) は、debate が有効な場合も無効な場合もあり、有効性はタスク構造に依存することを示しています。
+- **Recursive Reward Modeling (Leike et al. 2018)。** U が、人間による U+1 向け reward model の訓練を助けます。監督者の実効能力がモデルの能力とともに伸びます。
+- **Task Decomposition (Christiano, Shlegeris, Amodei 2018)。** 難しいタスクを、人間が確認できる sub-task に再帰的に分解します。分解可能性を仮定します。
 
-Each mechanism assumes something about the structure of the task or the alignment of the intermediate components.
+各メカニズムは、タスク構造または中間コンポーネントの alignment について何らかの仮定を置いています。
 
-### Why scalable oversight and W2SG are complementary
+### Scalable oversight と W2SG が相補的である理由
 
-Scalable oversight increases the overseer's effective signal quality.
-W2SG closes the gap from whatever imperfect signal the overseer can provide.
+Scalable oversight は、監督者の実効的な signal quality を高めます。
+W2SG は、監督者が提供できるどんな不完全な signal からでも gap を埋めることを狙います。
 
-Lang et al. — Debate Helps Weak-to-Strong Generalization (arXiv:2501.13124) combines them: a debate protocol provides better weak labels, and the strong model is trained on those labels. Reported PGR gains on NLP tasks.
+Lang et al. — Debate Helps Weak-to-Strong Generalization (arXiv:2501.13124) は両者を組み合わせています。debate protocol がより良い弱いラベルを提供し、強いモデルをそのラベルで訓練します。NLP タスクで PGR の改善が報告されています。
 
-### The organizational drama
+### 組織上のドラマ
 
-OpenAI's Superalignment team dissolved in May 2024 after Jan Leike's departure to Anthropic. The agenda (scalable oversight, W2SG, automated alignment research) continued at Anthropic and at academic labs — MATS (Lesson 28), Redwood (Lesson 10), Apollo (Lesson 8), METR (Lesson 28). The organizational structure changed; the research questions did not.
+OpenAI の Superalignment チームは、Jan Leike が Anthropic へ移った後の 2024年5月に解散しました。agenda (scalable oversight、W2SG、automated alignment research) は Anthropic や学術ラボで続きました — MATS (Lesson 28)、Redwood (Lesson 10)、Apollo (Lesson 8)、METR (Lesson 28)。組織構造は変わりましたが、研究上の問いは変わっていません。
 
-### Where this fits in Phase 18
+### Phase 18 における位置づけ
 
-Lessons 6-10 describe the threat and the defensive paradigm under the assumption U is untrustworthy. Lesson 11 is the offensive paradigm: make the overseer strong enough to verify U's alignment. Lessons 12-16 then turn to the practical tooling of adversarial evaluation.
+Lessons 6-10 は、U が信用できないという仮定のもとで threat と defensive paradigm を説明します。Lesson 11 は offensive paradigm です。監督者を、U の alignment を検証できるほど強くします。Lessons 12-16 では、adversarial evaluation の実務的な tooling に移ります。
 
-## Use It
+## 使ってみる
 
-`code/main.py` simulates a W2SG fine-tune on a synthetic task. Weak labeler has 70% accuracy with structured errors; strong model has 95% ceiling on gold labels. You fine-tune the strong model on weak labels, measure PGR, and compare to strong-on-gold and weak-alone.
+`code/main.py` は合成タスクで W2SG fine-tune をシミュレーションします。弱い labeler は構造化された誤りを持つ 70% accuracy、強いモデルは gold labels 上で 95% ceiling です。弱いラベルで強いモデルを fine-tune し、PGR を測り、strong-on-gold と weak-alone と比較します。
 
-## Ship It
+## 成果物
 
-This lesson produces `outputs/skill-w2sg-pgr.md`. Given an oversight setup description, it identifies the weak supervisor, the strong model, the supervision quality, and computes (or requests) PGR. It flags whether the claim is "weak can supervise strong" or "weak + oversight mechanism can supervise strong."
+この lesson は `outputs/skill-w2sg-pgr.md` を生成します。oversight setup の説明を受け取り、弱い監督者、強いモデル、監督の品質を特定し、PGR を計算します (または必要な情報を要求します)。その主張が「弱いものが強いものを監督できる」なのか、「弱いもの + oversight mechanism が強いものを監督できる」なのかを区別します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Report PGR for weak_accuracy = 0.60, 0.70, 0.80. Explain the shape of the PGR curve.
+1. `code/main.py` を実行してください。weak_accuracy = 0.60, 0.70, 0.80 の PGR を報告し、PGR 曲線の形を説明してください。
 
-2. Modify the weak labeler to have structured error (e.g., always wrong on a specific input class). Does PGR increase, decrease, or stay the same? Explain.
+2. 弱い labeler が構造化された誤り (例: 特定の入力 class で常に誤る) を持つように変更してください。PGR は上がりますか、下がりますか、それとも同じですか。説明してください。
 
-3. Read Burns et al. 2023 Section 4.3 (NLP tasks). Reproduce the "confidence auxiliary loss" intuition: when the strong model is more confident than the weak labels, who wins?
+3. Burns et al. 2023 Section 4.3 (NLP tasks) を読んでください。「confidence auxiliary loss」の直観を再現してください。強いモデルが弱いラベルより自信を持つとき、どちらが勝つのでしょうか。
 
-4. Design a scalable-oversight protocol that combines debate and task decomposition for a software-engineering task. Name one failure mode of each component and explain how the combination addresses or fails to address each.
+4. software-engineering タスク向けに、debate と task decomposition を組み合わせた scalable-oversight protocol を設計してください。各コンポーネントの failure mode を1つ挙げ、その組み合わせがそれぞれをどう扱うか、または扱えないかを説明してください。
 
-5. Articulate what would falsify the "weak-to-strong generalization is a viable path to superalignment" claim. Be specific about the empirical signature you would need to see.
+5. 「weak-to-strong generalization は superalignment への有望な道である」という主張を反証するには何が必要かを明確に述べてください。必要な empirical signature を具体的にしてください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| Scalable oversight | "making the overseer stronger" | Mechanisms that increase an overseer's ability to evaluate a more-capable model |
-| W2SG | "weak supervises strong" | Fine-tuning a strong model on weak labels and measuring the capability recovered |
-| PGR | "performance gap recovered" | (fine-tuned - weak) / (ceiling - weak); 1.0 = fully closed, 0 = no help |
-| Debate | "two U instances argue" | Scalable oversight mechanism where a weak judge picks between two U defenders |
-| RRM | "recursive reward modeling" | U helps train the reward model for U+1; overseer capability tracks U |
-| Task decomposition | "sub-tasks the human checks" | Break a hard task into sub-tasks the human can verify, recursively |
-| Superalignment | "aligning superhuman AI" | The research agenda concerned with aligning models the human cannot directly evaluate |
+| Term | よく言われる説明 | 実際の意味 |
+|------|------------------|------------|
+| Scalable oversight | 「監督者を強くする」 | より高性能なモデルを評価できるよう、監督者の能力を高めるメカニズム |
+| W2SG | 「弱いものが強いものを監督する」 | 弱いラベルで強いモデルを fine-tune し、回復した capability を測ること |
+| PGR | "performance gap recovered" | (fine-tuned - weak) / (ceiling - weak); 1.0 = 完全に gap を閉じた、0 = 効果なし |
+| Debate | 「2つの U インスタンスが議論する」 | 弱い judge が2つの U の主張から選ぶ scalable oversight メカニズム |
+| RRM | "recursive reward modeling" | U が U+1 向け reward model の訓練を助け、監督者能力が U に追随する |
+| Task decomposition | 「人間が確認する sub-task」 | 難しいタスクを、人間が検証できる sub-task に再帰的に分解する |
+| Superalignment | 「超人的 AI を align する」 | 人間が直接評価できないモデルを align する研究 agenda |
 
-## Further Reading
+## 参考文献
 
-- [Burns et al. — Weak-to-Strong Generalization (OpenAI 2023)](https://openai.com/index/weak-to-strong-generalization/) — the W2SG paper
-- [Irving, Christiano, Amodei — AI safety via debate (arXiv:1805.00899)](https://arxiv.org/abs/1805.00899) — the debate mechanism
+- [Burns et al. — Weak-to-Strong Generalization (OpenAI 2023)](https://openai.com/index/weak-to-strong-generalization/) — W2SG 論文
+- [Irving, Christiano, Amodei — AI safety via debate (arXiv:1805.00899)](https://arxiv.org/abs/1805.00899) — debate mechanism
 - [Leike et al. — Scalable agent alignment via reward modeling (arXiv:1811.07871)](https://arxiv.org/abs/1811.07871) — recursive reward modeling
-- [Khan et al. — Debating with More Persuasive LLMs Leads to More Truthful Answers (arXiv:2402.06782)](https://arxiv.org/abs/2402.06782) — 2024 empirical study of debate with stronger debaters
-- [Lang et al. — Debate Helps Weak-to-Strong Generalization (arXiv:2501.13124)](https://arxiv.org/abs/2501.13124) — 2025 combination of debate + W2SG
+- [Khan et al. — Debating with More Persuasive LLMs Leads to More Truthful Answers (arXiv:2402.06782)](https://arxiv.org/abs/2402.06782) — より強い debater を使った debate の 2024 年経験的研究
+- [Lang et al. — Debate Helps Weak-to-Strong Generalization (arXiv:2501.13124)](https://arxiv.org/abs/2501.13124) — debate + W2SG の 2025 年の組み合わせ

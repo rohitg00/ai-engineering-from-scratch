@@ -1,6 +1,6 @@
 ---
 name: skill-context-engineering
-description: Decision framework for designing context assembly pipelines based on task type, window size, and latency budget
+description: タスク種別、ウィンドウサイズ、レイテンシ予算に基づいてコンテキスト組み立てパイプラインを設計する意思決定フレームワーク
 version: 1.0.0
 phase: 11
 lesson: 05
@@ -9,69 +9,69 @@ tags: [context-engineering, context-window, rag, memory, tool-selection, lost-in
 
 # Context Engineering
 
-When building an LLM application, apply this framework to design the context assembly pipeline.
+LLMアプリケーションを構築するときは、このフレームワークでコンテキスト組み立てパイプラインを設計します。
 
-## Core principles
+## 中核原則
 
-1. **Context is scarce.** A 128K window sounds large but fills fast. Budget every component explicitly.
-2. **Attention is uneven.** Models attend more to the start and end. Put critical information there. The middle is the dead zone.
-3. **Dynamic beats static.** Different queries need different context. Assemble per query, not once at startup.
-4. **Less is more.** A curated 10K context outperforms a dumped 100K context. Signal-to-noise ratio matters more than total information.
-5. **Measure everything.** You cannot optimize what you do not measure. Count tokens per component on every request.
+1. **コンテキストは希少資源です。** 128Kウィンドウは大きく見えてもすぐ埋まります。すべてのコンポーネントに明示的な予算を置きます。
+2. **注意は均一ではありません。** モデルは先頭と末尾により強く注意します。重要情報はそこに置きます。中央は弱い領域です。
+3. **静的より動的です。** クエリごとに必要なコンテキストは違います。起動時に一度組むのではなく、クエリごとに組み立てます。
+4. **少ない方が良いことがあります。** 厳選した10Kコンテキストは、雑に詰め込んだ100Kコンテキストを上回ります。総情報量よりS/N比が重要です。
+5. **すべて測ります。** 測れないものは最適化できません。リクエストごとにコンポーネント別トークン数を数えます。
 
-## Context budget guidelines
+## コンテキスト予算の目安
 
 | Component | Typical Range | Priority | Compression Strategy |
 |-----------|-------------|----------|---------------------|
-| System prompt | 200-1,000 tokens | Fixed, high | Write tight, remove redundancy |
-| Tool definitions | 500-3,000 tokens | Dynamic, medium | Prune by query intent |
-| Retrieved context | 1,000-5,000 tokens | Dynamic, high | Rerank + threshold + deduplicate |
-| Conversation history | 500-5,000 tokens | Dynamic, medium | Summarize old turns |
-| Few-shot examples | 500-2,000 tokens | Dynamic, high | Select by task similarity |
-| User query | 50-500 tokens | Fixed, highest | N/A |
-| Generation reserve | 2,000-8,000 tokens | Fixed | Adjust by expected output length |
+| System prompt | 200-1,000 tokens | 固定、高 | 簡潔に書き、冗長性を除く |
+| Tool definitions | 500-3,000 tokens | 動的、中 | クエリ意図で削減する |
+| Retrieved context | 1,000-5,000 tokens | 動的、高 | Rerank + threshold + deduplicate |
+| Conversation history | 500-5,000 tokens | 動的、中 | 古いターンを要約する |
+| Few-shot examples | 500-2,000 tokens | 動的、高 | タスク類似度で選ぶ |
+| User query | 50-500 tokens | 固定、最高 | N/A |
+| Generation reserve | 2,000-8,000 tokens | 固定 | 想定出力長で調整する |
 
-## When to use each memory type
+## 各メモリ種別を使う場面
 
-**Short-term (conversation history):** The current session. Managed by summarization. Compress turns older than 5-10 exchanges. Keep the last 3-4 turns verbatim.
+**短期（conversation history）:** 現在のセッション。要約で管理します。5-10往復より古いターンを圧縮し、直近3-4ターンは逐語的に残します。
 
-**Long-term (facts database):** Preferences and project facts that persist across sessions. Retrieve on session start. Examples: "user prefers Python", "project uses PostgreSQL", "team follows trunk-based development". Store in CLAUDE.md, a database, or a structured memory system.
+**長期（facts database）:** セッションをまたいで残る好みやプロジェクト事実。セッション開始時に取得します。例:「user prefers Python」「project uses PostgreSQL」「team follows trunk-based development」。CLAUDE.md、データベース、構造化メモリに保存します。
 
-**Episodic (past interactions):** Specific past conversations relevant to the current task. Store as embeddings, retrieve by similarity. "Last week we debugged a similar auth issue" is episodic memory.
+**エピソード（past interactions）:** 現在のタスクに関係する過去の具体的な会話。埋め込みとして保存し、類似度で取得します。「先週、似たauth問題をデバッグした」はエピソード記憶です。
 
-## Tool selection strategy
+## ツール選択戦略
 
-Do not include all tools in every request. This wastes tokens and confuses the model.
+すべてのリクエストに全ツールを含めないでください。トークンを浪費し、モデルを混乱させます。
 
-1. Classify the query intent (code, email, calendar, research, data)
-2. Map intents to tool categories
-3. Include only matching tools
-4. If intent is ambiguous, include tools from the top 2 categories
-5. Always include a "general" tool (like web search) as fallback
+1. クエリ意図を分類する（code、email、calendar、research、data）
+2. 意図をツールカテゴリに対応付ける
+3. 一致するツールだけ含める
+4. 意図が曖昧なら上位2カテゴリのツールを含める
+5. フォールバックとして常に「general」ツール（web searchなど）を含める
 
-Expected savings: 60-80% of tool definition tokens on queries with clear intent.
+期待される節約: 意図が明確なクエリではツール定義トークンの60-80%。
 
-## Retrieval best practices
+## 検索のベストプラクティス
 
-- **Rerank after retrieval.** Vector similarity is a rough filter. A reranker (cross-encoder or LLM-based) improves precision significantly.
-- **Set a relevance threshold.** Do not include chunks below 0.3 cosine similarity. They add noise.
-- **Deduplicate.** If two chunks share 80%+ content, keep only the higher-scored one.
-- **Apply lost-in-the-middle ordering.** Place the most relevant chunks first and last.
-- **Limit total retrieval tokens.** 3-5 highly relevant chunks beat 15 mediocre ones.
+- **検索後にrerankする。** ベクトル類似度は粗いフィルタです。reranker（cross-encoderまたはLLMベース）は精度を大きく改善します。
+- **関連度しきい値を設定する。** cosine similarityが0.3未満のチャンクは含めません。ノイズになります。
+- **重複排除する。** 2つのチャンクが80%以上同じ内容なら、高スコア側だけ残します。
+- **lost-in-the-middle順序を適用する。** 最も関連するチャンクを先頭と末尾に置きます。
+- **検索トークン総量を制限する。** 平凡な15チャンクより、高関連度の3-5チャンクが有効です。
 
-## History management
+## 履歴管理
 
-- Keep the last 3-4 turns verbatim (the model needs recent context)
-- Summarize older turns into a digest ("We discussed X, decided Y, and blocked on Z")
-- Drop system-generated turns that add no information (tool invocations with no user-facing content)
-- Trigger compression when history exceeds 30% of the available budget
+- 直近3-4ターンは逐語的に保持する（モデルには最近の文脈が必要です）
+- 古いターンはダイジェストに要約する（「Xを議論し、Yを決定し、Zで詰まっている」）
+- 情報を追加しないシステム生成ターン（ユーザー向け内容のないツール呼び出し）は落とす
+- 履歴が利用可能予算の30%を超えたら圧縮を起動する
 
-## Red flags
+## 危険信号
 
-- System prompt exceeds 2,000 tokens: probably includes information that should be dynamic
-- All tools included on every request: implement intent-based selection
-- No relevance filtering on retrieval: you are dumping noise into the window
-- History grows unbounded: summarization is not implemented
-- No generation reserve: the model truncates its responses
-- Same information in 3 places (system prompt, retrieved doc, history): deduplicate
-- Context utilization over 60%: you are leaving too little room for the model to "think"
+- System promptが2,000トークンを超える: 動的にすべき情報を含んでいる可能性が高い
+- 毎回全ツールを含めている: 意図ベース選択を実装する
+- 検索に関連度フィルタがない: ノイズをウィンドウに流し込んでいる
+- 履歴が無制限に増える: 要約が未実装
+- Generation reserveがない: 応答が途中で切れる
+- 同じ情報が3箇所にある（system prompt、retrieved doc、history）: 重複排除する
+- コンテキスト使用率が60%超: モデルが「考える」余地を残していない

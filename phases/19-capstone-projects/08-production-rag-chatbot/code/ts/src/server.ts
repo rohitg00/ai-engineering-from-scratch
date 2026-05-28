@@ -19,7 +19,7 @@ export type AppOptions = {
 
 function renderClient(): string {
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Production RAG chatbot</title>
+<html lang="ja"><head><meta charset="utf-8"><title>Production RAG chatbot</title>
 <style>
   body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; color: #222; }
   #log { border: 1px solid #ddd; padding: 1rem; min-height: 200px; white-space: pre-wrap; }
@@ -28,12 +28,12 @@ function renderClient(): string {
   .cites { margin-top: 1rem; font-size: .9rem; color: #333; }
 </style></head><body>
 <h1>Capstone 08 chat (skeleton)</h1>
-<p>Role: <code>analyst</code>, jurisdiction: <code>GDPR</code>. Streams SSE token-by-token.</p>
+<p>Role: <code>analyst</code>, jurisdiction: <code>GDPR</code>。SSE で token-by-token に stream します。</p>
 <div id="log"></div>
 <div class="cites" id="cites"></div>
 <form id="f">
-  <input type="text" id="q" placeholder="ask about a policy..." required>
-  <button type="submit">send</button>
+  <input type="text" id="q" placeholder="policy について質問..." required>
+  <button type="submit">送信</button>
 </form>
 <script>
   const sessionId = "demo-session";
@@ -95,7 +95,7 @@ export function buildApp(options: AppOptions = {}): {
       q: c.req.query("q"),
     });
     if (!parsed.success) {
-      return c.json({ error: "missing q" }, 400);
+      return c.json({ error: "q がありません" }, 400);
     }
     const sessionId = parsed.data.sessionId ?? randomUUID();
     const role = parsed.data.role ?? "analyst";

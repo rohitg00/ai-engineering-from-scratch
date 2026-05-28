@@ -1,29 +1,29 @@
 ---
 name: regulatory-map
-description: Map a deployment's AI regulatory obligations across EU, US, UK, Korea.
+description: deployment の AI regulatory obligations を EU, US, UK, Korea across で map する。
 version: 1.0.0
 phase: 18
 lesson: 24
 tags: [eu-ai-act, gpai-code, caisi, uk-aisi, korean-framework-act]
 ---
 
-Given a deployment description (provider jurisdiction, infrastructure jurisdiction, user jurisdiction), map the applicable AI regulatory obligations.
+deployment description (provider jurisdiction, infrastructure jurisdiction, user jurisdiction) が与えられたら、applicable AI regulatory obligations を map する。
 
-Produce:
+作成するもの:
 
-1. EU exposure. If the deployment touches EU users or infrastructure, apply the EU AI Act. Identify risk tier (prohibited, high-risk, GPAI-systemic, GPAI-other, limited). State the deadline for each obligation class.
-2. UK exposure. If UK users, state the UK AI Security Institute evaluation expectations. The UK does not have a comprehensive AI regulation (2026); sectoral rules apply.
-3. US exposure. If US users, identify federal activity (CAISI, NIST standards) and state-level rules (California AB 2013, Colorado AI Act, etc.). Federal framework is pro-growth; state rules set the floor.
-4. Korea exposure. If Korean users, apply the Korean AI Framework Act; identify whether the deployment is high-impact AI or generative AI; flag local-representative requirement for foreign providers.
-5. Binding-rule determination. For each substantive obligation (transparency, risk assessment, copyright), identify the strictest rule across jurisdictions. That is the binding rule.
+1. EU exposure。deployment が EU users または infrastructure に触れる場合、EU AI Act を適用する。risk tier (prohibited, high-risk, GPAI-systemic, GPAI-other, limited) を特定する。各 obligation class の deadline を述べる。
+2. UK exposure。UK users がいる場合、UK AI Security Institute の evaluation expectations を述べる。UK には comprehensive AI regulation はない (2026年)。sectoral rules が適用される。
+3. US exposure。US users がいる場合、federal activity (CAISI, NIST standards) と state-level rules (California AB 2013, Colorado AI Act など) を特定する。Federal framework は pro-growth であり、state rules が floor を設定する。
+4. Korea exposure。Korean users がいる場合、Korean AI Framework Act を適用する。deployment が high-impact AI または generative AI かを特定し、foreign providers の local-representative requirement を flag する。
+5. Binding-rule determination。各 substantive obligation (transparency, risk assessment, copyright) について、jurisdictions をまたいで最も strict な rule を特定する。それが binding rule である。
 
 Hard rejects:
-- Any deployment map without naming the applicable jurisdictions.
-- Any EU exposure assessment without risk-tier identification.
-- Any US exposure assessment that ignores state-level rules.
+- applicable jurisdictions を名指ししない deployment map。
+- risk-tier identification のない EU exposure assessment。
+- state-level rules を無視する US exposure assessment。
 
 Refusal rules:
-- If the user asks "is this deployment compliant," refuse the binary claim without jurisdiction-by-jurisdiction mapping.
-- If the user asks for a single global compliance strategy, refuse — the jurisdictions have different requirements.
+- ユーザーが「この deployment は compliant か」と尋ねたら、jurisdiction-by-jurisdiction mapping なしの二値 claim は拒否する。
+- ユーザーが single global compliance strategy を求めたら拒否する。jurisdictions は異なる requirements を持つ。
 
-Output: a one-page map filling the five sections above, identifying the binding rule on each substantive question, and naming the highest-risk compliance gap. Cite EU AI Act (Regulation 2024/1689), GPAI Code of Practice (2025), and Korean AI Framework Act once each.
+出力: 上記5セクションを埋めた1ページの map。各 substantive question に対する binding rule を特定し、最も risk の高い compliance gap を名指しする。EU AI Act (Regulation 2024/1689)、GPAI Code of Practice (2025)、Korean AI Framework Act をそれぞれ一度引用する。

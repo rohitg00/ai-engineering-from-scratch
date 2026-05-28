@@ -4,67 +4,67 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does timeout on a non-idempotent tool default to no retry?",
+      "question": "non-idempotent tool の timeout が default で retry されないのはなぜですか？",
       "options": [
-        "Because the dispatcher cannot measure non-idempotent calls",
-        "Because the tool may have partially committed; retry can duplicate the effect",
-        "Because non-idempotent handlers run faster",
-        "Because idempotency keys are slow"
+        "dispatcher は non-idempotent call を計測できないから",
+        "tool が部分的に commit 済みかもしれず、retry が effect を duplicate する可能性があるから",
+        "non-idempotent handler は速く動くから",
+        "idempotency key は遅いから"
       ],
       "correct": 1,
-      "explanation": "Retrying a db.write that timed out at 4.9s can produce a second write. The dispatcher refuses unless the handler tells it the call is safe to repeat."
+      "explanation": "4.9 秒で timeout した db.write を retry すると 2 回目の write が発生する可能性があります。dispatcher は handler が繰り返して安全だと示さない限り拒否します。"
     },
     {
       "stage": "pre",
-      "question": "What is the idempotency-key dedupe protecting against?",
+      "question": "idempotency-key dedupe は何から守っていますか？",
       "options": [
-        "Slow networks",
-        "A retry that fires while the original call is still in flight",
-        "Schema validation errors",
-        "Process restarts"
+        "遅い network",
+        "original call がまだ in-flight の間に発火する retry",
+        "schema validation error",
+        "process restart"
       ],
       "correct": 1,
-      "explanation": "Without dedupe, a retry at 5s races a slow original still pending. The cache collapses both into one handler invocation."
+      "explanation": "dedupe がなければ、5 秒時点の retry がまだ pending の遅い original と競争します。cache は両方を 1 回の handler invocation に畳みます。"
     },
     {
       "stage": "check",
-      "question": "Which error kinds are eligible for retry in this dispatcher?",
+      "question": "この dispatcher で retry 対象になる error kind はどれですか？",
       "options": [
-        "schema and not_found",
-        "internal and budget_exceeded",
-        "timeout (if idempotent) and transient",
-        "All of them"
+        "schema と not_found",
+        "internal と budget_exceeded",
+        "timeout（idempotent の場合）と transient",
+        "すべて"
       ],
       "correct": 2,
-      "explanation": "Schema and not_found are deterministic. Internal masks an unknown handler bug. Budget exceeded is a yield. Only timeout-on-idempotent and explicit TransientError retry."
+      "explanation": "schema と not_found は deterministic です。internal は未知の handler bug を隠しています。budget exceeded は停止条件です。retry するのは idempotent な timeout と明示的な TransientError だけです。"
     },
     {
       "stage": "check",
-      "question": "What does the semaphore around _run_with_retries protect?",
+      "question": "_run_with_retries の周りの semaphore は何を守りますか？",
       "options": [
-        "The handler from itself",
-        "The backend from too many simultaneous calls fanned out by gather()",
-        "The validator",
-        "The retry counter"
+        "handler 自身から handler を守る",
+        "gather() によって fan-out された同時 call が多すぎることから backend を守る",
+        "validator",
+        "retry counter"
       ],
       "correct": 1,
-      "explanation": "A gather of forty calls would open forty concurrent dispatches without the limit. The semaphore caps the wave."
+      "explanation": "limit がなければ 40 call の gather は 40 concurrent dispatch を開きます。semaphore がその波を cap します。"
     },
     {
       "stage": "check",
-      "question": "Why is the idempotency key derived by the caller, not by the dispatcher?",
+      "question": "idempotency key を dispatcher ではなく caller が導くのはなぜですか？",
       "options": [
-        "Because Python hashes are unstable",
-        "Because deriving from args alone makes two semantically-different calls collide if they happen to share args",
-        "Because the registry would not have the key",
-        "Because the cache cannot store strings"
+        "Python hash は不安定だから",
+        "args だけから導くと、同じ args を共有する意味的に異なる call が衝突するから",
+        "registry は key を持たないから",
+        "cache は string を保存できないから"
       ],
       "correct": 1,
-      "explanation": "The caller knows the step id, the planner intent, the user. Args alone are not enough context to safely dedupe."
+      "explanation": "caller は step id、planner intent、user を知っています。args だけでは安全に dedupe するための context が足りません。"
     },
     {
       "stage": "post",
-      "question": "Which JSON-RPC error code maps to a schema failure on dispatch?",
+      "question": "dispatch 時の schema failure は、どの JSON-RPC error code に map されますか？",
       "options": [
         "-32601",
         "-32602",
@@ -72,19 +72,19 @@
         "-32700"
       ],
       "correct": 1,
-      "explanation": "-32602 Invalid params. The dispatcher returns it before any handler runs."
+      "explanation": "-32602 Invalid params です。dispatcher は handler を走らせる前にこれを返します。"
     },
     {
       "stage": "post",
-      "question": "After max_attempts is reached with timeouts on an idempotent tool, what is returned?",
+      "question": "idempotent tool で timeout が続き max_attempts に達したあと、何が返りますか？",
       "options": [
-        "An exception is raised",
-        "DispatchOk with no result",
-        "DispatchError with kind=timeout and attempts==max_attempts",
-        "DispatchError with kind=internal"
+        "exception が raise される",
+        "result なしの DispatchOk",
+        "kind=timeout かつ attempts==max_attempts の DispatchError",
+        "kind=internal の DispatchError"
       ],
       "correct": 2,
-      "explanation": "The dispatcher returns a typed error envelope. The kind reflects the last failure mode, attempts reflects how many tries it made."
+      "explanation": "dispatcher は typed error envelope を返します。kind は最後の failure mode を、attempts は試行回数を表します。"
     }
   ]
 }

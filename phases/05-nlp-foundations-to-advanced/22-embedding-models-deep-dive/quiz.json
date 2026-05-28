@@ -1,102 +1,102 @@
 {
   "lesson": "22-embedding-models-deep-dive",
-  "title": "Embedding Models — The 2026 Deep Dive",
+  "title": "埋め込みモデル — 2026 年版ディープダイブ",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is a dense embedding?",
+      "question": "dense embedding とは何ですか。",
       "options": [
-        "A graph over documents",
-        "A sparse weight per vocab token",
-        "A token-level alignment matrix",
-        "One fixed-size vector per text where cosine similarity ranks passages by semantic proximity"
+        "文書間の graph",
+        "vocab token ごとの sparse な重み",
+        "トークンレベルの alignment matrix",
+        "テキストごとに 1 本の固定サイズベクトルで、cosine similarity により意味的な近さでパッセージをランクづけするもの"
       ],
       "correct": 3,
-      "explanation": "Dense embeddings give one vector per text (typically 384-3072 dim); cosine ranks similarity."
+      "explanation": "Dense embeddings はテキストごとに 1 ベクトル (通常 384-3072 dim) を与え、cosine によって類似度をランクづけします。"
     },
     {
       "stage": "pre",
-      "question": "What does Matryoshka Representation Learning enable?",
+      "question": "Matryoshka Representation Learning は何を可能にしますか。",
       "options": [
-        "Multilingual training",
-        "Faster softmax",
-        "Truncating a trained embedding to its first N dimensions and getting a still-useful smaller embedding",
-        "Cross-encoder rescoring"
+        "多言語訓練",
+        "より高速な softmax",
+        "訓練済み embedding を先頭 N 次元に切り詰めても、有用な小型 embedding として使えること",
+        "cross-encoder rescoring"
       ],
       "correct": 2,
-      "explanation": "Matryoshka training makes the first N dims of the vector standalone-useful, enabling cheap truncation."
+      "explanation": "Matryoshka training は、ベクトルの先頭 N dims だけでも単独で有用になるようにし、低コストな truncation を可能にします。"
     },
     {
       "stage": "check",
-      "question": "How do multi-vector (ColBERT) embeddings score query-doc pairs?",
+      "question": "multi-vector (ColBERT) embeddings は query-doc ペアをどのようにスコアリングしますか。",
       "options": [
-        "Cosine of mean-pooled token vectors",
+        "mean-pooled token vectors の cosine",
         "Cross-entropy",
         "Earth-mover's distance",
-        "MaxSim: for each query token find the most similar document token, then sum the maxima"
+        "MaxSim: 各 query token について最も類似した document token を見つけ、その最大値を合計する"
       ],
       "correct": 3,
-      "explanation": "ColBERT-style late interaction uses MaxSim across per-token vectors."
+      "explanation": "ColBERT 方式の late interaction は、token ごとの vectors にまたがって MaxSim を使います。"
     },
     {
       "stage": "check",
-      "question": "What does BGE-M3 output simultaneously?",
+      "question": "BGE-M3 は何を同時に出力しますか。",
       "options": [
-        "Only a sparse vector",
-        "Only a dense vector",
-        "Dense, sparse, and multi-vector (colbert) representations from one model in a single inference",
-        "Only a colbert vector"
+        "sparse vector だけ",
+        "dense vector だけ",
+        "1 つのモデルによる 1 回の inference から、dense、sparse、multi-vector (colbert) representations",
+        "colbert vector だけ"
       ],
       "correct": 2,
-      "explanation": "BGE-M3 emits three retrieval modes from one model, useful for fused hybrid scoring."
+      "explanation": "BGE-M3 は 1 つのモデルから 3 つの retrieval modes を出力し、融合した hybrid scoring に役立ちます。"
     },
     {
       "stage": "check",
-      "question": "Why must you re-normalize a Matryoshka-truncated vector before cosine similarity?",
+      "question": "Matryoshka で切り詰めたベクトルを cosine similarity の前に再 normalize しなければならないのはなぜですか。",
       "options": [
-        "Truncation breaks training",
-        "Truncation changes the vector norm; without re-normalizing, dot product no longer equals cosine",
-        "Cosine ignores normalization",
-        "Required by FAISS only"
+        "truncation が訓練を壊すから",
+        "truncation が vector norm を変えるため。再 normalize しないと dot product が cosine と等しくなくなるから",
+        "cosine は normalization を無視するから",
+        "FAISS だけで必要だから"
       ],
       "correct": 1,
-      "explanation": "Re-normalizing after truncation restores unit norm so dot product equals cosine again."
+      "explanation": "truncation 後に再 normalize すると unit norm が戻り、dot product が再び cosine と等しくなります。"
     },
     {
       "stage": "post",
-      "question": "Why do BGE models often need a query-side prefix string?",
+      "question": "BGE models で query 側 prefix string が必要になることが多いのはなぜですか。",
       "options": [
-        "To compress queries",
-        "Required by FAISS",
-        "BGE was trained with an explicit query prompt; omitting it costs 3-5 points recall",
-        "Prefixes change tokenizer behavior"
+        "queries を圧縮するため",
+        "FAISS で必須だから",
+        "BGE は明示的な query prompt 付きで訓練されており、省略すると recall が 3-5 ポイント落ちるから",
+        "prefixes が tokenizer の挙動を変えるから"
       ],
       "correct": 2,
-      "explanation": "BGE models expect a 'Represent this sentence for searching...' prefix on queries."
+      "explanation": "BGE models は queries に 'Represent this sentence for searching...' prefix が付くことを想定しています。"
     },
     {
       "stage": "post",
-      "question": "Why is MTEB necessary but not sufficient for picking an embedding model?",
+      "question": "embedding model を選ぶうえで MTEB が必要だが十分ではないのはなぜですか。",
       "options": [
-        "MTEB only covers English",
-        "MTEB ignores latency",
-        "Leaderboard ranks are average across many tasks; your specific domain may differ, so always benchmark on your data",
-        "MTEB rewards bigger models"
+        "MTEB は英語しか扱わないから",
+        "MTEB は latency を無視するから",
+        "leaderboard ranks は多数のタスクにわたる平均であり、あなたの特定ドメインでは異なる可能性があるため、常に自分のデータで benchmark すべきだから",
+        "MTEB は大きいモデルを優遇するから"
       ],
       "correct": 2,
-      "explanation": "MTEB averages across tasks; domain-specific eval can flip the ranking."
+      "explanation": "MTEB はタスク全体で平均します。ドメイン固有の eval では ranking が逆転することがあります。"
     },
     {
       "stage": "post",
-      "question": "When should you add SPLADE sparse retrieval alongside dense embeddings?",
+      "question": "dense embeddings に加えて SPLADE sparse retrieval を追加すべきなのはどんなときですか。",
       "options": [
-        "Whenever the encoder is multilingual",
-        "Whenever Matryoshka is used",
-        "When queries are keyword-heavy or contain identifiers/codes that dense embeddings blur",
-        "On small corpora only"
+        "encoder が多言語のときは常に",
+        "Matryoshka を使うときは常に",
+        "queries がキーワード中心、または dense embeddings がぼかしがちな identifiers/codes を含むとき",
+        "小さな corpora の場合のみ"
       ],
       "correct": 2,
-      "explanation": "SPLADE captures lexical/keyword matches that dense models can miss; fuse with dense via RRF."
+      "explanation": "SPLADE は dense models が見落とし得る語彙/キーワード一致を捉えます。RRF で dense と融合してください。"
     }
   ]
 }

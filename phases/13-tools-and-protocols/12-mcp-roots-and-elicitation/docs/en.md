@@ -1,34 +1,34 @@
-# Roots and Elicitation — Scoping and Mid-Flight User Input
+# Roots and Elicitation - Scope設定と実行中のUser Input
 
-> Hard-coded paths break the moment a user opens a different project. Pre-filled tool arguments break when the user under-specifies. Roots scope the server to a user-controlled set of URIs; elicitation pauses mid-tool-call to ask the user for structured input via a form or URL. Two client primitives, two fixes for common MCP failure modes. SEP-1036 (URL-mode elicitation, 2025-11-25) is experimental through H1 2026 — check SDK versions before depending on it.
+> Hard-coded pathは、userが別のprojectを開いた瞬間に壊れます。pre-filled tool argumentは、userの指定が不足していると破綻します。Rootsはserverのscopeをuser-controlledなURI集合に限定します。Elicitationはtool callの途中でpauseし、formやURLを通じてstructured inputをuserに求めます。2つのclient primitiveが、よくあるMCP failure modeを2つ修正します。SEP-1036（URL-mode elicitation、2025-11-25）は2026年上半期を通じてexperimentalです。依存する前にSDK versionを確認してください。
 
-**Type:** Build
-**Languages:** Python (stdlib, roots + elicitation demo)
-**Prerequisites:** Phase 13 · 07 (MCP server)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python (stdlib, roots + elicitation demo)
+**前提条件:** Phase 13 · 07 (MCP server)
+**所要時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Declare `roots` and respond to `notifications/roots/list_changed`.
-- Restrict server file operations to URIs inside the declared root set.
-- Use `elicitation/create` to ask the user for a confirmation or structured input mid-tool-call.
-- Choose between form-mode and URL-mode elicitation (the latter is experimental; drift-risk noted).
+- `roots`を宣言し、`notifications/roots/list_changed`に応答する。
+- serverのfile operationを、宣言されたroot set内のURIに制限する。
+- `elicitation/create`を使って、tool callの途中でuserにconfirmationやstructured inputを求める。
+- form-modeとURL-mode elicitationを選び分ける（後者はexperimentalであり、drift riskに注意する）。
 
-## The Problem
+## 問題
 
-Two concrete failures a notes MCP server hits in production.
+notes MCP serverがproductionで直面する具体的なfailureが2つあります。
 
-**Broken path assumption.** The server is written against `~/notes`. A user on a different machine with notes in `~/Documents/Notes` gets a tool call that fails silently (no file found) or worse, wrote to the wrong place.
+**壊れたpath assumption。** serverは`~/notes`を前提に書かれています。別のmachineでnotesを`~/Documents/Notes`に置いているuserは、tool callがsilentに失敗する（file not found）か、さらに悪い場合は誤った場所へwriteします。
 
-**Missing argument the user would know.** The user asks "delete the old TPS report note". The model calls `notes_delete(title: "TPS report")` but there are three matching notes from 2023, 2024, and 2025. The tool cannot guess. Failing with "ambiguous" is annoying; running on all three is catastrophic.
+**userなら分かるmissing argument。** userが「古いTPS report noteを削除して」と頼みます。modelは`notes_delete(title: "TPS report")`を呼びますが、2023年、2024年、2025年のmatching noteが3つあります。toolは推測できません。"ambiguous"で失敗するのは煩わしく、3つすべてに実行するのは致命的です。
 
-Roots fix the first: the client declares at `initialize` the set of URIs the server may touch. Elicitation fixes the second: the server pauses the tool call and sends `elicitation/create` to ask the user to pick which one.
+Rootsは最初の問題を修正します。clientは`initialize`時に、serverが触れてよいURI集合を宣言します。Elicitationは2つ目を修正します。serverはtool callをpauseし、`elicitation/create`を送ってどれを選ぶかをuserに尋ねます。
 
-## The Concept
+## コンセプト
 
 ### Roots
 
-The client declares a root list at `initialize`:
+clientは`initialize`でroot listを宣言します。
 
 ```json
 {
@@ -36,23 +36,23 @@ The client declares a root list at `initialize`:
 }
 ```
 
-Server can then call `roots/list`:
+その後serverは`roots/list`をcallできます。
 
 ```json
 {"roots": [{"uri": "file:///Users/alice/Documents/Notes", "name": "Notes"}]}
 ```
 
-Servers MUST treat roots as the boundary: any file read or write outside the root set is rejected. This is not enforced by the client (the server is still code the user trusted), but spec-compliant servers honor it.
+serverはrootsをboundaryとして扱わなければなりません。root set外のfile read/writeはすべて拒否されます。これはclientによって強制されるものではありません（serverは依然としてuserがtrustしたcodeです）が、spec-compliantなserverはこれを守ります。
 
-When the user adds or removes a root, the client sends `notifications/roots/list_changed`. The server re-calls `roots/list` and updates its boundary.
+userがrootを追加または削除すると、clientは`notifications/roots/list_changed`を送ります。serverは`roots/list`を再callし、boundaryを更新します。
 
-### Why roots are a client primitive
+### なぜrootsはclient primitiveなのか
 
-Roots are declared by the client because they represent the user's consent model. The user told Claude Desktop "give this notes server access to these two directories". The server cannot widen that scope.
+Rootsはuserのconsent modelを表すため、clientによって宣言されます。userはClaude Desktopに「このnotes serverに、この2つのdirectoryへのaccessを与える」と伝えました。serverはそのscopeを広げることはできません。
 
-### Elicitation: the form-mode default
+### Elicitation: defaultのform mode
 
-`elicitation/create` takes a form schema plus a natural-language prompt:
+`elicitation/create`はform schemaとnatural-language promptを受け取ります。
 
 ```json
 {
@@ -74,7 +74,7 @@ Roots are declared by the client because they represent the user's consent model
 }
 ```
 
-Client renders a form, collects the user's answer, returns:
+clientはformをrenderし、userのanswerを集めて返します。
 
 ```json
 {
@@ -83,13 +83,13 @@ Client renders a form, collects the user's answer, returns:
 }
 ```
 
-Three possible actions: `accept` (user filled it), `decline` (user closed it), `cancel` (user aborted the whole tool call).
+actionは3つあります。`accept`（userが入力した）、`decline`（userが閉じた）、`cancel`（userがtool call全体を中止した）。
 
-Form schemas are flat — nested objects are not supported in v1. SDKs typically reject anything more complex than a single layer.
+Form schemaはflatです。v1ではnested objectはsupportされていません。SDKは通常、single layerより複雑なものをrejectします。
 
-### Elicitation: URL mode (SEP-1036, experimental)
+### Elicitation: URL mode（SEP-1036, experimental）
 
-New in 2025-11-25. Instead of a schema, the server sends a URL:
+2025-11-25の新機能です。serverはschemaの代わりにURLを送ります。
 
 ```json
 {
@@ -101,73 +101,73 @@ New in 2025-11-25. Instead of a schema, the server sends a URL:
 }
 ```
 
-Client opens the URL in a browser, waits for completion, returns when the user comes back. Useful for OAuth flows, payment authorization, and document signing where a form is insufficient.
+clientはURLをbrowserで開き、完了を待ち、userが戻ってきたらreturnします。formでは不十分なOAuth flow、payment authorization、document signingに有用です。
 
-Drift-risk note: the SEP-1036 response shape is still settling; some SDKs return the callback URL, others return a completion token. Read your SDK's release notes before using URL mode in production.
+Drift-risk note: SEP-1036のresponse shapeはまだ安定途上です。一部のSDKはcallback URLを返し、別のSDKはcompletion tokenを返します。productionでURL modeを使う前に、使用するSDKのrelease noteを読んでください。
 
-### When elicitation is the right tool
+### Elicitationが適切な場合
 
-- User confirmation before destructive actions (destructive hint + elicitation).
-- Disambiguation (pick one of N matches).
-- First-run setup (API keys, directories, preferences).
-- OAuth-style flows (URL mode).
+- destructive actionの前のuser confirmation（destructive hint + elicitation）。
+- Disambiguation（N個のmatchから1つを選ぶ）。
+- First-run setup（API key、directory、preference）。
+- OAuth-style flow（URL mode）。
 
-### When elicitation is wrong
+### Elicitationが不適切な場合
 
-- Filling a tool's required arguments that the model could have asked for in prose. Use a normal re-prompt, not an elicitation dialog.
-- High-frequency calls. Elicitation interrupts the conversation; do not fire it inside a loop.
-- Anything the server could validate after the fact. Validate, return an error, let the model ask the user in text.
+- modelがproseで質問できたtoolのrequired argumentを埋めること。elicitation dialogではなく、通常のre-promptを使います。
+- high-frequency call。Elicitationはconversationを中断します。loop内で発火させないでください。
+- serverが後からvalidateできるもの。validateしてerrorを返し、modelにtextでuserへ尋ねさせます。
 
 ### Human-in-the-loop bridge
 
-Elicitation plus sampling together enable MCP's "human-in-the-loop" model. A server's agent loop can pause for either user input (elicitation) or model reasoning (sampling). Phase 13 · 11 covered sampling; this lesson covers elicitation. Put them together for full mid-loop control.
+Elicitationとsamplingを合わせると、MCPの"human-in-the-loop" modelが実現します。serverのagent loopは、user input（elicitation）またはmodel reasoning（sampling）のためにpauseできます。Phase 13 · 11ではsamplingを扱いました。このlessonではelicitationを扱います。両者を組み合わせると、mid-loop control全体を構成できます。
 
 ## Use It
 
-`code/main.py` extends the notes server with:
+`code/main.py`はnotes serverを次で拡張します。
 
-- `roots/list` response that the server re-queries after root-list-changed notifications.
-- A `notes_delete` tool that uses `elicitation/create` to disambiguate when multiple notes match.
-- A `notes_setup` tool that uses URL-mode elicitation to open a first-run config page (simulated).
-- A boundary check that refuses operations on URIs outside the declared roots.
+- root-list-changed notificationの後でserverが再queryする`roots/list` response。
+- 複数のnoteがmatchしたときに`elicitation/create`でdisambiguateする`notes_delete` tool。
+- first-run config pageを開くURL-mode elicitationを使う`notes_setup` tool（simulated）。
+- 宣言済みrootsの外側にあるURIへのoperationを拒否するboundary check。
 
-The demo runs three scenarios: happy path (one match), disambiguation (three matches, elicitation fires), out-of-root-write (rejected).
+demoは3つのscenarioを実行します。happy path（1 match）、disambiguation（3 matchesでelicitation発火）、out-of-root-write（rejected）です。
 
 ## Ship It
 
-This lesson produces `outputs/skill-elicitation-form-designer.md`. Given a tool that might need user confirmation or disambiguation, the skill designs the elicitation form schema and the message template.
+このlessonは`outputs/skill-elicitation-form-designer.md`を生成します。user confirmationやdisambiguationを必要とする可能性があるtoolについて、このskillはelicitation form schemaとmessage templateを設計します。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Trigger the disambiguation path; confirm the simulated user answer gets routed back to the tool.
+1. `code/main.py`を実行してください。disambiguation pathをtriggerし、simulated user answerがtoolへ戻されることを確認してください。
 
-2. Add a new tool `notes_archive` that requires elicitation confirmation every time (destructive hint). Check the UX: how does this compare to the model re-asking in text?
+2. 毎回elicitation confirmationを必要とする新しいtool `notes_archive`を追加してください（destructive hint）。UXを確認してください。modelがtextで再質問する場合と比べてどう違いますか。
 
-3. Implement URL-mode elicitation for a first-run OAuth flow. Note the drift risk and add an SDK-version guard.
+3. first-run OAuth flow向けにURL-mode elicitationを実装してください。drift riskに注意し、SDK-version guardを追加してください。
 
-4. Extend `roots/list` handling: when a notification arrives, the server should atomically re-read and rescan open file handles that might now be out of scope.
+4. `roots/list` handlingを拡張してください。notificationが届いたら、serverはroot外になった可能性のあるopen file handleをatomicallyにre-readし、rescanするべきです。
 
-5. Read the SEP-1036 issue discussion thread on GitHub. Identify one open question that affects how servers should handle URL-mode callbacks.
+5. GitHub上のSEP-1036 issue discussion threadを読んでください。serverがURL-mode callbackを扱う方法に影響するopen questionを1つ特定してください。
 
-## Key Terms
+## 主要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Root | "Consent boundary" | URI the client has allowed the server to touch |
-| `roots/list` | "Server asks for scope" | Client returns the current root set |
-| `notifications/roots/list_changed` | "User changed scope" | Client signals the root set has mutated |
-| Elicitation | "Ask the user mid-call" | Server-initiated request for structured user input |
-| `elicitation/create` | "The method" | JSON-RPC method for elicitation requests |
-| Form mode | "Schema-driven form" | Flat JSON Schema rendered as a form in the client UI |
-| URL mode | "Browser redirect" | SEP-1036 experimental; opens a URL and waits |
-| `accept` / `decline` / `cancel` | "User response outcomes" | Three branches the server handles |
-| Disambiguation | "Pick one" | Common elicitation use case when a tool has N candidates |
-| Flat form | "Top-level properties only" | Elicitation schemas cannot nest |
+| Term | よく言われること | 実際の意味 |
+|------|------------------|------------|
+| Root | "Consent boundary" | clientがserverに触れることを許可したURI |
+| `roots/list` | "Server asks for scope" | clientが現在のroot setを返す |
+| `notifications/roots/list_changed` | "User changed scope" | clientがroot setの変化を通知する |
+| Elicitation | "Ask the user mid-call" | structured user inputを求めるserver-initiated request |
+| `elicitation/create` | "The method" | elicitation request用のJSON-RPC method |
+| Form mode | "Schema-driven form" | client UIでformとしてrenderされるflat JSON Schema |
+| URL mode | "Browser redirect" | SEP-1036 experimental。URLを開いて待つ |
+| `accept` / `decline` / `cancel` | "User response outcomes" | serverが処理する3つのbranch |
+| Disambiguation | "Pick one" | toolにN個のcandidateがあるときの一般的なelicitation use case |
+| Flat form | "Top-level properties only" | elicitation schemaはnestできない |
 
-## Further Reading
+## 参考資料
 
-- [MCP — Client roots spec](https://modelcontextprotocol.io/specification/draft/client/roots) — canonical roots reference
-- [MCP — Client elicitation spec](https://modelcontextprotocol.io/specification/draft/client/elicitation) — canonical elicitation reference
-- [Cisco — What's new in MCP elicitation, structured content, OAuth enhancements](https://blogs.cisco.com/developer/whats-new-in-mcp-elicitation-structured-content-and-oauth-enhancements) — 2025-11-25 additions walk-through
-- [MCP — GitHub SEP-1036](https://github.com/modelcontextprotocol/modelcontextprotocol) — URL-mode elicitation proposal (experimental, drift-risk)
-- [The New Stack — How elicitation brings human-in-the-loop to AI tools](https://thenewstack.io/how-elicitation-in-mcp-brings-human-in-the-loop-to-ai-tools/) — UX walkthrough
+- [MCP - Client roots spec](https://modelcontextprotocol.io/specification/draft/client/roots) - canonicalなroots reference
+- [MCP - Client elicitation spec](https://modelcontextprotocol.io/specification/draft/client/elicitation) - canonicalなelicitation reference
+- [Cisco - What's new in MCP elicitation, structured content, OAuth enhancements](https://blogs.cisco.com/developer/whats-new-in-mcp-elicitation-structured-content-and-oauth-enhancements) - 2025-11-25 additionsのwalk-through
+- [MCP - GitHub SEP-1036](https://github.com/modelcontextprotocol/modelcontextprotocol) - URL-mode elicitation proposal（experimental、drift-risk）
+- [The New Stack - How elicitation brings human-in-the-loop to AI tools](https://thenewstack.io/how-elicitation-in-mcp-brings-human-in-the-loop-to-ai-tools/) - UX walkthrough

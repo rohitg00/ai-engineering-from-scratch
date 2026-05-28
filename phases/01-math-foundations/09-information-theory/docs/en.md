@@ -1,155 +1,155 @@
-# Information Theory
+# 情報理論
 
-> Information theory measures surprise. Loss functions are built on it.
+> 情報理論は驚きを測ります。損失関数はその上に作られています。
 
-**Type:** Learn
-**Language:** Python
-**Prerequisites:** Phase 1, Lesson 06 (Probability)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** Phase 1、Lesson 06（確率）
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Compute entropy, cross-entropy, and KL divergence from scratch and explain their relationship
-- Derive why minimizing cross-entropy loss is equivalent to maximizing log-likelihood
-- Calculate mutual information between features and a target to rank feature importance
-- Explain perplexity as the effective vocabulary size a language model chooses from
+- エントロピー、クロスエントロピー、KLダイバージェンスをスクラッチで計算し、それらの関係を説明する
+- クロスエントロピー損失の最小化がlog尤度の最大化と等価である理由を導出する
+- 特徴量とターゲットの間の相互情報量を計算し、特徴量重要度を順位付けする
+- パープレキシティを、言語モデルが選んでいる有効語彙サイズとして説明する
 
-## The Problem
+## 問題
 
-You call `CrossEntropyLoss()` in every classification model you train. You see "perplexity" in every language model paper. You read about KL divergence in VAEs, distillation, and RLHF. These are not disconnected concepts. They are all the same idea wearing different hats.
+分類モデルを訓練するたびに `CrossEntropyLoss()` を呼びます。どの言語モデル論文でも「perplexity」を目にします。VAE、distillation、RLHFではKLダイバージェンスが出てきます。これらは互いに切り離された概念ではありません。すべて同じアイデアが違う帽子をかぶっているだけです。
 
-Information theory gives you the language to reason about uncertainty, compression, and prediction. Claude Shannon invented it in 1948 to solve communication problems. Turns out, training a neural network is a communication problem: the model is trying to transmit the correct label through a noisy channel of learned weights.
+情報理論は、不確実性、圧縮、予測について推論するための言語を与えてくれます。Claude Shannonは1948年に通信問題を解くためにこれを発明しました。実は、ニューラルネットワークの訓練も通信問題です。モデルは、学習された重みというノイズのあるチャネルを通して、正しいラベルを伝えようとしています。
 
-This lesson builds every formula from scratch so you see where they come from and why they work.
+このレッスンでは、すべての式をスクラッチから構築し、それらがどこから来て、なぜ機能するのかを見ていきます。
 
-## The Concept
+## 概念
 
-### Information Content (Surprise)
+### 情報量（驚き）
 
-When something unlikely happens, it carries more information. A coin landing heads? Not surprising. A lottery win? Very surprising.
+起こりにくいことが起きると、より多くの情報を持ちます。コインが表になる？それほど驚きません。宝くじに当たる？非常に驚きます。
 
-The information content of an event with probability p is:
+確率 p の事象の情報量は次のとおりです。
 
 ```
 I(x) = -log(p(x))
 ```
 
-Using log base 2 gives you bits. Using natural log gives you nats. Same idea, different units.
+logの底に2を使うと単位はbitsです。自然対数を使うとnatsです。同じ考え方で、単位が違うだけです。
 
 ```
-Event              Probability    Surprise (bits)
-Fair coin heads    0.5            1.0
-Rolling a 6        0.167          2.58
-1-in-1000 event    0.001          9.97
-Certain event      1.0            0.0
+事象                確率          驚き（bits）
+公平なコインの表    0.5           1.0
+サイコロで6          0.167         2.58
+1000分の1の事象      0.001         9.97
+確実な事象           1.0           0.0
 ```
 
-Certain events carry zero information. You already knew they would happen.
+確実な事象は情報量ゼロです。すでに起こるとわかっていたからです。
 
-### Entropy (Average Surprise)
+### エントロピー（平均的な驚き）
 
-Entropy is the expected surprise across all possible outcomes of a distribution.
-
-```
-H(P) = -sum( p(x) * log(p(x)) )  for all x
-```
-
-A fair coin has maximum entropy for a binary variable: 1 bit. A biased coin (99% heads) has low entropy: 0.08 bits. You already know what will happen, so each flip tells you almost nothing.
+エントロピーは、ある分布のすべての可能な結果にわたる期待驚きです。
 
 ```
-Fair coin:    H = -(0.5 * log2(0.5) + 0.5 * log2(0.5)) = 1.0 bit
-Biased coin:  H = -(0.99 * log2(0.99) + 0.01 * log2(0.01)) = 0.08 bits
+H(P) = -sum( p(x) * log(p(x)) )  すべてのxについて
 ```
 
-Entropy measures the irreducible uncertainty in a distribution. You cannot compress below it.
-
-### Cross-Entropy (The Loss Function You Use Every Day)
-
-Cross-entropy measures the average surprise when you use distribution Q to encode events that actually come from distribution P.
+公平なコインは、二値変数として最大エントロピーを持ちます。1 bitです。偏ったコイン（99%が表）は低いエントロピーを持ちます。0.08 bitsです。何が起こるかほぼわかっているので、各試行はほとんど何も教えてくれません。
 
 ```
-H(P, Q) = -sum( p(x) * log(q(x)) )  for all x
+公平なコイン: H = -(0.5 * log2(0.5) + 0.5 * log2(0.5)) = 1.0 bit
+偏ったコイン: H = -(0.99 * log2(0.99) + 0.01 * log2(0.01)) = 0.08 bits
 ```
 
-P is the true distribution (the labels). Q is your model's predictions. If Q matches P perfectly, cross-entropy equals entropy. Any mismatch makes it larger.
+エントロピーは分布に残る削減不能な不確実性を測ります。それ未満には圧縮できません。
 
-In classification, P is a one-hot vector (the true class has probability 1, everything else 0). This simplifies cross-entropy to:
+### クロスエントロピー（毎日使っている損失関数）
+
+クロスエントロピーは、本当は分布Pから来ている事象を、分布Qを使って符号化したときの平均的な驚きを測ります。
+
+```
+H(P, Q) = -sum( p(x) * log(q(x)) )  すべてのxについて
+```
+
+Pは真の分布（ラベル）です。Qはモデルの予測です。QがPに完全に一致していれば、クロスエントロピーはエントロピーと等しくなります。不一致があると、それより大きくなります。
+
+分類では、Pはone-hotベクトルです（真のクラスの確率が1で、それ以外は0）。そのため、クロスエントロピーは次のように単純化されます。
 
 ```
 H(P, Q) = -log(q(true_class))
 ```
 
-That is the entire cross-entropy loss formula for classification. Maximize the predicted probability of the correct class.
+これが分類におけるクロスエントロピー損失の式全体です。正しいクラスの予測確率を最大化します。
 
-### KL Divergence (Distance Between Distributions)
+### KLダイバージェンス（分布間の距離）
 
-KL divergence measures how much extra surprise you get from using Q instead of P.
+KLダイバージェンスは、Pの代わりにQを使うことで生じる追加の驚きを測ります。
 
 ```
-D_KL(P || Q) = sum( p(x) * log(p(x) / q(x)) )  for all x
+D_KL(P || Q) = sum( p(x) * log(p(x) / q(x)) )  すべてのxについて
              = H(P, Q) - H(P)
 ```
 
-Cross-entropy is entropy plus KL divergence. Since entropy of the true distribution is constant during training, minimizing cross-entropy is the same as minimizing KL divergence. You are pushing your model's distribution toward the true distribution.
+クロスエントロピーは、エントロピーにKLダイバージェンスを足したものです。訓練中、真の分布のエントロピーは定数なので、クロスエントロピーを最小化することはKLダイバージェンスを最小化することと同じです。モデルの分布を真の分布へ押し寄せています。
 
-KL divergence is not symmetric: D_KL(P || Q) != D_KL(Q || P). It is not a true distance metric.
+KLダイバージェンスは対称ではありません。D_KL(P || Q) != D_KL(Q || P) です。真の距離尺度ではありません。
 
-### Mutual Information
+### 相互情報量
 
-Mutual information measures how much knowing one variable tells you about another.
+相互情報量は、一方の変数を知ることで、もう一方についてどれだけわかるかを測ります。
 
 ```
 I(X; Y) = H(X) - H(X|Y)
         = H(X) + H(Y) - H(X, Y)
 ```
 
-If X and Y are independent, mutual information is zero. Knowing one tells you nothing about the other. If they are perfectly correlated, mutual information equals the entropy of either variable.
+XとYが独立なら、相互情報量はゼロです。一方を知っても、もう一方について何もわかりません。完全に相関しているなら、相互情報量はどちらか一方の変数のエントロピーに等しくなります。
 
-In feature selection, high mutual information between a feature and the target means the feature is useful. Low mutual information means it is noise.
+特徴量選択では、特徴量とターゲットの間の相互情報量が高いほど、その特徴量は有用です。相互情報量が低いなら、それはノイズです。
 
-### Conditional Entropy
+### 条件付きエントロピー
 
-H(Y|X) measures how much uncertainty remains about Y after you observe X.
+H(Y|X) は、Xを観測した後にYについてどれだけ不確実性が残るかを測ります。
 
 ```
 H(Y|X) = H(X,Y) - H(X)
 ```
 
-Two extremes:
-- If X completely determines Y, then H(Y|X) = 0. Knowing X eliminates all uncertainty about Y. Example: X = temperature in Celsius, Y = temperature in Fahrenheit.
-- If X tells you nothing about Y, then H(Y|X) = H(Y). Knowing X does not reduce your uncertainty at all. Example: X = coin flip, Y = tomorrow's weather.
+2つの極端な場合:
+- XがYを完全に決めるなら、H(Y|X) = 0 です。Xを知ればYに関する不確実性はすべて消えます。例: X = 摂氏温度、Y = 華氏温度。
+- XがYについて何も教えてくれないなら、H(Y|X) = H(Y) です。Xを知っても不確実性はまったく減りません。例: X = コイン投げ、Y = 明日の天気。
 
-Conditional entropy is always non-negative and never exceeds H(Y):
+条件付きエントロピーは常に非負で、H(Y)を超えません。
 
 ```
 0 <= H(Y|X) <= H(Y)
 ```
 
-In machine learning, conditional entropy appears in decision trees. At each split, the algorithm picks the feature X that minimizes H(Y|X) -- the feature that removes the most uncertainty about the label Y.
+機械学習では、条件付きエントロピーは決定木に現れます。各分割で、アルゴリズムは H(Y|X) を最小化する特徴量Xを選びます。つまり、ラベルYについて最も多くの不確実性を取り除く特徴量です。
 
-### Joint Entropy
+### 結合エントロピー
 
-H(X,Y) is the entropy of the joint distribution of X and Y together.
+H(X,Y) は、XとYを合わせた結合分布のエントロピーです。
 
 ```
-H(X,Y) = -sum sum p(x,y) * log(p(x,y))   for all x, y
+H(X,Y) = -sum sum p(x,y) * log(p(x,y))   すべてのx, yについて
 ```
 
-Key property:
+重要な性質:
 
 ```
 H(X,Y) <= H(X) + H(Y)
 ```
 
-Equality holds when X and Y are independent. If they share information, the joint entropy is less than the sum of individual entropies. The "missing" entropy is exactly the mutual information.
+XとYが独立のとき等号が成り立ちます。情報を共有している場合、結合エントロピーは個別のエントロピーの和より小さくなります。「欠けている」エントロピーが、まさに相互情報量です。
 
 ```mermaid
 graph TD
-    subgraph "Information Venn Diagram"
+    subgraph "情報のベン図"
         direction LR
         HX["H(X)"]
         HY["H(Y)"]
-        MI["I(X;Y)<br/>Mutual<br/>Information"]
+        MI["I(X;Y)<br/>相互<br/>情報量"]
         HXgY["H(X|Y)<br/>= H(X) - I(X;Y)"]
         HYgX["H(Y|X)<br/>= H(Y) - I(X;Y)"]
         HXY["H(X,Y) = H(X) + H(Y) - I(X;Y)"]
@@ -166,14 +166,14 @@ graph TD
     HXY -.- HYgX
 ```
 
-The relationships:
+関係式:
 - H(X,Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)
 - I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)
 - H(X,Y) = H(X) + H(Y) - I(X;Y)
 
-### Mutual Information (Deep Dive)
+### 相互情報量（深掘り）
 
-Mutual information I(X;Y) quantifies how much knowing one variable reduces uncertainty about the other.
+相互情報量 I(X;Y) は、一方の変数を知ることで、もう一方についての不確実性がどれだけ減るかを定量化します。
 
 ```
 I(X;Y) = H(X) - H(X|Y)
@@ -182,61 +182,61 @@ I(X;Y) = H(X) - H(X|Y)
        = sum sum p(x,y) * log(p(x,y) / (p(x) * p(y)))
 ```
 
-Properties:
-- I(X;Y) >= 0 always. You never lose information by observing something.
-- I(X;Y) = 0 if and only if X and Y are independent.
-- I(X;Y) = I(Y;X). It is symmetric, unlike KL divergence.
-- I(X;X) = H(X). A variable shares all its information with itself.
+性質:
+- I(X;Y) >= 0 は常に成り立ちます。何かを観測して情報を失うことはありません。
+- I(X;Y) = 0 であることと、XとYが独立であることは同値です。
+- I(X;Y) = I(Y;X)。KLダイバージェンスと違って対称です。
+- I(X;X) = H(X)。変数は自分自身とすべての情報を共有します。
 
-**Mutual information for feature selection.** In ML, you want features that are informative about the target. Mutual information gives you a principled way to rank features:
+**特徴量選択のための相互情報量。** MLでは、ターゲットについて情報を持つ特徴量が欲しいです。相互情報量は、特徴量を順位付けするための原理的な方法を与えます。
 
-1. For each feature X_i, compute I(X_i; Y) where Y is the target variable.
-2. Rank features by MI score.
-3. Keep the top k features.
+1. 各特徴量 X_i について、Yをターゲット変数として I(X_i; Y) を計算する。
+2. MIスコアで特徴量を順位付けする。
+3. 上位k個の特徴量を残す。
 
-This works for any relationship between feature and target -- linear, nonlinear, monotonic, or not. Correlation only catches linear relationships. MI catches everything.
+これは特徴量とターゲットのどんな関係にも使えます。線形、非線形、単調、非単調のどれでも構いません。相関は線形関係しか捉えません。MIはすべてを捉えます。
 
-| Method | Detects | Computational cost | Handles categorical? |
-|--------|---------|-------------------|---------------------|
-| Pearson correlation | Linear relationships | O(n) | No |
-| Spearman correlation | Monotonic relationships | O(n log n) | No |
-| Mutual information | Any statistical dependency | O(n log n) with binning | Yes |
+| 手法 | 検出するもの | 計算コスト | カテゴリ変数に対応するか |
+|------|--------------|------------|--------------------------|
+| Pearson correlation | 線形関係 | O(n) | いいえ |
+| Spearman correlation | 単調関係 | O(n log n) | いいえ |
+| Mutual information | 任意の統計的依存 | ビニングありで O(n log n) | はい |
 
-### Label Smoothing and Cross-Entropy
+### Label Smoothingとクロスエントロピー
 
-Standard classification uses hard targets: [0, 0, 1, 0]. The true class gets probability 1, everything else gets 0. Label smoothing replaces these with soft targets:
+標準的な分類では、hard targetを使います。[0, 0, 1, 0] のように、真のクラスは確率1、それ以外は0です。Label smoothingはこれをsoft targetに置き換えます。
 
 ```
 soft_target = (1 - epsilon) * hard_target + epsilon / num_classes
 ```
 
-With epsilon = 0.1 and 4 classes:
+epsilon = 0.1、4クラスの場合:
 - Hard target:  [0, 0, 1, 0]
 - Soft target:  [0.025, 0.025, 0.925, 0.025]
 
-From an information theory perspective, label smoothing increases the entropy of the target distribution. Hard one-hot targets have entropy 0 -- there is no uncertainty. Soft targets have positive entropy.
+情報理論の視点では、label smoothingはターゲット分布のエントロピーを増やします。hardなone-hotターゲットのエントロピーは0です。不確実性がないからです。soft targetは正のエントロピーを持ちます。
 
-Why this helps:
-- Prevents the model from driving logits to extreme values (infinite logits would be needed to perfectly match a one-hot target under cross-entropy)
-- Acts as regularization: the model cannot be 100% confident
-- Improves calibration: predicted probabilities better reflect true uncertainty
-- Reduces the gap between training and inference behavior
+これが役立つ理由:
+- モデルがlogitsを極端な値へ押し上げるのを防ぐ（クロスエントロピーでone-hotターゲットに完全一致するには無限大のlogitsが必要）
+- 正則化として働く: モデルは100%自信満々にはなれない
+- 較正を改善する: 予測確率が真の不確実性をよりよく反映する
+- 訓練時と推論時の振る舞いのギャップを減らす
 
-The cross-entropy loss with label smoothing becomes:
+label smoothingを使ったクロスエントロピー損失は次のようになります。
 
 ```
 L = (1 - epsilon) * CE(hard_target, prediction) + epsilon * H_uniform(prediction)
 ```
 
-The second term penalizes predictions that are far from uniform -- a direct regularization on confidence.
+第2項は、一様分布から遠い予測にペナルティを与えます。自信に対する直接的な正則化です。
 
-### Why Cross-Entropy Is THE Classification Loss
+### なぜクロスエントロピーが分類損失の本命なのか
 
-Three perspectives, same conclusion.
+3つの視点、同じ結論です。
 
-**Information theory view.** Cross-entropy measures how many bits you waste by using your model's distribution instead of the true distribution. Minimizing it makes your model the most efficient encoder of reality.
+**情報理論の視点。** クロスエントロピーは、真の分布ではなくモデルの分布を使うことで何bits無駄にするかを測ります。これを最小化すると、モデルは現実を最も効率よく符号化するものになります。
 
-**Maximum likelihood view.** For N training samples with true classes y_i:
+**最尤の視点。** 真のクラス y_i を持つN個の訓練サンプルについて:
 
 ```
 Likelihood     = product( q(y_i) )
@@ -244,38 +244,38 @@ Log-likelihood = sum( log(q(y_i)) )
 Negative log-likelihood = -sum( log(q(y_i)) )
 ```
 
-That last line is cross-entropy loss. Minimizing cross-entropy = maximizing the likelihood of the training data under your model.
+最後の行がクロスエントロピー損失です。クロスエントロピーの最小化 = モデルのもとで訓練データの尤度を最大化することです。
 
-**Gradient view.** The gradient of cross-entropy with respect to the logits is simply (predicted - true). Clean, stable, and fast to compute. This is why it pairs perfectly with softmax.
+**勾配の視点。** logitsに関するクロスエントロピーの勾配は、単に (predicted - true) です。きれいで、安定し、高速に計算できます。これがsoftmaxと完璧に組み合わさる理由です。
 
 ### Bits vs Nats
 
-The only difference is the log base.
+違いはlogの底だけです。
 
 ```
-log base 2   -> bits      (information theory tradition)
-log base e   -> nats      (machine learning convention)
-log base 10  -> hartleys  (rarely used)
+log base 2   -> bits      （情報理論の伝統）
+log base e   -> nats      （機械学習の慣例）
+log base 10  -> hartleys  （ほとんど使われない）
 ```
 
-1 nat = 1/ln(2) bits = 1.4427 bits. PyTorch and TensorFlow use natural log (nats) by default.
+1 nat = 1/ln(2) bits = 1.4427 bits です。PyTorchとTensorFlowはデフォルトで自然対数（nats）を使います。
 
-### Perplexity
+### パープレキシティ
 
-Perplexity is the exponential of cross-entropy. It tells you the effective number of equally likely choices the model is uncertain between.
+パープレキシティはクロスエントロピーの指数です。モデルがどれだけの等確率な選択肢の間で迷っているか、という有効数を示します。
 
 ```
 Perplexity = 2^H(P,Q)   (if using bits)
 Perplexity = e^H(P,Q)   (if using nats)
 ```
 
-A language model with perplexity 50 is, on average, as confused as if it had to pick uniformly from 50 possible next tokens. Lower is better.
+パープレキシティ50の言語モデルは、平均すると、次トークンを50個の候補から一様に選ばなければならないのと同じくらい迷っている、という意味です。低いほどよいです。
 
-GPT-2 achieved perplexity ~30 on common benchmarks. Modern models are in the single digits for well-represented domains.
+GPT-2は一般的なベンチマークで約30のパープレキシティを達成しました。現代のモデルは、十分に表現されたドメインでは一桁台です。
 
-## Build It
+## 作ってみる
 
-### Step 1: Information content and entropy
+### ステップ 1: 情報量とエントロピー
 
 ```python
 import math
@@ -300,7 +300,7 @@ print(f"Biased coin entropy: {entropy(biased_coin):.4f} bits")
 print(f"Fair die entropy:    {entropy(fair_die):.4f} bits")
 ```
 
-### Step 2: Cross-entropy and KL divergence
+### ステップ 2: クロスエントロピーとKLダイバージェンス
 
 ```python
 def cross_entropy(p, q, base=2):
@@ -326,7 +326,7 @@ print(f"KL divergence (good):     {kl_divergence(true_dist, good_model):.4f} bit
 print(f"KL divergence (bad):      {kl_divergence(true_dist, bad_model):.4f} bits")
 ```
 
-### Step 3: Cross-entropy as classification loss
+### ステップ 3: 分類損失としてのクロスエントロピー
 
 ```python
 def softmax(logits):
@@ -352,7 +352,7 @@ print(f"Loss:        {loss:.4f} nats")
 print(f"Perplexity:  {math.exp(loss):.2f}")
 ```
 
-### Step 4: Cross-entropy equals negative log-likelihood
+### ステップ 4: クロスエントロピーは負のlog尤度に等しい
 
 ```python
 import random
@@ -379,7 +379,7 @@ print(f"Negative log-likelihood: {nll:.6f}")
 print(f"Difference:              {abs(ce_loss - nll):.2e}")
 ```
 
-### Step 5: Mutual information
+### ステップ 5: 相互情報量
 
 ```python
 def mutual_information(joint_probs, base=2):
@@ -404,9 +404,9 @@ print(f"MI (independent): {mutual_information(independent):.4f} bits")
 print(f"MI (dependent):   {mutual_information(dependent):.4f} bits")
 ```
 
-## Use It
+## 使ってみる
 
-The same concepts using NumPy, the way you will use them in practice:
+実務で使う形に近い、NumPyでの同じ概念です。
 
 ```python
 import numpy as np
@@ -433,35 +433,35 @@ print(f"Cross-ent:  {np_cross_entropy(true, pred):.4f} nats")
 print(f"KL div:     {np_kl_divergence(true, pred):.4f} nats")
 ```
 
-You built from scratch what `torch.nn.CrossEntropyLoss()` does internally. Now you know why the loss goes down during training: your model's predicted distribution is getting closer to the true distribution, measured in nats of wasted information.
+あなたは `torch.nn.CrossEntropyLoss()` が内部で行っていることをスクラッチで構築しました。訓練中に損失が下がる理由もわかりました。モデルの予測分布が真の分布に近づいており、その近さを無駄な情報量のnatsで測っているのです。
 
-## Exercises
+## 演習
 
-1. Compute the entropy of the English alphabet assuming uniform distribution (26 letters). Then estimate it using actual letter frequencies. Which is higher and why?
+1. 英語アルファベットが一様分布（26文字）だと仮定してエントロピーを計算してください。次に、実際の文字頻度を使って推定してください。どちらが高く、なぜですか？
 
-2. A model outputs logits [5.0, 2.0, 0.5] for a sample with true class 1. Compute the cross-entropy loss by hand, then verify with your `cross_entropy_loss` function. What logits would give zero loss?
+2. あるサンプルの真のクラスが1で、モデルがlogits [5.0, 2.0, 0.5] を出力しました。クロスエントロピー損失を手計算し、`cross_entropy_loss` 関数で検証してください。どのようなlogitsなら損失がゼロになりますか？
 
-3. Show that KL divergence is not symmetric. Pick two distributions P and Q and compute D_KL(P || Q) and D_KL(Q || P). Explain why they differ.
+3. KLダイバージェンスが対称でないことを示してください。2つの分布PとQを選び、D_KL(P || Q) と D_KL(Q || P) を計算してください。なぜ違うのか説明してください。
 
-4. Build a function that computes perplexity for a sequence of token predictions. Given a list of (true_token_index, predicted_logits) pairs, return the perplexity of the sequence.
+4. トークン予測列のパープレキシティを計算する関数を作ってください。`(true_token_index, predicted_logits)` のペアのリストが与えられたら、その系列のパープレキシティを返します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Information content | "Surprise" | The number of bits (or nats) needed to encode an event: -log(p) |
-| Entropy | "Randomness" | The average surprise across all outcomes of a distribution. Measures irreducible uncertainty. |
-| Cross-entropy | "The loss function" | Average surprise when using model distribution Q to encode events from true distribution P. |
-| KL divergence | "Distance between distributions" | Extra bits wasted by using Q instead of P. Equals cross-entropy minus entropy. Not symmetric. |
-| Mutual information | "How related are X and Y" | Reduction in uncertainty about X from knowing Y. Zero means independent. |
-| Softmax | "Turn logits into probabilities" | Exponentiate and normalize. Maps any real-valued vector to a valid probability distribution. |
-| Perplexity | "How confused the model is" | Exponential of cross-entropy. The effective vocabulary size the model is choosing from at each step. |
-| Bits | "Shannon's unit" | Information measured with log base 2. One bit resolves one fair coin flip. |
-| Nats | "ML's unit" | Information measured with natural log. Used by PyTorch and TensorFlow by default. |
-| Negative log-likelihood | "NLL loss" | Identical to cross-entropy loss for one-hot labels. Minimizing it maximizes the probability of correct predictions. |
+| 用語 | よく言われる表現 | 実際の意味 |
+|------|------------------|------------|
+| Information content | 「驚き」 | 事象を符号化するために必要なbits（またはnats）の数: -log(p) |
+| Entropy | 「ランダムさ」 | 分布のすべての結果にわたる平均的な驚き。削減不能な不確実性を測る。 |
+| Cross-entropy | 「損失関数」 | 真の分布Pから来る事象をモデル分布Qで符号化するときの平均的な驚き。 |
+| KL divergence | 「分布間の距離」 | Pの代わりにQを使うことで無駄になる追加bits。クロスエントロピーからエントロピーを引いたもの。対称ではない。 |
+| Mutual information | 「XとYはどれだけ関係しているか」 | Yを知ることによるXの不確実性の減少。ゼロなら独立。 |
+| Softmax | 「logitsを確率にする」 | 指数を取り、正規化する。任意の実数値ベクトルを有効な確率分布へ写す。 |
+| Perplexity | 「モデルがどれだけ迷っているか」 | クロスエントロピーの指数。各ステップでモデルが選んでいる有効語彙サイズ。 |
+| Bits | 「Shannonの単位」 | logの底2で測る情報量。1 bitは公平なコイン投げ1回を解決する。 |
+| Nats | 「MLの単位」 | 自然対数で測る情報量。PyTorchとTensorFlowでデフォルトで使われる。 |
+| Negative log-likelihood | 「NLL loss」 | one-hotラベルではクロスエントロピー損失と同一。これを最小化すると、正解予測の確率を最大化する。 |
 
-## Further Reading
+## 参考資料
 
-- [Shannon 1948: A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) - the original paper, still readable
-- [Visual Information Theory (Chris Olah)](https://colah.github.io/posts/2015-09-Visual-Information/) - best visual explanation of entropy and KL divergence
-- [PyTorch CrossEntropyLoss docs](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) - how the framework implements what you just built
+- [Shannon 1948: A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) - 原論文。今でも読みやすい
+- [Visual Information Theory (Chris Olah)](https://colah.github.io/posts/2015-09-Visual-Information/) - エントロピーとKLダイバージェンスの優れた視覚的説明
+- [PyTorch CrossEntropyLoss docs](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) - ここで構築したものをフレームワークがどう実装しているか

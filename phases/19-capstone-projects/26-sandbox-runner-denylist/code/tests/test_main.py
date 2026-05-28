@@ -1,4 +1,4 @@
-"""Tests for the sandbox runner."""
+"""sandbox runner の tests。"""
 
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ class PathJailChecks(unittest.TestCase):
         _, cfg = _make_root()
         reason = _check_path_jail(["cat", "../../etc/passwd"], cfg)
         self.assertIsNotNone(reason)
-        self.assertIn("outside project root", reason)
+        self.assertIn("project root", reason)
 
     def test_absolute_outside_root_denied(self) -> None:
         _, cfg = _make_root()
@@ -127,7 +127,7 @@ class TruncateTests(unittest.TestCase):
         buf, truncated = truncate_stream(b"x" * 200, 50)
         self.assertTrue(truncated)
         self.assertTrue(buf.startswith(b"x" * 50))
-        self.assertIn(b"truncated", buf)
+        self.assertIn("切り詰め".encode("utf-8"), buf)
 
 
 class SandboxIntegrationTests(unittest.TestCase):
@@ -159,7 +159,7 @@ class SandboxIntegrationTests(unittest.TestCase):
             self.skipTest("cat not available")
         result = self.sandbox.run([cat, "../../etc/passwd"])
         self.assertTrue(result.denied)
-        self.assertIn("outside project root", result.reason)
+        self.assertIn("project root", result.reason)
 
     def test_truncation_fires_on_large_stdout(self) -> None:
         echo = find_executable(("echo",))

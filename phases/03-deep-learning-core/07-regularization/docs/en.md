@@ -1,32 +1,32 @@
-# Regularization
+# 正則化
 
-> Your model gets 99% on training data and 60% on test data. It memorized instead of learning. Regularization is the tax you impose on complexity to force generalization.
+> モデルが学習データで 99%、テストデータで 60% を出す。これは学習ではなく暗記です。正則化とは、汎化を強制するために複雑さへ課す税金です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Lesson 03.06 (Optimizers)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Lesson 03.06 (Optimizers)
+**時間:** 約 75 分
 
-## Learning Objectives
+## 学習目標
 
-- Implement dropout with inverted scaling, L2 weight decay, batch normalization, layer normalization, and RMSNorm from scratch
-- Measure the train-test accuracy gap and diagnose overfitting using regularization experiments
-- Explain why transformers use LayerNorm instead of BatchNorm and why modern LLMs prefer RMSNorm
-- Apply the correct combination of regularization techniques based on the severity of overfitting
+- inverted scaling 付きの dropout、L2 weight decay、batch normalization、layer normalization、RMSNorm をゼロから実装する
+- train-test accuracy gap を測定し、正則化実験を使って過学習を診断する
+- transformers が BatchNorm ではなく LayerNorm を使う理由と、現代的な LLMs が RMSNorm を好む理由を説明する
+- 過学習の深刻さに応じて、正しい正則化手法の組み合わせを適用する
 
-## The Problem
+## 問題
 
-A neural network with enough parameters can memorize any dataset. This is not a hypothetical -- Zhang et al. (2017) proved it by training standard networks on ImageNet with random labels. The networks reached near-zero training loss on completely random label assignments. They memorized a million random input-output pairs with no pattern to learn. Training loss was perfect. Test accuracy was zero.
+十分なパラメータを持つニューラルネットワークは、どんなデータセットでも暗記できます。これは仮説ではありません。Zhang et al. (2017) は、ランダムなラベルを付けた ImageNet で標準的なネットワークを学習させてそれを示しました。ネットワークは完全にランダムなラベル割り当てに対して、ほぼゼロの training loss に到達しました。学ぶべきパターンがない 100 万件のランダムな入出力ペアを暗記したのです。Training loss は完璧でした。Test accuracy はゼロでした。
 
-This is the overfitting problem, and it gets worse as models get larger. GPT-3 has 175 billion parameters. The training set has about 500 billion tokens. With that many parameters, the model has enough capacity to memorize significant chunks of the training data verbatim. Without regularization, it would just regurgitate training examples instead of learning generalizable patterns.
+これが過学習の問題であり、モデルが大きくなるほど悪化します。GPT-3 には 1750 億パラメータがあります。学習セットは約 5000 億 tokens です。それほど多くのパラメータがあれば、モデルには学習データのかなりの塊をそのまま暗記するだけの容量があります。正則化がなければ、汎化可能なパターンを学ぶ代わりに、学習例をそのまま吐き出すだけになります。
 
-The gap between training performance and test performance is the overfitting gap. Every technique in this lesson attacks that gap from a different angle. Dropout forces the network to not rely on any single neuron. Weight decay prevents any single weight from growing too large. Batch normalization smooths the loss landscape so the optimizer finds flatter, more generalizable minima. Layer normalization does the same thing but works where batch normalization fails (small batches, variable-length sequences). RMSNorm does it 10% faster by dropping the mean calculation. Each technique is simple. Together, they're the difference between a model that memorizes and one that generalizes.
+学習性能とテスト性能の差が overfitting gap です。このレッスンの各手法は、その gap を別々の角度から攻撃します。Dropout は、ネットワークが特定の 1 個のニューロンに依存しないように強制します。Weight decay は、どの重みも大きくなりすぎないようにします。Batch normalization は loss landscape を滑らかにし、optimizer がより平坦で汎化しやすい minima を見つけられるようにします。Layer normalization も同じことをしますが、batch normalization が失敗する場所（小さい batches、可変長 sequences）でも機能します。RMSNorm は平均計算を省いて、それを 10% 速く行います。各手法は単純です。組み合わせると、暗記するモデルと汎化するモデルの差になります。
 
-## The Concept
+## 概念
 
-### The Overfitting Spectrum
+### 過学習のスペクトラム
 
-Every model sits somewhere on a spectrum from underfitting (too simple to capture the pattern) to overfitting (so complex it captures noise). The sweet spot is in between, and regularization pushes models toward it from the overfit side.
+すべてのモデルは、underfitting（パターンを捉えるには単純すぎる）から overfitting（複雑すぎてノイズまで捉える）までのスペクトラム上のどこかにあります。最適な位置はその中間であり、正則化は overfit 側からモデルをそこへ押し戻します。
 
 ```mermaid
 graph LR
@@ -41,52 +41,52 @@ graph LR
 
 ### Dropout
 
-The simplest regularization technique with the most elegant interpretation. During training, randomly set each neuron's output to zero with probability p.
+最も単純で、最も優雅な解釈を持つ正則化手法です。学習中に、各ニューロンの出力を確率 p でランダムにゼロにします。
 
 ```
 output = activation(z) * mask    where mask[i] ~ Bernoulli(1 - p)
 ```
 
-With p = 0.5, half the neurons are zeroed on every forward pass. The network must learn redundant representations because it can't predict which neurons will be available. This prevents co-adaptation -- neurons learning to rely on specific other neurons being present.
+p = 0.5 なら、各 forward pass で半分のニューロンがゼロになります。どのニューロンが使えるか予測できないため、ネットワークは冗長な表現を学ばなければなりません。これにより co-adaptation、つまりニューロンが特定の他のニューロンの存在に依存することを防ぎます。
 
-The ensemble interpretation: a network with N neurons and dropout creates 2^N possible subnetworks (every combination of which neurons are on or off). Training with dropout approximately trains all 2^N subnetworks simultaneously, each on different mini-batches. At test time, you use all neurons (no dropout) and scale outputs by (1 - p) to match the expected value during training. This is equivalent to averaging the predictions of 2^N subnetworks -- a massive ensemble from a single model.
+ensemble としての解釈: N 個のニューロンを持つネットワークに dropout を使うと、2^N 個の可能なサブネットワーク（各ニューロンがオンかオフかのすべての組み合わせ）が作られます。Dropout での学習は、異なる mini-batches 上で 2^N 個すべてのサブネットワークを同時に近似的に学習していることになります。テスト時には全ニューロンを使い（dropout なし）、出力を (1 - p) でスケールして学習時の期待値と合わせます。これは 2^N 個のサブネットワークの予測を平均することと等価です。単一モデルから作る巨大な ensemble です。
 
-In practice, the scaling is applied during training instead of testing (inverted dropout):
+実務では、スケーリングはテスト時ではなく学習中に適用します（inverted dropout）。
 
 ```
 During training:  output = activation(z) * mask / (1 - p)
 During testing:   output = activation(z)   (no change needed)
 ```
 
-This is cleaner because test code doesn't need to know about dropout at all.
+このほうが、テストコードが dropout をまったく意識しなくてよいためきれいです。
 
-Default rates: p = 0.1 for transformers, p = 0.5 for MLPs, p = 0.2-0.3 for CNNs. Higher dropout = stronger regularization = more underfitting risk.
+デフォルトの rate: transformers は p = 0.1、MLPs は p = 0.5、CNNs は p = 0.2-0.3。Dropout が高いほど、正則化は強くなり、underfitting のリスクも上がります。
 
-### Weight Decay (L2 Regularization)
+### Weight Decay（L2 正則化）
 
-Add the squared magnitude of all weights to the loss:
+すべての重みの二乗の大きさを loss に加えます。
 
 ```
 total_loss = task_loss + (lambda / 2) * sum(w_i^2)
 ```
 
-The gradient of the regularization term is lambda * w. This means at every step, each weight is shrunk toward zero by a fraction proportional to its magnitude. Large weights get penalized more. The model is pushed toward solutions where no single weight dominates.
+正則化項の gradient は lambda * w です。つまり各 step で、それぞれの重みは自身の大きさに比例した割合でゼロへ縮められます。大きな重みほど強く罰せられます。モデルは、特定の 1 個の重みが支配しない解へ押されます。
 
-Why this helps generalization: overfit models tend to have large weights that amplify noise in the training data. Weight decay keeps weights small, which limits the model's effective capacity and forces it to rely on robust, generalizable features rather than memorized quirks.
+これが汎化に効く理由: overfit したモデルは、学習データ内のノイズを増幅する大きな重みを持ちがちです。Weight decay は重みを小さく保ち、モデルの実効容量を制限し、記憶した癖ではなく頑健で汎化可能な特徴に依存させます。
 
-The lambda hyperparameter controls the strength. Typical values:
+lambda hyperparameter が強さを制御します。典型値は次の通りです。
 
-- 0.01 for AdamW on transformers
-- 1e-4 for SGD on CNNs
-- 0.1 for heavily overfit models
+- transformers の AdamW では 0.01
+- CNNs の SGD では 1e-4
+- 強く overfit しているモデルでは 0.1
 
-As discussed in lesson 06: weight decay and L2 regularization are equivalent in SGD but not in Adam. Always use AdamW (decoupled weight decay) when training with Adam.
+レッスン 06 で説明した通り、weight decay と L2 regularization は SGD では等価ですが、Adam では等価ではありません。Adam で学習する場合は必ず AdamW（decoupled weight decay）を使ってください。
 
 ### Batch Normalization
 
-Normalize the output of each layer across the mini-batch before passing it to the next layer.
+各 layer の出力を、次の layer に渡す前に mini-batch 全体で正規化します。
 
-For a mini-batch of activations at some layer:
+ある layer の activations の mini-batch について:
 
 ```
 mu = (1/B) * sum(x_i)           (batch mean)
@@ -95,17 +95,17 @@ x_hat = (x_i - mu) / sqrt(sigma^2 + eps)   (normalize)
 y = gamma * x_hat + beta        (scale and shift)
 ```
 
-Gamma and beta are learnable parameters that let the network undo the normalization if that's optimal. Without them, you'd be forcing every layer's output to be zero-mean unit-variance, which might not be what the network wants.
+Gamma と beta は learnable parameters で、最適であればネットワークが正規化を打ち消せるようにします。これらがないと、すべての layer 出力を zero-mean unit-variance に強制することになり、それはネットワークが望むものではないかもしれません。
 
-**Training vs inference split:** During training, mu and sigma come from the current mini-batch. During inference, you use running averages accumulated during training (exponential moving average with momentum = 0.1, meaning 90% old + 10% new).
+**Training と inference の分離:** 学習中、mu と sigma は現在の mini-batch から得ます。Inference 中は、学習中に蓄積された running averages を使います（momentum = 0.1 の exponential moving average、つまり 90% old + 10% new）。
 
-Why BatchNorm works is still debated. The original paper claimed it reduces "internal covariate shift" (the distribution of layer inputs changing as earlier layers update). Santurkar et al. (2018) showed this explanation is wrong. The actual reason: BatchNorm makes the loss landscape smoother. The gradients are more predictive, the Lipschitz constants are smaller, and the optimizer can take larger steps safely. This is why BatchNorm lets you use higher learning rates and converge faster.
+BatchNorm がなぜ効くのかは、今でも議論があります。元の論文は "internal covariate shift"（前の layers が更新されるにつれて layer 入力の分布が変わること）を減らすからだと主張しました。Santurkar et al. (2018) は、この説明が誤りであることを示しました。実際の理由は、BatchNorm が loss landscape を滑らかにすることです。Gradients はより予測しやすくなり、Lipschitz constants は小さくなり、optimizer はより大きな step を安全に取れます。これが、BatchNorm によって高い learning rates を使え、より速く収束できる理由です。
 
-BatchNorm has a fundamental limitation: it depends on batch statistics. With batch size 1, the mean and variance are meaningless. With small batches (< 32), the statistics are noisy and hurt performance. This matters for tasks like object detection (where memory limits batch size) and language modeling (where sequence lengths vary).
+BatchNorm には根本的な制限があります。batch statistics に依存することです。Batch size 1 では、平均と分散に意味がありません。小さい batches（< 32）では statistics がノイズを含み、性能を損ないます。これは object detection（memory 制限で batch size が小さくなる）や language modeling（sequence lengths が可変）のようなタスクで重要です。
 
 ### Layer Normalization
 
-Normalize across features instead of across the batch. For a single sample:
+batch 方向ではなく features 方向で正規化します。単一 sample について:
 
 ```
 mu = (1/D) * sum(x_j)           (feature mean)
@@ -114,24 +114,24 @@ x_hat = (x_j - mu) / sqrt(sigma^2 + eps)
 y = gamma * x_hat + beta
 ```
 
-D is the feature dimension. Each sample is normalized independently -- no dependence on batch size. This is why transformers use LayerNorm instead of BatchNorm. Sequences have variable lengths, batch sizes are often small (or 1 during generation), and the computation is identical between training and inference.
+D は feature dimension です。各 sample は独立に正規化され、batch size には依存しません。これが transformers が BatchNorm ではなく LayerNorm を使う理由です。Sequences は可変長で、batch sizes は小さいことが多く（生成時は 1 になることもあります）、training と inference で計算が同一です。
 
-LayerNorm in transformers is applied after each self-attention block and each feed-forward block (Post-LN), or before them (Pre-LN, which is more stable for training).
+Transformers での LayerNorm は、各 self-attention block と各 feed-forward block の後（Post-LN）、またはそれらの前（Pre-LN、こちらのほうが学習が安定）に適用されます。
 
 ### RMSNorm
 
-LayerNorm without the mean subtraction. Proposed by Zhang & Sennrich (2019).
+平均の差し引きがない LayerNorm です。Zhang & Sennrich (2019) によって提案されました。
 
 ```
 rms = sqrt((1/D) * sum(x_j^2))
 y = gamma * x / rms
 ```
 
-That's it. No mean computation, no beta parameter. The observation: the re-centering (mean subtraction) in LayerNorm contributes very little to the model's performance, but costs computation. Removing it gives the same accuracy with about 10% less overhead.
+これだけです。平均計算も beta parameter もありません。観察されたことは、LayerNorm の re-centering（平均の差し引き）はモデル性能にほとんど寄与しない一方で、計算コストがかかるという点です。それを取り除くと、約 10% 少ない overhead で同じ accuracy が得られます。
 
-LLaMA, LLaMA 2, LLaMA 3, Mistral, and most modern LLMs use RMSNorm instead of LayerNorm. At the scale of billions of parameters and trillions of tokens, that 10% savings is significant.
+LLaMA、LLaMA 2、LLaMA 3、Mistral、そして多くの現代的な LLMs は LayerNorm の代わりに RMSNorm を使います。数十億パラメータ、数兆 tokens の規模では、この 10% の節約は大きな意味を持ちます。
 
-### Normalization Comparison
+### 正規化の比較
 
 ```mermaid
 graph TD
@@ -152,21 +152,21 @@ graph TD
     end
 ```
 
-### Data Augmentation as Regularization
+### 正則化としての Data Augmentation
 
-Not a model modification but a data modification. Transform training inputs while preserving labels:
+これはモデルの変更ではなく、データの変更です。ラベルを保ったまま学習入力を変換します。
 
-- Images: random crop, flip, rotation, color jitter, cutout
-- Text: synonym replacement, back-translation, random deletion
-- Audio: time stretch, pitch shift, noise addition
+- 画像: random crop、flip、rotation、color jitter、cutout
+- テキスト: synonym replacement、back-translation、random deletion
+- 音声: time stretch、pitch shift、noise addition
 
-The effect is identical to regularization: it increases the effective size of the training set, making it harder for the model to memorize specific examples. A model that only sees each image once in its original form can memorize it. A model that sees 50 augmented versions of each image is forced to learn the invariant structure.
+効果は正則化と同じです。学習セットの実効サイズを増やし、モデルが特定の例を暗記しにくくします。各画像を元の形で 1 回だけ見るモデルは、それを暗記できます。各画像の 50 個の augmented versions を見るモデルは、不変な構造を学ぶことを強制されます。
 
 ### Early Stopping
 
-The simplest regularizer: stop training when validation loss starts increasing. The model hasn't overfit yet at that point. In practice, you track validation loss every epoch, save the best model, and continue training for a "patience" window (typically 5-20 epochs). If validation loss doesn't improve within the patience window, you stop and load the best saved model.
+最も単純な正則化です。validation loss が増え始めたら学習を止めます。その時点では、モデルはまだ overfit していません。実務では、epoch ごとに validation loss を追跡し、best model を保存し、"patience" window（典型的には 5-20 epochs）の間は学習を続けます。patience window 内で validation loss が改善しなければ停止し、保存しておいた best model を読み込みます。
 
-### When to Apply What
+### 何をいつ適用するか
 
 ```mermaid
 flowchart TD
@@ -187,9 +187,9 @@ flowchart TD
     Light --> WD0["Weight decay 1e-4"]
 ```
 
-## Build It
+## 作ってみる
 
-### Step 1: Dropout (Train and Eval Mode)
+### Step 1: Dropout（Train Mode と Eval Mode）
 
 ```python
 import random
@@ -329,7 +329,7 @@ class RMSNorm:
         return output
 ```
 
-### Step 6: Training With and Without Regularization
+### Step 6: 正則化あり・なしで学習する
 
 ```python
 def sigmoid(x):
@@ -433,9 +433,9 @@ class RegularizedNetwork:
         return history
 ```
 
-## Use It
+## 使ってみる
 
-PyTorch provides all normalization and regularization as modules:
+PyTorch はすべての normalization と regularization を modules として提供しています。
 
 ```python
 import torch
@@ -460,9 +460,9 @@ model.eval()
 out_test = model(torch.randn(1, 784))
 ```
 
-The `model.train()` / `model.eval()` toggle is critical. It switches dropout on/off and tells BatchNorm to use batch statistics vs running statistics. Forgetting `model.eval()` before inference is one of the most common bugs in deep learning. Your test accuracy will fluctuate randomly because dropout is still active and BatchNorm is using mini-batch statistics.
+`model.train()` / `model.eval()` の切り替えは重要です。これは dropout のオン/オフを切り替え、BatchNorm に batch statistics と running statistics のどちらを使うかを伝えます。Inference 前に `model.eval()` を忘れることは、deep learning で最もよくあるバグの 1 つです。dropout がまだ有効で、BatchNorm が mini-batch statistics を使っているため、test accuracy がランダムに揺れます。
 
-For transformers, the pattern is different:
+Transformers では、パターンが異なります。
 
 ```python
 class TransformerBlock(nn.Module):
@@ -486,43 +486,43 @@ class TransformerBlock(nn.Module):
         return x
 ```
 
-LayerNorm, not BatchNorm. Dropout p=0.1, not p=0.5. These are the transformer defaults.
+BatchNorm ではなく LayerNorm。Dropout は p=0.5 ではなく p=0.1。これらが transformer のデフォルトです。
 
-## Ship It
+## 完成物
 
-This lesson produces:
-- `outputs/prompt-regularization-advisor.md` -- a prompt that diagnoses overfitting and recommends the right regularization strategy
+このレッスンで作るもの:
+- `outputs/prompt-regularization-advisor.md` - 過学習を診断し、適切な正則化戦略を推奨するプロンプト
 
-## Exercises
+## 演習
 
-1. Implement spatial dropout for 2D data: instead of dropping individual neurons, drop entire feature channels. Simulate this by treating groups of consecutive features as channels and dropping whole groups. Compare the train-test gap to standard dropout on the circle dataset with hidden_size=32.
+1. 2D データ向けの spatial dropout を実装してください。個別のニューロンを落とすのではなく、feature channels 全体を落とします。連続する features のグループを channels として扱い、グループ全体を落とすことでシミュレートしてください。hidden_size=32 の circle dataset で、標準的な dropout と train-test gap を比較してください。
 
-2. Implement label smoothing from lesson 05 combined with dropout from this lesson. Train with four configurations: neither, dropout only, label smoothing only, both. Measure the final train-test accuracy gap for each. Which combination gives the smallest gap?
+2. レッスン 05 の label smoothing と、このレッスンの dropout を組み合わせて実装してください。どちらもなし、dropout のみ、label smoothing のみ、両方、という 4 つの構成で学習します。それぞれの最終的な train-test accuracy gap を測定してください。どの組み合わせが最小の gap を出しますか。
 
-3. Add a BatchNorm layer between the hidden layer and the activation in your circle-dataset network. Train with and without BatchNorm at learning rates 0.01, 0.05, and 0.1. BatchNorm should allow stable training at higher learning rates where the vanilla network diverges.
+3. circle-dataset network の hidden layer と activation の間に BatchNorm layer を追加してください。Learning rates 0.01、0.05、0.1 で、BatchNorm あり・なしの両方を学習してください。BatchNorm は、通常のネットワークが発散する高い learning rates でも安定した学習を可能にするはずです。
 
-4. Implement early stopping: track test loss each epoch, save the best weights, and stop if test loss hasn't improved for 20 epochs. Run the regularized network for 1000 epochs. Report which epoch had the best test accuracy and how many epochs of computation you saved.
+4. early stopping を実装してください。epoch ごとに test loss を追跡し、best weights を保存し、test loss が 20 epochs 改善しなければ停止します。regularized network を 1000 epochs 実行してください。best test accuracy が得られた epoch と、節約できた計算 epoch 数を報告してください。
 
-5. Compare LayerNorm vs RMSNorm on a 4-layer network (not just 2). Initialize both with the same weights. Train for 200 epochs and compare final accuracy, training speed (time per epoch), and gradient magnitudes at the first layer. Verify that RMSNorm is faster with the same accuracy.
+5. 4-layer network（2 層だけではない）で LayerNorm と RMSNorm を比較してください。両方を同じ weights で初期化します。200 epochs 学習し、最終 accuracy、training speed（epoch あたりの時間）、first layer の gradient magnitudes を比較してください。同じ accuracy で RMSNorm が高速であることを確認してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Overfitting | "Model memorized the data" | When a model's training performance significantly exceeds its test performance, indicating it learned noise rather than signal |
-| Regularization | "Preventing overfitting" | Any technique that constrains model complexity to improve generalization: dropout, weight decay, normalization, augmentation |
-| Dropout | "Random neuron deletion" | Zeroing random neurons during training with probability p, forcing redundant representations; equivalent to training an ensemble |
-| Weight decay | "L2 penalty" | Shrinking all weights toward zero by subtracting lambda * w at each step; penalizes complexity through weight magnitude |
-| Batch normalization | "Normalize per batch" | Normalizing layer outputs across the batch dimension using batch statistics during training and running averages during inference |
-| Layer normalization | "Normalize per sample" | Normalizing across features within each sample; batch-independent, used in transformers where batch size varies |
-| RMSNorm | "LayerNorm without the mean" | Root mean square normalization; drops the mean subtraction from LayerNorm for 10% speedup with equal accuracy |
-| Early stopping | "Stop before overfit" | Halting training when validation loss stops improving; the simplest regularizer, often used alongside others |
-| Data augmentation | "More data from less" | Transforming training inputs (flip, crop, noise) to increase effective dataset size and force invariance learning |
-| Generalization gap | "Train-test split" | The difference between training and test performance; regularization aims to minimize this gap |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Overfitting | 「モデルがデータを暗記した」 | モデルの training performance が test performance を大きく上回り、signal ではなく noise を学んだことを示す状態 |
+| Regularization | 「過学習を防ぐこと」 | 汎化を改善するためにモデルの複雑さを制約する任意の手法: dropout、weight decay、normalization、augmentation |
+| Dropout | 「ランダムなニューロン削除」 | 学習中に確率 p でランダムなニューロンをゼロにし、冗長な表現を強制すること。ensemble の学習に等価 |
+| Weight decay | 「L2 penalty」 | 各 step で lambda * w を引くことで、すべての重みをゼロへ縮めること。重みの大きさを通じて複雑さを罰する |
+| Batch normalization | 「batch ごとの正規化」 | 学習中は batch statistics、inference 中は running averages を使って、batch dimension に沿って layer outputs を正規化すること |
+| Layer normalization | 「sample ごとの正規化」 | 各 sample 内の features 方向で正規化すること。batch-independent で、batch size が変わる transformers で使われる |
+| RMSNorm | 「平均なしの LayerNorm」 | Root mean square normalization。LayerNorm から平均の差し引きを省き、同等の精度で 10% 高速化する |
+| Early stopping | 「overfit 前に止める」 | validation loss が改善しなくなったら学習を止めること。最も単純な regularizer で、他の手法と併用されることが多い |
+| Data augmentation | 「少ないデータから多く作る」 | training inputs を変換（flip、crop、noise）して実効 dataset size を増やし、不変性の学習を強制すること |
+| Generalization gap | 「train-test split」 | training performance と test performance の差。正則化はこの gap を最小化することを目指す |
 
-## Further Reading
+## 参考文献
 
-- Srivastava et al., "Dropout: A Simple Way to Prevent Neural Networks from Overfitting" (2014) -- the original dropout paper with the ensemble interpretation and extensive experiments
-- Ioffe & Szegedy, "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift" (2015) -- introduced BatchNorm and its training procedure, one of the most cited deep learning papers
-- Zhang & Sennrich, "Root Mean Square Layer Normalization" (2019) -- showed RMSNorm matches LayerNorm accuracy with reduced computation; adopted by LLaMA and Mistral
-- Zhang et al., "Understanding Deep Learning Requires Rethinking Generalization" (2017) -- the landmark paper showing neural networks can memorize random labels, challenging traditional views of generalization
+- Srivastava et al., "Dropout: A Simple Way to Prevent Neural Networks from Overfitting" (2014) - dropout の元論文。ensemble としての解釈と広範な実験を含む
+- Ioffe & Szegedy, "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift" (2015) - BatchNorm とその学習手順を導入した、最も引用されている deep learning 論文の 1 つ
+- Zhang & Sennrich, "Root Mean Square Layer Normalization" (2019) - RMSNorm が計算量を減らしながら LayerNorm と同等の精度を達成することを示した。LLaMA と Mistral に採用された
+- Zhang et al., "Understanding Deep Learning Requires Rethinking Generalization" (2017) - neural networks がランダムラベルを暗記できることを示し、従来の汎化観に疑問を投げかけた画期的な論文

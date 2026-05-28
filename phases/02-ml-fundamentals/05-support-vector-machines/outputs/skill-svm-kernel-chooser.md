@@ -1,110 +1,110 @@
 ---
 name: skill-svm-kernel-chooser
-description: Choose the right SVM kernel and tune C and gamma for your problem
+description: 問題に合ったSVM kernelを選び、Cとgammaを調整する
 version: 1.0.0
 phase: 2
 lesson: 5
 tags: [svm, kernel, classification, hyperparameter-tuning]
 ---
 
-# SVM Kernel Selection Guide
+# SVM kernel選択ガイド
 
-SVMs are defined by two choices: the kernel (which determines the shape of the decision boundary) and the regularization parameters (which control the tradeoff between margin width and classification errors). Getting these right is the difference between a useless model and a strong one.
+SVMは2つの選択で決まります。決定境界の形を決めるkernelと、マージン幅と分類誤りのトレードオフを制御する正則化パラメータです。これらを正しく選べるかどうかが、役に立たないモデルと強いモデルの分かれ目です。
 
-## Decision Checklist
+## 判断チェックリスト
 
-1. Is the data linearly separable (or close to it)?
-   - Yes: use linear kernel. It is faster and more interpretable.
-   - No: go to step 2.
+1. データは線形分離可能（またはそれに近い）ですか？
+   - はい: 線形kernelを使います。高速で、より解釈しやすいです。
+   - いいえ: ステップ2へ進みます。
 
-2. How many features vs samples?
-   - Features >> samples (e.g., text with TF-IDF): use linear kernel. High-dimensional data is often linearly separable. RBF adds complexity for no gain.
-   - Samples >> features (e.g., tabular data with 10-50 features): RBF kernel is the default choice.
+2. 特徴量数とサンプル数の関係はどうなっていますか？
+   - 特徴量数 >> サンプル数（例: TF-IDFを使ったテキスト）: 線形kernelを使います。高次元データは線形分離可能であることが多く、RBFは利得なしに複雑さを増やします。
+   - サンプル数 >> 特徴量数（例: 10〜50特徴量の表形式データ）: RBF kernelが既定の選択肢です。
 
-3. Is the decision boundary expected to be smooth?
-   - Smooth, continuous boundary: RBF kernel
-   - Polynomial-shaped boundary: polynomial kernel (start with degree 2 or 3)
-   - Domain knowledge suggests specific interaction terms: polynomial kernel with matching degree
+3. 決定境界は滑らかだと期待されますか？
+   - 滑らかで連続的な境界: RBF kernel
+   - 多項式的な形の境界: polynomial kernel（degree 2または3から始める）
+   - ドメイン知識から特定の交互作用項が示唆される: それに合うdegreeのpolynomial kernel
 
-4. How large is the dataset?
-   - Under 10,000 samples: any kernel works, RBF is the safe default
-   - 10,000 to 100,000: linear kernel or LinearSVC (primal formulation, O(n) per epoch)
-   - Over 100,000: do not use kernel SVM. Switch to linear SVM, gradient boosting, or neural networks.
+4. データセットの大きさはどの程度ですか？
+   - 10,000サンプル未満: どのkernelでも動きます。RBFが安全な既定値です。
+   - 10,000〜100,000: 線形kernelまたはLinearSVC（主問題形式、1エポック O(n)）
+   - 100,000超: kernel SVMは使わないでください。線形SVM、勾配ブースティング、またはニューラルネットワークに切り替えます。
 
-5. Did you scale the features?
-   - SVMs require feature scaling. Always standardize (zero mean, unit variance) before fitting. Unscaled features distort the margin geometry.
+5. 特徴量をスケーリングしましたか？
+   - SVMには特徴量スケーリングが必要です。フィット前に必ず標準化（平均0、分散1）してください。スケーリングされていない特徴量はマージンの幾何を歪めます。
 
-## Kernel selection flowchart
+## kernel選択フローチャート
 
 ```
-Start
+開始
   |
   v
-Features > 1000 or features >> samples?
-  Yes --> Linear kernel (LinearSVC for speed)
-  No  --> Dataset < 10k samples?
-            Yes --> Try RBF first (best general-purpose kernel)
-            No  --> Linear kernel (kernel SVMs are O(n^2) to O(n^3))
+特徴量数 > 1000 または 特徴量数 >> サンプル数?
+  はい --> 線形kernel（速度重視ならLinearSVC）
+  いいえ --> データセット < 10kサンプル?
+              はい --> まずRBFを試す（最も汎用的なkernel）
+              いいえ --> 線形kernel（kernel SVMは O(n^2) から O(n^3)）
 ```
 
-If RBF does not work well, try polynomial degree 2-3. If that fails, the problem may not be suited to SVMs.
+RBFがうまく機能しない場合は、degree 2〜3のpolynomialを試します。それでもだめなら、その問題はSVMに向いていない可能性があります。
 
-## Tuning C (regularization)
+## C（正則化）の調整
 
-C controls the penalty for misclassifications. It is inversely related to regularization strength.
+Cは誤分類に対するペナルティを制御します。正則化強度とは逆の関係にあります。
 
-| C value | Effect | When to use |
+| Cの値 | 効果 | 使う場面 |
 |---------|--------|-------------|
-| 0.001 - 0.01 | Wide margin, many violations allowed | Noisy data, want generalization |
-| 0.1 - 1.0 | Balanced | Good starting range |
-| 10 - 1000 | Narrow margin, few violations | Clean data, need high accuracy |
+| 0.001 - 0.01 | 広いマージン、多くの違反を許容 | ノイズが多いデータ、汎化を重視 |
+| 0.1 - 1.0 | バランス型 | よい開始範囲 |
+| 10 - 1000 | 狭いマージン、少ない違反 | クリーンなデータ、高精度が必要 |
 
-Tuning strategy:
-- Start with C=1.0
-- Search on a log scale: [0.001, 0.01, 0.1, 1, 10, 100, 1000]
-- Use cross-validation to pick the best value
-- If best C is at the edge of your range, extend the range in that direction
+調整方針:
+- C=1.0から始める
+- 対数スケールで探索する: [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+- 交差検証で最良値を選ぶ
+- 最良のCが探索範囲の端にある場合は、その方向に範囲を広げる
 
-## Tuning gamma (RBF kernel)
+## gamma（RBF kernel）の調整
 
-Gamma controls how far the influence of a single training point reaches. It defines the width of the Gaussian.
+gammaは、単一の訓練点の影響がどこまで届くかを制御します。Gaussianの幅を定義します。
 
-| gamma value | Effect | When to use |
+| gammaの値 | 効果 | 使う場面 |
 |-------------|--------|-------------|
-| Small (0.001) | Each point influences a large area. Smooth, simple boundary | Underfitting or few features |
-| Medium (auto: 1/n_features) | sklearn default. Reasonable starting point | General use |
-| Large (10+) | Each point influences only nearby points. Complex, wiggly boundary | Risk of overfitting |
+| 小さい（0.001） | 各点が広い領域に影響する。滑らかで単純な境界 | 未学習、または特徴量が少ない |
+| 中程度（auto: 1/n_features） | sklearnの既定値。妥当な開始点 | 一般用途 |
+| 大きい（10+） | 各点が近傍の点だけに影響する。複雑で揺れた境界 | 過学習リスク |
 
-Tuning strategy:
-- Start with gamma="scale" (1 / (n_features * X.var()), the sklearn default)
-- Search on a log scale: [0.001, 0.01, 0.1, 1, 10]
-- Low gamma + high C tends to overfit
-- High gamma + low C tends to underfit
+調整方針:
+- gamma="scale"（1 / (n_features * X.var())、sklearnの既定値）から始める
+- 対数スケールで探索する: [0.001, 0.01, 0.1, 1, 10]
+- 低いgamma + 高いCは過学習しやすい
+- 高いgamma + 低いCは未学習になりやすい
 
-## Joint C and gamma tuning
+## Cとgammaの同時調整
 
-C and gamma interact. Always tune them together, not independently.
+Cとgammaは相互作用します。独立にではなく、必ず一緒に調整してください。
 
-Recommended approach:
-1. Coarse grid search: C in [0.01, 0.1, 1, 10, 100], gamma in [0.001, 0.01, 0.1, 1, 10] (25 combos)
-2. Find the best region
-3. Fine grid search around the best region (e.g., C in [5, 10, 20, 50], gamma in [0.05, 0.1, 0.2])
-4. Use 5-fold cross-validation throughout
+推奨手順:
+1. 粗いグリッドサーチ: C in [0.01, 0.1, 1, 10, 100]、gamma in [0.001, 0.01, 0.1, 1, 10]（25通り）
+2. 最良の領域を見つける
+3. 最良領域の周辺で細かいグリッドサーチを行う（例: C in [5, 10, 20, 50]、gamma in [0.05, 0.1, 0.2]）
+4. 全体を通して5-fold交差検証を使う
 
-## Common mistakes
+## よくある間違い
 
-- Using RBF kernel on high-dimensional sparse data (linear is better and 100x faster)
-- Forgetting to scale features (the single most common SVM mistake)
-- Setting C too high on noisy data (memorizes noise instead of learning the boundary)
-- Using kernel SVM on datasets over 50k samples (training time is prohibitive)
-- Not tuning C and gamma together (they compensate for each other)
-- Defaulting to polynomial degree 5+ (overfits aggressively, try 2 or 3 first)
+- 高次元の疎データにRBF kernelを使う（線形の方がよく、100倍速い）
+- 特徴量スケーリングを忘れる（SVMで最も多いミス）
+- ノイズの多いデータでCを高くしすぎる（境界を学ぶのではなくノイズを丸暗記する）
+- 50kサンプルを超えるデータセットでkernel SVMを使う（学習時間が現実的でない）
+- Cとgammaを一緒に調整しない（両者は互いを補償する）
+- polynomial degree 5+ を既定にする（強く過学習するため、まず2または3を試す）
 
-## Quick reference
+## クイックリファレンス
 
-| Kernel | When to use | Key parameters | Training complexity |
+| kernel | 使う場面 | 主要パラメータ | 学習計算量 |
 |--------|------------|----------------|-------------------|
-| Linear | Text/TF-IDF, many features, large data | C only | O(n) per epoch |
-| RBF | General-purpose, under 10k samples | C, gamma | O(n^2) to O(n^3) |
-| Polynomial | Known polynomial relationships | C, degree, coef0 | O(n^2) to O(n^3) |
-| Sigmoid | Rarely useful (equivalent to two-layer neural net) | C, gamma, coef0 | O(n^2) to O(n^3) |
+| Linear | テキスト/TF-IDF、特徴量が多い、大規模データ | Cのみ | 1エポック O(n) |
+| RBF | 汎用、10kサンプル未満 | C, gamma | O(n^2) から O(n^3) |
+| Polynomial | 多項式関係が既知 | C, degree, coef0 | O(n^2) から O(n^3) |
+| Sigmoid | 有用な場面はまれ（2層ニューラルネットと同等） | C, gamma, coef0 | O(n^2) から O(n^3) |

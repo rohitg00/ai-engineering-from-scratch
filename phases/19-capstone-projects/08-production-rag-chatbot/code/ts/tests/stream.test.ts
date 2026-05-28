@@ -8,12 +8,12 @@ import {
 } from "../src/stream.js";
 
 describe("encodeSseFrame", () => {
-  it("encodes event + JSON-stringified data with the SSE double-newline terminator", () => {
+  it("event と JSON-stringified data を SSE double-newline terminator 付きで encode する", () => {
     const frame = encodeSseFrame("token", { text: "hi" });
     assert.equal(frame, 'event: token\ndata: {"text":"hi"}\n\n');
   });
 
-  it("round-trips through parseSseStream", () => {
+  it("parseSseStream で round-trip する", () => {
     const concat =
       encodeSseFrame("session", { sessionId: "s-1" }) +
       encodeSseFrame("token", { text: "a" }) +
@@ -27,7 +27,7 @@ describe("encodeSseFrame", () => {
 });
 
 describe("retrieve", () => {
-  it("boosts entries that match the jurisdiction tag", () => {
+  it("jurisdiction tag が一致する entry を boost する", () => {
     const results = retrieve("erasure", "GDPR", 3);
     assert.ok(results.length > 0);
     const top = results[0];
@@ -35,34 +35,34 @@ describe("retrieve", () => {
     assert.equal(top.docId, "GDPR-Art-17");
   });
 
-  it("returns at most k citations", () => {
+  it("最大 k 件の citation を返す", () => {
     const results = retrieve("data", "GDPR", 2);
     assert.ok(results.length <= 2);
   });
 });
 
 describe("tokenizeAnswer", () => {
-  it("falls back to a no-match message when there are no citations", () => {
+  it("citation がない場合は no-match message に fallback する", () => {
     const tokens = tokenizeAnswer("anything", []);
     const joined = tokens.join("");
-    assert.match(joined, /No matching policy found for "anything"\./);
+    assert.match(joined, /"anything" に一致する policy は見つかりませんでした。/);
   });
 
-  it("leads with the first citation when present", () => {
+  it("citation がある場合は最初の citation から始める", () => {
     const tokens = tokenizeAnswer("q", [
       { docId: "GDPR-Art-17", page: 1, snippet: "snippet text", score: 5 },
     ]);
     const joined = tokens.join("");
-    assert.match(joined, /^Per GDPR-Art-17, snippet text$/);
+    assert.match(joined, /^GDPR-Art-17 によると、snippet text$/);
   });
 
-  it("appends a 'See also' tail when there are more citations", () => {
+  it("追加 citation がある場合は関連 tail を付ける", () => {
     const tokens = tokenizeAnswer("q", [
       { docId: "A", page: 1, snippet: "x", score: 1 },
       { docId: "B", page: 2, snippet: "y", score: 1 },
       { docId: "C", page: 3, snippet: "z", score: 1 },
     ]);
     const joined = tokens.join("");
-    assert.match(joined, /See also B, C\./);
+    assert.match(joined, /関連: B, C。/);
   });
 });

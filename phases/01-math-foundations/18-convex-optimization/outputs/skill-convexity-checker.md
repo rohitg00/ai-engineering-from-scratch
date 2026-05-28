@@ -1,91 +1,88 @@
 ---
 name: skill-convexity-checker
-description: Determine if an optimization problem is convex and choose the right solver
+description: 最適化問題が凸かどうかを判定し、適切なソルバを選ぶ
 version: 1.0.0
 phase: 1
 lesson: 18
 tags: [optimization, convexity, solvers]
 ---
 
-# Convexity Checker
+# 凸性チェッカー
 
-How to verify whether an optimization problem is convex, and what to do with the answer.
+最適化問題が凸かどうかを確認し、その結果に応じて何をすべきかを判断するための手順です。
 
-## Decision Checklist
+## 判断チェックリスト
 
-1. Is the objective function convex? (Check Hessian positive semi-definiteness or use composition rules.)
-2. Are all inequality constraints of the form g_i(x) <= 0 where each g_i is convex?
-3. Are all equality constraints affine (linear)?
-4. If all three are yes, the problem is convex. Use a convex solver with convergence guarantees.
-5. If any are no, the problem is non-convex. Use SGD/Adam and accept local optima.
+1. 目的関数は凸か。Hessian が positive semi-definite か、合成規則で確認します。
+2. すべての不等式制約は `g_i(x) <= 0` の形で、各 `g_i` は凸か。
+3. すべての等式制約は affine (linear) か。
+4. 三つすべてが yes なら凸問題です。収束保証のある凸最適化ソルバを使います。
+5. どれかが no なら非凸問題です。SGD/Adam を使い、局所解を受け入れます。
 
-## How to test convexity of a function
+## 関数の凸性テスト
 
-| Test | Applies to | Method |
+| テスト | 対象 | 方法 |
 |---|---|---|
-| Second derivative >= 0 | Scalar functions f(x) | Compute f''(x). If f''(x) >= 0 for all x, convex. |
-| Hessian is PSD | Multivariate functions f(x) | Compute H(x). If all eigenvalues >= 0 everywhere, convex. |
-| Definition test | Any function | Check f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y) for sampled x, y, t. |
-| Composition rules | Composed functions | See composition table below. |
-| Restriction to a line | Multivariate f | f is convex iff g(t) = f(x + tv) is convex in t for all x, v. |
+| Second derivative `>= 0` | スカラー関数 `f(x)` | `f''(x)` を計算し、全域で `>= 0` なら凸 |
+| Hessian is PSD | 多変量関数 `f(x)` | `H(x)` の固有値が全域で `>= 0` なら凸 |
+| Definition test | 任意の関数 | サンプルした `x, y, t` で `f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y)` を確認 |
+| Composition rules | 合成関数 | 下の合成規則を使う |
+| Restriction to a line | 多変量 `f` | 任意の直線制限 `g(t) = f(x + tv)` が凸なら凸 |
 
-## Composition rules (preserving convexity)
+## 凸性を保つ合成規則
 
-| Operation | Result |
+| 操作 | 結果 |
 |---|---|
-| f + g (both convex) | Convex |
-| c * f (c > 0, f convex) | Convex |
-| max(f, g) (both convex) | Convex |
-| f(Ax + b) where f is convex | Convex |
-| g(f(x)) where g is convex non-decreasing and f is convex | Convex |
-| g(f(x)) where g is convex non-increasing and f is concave | Convex |
-| sum of convex functions | Convex |
-| pointwise supremum of convex functions | Convex |
+| `f + g` (`both convex`) | 凸 |
+| `c * f` (`c > 0`, `f convex`) | 凸 |
+| `max(f, g)` (`both convex`) | 凸 |
+| `f(Ax + b)` where `f` is convex | 凸 |
+| `g(f(x))` where `g` is convex non-decreasing and `f` is convex | 凸 |
+| `g(f(x))` where `g` is convex non-increasing and `f` is concave | 凸 |
+| sum of convex functions | 凸 |
+| pointwise supremum of convex functions | 凸 |
 
-## Common ML objectives: convex or not?
+## ML の代表的な目的関数
 
-| Objective | Convex? | Reason |
+| 目的関数 | 凸か | 理由 |
 |---|---|---|
-| MSE: (1/n) sum(y - Xw)^2 | Yes | Quadratic in w, Hessian = (2/n) X^T X is PSD |
-| Logistic loss: sum(log(1 + exp(-y_i * w^T x_i))) | Yes | Sum of convex functions (log-sum-exp family) |
-| Hinge loss: sum(max(0, 1 - y_i * w^T x_i)) | Yes | Max of convex (linear) functions |
-| L2 regularization: lambda * \|\|w\|\|^2 | Yes | Quadratic, Hessian = 2*lambda*I |
-| L1 regularization: lambda * \|\|w\|\|_1 | Yes | Sum of absolute values (convex but not differentiable) |
-| Ridge regression: MSE + L2 | Yes | Sum of two convex functions |
-| LASSO: MSE + L1 | Yes | Sum of two convex functions |
-| Elastic net: MSE + L1 + L2 | Yes | Sum of convex functions |
-| SVM (primal): hinge + L2 | Yes | Sum of convex functions |
-| Cross-entropy with softmax | Yes (in logits) | Log-sum-exp is convex |
-| Neural network (any loss) | No | Nonlinear activations create non-convex composition |
-| k-means objective | No | Discrete assignment step |
-| Matrix factorization: \|\|X - UV^T\|\|^2 | No | Bilinear in U and V |
-| GAN loss | No | Minimax, non-convex in generator |
-| Contrastive loss (InfoNCE) | No | Log of ratio of exponentials with negative samples |
+| MSE: `(1/n) sum(y - Xw)^2` | Yes | `w` に関して二次、Hessian は PSD |
+| Logistic loss | Yes | convex functions の和 |
+| Hinge loss | Yes | 凸な線形関数の最大 |
+| L2 regularization | Yes | 二次関数 |
+| L1 regularization | Yes | 絶対値の和。微分不能点はある |
+| Ridge regression | Yes | 凸関数の和 |
+| LASSO | Yes | 凸関数の和 |
+| SVM (primal) | Yes | hinge + L2 |
+| Cross-entropy with softmax | Yes (in logits) | log-sum-exp は凸 |
+| Neural network | No | 非線形活性化により非凸 |
+| k-means objective | No | 離散的な割り当てがある |
+| Matrix factorization | No | `U` と `V` に双線形 |
+| GAN loss | No | minimax で非凸 |
 
-## Solver selection based on convexity
+## ソルバ選択
 
-| Problem type | Solver | Convergence guarantee |
+| 問題タイプ | ソルバ | 収束保証 |
 |---|---|---|
-| Convex, smooth, unconstrained | Gradient descent | O(1/k) to global minimum |
-| Convex, smooth, unconstrained | L-BFGS | Superlinear to global minimum |
-| Convex, smooth, unconstrained | Newton's method | Quadratic near minimum (if Hessian tractable) |
-| Convex, smooth, constrained | Interior point method | Polynomial time |
-| Convex, non-smooth (L1) | Proximal gradient / ISTA | O(1/k) to global minimum |
-| Convex, non-smooth (L1) | ADMM | Flexible, handles constraints |
-| Convex, quadratic | Conjugate gradient | Exact in n steps |
-| Non-convex, smooth | SGD / Adam | Converges to local minimum |
-| Non-convex, smooth | SGD + restarts | Better local minimum on average |
-| Non-convex, smooth | Overparameterize + SGD | Flat minima, good generalization |
+| Convex, smooth, unconstrained | Gradient descent | 大域最小へ `O(1/k)` |
+| Convex, smooth, unconstrained | L-BFGS | 大域最小へ超線形 |
+| Convex, smooth, unconstrained | Newton's method | 最小点近傍で二次収束 |
+| Convex, smooth, constrained | Interior point method | 多項式時間 |
+| Convex, non-smooth (L1) | Proximal gradient / ISTA | 大域最小へ `O(1/k)` |
+| Convex, non-smooth (L1) | ADMM | 制約を柔軟に扱える |
+| Convex, quadratic | Conjugate gradient | 最大 `n` ステップで厳密 |
+| Non-convex, smooth | SGD / Adam | 局所最小へ収束 |
+| Non-convex, smooth | SGD + restarts | 平均的に良い局所解 |
 
-## Common mistakes
+## よくある間違い
 
-- Assuming a problem is convex because the loss function is convex. The loss must be convex in the parameters you are optimizing. Cross-entropy is convex in the logits, but the full neural network mapping from inputs to logits is non-convex.
-- Using Newton's method on a non-convex problem. The Hessian may have negative eigenvalues, causing Newton to move toward saddle points or maxima instead of minima.
-- Forgetting that L1 regularization makes the objective non-differentiable at zero. Standard gradient descent does not work well. Use proximal gradient descent or subgradient methods.
-- Squaring the condition number by forming A^T A. If you need to solve a least-squares problem and A is ill-conditioned, use QR or SVD instead of the normal equations.
-- Declaring a problem non-convex without checking. Many ML problems (linear models, SVMs, logistic regression) are convex and benefit from stronger solvers.
+- 損失関数が凸だから問題全体も凸だと思い込むこと。最適化するパラメータに関して凸でなければなりません。
+- 非凸問題に Newton's method をそのまま使うこと。Hessian に負の固有値があると鞍点や最大点へ向かうことがあります。
+- L1 正則化がゼロで微分不能になることを忘れること。proximal gradient や subgradient methods を使います。
+- `A^T A` を作って条件数を二乗してしまうこと。悪条件の最小二乗では QR または SVD を使います。
+- 確認せずに非凸と決めつけること。線形モデル、SVM、ロジスティック回帰は凸で、強力なソルバの恩恵を受けます。
 
-## Quick test: is my problem convex?
+## 簡易テスト
 
 ```
 1. Write out the objective: minimize f(w) subject to constraints

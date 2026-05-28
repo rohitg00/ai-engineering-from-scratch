@@ -1,25 +1,25 @@
-# Mission - Agent Instructions as Executable Constraints
+# Mission - 実行可能な制約としての Agent Instructions
 
 ## Goal
-Turn prose instructions into machine-checkable rules across five categories and emit a rule report a reviewer can score.
+prose instructions を 5 categories の machine-checkable rules に変換し、reviewer が採点できる rule report を出力する。
 
 ## Inputs
-- `docs/agent-rules.md` with one rule per heading, each carrying slug, category, description, and a `check` field
-- A demo agent run that intentionally violates two rules
+- heading ごとに 1 rule を持つ `docs/agent-rules.md`。各 rule は slug、category、description、`check` field を持つ
+- 意図的に 2 つの rules に違反する demo agent run
 
-## Deliverables
-- Parser that loads `agent-rules.md` into a dataclass
-- `rule_checker.py` style functions, one per `check` referenced
-- `rule_report.json` with pass/fail per rule and an aggregate severity
+## 成果物
+- `agent-rules.md` を dataclass に load する parser
+- 参照される `check` ごとに 1 つの `rule_checker.py` style function
+- rule ごとの pass/fail と aggregate severity を持つ `rule_report.json`
 
 ## Acceptance
-- `python3 code/main.py` exits zero
-- Output prints the parsed rule set, the run trace, and pass/fail per rule
-- `rule_report.json` catches the two intentional violations
+- `python3 code/main.py` が exit zero
+- 出力が parsed rule set、run trace、rule ごとの pass/fail を表示する
+- `rule_report.json` が 2 つの intentional violations を捕捉する
 
 ## Out of scope
-- Wiring the checker into CI. The lesson exits at a written report.
-- Framework guardrails (OpenAI SDK, LangGraph interrupts). The rule set is the human-readable contract those implement.
+- checker を CI に結線すること。lesson は written report で終わる。
+- Framework guardrails (OpenAI SDK, LangGraph interrupts)。rule set はそれらが実装する human-readable contract。
 
 ## References
 - `docs/en.md` - full lesson

@@ -1,46 +1,46 @@
 ---
 name: migration-agent
-description: Build a repo-level code migration agent that combines deterministic recipes with an agent fallback loop, passes MigrationBench, and publishes a failure taxonomy.
+description: deterministic recipe と agent fallback loop を組み合わせ、MigrationBench を通過し、failure taxonomy を公開する repo-level code migration agent を構築する。
 version: 1.0.0
 phase: 19
 lesson: 09
 tags: [capstone, code-migration, openrewrite, libcst, migrationbench, agent, sandbox]
 ---
 
-Given a Java 8 or Python 2 repo, produce a migrated branch (to Java 17 or Python 3.12) with a green test suite and minimal coverage regression. Evaluate across the 50-repo MigrationBench subset.
+Java 8 または Python 2 repo を受け取り、test suite が green で coverage regression が最小の migrated branch (Java 17 または Python 3.12) を生成する。50-repo MigrationBench subset 全体で評価する。
 
-Build plan:
+構築計画:
 
-1. Deterministic pass: OpenRewrite (Java) or libcst (Python) runs mechanical rewrites first. Commit as the "recipe" commit with a clean diff.
-2. Daytona sandbox: target runtime preinstalled; per-branch build; read-only source mount.
-3. Agent loop: LangGraph or OpenAI Agents SDK over Claude Opus 4.7 + GPT-5.4-Codex. Tools: `run_build`, `read_file`, `edit_file`, `run_test`, `git_diff`. Classify failure (dep, syntax, test, build-tool), apply targeted fix, rerun.
-4. Budget caps: 30 min, $8, 20 turns. Breaching any halts and files under `budget_exhausted` with the current diff.
-5. Test + coverage gate: build green then tests green; coverage must not drop more than 2%.
-6. PR open with recipe-commit + agent commits + summary comment.
-7. Failure taxonomy: per-repo tag from `{dep_upgrade_required, build_tool_drift, custom_annotation, test_flake, syntax_edge_case, budget_exhausted, coverage_regression}`.
-8. 50-repo run across MigrationBench; publish per-class pass rate, cost-per-repo, and coverage-preservation; compare vs deterministic-only baseline.
+1. deterministic pass: OpenRewrite (Java) または libcst (Python) が mechanical rewrites を先に実行する。clean diff を持つ "recipe" commit として commit する。
+2. Daytona sandbox: target runtime を事前 install し、per-branch build と read-only source mount を使う。
+3. agent loop: Claude Opus 4.7 + GPT-5.4-Codex 上の LangGraph または OpenAI Agents SDK。tools: `run_build`, `read_file`, `edit_file`, `run_test`, `git_diff`。failure (dep, syntax, test, build-tool) を classify し、targeted fix を適用して rerun する。
+4. budget caps: 30 min、$8、20 turns。どれかを超えたら halt し、current diff とともに `budget_exhausted` に分類する。
+5. test + coverage gate: build green の後に tests green。coverage drop は 2% を超えてはならない。
+6. recipe-commit + agent commits + summary comment を付けて PR を開く。
+7. failure taxonomy: 各 failed repo に `{dep_upgrade_required, build_tool_drift, custom_annotation, test_flake, syntax_edge_case, budget_exhausted, coverage_regression}` から tag を付ける。
+8. MigrationBench 全体で50-repo run を行い、per-class pass rate、cost-per-repo、coverage-preservation を公開し、deterministic-only baseline と比較する。
 
-Assessment rubric:
+評価 rubric:
 
 | Weight | Criterion | Measurement |
 |:-:|---|---|
 | 25 | MigrationBench pass rate | 50-repo subset pass@1 |
-| 20 | Test-coverage preservation | Mean coverage delta vs base branch |
-| 20 | Cost per migrated repo | Mean $/repo on passing runs |
-| 20 | Agent / deterministic-tool integration | Fraction of fixes handled by OpenRewrite vs agent |
-| 15 | Failure analysis write-up | Taxonomy completeness with exemplars |
+| 20 | Test-coverage preservation | base branch に対する mean coverage delta |
+| 20 | Cost per migrated repo | passing runs の mean $/repo |
+| 20 | Agent / deterministic-tool integration | OpenRewrite が処理した fix と agent が書いた fix の割合 |
+| 15 | Failure analysis write-up | exemplar 付き taxonomy completeness |
 
-Hard rejects:
+ハードリジェクト:
 
-- Pipelines that skip the deterministic pass. OpenRewrite handles the mechanical 70-80% cheaper and more reliably than any agent.
-- Coverage regressions above 2% treated as passing.
-- PRs that bundle mechanical and agent-authored changes into one commit. Must separate.
-- Reporting pass rate without a matched deterministic-only baseline on the same 50 repos.
+- deterministic pass を skip する pipeline。OpenRewrite は mechanical な 70-80% をどの agent より安く信頼性高く処理する。
+- 2% を超える coverage regression を passing と扱うこと。
+- mechanical changes と agent-authored changes を1つの commit にまとめた PR。分離が必須。
+- 同じ50 repo 上の matched deterministic-only baseline なしに pass rate を報告すること。
 
-Refusal rules:
+拒否ルール:
 
-- Refuse to force-push a migrated branch over the base. Always a new branch + PR.
-- Refuse to open a PR whose CI has not flipped green in the sandbox.
-- Refuse to run on corporate repos without explicit license to modify.
+- migrated branch を base に force-push しない。必ず new branch + PR。
+- sandbox で CI が green になっていない PR を開くことを拒否する。
+- 明示的な modify license なしに corporate repo で実行しない。
 
-Output: a repo containing the two-layer migration pipeline, the 50-repo MigrationBench run logs, the failure taxonomy dashboard, a matched deterministic-only baseline run, and a write-up on the three most common failure classes and the recipe change that would eliminate each.
+出力: two-layer migration pipeline、50-repo MigrationBench run logs、failure taxonomy dashboard、matched deterministic-only baseline run、上位3つの common failure class と、それぞれをなくす recipe change を記した write-up を含むリポジトリ。

@@ -1,11 +1,11 @@
 """
-Sandbox runner with denylist, path jail, and timeout.
+denylist、path jail、timeout を備えた sandbox runner。
 
 See: phases/19-capstone-projects/26-sandbox-runner-denylist/docs/en.md
 Concept refs:
-  - POSIX subprocess semantics (wall-clock timeout, return codes).
-  - Symlink-safe path jail via realpath prefix check.
-The demo at the bottom runs a battery of allow/deny calls and exits zero.
+  - POSIX subprocess semantics（wall-clock timeout、return code）。
+  - realpath prefix check による symlink-safe path jail。
+bottom の demo は allow/deny call の battery を走らせ、exit zero する。
 """
 
 from __future__ import annotations
@@ -85,7 +85,7 @@ SHELL_METACHARS: tuple[str, ...] = (";", "|", "&", ">", "<", "`", "$(", "${", ")
 
 DEFAULT_MAX_OUTPUT_BYTES: int = 64 * 1024
 DEFAULT_TIMEOUT_SECONDS: float = 30.0
-TRUNCATION_MARKER: bytes = b"\n[sandbox: output truncated]\n"
+TRUNCATION_MARKER: bytes = "\n[sandbox: 出力を切り詰めました]\n".encode("utf-8")
 
 
 # ---------------------------------------------------------------------------
@@ -95,7 +95,7 @@ TRUNCATION_MARKER: bytes = b"\n[sandbox: output truncated]\n"
 
 @dataclass
 class SandboxResult:
-    """Structured outcome of a sandbox.run call."""
+    """sandbox.run call の structured outcome。"""
 
     argv: list[str]
     exit_code: int
@@ -127,7 +127,7 @@ class SandboxResult:
 
 @dataclass
 class SandboxConfig:
-    """All knobs the sandbox accepts."""
+    """sandbox が受け取るすべての knob。"""
 
     project_root: str
     max_output_bytes: int = DEFAULT_MAX_OUTPUT_BYTES
@@ -139,8 +139,8 @@ class SandboxConfig:
     env_allowlist: tuple[str, ...] = ("PATH", "HOME", "LANG", "LC_ALL", "TERM")
 
     def __post_init__(self) -> None:
-        # Resolve once and cache. The sandbox compares argument realpaths
-        # against this value, so any later symlink resolution is consistent.
+        # 1 回だけ resolve して cache する。sandbox は argument realpath をこの値と
+        # 比較するため、後続の symlink resolution が一貫する。
         self.project_root = os.path.realpath(self.project_root)
 
 
@@ -155,12 +155,12 @@ def _basename(executable: str) -> str:
 
 def _check_executable_denylist(argv: Sequence[str], cfg: SandboxConfig) -> str | None:
     if not argv:
-        return "empty argv"
+        return "argv が空です"
     name = _basename(argv[0])
     if not name:
-        return f"executable {argv[0]!r} has no basename"
+        return f"executable {argv[0]!r} に basename がありません"
     if name in cfg.denylist:
-        return f"executable {name!r} is on the denylist"
+        return f"executable {name!r} は denylist に含まれています"
     return None
 
 
@@ -174,8 +174,8 @@ def _check_argv_interpreter(argv: Sequence[str], cfg: SandboxConfig) -> str | No
         for pat in INTERPRETER_FLAG_PATTERNS:
             if pat.match(arg):
                 return (
-                    f"interpreter {name!r} invoked with refused flag {arg!r}; "
-                    "use a script file instead of -c/-e"
+                    f"interpreter {name!r} が拒否対象 flag {arg!r} で呼ばれました。"
+                    "-c/-e ではなく script file を使ってください"
                 )
     return None
 
@@ -187,8 +187,8 @@ def _check_shell_metachars(argv: Sequence[str], shell: bool) -> str | None:
         for meta in SHELL_METACHARS:
             if meta in arg:
                 return (
-                    f"argv contains shell metachar {meta!r} in {arg!r}; "
-                    "set shell=True to opt in"
+                    f"argv の {arg!r} に shell metachar {meta!r} が含まれます。"
+                    "明示的に使う場合は shell=True を設定してください"
                 )
     return None
 
@@ -197,12 +197,12 @@ _PATH_HINT = re.compile(r"[/\\]|^\.{1,2}$")
 
 
 def _looks_like_path(arg: str) -> bool:
-    """Conservative path-like detector.
+    """conservative な path-like detector。
 
-    Returns True for arguments that look like file paths: contain a slash,
-    are exactly . or .., or end in a common path-y suffix. The sandbox does
-    not need to be exhaustive: any false negative just means the path is not
-    jail-checked, which is fine for non-path arguments.
+    file path に見える argument で True を返す。slash を含む、ちょうど . または ..、
+    あるいは一般的な path 風 suffix で終わるもの。sandbox は exhaustive である必要はない。
+    false negative は path が jail-check されないことを意味するだけで、non-path argument
+    では問題ない。
     """
 
     if not arg:
@@ -219,15 +219,15 @@ def _check_path_jail(argv: Sequence[str], cfg: SandboxConfig) -> str | None:
             continue
         if arg.startswith("-"):
             continue
-        # Resolve against root if arg is relative; let absolute paths stay absolute.
+        # arg が relative なら root に対して resolve し、absolute path は absolute のままにする。
         candidate = arg
         if not os.path.isabs(candidate):
             candidate = os.path.join(root, candidate)
         resolved = os.path.realpath(candidate)
         if resolved != root and not resolved.startswith(root + os.sep):
             return (
-                f"path argument {arg!r} resolves outside project root "
-                f"({resolved!r} not under {root!r})"
+                f"path argument {arg!r} は project root の外に resolve されます "
+                f"({resolved!r} は {root!r} 配下ではありません)"
             )
     return None
 
@@ -245,13 +245,13 @@ def truncate_stream(buf: bytes, max_bytes: int) -> tuple[bytes, bool]:
 
 
 # ---------------------------------------------------------------------------
-# The sandbox
+# Sandbox 本体
 # ---------------------------------------------------------------------------
 
 
 @dataclass
 class Sandbox:
-    """A subprocess runner that refuses dangerous calls and jails paths."""
+    """危険な call を拒否し path を jail する subprocess runner。"""
 
     config: SandboxConfig
 
@@ -294,7 +294,7 @@ class Sandbox:
             self.config.project_root + os.sep
         ):
             result.denied = True
-            result.reason = f"cwd {work_cwd!r} not under project root"
+            result.reason = f"cwd {work_cwd!r} は project root 配下ではありません"
             return result
 
         env: dict[str, str] = {}
@@ -333,7 +333,7 @@ class Sandbox:
                 truncated=stdout_truncated or stderr_truncated,
                 timed_out=True,
                 denied=False,
-                reason=f"wall-clock timeout after {self.config.timeout_seconds}s",
+                reason=f"wall-clock timeout: {self.config.timeout_seconds}s 経過",
                 duration_ms=elapsed,
             )
         except FileNotFoundError as exc:
@@ -346,7 +346,7 @@ class Sandbox:
                 truncated=False,
                 timed_out=False,
                 denied=True,
-                reason=f"executable not found: {exc}",
+                reason=f"executable が見つかりません: {exc}",
                 duration_ms=elapsed,
             )
 
@@ -371,7 +371,7 @@ class Sandbox:
 
 
 # ---------------------------------------------------------------------------
-# Helpers for the demo (cross-platform tool selection)
+# demo 用 helper（cross-platform tool selection）
 # ---------------------------------------------------------------------------
 
 
@@ -397,11 +397,11 @@ def _which(name: str) -> str | None:
 
 
 def _seed_project_root() -> str:
-    """Create a temp project root with a single tracked file."""
+    """tracked file を 1 つ持つ temp project root を作る。"""
 
     root = tempfile.mkdtemp(prefix="sandbox-demo-")
     with open(os.path.join(root, "hello.txt"), "w", encoding="utf-8") as fh:
-        fh.write("hello from inside the sandbox\n")
+        fh.write("sandbox 内からこんにちは\n")
     sub = os.path.join(root, "src")
     os.makedirs(sub, exist_ok=True)
     with open(os.path.join(sub, "main.py"), "w", encoding="utf-8") as fh:
@@ -421,11 +421,11 @@ def _print_outcome(label: str, result: SandboxResult) -> None:
     )
     print(f"  - {label:38s} -> {badge}")
     if result.denied or result.timed_out:
-        print(f"      reason: {result.reason}")
+        print(f"      理由: {result.reason}")
 
 
 def run_demo() -> int:
-    """Self-terminating demo. Returns 0 on success."""
+    """self-terminating demo。成功時は 0 を返す。"""
 
     root = _seed_project_root()
     config = SandboxConfig(
@@ -441,7 +441,7 @@ def run_demo() -> int:
     sleep = find_executable(("sleep",))
     ls = find_executable(("ls",))
 
-    print("SANDBOX DEMO")
+    print("SANDBOX デモ")
     print(f"project_root={root}")
     print("")
 
@@ -454,13 +454,13 @@ def run_demo() -> int:
         _print_outcome("cat src/main.py", sandbox.run([cat, "src/main.py"]))
 
     print("")
-    print("denied by name:")
+    print("name による deny:")
     _print_outcome("rm -rf .", sandbox.run(["rm", "-rf", "."]))
     _print_outcome("sudo apt update", sandbox.run(["sudo", "apt", "update"]))
     _print_outcome("curl http://x", sandbox.run(["curl", "http://example.com"]))
 
     print("")
-    print("denied by argv interpreter:")
+    print("argv interpreter による deny:")
     _print_outcome(
         "python3 -c '...'",
         sandbox.run(["python3", "-c", "print('hi')"]),
@@ -471,14 +471,14 @@ def run_demo() -> int:
     )
 
     print("")
-    print("denied by shell metachar:")
+    print("shell metachar による deny:")
     _print_outcome(
         "echo a ; rm -rf",
         sandbox.run([echo, "a", ";", "rm", "-rf"]),
     )
 
     print("")
-    print("denied by path jail:")
+    print("path jail による deny:")
     if cat:
         _print_outcome("cat ../../etc/passwd", sandbox.run([cat, "../../etc/passwd"]))
         _print_outcome("cat /etc/passwd", sandbox.run([cat, "/etc/passwd"]))

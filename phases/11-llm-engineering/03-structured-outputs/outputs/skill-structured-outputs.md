@@ -1,56 +1,56 @@
 ---
 name: skill-structured-outputs
-description: Decision framework for choosing the right structured output strategy based on provider, reliability, and complexity
+description: プロバイダー、信頼性、複雑さに基づいて適切な structured output 戦略を選ぶための判断フレームワーク
 version: 1.0.0
 phase: 11
 lesson: 03
 tags: [structured-output, json, schema, constrained-decoding, pydantic, function-calling]
 ---
 
-# Structured Output Strategy
+# Structured Output 戦略
 
-When building an LLM application that requires structured data, apply this decision framework.
+構造化データを必要とする LLM アプリケーションを作るときは、この判断フレームワークを適用します。
 
-## When to use each approach
+## 各アプローチを使う場面
 
-**Prompt-based ("Return JSON"):** Prototyping only. Acceptable for internal tools where occasional parse failures are tolerable. Add a try/except with retry. Never use in production pipelines.
+**Prompt-based ("Return JSON")**: プロトタイプ専用です。たまの parse failure が許容できる内部ツールなら使えます。try/except と retry を追加してください。本番パイプラインでは使わないでください。
 
-**JSON mode (API flag):** You need guaranteed valid JSON but the schema is simple or flexible. Works when you validate the shape on the application side. Available: OpenAI, Anthropic (via tool use), Google.
+**JSON mode (API flag)**: 有効な JSON は保証したいが、schema が単純または柔軟でよい場合に使います。形状はアプリケーション側で検証します。OpenAI、Anthropic (tool use 経由)、Google で利用できます。
 
-**Schema mode (constrained decoding):** Production systems where every output must match a specific schema. Zero parse failures. Zero schema violations. Use this by default for any production extraction or classification task. Available: OpenAI structured outputs, Outlines, Guidance.
+**Schema mode (constrained decoding)**: すべての出力が特定 schema に一致しなければならない本番システムで使います。parse failure はゼロ、schema violation もゼロです。本番の抽出または分類タスクではデフォルトで使います。OpenAI structured outputs、Outlines、Guidance で利用できます。
 
-**Function calling / tool use:** The model needs to choose which function to call, not just fill parameters. You have multiple schemas and the model selects the appropriate one. Also use when integrating with existing tool/function infrastructure.
+**Function calling / tool use:** モデルがパラメータを埋めるだけでなく、どの関数を呼ぶか選ぶ必要がある場合に使います。複数の schema があり、入力に応じてモデルが適切なものを選ぶケースです。既存の tool/function 基盤と統合する場合にも使います。
 
-**Instructor library:** You want Pydantic validation with automatic retry across any provider. Best DX for Python projects. Wraps OpenAI, Anthropic, Google, and open-source models.
+**Instructor library:** 任意のプロバイダーで Pydantic validation と automatic retry が欲しい場合に使います。Python プロジェクトでは最も開発体験がよい選択です。OpenAI、Anthropic、Google、open-source models をラップします。
 
-## Provider-specific guidance
+## プロバイダー別ガイダンス
 
-**OpenAI:** Use `response_format` with `json_schema` type. Constrained decoding is built in. Pydantic models work directly. Most reliable structured output implementation.
+**OpenAI:** `json_schema` type の `response_format` を使います。constrained decoding が組み込まれています。Pydantic models を直接使えます。最も信頼性の高い structured output 実装です。
 
-**Anthropic:** Use tool use for structured output. Define a single tool with the desired schema. The model returns tool call arguments matching the schema. Reliable but requires the tool use API pattern.
+**Anthropic:** structured output には tool use を使います。目的の schema を持つ単一 tool を定義します。モデルは schema に一致する tool call arguments を返します。信頼できますが、tool use API パターンが必要です。
 
-**Open-source models (vLLM, Ollama):** Use Outlines or Guidance for constrained decoding. These libraries compile JSON Schemas into finite state machines that mask invalid tokens during generation. Requires running inference locally.
+**Open-source models (vLLM, Ollama):** constrained decoding には Outlines または Guidance を使います。これらのライブラリは JSON Schemas を finite state machines にコンパイルし、生成中に無効な tokens を mask します。ローカル推論が必要です。
 
-## Schema design guidelines
+## Schema 設計ガイドライン
 
-1. Keep schemas flat when possible. Nested objects beyond 2 levels increase extraction errors.
-2. Use enums for categorical fields. Do not rely on the model inventing the right string.
-3. Make ambiguous fields required with explicit null support rather than optional. Forces the model to make a decision.
-4. Add descriptions to schema properties. The model reads these as instructions.
-5. Avoid union types (oneOf/anyOf) unless necessary. They increase decoding complexity.
-6. Set minimum/maximum on numbers. Catches hallucinated extreme values.
-7. Use minItems/maxItems on arrays to prevent empty or unbounded outputs.
+1. 可能なら schema は平坦に保ちます。2 階層を超える nested objects は抽出エラーを増やします。
+2. カテゴリ値には enums を使います。モデルに正しい文字列を発明させないでください。
+3. 曖昧なフィールドは optional ではなく、明示的な null support 付きで required にします。モデルに判断を強制します。
+4. schema properties に descriptions を追加します。モデルはそれらを指示として読みます。
+5. 必要がなければ union types (oneOf/anyOf) は避けます。decoding complexity が増えます。
+6. 数値には minimum/maximum を設定します。極端な hallucinated values を捕捉できます。
+7. arrays には minItems/maxItems を使い、空または無制限の出力を防ぎます。
 
-## Common failure patterns and fixes
+## よくある失敗パターンと修正
 
-- **Model wraps JSON in markdown fences**: switch from prompt-based to JSON mode or schema mode
-- **Schema-valid but factually wrong**: add an LLM-as-judge validation step after extraction
-- **Inconsistent enum values**: switch to constrained decoding or add post-processing normalization
-- **Missing optional fields**: make them required or add default values in application code
-- **Very slow extraction**: constrained decoding adds 5-15% latency, reduce schema complexity if latency-sensitive
-- **Large arrays with varied items**: chunk the input and extract per-chunk, then merge results
+- **モデルが JSON を markdown fences で囲む**: prompt-based から JSON mode または schema mode へ切り替える
+- **schema-valid だが事実として誤り**: 抽出後に LLM-as-judge validation step を追加する
+- **enum values が一貫しない**: constrained decoding に切り替えるか、post-processing normalization を追加する
+- **optional fields が欠落する**: required にするか、アプリケーションコードで default values を追加する
+- **抽出が非常に遅い**: constrained decoding は 5-15% の latency を追加するため、latency-sensitive なら schema complexity を下げる
+- **多様な items を持つ large arrays**: 入力を chunk して chunk ごとに抽出し、結果を merge する
 
-## Reliability ladder
+## 信頼性ラダー
 
 | Approach | Parse Success | Schema Match | Setup Effort |
 |----------|-------------|-------------|-------------|

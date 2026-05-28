@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -8,77 +8,77 @@
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">Managed LLM platforms — three strategies</text>
+  <text x="480" y="24" text-anchor="middle" class="title">マネージドLLM基盤 — 3つの戦略</text>
 
   <rect x="40" y="50" width="280" height="440" class="box"/>
-  <text x="180" y="72" text-anchor="middle" class="head">AWS Bedrock — marketplace</text>
+  <text x="180" y="72" text-anchor="middle" class="head">AWS Bedrock — マーケットプレイス</text>
   <rect x="60" y="90" width="240" height="60" class="aws"/>
   <text x="180" y="110" text-anchor="middle" class="step">Claude · Llama · Titan · Cohere</text>
   <text x="180" y="128" text-anchor="middle" class="small">Mistral · Stability · AI21</text>
-  <text x="180" y="144" text-anchor="middle" class="small">one IAM, one CloudWatch surface</text>
+  <text x="180" y="144" text-anchor="middle" class="small">1つのIAM、1つのCloudWatch面</text>
   <rect x="60" y="160" width="240" height="80" class="aws"/>
   <text x="180" y="182" text-anchor="middle" class="step">Application Inference Profiles</text>
-  <text x="180" y="200" text-anchor="middle" class="small">cleanest FinOps attribution</text>
-  <text x="180" y="216" text-anchor="middle" class="small">tag team / product / feature</text>
-  <text x="180" y="232" text-anchor="middle" class="small">per-profile cost without post-proc</text>
+  <text x="180" y="200" text-anchor="middle" class="small">最も明確なFinOps配賦</text>
+  <text x="180" y="216" text-anchor="middle" class="small">チーム / 製品 / 機能をタグ付け</text>
+  <text x="180" y="232" text-anchor="middle" class="small">後処理なしでプロファイル別コスト</text>
   <rect x="60" y="250" width="240" height="70" class="box"/>
   <text x="180" y="272" text-anchor="middle" class="step">TTFT P50 ≈ 75 ms</text>
-  <text x="180" y="290" text-anchor="middle" class="small">on-demand shared capacity</text>
-  <text x="180" y="306" text-anchor="middle" class="small">PT available $21-$50/hr</text>
+  <text x="180" y="290" text-anchor="middle" class="small">オンデマンド共有容量</text>
+  <text x="180" y="306" text-anchor="middle" class="small">PT利用可 $21-$50/hr</text>
   <rect x="60" y="330" width="240" height="90" class="dsk"/>
-  <text x="180" y="352" text-anchor="middle" class="step">bet: optionality over any one model</text>
-  <text x="180" y="370" text-anchor="middle" class="small">frontier rotates — keep the door open</text>
-  <text x="180" y="390" text-anchor="middle" class="small">BAA in most regions, VPC endpoints</text>
-  <text x="180" y="410" text-anchor="middle" class="small">guardrails built-in</text>
+  <text x="180" y="352" text-anchor="middle" class="step">賭け: 1 モデルより選択肢</text>
+  <text x="180" y="370" text-anchor="middle" class="small">最先端は入れ替わる — 入口を開けておく</text>
+  <text x="180" y="390" text-anchor="middle" class="small">多くのリージョンでBAA対応, VPCエンドポイント</text>
+  <text x="180" y="410" text-anchor="middle" class="small">ガードレール内蔵</text>
 
   <rect x="340" y="50" width="280" height="440" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">Azure OpenAI — exclusive + PTU</text>
+  <text x="480" y="72" text-anchor="middle" class="head">Azure OpenAI — 専用 + PTU</text>
   <rect x="360" y="90" width="240" height="60" class="az"/>
   <text x="480" y="110" text-anchor="middle" class="step">GPT-4 / 4o / 5 / o-series</text>
-  <text x="480" y="128" text-anchor="middle" class="small">DALL-E, Whisper, fine-tuning</text>
-  <text x="480" y="144" text-anchor="middle" class="small">no non-OpenAI models</text>
+  <text x="480" y="128" text-anchor="middle" class="small">DALL-E, Whisper, 微調整</text>
+  <text x="480" y="144" text-anchor="middle" class="small">OpenAI以外のモデルなし</text>
   <rect x="360" y="160" width="240" height="80" class="az"/>
   <text x="480" y="182" text-anchor="middle" class="step">Provisioned Throughput Units</text>
-  <text x="480" y="200" text-anchor="middle" class="small">dedicated capacity, hourly billed</text>
-  <text x="480" y="216" text-anchor="middle" class="small">up to 70% savings at high util</text>
-  <text x="480" y="232" text-anchor="middle" class="small">break-even ≈ 40-60% utilization</text>
+  <text x="480" y="200" text-anchor="middle" class="small">専用容量、時間課金</text>
+  <text x="480" y="216" text-anchor="middle" class="small">高利用率で最大70% 節約</text>
+  <text x="480" y="232" text-anchor="middle" class="small">損益分岐 ≈ 40-60% 利用率</text>
   <rect x="360" y="250" width="240" height="70" class="box"/>
   <text x="480" y="272" text-anchor="middle" class="step">TTFT P50 ≈ 50 ms (PTU)</text>
-  <text x="480" y="290" text-anchor="middle" class="small">25 ms better than Bedrock</text>
-  <text x="480" y="306" text-anchor="middle" class="small">gap shrinks on on-demand</text>
+  <text x="480" y="290" text-anchor="middle" class="small">Bedrockより25 ms良い</text>
+  <text x="480" y="306" text-anchor="middle" class="small">オンデマンドでは差が縮小</text>
   <rect x="360" y="330" width="240" height="90" class="dsk"/>
-  <text x="480" y="352" text-anchor="middle" class="step">bet: OpenAI stays the frontier</text>
-  <text x="480" y="370" text-anchor="middle" class="small">regulated-industry default</text>
+  <text x="480" y="352" text-anchor="middle" class="step">賭け: OpenAIが最先端に残る</text>
+  <text x="480" y="370" text-anchor="middle" class="small">規制産業の標準</text>
   <text x="480" y="390" text-anchor="middle" class="small">HIPAA, SOC 2, ISO 27001</text>
-  <text x="480" y="410" text-anchor="middle" class="small">EU data residency available</text>
+  <text x="480" y="410" text-anchor="middle" class="small">EUデータ所在に対応</text>
 
   <rect x="640" y="50" width="280" height="440" class="box"/>
-  <text x="780" y="72" text-anchor="middle" class="head">Vertex AI — Gemini-first</text>
+  <text x="780" y="72" text-anchor="middle" class="head">Vertex AI — Gemini優先</text>
   <rect x="660" y="90" width="240" height="60" class="gcp"/>
   <text x="780" y="110" text-anchor="middle" class="step">Gemini 2.5 Pro / Flash / Nano</text>
-  <text x="780" y="128" text-anchor="middle" class="small">1M-token context window</text>
-  <text x="780" y="144" text-anchor="middle" class="small">Model Garden for 3rd-party</text>
+  <text x="780" y="128" text-anchor="middle" class="small">1Mトークンのコンテキスト窓</text>
+  <text x="780" y="144" text-anchor="middle" class="small">サードパーティはModel Garden</text>
   <rect x="660" y="160" width="240" height="80" class="gcp"/>
-  <text x="780" y="182" text-anchor="middle" class="step">BigQuery billing export</text>
-  <text x="780" y="200" text-anchor="middle" class="small">project-per-team + labels</text>
-  <text x="780" y="216" text-anchor="middle" class="small">arbitrary SQL on cost data</text>
-  <text x="780" y="232" text-anchor="middle" class="small">more work, more flexibility</text>
+  <text x="780" y="182" text-anchor="middle" class="step">BigQuery課金エクスポート</text>
+  <text x="780" y="200" text-anchor="middle" class="small">チーム別プロジェクト + ラベル</text>
+  <text x="780" y="216" text-anchor="middle" class="small">コストデータへ任意SQL</text>
+  <text x="780" y="232" text-anchor="middle" class="small">手間は増えるが柔軟性も増える</text>
   <rect x="660" y="250" width="240" height="70" class="box"/>
   <text x="780" y="272" text-anchor="middle" class="step">TTFT P50 ≈ 60 ms</text>
-  <text x="780" y="290" text-anchor="middle" class="small">on-demand, shared</text>
-  <text x="780" y="306" text-anchor="middle" class="small">provisioned per-SKU, less public</text>
+  <text x="780" y="290" text-anchor="middle" class="small">オンデマンド、共有</text>
+  <text x="780" y="306" text-anchor="middle" class="small">プロビジョンドはSKU別で公開情報少なめ</text>
   <rect x="660" y="330" width="240" height="90" class="dsk"/>
-  <text x="780" y="352" text-anchor="middle" class="step">bet: multimodal long-context</text>
-  <text x="780" y="370" text-anchor="middle" class="small">1M context is the differentiator</text>
-  <text x="780" y="390" text-anchor="middle" class="small">Model Garden hedges third-party</text>
-  <text x="780" y="410" text-anchor="middle" class="small">GCP compliance inherits</text>
+  <text x="780" y="352" text-anchor="middle" class="step">賭け: マルチモーダル長文脈</text>
+  <text x="780" y="370" text-anchor="middle" class="small">1Mコンテキストが差別化要因</text>
+  <text x="780" y="390" text-anchor="middle" class="small">Model Gardenでサードパーティをヘッジ</text>
+  <text x="780" y="410" text-anchor="middle" class="small">GCPコンプライアンスを継承</text>
 
   <rect x="40" y="500" width="880" height="50" class="box"/>
-  <text x="480" y="520" text-anchor="middle" class="step">two-provider minimum — Claude from one, GPT from another, gateway failover between</text>
-  <text x="480" y="540" text-anchor="middle" class="small">single-vendor lock-in is the expensive mistake in 2026 — frontier rotates monthly</text>
+  <text x="480" y="520" text-anchor="middle" class="step">最低は2プロバイダ — Claudeは一方、GPTは他方、ゲートウェイでフェイルオーバー</text>
+  <text x="480" y="540" text-anchor="middle" class="small">2026年の高価な失敗は単一ベンダーロックイン — 最先端は毎月入れ替わる</text>
 </svg>

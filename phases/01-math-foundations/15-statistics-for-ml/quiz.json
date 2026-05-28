@@ -2,31 +2,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does a p-value of 0.03 mean in a hypothesis test?",
+      "question": "hypothesis test における p-value = 0.03 は何を意味しますか？",
       "options": [
-        "There is a 3% probability the null hypothesis is true",
-        "There is a 3% probability of seeing data this extreme if the null hypothesis were true",
-        "The model improved by 3%",
-        "97% of the data supports the alternative hypothesis"
+        "null hypothesis が真である確率が 3% である",
+        "null hypothesis が真だと仮定したとき、この程度に極端な data が観測される確率が 3% である",
+        "モデルが 3% 改善した",
+        "data の 97% が alternative hypothesis を支持している"
       ],
       "correct": 1,
-      "explanation": "The p-value is the probability of observing data as extreme as what you got, assuming the null hypothesis is true. It is NOT the probability that H0 is true — this is the single most common misunderstanding in statistics."
+      "explanation": "p-value は、null hypothesis が真だと仮定したとき、観測されたものと同じくらい極端な data が得られる確率です。H0 が真である確率ではありません。これは statistics で最もよくある誤解です。"
     },
     {
       "stage": "pre",
-      "question": "Why do you divide by (n-1) instead of n when computing sample variance?",
+      "question": "sample variance を計算するとき、n ではなく (n-1) で割るのはなぜですか？",
       "options": [
-        "It makes the computation faster",
-        "It accounts for the fact that the sample mean is not the true population mean (Bessel's correction)",
-        "It converts the variance to standard deviation",
-        "It only applies when the sample size is odd"
+        "計算が速くなるから",
+        "sample mean が true population mean ではないことを補正するため（Bessel's correction）",
+        "variance を standard deviation に変換するため",
+        "sample size が奇数のときだけ適用されるから"
       ],
       "correct": 1,
-      "explanation": "Bessel's correction (dividing by n-1) compensates for the bias introduced by using the sample mean instead of the true population mean. Without it, sample variance systematically underestimates the true population variance."
+      "explanation": "Bessel's correction（n-1 で割ること）は、true population mean の代わりに sample mean を使うことで生じる bias を補正します。これがないと、sample variance は true population variance を体系的に過小評価します。"
     },
     {
       "stage": "post",
-      "question": "You test 20 different model configurations at alpha = 0.05. What is the approximate probability of at least one false positive?",
+      "question": "alpha = 0.05 で 20 個の model configurations を検定します。少なくとも 1 個の false positive が出る確率はおおよそどれですか？",
       "options": [
         "5%",
         "25%",
@@ -34,31 +34,31 @@
         "95%"
       ],
       "correct": 2,
-      "explanation": "P(at least one false positive) = 1 - (1 - 0.05)^20 = 1 - 0.95^20 ≈ 0.64 (64%). This is the multiple comparison problem. Bonferroni correction addresses it by testing each at alpha/20 = 0.0025."
+      "explanation": "P(at least one false positive) = 1 - (1 - 0.05)^20 = 1 - 0.95^20 ≈ 0.64（64%）です。これは multiple comparison problem です。Bonferroni correction は各検定を alpha/20 = 0.0025 で行うことで対処します。"
     },
     {
       "stage": "post",
-      "question": "Model A scores 0.9234 and Model B scores 0.9237 on 1 million test samples with p-value = 0.001. What should you conclude?",
+      "question": "Model A は 100 万 test samples で 0.9234、Model B は 0.9237、p-value = 0.001 でした。何を結論すべきですか？",
       "options": [
-        "Model B is significantly better and should be deployed immediately",
-        "The difference is statistically significant but a 0.03% improvement may not be practically significant",
-        "The test is invalid because the sample size is too large",
-        "Model A is better because it was tested first"
+        "Model B は有意に優れており、すぐ deploy すべき",
+        "差は statistically significant だが、0.03% improvement は practically significant ではない可能性がある",
+        "sample size が大きすぎるので検定は無効",
+        "Model A は先に test されたので優れている"
       ],
       "correct": 1,
-      "explanation": "With 1 million samples, even trivially small differences become statistically significant. The p-value confirms the difference is real, but the effect size (0.03% accuracy gain) may not justify the engineering cost of deployment. Always report both p-value and effect size."
+      "explanation": "100 万 samples があると、ごく小さな差でも statistically significant になります。p-value は差が実在することを示しますが、effect size（0.03% accuracy gain）が deployment の engineering cost に見合うとは限りません。常に p-value と effect size の両方を報告します。"
     },
     {
       "stage": "post",
-      "question": "What advantage does bootstrap have over the paired t-test for comparing two ML models?",
+      "question": "2 つの ML models を比較するとき、bootstrap は paired t-test に対してどんな利点がありますか？",
       "options": [
-        "Bootstrap always produces smaller p-values",
-        "Bootstrap requires no distributional assumptions and works for any metric (AUC, F1, median)",
-        "Bootstrap needs fewer samples to reach significance",
-        "Bootstrap can only be used with neural networks"
+        "Bootstrap は常に小さい p-values を生成する",
+        "Bootstrap は distributional assumptions を必要とせず、任意の metric（AUC、F1、median）に使える",
+        "Bootstrap は有意差に達するための samples が少なくて済む",
+        "Bootstrap は neural networks にしか使えない"
       ],
       "correct": 1,
-      "explanation": "Bootstrap resampling estimates the sampling distribution of any statistic by resampling with replacement. Unlike the t-test, it does not assume normality. It works for any metric — AUC, F1, precision@k, median — without needing a closed-form formula."
+      "explanation": "Bootstrap resampling は replacement ありの再標本化により、任意の statistic の sampling distribution を推定します。t-test と違い normality を仮定しません。AUC、F1、precision@k、median など、closed-form formula がなくても任意の metric に使えます。"
     }
   ]
 }

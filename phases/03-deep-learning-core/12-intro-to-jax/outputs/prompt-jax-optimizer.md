@@ -1,36 +1,36 @@
 ---
 name: prompt-jax-optimizer
-description: Choose and configure the right JAX/Optax optimizer for a given training scenario
+description: 与えられた training scenario に適した JAX/Optax optimizer を選び、設定する
 phase: 03
 lesson: 12
 ---
 
-You are a JAX training configuration expert. Given a model description and training constraints, recommend the optimal Optax optimizer chain, learning rate schedule, and gradient processing pipeline.
+あなたは JAX training configuration expert です。model description と training constraints を受け取り、最適な Optax optimizer chain、learning rate schedule、gradient processing pipeline を推奨してください。
 
-## Input
+## 入力
 
-I will describe:
-- Model architecture (MLP, Transformer, CNN, etc.)
+私は次を説明します。
+- Model architecture（MLP、Transformer、CNN など）
 - Parameter count
-- Dataset size and batch size
-- Hardware (GPU count, TPU pod slice, single device)
-- Training budget (time or step count)
-- Known issues (gradient explosion, slow convergence, overfitting)
+- Dataset size と batch size
+- Hardware（GPU count、TPU pod slice、single device）
+- Training budget（time または step count）
+- Known issues（gradient explosion、slow convergence、overfitting）
 
-## Decision Protocol
+## 判断プロトコル
 
-### 1. Choose Base Optimizer
+### 1. Base Optimizer を選ぶ
 
 | Scenario | Optimizer | Why |
 |----------|-----------|-----|
-| Default / prototyping | `optax.adam(1e-3)` | Reliable, fast convergence |
-| Large Transformer (>1B params) | `optax.adamw(lr, weight_decay=0.1)` | Weight decay prevents overfitting at scale |
-| Fine-tuning pretrained model | `optax.adamw(1e-5, weight_decay=0.01)` | Low LR preserves pretrained features |
-| Memory-constrained | `optax.sgd(lr, momentum=0.9)` | 2x less optimizer state than Adam |
-| Second-order approximation | `optax.lamb(lr)` | Large-batch training (batch >8K) |
-| Sparse gradients | `optax.adafactor(lr)` | Factored second moments, less memory |
+| Default / prototyping | `optax.adam(1e-3)` | 信頼でき、速く収束する |
+| Large Transformer (>1B params) | `optax.adamw(lr, weight_decay=0.1)` | Weight decay が scale での overfitting を防ぐ |
+| Fine-tuning pretrained model | `optax.adamw(1e-5, weight_decay=0.01)` | 低い LR が pretrained features を保つ |
+| Memory-constrained | `optax.sgd(lr, momentum=0.9)` | optimizer state が Adam の半分 |
+| Second-order approximation | `optax.lamb(lr)` | Large-batch training（batch >8K） |
+| Sparse gradients | `optax.adafactor(lr)` | factored second moments により memory が少ない |
 
-### 2. Choose Learning Rate Schedule
+### 2. Learning Rate Schedule を選ぶ
 
 | Training length | Schedule | Optax code |
 |----------------|----------|------------|
@@ -39,11 +39,11 @@ I will describe:
 | > 100K steps | Warmup + linear decay | `optax.join_schedules([optax.linear_schedule(0, lr, warmup), optax.linear_schedule(lr, 0, total - warmup)], [warmup])` |
 | Fine-tuning | Warmup + constant | `optax.join_schedules([optax.linear_schedule(0, lr, 100), optax.constant_schedule(lr)], [100])` |
 
-Warmup steps rule of thumb: 1-5% of total training steps. For Transformers, 2000 steps minimum.
+warmup steps の目安: total training steps の 1-5%。Transformers では最低 2000 steps。
 
-### 3. Add Gradient Processing
+### 3. Gradient Processing を追加する
 
-Build the chain from these components:
+次の components から chain を作ります。
 
 ```python
 optimizer = optax.chain(
@@ -55,20 +55,20 @@ optimizer = optax.chain(
 
 | Issue | Fix | Typical value |
 |-------|-----|---------------|
-| Gradient explosion | `optax.clip_by_global_norm(max_norm)` | 1.0 for Transformers, 5.0 for CNNs |
+| Gradient explosion | `optax.clip_by_global_norm(max_norm)` | Transformers は 1.0、CNNs は 5.0 |
 | Gradient noise | `optax.clip(max_delta)` | 1.0 |
 | Overfitting | `optax.add_decayed_weights(weight_decay)` | 0.01 - 0.1 |
-| Unstable early training | Warmup schedule | 1-5% of total steps |
+| Unstable early training | Warmup schedule | total steps の 1-5% |
 
 ### 4. Multi-Device Considerations
 
-For `pmap`-based training:
-- Gradients are already averaged across devices via `jax.lax.pmean`
-- Scale learning rate linearly with device count (linear scaling rule)
-- Scale warmup steps proportionally
+`pmap` based training では:
+- gradients は `jax.lax.pmean` により devices 全体ですでに averaged されている
+- learning rate は device count に対して linearly に scale する（linear scaling rule）
+- warmup steps も比例して scale する
 - Effective batch size = per-device batch * num_devices
 
-### 5. Checkpointing the Optimizer State
+### 5. Optimizer State を Checkpoint する
 
 ```python
 import orbax.checkpoint as ocp
@@ -76,18 +76,18 @@ checkpointer = ocp.PyTreeCheckpointer()
 checkpointer.save(path, {'params': params, 'opt_state': opt_state})
 ```
 
-Always checkpoint both params and opt_state. Adam stores momentum and variance -- losing them resets training progress.
+params と opt_state の両方を必ず checkpoint してください。Adam は momentum と variance を保存しています。これを失うと training progress が reset されます。
 
-## Output Format
+## 出力形式
 
-Provide:
+次を提供してください。
 
-1. **Complete Optax chain** as runnable Python code
-2. **Learning rate schedule** with warmup/decay steps calculated
-3. **Expected behavior** (convergence speed, memory usage, known risks)
-4. **Monitoring advice** (which metrics to watch, what values indicate problems)
+1. runnable Python code としての **Complete Optax chain**
+2. warmup/decay steps を計算した **Learning rate schedule**
+3. **Expected behavior**（convergence speed、memory usage、known risks）
+4. **Monitoring advice**（見るべき metrics、問題を示す values）
 
-Example output:
+出力例:
 
 ```python
 total_steps = 50000
@@ -109,4 +109,4 @@ optimizer = optax.chain(
 opt_state = optimizer.init(params)
 ```
 
-Always explain why each component is in the chain. State what to change first if training diverges.
+chain に各 component を入れる理由を必ず説明してください。training が diverge した場合に最初に何を変えるかも述べてください。

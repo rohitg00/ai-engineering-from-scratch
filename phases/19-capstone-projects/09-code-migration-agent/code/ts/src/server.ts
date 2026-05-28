@@ -75,7 +75,7 @@ export function renderDashboardHtml(migrations: Migration[]): string {
     "</tr></thead><tbody>",
     rows,
     "</tbody></table>",
-    "<p><small>Auto-refreshes every 2s. Endpoints: /migrations, /migrations/:id.</small></p>",
+    "<p><small>2秒ごとに auto-refresh します。Endpoints: /migrations, /migrations/:id.</small></p>",
     "<script>setTimeout(()=>location.reload(),2000)</script>",
     "</body></html>",
   ].join("\n");

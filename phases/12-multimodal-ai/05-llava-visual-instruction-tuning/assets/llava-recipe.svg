@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,84 +10,84 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .stage { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">LLaVA recipe — simpler projector, cheaper training, bigger ecosystem</text>
+  <text x="480" y="24" text-anchor="middle" class="title">LLaVAレシピ — 単純なプロジェクタ、安い学習、大きなエコシステム</text>
 
   <rect x="40" y="50" width="880" height="250" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">forward pass: image -> projector -> LLM</text>
+  <text x="480" y="72" text-anchor="middle" class="head">forward pass: 画像 -> projector -> LLM</text>
 
   <rect x="60" y="90" width="160" height="180" class="frozen"/>
   <text x="140" y="112" text-anchor="middle" class="step">CLIP ViT-L/14</text>
   <text x="140" y="130" text-anchor="middle" class="small">@ 336x336</text>
-  <text x="140" y="148" text-anchor="middle" class="small">frozen stage 1</text>
-  <text x="140" y="166" text-anchor="middle" class="small">303M params</text>
-  <text x="140" y="194" text-anchor="middle" class="small">576 patch tokens</text>
-  <text x="140" y="212" text-anchor="middle" class="small">dim 1024 each</text>
-  <text x="140" y="240" text-anchor="middle" class="caption">24x24 grid</text>
+  <text x="140" y="148" text-anchor="middle" class="small">stage 1は固定</text>
+  <text x="140" y="166" text-anchor="middle" class="small">303Mパラメータ</text>
+  <text x="140" y="194" text-anchor="middle" class="small">576 patchトークン</text>
+  <text x="140" y="212" text-anchor="middle" class="small">各トークンは1024次元</text>
+  <text x="140" y="240" text-anchor="middle" class="caption">24x24格子</text>
 
   <path d="M 225 180 L 290 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="295" y="90" width="180" height="180" class="train"/>
-  <text x="385" y="112" text-anchor="middle" class="step">2-layer MLP projector</text>
+  <text x="385" y="112" text-anchor="middle" class="step">2層MLPプロジェクタ</text>
   <text x="385" y="130" text-anchor="middle" class="small">1024 -&gt; 4096 -&gt; 4096</text>
-  <text x="385" y="148" text-anchor="middle" class="small">GELU activation</text>
-  <text x="385" y="168" text-anchor="middle" class="small">~22M params</text>
-  <text x="385" y="196" text-anchor="middle" class="small">shared across all patches</text>
-  <text x="385" y="214" text-anchor="middle" class="small">trained in stage 1</text>
-  <text x="385" y="232" text-anchor="middle" class="small">fine-tuned in stage 2</text>
-  <text x="385" y="252" text-anchor="middle" class="caption">the whole bridge</text>
+  <text x="385" y="148" text-anchor="middle" class="small">GELU活性化</text>
+  <text x="385" y="168" text-anchor="middle" class="small">~22Mパラメータ</text>
+  <text x="385" y="196" text-anchor="middle" class="small">全patchで共有</text>
+  <text x="385" y="214" text-anchor="middle" class="small">stage 1で学習</text>
+  <text x="385" y="232" text-anchor="middle" class="small">stage 2で微調整</text>
+  <text x="385" y="252" text-anchor="middle" class="caption">bridge全体</text>
 
   <path d="M 480 180 L 545 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="550" y="90" width="160" height="180" class="box"/>
-  <text x="630" y="112" text-anchor="middle" class="step">576 visual tokens</text>
-  <text x="630" y="130" text-anchor="middle" class="small">each dim 4096</text>
-  <text x="630" y="148" text-anchor="middle" class="small">replaces &lt;image&gt;</text>
-  <text x="630" y="166" text-anchor="middle" class="small">in the text prompt</text>
-  <text x="630" y="194" text-anchor="middle" class="small">token budget:</text>
+  <text x="630" y="112" text-anchor="middle" class="step">576視覚トークン</text>
+  <text x="630" y="130" text-anchor="middle" class="small">各トークンは4096次元</text>
+  <text x="630" y="148" text-anchor="middle" class="small">&lt;image&gt; を置換</text>
+  <text x="630" y="166" text-anchor="middle" class="small">テキストプロンプト内で</text>
+  <text x="630" y="194" text-anchor="middle" class="small">トークン予算:</text>
   <text x="630" y="212" text-anchor="middle" class="small">576 / 2048 = 28%</text>
   <text x="630" y="230" text-anchor="middle" class="small">576 / 32k = 1.8%</text>
-  <text x="630" y="252" text-anchor="middle" class="small">AnyRes: 2880 tokens</text>
+  <text x="630" y="252" text-anchor="middle" class="small">AnyRes: 2880トークン</text>
 
   <path d="M 715 180 L 780 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
 
   <rect x="785" y="90" width="130" height="180" class="frozen"/>
   <text x="850" y="112" text-anchor="middle" class="step">Vicuna 13B</text>
-  <text x="850" y="130" text-anchor="middle" class="small">or Llama-3.1</text>
-  <text x="850" y="150" text-anchor="middle" class="small">frozen stage 1</text>
-  <text x="850" y="170" text-anchor="middle" class="small">trained stage 2</text>
-  <text x="850" y="200" text-anchor="middle" class="small">autoregressive</text>
-  <text x="850" y="218" text-anchor="middle" class="small">next-token</text>
-  <text x="850" y="236" text-anchor="middle" class="small">generation</text>
-  <text x="850" y="256" text-anchor="middle" class="caption">same as text-only</text>
+  <text x="850" y="130" text-anchor="middle" class="small">または Llama-3.1</text>
+  <text x="850" y="150" text-anchor="middle" class="small">stage 1は固定</text>
+  <text x="850" y="170" text-anchor="middle" class="small">stage 2で学習</text>
+  <text x="850" y="200" text-anchor="middle" class="small">自己回帰</text>
+  <text x="850" y="218" text-anchor="middle" class="small">次トークン</text>
+  <text x="850" y="236" text-anchor="middle" class="small">生成</text>
+  <text x="850" y="256" text-anchor="middle" class="caption">テキスト専用と同じ</text>
 
   <rect x="40" y="320" width="880" height="220" class="box"/>
-  <text x="480" y="342" text-anchor="middle" class="head">two-stage training</text>
+  <text x="480" y="342" text-anchor="middle" class="head">2段階学習</text>
 
   <rect x="60" y="360" width="410" height="160" class="stage"/>
-  <text x="80" y="382" class="step">Stage 1: projector alignment</text>
-  <text x="80" y="402" class="small">freeze ViT, freeze LLM</text>
-  <text x="80" y="418" class="small">train ONLY the 2-layer MLP</text>
-  <text x="80" y="434" class="small">data: 558k caption pairs (LAION-CC-SBU)</text>
-  <text x="80" y="450" class="small">loss: LM on caption, conditioned on visual tokens</text>
-  <text x="80" y="468" class="small">cost: ~4 hours on 8xA100</text>
-  <text x="80" y="490" class="small">goal: projector learns ViT-space -&gt; LLM-space</text>
-  <text x="80" y="508" class="caption">no task-specific objectives</text>
+  <text x="80" y="382" class="step">Stage 1: プロジェクタ整列</text>
+  <text x="80" y="402" class="small">ViTを固定、LLMも固定</text>
+  <text x="80" y="418" class="small">2層MLPだけを学習</text>
+  <text x="80" y="434" class="small">データ: 558k キャプションペア (LAION-CC-SBU)</text>
+  <text x="80" y="450" class="small">損失: 視覚トークン条件のキャプションLM</text>
+  <text x="80" y="468" class="small">コスト: 8xA100で約4時間</text>
+  <text x="80" y="490" class="small">目標: ViT-space -&gt; LLM-spaceを学習</text>
+  <text x="80" y="508" class="caption">タスク固有目的関数なし</text>
 
   <rect x="490" y="360" width="410" height="160" class="train"/>
-  <text x="510" y="382" class="step">Stage 2: visual instruction tuning</text>
-  <text x="510" y="402" class="small">unfreeze LLM (full or LoRA)</text>
-  <text x="510" y="418" class="small">keep projector trainable</text>
-  <text x="510" y="434" class="small">data: 158k GPT-4-generated turns</text>
-  <text x="510" y="450" class="small">  (conversation / description / reasoning)</text>
-  <text x="510" y="468" class="small">cost: ~20 hours on 8xA100</text>
-  <text x="510" y="490" class="small">goal: dialog, VQA, instruction following</text>
-  <text x="510" y="508" class="caption">LLaVA-NeXT adds ShareGPT4V, academic mix</text>
+  <text x="510" y="382" class="step">Stage 2: 視覚指示チューニング</text>
+  <text x="510" y="402" class="small">LLM固定解除 (fullまたはLoRA)</text>
+  <text x="510" y="418" class="small">プロジェクタは学習可能のまま</text>
+  <text x="510" y="434" class="small">データ: GPT-4生成の158kターン</text>
+  <text x="510" y="450" class="small">  (会話 / 説明 / 推論)</text>
+  <text x="510" y="468" class="small">コスト: 8xA100で約20時間</text>
+  <text x="510" y="490" class="small">目標: 対話、VQA、指示追従</text>
+  <text x="510" y="508" class="caption">LLaVA-NeXTはShareGPT4V等を追加</text>
 </svg>

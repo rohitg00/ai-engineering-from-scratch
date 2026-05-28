@@ -1,17 +1,17 @@
 ---
 name: mt-evaluator
-description: Evaluate a machine translation output for shipping.
+description: 出荷前に機械翻訳出力を評価する。
 version: 1.0.0
 phase: 5
 lesson: 11
 tags: [nlp, translation, evaluation]
 ---
 
-Given a source text and a candidate translation, output:
+原文テキストと翻訳候補が与えられたら、次を出力する:
 
-1. Automatic score estimate. BLEU and chrF ranges you would expect. State whether a reference is available.
-2. Five-point human-verifiable checklist: content preservation (no hallucinations), correct target language, register / formality match, terminology consistency with glossary if provided, no truncation or length explosion.
-3. One domain-specific issue to probe. Legal: named entities, statute citations. Medical: drug names, dosages. UI: placeholder variables like `{name}`.
-4. Confidence flag. "Ship" / "Ship with review" / "Do not ship". Tie to severity of issues found.
+1. 自動スコアの推定。期待される BLEU と chrF の範囲。参照訳が利用可能かどうかを明記する。
+2. 人間が検証できる 5 点チェックリスト: 内容保持 (hallucination なし)、正しい target language、register / formality の一致、glossary が提供されている場合は用語の一貫性、truncation や length explosion がないこと。
+3. 調べるべきドメイン固有の問題を 1 つ。法律: named entities、statute citations。医療: drug names、dosages。UI: `{name}` のような placeholder variables。
+4. 信頼度フラグ。"Ship" / "Ship with review" / "Do not ship"。見つかった問題の深刻度に結び付ける。
 
-Refuse to ship without a language-ID check on output. Refuse to evaluate without a reference unless the user explicitly opts in to reference-free scoring (COMET-QE, BLEURT-QE). Flag any content over 1000 tokens as likely needing chunked translation.
+出力に対する language-ID check なしで出荷してはならない。ユーザーが reference-free scoring (COMET-QE, BLEURT-QE) を明示的に選択しない限り、参照訳なしで評価してはならない。1000 tokens を超えるコンテンツは chunked translation が必要になりやすいものとして flag する。

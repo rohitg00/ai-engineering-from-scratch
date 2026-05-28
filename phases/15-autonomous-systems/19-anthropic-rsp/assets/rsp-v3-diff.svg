@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,50 +7,50 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .content { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="440" y="26" text-anchor="middle" class="title">RSP v2 (2023) → v3.0 (Feb 24, 2026): what changed</text>
+  <text x="440" y="26" text-anchor="middle" class="title">RSP v2（2023）→ v3.0（2026-02-24）: 何が変わったか</text>
 
   <rect x="40" y="50" width="800" height="460" class="box"/>
 
   <!-- Two columns: additions / removals -->
   <rect x="60" y="80" width="370" height="280" class="cool"/>
-  <text x="245" y="104" text-anchor="middle" class="label">additions in v3.0</text>
-  <text x="76" y="126" class="content">• two-tier mitigation schedule</text>
-  <text x="76" y="142" class="small">  (Anthropic-unilateral vs industry recommendation)</text>
-  <text x="76" y="162" class="content">• AI R&amp;D-4 threshold (research automation)</text>
-  <text x="76" y="178" class="small">  once crossed: publish affirmative case</text>
-  <text x="76" y="198" class="content">• Frontier Safety Roadmap (standing doc)</text>
-  <text x="76" y="214" class="content">• Risk Report (standing doc, retrospective)</text>
-  <text x="76" y="234" class="content">• RAND SL-4 security referenced</text>
-  <text x="76" y="250" class="small">  (in the industry-recommendation tier)</text>
-  <text x="76" y="270" class="content">• acknowledgement: "confidently ruling out</text>
-  <text x="76" y="286" class="content">   AI R&amp;D-4 is becoming difficult"</text>
-  <text x="76" y="318" class="small">v3.0 announcement notes the threshold is a live concern</text>
-  <text x="76" y="334" class="small">even on current-gen Claude Opus 4.6</text>
+  <text x="245" y="104" text-anchor="middle" class="label">v3.0での追加</text>
+  <text x="76" y="126" class="content">• 2層の緩和スケジュール</text>
+  <text x="76" y="142" class="small">  （Anthropic単独 vs 業界推奨）</text>
+  <text x="76" y="162" class="content">• AI R&amp;D-4 しきい値（研究自動化）</text>
+  <text x="76" y="178" class="small">  超えたら affirmative case を公開</text>
+  <text x="76" y="198" class="content">• Frontier Safety Roadmap（常設文書）</text>
+  <text x="76" y="214" class="content">• Risk Report（常設、回顧的）</text>
+  <text x="76" y="234" class="content">• RAND SL-4 セキュリティを参照</text>
+  <text x="76" y="250" class="small">  （業界推奨層の中で）</text>
+  <text x="76" y="270" class="content">• 認識: AI R&amp;D-4を自信を持って</text>
+  <text x="76" y="286" class="content">  否定することは難しくなっている</text>
+  <text x="76" y="318" class="small">v3.0発表は、このしきい値が現行Claude Opus 4.6でも</text>
+  <text x="76" y="334" class="small">現実の懸念だと述べている</text>
 
   <rect x="450" y="80" width="370" height="280" class="hot"/>
-  <text x="635" y="104" text-anchor="middle" class="label">removals / softenings in v3.0</text>
-  <text x="466" y="126" class="content">• 2023 pause commitment REMOVED</text>
-  <text x="466" y="142" class="small">  (explicit training-pause clause dropped)</text>
-  <text x="466" y="162" class="content">• quantitative thresholds softened</text>
-  <text x="466" y="178" class="small">  to qualitative judgments</text>
-  <text x="466" y="198" class="content">• specific mitigations replaced with</text>
-  <text x="466" y="214" class="content">  "affirmative case" framing</text>
-  <text x="466" y="234" class="content">• independent review kept weak</text>
-  <text x="466" y="250" class="small">  (internal Safety Advisory Group primary)</text>
-  <text x="466" y="270" class="content">• industry-recommendation tier allows</text>
-  <text x="466" y="286" class="content">  policy-advocacy framing without commitment</text>
+  <text x="635" y="104" text-anchor="middle" class="label">v3.0での削除 / 弱化</text>
+  <text x="466" y="126" class="content">• 2023年の一時停止コミットを削除</text>
+  <text x="466" y="142" class="small">  （明示的な訓練停止条項が消えた）</text>
+  <text x="466" y="162" class="content">• 定量しきい値を弱めた</text>
+  <text x="466" y="178" class="small">  定性的判断へ移行</text>
+  <text x="466" y="198" class="content">• 具体的緩和策を</text>
+  <text x="466" y="214" class="content">  affirmative case 枠組みに置換</text>
+  <text x="466" y="234" class="content">• 独立レビューは弱いまま</text>
+  <text x="466" y="250" class="small">  （内部 Safety Advisory Group が中心）</text>
+  <text x="466" y="270" class="content">• 業界推奨層はコミットなしの</text>
+  <text x="466" y="286" class="content">  政策提言フレーミングを許す</text>
 
   <!-- SaferAI rating -->
   <rect x="60" y="380" width="760" height="110" class="warn"/>
-  <text x="440" y="404" text-anchor="middle" class="label">SaferAI independent rating</text>
-  <text x="80" y="426" class="content">v2 (2023): 2.2 — moderate</text>
-  <text x="80" y="442" class="content">v3.0 (2026): 1.9 — weak (joins OpenAI Preparedness and DeepMind FSF in "weak" category)</text>
-  <text x="80" y="462" class="content">downgrade drivers: qualitative thresholds · pause removal · limited independent oversight</text>
-  <text x="80" y="482" class="small">policy gets less rigorous while looking more polished; reading closely is the skill.</text>
+  <text x="440" y="404" text-anchor="middle" class="label">SaferAIの独立評価</text>
+  <text x="80" y="426" class="content">v2（2023）: 2.2 — moderate</text>
+  <text x="80" y="442" class="content">v3.0（2026）: 1.9 — weak（OpenAI Preparedness、DeepMind FSF と同じ weak）</text>
+  <text x="80" y="462" class="content">格下げ要因: 定性的しきい値 · 一時停止削除 · 限定的な独立監督</text>
+  <text x="80" y="482" class="small">見た目は洗練されても厳密さは下がる。精読こそがスキル。</text>
 </svg>

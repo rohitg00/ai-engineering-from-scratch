@@ -1,22 +1,22 @@
 {
   "lesson": "21-tool-registry-schema-validation",
-  "title": "Tool Registry with Schema Validation",
+  "title": "スキーマ検証つき Tool Registry",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why register a tool's schema separately from its handler?",
+      "question": "tool の schema を handler から分けて登録するのはなぜですか？",
       "options": [
-        "Because schemas have to live in YAML",
-        "So the validator stays pure data, and the handler stays opaque code",
-        "Because handlers cannot return JSON",
-        "Because schemas must be compiled"
+        "schema は YAML に置く必要があるから",
+        "validator は pure data を扱い、handler は opaque code のままにするため",
+        "handler は JSON を返せないから",
+        "schema は compile しなければならないから"
       ],
       "correct": 1,
-      "explanation": "Keeping the schema as data and the handler as code lets the validator be a pure function over the schema tree."
+      "explanation": "schema を data、handler を code として分けると、validator は schema tree に対する pure function でいられます。"
     },
     {
       "stage": "check",
-      "question": "Which keywords are intentionally outside the subset this lesson implements?",
+      "question": "この lesson が実装する subset から意図的に外している keyword はどれですか？",
       "options": [
         "type, properties, required",
         "minLength, maxLength, pattern",
@@ -24,35 +24,35 @@
         "items, enum"
       ],
       "correct": 2,
-      "explanation": "The omitted keywords add cycles and reference resolution. We keep the subset linear so the validator stays a single recursive walk."
+      "explanation": "省略した keyword は cycle と reference resolution を追加します。subset を linear に保つことで、validator は 1 回の recursive walk のままになります。"
     },
     {
       "stage": "check",
-      "question": "Why does register() reject duplicates by default?",
+      "question": "register() が default で重複を拒否するのはなぜですか？",
       "options": [
-        "Because the registry cannot store more than one record per name",
-        "Silent overwrites are the cause of production tool catalog drift",
-        "Because the schema cannot be re-validated",
-        "Because handlers cannot be replaced"
+        "registry は name ごとに 1 record しか保存できないから",
+        "silent overwrite が production tool catalog drift の原因になるから",
+        "schema は再 validate できないから",
+        "handler は置き換えられないから"
       ],
       "correct": 1,
-      "explanation": "Forcing override=True surfaces the case where two parts of the code intend to own the same tool name."
+      "explanation": "override=True を必須にすると、code の 2 か所が同じ tool name を所有しようとしている case が表面化します。"
     },
     {
       "stage": "check",
-      "question": "What does the validator do when a schema specifies type integer but receives the value True?",
+      "question": "schema が type integer を指定しているのに value True を受け取った場合、この validator はどうしますか？",
       "options": [
-        "Treats it as 1 and passes",
-        "Returns a type error because bool is not integer in this validator",
-        "Raises an unhandled exception",
-        "Coerces to integer silently"
+        "1 として扱い pass させる",
+        "この validator では bool は integer ではないため type error を返す",
+        "未処理 exception を raise する",
+        "黙って integer に coerce する"
       ],
       "correct": 1,
-      "explanation": "Python bool is a subclass of int, but the validator filters bool out of the integer check. JSON booleans and integers are distinct."
+      "explanation": "Python の bool は int の subclass ですが、この validator は integer check から bool を除外します。JSON boolean と integer は別物です。"
     },
     {
       "stage": "post",
-      "question": "When the input object is {'user': {'email': 0}} and the schema requires user.email to be a string, what is the error path?",
+      "question": "input object が {'user': {'email': 0}} で、schema が user.email を string として要求する場合、error path は何ですか？",
       "options": [
         "/",
         "/user",
@@ -60,19 +60,19 @@
         "user.email"
       ],
       "correct": 2,
-      "explanation": "JSON pointer encodes the descent through user then email as /user/email."
+      "explanation": "JSON pointer は user から email への下降を /user/email として encode します。"
     },
     {
       "stage": "post",
-      "question": "Why is the registry not a security boundary?",
+      "question": "registry が security boundary ではないのはなぜですか？",
       "options": [
-        "Because handlers can still misbehave after validation passes",
-        "Because handlers are async",
-        "Because the schema is JSON",
-        "Because the registry is in-process"
+        "validation を通過したあとでも handler は misbehave できるから",
+        "handler は async だから",
+        "schema は JSON だから",
+        "registry は in-process だから"
       ],
       "correct": 0,
-      "explanation": "The registry checks shape. Behavior, timeouts, and isolation belong to the dispatcher and the sandbox."
+      "explanation": "registry は shape を check します。behavior、timeout、isolation は dispatcher と sandbox の責務です。"
     }
   ]
 }

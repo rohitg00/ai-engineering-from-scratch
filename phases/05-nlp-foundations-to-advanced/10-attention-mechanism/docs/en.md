@@ -1,64 +1,64 @@
-# Attention Mechanism — The Breakthrough
+# Attention Mechanism — ブレイクスルー
 
-> The decoder stops squinting at a compressed summary and starts looking at the whole source. Everything after this is attention plus engineering.
+> decoderは圧縮された要約を目を細めて見るのをやめ、source全体を見るようになる。この後のすべては、attentionとengineeringです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
-**Time:** ~45 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 5 · 09 (Sequence-to-Sequence Models)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-Lesson 09 ended on a measured failure. A GRU encoder-decoder trained on a toy copy task goes from 89% accuracy at length 5 to near-chance at length 80. The reason is structural, not a training bug: every bit of information the encoder gleaned has to fit in one fixed-size hidden state, and the decoder never sees anything else.
+レッスン09は、測定可能な失敗で終わりました。おもちゃのcopy taskで学習したGRU encoder-decoderは、長さ5では89%のaccuracyだったのに、長さ80ではほぼ偶然レベルまで落ちます。理由は学習のバグではなく、構造です。encoderが得た情報はすべて1つの固定サイズ隠れ状態に収まらなければならず、decoderはそれ以外を一切見られません。
 
-Bahdanau, Cho, and Bengio published a three-line fix in 2014. Instead of giving the decoder only the final encoder state, keep every encoder state. At each decoder step, compute a weighted average of encoder states where the weights say "how much does the decoder need to look at encoder position `i` right now?" That weighted average is the context, and it changes every decoder step.
+Bahdanau、Cho、Bengioは2014年に、3行で表せる修正を発表しました。decoderに最後のencoder状態だけを渡すのではなく、すべてのencoder状態を保持します。各decoderステップでencoder状態の重み付き平均を計算し、その重みで「decoderはいまencoder位置`i`をどれくらい見る必要があるか」を表します。この重み付き平均がcontextであり、decoderステップごとに変化します。
 
-That is the whole idea. Transformers extended it. Self-attention applied it to a single sequence. Multi-head attention ran it in parallel. But the 2014 version already broke the bottleneck, and once you have it, the pivot to transformers is engineering, not conceptual.
+考え方はこれだけです。transformerはこれを拡張しました。self-attentionはそれを単一の系列に適用しました。multi-head attentionはそれを並列に走らせました。しかし2014年版の時点でボトルネックはすでに壊れており、一度それを理解すれば、transformerへの移行は概念というよりengineeringです。
 
-## The Concept
+## コンセプト
 
 ![Bahdanau attention: decoder queries all encoder states](../assets/attention.svg)
 
-At each decoder step `t`:
+decoderの各ステップ`t`で行うことは次の通りです。
 
-1. Use the previous decoder hidden state `s_{t-1}` as a **query**.
-2. Score it against every encoder hidden state `h_1, ..., h_T`. One scalar per encoder position.
-3. Softmax the scores to get attention weights `α_{t,1}, ..., α_{t,T}` that sum to 1.
-4. Context vector `c_t = Σ α_{t,i} * h_i`. Weighted average of encoder states.
-5. Decoder takes `c_t` plus the previous output token, produces the next token.
+1. 直前のdecoder隠れ状態`s_{t-1}`を**query**として使う。
+2. それを各encoder隠れ状態`h_1, ..., h_T`と照合してスコアを付ける。encoder位置ごとに1つのスカラーです。
+3. スコアにsoftmaxをかけ、合計が1になるattention weights `α_{t,1}, ..., α_{t,T}`を得る。
+4. Context vector `c_t = Σ α_{t,i} * h_i`。encoder状態の重み付き平均です。
+5. decoderは`c_t`と直前の出力トークンを受け取り、次のトークンを生成する。
 
-The weighted average is the point. When the decoder needs to translate "Je" to "I", it weights the encoder state over "Je" high and the others low. When it needs "not", it weights "pas" high. The context vector reshapes each step.
+要点は重み付き平均です。decoderが"Je"を"I"に翻訳する必要があるとき、"Je"上のencoder状態に高い重みを置き、ほかは低くします。"not"が必要なときは、"pas"に高い重みを置きます。context vectorは各ステップで形を変えます。
 
-## Shapes (the thing that bites everyone)
+## Shapes（誰もがつまずくところ）
 
-This is where every attention implementation goes wrong the first time. Read slowly.
+attention実装が最初に壊れるのは、ほぼここです。ゆっくり読んでください。
 
 | Thing | Shape | Notes |
 |-------|-------|-------|
-| Encoder hidden states `H` | `(T_enc, d_h)` | If BiLSTM, `d_h = 2 * d_hidden` |
-| Decoder hidden state `s_{t-1}` | `(d_s,)` | One vector |
-| Attention score `e_{t,i}` | scalar | One per encoder position |
-| Attention weight `α_{t,i}` | scalar | After softmax over all `i` |
-| Context vector `c_t` | `(d_h,)` | Same shape as an encoder state |
+| Encoder hidden states `H` | `(T_enc, d_h)` | BiLSTMなら`d_h = 2 * d_hidden` |
+| Decoder hidden state `s_{t-1}` | `(d_s,)` | 1つのベクトル |
+| Attention score `e_{t,i}` | scalar | encoder位置ごとに1つ |
+| Attention weight `α_{t,i}` | scalar | すべての`i`に対してsoftmaxした後 |
+| Context vector `c_t` | `(d_h,)` | encoder stateと同じshape |
 
-**Bahdanau (additive) score.** `e_{t,i} = v_α^T * tanh(W_a * s_{t-1} + U_a * h_i)`.
+**Bahdanau（additive）score。** `e_{t,i} = v_α^T * tanh(W_a * s_{t-1} + U_a * h_i)`。
 
-- `s_{t-1}` has shape `(d_s,)`, `h_i` has shape `(d_h,)`.
-- `W_a` has shape `(d_attn, d_s)`. `U_a` has shape `(d_attn, d_h)`.
-- Their sum inside the tanh has shape `(d_attn,)`.
-- `v_α` has shape `(d_attn,)`. The inner product with `v_α` collapses to a scalar. **This is what `v_α` does.** It is not magic. It is the projection that turns an attention-dim vector into a scalar score.
+- `s_{t-1}`のshapeは`(d_s,)`、`h_i`のshapeは`(d_h,)`です。
+- `W_a`のshapeは`(d_attn, d_s)`です。`U_a`のshapeは`(d_attn, d_h)`です。
+- tanhの内側で両者を足したもののshapeは`(d_attn,)`です。
+- `v_α`のshapeは`(d_attn,)`です。`v_α`とのinner productによりスカラーへ畳み込まれます。**これが`v_α`の役割です。** 魔法ではありません。attention-dim vectorをscalar scoreへ変換するprojectionです。
 
-**Luong (multiplicative) score.** Three variants:
+**Luong（multiplicative）score。** 3つのvariantがあります。
 
-- `dot`: `e_{t,i} = s_t^T * h_i`. Requires `d_s == d_h`. Hard constraint. Skip if your encoder is bidirectional.
-- `general`: `e_{t,i} = s_t^T * W * h_i` with `W` shape `(d_s, d_h)`. Removes the equal-dim constraint.
-- `concat`: essentially the Bahdanau form. Rarely used since the first two are cheaper.
+- `dot`: `e_{t,i} = s_t^T * h_i`。`d_s == d_h`が必要です。厳しい制約です。encoderがbidirectionalなら避けてください。
+- `general`: `e_{t,i} = s_t^T * W * h_i`。`W`のshapeは`(d_s, d_h)`です。次元が等しいという制約を取り除きます。
+- `concat`: 実質的にはBahdanau形式です。最初の2つの方が安いので、あまり使われません。
 
-**One Bahdanau / Luong gotcha worth naming.** Bahdanau uses `s_{t-1}` (the decoder state *before* generating the current word). Luong uses `s_t` (the state *after*). Mixing them up produces subtly wrong gradients that are extremely hard to debug. Pick one paper and stick to its convention.
+**名前を付けておく価値のあるBahdanau / Luongの落とし穴。** Bahdanauは`s_{t-1}`（現在の単語を生成する*前*のdecoder state）を使います。Luongは`s_t`（生成した*後*のstate）を使います。これを混同すると、非常にデバッグしにくい微妙に間違った勾配が生まれます。どちらか一方の論文を選び、その規約に従ってください。
 
-## Build It
+## 作ってみる
 
-### Step 1: additive (Bahdanau) attention
+### Step 1: additive（Bahdanau）attention
 
 ```python
 import numpy as np
@@ -80,9 +80,9 @@ def softmax(x):
     return e / e.sum()
 ```
 
-Check your shapes against the table above. `encoder_states` has shape `(T_enc, d_h)`. `projected_enc` has shape `(T_enc, d_attn)`. `projected_dec` has shape `(d_attn,)` and broadcasts. `combined` has shape `(T_enc, d_attn)`. `scores` has shape `(T_enc,)`. `weights` has shape `(T_enc,)`. `context` has shape `(d_h,)`. Ship it.
+上の表と照らしてshapeを確認してください。`encoder_states`のshapeは`(T_enc, d_h)`です。`projected_enc`のshapeは`(T_enc, d_attn)`です。`projected_dec`のshapeは`(d_attn,)`で、broadcastされます。`combined`のshapeは`(T_enc, d_attn)`です。`scores`のshapeは`(T_enc,)`です。`weights`のshapeは`(T_enc,)`です。`context`のshapeは`(d_h,)`です。これで出せます。
 
-### Step 2: Luong dot and general
+### Step 2: Luong dotとgeneral
 
 ```python
 def dot_attention(decoder_state, encoder_states):
@@ -98,11 +98,11 @@ def general_attention(decoder_state, encoder_states, W):
     return weights @ encoder_states, weights
 ```
 
-Three lines each. This is why Luong's paper landed. Same accuracy on most tasks, a lot less code.
+それぞれ3行です。これがLuongの論文が受け入れられた理由です。ほとんどのタスクで同等のaccuracyを、はるかに少ないコードで得られます。
 
-### Step 3: a worked numerical example
+### Step 3: 数値例で確認する
 
-Given three encoder states (roughly "cat", "sat", "mat") and a decoder state that aligns most with the first, the attention distribution concentrates on position 0. If the decoder state shifts to align with the last, attention moves to position 2. The context vector tracks.
+3つのencoder状態（だいたい"cat"、"sat"、"mat"）と、1つ目に最もよくalignするdecoder stateがあるとします。attention distributionは位置0に集中します。decoder stateを最後のencoder状態に近づけると、attentionは位置2へ移動します。context vectorはそれに追随します。
 
 ```python
 H = np.array([
@@ -120,23 +120,23 @@ print("weights:", w.round(3))
 weights: [0.464 0.305 0.231]
 ```
 
-First row wins. Then move the decoder state closer to the third encoder state and watch the weights shift. That is it. Attention is explicit alignment.
+最初の行が勝ちます。次にdecoder stateを3つ目のencoder状態に近づけ、重みが移動する様子を見てください。それだけです。attentionは明示的なalignmentです。
 
-### Step 4: why this is the bridge to transformers
+### Step 4: これがtransformerへの橋になる理由
 
-Translate the language above into Q/K/V:
+上の言葉をQ/K/Vに翻訳すると、次のようになります。
 
 - **Query** = decoder state `s_{t-1}`
-- **Key** = encoder states (what we score against)
-- **Value** = encoder states (what we weight and sum)
+- **Key** = encoder states（スコアを付ける対象）
+- **Value** = encoder states（重み付けして足し合わせる対象）
 
-In classical attention, keys and values are the same thing. Self-attention separates them: you can query a sequence against itself, with different learned projections for K and V. Multi-head attention runs it in parallel with different learned projections. Transformers stack the whole stage many times and drop RNNs.
+classical attentionでは、keysとvaluesは同じものです。self-attentionはそれらを分離します。系列をそれ自身に問い合わせることができ、KとVには別々のlearned projectionを使えます。multi-head attentionは、それを異なるlearned projectionで並列に実行します。transformerはこのstage全体を何度もstackし、RNNを捨てます。
 
-The math is the same. The shapes are the same. The pedagogical jump from Bahdanau attention to scaled dot-product attention is mostly notation.
+数学は同じです。shapeも同じです。Bahdanau attentionからscaled dot-product attentionへの教育的な飛躍は、ほとんど記法の違いです。
 
-## Use It
+## 使ってみる
 
-PyTorch and TensorFlow ship attention directly.
+PyTorchとTensorFlowにはattentionが直接用意されています。
 
 ```python
 import torch
@@ -155,64 +155,64 @@ print(output.shape, weights.shape)
 torch.Size([2, 5, 128]) torch.Size([2, 5, 10])
 ```
 
-That is a transformer attention layer. Query batch of 5 positions, key/value batch of 10 positions, 128-dim each, 8 heads. `output` is the new context-augmented queries. `weights` is the 5x10 alignment matrix you can visualize.
+これはtransformer attention layerです。5位置のquery batch、10位置のkey/value batch、それぞれ128次元、8 headsです。`output`は新しいcontext-augmented queriesです。`weights`は可視化できる5x10のalignment matrixです。
 
-### When classical attention still matters
+### Classical attentionがまだ重要な場面
 
-- Pedagogy. The single-head, single-layer, RNN-based version makes every concept visible.
-- On-device sequence tasks where transformers do not fit.
-- Any paper from 2014-2017. You will misread it without knowing Bahdanau's convention.
-- Fine-grained alignment analysis in MT. Raw attention weights are an interpretability tool even on transformer models, and reading them requires knowing what they are.
+- 教育目的。single-head、single-layer、RNNベースの版では、すべての概念が見える形になります。
+- transformerが収まらないon-device sequence tasks。
+- 2014-2017年の論文を読むとき。Bahdanauの規約を知らないと読み間違えます。
+- MTにおけるfine-grained alignment analysis。raw attention weightsはtransformerモデルでも解釈ツールであり、それを読むには何であるかを知る必要があります。
 
-### The attention-weight-as-explanation trap
+### attention-weight-as-explanationの罠
 
-Attention weights look interpretable. They are weights that sum to one across positions; you can plot them; high means "looked at this." Reviewers love them.
+attention weightsは解釈しやすそうに見えます。位置方向に合計1になる重みで、plotでき、高い値は「ここを見た」ことを意味するように見えます。reviewerはこれが好きです。
 
-They are not as interpretable as they look. Jain and Wallace (2019) showed that attention distributions can be permuted and replaced by arbitrary alternatives without changing model predictions for some tasks. Never report attention weights as evidence of reasoning without an ablation or counterfactual check.
+しかし見た目ほど解釈可能ではありません。Jain and Wallace（2019）は、いくつかのタスクでは、attention distributionを並べ替えたり任意の別分布に置き換えたりしても、モデル予測が変わらないことを示しました。ablationやcounterfactual checkなしに、attention weightsを推論の証拠として報告してはいけません。
 
 ## Ship It
 
-Save as `outputs/prompt-attention-shapes.md`:
+`outputs/prompt-attention-shapes.md`として保存します。
 
 ```markdown
 ---
 name: attention-shapes
-description: Debug shape bugs in attention implementations.
+description: attention実装のshape bugをデバッグする。
 phase: 5
 lesson: 10
 ---
 
-Given a broken attention implementation, you identify the shape mismatch. Output:
+壊れたattention実装が与えられたら、shape mismatchを特定してください。出力:
 
-1. Which matrix has the wrong shape. Name the tensor.
-2. What its shape should be, derived from (d_s, d_h, d_attn, T_enc, T_dec, batch_size).
-3. One-line fix. Transpose, reshape, or project.
-4. A test to catch regressions. Typically: assert `output.shape == (batch, T_dec, d_h)` and `weights.shape == (batch, T_dec, T_enc)` and `weights.sum(dim=-1) close to 1`.
+1. shapeが間違っているmatrix。tensor名を挙げる。
+2. あるべきshape。`(d_s, d_h, d_attn, T_enc, T_dec, batch_size)`から導く。
+3. 1行の修正。transpose、reshape、またはproject。
+4. regressionを検出するtest。典型的には、`output.shape == (batch, T_dec, d_h)`、`weights.shape == (batch, T_dec, T_enc)`、`weights.sum(dim=-1) close to 1`をassertする。
 
-Refuse to recommend fixes that silently broadcast. Broadcast-hiding bugs surface later as silent accuracy degradation, the worst kind of attention bug.
+silent broadcastに頼る修正は勧めないでください。broadcastで隠れたbugは、後になってsilent accuracy degradationとして表面化します。これはattention bugとして最悪の種類です。
 
-For Bahdanau confusion, insist the decoder input is `s_{t-1}` (pre-step state). For Luong, `s_t` (post-step state). For dot-product, flag dimension mismatch between query and key as the most common first-time error.
+Bahdanauの混乱については、decoder入力は`s_{t-1}`（pre-step state）だと主張してください。Luongでは`s_t`（post-step state）です。dot-productでは、queryとkeyのdimension mismatchが最もよくある初回エラーだと明示してください。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement `softmax` masking so padding tokens in the encoder get attention weight zero. Test on a batch with variable-length sequences.
-2. **Medium.** Add multi-head attention to the Luong `general` form. Split `d_h` into `n_heads` groups, run attention per head, concatenate. Verify the single-head case matches your earlier implementation.
-3. **Hard.** Train a GRU encoder-decoder with Bahdanau attention on the toy copy task from lesson 09. Plot accuracy vs sequence length. Compare against the no-attention baseline. You should see the gap widen as length grows, confirming attention lifts the bottleneck.
+1. **Easy。** encoder内のpadding tokensがattention weight 0になるように、`softmax` maskingを実装してください。可変長系列を含むbatchでテストします。
+2. **Medium。** Luong `general`形式にmulti-head attentionを追加してください。`d_h`を`n_heads`個のgroupに分け、headごとにattentionを実行して、連結します。single-headの場合が以前の実装と一致することを確認してください。
+3. **Hard。** レッスン09のおもちゃのcopy taskで、Bahdanau attention付きGRU encoder-decoderを学習してください。accuracy vs sequence lengthをplotします。no-attention baselineと比較してください。長さが伸びるほど差が広がるはずで、attentionがボトルネックを解消することを確認できます。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| Attention | Looking at things | Weighted average of a value sequence, weights computed from a query-key similarity. |
-| Query, Key, Value | QKV | Three projections: Q asks, K is what to match, V is what to return. |
-| Additive attention | Bahdanau | Feed-forward score: `v^T tanh(W q + U k)`. |
-| Multiplicative attention | Luong dot / general | Score is `q^T k` or `q^T W k`. Cheaper, same accuracy on most tasks. |
-| Alignment matrix | The pretty picture | Attention weights as a `(T_dec, T_enc)` grid. Read it to see what the model attended to. |
+| Term | よく言われる説明 | 実際の意味 |
+|------|-----------------|------------|
+| Attention | 何かを見ること | value sequenceの重み付き平均。重みはquery-key similarityから計算される。 |
+| Query, Key, Value | QKV | 3つのprojection。Qは問い、Kは照合対象、Vは返すもの。 |
+| Additive attention | Bahdanau | Feed-forward score: `v^T tanh(W q + U k)`。 |
+| Multiplicative attention | Luong dot / general | scoreは`q^T k`または`q^T W k`。安く、ほとんどのタスクで同等のaccuracy。 |
+| Alignment matrix | きれいな図 | `(T_dec, T_enc)` gridとしてのattention weights。モデルがどこにattendしたかを見るために読む。 |
 
-## Further Reading
+## 参考資料
 
-- [Bahdanau, Cho, Bengio (2014). Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473) — the paper.
-- [Luong, Pham, Manning (2015). Effective Approaches to Attention-based Neural Machine Translation](https://arxiv.org/abs/1508.04025) — the three score variants and their comparison.
-- [Jain and Wallace (2019). Attention is not Explanation](https://arxiv.org/abs/1902.10186) — the interpretability caveat.
-- [Dive into Deep Learning — Bahdanau Attention](https://d2l.ai/chapter_attention-mechanisms-and-transformers/bahdanau-attention.html) — runnable walkthrough with PyTorch.
+- [Bahdanau, Cho, Bengio (2014). Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473) — 元論文。
+- [Luong, Pham, Manning (2015). Effective Approaches to Attention-based Neural Machine Translation](https://arxiv.org/abs/1508.04025) — 3つのscore variantsとその比較。
+- [Jain and Wallace (2019). Attention is not Explanation](https://arxiv.org/abs/1902.10186) — interpretability上の注意点。
+- [Dive into Deep Learning — Bahdanau Attention](https://d2l.ai/chapter_attention-mechanisms-and-transformers/bahdanau-attention.html) — PyTorchで動かせるwalkthrough。

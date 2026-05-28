@@ -2,15 +2,15 @@ import type { Lesson, Mastery, Pick } from "./types.js";
 import { MASTERY_THRESHOLD } from "./types.js";
 
 export const CURRICULUM: Lesson[] = [
-  { id: "py-01", title: "variables and types", prereqs: [] },
-  { id: "py-02", title: "arithmetic operators", prereqs: ["py-01"] },
-  { id: "py-03", title: "strings", prereqs: ["py-01"] },
+  { id: "py-01", title: "変数と型", prereqs: [] },
+  { id: "py-02", title: "算術演算子", prereqs: ["py-01"] },
+  { id: "py-03", title: "文字列", prereqs: ["py-01"] },
   { id: "py-04", title: "if / else", prereqs: ["py-02"] },
-  { id: "py-05", title: "for loops", prereqs: ["py-04"] },
-  { id: "py-06", title: "lists", prereqs: ["py-03", "py-05"] },
-  { id: "py-07", title: "dicts", prereqs: ["py-06"] },
-  { id: "py-08", title: "functions", prereqs: ["py-04"] },
-  { id: "py-09", title: "list comprehensions", prereqs: ["py-06", "py-08"] },
+  { id: "py-05", title: "for loop", prereqs: ["py-04"] },
+  { id: "py-06", title: "list", prereqs: ["py-03", "py-05"] },
+  { id: "py-07", title: "dict", prereqs: ["py-06"] },
+  { id: "py-08", title: "関数", prereqs: ["py-04"] },
+  { id: "py-09", title: "list comprehension", prereqs: ["py-06", "py-08"] },
 ];
 
 export function buildIndex(items: Lesson[]): Record<string, Lesson> {
@@ -22,7 +22,7 @@ export function topoOrder(items: Lesson[]): string[] {
   for (const l of items) {
     for (const p of l.prereqs) {
       if (!known.has(p)) {
-        throw new Error(`lesson ${l.id} references unknown prereq ${p}`);
+        throw new Error(`lesson ${l.id} が unknown prereq ${p} を参照しています`);
       }
     }
   }
@@ -56,7 +56,7 @@ export function topoOrder(items: Lesson[]): string[] {
     const stuck = Object.keys(indeg)
       .filter((id) => (indeg[id] ?? 0) > 0)
       .sort();
-    throw new Error(`cycle detected in curriculum: ${stuck.join(", ")}`);
+    throw new Error(`curriculum に cycle を検出しました: ${stuck.join(", ")}`);
   }
   return order;
 }

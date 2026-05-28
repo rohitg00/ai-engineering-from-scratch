@@ -21,29 +21,29 @@ function span(model: string, latencyMs: number, status: "OK" | "ERROR" = "OK"): 
   };
 }
 
-test("percentile of empty list is zero", () => {
+test("空 list の percentile は zero", () => {
   assert.equal(percentile([], 0.5), 0);
 });
 
-test("percentile p50 of 1..100 is roughly 50", () => {
+test("1..100 の percentile p50 はおよそ 50", () => {
   const arr = Array.from({ length: 100 }, (_, i) => i + 1);
   const p50 = percentile(arr, 0.5);
   assert.ok(p50 >= 49 && p50 <= 51);
 });
 
-test("percentile p95 of 1..100 is roughly 95", () => {
+test("1..100 の percentile p95 はおよそ 95", () => {
   const arr = Array.from({ length: 100 }, (_, i) => i + 1);
   const p95 = percentile(arr, 0.95);
   assert.ok(p95 >= 94 && p95 <= 96);
 });
 
-test("percentile p99 of 1..100 is roughly 99", () => {
+test("1..100 の percentile p99 はおよそ 99", () => {
   const arr = Array.from({ length: 100 }, (_, i) => i + 1);
   const p99 = percentile(arr, 0.99);
   assert.ok(p99 >= 98 && p99 <= 100);
 });
 
-test("percentile is monotonically non-decreasing as p increases", () => {
+test("p が増えると percentile は単調非減少になる", () => {
   const arr = Array.from({ length: 50 }, (_, i) => i + 1);
   let prev = -Infinity;
   for (const p of [0, 0.25, 0.5, 0.75, 0.95, 0.99, 1]) {
@@ -53,7 +53,7 @@ test("percentile is monotonically non-decreasing as p increases", () => {
   }
 });
 
-test("rollUpByModel groups spans by model", () => {
+test("rollUpByModel は model ごとに span を group 化する", () => {
   const spans: GenAISpan[] = [
     span("gpt-4o-mini", 100),
     span("gpt-4o-mini", 200),
@@ -65,7 +65,7 @@ test("rollUpByModel groups spans by model", () => {
   assert.equal(gpt?.count, 2);
 });
 
-test("rollUpByModel counts errors per model", () => {
+test("rollUpByModel は model ごとに error を数える", () => {
   const spans: GenAISpan[] = [
     span("gpt-4o-mini", 100, "OK"),
     span("gpt-4o-mini", 200, "ERROR"),
@@ -75,7 +75,7 @@ test("rollUpByModel counts errors per model", () => {
   assert.equal(rollups[0]?.errors, 2);
 });
 
-test("rollUpByModel surfaces non-zero cost for known models", () => {
+test("rollUpByModel は既知 model に non-zero cost を出す", () => {
   const spans: GenAISpan[] = [
     span("gpt-4o-mini", 100),
     span("gpt-4o-mini", 200),

@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "A file on disk is decoded into a NumPy array with shape (224, 224, 3) and dtype uint8. What does each number represent?",
-      "options": ["The probability that a pixel is that colour, between 0 and 1", "One photon count per detector, normalized to the full dynamic range of the sensor", "A sample of light intensity at one grid position, quantized to one of 256 levels per channel", "A floating-point brightness value ready to feed to a convolutional network"],
+      "question": "disk 上の file が shape (224, 224, 3)、dtype uint8 の NumPy array に decode されました。それぞれの数値は何を表していますか？",
+      "options": ["pixel がその色である確率。0 から 1 の間", "detector ごとの photon count を sensor の full dynamic range に normalize したもの", "1 つの grid position における光の強度の sample を、channel ごとに 256 level のどれかへ量子化したもの", "convolutional network にそのまま入力できる floating-point brightness value"],
       "correct": 2,
-      "explanation": "A uint8 image stores 8-bit integers in [0, 255]. Each integer is one quantized sample of light intensity at one (row, column, channel) position. It is neither a probability nor a float; you must divide by 255 and standardize before feeding it to a pretrained model."
+      "explanation": "uint8 image は [0, 255] の 8-bit integer を保存します。各 integer は 1 つの (row, column, channel) position における光の強度を量子化した 1 sample です。probability でも float でもありません。pretrained model に入力する前に、255 で割って standardize する必要があります。"
     },
     {
       "stage": "pre",
-      "question": "You load an image with Pillow and get an array of shape (480, 640, 3). You pass it as a batched tensor (1, 480, 640, 3) to a PyTorch Conv2d with in_channels=3. What happens?",
-      "options": ["Nothing — PyTorch auto-detects the layout", "The first conv layer treats height as the channel axis, producing meaningless feature maps", "PyTorch raises a RuntimeError: Conv2d expects NCHW, sees 480 channels where the weight expects 3, and refuses to run", "Accuracy drops by a few percent but inference still works"],
+      "question": "Pillow で画像を読み込み、shape (480, 640, 3) の array を得ました。これを batched tensor (1, 480, 640, 3) として、in_channels=3 の PyTorch Conv2d に渡すと何が起きますか？",
+      "options": ["何も起きない。PyTorch が layout を自動検出する", "最初の conv layer が height を channel axis として扱い、意味のない feature map を生成する", "PyTorch が RuntimeError を出す。Conv2d は NCHW を期待し、weight が 3 channels を期待する場所で 480 channels を見たため、実行を拒否する", "accuracy は数パーセント落ちるが、inference はそのまま動く"],
       "correct": 2,
-      "explanation": "PyTorch Conv2d enforces strict channel-count checking against the weight tensor. A batched HWC input (1, 480, 640, 3) is interpreted as NCHW with C=480, which does not match the weight's expected 3 channels, and PyTorch raises RuntimeError before any computation. The loud failure is a feature — it forces you to fix the layout. You must permute to NCHW (`.permute(0, 3, 1, 2)`) before feeding PyTorch."
+      "explanation": "PyTorch Conv2d は weight tensor に対して厳密に channel count を check します。batched HWC input (1, 480, 640, 3) は C=480 の NCHW と解釈され、weight が期待する 3 channels と一致しないため、PyTorch は計算前に RuntimeError を出します。この loud failure は layout 修正を強制してくれる feature です。PyTorch に入力する前に NCHW へ permute（`.permute(0, 3, 1, 2)`）する必要があります。"
     },
     {
       "stage": "post",
-      "question": "Why do ImageNet pretrained models expect inputs standardized with mean=[0.485, 0.456, 0.406] and std=[0.229, 0.224, 0.225]?",
-      "options": ["Those are the RGB values of an average natural scene", "Those are the per-channel mean and standard deviation of the ImageNet training set in [0, 1] space, so subtracting them centers the distribution the model was trained on", "They make the input strictly zero-mean unit-variance for any image", "They are required by the ReLU activation function"],
+      "question": "ImageNet pretrained model が mean=[0.485, 0.456, 0.406]、std=[0.229, 0.224, 0.225] で standardized された input を期待するのはなぜですか？",
+      "options": ["それらは平均的な自然 scene の RGB value であるため", "それらは [0, 1] space における ImageNet training set の channel ごとの mean と standard deviation であり、これを引くことで model が学習した distribution を center できるため", "任意の image に対して input を厳密に zero-mean unit-variance にするため", "ReLU activation function に必要なため"],
       "correct": 1,
-      "explanation": "The numbers are statistics of the ImageNet training corpus computed after dividing pixels by 255. Using them aligns your input distribution with the one the network saw during training. For a model trained on a different dataset you would recompute the stats on that dataset."
+      "explanation": "これらの数値は、pixel を 255 で割った後に計算された ImageNet training corpus の statistics です。これを使うことで input distribution を network が training 中に見たものに合わせられます。別の dataset で学習した model では、その dataset 上で stats を再計算します。"
     },
     {
       "stage": "post",
-      "question": "You resize a segmentation mask (integer class IDs 0..20) from 500x500 to 224x224. Which interpolation method is correct?",
-      "options": ["Bilinear — it smooths the class boundaries", "Bicubic — it preserves sharpness", "Lanczos — highest quality", "Nearest neighbour — it preserves valid integer class IDs instead of inventing fractional ones"],
+      "question": "segmentation mask（integer class IDs 0..20）を 500x500 から 224x224 に resize します。正しい interpolation method はどれですか？",
+      "options": ["Bilinear — class boundary を滑らかにするため", "Bicubic — sharpness を保つため", "Lanczos — 最高品質のため", "Nearest neighbour — fractional な値を作らず、valid integer class ID を保つため"],
       "correct": 3,
-      "explanation": "Bilinear, bicubic, and lanczos average neighbouring values. On a class-ID mask that produces non-integer values like 4.7 between class 4 and class 5, which are not real classes. Nearest neighbour picks the closest original pixel and keeps the label space intact. This rule also applies to any channel that encodes IDs or indices."
+      "explanation": "Bilinear、bicubic、lanczos は近傍値を平均します。class-ID mask では class 4 と class 5 の間に 4.7 のような non-integer value を作り、これは実在する class ではありません。Nearest neighbour は最も近い original pixel を選び、label space を壊しません。この rule は ID や index を encode するあらゆる channel にも当てはまります。"
     },
     {
       "stage": "post",
-      "question": "RGB grayscale conversion uses weights 0.299 R + 0.587 G + 0.114 B rather than 0.333 R + 0.333 G + 0.333 B. Why?",
-      "options": ["To compensate for JPEG compression artifacts in each channel", "Because green photons carry more energy than red or blue photons", "Because human vision is most sensitive to green and least sensitive to blue, so the weighted sum matches perceived luminance", "To match the behaviour of the Bayer filter on camera sensors"],
+      "question": "RGB grayscale conversion が 0.333 R + 0.333 G + 0.333 B ではなく、0.299 R + 0.587 G + 0.114 B という weight を使うのはなぜですか？",
+      "options": ["各 channel の JPEG compression artifact を補正するため", "green photon が red や blue photon より多くの energy を運ぶため", "human vision は green に最も敏感で blue に最も鈍感なので、weighted sum が perceived luminance に合うため", "camera sensor の Bayer filter の挙動に合わせるため"],
       "correct": 2,
-      "explanation": "The ITU-R BT.601 weights 0.299/0.587/0.114 come from the luminous efficiency of the human eye. An equal-weight average would make green-tinted images look too dark and red ones too bright to a human observer. Most classical computer-vision grayscale code uses these weights; BT.709 (0.2126/0.7152/0.0722) is the modern HDTV variant for linear-light inputs."
+      "explanation": "ITU-R BT.601 の weights 0.299/0.587/0.114 は、人間の目の luminous efficiency に由来します。equal-weight average では、人間の観察者には green-tinted image が暗すぎ、red image が明るすぎて見えます。多くの classical computer-vision grayscale code はこの weight を使います。BT.709（0.2126/0.7152/0.0722）は linear-light input 向けの modern HDTV variant です。"
     }
   ]
 }

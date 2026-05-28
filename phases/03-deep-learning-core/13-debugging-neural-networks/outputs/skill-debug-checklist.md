@@ -1,6 +1,6 @@
 ---
 name: skill-debug-checklist
-description: Decision-tree checklist for debugging neural network training failures
+description: neural network training failures を debug するための decision-tree checklist
 version: 1.0.0
 phase: 3
 lesson: 13
@@ -9,75 +9,75 @@ tags: [debugging, neural-networks, training, diagnostics, deep-learning]
 
 # Neural Network Debug Checklist
 
-Systematic debugging protocol for when training goes wrong. Work through these in order -- most bugs are caught in the first 3 steps.
+training がうまくいかないときの systematic debugging protocol です。順番に進めてください。ほとんどの bugs は最初の 3 steps で見つかります。
 
-## Before training (prevent bugs)
+## training 前（bugs を防ぐ）
 
-1. Print model architecture and parameter count. Does the size make sense for your data?
-2. Run a single forward pass with random input. Does the output shape match your target shape?
-3. Check that labels are the correct dtype (CrossEntropyLoss needs Long, BCELoss needs Float)
-4. Verify data normalization: inputs should have mean near 0 and std near 1
-5. Print 5 random (input, label) pairs. Do the labels match what you expect?
-6. Confirm train/test split has no duplicate samples
+1. model architecture と parameter count を print します。data に対して size は妥当ですか？
+2. random input で single forward pass を実行します。output shape は target shape と一致していますか？
+3. labels が正しい dtype であることを確認します（CrossEntropyLoss は Long、BCELoss は Float が必要）
+4. data normalization を検証します。inputs は mean near 0、std near 1 であるべきです
+5. random な (input, label) pairs を 5 つ print します。labels は期待どおりですか？
+6. train/test split に duplicate samples がないことを確認します
 
-## Overfit-one-batch test (60 seconds, catches 80% of bugs)
+## Overfit-one-batch test（60 秒、bugs の 80% を検出）
 
-1. Take 8-32 samples from your training set
-2. Train for 200 steps with a reasonable learning rate
-3. Loss should approach 0. Training accuracy should hit 100%
-4. If it fails: the bug is in your model, loss function, or training loop -- not your data or hyperparameters
-5. If it passes: proceed to full training
+1. training set から 8-32 samples を取ります
+2. 妥当な learning rate で 200 steps 学習します
+3. loss は 0 に近づき、training accuracy は 100% に達するはずです
+4. 失敗した場合、bug は model、loss function、training loop のどこかにあります。data や hyperparameters ではありません
+5. 合格した場合、full training に進みます
 
-## Loss not decreasing
+## Loss が下がらない
 
-1. Check learning rate. Try 3 values: current/10, current, current*10
-2. Print gradient norms per layer. All zeros means dead network or detached graph
-3. Check `requires_grad=True` on parameters. Check that `loss.backward()` is called
-4. Check that `optimizer.zero_grad()` is called before `loss.backward()`
-5. Check that `optimizer.step()` is called after `loss.backward()`
-6. Verify model parameters are passed to the optimizer: `optimizer = Adam(model.parameters())`
+1. learning rate を確認します。3 つの値を試します: current/10、current、current*10
+2. layer ごとの gradient norms を print します。すべて 0 なら dead network または detached graph です
+3. parameters の `requires_grad=True` を確認します。`loss.backward()` が呼ばれていることも確認します
+4. `optimizer.zero_grad()` が `loss.backward()` の前に呼ばれていることを確認します
+5. `optimizer.step()` が `loss.backward()` の後に呼ばれていることを確認します
+6. model parameters が optimizer に渡されていることを検証します: `optimizer = Adam(model.parameters())`
 
-## Loss is NaN or Inf
+## Loss が NaN または Inf
 
-1. Reduce learning rate by 10x
-2. Add epsilon to all log() calls: `torch.log(x + 1e-7)`
-3. Add epsilon to all division: `x / (y + 1e-8)`
-4. Clamp predictions: `torch.clamp(pred, 1e-7, 1 - 1e-7)` before BCE loss
-5. Use `torch.autograd.detect_anomaly()` to find the exact operation
-6. Check for NaN in input data: `assert not torch.isnan(x).any()`
+1. learning rate を 10x 下げます
+2. すべての log() calls に epsilon を追加します: `torch.log(x + 1e-7)`
+3. すべての division に epsilon を追加します: `x / (y + 1e-8)`
+4. BCE loss の前に predictions を clamp します: `torch.clamp(pred, 1e-7, 1 - 1e-7)`
+5. 正確な operation を見つけるために `torch.autograd.detect_anomaly()` を使います
+6. input data 内の NaN を確認します: `assert not torch.isnan(x).any()`
 
-## Loss oscillating
+## Loss が oscillating する
 
-1. Reduce learning rate by 3-10x
-2. Increase batch size (reduces gradient noise)
-3. Add gradient clipping: `torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)`
-4. Switch from SGD to Adam (adaptive LR per parameter)
-5. Add learning rate warmup for the first 5-10% of training
+1. learning rate を 3-10x 下げます
+2. batch size を増やします（gradient noise を減らす）
+3. gradient clipping を追加します: `torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)`
+4. SGD から Adam に切り替えます（parameter ごとの adaptive LR）
+5. training の最初の 5-10% に learning rate warmup を追加します
 
-## Overfitting (train acc high, test acc low)
+## Overfitting（train acc high, test acc low）
 
-1. Add dropout (start with p=0.1, increase to 0.5)
-2. Add weight decay to optimizer: `Adam(params, weight_decay=1e-4)`
-3. Reduce model size (fewer layers or narrower layers)
-4. Add data augmentation
-5. Use early stopping: stop when validation loss increases for 5+ epochs
-6. Check for data leakage between train and test sets
+1. dropout を追加します（p=0.1 から始め、0.5 まで増やす）
+2. optimizer に weight decay を追加します: `Adam(params, weight_decay=1e-4)`
+3. model size を減らします（fewer layers または narrower layers）
+4. data augmentation を追加します
+5. early stopping を使います。validation loss が 5+ epochs 増えたら停止します
+6. train/test sets 間の data leakage を確認します
 
-## Underfitting (both train and test acc low)
+## Underfitting（train/test acc がどちらも低い）
 
-1. Increase model capacity (more layers, wider layers)
-2. Train for more epochs
-3. Increase learning rate (carefully)
-4. Remove regularization temporarily to verify the model can learn
-5. Check that your model is expressive enough for the task
+1. model capacity を増やします（more layers、wider layers）
+2. より多くの epochs で学習します
+3. learning rate を上げます（慎重に）
+4. model が学習できることを確認するため、一時的に regularization を外します
+5. model が task に対して十分 expressive か確認します
 
 ## Dead ReLU neurons
 
-1. Check fraction of zero activations per layer. >50% is a problem
-2. Switch to LeakyReLU(0.01) or GELU
-3. Use Kaiming initialization for weights
-4. Reduce learning rate (large updates can push neurons into the dead zone)
-5. Add batch normalization before activation functions
+1. layer ごとの zero activations の割合を確認します。50% 超は問題です
+2. LeakyReLU(0.01) または GELU に切り替えます
+3. weights に Kaiming initialization を使います
+4. learning rate を下げます（大きな updates は neurons を dead zone に押し込むことがあります）
+5. activation functions の前に batch normalization を追加します
 
 ## Quick reference: learning rate starting points
 
@@ -93,16 +93,16 @@ Systematic debugging protocol for when training goes wrong. Work through these i
 
 | Batch size | Gradient noise | Memory | Generalization |
 |-----------|---------------|--------|---------------|
-| 8-16 | High (noisy) | Low | Often better |
-| 32-64 | Moderate | Moderate | Good default |
-| 128-256 | Low (smooth) | High | May need warmup |
-| 512+ | Very low | Very high | Needs LR scaling |
+| 8-16 | High（noisy） | Low | 良いことが多い |
+| 32-64 | Moderate | Moderate | 良い default |
+| 128-256 | Low（smooth） | High | warmup が必要なことがある |
+| 512+ | Very low | Very high | LR scaling が必要 |
 
-## When nothing works
+## 何をしても動かないとき
 
-1. Simplify the model to 1 hidden layer. Does it learn?
-2. Simplify the data to 100 samples. Does it overfit?
-3. Replace your loss with MSE. Does it converge?
-4. Replace your optimizer with SGD(lr=0.01). Does it make progress?
-5. Replace your data with synthetic data (e.g., y = x[0] > 0). Does it learn?
-6. If none of these work: the bug is in code you are not looking at (data loading, preprocessing, tensor shapes)
+1. model を 1 hidden layer に単純化します。学習しますか？
+2. data を 100 samples に単純化します。overfit できますか？
+3. loss を MSE に置き換えます。収束しますか？
+4. optimizer を SGD(lr=0.01) に置き換えます。進みますか？
+5. data を synthetic data（例: y = x[0] > 0）に置き換えます。学習しますか？
+6. どれも動かない場合、bug は見ていない code（data loading、preprocessing、tensor shapes）にあります

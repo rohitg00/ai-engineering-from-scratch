@@ -4,23 +4,23 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does MATS do, and what is its rough scale?",
+      "question": "MATS は何をする組織で、その大まかな scale はどれくらいですか？",
       "options": [
-        "A reward-model training service",
-        "ML Alignment & Theory Scholars: a research mentorship program with 527+ scholars since 2021, 180+ papers, and roughly 80% of pre-2025 alumni working on safety/security",
-        "A regulatory body that issues AI export licenses",
-        "A frontier safety institute owned by the EU"
+        "reward-model training service",
+        "ML Alignment & Theory Scholars: 2021年以降 527+ scholars、180+ papers、pre-2025 alumni の約80%が safety/security に従事する research mentorship program",
+        "AI export licenses を発行する regulatory body",
+        "EU が所有する frontier safety institute"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which agenda did Redwood Research introduce?",
+      "question": "Redwood Research が introduced した agenda はどれですか？",
       "options": [
         "Differential privacy for LLMs",
-        "AI Control (Lesson 10): safety despite subversion via U / T / H protocols",
-        "Watermarking via SynthID",
+        "AI Control (Lesson 10): U / T / H protocols による subversion 下の safety",
+        "SynthID による watermarking",
         "Constitutional AI"
       ],
       "correct": 1,
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which organisation authored the In-Context Scheming paper and the 'Towards Safety Cases for AI Scheming' framework?",
+      "question": "In-Context Scheming paper と 'Towards Safety Cases for AI Scheming' framework を authored した organisation はどれですか？",
       "options": [
         "METR",
         "MATS",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "What is METR's distinctive methodological style in the alignment ecosystem?",
+      "question": "alignment ecosystem における METR の distinctive methodological style は何ですか？",
       "options": [
-        "Adversarial training of base models",
-        "Task-based capability evaluations, autonomous-task time-horizon studies, and framework synthesis (e.g., 'Common Elements of Frontier AI Safety Policies')",
-        "Hardware-attested verifiable inference",
-        "Closed-source red-teaming only"
+        "base models の adversarial training",
+        "task-based capability evaluations、autonomous-task time-horizon studies、framework synthesis (例: 'Common Elements of Frontier AI Safety Policies')",
+        "hardware-attested verifiable inference",
+        "closed-source red-teaming のみ"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why does multi-organisation co-authorship matter for safety claims?",
+      "question": "safety claims において multi-organisation co-authorship が重要な理由は何ですか？",
       "options": [
-        "It increases citation counts",
-        "It speeds up publication",
-        "It is mandated by the EU AI Act",
-        "Labs evaluating their own models have a structural conflict of interest; external evaluators (Redwood, Apollo, METR, Eleos, UK AISI) can raise and validate failure modes the lab might underreport"
+        "citation counts を増やすから",
+        "publication を速くするから",
+        "EU AI Act で義務付けられているから",
+        "labs が自社 models を評価すると structural conflict of interest がある。external evaluators (Redwood, Apollo, METR, Eleos, UK AISI) は lab が underreport し得る failure modes を raise and validate できるから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is Eleos AI Research's primary contribution to the ecosystem?",
+      "question": "Eleos AI Research の ecosystem への primary contribution は何ですか？",
       "options": [
         "AI Control benchmarks",
         "Watermarking standards",
         "California training-data law drafting",
-        "Pre-deployment model-welfare evaluations (Lesson 19), including the external welfare assessment in Claude Opus 4's system card"
+        "pre-deployment model-welfare evaluations (Lesson 19)。Claude Opus 4 の system card における external welfare assessment を含む"
       ],
       "correct": 3,
       "explanation": ""

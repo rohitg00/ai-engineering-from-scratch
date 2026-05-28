@@ -1,177 +1,177 @@
-# Logistic Regression
+# ロジスティック回帰
 
-> Logistic regression bends a straight line into an S-curve to answer yes-or-no questions with probabilities.
+> ロジスティック回帰は、直線を S 字カーブに曲げ、はい/いいえの問いに確率で答えます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
-**Time:** ~90 minutes
+**種類:** 構築
+**言語:** Python
+**前提条件:** Phase 2 Lesson 1-2（機械学習とは、線形回帰）
+**所要時間:** 約 90 分
 
-## Learning Objectives
+## 学習目標
 
-- Implement logistic regression from scratch using the sigmoid function and binary cross-entropy loss
-- Compute and interpret precision, recall, F1 score, and the confusion matrix for binary classification
-- Explain why MSE fails for classification and why binary cross-entropy produces a convex cost surface
-- Build a softmax regression model for multi-class classification and evaluate threshold tuning tradeoffs
+- シグモイド関数と二値交差エントロピー損失を使って、ロジスティック回帰をゼロから実装できる
+- 二値分類における precision、recall、F1 score、混同行列を計算し解釈できる
+- 分類で MSE がうまくいかない理由と、二値交差エントロピーが凸のコスト面を作る理由を説明できる
+- 多クラス分類のためのソフトマックス回帰モデルを構築し、しきい値調整のトレードオフを評価できる
 
-## The Problem
+## 問題
 
-You want to predict whether a tumor is malignant or benign given its size. You try linear regression. It outputs numbers like 0.3 or 1.7 or -0.5. What do those mean? Is 1.7 "very malignant"? Is -0.5 "very benign"? Linear regression outputs unbounded numbers. Classification needs bounded probabilities between 0 and 1, and a clear decision: yes or no.
+腫瘍の大きさから、それが悪性か良性かを予測したいとします。線形回帰を試すと、0.3、1.7、-0.5 のような数値が出力されます。これは何を意味するのでしょうか。1.7 は「とても悪性」でしょうか。-0.5 は「とても良性」でしょうか。線形回帰の出力は範囲に制限がありません。分類には 0 から 1 の範囲に収まる確率と、はい/いいえの明確な判断が必要です。
 
-Logistic regression solves this. It takes the same linear combination (wx + b) and passes it through the sigmoid function, which squashes any number into the range (0, 1). The output is a probability. You set a threshold (usually 0.5) and make a decision.
+ロジスティック回帰はこれを解決します。同じ線形結合（wx + b）を取り、それをシグモイド関数に通します。シグモイド関数は任意の数値を (0, 1) の範囲に押し込みます。出力は確率です。しきい値（通常は 0.5）を設定し、判断を下します。
 
-This is one of the most widely used algorithms in practice. Despite its name, logistic regression is a classification algorithm, not a regression algorithm. The name comes from the logistic (sigmoid) function it uses.
+これは実務で最も広く使われているアルゴリズムの 1 つです。名前に反して、ロジスティック回帰は回帰アルゴリズムではなく分類アルゴリズムです。名前は、使っているロジスティック（シグモイド）関数に由来します。
 
-## The Concept
+## 概念
 
-### Why Linear Regression Fails for Classification
+### 線形回帰が分類で失敗する理由
 
-Imagine predicting pass/fail (1/0) based on study hours. Linear regression fits a line through the data:
+勉強時間から合格/不合格（1/0）を予測するとします。線形回帰はデータに直線を当てはめます。
 
 ```
 hours:  1   2   3   4   5   6   7   8   9   10
 actual: 0   0   0   0   1   1   1   1   1   1
 ```
 
-A linear fit might produce predictions like -0.2 at hour 1 and 1.3 at hour 10. These values are not probabilities. They go below 0 and above 1. Worse, a single outlier (someone who studied 50 hours) would drag the entire line, changing predictions for everyone.
+線形の当てはめでは、1 時間で -0.2、10 時間で 1.3 のような予測が出るかもしれません。これらの値は確率ではありません。0 を下回ったり 1 を上回ったりします。さらに悪いことに、外れ値が 1 つ（50 時間勉強した人など）あるだけで直線全体が引っ張られ、全員の予測が変わってしまいます。
 
-Classification needs a function that:
-- Outputs values between 0 and 1 (probabilities)
-- Creates a sharp transition (a decision boundary)
-- Is not distorted by outliers far from the boundary
+分類には次のような関数が必要です。
+- 0 から 1 の値（確率）を出力する
+- 鋭い遷移（決定境界）を作る
+- 境界から遠い外れ値に歪められにくい
 
-### The Sigmoid Function
+### シグモイド関数
 
-The sigmoid function does exactly this:
+シグモイド関数はまさにこれを行います。
 
 ```
 sigmoid(z) = 1 / (1 + e^(-z))
 ```
 
-Properties:
-- When z is large and positive, sigmoid(z) approaches 1
-- When z is large and negative, sigmoid(z) approaches 0
-- When z = 0, sigmoid(z) = 0.5
-- The output is always between 0 and 1
-- The function is smooth and differentiable everywhere
+性質:
+- z が大きな正の値のとき、sigmoid(z) は 1 に近づく
+- z が大きな負の値のとき、sigmoid(z) は 0 に近づく
+- z = 0 のとき、sigmoid(z) = 0.5
+- 出力は常に 0 から 1 の間
+- 関数は滑らかで、どこでも微分可能
 
-The derivative has a convenient form: sigmoid'(z) = sigmoid(z) * (1 - sigmoid(z)). This makes gradient computation efficient.
+導関数は便利な形になります。sigmoid'(z) = sigmoid(z) * (1 - sigmoid(z)) です。これにより勾配計算が効率的になります。
 
-### Logistic Regression = Linear Model + Sigmoid
+### ロジスティック回帰 = 線形モデル + シグモイド
 
-The model computes z = wx + b (same as linear regression), then applies sigmoid:
+モデルは z = wx + b（線形回帰と同じ）を計算し、その後シグモイドを適用します。
 
 ```mermaid
 flowchart LR
-    X[Input features x] --> L["Linear: z = wx + b"]
-    L --> S["Sigmoid: p = 1/(1+e^-z)"]
+    X[入力特徴量 x] --> L["線形: z = wx + b"]
+    L --> S["シグモイド: p = 1/(1+e^-z)"]
     S --> D{"p >= 0.5?"}
-    D -->|Yes| P[Predict 1]
-    D -->|No| N[Predict 0]
+    D -->|はい| P[1 と予測]
+    D -->|いいえ| N[0 と予測]
 ```
 
-The output p is interpreted as P(y=1 | x), the probability that the input belongs to class 1. The decision boundary is where wx + b = 0, which makes sigmoid output exactly 0.5.
+出力 p は P(y=1 | x)、つまり入力がクラス 1 に属する確率として解釈されます。決定境界は wx + b = 0 となる場所で、このときシグモイド出力はちょうど 0.5 になります。
 
-### Binary Cross-Entropy Loss
+### 二値交差エントロピー損失
 
-You cannot use MSE for logistic regression. MSE with a sigmoid creates a non-convex cost surface with many local minima. Instead, use binary cross-entropy (log loss):
+ロジスティック回帰に MSE は使えません。シグモイドと組み合わせた MSE は、多くの局所最小値を持つ非凸のコスト面を作ります。代わりに、二値交差エントロピー（log loss）を使います。
 
 ```
 Loss = -(1/n) * sum(y * log(p) + (1-y) * log(1-p))
 ```
 
-Why this works:
-- When y=1 and p is close to 1: log(1) = 0, so loss is near 0 (correct, low cost)
-- When y=1 and p is close to 0: log(0) approaches negative infinity, so loss is huge (wrong, high cost)
-- When y=0 and p is close to 0: log(1) = 0, so loss is near 0 (correct, low cost)
-- When y=0 and p is close to 1: log(0) approaches negative infinity, so loss is huge (wrong, high cost)
+これが機能する理由:
+- y=1 で p が 1 に近い: log(1) = 0 なので損失は 0 に近い（正しい、低コスト）
+- y=1 で p が 0 に近い: log(0) は負の無限大に近づくので損失は非常に大きい（間違い、高コスト）
+- y=0 で p が 0 に近い: log(1) = 0 なので損失は 0 に近い（正しい、低コスト）
+- y=0 で p が 1 に近い: log(0) は負の無限大に近づくので損失は非常に大きい（間違い、高コスト）
 
-This loss function is convex for logistic regression, guaranteeing a single global minimum.
+この損失関数はロジスティック回帰では凸であり、単一の大域的最小値を保証します。
 
-### Gradient Descent for Logistic Regression
+### ロジスティック回帰の勾配降下法
 
-The gradients for binary cross-entropy with sigmoid have a clean form:
+シグモイドと二値交差エントロピーの勾配は、すっきりした形になります。
 
 ```
 dL/dw = (1/n) * sum((p - y) * x)
 dL/db = (1/n) * sum(p - y)
 ```
 
-These look identical to the linear regression gradients. The difference is that p = sigmoid(wx + b) instead of p = wx + b. The sigmoid introduces the nonlinearity, but the gradient update rule stays the same.
+これは線形回帰の勾配と同じ形に見えます。違いは、p = wx + b ではなく p = sigmoid(wx + b) であることです。シグモイドが非線形性を導入しますが、勾配の更新式は同じです。
 
 ```mermaid
 flowchart TD
-    A[Initialize w=0, b=0] --> B[Forward pass: z = wx+b, p = sigmoid z]
-    B --> C[Compute loss: binary cross-entropy]
-    C --> D["Compute gradients: dw = (1/n) * sum((p-y)*x)"]
-    D --> E[Update: w = w - lr*dw, b = b - lr*db]
-    E --> F{Converged?}
-    F -->|No| B
-    F -->|Yes| G[Model trained]
+    A[w=0, b=0 で初期化] --> B[順伝播: z = wx+b, p = sigmoid z]
+    B --> C[損失を計算: binary cross-entropy]
+    C --> D["勾配を計算: dw = (1/n) * sum((p-y)*x)"]
+    D --> E[更新: w = w - lr*dw, b = b - lr*db]
+    E --> F{収束したか}
+    F -->|いいえ| B
+    F -->|はい| G[モデル学習完了]
 ```
 
-### The Decision Boundary
+### 決定境界
 
-For a 2D input (two features), the decision boundary is the line where:
+2 次元入力（2 つの特徴量）の場合、決定境界は次の線です。
 
 ```
 w1*x1 + w2*x2 + b = 0
 ```
 
-Points on one side get classified as 1, points on the other side as 0. Logistic regression always produces a linear decision boundary. If you need a curved boundary, you either add polynomial features or use a nonlinear model.
+片側の点は 1 に分類され、反対側の点は 0 に分類されます。ロジスティック回帰は常に線形の決定境界を作ります。曲線の境界が必要な場合は、多項式特徴量を追加するか、非線形モデルを使います。
 
-### Multi-Class Classification with Softmax
+### ソフトマックスによる多クラス分類
 
-Binary logistic regression handles two classes. For k classes, use the softmax function:
+二値ロジスティック回帰は 2 クラスを扱います。k クラスの場合はソフトマックス関数を使います。
 
 ```
 softmax(z_i) = e^(z_i) / sum(e^(z_j) for all j)
 ```
 
-Each class has its own weight vector. The model computes a score z_i for each class, then softmax converts scores to probabilities that sum to 1. The predicted class is the one with the highest probability.
+各クラスは独自の重みベクトルを持ちます。モデルは各クラスのスコア z_i を計算し、softmax がスコアを合計 1 の確率へ変換します。予測クラスは、最も確率が高いクラスです。
 
-The loss function becomes categorical cross-entropy:
+損失関数はカテゴリ交差エントロピーになります。
 
 ```
 Loss = -(1/n) * sum(sum(y_k * log(p_k)))
 ```
 
-where y_k is 1 for the true class and 0 for all others (one-hot encoding).
+ここで y_k は真のクラスでは 1、それ以外では 0 です（one-hot encoding）。
 
-### Evaluation Metrics
+### 評価指標
 
-Accuracy alone is not enough. For a dataset with 95% negative and 5% positive, a model that always predicts negative gets 95% accuracy but is useless.
+accuracy だけでは不十分です。95% が陰性、5% が陽性のデータセットでは、常に陰性と予測するモデルは 95% の accuracy を得ますが、役に立ちません。
 
-**Confusion Matrix**:
+**混同行列**:
 
-| | Predicted Positive | Predicted Negative |
+| | 予測 Positive | 予測 Negative |
 |---|---|---|
-| Actually Positive | True Positive (TP) | False Negative (FN) |
-| Actually Negative | False Positive (FP) | True Negative (TN) |
+| 実際に Positive | 真陽性 (TP) | 偽陰性 (FN) |
+| 実際に Negative | 偽陽性 (FP) | 真陰性 (TN) |
 
-**Precision**: Of all predicted positives, how many are actually positive?
+**Precision**: positive と予測されたもののうち、実際に positive だったものはどれだけか。
 ```
 Precision = TP / (TP + FP)
 ```
 
-**Recall** (Sensitivity): Of all actual positives, how many did we catch?
+**Recall**（感度）: 実際の positive のうち、どれだけを捕捉できたか。
 ```
 Recall = TP / (TP + FN)
 ```
 
-**F1 Score**: Harmonic mean of precision and recall. Balances both metrics.
+**F1 Score**: precision と recall の調和平均。両方の指標のバランスを取ります。
 ```
 F1 = 2 * (Precision * Recall) / (Precision + Recall)
 ```
 
-When to prioritize:
-- **Precision**: when false positives are costly (spam filter, you do not want to block legitimate email)
-- **Recall**: when false negatives are costly (cancer screening, you do not want to miss a tumor)
-- **F1**: when you need a single balanced metric
+優先する場面:
+- **Precision**: 偽陽性のコストが高い場合（スパムフィルタで、正当なメールをブロックしたくない）
+- **Recall**: 偽陰性のコストが高い場合（がん検診で、腫瘍を見逃したくない）
+- **F1**: バランスの取れた単一指標が必要な場合
 
-## Build It
+## 作ってみる
 
-### Step 1: Sigmoid function and data generation
+### ステップ 1: シグモイド関数とデータ生成
 
 ```python
 import random
@@ -208,7 +208,7 @@ for i in range(5):
     print(f"  Features: [{X[i][0]:.2f}, {X[i][1]:.2f}], Label: {y[i]}")
 ```
 
-### Step 2: Logistic regression from scratch
+### ステップ 2: ロジスティック回帰をゼロから実装する
 
 ```python
 class LogisticRegression:
@@ -274,7 +274,7 @@ print(f"Weights: [{model.weights[0]:.4f}, {model.weights[1]:.4f}]")
 print(f"Bias: {model.bias:.4f}")
 ```
 
-### Step 3: Confusion matrix and metrics from scratch
+### ステップ 3: 混同行列と指標をゼロから実装する
 
 ```python
 class ClassificationMetrics:
@@ -322,7 +322,7 @@ metrics = ClassificationMetrics(y_test, y_pred_test)
 metrics.print_report()
 ```
 
-### Step 4: Decision boundary analysis
+### ステップ 4: 決定境界の分析
 
 ```python
 print("\n=== Decision Boundary ===")
@@ -346,7 +346,7 @@ for point in test_points:
     print(f"  [{point[0]}, {point[1]}] -> prob={prob:.4f}, class={pred}")
 ```
 
-### Step 5: Multi-class with softmax
+### ステップ 5: ソフトマックスによる多クラス分類
 
 ```python
 class SoftmaxRegression:
@@ -438,7 +438,7 @@ for i in range(5):
     print(f"  True: {y_test_3[i]}, Predicted: {pred}, Probs: [{', '.join(f'{p:.3f}' for p in probs)}]")
 ```
 
-### Step 6: Threshold tuning
+### ステップ 6: しきい値調整
 
 ```python
 print("\n=== Threshold Tuning ===")
@@ -454,9 +454,9 @@ for t in thresholds:
     print(f"{t:>10.1f} {m.accuracy():>10.4f} {m.precision():>10.4f} {m.recall():>10.4f} {m.f1():>10.4f}")
 ```
 
-## Use It
+## 使ってみる
 
-Now the same thing with scikit-learn.
+次は scikit-learn で同じことを行います。
 
 ```python
 from sklearn.linear_model import LogisticRegression as SklearnLR
@@ -491,32 +491,32 @@ print(f"\nConfusion Matrix:\n{confusion_matrix(y_te, y_pred)}")
 print(f"\nClassification Report:\n{classification_report(y_te, y_pred)}")
 ```
 
-Your from-scratch implementation produces the same decision boundary and metrics. Scikit-learn adds solver options (liblinear, lbfgs, saga), automatic regularization, multi-class strategies (one-vs-rest, multinomial), and numerical stability optimizations.
+ゼロから実装したものは、同じ決定境界と指標を出力します。Scikit-learn は、ソルバー選択肢（liblinear、lbfgs、saga）、自動正則化、多クラス戦略（one-vs-rest、multinomial）、数値安定性の最適化を追加してくれます。
 
-## Ship It
+## 仕上げる
 
-This lesson produces:
-- `code/logistic_regression.py` - logistic regression from scratch with metrics
+このレッスンでは次を作成します。
+- `code/logistic_regression.py` - 指標付きのロジスティック回帰のゼロからの実装
 
-## Exercises
+## 演習
 
-1. Generate a dataset that is NOT linearly separable (e.g., two concentric circles). Train logistic regression and observe its failure. Then add polynomial features (x1^2, x2^2, x1*x2) and train again. Show that the accuracy improves.
-2. Implement a multi-class confusion matrix for the 3-class softmax model. Compute per-class precision and recall. Which class is hardest to classify?
-3. Build an ROC curve from scratch. For 100 threshold values from 0 to 1, compute the true positive rate and false positive rate. Calculate the AUC (area under the curve) using the trapezoidal rule.
+1. 線形分離できないデータセット（例: 2 つの同心円）を生成してください。ロジスティック回帰を学習し、失敗を観察してください。その後、多項式特徴量（x1^2、x2^2、x1*x2）を追加して再学習してください。accuracy が改善することを示してください。
+2. 3 クラス softmax モデルの多クラス混同行列を実装してください。クラスごとの precision と recall を計算してください。どのクラスが最も分類しにくいですか。
+3. ROC 曲線をゼロから作成してください。0 から 1 までの 100 個のしきい値について、真陽性率と偽陽性率を計算してください。台形則を使って AUC（曲線下面積）を計算してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Logistic regression | "Regression for classification" | A linear model followed by a sigmoid function that outputs class probabilities |
-| Sigmoid function | "The S-curve" | The function 1/(1+e^(-z)) that maps any real number to the range (0, 1) |
-| Binary cross-entropy | "Log loss" | The loss function -[y*log(p) + (1-y)*log(1-p)] that penalizes confident wrong predictions severely |
-| Decision boundary | "The dividing line" | The surface where the model's output probability equals 0.5, separating predicted classes |
-| Softmax | "Multi-class sigmoid" | A function that converts a vector of scores into probabilities that sum to 1 |
-| Precision | "How many selected are relevant" | TP / (TP + FP), the fraction of positive predictions that are actually positive |
-| Recall | "How many relevant are selected" | TP / (TP + FN), the fraction of actual positives that the model correctly identifies |
-| F1 score | "Balanced accuracy" | The harmonic mean of precision and recall: 2*P*R / (P+R) |
-| Confusion matrix | "The error breakdown" | A table showing TP, TN, FP, FN counts for each class pair |
-| Threshold | "The cutoff" | The probability value above which the model predicts class 1 (default 0.5, tunable) |
-| One-hot encoding | "Binary columns for categories" | Representing class k as a vector of zeros with a 1 at position k |
-| Categorical cross-entropy | "Multi-class log loss" | The extension of binary cross-entropy to k classes using one-hot encoded labels |
+| Logistic regression | 「分類のための回帰」 | シグモイド関数を後ろに付け、クラス確率を出力する線形モデル |
+| Sigmoid function | 「S 字カーブ」 | 任意の実数を (0, 1) の範囲へ写像する関数 1/(1+e^(-z)) |
+| Binary cross-entropy | 「Log loss」 | 自信を持った誤予測を強く罰する損失関数 -[y*log(p) + (1-y)*log(1-p)] |
+| Decision boundary | 「分割線」 | モデルの出力確率が 0.5 になる面。予測クラスを分ける |
+| Softmax | 「多クラス版シグモイド」 | スコアのベクトルを、合計が 1 になる確率へ変換する関数 |
+| Precision | 「選ばれたもののうち関連するものの割合」 | TP / (TP + FP)。positive 予測のうち実際に positive である割合 |
+| Recall | 「関連するもののうち選ばれたものの割合」 | TP / (TP + FN)。実際の positive のうちモデルが正しく特定した割合 |
+| F1 score | 「バランスされた accuracy」 | precision と recall の調和平均: 2*P*R / (P+R) |
+| Confusion matrix | 「誤りの内訳」 | 各クラスペアについて TP、TN、FP、FN の数を示す表 |
+| Threshold | 「カットオフ」 | これを超えるとモデルがクラス 1 と予測する確率値（デフォルト 0.5、調整可能） |
+| One-hot encoding | 「カテゴリ用の二値列」 | クラス k を、位置 k だけが 1 で他は 0 のベクトルとして表すこと |
+| Categorical cross-entropy | 「多クラス log loss」 | one-hot エンコード済みラベルを使う、二値交差エントロピーの k クラスへの拡張 |

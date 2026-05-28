@@ -1,75 +1,75 @@
 {
   "lesson": "04-sycophancy-rlhf-amplification",
-  "title": "Sycophancy as RLHF Amplification",
+  "title": "RLHF による Sycophancy Amplification",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best describes sycophancy in a language model?",
+      "question": "language model における sycophancy を最もよく表すものはどれですか。",
       "options": [
-        "Agreeing with a stated user premise regardless of its truth",
-        "Switching languages mid-conversation",
-        "Refusing to answer any user-belief question",
-        "Citing sources for every claim"
+        "真偽にかかわらず、明示された user premise に同意すること",
+        "会話の途中で言語を切り替えること",
+        "user-belief question のすべてに回答を拒否すること",
+        "すべての claim に sources を引用すること"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Shapira et al. (2026) formalize sycophancy amplification as a two-stage mechanism. What is stage 1?",
+      "question": "Shapira et al. (2026) は sycophancy amplification を 2 段階 mechanism として定式化しています。stage 1 は何ですか。",
       "options": [
-        "Labelers explicitly select sycophantic outputs in 100% of pairs",
-        "Sycophantic completions are over-represented among high-reward outputs of the base policy",
-        "Sycophancy is encoded in the tokenizer",
-        "The optimizer adds a sycophancy term to the loss directly"
+        "labelers が 100% の pairs で sycophantic outputs を明示的に選ぶ",
+        "base policy の high-reward outputs に sycophantic completions が over-represented である",
+        "sycophancy が tokenizer に encode されている",
+        "optimizer が loss に sycophancy term を直接加える"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why is sycophancy considered inverse-scaling in the lesson?",
+      "question": "この lesson で sycophancy が inverse-scaling とされる理由は何ですか。",
       "options": [
-        "It is observed only in models below 1B parameters",
-        "It tracks training loss inversely",
-        "It decreases as model size grows",
-        "It rises with model size and longer RLHF training, unlike most capabilities"
+        "1B parameters 未満の models でだけ観測されるから",
+        "training loss と逆方向に動くから",
+        "model size が大きくなるほど減るから",
+        "多くの capabilities と異なり、model size と長い RLHF training で増えるから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Cheng, Tramel et al. (Science, March 2026) decouple sycophancy from honesty by:",
+      "question": "Cheng, Tramel et al. (Science, March 2026) は sycophancy と honesty をどう切り離しましたか。",
       "options": [
-        "Measuring matched user-belief vs third-party-belief framings of the same factual claim",
-        "Using only multiple-choice questions",
-        "Asking models to introspect on their own reasoning",
-        "Testing only on math problems"
+        "同じ factual claim を matched user-belief vs third-party-belief framing で測定した",
+        "multiple-choice questions だけを使った",
+        "models に自分の reasoning を introspect させた",
+        "math problems だけで test した"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the agreement-penalty correction Shapira et al. propose?",
+      "question": "Shapira et al. が提案する agreement-penalty correction は何ですか。",
       "options": [
-        "Penalize the policy when its KL is below a threshold",
-        "Re-rank outputs by length only",
-        "Drop pairs where the user is wrong",
-        "Subtract a classifier-measured agreement score from the proxy reward: r'(x, y) = r(x, y) - alpha * agree(x, y)"
+        "KL が threshold 未満のとき policy を penalize する",
+        "outputs を length だけで re-rank する",
+        "user が間違っている pairs を drop する",
+        "classifier が測った agreement score を proxy reward から引く: r'(x, y) = r(x, y) - alpha * agree(x, y)"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What trade-off does the agreement penalty produce as alpha increases?",
+      "question": "alpha を大きくすると agreement penalty はどんな trade-off を生みますか。",
       "options": [
-        "It always strictly improves both sycophancy and helpfulness",
-        "Sycophancy rises because the classifier is noisy",
-        "Sycophancy drops, but legitimate agreement (the model is slightly more contrarian on correct user beliefs) also drops",
-        "Only helpfulness changes, sycophancy is unaffected"
+        "sycophancy と helpfulness の両方を常に strict に改善する",
+        "classifier が noisy なので sycophancy が上がる",
+        "sycophancy は下がるが、legitimate agreement (正しい user beliefs に対して model がやや contrarian になる) も下がる",
+        "helpfulness だけが変わり、sycophancy は影響を受けない"
       ],
       "correct": 2,
       "explanation": ""

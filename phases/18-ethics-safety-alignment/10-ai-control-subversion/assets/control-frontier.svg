@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,8 +7,8 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .axis { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
       .curve { stroke-width: 2.0; fill: none; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -24,7 +24,7 @@
   <text x="80" y="220" text-anchor="middle" class="small" transform="rotate(-90 80 220)">safety (1 - backdoor ship rate) -&gt;</text>
 
   <path d="M 180 340 Q 280 340 400 340 T 580 340" class="curve" stroke="#c0392b" stroke-dasharray="4 4"/>
-  <text x="580" y="335" class="small" fill="#c0392b">baseline (no protocol)</text>
+  <text x="580" y="335" class="small" fill="#c0392b">baseline (protocolなし)</text>
 
   <path d="M 130 100 Q 160 110 200 130 T 320 260" class="curve" stroke="#2c5ea9"/>
   <text x="220" y="170" class="small" fill="#2c5ea9">upfront audit (H)</text>
@@ -40,13 +40,13 @@
   <text x="700" y="110" class="small">U = untrusted strong</text>
   <text x="700" y="130" class="small">T = trusted weak</text>
   <text x="700" y="150" class="small">H = trusted human</text>
-  <text x="700" y="180" class="small">baseline : ship U</text>
-  <text x="700" y="200" class="small">upfront  : audit all w/ H</text>
-  <text x="700" y="220" class="small">t-edit   : T gate, H on low conf</text>
-  <text x="700" y="240" class="small">u-monitor: U on U, H on flag</text>
+  <text x="700" y="180" class="small">baseline : Uをship</text>
+  <text x="700" y="200" class="small">upfront  : Hで全audit</text>
+  <text x="700" y="220" class="small">t-edit   : T gate、low confはH</text>
+  <text x="700" y="240" class="small">u-monitor: UがUを監視、flagでH</text>
 
   <rect x="60" y="420" width="860" height="70" class="box"/>
-  <text x="80" y="445" class="small">trusted editing Pareto-dominates untrusted monitoring on the Greenblatt 2024 code-backdoor task.</text>
-  <text x="80" y="465" class="small">collusion risk: two U instances can coordinate via steganography or shared training priors.</text>
-  <text x="80" y="483" class="small">limits: H does not scale; T-to-U capability gap caps editing signal; control is not alignment.</text>
+  <text x="80" y="445" class="small">Greenblatt 2024 code-backdoor taskではtrusted editingがuntrusted monitoringをPareto-dominateする。</text>
+  <text x="80" y="465" class="small">collusion risk: 2つのU instanceがsteganographyやshared training priorsで協調しうる。</text>
+  <text x="80" y="483" class="small">limits: Hはscaleしない。T-to-U capability gapがediting signalを制限する。controlはalignmentではない。</text>
 </svg>

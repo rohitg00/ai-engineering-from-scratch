@@ -1,141 +1,141 @@
-# Any-Resolution Vision: Patch-n'-Pack and NaFlex
+# Any-Resolution Vision: Patch-n'-Pack と NaFlex
 
-> Real images are not 224x224 squares. A receipt is 9:16, a chart is 16:9, a medical scan might be 4096x4096, a mobile screenshot is 9:19.5. The pre-2024 VLM answer — resize everything to a fixed square — threw away the signal that makes OCR, document understanding, and high-resolution scene parsing work. NaViT (Google, 2023) showed you could pack variable-resolution patches into a single transformer batch with block-diagonal masking. Qwen2-VL's M-RoPE (2024) dropped absolute positional tables entirely. LLaVA-NeXT's AnyRes tiled high-resolution images into a base + sub-images. SigLIP 2's NaFlex variant (2025) is now the default encoder for open VLMs that want a single checkpoint to serve every aspect ratio. This lesson implements patch-n'-pack end to end.
+> 現実の画像は 224x224 の正方形ではない。receipt は 9:16、chart は 16:9、medical scan は 4096x4096 かもしれず、mobile screenshot は 9:19.5 である。2024年以前の VLM の答え、すなわちすべてを固定正方形に resize する方法は、OCR、document understanding、高解像度 scene parsing を成り立たせる signal を捨てていた。NaViT (Google, 2023) は、block-diagonal masking によって variable-resolution patches を単一 transformer batch に pack できることを示した。Qwen2-VL の M-RoPE (2024) は absolute positional table を完全に捨てた。LLaVA-NeXT の AnyRes は高解像度画像を base + sub-images に tile した。SigLIP 2 の NaFlex variant (2025) は、すべての aspect ratio を1つの checkpoint で扱いたい open VLM の default encoder になっている。この lesson では patch-n'-pack を end to end で実装する。
 
-**Type:** Build
-**Languages:** Python (stdlib, patch packer + block-diagonal mask)
-**Prerequisites:** Phase 12 · 01 (ViT patches), Phase 12 · 05 (LLaVA)
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python (stdlib、patch packer + block-diagonal mask)
+**前提条件:** Phase 12 · 01 (ViT patches)、Phase 12 · 05 (LLaVA)
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Pack patches from a batch of variable-resolution images into one sequence and build the block-diagonal attention mask.
-- Pick between AnyRes tiling (LLaVA-NeXT), NaFlex (SigLIP 2), and M-RoPE (Qwen2-VL) for a given task.
-- Compute token budgets for OCR, charts, and photography without resizing.
-- Name the three failure modes of square-resize: squished text, cropped content, wasted tokens on padding.
+- variable-resolution images の batch から patches を1つの sequence に pack し、block-diagonal attention mask を作る。
+- task に応じて AnyRes tiling (LLaVA-NeXT)、NaFlex (SigLIP 2)、M-RoPE (Qwen2-VL) を選ぶ。
+- resize せずに OCR、charts、photography の token budget を計算する。
+- square-resize の3つの failure mode、すなわち squished text、cropped content、padding による wasted tokens を説明する。
 
-## The Problem
+## 問題
 
-Transformers expect a sequence. A batch is a stack of sequences the same length. If your images are 224x224, you get 196 patch tokens every time, padding not required, job done. Train on 224, infer on 224, never think about resolution again.
+Transformers は sequence を期待する。batch は同じ長さの sequence の stack である。画像が 224x224 なら、毎回 196 patch tokens が得られ、padding も不要で、それで完了する。224 で train し、224 で infer し、resolution について二度と考えなくてよい。
 
-The world does not cooperate. Documents are portrait (8.5x11 inches, 2:3-ish). Chart screenshots are landscape (16:9). Receipts are tall and thin (1:3). Medical imaging ships at 2048x2048 or larger. Mobile device screenshots are 1170x2532 (0.46:1).
+現実は協力してくれない。documents は portrait (8.5x11 inch、だいたい 2:3)。chart screenshot は landscape (16:9)。receipt は縦長で細い (1:3)。medical imaging は 2048x2048 以上で配布される。mobile device screenshot は 1170x2532 (0.46:1) である。
 
-Three pre-2024 options and why each fails:
+2024年以前の3つの選択肢と、それぞれが失敗する理由:
 
-1. Resize to a fixed square (224x224 or 336x336). The squish distorts text and faces. The downscale destroys chart labels and OCR content. Standard practice until LLaVA-1.5.
-2. Crop to a fixed aspect ratio. You throw away most of the image, and picking the crop location is its own vision problem.
-3. Pad to the longest side. Fixes distortion but wastes 50%+ of tokens on padding for portrait images. Quadratic attention cost on all those pad tokens.
+1. 固定正方形 (224x224 または 336x336) に resize する。squish により text と faces が歪む。downscale により chart label と OCR content が壊れる。LLaVA-1.5 までは標準だった。
+2. 固定 aspect ratio に crop する。画像の大部分を捨てることになり、crop location を選ぶこと自体が vision problem になる。
+3. longest side に合わせて pad する。歪みは解決するが、portrait image では 50% 以上の tokens を padding に浪費する。attention cost はそれらの pad tokens に対しても二乗でかかる。
 
-The 2024-2025 answer: let the transformer eat patches at the image's native resolution, and figure out how to pack a heterogeneous batch into one sequence without wasted compute.
+2024-2025年の答えは、transformer に画像の native resolution の patches を食べさせ、wasted compute なしで heterogeneous batch を1つの sequence に pack する方法を考えることだった。
 
-## The Concept
+## コンセプト
 
-### NaViT and patch-n'-pack
+### NaViT と patch-n'-pack
 
-NaViT (Dehghani et al., 2023) was the paper that showed this works at scale. The idea is mechanical:
+NaViT (Dehghani et al., 2023) は、これが scale することを示した論文である。考え方は機械的だ。
 
-1. For each image in the batch, compute its native patch grid at a chosen patch size (say 14).
-2. Flatten each image's patches into its own variable-length sequence.
-3. Concatenate all images' patches into one long sequence for the batch.
-4. Build a block-diagonal attention mask so image A's patches only attend within image A.
-5. Carry per-patch position information (2D RoPE or fractional position embeddings).
+1. batch 内の各 image について、選んだ patch size (例えば 14) で native patch grid を計算する。
+2. 各 image の patches を、それぞれ variable-length sequence に flatten する。
+3. すべての image の patch sequence を batch 用の1本の長い sequence に連結する。
+4. image A の patches が image A の内部だけを見るように、block-diagonal attention mask を作る。
+5. patch ごとの position information (2D RoPE または fractional position embeddings) を運ぶ。
 
-A batch of three images at 336x336 (576 tokens), 224x224 (256 tokens), and 448x336 (768 tokens) becomes one 1600-token sequence with a 1600x1600 block-diagonal mask. No padding. No wasted compute. The transformer handles arbitrary aspect ratios.
+336x336 (576 tokens)、224x224 (256 tokens)、448x336 (768 tokens) の3画像 batch は、1600-token sequence と 1600x1600 block-diagonal mask になる。padding はない。wasted compute もない。transformer は任意の aspect ratio を扱える。
 
-NaViT also introduced fractional patch dropping during training — drop 50% of patches at random across the batch — which both regularizes and speeds training. SigLIP 2 inherited this.
+NaViT は training 中の fractional patch dropping も導入した。batch 全体で patches の 50% を random に drop する。これは regularization と speed-up の両方になる。SigLIP 2 はこれを継承した。
 
 ### AnyRes (LLaVA-NeXT)
 
-LLaVA-NeXT's AnyRes is the pragmatic alternative. Given a high-resolution image and a fixed encoder (CLIP or SigLIP at 336), tile the image:
+LLaVA-NeXT の AnyRes は pragmatical な代替案である。高解像度 image と固定 encoder (CLIP または SigLIP @ 336) があるとき、image を tile する。
 
-1. Pick a grid layout from a predefined set — (1x1), (1x2), (2x1), (1x3), (3x1), (2x2), etc. — that best fits the image's aspect ratio.
-2. Tile the full image into the grid; each tile becomes a 336x336 crop.
-3. Also produce a thumbnail: the whole image resized to 336x336 as a global-context token.
-4. Encode every tile through the frozen 336-encoder. Concatenate the tile tokens + thumbnail tokens.
+1. 事前定義された grid layout、すなわち (1x1)、(1x2)、(2x1)、(1x3)、(3x1)、(2x2) などから、image の aspect ratio に最も合うものを選ぶ。
+2. full image を grid に tile する。各 tile は 336x336 crop になる。
+3. thumbnail も作る。global-context token として、画像全体を 336x336 に resize したものを使う。
+4. すべての tile を frozen 336-encoder に通す。tile tokens + thumbnail tokens を連結する。
 
-For a 672x672 image at 2x2 grid plus thumbnail: 4 * 576 + 576 = 2880 visual tokens. Expensive but effective — the LLM sees both local detail and global context.
+672x672 image を 2x2 grid + thumbnail で扱うと、4 * 576 + 576 = 2880 visual tokens になる。高価だが効果的である。LLM は local detail と global context の両方を見る。
 
-AnyRes is the route of choice when your encoder is frozen and only supports one resolution. It explodes token count for large images (a 1344x1344 image at 4x4 grid is 9216 + 576 ≈ 9800 tokens, which fills most of a 8k LLM context).
+AnyRes は、encoder が frozen で1つの resolution しか support しないときに最有力の経路である。ただし大きい image では token count が爆発する。1344x1344 image を 4x4 grid で扱うと 9216 + 576 ≈ 9800 tokens となり、8k LLM context の大半を埋めてしまう。
 
 ### M-RoPE (Qwen2-VL)
 
-Qwen2-VL introduced Multimodal Rotary Position Embedding. Instead of NaViT's fractional positions or AnyRes's tile-and-thumbnail, each patch carries a 3D position (temporal, height, width). The query/key rotations handle arbitrary H, W, and temporal length.
+Qwen2-VL は Multimodal Rotary Position Embedding を導入した。NaViT の fractional positions や AnyRes の tile-and-thumbnail の代わりに、各 patch が 3D position (temporal、height、width) を持つ。query/key rotation が任意の H、W、temporal length を扱う。
 
-M-RoPE ships native dynamic resolution without retraining. At inference you feed any HxW image, the patch embedder produces H/14 x W/14 tokens, each token gets its (t=0, r=row, c=col) position, RoPE rotates attention with the right frequencies, done. Qwen2.5-VL and Qwen3-VL continue this. InternVL3's V2PE is the same idea with variable encoding per modality.
+M-RoPE は retraining なしで native dynamic resolution を出荷する。inference では任意の HxW image を入力し、patch embedder が H/14 x W/14 tokens を生成し、各 token が (t=0, r=row, c=col) position を受け取り、RoPE が正しい frequency で attention を回転させ、それで完了する。Qwen2.5-VL と Qwen3-VL はこれを継続している。InternVL3 の V2PE も、modality ごとの variable encoding という同じ考え方である。
 
-Unlike AnyRes, M-RoPE is O(H x W / P^2) tokens at native resolution — no multiplicative tile overhead. Unlike NaViT, it still expects a single image per forward. Batching across resolutions still needs patch-n'-pack on top.
+AnyRes と違い、M-RoPE は native resolution で O(H x W / P^2) tokens で済み、multiplicative tile overhead がない。NaViT と違い、forward ごとに1つの image を想定する。resolution を跨いだ batching には、依然として上に patch-n'-pack が必要である。
 
 ### NaFlex (SigLIP 2)
 
-NaFlex is the SigLIP 2 checkpoint's native-flex mode. A single model serves multiple sequence lengths (256, 729, 1024 tokens) at inference. Internally it uses NaViT-style patch-n'-pack during training and absolute fractional positions per patch. The selling point: one checkpoint, pick your token budget at inference based on the task.
+NaFlex は SigLIP 2 checkpoint の native-flex mode である。単一 model が inference で複数の sequence length (256、729、1024 tokens) を処理する。内部では training に NaViT-style patch-n'-pack を使い、patch ごとの absolute fractional positions を使う。売りは、1つの checkpoint で task に応じて inference の token budget を選べることだ。
 
-For a semantic task (classification, retrieval), 256 tokens. For OCR or chart understanding, 1024 tokens. No retraining.
+semantic task (classification、retrieval) なら 256 tokens。OCR や chart understanding なら 1024 tokens。retraining は不要である。
 
-### The packing mask
+### Packing mask
 
-The block-diagonal mask is where most implementations stumble. For a packed sequence of length `N_total` covering images `i=0..B-1` with lengths `n_i`, the mask `M` of shape `(N_total, N_total)` is 1 if both indices fall in the same image's block, else 0. You can build it from a cumulative length list:
+block-diagonal mask は、多くの implementation がつまずく箇所である。length `n_i` の image `i=0..B-1` を含む packed sequence の total length を `N_total` とすると、shape `(N_total, N_total)` の mask `M` は、両方の index が同じ image block に入っている場合は 1、それ以外は 0 である。cumulative length list から構築できる。
 
 ```
 offsets = [0, n_0, n_0+n_1, ..., N_total]
 M[i, j] = 1 iff there exists b where offsets[b] <= i < offsets[b+1] and offsets[b] <= j < offsets[b+1]
 ```
 
-This is one line in PyTorch with `torch.block_diag` or an explicit gather. FlashAttention's variable-length path (`cu_seqlens`) skips the mask entirely and attends within sequences using the cumulative-length tensor directly — ~10x faster than a dense mask for typical batches.
+PyTorch では `torch.block_diag` または explicit gather で1行で作れる。FlashAttention の variable-length path (`cu_seqlens`) は mask を完全に省き、cumulative-length tensor を直接使って sequence 内だけに attend する。典型的な batch では dense mask より約10倍速い。
 
 ### Token budgets
 
-Pick your strategy by task:
+task ごとに strategy を選ぶ。
 
-- OCR / documents: 1024-4096 tokens. SigLIP 2 NaFlex at 1024, or AnyRes 3x3 + thumbnail.
-- Charts and UI: 729-1024 tokens at 384-448 native. Qwen2.5-VL dynamic resolution with max pixels cap.
-- Natural photos: 256-576 tokens is fine. The downstream LLM sees enough. Pay for tokens where content density is high.
-- Video: 64-128 tokens per frame after spatial pooling, 2-8 FPS. Lesson 12.17 covers this.
+- OCR / documents: 1024-4096 tokens。SigLIP 2 NaFlex @ 1024、または AnyRes 3x3 + thumbnail。
+- Charts and UI: native 384-448 で 729-1024 tokens。Qwen2.5-VL dynamic resolution と max pixels cap。
+- Natural photos: 256-576 tokens で十分。downstream LLM は十分に見える。content density が高いところに token を払う。
+- Video: spatial pooling 後に frame あたり 64-128 tokens、2-8 FPS。Lesson 12.17 で扱う。
 
-The 2026 production rule: pick a per-task max-pixels cap, encode at native aspect ratio up to that cap, pack the batch, and skip padding. Qwen2.5-VL exposes `min_pixels` and `max_pixels` for exactly this knob.
+2026年 production rule: task ごとの max-pixels cap を選び、その cap まで native aspect ratio で encode し、batch を pack し、padding は使わない。Qwen2.5-VL はまさにこの knob として `min_pixels` と `max_pixels` を公開している。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements patch-n'-pack for a heterogeneous batch of images with integer pixel coordinates. It:
+`code/main.py` は integer pixel coordinate を持つ heterogeneous image batch 向けに patch-n'-pack を実装する。処理内容:
 
-- Takes a list of (H, W) image sizes.
-- Computes each image's patch sequence length at patch size 14.
-- Packs them into one sequence of total length `sum(n_i)`.
-- Builds the block-diagonal attention mask (dense, for clarity).
-- Compares the packed cost vs square-resize and AnyRes tiling.
-- Prints a token budget table for a mixed batch (receipt, chart, screenshot, photo).
+- (H, W) image size の list を受け取る。
+- patch size 14 で各 image の patch sequence length を計算する。
+- total length `sum(n_i)` の1つの sequence に pack する。
+- block-diagonal attention mask を作る (説明のため dense)。
+- packed cost と square-resize、AnyRes tiling を比較する。
+- mixed batch (receipt、chart、screenshot、photo) の token budget table を出力する。
 
-Run it. The numbers that drop out are the reason every 2026 open VLM uses patch-n'-pack.
+実行してみること。出てくる数字が、2026年の open VLM がすべて patch-n'-pack を使う理由である。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-resolution-budget-planner.md`. Given a mixed-aspect-ratio workload (OCR, charts, photos, video frames) and a total-token budget, it picks the right strategy (NaFlex, AnyRes, M-RoPE, or fixed-square) and emits a per-request configuration. Use this skill when you are sizing a VLM for a product — it prevents the silent 10x token blowup that kills latency budgets.
+この lesson は `outputs/skill-resolution-budget-planner.md` を生成する。mixed-aspect-ratio workload (OCR、charts、photos、video frames) と total-token budget を受け取り、適切な strategy (NaFlex、AnyRes、M-RoPE、fixed-square) を選び、request ごとの configuration を出力する。product 用に VLM の size を決めるときに使う skill である。latency budget を破壊する、静かな 10x token blowup を防ぐ。
 
-## Exercises
+## 演習
 
-1. A receipt is 600x1500 (1:2.5). At patch size 14, how many native-resolution tokens? How many after square-resize to 336? Which loses more OCR accuracy in practice?
+1. receipt は 600x1500 (1:2.5) である。patch size 14 なら native-resolution tokens はいくつか。336 への square-resize 後はいくつか。実務で OCR accuracy をより落とすのはどちらか。
 
-2. Build the block-diagonal mask for a batch of four images with lengths 256, 576, 729, 1024. Verify the attention matrix is 2585x2585 and has exactly `256^2 + 576^2 + 729^2 + 1024^2` non-zero entries.
+2. length 256、576、729、1024 の4画像 batch 用に block-diagonal mask を作れ。attention matrix が 2585x2585 であり、非ゼロ要素がちょうど `256^2 + 576^2 + 729^2 + 1024^2` 個であることを確認せよ。
 
-3. For a 1792x896 image at patch 14, compare: (a) square-resize to 336 then encode, (b) AnyRes 2x1 + thumbnail, (c) M-RoPE at native. Which uses fewest tokens? Which preserves most detail?
+3. 1792x896 image を patch 14 で扱う。次を比較せよ: (a) 336 に square-resize して encode、(b) AnyRes 2x1 + thumbnail、(c) native の M-RoPE。最も token が少ないのはどれか。最も detail を保つのはどれか。
 
-4. Implement fractional patch dropping: given a packed sequence, drop 50% of tokens uniformly at random, and update the block-diagonal mask accordingly. Measure the mask's sparsity change.
+4. fractional patch dropping を実装せよ。packed sequence から 50% の tokens を uniform random に drop し、block-diagonal mask をそれに合わせて更新する。mask の sparsity 変化を測定せよ。
 
-5. Read Section 3.2 of the Qwen2-VL paper (arXiv:2409.12191). Describe in two sentences what `min_pixels` and `max_pixels` control and why both bounds matter.
+5. Qwen2-VL paper (arXiv:2409.12191) の Section 3.2 を読め。`min_pixels` と `max_pixels` が何を制御するか、なぜ上下限が両方必要かを2文で説明せよ。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| Patch-n'-pack | "NaViT-style packing" | Concatenate variable-length patch sequences from different images into one batch dimension |
-| Block-diagonal mask | "Packing mask" | Attention mask that confines each image's patches to attend only to themselves, not neighbors in the pack |
-| AnyRes | "LLaVA-NeXT tiling" | Split a high-res image into a grid of fixed-size tiles plus a global thumbnail; encode every tile with a fixed encoder |
-| NaFlex | "SigLIP 2 native-flex" | Single SigLIP 2 checkpoint that serves 256/729/1024-token budgets at inference without retraining |
-| M-RoPE | "Multimodal RoPE" | 3D rotary position encoding (time, row, column) that handles arbitrary H, W, T without position tables |
-| cu_seqlens | "FlashAttention packing" | Cumulative-length tensor the FlashAttention varlen path uses instead of a dense block-diagonal mask |
-| min_pixels / max_pixels | "Resolution bounds" | Qwen2.5-VL per-request knobs capping token count on very small or very large inputs |
-| Visual token budget | "How many tokens per image" | Rough count of patch tokens emitted per image; sets the LLM's prompt budget and attention cost |
+| Term | よく言われる表現 | 実際の意味 |
+|------|-----------------|------------|
+| Patch-n'-pack | "NaViT-style packing" | 異なる image からの variable-length patch sequences を1つの batch dimension に連結すること |
+| Block-diagonal mask | "Packing mask" | 各 image の patches が pack 内の隣接 image ではなく自分自身だけに attend する attention mask |
+| AnyRes | "LLaVA-NeXT tiling" | high-res image を fixed-size tiles の grid と global thumbnail に分け、各 tile を fixed encoder で encode する |
+| NaFlex | "SigLIP 2 native-flex" | retraining なしで inference の 256/729/1024-token budget に対応する単一 SigLIP 2 checkpoint |
+| M-RoPE | "Multimodal RoPE" | position table なしで任意の H、W、T を扱う 3D rotary position encoding (time, row, column) |
+| cu_seqlens | "FlashAttention packing" | FlashAttention varlen path が dense block-diagonal mask の代わりに使う cumulative-length tensor |
+| min_pixels / max_pixels | "Resolution bounds" | 非常に小さい入力または大きい入力の token count を cap する Qwen2.5-VL の request ごとの knob |
+| Visual token budget | "How many tokens per image" | 画像あたりに出る patch tokens の概算。LLM の prompt budget と attention cost を決める |
 
-## Further Reading
+## 参考文献
 
 - [Dehghani et al. — Patch n' Pack: NaViT (arXiv:2307.06304)](https://arxiv.org/abs/2307.06304)
 - [Wang et al. — Qwen2-VL (arXiv:2409.12191)](https://arxiv.org/abs/2409.12191)

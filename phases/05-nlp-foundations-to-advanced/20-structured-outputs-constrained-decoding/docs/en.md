@@ -1,46 +1,46 @@
-# Structured Outputs & Constrained Decoding
+# 構造化出力と制約付きデコーディング
 
-> Ask an LLM for JSON. Get JSON most of the time. In production, "most" is the problem. Constrained decoding turns "most" into "always" by editing the logits before sampling.
+> LLMにJSONを求めると、たいていJSONが返ります。本番では、この「たいてい」が問題です。制約付きデコーディングは、サンプリング前にlogitを編集することで「たいてい」を「常に」に変えます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
-**Time:** ~60 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
+**所要時間:** ~60分
 
-## The Problem
+## 問題
 
-A classifier prompts an LLM: "Return one of {positive, negative, neutral}." The model returns "The sentiment is positive — this review is overwhelmingly favorable because the customer explicitly states that they ...". Your parser crashes. Your classifier's F1 is 0.0.
+分類器がLLMにこうプロンプトします。「`{positive, negative, neutral}` のいずれかを返してください」。モデルはこう返します。「The sentiment is positive — this review is overwhelmingly favorable because the customer explicitly states that they ...」。パーサがクラッシュします。分類器のF1は0.0です。
 
-Free-form generation is not a contract. It is a suggestion. A production system needs a contract.
+自由形式の生成は契約ではありません。提案にすぎません。本番システムには契約が必要です。
 
-Three layers exist in 2026.
+2026年時点では3つの層があります。
 
-1. **Prompting.** Ask nicely. "Return only the JSON object." Works ~80% on frontier models, less on smaller ones.
-2. **Native structured output APIs.** OpenAI `response_format`, Anthropic tool use, Gemini JSON mode. Reliable on supported schemas. Vendor-locked.
-3. **Constrained decoding.** Modify the logits at every generation step so the model *cannot* emit invalid tokens. 100% valid by construction. Works on any local model.
+1. **プロンプティング。** 丁寧に頼みます。「JSON objectだけを返してください」。フロンティアモデルでは約80%うまくいきますが、小型モデルではさらに下がります。
+2. **ネイティブのstructured output API。** OpenAI `response_format`、Anthropic tool use、Gemini JSON mode。サポートされるスキーマでは信頼できます。ベンダーロックインがあります。
+3. **制約付きデコーディング。** 生成の各ステップでlogitを修正し、モデルが無効なトークンを出せないようにします。構造上、100%有効です。どのローカルモデルでも動きます。
 
-This lesson builds intuition for all three and names when to reach for which.
+このレッスンでは3つすべての直感を作り、どの場面でどれを使うべきかを示します。
 
-## The Concept
+## コンセプト
 
-![Constrained decoding masking invalid tokens at each step](../assets/constrained-decoding.svg)
+![制約付きデコーディングが各ステップで無効トークンをmaskする様子](../assets/constrained-decoding.svg)
 
-**How constrained decoding works.** At each generation step, the LLM produces a logit vector over the full vocabulary (~100k tokens). A *logit processor* sits between the model and the sampler. It computes which tokens are valid given the current position in the target grammar — JSON Schema, regex, context-free grammar — and sets the logits of all invalid tokens to negative infinity. The softmax over the remaining logits puts probability mass only on valid continuations.
+**制約付きデコーディングの仕組み。** 各生成ステップで、LLMは全語彙（約100kトークン）に対するlogitベクトルを出します。*logit processor* がモデルとsamplerの間に入ります。現在のターゲット文法内の位置に応じて有効なトークンを計算します。文法はJSON Schema、regex、context-free grammarなどです。そして、すべての無効トークンのlogitを負の無限大に設定します。残ったlogitに対するsoftmaxは、有効な継続だけに確率質量を置きます。
 
-Implementations in 2026:
+2026年時点の実装:
 
-- **Outlines.** Compiles JSON Schema or regex into a finite-state machine. Every token gets an O(1) valid-next-token lookup. FSM-based, so recursive schemas need flattening.
-- **XGrammar / llguidance.** Context-free grammar engines. Handle recursive JSON Schema. Near-zero decoding overhead. OpenAI credited llguidance in their 2025 structured output implementation.
-- **vLLM guided decoding.** Built-in `guided_json`, `guided_regex`, `guided_choice`, `guided_grammar` via Outlines, XGrammar, or lm-format-enforcer backends.
-- **Instructor.** Pydantic-based wrapper over any LLM. Retries on validation failure. Cross-provider, but does not modify logits — it relies on retries + structured-output-aware prompts.
+- **Outlines。** JSON Schemaまたはregexをfinite-state machineにコンパイルします。各トークンはO(1)でvalid-next-token lookupできます。FSMベースなので、再帰スキーマはflatteningが必要です。
+- **XGrammar / llguidance。** context-free grammarエンジンです。再帰的なJSON Schemaを扱えます。デコーディングのオーバーヘッドはほぼゼロです。OpenAIは2025年のstructured output実装でllguidanceに言及しました。
+- **vLLM guided decoding。** Outlines、XGrammar、またはlm-format-enforcer backendを通じて、組み込みの `guided_json`、`guided_regex`、`guided_choice`、`guided_grammar` を提供します。
+- **Instructor。** 任意のLLMに対するPydanticベースのラッパーです。バリデーション失敗時にリトライします。プロバイダ横断で使えますが、logitは修正しません。リトライとstructured-output-aware promptsに依存します。
 
-### The counterintuitive result
+### 直感に反する結果
 
-Constrained decoding is often *faster* than unconstrained generation. Two reasons. First, it shrinks the next-token search space. Second, clever implementations skip token generation entirely for forced tokens (scaffolding like `{"name": "` — every byte is determined).
+制約付きデコーディングは、制約なし生成より*速い*ことがよくあります。理由は2つあります。第一に、next-tokenの探索空間を小さくします。第二に、賢い実装は強制トークン（`{"name": "` のようなscaffolding、つまり各バイトが確定している部分）について、トークン生成そのものをスキップします。
 
-### The pitfall that costs you
+### コストの高い落とし穴
 
-Field order matters. Put `answer` before `reasoning`, and the model commits to an answer before it thinks. JSON is valid. Answer is wrong. No validation catches it.
+フィールド順序は重要です。`answer` を `reasoning` より前に置くと、モデルは考える前に答えを確定します。JSONは有効です。しかし答えは間違っています。バリデーションでは検出できません。
 
 ```json
 // BAD
@@ -50,13 +50,13 @@ Field order matters. Put `answer` before `reasoning`, and the model commits to a
 {"reasoning": "... therefore ...", "answer": "yes"}
 ```
 
-Schema field order is logic, not formatting.
+スキーマのフィールド順序は、整形ではなくロジックです。
 
-## Build It
+## 作る
 
-### Step 1: regex-constrained generation from scratch
+### Step 1: regex制約付き生成をスクラッチから実装する
 
-See `code/main.py` for a standalone FSM implementation. The core idea in 30 lines:
+単独で動くFSM実装は `code/main.py` を見てください。中心となる考え方は30行程度です。
 
 ```python
 def mask_logits(logits, valid_token_ids):
@@ -79,9 +79,9 @@ def generate_constrained(model, tokenizer, prompt, fsm):
     return tokenizer.decode(ids)
 ```
 
-The FSM tracks what parts of the grammar we have satisfied so far. `valid_tokens(state, tokenizer)` computes which vocabulary tokens can advance the FSM without leaving an accepting path.
+FSMは、文法のどの部分をここまで満たしたかを追跡します。`valid_tokens(state, tokenizer)` は、受理可能な経路から外れずにFSMを進められる語彙トークンを計算します。
 
-### Step 2: Outlines for JSON Schema
+### Step 2: JSON SchemaにOutlinesを使う
 
 ```python
 from pydantic import BaseModel
@@ -103,9 +103,9 @@ print(result)
 # Review(sentiment='positive', confidence=0.93, evidence_span='attentive ... hot')
 ```
 
-Zero validation errors. Ever. The FSM makes invalid output unreachable.
+バリデーションエラーはゼロです。常にです。FSMが無効な出力へ到達できないようにするからです。
 
-### Step 3: Instructor for provider-agnostic Pydantic
+### Step 3: プロバイダ非依存のPydanticにInstructorを使う
 
 ```python
 import instructor
@@ -128,9 +128,9 @@ invoice = client.messages.create(
 )
 ```
 
-Different mechanism. Instructor does not touch logits. It formats the schema into the prompt, parses the output, and retries on validation failure (default 3 times). Works with any provider. Retries add latency and cost. Cross-provider portability is the selling point.
+仕組みが異なります。Instructorはlogitに触りません。スキーマをプロンプトに整形して入れ、出力をパースし、バリデーション失敗時にリトライします（デフォルトは3回）。どのプロバイダでも使えます。リトライはレイテンシとコストを増やします。プロバイダ横断の移植性が売りです。
 
-### Step 4: native vendor APIs
+### Step 4: ネイティブのベンダーAPI
 
 ```python
 from openai import OpenAI
@@ -147,76 +147,76 @@ response = client.responses.create(
 print(response.output_parsed)
 ```
 
-Server-side constrained decoding. Reliability parity with Outlines for supported schemas. No local model management. Locks you to the vendor.
+サーバーサイドの制約付きデコーディングです。サポートされるスキーマではOutlinesと同等の信頼性があります。ローカルモデル管理は不要です。ベンダーにロックインされます。
 
-## Pitfalls
+## 落とし穴
 
-- **Recursive schemas.** Outlines flattens recursion to a fixed depth. Tree-structured outputs (nested comments, AST) need XGrammar or llguidance (CFG-based).
-- **Huge enums.** 10,000-option enum compiles slowly or times out. Switch to a retriever: predict top-k candidates first, constrain to those.
-- **Grammar too strict.** Force `date: "YYYY-MM-DD"` regex and the model cannot output `"unknown"` for missing dates. Model compensates by inventing a date. Allow `null` or a sentinel.
-- **Premature commitment.** See field-order pitfall above. Always put reasoning first.
-- **Vendor JSON mode without schema.** Pure JSON mode only guarantees valid JSON, not valid *for your use case*. Always provide a full schema.
+- **再帰スキーマ。** Outlinesは再帰を固定深さにflattenします。木構造の出力（入れ子コメント、AST）にはXGrammarまたはllguidance（CFGベース）が必要です。
+- **巨大なenum。** 10,000選択肢のenumはコンパイルが遅い、またはタイムアウトします。retrieverに切り替えます。まずtop-k候補を予測し、その候補に制約します。
+- **厳しすぎる文法。** `date: "YYYY-MM-DD"` のregexを強制すると、日付が欠損している場合にモデルは `"unknown"` を出せません。代わりに日付を捏造して埋めようとします。`null` またはsentinelを許可してください。
+- **早すぎるコミット。** 上のフィールド順序の落とし穴を参照してください。常にreasoningを先に置きます。
+- **スキーマなしのベンダーJSON mode。** 純粋なJSON modeは有効なJSONだけを保証し、あなたのユースケースに対して有効であることは保証しません。必ず完全なスキーマを与えてください。
 
-## Use It
+## 使う
 
-The 2026 stack:
+2026年のスタック:
 
-| Situation | Pick |
+| 状況 | 選ぶもの |
 |-----------|------|
-| OpenAI/Anthropic/Google model, simple schema | Native vendor structured output |
-| Any provider, Pydantic workflow, can tolerate retries | Instructor |
-| Local model, need 100% validity, flat schema | Outlines (FSM) |
-| Local model, recursive schema | XGrammar or llguidance |
-| Self-hosted inference server | vLLM guided decoding |
-| Batch processing with retries acceptable | Instructor + cheapest model |
+| OpenAI/Anthropic/Googleモデル、単純なスキーマ | ベンダーのネイティブstructured output |
+| 任意のプロバイダ、Pydantic workflow、リトライを許容できる | Instructor |
+| ローカルモデル、100%の妥当性が必要、flat schema | Outlines (FSM) |
+| ローカルモデル、recursive schema | XGrammarまたはllguidance |
+| 自前ホストの推論サーバー | vLLM guided decoding |
+| リトライを許容できるバッチ処理 | Instructor + 最安モデル |
 
 ## Ship It
 
-Save as `outputs/skill-structured-output-picker.md`:
+`outputs/skill-structured-output-picker.md` として保存します。
 
 ```markdown
 ---
 name: structured-output-picker
-description: Choose a structured output approach, schema design, and validation plan.
+description: 構造化出力の方式、スキーマ設計、検証計画を選ぶ。
 version: 1.0.0
 phase: 5
 lesson: 20
 tags: [nlp, llm, structured-output]
 ---
 
-Given a use case (provider, latency budget, schema complexity, failure tolerance), output:
+ユースケース（プロバイダ、レイテンシ予算、スキーマの複雑さ、失敗許容度）が与えられたら、次を出力してください。
 
-1. Mechanism. Native vendor structured output, Instructor retries, Outlines FSM, or XGrammar CFG. One-sentence reason.
-2. Schema design. Field order (reasoning first, answer last), nullable fields for "unknown", enum vs regex, required fields.
-3. Failure strategy. Max retries, fallback model, graceful `null` handling, out-of-distribution refusal.
-4. Validation plan. Schema compliance rate (target 100%), semantic validity (LLM-judge), field-coverage rate, latency p50/p99.
+1. 仕組み。ベンダーのネイティブstructured output、Instructor retries、Outlines FSM、XGrammar CFGのいずれか。理由を1文で述べる。
+2. スキーマ設計。フィールド順序（reasoningを先、answerを最後）、`"unknown"` に対するnullable fields、enum vs regex、required fields。
+3. 失敗戦略。最大リトライ数、fallback model、自然な `null` handling、out-of-distribution refusal。
+4. 検証計画。schema compliance rate（target 100%）、semantic validity（LLM-judge）、field-coverage rate、latency p50/p99。
 
-Refuse any design that puts `answer` or `decision` before reasoning fields. Refuse to use bare JSON mode without a schema. Flag recursive schemas behind an FSM-only library.
+`answer` または `decision` をreasoning fieldsより前に置く設計は拒否してください。スキーマなしのbare JSON modeの使用は拒否してください。FSM-only libraryで再帰スキーマを扱おうとしている場合は警告してください。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Prompt a small open-weights model (e.g., Llama-3.2-3B) without constrained decoding for `Review(sentiment, confidence, evidence_span)`. Measure the fraction that parse as valid JSON on 100 reviews.
-2. **Medium.** Same corpus with Outlines JSON mode. Compare compliance rate, latency, and semantic accuracy.
-3. **Hard.** Implement a regex-constrained decoder from scratch for phone numbers (`\d{3}-\d{3}-\d{4}`). Verify 0 invalid outputs on 1000 samples.
+1. **Easy。** 小さなopen-weights model（例: Llama-3.2-3B）に、`Review(sentiment, confidence, evidence_span)` を制約付きデコーディングなしでプロンプトしてください。100件のレビューで有効なJSONとしてパースできる割合を測定します。
+2. **Medium。** 同じコーパスをOutlines JSON modeで処理します。compliance rate、latency、semantic accuracyを比較してください。
+3. **Hard。** 電話番号（`\d{3}-\d{3}-\d{4}`）用のregex制約付きデコーダをスクラッチから実装してください。1000サンプルで無効出力が0件であることを確認します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Constrained decoding | Force valid output | Mask invalid-token logits at every generation step. |
-| Logit processor | The thing that constrains | Function: `(logits, state) -> masked_logits`. |
-| FSM | Finite-state machine | Compiled grammar representation; O(1) valid-next-token lookup. |
-| CFG | Context-free grammar | Grammar that handles recursion; slower but more expressive than FSM. |
-| Schema field order | Does it matter? | Yes — first field commits; always put reasoning before answer. |
-| Guided decoding | vLLM's name for it | Same concept, integrated into the inference server. |
-| JSON mode | OpenAI's early version | Guarantees JSON syntax; does NOT guarantee schema match. |
+| Constrained decoding | 有効な出力を強制する | 生成の各ステップで無効トークンのlogitをmaskする。 |
+| Logit processor | 制約をかけるもの | 関数: `(logits, state) -> masked_logits`。 |
+| FSM | Finite-state machine | コンパイル済みの文法表現。O(1)でvalid-next-token lookupできる。 |
+| CFG | Context-free grammar | 再帰を扱える文法。FSMより遅いが表現力が高い。 |
+| Schema field order | それは重要なのか | 重要。最初のフィールドでコミットする。常にanswerより前にreasoningを置く。 |
+| Guided decoding | vLLMでの呼び名 | 同じ概念を推論サーバーに統合したもの。 |
+| JSON mode | OpenAIの初期版 | JSON構文を保証するが、スキーマ一致は保証しない。 |
 
-## Further Reading
+## 参考文献
 
-- [Willard, Louf (2023). Efficient Guided Generation for LLMs](https://arxiv.org/abs/2307.09702) — the Outlines paper.
-- [XGrammar paper (2024)](https://arxiv.org/abs/2411.15100) — fast CFG-based constrained decoding.
-- [vLLM — Structured Outputs](https://docs.vllm.ai/en/latest/features/structured_outputs.html) — inference server integration.
-- [OpenAI — Structured Outputs guide](https://platform.openai.com/docs/guides/structured-outputs) — API reference + gotchas.
-- [Instructor library](https://python.useinstructor.com/) — Pydantic + retries across providers.
-- [JSONSchemaBench (2025)](https://arxiv.org/abs/2501.10868) — benchmarking 6 constrained decoding frameworks.
+- [Willard, Louf (2023). Efficient Guided Generation for LLMs](https://arxiv.org/abs/2307.09702) — Outlinesの論文。
+- [XGrammar paper (2024)](https://arxiv.org/abs/2411.15100) — 高速なCFGベース制約付きデコーディング。
+- [vLLM — Structured Outputs](https://docs.vllm.ai/en/latest/features/structured_outputs.html) — 推論サーバー統合。
+- [OpenAI — Structured Outputs guide](https://platform.openai.com/docs/guides/structured-outputs) — APIリファレンスと注意点。
+- [Instructor library](https://python.useinstructor.com/) — 複数プロバイダにまたがるPydantic + retries。
+- [JSONSchemaBench (2025)](https://arxiv.org/abs/2501.10868) — 6つの制約付きデコーディングフレームワークのベンチマーク。

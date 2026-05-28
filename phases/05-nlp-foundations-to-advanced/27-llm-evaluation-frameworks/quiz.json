@@ -1,102 +1,102 @@
 {
   "lesson": "27-llm-evaluation-frameworks",
-  "title": "LLM Evaluation — RAGAS, DeepEval, G-Eval",
+  "title": "LLM 評価 — RAGAS, DeepEval, G-Eval",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why are Exact Match and token-F1 insufficient for evaluating modern LLM outputs?",
+      "question": "現代の LLM outputs を評価するうえで、Exact Match と token-F1 が不十分なのはなぜですか？",
       "options": [
-        "They are too slow",
-        "They are not differentiable",
-        "They require GPUs",
-        "They miss semantic equivalence; 'June 29th, 2007' vs 'June 29, 2007' scores 0 EM despite being correct"
+        "遅すぎるから",
+        "微分可能ではないから",
+        "GPU が必要だから",
+        "意味的な同等性を取りこぼすから。'June 29th, 2007' と 'June 29, 2007' は正しいのに EM では 0 点になる"
       ],
       "correct": 3,
-      "explanation": "Exact-match/F1 cannot recognize paraphrases or formatting differences that humans would mark correct."
+      "explanation": "Exact-match/F1 は、人間なら正解とする言い換えや表記ゆれを認識できません。"
     },
     {
       "stage": "pre",
-      "question": "What does the RAGAS faithfulness metric measure?",
+      "question": "RAGAS の faithfulness metric は何を測りますか？",
       "options": [
         "Retrieval recall",
-        "Whether each claim in the answer is entailed by the retrieved context, via NLI",
+        "answer 内の各 claim が、NLI によって retrieved context から entail されるかどうか",
         "Latency",
         "Tokens per second"
       ],
       "correct": 1,
-      "explanation": "Faithfulness checks each answer claim against retrieved context using NLI entailment."
+      "explanation": "Faithfulness は、NLI entailment を使って各 answer claim を retrieved context と照合します。"
     },
     {
       "stage": "check",
-      "question": "Why is judge-model calibration against human labels required before trusting scores?",
+      "question": "scores を信頼する前に、judge-model を human labels に対して calibration する必要があるのはなぜですか？",
       "options": [
-        "Required by the GDPR",
-        "If Spearman correlation between judge and human labels is too low (e.g. below 0.7), the score is noise rather than signal",
-        "Calibration speeds up the judge",
-        "Calibration is a tokenization issue"
+        "GDPR で義務付けられているから",
+        "judge と human labels の Spearman correlation が低すぎる（例: 0.7 未満）場合、score は signal ではなく noise だから",
+        "Calibration によって judge が高速化するから",
+        "Calibration は tokenization の問題だから"
       ],
       "correct": 1,
-      "explanation": "Without calibration, you cannot tell whether judge scores reflect quality or model bias."
+      "explanation": "Calibration がなければ、judge scores が品質を反映しているのか model bias を反映しているのか判断できません。"
     },
     {
       "stage": "check",
-      "question": "What is self-evaluation bias in LLM-as-judge setups?",
+      "question": "LLM-as-judge 構成における self-evaluation bias とは何ですか？",
       "options": [
-        "Using the same LLM family to generate and judge inflates scores by 10-20% versus an independent judge",
-        "Lower latency",
-        "Judges run faster on cached outputs",
-        "Judges ignore system prompts"
+        "同じ LLM family を生成と judging に使うと、独立した judge と比べて scores が 10-20% 膨らむこと",
+        "latency が下がること",
+        "Judges が cached outputs 上で高速に動くこと",
+        "Judges が system prompts を無視すること"
       ],
       "correct": 0,
-      "explanation": "Same-family generator+judge biases scores upward; use a different model family for judging."
+      "explanation": "同じ family の generator+judge は scores を上向きに bias させます。judging には別の model family を使います。"
     },
     {
       "stage": "check",
-      "question": "What does G-Eval specifically add over a naive 'score 0-1' prompt?",
+      "question": "G-Eval は単純な 'score 0-1' prompt に対して何を追加しますか？",
       "options": [
-        "Bigger context",
-        "Lower cost",
-        "Multilingual scoring",
-        "An explicit chain-of-thought rubric with named evaluation steps, which yields more stable scores"
+        "より大きい context",
+        "より低い cost",
+        "multilingual scoring",
+        "名前付き evaluation steps を持つ明示的な chain-of-thought rubric。これにより scores がより安定する"
       ],
       "correct": 3,
-      "explanation": "G-Eval's structured eval-steps produce more reliable scores than freeform 'rate it' prompts."
+      "explanation": "G-Eval の structured eval-steps は、自由形式の 'rate it' prompts より信頼性の高い scores を生みます。"
     },
     {
       "stage": "post",
-      "question": "Why is reporting only the aggregate mean score dangerous?",
+      "question": "aggregate mean score だけを報告するのが危険なのはなぜですか？",
       "options": [
-        "Aggregates are too large",
-        "Aggregates ignore the judge",
-        "Aggregates need GPU",
-        "An 0.85 mean can hide 5% catastrophic failures; always inspect the bottom quantile"
+        "Aggregates が大きすぎるから",
+        "Aggregates が judge を無視するから",
+        "Aggregates には GPU が必要だから",
+        "0.85 の mean が 5% の catastrophic failures を隠すことがあるため、常に bottom quantile を確認すべきだから"
       ],
       "correct": 3,
-      "explanation": "Means hide tail failures; surface bottom-10% to catch high-severity issues."
+      "explanation": "Means は tail failures を隠します。重大な問題を見つけるには bottom-10% を可視化します。"
     },
     {
       "stage": "post",
-      "question": "Why pin the judge model + version in CI?",
+      "question": "CI で judge model + version を固定するのはなぜですか？",
       "options": [
-        "Required by Anthropic",
-        "Lower cost",
-        "Tokenizer drift",
-        "Upgrading the judge changes every metric; longitudinal comparison breaks without a frozen judge"
+        "Anthropic によって義務付けられているから",
+        "cost が下がるから",
+        "Tokenizer drift のため",
+        "judge を upgrade するとすべての metric が変わるため、固定しないと longitudinal comparison が壊れるから"
       ],
       "correct": 3,
-      "explanation": "A judge upgrade silently shifts the metric baseline; pinning preserves cross-run comparability."
+      "explanation": "judge upgrade は metric baseline を静かにずらします。pinning によって runs 間の比較可能性を保ちます。"
     },
     {
       "stage": "post",
-      "question": "Where does DeepEval fit relative to RAGAS?",
+      "question": "RAGAS と比べて DeepEval はどこに位置づけられますか？",
       "options": [
-        "DeepEval is pytest-for-LLMs (CI gates, G-Eval, hallucination metrics); RAGAS specializes in reference-free RAG monitoring",
-        "DeepEval is hosted only",
-        "DeepEval is a tokenizer",
-        "Replaces RAGAS entirely"
+        "DeepEval は pytest-for-LLMs（CI gates、G-Eval、hallucination metrics）で、RAGAS は reference-free RAG monitoring に特化する",
+        "DeepEval は hosted only",
+        "DeepEval は tokenizer",
+        "RAGAS を完全に置き換える"
       ],
       "correct": 0,
-      "explanation": "DeepEval anchors CI/CD regression testing; RAGAS handles reference-free RAG monitoring."
+      "explanation": "DeepEval は CI/CD regression testing の軸になります。RAGAS は reference-free RAG monitoring を扱います。"
     }
   ]
 }

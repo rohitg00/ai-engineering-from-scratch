@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: what is the practical benefit of writing your harness's spans in the OTel GenAI attribute shape?",
+      "question": "lesson を読む前に: harness の span を OTel GenAI attribute shape で書く実務上の利点は何ですか？",
       "options": [
-        "OTel spans compress better on disk.",
-        "Every OTel-compatible backend can read them without a custom parser.",
-        "OTel is a Python-only standard, so the harness gets type hints.",
-        "It is required by HIPAA."
+        "OTel span は disk 上でよりよく compress される。",
+        "すべての OTel-compatible backend が custom parser なしに読める。",
+        "OTel は Python-only standard なので harness が type hint を得られる。",
+        "HIPAA で必須だから。"
       ],
       "correct": 1,
-      "explanation": "The conventions are a contract with the wider ecosystem. Honeycomb, Grafana Tempo, Jaeger, and Datadog all parse gen_ai.* attributes out of the box."
+      "explanation": "conventions は wider ecosystem との contract です。Honeycomb、Grafana Tempo、Jaeger、Datadog はすべて gen_ai.* attributes を out of the box で parse します。"
     },
     {
       "stage": "check",
-      "question": "An exception is raised inside a SpanBuilder.span() context. What does the lesson's builder record?",
+      "question": "SpanBuilder.span() context 内で exception が raise されました。この lesson の builder は何を記録しますか？",
       "options": [
-        "The span is dropped to avoid polluting the trace.",
-        "status=ERROR, status_message includes the exception type and message, and an 'exception' event is appended.",
-        "status remains UNSET and the exception is silently swallowed.",
-        "The span is renamed to 'error'."
+        "trace を汚さないよう span を drop する。",
+        "status=ERROR、status_message に exception type と message、さらに 'exception' event を append する。",
+        "status は UNSET のままで、exception は黙って swallow される。",
+        "span 名を 'error' に rename する。"
       ],
       "correct": 1,
-      "explanation": "Status ERROR plus an exception event matches the OTel spec. The exception is re-raised so caller code can react."
+      "explanation": "Status ERROR と exception event は OTel spec に合います。exception は re-raise されるため caller code が反応できます。"
     },
     {
       "stage": "check",
-      "question": "The Prometheus exposition for a histogram includes _bucket, _sum, and _count lines. Why are bucket counts cumulative (each le bucket includes all smaller buckets)?",
+      "question": "histogram の Prometheus exposition には _bucket、_sum、_count line が含まれます。bucket count が cumulative（各 le bucket が小さい bucket をすべて含む）なのはなぜですか？",
       "options": [
-        "Cumulative counts let the scraper compute per-bucket counts via subtraction without storing all observations.",
-        "Cumulative counts are the only format Grafana supports.",
-        "They are not cumulative; the lesson's exposition is non-standard.",
-        "Cumulative counts reduce floating-point error."
+        "cumulative count により scraper は全 observation を保存せず、subtraction で per-bucket count を計算できるから。",
+        "cumulative count は Grafana が support する唯一の format だから。",
+        "cumulative ではない。この lesson の exposition は non-standard だから。",
+        "cumulative count は floating-point error を減らすから。"
       ],
       "correct": 0,
-      "explanation": "Prometheus' design choice: a backend reads cumulative counts and computes per-bucket differences. This lets the time series be a simple monotonic counter per bucket."
+      "explanation": "Prometheus の design choice です。backend は cumulative count を読み、per-bucket difference を計算します。これにより time series は bucket ごとの simple monotonic counter になります。"
     },
     {
       "stage": "check",
-      "question": "The harness wraps a tool execution in a span. Which attribute keys identify it as a tool call under the GenAI conventions?",
+      "question": "harness は tool execution を span で wrap します。GenAI conventions の下で tool call と識別する attribute key はどれですか？",
       "options": [
-        "gen_ai.system + gen_ai.request.model.",
-        "gen_ai.tool.name + gen_ai.tool.call.id.",
-        "agent.harness.tool + agent.harness.call.",
-        "operation + tool.name."
+        "gen_ai.system + gen_ai.request.model。",
+        "gen_ai.tool.name + gen_ai.tool.call.id。",
+        "agent.harness.tool + agent.harness.call。",
+        "operation + tool.name。"
       ],
       "correct": 1,
-      "explanation": "gen_ai.tool.name and gen_ai.tool.call.id are the canonical keys for tool executions in the GenAI conventions."
+      "explanation": "gen_ai.tool.name と gen_ai.tool.call.id は GenAI conventions における tool execution の canonical key です。"
     },
     {
       "stage": "post",
-      "question": "You want to query 'what is the p95 latency of read_file calls'. Which artifact do you query?",
+      "question": "'read_file call の p95 latency は？' を query したいとします。どの artifact を query しますか？",
       "options": [
-        "Each span's duration_ms in traces.jsonl, parsed by a script.",
-        "The Prometheus histogram tool_latency_ms{tool=\"read_file\"} scraped over a window.",
-        "The counter tools_called_total, divided by the time window.",
-        "The status_message field of the span."
+        "script で parse した traces.jsonl 内の各 span.duration_ms。",
+        "window を指定して scrape された Prometheus histogram tool_latency_ms{tool=\"read_file\"}。",
+        "counter tools_called_total を time window で割ったもの。",
+        "span の status_message field。"
       ],
       "correct": 1,
-      "explanation": "Histograms are the right tool for percentiles. The counter only counts; the trace contains raw spans but is not pre-aggregated."
+      "explanation": "percentile には histogram が適切です。counter は数えるだけです。trace は raw span を含みますが、pre-aggregated ではありません。"
     },
     {
       "stage": "post",
-      "question": "A reviewer asks why the lesson hand-rolls instead of importing opentelemetry-sdk. Which answer is correct?",
+      "question": "reviewer から、この lesson が opentelemetry-sdk を import せず hand-roll している理由を聞かれました。正しい答えはどれですか？",
       "options": [
-        "The SDK does not support GenAI conventions.",
-        "Hand-rolling teaches the wire format; the SDK can drop in later with the same attribute keys.",
-        "Hand-rolling is faster at runtime.",
-        "The SDK requires a network connection at import time."
+        "SDK は GenAI conventions を support していないから。",
+        "hand-rolling は wire format を教えるため。あとで同じ attribute key のまま SDK を差し込める。",
+        "hand-rolling の方が runtime で速いから。",
+        "SDK は import 時に network connection を要求するから。"
       ],
       "correct": 1,
-      "explanation": "The conventions are stable across implementations. The hand-rolled version exists for clarity; production wires in the SDK and reuses the same gen_ai.* keys."
+      "explanation": "conventions は implementation 間で stable です。hand-rolled version は clarity のためです。production では SDK を wire し、同じ gen_ai.* key を再利用します。"
     }
   ]
 }

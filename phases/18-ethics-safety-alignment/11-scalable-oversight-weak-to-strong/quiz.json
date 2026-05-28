@@ -1,34 +1,34 @@
 {
   "lesson": "11-scalable-oversight-weak-to-strong",
-  "title": "Scalable Oversight and Weak-to-Strong Generalization",
+  "title": "スケーラブルな監督と Weak-to-Strong Generalization",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core question the Superalignment agenda asks?",
+      "question": "Superalignment agenda が問う中心的な問いは何ですか。",
       "options": [
-        "Can RLHF scale beyond 1B parameters?",
-        "Can adversarial training remove all backdoors?",
-        "Can a weaker overseer reliably supervise a stronger, aligned model?",
-        "Are humans more accurate than reward models?"
+        "RLHF は 1B parameters を超えて scale できるか",
+        "adversarial training はすべての backdoor を除去できるか",
+        "弱い監督者は、より強く aligned なモデルを信頼できる形で監督できるか",
+        "人間は reward model より正確か"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "In Burns et al. (2023) weak-to-strong generalization, what is the setup?",
+      "question": "Burns et al. (2023) の weak-to-strong generalization はどのような設定ですか。",
       "options": [
-        "A reward model is trained on synthetic data only",
-        "Two strong models debate; a human judges",
-        "GPT-2 is fine-tuned on GPT-4 labels",
-        "A strong model (GPT-4 class) is fine-tuned on labels produced by a weak model (GPT-2 class) and its capability is measured against the strong supervised ceiling"
+        "reward model を synthetic data だけで訓練する",
+        "2つの強いモデルが debate し、人間が judge する",
+        "GPT-2 を GPT-4 ラベルで fine-tune する",
+        "強いモデル (GPT-4 クラス) を、弱いモデル (GPT-2 クラス) が生成したラベルで fine-tune し、その capability を強い supervised ceiling と比較して測る"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How is Performance Gap Recovered (PGR) defined?",
+      "question": "Performance Gap Recovered (PGR) はどのように定義されますか。",
       "options": [
         "(ceiling - fine-tuned) / weak",
         "(fine-tuned - weak) / (ceiling - weak)",
@@ -40,7 +40,7 @@
     },
     {
       "stage": "check",
-      "question": "Which of the following is NOT a scalable-oversight mechanism listed in the lesson?",
+      "question": "次のうち、この lesson で挙げた scalable-oversight mechanism ではないものはどれですか。",
       "options": [
         "Task Decomposition",
         "Tokenizer Distillation",
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "How are scalable oversight and W2SG complementary?",
+      "question": "scalable oversight と W2SG はどのように相補的ですか。",
       "options": [
-        "Scalable oversight improves the overseer's effective signal quality; W2SG closes the gap from whatever imperfect signal the overseer provides",
-        "They both target the same metric",
-        "They are mutually exclusive",
-        "They both require white-box access"
+        "scalable oversight は監督者の実効的な signal quality を改善し、W2SG は監督者が提供する不完全な signal から gap を埋める",
+        "両者は同じ metric を対象にしている",
+        "両者は互いに排他的である",
+        "両者とも white-box access を必要とする"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the central assumption of the AI-safety-via-debate mechanism?",
+      "question": "AI-safety-via-debate mechanism の中心的な仮定は何ですか。",
       "options": [
-        "Debate transcripts are always shorter than direct answers",
-        "Finding a convincing true answer is easier than finding a convincing false answer",
-        "The judge is more capable than the debaters",
-        "Both debaters always tell the truth"
+        "debate transcript は常に直接回答より短い",
+        "説得力のある真の答えを見つける方が、説得力のある偽の答えを見つけるより簡単である",
+        "judge は debater より高性能である",
+        "両方の debater は常に真実を述べる"
       ],
       "correct": 1,
       "explanation": ""

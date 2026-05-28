@@ -4,79 +4,79 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a single-agent harness hit a ceiling on large tasks even with a 200k-token context?",
+      "question": "200k-token context があっても single-agent harness が大きな task で ceiling に当たる理由は何ですか？",
       "options": [
-        "Single agents cannot make tool calls",
-        "Sandboxes refuse to host more than one process",
-        "Context cannot hold the architecture plan, four parallel codebase slices, reviewer commentary, and test output at once",
-        "Models lack support for git"
+        "single agent は tool call ができないため",
+        "sandbox が複数 process の hosting を拒否するため",
+        "context に architecture plan、4つの parallel codebase slice、reviewer commentary、test output を同時に保持できないため",
+        "model が git を support していないため"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "What does the architect role own in this factory shape?",
+      "question": "この factory shape で architect role は何を所有しますか？",
       "options": [
-        "Reviewing the merged diff for hallucinations",
-        "Reading the issue and emitting a plan with subtasks that have explicit interfaces",
-        "Running the test suite in a clean sandbox",
-        "Force-merging branches when coders disagree"
+        "hallucination を探すために merged diff を review すること",
+        "issue を読み、明示的な interface を持つ subtask 付きの plan を出力すること",
+        "clean sandbox で test suite を実行すること",
+        "coder が合意しないときに branch を force-merge すること"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does each coder work in its own git worktree plus a Daytona sandbox?",
+      "question": "各 coder が自分専用の git worktree と Daytona sandbox で作業する理由は何ですか？",
       "options": [
-        "Worktrees are faster to clone than branches",
-        "Daytona is the only sandbox that supports SSH",
-        "Isolated working trees let N coders implement subtasks in parallel without stepping on shared files",
-        "The architect requires worktree IDs"
+        "worktree は branch より clone が速いため",
+        "Daytona が SSH を support する唯一の sandbox だから",
+        "isolated working tree により、N 人の coder が shared files を踏み合わずに subtask を並列実装できるため",
+        "architect が worktree ID を要求するため"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What constraint is placed on the reviewer to keep it honest?",
+      "question": "reviewer を honest に保つための constraint は何ですか？",
       "options": [
-        "It can only run after the tester signs off",
-        "It cannot approve diffs it authored or proposed",
-        "It must approve every diff it reads",
-        "It must be the same model as the architect"
+        "tester が sign off した後にだけ実行できる",
+        "自分が書いた、または提案した diff を approve できない",
+        "読む diff はすべて approve しなければならない",
+        "architect と同じ model でなければならない"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does the rubric weigh token efficiency against a single-agent baseline?",
+      "question": "rubric が single-agent baseline に対する token efficiency を重視する理由は何ですか？",
       "options": [
-        "Multi-agent is always cheaper",
-        "Role boundaries add summary and handoff context, so the real question is whether the factory wins per dollar",
-        "Single-agent has no observability story",
-        "Token cost is unrelated to performance"
+        "multi-agent は常に安価だから",
+        "role boundary が summary と handoff context を増やすため、本当の問いは factory が dollar あたりで勝つかどうかだから",
+        "single-agent には observability story がないため",
+        "token cost は performance と無関係だから"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which artifact is produced from each failed issue during the post-mortem?",
+      "question": "post-mortem で各 failed issue から生成される artifact はどれですか？",
       "options": [
-        "A new architect plan template",
-        "An updated A2A protocol spec",
-        "A force-push log",
-        "A handoff-failure histogram identifying which role boundary broke (plan, merge, review, test)"
+        "新しい architect plan template",
+        "更新された A2A protocol spec",
+        "force-push log",
+        "どの role boundary (plan, merge, review, test) が壊れたかを示す handoff-failure histogram"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which evaluation set does the capstone use to score pass@1 across roles?",
+      "question": "この capstone が role 全体の pass@1 を採点するために使う evaluation set はどれですか？",
       "options": [
         "SWE-bench Pro 50-issue subset",
         "HumanEval-Java",

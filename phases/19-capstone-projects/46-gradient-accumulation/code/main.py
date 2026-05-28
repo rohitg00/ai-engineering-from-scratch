@@ -1,6 +1,6 @@
-"""Gradient accumulation from scratch.
+"""gradient accumulation を from scratch で実装する。
 
-Effective batch size = micro batch size * accumulation steps. Accumulate
+effective batch size = micro batch size * accumulation steps。
 gradients across several forward and backward passes, only step the
 optimizer after the last micro-batch. Tracks throughput against effective
 batch size so the curve is visible, not folklore.
@@ -102,9 +102,9 @@ def train_one_optimizer_step(
     no_sync_until_last: bool,
     sync_counter: List[int],
 ) -> tuple[float, float]:
-    """Run accum_steps micro batches, accumulate grads, step once.
+    """accum_steps 個の micro batch を実行し、grad を accumulate して 1 回 step する。
 
-    Returns (total_unscaled_loss, grad_norm).
+    (total_unscaled_loss, grad_norm) を返す。
     """
     accum_steps = len(micro_batches)
     zero_grads(model)
@@ -139,9 +139,9 @@ class _NoSyncCtx:
 
 
 def no_sync_context(model: nn.Module):
-    """Stand-in for DDP no_sync.
+    """DDP no_sync の stand-in。
 
-    In DDP this skips the all-reduce on the trailing backward. In this
+    DDP では trailing backward の all-reduce を skip する。
     single-process demo there is no collective to skip, but we still
     surface the call site so the pattern reads the same on a real cluster.
     """
@@ -159,7 +159,7 @@ def run_config(
     lr: float,
     seed: int,
 ) -> CurvePoint:
-    assert effective_batch % accum_steps == 0, "effective_batch must divide by accum_steps"
+    assert effective_batch % accum_steps == 0, "effective_batch は accum_steps で割り切れる必要があります"
     micro_batch = effective_batch // accum_steps
     seed_everything(seed)
     gen = torch.Generator()
@@ -243,10 +243,9 @@ def equivalence_check(
     lr: float = 0.1,
     seed: int = 7,
 ) -> dict:
-    """One full batch step vs accum_steps micro-batches must match.
+    """full batch 1 step と accum_steps 個の micro-batch は一致しなければならない。
 
-    Scaled loss is `raw / accum_steps`; the accumulated gradient equals the
-    full batch gradient up to floating point noise.
+    scaled loss は `raw / accum_steps`。accumulated gradient は floating point noise を除き full batch gradient と一致する。
     """
     assert big_batch % accum_steps == 0
     micro = big_batch // accum_steps
@@ -325,9 +324,9 @@ def main() -> int:
     print("equivalence check (full batch vs accumulated)")
     eq = equivalence_check()
     print(json.dumps(eq, indent=2))
-    assert eq["max_grad_diff"] < 1e-4, f"gradients diverge: {eq['max_grad_diff']}"
-    assert eq["max_param_diff"] < 1e-4, f"params diverge: {eq['max_param_diff']}"
-    print("equivalence holds. running sweep...")
+    assert eq["max_grad_diff"] < 1e-4, f"gradient が diverge しました: {eq['max_grad_diff']}"
+    assert eq["max_param_diff"] < 1e-4, f"parameter が diverge しました: {eq['max_param_diff']}"
+    print("equivalence を確認しました。sweep を実行します...")
 
     points = sweep_effective_batches(
         micro_batch=args.micro_batch,
@@ -345,7 +344,7 @@ def main() -> int:
         )
     if not args.no_write:
         write_curve(points, LOG_PATH)
-        print(f"wrote {LOG_PATH}")
+        print(f"書き込みました: {LOG_PATH}")
     return 0
 
 

@@ -1,75 +1,75 @@
 ---
 name: prompt-data-quality-checker
-description: Validate and debug data quality in LLM pre-training pipelines
+description: LLM 事前学習パイプラインのデータ品質を検証し、デバッグする
 version: 1.0.0
 phase: 10
 lesson: 3
 tags: [data-pipeline, deduplication, quality-filter, pre-training, llm, data-cleaning]
 ---
 
-# Data Quality Checker for LLM Pre-Training
+# LLM 事前学習向けデータ品質チェッカー
 
-When building or auditing a data pipeline for LLM pre-training, use this framework to catch problems before they reach the model.
+LLM 事前学習用のデータパイプラインを構築または監査するときは、このフレームワークを使って、問題がモデルに到達する前に捕まえてください。
 
-## Red Flags in Pipeline Output
+## パイプライン出力の危険信号
 
-**Deduplication removed less than 20% of web data.** Common Crawl typically contains 30-40% duplicates. If your dedup step removes less than 20%, your MinHash parameters are too conservative or your threshold is too high. Check: shingle size k, number of hash functions, number of LSH bands, Jaccard threshold.
+**重複排除で削除された Web データが20%未満。** Common Crawl には通常30から40%の重複が含まれます。重複排除ステップで20%未満しか削除されない場合、MinHash パラメータが保守的すぎるか、閾値が高すぎます。確認項目: shingle size `k`、ハッシュ関数数、LSH band 数、Jaccard 閾値。
 
-**Compression ratio below 2.0 chars/token.** This means your tokenizer is splitting too aggressively. Either retrain with more merges, increase vocabulary size, or check that pre-tokenization is not fragmenting text unnecessarily.
+**圧縮率が 2.0 chars/token 未満。** これはトークナイザーが細かく分割しすぎていることを意味します。より多くのマージで再訓練する、語彙サイズを増やす、または事前トークナイゼーションが不要にテキストを断片化していないか確認してください。
 
-**Compression ratio above 6.0 chars/token.** Your tokenizer has learned very domain-specific merges that may not generalize. This is fine for a domain-specific model but a warning sign for general-purpose models.
+**圧縮率が 6.0 chars/token を超える。** トークナイザーが非常にドメイン特化したマージを学んでおり、汎化しない可能性があります。ドメイン特化モデルなら問題ありませんが、汎用モデルでは警告信号です。
 
-**Sequence utilization below 90%.** Too much padding. Either your documents are very short (filter them or increase minimum document length) or your sequence packing is inefficient (switch from naive padding to multi-document packing).
+**シーケンス利用率が90%未満。** padding が多すぎます。文書が非常に短いならフィルタリングするか最小文書長を上げてください。シーケンスパッキングが非効率なら、素朴な padding から複数文書パッキングへ切り替えてください。
 
-**Vocab utilization below 50%.** More than half your vocabulary is unused on this corpus. Either the vocabulary is too large for your domain or the tokenizer was trained on very different data.
+**語彙利用率が50%未満。** このコーパス上で語彙の半分以上が使われていません。語彙がドメインに対して大きすぎるか、トークナイザーがまったく異なるデータで訓練されています。
 
-## Quality Filter Calibration
+## 品質フィルターの較正
 
-Run these checks on a random sample of 1,000 documents at each pipeline stage:
+各パイプライン段階で、ランダムに1,000文書をサンプリングして次を確認してください。
 
-1. **Read 20 random documents after cleaning.** Do they contain residual HTML, JavaScript, navigation text, or boilerplate? If yes, your HTML stripping is incomplete.
+1. **クリーニング後の文書をランダムに20件読む。** 残った HTML、JavaScript、ナビゲーションテキスト、ボイラープレートが含まれていませんか。含まれているなら、HTML 除去が不完全です。
 
-2. **Read 20 random documents that PASSED the quality filter.** Are any of them spam, keyword lists, or machine-generated? If yes, tighten the filter thresholds.
+2. **品質フィルターを通過した文書をランダムに20件読む。** スパム、キーワード列、機械生成文書が混ざっていませんか。混ざっているなら、フィルター閾値を厳しくしてください。
 
-3. **Read 20 random documents that FAILED the quality filter.** Are any of them genuinely good content? If yes, your filter is too aggressive. Relax thresholds or add exceptions for specific patterns.
+3. **品質フィルターで落ちた文書をランダムに20件読む。** 本当に良いコンテンツが混ざっていませんか。混ざっているなら、フィルターが強すぎます。閾値を緩めるか、特定パターンの例外を追加してください。
 
-4. **Read 20 random near-duplicate pairs from dedup.** Are they actually similar? If not, lower the Jaccard threshold or increase the number of hash functions.
+4. **重複排除で見つかった近似重複ペアをランダムに20件読む。** 本当に類似していますか。そうでないなら、Jaccard 閾値を下げるか、ハッシュ関数数を増やしてください。
 
-## Data Mixing Ratios
+## データ混合比
 
-There is no universal formula. Start with these baselines and adjust based on evaluation:
+万能な公式はありません。次のベースラインから始め、評価に基づいて調整してください。
 
-| Category | Llama 3 Ratio | Starting Point |
-|----------|--------------|----------------|
-| Web text | 50% | 50% |
-| Code | 25% | 15-25% |
-| Books/academic | 13% | 10-15% |
-| Math | 8% | 5-10% |
-| Multilingual web | 4% | 5-10% |
+| カテゴリ | Llama 3 の比率 | 開始点 |
+|----------|----------------|--------|
+| Web テキスト | 50% | 50% |
+| コード | 25% | 15-25% |
+| 書籍/学術 | 13% | 10-15% |
+| 数学 | 8% | 5-10% |
+| 多言語 Web | 4% | 5-10% |
 
-Increase code ratio if the model should be strong at programming. Increase math ratio if reasoning matters. Decrease web ratio if you need less noise. Always evaluate on benchmarks after changing ratios.
+プログラミングに強いモデルにしたいならコード比率を上げます。推論能力が重要なら数学比率を上げます。ノイズを減らしたいなら Web 比率を下げます。比率を変えた後は、必ずベンチマークで評価してください。
 
-## Scaling Estimates
+## スケーリング見積もり
 
-For a given target token count:
+目標トークン数が決まっている場合の目安です。
 
-- 1T tokens from web: expect ~3-5TB raw text, ~1.5-2TB after cleaning and dedup
-- Tokenization speed (Rust): ~100M tokens/second per core
-- Tokenization speed (Python): ~1-10M tokens/second per core
-- MinHash dedup at 128 hashes, 16 bands: ~10K documents/second per core
-- Sequence packing: I/O bound, use memory-mapped files for corpora above 10GB
+- Web 由来の 1T トークン: 生テキスト約3から5TB、クリーニングと重複排除後に約1.5から2TBを想定
+- トークン化速度 (Rust): コアあたり約100M tokens/second
+- トークン化速度 (Python): コアあたり約1から10M tokens/second
+- 128 hashes、16 bands の MinHash 重複排除: コアあたり約10K documents/second
+- シーケンスパッキング: I/O 律速。10GB超のコーパスでは memory-mapped file を使う
 
-For 15T tokens (Llama 3 scale), plan for ~30-50TB of raw input data, 1-2 weeks of preprocessing on a 64-core machine, and 100TB+ of disk for intermediate files.
+15T トークン、つまり Llama 3 規模では、生入力データ約30から50TB、64コアマシンで1から2週間の前処理、さらに中間ファイル用に100TB以上のディスクを見込んでください。
 
-## Checklist Before Training
+## 訓練前チェックリスト
 
-1. Total token count matches your compute budget (use Chinchilla scaling or the Llama 3 overtrain ratio as a guide)
-2. Dedup removed 30-40% of web data
-3. Quality filter removed 10-20% of remaining data
-4. Compression ratio is 3-5 chars/token for English
-5. Sequence utilization is above 95%
-6. Random spot-checks show clean, coherent text at every pipeline stage
-7. Data mix ratios have been validated on a small-scale training run
-8. PII removal has been verified on a sample
-9. All binary formats (packed sequences, token ID arrays) pass round-trip encoding/decoding tests
-10. Pipeline is reproducible: same input produces identical output with fixed random seeds
+1. 総トークン数が計算予算と一致している。Chinchilla scaling または Llama 3 の overtrain 比率を目安にする
+2. 重複排除で Web データの30から40%を削除した
+3. 品質フィルターで残りデータの10から20%を削除した
+4. 英語で圧縮率が 3-5 chars/token になっている
+5. シーケンス利用率が95%を超えている
+6. 各パイプライン段階で、ランダム確認によりクリーンで一貫したテキストが見えている
+7. 小規模訓練でデータ混合比を検証済みである
+8. サンプル上で PII 除去を検証済みである
+9. すべてのバイナリ形式、つまり packed sequence と token ID array が round-trip encoding/decoding テストに通る
+10. パイプラインが再現可能である。固定乱数 seed で、同じ入力から同じ出力が得られる

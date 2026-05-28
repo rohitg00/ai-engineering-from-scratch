@@ -1,30 +1,30 @@
 # Moderation Systems — OpenAI, Perspective, Llama Guard
 
-> Production moderation systems operationalize the safety policies defined in Lessons 12-16. OpenAI Moderation API: `omni-moderation-latest` (2024) built on GPT-4o classifies text + images in one call; 42% better on multilingual test set than prior version; the response schema returns 13 category booleans — harassment, harassment/threatening, hate, hate/threatening, illicit, illicit/violent, self-harm, self-harm/intent, self-harm/instructions, sexual, sexual/minors, violence, violence/graphic; free for most developers. Layered patterns: Input moderation (pre-generation), Output moderation (post-generation), Custom moderation (domain rules). Async parallel calls hide latency; placeholder responses on flag. Llama Guard 3/4 (Lesson 16): 14 MLCommons hazards, Code Interpreter Abuse, 8 languages (v3), multi-image (v4). Perspective API (Google Jigsaw): toxicity scoring predating the LLM-as-moderator wave; primarily single-dimension toxicity with severe-toxicity/insult/profanity variants; baseline for content-moderation research. Deprecations: Azure Content Moderator deprecated February 2024, retired February 2027, replaced by Azure AI Content Safety.
+> Production moderation systems は Lessons 12-16 で定義した safety policies を operationalize する。OpenAI Moderation API: `omni-moderation-latest` (2024) は GPT-4o ベースで text + images を1 call で classify する。multilingual test set では prior version より 42% better。response schema は 13 category booleans を返す — harassment、harassment/threatening、hate、hate/threatening、illicit、illicit/violent、self-harm、self-harm/intent、self-harm/instructions、sexual、sexual/minors、violence、violence/graphic。most developers には free。Layered patterns: Input moderation (pre-generation)、Output moderation (post-generation)、Custom moderation (domain rules)。Async parallel calls で latency を隠す。flag 時は placeholder response。Llama Guard 3/4 (Lesson 16): 14 MLCommons hazards、Code Interpreter Abuse、8 languages (v3)、multi-image (v4)。Perspective API (Google Jigsaw): LLM-as-moderator wave 以前からある toxicity scoring。主に single-dimension toxicity と severe-toxicity/insult/profanity variants。content-moderation research の baseline。Deprecations: Azure Content Moderator は 2024年2月 deprecated、2027年2月 retired、Azure AI Content Safety に replaced。
 
-**Type:** Build
-**Languages:** Python (stdlib, three-layer moderation harness)
-**Prerequisites:** Phase 18 · 16 (Llama Guard / Garak / PyRIT)
-**Time:** ~60 minutes
+**種別:** 構築
+**言語:** Python (stdlib, three-layer moderation harness)
+**前提条件:** Phase 18 · 16 (Llama Guard / Garak / PyRIT)
+**所要時間:** 約60分
 
 ## Learning Objectives
 
-- Describe the OpenAI Moderation API's category taxonomy and how it differs from Llama Guard 3's MLCommons set.
-- Describe the three moderation-layer pattern (input, output, custom) and name one failure mode of each.
-- Describe Perspective API's position as a pre-LLM-era baseline and why it remains used in research.
-- State the Azure deprecation timeline.
+- OpenAI Moderation API の category taxonomy と、Llama Guard 3 の MLCommons set との違いを説明する。
+- three moderation-layer pattern (input, output, custom) を説明し、それぞれの failure mode を1つ挙げる。
+- Perspective API が pre-LLM-era baseline として位置付けられる理由と、研究で使われ続ける理由を説明する。
+- Azure deprecation timeline を述べる。
 
-## The Problem
+## 問題
 
-Lessons 12-16 describe attacks and defense tooling. Lesson 29 covers the deployed moderation systems that operationalize the defenses at the surface where users touch the product. The three-layer pattern is the 2026 default configuration.
+Lessons 12-16 は attacks と defense tooling を説明した。Lesson 29 は、users が product に触れる surface で defense を operationalize する deployed moderation systems を扱う。three-layer pattern は 2026年の default configuration である。
 
 ## The Concept
 
 ### OpenAI Moderation API
 
-`omni-moderation-latest` (2024). Built on GPT-4o. Classifies text + images in one call. Free for most developers.
+`omni-moderation-latest` (2024)。GPT-4o ベース。text + images を1 call で classify。most developers には free。
 
-Categories (13 booleans in the response schema):
+Categories (response schema の 13 booleans):
 - harassment, harassment/threatening
 - hate, hate/threatening
 - self-harm, self-harm/intent, self-harm/instructions
@@ -32,81 +32,81 @@ Categories (13 booleans in the response schema):
 - violence, violence/graphic
 - illicit, illicit/violent
 
-Multimodal support applies to `violence`, `self-harm`, and `sexual` but not `sexual/minors`; the rest are text-only.
+Multimodal support は `violence`、`self-harm`、`sexual` に適用されるが `sexual/minors` には適用されない。その他は text-only。
 
-For the code harness in `code/main.py` we collapse the `/threatening`, `/intent`, `/instructions`, and `/graphic` sub-categories into their top-level parents for pedagogical simplicity. Production code should use the full 13-category schema.
+`code/main.py` の code harness では、pedagogical simplicity のため `/threatening`、`/intent`、`/instructions`、`/graphic` の sub-categories を top-level parents に collapse している。production code では full 13-category schema を使うべきである。
 
-42% better on multilingual test set than the prior-generation moderation endpoint. Per-category scores; applications set thresholds.
+prior-generation moderation endpoint と比べ、multilingual test set で 42% better。per-category scores が返り、applications が thresholds を設定する。
 
 ### Llama Guard 3/4
 
-Covered in Lesson 16. 14 MLCommons hazard categories (organized differently from OpenAI's 13 response-schema booleans). Supports 8 languages (v3). Llama Guard 4 (April 2025) is natively multimodal, 12B.
+Lesson 16 で扱った。14 MLCommons hazard categories (OpenAI の 13 response-schema booleans とは異なる構成)。8 languages を support (v3)。Llama Guard 4 (2025年4月) は natively multimodal, 12B。
 
-The OpenAI and Llama Guard taxonomies overlap but diverge. OpenAI has "illicit" as a broad category; Llama Guard has "violent crimes" and "non-violent crimes" separately. Deployments pick based on their policy-taxonomy fit.
+OpenAI と Llama Guard の taxonomies は重なるが diverge する。OpenAI には broad category として "illicit" がある。Llama Guard は "violent crimes" と "non-violent crimes" を別に持つ。deployments は policy-taxonomy fit に基づいて選ぶ。
 
 ### Perspective API (Google Jigsaw)
 
-Toxicity scoring system predating the LLM-as-moderator wave (pre-2020). Categories: TOXICITY, SEVERE_TOXICITY, INSULT, PROFANITY, THREAT, IDENTITY_ATTACK. Single-dimension primary score (TOXICITY) with sub-dimension variants.
+LLM-as-moderator wave (pre-2020) より前からある toxicity scoring system。Categories: TOXICITY, SEVERE_TOXICITY, INSULT, PROFANITY, THREAT, IDENTITY_ATTACK。primary score は single-dimension (TOXICITY) で、sub-dimension variants を持つ。
 
-Widely used as a content-moderation research baseline because the API is stable, documented, and has years of calibration data. For modern LLM-adjacent use cases, Llama Guard or OpenAI Moderation is typically a better fit.
+API が stable、documented、長年の calibration data を持つため、content-moderation research baseline として広く使われる。modern LLM-adjacent use cases では、通常 Llama Guard または OpenAI Moderation の方が適している。
 
 ### The three-layer pattern
 
-1. **Input moderation.** Classify the user's prompt before generation. Reject if flagged. Latency: one classifier call.
-2. **Output moderation.** Classify the model's output before delivery. Replace with a refusal if flagged. Latency: one classifier call after generation.
-3. **Custom moderation.** Domain-specific rules (regex, allowlists, business policy). Runs at either input or output.
+1. **Input moderation.** generation 前に user's prompt を classify。flag されたら reject。Latency: classifier call 1回。
+2. **Output moderation.** delivery 前に model output を classify。flag されたら refusal に置き換える。Latency: generation 後に classifier call 1回。
+3. **Custom moderation.** domain-specific rules (regex, allowlists, business policy)。input または output で実行。
 
-The three layers are sequential by design: input moderation must complete before generation, and output moderation runs after generation. Parallelism applies within a layer — running multiple classifiers (e.g., OpenAI Moderation + Llama Guard + Perspective) concurrently on the same text hides per-classifier latency. As an optional optimization, a placeholder response ("one moment, checking...") may be shown while input moderation completes and token-1 streaming is deferred. Flag behaviour is configurable: refuse, sanitize, escalate to human review.
+3 layers は設計上 sequential である。input moderation は generation 前に完了し、output moderation は generation 後に実行される。Parallelism は layer 内で適用する。同じ text に複数 classifiers (例: OpenAI Moderation + Llama Guard + Perspective) を同時に走らせると per-classifier latency を隠せる。optional optimization として、input moderation が完了し token-1 streaming を遅らせている間、placeholder response ("one moment, checking...") を表示してもよい。Flag behaviour は configurable: refuse、sanitize、human review に escalate。
 
 ### Failure modes
 
-- **Input only.** Does not catch output hallucinations (Lesson 12-14 encoding attacks bypass input classifiers).
-- **Output only.** Allows any input to reach the model; increases cost; surfaces internal reasoning to attacker.
-- **Custom only.** Not robust across categories; regexes are brittle.
+- **Input only.** output hallucinations を catch しない (Lessons 12-14 の encoding attacks は input classifiers を bypass する)。
+- **Output only.** 任意の input を model に到達させる。cost を増やす。internal reasoning を attacker に surface する。
+- **Custom only.** categories across に robust ではない。regexes は brittle。
 
-Layered is the default. Belt-and-suspenders.
+Layered が default。belt-and-suspenders。
 
 ### Azure deprecation
 
-Azure Content Moderator: deprecated February 2024, retired February 2027. Replaced by Azure AI Content Safety, which is LLM-based and integrates with Azure OpenAI. The migration is a 2024-2027 field-level project for Azure deployments.
+Azure Content Moderator: 2024年2月 deprecated、2027年2月 retired。Azure AI Content Safety に replaced。Azure AI Content Safety は LLM-based で Azure OpenAI と integrate する。この migration は Azure deployments にとって 2024-2027年の field-level project である。
 
 ### Where this fits in Phase 18
 
-Lesson 16 covers the moderation tooling in the red-team context. Lesson 29 covers deployed moderation. Lesson 30 closes with the current dual-use capability evidence.
+Lesson 16 は red-team context で moderation tooling を扱う。Lesson 29 は deployed moderation を扱う。Lesson 30 は current dual-use capability evidence で締める。
 
 ## Use It
 
-`code/main.py` builds a three-layer moderation harness: input moderator (keyword + category score), output moderator (same classifier on output), custom moderator (domain rules). You can run inputs through and observe which layer catches what.
+`code/main.py` は three-layer moderation harness を構築する: input moderator (keyword + category score)、output moderator (同じ classifier を output に適用)、custom moderator (domain rules)。inputs を通して、どの layer が何を catch するか観察できる。
 
 ## Ship It
 
-This lesson produces `outputs/skill-moderation-stack.md`. Given a deployment, it recommends a moderation stack configuration: which classifier at input, which at output, which custom rules, and what judge for edge cases.
+この lesson では `outputs/skill-moderation-stack.md` を作る。deployment が与えられたとき、moderation stack configuration を推奨する。input にどの classifier、output にどの classifier、どの custom rules、edge cases にどの judge を使うか。
 
 ## Exercises
 
-1. Run `code/main.py`. Run a benign, borderline, and harmful input through all three layers. Report which layer fires for each.
+1. `code/main.py` を実行する。benign、borderline、harmful input を all three layers に通す。それぞれでどの layer が fire するか報告する。
 
-2. Extend the harness with Perspective-API-style toxicity scoring on a specific category. Compare its threshold behaviour to the category score.
+2. Perspective-API-style toxicity scoring を特定 category に追加して harness を拡張する。その threshold behaviour を category score と比較する。
 
-3. Read the OpenAI Moderation API docs and the Llama Guard 3 category list. Map each OpenAI category to the closest Llama Guard categories. Identify three categories that do not cleanly map.
+3. OpenAI Moderation API docs と Llama Guard 3 category list を読む。OpenAI category を最も近い Llama Guard categories に map する。cleanly map しない categories を3つ特定する。
 
-4. Design a moderation stack for a code-assistant deployment (e.g., GitHub Copilot). Identify the categories most and least relevant and propose custom rules.
+4. code-assistant deployment (例: GitHub Copilot) の moderation stack を設計する。最も relevant な categories と最も relevant でない categories を特定し、custom rules を提案する。
 
-5. Azure Content Moderator retires February 2027. Plan a migration to Azure AI Content Safety. Identify the highest-risk element of the migration.
+5. Azure Content Moderator は 2027年2月に retire する。Azure AI Content Safety への migration を計画する。migration の最も risk が高い element を特定する。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| OpenAI Moderation | "omni-moderation-latest" | GPT-4o-based 13-category (text) classifier with partial multimodal support |
-| Perspective API | "Google Jigsaw toxicity" | Pre-LLM-era toxicity scoring baseline |
-| Llama Guard | "MLCommons 14-category" | Meta's hazard classifier (v3: 8B text, 8 langs; v4: 12B multimodal) |
-| Input moderation | "pre-generation filter" | Classifier on user prompt before model call |
-| Output moderation | "post-generation filter" | Classifier on model output before delivery |
-| Custom moderation | "domain rules" | Deployment-specific rules (regex, allowlist, policy) |
-| Layered moderation | "all three layers" | Standard production deployment pattern |
+| OpenAI Moderation | 「omni-moderation-latest」 | GPT-4o-based の 13-category (text) classifier。partial multimodal support |
+| Perspective API | 「Google Jigsaw toxicity」 | pre-LLM-era toxicity scoring baseline |
+| Llama Guard | 「MLCommons 14-category」 | Meta の hazard classifier (v3: 8B text, 8 langs; v4: 12B multimodal) |
+| Input moderation | 「pre-generation filter」 | model call 前の user prompt classifier |
+| Output moderation | 「post-generation filter」 | delivery 前の model output classifier |
+| Custom moderation | 「domain rules」 | deployment-specific rules (regex, allowlist, policy) |
+| Layered moderation | 「all three layers」 | standard production deployment pattern |
 
-## Further Reading
+## 参考文献
 
 - [OpenAI Moderation API docs](https://platform.openai.com/docs/api-reference/moderations) — omni-moderation endpoint
 - [Meta PurpleLlama + Llama Guard](https://github.com/meta-llama/PurpleLlama) — Llama Guard repo

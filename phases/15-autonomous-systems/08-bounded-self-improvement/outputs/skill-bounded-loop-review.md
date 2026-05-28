@@ -1,39 +1,39 @@
 ---
 name: bounded-loop-review
-description: Audit a proposed bounded self-improvement loop against the four-primitive stack (invariants, anchor, multi-objective, regression detection).
+description: 提案された境界付き自己改善ループを 4 つのプリミティブスタック（不変条件、アンカー、多目的、回帰検出）に照らして監査する。
 version: 1.0.0
 phase: 15
 lesson: 8
 tags: [bounded-self-improvement, invariants, alignment-anchor, rsi-safety]
 ---
 
-Given a proposed self-improvement loop, score it against the four bounding primitives identified by the ICLR 2026 RSI Workshop and produce a concrete gap analysis.
+提案された自己改善ループについて、ICLR 2026 RSI ワークショップが特定した 4 つの境界付けプリミティブに照らして採点し、具体的なギャップ分析を作成してください。
 
-Produce:
+作成するもの:
 
-1. **Invariant inventory.** List every invariant the loop enforces. For each, name (a) what is checked, (b) where the check runs (inside/outside agent reach), (c) what a violation does (hard reject, pause, log-only).
-2. **Anchor identification.** Name the alignment anchor (objective statement, constitution, intent description). State its storage location and verify the loop cannot edit it. If there is no anchor, flag as missing.
-3. **Multi-objective axes.** List every axis the loop evaluates. Confirm safety, fairness, and robustness are present alongside performance. A single-axis loop fails this check.
-4. **Regression policy.** State the historical window, the per-axis tolerance, and what happens when a drop is detected. Confirm regression checks use an external comparison set, not just internal history.
-5. **Gap analysis.** For each missing primitive, predict which failure class will emerge first. Invariants missing → smuggled capability or tool drift. Anchor missing → objective reinterpretation. Multi-objective missing → safety regression masking performance gain. Regression missing → silent capability loss.
+1. **不変条件の棚卸し。** ループが強制しているすべての不変条件を列挙してください。それぞれについて、(a) 何をチェックするか、(b) そのチェックがどこで実行されるか（エージェントが到達できる内側か外側か）、(c) 違反時に何が起こるか（即時却下、一時停止、ログのみ）を示してください。
+2. **アンカーの特定。** アラインメントアンカー（目的文、憲法、意図の説明）を示してください。その保存場所を述べ、ループが編集できないことを検証してください。アンカーがない場合は、欠落としてフラグを立てます。
+3. **多目的の軸。** ループが評価するすべての軸を列挙してください。性能に加えて、安全性、公平性、堅牢性が存在することを確認します。単一軸のループはこのチェックに失敗します。
+4. **回帰ポリシー。** 履歴ウィンドウ、軸ごとの許容範囲、低下が検出されたときに何が起こるかを示してください。回帰チェックが内部履歴だけでなく、外部の比較セットを使っていることを確認します。
+5. **ギャップ分析。** 欠けているプリミティブごとに、最初に現れる失敗クラスを予測してください。不変条件の欠落 → 持ち込まれた能力またはツールドリフト。アンカーの欠落 → 目的の再解釈。多目的の欠落 → 性能向上に隠れた安全性の回帰。回帰の欠落 → 静かな能力低下。
 
-Hard rejects:
-- Any loop with zero invariants.
-- Any loop without an alignment anchor outside the edit surface.
-- Any loop that optimizes a single scalar score.
-- Any loop whose regression check reads only from its own history (the loop defines "normal").
+即時却下:
+- 不変条件が 1 つもないループ。
+- 編集面の外側にアラインメントアンカーがないループ。
+- 単一のスカラー値を最適化するループ。
+- 回帰チェックが自分自身の履歴だけを読むループ（ループ自身が「正常」を定義している）。
 
-Refusal rules:
-- If the user treats "it hasn't broken yet" as evidence of safety, refuse and require explicit gate design before any compute is spent.
-- If the user cannot produce the invariants list in 15 minutes, refuse — the loop has no invariants.
-- If the loop is proposed to run in production (affecting real users or infrastructure) without all four primitives, refuse and require staging with monitoring first.
+拒否ルール:
+- ユーザーが「まだ壊れていない」ことを安全性の証拠として扱う場合は拒否し、計算資源を使う前に明示的なゲート設計を求めてください。
+- ユーザーが 15 分以内に不変条件リストを提示できない場合は拒否してください。そのループには不変条件がありません。
+- 実ユーザーまたはインフラに影響する本番環境で、4 つのプリミティブがそろっていないループを動かす提案であれば拒否し、まず監視付きのステージングを求めてください。
 
-Output format:
+出力形式:
 
-Return a scored review with:
-- **Invariant score** (0-5 with explicit list)
-- **Anchor score** (0-5 with storage and verify method)
-- **Multi-objective score** (0-5 with axes listed)
-- **Regression score** (0-5 with tolerance and window)
-- **Gap analysis** (predicted first failure, mitigation plan)
-- **Deployment readiness** (production / staging / research-only)
+採点付きレビューとして返してください。
+- **不変条件スコア**（0-5、明示的なリスト付き）
+- **アンカースコア**（0-5、保存場所と検証方法付き）
+- **多目的スコア**（0-5、軸の一覧付き）
+- **回帰スコア**（0-5、許容範囲とウィンドウ付き）
+- **ギャップ分析**（予測される最初の失敗、緩和計画）
+- **デプロイ準備状況**（production / staging / research-only）

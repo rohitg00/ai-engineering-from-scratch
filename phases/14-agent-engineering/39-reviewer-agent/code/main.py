@@ -1,10 +1,10 @@
-"""Reviewer agent stub with a five-dimension rubric.
+"""five-dimension rubric を持つ reviewer agent stub。
 
-Consumes builder artifacts (diff summary, state, feedback, verification verdict)
-and emits review_report.json with per-dimension scores and a final verdict.
+builder artifacts (diff summary、state、feedback、verification verdict) を consume し、
+dimension ごとの score と final verdict を持つ review_report.json を emit する。
 
-In production each dimension scorer calls an LLM. Here we keep them
-deterministic for the lesson — the structure is what travels.
+production では各 dimension scorer が LLM を呼ぶ。ここでは lesson 用に
+deterministic に保つ。持ち運ぶべきものは structure。
 
 Run: python3 code/main.py
 """
@@ -49,14 +49,14 @@ def score_problem_fit(inputs: ReviewerInputs) -> DimensionScore:
     keywords = [w for w in goal.split() if len(w) > 4]
     hits = sum(any(k in f.lower() for f in files) for k in keywords)
     score = min(2, hits)
-    return DimensionScore("problem_fit", score, f"keyword hits across touched files: {hits}")
+    return DimensionScore("problem_fit", score, f"touched files における keyword hits: {hits}")
 
 
 def score_scope_discipline(inputs: ReviewerInputs) -> DimensionScore:
     off = inputs.verdict.get("findings", [])
     block_scope = [f for f in off if f.get("code") == "scope.forbidden"]
     if block_scope:
-        return DimensionScore("scope_discipline", 0, "forbidden writes present")
+        return DimensionScore("scope_discipline", 0, "forbidden writes が存在")
     warn_scope = [f for f in off if f.get("code") == "scope.off_scope"]
     return DimensionScore("scope_discipline", 1 if warn_scope else 2, f"off-scope warnings: {len(warn_scope)}")
 
@@ -64,25 +64,25 @@ def score_scope_discipline(inputs: ReviewerInputs) -> DimensionScore:
 def score_assumptions(inputs: ReviewerInputs) -> DimensionScore:
     assumptions = inputs.state.get("assumptions") or []
     if not assumptions:
-        return DimensionScore("assumptions", 1, "no assumptions recorded; either work was trivial or undocumented")
+        return DimensionScore("assumptions", 1, "assumptions の記録なし。work が trivial か undocumented")
     return DimensionScore("assumptions", 2, f"{len(assumptions)} assumptions recorded")
 
 
 def score_verification(inputs: ReviewerInputs) -> DimensionScore:
     exits = [rec.get("exit_code") for rec in inputs.feedback]
     if any(code is None for code in exits):
-        return DimensionScore("verification_quality", 0, "feedback log has missing exit codes")
+        return DimensionScore("verification_quality", 0, "feedback log に missing exit codes がある")
     if all(code == 0 for code in exits) and exits:
-        return DimensionScore("verification_quality", 2, "all feedback exit zero")
-    return DimensionScore("verification_quality", 1, "mixed exit codes in feedback")
+        return DimensionScore("verification_quality", 2, "すべての feedback が exit zero")
+    return DimensionScore("verification_quality", 1, "feedback に mixed exit codes")
 
 
 def score_handoff(inputs: ReviewerInputs) -> DimensionScore:
     if inputs.state.get("active_task_id"):
-        return DimensionScore("handoff_readiness", 1, "active task not closed in state")
+        return DimensionScore("handoff_readiness", 1, "state で active task が close されていない")
     if inputs.state.get("next_action"):
-        return DimensionScore("handoff_readiness", 2, "next_action set, task closed")
-    return DimensionScore("handoff_readiness", 0, "no next_action recorded")
+        return DimensionScore("handoff_readiness", 2, "next_action が設定され、task は close 済み")
+    return DimensionScore("handoff_readiness", 0, "next_action の記録なし")
 
 
 SCORERS = [score_problem_fit, score_scope_discipline, score_assumptions, score_verification, score_handoff]
@@ -108,8 +108,8 @@ def main() -> None:
         diff_summary={"touched": ["app/signup.py", "tests/test_signup.py"]},
         state={
             "active_task_id": None,
-            "assumptions": ["users sign up with email + password only"],
-            "next_action": "pick next task from board",
+            "assumptions": ["users は email + password のみで sign up する"],
+            "next_action": "board から次の task を選ぶ",
         },
         feedback=[{"command": "pytest", "exit_code": 0}],
         verdict={"passed": True, "findings": []},

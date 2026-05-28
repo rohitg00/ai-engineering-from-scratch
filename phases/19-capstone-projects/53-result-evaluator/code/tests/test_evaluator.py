@@ -1,4 +1,4 @@
-"""Tests for Evaluator: improvement, regression, noise, failed terminal, log scale, t test."""
+"""Evaluator の tests: improvement、regression、noise、failed terminal、log scale、t test。"""
 
 from __future__ import annotations
 

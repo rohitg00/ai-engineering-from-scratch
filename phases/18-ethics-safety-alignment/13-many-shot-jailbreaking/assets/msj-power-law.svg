@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,8 +7,8 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .axis { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
       .curve { stroke-width: 2.0; fill: none; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -37,23 +37,23 @@
   <text x="485" y="95" class="small" fill="#888">256 shots</text>
 
   <rect x="680" y="60" width="240" height="340" class="box"/>
-  <text x="800" y="82" text-anchor="middle" class="head">mechanism shared with ICL</text>
+  <text x="800" y="82" text-anchor="middle" class="head">ICLと共有されるmechanism</text>
   <rect x="700" y="100" width="200" height="60" class="cold"/>
   <text x="800" y="125" text-anchor="middle" class="step">benign few-shot</text>
   <text x="800" y="143" text-anchor="middle" class="small">pattern: task instruction</text>
   <rect x="700" y="180" width="200" height="60" class="hot"/>
   <text x="800" y="205" text-anchor="middle" class="step">MSJ</text>
   <text x="800" y="223" text-anchor="middle" class="small">pattern: harmful compliance</text>
-  <text x="700" y="265" class="small">same power-law exponent.</text>
-  <text x="700" y="283" class="small">same pattern extraction.</text>
-  <text x="700" y="301" class="small">defenses that block MSJ</text>
-  <text x="700" y="319" class="small">without blocking ICL require</text>
-  <text x="700" y="337" class="small">context-level classification.</text>
-  <text x="700" y="365" class="small">Anthropic: 61% -&gt; 2% reduction</text>
-  <text x="700" y="383" class="small">on prompt-classifier defense.</text>
+  <text x="700" y="265" class="small">同じpower-law exponent。</text>
+  <text x="700" y="283" class="small">同じpattern extraction。</text>
+  <text x="700" y="301" class="small">ICLを塞がずMSJを塞ぐには</text>
+  <text x="700" y="319" class="small">context-level classificationが</text>
+  <text x="700" y="337" class="small">必要。</text>
+  <text x="700" y="365" class="small">Anthropic: prompt-classifier defenseで</text>
+  <text x="700" y="383" class="small">61% -&gt; 2%へ低下。</text>
 
   <rect x="60" y="420" width="860" height="70" class="box"/>
-  <text x="80" y="445" class="small">power law -&gt; no natural saturation; more shots keeps helping the attacker.</text>
-  <text x="80" y="465" class="small">category sensitivity: violent / deceitful categories have lower-exponent power laws (jailbreak faster).</text>
-  <text x="80" y="483" class="small">compositional: MSJ + PAIR + persuasive templates is strictly stronger than any single attack.</text>
+  <text x="80" y="445" class="small">power law -&gt; natural saturationなし。shotsが増えるほどattackerに有利。</text>
+  <text x="80" y="465" class="small">category sensitivity: violent / deceitful categoriesは低exponentのpower law (jailbreakが速い)。</text>
+  <text x="80" y="483" class="small">compositional: MSJ + PAIR + persuasive templatesは単独attackより明確に強い。</text>
 </svg>

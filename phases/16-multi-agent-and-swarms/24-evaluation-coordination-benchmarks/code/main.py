@@ -1,8 +1,8 @@
-"""Multi-agent benchmark scorecard generator, stdlib only.
+"""multi-agent benchmark scorecard generator。stdlib のみ。
 
-Simulates 3 multi-agent systems on a toy task set. Computes MARBLE-style
-milestone metrics, random baseline delta, cost-per-milestone, and a
-contamination check by splitting seen/unseen tasks.
+toy task set 上で 3 multi-agent systems を simulate する。MARBLE-style
+milestone metrics、random baseline delta、cost-per-milestone、seen/unseen
+tasks の split による contamination check を計算する。
 """
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ class SystemSim:
     base_accuracy: float
     cost_per_task: float
     milestone_completion_rate: float
-    training_contamination: float = 0.0  # extra accuracy on seen tasks
+    training_contamination: float = 0.0  # seen tasks での extra accuracy
     variance: float = 0.1
 
 
@@ -56,7 +56,7 @@ def run_task(system: SystemSim, task_id: str, seen: bool, rng: random.Random) ->
 
 
 def random_baseline(rng: random.Random) -> float:
-    return 0.15  # random routing accuracy on this task family
+    return 0.15  # この task family における random routing accuracy
 
 
 def run_bench(system: SystemSim, n_seen: int, n_held: int, seed: int = 0) -> dict:
@@ -82,7 +82,7 @@ def run_bench(system: SystemSim, n_seen: int, n_held: int, seed: int = 0) -> dic
 def format_scorecard() -> None:
     print("=" * 78)
     print("BENCHMARK SCORECARD — MARBLE-style milestone + contamination check")
-    print("  contamination check: accuracy_seen - accuracy_held (delta > 0.1 = suspect)")
+    print("  contamination check: accuracy_seen - accuracy_held（delta > 0.1 = suspect）")
     print("=" * 78)
     print(f"{'system':10s} {'acc(seen)':>10s} {'acc(held)':>10s} {'Δ':>6s} "
           f"{'mile(held)':>12s} {'cost/t':>8s} {'cost/mil':>10s} {'vs random':>12s}")
@@ -99,21 +99,21 @@ def format_scorecard() -> None:
               f"${r['cost_per_task']:>7.2f} ${r['cost_per_milestone_held']:>9.3f} "
               f"+{vs_random:>10.3f}")
 
-    print("\n  * = contamination flag; held-set accuracy is the canonical number")
+    print("\n  * = contamination flag。held-set accuracy が canonical number")
     print(f"  random baseline accuracy: {rand_baseline:.3f}")
 
 
 def print_claim_scorecard() -> None:
     print("\n" + "=" * 78)
-    print("CLAIM CHECKLIST — read this before accepting any multi-agent result")
+    print("CLAIM CHECKLIST — multi-agent result を受け入れる前に読む")
     print("=" * 78)
     checklist = [
-        "Which benchmark + split? Pro vs Verified is a 40-point gap for frontier models.",
-        "Contamination check: is the benchmark post-training-cutoff?",
-        "Baseline comparison: vs single-LLM, vs random, vs prior multi-agent?",
-        "Statistical significance: N trials, p-value, confidence interval?",
-        "Task diversity: single task or many? Generalization beyond one domain?",
-        "Cost disclosure: tokens per task, wall-clock per task?",
+        "どの benchmark + split か。Pro vs Verified は frontier models で 40-point gap。",
+        "Contamination check: benchmark は post-training-cutoff か。",
+        "Baseline comparison: vs single-LLM、vs random、vs prior multi-agent か。",
+        "Statistical significance: N trials、p-value、confidence interval はあるか。",
+        "Task diversity: single task か many か。1 domain を超えて generalize するか。",
+        "Cost disclosure: task あたり tokens、wall-clock はあるか。",
     ]
     for i, item in enumerate(checklist, 1):
         print(f"  [{i}] {item}")
@@ -122,11 +122,11 @@ def print_claim_scorecard() -> None:
 def main() -> None:
     format_scorecard()
     print_claim_scorecard()
-    print("\nTakeaways:")
-    print("  system-A scores highest on seen tasks but has contamination signal (large delta).")
-    print("  system-B is cheapest per milestone; lowest raw accuracy but transparent.")
-    print("  system-C sits in the middle but without contamination flag — trustworthy.")
-    print("  the ranking by 'raw accuracy' vs 'cost per milestone (held)' can differ sharply.")
+    print("\n要点:")
+    print("  system-A は seen tasks で最高 score ですが、contamination signal（large delta）があります。")
+    print("  system-B は milestone あたり最安です。raw accuracy は最低ですが transparent です。")
+    print("  system-C は中間ですが contamination flag がなく、trustworthy です。")
+    print("  'raw accuracy' と 'cost per milestone (held)' の ranking は大きく変わり得ます。")
 
 
 if __name__ == "__main__":

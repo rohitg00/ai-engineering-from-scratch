@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the chain rule in calculus state?",
-      "options": ["The derivative of a sum is the sum of derivatives", "The derivative of composed functions is the product of their individual derivatives", "The integral of a product is the product of integrals", "Functions can only be differentiated if they are linear"],
+      "question": "微分積分における連鎖律は何を述べていますか？",
+      "options": ["和の導関数は導関数の和である", "合成関数の導関数は、それぞれの関数の導関数の積である", "積の積分は積分の積である", "関数は線形でなければ微分できない"],
       "correct": 1,
-      "explanation": "For y = f(g(x)), the chain rule says dy/dx = f'(g(x)) * g'(x). You multiply the derivatives at each link in the chain. This is the mathematical basis of backpropagation."
+      "explanation": "y = f(g(x)) の場合、連鎖律は dy/dx = f'(g(x)) * g'(x) だと述べます。連鎖の各リンクで導関数を掛けます。これはバックプロパゲーションの数学的基盤です。"
     },
     {
       "stage": "pre",
-      "question": "What is a computational graph?",
-      "options": ["A plot of loss vs training steps", "A directed graph where nodes are operations and edges carry values forward or gradients backward", "A diagram showing the architecture of a neural network", "A graph database used for storing training data"],
+      "question": "計算グラフとは何ですか？",
+      "options": ["損失と学習ステップの関係を示すプロット", "ノードが演算で、エッジが値を前向きに、または勾配を後ろ向きに運ぶ有向グラフ", "ニューラルネットワークのアーキテクチャを示す図", "学習データを保存するためのグラフデータベース"],
       "correct": 1,
-      "explanation": "A computational graph represents the sequence of operations in a computation. Data flows forward through the graph, and gradients flow backward during backpropagation."
+      "explanation": "計算グラフは、計算内の演算の並びを表します。データはグラフを前向きに流れ、バックプロパゲーション中には勾配が後ろ向きに流れます。"
     },
     {
       "stage": "post",
-      "question": "Why does PyTorch use reverse-mode autodiff (backpropagation) instead of forward-mode?",
-      "options": ["Reverse mode is more numerically accurate", "Reverse mode computes all gradients in one backward pass, while forward mode needs one pass per input variable -- neural networks have millions of inputs but one loss output", "Reverse mode uses less memory", "Forward mode cannot handle non-linear functions"],
+      "question": "PyTorch が順モードではなく逆モード自動微分（バックプロパゲーション）を使うのはなぜですか？",
+      "options": ["逆モードの方が数値的に正確だから", "逆モードは1回の逆伝播ですべての勾配を計算できるが、順モードは入力変数ごとに1回のパスが必要だから。ニューラルネットワークには何百万もの入力がある一方で、損失出力は1つだから", "逆モードの方がメモリ使用量が少ないから", "順モードは非線形関数を扱えないから"],
       "correct": 1,
-      "explanation": "Neural networks have millions of weight inputs but produce a single scalar loss. Reverse mode needs one backward pass total. Forward mode would need one pass per weight -- millions of passes -- making it impractical."
+      "explanation": "ニューラルネットワークには何百万もの重み入力がありますが、単一のスカラー損失を出力します。逆モードは全体で1回の逆伝播だけで済みます。順モードでは重みごとに1回、つまり何百万回ものパスが必要になり、実用的ではありません。"
     },
     {
       "stage": "post",
-      "question": "In the Value class autograd engine, why does the backward function use '+=' instead of '=' for accumulating gradients?",
-      "options": ["To average the gradients across multiple samples", "Because a value used in multiple operations receives gradient contributions from each one, which must be summed", "To prevent numerical overflow in the gradients", "Because Python does not support the '=' operator in closures"],
+      "question": "Value クラスの autograd エンジンで、backward 関数が勾配の蓄積に '=' ではなく '+=' を使うのはなぜですか？",
+      "options": ["複数サンプルの勾配を平均するため", "ある値が複数の演算で使われると、それぞれから勾配の寄与を受け取り、それらを合計する必要があるため", "勾配の数値オーバーフローを防ぐため", "Python ではクロージャ内で '=' 演算子を使えないため"],
       "correct": 1,
-      "explanation": "When a value feeds into multiple operations (e.g., x used in both x*y and x+z), its total gradient is the sum of all incoming gradient contributions. Using '=' would overwrite earlier contributions."
+      "explanation": "ある値が複数の演算へ入力される場合（例: x が x*y と x+z の両方で使われる場合）、その合計勾配はすべての入力勾配寄与の和です。'=' を使うと、それ以前の寄与を上書きしてしまいます。"
     },
     {
       "stage": "post",
-      "question": "What is gradient checking and when should you use it?",
-      "options": ["Checking that gradients are below a threshold to prevent exploding gradients", "Comparing autodiff gradients against numerical finite-difference gradients to verify correctness of the backward pass", "Checking that all parameters received non-zero gradients during training", "Monitoring gradient magnitudes during training to detect vanishing gradients"],
+      "question": "勾配チェックとは何で、いつ使うべきですか？",
+      "options": ["爆発的勾配を防ぐために、勾配がしきい値以下か確認すること", "backward パスの正しさを検証するために、自動微分の勾配を数値的な有限差分勾配と比較すること", "学習中にすべてのパラメータが非ゼロ勾配を受け取ったか確認すること", "消失勾配を検出するために、学習中の勾配の大きさを監視すること"],
       "correct": 1,
-      "explanation": "Gradient checking computes numerical derivatives via (f(x+h) - f(x-h)) / 2h and compares them to autodiff gradients. Use it when adding new operations to your autograd engine or debugging training failures."
+      "explanation": "勾配チェックは、(f(x+h) - f(x-h)) / 2h で数値微分を計算し、自動微分の勾配と比較します。autograd エンジンに新しい演算を追加するときや、学習失敗をデバッグするときに使います。"
     }
   ]
 }

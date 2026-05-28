@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -7,7 +7,7 @@
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 11px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 15px; font-weight: 700; fill: #1a1a1a; }
       .tag { font-size: 10px; fill: #c0392b; font-weight: 600; }
@@ -16,42 +16,42 @@
     </style>
   </defs>
 
-  <text x="440" y="26" text-anchor="middle" class="title">three-tier VAD cascade + turn-end state machine</text>
+  <text x="440" y="26" text-anchor="middle" class="title">3段VADカスケード + ターン終了状態機械</text>
 
   <rect x="20" y="55" width="260" height="130" class="box"/>
-  <text x="150" y="78" text-anchor="middle" class="label">Tier 1: energy gate</text>
-  <text x="150" y="96" text-anchor="middle" class="tag">cheap, fires on every noise</text>
-  <text x="30" y="122" class="content">if RMS &gt; -40 dBFS → "speech"</text>
-  <text x="30" y="142" class="content">filters silence but NOT</text>
-  <text x="30" y="160" class="content">keyboard / cough / chair</text>
+  <text x="150" y="78" text-anchor="middle" class="label">第1段: エネルギー門</text>
+  <text x="150" y="96" text-anchor="middle" class="tag">軽いがノイズに反応する</text>
+  <text x="30" y="122" class="content">if RMS &gt; -40 dBFS → "発話"</text>
+  <text x="30" y="142" class="content">無音は除外するが</text>
+  <text x="30" y="160" class="content">キーボード/咳/椅子は苦手</text>
 
   <rect x="295" y="55" width="260" height="130" class="hot"/>
-  <text x="425" y="78" text-anchor="middle" class="label">Tier 2: Silero VAD</text>
-  <text x="425" y="96" text-anchor="middle" class="tag">the 2020-2026 default</text>
-  <text x="305" y="122" class="content">1M params · 1 ms / 30 ms chunk</text>
+  <text x="425" y="78" text-anchor="middle" class="label">第2段: Silero VAD</text>
+  <text x="425" y="96" text-anchor="middle" class="tag">2020-2026の定番</text>
+  <text x="305" y="122" class="content">1Mパラメータ · 1 ms / 30 msチャンク</text>
   <text x="305" y="142" class="content">87.7% TPR @ 5% FPR</text>
-  <text x="305" y="160" class="content">trained on 6000+ languages</text>
-  <text x="305" y="176" class="caption">MIT · open · rejects transients</text>
+  <text x="305" y="160" class="content">6000+言語で学習</text>
+  <text x="305" y="176" class="caption">MIT · オープン · 瞬間音を拒否</text>
 
   <rect x="570" y="55" width="285" height="130" class="box"/>
-  <text x="712" y="78" text-anchor="middle" class="label">Tier 3: semantic turn detector</text>
-  <text x="712" y="96" text-anchor="middle" class="tag">LiveKit turn-detector / custom</text>
-  <text x="580" y="122" class="content">VAD + recent-words classifier</text>
-  <text x="580" y="142" class="content">pauses mid-sentence vs done</text>
-  <text x="580" y="160" class="content">("hmm, let me think..." stays)</text>
-  <text x="580" y="176" class="caption">reduces false-interrupt by 5-10%</text>
+  <text x="712" y="78" text-anchor="middle" class="label">第3段: 意味的ターン検出</text>
+  <text x="712" y="96" text-anchor="middle" class="tag">LiveKit turn-detector / 独自</text>
+  <text x="580" y="122" class="content">VAD + 直近語分類器</text>
+  <text x="580" y="142" class="content">文中ポーズと完了を分ける</text>
+  <text x="580" y="160" class="content">("hmm, let me think..." は継続)</text>
+  <text x="580" y="176" class="caption">誤割り込みを5-10%削減</text>
 
   <rect x="20" y="205" width="835" height="130" class="box"/>
-  <text x="440" y="226" text-anchor="middle" class="label">turn-detection state machine</text>
-  <text x="60" y="254" class="content">state: "idle"       ─ VAD fires &gt; 250 ms of speech ─→ state: "speaking"  (emit START)</text>
-  <text x="60" y="274" class="content">state: "speaking"   ─ VAD silent for 500 ms        ─→ state: "idle"      (emit END)</text>
-  <text x="60" y="300" class="caption">pre-roll buffer (300 ms): keep audio BEFORE VAD fires, else first word gets clipped</text>
-  <text x="60" y="318" class="caption">min speech (250 ms): reject transients; silence hangover (500 ms): tune per use case</text>
+  <text x="440" y="226" text-anchor="middle" class="label">ターン検出の状態機械</text>
+  <text x="60" y="254" class="content">状態: "待機" ─ 250 ms超の発話でVAD発火 ─→ 状態: "発話中" (START送出)</text>
+  <text x="60" y="274" class="content">状態: "発話中" ─ 500 ms無音 ─→ 状態: "待機" (END送出)</text>
+  <text x="60" y="300" class="caption">先読みバッファ (300 ms): VAD発火前の音声を保持しないと最初の語が切れる</text>
+  <text x="60" y="318" class="caption">最小発話 (250 ms): 瞬間音拒否; 無音余韻 (500 ms): 用途ごとに調整</text>
 
   <rect x="20" y="345" width="835" height="105" class="hot"/>
-  <text x="440" y="366" text-anchor="middle" class="label">the flush trick (Kyutai Unmute 2025) — sub-200 ms end-to-end</text>
-  <text x="60" y="392" class="content">1. VAD fires end-of-speech at t=0</text>
-  <text x="60" y="410" class="content">2. send buffered audio + flush signal to STT server</text>
-  <text x="60" y="428" class="content">3. STT processes at 4× realtime → 500 ms look-ahead buffer → 125 ms wall time</text>
-  <text x="60" y="446" class="content">4. transcript ready at t+125 ms — same latency as the VAD signal itself</text>
+  <text x="440" y="366" text-anchor="middle" class="label">flush trick (Kyutai Unmute 2025) — E2E 200 ms未満</text>
+  <text x="60" y="392" class="content">1. t=0でVADが発話終了を発火</text>
+  <text x="60" y="410" class="content">2. バッファ音声 + flush信号をSTTサーバーへ送る</text>
+  <text x="60" y="428" class="content">3. STTは4×リアルタイム処理 → 500 ms先読み → 125 ms実時間</text>
+  <text x="60" y="446" class="content">4. 文字起こしはt+125 msで準備完了 — VAD信号自体と同じ遅延</text>
 </svg>

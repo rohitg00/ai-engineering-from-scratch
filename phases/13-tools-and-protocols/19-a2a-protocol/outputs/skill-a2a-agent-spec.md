@@ -1,30 +1,30 @@
 ---
 name: a2a-agent-spec
-description: Produce the Agent Card and skills schema for an agent that should be callable over A2A.
+description: A2A経由でcallableにすべきagent向けに、Agent Cardとskills schemaを作る。
 version: 1.0.0
 phase: 13
 lesson: 18
 tags: [a2a, agent-card, task-lifecycle, delegation]
 ---
 
-Given an agent's capabilities and intended collaborators, produce its A2A Agent Card and skill definitions.
+Agentのcapabilitiesとintended collaboratorsを受け取り、A2A Agent Cardとskill definitionsを作る。
 
 Produce:
 
-1. Agent Card. `name`, `description`, `url`, `version`, `schemaVersion`, `capabilities` (streaming, pushNotifications), `skills[]`.
-2. Skills list. Each with `id`, `name`, `description`, `inputModes`, `outputModes`. Use the "Use when X. Do not use for Y." pattern in descriptions.
-3. Task-state plan. For each skill, expected state transitions and the input_required paths.
-4. Signing plan. Whether to sign the card via AP2 (recommended for externally-callable agents).
-5. Transport. JSON-RPC over HTTP (default) or gRPC. Note backward-compat with v1.0.
+1. Agent Card。`name`、`description`、`url`、`version`、`schemaVersion`、`capabilities`（streaming、pushNotifications）、`skills[]`。
+2. Skills list。各skillに`id`、`name`、`description`、`inputModes`、`outputModes`を含める。Descriptionsでは「Use when X. Do not use for Y.」patternを使う。
+3. Task-state plan。各skillについて、expected state transitionsと`input_required` paths。
+4. Signing plan。AP2でcardへsignするか（externally-callable agentsではrecommended）。
+5. Transport。JSON-RPC over HTTP（default）またはgRPC。v1.0とのbackward-compatを記す。
 
 Hard rejects:
-- Any Agent Card without a stable URL. Breaks discovery.
-- Any skill without input and output modes declared. Callers cannot reason about compatibility.
-- Any externally-callable agent without an AP2 signing plan. Impersonation vector.
+- Stable URLのないAgent Card。Discoveryを壊す。
+- Input/output modesが宣言されていないskill。Callersがcompatibilityを判断できない。
+- AP2 signing planのないexternally-callable agent。Impersonation vector。
 
 Refusal rules:
-- If the agent's use case is a single tool call, refuse to scaffold A2A; recommend MCP.
-- If the agent exposes internals it should not (tool call traces, chain-of-thought), refuse and mandate opacity.
-- If the agent needs A2A for payments (AP2 use case), confirm the AP2 extension version and flag that AP2 is separate from core A2A.
+- Agentのuse caseがsingle tool callなら、A2A scaffoldingを拒否し、MCPを勧める。
+- Agentが見せるべきでないinternals（tool call traces、chain-of-thought）をexposeしている場合、拒否しopacityを必須にする。
+- Payments目的でA2Aが必要な場合（AP2 use case）、AP2 extension versionを確認し、AP2はcore A2Aとは別物だとflagする。
 
-Output: a one-page Agent Card JSON, a skills schema for each operation, state-transition plan, signing and transport choices. End with the minimum v1.0 backward-compat guarantee the agent promises.
+Output: 1ページのAgent Card JSON、各operationのskills schema、state-transition plan、signingとtransport choices。最後に、そのagentが約束するminimum v1.0 backward-compat guaranteeを示す。

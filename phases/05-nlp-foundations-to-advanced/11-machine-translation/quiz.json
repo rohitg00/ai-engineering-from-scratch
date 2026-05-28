@@ -1,102 +1,102 @@
 {
   "lesson": "11-machine-translation",
-  "title": "Machine Translation",
+  "title": "機械翻訳",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does BLEU measure?",
+      "question": "BLEU は何を測る指標ですか？",
       "options": [
-        "Language identification accuracy",
-        "N-gram precision (typically 1-4) between hypothesis and reference, with a brevity penalty",
-        "Character-level F-score",
-        "Embedding cosine similarity"
+        "言語識別の精度",
+        "仮説訳と参照訳の間の n-gram precision (通常 1-4) に brevity penalty を加えたもの",
+        "文字レベルの F-score",
+        "埋め込みの cosine similarity"
       ],
       "correct": 1,
-      "explanation": "BLEU is the geometric mean of 1-4-gram precision against references, plus a brevity penalty."
+      "explanation": "BLEU は、参照訳に対する 1-4-gram precision の幾何平均に brevity penalty を加えたものです。"
     },
     {
       "stage": "pre",
-      "question": "Why use sacrebleu instead of rolling your own BLEU?",
+      "question": "BLEU を自作せず sacrebleu を使うのはなぜですか？",
       "options": [
-        "It is more accurate",
-        "It runs on GPU",
-        "It normalizes tokenization so scores are comparable across papers and runs",
-        "It supports streaming"
+        "より正確だから",
+        "GPU で動くから",
+        "tokenization を正規化し、論文間や実行間でスコアを比較できるようにするから",
+        "streaming に対応しているから"
       ],
       "correct": 2,
-      "explanation": "sacrebleu freezes tokenization, removing a common source of incomparable BLEU numbers."
+      "explanation": "sacrebleu は tokenization を固定し、BLEU の数値が比較不能になる典型的な原因を取り除きます。"
     },
     {
       "stage": "check",
-      "question": "Which NLLB-specific setting controls the target language during decoding?",
+      "question": "decoding 中の target language を制御する NLLB 固有の設定はどれですか？",
       "options": [
         "length_penalty",
-        "forced_bos_token_id set to the target language code's token id",
+        "target language code の token id に設定した forced_bos_token_id",
         "num_beams",
         "src_lang"
       ],
       "correct": 1,
-      "explanation": "NLLB forces the first decoded token to a target-language code via forced_bos_token_id."
+      "explanation": "NLLB は forced_bos_token_id によって、最初に decode される token を target-language code に強制します。"
     },
     {
       "stage": "check",
-      "question": "Which metric family is the 2026 default for production MT quality where labeled data exists?",
+      "question": "ラベル付きデータがある場合、2026 年の本番 MT 品質評価でデフォルトとされる metric family はどれですか？",
       "options": [
-        "BLEU alone",
+        "BLEU のみ",
         "Token edit distance",
-        "Learned metrics such as COMET (and BERTScore/BLEURT) trained on human judgment",
+        "人間評価で学習した COMET などの learned metric (BERTScore/BLEURT を含む)",
         "Latency"
       ],
       "correct": 2,
-      "explanation": "Learned metrics like COMET correlate more strongly with human judgment than BLEU/chrF alone."
+      "explanation": "COMET のような learned metric は、BLEU/chrF だけの場合よりも人間評価と強く相関します。"
     },
     {
       "stage": "check",
-      "question": "When does chrF tend to be more informative than BLEU?",
+      "question": "chrF が BLEU より有益になりやすいのはどのような場合ですか？",
       "options": [
-        "For morphologically rich languages where character-level matches catch inflectional variants BLEU misses",
-        "When using beam search",
-        "On very short sentences",
-        "Whenever a reference exists"
+        "文字レベルの一致が、BLEU の見逃す語形変化を捉えられる形態変化の多い言語の場合",
+        "beam search を使う場合",
+        "非常に短い文の場合",
+        "参照訳が存在するすべての場合"
       ],
       "correct": 0,
-      "explanation": "Character F-score captures partial morphological matches that word-level BLEU undercounts."
+      "explanation": "Character F-score は、word-level BLEU が過小評価する部分的な形態的一致を捉えます。"
     },
     {
       "stage": "post",
-      "question": "What is off-target generation in multilingual MT?",
+      "question": "多言語 MT における off-target generation とは何ですか？",
       "options": [
-        "Output that drops named entities",
-        "Output that misses punctuation",
-        "The model decodes into the wrong target language (e.g. NLLB outputting Spanish when French was requested)",
-        "Output that is too short"
+        "named entities を落とした出力",
+        "句読点を落とした出力",
+        "モデルが誤った target language に decode すること (例: フランス語を要求したのに NLLB がスペイン語を出力する)",
+        "短すぎる出力"
       ],
       "correct": 2,
-      "explanation": "Off-target generation is common on rare language pairs; a post-translation language-ID check catches it."
+      "explanation": "off-target generation は希少な言語ペアでよく起きます。翻訳後の language-ID check で捕捉できます。"
     },
     {
       "stage": "post",
-      "question": "Why does fine-tuning on a few thousand high-quality domain pairs often beat much larger noisy web data?",
+      "question": "数千件の高品質なドメインペアでの fine-tuning が、はるかに大きなノイズ混じりの web data に勝つことが多いのはなぜですか？",
       "options": [
-        "Larger data overflows GPU memory",
-        "Smaller datasets train faster",
-        "Web data is illegal to use",
-        "Quality and domain match dominate volume; noisy parallel data introduces drift and hallucination"
+        "大きなデータは GPU memory をあふれさせるから",
+        "小さい dataset のほうが速く学習できるから",
+        "web data は使用が違法だから",
+        "品質とドメイン適合が量を上回るから。ノイズの多い並列データは drift と hallucination を持ち込む"
       ],
       "correct": 3,
-      "explanation": "Clean domain-aligned pairs are the largest production lever; noisy data degrades adaptation."
+      "explanation": "クリーンでドメインに合ったペアは、本番で最も大きく効くレバーです。ノイズの多いデータは adaptation を劣化させます。"
     },
     {
       "stage": "post",
-      "question": "When is an LLM (e.g. GPT-4) likely to outperform a specialized MT model in 2026?",
+      "question": "2026 年に LLM (例: GPT-4) が専用 MT モデルを上回りやすいのはどのような場合ですか？",
       "options": [
-        "Highest throughput batch translation",
-        "Latency-critical browser translation",
-        "Idiomatic content, long context, stylistic adaptation via prompting, or content requiring tone control",
-        "Small-language pairs with millions of parallel sentences"
+        "最高 throughput の batch translation",
+        "latency-critical な browser translation",
+        "慣用表現を含むコンテンツ、長い文脈、prompting による文体適応、または tone control が必要なコンテンツ",
+        "数百万の並列文がある小規模言語ペア"
       ],
       "correct": 2,
-      "explanation": "LLMs win on idiomatic, long-context, or style-controlled translation; specialized MT wins on throughput and latency."
+      "explanation": "LLM は慣用表現、長い文脈、style-controlled translation で強く、専用 MT は throughput と latency で強みがあります。"
     }
   ]
 }

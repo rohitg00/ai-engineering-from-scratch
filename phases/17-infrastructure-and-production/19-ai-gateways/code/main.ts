@@ -1,14 +1,14 @@
 /**
  * AI gateway skeleton — TypeScript port.
  *
- * Implements the four core gateway primitives from docs/en.md:
- *   1. Auth: API-key check with constant-time comparison + per-tenant resolution.
- *   2. Rate limit: token-bucket per tenant; LiteLLM-style.
- *   3. Retry: exponential backoff with jitter on transient 429/5xx; bounded.
- *   4. Fallback chain: try providers in order until one succeeds.
+ * docs/en.md にある4つの core gateway primitives を実装する:
+ *   1. Auth: constant-time comparison と per-tenant resolution による API-key check。
+ *   2. Rate limit: tenant ごとの token-bucket。LiteLLM style。
+ *   3. Retry: transient 429/5xx に対する jitter 付き exponential backoff。bounded。
+ *   4. Fallback chain: 成功するまで providers を順に試す。
  *
- * Plus the same fallback simulator main.py runs (4 gateway profiles, 3-provider
- * chain, error injection) so the numbers stay reproducible.
+ * さらに main.py と同じ fallback simulator（4 gateway profiles、3-provider chain、
+ * error injection）を実行し、数値を reproducible に保つ。
  *
  * Citations:
  *   - Kong AI Gateway benchmark (228% vs Portkey, 859% vs LiteLLM):
@@ -17,7 +17,7 @@
  *   - Portkey (Apache 2.0 since March 2026): https://github.com/Portkey-AI/gateway
  *   - Kong AI Gateway docs: https://docs.konghq.com/gateway/latest/ai-gateway/
  *
- * Runs on Node 20+ stdlib. No npm deps.
+ * Node 20+ stdlib で動作する。npm deps は不要。
  */
 
 import { timingSafeEqual, createHash } from "node:crypto";
@@ -26,9 +26,9 @@ import { timingSafeEqual, createHash } from "node:crypto";
 
 type Tenant = {
   id: string;
-  // SHA-256 hex of the issued API key. Never store keys in plaintext.
+  // 発行済み API key の SHA-256 hex。key を plaintext で保存しない。
   keyHashHex: string;
-  // Per-tenant tier: shapes rate-limit budgets.
+  // tenant ごとの tier。rate-limit budget の形を決める。
   tier: "free" | "trial" | "paid";
 };
 
@@ -41,11 +41,11 @@ class AuthService {
     this.hashByKey.set(tenant.keyHashHex, tenant);
   }
 
-  // Constant-time check by digest comparison.
+  // digest comparison による constant-time check。
   authenticate(presentedKey: string): Tenant | undefined {
     const digest = createHash("sha256").update(presentedKey).digest("hex");
-    // Walk every known hash so an unknown key has the same wall-clock cost
-    // as a known one.
+    // unknown key と known key の wall-clock cost が同じになるよう、
+    // すべての既知 hash を walk する。
     let match: Tenant | undefined;
     const presented = Buffer.from(digest, "hex");
     for (const t of this.tenants.values()) {
@@ -103,7 +103,7 @@ class TokenBucketLimiter {
     return bucket;
   }
 
-  // Returns true if the request fits within the bucket; false otherwise.
+  // request が bucket 内に収まるなら true、そうでなければ false。
   allow(tenant: Tenant, cost = 1): boolean {
     const bucket = this.getOrCreate(tenant);
     const nowNs = this.now();
@@ -138,16 +138,16 @@ type ProviderError = {
 
 type Provider = {
   name: string;
-  // Call is async because the real one is HTTP. Returns either text + latency
-  // or throws a ProviderError-shaped value.
+  // 実際の call は HTTP なので async。text + latency を返すか、
+  // ProviderError shape の値を throw する。
   call(prompt: string): Promise<{ text: string; latencyMs: number }>;
 };
 
-// Mocked provider with deterministic error injection by request counter.
+// request counter による deterministic error injection を持つ mock provider。
 function makeMockProvider(
   name: string,
   baseLatencyMs: number,
-  // Function that decides whether call #n errors and how.
+  // call #n が error になるか、どの error かを決める function。
   errorPolicy: (n: number) => ProviderError | null,
 ): Provider {
   let n = 0;
@@ -156,7 +156,7 @@ function makeMockProvider(
     async call(prompt: string): Promise<{ text: string; latencyMs: number }> {
       const callN = ++n;
       const err = errorPolicy(callN);
-      // Yield a microtask so we look properly async.
+      // microtask を yield して、正しく async に見せる。
       await Promise.resolve();
       if (err) {
         throw err;
@@ -172,16 +172,15 @@ function makeMockProvider(
 type RetryConfig = {
   maxAttempts: number;
   baseBackoffMs: number;
-  // For determinism in tests/demos.
+  // tests/demos の determinism 用。
   jitter: () => number;
   sleep: (ms: number) => Promise<void>;
 };
 
 type RetryOutcome = {
   response: ProviderResponse;
-  // Wall-clock spent across all retry attempts + backoff sleeps for this
-  // single provider. Equals response.latencyMs when the first attempt
-  // succeeds with no backoff.
+  // この単一 provider に対する retry attempts + backoff sleeps 全体の wall-clock。
+  // 初回 attempt が backoff なしで成功した場合は response.latencyMs と等しい。
   totalLatencyMs: number;
 };
 
@@ -214,7 +213,7 @@ async function callWithRetry(
       await cfg.sleep(backoffMs);
     }
   }
-  // Surface the last error to the fallback layer.
+  // fallback layer に最後の error を渡す。
   throw lastErr ?? ({ retryable: false, status: 500, message: "unknown" } as ProviderError);
 }
 
@@ -239,7 +238,7 @@ async function callWithFallback(
   throw lastErr ?? { retryable: false, status: 500, message: "no providers" };
 }
 
-// -- The gateway -----------------------------------------------------------
+// -- Gateway 本体 ----------------------------------------------------------
 
 class AIGateway {
   constructor(
@@ -271,9 +270,8 @@ class AIGateway {
       return {
         ok: true,
         response,
-        // End-to-end wall clock: gateway overhead + every retry attempt +
-        // every backoff sleep + every failed-provider latency leading to the
-        // winning provider.
+        // end-to-end wall clock: gateway overhead + retry attempt 全部 +
+        // backoff sleep 全部 + winning provider までの failed-provider latency 全部。
         totalLatencyMs: totalLatencyMs + this.overheadMs,
         fallbackHits,
       };
@@ -316,8 +314,8 @@ type SimRow = {
   gateway: string;
   successRate: number;
   meanLatency: number;
-  // Each inner iteration tries one provider exactly once before falling
-  // back, so this counts failed provider attempts, not in-provider retries.
+  // 各 inner iteration は fallback 前に1 provider を1回だけ試す。
+  // これは in-provider retries ではなく failed provider attempts を数える。
   providerFailures: number;
   fallbackHits: number;
 };
@@ -374,7 +372,7 @@ async function liveDemo(): Promise<void> {
   console.log("--- AI gateway primitives (auth + rate limit + retry + fallback) ---");
 
   const auth = new AuthService();
-  // Pre-issue two keys; "secret-paid-key" → paid tier, "secret-free-key" → free.
+  // key を2つ事前発行する。"secret-paid-key" → paid tier、"secret-free-key" → free。
   const paidHash = createHash("sha256").update("secret-paid-key").digest("hex");
   const freeHash = createHash("sha256").update("secret-free-key").digest("hex");
   auth.register({ id: "tenant-paid", keyHashHex: paidHash, tier: "paid" });
@@ -386,19 +384,19 @@ async function liveDemo(): Promise<void> {
     paid: { capacity: 100, refillPerSec: 10 },
   });
 
-  // Provider 1: 429 on the first call, succeeds afterwards.
+  // Provider 1: 初回 call で 429、その後は成功。
   const flaky = makeMockProvider("openai", 180, (n) =>
     n === 1
       ? { retryable: true, status: 429, message: "rate_limit_exceeded" }
       : null,
   );
-  // Provider 2: 5xx half the time.
+  // Provider 2: 半分の call で 5xx。
   const wobble = makeMockProvider("anthropic", 220, (n) =>
     n % 2 === 1
       ? { retryable: true, status: 503, message: "upstream_unavailable" }
       : null,
   );
-  // Provider 3: always healthy.
+  // Provider 3: 常に healthy。
   const healthy = makeMockProvider("self-hosted", 100, () => null);
 
   const retry: RetryConfig = {
@@ -416,13 +414,13 @@ async function liveDemo(): Promise<void> {
     /* overheadMs */ 5,
   );
 
-  console.log("paid tenant — should succeed via retry / fallback:");
+  console.log("paid tenant — retry / fallback 経由で成功する想定:");
   for (let i = 0; i < 3; i++) {
-    const r = await gateway.handle("secret-paid-key", `hello world ${i}`);
+    const r = await gateway.handle("secret-paid-key", `こんにちは world ${i}`);
     console.log("  →", JSON.stringify(r));
   }
 
-  console.log("\nfree tenant — capacity=2, third call hits rate limit:");
+  console.log("\nfree tenant — capacity=2、3回目の call で rate limit:");
   for (let i = 0; i < 4; i++) {
     const r = await gateway.handle("secret-free-key", `q ${i}`);
     console.log("  →", JSON.stringify(r));
@@ -434,7 +432,7 @@ async function liveDemo(): Promise<void> {
 
 function simulatorDemo(): void {
   console.log("\n" + "=".repeat(80));
-  console.log("AI GATEWAY FALLBACK — 3-provider chain under error injection");
+  console.log("AI GATEWAY FALLBACK — error injection 下の 3-provider chain");
   console.log("=".repeat(80));
   const header =
     `${"Gateway".padEnd(12)}  ` +
@@ -445,13 +443,13 @@ function simulatorDemo(): void {
     reportRow(simulateFallback(gw));
   }
   console.log(
-    "\nNotes: a single-provider target at 3% error rate → 97% success.",
+    "\n注記: 3% error rate の single-provider target → 97% success。",
   );
   console.log(
-    "Two-provider fallback → 99.94% success (complement of 0.03 × 0.02).",
+    "Two-provider fallback → 99.94% success（0.03 × 0.02 の補集合）。",
   );
   console.log(
-    "Three-provider fallback → 99.997% success. Latency rises on fallback.",
+    "Three-provider fallback → 99.997% success。fallback では latency が上がる。",
   );
 }
 

@@ -1,74 +1,74 @@
 {
   "lesson": "22-load-testing-llm-apis",
-  "title": "Load Testing LLM APIs — Why k6 and Locust Lie",
+  "title": "LLM API の負荷テスト — k6 と Locust の数値が嘘をつく理由",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the GIL trap in Locust-based LLM load testing?",
+      "question": "Locust ベースの LLM 負荷テストにおける GIL の罠とは何ですか。",
       "options": [
-        "Locust only works on Windows",
-        "Locust does not support HTTP",
-        "Client-side tokenization runs under the Python GIL and queues behind request generation, inflating reported inter-token latency",
-        "Locust requires CUDA"
+        "Locust は Windows でしか動かない",
+        "Locust は HTTP をサポートしていない",
+        "クライアント側 tokenization が Python GIL の下で実行され、リクエスト生成の後ろに滞留することで、報告される inter-token latency が膨らむ",
+        "Locust には CUDA が必要である"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the prompt-uniformity trap?",
+      "question": "プロンプト均一性の罠とは何ですか。",
       "options": [
-        "Uniform prompts always slow the server down",
-        "Sampling from a real distribution under-represents long prompts",
-        "Uniform prompts require streaming",
-        "Looping the same prompt makes prefix caching look like full concurrent decode, inflating reported throughput"
+        "均一なプロンプトは常にサーバーを遅くする",
+        "実分布からのサンプリングは長いプロンプトを過小評価する",
+        "均一なプロンプトには streaming が必要である",
+        "同じプロンプトをループすると prefix caching により full concurrent decode のように見え、報告 throughput が膨らむ"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which four load patterns does the lesson recommend?",
+      "question": "この lesson が推奨する 4 つの負荷パターンはどれですか。",
       "options": [
-        "Constant 1 RPS for 10 days",
-        "Manual click tests",
-        "Steady-state, ramp, spike, soak",
-        "Burst only"
+        "10 日間、一定 1 RPS",
+        "手動クリックテスト",
+        "Steady-state、ramp、spike、soak",
+        "Burst のみ"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the lesson recommend building a realistic prompt distribution?",
+      "question": "この lesson は、現実的なプロンプト分布をどのように作ることを推奨していますか。",
       "options": [
-        "Sample from a real distribution using mean and stddev (for example LLMPerf's --mean-input-tokens / --stddev-input-tokens) or replay real traffic",
-        "Random characters per request",
-        "Hand-write 5 prompts and shuffle",
-        "Always use the same prompt to maximize cache hits"
+        "mean と stddev を使って実分布からサンプリングする (例: LLMPerf の --mean-input-tokens / --stddev-input-tokens)、または実トラフィックを replay する",
+        "リクエストごとにランダム文字を送る",
+        "5 個のプロンプトを手書きして shuffle する",
+        "cache hits を最大化するため、常に同じプロンプトを使う"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which 2026 tool combination is positioned as best for CI/CD SLA gates and Kubernetes-native distributed runs?",
+      "question": "2026 年のツール組み合わせのうち、CI/CD SLA gate と Kubernetes ネイティブな分散実行に最適と位置づけられているものはどれですか。",
       "options": [
-        "k6 v2026.1.0 with the k6 Operator 1.0 GA (TestRun / PrivateLoadZone CRDs)",
-        "guidellm only",
-        "Vegeta only",
-        "Locust 2.43.3 stock"
+        "k6 v2026.1.0 と k6 Operator 1.0 GA (TestRun / PrivateLoadZone CRDs)",
+        "guidellm のみ",
+        "Vegeta のみ",
+        "素の Locust 2.43.3"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which failure mode does the soak load pattern catch?",
+      "question": "soak 負荷パターンはどの failure mode を捕まえますか。",
       "options": [
-        "Memory leaks, connection-pool drift, and observability overflow over hours",
+        "数時間かけて現れる memory leaks、connection-pool drift、observability overflow",
         "Cold-start tail",
-        "Tokenizer GIL contention",
+        "Tokenizer の GIL contention",
         "Cache eviction storms"
       ],
       "correct": 0,

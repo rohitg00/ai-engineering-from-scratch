@@ -1,22 +1,22 @@
 {
   "lesson": "03-reflexion-verbal-rl",
-  "title": "Reflexion: Verbal Reinforcement Learning",
+  "title": "Reflexion: 言語による強化学習",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does Reflexion replace in standard reinforcement learning?",
+      "question": "Reflexionは標準的なreinforcement learningの何を置き換えますか？",
       "options": [
-        "Reward shaping with a constant reward",
-        "Gradient updates with natural-language reflections stored between trials",
-        "Policy networks with random search",
-        "Episodic memory with parametric memory"
+        "一定rewardによるreward shaping",
+        "gradient updateを、trial間で保存される自然言語reflectionに置き換える",
+        "policy networkをrandom searchに置き換える",
+        "episodic memoryをparametric memoryに置き換える"
       ],
       "correct": 1,
-      "explanation": "Reflexion uses natural-language reflections in episodic memory instead of weight updates."
+      "explanation": "Reflexionはweight updateの代わりに、episodic memory内の自然言語reflectionを使います。"
     },
     {
       "stage": "pre",
-      "question": "What three components define a Reflexion system?",
+      "question": "Reflexion systemを定義する3つのcomponentはどれですか？",
       "options": [
         "Planner, Worker, Solver",
         "Actor, Evaluator, Self-Reflector",
@@ -24,11 +24,11 @@
         "Selector, Expander, Backpropagator"
       ],
       "correct": 1,
-      "explanation": "Reflexion factors the agent into an Actor that runs trajectories, an Evaluator that scores them, and a Self-Reflector that writes lessons."
+      "explanation": "Reflexionは、trajectoryを実行するActor、それを採点するEvaluator、lessonを書くSelf-Reflectorにagentを分解します。"
     },
     {
       "stage": "check",
-      "question": "Which evaluator type uses an external binary signal like a unit test or a known correct answer?",
+      "question": "unit testや既知の正答のような外部binary signalを使うevaluator typeはどれですか？",
       "options": [
         "Heuristic",
         "Scalar",
@@ -36,55 +36,55 @@
         "Vote-based"
       ],
       "correct": 1,
-      "explanation": "Scalar evaluators read pass/fail signals from ground truth (ALFWorld success, HumanEval tests)."
+      "explanation": "Scalar evaluatorはground truthからpass/fail signalを読みます（ALFWorld success、HumanEval testsなど）。"
     },
     {
       "stage": "check",
-      "question": "Why is self-evaluation a weaker signal than scalar feedback?",
+      "question": "self-evaluationがscalar feedbackより弱いsignalなのはなぜですか？",
       "options": [
-        "It is slower to compute",
-        "The model judging itself has no external grounding so it can rubber-stamp its own answer",
-        "It always requires a larger model",
-        "It cannot run on tools"
+        "計算が遅いから",
+        "modelが自分自身をjudgeしてもexternal groundingがなく、自分のanswerをrubber-stampし得るから",
+        "常により大きなmodelが必要だから",
+        "tools上で実行できないから"
       ],
       "correct": 1,
-      "explanation": "Self-eval lacks an external check, so a confident hallucination scores well; pair it with tool-grounded verification."
+      "explanation": "Self-evalには外部checkがないため、確信あるhallucinationでも高く採点され得ます。tool-grounded verificationと組み合わせます。"
     },
     {
       "stage": "check",
-      "question": "Which case does the lesson list as a place where Reflexion does NOT help?",
+      "question": "このlessonがReflexionの役に立たない場面として挙げているのはどれですか？",
       "options": [
-        "Code generation where tests can score",
-        "An external transient failure like the network being down",
+        "testsで採点できるcode generation",
+        "network downのような外部の一時的failure",
         "ALFWorld navigation tasks",
         "HotpotQA multi-hop questions"
       ],
       "correct": 1,
-      "explanation": "Reflecting on a transient external outage produces a reflection that does not help future runs."
+      "explanation": "一時的な外部障害についてreflectしても、future runsに役立つreflectionにはなりません。"
     },
     {
       "stage": "post",
-      "question": "What is memory rot in the Reflexion pattern?",
+      "question": "Reflexion patternにおけるmemory rotとは何ですか？",
       "options": [
-        "Losing reflections when the process restarts",
-        "Episodic buffer fills with obsolete or wrong reflections and slows or biases future trials",
-        "Reflections get encrypted by the provider",
-        "The reflection prompt exceeds the context window"
+        "process restart時にreflectionsを失うこと",
+        "episodic bufferが古いまたは間違ったreflectionsで埋まり、future trialsを遅くしたりbiasさせたりすること",
+        "reflectionsがproviderにより暗号化されること",
+        "reflection promptがcontext windowを超えること"
       ],
       "correct": 1,
-      "explanation": "Accumulated stale or wrong reflections degrade behavior; mitigate with compaction or TTL."
+      "explanation": "蓄積したstaleまたはwrong reflectionsはbehaviorを悪化させます。compactionやTTLで緩和します。"
     },
     {
       "stage": "post",
-      "question": "Which production pattern is the lesson's clearest match for Reflexion?",
+      "question": "このlessonがReflexionに最も明確に対応するとしているproduction patternはどれですか？",
       "options": [
-        "Cursor's apply-edits flow",
-        "Claude Code's CLAUDE.md learnings prepended to future sessions",
-        "OpenAI's batch API",
-        "Anthropic's prompt caching"
+        "Cursorのapply-edits flow",
+        "future sessionsの前に付けられるClaude CodeのCLAUDE.md learnings",
+        "OpenAIのbatch API",
+        "Anthropicのprompt caching"
       ],
       "correct": 1,
-      "explanation": "CLAUDE.md learnings, pro-workflow's learn-rule, and Letta's sleep-time compute all externalize the episodic reflection buffer."
+      "explanation": "CLAUDE.md learnings、pro-workflowのlearn-rule、Lettaのsleep-time computeはすべてepisodic reflection bufferを外部化します。"
     }
   ]
 }

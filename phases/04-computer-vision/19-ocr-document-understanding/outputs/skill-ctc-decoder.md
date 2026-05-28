@@ -1,6 +1,6 @@
 ---
 name: skill-ctc-decoder
-description: Write greedy and beam-search CTC decoders from scratch, including length normalisation
+description: greedy と beam-search CTC decoders を scratch から書く。length normalisation を含む
 version: 1.0.0
 phase: 4
 lesson: 19
@@ -9,19 +9,19 @@ tags: [ocr, ctc, decoding, sequence-models]
 
 # CTC Decoder
 
-Produce two decoding routines for CTC outputs: greedy (fast) and beam (better on noisy inputs).
+CTC outputs に対して2つの decoding routines を生成します。greedy (高速) と beam (noisy inputs で高品質) です。
 
 ## When to use
 
-- Running OCR inference on custom CRNN outputs.
-- Benchmarking a pretrained OCR model against different decoders.
-- Implementing a simple beam search without pulling in ctcdecode.
+- custom CRNN outputs で OCR inference を実行する。
+- pretrained OCR model を異なる decoders で benchmark する。
+- `ctcdecode` を導入せずに simple beam search を実装する。
 
 ## Inputs
 
-- `log_probs`: (T, N, C) log-softmax over vocab (index 0 = blank by convention).
-- `vocab`: list of C characters.
-- `beam_width` (beam only): typically 5-10.
+- `log_probs`: (T, N, C) log-softmax over vocab (慣例として index 0 = blank)。
+- `vocab`: C characters の list。
+- `beam_width` (beam only): 通常 5-10。
 
 ## Greedy decoder
 
@@ -101,8 +101,8 @@ def _logsumexp(a, b):
 
 ## Rules
 
-- The blank index in CTC is 0 by convention in PyTorch's `nn.CTCLoss`.
-- Beam search improves accuracy on low-confidence inputs; on clean inputs the improvement is <1% CER.
-- Never prune the beam below 5; the accuracy-latency trade flattens below that.
-- When running beam search inside a tight latency budget, drop to greedy; the quality hit is small on most production OCR data.
-- For large vocabularies (CJK with 3000+ characters), switch to `ctcdecode` (C++) instead of the pure Python version above; the Python beam quickly becomes the bottleneck.
+- CTC の blank index は PyTorch の `nn.CTCLoss` では慣例として 0 です。
+- Beam search は low-confidence inputs で accuracy を改善します。clean inputs では改善は <1% CER です。
+- beam を 5 未満に prune しないこと。accuracy-latency trade-off はその下で平坦になります。
+- tight latency budget の中で beam search を実行する場合は greedy に落とすこと。ほとんどの production OCR data では品質低下は小さいです。
+- 大きな vocabularies (3000+ characters の CJK) では、上の pure Python version ではなく `ctcdecode` (C++) に切り替えること。Python beam はすぐ bottleneck になります。

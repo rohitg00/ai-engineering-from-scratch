@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How does Anthropic distinguish a workflow from an agent?",
+      "question": "Anthropic は workflow と agent をどう区別していますか?",
       "options": [
-        "Workflows use embeddings; agents use tools",
-        "Workflows are engineer-owned predefined graphs; agents are model-owned dynamic tool direction",
-        "Workflows run on CPUs; agents need GPUs",
-        "Workflows are stateless; agents are stateful"
+        "Workflows は embeddings を使い、agents は tools を使う",
+        "Workflows は engineer-owned predefined graphs、agents は model-owned dynamic tool direction",
+        "Workflows は CPU で走り、agents は GPU が必要",
+        "Workflows は stateless、agents は stateful"
       ],
       "correct": 1,
-      "explanation": "Workflow = predefined code path the engineer owns; agent = the model owns the graph."
+      "explanation": "Workflow は engineer が所有する predefined code path。Agent は model が graph を所有します。"
     },
     {
       "stage": "pre",
-      "question": "What are the three capabilities of the augmented LLM that underpins all five patterns?",
+      "question": "5 patterns すべての土台となる augmented LLM の 3 capabilities は何ですか?",
       "options": [
         "Search (retrieval), tools (actions), memory (persistence)",
         "Embeddings, fine-tuning, RAG",
@@ -24,11 +24,11 @@
         "Plan, execute, reflect"
       ],
       "correct": 0,
-      "explanation": "The atomic unit is one LLM with retrieval, tools, and memory wired in."
+      "explanation": "Atomic unit は retrieval、tools、memory が wire された 1 つの LLM です。"
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of the five Anthropic workflow patterns?",
+      "question": "次のうち Anthropic の 5 workflow patterns に含まれないものはどれですか?",
       "options": [
         "Prompt chaining",
         "Routing",
@@ -36,23 +36,23 @@
         "Gradient distillation"
       ],
       "correct": 3,
-      "explanation": "The five are prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer. Gradient distillation is a training concept."
+      "explanation": "5 つは prompt chaining、routing、parallelization、orchestrator-workers、evaluator-optimizer です。Gradient distillation は training concept です。"
     },
     {
       "stage": "check",
-      "question": "Which two shapes does parallelization come in?",
+      "question": "Parallelization にはどの 2 つの shape がありますか?",
       "options": [
         "Sync and async",
-        "Sectioning (different chunks) and voting (same prompt N times, aggregate)",
+        "Sectioning (different chunks) と voting (same prompt を N 回、aggregate)",
         "Hot and cold",
         "Stateful and stateless"
       ],
       "correct": 1,
-      "explanation": "Parallelization is sectioning or voting; both fan out N calls and aggregate."
+      "explanation": "Parallelization は sectioning または voting です。どちらも N calls を fan out して aggregate します。"
     },
     {
       "stage": "check",
-      "question": "Which workflow pattern is Self-Refine generalized?",
+      "question": "Self-Refine を一般化した workflow pattern はどれですか?",
       "options": [
         "Prompt chaining",
         "Routing",
@@ -60,31 +60,31 @@
         "Evaluator-optimizer"
       ],
       "correct": 3,
-      "explanation": "Evaluator-optimizer is the Anthropic name for the Self-Refine / CRITIC iterative pattern."
+      "explanation": "Evaluator-optimizer は Self-Refine / CRITIC の iterative pattern に対する Anthropic の名前です。"
     },
     {
       "stage": "post",
-      "question": "When do workflows beat agents according to the lesson?",
+      "question": "この lesson によると、workflows が agents に勝るのはいつですか?",
       "options": [
-        "Always",
-        "On predictable, cost-bounded, or compliance-bounded tasks where the graph can be enumerated and audited",
-        "Only for chat",
-        "Only on GPUs"
+        "常に",
+        "Graph を enumerate して audit できる predictable、cost-bounded、compliance-bounded tasks",
+        "Chat のみ",
+        "GPU 上のみ"
       ],
       "correct": 1,
-      "explanation": "Workflows are cheaper, easier to debug, and auditable; pick them when steps are knowable."
+      "explanation": "Workflows は cheaper、debug しやすく、auditable です。Steps が分かっているなら workflow を選びます。"
     },
     {
       "stage": "post",
-      "question": "What is the lesson's recommended default starting point?",
+      "question": "この lesson が勧める default starting point は何ですか?",
       "options": [
-        "A multi-agent framework",
-        "Direct API calls; add frameworks only when durable state, actor concurrency, or role templating earns its cost",
-        "Fine-tune the model",
-        "Build a custom MCTS"
+        "Multi-agent framework",
+        "Direct API calls。Framework は durable state、actor concurrency、role templating が cost に見合うときだけ追加する",
+        "Model の fine-tune",
+        "Custom MCTS の構築"
       ],
       "correct": 1,
-      "explanation": "Schluntz and Zhang: start simple; add framework complexity only when justified."
+      "explanation": "Schluntz and Zhang は simple に始め、正当化されたときだけ framework complexity を追加すると述べています。"
     }
   ]
 }

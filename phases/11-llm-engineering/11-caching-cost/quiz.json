@@ -1,37 +1,37 @@
 [
   {
-    "question": "Why do AI startups often fail from cost issues rather than model quality?",
-    "options": ["Models are always good enough", "Per-call costs compound rapidly: 10K users making 10 calls/day costs $250/day in tokens before charging a single dollar", "Cost optimization is easy", "API providers offer unlimited free tiers"],
+    "question": "AI startups が model quality より cost issues で失敗しがちなのはなぜですか？",
+    "options": ["models は常に十分に良いから", "per-call costs は急速に積み上がるから。10K users が 10 calls/day 使うと、1 ドルも課金する前に tokens だけで $250/day かかる", "cost optimization は簡単だから", "API providers が unlimited free tiers を提供しているから"],
     "correct": 1,
-    "explanation": "LLM API costs scale linearly with usage. A feature that costs $0.003 per call seems cheap until it's called 100K times/day ($300/day, $9K/month). Without cost optimization, many AI products are unprofitable at scale.",
+    "explanation": "LLM API costs は usage に対して linear に増えます。1 call $0.003 の feature は安く見えますが、100K times/day 呼ばれると $300/day、$9K/month になります。cost optimization がなければ、多くの AI products は scale 時に不採算になります。",
     "stage": "pre"
   },
   {
-    "question": "What is semantic caching for LLM applications?",
-    "options": ["Caching model weights", "Storing responses for previous queries and serving cached responses when a new query is semantically similar (not just exactly matching)", "Caching embeddings only", "Pre-generating all possible responses"],
+    "question": "LLM applications における semantic caching とは何ですか？",
+    "options": ["model weights を cache すること", "previous queries への responses を保存し、新しい query が exact match だけでなく semantically similar な場合に cached responses を返すこと", "embeddings だけを cache すること", "可能な responses をすべて事前生成すること"],
     "correct": 1,
-    "explanation": "Exact-match caching only helps with identical queries. Semantic caching embeds queries and serves cached responses when cosine similarity exceeds a threshold. 'What's the weather in NYC?' matches 'NYC weather today?'.",
+    "explanation": "Exact-match caching は identical queries にしか効きません。Semantic caching は queries を embed し、cosine similarity が threshold を超えた場合に cached responses を返します。'What's the weather in NYC?' は 'NYC weather today?' に match します。",
     "stage": "pre"
   },
   {
-    "question": "What is model routing as a cost optimization strategy?",
-    "options": ["Load balancing across servers", "Sending simple queries to cheap/fast models and complex queries to expensive/powerful models based on query classification", "Routing between different API providers", "Caching responses from multiple models"],
+    "question": "cost optimization strategy としての model routing とは何ですか？",
+    "options": ["servers 間の load balancing", "query classification に基づき、simple queries は cheap/fast models へ、complex queries は expensive/powerful models へ送ること", "異なる API providers 間で routing すること", "multiple models の responses を cache すること"],
     "correct": 1,
-    "explanation": "Not every query needs GPT-4. A classifier routes simple questions (FAQ, greetings) to a cheap model (GPT-3.5, Haiku) and complex questions (reasoning, analysis) to an expensive model. This can cut costs 50-80%.",
+    "explanation": "すべての query に GPT-4 が必要なわけではありません。classifier が simple questions (FAQ、greetings) を cheap model (GPT-3.5、Haiku) に、complex questions (reasoning、analysis) を expensive model に route します。これにより costs を 50-80% 削減できます。",
     "stage": "post"
   },
   {
-    "question": "What is prompt compression and how does it reduce costs?",
-    "options": ["Making prompts shorter by removing words", "Removing redundant tokens, summarizing long contexts, and eliminating boilerplate to reduce input token count while preserving essential information", "Compressing prompts with gzip", "Using shorter variable names"],
+    "question": "prompt compression とは何で、どのように costs を削減しますか？",
+    "options": ["words を削除して prompts を短くすること", "essential information を保ちながら redundant tokens を削除し、long contexts を summarize し、boilerplate を取り除いて input token count を減らすこと", "gzip で prompts を圧縮すること", "短い variable names を使うこと"],
     "correct": 1,
-    "explanation": "Input tokens dominate cost in RAG applications (large retrieved contexts). Prompt compression removes filler words, summarizes verbose passages, and trims low-relevance chunks to reduce token count without losing key information.",
+    "explanation": "RAG applications では input tokens (large retrieved contexts) が cost を支配します。Prompt compression は filler words を削除し、verbose passages を summarize し、low-relevance chunks を trim して、key information を失わずに token count を減らします。",
     "stage": "post"
   },
   {
-    "question": "What is prefix caching and which provider feature enables it?",
-    "options": ["Caching the first word of each response", "Reusing KV-cache computation for shared prompt prefixes (system prompt + tool definitions), reducing latency and cost for repeated patterns", "Caching DNS lookups", "Browser caching of API responses"],
+    "question": "prefix caching とは何で、どの provider feature がそれを可能にしますか？",
+    "options": ["各 response の最初の単語を cache すること", "shared prompt prefixes (system prompt + tool definitions) の KV-cache computation を再利用し、repeated patterns の latency と cost を下げること", "DNS lookups を cache すること", "API responses を browser cache すること"],
     "correct": 1,
-    "explanation": "If your system prompt + tool definitions are 5000 tokens and identical across requests, prefix caching computes the KV-cache once and reuses it. Anthropic's prompt caching and OpenAI's cached tokens both support this.",
+    "explanation": "system prompt + tool definitions が 5000 tokens で requests 間で identical なら、prefix caching は KV-cache を一度計算して再利用します。Anthropic の prompt caching と OpenAI の cached tokens はどちらもこれを support します。",
     "stage": "post"
   }
 ]

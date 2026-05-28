@@ -1,30 +1,30 @@
-# Model Evaluation
+# モデル評価
 
-> A model is only as good as the way you measure it.
+> モデルの良し悪しは、それをどう測るかで決まります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 1 (Probability & Distributions, Statistics for ML), Phase 2 Lessons 1-8
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 1 (Probability & Distributions, Statistics for ML)、Phase 2 Lessons 1-8
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement K-fold and stratified K-fold cross-validation from scratch and explain why stratification matters for imbalanced data
-- Compute precision, recall, F1, AUC-ROC, and regression metrics (MSE, RMSE, MAE, R-squared) from scratch
-- Interpret learning curves to diagnose whether a model suffers from high bias or high variance
-- Identify common evaluation mistakes including data leakage, wrong metric selection, and test set contamination
+- K-fold と stratified K-fold cross-validation をゼロから実装し、imbalanced data で stratification が重要な理由を説明する
+- precision、recall、F1、AUC-ROC、regression metrics（MSE、RMSE、MAE、R-squared）をゼロから計算する
+- learning curve を解釈し、モデルが high bias または high variance に苦しんでいるか診断する
+- data leakage、誤った metric 選択、test set contamination など、よくある評価ミスを見分ける
 
-## The Problem
+## 問題
 
-You trained a model. It gets 95% accuracy on your data. Is it good?
+モデルを学習しました。データ上で accuracy が 95% 出ています。これは良いモデルでしょうか？
 
-Maybe. Maybe not. If 95% of your data belongs to one class, a model that always predicts that class gets 95% accuracy while being completely useless. If you evaluated on the same data you trained on, the 95% number is meaningless because the model just memorized the answers. If your dataset has a time component and you randomly shuffled before splitting, your model might be using future data to predict the past.
+そうかもしれませんし、そうでないかもしれません。データの 95% が 1 つのクラスに属しているなら、常にそのクラスを予測するだけの完全に役に立たないモデルでも 95% accuracy を出せます。学習に使ったのと同じデータで評価したなら、モデルが答えを暗記しただけなので 95% という数字に意味はありません。データセットに時間の要素があり、分割前にランダムシャッフルしたなら、モデルが未来のデータを使って過去を予測しているかもしれません。
 
-Model evaluation is where most ML projects go wrong. The wrong metric makes a bad model look good. The wrong split lets a model cheat. The wrong comparison makes you pick the worse model. Getting evaluation right is not optional. It is the difference between a model that works in production and one that fails the moment it sees real data.
+多くの ML プロジェクトはモデル評価で失敗します。誤った metric は悪いモデルを良く見せます。誤った分割はモデルに不正を許します。誤った比較は、悪い方のモデルを選ばせます。評価を正しく行うことは任意ではありません。本番で機能するモデルと、実データを見た瞬間に失敗するモデルの分かれ目です。
 
-## The Concept
+## コンセプト
 
-### Train, Validation, Test
+### Train、Validation、Test
 
 ```mermaid
 flowchart LR
@@ -40,17 +40,17 @@ flowchart LR
     D --> H[Report Performance]
 ```
 
-Three splits, three purposes:
+3 つの分割には、それぞれ 3 つの目的があります。
 
-- **Training set**: the model learns from this data. It sees these examples during training.
-- **Validation set**: used to tune hyperparameters and select between models. The model never trains on this data, but your decisions are influenced by it.
-- **Test set**: touched exactly once, at the very end, to report final performance. If you look at test performance and then go back to change your model, it is no longer a test set. It has become a second validation set.
+- **Training set**: モデルがこのデータから学習します。学習中にこれらの例を見ます。
+- **Validation set**: ハイパーパラメータ調整とモデル選択に使います。モデルはこのデータで学習しませんが、あなたの意思決定はこのデータの影響を受けます。
+- **Test set**: 最終性能を報告するため、最後に一度だけ触れます。test performance を見てからモデルを変更したなら、それはもはや test set ではありません。2 つ目の validation set になっています。
 
-The test set is your hold-out guarantee that the reported performance reflects how the model will do on truly unseen data.
+test set は、報告した性能が本当に未知のデータに対するモデルの挙動を反映していることを保証する hold-out です。
 
 ### K-Fold Cross-Validation
 
-With small datasets, a single train/validation split wastes data and gives noisy estimates. K-fold cross-validation uses all the data for both training and validation:
+小さなデータセットでは、単一の train/validation 分割はデータを無駄にし、推定も不安定になります。K-fold cross-validation は、すべてのデータを training と validation の両方に使います。
 
 ```mermaid
 flowchart TB
@@ -81,68 +81,68 @@ flowchart TB
     Fold5 --> R
 ```
 
-1. Split data into K equal-sized folds
-2. For each fold, train on K-1 folds and validate on the remaining fold
-3. Average the K validation scores
+1. データを K 個の同じ大きさの fold に分割する
+2. 各 fold について、K-1 個の fold で学習し、残り 1 個の fold で検証する
+3. K 個の validation score を平均する
 
-K=5 or K=10 are standard choices. Every data point gets used for validation exactly once. The average score is a more stable estimate than any single split.
+K=5 または K=10 が標準的な選択です。すべてのデータ点はちょうど 1 回 validation に使われます。平均スコアは、単一分割より安定した推定になります。
 
-**Stratified K-fold**: preserves the class distribution in each fold. If your dataset is 70% class A and 30% class B, each fold will have roughly the same ratio. This is important for imbalanced datasets where a random split might put all minority samples in one fold.
+**Stratified K-fold**: 各 fold のクラス分布を保ちます。データセットが class A 70%、class B 30% なら、各 fold もおおむね同じ比率になります。random split では minority sample が 1 つの fold に偏る可能性があるため、imbalanced dataset では重要です。
 
-### Classification Metrics
+### 分類指標
 
-**Confusion matrix**: the foundation. For binary classification:
+**Confusion matrix**: 基礎となる表です。binary classification では次のようになります。
 
 |  | Predicted Positive | Predicted Negative |
 |--|---|---|
 | Actually Positive | True Positive (TP) | False Negative (FN) |
 | Actually Negative | False Positive (FP) | True Negative (TN) |
 
-From this matrix, all other metrics follow:
+この行列から、他のすべての metric が導けます。
 
-- **Accuracy** = (TP + TN) / (TP + TN + FP + FN). Fraction of correct predictions. Misleading when classes are imbalanced.
-- **Precision** = TP / (TP + FP). Of all things predicted positive, how many actually were? Use when false positives are costly (e.g., spam filter marking real email as spam).
-- **Recall** (sensitivity) = TP / (TP + FN). Of all actual positives, how many did we catch? Use when false negatives are costly (e.g., cancer screening missing a tumor).
-- **F1 score** = 2 * precision * recall / (precision + recall). Harmonic mean of precision and recall. Balances both when neither clearly dominates.
-- **AUC-ROC**: Area Under the Receiver Operating Characteristic curve. Plots true positive rate vs false positive rate at various classification thresholds. AUC = 0.5 means random guessing, AUC = 1.0 means perfect separation. Threshold-independent: it measures how well the model ranks positives above negatives, regardless of the cutoff you pick.
+- **Accuracy** = (TP + TN) / (TP + TN + FP + FN)。正解した予測の割合です。クラスが不均衡な場合は誤解を招きます。
+- **Precision** = TP / (TP + FP)。positive と予測したもののうち、実際に positive だったものはいくつかを表します。false positive のコストが高い場合（例: スパムフィルタが本物のメールをスパム扱いする）に使います。
+- **Recall** (sensitivity) = TP / (TP + FN)。実際の positive のうち、どれだけ捕捉できたかを表します。false negative のコストが高い場合（例: がん検診で腫瘍を見逃す）に使います。
+- **F1 score** = 2 * precision * recall / (precision + recall)。precision と recall の調和平均です。どちらか一方が明確に優先されない場合に両者のバランスを取ります。
+- **AUC-ROC**: Receiver Operating Characteristic curve の下の面積です。さまざまな分類 threshold における true positive rate と false positive rate をプロットします。AUC = 0.5 はランダム推測、AUC = 1.0 は完全分離を意味します。threshold に依存せず、選ぶ cutoff に関係なく、モデルが positive を negative よりどれだけ上位に並べられるかを測ります。
 
-### Regression Metrics
+### 回帰指標
 
-- **MSE** (Mean Squared Error) = mean((y_true - y_pred)^2). Penalizes large errors quadratically. Sensitive to outliers.
-- **RMSE** (Root Mean Squared Error) = sqrt(MSE). Same units as the target variable. Easier to interpret than MSE.
-- **MAE** (Mean Absolute Error) = mean(|y_true - y_pred|). Treats all errors linearly. More robust to outliers than MSE.
-- **R-squared** = 1 - SS_res / SS_tot, where SS_res = sum((y_true - y_pred)^2) and SS_tot = sum((y_true - y_mean)^2). Fraction of variance explained by the model. R^2 = 1.0 is perfect. R^2 = 0.0 means the model is no better than always predicting the mean. R^2 can be negative if the model is worse than the mean.
+- **MSE** (Mean Squared Error) = mean((y_true - y_pred)^2)。大きな誤差を二乗で強く罰します。外れ値に敏感です。
+- **RMSE** (Root Mean Squared Error) = sqrt(MSE)。target variable と同じ単位になります。MSE より解釈しやすいです。
+- **MAE** (Mean Absolute Error) = mean(|y_true - y_pred|)。すべての誤差を線形に扱います。MSE より外れ値に頑健です。
+- **R-squared** = 1 - SS_res / SS_tot。ここで SS_res = sum((y_true - y_pred)^2)、SS_tot = sum((y_true - y_mean)^2) です。モデルが説明する分散の割合です。R^2 = 1.0 は完全、R^2 = 0.0 は常に平均を予測するモデルと変わらないことを意味します。モデルが平均より悪い場合、R^2 は負になり得ます。
 
 ### Learning Curves
 
-Plot training and validation scores as a function of training set size:
+training set size の関数として training score と validation score をプロットします。
 
-- **High bias (underfitting)**: both curves converge to a low score. Adding more data will not help. You need a more complex model.
-- **High variance (overfitting)**: training score is high but validation score is much lower. The gap between them is large. Adding more data should help.
+- **High bias (underfitting)**: 両方の曲線が低いスコアに収束します。データを増やしても役に立ちません。より複雑なモデルが必要です。
+- **High variance (overfitting)**: training score は高いが validation score はかなり低く、差が大きい状態です。データを増やすと役に立つ可能性があります。
 
 ### Validation Curves
 
-Plot training and validation scores as a function of a hyperparameter:
+hyperparameter の関数として training score と validation score をプロットします。
 
-- At low complexity: both scores are low (underfitting)
-- At the right complexity: both scores are high and close together
-- At high complexity: training score stays high but validation score drops (overfitting)
+- 複雑さが低い場合: 両方のスコアが低い（underfitting）
+- 適切な複雑さの場合: 両方のスコアが高く、互いに近い
+- 複雑さが高い場合: training score は高いままだが validation score は下がる（overfitting）
 
-The optimal hyperparameter value is where the validation score peaks.
+最適な hyperparameter 値は、validation score がピークになる位置です。
 
-### Common Evaluation Mistakes
+### よくある評価ミス
 
-**Data leakage**: information from the test set leaks into training. Examples: fitting a scaler on the full dataset before splitting, including future data in time series prediction, using a feature that is derived from the target. Always split first, then preprocess.
+**Data leakage**: test set の情報が training に漏れることです。例: 分割前に全データセットで scaler を fit する、時系列予測で未来データを含める、target から派生した特徴量を使う。常に先に分割し、その後で前処理します。
 
-**Class imbalance**: 99% of transactions are legitimate, 1% are fraud. A model that always predicts "legitimate" gets 99% accuracy. Use precision, recall, F1, or AUC-ROC instead.
+**Class imbalance**: 取引の 99% が正当で、1% が不正だとします。常に「正当」と予測するモデルでも 99% accuracy を得ます。代わりに precision、recall、F1、AUC-ROC を使います。
 
-**Wrong metric**: optimizing accuracy when you should optimize recall (medical diagnosis), or optimizing RMSE when your data has heavy outliers (use MAE instead).
+**Wrong metric**: recall を最適化すべき場面（医療診断）で accuracy を最適化する、または外れ値が大きいデータで RMSE を最適化する（代わりに MAE を使う）ことです。
 
-**Not using stratified splits**: with imbalanced data, a random split might put very few minority samples in the validation fold, giving unstable estimates.
+**Not using stratified splits**: imbalanced data では、random split によって validation fold に minority sample がほとんど入らず、推定が不安定になることがあります。
 
-**Testing too often**: every time you look at test performance and adjust, you overfit to the test set. The test set is single-use.
+**Testing too often**: test performance を見て調整するたびに、test set に overfit します。test set は一度だけ使うものです。
 
-## Build It
+## 実装する
 
 ### Step 1: Train/validation/test split
 
@@ -174,7 +174,7 @@ def train_val_test_split(X, y, train_ratio=0.6, val_ratio=0.2, seed=42):
     return X_train, y_train, X_val, y_val, X_test, y_test
 ```
 
-### Step 2: K-fold and stratified K-fold cross-validation
+### Step 2: K-fold と stratified K-fold cross-validation
 
 ```python
 def kfold_split(n, k=5, seed=42):
@@ -248,7 +248,7 @@ def cross_validate(X, y, model_fn, k=5, metric_fn=None, stratified=False):
     return scores
 ```
 
-### Step 3: Confusion matrix and classification metrics
+### Step 3: Confusion matrix と分類指標
 
 ```python
 def confusion_matrix(y_true, y_pred):
@@ -319,7 +319,7 @@ def auc_roc(y_true, y_scores):
     return area
 ```
 
-### Step 4: Regression metrics
+### Step 4: 回帰指標
 
 ```python
 def mse(y_true, y_pred):
@@ -384,7 +384,7 @@ def learning_curve(X, y, model_fn, metric_fn, train_sizes=None, val_ratio=0.2, s
     return train_sizes, train_scores, val_scores
 ```
 
-### Step 6: A simple classifier for testing, plus the full demo
+### Step 6: テスト用の単純な分類器と完全なデモ
 
 ```python
 class SimpleLogistic:
@@ -625,9 +625,9 @@ if __name__ == "__main__":
     print(f"  (|t| > 2.78 for significance at p<0.05 with df=4)")
 ```
 
-## Use It
+## 使ってみる
 
-With scikit-learn, evaluation is built into the workflow:
+scikit-learn では、評価が workflow に組み込まれています。
 
 ```python
 from sklearn.model_selection import cross_val_score, StratifiedKFold, learning_curve
@@ -641,35 +641,35 @@ model = LogisticRegression()
 scores = cross_val_score(model, X, y, cv=StratifiedKFold(5), scoring="f1")
 ```
 
-The from-scratch versions show exactly what cross-validation does (no magic, just for-loops and index tracking), how each metric is computed (just counting TP/FP/TN/FN), and why stratification matters (preserving class ratios in each fold). The library versions add parallelism, more scoring options, and integration with pipelines.
+ゼロから実装した版を見ると、cross-validation が何をしているのか（魔法ではなく、for-loop と index tracking だけ）、各 metric がどう計算されるのか（TP/FP/TN/FN を数えるだけ）、そして stratification がなぜ重要なのか（各 fold のクラス比率を保つため）が正確にわかります。ライブラリ版は並列処理、より多くの scoring option、pipeline との統合を追加します。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/skill-evaluation.md` - a skill covering evaluation strategy for classification and regression models
+このレッスンでは次を作ります。
+- `outputs/skill-evaluation.md` - 分類モデルと回帰モデルの評価戦略を扱う skill
 
-## Exercises
+## 演習
 
-1. Implement precision-recall curves: plot precision vs recall at different thresholds. Compute the average precision (area under the PR curve). Compare the PR curve to the ROC curve on an imbalanced dataset and explain when each is more informative.
-2. Build a nested cross-validation loop: the outer loop evaluates model performance, the inner loop tunes hyperparameters. Use it to compare two models fairly without leaking validation data into the evaluation.
-3. Implement a permutation test for model comparison: shuffle the labels, retrain, and measure performance. Repeat 100 times to build a null distribution. Compute the p-value for the observed model performance against this distribution.
+1. precision-recall curve を実装してください。異なる threshold で precision と recall をプロットします。average precision（PR curve の下の面積）を計算してください。imbalanced dataset 上で PR curve と ROC curve を比較し、それぞれがどの場面でより情報量を持つか説明してください。
+2. nested cross-validation loop を構築してください。外側の loop でモデル性能を評価し、内側の loop で hyperparameter を調整します。validation data を評価に漏らさず、2 つのモデルを公平に比較してください。
+3. モデル比較のための permutation test を実装してください。label をシャッフルし、再学習して性能を測定します。100 回繰り返して null distribution を作ります。この分布に対する観測モデル性能の p-value を計算してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Overfitting | "Memorizing the training data" | The model captures noise in the training data, performing well on training but poorly on unseen data |
-| Cross-validation | "Testing on different subsets" | Systematically rotating which portion of data is used for validation, averaging results across all rotations |
-| Precision | "How many predicted positives are correct" | TP / (TP + FP): the fraction of positive predictions that are actually positive |
-| Recall | "How many actual positives we found" | TP / (TP + FN): the fraction of actual positives that were correctly identified |
-| AUC-ROC | "How well the model separates classes" | The area under the curve of true positive rate vs false positive rate across all thresholds, from 0.5 (random) to 1.0 (perfect) |
-| R-squared | "How much variance is explained" | 1 - (sum of squared residuals / total sum of squares): the fraction of target variance captured by the model |
-| Data leakage | "The model cheated" | Using information during training that would not be available at prediction time, leading to optimistic evaluation |
-| Learning curve | "How performance changes with more data" | A plot of training and validation scores vs training set size, revealing underfitting or overfitting |
-| Stratified split | "Keeping class ratios balanced" | Splitting data so each subset has the same proportion of each class as the full dataset |
+| Overfitting | 「training data を暗記している」 | モデルが training data のノイズを捉えてしまい、training ではよく動くが未知データでは悪くなること |
+| Cross-validation | 「異なる subset でテストする」 | データのどの部分を validation に使うかを体系的に入れ替え、すべての入れ替え結果を平均すること |
+| Precision | 「positive と予測したもののうち正しい数」 | TP / (TP + FP)。positive 予測のうち実際に positive だった割合 |
+| Recall | 「実際の positive をどれだけ見つけたか」 | TP / (TP + FN)。実際の positive のうち正しく識別された割合 |
+| AUC-ROC | 「モデルがクラスをどれだけ分離できるか」 | すべての threshold にわたる true positive rate と false positive rate の曲線下面積。0.5（ランダム）から 1.0（完全）まで |
+| R-squared | 「どれだけ分散を説明できるか」 | 1 - (残差平方和 / 全平方和)。target 分散のうちモデルが捉えた割合 |
+| Data leakage | 「モデルがカンニングした」 | 予測時には利用できない情報を学習時に使ってしまい、楽観的な評価につながること |
+| Learning curve | 「データを増やすと性能がどう変わるか」 | training set size に対する training score と validation score のプロット。underfitting や overfitting を明らかにする |
+| Stratified split | 「クラス比率をそろえる」 | 各 subset がデータセット全体と同じクラス比率を持つように分割すること |
 
-## Further Reading
+## 参考資料
 
-- [scikit-learn Model Selection Guide](https://scikit-learn.org/stable/model_selection.html) - comprehensive reference on cross-validation, metrics, and hyperparameter tuning
-- [Beyond Accuracy: Precision and Recall (Google ML Crash Course)](https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall) - clear explanation with interactive examples
-- [A Survey of Cross-Validation Procedures (Arlot & Celisse, 2010)](https://projecteuclid.org/journals/statistics-surveys/volume-4/issue-none/A-survey-of-cross-validation-procedures-for-model-selection/10.1214/09-SS054.full) - rigorous treatment of when and why different CV strategies work
+- [scikit-learn Model Selection Guide](https://scikit-learn.org/stable/model_selection.html) - cross-validation、metrics、hyperparameter tuning に関する包括的なリファレンス
+- [Beyond Accuracy: Precision and Recall (Google ML Crash Course)](https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall) - インタラクティブな例を含む明快な説明
+- [A Survey of Cross-Validation Procedures (Arlot & Celisse, 2010)](https://projecteuclid.org/journals/statistics-surveys/volume-4/issue-none/A-survey-of-cross-validation-procedures-for-model-selection/10.1214/09-SS054.full) - さまざまな CV 戦略がいつ、なぜ機能するかを厳密に扱った論文

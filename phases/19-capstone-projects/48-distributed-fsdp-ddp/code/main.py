@@ -1,6 +1,6 @@
-"""Distributed data parallel from scratch on the gloo backend.
+"""gloo backend 上の distributed data parallel from scratch。
 
-CUDA is not assumed. The demo simulates a multi-rank cluster by spawning
+CUDA は前提にしない。demo は複数 process を spawn して multi-rank cluster を simulates する。
 several worker processes with torch.multiprocessing and connecting them
 through the gloo CPU backend. The same collective ops (all_reduce,
 broadcast) you would use on a multi-GPU machine show up here; only the
@@ -80,7 +80,7 @@ def broadcast_module(module: nn.Module, src: int = 0) -> None:
 
 
 def all_reduce_grads_(module: nn.Module, world_size: int) -> float:
-    """Sum gradients across ranks, divide by world size, return l2 norm."""
+    """rank 間で gradient を合計し world size で割り、L2 norm を返す。"""
     total_sq = 0.0
     for p in module.parameters():
         if p.grad is None:
@@ -101,9 +101,9 @@ def shard_for_rank(x: torch.Tensor, rank: int, world_size: int) -> torch.Tensor:
 
 
 class MinimalDDP(nn.Module):
-    """Toy DistributedDataParallel.
+    """toy DistributedDataParallel。
 
-    On construction, broadcast every parameter from rank zero so all ranks
+    construction 時に rank zero から全 parameter を broadcast し、全 rank をそろえる。
     start from the same weights. On forward, run the wrapped module. After
     backward, the trainer calls `sync_grads()` to all-reduce gradients.
 
@@ -139,7 +139,7 @@ def _grad_norm(module: nn.Module) -> float:
 
 
 def fsdp_round_trip_sketch(module: nn.Module, world_size: int, rank: int) -> bool:
-    """Sketch parameter sharding and gathering for the forward pass.
+    """forward pass 用の parameter sharding と gathering の sketch。
 
     Each rank keeps a 1/world_size slice of every parameter. Before a
     forward pass the full tensor is reconstructed with all_gather. After
@@ -183,7 +183,7 @@ def manual_all_reduce_matches_single_process(
     out_dim: int,
     batch_size: int,
 ) -> tuple[float, float]:
-    """Each rank computes a gradient on its slice; all-reduce-mean recovers the
+    """各 rank は自分の slice で gradient を計算し、all-reduce-mean が full-batch gradient を復元する。
     full-batch gradient up to numerical noise."""
     torch.manual_seed(0)
     full_x = torch.randn(batch_size * world_size, in_dim)
@@ -347,12 +347,12 @@ def run_distributed_demo(
         for p in procs:
             if p.is_alive():
                 p.terminate()
-        raise RuntimeError("ranks did not finish in time")
+        raise RuntimeError("rank が時間内に完了しませんでした")
     if collected < world_size:
-        raise RuntimeError(f"only got {collected}/{world_size} results: {results}")
+        raise RuntimeError(f"取得できた result 数: {collected}/{world_size} results: {results}")
     for rank, payload in results.items():
         if "error" in payload:
-            raise RuntimeError(f"rank {rank} failed: {payload['error']}")
+            raise RuntimeError(f"rank {rank} が失敗しました: {payload['error']}")
     param_sums = {r: results[r]["post_param_sum"] for r in results}
     spread = max(param_sums.values()) - min(param_sums.values())
     losses = [results[r]["final_loss"] for r in results]
@@ -388,12 +388,12 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     if not dist.is_available():
-        print("torch.distributed not available; skipping the demo")
+        print("torch.distributed が利用できないため demo を skip します")
         return 0
     if args.backend == "gloo" and not dist.is_gloo_available():
-        print("gloo backend not compiled; cannot run on CPU. install a build with gloo support.")
+        print("gloo backend が compiled されていないため CPU で実行できません。gloo support 付き build を install してください。")
         return 1
-    print(f"running distributed demo: backend={args.backend}, world_size={args.world_size}")
+    print(f"distributed demo を実行します: backend={args.backend}, world_size={args.world_size}")
     result = run_distributed_demo(
         world_size=args.world_size,
         backend=args.backend,
@@ -402,12 +402,12 @@ def main() -> int:
         seed=args.seed,
     )
     print(json.dumps(result, indent=2))
-    assert result["param_sum_spread"] < 1e-3, "parameters diverged across ranks"
-    assert result["fsdp_round_trip_all_ranks_ok"], "FSDP sketch round trip failed"
-    assert result["manual_all_reduce_max_diff_vs_single_process"] < 1e-4, "manual all-reduce mismatched single-process gradient"
+    assert result["param_sum_spread"] < 1e-3, "rank 間で parameter が diverge しました"
+    assert result["fsdp_round_trip_all_ranks_ok"], "FSDP sketch の round trip に失敗しました"
+    assert result["manual_all_reduce_max_diff_vs_single_process"] < 1e-4, "manual all-reduce が single-process gradient と一致しません"
     if not args.no_write:
         write_demo(result, DEMO_PATH)
-        print(f"wrote {DEMO_PATH}")
+        print(f"書き込みました: {DEMO_PATH}")
     return 0
 
 

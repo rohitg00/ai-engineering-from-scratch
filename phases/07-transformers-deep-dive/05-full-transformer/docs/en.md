@@ -1,34 +1,34 @@
-# The Full Transformer — Encoder + Decoder
+# 完全な Transformer — Encoder + Decoder
 
-> Attention is the star. Everything else — residuals, normalization, feed-forward, cross-attention — is the scaffolding that lets you stack it deep.
+> Attention は主役です。それ以外の residual、normalization、feed-forward、cross-attention は、Attention を深く積み重ねられるようにする足場です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head Attention), Phase 7 · 04 (Positional Encoding)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head Attention), Phase 7 · 04 (Positional Encoding)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-A single attention layer is a feature extractor, not a model. One matmul per layer is not enough capacity for language. You need depth — and depth breaks without the right plumbing.
+Attention 層を 1 つ置いただけでは、モデルではなく特徴抽出器にすぎません。1 層あたり 1 回の matmul だけでは、言語を扱うには容量が足りません。深さが必要です。そして正しい配管がないと、深くした瞬間に壊れます。
 
-The 2017 Vaswani paper packaged six design decisions that turned one attention layer into a stackable block. Every transformer since — encoder-only (BERT), decoder-only (GPT), encoder-decoder (T5) — inherits the same skeleton. In 2026 the blocks have been refined (RMSNorm, SwiGLU, pre-norm, RoPE) but the skeleton is identical.
+2017 年の Vaswani 論文は、1 つの Attention 層を積み重ね可能なブロックに変える 6 つの設計判断をまとめました。それ以降の Transformer は、encoder-only (BERT)、decoder-only (GPT)、encoder-decoder (T5) のどれであっても、同じ骨格を継承しています。2026 年時点ではブロックは洗練されていますが (RMSNorm、SwiGLU、pre-norm、RoPE)、骨格は同じです。
 
-This lesson is the skeleton. Next lessons specialize it — 06 for encoders, 07 for decoders, 08 for encoder-decoder.
+このレッスンではその骨格を扱います。次のレッスンではそれを特化します。06 は encoder、07 は decoder、08 は encoder-decoder です。
 
-## The Concept
+## コンセプト
 
 ![Encoder and decoder block internals, wired](../assets/full-transformer.svg)
 
-### The six pieces
+### 6 つの部品
 
-1. **Embedding + positional signal.** Tokens → vectors. Position injected via RoPE (modern) or sinusoidal (classic).
-2. **Self-attention.** Every position attends to every other. Masked in decoders.
-3. **Feed-forward network (FFN).** Position-wise two-layer MLP: `W_2 · activation(W_1 · x)`. Expansion ratio 4× by default.
-4. **Residual connection.** `x + sublayer(x)`. Without this, gradients vanish past ~6 layers.
-5. **Layer normalization.** `LayerNorm` or `RMSNorm` (modern). Stabilizes the residual stream.
-6. **Cross-attention (decoder only).** Queries come from the decoder, keys and values from the encoder output.
+1. **Embedding + positional signal.** Token → vector。位置は RoPE (現代的) または sinusoidal (古典的) で注入します。
+2. **Self-attention.** 各位置が他のすべての位置を参照します。decoder では mask されます。
+3. **Feed-forward network (FFN).** 位置ごとの 2 層 MLP: `W_2 · activation(W_1 · x)`。既定の expansion ratio は 4× です。
+4. **Residual connection.** `x + sublayer(x)`。これがないと、約 6 層を超えたあたりで勾配が消えます。
+5. **Layer normalization.** `LayerNorm` または現代的な `RMSNorm`。residual stream を安定させます。
+6. **Cross-attention (decoder only).** Query は decoder から、key と value は encoder output から来ます。
 
-### Encoder block (used by BERT, T5 encoder)
+### Encoder block (BERT、T5 encoder で使用)
 
 ```
 x → LN → MHA(self) → + → LN → FFN → + → out
@@ -37,62 +37,62 @@ x → LN → MHA(self) → + → LN → FFN → + → out
                      └── residual ──┘
 ```
 
-Encoder is bidirectional. No masking. All positions see all positions.
+Encoder は双方向です。mask はありません。すべての位置がすべての位置を見ます。
 
-### Decoder block (used by GPT, T5 decoder)
+### Decoder block (GPT、T5 decoder で使用)
 
 ```
 x → LN → MHA(masked self) → + → LN → MHA(cross to encoder) → + → LN → FFN → + → out
 ```
 
-Decoder has three sublayers per block. The middle one — cross-attention — is the only place information flows from encoder to decoder. In a pure decoder-only architecture (GPT), cross-attention is omitted and you just have masked self-attention + FFN.
+Decoder は 1 ブロックあたり 3 つの sublayer を持ちます。中央の cross-attention だけが、encoder から decoder へ情報が流れる場所です。純粋な decoder-only architecture (GPT) では cross-attention を省き、masked self-attention + FFN だけにします。
 
-### Pre-norm vs post-norm
+### Pre-norm と post-norm
 
-Original paper: `x + sublayer(LN(x))` vs `LN(x + sublayer(x))`. Post-norm lost favor around 2019 — it is harder to train deeply without careful warmup. Pre-norm (`LN` *before* sublayer) is the 2026 default: Llama, Qwen, GPT-3+, Mistral all use it.
+元論文の形式は `x + sublayer(LN(x))` と `LN(x + sublayer(x))` の対比でした。Post-norm は 2019 年ごろから主流ではなくなりました。丁寧な warmup なしに深く学習するのが難しいためです。Pre-norm (`LN` を sublayer の前に置く) が 2026 年の標準です。Llama、Qwen、GPT-3+、Mistral はすべてこれを使います。
 
-### The 2026 modernized block
+### 2026 年版の現代的ブロック
 
-Vaswani 2017 shipped LayerNorm + ReLU. Modern stacks replaced both. What production blocks actually look like:
+Vaswani 2017 は LayerNorm + ReLU でした。現代の stack では両方が置き換えられています。実運用のブロックはだいたい次の形です。
 
 | Component | 2017 | 2026 |
 |-----------|------|------|
 | Normalization | LayerNorm | RMSNorm |
 | FFN activation | ReLU | SwiGLU |
-| FFN expansion | 4× | 2.6× (SwiGLU uses three matrices, total params match) |
+| FFN expansion | 4× | 2.6× (SwiGLU は 3 つの行列を使い、総 parameter 数を合わせる) |
 | Position | Sinusoidal absolute | RoPE |
-| Attention | Full MHA | GQA (or MLA) |
+| Attention | Full MHA | GQA (または MLA) |
 | Bias terms | Yes | No |
 
-RMSNorm drops the mean-centering of LayerNorm (one fewer subtraction), which saves compute and is empirically at least as stable. SwiGLU (`Swish(W1 x) ⊙ W3 x`) consistently outperforms ReLU/GELU FFN by ~0.5 point ppl in the Llama, PaLM and Qwen papers.
+RMSNorm は LayerNorm の mean-centering を落とします (減算が 1 回少ない)。そのため計算量を節約でき、経験的にも少なくとも同程度に安定します。SwiGLU (`Swish(W1 x) ⊙ W3 x`) は、Llama、PaLM、Qwen の論文で ReLU/GELU FFN を一貫して約 0.5 point ppl 上回っています。
 
 ### Parameter count
 
-For one block with `d_model = d` and FFN expansion `r`:
+`d_model = d`、FFN expansion `r` の 1 ブロックについて:
 
 - MHA: `4 · d²` (Q, K, V, O projections)
 - FFN (SwiGLU): `3 · d · (r · d)` ≈ `3rd²`
-- Norms: negligible
+- Norms: 無視できる程度
 
-At `d = 4096, r = 2.6, layers = 32` (roughly Llama 3 8B), total: `32 · (4·4096² + 3·2.6·4096²) ≈ 32 · (16 + 32) M = ~1.5B parameters per layer × 32 ≈ 7B` (plus embeddings and head). Matches published counts.
+`d = 4096, r = 2.6, layers = 32` (おおよそ Llama 3 8B) では、合計は `32 · (4·4096² + 3·2.6·4096²) ≈ 32 · (16 + 32) M = ~1.5B parameters per layer × 32 ≈ 7B` です (embedding と head は別)。公開値と合います。
 
-## Build It
+## 作ってみる
 
-### Step 1: the building blocks
+### Step 1: building blocks
 
-Using the tiny `Matrix` class from Lesson 03 (copied to this file for independence):
+Lesson 03 の小さな `Matrix` class を使います (このファイルに独立性のためコピー済み)。
 
-- `layer_norm(x, eps=1e-5)` — subtract mean, divide by std.
-- `rms_norm(x, eps=1e-6)` — divide by RMS. No mean subtraction.
-- `gelu(x)` and `silu(x) * W3 x` (SwiGLU).
-- `ffn_swiglu(x, W1, W2, W3)`.
-- `encoder_block(x, params)` and `decoder_block(x, enc_out, params)`.
+- `layer_norm(x, eps=1e-5)` — mean を引き、std で割る。
+- `rms_norm(x, eps=1e-6)` — RMS で割る。mean subtraction はしない。
+- `gelu(x)` と `silu(x) * W3 x` (SwiGLU)。
+- `ffn_swiglu(x, W1, W2, W3)`。
+- `encoder_block(x, params)` と `decoder_block(x, enc_out, params)`。
 
-See `code/main.py` for the full wiring.
+全体の配線は `code/main.py` を見てください。
 
-### Step 2: wire a 2-layer encoder and a 2-layer decoder
+### Step 2: 2-layer encoder と 2-layer decoder をつなぐ
 
-Stack them. Pass the encoder output into every decoder cross-attention. Add a final LN before the output projection.
+積み重ねます。encoder output をすべての decoder cross-attention に渡します。output projection の前に final LN を追加します。
 
 ```python
 def encode(tokens, params):
@@ -108,25 +108,25 @@ def decode(target_tokens, encoder_out, params):
     return x
 ```
 
-### Step 3: run forward on a toy example
+### Step 3: toy example で forward を走らせる
 
-Feed a 6-token source and a 5-token target through. Verify the output shape is `(5, vocab)`. No training — this lesson is about the architecture, not the loss.
+6-token の source と 5-token の target を通します。output shape が `(5, vocab)` であることを確認します。training はしません。このレッスンの目的は architecture であり、loss ではありません。
 
-### Step 4: swap in RMSNorm + SwiGLU
+### Step 4: RMSNorm + SwiGLU に差し替える
 
-Replace LayerNorm and ReLU-FFN with RMSNorm and SwiGLU. Confirm shapes still match. This is the 2026 modernization with one function substitution.
+LayerNorm と ReLU-FFN を RMSNorm と SwiGLU に置き換えます。shape がまだ一致することを確認します。これは関数を 1 つ差し替えるだけでできる 2026 年版の modernization です。
 
-## Use It
+## 使ってみる
 
-The PyTorch/TF reference implementations: `nn.TransformerEncoderLayer`, `nn.TransformerDecoderLayer`. But most 2026 production code rolls its own block because:
+PyTorch/TF の参照実装は `nn.TransformerEncoderLayer`、`nn.TransformerDecoderLayer` です。ただし 2026 年の production code の多くは独自 block を持ちます。理由は次のとおりです。
 
-- Flash Attention is called inside attention, not via `nn.MultiheadAttention`.
-- GQA / MLA are not in the stdlib reference.
-- RoPE, RMSNorm, SwiGLU are not the PyTorch defaults.
+- Flash Attention は `nn.MultiheadAttention` 経由ではなく、attention 内部で呼ばれる。
+- GQA / MLA は stdlib の参照実装にない。
+- RoPE、RMSNorm、SwiGLU は PyTorch の default ではない。
 
-HF `transformers` has clean reference blocks you should read: `modeling_llama.py` is the canonical 2026 decoder-only block. It's ~500 lines and worth walking through once.
+HF `transformers` には読む価値のあるきれいな参照 block があります。`modeling_llama.py` は 2026 年時点の canonical な decoder-only block です。約 500 行なので、一度通読する価値があります。
 
-**Encoder vs decoder vs encoder-decoder — when to pick:**
+**Encoder vs decoder vs encoder-decoder — いつ選ぶか:**
 
 | Need | Pick | Example |
 |------|------|---------|
@@ -134,35 +134,35 @@ HF `transformers` has clean reference blocks you should read: `modeling_llama.py
 | Text generation, chat, code, reasoning | Decoder-only | GPT, Llama, Claude, Qwen |
 | Structured input → structured output (translation, summarization) | Encoder-decoder | T5, BART, Whisper |
 
-Decoder-only won language because it scales cleanest and handles both comprehension and generation. Encoder-decoder is still best when the input has a clear "source sequence" identity (translation, speech recognition, structured tasks).
+Decoder-only は、最も素直に scale し、理解と生成の両方を扱えるため、言語で勝ちました。入力に明確な「source sequence」としての性格がある場合 (translation、speech recognition、structured tasks) は、encoder-decoder が今でも最適です。
 
 ## Ship It
 
-See `outputs/skill-transformer-block-reviewer.md`. The skill reviews a new transformer block implementation against the 2026 defaults and flags missing pieces (pre-norm, RoPE, RMSNorm, GQA, FFN expansion ratio).
+`outputs/skill-transformer-block-reviewer.md` を見てください。この skill は新しい transformer block 実装を 2026 年の default と照らして review し、不足している要素 (pre-norm、RoPE、RMSNorm、GQA、FFN expansion ratio) を指摘します。
 
-## Exercises
+## 演習
 
-1. **Easy.** Count the parameters in your encoder_block at `d_model=512, n_heads=8, ffn_expansion=4, swiglu=True`. Validate by implementing the block and using `sum(p.numel() for p in block.parameters())`.
-2. **Medium.** Switch from post-norm to pre-norm. Initialize both and measure the activation norm after 12 stacked layers on random input. Post-norm's activations should explode; pre-norm's should stay bounded.
-3. **Hard.** Implement a 4-layer encoder-decoder on a toy copy task (copy `x` reversed). Train 100 steps. Report loss. Swap in RMSNorm + SwiGLU + RoPE — does loss drop?
+1. **Easy.** `d_model=512, n_heads=8, ffn_expansion=4, swiglu=True` で `encoder_block` の parameter 数を数えてください。block を実装し、`sum(p.numel() for p in block.parameters())` で検証します。
+2. **Medium.** post-norm から pre-norm に切り替えてください。両方を初期化し、random input に 12 層積んだ後の activation norm を測ります。post-norm の activation は爆発し、pre-norm は有界に保たれるはずです。
+3. **Hard.** toy copy task (copy `x` reversed) で 4-layer encoder-decoder を実装してください。100 steps 学習し、loss を報告します。RMSNorm + SwiGLU + RoPE に差し替えると loss は下がりますか。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Block | "One transformer layer" | Stack of norm + attention + norm + FFN, wrapped in residual connections. |
-| Residual | "Skip connection" | `x + f(x)` output; enables gradient flow through deep stacks. |
-| Pre-norm | "Normalize before, not after" | Modern: `x + sublayer(LN(x))`. Trains deeper without warmup gymnastics. |
-| RMSNorm | "LayerNorm without the mean" | Divide by RMS; one less op, same empirical stability. |
-| SwiGLU | "The FFN everyone switched to" | `Swish(W1 x) ⊙ W3 x → W2`. Beats ReLU/GELU on LM ppl. |
-| Cross-attention | "How the decoder sees the encoder" | MHA with Q from decoder, K/V from encoder outputs. |
-| FFN expansion | "How wide the middle MLP is" | Ratio of hidden-size to d_model, usually 4 (LayerNorm) or 2.6 (SwiGLU). |
-| Bias-free | "Drop the +b terms" | Modern stacks omit biases in linear layers; slight ppl improvement, smaller model. |
+| Block | 「1 つの transformer layer」 | norm + attention + norm + FFN の stack を residual connection で包んだもの。 |
+| Residual | 「Skip connection」 | `x + f(x)` の output。深い stack を通る gradient flow を可能にする。 |
+| Pre-norm | 「後ではなく前で normalize」 | 現代的な形式は `x + sublayer(LN(x))`。warmup の曲芸なしに深く学習できる。 |
+| RMSNorm | 「mean のない LayerNorm」 | RMS で割る。演算が 1 つ少なく、経験的安定性は同等。 |
+| SwiGLU | 「みんなが移行した FFN」 | `Swish(W1 x) ⊙ W3 x → W2`。LM ppl で ReLU/GELU を上回る。 |
+| Cross-attention | 「decoder が encoder を見る方法」 | decoder 由来の Q、encoder output 由来の K/V を使う MHA。 |
+| FFN expansion | 「middle MLP の幅」 | hidden-size と d_model の比。通常は 4 (LayerNorm) または 2.6 (SwiGLU)。 |
+| Bias-free | 「+b term を落とす」 | 現代的な stack は linear layer の bias を省く。ppl が少し改善し、model も小さくなる。 |
 
-## Further Reading
+## 参考文献
 
-- [Vaswani et al. (2017). Attention Is All You Need](https://arxiv.org/abs/1706.03762) — original block spec.
-- [Xiong et al. (2020). On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745) — why pre-norm beats post-norm deeply.
-- [Zhang, Sennrich (2019). Root Mean Square Layer Normalization](https://arxiv.org/abs/1910.07467) — RMSNorm.
-- [Shazeer (2020). GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202) — the SwiGLU paper.
-- [HuggingFace `modeling_llama.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/modeling_llama.py) — canonical 2026 decoder-only block.
+- [Vaswani et al. (2017). Attention Is All You Need](https://arxiv.org/abs/1706.03762) — original block spec。
+- [Xiong et al. (2020). On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745) — deep な設定で pre-norm が post-norm に勝つ理由。
+- [Zhang, Sennrich (2019). Root Mean Square Layer Normalization](https://arxiv.org/abs/1910.07467) — RMSNorm。
+- [Shazeer (2020). GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202) — SwiGLU paper。
+- [HuggingFace `modeling_llama.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/modeling_llama.py) — canonical な 2026 年版 decoder-only block。

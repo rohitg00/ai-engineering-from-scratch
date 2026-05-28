@@ -1,63 +1,63 @@
-# Audio Fundamentals — Waveforms, Sampling, Fourier Transform
+# オーディオの基礎 — 波形、サンプリング、フーリエ変換
 
-> Waveforms are the raw signal. Spectrograms are the representation. Mel features are the ML-friendly form. Every modern ASR and TTS pipeline walks this ladder, and the first rung is understanding sampling and Fourier.
+> 波形は生の信号です。スペクトログラムはその表現です。Mel 特徴量は機械学習で扱いやすい形です。現代の ASR と TTS のパイプラインはすべてこの段階をたどり、最初の一段はサンプリングとフーリエを理解することです。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-A microphone produces a pressure-vs-time signal. Your neural net consumes tensors. Between them sits a stack of conventions that, when violated, produce silent bugs: the model trains fine but the WER doubles, or TTS ships a hiss, or a voice cloning system memorizes the microphone instead of the speaker.
+マイクは「圧力 対 時間」の信号を生成します。ニューラルネットはテンソルを受け取ります。その間には、破ると静かなバグを生む慣習の層があります。モデルは問題なく学習しているように見えるのに WER が倍になる、TTS にヒスノイズが混ざる、音声クローニングシステムが話者ではなくマイクを記憶してしまう、といった具合です。
 
-Every bug in speech systems traces back to one of three questions:
+音声システムのバグは、突き詰めると次の 3 つの問いのどれかに戻ります。
 
-1. What sample rate was the data recorded at, and what does the model expect?
-2. Is the signal aliased?
-3. Are you operating on raw samples or on a frequency representation?
+1. データはどのサンプルレートで録音され、モデルは何を期待しているか。
+2. 信号にエイリアシングは起きていないか。
+3. 生サンプルを扱っているのか、周波数表現を扱っているのか。
 
-Get these right and the rest of Phase 6 is tractable. Get them wrong and even Whisper-Large-v4 produces garbage.
+ここを正しく押さえれば、Phase 6 の残りは扱いやすくなります。間違えると、Whisper-Large-v4 でさえゴミのような結果を出します。
 
-## The Concept
+## 概念
 
-![Waveform, sampling, DFT, and frequency bins visualized](../assets/audio-fundamentals.svg)
+![波形、サンプリング、DFT、周波数ビンの可視化](../assets/audio-fundamentals.svg)
 
-**Waveform.** A one-dimensional array of floats in `[-1.0, 1.0]`. Indexed by sample number. To convert to seconds, divide by the sample rate: `t = n / sr`. A 10-second clip at 16 kHz is an array of 160,000 floats.
+**波形。** `[-1.0, 1.0]` の float からなる 1 次元配列です。サンプル番号でインデックスします。秒に変換するには、サンプルレートで割ります: `t = n / sr`。16 kHz の 10 秒クリップは 160,000 個の float の配列です。
 
-**Sampling rate (sr).** How many samples per second. Common rates in 2026:
+**サンプリングレート (sr)。** 1 秒あたりのサンプル数です。2026 年によく使われるレート:
 
-| Rate | Use |
+| レート | 用途 |
 |------|-----|
-| 8 kHz | Telephony, legacy VOIP. Nyquist at 4 kHz kills consonants. Avoid for ASR. |
-| 16 kHz | ASR standard. Whisper, Parakeet, SeamlessM4T v2 all consume 16 kHz. |
-| 22.05 kHz | TTS vocoder training for older models. |
-| 24 kHz | Modern TTS (Kokoro, F5-TTS, xTTS v2). |
-| 44.1 kHz | CD audio, music. |
-| 48 kHz | Film, pro audio, high-fidelity TTS (VALL-E 2, NaturalSpeech 3). |
+| 8 kHz | 電話、レガシー VOIP。Nyquist が 4 kHz なので子音が失われます。ASR では避けます。 |
+| 16 kHz | ASR の標準。Whisper、Parakeet、SeamlessM4T v2 はすべて 16 kHz を入力にします。 |
+| 22.05 kHz | 古いモデルの TTS vocoder 学習。 |
+| 24 kHz | 現代の TTS (Kokoro, F5-TTS, xTTS v2)。 |
+| 44.1 kHz | CD オーディオ、音楽。 |
+| 48 kHz | 映画、プロ音声、高忠実度 TTS (VALL-E 2, NaturalSpeech 3)。 |
 
-**Nyquist-Shannon.** A sample rate of `sr` can unambiguously represent frequencies up to `sr/2`. The `sr/2` boundary is the *Nyquist frequency*. Energy above Nyquist gets *aliased* — folded down into lower frequencies — and corrupts the signal. Always low-pass filter before downsampling.
+**Nyquist-Shannon。** サンプルレート `sr` では、`sr/2` までの周波数を曖昧さなく表現できます。`sr/2` の境界が *Nyquist frequency* です。Nyquist を超えるエネルギーは *aliased* され、低い周波数へ折り返されて信号を汚します。ダウンサンプリング前には必ずローパスフィルタをかけます。
 
-**Bit depth.** 16-bit PCM (signed int16, range ±32,767) is the universal exchange format. 24-bit for music, 32-bit float for internal DSP. Libraries like `soundfile` read int16 but expose float32 arrays in `[-1, 1]`.
+**ビット深度。** 16-bit PCM (signed int16、範囲 ±32,767) は汎用の交換形式です。音楽では 24-bit、内部 DSP では 32-bit float を使います。`soundfile` のようなライブラリは int16 を読み込みますが、`[-1, 1]` の float32 配列として公開します。
 
-**Fourier Transform.** Any finite signal is a sum of sinusoids at different frequencies. The Discrete Fourier Transform (DFT) computes, for `N` samples, `N` complex coefficients — one per frequency bin. `bin k` maps to frequency `k · sr / N` Hz. Magnitude is amplitude at that frequency, angle is phase.
+**フーリエ変換。** 任意の有限信号は、異なる周波数の正弦波の和です。Discrete Fourier Transform (DFT) は、`N` 個のサンプルに対して `N` 個の複素係数を計算します。周波数ビンごとに 1 つです。`bin k` は周波数 `k · sr / N` Hz に対応します。大きさはその周波数の振幅、角度は位相です。
 
-**FFT.** Fast Fourier Transform: an `O(N log N)` algorithm for the DFT when `N` is a power of 2. Every audio library uses FFT under the hood. A 1024-sample FFT at 16 kHz gives 512 usable frequency bins spanning 0–8 kHz at 15.6 Hz resolution.
+**FFT。** Fast Fourier Transform は、`N` が 2 のべき乗のときに DFT を計算する `O(N log N)` アルゴリズムです。すべてのオーディオライブラリが内部で FFT を使っています。16 kHz で 1024 サンプルの FFT を使うと、0–8 kHz を 15.6 Hz 解像度で覆う 512 個の有効な周波数ビンが得られます。
 
-**Framing + window.** We do not FFT an entire clip. We chop it into overlapping *frames* (typically 25 ms with 10 ms hop), multiply each frame by a window function (Hann, Hamming) to kill edge discontinuities, then FFT each frame. This is the Short-Time Fourier Transform (STFT). Lesson 02 picks up from here.
+**フレーミング + 窓。** クリップ全体を FFT するわけではありません。重なり合う *frames* に分割し (典型的には 25 ms、hop は 10 ms)、各フレームに窓関数 (Hann、Hamming) を掛けて端の不連続を抑え、その後で各フレームを FFT します。これが Short-Time Fourier Transform (STFT) です。Lesson 02 はここから続きます。
 
-## Build It
+## 作る
 
-### Step 1: read a clip and plot the waveform
+### 手順 1: クリップを読み込み、波形をプロットする
 
-`code/main.py` uses only the stdlib `wave` module to keep the demo dependency-free. For production you will use `soundfile` or `torchaudio.load` (both return `(waveform, sr)` tuples):
+`code/main.py` はデモを依存なしに保つため、stdlib の `wave` モジュールだけを使います。本番では `soundfile` または `torchaudio.load` を使います (どちらも `(waveform, sr)` タプルを返します):
 
 ```python
 import soundfile as sf
 waveform, sr = sf.read("clip.wav", dtype="float32")  # shape (T,), sr=int
 ```
 
-### Step 2: synthesize a sine wave from first principles
+### 手順 2: 原理から正弦波を合成する
 
 ```python
 import math
@@ -67,9 +67,9 @@ def sine(freq_hz, sr, seconds, amp=0.5):
     return [amp * math.sin(2 * math.pi * freq_hz * i / sr) for i in range(n)]
 ```
 
-A 440 Hz sine (concert A) at 16 kHz for 1 second is 16,000 floats. Write with `wave.open(..., "wb")` using 16-bit PCM encoding.
+16 kHz で 1 秒の 440 Hz 正弦波 (concert A) は 16,000 個の float です。16-bit PCM エンコーディングを使って `wave.open(..., "wb")` で書き出します。
 
-### Step 3: compute the DFT by hand
+### 手順 3: DFT を手で計算する
 
 ```python
 def dft(x):
@@ -82,57 +82,57 @@ def dft(x):
     return out
 ```
 
-`O(N²)` — fine for `N=256` to confirm correctness, useless for real audio. Real code calls `numpy.fft.rfft` or `torch.fft.rfft`.
+`O(N²)` です。`N=256` で正しさを確認するには十分ですが、実際の音声には使えません。本番コードでは `numpy.fft.rfft` または `torch.fft.rfft` を呼びます。
 
-### Step 4: find the dominant frequency
+### 手順 4: 支配的な周波数を見つける
 
-Magnitude peak index `k_star` maps to frequency `k_star * sr / N`. Running this on the 440 Hz sine should return a peak at bin `440 * N / sr`.
+大きさのピークインデックス `k_star` は、周波数 `k_star * sr / N` に対応します。440 Hz の正弦波で実行すると、`440 * N / sr` のビンにピークが出るはずです。
 
-### Step 5: demonstrate aliasing
+### 手順 5: エイリアシングを実演する
 
-Sample a 7 kHz sine at 10 kHz (Nyquist = 5 kHz). The 7 kHz tone is above Nyquist and folds to `10 − 7 = 3 kHz`. The FFT peak appears at 3 kHz. This is the classic aliasing demo and the reason every DAC/ADC ships with a brick-wall low-pass filter.
+10 kHz (Nyquist = 5 kHz) で 7 kHz の正弦波をサンプリングします。7 kHz の音は Nyquist を超えているため、`10 − 7 = 3 kHz` に折り返されます。FFT のピークは 3 kHz に現れます。これは典型的なエイリアシングのデモであり、すべての DAC/ADC に急峻なローパスフィルタが載っている理由です。
 
-## Use It
+## 使う
 
-The stack you will actually ship in 2026:
+2026 年に実際に出荷するスタック:
 
-| Task | Library | Why |
+| タスク | ライブラリ | 理由 |
 |------|---------|-----|
-| Read/write WAV/FLAC/OGG | `soundfile` (libsndfile wrapper) | Fastest, stable, returns float32. |
-| Resample | `torchaudio.transforms.Resample` or `librosa.resample` | Correct anti-aliasing built in. |
-| STFT / Mel | `torchaudio` or `librosa` | GPU-friendly; PyTorch ecosystem. |
-| Real-time streaming | `sounddevice` or `pyaudio` | Cross-platform PortAudio bindings. |
-| Inspect a file | `ffprobe` or `soxi` | CLI, fast, reports sr/channels/codec. |
+| WAV/FLAC/OGG の読み書き | `soundfile` (libsndfile wrapper) | 高速で安定し、float32 を返します。 |
+| リサンプリング | `torchaudio.transforms.Resample` または `librosa.resample` | 正しいアンチエイリアシングが組み込まれています。 |
+| STFT / Mel | `torchaudio` または `librosa` | GPU フレンドリーで、PyTorch エコシステムに合います。 |
+| リアルタイムストリーミング | `sounddevice` または `pyaudio` | クロスプラットフォームの PortAudio バインディングです。 |
+| ファイル調査 | `ffprobe` または `soxi` | CLI で高速、sr/channels/codec を報告します。 |
 
-Decision rule: **match sample rate before you match anything else**. Whisper expects 16 kHz mono float32. Pass it 44.1 kHz stereo and you will get garbage that looks like a model bug.
+判断規則: **何より先にサンプルレートを合わせる**。Whisper は 16 kHz mono float32 を期待します。44.1 kHz stereo を渡すと、モデルのバグに見えるゴミが返ってきます。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-audio-loader.md`. The skill helps you check that audio input matches the expectations of the downstream model and resamples correctly when it does not.
+`outputs/skill-audio-loader.md` として保存します。このスキルは、音声入力が下流モデルの期待と一致するかを確認し、一致しない場合に正しくリサンプリングする助けになります。
 
-## Exercises
+## 演習
 
-1. **Easy.** Synthesize a 1-second mix of 220 Hz + 440 Hz + 880 Hz at 16 kHz. Run DFT. Confirm three peaks at the expected bins.
-2. **Medium.** Record a 3-second WAV of your voice at 48 kHz. Downsample to 16 kHz using `torchaudio.transforms.Resample` (with anti-aliasing), then to 16 kHz using naive decimation (every third sample). FFT both. Where does the aliasing appear?
-3. **Hard.** Build the STFT from scratch using only `math` and the DFT from Step 3. Frame size 400, hop 160, Hann window. Plot magnitudes with `matplotlib.pyplot.imshow`. This is the spectrogram of Lesson 02.
+1. **Easy.** 16 kHz で 220 Hz + 440 Hz + 880 Hz の 1 秒ミックスを合成します。DFT を実行します。期待されるビンに 3 つのピークがあることを確認します。
+2. **Medium.** 自分の声を 48 kHz で 3 秒の WAV として録音します。`torchaudio.transforms.Resample` (アンチエイリアシングあり) で 16 kHz にダウンサンプリングし、さらにナイーブな間引き (3 サンプルごと) でも 16 kHz にします。両方を FFT します。エイリアシングはどこに現れますか。
+3. **Hard.** 手順 3 の DFT と `math` だけを使って STFT をゼロから作ります。フレームサイズ 400、hop 160、Hann 窓。`matplotlib.pyplot.imshow` で大きさをプロットします。これが Lesson 02 のスペクトログラムです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Sample rate | How many samples per second | Frequency in Hz at which the ADC measures the signal. |
-| Nyquist | The max frequency you can represent | `sr/2`; energy above it aliases back down. |
-| Bit depth | Resolution of each sample | `int16` = 65,536 levels; `float32` = 24-bit precision in `[-1, 1]`. |
-| DFT | The Fourier transform for sequences | `N` samples → `N` complex frequency coefficients. |
-| FFT | The fast DFT | `O(N log N)` algorithm requiring `N` = power of 2. |
-| Bin | Frequency column | `k · sr / N` Hz; resolution = `sr / N`. |
-| STFT | Spectrogram under the hood | Framed + windowed FFT over time. |
-| Aliasing | Weird frequency ghosts | Energy above Nyquist mirroring down to lower bins. |
+| Sample rate | 1 秒あたりのサンプル数 | ADC が信号を測定する周波数 (Hz)。 |
+| Nyquist | 表現できる最大周波数 | `sr/2`; それを超えるエネルギーは下へ折り返されます。 |
+| Bit depth | 各サンプルの解像度 | `int16` = 65,536 段階; `float32` = `[-1, 1]` で 24-bit 精度。 |
+| DFT | 列に対するフーリエ変換 | `N` サンプル → `N` 個の複素周波数係数。 |
+| FFT | 高速な DFT | `N` = 2 のべき乗を前提にする `O(N log N)` アルゴリズム。 |
+| Bin | 周波数の列 | `k · sr / N` Hz; 解像度 = `sr / N`。 |
+| STFT | スペクトログラムの中身 | 時間方向にフレーム化し、窓を掛けた FFT。 |
+| Aliasing | 奇妙な周波数の幻影 | Nyquist を超えたエネルギーが低いビンへ鏡写しになること。 |
 
-## Further Reading
+## 参考資料
 
-- [Shannon (1949). Communication in the Presence of Noise](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) — the paper behind the sampling theorem.
-- [Smith — The Scientist and Engineer's Guide to Digital Signal Processing](https://www.dspguide.com/ch8.htm) — free, canonical DSP textbook.
-- [librosa docs — audio primer](https://librosa.org/doc/latest/tutorial.html) — practical walkthrough with code.
-- [Heinrich Kuttruff — Room Acoustics (6th ed.)](https://www.routledge.com/Room-Acoustics/Kuttruff/p/book/9781482260434) — reference for why real-world audio is not a clean sinusoid.
-- [Steve Eddins — FFT Interpretation notebook](https://blogs.mathworks.com/steve/2020/03/30/fft-spectrum-and-spectral-densities/) — frequency bin intuition cleared up in 10 minutes.
+- [Shannon (1949). Communication in the Presence of Noise](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) — サンプリング定理の背後にある論文。
+- [Smith — The Scientist and Engineer's Guide to Digital Signal Processing](https://www.dspguide.com/ch8.htm) — 無料で標準的な DSP 教科書。
+- [librosa docs — audio primer](https://librosa.org/doc/latest/tutorial.html) — コード付きの実践的な導入。
+- [Heinrich Kuttruff — Room Acoustics (6th ed.)](https://www.routledge.com/Room-Acoustics/Kuttruff/p/book/9781482260434) — 現実の音声がきれいな正弦波ではない理由の参考書。
+- [Steve Eddins — FFT Interpretation notebook](https://blogs.mathworks.com/steve/2020/03/30/fft-spectrum-and-spectral-densities/) — 周波数ビンの直感を 10 分で整理できます。

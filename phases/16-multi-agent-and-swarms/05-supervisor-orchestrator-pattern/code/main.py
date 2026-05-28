@@ -1,9 +1,9 @@
-"""Supervisor / Orchestrator-Worker pattern (Anthropic Research style).
+"""Supervisor / Orchestrator-Worker pattern (Anthropic Research style)。
 
-Lead agent decomposes a query, spawns workers in parallel threads, synthesizes.
-No real LLM calls -- workers are scripted fetch-and-summarize simulations.
+lead agent が query を分解し、parallel threads で workers を spawn し、synthesize する。
+real LLM calls はない。workers は scripted fetch-and-summarize simulations。
 
-The point is the wall-clock win from parallel subagents, plus the pattern.
+要点は parallel subagents による wall-clock win と pattern。
 """
 from __future__ import annotations
 
@@ -41,9 +41,9 @@ class Trace:
 
 
 def fake_web_fetch(query: str) -> str:
-    """Simulate web fetch + summarization latency."""
+    """web fetch + summarization latency を simulate する。"""
     time.sleep(0.3)
-    return f"Summary for '{query}': 3 key findings from 5 sources."
+    return f"'{query}' の summary: 5 sources から 3 key findings。"
 
 
 class Worker:
@@ -66,23 +66,23 @@ class Worker:
 
 
 class Lead:
-    """Supervisor. Plans, spawns workers in parallel, synthesizes."""
+    """Supervisor。plan し、workers を parallel に spawn し、synthesize する。"""
 
     def __init__(self, trace: Trace) -> None:
         self.trace = trace
 
     def plan(self, query: str) -> list[str]:
-        """Decompose. Real lead uses an LLM; this splits by heuristic."""
+        """分解する。real lead は LLM を使うが、ここでは heuristic で split する。"""
         return [
-            f"{query} -- historical origins",
-            f"{query} -- state of the art 2026",
+            f"{query} -- 歴史的起源",
+            f"{query} -- 2026 年の state of the art",
             f"{query} -- open problems",
         ]
 
     def synthesize(self, query: str, results: list[WorkerResult]) -> str:
         ok = [r for r in results if r is not None]
         parts = [f"- {r.sub_question}: {r.summary}" for r in ok]
-        return f"Answer to '{query}':\n" + "\n".join(parts)
+        return f"'{query}' への answer:\n" + "\n".join(parts)
 
     def run(self, query: str) -> tuple[str, dict]:
         t0 = time.time()
@@ -126,9 +126,9 @@ def main() -> None:
     trace = Trace()
     t0 = time.time()
     lead = Lead(trace=trace)
-    answer, stats = lead.run("What changed in multi-agent systems 2023 to 2026?")
+    answer, stats = lead.run("2023 年から 2026 年に multi-agent systems で何が変わったか?")
 
-    print("\nTrace (+seconds relative to plan start):")
+    print("\nTrace (plan start からの +seconds):")
     render_trace(trace, t0)
 
     print("\nFinal synthesis:")
@@ -138,8 +138,8 @@ def main() -> None:
     for k, v in stats.items():
         print(f"  {k}: {v}")
 
-    print("\nSequential baseline would be ~0.9s (3 * 0.3s).")
-    print("Parallel actual is ~0.35s. That's the supervisor win.")
+    print("\nSequential baseline は ~0.9s (3 * 0.3s)。")
+    print("Parallel actual は ~0.35s。これが supervisor の win です。")
 
 
 if __name__ == "__main__":

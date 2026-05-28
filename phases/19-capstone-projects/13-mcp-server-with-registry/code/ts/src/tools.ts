@@ -3,7 +3,7 @@ import type { ContentBlock, Incident, ToolArgs, ToolDescriptor, ToolExecutor } f
 export function makeIncidents(): Record<string, Incident> {
   return {
     "INC-101": { id: "INC-101", severity: "p0", title: "checkout 500s", acked: false },
-    "INC-102": { id: "INC-102", severity: "p2", title: "slow dashboard", acked: true },
+    "INC-102": { id: "INC-102", severity: "p2", title: "dashboard が遅い", acked: true },
     "INC-103": { id: "INC-103", severity: "p1", title: "rate-limit storm", acked: false },
   };
 }
@@ -12,7 +12,7 @@ export const TOOL_DESCRIPTORS: ToolDescriptor[] = [
   {
     name: "incidents_list",
     description:
-      "Use when listing recent incidents or filtering by severity. Do not use to look up a single id.",
+      "最近の incident を list する、または severity で filter するときに使う。単一 id の lookup には使わない。",
     inputSchema: {
       type: "object",
       properties: { severity: { type: "string", enum: ["p0", "p1", "p2"] } },
@@ -22,7 +22,7 @@ export const TOOL_DESCRIPTORS: ToolDescriptor[] = [
   },
   {
     name: "incidents_get",
-    description: "Use to fetch one incident by id. Do not use for listing.",
+    description: "id で incident を 1 件 fetch するときに使う。Listing には使わない。",
     inputSchema: {
       type: "object",
       properties: { id: { type: "string" } },
@@ -32,7 +32,7 @@ export const TOOL_DESCRIPTORS: ToolDescriptor[] = [
   },
   {
     name: "incidents_ack",
-    description: "Use to acknowledge an incident. Write op; only authorized callers.",
+    description: "Incident を acknowledge するときに使う。Write op なので authorized caller のみ。",
     inputSchema: {
       type: "object",
       properties: { id: { type: "string" } },

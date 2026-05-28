@@ -1,25 +1,25 @@
 /**
- * Observability — OpenTelemetry-shaped GenAI tracer + retention simulator (TypeScript).
+ * Observability — OpenTelemetry 形式の GenAI tracer + retention simulator（TypeScript）。
  *
- * Two halves:
- *   1. Minimal in-memory tracer using the OpenTelemetry GenAI Semantic Convention
- *      attribute names (gen_ai.system, gen_ai.request.model, gen_ai.usage.*).
- *      No SDK. Just a structured log emitter you can ship to Helicone/Phoenix/Langfuse
- *      by swapping the exporter.
- *   2. The same 1M-trace day retention simulator as main.py, with the five
- *      sampling strategies and 2026 price approximations.
+ * 2 つの部分があります:
+ *   1. OpenTelemetry GenAI Semantic Convention の attribute names
+ *      (gen_ai.system, gen_ai.request.model, gen_ai.usage.*) を使う
+ *      最小の in-memory tracer。SDK は使いません。Exporter を差し替えるだけで
+ *      Helicone/Phoenix/Langfuse に送れる structured log emitter です。
+ *   2. main.py と同じ 1M-trace day retention simulator。5 つの sampling
+ *      strategies と 2026 年の price approximations を使います。
  *
- * Citations: see docs/en.md for OpenTelemetry GenAI conventions, Arize AX zero-copy
- * pricing claim, Langfuse/Helicone tier comparison.
+ * Citations: OpenTelemetry GenAI conventions、Arize AX zero-copy pricing claim、
+ * Langfuse/Helicone tier comparison は docs/en.md を参照してください。
  *
- * Runs on Node 20+ stdlib. No npm deps.
+ * Node 20+ stdlib で動作します。npm deps は不要です。
  */
 
 import { randomUUID, createHash } from "node:crypto";
 
 // -- Tracer ----------------------------------------------------------------
 
-// OpenTelemetry GenAI Semantic Conventions (2025 spec).
+// OpenTelemetry GenAI Semantic Conventions（2025 spec）。
 // https://opentelemetry.io/docs/specs/semconv/gen-ai/
 type GenAIAttributes = {
   "gen_ai.system": string;
@@ -30,7 +30,7 @@ type GenAIAttributes = {
   "gen_ai.response.model"?: string;
   "gen_ai.response.finish_reasons"?: string[];
   "gen_ai.response.id"?: string;
-  // Optional but useful for cost / cache analysis.
+  // Optional ですが cost / cache analysis に有用です。
   "gen_ai.usage.cached_input_tokens"?: number;
   "gen_ai.request.temperature"?: number;
 };
@@ -55,8 +55,8 @@ type SpanEvent = {
   attributes?: Record<string, unknown>;
 };
 
-// Exporter contract: how a real shipper (Helicone, OpenLLMetry, Phoenix) would
-// receive a finished span. Swap this with a real OTLP HTTP exporter in prod.
+// Exporter contract: 実際の shipper（Helicone、OpenLLMetry、Phoenix）が
+// finished span を受け取る形です。Production では real OTLP HTTP exporter に差し替えます。
 type SpanExporter = (span: Readonly<Span>) => void;
 
 class GenAITracer {
@@ -90,14 +90,14 @@ class GenAITracer {
   endSpan(span: Span, status: SpanStatus = "OK"): void {
     span.endNs = process.hrtime.bigint();
     span.status = status;
-    // Remove from active stack regardless of strict ordering.
+    // Strict ordering に関係なく active stack から取り除きます。
     const idx = this.active.lastIndexOf(span);
     if (idx >= 0) this.active.splice(idx, 1);
     this.exporter(span);
   }
 }
 
-// Console exporter (development). A real exporter would batch and POST to OTLP.
+// Console exporter（development）。実際の exporter は batch して OTLP に POST します。
 function consoleExporter(span: Readonly<Span>): void {
   const durMs =
     span.endNs !== undefined
@@ -119,8 +119,8 @@ function consoleExporter(span: Readonly<Span>): void {
   console.log(JSON.stringify(obj));
 }
 
-// Sampling exporter — wraps another exporter. Matches the rule set in the
-// retention simulator below: keep all errors + high-cost, sample success at p.
+// Sampling exporter — 別 exporter を wrap します。下の retention simulator と同じ rule set:
+// errors + high-cost はすべて保持し、success は p で sample します。
 function makeSamplingExporter(
   inner: SpanExporter,
   successRate: number,
@@ -141,7 +141,7 @@ function makeSamplingExporter(
   };
 }
 
-// -- Mocked LLM call (no network) ------------------------------------------
+// -- Mocked LLM call（network なし） ----------------------------------------
 
 type MockProvider = "openai" | "anthropic" | "self-hosted";
 
@@ -163,7 +163,7 @@ function mockLLMCall(
   if (forceError) {
     throw new Error(`${provider}/${model}: simulated rate_limit_exceeded`);
   }
-  // Toy token counter — 4 chars/token, deterministic per prompt.
+  // Toy token counter — 4 chars/token。prompt ごとに deterministic です。
   const inputTokens = Math.max(1, Math.floor(prompt.length / 4));
   const seed = parseInt(
     createHash("sha256").update(prompt).digest("hex").slice(0, 8),
@@ -238,7 +238,7 @@ const STRATEGIES: Strategy[] = [
   { name: "1% aggregates only", sampleRate: 0.01, keepErrors: true, keepHighCost: true },
 ];
 
-// Mulberry32 PRNG — deterministic, no deps.
+// Mulberry32 PRNG — deterministic、deps なし。
 function makeRng(seed: number): () => number {
   let s = seed >>> 0;
   return function () {
@@ -308,11 +308,11 @@ function reportRow(r: SimResult): void {
 // -- Demo ------------------------------------------------------------------
 
 function tracerDemo(): void {
-  console.log("--- GenAI tracer (OpenTelemetry attribute shape) ---");
+  console.log("--- GenAI tracer（OpenTelemetry attribute shape）---");
   const tracer = new GenAITracer(consoleExporter);
   traceLLMCall(tracer, "openai", "gpt-4o-mini", "What is the capital of France?");
   traceLLMCall(tracer, "anthropic", "claude-3-5-sonnet", "Summarise system prompt cached document");
-  // Simulate an error path.
+  // Error path を simulate します。
   traceLLMCall(tracer, "self-hosted", "llama-3-70b", "boom", true);
 
   console.log("\n--- Sampling exporter: 5% success + 100% errors + high-cost ---");
@@ -328,18 +328,18 @@ function tracerDemo(): void {
 function retentionDemo(): void {
   console.log("\n" + "=".repeat(120));
   console.log(
-    "OBSERVABILITY SAMPLING — 1M traces/day, 2026 price approximations",
+    "OBSERVABILITY SAMPLING — 1M traces/day、2026 price approximations",
   );
   console.log("=".repeat(120));
   for (const s of STRATEGIES) reportRow(simulateDay(s));
   console.log(
-    "\nRead: 100% retention on Datadog-class costs hundreds of $/day.",
+    "\nRead: Datadog-class で 100% retention すると、1 日あたり数百ドルかかります。",
   );
   console.log(
-    "5% success + 100% errors + high-cost keeps signal, cuts 90% of bill.",
+    "5% success + 100% errors + high-cost は signal を保ちながら bill を 90% 削ります。",
   );
   console.log(
-    "Arize AX zero-copy pattern wins at scale when you already have a data lake.",
+    "既に data lake がある場合、Arize AX の zero-copy pattern は scale で勝ちます。",
   );
 }
 

@@ -1,29 +1,29 @@
 ---
 name: dual-use-triage
-description: Triage a capability claim or incident report across the four CBRN domains.
+description: capability claim または incident report を4つの CBRN domains にまたがって triage する。
 version: 1.0.0
 phase: 18
 lesson: 30
 tags: [dual-use, cbrn, bio, chem, cyber, nuclear, uplift]
 ---
 
-Given a capability claim, evaluation report, or incident, triage across the four CBRN domains and identify whether the claim affects novice-relative uplift, expert-absolute capability, or both.
+capability claim、evaluation report、incident が与えられたら、4つの CBRN domains にまたがって triage し、その claim が novice-relative uplift、expert-absolute capability、またはその両方に影響するかを特定する。
 
-Produce:
+作成するもの:
 
-1. Domain identification. Map the claim to bio, chem, cyber, or nuclear. Multi-domain claims get multi-domain triage.
-2. Uplift type. Novice-relative (multiplicative), expert-absolute (ceiling), or both. Each has different safety-case implications.
-3. 2025 benchmark. Compare against the 2025 state for the identified domain: bio (2.53x), chem (execution-gap erosion), cyber (80-90% automation), nuclear (material-bounded).
-4. Bottleneck residual. Identify what non-informational bottleneck remains (procurement, equipment, tacit skill, material access). Bottlenecks are the defense of last resort.
-5. Safety-case pillar. Identify which of the three pillars (monitoring, illegibility, incapability, per Lesson 18) the claim most stresses. Recommend pillar-specific evaluation.
+1. Domain identification。claim を bio、chem、cyber、nuclear に map する。multi-domain claims は multi-domain triage を行う。
+2. Uplift type。Novice-relative (multiplicative)、expert-absolute (ceiling)、または both。各 type は異なる safety-case implications を持つ。
+3. 2025 benchmark。identified domain の 2025年時点の state と比較する: bio (2.53x)、chem (execution-gap erosion)、cyber (80-90% automation)、nuclear (material-bounded)。
+4. Bottleneck residual。残っている non-informational bottleneck を特定する (procurement、equipment、tacit skill、material access)。bottlenecks は last resort の defense である。
+5. Safety-case pillar。claim が最も stress する3 pillars (monitoring, illegibility, incapability, Lesson 18) を特定する。pillar-specific evaluation を推奨する。
 
 Hard rejects:
-- Any dual-use safety claim without novice-vs-expert decomposition.
-- Any cyber claim post-November 2025 that treats AI cyber capability as non-agentic.
-- Any bio claim without WMDP-equivalent capability evidence (Lesson 17).
+- novice-vs-expert decomposition のない dual-use safety claim。
+- 2025年11月以降の cyber claim で、AI cyber capability を non-agentic として扱うもの。
+- WMDP-equivalent capability evidence (Lesson 17) のない bio claim。
 
 Refusal rules:
-- If the user asks for a numeric uplift forecast, refuse; the 2024-2025 trajectory is specific to each domain.
-- If the user asks whether a model "meets ASL-3," refuse without the lab's specific evaluation; thresholds are lab-specific.
+- ユーザーが numeric uplift forecast を求めたら拒否する。2024-2025 trajectory は domain ごとに specific である。
+- ユーザーが model が「ASL-3 を満たすか」と尋ねたら、lab の specific evaluation なしでは拒否する。thresholds は lab-specific である。
 
-Output: a one-page triage filling the five sections, benchmarking against 2025, and naming the single largest uncovered safety-case gap. Cite Anthropic RSP v3.0 (Lesson 18) and OpenAI PF v2 once each as appropriate.
+出力: 5つの section を埋めた1ページの triage。2025 benchmark と比較し、最も大きな uncovered safety-case gap を名指しする。必要に応じて Anthropic RSP v3.0 (Lesson 18) と OpenAI PF v2 をそれぞれ一度引用する。

@@ -1,42 +1,42 @@
-# Audio-Language Models — Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio
+# Audio-Language Models — Qwen2.5-Omni、Audio Flamingo、GPT-4o Audio
 
-> 2026 audio-language models reason over speech + environmental sound + music. Qwen2.5-Omni-7B matches GPT-4o Audio on MMAU-Pro. Audio Flamingo Next beats Gemini 2.5 Pro on LongAudioBench. The gap between open and closed is essentially closed — except on multi-audio tasks, where everyone is near random.
+> 2026年の audio-language model は、音声、環境音、音楽を横断して推論します。Qwen2.5-Omni-7B は MMAU-Pro で GPT-4o Audio に並びます。Audio Flamingo Next は LongAudioBench で Gemini 2.5 Pro を上回ります。オープンとクローズドの差は実質的に閉じています。ただし multi-audio task では例外で、どのモデルもほぼランダムに近い状態です。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
-**Time:** ~45 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
+**所要時間:** 約45分
 
-## The Problem
+## 問題
 
-You have 5 seconds of audio: dog barks, someone yells "stop!", then silence. Useful questions span multiple axes:
+5秒の音声があります。犬が吠え、誰かが "stop!" と叫び、その後に沈黙します。有用な質問は複数の軸にまたがります。
 
-- **Transcription.** "What was said?" — ASR territory.
-- **Semantic reasoning.** "Is the person in danger?" — requires joint understanding of the bark + yell + silence.
-- **Music reasoning.** "What instruments play the melody?"
-- **Long-audio retrieval.** "Where in this 90-minute lecture did the instructor explain gradient descent?"
+- **文字起こし。** "What was said?" — ASR の領域です。
+- **意味推論。** "Is the person in danger?" — 吠え声、叫び声、沈黙をまとめて理解する必要があります。
+- **音楽推論。** "What instruments play the melody?"
+- **長時間音声検索。** "Where in this 90-minute lecture did the instructor explain gradient descent?"
 
-A single model that answers all of these with one prompt is an **audio-language model** (LALM / ALM). Separate from pure ASR: LALMs produce free-form natural-language answers, not just transcripts.
+これらすべてに1つのプロンプトで答える単一モデルが **audio-language model**（LALM / ALM）です。純粋な ASR とは別物です。LALM は文字起こしだけでなく、自由形式の自然言語回答を生成します。
 
-## The Concept
+## コンセプト
 
 ![Audio-language model: audio encoder + projector + LLM decoder](../assets/alm-architecture.svg)
 
-### The three-component template
+### 3コンポーネントのテンプレート
 
-Every 2026 LALM has the same skeleton:
+2026年の LALM はすべて同じ骨格を持っています。
 
-1. **Audio encoder.** Whisper encoder · BEATs · CLAP · WavLM · or a custom encoder per model.
-2. **Projector.** Linear or MLP bridging audio-encoder features into the LLM's token embedding space.
-3. **LLM.** Llama / Qwen / Gemma-based decoder. Takes interleaved text + audio tokens; generates text.
+1. **Audio encoder。** Whisper encoder · BEATs · CLAP · WavLM · またはモデルごとの custom encoder。
+2. **Projector。** audio-encoder features を LLM の token embedding space へ橋渡しする Linear または MLP。
+3. **LLM。** Llama / Qwen / Gemma ベースの decoder。インターリーブされた text + audio tokens を受け取り、テキストを生成します。
 
-Training:
+学習:
 
-- **Stage 1.** Freeze encoder + LLM; train projector only on ASR / captioning data.
-- **Stage 2.** Full / LoRA fine-tune on instruction-following audio tasks (QA, reasoning, music understanding).
-- **Stage 3 (optional).** Voice-in / voice-out adds a speech decoder. Qwen2.5-Omni and AF3-Chat do this.
+- **Stage 1。** encoder + LLM を freeze し、ASR / captioning data で projector だけを学習します。
+- **Stage 2。** instruction-following audio tasks（QA、推論、音楽理解）で full / LoRA fine-tune します。
+- **Stage 3（任意）。** voice-in / voice-out では speech decoder を追加します。Qwen2.5-Omni と AF3-Chat はこれを行います。
 
-### The 2026 model map
+### 2026年のモデルマップ
 
 | Model | Backbone | Audio encoder | Output modality | Access |
 |-------|----------|---------------|-----------------|--------|
@@ -50,9 +50,9 @@ Training:
 | Gemini 2.5 Flash/Pro (closed) | Gemini | proprietary | text + speech | API |
 | GPT-4o Audio (closed) | GPT-4o | proprietary | text + speech | API |
 
-### Benchmark reality check (2026)
+### ベンチマークの現実確認（2026）
 
-**MMAU-Pro.** 1800 QA pairs covering speech / sound / music / mixed. Multi-audio subset included.
+**MMAU-Pro。** speech / sound / music / mixed をカバーする 1800 QA pairs。multi-audio subset も含まれます。
 
 | Model | Overall | Speech | Sound | Music | Multi-audio |
 |-------|---------|--------|-------|-------|-------------|
@@ -63,26 +63,26 @@ Training:
 | Audio Flamingo 3 | ~54% | — | — | — | — |
 | Audio Flamingo Next | SOTA on LongAudioBench | — | — | — | — |
 
-The **multi-audio column is damning for everyone.** Random chance on 4-option multiple choice = 25%; most models score around there. LALMs still struggle to compare two clips.
+**multi-audio 列は全モデルにとって厳しい結果です。** 4択のランダム正答率は 25% で、多くのモデルはその周辺です。LALM はまだ2つのクリップを比較するのに苦戦しています。
 
-### Where LALMs are useful in 2026
+### 2026年に LALM が役立つ場所
 
-- **Compliance audit of call-center recordings.** "Did the agent mention the required disclosure?"
-- **Accessibility.** Describe sound events to deaf users (not just transcription).
-- **Content moderation.** Detect violent language + threatening tone + background context.
-- **Podcast / meeting chaptering.** Semantic summary, not just speaker turns.
-- **Music catalog analysis.** "Find all tracks with a B-section key change."
+- **コールセンター録音のコンプライアンス監査。** "Did the agent mention the required disclosure?"
+- **アクセシビリティ。** ろうユーザーに音イベントを説明する（文字起こしだけではない）。
+- **コンテンツモデレーション。** 暴力的な言葉 + 威圧的な声色 + 背景文脈を検出する。
+- **ポッドキャスト / 会議のチャプター化。** 話者ターンだけでなく意味的な要約を作る。
+- **音楽カタログ分析。** "Find all tracks with a B-section key change."
 
-### Where they are NOT (yet) useful
+### まだ役に立たない場所
 
-- Fine-grained music theory (below chord-level).
-- Speaker-attributed reasoning over long conversations (degrades past 10 minutes).
-- Multi-audio comparison (22-26% is barely above random).
-- Real-time streaming reasoning (most are offline batch inference).
+- 細かな音楽理論（コードレベル未満）。
+- 長い会話に対する話者帰属付き推論（10分を超えると劣化します）。
+- multi-audio comparison（22-26% はランダムをわずかに上回る程度です）。
+- real-time streaming reasoning（多くは offline batch inference です）。
 
-## Build It
+## 作ってみる
 
-### Step 1: query Qwen2.5-Omni
+### Step 1: Qwen2.5-Omni に問い合わせる
 
 ```python
 from transformers import AutoModelForCausalLM, AutoProcessor
@@ -103,7 +103,7 @@ output = model.generate(**inputs, max_new_tokens=200)
 print(processor.decode(output[0], skip_special_tokens=True))
 ```
 
-### Step 2: the projector pattern
+### Step 2: projector pattern
 
 ```python
 import torch.nn as nn
@@ -119,9 +119,9 @@ class AudioProjector(nn.Module):
         return self.up(self.act(self.down(audio_features)))
 ```
 
-That's it. The projector is usually 1-3 linear layers. Training it on ASR pairs (audio → transcript) is the Stage-1 pretext task.
+これだけです。projector は通常 1-3 個の linear layer です。ASR ペア（audio → transcript）でこれを学習するのが Stage-1 pretext task です。
 
-### Step 3: benchmarking MMAU / LongAudioBench
+### Step 3: MMAU / LongAudioBench のベンチマーク
 
 ```python
 from datasets import load_dataset
@@ -135,9 +135,9 @@ for item in mmau["test"]:
 print(f"Accuracy: {correct / len(mmau['test']):.3f}")
 ```
 
-Report per-category (speech / sound / music / multi-audio) separately. Aggregate numbers hide where the model fails.
+カテゴリ別（speech / sound / music / multi-audio）に分けて報告します。集計値だけでは、モデルがどこで失敗しているかが隠れます。
 
-## Use It
+## 使いどころ
 
 | Task | 2026 pick |
 |------|-----------|
@@ -148,39 +148,39 @@ Report per-category (speech / sound / music / multi-audio) separately. Aggregate
 | Music reasoning | Audio Flamingo 3 or 2 (music-specialized AF-CLAP) |
 | Call-center audit | Gemini 2.5 Pro via API, with RAG over your policy docs |
 
-## Pitfalls
+## 落とし穴
 
-- **Over-trust on multi-audio.** If your task needs "which clip has X," random-chance-level performance is real.
-- **Long-audio degradation.** Past 10 minutes, most models' speaker attribution breaks. Diarize first (Lesson 6), then summarize.
-- **Hallucinations on silence.** Same Whisper-style issue inherited by LALMs that use Whisper encoder. VAD-gate.
-- **Benchmark cherry-picking.** Vendor blog posts highlight best-case categories. Run MMAU-Pro multi-audio subset yourself.
+- **multi-audio での過信。** タスクが "which clip has X" を必要とするなら、ランダム正答率レベルの性能は現実です。
+- **長時間音声の劣化。** 10分を超えると、多くのモデルで話者帰属が壊れます。先に diarize（Lesson 6）してから要約します。
+- **沈黙でのハルシネーション。** Whisper encoder を使う LALM が継承する、Whisper 風の同じ問題です。VAD-gate します。
+- **ベンチマークの cherry-picking。** ベンダーブログは最高に見えるカテゴリを強調します。MMAU-Pro multi-audio subset を自分で実行してください。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-alm-picker.md`. Pick LALM + benchmark subset + output-modality (text vs speech) for a given audio-understanding task.
+`outputs/skill-alm-picker.md` として保存します。与えられた音声理解タスクに対して、LALM + benchmark subset + output-modality（text vs speech）を選びます。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py` to see a toy projector pattern + fake LALM routing of (audio-embedding, text-tokens) → output tokens.
-2. **Medium.** Score Qwen2.5-Omni-7B on 100 MMAU-Pro speech items. Compare to the paper's reported number.
-3. **Hard.** Build a minimal audio-captioning baseline: BEATs encoder + 2-layer projector + frozen Llama-3.2-1B. Fine-tune only the projector on AudioCaps. Compare to SALMONN on Clotho-AQA.
+1. **Easy。** `code/main.py` を実行し、toy projector pattern + fake LALM routing の (audio-embedding, text-tokens) → output tokens を確認します。
+2. **Medium。** Qwen2.5-Omni-7B を MMAU-Pro speech items 100件で採点します。論文の報告値と比較します。
+3. **Hard。** 最小の audio-captioning baseline を作ります。BEATs encoder + 2-layer projector + frozen Llama-3.2-1B。AudioCaps で projector だけを fine-tune します。Clotho-AQA で SALMONN と比較します。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| LALM | Audio ChatGPT | Audio encoder + projector + LLM decoder. |
-| Projector | Adapter | Small MLP mapping audio features into LLM embedding space. |
-| MMAU | The benchmark | 10k audio-QA pairs across speech, sound, music. |
-| MMAU-Pro | Harder MMAU | 1800 multi-audio / reasoning-heavy questions. |
-| LongAudioBench | Long-form eval | Multi-minute clips with semantic queries. |
-| Voice-in / voice-out | Speech-native | Model ingests speech and emits speech without text detour. |
+| LALM | Audio ChatGPT | Audio encoder + projector + LLM decoder。 |
+| Projector | Adapter | audio features を LLM embedding space に写像する小さな MLP。 |
+| MMAU | The benchmark | speech、sound、music にまたがる 10k audio-QA pairs。 |
+| MMAU-Pro | Harder MMAU | 1800件の multi-audio / reasoning-heavy questions。 |
+| LongAudioBench | Long-form eval | semantic query を伴う数分のクリップ。 |
+| Voice-in / voice-out | Speech-native | テキスト迂回なしで、モデルが音声を取り込み音声を出す。 |
 
-## Further Reading
+## 参考資料
 
-- [Chu et al. (2024). Qwen2-Audio](https://arxiv.org/abs/2407.10759) — reference architecture.
-- [Alibaba (2025). Qwen2.5-Omni](https://huggingface.co/Qwen/Qwen2.5-Omni-7B) — speech-in-speech-out.
-- [NVIDIA (2025). Audio Flamingo 3](https://arxiv.org/abs/2507.08128) — the open long-audio leader.
-- [NVIDIA (2026). Audio Flamingo Next](https://arxiv.org/abs/2604.10905) — LongAudioBench SOTA.
-- [Tang et al. (2023). SALMONN](https://arxiv.org/abs/2310.13289) — dual-encoder pioneer.
-- [MMAU-Pro leaderboard](https://mmaubenchmark.github.io/) — live 2026 rankings.
+- [Chu et al. (2024). Qwen2-Audio](https://arxiv.org/abs/2407.10759) — 参照アーキテクチャ。
+- [Alibaba (2025). Qwen2.5-Omni](https://huggingface.co/Qwen/Qwen2.5-Omni-7B) — speech-in-speech-out。
+- [NVIDIA (2025). Audio Flamingo 3](https://arxiv.org/abs/2507.08128) — オープンな長時間音声リーダー。
+- [NVIDIA (2026). Audio Flamingo Next](https://arxiv.org/abs/2604.10905) — LongAudioBench SOTA。
+- [Tang et al. (2023). SALMONN](https://arxiv.org/abs/2310.13289) — dual-encoder の先駆け。
+- [MMAU-Pro leaderboard](https://mmaubenchmark.github.io/) — 2026年のライブランキング。

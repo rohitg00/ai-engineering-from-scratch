@@ -1,37 +1,37 @@
 [
   {
-    "question": "What problem does momentum solve in gradient descent?",
-    "options": ["It reduces memory usage", "It dampens oscillation by accumulating past gradients, accelerating movement in consistent directions", "It eliminates the need for a learning rate", "It prevents overfitting"],
+    "question": "gradient descent において momentum はどの問題を解決しますか?",
+    "options": ["メモリ使用量を減らす", "過去の勾配を蓄積して振動を減衰し、一貫した方向への移動を加速する", "learning rate を不要にする", "過学習を防ぐ"],
     "correct": 1,
-    "explanation": "In narrow valleys, gradients oscillate across the valley while making slow progress along it. Momentum accumulates past gradients: consistent directions amplify while oscillating directions cancel, giving smoother, faster convergence.",
+    "explanation": "狭い谷では、勾配は谷を横切って振動しながら、谷に沿った方向にはゆっくりしか進みません。Momentum は過去の勾配を蓄積します。一貫した方向は増幅され、振動する方向は打ち消されるため、より滑らかで速い収束が得られます。",
     "stage": "pre"
   },
   {
-    "question": "What is the key difference between Adam and AdamW?",
-    "options": ["AdamW uses a higher learning rate", "AdamW applies weight decay directly to weights instead of through the gradient, giving proper regularization", "AdamW doesn't use momentum", "AdamW only works with transformers"],
+    "question": "Adam と AdamW の主な違いは何ですか?",
+    "options": ["AdamW はより高い learning rate を使う", "AdamW は weight decay を勾配経由ではなく重みに直接適用し、適切な正則化を行う", "AdamW は momentum を使わない", "AdamW は transformers でしか動かない"],
     "correct": 1,
-    "explanation": "In Adam + L2, the adaptive learning rate scales the regularization term differently per parameter. AdamW decouples weight decay from the gradient update, applying uniform shrinkage regardless of gradient statistics.",
+    "explanation": "Adam + L2 では、adaptive learning rate が正則化項をパラメータごとに異なる形でスケールします。AdamW は weight decay を勾配更新から切り離し、勾配統計に関係なく一様な縮小を適用します。",
     "stage": "pre"
   },
   {
-    "question": "Why does Adam use bias correction in early training steps?",
-    "options": ["To prevent overfitting", "The moment estimates are initialized to zero, so early values are biased toward zero; correction compensates for this cold start", "To clip large gradients", "To speed up convergence"],
+    "question": "Adam が訓練初期の steps で bias correction を使うのはなぜですか?",
+    "options": ["過学習を防ぐため", "moment 推定がゼロ初期化されるため、初期値がゼロ側に偏る。この cold start を補正するため", "大きな勾配を clip するため", "収束を速くするため"],
     "correct": 1,
-    "explanation": "At step 1 with beta1=0.9, m_1 = 0.1 * gradient (10x too small). Dividing by (1 - 0.9^1) = 0.1 corrects this to the actual gradient. The correction becomes negligible after ~50 steps.",
+    "explanation": "beta1=0.9 の step 1 では、m_1 = 0.1 * gradient（10倍小さすぎる）です。(1 - 0.9^1) = 0.1 で割ることで、これを実際の勾配に補正します。この補正は約50 steps 後には無視できるほど小さくなります。",
     "stage": "post"
   },
   {
-    "question": "What are the standard default hyperparameters for Adam?",
+    "question": "Adam の標準的なデフォルトハイパーパラメータはどれですか?",
     "options": ["lr=0.1, beta1=0.5, beta2=0.5", "lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8", "lr=0.01, beta1=0.99, beta2=0.99", "lr=0.0001, beta1=0.8, beta2=0.9"],
     "correct": 1,
-    "explanation": "The original Adam paper (Kingma & Ba, 2014) recommended lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8. These defaults work well for most problems.",
+    "explanation": "Adam の原論文（Kingma & Ba, 2014）は lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8 を推奨しました。これらのデフォルトは多くの問題でうまく機能します。",
     "stage": "post"
   },
   {
-    "question": "Which optimizer is the modern default for training transformers and LLMs?",
+    "question": "transformers と LLMs の訓練における現代的なデフォルト optimizer はどれですか?",
     "options": ["Vanilla SGD", "SGD with momentum", "RMSProp", "AdamW"],
     "correct": 3,
-    "explanation": "AdamW (Adam with decoupled weight decay) is used to train BERT, GPT, LLaMA, and virtually all modern transformers. It combines adaptive learning rates with proper weight decay regularization.",
+    "explanation": "AdamW（decoupled weight decay を持つ Adam）は、BERT、GPT、LLaMA、そしてほぼすべての現代的な transformer の訓練に使われます。adaptive learning rates と適切な weight decay 正則化を組み合わせています。",
     "stage": "post"
   }
 ]

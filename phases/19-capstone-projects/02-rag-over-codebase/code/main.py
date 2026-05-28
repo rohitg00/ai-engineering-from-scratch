@@ -1,11 +1,11 @@
-"""Code RAG — AST-aware chunking + hybrid retrieval scaffold.
+"""Code RAG — AST-aware chunking + hybrid retrieval scaffold。
 
-The hard architectural primitive here is hybrid retrieval with rank fusion:
-two index structures (dense vector, BM25) run in parallel, results are merged
-with reciprocal rank fusion, then a re-ranker picks the final top-k. This
-scaffold implements both halves with stdlib: a naive dense index (hash-based
-fake embeddings so the loop runs deterministically offline) and a real BM25
-from scratch. The fusion + rerank logic is the part that matters.
+ここで難しい architectural primitive は rank fusion 付き hybrid retrieval です。
+2つの index structure (dense vector, BM25) を並列に走らせ、結果を
+reciprocal rank fusion で merge し、re-ranker が final top-k を選びます。
+この scaffold は stdlib だけで両側を実装します。naive dense index
+(offline で deterministic に走る hash-based fake embeddings) と scratch からの
+real BM25 です。重要なのは fusion + rerank logic です。
 
 Run:  python main.py
 """
@@ -19,7 +19,7 @@ from dataclasses import dataclass, field
 
 
 # ---------------------------------------------------------------------------
-# chunk shape  --  AST-aware function-level chunks
+# chunk shape  --  AST-aware な function-level chunks
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -39,31 +39,31 @@ class Chunk:
 SAMPLE_CORPUS = [
     Chunk("uploader", "services/retry.go", 122, 148, "AbortMultipartOnFail",
           "if ctx.Err() != nil { return abort() }; decrement bucket budget; retry with backoff",
-          "aborts an in-flight S3 multipart upload and decrements the per-bucket retry budget"),
+          "進行中の S3 multipart upload を abort し、bucket ごとの retry budget を減らす"),
     Chunk("uploader", "config/budgets.yaml", 34, 51, "bucket_budget",
           "per_bucket_budget: 64; backoff_ms: [100, 500, 2500]; abort_threshold: 3",
-          "declares the retry budget and exponential backoff schedule per S3 bucket"),
+          "S3 bucket ごとの retry budget と exponential backoff schedule を宣言する"),
     Chunk("client", "libs/s3client/multipart.ts", 44, 61, "abortUpload",
           "await s3.abortMultipartUpload({Bucket, Key, UploadId}); metrics.inc('s3.abort')",
-          "client-side S3 multipart abort with metrics instrumentation"),
+          "metrics instrumentation 付きの client-side S3 multipart abort"),
     Chunk("auth", "services/authz/check.py", 12, 38, "check_permission",
           "def check_permission(user, resource, action): return policy.evaluate(user, resource, action)",
-          "central authorization gateway evaluating an OPA policy for user-resource-action"),
+          "user-resource-action に対して OPA policy を評価する central authorization gateway"),
     Chunk("auth", "libs/policy/opa.py", 88, 110, "evaluate",
           "def evaluate(user, resource, action): return self.engine.query('authz', input=...)",
-          "OPA policy engine query wrapper for authorization checks"),
+          "authorization check 用の OPA policy engine query wrapper"),
     Chunk("catalog", "services/search/query.rs", 200, 240, "rank_fusion",
           "pub fn rank_fusion(dense: Vec<Hit>, sparse: Vec<Hit>) -> Vec<Hit>",
-          "reciprocal rank fusion of dense and sparse retrieval results"),
+          "dense と sparse retrieval result の reciprocal rank fusion"),
 ]
 
 
 # ---------------------------------------------------------------------------
-# naive dense index  --  deterministic fake embeddings for scaffold testing
+# naive dense index  --  scaffold testing 用の deterministic fake embeddings
 # ---------------------------------------------------------------------------
 
 def fake_embed(text: str, dim: int = 64) -> list[float]:
-    """Hash-based deterministic embedding; stands in for Voyage-code-3."""
+    """hash-based deterministic embedding。Voyage-code-3 の代役。"""
     vec = [0.0] * dim
     for tok in re.findall(r"\w+", text.lower()):
         h = hash(tok)
@@ -93,7 +93,7 @@ class DenseIndex:
 
 
 # ---------------------------------------------------------------------------
-# BM25 from scratch  --  the real algorithm, documents are Chunks
+# BM25 from scratch  --  document を Chunk とする実際の algorithm
 # ---------------------------------------------------------------------------
 
 def tokenize(text: str) -> list[str]:
@@ -111,7 +111,7 @@ class BM25Index:
     avgdl: float = 0.0
 
     def add(self, chunk: Chunk) -> None:
-        # field-weighted: symbol x4, summary x2, body x1
+        # field-weighted: symbol x4、summary x2、body x1
         tokens = (tokenize(chunk.symbol) * 4 +
                   tokenize(chunk.summary) * 2 +
                   tokenize(chunk.body))
@@ -143,7 +143,7 @@ class BM25Index:
 
 
 # ---------------------------------------------------------------------------
-# reciprocal rank fusion  --  the merge step of hybrid retrieval
+# reciprocal rank fusion  --  hybrid retrieval の merge step
 # ---------------------------------------------------------------------------
 
 def rrf(dense: list[tuple[Chunk, float]], sparse: list[tuple[Chunk, float]],
@@ -161,7 +161,7 @@ def rrf(dense: list[tuple[Chunk, float]], sparse: list[tuple[Chunk, float]],
 
 
 # ---------------------------------------------------------------------------
-# stub reranker  --  cross-encoder stand-in; rerank by query-symbol overlap
+# stub reranker  --  cross-encoder の代役。query-symbol overlap で rerank
 # ---------------------------------------------------------------------------
 
 def rerank(query: str, candidates: list[tuple[Chunk, float]],
@@ -177,7 +177,7 @@ def rerank(query: str, candidates: list[tuple[Chunk, float]],
 
 
 # ---------------------------------------------------------------------------
-# orchestrator  --  the full retrieve -> fuse -> rerank flow
+# orchestrator  --  retrieve -> fuse -> rerank の全体 flow
 # ---------------------------------------------------------------------------
 
 def answer(query: str, dense: DenseIndex, bm25: BM25Index) -> dict[str, object]:
@@ -202,9 +202,9 @@ def main() -> None:
         dense.add(ch)
         bm25.add(ch)
 
-    for q in ("how is S3 multipart abort wired into retry budget",
-              "where is authorization centralized",
-              "how does rank fusion work"):
+    for q in ("S3 multipart abort は retry budget にどう結び付いているか",
+              "authorization はどこに centralized されているか",
+              "rank fusion はどう動くか"):
         result = answer(q, dense, bm25)
         print(f"Q: {result['query']}")
         print(f"  dense  : {result['dense_top']}")

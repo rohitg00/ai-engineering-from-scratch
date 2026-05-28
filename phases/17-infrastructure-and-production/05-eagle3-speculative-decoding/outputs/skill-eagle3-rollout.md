@@ -1,32 +1,32 @@
 ---
 name: eagle3-rollout
-description: Produce a staged EAGLE-3 speculative-decoding rollout plan that measures acceptance rate alpha on real traffic before shipping.
+description: production traffic 上で acceptance rate alpha を測定してから出荷する、staged EAGLE-3 speculative-decoding rollout plan を作成する。
 version: 1.0.0
 phase: 17
 lesson: 05
 tags: [speculative-decoding, eagle-3, vllm, alpha, production-rollout]
 ---
 
-Given a target model, hardware (GPU type and count), traffic description (general chat / code / specialized), concurrency target, and current baseline metrics (TTFT, ITL, throughput), produce a staged EAGLE-3 rollout plan.
+target model、hardware (GPU type/count)、traffic description (general chat / code / specialized)、concurrency target、current baseline metrics (TTFT, ITL, throughput) が与えられたら、staged EAGLE-3 rollout plan を作成してください。
 
-Produce:
+生成するもの:
 
-1. Baseline measurement plan. Which benchmark (LLMPerf, GenAI-Perf, or production shadow), which prompt distribution, which concurrency point, which metrics to record (TTFT mean/P99, ITL mean/P99, throughput, concurrency).
-2. Draft-head selection. ShareGPT-trained EAGLE-3 for general chat. Domain-trained EAGLE-3 for specialized traffic (code, medical, legal) or the decision to train one before shipping.
-3. Config. Exact vLLM `speculative_config` fields (method, model, num_speculative_tokens). Note the v0.18.0 compatibility: draft-model speculation cannot combine with `--enable-chunked-prefill`; N-gram GPU spec decode in V1 is the exception.
-4. Alpha gate. Target alpha >= 0.55 at production concurrency. Measurement procedure: shadow traffic for 24 hours, log vLLM `spec_decode_metrics`, divide accepted tokens by requested draft length. Kill switch if alpha drops below 0.45 in any 1-hour window.
-5. Tail watch. Plot P99 ITL delta (spec on - spec off). If delta is positive, the rejected-draft two-pass pattern is biting. Reduce K or disable on this workload.
-6. Break-even check. At reported concurrency, compute break-even alpha for current verify overhead. Ship only if measured alpha clears break-even by at least 0.1.
+1. Baseline measurement plan。どの benchmark (LLMPerf, GenAI-Perf, production shadow)、どの prompt distribution、どの concurrency point、どの metrics (TTFT mean/P99, ITL mean/P99, throughput, concurrency) を記録するか。
+2. Draft-head selection。general chat なら ShareGPT-trained EAGLE-3。specialized traffic (code, medical, legal) なら domain-trained EAGLE-3、または出荷前に training する判断。
+3. Config。exact vLLM `speculative_config` fields (method, model, num_speculative_tokens)。v0.18.0 compatibility を note する: draft-model speculation は `--enable-chunked-prefill` と組み合わせられない。V1 の N-gram GPU spec decode が exception。
+4. Alpha gate。production concurrency で target alpha >= 0.55。measurement procedure: shadow traffic を 24時間、vLLM `spec_decode_metrics` を log、accepted tokens を requested draft length で割る。任意の 1-hour window で alpha が 0.45 未満なら kill switch。
+5. Tail watch。P99 ITL delta (spec on - spec off) を plot。delta が positive なら rejected-draft two-pass pattern が効いています。K を下げるか、その workload では disable してください。
+6. Break-even check。reported concurrency で current verify overhead から break-even alpha を計算する。measured alpha が break-even を少なくとも 0.1 上回る場合だけ ship する。
 
 Hard rejects:
-- Shipping without measuring alpha on production traffic. Refuse and require a 24-hour shadow measurement.
-- Claiming 2-3x speedup without naming the measured alpha.
-- Enabling speculative decoding for offline batch jobs where latency is not the constraint.
-- Combining draft-model speculation with chunked prefill on vLLM v0.18.0. Hard incompatibility.
+- production traffic 上で alpha を測らずに出荷すること。拒否し、24-hour shadow measurement を要求してください。
+- measured alpha を naming せずに 2-3x speedup を主張すること。
+- latency が constraint ではない offline batch job に speculative decoding を有効化すること。
+- vLLM v0.18.0 で draft-model speculation と chunked prefill を組み合わせること。hard incompatibility です。
 
 Refusal rules:
-- If traffic is primarily very short outputs (under 50 tokens mean), refuse. Draft overhead dominates; ship plain target.
-- If hardware is consumer (RTX 4090 / 5090) and batch size stays under 8, recommend plain target — batch-amortization of verify overhead needs concurrency the hardware cannot supply.
-- If the user wants auto-tune of K without a measurement loop, refuse. K is chosen from measured alpha plus verify overhead; no auto-tune replaces measurement.
+- traffic が primarily very short outputs (mean 50 tokens 未満) の場合は拒否してください。draft overhead が支配するため plain target を出荷します。
+- hardware が consumer (RTX 4090 / 5090) で batch size が 8 未満に留まる場合は plain target を推奨してください。verify overhead の batch-amortization にはその hardware では concurrency が足りません。
+- measurement loop なしの K auto-tune を求められた場合は拒否してください。K は measured alpha と verify overhead から選びます。measurement を置き換える auto-tune はありません。
 
-Output: a one-page staged rollout plan listing baseline → config → alpha gate → tail watch → break-even confirmation. End with a "what to measure next" paragraph naming either domain-specific EAGLE-3 training, lower K, or reverting to plain target depending on the diagnosis.
+Output: 1 page の staged rollout plan。baseline → config → alpha gate → tail watch → break-even confirmation を列挙してください。最後に "what to measure next" paragraph を置き、diagnosis に応じて domain-specific EAGLE-3 training、lower K、plain target への revert のいずれかを naming してください。

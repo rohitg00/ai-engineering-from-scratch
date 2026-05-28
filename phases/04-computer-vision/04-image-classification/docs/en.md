@@ -1,30 +1,30 @@
-# Image Classification
+# 画像分類
 
-> A classifier is a function from pixels to a probability distribution over classes. Everything else is plumbing.
+> 分類器とは、ピクセルからクラス上の確率分布への関数です。それ以外はすべて配管です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 2 Lesson 09 (Model Evaluation), Phase 3 Lesson 10 (Mini Framework), Phase 4 Lesson 03 (CNNs)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提条件:** フェーズ 2 レッスン 09（Model Evaluation）、フェーズ 3 レッスン 10（Mini Framework）、フェーズ 4 レッスン 03（CNNs）
+**所要時間:** 約 75 分
 
-## Learning Objectives
+## 学習目標
 
-- Build an end-to-end image classification pipeline on CIFAR-10: dataset, augmentation, model, training loop, evaluation
-- Explain the role of each component (dataloader, loss, optimizer, scheduler, augmentation) and predict how breaking any one of them manifests in the loss curve
-- Implement mixup, cutout, and label smoothing from scratch and justify when each is worth adding
-- Read a confusion matrix and a per-class precision/recall table to diagnose dataset and model failures beyond aggregate accuracy
+- CIFAR-10 向けのエンドツーエンドな画像分類パイプラインを構築する: データセット、拡張、モデル、学習ループ、評価
+- 各コンポーネント（dataloader、loss、optimizer、scheduler、augmentation）の役割を説明し、どれか 1 つが壊れたときに損失曲線へどう現れるかを予測する
+- mixup、cutout、label smoothing をゼロから実装し、それぞれを追加する価値がある場面を説明する
+- 混同行列とクラス別 precision/recall 表を読み、集約 accuracy だけでは見えないデータセットとモデルの失敗を診断する
 
-## The Problem
+## 問題
 
-Every vision task that ships reduces to image classification at some level. Detection classifies regions. Segmentation classifies pixels. Retrieval ranks by similarity to class centroids. Getting classification right — the dataset loop, the augmentation policy, the loss, the evaluation — is the skill that transfers to every other task in the phase.
+出荷されるあらゆるビジョンタスクは、どこかのレベルで画像分類に帰着します。検出は領域を分類します。セグメンテーションはピクセルを分類します。検索はクラス重心との類似度で順位付けします。分類を正しく作ること、つまりデータセットループ、拡張方針、損失、評価を正しく組む力は、このフェーズの他のすべてのタスクに移転します。
 
-Most classification bugs are not in the model. They live in the pipeline: a broken normalisation, an unshuffled training set, augmentation that distorts labels, a validation split contaminated by training data, a learning rate that silently diverges after epoch 30. A CNN that would hit 93% on CIFAR-10 with a correct setup commonly scores 70-75% with a broken one, and the loss curve looks plausible the whole time.
+分類のバグの多くはモデルの中にはありません。壊れた正規化、shuffle されていない訓練セット、ラベルを歪める拡張、訓練データで汚染された検証 split、epoch 30 の後に静かに発散する学習率など、パイプラインに潜んでいます。正しいセットアップなら CIFAR-10 で 93% に届く CNN でも、壊れたセットアップではよく 70-75% に落ちます。そして損失曲線は最後までそれらしく見えます。
 
-This lesson wires the entire pipeline by hand so every part is inspectable. You will not use anything from `torchvision.datasets` that could hide a bug.
+このレッスンでは、全体のパイプラインを手でつなぎ、どの部分も検査できるようにします。バグを隠し得る `torchvision.datasets` の機能は使いません。
 
-## The Concept
+## 概念
 
-### The classification pipeline
+### 分類パイプライン
 
 ```mermaid
 flowchart LR
@@ -46,28 +46,28 @@ flowchart LR
     style H fill:#dcfce7,stroke:#16a34a
 ```
 
-Every line in this loop is where a bug can live. Cross-entropy takes raw logits, not softmax outputs, so any `model(x).softmax()` before the loss quietly computes the wrong gradient. Augmentations apply to inputs only, not labels — except for mixup, which mixes both. `optimizer.zero_grad()` must happen once per step; skipping it accumulates gradients and looks like a wildly unstable learning rate. Each of those bugs flattens the learning curve without throwing an error.
+このループの各行にバグが入り込めます。Cross-entropy は softmax 出力ではなく raw logits を受け取るので、loss の前に `model(x).softmax()` を置くと、静かに間違った勾配を計算します。拡張は入力にだけ適用し、ラベルには適用しません。ただし mixup だけは両方を混ぜます。`optimizer.zero_grad()` は step ごとに 1 回必要です。省くと勾配が蓄積し、学習率がひどく不安定に見えます。こうしたバグはどれもエラーを出さずに学習曲線を平らにします。
 
-### Cross-entropy, logits, and softmax
+### Cross-entropy、logits、softmax
 
-A classifier produces `C` numbers per image called logits. Applying softmax converts them into a probability distribution:
+分類器は画像ごとに logits と呼ばれる `C` 個の数値を出します。softmax を適用すると、それらは確率分布になります。
 
 ```
 softmax(z)_i = exp(z_i) / sum_j exp(z_j)
 ```
 
-Cross-entropy measures the negative log probability of the correct class:
+Cross-entropy は正解クラスの負の対数確率を測ります。
 
 ```
 CE(z, y) = -log( softmax(z)_y )
         = -z_y + log( sum_j exp(z_j) )
 ```
 
-The right-hand form is the numerically stable one (log-sum-exp). PyTorch's `nn.CrossEntropyLoss` fuses softmax + NLL in one op and takes raw logits directly. Applying softmax yourself first is almost always a bug — you compute log(softmax(softmax(z))), a meaningless quantity.
+右辺の形が数値的に安定な形（log-sum-exp）です。PyTorch の `nn.CrossEntropyLoss` は softmax + NLL を 1 つの op に融合し、raw logits を直接受け取ります。先に自分で softmax を適用するのは、ほぼ常にバグです。意味のない量である log(softmax(softmax(z))) を計算してしまいます。
 
-### Why augmentation works
+### 拡張が効く理由
 
-A CNN has inductive bias for translation (from weight sharing) but no built-in invariance to crops, flips, colour jitter, or occlusion. The only way to teach it those invariances is to show it pixels that exercise them. Every random transform during training is a way of saying: "these two images have the same label; learn the features that ignore the difference."
+CNN には重み共有による平行移動への inductive bias がありますが、crop、flip、colour jitter、occlusion への不変性は組み込まれていません。その不変性を教える唯一の方法は、それを試すピクセルを見せることです。訓練中のランダム変換はどれも、「この 2 つの画像は同じラベルを持つ。違いを無視する特徴を学べ」という指示です。
 
 ```
 Original crop:  "dog facing left"
@@ -77,11 +77,11 @@ Colour jitter:  "dog in warmer light"
 RandomErasing:  "dog with patch missing"
 ```
 
-The rule: augmentation must preserve the label. Cutout and rotation on a digit can flip "6" into "9"; for that dataset you use smaller rotation ranges and pick augmentations that respect digit-specific invariances.
+ルールは、拡張がラベルを保存しなければならない、ということです。数字データセットでは cutout や rotation が "6" を "9" に変えてしまうことがあります。その場合は回転範囲を小さくし、数字固有の不変性を尊重する拡張を選びます。
 
-### Mixup and cutmix
+### Mixup と cutmix
 
-Ordinary augmentation transforms pixels but keeps labels one-hot. **Mixup** and **cutmix** break that by interpolating both.
+通常の拡張はピクセルを変換し、ラベルは one-hot のままにします。**Mixup** と **cutmix** は、ピクセルとラベルの両方を補間することでその前提を破ります。
 
 ```
 Mixup:
@@ -94,26 +94,26 @@ Cutmix:
   y = area-weighted mix of y_i and y_j
 ```
 
-Why it helps: the model stops memorising spiky one-hot targets and learns to interpolate between classes. Training loss goes up, test accuracy goes up. It is the single cheapest robustness upgrade for any classifier.
+これが効く理由は、モデルが尖った one-hot target を暗記するのをやめ、クラス間を補間するよう学ぶからです。訓練損失は上がり、テスト accuracy は上がります。分類器に対して最も安価に追加できる堅牢性の改善です。
 
 ### Label smoothing
 
-A cousin of mixup. Instead of training against `[0, 0, 1, 0, 0]`, train against `[eps/C, eps/C, 1-eps, eps/C, eps/C]` for a small `eps` like 0.1. Stops the model from producing arbitrarily sharp logits and improves calibration at almost no cost. Built into `nn.CrossEntropyLoss(label_smoothing=0.1)` since PyTorch 1.10.
+mixup の近縁です。`[0, 0, 1, 0, 0]` を相手に訓練する代わりに、小さな `eps`、たとえば 0.1 を使って `[eps/C, eps/C, 1-eps, eps/C, eps/C]` を相手に訓練します。モデルが際限なく鋭い logits を出すのを防ぎ、ほぼ追加コストなしに calibration を改善します。PyTorch 1.10 以降では `nn.CrossEntropyLoss(label_smoothing=0.1)` に組み込まれています。
 
-### Evaluation beyond accuracy
+### Accuracy を超えた評価
 
-Aggregate accuracy hides imbalance. A 90-10 binary classifier that always predicts the majority class scores 90%. The tools that actually tell you what is happening:
+集約 accuracy は imbalance を隠します。90-10 の二値分類器が常に多数派クラスを予測すれば 90% を出せます。実際に何が起きているかを教えてくれる道具は次の通りです。
 
-- **Per-class accuracy** — one number per class; immediately surfaces underperforming categories.
-- **Confusion matrix** — C x C grid with row i col j = count of true class i predicted as class j; the diagonal is correct, the off-diagonals are where your model lives.
-- **Top-1 / Top-5** — whether the correct class is in the top 1 or top 5 predictions; Top-5 matters for ImageNet because classes like "Norwich terrier" vs "Norfolk terrier" are genuinely ambiguous.
-- **Calibration (ECE)** — does a 0.8 confidence prediction get it right 80% of the time? Modern networks are systematically over-confident; fix with temperature scaling or label smoothing.
+- **クラス別 accuracy** — クラスごとの数値。苦手なカテゴリがすぐに表に出ます。
+- **混同行列** — 行 i 列 j が、真のクラス i をクラス j と予測した数を表す C x C のグリッド。対角成分が正解で、非対角成分にモデルの実態があります。
+- **Top-1 / Top-5** — 正解クラスが上位 1 件または上位 5 件の予測に入っているか。ImageNet では "Norwich terrier" と "Norfolk terrier" のように本当に曖昧なクラスがあるため、Top-5 が重要です。
+- **Calibration (ECE)** — confidence 0.8 の予測は 80% の頻度で正しいか。現代のネットワークは体系的に過信しがちです。temperature scaling や label smoothing で修正します。
 
-## Build It
+## 作る
 
-### Step 1: A deterministic synthetic dataset
+### ステップ 1: 決定的な synthetic dataset
 
-CIFAR-10 lives on disk. To make this lesson reproducible and fast we build a synthetic dataset that looks like CIFAR — 32x32 RGB images with class-specific structure the model must learn. The exact same pipeline works unchanged on real CIFAR-10.
+CIFAR-10 はディスク上にあります。このレッスンを再現可能かつ高速にするため、CIFAR のような synthetic dataset を作ります。これは 32x32 RGB 画像で、モデルが学ぶべきクラス固有の構造を持ちます。まったく同じパイプラインを real CIFAR-10 にそのまま使えます。
 
 ```python
 import numpy as np
@@ -161,11 +161,11 @@ class ArrayDataset(Dataset):
         return img, int(self.Y[i])
 ```
 
-Each class gets its own colour palette and frequency pattern, plus Gaussian noise to force the model to learn the signal rather than memorise pixels. Ten classes, one thousand images each, permuted.
+各クラスは独自の色 palette と周波数 pattern を持ち、さらに Gaussian noise を加えて、モデルがピクセルを暗記するのではなく signal を学ぶようにします。10 クラス、それぞれ 1000 枚の画像を作り、permutation します。
 
-### Step 2: Normalisation and augmentation
+### ステップ 2: 正規化と拡張
 
-The two transforms that every vision pipeline has.
+すべてのビジョンパイプラインにある 2 つの transform です。
 
 ```python
 def standardize(mean, std):
@@ -202,11 +202,11 @@ def compose(*fns):
     return _fn
 ```
 
-Reflect-pad before crop, not zero-pad, because black borders are a signal the model would learn to ignore in a non-useful way.
+crop の前は zero-pad ではなく reflect-pad にします。黒い境界は、モデルが非有用な形で無視することを学んでしまう signal だからです。
 
-### Step 3: Mixup
+### ステップ 3: Mixup
 
-Mixes two images and two labels inside the training step. Implemented as a batch transform so it lives next to the forward pass rather than inside the dataset.
+訓練 step の中で 2 枚の画像と 2 つのラベルを混ぜます。dataset の中ではなく forward pass の隣に置くため、batch transform として実装します。
 
 ```python
 def mixup_batch(x, y, num_classes, alpha=0.2):
@@ -225,11 +225,11 @@ def soft_cross_entropy(logits, soft_targets):
     return -(soft_targets * log_probs).sum(dim=-1).mean()
 ```
 
-`soft_cross_entropy` is cross-entropy against a soft-label distribution. It reduces to the usual one-hot case when the target is exactly one-hot.
+`soft_cross_entropy` は soft-label distribution を相手にする cross-entropy です。target が正確に one-hot のときは、通常の one-hot case に戻ります。
 
-### Step 4: The training loop
+### ステップ 4: 訓練ループ
 
-The complete recipe: one pass over the data, gradients once per batch, scheduler stepped once per epoch.
+完全な recipe は、データを 1 回なめ、batch ごとに 1 回 gradient を計算し、epoch ごとに 1 回 scheduler を進める、というものです。
 
 ```python
 import torch
@@ -237,6 +237,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.optim import SGD
 from torch.optim.lr_scheduler import CosineAnnealingLR
+
 
 def train_one_epoch(model, loader, optimizer, device, num_classes, use_mixup=True):
     model.train()
@@ -283,17 +284,17 @@ def evaluate(model, loader, device, num_classes):
     return loss_sum / total, correct / total, cm
 ```
 
-Five invariants you check every time you write a training loop:
+訓練ループを書くたびに確認する 5 つの invariant は次の通りです。
 
-1. `model.train()` before training, `model.eval()` before evaluation — flips dropout and batchnorm behaviour.
-2. `.zero_grad()` before `.backward()`.
-3. `.item()` when accumulating metrics so nothing keeps the computation graph alive.
-4. `@torch.no_grad()` during evaluation — saves memory and time, prevents subtle accidents.
-5. Argmax against raw logits, not softmax — same result, one fewer op.
+1. 訓練前に `model.train()`、評価前に `model.eval()` — dropout と batchnorm の挙動を切り替えます。
+2. `.backward()` の前に `.zero_grad()`。
+3. metric を蓄積するときは `.item()` を使い、計算グラフが生き残らないようにします。
+4. 評価中は `@torch.no_grad()` — メモリと時間を節約し、微妙な事故を防ぎます。
+5. softmax ではなく raw logits に対して argmax — 結果は同じで、op が 1 つ減ります。
 
-### Step 5: Put it together
+### ステップ 5: まとめて動かす
 
-Use the `TinyResNet` from the previous lesson, train for a few epochs, evaluate.
+前のレッスンの `TinyResNet` を使い、数 epoch 学習して評価します。
 
 ```python
 from main import synthetic_cifar, ArrayDataset
@@ -333,11 +334,11 @@ for epoch in range(10):
           f"train {tr_loss:.3f}/{tr_acc:.3f}  val {va_loss:.3f}/{va_acc:.3f}")
 ```
 
-On the synthetic dataset, this gets to near-perfect validation accuracy within five epochs, which is the point: the pipeline is correct, the model can learn what is learnable. Swap the dataset for real CIFAR-10 and the same loop trains to ~90% without changes.
+synthetic dataset では、5 epoch 以内に validation accuracy がほぼ完全に近づきます。それが狙いです。パイプラインは正しく、モデルは学べるものを学べます。dataset を real CIFAR-10 に差し替えても、同じ loop は変更なしで約 90% まで学習します。
 
-### Step 6: Read the confusion matrix
+### ステップ 6: 混同行列を読む
 
-Accuracy alone never tells you where the model is failing. The confusion matrix does.
+Accuracy だけでは、モデルがどこで失敗しているかは決して分かりません。混同行列なら分かります。
 
 ```python
 def print_confusion(cm, labels=None):
@@ -361,11 +362,11 @@ _, _, cm = evaluate(model, val_loader, device, 10)
 print_confusion(cm)
 ```
 
-Rows are true classes, columns are predictions. A cluster of off-diagonal counts between classes 3 and 5 means the model confuses those two and gives you a starting point for targeted data collection or a class-specific augmentation.
+行は真のクラス、列は予測です。クラス 3 と 5 の間に非対角の count が集中していれば、モデルがその 2 つを混同しているということで、targeted data collection や class-specific augmentation の出発点になります。
 
-## Use It
+## 使う
 
-`torchvision` wraps everything above into idiomatic components. For real CIFAR-10 the full pipeline is four lines plus a training loop.
+`torchvision` は上で作ったものをすべて idiomatic な component として包みます。real CIFAR-10 向けの完全な pipeline は、training loop に加えて 4 行です。
 
 ```python
 from torchvision.datasets import CIFAR10
@@ -385,37 +386,37 @@ train_ds = CIFAR10(root="./data", train=True,  download=True, transform=train_tf
 val_ds   = CIFAR10(root="./data", train=False, download=True, transform=eval_tf)
 ```
 
-Two things to notice: the mean/std are **dataset-specific** — computed on the CIFAR-10 training set, not ImageNet — and the reflect pad is the community-default crop policy. Copy-pasting ImageNet stats here is a ~1% accuracy leak that nobody catches until someone profiles the model.
+注意点は 2 つです。mean/std は **dataset-specific** であり、ImageNet ではなく CIFAR-10 training set 上で計算されたものです。また、reflect pad はコミュニティで標準的な crop policy です。ここに ImageNet stats をコピーすると約 1% の accuracy leak が起きますが、誰かが model を profile するまで気づかれません。
 
-## Ship It
+## 出荷する
 
-This lesson produces:
+このレッスンは次を生成します。
 
-- `outputs/prompt-classifier-pipeline-auditor.md` — a prompt that audits a training script for the five invariants above and surfaces the first violation.
-- `outputs/skill-classification-diagnostics.md` — a skill that, given a confusion matrix and a list of class names, summarises per-class failures and proposes the single most impactful fix.
+- `outputs/prompt-classifier-pipeline-auditor.md` — training script を上記 5 つの invariant で audit し、最初の違反を表に出す prompt。
+- `outputs/skill-classification-diagnostics.md` — confusion matrix と class name の list を受け取り、クラス別の失敗を要約し、最も効果の大きい fix を 1 つ提案する skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Train the same model with and without mixup for five epochs on the synthetic dataset. Plot train and val loss for both. Explain why train loss with mixup is higher yet val accuracy is similar or better.
-2. **(Medium)** Implement Cutout — zero out a random 8x8 square in each training image — and run an ablation vs no augmentation, hflip+crop, hflip+crop+cutout, hflip+crop+mixup. Report val accuracy for each.
-3. **(Hard)** Build a CIFAR-100 pipeline (100 classes, same input size) and reproduce a ResNet-34 training run to within 1% of published accuracy. Extras: sweep three learning rates and two weight decays, log to a local CSV, produce the final confusion-matrix-top-confusions table.
+1. **（Easy）** synthetic dataset 上で、同じ model を mixup あり・なしの両方で 5 epoch 学習します。両方の train loss と val loss を plot します。mixup ありの train loss は高いのに、val accuracy は同等か良くなる理由を説明してください。
+2. **（Medium）** Cutout を実装します。各 training image のランダムな 8x8 正方形を zero out してください。そして no augmentation、hflip+crop、hflip+crop+cutout、hflip+crop+mixup の ablation を実行します。それぞれの val accuracy を報告してください。
+3. **（Hard）** CIFAR-100 pipeline（100 クラス、同じ input size）を構築し、ResNet-34 の training run を published accuracy の 1% 以内で再現してください。追加課題: 3 つの learning rate と 2 つの weight decay を sweep し、local CSV に log し、最終的な confusion-matrix-top-confusions table を生成してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Logits | "Raw outputs" | The pre-softmax vector of C numbers per image; cross-entropy expects these, not softmaxed values |
-| Cross-entropy | "The loss" | Negative log-probability of the correct class; combines log-softmax and NLL in one stable op |
-| DataLoader | "The batcher" | Wraps a dataset with shuffling, batching, and (optional) multi-worker loading; gets blamed for half of training bugs |
-| Augmentation | "Random transforms" | Any pixel-level transform at training time that preserves the label; teaches invariances the CNN does not have natively |
-| Mixup / Cutmix | "Mix two images" | Blend both inputs and labels so the classifier learns smooth interpolations instead of hard boundaries |
-| Label smoothing | "Softer targets" | Replace one-hot with (1-eps, eps/(C-1), ...); improves calibration and slightly boosts accuracy |
-| Top-k accuracy | "Top-5" | The correct class is in the k highest-probability predictions; used on datasets with genuinely ambiguous classes |
-| Confusion matrix | "Where errors live" | C x C table where entry (i, j) counts images of true class i predicted as j; diagonal is right, off-diagonal tells you what to fix |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Logits | "Raw outputs" | 画像ごとに出る softmax 前の C 個の数値ベクトル。cross-entropy は softmax 済みの値ではなく、これを期待します |
+| Cross-entropy | "The loss" | 正解クラスの負の対数確率。log-softmax と NLL を 1 つの安定な op にまとめたもの |
+| DataLoader | "The batcher" | dataset を shuffling、batching、任意の multi-worker loading で包むもの。訓練バグの半分はこれのせいにされます |
+| Augmentation | "Random transforms" | 訓練時に行う、ラベルを保存する任意の pixel-level transform。CNN が生まれつき持たない不変性を教えます |
+| Mixup / Cutmix | "Mix two images" | 入力とラベルの両方を blend し、classifier が hard boundary ではなく滑らかな補間を学ぶようにします |
+| Label smoothing | "Softer targets" | one-hot を (1-eps, eps/(C-1), ...) に置き換えること。calibration を改善し、accuracy を少し押し上げます |
+| Top-k accuracy | "Top-5" | 正解クラスが、確率の高い k 個の予測に入っていること。本当に曖昧なクラスを含む dataset で使われます |
+| Confusion matrix | "Where errors live" | 要素 (i, j) が、真のクラス i の画像を j と予測した数を数える C x C table。対角は正解、非対角は直すべき場所を示します |
 
-## Further Reading
+## 参考資料
 
-- [CS231n: Training Neural Networks](https://cs231n.github.io/neural-networks-3/) — still the clearest tour of the training pipeline at a single page
-- [Bag of Tricks for Image Classification (He et al., 2019)](https://arxiv.org/abs/1812.01187) — every small trick that together adds 3-4% to ResNet accuracy on ImageNet
-- [mixup: Beyond Empirical Risk Minimization (Zhang et al., 2017)](https://arxiv.org/abs/1710.09412) — the original mixup paper; three pages of theory plus convincing experiments
-- [Why temperature scaling matters (Guo et al., 2017)](https://arxiv.org/abs/1706.04599) — the paper that proved modern networks are miscalibrated and fixed it with one scalar parameter
+- [CS231n: Training Neural Networks](https://cs231n.github.io/neural-networks-3/) — training pipeline を 1 ページで見渡せる、今でも最も明快な解説
+- [Bag of Tricks for Image Classification (He et al., 2019)](https://arxiv.org/abs/1812.01187) — 小さな工夫を積み重ねると ImageNet 上の ResNet accuracy が 3-4% 上がることを示す一覧
+- [mixup: Beyond Empirical Risk Minimization (Zhang et al., 2017)](https://arxiv.org/abs/1710.09412) — mixup の元論文。3 ページの理論と説得力のある実験
+- [Why temperature scaling matters (Guo et al., 2017)](https://arxiv.org/abs/1706.04599) — 現代のネットワークが miscalibrated であることを示し、1 つの scalar parameter で修正した論文

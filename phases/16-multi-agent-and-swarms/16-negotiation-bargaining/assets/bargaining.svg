@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,63 +10,63 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="28" text-anchor="middle" class="title">OG-Narrator decomposition and Contract Net task market</text>
+  <text x="480" y="28" text-anchor="middle" class="title">OG-Narrator分解とContract Netタスク市場</text>
 
   <rect x="40" y="60" width="420" height="200" class="cool"/>
   <text x="250" y="82" text-anchor="middle" class="head">OG-Narrator (arXiv:2402.15813)</text>
 
   <rect x="70" y="110" width="150" height="70" class="box"/>
-  <text x="145" y="134" text-anchor="middle" class="step">offer generator</text>
-  <text x="145" y="152" text-anchor="middle" class="small">deterministic</text>
+  <text x="145" y="134" text-anchor="middle" class="step">オファー生成器</text>
+  <text x="145" y="152" text-anchor="middle" class="small">決定的</text>
   <text x="145" y="168" text-anchor="middle" class="small">Zeuthen / Rubinstein</text>
 
   <rect x="280" y="110" width="150" height="70" class="box"/>
-  <text x="355" y="134" text-anchor="middle" class="step">LLM narrator</text>
-  <text x="355" y="152" text-anchor="middle" class="small">framing only</text>
-  <text x="355" y="168" text-anchor="middle" class="small">no numeric decisions</text>
+  <text x="355" y="134" text-anchor="middle" class="step">LLM語り手</text>
+  <text x="355" y="152" text-anchor="middle" class="small">表現のみ</text>
+  <text x="355" y="168" text-anchor="middle" class="small">数値判断なし</text>
 
   <line x1="220" y1="145" x2="276" y2="145" stroke="#1a1a1a" marker-end="url(#arrow)"/>
-  <text x="250" y="140" text-anchor="middle" class="small">price</text>
+  <text x="250" y="140" text-anchor="middle" class="small">価格</text>
 
-  <text x="250" y="210" text-anchor="middle" class="step">deal rate: 26.67% -> 88.88%</text>
-  <text x="250" y="230" text-anchor="middle" class="caption">prices stay in the ZOPA; anchors are strategic</text>
+  <text x="250" y="210" text-anchor="middle" class="step">成約率: 26.67% -> 88.88%</text>
+  <text x="250" y="230" text-anchor="middle" class="caption">価格はZOPA内に留まる; アンカーは戦略的</text>
 
   <rect x="500" y="60" width="420" height="200" class="hot"/>
-  <text x="710" y="82" text-anchor="middle" class="head">anti-pattern: LLM decides the price</text>
+  <text x="710" y="82" text-anchor="middle" class="head">アンチパターン: LLMが価格を決める</text>
 
   <rect x="540" y="110" width="340" height="70" class="box"/>
-  <text x="710" y="134" text-anchor="middle" class="step">single LLM call</text>
-  <text x="710" y="152" text-anchor="middle" class="small">generates both offer and framing</text>
-  <text x="710" y="168" text-anchor="middle" class="small">reveals reasoning in the output</text>
+  <text x="710" y="134" text-anchor="middle" class="step">単一LLM呼出し</text>
+  <text x="710" y="152" text-anchor="middle" class="small">オファーと表現の両方を生成</text>
+  <text x="710" y="168" text-anchor="middle" class="small">出力内で推論を露出</text>
 
-  <text x="710" y="210" text-anchor="middle" class="step">deal rate: ~27%</text>
-  <text x="710" y="230" text-anchor="middle" class="caption">prices drift; counterpart reads the reservation price</text>
+  <text x="710" y="210" text-anchor="middle" class="step">成約率: 約27%</text>
+  <text x="710" y="230" text-anchor="middle" class="caption">価格が漂流。相手が留保価格を読む</text>
 
   <rect x="40" y="290" width="880" height="210" class="cold"/>
   <text x="480" y="314" text-anchor="middle" class="head">Contract Net Protocol (Smith 1980 / FIPA 1996)</text>
 
   <rect x="80" y="340" width="140" height="50" class="box"/>
-  <text x="150" y="370" text-anchor="middle" class="step">manager</text>
+  <text x="150" y="370" text-anchor="middle" class="step">管理者</text>
   <circle cx="400" cy="365" r="24" class="box"/>
-  <text x="400" y="370" text-anchor="middle" class="step">bidders</text>
+  <text x="400" y="370" text-anchor="middle" class="step">入札者</text>
   <rect x="550" y="340" width="140" height="50" class="box"/>
-  <text x="620" y="370" text-anchor="middle" class="step">winner</text>
+  <text x="620" y="370" text-anchor="middle" class="step">勝者</text>
   <rect x="730" y="340" width="160" height="50" class="box"/>
-  <text x="810" y="370" text-anchor="middle" class="step">losers (reject)</text>
+  <text x="810" y="370" text-anchor="middle" class="step">敗者（拒否）</text>
 
   <line x1="220" y1="365" x2="376" y2="365" stroke="#1a1a1a" marker-end="url(#arrow)"/>
   <text x="295" y="355" text-anchor="middle" class="small">cfp</text>
   <line x1="424" y1="365" x2="546" y2="365" stroke="#1a1a1a" marker-end="url(#arrow)"/>
-  <text x="485" y="355" text-anchor="middle" class="small">propose · accept</text>
+  <text x="485" y="355" text-anchor="middle" class="small">提案 · 承認</text>
   <line x1="424" y1="380" x2="726" y2="380" stroke="#1a1a1a" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
   <text x="575" y="400" text-anchor="middle" class="small">reject-proposal</text>
 
-  <text x="480" y="440" text-anchor="middle" class="caption">scales: broadcast + collect + award; no synchronous chat</text>
-  <text x="480" y="460" text-anchor="middle" class="caption">adopted in production task markets (Microsoft Agent Framework, some LangGraph implementations)</text>
-  <text x="480" y="480" text-anchor="middle" class="caption">FIPA performative mapping: cfp -> propose -> accept-proposal / reject-proposal</text>
+  <text x="480" y="440" text-anchor="middle" class="caption">スケールする: 配信 + 回収 + 授与。同期チャットなし</text>
+  <text x="480" y="460" text-anchor="middle" class="caption">本番タスク市場で採用 (Microsoft Agent Framework、一部LangGraph実装)</text>
+  <text x="480" y="480" text-anchor="middle" class="caption">FIPA発話行為対応: cfp -> propose -> accept-proposal / reject-proposal</text>
 </svg>

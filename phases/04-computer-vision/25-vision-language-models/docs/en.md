@@ -1,30 +1,30 @@
-# Vision-Language Models — The ViT-MLP-LLM Pattern
+# Vision-Language Models — ViT-MLP-LLM パターン
 
-> A vision encoder converts an image into tokens. An MLP projector maps those tokens into the LLM's embedding space. A language model does the rest. That pattern — ViT-MLP-LLM — is every production VLM in 2026.
+> Vision encoder が画像を token に変換する。MLP projector がそれらの token を LLM の embedding 空間へ写像する。残りは language model が担う。この ViT-MLP-LLM というパターンが、2026 年の本番 VLM の標準形である。
 
-**Type:** Learn + Use
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 14 (ViT), Phase 4 Lesson 18 (CLIP), Phase 7 Lesson 02 (Self-Attention)
-**Time:** ~75 minutes
+**種別:** 学習 + 活用
+**言語:** Python
+**前提条件:** Phase 4 Lesson 14 (ViT), Phase 4 Lesson 18 (CLIP), Phase 7 Lesson 02 (Self-Attention)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- State the ViT-MLP-LLM architecture and explain what each of the three components contributes
-- Compare Qwen3-VL, InternVL3.5, LLaVA-Next, and GLM-4.6V on parameter count, context length, and benchmark performance
-- Explain DeepStack: why multi-level ViT features tighten vision-language alignment better than a single last-layer feature
-- Measure VLM hallucination in production with Cross-Modal Error Rate (CMER) and act on the signal
+- ViT-MLP-LLM アーキテクチャを説明し、3 つの構成要素がそれぞれ何を担うかを述べる
+- Qwen3-VL、InternVL3.5、LLaVA-Next、GLM-4.6V を、パラメータ数、context length、ベンチマーク性能で比較する
+- DeepStack を説明する: 複数階層の ViT features が、単一の最終層 feature より vision-language alignment を強める理由を理解する
+- Cross-Modal Error Rate (CMER) で本番 VLM の hallucination を測定し、そのシグナルに基づいて対応する
 
-## The Problem
+## 問題
 
-CLIP (Phase 4 Lesson 18) gives you a shared embedding space for images and text, which is enough for zero-shot classification and retrieval. It cannot answer "how many red cars are in this image?" because CLIP does not generate text — it only scores similarities.
+CLIP (Phase 4 Lesson 18) は画像とテキストに共有 embedding 空間を与えるため、zero-shot classification や retrieval には十分である。しかし CLIP はテキストを生成せず、類似度を採点するだけなので、「この画像に赤い車は何台ありますか？」には答えられない。
 
-Vision-Language Models (VLMs) — Qwen3-VL, InternVL3.5, LLaVA-Next, GLM-4.6V — bolt a CLIP-family image encoder to a full language model. The model sees an image plus a question and generates an answer. In 2026 open-source VLMs rival or beat GPT-5 and Gemini-2.5-Pro on multimodal benchmarks (MMMU, MMBench, DocVQA, ChartQA, MathVista, OSWorld).
+Vision-Language Models (VLMs) — Qwen3-VL、InternVL3.5、LLaVA-Next、GLM-4.6V — は、CLIP 系の image encoder を完全な language model に接続する。モデルは画像と質問を受け取り、答えを生成する。2026 年の open-source VLM は、multimodal benchmark (MMMU, MMBench, DocVQA, ChartQA, MathVista, OSWorld) で GPT-5 や Gemini-2.5-Pro に匹敵、または上回る。
 
-The trio of pieces (ViT, projector, LLM) is the standard. The differences between models are in which ViT, which projector, which LLM, the training data, and the alignment recipe. Once you understand the pattern, swapping any component is mechanical.
+3 つの部品 (ViT、projector、LLM) が標準である。モデル間の違いは、どの ViT、どの projector、どの LLM、どの training data、どの alignment recipe を使うかにある。このパターンを理解すれば、任意の構成要素の差し替えは機械的にできる。
 
-## The Concept
+## 概念
 
-### The ViT-MLP-LLM architecture
+### ViT-MLP-LLM architecture
 
 ```mermaid
 flowchart LR
@@ -44,27 +44,27 @@ flowchart LR
     style LLM fill:#dcfce7,stroke:#16a34a
 ```
 
-1. **Vision encoder** — a pretrained ViT (CLIP-L/14, SigLIP, DINOv3, or a fine-tuned variant). Produces patch tokens.
-2. **Projector** — a small module (2-4 layer MLP, or a Q-former) that maps vision tokens into the LLM's embedding dimension. This is where most of the fine-tuning happens.
-3. **LLM** — a decoder-only language model (Qwen3, Llama, Mistral, GLM, InternLM). Reads the vision + text tokens in sequence, generates text.
+1. **Vision encoder** — 事前学習済み ViT (CLIP-L/14、SigLIP、DINOv3、または fine-tuned variant)。patch token を生成する。
+2. **Projector** — vision token を LLM の embedding 次元へ写像する小さな module (2-4 layer MLP、または Q-former)。fine-tuning の多くはここで起きる。
+3. **LLM** — decoder-only language model (Qwen3、Llama、Mistral、GLM、InternLM)。vision + text token を列として読み、テキストを生成する。
 
-All three pieces are trainable in principle. In practice, the vision encoder and LLM stay mostly frozen while the projector trains — a few billion parameters of signal for cheap.
+原理的には 3 つすべてを train できる。実務では、vision encoder と LLM はほぼ frozen のまま、projector を train する。数十億パラメータ規模の信号を安価に活用できる。
 
 ### DeepStack
 
-Vanilla projection uses only the last ViT layer. DeepStack (Qwen3-VL) samples features from multiple ViT depths and stacks them. Deeper layers carry high-level semantics; shallower layers carry fine-grained spatial and textural information. Feeding both into the LLM closes the gap between "what does the image contain" (semantics) and "where exactly" (spatial grounding).
+通常の projection は ViT の最終層だけを使う。DeepStack (Qwen3-VL) は複数の ViT 深度から features をサンプリングして積み重ねる。深い層は高レベル semantic を持ち、浅い層は細かな空間情報や texture 情報を持つ。両方を LLM に渡すことで、「画像に何があるか」(semantics) と「正確にどこにあるか」(spatial grounding) のギャップを縮める。
 
-### Three training stages
+### 3 つの training stages
 
-Modern VLMs train in stages:
+現代の VLM は段階的に train される。
 
-1. **Alignment** — freeze ViT and LLM. Train only the projector on image-caption pairs. Teaches the projector to map vision space into language space.
-2. **Pre-training** — unfreeze everything. Train on large-scale interleaved image-text data (500M+ pairs). Builds the model's visual knowledge.
-3. **Instruction tuning** — fine-tune on curated (image, question, answer) triples. Teaches conversational behaviour and task formats. This is what turns a "vision-aware LM" into a usable assistant.
+1. **Alignment** — ViT と LLM を freeze する。image-caption pairs で projector だけを train する。vision 空間を language 空間へ写像する方法を projector に学ばせる。
+2. **Pre-training** — すべてを unfreeze する。大規模な interleaved image-text data (500M+ pairs) で train する。モデルの視覚知識を作る。
+3. **Instruction tuning** — curated な (image, question, answer) triples で fine-tune する。会話的な挙動と task format を教える。「vision-aware LM」を使える assistant に変える段階である。
 
-Most LoRA fine-tunes target stage 3 with a small labelled dataset.
+ほとんどの LoRA fine-tune は、小さな labelled dataset を使って stage 3 を狙う。
 
-### Model family comparison (early 2026)
+### Model family comparison (2026 年初頭)
 
 | Model | Params | Vision encoder | LLM | Context | Strengths |
 |-------|--------|----------------|-----|---------|-----------|
@@ -79,37 +79,37 @@ Most LoRA fine-tunes target stage 3 with a small labelled dataset.
 
 ### Visual agents
 
-Qwen3-VL-235B reaches top global performance on OSWorld — a benchmark for **visual agents** that operate GUIs (desktop, mobile, web). The model sees a screenshot, understands the UI, and emits actions (click, type, scroll). Combined with tools, it closes the loop on common desktop tasks. This is what most 2026 "AI PC" demos run under the hood.
+Qwen3-VL-235B は **visual agents** 向け benchmark である OSWorld で世界最高水準の性能に到達している。visual agent は GUI (desktop、mobile、web) を操作する agent である。モデルは screenshot を見て UI を理解し、action (click、type、scroll) を出力する。tool と組み合わせることで、一般的な desktop task の loop を閉じられる。2026 年の多くの「AI PC」デモは、内部でこの仕組みを動かしている。
 
 ### Agentic capabilities + RoPE variants
 
-VLMs need to know **when** a frame is in a video. Qwen3-VL evolved from T-RoPE (temporal rotary position embeddings) to **text-based time alignment** — explicit timestamp text tokens interleaved with video frames. The model sees "`<timestamp 00:32>` frame, prompt" and can reason about temporal relationships.
+VLM は video の中で frame が **いつ** のものかを知る必要がある。Qwen3-VL は T-RoPE (temporal rotary position embeddings) から **text-based time alignment** へ進化した。これは video frame と明示的な timestamp text token を interleave する方式である。モデルは「`<timestamp 00:32>` frame, prompt」を見て、時間的関係を推論できる。
 
-### The alignment problem
+### alignment の問題
 
-12% of image-text pairs in a crawled dataset contain descriptions not fully grounded in the image. A VLM trained on this silently learns to hallucinate — fabricate objects, misread numbers, invent relationships. In production this is the dominant failure mode.
+crawled dataset の image-text pairs の 12% には、画像に完全には grounded していない説明が含まれる。このデータで train された VLM は、物体を捏造し、数字を読み違え、関係を作り出す hallucination を静かに学ぶ。本番ではこれが支配的な failure mode である。
 
-Skywork.ai introduced the **Cross-Modal Error Rate (CMER)** to track it:
+Skywork.ai はそれを追跡するために **Cross-Modal Error Rate (CMER)** を導入した。
 
 ```
 CMER = fraction of outputs where the text confidence is high but the image-text similarity (via a CLIP-family checker) is low
 ```
 
-High CMER means the model is confidently saying things not grounded in the image. Monitoring CMER and treating it as a production KPI cut hallucination rate by ~35% in their deployment. The trick is not "fix the model" but "route high-CMER outputs to human review."
+CMER が高いとは、モデルが画像に grounded していない内容を自信を持って述べているという意味である。CMER を monitor し、本番 KPI として扱うことで、彼らの deployment では hallucination rate が約 35% 下がった。コツは「モデルを直す」ことではなく、「high-CMER output を human review に route する」ことである。
 
-### Fine-tuning with LoRA / QLoRA
+### LoRA / QLoRA による fine-tuning
 
-Full fine-tuning of a 70B VLM is out of reach for most teams. LoRA (rank 16-64) on attention + projector layers, or QLoRA with 4-bit base weights, fits on a single A100 / H100. Cost: 5,000-50,000 examples, $100-$5,000 in compute, 2-10 hours of training.
+70B VLM の full fine-tuning は、多くの team には手が届かない。attention + projector layers への LoRA (rank 16-64)、または 4-bit base weights を使う QLoRA なら、単一の A100 / H100 に収まる。コストは 5,000-50,000 examples、$100-$5,000 の compute、2-10 hours の training 程度である。
 
-### Spatial reasoning is still weak
+### Spatial reasoning はまだ弱い
 
-Current VLMs score 50-60% on spatial reasoning benchmarks (above-below, left-right, counting, distance). If your use case depends on "which object is on top of which," validate heavily — generic VLM performance is below human. Better-than-VLM alternatives for pure spatial tasks: a specialised keypoint / pose estimator, a depth model, or a detection model with box geometry post-processed.
+現在の VLM は spatial reasoning benchmark (above-below、left-right、counting、distance) で 50-60% 程度である。「どの object がどの上にあるか」に依存する use case では、厳しく検証すること。汎用 VLM の性能は human 未満である。純粋な spatial task では、specialised keypoint / pose estimator、depth model、または detection model と box geometry の post-processing の方が VLM より良いことが多い。
 
-## Build It
+## 実装
 
-### Step 1: The projector
+### Step 1: projector
 
-The part you will train most often. 2-4 layer MLP with GELU.
+最も頻繁に train する部分。GELU 付きの 2-4 layer MLP。
 
 ```python
 import torch
@@ -129,11 +129,11 @@ class Projector(nn.Module):
         return self.net(x)
 ```
 
-Input is a `(N_patches, d_vit)` token tensor. Output is `(N_patches, d_llm)`. The LLM treats every output row as just another token.
+入力は `(N_patches, d_vit)` token tensor。出力は `(N_patches, d_llm)`。LLM は出力の各 row を単なる別の token として扱う。
 
-### Step 2: Assemble ViT-MLP-LLM end-to-end
+### Step 2: ViT-MLP-LLM を end-to-end で組み立てる
 
-Skeleton of the forward pass for a minimal VLM. Real code uses `transformers`; this is the conceptual layout.
+最小 VLM の forward pass skeleton。実際の code は `transformers` を使うが、ここでは概念的な layout を示す。
 
 ```python
 class MinimalVLM(nn.Module):
@@ -171,11 +171,11 @@ class MinimalVLM(nn.Module):
         return out
 ```
 
-The `<image>` placeholder token in the text gets replaced with real image embeddings — same pattern LLaVA, Qwen-VL, and InternVL use.
+text 内の `<image>` placeholder token が実際の image embeddings に置き換えられる。LLaVA、Qwen-VL、InternVL が使うのと同じパターンである。
 
 ### Step 3: CMER computation
 
-A lightweight runtime check.
+軽量な runtime check。
 
 ```python
 import torch.nn.functional as F
@@ -194,11 +194,11 @@ def cross_modal_error_rate(image_emb, text_emb, text_confidence, sim_threshold=0
     return high_conf_low_sim.float().mean().item()
 ```
 
-Treat CMER as a production KPI. Monitor it per endpoint, per prompt type, per customer. Rising CMER indicates the model is starting to hallucinate on some input distribution.
+CMER を production KPI として扱う。endpoint ごと、prompt type ごと、customer ごとに monitor する。CMER の上昇は、ある input distribution でモデルが hallucinate し始めていることを示す。
 
-### Step 4: Toy VLM classifier (runnable)
+### Step 4: Toy VLM classifier (実行可能)
 
-Demonstrate the projector trains. Fake "ViT features" go in; a tiny LLM-style token predicts a class.
+projector が train できることを示す。偽の「ViT features」を入力し、小さな LLM 風 token が class を予測する。
 
 ```python
 class ToyVLM(nn.Module):
@@ -213,15 +213,15 @@ class ToyVLM(nn.Module):
         return self.head(pooled)
 ```
 
-One can fit this on synthetic (feature, class) pairs in under 200 steps — enough to show the projector pattern works.
+synthetic な (feature, class) pairs なら 200 steps 未満で fit できる。projector pattern が機能することを示すには十分である。
 
-## Use It
+## 使う
 
-Three ways production teams use VLMs in 2026:
+2026 年の production team が VLM を使う代表的な方法は 3 つある。
 
-- **Hosted API** — OpenAI Vision, Anthropic Claude Vision, Google Gemini Vision. Zero infra, vendor risk.
-- **Open-source self-host** — Qwen3-VL or InternVL3.5 via `transformers` and `vllm`. Full control, higher up-front effort.
-- **Fine-tune on domain** — load Qwen2.5-VL-7B or LLaVA-1.6-7B, LoRA on 5k-50k custom examples, serve with `vllm` or `TGI`.
+- **Hosted API** — OpenAI Vision、Anthropic Claude Vision、Google Gemini Vision。infra 不要だが vendor risk がある。
+- **Open-source self-host** — `transformers` と `vllm` で Qwen3-VL または InternVL3.5 を動かす。制御性は高いが、初期作業は重い。
+- **Fine-tune on domain** — Qwen2.5-VL-7B または LLaVA-1.6-7B を load し、5k-50k custom examples で LoRA、`vllm` または `TGI` で serve する。
 
 ```python
 from transformers import AutoProcessor, AutoModelForVision2Seq
@@ -244,35 +244,35 @@ generated = model.generate(**inputs, max_new_tokens=256)
 answer = processor.decode(generated[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
 ```
 
-`apply_chat_template` hides the `<image>` placeholder tokenisation; the model handles the merge internally.
+`apply_chat_template` は `<image>` placeholder tokenisation を隠蔽する。merge はモデル内部で処理される。
 
-## Ship It
+## 成果物
 
-This lesson produces:
+この lesson が生成するもの:
 
-- `outputs/prompt-vlm-selector.md` — picks Qwen3-VL / InternVL3.5 / LLaVA-Next / API given accuracy, latency, context length, and budget.
-- `outputs/skill-cmer-monitor.md` — emits the code to instrument a production VLM endpoint with cross-modal error rate, per-endpoint dashboards, and alerting thresholds.
+- `outputs/prompt-vlm-selector.md` — accuracy、latency、context length、budget に基づいて Qwen3-VL / InternVL3.5 / LLaVA-Next / API を選ぶ。
+- `outputs/skill-cmer-monitor.md` — production VLM endpoint に cross-modal error rate、endpoint ごとの dashboard、alerting threshold を instrument する code を出力する。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Run three prompts ("what is this?", "count the objects", "describe the scene") through any open VLM on five images. Score each answer as correct / partially correct / hallucinated by hand. Compute a first-pass CMER-like rate.
-2. **(Medium)** Fine-tune Qwen2.5-VL-3B or LLaVA-1.6-7B with LoRA (rank 16) on 500 images of a target domain with captions. Compare zero-shot vs fine-tuned MMBench-style accuracy.
-3. **(Hard)** Replace the VLM's image encoder with DINOv3 instead of its default SigLIP/CLIP. Re-train only the projector (frozen LLM + frozen DINOv3). Measure whether dense-prediction tasks (counting, spatial reasoning) improve.
+1. **(Easy)** 任意の open VLM で、5 枚の画像に対して 3 つの prompt ("what is this?", "count the objects", "describe the scene") を実行する。各回答を correct / partially correct / hallucinated として手で採点する。first-pass の CMER-like rate を計算する。
+2. **(Medium)** Qwen2.5-VL-3B または LLaVA-1.6-7B を、target domain の caption 付き 500 images で LoRA (rank 16) fine-tune する。zero-shot と fine-tuned の MMBench-style accuracy を比較する。
+3. **(Hard)** VLM の image encoder を default の SigLIP/CLIP ではなく DINOv3 に置き換える。projector だけを再 train する (frozen LLM + frozen DINOv3)。dense-prediction tasks (counting、spatial reasoning) が改善するか測定する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| Term | よく言われる表現 | 実際の意味 |
 |------|----------------|----------------------|
-| ViT-MLP-LLM | "The VLM pattern" | Vision encoder + projector + language model; every 2026 VLM |
-| Projector | "The bridge" | 2-4 layer MLP (or Q-former) that maps vision tokens into LLM embedding space |
-| DeepStack | "Qwen3-VL feature trick" | Multi-level ViT features stacked rather than last-layer only |
-| Image token | "<image> placeholder" | Special token in the text stream replaced by projected vision embeddings |
-| CMER | "Hallucination KPI" | Cross-Modal Error Rate; high when text confidence is high but image-text similarity is low |
-| Visual agent | "VLM that clicks" | VLM operating GUIs (OSWorld, mobile, web) with tool calls |
-| Q-former | "Fixed-count token bridge" | BLIP-2 style projector producing a fixed number of visual query tokens |
-| Alignment / pre-training / instruction tuning | "Three stages" | Standard VLM training pipeline |
+| ViT-MLP-LLM | "The VLM pattern" | Vision encoder + projector + language model; 2026 年のすべての VLM |
+| Projector | "The bridge" | vision token を LLM embedding space に写像する 2-4 layer MLP (または Q-former) |
+| DeepStack | "Qwen3-VL feature trick" | 最終層だけでなく multi-level ViT features を積み重ねる方法 |
+| Image token | "<image> placeholder" | projected vision embeddings に置き換えられる text stream 内の special token |
+| CMER | "Hallucination KPI" | Cross-Modal Error Rate; text confidence が高いのに image-text similarity が低いと高くなる |
+| Visual agent | "VLM that clicks" | tool calls で GUI (OSWorld、mobile、web) を操作する VLM |
+| Q-former | "Fixed-count token bridge" | 固定数の visual query tokens を生成する BLIP-2 style projector |
+| Alignment / pre-training / instruction tuning | "Three stages" | 標準的な VLM training pipeline |
 
-## Further Reading
+## 参考資料
 
 - [Qwen3-VL Technical Report (arXiv 2511.21631)](https://arxiv.org/abs/2511.21631)
 - [InternVL3.5 Advancing Open-Source Multimodal Models (arXiv 2508.18265)](https://arxiv.org/html/2508.18265v1)

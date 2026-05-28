@@ -1,26 +1,26 @@
-# The Workbench on a Real Repo
+# 実 repo 上の Workbench
 
-> Eleven lessons of surfaces are worth nothing if they do not survive contact with a real codebase. This lesson runs the same task twice on a small sample app: prompt-only versus workbench-guided. The numbers do the arguing.
+> 11 lesson 分の surface は、実際の codebase に触れても生き残れなければ意味がありません。この lesson では、小さな sample app に対して同じ task を 2 回実行します。prompt-only と workbench-guided です。議論は数値に任せます。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phases 14 · 32 to 14 · 40
-**Time:** ~60 minutes
+**種類:** Build
+**言語:** Python (stdlib)
+**前提:** Phases 14 · 32 to 14 · 40
+**時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Bring the seven workbench surfaces together on a small application.
-- Run the same task twice (prompt-only and workbench-guided) and measure five outcomes.
-- Read the before/after report and decide which surfaces gave the most leverage.
-- Defend the workbench against a "but my model is good enough" pushback.
+- 小さな application 上で 7 つの workbench surface をまとめる。
+- 同じ task を 2 回 (prompt-only と workbench-guided) 実行し、5 つの outcome を測定する。
+- before/after report を読み、どの surface がもっとも leverage を出したか判断する。
+- 「でも自分の model は十分良い」という反論に対して workbench を説明できるようになる。
 
-## The Problem
+## 問題
 
-A demo on a toy task convinces no one. The case for the workbench is made when a real-feeling task on a real-feeling repo lands in production with fewer failures, fewer reverts, and a packet the next session can use.
+toy task の demo だけでは誰も納得しません。workbench の価値は、実際らしい repo で実際らしい task が、failure と revert を減らし、次の session が使える packet を残して production に入るときに示されます。
 
-This lesson ships that real-feeling repo and runs the same task through both pipelines. The result is a before/after report you can hand to a skeptic.
+この lesson はその「実際らしい repo」を同梱し、同じ task を 2 つの pipeline で実行します。結果は、skeptic に渡せる before/after report です。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart TD
@@ -31,118 +31,118 @@ flowchart TD
   M --> Report[before-after-report.md]
 ```
 
-### The sample app
+### sample app
 
-A minimal FastAPI-style handler in `sample_app/`:
+`sample_app/` にある minimal FastAPI-style handler:
 
-- `app.py` with `/signup` (no validation yet).
-- `test_app.py` with one happy-path test.
-- `README.md` and `scripts/release.sh` as forbidden-zone bait.
+- `app.py` には `/signup` がある (まだ validation なし)。
+- `test_app.py` には happy-path test が 1 つある。
+- `README.md` と `scripts/release.sh` は forbidden-zone bait として置かれている。
 
-### The task
+### task
 
-> Add input validation to `/signup`: reject passwords shorter than 8 characters, return 422 with a typed error envelope. Add a test that proves the new behavior.
+> `/signup` に input validation を追加してください。8 文字未満の password を拒否し、typed error envelope つきで 422 を返してください。その新しい挙動を証明する test を追加してください。
 
-### The two pipelines
+### 2 つの pipeline
 
 Prompt-only:
 
-1. Read the README.
-2. Read `app.py`.
-3. Edit files.
-4. Claim done.
+1. README を読む。
+2. `app.py` を読む。
+3. ファイルを編集する。
+4. done と主張する。
 
 Workbench-guided:
 
-1. Run init script (Lesson 35).
-2. Read scope contract (Lesson 36).
-3. Read state (Lesson 34).
-4. Edit allowed files only.
-5. Run acceptance command via feedback runner (Lesson 37).
-6. Run verification gate (Lesson 38).
-7. Run reviewer (Lesson 39).
-8. Generate handoff (Lesson 40).
+1. init script を実行する (Lesson 35)。
+2. scope contract を読む (Lesson 36)。
+3. state を読む (Lesson 34)。
+4. 許可されたファイルだけを編集する。
+5. feedback runner 経由で acceptance command を実行する (Lesson 37)。
+6. verification gate を実行する (Lesson 38)。
+7. reviewer を実行する (Lesson 39)。
+8. handoff を生成する (Lesson 40)。
 
-### The five outcomes measured
+### 測定する 5 つの outcome
 
-| Outcome | Why it matters |
+| Outcome | 重要な理由 |
 |---------|----------------|
-| `tests_actually_run` | Most "tests passed" claims are unverifiable |
-| `acceptance_met` | The test that proves the goal must be the test that ran |
-| `files_outside_scope` | Scope creep is the dominant silent failure |
-| `handoff_quality` | The next session pays for or benefits from this |
-| `reviewer_total` | Qualitative judgment on top of the gate |
+| `tests_actually_run` | 「tests passed」という主張の多くは検証不能 |
+| `acceptance_met` | goal を証明する test は、実際に走った test でなければならない |
+| `files_outside_scope` | scope creep は支配的な silent failure |
+| `handoff_quality` | 次の session はこの内容のコストを払うか、恩恵を受ける |
+| `reviewer_total` | gate の上に乗る qualitative judgment |
 
-## Build It
+## 作ってみる
 
-`code/main.py` orchestrates the two pipelines against the same sample app fixture. Both pipelines are scripted (no LLM in the loop) so the measurement is reproducible. The script writes the comparison into `before-after-report.md` and `comparison.json`.
+`code/main.py` は、同じ sample app fixture に対して 2 つの pipeline を orchestrate します。両方の pipeline は scripted で、loop 内に LLM はいません。そのため測定は再現可能です。script は comparison を `before-after-report.md` と `comparison.json` に書き込みます。
 
-Run it:
+実行します。
 
 ```
 python3 code/main.py
 ```
 
-Output: a console table of outcomes per pipeline, the markdown report saved next to the script, and the JSON for whoever wants to chart it.
+出力: pipeline ごとの outcome を示す console table、script の隣に保存される markdown report、chart 化したい人向けの JSON。
 
 ## Production patterns in the wild
 
-The skeptic's question is "how much does the workbench actually help?" The 2026 numbers say a lot more than the explanation.
+skeptic の問いは「workbench は実際どれくらい効くのか」です。2026 年の数値は、説明よりはるかに強く答えています。
 
-**Terminal Bench Top-30 to Top-5 on the same model.** LangChain's *Anatomy of an Agent Harness* (April 2026): a coding agent jumped from outside the top 30 to rank five on Terminal Bench 2.0 by changing only the harness. Same model. Different surfaces. Twenty-five-rank delta.
+**Terminal Bench Top-30 to Top-5 on the same model.** LangChain の *Anatomy of an Agent Harness* (2026 年 4 月): coding agent は、model を変えず harness だけを変えることで Terminal Bench 2.0 の top 30 圏外から 5 位へ上がりました。同じ model、違う surface。25 rank の差です。
 
-**Vercel 80% to 100% by deleting tools.** Vercel reported deleting 80% of its agent's tools moved the success rate from 80% to 100%. Smaller tool surface, sharper scope, fewer ways to fail. Negative space wins.
+**Vercel 80% to 100% by deleting tools.** Vercel は、agent の tool の 80% を削除すると success rate が 80% から 100% になったと報告しました。小さな tool surface、鋭い scope、少ない failure path。negative space が勝ちます。
 
-**Harvey 2x accuracy via harness alone.** Legal agents more than doubled their accuracy through harness optimization, no model change.
+**Harvey 2x accuracy via harness alone.** Legal agent は、model を変えず harness optimization だけで accuracy を 2 倍以上にしました。
 
-**88% of enterprise AI agent projects fail to reach production.** The preprints.org *Harness Engineering for Language Agents* paper (March 2026) traces the failures to runtime, not reasoning: stale state, brittle retries, overgrown context, poor recovery from intermediate mistakes.
+**88% of enterprise AI agent projects fail to reach production.** preprints.org の *Harness Engineering for Language Agents* paper (2026 年 3 月) は、failure の原因を reasoning ではなく runtime に見ています。stale state、brittle retries、膨らみすぎた context、中間ミスからの poor recovery です。
 
-**Long-context collapse.** WebAgent baseline 40-50% success drops to under 10% in long-context conditions, mostly from infinite loops and goal loss. The Ralph Loop and the handoff packet exist to absorb that.
+**Long-context collapse.** WebAgent baseline の 40-50% success は、long-context 条件で 10% 未満に落ちます。主因は infinite loop と goal loss です。Ralph Loop と handoff packet は、これを吸収するためにあります。
 
-**False negatives still exist.** Single-step factual tasks, one-line lints, formatter runs, anything the model has memorized verbatim — these run faster prompt-only. The benchmark should enumerate them honestly so the workbench is not framed as overkill.
+**False negatives still exist.** single-step の factual task、1 行 lint、formatter run、model が verbatim に memorized しているものは prompt-only のほうが速いです。workbench を overkill として描かないために、benchmark はそれらを正直に列挙すべきです。
 
-The takeaway is not "harness wins forever." Models do absorb harness tricks over time. The takeaway is that today, the engineering load sits in the seven surfaces, and the numbers prove it.
+要点は「harness が永遠に勝つ」ではありません。model は時間とともに harness trick を吸収します。要点は、今日の engineering load は 7 つの surface にあり、そのことを数値が証明しているという点です。
 
-## Use It
+## 使い方
 
-This lesson is the case file you cite when:
+この lesson は、次の場面で引用する case file です。
 
-- Someone asks why every PR carries an `agent-rules.md` and a scope contract.
-- A team wants to drop the verification gate "just for this sprint."
-- A new agent product launches and you need a portable benchmark for whether it actually saves time.
+- すべての PR に `agent-rules.md` と scope contract が付く理由を尋ねられたとき。
+- team が「この sprint だけ」verification gate を外したがるとき。
+- 新しい agent product が登場し、実際に時間を節約するかを測る portable benchmark が必要なとき。
 
-The numbers travel further than the explanation.
+数値は説明より遠くまで届きます。
 
-## Ship It
+## 出荷する
 
-`outputs/skill-workbench-benchmark.md` is a portable evaluation harness that runs any agent product through both pipelines against a project's own sample app and reports the five outcomes.
+`outputs/skill-workbench-benchmark.md` は、任意の agent product を project 自身の sample app に対して両 pipeline で実行し、5 つの outcome を report する portable evaluation harness です。
 
-## Exercises
+## 演習
 
-1. Add a sixth outcome: time-to-first-meaningful-edit. How do you measure it cleanly?
-2. Run the comparison on a real second-day task in your codebase. Where do the workbench numbers slip?
-3. Add a "false negative" pass: tasks where prompt-only would have been faster and the workbench overhead is real cost. Defend keeping the workbench anyway.
-4. Replace the scripted "agent" with a real LLM call. Which outcomes get noisier?
-5. Author a one-page summary aimed at a non-engineer. What survives the cut?
+1. 6 つ目の outcome として time-to-first-meaningful-edit を追加してください。どうすれば clean に測定できますか。
+2. 自分の codebase の現実的な second-day task で comparison を走らせてください。workbench の数値はどこで落ちますか。
+3. 「false negative」pass を追加してください。prompt-only のほうが速く、workbench overhead が real cost になる task です。それでも workbench を維持する理由を説明してください。
+4. scripted な「agent」を実際の LLM call に置き換えてください。どの outcome が noisier になりますか。
+5. non-engineer 向けの 1 page summary を作ってください。何を残し、何を削りますか。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Sample app | "Toy repo" | Small but realistic enough to exercise all seven surfaces |
-| Pipeline | "Workflow" | Ordered sequence of surface reads/writes the agent follows |
-| Before/after report | "The receipts" | The artifact you hand to a skeptic |
-| False negative | "Workbench overkill" | Tasks where prompt-only is faster; useful to enumerate honestly |
-| Workbench benchmark | "Reliability score" | Portable harness that runs the comparison on your codebase |
+| Sample app | 「toy repo」 | 7 つの surface すべてを exercise できる程度に小さく現実的な app |
+| Pipeline | 「workflow」 | agent が従う surface read/write の順序つき sequence |
+| Before/after report | 「根拠」 | skeptic に渡す artifact |
+| False negative | 「workbench overkill」 | prompt-only のほうが速い task。正直に列挙すると有用 |
+| Workbench benchmark | 「reliability score」 | 自分の codebase で comparison を実行する portable harness |
 
-## Further Reading
+## 参考文献
 
-- [LangChain, The Anatomy of an Agent Harness](https://blog.langchain.com/the-anatomy-of-an-agent-harness/) — Terminal Bench Top-30 to Top-5 receipt
-- [MongoDB, The Agent Harness: Why the LLM Is the Smallest Part of Your Agent System](https://www.mongodb.com/company/blog/technical/agent-harness-why-llm-is-smallest-part-of-your-agent-system) — Vercel + Harvey numbers
-- [preprints.org, Harness Engineering for Language Agents](https://www.preprints.org/manuscript/202603.1756) — 88% enterprise failure rate, runtime root causes
-- [HN: Improving 15 LLMs at Coding in One Afternoon. Only the Harness Changed](https://news.ycombinator.com/item?id=46988596) — replicated across 15 models
-- [Cloudflare, Orchestrating AI Code Review at Scale](https://blog.cloudflare.com/ai-code-review/) — 131k review runs / 30 days in production
+- [LangChain, The Anatomy of an Agent Harness](https://blog.langchain.com/the-anatomy-of-an-agent-harness/) — Terminal Bench Top-30 から Top-5 への実績
+- [MongoDB, The Agent Harness: Why the LLM Is the Smallest Part of Your Agent System](https://www.mongodb.com/company/blog/technical/agent-harness-why-llm-is-smallest-part-of-your-agent-system) — Vercel + Harvey の数値
+- [preprints.org, Harness Engineering for Language Agents](https://www.preprints.org/manuscript/202603.1756) — enterprise failure rate 88%、runtime root cause
+- [HN: Improving 15 LLMs at Coding in One Afternoon. Only the Harness Changed](https://news.ycombinator.com/item?id=46988596) — 15 model で replication
+- [Cloudflare, Orchestrating AI Code Review at Scale](https://blog.cloudflare.com/ai-code-review/) — production で 30 日間 131k review run
 - [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
-- Phases 14 · 32 to 14 · 40 — the surfaces this lesson exercises end-to-end
-- Phase 14 · 19 — SWE-bench, GAIA, AgentBench as the macro benchmarks this lesson complements
-- Phase 14 · 30 — eval-driven agent development the same harness plugs into
+- Phases 14 · 32 to 14 · 40 — この lesson が end-to-end で exercise する surface
+- Phase 14 · 19 — この lesson を補完する macro benchmark としての SWE-bench、GAIA、AgentBench
+- Phase 14 · 30 — 同じ harness が接続する eval-driven agent development

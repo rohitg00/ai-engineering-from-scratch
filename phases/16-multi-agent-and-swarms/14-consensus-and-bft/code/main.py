@@ -1,8 +1,8 @@
-"""Consensus and BFT for LLM agents, stdlib only.
+"""LLM agents の Consensus と BFT。stdlib のみ。
 
-Implements three aggregators (plurality, CP-WBFT, DecentLLMs) and three
-attack patterns (byzantine, sycophancy, monoculture). Prints a table of
-(attack, aggregator) -> final answer, highlighting correct decisions.
+3つの aggregator (plurality, CP-WBFT, DecentLLMs) と3つの
+attack pattern (byzantine, sycophancy, monoculture) を実装する。
+(attack, aggregator) -> final answer の table を表示し、correct decision を強調する。
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ class Vote:
     confidence: float
 
     def canonical(self) -> str:
-        """Rough semantic clustering: lowercase + strip whitespace/punct."""
+        """rough semantic clustering: lowercase + whitespace/punct 削除。"""
         return "".join(c for c in self.answer.lower().strip() if c.isalnum() or c == "." or c == "%")
 
 
@@ -48,11 +48,11 @@ def cp_wbft(votes: list[Vote], threshold: float = 0.5) -> tuple[str | None, dict
 
 
 def decentllms(votes: list[Vote]) -> tuple[str | None, dict[str, float]]:
-    """Score proposals 0-1 via evaluator agents, pick geometric-median cluster.
+    """evaluator agents で proposal を 0-1 score し、geometric-median cluster を選ぶ。
 
-    Simplified: evaluator is the aggregator itself, scoring = confidence. The
-    'geometric median' selects the cluster whose members have min sum of
-    pairwise distance-to-median in confidence space; tie-break by size.
+    簡略化: evaluator は aggregator 自身で、scoring = confidence。
+    'geometric median' は confidence space で pairwise distance-to-median の和が
+    最小の member を持つ cluster を選ぶ。同点なら size で決める。
     """
     clusters: dict[str, list[Vote]] = {}
     for v in votes:
@@ -83,7 +83,7 @@ def scenario(name: str, correct: str, votes: list[Vote]) -> None:
 
     def mark(a: str | None) -> str:
         if a is None:
-            return "[rejected below threshold]"
+            return "[threshold 未満で rejected]"
         return "[CORRECT]" if a == correct else "[WRONG]"
 
     print(f"\n  plurality    -> {plural!r:22s} {mark(plural)}")
@@ -92,9 +92,9 @@ def scenario(name: str, correct: str, votes: list[Vote]) -> None:
 
 
 def main() -> None:
-    # Scenario 1: honest majority, no attack
+    # Scenario 1: honest majority、attack なし
     scenario(
-        "no attack",
+        "attack なし",
         correct="4.2%",
         votes=[
             Vote("agent-a", "4.2%", 0.85),
@@ -105,7 +105,7 @@ def main() -> None:
         ],
     )
 
-    # Scenario 2: one byzantine liar with high confidence
+    # Scenario 2: 高 confidence の byzantine liar が1つ
     scenario(
         "byzantine lie",
         correct="4.2%",
@@ -118,8 +118,8 @@ def main() -> None:
         ],
     )
 
-    # Scenario 3: sycophancy. Two conformers echo whoever spoke first (42%) with
-    # low confidence because they did not derive the answer.
+    # Scenario 3: sycophancy。2つの conformer は、最初に話した agent (42%) を echo する。
+    # answer を自分で導いていないため confidence は低い。
     scenario(
         "sycophantic conformity",
         correct="4.2%",
@@ -132,8 +132,8 @@ def main() -> None:
         ],
     )
 
-    # Scenario 4: correlated-error monoculture. Three agents share a model and
-    # confidently hallucinate the same wrong answer.
+    # Scenario 4: correlated-error monoculture。3つの agent が model を共有し、
+    # 同じ wrong answer を confidence 高めに hallucinate する。
     scenario(
         "monoculture (correlated errors)",
         correct="4.2%",
@@ -147,12 +147,12 @@ def main() -> None:
     )
 
     print("\nTakeaways:")
-    print("  plurality is wrong whenever a correlated cluster is >= half the votes.")
-    print("  CP-WBFT mitigates sycophancy because conformers have low confidence.")
-    print("  DecentLLMs scoring penalizes high-variance clusters -- helps on monoculture when")
-    print("  the dissenting agents are at least as confident as the majority.")
-    print("  no aggregator solves monoculture when the wrong cluster is both larger AND more")
-    print("  confident than the right cluster. That case needs diversity or verification.")
+    print("  correlated cluster が vote の半分以上なら plurality は間違う。")
+    print("  CP-WBFT は conformer の confidence が低いため sycophancy を緩和する。")
+    print("  DecentLLMs scoring は high-variance cluster に penalty を与える。")
+    print("  dissenting agents が majority 以上に confident なら monoculture に効く。")
+    print("  wrong cluster がより大きく、かつより confident な場合、aggregator だけでは解けない。")
+    print("  その case には diversity または verification が必要。")
 
 
 if __name__ == "__main__":

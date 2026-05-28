@@ -1,40 +1,40 @@
-# Multi-Layer Networks and Forward Pass
+# 多層ネットワークとフォワードパス
 
-> One neuron draws a line. Stack them, and you can draw anything.
+> 1つのニューロンが引けるのは1本の直線です。積み重ねれば、どんな形でも描けます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提条件:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Build a multi-layer network from scratch with Layer and Network classes that perform a complete forward pass
-- Trace matrix dimensions through each layer of a network and identify shape mismatches
-- Explain how stacking nonlinear activations enables a network to learn curved decision boundaries
-- Solve the XOR problem using a 2-2-1 architecture with hand-tuned sigmoid weights
+- 完全なフォワードパスを実行するLayerクラスとNetworkクラスを使い、多層ネットワークをゼロから作る
+- ネットワークの各層を通る行列次元を追跡し、shapeの不一致を見つける
+- 非線形な活性化関数を積み重ねることで、ネットワークが曲線の決定境界を学習できる理由を説明する
+- 手で調整したsigmoidの重みを使い、2-2-1アーキテクチャでXOR問題を解く
 
-## The Problem
+## 問題
 
-A single neuron is a line drawer. That's it. One straight line through your data. Every real problem in AI -- image recognition, language understanding, playing Go -- requires curves. Stacking neurons into layers is how you get curves.
+単一のニューロンは直線を引く機械です。それだけです。データの中に1本の直線を引きます。AIにおける現実の問題、つまり画像認識、言語理解、囲碁のプレイには、どれも曲線が必要です。ニューロンを層として積み重ねることで、曲線を得られます。
 
-In 1969, Minsky and Papert proved this limitation was fatal: a single-layer network cannot learn XOR. Not "struggles to learn" -- mathematically cannot. The XOR truth table places [0,1] and [1,0] on one side, [0,0] and [1,1] on the other. No single line separates them.
+1969年、MinskyとPapertはこの限界が致命的であることを証明しました。単層ネットワークはXORを学習できません。「学習しにくい」のではありません。数学的に不可能です。XORの真理値表では [0,1] と [1,0] が一方に、[0,0] と [1,1] がもう一方にあります。これらを分ける1本の直線は存在しません。
 
-This killed neural network funding for over a decade. The fix was obvious in hindsight: stop using one layer. Stack neurons into layers. Let the first layer carve the input space into new features, and let the second layer combine those features into decisions no single line could make.
+この結果により、ニューラルネットワークへの資金は10年以上にわたって冷え込みました。振り返れば解決策は明らかです。1層だけを使うのをやめればよいのです。ニューロンを層として積み重ねます。最初の層に入力空間を新しい特徴へ切り分けさせ、2番目の層にその特徴を組み合わせさせることで、1本の直線ではできない判断を可能にします。
 
-That stack is the multi-layer network. It is the foundation of every deep learning model in production today. The forward pass -- data flowing from input through hidden layers to output -- is the first thing you need to build before anything else works.
+その積み重ねが多層ネットワークです。これは現在本番で使われているすべての深層学習モデルの基礎です。フォワードパス、つまり入力から隠れ層を通って出力へデータが流れる処理は、ほかのすべてが機能する前に最初に作るべきものです。
 
-## The Concept
+## 概念
 
-### Layers: Input, Hidden, Output
+### 層: 入力、隠れ、出力
 
-A multi-layer network has three types of layers:
+多層ネットワークには3種類の層があります。
 
-**Input layer** -- not really a layer. It holds your raw data. Two features means two input nodes. No computation happens here.
+**入力層** -- 厳密には層ではありません。生データを保持します。特徴量が2つなら入力ノードは2つです。ここでは計算は起きません。
 
-**Hidden layers** -- where the work happens. Each neuron takes every output from the previous layer, applies weights and a bias, then passes the result through an activation function. "Hidden" because you never see these values directly in the training data.
+**隠れ層** -- 実際の仕事が行われる場所です。各ニューロンは前の層のすべての出力を受け取り、重みとバイアスを適用し、その結果を活性化関数に通します。訓練データの中でこれらの値を直接見ることはないため「隠れ」と呼ばれます。
 
-**Output layer** -- the final answer. For binary classification, one neuron with sigmoid. For multi-class, one neuron per class.
+**出力層** -- 最終的な答えです。二値分類ではsigmoidを持つ1つのニューロンを使います。多クラス分類では、クラスごとに1つのニューロンを使います。
 
 ```mermaid
 graph LR
@@ -61,29 +61,29 @@ graph LR
     h3 --> y
 ```
 
-This is a 2-3-1 network. Two inputs, three hidden neurons, one output. Every connection carries a weight. Every neuron (except input) carries a bias.
+これは2-3-1ネットワークです。入力が2つ、隠れニューロンが3つ、出力が1つです。すべての接続には重みがあります。入力を除くすべてのニューロンにはバイアスがあります。
 
-Each layer produces a vector of numbers called a hidden state. For text, hidden states increase dimensionality -- encoding a word as 768 numbers to capture semantic meaning. For images, they reduce dimensionality -- compressing millions of pixels into a manageable representation. The hidden state is where the learning lives.
+各層は、隠れ状態と呼ばれる数値ベクトルを生成します。テキストでは、隠れ状態は次元を増やします。たとえば単語を768個の数値として符号化し、意味を捉えます。画像では、隠れ状態は次元を減らします。数百万ピクセルを扱いやすい表現へ圧縮します。学習が宿る場所は、この隠れ状態です。
 
-### Neurons and Activations
+### ニューロンと活性化関数
 
-Each neuron does three things:
+各ニューロンは3つのことを行います。
 
-1. Multiply every input by its corresponding weight
-2. Sum all the products and add a bias
-3. Pass the sum through an activation function
+1. 各入力に対応する重みを掛ける
+2. すべての積を合計し、バイアスを足す
+3. その合計を活性化関数に通す
 
-For now, the activation is sigmoid:
+ここでは活性化関数としてsigmoidを使います。
 
 ```
 sigmoid(z) = 1 / (1 + e^(-z))
 ```
 
-Sigmoid squashes any number into the range (0, 1). Large positive inputs push toward 1. Large negative inputs push toward 0. Zero maps to 0.5. This smooth curve is what makes learning possible -- unlike the perceptron's hard step, sigmoid has a gradient everywhere.
+sigmoidはどんな数値も (0, 1) の範囲へ押し込みます。大きな正の入力は1へ近づきます。大きな負の入力は0へ近づきます。0は0.5に写されます。この滑らかな曲線が学習を可能にします。パーセプトロンの硬いステップ関数と違い、sigmoidにはどこでも勾配があります。
 
-### Forward Pass: How Data Flows
+### フォワードパス: データの流れ
 
-The forward pass pushes input data through the network, layer by layer, until it reaches the output. No learning happens during the forward pass. It is pure computation: multiply, add, activate, repeat.
+フォワードパスは、入力データをネットワークの層から層へ押し流し、出力に到達させます。フォワードパス中には学習は起きません。これは純粋な計算です。掛ける、足す、活性化する、を繰り返します。
 
 ```mermaid
 graph TD
@@ -97,36 +97,36 @@ graph TD
     AO --> Y["Output: y"]
 ```
 
-At each layer, three operations happen in sequence:
+各層では、3つの操作が順番に起きます。
 
 ```
 z = W * input + b       (linear transformation)
 a = sigmoid(z)           (activation)
 ```
 
-The output of one layer becomes the input to the next. That is the entire forward pass.
+ある層の出力が、次の層の入力になります。これがフォワードパスのすべてです。
 
-### Matrix Dimensions
+### 行列の次元
 
-Tracking dimensions is the single most important debugging skill in deep learning. Here is the 2-3-1 network:
+次元を追跡することは、深層学習で最も重要なデバッグ技術です。2-3-1ネットワークを見てみましょう。
 
-| Step | Operation | Dimensions | Result Shape |
-|------|-----------|------------|-------------|
-| Input | x | -- | (2,) |
-| Hidden linear | W1 * x + b1 | W1: (3, 2), b1: (3,) | (3,) |
-| Hidden activation | sigmoid(z1) | -- | (3,) |
-| Output linear | W2 * h + b2 | W2: (1, 3), b2: (1,) | (1,) |
-| Output activation | sigmoid(z2) | -- | (1,) |
+| ステップ | 操作 | 次元 | 結果のshape |
+|----------|------|------|-------------|
+| 入力 | x | -- | (2,) |
+| 隠れ層の線形変換 | W1 * x + b1 | W1: (3, 2), b1: (3,) | (3,) |
+| 隠れ層の活性化 | sigmoid(z1) | -- | (3,) |
+| 出力層の線形変換 | W2 * h + b2 | W2: (1, 3), b2: (1,) | (1,) |
+| 出力層の活性化 | sigmoid(z2) | -- | (1,) |
 
-The rule: weight matrix W at layer k has shape (neurons_in_layer_k, neurons_in_layer_k_minus_1). Rows match the current layer. Columns match the previous layer. If the shapes do not line up, you have a bug.
+ルールはこうです。層kの重み行列Wは (neurons_in_layer_k, neurons_in_layer_k_minus_1) というshapeを持ちます。行は現在の層に対応します。列は前の層に対応します。shapeが合わなければ、そこにバグがあります。
 
-### Universal Approximation Theorem
+### 普遍近似定理
 
-In 1989, George Cybenko proved something remarkable: a neural network with a single hidden layer and enough neurons can approximate any continuous function to any desired accuracy.
+1989年、George Cybenkoは驚くべきことを証明しました。1つの隠れ層と十分な数のニューロンを持つニューラルネットワークは、任意の連続関数を任意の精度で近似できます。
 
-This does not mean one hidden layer is always best. It means the architecture is theoretically capable. In practice, deeper networks (more layers, fewer neurons per layer) learn the same functions with far fewer total parameters than shallow-wide networks. That is why deep learning works.
+これは、隠れ層が1つのネットワークが常に最良だという意味ではありません。アーキテクチャとして理論上は可能だという意味です。実際には、より深いネットワーク（層が多く、各層のニューロンが少ないネットワーク）のほうが、浅く広いネットワークよりもはるかに少ない総パラメータ数で同じ関数を学習できます。これが深層学習が機能する理由です。
 
-The intuition: each neuron in the hidden layer learns one "bump" or feature. Enough bumps placed in the right locations can approximate any smooth curve. More neurons, more bumps, better approximation.
+直感的には、隠れ層の各ニューロンが1つの「こぶ」や特徴を学習します。十分な数のこぶを適切な位置に置けば、どんな滑らかな曲線でも近似できます。ニューロンが増えれば、こぶが増え、近似は良くなります。
 
 ```mermaid
 graph LR
@@ -142,15 +142,15 @@ graph LR
     FewNeurons --> MoreNeurons --> ManyNeurons
 ```
 
-### Composability
+### 合成可能性
 
-Neural networks are composable. You can stack them, chain them, run them in parallel. A Whisper model uses an encoder network to process audio and a separate decoder network to generate text. Modern LLMs are decoder-only. BERT is encoder-only. T5 is encoder-decoder. The architecture choice defines what the model can do.
+ニューラルネットワークは合成できます。積み重ねたり、連結したり、並列に実行したりできます。Whisperモデルは音声を処理するエンコーダネットワークと、テキストを生成する別のデコーダネットワークを使います。現代のLLMはdecoder-onlyです。BERTはencoder-onlyです。T5はencoder-decoderです。どのアーキテクチャを選ぶかによって、モデルができることが決まります。
 
-## Build It
+## 作ってみる
 
-Pure Python. No numpy. Every matrix operation written from scratch.
+純粋なPythonです。numpyは使いません。すべての行列操作をゼロから書きます。
 
-### Step 1: Sigmoid Activation
+### Step 1: Sigmoid活性化関数
 
 ```python
 import math
@@ -160,13 +160,13 @@ def sigmoid(x):
     return 1.0 / (1.0 + math.exp(-x))
 ```
 
-The clamp to [-500, 500] prevents overflow. `math.exp(500)` is large but finite. `math.exp(1000)` is infinity.
+[-500, 500] にクランプすることでオーバーフローを防ぎます。`math.exp(500)` は大きいですが有限です。`math.exp(1000)` は無限大になります。
 
-### Step 2: Layer Class
+### Step 2: Layerクラス
 
-The most important operation in all of deep learning is matrix multiplication. Every layer, every attention head, every forward pass -- it's matmuls all the way down. A linear layer takes an input vector, multiplies it by a weight matrix, and adds a bias vector: y = Wx + b. That single equation is 90% of the compute in a neural network.
+深層学習で最も重要な操作は行列乗算です。すべての層、すべてのattention head、すべてのフォワードパスは、突き詰めれば行列乗算です。線形層は入力ベクトルを受け取り、重み行列を掛け、バイアスベクトルを足します。y = Wx + b。この1本の式が、ニューラルネットワークの計算量の90%を占めます。
 
-A layer holds a weight matrix and a bias vector. Its forward method takes an input vector and returns the activated output.
+Layerは重み行列とバイアスベクトルを保持します。forwardメソッドは入力ベクトルを受け取り、活性化後の出力を返します。
 
 ```python
 class Layer:
@@ -196,11 +196,11 @@ class Layer:
         return self.last_output
 ```
 
-The weight matrix has shape (n_neurons, n_inputs). Each row is one neuron's weights across all inputs. The forward method loops through neurons, computes the weighted sum plus bias, applies sigmoid, and collects the results.
+重み行列のshapeは (n_neurons, n_inputs) です。各行が、1つのニューロンについて全入力に対する重みを表します。forwardメソッドはニューロンを順番に処理し、重み付き和にバイアスを足し、sigmoidを適用して、結果を集めます。
 
-### Step 3: Network Class
+### Step 3: Networkクラス
 
-A network is a list of layers. The forward pass chains them: output of layer k feeds into layer k+1.
+Networkは層のリストです。フォワードパスではそれらをつなぎます。層kの出力が層k+1へ入力されます。
 
 ```python
 class Network:
@@ -214,11 +214,11 @@ class Network:
         return current
 ```
 
-That is the entire forward pass. Four lines of logic. Data goes in, flows through every layer, comes out the other side.
+これがフォワードパス全体です。ロジックは4行です。データが入り、すべての層を流れ、反対側から出てきます。
 
-### Step 4: XOR with Hand-Tuned Weights
+### Step 4: 手で調整した重みによるXOR
 
-In Lesson 01, we solved XOR by combining OR, NAND, and AND perceptrons. Now do the same thing with our Layer and Network classes. The 2-2-1 architecture: two inputs, two hidden neurons, one output.
+Lesson 01では、OR、NAND、ANDパーセプトロンを組み合わせてXORを解きました。ここでは同じことをLayerクラスとNetworkクラスで行います。2-2-1アーキテクチャです。入力が2つ、隠れニューロンが2つ、出力が1つです。
 
 ```python
 hidden = Layer(
@@ -250,11 +250,11 @@ for inputs, expected in xor_data:
     print(f"  {inputs} -> {result[0]:.6f} (rounded: {predicted}, expected: {expected})")
 ```
 
-The large weights (20, -20) make sigmoid act like a step function. The first hidden neuron approximates OR. The second approximates NAND. The output neuron combines them into AND, which is XOR.
+大きな重み（20、-20）によって、sigmoidはステップ関数のように振る舞います。最初の隠れニューロンはORを近似します。2番目はNANDを近似します。出力ニューロンはそれらをANDにまとめます。これがXORです。
 
-### Step 5: Circle Classification
+### Step 5: 円の分類
 
-A harder problem: classify 2D points as inside or outside a circle of radius 0.5 centered at the origin. This requires a curved decision boundary -- impossible for a single perceptron.
+より難しい問題です。原点を中心とする半径0.5の円の内側か外側かで、2D点を分類します。これには曲線の決定境界が必要です。単一のパーセプトロンでは不可能です。
 
 ```python
 import random
@@ -275,7 +275,7 @@ circle_net = Network([
 ])
 ```
 
-With random weights, the network will not classify well. But the forward pass still runs. This is the point -- the forward pass is just computation. Learning the right weights is backpropagation, coming in Lesson 03.
+ランダムな重みでは、このネットワークはうまく分類できません。それでもフォワードパスは動きます。ここが重要です。フォワードパスはただの計算です。正しい重みを学習するのがバックプロパゲーションで、それはLesson 03で扱います。
 
 ```python
 correct = 0
@@ -288,11 +288,11 @@ for inputs, expected in data:
 print(f"Accuracy with random weights: {correct}/{len(data)} ({100*correct/len(data):.1f}%)")
 ```
 
-Random weights give poor accuracy -- often worse than guessing the majority class. After training (Lesson 03), this same architecture with 8 hidden neurons will draw a curved boundary that separates inside from outside.
+ランダムな重みでは精度は低く、多数派クラスを当てるだけより悪いこともよくあります。訓練後（Lesson 03）には、この同じアーキテクチャが8個の隠れニューロンで内側と外側を分ける曲線境界を描くようになります。
 
-## Use It
+## 使ってみる
 
-PyTorch does everything above in four lines:
+PyTorchでは、ここまでのすべてを4行で行えます。
 
 ```python
 import torch
@@ -310,48 +310,48 @@ output = model(x)
 print(output)
 ```
 
-`nn.Linear(2, 8)` is your Layer class: weight matrix of shape (8, 2), bias vector of shape (8,). `nn.Sigmoid()` is your sigmoid function applied element-wise. `nn.Sequential` is your Network class: chain layers in order.
+`nn.Linear(2, 8)` はあなたのLayerクラスです。shapeが (8, 2) の重み行列と、shapeが (8,) のバイアスベクトルを持ちます。`nn.Sigmoid()` は要素ごとに適用されるsigmoid関数です。`nn.Sequential` はあなたのNetworkクラスです。層を順番につなぎます。
 
-The difference is speed and scale. PyTorch runs on GPUs, handles batches of millions of samples, and automatically computes gradients for backpropagation. But the forward pass logic is identical to what you just built from scratch.
+違いは速度と規模です。PyTorchはGPUで動き、何百万ものサンプルのバッチを扱い、バックプロパゲーションのための勾配を自動的に計算します。それでもフォワードパスのロジックは、ここでゼロから作ったものと同じです。
 
-## Ship It
+## 成果物
 
-This lesson produces a reusable prompt for designing network architectures:
+このレッスンでは、ネットワークアーキテクチャを設計するための再利用可能なプロンプトを作ります。
 
 - `outputs/prompt-network-architect.md`
 
-Use it when you need to decide how many layers, how many neurons per layer, and which activation functions to use for a given problem.
+与えられた問題に対して、層の数、各層のニューロン数、使う活性化関数を決める必要があるときに使ってください。
 
-## Exercises
+## 演習
 
-1. Build a 2-4-2-1 network (two hidden layers) and run the forward pass on XOR data with random weights. Print the intermediate hidden layer outputs to see how the representation transforms at each layer.
+1. 2-4-2-1ネットワーク（2つの隠れ層）を作り、ランダムな重みでXORデータにフォワードパスを実行してください。各層で表現がどう変換されるかを見るために、中間の隠れ層出力を出力しましょう。
 
-2. Change the hidden layer size in the circle classifier from 8 to 2, then to 32. Run the forward pass with random weights each time. Does the number of hidden neurons change the output range or distribution? Why?
+2. 円分類器の隠れ層サイズを8から2へ、次に32へ変更してください。毎回ランダムな重みでフォワードパスを実行します。隠れニューロン数は出力範囲や分布を変えますか。なぜですか。
 
-3. Implement a `count_parameters` method on the Network class that returns the total number of trainable weights and biases. Test it on a 784-256-128-10 network (the classic MNIST architecture). How many parameters does it have?
+3. Networkクラスに `count_parameters` メソッドを実装し、訓練可能な重みとバイアスの総数を返すようにしてください。784-256-128-10ネットワーク（古典的なMNISTアーキテクチャ）でテストします。パラメータはいくつありますか。
 
-4. Build a forward pass for a 3-4-4-2 network. Feed it RGB color values (normalized to 0-1) and observe the two outputs. This is the architecture for a simple color classifier with two classes.
+4. 3-4-4-2ネットワークのフォワードパスを作ってください。RGBの色値（0-1に正規化）を入力し、2つの出力を観察します。これは2クラスの簡単な色分類器のアーキテクチャです。
 
-5. Replace sigmoid with a "leaky step" function: return 0.01 * z if z < 0, else 1.0. Run the forward pass on XOR with the same hand-tuned weights from Step 4. Does it still work? Why is the smooth sigmoid preferred over hard cutoffs?
+5. sigmoidを「leaky step」関数に置き換えてください。z < 0 なら 0.01 * z を返し、それ以外なら 1.0 を返します。Step 4と同じ手で調整した重みでXORにフォワードパスを実行します。まだ動きますか。硬いしきい値より滑らかなsigmoidが好まれるのはなぜですか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Forward pass | "Running the model" | Pushing input through every layer -- multiply by weights, add bias, activate -- to produce an output |
-| Hidden layer | "The middle part" | Any layer between input and output whose values are not directly observed in the data |
-| Multi-layer network | "A deep neural network" | Layers of neurons stacked sequentially, where each layer's output feeds the next layer's input |
-| Activation function | "The nonlinearity" | A function applied after the linear transformation that introduces curves into the decision boundary |
-| Sigmoid | "The S-curve" | sigma(z) = 1/(1+e^(-z)), squashes any real number to (0,1), smooth and differentiable everywhere |
-| Weight matrix | "The parameters" | A matrix W of shape (current_layer_neurons, previous_layer_neurons) containing learnable connection strengths |
-| Bias vector | "The offset" | A vector added after the matrix multiply that lets neurons activate even when all inputs are zero |
-| Universal approximation | "Neural nets can learn anything" | A single hidden layer with enough neurons can approximate any continuous function -- but "enough" can mean billions |
-| Linear transformation | "The matrix multiply step" | z = W * x + b, the computation before activation, which maps inputs to a new space |
-| Decision boundary | "Where the classifier switches" | The surface in input space where the network output crosses the classification threshold |
+| 用語 | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| フォワードパス | 「モデルを実行する」 | 入力をすべての層へ通し、重みを掛け、バイアスを足し、活性化して出力を生成すること |
+| 隠れ層 | 「真ん中の部分」 | 入力と出力の間にあり、値がデータ内で直接観測されない層 |
+| 多層ネットワーク | 「深層ニューラルネットワーク」 | ニューロンの層を順番に積み重ね、各層の出力を次の層の入力にする構造 |
+| 活性化関数 | 「非線形性」 | 線形変換の後に適用され、決定境界に曲線を導入する関数 |
+| Sigmoid | 「S字カーブ」 | sigma(z) = 1/(1+e^(-z))。任意の実数を (0,1) に押し込み、滑らかでどこでも微分可能 |
+| 重み行列 | 「パラメータ」 | shapeが (current_layer_neurons, previous_layer_neurons) の行列W。学習可能な接続強度を含む |
+| バイアスベクトル | 「オフセット」 | 行列乗算の後に足されるベクトル。すべての入力がゼロでもニューロンが活性化できるようにする |
+| 普遍近似 | 「ニューラルネットは何でも学習できる」 | 十分なニューロンを持つ1つの隠れ層は任意の連続関数を近似できる。ただし「十分」が数十億を意味することもある |
+| 線形変換 | 「行列乗算のステップ」 | z = W * x + b。活性化前の計算で、入力を新しい空間へ写す |
+| 決定境界 | 「分類器が切り替わる場所」 | ネットワーク出力が分類しきい値をまたぐ入力空間上の面 |
 
-## Further Reading
+## 参考資料
 
-- Michael Nielsen, "Neural Networks and Deep Learning", Chapter 1-2 (http://neuralnetworksanddeeplearning.com/) -- the clearest free explanation of forward passes and network structure, with interactive visualizations
-- Cybenko, "Approximation by Superpositions of a Sigmoidal Function" (1989) -- the original universal approximation theorem paper, surprisingly readable
-- 3Blue1Brown, "But what is a neural network?" (https://www.youtube.com/watch?v=aircAruvnKk) -- 20-minute visual walkthrough of layers, weights, and forward passes that builds the right mental model
-- Goodfellow, Bengio, Courville, "Deep Learning", Chapter 6 (https://www.deeplearningbook.org/) -- the standard reference for multi-layer networks, free online
+- Michael Nielsen, "Neural Networks and Deep Learning", Chapter 1-2 (http://neuralnetworksanddeeplearning.com/) -- フォワードパスとネットワーク構造について、インタラクティブな可視化を交えた最も分かりやすい無料解説の一つ
+- Cybenko, "Approximation by Superpositions of a Sigmoidal Function" (1989) -- 普遍近似定理の原論文。意外なほど読みやすい
+- 3Blue1Brown, "But what is a neural network?" (https://www.youtube.com/watch?v=aircAruvnKk) -- 層、重み、フォワードパスを20分で視覚的に説明し、正しいメンタルモデルを作る動画
+- Goodfellow, Bengio, Courville, "Deep Learning", Chapter 6 (https://www.deeplearningbook.org/) -- 多層ネットワークの標準的な参考文献。オンラインで無料公開

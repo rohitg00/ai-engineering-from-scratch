@@ -1,65 +1,65 @@
 ---
 name: prompt-distributed-training-planner
-description: Plan a distributed training run given model size and available hardware
+description: モデルサイズと利用可能なハードウェアに基づいて分散学習実行を計画する
 version: 1.0.0
 phase: 10
 lesson: 5
 tags: [distributed-training, fsdp, deepspeed, tensor-parallelism, pipeline-parallelism, scaling]
 ---
 
-# Distributed Training Planner
+# 分散学習プランナー
 
-When planning a distributed training run for a large language model, use this framework to determine the parallelism strategy, memory budget, communication overhead, and expected throughput.
+大規模言語モデルの分散学習を計画するときは、このフレームワークを使って、並列化戦略、メモリ予算、通信オーバーヘッド、期待スループットを決めてください。
 
-## Input Requirements
+## 入力要件
 
-Provide:
-- **Model size** (parameters in billions)
-- **Target training tokens** (in trillions)
-- **Available GPUs** (type: A100/H100/H200, count, interconnect: NVLink/InfiniBand)
-- **GPU memory** (80GB for A100/H100, 141GB for H200)
-- **Nodes** (GPUs per node, number of nodes)
-- **Budget constraints** (max cost in dollars, max wall-clock time)
+次を提供してください。
+- **モデルサイズ**（十億単位のパラメータ数）
+- **目標学習トークン数**（兆単位）
+- **利用可能なGPU**（種類: A100/H100/H200、枚数、インターコネクト: NVLink/InfiniBand）
+- **GPUメモリ**（A100/H100は80GB、H200は141GB）
+- **ノード**（ノードあたりGPU数、ノード数）
+- **予算制約**（最大コスト、最大ウォールクロック時間）
 
-## Step 1: Memory Budget
+## ステップ1: メモリ予算
 
-Calculate per-GPU memory for each component:
+各コンポーネントのGPUあたりメモリを計算します。
 
-| Component | Formula | FP16 | FP32 |
+| コンポーネント | 式 | FP16 | FP32 |
 |-----------|---------|------|------|
-| Weights | params x bytes_per_param | params x 2 | params x 4 |
-| Adam optimizer (m + v) | params x 4 x 2 | 8 bytes/param always | 8 bytes/param |
-| Gradients | params x bytes_per_param | params x 2 | params x 4 |
-| Activations (estimate) | seq_len x batch x hidden x layers x 2 | varies | varies |
+| 重み | params x bytes_per_param | params x 2 | params x 4 |
+| Adamオプティマイザ (m + v) | params x 4 x 2 | 常に8 bytes/param | 8 bytes/param |
+| 勾配 | params x bytes_per_param | params x 2 | params x 4 |
+| 活性化（推定） | seq_len x batch x hidden x layers x 2 | 可変 | 可変 |
 
-If total exceeds GPU memory, sharding is required. Try in order:
-1. ZeRO-1 (shard optimizer only) -- cheapest communication
-2. ZeRO-2 (+ gradients) -- moderate communication
-3. FSDP/ZeRO-3 (+ weights) -- highest communication but maximum memory savings
-4. Add activation checkpointing if activations still too large
-5. Add tensor parallelism if a single layer does not fit on one GPU
+合計がGPUメモリを超える場合は、シャーディングが必要です。次の順に試してください。
+1. ZeRO-1（オプティマイザのみシャーディング）-- 通信が最も安い
+2. ZeRO-2（+ 勾配）-- 通信は中程度
+3. FSDP/ZeRO-3（+ 重み）-- 通信は最も重いが、メモリ節約は最大
+4. 活性化がまだ大きすぎる場合は、活性化チェックポイントを追加する
+5. 1つの層が1枚のGPUに収まらない場合は、テンソル並列を追加する
 
-## Step 2: Parallelism Strategy
+## ステップ2: 並列化戦略
 
-### Decision Tree
+### 判断ツリー
 
-1. **Does one layer fit on one GPU?**
-   - No: You need tensor parallelism. Set TP = 2, 4, or 8 (within a node).
-   - Yes: Skip tensor parallelism.
+1. **1つの層は1枚のGPUに収まりますか？**
+   - いいえ: テンソル並列が必要です。TP = 2、4、または8（ノード内）にします。
+   - はい: テンソル並列を使いません。
 
-2. **Does the full model (with sharding) fit on GPUs within one node?**
-   - No: You need pipeline parallelism. Set PP = number of nodes / groups.
-   - Yes: Skip pipeline parallelism.
+2. **完全なモデル（シャーディング込み）は1ノード内のGPUに収まりますか？**
+   - いいえ: パイプライン並列が必要です。PP = ノード数 / グループ数 にします。
+   - はい: パイプライン並列を使いません。
 
-3. **How many remaining GPUs for data parallelism?**
+3. **データ並列に残るGPUはいくつですか？**
    - DP = total_gpus / (TP x PP)
 
-4. **What sharding level within the data parallel group?**
-   - Start with FSDP (ZeRO-3). Reduce to ZeRO-2 or ZeRO-1 if communication is bottleneck.
+4. **データ並列グループ内でどのシャーディングレベルを使いますか？**
+   - FSDP（ZeRO-3）から始めます。通信がボトルネックならZeRO-2またはZeRO-1へ下げます。
 
-### Typical Configurations
+### 典型的な設定
 
-| Model Size | Total GPUs | TP | PP | DP | Sharding |
+| モデルサイズ | 総GPU数 | TP | PP | DP | シャーディング |
 |-----------|-----------|----|----|-----|----------|
 | 7B | 8 | 1 | 1 | 8 | FSDP |
 | 13B | 16 | 2 | 1 | 8 | FSDP |
@@ -67,55 +67,55 @@ If total exceeds GPU memory, sharding is required. Try in order:
 | 70B | 128 | 8 | 2 | 8 | FSDP |
 | 405B | 16,384 | 8 | 16 | 128 | FSDP |
 
-## Step 3: Communication Analysis
+## ステップ3: 通信分析
 
-Estimate communication volume per training step:
+学習ステップあたりの通信量を見積もります。
 
-- **Data parallel (all-reduce)**: 2 x gradient_size x (N-1)/N per step
-- **FSDP (all-gather + reduce-scatter)**: ~3 x weight_size x (N-1)/N per step (higher than DP)
-- **Tensor parallel (all-reduce per layer)**: 2 x activation_size x num_layers per step (needs NVLink)
-- **Pipeline parallel (point-to-point)**: activation_size per stage boundary (minimal)
+- **データ並列（all-reduce）**: 1ステップあたり 2 x gradient_size x (N-1)/N
+- **FSDP（all-gather + reduce-scatter）**: 1ステップあたり約 3 x weight_size x (N-1)/N（DPより大きい）
+- **テンソル並列（層ごとのall-reduce）**: 1ステップあたり 2 x activation_size x num_layers（NVLinkが必要）
+- **パイプライン並列（point-to-point）**: ステージ境界ごとに activation_size（最小）
 
-If communication time exceeds 20% of compute time, the strategy is communication-bound. Solutions:
-- Gradient accumulation (reduce all-reduce frequency)
-- Overlap communication with computation (FSDP does this by default)
-- Increase micro-batch size (better compute-to-communication ratio)
-- Switch to a less communication-heavy sharding stage
+通信時間が計算時間の20%を超える場合、その戦略は通信律速です。対策:
+- 勾配蓄積（all-reduce頻度を下げる）
+- 通信と計算を重ねる（FSDPは既定でこれを行う）
+- マイクロバッチサイズを増やす（計算対通信の比率を改善する）
+- 通信の少ないシャーディングステージへ切り替える
 
-## Step 4: Throughput and Cost Estimate
+## ステップ4: スループットとコストの見積もり
 
-**FLOPS per training step:**
-- Forward: ~2 x params x tokens_per_batch
-- Backward: ~4 x params x tokens_per_batch (2x forward)
-- Total: ~6 x params x tokens_per_batch
+**学習ステップあたりFLOPS:**
+- 順伝播: 約 2 x params x tokens_per_batch
+- 逆伝播: 約 4 x params x tokens_per_batch（順伝播の2倍）
+- 合計: 約 6 x params x tokens_per_batch
 
-**Training time:**
+**学習時間:**
 - total_flops = 6 x params x total_tokens
 - time_seconds = total_flops / (num_gpus x gpu_tflops x 1e12 x utilization)
-- Typical utilization: 35-45% (accounting for communication, pipeline bubbles, memory overhead)
+- 典型的な利用率: 35-45%（通信、パイプラインバブル、メモリオーバーヘッドを考慮）
 
-**Cost:**
+**コスト:**
 - total_gpu_hours = num_gpus x time_seconds / 3600
 - cost = total_gpu_hours x cost_per_gpu_hour
 
-## Step 5: Validation Checklist
+## ステップ5: 検証チェックリスト
 
-Before launching:
+起動前に確認します。
 
-1. Per-GPU memory fits within hardware limit (with 10% headroom)
-2. Effective batch size matches target (per_gpu_batch x DP x gradient_accumulation_steps)
-3. Communication-to-compute ratio is below 20%
-4. Pipeline bubble fraction is below 15% (enough micro-batches)
-5. Learning rate is scaled for the effective batch size
-6. Checkpointing frequency accounts for failure probability (save every 1-2 hours for large runs)
-7. Gradient clipping is set (typically 1.0 for large models)
-8. Warmup steps are proportional to total steps (typically 0.1-1% of total)
+1. GPUあたりメモリがハードウェア上限内に収まる（10%の余裕を含む）
+2. 実効バッチサイズが目標に一致している（per_gpu_batch x DP x gradient_accumulation_steps）
+3. 通信対計算比が20%未満である
+4. パイプラインバブル率が15%未満である（十分なマイクロバッチがある）
+5. 実効バッチサイズに合わせて学習率がスケールされている
+6. チェックポイント頻度が失敗確率を考慮している（大規模実行では1-2時間ごとに保存）
+7. 勾配クリッピングが設定されている（大規模モデルでは通常1.0）
+8. ウォームアップステップが総ステップ数に比例している（通常は総数の0.1-1%）
 
-## Red Flags
+## 危険信号
 
-- **TP > 8**: Tensor parallelism across nodes (over InfiniBand) is almost always slower than pipeline parallelism
-- **Pipeline stages > 32**: Bubble overhead becomes significant even with many micro-batches
-- **Effective batch size > 10M tokens**: Diminishing returns; may harm convergence
-- **Utilization below 30%**: Communication-bound -- re-evaluate parallelism strategy
-- **No activation checkpointing above 13B**: You will run out of memory during the backward pass
-- **No gradient accumulation with small per-GPU batch**: Gradient noise increases; accumulate to effective batch of 256+ samples
+- **TP > 8**: ノードをまたぐテンソル並列（InfiniBand越し）は、ほぼ常にパイプライン並列より遅い
+- **パイプラインステージ > 32**: 多数のマイクロバッチがあっても、バブルのオーバーヘッドが大きくなる
+- **実効バッチサイズ > 10M tokens**: 収穫逓減が起き、収束を悪化させる可能性がある
+- **利用率が30%未満**: 通信律速。並列化戦略を見直す
+- **13B以上で活性化チェックポイントなし**: 逆伝播中にメモリ不足になる
+- **小さいGPUあたりバッチで勾配蓄積なし**: 勾配ノイズが増える。256サンプル以上の実効バッチへ蓄積する

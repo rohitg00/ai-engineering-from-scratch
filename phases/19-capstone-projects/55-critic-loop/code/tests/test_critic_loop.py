@@ -1,4 +1,4 @@
-"""Tests for the critic loop: monotone improvement, target/plateau/budget verdicts, trace shape."""
+"""critic loop の tests: monotone improvement、target/plateau/budget verdicts、trace shape。"""
 
 from __future__ import annotations
 

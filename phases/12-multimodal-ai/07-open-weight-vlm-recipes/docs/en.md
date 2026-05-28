@@ -1,143 +1,143 @@
-# Open-Weight VLM Recipes: What Actually Matters
+# Open-Weight VLM Recipes: 実際に効くもの
 
-> The 2024-2026 open-weight VLM literature is a forest of ablation tables. Apple's MM1 tested 13 combinations of image encoder, connector, and data mix. Allen AI's Molmo proved detailed human captions beat GPT-4V distillation. Cambrian-1 ran 20+ encoder comparisons. Idefics2 formalized the five-axis design space. Prismatic VLMs compared 27 training recipes on a controlled benchmark. Out of all that noise, a small set of results holds across papers: image encoder matters more than connector architecture, data mixture matters more than either, and detailed human captions beat distilled synthetic data. This lesson reads those tables so you do not have to.
+> 2024-2026年の open-weight VLM literature は ablation table の森である。Apple の MM1 は image encoder、connector、data mix の13通りの組み合わせを調べた。Allen AI の Molmo は、詳細な human captions が GPT-4V distillation に勝つことを示した。Cambrian-1 は 20 以上の encoder を比較した。Idefics2 は5軸の design space を定式化した。Prismatic VLMs は controlled benchmark で 27 個の training recipes を比較した。その大量の noise の中で、論文をまたいで成り立つ小さな結果群がある。image encoder は connector architecture より重要で、data mixture はそのどちらより重要で、詳細な human captions は distilled synthetic data に勝つ。この lesson は、それらの table をあなたの代わりに読む。
 
-**Type:** Learn + lab
-**Languages:** Python (stdlib, ablation table parser + recipe picker)
-**Prerequisites:** Phase 12 · 05 (LLaVA baseline)
-**Time:** ~180 minutes
+**種別:** 学習 + lab
+**言語:** Python (stdlib、ablation table parser + recipe picker)
+**前提条件:** Phase 12 · 05 (LLaVA baseline)
+**所要時間:** 約180分
 
-## Learning Objectives
+## 学習目標
 
-- Name the five-axis VLM design space: image encoder, connector, LLM, data mix, resolution schedule.
-- Read an MM1 / Idefics2 / Cambrian-1 ablation table and predict which knob moves a given benchmark.
-- Pick a recipe (encoder, connector, data, resolution) for a new VLM given a compute budget and task mix.
-- Explain why detailed human captions beat GPT-4V distillation at the same token count.
+- VLM design space の5軸、image encoder、connector、LLM、data mix、resolution schedule を挙げる。
+- MM1 / Idefics2 / Cambrian-1 の ablation table を読み、どの knob がどの benchmark を動かすかを予測する。
+- compute budget と task mix から、新しい VLM の recipe (encoder、connector、data、resolution) を選ぶ。
+- 同じ token count で詳細な human captions が GPT-4V distillation に勝つ理由を説明する。
 
-## The Problem
+## 問題
 
-Hundreds of open-weight VLMs exist. Most of the gap between "good" and "state-of-the-art" is not architecture. It is data, resolution schedule, and encoder choice. Knowing which knob to turn first when your model underperforms saves you a 5-million-GPU-hour mistake.
+open-weight VLM は数百存在する。「良い」と「state-of-the-art」の差の大半は architecture ではない。data、resolution schedule、encoder choice である。model が期待より弱いときに、どの knob を最初に回すべきかを知っていれば、500万 GPU-hour の失敗を避けられる。
 
-The 2023 wave (LLaVA-1.5, InstructBLIP, MiniGPT-4) ran on caption-pair pretraining + LLaVA-Instruct-150k. Good baseline. Topped out around MMMU 35%.
+2023年の wave (LLaVA-1.5、InstructBLIP、MiniGPT-4) は caption-pair pretraining + LLaVA-Instruct-150k で動いていた。良い baseline だが、MMMU はおよそ 35% で頭打ちだった。
 
-The 2024 wave (MM1, Idefics2, Molmo, Cambrian-1, Prismatic VLMs) ran exhaustive ablations. Results were surprising and practical.
+2024年の wave (MM1、Idefics2、Molmo、Cambrian-1、Prismatic VLMs) は網羅的な ablation を走らせた。結果は意外で実用的だった。
 
-## The Concept
+## コンセプト
 
-### The five-axis design space
+### 5軸の design space
 
-Idefics2 (Laurençon et al., 2024) named the axes:
+Idefics2 (Laurençon et al., 2024) は軸に名前を付けた。
 
-1. Image encoder. CLIP ViT-L/14, SigLIP SO400m/14, DINOv2 ViT-g/14, InternViT-6B. Encoders differ in patch size, resolution, and pretraining objective.
-2. Connector. MLP (2-4 layers), Q-Former (32 queries + cross-attn), Perceiver Resampler (64 queries), C-Abstractor (convolutional + bilinear pooling).
-3. Language model. Llama-3 8B / 70B, Mistral 7B, Phi-3, Gemma-2, Qwen2.5. LLM size is the dominant param cost.
-4. Training data. Caption pairs (CC3M, LAION), interleaved (OBELICS, MMC4), instruction (LLaVA-Instruct, ShareGPT4V, PixMo, Cauldron).
-5. Resolution schedule. Fixed 224/336/448, AnyRes, native dynamic. Ramped during training or constant.
+1. Image encoder。CLIP ViT-L/14、SigLIP SO400m/14、DINOv2 ViT-g/14、InternViT-6B。encoder は patch size、resolution、pretraining objective が異なる。
+2. Connector。MLP (2-4 layers)、Q-Former (32 queries + cross-attn)、Perceiver Resampler (64 queries)、C-Abstractor (convolutional + bilinear pooling)。
+3. Language model。Llama-3 8B / 70B、Mistral 7B、Phi-3、Gemma-2、Qwen2.5。LLM size は parameter cost の支配項である。
+4. Training data。Caption pairs (CC3M、LAION)、interleaved (OBELICS、MMC4)、instruction (LLaVA-Instruct、ShareGPT4V、PixMo、Cauldron)。
+5. Resolution schedule。Fixed 224/336/448、AnyRes、native dynamic。training 中に ramp するか、constant にするか。
 
-Every production VLM makes a choice on each axis. Most of the variance in MMMU scores is explained by axes 1, 4, and 5 — not by which connector you picked.
+すべての production VLM は各軸で選択をしている。MMMU score の variance の多くは軸 1、4、5 で説明できる。どの connector を選んだかではない。
 
 ### Axis 1: encoder > connector
 
-MM1 Section 3.2 showed: swapping from CLIP ViT-L/14 to SigLIP SO400m/14 added 3+ points MMMU. Swapping the connector from MLP to Perceiver Resampler added less than 1 point. Idefics2 replicated: SigLIP > CLIP, Q-Former ≈ MLP ≈ Perceiver at the same token count.
+MM1 Section 3.2 はこう示した。CLIP ViT-L/14 から SigLIP SO400m/14 に swap すると MMMU が 3+ points 上がる。connector を MLP から Perceiver Resampler に変えても 1 point 未満しか上がらない。Idefics2 も再現した。SigLIP > CLIP、同じ token count では Q-Former ≈ MLP ≈ Perceiver である。
 
-Cambrian-1's "Cambrian Vision Encoders Match-Up" (Tong et al., 2024) ran 20+ encoders on a vision-centric benchmark (CV-Bench). The top of the leaderboard is a mix of DINOv2 and SigLIP; CLIP is middle of the pack; ImageBind and ViT-MAE are lower. The gap from CLIP ViT-L to DINOv2 ViT-g/14 is ~5-7 points on CV-Bench.
+Cambrian-1 の "Cambrian Vision Encoders Match-Up" (Tong et al., 2024) は、vision-centric benchmark (CV-Bench) で 20 以上の encoder を走らせた。leaderboard 上位は DINOv2 と SigLIP の混合で、CLIP は中位、ImageBind と ViT-MAE は下位である。CLIP ViT-L から DINOv2 ViT-g/14 への差は CV-Bench で約 5-7 points ある。
 
-The 2026 default encoder for open VLMs is SigLIP 2 SO400m/14 for semantic + dense features, sometimes concatenated with DINOv2 ViT-g/14 features (Cambrian's "Spatial Vision Aggregator" does this).
+2026年の open VLM の default encoder は、semantic + dense features 用の SigLIP 2 SO400m/14 であり、segmentation/grounding が必要なら DINOv2 ViT-g/14 features と連結することがある (Cambrian の "Spatial Vision Aggregator" はこれを行う)。
 
-### Axis 2: connector design is a wash
+### Axis 2: connector design はほぼ横並び
 
-MM1, Idefics2, Prismatic, and MM-Interleaved all reached the same conclusion: at a fixed visual-token count, connector architecture barely matters. A 2-layer MLP on mean-pooled patches performs within 1 point of a 32-query Q-Former at the same token budget.
+MM1、Idefics2、Prismatic、MM-Interleaved はすべて同じ結論に到達した。固定 visual-token count では、connector architecture はほとんど効かない。同じ token budget なら、mean-pooled patches 上の 2-layer MLP は 32-query Q-Former の 1 point 以内に収まる。
 
-What does matter is the token count. More visual tokens = more LLM compute = better performance up to a point, then diminishing returns. 64 tokens per image is too few for OCR. 576-1024 tokens is the sweet spot for most open VLMs. 2048+ helps only for documents and charts.
+効くのは token count である。より多い visual tokens は、より多い LLM compute と引き換えに性能を上げる。ただし一定点を過ぎると diminishing returns になる。画像あたり 64 tokens は OCR には少なすぎる。576-1024 tokens はほとんどの open VLM の sweet spot である。2048+ が効くのは documents と charts くらいである。
 
-Q-Former vs MLP is a cost question, not a quality question: Q-Former caps tokens at 32-64 regardless of image resolution; MLP emits all patch tokens. For high-res inputs, Q-Former saves LLM context; for low-res, the difference is noise.
+Q-Former vs MLP は quality ではなく cost の問題である。Q-Former は image resolution に関係なく tokens を 32-64 に制限する。MLP はすべての patch tokens を出す。high-res input では Q-Former が LLM context を節約する。low-res では差は noise である。
 
-### Axis 3: LLM size sets the ceiling
+### Axis 3: LLM size が ceiling を決める
 
-Doubling the LLM from 7B to 13B reliably adds 2-4 points on MMMU across every VLM paper. At 70B you saturate most benchmarks. The VLM's multimodal reasoning ceiling is the LLM's text reasoning ceiling — the visual encoder can only feed it, not reason for it.
+LLM を 7B から 13B に倍増すると、どの VLM paper でも MMMU が確実に 2-4 points 上がる。70B ではほとんどの benchmark が飽和する。VLM の multimodal reasoning ceiling は LLM の text reasoning ceiling である。visual encoder は input を渡せるだけで、代わりに reasoning はできない。
 
-This is why Qwen2.5-VL-72B and Claude Opus 4.7 crush MMMU-Pro and ScreenSpot-Pro: the language brain is huge. A 7B VLM cannot substitute for a 70B VLM through clever connector design.
+だから Qwen2.5-VL-72B と Claude Opus 4.7 は MMMU-Pro と ScreenSpot-Pro で圧倒的に強い。language brain が巨大だからである。7B VLM は、巧妙な connector design では 70B VLM の代わりにならない。
 
-### Axis 4: data — detailed human captions beat distillation
+### Axis 4: data — 詳細な human captions は distillation に勝つ
 
-Molmo + PixMo (Deitke et al., 2024) is the 2024 result everyone should read. Allen AI had human annotators describe images in 1-3 minute dense speech-to-text passes, yielding 712K densely-captioned images. No GPT-4V distillation anywhere in the training data.
+Molmo + PixMo (Deitke et al., 2024) は、全員が読むべき2024年の結果である。Allen AI は human annotators に画像を 1-3 分の dense speech-to-text で説明させ、712K 件の densely-captioned images を得た。training data に GPT-4V distillation は一切ない。
 
-Molmo-72B beat Llama-3.2-90B-Vision on 11 of 11 benchmarks. The delta is not architecture — it is caption quality. Detailed human captions contain 5-10x more information per image than short web captions and stay factually grounded where GPT-4V distillation hallucinates.
+Molmo-72B は 11/11 benchmarks で Llama-3.2-90B-Vision を上回った。delta は architecture ではない。caption quality である。詳細な human captions は、短い web captions より画像あたり 5-10 倍多い情報を含み、GPT-4V distillation が hallucinate するところでも factual に grounded である。
 
-ShareGPT4V (Chen et al., 2023) and Cauldron (Idefics2) followed the same playbook with mixed human + GPT-4V captions. The trend is clear: for the 2026 frontier, caption density > caption quantity > distillation convenience.
+ShareGPT4V (Chen et al., 2023) と Cauldron (Idefics2) は mixed human + GPT-4V captions で同じ playbook を採用した。trend は明確である。2026年 frontier では、caption density > caption quantity > distillation convenience である。
 
-### Axis 5: resolution and its schedule
+### Axis 5: resolution と schedule
 
-Idefics2's ablations: 384 -> 448 adds 1-2 points. 448 -> 980 with image splitting (AnyRes) adds another 3-5 on OCR benchmarks. Flat resolution training plateaus at medium accuracy; resolution ramping (start 224, finish 448 or native) trains faster and ends higher.
+Idefics2 の ablations: 384 -> 448 は 1-2 points 上げる。448 -> 980 に image splitting (AnyRes) を加えると、OCR benchmarks でさらに 3-5 上がる。flat resolution training は中程度の accuracy で plateau する。resolution ramping (224 から始め、448 または native で終える) はより速く学習し、最後も高くなる。
 
-Cambrian-1 ran a resolution vs tokens trade-off: at fixed compute, you can have more tokens at lower resolution or fewer tokens at higher resolution. Higher resolution wins for OCR; lower-res-more-tokens wins for general scene understanding.
+Cambrian-1 は resolution vs tokens の trade-off を調べた。fixed compute では、低解像度でより多い tokens を持つか、高解像度でより少ない tokens を持つかを選べる。OCR では高解像度が勝つ。general scene understanding では low-res-more-tokens が勝つ。
 
-The 2026 production recipe: train Stage 1 at 384 fixed, Stage 2 with dynamic resolution up to 1280 for OCR-heavy tasks.
+2026年 production recipe: Stage 1 は fixed 384 で学習し、OCR-heavy task では Stage 2 を最大 1280 までの dynamic resolution で行う。
 
-### The Prismatic controlled comparison
+### Prismatic の controlled comparison
 
-Prismatic VLMs (Karamcheti et al., 2024) is the paper that controlled all the axes. Same 13B LLM, same instruction data, same evaluation — only one axis varies at a time. Results:
+Prismatic VLMs (Karamcheti et al., 2024) は全軸を control した論文である。同じ 13B LLM、同じ instruction data、同じ evaluation を使い、1回に1軸だけを変える。結果:
 
-- Per-image visual-token count explains ~60% of variance.
-- Encoder choice explains ~20%.
-- Connector architecture explains ~5%.
-- Everything else (data mix, scheduler, LR) the remaining ~15%.
+- per-image visual-token count が variance の約60%を説明する。
+- encoder choice が約20%を説明する。
+- connector architecture は約5%を説明する。
+- その他すべて (data mix、scheduler、LR) が残りの約15%である。
 
-This is a rough decomposition, but it is the cleanest answer to "what should I ablate first" in the literature.
+これは粗い decomposition だが、文献上「最初に何を ablate すべきか」への最もきれいな答えである。
 
-### A picker for 2026
+### 2026年向け picker
 
-Given the evidence, the default open-VLM recipe for a new project in 2026:
+証拠から見ると、2026年に新規 project で使う default open-VLM recipe は次の通りである。
 
-- Encoder: SigLIP 2 SO400m/14 at native resolution with NaFlex, concatenated with DINOv2 ViT-g/14 for dense features if you need segmentation/grounding.
-- Connector: 2-layer MLP on patch tokens. Skip Q-Former unless you are token-constrained.
-- LLM: Qwen2.5 / Llama-3.1 / Gemma 2, 7B for cost, 70B for quality, picked by target latency.
-- Data: PixMo + ShareGPT4V + Cauldron, topped up with task-specific instruction data.
-- Resolution: dynamic (min 256, max 1280 pixels per long side).
-- Schedule: Stage 1 alignment (projector-only), Stage 2 full fine-tune, Stage 3 task-specific fine-tune.
+- Encoder: native resolution + NaFlex の SigLIP 2 SO400m/14。segmentation/grounding が必要なら dense features 用に DINOv2 ViT-g/14 と連結する。
+- Connector: patch tokens 上の 2-layer MLP。token-constrained でない限り Q-Former は不要。
+- LLM: Qwen2.5 / Llama-3.1 / Gemma 2。cost なら 7B、quality なら 70B。target latency で選ぶ。
+- Data: PixMo + ShareGPT4V + Cauldron に task-specific instruction data を足す。
+- Resolution: dynamic (long side min 256、max 1280)。
+- Schedule: Stage 1 alignment (projector-only)、Stage 2 full fine-tune、Stage 3 task-specific fine-tune。
 
-Every one of those defaults traces back to a measured ablation in the papers cited at the end of this lesson.
+これらの default はすべて、この lesson の最後に挙げた論文の measured ablation に根拠がある。
 
-## Use It
+## 使ってみる
 
-`code/main.py` is an ablation table parser and recipe picker. It encodes the MM1 and Idefics2 ablation tables (condensed) and lets you query:
+`code/main.py` は ablation table parser と recipe picker である。MM1 と Idefics2 の ablation table (condensed) を encode し、次の問い合わせを可能にする。
 
-- "Given budget X and task Y, what recipe wins?"
-- "If I swap SigLIP for CLIP on a 7B Llama, what is the expected MMMU delta?"
-- "Which axis should I ablate first for an 80% confidence answer?"
+- 「budget X と task Y があるとき、どの recipe が勝つか」
+- 「7B Llama で SigLIP を CLIP に swap すると、期待される MMMU delta はいくつか」
+- 「80% confidence の答えを得るには、最初にどの axis を ablate すべきか」
 
-The output is a ranked recipe list with expected benchmark deltas and an "ablate first" recommendation.
+出力は、期待 benchmark delta と "ablate first" recommendation 付きの ranked recipe list である。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-vlm-recipe-picker.md`. Given a target task mix, a compute budget, and a latency target, it emits a full recipe (encoder, connector, LLM, data mix, resolution schedule) with citations to the ablation that justifies each choice. Stops engineers from reinventing the Idefics2 ablation table every time a new VLM project starts.
+この lesson は `outputs/skill-vlm-recipe-picker.md` を生成する。target task mix、compute budget、latency target を受け取り、各選択の根拠となる ablation citation 付きで full recipe (encoder、connector、LLM、data mix、resolution schedule) を出力する。新しい VLM project のたびに Idefics2 の ablation table を再発明するのを防ぐ。
 
-## Exercises
+## 演習
 
-1. Read MM1 Section 3.2. For a fixed 2B LLM at budget 50M images, which encoder wins? Would the answer flip at 13B LLM? Why?
+1. MM1 Section 3.2 を読め。固定 2B LLM、50M images の budget では、どの encoder が勝つか。13B LLM なら答えは反転するか。なぜか。
 
-2. Cambrian-1 finds that concatenating DINOv2 + SigLIP outperforms either alone on vision-centric benchmarks but adds no signal on MMMU. Predict which benchmarks gain and which stay flat.
+2. Cambrian-1 は、DINOv2 + SigLIP の連結が vision-centric benchmark では単体より優れるが、MMMU では signal を追加しないと示した。どの benchmark が伸び、どれが flat のままかを予測せよ。
 
-3. Your target is a mobile UI agent on a 2B LLM. Pick encoder, connector, resolution, and data mix. Justify each choice with a specific ablation table.
+3. target は 2B LLM 上の mobile UI agent である。encoder、connector、resolution、data mix を選べ。それぞれを specific ablation table で正当化せよ。
 
-4. Molmo ships 4B and 72B models. The 4B is competitive with closed 7B VLMs; the 72B beats Llama-3.2-90B-Vision on 11/11 benchmarks. What does that tell you about the LLM-size plateau hypothesis?
+4. Molmo は 4B と 72B の model を出荷している。4B は closed 7B VLMs と競争力があり、72B は 11/11 benchmarks で Llama-3.2-90B-Vision を上回る。これは LLM-size plateau hypothesis について何を示すか。
 
-5. Design an ablation table to isolate data-mix quality from encoder quality on a 7B VLM. How many training runs minimum? Propose the four axis settings.
+5. 7B VLM で data-mix quality と encoder quality を切り分ける ablation table を設計せよ。minimum training runs はいくつ必要か。4つの axis settings を提案せよ。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| Ablation | "Turning one knob" | Training multiple runs that differ in exactly one design-space axis, holding everything else constant |
-| Connector | "Bridge" / "projector" | Trainable module that maps vision encoder output into the LLM's token space (MLP, Q-Former, Perceiver) |
-| Detailed human caption | "Dense caption" | A multi-sentence human-written description (typically 80-300 tokens) richer than a web alt text |
-| Distillation | "GPT-4V captions" | Training data generated by a stronger proprietary VLM; convenient but prone to inherited hallucination |
-| AnyRes / dynamic res | "High-res path" | Strategy to feed images larger than the encoder's native resolution via tiling or M-RoPE |
-| Resolution ramp | "Curriculum" | Training schedule that starts low-resolution and increases, speeding alignment learning |
-| Vision-centric bench | "CV-Bench / BLINK" | Evaluation that stresses fine-grained visual perception rather than language-heavy reasoning |
-| PixMo | "Molmo's data" | Allen AI's 712K densely-captioned image dataset; human speech transcribed into dense captions |
+| Term | よく言われる表現 | 実際の意味 |
+|------|-----------------|------------|
+| Ablation | "Turning one knob" | それ以外を固定し、design-space axis を1つだけ変えた複数 run の training |
+| Connector | "Bridge" / "projector" | vision encoder output を LLM token space に写像する trainable module (MLP、Q-Former、Perceiver) |
+| Detailed human caption | "Dense caption" | web alt text より豊かな、人手で書かれた multi-sentence description (通常 80-300 tokens) |
+| Distillation | "GPT-4V captions" | より強い proprietary VLM で生成した training data。便利だが inherited hallucination を起こしやすい |
+| AnyRes / dynamic res | "High-res path" | tiling または M-RoPE で encoder native resolution より大きい画像を入力する strategy |
+| Resolution ramp | "Curriculum" | 低解像度から始めて解像度を上げ、alignment learning を速める training schedule |
+| Vision-centric bench | "CV-Bench / BLINK" | language-heavy reasoning ではなく fine-grained visual perception に負荷をかける evaluation |
+| PixMo | "Molmo's data" | Allen AI の 712K densely-captioned image dataset。human speech を dense captions に transcript したもの |
 
-## Further Reading
+## 参考文献
 
 - [McKinzie et al. — MM1 (arXiv:2403.09611)](https://arxiv.org/abs/2403.09611)
 - [Laurençon et al. — Idefics2 / What matters building VLMs (arXiv:2405.02246)](https://arxiv.org/abs/2405.02246)

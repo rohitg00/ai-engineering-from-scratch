@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,8 +7,8 @@
       .signal { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .arrow { stroke: #1a1a1a; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
     </style>
@@ -16,49 +16,49 @@
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
     </marker>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">model routing — four signals, three patterns</text>
+  <text x="480" y="24" text-anchor="middle" class="title">モデル ルーティング — 4 信号, 3 パターン</text>
 
   <rect x="40" y="50" width="280" height="220" class="signal"/>
-  <text x="180" y="72" text-anchor="middle" class="head">signals</text>
+  <text x="180" y="72" text-anchor="middle" class="head">信号</text>
   <rect x="60" y="90" width="240" height="35" class="box"/>
-  <text x="180" y="112" text-anchor="middle" class="step">1. task classification</text>
+  <text x="180" y="112" text-anchor="middle" class="step">1. task 分類</text>
   <rect x="60" y="130" width="240" height="35" class="box"/>
-  <text x="180" y="152" text-anchor="middle" class="step">2. prompt length</text>
+  <text x="180" y="152" text-anchor="middle" class="step">2. プロンプト長</text>
   <rect x="60" y="170" width="240" height="35" class="box"/>
-  <text x="180" y="192" text-anchor="middle" class="step">3. embedding to known-hard</text>
+  <text x="180" y="192" text-anchor="middle" class="step">3. 埋め込みding to known-hard</text>
   <rect x="60" y="210" width="240" height="35" class="box"/>
-  <text x="180" y="232" text-anchor="middle" class="step">4. self-confidence (logprobs)</text>
-  <text x="180" y="258" text-anchor="middle" class="caption">combine all four; each alone misses</text>
+  <text x="180" y="232" text-anchor="middle" class="step">4. 自己信頼度 (ログprobs)</text>
+  <text x="180" y="258" text-anchor="middle" class="caption">4つを組み合わせする; 単体では漏れる</text>
 
   <rect x="340" y="50" width="280" height="220" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">pattern: CASCADE (cheap-first)</text>
+  <text x="480" y="72" text-anchor="middle" class="head">パターン: CASCADE (安価モデル優先)</text>
   <rect x="360" y="90" width="240" height="45" class="cheap"/>
-  <text x="480" y="115" text-anchor="middle" class="step">cheap model (Haiku-class)</text>
-  <text x="480" y="130" text-anchor="middle" class="small">$0.25/M input, $1/M output</text>
+  <text x="480" y="115" text-anchor="middle" class="step">安価モデル (Haiku-class)</text>
+  <text x="480" y="130" text-anchor="middle" class="small">$0.25/M 入力, $1/M 出力</text>
   <rect x="360" y="150" width="240" height="35" class="signal"/>
-  <text x="480" y="172" text-anchor="middle" class="step">confidence check</text>
+  <text x="480" y="172" text-anchor="middle" class="step">信頼度チェック</text>
   <rect x="360" y="200" width="240" height="60" class="front"/>
-  <text x="480" y="222" text-anchor="middle" class="step">frontier only if low-confidence</text>
-  <text x="480" y="240" text-anchor="middle" class="small">~10% escalated in mixed traffic</text>
-  <text x="480" y="254" text-anchor="middle" class="small">~2x latency on escalated</text>
+  <text x="480" y="222" text-anchor="middle" class="step">low-confidence時だけ最先端</text>
+  <text x="480" y="240" text-anchor="middle" class="small">mixed トラフィックでは~10% エスカレーション</text>
+  <text x="480" y="254" text-anchor="middle" class="small">エスカレーションはレイテンシ ~2x</text>
 
   <rect x="640" y="50" width="280" height="220" class="box"/>
-  <text x="780" y="72" text-anchor="middle" class="head">pattern: PRE_ROUTE</text>
-  <text x="780" y="94" text-anchor="middle" class="small">classifier up front (5-10ms)</text>
+  <text x="780" y="72" text-anchor="middle" class="head">パターン: PRE_ROUTE</text>
+  <text x="780" y="94" text-anchor="middle" class="small">先頭で分類 (5-10ms)</text>
   <rect x="660" y="110" width="240" height="45" class="cheap"/>
-  <text x="780" y="135" text-anchor="middle" class="step">cheap for simple</text>
+  <text x="780" y="135" text-anchor="middle" class="step">単純なら安価モデル</text>
   <rect x="660" y="170" width="240" height="45" class="front"/>
-  <text x="780" y="195" text-anchor="middle" class="step">frontier for hard</text>
-  <text x="780" y="230" text-anchor="middle" class="caption">fastest overall, quality floor depends on classifier accuracy</text>
+  <text x="780" y="195" text-anchor="middle" class="step">難問なら最先端</text>
+  <text x="780" y="230" text-anchor="middle" class="caption">全体では最速、品質 下限はclassifier 精度次第</text>
 
   <rect x="40" y="290" width="880" height="100" class="box"/>
-  <text x="480" y="312" text-anchor="middle" class="head">the 2026 price curve</text>
-  <text x="480" y="334" text-anchor="middle" class="step">GPT-4-level quality: $20/M (late 2022) → $0.40/M (2026) ≈ 50x cheaper</text>
-  <text x="480" y="352" text-anchor="middle" class="step">aggregate LLM price drop: ~10x per year, mostly serving efficiency (Phase 17 · 04-09)</text>
-  <text x="480" y="372" text-anchor="middle" class="caption">routing captures those gains at the app layer</text>
+  <text x="480" y="312" text-anchor="middle" class="head">2026 価格曲線</text>
+  <text x="480" y="334" text-anchor="middle" class="step">GPT-4-level 品質: $20/M (late 2022) → $0.40/M (2026) ≈ 50x 安価</text>
+  <text x="480" y="352" text-anchor="middle" class="step">集計 LLM 価格低下: 年~10x、主にserving 効率 (Phase 17 · 04-09)</text>
+  <text x="480" y="372" text-anchor="middle" class="caption">ルーティングはアプリ 層でその利得を取り込む</text>
 
   <rect x="40" y="410" width="880" height="80" class="box"/>
-  <text x="480" y="432" text-anchor="middle" class="head">drift is the real risk</text>
-  <text x="480" y="454" text-anchor="middle" class="step">monitor: thumbs up/down per route · LLM-judge sample per route · escalation rate · refusal rate</text>
-  <text x="480" y="474" text-anchor="middle" class="caption">cheap-model creep is silent until a competitor benchmark surfaces it</text>
+  <text x="480" y="432" text-anchor="middle" class="head">本当のリスクはドリフト</text>
+  <text x="480" y="454" text-anchor="middle" class="step">監視: thumbs up/down per route · LLM-judge サンプル per route · エスカレーション率 · 拒否率</text>
+  <text x="480" y="474" text-anchor="middle" class="caption">cheap-モデル 浸食は競合 ベンチマークで表面化するまで静かに進む</text>
 </svg>

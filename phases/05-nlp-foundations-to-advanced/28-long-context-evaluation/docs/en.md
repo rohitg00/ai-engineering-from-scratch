@@ -1,56 +1,56 @@
 # Long-Context Evaluation — NIAH, RULER, LongBench, MRCR
 
-> Gemini 3 Pro advertises 10M tokens of context. At 1M tokens, 8-needle MRCR drops to 26.3%. Advertised ≠ usable. Long-context evaluation tells you the actual capacity of the model you are shipping on.
+> Gemini 3 Pro は 10M tokens の context をうたっている。1M tokens では、8-needle MRCR が 26.3% まで落ちる。advertised ≠ usable。Long-context evaluation は、あなたが ship する model の実際の容量を教えてくれる。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-You have a 200-page contract. The model claims a 1M-token context. You paste the contract in and ask: "What is the termination clause?" The model answers — but answers from the cover page because the termination clause sits at 120k tokens deep, past where the model actually attends.
+200 ページの契約書がある。model は 1M-token context を主張している。契約書を貼り付けて "What is the termination clause?" と聞く。model は答えるが、termination clause が 120k tokens の深さにあり実際には attention が届いていないため、表紙ページから答えてしまう。
 
-This is the 2026 context-capacity gap. Spec sheets say 1M or 10M. Reality says 60-70% of that is usable, and "usable" depends on the task.
+これが 2026 年の context-capacity gap だ。spec sheet は 1M や 10M と言う。現実には、その 60-70% が usable ならよい方で、さらに "usable" は task に依存する。
 
-- **Retrieval (single needle in haystack):** near-perfect up to the advertised max on frontier models.
-- **Multi-hop / aggregation:** degrades sharply past ~128k on most models.
-- **Reasoning over dispersed facts:** the first task to fail.
+- **Retrieval (single needle in haystack):** frontier models では advertised max 近くまでほぼ完全。
+- **Multi-hop / aggregation:** 多くの models で ~128k を超えると急激に劣化する。
+- **Reasoning over dispersed facts:** 最初に壊れる task。
 
-Long-context evaluation measures these axes. This lesson names the benchmarks, what each actually measures, and how to build a custom needle test for your domain.
+Long-context evaluation はこれらの軸を測る。この lesson では benchmarks の名前、それぞれが実際に測るもの、そして自分の domain 向け custom needle test の作り方を扱う。
 
-## The Concept
+## コンセプト
 
 ![NIAH baseline, RULER multi-task, LongBench holistic](../assets/long-context-eval.svg)
 
-**Needle-in-a-Haystack (NIAH, 2023).** Place a fact ("the magic word is pineapple") at a controlled depth in a long context. Ask the model to retrieve it. Sweep depth × length. The original long-context benchmark. Frontier models now saturate this; it is a necessary but not sufficient baseline.
+**Needle-in-a-Haystack (NIAH, 2023).** 長い context の制御された depth に fact（"the magic word is pineapple"）を置く。model にそれを retrieve させる。depth × length を sweep する。元祖 long-context benchmark。frontier models は今ではこれを飽和させるため、必要だが十分ではない baseline。
 
-**RULER (Nvidia, 2024).** 13 task types across 4 categories: retrieval (single / multi-key / multi-value), multi-hop tracing (variable tracking), aggregation (common word frequency), QA. Configurable context length (4k to 128k+). Reveals models that saturate NIAH but fail on multi-hop. In the 2024 release, only half of 17 models claiming 32k+ context maintained quality at 32k.
+**RULER (Nvidia, 2024).** 4 categories にまたがる 13 task types: retrieval（single / multi-key / multi-value）、multi-hop tracing（variable tracking）、aggregation（common word frequency）、QA。context length（4k から 128k+）を設定できる。NIAH は飽和するが multi-hop で失敗する models を明らかにする。2024 release では、32k+ context を主張する 17 models のうち、32k で quality を維持したのは半分だけだった。
 
-**LongBench v2 (2024).** 503 multiple-choice questions, 8k-2M word contexts, six task categories: single-doc QA, multi-doc QA, long in-context learning, long dialogue, code repo, long structured data. The production benchmark for real-world long-context behavior.
+**LongBench v2 (2024).** 503 multiple-choice questions、8k-2M word contexts、6 task categories: single-doc QA、multi-doc QA、long in-context learning、long dialogue、code repo、long structured data。実世界の long-context behavior を測る production benchmark。
 
-**MRCR (Multi-Round Coreference Resolution).** Multi-turn coreference at scale. 8-needle, 24-needle, 100-needle variants. Exposes how many facts a model can juggle before attention degrades.
+**MRCR (Multi-Round Coreference Resolution).** scale した multi-turn coreference。8-needle、24-needle、100-needle variants。attention が劣化する前に model がいくつの facts を扱えるかを暴く。
 
-**NoLiMa.** "Non-lexical needle." The needle and the query share no literal overlap; retrieval requires one step of semantic reasoning. Harder than NIAH.
+**NoLiMa.** "Non-lexical needle." needle と query が literal overlap を共有しない。retrieval には 1 step の semantic reasoning が必要になる。NIAH より難しい。
 
-**HELMET.** Concatenates many documents, asks a question from any one. Tests selective attention.
+**HELMET.** 多数の documents を連結し、そのどれか 1 つから question を出す。selective attention をテストする。
 
-**BABILong.** Embeds bAbI reasoning chains inside irrelevant haystacks. Tests reasoning-in-a-haystack, not just retrieval.
+**BABILong.** irrelevant haystacks の中に bAbI reasoning chains を埋め込む。単なる retrieval ではなく reasoning-in-a-haystack をテストする。
 
-### What to actually report
+### 実際に報告すべきもの
 
-- **Advertised context window.** The spec-sheet number.
-- **Effective retrieval length.** NIAH pass at some threshold (e.g., 90%).
-- **Effective reasoning length.** Multi-hop or aggregation pass at that threshold.
-- **Degradation curve.** Accuracy vs context length, plotted per task type.
+- **Advertised context window.** spec-sheet 上の数値。
+- **Effective retrieval length.** ある threshold（例: 90%）で NIAH に pass する長さ。
+- **Effective reasoning length.** 同じ threshold で multi-hop または aggregation に pass する長さ。
+- **Degradation curve.** task type ごとの accuracy vs context length plot。
 
-Two numbers for your spec sheet: retrieval-effective and reasoning-effective. Usually the reasoning-effective is 25-50% of the advertised window.
+spec sheet には retrieval-effective と reasoning-effective の 2 つの数値を載せる。通常、reasoning-effective は advertised window の 25-50% になる。
 
-## Build It
+## 作ってみる
 
-### Step 1: a custom NIAH for your domain
+### Step 1: domain 向け custom NIAH
 
-See `code/main.py`. The skeleton:
+`code/main.py` を参照。骨格は次の通り。
 
 ```python
 def build_haystack(filler_text, needle, depth_ratio, total_tokens):
@@ -80,9 +80,9 @@ def score_niah(model, haystack, question, expected):
     return 1 if expected.lower() in answer.lower() else 0
 ```
 
-Sweep `depth_ratio` ∈ {0, 0.25, 0.5, 0.75, 1.0} × `total_tokens` ∈ {1k, 4k, 16k, 64k}. Plot the heatmap. That is the NIAH card for your target model.
+`depth_ratio` ∈ {0, 0.25, 0.5, 0.75, 1.0} × `total_tokens` ∈ {1k, 4k, 16k, 64k} を sweep する。heatmap を plot する。これが target model の NIAH card になる。
 
-### Step 2: a multi-needle variant
+### Step 2: multi-needle variant
 
 ```python
 def build_multi_needle(filler, needles, total_tokens):
@@ -95,18 +95,18 @@ def build_multi_needle(filler, needles, total_tokens):
     return " ".join(chunks)
 ```
 
-Questions like "What are the three magic words?" require retrieving all three. Single-needle success does not predict multi-needle success.
+"What are the three magic words?" のような questions は 3 つすべてを retrieve する必要がある。single-needle success は multi-needle success を予測しない。
 
-### Step 3: multi-hop variable tracing (RULER-style)
+### Step 3: multi-hop variable tracing（RULER-style）
 
 ```python
 haystack = """X1 = 42. ... (filler) ... X2 = X1 + 10. ... (filler) ... X3 = X2 * 2."""
 question = "What is X3?"
 ```
 
-The answer requires chaining three assignments. Frontier models at 128k often drop to 50-70% accuracy here.
+answer には 3 つの assignments を chain する必要がある。128k では frontier models でもここで 50-70% accuracy まで落ちることがよくある。
 
-### Step 4: LongBench v2 on your stack
+### Step 4: stack 上で LongBench v2
 
 ```python
 from datasets import load_dataset
@@ -122,19 +122,19 @@ def eval_model_on_longbench(model, subset="single-doc-qa"):
     return correct / len(tasks)
 ```
 
-Report per-category accuracy. Aggregate scores hide big task-level differences.
+category ごとの accuracy を報告する。aggregate scores は大きな task-level differences を隠す。
 
-## Pitfalls
+## 落とし穴
 
-- **NIAH-only evaluation.** Passing NIAH at 1M tokens says nothing about multi-hop. Always run RULER or a custom multi-hop test.
-- **Uniform depth sampling.** Many implementations only test depth=0.5. Test depth=0, 0.25, 0.5, 0.75, 1.0 — the "lost in the middle" effect is real.
-- **Lexical overlap with filler.** If the needle shares keywords with the filler, retrieval becomes trivial. Use NoLiMa-style non-overlapping needles.
-- **Ignoring latency.** 1M-token prompts take 30-120 seconds to prefill. Measure time-to-first-token alongside accuracy.
-- **Vendor-self-reported numbers.** OpenAI, Google, Anthropic all publish their own scores. Always re-run independently on your use case.
+- **NIAH-only evaluation.** 1M tokens で NIAH に pass しても multi-hop については何も分からない。必ず RULER か custom multi-hop test を走らせる。
+- **Uniform depth sampling.** 多くの実装は depth=0.5 しか test しない。depth=0, 0.25, 0.5, 0.75, 1.0 を test する。"lost in the middle" effect は本物。
+- **Lexical overlap with filler.** needle が filler と keywords を共有すると retrieval が trivial になる。NoLiMa-style の non-overlapping needles を使う。
+- **Ignoring latency.** 1M-token prompts の prefill には 30-120 秒かかる。accuracy と一緒に time-to-first-token を測る。
+- **Vendor-self-reported numbers.** OpenAI、Google、Anthropic はいずれも自社 scores を公開する。必ず自分の use case で独立に再実行する。
 
-## Use It
+## 使いどころ
 
-The 2026 stack:
+2026 年の stack:
 
 | Situation | Benchmark |
 |-----------|-----------|
@@ -145,11 +145,11 @@ The 2026 stack:
 | Conversational / dialogue | MRCR 8-needle at your target length |
 | Model upgrade regression | Fixed in-house NIAH + RULER harness, run on every new model |
 
-Rule of thumb for production: never trust a context window until you have NIAH + 1 reasoning task at your intended length.
+production の経験則: intended length で NIAH + 1 reasoning task を実行するまで context window を信用しない。
 
 ## Ship It
 
-Save as `outputs/skill-long-context-eval.md`:
+`outputs/skill-long-context-eval.md` として保存する。
 
 ```markdown
 ---
@@ -172,29 +172,29 @@ Given a target model, target context length, and use case, output:
 Refuse to trust a context window from the model card alone. Refuse NIAH-only evaluation for any multi-hop workload. Refuse vendor self-reported long-context scores as independent evidence.
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Build a NIAH with 3 depths (0.25, 0.5, 0.75) × 3 lengths (1k, 4k, 16k). Run on any model. Plot pass rate as a 3×3 heatmap.
-2. **Medium.** Add a 3-needle variant. Measure retrieval of all 3 at each length. Compare to single-needle pass rate at the same length.
-3. **Hard.** Construct a variable-tracing task (X1 → X2 → X3, with 3 hops) embedded in 64k of filler. Measure accuracy across 3 frontier models. Report effective reasoning length per model.
+1. **Easy.** 3 depths（0.25, 0.5, 0.75）× 3 lengths（1k, 4k, 16k）の NIAH を作る。任意の model で実行する。pass rate を 3×3 heatmap として plot する。
+2. **Medium.** 3-needle variant を追加する。各 length で 3 つすべてを retrieve できるか測る。同じ length の single-needle pass rate と比較する。
+3. **Hard.** 64k の filler に埋め込んだ variable-tracing task（X1 → X2 → X3、3 hops）を構築する。3 つの frontier models で accuracy を測る。model ごとの effective reasoning length を報告する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| NIAH | Needle in haystack | Plant a fact in filler, ask the model to retrieve it. |
-| RULER | NIAH on steroids | 13 task types across retrieval / multi-hop / aggregation / QA. |
-| Effective context | The real capacity | Length at which accuracy still holds above threshold. |
-| Lost in the middle | Depth bias | Models under-attend to content in the middle of long inputs. |
-| Multi-needle | Many facts at once | Multiple plants; tests attention juggling, not retrieval alone. |
-| MRCR | Multi-round coref | 8, 24, or 100-needle coreference; exposes attention saturation. |
-| NoLiMa | Non-lexical needle | Needle and query share no literal tokens; requires reasoning. |
+| Term | よくある言い方 | 実際の意味 |
+|------|-----------------|------------|
+| NIAH | Needle in haystack | filler に fact を植え、model に retrieve させる。 |
+| RULER | 強化版 NIAH | retrieval / multi-hop / aggregation / QA にまたがる 13 task types。 |
+| Effective context | 実際の容量 | accuracy が threshold を上回って維持される長さ。 |
+| Lost in the middle | Depth bias | models は long inputs の中央にある content への attention が弱い。 |
+| Multi-needle | 複数 facts を同時に扱う | 複数の planted facts。retrieval だけでなく attention juggling を試す。 |
+| MRCR | Multi-round coref | 8、24、または 100-needle coreference。attention saturation を露出する。 |
+| NoLiMa | Non-lexical needle | needle と query が literal tokens を共有せず、reasoning が必要。 |
 
-## Further Reading
+## 参考資料
 
-- [Kamradt (2023). Needle in a Haystack analysis](https://github.com/gkamradt/LLMTest_NeedleInAHaystack) — the original NIAH repo.
-- [Hsieh et al. (2024). RULER: What's the Real Context Size of Your Long-Context LMs?](https://arxiv.org/abs/2404.06654) — the multi-task benchmark.
-- [Bai et al. (2024). LongBench v2](https://arxiv.org/abs/2412.15204) — real-world long-context eval.
-- [Modarressi et al. (2024). NoLiMa: Non-lexical needles](https://arxiv.org/abs/2404.06666) — harder needles.
-- [Kuratov et al. (2024). BABILong](https://arxiv.org/abs/2406.10149) — reasoning-in-haystack.
-- [Liu et al. (2024). Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) — the depth-bias paper.
+- [Kamradt (2023). Needle in a Haystack analysis](https://github.com/gkamradt/LLMTest_NeedleInAHaystack) — original NIAH repo。
+- [Hsieh et al. (2024). RULER: What's the Real Context Size of Your Long-Context LMs?](https://arxiv.org/abs/2404.06654) — multi-task benchmark。
+- [Bai et al. (2024). LongBench v2](https://arxiv.org/abs/2412.15204) — real-world long-context eval。
+- [Modarressi et al. (2024). NoLiMa: Non-lexical needles](https://arxiv.org/abs/2404.06666) — より難しい needles。
+- [Kuratov et al. (2024). BABILong](https://arxiv.org/abs/2406.10149) — reasoning-in-haystack。
+- [Liu et al. (2024). Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) — depth-bias paper。

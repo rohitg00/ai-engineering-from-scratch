@@ -1,300 +1,300 @@
-# What Is Machine Learning
+# 機械学習とは
 
-> Machine learning is teaching computers to find patterns in data instead of writing rules by hand.
+> 機械学習とは、手作業でルールを書く代わりに、コンピュータへデータ内のパターンを見つけさせることです。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 1 (Math Foundations)
-**Time:** ~45 minutes
+**種類:** 学習
+**言語:** Python
+**前提条件:** Phase 1（数学基礎）
+**所要時間:** 約 45 分
 
-## Learning Objectives
+## 学習目標
 
-- Explain the difference between supervised, unsupervised, and reinforcement learning and identify which type applies to a given problem
-- Implement a nearest centroid classifier from scratch and evaluate it against a random baseline
-- Distinguish between classification and regression tasks and select the appropriate loss function for each
-- Evaluate whether a given business problem is suitable for ML or better solved with deterministic rules
+- 教師あり学習、教師なし学習、強化学習の違いを説明し、与えられた問題にどの種類が当てはまるかを判断できる
+- 最近傍重心分類器をゼロから実装し、ランダムベースラインと比較して評価できる
+- 分類タスクと回帰タスクを区別し、それぞれに適切な損失関数を選択できる
+- あるビジネス課題が ML に適しているか、決定的なルールで解くべきかを評価できる
 
-## The Problem
+## 問題
 
-You want to build a spam filter. The traditional approach: sit down and write hundreds of rules. "If the email contains 'FREE MONEY', mark it spam. If it has more than 3 exclamation marks, mark it spam." You spend weeks writing rules. Then spammers change their wording. Your rules break. You write more rules. The cycle never ends.
+スパムフィルタを作りたいとします。従来のやり方は、腰を据えて何百ものルールを書くことです。「メールに 'FREE MONEY' が含まれていたらスパムにする。感嘆符が 3 個を超えたらスパムにする。」何週間もかけてルールを書きます。するとスパマーは言い回しを変えます。ルールは壊れます。さらにルールを書きます。このサイクルは終わりません。
 
-Machine learning flips this. Instead of writing rules, you give the computer thousands of labeled emails ("spam" or "not spam") and let it figure out the rules on its own. The computer finds patterns you never would have thought of. When spammers change tactics, you retrain on new data instead of rewriting code.
+機械学習はこれを反転させます。ルールを書く代わりに、何千通ものラベル付きメール（「スパム」または「スパムでない」）をコンピュータに与え、ルールを自分で見つけさせます。コンピュータは、人間が思いつかなかったパターンを見つけます。スパマーが戦術を変えたら、コードを書き直す代わりに新しいデータで再学習します。
 
-This shift from "programming rules" to "learning from data" is the core of machine learning. Every recommendation engine, voice assistant, self-driving car, and language model works this way.
+「ルールをプログラムする」から「データから学習する」へのこの転換が、機械学習の核心です。推薦エンジン、音声アシスタント、自動運転車、言語モデルはすべてこの仕組みで動いています。
 
-## The Concept
+## 概念
 
-### Learning From Data, Not Rules
+### ルールではなくデータから学習する
 
-Traditional programming and machine learning solve problems in opposite directions.
+従来のプログラミングと機械学習は、逆方向から問題を解きます。
 
 ```mermaid
 flowchart LR
-    subgraph Traditional["Traditional Programming"]
+    subgraph Traditional["従来のプログラミング"]
         direction LR
-        R[Rules] --> P1[Program]
-        D1[Data] --> P1
-        P1 --> O1[Output]
+        R[ルール] --> P1[プログラム]
+        D1[データ] --> P1
+        P1 --> O1[出力]
     end
 
-    subgraph ML["Machine Learning"]
+    subgraph ML["機械学習"]
         direction LR
-        D2[Data] --> P2[Learning Algorithm]
-        O2[Expected Output] --> P2
-        P2 --> M[Model / Rules]
+        D2[データ] --> P2[学習アルゴリズム]
+        O2[期待される出力] --> P2
+        P2 --> M[モデル / ルール]
     end
 ```
 
-Traditional programming: you write the rules. The program applies them to data to produce output.
+従来のプログラミングでは、あなたがルールを書きます。プログラムはそのルールをデータに適用し、出力を生成します。
 
-Machine learning: you provide data and expected outputs. The algorithm discovers the rules.
+機械学習では、データと期待される出力を与えます。アルゴリズムがルールを発見します。
 
-The "model" that comes out of training IS the rules, encoded as numbers (weights, parameters). It generalizes from examples it has seen to make predictions on data it has never seen.
+学習から得られる「モデル」こそが、数値（重み、パラメータ）として符号化されたルールです。モデルは見たことのある例から汎化し、見たことのないデータに対して予測します。
 
-### The Three Types of Machine Learning
+### 機械学習の 3 つの種類
 
 ```mermaid
 flowchart TD
-    ML[Machine Learning] --> SL[Supervised Learning]
-    ML --> UL[Unsupervised Learning]
-    ML --> RL[Reinforcement Learning]
+    ML[機械学習] --> SL[教師あり学習]
+    ML --> UL[教師なし学習]
+    ML --> RL[強化学習]
 
-    SL --> C[Classification]
-    SL --> R[Regression]
+    SL --> C[分類]
+    SL --> R[回帰]
 
-    UL --> CL[Clustering]
-    UL --> DR[Dimensionality Reduction]
+    UL --> CL[クラスタリング]
+    UL --> DR[次元削減]
 
-    RL --> PO[Policy Optimization]
-    RL --> VL[Value Learning]
+    RL --> PO[方策最適化]
+    RL --> VL[価値学習]
 ```
 
-**Supervised Learning**: You have input-output pairs. The model learns to map inputs to outputs.
-- "Here are 10,000 photos labeled cat or dog. Learn to tell them apart."
-- "Here are house features and prices. Learn to predict the price."
+**教師あり学習**: 入力と出力のペアがあります。モデルは入力を出力へ対応づける方法を学びます。
+- 「猫または犬とラベル付けされた写真が 10,000 枚あります。見分けられるように学習してください。」
+- 「住宅の特徴量と価格があります。価格を予測する方法を学習してください。」
 
-**Unsupervised Learning**: You have inputs only. No labels. The model finds structure on its own.
-- "Here are 10,000 customer purchase histories. Find natural groupings."
-- "Here are 1,000 dimensional data points. Reduce to 2 dimensions while keeping structure."
+**教師なし学習**: 入力だけがあります。ラベルはありません。モデルは自分で構造を見つけます。
+- 「顧客の購入履歴が 10,000 件あります。自然なまとまりを見つけてください。」
+- 「1,000 次元のデータ点があります。構造を保ったまま 2 次元へ削減してください。」
 
-**Reinforcement Learning**: An agent takes actions in an environment and receives rewards or penalties. It learns a strategy (policy) to maximize total reward.
-- "Play this game. +1 for winning, -1 for losing. Figure out a strategy."
-- "Control this robot arm. +1 for picking up the object, -0.01 for each second wasted."
+**強化学習**: エージェントが環境内で行動し、報酬または罰を受け取ります。総報酬を最大化する戦略（方策）を学びます。
+- 「このゲームをプレイしてください。勝てば +1、負ければ -1。戦略を見つけてください。」
+- 「このロボットアームを制御してください。物体を持ち上げたら +1、無駄にした 1 秒ごとに -0.01。」
 
-Most of what you will build in practice uses supervised learning. Unsupervised learning is common for preprocessing and exploration. Reinforcement learning powers game AI, robotics, and RLHF for language models.
+実務で作るものの大半は教師あり学習を使います。教師なし学習は前処理や探索でよく使われます。強化学習はゲーム AI、ロボティクス、言語モデルの RLHF を支えています。
 
-### Beyond the Big Three
+### 3 大分類の先へ
 
-The three categories above are clean, but real-world ML often blurs the lines.
+上の 3 つの分類は整理しやすいものですが、現実世界の ML では境界がよく曖昧になります。
 
-**Semi-supervised learning** uses a small set of labeled data and a large set of unlabeled data. You might have 100 labeled medical images and 100,000 unlabeled ones. Techniques include:
+**半教師あり学習**は、少量のラベル付きデータと大量のラベルなしデータを使います。ラベル付き医療画像が 100 枚、ラベルなし画像が 100,000 枚あるような場合です。代表的な手法は次のとおりです。
 
-- **Label propagation:** Build a graph connecting similar data points. Labels spread from labeled nodes to unlabeled neighbors through the graph.
-- **Pseudo-labeling:** Train a model on the labeled data, use it to predict labels for unlabeled data, then retrain on everything. The model bootstraps its own training set.
-- **Consistency regularization:** The model should give the same prediction for an input and a slightly perturbed version of that input. This works even without labels.
+- **ラベル伝播:** 似ているデータ点を結ぶグラフを作ります。ラベルはグラフを通じて、ラベル付きノードからラベルなしの近傍へ広がります。
+- **疑似ラベリング:** ラベル付きデータでモデルを学習し、そのモデルでラベルなしデータのラベルを予測してから、すべてのデータで再学習します。モデルが自分自身の訓練セットを拡張します。
+- **一貫性正則化:** 入力と、その入力を少し摂動させたものに対して、モデルが同じ予測を返すべきだとする手法です。ラベルがなくても機能します。
 
-**Self-supervised learning** creates supervision from the data itself. No human labels needed at all. The model creates its own prediction task from the structure of the data.
+**自己教師あり学習**は、データそのものから教師信号を作ります。人間によるラベルはまったく不要です。モデルはデータ構造から自分自身の予測タスクを作ります。
 
-- **Masked language modeling (BERT):** Hide 15% of words in a sentence, train the model to predict the missing words. The "labels" come from the original text.
-- **Contrastive learning (SimCLR):** Take an image, create two augmented versions. Train the model to recognize they came from the same image while distinguishing them from augmented versions of other images.
-- **Next-token prediction (GPT):** Predict the next word given all previous words. Every text document becomes a training example.
+- **マスク言語モデリング（BERT）:** 文中の 15% の単語を隠し、欠けた単語を予測するようにモデルを学習します。「ラベル」は元のテキストから得られます。
+- **対照学習（SimCLR）:** 画像を 1 枚取り、拡張版を 2 つ作ります。それらが同じ画像から来たことを認識しつつ、他の画像の拡張版と区別できるようにモデルを学習します。
+- **次トークン予測（GPT）:** それまでのすべての単語から次の単語を予測します。あらゆるテキスト文書が訓練例になります。
 
-These are not separate categories from the big three. They are strategies that combine supervised and unsupervised ideas. Self-supervised learning is technically supervised (the model predicts something), but the labels are generated automatically, not by humans.
+これらは 3 大分類とは別のカテゴリではありません。教師ありと教師なしの考え方を組み合わせる戦略です。自己教師あり学習は技術的には教師ありです（モデルが何かを予測するため）。ただしラベルは人間ではなく自動的に生成されます。
 
-### Classification vs Regression
+### 分類と回帰
 
-These are the two main supervised learning tasks.
+これらは教師あり学習の 2 つの主要タスクです。
 
-| Aspect | Classification | Regression |
+| 観点 | 分類 | 回帰 |
 |--------|---------------|------------|
-| Output | Discrete categories | Continuous numbers |
-| Example | "Is this email spam?" | "What will the house price be?" |
-| Output space | {cat, dog, bird} | Any real number |
-| Loss function | Cross-entropy, accuracy | Mean squared error, MAE |
-| Decision | Boundaries between classes | A curve that fits the data |
+| 出力 | 離散カテゴリ | 連続値 |
+| 例 | 「このメールはスパムか？」 | 「住宅価格はいくらになるか？」 |
+| 出力空間 | {cat, dog, bird} | 任意の実数 |
+| 損失関数 | 交差エントロピー、accuracy | 平均二乗誤差、MAE |
+| 判断 | クラス間の境界 | データに適合する曲線 |
 
-Classification answers "which category?" Regression answers "how much?"
+分類は「どのカテゴリか？」に答えます。回帰は「どれくらいか？」に答えます。
 
-Some problems can be framed either way. Predicting if a stock goes up or down is classification. Predicting the exact price is regression.
+問題によっては、どちらとしても定式化できます。株価が上がるか下がるかを予測するなら分類です。正確な価格を予測するなら回帰です。
 
-### The ML Workflow
+### ML ワークフロー
 
-Every machine learning project follows the same pipeline, regardless of the algorithm.
+機械学習プロジェクトは、アルゴリズムに関係なく同じパイプラインに従います。
 
 ```mermaid
 flowchart LR
-    A[Collect Data] --> B[Clean & Explore]
-    B --> C[Feature Engineering]
-    C --> D[Split Data]
-    D --> E[Train Model]
-    E --> F[Evaluate]
-    F -->|Not good enough| C
-    F -->|Good enough| G[Deploy]
-    G --> H[Monitor]
-    H -->|Performance drops| A
+    A[データ収集] --> B[クレンジングと探索]
+    B --> C[特徴量エンジニアリング]
+    C --> D[データ分割]
+    D --> E[モデル学習]
+    E --> F[評価]
+    F -->|不十分| C
+    F -->|十分| G[デプロイ]
+    G --> H[監視]
+    H -->|性能低下| A
 ```
 
-**Collect Data**: Gather raw data. More data is almost always better, but quality matters more than quantity.
+**データ収集**: 生データを集めます。ほとんどの場合、データは多いほどよいですが、量より品質が重要です。
 
-**Clean & Explore**: Handle missing values, remove duplicates, visualize distributions, spot anomalies. This step often takes 60-80% of total project time.
+**クレンジングと探索**: 欠損値を処理し、重複を削除し、分布を可視化し、異常を見つけます。このステップはプロジェクト全体の 60-80% を占めることがよくあります。
 
-**Feature Engineering**: Transform raw data into features the model can use. Turn dates into day-of-week. Normalize numerical columns. Encode categorical variables. Good features matter more than fancy algorithms.
+**特徴量エンジニアリング**: 生データをモデルが使える特徴量へ変換します。日付を曜日に変換する。数値列を正規化する。カテゴリ変数をエンコードする。優れた特徴量は、凝ったアルゴリズムより重要です。
 
-**Split Data**: Divide into training, validation, and test sets. The model trains on training data, you tune hyperparameters on validation data, and you report final performance on test data.
+**データ分割**: 訓練セット、検証セット、テストセットに分けます。モデルは訓練データで学習し、検証データでハイパーパラメータを調整し、テストデータで最終性能を報告します。
 
-**Train Model**: Feed training data into an algorithm. The algorithm adjusts internal parameters to minimize a loss function.
+**モデル学習**: 訓練データをアルゴリズムへ入力します。アルゴリズムは損失関数を最小化するように内部パラメータを調整します。
 
-**Evaluate**: Measure performance on validation/test data. If performance is not acceptable, go back and try different features, algorithms, or hyperparameters.
+**評価**: 検証/テストデータで性能を測ります。性能が許容できなければ戻って、別の特徴量、アルゴリズム、ハイパーパラメータを試します。
 
-**Deploy**: Put the model into production where it makes predictions on new data.
+**デプロイ**: 新しいデータに対して予測できるよう、モデルを本番環境へ配置します。
 
-**Monitor**: Track performance over time. Data distributions change (data drift), and models degrade. When performance drops, retrain.
+**監視**: 時間とともに性能を追跡します。データ分布は変化し（データドリフト）、モデルは劣化します。性能が落ちたら再学習します。
 
-### Training, Validation, and Test Splits
+### 訓練・検証・テスト分割
 
-This is the most important concept beginners get wrong. You must evaluate your model on data it has never seen during training. Otherwise you are measuring memorization, not learning.
+これは初心者が最も誤解しやすい重要概念です。モデルは学習中に見ていないデータで評価しなければなりません。そうしないと、学習ではなく暗記を測っていることになります。
 
 ```mermaid
 flowchart LR
-    subgraph Dataset["Full Dataset (100%)"]
+    subgraph Dataset["全データセット (100%)"]
         direction LR
-        TR["Training Set (70%)"]
-        VA["Validation Set (15%)"]
-        TE["Test Set (15%)"]
+        TR["訓練セット (70%)"]
+        VA["検証セット (15%)"]
+        TE["テストセット (15%)"]
     end
 
-    TR -->|Train model| M[Model]
-    M -->|Tune hyperparameters| VA
-    VA -->|Final evaluation| TE
+    TR -->|モデルを学習| M[モデル]
+    M -->|ハイパーパラメータ調整| VA
+    VA -->|最終評価| TE
 ```
 
-| Split | Purpose | When used | Typical size |
+| 分割 | 目的 | 使うタイミング | 典型的なサイズ |
 |-------|---------|-----------|-------------|
-| Training | Model learns from this data | During training | 60-80% |
-| Validation | Tune hyperparameters, compare models | After each training run | 10-20% |
-| Test | Final unbiased performance estimate | Once, at the very end | 10-20% |
+| 訓練 | モデルがこのデータから学習する | 学習中 | 60-80% |
+| 検証 | ハイパーパラメータ調整、モデル比較 | 各学習実行の後 | 10-20% |
+| テスト | 最終的な偏りのない性能推定 | 最後に一度だけ | 10-20% |
 
-The test set is sacred. You look at it exactly once. If you keep adjusting your model based on test performance, you are effectively training on the test set and your reported numbers are meaningless.
+テストセットは神聖なものです。見るのは正確に一度だけです。テスト性能にもとづいてモデルを調整し続けると、実質的にテストセットで学習していることになり、報告する数値は意味を失います。
 
-For small datasets, use k-fold cross-validation: split data into k parts, train on k-1 parts, validate on the remaining part, rotate, and average results.
+小さなデータセットでは k-fold 交差検証を使います。データを k 個に分け、k-1 個で学習し、残り 1 個で検証し、これをローテーションして結果を平均します。
 
-### Overfitting vs Underfitting
+### 過学習と過小適合
 
 ```mermaid
 flowchart LR
-    subgraph UF["Underfitting"]
-        U1["Model too simple"]
-        U2["High bias"]
-        U3["Misses patterns"]
+    subgraph UF["過小適合"]
+        U1["モデルが単純すぎる"]
+        U2["高バイアス"]
+        U3["パターンを見逃す"]
     end
 
-    subgraph GF["Good Fit"]
-        G1["Right complexity"]
-        G2["Balanced"]
-        G3["Generalizes well"]
+    subgraph GF["良い適合"]
+        G1["適切な複雑さ"]
+        G2["バランス良好"]
+        G3["よく汎化する"]
     end
 
-    subgraph OF["Overfitting"]
-        O1["Model too complex"]
-        O2["High variance"]
-        O3["Memorizes noise"]
+    subgraph OF["過学習"]
+        O1["モデルが複雑すぎる"]
+        O2["高バリアンス"]
+        O3["ノイズを暗記する"]
     end
 
-    UF -->|Increase complexity| GF
-    GF -->|Too much complexity| OF
+    UF -->|複雑さを上げる| GF
+    GF -->|複雑すぎる| OF
 ```
 
-**Underfitting**: The model is too simple to capture the patterns in the data. A straight line trying to fit a curved relationship. Training error is high. Test error is high.
+**過小適合**: モデルが単純すぎて、データ内のパターンを捉えられない状態です。曲線関係に直線を当てはめようとしているようなものです。訓練誤差は高く、テスト誤差も高くなります。
 
-**Overfitting**: The model is too complex and memorizes the training data, including its noise. A wiggly curve that passes through every training point but fails on new data. Training error is low. Test error is high.
+**過学習**: モデルが複雑すぎて、ノイズを含めた訓練データを暗記してしまう状態です。すべての訓練点を通る曲がりくねった曲線が、新しいデータでは失敗するようなものです。訓練誤差は低く、テスト誤差は高くなります。
 
-**Good fit**: The model captures real patterns without memorizing noise. Training error and test error are both reasonably low.
+**良い適合**: モデルがノイズを暗記せず、実際のパターンを捉えている状態です。訓練誤差とテスト誤差の両方が十分に低くなります。
 
-Signs of overfitting:
-- Training accuracy is much higher than validation accuracy
-- The model performs well on training data but poorly on new data
-- Adding more training data improves performance (the model was memorizing, not learning)
+過学習の兆候:
+- 訓練精度が検証精度よりかなり高い
+- モデルは訓練データではよく動くが、新しいデータでは悪い
+- 訓練データを増やすと性能が改善する（モデルは学習ではなく暗記していた）
 
-Fixes for overfitting:
-- Get more training data
-- Reduce model complexity (fewer parameters, simpler architecture)
-- Regularization (add a penalty for large weights)
-- Dropout (randomly zero out neurons during training)
-- Early stopping (stop training when validation error starts increasing)
+過学習への対策:
+- 訓練データを増やす
+- モデルの複雑さを下げる（パラメータを減らす、より単純なアーキテクチャにする）
+- 正則化（大きな重みに罰則を追加する）
+- ドロップアウト（学習中にニューロンをランダムにゼロ化する）
+- 早期終了（検証誤差が増え始めたら学習を止める）
 
-Fixes for underfitting:
-- Use a more complex model
-- Add more features
-- Reduce regularization
-- Train longer
+過小適合への対策:
+- より複雑なモデルを使う
+- 特徴量を増やす
+- 正則化を弱める
+- より長く学習する
 
-### The Bias-Variance Tradeoff
+### バイアスとバリアンスのトレードオフ
 
-This is the mathematical framework behind overfitting and underfitting.
+これは過学習と過小適合の背後にある数学的枠組みです。
 
-**Bias**: Error from wrong assumptions in the model. A linear model has high bias when the true relationship is nonlinear. High bias leads to underfitting.
+**バイアス**: モデルの誤った仮定による誤差です。真の関係が非線形なのに線形モデルを使うと、バイアスが高くなります。高バイアスは過小適合につながります。
 
-**Variance**: Error from sensitivity to small fluctuations in the training data. A model with high variance gives very different predictions when trained on different subsets of data. High variance leads to overfitting.
+**バリアンス**: 訓練データの小さな揺らぎに敏感であることによる誤差です。高バリアンスのモデルは、異なるデータ部分集合で学習すると大きく異なる予測を出します。高バリアンスは過学習につながります。
 
-| Model complexity | Bias | Variance | Result |
+| モデルの複雑さ | バイアス | バリアンス | 結果 |
 |-----------------|------|----------|--------|
-| Too low (linear model for curved data) | High | Low | Underfitting |
-| Just right | Medium | Medium | Good generalization |
-| Too high (degree-20 polynomial for 10 points) | Low | High | Overfitting |
+| 低すぎる（曲線データに線形モデル） | 高 | 低 | 過小適合 |
+| ちょうどよい | 中 | 中 | 良い汎化 |
+| 高すぎる（10 点に 20 次多項式） | 低 | 高 | 過学習 |
 
-Total error = Bias^2 + Variance + Irreducible noise
+総誤差 = バイアス^2 + バリアンス + 既約ノイズ
 
-You cannot reduce irreducible noise (it is randomness in the data itself). You want to find the sweet spot where bias^2 + variance is minimized.
+既約ノイズは減らせません（データそのものに含まれるランダム性です）。目指すのは bias^2 + variance が最小になるちょうどよい点を見つけることです。
 
-### No Free Lunch Theorem
+### ノーフリーランチ定理
 
-There is no single algorithm that works best for every problem. An algorithm that performs well on one class of problems will perform poorly on another. This is why data scientists try multiple algorithms and compare results.
+すべての問題に対して最もよく機能する単一のアルゴリズムはありません。ある種類の問題で高性能なアルゴリズムは、別の種類の問題では低性能になります。だからデータサイエンティストは複数のアルゴリズムを試し、結果を比較します。
 
-In practice, the choice depends on:
-- How much data you have
-- How many features there are
-- Whether the relationship is linear or nonlinear
-- Whether you need interpretability
-- How much compute you can afford
+実務では、選択は次の要因に依存します。
+- データ量
+- 特徴量の数
+- 関係が線形か非線形か
+- 解釈性が必要か
+- 使える計算資源の量
 
-### When NOT to Use Machine Learning
+### 機械学習を使うべきでない場合
 
-ML is powerful but not always the right tool. Before reaching for a model, ask whether you actually need one.
+ML は強力ですが、常に正しい道具とは限りません。モデルに手を伸ばす前に、本当に必要かを確認してください。
 
-**Do not use ML when:**
+**次の場合は ML を使わないでください。**
 
-- **Rules are simple and well-defined.** Tax calculation, sorting algorithms, unit conversions. If you can write the logic in a few if-statements, a model adds complexity for no benefit.
-- **You have no data or very little data.** ML needs examples to learn from. With 10 data points, you cannot train anything meaningful. Collect data first.
-- **The cost of being wrong is catastrophic and you need guaranteed correctness.** Medical dosage calculation, nuclear reactor control, cryptographic verification. ML models are probabilistic. They will sometimes be wrong. If "sometimes wrong" is unacceptable, use deterministic methods.
-- **A lookup table or heuristic solves the problem.** If a simple threshold or table covers 99% of cases, adding ML increases maintenance cost without meaningful improvement.
-- **You cannot explain the decision and explainability is required.** Regulated industries (lending, insurance, criminal justice) sometimes require that every decision be fully explainable. Some ML models are interpretable (linear regression, small decision trees). Most are not.
-- **The problem changes faster than you can retrain.** If the rules change daily and retraining takes a week, the model is always stale.
+- **ルールが単純で明確に定義されている。** 税額計算、ソートアルゴリズム、単位変換などです。数個の if 文でロジックを書けるなら、モデルは利点なしに複雑さを増やすだけです。
+- **データがない、または非常に少ない。** ML には学習するための例が必要です。データ点が 10 個では、意味のあるものは学習できません。まずデータを集めます。
+- **間違いのコストが壊滅的で、正しさを保証する必要がある。** 医療投与量計算、原子炉制御、暗号検証などです。ML モデルは確率的です。ときどき間違えます。「ときどき間違える」ことが許容できないなら、決定的な方法を使います。
+- **ルックアップテーブルやヒューリスティックで解ける。** 単純なしきい値や表で 99% のケースをカバーできるなら、ML を追加しても意味のある改善なしに保守コストが増えます。
+- **判断を説明できず、説明可能性が必須である。** 規制産業（融資、保険、刑事司法）では、すべての判断が完全に説明可能であることを求められる場合があります。一部の ML モデル（線形回帰、小さな決定木）は解釈可能ですが、多くはそうではありません。
+- **問題の変化が再学習より速い。** ルールが毎日変わり、再学習に 1 週間かかるなら、モデルは常に古くなります。
 
-Use this decision flowchart:
+この判断フローチャートを使ってください。
 
 ```mermaid
 flowchart TD
-    A["Do you have data?"] -->|No| B["Collect data first or use rules"]
-    A -->|Yes| C["Can you write the rules explicitly?"]
-    C -->|"Yes, and they are simple"| D["Use rules. Skip ML."]
-    C -->|"No, or they are too complex"| E["Is the cost of errors acceptable?"]
-    E -->|"No, need guaranteed correctness"| F["Use deterministic methods"]
-    E -->|Yes| G["Do you need explainability?"]
-    G -->|"Yes, strictly"| H["Use interpretable models only"]
-    G -->|"No, or partially"| I["Use ML"]
-    I --> J["Do you have enough labeled data?"]
-    J -->|Yes| K["Supervised learning"]
-    J -->|"Some labels"| L["Semi-supervised learning"]
-    J -->|"No labels"| M["Unsupervised or self-supervised"]
+    A["データはあるか"] -->|いいえ| B["まずデータを集めるかルールを使う"]
+    A -->|はい| C["ルールを明示的に書けるか"]
+    C -->|"はい、かつ単純"| D["ルールを使う。ML は使わない。"]
+    C -->|"いいえ、または複雑すぎる"| E["誤りのコストは許容できるか"]
+    E -->|"いいえ、正しさの保証が必要"| F["決定的な方法を使う"]
+    E -->|はい| G["説明可能性は必要か"]
+    G -->|"はい、厳密に必要"| H["解釈可能なモデルだけを使う"]
+    G -->|"いいえ、または一部でよい"| I["ML を使う"]
+    I --> J["十分なラベル付きデータはあるか"]
+    J -->|はい| K["教師あり学習"]
+    J -->|"一部にラベルあり"| L["半教師あり学習"]
+    J -->|"ラベルなし"| M["教師なしまたは自己教師あり"]
 ```
 
-## Build It
+## 作ってみる
 
-The code in `code/ml_intro.py` implements a nearest centroid classifier from scratch, the simplest possible ML algorithm. It demonstrates the core idea: learn from data, then predict on new data.
+`code/ml_intro.py` のコードは、最も単純な ML アルゴリズムである最近傍重心分類器をゼロから実装しています。中心となる考え方、つまりデータから学習し、新しいデータを予測することを示します。
 
-### Step 1: Nearest Centroid Classifier from Scratch
+### ステップ 1: 最近傍重心分類器をゼロから作る
 
-The nearest centroid classifier computes the center (mean) of each class in the training data. To predict, it assigns each new point to the class whose center is closest.
+最近傍重心分類器は、訓練データ内の各クラスの中心（平均）を計算します。予測時には、新しい点を最も近い中心を持つクラスに割り当てます。
 
 ```python
 class NearestCentroid:
@@ -312,11 +312,11 @@ class NearestCentroid:
         return self.classes[distances.argmin(axis=0)]
 ```
 
-That is the entire algorithm. Fit computes two means. Predict computes distances. No gradient descent, no iteration, no hyperparameters.
+これがアルゴリズム全体です。fit は 2 つの平均を計算します。predict は距離を計算します。勾配降下法も反復もハイパーパラメータもありません。
 
-### Step 2: Train on Synthetic Data
+### ステップ 2: 合成データで学習する
 
-We generate a 2D classification dataset with two classes that overlap slightly. The centroid classifier draws a linear decision boundary between the class centers.
+少し重なり合う 2 クラスの 2 次元分類データセットを生成します。重心分類器はクラス中心の間に線形の決定境界を引きます。
 
 ```python
 rng = np.random.RandomState(42)
@@ -326,40 +326,40 @@ X = np.vstack([X_class0, X_class1])
 y = np.array([0] * 100 + [1] * 100)
 ```
 
-### Step 3: Compare Against a Baseline
+### ステップ 3: ベースラインと比較する
 
-Every ML model should be compared against a trivial baseline. Here, the baseline predicts a random class. If your ML model does not beat random guessing, something is wrong.
+すべての ML モデルは単純なベースラインと比較すべきです。ここでは、ベースラインはランダムなクラスを予測します。ML モデルがランダム推測に勝てないなら、何かが間違っています。
 
 ```python
 baseline_preds = rng.choice([0, 1], size=len(y_test))
 baseline_acc = np.mean(baseline_preds == y_test)
 ```
 
-The centroid classifier should get around 90%+ accuracy on this clean dataset. Random baseline gets around 50%.
+このきれいなデータセットでは、重心分類器はおよそ 90% 以上の精度になるはずです。ランダムベースラインはおよそ 50% です。
 
-### Why This Matters
+### なぜこれが重要か
 
-The nearest centroid classifier is trivially simple. It has no hyperparameters, no iteration, no gradient descent. Yet it captures the fundamental ML pattern:
+最近傍重心分類器は極めて単純です。ハイパーパラメータも、反復も、勾配降下法もありません。それでも、ML の基本パターンを捉えています。
 
-1. **Learn** a representation from training data (the centroids)
-2. **Predict** on new data using that representation (nearest distance)
-3. **Evaluate** against a baseline (random guessing)
+1. 訓練データから表現を**学習**する（重心）
+2. その表現を使って新しいデータを**予測**する（最近距離）
+3. ベースラインと比較して**評価**する（ランダム推測）
 
-Every ML algorithm, from logistic regression to transformers, follows this same three-step pattern. The representation gets more complex, but the workflow stays the same.
+ロジスティック回帰から Transformer まで、すべての ML アルゴリズムはこの同じ 3 ステップのパターンに従います。表現はより複雑になりますが、ワークフローは同じです。
 
-### Step 4: What the Centroid Classifier Cannot Do
+### ステップ 4: 重心分類器にできないこと
 
-The nearest centroid classifier assumes each class forms a single blob. It draws linear decision boundaries. It fails when:
+最近傍重心分類器は、各クラスが 1 つの塊を作ると仮定します。線形の決定境界を引きます。次の場合には失敗します。
 
-- Classes have multiple clusters (e.g., the digit "1" can be written in several different ways)
-- The decision boundary is nonlinear (e.g., one class wraps around another)
-- Features have very different scales (distance is dominated by the largest-scale feature)
+- クラスが複数のクラスタを持つ（例: 数字の「1」はいくつもの書き方がある）
+- 決定境界が非線形である（例: 一方のクラスが別のクラスを囲んでいる）
+- 特徴量のスケールが大きく異なる（距離が最大スケールの特徴量に支配される）
 
-These limitations motivate every other algorithm you will learn. K-nearest neighbors handles multiple clusters. Decision trees handle nonlinear boundaries. Feature scaling fixes the scale problem. Each lesson builds on the limitations of the previous one.
+これらの制約が、これから学ぶ他のすべてのアルゴリズムの動機になります。K 近傍法は複数クラスタを扱えます。決定木は非線形境界を扱えます。特徴量スケーリングはスケール問題を修正します。各レッスンは前のレッスンの制約の上に積み上がります。
 
-## Use It
+## 使ってみる
 
-sklearn provides `NearestCentroid` and synthetic data generators:
+sklearn は `NearestCentroid` と合成データ生成器を提供しています。
 
 ```python
 from sklearn.neighbors import NearestCentroid
@@ -377,35 +377,35 @@ clf.fit(X_train, y_train)
 print(f"Accuracy: {clf.score(X_test, y_test):.3f}")
 ```
 
-## Ship It
+## 仕上げる
 
-This lesson produces `outputs/prompt-ml-problem-framer.md` -- a prompt that turns vague business problems into concrete ML tasks. Give it a problem description ("we want to reduce churn" or "predict demand for next quarter") and it identifies the learning type, defines the prediction target, lists candidate features, picks a success metric, establishes a baseline, and flags pitfalls like data leakage or class imbalance. Use it at the start of any ML project to avoid building the wrong thing.
+このレッスンでは `outputs/prompt-ml-problem-framer.md` を作成します。これは、あいまいなビジネス課題を具体的な ML タスクへ変換するプロンプトです。問題説明（「解約を減らしたい」「次の四半期の需要を予測したい」など）を与えると、学習タイプを特定し、予測対象を定義し、候補特徴量を列挙し、成功指標を選び、ベースラインを設定し、データリークやクラス不均衡などの落とし穴を指摘します。間違ったものを作らないよう、あらゆる ML プロジェクトの開始時に使ってください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Model | "The AI" | A mathematical function with learnable parameters that maps inputs to outputs |
-| Training | "Teaching the AI" | Running an optimization algorithm to adjust model parameters so predictions match known outputs |
-| Feature | "An input column" | A measurable property of the data that the model uses to make predictions |
-| Label | "The answer" | The known output for a training example, used to compute the error signal |
-| Hyperparameter | "A setting you tweak" | A parameter set before training that controls the learning process (learning rate, number of layers) |
-| Loss function | "How wrong the model is" | A function that measures the gap between predicted and actual outputs, which training tries to minimize |
-| Overfitting | "It memorized the test" | The model learned training-specific noise instead of general patterns, so it fails on new data |
-| Underfitting | "It didn't learn anything" | The model is too simple to capture the real patterns in the data |
-| Generalization | "It works on new data" | The model's ability to make accurate predictions on data it was not trained on |
-| Cross-validation | "Testing on different chunks" | Repeatedly splitting data into train/test folds and averaging results, giving a more robust performance estimate |
-| Regularization | "Keeping weights small" | Adding a penalty term to the loss function that discourages overly complex models |
-| Data drift | "The world changed" | The statistical distribution of incoming data shifts over time, degrading model performance |
+| Model | 「AI」 | 入力を出力へ写像する、学習可能なパラメータを持つ数学的関数 |
+| Training | 「AI に教える」 | 予測が既知の出力に合うよう、最適化アルゴリズムでモデルパラメータを調整すること |
+| Feature | 「入力列」 | モデルが予測に使う、データの測定可能な性質 |
+| Label | 「答え」 | 訓練例に対する既知の出力。誤差信号の計算に使う |
+| Hyperparameter | 「調整する設定」 | 学習プロセスを制御する、学習前に設定するパラメータ（学習率、層数など） |
+| Loss function | 「モデルがどれくらい間違っているか」 | 予測出力と実際の出力の差を測る関数。学習ではこれを最小化しようとする |
+| Overfitting | 「テストを暗記した」 | モデルが一般的なパターンではなく訓練固有のノイズを学習し、新しいデータで失敗すること |
+| Underfitting | 「何も学習していない」 | モデルが単純すぎて、データ内の実際のパターンを捉えられないこと |
+| Generalization | 「新しいデータでも動く」 | 学習していないデータに対して正確な予測を行うモデルの能力 |
+| Cross-validation | 「別々の塊でテストする」 | データを訓練/テスト fold に繰り返し分割して結果を平均し、より頑健な性能推定を得ること |
+| Regularization | 「重みを小さく保つ」 | 過度に複雑なモデルを抑えるため、損失関数へ罰則項を追加すること |
+| Data drift | 「世界が変わった」 | 入ってくるデータの統計分布が時間とともに変化し、モデル性能が劣化すること |
 
-## Exercises
+## 演習
 
-1. Take any dataset (e.g., Iris, Titanic). Split it 70/15/15 into train/validation/test. Explain why you should not tune hyperparameters on the test set.
-2. List three real-world problems. For each one, identify whether it is classification, regression, or clustering, and whether it is supervised or unsupervised.
-3. A model gets 99% accuracy on training data but 60% on test data. Diagnose the problem and list three things you would try to fix it.
+1. 任意のデータセット（例: Iris、Titanic）を取り、train/validation/test に 70/15/15 で分割してください。テストセットでハイパーパラメータを調整すべきでない理由を説明してください。
+2. 現実世界の問題を 3 つ挙げてください。それぞれについて、分類、回帰、クラスタリングのどれか、また教師ありか教師なしかを特定してください。
+3. あるモデルが訓練データで 99% の精度、テストデータで 60% の精度でした。問題を診断し、それを修正するために試すことを 3 つ挙げてください。
 
-## Further Reading
+## 参考文献
 
-- [An Introduction to Statistical Learning](https://www.statlearning.com/) - free textbook covering all classical ML methods with practical examples
-- [Google's Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course) - concise visual introduction to ML concepts
-- [Scikit-learn User Guide](https://scikit-learn.org/stable/user_guide.html) - the practical reference for implementing ML in Python
+- [An Introduction to Statistical Learning](https://www.statlearning.com/) - 古典的 ML 手法全般を実践例とともに扱う無料教科書
+- [Google's Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course) - ML 概念を簡潔かつ視覚的に紹介する教材
+- [Scikit-learn User Guide](https://scikit-learn.org/stable/user_guide.html) - Python で ML を実装するための実用的なリファレンス

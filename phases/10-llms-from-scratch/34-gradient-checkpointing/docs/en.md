@@ -1,61 +1,61 @@
 # Gradient Checkpointing and Activation Recomputation
 
-> Backprop keeps every intermediate activation. At 70B parameters and 128K context that is 3 TB of activations per rank. Checkpointing trades FLOPs for memory: recompute instead of save. The question is which segments to drop, and the answer is not "all of them."
+> Backprop はすべての intermediate activation を保持します。70B parameters かつ 128K context では、rank あたり 3 TB の activations になります。Checkpointing は FLOPs と memory を交換します。保存する代わりに recompute するのです。問題はどの segments を捨てるかであり、答えは「全部」ではありません。
 
-**Type:** Build
-**Languages:** Python (with numpy, optional torch)
-**Prerequisites:** Phase 10 Lesson 04 (Pre-Training Mini-GPT), Phase 10 Lesson 05 (Scaling & Distributed)
-**Time:** ~70 minutes
+**種別:** 構築
+**言語:** Python (with numpy, optional torch)
+**前提条件:** Phase 10 Lesson 04 (Pre-Training Mini-GPT), Phase 10 Lesson 05 (Scaling & Distributed)
+**所要時間:** 約70分
 
-## The Problem
+## 問題
 
-Training a transformer stores, for each layer, the inputs to every op that is differentiated in backward: the attention inputs, the Q/K/V projections, the softmax output, the FFN inputs, the norm outputs, and the residual stream. For a layer with hidden size `d`, sequence length `L`, batch `B`, this is on the order of `12 * B * L * d` floats per layer.
+Transformer の training では、backward で微分される各 op の inputs を layer ごとに保存します。Attention inputs、Q/K/V projections、softmax output、FFN inputs、norm outputs、residual stream です。Hidden size `d`、sequence length `L`、batch `B` の layer では、おおよそ `12 * B * L * d` floats per layer になります。
 
-For `d=8192, L=8192, B=1`, that's 800 MB/layer in BF16. A 64-layer model is 51 GB of activations — and that's before you multiply by microbatch size, before you add attention-softmax intermediates (`L^2` per head), and before you factor tensor-parallel partial copies.
+`d=8192, L=8192, B=1` の場合、BF16 で 800 MB/layer です。64-layer model では activations だけで 51 GB になります。これは microbatch size を掛ける前、attention-softmax intermediates (`L^2` per head) を足す前、tensor-parallel partial copies を考慮する前の数字です。
 
-The two-sided bill: BF16 weights plus optimizer state might fit in 80GB, but activations push you past. Gradient checkpointing (aka activation recomputation) is the standard fix. Drop most activations; redo the forward during backward to get them back. Cost: extra FLOPs. Benefit: memory drops by the ratio of checkpoint segments to total layers.
+両側から請求が来ます。BF16 weights と optimizer state は 80GB に収まるかもしれませんが、activations がそれを押し出します。Gradient checkpointing (aka activation recomputation) は標準的な対策です。ほとんどの activations を捨て、backward 中に forward をやり直して取り戻します。コストは extra FLOPs。利点は、memory が checkpoint segments と total layers の比率に応じて下がることです。
 
-Done naively, checkpointing costs roughly 33% more forward-pass FLOPs per step. Done well — selective checkpointing per the "smart selection" of Korthikanti et al. — you save 5x memory for under 5% FLOP overhead. And with FP8 matmuls, FSDP offload, and expert-parallel MoE this really matters: you can't afford either the memory or the wasted compute.
+素朴に行うと、checkpointing は step あたりの forward-pass FLOPs をおよそ 33% 増やします。うまく行えば、Korthikanti et al. の "smart selection" による selective checkpointing のように、5x の memory を節約しつつ FLOP overhead を 5% 未満にできます。FP8 matmuls、FSDP offload、expert-parallel MoE がある場合、これは非常に重要です。memory も無駄な compute も、どちらも余裕がないからです。
 
-## The Concept
+## コンセプト
 
-### What Backward Actually Needs
+### Backward が実際に必要とするもの
 
-`output = layer(input)`. Backward wants `grad_input` and `grad_params`. To compute them it needs:
+`output = layer(input)`。Backward は `grad_input` と `grad_params` を必要とします。それらを計算するには次が必要です。
 
-- `input` (to compute `grad_params = input.T @ grad_output` for linear layers)
-- some activation derivative intermediates (the derivative of ReLU/GELU/softmax depends on the activation value)
+- `input` (linear layers で `grad_params = input.T @ grad_output` を計算するため)
+- いくつかの activation derivative intermediates (ReLU/GELU/softmax の derivative は activation value に依存する)
 
-The forward pass stores these automatically in the autograd graph. Every `tensor.retain_grad()` and every op that needs its input retains a reference.
+Forward pass はこれらを autograd graph に自動的に保存します。すべての `tensor.retain_grad()` と、input を必要とするすべての op が reference を保持します。
 
-### Naive Full Checkpointing
+### 素朴な Full Checkpointing
 
-Split the network into `N` segments. During forward, store only the *input* to each segment. When backward needs intermediates, rerun the segment's forward pass to materialize them, then differentiate.
+Network を `N` segments に分割します。Forward 中は各 segment の *input* だけを保存します。Backward が intermediates を必要としたら、その segment の forward pass を再実行して materialize し、それから微分します。
 
-Example: 32-layer transformer split into 32 segments of 1 layer each.
+例: 32-layer transformer を 1 layer ずつ 32 segments に分割する。
 
-- Memory: 32 layer-inputs (small) vs 32 * (activation volume per layer) (huge).
-- Extra compute: 1 extra forward per segment, i.e., ~33% more forward FLOPs total (since backward is 2x forward, full step becomes 1 + 1 + 2 = 4 units instead of 1 + 2 = 3).
+- Memory: 32 layer-inputs (小さい) vs 32 * (activation volume per layer) (巨大)。
+- Extra compute: segment ごとに 1 回の追加 forward。つまり total forward FLOPs は約 33% 増えます (backward は forward の 2x なので、full step は 1 + 2 = 3 units ではなく 1 + 1 + 2 = 4 units になる)。
 
-This is the original Chen et al. 2016 recipe: one checkpoint every `sqrt(L)` layers to balance memory and compute. For L=64, that's 8 checkpoints.
+これは元の Chen et al. 2016 のレシピです。memory と compute のバランスを取るため、`sqrt(L)` layers ごとに 1 つ checkpoint を置きます。L=64 なら 8 checkpoints です。
 
 ### Selective Checkpointing (Korthikanti 2022)
 
-Not all activations cost the same. The attention softmax output is `B*L*L*heads` and grows *quadratically* with sequence length. The FFN hidden activation is `B*L*4d` and grows linearly. For long sequences the softmax dominates.
+すべての activations が同じコストではありません。Attention softmax output は `B*L*L*heads` で、sequence length に対して *二乗* で増えます。FFN hidden activation は `B*L*4d` で、線形に増えます。長い sequences では softmax が支配的です。
 
-Selective checkpointing keeps the cheap-to-store activations (linear projections, residuals) and recomputes only the expensive ones (attention). You pay minimal FLOPs to recompute but save the O(L^2) memory.
+Selective checkpointing は、保存コストが安い activations (linear projections、residuals) を保持し、高価なもの (attention) だけを recompute します。Recompute の FLOPs は最小限に抑えながら、O(L^2) memory を節約できます。
 
-Megatron-Core implements this as "selective" activation recomputation. Used in most 2024+ frontier training runs.
+Megatron-Core はこれを "selective" activation recomputation として実装しています。2024+ の frontier training runs の多くで使われています。
 
 ### Offload
 
-Alternative to recompute: ship activations to CPU RAM between forward and backward. Requires PCIe bandwidth; beneficial when idle bandwidth exceeds the cost of rematerialization. Mixed strategies are common: checkpoint some layers, offload others.
+Recompute の代替は、forward と backward の間に activations を CPU RAM へ送ることです。PCIe bandwidth が必要で、idle bandwidth が rematerialization のコストを上回る場合に有利です。混合戦略も一般的です。一部の layers を checkpoint し、他を offload します。
 
-FSDP2 ships offload as a first-class option. Offload shines when GPU is bottlenecked on memory but CPU-GPU transfer has headroom.
+FSDP2 は offload を first-class option として提供します。GPU が memory に詰まっている一方で CPU-GPU transfer に headroom があるとき、offload は効果を発揮します。
 
 ### Recompute Cost Model
 
-Per-step FLOPs with naive checkpointing every `k` layers out of `L`:
+`L` layers のうち `k` layers ごとに素朴な checkpointing を行う場合の per-step FLOPs:
 
 ```
 flops_fwd_normal = L * f_layer
@@ -69,7 +69,7 @@ flops_total_ckpt = 4 * L * f_layer
 overhead = 4 / 3 - 1 = 0.33 = 33%
 ```
 
-With selective checkpointing you recompute only the attention kernel, not the whole layer:
+Selective checkpointing では、layer 全体ではなく attention kernel だけを recompute します。
 
 ```
 flops_recompute_selective = L * f_attention ~= L * f_layer * 0.15
@@ -78,37 +78,37 @@ overhead_selective = (3 + 0.15) / 3 - 1 = 0.05 = 5%
 
 ### Memory Savings Model
 
-Activation volume per layer: `A`. For `L` layers, total activation memory: `L * A`.
+Activation volume per layer: `A`。`L` layers では total activation memory は `L * A` です。
 
-Full checkpoint (segment size 1): store only `L * input_volume` (~`L * 1/10 A` for a standard transformer). Saves ~`9 * L * A * 1/10`.
+Full checkpoint (segment size 1): `L * input_volume` だけを保存します (standard transformer では約 `L * 1/10 A`)。約 `9 * L * A * 1/10` を節約します。
 
-Checkpoint every `k` layers: store `L/k * A` plus `k-1` layers' worth within the active segment.
+`k` layers ごとに checkpoint する場合: `L/k * A` に加え、active segment 内の `k-1` layers 分を保存します。
 
-At `k = sqrt(L)`, memory and recompute cost both scale with `sqrt(L)` — the optimal tradeoff for uniform-cost layers.
+`k = sqrt(L)` では、memory と recompute cost の両方が `sqrt(L)` で scale します。Uniform-cost layers に対する optimal tradeoff です。
 
-### When Not to Checkpoint
+### Checkpoint しない方がよい場合
 
-- The innermost layers of a pipeline stage already in-flight. They have to finish anyway.
-- The first and last layers if they dominate the stage's compute (rare in transformers).
-- Attention kernels already using FlashAttention — Flash already recomputes the softmax fast, so additional layer-level checkpointing adds little on top.
+- Pipeline stage の innermost layers がすでに in-flight の場合。どのみち完了する必要があります。
+- Stage の compute を支配する first と last layers (transformers ではまれ)。
+- Attention kernels がすでに FlashAttention を使っている場合。Flash はすでに softmax を高速に recompute するため、追加の layer-level checkpointing の上乗せ効果は小さいです。
 
-### Implementation Patterns
+### 実装パターン
 
-1. **Function wrapper:** wrap a segment in `torch.utils.checkpoint.checkpoint(fn, input)`. PyTorch stores only `input`, recomputes everything else on backward.
+1. **Function wrapper:** segment を `torch.utils.checkpoint.checkpoint(fn, input)` で wrap します。PyTorch は `input` だけを保存し、backward でそれ以外を recompute します。
 
-2. **Decorator-based:** label layers as checkpointable; the trainer decides at config time which segments get wrapped.
+2. **Decorator-based:** layers を checkpointable として label し、trainer が config time にどの segments を wrap するか決めます。
 
-3. **Manual explicit recompute:** write the backward pass yourself, calling a custom `recompute_forward` that duplicates the forward with the stored input.
+3. **Manual explicit recompute:** backward pass を自分で書き、保存した input で forward を複製する custom `recompute_forward` を呼びます。
 
-All three give the same functional result. Wrappers are the standard idiom.
+3 つとも functional result は同じです。Wrappers が標準的な idiom です。
 
-### Interaction with TP / PP / FP8
+### TP / PP / FP8 との相互作用
 
-- **Tensor parallel:** checkpoint inputs must be gathered or rescattered on recompute; handle the communication cost.
-- **Pipeline parallel:** typical pattern is to checkpoint each pipeline-stage's forward so reverse-order microbatches can reuse activation memory.
-- **FP8 recompute:** amax histories updated during recompute must match the original forward's, or the FP8 scale drifts. Most frameworks snapshot the scale.
+- **Tensor parallel:** checkpoint inputs は recompute 時に gather または rescatter する必要があります。Communication cost を扱ってください。
+- **Pipeline parallel:** 典型的な pattern は、各 pipeline-stage の forward を checkpoint し、reverse-order microbatches が activation memory を再利用できるようにすることです。
+- **FP8 recompute:** recompute 中に更新される amax histories は元の forward と一致する必要があります。一致しないと FP8 scale が drift します。多くの frameworks は scale を snapshot します。
 
-## Build It
+## 作るもの
 
 ### Step 1: A Toy Model With Segments
 
@@ -254,49 +254,49 @@ def should_recompute(layer_type, activation_bytes, recompute_flops_ratio):
     return False
 ```
 
-## Use It
+## 使い方
 
-- **torch.utils.checkpoint**: `from torch.utils.checkpoint import checkpoint` — the canonical wrapper in PyTorch. Wraps a function; stores only inputs, recomputes on backward.
-- **Megatron-Core activation recomputation**: supports `selective`, `full`, and `block` modes. Standard in 2024+ frontier training.
-- **FSDP2 offload**: `module.to_empty(device="cpu")` with `offload_policy` in FSDP2 shards activations to CPU instead of recomputing.
-- **DeepSpeed ZeRO-Offload**: CPU offload for optimizer states and activations, complementing checkpointing.
+- **torch.utils.checkpoint**: `from torch.utils.checkpoint import checkpoint` — PyTorch の canonical wrapper。Function を wrap し、inputs だけを保存して backward で recompute します。
+- **Megatron-Core activation recomputation**: `selective`、`full`、`block` modes をサポートします。2024+ の frontier training で標準的です。
+- **FSDP2 offload**: FSDP2 shards の `offload_policy` と `module.to_empty(device="cpu")` により、recompute ではなく activations を CPU に移します。
+- **DeepSpeed ZeRO-Offload**: Optimizer states と activations の CPU offload。Checkpointing を補完します。
 
 ## Ship It
 
-This lesson produces `outputs/prompt-activation-recompute-policy.md` — a prompt that takes your model config (layers, hidden, seq, batch) and available GPU memory and emits a per-layer recompute policy (none / selective / full / offload).
+この lesson は `outputs/prompt-activation-recompute-policy.md` を生成します。これは model config (layers、hidden、seq、batch) と利用可能な GPU memory を受け取り、per-layer recompute policy (none / selective / full / offload) を出力する prompt です。
 
-## Exercises
+## 演習
 
-1. Verify correctness. Run `model_forward` + `model_backward` (full activations) vs `model_forward_checkpointed` + `model_backward_checkpointed` (segments). Parameter gradients must be identical to machine precision.
+1. 正しさを検証してください。`model_forward` + `model_backward` (full activations) と `model_forward_checkpointed` + `model_backward_checkpointed` (segments) を比較します。Parameter gradients は machine precision まで一致する必要があります。
 
-2. Sweep segment size `k` from 1 to `L`. Plot FLOP overhead and memory. Find the knee of the curve.
+2. Segment size `k` を 1 から `L` まで sweep します。FLOP overhead と memory を plot し、curve の knee を見つけます。
 
-3. Implement selective checkpointing: store the attention-module input but not its intermediates. Measure the FLOP overhead vs full-layer checkpointing for a 32-layer model at seq=8192.
+3. Selective checkpointing を実装してください。Attention-module input は保存し、その intermediates は保存しないようにします。seq=8192 の 32-layer model で、full-layer checkpointing に対する FLOP overhead を測定します。
 
-4. Add offload. Save segment inputs to a simulated "CPU buffer" (a separate list). Measure "PCIe bandwidth" as bytes/time and find the breakeven point between offload and recompute.
+4. Offload を追加してください。Segment inputs を simulated "CPU buffer" (別の list) に保存します。"PCIe bandwidth" を bytes/time として測定し、offload と recompute の breakeven point を見つけます。
 
-5. Benchmark a real PyTorch transformer with and without `torch.utils.checkpoint`. Measure memory (via `torch.cuda.max_memory_allocated`) and step time.
+5. `torch.utils.checkpoint` の有無で real PyTorch transformer を benchmark してください。Memory (`torch.cuda.max_memory_allocated` 経由) と step time を測定します。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Gradient checkpointing | "Save memory by redoing forward" | Store segment inputs only; recompute intermediates during backward to get gradient-support tensors |
-| Activation recomputation | "Same as checkpointing" | The HPC-flavored name for the same technique |
-| Segment size (k) | "How many layers per checkpoint" | Number of layers whose intermediates are dropped and rematerialized together |
-| Selective checkpointing | "Korthikanti's trick" | Recompute only expensive-to-store activations (attention softmax); keep cheap ones |
-| Full checkpointing | "The naive version" | Recompute every layer's intermediates in every segment |
-| Block checkpointing | "Coarse-grained" | Checkpoint whole transformer blocks; largest granularity |
-| FLOP overhead | "The compute tax" | Extra FLOPs per step = (recompute FLOPs) / (fwd + bwd FLOPs); 33% naive, 5% selective |
-| Activation offload | "Ship to CPU" | Move activations to CPU RAM across forward->backward; alternative to recompute |
-| sqrt-L rule | "The classical optimum" | For uniform-cost layers, optimal checkpoint spacing is sqrt(L) layers |
-| Attention-softmax volume | "The O(L^2) problem" | L^2 * heads * batch floats; dominates activation memory at long contexts |
+| Gradient checkpointing | "Save memory by redoing forward" | Segment inputs だけを保存し、backward 中に intermediates を recompute して gradient-support tensors を得る |
+| Activation recomputation | "Same as checkpointing" | 同じ手法を指す HPC 風の名前 |
+| Segment size (k) | "How many layers per checkpoint" | Intermediates を捨て、まとめて rematerialize する layers 数 |
+| Selective checkpointing | "Korthikanti's trick" | 保存コストが高い activations (attention softmax) だけを recompute し、安いものは保持する |
+| Full checkpointing | "The naive version" | 各 segment 内の全 layer intermediates を recompute する |
+| Block checkpointing | "Coarse-grained" | Transformer blocks 全体を checkpoint する。最も粗い granularity |
+| FLOP overhead | "The compute tax" | Step あたり extra FLOPs = (recompute FLOPs) / (fwd + bwd FLOPs)。naive で 33%、selective で 5% |
+| Activation offload | "Ship to CPU" | Forward->backward の間に activations を CPU RAM へ移動する。Recompute の代替 |
+| sqrt-L rule | "The classical optimum" | Uniform-cost layers では optimal checkpoint spacing が sqrt(L) layers になる |
+| Attention-softmax volume | "The O(L^2) problem" | L^2 * heads * batch floats。Long contexts で activation memory を支配する |
 
-## Further Reading
+## 参考資料
 
-- [Chen et al., 2016 -- "Training Deep Nets with Sublinear Memory Cost"](https://arxiv.org/abs/1604.06174) -- the original paper that formalized gradient checkpointing
-- [Korthikanti et al., 2022 -- "Reducing Activation Recomputation in Large Transformer Models"](https://arxiv.org/abs/2205.05198) -- selective activation recomputation and the formal cost analysis
-- [Pudipeddi et al., 2020 -- "Training Large Neural Networks with Constant Memory using a New Execution Algorithm"](https://arxiv.org/abs/2002.05645) -- alternative constant-memory approach via reverse-mode rematerialization
-- [Ren et al., 2021 -- "ZeRO-Offload: Democratizing Billion-Scale Model Training"](https://arxiv.org/abs/2101.06840) -- activation offload at scale
-- [PyTorch torch.utils.checkpoint docs](https://pytorch.org/docs/stable/checkpoint.html) -- the standard API
-- [Megatron-Core activation recomputation documentation](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/features/memory_optimizations.html) -- selective, full, and block modes
+- [Chen et al., 2016 -- "Training Deep Nets with Sublinear Memory Cost"](https://arxiv.org/abs/1604.06174) -- gradient checkpointing を形式化した original paper
+- [Korthikanti et al., 2022 -- "Reducing Activation Recomputation in Large Transformer Models"](https://arxiv.org/abs/2205.05198) -- selective activation recomputation と formal cost analysis
+- [Pudipeddi et al., 2020 -- "Training Large Neural Networks with Constant Memory using a New Execution Algorithm"](https://arxiv.org/abs/2002.05645) -- reverse-mode rematerialization による alternative constant-memory approach
+- [Ren et al., 2021 -- "ZeRO-Offload: Democratizing Billion-Scale Model Training"](https://arxiv.org/abs/2101.06840) -- scale した activation offload
+- [PyTorch torch.utils.checkpoint docs](https://pytorch.org/docs/stable/checkpoint.html) -- standard API
+- [Megatron-Core activation recomputation documentation](https://docs.nvidia.com/nemo-framework/user-guide/latest/nemotoolkit/features/memory_optimizations.html) -- selective、full、block modes

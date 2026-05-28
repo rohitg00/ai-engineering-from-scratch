@@ -1,26 +1,26 @@
-# Git & Collaboration
+# Gitとコラボレーション
 
-> Version control is not optional. Every experiment, every model, every lesson you build here gets tracked.
+> バージョン管理は任意ではありません。ここで作るすべての実験、すべてのモデル、すべてのレッスンを記録します。
 
-**Type:** Learn
-**Languages:** --
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~30 minutes
+**タイプ:** 学習
+**言語:** --
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約30分
 
-## Learning Objectives
+## 学習目標
 
-- Configure git identity and use the daily workflow of add, commit, and push
-- Create and merge branches for isolated experiments without breaking main
-- Write a `.gitignore` that excludes model checkpoints and large binary files
-- Navigate the commit history with `git log` to understand project evolution
+- gitのユーザー情報を設定し、add、commit、pushの日常的な流れを使う
+- mainを壊さずに、独立した実験用のブランチを作成してマージする
+- モデルチェックポイントや大きなバイナリファイルを除外する `.gitignore` を書く
+- `git log` でコミット履歴をたどり、プロジェクトの進化を理解する
 
-## The Problem
+## 課題
 
-You're about to write hundreds of code files across 20 phases. Without version control you will lose work, break things you can't undo, and have no way to collaborate with others.
+あなたはこれから、20フェーズにわたって何百ものコードファイルを書きます。バージョン管理がなければ、作業を失い、元に戻せない壊し方をし、他の人と協力する手段もなくなります。
 
-Git is the tool. GitHub is where the code lives. This lesson covers what you need for this course and nothing more.
+Gitが道具です。GitHubはコードを置く場所です。このレッスンでは、このコースに必要なことだけを扱います。
 
-## The Concept
+## 考え方
 
 ```mermaid
 sequenceDiagram
@@ -35,21 +35,21 @@ sequenceDiagram
     LR->>WD: git pull
 ```
 
-Three things to remember:
-1. Save often (`git commit`)
-2. Push to remote (`git push`)
-3. Branch for experiments (`git checkout -b experiment`)
+覚えることは3つです。
+1. こまめに保存する（`git commit`）
+2. リモートへ送る（`git push`）
+3. 実験にはブランチを使う（`git checkout -b experiment`）
 
-## Build It
+## 作ってみる
 
-### Step 1: Configure git
+### ステップ1: gitを設定する
 
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
 
-### Step 2: The daily workflow
+### ステップ2: 日常のワークフロー
 
 ```bash
 git status
@@ -58,7 +58,7 @@ git commit -m "Add perceptron implementation"
 git push origin main
 ```
 
-### Step 3: Branching for experiments
+### ステップ3: 実験用にブランチを切る
 
 ```bash
 git checkout -b experiment/new-optimizer
@@ -69,7 +69,7 @@ git checkout main
 git merge experiment/new-optimizer
 ```
 
-### Step 4: Working with this course repo
+### ステップ4: このコースのリポジトリで作業する
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -80,31 +80,31 @@ git checkout -b my-progress
 git push origin my-progress
 ```
 
-## Use It
+## 使ってみる
 
-For this course, you need exactly these commands:
+このコースで必要なコマンドは、正確には次のものだけです。
 
-| Command | When |
+| コマンド | 使う場面 |
 |---------|------|
-| `git clone` | Get the course repo |
-| `git add` + `git commit` | Save your work |
-| `git push` | Back it up to GitHub |
-| `git checkout -b` | Try something without breaking main |
-| `git log --oneline` | See what you've done |
+| `git clone` | コースのリポジトリを取得する |
+| `git add` + `git commit` | 作業を保存する |
+| `git push` | GitHubへバックアップする |
+| `git checkout -b` | mainを壊さずに試す |
+| `git log --oneline` | 自分がやったことを見る |
 
-That's it. You don't need rebase, cherry-pick, or submodules for this course.
+これだけです。このコースでは、rebase、cherry-pick、submoduleは必要ありません。
 
-## Exercises
+## 演習
 
-1. Clone this repo, create a branch called `my-progress`, make a file, commit it, push it
-2. Create a `.gitignore` that excludes model checkpoint files (`.pt`, `.pth`, `.safetensors`)
-3. Look at the commit history of this repo with `git log --oneline` and read how lessons were added
+1. このリポジトリをcloneし、`my-progress` というブランチを作成し、ファイルを作ってcommitし、pushする
+2. モデルチェックポイントファイル（`.pt`, `.pth`, `.safetensors`）を除外する `.gitignore` を作成する
+3. `git log --oneline` でこのリポジトリのコミット履歴を見て、レッスンがどのように追加されたかを読む
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Commit | "Saving" | A snapshot of your entire project at a point in time |
-| Branch | "A copy" | A pointer to a commit that moves forward as you work |
-| Merge | "Combining code" | Taking changes from one branch and applying them to another |
-| Remote | "The cloud" | A copy of your repo hosted somewhere else (GitHub, GitLab) |
+| Commit | 「保存」 | ある時点のプロジェクト全体のスナップショット |
+| Branch | 「コピー」 | 作業に合わせて前へ進む、コミットへのポインタ |
+| Merge | 「コードをまとめる」 | あるブランチの変更を別のブランチへ適用すること |
+| Remote | 「クラウド」 | GitHubやGitLabなど、別の場所にホストされたリポジトリのコピー |

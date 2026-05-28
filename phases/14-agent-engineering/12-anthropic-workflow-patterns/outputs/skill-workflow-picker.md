@@ -1,38 +1,38 @@
 ---
 name: workflow-picker
-description: Pick the right pattern (prompt chain, router, parallel, orchestrator-workers, evaluator-optimizer, or full agent) for a given task and produce the minimal implementation.
+description: 与えられた task に対し、prompt chain、router、parallel、orchestrator-workers、evaluator-optimizer、または full agent のうち適切な最小 pattern を選び、実装を生成する。
 version: 1.0.0
 phase: 14
 lesson: 12
 tags: [anthropic, workflows, agents, patterns, minimal]
 ---
 
-Given a task description, pick the minimal pattern that fits and produce the smallest correct implementation.
+Task description が与えられたら、fit する最小 pattern を選び、最小の正しい implementation を生成する。
 
 Decision tree:
 
-1. Can you enumerate the steps? -> **prompt chain** or **routing**.
-2. Does output need aggregation across independent runs? -> **parallelization** (sectioning or voting).
-3. Do you need a specialist pool whose membership varies per task? -> **orchestrator-workers**.
-4. Do you need iterative refinement until a judge passes? -> **evaluator-optimizer** (Self-Refine shape).
-5. None of the above, or the step count depends on intermediate results? -> **agent loop** (Lesson 01).
+1. Steps を enumerate できるか? -> **prompt chain** または **routing**。
+2. Independent runs の output を aggregate する必要があるか? -> **parallelization** (sectioning または voting)。
+3. Task ごとに membership が変わる specialist pool が必要か? -> **orchestrator-workers**。
+4. Judge が pass するまで iterative refinement が必要か? -> **evaluator-optimizer** (Self-Refine shape)。
+5. どれでもない、または step count が intermediate results に依存するか? -> **agent loop** (Lesson 01)。
 
-Produce:
+生成するもの:
 
-- For workflows: pure functions composing LLM + tool calls. No framework.
-- For agents: the ReAct loop from Lesson 01 plus whatever tool registry the task requires.
-- A `README.md` with the decision rationale, step count, expected token cost, and the observable success criterion.
+- Workflows: LLM + tool calls を compose する pure functions。Framework は使わない。
+- Agents: Lesson 01 の ReAct loop と、task に必要な tool registry。
+- Decision rationale、step count、expected token cost、observable success criterion を含む `README.md`。
 
 Hard rejects:
 
-- Reaching for a framework (LangGraph, AutoGen, CrewAI) when the task is a 3-step prompt chain. Over-engineering hides the actual problem.
-- Describing a 3-worker orchestrator-worker as "multi-agent." The workers are not agents; they are LLM calls. Use "orchestrator-workers" for clarity.
-- Evaluator-optimizer with no stop condition. Without `max_iter` and a "fail-pass-through" fallback, the loop can spin indefinitely.
+- Task が 3-step prompt chain なのに framework (LangGraph, AutoGen, CrewAI) に手を伸ばすこと。Over-engineering は実際の問題を隠す。
+- 3-worker orchestrator-worker を "multi-agent" と説明すること。Workers は agents ではなく LLM calls です。Clarity のため "orchestrator-workers" と呼ぶ。
+- Stop condition のない evaluator-optimizer。`max_iter` と "fail-pass-through" fallback がなければ loop は無期限に回る可能性がある。
 
 Refusal rules:
 
-- If the user asks for "multi-agent" when the task is actually a router, refuse and rename. The multi-agent label carries operational cost (coordination, debugging, evals) that routing does not need.
-- If the user wants workflows for an open-ended research task, refuse and suggest an agent with a turn budget. Workflows are for predictable trajectories.
-- If the user wants an agent for a 2-step task, refuse and suggest prompt chaining. Agents add latency and failure modes; use them only when you need them.
+- User が「multi-agent」と求めても task が実際には router である場合、拒否して名前を変える。Multi-agent label は routing には不要な operational cost (coordination, debugging, evals) を持ち込む。
+- User が open-ended research task に workflows を求める場合、拒否して turn budget 付き agent を提案する。Workflows は predictable trajectories 用。
+- User が 2-step task に agent を求める場合、拒否して prompt chaining を提案する。Agents は latency と failure modes を増やす。必要なときだけ使う。
 
-Output: pattern choice + minimal code + README. End with "what to read next" pointing to Lesson 13 (LangGraph) if durable state matters, Lesson 16 (OpenAI Agents SDK) for handoffs and guardrails, or Lesson 01 if you're picking an agent after all.
+Output: pattern choice + minimal code + README。最後に、durable state が重要なら Lesson 13 (LangGraph)、handoffs と guardrails には Lesson 16 (OpenAI Agents SDK)、結局 agent を選ぶなら Lesson 01 への "what to read next" で締める。

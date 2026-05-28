@@ -1,33 +1,33 @@
-# Capstone Lesson 27: Eval Harness with Fixture Tasks
+# Capstone Lesson 27: Fixture Tasks つき Eval Harness
 
-> A coding agent is only as good as the suite of tasks you measure it against. This lesson builds an evaluation harness that takes a folder of fixture tasks, runs each through a candidate agent, scores pass or fail through a deterministic verifier, and aggregates the results into pass@1, pass@k, mean latency, and mean cost. The harness is the source of truth that lets you tell a regression from a refactor.
+> coding agent の質は、それを測る task suite の質で決まります。この lesson では fixture task の folder を受け取り、各 task を candidate agent に通し、deterministic verifier で pass/fail を採点し、pass@1、pass@k、mean latency、mean cost に aggregate する evaluation harness を作ります。harness は regression と refactor を見分けるための source of truth です。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Define a fixture task as a triple of goal, setup, and verifier.
-- Score multiple sample runs per task and compute pass@1 and pass@k.
-- Aggregate latency and cost into mean and 95th-percentile metrics.
-- Wire deterministic verifiers (file diff, exit code, regex match) into reusable functions.
-- Emit a structured JSON report a regression-tracking script can ingest.
+- fixture task を goal、setup、verifier の triple として定義する。
+- task ごとに複数 sample run を採点し、pass@1 と pass@k を計算する。
+- latency と cost を mean と 95th-percentile metric に aggregate する。
+- deterministic verifier（file diff、exit code、regex match）を reusable function に wire する。
+- regression-tracking script が取り込める structured JSON report を emit する。
 
-## The Problem
+## 問題
 
-Three failure modes plague agent benchmarks built without an eval harness.
+eval harness なしで作られた agent benchmark は 3 つの failure mode に悩まされます。
 
-The first is unverified pass. The agent says it fixed the bug, the human glances at the diff, the suite is marked green, and three weeks later the regression test surfaces the same bug. The agent had reasoned plausibly without actually fixing anything.
+1 つ目は unverified pass です。agent は bug を直したと言い、人間が diff を一瞥し、suite は green と mark されます。3 週間後、regression test が同じ bug を surface します。agent はもっともらしく推論しただけで、何も直していなかったのです。
 
-The second is undetected regression. A change to the prompt template makes the agent 4% better on the loud task and 14% worse on the quiet one. Without a goldset and a per-task score, the regression rides into main and surfaces only when a customer complains.
+2 つ目は undetected regression です。prompt template の変更で agent は目立つ task では 4% 良くなり、静かな task では 14% 悪くなります。goldset と per-task score がなければ、regression は main に入り、customer complaint で初めて出てきます。
 
-The third is per-task drift. The eval was run on Monday with 100 tasks and on Friday with 95 of them, because somebody renamed five fixtures. The pass rate looks like a 5% improvement. It isn't.
+3 つ目は per-task drift です。eval は月曜に 100 task で走り、金曜には誰かが 5 fixture を rename したため 95 task で走ります。pass rate は 5% improvement に見えます。実際には違います。
 
-The harness is the program that turns these failures into facts. It runs every fixture, every time, in a reproducible order, against a verifier that returns true or false on a deterministic check.
+harness はこれらの failure を fact に変える program です。すべての fixture を、毎回、reproducible order で、true/false を deterministic check で返す verifier に対して実行します。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart LR
@@ -37,19 +37,19 @@ flowchart LR
   Harness --> Report[EvalReport<br/>pass@1 / pass@k<br/>mean ms / p95 ms<br/>mean cost]
 ```
 
-A `FixtureTask` is a small JSON file plus an optional `expected/` directory. The JSON declares an `id`, a `goal` (the prompt fed to the agent), a `setup` block (files to drop into the scratch dir), and a `verifier` block. The verifier block names a function in the harness's verifier registry and supplies its arguments.
+`FixtureTask` は小さな JSON file と optional な `expected/` directory です。JSON は `id`、`goal`（agent に渡す prompt）、`setup` block（scratch dir に置く file）、`verifier` block を宣言します。verifier block は harness の verifier registry 内の function を名指しし、その argument を渡します。
 
-Three verifier shapes cover the majority of useful tasks.
+多くの有用な task は 3 種類の verifier shape で cover できます。
 
-The first is `file_equals`. After the agent runs, compare a named file against an expected content. This catches "fix this bug in this exact way" tasks.
+1 つ目は `file_equals` です。agent 実行後、指定 file を expected content と比較します。「この exact way で bug を直す」task を捕まえます。
 
-The second is `regex_match`. The named file's contents are matched against a regex. This catches "the function must exist and return X" tasks where there are many acceptable solutions.
+2 つ目は `regex_match` です。指定 file の内容を regex に match します。「function が存在して X を返すべき」task のように acceptable solution が複数ある場合を捕まえます。
 
-The third is `shell_exit_zero`. The harness runs a shell command (through the sandbox from lesson 26) and passes the task only if the command exits zero. This catches "the tests must pass" tasks.
+3 つ目は `shell_exit_zero` です。harness が shell command（lesson 26 の sandbox 経由）を実行し、command が exit zero のときだけ task を pass にします。「tests must pass」task を捕まえます。
 
-The harness runs each task `k` times. Pass@k is `1 - (1 - p)^k` where p is the empirical pass rate; the harness also reports raw counts so you can spot variance. Latency is wall-clock per sample. Cost is whatever the agent self-reports (token count, USD, or both); the harness sums it across samples and presents the per-task and aggregate numbers.
+harness は各 task を `k` 回走らせます。Pass@k は `1 - (1 - p)^k` です。p は empirical pass rate です。variance に気づけるよう、harness は raw count も report します。Latency は sample ごとの wall-clock です。Cost は agent が自己申告するもの（token count、USD、または両方）です。harness は sample 全体で合計し、per-task と aggregate number を提示します。
 
-## Architecture
+## アーキテクチャ
 
 ```mermaid
 flowchart TD
@@ -59,39 +59,39 @@ flowchart TD
   TaskReport -->|aggregate| EvalReport[EvalReport<br/>total tasks / pass@1 / pass@k / p95 latency]
 ```
 
-The candidate is a callable: `Callable[[FixtureTask, str], SampleResult]`. The harness creates the scratch directory via `tempfile.mkdtemp()` and passes its path as a plain string. The harness does not care how the candidate works. The candidate could be a deterministic patch applier (useful for harness self-tests), a real LLM agent, a fuzzer. The contract is the SampleResult.
+candidate は callable、`Callable[[FixtureTask, str], SampleResult]` です。harness は `tempfile.mkdtemp()` で scratch directory を作り、その path を plain string として渡します。harness は candidate の内部を気にしません。candidate は deterministic patch applier（harness self-test に便利）、real LLM agent、fuzzer のどれでもよいです。contract は SampleResult です。
 
-## What you will build
+## 作るもの
 
-`main.py` ships:
+`main.py` には以下が入っています。
 
-1. `FixtureTask` dataclass.
-2. `SampleResult` dataclass: success_self_reported, latency_ms, cost_units, edits.
-3. `TaskReport`, `EvalReport` dataclasses with `to_dict()`.
-4. `VerifierRegistry` mapping verifier name to function. Built-in verifiers: file_equals, regex_match, shell_exit_zero.
-5. `EvalHarness` class. Runs a directory of tasks against a candidate. Returns EvalReport.
-6. Five fixture tasks bundled in `tasks/`:
-   - off-by-one in `fizzbuzz`
-   - missing return in `factorial`
-   - typo in error message
+1. `FixtureTask` dataclass。
+2. `SampleResult` dataclass: success_self_reported, latency_ms, cost_units, edits。
+3. `TaskReport`, `EvalReport` dataclass と `to_dict()`。
+4. verifier name から function への `VerifierRegistry`。built-in verifier: file_equals, regex_match, shell_exit_zero。
+5. `EvalHarness` class。task directory を candidate に対して実行し、EvalReport を返す。
+6. `tasks/` に同梱された 5 つの fixture task:
+   - `fizzbuzz` の off-by-one
+   - `factorial` の missing return
+   - error message の typo
    - empty function body
-   - off-by-one in linked-list traversal
-7. A deterministic reference candidate (`apply_known_fixes`) the harness uses to demonstrate a clean pass@1 of 1.0.
-8. Demo prints the EvalReport JSON and exits zero.
+   - linked-list traversal の off-by-one
+7. harness が clean pass@1 = 1.0 を示すために使う deterministic reference candidate（`apply_known_fixes`）。
+8. demo は EvalReport JSON を print し、exit zero する。
 
-The fixture tasks are bundled as JSON files in `tasks/` plus paired source files in `tasks/<id>/buggy/` and `tasks/<id>/expected/`. The harness copies buggy into a scratch dir, hands it to the candidate, and verifies against expected.
+fixture task は `tasks/` の JSON file と、`tasks/<id>/buggy/` および `tasks/<id>/expected/` の paired source file として同梱されています。harness は buggy を scratch dir に copy し、candidate に渡し、expected と照合します。
 
-## Why pass@k and not just pass@1
+## なぜ pass@k で、pass@1 だけではないのか
 
-Real LLM agents are stochastic. A pass@1 of 0.6 looks like a failure. A pass@5 of 0.95 says the agent gets the right answer most of the time but is choosing wrong on early samples. The fix is sampling and ranking, not always more training. Pass@k makes that visible.
+real LLM agent は stochastic です。pass@1 が 0.6 なら失敗に見えます。pass@5 が 0.95 なら、agent はたいてい正解に到達するが、early sample で選択を誤っていることを示します。fix は sampling と ranking であり、常に training を増やすことではありません。Pass@k はそれを見えるようにします。
 
-Pass@k is reported alongside pass@1 because pass@k papers over a real failure: if the model gets the right answer once in twenty tries you do not have a useful agent. The harness shows both.
+pass@k は pass@1 と一緒に report します。pass@k は実際の failure を覆い隠すことがあるからです。model が 20 回に 1 回だけ正解するなら、有用な agent とは言えません。harness は両方を表示します。
 
-## How this composes with the rest of Track A
+## Track A の他 lesson との合成
 
-Lesson 25 produced the gate chain. Lesson 26 produced the sandbox. The harness uses the sandbox for any `shell_exit_zero` verifier. Lesson 28 wraps each harness run in an OTel trace. Lesson 29 runs the end-to-end demo against one of the bundled fixtures and asserts pass@1 = 1.0 for the reference candidate.
+Lesson 25 は gate chain を作りました。Lesson 26 は sandbox を作りました。harness は `shell_exit_zero` verifier に sandbox を使います。Lesson 28 は各 harness run を OTel trace で wrap します。Lesson 29 は同梱 fixture の 1 つに対して end-to-end demo を走らせ、reference candidate の pass@1 = 1.0 を assert します。
 
-## Running it
+## 実行方法
 
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
@@ -99,4 +99,4 @@ python3 code/main.py
 python3 -m pytest code/tests/ -v
 ```
 
-The demo prints the EvalReport in JSON, including pass@1, pass@5, mean latency, and per-task breakdown. The exit code is zero. The tests cover the verifier functions, the pass@k math, fixture loading, and the harness end-to-end against the bundled reference candidate.
+demo は pass@1、pass@5、mean latency、per-task breakdown を含む EvalReport JSON を print します。exit code は zero です。tests は verifier function、pass@k math、fixture loading、同梱 reference candidate に対する harness end-to-end を cover します。

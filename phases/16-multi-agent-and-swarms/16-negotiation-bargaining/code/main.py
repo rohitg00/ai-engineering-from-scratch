@@ -1,8 +1,8 @@
-"""Negotiation: Contract Net + OG-Narrator demo, stdlib only.
+"""Negotiation: Contract Net + OG-Narrator demo。stdlib のみ。
 
-Compares naive all-LLM bargaining against OG-Narrator (deterministic offer
-generator + LLM narration). Measures deal rate over 1000 trials. Includes
-a small Contract Net task-market demo at the end.
+naive all-LLM bargaining と OG-Narrator (deterministic offer generator + LLM narration)
+を比較する。1000 trials で deal rate を測る。最後に小さな Contract Net
+task-market demo を含める。
 """
 from __future__ import annotations
 
@@ -21,9 +21,9 @@ class BargainState:
 
 
 def naive_llm_bargain(state: BargainState, rng: random.Random) -> int:
-    """Simulate naive LLM bargaining: picks a price with high variance and
-    frequently outside the ZOPA (mimics strategic errors documented in
-    arXiv:2402.15813)."""
+    """naive LLM bargaining を simulate する。
+    high variance で、しばしば ZOPA 外の price を選ぶ
+    (arXiv:2402.15813 で文書化された strategic error を模倣)。"""
     r = rng.random()
     if state.seller_offer is None:
         candidate = rng.randint(state.buyer_max - 60, state.buyer_max + 30)
@@ -38,7 +38,7 @@ def naive_llm_bargain(state: BargainState, rng: random.Random) -> int:
 
 def og_narrator_bargain(state: BargainState, rng: random.Random,
                         concession: float = 0.35) -> int:
-    """OG-Narrator deterministic offer: zeuthen-style concession toward midpoint."""
+    """OG-Narrator deterministic offer: midpoint に向かう zeuthen-style concession。"""
     if state.seller_offer is None and state.buyer_offer is None:
         return state.buyer_max - max(1, int((state.buyer_max - state.seller_min) * 0.2))
     if state.seller_offer is None:
@@ -52,7 +52,7 @@ def og_narrator_bargain(state: BargainState, rng: random.Random,
 
 def seller_response(state: BargainState, rng: random.Random,
                     concession: float = 0.3) -> int:
-    """Seller uses OG-Narrator-style offer too (for both buyers)."""
+    """seller も OG-Narrator-style offer を使う (両 buyer 向け)。"""
     if state.buyer_offer is None and state.seller_offer is None:
         return state.seller_min + max(1, int((state.buyer_max - state.seller_min) * 0.4))
     if state.buyer_offer is None:
@@ -71,13 +71,13 @@ def simulate_bargain(buyer_fn, rng: random.Random, buyer_max: int = 100,
     while state.rounds < state.max_rounds:
         state.buyer_offer = buyer_fn(state, rng)
         if state.seller_offer is not None and state.buyer_offer >= state.seller_offer:
-            # trade clears at seller's standing ask; feasible iff within both reservations
+            # seller の standing ask で trade clears。両 reservation 内なら feasible。
             if state.seller_offer >= state.seller_min and state.seller_offer <= state.buyer_max:
                 deal = True
             break
         state.seller_offer = seller_response(state, rng)
         if state.buyer_offer is not None and state.seller_offer <= state.buyer_offer:
-            # trade clears at buyer's standing bid; feasible iff within both reservations
+            # buyer の standing bid で trade clears。両 reservation 内なら feasible。
             if state.buyer_offer <= state.buyer_max and state.buyer_offer >= state.seller_min:
                 deal = True
             break
@@ -123,13 +123,13 @@ class ContractNetManager:
 
     def receive_proposal(self, task_id: str, bid: Bid) -> None:
         self.proposals[task_id].append(bid)
-        print(f"    propose from {bid.bidder}: price={bid.price} eta={bid.eta_minutes}m conf={bid.confidence:.2f}")
+        print(f"    {bid.bidder} から propose: price={bid.price} eta={bid.eta_minutes}m conf={bid.confidence:.2f}")
 
     def award(self, task: ContractNetTask) -> Bid | None:
         props = self.proposals.get(task.task_id, [])
         feasible = [b for b in props if b.price <= task.budget and b.eta_minutes <= task.deadline_minutes]
         if not feasible:
-            print("    no feasible bid; awarding rejected")
+            print("    feasible bid なし。award は rejected")
             return None
         winner = max(feasible, key=lambda b: b.confidence / max(b.price, 1))
         print(f"  manager accept-proposal -> {winner.bidder} (score = conf/price)")
@@ -141,11 +141,11 @@ class ContractNetManager:
 
 def demo_contract_net() -> None:
     print("\n" + "=" * 72)
-    print("CONTRACT NET TASK MARKET — manager + 3 bidders")
+    print("CONTRACT NET TASK MARKET - manager + 3 bidders")
     print("=" * 72)
     task = ContractNetTask(
         task_id="t-1",
-        description="compress 10GB log bundle",
+        description="10GB log bundle を圧縮",
         deadline_minutes=30,
         budget=10,
     )
@@ -159,21 +159,21 @@ def demo_contract_net() -> None:
 
 def main() -> None:
     print("=" * 72)
-    print("DEAL RATE — naive LLM bargaining vs OG-Narrator")
-    print("reservation prices sampled per trial: seller_min in [50,80], buyer_max in [75,115]")
+    print("DEAL RATE - naive LLM bargaining vs OG-Narrator")
+    print("trial ごとに reservation price を sample: seller_min in [50,80], buyer_max in [75,115]")
     print("=" * 72)
     bench_deal_rate(naive_llm_bargain, "naive LLM")
     bench_deal_rate(og_narrator_bargain, "OG-Narrator")
     demo_contract_net()
 
     print("\nTakeaways:")
-    print("  naive LLM-only bargaining has inflated variance -- swings outside the ZOPA.")
-    print("  OG-Narrator (deterministic offer + LLM narration) converges on every trial")
-    print("  because prices are arithmetic, not generative.")
-    print("  The original paper (arXiv:2402.15813) reports 26.67% -> 88.88% on the tighter")
-    print("  real-LLM benchmark. Our simulation shrinks the gap because the opposing seller")
-    print("  is already using deterministic offers -- the structural pattern is the same.")
-    print("  Contract Net scales: broadcast + collect + award; no synchronous chat needed.")
+    print("  naive LLM-only bargaining は variance が大きく、ZOPA 外へ振れる。")
+    print("  OG-Narrator (deterministic offer + LLM narration) はすべての trial で収束する。")
+    print("  price は generative ではなく arithmetic だから。")
+    print("  original paper (arXiv:2402.15813) は tighter な real-LLM benchmark で")
+    print("  26.67% -> 88.88% を報告している。ここでは opposing seller も")
+    print("  deterministic offer を使うため gap は小さいが、structural pattern は同じ。")
+    print("  Contract Net は scale する。broadcast + collect + award で、synchronous chat は不要。")
 
 
 if __name__ == "__main__":

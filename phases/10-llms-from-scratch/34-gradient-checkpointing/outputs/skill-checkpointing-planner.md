@@ -1,27 +1,27 @@
 ---
 name: checkpointing-planner
-description: Choose an activation recomputation policy per layer (none / selective / full / offload) given a training config and HBM budget.
+description: training config と HBM budget をもとに、layer ごとの activation recomputation policy (none / selective / full / offload) を選ぶ。
 version: 1.0.0
 phase: 10
 lesson: 34
 tags: [gradient-checkpointing, activation-recomputation, selective-checkpoint, fsdp-offload, training-memory]
 ---
 
-Given the training config (layer count L, hidden size d, sequence length S, microbatch B, dtype bytes per value, attention kernel, tensor-parallel degree TP, pipeline-parallel degree PP, expert-parallel degree EP if MoE) and the per-rank HBM budget after weights and optimizer state, output:
+Training config (layer count L、hidden size d、sequence length S、microbatch B、dtype bytes per value、attention kernel、tensor-parallel degree TP、pipeline-parallel degree PP、MoE の場合は expert-parallel degree EP) と、weights と optimizer state を除いた per-rank HBM budget が与えられたら、次を出力します。
 
-1. Per-layer policy. For each layer family in the stack (embedding, attention, FFN, MoE expert, norm, output head) pick none, selective, full, or offload. Default to selective for attention when S exceeds 4_096; default to none on residual streams and norms; default to offload on FFN only when the measured PCIe transfer time for that layer's activations is less than its measured recompute time.
-2. Segment size k. If full checkpointing is on, pick k as round(sqrt(L)) for uniform layer cost, smaller k when activation memory dominates the budget. Report extra FLOP percentage as (1/k) of forward FLOPs.
-3. FlashAttention interaction. Confirm whether the attention kernel already recomputes softmax. If yes, selective attention checkpointing buys little; downgrade to none. State the kernel by name (FlashAttention-2/3, xFormers memory-efficient, vanilla).
-4. TP / PP plan. For TP, name the activations that need gather or rescatter on recompute and the per-step communication bytes added. For PP, confirm which pipeline stages get checkpointed end-to-end so reverse microbatches free activation memory before flowing back.
-5. Budget math. Predict activation memory before and after the policy (in MB per rank). Predict FLOP overhead as percent of fwd+bwd. Reject any plan that does not fit in the HBM budget with 10 percent headroom.
+1. Per-layer policy。Stack 内の各 layer family (embedding、attention、FFN、MoE expert、norm、output head) について、none、selective、full、offload のいずれかを選びます。S が 4_096 を超える場合は attention を selective にするのを default とします。Residual streams と norms は none を default とします。FFN で offload を default にするのは、その layer の activations に対する measured PCIe transfer time が measured recompute time より短い場合だけです。
+2. Segment size k。Full checkpointing が有効なら、uniform layer cost では k を round(sqrt(L)) として選び、activation memory が budget を支配する場合はより小さい k を選びます。Extra FLOP percentage を forward FLOPs の (1/k) として報告します。
+3. FlashAttention interaction。Attention kernel がすでに softmax を recompute しているか確認します。している場合、selective attention checkpointing の利点は小さいため none に downgrade します。Kernel 名 (FlashAttention-2/3、xFormers memory-efficient、vanilla) を明記します。
+4. TP / PP plan。TP では、recompute 時に gather または rescatter が必要な activations と、追加される per-step communication bytes を示します。PP では、reverse microbatches が戻る前に activation memory を解放できるよう、どの pipeline stages を end-to-end で checkpoint するか確認します。
+5. Budget math。Policy 適用前後の activation memory を予測します (MB per rank)。FLOP overhead を fwd+bwd に対する percent として予測します。10 percent headroom を含めて HBM budget に収まらない plan は拒否します。
 
-Refuse full checkpointing every layer when selective on attention alone closes the budget; profile shows the FLOP overhead is many times higher than selective for the same memory savings, and the exact ratio is workload-specific. Refuse offload when the layer's measured activation transfer time on the target PCIe link exceeds its measured recompute time; recompute wins. Refuse "checkpoint everywhere" for FP8 training when the chosen framework does not snapshot amax history; the recompute will drift the scale and silently corrupt gradients.
+Attention だけの selective で budget を満たせる場合、every layer の full checkpointing は拒否します。同じ memory savings に対して FLOP overhead が selective より何倍も高く、正確な比率は workload-specific です。Target PCIe link 上で layer の measured activation transfer time が measured recompute time を超える場合、offload は拒否します。Recompute の方が勝ちます。選んだ framework が amax history を snapshot しない FP8 training では、"checkpoint everywhere" を拒否します。Recompute により scale が drift し、gradients が silent に破損します。
 
 Example input: "L=64, d=8192, S=8192, B=1, bf16, FlashAttention-3, TP=8, PP=4, HBM budget per rank 32 GB after weights, MoE with 8 experts and EP=8."
 
 Example output:
 - Per-layer policy: attention selective, FFN none, MoE expert full, embedding none, output head offload.
-- Segment size: full applied on MoE only at k=8; FLOP overhead 12 percent on expert path, 0 elsewhere.
-- FlashAttention interaction: FA-3 already recomputes softmax; selective at the layer wrapper, not inside the kernel.
-- TP / PP plan: TP gather of the attention input on recompute, 0.3 GB per step extra comms; PP stages each checkpoint their full forward; PP stage 3 retains its activations for the final backward.
-- Budget math: activations 38 GB without policy, 11 GB with policy. Total FLOP overhead 7.5 percent fwd+bwd.
+- Segment size: full は MoE のみに k=8 で適用。FLOP overhead は expert path で 12 percent、それ以外は 0。
+- FlashAttention interaction: FA-3 はすでに softmax を recompute する。Selective は kernel 内ではなく layer wrapper で行う。
+- TP / PP plan: recompute 時に attention input の TP gather、extra comms は step あたり 0.3 GB。PP stages はそれぞれ full forward を checkpoint する。PP stage 3 は final backward のため activations を保持する。
+- Budget math: policy なしでは activations 38 GB、policy ありでは 11 GB。Total FLOP overhead は fwd+bwd の 7.5 percent。

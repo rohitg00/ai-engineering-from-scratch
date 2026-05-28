@@ -1,26 +1,26 @@
-# Tool Registry with Schema Validation
+# スキーマ検証つき Tool Registry
 
-> A tool the agent cannot validate is a tool the agent cannot call. Build the registry and the schema checker before you build the tools.
+> エージェントが検証できない tool は、エージェントが呼び出せない tool です。tool 本体を作る前に、registry と schema checker を作ります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 13 lessons 01-07, Phase 14 lesson 01
+**所要時間:** 約90分
 
-## Learning Objectives
-- Hold a typed registry of tool name → schema → handler that the dispatcher can ask once and trust afterwards.
-- Implement a JSON Schema 2020-12 subset that covers the keywords ninety percent of tool calls actually use.
-- Return precise, json-pointer-shaped error paths so the model can self-correct in one round trip.
-- Reject re-registration without explicit override, since silent overwrites are how production tool catalogs drift.
-- Keep the validator pure (no I/O, no time, no globals) so it can be re-run on a replay log.
+## 学習目標
+- dispatcher が一度問い合わせれば以後信頼できる、tool name → schema → handler の型付き registry を保持する。
+- tool call の 9 割で実際に使う keyword をカバーする JSON Schema 2020-12 の subset を実装する。
+- model が 1 往復で自己修正できるように、json-pointer 形式の正確な error path を返す。
+- 明示的な override なしの再登録を拒否する。silent overwrite は production の tool catalog がずれる典型原因だからです。
+- replay log 上で再実行できるように、validator を pure に保つ（I/O、時刻、global state を使わない）。
 
-## Why the registry comes before the tool
+## なぜ tool より registry が先なのか
 
-A coding agent in 2026 has more registered tools than the model can fit in a single context window. A non-trivial harness will register two hundred tools and surface ten to forty at any given turn. The registry is the source of truth for "what tools exist," "what shape do their arguments take," and "what handler do I call." Once those three answers are pinned, the rest of the harness can stop guessing.
+2026 年の coding agent は、1 つの context window に収まりきらない数の tool を登録します。非自明な harness では 200 個の tool を登録し、その時点の turn で 10〜40 個を surface します。registry は「どの tool が存在するか」「引数はどんな形か」「どの handler を呼ぶか」の source of truth です。この 3 つが固定されれば、harness の残りは推測をやめられます。
 
-The mistake we are avoiding is shipping handlers without schemas, or shipping schemas without validation. Both are common. Both turn the next layer (the dispatcher in lesson twenty-three) into a guessing game where the only failure mode is a stack trace from the handler.
+避けたい失敗は、schema なしで handler を出荷すること、または validation なしで schema を出荷することです。どちらもよくあります。どちらも次の層（lesson 23 の dispatcher）を当て推量ゲームに変え、失敗モードを handler からの stack trace だけにしてしまいます。
 
-## What a tool record looks like
+## tool record の形
 
 ```text
 ToolRecord
@@ -32,11 +32,11 @@ ToolRecord
   timeout_ms  : int          (override per-tool dispatcher default)
 ```
 
-The schema is the only field the validator touches. The handler is opaque to it. We separate them on purpose. The schema is data. The handler is code. Mixing them tempts you to put validation logic inside the handler, which is the bug we are stopping.
+validator が触るのは schema field だけです。handler は validator から見て opaque です。意図的に分けています。schema は data、handler は code です。混ぜると validation logic を handler の中に置きたくなります。それこそ止めたい bug です。
 
-## The JSON Schema 2020-12 subset
+## JSON Schema 2020-12 subset
 
-The full 2020-12 spec is a paper. We need eight keywords.
+完全な 2020-12 spec は論文のような量があります。ここで必要なのは 8 つの keyword です。
 
 ```text
 type           string / number / integer / boolean / object / array / null
@@ -49,11 +49,11 @@ pattern        ECMA-262-compatible regex, applies to strings
 items          schema applied to every array element
 ```
 
-That is enough to cover what a tool API actually needs. The keywords we are not adding (oneOf, anyOf, allOf, $ref, conditionals) are valid in production schemas but turn the validator into a tree walker with cycles. We are building a registry, not a JSON Schema engine.
+tool API が実際に必要とする範囲はこれで十分です。追加しない keyword（oneOf, anyOf, allOf, $ref, conditionals）は production schema では有効ですが、validator を cycle を持つ tree walker に変えます。ここで作るのは registry であり、JSON Schema engine ではありません。
 
 ## Json pointer error paths
 
-When validation fails, the validator returns a list of errors. Each error carries a json-pointer path into the input. A pointer is a slash-prefixed sequence of property names and array indices.
+validation に失敗すると、validator は error の list を返します。各 error は input 内の json-pointer path を持ちます。pointer は slash で始まる property name と array index の sequence です。
 
 ```text
 {"a": {"b": [1, 2, "x"]}}
@@ -61,21 +61,21 @@ When validation fails, the validator returns a list of errors. Each error carrie
                     /a/b/2
 ```
 
-The model reads error paths better than it reads sentences. If a schema requires `args.user.email` and the model passed an integer, the error should be `/user/email` with `expected_type: string`. The model fixes that in the next call without a round of natural language.
+model は文章より error path をうまく読みます。schema が `args.user.email` を要求していて model が integer を渡したなら、error は `expected_type: string` を伴う `/user/email` であるべきです。model はそれを次の call で自然言語のやり取りなしに直せます。
 
-## Registration and override
+## Registration と override
 
-`register(name, schema, handler, **opts)` rejects re-registration by default. The caller has to pass `override=True` to replace. This is operational hygiene. Two parts of the codebase silently registering the same tool name is the kind of bug that takes a week to find in production.
+`register(name, schema, handler, **opts)` は default で再登録を拒否します。置き換えるには caller が `override=True` を渡す必要があります。これは運用上の hygiene です。codebase の 2 か所が同じ tool name を黙って登録する bug は、production で見つけるのに 1 週間かかる類のものです。
 
-The registry exposes three read methods. `get(name)` returns the record or raises. `validate(name, args)` returns an `Ok` or a list of errors. `names()` returns the tool names in registration order.
+registry は 3 つの read method を公開します。`get(name)` は record を返すか raise します。`validate(name, args)` は `Ok` または error list を返します。`names()` は登録順に tool name を返します。
 
-## What the validator is and is not
+## validator がすること、しないこと
 
-It is a single pass over the schema tree, recursive. It is pure. It does not call handlers. It does not coerce types (a string `"42"` does not pass a number schema). It does not silently truncate.
+validator は schema tree を 1 回だけ再帰的に走査します。pure です。handler は呼びません。type coercion はしません（string `"42"` は number schema に通りません）。黙って truncate もしません。
 
-It is not a security boundary. A malicious handler can still misbehave after validation passes. The dispatcher in lesson twenty-three adds timeout and sandbox layers. The registry adds shape.
+これは security boundary ではありません。validation を通過したあとでも malicious handler は悪さができます。lesson 23 の dispatcher が timeout と sandbox layer を追加します。registry が追加するのは shape です。
 
-## Shape
+## 形
 
 ```mermaid
 flowchart TD
@@ -86,14 +86,14 @@ flowchart TD
     reg -->|validate args| out
 ```
 
-## How to read the code
+## code の読み方
 
-`code/main.py` defines `ToolRegistry`, `ToolRecord`, `ValidationError`, and the eight validator functions. The validator dispatches on `schema["type"]` (or treats a schema with `enum` as untyped enum check). Each type validator returns either an empty list or a list of `ValidationError`. The top-level walker concatenates errors and prepends path segments as it descends.
+`code/main.py` は `ToolRegistry`, `ToolRecord`, `ValidationError`, そして 8 つの validator function を定義します。validator は `schema["type"]` で dispatch します（または `enum` を持つ schema を untyped enum check として扱います）。各 type validator は empty list または `ValidationError` の list を返します。top-level walker は error を連結し、下降するたびに path segment を prepend します。
 
-`code/tests/test_registry.py` covers registration, override, validation success, validation failure with paths, and every keyword in the subset.
+`code/tests/test_registry.py` は registration、override、validation success、path つき validation failure、subset 内の全 keyword を cover します。
 
-## Going further
+## さらに進む
 
-The two extensions you will want once this lesson lands are `$ref` resolution against a local definitions block, and `additionalProperties: false` for strict shape. Both are small. Both are common to add as the tool catalog grows past fifty tools. We left them out of the lesson to keep the file under one read.
+この lesson が入ったあと欲しくなる extension は 2 つあります。local definitions block に対する `$ref` resolution と、厳密な shape のための `additionalProperties: false` です。どちらも小さいです。tool catalog が 50 個を超えるとよく追加されます。この lesson では file を 1 回で読める長さに保つため、あえて外しています。
 
-The next lesson (twenty-two) builds the JSON-RPC stdio transport that surfaces this registry to a model client. The lesson after (twenty-three) wraps both behind a dispatcher with timeouts and retries.
+次の lesson（22）は、この registry を model client に surface する JSON-RPC stdio transport を作ります。その次（23）は、timeout と retry を持つ dispatcher の背後に両方を包みます。

@@ -1,48 +1,48 @@
 {
   "lesson": "16-model-routing",
-  "title": "Model Routing as a Cost-Reduction Primitive",
+  "title": "コスト削減プリミティブとしての Model Routing",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the core idea of model cascading?",
+      "question": "model cascading の中核的な考え方は何ですか？",
       "options": [
-        "Run two models in parallel and average the outputs",
-        "Always route by random weight",
-        "Run every request on the most expensive model first",
-        "Run a cheap model first, escalate to a frontier model only on low confidence or refusal"
+        "2つの model を並列実行し、outputs を平均する",
+        "常に random weight で route する",
+        "すべての request を最初に最も高価な model で実行する",
+        "安い model を先に実行し、low confidence または refusal の場合だけ frontier model へ escalate する"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which four signals does the lesson list for routing decisions?",
+      "question": "この lesson が routing decision 用に挙げる4つの signal はどれですか？",
       "options": [
-        "Task classification, prompt length, embedding similarity to known-hard set, and self-confidence from a first-pass",
-        "Token count only",
-        "User tier only",
-        "GPU temperature, fan speed, room humidity, time of day"
+        "Task classification、prompt length、known-hard set への embedding similarity、first-pass の self-confidence",
+        "Token count のみ",
+        "User tier のみ",
+        "GPU temperature、fan speed、room humidity、time of day"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the expected latency profile of a cascade router?",
+      "question": "cascade router の expected latency profile はどれですか？",
       "options": [
-        "Always slower by 10x",
-        "Identical to the frontier model",
-        "About 1.2x median latency (cheap run plus verify), about 2x on escalated requests (~10% of traffic)",
-        "Always faster than pre-route"
+        "常に10x遅い",
+        "frontier model と同一",
+        "median latency は約1.2x（cheap run + verify）、escalated requests では約2x（traffic の約10%）",
+        "常に pre-route より速い"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which routing pattern adds 5-10ms latency up front and is fastest overall?",
+      "question": "最初に5-10msの latency を追加し、全体として最速の routing pattern はどれですか？",
       "options": [
-        "Pre-route with a classifier",
+        "classifier を使う Pre-route",
         "Ensemble route",
         "Cascade",
         "Random round-robin"
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "What is cheap-model drift in routing?",
+      "question": "routing における cheap-model drift とは何ですか？",
       "options": [
-        "The cheap model becomes more expensive",
-        "Cascade falls through to frontier 100% of the time",
-        "Task distribution shifts but the trained router keeps sending requests to the cheap model, silently degrading quality",
-        "A latency drift in the cheap model"
+        "cheap model が高価になること",
+        "cascade が100% frontier へ fall through すること",
+        "task distribution が変化しているのに trained router が request を cheap model に送り続け、quality が静かに悪化すること",
+        "cheap model の latency drift"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which guard does the lesson recommend to catch routing drift?",
+      "question": "routing drift を検出するためにこの lesson が推奨する guard はどれですか？",
       "options": [
-        "Only offline eval sets",
-        "Disable routing in production",
-        "Quarterly engineering review only",
-        "Online quality metrics — thumbs-up/down per route, LLM-judge on held-out samples, escalation rate, refusal rate"
+        "offline eval set のみ",
+        "production で routing を無効化する",
+        "四半期の engineering review のみ",
+        "Online quality metrics — route ごとの thumbs-up/down、held-out samples の LLM-judge、escalation rate、refusal rate"
       ],
       "correct": 3,
       "explanation": ""

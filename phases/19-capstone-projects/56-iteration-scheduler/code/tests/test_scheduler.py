@@ -1,4 +1,4 @@
-"""Tests for the iteration scheduler: UCB picks, parallel slots, fan-out, pruning, budgets."""
+"""iteration scheduler の tests: UCB picks、parallel slots、fan-out、pruning、budgets。"""
 
 from __future__ import annotations
 

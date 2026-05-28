@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why model the harness loop as an explicit state machine rather than a while loop with flags?",
+      "question": "Flag 付き while loop ではなく、harness loop を明示的な state machine として model 化する理由は何ですか？",
       "options": [
-        "It lets the harness reject illegal transitions in one place and replay sessions from the event log",
-        "It is faster on CPython",
-        "It avoids the need for tests",
-        "It is the only shape the model can call"
+        "Illegal transition を 1 か所で reject でき、event log から session を replay できるため",
+        "CPython で高速だから",
+        "Test が不要になるから",
+        "Model が call できる唯一の形だから"
       ],
       "correct": 0,
-      "explanation": "A state machine puts the legality rules in one transition function. The same input sequence reproduces the same state, which is what makes session replay possible."
+      "explanation": "State machine は legality rule を 1 つの transition function に集約する。同じ input sequence で同じ state が再現されるため、session replay が可能になる。"
     },
     {
       "stage": "pre",
-      "question": "What does a pull point in the loop represent?",
+      "question": "Loop における pull point は何を表しますか？",
       "options": [
-        "A point where the loop yields control and waits for the caller to provide an input",
-        "A model call that returns a tool name",
-        "A timer that fires every N seconds",
-        "A hook subscriber that mutates payload"
+        "Loop が control を yield し、caller が input を提供するのを待つ点",
+        "Tool name を返す model call",
+        "N 秒ごとに fire する timer",
+        "Payload を mutate する hook subscriber"
       ],
       "correct": 0,
-      "explanation": "Pull points are returns, not exceptions. The caller fetches what the harness asked for and calls resume()."
+      "explanation": "Pull point は exception ではなく return である。Caller は harness が求めたものを取得し、resume() を呼ぶ。"
     },
     {
       "stage": "check",
-      "question": "Which state is the only legal pull point for a tool call?",
+      "question": "Tool call 用の唯一の legal pull point である state はどれですか？",
       "options": [
         "EXECUTING",
         "AWAITING_TOOL",
@@ -36,55 +36,55 @@
         "PLANNING"
       ],
       "correct": 1,
-      "explanation": "Only AWAITING_TOOL yields a tool pull point. EXECUTING transitions into it when a step requires a tool."
+      "explanation": "Tool pull point を yield するのは AWAITING_TOOL だけである。Step が tool を必要とすると、EXECUTING から AWAITING_TOOL に transition する。"
     },
     {
       "stage": "check",
-      "question": "What happens when a hook raises HookAbort in before_tool_call?",
+      "question": "before_tool_call で hook が HookAbort を raise すると何が起きますか？",
       "options": [
-        "The session immediately transitions to DONE",
-        "The tool call is skipped, on_error fires, and the loop moves to REFLECTING",
-        "The hook is unregistered",
-        "The budget is reset"
+        "Session は即座に DONE へ transition する",
+        "Tool call は skip され、on_error が fire し、loop は REFLECTING に進む",
+        "Hook が unregister される",
+        "Budget が reset される"
       ],
       "correct": 1,
-      "explanation": "HookAbort cancels the in-flight tool dispatch, fires on_error with the abort reason, and continues."
+      "explanation": "HookAbort は in-flight tool dispatch を cancel し、abort reason とともに on_error を fire し、続行する。"
     },
     {
       "stage": "check",
-      "question": "Why are hooks and events kept as separate concerns?",
+      "question": "Hook と event を別 concern として保つ理由は何ですか？",
       "options": [
-        "Because event types are bytes and hooks are strings",
-        "Hooks are imperative and can mutate or abort. Events are observational and append-only.",
-        "Because the audit script forbids subscribers",
-        "Because the event log cannot store dicts"
+        "Event type は byte で hook は string だから",
+        "Hook は imperative で mutate や abort ができる。Event は observational で append-only だから。",
+        "Audit script が subscriber を禁止しているから",
+        "Event log は dict を保存できないから"
       ],
       "correct": 1,
-      "explanation": "Hooks change behavior. Events describe behavior. Mixing them couples policy and telemetry, which is the bug we are avoiding."
+      "explanation": "Hook は behavior を変える。Event は behavior を記述する。混ぜると policy と telemetry が結合し、それが避けたい bug になる。"
     },
     {
       "stage": "post",
-      "question": "When the wall-clock budget is exceeded, what is the next state?",
+      "question": "Wall-clock budget を超過したとき、次の state は何ですか？",
       "options": [
-        "DONE — the session is terminated",
-        "EXECUTING — the loop retries",
-        "IDLE — a pull point is returned with a budget_exceeded reason",
-        "PLANNING — a fresh plan is drafted"
+        "DONE — session が termination される",
+        "EXECUTING — loop が retry する",
+        "IDLE — budget_exceeded reason を持つ pull point が返る",
+        "PLANNING — fresh plan が draft される"
       ],
       "correct": 2,
-      "explanation": "Budget exhaustion is a yield. The harness transitions to IDLE, fires on_budget_exceeded, and returns a PullRequest so the caller can decide whether to extend or close."
+      "explanation": "Budget exhaustion は yield である。Harness は IDLE に transition し、on_budget_exceeded を fire し、caller が延長か close を決められるよう PullRequest を返す。"
     },
     {
       "stage": "post",
-      "question": "Why does this lesson stub out the planner instead of calling a model?",
+      "question": "この lesson が model を呼ばずに planner を stub にしている理由は何ですか？",
       "options": [
-        "Because models are slow to call locally",
-        "To keep the loop contract testable and deterministic before any model is bound",
-        "Because models cannot return tool calls",
-        "To save tokens"
+        "Local では model call が遅いから",
+        "Model を bind する前に loop contract を testable かつ deterministic に保つため",
+        "Model は tool call を返せないから",
+        "Token を節約するため"
       ],
       "correct": 1,
-      "explanation": "Pinning the loop contract first lets later lessons swap in real planners, registries, and dispatchers without renegotiating the state machine."
+      "explanation": "先に loop contract を固定すると、後の lesson で real planner、registry、dispatcher を入れても state machine を再交渉せずに済む。"
     }
   ]
 }

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -6,8 +6,8 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -55,7 +55,7 @@
   <path d="M440,270 L330,310" class="edge"/>
 
   <text x="60" y="385" class="small">walk edges: OWNS, SCHEDULED_ON, OBSERVED_BY, EXPOSES</text>
-  <text x="60" y="402" class="small">collect telemetry within 15m window; rank hypotheses</text>
+  <text x="60" y="402" class="small">15m window内のtelemetryを集め、hypothesesをrank</text>
 
   <rect x="620" y="50" width="300" height="180" class="box"/>
   <text x="770" y="72" text-anchor="middle" class="head">ranked hypotheses</text>
@@ -77,7 +77,7 @@
 
   <rect x="640" y="330" width="260" height="38" class="hot"/>
   <text x="770" y="350" text-anchor="middle" class="step">destructive MCP server</text>
-  <text x="770" y="368" text-anchor="middle" class="small">separate token, separate RBAC</text>
+  <text x="770" y="368" text-anchor="middle" class="small">separate token、separate RBAC</text>
 
   <rect x="640" y="376" width="260" height="38" class="cool"/>
   <text x="770" y="396" text-anchor="middle" class="step">audit log (append-only)</text>
@@ -85,6 +85,6 @@
 
   <text x="770" y="440" text-anchor="middle" class="small">read-only tools:</text>
   <text x="770" y="456" text-anchor="middle" class="small">kubectl get/describe, promql,</text>
-  <text x="770" y="472" text-anchor="middle" class="small">logql, traceql -- no approval</text>
-  <text x="770" y="498" text-anchor="middle" class="caption">20-scenario eval target: 80% RCA</text>
+  <text x="770" y="472" text-anchor="middle" class="small">logql, traceql -- approval不要</text>
+  <text x="770" y="498" text-anchor="middle" class="caption">20-scenario eval target: RCA 80%</text>
 </svg>

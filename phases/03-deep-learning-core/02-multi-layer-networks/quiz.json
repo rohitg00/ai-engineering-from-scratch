@@ -1,37 +1,37 @@
 [
   {
-    "question": "What is the purpose of a hidden layer in a multi-layer network?",
-    "options": ["To store the training data", "To transform inputs into new feature representations that enable nonlinear decision boundaries", "To reduce the number of parameters", "To apply the loss function"],
+    "question": "多層ネットワークにおける隠れ層の目的は何ですか？",
+    "options": ["訓練データを保存すること", "入力を新しい特徴表現に変換し、非線形の決定境界を可能にすること", "パラメータ数を減らすこと", "損失関数を適用すること"],
     "correct": 1,
-    "explanation": "Hidden layers apply weights, biases, and activation functions to create new feature representations. These intermediate features allow the network to learn nonlinear mappings that a single layer cannot.",
+    "explanation": "隠れ層は重み、バイアス、活性化関数を適用して新しい特徴表現を作ります。これらの中間特徴により、単一層では学習できない非線形写像をネットワークが学習できます。",
     "stage": "pre"
   },
   {
-    "question": "What does the forward pass do in a neural network?",
-    "options": ["Updates the weights using gradients", "Computes gradients for backpropagation", "Pushes input through each layer to produce an output", "Shuffles the training data"],
+    "question": "ニューラルネットワークのフォワードパスは何をしますか？",
+    "options": ["勾配を使って重みを更新する", "バックプロパゲーションのために勾配を計算する", "入力を各層に通して出力を生成する", "訓練データをシャッフルする"],
     "correct": 2,
-    "explanation": "The forward pass is pure computation: for each layer, multiply by weights, add bias, apply activation, and pass the result to the next layer. No learning happens during the forward pass.",
+    "explanation": "フォワードパスは純粋な計算です。各層で重みを掛け、バイアスを足し、活性化関数を適用し、その結果を次の層へ渡します。フォワードパス中に学習は起きません。",
     "stage": "pre"
   },
   {
-    "question": "For a layer with 3 neurons receiving input from 2 neurons, what is the shape of the weight matrix?",
+    "question": "2つのニューロンから入力を受け取る3ニューロンの層では、重み行列のshapeは何ですか？",
     "options": ["(2, 3)", "(3, 2)", "(3, 3)", "(2, 2)"],
     "correct": 1,
-    "explanation": "The weight matrix has shape (neurons_in_current_layer, neurons_in_previous_layer) = (3, 2). Each row contains one neuron's weights across all inputs.",
+    "explanation": "重み行列のshapeは (現在の層のニューロン数, 前の層のニューロン数) = (3, 2) です。各行には、1つのニューロンがすべての入力に対して持つ重みが入ります。",
     "stage": "post"
   },
   {
-    "question": "What does the Universal Approximation Theorem guarantee?",
-    "options": ["Any network can be trained in polynomial time", "A single hidden layer with enough neurons can approximate any continuous function", "Deeper networks always outperform shallow ones", "Neural networks can solve any computational problem"],
+    "question": "普遍近似定理は何を保証しますか？",
+    "options": ["どんなネットワークも多項式時間で訓練できること", "十分な数のニューロンを持つ単一の隠れ層が、任意の連続関数を近似できること", "深いネットワークは常に浅いネットワークより優れていること", "ニューラルネットワークが任意の計算問題を解けること"],
     "correct": 1,
-    "explanation": "Cybenko (1989) proved that a network with one hidden layer and sufficient neurons can approximate any continuous function to any desired accuracy. In practice, deeper networks achieve the same with fewer total parameters.",
+    "explanation": "Cybenko (1989) は、1つの隠れ層と十分なニューロンを持つネットワークが、任意の連続関数を任意の精度で近似できることを証明しました。実際には、より深いネットワークのほうが少ない総パラメータ数で同じことを達成できます。",
     "stage": "post"
   },
   {
-    "question": "Why does the sigmoid activation function make learning possible, unlike the step function used in perceptrons?",
-    "options": ["Sigmoid outputs larger values", "Sigmoid is faster to compute", "Sigmoid is smooth and differentiable everywhere, so gradients exist for backpropagation", "Sigmoid outputs negative values"],
+    "question": "パーセプトロンで使われるステップ関数と違い、sigmoid活性化関数が学習を可能にするのはなぜですか？",
+    "options": ["sigmoidはより大きな値を出力するため", "sigmoidは計算が速いため", "sigmoidは滑らかでどこでも微分可能なので、バックプロパゲーションに必要な勾配が存在するため", "sigmoidは負の値を出力するため"],
     "correct": 2,
-    "explanation": "The step function has zero gradient almost everywhere and undefined gradient at the threshold. Sigmoid is smooth with a well-defined derivative (s*(1-s)) at every point, which is essential for gradient-based learning.",
+    "explanation": "ステップ関数はほぼすべての場所で勾配がゼロで、しきい値では勾配が未定義です。sigmoidは滑らかで、すべての点で明確な導関数（s*(1-s)）を持つため、勾配ベースの学習に不可欠です。",
     "stage": "post"
   }
 ]

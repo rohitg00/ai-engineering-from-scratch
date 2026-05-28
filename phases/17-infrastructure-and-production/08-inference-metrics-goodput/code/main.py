@@ -1,8 +1,8 @@
-"""Toy goodput calculator — stdlib Python.
+"""Toy goodput calculator — stdlib Python。
 
-Simulate a population of LLM requests with realistic right-skewed latency,
-apply a multi-constraint SLO, compute goodput, and show the GenAI-Perf
-vs LLMPerf TPOT calculation divergence on the same trace.
+現実的な右裾の長い latency を持つ LLM request 群を simulate し、
+multi-constraint SLO を適用して goodput を計算し、同じ trace での
+GenAI-Perf と LLMPerf の TPOT 計算差を示します。
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from dataclasses import dataclass
 class RequestTrace:
     queue_ms: float
     prefill_ms: float
-    decode_ms_per_token: list[float]      # per-token decode latency
+    decode_ms_per_token: list[float]      # token ごとの decode latency
     output_tokens: int
 
     @property
@@ -28,11 +28,11 @@ class RequestTrace:
         return self.ttft_ms + sum(self.decode_ms_per_token)
 
     def tpot_llmperf(self) -> float:
-        """LLMPerf: include TTFT in ITL calculation."""
+        """LLMPerf: ITL 計算に TTFT を含めます。"""
         return self.e2e_ms / self.output_tokens
 
     def tpot_genaiperf(self) -> float:
-        """GenAI-Perf: ITL starts from token 2."""
+        """GenAI-Perf: ITL は token 2 から始まります。"""
         if self.output_tokens <= 1:
             return 0.0
         return sum(self.decode_ms_per_token) / (self.output_tokens - 1)
@@ -44,8 +44,8 @@ def synth_workload(n: int = 1000, seed: int = 7, tail_spike_rate: float = 0.02) 
     for _ in range(n):
         prompt_len = rng.choice([128, 256, 512, 2048, 8192])
         output_tokens = rng.randint(50, 300)
-        queue = rng.expovariate(1 / 40.0)           # avg 40 ms queue
-        prefill = prompt_len * 0.05                 # ~50 us per input token
+        queue = rng.expovariate(1 / 40.0)           # 平均 40 ms の queue
+        prefill = prompt_len * 0.05                 # input token あたり約 50 us
         decode_base = 7.0                            # 7 ms mean TPOT
         decodes = []
         for _ in range(output_tokens):
@@ -93,12 +93,12 @@ def goodput(traces: list[RequestTrace], slo_ttft: float, slo_tpot: float,
 
 def main() -> None:
     print("=" * 78)
-    print("TOY GOODPUT CALCULATOR — inference SLOs and the measurement trap")
+    print("TOY GOODPUT CALCULATOR — inference SLO と測定の罠")
     print("=" * 78)
     print()
 
     traces = synth_workload(n=2000)
-    report_latency("Synthetic workload (2000 requests)", traces)
+    report_latency("Synthetic workload（2000 requests）", traces)
     print()
 
     slos = [
@@ -106,7 +106,7 @@ def main() -> None:
         ("target  TTFT<500 TPOT<15 E2E<2000", 500, 15, 2000),
         ("tight   TTFT<300 TPOT<10 E2E<1500", 300, 10, 1500),
     ]
-    print("Goodput under three SLO profiles")
+    print("3 つの SLO profile における Goodput")
     print("-" * 76)
     for label, t1, t2, t3 in slos:
         g = goodput(traces, t1, t2, t3)
@@ -117,9 +117,9 @@ def main() -> None:
     print("=" * 78)
     print("KEY FINDING")
     print("-" * 78)
-    print("  Mean TPOT ~7 ms looks great. P99 TPOT ~25-40 ms tells the real story.")
-    print("  Tighten the SLO and goodput collapses from 99% -> 80%+. Users feel P99.")
-    print("  GenAI-Perf vs LLMPerf disagree by ~1 ms on mean TPOT — cite the tool.")
+    print("  Mean TPOT ~7 ms は良く見えます。P99 TPOT ~25-40 ms が本当の姿です。")
+    print("  SLO を厳しくすると goodput は 99% から 80%+ へ崩れます。ユーザーが感じるのは P99 です。")
+    print("  GenAI-Perf と LLMPerf は mean TPOT で約 1 ms ずれます。tool を明記してください。")
 
 
 if __name__ == "__main__":

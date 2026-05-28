@@ -4,87 +4,87 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which field is the load-bearing one in a handoff packet?",
+      "question": "handoff packet で load-bearing な field はどれですか？",
       "options": [
         "summary",
-        "next_action (without it, the document is a status report, not a handoff)",
+        "next_action (これがない document は status report であり handoff ではない)",
         "commands_run",
         "verdict_pointer"
       ],
       "correct": 1,
-      "explanation": "A handoff with everything except next_action is a status report; the next concrete step is what makes the next session productive."
+      "explanation": "next_action 以外がすべて揃った handoff は status report です。次の concrete step が次 session を productive にします。"
     },
     {
       "stage": "pre",
-      "question": "Why are handoffs generated, not written?",
+      "question": "なぜ handoff は書くのではなく生成するのですか？",
       "options": [
-        "Generators are faster",
-        "Hand-written handoffs get skipped on a hard day; the generator reads workbench artifacts and emits the packet, so the agent just leaves the workbench in a state the generator can summarize",
-        "Generators encrypt better",
-        "Apache 2.0 requires it"
+        "generator の方が速いから",
+        "手書き handoff は厳しい日に skip されるから。generator は workbench artifacts を読み packet を emit し、agent は generator が summarize できる state に workbench を残すだけでよい",
+        "generator の方が encryption に優れるから",
+        "Apache 2.0 が要求するから"
       ],
       "correct": 1,
-      "explanation": "Automation closes the gap between intention and consistency."
+      "explanation": "automation は intention と consistency の gap を閉じます。"
     },
     {
       "stage": "check",
-      "question": "Which two forms does the packet ship in?",
+      "question": "packet はどの2つの形式で出荷されますか？",
       "options": [
-        "PDF and PNG",
-        "handoff.md (human-readable) and handoff.json (machine-readable, both from the same source artifacts; JSON wins on divergence)",
-        "Email and Slack",
-        "YAML and TOML"
+        "PDF と PNG",
+        "handoff.md (human-readable) と handoff.json (machine-readable。同じ source artifacts から生成され、食い違えば JSON が勝つ)",
+        "Email と Slack",
+        "YAML と TOML"
       ],
       "correct": 1,
-      "explanation": "Markdown for humans, JSON for the next agent; both come from the same generator."
+      "explanation": "Markdown は人間向け、JSON は次の agent 向けです。どちらも同じ generator から来ます。"
     },
     {
       "stage": "check",
-      "question": "How does the lesson distinguish compaction from handoff?",
+      "question": "lesson は compaction と handoff をどう区別していますか？",
       "options": [
-        "They are the same",
-        "Compaction extends a session; handoff closes one cleanly and starts the next in fresh context. The packet is what makes that transition cheap",
-        "Compaction is paid, handoff is free",
-        "Handoff requires GPU"
+        "同じものである",
+        "compaction は session を伸ばす。handoff は session を clean に閉じ、fresh context で次を始める。その transition を安くするのが packet",
+        "compaction は有料、handoff は無料",
+        "handoff には GPU が必要"
       ],
       "correct": 1,
-      "explanation": "Hermes Issue 20372 framing: write a compact handoff before in-place compression degrades quality, then resume in a fresh session."
+      "explanation": "Hermes Issue 20372 の framing: in-place compression が quality を劣化させる前に compact handoff を書き、fresh session で resume します。"
     },
     {
       "stage": "check",
-      "question": "What does the lesson recommend about when to wrap up a session?",
+      "question": "lesson は session の wrap up をいつ行うことを推奨していますか？",
       "options": [
-        "At 100% context, then panic",
-        "Before 50-75% context budget, while context is intact; cheap to write before compression artifacts pollute state",
-        "Only at midnight",
-        "Only after a merge"
+        "context 100% で panic してから",
+        "context が intact なうち、50-75% context budget の前。compression artifacts が state を汚す前に書くのが安い",
+        "真夜中だけ",
+        "merge 後だけ"
       ],
       "correct": 1,
-      "explanation": "Wrapping up early keeps the generator's inputs clean."
+      "explanation": "早めの wrap up は generator の input を clean に保ちます。"
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend trimming the feedback log to in the packet?",
+      "question": "lesson は packet 内の feedback log を何に trim することを推奨していますか？",
       "options": [
-        "First K entries only",
-        "Last K entries plus every entry with a non-zero exit, so the packet stays small while the failure history survives",
-        "Random N entries",
-        "Only the most recent entry"
+        "最初の K entries だけ",
+        "最後の K entries と non-zero exit のすべて。packet を小さく保ちながら failure history を残す",
+        "random な N entries",
+        "最新 entry のみ"
       ],
       "correct": 1,
-      "explanation": "Asymmetric trim: failures must survive; trivia at the tail is cheap to keep."
+      "explanation": "asymmetric trim です。failures は残す必要があり、tail の trivia は安く保てます。"
     },
     {
       "stage": "post",
-      "question": "What metadata makes coordination across multi-agent sessions work?",
+      "question": "multi-agent sessions の coordination を機能させる metadata は何ですか？",
       "options": [
-        "Top secret encryption",
-        "branch, last_known_good_commit, and status (active | superseded | archived); only one active handoff per branch and topic",
-        "A shared Slack channel",
-        "A central queue"
+        "top secret encryption",
+        "branch、last_known_good_commit、status (active | superseded | archived)。branch と topic ごとに active handoff は1つだけ",
+        "shared Slack channel",
+        "central queue"
       ],
       "correct": 1,
-      "explanation": "Stale handoffs are the dominant multi-agent failure; status + branch + LKG keep the active set small."
+      "explanation": "stale handoffs は dominant な multi-agent failure です。status + branch + LKG が active set を小さく保ちます。"
     }
   ]
 }

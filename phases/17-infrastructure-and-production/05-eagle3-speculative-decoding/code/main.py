@@ -1,8 +1,8 @@
 """Toy speculative-decoding analyzer — stdlib Python.
 
-Compute expected speedup and break-even alpha for EAGLE-3-style speculative
-decoding across a range of (alpha, K, verify_overhead, concurrency) points.
-Pedagogical — numbers track shape, not absolute latency.
+EAGLE-3-style speculative decoding について、(alpha, K, verify_overhead,
+concurrency) の範囲で expected speedup と break-even alpha を計算する。
+教育用: 数値は shape を追うもので、absolute latency ではない。
 """
 
 from __future__ import annotations
@@ -16,15 +16,15 @@ import statistics
 class SpecPoint:
     alpha: float      # acceptance rate (0..1)
     k: int            # draft length
-    verify_overhead: float  # fraction extra cost per target forward
-    concurrency: int  # batch size at decode
+    verify_overhead: float  # target forward あたりの追加 cost fraction
+    concurrency: int  # decode 時の batch size
 
 
 def expected_speedup(p: SpecPoint) -> float:
-    """Plain decode: 1 token per target forward.
-    Spec decode at (alpha, K): expected 1 + K*alpha tokens per target forward,
-    but each target forward costs (1 + verify_overhead) relative to plain.
-    Concurrency increases verify_overhead (more seqs share the verify cost).
+    """Plain decode: target forward 1回で 1 token。
+    (alpha, K) の spec decode: target forward あたり expected 1 + K*alpha tokens。
+    ただし各 target forward は plain 比で (1 + verify_overhead) の cost。
+    concurrency は verify_overhead を増やす（より多くの seqs が verify cost を共有する）。
     """
     effective_overhead = p.verify_overhead * (1 + p.concurrency / 256)
     tokens_per_target = 1 + p.k * p.alpha
@@ -40,21 +40,21 @@ def breakeven_alpha(k: int, verify_overhead: float, concurrency: int) -> float:
 
 
 def simulate_tail(p: SpecPoint, n_tokens: int = 1000, seed: int = 3) -> tuple[float, float]:
-    """Simulate per-token latency distribution.
-    Plain decode: constant-ish latency per token (+ small jitter).
-    Spec decode: good tokens arrive in batches; rejected draft pays two target passes.
-    Return (mean_ms, p99_ms).
+    """per-token latency distribution を simulate する。
+    Plain decode: token あたりほぼ一定 latency（小さな jitter）。
+    Spec decode: 良い tokens は batch で到着し、rejected draft は target pass 2回分を支払う。
+    (mean_ms, p99_ms) を返す。
     """
     rng = random.Random(seed)
     base_target_ms = 8.0
     effective_overhead = p.verify_overhead * (1 + p.concurrency / 256)
     verify_ms = base_target_ms * (1 + effective_overhead)
-    reroll_ms = base_target_ms  # second pass when draft rejects early
+    reroll_ms = base_target_ms  # draft が early reject したときの second pass
 
     latencies: list[float] = []
     tokens_emitted = 0
     while tokens_emitted < n_tokens:
-        # draft K tokens, verify
+        # K tokens を draft し、verify する
         accepted = 0
         for _ in range(p.k):
             if rng.random() < p.alpha:
@@ -62,7 +62,7 @@ def simulate_tail(p: SpecPoint, n_tokens: int = 1000, seed: int = 3) -> tuple[fl
             else:
                 break
         batch_lat = verify_ms + (reroll_ms if accepted < p.k else 0)
-        # tokens emitted: accepted + 1 (the verified one at end)
+        # emitted tokens: accepted + 1（末尾の verified token）
         batch_tokens = max(1, accepted + 1)
         per_tok = batch_lat / batch_tokens
         for _ in range(batch_tokens):
@@ -123,10 +123,10 @@ def main() -> None:
     print("=" * 80)
     print("KEY FINDING")
     print("-" * 80)
-    print("  Break-even alpha rises with concurrency. At 32 concurrent you profit")
-    print("  anywhere above ~0.1; at 256 concurrent the bar is ~0.4. Under that,")
-    print("  P99 tail gets worse even if the expected-speedup formula says positive.")
-    print("  Measure alpha on your real traffic before shipping.")
+    print("  Break-even alpha は concurrency とともに上がる。32 concurrent では")
+    print("  ~0.1 を少し超えれば利益が出るが、256 concurrent では bar が ~0.4 になる。")
+    print("  それ未満では、expected-speedup formula が positive でも P99 tail は悪化する。")
+    print("  ship 前に real traffic で alpha を測ること。")
 
 
 if __name__ == "__main__":

@@ -1,102 +1,102 @@
 {
   "lesson": "20-structured-outputs-constrained-decoding",
-  "title": "Structured Outputs & Constrained Decoding",
+  "title": "構造化出力と制約付きデコーディング",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is prompt-only 'return JSON' not enough for production?",
+      "question": "本番でプロンプトだけの「JSONを返して」が不十分なのはなぜですか？",
       "options": [
-        "JSON is too verbose",
-        "Prompts are too long",
-        "Frontier models comply most of the time but not always; the small fraction of malformed outputs breaks downstream parsers",
-        "Prompting cannot describe schemas"
+        "JSONは冗長すぎるから",
+        "プロンプトが長すぎるから",
+        "フロンティアモデルはたいてい従うが常にではなく、わずかな不正形式の出力でも下流パーサが壊れるから",
+        "プロンプティングではスキーマを記述できないから"
       ],
       "correct": 2,
-      "explanation": "Prompt-only structure works ~80% of the time on frontier models; production needs harder guarantees."
+      "explanation": "プロンプトだけで構造を指定する方法は、フロンティアモデルでも約80%の成功率です。本番にはより強い保証が必要です。"
     },
     {
       "stage": "pre",
-      "question": "What does constrained decoding modify at each generation step?",
+      "question": "制約付きデコーディングは各生成ステップで何を変更しますか？",
       "options": [
-        "The KV cache",
-        "The tokenizer",
-        "The training loss",
-        "The logit vector, masking tokens that would invalidate the target grammar so only valid continuations can be sampled"
+        "KV cache",
+        "トークナイザ",
+        "学習損失",
+        "logitベクトル。ターゲット文法を無効にするトークンをmaskし、有効な継続だけをサンプリングできるようにする"
       ],
       "correct": 3,
-      "explanation": "A logit processor sets invalid tokens to -inf so the softmax cannot sample them."
+      "explanation": "logit processorが無効なトークンを-infに設定するため、softmaxはそれらをサンプリングできません。"
     },
     {
       "stage": "check",
-      "question": "Why might constrained decoding be faster than free generation?",
+      "question": "制約付きデコーディングが自由生成より速くなることがあるのはなぜですか？",
       "options": [
-        "The model is smaller",
-        "Forced scaffold tokens (e.g. '{\"name\": \"') can be emitted directly without sampling, and the valid-token search space shrinks",
-        "It avoids softmax entirely",
-        "It skips backprop"
+        "モデルが小さくなるから",
+        "強制されるscaffold token（例: '{\"name\": \"'）はサンプリングなしで直接出力でき、有効トークンの探索空間も小さくなるから",
+        "softmaxを完全に避けるから",
+        "backpropをスキップするから"
       ],
       "correct": 1,
-      "explanation": "Determined tokens skip sampling and reduced valid-token sets shrink the decode cost."
+      "explanation": "確定しているトークンではサンプリングをスキップでき、有効トークン集合が小さいためデコードコストも下がります。"
     },
     {
       "stage": "check",
-      "question": "Which schema design choice prevents premature commitment by the model?",
+      "question": "モデルの早すぎるコミットを防ぐスキーマ設計はどれですか？",
       "options": [
-        "Put 'answer' first",
-        "Use shorter keys",
-        "Place reasoning fields before the answer/decision field so the model thinks before committing",
-        "Use snake_case"
+        "'answer'を最初に置く",
+        "短いキーを使う",
+        "answer/decisionフィールドの前にreasoningフィールドを置き、モデルが確定前に考えられるようにする",
+        "snake_caseを使う"
       ],
       "correct": 2,
-      "explanation": "Field order is logic: putting reasoning first lets the model think before locking in an answer."
+      "explanation": "フィールド順序はロジックです。reasoningを先に置くと、答えを固定する前にモデルが考えられます。"
     },
     {
       "stage": "check",
-      "question": "What is the limitation of FSM-based constrained decoding tools like Outlines?",
+      "question": "OutlinesのようなFSMベースの制約付きデコーディングツールにはどんな制限がありますか？",
       "options": [
-        "They are not deterministic",
-        "They lock you to OpenAI",
-        "Recursive schemas have to be flattened; truly recursive structures need CFG-based engines such as XGrammar",
-        "They only support enums"
+        "決定的ではない",
+        "OpenAIにロックインされる",
+        "再帰スキーマはflattenする必要があり、本当に再帰的な構造にはXGrammarのようなCFGベースのエンジンが必要である",
+        "enumしかサポートしない"
       ],
       "correct": 2,
-      "explanation": "FSMs cannot represent unbounded recursion; CFG engines handle it."
+      "explanation": "FSMは非有界の再帰を表現できません。CFGエンジンなら扱えます。"
     },
     {
       "stage": "post",
-      "question": "Why is Instructor described as not modifying logits?",
+      "question": "Instructorがlogitを変更しないと言われるのはなぜですか？",
       "options": [
-        "Instructor formats the schema into the prompt and parses/retries the output; logit masking happens server-side or not at all",
-        "It uses gradient updates",
-        "Required by Anthropic",
-        "It edits the prompt"
+        "Instructorはスキーマをプロンプトに整形して出力をパース/リトライするだけで、logit maskingはサーバー側で起きるか、まったく起きないから",
+        "勾配更新を使うから",
+        "Anthropicで必須だから",
+        "プロンプトを編集するから"
       ],
       "correct": 0,
-      "explanation": "Instructor uses provider-side structured output plus client-side validation and retries, not logit masking."
+      "explanation": "Instructorはプロバイダ側のstructured outputに加え、クライアント側のバリデーションとリトライを使います。logit maskingではありません。"
     },
     {
       "stage": "post",
-      "question": "What problem can a strict regex like date='YYYY-MM-DD' introduce?",
+      "question": "date='YYYY-MM-DD' のような厳密なregexは、どんな問題を起こし得ますか？",
       "options": [
-        "It requires CFG support",
-        "It removes any escape hatch for unknown values, so the model fabricates a date instead of returning null/sentinel",
-        "It breaks JSON parsing",
-        "Regex is slow"
+        "CFGサポートが必要になる",
+        "不明値の逃げ道をなくすため、モデルがnull/sentinelを返す代わりに日付を捏造してしまう",
+        "JSON parsingを壊す",
+        "regexは遅い"
       ],
       "correct": 1,
-      "explanation": "Over-strict grammars force the model to invent values; always allow null/sentinel for unknowns."
+      "explanation": "厳しすぎる文法はモデルに値の捏造を強制します。不明値には必ずnull/sentinelを許可してください。"
     },
     {
       "stage": "post",
-      "question": "When should you reach for vLLM guided decoding vs a vendor structured-output API?",
+      "question": "vendor structured-output APIではなくvLLM guided decodingを使うべきなのはどんなときですか？",
       "options": [
-        "Always vendor",
-        "Only for tiny schemas",
-        "Only with byte-level BPE",
-        "Self-hosted inference where you control the model and want logit-level guarantees without retries"
+        "常にvendorを使うべき",
+        "小さなスキーマのときだけ",
+        "byte-level BPEのときだけ",
+        "モデルを自前ホストしており、リトライなしでlogitレベルの保証がほしいとき"
       ],
       "correct": 3,
-      "explanation": "vLLM guided decoding fits self-hosted serving with logit-level constraints; vendor APIs lock you to their stack."
+      "explanation": "vLLM guided decodingは、自前ホストのサービングでlogitレベルの制約が必要な場合に適しています。vendor APIはそのベンダーのスタックにロックインされます。"
     }
   ]
 }

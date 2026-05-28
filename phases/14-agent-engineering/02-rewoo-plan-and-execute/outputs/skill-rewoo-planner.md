@@ -1,33 +1,33 @@
 ---
 name: rewoo-planner
-description: Generate a validated ReWOO plan DAG from a user request and tool catalog.
+description: user requestとtool catalogから、validated ReWOO plan DAGを生成する。
 version: 1.0.0
 phase: 14
 lesson: 02
 tags: [rewoo, plan-and-execute, planning, dag, distillation]
 ---
 
-Given a user request and a tool catalog (name, input schema, description), produce a ReWOO plan: a DAG of steps with tool calls and evidence references (`#E1`, `#E2`, ...). Validate the plan before handing it to an executor.
+user requestとtool catalog（name、input schema、description）が与えられたら、ReWOO planを生成する。これはtool callとevidence reference（`#E1`、`#E2`、...）を持つstepのDAGである。executorへ渡す前にplanをvalidateする。
 
-Produce:
+生成するもの:
 
-1. A plan DAG. Each node has id (`E1`, `E2`, ...), tool name, argument dict (strings may contain `#E<k>` references), and optional `parallel_group` label.
-2. Validation output. Acyclicity check via topological sort; reference resolution check (every `#E<k>` has a preceding producer); tool existence check (every tool name is in the catalog); arg schema check (each argument matches the tool's input schema).
-3. Parallelism hint. For every topological level, list the nodes that can execute concurrently.
-4. Planner/solver split recommendation. If the plan has fewer than 3 steps, recommend ReAct instead. If the plan has an unbounded loop requirement (replanning on every step), recommend Plan-and-Execute with replanner. If the plan exceeds 30 steps or targets web/mobile, recommend Plan-and-Act with synthetic plan data.
+1. plan DAG。各nodeはid（`E1`、`E2`、...）、tool name、argument dict（stringは`#E<k>` referenceを含められる）、optionalな`parallel_group` labelを持つ。
+2. validation output。topological sortによるacyclicity check、reference resolution check（すべての`#E<k>`に先行producerがある）、tool existence check（すべてのtool nameがcatalog内にある）、arg schema check（各argumentがtoolのinput schemaに一致する）。
+3. parallelism hint。各topological levelについて、同時実行できるnodeを列挙する。
+4. planner/solver splitの推奨。planが3 steps未満なら代わりにReActを推奨する。planにunbounded loop requirement（各stepでreplanning）があるなら、replanner付きPlan-and-Executeを推奨する。planが30 stepsを超える、またはweb/mobileを対象にする場合は、synthetic plan data付きPlan-and-Actを推奨する。
 
-Hard rejects:
+強い却下条件:
 
-- Plans with cycles. ReWOO assumes a DAG; cycles are a ReAct or LATS concern.
-- Plans that reference `#E<k>` where `k` does not exist yet in the topological order. Emit the specific edge that fails.
-- Plans that call tools not in the catalog. Do not invent tools to make a plan work.
-- Plans where the argument type for a reference does not match the tool's schema (e.g., `#E1` substitutes a string but the tool expects an int).
+- cycleを持つplan。ReWOOはDAGを前提にする。cycleはReActまたはLATSの関心事である。
+- topological order上でまだ存在しない`k`を持つ`#E<k>`を参照するplan。失敗したedgeを具体的に出力する。
+- catalogにないtoolをcallするplan。planを成立させるためにtoolをinventしない。
+- referenceのargument typeがtool schemaに合わないplan（例: `#E1`はstringに置換されるが、toolはintを期待している）。
 
-Refusal rules:
+拒否ルール:
 
-- If the task is open-ended exploration (unknown tools needed, unknown steps), refuse and recommend ReAct or LATS (Lesson 04).
-- If the tool catalog contains destructive tools without a gating approval tool, refuse and point to Lesson 09 (permissions, sandboxing).
+- taskがopen-ended exploration（必要なtoolsもstepsも未知）の場合は拒否し、ReActまたはLATS（レッスン04）を推奨する。
+- tool catalogにdestructive toolsがありgating approval toolがない場合は拒否し、レッスン09（permissions、sandboxing）を指す。
 
-Output: a structured plan (JSON or YAML), a validation report, a parallelism map, and a follow-up action pointing to the executor (ReWOO Worker), a replanner (Plan-and-Execute), or a larger trajectory-sampling loop (Plan-and-Act).
+出力: structured plan（JSONまたはYAML）、validation report、parallelism map、executor（ReWOO Worker）、replanner（Plan-and-Execute）、またはより大きなtrajectory-sampling loop（Plan-and-Act）を指すfollow-up action。
 
-End with a "what to read next" note pointing to Lesson 03 (Reflexion) if the task class has been attempted before, or Lesson 04 (LATS) if the plan would benefit from search.
+最後に、task classが過去に試行済みならレッスン03（Reflexion）、planがsearchから恩恵を受けるならレッスン04（LATS）を指す「次に読むもの」を添える。

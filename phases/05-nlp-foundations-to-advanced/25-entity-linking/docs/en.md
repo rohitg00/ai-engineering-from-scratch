@@ -1,53 +1,53 @@
-# Entity Linking & Disambiguation
+# エンティティリンキングと曖昧性解消
 
-> NER found "Paris." Entity linking decides: Paris, France? Paris Hilton? Paris, Texas? Paris (the Trojan prince)? Without linking, your knowledge graph stays ambiguous.
+> NER は "Paris" を見つけました。Entity linking は、Paris, France なのか、Paris Hilton なのか、Paris, Texas なのか、Paris (Trojan prince) なのかを決めます。linking がなければ、knowledge graph は曖昧なままです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
-**Time:** ~60 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-A sentence reads: "Jordan beat the press." Your NER tags "Jordan" as PERSON. Good. But *which* Jordan?
+ある文に "Jordan beat the press." とあります。NER は "Jordan" を PERSON と tag しました。良い結果です。しかし、*どの* Jordan でしょうか。
 
 - Michael Jordan (basketball)?
 - Michael B. Jordan (actor)?
-- Michael I. Jordan (Berkeley ML professor — yes, this confusion is real in ML papers)?
+- Michael I. Jordan (Berkeley ML professor — ML papers では実際にこの混同が起きます)?
 - Jordan (the country)?
 - Jordan (Hebrew first name)?
 
-Entity linking (EL) resolves each mention to a unique entry in a knowledge base: Wikidata, Wikipedia, DBpedia, or your domain KB. Two subtasks:
+Entity linking (EL) は、各 mention を knowledge base 内の一意な entry に resolve します。Wikidata、Wikipedia、DBpedia、または domain KB です。subtasks は 2 つあります。
 
-1. **Candidate generation.** Given "Jordan," which KB entries are plausible?
-2. **Disambiguation.** Given the context, which candidate is the right one?
+1. **Candidate generation。** "Jordan" が与えられたとき、どの KB entries が plausible か。
+2. **Disambiguation。** context が与えられたとき、どの candidate が正しいか。
 
-Both steps are learnable. Both are benchmarked. The combined pipeline has been stable for a decade — what changes is the quality of the disambiguator.
+どちらの step も学習可能です。どちらも benchmark されています。組み合わせた pipeline は 10 年ほど安定しています。変わっているのは disambiguator の品質です。
 
-## The Concept
+## 概念
 
 ![Entity linking pipeline: mention → candidates → disambiguated entity](../assets/entity-linking.svg)
 
-**Candidate generation.** Given the mention surface form ("Jordan"), look up candidates in an alias index. Wikipedia alias dictionaries cover most named entities: "JFK" → John F. Kennedy, Jacqueline Kennedy, JFK airport, JFK (movie). Typical index returns 10-30 candidates per mention.
+**Candidate generation。** mention surface form ("Jordan") が与えられたら、alias index で candidates を引きます。Wikipedia alias dictionaries はほとんどの named entities を cover します。"JFK" → John F. Kennedy、Jacqueline Kennedy、JFK airport、JFK (movie)。典型的な index は mention ごとに 10-30 candidates を返します。
 
-**Disambiguation: three approaches.**
+**Disambiguation: 3 つのアプローチ。**
 
-1. **Prior + context (Milne & Witten, 2008).** `P(entity | mention) × context-similarity(entity, text)`. Works well, fast, no training.
-2. **Embedding-based (ESS / REL / Blink).** Encode mention + context. Encode each candidate's description. Pick max cosine. The 2020-2024 default.
-3. **Generative (GENRE, 2021; LLM-based, 2023+).** Decode the entity's canonical name token-by-token. Constrained to a trie of valid entity names so output is guaranteed to be a valid KB id.
+1. **Prior + context (Milne & Witten, 2008)。** `P(entity | mention) × context-similarity(entity, text)`。高速で、training なしでもよく動きます。
+2. **Embedding-based (ESS / REL / Blink)。** mention + context を encode します。各 candidate の description も encode します。cosine が最大のものを選びます。2020-2024 年の default です。
+3. **Generative (GENRE, 2021; LLM-based, 2023+)。** entity の canonical name を token-by-token に decode します。valid entity names の trie に constrain するため、output は valid KB id であることが保証されます。
 
-**End-to-end vs pipeline.** Modern models (ELQ, BLINK, ExtEnD, GENRE) run NER + candidate generation + disambiguation in one pass. Pipeline systems still dominate in production because you can swap components.
+**End-to-end vs pipeline。** 現代の models (ELQ、BLINK、ExtEnD、GENRE) は NER + candidate generation + disambiguation を 1 pass で実行します。production では components を交換できるため、pipeline systems が今も主流です。
 
-### The two measurements
+### 2 つの測定値
 
-- **Mention recall (candidate gen).** Fraction of gold mentions where the correct KB entry appears in the candidate list. Floor for the whole pipeline.
-- **Disambiguation accuracy / F1.** Given correct candidates, how often the top-1 is right.
+- **Mention recall (candidate gen)。** gold mentions のうち、正しい KB entry が candidate list に含まれる割合。pipeline 全体の floor です。
+- **Disambiguation accuracy / F1。** correct candidates が与えられたとき、top-1 がどれだけ正しいか。
 
-Always report both. A system with 99% disambiguation on 80% candidate recall is an 80% pipeline.
+必ず両方を報告してください。80% candidate recall 上で 99% disambiguation の system は、全体としては 80% pipeline です。
 
-## Build It
+## 作ってみる
 
-### Step 1: build an alias index from Wikipedia redirects
+### Step 1: Wikipedia redirects から alias index を作る
 
 ```python
 alias_to_entities = {
@@ -57,7 +57,7 @@ alias_to_entities = {
 }
 ```
 
-Wikipedia alias data: ~18M (alias, entity) pairs. Download from Wikidata dumps. Store as inverted index.
+Wikipedia alias data は約 18M の (alias, entity) pairs です。Wikidata dumps から download します。inverted index として保存してください。
 
 ### Step 2: context-based disambiguation
 
@@ -77,7 +77,7 @@ def disambiguate(mention, context, alias_index, entity_desc):
     return best, best_score
 ```
 
-The Jaccard overlap is a toy. Replace with cosine similarity on embeddings (see `code/main.py` step-2 for the transformer version).
+Jaccard overlap は toy です。embeddings 上の cosine similarity に置き換えてください (transformer version は `code/main.py` の step-2 を参照)。
 
 ### Step 3: embedding-based (BLINK-style)
 
@@ -94,11 +94,11 @@ def embed_entity(entity_id, description):
     return encoder.encode([f"{entity_id}: {description}"], normalize_embeddings=True)[0]
 ```
 
-At index time, embed every KB entity once. At query time, embed the mention + context once, dot-product against the candidate pool, pick max.
+index time では、すべての KB entity を一度だけ embed します。query time では、mention + context を一度だけ embed し、candidate pool に対して dot-product を取り、最大のものを選びます。
 
 ### Step 4: generative entity linking (concept)
 
-GENRE decodes the entity's Wikipedia title character-by-character. Constrained decoding (see lesson 20) ensures only valid titles can be output. Tight integration with a KB-backed trie. The modern descendant is REL-GEN and LLM-prompted EL with structured output.
+GENRE は entity の Wikipedia title を character-by-character に decode します。constrained decoding (lesson 20 参照) により、valid titles だけを output できます。KB-backed trie と密に統合します。現代的な descendant は REL-GEN と、structured output を使う LLM-prompted EL です。
 
 ```python
 prompt = f"""Text: {text}
@@ -107,82 +107,82 @@ List the best Wikipedia title for this mention.
 Respond with JSON: {{"title": "..."}}"""
 ```
 
-Combined with a whitelist (Outlines `choice`), this is the simplest EL pipeline to ship in 2026.
+whitelist (Outlines `choice`) と組み合わせると、これは 2026 年に出荷できる最も簡単な EL pipeline です。
 
-### Step 5: evaluate on AIDA-CoNLL
+### Step 5: AIDA-CoNLL で評価する
 
-AIDA-CoNLL is the standard EL benchmark: 1,393 Reuters articles, 34k mentions, Wikipedia entities. Report in-KB accuracy (`P@1`) and out-of-KB NIL-detection rate.
+AIDA-CoNLL は標準的な EL benchmark です。1,393 Reuters articles、34k mentions、Wikipedia entities で構成されます。in-KB accuracy (`P@1`) と out-of-KB NIL-detection rate を報告します。
 
-## Pitfalls
+## 落とし穴
 
-- **NIL handling.** Some mentions are not in the KB (emerging entities, obscure people). Systems must predict NIL instead of guessing the wrong entity. Measured separately.
-- **Mention boundary errors.** Upstream NER misses partial spans ("Bank of America" tagged as just "Bank"). EL recall drops.
-- **Popularity bias.** Trained systems over-predict frequent entities. A mention of "Michael I. Jordan" on an ML paper often links to basketball Jordan.
-- **Cross-lingual EL.** Mapping mentions in Chinese text to English Wikipedia entities. Requires a multilingual encoder or a translation step.
-- **KB staleness.** New companies, events, people are not in last year's Wikipedia dump. Production pipelines need a refresh loop.
+- **NIL handling。** 一部の mentions は KB にありません (emerging entities、obscure people)。systems は誤った entity を推測するのではなく NIL を予測しなければなりません。これは別に測定します。
+- **Mention boundary errors。** upstream NER が partial spans を miss します ("Bank of America" が "Bank" だけとして tagged される)。EL recall が落ちます。
+- **Popularity bias。** trained systems は frequent entities を過剰に予測します。ML paper 上の "Michael I. Jordan" という mention が basketball Jordan に link されることがよくあります。
+- **Cross-lingual EL。** 中国語 text 内の mentions を English Wikipedia entities に map します。multilingual encoder か translation step が必要です。
+- **KB staleness。** 新しい companies、events、people は去年の Wikipedia dump にはありません。production pipelines には refresh loop が必要です。
 
-## Use It
+## 使う
 
-The 2026 stack:
+2026 年の stack:
 
-| Situation | Pick |
+| 状況 | 選択 |
 |-----------|------|
-| General-purpose English + Wikipedia | BLINK or REL |
-| Cross-lingual, KB = Wikipedia | mGENRE |
-| LLM-friendly, few mentions/day | Prompt Claude/GPT-4 with candidate list + constrained JSON |
-| Domain-specific KB (medical, legal) | Custom BERT with KB-aware retrieval + fine-tune on domain AIDA-style set |
-| Extremely low-latency | Exact-match prior only (Milne-Witten baseline) |
+| General-purpose English + Wikipedia | BLINK または REL |
+| Cross-lingual、KB = Wikipedia | mGENRE |
+| LLM-friendly、few mentions/day | candidate list + constrained JSON で Claude/GPT-4 に prompt する |
+| Domain-specific KB (medical、legal) | KB-aware retrieval を備えた custom BERT + domain AIDA-style set で fine-tune |
+| Extremely low-latency | exact-match prior only (Milne-Witten baseline) |
 | Research SOTA | GENRE / ExtEnD / generative LLM-EL |
 
-Production pattern that ships in 2026: NER → coref → EL on each mention → collapse clusters to one canonical entity per cluster. Output: one KB id per entity in the document, not one per mention.
+2026 年に出荷される production pattern: NER → coref → 各 mention に EL → clusters を 1 つの canonical entity per cluster に collapse。output は document 内の entity ごとに 1 つの KB id であり、mention ごとに 1 つではありません。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-entity-linker.md`:
+`outputs/skill-entity-linker.md` として保存:
 
 ```markdown
 ---
 name: entity-linker
-description: Design an entity linking pipeline — KB, candidate generator, disambiguator, evaluation.
+description: entity linking pipeline を設計する。KB、candidate generator、disambiguator、evaluation を含める。
 version: 1.0.0
 phase: 5
 lesson: 25
 tags: [nlp, entity-linking, knowledge-graph]
 ---
 
-Given a use case (domain KB, language, volume, latency budget), output:
+use case (domain KB、language、volume、latency budget) が与えられたら、次を出力してください。
 
-1. Knowledge base. Wikidata / Wikipedia / custom KB. Version date. Refresh cadence.
-2. Candidate generator. Alias-index, embedding, or hybrid. Target mention recall @ K.
-3. Disambiguator. Prior + context, embedding-based, generative, or LLM-prompted.
-4. NIL strategy. Threshold on top score, classifier, or explicit NIL candidate.
-5. Evaluation. Mention recall @ 30, top-1 accuracy, NIL-detection F1 on held-out set.
+1. Knowledge base。Wikidata / Wikipedia / custom KB。Version date。Refresh cadence。
+2. Candidate generator。Alias-index、embedding、または hybrid。Target mention recall @ K。
+3. Disambiguator。Prior + context、embedding-based、generative、または LLM-prompted。
+4. NIL strategy。Top score の threshold、classifier、または explicit NIL candidate。
+5. Evaluation。Held-out set 上の mention recall @ 30、top-1 accuracy、NIL-detection F1。
 
-Refuse any EL pipeline without a mention-recall baseline (you cannot evaluate a disambiguator without knowing candidate gen surfaced the right entity). Refuse any pipeline using LLM-prompted EL without constrained output to valid KB ids. Flag systems where popularity bias affects minority entities (e.g. name-clashes) without domain fine-tuning.
+mention-recall baseline のない EL pipeline は拒否する (candidate gen が正しい entity を surfaced したかを知らずに disambiguator は評価できない)。valid KB ids への constrained output なしに LLM-prompted EL を使う pipeline は拒否する。domain fine-tuning なしに popularity bias が minority entities (例: name-clashes) に影響する systems は警告する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement the prior+context disambiguator in `code/main.py` on 10 ambiguous mentions (Paris, Jordan, Apple). Hand-label the correct entity. Measure accuracy.
-2. **Medium.** Encode 50 ambiguous mentions with a sentence transformer. Embed each candidate's description. Compare embedding-based disambiguation to Jaccard context overlap.
-3. **Hard.** Build a 1k-entity domain KB (e.g. employees + products in your company). Implement NER + EL end-to-end. Measure precision and recall on 100 held-out sentences.
+1. **Easy.** `code/main.py` で prior+context disambiguator を 10 個の ambiguous mentions (Paris、Jordan、Apple) に対して実装してください。正しい entity を hand-label し、accuracy を測ります。
+2. **Medium.** sentence transformer で 50 個の ambiguous mentions を encode してください。各 candidate の description を embed します。embedding-based disambiguation と Jaccard context overlap を比較してください。
+3. **Hard.** 1k-entity の domain KB (例: 自社の employees + products) を作ってください。NER + EL を end-to-end に実装し、100 held-out sentences 上で precision と recall を測ります。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| Term | みんなの言い方 | 実際の意味 |
 |------|-----------------|-----------------------|
-| Entity linking (EL) | Link to Wikipedia | Map a mention to a unique KB entry. |
-| Candidate generation | Who could it be? | Return a shortlist of plausible KB entries for a mention. |
-| Disambiguation | Pick the right one | Score candidates using context, pick the winner. |
-| Alias index | The lookup table | Map from surface form → candidate entities. |
-| NIL | Not in KB | Explicit prediction that no KB entry matches. |
-| KB | Knowledge base | Wikidata, Wikipedia, DBpedia, or your domain KB. |
-| AIDA-CoNLL | The benchmark | 1,393 Reuters articles with gold entity links. |
+| Entity linking (EL) | Wikipedia に link する | mention を一意な KB entry に map する。 |
+| Candidate generation | それは誰/何の可能性があるか | mention に対して plausible な KB entries の shortlist を返す。 |
+| Disambiguation | 正しいものを選ぶ | context を使って candidates を score し、winner を選ぶ。 |
+| Alias index | lookup table | surface form → candidate entities に map する。 |
+| NIL | KB にない | 一致する KB entry がないことを明示的に予測する。 |
+| KB | Knowledge base | Wikidata、Wikipedia、DBpedia、または domain KB。 |
+| AIDA-CoNLL | benchmark | gold entity links を持つ 1,393 Reuters articles。 |
 
-## Further Reading
+## 参考文献
 
-- [Milne, Witten (2008). Learning to Link with Wikipedia](https://www.cs.waikato.ac.nz/~ihw/papers/08-DM-IHW-LearningToLinkWithWikipedia.pdf) — the foundational prior+context approach.
-- [Wu et al. (2020). Zero-shot Entity Linking with Dense Entity Retrieval (BLINK)](https://arxiv.org/abs/1911.03814) — the embedding-based workhorse.
-- [De Cao et al. (2021). Autoregressive Entity Retrieval (GENRE)](https://arxiv.org/abs/2010.00904) — generative EL with constrained decoding.
-- [Hoffart et al. (2011). Robust Disambiguation of Named Entities in Text (AIDA)](https://www.aclweb.org/anthology/D11-1072.pdf) — the benchmark paper.
-- [REL: An Entity Linker Standing on the Shoulders of Giants (2020)](https://arxiv.org/abs/2006.01969) — the open production stack.
+- [Milne, Witten (2008). Learning to Link with Wikipedia](https://www.cs.waikato.ac.nz/~ihw/papers/08-DM-IHW-LearningToLinkWithWikipedia.pdf) — foundational な prior+context approach。
+- [Wu et al. (2020). Zero-shot Entity Linking with Dense Entity Retrieval (BLINK)](https://arxiv.org/abs/1911.03814) — embedding-based の workhorse。
+- [De Cao et al. (2021). Autoregressive Entity Retrieval (GENRE)](https://arxiv.org/abs/2010.00904) — constrained decoding を使う generative EL。
+- [Hoffart et al. (2011). Robust Disambiguation of Named Entities in Text (AIDA)](https://www.aclweb.org/anthology/D11-1072.pdf) — benchmark paper。
+- [REL: An Entity Linker Standing on the Shoulders of Giants (2020)](https://arxiv.org/abs/2006.01969) — open production stack。

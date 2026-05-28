@@ -1,34 +1,34 @@
 {
   "lesson": "01-text-processing",
-  "title": "Text Processing — Tokenization, Stemming, Lemmatization",
+  "title": "テキスト処理 — トークン化、ステミング、レンマ化",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a language model need preprocessing before training?",
+      "question": "言語モデルはなぜ学習前に前処理を必要とするのですか？",
       "options": [
-        "Preprocessing improves GPU utilization",
-        "Models consume discrete integer tokens, not raw text",
-        "Models read strings directly",
-        "Preprocessing is required only for languages without whitespace"
+        "前処理によって GPU 利用率が向上するから",
+        "モデルは生テキストではなく、離散的な整数トークンを消費するから",
+        "モデルは文字列を直接読むから",
+        "前処理は空白のない言語でだけ必要だから"
       ],
       "correct": 1,
-      "explanation": "Models operate on integer token IDs; preprocessing bridges continuous language to discrete inputs."
+      "explanation": "モデルは整数のトークン ID を扱います。前処理は連続的な言語を離散的な入力へ橋渡しします。"
     },
     {
       "stage": "pre",
-      "question": "Which preprocessing operation is rule-based suffix stripping?",
+      "question": "ルールベースで接尾辞を削る前処理操作はどれですか？",
       "options": [
-        "Stemming",
-        "POS tagging",
-        "Lemmatization",
-        "Tokenization"
+        "ステミング",
+        "POS タギング",
+        "レンマ化",
+        "トークン化"
       ],
       "correct": 0,
-      "explanation": "Stemming chops suffixes with rules; it is fast but can be wrong."
+      "explanation": "ステミングはルールで接尾辞を切り落とします。高速ですが、誤ることがあります。"
     },
     {
       "stage": "check",
-      "question": "What does the Porter stemmer step 1a return for the word 'ponies'?",
+      "question": "Porter ステマーの step 1a は、単語 'ponies' に対して何を返しますか？",
       "options": [
         "ponies",
         "ponie",
@@ -36,67 +36,67 @@
         "poni"
       ],
       "correct": 3,
-      "explanation": "The 'ies' rule replaces the suffix with 'i', producing 'poni'; step 1b in real Porter cleans it up."
+      "explanation": "'ies' ルールは接尾辞を 'i' に置き換えるため 'poni' になります。本物の Porter では step 1b がこれを整えます。"
     },
     {
       "stage": "check",
-      "question": "Why does lemmatization usually need a POS tag?",
+      "question": "レンマ化では通常、なぜ POS タグが必要ですか？",
       "options": [
-        "Unicode handling",
-        "Speed",
-        "Grammatical context disambiguates forms like 'better' (ADJ) versus 'better' (VERB)",
-        "To reduce memory usage"
+        "Unicode を扱うため",
+        "速度のため",
+        "'better' (ADJ) と 'better' (VERB) のような形を、文法コンテキストで曖昧性解消するため",
+        "メモリ使用量を減らすため"
       ],
       "correct": 2,
-      "explanation": "Lemmas depend on grammatical role; without the tag the lookup is ambiguous."
+      "explanation": "レンマは文法上の役割に依存します。タグがないとルックアップが曖昧になります。"
     },
     {
       "stage": "check",
-      "question": "When translating NLTK Penn Treebank POS tags to WordNet tags, what does a tag starting with 'V' map to?",
+      "question": "NLTK の Penn Treebank POS タグを WordNet タグへ変換するとき、'V' で始まるタグは何に対応しますか？",
       "options": [
-        "'n' (noun)",
-        "'v' (verb)",
-        "'r' (adverb)",
-        "'a' (adjective)"
+        "'n' (名詞)",
+        "'v' (動詞)",
+        "'r' (副詞)",
+        "'a' (形容詞)"
       ],
       "correct": 1,
-      "explanation": "Verb-prefixed Penn Treebank tags map to WordNet 'v'."
+      "explanation": "動詞を表す Penn Treebank タグは WordNet の 'v' に対応します。"
     },
     {
       "stage": "post",
-      "question": "What is 'training/inference mismatch' in NLP preprocessing?",
+      "question": "NLP 前処理における「学習 / 推論の不一致」とは何ですか？",
       "options": [
-        "Different batch sizes between train and test",
-        "Training and serving apply different preprocessing, so the model sees an unfamiliar distribution at inference",
-        "A GPU memory issue",
-        "Mixing tokenizer libraries within a notebook"
+        "学習とテストでバッチサイズが違うこと",
+        "学習時とサービング時で異なる前処理を適用し、推論時にモデルが未知の分布を見ること",
+        "GPU メモリの問題",
+        "ノートブック内でトークナイザライブラリを混在させること"
       ],
       "correct": 1,
-      "explanation": "Different preprocessing at training vs inference is the most common production NLP failure."
+      "explanation": "学習時と推論時で前処理が異なることは、本番 NLP で最もよくある失敗です。"
     },
     {
       "stage": "post",
-      "question": "Which tool would you reach for in a transformer pipeline instead of classical preprocessing?",
+      "question": "古典的前処理の代わりに、Transformer パイプラインで使うべきものはどれですか？",
       "options": [
         "NLTK word_tokenize",
-        "The model's own tokenizer (e.g. via tokenizers / transformers)",
-        "A regex tokenizer",
+        "モデル自身のトークナイザ (例: tokenizers / transformers 経由)",
+        "正規表現トークナイザ",
         "spaCy en_core_web_sm"
       ],
       "correct": 1,
-      "explanation": "Transformer models ship a paired tokenizer; classical preprocessing is bypassed."
+      "explanation": "Transformer モデルには対応するトークナイザが付属します。古典的前処理は迂回されます。"
     },
     {
       "stage": "post",
-      "question": "Why pin NLTK and spaCy versions in requirements?",
+      "question": "requirements で NLTK と spaCy のバージョンを固定するのはなぜですか？",
       "options": [
-        "License compatibility",
-        "Tokenizer and lemmatizer behavior shifts between minor releases, silently changing training distribution",
-        "Older versions support more languages",
-        "Newer versions are slower"
+        "ライセンス互換性のため",
+        "マイナーリリース間でトークナイザやレンマ化器の挙動が変わり、学習分布が静かに変化し得るから",
+        "古いバージョンのほうが多くの言語をサポートしているから",
+        "新しいバージョンは遅いから"
       ],
       "correct": 1,
-      "explanation": "Library upgrades can change tokenization output, drifting from the training distribution."
+      "explanation": "ライブラリ更新によってトークン化出力が変わり、学習分布からドリフトすることがあります。"
     }
   ]
 }

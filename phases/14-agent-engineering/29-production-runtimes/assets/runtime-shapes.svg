@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -9,27 +9,27 @@
       .stream { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .queue { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .event { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="26" text-anchor="middle" class="title">Production runtime shapes — pick by task, not by framework</text>
+  <text x="480" y="26" text-anchor="middle" class="title">Production runtime shapes — taskで選び、frameworkで選ばない</text>
 
   <rect x="40" y="50" width="220" height="220" class="req"/>
   <text x="150" y="72" text-anchor="middle" class="head">request-response</text>
   <text x="60" y="96" class="small">synchronous HTTP</text>
-  <text x="60" y="114" class="small">user waits for completion</text>
-  <text x="60" y="132" class="small">short tasks only (&lt;30s)</text>
+  <text x="60" y="114" class="small">userはcompletionを待つ</text>
+  <text x="60" y="132" class="small">short tasksのみ (&lt;30s)</text>
   <rect x="60" y="148" width="180" height="30" class="box"/>
   <text x="78" y="168" class="step">Agno, Mastra, raw SDK</text>
   <rect x="60" y="186" width="180" height="30" class="box"/>
   <text x="78" y="206" class="step">OTel spans per request</text>
   <rect x="60" y="224" width="180" height="30" class="box"/>
-  <text x="78" y="244" class="step">fits: chat UX, tool calls</text>
+  <text x="78" y="244" class="step">向く: chat UX, tool calls</text>
 
   <rect x="280" y="50" width="220" height="220" class="stream"/>
   <text x="390" y="72" text-anchor="middle" class="head">streaming</text>
@@ -39,21 +39,21 @@
   <rect x="300" y="148" width="180" height="30" class="box"/>
   <text x="318" y="168" class="step">Pipecat, LiveKit, SDK</text>
   <rect x="300" y="186" width="180" height="30" class="box"/>
-  <text x="318" y="206" class="step">first-token latency matters</text>
+  <text x="318" y="206" class="step">first-token latencyが重要</text>
   <rect x="300" y="224" width="180" height="30" class="box"/>
-  <text x="318" y="244" class="step">fits: voice, copilot UX</text>
+  <text x="318" y="244" class="step">向く: voice, copilot UX</text>
 
   <rect x="520" y="50" width="220" height="220" class="queue"/>
   <text x="630" y="72" text-anchor="middle" class="head">queue-based</text>
   <text x="540" y="96" class="small">producer  worker pool  DLQ</text>
-  <text x="540" y="114" class="small">webhook / pubsub for results</text>
+  <text x="540" y="114" class="small">resultsはwebhook / pubsub</text>
   <text x="540" y="132" class="small">long-horizon tasks</text>
   <rect x="540" y="148" width="180" height="30" class="box"/>
   <text x="558" y="168" class="step">Celery, BullMQ, SQS</text>
   <rect x="540" y="186" width="180" height="30" class="box"/>
   <text x="558" y="206" class="step">queue depth + DLQ metrics</text>
   <rect x="540" y="224" width="180" height="30" class="box"/>
-  <text x="558" y="244" class="step">fits: computer use, research</text>
+  <text x="558" y="244" class="step">向く: computer use, research</text>
 
   <rect x="760" y="50" width="160" height="220" class="event"/>
   <text x="840" y="72" text-anchor="middle" class="head">event + cron</text>
@@ -67,17 +67,17 @@
   <text x="796" y="228" class="step">cron + durable</text>
 
   <rect x="40" y="290" width="880" height="220" class="box"/>
-  <text x="480" y="312" text-anchor="middle" class="head">durable execution cross-cuts all shapes  (LangGraph, AutoGen v0.4 actors, Managed Agents)</text>
+  <text x="480" y="312" text-anchor="middle" class="head">durable executionは全shapeを横断  (LangGraph, AutoGen v0.4 actors, Managed Agents)</text>
   <rect x="60" y="328" width="840" height="30" class="box"/>
-  <text x="78" y="348" class="step">state checkpointed after every step  resume picks up at exact step</text>
+  <text x="78" y="348" class="step">各step後にstate checkpoint  resumeは正確なstepから再開</text>
   <rect x="60" y="362" width="840" height="30" class="box"/>
-  <text x="78" y="382" class="step">actor-model fault isolation  one agent crash does not crash peers</text>
+  <text x="78" y="382" class="step">actor-model fault isolation  1 agentのcrashがpeersを落とさない</text>
   <rect x="60" y="396" width="840" height="30" class="box"/>
-  <text x="78" y="416" class="step">essential when step count is unknown and recovery cost is high</text>
+  <text x="78" y="416" class="step">step countが未知でrecovery costが高い時に必須</text>
   <rect x="60" y="430" width="840" height="30" class="box"/>
-  <text x="78" y="450" class="step">observability load-bearing: OTel GenAI (Lesson 23) + Langfuse/Phoenix/Opik (Lesson 24)</text>
+  <text x="78" y="450" class="step">observabilityが支柱: OTel GenAI (Lesson 23) + Langfuse/Phoenix/Opik (Lesson 24)</text>
   <rect x="60" y="464" width="840" height="30" class="box"/>
-  <text x="78" y="484" class="step">without spans + eval: failing at step 40 is un-debuggable; you replay from scratch</text>
+  <text x="78" y="484" class="step">spans + evalなし: step 40のfailureはdebug不能; scratchからreplay</text>
 
-  <text x="480" y="540" text-anchor="middle" class="caption">pick the shape first; the framework is a second-order choice.</text>
+  <text x="480" y="540" text-anchor="middle" class="caption">先にshapeを選ぶ。frameworkは二次的な選択。</text>
 </svg>

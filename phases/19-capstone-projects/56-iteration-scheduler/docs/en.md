@@ -1,27 +1,26 @@
-# Iteration Scheduler
+# 反復スケジューラー
 
-> A research loop without a scheduler is a queue with delusions. The scheduler is where the loop decides what to stop exploring, and that decision is the whole game.
+> scheduler のない研究ループは、ただの worklist です。何を探索し続け、何を止めるかを決める場所が scheduler であり、その判断が全体の勝負を決めます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 19 lessons 50-53
-**Time:** ~90 minutes
+**種別:** Build
+**言語:** Python
+**前提:** Phase 19 lessons 50-53
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
+- hypothesis queue が parallel experiment slots に流れ、result が fan-in する研究 workflow を model 化する。
+- `asyncio` で複数 experiment を同時に走らせ、slot を空けない。
+- UCB で各 hypothesis branch を score し、exploration を残しつつ low-yield branch を prune する。
+- 完了 result を paper-write stage と re-queue stage に fan out し、高 yield branch から follow-up hypothesis を生む。
+- branch score、slot occupancy、pruning decision を持つ per-iteration trace を出す。
 
-- Model a research workflow as a hypothesis queue feeding parallel experiment slots whose results fan back in.
-- Run multiple experiments concurrently with asyncio so the scheduler can keep all slots busy.
-- Score each hypothesis branch with UCB so the scheduler can prune low-yield branches without abandoning exploration.
-- Fan out finished results to a paper-write stage and a re-queue stage so a high-yield branch spawns follow-up hypotheses.
-- Surface a per-iteration trace with branch scores, slot occupancy, and pruning decisions.
+## Scheduler と worklist の違い
 
-## Why a scheduler, not a worklist
+flat worklist は job を投入順に実行します。各 job が独立しているなら十分です。しかし研究では experiment 3 の発見が experiment 4 と 5 の優先順位を変えます。result fan-in を読み queue を並べ替える scheduler は、同じ compute でより有用な work を行えます。
 
-A flat worklist runs jobs in submission order. That is fine when each job is independent. Research is not independent: a finding from experiment three changes the priority of experiments four and five. A scheduler that reads the result fan-in and reorders the queue gets more useful work done per unit of compute.
+scoring rule が設計の中心です。greedy scorer は current leader だけを選び exploration しません。uniform scorer は exploitation しません。UCB、upper confidence bound はその中間です。leader を exploit しながら、試行回数の少ない branch に capacity を残します。
 
-The interesting design choice is the scoring rule. A greedy scorer always picks the current leader and never explores. A uniform scorer never exploits. UCB (upper confidence bound) is the middle path: exploit the leader while reserving capacity for branches that have been tried less.
-
-## The system shape
+## System shape
 
 ```mermaid
 flowchart LR
@@ -37,9 +36,9 @@ flowchart LR
     Bus --> Paper[Paper write fan-out]
 ```
 
-The queue holds hypotheses. The scheduler picks the highest-UCB hypothesis when a slot frees. Each slot runs an experiment asynchronously. Finished experiments fan their result onto the bus. The bus updates UCB statistics on the originating branch and fans out to the paper-write stage when a branch's yield crosses a threshold.
+queue は hypotheses を保持します。slot が空くと scheduler は最高 UCB の hypothesis を選びます。各 slot は experiment を async に走らせます。完了した result は bus に流れ、originating branch の UCB statistics を更新し、yield が threshold を超えれば paper-write stage へ fan out します。
 
-## The Hypothesis shape
+## Hypothesis の形
 
 ```mermaid
 flowchart TB
@@ -51,23 +50,23 @@ flowchart TB
     Stats --> Sum[reward sum float]
 ```
 
-`branch` is the key for UCB statistics. Multiple hypotheses may share a branch (the branch is the research direction; the hypothesis is one trial within it). `runs` is the count of completed experiments for that branch, `reward_sum` is the cumulative reward. UCB reads both.
+`branch` は UCB statistics の key です。複数の hypothesis が同じ branch を共有できます。branch は研究方向、hypothesis はその中の一試行です。`runs` は完了 experiment 数、`reward_sum` は累積 reward です。
 
 ## UCB scoring
 
-The UCB formula used in this lesson is the classic UCB1.
+この lesson の UCB は classic UCB1 です。
 
 ```text
 ucb(branch) = mean_reward(branch) + c * sqrt( ln(total_runs) / runs(branch) )
 ```
 
-`total_runs` is the count of all experiments completed across all branches. `c` is the exploration weight; the lesson defaults to `sqrt(2)`. A branch with zero runs gets `+inf` so untried branches are always scheduled first. A branch with high mean reward keeps a high score until other branches catch up; a branch that runs many times without much reward gets eclipsed by less-run alternatives.
+`total_runs` は全 branch の完了 experiment 数です。`c` は exploration weight で、default は `sqrt(2)` です。runs が0の branch は `+inf` となり、未試行 branch が必ず先に選ばれます。mean reward が高い branch は高 score を保ちますが、何度も低 reward なら未探索 branch に抜かれます。
 
-The pruning gate is separate from the picker. Pruning removes a branch from future scheduling when its mean reward falls below an absolute floor (default `0.2`) after at least `prune_after_runs` trials (default `3`). This keeps the queue bounded.
+pruning gate は picker とは別です。mean reward が absolute floor、default `0.2` を下回り、かつ `prune_after_runs`、default `3` に達した branch は future scheduling から外されます。
 
-## Parallel slots with asyncio
+## asyncio の parallel slots
 
-The scheduler drives experiments with `asyncio.create_task`. Each task runs the experiment runner (an `async def` callable) that returns a `Result`. The main loop waits on the set of in-flight tasks with `asyncio.wait(..., return_when=asyncio.FIRST_COMPLETED)` and fires the scoring update on each completion.
+scheduler は `asyncio.create_task` で experiment を駆動します。各 task は async runner を走らせ、`Result` を返します。main loop は in-flight task set に対して `asyncio.wait(..., return_when=asyncio.FIRST_COMPLETED)` を待ち、完了ごとに scoring update を行います。
 
 ```mermaid
 sequenceDiagram
@@ -84,39 +83,37 @@ sequenceDiagram
     S->>Q: re-queue follow-ups
 ```
 
-Three slots run concurrently. The main loop never blocks on a single experiment. The scheduler keeps starting new tasks as soon as a slot frees, until both the queue is empty and no tasks are in flight.
+main loop は単一 experiment を block しません。queue が空で in-flight task もなくなるか budget が尽きるまで、slot が空くたびに新しい task を起動します。
 
 ## Fan-out: paper triggers
 
-When a branch's mean reward crosses `paper_threshold` (default `0.7`) and that branch has not yet produced a paper, the scheduler fans a `paper.trigger` event onto an output list. Downstream the paper writer from lesson fifty-four would pick this up. In this lesson the trigger is captured as a list so tests can assert it.
+branch の mean reward が `paper_threshold`、default `0.7` を超え、まだ paper を作っていない場合、scheduler は `paper.trigger` event を output list に出します。本 lesson では tests が assert できるよう list として捕捉します。
 
 ## Fan-out: follow-up hypotheses
 
-When a high-yield result lands, the scheduler can call the user-supplied `expander` to produce one or more follow-up hypotheses on the same branch. The expander is a pure function from `Result` to `list[Hypothesis]`. The lesson ships a deterministic expander that produces two follow-ups for any result whose reward exceeds the paper threshold.
+high-yield result が届くと、scheduler は user-supplied `expander` を呼んで follow-up hypotheses を生成できます。expander は `Result` から `list[Hypothesis]` への pure function です。この lesson の deterministic expander は threshold を超えた result から二つの follow-up を作ります。
 
 ## Budgets
 
-Two budgets protect the scheduler from runaway loops.
+二つの budget が runaway loop を防ぎます。
 
 ```text
-max_experiments    : total count of experiments run across all branches
+max_experiments    : 全 branch 合計の experiment 実行数
 max_seconds        : wall-clock cap (asyncio time)
 ```
 
-When either fires, the scheduler stops scheduling new tasks, awaits the in-flight ones, and returns the final trace. The trace includes a `stop_reason`.
+どちらかが発火すると、scheduler は新しい task を起動せず、in-flight を await して final trace を返します。trace には `stop_reason` が含まれます。
 
-## The Trace and final report
+## Trace と final report
 
-Each scheduling decision (pick, dispatch, result, prune, fan-out) emits one event. The final report summarises per-branch stats, total runs, total wall-clock, and the paper triggers fired. The next lesson, the end-to-end demo, reads this report to drive the paper writer.
+pick、dispatch、result、prune、fan-out の各 scheduling decision が event を出します。final report は branch stats、total runs、total wall-clock、paper triggers をまとめます。次の end-to-end demo はこの report を読み paper writer を動かします。
 
-## How to read the code
+## コードの読み方
 
-`code/main.py` defines `Hypothesis`, `Result`, `BranchStats`, `IterationScheduler`, and a `make_deterministic_runner` factory that returns an asyncio experiment runner with predictable rewards. The runner sleeps for a fixed `delay_ms` (default `5ms`) so concurrency is observable.
+`code/main.py` は `Hypothesis`, `Result`, `BranchStats`, `IterationScheduler`, predictable rewards を持つ asyncio experiment runner を返す `make_deterministic_runner` を定義します。runner は固定 `delay_ms`、default `5ms` だけ sleep するため concurrency が観測できます。
 
-`code/tests/test_scheduler.py` covers: UCB picks untried branches first, parallel slot occupancy, paper triggers when threshold is crossed, branch pruning after low-yield trials, fan-out follow-up hypotheses, and budget exit (both experiment count and wall clock).
+`code/tests/test_scheduler.py` は、未試行 branch を UCB が先に選ぶこと、parallel slot occupancy、threshold crossing での paper trigger、low-yield branch pruning、follow-up hypothesis fan-out、experiment count と wall clock の budget exit を確認します。
 
-## Going further
+## 発展
 
-Three extensions a real implementation will want. First, persistent UCB stats across sessions: the current statistics live in memory; a real scheduler would checkpoint them so a restart preserves the exploration budget already spent. Second, multi-objective scoring: instead of a scalar reward, each result emits a vector and UCB becomes a Pareto-style picker. Third, contextual bandits: the picker conditions on hypothesis features (length, complexity) so similar hypotheses share exploration.
-
-The scheduler is the place where research becomes more than a worklist. Once UCB is wired and the slots run in parallel, every other improvement composes on top.
+本番化では persistent UCB stats、multi-objective scoring、contextual bandits が有用です。stats を checkpoint すれば restart 後も exploration budget を保持できます。scalar reward を vector にすれば Pareto-style picker に拡張できます。hypothesis features を条件にした contextual bandit なら似た仮説間で exploration を共有できます。

@@ -1,39 +1,39 @@
 ---
 name: aar-deployment-review
-description: Pre-deployment review of an automated-alignment-research pipeline, including sandbox isolation and log integrity.
+description: サンドボックス隔離とログ完全性を含む、自動アラインメント研究パイプラインのデプロイ前レビュー。
 version: 1.0.0
 phase: 15
 lesson: 6
 tags: [aar, alignment-research, sandbox, log-integrity, rsp]
 ---
 
-Given a proposed Automated-Alignment-Research deployment (model, sandbox, task queue, forum), produce a pre-deployment review that a frontier-lab safety team would sign off on.
+提案された自動アラインメント研究（Automated-Alignment-Research）デプロイ（モデル、サンドボックス、タスクキュー、フォーラム）を受け取り、フロンティアラボの安全性チームが承認できるデプロイ前レビューを作成する。
 
-Produce:
+作成するもの:
 
-1. **Sandbox isolation.** Verify filesystem, network, and process limits for each AAR instance. Confirm no AAR can read or modify another AAR's sandbox. Confirm no AAR can reach the forum storage's write endpoint directly (all posts go through a separate service).
-2. **Forum log integrity.** The forum must be append-only and tamper-evident. Specify the storage (e.g. S3 with object lock, immutable ledger, append-only WAL). Specify the verification interval and the response if tampering is detected.
-3. **Task allocation policy.** State how tasks are assigned: who writes them, who approves them, whether AARs can propose their own follow-up tasks, and under what conditions. Free decomposition wins on performance; prescribed workflow wins on auditability. Document the tradeoff explicitly.
-4. **Human review gate.** Before any AAR output influences real research direction, training data, or published work, a named human reviewer must sign off. Specify the review checklist: experiment reproducibility, log completeness, claim-to-evidence mapping.
-5. **Threshold monitoring.** Track signals that the AAR system approaches RSP v3.0 AI R&D-4 territory: task complexity delta, autonomous sub-task spawning, cross-task information transfer. Define thresholds that require elevated review.
+1. **Sandbox isolation.** 各 AAR インスタンスについて、ファイルシステム、ネットワーク、プロセスの制限を検証する。どの AAR も別の AAR のサンドボックスを読んだり変更したりできないことを確認する。どの AAR もフォーラムストレージの書き込みエンドポイントへ直接到達できないことを確認する（すべての投稿は別サービスを経由する）。
+2. **Forum log integrity.** フォーラムは append-only で、改ざん検知可能でなければならない。ストレージ（例: object lock 付き S3、不変 ledger、append-only WAL）を明記する。検証間隔と、改ざんが検出された場合の対応を明記する。
+3. **Task allocation policy.** タスクがどのように割り当てられるかを述べる。誰が書くのか、誰が承認するのか、AAR が自分自身のフォローアップタスクを提案できるのか、その条件は何か。自由な分解は性能で有利であり、規定ワークフローは監査可能性で有利である。このトレードオフを明示的に文書化する。
+4. **Human review gate.** AAR の出力が実際の研究方針、訓練データ、公開成果物に影響する前に、名前付きの人間レビュアーが承認しなければならない。レビューチェックリストを明記する。実験の再現性、ログの完全性、主張と証拠の対応である。
+5. **Threshold monitoring.** AAR システムが RSP v3.0 AI R&D-4 の領域に近づいていることを示すシグナルを追跡する。タスク複雑度の差分、自律的なサブタスク生成、タスク横断の情報転移である。強化レビューを必要とするしきい値を定義する。
 
-Hard rejects:
-- Any AAR deployment without tamper-evident, out-of-sandbox logs.
-- Any pipeline where AARs' outputs feed directly into training data or production policy without named human review.
-- Any pipeline where a single AAR has sufficient credentials to influence multiple downstream systems.
+絶対的な拒否条件:
+- 改ざん検知可能なサンドボックス外ログを持たない AAR デプロイ。
+- AAR の出力が、名前付きの人間レビューなしに訓練データや本番ポリシーへ直接流れ込むパイプライン。
+- 単一の AAR が複数の下流システムへ影響できるだけの認証情報を持つパイプライン。
 
-Refusal rules:
-- If the sandbox isolation is unspecified or relies on a single layer (Docker only, no seccomp / gVisor), refuse and require defense-in-depth.
-- If the log storage is editable by anyone (even operators), refuse and require write-once media.
-- If the deployment's goal is to automate a part of the capability pipeline — not just alignment research — refuse and escalate to RSP review.
+拒否ルール:
+- サンドボックス隔離が未指定である、または単一層（Docker のみで seccomp / gVisor なし）に依存している場合は拒否し、多層防御を求める。
+- ログストレージを誰かが編集できる場合（運用者であっても）、拒否して write-once media を求める。
+- デプロイの目的がアラインメント研究だけでなく、能力パイプラインの一部を自動化することにある場合は、拒否して RSP レビューへエスカレーションする。
 
-Output format:
+出力形式:
 
-Return a review memo with:
-- **Pipeline summary** (one paragraph)
-- **Isolation score** (per-dimension: fs, net, proc, peer)
-- **Log integrity score** (with verification plan)
-- **Task allocation decision** (fixed / free / hybrid, with rationale)
-- **Human review gate** (reviewer name, checklist)
-- **Threshold monitors** (list of signals, thresholds, response)
-- **Deployment verdict** (go / hold / no-go)
+次を含むレビューメモを返す:
+- **Pipeline summary**（1段落）
+- **Isolation score**（次元ごと: fs, net, proc, peer）
+- **Log integrity score**（検証計画付き）
+- **Task allocation decision**（fixed / free / hybrid、根拠付き）
+- **Human review gate**（レビュアー名、チェックリスト）
+- **Threshold monitors**（シグナル、しきい値、対応のリスト）
+- **Deployment verdict**（go / hold / no-go）

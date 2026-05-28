@@ -1,33 +1,33 @@
 ---
 name: computer-use-safety
-description: Build per-step safety classifier + confirmation gate for a computer-use agent, with allowlist navigation and injection-marker filtering.
+description: allowlist navigationとinjection-marker filteringを備えた、computer-use agent向けper-step safety classifier + confirmation gateを構築する。
 version: 1.0.0
 phase: 14
 lesson: 21
 tags: [computer-use, safety, claude, openai-cua, gemini]
 ---
 
-Given a computer-use agent and a list of target apps, produce a safety layer that classifies every action before execution.
+computer-use agentとtarget appのlistを受け取り、execution前にすべてのactionをclassifyするsafety layerを生成する。
 
-Produce:
+生成するもの:
 
-1. `SafetyClassifier.assess(action, screen) -> SafetyVerdict` with fields `allow`, `reason`, `needs_confirmation`.
-2. Allowlist of element labels the agent can click; refusal otherwise.
-3. Allowlist of URLs the agent can navigate to; refusal on redirects out of the list.
-4. Injection-marker filter on DOM text, retrieved content, and typed text. Any match blocks the action.
-5. Confirmation gate for sensitive actions (login, purchase, delete, publish). Human-in-the-loop callback interface.
-6. Trace emitter: every decision logged with (action, verdict, reason).
+1. `allow`、`reason`、`needs_confirmation` fieldsを持つ`SafetyClassifier.assess(action, screen) -> SafetyVerdict`。
+2. agentがclickできるelement labelのallowlist。それ以外は拒否する。
+3. agentがnavigateできるURLのallowlist。list外へのredirectは拒否する。
+4. DOM text、retrieved content、typed textに対するinjection-marker filter。matchすればactionをblockする。
+5. sensitive actions (login、purchase、delete、publish) 向けconfirmation gate。human-in-the-loop callback interface。
+6. Trace emitter: すべてのdecisionを(action, verdict, reason)付きでlogする。
 
 Hard rejects:
 
-- Safety classifier that only runs on the first action. Every action must be classified.
-- Allowlist of form `*`. An allowlist that allows everything is not an allowlist.
-- Skipping confirmation because the model "seems confident." Confidence is not safety.
+- first actionでしか実行されないsafety classifier。すべてのactionをclassifyする必要があります。
+- `*`形式のallowlist。すべてを許可するallowlistはallowlistではありません。
+- modelが「自信ありそう」に見えるという理由でconfirmationをskipすること。confidenceはsafetyではありません。
 
 Refusal rules:
 
-- If the agent has computer-use access without per-step safety, refuse to ship.
-- If the agent can navigate to arbitrary URLs, refuse. Require allowlist or blocklist.
-- If sensitive actions bypass the confirmation gate in any mode, refuse.
+- agentがper-step safetyなしでcomputer-use accessを持つ場合、shipを拒否する。
+- agentがarbitrary URLsへnavigateできる場合は拒否する。allowlistまたはblocklistを必須にする。
+- sensitive actionsがどのmodeでもconfirmation gateをbypassする場合は拒否する。
 
-Output: `classifier.py`, `allowlist.py`, `confirmation.py`, `trace.py`, `README.md` explaining the gate policy, injection markers, and allowlist maintenance process. End with "what to read next" pointing to Lesson 27 (prompt injection) and Lesson 23 (OTel span attribution for safety decisions).
+Output: `classifier.py`, `allowlist.py`, `confirmation.py`, `trace.py`, `README.md`。gate policy、injection markers、allowlist maintenance processを説明する。最後に"what to read next"としてLesson 27 (prompt injection) とLesson 23 (safety decisionのOTel span attribution) を示す。

@@ -7,9 +7,9 @@ export const FIXTURES: Record<string, DocumentFixture> = {
     pageWidth: 1224,
     pageHeight: 1584,
     pageImageUrl: "/static/10k-acme-2025-p88.png",
-    query: "What was Acme's free cash flow in FY2025?",
+    query: "Acme の FY2025 free cash flow はいくらでしたか？",
     answer:
-      "Free cash flow in FY2025 was $3.12B, up from $2.41B in FY2024 (Table 4, p.88).",
+      "FY2025 の free cash flow は $3.12B で、FY2024 の $2.41B から増加しました (Table 4, p.88)。",
     evidence: [
       {
         page: 88,
@@ -31,9 +31,9 @@ export const FIXTURES: Record<string, DocumentFixture> = {
     pageWidth: 1200,
     pageHeight: 1553,
     pageImageUrl: "/static/nature-2026-p4.png",
-    query: "What is the MaxSim reduction over BM25?",
+    query: "BM25 に対する MaxSim の reduction はどれくらいですか？",
     answer:
-      "MaxSim reduces ColBERT-style query latency by 4.1x vs BM25 reranking (Fig. 3, p.4).",
+      "MaxSim は BM25 reranking と比べ、ColBERT-style query latency を 4.1x 削減します (Fig. 3, p.4)。",
     evidence: [
       {
         page: 4,

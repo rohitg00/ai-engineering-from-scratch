@@ -1,75 +1,75 @@
 {
   "lesson": "03-direct-preference-optimization-family",
-  "title": "The Direct Preference Optimization Family",
+  "title": "Direct Preference Optimization Family",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why can DPO skip training an explicit reward model?",
+      "question": "DPO が explicit reward model の訓練を省略できるのはなぜですか。",
       "options": [
-        "DPO trains its own reward model implicitly in a second optimization loop",
-        "The closed-form RLHF optimum lets you express reward as a log-ratio of policies, which substitutes into the Bradley-Terry loss",
-        "Preference data does not require a scalar reward",
-        "Bradley-Terry preferences happen to be invariant to the reward function"
+        "DPO は 2 つ目の optimization loop で reward model を暗黙に訓練するから",
+        "closed-form RLHF optimum により reward を policies の log-ratio として表せ、それを Bradley-Terry loss に代入できるから",
+        "preference data は scalar reward を必要としないから",
+        "Bradley-Terry preferences はたまたま reward function に不変だから"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What failure mode does IPO (Azar et al., 2024) primarily address in DPO?",
+      "question": "IPO (Azar et al., 2024) が DPO で主に対処する failure mode は何ですか。",
       "options": [
-        "Requirement of paired data",
-        "Reliance on a reference policy",
-        "Length bias of the chosen response",
-        "Unbounded implicit reward gap from tiny preference probabilities"
+        "paired data の requirement",
+        "reference policy への reliance",
+        "chosen response の length bias",
+        "小さな preference probabilities から生じる unbounded implicit reward gap"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "When would you reach for KTO over DPO?",
+      "question": "DPO より KTO を選ぶのはどんな場合ですか。",
       "options": [
-        "When you must guarantee zero implicit-reward drift",
-        "When you have unpaired single labels (desirable / undesirable) and want to use loss-aversion utilities",
-        "When you have only paired data with strong margins",
-        "When you want to remove the KL penalty entirely"
+        "implicit-reward drift をゼロに保証しなければならない場合",
+        "unpaired single labels (desirable / undesirable) があり、loss-aversion utilities を使いたい場合",
+        "strong margins を持つ paired data だけがある場合",
+        "KL penalty を完全に取り除きたい場合"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which property is unique to SimPO compared to DPO?",
+      "question": "DPO と比べて SimPO に固有の性質はどれですか。",
       "options": [
-        "It removes the reference policy and normalizes log-likelihood by sequence length",
-        "It drops the Bradley-Terry log-sigmoid for an identity mapping",
-        "It uses an odds-ratio loss with NLL",
-        "It keeps the reference policy and adds a margin"
+        "reference policy を取り除き、sequence length で log-likelihood を normalize する",
+        "Bradley-Terry log-sigmoid を identity mapping に置き換える",
+        "NLL と odds-ratio loss を使う",
+        "reference policy を保ち margin を加える"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the 'Degraded Chosen Response' problem in DPO that BPO targets?",
+      "question": "BPO が target にする DPO の 'Degraded Chosen Response' problem とは何ですか。",
       "options": [
-        "The chosen response is missing from the reference policy's support",
-        "The chosen response is sampled with low probability at inference",
-        "DPO can drive the chosen response's absolute log-prob down as long as the rejected log-prob falls faster",
-        "The chosen response becomes longer than the rejected"
+        "chosen response が reference policy の support から欠落している",
+        "chosen response が inference 時に low probability で sample される",
+        "rejected log-prob がより速く下がる限り、DPO が chosen response の absolute log-prob を下げ得る",
+        "chosen response が rejected より長くなる"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Rafailov et al. (NeurIPS 2024) on scaling laws for direct alignment algorithms show:",
+      "question": "direct alignment algorithms の scaling laws に関する Rafailov et al. (NeurIPS 2024) が示したことは何ですか。",
       "options": [
-        "DAAs exhibit the same Gao et al. peak-and-collapse over-optimization shape on gold reward",
-        "DAAs eliminate Goodhart by design",
-        "Over-optimization disappears when paired data exceeds 100k examples",
-        "DPO over-optimizes but IPO and SimPO do not"
+        "DAAs は gold reward 上で Gao et al. と同じ peak-and-collapse over-optimization shape を示す",
+        "DAAs は設計上 Goodhart を排除する",
+        "paired data が 100k examples を超えると over-optimization は消える",
+        "DPO は over-optimize するが IPO と SimPO はしない"
       ],
       "correct": 0,
       "explanation": ""

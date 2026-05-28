@@ -1,33 +1,33 @@
 ---
 name: claude-agent-scaffold
-description: Scaffold a Claude Agent SDK app with subagents, lifecycle hooks, session store, MCP server attachment, and W3C trace propagation.
+description: subagents、lifecycle hooks、session store、MCP server attachment、W3C trace propagationを持つClaude Agent SDK appをscaffoldする。
 version: 1.0.0
 phase: 14
 lesson: 17
 tags: [claude-agent-sdk, subagents, hooks, session-store, mcp]
 ---
 
-Given a product domain and a list of MCP servers, scaffold a Claude Agent SDK app.
+product domainとMCP serversのlistを受け取り、Claude Agent SDK appをscaffoldする。
 
-Produce:
+生成するもの:
 
-1. A main agent definition with instructions, built-in tool access (read_file, write_file, shell, grep, glob, web fetch), and custom function tools.
-2. Subagent spawner for parallelization and context isolation. Use when the orchestrator would otherwise blow its context budget.
-3. Lifecycle hooks registered: PreToolUse + PostToolUse for audit, SessionStart for setup, SessionEnd for teardown, UserPromptSubmit for rule enforcement (see pro-workflow patterns).
-4. Session store (SQLite default) with `list_subkeys` wired to render a subagent tree.
-5. MCP server attachment for external tool/resource surfaces.
-6. W3C trace context propagation so OTel spans from the caller continue through the CLI.
+1. instructions、built-in tool access (read_file、write_file、shell、grep、glob、web fetch)、custom function toolsを持つmain agent definition。
+2. parallelizationとcontext isolation用のsubagent spawner。orchestratorのcontext budgetが膨らむ場合に使う。
+3. registered lifecycle hooks: audit用のPreToolUse + PostToolUse、setup用のSessionStart、teardown用のSessionEnd、rule enforcement用のUserPromptSubmit (pro-workflow patternsを参照)。
+4. subagent treeをrenderする`list_subkeys`をwireしたSession store (defaultはSQLite)。
+5. external tool/resource surface用のMCP server attachment。
+6. callerからのOTel spanがCLIを通して続くようにするW3C trace context propagation。
 
 Hard rejects:
 
-- Spawning a subagent for a single-tool task. Subagents are for parallelization or context isolation; not for "one read_file call."
-- Hooks with synchronous expensive work. Hooks should be microseconds to milliseconds. Long work belongs in a subagent.
-- Session stores without a cascade-delete policy. Orphaned subagent sessions bloat storage.
+- single-tool taskにsubagentをspawnすること。subagentsはparallelizationまたはcontext isolationのためのもので、「1回のread_file call」のためではありません。
+- synchronousで高価なworkを行うhook。hookはmicrosecondsからmillisecondsであるべきです。長いworkはsubagentに置きます。
+- cascade-delete policyのないsession store。orphaned subagent sessionsはstorageを膨らませます。
 
 Refusal rules:
 
-- If the product needs long-running async work (hours-to-days), refuse the self-hosted SDK and route to Claude Managed Agents.
-- If the user asks for `--session-mirror` to a shared location, refuse. Session transcripts carry PII; mirror to per-user encrypted storage.
-- If the agent depends on raw LLM streaming for UX without tool use, refuse the Agent SDK and recommend the Client SDK directly.
+- productがlong-running async work (hours-to-days) を必要とする場合はself-hosted SDKを拒否し、Claude Managed Agentsへrouteする。
+- userがshared locationへの`--session-mirror`を求めたら拒否する。session transcriptはPIIを含むため、per-user encrypted storageへmirrorする。
+- agentがtool useなしでraw LLM streaming UXに依存する場合はAgent SDKを拒否し、Client SDKを直接推奨する。
 
-Output: `agent.py`, `tools.py`, `hooks.py`, `session.py`, `README.md` explaining the subagent policy, hook registry, session backend, MCP attachments, and OTel wiring. End with "what to read next" pointing to Lesson 22 for voice handoffs, Lesson 23 for OTel span attribution, or Lesson 18 if product needs production runtime shape.
+Output: `agent.py`, `tools.py`, `hooks.py`, `session.py`, `README.md`。subagent policy、hook registry、session backend、MCP attachments、OTel wiringを説明する。最後に"what to read next"として、voice handoffにはLesson 22、OTel span attributionにはLesson 23、production runtime shapeが必要なproductにはLesson 18を示す。

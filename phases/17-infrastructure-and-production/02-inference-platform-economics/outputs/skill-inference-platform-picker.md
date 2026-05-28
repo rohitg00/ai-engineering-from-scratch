@@ -1,30 +1,30 @@
 ---
 name: inference-platform-picker
-description: Pick an inference platform (Fireworks, Together, Baseten, Modal, Replicate, Anyscale, or custom silicon) given workload, SLA, budget, and operational constraints. Normalize per-token, per-minute, and per-prediction pricing.
+description: workload、SLA、budget、operational constraints に基づき、inference platform（Fireworks、Together、Baseten、Modal、Replicate、Anyscale、または custom silicon）を選ぶ。per-token、per-minute、per-prediction pricing を正規化する。
 version: 1.0.0
 phase: 17
 lesson: 02
 tags: [inference, fireworks, together, baseten, modal, replicate, anyscale, economics]
 ---
 
-Given a workload profile (model, tokens/day, sustained utilization, TTFT SLA, burst factor, compliance, Python vs mixed stack), produce a platform recommendation.
+workload profile（model、tokens/day、sustained utilization、TTFT SLA、burst factor、compliance、Python vs mixed stack）を受け取り、platform recommendation を作成する。
 
-Produce:
+作成するもの:
 
-1. Primary platform. Name the platform and the specific pricing tier (serverless vs dedicated vs batch). Justify with the workload characteristics that match — e.g., "Fireworks serverless because TTFT < 500 ms is the SLA and the traffic is bursty."
-2. Effective cost. Normalize the chosen pricing model to $/M output tokens. Compare to at least two alternatives. Call out when per-minute beats per-token (above ~30% sustained utilization) or vice versa.
-3. Cold-start plan. For serverless picks (Fireworks, Modal, Replicate), state expected cold-start latency and a mitigation (pre-warming, min_workers=1, live-migration). For dedicated picks (Baseten, Anyscale), skip this section but note the trade-off.
-4. Runner-up. Name the second platform and the explicit condition under which you would switch (e.g., "move to Baseten if we close an enterprise deal requiring HIPAA + dedicated GPUs").
-5. Gateway layer. Recommend whether to front the platform with an AI gateway (LiteLLM, Portkey, Kong AI Gateway) to isolate the product from provider churn. Default: yes, unless scale is below 500 RPS.
+1. Primary platform。platform と specific pricing tier（serverless vs dedicated vs batch）を示す。workload characteristics との一致で正当化する。例: "Fireworks serverless because TTFT < 500 ms is the SLA and the traffic is bursty."
+2. Effective cost。選んだ pricing model を $/M output tokens に正規化する。少なくとも2つの alternative と比較する。per-minute が per-token に勝つ場合（sustained utilization 約30%超）またはその逆を明示する。
+3. Cold-start plan。serverless picks（Fireworks、Modal、Replicate）では expected cold-start latency と mitigation（pre-warming、min_workers=1、live-migration）を示す。dedicated picks（Baseten、Anyscale）ではこの section を省き、trade-off を記す。
+4. Runner-up。2番手の platform と、switch する explicit condition を示す（例: "move to Baseten if we close an enterprise deal requiring HIPAA + dedicated GPUs"）。
+5. Gateway layer。provider churn から product を隔離するために AI gateway（LiteLLM、Portkey、Kong AI Gateway）を前段に置くべきか推奨する。default: scale が 500 RPS 未満でない限り yes。
 
 Hard rejects:
-- Comparing per-token against per-minute without normalizing. Refuse and insist on effective $/M tokens.
-- Picking Fireworks because it's "fastest" without validating TTFT SLA against the published benchmarks.
-- Recommending custom silicon (Groq, Cerebras, SambaNova) for any workload not latency-bound. They are priced at a premium and only justify themselves on interactive SLAs.
+- 正規化せずに per-token と per-minute を比較すること。拒否し、effective $/M tokens を要求する。
+- published benchmarks に対して TTFT SLA を検証せず、"fastest" という理由で Fireworks を選ぶこと。
+- latency-bound でない workload に custom silicon（Groq、Cerebras、SambaNova）を推奨すること。premium price であり、interactive SLA でしか正当化できない。
 
 Refusal rules:
-- If the workload requires a regulated framework (SOC 2 Type II, HIPAA) and the customer picked Modal or Replicate, refuse — neither has the same enterprise footprint as Baseten or Anyscale. Suggest Baseten.
-- If the expected traffic is below 100k tokens/day, refuse to recommend per-minute (Baseten, Modal, Anyscale). The economics do not work — default to a marketplace (OpenRouter, DeepInfra) or a managed hyperscaler.
-- If the customer wants "the cheapest," refuse — name the multi-dimensional cost function (token rate + cold start + attribution + gateway + DX).
+- workload が regulated framework（SOC 2 Type II、HIPAA）を必要とし、customer が Modal または Replicate を選んだ場合は拒否する。Baseten や Anyscale と同じ enterprise footprint はない。Baseten を提案する。
+- expected traffic が 100k tokens/day 未満なら、per-minute（Baseten、Modal、Anyscale）を推奨しない。economics が成立しないため、marketplace（OpenRouter、DeepInfra）または managed hyperscaler を default にする。
+- customer が「cheapest」を望む場合は拒否する。multi-dimensional cost function（token rate + cold start + attribution + gateway + DX）を名前で挙げる。
 
-Output: a one-page recommendation naming primary platform, effective cost, cold-start plan, runner-up, gateway posture. End with the single metric that will reveal a mis-pick (cold-start P99, per-token rate, or utilization drift).
+Output: primary platform、effective cost、cold-start plan、runner-up、gateway posture を含む1ページの recommendation。最後に、mis-pick を明らかにする単一 metric（cold-start P99、per-token rate、utilization drift）で締める。

@@ -1,58 +1,58 @@
 {
   "lesson": "02-bag-of-words-tfidf",
-  "title": "Bag of Words, TF-IDF, and Text Representation",
+  "title": "Bag of Words、TF-IDF、テキスト表現",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does Bag of Words throw away?",
+      "question": "Bag of Words は何を捨てますか？",
       "options": [
-        "Token order",
-        "Vocabulary size",
-        "Document length",
-        "Punctuation"
+        "トークンの順序",
+        "語彙サイズ",
+        "文書長",
+        "句読点"
       ],
       "correct": 0,
-      "explanation": "BoW counts tokens per document but discards their sequence."
+      "explanation": "BoW は文書ごとにトークンを数えますが、その並び順は捨てます。"
     },
     {
       "stage": "pre",
-      "question": "Why scale TF by an IDF factor?",
+      "question": "なぜ TF に IDF 係数を掛けるのですか？",
       "options": [
-        "Words that appear in every document carry little discriminative signal and should be downweighted",
-        "To normalize document length",
-        "To accelerate training",
-        "To remove punctuation"
+        "すべての文書に現れる単語は識別シグナルが弱いため、重みを下げるべきだから",
+        "文書長を正規化するため",
+        "学習を高速化するため",
+        "句読点を削除するため"
       ],
       "correct": 0,
-      "explanation": "IDF penalizes ubiquitous words and boosts rare ones."
+      "explanation": "IDF はどこにでも出る単語にペナルティを与え、珍しい単語を強調します。"
     },
     {
       "stage": "check",
-      "question": "In the smoothed IDF formula log((N+1)/(df+1)) + 1, what does the trailing +1 ensure?",
+      "question": "平滑化 IDF 式 log((N+1)/(df+1)) + 1 において、末尾の +1 は何を保証しますか？",
       "options": [
-        "Faster computation",
-        "A word that appears in every document still has IDF 1 instead of 0",
-        "Compatibility with raw counts",
-        "Numerical stability for large N"
+        "計算が速くなること",
+        "すべての文書に現れる単語でも IDF が 0 ではなく 1 になること",
+        "生のカウントとの互換性",
+        "大きな N に対する数値安定性"
       ],
       "correct": 1,
-      "explanation": "The +1 keeps ubiquitous words at IDF=1 so they are not zeroed out, matching scikit-learn's default."
+      "explanation": "+1 によって、どこにでも出る単語も IDF=1 に保たれ、ゼロ化されません。これは scikit-learn のデフォルトに対応します。"
     },
     {
       "stage": "check",
-      "question": "Why L2-normalize TF-IDF rows before cosine similarity?",
+      "question": "コサイン類似度の前に TF-IDF 行を L2 正規化するのはなぜですか？",
       "options": [
-        "To convert sparse vectors to dense",
-        "To compress the vocabulary",
-        "To remove zero entries",
-        "Longer documents would otherwise dominate similarity scores; normalization puts all docs on the unit hypersphere"
+        "スパースベクトルを密ベクトルに変換するため",
+        "語彙を圧縮するため",
+        "ゼロ要素を削除するため",
+        "正規化しないと長い文書が類似度スコアを支配するため。正規化によってすべての文書を単位超球面上に置く"
       ],
       "correct": 3,
-      "explanation": "L2 normalization removes document-length bias and turns cosine similarity into a dot product."
+      "explanation": "L2 正規化は文書長バイアスを取り除き、コサイン類似度をドット積に変えます。"
     },
     {
       "stage": "check",
-      "question": "Which TfidfVectorizer setting is risky to enable for sentiment analysis?",
+      "question": "感情分析で有効にすると危険な TfidfVectorizer 設定はどれですか？",
       "options": [
         "stop_words='english'",
         "ngram_range=(1, 2)",
@@ -60,43 +60,43 @@
         "sublinear_tf=True"
       ],
       "correct": 0,
-      "explanation": "English stopword lists drop negations like 'not', which carry sentiment signal."
+      "explanation": "英語のストップワードリストは 'not' のような否定語を落とします。否定語は感情シグナルを持ちます。"
     },
     {
       "stage": "post",
-      "question": "Which task does TF-IDF still win in 2026?",
+      "question": "2026 年でも TF-IDF が勝つタスクはどれですか？",
       "options": [
-        "Open-ended dialogue",
-        "Machine translation",
-        "Spam detection, log anomaly flagging, and low-latency narrow classification",
-        "Image captioning"
+        "自由形式の対話",
+        "機械翻訳",
+        "スパム検出、ログ異常フラグ付け、低レイテンシの狭い分類",
+        "画像キャプション生成"
       ],
       "correct": 2,
-      "explanation": "TF-IDF beats embeddings when word presence is the signal and explainability or speed matter."
+      "explanation": "単語の有無がシグナルで、説明可能性や速度が重要な場合、TF-IDF は埋め込みに勝つことがあります。"
     },
     {
       "stage": "post",
-      "question": "Why does TF-IDF fail on the pair 'The movie was not good' vs 'The movie was excellent'?",
+      "question": "TF-IDF が 'The movie was not good' と 'The movie was excellent' の組で失敗するのはなぜですか？",
       "options": [
-        "TF-IDF cannot handle stopwords",
-        "TF-IDF requires bigrams to work",
-        "Embeddings overlap is too high",
-        "Both documents share most tokens; bag-of-words has no notion of negation or word order"
+        "TF-IDF はストップワードを扱えないから",
+        "TF-IDF は機能するためにバイグラムを必要とするから",
+        "埋め込みの重なりが高すぎるから",
+        "両方の文書が多くのトークンを共有しており、Bag-of-Words には否定や語順の概念がないから"
       ],
       "correct": 3,
-      "explanation": "Without word order or syntactic context, BoW cannot model that 'not' flips the sentiment of 'good'."
+      "explanation": "語順や構文コンテキストがないため、BoW は 'not' が 'good' の感情を反転させることを表現できません。"
     },
     {
       "stage": "post",
-      "question": "What is the TF-IDF weighted embedding hybrid?",
+      "question": "TF-IDF 重み付き埋め込みハイブリッドとは何ですか？",
       "options": [
-        "Using TF-IDF weights as a pooling weight over per-token embeddings before averaging",
-        "Running PCA on TF-IDF then re-embedding",
-        "Concatenating BoW and dense embeddings",
-        "Training BERT on TF-IDF features"
+        "平均化の前に、各トークンの埋め込みに対するプーリング重みとして TF-IDF 重みを使うこと",
+        "TF-IDF に PCA をかけてから再埋め込みすること",
+        "BoW と密な埋め込みを連結すること",
+        "TF-IDF 特徴量で BERT を学習すること"
       ],
       "correct": 0,
-      "explanation": "The hybrid weights each token's embedding by its TF-IDF score and averages, blending semantic capacity with rare-word emphasis."
+      "explanation": "このハイブリッドは各トークンの埋め込みを TF-IDF スコアで重み付けして平均し、意味的な表現力と希少語の強調を組み合わせます。"
     }
   ]
 }

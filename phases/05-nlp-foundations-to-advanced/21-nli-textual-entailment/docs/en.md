@@ -1,54 +1,54 @@
-# Natural Language Inference — Textual Entailment
+# 自然言語推論 — テキスト含意
 
-> "t entails h" means a human reading t would conclude h is true. NLI is the task of predicting entailment / contradiction / neutral. Boring on the surface, load-bearing in production.
+> 「t が h を含意する」とは、t を読んだ人間が h は真だと結論づける、という意味です。NLI は、含意 / 矛盾 / 中立を予測するタスクです。表面上は地味ですが、本番環境では重要な土台になります。
 
-**Type:** Learn
-**Languages:** Python
-**Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python
+**前提条件:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-You built a summarizer. It produced a summary. How do you know the summary does not contain a hallucination?
+要約器を作りました。要約が出力されました。その要約にハルシネーションが含まれていないと、どう確認すればよいでしょうか。
 
-You built a chatbot. It answered "yes." How do you know the answer is supported by the retrieved passage?
+チャットボットを作りました。ボットは「yes」と答えました。その答えが検索されたパッセージに裏づけられていると、どう確認すればよいでしょうか。
 
-You need to classify 10,000 news articles by topic. You have no training labels. Can you reuse a model?
+10,000 件のニュース記事をトピック別に分類する必要があります。訓練ラベルはありません。既存のモデルを再利用できるでしょうか。
 
-All three problems reduce to Natural Language Inference. NLI asks: given a premise `t` and a hypothesis `h`, is `h` entailed by `t`, contradicted, or neutral (unrelated)?
+この 3 つの問題はいずれも Natural Language Inference に帰着します。NLI は、前提 `t` と仮説 `h` が与えられたとき、`h` が `t` によって含意されるのか、矛盾するのか、中立 (無関係) なのかを問います。
 
-- **Hallucination check:** `t` = source document, `h` = summary claim. Not entailment = hallucination.
-- **Grounded QA:** `t` = retrieved passage, `h` = generated answer. Not entailment = fabrication.
-- **Zero-shot classification:** `t` = document, `h` = verbalized label ("This is about sports"). Entailment = predicted label.
+- **ハルシネーションチェック:** `t` = ソース文書、`h` = 要約内の主張。含意でない = ハルシネーション。
+- **グラウンデッド QA:** `t` = 検索されたパッセージ、`h` = 生成された回答。含意でない = 捏造。
+- **ゼロショット分類:** `t` = 文書、`h` = 言語化したラベル ("This is about sports")。含意 = 予測ラベル。
 
-One task, three production uses. This is why every RAG evaluation framework ships an NLI model under the hood.
+1 つのタスクで、本番用途が 3 つあります。だからこそ、ほぼすべての RAG 評価フレームワークは内部で NLI モデルを使っています。
 
-## The Concept
+## 概念
 
 ![NLI: three-way classification, premise vs hypothesis](../assets/nli.svg)
 
-**The three labels.**
+**3 つのラベル。**
 
-- **Entailment.** `t` → `h`. "The cat is on the mat" entails "There is a cat."
-- **Contradiction.** `t` → ¬`h`. "The cat is on the mat" contradicts "There is no cat."
-- **Neutral.** No inference either way. "The cat is on the mat" is neutral to "The cat is hungry."
+- **含意。** `t` → `h`。"The cat is on the mat" は "There is a cat." を含意します。
+- **矛盾。** `t` → ¬`h`。"The cat is on the mat" は "There is no cat." と矛盾します。
+- **中立。** どちらにも推論できません。"The cat is on the mat" は "The cat is hungry." に対して中立です。
 
-**Not logical entailment.** NLI is *natural* language inference — what a typical human reader would infer, not strict logic. "John walked his dog" entails "John has a dog" in NLI, but strict first-order logic would only admit it if you axiomatize possession.
+**論理的含意ではありません。** NLI は *自然* 言語推論です。厳密な論理ではなく、典型的な人間の読者が何を推論するかを扱います。"John walked his dog" は NLI では "John has a dog" を含意しますが、厳密な一階述語論理では、所有関係を公理化しない限り認められません。
 
-**Datasets.**
+**データセット。**
 
-- **SNLI** (2015). 570k human-annotated pairs, image captions as premises. Narrow domain.
-- **MultiNLI** (2017). 433k pairs across 10 genres. The standard training corpus in 2026.
-- **ANLI** (2019). Adversarial NLI. Humans wrote examples specifically designed to break existing models. Harder.
-- **DocNLI, ConTRoL** (2020–21). Document-length premises. Tests multi-hop and long-range inference.
+- **SNLI** (2015)。人手でアノテーションされた 57 万ペア。前提は画像キャプション。ドメインは狭めです。
+- **MultiNLI** (2017)。10 ジャンルにわたる 43.3 万ペア。2026 年時点の標準的な訓練コーパスです。
+- **ANLI** (2019)。敵対的 NLI。人間が既存モデルを破ることを狙って例を書きました。より難しいベンチマークです。
+- **DocNLI, ConTRoL** (2020–21)。文書長の前提。マルチホップ推論と長距離推論をテストします。
 
-**The architecture.** A transformer encoder (BERT, RoBERTa, DeBERTa) reads `[CLS] premise [SEP] hypothesis [SEP]`. The `[CLS]` representation feeds a 3-way softmax. Train on MNLI, evaluate on held-out benchmarks, get 90%+ accuracy on in-distribution pairs.
+**アーキテクチャ。** transformer encoder (BERT, RoBERTa, DeBERTa) が `[CLS] premise [SEP] hypothesis [SEP]` を読みます。`[CLS]` 表現を 3-way softmax に渡します。MNLI で訓練し、ホールドアウトのベンチマークで評価すると、分布内のペアでは 90% 超の精度が得られます。
 
-**Zero-shot via NLI.** Given a document and candidate labels, turn each label into a hypothesis ("This text is about sports"). Compute entailment probability for each. Pick the max. This is the mechanism behind Hugging Face's `zero-shot-classification` pipeline.
+**NLI によるゼロショット。** 文書と候補ラベルがあるとき、各ラベルを仮説 ("This text is about sports") に変換します。それぞれの含意確率を計算し、最大のものを選びます。これが Hugging Face の `zero-shot-classification` pipeline の背後にある仕組みです。
 
-## Build It
+## 作ってみる
 
-### Step 1: run a pretrained NLI model
+### Step 1: 事前訓練済み NLI モデルを実行する
 
 ```python
 from transformers import pipeline
@@ -67,9 +67,9 @@ print(result)
 #  {'label': 'contradiction', 'score': 0.01}]
 ```
 
-For production NLI, `facebook/bart-large-mnli` and `microsoft/deberta-v3-large-mnli` are the open defaults. DeBERTa-v3 tops leaderboards.
+本番向け NLI では、`facebook/bart-large-mnli` と `microsoft/deberta-v3-large-mnli` がオープンな標準候補です。DeBERTa-v3 はリーダーボード上位の常連です。
 
-### Step 2: zero-shot classification
+### Step 2: ゼロショット分類
 
 ```python
 zs = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
@@ -83,9 +83,9 @@ print(result)
 #  'scores': [0.92, 0.05, 0.02, 0.01]}
 ```
 
-The template is "This example is about {label}." by default. Customize with `hypothesis_template`. No training data required. No fine-tuning. Works out of the box.
+デフォルトのテンプレートは "This example is about {label}." です。`hypothesis_template` でカスタマイズできます。訓練データは不要です。ファインチューニングも不要です。そのまま動きます。
 
-### Step 3: faithfulness check for RAG
+### Step 3: RAG の忠実性チェック
 
 ```python
 def is_faithful(answer, context, threshold=0.5):
@@ -94,81 +94,81 @@ def is_faithful(answer, context, threshold=0.5):
     return entail["score"] > threshold
 ```
 
-This is the core of RAGAS faithfulness. Split the generated answer into atomic claims. Check each claim against the retrieved context. Report the fraction that entail.
+これは RAGAS の忠実性評価の中核です。生成回答を原子的な主張に分割します。各主張を検索コンテキストと照合します。含意された割合を報告します。
 
-### Step 4: hand-rolled NLI classifier (conceptual)
+### Step 4: 手作り NLI 分類器 (概念用)
 
-See `code/main.py` for a stdlib-only toy: premise and hypothesis are compared via lexical overlap + negation detection. Not competitive with transformer models — but it shows the shape of the task: two texts in, 3-way label out, loss = cross-entropy over `{entail, contradict, neutral}`.
+`code/main.py` には stdlib のみの toy があります。前提と仮説を、語彙の重なり + 否定検出で比較します。transformer モデルには到底及びませんが、このタスクの形は示しています。2 つのテキストを入力し、3-way ラベルを出力し、損失は `{entail, contradict, neutral}` 上の cross-entropy です。
 
-## Pitfalls
+## 落とし穴
 
-- **Hypothesis-only shortcuts.** Models can predict the label from the hypothesis alone at ~60% on SNLI because "not", "nobody", "never" correlate with contradiction. Strong baseline for detecting label leakage.
-- **Lexical overlap heuristic.** The subsequence heuristic ("every subsequence is entailed") passes SNLI but fails HANS/ANLI. Use adversarial benchmarks.
-- **Document-length degradation.** Single-sentence NLI models drop 20+ F1 on document-length premises. Use DocNLI-trained models for long context.
-- **Zero-shot template sensitivity.** "This example is about {label}" vs "{label}" vs "The topic is {label}" can swing accuracy by 10+ points. Tune the template.
-- **Domain mismatch.** MNLI trains on general English. Legal, medical, and scientific text need domain-specific NLI models (e.g., SciNLI, MedNLI).
+- **仮説だけのショートカット。** モデルは仮説だけからでも SNLI で約 60% の精度でラベルを予測できます。"not"、"nobody"、"never" が矛盾と相関するためです。ラベル漏れ検出の強力なベースラインになります。
+- **語彙重なりヒューリスティック。** 部分系列ヒューリスティック ("every subsequence is entailed") は SNLI では通りますが、HANS/ANLI では失敗します。敵対的ベンチマークを使いましょう。
+- **文書長での劣化。** 単文 NLI モデルは文書長の前提で 20+ F1 低下します。長いコンテキストには DocNLI で訓練されたモデルを使います。
+- **ゼロショットテンプレート感度。** "This example is about {label}"、"{label}"、"The topic is {label}" の違いだけで精度が 10 ポイント以上動くことがあります。テンプレートをチューニングしてください。
+- **ドメイン不一致。** MNLI は一般英語で訓練されています。法律、医療、科学テキストには、ドメイン特化 NLI モデル (SciNLI, MedNLI など) が必要です。
 
-## Use It
+## 使う
 
-The 2026 stack:
+2026 年のスタック:
 
-| Use case | Model |
+| ユースケース | モデル |
 |---------|-------|
-| General-purpose NLI | `microsoft/deberta-v3-large-mnli` |
-| Fast / edge | `cross-encoder/nli-deberta-v3-base` |
-| Zero-shot classification (lightweight) | `facebook/bart-large-mnli` |
-| Document-level NLI | `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` |
-| Multilingual | `MoritzLaurer/multilingual-MiniLMv2-L6-mnli-xnli` |
-| Hallucination detection in RAG | NLI layer inside RAGAS / DeepEval |
+| 汎用 NLI | `microsoft/deberta-v3-large-mnli` |
+| 高速 / エッジ | `cross-encoder/nli-deberta-v3-base` |
+| ゼロショット分類 (軽量) | `facebook/bart-large-mnli` |
+| 文書レベル NLI | `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` |
+| 多言語 | `MoritzLaurer/multilingual-MiniLMv2-L6-mnli-xnli` |
+| RAG のハルシネーション検出 | RAGAS / DeepEval 内の NLI レイヤー |
 
-The 2026 meta-pattern: NLI is the duct tape of text understanding. Whenever you need "does A support B?" or "does A contradict B?" — reach for NLI before you reach for another LLM call.
+2026 年のメタパターン: NLI はテキスト理解の万能テープです。「A は B を支持しているか」「A は B と矛盾するか」が必要になったら、別の LLM 呼び出しに進む前に NLI を検討してください。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-nli-picker.md`:
+`outputs/skill-nli-picker.md` として保存:
 
 ```markdown
 ---
 name: nli-picker
-description: Pick an NLI model, label template, and evaluation setup for a classification / faithfulness / zero-shot task.
+description: 分類 / 忠実性 / ゼロショットタスク向けに、NLI モデル、ラベルテンプレート、評価設定を選ぶ。
 version: 1.0.0
 phase: 5
 lesson: 21
 tags: [nlp, nli, zero-shot]
 ---
 
-Given a use case (faithfulness check, zero-shot classification, document-level inference), output:
+ユースケース（忠実性チェック、ゼロショット分類、文書レベル推論）が与えられたら、次を出力してください。
 
-1. Model. Named NLI checkpoint. Reason tied to domain, length, language.
-2. Template (if zero-shot). Verbalization pattern. Example.
-3. Threshold. Entailment cutoff for the decision rule. Reason based on calibration.
-4. Evaluation. Accuracy on held-out labeled set, hypothesis-only baseline, adversarial subset.
+1. モデル。名前つき NLI checkpoint。ドメイン、長さ、言語に結びついた理由。
+2. テンプレート（ゼロショットの場合）。言語化パターン。例。
+3. しきい値。判定ルール用の含意カットオフ。キャリブレーションに基づく理由。
+4. 評価。ホールドアウトのラベル付きセットでの accuracy、仮説のみベースライン、敵対的サブセット。
 
-Refuse to ship zero-shot classification without a 100-example labeled sanity check. Refuse to use a sentence-level NLI model on document-length premises. Flag any claim that NLI solves hallucination — it reduces it; it does not eliminate it.
+100 例のラベル付き健全性チェックなしでゼロショット分類を出荷することは拒否する。文書長の前提に単文レベル NLI モデルを使うことは拒否する。NLI がハルシネーションを解決すると主張するものには警告する。NLI はそれを減らすが、なくすわけではない。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `facebook/bart-large-mnli` on 20 hand-crafted (premise, hypothesis, label) triples covering all three classes. Measure accuracy. Add adversarial "subsequence heuristic" traps ("I did not eat the cake" vs "I ate the cake") and see if it breaks.
-2. **Medium.** Compare the zero-shot template `"This text is about {label}"` against `"The topic is {label}"` and `"{label}"` on 100 AG News headlines. Report accuracy swing.
-3. **Hard.** Build a RAG faithfulness checker: atomic-claim decomposition + NLI per claim. Evaluate on 50 RAG-generated answers with gold context. Measure false-positive and false-negative rates vs hand labels.
+1. **Easy.** 全 3 クラスを含む手作りの (premise, hypothesis, label) トリプル 20 件で `facebook/bart-large-mnli` を実行してください。accuracy を測ります。敵対的な「部分系列ヒューリスティック」の罠 ("I did not eat the cake" vs "I ate the cake") を追加し、破綻するか確認してください。
+2. **Medium.** AG News 見出し 100 件で、ゼロショットテンプレート `"This text is about {label}"`、`"The topic is {label}"`、`"{label}"` を比較してください。accuracy の振れ幅を報告します。
+3. **Hard.** RAG 忠実性チェッカーを作ってください。原子的主張への分解 + 主張ごとの NLI です。gold context つきの RAG 生成回答 50 件で評価します。手作業ラベルに対する false-positive と false-negative の率を測ってください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| NLI | Natural Language Inference | 3-way classification of premise-hypothesis relationship. |
-| RTE | Recognizing Textual Entailment | Older name for NLI; same task. |
-| Entailment | "t implies h" | A typical reader would conclude h is true given t. |
-| Contradiction | "t rules out h" | A typical reader would conclude h is false given t. |
-| Neutral | "undecided" | No inference from t to h either way. |
-| Zero-shot classification | NLI as classifier | Verbalize labels as hypotheses, pick max entailment. |
-| Faithfulness | Is the answer supported? | NLI over (retrieved context, generated answer). |
+| NLI | Natural Language Inference | 前提と仮説の関係を 3-way 分類すること。 |
+| RTE | Recognizing Textual Entailment | NLI の古い呼び名。同じタスク。 |
+| Entailment | "t implies h" | t が与えられたとき、典型的な読者は h が真だと結論づける。 |
+| Contradiction | "t rules out h" | t が与えられたとき、典型的な読者は h が偽だと結論づける。 |
+| Neutral | 未決定 | t から h へ、どちら向きにも推論できない。 |
+| Zero-shot classification | 分類器としての NLI | ラベルを仮説として言語化し、最大の含意を選ぶ。 |
+| Faithfulness | 回答は裏づけられているか | (検索コンテキスト, 生成回答) に対する NLI。 |
 
-## Further Reading
+## 参考文献
 
-- [Bowman et al. (2015). A large annotated corpus for learning natural language inference](https://arxiv.org/abs/1508.05326) — SNLI.
-- [Williams, Nangia, Bowman (2017). A Broad-Coverage Challenge Corpus for Sentence Understanding through Inference](https://arxiv.org/abs/1704.05426) — MultiNLI.
-- [Nie et al. (2019). Adversarial NLI](https://arxiv.org/abs/1910.14599) — the ANLI benchmark.
-- [Yin, Hay, Roth (2019). Benchmarking Zero-shot Text Classification](https://arxiv.org/abs/1909.00161) — NLI-as-classifier.
-- [He et al. (2021). DeBERTa: Decoding-enhanced BERT with Disentangled Attention](https://arxiv.org/abs/2006.03654) — the 2026 NLI workhorse.
+- [Bowman et al. (2015). A large annotated corpus for learning natural language inference](https://arxiv.org/abs/1508.05326) — SNLI。
+- [Williams, Nangia, Bowman (2017). A Broad-Coverage Challenge Corpus for Sentence Understanding through Inference](https://arxiv.org/abs/1704.05426) — MultiNLI。
+- [Nie et al. (2019). Adversarial NLI](https://arxiv.org/abs/1910.14599) — ANLI benchmark。
+- [Yin, Hay, Roth (2019). Benchmarking Zero-shot Text Classification](https://arxiv.org/abs/1909.00161) — 分類器としての NLI。
+- [He et al. (2021). DeBERTa: Decoding-enhanced BERT with Disentangled Attention](https://arxiv.org/abs/2006.03654) — 2026 年の NLI の主力。

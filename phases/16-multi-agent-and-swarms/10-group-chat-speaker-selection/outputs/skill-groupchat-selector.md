@@ -1,33 +1,33 @@
 ---
 name: groupchat-selector
-description: Configure an AutoGen/AG2-style GroupChat selector for a task, naming the selector variant, termination, and anti-hot-speaker rules.
+description: task 向けに AutoGen/AG2-style GroupChat selector を設定し、selector variant、termination、anti-hot-speaker rule を定義する。
 version: 1.0.0
 phase: 16
 lesson: 10
 tags: [multi-agent, groupchat, autogen, ag2, speaker-selection]
 ---
 
-Given a task and an agent roster, produce a GroupChat configuration: selector choice, selector inputs, termination rules, and guardrails.
+task と agent roster を受け取り、GroupChat configuration を作る。selector choice、selector input、termination rule、guardrail を含める。
 
 Produce:
 
-1. **Selector variant.** Round-robin (cheap, fair, context-blind), LLM-selected (context-aware, expensive), or custom (LLM + rule-based fallback).
-2. **Selector inputs.** If LLM-selected: recent N messages, agent specialties, turn counts. If custom: explicit rules.
-3. **Termination rules.** Max rounds, TERMINATE token, goal-reached verifier, or combination.
-4. **Hot-speaker mitigation.** Per-agent turn cap, speaker-balance score in selector input, forced rotation after K consecutive turns.
-5. **Context bloat mitigation.** Projection plan (scoped views per role), summarization checkpoints, context cap per agent.
-6. **Observability.** Log selector's input, selector's choice, per-turn agent latency.
+1. **Selector variant.** round-robin (安い、公平、context-blind)、LLM-selected (context-aware、高価)、custom (LLM + rule-based fallback)。
+2. **Selector inputs.** LLM-selected なら recent N messages、agent specialties、turn counts。custom なら explicit rules。
+3. **Termination rules.** max rounds、TERMINATE token、goal-reached verifier、またはその組み合わせ。
+4. **Hot-speaker mitigation.** agent ごとの turn cap、selector input 内の speaker-balance score、K consecutive turns 後の forced rotation。
+5. **Context bloat mitigation.** projection plan (role ごとの scoped view)、summarization checkpoints、agent ごとの context cap。
+6. **Observability.** selector の input、selector の choice、turn ごとの agent latency を log する。
 
 Hard rejects:
 
-- Any LLM-selected config without logging of selector's input/output. Debugging becomes impossible.
-- Configs without a max_rounds cap.
-- Symmetric chats (no specialization) on reasoning tasks — use debate (Lesson 07) instead.
+- selector の input/output logging がない LLM-selected config。debugging が不可能になる。
+- max_rounds cap がない config。
+- reasoning task に対する symmetric chats (specialization なし) — 代わりに debate (Lesson 07) を使う。
 
 Refusal rules:
 
-- If the task has a known DAG structure, refuse GroupChat and recommend LangGraph static graph for determinism.
-- If the task requires strict audit trails, refuse GroupChat; recommend LangGraph with checkpointer.
-- If the agents number more than 5-6, refuse flat GroupChat and recommend nested groups or hierarchical pattern.
+- task が既知の DAG structure を持つ場合、GroupChat を拒否し、determinism のため LangGraph static graph を推奨する。
+- task が strict audit trail を必要とする場合、GroupChat を拒否し、checkpointer 付き LangGraph を推奨する。
+- agent 数が 5-6 を超える場合、flat GroupChat を拒否し、nested groups または hierarchical pattern を推奨する。
 
-Output: a one-page GroupChat config brief. Close with the cost estimate (LLM-selected incurs one selector call per turn).
+Output: 1ページの GroupChat config brief。最後に cost estimate を書く (LLM-selected は turn ごとに1回の selector call が発生する)。

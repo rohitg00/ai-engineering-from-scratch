@@ -1,8 +1,7 @@
-"""Compare a prompt-only run against a workbench-guided run on a tiny repo task.
+"""小さな repo task で prompt-only run と workbench-guided run を比較する。
 
-The agent is a rule-based stub; the point is the surrounding surfaces. Each
-surface is wired in for the second run and we count which surfaces would have
-caught each failure on the first run.
+agent は rule-based stub。主題は周辺 surface である。2 回目の run では各
+surface を結線し、1 回目の run の各 failure をどの surface が検出できたかを数える。
 
 Run: python3 code/main.py
 """
@@ -48,7 +47,7 @@ class RunResult:
 
 
 def stub_agent(task: RepoTask, surfaces: list[str]) -> RunResult:
-    """Tiny deterministic stand-in for an LLM-backed coding agent."""
+    """LLM-backed coding agent の小さな deterministic 代役。"""
     result = RunResult(label="prompt-only" if not surfaces else "workbench")
     result.surfaces_present = list(surfaces)
 
@@ -61,25 +60,25 @@ def stub_agent(task: RepoTask, surfaces: list[str]) -> RunResult:
         result.files_touched = [f for f in task.allowed_files]
     else:
         result.files_touched = [*task.allowed_files, "README.md", "scripts/release.sh"]
-        result.notes.append("touched unrelated files because scope was missing")
+        result.notes.append("scope が欠けていたため無関係な files に触れた")
 
     if has_feedback:
         result.tests_run = True
-        result.notes.append("captured stdout/stderr/exit code from the test run")
+        result.notes.append("test run の stdout/stderr/exit code を捕捉した")
     else:
-        result.notes.append("never ran the test command, guessed at output")
+        result.notes.append("test command を実行せず、output を推測した")
 
     if has_verification:
         result.actually_passing = True
         result.declared_success = True
-        result.notes.append("verification gate proved acceptance criteria met")
+        result.notes.append("verification gate が acceptance criteria の充足を証明した")
     else:
         result.declared_success = True
         result.actually_passing = False
-        result.notes.append("declared success without running acceptance checks")
+        result.notes.append("acceptance checks を実行せずに success を宣言した")
 
     if not has_state:
-        result.notes.append("no state file written, next session restarts from zero")
+        result.notes.append("state file が書かれず、次 session はゼロから再開する")
 
     return result
 
@@ -100,7 +99,7 @@ def failure_report(result: RunResult) -> dict[str, object]:
 
 def main() -> None:
     task = RepoTask(
-        description="add input validation to /signup and a passing test",
+        description="/signup に input validation と passing test を追加する",
         allowed_files=["app.py", "test_app.py"],
         forbidden_files=["README.md", "scripts/release.sh"],
         acceptance=["test_app.py::test_signup_rejects_short_password passes"],
@@ -119,7 +118,7 @@ def main() -> None:
 
     out = Path(__file__).parent.parent / "outputs" / "failure_modes.json"
     out.write_text(json.dumps(failure_report(prompt_only), indent=2) + "\n")
-    print(f"\nwrote {out.relative_to(out.parent.parent.parent.parent.parent)}")
+    print(f"\n書き込み先: {out.relative_to(out.parent.parent.parent.parent.parent)}")
 
 
 if __name__ == "__main__":

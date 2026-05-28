@@ -1,11 +1,11 @@
-"""Agent harness loop contract — deterministic state machine, hooks, pull points.
+"""Agent harness loop contract — deterministic state machine、hooks、pull points。
 
 Conceptual references:
-- ./docs/en.md (this lesson)
+- ./docs/en.md (この lesson)
 - Phase 14 lesson 01 (agent loop fundamentals)
 - Phase 13 lesson 02 (tool protocols overview)
 
-Stdlib only. Run: python3 code/main.py
+Stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -55,7 +55,7 @@ EVENT_TYPES = (
 
 
 class HookAbort(Exception):
-    """Raised by a hook to cancel the in-flight turn."""
+    """In-flight turn を cancel するために hook が raise する。"""
 
 
 @dataclass
@@ -103,7 +103,7 @@ class Step:
 
 @dataclass
 class PullRequest:
-    """Returned from run()/resume() when the loop yields control."""
+    """Loop が control を yield するときに run()/resume() から返される。"""
     reason: str
     state: State
     payload: dict
@@ -137,20 +137,20 @@ Planner = Callable[[str, list[Step]], list[Step]]
 
 
 def _default_planner(goal: str, history: list[Step]) -> list[Step]:
-    """Deterministic stand-in planner. Returns a fixed three-step plan."""
+    """Deterministic stand-in planner。固定の three-step plan を返す。"""
     if history:
         return []
     return [
-        Step(id=1, description=f"interpret goal: {goal}", requires_tool=False),
-        Step(id=2, description="fetch user record", requires_tool=True,
+        Step(id=1, description=f"goal を解釈する: {goal}", requires_tool=False),
+        Step(id=2, description="user record を取得する", requires_tool=True,
              tool_name="db.get_user", tool_args={"id": 42}),
-        Step(id=3, description="summarize and respond", requires_tool=True,
+        Step(id=3, description="要約して応答する", requires_tool=True,
              tool_name="format.summary", tool_args={"style": "short"}),
     ]
 
 
 class HarnessLoop:
-    """Six-state deterministic loop with hook topics and event stream."""
+    """Hook topic と event stream を持つ six-state deterministic loop。"""
 
     def __init__(
         self,
@@ -213,7 +213,7 @@ class HarnessLoop:
 
     def run(self, goal: str) -> PullRequest | SessionResult:
         if self.state != State.IDLE:
-            raise RuntimeError(f"run() requires IDLE, got {self.state.value}")
+            raise RuntimeError(f"run() は IDLE からのみ実行できます。現在: {self.state.value}")
         self._goal = goal
         self.budget.started_at = time.time()
         self._emit("session.start", {"goal": goal})
@@ -236,7 +236,7 @@ class HarnessLoop:
             return self._step()
         if self.state == State.AWAITING_TOOL:
             if payload is None:
-                raise ValueError("resume from AWAITING_TOOL requires a payload")
+                raise ValueError("AWAITING_TOOL から resume するには payload が必要です")
             current = self._plan[self._cursor]
             if "error" in payload:
                 current.error = str(payload["error"])
@@ -248,7 +248,7 @@ class HarnessLoop:
             self.hooks.fire("after_tool_call", {"step": current})
             self._transition(State.REFLECTING)
             return self._step()
-        raise RuntimeError(f"resume() unsupported from state {self.state.value}")
+        raise RuntimeError(f"state {self.state.value} からの resume() は support されていません")
 
     def _begin_plan(self) -> PullRequest | SessionResult:
         self._transition(State.PLANNING)
@@ -278,7 +278,7 @@ class HarnessLoop:
             self._transition(State.EXECUTING)
             return self._step()
         if self.state != State.EXECUTING:
-            raise RuntimeError(f"_step requires EXECUTING/REFLECTING, got {self.state.value}")
+            raise RuntimeError(f"_step には EXECUTING/REFLECTING が必要です。現在: {self.state.value}")
         step = self._plan[self._cursor]
         self.hooks.fire("before_step", {"step": step})
         self._emit("step.start", {"step_id": step.id, "desc": step.description})
@@ -321,7 +321,7 @@ def _demo() -> None:
     for topic in HOOK_TOPICS:
         loop.hooks.on(topic, lambda payload, t=topic: fired.append(t))
 
-    out = loop.run("ship the release notes")
+    out = loop.run("release notes を ship する")
     assert isinstance(out, PullRequest) and out.reason == "tool_call"
     out = loop.resume({"result": {"id": 42, "name": "ada"}})
     assert isinstance(out, PullRequest) and out.reason == "tool_call"

@@ -1,34 +1,34 @@
-# Sentiment Analysis
+# 感情分析
 
-> The canonical NLP task. Most of what you need to know about classical text classification shows up here.
+> NLPの定番タスク。古典的なテキスト分類について知るべきことのほとんどが、ここに現れます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
-**Time:** ~75 minutes
+**種類:** 実装
+**言語:** Python
+**前提:** フェーズ 5 · 02 (BoW + TF-IDF)、フェーズ 2 · 14 (Naive Bayes)
+**時間:** 約75分
 
-## The Problem
+## 問題
 
-"The food was not great." Positive or negative?
+"The food was not great." これはポジティブでしょうか、ネガティブでしょうか。
 
-Sentiment sounds simple. A reviewer said they liked or did not like something. Label the sentence. The reason it became the canonical NLP task is that every easy-looking case hides a hard one. Negation flips meaning. Sarcasm inverts it. "Not bad at all" is positive despite two negative-coded words. Emojis carry more signal than surrounding text. Domain vocabulary matters (`tight` in music review versus `tight` in fashion review).
+感情分析は単純に見えます。レビューを書いた人が、何かを好きだったか嫌いだったかを述べる。その文にラベルを付ける。それがNLPの定番タスクになった理由は、簡単そうに見える例の裏に必ず難しい例が隠れているからです。否定は意味を反転させます。皮肉は意味を逆にします。`Not bad at all` は、否定的に見える単語が2つ入っているのにポジティブです。絵文字は周囲のテキストより強いシグナルを持つことがあります。ドメイン語彙も重要です (音楽レビューの `tight` と、ファッションレビューの `tight` は違います)。
 
-Sentiment is a working lab for classical NLP. If you understand why every naive baseline has a specific failure mode, you understand why every richer model was invented. This lesson builds a Naive Bayes baseline from scratch, adds logistic regression, and names the traps that make production sentiment a compliance-grade problem.
+感情分析は古典的NLPの実験場です。素朴なベースラインがなぜ特定の失敗モードを持つのかを理解できれば、よりリッチなモデルがなぜ発明されたのかも理解できます。このレッスンでは、Naive Bayesのベースラインをゼロから作り、logistic regressionを追加し、本番の感情分析をコンプライアンス級の問題にする落とし穴に名前を付けます。
 
-## The Concept
+## コンセプト
 
-Classical sentiment is a two-step recipe.
+古典的な感情分析は2段階のレシピです。
 
-1. **Represent.** Turn the text into a feature vector. BoW, TF-IDF, or n-grams.
-2. **Classify.** Fit a linear model (Naive Bayes, logistic regression, SVM) on labeled examples.
+1. **表現する。** テキストを特徴ベクトルに変換します。BoW、TF-IDF、またはn-gramを使います。
+2. **分類する。** ラベル付き例の上で線形モデル (Naive Bayes、logistic regression、SVM) をfitします。
 
-Naive Bayes is the dumbest model that works. Assume every feature is independent given the label. Estimate `P(word | positive)` and `P(word | negative)` from counts. At inference, multiply the probabilities. The "naive" independence assumption is laughably wrong and yet the results are shockingly strong. The reason: with sparse text features and moderate data, the classifier cares about which side each word leans toward more than how much.
+Naive Bayesは、動くモデルの中でいちばん単純なものです。ラベルが与えられたとき、すべての特徴は独立だと仮定します。カウントから `P(word | positive)` と `P(word | negative)` を推定します。推論時には確率を掛け合わせます。この「naive」な独立性仮定は笑ってしまうほど間違っていますが、それでも結果は驚くほど強いです。理由は、疎なテキスト特徴と中規模データでは、分類器が気にするのは各単語がどちら側に傾くかであり、その強さの厳密さではないからです。
 
-Logistic regression fixes the independence assumption. It learns a weight per feature, including negative weights. `not good` as a bigram feature gets a negative weight. Naive Bayes cannot do that for bigrams it has never labeled.
+Logistic regressionは独立性仮定を直します。負の重みを含め、特徴ごとに重みを学習します。bigram特徴としての `not good` には負の重みが付きます。Naive Bayesは、ラベル付きデータで見たことのないbigramにはそれができません。
 
-## Build It
+## 実装
 
-### Step 1: a real mini-dataset
+### ステップ1: 実際のミニデータセット
 
 ```python
 POSITIVE = [
@@ -48,9 +48,9 @@ NEGATIVE = [
 ]
 ```
 
-Small on purpose. Real work uses tens of thousands of examples (IMDb, SST-2, Yelp polarity). The math is identical.
+意図的に小さくしています。実務では数万件の例を使います (IMDb、SST-2、Yelp polarity)。数式は同じです。
 
-### Step 2: multinomial Naive Bayes from scratch
+### ステップ2: multinomial Naive Bayesをゼロから作る
 
 ```python
 import math
@@ -86,9 +86,9 @@ def predict_nb(doc, class_priors, class_word_probs):
     return max(scores, key=scores.get)
 ```
 
-Additive smoothing (alpha=1.0) is Laplace smoothing. Without it, a word unseen in a class has probability zero and the log explodes. `alpha=0.01` is common in practice. `alpha=1.0` is the teaching default.
+加算スムージング (`alpha=1.0`) はLaplace smoothingです。これがないと、あるクラスで未出の単語の確率がゼロになり、logが破綻します。実務では `alpha=0.01` がよく使われます。`alpha=1.0` は教材としての標準値です。
 
-### Step 3: logistic regression from scratch
+### ステップ3: logistic regressionをゼロから作る
 
 ```python
 import numpy as np
@@ -117,13 +117,13 @@ def predict_lr(X, w, b):
     return (sigmoid(X @ w + b) >= 0.5).astype(int)
 ```
 
-L2 regularization matters here. Text features are sparse; without L2 the model memorizes training examples. Start at `0.01` and tune.
+ここではL2正則化が重要です。テキスト特徴は疎です。L2がないと、モデルは学習例を記憶してしまいます。`0.01` から始めて調整してください。
 
-### Step 4: handling negation (the failure mode)
+### ステップ4: 否定を扱う (失敗モード)
 
-Consider "not good" and "not bad". A BoW classifier sees `{not, good}` and `{not, bad}` and learns from whichever showed up more in training. A bigram classifier sees `not_good` and `not_bad` and learns them as distinct features. That is usually enough.
+"not good" と "not bad" を考えます。BoW分類器は `{not, good}` と `{not, bad}` を見て、学習データに多く出た側から学びます。bigram分類器は `not_good` と `not_bad` を見て、それぞれを別の特徴として学習します。たいていはそれで十分です。
 
-A cruder fix that works when you do not have bigrams: **negation scoping**. Prefix tokens following a negation word with `NOT_` up to the next punctuation.
+bigramがない場合に使える、より粗い修正があります。**否定スコープ** です。否定語の後に続くtokenに、次の句読点まで `NOT_` というprefixを付けます。
 
 ```python
 NEGATION_WORDS = {"not", "no", "never", "nor", "none", "nothing", "neither"}
@@ -151,21 +151,21 @@ def apply_negation(tokens):
 ['not', 'NOT_good', 'NOT_at', 'NOT_all', '.', 'but', 'funny']
 ```
 
-Now `good` and `NOT_good` are different features. The classifier can weight them opposite. Three lines of preprocessing, measurable accuracy jump on sentiment benchmarks.
+これで `good` と `NOT_good` は別の特徴になります。分類器はそれらに逆向きの重みを付けられます。前処理を3行追加するだけで、感情分析ベンチマークのaccuracyが測定可能なほど上がります。
 
-### Step 5: evaluation metrics that matter
+### ステップ5: 重要な評価指標
 
-Accuracy alone is misleading if classes are imbalanced. Real sentiment corpora are usually 70-80% positive or 70-80% negative; a constant-majority classifier gets 80% accuracy and is worthless. Report every one of the following:
+クラスに偏りがある場合、accuracyだけでは誤解を招きます。実際の感情コーパスは70-80%がポジティブ、または70-80%がネガティブであることが多く、多数派を常に返す分類器でも80% accuracyを達成できますが、役には立ちません。次をすべて報告してください。
 
-- **Per-class precision and recall.** One pair per class. Macro-average them to get a single number that respects class balance.
-- **Macro-F1 (primary metric for imbalanced data).** Mean of per-class F1 scores, equally weighted. Use this instead of accuracy when classes are imbalanced.
-- **Weighted-F1 (alternative).** Same as macro but weighted by class frequency. Report alongside macro-F1 when the imbalance itself has business meaning.
-- **Confusion matrix.** Raw counts. Always inspect before trusting any scalar metric; it reveals which pair of classes the model confuses.
-- **Per-class error samples.** Pull 5 wrong predictions per class. Read them. Nothing replaces reading the actual errors.
+- **クラス別precisionとrecall。** クラスごとに1組ずつ出します。クラスバランスを尊重した単一の数値にするには、macro平均を取ります。
+- **Macro-F1 (不均衡データの主要指標)。** クラス別F1の平均で、各クラスを同じ重みで扱います。クラスが不均衡なときはaccuracyの代わりに使います。
+- **Weighted-F1 (代替指標)。** macroと同様ですが、クラス頻度で重み付けします。不均衡そのものにビジネス上の意味があるときは、Macro-F1と並べて報告します。
+- **混同行列。** 生の件数です。どんなスカラー指標を信じる前にも必ず確認してください。モデルがどのクラスの組を混同しているかを明らかにします。
+- **クラス別エラー例。** クラスごとに誤予測を5件取り出します。読みます。実際のエラーを読むことに代わるものはありません。
 
-For severely imbalanced data (> 95-5 ratio), report **AUROC** and **AUPRC** instead of accuracy. AUPRC is more sensitive to the minority class, which is what you usually care about (spam, fraud, rare sentiment).
+極端に不均衡なデータ (> 95対5) では、accuracyではなく **AUROC** と **AUPRC** を報告してください。AUPRCは少数クラスにより敏感です。通常、気にしているのはそちらです (spam、fraud、まれなsentiment)。
 
-**Common bug to avoid.** Reporting micro-F1 instead of macro-F1 on imbalanced data gives a number that looks high because it is dominated by the majority class. Macro-F1 forces you to see the minority-class performance.
+**避けるべきよくあるバグ。** 不均衡データでmacro-F1ではなくmicro-F1を報告すると、多数派クラスに支配されるため高く見える数値になります。Macro-F1は少数クラスの性能を見ざるを得なくします。
 
 ```python
 def evaluate(y_true, y_pred):
@@ -179,9 +179,9 @@ def evaluate(y_true, y_pred):
     return {"tp": tp, "fp": fp, "tn": tn, "fn": fn, "precision": precision, "recall": recall, "f1": f1}
 ```
 
-## Use It
+## 使う
 
-scikit-learn does it in six lines, correctly.
+scikit-learnなら、これを6行で正しく実行できます。
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -196,61 +196,45 @@ pipe.fit(X_train, y_train)
 print(pipe.score(X_test, y_test))
 ```
 
-Three things to notice. `stop_words=None` keeps negations. `ngram_range=(1, 2)` adds bigrams so `not_good` becomes a feature. `sublinear_tf=True` dampens repeated words. These three flags are the difference between a 75%-accurate baseline and an 85%-accurate baseline on SST-2.
+注目すべき点が3つあります。`stop_words=None` は否定語を残します。`ngram_range=(1, 2)` はbigramを追加するので、`not_good` が特徴になります。`sublinear_tf=True` は繰り返し語の影響を弱めます。この3つのフラグが、SST-2で75% accuracyのベースラインと85% accuracyのベースラインを分けます。
 
-### When to reach for a transformer
+### transformerを使うべきとき
 
-- Sarcasm detection. Classical models fail here. Period.
-- Long reviews where sentiment shifts mid-document.
-- Aspect-based sentiment. "Camera was great but battery was terrible." You need to attribute sentiment to aspects. Transformers or structured output models only.
-- Non-English, low-resource languages. Multilingual BERT gives you a zero-shot baseline for free.
+- 皮肉検出。古典的モデルはここで失敗します。例外はありません。
+- 文書の途中で感情が変わる長いレビュー。
+- アスペクトベース感情分析。"Camera was great but battery was terrible." 感情をアスペクトに対応付ける必要があります。transformerか構造化出力モデルが必要です。
+- 英語以外、低リソース言語。Multilingual BERTはzero-shotベースラインを無料で与えてくれます。
 
-If you need any of the above, skip ahead to phase 7 (transformers deep dive). Otherwise, Naive Bayes or logistic regression on TF-IDF plus bigrams plus negation handling is your 2026 production baseline.
+上のどれかが必要なら、フェーズ7 (transformer詳解) に進んでください。そうでなければ、TF-IDF + bigram + 否定処理の上にNaive Bayesまたはlogistic regressionを載せたものが、2026年時点の本番ベースラインです。
 
-### The reproducibility trap (again)
+### 再現性の落とし穴 (再び)
 
-Retraining sentiment models is routine. Re-evaluating them is not. Accuracy numbers reported in papers use specific splits, specific preprocessing, specific tokenizers. If you compare your new model to a baseline without using the identical pipeline, you will get misleading deltas. Always regenerate the baseline on your pipeline, not the paper's number.
+感情分析モデルの再学習は日常的に行われます。再評価はそうではありません。論文で報告されるaccuracyは、特定のsplit、特定の前処理、特定のtokenizerを使っています。同一pipelineを使わずに新しいモデルをベースラインと比較すると、誤解を招く差分が出ます。論文の数値ではなく、自分のpipeline上で必ずベースラインを再生成してください。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/prompt-sentiment-baseline.md`:
+`outputs/prompt-sentiment-baseline.md` として保存します。
 
 ```markdown
 ---
 name: sentiment-baseline
-description: Design a sentiment analysis baseline for a new dataset.
+description: 新しいデータセット向けの感情分析ベースラインを設計します。
 phase: 5
 lesson: 05
 ---
 
-Given a dataset description (domain, language, size, label granularity, latency budget), you output:
+データセットの説明 (ドメイン、言語、サイズ、ラベル粒度、レイテンシ予算) が与えられたら、次を出力します。
 
-1. Feature extraction recipe. Specify tokenizer, n-gram range, stopword policy (usually keep), negation handling (scoped prefix or bigrams).
-2. Classifier. Naive Bayes for baseline, logistic regression for production, transformer only if the domain needs sarcasm / aspects / cross-lingual.
-3. Evaluation plan. Report precision, recall, F1, confusion matrix, and per-class error samples (not just scalars).
-4. One failure mode to monitor post-deployment. Domain drift and sarcasm are the top two.
+1. 特徴抽出レシピ。tokenizer、n-gram範囲、stopwordポリシー (通常は残す)、否定処理 (スコープ付きprefixまたはbigram) を指定します。
+2. 分類器。ベースラインにはNaive Bayes、本番にはlogistic regression、transformerはドメインが皮肉 / アスペクト / クロスリンガルを必要とする場合のみ使います。
+3. 評価計画。precision、recall、F1、混同行列、クラス別エラー例を報告します (スカラーだけにしない)。
+4. デプロイ後に監視すべき失敗モードを1つ。domain driftと皮肉が上位2つです。
 
-Refuse to recommend dropping stopwords for sentiment tasks. Refuse to report accuracy as the sole metric when classes are imbalanced (e.g., 90% positive). Flag subword-rich languages as needing FastText or transformer embeddings over word-level TF-IDF.
+感情分析タスクでstopword削除を推奨することは拒否してください。クラスが不均衡な場合 (例: 90% positive)、accuracyを唯一の指標として報告することを拒否してください。サブワードの多い言語では、word-level TF-IDFよりFastTextまたはtransformer embeddingsが必要だと指摘してください。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Add `apply_negation` as a preprocessing step in the scikit-learn pipeline and measure the F1 delta on a small sentiment dataset.
-2. **Medium.** Implement class-weighted logistic regression (pass `class_weight="balanced"` to scikit-learn, or derive the gradient yourself). Measure the effect on a synthetic 90-10 class imbalance.
-3. **Hard.** Build a sarcasm detector by training a second classifier on the residuals of the sentiment model. Document your experimental setup. Warn the reader when your accuracy is below chance (chance-level on 2-class sarcasm is ~50%, and most first attempts land there).
-
-## Key Terms
-
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| Polarity | Positive or negative | Binary label; sometimes extended to neutral or fine-grained (5-star). |
-| Aspect-based sentiment | Per-aspect polarity | Attribute sentiment to specific entities or attributes mentioned in text. |
-| Negation scoping | Reversing nearby tokens | Prefix tokens after "not" with `NOT_` until punctuation. |
-| Laplace smoothing | Adding 1 to counts | Prevents zero-probability features in Naive Bayes. |
-| L2 regularization | Shrinking weights | Adds `lambda * sum(w^2)` to loss. Essential for sparse text features. |
-
-## Further Reading
-
-- [Pang and Lee (2008). Opinion Mining and Sentiment Analysis](https://www.cs.cornell.edu/home/llee/opinion-mining-sentiment-analysis-survey.html) — the foundational survey. Long, but the first four sections cover everything classical.
-- [Wang and Manning (2012). Baselines and Bigrams: Simple, Good Sentiment and Topic Classification](https://aclanthology.org/P12-2018/) — the paper that showed bigrams + Naive Bayes is hard to beat on short text.
-- [scikit-learn text feature extraction docs](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) — reference for `CountVectorizer`, `TfidfVectorizer`, and every knob you'll tune.
+1. **易しい。** scikit-learn pipelineの前処理ステップとして `apply_negation` を追加し、小さな感情分析データセットでF1の差分を測定してください。
+2. **普通。** クラス重み付きlogistic regressionを実装してください (scikit-learnに `class_weight="balanced"` を渡すか、自分で勾配を導出します)。90対10の合成クラス不均衡で効果を測定してください。
+3. **難しい。** 感情分析モデルの残差の上で2つ目の分類器を学習し、皮肉検出器を作ってください。実験設定を文書化してください。accuracyがchanceを下回る場合は読者に警告してください (2クラス皮肉検出のchance-levelは約50%で、最初の試みの多くはそこに落ち着きます)。

@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is an API key used for when calling an LLM service?",
-      "options": ["Encrypting the data sent to the server", "Authenticating your identity and authorizing requests", "Compressing requests to reduce bandwidth", "Selecting which programming language the server uses"],
+      "question": "LLM service を呼ぶとき、API key は何に使われますか。",
+      "options": [
+        "server に送る data を encrypt する",
+        "identity を認証し、request を authorize する",
+        "bandwidth を減らすため request を compress する",
+        "server が使う programming language を選ぶ"
+      ],
       "correct": 1,
-      "explanation": "An API key is a unique string that identifies your account, authorizes your requests, and allows the provider to track usage and billing."
+      "explanation": "API key は account を識別し、request を authorize し、provider が usage と billing を追跡できるようにする unique string です。"
     },
     {
       "stage": "pre",
-      "question": "Why should API keys never be hardcoded directly in source code?",
-      "options": ["Hardcoded keys make the code run slower", "They can be accidentally committed to git and exposed publicly", "Python cannot read string literals longer than 50 characters", "API providers block keys that appear in source files"],
+      "question": "API key を source code に直接 hardcode してはいけないのはなぜですか。",
+      "options": [
+        "hardcoded key は code を遅くするから",
+        "誤って git に commit され、public に露出する可能性があるから",
+        "Python は 50 文字を超える string literal を読めないから",
+        "API provider は source file に現れる key を block するから"
+      ],
       "correct": 1,
-      "explanation": "Hardcoded keys in source code risk being committed to version control and pushed to public repositories, where they can be scraped and abused by others."
+      "explanation": "source code に hardcode された key は version control に commit され、public repository に push される危険があります。そこから scraping され悪用される可能性があります。"
     },
     {
       "stage": "post",
-      "question": "What is the recommended way to store API keys for local development?",
-      "options": ["In a Python variable at the top of your script", "In a .env file that is listed in .gitignore", "In the README.md for easy access", "In the requirements.txt alongside package versions"],
+      "question": "local development で API key を保存する推奨方法はどれですか。",
+      "options": [
+        "script 先頭の Python variable に入れる",
+        "`.gitignore` に載せた `.env` file に入れる",
+        "簡単に access できるよう README.md に入れる",
+        "package version と一緒に requirements.txt に入れる"
+      ],
       "correct": 1,
-      "explanation": "A .env file stores keys as environment variables and should be added to .gitignore so it is never committed to version control. SDKs read keys from environment variables automatically."
+      "explanation": "`.env` file は key を environment variable として保存します。version control に commit されないよう `.gitignore` に追加すべきです。SDK は environment variable から key を自動的に読みます。"
     },
     {
       "stage": "post",
-      "question": "In the raw HTTP API call to Anthropic, which header carries the API key?",
-      "options": ["Authorization: Bearer sk-ant-...", "x-api-key: sk-ant-...", "Content-Type: application/json", "anthropic-version: 2023-06-01"],
+      "question": "Anthropic への raw HTTP API call で API key を運ぶ header はどれですか。",
+      "options": [
+        "Authorization: Bearer sk-ant-...",
+        "x-api-key: sk-ant-...",
+        "Content-Type: application/json",
+        "anthropic-version: 2023-06-01"
+      ],
       "correct": 1,
-      "explanation": "Anthropic's API uses the 'x-api-key' header for authentication, not the more common 'Authorization: Bearer' pattern. This is specific to their API design."
+      "explanation": "Anthropic API は authentication に一般的な `Authorization: Bearer` pattern ではなく `x-api-key` header を使います。これは Anthropic API design 固有です。"
     },
     {
       "stage": "post",
-      "question": "What happens when you exceed an API's rate limit?",
-      "options": ["Your API key is permanently revoked", "The server returns an error (typically HTTP 429) and you must wait before retrying", "Your request is queued and processed later automatically", "The API silently drops your request with no response"],
+      "question": "API の rate limit を超えると何が起きますか。",
+      "options": [
+        "API key が永久に revoke される",
+        "server が error (通常 HTTP 429) を返し、retry 前に待つ必要がある",
+        "request が queue に入り、後で自動処理される",
+        "API が response なしで request を silently drop する"
+      ],
       "correct": 1,
-      "explanation": "Rate limiting returns HTTP 429 (Too Many Requests). You need to wait and retry, typically with exponential backoff. Rate limits prevent abuse and ensure fair usage."
+      "explanation": "rate limiting は HTTP 429 (Too Many Requests) を返します。通常は exponential backoff で待って retry します。rate limit は abuse を防ぎ、公平な使用を保証します。"
     }
   ]
 }

@@ -1,26 +1,26 @@
-# Mission - Scope Contracts and Task Boundaries
+# Mission - Scope Contracts と Task Boundaries
 
 ## Goal
-Write a per-task `scope_contract.json` and a glob-aware checker that compares the agent's diff against the contract and flags any forbidden or off-scope writes.
+per-task `scope_contract.json` と glob-aware checker を書き、agent の diff を contract と比較して forbidden または off-scope writes を flag する。
 
 ## Inputs
-- A task description with allowed globs, forbidden globs, acceptance commands, rollback paragraph, approvals required
-- Two demo runs: one that stays in scope, one that creeps
+- allowed globs、forbidden globs、acceptance commands、rollback paragraph、approvals required を持つ task description
+- 2 つの demo runs: scope 内に留まるものと creep するもの
 
-## Deliverables
-- `scope_contract.json` schema validator (subset of JSON Schema, glob arrays)
-- A diff parser that produces a `RunSummary` from touched files plus commands run
+## 成果物
+- `scope_contract.json` schema validator (JSON Schema subset, glob arrays)
+- touched files と commands run から `RunSummary` を作る diff parser
 - `scope_check(contract, run) -> (violations, in_scope, off_scope)`
-- `scope_report.json` saved next to the script
+- script の横に保存される `scope_report.json`
 
 ## Acceptance
-- `python3 code/main.py` exits zero
-- The in-scope run reports zero violations
-- The creeping run reports the exact off-scope files and the reason for each
+- `python3 code/main.py` が exit zero
+- in-scope run が zero violations を報告する
+- creeping run が exact off-scope files と各 reason を報告する
 
 ## Out of scope
-- Time budgets, network egress allowlists. The lesson ships file globs; the exercise prompts extend it.
-- Wiring into a runtime interrupt. The lesson exits at the report.
+- Time budgets、network egress allowlists。lesson は file globs を ship し、exercises が拡張する。
+- runtime interrupt への wiring。lesson は report で終わる。
 
 ## References
 - `docs/en.md` - full lesson

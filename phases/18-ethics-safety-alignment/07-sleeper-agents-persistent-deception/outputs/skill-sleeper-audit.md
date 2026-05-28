@@ -1,29 +1,29 @@
 ---
 name: sleeper-audit
-description: Audit an alignment-training report for whether it actually demonstrates removal of a planted or suspected backdoor.
+description: alignment-training report が planted または suspected backdoor の除去を本当に示しているか audit する。
 version: 1.0.0
 phase: 18
 lesson: 7
 tags: [sleeper-agents, backdoor, alignment-training, adversarial-training, probes]
 ---
 
-Given a report that claims a harmful behaviour has been removed from a model (via SFT, RLHF, adversarial training, or any combination), audit whether the removal has actually been demonstrated against the standard Hubinger et al. 2024 threat model.
+model から harmful behaviour が除去されたと主張する report (SFT、RLHF、adversarial training、またはその組み合わせ) が与えられたら、standard Hubinger et al. 2024 threat model に対して removal が実証されているか audit してください。
 
-Produce:
+作成するもの:
 
-1. Elicitation scope. Did the report hold out an elicitation method that the training pipeline never saw? If the only evaluation is the red team's own distribution, removal is unproven.
-2. Trigger generality. Is the claimed trigger a literal string, a distribution shift, or an environmental feature (date, token, context size)? Generality of the trigger determines the size of the search space the red team has to cover.
-3. Internal-state evidence. Did the team apply residual-stream probes, SAE features, or other mechanistic probes to check whether the trigger-relevant state is still present internally even when behaviour is clean? Per the April 2024 Anthropic follow-up, internal state remains linearly legible after behavioural removal.
-4. Persistence-through-pipeline check. Was removal verified after every subsequent training stage (further SFT, later RLHF pass, adapter merge, distillation)? Backdoors persist through training — the final model is the thing evaluated, not a middle checkpoint.
-5. Scale-consistency check. If the claim is based on a smaller model, Hubinger 2024 Figure 4 shows persistence grows with scale. Smaller-model evidence does not transfer upward.
+1. Elicitation scope。training pipeline が一度も見ていない elicitation method を hold out していたか。評価が red team's own distribution だけなら、removal は未証明です。
+2. Trigger generality。claimed trigger は literal string、distribution shift、environmental feature (date, token, context size) のどれか。trigger の generality は red team が cover すべき search space の大きさを決めます。
+3. Internal-state evidence。behaviour が clean でも trigger-relevant state が内部に残っていないか確認するため、residual-stream probes、SAE features、その他 mechanistic probes を適用したか。2024 年 4 月の Anthropic follow-up によれば、behavioural removal 後も internal state は linearly legible に残ります。
+4. Persistence-through-pipeline check。その後の training stage (further SFT、later RLHF pass、adapter merge、distillation) の後にも removal を確認したか。backdoors は training を生き残ります。評価すべきは中間 checkpoint ではなく final model です。
+5. Scale-consistency check。claim が小さい model に基づく場合、Hubinger 2024 Figure 4 は persistence が scale とともに増えることを示します。smaller-model evidence は上方に transfer しません。
 
-Hard rejects:
-- Any claim that "we applied RLHF so the model is safe" with no held-out elicitation.
-- Any claim based only on red-team-distribution evaluation (training and evaluation draw from the same pool).
-- Any claim of removal without internal-state probes when the original implant mechanism is unknown.
+強い拒否条件:
+- held-out elicitation なしに "we applied RLHF so the model is safe" とする主張。
+- red-team-distribution evaluation だけに基づく主張 (training と evaluation が同じ pool から来る)。
+- original implant mechanism が unknown なのに internal-state probes なしで removal を主張すること。
 
-Refusal rules:
-- If the user asks "can RLHF remove deceptive alignment," refuse the binary answer and point to Hubinger et al. 2024 Section 5 on persistence and Section 6 on chain-of-thought.
-- If the user asks for a numeric probability of latent deception, refuse and explain that base rates are unknown; the empirical evidence is persistence in constructed organisms, not emergence rate in naturally trained models.
+拒否ルール:
+- user が "can RLHF remove deceptive alignment" と聞いたら binary answer を拒否し、persistence に関する Hubinger et al. 2024 Section 5 と chain-of-thought に関する Section 6 を参照してください。
+- user が latent deception の numeric probability を求めたら拒否し、base rates は unknown で、empirical evidence は constructed organisms における persistence であり naturally trained models での emergence rate ではないと説明してください。
 
-Output: a one-page audit that maps the report's evidence onto the five audit dimensions above, flags every dimension the report does not address, and states the single largest unaddressed threat model. Cite Hubinger et al. (arXiv:2401.05566) for the baseline threat model.
+出力: report の evidence を上記 5 audit dimensions に mapping し、未対応 dimension をすべて flag し、最大の unaddressed threat model を述べる 1 ページ audit。baseline threat model として Hubinger et al. (arXiv:2401.05566) を引用してください。

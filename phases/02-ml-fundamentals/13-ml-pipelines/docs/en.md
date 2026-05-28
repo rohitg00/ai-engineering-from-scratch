@@ -1,32 +1,32 @@
-# ML Pipelines
+# ML パイプライン
 
-> A model is not a product. A pipeline is. The pipeline is everything from raw data to deployed prediction, and every step must be reproducible.
+> モデルそのものはプロダクトではありません。パイプラインこそがプロダクトです。生データからデプロイされた予測までを含む全体がパイプラインであり、すべてのステップは再現可能でなければなりません。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 2, Lesson 12 (Hyperparameter Tuning)
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 2, Lesson 12 (Hyperparameter Tuning)
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Build an ML pipeline from scratch that chains imputation, scaling, encoding, and model training into a single reproducible object
-- Identify data leakage scenarios and explain how pipelines prevent them by fitting transformers only on training data
-- Construct a ColumnTransformer that applies different preprocessing to numeric and categorical features
-- Implement pipeline serialization and demonstrate that the same fitted pipeline produces identical results in training and production
+- 欠損値補完、スケーリング、エンコーディング、モデル学習を 1 つの再現可能なオブジェクトにつなぐ ML パイプラインをゼロから構築する
+- データリークが起きる状況を見つけ、transformer を訓練データだけで fit することでパイプラインがそれを防ぐ仕組みを説明する
+- 数値特徴量とカテゴリ特徴量に別々の前処理を適用する `ColumnTransformer` を組み立てる
+- パイプラインのシリアライズを実装し、同じ fit 済みパイプラインが訓練時と本番時に同一の結果を返すことを示す
 
-## The Problem
+## 問題
 
-You have a notebook that loads data, fills missing values with the median, scales features, trains a model, and prints accuracy. It works. You ship it.
+データを読み込み、欠損値を中央値で埋め、特徴量をスケーリングし、モデルを訓練して accuracy を表示するノートブックがあります。動きます。あなたはそれを出荷します。
 
-A month later, someone retrains the model and gets different results. The median was computed on the full dataset including test data (data leakage). The scaling parameters were not saved, so inference uses different statistics. The feature engineering code was copy-pasted between training and serving, and the copies diverged. A categorical column gained a new value in production that the encoder has never seen.
+1 か月後、別の人がモデルを再訓練すると違う結果になります。中央値はテストデータを含む全データセットで計算されていました（データリーク）。スケーリングのパラメータは保存されていなかったため、推論時には別の統計量が使われます。特徴量エンジニアリングのコードは訓練側と serving 側でコピーされ、いつの間にか内容がずれました。本番環境では、encoder が見たことのない新しいカテゴリ値も現れました。
 
-These are not hypothetical. They are the most common reasons ML systems fail in production. Pipelines solve all of them by packaging every transformation step into a single, ordered, reproducible object.
+これは仮の話ではありません。ML システムが本番で失敗する最も一般的な理由です。パイプラインは、すべての変換ステップを単一の、順序付きで再現可能なオブジェクトにまとめることで、これらを解決します。
 
-## The Concept
+## コンセプト
 
-### What a Pipeline Is
+### パイプラインとは
 
-A pipeline is an ordered sequence of data transformations followed by a model. Each step takes the output of the previous step as input. The entire pipeline is fitted once on training data. At inference time, the same fitted pipeline transforms new data and produces predictions.
+パイプラインは、データ変換の順序付き列と、その最後に置かれるモデルです。各ステップは、直前のステップの出力を入力として受け取ります。パイプライン全体は訓練データで一度だけ fit されます。推論時には、同じ fit 済みパイプラインが新しいデータを変換し、予測を生成します。
 
 ```mermaid
 flowchart LR
@@ -37,17 +37,17 @@ flowchart LR
     E --> F[Prediction]
 ```
 
-The pipeline guarantees:
-- Transformations are fitted only on training data (no leakage)
-- The same transformations are applied at inference time
-- The entire object can be serialized and deployed as one artifact
-- Cross-validation applies the pipeline per fold, preventing subtle leakage
+パイプラインが保証すること:
+- 変換は訓練データだけで fit される（リークしない）
+- 推論時にも同じ変換が適用される
+- オブジェクト全体を 1 つの artifact としてシリアライズしてデプロイできる
+- クロスバリデーションでは fold ごとにパイプラインが適用され、見落としやすいリークを防げる
 
-### Data Leakage: The Silent Killer
+### データリーク: 静かな破壊者
 
-Data leakage happens when information from the test set or future data contaminates training. Pipelines prevent the most common forms.
+データリークは、テストセットや未来のデータの情報が訓練に混入したときに起きます。パイプラインは、最も一般的なリークを防ぎます。
 
-**Leaky (wrong):**
+**リークしている例（誤り）:**
 ```python
 X = df.drop("target", axis=1)
 y = df["target"]
@@ -59,9 +59,9 @@ X_train, X_test = X_scaled[:800], X_scaled[800:]
 y_train, y_test = y[:800], y[800:]
 ```
 
-The scaler saw test data. The mean and standard deviation include test samples. This inflates accuracy estimates.
+この scaler はテストデータを見ています。平均と標準偏差にテストサンプルが含まれています。その結果、accuracy の見積もりが実際より高くなります。
 
-**Correct:**
+**正しい例:**
 ```python
 X_train, X_test = X[:800], X[800:]
 
@@ -70,11 +70,11 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 ```
 
-With a pipeline, you do not need to think about this. The pipeline handles it automatically.
+パイプラインを使えば、これを毎回意識する必要はありません。パイプラインが自動的に処理します。
 
 ### sklearn Pipeline
 
-sklearn's `Pipeline` chains transformers and an estimator. It exposes `.fit()`, `.predict()`, and `.score()` that apply all steps in order.
+sklearn の `Pipeline` は transformer と estimator をつなぎます。`.fit()`、`.predict()`、`.score()` を公開し、すべてのステップを順番に適用します。
 
 ```python
 from sklearn.pipeline import Pipeline
@@ -90,19 +90,19 @@ pipe.fit(X_train, y_train)
 predictions = pipe.predict(X_test)
 ```
 
-When you call `pipe.fit(X_train, y_train)`:
-1. Scaler calls `fit_transform` on X_train
-2. Model calls `fit` on the scaled X_train
+`pipe.fit(X_train, y_train)` を呼ぶと:
+1. Scaler が X_train に対して `fit_transform` を呼ぶ
+2. Model がスケーリング済みの X_train に対して `fit` を呼ぶ
 
-When you call `pipe.predict(X_test)`:
-1. Scaler calls `transform` (not fit_transform) on X_test
-2. Model calls `predict` on the scaled X_test
+`pipe.predict(X_test)` を呼ぶと:
+1. Scaler が X_test に対して `transform`（`fit_transform` ではない）を呼ぶ
+2. Model がスケーリング済みの X_test に対して `predict` を呼ぶ
 
-The scaler never sees test data during fitting. This is the whole point.
+fit の間、scaler はテストデータを一切見ません。これが核心です。
 
-### ColumnTransformer: Different Pipelines for Different Columns
+### ColumnTransformer: 列ごとに違うパイプラインを使う
 
-Real datasets have numeric and categorical columns that need different preprocessing. `ColumnTransformer` handles this.
+現実のデータセットには、前処理が異なる数値列とカテゴリ列があります。`ColumnTransformer` はこれを扱います。
 
 ```python
 from sklearn.compose import ColumnTransformer
@@ -130,13 +130,13 @@ full_pipeline = Pipeline([
 ])
 ```
 
-The `handle_unknown="ignore"` in OneHotEncoder is critical for production. When a new category appears (a city the model has never seen), it produces a zero vector instead of crashing.
+OneHotEncoder の `handle_unknown="ignore"` は本番運用では重要です。新しいカテゴリ（モデルが見たことのない city など）が現れても、クラッシュせずにゼロベクトルを生成します。
 
-### Experiment Tracking
+### 実験トラッキング
 
-A pipeline makes training reproducible, but you also need to track what happened across experiments: which hyperparameters were used, which dataset version, what the metrics were, which code was running.
+パイプラインは訓練を再現可能にしますが、実験間で何が起きたかも追跡する必要があります。どの hyperparameter を使ったか、どの dataset version だったか、metrics は何だったか、どのコードが動いていたか、です。
 
-**MLflow** is the most common open-source solution:
+**MLflow** は最も一般的な open-source の解決策です:
 
 ```python
 import mlflow
@@ -153,9 +153,9 @@ with mlflow.start_run():
     mlflow.sklearn.log_model(pipe, "model")
 ```
 
-Every run is recorded with parameters, metrics, artifacts, and the full model. You can compare runs, reproduce any experiment, and deploy any model version.
+各 run には parameters、metrics、artifacts、完全な model が記録されます。run を比較し、任意の実験を再現し、任意の model version をデプロイできます。
 
-**Weights & Biases (wandb)** provides the same functionality with a hosted dashboard:
+**Weights & Biases (wandb)** も、hosted dashboard 付きで同じ機能を提供します:
 
 ```python
 import wandb
@@ -169,19 +169,19 @@ accuracy = pipe.score(X_test, y_test)
 wandb.log({"accuracy": accuracy})
 ```
 
-### Model Versioning
+### モデルバージョニング
 
-After experiment tracking, you need to manage model versions. Which model is in production? Which is staging? Which was last week's?
+実験トラッキングの次には、model version の管理が必要です。どの model が production にあるのか。どれが staging なのか。先週の model はどれか。
 
-MLflow's Model Registry provides:
-- **Version tracking:** Every saved model gets a version number
-- **Stage transitions:** "Staging", "Production", "Archived"
-- **Approval workflow:** Models must be explicitly promoted to production
-- **Rollback:** Switch back to a previous version instantly
+MLflow の Model Registry が提供するもの:
+- **Version tracking:** 保存された model すべてに version number が付く
+- **Stage transitions:** "Staging"、"Production"、"Archived"
+- **Approval workflow:** production への昇格は明示的に承認する
+- **Rollback:** 以前の version に即座に戻せる
 
-### Data Versioning with DVC
+### DVC によるデータバージョニング
 
-Code is versioned with git. Data should be versioned too, but git cannot handle large files. DVC (Data Version Control) solves this.
+コードは git で version 管理します。データも version 管理すべきですが、git は大きなファイルを扱うのに向いていません。DVC (Data Version Control) がこれを解決します。
 
 ```
 dvc init
@@ -191,18 +191,18 @@ git commit -m "Track training data"
 dvc push
 ```
 
-DVC stores the actual data in remote storage (S3, GCS, Azure) and keeps a small `.dvc` file in git that records the hash. When you checkout a git commit, `dvc checkout` restores the exact data that was used.
+DVC は実データを remote storage（S3、GCS、Azure など）に保存し、hash を記録した小さな `.dvc` file を git に置きます。git commit を checkout したとき、`dvc checkout` がその commit で使われた正確なデータを復元します。
 
-This means every git commit pins both the code and the data. Full reproducibility.
+つまり、各 git commit がコードとデータの両方を固定します。完全な再現性です。
 
-### Reproducible Experiments
+### 再現可能な実験
 
-A reproducible experiment requires four things:
+再現可能な実験には 4 つが必要です:
 
-1. **Fixed random seeds:** Set seeds for numpy, random, and the framework (torch, sklearn)
-2. **Pinned dependencies:** requirements.txt or poetry.lock with exact versions
-3. **Versioned data:** DVC or similar
-4. **Config files:** All hyperparameters in a config, not hardcoded
+1. **固定された random seeds:** numpy、random、framework（torch、sklearn）の seed を設定する
+2. **固定された dependencies:** exact version を持つ requirements.txt または poetry.lock
+3. **version 管理された data:** DVC など
+4. **Config files:** hyperparameters は hardcoded せず config に置く
 
 ```python
 import numpy as np
@@ -220,7 +220,7 @@ def set_seed(seed=42):
         pass
 ```
 
-### From Notebook to Production Pipeline
+### ノートブックから本番パイプラインへ
 
 ```mermaid
 flowchart TD
@@ -236,31 +236,31 @@ flowchart TD
     style H fill:#dfd,stroke:#333
 ```
 
-The typical progression:
+典型的な進め方:
 
-1. **Notebook exploration:** Quick experiments, visualizations, feature ideas
-2. **Extract functions:** Move preprocessing, feature engineering, evaluation into modules
-3. **Build Pipeline:** Chain transformations into a sklearn Pipeline or custom class
-4. **Config management:** Move all hyperparameters into a YAML/JSON config
-5. **Experiment tracking:** Add MLflow or wandb logging
-6. **Data validation:** Check schema, distributions, and missing value patterns before training
-7. **Tests:** Unit tests for transformers, integration tests for the full pipeline
-8. **Deployment:** Serialize the pipeline, wrap in an API (FastAPI, Flask), containerize
+1. **Notebook exploration:** 素早い実験、可視化、特徴量アイデア
+2. **Extract functions:** 前処理、特徴量エンジニアリング、評価を modules に移す
+3. **Build Pipeline:** 変換を sklearn Pipeline または custom class に連結する
+4. **Config management:** すべての hyperparameters を YAML/JSON config に移す
+5. **Experiment tracking:** MLflow または wandb logging を追加する
+6. **Data validation:** 訓練前に schema、distributions、missing value patterns を確認する
+7. **Tests:** transformer の unit tests と full pipeline の integration tests
+8. **Deployment:** pipeline をシリアライズし、API（FastAPI、Flask）で包み、containerize する
 
-### Common Pipeline Mistakes
+### よくあるパイプラインの間違い
 
 | Mistake | Why it is bad | Fix |
 |---------|-------------|-----|
-| Fitting on full data before splitting | Data leakage | Use Pipeline with cross_val_score |
-| Feature engineering outside pipeline | Different transforms at train vs serve | Put all transforms in the Pipeline |
-| Not handling unknown categories | Production crash on new values | OneHotEncoder(handle_unknown="ignore") |
-| Hardcoded column names | Breaks when schema changes | Use column name lists from config |
-| No data validation | Silently wrong predictions on bad data | Add schema checks before prediction |
-| Training/serving skew | Model sees different features in prod | One Pipeline object for both |
+| 分割前に全データで fit する | Data leakage | cross_val_score と Pipeline を使う |
+| pipeline の外で feature engineering する | train と serve で変換がずれる | すべての変換を Pipeline に入れる |
+| unknown categories を扱わない | 新しい値で production がクラッシュする | OneHotEncoder(handle_unknown="ignore") |
+| column names を hardcoded する | schema 変更で壊れる | config の column name lists を使う |
+| data validation がない | 悪いデータで静かに誤予測する | prediction 前に schema checks を追加する |
+| training/serving skew | prod で model が違う features を見る | 両方で 1 つの Pipeline object を使う |
 
-## Build It
+## 作ってみる
 
-The code in `code/pipeline.py` builds a complete ML pipeline from scratch:
+`code/pipeline.py` のコードは、完全な ML パイプラインをゼロから構築します。
 
 ### Step 1: Custom Transformer
 
@@ -306,50 +306,50 @@ class PipelineFromScratch:
         return model.predict(X_current)
 ```
 
-### Step 3: Cross-Validation with Pipeline
+### Step 3: パイプラインを使ったクロスバリデーション
 
-The code demonstrates how cross-validation with a pipeline prevents data leakage: the scaler is fit separately on each fold's training data.
+コードは、パイプライン付きの cross-validation がデータリークを防ぐ仕組みを示します。scaler は各 fold の訓練データだけで個別に fit されます。
 
-### Step 4: Full Production Pipeline with sklearn
+### Step 4: sklearn による完全な本番パイプライン
 
-A complete pipeline with `ColumnTransformer`, multiple preprocessing paths, and a model, trained with proper cross-validation and experiment logging.
+`ColumnTransformer`、複数の前処理経路、model を含む完全な pipeline を、正しい cross-validation と experiment logging 付きで訓練します。
 
-## Ship It
+## 出荷物
 
-This lesson produces:
-- `outputs/prompt-ml-pipeline.md` -- a skill for building and debugging ML pipelines
-- `code/pipeline.py` -- a complete pipeline from scratch through sklearn
+この lesson が生成するもの:
+- `outputs/prompt-ml-pipeline.md` -- ML パイプラインを構築・debug するための skill
+- `code/pipeline.py` -- scratch 実装から sklearn までを含む完全な pipeline
 
-## Exercises
+## 演習
 
-1. Build a pipeline that handles a dataset with 3 numeric columns and 2 categorical columns. Use `ColumnTransformer` to apply median imputation + scaling to numerics and most-frequent imputation + one-hot encoding to categoricals. Train with 5-fold cross-validation.
+1. 数値列 3 個とカテゴリ列 2 個を持つ dataset を扱う pipeline を作ってください。`ColumnTransformer` を使い、数値列には median imputation + scaling、カテゴリ列には most-frequent imputation + one-hot encoding を適用します。5-fold cross-validation で訓練してください。
 
-2. Deliberately introduce data leakage: fit the scaler on the full dataset before splitting. Compare the cross-validation score (leaky) to the pipeline cross-validation score (clean). How large is the difference?
+2. 意図的にデータリークを入れてください。分割前の全データで scaler を fit します。cross-validation score（leaky）と pipeline cross-validation score（clean）を比較してください。差はどれくらいですか。
 
-3. Serialize your pipeline with `joblib.dump`. Load it in a separate script and run predictions. Verify the predictions are identical.
+3. `joblib.dump` で pipeline をシリアライズしてください。別 script で読み込み、予測を実行します。予測が同一であることを確認してください。
 
-4. Add a custom transformer to the pipeline that creates polynomial features (degree 2) for the two most important numeric columns. Where should it go in the pipeline?
+4. 最も重要な数値列 2 個に degree 2 の polynomial features を作る custom transformer を pipeline に追加してください。pipeline のどこに置くべきですか。
 
-5. Set up MLflow tracking for the pipeline. Run 5 experiments with different hyperparameters. Use the MLflow UI (`mlflow ui`) to compare runs and pick the best model.
+5. pipeline に MLflow tracking を設定してください。異なる hyperparameters で 5 つの実験を実行します。MLflow UI（`mlflow ui`）で run を比較し、最良の model を選んでください。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Pipeline | "Chain of transforms + model" | An ordered sequence of fitted transformers and a model, applied as one unit to prevent leakage |
-| Data leakage | "Test info leaked into training" | Using information from outside the training set to build the model, inflating performance estimates |
-| ColumnTransformer | "Different preprocessing per column" | Applies different pipelines to different subsets of columns, combining results |
-| Experiment tracking | "Logging your runs" | Recording parameters, metrics, artifacts, and code versions for every training run |
-| MLflow | "Track and deploy models" | Open-source platform for experiment tracking, model registry, and deployment |
-| DVC | "Git for data" | Version control system for large data files, storing hashes in git and data in remote storage |
-| Model registry | "Model version catalog" | A system that tracks model versions with stage labels (staging, production, archived) |
-| Training/serving skew | "It worked in the notebook" | Differences between how data is processed during training versus inference, causing silent errors |
-| Reproducibility | "Same code, same result" | The ability to get identical results from the same code, data, and configuration |
+| Pipeline | "Chain of transforms + model" | fit 済み transformer と model の順序付き列。リークを防ぐため 1 つの単位として適用される |
+| Data leakage | "Test info leaked into training" | 訓練セット外の情報を使って model を作り、performance estimate を水増しすること |
+| ColumnTransformer | "Different preprocessing per column" | 列の subset ごとに異なる pipeline を適用し、結果を結合する仕組み |
+| Experiment tracking | "Logging your runs" | 各 training run の parameters、metrics、artifacts、code versions を記録すること |
+| MLflow | "Track and deploy models" | experiment tracking、model registry、deployment のための open-source platform |
+| DVC | "Git for data" | large data files の version control。hash を git に、data を remote storage に保存する |
+| Model registry | "Model version catalog" | model versions を stage labels（staging、production、archived）付きで追跡する system |
+| Training/serving skew | "It worked in the notebook" | 訓練時と推論時で data processing が異なり、静かな error を起こすこと |
+| Reproducibility | "Same code, same result" | 同じ code、data、configuration から同一結果を得られる能力 |
 
-## Further Reading
+## 参考資料
 
-- [scikit-learn Pipeline docs](https://scikit-learn.org/stable/modules/compose.html) -- the official pipeline reference
-- [MLflow documentation](https://mlflow.org/docs/latest/index.html) -- experiment tracking and model registry
+- [scikit-learn Pipeline docs](https://scikit-learn.org/stable/modules/compose.html) -- 公式 pipeline reference
+- [MLflow documentation](https://mlflow.org/docs/latest/index.html) -- experiment tracking と model registry
 - [DVC documentation](https://dvc.org/doc) -- data versioning
-- [Sculley et al., Hidden Technical Debt in Machine Learning Systems (2015)](https://papers.nips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) -- the seminal paper on ML systems complexity
-- [Google ML Best Practices: Rules of ML](https://developers.google.com/machine-learning/guides/rules-of-ml) -- practical production ML advice
+- [Sculley et al., Hidden Technical Debt in Machine Learning Systems (2015)](https://papers.nips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) -- ML systems complexity に関する重要論文
+- [Google ML Best Practices: Rules of ML](https://developers.google.com/machine-learning/guides/rules-of-ml) -- production ML の実践的 advice

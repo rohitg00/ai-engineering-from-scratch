@@ -1,25 +1,25 @@
-# Mission - Initialization Scripts for Agents
+# Mission - Agents のための Initialization Scripts
 
 ## Goal
-Build `init_agent.py` that probes runtime, dependencies, test command, env vars, and state freshness, then writes `init_report.json` and halts the session loud when a block-severity probe fails.
+runtime、dependencies、test command、env vars、state freshness を probe する `init_agent.py` を作り、`init_report.json` を書き、block-severity probe が失敗したら session を loud に halt する。
 
 ## Inputs
-- A repo with a `requirements.txt` (or equivalent), a test command, and the workbench state file from lesson 34
-- The probe table from the lesson (runtime, deps, paths, env, state freshness, last-known-good commit)
+- `requirements.txt` (または equivalent)、test command、lesson 34 の workbench state file を持つ repo
+- lesson の probe table (runtime, deps, paths, env, state freshness, last-known-good commit)
 
-## Deliverables
-- `init_agent.py` with one function per probe returning `(name, status, detail)`
-- `init_report.json` carrying the full probe set and a timestamp
-- Non-zero exit on any block-severity probe failure
+## 成果物
+- probe ごとに `(name, status, detail)` を返す 1 function を持つ `init_agent.py`
+- full probe set と timestamp を運ぶ `init_report.json`
+- block-severity probe failure があれば non-zero exit
 
 ## Acceptance
-- `python3 code/main.py` exits zero on the happy path
-- Running it twice in a row is a no-op except for the timestamp
-- A simulated missing env var probe surfaces in the report and flips the exit code
+- happy path で `python3 code/main.py` が exit zero
+- 連続 2 回実行しても timestamp 以外 no-op
+- simulated missing env var probe が report に surface し、exit code を反転させる
 
 ## Out of scope
-- Auto-installing missing dependencies. The script halts and surfaces; the human fixes.
-- Calling an LLM from a probe. Probes stay deterministic plumbing.
+- missing dependencies の auto-install。script は halt して surface し、人間が直す。
+- probe から LLM を呼ぶこと。probes は deterministic plumbing に留める。
 
 ## References
 - `docs/en.md` - full lesson

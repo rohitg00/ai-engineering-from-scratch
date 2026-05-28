@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,77 +7,77 @@
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .content { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="440" y="26" text-anchor="middle" class="title">Cost governors layer by time scale. Each layer catches a distinct failure.</text>
+  <text x="440" y="26" text-anchor="middle" class="title">コストガバナーは時間スケールで重ねる。各層が別の失敗を捕捉する。</text>
 
   <rect x="40" y="50" width="800" height="460" class="box"/>
 
   <!-- Time-scale rows -->
-  <text x="60" y="80" class="label">time scale</text>
-  <text x="240" y="80" class="label">layer</text>
-  <text x="500" y="80" class="label">catches</text>
+  <text x="60" y="80" class="label">時間スケール</text>
+  <text x="240" y="80" class="label">層</text>
+  <text x="500" y="80" class="label">捕捉するもの</text>
 
   <!-- Per request -->
   <rect x="60" y="90" width="160" height="40" class="cool"/>
-  <text x="140" y="115" text-anchor="middle" class="small">per request (&lt;1 s)</text>
+  <text x="140" y="115" text-anchor="middle" class="small">リクエストごと（&lt;1秒）</text>
   <rect x="230" y="90" width="240" height="40" class="cold"/>
   <text x="350" y="115" text-anchor="middle" class="content">max_tokens</text>
   <rect x="480" y="90" width="340" height="40" class="box"/>
-  <text x="650" y="115" text-anchor="middle" class="small">unbounded completion (single LLM call)</text>
+  <text x="650" y="115" text-anchor="middle" class="small">無制限補完（単一LLM呼出し）</text>
 
   <!-- Per session -->
   <rect x="60" y="135" width="160" height="40" class="cool"/>
-  <text x="140" y="160" text-anchor="middle" class="small">per session (min)</text>
+  <text x="140" y="160" text-anchor="middle" class="small">セッションごと（分）</text>
   <rect x="230" y="135" width="240" height="40" class="cold"/>
   <text x="350" y="160" text-anchor="middle" class="content">max_turns, max_budget_usd</text>
   <rect x="480" y="135" width="340" height="40" class="box"/>
-  <text x="650" y="160" text-anchor="middle" class="small">long reasoning loop in one session</text>
+  <text x="650" y="160" text-anchor="middle" class="small">1 session内の長い推論ループ</text>
 
   <!-- Per tool -->
   <rect x="60" y="180" width="160" height="40" class="cool"/>
-  <text x="140" y="205" text-anchor="middle" class="small">per tool (sess.)</text>
+  <text x="140" y="205" text-anchor="middle" class="small">ツールごと（session）</text>
   <rect x="230" y="180" width="240" height="40" class="cold"/>
-  <text x="350" y="205" text-anchor="middle" class="content">per-tool cap (e.g., ≤5 WebFetch)</text>
+  <text x="350" y="205" text-anchor="middle" class="content">ツール別上限（例: WebFetch ≤5）</text>
   <rect x="480" y="180" width="340" height="40" class="box"/>
-  <text x="650" y="205" text-anchor="middle" class="small">new tool triggers new loop (e.g. order-track)</text>
+  <text x="650" y="205" text-anchor="middle" class="small">新ツールが新ループを誘発（例: order-track）</text>
 
   <!-- Velocity -->
   <rect x="60" y="225" width="160" height="40" class="warn"/>
-  <text x="140" y="250" text-anchor="middle" class="small">velocity (10 min)</text>
+  <text x="140" y="250" text-anchor="middle" class="small">速度（10分）</text>
   <rect x="230" y="225" width="240" height="40" class="cold"/>
-  <text x="350" y="250" text-anchor="middle" class="content">cut off above $50 / 10 min</text>
+  <text x="350" y="250" text-anchor="middle" class="content">$50 / 10分超で遮断</text>
   <rect x="480" y="225" width="340" height="40" class="box"/>
-  <text x="650" y="250" text-anchor="middle" class="small">runaway loop; fast-burn</text>
+  <text x="650" y="250" text-anchor="middle" class="small">暴走ループ、高速消費</text>
 
   <!-- Daily -->
   <rect x="60" y="270" width="160" height="40" class="hot"/>
-  <text x="140" y="295" text-anchor="middle" class="small">per day</text>
+  <text x="140" y="295" text-anchor="middle" class="small">日ごと</text>
   <rect x="230" y="270" width="240" height="40" class="cold"/>
-  <text x="350" y="295" text-anchor="middle" class="content">rolling daily cap + alert</text>
+  <text x="350" y="295" text-anchor="middle" class="content">日次ローリング上限 + 警告</text>
   <rect x="480" y="270" width="340" height="40" class="box"/>
-  <text x="650" y="295" text-anchor="middle" class="small">slow leak; gradual doubling</text>
+  <text x="650" y="295" text-anchor="middle" class="small">遅い漏れ、段階的倍増</text>
 
   <!-- Weekly/monthly -->
   <rect x="60" y="315" width="160" height="40" class="hot"/>
-  <text x="140" y="340" text-anchor="middle" class="small">per week/month</text>
+  <text x="140" y="340" text-anchor="middle" class="small">週/月ごと</text>
   <rect x="230" y="315" width="240" height="40" class="cold"/>
-  <text x="350" y="340" text-anchor="middle" class="content">hard monthly cap + weekly alert</text>
+  <text x="350" y="340" text-anchor="middle" class="content">月次ハード上限 + 週次警告</text>
   <rect x="480" y="315" width="340" height="40" class="box"/>
-  <text x="650" y="340" text-anchor="middle" class="small">bad release; regression across sessions</text>
+  <text x="650" y="340" text-anchor="middle" class="small">悪いリリース、セッション横断の回帰</text>
 
   <!-- Cost-reduction row -->
   <rect x="60" y="370" width="760" height="54" class="cool"/>
-  <text x="440" y="392" text-anchor="middle" class="label">orthogonal: cost reduction at constant quality</text>
-  <text x="80" y="412" class="content">prompt caching · context windowing / compaction · tiered model routing · parallel cache for long-horizon runs</text>
+  <text x="440" y="392" text-anchor="middle" class="label">直交策: 品質一定でのコスト削減</text>
+  <text x="80" y="412" class="content">prompt caching · context windowing / compaction · tiered model routing · 長期実行用並列キャッシュ</text>
 
   <!-- Kill switch row -->
   <rect x="60" y="430" width="760" height="60" class="hot"/>
-  <text x="440" y="452" text-anchor="middle" class="label">kill switch on breach</text>
-  <text x="80" y="472" class="content">any cap fires → session aborts → alert → manual re-enable required → agent cannot modify its own cap</text>
-  <text x="80" y="486" class="small">observed 2026: e-commerce agent $1,200 → $4,800 after tool addition; weekly-growth alert was the fix.</text>
+  <text x="440" y="452" text-anchor="middle" class="label">超過時のキルスイッチ</text>
+  <text x="80" y="472" class="content">任意の上限発火 → セッション中止 → 警告 → 手動再有効化必須 → エージェントは自身の上限を変更不可</text>
+  <text x="80" y="486" class="small">2026年観測例: ECエージェントがtool追加後 $1,200 → $4,800。週次増加警告で修正。</text>
 </svg>

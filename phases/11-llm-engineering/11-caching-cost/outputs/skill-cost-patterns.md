@@ -1,6 +1,6 @@
 ---
 name: skill-cost-patterns
-description: Decision framework for LLM cost optimization -- caching strategies, rate limiting, model routing, and budget controls
+description: LLM cost optimization のための decision framework -- caching strategies、rate limiting、model routing、budget controls
 version: 1.0.0
 phase: 11
 lesson: 11
@@ -9,59 +9,59 @@ tags: [caching, cost-optimization, rate-limiting, model-routing, budget, llm-ops
 
 # LLM Cost Optimization Patterns
 
-When building an LLM application that needs to control costs, apply this decision framework.
+costs を control する必要がある LLM application を構築するときは、この decision framework を適用してください。
 
-## When to optimize
+## Optimize するタイミング
 
-**Optimize immediately when:**
-- Monthly LLM spend exceeds $500 or 10% of infrastructure budget
-- Cost per query is above $0.01 for a consumer product
-- Your system prompt is over 1,000 tokens and sent with every request
-- More than 30% of queries are duplicates or near-duplicates
-- You are scaling from 100 to 10,000+ daily users
+**すぐ optimize する場合:**
+- monthly LLM spend が $500 または infrastructure budget の 10% を超える
+- consumer product で cost per query が $0.01 を超える
+- system prompt が 1,000 tokens を超え、every request で送られる
+- queries の 30% 超が duplicates または near-duplicates
+- 100 から 10,000+ daily users へ scale している
 
-**Do not optimize yet when:**
-- You have fewer than 100 DAU and are still validating product-market fit
-- Monthly spend is under $100 and growing slowly
-- You are still iterating on prompt design (caching locks you into a prompt)
+**まだ optimize しない場合:**
+- DAU が 100 未満で、まだ product-market fit を検証中
+- monthly spend が $100 未満でゆっくり増えている
+- まだ prompt design を iterate している (caching は prompt に lock される)
 
 ## Caching strategy selection
 
 ### Exact caching
 
-**Use when:** temperature=0, identical prompts repeat, deterministic outputs needed.
+**使う場合:** temperature=0、identical prompts が繰り返される、deterministic outputs が必要。
 
 ```python
 key = sha256(json.dumps({"model": m, "messages": msgs, "temp": 0}))
 ```
 
-- Implementation: 30 minutes
-- Hit rate: 10-25% for most apps, 40-60% for FAQ bots
+- Implementation: 30 分
+- Hit rate: ほとんどの apps で 10-25%、FAQ bots で 40-60%
 - Latency: <1ms (dict lookup)
-- Risk: stale responses if underlying data changes
+- Risk: underlying data が変わると stale responses
 
-**Skip when:** temperature > 0, every query is unique, real-time data needed.
+**使わない場合:** temperature > 0、every query が unique、real-time data が必要。
 
 ### Semantic caching
 
-**Use when:** users ask the same question in different words, FAQ-heavy products, customer support.
+**使う場合:** users が同じ質問を違う言い回しで聞く、FAQ-heavy products、customer support。
 
-- Implementation: 2-4 hours (embedding + similarity + storage)
-- Hit rate: 15-35% on top of exact cache
+- Implementation: 2-4 時間 (embedding + similarity + storage)
+- Hit rate: exact cache に加えて 15-35%
 - Latency: 10-50ms (embedding + ANN search)
-- Risk: false positives (returning wrong cached answer for a similar but different question)
+- Risk: false positives (似ているが異なる質問に wrong cached answer を返す)
 
 **Threshold guidelines:**
-- 0.98+: very conservative, almost no false positives, lower hit rate
-- 0.95: good balance for factual Q&A
-- 0.90: aggressive, higher hit rate but risk of wrong answers
-- 0.85: only for low-stakes applications (suggestions, autocomplete)
+- 0.98+: very conservative、false positives はほぼないが hit rate は低い
+- 0.95: factual Q&A の良い balance
+- 0.90: aggressive、hit rate は高いが wrong answers の risk
+- 0.85: low-stakes applications (suggestions、autocomplete) 専用
 
-**Skip when:** every query has unique context (code generation), responses must reflect latest data, query space is unbounded.
+**使わない場合:** every query が unique context を持つ (code generation)、responses が latest data を反映する必要がある、query space が unbounded。
 
 ### Provider prompt caching
 
-**Use when:** system prompt > 1,024 tokens (OpenAI) or model-specific minimum, same prefix sent repeatedly.
+**使う場合:** system prompt > 1,024 tokens (OpenAI) または model-specific minimum を超え、同じ prefix が繰り返し送られる。
 
 | Provider | Action | Savings |
 |----------|--------|---------|
@@ -69,7 +69,7 @@ key = sha256(json.dumps({"model": m, "messages": msgs, "temp": 0}))
 | OpenAI | Nothing (automatic) | 50% on cached prefix |
 | Google | Use Context Caching API with explicit TTL | ~75% on cached context |
 
-**Skip when:** system prompt changes per request, prompt is under minimum length.
+**使わない場合:** system prompt が request ごとに変わる、prompt が minimum length 未満。
 
 ## Model routing rules
 
@@ -81,27 +81,27 @@ medium:  general queries, summaries        -> claude-sonnet ($3/$15)
 complex: "analyze", "compare", "debug"     -> gpt-4o ($2.50/$10)
 ```
 
-- Implementation: 1 hour
+- Implementation: 1 時間
 - Accuracy: 70-80%
-- Savings: 40-60% of model costs
+- Savings: model costs の 40-60%
 
 ### Embedding-based (more accurate)
 
-Embed 50-100 labeled queries per category. Classify new queries by nearest neighbor.
+category ごとに 50-100 labeled queries を embed します。new queries は nearest neighbor で classify します。
 
-- Implementation: 4-8 hours
+- Implementation: 4-8 時間
 - Accuracy: 85-92%
-- Savings: 50-70% of model costs
-- Additional cost: ~$0.02/1M tokens for classification embeddings (negligible)
+- Savings: model costs の 50-70%
+- Additional cost: classification embeddings に約 $0.02/1M tokens (negligible)
 
 ### ML-based (production grade)
 
-Train a small classifier (logistic regression or small BERT) on historical query/model pairs.
+historical query/model pairs で small classifier (logistic regression または small BERT) を train します。
 
-- Implementation: 1-2 weeks
+- Implementation: 1-2 週間
 - Accuracy: 90-95%
-- Savings: 60-75% of model costs
-- Requires: labeled training data from production traffic
+- Savings: model costs の 60-75%
+- Requires: production traffic からの labeled training data
 
 ## Rate limiting configuration
 
@@ -115,11 +115,11 @@ Train a small classifier (logistic regression or small BERT) on historical query
 
 ### Implementation checklist
 
-1. Store buckets in Redis (not in-memory) for multi-instance apps
-2. Use atomic operations (MULTI/EXEC) to prevent race conditions
-3. Return `Retry-After` header with rejection responses
-4. Track rejected requests as a metric (>5% rejection = tier limits too tight)
-5. Implement graceful degradation: reject expensive model requests first, keep cheap model access
+1. multi-instance apps では buckets を in-memory ではなく Redis に保存する
+2. race conditions を防ぐため atomic operations (MULTI/EXEC) を使う
+3. rejection responses で `Retry-After` header を返す
+4. rejected requests を metric として track する (>5% rejection = tier limits が厳しすぎる)
+5. graceful degradation を実装する。expensive model requests を先に reject し、cheap model access は維持する
 
 ## Budget controls
 
@@ -127,20 +127,20 @@ Train a small classifier (logistic regression or small BERT) on historical query
 
 | Threshold | Action | Reversible |
 |-----------|--------|------------|
-| 70% of monthly budget | Log warning, alert team via Slack/PagerDuty | Yes (auto) |
-| 85% of monthly budget | Route all traffic to cheapest model | Yes (auto, next billing cycle) |
-| 95% of monthly budget | Serve cached responses only, reject new LLM calls | Yes (manual reset or next cycle) |
+| monthly budget の 70% | warning を log し、Slack/PagerDuty で team に alert | Yes (auto) |
+| monthly budget の 85% | all traffic を cheapest model に route | Yes (auto、next billing cycle) |
+| monthly budget の 95% | cached responses のみ serve し、new LLM calls を reject | Yes (manual reset または next cycle) |
 
 ### Per-user cost tracking
 
-Track cumulative cost per user. Flag users exceeding 10x the median. Common causes:
-- Legitimate power user (upgrade their tier)
-- Prompt injection loop (bot sending automated requests)
-- Inefficient integration (client retrying on every error)
+user ごとの cumulative cost を track します。median の 10x を超える users を flag します。よくある原因:
+- legitimate power user (tier を upgrade)
+- prompt injection loop (bot が automated requests を送る)
+- inefficient integration (client が every error で retry)
 
 ## Cost tracking fields
 
-Log every API call with these fields:
+すべての API call を次の fields で log します。
 
 ```json
 {
@@ -159,27 +159,27 @@ Log every API call with these fields:
 }
 ```
 
-### Key metrics to dashboard
+### Dashboard 化すべき key metrics
 
-- **Cost per query** (P50, P95, P99) -- by model, by feature, by user tier
-- **Cache hit rate** -- exact vs semantic, trend over time
-- **Model distribution** -- % of traffic per model, cost per model
-- **Budget burn rate** -- current spend vs projected monthly at current rate
-- **Rejection rate** -- % of requests rate-limited, by tier
+- **Cost per query** (P50、P95、P99) -- model 別、feature 別、user tier 別
+- **Cache hit rate** -- exact vs semantic、trend over time
+- **Model distribution** -- model ごとの traffic 割合、cost per model
+- **Budget burn rate** -- current spend vs current rate での projected monthly
+- **Rejection rate** -- rate-limited requests の割合、tier 別
 
 ## Common mistakes
 
-| Mistake | Why it hurts | Fix |
+| Mistake | 問題 | Fix |
 |---------|-------------|-----|
-| Caching with temperature > 0 | Non-deterministic outputs, stale cache gives wrong variety | Only cache temp=0 calls, or accept that cached responses lose randomness |
-| Semantic cache threshold too low | Returns wrong answers for superficially similar queries | Start at 0.95, lower only after measuring false positive rate |
-| No cache invalidation | Responses go stale when underlying data changes | Set TTL (1 hour for dynamic data, 24 hours for static), invalidate on data updates |
-| Routing all traffic to cheapest model | Quality drops, users notice | Route by complexity, measure quality per tier, set minimum quality thresholds |
-| No per-user limits | One abusive user burns entire budget | Always implement per-user quotas, even if generous |
-| Ignoring output tokens | Output costs 2-5x more than input per token | Set max_tokens appropriately, use stop sequences, compress outputs |
-| Caching before prompt is stable | Cache fills with responses from old prompts | Only enable caching after prompt is finalized, flush cache on prompt changes |
+| Caching with temperature > 0 | non-deterministic outputs のため stale cache が wrong variety を返す | temp=0 calls のみ cache、または cached responses が randomness を失うことを受け入れる |
+| Semantic cache threshold too low | superficially similar queries に wrong answers を返す | 0.95 から始め、false positive rate 測定後にだけ下げる |
+| No cache invalidation | underlying data が変わると responses が stale になる | TTL を設定 (dynamic data は 1 時間、static は 24 時間)、data updates 時に invalidate |
+| Routing all traffic to cheapest model | quality が落ち users が気づく | complexity で route、tier ごとに quality を測定、minimum quality thresholds を設定 |
+| No per-user limits | abusive user 1 人が budget 全体を消費する | generous でも per-user quotas を必ず実装 |
+| Ignoring output tokens | output は token あたり input の 2-5x 高い | `max_tokens` を適切に設定し、stop sequences を使い、outputs を compress |
+| Caching before prompt is stable | old prompts の responses で cache が埋まる | prompt finalized 後にのみ caching を enable、prompt changes で cache を flush |
 
-## Pricing reference (as of April 2026)
+## Pricing reference (2026 年 4 月時点)
 
 | Model | Input ($/1M) | Output ($/1M) | Cached Input ($/1M) | Best For |
 |-------|-------------|--------------|--------------------|---------| 

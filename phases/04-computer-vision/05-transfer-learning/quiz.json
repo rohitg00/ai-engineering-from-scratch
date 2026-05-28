@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "You have 500 labelled images for a new task close to the ImageNet distribution. Which regime makes the most sense?",
-      "options": ["Train a ResNet-50 from scratch", "Freeze an ImageNet-pretrained backbone and train only a new linear head", "Fine-tune every layer with the same large LR", "Ignore pretrained weights; small datasets work best with small models"],
+      "question": "新しいタスク用に、ImageNet 分布に近いラベル付き画像が 500 枚あります。どの進め方が最も妥当ですか？",
+      "options": [
+        "ResNet-50 をゼロから学習する",
+        "ImageNet で事前学習した backbone を凍結し、新しい線形 head だけを学習する",
+        "すべての層を同じ大きな LR で fine-tuning する",
+        "事前学習済み重みは無視する。小規模データセットには小さいモデルが最適である"
+      ],
       "correct": 1,
-      "explanation": "With 500 images you do not have enough signal to train a deep network from scratch or to safely fine-tune all layers end-to-end without destroying pretrained features. Freezing the backbone and training only a new head (linear probe) uses the pretrained features directly and is the standard recipe for small, close-domain datasets."
+      "explanation": "500 枚では、深いネットワークをゼロから学習したり、事前学習済み特徴を壊さずに全層を安全に end-to-end fine-tuning したりするだけの信号がありません。backbone を凍結して新しい head だけを学習する linear probe は、事前学習済み特徴を直接使う、小規模で近いドメインの標準的な方法です。"
     },
     {
       "stage": "pre",
-      "question": "Why do early conv layers of an ImageNet-pretrained network transfer well to medical images even though ImageNet contains no X-rays?",
-      "options": ["PyTorch re-initialises early layers automatically", "Early layers encode generic visual primitives — edges, orientations, contrast — that are shared across almost any visual domain; only late layers specialise to ImageNet categories", "ImageNet secretly contains medical data", "Transfer only works when domains match"],
+      "question": "ImageNet に X 線画像が含まれていないのに、ImageNet で事前学習したネットワークの初期 conv 層が医用画像にもよく転移するのはなぜですか？",
+      "options": [
+        "PyTorch が初期層を自動的に再初期化するから",
+        "初期層はエッジ、向き、コントラストなど、ほぼすべての視覚ドメインで共有される汎用的な視覚プリミティブを符号化し、ImageNet カテゴリに特化するのは後段の層だけだから",
+        "ImageNet には秘密裏に医用データが含まれているから",
+        "転移はドメインが一致するときだけ機能するから"
+      ],
       "correct": 1,
-      "explanation": "Gabor-like filters and simple texture detectors are the features early CNN layers learn on any natural-image corpus. They reflect the statistics of light, shadow, and edges that hold across photography, medical imaging, microscopy, and satellite data. Late layers progressively specialise, which is why fine-tuning focuses on the last few blocks."
+      "explanation": "Gabor に似たフィルタや単純なテクスチャ検出器は、どの自然画像コーパスでも初期 CNN 層が学習する特徴です。光、影、エッジの統計は写真、医用画像、顕微鏡画像、衛星データにまたがって成り立ちます。後段の層ほど特化が進むため、fine-tuning では最後の数ブロックを中心に調整します。"
     },
     {
       "stage": "post",
-      "question": "When fine-tuning end-to-end with discriminative learning rates, why should early layers get a smaller LR than late layers?",
-      "options": ["Early layers have fewer parameters", "Early layers encode general features you want to preserve; late layers encode task-specific features that must move; a smaller LR on early layers prevents feature drift and catastrophic forgetting", "PyTorch requires layer-wise LR for correctness", "A smaller LR in the early layers speeds up training"],
+      "question": "識別的 learning rate で end-to-end fine-tuning するとき、初期層の LR を後段の層より小さくすべきなのはなぜですか？",
+      "options": [
+        "初期層はパラメータ数が少ないから",
+        "初期層は保持したい汎用特徴を符号化し、後段の層は大きく動かす必要があるタスク固有特徴を符号化する。初期層の LR を小さくすると feature drift と catastrophic forgetting を防げるから",
+        "PyTorch が正しく動くには層ごとの LR が必須だから",
+        "初期層の LR を小さくすると学習が速くなるから"
+      ],
       "correct": 1,
-      "explanation": "Early layers already encode the right visual primitives; you want tiny updates so those features are preserved. Late layers need to move toward the new task. One learning rate for the whole model forces a compromise that hurts both ends. Discriminative LRs let each stage move at its own pace, which is the empirical sweet spot for fine-tuning."
+      "explanation": "初期層はすでに適切な視覚プリミティブを符号化しているため、特徴を保つには更新を小さくしたいところです。後段の層は新しいタスクに向けて動く必要があります。モデル全体で 1 つの LR にすると両端に悪い妥協になります。識別的 LR により各 stage が適切な速さで動け、fine-tuning で経験的に安定します。"
     },
     {
       "stage": "post",
-      "question": "You fine-tune a ResNet on a 10-class medical dataset of 800 grayscale images (replicated to 3 channels). Accuracy is 10% (random chance for 10 classes). What is the most likely cause?",
-      "options": ["You used the wrong loss function", "BatchNorm running statistics are from ImageNet RGB photos and badly mismatch the grayscale-medical distribution, so the first few BN layers produce noise that propagates forward", "ResNet cannot handle grayscale input", "800 images is simply too few for any transfer learning"],
+      "question": "800 枚のグレースケール医用画像を 3 チャンネルに複製した 10 クラスデータセットで ResNet を fine-tuning しました。精度は 10%（10 クラスのランダム相当）です。最もありそうな原因は何ですか？",
+      "options": [
+        "損失関数を間違えた",
+        "BatchNorm の running statistics が ImageNet の RGB 写真由来で、グレースケール医用分布と大きくずれており、最初の数 BN 層がノイズを出してそれが前方へ伝播している",
+        "ResNet はグレースケール入力を扱えない",
+        "800 枚は transfer learning には少なすぎる"
+      ],
       "correct": 1,
-      "explanation": "BatchNorm keeps running_mean and running_var from ImageNet. On a small, distribution-shifted dataset those buffers never adapt fast enough during a short fine-tune, and BN normalises activations with the wrong stats. Fixes: freeze BN statistics, switch to GroupNorm, or pretrain BN stats with a BN-only warmup pass on the target dataset."
+      "explanation": "BatchNorm は ImageNet 由来の running_mean と running_var を保持します。小規模で分布がずれたデータセットでは、短い fine-tuning 中にこれらのバッファが十分に適応せず、BN が誤った統計で activation を正規化します。対策は BN 統計を凍結する、GroupNorm に切り替える、または target dataset で BN-only の warmup を行うことです。"
     },
     {
       "stage": "post",
-      "question": "You compare two runs: (a) linear probe on frozen ImageNet backbone, 82% accuracy; (b) end-to-end fine-tune, 78% accuracy. What should you conclude?",
-      "options": ["Fine-tuning is not helpful; ship the linear probe", "A fine-tune that ends below the linear probe is almost always a training bug — LR too high, BN mishandled, or scheduler/optimizer misconfigured; diagnose before concluding anything about transfer", "The dataset is too large", "Pretrained weights are bad"],
+      "question": "2 つの実行を比較しました。(a) 凍結した ImageNet backbone 上の linear probe が 82% 精度、(b) end-to-end fine-tune が 78% 精度。何を結論すべきですか？",
+      "options": [
+        "Fine-tuning は役に立たないので linear probe を出荷する",
+        "linear probe を下回る fine-tune はほぼ常に学習バグである。LR が高すぎる、BN の扱いが悪い、scheduler/optimizer の設定ミスなどを、転移について結論する前に診断する",
+        "データセットが大きすぎる",
+        "事前学習済み重みが悪い"
+      ],
       "correct": 1,
-      "explanation": "Fine-tuning should always beat or match the linear probe, since the linear probe is a special case of fine-tuning with backbone LR = 0. If fine-tune is worse, the pipeline is actively destroying pretrained features. The fix is to lower backbone LR, apply discriminative LRs, or freeze BN — not to abandon fine-tuning."
+      "explanation": "Fine-tuning は、backbone LR = 0 の特殊ケースである linear probe と同等以上になるべきです。fine-tune が悪化するなら、pipeline が事前学習済み特徴を壊しています。対策は backbone LR を下げる、識別的 LR を使う、BN を凍結することであり、fine-tuning を諦めることではありません。"
     }
   ]
 }

@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which three market segments does the lesson use to organize 2026 inference vendors?",
+      "question": "このレッスンは、2026年の inference vendors を整理するためにどの3つの market segments を使いますか。",
       "options": [
-        "Free, paid, enterprise",
-        "Single-tenant, multi-tenant, on-prem",
-        "Custom silicon, GPU platforms, API-first marketplaces",
-        "Open-source, commercial, hybrid"
+        "free、paid、enterprise",
+        "single-tenant、multi-tenant、on-prem",
+        "custom silicon、GPU platforms、API-first marketplaces",
+        "open-source、commercial、hybrid"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Around what sustained GPU utilization does per-minute billing (Baseten, Modal) start to beat per-token billing (Fireworks, Together)?",
+      "question": "per-minute billing（Baseten、Modal）が per-token billing（Fireworks、Together）に勝ち始める sustained GPU utilization はおおよそどれくらいですか。",
       "options": [
         "60%",
         "90%",
@@ -28,7 +28,7 @@
     },
     {
       "stage": "check",
-      "question": "Which platform is described as Python-native serverless with per-second billing and 2-4s cold starts after pre-warming?",
+      "question": "per-second billing と pre-warming 後 2-4s cold starts を持つ Python-native serverless と説明されている platform はどれですか。",
       "options": [
         "Baseten",
         "Modal",
@@ -40,19 +40,19 @@
     },
     {
       "stage": "check",
-      "question": "What is Fireworks's notable LoRA pricing differentiator?",
+      "question": "Fireworks の注目すべき LoRA pricing differentiator は何ですか。",
       "options": [
-        "LoRA-served requests cost more than base model",
-        "LoRA is not supported at all",
-        "LoRA requests require a separate dedicated GPU contract",
-        "LoRA-served requests are charged at the base model's per-token rate"
+        "LoRA-served requests は base model より高い",
+        "LoRA はまったく support されない",
+        "LoRA requests には別の dedicated GPU contract が必要",
+        "LoRA-served requests は base model の per-token rate で課金される"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which platform fits a regulated healthcare customer that needs SOC 2 Type II, HIPAA-ready posture, and dedicated GPUs?",
+      "question": "SOC 2 Type II、HIPAA-ready posture、dedicated GPUs を必要とする regulated healthcare customer に合う platform はどれですか。",
       "options": [
         "Baseten",
         "Together",
@@ -64,12 +64,12 @@
     },
     {
       "stage": "post",
-      "question": "Why does the lesson argue that custom-engine claims are mostly marketing shade at the platform layer?",
+      "question": "このレッスンが、platform layer における custom-engine claims は大部分が marketing shade だと論じる理由は何ですか。",
       "options": [
-        "Per-token pricing is the only real differentiator",
-        "vLLM and SGLang represent roughly 80% of production open-source inference, so platform differentiation comes more from DX, attribution, and SLAs than engine",
-        "All custom engines are forks of TensorRT-LLM",
-        "Custom engines never outperform vLLM"
+        "per-token pricing だけが本当の differentiator だから",
+        "vLLM と SGLang は production open-source inference のおよそ80%を占めるため、platform differentiation は engine より DX、attribution、SLA によるところが大きいから",
+        "すべての custom engines は TensorRT-LLM の fork だから",
+        "custom engines は vLLM を決して上回らないから"
       ],
       "correct": 1,
       "explanation": ""

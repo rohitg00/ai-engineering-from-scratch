@@ -3,7 +3,7 @@ import { strict as assert } from "node:assert";
 import { runSession, summarize, turnLatencyMs } from "../src/orchestrator.ts";
 import { synthCall } from "../src/vad.ts";
 
-test("runSession: clean call reaches first-audio-out with tool result", () => {
+test("runSession: clean call は tool result 付きで first-audio-out に到達する", () => {
   const m = runSession(synthCall("what is the weather in tokyo tomorrow"), {
     useTool: true,
     bargeInAtMs: null,
@@ -15,7 +15,7 @@ test("runSession: clean call reaches first-audio-out with tool result", () => {
   assert.ok(m.events.some((e) => e.includes("tool result")));
 });
 
-test("runSession: barge-in increments bargeIns and re-arms ASR", () => {
+test("runSession: barge-in で bargeIns が増え ASR を re-arm する", () => {
   const frames = synthCall("tell me a long story about");
   for (let i = 0; i < 8; i++) {
     const idx = frames.length - 20 + i;
@@ -30,7 +30,7 @@ test("runSession: barge-in increments bargeIns and re-arms ASR", () => {
   assert.ok(m.bargeIns >= 1);
 });
 
-test("turnLatencyMs: -1 if first-audio-out never fired", () => {
+test("turnLatencyMs: first-audio-out が未発火なら -1", () => {
   const m = {
     events: [],
     turnCompleteMs: 0,
@@ -41,7 +41,7 @@ test("turnLatencyMs: -1 if first-audio-out never fired", () => {
   assert.equal(turnLatencyMs(m), -1);
 });
 
-test("turnLatencyMs: positive delta when both timestamps present", () => {
+test("turnLatencyMs: 両 timestamp があれば正の delta", () => {
   const m = {
     events: [],
     turnCompleteMs: 1000,
@@ -52,7 +52,7 @@ test("turnLatencyMs: positive delta when both timestamps present", () => {
   assert.equal(turnLatencyMs(m), 380);
 });
 
-test("summarize: produces a SessionSummary with computed turnLatencyMs", () => {
+test("summarize: computed turnLatencyMs 付き SessionSummary を生成する", () => {
   const m = runSession(synthCall("hello"), { useTool: false, bargeInAtMs: null });
   const s = summarize(m);
   assert.equal(typeof s.turnLatencyMs, "number");

@@ -1,7 +1,7 @@
-// Personal AI Tutor: TypeScript web-app half of the capstone stack.
-// Python side ships the learner model and tutor policy; this project exposes
-// /lesson/next (topo-walk over curriculum DAG) and /lesson/:id/submit.
-// Refs: docs/en.md (this lesson),
+// Personal AI Tutor: capstone stack の TypeScript web-app 側。
+// Python 側は learner model と tutor policy を提供し、この project は
+// /lesson/next (curriculum DAG の topo-walk) と /lesson/:id/submit を expose する。
+// Refs: docs/en.md (この lesson),
 //   Bayesian Knowledge Tracing: https://en.wikipedia.org/wiki/Bayesian_knowledge_tracing
 //   FSRS spaced-repetition: https://github.com/open-spaced-repetition/fsrs4anki
 
@@ -117,12 +117,12 @@ function parsePort(argv: string[], defaultPort: number): number {
   if (portFlag < 0) return defaultPort;
   const raw = argv[portFlag + 1];
   if (raw === undefined) {
-    process.stderr.write("--port requires a value\n");
+    process.stderr.write("--port には値が必要です\n");
     process.exit(2);
   }
   const n = Number(raw);
   if (!Number.isInteger(n) || n < 1 || n > 65535) {
-    process.stderr.write(`invalid --port ${raw}: must be integer in 1..65535\n`);
+    process.stderr.write(`invalid --port ${raw}: 1..65535 の integer が必要です\n`);
     process.exit(2);
   }
   return n;

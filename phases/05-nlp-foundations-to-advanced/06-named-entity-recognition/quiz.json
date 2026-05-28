@@ -1,102 +1,102 @@
 {
   "lesson": "06-named-entity-recognition",
-  "title": "Named Entity Recognition",
+  "title": "固有表現認識",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is BIO tagging?",
+      "question": "BIO taggingとは何ですか?",
       "options": [
-        "Per-token labels: B-TYPE for entity start, I-TYPE for inside, O for outside",
-        "A binary entity vs non-entity scheme",
-        "A tokenization style",
-        "A tree representation of entities"
+        "tokenごとのlabel。エンティティ開始にはB-TYPE、内側にはI-TYPE、外側にはOを使う",
+        "エンティティか非エンティティかの二値方式",
+        "tokenizationのスタイル",
+        "エンティティの木表現"
       ],
       "correct": 0,
-      "explanation": "BIO turns span extraction into token classification with B/I/O prefixes."
+      "explanation": "BIOは、span抽出をB/I/O prefix付きのtoken分類に変換します。"
     },
     {
       "stage": "pre",
-      "question": "Why are rule-based gazetteers brittle in production NER?",
+      "question": "rule-based gazetteerが本番NERで壊れやすいのはなぜですか?",
       "options": [
-        "They require GPUs",
-        "They are slow",
-        "They have zero coverage on new entities and cannot disambiguate (e.g. Apple fruit vs company)",
-        "They cannot handle multi-token entities"
+        "GPUが必要だから",
+        "遅いから",
+        "新しいエンティティへのカバレッジがゼロで、曖昧性解消もできないから (例: Appleの果物と会社)",
+        "複数tokenのエンティティを扱えないから"
       ],
       "correct": 2,
-      "explanation": "Gazetteers can match known strings but cannot disambiguate sense or generalize to unseen names."
+      "explanation": "gazetteerは既知の文字列には一致できますが、意味の曖昧性解消や未知の名前への汎化はできません。"
     },
     {
       "stage": "check",
-      "question": "What is the key advantage of a CRF over an HMM for NER?",
+      "question": "NERにおいて、HMMに対するCRFの主な利点は何ですか?",
       "options": [
-        "CRFs avoid the Viterbi algorithm",
-        "CRFs never need training data",
-        "CRFs are discriminative and can mix arbitrary features (shape, capitalization, neighbors)",
-        "CRFs are faster"
+        "CRFはViterbi algorithmを避けられる",
+        "CRFは学習データをまったく必要としない",
+        "CRFはdiscriminativeで、shape、大文字小文字、周辺語など任意の特徴を混ぜられる",
+        "CRFのほうが速い"
       ],
       "correct": 2,
-      "explanation": "CRFs are discriminative and let you condition on rich, overlapping features."
+      "explanation": "CRFはdiscriminativeで、リッチかつ重なり合う特徴に条件付けできます。"
     },
     {
       "stage": "check",
-      "question": "In a BiLSTM-CRF architecture, what role does the CRF layer play?",
+      "question": "BiLSTM-CRFアーキテクチャで、CRF layerはどの役割を果たしますか?",
       "options": [
-        "Performs tokenization",
-        "Enforces valid BIO tag sequences by modeling tag-to-tag transitions on top of LSTM emissions",
-        "Pretrains the LSTM",
-        "Replaces embeddings"
+        "tokenizationを実行する",
+        "LSTM emissionsの上でtag間transitionをモデル化し、妥当なBIO tag列を強制する",
+        "LSTMをpretrainする",
+        "embeddingを置き換える"
       ],
       "correct": 1,
-      "explanation": "The CRF on top of LSTM features models inter-label dependencies and rules out illegal sequences."
+      "explanation": "LSTM特徴の上にあるCRFはlabel間依存をモデル化し、不正な系列を排除します。"
     },
     {
       "stage": "check",
-      "question": "Why must NER be evaluated with entity-level F1, not token-level F1?",
+      "question": "NERはなぜtoken-level F1ではなくentity-level F1で評価すべきですか?",
       "options": [
-        "Entity-level F1 is easier to compute",
-        "Predicted spans must match true spans exactly; token-level F1 overstates accuracy by counting partial matches",
-        "Token-level F1 cannot handle BIO",
-        "Entity-level F1 is required by HuggingFace"
+        "entity-level F1のほうが計算しやすいから",
+        "予測spanは正解spanと完全一致する必要があり、token-level F1は部分一致を数えてaccuracyを過大評価するから",
+        "token-level F1はBIOを扱えないから",
+        "entity-level F1はHuggingFaceで必須だから"
       ],
       "correct": 1,
-      "explanation": "Span exact-match is the meaningful metric; token-level F1 inflates scores via partial overlap."
+      "explanation": "spanの完全一致が意味のある指標です。token-level F1は部分的な重なりでスコアを水増しします。"
     },
     {
       "stage": "post",
-      "question": "What does aggregation_strategy='simple' do in the HuggingFace NER pipeline?",
+      "question": "HuggingFaceのNER pipelineで aggregation_strategy='simple' は何をしますか?",
       "options": [
-        "Lowercases the output",
-        "Skips tokenization",
-        "Merges contiguous B-X and I-X tokens into a single span",
-        "Returns only the most confident entity"
+        "出力を小文字化する",
+        "tokenizationをスキップする",
+        "連続したB-XとI-X tokenを1つのspanにまとめる",
+        "最もconfidenceが高いエンティティだけを返す"
       ],
       "correct": 2,
-      "explanation": "It merges contiguous BIO tokens of the same type into span-level entities."
+      "explanation": "同じ型の連続したBIO tokenをspan-levelエンティティにまとめます。"
     },
     {
       "stage": "post",
-      "question": "Why does standard BIO fail on nested entities?",
+      "question": "標準BIOがnestedエンティティで失敗するのはなぜですか?",
       "options": [
-        "BIO requires a transformer",
-        "BIO is a flat per-token scheme and cannot express two overlapping spans of different types",
-        "BIO cannot represent multi-token entities",
-        "BIO drops the type label"
+        "BIOにはtransformerが必要だから",
+        "BIOはtokenごとに1つのflatな方式であり、異なる型の重なり合う2つのspanを表現できないから",
+        "BIOは複数tokenのエンティティを表現できないから",
+        "BIOはtype labelを落とすから"
       ],
       "correct": 1,
-      "explanation": "BIO assigns one label per token; nested spans need multi-pass or span-based models."
+      "explanation": "BIOはtokenごとに1つのlabelを割り当てます。nested spanにはmulti-passまたはspan-based modelが必要です。"
     },
     {
       "stage": "post",
-      "question": "When does classical NER (CRF or BiLSTM-CRF) still beat an LLM in 2026?",
+      "question": "2026年に、古典的NER (CRFまたはBiLSTM-CRF) がLLMにまだ勝つのはどのような場合ですか?",
       "options": [
-        "On nested entities",
-        "Whenever the input is in English",
-        "On open-domain narrative",
-        "Under tight latency budgets, abundant labels, stable ontologies, or non-generative regulatory constraints"
+        "nestedエンティティの場合",
+        "入力が英語なら常に",
+        "open-domain narrativeの場合",
+        "厳しいレイテンシ予算、豊富なラベル、安定したontology、または非生成モデルを求める規制制約がある場合"
       ],
       "correct": 3,
-      "explanation": "Classical NER wins on latency, labeled-data regimes, fixed ontologies, and on-prem constraints."
+      "explanation": "古典的NERは、レイテンシ、ラベル付きデータがある領域、固定ontology、オンプレミス制約で勝ちます。"
     }
   ]
 }

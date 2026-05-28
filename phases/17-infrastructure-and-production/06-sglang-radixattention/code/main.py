@@ -1,12 +1,11 @@
 """Toy RadixAttention scheduler — stdlib Python.
 
-Simulate an SGLang-style radix-tree KV cache plus two schedulers:
+SGLang-style radix-tree KV cache と2つの scheduler を simulate する:
   FCFS         : naive first-come first-served
-  CACHE_AWARE  : depth-first dispatch on hottest branch
+  CACHE_AWARE  : hottest branch 上の depth-first dispatch
 
-Also show how scrambled prompt ordering collapses hit rate. Pedagogical
-constants — the shape matches the published numbers, not the absolute
-latencies.
+scrambled prompt ordering が hit rate を崩す様子も示す。教育用 constants であり、
+shape は published numbers に合わせるが absolute latencies ではない。
 """
 
 from __future__ import annotations
@@ -16,7 +15,7 @@ from collections import defaultdict
 import random
 
 
-KV_BUDGET_BLOCKS = 160    # small budget so eviction bites under FCFS
+KV_BUDGET_BLOCKS = 160    # FCFS で eviction が効くように小さな budget
 BLOCK_TOKENS = 16
 
 
@@ -39,7 +38,7 @@ class Request:
 
 
 class RadixCache:
-    """Represent the tree as a dict: path_tuple -> blocks (last_used)."""
+    """tree を dict として表現する: path_tuple -> blocks (last_used)。"""
 
     def __init__(self, budget_blocks: int = KV_BUDGET_BLOCKS):
         self.budget = budget_blocks
@@ -49,8 +48,8 @@ class RadixCache:
         self.nodes: dict[tuple[str, ...], list[int]] = {}
 
     def walk(self, segments: list[str]) -> int:
-        """Return number of tokens that are already cached at the longest matching
-        prefix, bumping last_used along the path."""
+        """longest matching prefix ですでに cache されている token 数を返し、
+        path 上の last_used を更新する。"""
         reused = 0
         self.time += 1
         for i in range(1, len(segments) + 1):
@@ -63,7 +62,7 @@ class RadixCache:
         return reused
 
     def insert(self, segments: list[str]) -> None:
-        """Insert any missing segments on the path, evicting LRU leaves if over budget."""
+        """path 上で missing な segment を insert し、budget 超過時は LRU leaves を evict する。"""
         for i in range(1, len(segments) + 1):
             key = tuple(segments[:i])
             if key in self.nodes:
@@ -130,7 +129,7 @@ def workload_rag(n: int = 80, docs: int = 4, seed: int = 1) -> list[Request]:
 
 
 def workload_scrambled(n: int = 80, docs: int = 4, seed: int = 1) -> list[Request]:
-    """Prompts reorder [SYSTEM, TOOLS, DOC] randomly. Tree cannot share the prefix."""
+    """Prompts は [SYSTEM, TOOLS, DOC] を random に reorder する。tree は prefix を共有できない。"""
     rng = random.Random(seed)
     reqs = []
     for i in range(n):
@@ -150,7 +149,7 @@ def report(label: str, res: dict) -> None:
 
 def main() -> None:
     print("=" * 88)
-    print("TOY RADIX CACHE — cache hit rate across schedulers and orderings")
+    print("TOY RADIX CACHE — scheduler と ordering ごとの cache hit rate")
     print("=" * 88)
 
     rag = workload_rag()
@@ -165,9 +164,9 @@ def main() -> None:
     print("=" * 88)
     print("KEY FINDING")
     print("-" * 88)
-    print("  Fixed ordering + cache-aware scheduler : hit rate clears 80% on RAG.")
-    print("  Scrambled prefix order : hit rate collapses — the tree cannot find shared paths.")
-    print("  Real cases: 7% -> 74% hit rate by moving dynamic content out of the prefix.")
+    print("  Fixed ordering + cache-aware scheduler : RAG で hit rate が 80% を超える。")
+    print("  Scrambled prefix order : hit rate は崩れる。tree が shared paths を見つけられない。")
+    print("  Real cases: dynamic content を prefix から外して 7% -> 74% hit rate。")
 
 
 if __name__ == "__main__":

@@ -1,58 +1,58 @@
 {
   "lesson": "54-paper-writer",
-  "title": "Paper Writer",
+  "title": "論文ライター",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the writer declare sections, figures, and citations as data before any prose is written?",
+      "question": "writer が prose を書く前に sections、figures、citations を data として宣言する理由は何ですか?",
       "options": [
-        "Because LaTeX requires a forward declaration",
-        "Because the structure is the contract: the harness can validate completeness before prose generation",
-        "Because the model needs a system prompt",
-        "Because BibTeX cannot resolve forward references"
+        "LaTeX が forward declaration を要求するため",
+        "structure が contract であり、harness が prose generation 前に completeness を validate できるため",
+        "model が system prompt を必要とするため",
+        "BibTeX が forward references を解決できないため"
       ],
       "correct": 1,
-      "explanation": "Structure-first lets the harness validate uniqueness, citation coverage, and figure coverage before invoking the prose generator. The skeleton is the contract."
+      "explanation": "structure-first により、prose generator を呼ぶ前に uniqueness、citation coverage、figure coverage を validate できます。skeleton が contract です。"
     },
     {
       "stage": "pre",
-      "question": "What does the figure-injection step produce from an experiment manifest?",
+      "question": "figure-injection step は experiment manifest から何を生成しますか?",
       "options": [
-        "A PDF compiled from artifacts",
-        "A list of Figure records with stable ids and paths normalised to the paper directory",
-        "A model prompt with figure descriptions",
-        "A bibliography stub"
+        "artifact から compile された PDF",
+        "stable id と paper directory に正規化された path を持つ Figure records の list",
+        "figure description を含む model prompt",
+        "bibliography stub"
       ],
       "correct": 1,
-      "explanation": "read_experiment_manifest returns Figure records. Ids are deterministic, paths are normalised, captions come from the manifest."
+      "explanation": "read_experiment_manifest は Figure records を返します。id は deterministic、path は正規化され、caption は manifest から来ます。"
     },
     {
       "stage": "check",
-      "question": "Which validation failure raises PaperValidationError before any file is written?",
+      "question": "file が書かれる前に PaperValidationError を raise する validation failure はどれですか?",
       "options": [
-        "An odd number of authors",
-        "A section that cites a key not declared in the bibliography",
-        "An abstract longer than 200 words",
-        "A figure path that does not exist on disk"
+        "author 数が奇数",
+        "bibliography に宣言されていない key を section が cite している",
+        "abstract が200 words を超える",
+        "figure path が disk 上に存在しない"
       ],
       "correct": 1,
-      "explanation": "Missing bibliography keys, duplicate figure ids, empty title, empty abstract, and unknown figure refs all raise PaperValidationError. Existence on disk is not enforced because the LaTeX compiler enforces it later."
+      "explanation": "missing bibliography key、duplicate figure id、empty title、empty abstract、unknown figure refs は PaperValidationError になります。path の存在は LaTeX compiler が後で検出するためここでは enforce しません。"
     },
     {
       "stage": "check",
-      "question": "Why is the prose generator a callable injected into PaperWriter rather than a method on it?",
+      "question": "prose generator が PaperWriter の method ではなく callable として注入される理由は何ですか?",
       "options": [
-        "Because Python does not allow methods to take Paper as an argument",
-        "Because tests can swap a deterministic MockProseGenerator for a model call without touching the writer",
-        "Because LaTeX requires a callback",
-        "Because the dataclass cannot hold state"
+        "Python では method が Paper を argument に取れないため",
+        "tests が deterministic MockProseGenerator を model call と差し替えられ、writer を変更せずに済むため",
+        "LaTeX が callback を要求するため",
+        "dataclass が state を保持できないため"
       ],
       "correct": 1,
-      "explanation": "The writer takes the prose generator as a dependency. The test substitutes MockProseGenerator. Production substitutes a model call. The writer is unchanged."
+      "explanation": "writer は prose generator を dependency として受け取ります。test は MockProseGenerator を、production は model call を渡せます。writer は変わりません。"
     },
     {
       "stage": "post",
-      "question": "What three files does PaperWriter.write emit on success?",
+      "question": "PaperWriter.write は成功時にどの三 file を出力しますか?",
       "options": [
         "paper.tex, paper.pdf, references.bib",
         "paper.tex, references.bib, manifest.json",
@@ -60,19 +60,19 @@
         "manifest.json, prose.txt, paper.pdf"
       ],
       "correct": 1,
-      "explanation": "paper.tex is the LaTeX source. references.bib is the bibliography. manifest.json is the structured artifact the critic loop reads next."
+      "explanation": "paper.tex は LaTeX source、references.bib は bibliography、manifest.json は critic loop が次に読む structured artifact です。"
     },
     {
       "stage": "post",
-      "question": "Why is the manifest part of the writer's contract instead of just the LaTeX file?",
+      "question": "LaTeX file だけでなく manifest が writer contract の一部である理由は何ですか?",
       "options": [
-        "Because LaTeX is too large to parse",
-        "Because downstream tooling (critics, dashboards) reads structured manifests, not LaTeX",
-        "Because manifest.json is the only file BibTeX accepts",
-        "Because LaTeX compilers reject untyped sections"
+        "LaTeX は大きすぎて parse できないため",
+        "downstream tooling、critics、dashboards は LaTeX ではなく structured manifest を読むため",
+        "manifest.json だけが BibTeX に受理されるため",
+        "LaTeX compiler が untyped sections を拒否するため"
       ],
       "correct": 1,
-      "explanation": "The manifest is a stable interface for downstream stages. Critics and dashboards inspect manifest.json. LaTeX is the human-readable artifact, not the machine interface."
+      "explanation": "manifest は downstream stage 向けの stable interface です。LaTeX は human-readable artifact であり、machine interface ではありません。"
     }
   ]
 }

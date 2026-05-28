@@ -1,37 +1,37 @@
 [
   {
-    "question": "What is the chain rule in the context of neural networks?",
-    "options": ["A rule for chaining layers together", "If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- multiply derivatives along the path", "A method for initializing weights", "A technique for batching data"],
+    "question": "ニューラルネットワークの文脈で、連鎖律とは何ですか？",
+    "options": ["層をつなげるためのルール", "y = f(g(x)) なら dy/dx = f'(g(x)) * g'(x) であり、経路に沿って導関数を掛け合わせること", "重みを初期化する方法", "データをバッチ化する手法"],
     "correct": 1,
-    "explanation": "The chain rule lets you compute the derivative of a composite function by multiplying the local derivatives at each step. Backpropagation applies this systematically through the computational graph.",
+    "explanation": "連鎖律を使うと、各ステップの局所的な導関数を掛け合わせることで、合成関数の導関数を計算できます。バックプロパゲーションはこれを計算グラフ全体に体系的に適用します。",
     "stage": "pre"
   },
   {
-    "question": "Why is backpropagation more efficient than computing each gradient independently?",
-    "options": ["It uses less memory", "It computes all gradients in a single backward pass instead of one forward pass per parameter", "It only works on small networks", "It avoids using the chain rule"],
+    "question": "各勾配を独立に計算するよりも、バックプロパゲーションが効率的なのはなぜですか？",
+    "options": ["メモリ使用量が少ないため", "パラメータごとに1回のフォワードパスを行う代わりに、1回のバックワードパスですべての勾配を計算するため", "小さなネットワークでしか動かないため", "連鎖律を使わずに済むため"],
     "correct": 1,
-    "explanation": "Computing gradients independently requires one forward pass per parameter (millions of passes for a large network). Backpropagation computes all gradients in one backward pass by reusing intermediate values stored during the forward pass.",
+    "explanation": "勾配を独立に計算するには、パラメータごとに1回のフォワードパスが必要です。大きなネットワークでは何百万回ものパスになります。バックプロパゲーションは、フォワードパス中に保存した中間値を再利用し、1回のバックワードパスですべての勾配を計算します。",
     "stage": "pre"
   },
   {
-    "question": "In the backward pass, why do we use '+=' instead of '=' when accumulating gradients?",
-    "options": ["It's a Python convention", "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths", "It prevents overflow", "It makes the code run faster"],
+    "question": "バックワードパスで勾配を蓄積するとき、'=' ではなく '+=' を使うのはなぜですか？",
+    "options": ["Pythonの慣習だから", "1つの値が複数の演算で使われることがあり、その勾配はすべての経路から来る勾配の合計だから", "オーバーフローを防ぐため", "コードの実行が速くなるため"],
     "correct": 1,
-    "explanation": "When a Value is used as input to multiple operations (e.g., x used in both x*w1 and x*w2), its total gradient is the sum of the gradients flowing back from each operation. Using += accumulates these correctly.",
+    "explanation": "Valueが複数の演算の入力として使われる場合（例: x が x*w1 と x*w2 の両方で使われる）、その合計勾配は各演算から逆向きに流れてくる勾配の和です。+= を使うことで、これらを正しく蓄積できます。",
     "stage": "post"
   },
   {
-    "question": "What causes the vanishing gradient problem in deep sigmoid networks?",
-    "options": ["The learning rate is too small", "Sigmoid's derivative has a maximum of 0.25, so gradients shrink exponentially through layers", "The network has too many parameters", "The loss function is poorly chosen"],
+    "question": "深いsigmoidネットワークで勾配消失問題が起きる原因は何ですか？",
+    "options": ["learning rateが小さすぎること", "sigmoidの導関数の最大値が0.25なので、層を通るたびに勾配が指数的に小さくなること", "ネットワークのパラメータが多すぎること", "損失関数の選び方が悪いこと"],
     "correct": 1,
-    "explanation": "The sigmoid derivative peaks at 0.25 (when z=0). Each layer multiplies the gradient by at most 0.25, so after 10 layers the gradient is at most 0.25^10 = ~0.000001 of the original signal.",
+    "explanation": "sigmoidの導関数は最大でも0.25です（z=0のとき）。各層で勾配は最大でも0.25倍されるため、10層後には元の信号の 0.25^10 = 約0.000001 倍以下になります。",
     "stage": "post"
   },
   {
-    "question": "Why does topological sort matter in the backward pass?",
-    "options": ["It makes the code cleaner", "It ensures each node's gradient is fully accumulated before propagating to its children", "It speeds up the forward pass", "It reduces memory usage"],
+    "question": "バックワードパスでトポロジカルソートが重要なのはなぜですか？",
+    "options": ["コードがきれいになるため", "各ノードの勾配が完全に蓄積されてから、その子へ伝播されることを保証するため", "フォワードパスを高速化するため", "メモリ使用量を減らすため"],
     "correct": 1,
-    "explanation": "Topological sort ensures we process nodes in the correct order: a node's gradient must be fully accumulated from all downstream paths before we propagate through it. Without this ordering, gradients would be incomplete.",
+    "explanation": "トポロジカルソートにより、ノードを正しい順序で処理できます。あるノードを通って勾配を伝播する前に、そのノードの勾配はすべての下流経路から完全に蓄積されていなければなりません。この順序がなければ、勾配が不完全になります。",
     "stage": "post"
   }
 ]

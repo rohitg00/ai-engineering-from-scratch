@@ -1,134 +1,134 @@
 # InternVL3: Native Multimodal Pretraining
 
-> Every open VLM before InternVL3 followed the same three-step recipe: take a text LLM trained on trillions of text tokens, bolt on a vision encoder, then fine-tune the seams. This works but has alignment debt — the text LLM has spent its full pretraining budget on pure text and does not natively understand visual tokens. When you add vision post-hoc, the LLM has to re-learn how to relate visual input to its text reasoning without forgetting the text. InternVL3 (Zhu et al., April 2025) rejects the post-hoc approach: one pretraining run, text and multimodal interleaved from step one. The result matches Gemini 2.5 Pro on MMMU-Pro at 78B params open. This lesson reads the case for native pretraining and what changes when you make it.
+> InternVL3以前のopen VLMは、ほぼ同じ3-step recipeに従っていました。trillions of text tokensでtrainingされたtext LLMを取り、vision encoderを後付けし、接続部分をfine-tuneする、という流れです。これは動きますがalignment debtがあります。text LLMはpretraining budgetの全量をpure textに使っており、visual tokensをnativeには理解していません。visionをpost-hocに追加すると、LLMはtext能力を忘れずにvisual inputとtext reasoningを結び直す必要があります。InternVL3（Zhu et al., 2025年4月）はpost-hoc approachを拒否します。1回のpretraining runで、step oneからtextとmultimodalをinterleaveするのです。その結果、open 78B paramsでMMMU-ProにおいてGemini 2.5 Proに並びます。このレッスンではnative pretrainingの主張と、それを採用すると何が変わるのかを読みます。
 
-**Type:** Learn
-**Languages:** Python (stdlib, training-corpus mixer)
-**Prerequisites:** Phase 12 · 05, Phase 12 · 07 (recipes)
-**Time:** ~120 minutes
+**種別:** 学習
+**言語:** Python (stdlib, training-corpus mixer)
+**前提条件:** Phase 12 · 05, Phase 12 · 07 (recipes)
+**所要時間:** ~120分
 
-## Learning Objectives
+## 学習目標
 
-- Explain why post-hoc VLM training accumulates alignment debt, citing the three measurable symptoms (catastrophic forgetting, answer drift, visual-text inconsistency).
-- Describe InternVL3's native pretraining corpus mix and why the ratio of text : interleaved : caption matters.
-- Compare V2PE (variable visual position encoding) to Qwen2-VL's M-RoPE.
-- Name the Visual Resolution Router (ViR) and Decoupled Vision-Language (DvD) deployment optimizations.
+- post-hoc VLM trainingがalignment debtを蓄積する理由を、3つの測定可能な症状（catastrophic forgetting、answer drift、visual-text inconsistency）を挙げて説明できる。
+- InternVL3のnative pretraining corpus mixと、text : interleaved : captionのratioが重要な理由を説明できる。
+- V2PE（variable visual position encoding）をQwen2-VLのM-RoPEと比較できる。
+- Visual Resolution Router (ViR)とDecoupled Vision-Language (DvD)というdeployment optimizationsを説明できる。
 
-## The Problem
+## 問題
 
-Post-hoc VLM training is the default. LLaVA, BLIP-2, Qwen-VL, Idefics — all take an already-pretrained LLM (Llama, Vicuna, Qwen, Mistral) and add vision. The training stages typically look like:
+Post-hoc VLM trainingはdefaultです。LLaVA、BLIP-2、Qwen-VL、Ideficsはいずれも、すでにpretrainedされたLLM（Llama、Vicuna、Qwen、Mistral）を取り、visionを追加します。training stagesは典型的に次の形です。
 
-1. Frozen LLM + frozen vision encoder + trainable projector, trained on caption pairs to align embeddings.
-2. Unfreeze LLM, train on instruction data (LLaVA-Instruct, ShareGPT4V).
-3. Optional task-specific fine-tune.
+1. Frozen LLM + frozen vision encoder + trainable projectorを、caption pairsでtrainingしてembeddingをalignする。
+2. LLMをunfreezeし、instruction data（LLaVA-Instruct、ShareGPT4V）でtrainingする。
+3. 必要に応じてtask-specific fine-tune。
 
-Three symptoms of alignment debt show up:
+Alignment debtには3つの症状があります。
 
-- Catastrophic forgetting. The post-hoc VLM forgets text-only skills. GSM8K scores drop 5-10 points. Hellaswag scores drop. Pure-text agents regress.
-- Answer drift. Small phrasings of the same visual question get different answers. The vision encoder connects to the LLM with weaker bindings than the LLM's own tokens.
-- Visual-text inconsistency. The VLM can describe an image correctly and then answer a question contradicting its own description. Visual tokens do not participate in the LLM's internal consistency checks the same way text does.
+- Catastrophic forgetting。post-hoc VLMはtext-only skillsを忘れます。GSM8K scoreが5-10 points落ち、Hellaswag scoreも落ちます。pure-text agentsもregressします。
+- Answer drift。同じvisual questionの少し違う言い回しに対して、異なるanswerが出ます。vision encoderとLLMの結合は、LLM自身のtokens同士の結合より弱いからです。
+- Visual-text inconsistency。VLMは画像を正しくdescribeした後で、そのdescriptionと矛盾するquestion answerを出すことがあります。Visual tokensが、text tokensと同じようにはLLM内部のconsistency checksに参加していません。
 
-These symptoms are well-documented. MM1.5 Section 4 quantifies them. LLaVA-OneVision's ablations hint at them. Native pretraining is the answer.
+これらの症状はよくdocumentedされています。MM1.5 Section 4はそれらを定量化しています。LLaVA-OneVisionのablationsもそれを示唆します。答えがnative pretrainingです。
 
-## The Concept
+## 概念
 
 ### Native multimodal pretraining
 
-InternVL3 trains from scratch on a corpus that is native multimodal from step one. The mix is:
+InternVL3は、step oneからnative multimodalなcorpusでfrom scratchにtrainingします。mixは次です。
 
-- 40% text-only data (FineWeb, Proof-Pile-2, etc.)
-- 35% interleaved image-text data (OBELICS, MMC4-style)
+- 40% text-only data（FineWeb、Proof-Pile-2など）
+- 35% interleaved image-text data（OBELICS、MMC4-style）
 - 20% paired image-caption data
 - 5% video-text data
 
-Vision tokens, text tokens, and cross-modal interactions all participate in the same loss from the first gradient step. No alignment pretraining, no projector freezing stage, no catastrophic forgetting to recover from.
+Vision tokens、text tokens、cross-modal interactionsはすべて、最初のgradient stepから同じlossに参加します。alignment pretrainingも、projector freezing stageも、後から回復すべきcatastrophic forgettingもありません。
 
-Training is a single stage for the base model. Instruction tuning follows, but the base model already understands visual tokens as first-class citizens.
+base modelのtrainingはsingle stageです。instruction tuningはその後に行いますが、base modelはすでにvisual tokensをfirst-class citizenとして理解しています。
 
 ### V2PE (variable visual position encoding)
 
-Qwen2-VL uses M-RoPE with fixed axis allocation. InternVL3 introduces V2PE: the position encoding varies per modality type (text, image, video) with learnable scaling. In practice:
+Qwen2-VLはfixed axis allocationのM-RoPEを使います。InternVL3はV2PEを導入します。position encodingがmodality type（text、image、video）ごとに変わり、learnable scalingを持ちます。実際には次のようになります。
 
-- Text tokens get 1D position (text index).
-- Image patches get 2D position (row, col).
-- Video frames get 3D position (time, row, col).
+- Text tokensは1D position（text index）を持つ。
+- Image patchesは2D position（row, col）を持つ。
+- Video framesは3D position（time, row, col）を持つ。
 
-The three share the same RoPE frequency base, but the hidden-dim allocation per band is a learned parameter rather than a fixed split. Freedom to trade off temporal vs spatial frequency resolution during pretraining.
+3つは同じRoPE frequency baseを共有しますが、bandごとのhidden-dim allocationはfixed splitではなくlearned parameterです。pretraining中にtemporalとspatial frequency resolutionのtrade-offを学習できます。
 
-V2PE's ablation claim: 1-2 points on video benchmarks over M-RoPE at the same compute. Not a revolution, but cleaner.
+V2PEのablation claimは、同じcomputeでM-RoPEよりvideo benchmarkが1-2 points良いというものです。革命ではありませんが、よりきれいです。
 
 ### Visual Resolution Router (ViR)
 
-Deployment optimization. Not all images need full-resolution encoding. A photo with one object at low detail wastes tokens when encoded at 1280px native. ViR is a small classifier that predicts the minimum resolution needed to answer the question, before encoding.
+Deployment optimizationです。すべての画像がfull-resolution encodingを必要とするわけではありません。low detailの単一object写真を1280px nativeでencodeするとtokensを無駄にします。ViRは、encoding前にquestionに答えるための最小resolutionを予測するsmall classifierです。
 
-The routing has three tiers: low-res (256 tokens), medium (576), high (2048+). For 60% of queries in production traffic, low or medium is sufficient. Net effect: 2-3x throughput at equal quality.
+routingはlow-res（256 tokens）、medium（576）、high（2048+）の3 tiersです。production trafficでは60%のqueriesにlowまたはmediumで十分です。net effectは、同品質で2-3x throughputです。
 
 ### Decoupled Vision-Language deployment (DvD)
 
-When you serve a large VLM, the vision encoder runs once per image but the LLM runs autoregressively for every output token. The two components have different bottlenecks (vision = GPU memory bandwidth for conv + attention; LLM = KV cache). DvD splits them onto separate GPUs with streaming between.
+large VLMをserveするとき、vision encoderはimageごとに1回だけ動きますが、LLMはoutput tokenごとにautoregressiveに動きます。2つのcomponentはbottleneckが異なります（vision = conv + attentionのGPU memory bandwidth、LLM = KV cache）。DvDはそれらを別GPUに分け、間をstreamingします。
 
-For an 8B + 400M encoder model, DvD roughly doubles per-node throughput vs co-located.
+8B + 400M encoder modelでは、DvDはco-located構成に比べてper-node throughputをおおむね2倍にします。
 
 ### Single-stage vs multi-stage quality
 
-InternVL3's primary benchmark claim: at 78B params, match Gemini 2.5 Pro's MMMU-Pro. At 38B, match GPT-4o. At 8B, lead the open-8B leaderboard. All on a single-stage pretrain + instruction-tune recipe.
+InternVL3の主要benchmark claimは、78B paramsでGemini 2.5 ProのMMMU-Proに並ぶことです。38BではGPT-4oに並び、8Bではopen-8B leaderboardをリードします。すべてsingle-stage pretrain + instruction-tune recipeによるものです。
 
-The alignment-debt hypothesis is measurable: InternVL3-8B loses fewer text-benchmark points (MMLU, GSM8K) than Qwen2.5-VL-7B per unit of vision-benchmark gain. The model is more of a generalist because training was one piece, not two.
+alignment-debt hypothesisは測定できます。InternVL3-8Bは、vision-benchmark gainあたりのtext-benchmark loss（MMLU、GSM8K）がQwen2.5-VL-7Bより少ないです。trainingが2つではなく1つのpieceだったため、modelはよりgeneralistです。
 
-### InternVL3.5 and InternVL-U
+### InternVL3.5とInternVL-U
 
-InternVL3.5 (August 2025) scales the recipe. Same native-pretrain approach, more data, more params. MMMU improvements are incremental.
+InternVL3.5（2025年8月）はrecipeをscaleします。同じnative-pretrain approachで、dataとparamsを増やします。MMMU improvementはincrementalです。
 
-InternVL-U (2026) adds unified generation — image output via MMDiT heads on top of the same backbone. The "U" stands for "Understanding + generation," chasing Transfusion-style unified models (Lesson 12.13). The same native-pretrain backbone supports both understanding and generation heads.
+InternVL-U（2026）はunified generationを追加します。同じbackboneの上にMMDiT headsを置き、image outputを生成します。"U"は"Understanding + generation"を意味し、Transfusion-style unified models（Lesson 12.13）を追っています。同じnative-pretrain backboneがunderstandingとgenerationの両headsを支えます。
 
-### Trade-offs of native pretraining
+### Native pretrainingのtrade-off
 
-Native pretraining is not free:
+Native pretrainingは無料ではありません。
 
-- Compute. Training a new VLM from scratch costs the same as training a text LLM — millions of GPU-hours. Post-hoc adaptation reuses existing LLM weights, saves most of the cost.
-- Data. Interleaved image-text corpora at scale are rare. OBELICS is 141M documents; MMC4 is 571M. Text alone ships at 15T tokens. Multimodal pretraining data scarcity is a hard constraint.
-- Base-LLM reuse. Native pretraining gives up the option to drop in a new LLM later. Post-hoc lets you swap Llama-3.1 for Llama-4 by retraining only the adapter.
+- Compute。新しいVLMをfrom scratchでtrainingするcostは、text LLMをtrainingするのと同じです。millions of GPU-hoursが必要です。Post-hoc adaptationは既存LLM weightsを再利用し、大半のcostを節約します。
+- Data。大規模interleaved image-text corporaは希少です。OBELICSは141M documents、MMC4は571Mです。text単体なら15T tokens規模があります。multimodal pretraining dataの希少性はhard constraintです。
+- Base-LLM reuse。Native pretrainingは、後から新しいLLMを差し替える選択肢を捨てます。Post-hocならadapterだけをretrainingしてLlama-3.1をLlama-4にswapできます。
 
-The bet InternVL3 makes: the alignment debt is worse than the reuse loss. The benchmarks back the claim. The cost-to-produce bars future labs from cheaply replicating. Post-hoc VLMs will keep existing because they remain cheaper for most projects.
+InternVL3の賭けは、alignment debtの方がreuse lossより悪いというものです。benchmarksはその主張を支えます。一方でproduce costは、将来のlabsが安価に複製することを妨げます。Post-hoc VLMsは大半のprojectsにとって安いままなので、今後も残ります。
 
-## Use It
+## 使ってみる
 
-`code/main.py` is a training-corpus mixer and ViR router simulator. It:
+`code/main.py`はtraining-corpus mixerとViR router simulatorです。次を行います。
 
-- Takes a target corpus mix (%text, %interleaved, %caption, %video) and computes expected steps per modality.
-- Simulates ViR routing on a batch of queries (distribution: 50% low-detail, 30% medium, 20% high-detail) and reports average token count.
-- Reports DvD throughput estimates given encoder vs LLM FLOPs.
-- Prints a side-by-side of post-hoc vs native pretraining in params, compute, data, and expected alignment-debt symptoms.
+- target corpus mix（%text、%interleaved、%caption、%video）を受け取り、modalityごとのexpected stepsを計算する。
+- query batch（distribution: 50% low-detail、30% medium、20% high-detail）でViR routingをsimulateし、average token countをreportする。
+- encoder vs LLM FLOPsに基づいてDvD throughput estimateをreportする。
+- params、compute、data、expected alignment-debt symptomsについて、post-hocとnative pretrainingをside-by-sideで表示する。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-native-vs-posthoc-auditor.md`. Given a proposed VLM training plan, it audits whether to go native or post-hoc, flags alignment-debt risk, and recommends a corpus mix. Use it when you are sizing a new open-VLM project and need to pick the training strategy.
+このレッスンは`outputs/skill-native-vs-posthoc-auditor.md`を作ります。提案されたVLM training planを受け取り、nativeにするかpost-hocにするかをauditし、alignment-debt riskをflagし、corpus mixを推奨します。新しいopen-VLM projectの規模を見積もり、training strategyを選ぶときに使ってください。
 
-## Exercises
+## 演習
 
-1. Estimate the compute delta between InternVL3-8B (native pretrain) and LLaVA-OneVision-7B (post-hoc). Ratio of GPU-hours approximately? What explains the gap?
+1. InternVL3-8B（native pretrain）とLLaVA-OneVision-7B（post-hoc）のcompute deltaを見積もってください。GPU-hoursのratioはおおよそどのくらいですか。gapは何で説明できますか。
 
-2. InternVL3 reports 40% text / 35% interleaved / 20% caption / 5% video. If your target task is video-heavy, propose a new ratio and argue why the base model still needs substantial text and caption data.
+2. InternVL3は40% text / 35% interleaved / 20% caption / 5% videoを報告しています。target taskがvideo-heavyなら新しいratioを提案し、それでもbase modelにかなりのtextとcaption dataが必要な理由を説明してください。
 
-3. Read MM1.5 Section 4 on forgetting. Name the exact benchmark where post-hoc training showed the largest regression. How much did the regression cost?
+3. forgettingに関するMM1.5 Section 4を読んでください。post-hoc trainingで最大のregressionが出た正確なbenchmark名を挙げてください。regressionはどれくらいのcostでしたか。
 
-4. ViR routes 60% of traffic to low-resolution encoding. What kinds of queries does it misroute (sends to low-res when high-res was needed)? Propose three router-failure modes.
+4. ViRはtrafficの60%をlow-resolution encodingにrouteします。どんなqueryをmisrouteしますか（high-resが必要なのにlow-resへ送る）。router-failure modesを3つ提案してください。
 
-5. DvD splits vision and LLM onto separate GPUs. Under what traffic pattern does DvD hurt throughput instead of helping?
+5. DvDはvisionとLLMを別GPUに分割します。どんなtraffic patternでは、DvDがthroughputを上げるどころか悪化させますか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| Term | よく言われること | 実際の意味 |
 |------|-----------------|------------------------|
-| Native multimodal pretraining | "From scratch together" | Text + image + video tokens participate in the loss from step 1, not bolted on later |
-| Alignment debt | "Post-hoc penalty" | Measurable regression in text skills and answer consistency that comes from bolting vision onto a frozen LLM |
-| V2PE | "Variable visual pos encoding" | Per-modality learnable position encoding allocation; InternVL3's M-RoPE successor |
-| ViR | "Resolution router" | Small classifier that picks minimum resolution needed per query before encoding, saving inference tokens |
-| DvD | "Decoupled deployment" | Vision encoder on one GPU, LLM on another, with stream handoff; doubles throughput for large VLMs |
-| InternVL-U | "Unified understanding + generation" | 2026 follow-up that adds image-generation heads to the native-pretrain backbone |
-| Interleaved corpus | "OBELICS / MMC4" | Documents with text and images in natural reading order; the raw material for native pretraining |
+| Native multimodal pretraining | "From scratch together" | Text + image + video tokensがstep 1からlossに参加し、後付けではないこと |
+| Alignment debt | "Post-hoc penalty" | frozen LLMにvisionを後付けすることで生じる、text skillsとanswer consistencyの測定可能なregression |
+| V2PE | "Variable visual pos encoding" | modalityごとにlearnableなposition encoding allocation。InternVL3のM-RoPE後継 |
+| ViR | "Resolution router" | encoding前にqueryごとの最小resolutionを選ぶsmall classifier。inference tokensを節約する |
+| DvD | "Decoupled deployment" | vision encoderを一方のGPU、LLMを別GPUに置き、stream handoffする構成。large VLMのthroughputを上げる |
+| InternVL-U | "Unified understanding + generation" | native-pretrain backboneにimage-generation headsを追加する2026年のfollow-up |
+| Interleaved corpus | "OBELICS / MMC4" | textとimagesが自然な読順で混在したdocuments。native pretrainingのraw material |
 
-## Further Reading
+## 参考文献
 
 - [Chen et al. — InternVL 1 (arXiv:2312.14238)](https://arxiv.org/abs/2312.14238)
 - [Zhu et al. — InternVL3 (arXiv:2504.10479)](https://arxiv.org/abs/2504.10479)

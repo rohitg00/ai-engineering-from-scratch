@@ -1,37 +1,37 @@
 # Monocular Depth & Geometry Estimation
 
-> A depth map is a single-channel image where each pixel is a distance from the camera. Predicting it from one RGB frame used to be impossible without stereo or LiDAR. In 2026 a frozen ViT encoder plus a lightweight head gets within a few percent of ground truth.
+> depth map は、各 pixel が camera からの距離を表す single-channel image である。かつては 1 枚の RGB frame からこれを予測するには stereo や LiDAR が不可欠だった。2026 年には、frozen ViT encoder と lightweight head だけで ground truth から数 percent 以内に届く。
 
-**Type:** Build + Use
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 14 (ViT), Phase 4 Lesson 17 (Self-Supervised Vision), Phase 4 Lesson 07 (U-Net)
-**Time:** ~60 minutes
+**種別:** 構築 + Use
+**言語:** Python
+**前提条件:** Phase 4 Lesson 14 (ViT), Phase 4 Lesson 17 (Self-Supervised Vision), Phase 4 Lesson 07 (U-Net)
+**所要時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Distinguish relative and metric depth and state which one each production model (MiDaS, Marigold, Depth Anything V3, ZoeDepth) solves
-- Use Depth Anything V3 (DINOv2 backbone) to predict depth for arbitrary single images with no calibration
-- Explain why monocular depth works at all from a single image (perspective cues, texture gradients, learned priors) and what it cannot recover (absolute scale, occluded geometry)
-- Lift 2D detections to 3D points using a depth map and pinhole camera intrinsics
+- relative depth と metric depth を区別し、各 production model (MiDaS、Marigold、Depth Anything V3、ZoeDepth) がどちらを解くかを述べる
+- Depth Anything V3 (DINOv2 backbone) を使い、calibration なしで任意の single image の depth を予測する
+- 1 枚の画像から monocular depth がなぜ成立するのか (perspective cues、texture gradients、learned priors) と、何を復元できないのか (absolute scale、occluded geometry) を説明する
+- depth map と pinhole camera intrinsics を使って 2D detections を 3D points に lift する
 
-## The Problem
+## 問題
 
-Depth is the missing axis in 2D computer vision. Given RGB, you know where things appear in the image plane; you do not know how far they are. Depth sensors (stereo rigs, LiDAR, time-of-flight) solve this directly but are expensive, fragile, and limited in range.
+depth は 2D computer vision に欠けている軸である。RGB があれば object が image plane のどこに見えるかは分かるが、どれだけ遠いかは分からない。depth sensors (stereo rigs、LiDAR、time-of-flight) はこれを直接解くが、高価で壊れやすく、range に制限がある。
 
-Monocular depth estimation — predicting depth from a single RGB frame — used to produce blurry, unreliable output. By 2026 large pretrained encoders changed that: Depth Anything V3 uses a frozen DINOv2 backbone and produces depth maps that generalise across indoor, outdoor, medical, and satellite domains. Marigold reframes depth as a conditional diffusion problem. ZoeDepth regresses true metric distances.
+Monocular depth estimation、つまり single RGB frame から depth を予測する手法は、以前はぼやけた信頼できない出力しか出せなかった。2026 年までに、大規模 pretrained encoders が状況を変えた。Depth Anything V3 は frozen DINOv2 backbone を使い、indoor、outdoor、medical、satellite domains にまたがって generalise する depth maps を生成する。Marigold は depth を conditional diffusion problem として再定式化する。ZoeDepth は真の metric distances を回帰する。
 
-Depth is also the bridge between 2D detection and 3D understanding: multiply a detected box's pixels by depth and you lift the 2D object into a 3D point cloud. That is the core of every AR occlusion system, every obstacle-avoidance pipeline, and every "pick up the cup" robot.
+depth は 2D detection と 3D understanding の橋でもある。検出 box の pixels に depth を掛けると、2D object を 3D point cloud に lift できる。これは AR occlusion system、obstacle-avoidance pipeline、「cup をつかむ」robot の中核である。
 
-## The Concept
+## 概念
 
-### Relative vs metric depth
+### Relative depth と metric depth
 
-- **Relative depth** — ordered `z` values without a real-world unit. "Pixel A is closer than pixel B, but the ratio of distances is not anchored to metres."
-- **Metric depth** — absolute distance in metres from the camera. Requires the model to have learnt the statistical relationship between image cues and real distance.
+- **Relative depth** — 実世界単位を持たない ordered `z` values。「Pixel A は pixel B より近いが、距離比は metres に anchored されていない」。
+- **Metric depth** — camera からの absolute distance を metres で表す。model が image cues と real distance の統計的関係を学んでいる必要がある。
 
-MiDaS and Depth Anything V3 produce relative depth. Marigold produces relative depth. ZoeDepth, UniDepth, and Metric3D produce metric depth. Metric models are sensitive to camera intrinsics; relative models are not.
+MiDaS と Depth Anything V3 は relative depth を生成する。Marigold も relative depth を生成する。ZoeDepth、UniDepth、Metric3D は metric depth を生成する。metric models は camera intrinsics に敏感で、relative models はそうではない。
 
-### The encoder-decoder pattern
+### encoder-decoder pattern
 
 ```mermaid
 flowchart LR
@@ -45,43 +45,43 @@ flowchart LR
     style DEPTH fill:#dcfce7,stroke:#16a34a
 ```
 
-Depth Anything V3 freezes the encoder and trains only the DPT-style decoder. The encoder provides rich features; the decoder interpolates them back to image resolution and regresses depth.
+Depth Anything V3 は encoder を freeze し、DPT-style decoder だけを train する。encoder は豊かな features を提供し、decoder はそれらを image resolution へ補間して depth を回帰する。
 
-### Why a single image produces depth at all
+### 1 枚の画像から depth が得られる理由
 
-A 2D image contains many monocular cues that correlate with depth:
+2D image には depth と相関する monocular cues が多く含まれる。
 
-- **Perspective** — parallel lines in 3D converge in 2D.
-- **Texture gradient** — surfaces far away have smaller, denser texture.
-- **Occlusion order** — nearer objects occlude farther ones.
-- **Size constancy** — known objects (cars, humans) give approximate scale.
-- **Atmospheric perspective** — distant objects appear hazier and bluer in outdoor scenes.
+- **Perspective** — 3D の平行線は 2D では収束する。
+- **Texture gradient** — 遠い surface ほど texture が小さく密になる。
+- **Occlusion order** — 近い object は遠い object を隠す。
+- **Size constancy** — 既知の object (cars、humans) はおおよその scale を与える。
+- **Atmospheric perspective** — outdoor scene では遠い object が霞み、青みがかって見える。
 
-A ViT trained on billions of images internalises these cues. With enough data and a strong backbone, monocular depth hits reasonable accuracy without any explicit 3D supervision.
+数十億枚の画像で train された ViT はこれらの cues を internalise する。十分な data と強い backbone があれば、明示的な 3D supervision がなくても monocular depth は妥当な accuracy に達する。
 
-### What monocular depth cannot do
+### monocular depth ができないこと
 
-- **Absolute metric scale** without intrinsics or a known object in the scene. The network can predict "the cup is twice as far as the spoon" without knowing whether the cup is 1 m or 10 m away.
-- **Occluded geometry** — the back of a chair is unseen and cannot be inferred reliably.
-- **Truly untextured / reflective surfaces** — mirrors, glass, uniform walls. The network reports plausible but wrong depth.
+- **intrinsics や scene 内の既知 object がない absolute metric scale**。network は「cup は spoon の 2 倍遠い」と予測できても、cup が 1 m 先か 10 m 先かは分からない。
+- **Occluded geometry** — chair の背面は見えておらず、信頼して推論できない。
+- **Truly untextured / reflective surfaces** — mirrors、glass、uniform walls。network はもっともらしいが誤った depth を返す。
 
 ### Depth Anything V3 in 2026
 
-- Vanilla DINOv2 ViT-L/14 as encoder (frozen).
-- DPT decoder.
-- Trained on posed image pairs from diverse sources (no explicit depth supervision needed beyond photometric consistency).
-- Predicts spatially consistent geometry from **an arbitrary number of visual inputs, with or without known camera poses**.
-- SOTA across monocular depth, any-view geometry, visual rendering, camera pose estimation.
+- Vanilla DINOv2 ViT-L/14 を encoder として使用 (frozen)。
+- DPT decoder。
+- 多様な source からの posed image pairs で train (photometric consistency を超える明示的な depth supervision は不要)。
+- **known camera poses の有無にかかわらず、任意個数の visual inputs** から spatially consistent geometry を予測する。
+- monocular depth、any-view geometry、visual rendering、camera pose estimation 全体で SOTA。
 
-This is the drop-in model to call when you need depth in 2026.
+2026 年に depth が必要なときに呼ぶ drop-in model である。
 
 ### Marigold — diffusion for depth
 
-Marigold (Ke et al., CVPR 2024) reframes depth estimation as conditional image-to-image diffusion. Conditioning: RGB. Target: depth map. Uses a pretrained Stable Diffusion 2 U-Net as backbone. Output depth maps are exceptionally sharp at object boundaries. Trade-off: slower inference than feed-forward models (10-50 denoising steps).
+Marigold (Ke et al., CVPR 2024) は depth estimation を conditional image-to-image diffusion として再定式化する。conditioning は RGB、target は depth map。pretrained Stable Diffusion 2 U-Net を backbone に使う。出力 depth map は object boundary で非常に sharp である。trade-off は feed-forward models より inference が遅いこと (10-50 denoising steps)。
 
-### Intrinsics and the pinhole camera
+### intrinsics と pinhole camera
 
-To lift a pixel `(u, v)` with depth `d` to a 3D point `(X, Y, Z)` in camera coordinates:
+depth `d` を持つ pixel `(u, v)` を camera coordinates の 3D point `(X, Y, Z)` に lift するには:
 
 ```
 fx, fy, cx, cy = camera intrinsics
@@ -90,20 +90,20 @@ Y = (v - cy) * d / fy
 Z = d
 ```
 
-Intrinsics come from EXIF metadata, a calibration pattern, or a monocular intrinsics estimator (Perspective Fields, UniDepth). Without intrinsics, you can still render a point cloud by assuming a 60-70° FOV and moderate-resolution principals — usable for visualisation, not for measurement.
+intrinsics は EXIF metadata、calibration pattern、または monocular intrinsics estimator (Perspective Fields、UniDepth) から得る。intrinsics がなくても、60-70° FOV と中程度解像度の principal point を仮定して point cloud を render できるが、measurement ではなく visualisation 用である。
 
 ### Evaluation
 
-Two standard metrics:
+標準 metric は 2 つある。
 
-- **AbsRel** (absolute relative error): `mean(|d_pred - d_gt| / d_gt)`. Lower is better. 0.05-0.1 for production models.
-- **delta < 1.25** (threshold accuracy): fraction of pixels where `max(d_pred/d_gt, d_gt/d_pred) < 1.25`. Higher is better. 0.9+ for SOTA.
+- **AbsRel** (absolute relative error): `mean(|d_pred - d_gt| / d_gt)`。低いほど良い。production models では 0.05-0.1 程度。
+- **delta < 1.25** (threshold accuracy): `max(d_pred/d_gt, d_gt/d_pred) < 1.25` を満たす pixels の割合。高いほど良い。SOTA では 0.9+。
 
-For relative depth (Depth Anything V3, MiDaS), evaluation uses scale-and-shift invariant versions of both metrics.
+relative depth (Depth Anything V3、MiDaS) では、両 metric の scale-and-shift invariant 版を使って評価する。
 
-## Build It
+## 実装
 
-### Step 1: Depth metrics
+### Step 1: depth metrics
 
 ```python
 import torch
@@ -123,11 +123,11 @@ def delta_accuracy(pred, target, threshold=1.25, mask=None):
     return (ratio < threshold).float().mean().item()
 ```
 
-Always mask invalid depth pixels (zero, NaN, saturated) before evaluation.
+evaluation 前には invalid depth pixels (zero、NaN、saturated) を必ず mask する。
 
-### Step 2: Scale-and-shift alignment
+### Step 2: scale-and-shift alignment
 
-For relative-depth models, align prediction to ground truth before computing metrics. Least-squares fit of `a * pred + b = target`:
+relative-depth models では、metrics を計算する前に prediction を ground truth に align する。`a * pred + b = target` の least-squares fit:
 
 ```python
 def align_scale_shift(pred, target, mask=None):
@@ -143,9 +143,9 @@ def align_scale_shift(pred, target, mask=None):
     return a * pred + b
 ```
 
-Run `align_scale_shift` before `abs_rel_error` when evaluating MiDaS / Depth Anything.
+MiDaS / Depth Anything を評価するときは、`abs_rel_error` の前に `align_scale_shift` を実行する。
 
-### Step 3: Lift depth to a point cloud
+### Step 3: depth を point cloud に lift する
 
 ```python
 import numpy as np
@@ -166,9 +166,9 @@ pc = depth_to_point_cloud(depth, intr)
 print(f"point cloud shape: {pc.shape}  (H, W, 3)")
 ```
 
-One function, every 3D-lifted application. Export the point cloud to `.ply` and open in MeshLab or CloudCompare.
+1 つの関数で、すべての 3D-lifted application に使える。point cloud を `.ply` に export し、MeshLab や CloudCompare で開く。
 
-### Step 4: Smoke test with a synthetic depth scene
+### Step 4: synthetic depth scene で smoke test
 
 ```python
 def synthetic_depth(size=96):
@@ -202,56 +202,56 @@ out = pipe(image)
 depth_np = np.array(out["depth"])
 ```
 
-Three lines. `out["depth"]` is a PIL grayscale; convert to numpy for math. For Depth Anything V3 specifically, swap the model id once released; the API is unchanged.
+3 行で使える。`out["depth"]` は PIL grayscale なので、数値計算には numpy に変換する。Depth Anything V3 専用には、release 後に model id を差し替えるだけでよい。API は変わらない。
 
-## Use It
+## 使う
 
-- **Depth Anything V3** (Meta AI / ByteDance, 2024-2026) — the default for relative depth. Fastest ViT-large-backbone model in production.
-- **Marigold** (ETH, 2024) — highest visual quality, slow inference.
-- **UniDepth** (ETH, 2024) — metric depth with camera intrinsics estimation.
-- **ZoeDepth** (Intel, 2023) — metric depth; older, still reliable.
-- **MiDaS v3.1** — legacy but stable; good baseline for comparison.
+- **Depth Anything V3** (Meta AI / ByteDance, 2024-2026) — relative depth の default。production で最速級の ViT-large-backbone model。
+- **Marigold** (ETH, 2024) — 最高の visual quality、inference は遅い。
+- **UniDepth** (ETH, 2024) — camera intrinsics estimation 付き metric depth。
+- **ZoeDepth** (Intel, 2023) — metric depth。古いが今も信頼できる。
+- **MiDaS v3.1** — legacy だが stable。comparison 用 baseline として良い。
 
-Typical integration pattern:
+典型的な integration pattern:
 
-1. RGB frame arrives.
-2. Depth model produces depth map.
-3. Detector produces boxes.
-4. Lift box centroids through depth to 3D; merge with point cloud if available.
-5. Downstream: AR occlusion, path planning, object-size estimation, stereo replacement.
+1. RGB frame が到着する。
+2. Depth model が depth map を生成する。
+3. Detector が boxes を生成する。
+4. box centroids を depth で 3D に lift する。可能なら point cloud と merge する。
+5. downstream: AR occlusion、path planning、object-size estimation、stereo replacement。
 
-For real-time use, Depth Anything V2 Small (INT8 quantised) hits ~30 fps on a consumer GPU at 518x518.
+real-time use では、Depth Anything V2 Small (INT8 quantised) が consumer GPU で 518x518 において約 30 fps に達する。
 
-## Ship It
+## 成果物
 
-This lesson produces:
+この lesson が生成するもの:
 
-- `outputs/prompt-depth-model-picker.md` — picks between Depth Anything V3, Marigold, UniDepth, MiDaS given latency, metric-vs-relative need, and scene type.
-- `outputs/skill-depth-to-pointcloud.md` — a skill that builds point clouds from depth maps with correct intrinsics handling and export to `.ply`.
+- `outputs/prompt-depth-model-picker.md` — latency、metric-vs-relative need、scene type に基づき Depth Anything V3、Marigold、UniDepth、MiDaS から選ぶ。
+- `outputs/skill-depth-to-pointcloud.md` — depth maps から正しい intrinsics handling と `.ply` export を備えた point clouds を作る skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Run Depth Anything V2 on any 10 images of your desk. Save depth as grayscale PNGs and inspect. Identify one object whose predicted depth looks wrong and explain why the monocular cues failed.
-2. **(Medium)** Given RGB + depth from Depth Anything V2, lift to a point cloud and render with `open3d`. Compare two scenes (indoor / outdoor) and note which looks more believable.
-3. **(Hard)** Take five pairs of images that differ only by a known object's position (e.g. bottle moved 30 cm closer). Use UniDepth to predict metric depth on both. Report the predicted distance delta vs the true 30 cm.
+1. **(Easy)** 自分の desk の任意の 10 images に Depth Anything V2 を実行する。depth を grayscale PNG として保存して確認する。predicted depth が誤って見える object を 1 つ特定し、monocular cues がなぜ失敗したかを説明する。
+2. **(Medium)** Depth Anything V2 から得た RGB + depth を point cloud に lift し、`open3d` で render する。2 つの scenes (indoor / outdoor) を比較し、どちらがより believable か記録する。
+3. **(Hard)** 既知 object の位置だけが異なる 5 pairs の images (例: bottle を 30 cm 近づける) を用意する。UniDepth で両方の metric depth を予測し、predicted distance delta と true 30 cm を report する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| Term | よく言われる表現 | 実際の意味 |
 |------|----------------|----------------------|
-| Monocular depth | "Single-image depth" | Depth estimation from one RGB frame, no stereo or LiDAR |
-| Relative depth | "Ordered depth" | Ordered z-values without real-world units |
-| Metric depth | "Absolute distance" | Depth in metres; requires calibration or a model trained with metric supervision |
-| AbsRel | "Absolute relative error" | Mean of |d_pred - d_gt| / d_gt; standard depth metric |
-| Delta accuracy | "delta < 1.25" | Fraction of pixels with prediction within 25% of ground truth |
-| Pinhole camera | "fx, fy, cx, cy" | The camera model used to lift (u, v, d) to (X, Y, Z) |
-| DPT | "Dense Prediction Transformer" | The conv-based decoder used on top of frozen ViT encoders for depth |
-| DINOv2 backbone | "The reason it works" | Self-supervised features that generalise across domains without depth labels |
+| Monocular depth | "Single-image depth" | stereo や LiDAR なしで、1 枚の RGB frame から depth を推定する |
+| Relative depth | "Ordered depth" | 実世界単位を持たない ordered z-values |
+| Metric depth | "Absolute distance" | metres 単位の depth。calibration または metric supervision で train された model が必要 |
+| AbsRel | "Absolute relative error" | `|d_pred - d_gt| / d_gt` の平均。標準的な depth metric |
+| Delta accuracy | "delta < 1.25" | prediction が ground truth の 25% 以内にある pixels の割合 |
+| Pinhole camera | "fx, fy, cx, cy" | (u, v, d) を (X, Y, Z) に lift する camera model |
+| DPT | "Dense Prediction Transformer" | frozen ViT encoders の上で depth に使われる conv-based decoder |
+| DINOv2 backbone | "The reason it works" | depth labels なしで domain をまたいで generalise する self-supervised features |
 
-## Further Reading
+## 参考資料
 
-- [Depth Anything V3 paper page](https://depth-anything.github.io/) — SOTA monocular depth with DINOv2 encoder
+- [Depth Anything V3 paper page](https://depth-anything.github.io/) — DINOv2 encoder を使う SOTA monocular depth
 - [Marigold (Ke et al., CVPR 2024)](https://marigoldmonodepth.github.io/) — diffusion-based depth estimation
-- [UniDepth (Piccinelli et al., 2024)](https://arxiv.org/abs/2403.18913) — metric depth with intrinsics
-- [MiDaS v3.1 (Intel ISL)](https://github.com/isl-org/MiDaS) — the canonical relative-depth baseline
-- [DINOv3 blog post (Meta)](https://ai.meta.com/blog/dinov3-self-supervised-vision-model/) — the encoder family that lifts depth accuracy
+- [UniDepth (Piccinelli et al., 2024)](https://arxiv.org/abs/2403.18913) — intrinsics 付き metric depth
+- [MiDaS v3.1 (Intel ISL)](https://github.com/isl-org/MiDaS) — canonical relative-depth baseline
+- [DINOv3 blog post (Meta)](https://ai.meta.com/blog/dinov3-self-supervised-vision-model/) — depth accuracy を押し上げる encoder family

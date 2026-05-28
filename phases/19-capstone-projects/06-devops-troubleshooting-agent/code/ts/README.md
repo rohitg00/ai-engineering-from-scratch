@@ -1,9 +1,6 @@
 # Capstone 06 - DevOps Troubleshooting Agent (TypeScript)
 
-Slack-integration skeleton for the on-call agent in `../main.py`. Exposes a
-slash-command endpoint and an interactivity (button-click) endpoint, both gated
-by Slack's HMAC-SHA256 request signature plus a 5-minute replay window.
-Destructive remediations only run after the Slack card is approved.
+`../main.py` の on-call agent 向け Slack integration skeleton です。slash-command endpoint と interactivity (button-click) endpoint を公開し、どちらも Slack の HMAC-SHA256 request signature と5分の replay window で gate されます。destructive remediation は Slack card が approve された後にだけ実行されます。
 
 ## Layout
 
@@ -12,8 +9,8 @@ ts/
   package.json
   tsconfig.json
   src/
-    index.ts          # entrypoint, demo + HTTP server
-    server.ts         # hono app, /slack/command + /slack/interactivity
+    index.ts          # entrypoint、demo + HTTP server
+    server.ts         # hono app、/slack/command + /slack/interactivity
     slack_verify.ts   # HMAC v0 verification + timing-safe compare
     agent.ts          # mocked hypothesis ranker
     blocks.ts         # Block Kit response builder
@@ -30,20 +27,16 @@ ts/
 npm install
 npm run typecheck
 npm test
-npm start          # one self-check pass, exits 0
-npm run serve      # interactive HTTP server on 127.0.0.1:<port>
+npm start          # self-check を1回実行して exit 0
+npm run serve      # 127.0.0.1:<port> の interactive HTTP server
 ```
 
-Set `SLACK_SIGNING_SECRET=...` to override the placeholder secret. The
-interactive server prints the chosen port (random when `PORT` is unset).
+placeholder secret を上書きするには `SLACK_SIGNING_SECRET=...` を設定します。interactive server は chosen port を表示します (`PORT` 未設定時は random)。
 
 ## Tests
 
-`node --test` runner via tsx. Coverage:
+tsx 経由の `node --test` runner。coverage:
 
-- Slack signature verification: valid signature passes, tampered signature is
-  rejected, stale timestamp (>5 min skew) is rejected, non-numeric timestamp is
-  rejected, length-mismatch path is exercised before constant-time compare.
-- Mock agent: OOM keyword path, CrashLoop keyword path, fallback path.
-- Server: `/health`, `/slack/command` happy/tampered/stale paths,
-  `/slack/interactivity` approve action.
+- Slack signature verification: valid signature は pass、tampered signature は reject、stale timestamp (>5 min skew) は reject、non-numeric timestamp は reject、length-mismatch path は constant-time compare 前に exercise。
+- Mock agent: OOM keyword path、CrashLoop keyword path、fallback path。
+- Server: `/health`、`/slack/command` happy/tampered/stale paths、`/slack/interactivity` approve action。

@@ -1,37 +1,37 @@
 [
   {
-    "question": "Why is manually reading a few LLM outputs not a reliable evaluation method?",
-    "options": ["It takes too long", "Small samples miss failure modes that only appear at scale, and human judgment is inconsistent across reviewers and sessions", "Manual review is too expensive", "LLM outputs are always correct"],
+    "question": "LLM outputs を数件だけ手で読む方法が信頼できる evaluation にならないのはなぜですか？",
+    "options": ["時間がかかりすぎるから", "small samples では scale して初めて出る failure modes を見逃し、人間の判断も reviewers や sessions によって一貫しないから", "manual review が高すぎるから", "LLM outputs は常に正しいから"],
     "correct": 1,
-    "explanation": "Reading 10 outputs shows you 10 points in a distribution. A prompt change might improve 90% of outputs but break 10% of edge cases. Without systematic evaluation, you'll miss the regression until users report it.",
+    "explanation": "10 outputs を読むことは distribution 上の 10 点を見るだけです。prompt change は 90% の outputs を改善しつつ 10% の edge cases を壊すかもしれません。systematic evaluation がなければ、users が報告するまで regression を見逃します。",
     "stage": "pre"
   },
   {
-    "question": "What is regression testing in the context of LLM applications?",
-    "options": ["Testing linear regression models", "Running a fixed set of test cases after every change (prompt, model, parameters) to ensure quality hasn't degraded", "Testing on the training data", "Measuring model loss during training"],
+    "question": "LLM applications における regression testing とは何ですか？",
+    "options": ["linear regression models を test すること", "prompt、model、parameters などの各変更後に fixed set of test cases を実行し、quality が degrade していないことを確認すること", "training data で test すること", "training 中の model loss を測定すること"],
     "correct": 1,
-    "explanation": "Every prompt change, model swap, or temperature tweak changes the output distribution. Regression tests catch cases where a change that improves one area silently degrades another.",
+    "explanation": "prompt change、model swap、temperature tweak はすべて output distribution を変えます。regression tests は、ある領域を改善する変更が別領域を silently degrade する cases を検出します。",
     "stage": "pre"
   },
   {
-    "question": "What is the LLM-as-judge evaluation approach?",
-    "options": ["Having the model evaluate its own training loss", "Using a strong LLM to score outputs against rubrics, replacing expensive human evaluation while scaling to thousands of test cases", "Using the model's confidence scores", "Comparing two models' parameter counts"],
+    "question": "LLM-as-judge evaluation approach とは何ですか？",
+    "options": ["model に自身の training loss を評価させること", "strong LLM を使って outputs を rubrics に照らして採点し、高価な human evaluation を置き換えつつ thousands of test cases に scale すること", "model の confidence scores を使うこと", "2 つの models の parameter counts を比較すること"],
     "correct": 1,
-    "explanation": "LLM-as-judge sends (input, output, rubric) to a strong model (e.g., GPT-4) which scores the output. It's cheaper and faster than human evaluation, though it has known biases (e.g., preferring verbose responses).",
+    "explanation": "LLM-as-judge は (input, output, rubric) を strong model (例: GPT-4) に送り、output を採点させます。human evaluation より安く速い一方で、verbose responses を好むなど既知の biases があります。",
     "stage": "post"
   },
   {
-    "question": "What makes a good evaluation dataset for an LLM application?",
-    "options": ["As many examples as possible", "Diverse inputs covering common cases, edge cases, adversarial inputs, and expected outputs with clear rubrics", "Only the hardest examples", "Random samples from the internet"],
+    "question": "LLM application にとって良い evaluation dataset とはどのようなものですか？",
+    "options": ["できるだけ多くの examples", "common cases、edge cases、adversarial inputs を cover し、expected outputs と clear rubrics を持つ diverse inputs", "最も難しい examples だけ", "internet からの random samples"],
     "correct": 1,
-    "explanation": "A good eval set covers the distribution: happy path cases, edge cases (empty input, very long input), adversarial inputs (prompt injection), and ambiguous queries. Each example has a clear expected output or scoring rubric.",
+    "explanation": "良い eval set は distribution を cover します。happy path cases、edge cases (empty input、very long input)、adversarial inputs (prompt injection)、ambiguous queries を含みます。各 example には clear expected output または scoring rubric があります。",
     "stage": "post"
   },
   {
-    "question": "How should you handle non-deterministic LLM outputs in evaluation?",
-    "options": ["Set temperature to 0 for all evaluations", "Run each test case multiple times and use aggregate metrics (pass rate, average score) to account for output variance", "Non-determinism doesn't affect evaluation", "Only evaluate the first output"],
+    "question": "evaluation で non-deterministic LLM outputs をどう扱うべきですか？",
+    "options": ["すべての evaluations で temperature を 0 にする", "各 test case を複数回実行し、output variance を考慮するため aggregate metrics (pass rate、average score) を使う", "non-determinism は evaluation に影響しない", "最初の output だけを評価する"],
     "correct": 1,
-    "explanation": "Even at temperature 0, some providers introduce sampling variation. Running each test 3-5 times and measuring pass rate or average score gives a more reliable picture than a single run that might hit a lucky/unlucky sample.",
+    "explanation": "temperature 0 でも、一部 providers は sampling variation を生みます。各 test を 3-5 回実行し、pass rate や average score を測る方が、lucky/unlucky sample に当たる single run より信頼できます。",
     "stage": "post"
   }
 ]

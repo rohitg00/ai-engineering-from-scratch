@@ -1,45 +1,45 @@
 ---
 name: crew-or-flow
-description: Pick CrewAI Crew or Flow for a given task, and scaffold the minimal implementation.
+description: 指定されたtaskに対してCrewAI CrewまたはFlowを選び、minimal implementationをscaffoldする。
 version: 1.0.0
 phase: 14
 lesson: 15
 tags: [crewai, crews, flows, multi-agent, role-based]
 ---
 
-Given a task description, pick Crew (autonomous) or Flow (deterministic), then scaffold.
+task descriptionを受け取り、Crew (autonomous) かFlow (deterministic) を選んでscaffoldする。
 
 Decision:
 
-1. Does the task have SLA, compliance, or deterministic replay requirements? -> Flow.
-2. Is the task exploratory (research, first draft, brainstorm)? -> Crew.
-3. Does the task have 4+ specialists with LLM-picked ordering? -> Hierarchical Crew.
-4. Does the task have <=3 specialists in a fixed order? -> Sequential Crew or Flow — prefer Flow.
+1. taskにSLA、compliance、deterministic replay requirementがあるか? -> Flow。
+2. taskがexploratory (research、first draft、brainstorm) か? -> Crew。
+3. taskに4+ specialistsとLLM-picked orderingがあるか? -> Hierarchical Crew。
+4. taskに<=3 specialistsがfixed orderでいるか? -> Sequential CrewまたはFlow。Flowを優先する。
 
-For Crews, produce:
+Crewsでは次を生成する:
 
-1. Agent definitions: role, goal, backstory (tight, <=200 words), tools.
-2. Task definitions: description, expected_output, agent.
-3. Crew with the right Process (Sequential | Hierarchical).
-4. A test harness that runs the Crew on sample inputs and checks that expected_outputs are produced.
+1. Agent definitions: role、goal、backstory (tight、<=200 words)、tools。
+2. Task definitions: description、expected_output、agent。
+3. 適切なProcess (Sequential | Hierarchical) を持つCrew。
+4. sample inputsでCrewを実行し、expected_outputsが生成されることをcheckするtest harness。
 
-For Flows, produce:
+Flowsでは次を生成する:
 
-1. `@start` entry function.
-2. `@listen(topic)` steps forming a DAG.
-3. Explicit event topics; no magical broadcast.
-4. A replay harness: given a kickoff payload, rerun deterministically.
+1. `@start` entry function。
+2. DAGを形成する`@listen(topic)` steps。
+3. explicit event topics。magical broadcastは使わない。
+4. replay harness: kickoff payloadを受け取り、deterministicallyにrerunする。
 
 Hard rejects:
 
-- Crews without backstories. Backstories are load-bearing.
-- Flows without explicit topic names. "Implicit chaining" defeats the audit purpose.
-- Hierarchical Crews with 2 specialists. The manager overhead is not earning cost.
+- backstoryのないCrew。backstoryはload-bearingです。
+- explicit topic nameのないFlow。「implicit chaining」はaudit目的を壊します。
+- 2 specialistsのHierarchical Crew。manager overheadはcostに見合いません。
 
 Refusal rules:
 
-- If the user asks for a Crew on a prod-only compliance task, refuse and migrate to Flow.
-- If the user asks for a Flow on an open-ended research task, refuse and migrate to Crew.
-- If the backstory exceeds 200 words, refuse and require a trim. Context budget is finite.
+- userがprod-only compliance taskにCrewを求めたら拒否し、Flowへ移行する。
+- userがopen-ended research taskにFlowを求めたら拒否し、Crewへ移行する。
+- backstoryが200 wordsを超える場合は拒否し、trimを要求する。context budgetは有限です。
 
-Output: `agents.py`, `tasks.py`, `crew.py` or `flow.py`, plus `README.md` with the decision rationale. End with "what to read next" pointing to Lesson 24 (Langfuse/AgentOps) for observability, or Lesson 13 if the Flow needs durable resume semantics.
+Output: `agents.py`, `tasks.py`, `crew.py`または`flow.py`、およびdecision rationaleを持つ`README.md`。最後に"what to read next"として、observabilityにはLesson 24 (Langfuse/AgentOps)、Flowにdurable resume semanticsが必要ならLesson 13を示す。

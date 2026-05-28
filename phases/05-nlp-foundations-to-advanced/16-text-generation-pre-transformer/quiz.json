@@ -1,102 +1,102 @@
 {
   "lesson": "16-text-generation-pre-transformer",
-  "title": "Text Generation Before Transformers — N-gram Language Models",
+  "title": "Transformer 以前のテキスト生成 — N-gram 言語モデル",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does an n-gram language model estimate?",
+      "question": "n-gram 言語モデルは何を推定しますか。",
       "options": [
-        "Edit distance between words",
+        "単語間の編集距離",
         "P(label | document)",
-        "Document embeddings",
-        "P(next word | previous n-1 words) from count statistics"
+        "文書埋め込み",
+        "カウント統計から求める P(next word | previous n-1 words)"
       ],
       "correct": 3,
-      "explanation": "An n-gram LM models P(w | last n-1 words) via counted occurrences."
+      "explanation": "n-gram LM は、出現回数のカウントを通じて P(w | last n-1 words) をモデル化します。"
     },
     {
       "stage": "pre",
-      "question": "What problem does smoothing solve in n-gram models?",
+      "question": "n-gram モデルにおいて smoothing はどの問題を解決しますか。",
       "options": [
-        "Numerical precision",
-        "Memory usage",
-        "Zero-probability assignment to n-grams unseen in training, which collapses sentence likelihoods to zero",
-        "Tokenization mismatch"
+        "数値精度",
+        "メモリ使用量",
+        "訓練中に未観測だった n-gram にゼロ確率を割り当て、文の尤度がゼロに崩壊する問題",
+        "トークン化の不一致"
       ],
       "correct": 2,
-      "explanation": "Smoothing reallocates probability mass so unseen n-grams get non-zero probability."
+      "explanation": "smoothing は確率質量を再配分し、未観測の n-gram が非ゼロ確率を得られるようにします。"
     },
     {
       "stage": "check",
-      "question": "What insight makes Kneser-Ney smoothing better than naive absolute discounting?",
+      "question": "Kneser-Ney smoothing を素朴な absolute discounting より良くしている洞察は何ですか。",
       "options": [
-        "It estimates the lower-order distribution with continuation probability (number of distinct contexts a word appears in) instead of raw frequency",
-        "It uses TF-IDF",
-        "It uses bigger n",
-        "It uses gradient descent"
+        "低次分布を生の頻度ではなく continuation probability（単語が現れる異なる文脈の数）で推定する",
+        "TF-IDF を使う",
+        "より大きな n を使う",
+        "勾配降下法を使う"
       ],
       "correct": 0,
-      "explanation": "Continuation probability gives credit for context diversity, not just raw count."
+      "explanation": "continuation probability は、生カウントだけでなく文脈の多様性を評価します。"
     },
     {
       "stage": "check",
-      "question": "What does perplexity measure?",
+      "question": "perplexity は何を測りますか。",
       "options": [
-        "exp of the average negative log-likelihood per token on a held-out test set; lower is better",
-        "Number of distinct n-grams",
-        "Cross-entropy of labels",
-        "Throughput of generation"
+        "ホールドアウトされたテストセット上でのトークンあたり平均負対数尤度の exp。低いほど良い",
+        "異なる n-gram の数",
+        "ラベルの交差エントロピー",
+        "生成のスループット"
       ],
       "correct": 0,
-      "explanation": "Perplexity = exp(- mean log P); lower means the model is less surprised by the test text."
+      "explanation": "Perplexity = exp(- mean log P) です。低いほど、モデルがテストテキストに驚いていないことを意味します。"
     },
     {
       "stage": "check",
-      "question": "Why must train and test sets use identical tokenization when comparing perplexity numbers?",
+      "question": "perplexity の値を比較するとき、訓練セットとテストセットで同一のトークン化を使う必要があるのはなぜですか。",
       "options": [
-        "Required by gradient descent",
-        "To avoid OOV",
-        "Perplexity depends on the tokenization scheme; mismatched tokenizers produce noncomparable scores",
-        "To control batch size"
+        "勾配降下法で必要だから",
+        "OOV を避けるため",
+        "perplexity はトークン化方式に依存し、不一致のトークナイザは比較不能なスコアを生むから",
+        "バッチサイズを制御するため"
       ],
       "correct": 2,
-      "explanation": "Different tokenizations change the token count and likelihood, making perplexity values incomparable."
+      "explanation": "異なるトークン化はトークン数と尤度を変えるため、perplexity の値を比較不能にします。"
     },
     {
       "stage": "post",
-      "question": "Why do generated trigram-LM sentences feel locally fluent but globally incoherent?",
+      "question": "trigram LM が生成する文が、局所的には流暢に見える一方で大域的には一貫しないのはなぜですか。",
       "options": [
-        "They drop punctuation",
-        "Beam search fails",
-        "Local trigram context guides each next word but the model has no long-range memory beyond n-1 tokens",
-        "They use Laplace smoothing"
+        "句読点を落とすから",
+        "beam search が失敗するから",
+        "局所的な trigram 文脈が各次単語を導くが、モデルには n-1 トークンを超える長距離記憶がないから",
+        "Laplace smoothing を使うから"
       ],
       "correct": 2,
-      "explanation": "Conditioning only on the last n-1 tokens makes long-range coherence accidental."
+      "explanation": "直前の n-1 トークンだけに条件付けるため、長距離の一貫性は偶然に頼ることになります。"
     },
     {
       "stage": "post",
-      "question": "Where do n-gram models still ship in production in 2026?",
+      "question": "2026年時点で、n-gram モデルは本番環境のどこでまだ使われていますか。",
       "options": [
-        "Multilingual translation",
-        "Open-domain chatbots",
-        "Latency-critical paths like speech recognition rescoring and on-device autocomplete via libraries such as KenLM",
-        "Summarization"
+        "多言語翻訳",
+        "オープンドメインのチャットボット",
+        "KenLM などのライブラリを使う、音声認識のリスコアリングやオンデバイス補完のようなレイテンシが重要な経路",
+        "要約"
       ],
       "correct": 2,
-      "explanation": "KenLM-style n-gram models still serve as fast on-device or rescoring components."
+      "explanation": "KenLM 型の n-gram モデルは、今でも高速なオンデバイス部品やリスコアリング部品として使われています。"
     },
     {
       "stage": "post",
-      "question": "Why is computing an n-gram baseline before declaring a neural LM 'good' still recommended?",
+      "question": "ニューラル LM が「良い」と宣言する前に n-gram ベースラインを計算することが今でも推奨されるのはなぜですか。",
       "options": [
-        "It speeds up training",
-        "Required by ROUGE",
-        "It removes OOV",
-        "If a transformer LM does not beat a tuned Kneser-Ney baseline by a wide margin on the same tokenization, something is off in the training pipeline"
+        "訓練を高速化するから",
+        "ROUGE で必須だから",
+        "OOV を取り除くから",
+        "同じトークン化で、transformer LM が調整済み Kneser-Ney ベースラインを大きく上回れないなら、訓練パイプラインのどこかがおかしいから"
       ],
       "correct": 3,
-      "explanation": "KN baselines are surprisingly strong; a neural LM should win by a large margin or you have a bug."
+      "explanation": "KN ベースラインは驚くほど強力です。ニューラル LM は大差で勝つべきで、そうでなければバグがある可能性があります。"
     }
   ]
 }

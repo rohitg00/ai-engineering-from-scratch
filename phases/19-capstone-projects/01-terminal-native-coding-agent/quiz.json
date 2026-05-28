@@ -1,10 +1,10 @@
 {
   "lesson": "01-terminal-native-coding-agent",
-  "title": "Capstone 01 — Terminal-Native Coding Agent",
+  "title": "Capstone 01 — ターミナルネイティブ Coding Agent",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which loop shape do 2026 terminal coding agents share?",
+      "question": "2026年の terminal coding agent が共有している loop 形状はどれですか？",
       "options": [
         "Plan, act, observe, recover",
         "Encode, decode, sample, stream",
@@ -16,19 +16,19 @@
     },
     {
       "stage": "pre",
-      "question": "Why does the harness run each task inside an E2B or Daytona sandbox?",
+      "question": "harness が各 task を E2B または Daytona sandbox 内で実行する理由は何ですか？",
       "options": [
-        "To isolate filesystem and tool execution from the host so the worktree can be torn down on completion",
-        "To bypass model-provider rate limits",
-        "To benchmark token throughput on cold caches",
-        "To enable GPU access for the agent loop"
+        "filesystem と tool execution を host から隔離し、完了後に worktree を破棄できるようにするため",
+        "model provider の rate limit を回避するため",
+        "cold cache 上の token throughput を benchmark するため",
+        "agent loop で GPU access を有効にするため"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which built-in hook is the natural place to block destructive shell commands before they execute?",
+      "question": "destructive shell command を実行前に block する自然な場所は、どの built-in hook ですか？",
       "options": [
         "PreToolUse",
         "SessionStart",
@@ -40,31 +40,31 @@
     },
     {
       "stage": "check",
-      "question": "The capstone caps each tool result at roughly 4k tokens. Which failure mode does that primarily prevent?",
+      "question": "この capstone は各 tool result をおおよそ 4k tokens に制限します。これは主にどの failure mode を防ぎますか？",
       "options": [
-        "Sandbox escape via malicious shell metacharacters",
-        "Context poisoning and runaway cost when a tool returns a large dump",
-        "Stale plan state across resumed sessions",
-        "Model overfitting to tool-call traces"
+        "悪意ある shell metacharacter による sandbox escape",
+        "tool が大きな dump を返したときの context poisoning と runaway cost",
+        "resume された session 間の stale plan state",
+        "model が tool-call trace に overfit すること"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the PreCompact hook do at the 150k-token mark?",
+      "question": "150k-token に達した時点で PreCompact hook は何をしますか？",
       "options": [
-        "Cancels the run and refunds the user budget",
-        "Summarizes older turns into a prior-state block so the plan and new observations still fit",
-        "Force-pushes the current branch to back up progress",
-        "Switches the backing model to a smaller draft model"
+        "run を cancel し、user budget を返金する",
+        "古い turn を prior-state block に要約し、plan と新しい observation がまだ収まるようにする",
+        "進捗をバックアップするため current branch を force-push する",
+        "backing model を小さな draft model に切り替える"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which baseline does the capstone compare its harness against on a 30-issue SWE-bench Pro subset?",
+      "question": "この capstone は30 issue の SWE-bench Pro subset で、どの baseline と harness を比較しますか？",
       "options": [
         "OpenCode",
         "mini-swe-agent",
@@ -76,7 +76,7 @@
     },
     {
       "stage": "post",
-      "question": "Which metric set is the deliverable measuring against?",
+      "question": "deliverable が測定対象にする metric set はどれですか？",
       "options": [
         "WER, MOS, and first-audio-out",
         "Perplexity, BLEU, and ROUGE",

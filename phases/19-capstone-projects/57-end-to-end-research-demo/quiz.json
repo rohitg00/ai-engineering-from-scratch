@@ -1,78 +1,78 @@
 {
   "lesson": "57-end-to-end-research-demo",
-  "title": "End-to-End Research Demo",
+  "title": "End-to-End 研究デモ",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the demo's job in this lesson?",
+      "question": "この lesson における demo の役割は何ですか?",
       "options": [
-        "To replace the earlier lessons with a single new framework",
-        "To compose the primitives from the earlier lessons through plain Python imports",
-        "To benchmark the scheduler against a baseline",
-        "To call a real language model on each branch"
+        "earlier lessons を単一の新 framework で置き換えること",
+        "earlier lessons の primitives を plain Python imports で合成すること",
+        "scheduler を baseline と benchmark すること",
+        "各 branch で real language model を呼ぶこと"
       ],
       "correct": 1,
-      "explanation": "The demo is a composition test. Each stage exists in its own lesson. The demo imports them and wires the report. No new framework, no new abstractions."
+      "explanation": "demo は composition test です。各 stage は別 lesson に存在し、demo はそれらを import して report を配線します。新 framework も新 abstraction もありません。"
     },
     {
       "stage": "pre",
-      "question": "Why does the lesson load earlier lessons via importlib instead of a normal package import?",
+      "question": "通常の package import ではなく importlib で earlier lessons を load する理由は何ですか?",
       "options": [
-        "Because importlib is faster",
-        "Because each earlier lesson is a standalone code/ folder, not an installed package; importlib loads them by file path",
-        "Because asyncio requires importlib",
-        "Because the lessons share a module name and would collide"
+        "importlib の方が速いため",
+        "各 earlier lesson は installed package ではなく standalone code/ folder なので、importlib が file path から load するため",
+        "asyncio が importlib を要求するため",
+        "lessons が module name を共有して衝突するため"
       ],
       "correct": 1,
-      "explanation": "The lessons are not installed packages. Each ships a main.py inside its own code/ folder. importlib.util.spec_from_file_location loads them by path without polluting the global module namespace."
+      "explanation": "lessons は installed package ではありません。各 lesson の code/ folder に main.py があり、importlib.util.spec_from_file_location が path から load します。"
     },
     {
       "stage": "check",
-      "question": "How does the best-result picker decide between branches when more than one triggered a paper?",
+      "question": "複数 branch が paper trigger を出した場合、best-result picker はどう選びますか?",
       "options": [
-        "It picks the branch with the most experiments run",
-        "It picks the branch with the highest mean reward, breaking ties alphabetically by branch id",
-        "It picks at random for fairness",
-        "It picks the first triggered branch"
+        "experiment run が最も多い branch を選ぶ",
+        "mean reward が最も高い branch を選び、tie は branch id の alphabetic order で解く",
+        "fairness のため random に選ぶ",
+        "最初に trigger した branch を選ぶ"
       ],
       "correct": 1,
-      "explanation": "Highest mean wins. Ties break on branch id so the demo is deterministic. Random would defeat the determinism test."
+      "explanation": "highest mean が勝ちます。tie は branch id で解くため demo は deterministic です。random は determinism test を壊します。"
     },
     {
       "stage": "check",
-      "question": "What error does the picker raise when the scheduler reports zero paper triggers?",
+      "question": "scheduler が paper trigger を一つも報告しない場合、picker はどの error を raise しますか?",
       "options": [
         "ValueError",
-        "NoTriggerError, which short-circuits the demo before the writer runs",
+        "NoTriggerError。writer が走る前に demo を short-circuit する",
         "PaperValidationError",
-        "It returns None"
+        "None を返す"
       ],
       "correct": 1,
-      "explanation": "NoTriggerError is the typed failure mode. Returning None would let the writer run on a malformed input and break later with a less actionable error."
+      "explanation": "NoTriggerError が typed failure mode です。None を返すと malformed input で writer が走り、後で扱いにくい error になります。"
     },
     {
       "stage": "post",
-      "question": "Why does the demo run twice with the same seed in the determinism test?",
+      "question": "determinism test で demo を同じ seed で二回走らせる理由は何ですか?",
       "options": [
-        "To exercise asyncio twice",
-        "To assert that the picked branch, reward, and paper section ids are identical across runs",
-        "To catch a memory leak",
-        "To prove that the scheduler is fair"
+        "asyncio を二回 exercise するため",
+        "picked branch、reward、paper section ids が run 間で同一であることを assert するため",
+        "memory leak を見つけるため",
+        "scheduler の fairness を証明するため"
       ],
       "correct": 1,
-      "explanation": "Determinism is part of the contract. Two runs with the same seed must produce the same artifacts. The test pins that."
+      "explanation": "determinism は contract の一部です。同じ seed の二回の run は同じ artifacts を生成する必要があります。"
     },
     {
       "stage": "post",
-      "question": "What does the demo report contain after a successful run?",
+      "question": "成功した run の demo report には何が含まれますか?",
       "options": [
-        "Only the final LaTeX file",
-        "scheduler_report, best_branch, best_reward, critic_result, paper_manifest, and stop_reason",
-        "Just the experiment count and a status string",
-        "A model prompt and completion log"
+        "final LaTeX file だけ",
+        "scheduler_report, best_branch, best_reward, critic_result, paper_manifest, stop_reason",
+        "experiment count と status string だけ",
+        "model prompt と completion log"
       ],
       "correct": 1,
-      "explanation": "Every stage's output is preserved. The report is a composition of upstream outputs, not a transformed summary. Downstream tooling reads the manifest; debuggers read the trace inside scheduler_report."
+      "explanation": "各 stage の output が保持されます。report は upstream outputs の composition であり、変換済み summary ではありません。"
     }
   ]
 }

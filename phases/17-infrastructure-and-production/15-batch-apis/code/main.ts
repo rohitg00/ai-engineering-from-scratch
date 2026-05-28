@@ -1,21 +1,22 @@
 /**
  * Batch APIs — TypeScript port + deferred-future dispatcher.
  *
- * Two halves:
- *   1. BatchDispatcher: submits N jobs, returns a promise per job that resolves
- *      when the batch completes. Simulates the OpenAI / Anthropic JSONL batch
- *      lifecycle (in_progress → completed) without any network. The "deferred
- *      future" pattern is what your code does at the call site — you fire and
- *      forget, the promise hands you the answer hours later.
- *   2. Cost simulator matching main.py: SYNC, SYNC+CACHE, BATCH, BATCH+CACHE
- *      across three workloads. Pricing constants 2026-04 per docs/en.md.
+ * 2つの部分:
+ *   1. BatchDispatcher: N 個の job を submit し、job ごとに promise を返す。
+ *      batch が完了すると resolve される。network なしで OpenAI / Anthropic の
+ *      JSONL batch lifecycle（in_progress → completed）を simulate する。
+ *      "deferred future" pattern は call site で起きることそのものだ。投げっぱなしに
+ *      して、promise が数時間後に答えを渡す。
+ *   2. main.py と同じ cost simulator: 3つの workload に対して
+ *      SYNC、SYNC+CACHE、BATCH、BATCH+CACHE を比較する。
+ *      Pricing constants は docs/en.md の 2026-04 時点。
  *
  * Citations:
  *   - OpenAI Batch API: platform.openai.com/docs/guides/batch
  *   - Anthropic Message Batches: docs.anthropic.com/en/docs/build-with-claude/batch-processing
  *   - Vertex AI Batch Prediction: cloud.google.com/vertex-ai/generative-ai/docs/model-reference/batch-prediction
  *
- * Runs on Node 20+ stdlib. No npm deps.
+ * Node 20+ stdlib で動作する。npm deps は不要。
  */
 
 import { randomUUID } from "node:crypto";
@@ -36,7 +37,7 @@ type BatchJob<I, O> = {
   id: string;
   input: I;
   promise: Promise<O>;
-  // Internal: resolver functions captured at dispatch.
+  // Internal: dispatch 時に capture した resolver functions。
   resolve: (out: O) => void;
   reject: (err: Error) => void;
 };
@@ -52,8 +53,8 @@ type Batch<I, O> = {
 class BatchDispatcher<I, O> {
   private readonly batches = new Map<string, Batch<I, O>>();
   private readonly processor: (input: I) => Promise<O>;
-  // Simulated turnaround. Real providers say 24h SLA; typical P50 is 2-6h.
-  // In the demo we use small ms to keep the run snappy.
+  // simulated turnaround。実 provider は 24h SLA と言うが、典型 P50 は 2-6h。
+  // demo では実行を速くするため小さな ms を使う。
   private readonly turnaroundMs: number;
 
   constructor(
@@ -64,7 +65,7 @@ class BatchDispatcher<I, O> {
     this.turnaroundMs = turnaroundMs;
   }
 
-  // Open a new batch. Returns the batch id you append jobs to.
+  // 新しい batch を開く。job を追加するための batch id を返す。
   openBatch(): string {
     const id = `batch_${randomUUID().slice(0, 12)}`;
     this.batches.set(id, {
@@ -76,17 +77,17 @@ class BatchDispatcher<I, O> {
     return id;
   }
 
-  // Append a job to a queued batch. Returns the deferred Promise<O> the caller
-  // awaits once the batch closes and processes. Matches the user-facing shape
-  // of OpenAI's batch.create + retrieve flow.
+  // queued batch に job を追加する。caller が batch close/process 後に await する
+  // deferred Promise<O> を返す。OpenAI の batch.create + retrieve flow の
+  // user-facing shape と対応する。
   addJob(batchId: string, input: I): Promise<O> {
     const batch = this.requireBatch(batchId);
     if (batch.status !== "queued") {
       return Promise.reject(
-        new Error(`batch ${batchId} not queued (status=${batch.status})`),
+        new Error(`batch ${batchId} は queued ではありません (status=${batch.status})`),
       );
     }
-    // Hand-rolled deferred so we can resolve from the processor loop.
+    // processor loop から resolve できるよう、手書きの deferred を作る。
     let resolve!: (out: O) => void;
     let reject!: (err: Error) => void;
     const promise = new Promise<O>((res, rej) => {
@@ -103,13 +104,13 @@ class BatchDispatcher<I, O> {
     return promise;
   }
 
-  // Close + process. Returns when all jobs resolved/rejected.
-  // The async-iteration model is identical to a real batch: you don't await
-  // each job; you await the whole batch.
+  // Close + process。すべての job が resolved/rejected されたら返る。
+  // async iteration model は実 batch と同じ。job ごとに await せず、
+  // batch 全体を await する。
   async closeBatch(batchId: string): Promise<Batch<I, O>> {
     const batch = this.requireBatch(batchId);
     batch.status = "in_progress";
-    // Simulate provider scheduling delay.
+    // provider scheduling delay を simulate する。
     await new Promise<void>((res) => setTimeout(res, this.turnaroundMs));
     const settlements: Promise<void>[] = batch.jobs.map(async (j) => {
       try {
@@ -130,7 +131,7 @@ class BatchDispatcher<I, O> {
 
   private requireBatch(id: string): Batch<I, O> {
     const b = this.batches.get(id);
-    if (!b) throw new Error(`no such batch: ${id}`);
+    if (!b) throw new Error(`その batch は存在しません: ${id}`);
     return b;
   }
 }
@@ -141,7 +142,7 @@ type ClassifyIn = { docId: string; text: string };
 type ClassifyOut = { docId: string; label: string; confidence: number };
 
 async function fakeClassifier(input: ClassifyIn): Promise<ClassifyOut> {
-  // Deterministic toy classifier on input length parity.
+  // input length の偶奇だけを見る deterministic toy classifier。
   const label = input.text.length % 2 === 0 ? "positive" : "neutral";
   return {
     docId: input.docId,
@@ -151,8 +152,8 @@ async function fakeClassifier(input: ClassifyIn): Promise<ClassifyOut> {
 }
 
 async function batchDemo(): Promise<void> {
-  console.log("--- Batch dispatcher with deferred futures ---");
-  // Turnaround set to 50ms in demo (production: 24h SLA).
+  console.log("--- deferred future を使う Batch dispatcher ---");
+  // demo では turnaround を 50ms に設定する（production: 24h SLA）。
   const dispatcher = new BatchDispatcher<ClassifyIn, ClassifyOut>(
     fakeClassifier,
     50,
@@ -167,12 +168,12 @@ async function batchDemo(): Promise<void> {
       }),
     );
   }
-  console.log(`status before close: ${dispatcher.getStatus(batchId)}`);
-  // Caller awaits jobs; dispatcher closes the batch concurrently.
+  console.log(`close 前の status: ${dispatcher.getStatus(batchId)}`);
+  // caller は jobs を await し、dispatcher は同時に batch を close する。
   const closePromise = dispatcher.closeBatch(batchId);
   const results = await Promise.all(futures);
   await closePromise;
-  console.log(`status after close: ${dispatcher.getStatus(batchId)}`);
+  console.log(`close 後の status: ${dispatcher.getStatus(batchId)}`);
   for (const r of results) {
     console.log(
       `  ${r.docId} → label=${r.label} confidence=${r.confidence.toFixed(2)}`,
@@ -256,34 +257,34 @@ function runScenario(
     `  docs=${docs}, prefix=${prefix}, per_doc=${perDoc}, output=${output}`,
   );
   console.log(`  SYNC            : ${fmtCost(sc)}  (baseline)`);
-  console.log(`  SYNC + CACHE    : ${fmtCost(scc)}  (${fmtPct(scc, sc)} of baseline)`);
-  console.log(`  BATCH           : ${fmtCost(bc)}  (${fmtPct(bc, sc)} of baseline)`);
-  console.log(`  BATCH + CACHE   : ${fmtCost(bcc)}  (${fmtPct(bcc, sc)} of baseline)`);
+  console.log(`  SYNC + CACHE    : ${fmtCost(scc)}  (baseline の ${fmtPct(scc, sc)})`);
+  console.log(`  BATCH           : ${fmtCost(bc)}  (baseline の ${fmtPct(bc, sc)})`);
+  console.log(`  BATCH + CACHE   : ${fmtCost(bcc)}  (baseline の ${fmtPct(bcc, sc)})`);
 }
 
 async function main(): Promise<void> {
   await batchDemo();
   console.log("\n" + "=".repeat(80));
   console.log(
-    "BATCH API ECONOMICS — stack batch with prompt caching for ~10% of sync bill",
+    "BATCH API ECONOMICS — batch と prompt caching を重ねて sync bill の約10%へ",
   );
   console.log("=".repeat(80));
   runScenario(
-    "Nightly doc summarization (50k docs)",
+    "夜間の文書要約 (50k docs)",
     50_000,
     4000,
     2000,
     200,
   );
   runScenario(
-    "Content classification (200k items, short per item)",
+    "コンテンツ分類 (200k items, short per item)",
     200_000,
     1500,
     300,
     50,
   );
   runScenario(
-    "Large report draft (small N, heavy per item)",
+    "大きなレポート草案 (small N, heavy per item)",
     1_000,
     6000,
     15_000,

@@ -2,66 +2,66 @@
   {
     "id": "featsel-pre-1",
     "stage": "pre",
-    "question": "Why can adding more features actually make a model perform worse?",
+    "question": "特徴量を増やすと、なぜモデル性能が悪化することがあるのですか？",
     "options": [
-      "More features always improve model accuracy",
-      "Irrelevant features add noise, increase overfitting risk, and dilute the signal from useful features",
-      "Models have a hard limit on the number of features they can accept",
-      "More features make the model run out of memory"
+      "特徴量を増やすと常に model accuracy が向上する",
+      "無関係な特徴量がノイズを追加し、overfitting risk を高め、有用な特徴量からの signal を薄めるから",
+      "モデルには受け取れる特徴量数に厳密な上限があるから",
+      "特徴量を増やすとモデルがメモリ不足になるから"
     ],
     "correct": 1,
-    "explanation": "Irrelevant features give the model opportunities to overfit on noise in the training data. They increase dimensionality, making the data sparser and distances less meaningful (curse of dimensionality)."
+    "explanation": "無関係な特徴量は、training data のノイズに過学習する機会をモデルに与えます。次元数が増えることでデータは疎になり、距離の意味が薄れます（curse of dimensionality）。"
   },
   {
     "id": "featsel-pre-2",
     "stage": "pre",
-    "question": "What is the key difference between filter and wrapper feature selection methods?",
+    "question": "filter と wrapper の feature selection methods の重要な違いは何ですか？",
     "options": [
-      "Filter methods use a model to evaluate features; wrapper methods use statistics",
-      "Filter methods score features using statistics without a model; wrapper methods train a model to evaluate feature subsets",
-      "Filter methods are always more accurate than wrapper methods",
-      "Wrapper methods can only select one feature at a time"
+      "Filter methods はモデルで特徴量を評価し、wrapper methods は統計量を使う",
+      "Filter methods はモデルなしで統計量により特徴量をスコアリングし、wrapper methods は特徴量 subset を評価するためにモデルを学習する",
+      "Filter methods は常に wrapper methods より正確である",
+      "Wrapper methods は一度に 1 つの特徴量しか選択できない"
     ],
     "correct": 1,
-    "explanation": "Filter methods (variance threshold, mutual information, correlation) score features with statistical measures. Wrapper methods (RFE, forward selection) train models repeatedly to evaluate different feature subsets."
+    "explanation": "Filter methods（variance threshold、mutual information、correlation）は統計的尺度で特徴量をスコアリングします。Wrapper methods（RFE、forward selection）は、異なる feature subsets を評価するためにモデルを繰り返し学習します。"
   },
   {
     "id": "featsel-post-1",
     "stage": "post",
-    "question": "Mutual information can detect relationships that Pearson correlation cannot. What kind?",
+    "question": "Mutual information は Pearson correlation では検出できない関係を検出できます。どのような関係ですか？",
     "options": [
-      "Linear relationships between continuous features",
-      "Nonlinear relationships such as quadratic or periodic dependencies",
-      "Relationships between categorical features only",
-      "Relationships that require more than 1000 data points"
+      "連続特徴量間の線形関係",
+      "二次関係や周期的依存などの非線形関係",
+      "categorical features 間の関係のみ",
+      "1000 個を超えるデータ点を必要とする関係"
     ],
     "correct": 1,
-    "explanation": "Pearson correlation only measures linear association. A quadratic relationship (y = x^2) has zero correlation but high mutual information. MI captures any statistical dependency between variables."
+    "explanation": "Pearson correlation は線形関連だけを測ります。二次関係（y = x^2）は correlation がゼロでも mutual information は高くなります。MI は変数間の任意の統計的依存を捉えます。"
   },
   {
     "id": "featsel-post-2",
     "stage": "post",
-    "question": "L1 (Lasso) regularization performs feature selection as part of training. How?",
+    "question": "L1 (Lasso) regularization は学習の一部として feature selection を行います。どのように行うのですか？",
     "options": [
-      "It removes features with low variance before training starts",
-      "It drives the weights of irrelevant features to exactly zero, effectively eliminating them from the model",
-      "It ranks features by correlation with the target",
-      "It trains separate models for each feature"
+      "学習開始前に低分散の特徴量を削除する",
+      "無関係な特徴量の重みを正確にゼロへ押し込み、モデルから実質的に除外する",
+      "target との correlation で特徴量を順位付けする",
+      "特徴量ごとに別々のモデルを学習する"
     ],
     "correct": 1,
-    "explanation": "L1 regularization adds |w| penalty to the loss. The geometry of the L1 constraint (diamond shape) causes some weight solutions to land exactly at zero, producing sparse models that automatically select features."
+    "explanation": "L1 regularization は loss に |w| penalty を追加します。L1 制約の幾何（diamond shape）により、一部の重み解が正確にゼロに落ち、特徴量を自動選択する疎なモデルが得られます。"
   },
   {
     "id": "featsel-post-3",
     "stage": "post",
-    "question": "RFE removes the least important feature and retrains. Why is this better than just removing all low-importance features at once?",
+    "question": "RFE は最も重要度の低い特徴量を削除して再学習します。低重要度の特徴量を一度に全部削除するより、なぜこの方がよいのですか？",
     "options": [
-      "It is not better -- removing all at once is always preferred",
-      "Feature importances change as features are removed, so iterative removal accounts for interactions between features",
-      "RFE uses a different importance metric than single-step removal",
-      "Removing one at a time is only necessary for neural networks"
+      "よくない。一度に全部削除する方が常に望ましい",
+      "特徴量を削除すると feature importances が変わるため、反復的な削除は特徴量間の相互作用を考慮できるから",
+      "RFE は単一ステップ削除とは異なる importance metric を使うから",
+      "1 つずつ削除する必要があるのは neural networks だけだから"
     ],
     "correct": 1,
-    "explanation": "Feature importances are relative. When a correlated feature is removed, the importance of its counterpart may increase. Iterative removal lets the model reassess importances at each step, capturing these interactions."
+    "explanation": "Feature importances は相対的です。相関した特徴量が削除されると、その対応する特徴量の重要度が上がることがあります。反復的な削除により、各ステップでモデルが importance を再評価でき、こうした相互作用を捉えられます。"
   }
 ]

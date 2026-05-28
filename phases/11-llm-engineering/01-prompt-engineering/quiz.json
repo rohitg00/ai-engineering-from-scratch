@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the most common mistake people make when writing prompts for LLMs?",
-    "options": ["Using too many tokens", "Writing vague, underspecified instructions that leave the model guessing about format, scope, and constraints", "Using the wrong API", "Not using enough examples"],
+    "question": "LLM 向けプロンプトを書くときに最もよくある間違いは何ですか？",
+    "options": [
+      "トークンを使いすぎること",
+      "形式、スコープ、制約についてモデルに推測を残す、曖昧で仕様不足の指示を書くこと",
+      "間違った API を使うこと",
+      "例を十分に使わないこと"
+    ],
     "correct": 1,
-    "explanation": "LLMs follow instructions literally. 'Write me a marketing email' gives the model no constraints. Specifying tone, audience, length, format, and constraints produces dramatically better results.",
+    "explanation": "LLM は指示を文字どおりに扱います。'Write me a marketing email' だけでは制約がありません。トーン、読者、長さ、形式、制約を指定すると結果は大きく改善します。",
     "stage": "pre"
   },
   {
-    "question": "What are the four core components of an effective prompt?",
-    "options": ["Input, output, model, temperature", "Role, context, constraints, and output format", "System, user, assistant, function", "Query, document, answer, score"],
+    "question": "効果的なプロンプトの 4 つの中核要素は何ですか？",
+    "options": [
+      "入力、出力、モデル、temperature",
+      "ロール、コンテキスト、制約、出力形式",
+      "system、user、assistant、function",
+      "クエリ、文書、回答、スコア"
+    ],
     "correct": 1,
-    "explanation": "Effective prompts specify: who the model should be (role), what it should know (context), what it should and shouldn't do (constraints), and how to structure the response (output format).",
+    "explanation": "効果的なプロンプトは、モデルが誰として振る舞うか (role)、何を知っているべきか (context)、何をすべき/すべきでないか (constraints)、応答をどう構造化するか (output format) を指定します。",
     "stage": "pre"
   },
   {
-    "question": "Why should you include output format instructions in your prompts?",
-    "options": ["It makes the prompt shorter", "Without format instructions, the model chooses its own structure, which varies between calls and is hard to parse programmatically", "It reduces API costs", "It prevents hallucination"],
+    "question": "プロンプトに出力形式の指示を含めるべき理由は何ですか？",
+    "options": [
+      "プロンプトが短くなるから",
+      "形式指示がないとモデルが独自の構造を選び、呼び出しごとに変動してプログラムで解析しにくいから",
+      "API コストが下がるから",
+      "ハルシネーションを防ぐから"
+    ],
     "correct": 1,
-    "explanation": "LLMs are non-deterministic. Without explicit format instructions, one call might return bullet points, the next prose, the next markdown. Specifying format ensures consistent, parseable outputs.",
+    "explanation": "LLM は非決定的です。明示的な形式指示がなければ、ある呼び出しでは箇条書き、次は散文、その次は markdown になることがあります。形式を指定すると、一貫して解析しやすい出力になります。",
     "stage": "post"
   },
   {
-    "question": "What is the purpose of a system prompt?",
-    "options": ["To authenticate the API call", "To set persistent behavioral rules, role, and constraints that apply to the entire conversation", "To define the model's architecture", "To compress the conversation history"],
+    "question": "system prompt の目的は何ですか？",
+    "options": [
+      "API 呼び出しを認証すること",
+      "会話全体に適用される継続的な振る舞いのルール、ロール、制約を設定すること",
+      "モデルのアーキテクチャを定義すること",
+      "会話履歴を圧縮すること"
+    ],
     "correct": 1,
-    "explanation": "The system prompt establishes the model's persona, rules, and constraints for the entire session. It runs before every user turn and is the primary mechanism for controlling model behavior in production.",
+    "explanation": "system prompt はセッション全体のモデルのペルソナ、ルール、制約を確立します。各ユーザーターンの前提として働き、本番環境でモデル挙動を制御する主要な仕組みです。",
     "stage": "post"
   },
   {
-    "question": "How should you test whether a prompt change actually improved output quality?",
-    "options": ["Read a few outputs and make a judgment call", "Run the prompt on a diverse test set and measure changes in defined metrics (accuracy, format compliance, relevance)", "Ask the model if it's doing better", "Check the API response time"],
+    "question": "プロンプト変更が実際に出力品質を改善したかどうかは、どうテストすべきですか？",
+    "options": [
+      "いくつかの出力を読んで判断する",
+      "多様なテストセットでプロンプトを実行し、定義済み指標 (正確性、形式遵守、関連性) の変化を測る",
+      "モデルに良くなったか尋ねる",
+      "API 応答時間を確認する"
+    ],
     "correct": 1,
-    "explanation": "Evaluating prompt changes on a handful of examples is unreliable. A systematic evaluation harness with diverse test cases and defined metrics shows whether changes help across the distribution, not just cherry-picked examples.",
+    "explanation": "少数の例だけでプロンプト変更を評価するのは信頼できません。多様なテストケースと定義済み指標を持つ体系的な評価ハーネスなら、都合のよい例だけでなく分布全体で効果があるか確認できます。",
     "stage": "post"
   }
 ]

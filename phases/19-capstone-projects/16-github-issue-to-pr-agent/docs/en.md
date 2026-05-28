@@ -1,28 +1,28 @@
-# Capstone 16 — GitHub Issue-to-PR Autonomous Agent
+# キャップストーン 16 — GitHub Issue-to-PR Autonomous Agent
 
-> AWS Remote SWE Agents, Cursor Background Agents, OpenAI Codex cloud, and Google Jules all ship the same 2026 product shape: label an issue, get a PR. Run an agent in a cloud sandbox, verify tests pass, and post a review-ready PR with rationale. The hard parts are reproducing the repo's build environment automatically, preventing credential leakage, enforcing per-repo budgets, and making sure the agent cannot force-push. This capstone builds the self-hosted version and compares it on cost and pass rate to the hosted alternatives.
+> AWS Remote SWE Agents、Cursor Background Agents、OpenAI Codex cloud、Google Jules は、どれも同じ 2026 年の product shape を提供している: issue に label を付けると PR が出る。Cloud sandbox で agent を走らせ、test pass を確認し、rationale 付きの review-ready PR を投稿する。難しいのは、repo の build environment を自動再現すること、credential leakage を防ぐこと、repo ごとの budget を enforce すること、agent に force-push させないことだ。この capstone では self-hosted 版を作り、hosted alternative と cost / pass rate を比較する。
 
-**Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
-**Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
-**Phases exercised:** P11 · P13 · P14 · P15 · P17
-**Time:** 30 hours
+**種類:** Capstone
+**言語:** Python (agent)、TypeScript (GitHub App)、YAML (Actions)
+**前提:** Phase 11 (LLM engineering)、Phase 13 (tools)、Phase 14 (agents)、Phase 15 (autonomous)、Phase 17 (infrastructure)
+**演習対象フェーズ:** P11 · P13 · P14 · P15 · P17
+**時間:** 30 時間
 
-## Problem
+## 問題
 
-The async cloud coding agent is a separate product category from interactive coding agents (capstone 01). The UX is a GitHub label. You label an issue `@agent fix this`, a worker spins up in a cloud sandbox, clones the repo, runs tests, edits files, verifies, and opens a PR with the agent's rationale in the body. No interactive loop, no terminal. AWS Remote SWE Agents, Cursor Background Agents, OpenAI Codex cloud, Google Jules, and Factory Droids all converge on this.
+Async cloud coding agent は、interactive coding agent (capstone 01) とは別の product category である。UX は GitHub label だ。Issue に `@agent fix this` と label を付けると、worker が cloud sandbox で立ち上がり、repo を clone し、test を走らせ、file を edit し、verify し、agent の rationale を body に含む PR を開く。Interactive loop も terminal もない。AWS Remote SWE Agents、Cursor Background Agents、OpenAI Codex cloud、Google Jules、Factory Droids はすべてここに収束している。
 
-The engineering challenges are concrete: environment reproduction (the agent has to build the repo from scratch without a cached dev image), flaky tests (must be re-run or isolated), credential scoping (a GitHub App with minimal fine-grained permissions), budget enforcement per repo per day, and no-force-push policy. The capstone measures pass rate, cost, and safety vs the hosted alternatives.
+Engineering challenge は具体的だ。Environment reproduction (agent は cached dev image なしに repo を一から build しなければならない)、flaky tests (rerun または isolate が必要)、credential scoping (fine-grained permission が最小の GitHub App)、repo ごとの daily budget enforcement、no-force-push policy。この capstone は hosted alternative に対して pass rate、cost、safety を測定する。
 
-## Concept
+## コンセプト
 
-The trigger is a GitHub webhook (issue label or PR comment). A dispatcher enqueues work to ECS Fargate or Lambda. The worker pulls the repo into a Daytona or E2B sandbox with a generic Dockerfile inferred from the repo (language, framework). The agent runs a mini-swe-agent or SWE-agent v2 loop against Claude Opus 4.7 or GPT-5.4-Codex. It iterates: read code, propose fix, apply patch, run tests.
+Trigger は GitHub webhook (issue label または PR comment) である。Dispatcher は ECS Fargate または Lambda に work を enqueue する。Worker は repo から推定した generic Dockerfile (language、framework) を使って Daytona または E2B sandbox に repo を pull する。Agent は Claude Opus 4.7 または GPT-5.4-Codex を使った mini-swe-agent あるいは SWE-agent v2 loop を実行する。反復は、code を読む、fix を提案する、patch を apply する、test を実行する、という流れになる。
 
-Verification is the gating step. Full CI must pass in the sandbox before the PR opens. Coverage delta is computed; if negative beyond a threshold, the PR opens but gets labeled `needs-review`. The agent posts the rationale as the PR description plus an `@agent` thread the reviewer can ping for follow-ups.
+Verification が gate である。PR を開く前に sandbox 内で full CI が pass しなければならない。Coverage delta を計算し、threshold を超えて negative なら PR は開くが `needs-review` label を付ける。Agent は PR description として rationale を投稿し、reviewer が follow-up のために ping できる `@agent` thread も残す。
 
-Safety is scoped through two different GitHub surfaces: the App provides a short-lived installation token with `workflows: read` and narrow repo contents/PR scopes; branch protection (not app permissions) enforces "no direct writes to `main`" and "no force-push" — the app is never added to the bypass list. Path-scoped read-only access to `.github/workflows` is not a real GitHub App primitive, so the agent's allow-list on file edits has to enforce that at the worker. Budget ceilings per repo per day are enforced at the dispatcher (e.g., max 5 PRs per repo per day, $20 per PR).
+Safety は 2 つの GitHub surface で scope する。App は `workflows: read` と狭い repo contents/PR scope を持つ short-lived installation token を提供する。"no direct writes to `main`" と "no force-push" は app permission ではなく branch protection で enforce する。App は bypass list に入れない。`.github/workflows` への path-scoped read-only access は GitHub App の実プリミティブではないため、worker が file edit allow-list で enforce する必要がある。Repo ごとの daily budget ceiling は dispatcher で enforce する (例: repo ごとに 1 日最大 5 PR、PR ごとに $20)。
 
-## Architecture
+## アーキテクチャ
 
 ```
 GitHub issue labeled `@agent fix` or PR comment
@@ -54,38 +54,38 @@ GitHub issue labeled `@agent fix` or PR comment
     operator reviews; can @-mention agent for follow-ups
 ```
 
-## Stack
+## スタック
 
-- Trigger: GitHub App with fine-grained token; webhook receiver via Lambda or Fly.io
-- Worker: ECS Fargate task (or GitHub Actions self-hosted runner)
-- Sandbox: Daytona devcontainer or E2B sandbox per task
-- Agent loop: mini-swe-agent baseline or SWE-agent v2 over Claude Opus 4.7 / GPT-5.4-Codex
+- Trigger: fine-grained token を持つ GitHub App。Webhook receiver は Lambda または Fly.io
+- Worker: ECS Fargate task (または GitHub Actions self-hosted runner)
+- Sandbox: task ごとに Daytona devcontainer または E2B sandbox
+- Agent loop: Claude Opus 4.7 / GPT-5.4-Codex 上の mini-swe-agent baseline または SWE-agent v2
 - Retrieval: tree-sitter repo-map + ripgrep
-- Verification: full CI in-sandbox + coverage delta gate
-- Observability: Langfuse with per-PR trace archive linked from the PR body
-- Budget: per-repo daily dollar ceiling; max PRs per repo per day
+- Verification: sandbox 内の full CI + coverage delta gate
+- Observability: PR body から link される per-PR trace archive を持つ Langfuse
+- Budget: repo ごとの daily dollar ceiling、repo ごとの daily max PR 数
 
-## Build It
+## 実装
 
-1. **GitHub App.** Fine-grained installation token: issues read+write, pull_requests write, contents read+write, workflows read. Branch protection (the only surface that can do this) enforces "no direct push to `main`" and "no force-push"; the app is not in the bypass list. The worker enforces "no writes under `.github/workflows`" as an allow-list check on the proposed diff, since GitHub App permissions are not path-scoped.
+1. **GitHub App.** Fine-grained installation token: issues read+write、pull_requests write、contents read+write、workflows read。Branch protection (これを実現できる唯一の surface) で "no direct push to `main`" と "no force-push" を enforce する。App は bypass list に入れない。GitHub App permission は path-scoped ではないため、worker が proposed diff に対して "no writes under `.github/workflows`" を allow-list check として enforce する。
 
-2. **Webhook receiver.** Lambda function accepts issue label / PR comment webhooks. Filters by label `@agent fix this`. Enqueues to SQS.
+2. **Webhook receiver.** Lambda function が issue label / PR comment webhook を受け付ける。Label `@agent fix this` で filter する。SQS に enqueue する。
 
-3. **Dispatcher.** Pops tasks from SQS. Enforces per-repo per-day budget. Spins up an ECS Fargate task with the repo URL, issue body, and a fresh Daytona sandbox.
+3. **Dispatcher.** SQS から task を pop する。Repo ごとの daily budget を enforce する。Repo URL、issue body、新しい Daytona sandbox を指定して ECS Fargate task を起動する。
 
-4. **Environment inference.** Detect language (Python, Node, Go, Rust) and package manager (uv, pnpm, go mod, cargo). Generate a Dockerfile on the fly if one does not exist.
+4. **Environment inference.** Language (Python、Node、Go、Rust) と package manager (uv、pnpm、go mod、cargo) を detect する。Dockerfile がなければその場で生成する。
 
-5. **Agent loop.** mini-swe-agent or SWE-agent v2 with Claude Opus 4.7. Tools: ripgrep, tree-sitter repo-map, read_file, edit_file, run_tests, git. Hard limits: $20 cost, 30 min wall-clock, 30 agent turns.
+5. **Agent loop.** Claude Opus 4.7 を使う mini-swe-agent または SWE-agent v2。Tools: ripgrep、tree-sitter repo-map、read_file、edit_file、run_tests、git。Hard limits: cost $20、wall-clock 30 分、agent 30 turns。
 
-6. **Verification.** After the loop concludes, run the full test suite in-sandbox. Compute coverage delta via jacoco / coverage.py. If CI red: halt, do not open PR. If coverage drops more than 2%: open PR with `needs-review` label.
+6. **Verification.** Loop が終わったら sandbox 内で full test suite を実行する。jacoco / coverage.py で coverage delta を計算する。CI red なら halt し、PR は開かない。Coverage が 2% を超えて低下したら `needs-review` label 付きで PR を開く。
 
-7. **PR posting.** Push the agent branch. Open PR via GitHub API with: title, rationale, diff summary, trace URL, cost, turns.
+7. **PR posting.** Agent branch を push する。GitHub API で title、rationale、diff summary、trace URL、cost、turns を含む PR を開く。
 
-8. **Credential hygiene.** Worker runs with a short-lived GitHub App installation token. Logs are scrubbed for secrets before archival.
+8. **Credential hygiene.** Worker は short-lived GitHub App installation token で動く。Log は archival 前に secret を scrub する。
 
-9. **Eval.** 30 seeded internal issues of varying difficulty. Measure pass rate, PR quality (diff size, style, coverage), cost, latency. Compare with Cursor Background Agents and AWS Remote SWE Agents on the same issues.
+9. **Eval.** 難易度の異なる seeded internal issue 30 件で測定する。Pass rate、PR quality (diff size、style、coverage)、cost、latency を測る。同じ issue で Cursor Background Agents と AWS Remote SWE Agents と比較する。
 
-## Use It
+## 使ってみる
 
 ```
 # on github.com
@@ -101,48 +101,48 @@ GitHub issue labeled `@agent fix` or PR comment
 
 ## Ship It
 
-`outputs/skill-issue-to-pr.md` is the deliverable. A GitHub App + async cloud worker that turns labeled issues into review-ready PRs with bounded cost and scoped credentials.
+`outputs/skill-issue-to-pr.md` が提出物である。Labeled issue を bounded cost と scoped credentials のもとで review-ready PR に変換する GitHub App + async cloud worker。
 
 | Weight | Criterion | How it is measured |
 |:-:|---|---|
 | 25 | Pass rate on 30 issues | End-to-end success (CI green + coverage OK) |
-| 20 | PR quality | Diff size, coverage delta, style conformance |
-| 20 | Cost and latency per resolved issue | $ and wall-clock per PR |
-| 20 | Safety | Scoped token, per-repo budget, no force-push, credential hygiene |
-| 15 | Operator UX | Rationale comments, retry affordance, @-mention follow-up |
+| 20 | PR quality | Diff size、coverage delta、style conformance |
+| 20 | Cost and latency per resolved issue | PR ごとの $ と wall-clock |
+| 20 | Safety | Scoped token、per-repo budget、no force-push、credential hygiene |
+| 15 | Operator UX | Rationale comments、retry affordance、@-mention follow-up |
 | **100** | | |
 
-## Exercises
+## 演習
 
-1. Add a "fix flaky test" mode: the label `@agent stabilize-flake TestX` runs the test 50 times in-sandbox and proposes a minimal change that stabilizes it.
+1. "fix flaky test" mode を追加する: label `@agent stabilize-flake TestX` が sandbox 内で test を 50 回実行し、安定化する最小変更を提案する。
 
-2. Compare cost vs Cursor Background Agents on three shared issues. Report which tools win where.
+2. 3 つの shared issue で Cursor Background Agents と cost を比較する。どの tool がどこで勝つかを報告する。
 
-3. Implement a budget dashboard: per-repo per-day cost, per-user cost. Alert on anomaly.
+3. Budget dashboard を実装する: repo ごとの daily cost、user ごとの cost。Anomaly で alert する。
 
-4. Build a "dry-run" mode that opens a draft PR without running CI, so reviewers can examine the plan cheap.
+4. CI を実行せずに draft PR を開く "dry-run" mode を作る。Reviewer が低 cost で plan を確認できるようにする。
 
-5. Add a retention policy: PR branches older than 7 days without merge get deleted automatically.
+5. Retention policy を追加する: merge されずに 7 日を過ぎた PR branch を自動削除する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|------------------------|
-| GitHub App | "Scoped bot identity" | App with fine-grained permissions + short-lived installation token |
-| Async cloud agent | "Background agent" | Non-interactive worker that runs in a cloud sandbox, not a terminal |
-| Environment inference | "Dockerfile synthesis" | Detect language + package manager, generate a Dockerfile if absent |
-| Verification | "CI-in-sandbox" | Run the full test suite inside the worker before opening a PR |
-| Coverage delta | "Coverage preservation" | Change in test coverage % from base to agent branch |
-| Per-repo budget | "Daily ceiling" | Dollar and PR-count cap enforced at the dispatcher |
-| Rationale | "PR body explanation" | Agent's summary of what changed and why; required in the PR body |
+| Term | よくある言い方 | 実際の意味 |
+|------|-----------------|------------|
+| GitHub App | "Scoped bot identity" | Fine-grained permission と short-lived installation token を持つ app |
+| Async cloud agent | "Background agent" | Terminal ではなく cloud sandbox で動く non-interactive worker |
+| Environment inference | "Dockerfile synthesis" | Language + package manager を detect し、なければ Dockerfile を生成する |
+| Verification | "CI-in-sandbox" | PR を開く前に worker 内で full test suite を実行すること |
+| Coverage delta | "Coverage preservation" | Base から agent branch までの test coverage % の変化 |
+| Per-repo budget | "Daily ceiling" | Dispatcher が enforce する dollar と PR-count の上限 |
+| Rationale | "PR body explanation" | 何をなぜ変えたかという agent の summary。PR body に必須 |
 
-## Further Reading
+## 参考資料
 
-- [AWS Remote SWE Agents](https://github.com/aws-samples/remote-swe-agents) — the canonical async cloud agent reference
+- [AWS Remote SWE Agents](https://github.com/aws-samples/remote-swe-agents) — canonical async cloud agent reference
 - [SWE-agent](https://github.com/SWE-agent/SWE-agent) — CLI reference
 - [Cursor Background Agents](https://docs.cursor.com/background-agent) — commercial alternative
 - [OpenAI Codex (cloud)](https://openai.com/codex) — hosted competitor
-- [Google Jules](https://jules.google) — Google's hosted version
+- [Google Jules](https://jules.google) — Google の hosted version
 - [Factory Droids](https://www.factory.ai) — alternate commercial reference
 - [GitHub App documentation](https://docs.github.com/en/apps) — scoped bot identity
 - [Daytona cloud sandboxes](https://daytona.io) — reference sandbox

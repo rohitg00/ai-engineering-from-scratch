@@ -1,10 +1,10 @@
 {
   "lesson": "28-self-hosted-serving-selection",
-  "title": "Self-Hosted Serving Selection — llama.cpp, Ollama, TGI, vLLM, SGLang",
+  "title": "Self-Hosted Serving Selection — llama.cpp、Ollama、TGI、vLLM、SGLang",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which engine does the lesson pick as the dev-laptop one-command default?",
+      "question": "この lesson が dev-laptop の one-command default として選ぶ engine はどれですか。",
       "options": [
         "TGI",
         "Ollama",
@@ -16,31 +16,31 @@
     },
     {
       "stage": "check",
-      "question": "What 2025 event changes the default away from TGI for new projects?",
+      "question": "new projects の default を TGI から外すきっかけとなる 2025 年の event は何ですか。",
       "options": [
-        "TGI was acquired by Anthropic",
-        "TGI raised prices",
-        "TGI dropped CUDA support",
-        "TGI entered maintenance mode on December 11, 2025 — only bug fixes going forward"
+        "TGI が Anthropic に acquired された",
+        "TGI が prices を上げた",
+        "TGI が CUDA support を廃止した",
+        "TGI が 2025 年 12 月 11 日に maintenance mode に入った。今後は bug fixes のみ"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which hardware constraint forces llama.cpp and excludes vLLM / TRT-LLM?",
+      "question": "llama.cpp を強制し、vLLM / TRT-LLM を除外する hardware constraint はどれですか。",
       "options": [
         "Apple M4",
         "AMD MI300X",
         "NVIDIA Hopper",
-        "CPU only (no accelerator)"
+        "CPU only (accelerator なし)"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which engine does the lesson position for agentic multi-turn and prefix-heavy workloads thanks to RadixAttention?",
+      "question": "この lesson は RadixAttention により agentic multi-turn と prefix-heavy workloads 向けと位置づける engine をどれとしていますか。",
       "options": [
         "Ollama",
         "llama.cpp",
@@ -52,24 +52,24 @@
     },
     {
       "stage": "post",
-      "question": "What dev-to-prod pipeline does the lesson recommend on the same GGUF or HF weights?",
+      "question": "この lesson は同じ GGUF または HF weights で、どの dev-to-prod pipeline を推奨していますか。",
       "options": [
-        "Only TRT-LLM, top to bottom",
-        "Ollama in dev and Ollama in prod",
-        "Ollama in dev, llama.cpp in staging, vLLM (or SGLang for prefix-heavy) in prod",
-        "TGI everywhere"
+        "最初から最後まで TRT-LLM のみ",
+        "dev も prod も Ollama",
+        "dev は Ollama、staging は llama.cpp、prod は vLLM (prefix-heavy なら SGLang)",
+        "すべて TGI"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is Ollama discouraged for shared production?",
+      "question": "Ollama が shared production で非推奨な理由は何ですか。",
       "options": [
-        "It is closed source",
-        "It only runs on Windows",
-        "Go HTTP serialization adds overhead, concurrency management is simpler than vLLM, and OpenTelemetry support lags",
-        "It cannot load GGUF"
+        "closed source だから",
+        "Windows でしか動かないから",
+        "Go HTTP serialization が overhead を追加し、concurrency management は vLLM より単純で、OpenTelemetry support も遅れているから",
+        "GGUF を load できないから"
       ],
       "correct": 2,
       "explanation": ""

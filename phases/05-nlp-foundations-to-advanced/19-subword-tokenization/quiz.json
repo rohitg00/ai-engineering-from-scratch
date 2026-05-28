@@ -1,102 +1,102 @@
 {
   "lesson": "19-subword-tokenization",
-  "title": "Subword Tokenization — BPE, WordPiece, Unigram, SentencePiece",
+  "title": "サブワードトークン化 — BPE, WordPiece, Unigram, SentencePiece",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does subword tokenization buy you over word-level vocabularies?",
+      "question": "単語レベルの語彙と比べて、サブワードトークン化にはどんな利点がありますか？",
       "options": [
-        "Rare words decompose into known subword pieces, eliminating OOV while keeping vocabulary bounded",
-        "Smaller models",
-        "Faster training",
-        "Better embeddings"
+        "レア語を既知のサブワード片に分解できるため、語彙サイズを一定範囲に保ちながらOOVをなくせる",
+        "モデルが小さくなる",
+        "学習が速くなる",
+        "埋め込みが良くなる"
       ],
       "correct": 0,
-      "explanation": "Subword tokens cover any input by decomposition, removing the OOV problem of word-level vocab."
+      "explanation": "サブワードトークンは入力を分解してカバーするため、単語レベル語彙のOOV問題を取り除けます。"
     },
     {
       "stage": "pre",
-      "question": "Why does GPT-2 use byte-level BPE rather than character-level BPE?",
+      "question": "GPT-2が文字レベルBPEではなくbyte-level BPEを使うのはなぜですか？",
       "options": [
-        "Required by transformers",
-        "Byte BPE skips merges",
-        "A 256-byte base vocabulary covers any UTF-8 input, guaranteeing no [UNK] tokens",
-        "Bytes are smaller"
+        "Transformerで必須だから",
+        "Byte BPEはマージをスキップするから",
+        "256バイトの基本語彙で任意のUTF-8入力をカバーでき、[UNK]トークンが出ないことを保証できるから",
+        "バイトのほうが小さいから"
       ],
       "correct": 2,
-      "explanation": "Byte-level BPE starts from 256 bytes so every input encodes; nothing is OOV."
+      "explanation": "Byte-level BPEは256バイトから始めるため、すべての入力をエンコードできます。OOVになるものはありません。"
     },
     {
       "stage": "check",
-      "question": "How does the Unigram tokenizer build its vocabulary?",
+      "question": "Unigram tokenizerはどのように語彙を構築しますか？",
       "options": [
-        "Greedy IDF weighting",
-        "Start from a large candidate set, iteratively prune tokens whose removal least hurts corpus log-likelihood",
-        "Greedy frequent-pair merging",
-        "Random sampling"
+        "貪欲なIDF重み付け",
+        "大きな候補集合から始め、取り除いてもコーパスの対数尤度を最も損なわないトークンを反復的に刈り込む",
+        "頻出ペアの貪欲マージ",
+        "ランダムサンプリング"
       ],
       "correct": 1,
-      "explanation": "Unigram fits a unigram LM and iteratively removes the least useful tokens to reach target vocab size."
+      "explanation": "UnigramはUnigram LMを当てはめ、目標語彙サイズに達するまで最も有用性の低いトークンを反復的に取り除きます。"
     },
     {
       "stage": "check",
-      "question": "What distinguishes WordPiece's merge criterion from BPE's?",
+      "question": "WordPieceのマージ基準はBPEと何が違いますか？",
       "options": [
-        "WordPiece uses bytes",
-        "WordPiece is unsupervised",
-        "WordPiece merges pairs that maximize training-corpus likelihood, while BPE merges the most frequent pair",
-        "WordPiece skips merges"
+        "WordPieceはバイトを使う",
+        "WordPieceは教師なしである",
+        "WordPieceは学習コーパスの尤度を最大化するペアをマージし、BPEは最頻出ペアをマージする",
+        "WordPieceはマージをスキップする"
       ],
       "correct": 2,
-      "explanation": "WordPiece picks merges by likelihood; BPE picks by raw frequency."
+      "explanation": "WordPieceは尤度に基づいてマージを選び、BPEは生の頻度に基づいて選びます。"
     },
     {
       "stage": "check",
-      "question": "Which tool trains a tokenizer directly on raw multilingual Unicode text?",
+      "question": "生の多言語Unicodeテキストから直接トークナイザを学習できるツールはどれですか？",
       "options": [
         "spaCy",
         "tiktoken",
         "tokenizers-lite",
-        "SentencePiece (encodes whitespace as a special marker and trains BPE or Unigram)"
+        "SentencePiece（空白を特殊マーカーとしてエンコードし、BPEまたはUnigramを学習する）"
       ],
       "correct": 3,
-      "explanation": "SentencePiece trains BPE/Unigram on raw text without pre-tokenization; tiktoken only encodes."
+      "explanation": "SentencePieceは事前トークン化なしで生テキストからBPE/Unigramを学習します。tiktokenはエンコードだけを行います。"
     },
     {
       "stage": "post",
-      "question": "Why must production CI hash-check the deployed tokenizer.json?",
+      "question": "本番CIでデプロイされるtokenizer.jsonのハッシュチェックが必要なのはなぜですか？",
       "options": [
-        "Tokenizer drift produces different token IDs from those the model was trained on, silently corrupting outputs",
-        "Required by Hugging Face",
-        "To compress storage",
-        "It reduces vocabulary size"
+        "Tokenizer driftにより、モデルが学習したものと異なるトークンIDが生成され、出力が気づかないうちに壊れるから",
+        "Hugging Faceで必須だから",
+        "ストレージを圧縮するため",
+        "語彙サイズを減らせるから"
       ],
       "correct": 0,
-      "explanation": "Even small tokenizer changes shift IDs; a hash check catches drift before it reaches users."
+      "explanation": "小さなトークナイザ変更でもIDがずれます。ハッシュチェックにより、ユーザーに届く前にdriftを検出できます。"
     },
     {
       "stage": "post",
-      "question": "What is a common reason a single emoji takes many tokens?",
+      "question": "1つの絵文字が多くのトークンになる一般的な理由は何ですか？",
       "options": [
-        "Emojis are reserved",
-        "Multi-codepoint emojis encode into multiple UTF-8 bytes; without dedicated tokens each byte is its own subword",
-        "Emojis are stored as floats",
-        "Emojis are stop characters"
+        "絵文字は予約済みだから",
+        "複数コードポイントの絵文字は複数のUTF-8バイトにエンコードされ、専用トークンがない場合は各バイトがそれぞれサブワードになるから",
+        "絵文字はfloatとして保存されるから",
+        "絵文字は停止文字だから"
       ],
       "correct": 1,
-      "explanation": "Composite emojis encode as several bytes; byte-level tokenizers may use multiple tokens per glyph."
+      "explanation": "複合絵文字は複数バイトとしてエンコードされます。Byte-level tokenizerでは、1つの字形に複数トークンを使うことがあります。"
     },
     {
       "stage": "post",
-      "question": "What heuristic guides vocabulary size for a new monolingual transformer?",
+      "question": "新しい単一言語Transformerの語彙サイズを決める目安は何ですか？",
       "options": [
-        "Always 8000",
-        "Always 1M",
-        "Roughly 32k for models under 1B parameters; 50-100k for 1-10B; 200k+ for multilingual or frontier models",
-        "Match training corpus size"
+        "常に8000",
+        "常に1M",
+        "1B未満のモデルならおおよそ32k、1〜10Bなら50〜100k、多言語またはフロンティアモデルなら200k以上",
+        "学習コーパスサイズに合わせる"
       ],
       "correct": 2,
-      "explanation": "Vocab size scales with model and language coverage; these are rough community defaults."
+      "explanation": "語彙サイズはモデルと言語カバレッジに応じてスケールします。これらはコミュニティで使われる大まかなデフォルトです。"
     }
   ]
 }

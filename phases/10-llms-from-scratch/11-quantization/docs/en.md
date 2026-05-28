@@ -1,36 +1,36 @@
-# Quantization: Making Models Fit
+# 量子化: モデルを載せられる大きさにする
 
-> A 70B model in FP16 needs 140GB. Two A100s just for weights. Quantize to FP8: one 80GB GPU. INT4: a MacBook.
+> FP16 の 70B モデルには 140GB が必要です。重みだけで A100 が 2枚必要になります。FP8 に量子化すれば 80GB GPU 1枚。INT4 なら MacBook でも動かせます。
 
-**Type:** Build
-**Languages:** Python (with numpy)
-**Prerequisites:** Phase 10, Lessons 01-10 (LLMs from Scratch)
-**Time:** ~120 minutes
+**種類:** Build
+**言語:** Python (with numpy)
+**前提条件:** Phase 10, Lessons 01-10 (LLMs from Scratch)
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Implement symmetric and asymmetric quantization from FP16 to INT8 and INT4, including per-tensor and per-channel scaling
-- Calculate the memory savings from quantization and determine which precision fits a given GPU's VRAM
-- Explain the difference between post-training quantization (PTQ) and quantization-aware training (QAT)
-- Apply GPTQ or AWQ to quantize a real model and measure the accuracy-memory tradeoff on a benchmark
+- FP16 から INT8/INT4 への対称量子化と非対称量子化を、テンソル単位・チャネル単位のスケーリング込みで実装する
+- 量子化によるメモリ削減量を計算し、特定 GPU の VRAM に収まる数値精度を判断する
+- Post-training quantization (PTQ) と quantization-aware training (QAT) の違いを説明する
+- GPTQ または AWQ で実際のモデルを量子化し、ベンチマーク上で精度とメモリのトレードオフを測定する
 
-## The Problem
+## 問題
 
-Llama 3 70B has 70 billion parameters. Each parameter is a 16-bit floating point number. That is 140 billion bytes. 140GB. A single A100 has 80GB of VRAM. You cannot even load the weights, let alone run inference, on a single GPU. You need two A100s at $2/hour each just to serve one model.
+Llama 3 70B には 700億個のパラメータがあります。各パラメータは 16-bit 浮動小数点数なので、合計で 1,400億バイト、つまり 140GB です。A100 1枚の VRAM は 80GB です。単一 GPU では推論どころか重みをロードすることすらできません。1つのモデルを配信するだけで、1時間あたり$2の A100 が 2枚必要になります。
 
-But 16 bits per parameter is wasteful. Most weights in a neural network cluster near zero. The full dynamic range of FP16 (from 0.000000059 to 65,504) is almost entirely unused. If you measure the actual distribution of weights in Llama 3 70B, 95% of them fall between -0.1 and +0.1. You are burning 16 bits to represent values that could fit in 4.
+しかし、1パラメータあたり 16bit は無駄が多い形式です。ニューラルネットワークの重みの多くはゼロ付近に集まります。FP16 の全ダイナミックレンジ (0.000000059 から 65,504) は、ほぼ使われていません。Llama 3 70B の実際の重み分布を測ると、95% が -0.1 から +0.1 の間に収まります。4bit で表せる値のために 16bit を消費しているわけです。
 
-Quantization replaces high-precision numbers with lower-precision ones. FP16 to FP8 cuts memory in half. FP16 to INT4 cuts it to a quarter. That 140GB model becomes 35GB. It fits on a single consumer GPU. Push to 2-bit quantization (aggressive, lossy, but usable for some tasks) and the same model runs on a 16GB laptop.
+量子化は、高精度の数値を低精度の数値に置き換えます。FP16 から FP8 にするとメモリは半分になります。FP16 から INT4 にすると 4分の1 になります。140GB のモデルは 35GB になり、単一の民生用 GPU に収まります。さらに 2-bit 量子化まで進めると、攻めた lossy な手法ではありますが、一部タスクでは同じモデルを 16GB のノート PC で実行できます。
 
-The cost is accuracy. Every bit you remove destroys information. The question is how much accuracy you lose and where. A well-quantized INT4 model retains 95-99% of the original's quality on most benchmarks. A naive quantization to INT4 can destroy the model entirely. The difference is technique.
+代償は精度です。削る bit はそれぞれ情報を破壊します。問題は、どこでどれだけ精度を失うかです。適切に量子化された INT4 モデルは、多くのベンチマークで元モデルの品質の 95-99% を維持します。一方で、単純に INT4 へ量子化するとモデル全体が壊れることもあります。その差は手法にあります。
 
-Community quantizations of Llama 3 to INT4 with GPTQ show roughly 1-2 perplexity points lost on WikiText. Mistral released FP8 checkpoints of Mixtral 8x22B with zero measurable quality loss on MMLU. The GGUF format powers llama.cpp, running 70B models on MacBooks with M-series chips. Quantization is not a hack. It is the standard deployment path for every model larger than 7B.
+コミュニティで公開されている Llama 3 の GPTQ INT4 量子化では、WikiText 上の perplexity がだいたい 1-2 ポイント悪化します。Mistral は Mixtral 8x22B の FP8 チェックポイントを公開し、MMLU で測定可能な品質低下がないことを示しました。GGUF 形式は llama.cpp を支え、M-series チップ搭載 MacBook 上で 70B モデルを動かします。量子化はハックではありません。7B を超えるすべてのモデルにとって、標準的なデプロイ経路です。
 
-## The Concept
+## コンセプト
 
-### Number Formats: What Each Bit Does
+### 数値形式: 各 bit の役割
 
-Every floating-point number has three parts: sign, exponent, and mantissa (also called significand). The sign is one bit. The exponent determines the range (how large or small the number can be). The mantissa determines the precision (how many decimal places you get).
+すべての浮動小数点数は、符号、指数部、仮数部 (significand とも呼ばれる) の 3つで構成されます。符号は 1bit です。指数部は範囲、つまり数値をどれだけ大きく・小さくできるかを決めます。仮数部は精度、つまり何桁程度まで表せるかを決めます。
 
 ```
 FP32:  [1 sign] [8 exponent] [23 mantissa]  = 32 bits
@@ -42,25 +42,25 @@ INT8:  [1 sign] [7 value]                   = 8  bits (uniform steps)
 INT4:  [1 sign] [3 value]                   = 4  bits (16 levels total)
 ```
 
-**FP32** is full precision. 23 mantissa bits give you about 7 decimal digits of precision. Range: roughly 1.2 x 10^-38 to 3.4 x 10^38. Training used to happen exclusively in FP32. It still does for accumulation (running sums during matrix multiplication).
+**FP32** は full precision です。23bit の仮数部により、およそ 7桁の十進精度が得られます。範囲はおおよそ 1.2 x 10^-38 から 3.4 x 10^38 です。かつて学習はほぼ FP32 だけで行われていました。現在でも accumulation、つまり行列積中の累積和には使われます。
 
-**FP16** halves the bits. 10 mantissa bits give about 3.3 decimal digits. The exponent shrinks to 5 bits, reducing the range dramatically (max value ~65,504). This is fine for weights (which cluster near zero) but dangerous for activations and gradients that can spike during training. FP16 training requires loss scaling to prevent underflow.
+**FP16** は bit 数を半分にします。10bit の仮数部により、およそ 3.3桁の十進精度が得られます。指数部は 5bit に縮み、範囲は大きく狭まります (最大値は約 65,504)。ゼロ付近に集まる重みには十分ですが、学習中に急増することがある活性値や勾配には危険です。FP16 学習では underflow を防ぐために loss scaling が必要です。
 
-**BF16** (Brain Float 16) keeps the 8-bit exponent from FP32 but shrinks the mantissa to 7 bits. Same range as FP32, less precision than FP16. Google designed it specifically for deep learning. The intuition: range matters more than precision for neural networks. A gradient of 10^-20 that underflows to zero in FP16 survives in BF16. A weight of 0.07342 that rounds to 0.0734 in BF16 is close enough. Every modern training run uses BF16 or a BF16/FP32 mix.
+**BF16** (Brain Float 16) は FP32 と同じ 8bit の指数部を保ち、仮数部を 7bit に縮めます。範囲は FP32 と同じで、精度は FP16 より低くなります。Google はこれを deep learning 専用に設計しました。直感は、ニューラルネットワークでは精度より範囲が重要だというものです。FP16 ではゼロに underflow する 10^-20 の勾配も、BF16 では残ります。0.07342 の重みが BF16 で 0.0734 に丸められても十分近い値です。現代の学習のほとんどは BF16、または BF16/FP32 の混合で行われます。
 
-**FP8** comes in two flavors. E4M3 (4 exponent, 3 mantissa) is used for weights and activations during inference. E5M2 (5 exponent, 2 mantissa) is used for gradients during training where range matters more than precision. FP8 inference on H100 GPUs achieves 30-50% speedup over FP16 with negligible quality loss.
+**FP8** には 2種類あります。E4M3 (指数部 4bit、仮数部 3bit) は推論時の重みと活性値に使われます。E5M2 (指数部 5bit、仮数部 2bit) は、精度より範囲が重要な学習時の勾配に使われます。H100 GPU 上の FP8 推論は、品質低下をほぼ伴わずに FP16 より 30-50% 高速化します。
 
-**INT8** is an integer format. No exponent, no mantissa. Just 256 evenly spaced values from -128 to 127. You need a scale factor to map floating-point weights into this range. The advantage: integer arithmetic is faster and more power-efficient than floating-point. INT8 matrix multiplication on an A100 runs at 624 TOPS versus 312 TFLOPS for FP16.
+**INT8** は整数形式です。指数部も仮数部もありません。-128 から 127 までの等間隔な 256個の値だけです。浮動小数点の重みをこの範囲に写すには scale factor が必要です。利点は、整数演算が浮動小数点演算より高速で電力効率に優れることです。A100 上の INT8 行列積は 624 TOPS で動作し、FP16 の 312 TFLOPS を上回ります。
 
-**INT4** pushes further. Only 16 possible values. The scale factor does heavy lifting. Quality depends entirely on how you choose the scale and which weights you quantize. State-of-the-art INT4 methods (GPTQ, AWQ) retain 95%+ of original model quality.
+**INT4** はさらに踏み込みます。表せる値は 16個だけです。scale factor が大きな役割を担います。品質は、scale の選び方と、どの重みを量子化するかにほぼ完全に依存します。最先端の INT4 手法 (GPTQ, AWQ) は、元モデル品質の 95% 以上を維持します。
 
 ```mermaid
 graph LR
-    subgraph Formats["Number Format Landscape"]
+    subgraph Formats["数値形式の全体像"]
         direction TB
-        FP32["FP32\n32 bits\n4 bytes/param\nTraining gold standard"]
-        BF16["BF16\n16 bits\n2 bytes/param\nTraining default"]
-        FP16["FP16\n16 bits\n2 bytes/param\nInference baseline"]
+        FP32["FP32\n32 bits\n4 bytes/param\n学習の gold standard"]
+        BF16["BF16\n16 bits\n2 bytes/param\n学習の標準"]
+        FP16["FP16\n16 bits\n2 bytes/param\n推論の baseline"]
         FP8["FP8\n8 bits\n1 byte/param\n30-50% faster"]
         INT8["INT8\n8 bits\n1 byte/param\n2x throughput"]
         INT4["INT4\n4 bits\n0.5 bytes/param\n4x compression"]
@@ -80,53 +80,53 @@ graph LR
     style INT4 fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-### How Quantization Works
+### 量子化の仕組み
 
-The core operation is simple. Take a tensor of floating-point values, find a scale factor, multiply, round to the nearest integer, and store the integers plus the scale factor.
+中心となる操作は単純です。浮動小数点値の tensor を取り、scale factor を求め、掛け算し、最も近い整数に丸め、整数値と scale factor を保存します。
 
-**Quantize:**
+**量子化:**
 ```
 scale = max(abs(tensor)) / max_int_value
 quantized = round(tensor / scale)
 ```
 
-**Dequantize:**
+**逆量子化:**
 ```
 reconstructed = quantized * scale
 ```
 
-For INT8 with a symmetric range (-127 to 127):
+対称範囲 (-127 から 127) の INT8 では次のようになります。
 ```
 scale = max(abs(tensor)) / 127
 quantized = clamp(round(tensor / scale), -128, 127)
 ```
 
-The error is the rounding error. Each value can be off by at most `scale / 2`. The total error across a layer depends on how many weights you have and how sensitive the model is to perturbations in those weights.
+誤差は丸め誤差です。各値は最大で `scale / 2` だけずれる可能性があります。層全体の総誤差は、重みの数と、その重みへの摂動に対するモデルの敏感さによって決まります。
 
-**Per-tensor vs per-channel quantization.** Per-tensor uses one scale factor for the entire weight matrix. Simple but lossy: if one column has large values and another has small values, the small values lose most of their precision. Per-channel uses one scale factor per output channel (per row or column of the weight matrix). More overhead (you store N scale factors instead of 1) but dramatically better quality. Every production quantization method uses per-channel or finer granularity.
+**テンソル単位 vs チャネル単位の量子化。** テンソル単位では、重み行列全体に 1つの scale factor を使います。単純ですが lossy です。ある列の値が大きく、別の列の値が小さい場合、小さい値は精度の大半を失います。チャネル単位では、出力チャネルごと、つまり重み行列の行または列ごとに 1つの scale factor を使います。scale factor を 1個ではなく N個保存するため overhead は増えますが、品質は劇的に良くなります。本番用の量子化手法はすべて、チャネル単位か、それより細かい粒度を使います。
 
-**Asymmetric quantization** adds a zero-point offset: `quantized = round(tensor / scale) + zero_point`. This handles distributions that are not centered at zero. ReLU activations, for example, are always non-negative. Symmetric quantization wastes half the integer range on negative values that never appear. Asymmetric quantization maps the actual range [min, max] to the full integer range.
+**非対称量子化** は zero-point offset を追加します: `quantized = round(tensor / scale) + zero_point`。これはゼロ中心ではない分布を扱うための手法です。たとえば ReLU 活性値は常に非負です。対称量子化では、決して現れない負の値に整数範囲の半分を無駄に使ってしまいます。非対称量子化は、実際の範囲 [min, max] を整数範囲全体に写します。
 
-### Sensitivity Hierarchy
+### 感度の階層
 
-Not everything in a model tolerates quantization equally. There is a clear hierarchy.
+モデル内のすべてが同じように量子化に耐えられるわけではありません。明確な階層があります。
 
-**Weights (most robust).** Model weights change slowly during training and follow a roughly Gaussian distribution centered near zero. They quantize well. INT8 weights with per-channel scales produce nearly lossless results. INT4 requires more sophisticated methods but works.
+**重み (最も頑健)。** モデルの重みは学習中にゆっくり変化し、ゼロ付近を中心とするおおよそ Gaussian な分布に従います。重みは量子化しやすい対象です。チャネル単位 scale の INT8 重みは、ほぼ lossless な結果になります。INT4 にはより高度な手法が必要ですが、実用的に動きます。
 
-**Activations (moderate sensitivity).** Activations are the intermediate values flowing through the network during inference. They have wider dynamic range than weights and contain outliers. A single attention head might produce activation values 100x larger than the mean. These outliers are critical for model quality. Quantizing them naively destroys information. Solutions: keep outlier channels in higher precision (LLM.int8()), use per-token or per-channel activation scales.
+**活性値 (中程度の感度)。** 活性値は、推論中にネットワーク内を流れる中間値です。重みよりダイナミックレンジが広く、外れ値を含みます。単一の attention head が平均の 100倍の活性値を出すこともあります。こうした外れ値はモデル品質にとって重要です。単純に量子化すると情報が壊れます。対策として、外れ値チャネルを高精度のまま残す (LLM.int8())、token 単位または channel 単位の activation scale を使う、といった方法があります。
 
-**KV cache (high sensitivity).** The key-value cache stores attention states for all previous tokens. At long context lengths, the KV cache dominates memory. For a 70B model at 32K context, the KV cache alone is 40GB in FP16. Quantizing the KV cache to FP8 or INT8 saves massive memory but any error compounds across all future attention computations. The quality impact scales with sequence length.
+**KV cache (高い感度)。** key-value cache は、過去すべての token の attention state を保存します。長い context length では KV cache がメモリの大半を占めます。70B モデルの 32K context では、KV cache だけで FP16 で 40GB になります。KV cache を FP8 または INT8 に量子化すると大きくメモリを節約できますが、誤差は将来すべての attention 計算に蓄積します。品質への影響は sequence length に比例して大きくなります。
 
-**Attention logits (most sensitive).** The softmax in attention is highly sensitive to small changes in its inputs. A quantization error of 0.01 in a pre-softmax logit can shift the attention distribution meaningfully. Most quantization schemes keep attention computation in higher precision (FP16 or BF16) even when everything else is quantized.
+**Attention logits (最も高い感度)。** attention の softmax は入力の小さな変化に非常に敏感です。softmax 前の logit に 0.01 の量子化誤差があるだけで、attention 分布が意味のある形でずれることがあります。ほとんどの量子化スキームでは、他の部分を量子化しても attention 計算は高精度 (FP16 または BF16) のままにします。
 
 ```mermaid
 graph TD
-    subgraph Sensitivity["Quantization Sensitivity (Low to High)"]
+    subgraph Sensitivity["量子化感度 (低から高)"]
         direction LR
-        W["Weights\nGaussian, near zero\nINT4 works well"]
-        A["Activations\nWider range, outliers\nINT8 with care"]
-        KV["KV Cache\nErrors compound\nFP8 or INT8"]
-        ATT["Attention Logits\nSoftmax amplifies error\nKeep in FP16"]
+        W["重み\nGaussian, near zero\nINT4 works well"]
+        A["活性値\n広い範囲, 外れ値\nINT8 with care"]
+        KV["KV Cache\n誤差が蓄積\nFP8 or INT8"]
+        ATT["Attention Logits\nSoftmax が誤差を増幅\nKeep in FP16"]
     end
 
     W -->|"safe"| A
@@ -141,37 +141,37 @@ graph TD
 
 ### PTQ vs QAT
 
-**Post-Training Quantization (PTQ)** quantizes an already-trained model. No retraining. You take the FP16 weights, compute scale factors, round, and deploy. Fast (minutes to hours) and cheap. Works well for INT8 and FP8. For INT4, naive PTQ often fails badly because rounding errors accumulate. Advanced PTQ methods (GPTQ, AWQ) use calibration data to minimize the quantization error.
+**Post-Training Quantization (PTQ)** は、学習済みモデルを量子化します。再学習はしません。FP16 の重みを取り出し、scale factor を計算し、丸めて、デプロイします。高速 (数分から数時間) で安価です。INT8 と FP8 ではよく機能します。INT4 では丸め誤差が蓄積するため、素朴な PTQ は失敗しがちです。高度な PTQ 手法 (GPTQ, AWQ) は calibration data を使って量子化誤差を最小化します。
 
-**Quantization-Aware Training (QAT)** inserts fake quantization operations into the forward pass during training. The model learns to place its weights where rounding errors are small. Gradients flow through the fake quantization using the straight-through estimator (STE): pretend the rounding operation has gradient 1. QAT produces better INT4 and INT2 models than PTQ but requires a full training run. Google used QAT for Gemini's efficient serving. Meta used QAT for some Llama deployment targets.
+**Quantization-Aware Training (QAT)** は、学習中の forward pass に fake quantization 操作を挿入します。モデルは、丸め誤差が小さくなる位置に重みを置くよう学習します。勾配は straight-through estimator (STE) により fake quantization を通過します。つまり、丸め操作の勾配を 1 とみなします。QAT は PTQ より優れた INT4/INT2 モデルを作れますが、完全な学習実行が必要です。Google は Gemini の効率的な serving に QAT を使いました。Meta も一部の Llama deployment target に QAT を使いました。
 
-| Aspect | PTQ | QAT |
+| 観点 | PTQ | QAT |
 |--------|-----|-----|
-| Cost | Minutes to hours | Full training run |
-| Quality at INT8 | Excellent (< 0.1% loss) | Excellent |
-| Quality at INT4 | Good with GPTQ/AWQ (1-3% loss) | Better (< 1% loss) |
-| Quality at INT2 | Poor | Usable for some tasks |
-| Calibration data | 128-1024 examples | Full training dataset |
-| When to use | Deployment, iteration | Maximum quality at low bit-width |
+| コスト | 数分から数時間 | 完全な学習実行 |
+| INT8 での品質 | 優秀 (< 0.1% loss) | 優秀 |
+| INT4 での品質 | GPTQ/AWQ なら良好 (1-3% loss) | より良い (< 1% loss) |
+| INT2 での品質 | 悪い | 一部タスクでは利用可能 |
+| Calibration data | 128-1024 examples | 完全な training dataset |
+| 使う場面 | デプロイ、反復 | 低 bit-width で最大品質が必要な場合 |
 
 ### GPTQ, AWQ, GGUF
 
-**GPTQ (GPT Quantization)** is a one-shot PTQ method. It quantizes weights one layer at a time, using a small calibration dataset (128 examples is typical) to measure the Hessian (second-order information about how sensitive the output is to each weight). Weights that the Hessian says are important get quantized more carefully. GPTQ was the first method to make INT4 quantization practical for LLMs. The TheBloke on Hugging Face popularized GPTQ by releasing quantized versions of hundreds of models.
+**GPTQ (GPT Quantization)** は one-shot の PTQ 手法です。小さな calibration dataset (典型的には 128 examples) を使って Hessian、つまり各重みに対する出力感度の二次情報を測り、層ごとに重みを量子化します。Hessian が重要だと示す重みは、より慎重に量子化されます。GPTQ は、LLM の INT4 量子化を初めて実用的にした手法です。Hugging Face の TheBloke は、数百のモデルの量子化版を公開して GPTQ を普及させました。
 
-**AWQ (Activation-Aware Weight Quantization)** observes that a small fraction of weights (about 1%) are disproportionately important because they multiply with large activation values. AWQ identifies these salient weights using calibration data and scales them up before quantization (then scales the corresponding activations down). This keeps the important weights in a range where INT4 quantization is accurate. AWQ typically matches or slightly beats GPTQ quality while being 1.5-2x faster to apply.
+**AWQ (Activation-Aware Weight Quantization)** は、少数の重み (約 1%) が大きな activation value と掛け合わされるため、過度に重要になることに注目します。AWQ は calibration data を使ってこの salient weight を特定し、量子化前にそれらをスケールアップします (対応する activations はスケールダウンします)。これにより、重要な重みを INT4 量子化が正確に扱える範囲に保ちます。AWQ は通常 GPTQ と同等か少し上回る品質を出しつつ、適用は 1.5-2倍高速です。
 
-**GGUF (GPT-Generated Unified Format)** is the file format used by llama.cpp and its ecosystem. It supports mixed quantization: different layers get different bit widths. The first and last layers (embedding and output head) are typically kept at higher precision. Middle layers get INT4 or INT3. GGUF files are self-contained: weights, tokenizer, metadata all in one file. The format is designed for CPU inference and Apple Silicon, where loading the entire model into memory and running matrix multiplications on the CPU or Metal GPU is the standard path. Q4_K_M is the most popular GGUF quantization variant, balancing quality and size.
+**GGUF (GPT-Generated Unified Format)** は llama.cpp とその ecosystem で使われるファイル形式です。mixed quantization をサポートしており、層ごとに異なる bit width を使えます。最初と最後の層 (embedding と output head) は通常、高めの精度で保持します。中間層は INT4 または INT3 にします。GGUF ファイルは自己完結型で、重み、tokenizer、metadata が 1ファイルに入ります。この形式は CPU inference と Apple Silicon 向けに設計されています。モデル全体をメモリに読み込み、CPU または Metal GPU で行列積を走らせるのが標準的な経路です。Q4_K_M は最も人気のある GGUF 量子化 variant で、品質とサイズのバランスに優れます。
 
 ```mermaid
 graph TD
-    subgraph Methods["Quantization Methods"]
+    subgraph Methods["量子化手法"]
         direction TB
-        GPTQ_["GPTQ\nHessian-guided\nPer-layer optimization\nPopular on HuggingFace"]
-        AWQ_["AWQ\nActivation-aware\nSalient weight scaling\n1.5-2x faster than GPTQ"]
+        GPTQ_["GPTQ\nHessian-guided\n層ごとの最適化\nHuggingFace で人気"]
+        AWQ_["AWQ\nActivation-aware\nSalient weight scaling\nGPTQ より 1.5-2x 高速"]
         GGUF_["GGUF\nMixed precision\nCPU + Metal optimized\nllama.cpp ecosystem"]
     end
 
-    subgraph Use["Best For"]
+    subgraph Use["向いている用途"]
         GPU["GPU inference\n(CUDA, ROCm)"]
         EDGE["Edge / Laptop\n(CPU, Metal)"]
     end
@@ -185,19 +185,19 @@ graph TD
     style GGUF_ fill:#1a1a2e,stroke:#0f3460,color:#fff
 ```
 
-### Quality Measurement
+### 品質測定
 
-How do you know if your quantized model is still good?
+量子化後のモデルがまだ良いモデルかどうかは、どう判断すればよいでしょうか。
 
-**Perplexity.** The most common metric. Lower is better. Compute perplexity on a held-out dataset (WikiText-2 is standard) for both the original and quantized model. The delta tells you how much information the quantization destroyed. Rules of thumb: delta < 0.5 is excellent, 0.5-1.0 is good, 1.0-2.0 is acceptable for most tasks, > 2.0 means something went wrong.
+**Perplexity。** 最も一般的な指標です。低いほど良いです。元モデルと量子化モデルの両方について、held-out dataset (標準は WikiText-2) 上で perplexity を計算します。その差分が、量子化によってどれだけ情報が壊れたかを示します。目安として、差分 < 0.5 は優秀、0.5-1.0 は良好、1.0-2.0 は多くのタスクで許容範囲、> 2.0 は何かがうまくいっていません。
 
-**Task-specific benchmarks.** Run the quantized model on MMLU, HumanEval, GSM8K, or your custom eval suite. Compare against the original. Quantization affects different capabilities unevenly. Math and code tasks are more sensitive to precision loss than general knowledge.
+**タスク固有のベンチマーク。** MMLU、HumanEval、GSM8K、または独自の eval suite で量子化モデルを実行します。元モデルと比較します。量子化の影響は能力ごとに均一ではありません。数学やコードのタスクは、一般知識よりも精度低下に敏感です。
 
-**Output comparison.** Generate responses from both models on the same prompts and compare. LLM-as-judge (Lesson 10) works well here. Compute a win rate: what fraction of prompts does the quantized model match or beat the original on?
+**出力比較。** 同じ prompt に対して両方のモデルから応答を生成して比較します。ここでは LLM-as-judge (Lesson 10) がよく機能します。量子化モデルが元モデルと同等以上だった prompt の割合、つまり win rate を計算します。
 
-**Latency and throughput.** Quantization exists to make models faster and cheaper. Measure tokens per second, time to first token, and memory usage. A quantized model that is slower than the original is worse than useless.
+**Latency と throughput。** 量子化はモデルを速く安くするためにあります。tokens per second、time to first token、メモリ使用量を測定します。元モデルより遅い量子化モデルは役に立たないどころか逆効果です。
 
-| Model | Format | Size | Perplexity (WikiText-2) | MMLU | Tokens/sec (A100) |
+| モデル | 形式 | サイズ | Perplexity (WikiText-2) | MMLU | Tokens/sec (A100) |
 |-------|--------|------|------------------------|------|-------------------|
 | Llama 3 70B | FP16 | 140GB | 3.12 | 79.5% | 38 |
 | Llama 3 70B | FP8 | 70GB | 3.14 | 79.3% | 55 |
@@ -205,25 +205,25 @@ How do you know if your quantized model is still good?
 | Llama 3 70B | AWQ INT4 | 35GB | 4.18 | 78.1% | 75 |
 | Llama 3 70B | GGUF Q4_K_M | 40GB | 4.25 | 77.9% | 28 (CPU) |
 
-The pattern: FP8 is nearly free. INT4 costs 1-2 MMLU points but doubles throughput and quarters memory. The tradeoff is worth it for almost every deployment.
+パターンは明確です。FP8 はほぼ無料で使えます。INT4 は MMLU を 1-2 ポイント失いますが、throughput を倍増させ、メモリを 4分の1 にします。ほぼすべてのデプロイで、このトレードオフには価値があります。
 
-### Real Numbers
+### 実際の数字
 
-FP16 to FP8 on H100: 30-50% inference speedup, < 0.1% quality loss. This is the no-brainer quantization. Every H100 deployment should use it.
+H100 上の FP16 から FP8: 推論が 30-50% 高速化し、品質低下は < 0.1% です。これは迷う必要のない量子化です。すべての H100 deployment で使うべきです。
 
-FP16 to INT8 (LLM.int8()): 2x memory reduction, < 0.5% quality loss. The mixed-precision approach keeps outlier features in FP16 while quantizing everything else to INT8.
+FP16 から INT8 (LLM.int8()): メモリは 2分の1、品質低下は < 0.5% です。この mixed-precision approach では、外れ値 feature を FP16 のまま保ち、それ以外を INT8 に量子化します。
 
-FP16 to INT4 (GPTQ/AWQ): 4x memory reduction, 1-3% quality loss depending on the model and method. Enables 70B models on a single 48GB GPU.
+FP16 から INT4 (GPTQ/AWQ): メモリは 4分の1、品質低下はモデルと手法に応じて 1-3% です。単一の 48GB GPU で 70B モデルを動かせます。
 
-FP16 to INT4 (GGUF Q4_K_M): 3.5x memory reduction, 1-2% quality loss. Optimized for CPU inference. A 70B model at Q4_K_M is about 40GB and runs at 10-15 tokens/second on an M3 Max with 64GB.
+FP16 から INT4 (GGUF Q4_K_M): メモリは 3.5分の1、品質低下は 1-2% です。CPU inference 向けに最適化されています。Q4_K_M の 70B モデルは約 40GB で、64GB の M3 Max 上で 10-15 tokens/second で動作します。
 
-FP16 to INT2: 8x memory reduction, 5-15% quality loss. Only viable for specific narrow tasks where you can tolerate degradation. Research frontier, not production-ready for general use.
+FP16 から INT2: メモリは 8分の1、品質低下は 5-15% です。劣化を許容できる特定の狭いタスクでのみ成立します。研究の最前線であり、一般用途の本番にはまだ向きません。
 
-## Build It
+## 作ってみる
 
-### Step 1: Number Format Representations
+### Step 1: 数値形式の表現
 
-Build the bit-level representation of each format to see exactly what sign, exponent, and mantissa do.
+各形式の bit-level 表現を作り、符号、指数部、仮数部が何をしているのかを正確に確認します。
 
 ```python
 import numpy as np
@@ -307,9 +307,9 @@ def display_format_comparison(value):
     print(f"  {'FP8e4m3':<8} {fp8['value']:>14.6f} {abs(fp8['value'] - value):>12.8f} {fp8['sign']:>5} {fp8['exponent_bits']:>10} {fp8['mantissa_bits']:>25}")
 ```
 
-### Step 2: Symmetric Quantization (Per-Tensor and Per-Channel)
+### Step 2: 対称量子化 (テンソル単位とチャネル単位)
 
-The fundamental quantization operations. Per-tensor uses one scale for the whole matrix. Per-channel uses one scale per row or column.
+基本となる量子化操作です。テンソル単位では行列全体に 1つの scale を使います。チャネル単位では、行または列ごとに 1つの scale を使います。
 
 ```python
 def quantize_symmetric(tensor, num_bits=8):
@@ -367,9 +367,9 @@ def dequantize_asymmetric(quantized, scale, zero_point):
     return (quantized.astype(np.float64) - zero_point) * scale
 ```
 
-### Step 3: Quality Measurement
+### Step 3: 品質測定
 
-Measure how much information quantization destroys. Mean squared error, signal-to-noise ratio, and cosine similarity between original and reconstructed tensors.
+量子化がどれだけ情報を破壊するかを測定します。元の tensor と復元した tensor の間で、mean squared error、signal-to-noise ratio、cosine similarity を計算します。
 
 ```python
 def quantization_error(original, reconstructed):
@@ -416,9 +416,9 @@ def compare_quantization_methods(tensor, num_bits=8):
     return {"per_tensor": err_pt, "per_channel": err_pc, "asymmetric": err_asym}
 ```
 
-### Step 4: Bit-Width Sweep
+### Step 4: Bit-Width Sweep (bit 幅の掃引)
 
-Quantize the same tensor at different bit widths (2, 3, 4, 8, 16) and measure quality at each level. This shows exactly where the quality cliff is.
+同じ tensor を異なる bit width (2, 3, 4, 8, 16) で量子化し、それぞれの品質を測定します。これにより、品質が急落する位置が正確に見えます。
 
 ```python
 def bit_width_sweep(tensor):
@@ -440,9 +440,9 @@ def bit_width_sweep(tensor):
     return results
 ```
 
-### Step 5: Sensitivity Experiment
+### Step 5: 感度実験
 
-Simulate quantizing different parts of a transformer and measure which components are most sensitive. This demonstrates the sensitivity hierarchy: weights < activations < KV cache < attention.
+Transformer の異なる部分を量子化する状況をシミュレートし、どの component が最も敏感かを測定します。これにより、重み < 活性値 < KV cache < attention という感度の階層を確認できます。
 
 ```python
 def simulate_transformer_layer(input_data, weights, kv_scale=1.0):
@@ -520,9 +520,9 @@ def sensitivity_experiment(batch_size=2, seq_len=16, d_model=64, num_bits=8):
     return experiments
 ```
 
-### Step 6: Simulated GPTQ
+### Step 6: GPTQ のシミュレーション
 
-GPTQ quantizes one column at a time, using the Hessian to decide how to distribute the rounding error. This is a simplified version that captures the core idea: use calibration data to measure weight importance, then quantize the least important weights more aggressively.
+GPTQ は Hessian を使って丸め誤差の分配方法を決めながら、1列ずつ量子化します。ここでは中核的な考え方を捉えた簡略版を実装します。calibration data で重みの重要度を測り、重要度の低い重みをより積極的に量子化します。
 
 ```python
 def simulated_gptq(weight_matrix, calibration_inputs, num_bits=4):
@@ -580,9 +580,9 @@ def dequantize_gptq(quantized, scales):
     return result
 ```
 
-### Step 7: AWQ Simulation
+### Step 7: AWQ のシミュレーション
 
-AWQ identifies salient weights (those that multiply with large activations) and protects them by scaling before quantization.
+AWQ は salient weights、つまり大きな activations と掛け合わされる重みを特定し、量子化前にスケーリングして保護します。
 
 ```python
 def simulated_awq(weight_matrix, calibration_inputs, num_bits=4, salient_fraction=0.01):
@@ -622,9 +622,9 @@ def simulated_awq(weight_matrix, calibration_inputs, num_bits=4, salient_fractio
                     "n_salient": n_salient}
 ```
 
-### Step 8: Full Pipeline
+### Step 8: フルパイプライン
 
-Wire everything together. Compare naive quantization, per-channel, GPTQ, and AWQ on the same weight matrix.
+すべてをつなぎ合わせます。同じ重み行列に対して、naive quantization、チャネル単位、GPTQ、AWQ を比較します。
 
 ```python
 def full_quantization_comparison(d_in=256, d_out=512, num_bits=4, n_calibration=32):
@@ -767,9 +767,9 @@ if __name__ == "__main__":
     print("=" * 70)
 ```
 
-## Use It
+## 使ってみる
 
-### Quantizing with AutoGPTQ
+### AutoGPTQ で量子化する
 
 ```python
 # pip install auto-gptq transformers
@@ -791,7 +791,7 @@ if __name__ == "__main__":
 # model.save_quantized("llama-8b-gptq-int4")
 ```
 
-### Quantizing with AutoAWQ
+### AutoAWQ で量子化する
 
 ```python
 # pip install autoawq
@@ -806,7 +806,7 @@ if __name__ == "__main__":
 # model.save_quantized("llama-8b-awq-int4")
 ```
 
-### Converting to GGUF
+### GGUF に変換する
 
 ```bash
 # pip install llama-cpp-python
@@ -814,54 +814,54 @@ if __name__ == "__main__":
 # llama-server -m llama-8b-q4km.gguf -c 4096 -ngl 99
 ```
 
-### Serving with vLLM
+### vLLM で配信する
 
 ```python
 # pip install vllm
 # vllm serve model-awq --quantization awq --dtype half --max-model-len 8192
 ```
 
-vLLM natively supports AWQ and GPTQ models. It handles the dequantization during matrix multiplication and uses paged attention for the KV cache. For FP8 on H100, add `--dtype float8_e4m3fn`.
+vLLM は AWQ と GPTQ モデルをネイティブにサポートしています。行列積の中で逆量子化を処理し、KV cache には paged attention を使います。H100 で FP8 を使う場合は `--dtype float8_e4m3fn` を追加します。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-quantization.md`, a decision framework for choosing the right quantization strategy. Given your model size, target hardware, and quality requirements, it tells you which format, method, and validation steps to use. It includes memory budget calculations, per-component precision recommendations, and deployment recipes for vLLM, llama.cpp, and TensorRT-LLM.
+このレッスンでは `outputs/skill-quantization.md` を作ります。これは適切な量子化戦略を選ぶための意思決定フレームワークです。モデルサイズ、対象 hardware、品質要件を入力すると、使うべき形式、手法、検証手順を判断できます。memory budget の計算、component ごとの推奨精度、vLLM、llama.cpp、TensorRT-LLM 向けの deployment recipe を含みます。
 
-## Exercises
+## 演習
 
-1. Implement group quantization. Instead of one scale per channel, use one scale per group of 128 weights within a channel. This is what GPTQ and AWQ actually use. Compare group sizes of 32, 64, 128, and 256 on the same weight matrix. Smaller groups give better quality but more storage overhead for scale factors.
+1. group quantization を実装してください。チャネルごとに 1つの scale を使うのではなく、チャネル内の 128 個の重みごとに 1つの scale を使います。これは GPTQ と AWQ が実際に使っている方式です。同じ重み行列で group size 32、64、128、256 を比較してください。小さい group は品質が良くなりますが、scale factor の保存 overhead が増えます。
 
-2. Build a mixed-precision quantizer. Quantize the first and last layers of a multi-layer network at INT8 while quantizing middle layers at INT4. Compare end-to-end output quality against uniform INT4 and uniform INT8. Measure the memory savings compared to all-INT8.
+2. mixed-precision quantizer を作ってください。多層ネットワークの最初と最後の層を INT8、中間層を INT4 で量子化します。一律 INT4、一律 INT8 と end-to-end の出力品質を比較してください。all-INT8 と比べたメモリ削減量も測定します。
 
-3. Implement the straight-through estimator (STE) for quantization-aware training. Insert fake quantize/dequantize operations in the forward pass of a simple two-layer network trained on a regression task. Compare final loss between a model trained normally (then PTQ to INT4) versus a model trained with QAT from the start.
+3. quantization-aware training のための straight-through estimator (STE) を実装してください。回帰タスクで学習する単純な 2層ネットワークの forward pass に、fake quantize/dequantize 操作を挿入します。通常通り学習してから INT4 に PTQ したモデルと、最初から QAT で学習したモデルの最終 loss を比較してください。
 
-4. Build an outlier-aware quantizer inspired by LLM.int8(). Detect channels where the activation magnitude exceeds 6x the mean. Keep those channels in FP16 and quantize everything else to INT8. Measure end-to-end quality on the transformer layer from Step 5 with varying outlier thresholds (3x, 6x, 10x).
+4. LLM.int8() に着想を得た outlier-aware quantizer を作ってください。activation magnitude が平均の 6倍を超えるチャネルを検出します。それらのチャネルは FP16 のまま保持し、それ以外を INT8 に量子化します。Step 5 の transformer layer で、outlier threshold (3x, 6x, 10x) を変えながら end-to-end の品質を測定してください。
 
-5. Implement a quantization quality dashboard. Given a weight matrix, compute and display: the weight distribution histogram, the quantization error distribution, per-channel scale factors, the worst-quantized channels (highest reconstruction error), and the cosine similarity between original and quantized outputs across 100 random inputs. Identify which channels should be kept at higher precision.
+5. 量子化品質 dashboard を実装してください。重み行列を入力として、weight distribution histogram、quantization error distribution、チャネル単位の scale factor、最も量子化が悪いチャネル (reconstruction error が最大のもの)、100個の random input に対する元出力と量子化出力の cosine similarity を計算して表示します。どのチャネルを高精度のまま保持すべきかを特定してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| FP16 | "Half precision" | 16-bit float with 5 exponent bits and 10 mantissa bits, max value 65,504, standard inference format |
-| BF16 | "Brain float" | 16-bit float with 8 exponent bits (same range as FP32) and 7 mantissa bits, designed by Google for training |
-| FP8 | "Eight-bit float" | Two variants: E4M3 (inference, more precision) and E5M2 (training, more range), native on H100 |
-| INT8 | "Eight-bit integer" | 256 uniformly spaced values from -128 to 127, needs a scale factor to map from floats |
-| INT4 | "Four-bit integer" | 16 levels total, requires sophisticated methods (GPTQ, AWQ) to maintain quality |
-| Per-channel quantization | "One scale per row" | Uses a separate scale factor for each output channel instead of one for the whole tensor, dramatically reduces error |
-| GPTQ | "The Hessian method" | Post-training quantization using second-order information to minimize output error, one layer at a time |
-| AWQ | "Activation-aware" | Scales salient weights (those multiplied by large activations) before quantization to protect them |
-| GGUF | "The llama.cpp format" | Self-contained model file with mixed-precision layers, optimized for CPU and Apple Silicon inference |
-| PTQ | "Quantize after training" | Convert a trained model's weights to lower precision without retraining, fast but limited at extreme compression |
-| QAT | "Quantize during training" | Insert fake quantization into the forward pass so the model learns to tolerate rounding, better at INT4/INT2 |
-| Calibration data | "The 128 examples" | A small dataset run through the model to compute activation statistics for setting scale factors |
-| Scale factor | "The multiplier" | Converts between floating-point range and integer range: `float_val = int_val * scale` |
-| Perplexity delta | "How much worse" | Difference in perplexity between original and quantized model, < 0.5 is excellent, > 2.0 is a problem |
+| FP16 | 「半精度」 | 5bit の指数部と 10bit の仮数部を持つ 16-bit float。最大値は 65,504。標準的な推論形式 |
+| BF16 | 「Brain float」 | 8bit の指数部 (FP32 と同じ範囲) と 7bit の仮数部を持つ 16-bit float。Google が学習向けに設計 |
+| FP8 | 「8-bit float」 | 2つの variant がある。E4M3 (推論向け、より高精度) と E5M2 (学習向け、より広い範囲)。H100 でネイティブ対応 |
+| INT8 | 「8-bit integer」 | -128 から 127 までの等間隔な 256個の値。float から写すには scale factor が必要 |
+| INT4 | 「4-bit integer」 | 合計 16 levels。品質維持には高度な手法 (GPTQ, AWQ) が必要 |
+| Per-channel quantization | 「行ごとに 1つの scale」 | tensor 全体に 1つではなく、出力チャネルごとに別々の scale factor を使い、誤差を大きく減らす |
+| GPTQ | 「Hessian を使う手法」 | 二次情報を使って出力誤差を最小化する post-training quantization。層ごとに処理する |
+| AWQ | 「Activation-aware」 | 量子化前に salient weights (大きな activations と掛け合わされる重み) をスケールして保護する |
+| GGUF | 「llama.cpp の形式」 | mixed-precision layers を持つ自己完結型モデルファイル。CPU と Apple Silicon inference 向けに最適化 |
+| PTQ | 「学習後に量子化する」 | 再学習なしで学習済みモデルの重みを低精度に変換する。高速だが極端な圧縮では限界がある |
+| QAT | 「学習中に量子化する」 | forward pass に fake quantization を挿入し、モデルが丸めに耐えるよう学習させる。INT4/INT2 で有利 |
+| Calibration data | 「128個の例」 | scale factor 設定用の activation statistics を計算するためにモデルへ流す小さな dataset |
+| Scale factor | 「倍率」 | 浮動小数点範囲と整数範囲を変換する係数: `float_val = int_val * scale` |
+| Perplexity delta | 「どれだけ悪化したか」 | 元モデルと量子化モデルの perplexity 差。< 0.5 は優秀、> 2.0 は問題 |
 
-## Further Reading
+## 参考資料
 
-- [Frantar et al., 2022 -- "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers"](https://arxiv.org/abs/2210.17323) -- the paper that made INT4 quantization practical for LLMs using Hessian-guided weight rounding
-- [Lin et al., 2023 -- "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration"](https://arxiv.org/abs/2306.00978) -- protecting salient weights by scaling before quantization, matching or beating GPTQ
-- [Dettmers et al., 2022 -- "LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale"](https://arxiv.org/abs/2208.07339) -- mixed-precision INT8 that keeps outlier features in FP16, enabling INT8 inference without quality loss
-- [Xiao et al., 2023 -- "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models"](https://arxiv.org/abs/2211.10438) -- migrating quantization difficulty from activations to weights for W8A8 deployment
-- [Micikevicius et al., 2022 -- "FP8 Formats for Deep Learning"](https://arxiv.org/abs/2209.05433) -- the NVIDIA/ARM/Intel paper defining E4M3 and E5M2 formats now native on H100
+- [Frantar et al., 2022 -- "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers"](https://arxiv.org/abs/2210.17323) -- Hessian-guided weight rounding により、LLM の INT4 量子化を実用化した論文
+- [Lin et al., 2023 -- "AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration"](https://arxiv.org/abs/2306.00978) -- 量子化前の scaling で salient weights を保護し、GPTQ と同等か上回る品質を得る手法
+- [Dettmers et al., 2022 -- "LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale"](https://arxiv.org/abs/2208.07339) -- outlier features を FP16 に保つ mixed-precision INT8 により、品質低下なしの INT8 inference を可能にする手法
+- [Xiao et al., 2023 -- "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models"](https://arxiv.org/abs/2211.10438) -- W8A8 deployment のために、量子化の難しさを activations から weights へ移す手法
+- [Micikevicius et al., 2022 -- "FP8 Formats for Deep Learning"](https://arxiv.org/abs/2209.05433) -- H100 でネイティブ対応された E4M3 と E5M2 形式を定義した NVIDIA/ARM/Intel の論文

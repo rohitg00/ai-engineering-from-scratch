@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the core insight behind LoRA (Low-Rank Adaptation)?",
-    "options": ["Most weights don't matter", "Weight updates during fine-tuning have low intrinsic rank, so they can be approximated by two small matrices instead of updating the full weight matrix", "Fine-tuning only needs the last layer", "Smaller models are always better"],
+    "question": "LoRA（Low-Rank Adaptation）の中核的な洞察は何ですか。",
+    "options": [
+      "ほとんどのweightsは重要ではない",
+      "fine-tuning中のweight updatesはlow intrinsic rankなので、full weight matrixを更新する代わりに2つの小さな行列で近似できる",
+      "fine-tuningには最後のlayerだけで十分",
+      "小さいmodelsは常に良い"
+    ],
     "correct": 1,
-    "explanation": "Aghajanyan et al. showed that fine-tuning updates occupy a low-dimensional subspace. LoRA exploits this by representing the update as W + BA where B (d x r) and A (r x d) have small rank r, typically 8-64.",
+    "explanation": "Aghajanyan et al.はfine-tuning updatesが低次元部分空間に存在することを示しました。LoRAは更新をW + BAとして表し、B (d x r) と A (r x d) のrank rを小さく、通常8-64にすることでこれを利用します。",
     "stage": "pre"
   },
   {
-    "question": "How much memory does LoRA save compared to full fine-tuning of an 8B model?",
-    "options": ["No savings", "From ~56GB down to ~6GB by training <1% of parameters while keeping base weights frozen", "50% reduction", "Only saves disk space"],
+    "question": "LoRAは8B modelのfull fine-tuningと比べてどれくらいmemoryを節約しますか。",
+    "options": [
+      "節約しません",
+      "base weightsをfreezeし、<1%のparametersだけをtrainingすることで、約56GBから約6GBへ下げます",
+      "50%削減します",
+      "disk spaceだけを節約します"
+    ],
     "correct": 1,
-    "explanation": "Full fine-tuning needs gradients and optimizer states for all 8B parameters (~56GB). LoRA freezes base weights and only trains adapter matrices (~80M parameters at rank 16), needing ~6GB total.",
+    "explanation": "full fine-tuningは8B parametersすべてのgradientsとoptimizer statesが必要です（約56GB）。LoRAはbase weightsをfreezeし、adapter matrices（rank 16で約80M parameters）だけをtrainするため、合計約6GBで済みます。",
     "stage": "pre"
   },
   {
-    "question": "What is QLoRA?",
-    "options": ["Quantized LoRA: the base model is loaded in 4-bit precision while LoRA adapters train in 16-bit, combining memory savings from both techniques", "A faster version of LoRA", "LoRA applied to quantized activations", "A different fine-tuning algorithm"],
+    "question": "QLoRAとは何ですか。",
+    "options": [
+      "Quantized LoRA: base modelを4-bit precisionでloadし、LoRA adaptersを16-bitでtrainして、両方のmemory savingsを組み合わせる手法",
+      "LoRAの高速版",
+      "quantized activationsへ適用するLoRA",
+      "別のfine-tuning algorithm"
+    ],
     "correct": 0,
-    "explanation": "QLoRA (Dettmers et al.) loads the frozen base model in 4-bit (NF4 quantization) while training LoRA adapters in FP16/BF16. This allows fine-tuning a 7B model on a single consumer GPU with 6GB VRAM.",
+    "explanation": "QLoRA（Dettmers et al.）はfrozen base modelを4-bit（NF4 quantization）でloadし、LoRA adaptersをFP16/BF16でtrainします。これにより、単一consumer GPUの6GB VRAMで7B modelをfine-tuneできます。",
     "stage": "post"
   },
   {
-    "question": "What does the 'rank' parameter (r) in LoRA control?",
-    "options": ["The number of training epochs", "The capacity of the adapter: higher rank captures more complex adaptations but uses more parameters and memory", "The learning rate", "The number of layers to fine-tune"],
+    "question": "LoRAの'rank' parameter（r）は何を制御しますか。",
+    "options": [
+      "training epochsの数",
+      "adapterのcapacityです。高いrankはより複雑なadaptationsを捉えられますが、parametersとmemoryを多く使います",
+      "learning rate",
+      "fine-tuneするlayers数"
+    ],
     "correct": 1,
-    "explanation": "Rank r determines the size of adapter matrices A (r x d) and B (d x r). Rank 4 trains very few parameters (fast, cheap). Rank 64 trains more parameters (more expressive). Most tasks work well with rank 8-32.",
+    "explanation": "rank rはadapter matrices A (r x d) と B (d x r) のサイズを決めます。Rank 4は非常に少ないparametersをtrainします（速く安い）。Rank 64はより多くのparametersをtrainします（表現力が高い）。多くのtasksはrank 8-32でうまく動きます。",
     "stage": "post"
   },
   {
-    "question": "What happens when you merge LoRA weights back into the base model?",
-    "options": ["The model becomes larger", "The adapter matrices are added to the base weights (W_merged = W_base + B*A), producing a standard model with no inference overhead", "The model needs to be retrained", "Merging is not possible"],
+    "question": "LoRA weightsをbase modelへmergeすると何が起きますか。",
+    "options": [
+      "modelが大きくなります",
+      "adapter matricesがbase weightsに加算され（W_merged = W_base + B*A）、inference overheadのないstandard modelになります",
+      "modelを再学習する必要があります",
+      "mergeはできません"
+    ],
     "correct": 1,
-    "explanation": "Since LoRA adds W_base + B*A, you can compute B*A once and add it to W_base permanently. The merged model has the same architecture and inference speed as the original, with no adapter overhead.",
+    "explanation": "LoRAはW_base + B*Aを追加するため、B*Aを一度計算してW_baseへ永久に加えられます。merged modelは元と同じarchitectureとinference speedを持ち、adapter overheadはありません。",
     "stage": "post"
   }
 ]

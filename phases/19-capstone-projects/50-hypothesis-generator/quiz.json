@@ -1,46 +1,46 @@
 {
   "lesson": "50-hypothesis-generator",
-  "title": "Hypothesis Generator",
+  "title": "仮説ジェネレーター",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does the generator produce a ranked queue instead of a single hypothesis?",
+      "question": "generator が単一の仮説ではなく順位付き queue を生成する理由は何ですか?",
       "options": [
-        "Because the parser cannot read a single block",
-        "Because the runner needs depth so it can pop the next hypothesis when the first one fails",
-        "Because the mock model only emits lists",
-        "Because the embedding requires more than one input"
+        "parser が単一 block を読めないため",
+        "runner が深さを必要とし、最初の仮説が失敗したとき次の仮説を pop できるようにするため",
+        "mock model が list しか出力しないため",
+        "embedding が複数入力を必要とするため"
       ],
       "correct": 1,
-      "explanation": "The point of generating a queue is to amortise sampling cost across the loop. When the first hypothesis fails the runner pops the next without a fresh sampling pass."
+      "explanation": "queue を生成する目的は sampling cost を loop 全体で amortise することです。最初の仮説が失敗しても、新しい sampling pass なしで runner が次を pop できます。"
     },
     {
       "stage": "pre",
-      "question": "What does the temperature ramp accomplish on each pass?",
+      "question": "temperature ramp は各 pass で何をしますか?",
       "options": [
-        "It raises the parser tolerance",
-        "It widens the sampling distribution so later drafts can land further from the seed",
-        "It increases the embedding dimension",
-        "It triples the seed value"
+        "parser の許容度を上げる",
+        "sampling distribution を広げ、後半の draft が seed からより離れた場所に着地できるようにする",
+        "embedding dimension を増やす",
+        "seed 値を三倍にする"
       ],
       "correct": 1,
-      "explanation": "Higher temperature widens the sampling distribution. The ramp encourages each pass to drift further so the novelty filter has something to do."
+      "explanation": "高い temperature は sampling distribution を広げます。ramp は各 pass がより遠くへ drift することを促し、novelty filter が働く余地を作ります。"
     },
     {
       "stage": "check",
-      "question": "When does the novelty filter reject a draft?",
+      "question": "novelty filter はいつ draft を reject しますか?",
       "options": [
-        "When its rank score is below the threshold",
-        "When its minimum cosine distance to any prior survivor falls below the novelty threshold",
-        "When its parser passes but its tag count is wrong",
-        "When its draft pass is greater than the queue length"
+        "rank score が threshold を下回ったとき",
+        "prior survivor への最小 cosine distance が novelty threshold を下回ったとき",
+        "parser は通ったが tag count が間違っているとき",
+        "draft pass が queue length より大きいとき"
       ],
       "correct": 1,
-      "explanation": "Novelty is the minimum distance to prior survivors. If that distance is below the threshold the draft is a near duplicate and is dropped."
+      "explanation": "novelty は prior survivor への最小 distance です。その distance が threshold 未満なら近重複として落とします。"
     },
     {
       "stage": "check",
-      "question": "Which three components combine in the rank score?",
+      "question": "rank score を構成する三つの component はどれですか?",
       "options": [
         "Latency, throughput, cost",
         "Novelty, specificity, testability",
@@ -48,31 +48,31 @@
         "Variables, metric, baseline length"
       ],
       "correct": 1,
-      "explanation": "The rank score is a weighted sum of novelty, specificity, and testability. Each sub score lives between zero and one."
+      "explanation": "rank score は novelty、specificity、testability の weighted sum です。各 sub score は0から1の範囲です。"
     },
     {
       "stage": "check",
-      "question": "Why is the mock language model keyed on a temperature bucket rather than the raw float?",
+      "question": "mock language model が raw float ではなく temperature bucket を key にする理由は何ですか?",
       "options": [
-        "Because floats cannot be hashed",
-        "Because buckets make the schedule discrete so a small temperature change can pick a different scripted draft",
-        "Because the parser needs an integer",
-        "Because the embedding requires it"
+        "float は hash できないため",
+        "bucket により schedule が discrete になり、小さな temperature 変化で別の scripted draft を選べるため",
+        "parser が integer を必要とするため",
+        "embedding がそれを要求するため"
       ],
       "correct": 1,
-      "explanation": "Buckets discretise the continuous schedule. Two adjacent temperatures can map to different buckets and pull different drafts from the scripted bank, which is how the mock simulates varied sampling."
+      "explanation": "bucket は連続的な schedule を離散化します。隣り合う temperature が別 bucket に map されることで、scripted bank から異なる draft を引けます。"
     },
     {
       "stage": "check",
-      "question": "What happens if every draft from the mock model fails the parser?",
+      "question": "mock model のすべての draft が parser に失敗した場合、何が起きますか?",
       "options": [
-        "The generator raises a hard error",
-        "The queue is empty and each pass logs a parse rejection so the failure mode is auditable",
-        "The runner retries with a fresh prompt",
-        "The novelty threshold is lowered automatically"
+        "generator が hard error を raise する",
+        "queue は空になり、各 pass は parse rejection を log するため failure mode を監査できる",
+        "runner が fresh prompt で retry する",
+        "novelty threshold が自動的に下がる"
       ],
       "correct": 1,
-      "explanation": "Parser failures are recorded as logs with a parse reject reason. The queue can come back empty without crashing the loop, and the logs explain why."
+      "explanation": "parser failure は parse reject reason 付きの log として記録されます。loop を crash させずに空 queue が返り、log が理由を説明します。"
     }
   ]
 }

@@ -1,35 +1,35 @@
 ---
 name: skill-residual-block-reviewer
-description: Review a PyTorch residual block for skip-connection correctness, BN placement, activation order, and shape alignment
+description: PyTorch の residual block について、skip-connection の正しさ、BN placement、activation order、shape alignment をレビューする
 version: 1.0.0
 phase: 4
 lesson: 3
 tags: [computer-vision, resnet, code-review, pytorch]
 ---
 
-# Residual Block Reviewer
+# 残差ブロックレビュー
 
-A focused reviewer for any PyTorch `nn.Module` claiming to implement a residual block. Catches the four mistakes that account for almost every broken ResNet rewrite.
+residual block を実装している PyTorch `nn.Module` のための、焦点を絞ったレビュー用 skill です。壊れた ResNet 再実装のほぼすべてを占める 4 つのミスを検出します。
 
-## When to use
+## 使う場面
 
-- Someone wrote a custom BasicBlock or Bottleneck and loss is NaN or accuracy is stuck.
-- You are porting a block from one framework to another and want to verify equivalence.
-- You are reviewing a PR that changes ResNet internals (pre-activation, squeeze-excite, anti-alias).
-- A model ships fine on CIFAR-sized input but crashes on ImageNet resolution because the shortcut is wrong.
+- 誰かが custom BasicBlock または Bottleneck を書き、loss が NaN になるか accuracy が伸びない。
+- block をある framework から別の framework へ port しており、等価性を確認したい。
+- ResNet internals (pre-activation, squeeze-excite, anti-alias) を変える PR をレビューしている。
+- model は CIFAR サイズ入力では問題なく ship できるが、shortcut が誤っているため ImageNet resolution で crash する。
 
-## Inputs
+## 入力
 
-- A PyTorch class definition, either as source text or an importable path.
-- Optional `variant`: `basic` | `bottleneck` | `preact` | `seblock`.
+- PyTorch class definition。source text または importable path のどちらでもよい。
+- 任意の `variant`: `basic` | `bottleneck` | `preact` | `seblock`。
 
-## Four checks
+## 4 つのチェック
 
-### 1. Shortcut shape alignment
+### 1. shortcut の shape alignment
 
-For any block with `stride != 1` or `in_channels != out_channels`, the shortcut path **must** be a shape-matching module — typically a 1x1 conv plus BN. A bare `nn.Identity()` in this case is a guaranteed shape-mismatch error at forward time.
+`stride != 1` または `in_channels != out_channels` である block では、shortcut path は shape を合わせる module でなければなりません。通常は 1x1 conv と BN です。この場合に裸の `nn.Identity()` を使うと、forward 時に確実に shape-mismatch error になります。
 
-Diagnostic:
+診断:
 ```
 [shortcut]
   detected:  nn.Identity | 1x1 Conv + BN | 1x1 Conv + BN + ReLU | other
@@ -37,40 +37,40 @@ Diagnostic:
   verdict:   ok | wrong | unnecessarily heavy
 ```
 
-### 2. BN placement relative to the addition
+### 2. addition に対する BN placement
 
-The addition `out + shortcut(x)` must happen **before** the final ReLU (post-activation, original ResNet) or the final ReLU must be absent entirely (pre-activation ResNet v2). A block that applies ReLU in the main branch and then adds a raw shortcut produces an asymmetric activation range that hurts training.
+addition `out + shortcut(x)` は、final ReLU より **前** に行う必要があります (post-activation、original ResNet)。または final ReLU を完全になくします (pre-activation ResNet v2)。main branch で ReLU を適用してから raw shortcut を足す block は、activation range が非対称になり、training を悪化させます。
 
-Diagnostic:
+診断:
 ```
 [activation order]
   pattern:  post-act (conv-BN-ReLU-conv-BN-add-ReLU) | pre-act (BN-ReLU-conv-BN-ReLU-conv-add) | other
   verdict:  ok | suspect
 ```
 
-### 3. Bias on conv layers
+### 3. conv layer の bias
 
-Convs followed immediately by BatchNorm should have `bias=False`. BN's beta already parameterises the bias, so an extra conv bias wastes parameters and can slow convergence.
+直後に BatchNorm が続く conv は `bias=False` にするべきです。BN の beta がすでに bias を parameterise するため、追加の conv bias はパラメータを無駄にし、convergence を遅くすることがあります。
 
-Diagnostic:
+診断:
 ```
 [bias]
   convs with BN and bias=True: <count>
   recommended fix: set bias=False on those layers
 ```
 
-### 4. In-place ReLU and autograd
+### 4. in-place ReLU と autograd
 
-`nn.ReLU(inplace=True)` on the tensor that will be added to the shortcut overwrites values that may still be needed for the residual add. Flag any `inplace=True` that is not followed by a layer that produces a new tensor before the add.
+shortcut に足される tensor に対する `nn.ReLU(inplace=True)` は、residual add にまだ必要な値を上書きする可能性があります。add より前に新しい tensor を生成する layer が続かない `inplace=True` をすべて指摘してください。
 
-Diagnostic:
+診断:
 ```
 [in-place]
   risky inplace ops: <list>
   fix: inplace=False before the residual add
 ```
 
-## Report
+## レポート
 
 ```
 [block-review]
@@ -82,9 +82,9 @@ Diagnostic:
   summary:       one sentence
 ```
 
-## Rules
+## ルール
 
-- Do not rewrite the block. Report only.
-- If the block is correct, say `ok` everywhere and stop. No suggestions.
-- If multiple things are wrong, list them in the order above (shortcut first because it is the most common cause of crashes).
-- Never flag a deliberate pre-activation or squeeze-excite variant as wrong when the user has specified it.
+- block を書き換えない。報告だけを行う。
+- block が正しい場合は、すべてに `ok` と書いて終了する。提案は不要。
+- 複数の問題がある場合は、上の順序で列挙する。shortcut が crash の最も一般的な原因なので最初に置く。
+- ユーザーが意図的に指定した pre-activation または squeeze-excite variant を、誤りとして指摘してはいけない。

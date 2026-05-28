@@ -1,32 +1,32 @@
 # The Multi-Agent Primitive Model
 
-> Every multi-agent framework shipping in 2026 — AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework — is a point in a four-dimensional design space. Four primitives, nothing more: the agent, the handoff, the shared state, the orchestrator. This lesson builds them from zero, runs a toy system on all four, then maps every major framework onto the same axes so you can read any new release in one paragraph.
+> 2026 年に出荷されるすべての multi-agent framework、AutoGen、LangGraph、CrewAI、OpenAI Agents SDK、Microsoft Agent Framework は、4 次元 design space の 1 点です。primitives は 4 つだけです。agent、handoff、shared state、orchestrator。この lesson ではそれらをゼロから作り、toy system を 4 つすべての上で動かし、主要 frameworks を同じ axes に map します。これにより、新しい release を 1 段落で読めるようになります。
 
-**Type:** Learn
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
-**Time:** ~60 minutes
+**種別:** 学習
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
+**所要時間:** 約60分
 
-## Problem
+## 問題
 
-Every six months a new multi-agent framework ships. AutoGen in 2023. CrewAI in 2024. LangGraph and OpenAI Swarm in 2024. Google ADK in April 2025. Microsoft Agent Framework RC in February 2026. Each press release claims to be "the right abstraction."
+半年ごとに新しい multi-agent framework が出ます。2023 年に AutoGen。2024 年に CrewAI。2024 年に LangGraph と OpenAI Swarm。2025 年 4 月に Google ADK。2026 年 2 月に Microsoft Agent Framework RC。それぞれの press release は "the right abstraction" だと主張します。
 
-If you try to learn them one at a time you will burn out. The APIs look different. The docs disagree about what an "agent" is. One framework calls its shared memory a "blackboard," another calls it a "message pool," a third calls it a "StateGraph." You start suspecting the field is just churning.
+1 つずつ学ぼうとすると疲弊します。APIs は違います。docs は "agent" の意味について食い違います。ある framework は shared memory を "blackboard" と呼び、別のものは "message pool"、3 つ目は "StateGraph" と呼びます。field がただ churn しているだけに見えてきます。
 
-It is not. Underneath the marketing, the four primitives are stable. Learn them once, read every new framework in one paragraph.
+そうではありません。marketing の下では 4 つの primitives は安定しています。1 度学べば、どんな new framework も 1 段落で読めます。
 
-## Concept
+## コンセプト
 
-### The four primitives
+### 4 つの primitives
 
-1. **Agent** — a system prompt plus a tool list. Stateless; every run starts from its system prompt and the current message history.
-2. **Handoff** — a structured transfer of control from one agent to another. Mechanically, a tool call that returns a new agent or a graph edge that follows a condition.
-3. **Shared state** — any data structure that more than one agent can read (sometimes write). Message pool, blackboard, key-value store, vector memory.
-4. **Orchestrator** — whoever decides who speaks next. Options: an explicit graph (deterministic), an LLM speaker-selector (soft), the last speaker's handoff call (OpenAI Swarm), or a scheduler over a queue (swarm architecture).
+1. **Agent** — system prompt と tool list。stateless で、run のたびに system prompt と current message history から始まる。
+2. **Handoff** — ある agent から別の agent への structured transfer of control。mechanically には、new agent を返す tool call、または condition に従う graph edge。
+3. **Shared state** — 複数 agent が read (ときに write) できる data structure。message pool、blackboard、key-value store、vector memory。
+4. **Orchestrator** — 次に誰が話すかを決めるもの。explicit graph (deterministic)、LLM speaker-selector (soft)、last speaker の handoff call (OpenAI Swarm)、queue 上の scheduler (swarm architecture) など。
 
-That is the entire design space. Every framework picks defaults for each axis; the rest is surface syntax.
+design space はこれで全部です。各 framework は各 axis の defaults を選び、残りは surface syntax です。
 
-### How every 2026 framework maps to it
+### 2026 frameworks への mapping
 
 | Framework | Agent | Handoff | Shared state | Orchestrator |
 |-----------|-------|---------|--------------|--------------|
@@ -37,25 +37,25 @@ That is the entire design space. Every framework picks defaults for each axis; t
 | Microsoft Agent Framework | agent + orchestration patterns | pattern-specific | thread / context | pattern-specific |
 | Google ADK | agent + A2A card | A2A task | A2A artifacts | host decides |
 
-Surface differences look huge. Underneath: same four knobs.
+surface differences は大きく見えます。下には同じ 4 knobs があります。
 
-### Why this matters
+### なぜ重要か
 
-Once you see the primitives, framework comparison becomes a short checklist:
+primitives が見えると、framework comparison は短い checklist になります。
 
-- Does the orchestrator trust the LLM to route (Swarm) or does it pin routing in code (LangGraph)?
-- Is shared state full-history (GroupChat) or projected (StateGraph reducer)?
-- Can agents modify each other's prompts (CrewAI manager) or only hand off (Swarm)?
+- orchestrator は routing を LLM に任せるか (Swarm)、code で固定するか (LangGraph)?
+- shared state は full-history (GroupChat) か projected (StateGraph reducer) か?
+- agents は互いの prompts を変更できるか (CrewAI manager)、handoff だけか (Swarm)?
 
-Those three questions answer 80% of which framework fits a given problem. You stop shopping for "the best multi-agent framework" and start designing for the axis you actually care about.
+この 3 questions で、どの framework が problem に合うかの 80% が決まります。"the best multi-agent framework" を探すのをやめ、自分が気にしている axis に対して設計できます。
 
-### The stateless insight
+### Stateless insight
 
-Every primitive except shared state is stateless. Agent is a function of (prompt, tools). Handoff is a function call. Orchestrator is a scheduler. **The only stateful thing in the system is shared state.** That is where all the interesting bugs live: memory poisoning (Lesson 15), message ordering, versioning, write contention.
+shared state 以外の primitive はすべて stateless です。Agent は (prompt, tools) の function。Handoff は function call。Orchestrator は scheduler。**system の中で stateful なのは shared state だけです。** 面白い bugs はすべてそこにあります。memory poisoning (Lesson 15)、message ordering、versioning、write contention。
 
-Frameworks that hide shared state (Swarm) push the problem to the caller. Frameworks that centralize it (LangGraph checkpoint, AutoGen pool) make it inspectable but shift coordination cost onto the shared-state implementation.
+shared state を隠す frameworks (Swarm) は問題を caller に押し出します。centralize する frameworks (LangGraph checkpoint、AutoGen pool) は inspectable にしますが、coordination cost を shared-state implementation に移します。
 
-### Anatomy of a single primitive
+### 各 primitive の anatomy
 
 #### Agent
 
@@ -63,7 +63,7 @@ Frameworks that hide shared state (Swarm) push the problem to the caller. Framew
 Agent = (system_prompt, tools, model, optional_name)
 ```
 
-No memory. No state. Two agents with the same system prompt and tools are interchangeable. Everything that looks like per-agent state is actually in shared state or the handoff protocol.
+memory も state もありません。同じ system prompt と tools を持つ 2 agents は interchangeable です。per-agent state に見えるものは、実際には shared state か handoff protocol にあります。
 
 #### Handoff
 
@@ -71,11 +71,11 @@ No memory. No state. Two agents with the same system prompt and tools are interc
 Handoff = (from_agent, to_agent, reason, payload)
 ```
 
-Three implementations dominate:
+3 implementations が主流です。
 
-- **Function return** — the tool returns the next agent. This is the OpenAI Swarm pattern. Agents carry routing in their tool schemas.
-- **Graph edge** — LangGraph. Edges are declarative. The LLM produces a value; a condition selects the next node.
-- **Speaker selection** — AutoGen GroupChat. A selector function (sometimes itself an LLM call) reads the pool and picks who speaks next.
+- **Function return** — tool が next agent を返す。OpenAI Swarm pattern。agents は tool schemas に routing を持つ。
+- **Graph edge** — LangGraph。edges は declarative。LLM が value を出し、condition が next node を選ぶ。
+- **Speaker selection** — AutoGen GroupChat。selector function (ときに LLM call) が pool を読んで次の speaker を選ぶ。
 
 #### Shared state
 
@@ -83,9 +83,9 @@ Three implementations dominate:
 SharedState = { messages: [], artifacts: {}, context: {} }
 ```
 
-At minimum, a list of messages. Often more: structured artifacts (CrewAI Task outputs), typed context (LangGraph reducers), external memory (MCP, vector DB).
+最低限は message list です。多くの場合、structured artifacts (CrewAI Task outputs)、typed context (LangGraph reducers)、external memory (MCP, vector DB) も入ります。
 
-Two topologies: **full pool** (every agent sees every message) and **projected** (agents see a role-scoped view). Full pools are simple and scale badly. Projected pools scale but require upfront schema design.
+topology は 2 つです。**full pool** (すべての agent がすべての message を見る) と **projected** (agents が role-scoped view を見る)。full pool は simple ですが scale しにくい。projected pool は scale しますが upfront schema design が必要です。
 
 #### Orchestrator
 
@@ -93,80 +93,80 @@ Two topologies: **full pool** (every agent sees every message) and **projected**
 Orchestrator = ({state, last_speaker}) -> next_agent
 ```
 
-Four flavors:
+4 flavors:
 
-- **Static** — the graph is fixed at build time (LangGraph deterministic, CrewAI Sequential).
-- **LLM-selected** — an LLM reads the pool and picks the next speaker (AutoGen, CrewAI Hierarchical).
-- **Handoff-driven** — the current agent decides by calling a handoff tool (Swarm).
-- **Queue-driven** — workers pull from a shared queue; no explicit next-speaker (swarm architectures, Matrix).
+- **Static** — graph は build time に固定 (LangGraph deterministic、CrewAI Sequential)。
+- **LLM-selected** — LLM が pool を読んで next speaker を選ぶ (AutoGen、CrewAI Hierarchical)。
+- **Handoff-driven** — current agent が handoff tool を call して決める (Swarm)。
+- **Queue-driven** — workers が shared queue から pull する。explicit next-speaker はない (swarm architectures、Matrix)。
 
-### What changes between frameworks
+### frameworks 間で変わるもの
 
-Once the primitives are fixed, the remaining design decisions are:
+primitives が固定されると、残る design decisions は次です。
 
-- **Memory strategy** — ephemeral vs durable checkpointing (LangGraph checkpointer).
-- **Safety boundary** — who can approve a handoff (human-in-the-loop).
-- **Cost accounting** — per-agent token budgets.
-- **Observability** — tracing handoffs, persisting state for replay.
+- **Memory strategy** — ephemeral か durable checkpointing か (LangGraph checkpointer)。
+- **Safety boundary** — handoff を誰が approve できるか (human-in-the-loop)。
+- **Cost accounting** — per-agent token budgets。
+- **Observability** — handoffs の tracing、state の replay 用 persistence。
 
-All implementable on top of the primitives. None of them are new primitives.
+これらはすべて primitives の上に実装できます。新しい primitive ではありません。
 
-## Build It
+## 実装
 
-`code/main.py` implements the four primitives in ~150 lines of stdlib Python. No real LLM — each agent is a scripted policy so the focus stays on the coordination structure.
+`code/main.py` は 4 つの primitives を stdlib Python 約 150 lines で実装します。real LLM は使いません。各 agent は scripted policy で、focus は coordination structure にあります。
 
-The file exports:
+file が export するもの:
 
-- `Agent` — a dataclass of name, system prompt, tools, policy function.
-- `Handoff` — a function that returns a new agent.
-- `SharedState` — a thread-safe message pool.
-- `Orchestrator` — three variants: `StaticOrchestrator`, `HandoffOrchestrator`, `LLMSelectorOrchestrator` (simulated).
+- `Agent` — name、system prompt、tools、policy function の dataclass。
+- `Handoff` — new agent を返す function。
+- `SharedState` — thread-safe message pool。
+- `Orchestrator` — 3 variants: `StaticOrchestrator`、`HandoffOrchestrator`、`LLMSelectorOrchestrator` (simulated)。
 
-The demo runs the same three-agent pipeline (research → write → review) through all three orchestrator types and prints the message pool at the end. You can see that the outputs differ only in *who picks next*; the agents and shared state are identical across runs.
+demo は同じ 3-agent pipeline (research → write → review) を 3 orchestrator types で実行し、最後に message pool を print します。outputs の違いは *who picks next* だけで、agents と shared state は runs 間で同じです。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-Expected output: three orchestrator runs, one per pattern. Each prints the final message pool. The handoff-driven run reaches fewer agents if the researcher decides it is done early — that is the LLM-routing tradeoff in miniature.
+期待 output: pattern ごとに 1 回、計 3 orchestrator runs。各 run が final message pool を print します。handoff-driven run は researcher が早期に done と判断すると到達する agents が少なくなります。これは LLM-routing tradeoff のミニチュアです。
 
 ## Use It
 
-`outputs/skill-primitive-mapper.md` is a skill that reads any multi-agent codebase or framework doc and returns the four-primitive mapping. Run it on a new framework release to get a one-paragraph understanding before reading docs in depth.
+`outputs/skill-primitive-mapper.md` は任意の multi-agent codebase や framework doc を読み、4-primitive mapping を返す skill です。new framework release に使うと、docs を深く読む前に 1 段落で理解できます。
 
 ## Ship It
 
-Before adopting a new framework, write the primitive mapping for it. If you cannot, the docs are incomplete or the framework is inventing a fifth primitive (rare — check for a shared-state flavor you have not seen).
+new framework 採用前に、その primitive mapping を書いてください。書けないなら、docs が incomplete か、framework が 5 つ目の primitive を発明しているかです (rare。未見の shared-state flavor でないか確認してください)。
 
-Pin the mapping in your architecture doc. When a new team member joins, send them the mapping before the API docs. When framework versions change, diff the mapping, not the changelog.
+mapping を architecture doc に pin します。new team member が入ったら API docs より先に mapping を送ります。framework versions が変わったら changelog ではなく mapping を diff します。
 
 ## Exercises
 
-1. Run `code/main.py` three times with different agent policies. Observe how the orchestrator choice changes which agents run.
-2. Implement a fourth orchestrator type: a queue-driven one where agents poll shared state for work. What deadlock can happen, and how do you detect it?
-3. Take the LangGraph quickstart (https://docs.langchain.com/oss/python/langgraph/workflows-agents) and rewrite it as the four primitives. Which of LangGraph's abstractions map 1:1 and which are convenience wrappers?
-4. Read the OpenAI Swarm cookbook (https://developers.openai.com/cookbook/examples/orchestrating_agents). Identify which of the four primitives Swarm makes most ergonomic, and which one it pushes to the caller.
-5. Find one framework in this table that hides shared state entirely. Explain what breaks when agents need to coordinate across handoffs without re-reading history.
+1. `code/main.py` を agent policies を変えて 3 回実行する。orchestrator choice がどの agents を run させるかを観察する。
+2. 4 つ目の orchestrator type を実装する。agents が shared state から work を poll する queue-driven orchestrator。どんな deadlock が起きるか、どう検出するか?
+3. LangGraph quickstart (https://docs.langchain.com/oss/python/langgraph/workflows-agents) を 4 primitives として書き直す。LangGraph の abstractions のどれが 1:1 に map され、どれが convenience wrappers か?
+4. OpenAI Swarm cookbook (https://developers.openai.com/cookbook/examples/orchestrating_agents) を読む。Swarm が最も ergonomic にしている primitive と、caller に押し出している primitive を特定する。
+5. この table から shared state を完全に隠す framework を 1 つ見つける。agents が history を reread せずに handoffs をまたいで coordinate する必要があるとき、何が壊れるか説明する。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Agent | "An LLM with tools" | A `(system_prompt, tools, model)` triple. Stateless. |
-| Handoff | "Transfer of control" | A structured call that names the next agent and optional payload. Three implementations: function return, graph edge, speaker selection. |
-| Shared state | "Memory" / "context" | The only stateful part of a multi-agent system. Message pool or blackboard. |
-| Orchestrator | "Coordinator" | Whoever decides who runs next. Static graph, LLM selector, handoff-driven, or queue-driven. |
-| Primitive | "Abstraction" | One of the four axes every framework parameterizes. Not a framework feature. |
-| Message pool | "Shared chat history" | Full-history shared state. Easy to reason about, scales badly. |
-| Projected state | "Scoped view" | Role-specific view into shared state. Scales, requires schema design. |
-| Speaker selection | "Who talks next" | Orchestrator pattern where a function (often an LLM) picks the next agent from a group. |
+| Term | よくある言い方 | 実際の意味 |
+|------|----------------|------------|
+| Agent | "An LLM with tools" | `(system_prompt, tools, model)` triple。stateless。 |
+| Handoff | "Transfer of control" | next agent と optional payload を named する structured call。実装は function return、graph edge、speaker selection。 |
+| Shared state | "Memory" / "context" | multi-agent system の唯一の stateful part。message pool または blackboard。 |
+| Orchestrator | "Coordinator" | 次に誰が run するかを決めるもの。static graph、LLM selector、handoff-driven、queue-driven。 |
+| Primitive | "Abstraction" | すべての framework が parameterize する 4 axes の 1 つ。framework feature ではない。 |
+| Message pool | "Shared chat history" | full-history shared state。reasoning しやすいが scale しにくい。 |
+| Projected state | "Scoped view" | shared state の role-specific view。scale するが schema design が必要。 |
+| Speaker selection | "Who talks next" | function (しばしば LLM) が group から next agent を選ぶ orchestrator pattern。 |
 
-## Further Reading
+## 参考文献
 
-- [OpenAI cookbook: Orchestrating Agents — Routines and Handoffs](https://developers.openai.com/cookbook/examples/orchestrating_agents) — the clearest articulation of handoff-driven orchestration
-- [AutoGen stable docs](https://microsoft.github.io/autogen/stable/) — GroupChat + speaker selection is the reference for LLM-selected orchestration
-- [LangGraph workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents) — graph-edge orchestration and reducer-based shared state
-- [CrewAI introduction](https://docs.crewai.com/en/introduction) — role-goal-backstory agents, Sequential / Hierarchical processes
-- [AG2 (community AutoGen continuation)](https://github.com/ag2ai/ag2) — the live AutoGen v0.2 line after Microsoft moved v0.4 into maintenance
+- [OpenAI cookbook: Orchestrating Agents — Routines and Handoffs](https://developers.openai.com/cookbook/examples/orchestrating_agents) — handoff-driven orchestration の最も明確な説明
+- [AutoGen stable docs](https://microsoft.github.io/autogen/stable/) — GroupChat + speaker selection は LLM-selected orchestration の reference
+- [LangGraph workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents) — graph-edge orchestration と reducer-based shared state
+- [CrewAI introduction](https://docs.crewai.com/en/introduction) — role-goal-backstory agents、Sequential / Hierarchical processes
+- [AG2 (community AutoGen continuation)](https://github.com/ag2ai/ag2) — Microsoft が v0.4 を maintenance に移した後の live AutoGen v0.2 line

@@ -1,15 +1,15 @@
 ---
 name: lm-baseline
-description: Build a reproducible n-gram language model baseline before training a neural LM.
+description: ニューラル LM を訓練する前に、再現可能な n-gram 言語モデルのベースラインを構築する。
 phase: 5
 lesson: 16
 ---
 
-Given a corpus and target use (next-word prediction, rescoring, perplexity baseline), output:
+コーパスと目的（次単語予測、リスコアリング、パープレキシティのベースライン）が与えられたら、次を出力する。
 
-1. N-gram order. Trigram for general English, 4-gram if corpus is large, 5-gram for speech rescoring.
-2. Smoothing. Modified Kneser-Ney is the default; Laplace only for teaching.
-3. Library. `kenlm` for production, `nltk.lm` for teaching, roll your own only to learn the math.
-4. Evaluation. Held-out perplexity with consistent tokenization between train and test sets.
+1. N-gram の次数。一般的な英語なら trigram、コーパスが大きければ 4-gram、音声認識のリスコアリングなら 5-gram。
+2. スムージング。デフォルトは Modified Kneser-Ney。Laplace は教育用に限る。
+3. ライブラリ。本番では `kenlm`、教育用途では `nltk.lm`、自作は数学を理解する目的に限る。
+4. 評価。訓練セットとテストセットで一貫したトークン化を使い、ホールドアウトのパープレキシティを測る。
 
-Refuse to report perplexity computed with different tokenization between systems being compared — perplexity numbers are comparable only under identical tokenization. Flag OOV rate in test set; KN handles OOV poorly unless you reserve a special `<UNK>` token during training.
+比較対象のシステム間で異なるトークン化を使って計算されたパープレキシティは報告しない。パープレキシティの値は、同一のトークン化の下でのみ比較できる。テストセットの OOV 率を指摘する。訓練時に特別な `<UNK>` トークンを予約していない限り、KN は OOV をうまく扱えない。

@@ -1,70 +1,70 @@
-# Open Models: Architecture Walkthroughs
+# オープンモデル: アーキテクチャ詳解
 
-> You built a GPT-2 Small from scratch in Lesson 04. Frontier open models in 2026 are the same family with five or six concrete changes. RMSNorm instead of LayerNorm. SwiGLU instead of GELU. RoPE instead of learned positions. GQA or MLA instead of full MHA. Mixture-of-Experts at scale. The math you already know covers 95% of them. This lesson reads Llama 3, DeepSeek-V3, Mixtral, Qwen, and Gemma side by side and names the exact line where each architecture diverges.
+> Lesson 04 で GPT-2 Small を scratch から構築しました。2026年の frontier open models は、同じ family に 5つか 6つの具体的な変更を加えたものです。LayerNorm ではなく RMSNorm。GELU ではなく SwiGLU。learned positions ではなく RoPE。full MHA ではなく GQA または MLA。scale した Mixture-of-Experts。すでに知っている math で、それらの 95% は説明できます。このレッスンでは Llama 3、DeepSeek-V3、Mixtral、Qwen、Gemma を横に並べ、各 architecture が分岐する正確な line に名前を付けます。
 
-**Type:** Learn
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
-**Time:** ~45 minutes
+**種類:** Learn
+**言語:** Python (stdlib)
+**前提条件:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
+**所要時間:** 約45分
 
-## Learning Objectives
+## 学習目標
 
-- Read the config.json of Llama 3, Mistral, Mixtral, Gemma 2, Qwen 2.5, and DeepSeek-V3 and explain every field
-- Name the specific architectural change each model made versus GPT-2 Small and justify it from first principles
-- Compute parameter count, KV cache size, and activation memory for any open model from its config alone
-- Pick the right open model for a deployment target given latency, memory, and capability constraints
+- Llama 3、Mistral、Mixtral、Gemma 2、Qwen 2.5、DeepSeek-V3 の config.json を読み、すべての field を説明する
+- 各 model が GPT-2 Small に対して行った具体的な architectural change に名前を付け、first principles から正当化する
+- config だけから任意の open model の parameter count、KV cache size、activation memory を計算する
+- latency、memory、capability constraints が与えられた deployment target に対して、適切な open model を選ぶ
 
-## The Problem
+## 問題
 
-In Lesson 04 you wrote 350 lines of numpy and had a GPT-2-shaped model. Llama 3 405B has a 200-page technical report. Your instinct is that these are different beasts. They are not. The 200 pages describe the same object with five or six well-motivated modifications, plus a thousand implementation details about scaling. The skeleton -- embedding, transformer blocks, attention, MLP, norm, head -- is unchanged.
+Lesson 04 では 350行の numpy を書き、GPT-2-shaped model を作りました。Llama 3 405B には 200ページの technical report があります。直感的には、これらは別物のように見えます。しかし違います。その 200ページは、同じ object に対して、よく動機づけられた 5つか 6つの modification と、scaling に関する多数の implementation details を説明しているだけです。skeleton、つまり embedding、transformer blocks、attention、MLP、norm、head は変わりません。
 
-This lesson is a diff. For each major open model family, we list exactly what changed from GPT-2, why, and what it cost. When you are done you can read a fresh model card and mentally translate it back to the GPT-2 baseline.
+このレッスンは diff です。主要な open model family ごとに、GPT-2 から何が変わったか、なぜ変わったか、何を cost として払ったかを正確に並べます。終わる頃には、新しい model card を読み、それを頭の中で GPT-2 baseline に戻して理解できるようになります。
 
-The practical payoff is that when Meta releases Llama 5 or DeepSeek releases V4, you will not need a new mental model. You will look at the config, see which of the well-known knobs moved, and know what the downstream implications are. The 2026 architectures are a finite toolbox. Each new model picks a different subset.
+実務上の payoff は、Meta が Llama 5 を release したり DeepSeek が V4 を release したりしても、新しい mental model が不要になることです。config を見て、既知の knob のどれが動いたかを見れば、downstream implications が分かります。2026年の architectures は有限の toolbox です。各 new model はその異なる subset を選んでいます。
 
-## The Concept
+## コンセプト
 
-### The Invariant Core
+### 変わらない core
 
-All autoregressive open models share:
+すべての autoregressive open models は以下を共有しています。
 
-- Token embedding matrix (vocab_size x hidden_dim).
-- Stack of N decoder blocks: norm, self-attention, residual, norm, MLP, residual.
-- Final norm and linear head projecting to vocab_size (often weight-tied with embeddings).
-- Causal mask, next-token cross-entropy loss.
+- Token embedding matrix (vocab_size x hidden_dim)。
+- N 個の decoder blocks の stack: norm、self-attention、residual、norm、MLP、residual。
+- vocab_size に project する final norm と linear head (embeddings と weight-tied されることが多い)。
+- Causal mask、next-token cross-entropy loss。
 
-That is the shape. The rest is knobs.
+これが shape です。残りは knobs です。
 
-### The Six Knobs That Actually Move
+### 実際に動く 6つの knobs
 
-Across every 2024-2026 frontier open model, the same six design choices get picked over and over:
+2024-2026 年のすべての frontier open model で、同じ 6つの design choices が何度も選ばれています。
 
-1. **Normalization.** LayerNorm -> RMSNorm.
-2. **Positional encoding.** Learned absolute -> RoPE (plus variants: YaRN, NTK).
-3. **Activation.** GELU -> SwiGLU (or GeGLU).
-4. **Attention head sharing.** MHA -> GQA -> MQA -> MLA.
-5. **Dense vs sparse MLP.** Dense -> Mixture-of-Experts.
-6. **Pre-norm placement.** Pre-norm stays. Post-norm is gone.
+1. **Normalization。** LayerNorm -> RMSNorm。
+2. **Positional encoding。** Learned absolute -> RoPE (variants: YaRN、NTK)。
+3. **Activation。** GELU -> SwiGLU (または GeGLU)。
+4. **Attention head sharing。** MHA -> GQA -> MQA -> MLA。
+5. **Dense vs sparse MLP。** Dense -> Mixture-of-Experts。
+6. **Pre-norm placement。** Pre-norm は残る。Post-norm は消えた。
 
-Everything else (learning rate schedule, data mix, batch size, context length) lives in the training config, not the architecture. Six knobs.
+その他すべて (learning rate schedule、data mix、batch size、context length) は training config に属し、architecture ではありません。6つの knobs です。
 
 ### Knob 1: RMSNorm
 
-LayerNorm subtracts mean, divides by std, scales, and shifts. RMSNorm keeps only the scale:
+LayerNorm は mean を subtract し、std で割り、scale と shift を行います。RMSNorm は scale だけを残します。
 
 ```
 RMSNorm(x) = x / sqrt(mean(x^2) + eps) * gamma
 ```
 
-No mean subtraction. No bias. One matmul fewer per token. Zhang and Sennrich (2019) argued it matched LayerNorm on machine translation while being 10% faster. Every modern open model runs it.
+mean subtraction はありません。bias もありません。token ごとに matmul が 1つ少なくなります。Zhang and Sennrich (2019) は、machine translation で LayerNorm と同等の性能を出しつつ 10% 速いと主張しました。現代の open model はすべてこれを使っています。
 
-Cost: none. Benefit: small throughput win, simpler code.
+Cost: なし。Benefit: 小さな throughput 改善、より単純な code。
 
 ### Knob 2: RoPE
 
-Learned position embeddings were a 1024-slot lookup table in GPT-2. Context 1025 is off the end of the table. Models cannot extrapolate beyond their training length.
+learned position embeddings は GPT-2 では 1024-slot lookup table でした。context 1025 は table の外です。models は training length を超えて extrapolate できません。
 
-Rotary Position Embedding (RoPE, Su et al. 2021) injects position by rotating each Q and K vector in pairs before the attention dot product. The angle of rotation is a deterministic function of position, so there is nothing learned and nothing to run out of. With scaling tricks (NTK-aware interpolation, YaRN), a model trained on 8k context can stretch to 128k at inference with modest accuracy loss.
+Rotary Position Embedding (RoPE, Su et al. 2021) は、attention dot product の前に各 Q と K vector を pair ごとに回転させることで position を注入します。rotation angle は position の deterministic function なので、learned なものはなく、尽きる table もありません。scaling tricks (NTK-aware interpolation、YaRN) により、8k context で train した model を inference 時に 128k まで伸ばしても、accuracy loss は modest です。
 
 ```
 q_rotated = rotate(q, angle(pos))
@@ -72,27 +72,27 @@ k_rotated = rotate(k, angle(pos))
 score = q_rotated . k_rotated
 ```
 
-Every Llama, Mistral, Qwen, DeepSeek, and Gemma uses RoPE. Gemma 2 uses a hybrid (RoPE on most layers, local sliding-window attention on others).
+Llama、Mistral、Qwen、DeepSeek、Gemma はすべて RoPE を使います。Gemma 2 は hybrid (多くの layers では RoPE、他では local sliding-window attention) を使います。
 
 ### Knob 3: SwiGLU
 
-GPT-2's MLP is `x -> gelu(xW1 + b1) -> (...)W2 + b2`. SwiGLU (Shazeer 2020) replaces the activation with a gated product:
+GPT-2 の MLP は `x -> gelu(xW1 + b1) -> (...)W2 + b2` です。SwiGLU (Shazeer 2020) は activation を gated product に置き換えます。
 
 ```
 SwiGLU(x) = (xW1) * sigmoid(xW1) * xV
 ```
 
-Two projections in parallel instead of one, gated by the Swish activation. Empirically stronger on perplexity per parameter. Llama 2 adopted it, everyone followed. The MLP's hidden size is usually set so that total parameter count matches the original dense MLP: if GPT-2 used `ff_dim = 4 * hidden`, SwiGLU uses `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`.
+1つではなく 2つの projection を parallel に行い、Swish activation で gate します。経験的には parameter あたりの perplexity が強くなります。Llama 2 が採用し、全員が追随しました。MLP の hidden size は通常、total parameter count が元の dense MLP と一致するように設定されます。GPT-2 が `ff_dim = 4 * hidden` を使っていたなら、SwiGLU は `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden` を使います。
 
 ### Knob 4: Attention Head Sharing
 
-GPT-2 used **Multi-Head Attention (MHA)**: every head has its own Q, K, V projection.
+GPT-2 は **Multi-Head Attention (MHA)** を使いました。各 head が独自の Q、K、V projection を持ちます。
 
-**Multi-Query Attention (MQA, Shazeer 2019)** shares one K and one V across all heads. Cuts the KV cache by num_heads, which is a 12x to 32x reduction on a typical model. Accuracy drops slightly on hard benchmarks.
+**Multi-Query Attention (MQA, Shazeer 2019)** は、すべての heads で 1つの K と 1つの V を共有します。KV cache を num_heads 分削減します。典型的な model では 12x から 32x の削減です。hard benchmarks では accuracy がわずかに落ちます。
 
-**Grouped-Query Attention (GQA, Ainslie et al. 2023)** is the middle ground: G groups of Q heads share one K and one V. Llama 3 8B uses GQA with 32 Q heads and 8 KV heads (G=8), so the KV cache shrinks 4x versus full MHA.
+**Grouped-Query Attention (GQA, Ainslie et al. 2023)** は中間点です。G groups の Q heads が 1つの K と 1つの V を共有します。Llama 3 8B は 32 Q heads と 8 KV heads (G=8) の GQA を使うため、full MHA と比べて KV cache は 4x 小さくなります。
 
-**Multi-Head Latent Attention (MLA, DeepSeek 2024)** compresses K and V into a shared low-rank latent, projecting them back up per head. Further reduces KV cache while preserving per-head expressiveness. DeepSeek-V2 and V3 rely on this for their long-context performance.
+**Multi-Head Latent Attention (MLA, DeepSeek 2024)** は、K と V を shared low-rank latent に compress し、head ごとに再 projection します。KV cache をさらに削減しつつ、per-head expressiveness を保ちます。DeepSeek-V2 と V3 は long-context performance のためにこれに依存しています。
 
 | Scheme | KV Heads | KV Cache | Accuracy |
 |--------|----------|----------|----------|
@@ -101,11 +101,11 @@ GPT-2 used **Multi-Head Attention (MHA)**: every head has its own Q, K, V projec
 | MQA    | 1 | num_heads reduction | small hit |
 | MLA    | latent, per-head decompression | smaller than MQA | near-MHA |
 
-For any model above ~13B parameters, GQA or MLA is effectively mandatory. Full MHA at scale is a KV cache disaster.
+約 13B parameters を超える model では、GQA または MLA は実質的に必須です。scale した full MHA は KV cache disaster です。
 
 ### Knob 5: Mixture of Experts
 
-A dense MLP activates all its parameters for every token. An MoE MLP has K experts per block and a router that picks the top-k experts per token (typically top-2). Only those experts' weights see a forward pass for that token.
+dense MLP は、すべての token で全 parameter を activate します。MoE MLP は block ごとに K 個の experts と router を持ち、token ごとに top-k experts を選びます (通常 top-2)。その token の forward pass を見るのは、それらの experts の weights だけです。
 
 ```
 router_logits = xW_r
@@ -113,7 +113,7 @@ indices, weights = top_k(router_logits, k=2)
 output = sum_i weights[i] * expert[indices[i]](x)
 ```
 
-The appeal: you can have 64 experts of size 7B each (so total param count is huge) while only running 2 of them per token (so per-token compute matches a dense 7B model). Mixtral 8x7B has 47B total parameters but activates only 13B per token. DeepSeek-V3 has 671B total parameters but activates only 37B per token.
+魅力は、7B size の experts を 64 個持てる (つまり total param count は巨大になる) 一方で、token ごとには 2個だけを実行する (つまり per-token compute は dense 7B model と同程度になる) ことです。Mixtral 8x7B は total 47B parameters ですが、token ごとに activate するのは 13B だけです。DeepSeek-V3 は total 671B parameters ですが、token ごとに activate するのは 37B だけです。
 
 ```mermaid
 graph LR
@@ -132,15 +132,15 @@ graph LR
     style R fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-Pros: same compute, more parameters, better capacity. Cons: the expert memory still has to live somewhere (so serving needs more VRAM than a dense equivalent), load-balancing the router is hard, and fine-tuning the router during alignment is its own research area.
+Pros: 同じ compute でより多くの parameters、より高い capacity。Cons: expert memory はどこかに置かなければならない (そのため serving には dense equivalent より多い VRAM が必要)、router の load-balancing が難しい、alignment 中に router を fine-tune すること自体が research area である。
 
-### Knob 6: Pre-norm stays
+### Knob 6: Pre-norm は残る
 
-The original transformer applied layer norm after each sublayer. Every open model since GPT-2 puts it *before* each sublayer. Pre-norm is strictly easier to train at depth. Nothing to argue about.
+original transformer は各 sublayer の後に layer norm を適用しました。GPT-2 以降のすべての open model は、それを各 sublayer の*前*に置きます。Pre-norm は depth が増えても明らかに train しやすいです。議論の余地はありません。
 
 ### Model-by-Model Diff
 
-Here is the table that makes all of this concrete.
+これを具体化する table が以下です。
 
 | Model | Year | Total Params | Active Params | Norm | Activation | Position | Attention | MoE | Context |
 |-------|------|-------------|---------------|------|-----------|----------|-----------|-----|---------|
@@ -155,9 +155,9 @@ Here is the table that makes all of this concrete.
 | DeepSeek V2 236B | 2024 | 236B | 21B | RMSNorm | SwiGLU | RoPE | MLA | yes (160 experts, top-6) | 128k |
 | DeepSeek V3 | 2024 | 671B | 37B | RMSNorm | SwiGLU | RoPE | MLA | yes (256 experts, top-8) | 128k |
 
-Scan the columns. RMSNorm is universal. SwiGLU or its GeGLU cousin is universal. RoPE is universal. GQA is universal above 7B except when replaced by MLA. MoE is the differentiator at the top end.
+columns を見てください。RMSNorm は universal です。SwiGLU またはその cousin である GeGLU も universal です。RoPE も universal です。7B を超えると、MLA に置き換えられる場合を除き GQA が universal です。top end での differentiator は MoE です。
 
-### Reading a config.json
+### config.json を読む
 
 Llama 3 8B config:
 
@@ -175,54 +175,54 @@ Llama 3 8B config:
 }
 ```
 
-Every field corresponds to something you have already implemented.
+すべての field は、すでに実装したものに対応しています。
 
-- `hidden_size`: embedding dimension.
-- `intermediate_size`: MLP hidden size (3.5x hidden -- SwiGLU math).
-- `num_hidden_layers`: stack depth.
-- `num_attention_heads`: Q heads.
-- `num_key_value_heads`: KV heads (GQA).
-- `max_position_embeddings`: training context length.
-- `rope_theta`: RoPE base frequency. Meta scaled it from the default 10k to 500k for long-context extrapolation.
-- `rms_norm_eps`: numerical stability.
-- `vocab_size`: tokens.
+- `hidden_size`: embedding dimension。
+- `intermediate_size`: MLP hidden size (3.5x hidden、SwiGLU math)。
+- `num_hidden_layers`: stack depth。
+- `num_attention_heads`: Q heads。
+- `num_key_value_heads`: KV heads (GQA)。
+- `max_position_embeddings`: training context length。
+- `rope_theta`: RoPE base frequency。Meta は long-context extrapolation のため、default 10k から 500k に scale しました。
+- `rms_norm_eps`: numerical stability。
+- `vocab_size`: tokens。
 
-From these alone you compute total parameters, KV cache, and peak activation memory. See `code/main.py` for the exact formulas.
+これらだけから total parameters、KV cache、peak activation memory を計算できます。exact formulas は `code/main.py` を参照してください。
 
 ### Activation memory budget
 
-Activations dominate training memory above a few billion parameters. The rule of thumb for pre-training (with gradient checkpointing):
+数 billion parameters を超える training では、activations が training memory を支配します。pre-training の rule of thumb (gradient checkpointing あり) は以下です。
 
 ```
 activation_mem ~ batch_size * seq_len * hidden_size * num_layers * bytes_per_element
 ```
 
-For Llama 3 8B at batch 1, seq 8192, BF16, 32 layers, hidden 4096: roughly 8 GB just for activations with checkpointing, 40 GB without. This is why flash-attention and ring-attention matter -- they rewrite the attention computation so activations fit.
+Llama 3 8B で batch 1、seq 8192、BF16、32 layers、hidden 4096 の場合、checkpointing ありで activations だけで約 8 GB、なしで 40 GB です。だから flash-attention と ring-attention が重要です。attention computation を書き換え、activations が収まるようにします。
 
 ### KV Cache budget
 
-For inference at max context:
+max context での inference では以下です。
 
 ```
 kv_cache = 2 * num_layers * num_kv_heads * head_dim * max_seq_len * bytes_per_element
 ```
 
-Llama 3 8B at 128k context, BF16, head_dim = hidden / num_heads = 128:
-`2 * 32 * 8 * 128 * 131072 * 2 = 17.2 GB` per sequence.
+Llama 3 8B、128k context、BF16、head_dim = hidden / num_heads = 128 の場合:
+`2 * 32 * 8 * 128 * 131072 * 2 = 17.2 GB` per sequence。
 
-The 8B weights are 16 GB in BF16. The KV cache for a single 128k sequence is larger than the weights. This is the memory pressure driving GQA, MLA, and KV cache quantization research.
+8B weights は BF16 で 16 GB です。単一 128k sequence の KV cache は weights より大きくなります。これが GQA、MLA、KV cache quantization research を動かしている memory pressure です。
 
-### When Each Model Wins
+### 各 model が勝つ場面
 
-- **Single 80GB GPU, no MoE**: Llama 3 8B, Mistral 7B, Gemma 2 9B. Easy to serve, wide tooling.
-- **Single node (8x80GB), big capacity**: Llama 3 70B, Qwen 2.5 72B. Highest dense open capability.
-- **Biggest open capability, accept MoE complexity**: DeepSeek V3, Mixtral 8x22B. Best capability per active FLOP.
-- **Long-context needs**: Llama 3 (128k with RoPE scaling), DeepSeek (MLA advantage).
-- **Low-latency serving**: Gemma 2 9B (sliding window cuts long-context compute).
+- **Single 80GB GPU, no MoE**: Llama 3 8B、Mistral 7B、Gemma 2 9B。serving が簡単で tooling が広い。
+- **Single node (8x80GB), big capacity**: Llama 3 70B、Qwen 2.5 72B。最高水準の dense open capability。
+- **Biggest open capability, accept MoE complexity**: DeepSeek V3、Mixtral 8x22B。active FLOP あたりの capability が最良。
+- **Long-context needs**: Llama 3 (RoPE scaling で 128k)、DeepSeek (MLA advantage)。
+- **Low-latency serving**: Gemma 2 9B (sliding window が long-context compute を削減)。
 
-## Build It
+## 作ってみる
 
-The lesson's code is a calculator. Given any config.json, it prints parameter count by component, KV cache at max context, SwiGLU MLP ratio, and a short verdict on the architecture (dense / GQA / MLA / MoE).
+このレッスンの code は calculator です。任意の config.json を与えると、component ごとの parameter count、max context での KV cache、SwiGLU MLP ratio、architecture に関する短い verdict (dense / GQA / MLA / MoE) を出力します。
 
 ```python
 config = {
@@ -233,54 +233,54 @@ config = {
 }
 ```
 
-The script walks the architecture field by field, computes param counts for embedding, attention (with GQA reduction), MLP (with SwiGLU expansion), layernorms, and the head. It then computes the KV cache at the stated context length and prints a summary.
+script は architecture の field を 1つずつ辿り、embedding、attention (GQA reduction あり)、MLP (SwiGLU expansion あり)、layernorms、head の param counts を計算します。次に指定された context length での KV cache を計算し、summary を出力します。
 
-See `code/main.py` for the implementation.
+実装は `code/main.py` を参照してください。
 
-## Use It
+## 使ってみる
 
-Run the calculator on Llama 3 8B, Mistral 7B, Mixtral 8x7B, and DeepSeek V3 configs bundled in the script. Compare the parameter breakdowns. Notice that the MoE models have a total param count that dwarfs the dense models but an active param count that is often smaller. Notice that DeepSeek V3's KV cache is smaller than Llama 3 405B's despite having more total parameters -- that is MLA in action.
+script に bundled されている Llama 3 8B、Mistral 7B、Mixtral 8x7B、DeepSeek V3 configs で calculator を実行します。parameter breakdowns を比較してください。MoE models は total param count が dense models を大きく上回る一方で、active param count はしばしば小さいことに注目してください。DeepSeek V3 の total parameters は Llama 3 405B より多いにもかかわらず、KV cache は Llama 3 405B より小さいことにも注目してください。これが MLA の効果です。
 
-Then plug in a config for any model you have locally, read the summary, and decide whether it fits your GPU.
+次に、local にある任意の model の config を差し込み、summary を読み、自分の GPU に収まるか判断してください。
 
 ## Ship It
 
-This lesson produces `outputs/skill-open-model-picker.md`. Given a deployment target (GPU type, VRAM, context length, latency budget) and a task profile (chat, code, reasoning, long-context), it recommends an open model, a quantization scheme from Lesson 11, and an inference stack from Lesson 12, with explicit reasoning about the six architectural knobs.
+このレッスンは `outputs/skill-open-model-picker.md` を生成します。deployment target (GPU type、VRAM、context length、latency budget) と task profile (chat、code、reasoning、long-context) が与えられると、open model、Lesson 11 の quantization scheme、Lesson 12 の inference stack を recommendation し、6つの architectural knobs に関する明示的な reasoning を添えます。
 
-## Exercises
+## 演習
 
-1. Read the Qwen 2.5 72B config from HuggingFace. Compute total parameters from scratch. Compare to the HF-reported value and identify where any delta comes from (head dim rounding, KV sharing factor, etc.).
+1. HuggingFace から Qwen 2.5 72B config を読んでください。total parameters を scratch から計算します。HF-reported value と比較し、delta がある場合はその理由 (head dim rounding、KV sharing factor など) を特定してください。
 
-2. DeepSeek V3 uses 256 experts with top-8 routing. Compute the ratio of activated experts to total experts and compare to Mixtral 8x7B's top-2 of 8. What does the shift from sparse (25%) to denser sparse (3%) imply about capacity per FLOP?
+2. DeepSeek V3 は 256 experts と top-8 routing を使います。activated experts と total experts の ratio を計算し、Mixtral 8x7B の top-2 of 8 と比較してください。sparse (25%) から denser sparse (3%) への shift は capacity per FLOP について何を意味しますか。
 
-3. Compute the KV cache for Llama 3 405B at 128k context in FP8 and BF16. At FP8 it is half the BF16 number. How many parallel sequences can you serve on a single 8xH100 node (80GB each = 640GB total, minus weight memory)?
+3. Llama 3 405B の 128k context における KV cache を FP8 と BF16 で計算してください。FP8 では BF16 の半分です。単一 8xH100 node (各 80GB = total 640GB、weight memory を除く) で何本の parallel sequences を serve できますか。
 
-4. Gemma 2 alternates full-attention and sliding-window-attention layers. Write the math for the KV cache when half the layers use a 4096-token sliding window instead of full context. How much memory does that save at 8k total context?
+4. Gemma 2 は full-attention layers と sliding-window-attention layers を交互に使います。半分の layers が full context ではなく 4096-token sliding window を使う場合の KV cache の math を書いてください。8k total context でどれだけ memory を節約できますか。
 
-5. Find a recent frontier open model that was released after this lesson was written. Identify which of the six knobs it picked and whether it introduced a seventh knob. The curriculum will feel out of date the moment a new architecture ships -- the goal is to update your table without rebuilding your mental model.
+5. このレッスンが書かれた後に release された recent frontier open model を見つけてください。その model が 6つの knobs のどれを選んだか、そして seventh knob を導入したかどうかを特定してください。new architecture が ship された瞬間に curriculum は古く見えるはずです。goal は mental model を作り直さずに table を update することです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| RMSNorm | "LayerNorm without the mean" | Normalize by root mean square only, with a learned scale — cheaper and comparable to LayerNorm |
-| RoPE | "Rotary positions" | Rotate each Q and K vector in 2D pairs by an angle that depends on position — extrapolates beyond training length with scaling tricks |
-| SwiGLU | "The new MLP activation" | Gated linear unit with Swish: `(xW1) * sigmoid(xW1) * xV` — standard in every 2024+ open model |
-| GQA | "Middle ground attention" | Grouped-Query Attention: G groups of Q heads share one K and one V head — shrinks KV cache without MQA's accuracy hit |
-| MLA | "DeepSeek's attention" | Multi-Head Latent Attention: compress K/V into a shared low-rank latent, decompress per head — smallest KV cache for large models |
-| MoE | "Sparse experts" | Mixture of Experts: N MLPs per block, router picks top-k per token — huge total params, small active params |
-| Top-k routing | "Pick k experts per token" | The router computes a score per expert and activates the k highest — typical k is 2 (Mixtral) to 8 (DeepSeek) |
-| YaRN | "Stretch RoPE" | Yet another RoPE extension — interpolates rotary angles to extend context from 8k to 128k+ at inference time |
-| Sliding-window attention | "Don't attend to everything" | Each token attends only to the last W tokens — caps attention cost at O(W) per token, used in Gemma 2 and early Mistral |
-| Active params | "What runs per token" | For MoE models, the parameter count that sees a forward pass per token (much smaller than total params) — governs per-token FLOPs |
+| RMSNorm | 「mean なしの LayerNorm」 | root mean square だけで normalize し、learned scale を持つ。LayerNorm より安く、同等に近い |
+| RoPE | 「rotary positions」 | 各 Q と K vector を position に依存する角度で 2D pairs ごとに回転する。scaling tricks により training length を超えて extrapolate できる |
+| SwiGLU | 「新しい MLP activation」 | Swish を使う gated linear unit: `(xW1) * sigmoid(xW1) * xV`。2024+ の open model では標準 |
+| GQA | 「middle ground attention」 | Grouped-Query Attention: G groups の Q heads が 1つの K head と 1つの V head を共有する。MQA の accuracy hit なしに KV cache を縮小する |
+| MLA | 「DeepSeek の attention」 | Multi-Head Latent Attention: K/V を shared low-rank latent に compress し、head ごとに decompress する。large models で最小級の KV cache |
+| MoE | 「sparse experts」 | Mixture of Experts: block ごとに N 個の MLP を持ち、router が token ごとに top-k を選ぶ。total params は巨大、active params は小さい |
+| Top-k routing | 「token ごとに k experts を選ぶ」 | router が expert ごとに score を計算し、上位 k 個を activate する。typical k は 2 (Mixtral) から 8 (DeepSeek) |
+| YaRN | 「RoPE を伸ばす」 | Yet another RoPE extension。rotary angles を interpolate し、inference 時に context を 8k から 128k+ へ拡張する |
+| Sliding-window attention | 「全部には attend しない」 | 各 token が直近 W tokens にだけ attend する。attention cost を token あたり O(W) に抑える。Gemma 2 と early Mistral で使用 |
+| Active params | 「token ごとに実行されるもの」 | MoE models で、token ごとに forward pass を見る parameter count (total params より大幅に小さい)。per-token FLOPs を支配する |
 
-## Further Reading
+## 参考文献
 
-- [Dubey et al., 2024 -- "The Llama 3 Herd of Models"](https://arxiv.org/abs/2407.21783) -- the architectural and training reference for the dense Llama 3 family
-- [DeepSeek-AI, 2024 -- "DeepSeek-V3 Technical Report"](https://arxiv.org/abs/2412.19437) -- MLA plus auxiliary-loss-free load balancing plus 671B MoE
-- [Jiang et al., 2024 -- "Mixtral of Experts"](https://arxiv.org/abs/2401.04088) -- the canonical MoE open model paper
-- [Su et al., 2021 -- "RoFormer: Enhanced Transformer with Rotary Position Embedding"](https://arxiv.org/abs/2104.09864) -- the RoPE paper
-- [Shazeer, 2020 -- "GLU Variants Improve Transformer"](https://arxiv.org/abs/2002.05202) -- SwiGLU, GeGLU, and friends
-- [Ainslie et al., 2023 -- "GQA: Training Generalized Multi-Query Transformer Models"](https://arxiv.org/abs/2305.13245) -- the GQA paper
-- [Gemma 2 Team, 2024 -- "Gemma 2: Improving Open Language Models at a Practical Size"](https://arxiv.org/abs/2408.00118) -- hybrid full+sliding attention, pre+post-norm
-- [Qwen Team, 2024 -- "Qwen 2.5 Technical Report"](https://arxiv.org/abs/2412.15115) -- YaRN context extension and long-context training recipes
+- [Dubey et al., 2024 -- "The Llama 3 Herd of Models"](https://arxiv.org/abs/2407.21783) -- dense Llama 3 family の architecture と training の reference
+- [DeepSeek-AI, 2024 -- "DeepSeek-V3 Technical Report"](https://arxiv.org/abs/2412.19437) -- MLA、auxiliary-loss-free load balancing、671B MoE
+- [Jiang et al., 2024 -- "Mixtral of Experts"](https://arxiv.org/abs/2401.04088) -- canonical MoE open model paper
+- [Su et al., 2021 -- "RoFormer: Enhanced Transformer with Rotary Position Embedding"](https://arxiv.org/abs/2104.09864) -- RoPE paper
+- [Shazeer, 2020 -- "GLU Variants Improve Transformer"](https://arxiv.org/abs/2002.05202) -- SwiGLU、GeGLU、および related variants
+- [Ainslie et al., 2023 -- "GQA: Training Generalized Multi-Query Transformer Models"](https://arxiv.org/abs/2305.13245) -- GQA paper
+- [Gemma 2 Team, 2024 -- "Gemma 2: Improving Open Language Models at a Practical Size"](https://arxiv.org/abs/2408.00118) -- hybrid full+sliding attention、pre+post-norm
+- [Qwen Team, 2024 -- "Qwen 2.5 Technical Report"](https://arxiv.org/abs/2412.15115) -- YaRN context extension と long-context training recipes

@@ -1,8 +1,9 @@
-"""Toy three-stage RLHF pipeline — stdlib Python.
+"""3 段階 RLHF pipeline の toy 実装 — stdlib Python。
 
-Simulates InstructGPT's SFT + RM + PPO loop on a bandit with three actions.
-Watch reward climb, KL divergence grow, and the policy drift. Turn off the
-KL penalty to see reward hacking appear. Pedagogical toy — no torch.
+3 actions の bandit 上で InstructGPT の SFT + RM + PPO loop を simulation
+します。reward が上がり、KL divergence が増え、policy が drift する様子を
+確認してください。KL penalty を切ると reward hacking が現れます。
+教育用の toy であり、torch は使いません。
 
 Usage: python3 code/main.py
 """
@@ -32,7 +33,7 @@ def kl(p: list[float], q: list[float]) -> float:
 
 @dataclass
 class Policy:
-    """Softmax policy over 3 actions. Logits are the trainable parameters."""
+    """3 actions 上の softmax policy。logits が trainable parameters です。"""
     logits: list[float] = field(default_factory=lambda: [0.0, 0.0, 0.0])
 
     def probs(self) -> list[float]:
@@ -55,15 +56,15 @@ class Policy:
 
 
 def labeler_true_utility() -> list[float]:
-    """The 'human' rater prefers B, is neutral on A, slightly against C."""
+    """'human' rater は B を好み、A には中立で、C を少し嫌います。"""
     return [0.0, 1.0, -0.3]
 
 
 def stage1_sft(n_demos: int = 200) -> Policy:
-    """Imitation learning from labeler demonstrations.
+    """labeler demonstrations からの imitation learning。
 
-    Labeler samples actions with probabilities softmax(utility). SFT maximum-
-    likelihood estimates this distribution with a single-step gradient move.
+    labeler は softmax(utility) の確率で actions を sample します。SFT は
+    single-step gradient move でこの分布を maximum-likelihood 推定します。
     """
     utility = labeler_true_utility()
     target = softmax(utility)
@@ -76,24 +77,24 @@ def stage1_sft(n_demos: int = 200) -> Policy:
             if r < cum:
                 demos.append(i)
                 break
-    # closed-form MLE for categorical: log count frequencies
+    # categorical の closed-form MLE: count frequencies の log
     counts = [0.0, 0.0, 0.0]
     for a in demos:
         counts[a] += 1
     total = sum(counts)
     logits = [math.log(c / total + 1e-6) for c in counts]
-    # center for numerical stability
+    # numerical stability のため center する
     m = sum(logits) / 3
     logits = [x - m for x in logits]
     return Policy(logits=logits)
 
 
 def stage2_reward_model(n_pairs: int = 500, bias: list[float] | None = None) -> list[float]:
-    """Bradley-Terry fit of a scalar reward over actions.
+    """actions 上の scalar reward を Bradley-Terry で fit します。
 
-    Labeler prefers action with higher true utility. We fit one scalar per
-    action by SGD on pairwise cross-entropy. Optional `bias` injects a
-    reward-model bug (used in Exercise 2).
+    labeler は true utility が高い action を好みます。pairwise cross-entropy
+    上の SGD により action ごとに 1 つの scalar を fit します。任意の `bias`
+    は reward-model bug を注入します (Exercise 2 で使用)。
     """
     utility = labeler_true_utility()
     r = [0.0, 0.0, 0.0]
@@ -110,7 +111,7 @@ def stage2_reward_model(n_pairs: int = 500, bias: list[float] | None = None) -> 
         r[loser] -= lr * (1 - s)
     if bias:
         r = [ri + bi for ri, bi in zip(r, bias)]
-    # center reward (RL is invariant to constant shifts)
+    # reward を center する (RL は constant shift に不変)
     m = sum(r) / 3
     return [x - m for x in r]
 
@@ -118,10 +119,11 @@ def stage2_reward_model(n_pairs: int = 500, bias: list[float] | None = None) -> 
 def stage3_ppo(sft: Policy, reward: list[float], beta: float,
                steps: int = 300, batch: int = 32,
                lr: float = 0.1) -> tuple[Policy, list[float], list[float]]:
-    """Toy REINFORCE-with-KL (a stripped-down PPO).
+    """toy REINFORCE-with-KL (簡略化した PPO)。
 
-    For each step: sample a batch from current policy, take a policy-gradient
-    step on `r(a) - beta * log(pi / pi_sft)`. Tracks mean reward and KL.
+    各 step で current policy から batch を sample し、
+    `r(a) - beta * log(pi / pi_sft)` の policy-gradient step を取ります。
+    mean reward と KL を追跡します。
     """
     pi = sft.copy()
     reward_traj: list[float] = []
@@ -134,7 +136,7 @@ def stage3_ppo(sft: Policy, reward: list[float], beta: float,
         for _ in range(batch):
             a = pi.sample()
             r_a = reward[a]
-            # KL-shaped per-sample reward
+            # KL で shaping した per-sample reward
             penalty = beta * (math.log(pi.probs()[a] + 1e-12)
                               - math.log(sft_probs[a] + 1e-12))
             shaped = r_a - penalty
@@ -161,12 +163,12 @@ def report(name: str, sft: Policy, rlhf: Policy, reward: list[float],
            r_traj: list[float], kl_traj: list[float]) -> None:
     print(f"\n{name}")
     print("-" * 60)
-    print(f"  SFT probs     : {[f'{p:.3f}' for p in sft.probs()]}")
-    print(f"  RLHF probs    : {[f'{p:.3f}' for p in rlhf.probs()]}")
-    print(f"  Reward model  : {[f'{r:+.3f}' for r in reward]}")
-    print(f"  Final reward  : {r_traj[-1]:+.3f}")
-    print(f"  Final KL      : {kl_traj[-1]:.3f} nats")
-    print(f"  Max reward    : {max(r_traj):+.3f} at step {r_traj.index(max(r_traj))}")
+    print(f"  SFT 確率       : {[f'{p:.3f}' for p in sft.probs()]}")
+    print(f"  RLHF 確率      : {[f'{p:.3f}' for p in rlhf.probs()]}")
+    print(f"  Reward model   : {[f'{r:+.3f}' for r in reward]}")
+    print(f"  最終 reward    : {r_traj[-1]:+.3f}")
+    print(f"  最終 KL        : {kl_traj[-1]:.3f} nats")
+    print(f"  最大 reward    : {max(r_traj):+.3f} at step {r_traj.index(max(r_traj))}")
 
 
 def main() -> None:
@@ -175,32 +177,32 @@ def main() -> None:
     print("=" * 60)
 
     sft = stage1_sft()
-    print("\nStage 1 SFT complete.")
+    print("\nStage 1 SFT が完了しました。")
     print(f"  SFT policy: {[f'{p:.3f}' for p in sft.probs()]}")
 
     rm = stage2_reward_model()
-    print("\nStage 2 RM complete.")
-    print(f"  Reward per action: {[f'{r:+.3f}' for r in rm]}")
+    print("\nStage 2 RM が完了しました。")
+    print(f"  action ごとの reward: {[f'{r:+.3f}' for r in rm]}")
 
-    # Standard RLHF: small-beta KL keeps us near SFT.
+    # 標準的な RLHF: 小さな beta の KL が SFT 近傍に保つ。
     rlhf, r_traj, kl_traj = stage3_ppo(sft, rm, beta=0.1)
-    report("Run 1: beta = 0.10 (standard InstructGPT)", sft, rlhf, rm, r_traj, kl_traj)
+    report("Run 1: beta = 0.10 (標準的な InstructGPT)", sft, rlhf, rm, r_traj, kl_traj)
 
-    # Reward hacking: kill the KL.
+    # Reward hacking: KL を消す。
     rlhf2, r2, kl2 = stage3_ppo(sft, rm, beta=0.0)
-    report("Run 2: beta = 0.00 (no KL — reward hacking shows up)",
+    report("Run 2: beta = 0.00 (KL なし — reward hacking が現れる)",
            sft, rlhf2, rm, r2, kl2)
 
-    # RM bug: +0.5 bias on action A. With KL on, partial exploitation.
+    # RM bug: action A に +0.5 bias。KL があっても一部 exploit される。
     rm_buggy = stage2_reward_model(bias=[0.5, 0.0, 0.0])
     rlhf3, r3, kl3 = stage3_ppo(sft, rm_buggy, beta=0.1)
-    report("Run 3: buggy RM (+0.5 on action A), beta = 0.10",
+    report("Run 3: buggy RM (action A に +0.5), beta = 0.10",
            sft, rlhf3, rm_buggy, r3, kl3)
 
     print("\n" + "=" * 60)
-    print("TAKEAWAY: KL penalty trades reward for faithfulness. beta is the")
-    print("single most important RLHF hyperparameter. beta = 0 is not PPO;")
-    print("it is adversarial optimization against an imperfect proxy.")
+    print("要点: KL penalty は reward と忠実性を trade off します。beta は")
+    print("RLHF で最も重要な hyperparameter です。beta = 0 は PPO ではなく、")
+    print("不完全な proxy に対する adversarial optimization です。")
     print("=" * 60)
 
 

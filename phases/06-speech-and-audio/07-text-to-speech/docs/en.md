@@ -1,41 +1,41 @@
-# Text-to-Speech (TTS) — From Tacotron to F5 and Kokoro
+# Text-to-Speech (TTS) - Tacotron から F5 と Kokoro まで
 
-> ASR inverts speech to text; TTS inverts text to speech. The 2026 stack is three parts: text → tokens, tokens → mel, mel → waveform. Each part has a default model that fits in a laptop.
+> ASR は音声をテキストに戻します。TTS はテキストを音声に戻します。2026 年のスタックは 3 部構成です。text → tokens、tokens → mel、mel → waveform。それぞれに、ノート PC に収まるデフォルトモデルがあります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
+**時間:** 約 75 分
 
-## The Problem
+## 問題
 
-You have a string: "Please remind me to water the plants at 6 pm." You need a 3-second audio clip that sounds natural, has correct prosody (pauses, stress), pronounces "plants" with the right vowel, and runs in under 300 ms on a CPU for a live voice assistant. You also need to swap voices, handle code-switched input ("remind me at 6 pm, daijoubu?"), and not embarrass yourself on names.
+文字列があります: "Please remind me to water the plants at 6 pm." 必要なのは、自然に聞こえ、正しい prosody (休止、強勢) を持ち、"plants" を正しい母音で発音し、live voice assistant のために CPU 上で 300 ms 未満で動く 3 秒の音声クリップです。さらに voice を差し替え、code-switched input ("remind me at 6 pm, daijoubu?") を扱い、名前の発音で失敗しない必要があります。
 
-Modern TTS pipelines look like this:
+現代の TTS pipelines は次のような構成です。
 
-1. **Text frontend.** Normalize text (dates, numbers, emails), convert to phonemes or subword tokens, predict prosody features.
-2. **Acoustic model.** Text → mel spectrogram. Tacotron 2 (2017), FastSpeech 2 (2020), VITS (2021), F5-TTS (2024), Kokoro (2024).
-3. **Vocoder.** Mel → waveform. WaveNet (2016), WaveRNN, HiFi-GAN (2020), BigVGAN (2022), neural codec vocoders in 2024+.
+1. **Text frontend。** テキストを正規化し (dates, numbers, emails)、phonemes または subword tokens に変換し、prosody features を予測します。
+2. **Acoustic model。** Text → mel spectrogram。Tacotron 2 (2017)、FastSpeech 2 (2020)、VITS (2021)、F5-TTS (2024)、Kokoro (2024)。
+3. **Vocoder。** Mel → waveform。WaveNet (2016)、WaveRNN、HiFi-GAN (2020)、BigVGAN (2022)、2024 年以降の neural codec vocoders。
 
-In 2026 the acoustic + vocoder split blurs with end-to-end diffusion and flow-matching models. But the mental model of three parts still holds for debugging.
+2026 年には、end-to-end diffusion と flow-matching models によって acoustic + vocoder の境界は曖昧になっています。それでも、デバッグのための 3 部構成という mental model は有効です。
 
-## The Concept
+## コンセプト
 
 ![Tacotron, FastSpeech, VITS, F5/Kokoro side-by-side](../assets/tts.svg)
 
-**Tacotron 2 (2017).** Seq2seq: char-embedding → BiLSTM encoder → location-sensitive attention → autoregressive LSTM decoder emits mel frames. Slow (AR), wobbly on long text. Still cited as a baseline.
+**Tacotron 2 (2017)。** Seq2seq: char-embedding → BiLSTM encoder → location-sensitive attention → autoregressive LSTM decoder が mel frames を出力します。遅く (AR)、長文で不安定です。今でも baseline として引用されます。
 
-**FastSpeech 2 (2020).** Non-autoregressive. Duration predictor outputs how many mel frames each phoneme gets. 1-pass, 10× faster than Tacotron. Loses some naturalness (monotonic alignment) but ships everywhere.
+**FastSpeech 2 (2020)。** Non-autoregressive。Duration predictor が各 phoneme に割り当てる mel frames 数を出力します。1-pass で、Tacotron より 10 倍高速です。自然さはやや落ちます (monotonic alignment) が、広く本番利用されています。
 
-**VITS (2021).** Jointly trains encoder + flow-based duration + HiFi-GAN vocoder end-to-end with variational inference. High quality, single model. Dominant open-source TTS 2022–2024. Variants: YourTTS (multi-speaker zero-shot), XTTS v2 (2024, Coqui).
+**VITS (2021)。** encoder + flow-based duration + HiFi-GAN vocoder を variational inference で end-to-end に同時学習します。高品質な単一モデルです。2022-2024 年の open-source TTS を支配しました。派生には YourTTS (multi-speaker zero-shot)、XTTS v2 (2024, Coqui) があります。
 
-**F5-TTS (2024).** Diffusion transformer over flow matching. Natural prosody, zero-shot voice cloning with 5 seconds of reference audio. Top of the 2026 open-source TTS leaderboards. 335M params.
+**F5-TTS (2024)。** flow matching 上の diffusion transformer。自然な prosody と、5 秒の reference audio による zero-shot voice cloning が特徴です。2026 年の open-source TTS leaderboard 上位です。335M params。
 
-**Kokoro (2024).** Small (82M), CPU-runnable, best-in-class English TTS for real-time use. Closed-vocabulary English-only, apache-2.0.
+**Kokoro (2024)。** 小型 (82M)、CPU 実行可能、real-time 用 English TTS として最高クラスです。Closed-vocabulary English-only、apache-2.0。
 
-**OpenAI TTS-1-HD, ElevenLabs v2.5, Google Chirp-3.** Commercial state of the art. ElevenLabs v2.5 emotion tags ("[whispered]", "[laughing]") and character voices dominate audiobook production in 2026.
+**OpenAI TTS-1-HD、ElevenLabs v2.5、Google Chirp-3。** 商用の最先端です。ElevenLabs v2.5 の emotion tags ("[whispered]", "[laughing]") と character voices は、2026 年の audiobook production を支配しています。
 
-### Vocoder evolution
+### Vocoder の進化
 
 | Era | Vocoder | Latency | Quality |
 |-----|---------|---------|---------|
@@ -45,30 +45,30 @@ In 2026 the acoustic + vocoder split blurs with end-to-end diffusion and flow-ma
 | 2022 | BigVGAN | 50× realtime | generalizes across speakers/langs |
 | 2024 | SNAC, DAC (neural codecs) | integrated with AR models | discrete tokens, bit-efficient |
 
-By 2026 most "TTS" models are end-to-end from text to waveform; the mel spectrogram is an internal representation.
+2026 年には、ほとんどの "TTS" モデルが text から waveform まで end-to-end です。mel spectrogram は内部表現になっています。
 
-### Evaluation
+### 評価
 
-- **MOS (Mean Opinion Score).** 1–5 scale, crowd-sourced. Still the gold standard; painfully slow.
-- **CMOS (Comparative MOS).** A-vs-B preference. Tighter confidence intervals per annotation.
-- **UTMOS, DNSMOS.** Reference-free neural MOS predictors. Used for leaderboards.
-- **CER (Character Error Rate) via ASR.** Run TTS output through Whisper, compute CER against the input text. Proxy for intelligibility.
-- **SECS (Speaker Embedding Cosine Similarity).** Voice-cloning quality.
+- **MOS (Mean Opinion Score)。** 1-5 の尺度で、crowd-sourced です。今でも gold standard ですが、とても時間がかかります。
+- **CMOS (Comparative MOS)。** A-vs-B preference。annotation あたりの confidence intervals が狭くなります。
+- **UTMOS, DNSMOS。** Reference-free neural MOS predictors。leaderboards で使われます。
+- **CER (Character Error Rate) via ASR。** TTS output を Whisper に通し、input text に対する CER を計算します。intelligibility の proxy です。
+- **SECS (Speaker Embedding Cosine Similarity)。** Voice-cloning quality の指標です。
 
-2026 numbers on LibriTTS test-clean:
+LibriTTS test-clean における 2026 年の数値:
 
 | Model | UTMOS | CER (via Whisper) | Size |
 |-------|-------|-------------------|------|
-| Ground truth | 4.08 | 1.2% | — |
+| Ground truth | 4.08 | 1.2% | - |
 | F5-TTS | 3.95 | 2.1% | 335M |
 | XTTS v2 | 3.81 | 3.5% | 470M |
 | VITS | 3.62 | 3.1% | 25M |
 | Kokoro v0.19 | 3.87 | 1.8% | 82M |
 | Parler-TTS Large | 3.76 | 2.8% | 2.3B |
 
-## Build It
+## 作ってみる
 
-### Step 1: phonemize input
+### Step 1: 入力を phonemize する
 
 ```python
 from phonemizer import phonemize
@@ -76,9 +76,9 @@ ph = phonemize("Hello world", language="en-us", backend="espeak")
 # 'həloʊ wɜːld'
 ```
 
-Phonemes are the universal bridge. Avoid feeding raw text to anything below VITS-level quality.
+phonemes は普遍的な橋渡しです。VITS レベル未満の品質のものに raw text を直接入れるのは避けてください。
 
-### Step 2: run Kokoro (2026 CPU default)
+### Step 2: Kokoro を実行する (2026 年の CPU デフォルト)
 
 ```python
 from kokoro import KPipeline
@@ -87,9 +87,9 @@ audio, sr = tts("Please remind me to water the plants at 6 pm.", voice="af_bella
 # audio: float32 tensor, sr=24000
 ```
 
-Runs offline, single file, 82M params.
+offline で動き、単一ファイル、82M params です。
 
-### Step 3: run F5-TTS with voice cloning
+### Step 3: voice cloning 付きで F5-TTS を実行する
 
 ```python
 from f5_tts.api import F5TTS
@@ -101,11 +101,11 @@ wav = tts.infer(
 )
 ```
 
-Pass a 5-second reference clip + its transcript; F5 clones prosody and timbre.
+5 秒の reference clip とその transcript を渡します。F5 は prosody と timbre を clone します。
 
-### Step 4: HiFi-GAN vocoder from scratch
+### Step 4: HiFi-GAN vocoder を scratch から作る
 
-Too big to fit in a tutorial script, but the shape is:
+tutorial script に収めるには大きすぎますが、形は次の通りです。
 
 ```python
 class HiFiGAN(nn.Module):
@@ -117,9 +117,9 @@ class HiFiGAN(nn.Module):
         return self.blocks(mel)  # -> waveform
 ```
 
-Training: adversarial (discriminator on short windows) + mel-spectrogram reconstruction loss + feature-matching loss. Commoditized — use pretrained checkpoints from `hifi-gan` repo or nvidia-NeMo.
+学習は adversarial (短い windows 上の discriminator) + mel-spectrogram reconstruction loss + feature-matching loss です。これはすでにコモディティ化しているので、`hifi-gan` repo や nvidia-NeMo の pretrained checkpoints を使ってください。
 
-### Step 5: the full pipeline (pseudocode)
+### Step 5: 完全な pipeline (pseudocode)
 
 ```python
 text = "Please remind me at 6 pm."
@@ -129,9 +129,9 @@ wav = vocoder(mel)                                # [T * 256]
 soundfile.write("out.wav", wav, 24000)
 ```
 
-## Use It
+## 使いどころ
 
-The 2026 stack:
+2026 年のスタック:
 
 | Situation | Pick |
 |-----------|------|
@@ -139,45 +139,45 @@ The 2026 stack:
 | Voice cloning from 5 s reference | F5-TTS |
 | Commercial character voices | ElevenLabs v2.5 |
 | Audiobook narration | ElevenLabs v2.5 or XTTS v2 + fine-tune |
-| Low-resource language | Train VITS on 5–20 h target-lang data |
+| Low-resource language | Train VITS on 5-20 h target-lang data |
 | Expressive / emotion tags | ElevenLabs v2.5 or StyleTTS 2 fine-tune |
 
-Open-source leader as of 2026: **F5-TTS for quality, Kokoro for efficiency**. Don't reach for Tacotron unless you are a historian.
+2026 年時点の open-source leader は、**品質なら F5-TTS、効率なら Kokoro** です。Tacotron を選ぶのは、歴史研究をしている場合だけで十分です。
 
-## Pitfalls
+## 落とし穴
 
-- **No text normalizer.** "Dr. Smith" reads as "Doctor" or "Drive"? "2026" as "twenty twenty six" or "two zero two six"? Normalize BEFORE phonemizer.
-- **OOV proper nouns.** "Ghumare" → "ghyu-mair"? Ship a fallback grapheme-to-phoneme model for unknown tokens.
-- **Clipping.** Vocoder output rarely clips, but mel scaling mismatch at inference can overshoot ±1.0. Always `np.clip(wav, -1, 1)`.
-- **Sample-rate mismatch.** Kokoro outputs 24 kHz; your downstream pipeline expects 16 kHz → resample or get aliasing.
+- **Text normalizer がない。** "Dr. Smith" は "Doctor" か "Drive" か？ "2026" は "twenty twenty six" か "two zero two six" か？ phonemizer の前に正規化してください。
+- **OOV proper nouns。** "Ghumare" → "ghyu-mair" になるかもしれません。unknown tokens 用に fallback grapheme-to-phoneme model を出荷してください。
+- **Clipping。** Vocoder output はめったに clip しませんが、inference 時の mel scaling mismatch があると ±1.0 を超えることがあります。必ず `np.clip(wav, -1, 1)` します。
+- **Sample-rate mismatch。** Kokoro は 24 kHz を出力します。下流 pipeline が 16 kHz を期待するなら、resample してください。しないと aliasing が起きます。
 
-## Ship It
+## 提出物
 
-Save as `outputs/skill-tts-designer.md`. Design a TTS pipeline for a given voice, latency, and language target.
+`outputs/skill-tts-designer.md` として保存してください。指定された voice、latency、language target に対する TTS pipeline を設計します。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. Builds a phoneme dictionary from a toy vocab, estimates duration per phoneme, and prints a fake "mel" schedule.
-2. **Medium.** Install Kokoro, synthesize the same sentence at voice `af_bella` and `am_adam`. Compare audio durations and subjective quality.
-3. **Hard.** Record a 5-second reference clip of yourself. Use F5-TTS to clone it. Report SECS between reference and cloned output.
+1. **Easy.** `code/main.py` を実行してください。toy vocab から phoneme dictionary を作り、phoneme ごとの duration を見積もり、偽の "mel" schedule を出力します。
+2. **Medium.** Kokoro をインストールし、同じ文を voice `af_bella` と `am_adam` で合成してください。audio durations と主観品質を比較します。
+3. **Hard.** 自分の 5 秒の reference clip を録音してください。F5-TTS で clone します。reference と cloned output の SECS を報告してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| Phoneme | Sound unit | Abstract sound class; 39 in English (ARPABet). |
-| Duration predictor | How long each phoneme lasts | Non-AR model output; integer frames per phoneme. |
-| Vocoder | Mel → waveform | Neural net mapping mel-spec to raw samples. |
-| HiFi-GAN | Standard vocoder | GAN-based; dominant 2020–2024. |
-| MOS | Subjective quality | 1–5 mean opinion score from human raters. |
-| SECS | Voice-clone metric | Cosine similarity between target and output speaker embedding. |
-| F5-TTS | 2024 open-source SOTA | Flow-matching diffusion; zero-shot cloning. |
-| Kokoro | CPU English leader | 82M-param model, Apache 2.0. |
+| Term | よく言われる意味 | 実際の意味 |
+|------|-----------------|------------|
+| Phoneme | 音の単位 | 抽象的な音クラス。English では 39 個 (ARPABet)。 |
+| Duration predictor | 各 phoneme の長さ | Non-AR model output。phoneme あたりの integer frames。 |
+| Vocoder | Mel → waveform | mel-spec から raw samples へ写像する neural net。 |
+| HiFi-GAN | 標準 vocoder | GAN-based。2020-2024 年に主流。 |
+| MOS | 主観品質 | human raters による 1-5 の mean opinion score。 |
+| SECS | Voice-clone metric | target と output の speaker embedding 間 cosine similarity。 |
+| F5-TTS | 2024 open-source SOTA | Flow-matching diffusion。zero-shot cloning。 |
+| Kokoro | CPU English leader | 82M-param model、Apache 2.0。 |
 
-## Further Reading
+## 参考資料
 
-- [Shen et al. (2017). Tacotron 2](https://arxiv.org/abs/1712.05884) — the seq2seq baseline.
-- [Kim, Kong, Son (2021). VITS](https://arxiv.org/abs/2106.06103) — end-to-end flow-based.
-- [Chen et al. (2024). F5-TTS](https://arxiv.org/abs/2410.06885) — current open-source SOTA.
-- [Kong, Kim, Bae (2020). HiFi-GAN](https://arxiv.org/abs/2010.05646) — the vocoder that still ships in 2026.
-- [Kokoro-82M on HuggingFace](https://huggingface.co/hexgrad/Kokoro-82M) — 2024 CPU-friendly English TTS.
+- [Shen et al. (2017). Tacotron 2](https://arxiv.org/abs/1712.05884) - seq2seq baseline。
+- [Kim, Kong, Son (2021). VITS](https://arxiv.org/abs/2106.06103) - end-to-end flow-based。
+- [Chen et al. (2024). F5-TTS](https://arxiv.org/abs/2410.06885) - 現在の open-source SOTA。
+- [Kong, Kim, Bae (2020). HiFi-GAN](https://arxiv.org/abs/2010.05646) - 2026 年も出荷される vocoder。
+- [Kokoro-82M on HuggingFace](https://huggingface.co/hexgrad/Kokoro-82M) - 2024 年の CPU-friendly English TTS。

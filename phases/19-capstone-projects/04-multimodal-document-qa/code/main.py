@@ -1,10 +1,10 @@
-"""Multimodal document QA — ColPali-style late interaction scaffold.
+"""Multimodal document QA — ColPali-style late interaction scaffold。
 
-The hard architectural primitive is late-interaction retrieval: every query
-token scores against every document patch, the MaxSim per query token is
-summed, the top-k pages are returned. This scaffold implements MaxSim end to
-end on synthetic patch embeddings so the algorithm is observable without
-loading a real ColQwen model. Includes DocPruner-style patch pruning.
+難しい architectural primitive は late-interaction retrieval です。各 query
+token が各 document patch に対して score され、query token ごとの MaxSim を
+合計し、top-k page を返します。この scaffold は synthetic patch embedding 上で
+MaxSim を end to end に実装し、real ColQwen model を load しなくても algorithm
+を観測できるようにします。DocPruner-style patch pruning も含みます。
 
 Run:  python main.py
 """
@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 
 
 # ---------------------------------------------------------------------------
-# patch embeddings  --  fake 16-dim patch vectors per page
+# patch embeddings  --  page ごとの fake 16-dim patch vectors
 # ---------------------------------------------------------------------------
 
 EMB_DIM = 16
@@ -39,21 +39,21 @@ def hash_embed(tok: str) -> list[float]:
 class Page:
     doc_id: str
     page_num: int
-    content_tokens: list[str]          # stand-in for page contents
+    content_tokens: list[str]          # page contents の代役
     patches: list[list[float]] = field(default_factory=list)
 
     def embed_patches(self) -> None:
-        """Multi-vector: each content token becomes a patch vector."""
+        """multi-vector: 各 content token が patch vector になる。"""
         self.patches = [hash_embed(t) for t in self.content_tokens]
 
 
 # ---------------------------------------------------------------------------
-# DocPruner  --  keep top-fraction patches by norm variance
+# DocPruner  --  norm variance で top fraction の patch を残す
 # ---------------------------------------------------------------------------
 
 def doc_prune(patches: list[list[float]], keep_fraction: float = 0.5) -> list[list[float]]:
-    """Keep patches with highest per-patch norm (poor proxy for info density
-    but matches the DocPruner intuition: drop low-signal patches)."""
+    """per-patch norm が高い patch を残す。
+    info density の粗い proxy だが、low-signal patch を落とす DocPruner の直感に合う。"""
     scored = [(sum(abs(x) for x in p), p) for p in patches]
     scored.sort(key=lambda x: -x[0])
     keep_n = max(1, int(len(scored) * keep_fraction))
@@ -61,7 +61,7 @@ def doc_prune(patches: list[list[float]], keep_fraction: float = 0.5) -> list[li
 
 
 # ---------------------------------------------------------------------------
-# MaxSim late interaction  --  the algorithmic core of ColPali / ColQwen
+# MaxSim late interaction  --  ColPali / ColQwen の algorithmic core
 # ---------------------------------------------------------------------------
 
 def dot(a: list[float], b: list[float]) -> float:
@@ -70,8 +70,8 @@ def dot(a: list[float], b: list[float]) -> float:
 
 def max_sim_score(query_tokens: list[list[float]],
                   doc_patches: list[list[float]]) -> float:
-    """For every query token embedding, take max dot product against any
-    doc patch; sum across query tokens. This is MaxSim / late interaction."""
+    """各 query token embedding について任意の doc patch との max dot product を取り、
+    query token 全体で合計する。これが MaxSim / late interaction。"""
     total = 0.0
     for q in query_tokens:
         best = -1e9
@@ -84,7 +84,7 @@ def max_sim_score(query_tokens: list[list[float]],
 
 
 # ---------------------------------------------------------------------------
-# index + retrieval  --  ranked top-k by MaxSim
+# index + retrieval  --  MaxSim による ranked top-k
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -102,7 +102,7 @@ class Index:
 
 
 # ---------------------------------------------------------------------------
-# synthetic corpus  --  ten pages spanning tables, charts, handwriting, text
+# synthetic corpus  --  table、chart、handwriting、text にまたがる10 pages
 # ---------------------------------------------------------------------------
 
 CORPUS = [
@@ -131,15 +131,15 @@ def build_index(prune: bool = True) -> Index:
 
 
 def main() -> None:
-    print("=== build index with DocPruner (50% patches) ===")
+    print("=== DocPruner (50% patches) で index を構築 ===")
     idx = build_index(prune=True)
-    print(f"pages indexed: {len(idx.pages)}")
+    print(f"index 済み pages: {len(idx.pages)}")
 
     queries = [
-        "what was the 2024 operating margin change for EMEA",
-        "late interaction retrieval vs OCR",
-        "handwritten experimental figures with error bars",
-        "bar chart comparing segment margins",
+        "2024年の EMEA operating margin はどう変化したか",
+        "late interaction retrieval と OCR の比較",
+        "error bar 付きの手書き実験 figure",
+        "segment margin を比較する bar chart",
     ]
 
     for q in queries:
@@ -152,7 +152,7 @@ def main() -> None:
     print("\n=== ablation: pruning off vs on ===")
     full = build_index(prune=False)
     pruned = build_index(prune=True)
-    q = "chart comparing segment margins"
+    q = "segment margin を比較する chart"
     full_top = [(p.doc_id, p.page_num) for p, _ in full.retrieve(q, 3)]
     prn_top = [(p.doc_id, p.page_num) for p, _ in pruned.retrieve(q, 3)]
     print(f"  full    top-3 : {full_top}")

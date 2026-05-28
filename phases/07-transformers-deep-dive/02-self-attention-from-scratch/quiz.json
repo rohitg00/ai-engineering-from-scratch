@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does vanilla self-attention scale the dot product by 1/sqrt(d_k)?",
-      "options": ["To make the output values between 0 and 1", "To prevent dot products from growing large in high dimensions, which would push softmax into regions with tiny gradients", "To normalize the query and key vectors to unit length", "To reduce the computational cost of the matrix multiplication"],
+      "question": "素の self-attention はなぜ内積を 1/sqrt(d_k) でスケールするのですか？",
+      "options": ["出力値を 0 から 1 の間にするため", "高次元で内積が大きくなり、softmax が勾配の非常に小さい領域に押し込まれるのを防ぐため", "query と key のベクトルを単位長に正規化するため", "行列積の計算コストを減らすため"],
       "correct": 1,
-      "explanation": "When d_k is large, the dot product of random vectors grows proportionally to sqrt(d_k). Without scaling, softmax receives large inputs, producing near-one-hot outputs where gradients vanish."
+      "explanation": "d_k が大きいと、ランダムベクトルの内積は sqrt(d_k) に比例して大きくなります。スケーリングしないと softmax に大きな入力が入り、ほぼ one-hot の出力になって勾配が消えます。"
     },
     {
       "stage": "pre",
-      "question": "What are the three projections in self-attention?",
-      "options": ["Input, hidden, and output", "Query, key, and value -- each a learned linear projection of the same input", "Encoder, decoder, and cross-attention", "Embedding, position, and segment"],
+      "question": "self-attention における 3 つの projection は何ですか？",
+      "options": ["Input、hidden、output", "Query、key、value。いずれも同じ入力の学習済み線形 projection", "Encoder、decoder、cross-attention", "Embedding、position、segment"],
       "correct": 1,
-      "explanation": "Self-attention projects the input through three different weight matrices to produce queries (what am I looking for?), keys (what do I contain?), and values (what do I output if matched?)."
+      "explanation": "Self-attention は入力を 3 つの異なる重み行列で projection し、query（自分は何を探しているか）、key（自分は何を含んでいるか）、value（一致したら何を出力するか）を作ります。"
     },
     {
       "stage": "post",
-      "question": "In multi-head attention with 8 heads and d_model=512, what is the dimension of each head?",
-      "options": ["512 -- each head sees the full dimension", "64 -- d_model is split evenly across heads (512/8=64)", "8 -- one dimension per head", "4096 -- each head expands the representation"],
+      "question": "8 heads で d_model=512 の multi-head attention では、各 head の次元はいくつですか？",
+      "options": ["512。各 head が全次元を見る", "64。d_model は head 間で均等に分割される（512/8=64）", "8。head ごとに 1 次元", "4096。各 head が表現を拡張する"],
       "correct": 1,
-      "explanation": "Multi-head attention splits d_model into h heads, each operating on d_k = d_model/h dimensions. With 512/8 = 64 dimensions per head, the total computation cost equals single-head attention at full dimension."
+      "explanation": "Multi-head attention は d_model を h 個の head に分割し、それぞれが d_k = d_model/h 次元で動作します。512/8 = 64 次元が各 head に割り当てられ、総計算コストは全次元の single-head attention と同等です。"
     },
     {
       "stage": "post",
-      "question": "What does the causal mask in autoregressive attention prevent?",
-      "options": ["It prevents the model from attending to padding tokens", "It prevents each position from attending to future positions, ensuring the model can only use past context when predicting the next token", "It prevents attention weights from becoming too large", "It prevents the model from attending to its own position"],
+      "question": "autoregressive attention における causal mask は何を防ぎますか？",
+      "options": ["モデルが padding token に attention するのを防ぐ", "各位置が未来の位置に attention するのを防ぎ、次トークン予測時に過去の文脈だけを使えるようにする", "attention weight が大きくなりすぎるのを防ぐ", "モデルが自分自身の位置に attention するのを防ぐ"],
       "correct": 1,
-      "explanation": "In autoregressive generation, token t must not see tokens t+1, t+2, etc. The causal mask sets future positions to -infinity before softmax, zeroing out their attention weights."
+      "explanation": "autoregressive generation では、トークン t が t+1、t+2 などを見てはいけません。causal mask は softmax の前に未来位置を -infinity に設定し、それらの attention weight を 0 にします。"
     },
     {
       "stage": "post",
-      "question": "Why does self-attention have O(n^2) complexity in sequence length n?",
-      "options": ["Because the model has n layers stacked on top of each other", "Because every token computes attention scores with every other token, producing an n x n attention matrix", "Because the feedforward layers after attention are quadratic", "Because backpropagation through attention requires n^2 gradient computations"],
+      "question": "self-attention の計算量が系列長 n に対して O(n^2) になるのはなぜですか？",
+      "options": ["モデルが n 層積み重なっているから", "すべてのトークンが他のすべてのトークンと attention score を計算し、n x n の attention 行列を作るから", "attention の後の feedforward 層が二次だから", "attention を通した backpropagation に n^2 個の勾配計算が必要だから"],
       "correct": 1,
-      "explanation": "The QK^T matrix multiplication produces an n x n attention matrix where entry (i,j) is the attention from token i to token j. Both computation and memory scale as O(n^2), which is why long-context models need techniques like FlashAttention."
+      "explanation": "QK^T の行列積は n x n の attention 行列を作り、要素 (i,j) はトークン i からトークン j への attention を表します。計算量とメモリの両方が O(n^2) で増えるため、長いコンテキストのモデルには FlashAttention のような技術が必要です。"
     }
   ]
 }

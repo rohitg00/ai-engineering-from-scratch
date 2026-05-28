@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the limitation of basic top-k semantic search in RAG?",
-    "options": ["It's too slow", "It retrieves chunks that are semantically similar to the query but may not contain the actual answer, especially for ambiguous or multi-hop questions", "It can't handle large documents", "It requires GPU"],
+    "question": "RAGにおけるbasic top-k semantic searchの限界は何ですか。",
+    "options": [
+      "遅すぎます",
+      "queryと意味的に似ているchunksを取得しますが、特にambiguousまたはmulti-hop questionsでは実際の答えを含まないことがあります",
+      "大きなdocumentsを扱えません",
+      "GPUが必要です"
+    ],
     "correct": 1,
-    "explanation": "Basic semantic search matches surface-level meaning. 'What was revenue last quarter?' retrieves chunks about 'revenue strategy' (semantically similar) instead of the chunk saying '$47.2M in Q3 2025' (which uses 'earnings').",
+    "explanation": "basic semantic searchは表面的な意味を合わせます。'What was revenue last quarter?'は'$47.2M in Q3 2025'（'earnings'を使う）ではなく、'revenue strategy'（意味的に似る）を取得することがあります。",
     "stage": "pre"
   },
   {
-    "question": "What is hybrid search in the context of RAG?",
-    "options": ["Using two different LLMs", "Combining BM25 keyword matching with semantic vector search to capture both exact terms and meaning-based relevance", "Searching across multiple databases", "Using both CPU and GPU for search"],
+    "question": "RAG文脈でのhybrid searchとは何ですか。",
+    "options": [
+      "2つの異なるLLMを使うこと",
+      "BM25 keyword matchingとsemantic vector searchを組み合わせ、完全一致語と意味ベースの関連性の両方を捉えること",
+      "複数databaseを検索すること",
+      "CPUとGPUの両方を検索に使うこと"
+    ],
     "correct": 1,
-    "explanation": "BM25 catches exact keyword matches (e.g., '$47.2M' or 'Q3'). Semantic search catches meaning matches. Combining them with a reranker gives the best of both worlds: precision on specific terms plus recall on semantic variants.",
+    "explanation": "BM25は'$47.2M'や'Q3'などのexact keyword matchesを拾います。semantic searchは意味の一致を拾います。rerankerと組み合わせると、specific termsのprecisionとsemantic variantsのrecallを両立できます。",
     "stage": "pre"
   },
   {
-    "question": "What does a cross-encoder reranker do in an advanced RAG pipeline?",
-    "options": ["It generates the final answer", "It takes (query, document) pairs and scores their relevance with higher accuracy than embedding similarity, reordering the initial retrieval results", "It encodes documents into vectors", "It splits documents into chunks"],
+    "question": "advanced RAG pipelineでcross-encoder rerankerは何をしますか。",
+    "options": [
+      "final answerを生成します",
+      "(query, document)ペアを受け取り、embedding similarityより高精度にrelevanceをスコアし、初期retrieval resultsを並べ替えます",
+      "documentsをvectorsへencodeします",
+      "documentsをchunksへ分割します"
+    ],
     "correct": 1,
-    "explanation": "Bi-encoder similarity (used for initial retrieval) is fast but approximate. A cross-encoder processes the full query-document pair together with cross-attention, giving much more accurate relevance scores for reranking the top candidates.",
+    "explanation": "初期検索で使うbi-encoder similarityは高速ですが近似的です。cross-encoderはquery-document pair全体をcross-attentionで同時に処理するため、top candidatesのrerankingに対してはるかに正確なrelevance scoresを出せます。",
     "stage": "post"
   },
   {
-    "question": "What is the HyDE (Hypothetical Document Embedding) query transformation technique?",
-    "options": ["Hiding the query from the model", "Using the LLM to generate a hypothetical answer, then embedding that answer as the search query instead of the original question", "Encrypting the query for privacy", "Expanding abbreviations in the query"],
+    "question": "HyDE（Hypothetical Document Embedding）query transformation techniqueとは何ですか。",
+    "options": [
+      "queryをmodelから隠すこと",
+      "LLMでhypothetical answerを生成し、元のquestionではなくそのanswerをsearch queryとしてembedすること",
+      "privacyのためqueryを暗号化すること",
+      "query内のabbreviationsを展開すること"
+    ],
     "correct": 1,
-    "explanation": "The original query 'What was Q3 revenue?' might not embed close to the answer chunk. HyDE asks the LLM to generate a hypothetical answer ('Q3 revenue was approximately...'), then uses that as the search query, which embeds closer to actual answer-containing chunks.",
+    "explanation": "元のquery 'What was Q3 revenue?' はanswer chunkに近くembedされないかもしれません。HyDEはLLMにhypothetical answer（'Q3 revenue was approximately...'）を生成させ、それをsearch queryとして使います。これは実際にanswerを含むchunksへより近くembedされます。",
     "stage": "post"
   },
   {
-    "question": "Why does parent-child chunking improve RAG over flat chunking?",
-    "options": ["It's faster to index", "Small child chunks are used for precise retrieval, but the larger parent chunk is returned for context, preventing the 'lost context' problem", "It reduces the number of chunks", "It eliminates the need for embeddings"],
+    "question": "parent-child chunkingがflat chunkingよりRAGを改善するのはなぜですか。",
+    "options": [
+      "indexingが速いからです",
+      "小さなchild chunksを精密なretrievalに使い、より大きなparent chunkをcontextとして返すことで'lost context'問題を防ぐからです",
+      "chunks数を減らすからです",
+      "embeddingsが不要になるからです"
+    ],
     "correct": 1,
-    "explanation": "Small chunks (200 tokens) embed precisely but lack context. Large chunks (2000 tokens) have context but embed imprecisely. Parent-child uses small chunks for search accuracy but returns the parent chunk for generation context.",
+    "explanation": "小チャンク（200 tokens）は精密にembedされますが文脈が不足します。大チャンク（2000 tokens）は文脈がありますがembedが不正確です。parent-childは小チャンクでsearch accuracyを得つつ、generation contextにはparent chunkを返します。",
     "stage": "post"
   }
 ]

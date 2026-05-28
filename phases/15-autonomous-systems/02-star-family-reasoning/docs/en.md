@@ -1,108 +1,108 @@
-# STaR, V-STaR, Quiet-STaR — Self-Taught Reasoning
+# STaR、V-STaR、Quiet-STaR — 自己学習による推論
 
-> The smallest possible self-improvement loop sits inside the rationale. A model generates a chain of thought, keeps the ones that land on correct answers, and fine-tunes on those. That is STaR. V-STaR adds a verifier so inference-time selection is better. Quiet-STaR pushes the rationale down to every token. All three work. None of them are magic — the loop preserves any shortcut that happened to reach the right answer.
+> 最も小さな自己改善ループは、推論の根拠（rationale）の中に存在します。モデルは思考の連鎖（chain of thought）を生成し、正しい答えにたどり着いたものを保持し、それらでファインチューニングを行います。これがSTaRです。V-STaRは検証器（verifier）を追加することで、推論時の選択精度を向上させます。Quiet-STaRは、この根拠の生成をすべてのトークンにわたって行います。これらすべてが機能します。しかし、どれも魔法ではありません。このループは、たまたま正しい答えにたどり着いたショートカットを保持してしまう可能性があります。
 
-**Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
-**Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
-**Time:** ~60 minutes
+**タイプ:** 学習
+**言語:** Python（stdlib、ブートストラップループシミュレーター）
+**前提条件:** フェーズ 13 · 01-03（推論とCoT）、フェーズ 15 · 01（長期ホライズン設定）
+**時間:** 約60分
 
-## The Problem
+## 課題
 
-The straightforward way to teach a model to reason is to collect human-written reasoning traces. That is expensive, slow, and bounded by how much high-quality chain-of-thought humans are willing to write.
+モデルに推論を教える最も簡単な方法は、人間が書いた推論のトレースを収集することです。しかし、これは費用がかかり、時間がかかり、また、人間がどれだけ質の高い思考の連鎖を書きたいかという量に制限されます。
 
-STaR (Self-Taught Reasoner, Zelikman et al., 2022) asks: what if the model writes its own rationales and grades them against known answers? The loop is:
+STaR（Self-Taught Reasoner, Zelikman et al., 2022）は、次のように問いかけます。モデル自身が推論を書き、既知の答えと比較して採点したらどうなるか？このループは以下の通りです。
 
-1. Sample a reasoning trace plus answer.
-2. If the final answer is correct, keep the trace.
-3. Fine-tune on the kept traces.
-4. Repeat.
+1. 推論のトレースと答えをサンプリングする。
+2. 最終的な答えが正しければ、そのトレースを保持する。
+3. 保持されたトレースでファインチューニングを行う。
+4. 繰り返す。
 
-It works. GSM8K and CommonsenseQA both improved without new human annotation. But the loop has a built-in bias: any rationale that produced the right answer is retained, regardless of whether the reasoning itself was sound. V-STaR (Hosseini et al., 2024) patches this with a learned verifier; Quiet-STaR (Zelikman et al., 2024) generalizes the idea to per-token internal rationales.
+これは機能します。GSM8KとCommonsenseQAの両方で、新しい人間のアノテーションなしに改善が見られました。しかし、このループには組み込みのバイアスがあります。推論自体が健全であったかどうかに関わらず、正しい答えを生み出した推論はすべて保持されてしまうのです。V-STaR（Hosseini et al., 2024）は、学習された検証器でこれを修正し、Quiet-STaR（Zelikman et al., 2024）は、このアイデアをトークンごとの内部推論に一般化しました。
 
-## The Concept
+## 考え方
 
-### STaR: bootstrap on what worked
+### STaR: 何が機能したかからのブートストラップ
 
-Start from a base model with some weak reasoning ability. On each training problem, sample a rationale plus answer. If the answer matches the label, keep the (problem, rationale, answer) triple. Fine-tune the model on the kept set. Repeat.
+ある程度の弱い推論能力を持つベースモデルから始めます。トレーニングの問題ごとに、推論と答えをサンプリングします。答えがラベルと一致した場合、(問題、推論、答え)のトリプルを保持します。この保持されたセットでモデルをファインチューニングし、繰り返します。
 
-One twist matters. If the model can never get a problem right, the loop cannot learn on it. STaR adds **rationalization**: for problems the model fails, inject the correct answer as a hint and re-prompt the model to produce a rationale that leads to it. Rationalized rationales are added to the training set.
+ここで重要な工夫があります。モデルが問題に正解できない場合、ループはそこから学習できません。STaRは**合理化（rationalization）**を追加します。モデルが失敗した問題に対しては、正しい答えをヒントとして注入し、その答えに至る推論を生成するようにモデルに再プロンプトします。合理化された推論はトレーニングセットに追加されます。
 
-Result in the original paper (Zelikman et al., 2022): a GPT-J base model improved on GSM8K from 5.8% to 10.7% through repeated STaR rounds with rationalization — about 5 percentage points absolute. On CommonsenseQA, STaR-trained GPT-J 6B reached 72.5%, comparable to a fine-tuned GPT-3 175B (~73%) — a roughly 30x larger model trained on hand-annotated rationales.
+元の論文（Zelikman et al., 2022）の結果では、GPT-Jベースモデルが、合理化を伴うSTaRの繰り返しラウンドを通じて、GSM8Kのスコアを5.8%から10.7%に改善しました。これは絶対値で約5パーセントポイントの向上です。CommonsenseQAでは、STaRで訓練されたGPT-J 6Bが72.5%に達し、手動アノテーションされた推論で訓練されたGPT-3 175B（約73%）に匹敵します。これは、約30倍大きなモデルを比較したものです。
 
-### V-STaR: train a verifier with DPO
+### V-STaR: DPOによる検証器の訓練
 
-STaR throws away incorrect rationales. Hosseini et al. (2024) observed those are also data: every pair of (rationale, "is this correct") can train a verifier. They use Direct Preference Optimization over both correct and incorrect solutions to build a ranker. At inference time, sample N rationales and pick the verifier's top choice.
+STaRは誤った推論を破棄します。Hosseini et al. (2024)は、それらもデータであることを観察しました。つまり、(推論、"これは正しいか")のペアすべてが検証器を訓練できます。彼らは、正解と不正解の両方に対して直接選好最適化（Direct Preference Optimization, DPO）を使用し、ランキング器を構築します。推論時には、N個の推論をサンプリングし、検証器が選んだ最良のものを選択します。
 
-Reported delta: +4 to +17 percentage points over prior self-improvement baselines on GSM8K and MATH, with most of the gain coming from using the verifier for inference-time selection rather than for additional generator fine-tuning.
+報告された改善幅：GSM8KおよびMATHにおいて、以前の自己改善ベースラインと比較して+4〜+17パーセントポイントの向上があり、その大部分は、追加のジェネレーターファインチューニングのためではなく、推論時の選択に検証器を使用したことによるものです。
 
-### Quiet-STaR: per-token internal rationales
+### Quiet-STaR: トークンごとの内部推論
 
-Zelikman et al. (2024) asked: what if the model learns to generate a short internal rationale at every token position, not just between problem and answer? Quiet-STaR trains a model to emit a hidden "thought" before each predicted token, then mixes the thought-aware prediction with the baseline prediction via a learned weight.
+Zelikman et al. (2024)は、モデルが問題と答えの間だけでなく、すべてのトークン位置で短い内部推論を生成することを学習したらどうなるか、と問いかけました。Quiet-STaRは、モデルが予測する各トークンの前に隠された「思考」を放出するように訓練し、その思考を考慮した予測とベースラインの予測を学習された重みで混合します。
 
-Result: Mistral 7B gained absolute zero-shot improvements on GSM8K from 5.9% to 10.9% and CommonsenseQA from 36.3% to 47.2% without task-specific fine-tuning. The model learned "when to think" — hard tokens get longer internal rationales; easy ones get almost none.
+結果：Mistral 7Bは、タスク固有のファインチューニングなしで、GSM8Kで絶対的なゼロショットの改善を5.9%から10.9%に、CommonsenseQAで36.3%から47.2%に達成しました。このモデルは「いつ考えるべきか」を学習しました。難しいトークンには長い内部推論が、簡単なトークンにはほとんど推論が伴うという具合です。
 
-### Why all three share a safety concern
+### なぜこれらすべてが安全性の懸念を共有するのか
 
-All three methods use the final answer as the gradient signal. A rationale that reaches the right answer via flawed reasoning — exploiting a shortcut, guessing, or using a non-generalizing pattern — gets positively reinforced. On in-distribution problems the shortcut works. On out-of-distribution problems it breaks silently.
+これら3つの手法すべてが、最終的な答えを勾配シグナルとして使用します。推論の過程に欠陥があるにもかかわらず、正しい答えにたどり着く推論（ショートカットの利用、推測、非一般化なパターンの使用など）は、正のフィードバックを受けます。分布内の問題では、そのショートカットは機能します。しかし、分布外の問題では、静かに破綻します。
 
-V-STaR's verifier mitigates by learning to rank rationales, but the verifier is trained on the same label set. It can learn to prefer well-formatted wrong reasoning over honest uncertainty. The safer design is to combine STaR-style data with (a) process-supervised reward models (rewarding intermediate steps, not just answers) and (b) held-out OOD evaluation that breaks simple shortcuts.
+V-STaRの検証器は、推論をランク付けすることを学習することで緩和しますが、検証器自体は同じラベルセットで訓練されています。そのため、正直な不確実性よりも、形式が整った間違った推論を好むように学習してしまう可能性があります。より安全な設計は、STaRスタイルのデータに、(a) プロセス監視型報酬モデル（答えだけでなく中間ステップに報酬を与える）と、(b) 単純なショートカットを破るためのホールドアウトされたOOD評価を組み合わせることです。
 
-### Comparison
+### 比較
 
-| Method | Training signal | Inference cost | Data waste | Known failure mode |
+| 手法 | トレーニングシグナル | 推論コスト | データの無駄 | 既知の失敗モード |
 |---|---|---|---|---|
-| STaR | keep (rationale, answer) if correct | 1x | discards all incorrect rationales | shortcut rationales |
-| STaR + rationalization | above + correct-answer hinted retries | 1x | less | rationalized rationales may be implausible |
-| V-STaR | STaR + DPO verifier from both classes | Nx (best-of-N) | minimal | verifier can reinforce confident wrongness |
-| Quiet-STaR | per-token rationale + mixing weight | 1.5-3x | minimal | still answer-conditioned gradient |
+| STaR | 正解なら（根拠、回答）を保持 | 1x | 不正解の根拠をすべて破棄 | ショートカット根拠 |
+| STaR + 合理化 | 上記 + 正解をヒントにした再試行 | 1x | 少ない | 合理化された根拠がもっともらしくない場合がある |
+| V-STaR | STaR + 両クラスから学習したDPO検証器 | Nx（best-of-N） | 最小 | 検証器が自信のある誤りを強化しうる |
+| Quiet-STaR | トークンごとの根拠 + ミキシング重み | 1.5-3x | 最小 | 依然として回答条件付き勾配である |
 
-### Where this sits in the 2026 stack
+### 2026年のスタックにおける位置づけ
 
-STaR is old. But the pattern reappears everywhere in 2025-2026. RL on verifiable math problems (DeepSeek-R1, Kimi-k1.5, o1) is STaR's answer-conditioned gradient signal, scaled up. Process reward models (Lightman et al., 2023; OpenAI's "Let's verify step by step") are the process-supervised alternative. AlphaEvolve (Lesson 3) is STaR for code, with a program evaluator instead of a label. Darwin Godel Machine (Lesson 4) is STaR for the agent scaffolding itself.
+STaRは古い。しかし、そのパターンは2025年から2026年にかけて至る所で再出現している。検証可能な数学の問題に対するRL（DeepSeek-R1、Kimi-k1.5、o1）は、STaRの回答条件付き勾配シグナルをスケールアップしたものだ。プロセス報酬モデル（Lightman et al., 2023; OpenAIの「Let's verify step by step」）は、プロセス監視型の代替手段である。AlphaEvolve（レッスン3）は、ラベルの代わりにプログラム評価器を持つ、コードのためのSTaRである。Darwin Godel Machine（レッスン4）は、エージェントの足場そのものに対するSTaRである。
 
-Understanding STaR makes all of these click. It is the minimum-viable self-improvement loop.
+STaRを理解することが、これらすべてを理解する鍵となる。これは、最小実行可能自己改善ループである。
 
-## Use It
+## 使ってみる
 
-`code/main.py` runs a simulated STaR loop on a toy arithmetic task. You can watch:
+`code/main.py` は、おもちゃの算術タスクに対してシミュレートされたSTaRループを実行する。以下の点を確認できる：
 
-- How accuracy climbs over bootstrap rounds.
-- How shortcuts sneak in: the simulator includes a "lazy" rationale class that gets the right answer 40% of the time but generalizes badly. Watch whether STaR keeps them.
-- How a verifier (V-STaR style) helps at inference but cannot fully prune shortcuts introduced during training.
+- ブートストラップラウンドを重ねるにつれて、精度がどのように上昇するか。
+- ショートカットがどのように忍び込むか：シミュレーターには、「怠惰な」推論クラスが含まれており、正解を40%の確率で出すが、一般化が悪い。STaRがこれらを維持するかどうかを観察する。
+- 検証器（V-STaRスタイル）が推論時にどのように役立つか、しかし、トレーニング中に導入されたショートカットを完全に排除できないことも確認する。
 
-## Ship It
+## 形にして届ける
 
-`outputs/skill-star-loop-reviewer.md` helps you audit a proposed self-taught-reasoning pipeline before you train on it.
+`outputs/skill-star-loop-reviewer.md` は、実際にトレーニングする前に、提案された自己学習推論パイプラインを監査するのに役立つ。
 
-## Exercises
+## 演習
 
-1. Run the simulator. Set the shortcut frequency to zero, then to 0.4. How much does final accuracy diverge between the two runs, even though both hit >90% on the training distribution?
+1. シミュレーターを実行する。ショートカットの頻度をゼロに設定してから、0.4に設定する。どちらの実行もトレーニング分布で>90%に達しているにもかかわらず、最終的な精度がどれだけ乖離するか？
 
-2. Add a held-out OOD test to the simulator. Draw problems from a different distribution and evaluate the bootstrapped model on both in-distribution and OOD sets. Quantify the gap.
+2. シミュレーターに保持されたOOD（分布外）テストを追加する。異なる分布から問題を抽出し、ブートストラップされたモデルを分布内とOODの両方のセットで評価する。ギャップを定量化する。
 
-3. Read the Quiet-STaR paper (arXiv:2403.09629) Section 3. Explain the "end-of-thought" token and the mixing-weight head in three sentences each.
+3. Quiet-STaRの論文（arXiv:2403.09629）のセクション3を読む。「end-of-thought」トークンとミキシング重みヘッドについて、それぞれ3文で説明する。
 
-4. Compare STaR's keep-if-correct filter to a process-supervised alternative that rewards each rationale step independently. Identify the labelling cost difference and the plausible quality difference.
+4. STaRの「正しければ維持する」フィルターを、各推論ステップを独立して報酬を与えるプロセス監視型の代替手段と比較する。ラベリングコストの違いと、考えられる品質の違いを特定する。
 
-5. Design one evaluation that would catch shortcut rationales in a deployed model. It does not have to be perfect — it has to break the simplest shortcuts a STaR loop would reinforce.
+5. デプロイされたモデル内のショートカット推論を検出する評価を一つ設計する。完璧である必要はない。STaRループが強化する最も単純なショートカットを破るものであれば十分である。
 
-## Key Terms
+## キー用語
 
-| Term | What people say | What it actually means |
+| 用語 | 人々が言うこと | 実際の意味 |
 |---|---|---|
-| STaR | "Self-Taught Reasoner" | Fine-tune on model-generated rationales that land correct answers; repeat |
-| Rationalization | "Hinted retry" | Inject the correct answer and re-prompt for a rationale on problems the base model fails |
-| V-STaR | "Verifier STaR" | DPO-train a verifier on both correct and incorrect rationales, use it for inference-time selection |
-| Quiet-STaR | "Per-token rationales" | Generate hidden thoughts at every token position; mix with baseline prediction |
-| Answer-conditioned gradient | "Outcome-based signal" | The training loop rewards final answers, not reasoning steps |
-| Process reward model | "Step-level verifier" | Reward model trained on per-step correctness, not outcome — contrasts with STaR |
-| Shortcut rationale | "Right answer, wrong reasoning" | A rationale that reaches the label via a non-generalizing pattern; STaR keeps these |
+| STaR | 「自己学習推論器」 | モデル生成の推論を用いて正解にたどり着くようにファインチューニングし、繰り返す |
+| Rationalization | 「ヒント付きリトライ」 | ベースモデルが失敗した問題に対して正解を注入し、推論を再プロンプトする |
+| V-STaR | 「検証器STaR」 | 正しい推論と間違った推論の両方で検証器をDPO学習させ、推論時の選択に使用する |
+| Quiet-STaR | 「トークンごとの推論」 | すべてのトークン位置で隠れた思考を生成し、ベースライン予測と混合する |
+| 回答条件付き勾配 | 「結果ベースのシグナル」 | トレーニングループが推論ステップではなく、最終的な回答に報酬を与える |
+| プロセス報酬モデル | 「ステップレベルの検証器」 | 結果ではなく、ステップごとの正しさに基づいて訓練された報酬モデル。STaRとは対照的 |
+| ショートカット根拠 | 「正解、誤った推論」 | 非一般化なパターンを通じてラベルに到達する推論。STaRはこれらを維持する |
 
-## Further Reading
+## さらなる参考文献
 
-- [Zelikman et al. (2022). STaR: Bootstrapping Reasoning With Reasoning](https://arxiv.org/abs/2203.14465) — the original paper.
-- [Hosseini et al. (2024). V-STaR: Training Verifiers for Self-Taught Reasoners](https://arxiv.org/abs/2402.06457) — adds a DPO verifier for inference-time selection.
-- [Zelikman et al. (2024). Quiet-STaR: Language Models Can Teach Themselves to Think Before Speaking](https://arxiv.org/abs/2403.09629) — per-token internal rationales.
-- [Lightman et al. (2023). Let's Verify Step by Step](https://arxiv.org/abs/2305.20050) — process reward models, the alternative gradient signal.
-- [DeepSeek-R1 paper (arXiv:2501.12948)](https://arxiv.org/abs/2501.12948) — RL on verifiable tasks, STaR scaled to frontier training.
+- [Zelikman et al. (2022). STaR: Bootstrapping Reasoning With Reasoning](https://arxiv.org/abs/2203.14465) — オリジナル論文。
+- [Hosseini et al. (2024). V-STaR: Training Verifiers for Self-Taught Reasoners](https://arxiv.org/abs/2402.06457) — 推論時選択のためのDPO検証器を追加。
+- [Zelikman et al. (2024). Quiet-STaR: Language Models Can Teach Themselves to Think Before Speaking](https://arxiv.org/abs/2403.09629) — トークンごとの内部推論。
+- [Lightman et al. (2023). Let's Verify Step by Step](https://arxiv.org/abs/2305.20050) — プロセス報酬モデル、代替勾配シグナル。
+- [DeepSeek-R1 paper (arXiv:2501.12948)](https://arxiv.org/abs/2501.12948) — 検証可能なタスクに対するRL、最先端のトレーニングにスケールアップされたSTaR。

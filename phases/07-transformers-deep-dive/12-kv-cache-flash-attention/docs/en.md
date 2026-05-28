@@ -1,32 +1,32 @@
 # KV Cache, Flash Attention & Inference Optimization
 
-> Training is parallel and FLOP-bound. Inference is serial and memory-bound. Different bottleneck, different tricks.
+> Training は parallel で FLOP-bound です。Inference は serial で memory-bound です。bottleneck が違えば、tricks も違います。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
+**所要時間:** 約75分
 
-## The Problem
+## 課題
 
-A naive autoregressive decoder does `O(N²)` work to generate `N` tokens: at each step it recomputes attention over the full prefix. For a 4K-token response that is 16M attention operations, most of them redundant. Every hidden state of a prefix token is deterministic once computed — you only need to run the new token's query against the cached keys and values of everything before.
+Naive な autoregressive decoder は、`N` tokens を生成するために `O(N²)` の仕事をします。各 step で full prefix に対する attention を再計算するためです。4K-token response では 16M attention operations になり、その大半は冗長です。prefix token の hidden state は一度計算すれば決定的です。必要なのは、新しい token の query を、それ以前すべての cached keys and values に当てることだけです。
 
-On top of that, attention itself moves a lot of data. Standard attention materializes an N×N score matrix, N×d softmax output, N×d final output — too many reads and writes to HBM. For N≥2K, attention becomes memory-bound before it becomes FLOP-bound. Classic attention kernels underuse modern GPUs by 4–10×.
+さらに、attention 自体も大量のデータを移動します。Standard attention は N×N score matrix、N×d softmax output、N×d final output を materialize します。HBM への read/write が多すぎます。N≥2K では、attention は FLOP-bound になる前に memory-bound になります。古典的な attention kernels は現代 GPU を 4–10× も使い切れません。
 
-Two optimizations, both from Dao et al., pushed frontier inference from "slow" to "fast":
+Dao et al. 由来の 2 つの最適化が、frontier inference を「遅い」から「速い」に押し上げました。
 
-1. **KV cache.** Store the K and V vectors of every prefix token. Each new token's attention is one query against the cached keys. Inference reduces from `O(N²)` to `O(N)` per generation step.
-2. **Flash Attention.** Tile the attention computation so the full N×N matrix never hits HBM. All of softmax + matmul happens in SRAM. 2–4× wall-clock speedup on A100; 5–10× on H100 with FP8.
+1. **KV cache。** すべての prefix token の K and V vectors を保存します。各 new token の attention は、cached keys に対する 1 つの query になります。Inference は generation step ごとに `O(N²)` から `O(N)` に下がります。
+2. **Flash Attention。** full N×N matrix が HBM に載らないよう attention computation を tile 化します。softmax + matmul はすべて SRAM 内で起きます。A100 で 2–4×、FP8 を使う H100 で 5–10× の wall-clock speedup です。
 
-By 2026 both are universal. Every production inference stack (vLLM, TensorRT-LLM, SGLang, llama.cpp) assumes them. Every frontier model ships with Flash Attention enabled.
+2026 年にはどちらも普遍的です。すべての production inference stack (vLLM, TensorRT-LLM, SGLang, llama.cpp) がこれらを前提にしています。すべての frontier model は Flash Attention enabled で提供されます。
 
-## The Concept
+## コンセプト
 
 ![KV cache growth and Flash Attention tiling](../assets/kv-cache-flash-attn.svg)
 
 ### KV cache math
 
-Per decoder layer, per token, per head:
+decoder layer ごと、token ごと、head ごと:
 
 ```
 bytes_per_token_per_layer = 2 * d_head * dtype_size
@@ -34,7 +34,7 @@ bytes_per_token_per_layer = 2 * d_head * dtype_size
                           K and V
 ```
 
-For a 7B model with 32 layers, 32 heads, d_head=128, fp16:
+32 layers、32 heads、d_head=128、fp16 の 7B model では:
 
 ```
 per token per layer = 2 * 128 * 2 = 512 bytes
@@ -42,18 +42,18 @@ per token (32 layers) = 16 KB
 per 32K context = 512 MB
 ```
 
-For Llama 3 70B (80 layers, d_head=128, GQA with 8 KV heads):
+Llama 3 70B (80 layers, d_head=128, GQA with 8 KV heads) では:
 
 ```
 per token per layer = 2 * 8 * 128 * 2 = 4096 bytes (4 KB)
 per 32K context = 10.4 GB
 ```
 
-That 10 GB is why Llama 3 70B at 128K context needs most of a 40 GB A100 just for KV cache at batch size 1.
+この 10 GB が、128K context の Llama 3 70B が batch size 1 でも 40 GB A100 の大部分を KV cache だけに使う理由です。
 
-**GQA is the KV-cache win.** MHA with 64 heads would be 32 GB. MLA compresses even further.
+**GQA は KV-cache の勝ち筋です。** MHA with 64 heads なら 32 GB になります。MLA はさらに圧縮します。
 
-### Flash Attention — the tiling trick
+### Flash Attention — tiling trick
 
 Standard attention:
 
@@ -63,7 +63,7 @@ P = softmax(S)       (HBM read, HBM write)
 O = P @ V            (HBM read, HBM write)
 ```
 
-Three HBM round trips. On H100, HBM bandwidth is 3 TB/s; SRAM is 30 TB/s. Every HBM trip is a factor-of-10 slowdown vs keeping everything on-chip.
+HBM round trips が 3 回あります。H100 の HBM bandwidth は 3 TB/s、SRAM は 30 TB/s です。HBM trip のたびに、on-chip に保持する場合と比べて 10 倍遅くなります。
 
 Flash Attention:
 
@@ -78,9 +78,9 @@ for each block of Q (tile size ~128 × 128):
     write O_tile to HBM
 ```
 
-One HBM trip per tile. Total memory footprint drops from `O(N²)` to `O(N)`. Backward pass recomputes some values from the forward pass instead of storing them — another memory win.
+tile ごとに HBM trip は 1 回です。total memory footprint は `O(N²)` から `O(N)` に落ちます。Backward pass では forward pass から一部の値を保存する代わりに再計算するため、さらに memory win になります。
 
-**Numerical trick.** Running softmax maintains `(max, sum)` across tiles so the final normalization is exact. Not an approximation — Flash Attention computes bit-identical output to standard attention (modulo fp16 non-associativity).
+**Numerical trick。** Running softmax は tile 間で `(max, sum)` を維持するため、最終 normalization は正確です。近似ではありません。Flash Attention は standard attention と bit-identical な output を計算します。ただし fp16 の non-associativity による差はあります。
 
 **Version evolution:**
 
@@ -91,34 +91,34 @@ One HBM trip per tile. Total memory footprint drops from `O(N²)` to `O(N)`. Bac
 | Flash 3 | 2024 | Hopper asynchrony, FP8 | 1.5–2× on H100 (~740 TFLOPs FP16) |
 | Flash 4 | 2026 | Blackwell 5-stage pipeline, software exp2 | Inference-first (forward only initially) |
 
-Flash 4 is forward-pass only at launch. Training still uses Flash 3. GQA and varlen support for Flash 4 is pending (mid-2026).
+Flash 4 は launch 時点で forward-pass only です。Training はまだ Flash 3 を使います。Flash 4 の GQA と varlen support は pending (mid-2026) です。
 
-### Speculative decoding — the other latency win
+### Speculative decoding — もう 1 つの latency win
 
-Cheap model proposes N tokens. Big model verifies all N in parallel. If verification accepts k tokens, you paid 1 big-model forward pass for k generations. Typical k=3–5 on code and prose.
+安い model が N tokens を提案します。大きい model が N 個すべてを parallel に検証します。verification が k tokens を受け入れれば、1 回の big-model forward pass で k generations 分を払ったことになります。code や prose では典型的に k=3–5 です。
 
-2026 defaults:
-- **EAGLE 2 / Medusa.** Integrated draft heads that share the verifier's hidden states. 2–3× speedup with no quality loss.
-- **Speculative decoding with draft model.** 2–4× speedup on consumer hardware.
-- **Lookahead decoding.** Jacobi iteration; no draft model needed. Niche but free.
+2026 年のデフォルト:
+- **EAGLE 2 / Medusa。** verifier の hidden states を共有する integrated draft heads。quality loss なしで 2–3× speedup。
+- **Speculative decoding with draft model。** consumer hardware で 2–4× speedup。
+- **Lookahead decoding。** Jacobi iteration。draft model は不要。niche ですが無料です。
 
 ### Continuous batching
 
-Classic batched inference: wait for the slowest sequence to finish, then start a new batch. Wastes GPU when short responses finish early.
+古典的な batched inference では、最も遅い sequence が終わるのを待ってから new batch を開始します。short responses が早く終わると GPU が無駄になります。
 
-Continuous batching (first shipped in Orca, now in vLLM, TensorRT-LLM, SGLang): swap new requests into the batch as soon as old ones finish. 5–10× throughput gain for typical chat workloads.
+Continuous batching は Orca で初めて提供され、今では vLLM、TensorRT-LLM、SGLang に入っています。古い requests が終わった瞬間に新しい requests を batch に差し込みます。典型的な chat workloads で throughput が 5–10× 向上します。
 
-### PagedAttention — KV cache as virtual memory
+### PagedAttention — virtual memory としての KV cache
 
-vLLM's headline feature. KV cache is allocated in 16-token blocks; a page table maps logical positions to physical blocks. Lets you share KV across parallel samples (beam search, parallel sampling), hot-swap prefixes for prompt caching, and defragment memory. 4× throughput improvement over naive contiguous allocation.
+vLLM の看板機能です。KV cache を 16-token blocks に割り当て、page table が logical positions を physical blocks に対応付けます。これにより、parallel samples (beam search, parallel sampling) 間で KV を共有でき、prompt caching 用に prefixes を hot-swap でき、memory を defragment できます。naive contiguous allocation と比べて throughput が 4× 改善します。
 
-## Build It
+## 作ってみる
 
-See `code/main.py`. We implement:
+`code/main.py` を見てください。次を実装します。
 
-1. A naive `O(N²)` incremental decoder.
-2. A `O(N)` KV-cached decoder.
-3. A tiled softmax that simulates Flash Attention's running-max algorithm.
+1. naive な `O(N²)` incremental decoder。
+2. `O(N)` の KV-cached decoder。
+3. Flash Attention の running-max algorithm を模した tiled softmax。
 
 ### Step 1: KV cache
 
@@ -136,7 +136,7 @@ class KVCache:
         return self.K[layer][head], self.V[layer][head]
 ```
 
-Simple: keep growing per-token K, V vectors in per-layer, per-head lists.
+単純に、per-layer、per-head lists に per-token K, V vectors を伸ばしていきます。
 
 ### Step 2: tiled softmax
 
@@ -160,13 +160,13 @@ def tiled_softmax_dot(q, K, V, tile=4):
     return [o / s for o in out]
 ```
 
-Bit-identical output to `softmax(qK) V` in one shot, but at any time the working set is a `tile × d_head` block, not the full `N × d_head`.
+`softmax(qK) V` を一括で計算した場合と bit-identical な output ですが、任意の時点の working set は full `N × d_head` ではなく `tile × d_head` block です。
 
-### Step 3: compare naive vs cached decoding on 100-token generation
+### Step 3: 100-token generation で naive vs cached decoding を比較する
 
-Count attention operations. Naive: `O(N²)` = 5050. Cached: `O(N)` = 100. The code prints both.
+attention operations を数えます。Naive は `O(N²)` = 5050。Cached は `O(N)` = 100。コードは両方を出力します。
 
-## Use It
+## 使ってみる
 
 ```python
 # HuggingFace transformers auto-enables KV cache on decoder-only generate().
@@ -190,39 +190,39 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
     --kv-cache-dtype fp8
 ```
 
-Prefix caching across requests is a big 2026 win — the same system prompt, few-shot examples, or long context document reuses KV across calls. For agent workloads with repeated tool prompts, prefix caching is routinely 5× throughput gain.
+requests 間の prefix caching は 2026 年の大きな勝ち筋です。同じ system prompt、few-shot examples、long context document が calls 間で KV を再利用します。repeated tool prompts を持つ agent workloads では、prefix caching による throughput gain は日常的に 5× です。
 
 ## Ship It
 
-See `outputs/skill-inference-optimizer.md`. The skill picks attention implementation, KV cache strategy, quantization, and speculative decoding for a new inference deployment.
+`outputs/skill-inference-optimizer.md` を見てください。この skill は、新しい inference deployment 向けに attention implementation、KV cache strategy、quantization、speculative decoding を選びます。
 
-## Exercises
+## 演習
 
-1. **Easy.** Run `code/main.py`. Confirm the naive and cached decoders produce the same output; note the op-count difference.
-2. **Medium.** Implement prefix caching: given a prompt P and several completions, run one forward pass over P to fill the KV cache, then branch per-completion. Measure speedup vs re-encoding P for each.
-3. **Hard.** Implement a toy PagedAttention: KV cache in fixed 16-token blocks with a free-list. When a sequence finishes, return its blocks to the pool. Simulate 1,000 chat completions with varying lengths. Compare memory fragmentation vs contiguous allocation.
+1. **Easy.** `code/main.py` を実行してください。naive decoder と cached decoder が同じ output を生成することを確認し、op-count difference を確認します。
+2. **Medium.** Prefix caching を実装してください。prompt P と複数の completions が与えられたら、P に対する forward pass を 1 回実行して KV cache を埋め、completion ごとに branch します。各 completion で P を再 encoding する場合と speedup を測ります。
+3. **Hard.** toy PagedAttention を実装してください。free-list を持つ固定 16-token blocks に KV cache を置きます。sequence が終わったら、その blocks を pool に返します。長さが異なる 1,000 個の chat completions を simulate します。contiguous allocation と memory fragmentation を比較します。
 
-## Key Terms
+## 重要語句
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| KV cache | "The trick that makes decoding fast" | Stored K and V from every prefix token; new queries attend to them instead of recomputing. |
-| HBM | "GPU main memory" | High Bandwidth Memory; 80 GB on H100, 192 GB on B200. ~3 TB/s bandwidth. |
-| SRAM | "On-chip memory" | Per-SM fast memory, ~256 KB per SM on H100. ~30 TB/s bandwidth. |
-| Flash Attention | "Tiled attention kernel" | Computes attention without materializing N×N in HBM. |
-| Continuous batching | "No-wait batching" | Swap finished sequences out, new ones in, without draining the batch. |
-| PagedAttention | "vLLM's headline" | KV cache allocated in fixed blocks with a page table; eliminates fragmentation. |
-| Prefix caching | "Reuse long prompts" | Cache KV for a shared prefix across requests; major cost cut for agents. |
-| Speculative decoding | "Draft + verify" | Cheap draft model proposes tokens; big model verifies k in one pass. |
+| KV cache | 「decoding を速くする trick」 | すべての prefix token からの K and V を保存したもの。new queries は再計算せず、それらに attend する。 |
+| HBM | 「GPU main memory」 | High Bandwidth Memory。H100 で 80 GB、B200 で 192 GB。bandwidth は約 3 TB/s。 |
+| SRAM | 「On-chip memory」 | per-SM の高速 memory。H100 で SM あたり約 256 KB。bandwidth は約 30 TB/s。 |
+| Flash Attention | 「Tiled attention kernel」 | HBM に N×N を materialize せずに attention を計算する。 |
+| Continuous batching | 「No-wait batching」 | batch を drain せずに finished sequences を出し、新しい ones を入れる。 |
+| PagedAttention | 「vLLM's headline」 | page table 付き固定 blocks に割り当てられる KV cache。fragmentation をなくす。 |
+| Prefix caching | 「Reuse long prompts」 | requests 間で shared prefix の KV を cache する。agents の大きな cost cut。 |
+| Speculative decoding | 「Draft + verify」 | 安い draft model が tokens を提案し、大きい model が k 個を 1 pass で検証する。 |
 
-## Further Reading
+## 参考資料
 
-- [Dao et al. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) — Flash 1.
-- [Dao (2023). FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691) — Flash 2.
-- [Shah et al. (2024). FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision](https://arxiv.org/abs/2407.08608) — Flash 3.
-- [FlashAttention-4 release notes (Dao-AILab, 2026)](https://github.com/Dao-AILab/flash-attention) — Blackwell 5-stage pipeline and the software-exp2 trick; read the repo README for the forward-only launch caveats this lesson mentions.
-- [Kwon et al. (2023). Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) — vLLM paper.
-- [Leviathan et al. (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — spec decoding.
-- [Li et al. (2024). EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://arxiv.org/abs/2401.15077) — EAGLE-1/2 paper for the integrated-draft approach the lesson cites.
-- [Cai et al. (2024). Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://arxiv.org/abs/2401.10774) — the Medusa approach referenced alongside EAGLE.
-- [vLLM docs — PagedAttention](https://docs.vllm.ai/en/latest/design/kernel/paged_attention.html) — the canonical deep dive on the 16-token block and page-table design.
+- [Dao et al. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) — Flash 1。
+- [Dao (2023). FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691) — Flash 2。
+- [Shah et al. (2024). FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision](https://arxiv.org/abs/2407.08608) — Flash 3。
+- [FlashAttention-4 release notes (Dao-AILab, 2026)](https://github.com/Dao-AILab/flash-attention) — Blackwell 5-stage pipeline と software-exp2 trick。この lesson が触れた forward-only launch caveats は repo README を読んでください。
+- [Kwon et al. (2023). Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) — vLLM paper。
+- [Leviathan et al. (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — spec decoding。
+- [Li et al. (2024). EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://arxiv.org/abs/2401.15077) — lesson が引用する integrated-draft approach に関する EAGLE-1/2 paper。
+- [Cai et al. (2024). Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://arxiv.org/abs/2401.10774) — EAGLE と並んで参照される Medusa approach。
+- [vLLM docs — PagedAttention](https://docs.vllm.ai/en/latest/design/kernel/paged_attention.html) — 16-token block と page-table design についての標準的な deep dive。

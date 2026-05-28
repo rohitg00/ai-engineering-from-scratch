@@ -19,6 +19,7 @@
     );
     for (var i = 0; i < els.length; i++) {
       els[i].textContent = format(n);
+      els[i].setAttribute('aria-label', 'GitHub スター数: ' + String(n));
       els[i].removeAttribute('data-loading');
     }
   }

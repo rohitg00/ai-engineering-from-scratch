@@ -1,27 +1,27 @@
 /**
  * Shadow + canary + progressive rollout — TypeScript port + policy engine.
  *
- * Three policies:
- *   1. Shadow mode: duplicates each request to candidate; logs the deltas;
- *      never returns candidate output to the user. Catches cost/length
- *      regressions before any user exposure.
- *   2. Canary rollout: progressive traffic shift through stages with five
- *      LLM-specific gates. Halts the moment any gate breaches.
- *   3. Progressive policy: combines shadow → canary → 100%, with a policy
- *      flag that supports seconds-not-hours rollback.
+ * 3つの policies:
+ *   1. Shadow mode: 各 request を candidate に複製し、delta を log する。
+ *      candidate output は user に返さない。user exposure 前に cost/length
+ *      regressions を捕まえる。
+ *   2. Canary rollout: 5つの LLM-specific gates を持つ stage に沿って
+ *      progressive traffic shift する。どれかの gate が breach した瞬間に止まる。
+ *   3. Progressive policy: shadow → canary → 100% を組み合わせ、
+ *      seconds-not-hours rollback を支える policy flag を持つ。
  *
- * Plus the same canary simulator main.py runs (six stages, five gates, six
- * regression scenarios) so the numbers reproduce.
+ * さらに main.py と同じ canary simulator（6 stages、5 gates、6 regression scenarios）
+ * を実行し、数値を再現する。
  *
  * Citations:
  *   - Argo Rollouts (Kubernetes progressive delivery)
  *     https://argo-rollouts.readthedocs.io/
  *   - Flagger (progressive delivery operator)
  *     https://docs.flagger.app/
- *   - Non-determinism ~15% run-to-run cited in docs/en.md (GPU FP
- *     non-associativity + batch-size variance + sampling).
+ *   - docs/en.md で引用した run-to-run 約15%の non-determinism
+ *     （GPU FP non-associativity + batch-size variance + sampling）。
  *
- * Runs on Node 20+ stdlib. No npm deps.
+ * Node 20+ stdlib で動作する。npm deps は不要。
  */
 
 // -- Baseline + gates ------------------------------------------------------
@@ -42,8 +42,8 @@ const BASELINE: Metrics = {
   thumbsDownRate: 0.03,
 };
 
-// Multipliers above baseline that constitute a breach. Set high enough to
-// stay above the LLM non-determinism noise floor (~15% per docs/en.md).
+// baseline を上回る breach multiplier。docs/en.md の LLM non-determinism
+// noise floor（約15%）より上になるように設定する。
 const GATES: Record<keyof Metrics, number> = {
   latencyP99Ms: 1.5,
   costPerReq: 1.2,
@@ -91,7 +91,7 @@ const NO_REGRESSION: Regression = {
 
 function measureStage(_stage: number, reg: Regression, seed: number): Metrics {
   const rng = makeRng(seed);
-  // Noise floor is the non-determinism docs/en.md describes: ~±8% per measurement.
+  // noise floor は docs/en.md が説明する non-determinism: measurement ごとに約±8%。
   const noise = (v: number): number => v * (0.92 + rng() * 0.16);
   return {
     latencyP99Ms: noise(BASELINE.latencyP99Ms * reg.latencyMult),
@@ -123,7 +123,7 @@ type ShadowReport = {
   n: number;
   meanCostDeltaPct: number;
   meanLatencyDeltaPct: number;
-  // True if shadow alone justifies halting before canary.
+  // shadow だけで canary 前に halt する根拠がある場合 true。
   alert: boolean;
   reasons: string[];
 };
@@ -143,8 +143,8 @@ function shadowEvaluate(samples: ShadowSample[]): ShadowReport {
   let costN = 0;
   let latN = 0;
   for (const s of samples) {
-    // Skip rows with non-positive baselines so a single zero row cannot turn
-    // the average into Infinity/NaN and corrupt the gate decision.
+    // baseline が non-positive の row は skip する。1件の zero row で average が
+    // Infinity/NaN になり gate decision を壊さないようにするため。
     if (s.baselineCost > 0) {
       costDelta += (s.candidateCost - s.baselineCost) / s.baselineCost;
       costN++;
@@ -185,8 +185,9 @@ function canaryRollout(reg: Regression): CanaryDecision {
   return { promoted: true, stagesAdvanced: STAGES.length, breaches: [] };
 }
 
-// PolicyEngine wraps a feature flag — flip pinnedModel from candidate back to
-// baseline in O(1). Mirrors LaunchDarkly/Flagsmith/Unleash flag-flip rollback.
+// PolicyEngine は feature flag を wrap する。pinnedModel を candidate から
+// baseline へ O(1) で戻す。LaunchDarkly/Flagsmith/Unleash の flag-flip
+// rollback を反映している。
 class PolicyEngine {
   private baselineDigest: string;
   private pinnedDigest: string;
@@ -202,9 +203,8 @@ class PolicyEngine {
     this.rolloutPct = pct;
   }
 
-  // Constant-time rollback — what your runbook flips. Repins to the
-  // baseline captured at construction time (or the most recent rollback
-  // override).
+  // constant-time rollback。runbook が flip する操作。constructor 時点の
+  // baseline（または直近 rollback override）へ repin する。
   rollback(baselineDigest?: string): void {
     if (baselineDigest !== undefined) this.baselineDigest = baselineDigest;
     this.pinnedDigest = this.baselineDigest;
@@ -241,19 +241,19 @@ function rolloutReport(name: string, reg: Regression): void {
         `${status}`,
     );
     if (breaches.length > 0) {
-      console.log("  → ROLLBACK (policy flip, pinned model reverted)");
+      console.log("  → ROLLBACK (policy flip、pinned model reverted)");
       return;
     }
   }
-  console.log("  → PROMOTED to 100%");
+  console.log("  → 100% へ PROMOTED");
 }
 
 // -- Demo ------------------------------------------------------------------
 
 function shadowDemo(): void {
   console.log("--- Shadow-mode evaluation (zero user impact) ---");
-  // Three scenarios: candidate roughly comparable, candidate cheaper, candidate
-  // 40% more expensive (the docs' canonical bad scenario).
+  // 3つの scenarios: candidate がほぼ同等、candidate が安い、
+  // candidate が40%高価（docs の canonical bad scenario）。
   const rng = makeRng(99);
   const mkSamples = (costMult: number, latMult: number): ShadowSample[] =>
     Array.from({ length: 200 }, () => ({
@@ -264,7 +264,7 @@ function shadowDemo(): void {
     }));
 
   const scenarios: { name: string; samples: ShadowSample[] }[] = [
-    { name: "comparable candidate", samples: mkSamples(1.05, 1.02) },
+    { name: "ほぼ同等の candidate", samples: mkSamples(1.05, 1.02) },
     { name: "candidate 20% cheaper", samples: mkSamples(0.8, 0.95) },
     { name: "candidate 40% more expensive (rollback case)", samples: mkSamples(1.4, 1.0) },
   ];
@@ -289,42 +289,42 @@ function policyEngineDemo(): void {
     if (engine.pick(rng).chose === "candidate") candidateCount++;
   }
   console.log(
-    `  after promote to 10%: ${candidateCount}/1000 picks chose candidate (target ~100)`,
+    `  10% へ promote 後: ${candidateCount}/1000 picks が candidate を選択 (target ~100)`,
   );
   engine.rollback();
   let postCount = 0;
   for (let i = 0; i < 1000; i++) {
     if (engine.pick(rng).chose === "candidate") postCount++;
   }
-  console.log(`  after rollback: ${postCount}/1000 (target 0)`);
+  console.log(`  rollback 後: ${postCount}/1000 (target 0)`);
 }
 
 function canaryDemo(): void {
   console.log("\n" + "=".repeat(95));
-  console.log("CANARY ROLLOUT — six stages, five gates, injected regressions");
+  console.log("CANARY ROLLOUT — 6 stages、5 gates、injected regressions");
   console.log("=".repeat(95));
 
-  rolloutReport("Clean promotion", NO_REGRESSION);
-  rolloutReport("Small cost regression (10%) — within gate", {
+  rolloutReport("クリーンな昇格", NO_REGRESSION);
+  rolloutReport("小さなコスト退行 (10%) — gate 内", {
     ...NO_REGRESSION,
     costMult: 1.1,
   });
-  rolloutReport("Cost regression 25%", { ...NO_REGRESSION, costMult: 1.25 });
-  rolloutReport("Latency regression 80%", {
+  rolloutReport("コスト退行 25%", { ...NO_REGRESSION, costMult: 1.25 });
+  rolloutReport("レイテンシ退行 80%", {
     ...NO_REGRESSION,
     latencyMult: 1.8,
   });
-  rolloutReport("Thumbs-down regression 60%", {
+  rolloutReport("thumbs-down 退行 60%", {
     ...NO_REGRESSION,
     thumbsDownMult: 1.6,
   });
-  rolloutReport("Quality silent + cost creep", {
+  rolloutReport("quality は静かに悪化 + cost creep", {
     ...NO_REGRESSION,
     costMult: 1.15,
     thumbsDownMult: 1.45,
   });
 
-  // Programmatic outcome of canaryRollout() for the same six scenarios.
+  // 同じ6 scenario に対する canaryRollout() の programmatic outcome。
   console.log("\n--- canaryRollout() programmatic verdict ---");
   const scenarios: { name: string; reg: Regression }[] = [
     { name: "clean", reg: NO_REGRESSION },

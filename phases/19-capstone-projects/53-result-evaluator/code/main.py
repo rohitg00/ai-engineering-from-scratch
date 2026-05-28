@@ -1,11 +1,11 @@
-"""Result evaluator: improvement check, paired t test, log normalisation, verdict.
+"""結果評価器: improvement check、paired t test、log normalisation、verdict。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
+概念参照:
+- ./docs/en.md (この lesson)
 - Phase 19 Track A lessons 20-29 (agent harness primitives)
 
-Stdlib + numpy (read of result lists). The t test math is pure stdlib.
-Run: python3 code/main.py
+stdlib + numpy (result list の読み取り)。t test の math は pure stdlib です。
+実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -26,11 +26,10 @@ LINEAR = "linear"
 
 @dataclass
 class ExperimentResultLike:
-    """Subset of ExperimentResult fields the evaluator depends on.
+    """evaluator が依存する ExperimentResult fields の subset。
 
-    The runner in lesson 52 emits the same fields. The lesson 53 tests
-    construct lightweight instances directly so the evaluator can be tested
-    in isolation.
+    lesson 52 の runner は同じ fields を出します。lesson 53 の tests は
+    evaluator を単体で test できるよう lightweight instances を直接作ります。
     """
     spec_id: str
     terminal: str
@@ -83,11 +82,11 @@ class Verdict:
 
 
 class PairingError(ValueError):
-    """Raised when candidate and baseline results cannot be paired by seed."""
+    """candidate と baseline results を seed で pair にできないときに raise されます。"""
 
 
 def _lentz_betacf(a: float, b: float, x: float, max_iter: int = 200, eps: float = 1e-12) -> float:
-    """Continued fraction for the regularised incomplete beta function via Lentz."""
+    """Lentz 法による regularised incomplete beta function の continued fraction。"""
     qab = a + b
     qap = a + 1.0
     qam = a - 1.0
@@ -124,7 +123,7 @@ def _lentz_betacf(a: float, b: float, x: float, max_iter: int = 200, eps: float 
 
 
 def regularised_incomplete_beta(a: float, b: float, x: float) -> float:
-    """I_x(a, b) via the standard Lentz continued fraction, symmetric in x."""
+    """standard Lentz continued fraction による I_x(a, b)。x に対して対称化します。"""
     if x < 0.0 or x > 1.0:
         raise ValueError("x out of [0, 1]")
     if x == 0.0:
@@ -142,7 +141,7 @@ def regularised_incomplete_beta(a: float, b: float, x: float) -> float:
 
 
 def two_sided_t_p_value(t_stat: float, df: int) -> float:
-    """Two sided p value for a t statistic with df degrees of freedom."""
+    """df degrees of freedom の t statistic に対する two-sided p value。"""
     if df <= 0:
         return 1.0
     x = df / (df + t_stat * t_stat)
@@ -151,7 +150,7 @@ def two_sided_t_p_value(t_stat: float, df: int) -> float:
 
 
 def paired_t_test(candidate: list[float], baseline: list[float]) -> tuple[float, float | None, int]:
-    """Return (mean_diff, p_value, n). p_value is None when n < 2."""
+    """(mean_diff, p_value, n) を返します。n < 2 では p_value は None です。"""
     if len(candidate) != len(baseline):
         raise PairingError("candidate and baseline lengths disagree")
     n = len(candidate)
@@ -224,7 +223,7 @@ class EvaluatorConfig:
 
 
 class Evaluator:
-    """Pure function over (candidate, baseline) result lists; returns a Verdict."""
+    """(candidate, baseline) result lists 上の pure function。Verdict を返します。"""
 
     def __init__(self, config: EvaluatorConfig | None = None) -> None:
         self._cfg = config or EvaluatorConfig()

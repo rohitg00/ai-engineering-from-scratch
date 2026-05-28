@@ -1,82 +1,80 @@
 # Naive Bayes
 
-> The "naive" assumption is wrong, and it works anyway. That's the beauty of it.
+> 「ナイーブ」な仮定は間違っています。それでも機能します。そこが美しさです。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 2, Lessons 01-07 (classification, Bayes' theorem)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 2, Lessons 01-07 (classification, Bayes' theorem)
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Implement Multinomial Naive Bayes from scratch with Laplace smoothing for text classification
-- Explain why the naive independence assumption is mathematically wrong but produces correct class rankings in practice
-- Compare Multinomial, Bernoulli, and Gaussian Naive Bayes variants and select the right one for a given feature type
-- Evaluate Naive Bayes against logistic regression on high-dimensional sparse data and explain the bias-variance tradeoff at work
+- text classification のために、Laplace smoothing 付きの Multinomial Naive Bayes をゼロから実装する
+- ナイーブな独立性仮定が数学的には誤りなのに、実務では正しい class ranking を生む理由を説明する
+- Multinomial、Bernoulli、Gaussian Naive Bayes の variants を比較し、feature type に合ったものを選ぶ
+- 高次元 sparse data で Naive Bayes と logistic regression を比較し、そこで働く bias-variance tradeoff を説明する
 
-## The Problem
+## 問題
 
-You need to classify text. Emails into spam or not-spam. Customer reviews into positive or negative. Support tickets into categories. You have thousands of features (one per word) and limited training data.
+テキストを分類する必要があります。email を spam / not-spam に分ける。customer review を positive / negative に分ける。support ticket を category に分ける。features は数千個（単語ごとに 1 つ）あり、training data は限られています。
 
-Most classifiers choke here. Logistic regression needs enough samples to estimate thousands of weights reliably. Decision trees split on one word at a time and overfit wildly. KNN in 10,000 dimensions is meaningless because every point is equally far from every other point.
+多くの classifier はここで苦しみます。Logistic regression は数千の weights を信頼できるように推定するだけの samples を必要とします。Decision trees は単語を 1 つずつ split して激しく overfit します。KNN は 10,000 次元では意味を失います。どの点も他の点から同じくらい遠くなるからです。
 
-Naive Bayes handles this. It makes a mathematically wrong assumption (that every feature is independent of every other feature given the class), and it still outperforms "smarter" models on text classification, especially with small training sets. It trains in a single pass through the data. It scales to millions of features. It produces probability estimates (though often poorly calibrated due to the independence assumption).
+Naive Bayes はこの状況に強いです。数学的には誤った仮定（class が与えられたとき、すべての feature が互いに independent である）を置きます。それでも、特に training set が小さい text classification では、「より賢い」model を上回ることがあります。data を 1 回通すだけで訓練でき、数百万 features まで scale し、probability estimates も返します（ただし independence assumption のため calibration は悪いことが多いです）。
 
-Understanding why a wrong assumption leads to good predictions teaches you something fundamental about machine learning: the best model is not the most correct one, it is the one with the best bias-variance tradeoff for your data.
+間違った仮定が良い予測につながる理由を理解すると、machine learning の基本が見えてきます。最良の model は最も正しい model ではなく、手元の data に対して最良の bias-variance tradeoff を持つ model です。
 
-## The Concept
+## コンセプト
 
-### Bayes' Theorem (Quick Review)
+### Bayes' Theorem（短い復習）
 
-Bayes' theorem flips conditional probabilities:
+Bayes' theorem は conditional probabilities を反転します。
 
 ```
 P(class | features) = P(features | class) * P(class) / P(features)
 ```
 
-We want `P(class | features)` -- the probability that a document belongs to a class given the words in it. We can compute this from:
-- `P(features | class)` -- the likelihood of seeing these words in documents of this class
-- `P(class)` -- the prior probability of the class (how common is spam in general?)
-- `P(features)` -- the evidence, same for all classes, so we can ignore it when comparing
+求めたいのは `P(class | features)`、つまり document 内の words が与えられたとき、その document が class に属する確率です。これは次から計算できます。
+- `P(features | class)` -- この class の documents でこれらの words を見る likelihood
+- `P(class)` -- class の prior probability（spam は全体でどれくらい一般的か）
+- `P(features)` -- evidence。全 class で同じなので比較時には無視できる
 
-The class with the highest `P(class | features)` wins.
+最も高い `P(class | features)` を持つ class が勝ちます。
 
-### The Naive Independence Assumption
+### ナイーブな独立性仮定
 
-Computing `P(features | class)` exactly requires estimating the joint probability of all features together. With a vocabulary of 10,000 words, you would need to estimate a distribution over 2^10,000 possible combinations. Impossible.
+`P(features | class)` を正確に計算するには、すべての features の joint probability を推定する必要があります。語彙が 10,000 words あると、2^10,000 通りの組み合わせの分布を推定することになります。不可能です。
 
-The naive assumption: every feature is conditionally independent given the class.
+ナイーブな仮定: class が与えられたら、すべての feature は conditionally independent である。
 
 ```
 P(w1, w2, ..., wn | class) = P(w1 | class) * P(w2 | class) * ... * P(wn | class)
 ```
 
-Instead of one impossible joint distribution, you estimate n simple per-feature distributions. Each one needs only a count.
+不可能な joint distribution を 1 つ推定する代わりに、n 個の単純な per-feature distributions を推定します。それぞれに必要なのは count だけです。
 
-This assumption is obviously wrong. The words "machine" and "learning" are not independent in any document. But the classifier does not need correct probability estimates. It needs correct rankings -- which class has the highest probability. The independence assumption introduces systematic errors, but those errors affect all classes similarly, so the ranking stays correct.
+この仮定は明らかに誤りです。"machine" と "learning" は document 内で独立ではありません。しかし classifier に必要なのは正確な probability estimates ではありません。必要なのは正しい ranking、つまりどの class の probability が最大かです。independence assumption は systematic errors を導入しますが、その error が各 class に似た形で効くため、ranking が保たれることがあります。
 
-### Why It Still Works
+### それでも機能する理由
 
-Three reasons:
+1. **Calibration より ranking。** Classification に必要なのは top-ranked class が正しいことです。真の確率が 0.7 なのに P(spam) = 0.99999 と出ても、spam を選べれば分類は正解です。正しい確率ではなく、正しい勝者が必要です。
 
-1. **Ranking over calibration.** Classification only needs the top-ranked class to be correct. Even if P(spam) = 0.99999 when the true probability is 0.7, the classifier still picks spam correctly. We do not need correct probabilities. We need the correct winner.
+2. **High bias, low variance。** independence assumption は強い prior です。model を強く制約し、overfitting を防ぎます。training data が限られているときは、少し間違っていても安定した model が、理論的には正しくても不安定な model に勝ちます。
 
-2. **High bias, low variance.** The independence assumption is a strong prior. It constrains the model heavily, which prevents overfitting. With limited training data, a model that is slightly wrong but stable beats a model that is theoretically right but wildly unstable. This is the bias-variance tradeoff in action.
+3. **Feature redundancy が相殺される。** 相関した features は重複した evidence を与えます。classifier はその evidence を二重に数えますが、正しい class についても二重に数えます。"machine" と "learning" が常に一緒に出るなら、どちらも "tech" class の evidence です。
 
-3. **Feature redundancy cancels out.** Correlated features provide redundant evidence. The classifier double-counts this evidence, but it double-counts it for the correct class too. If "machine" and "learning" always appear together, both provide evidence for the "tech" class. NB counts them twice, but it counts them twice for the right class.
+実務的には、Naive Bayes は非常に高速です。Training は frequencies を数えるために data を 1 回通すだけです。Prediction は matrix multiplication です。million documents でも数秒で訓練できます。この速さにより、遅い model よりも多くの feature sets と experiments を試せます。
 
-A fourth, practical reason: Naive Bayes is extremely fast. Training is a single pass through the data counting frequencies. Prediction is a matrix multiplication. You can train on a million documents in seconds. This speed means you can iterate faster, try more feature sets, and run more experiments than with slower models.
+### 数式を順に追う
 
-### The Math Step by Step
-
-Let us trace through a concrete example. Suppose we have two classes: spam and not-spam. Our vocabulary has three words: "free", "money", "meeting".
+2 classes（spam、not-spam）と、3 words（"free"、"money"、"meeting"）を考えます。
 
 Training data:
-- Spam emails mention "free" 80 times, "money" 60 times, "meeting" 10 times (150 total words)
-- Not-spam emails mention "free" 5 times, "money" 10 times, "meeting" 100 times (115 total words)
-- 40% of emails are spam, 60% are not-spam
+- Spam emails は "free" を 80 回、"money" を 60 回、"meeting" を 10 回含む（合計 150 words）
+- Not-spam emails は "free" を 5 回、"money" を 10 回、"meeting" を 100 回含む（合計 115 words）
+- emails の 40% が spam、60% が not-spam
 
-With Laplace smoothing (alpha=1):
+Laplace smoothing（alpha=1）を使うと:
 
 ```
 P(free | spam)    = (80 + 1) / (150 + 3) = 81/153 = 0.529
@@ -88,7 +86,7 @@ P(money | not-spam)   = (10 + 1) / (115 + 3) = 11/118 = 0.093
 P(meeting | not-spam) = (100 + 1) / (115 + 3) = 101/118 = 0.856
 ```
 
-New email contains: "free" (2 times), "money" (1 time), "meeting" (0 times).
+新しい email は "free" を 2 回、"money" を 1 回、"meeting" を 0 回含みます。
 
 ```
 log P(spam | email) = log(0.4) + 2*log(0.529) + 1*log(0.399) + 0*log(0.072)
@@ -100,43 +98,43 @@ log P(not-spam | email) = log(0.6) + 2*log(0.051) + 1*log(0.093) + 0*log(0.856)
                         = -8.838
 ```
 
-Spam wins by a large margin. The word "free" appearing twice is strong evidence for spam. Note that "meeting" not appearing contributes zero to both log sums (0 * log(P)) -- in Multinomial NB, absent words have no effect. It is Bernoulli NB that explicitly models word absence.
+Spam が大差で勝ちます。"free" が 2 回出ることは spam の強い evidence です。Multinomial NB では、出現しない "meeting" は log sum に 0 を足すだけなので影響しません。word absence を明示的に model 化するのは Bernoulli NB です。
 
-### Three Variants
+### 3 つの variants
 
-Naive Bayes comes in three flavors. Each models `P(feature | class)` differently.
+Naive Bayes には 3 種類があります。それぞれ `P(feature | class)` の model 化が違います。
 
 #### Multinomial Naive Bayes
 
-Models each feature as a count. Best for text data where features are word frequencies or TF-IDF values.
+各 feature を count として model 化します。word frequencies や TF-IDF values のような text data に最適です。
 
 ```
 P(word_i | class) = (count of word_i in class + alpha) / (total words in class + alpha * vocab_size)
 ```
 
-The `alpha` is Laplace smoothing (explained below). This variant is the workhorse for text classification.
+`alpha` は Laplace smoothing です。この variant は text classification の主力です。
 
 #### Gaussian Naive Bayes
 
-Models each feature as a normal distribution. Best for continuous features.
+各 feature を normal distribution として model 化します。continuous features に最適です。
 
 ```
 P(x_i | class) = (1 / sqrt(2 * pi * var)) * exp(-(x_i - mean)^2 / (2 * var))
 ```
 
-Each class gets its own mean and variance per feature. This works well when features genuinely follow a bell curve within each class.
+class ごと、feature ごとに mean と variance を持ちます。features が class 内で本当に bell curve に近いときにうまく働きます。
 
 #### Bernoulli Naive Bayes
 
-Models each feature as binary (present or absent). Best for short text or binary feature vectors.
+各 feature を binary（present / absent）として model 化します。short text や binary feature vectors に向いています。
 
 ```
 P(word_i | class) = (docs in class containing word_i + alpha) / (total docs in class + 2 * alpha)
 ```
 
-Unlike Multinomial, Bernoulli explicitly penalizes the absence of a word. If "free" typically appears in spam but is absent from this email, Bernoulli counts that as evidence against spam.
+Multinomial と違い、Bernoulli は word absence を明示的に penalize します。"free" が spam に典型的なのにこの email にないなら、それを spam に反する evidence として数えます。
 
-### When to Use Each Variant
+### どの variant を使うか
 
 | Variant | Feature Type | Best For | Example |
 |---------|-------------|----------|---------|
@@ -146,51 +144,49 @@ Unlike Multinomial, Bernoulli explicitly penalizes the absence of a word. If "fr
 
 ### Laplace Smoothing
 
-What happens when a word appears in the test data but never appeared in the training data for a particular class?
+test data に現れた word が、ある class の training data に一度も出ていなかったらどうなるでしょうか。
 
-Without smoothing: `P(word | class) = 0/N = 0`. One zero multiplied through the entire product makes `P(class | features) = 0`, regardless of all other evidence. A single unseen word destroys the entire prediction, no matter how much other evidence supports it.
+smoothing なしでは `P(word | class) = 0/N = 0` です。1 つの zero が product 全体を zero にし、他の evidence がどれほど強くても `P(class | features) = 0` になります。
 
-Laplace smoothing adds a small count `alpha` (usually 1) to every feature count:
+Laplace smoothing は、すべての feature count に小さな count `alpha`（通常 1）を足します。
 
 ```
 P(word_i | class) = (count(word_i, class) + alpha) / (total_words_in_class + alpha * vocab_size)
 ```
 
-With alpha=1, every word gets at least a tiny probability. The word "discombobulate" appearing in a test email no longer kills the spam probability. The smoothing has a Bayesian interpretation: it is equivalent to placing a uniform Dirichlet prior on the word distributions.
+alpha=1 なら、すべての word に少なくとも小さな probability が与えられます。"discombobulate" が test email に出ても spam probability は消えません。Bayesian には、word distributions に uniform Dirichlet prior を置くことと解釈できます。
 
-Higher alpha means stronger smoothing (more uniform distributions). Lower alpha means the model trusts the data more. Alpha is a hyperparameter you tune.
-
-The effect of alpha:
+alpha が大きいほど smoothing は強くなり、distribution はより uniform になります。alpha が小さいほど model は data を強く信頼します。Alpha は tune する hyperparameter です。
 
 | Alpha | Effect | When to use |
 |-------|--------|-------------|
-| 0.001 | Almost no smoothing, trust the data | Very large training set, no unseen features expected |
-| 0.1 | Light smoothing | Large training set |
-| 1.0 | Standard Laplace smoothing | Default starting point |
-| 10.0 | Heavy smoothing, flattens distributions | Very small training set, many unseen features expected |
+| 0.001 | ほぼ smoothing なし、data を信頼する | 非常に大きな training set、unseen features が想定されない |
+| 0.1 | 軽い smoothing | 大きな training set |
+| 1.0 | 標準的な Laplace smoothing | default starting point |
+| 10.0 | 強い smoothing、distributions を平らにする | 小さな training set、unseen features が多い |
 
 ### Log-Space Computation
 
-Multiplying hundreds of probabilities (each less than 1) causes floating-point underflow. The product becomes zero in floating point even though the true value is a very small positive number.
+数百個の probabilities（どれも 1 未満）を掛けると floating-point underflow が起きます。真の値は小さな正数なのに、floating point では product が zero になります。
 
-The solution: work in log space. Instead of multiplying probabilities, add their logarithms:
+解決策は log space で計算することです。probabilities を掛ける代わりに logarithms を足します。
 
 ```
 log P(class | x1, x2, ..., xn) = log P(class) + sum_i log P(xi | class)
 ```
 
-This turns the prediction into a dot product:
+予測は dot product になります。
 
 ```
 log_scores = X @ log_feature_probs.T + log_class_priors
 prediction = argmax(log_scores)
 ```
 
-Matrix multiplication. That is why Naive Bayes prediction is so fast -- it is the same operation as a single-layer linear model.
+Matrix multiplication です。だから Naive Bayes の prediction は速いのです。single-layer linear model と同じ演算です。
 
 ### Naive Bayes vs Logistic Regression
 
-Both are linear classifiers for text. The difference is in what they model.
+どちらも text 向けの linear classifiers です。違いは何を model 化するかです。
 
 | Aspect | Naive Bayes | Logistic Regression |
 |--------|------------|-------------------|
@@ -202,7 +198,7 @@ Both are linear classifiers for text. The difference is in what they model.
 | Speed | Single pass, very fast | Iterative optimization |
 | Calibration | Poor probabilities | Better probabilities |
 
-Rule of thumb: start with Naive Bayes. If you have enough data and NB plateaus, switch to logistic regression.
+経験則: まず Naive Bayes から始めます。十分な data があり NB が頭打ちになったら logistic regression に切り替えます。
 
 ### Classification Pipeline
 
@@ -219,25 +215,25 @@ flowchart LR
     style G fill:#9f9,stroke:#333
 ```
 
-In practice, we work in log space to avoid floating-point underflow. Instead of multiplying many small probabilities, we add their logarithms:
+実務では floating-point underflow を避けるため log space で計算します。小さな probabilities を掛ける代わりに logarithms を足します。
 
 ```
 log P(class | features) = log P(class) + sum_i log P(feature_i | class)
 ```
 
-## Build It
+## 作ってみる
 
-The code in `code/naive_bayes.py` implements both MultinomialNB and GaussianNB from scratch.
+`code/naive_bayes.py` は MultinomialNB と GaussianNB の両方を scratch から実装します。
 
 ### MultinomialNB
 
-The from-scratch implementation:
+scratch 実装:
 
-1. **fit(X, y)**: For each class, count the frequency of each feature. Add Laplace smoothing. Compute log probabilities. Store class priors (log of class frequencies).
+1. **fit(X, y)**: class ごとに各 feature の frequency を数える。Laplace smoothing を足す。log probabilities を計算する。class priors（class frequencies の log）を保存する。
 
-2. **predict_log_proba(X)**: For each sample, compute log P(class) + sum of log P(feature_i | class) for all classes. This is a matrix multiplication: X @ log_probs.T + log_priors.
+2. **predict_log_proba(X)**: 各 sample について、すべての class に対して log P(class) + sum of log P(feature_i | class) を計算する。これは matrix multiplication、つまり X @ log_probs.T + log_priors です。
 
-3. **predict(X)**: Return the class with highest log probability.
+3. **predict(X)**: 最も高い log probability を持つ class を返す。
 
 ```python
 class MultinomialNB:
@@ -262,11 +258,11 @@ class MultinomialNB:
         return self
 ```
 
-The key insight: after fitting, prediction is just matrix multiplication plus a bias. This is why Naive Bayes is so fast.
+重要な insight: fit 後の prediction は matrix multiplication に bias を足すだけです。だから Naive Bayes は速いのです。
 
 ### GaussianNB
 
-For continuous features, we estimate mean and variance per class per feature:
+continuous features では、class ごと feature ごとに mean と variance を推定します。
 
 ```python
 class GaussianNB:
@@ -289,34 +285,34 @@ class GaussianNB:
         return self
 ```
 
-Prediction uses the Gaussian PDF per feature, multiplied across features (added in log space).
+Prediction では feature ごとの Gaussian PDF を使い、features 全体で掛け合わせます（log space では足します）。
 
 ### Demo: Text Classification
 
-The code generates synthetic bag-of-words data simulating two classes (tech articles vs sports articles). Each class has a different word frequency distribution. MultinomialNB classifies them using word counts.
+コードは、tech articles と sports articles の 2 classes を模した synthetic bag-of-words data を生成します。class ごとに word frequency distribution が異なり、MultinomialNB が word counts を使って分類します。
 
-The synthetic data works like this: we create 200 "words" (feature columns). Words 0-39 have high frequency in tech articles and low in sports. Words 80-119 have high frequency in sports and low in tech. Words 40-79 are medium frequency in both. This creates a realistic scenario where some words are strong class indicators and others are noise.
+synthetic data では 200 個の "words"（feature columns）を作ります。Words 0-39 は tech articles で high frequency、sports で low frequency です。Words 80-119 は sports で high frequency、tech で low frequency です。Words 40-79 は両方で medium frequency です。これにより、一部の words が強い class indicators で、他は noise という現実的な状況を作ります。
 
 ### Demo: Continuous Features
 
-The code generates Iris-like data (3 classes, 4 features, Gaussian clusters). GaussianNB classifies using per-class mean and variance. Each class has a different center (mean vector) and different spread (variance), mimicking real-world data where measurements differ systematically between categories.
+コードは Iris-like data（3 classes、4 features、Gaussian clusters）を生成します。GaussianNB は per-class mean と variance を使って分類します。各 class は異なる center（mean vector）と spread（variance）を持ち、measurements が categories 間で体系的に異なる実データを模します。
 
-The code also demonstrates:
-- **Smoothing comparison:** Training MultinomialNB with different alpha values to show the effect of smoothing strength on accuracy.
-- **Training size experiment:** How NB accuracy improves as training data grows from 20 to 1600 samples. NB reaches decent accuracy even with very few samples -- this is its main advantage.
-- **Confusion matrix:** Per-class precision, recall, and F1 score to show where NB makes mistakes.
+コードは次も示します。
+- **Smoothing comparison:** alpha values を変えて MultinomialNB を訓練し、smoothing strength が accuracy に与える影響を見る
+- **Training size experiment:** training data が 20 から 1600 samples へ増えるにつれて NB accuracy がどう改善するかを見る。NB は非常に少ない samples でもそこそこの accuracy に達する
+- **Confusion matrix:** per-class precision、recall、F1 score により、NB がどこで間違えるかを見る
 
 ### Prediction Speed
 
-Naive Bayes prediction is a matrix multiplication. For n samples with d features and k classes:
-- MultinomialNB: one matrix multiply (n x d) @ (d x k) = O(n * d * k)
-- GaussianNB: n * k Gaussian PDF evaluations, each over d features = O(n * d * k)
+Naive Bayes prediction は matrix multiplication です。n samples、d features、k classes の場合:
+- MultinomialNB: 1 回の matrix multiply (n x d) @ (d x k) = O(n * d * k)
+- GaussianNB: n * k 回の Gaussian PDF evaluations、それぞれ d features = O(n * d * k)
 
-Both are linear in every dimension. Compare this to KNN (which requires distance computation to all training points) or SVM with RBF kernel (which requires kernel evaluation against all support vectors). NB is faster by orders of magnitude at prediction time.
+どちらも全 dimension に対して linear です。KNN（すべての training points との distance computation が必要）や RBF kernel の SVM（support vectors との kernel evaluation が必要）と比べると、prediction time は桁違いに速くなります。
 
-## Use It
+## 使ってみる
 
-With sklearn, both variants are one-liners:
+sklearn ではどちらの variant も one-liner です。
 
 ```python
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
@@ -330,7 +326,7 @@ mnb.fit(X_train_counts, y_train)
 print(f"MultinomialNB accuracy: {mnb.score(X_test_counts, y_test):.3f}")
 ```
 
-For text classification with sklearn:
+sklearn で text classification を行う例:
 
 ```python
 from sklearn.feature_extraction.text import CountVectorizer
@@ -346,11 +342,11 @@ text_clf.fit(train_texts, train_labels)
 accuracy = text_clf.score(test_texts, test_labels)
 ```
 
-The code in `naive_bayes.py` compares from-scratch implementations against sklearn on the same data to verify correctness.
+`naive_bayes.py` のコードは、scratch 実装と sklearn を同じ data で比較し、正しさを確認します。
 
-### TF-IDF with Naive Bayes
+### Naive Bayes と TF-IDF
 
-Raw word counts give every word equal weight per occurrence. But common words like "the" and "is" appear frequently in every class -- they carry no information. TF-IDF (Term Frequency - Inverse Document Frequency) downweights common words and upweights rare, discriminative words.
+raw word counts は出現 1 回ごとにすべての word を同じ重みで扱います。しかし "the" や "is" のような common words は全 class に頻繁に出るため、情報を持ちません。TF-IDF (Term Frequency - Inverse Document Frequency) は common words の重みを下げ、rare で discriminative な words の重みを上げます。
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -363,11 +359,11 @@ text_clf = Pipeline([
 ])
 ```
 
-TF-IDF values are non-negative, so they work with MultinomialNB. The combination of TF-IDF + MultinomialNB is one of the strongest baselines for text classification. It frequently beats more complex models on datasets with fewer than 10,000 training samples.
+TF-IDF values は non-negative なので MultinomialNB と一緒に使えます。TF-IDF + MultinomialNB は text classification の強力な baseline の 1 つです。training samples が 10,000 未満の datasets では、より複雑な model に勝つこともよくあります。
 
-### BernoulliNB for Short Text
+### Short Text には BernoulliNB
 
-For short text (tweets, SMS, chat messages), BernoulliNB can outperform MultinomialNB. Short texts have low word counts, so the frequency information that MultinomialNB relies on is noisy. BernoulliNB only cares about presence or absence, which is more reliable with short text.
+short text（tweets、SMS、chat messages）では BernoulliNB が MultinomialNB を上回ることがあります。short texts は word counts が小さく、MultinomialNB が頼る frequency information は noisy です。BernoulliNB は presence / absence だけを見るため、short text ではより信頼できます。
 
 ```python
 from sklearn.naive_bayes import BernoulliNB
@@ -379,11 +375,11 @@ text_clf = Pipeline([
 ])
 ```
 
-The `binary=True` flag in CountVectorizer converts all counts to 0/1. Without it, BernoulliNB still works but is seeing counts that it was not designed for.
+CountVectorizer の `binary=True` flag はすべての counts を 0/1 に変換します。これがなくても BernoulliNB は動きますが、本来設計されていない count を見ていることになります。
 
-### Calibrating NB Probabilities
+### NB Probabilities の calibration
 
-NB probabilities are poorly calibrated. When NB says P(spam) = 0.95, the true probability might be 0.7. If you need reliable probability estimates (for example, to set a threshold or to combine with other models), use sklearn's CalibratedClassifierCV:
+NB probabilities は calibration が悪いです。NB が P(spam) = 0.95 と言っても、真の確率は 0.7 かもしれません。threshold 設定や他 model との組み合わせなどで信頼できる probability estimates が必要なら、sklearn の CalibratedClassifierCV を使います。
 
 ```python
 from sklearn.calibration import CalibratedClassifierCV
@@ -393,65 +389,65 @@ calibrated_nb.fit(X_train, y_train)
 proba = calibrated_nb.predict_proba(X_test)
 ```
 
-This fits a logistic regression on top of NB's raw scores using cross-validation. The resulting probabilities are much closer to the true class frequencies.
+これは cross-validation を使って NB の raw scores の上に logistic regression を fit します。得られる probabilities は真の class frequencies にかなり近くなります。
 
-### Common Gotchas
+### よくある落とし穴
 
-1. **Negative feature values.** MultinomialNB requires non-negative features. If you have negative values (like TF-IDF with certain settings or standardized features), use GaussianNB instead, or shift the features to be positive.
+1. **Negative feature values。** MultinomialNB は non-negative features を要求します。negative values（特定設定の TF-IDF や standardized features など）がある場合は GaussianNB を使うか、features を positive に shift します。
 
-2. **Zero variance features.** GaussianNB divides by variance. If a feature has zero variance for a class (all values identical), the probability computation breaks. The code adds a small smoothing term (1e-9) to all variances to prevent this.
+2. **Zero variance features。** GaussianNB は variance で割ります。class 内で feature の variance が zero（すべて同じ値）だと probability computation が壊れます。コードでは 1e-9 の小さな smoothing term をすべての variances に足して防ぎます。
 
-3. **Class imbalance.** If 99% of emails are not-spam, the prior P(not-spam) = 0.99 is so strong that it overwhelms the likelihood evidence. You can set class priors manually or use class_prior parameter in sklearn.
+3. **Class imbalance。** emails の 99% が not-spam なら prior P(not-spam) = 0.99 が強すぎて likelihood evidence を押しつぶします。class priors を手動設定するか、sklearn の class_prior parameter を使えます。
 
-4. **Feature scaling.** MultinomialNB does not need scaling (it works on counts). GaussianNB does not need scaling either (it estimates per-feature statistics). This is an advantage over logistic regression and SVM, which are sensitive to feature scales.
+4. **Feature scaling。** MultinomialNB は scaling 不要です（counts で動きます）。GaussianNB も scaling 不要です（per-feature statistics を推定します）。これは feature scale に敏感な logistic regression や SVM に対する利点です。
 
-## Ship It
+## 出荷物
 
-This lesson produces:
-- `outputs/skill-naive-bayes-chooser.md` -- a decision skill for picking the right NB variant
-- `code/naive_bayes.py` -- MultinomialNB and GaussianNB from scratch, with sklearn comparison
+この lesson が生成するもの:
+- `outputs/skill-naive-bayes-chooser.md` -- 適切な NB variant を選ぶための decision skill
+- `code/naive_bayes.py` -- scratch 実装の MultinomialNB と GaussianNB、および sklearn comparison
 
-### When Naive Bayes Fails
+### Naive Bayes が失敗する場合
 
-NB fails when the independence assumption causes incorrect rankings (not just incorrect probabilities). This happens when:
+NB は independence assumption が incorrect probabilities だけでなく incorrect rankings を生むと失敗します。たとえば:
 
-1. **Strong feature interactions.** If the class depends on the combination of two features but not either alone (XOR-like patterns), NB will miss it entirely. Each feature alone provides no evidence, and NB cannot combine them nonlinearly.
+1. **強い feature interactions。** class が 2 つの features の組み合わせに依存し、どちら単独にも依存しない場合（XOR-like patterns）、NB は完全に見逃します。各 feature 単独では evidence がなく、NB は非線形に組み合わせられません。
 
-2. **Highly correlated features with opposing evidence.** If feature A says "spam" and feature B says "not-spam", but A and B are perfectly correlated (they always agree in reality), NB will see conflicting evidence where there is none.
+2. **反対の evidence を持つ高度に correlated な features。** feature A が "spam"、feature B が "not-spam" を示すが、A と B が完全に correlated（実際には常に一致）している場合、NB は存在しない conflicting evidence を見ます。
 
-3. **Very large training sets.** With enough data, discriminative models like logistic regression learn the true decision boundary and outperform NB. The independence assumption that helped with small data now holds the model back.
+3. **非常に大きい training sets。** data が十分にあると、logistic regression のような discriminative models は真の decision boundary を学び、NB を上回ります。small data で助けになった independence assumption が足かせになります。
 
-In practice, these failure modes are rare for text classification. Text features are numerous, individually weak, and the independence assumption's errors tend to cancel out. For tabular data with few strongly correlated features, consider logistic regression or tree-based models first.
+実務では、text classification でこれらの failure modes は比較的まれです。Text features は多数で、個々には弱く、independence assumption の error は相殺されがちです。少数の強く correlated な features を持つ tabular data では、logistic regression や tree-based models を先に検討してください。
 
-## Exercises
+## 演習
 
-1. **Smoothing experiment.** Train MultinomialNB on text data with alpha values of 0.01, 0.1, 1.0, 10.0, and 100.0. Plot accuracy vs alpha. Where does performance peak? Why does very high alpha hurt?
+1. **Smoothing experiment。** alpha values 0.01、0.1、1.0、10.0、100.0 で text data に MultinomialNB を訓練してください。accuracy vs alpha を plot します。performance はどこで peak しますか。alpha が非常に大きいとなぜ悪化しますか。
 
-2. **Feature independence test.** Take a real text dataset. Pick two words that are obviously correlated ("machine" and "learning"). Compute P(word1 | class) * P(word2 | class) and compare to P(word1 AND word2 | class). How wrong is the independence assumption? Does it affect classification accuracy?
+2. **Feature independence test。** 実際の text dataset を使います。明らかに correlated な 2 words（"machine" と "learning" など）を選びます。P(word1 | class) * P(word2 | class) を計算し、P(word1 AND word2 | class) と比較します。independence assumption はどれくらい間違っていますか。classification accuracy に影響しますか。
 
-3. **Bernoulli implementation.** Extend the code with a BernoulliNB class. Convert bag-of-words to binary (present/absent) and compare accuracy against MultinomialNB on text data. When does Bernoulli win?
+3. **Bernoulli implementation。** コードに BernoulliNB class を追加してください。bag-of-words を binary（present / absent）に変換し、text data で MultinomialNB と accuracy を比較します。どんなときに Bernoulli が勝ちますか。
 
-4. **NB vs Logistic Regression.** Train both on text data. Start with 100 training samples and increase to 10,000. Plot accuracy vs training set size for both. At what point does Logistic Regression overtake Naive Bayes?
+4. **NB vs Logistic Regression。** text data で両方を訓練してください。training samples を 100 から始め、10,000 まで増やします。両方の accuracy vs training set size を plot します。どの時点で Logistic Regression が Naive Bayes を追い越しますか。
 
-5. **Spam filter.** Build a complete spam classifier: tokenize raw email text, build vocabulary, create bag-of-words features, train MultinomialNB, evaluate with precision and recall (not just accuracy -- why?).
+5. **Spam filter。** 完全な spam classifier を作ってください。raw email text を tokenize し、vocabulary を作り、bag-of-words features を作成し、MultinomialNB を訓練し、precision と recall で評価します（accuracy だけでは不十分です。なぜですか）。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Naive Bayes | "Simple probabilistic classifier" | A classifier that applies Bayes' theorem with the assumption that features are conditionally independent given the class |
-| Conditional independence | "Features don't affect each other" | P(A, B \| C) = P(A \| C) * P(B \| C) -- knowing B tells you nothing new about A once you know C |
-| Laplace smoothing | "Add-one smoothing" | Adding a small count to every feature to prevent zero probabilities from dominating the prediction |
-| Prior | "What you believed before seeing data" | P(class) -- the probability of each class before observing any features |
-| Likelihood | "How well the data fits" | P(features \| class) -- the probability of observing these features if the class is known |
-| Posterior | "What you believe after seeing data" | P(class \| features) -- the updated probability of the class after observing the features |
-| Generative model | "Models how data is generated" | A model that learns P(X \| Y) and P(Y), then uses Bayes' theorem to get P(Y \| X) |
-| Discriminative model | "Models the decision boundary" | A model that directly learns P(Y \| X) without modeling how X is generated |
-| Log probability | "Avoid underflow" | Working with log P instead of P to prevent the product of many small numbers from becoming zero in floating point |
+| Naive Bayes | "Simple probabilistic classifier" | Bayes' theorem と、class が与えられたとき features が conditionally independent であるという仮定を使う classifier |
+| Conditional independence | "Features don't affect each other" | P(A, B \| C) = P(A \| C) * P(B \| C)。C を知っているなら、B を知っても A について新しい情報はない |
+| Laplace smoothing | "Add-one smoothing" | zero probabilities が prediction を支配しないよう、すべての feature に小さな count を足すこと |
+| Prior | "What you believed before seeing data" | P(class)。features を観測する前の各 class の probability |
+| Likelihood | "How well the data fits" | P(features \| class)。class が既知のとき、その features を観測する probability |
+| Posterior | "What you believe after seeing data" | P(class \| features)。features を観測した後に更新された class probability |
+| Generative model | "Models how data is generated" | P(X \| Y) と P(Y) を学習し、Bayes' theorem で P(Y \| X) を得る model |
+| Discriminative model | "Models the decision boundary" | X がどう生成されるかを model 化せず、P(Y \| X) を直接学習する model |
+| Log probability | "Avoid underflow" | 多数の小さい数の product が floating point で zero になるのを避けるため、P ではなく log P を使うこと |
 
-## Further Reading
+## 参考資料
 
-- [scikit-learn Naive Bayes docs](https://scikit-learn.org/stable/modules/naive_bayes.html) -- all three variants with mathematical details
-- [McCallum and Nigam, A Comparison of Event Models for Naive Bayes Text Classification (1998)](https://www.cs.cmu.edu/~knigam/papers/multinomial-aaaiws98.pdf) -- the classic comparison of Multinomial vs Bernoulli for text
-- [Rennie et al., Tackling the Poor Assumptions of Naive Bayes Text Classifiers (2003)](https://people.csail.mit.edu/jrennie/papers/icml03-nb.pdf) -- improvements to NB for text
-- [Ng and Jordan, On Discriminative vs. Generative Classifiers (2001)](https://ai.stanford.edu/~ang/papers/nips01-discriminativegenerative.pdf) -- proves NB converges faster than LR with less data
+- [scikit-learn Naive Bayes docs](https://scikit-learn.org/stable/modules/naive_bayes.html) -- 3 variants すべてと数学的詳細
+- [McCallum and Nigam, A Comparison of Event Models for Naive Bayes Text Classification (1998)](https://www.cs.cmu.edu/~knigam/papers/multinomial-aaaiws98.pdf) -- text における Multinomial vs Bernoulli の古典的比較
+- [Rennie et al., Tackling the Poor Assumptions of Naive Bayes Text Classifiers (2003)](https://people.csail.mit.edu/jrennie/papers/icml03-nb.pdf) -- text 向け NB の改善
+- [Ng and Jordan, On Discriminative vs. Generative Classifiers (2001)](https://ai.stanford.edu/~ang/papers/nips01-discriminativegenerative.pdf) -- NB が LR より少ない data で速く収束することを示す

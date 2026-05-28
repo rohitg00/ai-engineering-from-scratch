@@ -1,22 +1,22 @@
 {
   "lesson": "31-agent-workbench-why-models-fail",
-  "title": "Agent Workbench Engineering: Why Capable Models Still Fail",
+  "title": "Agent Workbench Engineering: 高性能モデルがそれでも失敗する理由",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the lesson identify as the root cause of agent failures on real tasks?",
+      "question": "この lesson は、実タスクでの agent failure の根本原因を何だと説明しているか？",
       "options": [
-        "Insufficient model parameters",
-        "Workbench failures: missing surfaces around the model, not LLM limitations",
-        "Slow network",
-        "Outdated training data"
+        "モデル parameter が不足していること",
+        "Workbench failure: LLM の限界ではなく、model 周辺の surface が欠けていること",
+        "network が遅いこと",
+        "training data が古いこと"
       ],
       "correct": 1,
-      "explanation": "The model is not wrong about Python; it is wrong about the work. Surfaces around the model are missing."
+      "explanation": "モデルが Python を間違えたのではなく、作業を間違えた。model 周辺の surface が欠けている。"
     },
     {
       "stage": "pre",
-      "question": "What are the seven workbench surfaces the lesson names?",
+      "question": "lesson が挙げる 7 つの workbench surface は何か？",
       "options": [
         "Instructions, state, scope, feedback, verification, review, handoff",
         "Train, eval, deploy, monitor, retrain, scale, retire",
@@ -24,11 +24,11 @@
         "Read, write, exec, fork, exit, wait, kill"
       ],
       "correct": 0,
-      "explanation": "The seven surfaces are instructions, state, scope, feedback, verification, review, handoff."
+      "explanation": "7 つの surface は instructions, state, scope, feedback, verification, review, handoff。"
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of the eight distributed-systems primitives the lesson maps surfaces to?",
+      "question": "lesson が surface を対応付ける 8 つの distributed-systems primitive に含まれないものはどれか？",
       "options": [
         "Function",
         "Worker",
@@ -36,55 +36,55 @@
         "Backpropagation"
       ],
       "correct": 3,
-      "explanation": "The eight primitives are function, worker, trigger, runtime, HTTP/RPC, queue, session persistence, authorization policy."
+      "explanation": "8 つの primitive は function, worker, trigger, runtime, HTTP/RPC, queue, session persistence, authorization policy。"
     },
     {
       "stage": "check",
-      "question": "What did Vercel's reported harness change move success rate from and to?",
+      "question": "Vercel が報告した harness change で success rate は何%から何%へ変わったか？",
       "options": [
-        "20% to 60%",
-        "80% to 100%, by deleting 80% of the agent's tools",
-        "0% to 100%, by switching models",
-        "50% to 70%, by adding RAG"
+        "20% から 60%",
+        "agent tools の 80% を削除して 80% から 100%",
+        "model を切り替えて 0% から 100%",
+        "RAG を追加して 50% から 70%"
       ],
       "correct": 1,
-      "explanation": "Deleting 80% of tools moved Vercel's agent from 80% to 100% success."
+      "explanation": "tools の 80% を削除したことで、Vercel の agent は 80% から 100% success へ動いた。"
     },
     {
       "stage": "check",
-      "question": "What does Terminal Bench 2.0 demonstrate about model vs harness?",
+      "question": "Terminal Bench 2.0 は model と harness について何を示しているか？",
       "options": [
-        "Models alone determine ranking",
-        "Same model moved from outside top 30 to rank five by changing only the harness",
-        "Harness changes do not matter",
-        "Only GPUs matter"
+        "ranking は model だけで決まる",
+        "同じ model が harness 変更だけで top 30 圏外から 5 位へ動いた",
+        "harness 変更は重要ではない",
+        "GPU だけが重要"
       ],
       "correct": 1,
-      "explanation": "LangChain's Anatomy of an Agent Harness: same model, harness change, 25+ rank jump."
+      "explanation": "LangChain の Anatomy of an Agent Harness では、同じ model、harness 変更、25 位以上の rank jump が示されている。"
     },
     {
       "stage": "post",
-      "question": "What does the lesson recommend doing when you hear new harness vocabulary?",
+      "question": "新しい harness vocabulary を聞いたとき、lesson は何を推奨しているか？",
       "options": [
-        "Adopt the vocabulary verbatim",
-        "Translate back to primitives (function, worker, trigger, runtime, HTTP/RPC, queue, persistence, policy) before adopting",
-        "Reject it",
-        "Wait for OpenAI to standardize it"
+        "語彙をそのまま採用する",
+        "採用前に primitive (function, worker, trigger, runtime, HTTP/RPC, queue, persistence, policy) へ翻訳する",
+        "拒否する",
+        "OpenAI が標準化するまで待つ"
       ],
       "correct": 1,
-      "explanation": "Reason from primitives, not vendor taxonomies; the vocabulary changes but the engineering does not."
+      "explanation": "vendor taxonomy ではなく primitive から考える。語彙は変わるが engineering は変わらない。"
     },
     {
       "stage": "post",
-      "question": "Where does chat history sit relative to the workbench?",
+      "question": "chat history は workbench に対してどの位置づけか？",
       "options": [
-        "Chat is the system of record",
-        "Chat is volatile; the repo is the system of record",
-        "Both are equivalent",
-        "Neither matters"
+        "chat が system of record",
+        "chat は揮発的で、repo が system of record",
+        "両者は同等",
+        "どちらも重要ではない"
       ],
       "correct": 1,
-      "explanation": "The loop closes on the state file, not on chat history."
+      "explanation": "loop は chat history ではなく state file で閉じる。"
     }
   ]
 }

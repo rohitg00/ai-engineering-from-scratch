@@ -1,56 +1,56 @@
-# Build Your Own Mini Framework
+# 自分だけのミニフレームワークを作る
 
-> You have built neurons, layers, networks, backprop, activations, loss functions, optimizers, regularization, initialization, and LR schedules. All as separate pieces. Now wire them together into a framework. Not PyTorch. Not TensorFlow. Yours.
+> あなたは neuron、layer、network、backprop、activation、loss function、optimizer、regularization、initialization、LR schedule を作ってきました。すべて別々の部品としてです。今度はそれらをつないで framework にします。PyTorch ではありません。TensorFlow でもありません。あなた自身のものです。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** All of Phase 03 (Lessons 01-09)
-**Time:** ~120 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 03 すべて（Lessons 01-09）
+**時間:** 約 120 分
 
-## Learning Objectives
+## 学習目標
 
-- Build a complete deep learning framework (~500 lines) with Module, Linear, ReLU, Sigmoid, Dropout, BatchNorm, Sequential, loss functions, optimizers, and DataLoader
-- Explain the Module abstraction (forward, backward, parameters) and why train/eval mode toggling is necessary
-- Wire all components into a working training loop that trains a 4-layer network on circle classification
-- Map each component of your framework to its PyTorch equivalent (nn.Module, nn.Sequential, optim.Adam, DataLoader)
+- Module、Linear、ReLU、Sigmoid、Dropout、BatchNorm、Sequential、loss functions、optimizers、DataLoader を備えた完全な deep learning framework（約 500 行）を作る
+- Module abstraction（forward、backward、parameters）と、train/eval mode の切り替えが必要な理由を説明する
+- すべての component を、circle classification で 4-layer network を学習する実用的な training loop に接続する
+- 自分の framework の各 component を PyTorch の対応物（nn.Module、nn.Sequential、optim.Adam、DataLoader）へ対応付ける
 
-## The Problem
+## 問題
 
-You have ten lessons of building blocks scattered across separate files. A `Value` class here, a training loop there, weight initialization in another file, learning rate schedules in yet another. To train a network, you copy-paste from five different lessons and wire them together by hand.
+あなたには、10 lessons 分の building blocks が別々のファイルに散らばっています。ここには `Value` class、そこには training loop、別のファイルには weight initialization、さらに別のファイルには learning rate schedules。network を学習するには、5 つの lessons から copy-paste し、手作業でつなげる必要があります。
 
-That is what frameworks solve. PyTorch gives you `nn.Module`, `nn.Sequential`, `optim.Adam`, `DataLoader`, and a training loop pattern that ties them together. TensorFlow gives you `keras.Layer`, `keras.Sequential`, `keras.optimizers.Adam`. These are not magic. They are organizational patterns that make it possible to define, train, and evaluate networks without reinventing the plumbing every time.
+framework はこの問題を解決します。PyTorch は `nn.Module`、`nn.Sequential`、`optim.Adam`、`DataLoader`、そしてそれらをまとめる training loop pattern を提供します。TensorFlow は `keras.Layer`、`keras.Sequential`、`keras.optimizers.Adam` を提供します。これらは魔法ではありません。network を毎回 plumbing から作り直さずに定義し、学習し、評価できるようにするための組織化の pattern です。
 
-You are going to build the same thing in ~500 lines of Python. No numpy. No external dependencies. A framework that can define any feedforward network, train it with SGD or Adam, batch the data, apply dropout and batch normalization, use any activation, and schedule the learning rate.
+あなたは同じものを約 500 行の Python で作ります。numpy なし。外部依存なし。任意の feedforward network を定義でき、SGD または Adam で学習でき、data を batch 化し、dropout と batch normalization を適用し、任意の activation を使い、learning rate を schedule できる framework です。
 
-When you finish, you will understand exactly what happens when you write `model = nn.Sequential(...)` in PyTorch. You will understand why `model.train()` and `model.eval()` exist. You will understand why `optimizer.zero_grad()` is a separate call. You will understand all of it, because you built all of it.
+終える頃には、PyTorch で `model = nn.Sequential(...)` と書いたときに何が起きているかを正確に理解できます。`model.train()` と `model.eval()` が存在する理由も理解できます。`optimizer.zero_grad()` が独立した呼び出しである理由も理解できます。すべて自分で作るからです。
 
-## The Concept
+## 概念
 
-### The Module Abstraction
+### Module Abstraction
 
-Every layer in PyTorch inherits from `nn.Module`. A Module has three responsibilities:
+PyTorch のすべての layer は `nn.Module` を継承します。Module には 3 つの責務があります。
 
-1. **forward()** -- compute the output given inputs
-2. **parameters()** -- return all trainable weights
-3. **backward()** -- compute gradients (handled by autograd in PyTorch, explicit in ours)
+1. **forward()** -- input から output を計算する
+2. **parameters()** -- すべての trainable weights を返す
+3. **backward()** -- gradients を計算する（PyTorch では autograd が処理し、ここでは明示的に実装する）
 
-A Linear layer is a Module. A ReLU activation is a Module. A dropout layer is a Module. A batch normalization layer is a Module. They all have the same interface.
+Linear layer は Module です。ReLU activation も Module です。dropout layer も Module です。batch normalization layer も Module です。すべて同じ interface を持ちます。
 
 ### Sequential Container
 
-`nn.Sequential` chains Modules. Forward pass: feed data through Module 1, then Module 2, then Module 3. Backward pass: reverse the chain. The container itself is a Module -- it has forward(), parameters(), and backward(). This is the composite pattern: a sequence of Modules is itself a Module.
+`nn.Sequential` は Modules を連結します。Forward pass では、data を Module 1、Module 2、Module 3 の順に通します。Backward pass では、その chain を逆向きにたどります。container 自身も Module です。forward()、parameters()、backward() を持ちます。これは composite pattern です。Modules の sequence が、それ自体 Module になります。
 
 ### Training vs Evaluation Mode
 
-Dropout randomly zeroes neurons during training but passes everything through during evaluation. Batch normalization uses batch statistics during training but running averages during evaluation. The `train()` and `eval()` methods toggle this behavior. Every Module has a `training` flag.
+Dropout は training 中に neurons を random に 0 にしますが、evaluation 中はすべてをそのまま通します。Batch normalization は training 中に batch statistics を使い、evaluation 中は running averages を使います。`train()` と `eval()` methods はこの behavior を切り替えます。すべての Module は `training` flag を持ちます。
 
 ### Optimizer
 
-The optimizer updates parameters using their gradients. SGD: `param -= lr * grad`. Adam: maintains momentum and variance estimates, then updates. The optimizer does not know about the network architecture -- it only sees a flat list of parameters and their gradients.
+optimizer は gradients を使って parameters を更新します。SGD は `param -= lr * grad`。Adam は momentum と variance estimates を維持してから更新します。optimizer は network architecture を知りません。flat な parameters と gradients の list だけを見ます。
 
 ### DataLoader
 
-Batching matters for two reasons. First, you cannot fit the entire dataset in memory for large problems. Second, mini-batch gradient descent provides noise that helps escape local minima. The DataLoader splits data into batches and optionally shuffles between epochs.
+batching は 2 つの理由で重要です。第一に、大きな問題では dataset 全体を memory に載せられません。第二に、mini-batch gradient descent は local minima から抜ける助けになる noise を提供します。DataLoader は data を batches に分割し、必要なら epochs の間で shuffle します。
 
 ### Framework Architecture
 
@@ -147,11 +147,11 @@ classDiagram
     Sequential *-- Module
 ```
 
-## Build It
+## 作ってみる
 
 ### Step 1: Module Base Class
 
-The abstract interface that every layer implements.
+すべての layer が実装する abstract interface です。
 
 ```python
 class Module:
@@ -176,7 +176,7 @@ class Module:
 
 ### Step 2: Linear Layer
 
-The fundamental building block. Stores weights and biases, computes Wx + b forward, and weight/input gradients backward.
+基本の building block です。weights と biases を保持し、forward で Wx + b を計算し、backward で weight/input gradients を計算します。
 
 ```python
 import math
@@ -225,7 +225,7 @@ class Linear(Module):
 
 ### Step 3: Activation Modules
 
-ReLU, Sigmoid, and Tanh as Modules. Each caches what it needs for the backward pass.
+ReLU、Sigmoid、Tanh を Modules として実装します。それぞれ backward pass に必要な値を cache します。
 
 ```python
 class ReLU(Module):
@@ -272,7 +272,7 @@ class Tanh(Module):
 
 ### Step 4: Dropout Module
 
-Randomly zeroes elements during training. Scales remaining elements by 1/(1-p) so expected values stay the same. Does nothing during eval.
+training 中に elements を random に 0 にします。期待値が変わらないよう、残った elements を 1/(1-p) で scale します。eval 中は何もしません。
 
 ```python
 class Dropout(Module):
@@ -295,7 +295,7 @@ class Dropout(Module):
 
 ### Step 5: BatchNorm Module
 
-Normalizes activations to zero mean and unit variance per feature across the batch. Maintains running statistics for eval mode.
+batch 内の feature ごとに、activations を mean 0、variance 1 に正規化します。eval mode 用に running statistics を維持します。
 
 ```python
 class BatchNorm(Module):
@@ -375,7 +375,7 @@ class BatchNorm(Module):
 
 ### Step 6: Sequential Container
 
-Chains modules. Forward goes left-to-right, backward goes right-to-left.
+modules を連結します。Forward は左から右へ、backward は右から左へ進みます。
 
 ```python
 class Sequential(Module):
@@ -412,7 +412,7 @@ class Sequential(Module):
 
 ### Step 7: Loss Functions
 
-MSE and Binary Cross-Entropy. Each returns the loss value and provides a backward() that returns the gradient.
+MSE と Binary Cross-Entropy です。それぞれ loss value を返し、gradient を返す backward() を提供します。
 
 ```python
 class MSELoss:
@@ -453,7 +453,7 @@ class BCELoss:
 
 ### Step 8: SGD and Adam Optimizers
 
-Both take a parameter list and update weights using gradients.
+どちらも parameter list を受け取り、gradients を使って weights を更新します。
 
 ```python
 class SGD:
@@ -518,7 +518,7 @@ class Adam:
 
 ### Step 9: DataLoader
 
-Splits data into batches, optionally shuffles each epoch.
+data を batches に分割し、必要なら各 epoch で shuffle します。
 
 ```python
 class DataLoader:
@@ -542,9 +542,9 @@ class DataLoader:
         return (len(self.data) + self.batch_size - 1) // self.batch_size
 ```
 
-### Step 10: Train a 4-Layer Network on Circle Classification
+### Step 10: Circle Classification で 4-Layer Network を学習する
 
-Wire everything together. Define a model, pick a loss, pick an optimizer, run the training loop.
+すべてを接続します。model を定義し、loss を選び、optimizer を選び、training loop を実行します。
 
 ```python
 def make_circle_data(n=500, seed=42):
@@ -627,9 +627,9 @@ def train():
     return model, test_accuracy
 ```
 
-## Use It
+## 使ってみる
 
-Here is the PyTorch equivalent of what you just built:
+いま作ったものに対応する PyTorch 版は次のとおりです。
 
 ```python
 import torch
@@ -664,44 +664,44 @@ for epoch in range(100):
         test_predictions = model(test_inputs)
 ```
 
-The structure is identical. `Sequential`, `Linear`, `ReLU`, `Sigmoid`, `BCELoss`, `Adam`, `zero_grad`, `backward`, `step`, `train`, `eval`. Every concept maps one-to-one. The difference is that PyTorch handles autograd automatically (no need to implement backward() in each module), runs on GPU, and has been optimized for years. But the bones are the same.
+構造は同一です。`Sequential`、`Linear`、`ReLU`、`Sigmoid`、`BCELoss`、`Adam`、`zero_grad`、`backward`、`step`、`train`、`eval`。すべての概念が 1 対 1 で対応します。違いは、PyTorch が autograd を自動処理し（各 module に backward() を実装する必要がない）、GPU 上で実行でき、長年最適化されてきたことです。しかし骨格は同じです。
 
-Now when you see PyTorch code, you know exactly what is happening at every line. That understanding is the whole point.
+これで PyTorch code を見たとき、各行で何が起きているかを正確に理解できます。その理解こそが目的です。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-framework-architect.md` -- a prompt for designing neural network architectures using framework abstractions
+この lesson で作るもの:
+- `outputs/prompt-framework-architect.md` -- framework abstractions を使って neural network architectures を設計するための prompt
 
-## Exercises
+## 演習
 
-1. Add a `SoftmaxCrossEntropyLoss` class for multi-class classification. Softmax the predictions, compute cross-entropy loss, and handle the combined backward pass. Test it on a 3-class spiral dataset.
+1. multi-class classification 用の `SoftmaxCrossEntropyLoss` class を追加してください。predictions に softmax を適用し、cross-entropy loss を計算し、combined backward pass を処理します。3-class spiral dataset で test してください。
 
-2. Implement learning rate scheduling in the optimizer: add a `set_lr()` method and wire in the cosine schedule from Lesson 09. Train the circle classifier with warmup + cosine and compare to constant LR.
+2. optimizer に learning rate scheduling を実装してください。`set_lr()` method を追加し、Lesson 09 の cosine schedule を接続します。warmup + cosine で circle classifier を学習し、constant LR と比較してください。
 
-3. Add a `save()` and `load()` method to Sequential that serializes all weights to a JSON file and loads them back. Verify that a loaded model produces the same predictions as the original.
+3. Sequential に `save()` と `load()` method を追加し、すべての weights を JSON file に serialize して読み戻せるようにしてください。読み込んだ model が元の model と同じ predictions を出すことを確認してください。
 
-4. Implement weight decay (L2 regularization) in the Adam optimizer. Add a `weight_decay` parameter that shrinks weights toward zero each step. Compare training with decay=0 vs decay=0.01.
+4. Adam optimizer に weight decay（L2 regularization）を実装してください。weights を各 step で 0 に近づける `weight_decay` parameter を追加します。decay=0 と decay=0.01 の学習を比較してください。
 
-5. Replace the per-sample training loop with proper mini-batch gradient accumulation: accumulate gradients across all samples in a batch, then divide by batch size and take one optimizer step. Measure whether this changes convergence speed.
+5. sample ごとの training loop を、正しい mini-batch gradient accumulation に置き換えてください。batch 内のすべての samples で gradients を蓄積し、batch size で割ってから optimizer step を 1 回だけ実行します。これが convergence speed を変えるか測定してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|----------------|----------------------|
-| Module | "A layer" | The base abstraction in a framework -- anything with forward(), backward(), and parameters() |
-| Sequential | "Stack layers in order" | A container that chains modules, applying them in sequence for forward and reverse for backward |
-| Forward pass | "Run the network" | Computing the output by passing input through each module in order |
-| Backward pass | "Compute gradients" | Propagating the loss gradient through each module in reverse to compute parameter gradients |
-| Parameters | "The trainable weights" | All values in the network that the optimizer can update -- weights and biases |
-| Optimizer | "The thing that updates weights" | An algorithm that uses gradients to update parameters, implementing SGD, Adam, or other rules |
-| DataLoader | "The thing that feeds data" | An iterator that splits a dataset into batches, optionally shuffling between epochs |
-| Training mode | "model.train()" | A flag that enables stochastic behavior like dropout and batch normalization with batch stats |
-| Evaluation mode | "model.eval()" | A flag that disables dropout and uses running statistics for batch normalization |
-| Zero grad | "Clear the gradients" | Resetting all parameter gradients to zero before computing the next batch's gradients |
+| Module | "A layer" | framework の base abstraction -- forward()、backward()、parameters() を持つもの |
+| Sequential | "Stack layers in order" | modules を chain し、forward では順方向、backward では逆方向に適用する container |
+| Forward pass | "Run the network" | input を各 module に順番に通して output を計算すること |
+| Backward pass | "Compute gradients" | loss gradient を各 module に逆順で伝播させ、parameter gradients を計算すること |
+| Parameters | "The trainable weights" | optimizer が更新できる network 内のすべての値 -- weights と biases |
+| Optimizer | "The thing that updates weights" | gradients を使って parameters を更新する algorithm。SGD、Adam、その他の rules を実装する |
+| DataLoader | "The thing that feeds data" | dataset を batches に分割し、必要なら epochs 間で shuffle する iterator |
+| Training mode | "model.train()" | dropout や batch normalization の batch stats のような stochastic behavior を有効にする flag |
+| Evaluation mode | "model.eval()" | dropout を無効化し、batch normalization で running statistics を使う flag |
+| Zero grad | "Clear the gradients" | 次の batch の gradients を計算する前に、すべての parameter gradients を 0 に reset すること |
 
-## Further Reading
+## 参考資料
 
-- Paszke et al., "PyTorch: An Imperative Style, High-Performance Deep Learning Library" (2019) -- the paper describing PyTorch's design decisions
-- Chollet, "Deep Learning with Python, Second Edition" (2021) -- Chapter 3 covers Keras internals with the same module/layer abstraction
-- Johnson, "Tiny-DNN" (https://github.com/tiny-dnn/tiny-dnn) -- a header-only C++ deep learning framework for understanding framework internals
+- Paszke et al., "PyTorch: An Imperative Style, High-Performance Deep Learning Library" (2019) -- PyTorch の設計判断を説明する論文
+- Chollet, "Deep Learning with Python, Second Edition" (2021) -- Chapter 3 が同じ module/layer abstraction による Keras internals を扱う
+- Johnson, "Tiny-DNN" (https://github.com/tiny-dnn/tiny-dnn) -- framework internals を理解するための header-only C++ deep learning framework

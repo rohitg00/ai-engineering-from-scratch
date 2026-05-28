@@ -1,5 +1,5 @@
-# Phase 15: Autonomous Systems
+# Phase 15: 自律システム
 
-> Agents that run without human intervention — safely.
+> 人間の介入なしに、安全に動くエージェント。
 
-See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.
+全レッスン計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。

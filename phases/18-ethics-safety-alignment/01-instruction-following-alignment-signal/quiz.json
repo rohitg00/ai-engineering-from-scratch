@@ -1,75 +1,75 @@
 {
   "lesson": "01-instruction-following-alignment-signal",
-  "title": "Instruction-Following as Alignment Signal",
+  "title": "アラインメント信号としての Instruction-Following",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why does a raw pre-trained language model often respond to 'write a Python function that reverses a list' with another prompt instead of code?",
+      "question": "生の pre-trained language model が「リストを反転する Python 関数を書いて」に対して、コードではなく別のプロンプトで返すことが多いのはなぜですか。",
       "options": [
-        "Its vocabulary lacks Python tokens",
-        "It cannot represent function signatures without fine-tuning",
-        "Its temperature defaults to zero",
-        "It is trained to complete web-style text, where prompts continue with more prompts"
+        "語彙に Python tokens が含まれていないから",
+        "fine-tuning なしでは function signatures を表現できないから",
+        "temperature の default が zero だから",
+        "web 風のテキストを補完するよう訓練されており、その分布では prompts がさらに prompts として続くから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which loss does the InstructGPT reward model use over pairwise preference labels?",
+      "question": "InstructGPT の reward model は pairwise preference labels に対してどの loss を使いますか。",
       "options": [
-        "Mean squared error on labeler scores",
+        "labeler scores に対する mean squared error",
         "Bradley-Terry: -log sigmoid(r(x, y_w) - r(x, y_l))",
-        "Hinge loss with a fixed margin",
-        "Cross-entropy between predicted and true reward"
+        "固定 margin の hinge loss",
+        "predicted reward と true reward の cross-entropy"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the KL penalty in stage 3 of InstructGPT primarily protecting against?",
+      "question": "InstructGPT の stage 3 における KL penalty は主に何から守っていますか。",
       "options": [
-        "Catastrophic forgetting of tokenizer statistics",
-        "Numerical instability in PPO gradient updates",
-        "Overflowing context windows during sampling",
-        "The optimizer finding adversarial high-reward strings that exploit the reward model"
+        "tokenizer statistics の catastrophic forgetting",
+        "PPO gradient updates の numerical instability",
+        "sampling 中の context windows の overflow",
+        "optimizer が reward model を exploit する adversarial high-reward strings を見つけること"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What problem does PPO-ptx mix into the RL objective to mitigate?",
+      "question": "PPO-ptx は RL objective に何を混ぜて、どの問題を緩和しますか。",
       "options": [
-        "The reward model drifting during PPO",
-        "The KL term becoming negative",
-        "The alignment tax: regression on benchmarks RLHF did not target",
-        "Tokenizer mismatch between SFT and RM"
+        "PPO 中に reward model が drift する問題",
+        "KL term が negative になる問題",
+        "alignment tax、つまり RLHF が target にしていない benchmarks での regression",
+        "SFT と RM の tokenizer mismatch"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "A 1.3B InstructGPT was preferred over the 175B base GPT-3 about 70% of the time. What does this say about alignment and capability?",
+      "question": "1.3B InstructGPT は 175B base GPT-3 より約 70% の確率で好まれました。これは alignment と capability について何を示しますか。",
       "options": [
-        "Alignment is a different axis from capability, and the base model sets the capability floor",
-        "Preference rates above 50% prove the proxy reward equals human values",
-        "Capability and alignment are the same axis at scale",
-        "Bigger base models always lose to small aligned models"
+        "alignment は capability とは別の軸であり、base model が capability floor を決める",
+        "preference rate が 50% を超えれば proxy reward が human values と等しいと証明される",
+        "scale では capability と alignment は同じ軸になる",
+        "大きい base model は常に小さい aligned model に負ける"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which of the following is the reward model in InstructGPT initialized from?",
+      "question": "InstructGPT の reward model は次のどれから初期化されますか。",
       "options": [
-        "A random scalar regressor with no pretraining",
-        "A separate encoder-only transformer",
-        "The base pre-trained model with the LM head intact",
-        "The SFT model with the LM head replaced by a scalar head"
+        "pretraining なしの random scalar regressor",
+        "別の encoder-only transformer",
+        "LM head を残した base pre-trained model",
+        "LM head を scalar head に置き換えた SFT model"
       ],
       "correct": 3,
       "explanation": ""

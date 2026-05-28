@@ -1,8 +1,8 @@
 """Inference platform economics comparator — stdlib Python.
 
-Models six providers (Fireworks, Together, Baseten, Modal, Replicate, Anyscale)
-on the same synthetic workload. Normalizes per-token vs per-minute vs per-prediction
-pricing so you can compare head-to-head.
+6つの provider（Fireworks、Together、Baseten、Modal、Replicate、Anyscale）を
+同じ synthetic workload で model 化する。per-token vs per-minute vs
+per-prediction pricing を正規化し、head-to-head で比較できるようにする。
 """
 
 from __future__ import annotations
@@ -14,13 +14,13 @@ from dataclasses import dataclass
 class Vendor:
     name: str
     model: str
-    per_mtok_output: float | None   # $/M output tokens (None if not the model)
-    per_minute: float | None        # $/minute for dedicated GPU (None if serverless)
-    per_prediction: float | None    # $/prediction (None if per-token)
-    tokens_per_minute: int          # effective tokens when GPU is saturated
+    per_mtok_output: float | None   # $/M output tokens（その model でなければ None）
+    per_minute: float | None        # dedicated GPU の $/minute（serverless なら None）
+    per_prediction: float | None    # $/prediction（per-token なら None）
+    tokens_per_minute: int          # GPU が飽和したときの effective tokens
     cold_start_sec: float
     notes: str
-    min_reserved_minutes_per_day: int = 0  # reserved-minute floor for per-minute vendors (warm pool / minimum commitment)
+    min_reserved_minutes_per_day: int = 0  # per-minute vendors の reserved-minute floor（warm pool / minimum commitment）
 
 
 VENDORS = [
@@ -34,13 +34,12 @@ VENDORS = [
 
 
 def cost_per_day(v: Vendor, tokens_per_day: int, predictions_per_day: int) -> float:
-    """Effective $/day given the vendor's pricing model.
+    """vendor の pricing model に基づく effective $/day。
 
-    Per-minute vendors are billed for the maximum of saturated serving time and
-    a reserved-minute floor (warm-pool minimum / reservation). This makes the
-    per-minute model consistent across `run_scenario` and `utilization_breakeven`
-    instead of assuming perfect scale-to-zero in one place and reserved 24h in
-    the other.
+    Per-minute vendors は、飽和 serving time と reserved-minute floor
+    （warm-pool minimum / reservation）の大きいほうで課金される。これにより、
+    `run_scenario` と `utilization_breakeven` の間で、片方は perfect scale-to-zero、
+    片方は reserved 24h と仮定する不整合を避ける。
     """
     if v.per_mtok_output is not None:
         return (tokens_per_day / 1e6) * v.per_mtok_output
@@ -54,7 +53,7 @@ def cost_per_day(v: Vendor, tokens_per_day: int, predictions_per_day: int) -> fl
 
 
 def effective_rate(v: Vendor, tokens_per_day: int, predictions_per_day: int) -> float:
-    """Normalize to $/M tokens for cross-vendor comparison."""
+    """cross-vendor comparison のために $/M tokens に正規化する。"""
     c = cost_per_day(v, tokens_per_day, predictions_per_day)
     return (c / (tokens_per_day / 1e6)) if tokens_per_day else 0
 
@@ -110,8 +109,8 @@ def main() -> None:
     utilization_breakeven()
     cold_start_penalty()
 
-    print("\nRule of thumb: under reserved-minute billing, per-minute (Baseten, Modal) beats per-token")
-    print("once GPU saturation stays above ~60-70% utilization; below that, per-token wins.")
+    print("\nRule of thumb: reserved-minute billing では、per-minute（Baseten、Modal）が per-token に勝つのは")
+    print("GPU saturation が約60-70% utilization を超えて維持される場合。それ未満では per-token が勝つ。")
 
 
 if __name__ == "__main__":

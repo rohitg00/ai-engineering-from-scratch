@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * Build script for AI Engineering from Scratch website.
- * Parses README.md, ROADMAP.md, and glossary/terms.md from the repo root
- * and generates data.js with all phase/lesson/glossary data.
+ * AI Engineering from Scratch Web サイト用のビルドスクリプト。
+ * リポジトリルートの README.md、ROADMAP.md、glossary/terms.md を解析し、
+ * すべてのフェーズ、レッスン、用語集データを含む data.js を生成します。
  *
  * Run: node site/build.js
- * Called automatically by GitHub Actions on every push.
+ * push ごとに GitHub Actions から自動実行されます。
  */
 
 const fs = require('fs');
@@ -19,14 +19,14 @@ const OUTPUT_PATH = path.join(__dirname, 'data.js');
 
 const GITHUB_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
 
-// ─── Parse ROADMAP.md for lesson statuses ────────────────────────────
+// ─── ROADMAP.md からレッスンのステータスを解析 ─────────────────────
 function parseRoadmap(content) {
   const statuses = {}; // { "Phase 0": { phaseStatus, lessons: { "Dev Environment": "complete" } } }
   let currentPhase = null;
   let currentPhaseStatus = null;
 
   for (const line of content.split(/\r?\n/)) {
-    // Match phase headers like: ## Phase 0: Setup & Tooling — ✅
+    // 例: ## Phase 0: Setup & Tooling — ✅
     const phaseMatch = line.match(/^##\s+Phase\s+(\d+).*?—\s*(✅|🚧|⬚)/);
     if (phaseMatch) {
       const phaseId = parseInt(phaseMatch[1]);
@@ -37,7 +37,7 @@ function parseRoadmap(content) {
       continue;
     }
 
-    // Match lesson rows like: | 01 | Dev Environment | ✅ |
+    // 例: | 01 | Dev Environment | ✅ |
     if (currentPhase) {
       const lessonMatch = line.match(/^\|\s*\d+\s*\|\s*(.+?)\s*\|\s*(✅|🚧|⬚)\s*\|/);
       if (lessonMatch) {
@@ -52,13 +52,12 @@ function parseRoadmap(content) {
   return statuses;
 }
 
-// ─── Parse README.md for phases and lessons ──────────────────────────
+// ─── README.md からフェーズとレッスンを解析 ─────────────────────────
 function parseReadme(content, roadmapStatuses) {
   const phases = [];
 
-  // Split into phase blocks
-  // Phase 0 is in a <table> block, phases 1-19 are in <details> blocks
-  // We'll parse line by line to extract phase headers and lesson tables
+  // Phase 0 は <table> ブロック内、Phase 1-19 は <details> ブロック内にあります。
+  // 行単位で走査し、フェーズ見出しとレッスン表を抽出します。
 
   const lines = content.split(/\r?\n/);
   let currentPhase = null;
@@ -68,23 +67,23 @@ function parseReadme(content, roadmapStatuses) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Match Phase header - multiple formats supported:
+    // フェーズ見出し。複数の既存形式に対応します:
     // Old: ### Phase 0: Setup & Tooling `12 lessons`
     // Old: <summary><strong>Phase 1: Math Foundations</strong> <code>22 lessons</code> ... <em>Description</em></summary>
     // New: ### ![](https://img.shields.io/badge/Phase_0-Setup_&_Tooling-95A5A6?style=for-the-badge) `12 lessons`
     // New: <summary><b>🟣 Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Description</em></summary>
     const phaseHeaderMatch =
-      line.match(/###\s+Phase\s+(\d+):\s+(.+?)\s*`(\d+)\s+lessons?`/) ||
-      line.match(/###\s+!\[\]\([^)]*?Phase[_\s]+(\d+)[-_]([^?)]+?)-[A-F0-9]{6}[^)]*\)\s*`(\d+)\s+lessons?`/i);
+      line.match(/###\s+Phase\s+(\d+):\s+(.+?)\s*`(\d+)\s+(?:lessons?|レッスン)`/) ||
+      line.match(/###\s+!\[\]\([^)]*?Phase[_\s]+(\d+)[-_]([^?)]+?)-[A-F0-9]{6}[^)]*\)\s*`(\d+)\s+(?:lessons?|レッスン)`/i);
     const detailsHeaderMatch =
-      line.match(/<summary><strong>Phase\s+(\d+):\s+(.+?)<\/strong>\s*<code>(\d+)\s+(?:lessons?|projects?)<\/code>.*?<em>(.*?)<\/em>/) ||
-      line.match(/<summary>\s*<b>\s*(?:[^\w\s]+\s+)?Phase\s+(\d+)\s*[—\-:]\s*(.+?)<\/b>.*?<code>(\d+)\s+(?:lessons?|projects?)<\/code>.*?<em>(.*?)<\/em>/);
+      line.match(/<summary><strong>Phase\s+(\d+):\s+(.+?)<\/strong>\s*<code>(\d+)\s+(?:lessons?|projects?|レッスン|プロジェクト)<\/code>.*?<em>(.*?)<\/em>/) ||
+      line.match(/<summary>\s*<b>\s*(?:[^\w\s]+\s+)?Phase\s+(\d+)\s*[—\-:]\s*(.+?)<\/b>.*?<code>(\d+)\s+(?:lessons?|projects?|レッスン|プロジェクト)<\/code>.*?<em>(.*?)<\/em>/);
 
     if (phaseHeaderMatch) {
       const [, idStr, rawName] = phaseHeaderMatch;
       const id = parseInt(idStr);
       const name = rawName.replace(/_/g, ' ').trim();
-      // Look for the description on the next line (blockquote)
+      // 次の数行にある blockquote を説明文として拾います。
       let desc = '';
       for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
         if (lines[j].startsWith('>')) {
@@ -111,19 +110,19 @@ function parseReadme(content, roadmapStatuses) {
       continue;
     }
 
-    // Detect start of lesson table
-    if (currentPhase && line.match(/^\|\s*#\s*\|\s*Lesson/)) {
+    // レッスン表の開始を検出します。
+    if (currentPhase && line.match(/^\|\s*#\s*\|\s*(?:Lesson|レッスン)/)) {
       inLessonTable = true;
       isCapstoneTable = false;
       continue;
     }
 
-    // Skip table separator
+    // 表の区切り線をスキップします。
     if (inLessonTable && line.match(/^\|[\s:|-]+\|$/)) {
       continue;
     }
 
-    // Parse lesson rows
+    // レッスン行を解析します。
     if (inLessonTable && currentPhase && line.startsWith('|')) {
       // | 01 | [Dev Environment](phases/00-setup-and-tooling/01-dev-environment/) | Build | Python, Node, Rust |
       // | 02 | Multi-Layer Networks & Forward Pass | Build | Python |
@@ -133,11 +132,11 @@ function parseReadme(content, roadmapStatuses) {
         const typeRaw = cols[2];
         const langRaw = cols[3];
 
-        // Type may be plain ("Build") or a shield image: ![Build](https://...)
+        // Type はプレーンテキスト ("Build") または shield 画像です: ![Build](https://...)
         const typeBadgeMatch = typeRaw.match(/!\[([^\]]+)\]/);
         const type = typeBadgeMatch ? typeBadgeMatch[1] : typeRaw;
 
-        // Lang may be plain ("Python, Rust") or emoji flags (🐍 🟦 🦀 🟣 ⚛️)
+        // Lang はプレーンテキスト ("Python, Rust") または絵文字フラグです。
         const EMOJI_LANG = {
           '🐍': 'Python',
           '🟦': 'TypeScript',
@@ -156,7 +155,7 @@ function parseReadme(content, roadmapStatuses) {
         }
         if (lang === '—' || lang === '-') lang = '';
 
-        // Check if lesson has a link (meaning it has content)
+        // レッスンへのリンクがあれば、本文が存在するとみなします。
         const linkMatch = lessonCol.match(/\[(.+?)\]\((.+?)\)/);
         let lessonName, url;
         if (linkMatch) {
@@ -168,12 +167,12 @@ function parseReadme(content, roadmapStatuses) {
           url = null;
         }
 
-        // Get status from roadmap
+        // ROADMAP からステータスを取得します。
         const roadmapKey = `Phase ${currentPhase.id}`;
         const roadmapPhase = roadmapStatuses[roadmapKey];
         let status = 'planned';
         if (roadmapPhase) {
-          // Try to find matching lesson by fuzzy match
+          // レッスン名をゆるく照合します。
           const lessonNameClean = lessonName.replace(/[-–—:]/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
           for (const [rName, rStatus] of Object.entries(roadmapPhase.lessons)) {
             const rNameClean = rName.replace(/[-–—:]/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -185,15 +184,14 @@ function parseReadme(content, roadmapStatuses) {
           }
         }
 
-        // If it has a link, it's at least complete (override roadmap if needed)
+        // リンクがあるものは少なくとも complete とみなします。
         if (url && status === 'planned') {
           status = 'complete';
         }
 
-        // Capstone tables use the middle column for prerequisite phase tokens
-        // (e.g., "P11 P13 P14"), not a Build/Learn enum. Keep `type` on the
-        // Build/Learn axis so CSS selectors (data-type="Build"/"Learn") stay
-        // valid, and emit the prereq string in a dedicated `combines` field.
+        // Capstone 表では中央列が Build/Learn ではなく前提フェーズのトークン
+        // (例: "P11 P13 P14") です。CSS セレクター (data-type="Build"/"Learn")
+        // を保つため `type` は既存軸に残し、前提文字列は `combines` に出します。
         const lessonEntry = {
           name: lessonName.trim(),
           status,
@@ -206,13 +204,13 @@ function parseReadme(content, roadmapStatuses) {
       }
     }
 
-    // End of table
+    // 表の終了を検出します。
     if (inLessonTable && (line.match(/<\/td>/) || line.match(/<\/details>/) || (line.trim() === '' && i + 1 < lines.length && !lines[i + 1].startsWith('|')))) {
       inLessonTable = false;
     }
 
-    // Also detect capstone table format (# | Project | Combines | Lang)
-    if (currentPhase && line.match(/^\|\s*#\s*\|\s*Project/)) {
+    // Capstone 表形式 (# | Project | Combines | Lang) も検出します。
+    if (currentPhase && line.match(/^\|\s*#\s*\|\s*(?:Project|プロジェクト)/)) {
       inLessonTable = true;
       isCapstoneTable = true;
       continue;
@@ -222,19 +220,18 @@ function parseReadme(content, roadmapStatuses) {
   return phases;
 }
 
-// ─── Extract lesson summary + keywords from docs/en.md ───────────────
+// ─── docs/en.md からレッスン概要とキーワードを抽出 ─────────────────
 /**
- * Single-pass read of a lesson's docs/en.md.
+ * レッスンの docs/en.md を 1 パスで読みます。
  *
- * Returns:
- *   summary  — first `> blockquote` line (the lesson's one-liner motto).
- *   keywords — all `### H3` heading texts joined by ' · '.
- *              H3 headings are the densest vocabulary in a lesson doc
- *              (e.g. "Scaled dot-product · Causal masking · KV cache"),
- *              so they extend search coverage without bloating data.js.
+ * 返り値:
+ *   summary  — 最初の `> blockquote` 行。レッスンの一行要約。
+ *   keywords — すべての `### H3` 見出しを ' · ' で連結したもの。
+ *              H3 見出しはレッスン内で語彙密度が高いため、
+ *              data.js を肥大化させずに検索範囲を広げます。
  *
- * Both fields are empty strings when the file is absent or has no
- * matching content — expected for planned lessons with no docs yet.
+ * ファイルがない、または該当コンテンツがない場合は空文字列を返します。
+ * これは、まだ docs がない予定レッスンでは想定どおりです。
  */
 function extractLessonMeta(relPath) {
   const docPath = path.join(REPO_ROOT, relPath, 'docs', 'en.md');
@@ -255,18 +252,18 @@ function extractLessonMeta(relPath) {
     }
     if (h3s.length) result.keywords = h3s.join(' · ');
   } catch (_) {
-    // File absent or unreadable — expected for planned lessons.
+    // ファイルなし、または読み取り不可。予定レッスンでは想定どおりです。
   }
   return result;
 }
 
-// ─── Parse glossary/terms.md ──────────────────────────────────────────
+// ─── glossary/terms.md を解析 ───────────────────────────────────────
 function parseGlossary(content) {
   const terms = [];
   let currentTerm = null;
 
   for (const line of content.split(/\r?\n/)) {
-    // Match term headers: ### Agent or ### Adam (Optimizer)
+    // 例: ### Agent または ### Adam (Optimizer)
     const termMatch = line.match(/^###\s+(.+)/);
     if (termMatch) {
       if (currentTerm && currentTerm.says && currentTerm.means) {
@@ -278,22 +275,22 @@ function parseGlossary(content) {
 
     if (!currentTerm) continue;
 
-    // Match "What people say" line
-    const saysMatch = line.match(/\*\*What people say:\*\*\s*"?(.+?)"?\s*$/);
+    // 「よく言われること」行。英語版の旧形式も後方互換で許容します。
+    const saysMatch = line.match(/\*\*(?:よく言われること|What people say):\*\*\s*["「]?(.+?)["」]?\s*$/);
     if (saysMatch) {
       currentTerm.says = saysMatch[1].replace(/^"/, '').replace(/"$/, '').trim();
       continue;
     }
 
-    // Match "What it actually means" line
-    const meansMatch = line.match(/\*\*What it actually means:\*\*\s*(.+)/);
+    // 「実際の意味」行。英語版の旧形式も後方互換で許容します。
+    const meansMatch = line.match(/\*\*(?:実際の意味|What it actually means):\*\*\s*(.+)/);
     if (meansMatch) {
       currentTerm.means = meansMatch[1].trim();
       continue;
     }
   }
 
-  // Push the last term
+  // 最後の用語を追加します。
   if (currentTerm && currentTerm.says && currentTerm.means) {
     terms.push(currentTerm);
   }
@@ -301,7 +298,7 @@ function parseGlossary(content) {
   return terms;
 }
 
-// ─── Discover outputs/ artifacts (skills / prompts / agents) ──────────
+// ─── outputs/ 成果物 (skills / prompts / agents) を検出 ────────────
 function parseFrontmatter(text) {
   if (!text.startsWith('---')) return null;
   const end = text.indexOf('\n---', 4);
@@ -389,27 +386,27 @@ function discoverArtifacts() {
   return artifacts;
 }
 
-// ─── Main build ──────────────────────────────────────────────────────
+// ─── メインビルド ─────────────────────────────────────────────────
 function build() {
-  console.log('📖 Reading source files...');
+  console.log('📖 ソースファイルを読み込み中...');
 
   const readme = fs.readFileSync(README_PATH, 'utf8');
   const roadmap = fs.readFileSync(ROADMAP_PATH, 'utf8');
   const glossary = fs.readFileSync(GLOSSARY_PATH, 'utf8');
 
-  console.log('🔍 Parsing ROADMAP.md...');
+  console.log('🔍 ROADMAP.md を解析中...');
   const roadmapStatuses = parseRoadmap(roadmap);
 
-  console.log('🔍 Parsing README.md...');
+  console.log('🔍 README.md を解析中...');
   const phases = parseReadme(readme, roadmapStatuses);
 
-  console.log('🔍 Parsing glossary/terms.md...');
+  console.log('🔍 glossary/terms.md を解析中...');
   const glossaryTerms = parseGlossary(glossary);
 
-  console.log('🔍 Discovering outputs + Phase 14 missions...');
+  console.log('🔍 outputs と Phase 14 missions を検出中...');
   const artifacts = discoverArtifacts();
 
-  console.log('📚 Extracting lesson summaries + keywords from docs/en.md...');
+  console.log('📚 docs/en.md からレッスン概要とキーワードを抽出中...');
   let summarized = 0, withKeywords = 0;
   for (const phase of phases) {
     for (const lesson of phase.lessons) {
@@ -422,7 +419,7 @@ function build() {
     }
   }
 
-  // Stats
+  // 統計
   let totalLessons = 0;
   let completeLessons = 0;
   phases.forEach(p => {
@@ -430,17 +427,17 @@ function build() {
     completeLessons += p.lessons.filter(l => l.status === 'complete').length;
   });
 
-  console.log(`\n📊 Stats:`);
-  console.log(`   Phases: ${phases.length}`);
-  console.log(`   Lessons: ${totalLessons}`);
-  console.log(`   Complete: ${completeLessons}`);
-  console.log(`   Summaries: ${summarized}, Keywords: ${withKeywords}`);
-  console.log(`   Glossary terms: ${glossaryTerms.length}`);
-  console.log(`   Artifacts: ${artifacts.length}`);
+  console.log(`\n📊 統計:`);
+  console.log(`   フェーズ: ${phases.length}`);
+  console.log(`   レッスン: ${totalLessons}`);
+  console.log(`   完了: ${completeLessons}`);
+  console.log(`   概要: ${summarized}, キーワード: ${withKeywords}`);
+  console.log(`   用語数: ${glossaryTerms.length}`);
+  console.log(`   成果物: ${artifacts.length}`);
 
-  // Generate data.js
-  const output = `// Auto-generated by build.js — do not edit manually.
-// Last built: ${new Date().toISOString()}
+  // data.js を生成します。
+  const output = `// build.js による自動生成ファイルです。手動編集しないでください。
+// 最終ビルド: ${new Date().toISOString()}
 
 const PHASES = ${JSON.stringify(phases, null, 2)};
 
@@ -450,7 +447,7 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
 `;
 
   fs.writeFileSync(OUTPUT_PATH, output, 'utf8');
-  console.log(`\n✅ Generated ${OUTPUT_PATH}`);
+  console.log(`\n✅ ${OUTPUT_PATH} を生成しました`);
 }
 
 build();

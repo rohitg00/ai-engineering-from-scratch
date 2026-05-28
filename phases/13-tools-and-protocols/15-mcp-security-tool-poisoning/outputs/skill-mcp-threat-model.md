@@ -1,30 +1,30 @@
 ---
 name: mcp-threat-model
-description: Produce a threat model for an MCP deployment naming the applicable attack classes, defenses in place, and Rule-of-Two violations.
+description: MCP deployment向けに、該当するattack classes、導入済みdefenses、Rule-of-Two violationsを示すthreat modelを作る。
 version: 1.0.0
 phase: 13
 lesson: 15
 tags: [mcp, security, tool-poisoning, threat-model, rule-of-two]
 ---
 
-Given an MCP deployment (list of servers, list of tools, list of permissions), produce a threat model.
+MCP deployment（servers list、tools list、permissions list）を受け取り、threat modelを作る。
 
 Produce:
 
-1. Attack applicability. For each of the seven attack classes (tool poisoning, rug pull, shadowing, MPMA, parasitic toolchain, sampling attacks, supply-chain masquerade), rate applicability as high / medium / low with one-sentence rationale.
-2. Defense inventory. List defenses already in place (hash pinning, static detector, gateway, signed registry, MELON, Rule-of-Two enforcement).
-3. Rule of Two audit. For every tool, classify as untrusted / sensitive / consequential and flag any combination of all three in a single turn.
-4. Missing defenses. Name the highest-leverage defense not yet applied given the threat profile.
-5. Runbook. Three actions the team should take in the next week to improve the security posture.
+1. Attack applicability。7つのattack classes（tool poisoning、rug pull、shadowing、MPMA、parasitic toolchain、sampling attacks、supply-chain masquerade）それぞれについて、high / medium / lowで該当度を評価し、1文で理由を書く。
+2. Defense inventory。導入済みdefenses（hash pinning、static detector、gateway、signed registry、MELON、Rule-of-Two enforcement）をlistする。
+3. Rule of Two audit。すべてのtoolをuntrusted / sensitive / consequentialで分類し、single turnで3つすべてが組み合わさる箇所をflagする。
+4. Missing defenses。Threat profileに照らして、まだ適用されていない最高leverageのdefenseを1つ挙げる。
+5. Runbook。Security posture改善のため、teamがnext weekに実施すべき3 actions。
 
 Hard rejects:
-- Any threat model that says "attack class X does not apply because we trust this server". Assume one server will be compromised.
-- Any deployment that uses silent-overwrite namespace resolution.
-- Any deployment with sampling enabled but no per-session rate limiter.
+- 「このserverを信頼しているのでattack class Xは該当しない」と言うthreat model。1つのserverはcompromisedされると仮定する。
+- Silent-overwrite namespace resolutionを使うdeployment。
+- Samplingが有効なのにper-session rate limiterがないdeployment。
 
 Refusal rules:
-- If the deployment has no documentation of approved tool descriptions, refuse and mandate hash pinning first.
-- If the deployment uses public unsigned MCP registries, flag the supply-chain risk and recommend migration to a verified registry.
-- If any tool combines untrusted input, sensitive data, and consequential action, refuse to approve and demand a split.
+- Approved tool descriptionsのdocumentationがないdeploymentでは拒否し、まずhash pinningを必須にする。
+- Public unsigned MCP registriesを使っているdeploymentでは、supply-chain riskをflagし、verified registryへの移行を勧める。
+- Toolがuntrusted input、sensitive data、consequential actionを組み合わせる場合、approvalを拒否し、splitを要求する。
 
-Output: a one-page threat model with attack applicability table, defense inventory, Rule-of-Two flag list, and the three-action runbook. End with the single highest-value security addition for this deployment.
+Output: attack applicability table、defense inventory、Rule-of-Two flag list、three-action runbookを含む1ページthreat model。最後に、このdeploymentで最も価値の高いsecurity additionを1つだけ示す。

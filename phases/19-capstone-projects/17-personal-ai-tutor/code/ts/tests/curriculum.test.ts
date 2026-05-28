@@ -5,7 +5,7 @@ import { MasteryStore } from "../src/mastery.js";
 import { scheduleNextDue, MIN_INTERVAL_MS, MAX_INTERVAL_MS } from "../src/repetition.js";
 import { BASE_INTERVAL_MS, MASTERY_THRESHOLD } from "../src/types.js";
 
-test("topoOrder respects prereqs (parent before child)", () => {
+test("topoOrder は prereq を守る (parent before child)", () => {
   const order = topoOrder(CURRICULUM);
   const pos = new Map(order.map((id, i) => [id, i]));
   for (const l of CURRICULUM) {
@@ -13,17 +13,17 @@ test("topoOrder respects prereqs (parent before child)", () => {
       const pp = pos.get(p);
       const cp = pos.get(l.id);
       assert.ok(pp !== undefined && cp !== undefined);
-      assert.ok(pp < cp, `prereq ${p} must come before ${l.id}`);
+      assert.ok(pp < cp, `prereq ${p} は ${l.id} より前に来る必要があります`);
     }
   }
 });
 
-test("topoOrder produces stable lexicographic tie-break", () => {
+test("topoOrder は安定した lexicographic tie-break を生成する", () => {
   const order = topoOrder(CURRICULUM);
   assert.equal(order[0], "py-01");
 });
 
-test("pickNextLesson returns first eligible un-mastered lesson", () => {
+test("pickNextLesson は最初の eligible un-mastered lesson を返す", () => {
   const store = new MasteryStore();
   const index = buildIndex(CURRICULUM);
   const topo = topoOrder(CURRICULUM);
@@ -33,7 +33,7 @@ test("pickNextLesson returns first eligible un-mastered lesson", () => {
   assert.equal(pick.reason, "new_eligible");
 });
 
-test("BKT-ish update: score increases on correct, falls on wrong", () => {
+test("BKT-ish update: 正答で score が上がり、誤答で下がる", () => {
   const store = new MasteryStore();
   const score1 = store.record("py-01", true, 1_000).score;
   assert.ok(score1 > 0);
@@ -46,7 +46,7 @@ test("BKT-ish update: score increases on correct, falls on wrong", () => {
   assert.ok(after3.score <= score2, `expected ${after3.score} <= ${score2}`);
 });
 
-test("pickNextLesson advances frontier after mastery", () => {
+test("pickNextLesson は mastery 後に frontier を進める", () => {
   const store = new MasteryStore();
   const index = buildIndex(CURRICULUM);
   const topo = topoOrder(CURRICULUM);
@@ -61,7 +61,7 @@ test("pickNextLesson advances frontier after mastery", () => {
   assert.notEqual(pick.lesson.id, "py-01");
 });
 
-test("scheduleNextDue doubles interval on correct, halves on wrong", () => {
+test("scheduleNextDue は正答で interval を倍にし、誤答で半分にする", () => {
   const up = scheduleNextDue(BASE_INTERVAL_MS, true, 0);
   assert.equal(up.interval_ms, BASE_INTERVAL_MS * 2);
   assert.equal(up.next_due_at, BASE_INTERVAL_MS * 2);
@@ -69,14 +69,14 @@ test("scheduleNextDue doubles interval on correct, halves on wrong", () => {
   assert.equal(down.interval_ms, Math.floor(BASE_INTERVAL_MS / 2));
 });
 
-test("scheduleNextDue clamps to MIN/MAX interval", () => {
+test("scheduleNextDue は MIN/MAX interval に clamp する", () => {
   const tiny = scheduleNextDue(MIN_INTERVAL_MS, false, 0);
   assert.equal(tiny.interval_ms, MIN_INTERVAL_MS);
   const huge = scheduleNextDue(MAX_INTERVAL_MS, true, 0);
   assert.equal(huge.interval_ms, MAX_INTERVAL_MS);
 });
 
-test("pickNextLesson surfaces overdue review when no eligible new lessons", () => {
+test("pickNextLesson は eligible new lesson がないと overdue review を出す", () => {
   const store = new MasteryStore();
   const index = buildIndex(CURRICULUM);
   const topo = topoOrder(CURRICULUM);

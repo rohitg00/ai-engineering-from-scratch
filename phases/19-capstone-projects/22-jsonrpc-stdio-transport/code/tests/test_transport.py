@@ -1,4 +1,4 @@
-"""Tests for JSON-RPC 2.0 stdio transport: error codes, notifications, batches."""
+"""JSON-RPC 2.0 stdio transport の tests: error code、notification、batch。"""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from main import (  # noqa: E402
 
 
 def _drive(requests, handler):
-    """Encode requests as newline-delimited JSON and run the server over them."""
+    """request を newline-delimited JSON に encode し、server に通す。"""
     stdin = io.BytesIO()
     for r in requests:
         if isinstance(r, (bytes, bytearray)):
@@ -45,7 +45,7 @@ def echo_handler(method, params):
         return params
     if method == "addone":
         if not isinstance(params, dict) or "n" not in params:
-            raise InvalidParams("n required")
+            raise InvalidParams("n が必要です")
         return params["n"] + 1
     raise MethodNotFound(f"method {method!r}")
 

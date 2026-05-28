@@ -1,9 +1,9 @@
-"""Wrap subprocess.run with structured capture, secret redaction, rotation, and command lineage.
+"""subprocess.run を構造化 capture、secret redaction、rotation、command lineage で wrap する。
 
-Every shell command goes through run_with_feedback. Records carry argv, redacted
-stdout/stderr tails, exit code, duration, started_at, agent note, and a
-command_id/parent_command_id pair so retries trace back to their origin. The
-JSONL file rotates at 1 MB to keep loader memory bounded.
+すべての shell command は run_with_feedback を通る。record には argv、
+redact 済み stdout/stderr tail、exit code、duration、started_at、agent note、
+retry を起点まで辿るための command_id/parent_command_id pair が入る。
+loader memory を bounded に保つため、JSONL file は 1 MB で rotate する。
 
 Run: python3 code/main.py
 """
@@ -27,7 +27,7 @@ TAIL_LINES = 30
 ROTATE_BYTES = 1 * 1024 * 1024  # 1 MB
 MAX_ROTATIONS = 5
 
-# Secret patterns. Audit quarterly against the production runtime's observed leak shapes.
+# Secret pattern。production runtime で観測された leak shape に照らして四半期ごとに audit する。
 REDACTION_PATTERNS = [
     (re.compile(r"(?i)bearer\s+[A-Za-z0-9._\-]+"), "Bearer [REDACTED]"),
     (re.compile(r"(?i)\b(password|passwd|secret|api[_-]?key|access[_-]?key|token)\s*[:=]\s*\S+"),
@@ -56,7 +56,7 @@ class FeedbackRecord:
 
 
 def redact(text: str) -> tuple[str, int]:
-    """Strip secrets before the JSONL append. Read-time redaction is a foot-gun."""
+    """JSONL append の前に secrets を strip する。read-time redaction は foot-gun。"""
     if not text:
         return text, 0
     hits = 0
@@ -76,14 +76,14 @@ def deterministic_tail(text: str, head: int = HEAD_LINES, tail: int = TAIL_LINES
 
 
 def _process_capture(text: str) -> tuple[str, int, int]:
-    """Truncate first, then redact. Returns (text, cut_lines, redaction_hits)."""
+    """先に truncate し、その後 redact する。戻り値は (text, cut_lines, redaction_hits)。"""
     tailed, cut = deterministic_tail(text)
     redacted, hits = redact(tailed)
     return redacted, cut, hits
 
 
 def maybe_rotate() -> None:
-    """Cap the active file at ROTATE_BYTES; rotate .1 .. .MAX, drop oldest."""
+    """active file を ROTATE_BYTES で cap し、.1 .. .MAX に rotate して最古を捨てる。"""
     if not RECORD.exists() or RECORD.stat().st_size < ROTATE_BYTES:
         return
     for idx in range(MAX_ROTATIONS, 0, -1):
@@ -157,12 +157,12 @@ def run_with_feedback(
 
 
 def loop_can_advance(record: FeedbackRecord) -> bool:
-    """Refuse to advance the loop when exit code is missing."""
+    """exit code が欠けているときは loop の前進を拒否する。"""
     return record.exit_code is not None
 
 
 def load_all() -> list[FeedbackRecord]:
-    """Read active + rotated files so parent-command lineage survives rotation."""
+    """active + rotated file を読み、parent-command lineage を rotation 後も残す。"""
     def _rotation_key(p: Path) -> int:
         suffix = p.name[len(RECORD.name):]
         if not suffix:
@@ -185,12 +185,12 @@ def load_all() -> list[FeedbackRecord]:
                 record = FeedbackRecord(**json.loads(line))
             except (json.JSONDecodeError, TypeError):
                 continue
-            by_id[record.command_id] = record  # active file wins (last loaded)
+            by_id[record.command_id] = record  # active file が勝つ (最後に load される)
     return list(by_id.values())
 
 
 def retry_chain(command_id: str) -> list[FeedbackRecord]:
-    """Walk parent_command_id pointers to reconstruct a retry chain."""
+    """parent_command_id pointer を辿って retry chain を復元する。"""
     records = {r.command_id: r for r in load_all()}
     chain: list[FeedbackRecord] = []
     cursor: str | None = command_id
@@ -204,19 +204,19 @@ def main() -> None:
     for path in HERE.glob("feedback_record.jsonl*"):
         path.unlink()
 
-    ok = run_with_feedback(["python3", "-c", "print('hello')"], agent_note="expect hello")
+    ok = run_with_feedback(["python3", "-c", "print('hello')"], agent_note="hello を期待")
     leak = run_with_feedback(
         ["python3", "-c",
          "print('Authorization: Bearer ya29.AbCdEf'); print('password=hunter2'); print('AKIAIOSFODNN7EXAMPLE')"],
-        agent_note="expect redaction"
+        agent_note="redaction を期待"
     )
-    fail = run_with_feedback(["python3", "-c", "import sys; sys.exit(2)"], agent_note="first attempt; will retry")
+    fail = run_with_feedback(["python3", "-c", "import sys; sys.exit(2)"], agent_note="初回 attempt。retry する")
     retry = run_with_feedback(
         ["python3", "-c", "print('recovered'); import sys; sys.exit(0)"],
-        agent_note="retry after non-zero",
+        agent_note="non-zero 後の retry",
         parent_command_id=fail.command_id,
     )
-    missing = run_with_feedback([shlex.split("does-not-exist")[0]], agent_note="probe missing binary")
+    missing = run_with_feedback([shlex.split("does-not-exist")[0]], agent_note="missing binary を probe")
 
     for label, rec in (("ok", ok), ("leak", leak), ("fail", fail), ("retry", retry), ("missing", missing)):
         print(f"{label}: cid={rec.command_id} parent={rec.parent_command_id or '-'} exit={rec.exit_code} "
@@ -224,11 +224,11 @@ def main() -> None:
         if rec.error:
             print(f"  error: {rec.error}")
         if rec.stdout_tail and "REDACTED" in rec.stdout_tail:
-            print(f"  stdout after redaction: {rec.stdout_tail!r}")
+            print(f"  redaction 後の stdout: {rec.stdout_tail!r}")
 
     chain = retry_chain(retry.command_id)
-    print(f"\nretry chain for {retry.command_id}: {[r.command_id for r in chain]} (oldest -> newest)")
-    print(f"{len(load_all())} records persisted in {RECORD.name}")
+    print(f"\n{retry.command_id} の retry chain: {[r.command_id for r in chain]} (oldest -> newest)")
+    print(f"{len(load_all())} records が {RECORD.name} に永続化されました")
 
 
 if __name__ == "__main__":

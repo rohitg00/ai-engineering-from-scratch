@@ -1,11 +1,11 @@
-"""JSON-RPC 2.0 over newline-delimited stdio.
+"""newline-delimited stdio 上の JSON-RPC 2.0。
 
 Conceptual references:
 - ./docs/en.md (this lesson)
 - JSON-RPC 2.0 specification (https://www.jsonrpc.org/specification)
 - RFC 8259 (JSON)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -68,9 +68,9 @@ def _is_valid_envelope(msg: Any) -> bool:
 
 
 def parse_request(raw: str) -> tuple[Request | None, dict | None]:
-    """Parse one JSON line. Returns (Request, None) on success or (None, error_dict).
+    """JSON line を 1 つ parse する。成功時は (Request, None)、失敗時は (None, error_dict) を返す。
 
-    error_dict is a JSON-RPC error response ready to write out.
+    error_dict はそのまま書き出せる JSON-RPC error response。
     """
     try:
         msg = json.loads(raw)
@@ -107,7 +107,7 @@ def _notification_envelope(method: str, params: Any | None) -> dict:
 
 
 class StdioTransport:
-    """Newline-delimited JSON-RPC 2.0 over a pair of byte streams."""
+    """byte stream pair 上の newline-delimited JSON-RPC 2.0。"""
 
     def __init__(self, stdin: BinaryIO, stdout: BinaryIO) -> None:
         self._in: BinaryIO = stdin
@@ -138,7 +138,7 @@ Handler = Callable[[str, Any], Any]
 
 
 def _handle_one(handler: Handler, transport: StdioTransport, req: Request) -> dict | None:
-    """Dispatch a single Request. Returns the response envelope (or None for notification)."""
+    """単一の Request を dispatch する。response envelope を返す（notification なら None）。"""
     try:
         result = handler(req.method, req.params)
     except MethodNotFound as exc:
@@ -184,7 +184,7 @@ def _write_raw(transport: StdioTransport, obj: Any) -> None:
 
 
 def serve(handler: Handler, transport: StdioTransport) -> None:
-    """Read requests from transport until EOF. Dispatch each through handler."""
+    """EOF まで transport から request を読み、各 request を handler に dispatch する。"""
     while True:
         line = transport.read_line()
         if line is None:
@@ -215,17 +215,17 @@ def serve(handler: Handler, transport: StdioTransport) -> None:
 
 
 def _demo() -> None:
-    """Self-terminating demo using io.BytesIO. No process spawn."""
+    """io.BytesIO を使う self-terminating demo。process は spawn しない。"""
 
     def handler(method: str, params: Any) -> Any:
         if method == "math.add":
             if not isinstance(params, dict) or "a" not in params or "b" not in params:
-                raise InvalidParams("a and b required")
+                raise InvalidParams("a と b が必要です")
             return params["a"] + params["b"]
         if method == "echo":
             return params
         if method == "boom":
-            raise RuntimeError("intentional")
+            raise RuntimeError("意図的な失敗")
         raise MethodNotFound(f"method {method!r}")
 
     requests = [

@@ -1,4 +1,4 @@
-"""Tests for the function call dispatcher: timeout, retry, idempotency, concurrency."""
+"""function call dispatcher の tests: timeout、retry、idempotency、concurrency。"""
 
 from __future__ import annotations
 
@@ -111,7 +111,7 @@ class TestRetry(unittest.TestCase):
         async def flaky():
             attempts["n"] += 1
             if attempts["n"] < 2:
-                raise TransientError("not ready")
+                raise TransientError("準備ができていません")
             return "ok"
 
         r = _registry_with("t", flaky, idempotent=True, timeout_ms=200)
@@ -144,7 +144,7 @@ class TestRetry(unittest.TestCase):
 
         async def bad():
             attempts["n"] += 1
-            raise RuntimeError("kaboom")
+            raise RuntimeError("意図的な失敗")
 
         r = _registry_with("t", bad, idempotent=True, timeout_ms=200)
         d = Dispatcher(r, max_attempts=3)

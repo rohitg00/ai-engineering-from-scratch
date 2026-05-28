@@ -1,75 +1,75 @@
 {
   "lesson": "14-ascii-art-visual-jailbreaks",
-  "title": "ASCII Art and Visual Jailbreaks",
+  "title": "ASCII Art と Visual Jailbreaks",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do token-level and semantic-level safety filters miss ArtPrompt-style attacks?",
+      "question": "token-level と semantic-level の safety filters が ArtPrompt-style attacks を見逃すのはなぜですか。",
       "options": [
-        "ArtPrompt requires fine-tuning the model",
-        "ArtPrompt is only effective on multimodal models",
-        "ArtPrompt always uses base64 encoding",
-        "ArtPrompt operates at the visual recognition level: the filter sees harmless punctuation while the model reads the rendered letters as a word"
+        "ArtPrompt には model の fine-tuning が必要だから",
+        "ArtPrompt は multimodal model にしか効かないから",
+        "ArtPrompt は常に base64 encoding を使うから",
+        "ArtPrompt は visual recognition level で動くため。filter には無害な punctuation に見え、model には描かれた letters が単語として読めるから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What are the two steps of ArtPrompt as described in Jiang et al. (ACL 2024)?",
+      "question": "Jiang et al. (ACL 2024) が説明する ArtPrompt の2ステップは何ですか。",
       "options": [
-        "Translation to French, then back-translation",
-        "Word identification of safety-relevant tokens, then ASCII-art substitution and cloaked-prompt generation",
-        "Random search, then perplexity boosting",
-        "Tokenizer mismatch, then context truncation"
+        "フランス語への翻訳、その後 back-translation",
+        "safety-relevant tokens の word identification、その後 ASCII-art substitution と cloaked-prompt generation",
+        "random search、その後 perplexity boosting",
+        "tokenizer mismatch、その後 context truncation"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does perplexity-filter (PPL) defense fail on ArtPrompt?",
+      "question": "perplexity-filter (PPL) defense が ArtPrompt で失敗するのはなぜですか。",
       "options": [
-        "Perplexity always equals zero on cloaked input",
-        "Perplexity is not measurable on ASCII art",
-        "Perplexity filters are disabled by default",
-        "ASCII art has high perplexity, but so does any legitimate structured input; thresholds that block the attack also block legitimate content"
+        "cloaked input では perplexity が常に zero になるから",
+        "ASCII art では perplexity を測れないから",
+        "perplexity filters は default で無効だから",
+        "ASCII art は high perplexity だが、正当な structured input も high perplexity になり得る。攻撃を block する threshold は正当な content も block するから"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the ViTC benchmark measure?",
+      "question": "ViTC benchmark は何を測りますか。",
       "options": [
-        "The model's tool-calling accuracy",
-        "The model's training-data toxicity",
-        "The model's ability to read non-semantic visual prompts (ASCII art, wingdings, similar encoded text)",
-        "The model's ability to compress vision data"
+        "model の tool-calling accuracy",
+        "model の training-data toxicity",
+        "non-semantic visual prompts (ASCII art、wingdings、類似 encoded text) を model が読む能力",
+        "model の vision data compression 能力"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does StructuralSleight generalize ArtPrompt to?",
+      "question": "StructuralSleight は ArtPrompt を何に一般化しますか。",
       "options": [
-        "Uncommon Text-Encoded Structures (UTES): trees, graphs, nested JSON, CSV-in-JSON, diff-style code, etc.",
-        "Adversarial token suffixes via gradient search",
-        "Long-context shot stuffing",
-        "Image inputs only"
+        "Uncommon Text-Encoded Structures (UTES): trees、graphs、nested JSON、CSV-in-JSON、diff-style code など",
+        "gradient search による adversarial token suffixes",
+        "long-context shot stuffing",
+        "image inputs のみ"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the capability-safety tradeoff implied by ViTC results?",
+      "question": "ViTC results が示す capability-safety tradeoff は何ですか。",
       "options": [
-        "Smaller models are always more secure",
-        "Visual recognition is unrelated to ArtPrompt success",
-        "The better the model reads non-semantic visual text, the more effective ArtPrompt-style attacks are on it",
-        "Larger context windows reduce ArtPrompt success"
+        "小さい model は常により安全である",
+        "visual recognition は ArtPrompt success と無関係である",
+        "model が non-semantic visual text をうまく読めるほど、ArtPrompt-style attacks がその model に対して有効になる",
+        "大きい context window は ArtPrompt success を下げる"
       ],
       "correct": 2,
       "explanation": ""

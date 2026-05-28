@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the derivative of a function at a point tell you?",
-      "options": ["The value of the function at that point", "The rate of change (slope) of the function at that point", "The area under the function up to that point", "The maximum value the function can reach"],
+      "question": "ある点における関数の導関数は何を教えてくれますか？",
+      "options": ["その点での関数の値", "その点での関数の変化率（傾き）", "その点までの関数の下の面積", "その関数が取り得る最大値"],
       "correct": 1,
-      "explanation": "The derivative f'(x) measures how much the output changes per unit change in input. Geometrically, it is the slope of the tangent line at that point."
+      "explanation": "導関数 f'(x) は、入力が1単位変化したときに出力がどれだけ変化するかを測ります。幾何学的には、その点における接線の傾きです。"
     },
     {
       "stage": "pre",
-      "question": "What is a gradient in the context of machine learning?",
-      "options": ["A measure of model accuracy", "A vector of all partial derivatives that points in the direction of steepest ascent", "The learning rate used during training", "The difference between predicted and actual values"],
+      "question": "機械学習の文脈で、勾配とは何ですか？",
+      "options": ["モデル精度の尺度", "すべての偏導関数からなるベクトルで、最急上昇の方向を指すもの", "学習中に使う学習率", "予測値と実測値の差"],
       "correct": 1,
-      "explanation": "The gradient collects every partial derivative into one vector. It points in the direction that increases the function fastest. To minimize loss, you move opposite the gradient."
+      "explanation": "勾配はすべての偏導関数を1つのベクトルにまとめたものです。関数を最も速く増加させる方向を指します。損失を最小化するには、勾配と反対方向へ動きます。"
     },
     {
       "stage": "post",
-      "question": "In gradient descent, what does the update rule 'w = w - lr * dL/dw' accomplish?",
-      "options": ["It increases the loss to test model robustness", "It adjusts each weight in the direction that reduces the loss, scaled by the learning rate", "It resets the weight to its initial value minus the gradient", "It normalizes the weight to have magnitude 1"],
+      "question": "勾配降下法で、更新式 'w = w - lr * dL/dw' は何を行っていますか？",
+      "options": ["モデルの頑健性を試すために損失を増やす", "学習率でスケールしながら、損失を減らす方向へ各重みを調整する", "重みを初期値から勾配を引いた値へリセットする", "重みの大きさが1になるように正規化する"],
       "correct": 1,
-      "explanation": "dL/dw tells you which direction increases the loss. Subtracting it (times the learning rate) moves the weight in the direction that decreases the loss. This is repeated for every weight in the model."
+      "explanation": "dL/dw は損失が増える方向を示します。それを学習率倍して引くことで、重みは損失を減らす方向へ動きます。これをモデル内のすべての重みに対して繰り返します。"
     },
     {
       "stage": "post",
-      "question": "Why can't Newton's method (which uses the Hessian matrix) be directly applied to neural networks with millions of parameters?",
-      "options": ["Newton's method only works for convex functions", "The Hessian is an N x N matrix, requiring O(N^2) storage and O(N^3) computation per step, which is intractable for millions of parameters", "Newton's method requires analytical derivatives which cannot be computed for neural networks", "Newton's method converges too slowly for deep networks"],
+      "question": "ヘッセ行列を使うニュートン法を、何百万ものパラメータを持つニューラルネットワークにそのまま適用できないのはなぜですか？",
+      "options": ["ニュートン法は凸関数にしか使えないから", "ヘッセ行列は N x N 行列であり、各ステップで O(N^2) の記憶容量と O(N^3) の計算が必要になり、何百万パラメータでは扱えないから", "ニュートン法には解析的導関数が必要だが、ニューラルネットワークでは計算できないから", "ニュートン法は深層ネットワークでは収束が遅すぎるから"],
       "correct": 1,
-      "explanation": "For N=1 million parameters, the Hessian has 1 trillion entries. Computing and inverting it is impossible. This is why we use first-order methods (SGD, Adam) that approximate second-order information cheaply."
+      "explanation": "N=100万パラメータなら、ヘッセ行列には1兆個の要素があります。それを計算して逆行列を求めることは不可能です。そのため、SGD や Adam のように2階情報を安価に近似する1階法を使います。"
     },
     {
       "stage": "post",
-      "question": "What is the numerical (central difference) approximation for f'(x)?",
+      "question": "f'(x) の数値的な中心差分近似はどれですか？",
       "options": ["f(x+h) / h", "(f(x+h) - f(x)) / h", "(f(x+h) - f(x-h)) / (2*h)", "f(x) * h"],
       "correct": 2,
-      "explanation": "The central difference (f(x+h) - f(x-h)) / (2h) is more accurate than the forward difference because it averages the slope on both sides of x, canceling out the leading error term."
+      "explanation": "中心差分 (f(x+h) - f(x-h)) / (2h) は、x の両側の傾きを平均して主要な誤差項を打ち消すため、前進差分より正確です。"
     }
   ]
 }

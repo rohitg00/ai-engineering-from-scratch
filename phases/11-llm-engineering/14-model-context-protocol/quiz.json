@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "post",
-      "question": "What three primitives does an MCP server expose?",
+      "question": "MCP server が公開する3つの primitive は何ですか？",
       "options": [
-        "Functions, types, classes",
-        "Tools, resources, prompts",
-        "Endpoints, webhooks, queues",
-        "Agents, skills, workflows"
+        "Functions、types、classes",
+        "Tools、resources、prompts",
+        "Endpoints、webhooks、queues",
+        "Agents、skills、workflows"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What wire format does MCP use?",
+      "question": "MCP が使う wire format は何ですか？",
       "options": [
-        "GraphQL over HTTP",
-        "gRPC with protobuf",
+        "HTTP 上の GraphQL",
+        "protobuf を使う gRPC",
         "JSON-RPC 2.0",
-        "REST with OpenAPI"
+        "OpenAPI 付き REST"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which metadata field signals a tool mutates state and should require human approval?",
+      "question": "tool が state を mutate し、human approval を要求すべきことを示す metadata field はどれですか？",
       "options": [
         "readonly: false",
         "mutating: true",
@@ -40,7 +40,7 @@
     },
     {
       "stage": "post",
-      "question": "What is the 2025-06-18 transport that replaced the earlier SSE-only remote transport?",
+      "question": "以前の SSE-only remote transport を置き換えた 2025-06-18 の transport は何ですか？",
       "options": [
         "WebTransport",
         "Streamable HTTP",
@@ -52,12 +52,12 @@
     },
     {
       "stage": "post",
-      "question": "When should a tool be split into its own MCP server instead of staying inline?",
+      "question": "tool はいつ inline のままではなく、独立した MCP server に分けるべきですか？",
       "options": [
-        "When it is called fewer than 10 times per day",
-        "When it is called from two or more hosts and is read-only/cacheable",
-        "When it returns more than 1KB of data",
-        "Never; MCP is only for local dev"
+        "1日に10回未満しか呼ばれないとき",
+        "2つ以上の host から呼ばれ、read-only/cacheable であるとき",
+        "1KB を超える data を返すとき",
+        "分けるべきではない。MCP は local dev 専用である"
       ],
       "correct": 1,
       "explanation": ""

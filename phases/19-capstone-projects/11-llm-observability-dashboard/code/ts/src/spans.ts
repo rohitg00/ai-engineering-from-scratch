@@ -41,7 +41,7 @@ export class RingBuffer<T> {
   private filled = false;
 
   constructor(capacity: number) {
-    if (capacity <= 0) throw new Error("capacity must be > 0");
+    if (capacity <= 0) throw new Error("capacity は 0 より大きい必要があります");
     this.capacity = capacity;
     this.slots = new Array<T | undefined>(capacity);
   }

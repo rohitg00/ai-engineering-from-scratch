@@ -1,39 +1,39 @@
-# CNNs and RNNs for Text
+# テキスト向けCNNとRNN
 
-> Convolutions learn n-grams. Recurrences remember. Both are superseded by attention. Both still matter on constrained hardware.
+> 畳み込みはn-gramを学習する。再帰は記憶する。どちらもAttentionに置き換えられた。どちらも制約の厳しいハードウェアでは今でも重要だ。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-TF-IDF and Word2Vec produced flat vectors that ignored word order. A classifier built on them could not tell `dog bites man` from `man bites dog`. Word order sometimes carries the signal.
+TF-IDFとWord2Vecは、語順を無視した平坦なベクトルを作った。それらの上に構築した分類器は、`dog bites man` と `man bites dog` を区別できない。語順が信号そのものを運ぶことがある。
 
-Two families of architectures filled that gap before transformers arrived.
+Transformerが登場する前、この穴を埋めたアーキテクチャは大きく2系統あった。
 
-**Convolutional nets for text (TextCNN).** Apply 1D convolutions over sequences of word embeddings. A filter of width 3 is a learnable trigram detector: it spans three words and outputs a score. Stack different widths (2, 3, 4, 5) to detect multi-scale patterns. Max-pool to a fixed-size representation. Flat, parallel, fast.
+**テキスト向け畳み込みネットワーク (TextCNN)。** 単語埋め込みの系列に1D畳み込みを適用する。幅3のフィルタは学習可能なtrigram検出器だ。3語にまたがってスコアを出す。幅を変えて (2, 3, 4, 5) 積み、複数スケールのパターンを検出する。max-poolで固定長表現にする。平坦、並列、高速。
 
-**Recurrent nets (RNN, LSTM, GRU).** Process tokens one at a time, maintaining a hidden state that carries information forward. Sequential, memory-bearing, flexible input lengths. Dominated sequence modeling from 2014 to 2017, then attention happened.
+**再帰ネットワーク (RNN, LSTM, GRU)。** トークンを1つずつ処理し、情報を前へ運ぶ隠れ状態を維持する。逐次的で、記憶を持ち、入力長に柔軟に対応する。2014年から2017年まで系列モデリングを支配し、その後Attentionが起きた。
 
-This lesson builds both, then names the failure that motivated attention.
+このレッスンでは両方を作り、Attentionを必要にした失敗を名指しする。
 
-## The Concept
+## コンセプト
 
-**TextCNN** (Kim, 2014). Tokens get embedded. A width-`k` 1D convolution slides a filter over consecutive `k`-grams of embeddings, producing a feature map. Global max-pooling over that map picks the strongest activation. Concatenate max-pooled outputs from several filter widths. Feed to a classifier head.
+**TextCNN** (Kim, 2014)。トークンを埋め込みに変換する。幅 `k` の1D畳み込みが、連続する `k`-gramの埋め込み上をフィルタでスライドし、特徴マップを作る。そのマップに対するglobal max-poolingが最も強い活性化を選ぶ。複数のフィルタ幅から得たmax-pool済み出力を連結する。最後に分類ヘッドへ渡す。
 
-Why it works. A filter is a learnable n-gram. Max-pooling is position-invariant, so "not good" fires the same feature at the start or middle of a review. Three filter widths with 100 filters each gives you 300 learned n-gram detectors. Training is parallel; no sequential dependency.
+なぜ動くのか。フィルタは学習可能なn-gramだ。max-poolingは位置不変なので、"not good" がレビューの冒頭にあっても中央にあっても同じ特徴を発火させる。フィルタ幅を3種類、各100フィルタにすれば、300個の学習済みn-gram検出器が得られる。訓練は並列で、逐次依存がない。
 
-**RNN.** At each time step `t`, the hidden state `h_t = f(W * x_t + U * h_{t-1} + b)`. Share `W`, `U`, `b` across time. The hidden state at time `T` is a summary of the entire prefix. For classification, pool across `h_1 ... h_T` (max, mean, or last).
+**RNN。** 各時刻 `t` で、隠れ状態は `h_t = f(W * x_t + U * h_{t-1} + b)` になる。`W`、`U`、`b` は時刻間で共有する。時刻 `T` の隠れ状態は、そこまでのprefix全体の要約である。分類では `h_1 ... h_T` に対してpooling (max、mean、last) する。
 
-Plain RNNs suffer vanishing gradients. The **LSTM** adds gates that decide what to forget, what to store, and what to output, stabilizing gradients through long sequences. The **GRU** simplifies LSTM to two gates; performs similarly with fewer parameters.
+素のRNNは勾配消失に苦しむ。**LSTM** は、何を忘れ、何を保存し、何を出力するかを決めるゲートを追加し、長い系列を通した勾配を安定させる。**GRU** はLSTMを2つのゲートへ簡略化したものだ。より少ないパラメータで似た性能を出す。
 
-**Bidirectional RNNs** run one RNN forward and another backward, concatenating hidden states. Every token's representation sees both left and right context. Essential for tagging tasks.
+**双方向RNN** は、一方のRNNを順方向に、もう一方を逆方向に走らせ、隠れ状態を連結する。各トークンの表現が左文脈と右文脈の両方を見る。タグ付けタスクでは不可欠だ。
 
-## Build It
+## 作ってみる
 
-### Step 1: TextCNN in PyTorch
+### Step 1: PyTorchでTextCNN
 
 ```python
 import torch
@@ -63,9 +63,9 @@ class TextCNN(nn.Module):
         return self.fc(self.dropout(h))
 ```
 
-The `transpose(1, 2)` reshapes `[batch, seq_len, embed_dim]` to `[batch, embed_dim, seq_len]` because `nn.Conv1d` treats the middle axis as channels. The pooled output is fixed-size regardless of input length.
+`nn.Conv1d` は中央の軸をチャネルとして扱うため、`transpose(1, 2)` は `[batch, seq_len, embed_dim]` を `[batch, embed_dim, seq_len]` に変形する。pooling後の出力は、入力長に関係なく固定長になる。
 
-### Step 2: LSTM classifier
+### Step 2: LSTM分類器
 
 ```python
 class LSTMClassifier(nn.Module):
@@ -84,11 +84,11 @@ class LSTMClassifier(nn.Module):
         return self.fc(self.dropout(pooled))
 ```
 
-Max-pool over the sequence, not last-state pool. For classification, max-pooling usually beats taking the last hidden state because information at the end of a long sequence tends to dominate the last state.
+最後の状態ではなく、系列全体にmax-poolをかける。分類では、max-poolingはたいてい最後の隠れ状態だけを使うより良い。長い系列では末尾の情報が最後の状態を支配しやすいからだ。
 
-### Step 3: the vanishing gradient demo (intuition)
+### Step 3: 勾配消失デモ (直感)
 
-A plain RNN without gating cannot learn long-range dependencies. Consider a toy task: predict whether token `A` appeared anywhere in a sequence. If `A` is at position 1 and the sequence is 100 tokens long, the gradient from the loss has to flow back through 99 multiplications of the recurrent weight. If the weight is less than 1, the gradient vanishes. If more than 1, it explodes.
+ゲートを持たない素のRNNは、長距離依存を学習できない。おもちゃのタスクを考える。系列内のどこかにトークン `A` が現れたかを予測する。`A` が位置1にあり、系列長が100なら、損失からの勾配は再帰重みの99回の乗算をさかのぼる必要がある。重みが1未満なら勾配は消える。1を超えるなら爆発する。
 
 ```python
 def vanishing_gradient_sim(seq_len, recurrent_weight=0.9):
@@ -101,23 +101,23 @@ def vanishing_gradient_sim(seq_len, recurrent_weight=0.9):
 # The gradient from step 100 to step 1 is effectively zero.
 ```
 
-LSTMs fix this with a **cell state** that runs through the network with only additive interactions (the forget gate scales it multiplicatively, but gradients still flow along the "highway"). GRUs do something similar with fewer parameters. Both give you stable training through 100+ step sequences.
+LSTMは、加算的な相互作用だけでネットワークを通る**cell state**によってこれを修正する。forget gateはそれを乗算的にスケールするが、それでも勾配は「高速道路」に沿って流れる。GRUは、より少ないパラメータで似たことをする。どちらも100ステップを超える系列で安定した訓練を可能にする。
 
-### Step 4: why this still was not enough
+### Step 4: それでも十分ではなかった理由
 
-Three problems persisted even with LSTMs.
+LSTMを使っても3つの問題が残った。
 
-1. **Sequential bottleneck.** Training an RNN on a sequence of length 1000 requires 1000 serial forward/backward steps. Cannot parallelize across time.
-2. **Fixed-size context vector in encoder-decoder setups.** The decoder sees only the final hidden state of the encoder, compressed over the entire input. Long inputs lose detail. Lesson 09 covers this directly.
-3. **Distant-dependency accuracy ceiling.** LSTMs outperform plain RNNs but still struggle to propagate specific information across 200+ steps.
+1. **逐次ボトルネック。** 長さ1000の系列でRNNを訓練するには、1000回の直列forward/backwardステップが必要になる。時間方向に並列化できない。
+2. **encoder-decoder構成での固定長文脈ベクトル。** decoderは、入力全体を圧縮したencoderの最後の隠れ状態だけを見る。長い入力では詳細が失われる。レッスン09で直接扱う。
+3. **遠距離依存における精度の上限。** LSTMは素のRNNを上回るが、それでも200ステップ以上にわたって特定の情報を伝播させるのは苦手だ。
 
-Attention solved all three. Transformers dropped recurrence entirely. Lesson 10 is the pivot.
+Attentionはこの3つをすべて解いた。Transformerは再帰を完全に捨てた。レッスン10が転換点になる。
 
-## Use It
+## 使ってみる
 
-PyTorch's `nn.LSTM`, `nn.GRU`, and `nn.Conv1d` are production-ready. Training code is standard.
+PyTorchの `nn.LSTM`、`nn.GRU`、`nn.Conv1d` は本番投入できる品質だ。訓練コードは標準的でよい。
 
-Hugging Face ships pretrained embeddings you plug in as the input layer:
+Hugging Faceは、入力層として差し込める事前学習済み埋め込みを提供している。
 
 ```python
 from transformers import AutoModel
@@ -142,56 +142,56 @@ class BertCNN(nn.Module):
         return self.fc(torch.cat(pooled, dim=1))
 ```
 
-Use-when-it-fits-the-constraint checklist.
+制約に合うときに使うためのチェックリスト。
 
-- **Edge / on-device inference.** TextCNN with GloVe embeddings is 10-100x smaller than a transformer. If your deploy target is a phone, this is the stack.
-- **Streaming / online classification.** RNN processes one token at a time; transformers need the full sequence. For real-time incoming text, LSTMs still win.
-- **Tiny models for baselines.** Fast iteration on a new task. Train a TextCNN in 5 minutes on a CPU.
-- **Sequence labeling with limited data.** BiLSTM-CRF (lesson 06) is still a production-grade NER architecture for 1k-10k labeled sentences.
+- **エッジ / オンデバイス推論。** GloVe埋め込みを使うTextCNNはTransformerより10〜100倍小さい。配布先がスマートフォンなら、この構成が候補になる。
+- **ストリーミング / オンライン分類。** RNNはトークンを1つずつ処理する。Transformerは系列全体を必要とする。リアルタイムに流入するテキストでは、LSTMがまだ勝つ。
+- **ベースライン用の小型モデル。** 新しいタスクで高速に反復できる。CPU上でもTextCNNを5分で訓練できる。
+- **少量データでの系列ラベリング。** BiLSTM-CRF (レッスン06) は、1k〜10k件のラベル付き文に対して今でも本番級のNERアーキテクチャだ。
 
-Everything else goes to a transformer.
+それ以外はTransformerへ行く。
 
-## Ship It
+## 提出物
 
-Save as `outputs/prompt-text-encoder-picker.md`:
+`outputs/prompt-text-encoder-picker.md` として保存する。
 
 ```markdown
 ---
 name: text-encoder-picker
-description: Pick a text encoder architecture for a given constraint set.
+description: 与えられた制約セットに合わせてテキストエンコーダのアーキテクチャを選ぶ。
 phase: 5
 lesson: 08
 ---
 
-Given constraints (task, data volume, latency budget, deploy target, compute budget), output:
+制約 (タスク、データ量、レイテンシ予算、配布先、計算予算) が与えられたら、次を出力する。
 
-1. Encoder architecture: TextCNN, BiLSTM, BiLSTM-CRF, transformer fine-tune, or "use a pretrained transformer as a frozen encoder + small head".
-2. Embedding input: random init, GloVe / fastText frozen, or contextualized transformer embeddings.
-3. Training recipe in 5 lines: optimizer, learning rate, batch size, epochs, regularization.
-4. One monitoring signal. For RNN/CNN models: attention mechanism absence means they miss long-range deps; check per-length accuracy. For transformers: fine-tuning collapse if LR too high; check train loss.
+1. エンコーダアーキテクチャ: TextCNN、BiLSTM、BiLSTM-CRF、Transformer fine-tune、または「事前学習済みTransformerを凍結エンコーダとして使い、小さなヘッドを載せる」。
+2. 埋め込み入力: ランダム初期化、凍結したGloVe / fastText、または文脈化Transformer埋め込み。
+3. 5行の訓練レシピ: optimizer、learning rate、batch size、epochs、regularization。
+4. 監視シグナルを1つ。RNN/CNNモデルでは、Attention機構がないため長距離依存を落とすことがある。系列長ごとの精度を確認する。Transformerでは、learning rateが高すぎる場合のfine-tuning collapseに注意し、train lossを確認する。
 
-Refuse to recommend fine-tuning a transformer when data is under ~500 labeled examples without showing that a TextCNN / BiLSTM baseline has plateaued. Flag edge deployment as needing architecture-before-everything.
+ラベル付き例が約500件未満のとき、TextCNN / BiLSTMベースラインが頭打ちになったことを示さずにTransformerのfine-tuningを推奨してはいけない。エッジ配布では、何より先にアーキテクチャ判断が必要だと指摘する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Train a TextCNN on a 3-class toy dataset (you invent the data). Verify that filter widths (2, 3, 4) outperform a single width (3) on average F1.
-2. **Medium.** Implement max-pool, mean-pool, and last-state pooling for the LSTM classifier. Compare on a small dataset; document which pooling wins and hypothesize why.
-3. **Hard.** Build a BiLSTM-CRF NER tagger (combine lesson 06 and this one). Train on CoNLL-2003. Compare to the CRF-alone baseline from lesson 06 and to a BERT fine-tune. Report training time, memory, and F1.
+1. **易しい。** 3クラスのおもちゃデータセット (自分でデータを作る) でTextCNNを訓練する。フィルタ幅 (2, 3, 4) が、単一幅 (3) より平均F1で優れることを確認する。
+2. **普通。** LSTM分類器にmax-pool、mean-pool、last-state poolingを実装する。小さなデータセットで比較し、どのpoolingが勝ったかを記録し、その理由を仮説として書く。
+3. **難しい。** BiLSTM-CRF NERタガーを作る (レッスン06とこのレッスンを組み合わせる)。CoNLL-2003で訓練する。レッスン06のCRF単体ベースライン、およびBERT fine-tuneと比較する。訓練時間、メモリ、F1を報告する。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|-----------------|-----------------------|
-| TextCNN | CNN for text | Stack of 1D convolutions over word embeddings with global max-pool. Kim (2014). |
-| RNN | Recurrent net | Hidden state updated at each time step: `h_t = f(W x_t + U h_{t-1})`. |
-| LSTM | Gated RNN | Adds input / forget / output gates + a cell state. Trains stably through long sequences. |
-| GRU | Simpler LSTM | Two gates instead of three. Similar accuracy, fewer parameters. |
-| Bidirectional | Both directions | Forward + backward RNN concatenated. Every token sees both sides of its context. |
-| Vanishing gradient | Training signal dies | Repeated multiplication by <1 weights in plain RNNs makes early-step gradients effectively zero. |
+| TextCNN | テキスト向けCNN | 単語埋め込み上の1D畳み込みを重ね、global max-poolする構成。Kim (2014)。 |
+| RNN | 再帰ネット | 各時刻で更新される隠れ状態: `h_t = f(W x_t + U h_{t-1})`。 |
+| LSTM | ゲート付きRNN | input / forget / output gateとcell stateを追加する。長い系列でも安定して訓練できる。 |
+| GRU | より単純なLSTM | 3つではなく2つのゲートを使う。似た精度で、パラメータが少ない。 |
+| Bidirectional | 両方向 | 順方向RNNと逆方向RNNを連結する。各トークンが文脈の両側を見る。 |
+| Vanishing gradient | 訓練信号が消える | 素のRNNで1未満の重みによる反復乗算が起こると、初期ステップへの勾配が実質ゼロになる。 |
 
-## Further Reading
+## さらに読む
 
-- [Kim, Y. (2014). Convolutional Neural Networks for Sentence Classification](https://arxiv.org/abs/1408.5882) — the TextCNN paper. Eight pages. Readable.
-- [Hochreiter, S. and Schmidhuber, J. (1997). Long Short-Term Memory](https://www.bioinf.jku.at/publications/older/2604.pdf) — the LSTM paper. Unexpectedly lucid.
-- [Olah, C. (2015). Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/) — the diagrams that made LSTMs accessible to everyone.
+- [Kim, Y. (2014). Convolutional Neural Networks for Sentence Classification](https://arxiv.org/abs/1408.5882) — TextCNNの論文。8ページで読みやすい。
+- [Hochreiter, S. and Schmidhuber, J. (1997). Long Short-Term Memory](https://www.bioinf.jku.at/publications/older/2604.pdf) — LSTMの論文。意外なほど明快。
+- [Olah, C. (2015). Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/) — LSTMを誰にでも分かりやすくした図解。

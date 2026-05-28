@@ -1,77 +1,77 @@
-# Decision Trees and Random Forests
+# 決定木とランダムフォレスト
 
-> A decision tree is just a flowchart. But a forest of them is one of the most powerful tools in ML.
+> 決定木は、突き詰めればフローチャートです。けれど、その木を集めた森は、機械学習で最も強力な道具の1つになります。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
-**Time:** ~90 minutes
+**タイプ:** Build
+**言語:** Python
+**前提条件:** フェーズ1（レッスン09 情報理論、06 確率）
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Implement Gini impurity, entropy, and information gain calculations to find optimal decision tree splits
-- Build a decision tree classifier from scratch with pre-pruning controls (max depth, min samples)
-- Construct a random forest using bootstrap sampling and feature randomization, and explain why it reduces variance
-- Compare MDI feature importance with permutation importance and identify when MDI is biased
+- 最適な決定木分割を見つけるために、Gini不純度、エントロピー、情報利得の計算を実装する
+- 事前枝刈り制御（最大深さ、最小サンプル数）を備えた決定木分類器をゼロから構築する
+- ブートストラップサンプリングと特徴量のランダム化を使ってランダムフォレストを構築し、それが分散を下げる理由を説明する
+- MDI特徴量重要度とPermutation importanceを比較し、MDIにバイアスがかかる場面を見分ける
 
-## The Problem
+## 問題
 
-You have tabular data. Rows are samples, columns are features, and there is a target column you want to predict. You could throw a neural network at it. But for tabular data, tree-based models (decision trees, random forests, gradient boosted trees) consistently outperform deep learning. Kaggle competitions on structured data are dominated by XGBoost and LightGBM, not transformers.
+手元に表形式データがあります。行はサンプル、列は特徴量で、予測したいターゲット列があります。ここにニューラルネットワークを投入することもできます。けれど表形式データでは、木ベースのモデル（決定木、ランダムフォレスト、勾配ブースティング木）が深層学習を一貫して上回ります。構造化データのKaggleコンペを支配しているのはTransformerではなく、XGBoostやLightGBMです。
 
-Why? Trees handle mixed feature types (numeric and categorical) without preprocessing. They handle nonlinear relationships without feature engineering. They are interpretable: you can look at the tree and see exactly why a prediction was made. And random forests, which average many trees, are highly resistant to overfitting on moderate-sized datasets.
+なぜでしょうか。木は前処理なしで、数値特徴量とカテゴリ特徴量が混在したデータを扱えます。特徴量エンジニアリングなしで非線形関係も扱えます。さらに解釈しやすく、木を見ればなぜその予測になったのかを正確に追えます。そして多数の木を平均するランダムフォレストは、中規模データセットで過学習に強い性質を持ちます。
 
-This lesson builds decision trees from scratch using recursive splitting, then builds a random forest on top. You will implement the math behind split criteria (Gini impurity, entropy, information gain) and understand why an ensemble of weak learners becomes a strong one.
+このレッスンでは、再帰的な分割を使って決定木をゼロから構築し、その上にランダムフォレストを構築します。分割基準（Gini不純度、エントロピー、情報利得）の背後にある数学を実装し、弱い学習器のアンサンブルがなぜ強い学習器になるのかを理解します。
 
-## The Concept
+## 概念
 
-### What a decision tree does
+### 決定木がしていること
 
-A decision tree partitions the feature space into rectangular regions by asking a sequence of yes/no questions.
+決定木は、はい/いいえで答えられる一連の質問によって、特徴量空間を長方形の領域に分割します。
 
 ```mermaid
 graph TD
-    A["Age < 30?"] -->|Yes| B["Income > 50k?"]
-    A -->|No| C["Credit Score > 700?"]
-    B -->|Yes| D["Approve"]
-    B -->|No| E["Deny"]
-    C -->|Yes| F["Approve"]
-    C -->|No| G["Deny"]
+    A["年齢 < 30?"] -->|はい| B["収入 > 50k?"]
+    A -->|いいえ| C["クレジットスコア > 700?"]
+    B -->|はい| D["承認"]
+    B -->|いいえ| E["拒否"]
+    C -->|はい| F["承認"]
+    C -->|いいえ| G["拒否"]
 ```
 
-Each internal node tests a feature against a threshold. Each leaf node makes a prediction. To classify a new data point, you start at the root and follow the branches until you reach a leaf.
+各内部ノードは、特徴量をしきい値と比較します。各葉ノードは予測を行います。新しいデータ点を分類するには、根から始めて、葉に到達するまで分岐をたどります。
 
-The tree is built top-down by choosing, at each node, the feature and threshold that best separate the data. "Best" is defined by a split criterion.
+木はトップダウンに構築されます。各ノードで、データを最もよく分ける特徴量としきい値を選びます。この「最もよい」は分割基準によって定義されます。
 
-### Split criteria: measuring impurity
+### 分割基準: 不純度を測る
 
-At each node, we have a set of samples. We want to split them so that the resulting child nodes are as "pure" as possible, meaning each child contains mostly one class.
+各ノードにはサンプル集合があります。分割後の子ノードができるだけ「純粋」になるように分けたい、つまり各子ノードにほぼ1つのクラスだけが含まれる状態を目指します。
 
-**Gini impurity** measures the probability that a randomly chosen sample would be misclassified if it were labeled according to the class distribution at that node.
+**Gini不純度**は、そのノードのクラス分布に従ってランダムにラベルを付けた場合に、ランダムに選んだサンプルを誤分類する確率を測ります。
 
 ```
 Gini(S) = 1 - sum(p_k^2)
 
-where p_k is the proportion of class k in set S.
+ここで p_k は、集合 S におけるクラス k の割合です。
 ```
 
-For a pure node (all one class), Gini = 0. For a binary split with 50/50 classes, Gini = 0.5. Lower is better.
+純粋なノード（すべて同じクラス）では Gini = 0 です。2クラスが50/50の分割では Gini = 0.5 です。低いほどよい値です。
 
 ```
-Example: 6 cats, 4 dogs
+例: 猫6匹、犬4匹
 
 Gini = 1 - (0.6^2 + 0.4^2) = 1 - (0.36 + 0.16) = 0.48
 ```
 
-**Entropy** measures the information content (disorder) in a node. Covered in Phase 1 Lesson 09.
+**エントロピー**は、ノード内の情報量（乱雑さ）を測ります。フェーズ1 レッスン09で扱いました。
 
 ```
 Entropy(S) = -sum(p_k * log2(p_k))
 ```
 
-For a pure node, entropy = 0. For a 50/50 binary split, entropy = 1.0. Lower is better.
+純粋なノードでは entropy = 0 です。2クラスが50/50の分割では entropy = 1.0 です。低いほどよい値です。
 
 ```
-Example: 6 cats, 4 dogs
+例: 猫6匹、犬4匹
 
 Entropy = -(0.6 * log2(0.6) + 0.4 * log2(0.4))
         = -(0.6 * -0.737 + 0.4 * -1.322)
@@ -79,121 +79,121 @@ Entropy = -(0.6 * log2(0.6) + 0.4 * log2(0.4))
         = 0.971 bits
 ```
 
-**Information gain** is the reduction in impurity (entropy or Gini) after a split.
+**情報利得**は、分割によって不純度（エントロピーまたはGini）がどれだけ減ったかを表します。
 
 ```
 IG(S, feature, threshold) = Impurity(S) - weighted_avg(Impurity(S_left), Impurity(S_right))
 
-where the weights are the proportions of samples in each child.
+ここで重みは、それぞれの子ノードに含まれるサンプル割合です。
 ```
 
-The greedy algorithm at each node: try every feature and every possible threshold. Pick the (feature, threshold) pair that maximizes information gain.
+各ノードでの貪欲アルゴリズムは、すべての特徴量と可能なしきい値を試し、情報利得を最大にする (feature, threshold) の組を選ぶ、というものです。
 
-### How splitting works
+### 分割のしくみ
 
-For a dataset with n features and m samples at the current node:
+現在のノードに n 個の特徴量と m 個のサンプルがあるデータセットについて考えます。
 
-1. For each feature j (j = 1 to n):
-   - Sort the samples by feature j
-   - Try every midpoint between consecutive distinct values as a threshold
-   - Compute the information gain for each threshold
-2. Select the feature and threshold with the highest information gain
-3. Split the data into left (feature <= threshold) and right (feature > threshold)
-4. Recurse on each child
+1. 各特徴量 j（j = 1 から n）について:
+   - サンプルを特徴量 j でソートする
+   - 連続する異なる値の中点をすべてしきい値として試す
+   - 各しきい値の情報利得を計算する
+2. 情報利得が最も高い特徴量としきい値を選ぶ
+3. データを左（feature <= threshold）と右（feature > threshold）に分割する
+4. それぞれの子に対して再帰する
 
-This greedy approach does not guarantee the globally optimal tree. Finding the optimal tree is NP-hard. But greedy splitting works well in practice.
+この貪欲な方法は、大域的に最適な木を保証しません。最適な木を見つける問題はNP-hardです。それでも実務では、貪欲な分割は十分うまく機能します。
 
-### Stopping conditions
+### 停止条件
 
-Without stopping conditions, the tree grows until every leaf is pure (one sample per leaf). This perfectly memorizes the training data and generalizes terribly.
+停止条件がないと、木はすべての葉が純粋になるまで（各葉に1サンプルになるまで）成長します。これは訓練データを完全に丸暗記し、汎化性能は非常に悪くなります。
 
-**Pre-pruning** stops the tree before it fully grows:
-- Maximum depth: stop splitting when the tree reaches a set depth
-- Minimum samples per leaf: stop if a node has fewer than k samples
-- Minimum information gain: stop if the best split improves impurity by less than a threshold
-- Maximum leaf nodes: limit the total number of leaves
+**事前枝刈り**は、木が完全に成長する前に止めます。
+- 最大深さ: 木が設定した深さに到達したら分割を止める
+- 葉あたりの最小サンプル数: ノードのサンプル数が k 未満なら止める
+- 最小情報利得: 最良の分割による不純度改善がしきい値未満なら止める
+- 最大葉ノード数: 葉の総数を制限する
 
-**Post-pruning** grows the full tree, then trims it back:
-- Cost-complexity pruning (used by scikit-learn): adds a penalty proportional to the number of leaves. Increase the penalty to get smaller trees
-- Reduced error pruning: remove a subtree if the validation error does not increase
+**事後枝刈り**は、完全な木を成長させたあとで切り戻します。
+- コスト複雑度枝刈り（scikit-learnで使われる）: 葉の数に比例するペナルティを加える。ペナルティを大きくすると木は小さくなる
+- Reduced error pruning: 検証誤差が増えないなら部分木を削除する
 
-Pre-pruning is simpler and faster. Post-pruning often produces better trees because it does not prematurely stop splits that might lead to useful further splits.
+事前枝刈りは単純で高速です。事後枝刈りは、さらに有用な分割につながる可能性がある分割を早すぎる段階で止めないため、よりよい木を作ることがよくあります。
 
-### Decision trees for regression
+### 回帰のための決定木
 
-For regression, the leaf prediction is the mean of the target values in that leaf. The split criterion changes too:
+回帰では、葉の予測値はその葉に含まれるターゲット値の平均です。分割基準も変わります。
 
-**Variance reduction** replaces information gain:
+**分散減少**が情報利得の代わりになります。
 
 ```
 VR(S, feature, threshold) = Var(S) - weighted_avg(Var(S_left), Var(S_right))
 ```
 
-Pick the split that reduces variance the most. The tree partitions the input space into regions, and predicts a constant (the mean) in each region.
+分散を最も大きく下げる分割を選びます。木は入力空間を領域に分割し、各領域で定数（平均）を予測します。
 
-### Random forests: the power of ensembles
+### ランダムフォレスト: アンサンブルの力
 
-A single decision tree is high variance. Small changes in the data can produce completely different trees. Random forests fix this by averaging many trees.
+単独の決定木は分散が大きいモデルです。データが少し変わるだけで、まったく異なる木が作られることがあります。ランダムフォレストは、多数の木を平均することでこれを改善します。
 
 ```mermaid
 graph TD
-    D["Training Data"] --> B1["Bootstrap Sample 1"]
-    D --> B2["Bootstrap Sample 2"]
-    D --> B3["Bootstrap Sample 3"]
-    D --> BN["Bootstrap Sample N"]
-    B1 --> T1["Tree 1<br>(random feature subset)"]
-    B2 --> T2["Tree 2<br>(random feature subset)"]
-    B3 --> T3["Tree 3<br>(random feature subset)"]
-    BN --> TN["Tree N<br>(random feature subset)"]
-    T1 --> V["Aggregate Predictions<br>(majority vote or average)"]
+    D["訓練データ"] --> B1["ブートストラップサンプル1"]
+    D --> B2["ブートストラップサンプル2"]
+    D --> B3["ブートストラップサンプル3"]
+    D --> BN["ブートストラップサンプルN"]
+    B1 --> T1["木1<br>（ランダムな特徴量部分集合）"]
+    B2 --> T2["木2<br>（ランダムな特徴量部分集合）"]
+    B3 --> T3["木3<br>（ランダムな特徴量部分集合）"]
+    BN --> TN["木N<br>（ランダムな特徴量部分集合）"]
+    T1 --> V["予測を集約<br>（多数決または平均）"]
     T2 --> V
     T3 --> V
     TN --> V
 ```
 
-Two sources of randomness make the trees diverse:
+2つのランダム性が、木に多様性を与えます。
 
-**Bagging (bootstrap aggregating):** Each tree is trained on a bootstrap sample, a random sample with replacement from the training data. About 63% of the original samples appear in each bootstrap (the rest are out-of-bag samples that can be used for validation).
+**Bagging（bootstrap aggregating）:** 各木は、訓練データから復元抽出したランダムサンプルであるブートストラップサンプルで学習されます。各ブートストラップには元のサンプルのおよそ63%が現れます（残りはout-of-bagサンプルで、検証に使えます）。
 
-**Feature randomization:** At each split, only a random subset of features is considered. For classification, the default is sqrt(n_features). For regression, n_features/3. This prevents all trees from splitting on the same dominant feature.
+**特徴量のランダム化:** 各分割では、特徴量のランダムな部分集合だけを候補にします。分類では既定値は sqrt(n_features)、回帰では n_features/3 です。これにより、すべての木が同じ支配的な特徴量で分割してしまうことを防ぎます。
 
-The key insight: averaging many decorrelated trees reduces variance without increasing bias. Each individual tree may be mediocre. The ensemble is strong.
+重要な洞察は、相関の低い多数の木を平均すると、バイアスを増やさずに分散を下げられることです。個々の木は平凡かもしれません。それでもアンサンブルは強力です。
 
-### Feature importance
+### 特徴量重要度
 
-Random forests naturally provide feature importance scores. The most common method:
+ランダムフォレストは、自然に特徴量重要度スコアを提供します。最も一般的な方法は次のものです。
 
-**Mean Decrease in Impurity (MDI):** For each feature, sum the total reduction in impurity across all trees and all nodes where that feature is used. Features that produce bigger impurity reductions at earlier splits are more important.
+**Mean Decrease in Impurity（MDI）:** 各特徴量について、その特徴量が使われたすべての木・すべてのノードでの不純度減少を合計します。早い分割で大きな不純度減少を生む特徴量ほど重要です。
 
 ```
-importance(feature_j) = sum over all nodes where feature_j is used:
+importance(feature_j) = feature_j が使われたすべてのノードについて合計:
     (n_samples_at_node / n_total_samples) * impurity_decrease
 ```
 
-This is fast (computed during training) but biased toward high-cardinality features and features with many possible split points.
+これは高速です（学習中に計算されます）が、カーディナリティが高い特徴量や、可能な分割点が多い特徴量に偏ります。
 
-**Permutation importance** is the alternative: shuffle one feature's values and measure how much the model's accuracy drops. More reliable but slower.
+代替手法が**Permutation importance**です。1つの特徴量の値をシャッフルし、モデルの精度がどれだけ下がるかを測ります。より信頼できますが、遅くなります。
 
-### When trees beat neural networks
+### 木がニューラルネットワークに勝つ場面
 
-Trees and forests dominate neural networks on tabular data. Several reasons:
+表形式データでは、決定木やフォレストはニューラルネットワークを上回ります。理由はいくつかあります。
 
-| Factor | Trees | Neural networks |
+| 要因 | 木 | ニューラルネットワーク |
 |--------|-------|----------------|
-| Mixed types (numeric + categorical) | Native support | Need encoding |
-| Small datasets (< 10k rows) | Work well | Overfit |
-| Feature interactions | Found by splitting | Need architecture design |
-| Interpretability | Full transparency | Black box |
-| Training time | Minutes | Hours |
-| Hyperparameter sensitivity | Low | High |
+| 混在型（数値 + カテゴリ） | ネイティブ対応 | エンコーディングが必要 |
+| 小規模データセット（1万行未満） | よく機能する | 過学習しやすい |
+| 特徴量の相互作用 | 分割で見つける | アーキテクチャ設計が必要 |
+| 解釈性 | 完全に透明 | ブラックボックス |
+| 学習時間 | 数分 | 数時間 |
+| ハイパーパラメータ感度 | 低い | 高い |
 
-Neural networks win when the data has spatial or sequential structure (images, text, audio). For flat tables of features, trees are the default.
+ニューラルネットワークが勝つのは、データに空間構造や系列構造がある場合（画像、テキスト、音声）です。平坦な特徴量テーブルでは、木が既定の選択肢です。
 
-## Build It
+## 作ってみる
 
-### Step 1: Gini impurity and entropy
+### ステップ1: Gini不純度とエントロピー
 
-Build both split criteria from scratch and verify they agree on which splits are good.
+2つの分割基準をゼロから作り、どの分割がよいかについて両者がおおむね一致することを確認します。
 
 ```python
 import math
@@ -219,9 +219,9 @@ def entropy(labels):
     )
 ```
 
-### Step 2: Find the best split
+### ステップ2: 最良の分割を見つける
 
-Try every feature and every threshold. Return the one with the highest information gain.
+すべての特徴量とすべてのしきい値を試します。情報利得が最も高いものを返します。
 
 ```python
 def information_gain(parent_labels, left_labels, right_labels, criterion="gini"):
@@ -239,9 +239,9 @@ def information_gain(parent_labels, left_labels, right_labels, criterion="gini")
     return parent_impurity - child_impurity
 ```
 
-### Step 3: Build the DecisionTree class
+### ステップ3: DecisionTreeクラスを作る
 
-Recursive splitting, prediction, and feature importance tracking.
+再帰的な分割、予測、特徴量重要度の追跡を実装します。
 
 ```python
 class DecisionTree:
@@ -271,9 +271,9 @@ class DecisionTree:
         return [self._predict_one(x, self.tree) for x in X]
 ```
 
-### Step 4: Build the RandomForest class
+### ステップ4: RandomForestクラスを作る
 
-Bootstrap sampling, feature randomization, and majority voting.
+ブートストラップサンプリング、特徴量のランダム化、多数決を実装します。
 
 ```python
 class RandomForest:
@@ -314,11 +314,11 @@ class RandomForest:
         return predictions
 ```
 
-See `code/trees.py` for the complete implementation with all helper methods.
+すべてのヘルパーメソッドを含む完全な実装は `code/trees.py` を参照してください。
 
-## Use It
+## 使ってみる
 
-With scikit-learn, training a random forest is three lines:
+scikit-learnを使うと、ランダムフォレストの学習は数行で済みます。
 
 ```python
 from sklearn.ensemble import RandomForestClassifier
@@ -334,44 +334,44 @@ print(f"Accuracy: {rf.score(X_test, y_test):.4f}")
 print(f"Feature importances: {rf.feature_importances_}")
 ```
 
-In practice, gradient boosted trees (XGBoost, LightGBM, CatBoost) are often stronger than random forests because they build trees sequentially, with each tree correcting the errors of the previous ones. But random forests are harder to misconfigure and require almost no hyperparameter tuning.
+実務では、勾配ブースティング木（XGBoost、LightGBM、CatBoost）がランダムフォレストより強いことがよくあります。木を逐次的に構築し、それぞれの木が前の木の誤りを修正するからです。ただし、ランダムフォレストは設定を誤りにくく、ハイパーパラメータ調整もほとんど必要ありません。
 
-## Ship It
+## 仕上げる
 
-This lesson produces `outputs/prompt-tree-interpreter.md` -- a prompt that interprets decision tree splits for business stakeholders. Feed it a trained tree's structure (depth, features, split thresholds, accuracy) and it translates the model into plain-language rules, ranks feature importance, flags overfitting or leakage, and recommends next steps. Use it any time you need to explain a tree-based model to someone who does not read code.
+このレッスンでは `outputs/prompt-tree-interpreter.md` を作ります。これは、ビジネス関係者向けに決定木の分割を解釈するプロンプトです。学習済み木の構造（深さ、特徴量、分割しきい値、精度）を渡すと、モデルを平易なルールに翻訳し、特徴量重要度を順位付けし、過学習やリークを指摘し、次の手順を提案します。コードを読まない相手に木ベースのモデルを説明する必要があるときに使ってください。
 
-## Exercises
+## 演習
 
-1. Train a single decision tree on a 2D dataset with 3 classes. Manually trace the splits and draw the rectangular decision boundaries. Compare the boundaries at max_depth=2 vs max_depth=10.
+1. 3クラスの2Dデータセットで単独の決定木を学習します。分割を手で追跡し、長方形の決定境界を描いてください。max_depth=2 と max_depth=10 の境界を比較します。
 
-2. Implement variance reduction splitting for regression trees. Generate y = sin(x) + noise for 200 points and fit your regression tree. Plot the tree's piecewise-constant predictions against the true curve.
+2. 回帰木のための分散減少分割を実装します。200点について y = sin(x) + noise を生成し、自分の回帰木をフィットさせてください。木の区分定数の予測を真の曲線と重ねてプロットします。
 
-3. Build a random forest with 1, 5, 10, 50, and 200 trees. Plot training accuracy and test accuracy vs number of trees. Observe that test accuracy plateaus but does not decrease (forests resist overfitting).
+3. 木の数が1、5、10、50、200のランダムフォレストを構築します。木の数に対する訓練精度とテスト精度をプロットしてください。テスト精度は頭打ちになりますが低下しないこと（フォレストは過学習に強いこと）を観察します。
 
-4. Compare Gini impurity vs entropy as split criteria on 5 different datasets. Measure accuracy and tree depth. In most cases, they produce nearly identical results. Explain why.
+4. 5つの異なるデータセットで、分割基準としてGini不純度とエントロピーを比較します。精度と木の深さを測定してください。ほとんどの場合、結果はほぼ同じになります。その理由を説明します。
 
-5. Implement permutation importance. Compare it with MDI importance on a dataset where one feature is random noise but has high cardinality. MDI will rank the noise feature highly. Permutation importance will not.
+5. Permutation importanceを実装します。1つの特徴量がランダムノイズだが高カーディナリティであるデータセットで、MDI重要度と比較してください。MDIはそのノイズ特徴量を高く順位付けしますが、Permutation importanceはそうしません。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Decision tree | "A flowchart for predictions" | A model that partitions feature space into rectangular regions by learning a sequence of if/else splits |
-| Gini impurity | "How mixed the node is" | Probability of misclassifying a random sample at a node. 0 = pure, 0.5 = maximum impurity for binary |
-| Entropy | "The disorder in a node" | Information content at a node. 0 = pure, 1.0 = maximum uncertainty for binary. From information theory |
-| Information gain | "How good a split is" | Reduction in impurity after a split. The greedy criterion for choosing splits |
-| Pre-pruning | "Stop the tree early" | Stopping tree growth early by setting max depth, min samples, or min gain thresholds |
-| Post-pruning | "Trim the tree after" | Growing the full tree, then removing subtrees that do not improve validation performance |
-| Bagging | "Train on random subsets" | Bootstrap aggregating. Train each model on a different random sample with replacement |
-| Random forest | "A bunch of trees" | Ensemble of decision trees, each trained on a bootstrap sample with random feature subsets at each split |
-| Feature importance (MDI) | "Which features matter" | Total impurity decrease contributed by each feature, summed across all trees and nodes |
-| Permutation importance | "Shuffle and check" | Accuracy drop when a feature's values are randomly shuffled. More reliable than MDI for noisy features |
-| Variance reduction | "The regression version of info gain" | The regression tree analogue of information gain. Picks the split that reduces target variance the most |
-| Bootstrap sample | "Random sample with repeats" | A random sample drawn with replacement from the original dataset. Same size, but with duplicates |
+| 決定木 | 「予測のためのフローチャート」 | if/else分割の列を学習して、特徴量空間を長方形の領域に分割するモデル |
+| Gini不純度 | 「ノードがどれくらい混ざっているか」 | ノードでランダムなサンプルを誤分類する確率。0 = 純粋、0.5 = 2クラスでの最大不純度 |
+| エントロピー | 「ノード内の乱雑さ」 | ノードの情報量。0 = 純粋、1.0 = 2クラスでの最大不確実性。情報理論に由来 |
+| 情報利得 | 「分割がどれくらいよいか」 | 分割後の不純度の減少量。分割を選ぶための貪欲基準 |
+| 事前枝刈り | 「木を早めに止める」 | 最大深さ、最小サンプル数、最小利得しきい値を設定して、木の成長を早めに止めること |
+| 事後枝刈り | 「あとから木を切る」 | 完全な木を成長させたあと、検証性能を改善しない部分木を取り除くこと |
+| Bagging | 「ランダムな部分集合で学習する」 | Bootstrap aggregating。各モデルを、復元抽出された異なるランダムサンプルで学習する |
+| ランダムフォレスト | 「木の集まり」 | 各木をブートストラップサンプルで学習し、各分割でランダムな特徴量部分集合を使う決定木のアンサンブル |
+| 特徴量重要度（MDI） | 「どの特徴量が効いているか」 | 各特徴量が寄与した不純度減少の総量を、すべての木とノードで合計したもの |
+| Permutation importance | 「シャッフルして確認する」 | 特徴量の値をランダムにシャッフルしたときの精度低下。ノイズ特徴量に対してはMDIより信頼しやすい |
+| 分散減少 | 「情報利得の回帰版」 | 情報利得に対応する回帰木の基準。ターゲット分散を最も下げる分割を選ぶ |
+| ブートストラップサンプル | 「重複ありのランダムサンプル」 | 元のデータセットから復元抽出したランダムサンプル。同じサイズだが重複を含む |
 
-## Further Reading
+## 参考文献
 
-- [Breiman: Random Forests (2001)](https://link.springer.com/article/10.1023/A:1010933404324) - the original random forest paper
-- [Grinsztajn et al.: Why do tree-based models still outperform deep learning on tabular data? (2022)](https://arxiv.org/abs/2207.08815) - rigorous comparison of trees vs neural networks on tabular tasks
-- [scikit-learn Decision Trees documentation](https://scikit-learn.org/stable/modules/tree.html) - practical guide with visualization tools
-- [XGBoost: A Scalable Tree Boosting System (Chen & Guestrin, 2016)](https://arxiv.org/abs/1603.02754) - the gradient boosting paper that dominates Kaggle
+- [Breiman: Random Forests (2001)](https://link.springer.com/article/10.1023/A:1010933404324) - ランダムフォレストの元論文
+- [Grinsztajn et al.: Why do tree-based models still outperform deep learning on tabular data? (2022)](https://arxiv.org/abs/2207.08815) - 表形式タスクにおける木とニューラルネットワークの厳密な比較
+- [scikit-learn Decision Trees documentation](https://scikit-learn.org/stable/modules/tree.html) - 可視化ツールを含む実践的ガイド
+- [XGBoost: A Scalable Tree Boosting System (Chen & Guestrin, 2016)](https://arxiv.org/abs/1603.02754) - Kaggleを席巻する勾配ブースティングの論文

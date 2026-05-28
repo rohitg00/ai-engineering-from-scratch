@@ -1,11 +1,11 @@
 """
-Eval harness for an agent: fixture tasks, scored samples, pass@k.
+agent 用 eval harness: fixture task、scored sample、pass@k。
 
 See: phases/19-capstone-projects/27-eval-harness-fixture-tasks/docs/en.md
 Concept refs:
-  - pass@k = 1 - (1 - p)^k where p is the empirical per-sample pass rate.
-  - Deterministic verifiers: file_equals, regex_match, shell_exit_zero.
-The demo at the bottom runs the bundled fixtures against the reference candidate.
+  - pass@k = 1 - (1 - p)^k。p は empirical per-sample pass rate。
+  - Deterministic verifier: file_equals、regex_match、shell_exit_zero。
+bottom の demo は bundled fixture を reference candidate に対して走らせる。
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ from typing import Any, Callable
 
 @dataclass
 class FixtureTask:
-    """A single evaluation task."""
+    """単一の evaluation task。"""
 
     id: str
     goal: str
@@ -50,7 +50,7 @@ class FixtureTask:
 
 @dataclass
 class SampleResult:
-    """One execution of a candidate against a task."""
+    """task に対する candidate の 1 execution。"""
 
     task_id: str
     sample_index: int
@@ -70,7 +70,7 @@ class SampleResult:
 
 @dataclass
 class VerificationOutcome:
-    """The verifier's verdict on a single sample."""
+    """single sample に対する verifier の verdict。"""
 
     passed: bool
     detail: str
@@ -130,7 +130,7 @@ class EvalReport:
 
 
 def pass_at_k(empirical_pass_rate: float, k: int) -> float:
-    """Probability of at least one pass in k independent samples."""
+    """k 個の independent sample で少なくとも 1 回 pass する確率。"""
 
     if k <= 0:
         return 0.0
@@ -139,7 +139,7 @@ def pass_at_k(empirical_pass_rate: float, k: int) -> float:
 
 
 def p95(values: list[float]) -> float:
-    """Sample 95th percentile via nearest-rank."""
+    """nearest-rank による sample 95th percentile。"""
 
     if not values:
         return 0.0
@@ -159,17 +159,17 @@ Verifier = Callable[[FixtureTask, str, dict[str, Any]], VerificationOutcome]
 def verify_file_equals(
     task: FixtureTask, scratch_dir: str, args: dict[str, Any]
 ) -> VerificationOutcome:
-    """Compare a file in scratch_dir against a file in expected_dir."""
+    """scratch_dir 内の file を expected_dir 内の file と比較する。"""
 
     rel = args.get("path")
     if not isinstance(rel, str):
-        return VerificationOutcome(False, "verifier args missing 'path'")
+        return VerificationOutcome(False, "verifier args に 'path' がありません")
     actual = os.path.join(scratch_dir, rel)
     expected = os.path.join(task.expected_dir, rel)
     if not os.path.isfile(actual):
-        return VerificationOutcome(False, f"scratch file missing: {rel}")
+        return VerificationOutcome(False, f"scratch file がありません: {rel}")
     if not os.path.isfile(expected):
-        return VerificationOutcome(False, f"expected file missing: {rel}")
+        return VerificationOutcome(False, f"expected file がありません: {rel}")
     with open(actual, "r", encoding="utf-8") as fh:
         actual_text = fh.read()
     with open(expected, "r", encoding="utf-8") as fh:
@@ -179,42 +179,42 @@ def verify_file_equals(
         actual_text = actual_text.rstrip("\n") + "\n"
         expected_text = expected_text.rstrip("\n") + "\n"
     if actual_text == expected_text:
-        return VerificationOutcome(True, f"file {rel!r} matches expected")
-    return VerificationOutcome(False, f"file {rel!r} differs from expected")
+        return VerificationOutcome(True, f"file {rel!r} は expected と一致しました")
+    return VerificationOutcome(False, f"file {rel!r} は expected と異なります")
 
 
 def verify_regex_match(
     task: FixtureTask, scratch_dir: str, args: dict[str, Any]
 ) -> VerificationOutcome:
-    """Match a regex against a file in scratch_dir."""
+    """scratch_dir 内の file に regex を match する。"""
 
     rel = args.get("path")
     pattern = args.get("pattern")
     if not isinstance(rel, str) or not isinstance(pattern, str):
-        return VerificationOutcome(False, "verifier args need 'path' and 'pattern'")
+        return VerificationOutcome(False, "verifier args には 'path' と 'pattern' が必要です")
     actual = os.path.join(scratch_dir, rel)
     if not os.path.isfile(actual):
-        return VerificationOutcome(False, f"scratch file missing: {rel}")
+        return VerificationOutcome(False, f"scratch file がありません: {rel}")
     with open(actual, "r", encoding="utf-8") as fh:
         text = fh.read()
     if re.search(pattern, text, re.MULTILINE):
-        return VerificationOutcome(True, f"file {rel!r} matched {pattern!r}")
-    return VerificationOutcome(False, f"file {rel!r} did not match {pattern!r}")
+        return VerificationOutcome(True, f"file {rel!r} は {pattern!r} に match しました")
+    return VerificationOutcome(False, f"file {rel!r} は {pattern!r} に match しませんでした")
 
 
 def verify_shell_exit_zero(
     task: FixtureTask, scratch_dir: str, args: dict[str, Any]
 ) -> VerificationOutcome:
-    """Run a shell command in scratch_dir; pass if exit code is zero.
+    """scratch_dir で shell command を走らせ、exit code が zero なら pass。
 
-    The harness uses a simple subprocess call. Production wiring goes through
-    the sandbox from lesson 26 with a denylist; for the eval harness's own
-    self-test the candidate authors the command, not the model.
+    harness は単純な subprocess call を使う。production wiring では lesson 26 の
+    denylist つき sandbox を通す。eval harness 自身の self-test では、command を
+    model ではなく candidate author が書く。
     """
 
     argv = args.get("argv")
     if not isinstance(argv, list) or not argv:
-        return VerificationOutcome(False, "verifier args need 'argv' list")
+        return VerificationOutcome(False, "verifier args には 'argv' list が必要です")
     timeout = float(args.get("timeout_seconds", 10.0))
     try:
         proc = subprocess.run(
@@ -225,12 +225,12 @@ def verify_shell_exit_zero(
             check=False,
         )
     except subprocess.TimeoutExpired:
-        return VerificationOutcome(False, "shell command timed out")
+        return VerificationOutcome(False, "shell command が timeout しました")
     except FileNotFoundError as exc:
-        return VerificationOutcome(False, f"shell command not found: {exc}")
+        return VerificationOutcome(False, f"shell command が見つかりません: {exc}")
     if proc.returncode == 0:
-        return VerificationOutcome(True, "command exited zero")
-    return VerificationOutcome(False, f"command exited {proc.returncode}")
+        return VerificationOutcome(True, "command は exit zero でした")
+    return VerificationOutcome(False, f"command は {proc.returncode} で exit しました")
 
 
 VERIFIER_REGISTRY: dict[str, Verifier] = {
@@ -246,9 +246,9 @@ VERIFIER_REGISTRY: dict[str, Verifier] = {
 
 
 def load_fixture(task_dir: str) -> FixtureTask:
-    """Load a fixture from a directory.
+    """directory から fixture を load する。
 
-    Expected layout:
+    expected layout:
         <task_dir>/task.json
         <task_dir>/buggy/...
         <task_dir>/expected/... (when verifier is file_equals)
@@ -288,9 +288,9 @@ Candidate = Callable[[FixtureTask, str], SampleResult]
 
 
 def apply_known_fixes(task: FixtureTask, scratch_dir: str) -> SampleResult:
-    """Reference candidate: copies the expected files over the buggy ones.
+    """reference candidate: expected file を buggy file の上に copy する。
 
-    Used by the harness's self-test. Real candidates wire to an LLM agent.
+    harness の self-test で使う。real candidate は LLM agent に wire する。
     """
 
     start = time.perf_counter()
@@ -315,7 +315,7 @@ def apply_known_fixes(task: FixtureTask, scratch_dir: str) -> SampleResult:
 
 
 def noop_candidate(task: FixtureTask, scratch_dir: str) -> SampleResult:
-    """A candidate that does nothing. Used to verify the harness records failures."""
+    """何もしない candidate。harness が failure を記録することを検証するために使う。"""
 
     start = time.perf_counter()
     elapsed = (time.perf_counter() - start) * 1000.0
@@ -329,13 +329,13 @@ def noop_candidate(task: FixtureTask, scratch_dir: str) -> SampleResult:
 
 
 # ---------------------------------------------------------------------------
-# The harness
+# Harness
 # ---------------------------------------------------------------------------
 
 
 @dataclass
 class EvalHarness:
-    """Runs fixtures through a candidate and aggregates results."""
+    """fixture を candidate に通し、result を aggregate する。"""
 
     tasks: list[FixtureTask]
     k: int = 1
@@ -349,7 +349,7 @@ class EvalHarness:
         verifier = self.verifier_registry.get(task.verifier_name)
         if verifier is None:
             return VerificationOutcome(
-                False, f"unknown verifier {task.verifier_name!r}"
+                False, f"未知の verifier {task.verifier_name!r}"
             )
         return verifier(task, scratch_dir, task.verifier_args)
 
@@ -457,31 +457,31 @@ def _tasks_dir() -> str:
 def run_demo() -> int:
     tasks = load_all_fixtures(_tasks_dir())
     if not tasks:
-        print("ERROR: no fixture tasks found", file=sys.stderr)
+        print("ERROR: fixture task が見つかりません", file=sys.stderr)
         return 1
 
-    print("EVAL HARNESS DEMO")
-    print(f"loaded {len(tasks)} fixture task(s)")
+    print("EVAL HARNESS デモ")
+    print(f"{len(tasks)} 個の fixture task を load しました")
     print("")
     for t in tasks:
         print(f"  - {t.id:32s} verifier={t.verifier_name}")
     print("")
 
-    print("running reference candidate (apply_known_fixes), k=1 ...")
+    print("reference candidate (apply_known_fixes) を実行中, k=1 ...")
     harness = EvalHarness(tasks=tasks, k=1)
     report = harness.run(apply_known_fixes)
     print(json.dumps(report.to_dict(), indent=2))
 
     if report.pass_at_1 < 1.0:
         print(
-            f"ERROR: reference candidate should pass all fixtures, got "
-            f"pass@1={report.pass_at_1}",
+            f"ERROR: reference candidate はすべての fixture に pass する想定ですが "
+            f"pass@1={report.pass_at_1} でした",
             file=sys.stderr,
         )
         return 1
 
     print("")
-    print("running noop candidate (should fail every fixture), k=3 ...")
+    print("noop candidate（すべての fixture で失敗する想定）を実行中, k=3 ...")
     harness_noop = EvalHarness(tasks=tasks, k=3)
     noop_report = harness_noop.run(noop_candidate)
     print(
@@ -497,7 +497,7 @@ def run_demo() -> int:
 
     if noop_report.pass_at_1 > 0.0:
         print(
-            f"ERROR: noop candidate should fail, got pass@1={noop_report.pass_at_1}",
+            f"ERROR: noop candidate は失敗する想定ですが pass@1={noop_report.pass_at_1} でした",
             file=sys.stderr,
         )
         return 1

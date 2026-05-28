@@ -1,7 +1,8 @@
-"""Load-test anti-pattern demonstrator — stdlib Python.
+"""負荷テストのアンチパターンを示すデモ — 標準ライブラリのみの Python。
 
-Simulates how uniform prompts inflate reported throughput via prefix-cache
-and request-coalescing, while realistic distribution reveals the true ceiling.
+uniform prompts が prefix-cache と request-coalescing によって報告 throughput を
+膨らませる一方で、realistic distribution が本当の上限を明らかにする様子を
+シミュレートします。
 """
 
 from __future__ import annotations
@@ -40,7 +41,7 @@ def make_realistic_workload(n: int = 500, seed: int = 7) -> list[Request]:
 def simulate(reqs: list[Request], concurrency: int) -> dict:
     cache: set[str] = set()
     ttft_samples: list[float] = []
-    # serialize in groups of "concurrency"
+    # "concurrency" ごとのグループとして直列化する
     for i in range(0, len(reqs), concurrency):
         batch = reqs[i:i + concurrency]
         unique_prefixes = len({r.prefix_hash for r in batch})
@@ -64,7 +65,7 @@ def simulate(reqs: list[Request], concurrency: int) -> dict:
 
 def main() -> None:
     print("=" * 95)
-    print("PROMPT-UNIFORMITY TRAP — same test harness, different prompt distributions")
+    print("PROMPT-UNIFORMITY TRAP — 同じテストハーネス、異なるプロンプト分布")
     print("=" * 95)
 
     for concurrency in (10, 50, 200):
@@ -81,8 +82,8 @@ def main() -> None:
         r = simulate(realistic, concurrency)
         print(f"{'REALISTIC':22}  {r['n']:5}  {r['p50']:8.0f}ms  {r['p99']:8.0f}ms  {r['mean']:6.0f}ms  {r['cache_hits']:4}")
 
-    print("\nRead: uniform prompts make your endpoint look fast. Realistic prompts tell the truth.")
-    print("LLMPerf: --mean-input-tokens + --stddev-input-tokens. Always.")
+    print("\n読み方: uniform prompts は endpoint を速く見せます。realistic prompts は真実を示します。")
+    print("LLMPerf: --mean-input-tokens + --stddev-input-tokens。必ず使いましょう。")
 
 
 if __name__ == "__main__":

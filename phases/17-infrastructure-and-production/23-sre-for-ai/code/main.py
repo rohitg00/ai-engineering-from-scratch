@@ -1,7 +1,7 @@
-"""Multi-agent AI SRE triage simulator — stdlib Python.
+"""Multi-agent AI SRE triage simulator — 標準ライブラリのみの Python。
 
-Three specialized agents produce hypotheses; supervisor ranks by agreement.
-Adversarial evaluation: disagreement escalates to human.
+3 つの specialized agents が hypotheses を作り、supervisor が agreement で順位づけします。
+Adversarial evaluation: 不一致なら人間へ escalate します。
 """
 
 from __future__ import annotations
@@ -18,39 +18,39 @@ class AgentHypothesis:
 
 
 def log_agent(incident: str) -> AgentHypothesis:
-    # simulated: scans logs, picks most common error token
+    # シミュレーション: logs を scan し、最も多い error token を選ぶ
     if "checkout" in incident.lower():
         return AgentHypothesis(
             "LogAgent",
-            "vLLM OOM from KV cache spike on /api/llm",
+            "KV cache spike による /api/llm の vLLM OOM",
             0.78,
-            ["frequency: 142 errors/min", "pattern: 'kv_cache_allocation_failed'", "node: pod-gpu-3"],
+            ["頻度: 142 errors/min", "pattern: 'kv_cache_allocation_failed'", "node: pod-gpu-3"],
         )
-    return AgentHypothesis("LogAgent", "unclear", 0.35, ["logs show no obvious pattern"])
+    return AgentHypothesis("LogAgent", "不明", 0.35, ["logs に明確な pattern はない"])
 
 
 def metric_agent(incident: str) -> AgentHypothesis:
-    # simulated: PromQL query matches to known patterns
+    # シミュレーション: PromQL query を known patterns に照合する
     return AgentHypothesis(
         "MetricAgent",
-        "GPU memory utilization hit 98% 4 minutes before error spike",
+        "error spike の 4 分前に GPU memory utilization が 98% に到達",
         0.82,
-        ["DCGM_FI_DEV_FB_USED >= 97% for 240s", "correlation with error onset: 0.93"],
+        ["DCGM_FI_DEV_FB_USED >= 97% for 240s", "error onset との correlation: 0.93"],
     )
 
 
 def runbook_agent(incident: str) -> AgentHypothesis:
-    # simulated: vector search on runbook repo
+    # シミュレーション: runbook repo に対する vector search
     return AgentHypothesis(
         "RunbookAgent",
-        "Matches runbook RB-017: KV cache OOM under burst concurrency",
+        "runbook RB-017 に一致: burst concurrency 下の KV cache OOM",
         0.88,
         ["runbook: RB-017", "last applied: 2026-01-14", "safe action: restart pod + lower --gpu-memory-utilization to 0.85"],
     )
 
 
 def supervisor(hypotheses: list[AgentHypothesis]) -> dict:
-    # group similar root causes; agreement = confidence boost
+    # 似た root causes を group 化する。agreement = confidence boost
     root_causes = {}
     for h in hypotheses:
         key = h.root_cause.split(" on ")[0].split(" hit ")[0][:30]
@@ -73,9 +73,9 @@ def supervisor(hypotheses: list[AgentHypothesis]) -> dict:
 
 def main() -> None:
     print("=" * 80)
-    print("AI SRE TRIAGE — multi-agent investigation of a production incident")
+    print("AI SRE TRIAGE — production incident の multi-agent investigation")
     print("=" * 80)
-    incident = "High error rate in /checkout/generate-summary, last 6 min"
+    incident = "直近 6 分、/checkout/generate-summary の error rate が高い"
     print(f"\nIncident: {incident}\n")
 
     hypotheses = [log_agent(incident), metric_agent(incident), runbook_agent(incident)]
@@ -93,8 +93,8 @@ def main() -> None:
     for k, v in decision.items():
         print(f"  {k}: {v}")
 
-    print("\nNote: the supervisor only proposes narrow safe actions.")
-    print("Broad changes (topology, code, IAM) always escalate to a human commander.")
+    print("\nNote: supervisor は狭い safe actions だけを提案します。")
+    print("広い変更 (topology, code, IAM) は必ず human commander に escalate します。")
 
 
 if __name__ == "__main__":

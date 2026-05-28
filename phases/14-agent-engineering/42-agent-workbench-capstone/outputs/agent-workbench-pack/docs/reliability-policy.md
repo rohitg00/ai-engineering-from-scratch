@@ -1,12 +1,12 @@
 # Reliability Policy
 
-The workbench absorbs the five industry-recurring failure modes:
+workbench は、業界で繰り返し発生する5つの failure modes を吸収します。
 
-1. Hallucinated action — caught by the rule set + verification gate.
-2. Scope creep — caught by the scope contract diff check.
-3. Cascading errors — caught by feedback records + refuse-on-null-exit.
-4. Context loss — absorbed by repo memory; chat is not the source of truth.
-5. Tool misuse — caught by the reviewer rubric's verification dimension.
+1. Hallucinated action — rule set + verification gate で捕捉する。
+2. Scope creep — scope contract diff check で捕捉する。
+3. Cascading errors — feedback records + refuse-on-null-exit で捕捉する。
+4. Context loss — repo memory で吸収する。chat は source of truth ではない。
+5. Tool misuse — reviewer rubric の verification dimension で捕捉する。
 
-The policy is enforced by the verification gate. The override path is signed
-and audited; agents cannot self-override.
+policy は verification gate により enforce されます。override path は signed
+and audited です。agents は self-override できません。

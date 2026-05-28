@@ -1,205 +1,205 @@
-# Optimization
+# 最適化
 
-> Training a neural network is nothing more than finding the bottom of a valley.
+> ニューラルネットワークの訓練とは、谷底を見つけることにすぎません。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1, Lessons 04-05 (Derivatives, Gradients)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 1、Lessons 04-05（微分、勾配）
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Implement vanilla gradient descent, SGD with momentum, and Adam from scratch
-- Compare optimizer convergence on the Rosenbrock function and explain why Adam adapts per-weight learning rates
-- Distinguish convex from non-convex loss landscapes and explain the role of saddle points in high dimensions
-- Configure learning rate schedules (step decay, cosine annealing, warmup) for training stability
+- 通常の勾配降下法、momentum付きSGD、Adamをスクラッチで実装する
+- Rosenbrock関数でoptimizerの収束を比較し、Adamが重みごとに学習率を適応させる理由を説明する
+- 凸な損失地形と非凸な損失地形を区別し、高次元での鞍点の役割を説明する
+- 訓練安定性のために、学習率スケジュール（step decay、cosine annealing、warmup）を設定する
 
-## The Problem
+## 問題
 
-You have a loss function. It tells you how wrong your model is. You have gradients. They tell you which direction makes the loss worse. Now you need a strategy for walking downhill.
+損失関数があります。それはモデルがどれだけ間違っているかを教えてくれます。勾配があります。それは、どの方向へ進むと損失が悪化するかを教えてくれます。ここで必要なのは、下り坂を歩くための戦略です。
 
-The naive approach is simple: move opposite the gradient. Scale the step by some number called the learning rate. Repeat. This is gradient descent, and it works. But "works" has caveats. Too large a learning rate and you overshoot the valley entirely, bouncing between walls. Too small and you crawl toward the answer over thousands of unnecessary steps. Hit a saddle point and you stop moving even though you have not found a minimum.
+素朴な方法は単純です。勾配と反対方向に動く。学習率と呼ばれる数値でステップを拡大縮小する。繰り返す。これが勾配降下法であり、実際に機能します。ただし、「機能する」には注意点があります。学習率が大きすぎると谷を完全に飛び越え、壁の間で跳ね返ります。小さすぎると、不要な数千ステップをかけて答えに向かって這うことになります。鞍点にぶつかると、最小値を見つけていないのに動きが止まります。
 
-Every optimizer in deep learning is an answer to the same question: how do you get to the bottom of the valley faster and more reliably?
+深層学習のあらゆるoptimizerは、同じ問いへの答えです。どうすれば谷底へ、より速く、より確実に到達できるか？
 
-## The Concept
+## 概念
 
-### What optimization means
+### 最適化とは何か
 
-Optimization is finding the input values that minimize (or maximize) a function. In machine learning, the function is the loss. The inputs are the model's weights. Training is optimization.
+最適化とは、関数を最小化（または最大化）する入力値を見つけることです。機械学習では、その関数は損失です。入力はモデルの重みです。訓練とは最適化です。
 
 ```
-minimize L(w) where:
-  L = loss function
-  w = model weights (could be millions of parameters)
+minimize L(w) 条件:
+  L = 損失関数
+  w = モデル重み（数百万パラメータになり得る）
 ```
 
-### Gradient descent (vanilla)
+### 勾配降下法（vanilla）
 
-The simplest optimizer. Compute the gradient of the loss with respect to every weight. Move each weight in the opposite direction of its gradient. Scale the step by the learning rate.
+最も単純なoptimizerです。すべての重みに関して損失の勾配を計算します。各重みを、その勾配と反対方向に動かします。ステップ幅は学習率で調整します。
 
 ```
 w = w - lr * gradient
 ```
 
-That is the entire algorithm. One line.
+これがアルゴリズム全体です。1行です。
 
 ```mermaid
 graph TD
-    A["* Starting point (high loss)"] --> B["Moving downhill along gradient"]
-    B --> C["Approaching minimum"]
-    C --> D["o Minimum (low loss)"]
+    A["* 開始点（高い損失）"] --> B["勾配に沿って下る"]
+    B --> C["最小値に近づく"]
+    C --> D["o 最小値（低い損失）"]
 ```
 
-### Learning rate: the most important hyperparameter
+### 学習率: 最も重要なハイパーパラメータ
 
-The learning rate controls step size. It determines everything about convergence.
+学習率はステップ幅を制御します。収束に関するほぼすべてを決めます。
 
 ```mermaid
 graph LR
-    subgraph TooLarge["Too Large (lr = 1.0)"]
-        A1["Step 1"] -->|overshoot| A2["Step 2"]
-        A2 -->|overshoot| A3["Step 3"]
-        A3 -->|diverging| A4["..."]
+    subgraph TooLarge["大きすぎる（lr = 1.0）"]
+        A1["ステップ 1"] -->|飛び越える| A2["ステップ 2"]
+        A2 -->|飛び越える| A3["ステップ 3"]
+        A3 -->|発散| A4["..."]
     end
-    subgraph TooSmall["Too Small (lr = 0.0001)"]
-        B1["Step 1"] -->|tiny step| B2["Step 2"]
-        B2 -->|tiny step| B3["Step 3"]
-        B3 -->|10,000 steps later| B4["Minimum"]
+    subgraph TooSmall["小さすぎる（lr = 0.0001）"]
+        B1["ステップ 1"] -->|ごく小さいステップ| B2["ステップ 2"]
+        B2 -->|ごく小さいステップ| B3["ステップ 3"]
+        B3 -->|10,000ステップ後| B4["最小値"]
     end
-    subgraph JustRight["Just Right (lr = 0.01)"]
-        C1["Start"] --> C2["..."] --> C3["Converged in ~100 steps"]
+    subgraph JustRight["ちょうどよい（lr = 0.01）"]
+        C1["開始"] --> C2["..."] --> C3["約100ステップで収束"]
     end
 ```
 
-There is no formula for the right learning rate. You find it by experiment. Common starting points: 0.001 for Adam, 0.01 for SGD with momentum.
+正しい学習率を求める公式はありません。実験で見つけます。一般的な開始点は、Adamなら0.001、momentum付きSGDなら0.01です。
 
 ### SGD vs batch vs mini-batch
 
-Vanilla gradient descent computes the gradient over the entire dataset before taking one step. This is called batch gradient descent. It is stable but slow.
+通常の勾配降下法は、1ステップ進む前にデータセット全体で勾配を計算します。これはバッチ勾配降下法と呼ばれます。安定していますが遅いです。
 
-Stochastic gradient descent (SGD) computes the gradient on a single random sample and steps immediately. It is noisy but fast.
+確率的勾配降下法（SGD）は、1つのランダムなサンプルで勾配を計算し、すぐにステップします。ノイズは大きいですが高速です。
 
-Mini-batch gradient descent splits the difference. Compute the gradient over a small batch (32, 64, 128, 256 samples), then step. This is what everyone actually uses.
+ミニバッチ勾配降下法は、その中間です。小さなバッチ（32、64、128、256サンプル）で勾配を計算し、ステップします。実際にほぼ全員が使っているのはこれです。
 
-| Variant | Batch size | Gradient quality | Speed per step | Noise |
-|---------|-----------|-----------------|---------------|-------|
-| Batch GD | Entire dataset | Exact | Slow | None |
-| SGD | 1 sample | Very noisy | Fast | High |
-| Mini-batch | 32-256 | Good estimate | Balanced | Moderate |
+| 種類 | バッチサイズ | 勾配の品質 | 1ステップあたりの速度 | ノイズ |
+|------|--------------|------------|------------------------|--------|
+| Batch GD | データセット全体 | 正確 | 遅い | なし |
+| SGD | 1サンプル | 非常にノイジー | 速い | 高い |
+| Mini-batch | 32-256 | 良い推定 | バランスがよい | 中程度 |
 
-The noise in SGD and mini-batch is not a bug. It helps escape shallow local minima and saddle points.
+SGDやミニバッチのノイズはバグではありません。浅い局所最小値や鞍点から抜け出す助けになります。
 
-### Momentum: the ball rolling downhill
+### Momentum: 下り坂を転がるボール
 
-Vanilla gradient descent only looks at the current gradient. If the gradient zigzags (common in narrow valleys), progress is slow. Momentum fixes this by accumulating past gradients into a velocity term.
+通常の勾配降下法は現在の勾配だけを見ます。勾配がジグザグする場合（狭い谷ではよく起こります）、進みは遅くなります。Momentumは、過去の勾配を速度項に蓄積することでこれを修正します。
 
 ```
 v = beta * v + gradient
 w = w - lr * v
 ```
 
-The analogy: a ball rolling downhill. It does not stop and restart at every bump. It builds speed in consistent directions and dampens oscillations.
+比喩としては、下り坂を転がるボールです。小さな凹凸ごとに停止して再出発するわけではありません。一貫した方向で速度を蓄え、振動を減衰させます。
 
 ```mermaid
 graph TD
-    subgraph Without["Without Momentum (zigzag, slow)"]
-        W1["Start"] -->|left| W2[" "]
-        W2 -->|right| W3[" "]
-        W3 -->|left| W4[" "]
-        W4 -->|right| W5[" "]
-        W5 -->|left| W6[" "]
-        W6 --> W7["Minimum"]
+    subgraph Without["Momentumなし（ジグザグ、遅い）"]
+        W1["開始"] -->|左| W2[" "]
+        W2 -->|右| W3[" "]
+        W3 -->|左| W4[" "]
+        W4 -->|右| W5[" "]
+        W5 -->|左| W6[" "]
+        W6 --> W7["最小値"]
     end
-    subgraph With["With Momentum (smooth, fast)"]
-        M1["Start"] --> M2[" "] --> M3[" "] --> M4["Minimum"]
+    subgraph With["Momentumあり（滑らか、速い）"]
+        M1["開始"] --> M2[" "] --> M3[" "] --> M4["最小値"]
     end
 ```
 
-`beta` (typically 0.9) controls how much history to keep. Higher beta means more momentum, smoother paths, but slower response to direction changes.
+`beta`（通常は0.9）は、どれだけ履歴を保持するかを制御します。betaが高いほどmomentumが強く、経路は滑らかになりますが、方向変化への反応は遅くなります。
 
-### Adam: adaptive learning rates
+### Adam: 適応的な学習率
 
-Different weights need different learning rates. A weight that rarely gets large gradients should take bigger steps when it finally does. A weight that gets huge gradients constantly should take smaller steps.
+重みによって必要な学習率は異なります。めったに大きな勾配を受け取らない重みは、いざ受け取ったときに大きく動くべきです。常に巨大な勾配を受け取る重みは、小さく動くべきです。
 
-Adam (Adaptive Moment Estimation) tracks two things per weight:
+Adam（Adaptive Moment Estimation）は、各重みについて2つの量を追跡します。
 
-1. First moment (m): running average of gradients (like momentum)
-2. Second moment (v): running average of squared gradients (gradient magnitude)
+1. 第1モーメント（m）: 勾配の移動平均（momentumに似ている）
+2. 第2モーメント（v）: 勾配二乗の移動平均（勾配の大きさ）
 
 ```
 m = beta1 * m + (1 - beta1) * gradient
 v = beta2 * v + (1 - beta2) * gradient^2
 
-m_hat = m / (1 - beta1^t)    bias correction
-v_hat = v / (1 - beta2^t)    bias correction
+m_hat = m / (1 - beta1^t)    バイアス補正
+v_hat = v / (1 - beta2^t)    バイアス補正
 
 w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
 ```
 
-The division by `sqrt(v_hat)` is the key insight. Weights with large gradients get divided by a large number (small effective step). Weights with small gradients get divided by a small number (large effective step). Each weight gets its own adaptive learning rate.
+`sqrt(v_hat)` で割ることが重要な洞察です。大きな勾配を持つ重みは大きな数で割られます（有効ステップは小さい）。小さな勾配を持つ重みは小さな数で割られます（有効ステップは大きい）。各重みがそれぞれ適応的な学習率を持ちます。
 
-Default hyperparameters: `lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8`. These defaults work well for most problems.
+デフォルトのハイパーパラメータは `lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8` です。ほとんどの問題で、このデフォルトはうまく機能します。
 
-### Learning rate schedules
+### 学習率スケジュール
 
-A fixed learning rate is a compromise. Early in training, you want large steps to make fast progress. Late in training, you want small steps to fine-tune near the minimum.
+固定学習率は妥協です。訓練初期には、大きなステップで素早く進みたい。訓練後期には、最小値付近を微調整するために小さなステップにしたい。
 
-Common schedules:
+一般的なスケジュール:
 
-| Schedule | Formula | Use case |
-|----------|---------|----------|
-| Step decay | lr = lr * factor every N epochs | Simple, manual control |
-| Exponential decay | lr = lr_0 * decay^t | Smooth reduction |
-| Cosine annealing | lr = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * t / T)) | Transformers, modern training |
-| Warmup + decay | Linear ramp up, then decay | Large models, prevents early instability |
+| スケジュール | 公式 | 使いどころ |
+|--------------|------|------------|
+| Step decay | lr = lr * factor every N epochs | 単純で、手動制御しやすい |
+| Exponential decay | lr = lr_0 * decay^t | 滑らかな減衰 |
+| Cosine annealing | lr = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * t / T)) | Transformers、現代的な訓練 |
+| Warmup + decay | 線形に立ち上げ、その後減衰 | 大規模モデル、初期の不安定性を防ぐ |
 
-### Convex vs non-convex
+### 凸と非凸
 
-A convex function has one minimum. Gradient descent always finds it. A quadratic like `f(x) = x^2` is convex.
+凸関数には最小値が1つあります。勾配降下法は常にそれを見つけます。`f(x) = x^2` のような二次関数は凸です。
 
-Neural network loss functions are non-convex. They have many local minima, saddle points, and flat regions.
+ニューラルネットワークの損失関数は非凸です。多くの局所最小値、鞍点、平坦領域があります。
 
 ```mermaid
 graph LR
-    subgraph Convex["Convex: One valley, one answer"]
+    subgraph Convex["凸: 谷は1つ、答えは1つ"]
         direction TB
-        CV1["High loss"] --> CV2["Global minimum"]
+        CV1["高い損失"] --> CV2["大域最小値"]
     end
-    subgraph NonConvex["Non-convex: Multiple valleys, saddle points"]
+    subgraph NonConvex["非凸: 複数の谷と鞍点"]
         direction TB
-        NC1["Start"] --> NC2["Local minimum"]
-        NC1 --> NC3["Saddle point"]
-        NC1 --> NC4["Global minimum"]
+        NC1["開始"] --> NC2["局所最小値"]
+        NC1 --> NC3["鞍点"]
+        NC1 --> NC4["大域最小値"]
     end
 ```
 
-In practice, local minima in high-dimensional neural networks are rarely a problem. Most local minima have loss values close to the global minimum. Saddle points (flat in some directions, curved in others) are the real obstacle. Momentum and noise from mini-batches help escape them.
+実務では、高次元ニューラルネットワークの局所最小値はめったに問題になりません。ほとんどの局所最小値は、大域最小値に近い損失値を持ちます。本当の障害は鞍点（一部の方向では平坦で、別の方向では曲がっている点）です。Momentumとミニバッチ由来のノイズは、そこから抜け出す助けになります。
 
-### Loss landscape visualization
+### 損失地形の可視化
 
-The loss is a function of all weights. For a model with 1 million weights, the loss landscape lives in 1,000,001-dimensional space. We visualize it by picking two random directions in weight space and plotting the loss along those directions, producing a 2D surface.
+損失はすべての重みに関する関数です。100万個の重みを持つモデルでは、損失地形は1,000,001次元空間に存在します。これを可視化するには、重み空間で2つのランダムな方向を選び、その方向に沿った損失をプロットして2D曲面を作ります。
 
 ```mermaid
 graph TD
-    HL["High loss region"] --> SP["Saddle point"]
-    HL --> LM["Local minimum"]
+    HL["高損失領域"] --> SP["鞍点"]
+    HL --> LM["局所最小値"]
     SP --> LM
-    SP --> GM["Global minimum"]
-    LM -.->|"shallow barrier"| GM
+    SP --> GM["大域最小値"]
+    LM -.->|"浅い障壁"| GM
     style HL fill:#ff6666,color:#000
     style SP fill:#ffcc66,color:#000
     style LM fill:#66ccff,color:#000
     style GM fill:#66ff66,color:#000
 ```
 
-Sharp minima generalize poorly. Flat minima generalize well. This is one reason SGD with momentum often outperforms Adam on final test accuracy: its noise prevents settling into sharp minima.
+鋭い最小値は汎化が悪くなりやすいです。平坦な最小値はよく汎化します。これが、最終的なテスト精度でmomentum付きSGDがAdamを上回ることが多い理由の1つです。SGDのノイズは、鋭い最小値に落ち着くのを防ぎます。
 
-## Build It
+## 作ってみる
 
-### Step 1: Define a test function
+### ステップ 1: テスト関数を定義する
 
-The Rosenbrock function is a classic optimization benchmark. Its minimum is at (1, 1) inside a narrow curved valley that is easy to find but hard to follow.
+Rosenbrock関数は古典的な最適化ベンチマークです。最小値は (1, 1) にあり、見つけるのは簡単ですが、たどるのは難しい細く曲がった谷の中にあります。
 
 ```
 f(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
@@ -217,7 +217,7 @@ def rosenbrock_gradient(params):
     return [df_dx, df_dy]
 ```
 
-### Step 2: Vanilla gradient descent
+### ステップ 2: 通常の勾配降下法
 
 ```python
 class GradientDescent:
@@ -228,7 +228,7 @@ class GradientDescent:
         return [p - self.lr * g for p, g in zip(params, grads)]
 ```
 
-### Step 3: SGD with momentum
+### ステップ 3: Momentum付きSGD
 
 ```python
 class SGDMomentum:
@@ -247,7 +247,7 @@ class SGDMomentum:
         return [p - self.lr * v for p, v in zip(params, self.velocity)]
 ```
 
-### Step 4: Adam
+### ステップ 4: Adam
 
 ```python
 class Adam:
@@ -285,7 +285,7 @@ class Adam:
         ]
 ```
 
-### Step 5: Run and compare
+### ステップ 5: 実行して比較する
 
 ```python
 def optimize(optimizer, func, grad_func, start, steps=5000):
@@ -309,11 +309,11 @@ for name, history in [("GD", gd_history), ("SGD+M", sgd_history), ("Adam", adam_
     print(f"{name:6s} -> x={final[0]:.6f}, y={final[1]:.6f}, loss={loss:.8f}")
 ```
 
-Expected output: Adam converges fastest. SGD with momentum follows a smoother path. Vanilla GD makes slow progress along the narrow valley.
+期待される出力: Adamが最も速く収束します。Momentum付きSGDはより滑らかな経路をたどります。通常のGDは、細い谷に沿ってゆっくり進みます。
 
-## Use It
+## 使ってみる
 
-In practice, use PyTorch or JAX optimizers. They handle parameter groups, weight decay, gradient clipping, and GPU acceleration.
+実務では、PyTorchやJAXのoptimizerを使います。これらはパラメータグループ、weight decay、gradient clipping、GPU高速化を扱います。
 
 ```python
 import torch
@@ -327,50 +327,50 @@ adamw = torch.optim.AdamW(model.parameters(), lr=0.001, weight_decay=0.01)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(adam, T_max=100)
 ```
 
-Rules of thumb:
+経験則:
 
-- Start with Adam (lr=0.001). It works for most problems without tuning.
-- Switch to SGD with momentum (lr=0.01, momentum=0.9) when you need the best final accuracy and can afford more tuning.
-- Use AdamW (Adam with decoupled weight decay) for transformers.
-- Always use a learning rate schedule for training runs longer than a few epochs.
-- If training is unstable, reduce the learning rate. If training is too slow, increase it.
+- Adam（lr=0.001）から始める。ほとんどの問題では、チューニングなしで動く。
+- 最終精度が最重要で、チューニングの余裕がある場合は、momentum付きSGD（lr=0.01, momentum=0.9）へ切り替える。
+- TransformersにはAdamW（decoupled weight decay付きAdam）を使う。
+- 数epochを超える訓練では、必ず学習率スケジュールを使う。
+- 訓練が不安定なら学習率を下げる。訓練が遅すぎるなら学習率を上げる。
 
-## Ship It
+## 出荷する
 
-This lesson produces a prompt for choosing the right optimizer. See `outputs/prompt-optimizer-guide.md`.
+このレッスンでは、適切なoptimizerを選ぶためのプロンプトを作ります。`outputs/prompt-optimizer-guide.md` を参照してください。
 
-The optimizer classes built here reappear in Phase 3 when we train a neural network from scratch.
+ここで構築したoptimizerクラスは、Phase 3でニューラルネットワークをスクラッチから訓練するときに再登場します。
 
-## Exercises
+## 演習
 
-1. **Learning rate sweep.** Run vanilla gradient descent on the Rosenbrock function with learning rates [0.0001, 0.0005, 0.001, 0.005, 0.01]. Plot or print the final loss after 5000 steps for each. Find the largest learning rate that still converges.
+1. **学習率スイープ。** Rosenbrock関数に対して、学習率 [0.0001, 0.0005, 0.001, 0.005, 0.01] で通常の勾配降下法を実行してください。それぞれについて5000ステップ後の最終損失をプロットまたは表示してください。収束する最大の学習率を見つけてください。
 
-2. **Momentum comparison.** Run SGD with momentum values [0.0, 0.5, 0.9, 0.99] on the Rosenbrock function. Track the loss at every step. Which momentum value converges fastest? Which overshoots?
+2. **Momentum比較。** Rosenbrock関数で、momentum値 [0.0, 0.5, 0.9, 0.99] のSGDを実行してください。各ステップの損失を追跡します。どのmomentum値が最も速く収束しますか？どれが飛び越えますか？
 
-3. **Saddle point escape.** Define the function `f(x, y) = x^2 - y^2` (a saddle point at the origin). Start at (0.01, 0.01). Compare how vanilla GD, SGD with momentum, and Adam behave. Which escapes the saddle point?
+3. **鞍点からの脱出。** 関数 `f(x, y) = x^2 - y^2`（原点に鞍点）を定義してください。(0.01, 0.01) から開始します。通常のGD、momentum付きSGD、Adamの挙動を比較してください。どれが鞍点から抜け出しますか？
 
-4. **Implement learning rate decay.** Add an exponential decay schedule to the GradientDescent class: `lr = lr_0 * 0.999^step`. Compare convergence with and without decay on the Rosenbrock function.
+4. **学習率減衰を実装する。** GradientDescentクラスに指数減衰スケジュール `lr = lr_0 * 0.999^step` を追加してください。Rosenbrock関数で、減衰ありとなしの収束を比較してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Gradient descent | "Go downhill" | Update weights by subtracting the gradient scaled by the learning rate. The most basic optimizer. |
-| Learning rate | "Step size" | A scalar that controls how far each update moves the weights. Too large causes divergence. Too small wastes compute. |
-| Momentum | "Keep rolling" | Accumulate past gradients into a velocity vector. Dampens oscillations and accelerates movement through consistent directions. |
-| SGD | "Random sampling" | Stochastic gradient descent. Compute gradient on a random subset instead of the full dataset. Almost always means mini-batch SGD in practice. |
-| Mini-batch | "A chunk of data" | A small subset of training data (32-256 samples) used to estimate the gradient. Balances speed and gradient accuracy. |
-| Adam | "The default optimizer" | Adaptive Moment Estimation. Tracks per-weight running averages of gradients and squared gradients to give each weight its own learning rate. |
-| Bias correction | "Fix the cold start" | Adam's first and second moments are initialized to zero. Bias correction divides by (1 - beta^t) to compensate during early steps. |
-| Learning rate schedule | "Change lr over time" | A function that adjusts the learning rate during training. Large steps early, small steps late. |
-| Convex function | "One valley" | A function where any local minimum is the global minimum. Gradient descent always finds it. Neural network losses are not convex. |
-| Saddle point | "Flat but not a minimum" | A point where the gradient is zero but it is a minimum in some directions and a maximum in others. Common in high dimensions. |
-| Loss landscape | "The terrain" | The loss function plotted over weight space. Visualized by slicing along two random directions. |
-| Convergence | "Getting there" | The optimizer has reached a point where further steps do not meaningfully reduce the loss. |
+| 用語 | よく言われる表現 | 実際の意味 |
+|------|------------------|------------|
+| Gradient descent | 「下り坂を進む」 | 学習率でスケールした勾配を引くことで重みを更新する。最も基本的なoptimizer。 |
+| Learning rate | 「ステップ幅」 | 各更新で重みをどれだけ動かすかを制御するスカラー。大きすぎると発散し、小さすぎると計算を浪費する。 |
+| Momentum | 「転がり続ける」 | 過去の勾配を速度ベクトルに蓄積する。振動を減らし、一貫した方向への移動を加速する。 |
+| SGD | 「ランダムサンプリング」 | Stochastic gradient descent。データセット全体ではなくランダムな部分集合で勾配を計算する。実務ではほぼ常にミニバッチSGDを意味する。 |
+| Mini-batch | 「データの塊」 | 勾配を推定するために使う訓練データの小さな部分集合（32-256サンプル）。速度と勾配精度のバランスを取る。 |
+| Adam | 「デフォルトのoptimizer」 | Adaptive Moment Estimation。各重みの勾配と勾配二乗の移動平均を追跡し、それぞれの重みに独自の学習率を与える。 |
+| Bias correction | 「コールドスタートの補正」 | Adamの第1・第2モーメントはゼロで初期化される。初期ステップで補償するために (1 - beta^t) で割る。 |
+| Learning rate schedule | 「時間とともにlrを変える」 | 訓練中に学習率を調整する関数。初期は大きなステップ、後期は小さなステップ。 |
+| Convex function | 「谷が1つ」 | 任意の局所最小値が大域最小値である関数。勾配降下法は必ずそれを見つける。ニューラルネットワークの損失は凸ではない。 |
+| Saddle point | 「平坦だが最小値ではない」 | 勾配はゼロだが、一部の方向では最小、一部の方向では最大である点。高次元でよく現れる。 |
+| Loss landscape | 「地形」 | 重み空間上にプロットされた損失関数。2つのランダムな方向に沿ってスライスして可視化する。 |
+| Convergence | 「到達すること」 | 追加のステップで損失が意味のあるほど下がらない点にoptimizerが到達した状態。 |
 
-## Further Reading
+## 参考資料
 
-- [Sebastian Ruder: An overview of gradient descent optimization algorithms](https://ruder.io/optimizing-gradient-descent/) - comprehensive survey of all major optimizers
-- [Why Momentum Really Works (Distill)](https://distill.pub/2017/momentum/) - interactive visualization of momentum dynamics
-- [Adam: A Method for Stochastic Optimization (Kingma & Ba, 2014)](https://arxiv.org/abs/1412.6980) - the original Adam paper, readable and short
-- [Visualizing the Loss Landscape of Neural Nets (Li et al., 2018)](https://arxiv.org/abs/1712.09913) - the paper that showed sharp vs flat minima
+- [Sebastian Ruder: An overview of gradient descent optimization algorithms](https://ruder.io/optimizing-gradient-descent/) - 主要なoptimizerを網羅した包括的な調査
+- [Why Momentum Really Works (Distill)](https://distill.pub/2017/momentum/) - momentumのダイナミクスを示すインタラクティブな可視化
+- [Adam: A Method for Stochastic Optimization (Kingma & Ba, 2014)](https://arxiv.org/abs/1412.6980) - Adamの原論文。短く読みやすい
+- [Visualizing the Loss Landscape of Neural Nets (Li et al., 2018)](https://arxiv.org/abs/1712.09913) - 鋭い最小値と平坦な最小値を示した論文

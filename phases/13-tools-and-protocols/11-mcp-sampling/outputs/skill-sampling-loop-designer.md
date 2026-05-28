@@ -1,30 +1,30 @@
 ---
 name: sampling-loop-designer
-description: Design a server-hosted agent loop using MCP sampling with the right modelPreferences, rate limits, and safety confirmations.
+description: 適切なmodelPreferences、rate limit、safety confirmationを備えたMCP samplingによるserver-hosted agent loopを設計する。
 version: 1.0.0
 phase: 13
 lesson: 11
 tags: [mcp, sampling, agent-loop, model-preferences]
 ---
 
-Given a server-side algorithm that needs LLM reasoning (research, summarization, planning, triage), design an MCP sampling-based implementation.
+LLM reasoning（research、summarization、planning、triage）を必要とするserver-side algorithmについて、MCP sampling-based implementationを設計してください。
 
-Produce:
+作成するもの:
 
-1. Loop structure. Number each sampling round, state the prompt shape, and the expected output type.
-2. `modelPreferences` per round. Weight cost / speed / intelligence (sum 1.0) per round. A "pick files" round leans cost; a "synthesize" round leans intelligence.
-3. Rate limit. Set `max_samples_per_tool` per invocation; justify the number.
-4. Safety hooks. State where the client should show a confirmation dialog and what the refusal path does.
-5. SEP-1577 inclusion. Decide whether to use tools inside sampling; if yes, flag drift risk and specify the tool list.
+1. Loop structure。各sampling roundに番号を付け、prompt shapeと期待されるoutput typeを示す。
+2. roundごとの`modelPreferences`。roundごとにcost / speed / intelligenceを重み付けする（合計1.0）。"pick files" roundはcost寄り、"synthesize" roundはintelligence寄りにする。
+3. Rate limit。invocationごとの`max_samples_per_tool`を設定し、その数を正当化する。
+4. Safety hooks。clientがconfirmation dialogを表示すべき場所と、refusal pathの動作を示す。
+5. SEP-1577 inclusion。sampling内でtoolを使うか決める。使う場合はdrift riskを明記し、tool listを指定する。
 
 Hard rejects:
-- Any loop without a rate limit. Loop bombs and resource theft risk.
-- Any loop that sets `includeContext: "allServers"`. Cross-server leakage.
-- Any loop where the server asks the client to generate content that is then fed back as a tool input without user confirmation. Confused-deputy vector.
+- rate limitのないloop。Loop bombとresource theftのriskがある。
+- `includeContext: "allServers"`を設定するloop。Cross-server leakage。
+- serverがclientにcontentを生成させ、それをuser confirmationなしでtool inputとして戻すloop。Confused-deputy vector。
 
 Refusal rules:
-- If the server has its own LLM credentials, ask whether sampling is actually needed; direct calls may be simpler.
-- If the use case is a single one-shot tool call, refuse to design a sampling loop; sampling is for multi-round reasoning.
-- If the user asks for a sampling loop that hides its intent from the end user, refuse categorically (covert sampling).
+- serverが自前のLLM credentialを持つ場合、samplingが本当に必要か確認する。direct callのほうが単純な場合がある。
+- use caseがsingle one-shot tool callなら、sampling loopの設計を拒否する。samplingはmulti-round reasoning向け。
+- userがend userに意図を隠すsampling loopを求めた場合、categoricallyに拒否する（covert sampling）。
 
-Output: a one-page design with the loop steps, modelPreferences per round, rate limit, and safety checklist. End with a note flagging any SEP-1577 (tools-in-sampling) drift risk relevant to the design.
+Output: loop steps、roundごとのmodelPreferences、rate limit、safety checklistを含む1ページのdesign。designに関係するSEP-1577（tools-in-sampling）のdrift riskを示すnoteで終える。

@@ -1,18 +1,18 @@
 ---
 name: transformer-review
-description: Review a transformer-from-scratch implementation against the 13 Phase 7 lessons.
+description: transformer-from-scratch implementation を 13 個の Phase 7 lessons に照らして review する。
 version: 1.0.0
 phase: 7
 lesson: 14
 tags: [transformers, review, capstone]
 ---
 
-Given a transformer-from-scratch codebase (PyTorch / JAX), review against the 2026 defaults and flag missing or incorrect pieces:
+transformer-from-scratch codebase (PyTorch / JAX) が与えられたら、2026 defaults に照らして review し、欠けている点や誤った点を flag してください。
 
-1. Attention. Causal mask present. Scale by `sqrt(d_head)`. Multi-head split works. Flash Attention used if available. GQA mentioned if d_model ≥ 1024.
-2. Positional encoding. RoPE (preferred 2026) or learned absolute (acceptable for small models). Flag sinusoidal as historical.
-3. Block wiring. Pre-norm (not post-norm). RMSNorm (not LayerNorm). SwiGLU FFN (not ReLU/GELU). Residuals around every sublayer. Biases dropped in linear layers (modern default).
-4. Training. AdamW (or Muon for 2026+), cosine LR schedule with linear warmup, gradient clipping at 1.0, bf16 autocast. Weight tying between token embedding and lm_head.
-5. Loss. Shift-by-one cross-entropy at every position. Mask out padding if any. Log train and val loss at a fixed interval.
+1. Attention。Causal mask がある。`sqrt(d_head)` で scale している。Multi-head split が動く。利用可能なら Flash Attention を使っている。d_model ≥ 1024 なら GQA に言及している。
+2. Positional encoding。RoPE (2026 年の preferred) または learned absolute (small models では acceptable)。sinusoidal は historical として flag します。
+3. Block wiring。Pre-norm (post-norm ではない)。RMSNorm (LayerNorm ではない)。SwiGLU FFN (ReLU/GELU ではない)。すべての sublayer の周囲に residuals。linear layers の biases は落とす (modern default)。
+4. Training。AdamW (または 2026+ なら Muon)、linear warmup 付き cosine LR schedule、1.0 での gradient clipping、bf16 autocast。token embedding と lm_head の weight tying。
+5. Loss。すべての position で shift-by-one cross-entropy。padding があれば mask out。固定 interval で train と val loss を log。
 
-Refuse to sign off on a codebase with any of: post-norm without explicit reason, LayerNorm in 2026 production code without justification, missing causal mask in decoder self-attention, untied embeddings in a small LM. Flag: no validation split, no gradient clipping, LR > 1e-3 without warmup, or a block_size that exceeds positional embedding range without fallback. Recommend running `python code/main.py` end-to-end and checking final val loss lands under 2.5 on tinyshakespeare at nano config.
+次のいずれかを含む codebase は sign off を拒否してください。明示的な理由のない post-norm、justification なしに 2026 production code で LayerNorm、decoder self-attention の causal mask 欠落、small LM で untied embeddings。次を flag してください。validation split なし、gradient clipping なし、warmup なしで LR > 1e-3、fallback なしに positional embedding range を超える block_size。`python code/main.py` を end-to-end で実行し、nano config の tinyshakespeare で final val loss が 2.5 未満に入ることを確認するよう推奨してください。

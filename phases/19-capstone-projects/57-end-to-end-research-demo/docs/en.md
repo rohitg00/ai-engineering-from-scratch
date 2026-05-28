@@ -1,21 +1,20 @@
-# End-to-End Research Demo
+# End-to-End 研究デモ
 
-> A demo is the place where every contract you wrote earlier has to compose. If any one of them leaks, the demo is the lesson that catches it.
+> demo は、これまで書いたすべての contract が合成できるかを試す場所です。一つでも漏れがあれば、この lesson がそれを見つけます。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 19 lessons 50-53
-**Time:** ~90 minutes
+**種別:** Build
+**言語:** Python
+**前提:** Phase 19 lessons 50-53
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
+- auto-research loop を end to end につなぐ: hypothesis seed、experiment runner、scheduler、critic loop、paper writer。
+- earlier Track D lessons の primitive を framework ではなく plain Python imports で合成する。
+- loop を自己終了まで走らせ、各 stage の出力を列挙する単一 demo report を出す。
+- demo を決定的に保ち、test suite が final shape を assert できるようにする。
+- stage contract が壊れたとき clear failure mode を出し、壊れた input で次 stage を走らせない。
 
-- Wire the auto-research loop end to end: hypothesis seed, experiment runner, scheduler, critic loop, paper writer.
-- Compose the primitives from the four earlier Track D lessons through plain Python imports, not a framework.
-- Run the loop to a self-terminating end and emit a single demo report that lists every stage's output.
-- Keep the demo deterministic so the test suite can assert the final shape.
-- Surface a clear failure mode when any stage's contract breaks, so the next stage does not run with a broken input.
-
-## What composes here
+## ここで合成するもの
 
 ```mermaid
 flowchart LR
@@ -30,11 +29,11 @@ flowchart LR
     Writer --> Report[Demo report]
 ```
 
-Five stages. The seed is a list of three hypotheses. The scheduler runs six experiments across them with three parallel slots. The bus reports one or more paper triggers. The picker selects the single best result. The critic loop iterates on a draft built from that result. The paper writer emits the final LaTeX, BibTeX, and manifest.
+五つの stage があります。seed は三つの hypothesis list です。scheduler は三つの parallel slot で六つの experiment を走らせます。bus は paper trigger を一つ以上報告します。picker は単一の best result を選びます。critic loop はその result から作った draft を反復します。paper writer は final LaTeX、BibTeX、manifest を出します。
 
-## Why import, not copy
+## なぜ copy ではなく import か
 
-Each earlier lesson ships a `main.py` with public dataclasses and functions. The demo imports them by adjusting `sys.path` to the parent directory of each lesson. This is not framework wiring; it is the same import the test files in the earlier lessons already use.
+各 earlier lesson は public dataclass と function を持つ `main.py` を含みます。demo は各 lesson の parent directory を `sys.path` に足して import します。これは framework wiring ではなく、各 lesson の test file がすでに使っている import と同じです。
 
 ```mermaid
 flowchart TB
@@ -44,15 +43,15 @@ flowchart TB
     Demo --> Inline[Inline stub: seed and runner]
 ```
 
-The inline stub stands in for lessons fifty through fifty-three: a small generator of seed hypotheses and a synchronous reward function. The user can swap the inline stub for the real primitives from those lessons by adjusting two imports.
+inline stub は lessons 50 から 53 の代役です。小さな seed hypothesis generator と synchronous reward function です。user は import を二つ調整するだけで実 primitive に替えられます。
 
 ## Determinism guarantees
 
-The demo is deterministic by construction. The experiment runner is seeded numpy. The critic loop's reviser walks fixed dimensions in fixed order. The paper writer's prose generator is the mocked one from lesson fifty-four. The scheduler's UCB picker breaks ties on iteration order, not random choice.
+demo は構造的に決定的です。experiment runner は seeded numpy です。critic loop の reviser は fixed dimensions を fixed order で処理します。paper writer の prose generator は lesson 54 の mock です。scheduler の UCB picker は random ではなく iteration order で tie break します。
 
-Given the same seed, the demo emits the same report. The test asserts this property by running the demo twice and comparing the manifest.
+同じ seed なら同じ report を出します。test は demo を二回実行して manifest を比較します。
 
-## The demo report shape
+## Demo report の形
 
 ```mermaid
 flowchart TB
@@ -63,11 +62,11 @@ flowchart TB
     Rep --> Term[stop_reason]
 ```
 
-Each field comes verbatim from the upstream stage. The demo does not transform any output; it composes them. That is the test the demo is.
+各 field は upstream stage からそのまま来ます。demo は output を変換せず、合成します。それが demo の test です。
 
 ## Failure mode handling
 
-Each stage either succeeds or raises a typed error.
+各 stage は成功するか typed error を raise します。
 
 ```text
 Scheduler ........ returns SchedulerReport with stop_reason
@@ -77,30 +76,28 @@ Critic loop ...... returns LoopResult with status converged or stopped
 Paper writer ..... raises PaperValidationError on contract break
 ```
 
-A failure in any stage short-circuits the demo with a typed exception. The tests pin this contract: `test_no_triggers_raises_typed_error` and `test_best_picker_raises_when_no_triggers` assert the picker raises `NoTriggerError` / `BestResultError` when no branch fired a trigger, and the writer is never invoked.
+どの stage でも failure があれば demo は typed exception で short-circuit します。tests は `NoTriggerError` / `BestResultError` と writer が呼ばれないことを pin します。
 
-## The best-result picker
+## Best-result picker
 
-The scheduler emits paper triggers per branch. The picker selects the branch with the highest mean reward across all triggers. Ties break alphabetically by branch id so the demo is deterministic. The picker is a small pure function; the test pins it on a fixed scheduler report.
+scheduler は branch ごとに paper trigger を出します。picker は trigger された branch の中で mean reward が最大のものを選びます。tie は branch id の alphabetic order で break するため、demo は決定的です。
 
-## Wiring the critic loop
+## Critic loop wiring
 
-The critic loop in lesson fifty-five operates on a `MiniPaper`. The demo builds a `MiniPaper` from the picked branch by populating the abstract with the branch id, seeding two sections (Introduction and Results), and setting `originality_tag` from the branch's mean reward (high if `>= 0.8`, medium if `>= 0.6`, low otherwise).
+lesson 55 の critic loop は `MiniPaper` を扱います。demo は選ばれた branch から `MiniPaper` を作ります。abstract には branch id を入れ、Introduction と Results の二 section を seed し、branch mean reward から `originality_tag` を設定します。
 
-The reviser then iterates the draft to convergence. The output goes into the paper writer.
+reviser は draft を convergence まで反復します。その output が paper writer に渡ります。
 
-## Wiring the paper writer
+## Paper writer wiring
 
-The paper writer in lesson fifty-four operates on the full `Paper` shape with figures and bibliography. The demo upgrades the converged `MiniPaper` via `mini_to_full_paper`, which attaches one figure for the selected branch and a small synthetic bibliography built from the union of cite keys the critic suggested. Every cite the demo adds is also added to the bibliography list, so validation passes.
+lesson 54 の paper writer は full `Paper` shape を扱います。demo は `mini_to_full_paper` で converged `MiniPaper` を昇格させます。選ばれた branch 用の figure を一つ付け、critic が提案した cite key の union から小さな synthetic bibliography を作ります。demo が追加する cite はすべて bibliography list にも追加されるため validation は通ります。
 
-## How to read the code
+## コードの読み方
 
-`code/main.py` defines `BestResultError`, `NoTriggerError`, `DemoReport`, `pick_best_branch`, `build_mini_paper`, `mini_to_full_paper`, and `run_demo`. The imports at the top adjust `sys.path` once and pull `PaperWriter`, `CriticLoop`, and `IterationScheduler` from their lessons.
+`code/main.py` は `BestResultError`, `NoTriggerError`, `DemoReport`, `pick_best_branch`, `build_mini_paper`, `mini_to_full_paper`, `run_demo` を定義します。top-level import は `sys.path` を一度調整し、`PaperWriter`, `CriticLoop`, `IterationScheduler` を各 lesson から読みます。
 
-`code/tests/test_e2e.py` covers: demo runs end to end and emits a report with all five fields populated, determinism across two runs, NoTriggerError when no branch crosses the threshold, PaperValidationError when the writer's contract breaks, paper manifest contains the picked branch's figure, and the scheduler stop reason is one of the expected values.
+`code/tests/test_e2e.py` は end to end の成功、二回実行の determinism、trigger がない場合の `NoTriggerError`、writer contract break の `PaperValidationError`、paper manifest に選ばれた branch の figure があること、scheduler stop reason が期待集合に含まれることを確認します。
 
-## Going further
+## 発展
 
-Three extensions worth wiring once the demo is green. First, persistent state: each stage's result writes to a small JSON store so a restart can resume without re-running the cheap stages. Second, a dashboard: the trace events from the scheduler and critic loop render as a single timeline. Third, real model calls: swap the mocked prose generator and the deterministic critic for model-driven ones; the wiring does not change.
-
-The demo's job is to prove that composition is the architecture. Five lessons, four imports, one report. The next time you add a stage, the wiring grows by exactly one line.
+demo が green になったら三つの拡張が有用です。第一に persistent state です。各 stage の result を小さな JSON store に書けば restart で cheap stage を再実行せずに済みます。第二に dashboard です。scheduler と critic loop の trace event を単一 timeline として表示できます。第三に real model calls です。mocked prose generator と deterministic critic を model-driven なものに替えても wiring は変わりません。

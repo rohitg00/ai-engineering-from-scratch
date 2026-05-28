@@ -1,124 +1,124 @@
-# Checkpoints and Rollback
+# チェックポイントとロールバック
 
-> Every graph-state transition persists. When a worker crashes, its lease expires and another worker picks up at the latest checkpoint. Cloudflare Durable Objects hold state across hours or weeks. Propose-then-commit (Lesson 15) defines a rollback plan per action. Post-action verification closes the loop. EU AI Act Article 14 makes effective human oversight mandatory for high-risk systems — in practice this means checkpoints must be queryable, rollbacks must be rehearsed, and the audit trail must survive a deploy. The sharp failure mode: without idempotency keys and precondition checks, a retry after a transient failure can double-execute an already-approved action. Post-action verification is what catches it.
+> すべてのgraph-state transitionは永続化される。workerがクラッシュするとleaseが期限切れになり、別のworkerが最新checkpointから引き継ぐ。Cloudflare Durable Objectsは、数時間から数週間にわたって状態を保持する。Propose-then-commit（レッスン15）は、actionごとにrollback planを定義する。Post-action verificationがループを閉じる。EU AI Act Article 14は、high-risk systemにeffective human oversightを義務付けている。実務上これは、checkpointがquery可能であること、rollbackがrehearsal済みであること、audit trailがdeployをまたいで生き残ることを意味する。鋭い失敗モードは、一時障害後のリトライが、idempotency keyとprecondition checkなしに、承認済みactionを二重実行してしまうことだ。Post-action verificationがそれを捕まえる。
 
-**Type:** Learn
-**Languages:** Python (stdlib, checkpoint and rollback state machine)
-**Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 15 (Propose-then-commit)
-**Time:** ~60 minutes
+**タイプ:** Learn
+**言語:** Python（stdlib、checkpointとrollbackのステートマシン）
+**前提条件:** Phase 15 · 12（Durable execution）、Phase 15 · 15（Propose-then-commit）
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-Durable execution (Lesson 12) makes a crashed agent resumable. Propose-then-commit (Lesson 15) makes an approved action auditable. This lesson joins them: what happens when an approved action executes partially, crashes, and resumes? When does the rollback run, and against what state?
+Durable execution（レッスン12）は、クラッシュしたagentを再開可能にする。Propose-then-commit（レッスン15）は、承認済みactionを監査可能にする。このレッスンではその2つを接続する。承認済みactionが部分的に実行され、クラッシュし、再開したら何が起きるのか。rollbackはいつ、どの状態に対して走るのか。
 
-Real systems wire this up differently:
+実システムでは、この接続方法はそれぞれ異なる。
 
-- **LangGraph** checkpoints every graph-state transition to PostgreSQL. On worker crash, the lease releases and another worker resumes at the latest checkpoint. Workflows pause on `interrupt()`, which itself persists.
-- **Cloudflare Durable Objects** hold per-key state across hours or weeks. Co-locate the computation with the storage for the approved action.
-- **Microsoft Agent Framework** exposes `Checkpoint` primitives in the workflow API; replay plus idempotency covers retries.
+- **LangGraph**は、すべてのgraph-state transitionをPostgreSQLへcheckpointする。worker crash時にはleaseが解放され、別のworkerが最新checkpointから再開する。workflowは`interrupt()`で一時停止し、その一時停止自体も永続化される。
+- **Cloudflare Durable Objects**は、keyごとの状態を数時間から数週間保持する。承認済みactionのcomputationとstorageを同じ場所に置く。
+- **Microsoft Agent Framework**は、workflow APIで`Checkpoint` primitiveを公開する。replayとidempotencyの組み合わせがretryをカバーする。
 
-In every case, the combination that actually works is: idempotency key (prevents double-execute) + precondition check (state is still what we approved against) + post-action verify (the side effect actually happened) + rollback on verify-fail.
+どの場合でも、実際に機能する組み合わせは、idempotency key（二重実行を防ぐ）+ precondition check（状態がまだ承認時と一致している）+ post-action verify（副作用が本当に起きた）+ verify-fail時のrollbackである。
 
-## The Concept
+## 概念
 
-### Every transition persists
+### すべてのtransitionを永続化する
 
-A graph-state transition is any step that moves the workflow from one named state to another. Naive implementations persist only at specific commit points; production implementations persist every transition. The cost (a few extra writes) is small relative to the reliability gain (replay lands anywhere, lease recovery is precise).
+graph-state transitionとは、workflowをある名前付きstateから別のstateへ動かす任意のstepである。ナイーブな実装は特定のcommit pointだけを永続化する。本番実装はすべてのtransitionを永続化する。コスト（数回余分にwriteすること）は、信頼性の向上（replayがどこにでも着地でき、lease recoveryが正確になること）に比べれば小さい。
 
-### Lease recovery
+### lease recovery
 
-When a worker crashes, the workflow is not lost; the lease (a short-lived claim that this worker is executing this run) simply expires. Another worker picks up the latest checkpoint and resumes. The lease mechanism is what lets production systems survive rolling deploys without losing in-flight work.
+workerがクラッシュしても、workflowは失われない。lease（このworkerがこのrunを実行しているという短命のclaim）が単に期限切れになるだけである。別のworkerが最新checkpointを拾って再開する。lease mechanismがあるからこそ、本番システムはin-flight workを失わずにrolling deployを乗り切れる。
 
-### Idempotency plus preconditions
+### idempotency plus preconditions
 
-Idempotency alone is not enough. Consider: a workflow is approved to "transfer $100 from A to B when balance > $1000." The workflow is committed, crashes mid-execution, and resumes. If only the idempotency key is checked, and the execution resumes, the transfer runs once (correct). But consider that between crash and resume, A's balance drops to $500 via a different workflow. The idempotency check still passes; the precondition does not. Without a precondition check, we ship an overdraft.
+idempotencyだけでは十分ではない。例を考える。workflowは「balance > $1000のとき、AからBへ$100をtransferする」ことを承認されている。workflowがcommitされ、実行途中でクラッシュし、再開する。idempotency keyだけを確認して実行が再開された場合、transferは1回だけ走る（これは正しい）。しかしクラッシュから再開までの間に、別のworkflowによってAのbalanceが$500に下がったとする。idempotency checkはまだ通るが、preconditionは通らない。precondition checkがなければ、overdraftを出荷してしまう。
 
-Every consequential action needs both:
+すべてのconsequential actionには両方が必要である。
 
-- **Idempotency key**: prevents double-execute.
-- **Precondition check**: confirms the state is still consistent with what was approved.
+- **Idempotency key**: 二重実行を防ぐ。
+- **Precondition check**: 状態がまだ承認された内容と整合していることを確認する。
 
-### Post-action verification
+### post-action verification
 
-"The tool returned 200" is not verification. Real verification re-reads the target state and confirms the side effect actually happened. Patterns:
+「tool returned 200」はverificationではない。本物のverificationはtarget stateを読み直し、副作用が本当に起きたことを確認する。パターン:
 
-- Database update: `UPDATE ... RETURNING *` then assert the returned row matches intended state.
-- Email send: check sent-folder for the message ID after submission.
-- File write: read the file back and hash it.
-- API call: follow-up `GET` on the target resource.
+- Database update: `UPDATE ... RETURNING *`を実行し、返されたrowが意図したstateに一致することをassertする。
+- Email send: submission後、message IDをsent-folderで確認する。
+- File write: fileを読み戻してhashする。
+- API call: target resourceに対してfollow-up `GET`を行う。
 
-If verify fails, the workflow is in a known-bad state. Rollback engages.
+verifyが失敗した場合、workflowはknown-bad stateにある。rollbackが作動する。
 
-### Rollback plans
+### rollback plans
 
-Every consequential action in propose-then-commit (Lesson 15) carries a rollback plan. Types:
+propose-then-commit（レッスン15）におけるすべてのconsequential actionはrollback planを持つ。種類:
 
-- **In-band rollback**: reverse the side effect directly (`DELETE` after `INSERT`, `Send-correction-email` after send).
-- **Compensating transaction**: a new action that neutralizes the original (standard SAGA pattern).
-- **Out-of-band rollback**: alert a human, pause the workflow, leave the bad state for investigation.
+- **In-band rollback**: 副作用を直接戻す（`INSERT`後の`DELETE`、send後の`Send-correction-email`）。
+- **Compensating transaction**: originalを中和する新しいaction（標準的なSAGA pattern）。
+- **Out-of-band rollback**: 人間にalertし、workflowを一時停止し、調査のためにbad stateを残す。
 
-No-op rollback ("we cannot undo this") must be named in the proposal. Actions with no rollback require stronger HITL at commit time (Lesson 15 challenge-and-response).
+No-op rollback（「これは取り消せない」）はproposal内で明示しなければならない。rollbackのないactionは、commit時により強いHITLを必要とする（レッスン15のchallenge-and-response）。
 
-### EU AI Act Article 14 operational reading
+### EU AI Act Article 14の運用上の読み方
 
-Article 14 requires "effective human oversight" for high-risk systems. In operational terms, implementers read it as:
+Article 14は、high-risk systemに「effective human oversight」を要求する。運用上、実装者はこれを次のように読む。
 
-- Checkpoints are queryable by an auditor.
-- Rollbacks are rehearsed (tested end-to-end at least once).
-- The audit trail survives a deploy (checkpoint backend is not ephemeral).
-- Failed verifications are alerted on, not silently logged.
+- checkpointはauditorがqueryできる。
+- rollbackはrehearsal済みである（少なくとも1回end-to-endでtest済み）。
+- audit trailはdeployをまたいで生き残る（checkpoint backendがephemeralではない）。
+- failed verificationは黙ってlogに残すだけでなく、alertされる。
 
-A workflow that crashes mid-commit, resumes, and completes the side effect without a verify + rollback pathway does not survive the Article 14 test.
+commit途中でクラッシュし、再開し、verify + rollback pathwayなしに副作用を完了するworkflowは、Article 14のtestに耐えない。
 
-### The sharp failure mode: the double-execute
+### 鋭い失敗モード: double-execute
 
-The most common production incident in this space:
+この領域で最もよくある本番incident:
 
-1. Action approved, idempotency key k.
-2. Commit starts, executes, returns 200.
-3. Workflow crashes before persisting the "committed" status.
-4. Workflow resumes; sees "approved but not committed"; re-executes.
-5. Side effect fires twice.
+1. actionが承認され、idempotency keyはk。
+2. commitが開始し、実行され、200を返す。
+3. "committed" statusを永続化する前にworkflowがクラッシュする。
+4. workflowが再開し、"approved but not committed"と見なして再実行する。
+5. 副作用が2回発火する。
 
-Mitigation: persist an "in-flight" intent before execution, execute with an idempotency key, then mark "committed" only after post-action verification succeeds. If the action fires and the status write fails, you know to verify and (if necessary) re-fire. If the status write succeeds and the action fails, you verify and fire exactly once via the recovery path.
+緩和策: 実行前に"in-flight" intentを永続化し、idempotency key付きで実行し、post-action verificationが成功した後だけ"committed"とmarkする。actionが発火してstatus writeが失敗した場合、verifyし、必要ならre-fireすべきことが分かる。status writeが成功してactionが失敗した場合、verifyし、recovery path経由でちょうど1回だけ発火させる。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements a checkpointed workflow with idempotency, preconditions, verify, and rollback. The driver simulates four scenarios: clean run, retry after crash (idempotency catches), precondition fail (workflow aborts without firing), verify fail (rollback fires).
+`code/main.py`は、idempotency、precondition、verify、rollbackを備えたcheckpointed workflowを実装している。ドライバーは4つのscenarioをシミュレートする。clean run、crash後のretry（idempotencyが捕まえる）、precondition fail（workflowは発火せずabortする）、verify fail（rollbackが発火する）である。
 
-## Ship It
+## 仕上げる
 
-`outputs/skill-rollback-rehearsal.md` designs a rollback-rehearsal test for a proposed workflow and audits the checkpoint backend for audit-trail persistence.
+`outputs/skill-rollback-rehearsal.md`は、提案されたworkflow向けのrollback-rehearsal testを設計し、checkpoint backendのaudit-trail persistenceを監査する。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Verify the four scenarios. For the crash-during-commit case, confirm the action fires exactly once across retries.
+1. `code/main.py`を実行する。4つのscenarioを確認する。crash-during-commitのケースでは、retryをまたいでactionがちょうど1回だけ発火することを確認する。
 
-2. Modify the "mark as done first, then do it" pattern so the status write fires after the action. Rerun the crash scenario. Measure how many duplicate actions fire.
+2. 「mark as done first, then do it」パターンを変更し、status writeがactionの後に発火するようにする。crash scenarioを再実行する。重複actionが何回発火するかを測定する。
 
-3. Design a rollback plan for a specific production action (e.g., "post to a Slack channel"). Classify as in-band, compensating, or out-of-band. Justify the choice.
+3. 特定のproduction action（例: 「Slack channelへ投稿する」）のrollback planを設計する。in-band、compensating、out-of-bandのいずれかに分類する。その選択を正当化する。
 
-4. Take one workflow you know. Identify every state transition. Mark each with a durability requirement (persist / do not persist). Count the ones you are currently not persisting.
+4. 自分が知っているworkflowを1つ取り上げる。すべてのstate transitionを特定する。それぞれにdurability requirement（persist / do not persist）を付ける。現在永続化していないものを数える。
 
-5. Rehearsed-rollback test: design an end-to-end test that runs a real workflow, crashes it, and confirms the rollback path fires. What does the test assert?
+5. Rehearsed-rollback test: 実際のworkflowを実行し、クラッシュさせ、rollback pathが発火することを確認するend-to-end testを設計する。このtestは何をassertするか。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |---|---|---|
-| Checkpoint | "Save point" | Every graph-state transition persists to a durable store |
-| Lease | "Worker claim" | Short-lived claim that a worker is executing a run; expires on crash |
-| Precondition | "State gate" | Assertion that the state is still consistent with the approved action |
-| Post-action verify | "Re-read check" | Confirm the side effect actually happened in the target system |
-| In-band rollback | "Direct undo" | Reverse the side effect with the inverse operation |
-| Compensating transaction | "SAGA undo" | A new action that neutralizes the original |
-| Mark-as-done-first | "Status write order" | Persist the committed status before returning from commit |
-| Article 14 | "EU AI Act human oversight" | Operational: queryable checkpoints, rehearsed rollbacks, auditable trail |
+| Checkpoint | 「保存地点」 | すべてのgraph-state transitionがdurable storeへ永続化される |
+| Lease | 「worker claim」 | workerがrunを実行していることを示す短命のclaim。crash時に期限切れになる |
+| Precondition | 「state gate」 | 状態がまだ承認済みactionと整合しているというassertion |
+| Post-action verify | 「読み戻しcheck」 | target systemで副作用が本当に起きたことを確認する |
+| In-band rollback | 「直接undo」 | 逆操作で副作用を元に戻す |
+| Compensating transaction | 「SAGA undo」 | originalを中和する新しいaction |
+| Mark-as-done-first | 「status write order」 | commitから戻る前にcommitted statusを永続化する |
+| Article 14 | 「EU AI Act human oversight」 | 運用上はquery可能なcheckpoint、rehearsal済みrollback、監査可能なtrail |
 
-## Further Reading
+## 参考資料
 
-- [Microsoft Agent Framework — Checkpointing and HITL](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — checkpoint primitives and lease recovery.
-- [Cloudflare Agents — Human in the loop](https://developers.cloudflare.com/agents/concepts/human-in-the-loop/) — Durable Objects as a state substrate.
-- [EU AI Act — Article 14: Human oversight](https://artificialintelligenceact.eu/article/14/) — regulatory baseline.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — reliability framing for long-horizon workflows.
-- [Anthropic — Claude Code Agent SDK: agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — workflow shape for Claude Code Routines.
+- [Microsoft Agent Framework — Checkpointing and HITL](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — checkpoint primitiveとlease recovery。
+- [Cloudflare Agents — Human in the loop](https://developers.cloudflare.com/agents/concepts/human-in-the-loop/) — state substrateとしてのDurable Objects。
+- [EU AI Act — Article 14: Human oversight](https://artificialintelligenceact.eu/article/14/) — regulatory baseline。
+- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — long-horizon workflowのreliability framing。
+- [Anthropic — Claude Code Agent SDK: agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — Claude Code Routinesのworkflow shape。

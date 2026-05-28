@@ -1,6 +1,6 @@
-"""Unit tests for the streaming corpus downloader.
+"""streaming corpus downloader の unit tests。
 
-Run with: python3 -m unittest discover code/tests -v
+実行: python3 -m unittest discover code/tests -v
 """
 
 from __future__ import annotations
@@ -49,19 +49,19 @@ def _zst_url(directory: Path, name: str, lines: list[str]) -> str:
 class MinHasherTests(unittest.TestCase):
     def test_signature_length_matches_num_hashes(self) -> None:
         hasher = MinHasher(num_hashes=64, shingle_width=3)
-        sig = hasher.signature("the quick brown fox jumps over the lazy dog")
+        sig = hasher.signature("すばやい茶色の狐がのんびりした犬を飛び越える")
         self.assertEqual(len(sig), 64)
 
     def test_identical_text_produces_identical_signature(self) -> None:
         hasher = MinHasher(num_hashes=32, shingle_width=3)
-        text = "alignment is a contract between rewards and behavior"
+        text = "alignment は reward と behavior の contract である"
         self.assertEqual(hasher.signature(text), hasher.signature(text))
 
     def test_near_duplicate_has_high_jaccard_estimate(self) -> None:
         hasher = MinHasher(num_hashes=256, shingle_width=3)
         index = LSHIndex(num_hashes=256, bands=64)
-        a = "alignment is a contract between reward functions and behavior"
-        b = "alignment is a contract between reward functions and the behavior"
+        a = "alignment は reward function と behavior の contract である"
+        b = "alignment は reward function と behavior の contract である"
         index.insert("a", hasher.signature(a))
         index.insert("b", hasher.signature(b))
         estimate = index.jaccard_estimate("a", "b")
@@ -103,9 +103,9 @@ class LSHIndexTests(unittest.TestCase):
     def test_lsh_does_not_collide_unrelated_documents(self) -> None:
         hasher = MinHasher(num_hashes=128, shingle_width=3)
         index = LSHIndex(num_hashes=128, bands=32)
-        index.insert("alpha", hasher.signature("the alignment problem is a story about reward functions"))
+        index.insert("alpha", hasher.signature("alignment problem は reward function についての話である"))
         match = index.query(
-            hasher.signature("kubernetes pod scheduling is a constraint satisfaction problem")
+            hasher.signature("kubernetes pod scheduling は constraint satisfaction problem である")
         )
         self.assertIsNone(match)
 
@@ -115,9 +115,9 @@ class DedupTests(unittest.TestCase):
         hasher = MinHasher(num_hashes=128, shingle_width=3)
         index = LSHIndex(num_hashes=128, bands=32)
         dedup = Dedup(hasher=hasher, index=index)
-        verdict_keep = dedup.evaluate("s0", 0, "the alignment problem is a story about reward functions")
+        verdict_keep = dedup.evaluate("s0", 0, "alignment problem は reward function についての話である")
         verdict_dup = dedup.evaluate(
-            "s0", 1, "the alignment problem is a story about reward functions"
+            "s0", 1, "alignment problem は reward function についての話である"
         )
         self.assertEqual(verdict_keep.verdict, "keep")
         self.assertEqual(verdict_dup.verdict, "near_duplicate")

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow28" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -8,8 +8,8 @@
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
@@ -23,10 +23,10 @@
   <text x="160" y="100" text-anchor="middle" class="small">talent pipeline</text>
   <rect x="80" y="110" width="160" height="50" class="cool"/>
   <text x="160" y="132" text-anchor="middle" class="step">527+ scholars</text>
-  <text x="160" y="150" text-anchor="middle" class="small">180+ papers, h-index 47</text>
+  <text x="160" y="150" text-anchor="middle" class="small">180+ papers、h-index 47</text>
   <rect x="80" y="170" width="160" height="50" class="cool"/>
   <text x="160" y="192" text-anchor="middle" class="step">90 scholars 2024</text>
-  <text x="160" y="210" text-anchor="middle" class="small">~80% safety careers</text>
+  <text x="160" y="210" text-anchor="middle" class="small">~80%がsafety careersへ</text>
 
   <rect x="300" y="60" width="200" height="180" class="box"/>
   <text x="400" y="82" text-anchor="middle" class="head">Redwood + Apollo</text>
@@ -63,12 +63,12 @@
   <path d="M 740 150 L 780 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow28)" fill="none"/>
 
   <rect x="60" y="280" width="880" height="210" class="box"/>
-  <text x="480" y="305" text-anchor="middle" class="head">multi-org publications as quality control</text>
-  <text x="80" y="335" class="small">Sleeper Agents (Lesson 7): Anthropic + Redwood. external co-author validates the threat model.</text>
-  <text x="80" y="355" class="small">Alignment Faking (Lesson 9): Anthropic + Redwood. same pattern.</text>
-  <text x="80" y="375" class="small">Anti-Scheming Training (Lesson 8): Apollo + OpenAI. external evaluator inside the training collab.</text>
-  <text x="80" y="395" class="small">AI Control (Lesson 10): Redwood, then published at ICML 2024; UK AISI partner from 2025.</text>
-  <text x="80" y="425" class="small">regulatory counterparts: UK AISI (Feb 2025 rename), US CAISI (Jun 2025), EU AI Office.</text>
-  <text x="80" y="445" class="small">MATS -&gt; labs is the dominant flow. retention: 80% on safety/security.</text>
-  <text x="80" y="475" class="small">gap: China, India, Africa alignment ecosystems are less documented publicly as of 2026.</text>
+  <text x="480" y="305" text-anchor="middle" class="head">quality controlとしてのmulti-org publications</text>
+  <text x="80" y="335" class="small">Sleeper Agents (Lesson 7): Anthropic + Redwood。external co-authorがthreat modelを検証。</text>
+  <text x="80" y="355" class="small">Alignment Faking (Lesson 9): Anthropic + Redwood。同じpattern。</text>
+  <text x="80" y="375" class="small">Anti-Scheming Training (Lesson 8): Apollo + OpenAI。training collaboration内にexternal evaluator。</text>
+  <text x="80" y="395" class="small">AI Control (Lesson 10): Redwood、のちICML 2024で発表。2025年からUK AISI partner。</text>
+  <text x="80" y="425" class="small">regulatory counterparts: UK AISI (2025年2月改名)、US CAISI (2025年6月)、EU AI Office。</text>
+  <text x="80" y="445" class="small">MATS -&gt; labsがdominant flow。retention: 80%がsafety/security。</text>
+  <text x="80" y="475" class="small">gap: China、India、Africaのalignment ecosystemsは2026年時点で公開documentationが少ない。</text>
 </svg>

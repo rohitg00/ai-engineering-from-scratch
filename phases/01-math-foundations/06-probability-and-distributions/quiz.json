@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the difference between a probability mass function (PMF) and a probability density function (PDF)?",
-      "options": ["PMFs are used for continuous variables, PDFs for discrete variables", "PMFs give exact probabilities for discrete outcomes, while PDFs give densities for continuous variables that must be integrated over an interval to get probability", "There is no difference; they are the same concept with different names", "PMFs always sum to 0.5, PDFs integrate to 1"],
+      "question": "確率質量関数（PMF）と確率密度関数（PDF）の違いは何ですか？",
+      "options": ["PMF は連続変数に、PDF は離散変数に使う", "PMF は離散的な結果の正確な確率を与え、PDF は連続変数の密度を与える。確率を得るには区間上で積分する必要がある", "違いはない。同じ概念の別名である", "PMF は必ず合計が 0.5 になり、PDF は積分すると 1 になる"],
       "correct": 1,
-      "explanation": "For discrete variables, the PMF gives P(X=k) directly. For continuous variables, the PDF f(x) is a density -- P(a<=X<=b) requires integrating f(x) from a to b. The density at a single point is not a probability."
+      "explanation": "離散変数では、PMF が P(X=k) を直接与えます。連続変数では、PDF f(x) は密度であり、P(a<=X<=b) を得るには f(x) を a から b まで積分する必要があります。1点での密度は確率ではありません。"
     },
     {
       "stage": "pre",
-      "question": "What does the Central Limit Theorem state?",
-      "options": ["All data follows a normal distribution", "The mean of many independent random samples converges to a normal distribution regardless of the source distribution", "Large datasets always have low variance", "The probability of rare events decreases as sample size increases"],
+      "question": "中心極限定理は何を述べていますか？",
+      "options": ["すべてのデータは正規分布に従う", "多くの独立なランダムサンプルの平均は、元の分布に関係なく正規分布へ近づく", "大きなデータセットは常に分散が低い", "まれな事象の確率はサンプルサイズが増えるほど低下する"],
       "correct": 1,
-      "explanation": "The CLT says that the average of many independent random variables approaches a Gaussian, no matter what the original distribution looks like. This explains why the normal distribution appears everywhere."
+      "explanation": "中心極限定理は、多くの独立な確率変数の平均が、元の分布の形に関係なく Gaussian に近づくことを述べます。これが正規分布が至るところに現れる理由です。"
     },
     {
       "stage": "post",
-      "question": "Why does softmax subtract the maximum logit before exponentiating (the 'softmax trick')?",
-      "options": ["To make all probabilities equal", "To prevent numerical overflow from exponentiating large numbers while producing mathematically identical results", "To normalize the logits to have mean zero", "To speed up the computation by reducing the number of exponentiations"],
+      "question": "softmax が指数化する前に最大 logit を引く（'softmax trick'）のはなぜですか？",
+      "options": ["すべての確率を等しくするため", "大きな数を指数化して数値オーバーフローするのを防ぎつつ、数学的に同じ結果を得るため", "logits の平均がゼロになるように正規化するため", "指数計算の回数を減らして計算を速くするため"],
       "correct": 1,
-      "explanation": "exp(100) overflows to infinity. Subtracting max(logits) shifts all values so the largest is 0. exp(0)=1 is safe. The subtraction cancels out in the normalization, giving identical probabilities."
+      "explanation": "exp(100) は無限大へオーバーフローします。max(logits) を引くと、最大値が 0 になるようにすべての値がシフトされます。exp(0)=1 は安全です。この引き算は正規化の中で打ち消されるため、同じ確率が得られます。"
     },
     {
       "stage": "post",
-      "question": "Cross-entropy loss for classification simplifies to -log(q(true_class)). What does this mean intuitively?",
-      "options": ["Multiply the predicted probabilities by the true labels", "Penalize the model based on how low its predicted probability is for the correct class -- lower prediction means higher loss", "Average the log probabilities across all classes", "Compute the entropy of the true distribution"],
+      "question": "分類の cross-entropy loss は -log(q(true_class)) に簡約されます。これは直感的には何を意味しますか？",
+      "options": ["予測確率に真のラベルを掛ける", "正解クラスに対する予測確率が低いほど損失が高くなるように、モデルを罰する", "すべてのクラスの対数確率を平均する", "真の分布のエントロピーを計算する"],
       "correct": 1,
-      "explanation": "If the model predicts 0.9 for the correct class, loss = -log(0.9) = 0.105 (low). If it predicts 0.01, loss = -log(0.01) = 4.6 (high). The loss punishes low confidence in the correct answer."
+      "explanation": "モデルが正解クラスに 0.9 を予測した場合、loss = -log(0.9) = 0.105 で低くなります。0.01 を予測した場合、loss = -log(0.01) = 4.6 で高くなります。この損失は、正解への低い信頼度を罰します。"
     },
     {
       "stage": "post",
-      "question": "Why do language models work with log probabilities instead of raw probabilities?",
-      "options": ["Log probabilities are easier to interpret visually", "Multiplying many small probabilities causes numerical underflow to zero; log probabilities convert products to sums, avoiding this", "Log probabilities are required by the transformer architecture", "Raw probabilities cannot represent values less than 0.01"],
+      "question": "言語モデルが生の確率ではなく対数確率を扱うのはなぜですか？",
+      "options": ["対数確率の方が視覚的に解釈しやすいから", "多くの小さな確率を掛けると数値アンダーフローでゼロになるため。対数確率は積を和に変換してこれを避けるから", "transformer アーキテクチャでは対数確率が必須だから", "生の確率は 0.01 より小さい値を表せないから"],
       "correct": 1,
-      "explanation": "P(sentence) = P(word1) * P(word2) * ... quickly underflows to 0.0 with float64. Log P(sentence) = log P(word1) + log P(word2) + ... stays in a finite range. Products become sums."
+      "explanation": "P(sentence) = P(word1) * P(word2) * ... は、float64 でもすぐに 0.0 へアンダーフローします。Log P(sentence) = log P(word1) + log P(word2) + ... は有限範囲にとどまります。積が和になります。"
     }
   ]
 }

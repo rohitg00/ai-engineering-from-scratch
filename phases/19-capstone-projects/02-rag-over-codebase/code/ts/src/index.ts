@@ -1,14 +1,14 @@
 // Capstone 19/02: code RAG query API (multi-file TypeScript).
 //
 // Sources:
-//   This lesson's docs/en.md (hybrid retrieval + cited answer API)
+//   この lesson の docs/en.md (hybrid retrieval + cited answer API)
 //   Hono web framework           https://hono.dev/docs/
 //   BM25 (Robertson + Zaragoza) https://en.wikipedia.org/wiki/Okapi_BM25
 //   Reciprocal Rank Fusion       https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf
 //
-// Hybrid retrieval API split into modules: index_store.ts (FNV-1a embedder + BM25),
-// retrieval.ts (RRF merge), server.ts (hono routes /healthz, /query), this entry
-// (boots node:http behind the hono fetch handler, runs a self-probe, exits 0).
+// hybrid retrieval API は module に分割しています: index_store.ts (FNV-1a embedder + BM25),
+// retrieval.ts (RRF merge)、server.ts (hono routes /healthz, /query)、この entry
+// (hono fetch handler 背後で node:http を起動し、self-probe を走らせて exit 0)。
 
 import * as http from "node:http";
 import { Readable } from "node:stream";
@@ -54,9 +54,9 @@ function nodeListener(fetchHandler: FetchLike) {
 
 async function probe(server: http.Server, port: number): Promise<void> {
   const queries = [
-    "how is S3 multipart abort wired into retry budget",
-    "where is authorization centralized",
-    "how does rank fusion work",
+    "S3 multipart abort は retry budget にどう結び付いているか",
+    "authorization はどこに centralized されているか",
+    "rank fusion はどう動くか",
   ];
   const get = (p: string): Promise<{ status: number; body: string }> =>
     new Promise((resolve, reject) => {
@@ -83,7 +83,7 @@ async function probe(server: http.Server, port: number): Promise<void> {
 
   for (const q of queries) {
     const r = await get(`/query?q=${encodeURIComponent(q)}`);
-    if (r.status !== 200) throw new Error(`query '${q}' returned ${r.status}`);
+    if (r.status !== 200) throw new Error(`query '${q}' が ${r.status} を返しました`);
     const parsed = JSON.parse(r.body) as QueryResponse;
     console.log(`GET /query?q=${JSON.stringify(q)} -> ${r.status}`);
     console.log(`  dense  : ${JSON.stringify(parsed.denseTop)}`);
@@ -95,7 +95,7 @@ async function probe(server: http.Server, port: number): Promise<void> {
         .join(", ")}`,
     );
     if (parsed.citations.length === 0) {
-      throw new Error(`query '${q}' returned no citations`);
+      throw new Error(`query '${q}' が citation を返しませんでした`);
     }
   }
   await new Promise<void>((resolve) => server.close(() => resolve()));
@@ -103,12 +103,12 @@ async function probe(server: http.Server, port: number): Promise<void> {
 
 async function main(): Promise<void> {
   const { dense, bm25 } = buildIndices();
-  console.log(`indexed ${dense.size()} chunks across ${SAMPLE_CORPUS.length} entries`);
+  console.log(`${SAMPLE_CORPUS.length} entries にわたる ${dense.size()} chunks を index 済み`);
   const app = buildApp(dense, bm25);
   const server = http.createServer(nodeListener(app.fetch as FetchLike));
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", () => resolve()));
   const addr = server.address();
-  if (!addr || typeof addr === "string") throw new Error("server address unavailable");
+  if (!addr || typeof addr === "string") throw new Error("server address を取得できません");
   const port = addr.port;
   console.log(`code-rag api listening on http://127.0.0.1:${port}`);
   if (process.argv.includes("--serve")) {

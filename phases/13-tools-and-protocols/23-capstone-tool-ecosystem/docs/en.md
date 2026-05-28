@@ -1,28 +1,28 @@
-# Capstone — Build a Complete Tool Ecosystem
+# Capstone — Complete Tool Ecosystemを構築する
 
-> Phase 13 taught every piece. This capstone wires them into one production-shaped system: an MCP server with tools + resources + prompts + tasks + UI, OAuth 2.1 at the edge, an RBAC gateway, a multi-server client, an A2A sub-agent call, OTel tracing into a collector, tool-poisoning detection in CI, and an AGENTS.md + SKILL.md bundle. By the end you can defend every architectural choice.
+> Phase 13では部品をすべて学んだ。このcapstoneでは、それらを1つのproduction-shaped systemへ配線する。Tools + resources + prompts + tasks + UIを持つMCP server、edgeのOAuth 2.1、RBAC gateway、multi-server client、A2A sub-agent call、collectorへ流すOTel tracing、CIでのtool-poisoning detection、AGENTS.md + SKILL.md bundle。最後には、各architecture choiceを説明して守れるようになる。
 
-**Type:** Build
-**Languages:** Python (stdlib, end-to-end ecosystem harness)
-**Prerequisites:** Phase 13 · 01 through 21
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python (stdlib, end-to-end ecosystem harness)
+**前提条件:** Phase 13 · 01 through 21
+**所要時間:** 約120分
 
 ## Learning Objectives
 
-- Compose an MCP server exposing tools, resources, prompts, and a task with a `ui://` app.
-- Front the server with an OAuth 2.1 gateway that enforces RBAC and pinned hashes.
-- Write a multi-server client that traces with OTel GenAI attributes end-to-end.
-- Delegate part of a workload to an A2A sub-agent; verify opacity is preserved.
-- Package the whole stack with AGENTS.md + SKILL.md so other agents can drive it.
+- Tools、resources、prompts、`ui://` app付きtaskを公開するMCP serverを構成する。
+- OAuth 2.1 gatewayを前段に置き、RBACとpinned hashesを強制する。
+- OTel GenAI attributesでend-to-endにtraceするmulti-server clientを書く。
+- Workloadの一部をA2A sub-agentへdelegateし、opacityが保たれることを検証する。
+- Stack全体をAGENTS.md + SKILL.mdでpackageし、他のagentsが操作できるようにする。
 
-## The Problem
+## 問題
 
-Ship the "research and report" system:
+「research and report」systemをshipする。
 
 - User asks: "summarize the three most-cited 2026 arXiv papers on agent protocols."
-- System: search arXiv via MCP; delegate paper summarization to a specialized writer agent via A2A; aggregate results; render an interactive report as an MCP Apps `ui://` resource; log every step to OTel.
+- System: MCP経由でarXivをsearchする。A2A経由でpaper summarizationをspecialized writer agentへdelegateする。結果をaggregateする。MCP Apps `ui://` resourceとしてinteractive reportをrenderする。全stepをOTelへlogする。
 
-All the primitives from Phase 13 show up. This is not a toy — production research-assistant systems shipped in 2026 by Anthropic (the Claude Research product), OpenAI (GPTs with Apps SDK), and third parties have this exact shape.
+Phase 13のprimitivesがすべて登場する。これはtoyではない。Anthropic（Claude Research product）、OpenAI（Apps SDK付きGPTs）、third partiesが2026年にshipしたproduction research-assistant systemsは、この形とほぼ同じである。
 
 ## The Concept
 
@@ -57,23 +57,23 @@ agent.invoke_agent
  └── llm.chat (final synthesis)
 ```
 
-One trace id. Every span has the right `gen_ai.*` attributes.
+1つのtrace id。すべてのspanが正しい`gen_ai.*` attributesを持つ。
 
 ### Security posture
 
-- OAuth 2.1 + PKCE with resource indicator pinning audience to gateway.
-- Gateway holds upstream credentials; user never sees them.
-- RBAC: `alice` has `research:read`, `research:write`, can call all tools. `bob` has `research:read`, cannot call `generate_report`.
-- Pinned description manifest: dropped any server whose tool hashes changed.
-- Rule of Two audit: no tool combines untrusted input, sensitive data, and consequential action.
+- OAuth 2.1 + PKCE。Resource indicatorでaudienceをgatewayへpinする。
+- Gatewayがupstream credentialsを保持し、userには見せない。
+- RBAC: `alice`は`research:read`と`research:write`を持ち、すべてのtoolsをcallできる。`bob`は`research:read`のみで、`generate_report`はcallできない。
+- Pinned description manifest: tool hashが変わったserverはdropする。
+- Rule of Two audit: untrusted input、sensitive data、consequential actionを1つに結合するtoolを許可しない。
 
 ### Rendering
 
-The final `generate_report` task returns content blocks plus a `ui://report/current` resource. The client's host (Claude Desktop, etc.) renders the interactive dashboard in a sandbox iframe. The dashboard contains a sorted paper list, citation counts, and a button that calls `host.callTool('summarize_paper', {arxiv_id})` for any paper the user clicks.
+最終的に`generate_report` taskはcontent blocksと`ui://report/current` resourceを返す。Client host（Claude Desktopなど）はinteractive dashboardをsandbox iframeでrenderする。Dashboardにはsorted paper list、citation counts、userがpaperをclickしたときに`host.callTool('summarize_paper', {arxiv_id})`を呼ぶbuttonが含まれる。
 
 ### Packaging
 
-The whole thing ships as:
+全体は次の形でshipする。
 
 ```
 research-system/
@@ -91,68 +91,68 @@ research-system/
     config.yaml                 # RBAC + pinned manifest
 ```
 
-Users deploy with `docker compose up`. Claude Code, Cursor, Codex, and opencode users can drive the system by invoking the `run-research` skill.
+Usersは`docker compose up`でdeployする。Claude Code、Cursor、Codex、opencodeのusersは`run-research` skillをinvokeしてsystemを操作できる。
 
 ### What each Phase 13 lesson contributed
 
 | Lesson | What the capstone uses |
 |--------|------------------------|
-| 01-05 | Tool interface, provider-portability, parallel calls, schemas, linting |
-| 06-10 | MCP primitives, server, client, transports, resources + prompts |
-| 11-14 | Sampling, roots + elicitation, async tasks, `ui://` apps |
-| 15-17 | Tool poisoning, OAuth 2.1, gateway + registry |
+| 01-05 | Tool interface、provider-portability、parallel calls、schemas、linting |
+| 06-10 | MCP primitives、server、client、transports、resources + prompts |
+| 11-14 | Sampling、roots + elicitation、async tasks、`ui://` apps |
+| 15-17 | Tool poisoning、OAuth 2.1、gateway + registry |
 | 18 | A2A sub-agent delegation |
 | 19 | OTel GenAI tracing |
-| 20 | Routing gateway for the LLM layer |
+| 20 | LLM layer向けrouting gateway |
 | 21 | SKILL.md + AGENTS.md packaging |
 
 ## Use It
 
-`code/main.py` stitches the previous lessons' patterns into one runnable demo. All stdlib, all in-process so you can read it end to end. It runs the full flow for the research-and-report scenario: handshake with gateway, OAuth 2.1 simulated, tools/list merged, generate_report as a task, A2A call to writer, ui:// resource returned, OTel spans emitted.
+`code/main.py`はこれまでのlessonsのpatternsを1つのrunnable demoへ縫い合わせる。すべてstdlib、すべてin-processなのでend-to-endで読める。Research-and-report scenarioのfull flowを走らせる。Gatewayとのhandshake、simulated OAuth 2.1、merged tools/list、taskとしてのgenerate_report、writerへのA2A call、返却されるui:// resource、emitされるOTel spans。
 
-What to look at:
+見るべき点:
 
-- One trace id across every hop.
-- Gateway policy blocks a second user from writing.
-- Task lifecycle goes working → completed and returns both text and ui:// content.
-- A2A call's inner state is opaque to the orchestrator.
-- AGENTS.md and SKILL.md are the only files another agent needs to reproduce the workflow.
+- すべてのhopをまたぐ1つのtrace id。
+- Gateway policyがsecond userのwriteをblockする。
+- Task lifecycleがworking → completedへ進み、textとui:// contentの両方を返す。
+- A2A callのinner stateはorchestratorからopaqueである。
+- AGENTS.mdとSKILL.mdだけが、別agentがworkflowを再現するために必要なfilesである。
 
 ## Ship It
 
-This lesson produces `outputs/skill-ecosystem-blueprint.md`. Given a product need (research, summarization, automation), the skill produces the full architecture: which MCP primitives, which gateway controls, which A2A calls, which telemetry, which packaging.
+このlessonは`outputs/skill-ecosystem-blueprint.md`を生成する。Product need（research、summarization、automation）を与えると、このskillはfull architectureを作る。どのMCP primitives、どのgateway controls、どのA2A calls、どのtelemetry、どのpackagingが必要かを示す。
 
 ## Exercises
 
-1. Run `code/main.py`. Note the single trace id and how spans nest. Count how many primitives from Phase 13 the demo touches.
+1. `code/main.py`を実行する。Single trace idとspanのnestを確認する。DemoがPhase 13のprimitivesをいくつ触るか数える。
 
-2. Extend the demo: add a second backend MCP server (e.g. `bibliography`) and confirm the gateway merges its tools into the same namespace.
+2. Demoを拡張する。Second backend MCP server（例: `bibliography`）を追加し、gatewayがそのtoolsを同じnamespaceへmergeすることを確認する。
 
-3. Replace the fake A2A writer agent with a real one running on a subprocess. Use the Lesson 19 harness.
+3. Fake A2A writer agentを、subprocess上で動くreal agentへ置き換える。Lesson 19 harnessを使う。
 
-4. Add a PII redaction step in the routing gateway between the orchestrator and the LLM. Confirm emails in the user query get scrubbed.
+4. OrchestratorとLLMの間のrouting gatewayにPII redaction stepを追加する。User query内のemailがscrubされることを確認する。
 
-5. Write an AGENTS.md for a teammate who will maintain this system. It should take under five minutes to read and give them everything they need to drive the capstone in Cursor or Codex.
+5. このsystemを保守するteammate向けのAGENTS.mdを書く。5分以内で読め、CursorまたはCodexでcapstoneを操作するのに必要な情報がすべて入っているべきである。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Capstone | "Phase-13 integration demo" | End-to-end system using every primitive |
-| Research and report | "The scenario" | Search, summarize, render pattern |
-| Ecosystem | "All the pieces together" | Server + client + gateway + sub-agent + telemetry + package |
-| Trace hierarchy | "Single trace id" | Every hop's span shares the trace; parent-child via span ids |
-| Gateway-issued token | "Transitive auth" | Client sees only gateway's token; gateway holds upstream creds |
-| Merged namespace | "All tools in one flat list" | Multi-server merge at the gateway, prefix-on-collision |
-| Opacity boundary | "A2A call hides internals" | Sub-agent's reasoning invisible to orchestrator |
-| Three-layer stack | "AGENTS.md + SKILL.md + MCP" | Project context + workflow + tools |
-| Defense-in-depth | "Multiple security layers" | Pinned hashes, OAuth, RBAC, Rule of Two, audit log |
-| Spec compliance matrix | "What we ship that the spec requires" | Checklist mapping deliverables to 2025-11-25 requirements |
+| Term | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Capstone | 「Phase 13のintegration demo」 | すべてのprimitiveを使うend-to-end system |
+| Research and report | 「このscenario」 | Search、summarize、render pattern |
+| Ecosystem | 「全部品をまとめたもの」 | Server + client + gateway + sub-agent + telemetry + package |
+| Trace hierarchy | 「single trace id」 | すべてのhopのspanがtraceを共有し、span idでparent-childになる |
+| Gateway-issued token | 「transitive auth」 | Clientはgateway tokenだけを見る。Gatewayがupstream credsを保持 |
+| Merged namespace | 「all tools in one flat list」 | Gatewayでmulti-serverをmergeし、collision時はprefixする |
+| Opacity boundary | 「A2A callがinternalsを隠す」 | Sub-agentのreasoningはorchestratorから見えない |
+| Three-layer stack | 「AGENTS.md + SKILL.md + MCP」 | Project context + workflow + tools |
+| Defense-in-depth | 「複数のsecurity layers」 | Pinned hashes、OAuth、RBAC、Rule of Two、audit log |
+| Spec compliance matrix | 「spec要求と出荷内容の対応」 | 成果物を2025-11-25要件へ対応付けるチェックリスト |
 
-## Further Reading
+## 参考文献
 
-- [MCP — Specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — consolidated reference
-- [MCP blog — 2026 roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — where the protocol is heading
+- [MCP — Specification 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25) — 統合リファレンス
+- [MCP blog — 2026 roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/) — プロトコルの今後
 - [a2a-protocol.org](https://a2a-protocol.org/latest/) — A2A v1.0 reference
 - [OpenTelemetry — GenAI semconv](https://opentelemetry.io/docs/specs/semconv/gen-ai/) — canonical tracing conventions
 - [Anthropic — Claude Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview) — production agent runtime patterns

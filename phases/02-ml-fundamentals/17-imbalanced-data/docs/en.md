@@ -1,34 +1,34 @@
 # Handling Imbalanced Data
 
-> When 99% of your data is "normal," accuracy is a lie.
+> データの 99% が「normal」なら、accuracy は嘘をつきます。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 2, Lessons 01-09 (especially evaluation metrics)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 2, Lessons 01-09 (especially evaluation metrics)
+**所要時間:** 約90分
 
 ## Learning Objectives
 
-- Implement SMOTE from scratch and explain how synthetic oversampling differs from random duplication
-- Evaluate imbalanced classifiers using F1, AUPRC, and Matthews Correlation Coefficient instead of accuracy
-- Compare class weighting, threshold tuning, and resampling strategies and select the right approach for a given imbalance ratio
-- Build a complete imbalanced data pipeline that combines SMOTE, class weights, and threshold optimization
+- SMOTE をゼロから実装し、synthetic oversampling が random duplication とどう違うかを説明する
+- 不均衡分類器を accuracy ではなく F1、AUPRC、Matthews Correlation Coefficient で評価する
+- class weighting、threshold tuning、resampling strategies を比較し、与えられた imbalance ratio に適した手法を選ぶ
+- SMOTE、class weights、threshold optimization を組み合わせた完全な imbalanced data pipeline を構築する
 
-## The Problem
+## 問題
 
-You build a fraud detection model. It gets 99.9% accuracy. You celebrate. Then you realize it predicts "not fraud" for every single transaction.
+fraud detection model を構築しました。99.9% accuracy が出ました。喜んだあとで、そのモデルがすべての transaction を「not fraud」と予測していることに気づきます。
 
-This is not a bug. It is the rational thing to do when only 0.1% of transactions are fraudulent. The model learns that always guessing the majority class minimizes overall error. It is technically correct and completely useless.
+これは bug ではありません。fraudulent な transaction が 0.1% しかない場合、これは合理的な振る舞いです。モデルは、常に majority class を予測すれば全体の error が最小になると学びます。技術的には正しく、実用上はまったく役に立ちません。
 
-This happens everywhere real classification matters. Disease diagnosis: 1% positive rate. Network intrusion: 0.01% attacks. Manufacturing defects: 0.5% defective. Spam filtering: 20% spam. Churn prediction: 5% churners. The more consequential the minority class, the rarer it tends to be.
+これは、現実の重要な分類問題のあらゆる場所で起こります。disease diagnosis: positive rate 1%。network intrusion: attacks 0.01%。manufacturing defects: defective 0.5%。spam filtering: spam 20%。churn prediction: churners 5%。minority class が重要であればあるほど、まれであることが多いのです。
 
-Accuracy fails because it treats all correct predictions equally. Correctly labeling a legitimate transaction and correctly catching fraud both count as one point of accuracy. But catching fraud is the entire reason the model exists. We need metrics, techniques, and training strategies that force the model to pay attention to the rare but important class.
+Accuracy が失敗するのは、すべての正解を同じ重みで扱うからです。legitimate transaction を正しく分類することと fraud を正しく捕捉することは、どちらも accuracy では 1 点です。しかし fraud を捕捉することこそ、モデルが存在する理由です。まれだが重要な class にモデルが注意を払うようにする metrics、techniques、training strategies が必要です。
 
 ## The Concept
 
 ### Why Accuracy Fails
 
-Consider a dataset with 1000 samples: 990 negative, 10 positive. A model that always predicts negative:
+1000 samples のデータセットを考えます。990 が negative、10 が positive です。常に negative と予測するモデルは次のようになります。
 
 |  | Predicted Positive | Predicted Negative |
 |--|---|---|
@@ -37,23 +37,23 @@ Consider a dataset with 1000 samples: 990 negative, 10 positive. A model that al
 
 Accuracy = (0 + 990) / 1000 = 99.0%
 
-The model catches zero fraud. Zero disease. Zero defects. But accuracy says 99%. This is why accuracy is dangerous for imbalanced problems.
+モデルは fraud を 0 件、disease を 0 件、defects を 0 件しか捕捉しません。それでも accuracy は 99% と言います。これが、不均衡問題で accuracy が危険な理由です。
 
 ### Better Metrics
 
-**Precision** = TP / (TP + FP). Of everything flagged as positive, how many actually are? High precision means few false alarms.
+**Precision** = TP / (TP + FP)。positive として flag したもののうち、実際に positive だったものはいくつか。高い precision は false alarms が少ないことを意味します。
 
-**Recall** = TP / (TP + FN). Of everything actually positive, how many did we catch? High recall means few missed positives.
+**Recall** = TP / (TP + FN)。実際に positive のもののうち、いくつ捕捉できたか。高い recall は missed positives が少ないことを意味します。
 
-**F1 Score** = 2 * precision * recall / (precision + recall). The harmonic mean. Penalizes extreme imbalance between precision and recall more than the arithmetic mean would.
+**F1 Score** = 2 * precision * recall / (precision + recall)。調和平均です。precision と recall の極端な不均衡を、算術平均より強く罰します。
 
-**F-beta Score** = (1 + beta^2) * precision * recall / (beta^2 * precision + recall). When beta > 1, recall matters more. When beta < 1, precision matters more. F2 is common in fraud detection (missing fraud is worse than a false alarm).
+**F-beta Score** = (1 + beta^2) * precision * recall / (beta^2 * precision + recall)。beta > 1 なら recall をより重視します。beta < 1 なら precision をより重視します。fraud detection では F2 がよく使われます（fraud の見逃しは false alarm より悪い）。
 
-**AUPRC** (Area Under Precision-Recall Curve). Like AUC-ROC but more informative for imbalanced data. A random classifier has AUPRC equal to the positive class rate (not 0.5 like ROC). This makes improvements easier to see.
+**AUPRC** (Area Under Precision-Recall Curve)。AUC-ROC に似ていますが、不均衡データではより情報量があります。random classifier の AUPRC は positive class rate に等しくなります（ROC のように 0.5 ではありません）。そのため改善が見えやすくなります。
 
-**Matthews Correlation Coefficient** = (TP * TN - FP * FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN)). Ranges from -1 to +1. Only gives a high score when the model does well on both classes. Balanced even when classes are very different sizes.
+**Matthews Correlation Coefficient** = (TP * TN - FP * FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN))。範囲は -1 から +1 です。モデルが両方の class でうまく機能したときだけ高い score になります。class sizes が大きく異なっても balanced です。
 
-For the "always predict negative" model above: precision = 0/0 (undefined, often set to 0), recall = 0/10 = 0, F1 = 0, MCC = 0. These metrics correctly identify the model as worthless.
+上の「常に negative を予測する」モデルでは、precision = 0/0（未定義、通常 0 と扱う）、recall = 0/10 = 0、F1 = 0、MCC = 0 です。これらの指標は、モデルが役に立たないことを正しく示します。
 
 ### The Imbalanced Data Pipeline
 
@@ -75,17 +75,17 @@ flowchart TD
 
 ### SMOTE: Synthetic Minority Oversampling Technique
 
-Random oversampling duplicates existing minority samples. This works but risks overfitting because the model sees identical points repeatedly.
+Random oversampling は既存の minority samples を複製します。これは機能しますが、モデルが同一の点を繰り返し見るため overfitting のリスクがあります。
 
-SMOTE creates new synthetic minority samples that are plausible but not copies. The algorithm:
+SMOTE は、もっともらしいがコピーではない synthetic minority samples を作ります。アルゴリズムは次の通りです。
 
-1. For each minority sample x, find its k nearest neighbors among other minority samples
-2. Pick one neighbor at random
-3. Create a new sample on the line segment between x and that neighbor
+1. 各 minority sample x について、他の minority samples の中から k nearest neighbors を見つける
+2. neighbor を 1 つランダムに選ぶ
+3. x とその neighbor を結ぶ線分上に新しい sample を作る
 
-The formula: `new_sample = x + random(0, 1) * (neighbor - x)`
+式は `new_sample = x + random(0, 1) * (neighbor - x)` です。
 
-This interpolates between real minority points, creating samples in the same region of feature space without just copying existing data.
+これは実際の minority points の間を補間し、既存データを単にコピーするのではなく、feature space の同じ領域に samples を作ります。
 
 ```mermaid
 flowchart LR
@@ -114,17 +114,17 @@ flowchart LR
 
 ### Sampling Strategies Compared
 
-**Random Oversampling**: duplicate minority samples to match majority count.
-- Pros: simple, no information loss
-- Cons: exact duplicates cause overfitting, increases training time
+**Random Oversampling**: minority samples を複製して majority count に合わせます。
+- Pros: 単純、情報損失がない
+- Cons: 完全な重複が overfitting を起こし、training time が増える
 
-**Random Undersampling**: remove majority samples to match minority count.
-- Pros: fast training, simple
-- Cons: throws away potentially useful majority data, higher variance
+**Random Undersampling**: majority samples を削除して minority count に合わせます。
+- Pros: training が速い、単純
+- Cons: 有用な majority data を捨てる可能性があり、variance が高くなる
 
-**SMOTE**: create synthetic minority samples via interpolation.
-- Pros: generates new data points, reduces overfitting compared to random oversampling
-- Cons: can create noisy samples near the decision boundary, does not account for majority class distribution
+**SMOTE**: 補間によって synthetic minority samples を作ります。
+- Pros: 新しい data points を生成し、random oversampling より overfitting を減らす
+- Cons: decision boundary 付近に noisy samples を作ることがあり、majority class distribution を考慮しない
 
 | Strategy | Data Changed | Risk | When to Use |
 |----------|-------------|------|-------------|
@@ -134,34 +134,34 @@ flowchart LR
 
 ### Class Weights
 
-Instead of changing the data, change how the model treats errors. Assign higher weight to misclassifying the minority class.
+データを変えるのではなく、モデルが errors をどう扱うかを変えます。minority class の misclassification に高い weight を割り当てます。
 
-For a binary problem with 950 negative and 50 positive samples:
-- Weight for negative class = n_samples / (2 * n_negative) = 1000 / (2 * 950) = 0.526
-- Weight for positive class = n_samples / (2 * n_positive) = 1000 / (2 * 50) = 10.0
+950 negative と 50 positive samples の binary problem では次のようになります。
+- negative class の weight = n_samples / (2 * n_negative) = 1000 / (2 * 950) = 0.526
+- positive class の weight = n_samples / (2 * n_positive) = 1000 / (2 * 50) = 10.0
 
-The positive class gets 19x the weight. Misclassifying one positive sample costs as much as misclassifying 19 negative samples. The model is forced to pay attention to the minority class.
+positive class は 19 倍の weight を得ます。positive sample を 1 つ誤分類する cost は、negative samples を 19 個誤分類する cost と同じです。モデルは minority class に注意を払うよう強制されます。
 
-In logistic regression, this modifies the loss function:
+logistic regression では、これは loss function を変更します。
 
 ```
 weighted_loss = -sum(w_i * [y_i * log(p_i) + (1-y_i) * log(1-p_i)])
 ```
 
-where w_i depends on the class of sample i.
+ここで w_i は sample i の class に依存します。
 
-Class weights are mathematically equivalent to oversampling in expectation, but without creating new data points. This makes them faster and avoids the overfitting risk of duplicated samples.
+Class weights は期待値として oversampling と数学的に等価ですが、新しい data points を作りません。そのため高速で、duplicated samples による overfitting risk を避けられます。
 
 ### Threshold Tuning
 
-Most classifiers output a probability. The default threshold is 0.5: if P(positive) >= 0.5, predict positive. But 0.5 is arbitrary. When classes are imbalanced, the optimal threshold is usually much lower.
+多くの分類器は probability を出力します。デフォルト threshold は 0.5 です。P(positive) >= 0.5 なら positive と予測します。しかし 0.5 は任意です。class が不均衡な場合、最適なしきい値は通常もっと低くなります。
 
-The process:
-1. Train a model
-2. Get predicted probabilities on the validation set
-3. Sweep thresholds from 0.0 to 1.0
-4. Compute F1 (or your chosen metric) at each threshold
-5. Pick the threshold that maximizes your metric
+手順は次の通りです。
+1. モデルを学習する
+2. validation set で predicted probabilities を得る
+3. thresholds を 0.0 から 1.0 まで走査する
+4. 各 threshold で F1（または選んだ metric）を計算する
+5. metric を最大化する threshold を選ぶ
 
 ```mermaid
 flowchart LR
@@ -172,20 +172,20 @@ flowchart LR
     E --> F[Use in Production]
 ```
 
-A model might output P(fraud) = 0.15 for a fraudulent transaction. At threshold 0.5, this is classified as not fraud. At threshold 0.10, it is correctly caught. The probability calibration matters less than the ranking -- as long as fraud gets higher probabilities than non-fraud, there exists a threshold that separates them.
+モデルが fraudulent transaction に P(fraud) = 0.15 を出力するかもしれません。threshold 0.5 では not fraud と分類されます。threshold 0.10 なら正しく捕捉されます。probability calibration より ranking が重要です。fraud が non-fraud より高い probabilities を得ている限り、それらを分離する threshold は存在します。
 
 ### Cost-Sensitive Learning
 
-Generalization of class weights. Instead of uniform costs, assign specific misclassification costs:
+class weights の一般化です。一律の costs ではなく、具体的な misclassification costs を割り当てます。
 
 | | Predict Positive | Predict Negative |
 |--|---|---|
 | Actually Positive | 0 (correct) | C_FN = 100 |
 | Actually Negative | C_FP = 1 | 0 (correct) |
 
-Missing a fraudulent transaction (FN) costs 100x more than a false alarm (FP). The model optimizes for total cost, not total error count.
+fraudulent transaction の見逃し（FN）は false alarm（FP）より 100 倍高コストです。モデルは total error count ではなく total cost を最適化します。
 
-This is the most principled approach when you can estimate real-world costs. A missed cancer diagnosis has a very different cost than a false alarm that leads to an extra biopsy. Making these costs explicit forces the right tradeoffs.
+現実の costs を見積もれるなら、これは最も原則的な approach です。missed cancer diagnosis の cost は、追加の biopsy につながる false alarm とはまったく違います。これらの costs を明示することで、正しい tradeoffs を強制できます。
 
 ### Decision Flowchart
 
@@ -211,9 +211,9 @@ flowchart TD
     M -->|Yes| O[Ship it]
 ```
 
-## Build It
+## 実装
 
-### Step 1: Generate an imbalanced dataset
+### Step 1: 不均衡データセットを生成する
 
 ```python
 import numpy as np
@@ -455,11 +455,11 @@ best_thresh, best_f1 = find_optimal_threshold(y_val, probs_val, metric="f1")
 preds_thresh = (probs_cw >= best_thresh).astype(int)
 ```
 
-The code file runs all of this in a single script and prints results.
+コードファイルはこれを単一 script として実行し、結果を出力します。
 
 ## Use It
 
-With scikit-learn and imbalanced-learn, these techniques are one-liners:
+scikit-learn と imbalanced-learn を使えば、これらの technique は one-liners です。
 
 ```python
 from sklearn.linear_model import LogisticRegression
@@ -489,42 +489,42 @@ pipeline.fit(X_train, y_train)
 print(classification_report(y_test, pipeline.predict(X_test)))
 ```
 
-The from-scratch implementations show exactly what each technique does. SMOTE is just k-NN interpolation on the minority class. Class weights multiply the loss. Threshold tuning is a for-loop over cutoffs. No magic.
+ゼロからの実装は、それぞれの technique が何をしているかを正確に示します。SMOTE は minority class に対する k-NN interpolation にすぎません。Class weights は loss を掛け算します。Threshold tuning は cutoffs を for-loop で走査するだけです。魔法はありません。
 
 ## Ship It
 
-This lesson produces:
-- `outputs/skill-imbalanced-data.md` -- a decision checklist for handling imbalanced classification problems
+この lesson の成果物は次の通りです。
+- `outputs/skill-imbalanced-data.md` -- imbalanced classification problems に対処するための decision checklist
 
 ## Exercises
 
-1. **Borderline-SMOTE**: modify the SMOTE implementation to only generate synthetic samples for minority points that are near the decision boundary (those whose k-nearest neighbors include majority class samples). Compare results with standard SMOTE on a dataset where classes overlap.
+1. **Borderline-SMOTE**: SMOTE 実装を変更し、decision boundary 付近にある minority points（k-nearest neighbors に majority class samples が含まれる点）に対してのみ synthetic samples を生成するようにします。classes が重なるデータセットで standard SMOTE と結果を比較します。
 
-2. **Cost matrix optimization**: implement cost-sensitive learning where the cost matrix is a parameter. Create a function that takes a cost matrix and returns optimal predictions that minimize expected cost. Test with different cost ratios (1:10, 1:100, 1:1000) and plot how the precision-recall tradeoff changes.
+2. **Cost matrix optimization**: cost matrix を parameter とする cost-sensitive learning を実装します。cost matrix を受け取り、expected cost を最小化する optimal predictions を返す function を作成します。異なる cost ratios（1:10, 1:100, 1:1000）でテストし、precision-recall tradeoff がどう変わるかを plot します。
 
-3. **Threshold calibration**: implement Platt scaling (fit a logistic regression on the model's raw outputs to produce calibrated probabilities). Compare the precision-recall curve before and after calibration. Show that calibration does not change the ranking (AUC stays the same) but makes the probabilities more meaningful.
+3. **Threshold calibration**: Platt scaling を実装します（model の raw outputs に logistic regression を fit して calibrated probabilities を生成）。calibration 前後の precision-recall curve を比較します。calibration は ranking を変えない（AUC は同じ）一方、probabilities をより意味のあるものにすることを示します。
 
-4. **Ensemble with balanced bagging**: train multiple models, each on a balanced bootstrap sample (all minority + random subset of majority). Average their predictions. Compare this approach against a single model with SMOTE. Measure both performance and variance across runs.
+4. **Ensemble with balanced bagging**: 複数の models を学習します。それぞれは balanced bootstrap sample（all minority + random subset of majority）で学習します。predictions を平均します。この approach を SMOTE を使った単一 model と比較します。performance と runs 間の variance の両方を測定します。
 
-5. **Imbalance ratio experiment**: take a balanced dataset and progressively increase the imbalance ratio (50/50, 70/30, 90/10, 95/5, 99/1). For each ratio, train with and without SMOTE. Plot F1 vs imbalance ratio for both approaches. At what ratio does SMOTE start making a meaningful difference?
+5. **Imbalance ratio experiment**: balanced dataset を取り、imbalance ratio を段階的に増やします（50/50, 70/30, 90/10, 95/5, 99/1）。各 ratio で SMOTE あり/なしで学習します。両 approach について F1 vs imbalance ratio を plot します。どの ratio から SMOTE が意味のある差を生み始めますか？
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Class imbalance | "One class has way more samples" | The distribution of classes in the dataset is significantly skewed, causing models to favor the majority class |
-| SMOTE | "Synthetic oversampling" | Creates new minority samples by interpolating between existing minority samples and their k-nearest minority neighbors |
-| Class weights | "Making errors on rare classes more expensive" | Multiplying the loss function by class-specific weights so the model penalizes minority misclassification more heavily |
-| Threshold tuning | "Moving the decision boundary" | Changing the probability cutoff for classification from the default 0.5 to a value that optimizes the desired metric |
-| Precision-recall tradeoff | "You cannot have both" | Lowering the threshold catches more positives (higher recall) but also flags more false positives (lower precision), and vice versa |
-| AUPRC | "Area under the PR curve" | Summarizes the precision-recall curve into a single number; more informative than AUC-ROC when classes are heavily imbalanced |
-| Matthews Correlation Coefficient | "The balanced metric" | A correlation between predicted and actual labels that produces a high score only when the model performs well on both classes |
-| Cost-sensitive learning | "Different mistakes cost different amounts" | Incorporating real-world misclassification costs into the training objective so the model optimizes for total cost, not error count |
-| Random oversampling | "Duplicate the minority" | Repeating minority class samples to balance class counts; simple but risks overfitting to duplicated points |
+| Class imbalance | "One class has way more samples" | データセット内の class distribution が大きく偏っており、models が majority class を好む状態 |
+| SMOTE | "Synthetic oversampling" | 既存の minority samples とその k-nearest minority neighbors の間を補間して新しい minority samples を作る |
+| Class weights | "Making errors on rare classes more expensive" | class-specific weights を loss function に掛け、minority misclassification をより重く罰すること |
+| Threshold tuning | "Moving the decision boundary" | classification の probability cutoff をデフォルト 0.5 から、望ましい metric を最適化する値へ変更すること |
+| Precision-recall tradeoff | "You cannot have both" | threshold を下げると more positives を捕捉する（higher recall）一方、false positives も増える（lower precision）。逆も同じ |
+| AUPRC | "Area under the PR curve" | precision-recall curve を単一の数値に要約する。不均衡が強い場合は AUC-ROC より情報量がある |
+| Matthews Correlation Coefficient | "The balanced metric" | predicted labels と actual labels の相関。両 classes でうまく機能したときだけ高い score になる |
+| Cost-sensitive learning | "Different mistakes cost different amounts" | 現実の misclassification costs を training objective に組み込み、error count ではなく total cost を最適化すること |
+| Random oversampling | "Duplicate the minority" | class counts を balance するため minority class samples を繰り返す。単純だが duplicated points への overfitting リスクがある |
 
-## Further Reading
+## 参考文献
 
-- [SMOTE: Synthetic Minority Over-sampling Technique (Chawla et al., 2002)](https://arxiv.org/abs/1106.1813) -- the original SMOTE paper, still the most cited work on imbalanced learning
-- [Learning from Imbalanced Data (He & Garcia, 2009)](https://ieeexplore.ieee.org/document/5128907) -- comprehensive survey covering sampling, cost-sensitive, and algorithmic approaches
-- [imbalanced-learn documentation](https://imbalanced-learn.org/stable/) -- Python library with SMOTE variants, undersampling strategies, and pipeline integration
-- [The Precision-Recall Plot Is More Informative than the ROC Plot (Saito & Rehmsmeier, 2015)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432) -- when and why to prefer PR curves over ROC curves for imbalanced problems
+- [SMOTE: Synthetic Minority Over-sampling Technique (Chawla et al., 2002)](https://arxiv.org/abs/1106.1813) -- original SMOTE paper
+- [Learning from Imbalanced Data (He & Garcia, 2009)](https://ieeexplore.ieee.org/document/5128907) -- sampling、cost-sensitive、algorithmic approaches を扱う包括的 survey
+- [imbalanced-learn documentation](https://imbalanced-learn.org/stable/) -- SMOTE variants、undersampling strategies、pipeline integration を提供する Python library
+- [The Precision-Recall Plot Is More Informative than the ROC Plot (Saito & Rehmsmeier, 2015)](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432) -- 不均衡問題で PR curves を ROC curves より優先する理由

@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What license does Langfuse ship under after the June 2025 open-sourcing of formerly commercial modules?",
+      "question": "2025年6月に以前commercialだったmodulesをopen-source化した後、Langfuseはどのlicenseでshipされていますか?",
       "options": [
         "GPLv3",
         "MIT",
@@ -12,23 +12,23 @@
         "Apache 2.0"
       ],
       "correct": 1,
-      "explanation": "Langfuse is MIT, including LLM-as-a-judge, annotation queues, prompt experiments, and Playground after June 2025."
+      "explanation": "LangfuseはMITです。2025年6月以降はLLM-as-a-judge、annotation queues、prompt experiments、Playgroundも含まれます。"
     },
     {
       "stage": "pre",
-      "question": "What is Arize Phoenix strongest at according to the lesson?",
+      "question": "このlessonによると、Arize Phoenixが最も強い領域は何ですか?",
       "options": [
-        "Prompt versioning",
-        "Deep agent-specific evaluation: trace clustering, anomaly detection, RAG retrieval relevancy, OpenInference auto-instrumentation",
-        "Automated optimization loop",
-        "Static analysis of code"
+        "prompt versioning",
+        "deep agent-specific evaluation: trace clustering、anomaly detection、RAG retrieval relevancy、OpenInference auto-instrumentation",
+        "automated optimization loop",
+        "codeのstatic analysis"
       ],
       "correct": 1,
-      "explanation": "Phoenix focuses on behavioral drift and RAG evaluation with OpenInference auto-instrumentation."
+      "explanation": "PhoenixはOpenInference auto-instrumentationを備え、behavioral driftとRAG evaluationにfocusします。"
     },
     {
       "stage": "check",
-      "question": "Which platform pairs automated prompt optimization with guardrails (PII redaction, topical constraints) and LLM-judge hallucination detection?",
+      "question": "automated prompt optimizationにguardrails (PII redaction、topical constraints) とLLM-judge hallucination detectionを組み合わせるplatformはどれですか?",
       "options": [
         "Langfuse",
         "Phoenix",
@@ -36,11 +36,11 @@
         "Jaeger"
       ],
       "correct": 2,
-      "explanation": "Opik centers on the optimization + guardrail loop."
+      "explanation": "Opikはoptimization + guardrail loopを中心にしています。"
     },
     {
       "stage": "check",
-      "question": "Which platform does the lesson recommend for an all-in-one with prompt management?",
+      "question": "このlessonがprompt management付きall-in-oneとして推奨するplatformはどれですか?",
       "options": [
         "Langfuse",
         "Phoenix",
@@ -48,43 +48,43 @@
         "Datadog APM"
       ],
       "correct": 0,
-      "explanation": "Langfuse covers tracing + prompt management + evals + session replay end-to-end."
+      "explanation": "Langfuseはtracing + prompt management + evals + session replayをend-to-endでcoverします。"
     },
     {
       "stage": "check",
-      "question": "What does the lesson say about vendor-published platform benchmarks?",
+      "question": "vendor-published platform benchmarksについて、このlessonは何と言っていますか?",
       "options": [
-        "They are definitive",
-        "Take them as directional; measure your own corpus",
-        "They are forbidden by OpenTelemetry",
-        "Only Opik's are reliable"
+        "決定的なものとして扱う",
+        "directionalとして受け取り、自分のcorpusで測る",
+        "OpenTelemetryで禁止されている",
+        "Opikのものだけが信頼できる"
       ],
       "correct": 1,
-      "explanation": "Even the cited 14x gap between Opik and Langfuse should be measured on your own data before deciding."
+      "explanation": "引用されたOpikとLangfuseの14x gapでさえ、決定前に自分のdataで測るべきです。"
     },
     {
       "stage": "post",
-      "question": "Why is tracing without evaluation considered expensive logging?",
+      "question": "なぜevaluationなしのtracingは高価なloggingと見なされますか?",
       "options": [
-        "Disk costs more than CPU",
-        "You see runs but you do not score them, so regressions are invisible and bisection is impossible",
-        "Providers charge for spans",
-        "Spans cannot be replayed"
+        "diskの方がCPUより高価なため",
+        "runは見えるがscoreしないため、regressionが不可視でbisectもできないため",
+        "providerがspanに課金するため",
+        "spanはreplayできないため"
       ],
       "correct": 1,
-      "explanation": "Evals are what turn traces into actionable quality signals."
+      "explanation": "evalsが、traceをactionableなquality signalへ変えるものです。"
     },
     {
       "stage": "post",
-      "question": "What is the lesson's warning about self-rolled LLM-judges?",
+      "question": "self-rolled LLM-judgeについて、このlessonは何を警告していますか?",
       "options": [
-        "They are forbidden by Apache 2.0",
-        "CRITIC applies: judges need external grounding for factual verification or they rubber-stamp",
-        "They only work in TypeScript",
-        "They must run on GPUs"
+        "Apache 2.0で禁止されている",
+        "CRITICが当てはまる。judgeにはfactual verificationのためのexternal groundingが必要で、ないとrubber-stampになる",
+        "TypeScriptでしか動かない",
+        "GPU上で実行しなければならない"
       ],
       "correct": 1,
-      "explanation": "Without external tool-grounded verification, LLM-judges drift toward rubber-stamping (CRITIC, Lesson 5)."
+      "explanation": "external tool-grounded verificationがないと、LLM-judgeはrubber-stampingへdriftします (CRITIC、Lesson 5)。"
     }
   ]
 }

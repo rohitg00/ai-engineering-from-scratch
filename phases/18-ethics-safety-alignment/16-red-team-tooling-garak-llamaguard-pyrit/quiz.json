@@ -4,19 +4,19 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What role does Llama Guard play in a typical 2026 deployment?",
+      "question": "典型的な 2026 年の deployment で、Llama Guard はどの役割を担いますか。",
       "options": [
-        "A reasoning scaffolder for chain-of-thought",
-        "A reward model for RLHF",
-        "A tokenizer alternative",
-        "An input and/or output safety classifier across MLCommons hazard categories, placed before and after the LLM"
+        "chain-of-thought 用の reasoning scaffolder",
+        "RLHF 用の reward model",
+        "tokenizer alternative",
+        "LLM の前後に配置される、MLCommons hazard categories にわたる input / output safety classifier"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how many MLCommons hazard categories does Llama Guard 3 cover?",
+      "question": "Llama Guard 3 はおおよそいくつの MLCommons hazard categories をカバーしますか。",
       "options": [
         "7",
         "3",
@@ -28,48 +28,48 @@
     },
     {
       "stage": "check",
-      "question": "How is Garak's architecture organized?",
+      "question": "Garak の architecture はどのように構成されていますか。",
       "options": [
-        "Tools, resources, prompts",
-        "Embeddings, retrievers, rerankers",
-        "Routers, agents, queues",
-        "Probes (attack generators), Detectors (output scorers), Harnesses (campaign managers)"
+        "Tools、resources、prompts",
+        "Embeddings、retrievers、rerankers",
+        "Routers、agents、queues",
+        "Probes (attack generators)、Detectors (output scorers)、Harnesses (campaign managers)"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is PyRIT primarily designed for, and how does it differ from Garak?",
+      "question": "PyRIT は主に何のために設計され、Garak とどう違いますか。",
       "options": [
-        "They are identical in scope and audience",
-        "PyRIT is a reward model trainer; Garak is a tokenizer",
-        "PyRIT runs deep multi-turn campaigns (converter chains, orchestrators like Crescendo and TAP, scoring) while Garak runs thousands of single-turn probes",
-        "PyRIT is a Llama Guard variant; Garak is a Prompt-Guard variant"
+        "両者は scope と audience が同一である",
+        "PyRIT は reward model trainer、Garak は tokenizer である",
+        "PyRIT は converter chains、Crescendo / TAP などの orchestrators、scoring を使う深い multi-turn campaigns を実行する。一方 Garak は何千もの single-turn probes を実行する",
+        "PyRIT は Llama Guard variant、Garak は Prompt-Guard variant である"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the recommended 2026 default red-team stack configuration?",
+      "question": "2026 年の default red-team stack configuration として推奨されるものは何ですか。",
       "options": [
-        "Replace LLM evaluation with manual review only",
-        "Use PAIR instead of any tooling",
-        "Put Llama Guard on both sides of the model, run Garak nightly for regression, and run PyRIT for pre-release campaigns",
-        "Run Garak once at launch only"
+        "LLM evaluation を manual review のみに置き換える",
+        "tooling の代わりに PAIR だけを使う",
+        "model の両側に Llama Guard を置き、Garak を nightly regression で走らせ、PyRIT を pre-release campaigns で走らせる",
+        "launch 時に Garak を1回だけ走らせる"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What evaluation pitfall is shared across Llama Guard, Garak, and PyRIT?",
+      "question": "Llama Guard、Garak、PyRIT に共通する evaluation pitfall は何ですか。",
       "options": [
-        "Reported attack/defense rates depend on the judge identity and probe staleness; you must specify the judge and refresh probes as models are patched",
-        "They only work in English",
-        "They require white-box access",
-        "They cannot run on GPUs"
+        "報告される attack / defense rates は judge identity と probe staleness に依存する。judge を明示し、models が patch されるにつれて probes を更新する必要がある",
+        "英語でしか機能しない",
+        "white-box access が必要である",
+        "GPU で実行できない"
       ],
       "correct": 0,
       "explanation": ""

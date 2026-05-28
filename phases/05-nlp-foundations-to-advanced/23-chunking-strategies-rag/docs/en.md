@@ -1,59 +1,59 @@
-# Chunking Strategies for RAG
+# RAG のためのチャンキング戦略
 
-> Chunking configuration influences retrieval quality as much as the choice of embedding model (Vectara NAACL 2025). Get chunking wrong and no amount of reranking saves you.
+> チャンキング設定は、embedding model の選択と同じくらい検索品質に影響します (Vectara NAACL 2025)。チャンキングを間違えると、どれだけ reranking しても救えません。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 14 (Information Retrieval), Phase 5 · 22 (Embedding Models)
-**Time:** ~60 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 5 · 14 (Information Retrieval), Phase 5 · 22 (Embedding Models)
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-You put a 50-page contract into a RAG system. User asks: "What is the termination clause?" The retriever returns the cover page. Why? Because the model was trained on 512-token chunks and the termination clause sits 20 pages in, split across a page break, with no local keywords tying it to the query.
+50 ページの契約書を RAG システムに入れます。ユーザーは「解除条項は何ですか」と尋ねます。retriever は表紙を返します。なぜでしょうか。モデルが 512-token chunks で訓練されていて、解除条項は 20 ページ目にあり、ページ区切りをまたいで分割され、query と結びつく局所的な keywords がないからです。
 
-The fix is not "buy a better embedding model." The fix is chunking. How big? Overlap? Where to split? With surrounding context?
+解決策は「より良い embedding model を買うこと」ではありません。解決策はチャンキングです。どれくらいの大きさか。Overlap は必要か。どこで分割するか。周囲の context を持たせるか。
 
-Feb 2026 benchmarks show surprising results:
+2026 年 2 月の benchmarks は意外な結果を示しています。
 
-- Vectara's 2026 study: recursive 512-token chunking beat semantic chunking 69% → 54% accuracy.
-- SPLADE + Mistral-8B on Natural Questions: overlap provided zero measurable benefit.
-- Context cliff: response quality drops sharply around 2,500 tokens of context.
+- Vectara の 2026 年研究: recursive 512-token chunking は semantic chunking を 69% → 54% の accuracy で上回りました。
+- Natural Questions 上の SPLADE + Mistral-8B: overlap は測定可能な利益をまったく出しませんでした。
+- Context cliff: response quality は context 約 2,500 tokens 付近で急落します。
 
-The "obvious" answer (semantic chunking, 20% overlap, 1000 tokens) is often wrong. This lesson builds intuition for six strategies and tells you when to reach for which.
+「明らかな」答え (semantic chunking、20% overlap、1000 tokens) は、多くの場合間違っています。このレッスンでは 6 つの戦略への直感を作り、どの状況でどれを選ぶべきかを示します。
 
-## The Concept
+## 概念
 
-![Six chunking strategies visualized on one passage](../assets/chunking.svg)
+![1 つの passage 上に可視化した 6 つの chunking strategies](../assets/chunking.svg)
 
-**Fixed chunking.** Split every N characters or tokens. Simplest baseline. Breaks mid-sentence. Good compression, bad coherence.
+**Fixed chunking。** N characters または tokens ごとに分割します。最も単純な baseline です。文の途中で切れます。圧縮率は良いですが、coherence は低くなります。
 
-**Recursive.** LangChain's `RecursiveCharacterTextSplitter`. Try splitting on `\n\n` first, then `\n`, then `.`, then space. Falls back cleanly. The 2026 default.
+**Recursive。** LangChain の `RecursiveCharacterTextSplitter` です。まず `\n\n` で分割を試し、次に `\n`、`.`、space と試します。きれいに fallback します。2026 年の default です。
 
-**Semantic.** Embed each sentence. Compute cosine similarity between adjacent sentences. Split where similarity drops below a threshold. Preserves topic coherence. Slower; sometimes produces tiny 40-token fragments that hurt retrieval.
+**Semantic。** 各文を embed します。隣接文どうしの cosine similarity を計算します。similarity が threshold を下回る箇所で分割します。topic coherence を保ちます。遅く、ときどき retrieval を悪化させる 40-token 程度の小さな fragments を作ります。
 
-**Sentence.** Split on sentence boundaries. One sentence per chunk or a window of N sentences. Matches semantic chunking up to ~5k tokens at a fraction of the cost.
+**Sentence。** 文境界で分割します。1 文 1 chunk、または N 文の window にします。コストのほんの一部で、約 5k tokens までは semantic chunking に匹敵します。
 
-**Parent-document.** Store small child chunks for retrieval *and* the larger parent chunk for context. Retrieve by child; return parent. Degrades gracefully: bad child chunks still return reasonable parents.
+**Parent-document。** 検索用に小さな child chunks を保存し、context 用に大きな parent chunk も保存します。child で検索し、parent を返します。劣化がなだらかです。不完全な child chunks でも妥当な parents を返せます。
 
-**Late chunking (2024).** Embed the whole document at the token level first, then pool token embeddings into chunk embeddings. Preserves cross-chunk context. Works with long-context embedders (BGE-M3, Jina v3). Higher compute.
+**Late chunking (2024)。** まず document 全体を token level で embed し、その後 token embeddings を chunk embeddings へ pool します。chunk をまたぐ context を保ちます。long-context embedders (BGE-M3, Jina v3) で機能します。compute は高くなります。
 
-**Contextual retrieval (Anthropic, 2024).** Prepend each chunk with an LLM-generated summary of its position in the document ("This chunk is section 3.2 of the termination clauses..."). 35-50% retrieval improvement in Anthropic's own benchmark. Expensive to index.
+**Contextual retrieval (Anthropic, 2024)。** 各 chunk の先頭に、その document 内での位置を LLM が生成した summary として付けます (「この chunk は解除条項の section 3.2 です...」)。Anthropic 自身の benchmark では retrieval が 35-50% 改善しました。indexing は高コストです。
 
-### The rule that beats every default
+### すべての default に勝つルール
 
-Match the chunk size to the query type:
+chunk size を query type に合わせます。
 
-| Query type | Chunk size |
+| クエリタイプ | Chunk size |
 |------------|-----------|
-| Factoid ("what is the CEO's name?") | 256-512 tokens |
-| Analytical / multi-hop | 512-1024 tokens |
-| Whole-section comprehension | 1024-2048 tokens |
+| Factoid (「CEO の名前は何ですか」) | 256-512 tokens |
+| 分析 / multi-hop | 512-1024 tokens |
+| section 全体の理解 | 1024-2048 tokens |
 
-NVIDIA's 2026 benchmark. The chunk should be big enough to contain the answer plus local context, small enough that the retriever's top-K returns focus on the answer rather than context noise.
+NVIDIA の 2026 年 benchmark です。chunk は、答えと局所 context を含められるだけ大きく、かつ retriever の top-K が context noise ではなく答えに集中できるだけ小さい必要があります。
 
-## Build It
+## 作ってみる
 
-### Step 1: fixed and recursive chunking
+### Step 1: fixed と recursive chunking
 
 ```python
 def chunk_fixed(text, size=512, overlap=0):
@@ -117,7 +117,7 @@ def chunk_semantic(text, encoder, threshold=0.6, min_chars=200, max_chars=2048):
     return result
 ```
 
-Tune `threshold` on your domain. Too high → fragments. Too low → one giant chunk.
+`threshold` は自分の domain で調整してください。高すぎると fragments になります。低すぎると 1 つの巨大な chunk になります。
 
 ### Step 3: parent-document
 
@@ -145,7 +145,7 @@ def retrieve_parent(child_query, mapping, encoder, top_k=3):
     return parents
 ```
 
-Key insight: dedupe parents. Multiple children can map to the same parent; returning all would waste context.
+重要な insight: parents を dedupe します。複数の children が同じ parent に map されることがあります。すべて返すと context を無駄にします。
 
 ### Step 4: contextual retrieval (Anthropic pattern)
 
@@ -161,7 +161,7 @@ Write 50-100 words placing this chunk in the document's context."""
     return [f"{ctx}\n\n{c}" for ctx, c in zip(contexts, chunks)]
 ```
 
-Index the contextualized chunks. At query time, retrieval benefits from the extra surrounding signal.
+contextualized chunks を index します。query 時には、追加された周辺 signal によって retrieval が改善します。
 
 ### Step 5: evaluate
 
@@ -177,78 +177,78 @@ def recall_at_k(queries, corpus_chunks, encoder, k=5):
     return hits / len(queries)
 ```
 
-Always benchmark. The "best" strategy for your corpus may not match any blog post.
+必ず benchmark してください。自分の corpus にとっての「best」strategy は、どの blog post とも一致しないかもしれません。
 
-## Pitfalls
+## 落とし穴
 
-- **Chunking evaluated only on factoid queries.** Multi-hop queries reveal very different winners. Use a query-type-stratified eval set.
-- **Semantic chunking without a minimum size.** Produces 40-token fragments that hurt retrieval. Always enforce `min_tokens`.
-- **Overlap as cargo cult.** 2026 studies find overlap often provides zero benefit and doubles index cost. Measure, do not assume.
-- **No min/max enforcement.** Chunks of 5 tokens or 5000 tokens both break retrieval. Clamp.
-- **Cross-doc chunking.** Never let a chunk span two documents. Always chunk per-doc, then merge.
+- **Factoid queries だけで chunking を評価する。** Multi-hop queries ではまったく別の勝者が見えることがあります。query-type-stratified eval set を使ってください。
+- **Minimum size なしの semantic chunking。** retrieval を悪化させる 40-token fragments を作ります。必ず `min_tokens` を強制してください。
+- **Cargo cult としての overlap。** 2026 年の研究では、overlap は利益ゼロで index cost を倍にすることが多いとされています。仮定せず測定してください。
+- **Min/max enforcement がない。** 5 tokens の chunks も 5000 tokens の chunks も retrieval を壊します。clamp してください。
+- **Cross-doc chunking。** 1 つの chunk が 2 つの documents にまたがることは絶対に避けてください。必ず document ごとに chunk し、その後 merge します。
 
-## Use It
+## 使う
 
-The 2026 stack:
+2026 年の stack:
 
-| Situation | Strategy |
+| 状況 | 戦略 |
 |-----------|----------|
-| First build, unknown corpus | Recursive, 512 tokens, no overlap |
+| 初回 build、未知の corpus | Recursive, 512 tokens, overlap なし |
 | Factoid QA | Recursive, 256-512 tokens |
-| Analytical / multi-hop | Recursive, 512-1024 tokens + parent-document |
-| Heavy cross-reference (contracts, papers) | Late chunking or contextual retrieval |
-| Conversational / dialog corpus | Turn-level chunks + speaker metadata |
-| Short utterances (tweets, reviews) | One document = one chunk |
+| 分析 / multi-hop | Recursive, 512-1024 tokens + parent-document |
+| cross-reference が多い (contracts、papers) | Late chunking または contextual retrieval |
+| 会話 / dialog corpus | turn-level chunks + speaker metadata |
+| 短い utterances (tweets、reviews) | 1 document = 1 chunk |
 
-Start with recursive 512. Measure recall@5 on a 50-query eval set. Tune from there.
+recursive 512 から始めます。50-query eval set で recall@5 を測ります。そこから調整してください。
 
-## Ship It
+## 出荷する
 
-Save as `outputs/skill-chunker.md`:
+`outputs/skill-chunker.md` として保存:
 
 ```markdown
 ---
 name: chunker
-description: Pick a chunking strategy, size, and overlap for a given corpus and query distribution.
+description: 与えられたコーパスと query distribution に対して、chunking strategy、size、overlap を選ぶ。
 version: 1.0.0
 phase: 5
 lesson: 23
 tags: [nlp, rag, chunking]
 ---
 
-Given a corpus (document types, avg length, domain) and query distribution (factoid / analytical / multi-hop), output:
+コーパス (document types、avg length、domain) と query distribution (factoid / analytical / multi-hop) が与えられたら、次を出力してください。
 
-1. Strategy. Recursive / sentence / semantic / parent-document / late / contextual. Reason.
-2. Chunk size. Token count. Reason tied to query type.
-3. Overlap. Default 0; justify if >0.
-4. Min/max enforcement. `min_tokens`, `max_tokens` guards.
-5. Evaluation plan. Recall@5 on 50-query stratified eval set (factoid, analytical, multi-hop).
+1. 戦略。Recursive / sentence / semantic / parent-document / late / contextual。理由。
+2. Chunk size。Token count。query type に結びついた理由。
+3. Overlap。デフォルト 0。>0 の場合は正当化する。
+4. Min/max enforcement。`min_tokens`、`max_tokens` guards。
+5. 評価計画。50-query stratified eval set (factoid、analytical、multi-hop) 上の Recall@5。
 
-Refuse any chunking strategy without min/max chunk size enforcement. Refuse overlap above 20% without an ablation showing it helps. Flag semantic chunking recommendations without a min-token floor.
+min/max chunk size enforcement のない chunking strategy は拒否する。効果があることを示す ablation なしに 20% を超える overlap は拒否する。min-token floor のない semantic chunking recommendations は警告する。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Chunk one 20-page document with fixed(512, 0), recursive(512, 0), and recursive(512, 100). Compare chunk counts and boundary quality.
-2. **Medium.** Build a 30-query eval set over 5 documents. Measure recall@5 for recursive, semantic, and parent-document. Which wins? Does it match the blog posts?
-3. **Hard.** Implement contextual retrieval. Measure MRR improvement over baseline recursive. Report index cost (LLM calls) vs accuracy gain.
+1. **Easy.** 20 ページの document 1 件を fixed(512, 0)、recursive(512, 0)、recursive(512, 100) で chunk してください。chunk counts と boundary quality を比較します。
+2. **Medium.** 5 documents に対して 30-query eval set を作ってください。recursive、semantic、parent-document の recall@5 を測ります。どれが勝ちますか。blog posts と一致しますか。
+3. **Hard.** contextual retrieval を実装してください。baseline recursive に対する MRR improvement を測ります。index cost (LLM calls) と accuracy gain を報告します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Chunk | A piece of a doc | Sub-document unit that gets embedded, indexed, and retrieved. |
-| Overlap | Safety margin | N tokens shared between adjacent chunks; often useless in 2026 benchmarks. |
-| Semantic chunking | Smart chunking | Split where adjacent-sentence embedding similarity drops. |
-| Parent-document | Two-level retrieval | Retrieve small children, return larger parents. |
-| Late chunking | Chunk after embedding | Embed full doc at token level, pool into chunk vectors. |
-| Contextual retrieval | Anthropic's trick | LLM-generated summary prepended to each chunk before indexing. |
-| Context cliff | 2500-token wall | Quality drop observed around 2.5k context tokens in RAG (Jan 2026). |
+| Chunk | doc の一部 | embed、index、retrieve される sub-document unit。 |
+| Overlap | Safety margin | 隣接 chunks の間で共有される N tokens。2026 年 benchmarks では役に立たないことが多い。 |
+| Semantic chunking | Smart chunking | 隣接文 embedding similarity が下がる箇所で分割する。 |
+| Parent-document | Two-level retrieval | 小さな children を retrieve し、大きな parents を返す。 |
+| Late chunking | Chunk after embedding | full doc を token level で embed し、chunk vectors に pool する。 |
+| Contextual retrieval | Anthropic の trick | indexing 前に、LLM-generated summary を各 chunk の先頭に付ける。 |
+| Context cliff | 2500-token wall | RAG で約 2.5k context tokens 付近に観測される quality drop (Jan 2026)。 |
 
-## Further Reading
+## 参考文献
 
-- [Yepes et al. / LangChain — Recursive Character Splitting docs](https://python.langchain.com/docs/how_to/recursive_text_splitter/) — the default in production.
-- [Vectara (2024, NAACL 2025). Chunking configurations analysis](https://arxiv.org/abs/2410.13070) — chunking matters as much as embedding choice.
-- [Jina AI — Late Chunking in Long-Context Embedding Models (2024)](https://jina.ai/news/late-chunking-in-long-context-embedding-models/) — the late chunking paper.
-- [Anthropic — Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval) — 35-50% retrieval improvement with LLM-generated context prefixes.
-- [NVIDIA 2026 chunk-size benchmark — Premai summary](https://blog.premai.io/rag-chunking-strategies-the-2026-benchmark-guide/) — chunk size by query type.
+- [Yepes et al. / LangChain — Recursive Character Splitting docs](https://python.langchain.com/docs/how_to/recursive_text_splitter/) — production の default。
+- [Vectara (2024, NAACL 2025). Chunking configurations analysis](https://arxiv.org/abs/2410.13070) — chunking は embedding choice と同じくらい重要。
+- [Jina AI — Late Chunking in Long-Context Embedding Models (2024)](https://jina.ai/news/late-chunking-in-long-context-embedding-models/) — late chunking paper。
+- [Anthropic — Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval) — LLM-generated context prefixes による 35-50% retrieval improvement。
+- [NVIDIA 2026 chunk-size benchmark — Premai summary](https://blog.premai.io/rag-chunking-strategies-the-2026-benchmark-guide/) — query type ごとの chunk size。

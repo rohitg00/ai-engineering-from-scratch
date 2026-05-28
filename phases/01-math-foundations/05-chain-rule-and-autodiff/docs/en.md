@@ -1,42 +1,42 @@
-# Chain Rule & Automatic Differentiation
+# 連鎖律と自動微分
 
-> The chain rule is the engine behind every neural network that learns.
+> 連鎖律は、学習するすべてのニューラルネットワークのエンジンです。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1, Lesson 04 (Derivatives & Gradients)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** フェーズ1、レッスン04（導関数と勾配）
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Build a minimal autograd engine (Value class) that records operations and computes gradients via reverse-mode autodiff
-- Implement forward and backward passes through a computation graph using topological sort
-- Construct and train a multi-layer perceptron on XOR using only the from-scratch autograd engine
-- Verify autodiff correctness using gradient checking against numerical finite differences
+- 演算を記録し、逆モード自動微分で勾配を計算する最小限の autograd エンジン（Value クラス）を作る
+- トポロジカルソートを使って、計算グラフ上の順伝播と逆伝播を実装する
+- スクラッチで作った autograd エンジンだけを使い、XOR 用の多層パーセプトロンを構築して学習する
+- 数値的な有限差分による勾配チェックで、自動微分の正しさを検証する
 
-## The Problem
+## 問題
 
-You can compute derivatives of simple functions. But a neural network is not a simple function. It is hundreds of functions composed together: matrix multiply, add bias, apply activation, matrix multiply again, softmax, cross-entropy loss. The output is a function of a function of a function.
+単純な関数の導関数は計算できます。しかしニューラルネットワークは単純な関数ではありません。行列を掛け、バイアスを足し、活性化関数を適用し、また行列を掛け、softmax を取り、cross-entropy loss を計算する、何百もの関数の合成です。出力は、関数の関数の関数です。
 
-To train the network, you need the gradient of the loss with respect to every single weight. Doing this by hand is impossible for millions of parameters. Doing it numerically (finite differences) is too slow.
+ネットワークを学習するには、損失のすべての重みに対する勾配が必要です。何百万ものパラメータについて手で計算することは不可能です。数値的に計算する（有限差分）には遅すぎます。
 
-The chain rule gives you the math. Automatic differentiation gives you the algorithm. Together they let you compute exact gradients through arbitrary compositions of functions in time proportional to a single forward pass.
+連鎖律は数学を与えます。自動微分はアルゴリズムを与えます。両者を合わせると、関数の任意の合成を通る厳密な勾配を、1回の順伝播に比例する時間で計算できます。
 
-This is how PyTorch, TensorFlow, and JAX work. You will build a miniature version from scratch.
+PyTorch、TensorFlow、JAX はこの仕組みで動いています。ここでは小さな版をスクラッチで作ります。
 
-## The Concept
+## 概念
 
-### The Chain Rule
+### 連鎖律
 
-If `y = f(g(x))`, the derivative of `y` with respect to `x` is:
+`y = f(g(x))` のとき、`x` に対する `y` の導関数は次のようになります。
 
 ```
 dy/dx = dy/dg * dg/dx = f'(g(x)) * g'(x)
 ```
 
-Multiply the derivatives along the chain. Each link contributes its local derivative.
+連鎖に沿って導関数を掛けます。それぞれのリンクが局所的な導関数を与えます。
 
-Example: `y = sin(x^2)`
+例: `y = sin(x^2)`
 
 ```
 g(x) = x^2       g'(x) = 2x
@@ -45,7 +45,7 @@ f(g) = sin(g)     f'(g) = cos(g)
 dy/dx = cos(x^2) * 2x
 ```
 
-For deeper compositions, the chain extends:
+より深い合成では、連鎖は伸びていきます。
 
 ```
 y = f(g(h(x)))
@@ -53,13 +53,13 @@ y = f(g(h(x)))
 dy/dx = f'(g(h(x))) * g'(h(x)) * h'(x)
 ```
 
-Every layer in a neural network is one link in this chain.
+ニューラルネットワークの各層は、この連鎖の1つのリンクです。
 
-### Computational Graphs
+### 計算グラフ
 
-A computational graph makes the chain rule visual. Every operation becomes a node. Data flows forward through the graph. Gradients flow backward.
+計算グラフは連鎖律を視覚化します。すべての演算がノードになります。データはグラフを前向きに流れます。勾配は後ろ向きに流れます。
 
-**Forward pass (compute values):**
+**順伝播（値を計算）:**
 
 ```mermaid
 graph TD
@@ -71,7 +71,7 @@ graph TD
     relu -->|"y = 7"| y["output y"]
 ```
 
-**Backward pass (compute gradients):**
+**逆伝播（勾配を計算）:**
 
 ```mermaid
 graph TD
@@ -82,13 +82,13 @@ graph TD
     da -->|"da/dx2 = x1 = 2"| dx2["dy/dx2 = 2"]
 ```
 
-The backward pass applies the chain rule at every node, propagating gradients from output to inputs.
+逆伝播は各ノードで連鎖律を適用し、出力から入力へ勾配を伝播します。
 
-### Forward Mode vs Reverse Mode
+### 順モードと逆モード
 
-There are two ways to apply the chain rule through a graph.
+グラフに連鎖律を適用する方法は2つあります。
 
-**Forward mode** starts at the inputs and pushes derivatives forward. It computes `dx/dx = 1` and propagates through each operation. Good when you have few inputs and many outputs.
+**順モード**は入力から始めて導関数を前向きに押し出します。`dx/dx = 1` を計算し、各演算を通して伝播します。入力が少なく出力が多い場合に向いています。
 
 ```
 Forward mode: seed dx/dx = 1, propagate forward
@@ -98,7 +98,7 @@ Forward mode: seed dx/dx = 1, propagate forward
   y = sin(a)  (dy/dx = cos(a) * da/dx = cos(4) * 4 = -2.615)
 ```
 
-**Reverse mode** starts at the output and pulls gradients backward. It computes `dy/dy = 1` and propagates through each operation in reverse. Good when you have many inputs and few outputs.
+**逆モード**は出力から始めて勾配を後ろ向きに引き戻します。`dy/dy = 1` を計算し、各演算を逆順に伝播します。入力が多く出力が少ない場合に向いています。
 
 ```
 Reverse mode: seed dy/dy = 1, propagate backward
@@ -108,16 +108,16 @@ Reverse mode: seed dy/dy = 1, propagate backward
   x = 2       (dy/dx = dy/da * da/dx = -0.654 * 4 = -2.615)
 ```
 
-Neural networks have millions of inputs (weights) and one output (loss). Reverse mode computes all gradients in one backward pass. This is why backpropagation uses reverse mode.
+ニューラルネットワークには何百万もの入力（重み）と1つの出力（損失）があります。逆モードは1回の逆伝播ですべての勾配を計算します。バックプロパゲーションが逆モードを使うのはこのためです。
 
-| Mode | Seed | Direction | Best when |
+| モード | 種（seed） | 方向 | 向いている場合 |
 |------|------|-----------|-----------|
-| Forward | `dx_i/dx_i = 1` | Input to output | Few inputs, many outputs |
-| Reverse | `dy/dy = 1` | Output to input | Many inputs, few outputs (neural nets) |
+| 順モード | `dx_i/dx_i = 1` | 入力から出力 | 入力が少なく、出力が多い |
+| 逆モード | `dy/dy = 1` | 出力から入力 | 入力が多く、出力が少ない（ニューラルネット） |
 
-### Dual Numbers for Forward Mode
+### 順モードのための双対数
 
-Forward mode can be implemented elegantly with dual numbers. A dual number has the form `a + b*epsilon` where `epsilon^2 = 0`.
+順モードは双対数を使うとエレガントに実装できます。双対数は `a + b*epsilon` という形を持ち、`epsilon^2 = 0` です。
 
 ```
 Dual number: (value, derivative)
@@ -130,21 +130,21 @@ Arithmetic rules:
   sin(a, a')         = (sin(a), cos(a)*a')
 ```
 
-Seed the input variable with derivative 1. The derivative propagates automatically through every operation.
+入力変数の導関数を 1 として種を置きます。導関数はすべての演算を通して自動的に伝播します。
 
-### Building an Autograd Engine
+### Autograd エンジンを作る
 
-An autograd engine needs three things:
+autograd エンジンには3つのものが必要です。
 
-1. **Value wrapping.** Wrap every number in an object that stores its value and gradient.
-2. **Graph recording.** Every operation records its inputs and the local gradient function.
-3. **Backward pass.** Topological sort the graph, then walk it in reverse, applying the chain rule at each node.
+1. **値のラップ。** すべての数値を、その値と勾配を保存するオブジェクトで包みます。
+2. **グラフの記録。** すべての演算が、入力と局所勾配関数を記録します。
+3. **逆伝播。** グラフをトポロジカルソートし、逆順にたどって各ノードで連鎖律を適用します。
 
-This is exactly what PyTorch's `autograd` does. The `torch.Tensor` class wraps values, records operations when `requires_grad=True`, and computes gradients when you call `.backward()`.
+これは PyTorch の `autograd` が行っていることそのものです。`torch.Tensor` クラスは値をラップし、`requires_grad=True` のときに演算を記録し、`.backward()` を呼ぶと勾配を計算します。
 
-### How PyTorch Autograd Works Under the Hood
+### PyTorch Autograd の内部の動き
 
-When you write PyTorch code:
+PyTorch で次のコードを書くとします。
 
 ```python
 x = torch.tensor(2.0, requires_grad=True)
@@ -153,19 +153,19 @@ y.backward()
 print(x.grad)  # 7.0 = 2*x + 3 = 2*2 + 3
 ```
 
-PyTorch internally:
+PyTorch の内部では次が起きています。
 
-1. Creates a `Tensor` node for `x` with `requires_grad=True`
-2. Every operation (`**`, `*`, `+`) creates a new node and records the backward function
-3. `y.backward()` triggers reverse-mode autodiff through the recorded graph
-4. Each node's `grad_fn` computes local gradients and passes them to parent nodes
-5. Gradients accumulate in `.grad` attributes via addition (not replacement)
+1. `requires_grad=True` を持つ `x` の `Tensor` ノードを作る
+2. すべての演算（`**`、`*`、`+`）が新しいノードを作り、backward 関数を記録する
+3. `y.backward()` が、記録されたグラフを通して逆モード自動微分を実行する
+4. 各ノードの `grad_fn` が局所勾配を計算し、親ノードへ渡す
+5. 勾配は置き換えではなく加算によって `.grad` 属性に蓄積される
 
-The graph is dynamic (define-by-run). A new graph is built on every forward pass. This is why PyTorch supports control flow (if/else, loops) inside models.
+グラフは動的です（define-by-run）。各順伝播ごとに新しいグラフが作られます。そのため PyTorch はモデル内部の制御フロー（if/else、ループ）をサポートできます。
 
-## Build It
+## 作ってみる
 
-### Step 1: The Value class
+### Step 1: Value クラス
 
 ```python
 class Value:
@@ -180,9 +180,9 @@ class Value:
         return f"Value(data={self.data:.4f}, grad={self.grad:.4f})"
 ```
 
-Every `Value` stores its numeric data, its gradient (initially zero), a backward function, and pointers to child nodes that produced it.
+すべての `Value` は、数値データ、勾配（初期値はゼロ）、backward 関数、それを生み出した子ノードへのポインタを保存します。
 
-### Step 2: Arithmetic operations with gradient tracking
+### Step 2: 勾配追跡つきの算術演算
 
 ```python
     def __add__(self, other):
@@ -211,9 +211,9 @@ Every `Value` stores its numeric data, its gradient (initially zero), a backward
         return out
 ```
 
-Each operation creates a closure that knows how to compute local gradients and multiply by the upstream gradient (`out.grad`). The `+=` handles the case where a value is used in multiple operations.
+各演算は、局所勾配を計算して上流から来た勾配（`out.grad`）を掛ける方法を知っているクロージャを作ります。`+=` は、1つの値が複数の演算で使われる場合に対応します。
 
-### Step 3: The backward pass
+### Step 3: 逆伝播
 
 ```python
     def backward(self):
@@ -232,11 +232,11 @@ Each operation creates a closure that knows how to compute local gradients and m
             v._backward()
 ```
 
-Topological sort ensures every node's gradient is fully computed before it propagates to its children. The seed gradient is 1.0 (dy/dy = 1).
+トポロジカルソートにより、各ノードの勾配が完全に計算されてから子ノードへ伝播されます。種となる勾配は 1.0（dy/dy = 1）です。
 
-### Step 4: More operations for a complete engine
+### Step 4: 完全なエンジンに必要な追加演算
 
-The basic Value class handles addition, multiplication, and relu. A real autograd engine needs more. Here are the operations you need to build neural networks:
+基本的な Value クラスは加算、乗算、relu を扱います。実用的な autograd エンジンにはさらに多くの演算が必要です。ニューラルネットワークを作るために必要な演算は次のとおりです。
 
 ```python
     def __neg__(self):
@@ -291,22 +291,22 @@ The basic Value class handles addition, multiplication, and relu. A real autogra
         return out
 ```
 
-**Why each operation matters:**
+**各演算が重要な理由:**
 
-| Operation | Backward rule | Used in |
+| 演算 | backward の規則 | 使われる場所 |
 |-----------|--------------|---------|
-| `__sub__` | Reuses add + neg | Loss computation (pred - target) |
-| `__pow__` | n * x^(n-1) | Polynomial activations, MSE (error^2) |
-| `__truediv__` | Reuses mul + pow(-1) | Normalization, learning rate scaling |
-| `exp` | exp(x) * upstream | Softmax, log-likelihood |
-| `log` | (1/x) * upstream | Cross-entropy loss, log probabilities |
-| `tanh` | (1 - tanh^2) * upstream | Classic activation function |
+| `__sub__` | add + neg を再利用 | 損失計算（pred - target） |
+| `__pow__` | n * x^(n-1) | 多項式活性化、MSE（error^2） |
+| `__truediv__` | mul + pow(-1) を再利用 | 正規化、学習率のスケーリング |
+| `exp` | exp(x) * upstream | Softmax、対数尤度 |
+| `log` | (1/x) * upstream | Cross-entropy loss、対数確率 |
+| `tanh` | (1 - tanh^2) * upstream | 古典的な活性化関数 |
 
-The clever part: `__sub__` and `__truediv__` are defined in terms of existing operations. They get correct gradients for free because the chain rule composes through the underlying add/mul/pow operations.
+賢い点は、`__sub__` と `__truediv__` が既存の演算を使って定義されていることです。基礎にある add/mul/pow 演算を通して連鎖律が合成されるため、正しい勾配が無料で得られます。
 
-### Step 5: Mini MLP from scratch
+### Step 5: スクラッチのミニ MLP
 
-With a complete Value class, you can build a neural network. No PyTorch. No NumPy. Just Values and the chain rule.
+完全な Value クラスがあれば、ニューラルネットワークを作れます。PyTorch も NumPy も使いません。Value と連鎖律だけです。
 
 ```python
 import random
@@ -346,9 +346,9 @@ class MLP:
         return [p for layer in self.layers for p in layer.parameters()]
 ```
 
-A `Neuron` computes `tanh(w1*x1 + w2*x2 + ... + b)`. A `Layer` is a list of neurons. An `MLP` stacks layers. Every weight is a `Value`, so calling `loss.backward()` propagates gradients to every parameter.
+`Neuron` は `tanh(w1*x1 + w2*x2 + ... + b)` を計算します。`Layer` はニューロンのリストです。`MLP` は層を積み重ねます。すべての重みが `Value` なので、`loss.backward()` を呼ぶと、すべてのパラメータへ勾配が伝播します。
 
-**Training on XOR:**
+**XOR で学習する:**
 
 ```python
 random.seed(42)
@@ -377,11 +377,11 @@ for x, y in zip(xs, ys):
     print(f"  input={x}  target={y:2d}  pred={model(x).data:6.3f}")
 ```
 
-This is micrograd. A complete neural network training loop in pure Python with automatic differentiation. Every commercial deep learning framework does the same thing at massive scale.
+これは micrograd です。自動微分を備えた、純粋な Python の完全なニューラルネットワーク学習ループです。商用の深層学習フレームワークも、大規模にはなりますが同じことをしています。
 
-### Step 6: Gradient checking
+### Step 6: 勾配チェック
 
-How do you know your autodiff is correct? Compare it against numerical derivatives. This is gradient checking.
+自動微分が正しいとどうやって分かるでしょうか。数値微分と比較します。これが勾配チェックです。
 
 ```python
 def gradient_check(build_expr, x_val, h=1e-7):
@@ -398,7 +398,7 @@ def gradient_check(build_expr, x_val, h=1e-7):
     return autodiff_grad, numerical_grad, diff
 ```
 
-Test it on a complex expression:
+複雑な式で試します。
 
 ```python
 def expr(x):
@@ -411,18 +411,18 @@ print(f"Difference: {diff:.2e}")
 # Difference should be < 1e-5
 ```
 
-Gradient checking is essential when implementing new operations. If your backward pass has a bug, the numerical check catches it. Every serious deep learning implementation runs gradient checks during development.
+新しい演算を実装するとき、勾配チェックは不可欠です。backward パスにバグがあれば、数値チェックが見つけてくれます。本格的な深層学習実装では、開発中に必ず勾配チェックを行います。
 
-**When to use gradient checking:**
+**勾配チェックを使う場面:**
 
-| Situation | Do gradient check? |
+| 状況 | 勾配チェックする？ |
 |-----------|-------------------|
-| Adding a new operation to your autograd | Yes, always |
-| Debugging a training loop that won't converge | Yes, check gradients first |
-| Production training | No, too slow (2x forward passes per parameter) |
-| Unit tests for autograd code | Yes, automate it |
+| autograd に新しい演算を追加する | はい、必ず |
+| 収束しない学習ループをデバッグする | はい、まず勾配を確認する |
+| 本番学習 | いいえ、遅すぎる（パラメータごとに2回の順伝播） |
+| autograd コードのユニットテスト | はい、自動化する |
 
-### Step 7: Verify against manual calculation
+### Step 7: 手計算との照合
 
 ```python
 x1 = Value(2.0)
@@ -438,12 +438,12 @@ print(f"dy/dx1 = {x1.grad}")   # 3.0 (= x2)
 print(f"dy/dx2 = {x2.grad}")   # 2.0 (= x1)
 ```
 
-Manual check: `y = relu(x1*x2 + 1)`. Since `x1*x2 + 1 = 7 > 0`, relu is identity.
-`dy/dx1 = x2 = 3`. `dy/dx2 = x1 = 2`. The engine matches.
+手計算で確認します。`y = relu(x1*x2 + 1)` です。`x1*x2 + 1 = 7 > 0` なので relu は恒等関数です。
+`dy/dx1 = x2 = 3`、`dy/dx2 = x1 = 2` です。エンジンの結果と一致します。
 
-## Use It
+## 使ってみる
 
-### Verify against PyTorch
+### PyTorch と照合する
 
 ```python
 import torch
@@ -459,9 +459,9 @@ print(f"PyTorch dy/dx1 = {x1.grad.item()}")  # 3.0
 print(f"PyTorch dy/dx2 = {x2.grad.item()}")  # 2.0
 ```
 
-Same gradients. Your engine computes the same result as PyTorch because the math is the same: reverse-mode autodiff via the chain rule.
+勾配は同じです。あなたのエンジンが PyTorch と同じ結果を計算するのは、数学が同じだからです。連鎖律による逆モード自動微分です。
 
-### A more complex expression
+### もう少し複雑な式
 
 ```python
 a = Value(2.0)
@@ -475,43 +475,43 @@ print(f"df/db = {b.grad}")  #  2.0 (= a)
 print(f"df/dc = {c.grad}")  #  1.0
 ```
 
-## Ship It
+## 提出物
 
-This lesson produces:
-- `outputs/skill-autodiff.md` -- a skill for building and debugging autograd systems
-- `code/autodiff.py` -- a minimal autograd engine you can extend
+このレッスンでは次を作ります。
+- `outputs/skill-autodiff.md` -- autograd システムを構築・デバッグするためのスキル
+- `code/autodiff.py` -- 拡張可能な最小限の autograd エンジン
 
-The Value class built here is the foundation for the neural network training loop in Phase 3.
+ここで作った Value クラスは、フェーズ3のニューラルネットワーク学習ループの土台になります。
 
-## Exercises
+## 演習
 
-1. Add `__pow__` to the Value class so you can compute `x ** n`. Verify that `d/dx(x^3)` at `x=2` equals `12.0`.
+1. `Value` クラスに `__pow__` を追加し、`x ** n` を計算できるようにしてください。`x=2` における `d/dx(x^3)` が `12.0` になることを確認してください。
 
-2. Add `tanh` as an activation function. Verify that `tanh'(0) = 1` and `tanh'(2) = 0.0707` (approx).
+2. 活性化関数として `tanh` を追加してください。`tanh'(0) = 1`、`tanh'(2) = 0.0707`（近似）になることを確認してください。
 
-3. Build a computation graph for a single neuron: `y = relu(w1*x1 + w2*x2 + b)`. Compute all five gradients and verify against PyTorch.
+3. 単一ニューロン `y = relu(w1*x1 + w2*x2 + b)` の計算グラフを作ってください。5つすべての勾配を計算し、PyTorch と照合してください。
 
-4. Implement forward-mode autodiff using dual numbers. Create a `Dual` class and verify it gives the same derivatives as your reverse-mode engine.
+4. 双対数を使って順モード自動微分を実装してください。`Dual` クラスを作り、逆モードエンジンと同じ導関数が得られることを確認してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる説明 | 実際の意味 |
 |------|----------------|----------------------|
-| Chain rule | "Multiply the derivatives" | The derivative of composed functions equals the product of each function's local derivative, evaluated at the right point |
-| Computational graph | "The network diagram" | A directed acyclic graph where nodes are operations and edges carry values (forward) or gradients (backward) |
-| Forward mode | "Push derivatives forward" | Autodiff that propagates derivatives from inputs to outputs. One pass per input variable. |
-| Reverse mode | "Backpropagation" | Autodiff that propagates gradients from outputs to inputs. One pass per output variable. |
-| Autograd | "Automatic gradients" | A system that records operations on values, builds a graph, and computes exact gradients via the chain rule |
-| Dual numbers | "Value plus derivative" | Numbers of the form a + b*epsilon (epsilon^2 = 0) that carry derivative information through arithmetic |
-| Topological sort | "Dependency order" | Ordering graph nodes so every node comes after all its dependencies. Required for correct gradient propagation. |
-| Gradient accumulation | "Add, don't replace" | When a value feeds into multiple operations, its gradient is the sum of all incoming gradient contributions |
-| Dynamic graph | "Define by run" | A computation graph rebuilt on every forward pass, allowing Python control flow inside models (PyTorch style) |
-| Gradient checking | "Numerical verification" | Comparing autodiff gradients against numerical finite-difference gradients to verify correctness. Essential for debugging. |
-| MLP | "Multi-layer perceptron" | A neural network with one or more hidden layers of neurons. Each neuron computes a weighted sum plus bias, then applies an activation function. |
-| Neuron | "Weighted sum + activation" | The basic unit: output = activation(w1*x1 + w2*x2 + ... + b). The weights and bias are learnable parameters. |
+| 連鎖律 | 「導関数を掛ける」 | 合成関数の導関数は、適切な点で評価した各関数の局所導関数の積に等しい |
+| 計算グラフ | 「ネットワーク図」 | ノードが演算、エッジが値（順方向）または勾配（逆方向）を運ぶ有向非巡回グラフ |
+| 順モード | 「導関数を前へ押す」 | 入力から出力へ導関数を伝播する自動微分。入力変数ごとに1回のパスが必要。 |
+| 逆モード | 「バックプロパゲーション」 | 出力から入力へ勾配を伝播する自動微分。出力変数ごとに1回のパスが必要。 |
+| Autograd | 「自動勾配」 | 値に対する演算を記録し、グラフを構築し、連鎖律で厳密な勾配を計算するシステム |
+| 双対数 | 「値と導関数」 | a + b*epsilon（epsilon^2 = 0）の形の数。算術演算を通して導関数情報を運ぶ |
+| トポロジカルソート | 「依存関係の順序」 | すべてのノードがその依存先の後に来るようにグラフノードを並べること。正しい勾配伝播に必要。 |
+| 勾配の蓄積 | 「置き換えずに足す」 | 1つの値が複数の演算へ流れるとき、その勾配は入ってくるすべての勾配寄与の和になる |
+| 動的グラフ | 「Define by run」 | 各順伝播で再構築される計算グラフ。モデル内で Python の制御フローを使える（PyTorch 方式） |
+| 勾配チェック | 「数値検証」 | 自動微分の勾配を数値的な有限差分勾配と比較して正しさを検証すること。デバッグに不可欠。 |
+| MLP | 「多層パーセプトロン」 | 1つ以上の隠れ層を持つニューラルネットワーク。各ニューロンは重み付き和とバイアスを計算し、活性化関数を適用する。 |
+| ニューロン | 「重み付き和 + 活性化」 | 基本単位: output = activation(w1*x1 + w2*x2 + ... + b)。重みとバイアスは学習可能なパラメータ。 |
 
-## Further Reading
+## 参考資料
 
-- [3Blue1Brown: Backpropagation calculus](https://www.youtube.com/watch?v=tIeHLnjs5U8) -- visual explanation of the chain rule in neural networks
-- [PyTorch Autograd mechanics](https://pytorch.org/docs/stable/notes/autograd.html) -- how the real system works
-- [Baydin et al., Automatic Differentiation in Machine Learning: a Survey](https://arxiv.org/abs/1502.05767) -- comprehensive reference
+- [3Blue1Brown: Backpropagation calculus](https://www.youtube.com/watch?v=tIeHLnjs5U8) -- ニューラルネットワークにおける連鎖律の視覚的な説明
+- [PyTorch Autograd mechanics](https://pytorch.org/docs/stable/notes/autograd.html) -- 実際のシステムがどう動くか
+- [Baydin et al., Automatic Differentiation in Machine Learning: a Survey](https://arxiv.org/abs/1502.05767) -- 包括的なリファレンス

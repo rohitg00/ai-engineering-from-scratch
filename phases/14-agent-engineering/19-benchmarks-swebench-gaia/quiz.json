@@ -4,55 +4,55 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does SWE-bench's evaluator check on a candidate patch?",
+      "question": "SWE-benchのevaluatorはcandidate patchの何をcheckしますか?",
       "options": [
-        "BLEU score against the reference fix",
-        "Previously failing tests now pass (FAIL_TO_PASS) and previously passing tests still pass (PASS_TO_PASS)",
-        "Patch length under 200 lines",
-        "Patch passes a separate LLM judge"
+        "reference fixに対するBLEU score",
+        "以前failしていたtestがpassすること (FAIL_TO_PASS) と、以前passしていたtestが引き続きpassすること (PASS_TO_PASS)",
+        "patch lengthが200行未満であること",
+        "別のLLM judgeをpatchが通過すること"
       ],
       "correct": 1,
-      "explanation": "The harness gates on test transitions: bug-revealing tests must flip while regression tests must stay green."
+      "explanation": "harnessはtest transitionでgateします。bugを露呈するtestはflipし、regression testはgreenのままでなければなりません。"
     },
     {
       "stage": "pre",
-      "question": "Why does SWE-bench Verified exist?",
+      "question": "SWE-bench Verifiedはなぜ存在しますか?",
       "options": [
-        "It runs faster",
-        "OpenAI's 500-task human-curated subset removes ambiguous issues and unreliable tests",
-        "It includes more languages",
-        "It uses a different patch format"
+        "より高速に実行できるため",
+        "OpenAIの500-task human-curated subsetが、曖昧なissueと信頼できないtestを取り除くため",
+        "より多くの言語を含むため",
+        "異なるpatch formatを使うため"
       ],
       "correct": 1,
-      "explanation": "Verified is the cleaner subset for credible reporting."
+      "explanation": "Verifiedは、信頼できるreportingのためのよりcleanなsubsetです。"
     },
     {
       "stage": "check",
-      "question": "What did SWE-bench+ find about successful patches?",
+      "question": "SWE-bench+はsuccessful patchesについて何を発見しましたか?",
       "options": [
-        "32.67% leaked solution text in the issue and 31.08% had suspiciously weak test coverage",
-        "All patches were memorized",
-        "There is no contamination",
-        "Patches always exceeded 1000 lines"
+        "32.67%でissue内にsolution textが漏れており、31.08%はtest coverageが疑わしいほど弱かった",
+        "すべてのpatchがmemorizedされていた",
+        "contaminationは存在しない",
+        "patchは常に1000行を超えていた"
       ],
       "correct": 0,
-      "explanation": "SWE-bench+ flagged solution leakage and weak coverage on a large fraction of successful patches."
+      "explanation": "SWE-bench+は、successful patchesの大きな割合でsolution leakageとweak coverageをflagしました。"
     },
     {
       "stage": "check",
-      "question": "What is GAIA's design philosophy?",
+      "question": "GAIAの設計思想は何ですか?",
       "options": [
-        "Hard for humans, easy for AI",
-        "Conceptually simple for humans (about 92%) but hard for AI (early GPT-4 with plugins: about 15%)",
-        "Pure benchmark of vector retrieval",
-        "Only single-turn questions"
+        "人間には難しく、AIには簡単",
+        "人間には概念的に単純 (約92%) だが、AIには難しい (初期のplugins付きGPT-4: 約15%)",
+        "vector retrievalだけのbenchmark",
+        "single-turn questionsのみ"
       ],
       "correct": 1,
-      "explanation": "GAIA is intentionally easy-for-humans, hard-for-AI, testing reasoning + tools + modality."
+      "explanation": "GAIAは意図的に人間には簡単、AIには難しく設計され、reasoning + tools + modalityをテストします。"
     },
     {
       "stage": "check",
-      "question": "Which is NOT one of AgentBench's environment categories?",
+      "question": "AgentBenchのenvironment categoryではないものはどれですか?",
       "options": [
         "Code (Bash, DB, KG)",
         "Games (Alfworld, LTP)",
@@ -60,31 +60,31 @@
         "Gradient (RL, IRL)"
       ],
       "correct": 3,
-      "explanation": "AgentBench covers code, games, web, and open-ended generation. There is no gradient category."
+      "explanation": "AgentBenchはcode、games、web、open-ended generationを扱います。gradient categoryはありません。"
     },
     {
       "stage": "post",
-      "question": "What does the lesson identify as the wrong way to report SWE-bench numbers?",
+      "question": "このlessonは、SWE-bench numbersの誤った報告方法として何を挙げていますか?",
       "options": [
-        "Reporting per-repo breakdowns",
-        "Reporting one aggregate number without mentioning Verified or SWE-bench+ context",
-        "Reporting step counts",
-        "Reporting wall-clock"
+        "repo別breakdownを報告すること",
+        "VerifiedやSWE-bench+ contextに触れず、aggregate numberを1つだけ報告すること",
+        "step countを報告すること",
+        "wall-clockを報告すること"
       ],
       "correct": 1,
-      "explanation": "Single-number fixation hides contamination and cost; always report Verified and per-distribution context."
+      "explanation": "single-number fixationはcontaminationとcostを隠します。常にVerifiedとdistribution別contextを報告してください。"
     },
     {
       "stage": "post",
-      "question": "Which dimension do these benchmarks NOT measure?",
+      "question": "これらのbenchmarkが測っていないdimensionはどれですか?",
       "options": [
-        "Real-world operational cost (tokens, wall-clock), adversarial safety, and your own domain",
+        "実世界のoperational cost (tokens、wall-clock)、adversarial safety、あなた自身のdomain",
         "Test transitions",
         "Per-task success",
         "Step counts"
       ],
       "correct": 0,
-      "explanation": "Benchmarks aggregate; they do not capture cost, adversarial robustness, or your domain."
+      "explanation": "benchmarkはaggregateします。cost、adversarial robustness、あなたのdomainまでは捉えません。"
     }
   ]
 }

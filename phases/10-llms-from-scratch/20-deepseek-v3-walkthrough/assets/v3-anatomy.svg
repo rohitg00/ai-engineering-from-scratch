@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -11,15 +11,15 @@
       .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
       .old { fill: #eeeeee; stroke: #888; stroke-width: 1.2; }
       .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">DeepSeek-V3 anatomy — 671B total, 37B active</text>
+  <text x="480" y="24" text-anchor="middle" class="title">DeepSeek-V3 anatomy — total 671B、active 37B</text>
 
   <!-- stack -->
   <rect x="60" y="50" width="300" height="500" class="box"/>
@@ -38,11 +38,11 @@
   <text x="210" y="242" text-anchor="middle" class="small">256 experts (2048 hidden each)</text>
   <text x="210" y="262" text-anchor="middle" class="small">+ 1 shared expert (always on)</text>
   <text x="210" y="282" text-anchor="middle" class="small">router: aux-loss-free bias</text>
-  <text x="210" y="302" text-anchor="middle" class="small">top-8 routing per token</text>
-  <text x="210" y="324" text-anchor="middle" class="small">active per token:</text>
+  <text x="210" y="302" text-anchor="middle" class="small">token ごとに top-8 routing</text>
+  <text x="210" y="324" text-anchor="middle" class="small">token ごとの active:</text>
   <text x="210" y="340" text-anchor="middle" class="small">8 routed + 1 shared = 9 experts</text>
   <text x="210" y="362" text-anchor="middle" class="small">KV cache: 512-dim MLA latent</text>
-  <text x="210" y="382" text-anchor="middle" class="small">per token per layer</text>
+  <text x="210" y="382" text-anchor="middle" class="small">token/layer ごと</text>
 
   <rect x="80" y="420" width="260" height="36" class="hot"/>
   <text x="210" y="442" text-anchor="middle" class="step">1 MTP module</text>
@@ -54,36 +54,36 @@
 
   <!-- Innovation callouts -->
   <rect x="400" y="50" width="520" height="500" class="box"/>
-  <text x="660" y="72" text-anchor="middle" class="head">four DeepSeek innovations</text>
+  <text x="660" y="72" text-anchor="middle" class="head">4つの DeepSeek innovation</text>
 
   <rect x="420" y="92" width="480" height="80" class="cool"/>
   <text x="440" y="114" class="step">1 / MLA — Multi-Head Latent Attention</text>
-  <text x="440" y="134" class="small">compress K and V into shared 512-dim latent c^{KV};</text>
-  <text x="440" y="150" class="small">KV cache stores 512 floats/token/layer instead of 2 * heads * head_dim.</text>
-  <text x="440" y="166" class="small">at 128k: 7.6 GB vs 30.5 GB for GQA(8/128). 4x savings.</text>
+  <text x="440" y="134" class="small">K と V を shared 512-dim latent c^{KV} へ圧縮;</text>
+  <text x="440" y="150" class="small">KV cache は 2 * heads * head_dim ではなく 512 floats/token/layer を保存。</text>
+  <text x="440" y="166" class="small">128k で: 7.6 GB vs GQA(8/128) の 30.5 GB。4x 節約。</text>
 
   <rect x="420" y="180" width="480" height="80" class="hot"/>
   <text x="440" y="202" class="step">2 / MTP — Multi-Token Prediction</text>
-  <text x="440" y="222" class="small">D=1 module predicts t+2 from h^(1) + E(t+1).</text>
-  <text x="440" y="238" class="small">denser training signal at 2.1% param overhead (14B of 671B).</text>
-  <text x="440" y="254" class="small">at inference: 80%+ acceptance as speculative-decoding draft.</text>
+  <text x="440" y="222" class="small">D=1 module が h^(1) + E(t+1) から t+2 を予測。</text>
+  <text x="440" y="238" class="small">2.1% param overhead (671B 中 14B) で denser training signal。</text>
+  <text x="440" y="254" class="small">inference 時: speculative-decoding draft として 80%+ acceptance。</text>
 
   <rect x="420" y="268" width="480" height="80" class="cold"/>
   <text x="440" y="290" class="step">3 / aux-loss-free routing</text>
-  <text x="440" y="310" class="small">per-expert bias terms adjusted during training</text>
-  <text x="440" y="326" class="small">to balance load — no auxiliary loss term needed.</text>
-  <text x="440" y="342" class="small">same effect, cleaner objective.</text>
+  <text x="440" y="310" class="small">training 中に per-expert bias term を調整し</text>
+  <text x="440" y="326" class="small">load を balance — auxiliary loss term は不要。</text>
+  <text x="440" y="342" class="small">同じ効果で、objective は cleaner。</text>
 
   <rect x="420" y="356" width="480" height="80" class="dsk"/>
   <text x="440" y="378" class="step">4 / DualPipe training</text>
-  <text x="440" y="398" class="small">bidirectional pipeline overlap on 2k H800 GPUs.</text>
-  <text x="440" y="414" class="small">hides cross-node all-to-all inside compute windows.</text>
-  <text x="440" y="430" class="small">recovers ~245k GPU-hours vs 1F1B at V3's scale.</text>
+  <text x="440" y="398" class="small">2k H800 GPUs 上の bidirectional pipeline overlap。</text>
+  <text x="440" y="414" class="small">cross-node all-to-all を compute window 内に隠す。</text>
+  <text x="440" y="430" class="small">V3 scale で 1F1B 比 約 245k GPU-hours を回収。</text>
 
   <rect x="420" y="444" width="480" height="100" class="box"/>
-  <text x="440" y="466" class="step">what this unlocks</text>
-  <text x="440" y="484" class="small">· 128k context with a manageable KV cache (MLA)</text>
-  <text x="440" y="500" class="small">· larger capacity for same active FLOP budget (256 experts, top-8)</text>
-  <text x="440" y="516" class="small">· 1.8x decode throughput free (MTP as spec-decode draft)</text>
-  <text x="440" y="532" class="small">· 95%+ GPU utilization at 2k-rank training (DualPipe)</text>
+  <text x="440" y="466" class="step">これで可能になること</text>
+  <text x="440" y="484" class="small">· 管理可能な KV cache で 128k context (MLA)</text>
+  <text x="440" y="500" class="small">· 同じ active FLOP budget で大容量化 (256 experts, top-8)</text>
+  <text x="440" y="516" class="small">· 追加なしで 1.8x decode throughput (MTP as spec-decode draft)</text>
+  <text x="440" y="532" class="small">· 2k-rank training で 95%+ GPU utilization (DualPipe)</text>
 </svg>

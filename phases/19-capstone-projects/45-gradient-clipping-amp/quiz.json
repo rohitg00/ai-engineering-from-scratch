@@ -1,78 +1,78 @@
 {
   "lesson": "45-gradient-clipping-amp",
-  "title": "Gradient Clipping and Mixed Precision",
+  "title": "Gradient Clipping と Mixed Precision",
   "questions": [
     {
       "stage": "pre",
-      "question": "What problem does global L2 gradient clipping solve?",
+      "question": "global L2 gradient clipping は何を解決するか。",
       "options": [
-        "Slow training",
-        "A single bad batch can spike the gradient norm by orders of magnitude; clipping bounds the worst-case optimizer step so one batch cannot reset hours of learning",
-        "Vocabulary drift",
-        "Random restart"
+        "training が遅い問題。",
+        "1 つの bad batch が gradient norm を数桁 spike させても、optimizer step の最悪値を縛れる。",
+        "vocabulary drift。",
+        "random restart。"
       ],
       "correct": 1,
-      "explanation": "Clipping is the safety belt that keeps a noisy batch from wrecking the loss curve."
+      "explanation": "clipping は noisy batch が loss curve を壊すのを防ぐ安全装置である。"
     },
     {
       "stage": "check",
-      "question": "What is the correct order of GradScaler operations in a step?",
+      "question": "1 step 内の GradScaler 操作の正しい順序はどれか。",
       "options": [
-        "step, scale, unscale, backward, update",
-        "scaler.scale(loss).backward(); scaler.unscale_(optimizer); clip_grad_norm_; scaler.step(optimizer); scaler.update()",
-        "backward, step, scale, update",
-        "Any order; the scaler reorders internally"
+        "step, scale, unscale, backward, update。",
+        "`scaler.scale(loss).backward(); scaler.unscale_(optimizer); clip_grad_norm_; scaler.step(optimizer); scaler.update()`。",
+        "backward, step, scale, update。",
+        "任意。scaler が内部で並べ替える。"
       ],
       "correct": 1,
-      "explanation": "Clip on unscaled gradients between unscale_ and step; update always runs."
+      "explanation": "unscale_ と step の間で unscaled gradient を clip し、update は常に走らせる。"
     },
     {
       "stage": "check",
-      "question": "What does scaler.update() do on a skipped step?",
+      "question": "skipped step で `scaler.update()` は何をするか。",
       "options": [
-        "Nothing",
-        "Halves the scaling factor and resets the no-inf counter; forgetting to call it on the skip path is the bug that produces 'the scaling factor never changed'",
-        "Doubles the scaling factor",
-        "Closes the run"
+        "何もしない。",
+        "scaling factor を半分にし no-inf counter を reset する。skip path で呼び忘れると scale が変わらない bug になる。",
+        "scaling factor を 2 倍にする。",
+        "run を閉じる。"
       ],
       "correct": 1,
-      "explanation": "The scaler tunes its factor based on the skip / clean ratio across recent steps."
+      "explanation": "scaler は最近の skip/clean ratio に基づいて factor を調整する。"
     },
     {
       "stage": "check",
-      "question": "Why is the loss finiteness check necessary even with a GradScaler?",
+      "question": "GradScaler があっても loss finiteness check が必要なのはなぜか。",
       "options": [
-        "Because GradScaler is slow",
-        "GradScaler handles backward-pass overflow but a non-finite loss does not produce useful gradients; skipping before backward saves compute and avoids polluting the scaler's state",
-        "It is decorative",
-        "PyTorch requires it"
+        "GradScaler が遅いから。",
+        "GradScaler は backward overflow を扱うが、non-finite loss は有用な gradient を作らないため backward 前に skip するべきだから。",
+        "飾り。",
+        "PyTorch が要求するから。"
       ],
       "correct": 1,
-      "explanation": "Loss check covers forward-pass failures; scaler covers backward-pass failures."
+      "explanation": "loss check は forward failure、scaler は backward overflow を担当する。"
     },
     {
       "stage": "post",
-      "question": "What is the production signal in the rolling skip rate?",
+      "question": "rolling skip rate の production signal は何か。",
       "options": [
-        "Always page on any skip",
-        "A handful of skips per run is healthy; hundreds of skips per epoch (above roughly 5 percent rolling rate) is a hard alert that the model is in a regime FP16 cannot hold",
-        "Skip rate is irrelevant",
-        "Page only on consecutive skips"
+        "skip が 1 回でも page する。",
+        "run 中の数回の skip は正常だが、epoch あたり数百回や rolling rate 5% 超は FP16 が持たない regime の hard alert。",
+        "skip rate は無関係。",
+        "連続 skip のときだけ page する。"
       ],
       "correct": 1,
-      "explanation": "Rate-based alerting catches silent failure modes that occasional-skip pages would not."
+      "explanation": "rate-based alerting は occasional skip では見えない silent failure を拾う。"
     },
     {
       "stage": "post",
-      "question": "Why switch from FP16 to BF16 autocast when skips are frequent?",
+      "question": "skip が多いとき FP16 から BF16 autocast に切り替えるのはなぜか。",
       "options": [
-        "BF16 is newer",
-        "BF16 has a wider exponent range than FP16 and rarely needs loss scaling; the skip rate typically drops to zero on the same model",
-        "BF16 is slower so it skips less",
-        "Random tradition"
+        "BF16 の方が新しいから。",
+        "BF16 は FP16 より exponent range が広く、loss scaling がほぼ不要で skip rate が 0 に落ちることが多いから。",
+        "BF16 は遅いので skip が減る。",
+        "慣習。"
       ],
       "correct": 1,
-      "explanation": "FP16 favors mantissa precision over range; BF16 trades the other way, removing the overflow class entirely."
+      "explanation": "FP16 は mantissa precision を優先し range が狭い。BF16 は range を広げ overflow class を消しやすい。"
     }
   ]
 }

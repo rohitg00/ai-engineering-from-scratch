@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,15 +7,15 @@
       .overlap { fill: #e1d7ff; stroke: #5a4fcf; stroke-width: 1.2; }
       .bubble { fill: #f2f2f2; stroke: #aaa; stroke-width: 1.0; stroke-dasharray: 2,2; }
       .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
-      .step { font-size: 11px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 11px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">DualPipe schedule — P=4, 8 micro-batches, two directions</text>
+  <text x="480" y="24" text-anchor="middle" class="title">DualPipe schedule — P=4、8 micro-batches、2 directions</text>
 
   <!-- Y-axis: ranks -->
   <text x="20" y="70" class="head">rank 0</text>
@@ -136,12 +136,12 @@
   <rect x="695" y="175" width="22" height="16" class="bubble"/>
   <text x="725" y="187" class="step">bubble (warmup only)</text>
 
-  <text x="695" y="215" class="small">bubbles do not grow</text>
-  <text x="695" y="228" class="small">with micro-batch count</text>
+  <text x="695" y="215" class="small">bubble は micro-batch 数と</text>
+  <text x="695" y="228" class="small">一緒には増えない</text>
 
   <!-- Bubble fraction table -->
   <rect x="30" y="280" width="900" height="230" class="box"/>
-  <text x="480" y="303" text-anchor="middle" class="label">bubble fraction vs schedule — lower is better</text>
+  <text x="480" y="303" text-anchor="middle" class="label">bubble fraction vs schedule — 低いほど良い</text>
 
   <text x="50" y="335" class="step">P=8, M=16</text>
   <text x="260" y="335" class="small">1F1B: 30.4%   Zero Bubble: 11.3%   DualPipe: 5.5%   DualPipeV: 6.5%</text>
@@ -153,12 +153,12 @@
   <text x="260" y="385" class="small">1F1B: 10.5%   Zero Bubble: 3.9%    DualPipe: 1.8%   DualPipeV: 2.1%</text>
 
   <text x="50" y="420" class="step">DualPipe cost</text>
-  <text x="260" y="420" class="small">2x parameter copies per rank — affordable at MoE scale (EP dominates)</text>
+  <text x="260" y="420" class="small">rank ごとに 2x parameter copies — MoE scale では許容可能 (EP dominates)</text>
 
   <text x="50" y="445" class="step">DualPipeV cost</text>
-  <text x="260" y="445" class="small">1x parameter copies, slightly larger bubble — better fit for dense models</text>
+  <text x="260" y="445" class="small">1x parameter copies、やや大きい bubble — dense model に向く</text>
 
   <text x="50" y="480" class="step">DeepSeek-V3</text>
-  <text x="260" y="480" class="small">2048 H800 GPUs, ~2.8M GPU-hours. DualPipe recovers ~245k GPU-hours</text>
-  <text x="260" y="498" class="small">over a 1F1B baseline — enough to fund a separate 70B dense run.</text>
+  <text x="260" y="480" class="small">2048 H800 GPUs、約 2.8M GPU-hours。DualPipe は約 245k GPU-hours を回収</text>
+  <text x="260" y="498" class="small">1F1B baseline 比 — 別の 70B dense run を賄える規模。</text>
 </svg>

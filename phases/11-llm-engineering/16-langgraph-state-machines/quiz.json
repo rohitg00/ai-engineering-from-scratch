@@ -3,60 +3,60 @@
   "questions": [
     {
       "stage": "post",
-      "question": "Why does the `messages` field in a LangGraph State TypedDict need `Annotated[list, add_messages]`?",
+      "question": "LangGraph State TypedDictの `messages` fieldに `Annotated[list, add_messages]` が必要なのはなぜですか？",
       "options": [
-        "It enables streaming of token deltas from the model.",
-        "Without the reducer, node updates overwrite the list instead of appending, so every turn loses the prior history.",
-        "It compresses the message list when checkpoints are written to disk.",
-        "It converts plain dicts into LangChain message objects at runtime."
+        "modelからのtoken delta streamingを有効にするため。",
+        "reducerがないとnode updatesがappendではなくlistをoverwriteし、各turnで過去historyを失うため。",
+        "checkpointをdiskに書くときmessage listをcompressするため。",
+        "runtimeでplain dictをLangChain message objectへ変換するため。"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What is the difference between `interrupt_before=['tools']` and `interrupt_after=['tools']`?",
+      "question": "`interrupt_before=['tools']` と `interrupt_after=['tools']` の違いは何ですか？",
       "options": [
-        "No difference; they are aliases.",
-        "`interrupt_before` pauses after the model emits tool_calls but before the tools execute; `interrupt_after` pauses after the tools have already run.",
-        "`interrupt_before` runs the tool in a sandbox first; `interrupt_after` runs it in production.",
-        "`interrupt_before` is for unit tests; `interrupt_after` is for production."
+        "違いはない。aliasである。",
+        "`interrupt_before` はmodelがtool_callsをemitした後、tools実行前にpauseする。`interrupt_after` はtools実行後にpauseする。",
+        "`interrupt_before` はtoolを先にsandboxで実行し、`interrupt_after` はproductionで実行する。",
+        "`interrupt_before` はunit test用、`interrupt_after` はproduction用。"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Given a thread's checkpoint history, how do you time-travel to a prior state and explore a different branch?",
+      "question": "threadのcheckpoint historyがあるとき、過去stateへtime-travelして別branchを探索するにはどうしますか？",
       "options": [
-        "Call `graph.reset(thread_id)` then `graph.invoke(new_input, config)`.",
-        "Delete the checkpoint directory and reinvoke with the same thread_id.",
-        "Invoke the graph with the desired prior `checkpoint_id` in the config; passing `None` as input replays from that checkpoint, passing a new value appends to it before resuming.",
-        "Set `graph.rewind = True` and reinvoke."
+        "`graph.reset(thread_id)` を呼び、その後 `graph.invoke(new_input, config)` を呼ぶ。",
+        "checkpoint directoryを削除し、同じthread_idで再invokeする。",
+        "目的の過去 `checkpoint_id` をconfigに入れてgraphをinvokeする。inputに `None` を渡すとそのcheckpointからreplayし、新しい値を渡すとそれをappendしてからresumeする。",
+        "`graph.rewind = True` を設定して再invokeする。"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "In a four-node ReAct graph (agent, tools, conditional edge, static edge back to agent), where does the conditional edge live?",
+      "question": "4-node ReAct graph (agent、tools、conditional edge、agentへ戻るstatic edge) で、conditional edgeはどこにありますか？",
       "options": [
-        "From `tools` back to `agent`, routing on whether tool output was empty.",
-        "From `agent`, routing to `tools` if the last message has tool_calls and to `END` otherwise.",
-        "From `START`, routing to either `agent` or `END` based on input length.",
-        "There is no conditional edge; both are static."
+        "`tools` から `agent` へ戻るedgeで、tool outputがemptyかどうかでroutingする。",
+        "`agent` から、last messageにtool_callsがあれば `tools` へ、なければ `END` へroutingする。",
+        "`START` から、input lengthに基づき `agent` または `END` へroutingする。",
+        "conditional edgeはない。両方ともstaticである。"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "When should you use `Send(node_name, state)` instead of a plain edge?",
+      "question": "plain edgeではなく `Send(node_name, state)` を使うべきなのはいつですか？",
       "options": [
-        "To retry a node after a failure.",
-        "To defer a node until a timer expires.",
-        "To dispatch N parallel executions of a target node whose outputs merge back through the state reducer.",
-        "To invoke a node in a different process for isolation."
+        "failure後にnodeをretryするため。",
+        "timerがexpireするまでnodeをdeferするため。",
+        "target nodeのN parallel executionsをdispatchし、そのoutputsをstate reducer経由でmergeするため。",
+        "isolation目的でnodeを別processでinvokeするため。"
       ],
       "correct": 2,
       "explanation": ""

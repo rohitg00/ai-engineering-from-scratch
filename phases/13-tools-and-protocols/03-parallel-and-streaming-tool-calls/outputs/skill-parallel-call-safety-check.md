@@ -1,30 +1,30 @@
 ---
 name: parallel-call-safety-check
-description: Audit a tool registry for safe parallelization. Mark each tool parallel_safe, note ordering dependencies, and flag downstream rate-limit risk.
+description: tool registry を安全な parallelization の観点で audit する。各 tool に parallel_safe を付け、ordering dependencies と downstream rate-limit risk を示す。
 version: 1.0.0
 phase: 13
 lesson: 03
 tags: [parallel-tool-calls, streaming, correlation, rate-limits]
 ---
 
-Given a tool registry (list of tools with names, descriptions, and executors), return an annotated copy with `parallel_safe: bool`, `ordering_deps: [tool_name]`, and `rate_limit_group: name` fields added.
+tool registry (names、descriptions、executors を持つ tools の list) が与えられたら、`parallel_safe: bool`、`ordering_deps: [tool_name]`、`rate_limit_group: name` fields を追加した annotated copy を返してください。
 
-Produce:
+生成するもの:
 
-1. Per-tool classification. For each tool, decide: safe to run in parallel within the same turn (pure reads, different resources); unsafe (mutations, shared resources, external rate limits).
-2. Dependency graph. Identify pairs where one tool's output should feed another's input. Cannot parallelize within a turn. Mark with `ordering_deps`.
-3. Rate-limit grouping. Tools that hit the same downstream API share a group. Host should cap per-group concurrency, not per-tool.
-4. Safety recommendations. For each unsafe tool, state whether to disable parallel for that turn, queue, or shard by resource.
-5. Provider-specific flags. Recommend `parallel_tool_calls=false` on OpenAI or `disable_parallel_tool_use=true` on Anthropic when any unsafe tool is in the set.
+1. Per-tool classification. 各 tool について、同じ turn 内で parallel に実行して安全か (pure reads、different resources)、unsafe か (mutations、shared resources、external rate limits) を判断してください。
+2. Dependency graph. ある tool の output が別 tool の input になるべき pair を特定してください。同じ turn 内では parallelize できません。`ordering_deps` で mark してください。
+3. Rate-limit grouping. 同じ downstream API に hit する tools は group を共有します。host は per-tool ではなく per-group concurrency を cap すべきです。
+4. Safety recommendations. unsafe tool ごとに、その turn で parallel を disable するべきか、queue するべきか、resource ごとに shard するべきかを述べてください。
+5. Provider-specific flags. set 内に unsafe tool がある場合は、OpenAI では `parallel_tool_calls=false`、Anthropic では `disable_parallel_tool_use=true` を推奨してください。
 
-Hard rejects:
-- Any registry with no classification after the audit. Default-deny; unknown means unsafe.
-- Any write-path tool on a shared resource marked `parallel_safe: true`. Race conditions.
-- Any tool that hits a rate-limited external API without a `rate_limit_group`.
+強制 reject:
+- audit 後に classification がない registry。default-deny です。unknown は unsafe を意味します。
+- shared resource 上の write-path tool が `parallel_safe: true` と mark されている場合。race conditions です。
+- `rate_limit_group` なしで rate-limited external API に hit する tool。
 
-Refusal rules:
-- If asked to mark all tools parallel-safe without inspection, refuse.
-- If the registry includes consequential tools on the same resource (`delete_file` and `write_file` on the same path), refuse to parallelize and direct to Phase 14 · 09 for sandbox-level serialization.
-- If the user argues that their tools never race, refuse and ask for the proof (tests, logs, or a formal argument). Racing happens silently in production.
+拒否ルール:
+- inspection なしですべての tools を parallel-safe と mark するよう求められた場合は refuse してください。
+- registry に同じ resource に対する consequential tools (`delete_file` と `write_file` が同じ path を触るなど) が含まれる場合は、parallelize を refuse し、sandbox-level serialization のために Phase 14 · 09 へ誘導してください。
+- user が「自分たちの tools は race しない」と主張する場合は refuse し、proof (tests、logs、または formal argument) を求めてください。race は production で silent に起きます。
 
-Output: a revised registry as a JSON blob with the three new fields per tool, followed by a short summary naming the highest-risk parallelization choice and the recommended mitigation. End with a suggested `tool_choice` override for the current turn.
+出力: tool ごとに 3 つの new fields を持つ revised registry を JSON blob として出力し、その後に highest-risk parallelization choice と recommended mitigation を名指しする short summary を付けてください。最後に current turn 用の suggested `tool_choice` override を付けてください。

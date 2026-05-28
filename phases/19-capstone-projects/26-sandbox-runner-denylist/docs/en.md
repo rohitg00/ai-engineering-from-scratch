@@ -1,35 +1,35 @@
-# Capstone Lesson 26: Sandbox Runner with Denylist and Path Jail
+# Capstone Lesson 26: Denylist と Path Jail つき Sandbox Runner
 
-> The verification gate decides whether a tool call should run. The sandbox decides what happens when it does. This lesson ships a subprocess runner that refuses dangerous executables, refuses dangerous argv shapes, jails every file path to a project root, truncates oversized output, and kills runaway processes on a wall-clock timeout. It is the second of two layers that sit between the model and the operating system.
+> verification gate は tool call を実行してよいかを決めます。sandbox は、実行する場合に何が起きるかを決めます。この lesson では subprocess runner を出荷します。危険な executable、危険な argv shape を拒否し、すべての file path を project root に jail し、大きすぎる output を truncate し、wall-clock timeout で暴走 process を kill します。model と operating system の間に置く 2 層のうち 2 つ目です。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
-**Time:** ~90 minutes
+**種別:** 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
+**所要時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Build a `Sandbox` class wrapping `subprocess.run` with timeout, capture, and truncation.
-- Refuse a command by name against a denylist and by structure against an argv inspector.
-- Refuse any path argument that resolves outside a declared project root.
-- Refuse shell metacharacters when shell mode is off.
-- Return a structured `SandboxResult` that downstream observability and the eval harness can ingest.
+- timeout、capture、truncation を持つ `subprocess.run` wrapper として `Sandbox` class を作る。
+- command name は denylist で、構造は argv inspector で拒否する。
+- declared project root の外へ resolve される path argument を拒否する。
+- shell mode が off のとき shell metacharacter を拒否する。
+- downstream observability と eval harness が取り込める structured `SandboxResult` を返す。
 
-## The Problem
+## 問題
 
-A coding agent that can shell out can install backdoors, exfiltrate keys, brick a developer laptop, and rack up a cloud bill in a single turn. The least costly defense is to not give it shell. The second least costly is a sandbox that says no to a precise list of patterns.
+shell out できる coding agent は、1 turn で backdoor を入れ、key を exfiltrate し、developer laptop を壊し、cloud bill を積み上げられます。最も安い防御は shell を与えないことです。次に安い防御は、正確な pattern list に no と言う sandbox です。
 
-Three classes of failure recur in agent traces.
+agent trace では 3 種類の failure が繰り返し出ます。
 
-The first is dangerous executables. A model under pressure to fix a path issue will try `sudo`, `chmod -R 777`, `rm -rf`, `mkfs`, `dd`. None of these belong in an agent run. The denylist catches them by name and by alias.
+1 つ目は dangerous executable です。path issue を直す pressure の下で model は `sudo`, `chmod -R 777`, `rm -rf`, `mkfs`, `dd` を試します。agent run にこれらは不要です。denylist は name と alias で捕まえます。
 
-The second is argv tricks. A model that has been told no shell will pipe an attack through an interpreter: `python3 -c "import os; os.system('rm -rf /')"`, `bash -c '...'`, `node -e '...'`, `perl -e '...'`. The sandbox needs to know that any interpreter run with a `-c`-like flag is just a shell call with extra steps.
+2 つ目は argv trick です。shell はだめだと言われた model が、interpreter 経由で攻撃を通します。`python3 -c "import os; os.system('rm -rf /')"`, `bash -c '...'`, `node -e '...'`, `perl -e '...'` です。sandbox は、`-c` 風の flag 付き interpreter run が、手順を増やしただけの shell call であることを知る必要があります。
 
-The third is path escape. The model is told to read `./src/main.py` and instead reads `../../etc/passwd`. The sandbox jails every path argument by resolving it through `os.path.realpath` and asserting the prefix.
+3 つ目は path escape です。model は `./src/main.py` を読むように言われ、代わりに `../../etc/passwd` を読みます。sandbox はすべての path argument を `os.path.realpath` で resolve し、prefix を assert して jail します。
 
-The sandbox is not a security boundary in the operating system sense. A determined attacker with code execution can still break out. The sandbox is a development-time guardrail: it makes the common failure modes loud and stops the agent from doing damage out of sheer ineptitude.
+sandbox は operating system 的な意味での security boundary ではありません。code execution を持つ決意ある attacker はまだ抜け出せます。この sandbox は development-time guardrail です。よくある failure mode を loud にし、agent が単なる不器用さで damage を与えることを止めます。
 
-## The Concept
+## コンセプト
 
 ```mermaid
 flowchart TD
@@ -42,11 +42,11 @@ flowchart TD
   S5 --> Result[SandboxResult<br/>exit_code, stdout, stderr,<br/>truncated, timed_out, denied, reason]
 ```
 
-The sandbox has four refusal axes: name, argv, path, structure. Each axis is a pure function of the call, no subprocess yet. The subprocess only spawns after every axis has passed.
+sandbox には 4 つの refusal axis があります。name、argv、path、structure です。各 axis は call に対する pure function であり、まだ subprocess はありません。すべての axis を pass した後にだけ subprocess を spawn します。
 
-The `SandboxResult` exit codes are the conventional ones: 0 success, non-zero failure, plus three sentinel codes for denied (-100), timed_out (-101), and truncated (the exit code is the real one, with a flag set). Downstream lessons read this structured result rather than parsing stderr.
+`SandboxResult` の exit code は conventional なものです。0 は success、non-zero は failure、さらに denied (-100)、timed_out (-101)、truncated（exit code は実際の値で flag が立つ）の sentinel code があります。後続 lesson は stderr を parse せず、この structured result を読みます。
 
-## Architecture
+## アーキテクチャ
 
 ```mermaid
 flowchart LR
@@ -55,30 +55,30 @@ flowchart LR
   Sandbox --> Result[SandboxResult]
 ```
 
-The denylist is a frozenset of executable basenames. Aliases (`/bin/rm`, `/usr/bin/rm`) all resolve to the same basename. The argv inspector knows the interpreter shape: any argv where argv[0] is an interpreter and any later arg starts with `-c` or `-e` is denied. Shell metacharacters (`;`, `|`, `&`, `>`, `<`, backticks, `$()`) cause refusal when the call did not explicitly request a shell.
+denylist は executable basename の frozenset です。alias（`/bin/rm`, `/usr/bin/rm`）はいずれも同じ basename に resolve されます。argv inspector は interpreter shape を知っています。argv[0] が interpreter で、後続 arg が `-c` または `-e` で始まるものは deny します。shell metacharacter（`;`, `|`, `&`, `>`, `<`, backticks, `$()`）は、call が明示的に shell を要求していない場合に refusal になります。
 
-The path jail is the most subtle piece. The sandbox accepts a `project_root` at construction. Any argument that looks like a path (contains `/` or matches an existing file) is normalized through `os.path.realpath`, then checked against the realpath of the project root. If the resolved target is not under the root, refusal. Symlink escape attempts (a symlink in the project root that points outside) are blocked by checking realpath, not the literal path.
+path jail が最も subtle な部分です。sandbox は construction 時に `project_root` を受け取ります。path に見える引数（`/` を含む、または既存 file に match する）は `os.path.realpath` で normalize し、project root の realpath と照合します。resolved target が root 配下でなければ refusal です。project root 内の symlink が外を指す symlink escape attempt は、literal path ではなく realpath を見ることで block します。
 
-## What you will build
+## 作るもの
 
-The implementation is `main.py` plus a tests dir.
+implementation は `main.py` と tests dir です。
 
-1. `SandboxResult` dataclass: exit_code, stdout, stderr, truncated, timed_out, denied, reason, duration_ms.
-2. `SandboxConfig` dataclass: project_root, max_output_bytes, timeout_seconds, denylist, interpreter_block.
-3. `Sandbox` class: `run(argv, *, shell=False, cwd=None)` returns a `SandboxResult`.
-4. Internal refusal helpers: `_check_executable_denylist`, `_check_argv_interpreter`, `_check_shell_metachars`, `_check_path_jail`.
-5. Output truncation with a clear `truncated` flag and a marker line in the captured stream.
-6. Demo at the bottom: a sequence of legitimate and adversarial calls. Each is shown with its result.
+1. `SandboxResult` dataclass: exit_code, stdout, stderr, truncated, timed_out, denied, reason, duration_ms。
+2. `SandboxConfig` dataclass: project_root, max_output_bytes, timeout_seconds, denylist, interpreter_block。
+3. `Sandbox` class: `run(argv, *, shell=False, cwd=None)` が `SandboxResult` を返す。
+4. internal refusal helper: `_check_executable_denylist`, `_check_argv_interpreter`, `_check_shell_metachars`, `_check_path_jail`。
+5. 明確な `truncated` flag と captured stream 内 marker line つきの output truncation。
+6. bottom の demo: legitimate call と adversarial call の sequence。各 call を result とともに表示する。
 
-The sandbox uses `subprocess.run` with `shell=False` by default and `capture_output=True`. The wall-clock timeout uses the `timeout` argument; on `TimeoutExpired`, the sandbox kills the process group and synthesizes a SandboxResult.
+sandbox は default で `shell=False`、`capture_output=True` の `subprocess.run` を使います。wall-clock timeout は `timeout` argument を使います。`TimeoutExpired` では process group を kill し、`SandboxResult` を synthesize します。
 
-## Why this is not a real sandbox
+## なぜこれは本物の sandbox ではないのか
 
-The lesson sandbox does not use namespaces, cgroups, seccomp, gVisor, Firecracker, or any kernel-level isolation. Anything the subprocess can do, the sandbox can do. The protection is structural: the agent is denied the most common dangerous invocations, and the loud refusal goes into observability instead of silently running.
+lesson sandbox は namespace、cgroup、seccomp、gVisor、Firecracker、kernel-level isolation を使いません。subprocess ができることは、sandbox もできます。protection は structural です。agent はよくある危険な invocation を deny され、silent に実行される代わりに loud refusal が observability に入ります。
 
-For production agents you layer on top: run inside an unprivileged Docker container, run inside a microVM, drop capabilities, mount the project root read-only and a scratch dir read-write, set ulimit on memory and CPU, scrub the environment to a known-safe whitelist. Lesson 29 does some of this. Operating-system isolation is out of scope for this lesson.
+production agent では上に layer を載せます。unprivileged Docker container 内で走らせる、microVM 内で走らせる、capability を drop する、project root を read-only で mount し scratch dir を read-write にする、memory と CPU に ulimit をかける、environment を known-safe whitelist に scrub する。Lesson 29 はこの一部を扱います。operating-system isolation はこの lesson の scope 外です。
 
-## Running it
+## 実行方法
 
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
@@ -86,8 +86,4 @@ python3 code/main.py
 python3 -m pytest code/tests/ -v
 ```
 
-The demo creates a temp directory, drops a clean file into it, then runs a battery of calls. Legal calls succeed. Denied calls return SandboxResult with `denied=True` and a reason. Timeouts return `timed_out=True`. Truncation sets `truncated=True`. The demo prints a JSON table of outcomes and exits zero.
-
-## How this composes with the rest of Track A
-
-Lesson 25 produced the gate chain. Lesson 26 is the executor that runs after a gate ALLOW. Lesson 27's eval harness compares the sandbox results against the expected exit-code per task. Lesson 28 emits a `gen_ai.tool.execution` span around each `Sandbox.run` invocation. Lesson 29's end-to-end demo wires a real coding agent through both layers.
+demo は temp directory を作り、そこに clean file を置き、call の battery を走らせます。legal call は success します。denied call は `denied=True` と reason を持つ SandboxResult を返します。timeout は `timed_out=True` を返します。truncation は `truncated=True` を立てます。demo は outcome の JSON table を print し、exit zero します。

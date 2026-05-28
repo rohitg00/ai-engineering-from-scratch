@@ -1,36 +1,36 @@
 ---
 name: workbench-benchmark
-description: Run the same task through prompt-only and workbench-guided pipelines on a project's own sample app and emit a five-outcome before/after report.
+description: project 自身の sample app 上で prompt-only と workbench-guided pipeline に同じ task を実行し、5 outcome の before/after report を出力する。
 version: 1.0.0
 phase: 14
 lesson: 41
 tags: [benchmark, before-after, evaluation, workbench, sample-app]
 ---
 
-Given a repo, an agent product, and a small sample app, produce a portable evaluation harness that compares prompt-only against workbench-guided pipelines.
+repo、agent product、小さな sample app が与えられたら、prompt-only と workbench-guided pipeline を比較する portable evaluation harness を作成してください。
 
-Produce:
+生成するもの:
 
-1. `eval/sample_app/` — a minimum-viable sample app drawn from the project's domain.
-2. `eval/run_prompt_only.py` and `eval/run_workbench.py` that each take a task description and return a `TaskOutcome`.
-3. `eval/report.py` that runs both pipelines and writes `before-after-report.md` plus `comparison.json`.
-4. CI workflow that fails when workbench outcomes regress on a fixed task suite.
-5. `docs/benchmark.md` explaining the five outcomes and what counts as a regression.
+1. `eval/sample_app/`。project の domain から作った minimum-viable sample app。
+2. `eval/run_prompt_only.py` と `eval/run_workbench.py`。それぞれ task description を受け取り、`TaskOutcome` を返す。
+3. `eval/report.py`。両 pipeline を実行し、`before-after-report.md` と `comparison.json` を書く。
+4. 固定 task suite で workbench outcome が regression したら fail する CI workflow。
+5. 5 つの outcome と regression の定義を説明する `docs/benchmark.md`。
 
-Hard rejects:
+ハード拒否条件:
 
-- A benchmark with only one pipeline. Comparison is the whole point.
-- Outcomes phrased as percentages without a denominator. Always report `n / m`.
-- A sample app the agent product was trained on. Use a domain-tuned fixture.
-- Reports that hide false negatives. Tasks where prompt-only was faster must be enumerated.
+- pipeline が 1 つしかない benchmark。比較こそが目的です。
+- denominator のない percentage として表現された outcome。常に `n / m` で report してください。
+- agent product が training された sample app。domain-tuned fixture を使ってください。
+- false negative を隠す report。prompt-only のほうが速かった task は列挙する必要があります。
 
-Refusal rules:
+拒否ルール:
 
-- If the project has no acceptance command, refuse to ship the benchmark. There is nothing to measure.
-- If the workbench pipeline takes more than 3x the prompt-only pipeline on the median task, surface that finding; the workbench needs simplification, not the model.
-- If the harness cannot run offline, refuse to wire it into CI. Network flakiness will corrupt the comparison.
+- project に acceptance command がない場合、benchmark の出荷を拒否してください。測定するものがありません。
+- median task で workbench pipeline が prompt-only pipeline の 3 倍を超える場合、その finding を明示してください。必要なのは model 変更ではなく workbench の単純化です。
+- harness が offline で走れない場合、CI への wiring を拒否してください。network flakiness は comparison を汚します。
 
-Output structure:
+出力構成:
 
 ```
 <repo>/
@@ -46,8 +46,8 @@ Output structure:
 └── .github/workflows/benchmark.yml
 ```
 
-End with "what to read next" pointing to:
+最後に "what to read next" を置き、次を指してください。
 
-- Lesson 42 for the capstone pack that bundles every surface used by the workbench pipeline.
-- Lesson 19 (SWE-bench, GAIA, AgentBench) for the macro benchmarks this complements.
-- Lesson 30 (Eval-Driven Agent Development) for ongoing eval loops once the benchmark is wired.
+- Lesson 42: workbench pipeline が使うすべての surface を bundle する capstone pack。
+- Lesson 19 (SWE-bench, GAIA, AgentBench): この harness を補完する macro benchmark。
+- Lesson 30 (Eval-Driven Agent Development): benchmark wiring 後の ongoing eval loop。

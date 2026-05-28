@@ -1,7 +1,7 @@
-"""Cross-framework compliance mapping — stdlib Python.
+"""Cross-framework compliance mapping — 標準ライブラリのみの Python。
 
-Given a control, print the frameworks it satisfies. Given a customer profile
-(geography + segment), print the required frameworks.
+control を受け取り、それが満たす frameworks を出力します。customer profile
+(geography + segment) を受け取り、required frameworks を出力します。
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ PROFILE_MAP = {
 
 def main() -> None:
     print("=" * 80)
-    print("COMPLIANCE CONTROL MAP — one control, many frameworks")
+    print("COMPLIANCE CONTROL MAP — 1 つの control、複数の frameworks")
     print("=" * 80)
     for control, frameworks in CONTROL_MAP.items():
         print(f"\n{control}")
@@ -42,15 +42,15 @@ def main() -> None:
             print(f"  → {f}")
 
     print("\n" + "=" * 80)
-    print("CUSTOMER PROFILE MAP — required frameworks per geography + segment")
+    print("CUSTOMER PROFILE MAP — geography + segment ごとの required frameworks")
     print("=" * 80)
     for (geo, segment), frameworks in PROFILE_MAP.items():
         print(f"\n{geo} · {segment}")
         for f in frameworks:
             print(f"  · {f}")
 
-    print("\nNote: EU AI Act high-risk enforcement August 2, 2026.")
-    print("Fines up to €35M or 7% global annual turnover.")
+    print("\nNote: EU AI Act high-risk enforcement は 2026 年 8 月 2 日です。")
+    print("fines は最大 €35M または global annual turnover の 7% です。")
 
 
 if __name__ == "__main__":

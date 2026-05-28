@@ -1,33 +1,33 @@
 ---
 name: memory-blocks
-description: Generate a Letta-shaped three-tier memory system (core blocks, recall, archival) with a sleep-time consolidation agent off the critical path.
+description: Critical path 外の sleep-time consolidation agent を持つ、Letta 形の 3-tier memory system (core blocks, recall, archival) を生成する。
 version: 1.0.0
 phase: 14
 lesson: 08
 tags: [memory, letta, blocks, sleep-time, consolidation]
 ---
 
-Given a target runtime, a primary model, and a (possibly stronger) sleep-time model, produce a three-tier memory system with explicit block types and async consolidation.
+Target runtime、primary model、(より強い可能性のある) sleep-time model が与えられたら、明示的な block types と async consolidation を持つ 3-tier memory system を生成する。
 
-Produce:
+生成するもの:
 
-1. `Block` type with `label`, `value`, `limit`, `description`, `version`, `history`. Every write bumps version and records the old value. Expose `near_limit(threshold=0.8)`.
-2. A `BlockStore` with at minimum three default blocks: `human` (facts about the user), `persona` (agent self-concept), and `task` (current scope). Allow user-defined blocks.
-3. A `Recall` store — turn log paginated by session. Auto-write every turn. Tail evicts on cap but remains retrievable.
-4. An `Archival` store — at least two backends (vector, KV). Insert returns record id. Invalidate rather than delete on contradiction.
-5. A `PrimaryAgent` that handles turns and only issues raw writes. No summarization on the critical path.
-6. A `SleepTimeAgent` that runs between turns: summarize blocks over threshold, invalidate contradicted archival records, write `learned_context` into shared blocks.
+1. `label`, `value`, `limit`, `description`, `version`, `history` を持つ `Block` type。すべての write は version を上げ、old value を記録する。`near_limit(threshold=0.8)` を expose する。
+2. 少なくとも 3 つの default blocks を持つ `BlockStore`: `human` (user に関する facts)、`persona` (agent self-concept)、`task` (current scope)。User-defined blocks を許可する。
+3. `Recall` store — session ごとに paginate される turn log。すべての turn を auto-write する。Tail は cap で evict されるが retrieve 可能なままにする。
+4. `Archival` store — 少なくとも 2 backends (vector, KV)。Insert は record id を返す。Contradiction では delete ではなく invalidate する。
+5. Turn を処理し raw writes だけを発行する `PrimaryAgent`。User-facing turn の critical path で summarization は行わない。
+6. Turn 間で走る `SleepTimeAgent`: threshold 超過 block の summarize、contradicted archival records の invalidate、shared blocks への `learned_context` write を行う。
 
 Hard rejects:
 
-- Any memory op that runs synchronously during a user-facing turn except a direct lookup. Summarization, consolidation, invalidation belong to the sleep-time pass.
-- Deleting archival records on contradiction. Invalidate so history remains auditable.
-- Writing to the Persona or Safety block without a review step. These blocks shape behavior globally; silent writes mask bugs.
+- Direct lookup 以外の memory op を user-facing turn 中に同期実行すること。Summarization、consolidation、invalidation は sleep-time pass の仕事。
+- Contradiction で archival records を delete すること。History が auditable に残るよう invalidate する。
+- Review step なしに Persona または Safety block へ書くこと。これらの block は behavior 全体を shaping するため、silent writes は bug を隠す。
 
 Refusal rules:
 
-- If the runtime cannot persist blocks across sessions, refuse to ship a product described as "memory." Downgrade the claim.
-- If the sleep-time agent has no trace output, refuse. Silent consolidation is a debugging dead-zone.
-- If the user asks for "no invalidation, always trust latest write," refuse for any domain where historical claims matter (compliance, medical, legal).
+- Runtime が session をまたいで blocks を persist できない場合、「memory」として product を ship することを拒否する。Claim を downgrade する。
+- Sleep-time agent に trace output がない場合は拒否する。Silent consolidation は debugging dead-zone。
+- User が「invalidation なしで常に latest write を信じる」と依頼した場合、historical claims が重要な domain (compliance, medical, legal) では拒否する。
 
-Output: one file per component plus a `README.md` that names the default blocks, the sleep-time cadence, and the contradiction resolution policy. End with "what to read next" pointing to Lesson 09 if the agent needs graph reasoning over memory, or Lesson 23 if the product needs OTel spans on memory ops.
+Output: component ごとに 1 file と、default blocks、sleep-time cadence、contradiction resolution policy を説明する `README.md`。最後に、agent が memory 上の graph reasoning を必要とするなら Lesson 09、memory ops に OTel spans が必要なら Lesson 23 への "what to read next" で締める。

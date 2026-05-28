@@ -1,7 +1,7 @@
-// GitHub Issue-to-PR Agent: TypeScript webhook receiver.
-// Python side ships the agent loop; YAML side ships the Actions workflow.
-// This project verifies HMAC, routes on event type, dispatches a stub agent.
-// Refs: docs/en.md (this lesson),
+// GitHub Issue-to-PR Agent: TypeScript webhook receiver。
+// Python 側は agent loop、YAML 側は Actions workflow を提供する。
+// この project は HMAC を verify し、event type で route し、stub agent を dispatch する。
+// Refs: docs/en.md (この lesson),
 //   GitHub webhook signature: https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries
 //   GitHub App docs: https://docs.github.com/en/apps
 
@@ -49,7 +49,7 @@ function runDemo(): void {
       action: "opened",
       issue: {
         number: 42,
-        title: "Add /healthz endpoint",
+      title: "/healthz endpoint を追加",
         user: { login: "octocat" },
       },
       repository: { full_name: "acme/widgets" },
@@ -75,7 +75,7 @@ function runDemo(): void {
     "issues",
     {
       action: "closed",
-      issue: { number: 41, title: "skip me" },
+      issue: { number: 41, title: "skip してください" },
       repository: { full_name: "acme/widgets" },
     },
     secret,
@@ -147,12 +147,12 @@ function parsePort(argv: string[], defaultPort: number): number {
   if (portFlag < 0) return defaultPort;
   const raw = argv[portFlag + 1];
   if (raw === undefined) {
-    process.stderr.write("--port requires a value\n");
+    process.stderr.write("--port には値が必要です\n");
     process.exit(2);
   }
   const n = Number(raw);
   if (!Number.isInteger(n) || n < 1 || n > 65535) {
-    process.stderr.write(`invalid --port ${raw}: must be integer in 1..65535\n`);
+    process.stderr.write(`invalid --port ${raw}: 1..65535 の integer が必要です\n`);
     process.exit(2);
   }
   return n;
@@ -164,7 +164,7 @@ function main(): void {
     const secret = process.env.GH_WEBHOOK_SECRET;
     if (!secret) {
       process.stderr.write(
-        "GH_WEBHOOK_SECRET must be set in the environment to run --serve\n",
+        "--serve を実行するには environment に GH_WEBHOOK_SECRET を設定してください\n",
       );
       process.exit(1);
     }

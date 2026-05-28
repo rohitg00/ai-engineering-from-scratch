@@ -1,6 +1,6 @@
-"""Unit tests for the cosine-with-warmup schedule and AdamW wiring.
+"""cosine-with-warmup schedule と AdamW 接続の unit tests。
 
-Run with: python3 -m unittest discover code/tests -v
+実行: python3 -m unittest discover code/tests -v
 """
 
 from __future__ import annotations

@@ -1,42 +1,42 @@
-# MIO and Any-to-Any Streaming Multimodal Models
+# MIO と Any-to-Any Streaming Multimodal Models
 
-> GPT-4o ships a product most open models cannot replicate: an agent that hears voice, sees video, and speaks back in real time. The open-ecosystem answer by late 2024 was MIO (Wang et al., September 2024). MIO tokenizes text, image, speech, and music, trains one causal transformer over the interleaved sequences, and generates any modality to any modality. AnyGPT (Zhan et al., February 2024) was the proof of concept; MIO is the scale-up; Unified-IO 2 (Allen AI, December 2023) is the cousin with vision + action grounding. This lesson reads the any-to-any pattern — four tokenizers, one transformer, streaming-friendly decode.
+> GPT-4o は多くの open models が再現できない product を出荷した。声を聞き、video を見て、real time に話し返す agent だ。2024年末時点の open-ecosystem の答えが MIO (Wang et al., 2024年9月) だった。MIO は text、image、speech、music を tokenize し、interleaved sequences 上で1つの causal transformer を訓練し、どの modality からどの modality へも生成する。AnyGPT (Zhan et al., 2024年2月) は proof of concept、MIO は scale-up、Unified-IO 2 (Allen AI, 2023年12月) は vision + action grounding を持つ cousin だ。このレッスンでは any-to-any pattern、つまり4つの tokenizers、1つの transformer、streaming-friendly decode を読む。
 
-**Type:** Learn
-**Languages:** Python (stdlib, four-modality token allocator + streaming decode loop)
-**Prerequisites:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
-**Time:** ~120 minutes
+**種類:** 学習
+**言語:** Python (stdlib, four-modality token allocator + streaming decode loop)
+**前提:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Design a shared vocabulary that hosts text, image, speech, and music tokens without collisions.
-- Compare SEED-Tokenizer (images) and SpeechTokenizer residual-VQ (speech) on compression + reconstruction trade-offs.
-- Explain the four-stage curriculum that builds up any-to-any generation.
-- Name the three open any-to-any recipes and their main trade-offs: MIO, AnyGPT, Unified-IO 2.
+- Text、image、speech、music tokens を collision なしで収容する shared vocabulary を設計する。
+- SEED-Tokenizer (images) と SpeechTokenizer residual-VQ (speech) を compression + reconstruction trade-offs で比較する。
+- Any-to-any generation を組み上げる four-stage curriculum を説明する。
+- Open な any-to-any recipes 3つ、MIO、AnyGPT、Unified-IO 2 とそれぞれの主な trade-offs を名指しする。
 
-## The Problem
+## 問題
 
-A unified multimodal model is easy to claim and hard to build at scale. Most "any-to-any" systems until 2024 were pipelined: vision model → text representation → speech model → audio. Each hop loses information, adds latency, and complicates training. GPT-4o's demo video showed a single-model alternative with subsecond response; open systems trailed by months.
+Unified multimodal model を名乗るのは簡単だが、scale して作るのは難しい。2024年までの多くの "any-to-any" systems は pipeline だった。Vision model → text representation → speech model → audio。各hopで情報が失われ、latency が加わり、training が複雑になる。GPT-4o の demo video は、subsecond response を持つ single-model alternative を見せた。Open systems は数カ月遅れた。
 
-The engineering challenges:
+Engineering 上の課題:
 
-- Tokenizers must exist for every modality, compress losslessly-enough for reconstruction, and produce tokens at rates the transformer can consume.
-- A single vocabulary must allocate space for text (32k+), image (16k+), speech (4k+), music (8k+). Forty-thousand-plus entries minimum.
-- Training data must cover every input-output pair (text→image, image→speech, speech→image, etc.) or the model must compose.
-- Inference must stream output tokens fast enough for conversational latency (<500ms time-to-first-audio-byte).
+- Tokenizers は全modalityに存在し、reconstruction に十分なほど lossless に compress し、transformer が消費できる rate の tokens を出す必要がある。
+- Single vocabulary は text (32k+)、image (16k+)、speech (4k+)、music (8k+) の space を allocate しなければならない。最低でも4万以上の entries。
+- Training data は全input-output pair (text→image, image→speech, speech→image など) を cover するか、model が compose できなければならない。
+- Inference は conversational latency (<500ms time-to-first-audio-byte) に十分な速さで output tokens を stream しなければならない。
 
-## The Concept
+## 概念
 
-### Four tokenizers for four modalities
+### 4つの modalities のための4つの tokenizers
 
-MIO's tokenizer stack:
+MIO の tokenizer stack:
 
-- Text: standard BPE, vocab ~32000.
-- Image: SEED-Tokenizer (2023) — quantized VAE with discrete codebook, 4096 entries, 32x32 tokens per image.
-- Speech: SpeechTokenizer residual-VQ (2023) — encodes 16kHz waveform into 8 hierarchical codebooks; first level is coarse content, later levels add prosody and speaker identity.
-- Music: similar residual-VQ (Meta's MusicGen / Encodec family), 4-8 codebooks.
+- Text: 標準 BPE、vocab ~32000。
+- Image: SEED-Tokenizer (2023)。Discrete codebook 付き quantized VAE、4096 entries、imageあたり 32x32 tokens。
+- Speech: SpeechTokenizer residual-VQ (2023)。16kHz waveform を8つの hierarchical codebooks に encode する。First level は coarse content、later levels は prosody と speaker identity を追加する。
+- Music: 類似の residual-VQ (Meta の MusicGen / Encodec family)、4-8 codebooks。
 
-Each modality produces integer tokens. The tokens get disjoint ID ranges in the shared vocabulary:
+各 modality は integer tokens を生成する。Tokens は shared vocabulary 内で互いに disjoint な ID ranges を持つ:
 
 ```
 text:   0..31999
@@ -46,108 +46,108 @@ music:  40192..48383  (8192 music tokens)
 sep:    48384..48390  (<image>, <speech>, <music>, </...>, etc.)
 ```
 
-Total: ~48k vocabulary. The input embedding and output projection span all of it.
+Total は約48k vocabulary。Input embedding と output projection はその全体を span する。
 
 ### Streaming decode
 
-Speech generation uses residual-VQ. The transformer predicts the base (layer 0) speech tokens; a parallel-decoded residual quantizer predicts the subsequent layers. Each layer 0 token is roughly 50ms of audio at 16kHz.
+Speech generation は residual-VQ を使う。Transformer は base (layer 0) speech tokens を予測する。Parallel-decoded residual quantizer が後続layersを予測する。各 layer 0 token は 16kHz audio で約50msに相当する。
 
-The streaming pattern:
+Streaming pattern:
 
-1. User speaks into mic; real-time audio tokenizer emits speech tokens every 50ms.
-2. MIO consumes tokens as they arrive (prompt prefill + incremental forward).
-3. Output tokens stream out as generated; a parallel speech decoder converts them to audio samples with ~50-150ms latency.
-4. Time-to-first-audio-byte: ~300-500ms in MIO paper, approaching GPT-4o's ~250ms.
+1. User が mic に話す。Real-time audio tokenizer が50msごとに speech tokens を emit する。
+2. MIO は到着した tokens を消費する (prompt prefill + incremental forward)。
+3. Generated output tokens が stream out される。Parallel speech decoder がそれらを audio samples に変換し、latency は約50-150ms。
+4. Time-to-first-audio-byte: MIO paper では約300-500ms。GPT-4o の約250msに近づく。
 
-Mini-Omni (arXiv:2408.16725), GLM-4-Voice (arXiv:2412.02612), and Moshi (arXiv:2410.00037) are complementary streaming speech-LLM designs. Moshi in particular achieves 160ms round-trip on a single GPU.
+Mini-Omni (arXiv:2408.16725)、GLM-4-Voice (arXiv:2412.02612)、Moshi (arXiv:2410.00037) は complementary な streaming speech-LLM designs だ。特に Moshi は single GPU で160ms round-trip を達成する。
 
 ### Four-stage curriculum
 
-MIO's training curriculum:
+MIO の training curriculum:
 
-1. Stage 1 — alignment. Large-scale modality-pair corpora: text-image, text-speech, text-music. Each pair uses its own token vocabulary segment. Trains the shared vocabulary.
-2. Stage 2 — interleaved. Multi-modality interleaved documents (blogs with images + video, podcasts with transcripts, etc.). Trains cross-modality context.
-3. Stage 3 — speech-enhanced. Extra audio data to lift speech quality without losing text capability.
-4. Stage 4 — SFT. Instruction tuning across modalities: VQA, captioning, narration, speech-to-speech dialogue.
+1. Stage 1 — alignment。Large-scale modality-pair corpora: text-image、text-speech、text-music。各pairは独自の token vocabulary segment を使う。Shared vocabulary を訓練する。
+2. Stage 2 — interleaved。Multi-modality interleaved documents (images + video を含む blogs、transcripts付き podcasts など)。Cross-modality context を訓練する。
+3. Stage 3 — speech-enhanced。Text capability を失わずに speech quality を上げるための extra audio data。
+4. Stage 4 — SFT。Modalities をまたぐ instruction tuning: VQA、captioning、narration、speech-to-speech dialogue。
 
-Missing a stage degrades specific capabilities: skip stage 2 and the model loses cross-modality context; skip stage 3 and speech is poor.
+Stage が欠けると specific capability が劣化する。Stage 2 を飛ばすと model は cross-modality context を失い、Stage 3 を飛ばすと speech が悪くなる。
 
 ### Chain-of-visual-thought
 
-MIO introduces chain-of-visual-thought: the model emits intermediate image tokens as a reasoning step. For "is the cat climbing a tree?" the model:
+MIO は chain-of-visual-thought を導入する。Model が reasoning step として intermediate image tokens を emit する。"is the cat climbing a tree?" では、model は:
 
-1. Emits `<image>` tokens rendering the scene (from the input image or a sketch).
-2. Emits text analyzing the sketch.
-3. Emits the final answer.
+1. Scene を render する `<image>` tokens を emit する (input image から、または sketch として)。
+2. Sketch を分析する text を emit する。
+3. Final answer を emit する。
 
-The rendered intermediate image serves as a scratchpad. Benchmarks improve on spatial-reasoning tasks. The idea mirrors chain-of-thought for text reasoning.
+Rendered intermediate image は scratchpad として働く。Spatial-reasoning tasks で benchmarks が改善する。この idea は text reasoning の chain-of-thought を映像側に写したものだ。
 
-### Competitors in any-to-any
+### Any-to-any の競合
 
-- AnyGPT (arXiv:2402.12226): 4 modalities (text, image, speech, music), similar design.
-- Unified-IO 2 (arXiv:2312.17172): adds vision action outputs, depth, normals. More task diversity, smaller scale.
-- NExT-GPT (arXiv:2309.05519): LLM + modality-specific diffusion decoders. Not a single-model approach.
-- CoDi (arXiv:2305.11846): composable diffusion; any-to-any via shared latent.
+- AnyGPT (arXiv:2402.12226): 4 modalities (text, image, speech, music)、類似design。
+- Unified-IO 2 (arXiv:2312.17172): vision action outputs、depth、normals を追加。Task diversity は広いが scale は小さい。
+- NExT-GPT (arXiv:2309.05519): LLM + modality-specific diffusion decoders。Single-model approach ではない。
+- CoDi (arXiv:2305.11846): composable diffusion。Shared latent 経由の any-to-any。
 
-MIO is the closest to pure-token any-to-any. AnyGPT is its conceptual ancestor.
+MIO は pure-token any-to-any に最も近い。AnyGPT はその conceptual ancestor だ。
 
 ### Latency budget
 
-For a conversational product, every component's latency matters:
+Conversational product では全componentの latency が重要だ:
 
-- Mic to audio tokens: ~50ms.
-- Prefill (audio tokens + history): ~100ms on an 8B model.
-- First output token: ~50ms.
-- Parallel residual-VQ + speech decoder: ~100-150ms.
+- Mic to audio tokens: 約50ms。
+- Prefill (audio tokens + history): 8B model で約100ms。
+- First output token: 約50ms。
+- Parallel residual-VQ + speech decoder: 約100-150ms。
 
-Total time-to-first-audio-byte: ~300ms minimum. GPT-4o claims ~250ms. Moshi claims 160ms. MIO/AnyGPT are in the 400-600ms range per public benchmarks.
+Total time-to-first-audio-byte は最小約300ms。GPT-4o は約250msを主張する。Moshi は160msを主張する。MIO/AnyGPT は public benchmarks では400-600ms帯だ。
 
-### Why any-to-any stays hard
+### Any-to-any が難しいままである理由
 
-Even in 2026, open any-to-any models trail closed ones on two axes:
+2026年でも open any-to-any models は closed ones に2軸で遅れている:
 
-- Speech quality. The residual-VQ tokenizer is lossy; conversational speech sounds robotic compared to ElevenLabs-class voices.
-- Cross-modality reasoning. Asking the model "sing about what you see" still fails more often than pure-vision tasks.
+- Speech quality。Residual-VQ tokenizer は lossy で、conversational speech は ElevenLabs-class voices と比べて robotic に聞こえる。
+- Cross-modality reasoning。"見えているものについて歌って" と頼むと、pure-vision tasks より失敗しやすい。
 
-These are open research problems. Qwen3-Omni (Lesson 12.20) is the most advanced open attempt in 2025.
+これらは open research problems だ。Qwen3-Omni (Lesson 12.20) は2025年時点で最も進んだ open attempt である。
 
-## Use It
+## 使ってみる
 
 `code/main.py`:
 
-- Defines the four-modality vocabulary allocation and prints it.
-- Routes a list of multimodal inputs (text, image, audio-clip, music) through the tokenizer router.
-- Simulates streaming decode for a text-to-speech response with latency counting.
-- Computes the expected time-to-first-audio-byte given encoder, prefill, and decoder latencies.
+- Four-modality vocabulary allocation を定義し、表示する。
+- Multimodal inputs (text, image, audio-clip, music) の list を tokenizer router に通す。
+- Text-to-speech response の streaming decode を latency counting とともに simulate する。
+- Encoder、prefill、decoder latencies が与えられたときの expected time-to-first-audio-byte を計算する。
 
-## Ship It
+## 仕上げ
 
-This lesson produces `outputs/skill-any-to-any-pipeline-auditor.md`. Given a conversational product spec (modalities in, modalities out, latency target), it audits the MIO-family design choices and computes the latency budget.
+このレッスンは `outputs/skill-any-to-any-pipeline-auditor.md` を作る。Conversational product spec (modalities in, modalities out, latency target) が与えられたら、MIO-family design choices を audit し、latency budget を計算する。
 
-## Exercises
+## 演習
 
-1. Your product accepts speech input and returns speech output. What's the end-to-end latency budget target? List the components that spend time.
+1. Product が speech input を受け取り speech output を返す。End-to-end latency budget target は何か。時間を消費する components を列挙せよ。
 
-2. SpeechTokenizer residual-VQ uses 8 codebooks. Propose why parallel-decoding the residual levels is necessary (vs sequential) and what latency savings it brings.
+2. SpeechTokenizer residual-VQ は8 codebooks を使う。Residual levels を sequential ではなく parallel decode する必要がある理由と、どの latency savings が得られるかを提案せよ。
 
-3. Your vocabulary has 32k text + 4k image + 4k speech. Add 8k music and ~10 separators. What is the embedding-matrix parameter cost at hidden dim 4096?
+3. Vocabulary が 32k text + 4k image + 4k speech を持つ。8k music と約10 separators を追加する。Hidden dim 4096 の embedding-matrix parameter cost はいくらか。
 
-4. Chain-of-visual-thought emits an intermediate image. What kinds of questions benefit? What kinds are hurt by the extra tokens?
+4. Chain-of-visual-thought は intermediate image を emit する。どんな種類の質問に有利か。Extra tokens によってどんな質問は悪化するか。
 
-5. Read Moshi (arXiv:2410.00037). Describe its "inner monologue" technique and compare to MIO's chain-of-visual-thought.
+5. Moshi (arXiv:2410.00037) を読め。その "inner monologue" technique を説明し、MIO の chain-of-visual-thought と比較せよ。
 
-## Key Terms
+## 重要語句
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|------------------------|
-| Any-to-any | "Multimodal in/out" | A single model that accepts and emits text, image, speech, and music in any direction |
-| Residual-VQ | "Speech tokenizer stack" | Multi-codebook tokenization where each layer adds information; base layer is content, later layers are prosody |
-| SEED-Tokenizer | "Image codes" | Discrete image tokenizer with 4096-entry codebook used by MIO |
-| Chain-of-visual-thought | "Visual scratchpad" | The model generates an intermediate image as a reasoning step before its final answer |
-| Time-to-first-audio-byte | "TTFAB" | Latency from user voice to first audio output; <500ms for conversational feel |
-| Four-stage curriculum | "Training recipe" | Alignment -> interleaved -> speech-enhanced -> SFT, in that order |
+| Any-to-any | "Multimodal in/out" | Text、image、speech、music を任意の方向で受け取り出力する単一model |
+| Residual-VQ | "Speech tokenizer stack" | 各layerが情報を追加する multi-codebook tokenization。Base layer は content、later layers は prosody |
+| SEED-Tokenizer | "Image codes" | MIO が使う4096-entry codebook を持つ discrete image tokenizer |
+| Chain-of-visual-thought | "Visual scratchpad" | Model が final answer の前に reasoning step として intermediate image を生成する |
+| Time-to-first-audio-byte | "TTFAB" | User voice から first audio output までの latency。会話感には <500ms |
+| Four-stage curriculum | "Training recipe" | Alignment -> interleaved -> speech-enhanced -> SFT の順に進む訓練recipe |
 
-## Further Reading
+## 参考文献
 
 - [Wang et al. — MIO (arXiv:2409.17692)](https://arxiv.org/abs/2409.17692)
 - [Zhan et al. — AnyGPT (arXiv:2402.12226)](https://arxiv.org/abs/2402.12226)

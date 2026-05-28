@@ -1,32 +1,32 @@
-# Image Fundamentals — Pixels, Channels, Color Spaces
+# 画像の基礎 — ピクセル、チャネル、色空間
 
-> An image is a tensor of light samples. Every vision model you will ever use starts from this one fact.
+> 画像とは、光のサンプルを並べたテンソルです。これから使うすべての vision model は、この事実から始まります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 1 Lesson 12 (Tensor Operations), Phase 3 Lesson 11 (Intro to PyTorch)
-**Time:** ~45 minutes
+**種類:** Build
+**言語:** Python
+**前提条件:** フェーズ 1 レッスン 12（Tensor Operations）、フェーズ 3 レッスン 11（Intro to PyTorch）
+**所要時間:** 約 45 分
 
-## Learning Objectives
+## 学習目標
 
-- Explain how a continuous scene gets discretized into pixels and why sampling/quantization decisions set the ceiling on every downstream model
-- Read, slice, and inspect images as NumPy arrays and switch fluently between HWC and CHW layouts
-- Convert between RGB, grayscale, HSV, and YCbCr and justify why each color space exists
-- Apply pixel-level preprocessing (normalize, standardize, resize, channel-first) exactly as torchvision expects it
+- 連続的なシーンがどのようにピクセルへ離散化されるか、そしてサンプリングと量子化の判断が下流のすべてのモデルの上限を決める理由を説明する
+- NumPy 配列として画像を読み込み、スライスし、調査し、HWC と CHW のレイアウトを自在に切り替える
+- RGB、grayscale、HSV、YCbCr を相互変換し、それぞれの色空間が存在する理由を説明する
+- torchvision が期待する形に合わせて、ピクセル単位の前処理（normalize、standardize、resize、channel-first）を正確に適用する
 
-## The Problem
+## 問題
 
-Every paper you will read, every pretrained weight you will download, every vision API you will call assumes a specific encoding of the input. Pass a `uint8` image where the model wants `float32` and it will still run — and silently produce garbage. Feed BGR to a network trained on RGB and accuracy collapses by ten points. Hand a model channels-last input when it expects channels-first and the first conv layer treats height as a feature channel. None of this throws an error. It just ruins your metrics and you spend a week hunting for a bug that lives in how you loaded the file.
+これから読むすべての論文、ダウンロードするすべての pretrained weight、呼び出すすべての vision API は、入力が特定の形式で符号化されていることを前提にしています。モデルが `float32` を求めているところに `uint8` 画像を渡しても、処理自体は走ります。そして何も言わずに意味のない結果を出します。RGB で学習されたネットワークに BGR を入れると、精度は 10 ポイント単位で崩れます。channels-first を期待するモデルに channels-last の入力を渡すと、最初の conv layer は高さを feature channel として扱います。これらはエラーを投げません。ただ metric を壊し、ファイルの読み込み方に潜むバグを 1 週間探すことになります。
 
-A convolution is not complicated once you know what it is sliding over. The hard part is that "an image" means different things to a camera, a JPEG decoder, PIL, OpenCV, torchvision, and a CUDA kernel. Each stack has its own axis order, byte range, and channel convention. A vision engineer who cannot keep these straight ships broken pipelines.
+convolution は、何の上をスライドしているのかが分かれば複雑ではありません。難しいのは、「画像」が camera、JPEG decoder、PIL、OpenCV、torchvision、CUDA kernel によって違う意味を持つことです。それぞれの stack には独自の axis order、byte range、channel convention があります。これらを整理できない vision engineer は、壊れた pipeline を出荷してしまいます。
 
-This lesson fixes the foundation so the rest of the phase can build on it. By the end you will know what a pixel is, why there are three numbers per pixel instead of one, what "normalize with ImageNet stats" actually does, and how to move between the two or three layouts that every other lesson in this phase will assume.
+このレッスンでは、フェーズの残りが積み上がる土台を直します。最後まで進めば、pixel とは何か、なぜ pixel ごとに 1 つではなく 3 つの数値があるのか、「ImageNet stats で normalize する」とは実際に何をしているのか、そしてこのフェーズの他のレッスンが前提にする 2 つか 3 つの layout をどう行き来するのかが分かります。
 
-## The Concept
+## 概念
 
-### The full preprocessing pipeline at a glance
+### 前処理 pipeline の全体像
 
-Every production vision system is the same sequence of reversible transforms. Get one step wrong and the model sees a different input than it was trained on.
+本番の vision system は、どれも可逆変換の同じ並びです。1 ステップでも間違えると、モデルは学習時とは違う入力を見ることになります。
 
 ```mermaid
 flowchart LR
@@ -46,11 +46,11 @@ flowchart LR
     style H fill:#bfdbfe,stroke:#2563eb
 ```
 
-The two red and blue boxes are where 80% of silent failures live: missing standardization and wrong layout.
+赤と青の 2 つの box は、静かな失敗の 80% が潜む場所です。standardization の抜けと、layout の間違いです。
 
-### A pixel is a sample, not a square
+### pixel は四角ではなく sample
 
-A camera sensor counts photons that land on a grid of tiny detectors. Each detector integrates light for a fraction of a second and emits a voltage proportional to how many photons hit it. The sensor then discretizes that voltage into an integer. One detector becomes one pixel.
+camera sensor は、小さな detector の grid に落ちた photon を数えます。各 detector は一瞬だけ光を積分し、当たった photon 数に比例した電圧を出します。sensor はその電圧を整数に離散化します。1 つの detector が 1 つの pixel になります。
 
 ```
 Continuous scene                 Sensor grid                     Digital image
@@ -63,16 +63,16 @@ Continuous scene                 Sensor grid                     Digital image
                                  +--+--+--+--+--+                 188 180 165 145 108
 ```
 
-Two choices happen at this step and they fix the ceiling on everything downstream:
+この段階で 2 つの選択が行われ、それが下流すべての上限を決めます。
 
-- **Spatial sampling** decides how many detectors per degree of the scene. Too few, and edges become jagged (aliasing). Too many, and storage and compute explode.
-- **Intensity quantization** decides how finely the voltage is bucketed. 8 bits gives 256 levels and is standard for display. 10, 12, 16 bits give smoother gradients and matter for medical imaging, HDR, and raw sensor pipelines.
+- **Spatial sampling** は、scene の 1 度あたりに detector をいくつ置くかを決めます。少なすぎると edge がギザギザになります（aliasing）。多すぎると storage と compute が膨れ上がります。
+- **Intensity quantization** は、電圧をどれだけ細かい bucket に分けるかを決めます。8 bit は 256 level で、表示用途の標準です。10、12、16 bit はより滑らかな gradient を与え、medical imaging、HDR、raw sensor pipeline で重要になります。
 
-A pixel is not a coloured square with area. It is a single measurement. When you resize or rotate, you are resampling that measurement grid.
+pixel は面積を持つ色付きの四角ではありません。単一の測定値です。resize や rotate をするとき、あなたはその測定 grid を resampling しています。
 
-### Why three channels
+### なぜ 3 channels なのか
 
-One detector counts photons across the whole visible spectrum — that is grayscale. To get colour, the sensor covers the grid with a mosaic of red, green, and blue filters. After demosaicing, every spatial location has three integers: the response of the red-filtered detector, green-filtered, and blue-filtered nearby. Those three integers are a pixel's RGB triplet.
+1 つの detector は可視スペクトル全体の photon を数えます。これが grayscale です。color を得るために、sensor は赤、緑、青の filter の mosaic で grid を覆います。demosaicing の後、すべての空間位置は 3 つの整数を持ちます。近傍にある赤 filter、緑 filter、青 filter の detector response です。この 3 つの整数が、pixel の RGB triplet です。
 
 ```
 One pixel in memory:
@@ -85,11 +85,11 @@ An H x W RGB image:
                                     each in [0, 255] for uint8
 ```
 
-Three is not magic. Depth cameras add a Z channel. Satellites add infrared and ultraviolet bands. Medical scans often have one channel (X-ray, CT) or many (hyperspectral). The number of channels is the last axis; conv layers learn to mix across it.
+3 は魔法の数ではありません。depth camera は Z channel を追加します。satellite は infrared や ultraviolet の band を追加します。medical scan は 1 channel（X-ray、CT）であることも、多数の channel（hyperspectral）を持つこともあります。channel 数は最後の axis で、conv layer はそれらを混ぜ合わせることを学習します。
 
-### Two layout conventions: HWC and CHW
+### 2 つの layout convention: HWC と CHW
 
-Same tensor, two orderings. Every library picks one.
+同じ tensor でも、並べ方は 2 通りあります。library ごとにどちらかを選びます。
 
 ```
 HWC (height, width, channels)           CHW (channels, height, width)
@@ -107,16 +107,16 @@ v |R G B|R G B|R G B|                   v |G G G G G G|
    almost every image file on disk       frameworks, cuDNN kernels
 ```
 
-CHW exists because convolution kernels slide across H and W. Keeping the channel axis first means each kernel sees a contiguous 2D plane per channel, which vectorizes cleanly. Disk formats keep HWC because that matches how scanlines come out of a sensor.
+CHW が存在するのは、convolution kernel が H と W の上をスライドするからです。channel axis を先頭に置くと、各 kernel は channel ごとに連続した 2D plane を見られ、きれいに vectorize できます。disk format が HWC を保つのは、sensor から scanline が出てくる並びと一致するからです。
 
-The one-line conversion you will type a thousand times:
+これから何度も打つ 1 行の変換です。
 
 ```
 img_chw = img_hwc.transpose(2, 0, 1)      # NumPy
 img_chw = img_hwc.permute(2, 0, 1)        # PyTorch tensor
 ```
 
-Memory layout, visualised:
+memory layout を図にするとこうなります。
 
 ```mermaid
 flowchart TB
@@ -134,21 +134,21 @@ flowchart TB
     CHW -->|"transpose(1, 2, 0)"| HWC
 ```
 
-### Byte ranges and dtype
+### byte range と dtype
 
-Three conventions dominate:
+主に 3 つの convention があります。
 
 | Convention | dtype | Range | Where you see it |
 |------------|-------|-------|------------------|
-| Raw | `uint8` | [0, 255] | Files on disk, PIL, OpenCV output |
-| Normalized | `float32` | [0.0, 1.0] | After `img.astype('float32') / 255` |
-| Standardized | `float32` | roughly [-2, +2] | After subtracting mean and dividing by std |
+| Raw | `uint8` | [0, 255] | disk 上の file、PIL、OpenCV output |
+| Normalized | `float32` | [0.0, 1.0] | `img.astype('float32') / 255` の後 |
+| Standardized | `float32` | おおよそ [-2, +2] | mean を引き、std で割った後 |
 
-Convolutional networks were trained on standardized inputs. ImageNet stats `mean=[0.485, 0.456, 0.406]`, `std=[0.229, 0.224, 0.225]` are the arithmetic mean and standard deviation of the three channels over the full ImageNet training set, computed on [0, 1] normalized pixels. Feeding raw `uint8` into a model that expects standardized float is the single most common silent failure in applied vision.
+convolutional network は standardized input で学習されています。ImageNet stats の `mean=[0.485, 0.456, 0.406]`、`std=[0.229, 0.224, 0.225]` は、[0, 1] に normalized された pixel 上で、ImageNet training set 全体の 3 channel の算術平均と標準偏差を計算したものです。standardized float を期待するモデルに raw `uint8` を入れることは、応用 vision で最も多い静かな失敗です。
 
-### Color spaces and why they exist
+### 色空間と存在理由
 
-RGB is the capture format but it is not always the most useful representation for a model.
+RGB は capture format ですが、model にとって常に最も便利な表現とは限りません。
 
 ```
  RGB               HSV                       YCbCr / YUV
@@ -165,27 +165,27 @@ RGB is the capture format but it is not always the most useful representation fo
                                              to chroma detail than to Y.
 ```
 
-For most modern CNNs you feed RGB. You meet other spaces when:
+ほとんどの modern CNN には RGB を入力します。他の色空間に出会うのは、次のような場面です。
 
-- **HSV** — classical CV code, color-based segmentation, white-balancing.
-- **YCbCr** — reading JPEG internals, video pipelines, super-resolution models that operate on Y only.
-- **Grayscale** — OCR, document models, any case where color is nuisance variable rather than signal.
+- **HSV** — classical CV code、color-based segmentation、white-balancing。
+- **YCbCr** — JPEG internal を読むとき、video pipeline、Y のみで動く super-resolution model。
+- **Grayscale** — OCR、document model、color が signal ではなく nuisance variable になるあらゆるケース。
 
-Grayscale from RGB is a weighted sum, not an average, because the human eye is more sensitive to green than to red or blue:
+RGB からの grayscale は平均ではなく weighted sum です。人間の目は赤や青より緑に敏感だからです。
 
 ```
 Y = 0.299 R + 0.587 G + 0.114 B       (ITU-R BT.601, the classic weights)
 ```
 
-### Aspect ratio, resizing, and interpolation
+### aspect ratio、resize、interpolation
 
-Every model has a fixed input size (224x224 for most ImageNet classifiers, 384x384 or 512x512 for modern detectors). Your images rarely match. The three resize choices that matter:
+すべての model には固定の input size があります（多くの ImageNet classifier では 224x224、modern detector では 384x384 や 512x512）。手元の画像がそれに一致することはほとんどありません。重要な resize の選択肢は 3 つです。
 
-- **Resize shorter side, then center crop** — the standard ImageNet recipe. Preserves aspect ratio, throws away a strip of edge pixels.
-- **Resize and pad** — preserves aspect ratio and every pixel, adds black bars. Standard for detection and OCR.
-- **Resize directly to target** — stretches the image. Cheap, distorts geometry, fine for many classification tasks.
+- **shorter side を resize してから center crop** — 標準的な ImageNet recipe です。aspect ratio を保ち、edge pixel の帯を捨てます。
+- **resize and pad** — aspect ratio とすべての pixel を保ち、black bar を追加します。detection と OCR の標準です。
+- **target に直接 resize** — 画像を引き伸ばします。安価ですが geometry を歪めます。多くの classification task では十分です。
 
-The interpolation method decides how intermediate pixels are computed when the new grid does not align with the old one:
+interpolation method は、新しい grid が古い grid と揃わないときに中間 pixel をどう計算するかを決めます。
 
 ```
 Nearest neighbour     fastest, blocky, only choice for masks/labels
@@ -194,13 +194,13 @@ Bicubic               slower, sharper on upscaling
 Lanczos               slowest, best quality, used for final display
 ```
 
-Rule of thumb: bilinear for training, bicubic or lanczos for assets you will look at, nearest for anything containing integer class IDs.
+目安は、training には bilinear、目で見る asset には bicubic または lanczos、integer class ID を含むものには nearest です。
 
-## Build It
+## 自分で作る
 
-### Step 1: Load an image and inspect its shape
+### ステップ 1: 画像を読み込み、shape を調べる
 
-Use Pillow to load any JPEG or PNG, convert to NumPy, and print what you got. For a deterministic example that runs offline, synthesize one.
+Pillow で任意の JPEG または PNG を読み込み、NumPy に変換して、得られたものを出力します。offline で決定的に動く例として、ここでは 1 枚合成します。
 
 ```python
 import numpy as np
@@ -227,11 +227,11 @@ print(f"max:    {arr.max()}")
 print(f"pixel at (0, 0): {arr[0, 0]}")
 ```
 
-Expected output: `shape: (H, W, 3)`, `dtype: uint8`, range `[0, 255]`. That is the canonical on-disk representation whether the bytes came from a camera, a JPEG decoder, or a synthetic generator.
+期待される出力は `shape: (H, W, 3)`、`dtype: uint8`、range `[0, 255]` です。byte が camera、JPEG decoder、synthetic generator のどこから来たとしても、これが disk 上の標準表現です。
 
-### Step 2: Split channels and re-order layout
+### ステップ 2: channel を分割し、layout を並べ替える
 
-Pull out R, G, B separately, then convert from HWC to CHW for PyTorch.
+R、G、B を別々に取り出し、PyTorch 用に HWC から CHW へ変換します。
 
 ```python
 R = arr[:, :, 0]
@@ -246,11 +246,11 @@ print(f"\nHWC shape: {arr.shape}")
 print(f"CHW shape: {arr_chw.shape}")
 ```
 
-Three grayscale planes, one per channel. CHW just reorders the axes; no data copy is strictly required when the memory layout allows it.
+channel ごとに 1 枚、合計 3 枚の grayscale plane です。CHW は axis を並べ替えるだけです。memory layout が許せば、厳密には data copy は不要です。
 
-### Step 3: Grayscale and HSV conversions
+### ステップ 3: grayscale と HSV への変換
 
-Weighted-sum grayscale, then a manual RGB-to-HSV.
+weighted-sum grayscale を作り、その後で RGB-to-HSV を手書きします。
 
 ```python
 def rgb_to_grayscale(rgb):
@@ -287,11 +287,11 @@ print(f"sat range: [{hsv[..., 1].min():.2f}, {hsv[..., 1].max():.2f}]")
 print(f"val range: [{hsv[..., 2].min():.2f}, {hsv[..., 2].max():.2f}]")
 ```
 
-Hue comes out in degrees, saturation and value in [0, 1]. That matches the OpenCV `hsv_full` convention.
+Hue は degree で、saturation と value は [0, 1] で出力されます。これは OpenCV の `hsv_full` convention と一致します。
 
-### Step 4: Normalize, standardize, and reverse it
+### ステップ 4: normalize、standardize、そして元に戻す
 
-Go from raw bytes to the exact tensor a pretrained ImageNet model expects, then back.
+raw byte から pretrained ImageNet model が期待する正確な tensor に変換し、その後で戻します。
 
 ```python
 mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
@@ -320,11 +320,11 @@ max_diff = np.abs(roundtrip.astype(int) - arr.astype(int)).max()
 print(f"roundtrip max pixel diff: {max_diff}    # should be 0 or 1")
 ```
 
-Per-channel mean should be close to zero, std close to one. The preprocess/deprocess pair is exactly what every torchvision `transforms.Normalize` call is doing under the hood.
+channel ごとの mean は 0 に近く、std は 1 に近いはずです。`preprocess` / `deprocess` の組は、すべての torchvision `transforms.Normalize` call が裏側で行っていることと同じです。
 
-### Step 5: Resize with three interpolation methods
+### ステップ 5: 3 つの interpolation method で resize する
 
-Compare nearest, bilinear, and bicubic on an upscale so the difference is visible.
+違いが見えるように、upscale で nearest、bilinear、bicubic を比較します。
 
 ```python
 target = (arr.shape[0] * 3, arr.shape[1] * 3)
@@ -342,11 +342,11 @@ for name, out in [("nearest", nearest), ("bilinear", bilinear), ("bicubic", bicu
     print(f"{name:>8}  shape={out.shape}  roughness={local_roughness(out):6.2f}")
 ```
 
-Nearest scores highest on roughness because it keeps hard edges. Bilinear is the smoothest. Bicubic sits in between, preserving perceived sharpness without the stair-step artifacts.
+nearest は硬い edge を保つため、roughness が最も高くなります。bilinear は最も滑らかです。bicubic はその中間で、階段状の artifact を抑えながら見た目の sharpness を保ちます。
 
-## Use It
+## 使う
 
-`torchvision.transforms` bundles everything above into a single composable pipeline. The code below reproduces exactly what `preprocess_imagenet` does, plus resize and crop.
+`torchvision.transforms` は、上の処理を 1 つの合成可能な pipeline にまとめています。以下の code は、resize と crop に加えて、`preprocess_imagenet` とまったく同じことを再現します。
 
 ```python
 import torch
@@ -373,37 +373,37 @@ batch = x.unsqueeze(0)
 print(f"\nbatched shape: {tuple(batch.shape)}   # (N, C, H, W) — ready for a model")
 ```
 
-Four steps, in this exact order: `Resize(256)` scales the shorter side to 256; `CenterCrop(224)` takes a 224x224 patch from the middle; `ToTensor()` divides by 255 and swaps HWC to CHW; `Normalize` subtracts the ImageNet mean and divides by std. Reversing that order silently changes what reaches the model.
+この順序で 4 steps です。`Resize(256)` は shorter side を 256 に scale します。`CenterCrop(224)` は中央から 224x224 patch を取り出します。`ToTensor()` は 255 で割り、HWC を CHW に入れ替えます。`Normalize` は ImageNet mean を引き、std で割ります。この順序を逆にすると、モデルへ届くものが静かに変わります。
 
-## Ship It
+## 出荷物
 
-This lesson produces:
+このレッスンは次を生成します。
 
-- `outputs/prompt-vision-preprocessing-audit.md` — a prompt that turns any model card or dataset card into a checklist of the exact preprocessing invariants a team must honour.
-- `outputs/skill-image-tensor-inspector.md` — a skill that, given any image-shaped tensor or array, reports dtype, layout, range, and whether it looks raw, normalized, or standardized.
+- `outputs/prompt-vision-preprocessing-audit.md` — 任意の model card または dataset card を、team が守るべき正確な preprocessing invariant の checklist に変換する prompt。
+- `outputs/skill-image-tensor-inspector.md` — 任意の image-shaped tensor または array を受け取り、dtype、layout、range、raw / normalized / standardized のどれに見えるかを報告する skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Load a JPEG with OpenCV (`cv2.imread`) and with Pillow. Print both shapes and the pixel at `(0, 0)`. Explain the channel-order difference, then write a one-line conversion that makes the OpenCV array identical to the Pillow one.
-2. **(Medium)** Write `standardize(img, mean, std)` and its inverse that together pass a `roundtrip_max_diff <= 1` test on any uint8 image. Your functions must work on a single image in HWC and on a batch in NCHW with the same call.
-3. **(Hard)** Take a 3-channel ImageNet-standardized tensor and run it through a 1x1 conv that learns a weighted mixture of RGB into a single grayscale channel. Initialize the weights to `[0.299, 0.587, 0.114]`, freeze them, and verify the output matches your manual `rgb_to_grayscale` to within floating-point error. What other classical color-space transforms can be written as 1x1 convolutions?
+1. **(Easy)** OpenCV（`cv2.imread`）と Pillow で JPEG を読み込みます。両方の shape と `(0, 0)` の pixel を出力します。channel order の違いを説明し、OpenCV array を Pillow のものと同一にする 1 行の変換を書いてください。
+2. **(Medium)** `standardize(img, mean, std)` とその inverse を書き、任意の uint8 image で `roundtrip_max_diff <= 1` test を通してください。関数は同じ call で、HWC の単一 image と NCHW の batch の両方に対応する必要があります。
+3. **(Hard)** 3-channel の ImageNet-standardized tensor を、RGB を 1 つの grayscale channel に weighted mixture する 1x1 conv に通します。weight を `[0.299, 0.587, 0.114]` で初期化して freeze し、出力が手書きの `rgb_to_grayscale` と floating-point error の範囲内で一致することを検証してください。他にどの classical color-space transform を 1x1 convolution として書けるでしょうか。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Pixel | "A coloured square" | One sample of light intensity at one grid location — three numbers for colour, one for grayscale |
-| Channel | "The colour" | One of the parallel spatial grids stacked into an image tensor; last axis in HWC, first in CHW |
-| HWC / CHW | "The shape" | Axis orderings for an image tensor; disk and PIL use HWC, PyTorch and cuDNN use CHW |
-| Normalize | "Scale the image" | Divide by 255 so pixels live in [0, 1] — necessary but not sufficient |
-| Standardize | "Zero-center" | Subtract mean and divide by std per channel so the input distribution matches what the model was trained on |
-| Grayscale conversion | "Average the channels" | A weighted sum with coefficients 0.299/0.587/0.114 that matches human luminance perception |
-| Interpolation | "How resize picks pixels" | The rule that decides output values when the new grid does not align with the old one — nearest for labels, bilinear for training, bicubic for display |
-| Aspect ratio | "Width over height" | The ratio that distinguishes "resize and pad" from "resize and stretch" |
+| Pixel | 「色付きの四角」 | 1 つの grid location における光の強度の 1 sample。color なら 3 つの数値、grayscale なら 1 つの数値 |
+| Channel | 「色」 | image tensor に stack された parallel spatial grid の 1 つ。HWC では最後の axis、CHW では最初の axis |
+| HWC / CHW | 「shape」 | image tensor の axis ordering。disk と PIL は HWC、PyTorch と cuDNN は CHW を使う |
+| Normalize | 「画像を scale する」 | pixel が [0, 1] に収まるように 255 で割ること。必要だが、それだけでは十分ではない |
+| Standardize | 「zero-center する」 | input distribution が model の学習時と一致するように、channel ごとに mean を引き std で割ること |
+| Grayscale conversion | 「channel を平均する」 | 人間の luminance perception に合う係数 0.299/0.587/0.114 による weighted sum |
+| Interpolation | 「resize が pixel を選ぶ方法」 | 新しい grid が古い grid と揃わないときに output value を決める規則。label には nearest、training には bilinear、display には bicubic |
+| Aspect ratio | 「width over height」 | 「resize and pad」と「resize and stretch」を分ける比率 |
 
-## Further Reading
+## 参考資料
 
-- [Charles Poynton — A Guided Tour of Color Space](https://poynton.ca/PDFs/Guided_tour.pdf) — the clearest technical treatment of why there are so many color spaces and when each one matters
-- [PyTorch Vision Transforms Docs](https://pytorch.org/vision/stable/transforms.html) — the full pipeline of transforms you will actually compose in production
-- [How JPEG Works (Colt McAnlis)](https://www.youtube.com/watch?v=F1kYBnY6mwg) — a sharp visual tour of chroma subsampling, DCT, and why JPEG encodes YCbCr rather than RGB
-- [ImageNet Preprocessing Conventions (torchvision models)](https://pytorch.org/vision/stable/models.html) — the source of truth for `mean=[0.485, 0.456, 0.406]` and why every model in the zoo expects it
+- [Charles Poynton — A Guided Tour of Color Space](https://poynton.ca/PDFs/Guided_tour.pdf) — 色空間がこれほど多い理由と、それぞれが重要になる場面を最も明快に扱った技術解説
+- [PyTorch Vision Transforms Docs](https://pytorch.org/vision/stable/transforms.html) — 本番で実際に組み合わせる transforms の full pipeline
+- [How JPEG Works (Colt McAnlis)](https://www.youtube.com/watch?v=F1kYBnY6mwg) — chroma subsampling、DCT、そして JPEG が RGB ではなく YCbCr を encode する理由を視覚的に理解できる解説
+- [ImageNet Preprocessing Conventions (torchvision models)](https://pytorch.org/vision/stable/models.html) — `mean=[0.485, 0.456, 0.406]` の正典であり、model zoo のすべての model がそれを期待する理由

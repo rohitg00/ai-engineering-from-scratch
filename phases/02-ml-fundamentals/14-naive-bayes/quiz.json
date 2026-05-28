@@ -2,59 +2,59 @@
   {
     "id": "nb-pre-1",
     "stage": "pre",
-    "question": "What is the 'naive' assumption in Naive Bayes?",
+    "question": "Naive Bayes における「ナイーブ」な仮定とは何ですか。",
     "options": [
-      "The prior probability of each class is equal",
-      "All features are conditionally independent given the class label",
-      "The data is normally distributed",
-      "The model has no parameters to learn"
+      "各 class の prior probability が等しいという仮定",
+      "class label が与えられたとき、すべての features が conditionally independent であるという仮定",
+      "data が normally distributed であるという仮定",
+      "model に学習すべき parameters がないという仮定"
     ],
     "correct": 1,
-    "explanation": "Naive Bayes assumes every feature is independent of every other feature, conditioned on the class. This is mathematically wrong (e.g., 'machine' and 'learning' co-occur) but works well in practice."
+    "explanation": "Naive Bayes は、class で条件づけたとき、すべての feature が他の feature から independent であると仮定します。これは数学的には誤りです（例: 'machine' と 'learning' は共起します）が、実務ではよく機能します。"
   },
   {
     "id": "nb-pre-2",
     "stage": "pre",
-    "question": "What does Laplace smoothing prevent in Naive Bayes?",
+    "question": "Laplace smoothing は Naive Bayes で何を防ぎますか。",
     "options": [
-      "Overfitting to large datasets",
-      "Zero probabilities for words never seen in a class during training",
-      "Slow training on high-dimensional data",
-      "Class imbalance in the dataset"
+      "大規模 dataset への overfitting",
+      "training 中にある class で一度も見なかった words に zero probability が割り当てられること",
+      "高次元 data での遅い training",
+      "dataset の class imbalance"
     ],
     "correct": 1,
-    "explanation": "Without smoothing, a word that never appeared in 'spam' training emails would get P(word|spam) = 0, making the entire product zero regardless of other strong evidence. Laplace smoothing adds 1 to each count."
+    "explanation": "smoothing がないと、'spam' training emails に一度も出なかった word は P(word|spam) = 0 になり、他に強い evidence があっても product 全体が zero になります。Laplace smoothing は各 count に 1 を足します。"
   },
   {
     "id": "nb-post-1",
     "stage": "post",
-    "question": "The naive independence assumption is clearly wrong for text. Why does Naive Bayes still classify well?",
+    "question": "ナイーブな独立性仮定は text では明らかに誤りです。それでも Naive Bayes がうまく分類できるのはなぜですか。",
     "options": [
-      "It only works on very small vocabularies where independence holds",
-      "Classification only needs correct class rankings, not correct probability estimates, and the assumption introduces stable errors that affect all classes similarly",
-      "Modern implementations secretly remove the independence assumption",
-      "It only works when features are truly independent"
+      "independence が成り立つ非常に小さな vocabulary でしか動かないから",
+      "classification には正確な probability estimates ではなく正しい class rankings が必要であり、その仮定が導入する安定した errors は各 class に似た形で作用するから",
+      "現代の実装は independence assumption を密かに取り除いているから",
+      "features が本当に independent な場合にしか動かないから"
     ],
     "correct": 1,
-    "explanation": "NB needs to rank classes correctly, not estimate exact probabilities. The independence assumption is high bias but low variance, making it stable with limited data. Correlated features double-count evidence for the correct class too."
+    "explanation": "NB に必要なのは exact probabilities ではなく class を正しく rank することです。independence assumption は high bias ですが low variance で、limited data では安定します。correlated features は正しい class に対する evidence も二重に数えます。"
   },
   {
     "id": "nb-post-2",
     "stage": "post",
-    "question": "When should you use Multinomial NB versus Gaussian NB?",
+    "question": "Multinomial NB と Gaussian NB はいつ使い分けるべきですか。",
     "options": [
-      "Multinomial for regression, Gaussian for classification",
-      "Multinomial for word count/frequency features, Gaussian for continuous real-valued features",
-      "Multinomial for binary data, Gaussian for multi-class problems",
-      "They are interchangeable -- always use whichever is faster"
+      "Multinomial は regression、Gaussian は classification に使う",
+      "Multinomial は word count/frequency features に、Gaussian は continuous real-valued features に使う",
+      "Multinomial は binary data、Gaussian は multi-class problems に使う",
+      "両者は交換可能で、常に速い方を使えばよい"
     ],
     "correct": 1,
-    "explanation": "Multinomial NB models feature counts (word frequencies in text). Gaussian NB assumes features follow normal distributions, suitable for continuous features like measurements or sensor readings."
+    "explanation": "Multinomial NB は feature counts（text の word frequencies）を model 化します。Gaussian NB は features が normal distributions に従うと仮定し、measurements や sensor readings のような continuous features に向いています。"
   },
   {
     "id": "nb-post-3",
     "stage": "post",
-    "question": "An email contains 'free' twice and 'money' once. In Multinomial NB with log probabilities, how is the spam score computed?",
+    "question": "email に 'free' が 2 回、'money' が 1 回含まれています。log probabilities を使う Multinomial NB では、spam score はどう計算されますか。",
     "options": [
       "log P(spam) + log P(free|spam) + log P(money|spam)",
       "log P(spam) + 2 * log P(free|spam) + 1 * log P(money|spam)",
@@ -62,6 +62,6 @@
       "log P(spam) * 2 * log P(free|spam)"
     ],
     "correct": 1,
-    "explanation": "Multinomial NB multiplies the word likelihoods raised to their count. In log space: log P(spam) + 2*log P(free|spam) + 1*log P(money|spam). The word count acts as an exponent."
+    "explanation": "Multinomial NB は word likelihoods をその count 乗して掛けます。log space では log P(spam) + 2*log P(free|spam) + 1*log P(money|spam) です。word count は exponent として働きます。"
   }
 ]

@@ -1,4 +1,4 @@
-"""Tests for the SFT lesson."""
+"""SFT lesson のテスト。"""
 
 from __future__ import annotations
 
@@ -37,7 +37,7 @@ class TokenizerTests(unittest.TestCase):
         ids, resp_start = tok.encode_pair("hi", "bye", max_len=32)
         self.assertEqual(ids[0], InstructionTokenizer.INST_ID)
         self.assertEqual(ids[resp_start - 1], InstructionTokenizer.RESP_ID)
-        # Response bytes start at resp_start.
+        # response bytes は resp_start から始まります。
         self.assertEqual(bytes(ids[resp_start : resp_start + 3]), b"bye")
 
     def test_truncates_to_max_len(self) -> None:
@@ -57,13 +57,13 @@ class CollateTests(unittest.TestCase):
         ids1, rs1 = tok.encode_pair("ab", "cd", max_len=32)
         ids2, rs2 = tok.encode_pair("a", "bcdefg", max_len=32)
         input_ids, labels, _attn_mask = sft_collate([(ids1, rs1), (ids2, rs2)])
-        # Padded to same length.
+        # 同じ長さに padding されます。
         self.assertEqual(input_ids.shape, labels.shape)
         self.assertEqual(input_ids.shape[0], 2)
-        # Instruction region of row 0 must be -100 in labels.
+        # row 0 の instruction region は labels で -100 である必要があります。
         for i in range(rs1):
             self.assertEqual(int(labels[0, i].item()), InstructionTokenizer.IGNORE_INDEX)
-        # Response region of row 0 keeps token ids (=== input_ids on those positions).
+        # row 0 の response region は token ids を保持します（その positions の input_ids と同じ）。
         for i in range(rs1, len(ids1)):
             self.assertEqual(int(labels[0, i].item()), ids1[i])
 
@@ -73,10 +73,10 @@ class CollateTests(unittest.TestCase):
         ids2, rs2 = tok.encode_pair("a", "bcdefghij", max_len=32)
         input_ids, labels, attn_mask = sft_collate([(ids1, rs1), (ids2, rs2)])
         max_t = input_ids.size(1)
-        # Last positions of the shorter row are pad and must be -100 in labels.
+        # 短い row の末尾 positions は pad で、labels では -100 である必要があります。
         for i in range(len(ids1), max_t):
             self.assertEqual(int(labels[0, i].item()), InstructionTokenizer.IGNORE_INDEX)
-        # Pad positions are 0 in attn_mask, real positions are 1.
+        # attn_mask では pad positions が0、real positions が1です。
         self.assertEqual(int(attn_mask[0, 0].item()), 1)
         self.assertEqual(int(attn_mask[0, -1].item()), 0)
 
@@ -95,7 +95,7 @@ class DatasetTests(unittest.TestCase):
         pairs, cats = make_dataset(seed=0)
         tr, _tr_c, te, te_c = split_dataset(pairs, cats, test_frac=0.2, seed=0)
         self.assertEqual(len(tr) + len(te), 200)
-        # Every category appears in the test split.
+        # 全 category が test split に現れます。
         self.assertEqual(set(te_c), set(cats))
 
 
@@ -106,9 +106,9 @@ class LossTests(unittest.TestCase):
         logits = torch.randn(1, 4, V, requires_grad=True)
         labels = torch.tensor([[InstructionTokenizer.IGNORE_INDEX] * 4])
         loss = shifted_loss(logits, labels)
-        # All targets masked: cross-entropy with no valid targets returns nan,
-        # which is the standard PyTorch behaviour. The contract here is that
-        # the function does not raise.
+        # 全 target が masked: valid target なしの cross-entropy は nan を返します。
+        # これは標準的な PyTorch の挙動です。ここでの契約は
+        # function が例外を投げないことです。
         self.assertTrue(torch.isnan(loss) or loss.item() == 0.0)
 
     def test_loss_decreases_when_target_distribution_is_learnable(self) -> None:
@@ -117,8 +117,8 @@ class LossTests(unittest.TestCase):
         logits = torch.zeros(1, 4, V, requires_grad=True)
         labels = torch.tensor([[InstructionTokenizer.IGNORE_INDEX, 3, 5, 7]])
         l0 = shifted_loss(logits, labels)
-        # The target positions in the shifted formulation are labels[:, 1:] = [3, 5, 7].
-        # Hand-craft logits that peak at those tokens and check loss drops.
+        # shifted formulation の target positions は labels[:, 1:] = [3, 5, 7] です。
+        # それらの token で peak する logits を手で作り、loss が下がることを確認します。
         logits2 = torch.zeros(1, 4, V)
         # logits at position i predict labels[i+1]; positions used for the loss are 0,1,2.
         logits2[0, 0, 3] = 10.0
@@ -133,8 +133,8 @@ class MetricTests(unittest.TestCase):
         self.assertEqual(normalise("  Hello   WORLD  "), "hello world")
 
     def test_exact_match_is_strict(self) -> None:
-        self.assertEqual(exact_match("Paris", "paris"), 1)
-        self.assertEqual(exact_match("Paris.", "Paris"), 0)
+        self.assertEqual(exact_match("パリ", "paris"), 1)
+        self.assertEqual(exact_match("パリ.", "パリ"), 0)
 
 
 class GenerateTests(unittest.TestCase):
@@ -144,7 +144,7 @@ class GenerateTests(unittest.TestCase):
         model = build_model(cfg)
         out = generate(model, tok, "Hi.", max_len=cfg.max_len, max_new_tokens=4)
         self.assertIsInstance(out, str)
-        # At most max_new_tokens bytes (the function may stop earlier).
+        # 最大 max_new_tokens bytes（function はもっと早く止まる場合があります）。
         self.assertLessEqual(len(out.encode("utf-8")), 4)
 
     def test_temperature_zero_is_deterministic(self) -> None:

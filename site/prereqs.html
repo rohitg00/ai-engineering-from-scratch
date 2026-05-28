@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roadmap - AI Engineering from Scratch</title>
+  <title>ロードマップ - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="Interactive prerequisite map for 435 AI engineering lessons. See which phases depend on which, and plan your learning path.">
-  <meta property="og:title" content="Roadmap · AI Engineering from Scratch">
-  <meta property="og:description" content="Interactive prerequisite map. See what each phase depends on and what it unlocks downstream.">
+  <meta name="description" content="AIエンジニアリング473レッスンのインタラクティブな前提マップ。各フェーズの依存関係を確認し、学習パスを計画できます。">
+  <meta property="og:title" content="ロードマップ · AI Engineering from Scratch">
+  <meta property="og:description" content="インタラクティブな前提マップ。各フェーズが何に依存し、その先で何を解放するかを確認できます。">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
   <meta property="og:url" content="https://aiengineeringfromscratch.com/prereqs.html">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Roadmap · AI Engineering from Scratch">
-  <meta name="twitter:description" content="Interactive prerequisite map across 20 phases.">
+  <meta name="twitter:title" content="ロードマップ · AI Engineering from Scratch">
+  <meta name="twitter:description" content="20フェーズを横断するインタラクティブな前提マップ。">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="style.css?v=20260525a">
   <style>
     /* ===================================================
-       Learning Path — Page Styles
+       学習パス — ページスタイル
     =================================================== */
 
     .prereqs-page {
@@ -46,7 +46,7 @@
       margin: 0 auto;
     }
 
-    /* --- Controls bar --- */
+    /* --- コントロールバー --- */
     .prereqs-controls {
       display: flex;
       justify-content: center;
@@ -104,7 +104,7 @@
       color: var(--accent);
     }
 
-    /* --- Graph container --- */
+    /* --- グラフコンテナ --- */
     .graph-wrap {
       overflow-x: auto;
       overflow-y: visible;
@@ -131,7 +131,7 @@
 
     .graph-svg { display: block; }
 
-    /* --- SVG Node styles --- */
+    /* --- SVGノードスタイル --- */
     .node-group { cursor: pointer; }
 
     .node-rect {
@@ -192,7 +192,7 @@
       transition: opacity 0.25s;
     }
 
-    /* --- SVG Edge styles --- */
+    /* --- SVGエッジスタイル --- */
     .edge-path {
       fill: none;
       stroke: var(--border);
@@ -215,7 +215,7 @@
     .edge-arrow.descendant-edge { fill: var(--complete);  opacity: 0.7; }
     .edge-arrow.dimmed-edge     { opacity: 0.08; }
 
-    /* --- Detail panel --- */
+    /* --- 詳細パネル --- */
     .detail-panel {
       max-width: 700px;
       margin: 0 auto;
@@ -383,7 +383,7 @@
       border-color: var(--accent-hover);
     }
 
-    /* --- Responsive --- */
+    /* --- レスポンシブ --- */
     @media (max-width: 768px) {
       .prereqs-page        { padding: 80px 0 48px; }
       .graph-scroll-hint   { display: block; }
@@ -394,7 +394,7 @@
 </head>
 <body>
 
-  <a href="#main" class="skip-link">Skip to content</a>
+  <a href="#main" class="skip-link">本文へスキップ</a>
 
   <header class="site-header">
     <div class="header-inner">
@@ -402,18 +402,18 @@
         <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
       </a>
       <nav class="header-nav">
-        <a href="index.html#contents">Contents</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="prereqs.html">Roadmap</a>
-        <a href="glossary.html">Glossary</a>
+        <a href="index.html#contents">目次</a>
+        <a href="catalog.html">カタログ</a>
+        <a href="prereqs.html">ロードマップ</a>
+        <a href="glossary.html">用語集</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
-          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+          <span class="star-count" data-loading="true" aria-label="GitHubスター数">…</span>
         </a>
       </nav>
       <button class="search-toggle" type="button" data-cmd-palette
-        aria-label="Search (⌘K)" title="Search (⌘K)">
+        aria-label="検索 (⌘K)" title="検索 (⌘K)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2.5"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -421,8 +421,8 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="theme-icon" id="themeIcon">N</span>
+      <button class="theme-toggle" id="themeToggle" aria-label="テーマを切り替え">
+        <span class="theme-icon" id="themeIcon">夜</span>
       </button>
     </div>
   </header>
@@ -430,20 +430,20 @@
   <main class="prereqs-page" id="main">
     <div class="container">
       <div class="prereqs-header">
-        <h1>Roadmap</h1>
-        <p>Click any phase to see its prerequisites and what it unlocks downstream.</p>
+        <h1>ロードマップ</h1>
+        <p>フェーズを選ぶと、前提フェーズとその先で解放される内容を確認できます。</p>
       </div>
 
       <div class="prereqs-controls">
         <div class="prereqs-legend">
-          <div class="legend-item"><span class="legend-dot complete"></span> Complete</div>
-          <div class="legend-item"><span class="legend-dot in-progress"></span> In Progress</div>
-          <div class="legend-item"><span class="legend-dot planned"></span> Planned</div>
+          <div class="legend-item"><span class="legend-dot complete"></span> 完了</div>
+          <div class="legend-item"><span class="legend-dot in-progress"></span> 進行中</div>
+          <div class="legend-item"><span class="legend-dot planned"></span> 予定</div>
         </div>
-        <button class="reset-btn" id="resetBtn">&#10005; Clear selection</button>
+        <button class="reset-btn" id="resetBtn">&#10005; 選択を解除</button>
       </div>
 
-      <div class="graph-scroll-hint">&#8596; Scroll to explore the full graph</div>
+      <div class="graph-scroll-hint">&#8596; 横にスクロールして全体を見る</div>
 
       <div class="graph-wrap">
         <div class="graph-container" id="graphContainer">
@@ -457,13 +457,13 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>AI Engineering from Scratch · open source · free forever.</p>
+      <p>AI Engineering from Scratch · オープンソース · ずっと無料。</p>
       <div class="footer-links">
-        <a href="index.html">Home</a>
+        <a href="index.html">ホーム</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
-        <a href="catalog.html">Catalog</a>
-        <a href="glossary.html">Glossary</a>
-              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+        <a href="catalog.html">カタログ</a>
+        <a href="glossary.html">用語集</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">報告 / 提案</a>
       </div>
     </div>
   </footer>
@@ -475,7 +475,7 @@
   <script>
   (function () {
     /* ===================================================
-       Theme Toggle — matches site-wide pattern
+       テーマ切り替え — サイト共通パターンに合わせる
     =================================================== */
     var root   = document.documentElement;
     var stored = localStorage.getItem('theme');
@@ -490,7 +490,7 @@
     function updateIcon() {
       var icon = document.getElementById('themeIcon');
       if (!icon) return;
-      icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';
+      icon.textContent = root.getAttribute('data-theme') === 'light' ? '夜' : '昼';
     }
 
     updateIcon();
@@ -510,13 +510,11 @@
     });
 
     /* ===================================================
-       Prerequisite data.
+       前提データ。
 
-       To add a new phase, add its id and prerequisite
-       list here. Any phase present in PHASES (data.js)
-       but missing from this map will automatically
-       appear as a standalone node at the bottom of the
-       graph — no manual positioning needed.
+       新しいフェーズを追加する場合は、ここにIDと前提リストを追加する。
+       PHASES（data.js）に存在するがこのマップにないフェーズは、
+       グラフ下部に独立ノードとして自動表示されるため、手動配置は不要。
     =================================================== */
     var PREREQS = {
       0:  [],
@@ -542,11 +540,10 @@
     };
 
     /*
-     * Tier definitions control the visual layout.
-     * Each sub-array is one horizontal row; the order
-     * within a row controls left-to-right placement.
-     * Phases in PHASES but not in any tier are collected
-     * into an auto-generated row at the bottom.
+     * ティア定義で見た目の配置を制御する。
+     * 各サブ配列が横一列で、配列内の順序が左から右の配置になる。
+     * PHASES にあるがどのティアにも含まれないフェーズは、
+     * 下部の自動生成行にまとめられる。
      */
     var TIER_ORDER = [
       [0],
@@ -563,7 +560,7 @@
     ];
 
     /* ===================================================
-       Layout constants
+       レイアウト定数
     =================================================== */
     var NODE_W   = 168;
     var NODE_H   = 56;
@@ -573,7 +570,7 @@
     var PAD_Y    = 50;
 
     /* ===================================================
-       Build lookups from PHASES (data.js)
+       PHASES（data.js）から検索用マップを作る
     =================================================== */
     var PHASE_MAP   = {};
     var allPhaseIds = {};
@@ -582,12 +579,12 @@
       allPhaseIds[PHASES[i].id] = true;
     }
 
-    /* Ensure every phase in PHASES has a PREREQS entry */
+    /* PHASES 内の全フェーズに PREREQS エントリを用意する */
     for (var pid in allPhaseIds) {
       if (!(pid in PREREQS)) PREREQS[pid] = [];
     }
 
-    /* Build reverse map: parent → children */
+    /* 逆引きマップを作る: parent → children */
     var CHILDREN = {};
     for (var pid in PREREQS) CHILDREN[pid] = [];
     for (var pid in PREREQS) {
@@ -599,11 +596,11 @@
     }
 
     /* ===================================================
-       Auto-compute node positions from TIER_ORDER
+       TIER_ORDER からノード位置を自動計算する
     =================================================== */
     var POSITIONS = {};
 
-    /* Collect phase IDs not yet in any tier */
+    /* まだティアに含まれていないフェーズIDを集める */
     var tieredIds = {};
     for (var t = 0; t < TIER_ORDER.length; t++) {
       for (var n = 0; n < TIER_ORDER[t].length; n++) {
@@ -619,7 +616,7 @@
       TIER_ORDER.push(extraTier);
     }
 
-    /* Determine SVG dimensions from widest tier */
+    /* 最も幅の広いティアからSVGサイズを決める */
     var maxPerTier = 1;
     for (var t = 0; t < TIER_ORDER.length; t++) {
       if (TIER_ORDER[t].length > maxPerTier) maxPerTier = TIER_ORDER[t].length;
@@ -627,7 +624,7 @@
     var SVG_W = Math.max(960, maxPerTier * (NODE_W + COL_GAP) + PAD_X * 2);
     var SVG_H = TIER_ORDER.length * TIER_GAP + PAD_Y * 2;
 
-    /* Place nodes — centred within each tier */
+    /* 各ティアの中央にノードを配置する */
     for (var t = 0; t < TIER_ORDER.length; t++) {
       var tier  = TIER_ORDER[t];
       var count = tier.length;
@@ -641,7 +638,7 @@
     }
 
     /* ===================================================
-       Graph traversal helpers
+       グラフ探索ヘルパー
     =================================================== */
     function getAncestors(id) {
       var result = {};
@@ -672,7 +669,7 @@
     }
 
     /* ===================================================
-       SVG utility functions
+       SVGユーティリティ関数
     =================================================== */
     function svgEl(tag, attrs) {
       var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -686,7 +683,7 @@
       return div.innerHTML;
     }
 
-    /** Split a phase name into 1 or 2 lines for SVG text */
+    /** SVGテキスト用にフェーズ名を1〜2行へ分割する */
     function splitName(name) {
       if (name.length <= 20) return [name];
       var mid = Math.ceil(name.length / 2);
@@ -696,7 +693,7 @@
       return [name.substring(0, idx), name.substring(idx + 1)];
     }
 
-    /** Cubic bezier edge between two nodes */
+    /** 2つのノードをつなぐ3次ベジェ曲線 */
     function edgePath(fromId, toId) {
       var fp = POSITIONS[fromId], tp = POSITIONS[toId];
       if (!fp || !tp) return '';
@@ -709,7 +706,7 @@
              ' ' + x2 + ' ' + y2;
     }
 
-    /** Arrow polygon at the target end of an edge */
+    /** エッジ終端に置く矢印ポリゴン */
     function arrowPoints(toId) {
       var tp = POSITIONS[toId];
       if (!tp) return '0,0 0,0 0,0';
@@ -723,6 +720,13 @@
       return '#807060';
     }
 
+    function statusLabel(status) {
+      if (status === 'complete') return '完了';
+      if (status === 'in-progress') return '進行中';
+      if (status === 'planned') return '予定';
+      return status;
+    }
+
     function lessonStats(phase) {
       var done = 0;
       var lessons = Array.isArray(phase.lessons) ? phase.lessons : [];
@@ -733,7 +737,7 @@
     }
 
     /* ===================================================
-       Build and render the graph
+       グラフの構築と描画
     =================================================== */
     var selectedId   = null;
     var nodeEls      = {};
@@ -750,7 +754,7 @@
       container.style.width  = SVG_W + 'px';
       container.style.height = SVG_H + 'px';
 
-      /* --- Edges (drawn first, behind nodes) --- */
+      /* --- エッジ（ノードの背面に先に描画） --- */
       var edgeGroup = svgEl('g', { class: 'edges-layer' });
       svg.appendChild(edgeGroup);
 
@@ -773,7 +777,7 @@
         }
       }
 
-      /* --- Nodes --- */
+      /* --- ノード --- */
       var nodeGroup = svgEl('g', { class: 'nodes-layer' });
       svg.appendChild(nodeGroup);
 
@@ -788,20 +792,20 @@
           transform: 'translate(' + (pos.x - NODE_W / 2) + ',' + (pos.y - NODE_H / 2) + ')',
           tabindex: '0',
           role: 'button',
-          'aria-label': 'Select Phase ' + id + ': ' + phase.name
+          'aria-label': 'フェーズ ' + id + ' を選択: ' + phase.name
         });
 
-        /* Background */
+        /* 背景 */
         g.appendChild(svgEl('rect', { class: 'node-rect', width: NODE_W, height: NODE_H, rx: 12 }));
 
-        /* Status colour bar */
+        /* ステータス色バー */
         g.appendChild(svgEl('rect', {
           class: 'node-status-bar',
           x: 8, y: 0, width: NODE_W - 16, height: 3, rx: 1.5,
           fill: statusColor(phase.status)
         }));
 
-        /* Label content */
+        /* ラベル内容 */
         var lines = splitName(phase.name);
         var stats = lessonStats(phase);
 
@@ -834,14 +838,14 @@
     }
 
     /* ===================================================
-       Selection logic
+       選択ロジック
     =================================================== */
     function selectNode(id) {
       selectedId = id;
       var ancestors   = getAncestors(id);
       var descendants = getDescendants(id);
 
-      /* Highlight nodes */
+      /* ノードをハイライト */
       for (var nid in nodeEls) {
         var n  = parseInt(nid);
         var el = nodeEls[n];
@@ -852,7 +856,7 @@
         else                     el.classList.add('dimmed');
       }
 
-      /* Highlight edges */
+      /* エッジをハイライト */
       var aEdges = buildEdgeSet(id, ancestors,   true);
       var dEdges = buildEdgeSet(id, descendants, false);
 
@@ -872,8 +876,7 @@
     }
 
     /**
-     * Collect the set of edge keys (from-to) that belong
-     * to the ancestor or descendant subgraph.
+     * 祖先または子孫サブグラフに属するエッジキー（from-to）を集める。
      */
     function buildEdgeSet(id, group, isAncestor) {
       var set = {};
@@ -925,7 +928,7 @@
     }
 
     /* ===================================================
-       Detail panel
+       詳細パネル
     =================================================== */
     function showDetail(id, ancestors, descendants) {
       var panel = document.getElementById('detailPanel');
@@ -934,40 +937,40 @@
 
       var stats = lessonStats(phase);
 
-      /* Prerequisites list */
+      /* 前提リスト */
       var directPrereqs = PREREQS[id] || [];
       var prereqHtml    = '';
       if (directPrereqs.length) {
         prereqHtml = '<ul class="detail-prereq-list">';
         for (var i = 0; i < directPrereqs.length; i++) {
           var ppid = directPrereqs[i];
-          var pn   = PHASE_MAP[ppid] ? PHASE_MAP[ppid].name : 'Phase ' + ppid;
-          prereqHtml += '<li data-goto="' + ppid + '" tabindex="0" role="button" aria-label="Go to Phase ' + ppid + ': ' + escapeHtml(pn) + '"><span class="li-num">' + String(ppid).padStart(2, '0') + '</span> ' + escapeHtml(pn) + '</li>';
+          var pn   = PHASE_MAP[ppid] ? PHASE_MAP[ppid].name : 'フェーズ ' + ppid;
+          prereqHtml += '<li data-goto="' + ppid + '" tabindex="0" role="button" aria-label="フェーズ ' + ppid + ' へ移動: ' + escapeHtml(pn) + '"><span class="li-num">' + String(ppid).padStart(2, '0') + '</span> ' + escapeHtml(pn) + '</li>';
         }
         prereqHtml += '</ul>';
       } else {
-        prereqHtml = '<div class="detail-empty">None. This is a starting point.</div>';
+        prereqHtml = '<div class="detail-empty">なし。ここから始められます。</div>';
       }
 
-      /* Unlocks list */
+      /* 解放されるフェーズのリスト */
       var childIds   = CHILDREN[id] || [];
       var unlockHtml = '';
       if (childIds.length) {
         unlockHtml = '<ul class="detail-unlock-list">';
         for (var i = 0; i < childIds.length; i++) {
           var cid = childIds[i];
-          var cn  = PHASE_MAP[cid] ? PHASE_MAP[cid].name : 'Phase ' + cid;
-          unlockHtml += '<li data-goto="' + cid + '" tabindex="0" role="button" aria-label="Go to Phase ' + cid + ': ' + escapeHtml(cn) + '"><span class="li-num">' + String(cid).padStart(2, '0') + '</span> ' + escapeHtml(cn) + '</li>';
+          var cn  = PHASE_MAP[cid] ? PHASE_MAP[cid].name : 'フェーズ ' + cid;
+          unlockHtml += '<li data-goto="' + cid + '" tabindex="0" role="button" aria-label="フェーズ ' + cid + ' へ移動: ' + escapeHtml(cn) + '"><span class="li-num">' + String(cid).padStart(2, '0') + '</span> ' + escapeHtml(cn) + '</li>';
         }
         unlockHtml += '</ul>';
       } else {
-        unlockHtml = '<div class="detail-empty">Final destination. End of the curriculum.</div>';
+        unlockHtml = '<div class="detail-empty">最終地点。カリキュラムの終点です。</div>';
       }
 
-      /* Compute exact GitHub tree URL using standard slug logic */
+      /* 標準のslugロジックで正確なGitHubツリーURLを作る */
       var phaseGithubUrl = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/' + extractPhaseSlug(phase);
 
-      /* Find first readable lesson for Read button */
+      /* 「読む」ボタン用に最初の閲覧可能レッスンを探す */
       var readLink = '';
       var lessonsArray = Array.isArray(phase.lessons) ? phase.lessons : [];
       for (var li = 0; li < lessonsArray.length; li++) {
@@ -985,28 +988,28 @@
 
       panel.innerHTML =
         '<div class="detail-top">' +
-          '<span class="detail-phase-num">Phase ' + String(id).padStart(2, '0') + '</span>' +
-          '<span class="detail-status ' + phase.status + '">' + phase.status.replace('-', ' ') + '</span>' +
+          '<span class="detail-phase-num">フェーズ ' + String(id).padStart(2, '0') + '</span>' +
+          '<span class="detail-status ' + phase.status + '">' + statusLabel(phase.status) + '</span>' +
         '</div>' +
         '<div class="detail-title">' + escapeHtml(phase.name) + '</div>' +
         '<div class="detail-desc">' + escapeHtml(phase.desc) + '</div>' +
         '<div class="detail-stats">' +
-          '<strong>' + stats.done + '</strong> of <strong>' + stats.total + '</strong> lessons complete' +
-          ' &nbsp;·&nbsp; <strong>' + ancestorCount + '</strong> prerequisite phases' +
-          ' &nbsp;·&nbsp; <strong>' + descendantCount + '</strong> phases unlocked' +
+          '<strong>' + stats.total + '</strong>件中 <strong>' + stats.done + '</strong>件のレッスン完了' +
+          ' &nbsp;·&nbsp; 前提フェーズ <strong>' + ancestorCount + '</strong>件' +
+          ' &nbsp;·&nbsp; 解放されるフェーズ <strong>' + descendantCount + '</strong>件' +
         '</div>' +
         '<div class="detail-sections">' +
-          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--accent)">&#9664;</span> Prerequisites</div>' + prereqHtml + '</div>' +
-          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> Unlocks</div>' + unlockHtml + '</div>' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--accent)">&#9664;</span> 前提</div>' + prereqHtml + '</div>' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> この先に解放</div>' + unlockHtml + '</div>' +
         '</div>' +
         '<div class="detail-actions">' +
-          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">Read</a>' : '') +
-          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">View on GitHub</a>' +
+          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">読む</a>' : '') +
+          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">GitHubで見る</a>' +
         '</div>';
 
       panel.classList.add('open');
 
-      /* Clickable prereq/unlock items navigate the graph */
+      /* 前提／解放リストの項目クリックでグラフ内を移動する */
       var clickables = panel.querySelectorAll('[data-goto]');
       for (var i = 0; i < clickables.length; i++) {
         (function (el) {

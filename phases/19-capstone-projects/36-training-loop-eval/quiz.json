@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why must the target tensor be the input tensor shifted by one position?",
+      "question": "target tensor を input tensor から1つずらす必要がある理由は何ですか?",
       "options": [
-        "Cross entropy needs identical tensors",
-        "Next token prediction is the training objective: at every position the model predicts the token that comes next; forgetting the shift trains the model to predict itself, which learns nothing useful",
-        "It speeds up the optimizer",
-        "It is required by AdamW"
+        "Cross entropy は同一 tensor を必要とするため",
+        "next-token prediction が目的で、各位置で次の token を予測するため。shift を忘れると自分自身を予測する model になる",
+        "optimizer が速くなるため",
+        "AdamW に必要だから"
       ],
       "correct": 1,
-      "explanation": "Input is tokens 0..T-1; target is tokens 1..T; loss is computed on the flattened (batch*seq, vocab) and (batch*seq,) shapes."
+      "explanation": "input は tokens 0..T-1、target は tokens 1..T です。loss は flattened shape で計算します。"
     },
     {
       "stage": "pre",
-      "question": "What does evaluate_model do that the training step does not?",
+      "question": "evaluate_model が training step と違って行うことは何ですか?",
       "options": [
-        "It runs the optimizer",
-        "It runs a fixed number of validation batches under no_grad and with dropout disabled, returning a reproducible mean loss",
-        "It changes the model weights",
-        "It computes gradients twice"
+        "optimizer を実行する",
+        "no_grad かつ dropout disabled で固定数の validation batches を走らせ、再現可能な mean loss を返す",
+        "model weights を変える",
+        "gradient を2回計算する"
       ],
       "correct": 1,
-      "explanation": "Held out evaluation needs no gradients, no dropout, and a fixed slice of validation data to be reproducible across runs."
+      "explanation": "held-out evaluation は gradient なし、dropout なし、固定 validation slice で実行します。"
     },
     {
       "stage": "check",
-      "question": "Which AdamW parameters get weight decay?",
+      "question": "AdamW で weight decay を受ける parameters はどれですか?",
       "options": [
-        "Every parameter equally",
-        "Matrix-shaped tensors (linear weights, embedding tables) receive weight decay; scale, shift, and bias tensors receive zero decay",
-        "Only the LM head",
-        "Only the LayerNorm scales"
+        "全 parameter が同じ",
+        "matrix-shaped tensors は decay、scale/shift/bias tensors は zero decay",
+        "LM head だけ",
+        "LayerNorm scales だけ"
       ],
       "correct": 1,
-      "explanation": "Putting decay on a LayerNorm scale drives the scale to zero and breaks normalization; the split is a standard production pattern."
+      "explanation": "LayerNorm scale に decay をかけると正規化が壊れやすいため、標準的に分けます。"
     },
     {
       "stage": "check",
-      "question": "What shape does the warmup-plus-cosine schedule trace from step 0 to the final step?",
+      "question": "warmup + cosine schedule は step 0 から final step までどんな形ですか?",
       "options": [
-        "Constant",
-        "Linear ramp from zero to max over warmup_steps, then cosine decay from max to min_lr over the remaining steps",
-        "Exponential growth",
-        "Step function"
+        "一定",
+        "warmup_steps まで0から max へ linear ramp、その後 remaining steps で max から min_lr へ cosine decay",
+        "指数的増加",
+        "step function"
       ],
       "correct": 1,
-      "explanation": "Warmup populates optimizer state; cosine decay tapers the step size so the final phase fine-tunes the weights."
+      "explanation": "warmup は optimizer state を立ち上げ、cosine decay は終盤の step size を小さくします。"
     },
     {
       "stage": "check",
-      "question": "Why clip gradient norm before optimizer.step()?",
+      "question": "optimizer.step() の前に gradient norm を clip する理由は何ですか?",
       "options": [
-        "It accelerates the matmul",
-        "A bad batch can produce a huge gradient that wipes out hours of training; clipping to max_norm=1.0 keeps the optimizer in a safe range without distorting normal updates",
-        "It reduces memory usage",
-        "It removes the warmup requirement"
+        "matmul を高速化するため",
+        "悪い batch が巨大 gradient を作り学習を壊すのを防ぐため。max_norm=1.0 は通常 update を大きく歪めず安全域に保つ",
+        "memory 使用量を減らすため",
+        "warmup を不要にするため"
       ],
       "correct": 1,
-      "explanation": "Gradient clipping is the cheapest insurance against divergence; one is the default that survives most setups."
+      "explanation": "gradient clipping は divergence への安価な保険です。"
     },
     {
       "stage": "post",
-      "question": "Why log per step records as JSONL instead of pickled state?",
+      "question": "per-step record を pickle ではなく JSONL で log する理由は何ですか?",
       "options": [
-        "JSONL is required by the optimizer",
-        "JSONL records are durable across refactors, greppable, plottable in thirty lines, and survive crashes; pickled state ties you to the module layout that produced it",
-        "JSONL trains faster",
-        "JSONL uses less GPU memory"
+        "optimizer が JSONL を要求するため",
+        "JSONL は refactor に強く、grep でき、plot しやすく、crash 後も読める。pickle は生成時の module layout に縛られる",
+        "JSONL の方が学習が速い",
+        "JSONL は GPU memory を使わない"
       ],
       "correct": 1,
-      "explanation": "Any crash leaves a readable artifact; resume reads the last step; tooling on top is trivial."
+      "explanation": "crash 後も artifact が読め、最後の step を見て resume できます。"
     }
   ]
 }

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,19 +10,19 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
     </style>
   </defs>
-  <text x="450" y="28" text-anchor="middle" class="title">Multi-agent debate — Du et al. 2023, convergence dynamics</text>
+  <text x="450" y="28" text-anchor="middle" class="title">マルチエージェント討論 — Du et al. 2023、収束ダイナミクス</text>
 
   <!-- 3 rounds, 3 agents layout -->
-  <text x="110" y="80" text-anchor="middle" class="head">round 0</text>
-  <text x="310" y="80" text-anchor="middle" class="head">round 1</text>
-  <text x="510" y="80" text-anchor="middle" class="head">round 2</text>
-  <text x="710" y="80" text-anchor="middle" class="head">round 3</text>
+  <text x="110" y="80" text-anchor="middle" class="head">ラウンド0</text>
+  <text x="310" y="80" text-anchor="middle" class="head">ラウンド1</text>
+  <text x="510" y="80" text-anchor="middle" class="head">ラウンド2</text>
+  <text x="710" y="80" text-anchor="middle" class="head">ラウンド3</text>
 
   <rect x="60" y="100" width="100" height="40" class="hot"/>
   <text x="110" y="125" text-anchor="middle" class="step">A: 38.0</text>
@@ -64,18 +64,18 @@
   <rect x="660" y="220" width="100" height="40" class="cold"/>
   <text x="710" y="245" text-anchor="middle" class="step">C: 44.50</text>
 
-  <text x="110" y="300" text-anchor="middle" class="small">spread 13.0</text>
-  <text x="310" y="300" text-anchor="middle" class="small">spread 2.45</text>
-  <text x="510" y="300" text-anchor="middle" class="small">spread 0.44</text>
-  <text x="710" y="300" text-anchor="middle" class="small">spread 0.09</text>
+  <text x="110" y="300" text-anchor="middle" class="small">ばらつき13.0</text>
+  <text x="310" y="300" text-anchor="middle" class="small">ばらつき2.45</text>
+  <text x="510" y="300" text-anchor="middle" class="small">ばらつき0.44</text>
+  <text x="710" y="300" text-anchor="middle" class="small">ばらつき0.09</text>
 
   <rect x="60" y="330" width="780" height="60" class="box"/>
-  <text x="450" y="352" text-anchor="middle" class="head">Du et al. ablations</text>
-  <text x="450" y="372" text-anchor="middle" class="small">agents-only plateaus · rounds-only barely helps · agents × rounds produces the big jump</text>
+  <text x="450" y="352" text-anchor="middle" class="head">Duらのアブレーション</text>
+  <text x="450" y="372" text-anchor="middle" class="small">エージェント数だけでは頭打ち · ラウンド数だけは効果薄 · エージェント数 × ラウンド数が大きな跳躍を生む</text>
 
   <rect x="60" y="400" width="780" height="100" class="box"/>
-  <text x="450" y="422" text-anchor="middle" class="head">failure modes to guard against</text>
-  <text x="450" y="442" text-anchor="middle" class="small">sycophancy cascade: agents defer to loudest confidence, may converge on wrong answer</text>
-  <text x="450" y="460" text-anchor="middle" class="small">topic drift: long debates wander from original question — re-inject every round</text>
-  <text x="450" y="478" text-anchor="middle" class="small">cost: N × R calls with growing context; cap N=5, R=3</text>
+  <text x="450" y="422" text-anchor="middle" class="head">防ぐべき失敗モード</text>
+  <text x="450" y="442" text-anchor="middle" class="small">迎合カスケード: エージェントが自信の強い声に従い、誤答へ収束しうる</text>
+  <text x="450" y="460" text-anchor="middle" class="small">topic drift: 長いdebateは元の質問から逸れる — roundごとに再注入</text>
+  <text x="450" y="478" text-anchor="middle" class="small">cost: contextが増えながらN × R calls; N=5, R=3でcap</text>
 </svg>

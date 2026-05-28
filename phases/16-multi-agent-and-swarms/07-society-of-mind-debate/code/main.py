@@ -1,9 +1,9 @@
-"""Multi-agent debate on a numeric task (Du et al. 2023 style).
+"""numeric task 上の multi-agent debate (Du et al. 2023 style)。
 
-3 agents, each starts with a different (possibly wrong) answer. In each round,
-every agent reads the others' answers and revises toward the weighted average.
-Convergence is logged per round. Agent policies are scripted, not LLM-backed --
-the point is the debate dynamics.
+3 agents がそれぞれ異なる (ときに wrong な) answer から始める。各 round で
+各 agent は others' answers を読み、weighted average に向けて revise する。
+convergence を round ごとに log する。agent policies は LLM-backed ではなく scripted。
+焦点は debate dynamics。
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ class DebateAgent:
         self.history.append(self.answer)
 
     def revise(self, others: list["DebateAgent"]) -> None:
-        """Weighted average of own + others, weighted by confidence."""
+        """own + others を confidence で weighted average する。"""
         weights = [self.confidence] + [o.confidence for o in others]
         values = [self.answer] + [o.answer for o in others]
         total_w = sum(weights)
@@ -37,7 +37,7 @@ class DebateAgent:
 
 
 def agreement_score(agents: list[DebateAgent], tol: float = 0.1) -> float:
-    """Fraction of agents within tol of the mean."""
+    """mean から tol 以内にいる agents の fraction。"""
     mean = sum(a.answer for a in agents) / len(agents)
     agree = sum(1 for a in agents if abs(a.answer - mean) <= tol)
     return agree / len(agents)
@@ -77,7 +77,7 @@ def fresh_team(seed: int) -> list[DebateAgent]:
 
 
 def single_shot_majority(agents: list[DebateAgent]) -> float:
-    """Control: majority on round-0 answers (self-consistency baseline)."""
+    """Control: round-0 answers の majority (self-consistency baseline)。"""
     return sum(a.answer for a in agents) / len(agents)
 
 
@@ -91,19 +91,19 @@ def main() -> None:
         a.initial()
     control_mean = single_shot_majority(baseline)
     print(f"\nControl (round-0 mean, self-consistency baseline): {control_mean:.2f}")
-    print(f"Error vs truth: {abs(control_mean - TRUE_ANSWER):.2f}")
+    print(f"truth との差: {abs(control_mean - TRUE_ANSWER):.2f}")
 
     team3 = fresh_team(seed=1)
-    run_debate(team3, rounds=3, label="Debate 3 agents, 3 rounds")
+    run_debate(team3, rounds=3, label="3 agents, 3 rounds の debate")
 
     team5 = fresh_team(seed=2)
-    run_debate(team5, rounds=5, label="Debate 3 agents, 5 rounds (diminishing returns)")
+    run_debate(team5, rounds=5, label="3 agents, 5 rounds の debate (diminishing returns)")
 
     print("\nTakeaways:")
-    print("  - 1 round of exchange cuts the error most.")
-    print("  - Rounds 2-3 compound.")
-    print("  - Beyond round 3 the gain per round shrinks (Du et al. plateau).")
-    print("  - Cost scales N * R LLM calls with growing context.")
+    print("  - 1 round の exchange が error を最も大きく減らす。")
+    print("  - Rounds 2-3 は compound する。")
+    print("  - round 3 を超えると round ごとの gain は縮む (Du et al. plateau)。")
+    print("  - Cost は growing context 付きの N * R LLM calls として scale する。")
 
 
 if __name__ == "__main__":

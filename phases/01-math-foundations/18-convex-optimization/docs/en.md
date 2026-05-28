@@ -1,161 +1,81 @@
-# Convex Optimization
+# 凸最適化
 
-> Convex problems have one valley. Neural networks have millions. Knowing the difference matters.
+> 凸問題には谷が一つだけあります。ニューラルネットワークには無数の谷があります。その違いを知ることが重要です。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
+**時間:** 約90分
 
-## Learning Objectives
+## 学習目標
 
-- Test whether a function is convex using the definition, second derivative, and Hessian criteria
-- Implement Newton's method and compare its quadratic convergence against gradient descent
-- Solve constrained optimization problems using Lagrange multipliers and interpret KKT conditions
-- Explain why neural network loss landscapes are non-convex yet SGD still finds good solutions
+- 定義、二階微分、Hessian 条件で関数が凸かどうかを判定する
+- Newton's method を実装し、勾配降下法との収束速度を比較する
+- Lagrange multipliers と KKT conditions で制約付き最適化を解釈する
+- ニューラルネットワークの損失地形が非凸でも SGD が良い解を見つける理由を説明する
 
-## The Problem
+## 問題
 
-Lesson 08 taught you gradient descent, momentum, and Adam. Those optimizers walk downhill on any surface. But they come with no guarantees. Gradient descent on a non-convex landscape might land in a bad local minimum, get stuck on a saddle point, or oscillate forever. You used it anyway because neural networks are non-convex and there is no alternative.
+勾配降下法、momentum、Adam はどんな曲面でも下り坂を進みます。ただし保証はありません。非凸な地形では、悪い局所最小に落ちる、鞍点に止まる、振動する、といったことが起こります。それでも深層学習で使うのは、ニューラルネットワークが非凸で、ほかに万能な選択肢がないからです。
 
-But many problems in machine learning are convex. Linear regression, logistic regression, SVMs, LASSO, ridge regression. For these, something stronger exists: optimization with mathematical guarantees. A convex problem has exactly one valley. Any algorithm that walks downhill will reach the global minimum. No restarts needed. No learning rate schedules. No prayer.
+一方、線形回帰、ロジスティック回帰、SVM、LASSO、リッジ回帰など、多くの ML 問題は凸です。凸問題では「任意の局所最小が大域最小」という強力な保証があります。再スタートも、複雑な学習率スケジュールも、運任せも不要です。
 
-Understanding convexity does three things. First, it tells you when your problem is easy (convex) versus hard (non-convex). Second, it gives you faster tools like Newton's method for convex problems. Third, it explains concepts that appear throughout ML: regularization as a constraint, duality in SVMs, and why deep learning works despite violating every nice property convexity gives you.
+凸性を理解すると、問題が扱いやすいかどうか、Newton's method のような高速な手法を使えるか、正則化や SVM の双対性が何を意味するかが見えるようになります。
 
-## The Concept
+## 概念
 
-### Convex sets
+### 凸集合と凸関数
 
-A set S is convex if for any two points in S, the line segment between them also lies entirely in S.
+集合 `S` は、`S` 内の任意の二点を結ぶ線分がすべて `S` 内にあるとき凸です。形式的には、任意の `x, y in S` と `t in [0, 1]` について `tx + (1-t)y in S` です。
 
-| Convex sets | Not convex |
-|---|---|
-| **Rectangle**: any two points inside can be connected by a line segment that stays inside | **Star/crescent shape**: a line between two interior points can pass outside the set |
-| **Triangle**: same property holds for all interior points | **Donut/annulus**: the hole means some line segments leave the set |
-| The line segment between any two points stays within the set | The line segment between some pairs of points exits the set |
-
-Formal test: for any points x, y in S and any t in [0, 1], the point tx + (1-t)y is also in S.
-
-Examples of convex sets:
-- A line, a plane, all of R^n
-- A ball (circle, sphere, hypersphere)
-- A halfspace: {x : a^T x <= b}
-- The intersection of any number of convex sets
-
-Examples of non-convex sets:
-- A donut (annulus)
-- The union of two disjoint circles
-- Any set with a "dent" or "hole"
-
-### Convex functions
-
-A function f is convex if its domain is a convex set and for any two points x, y in its domain and any t in [0, 1]:
+関数 `f` は、定義域が凸集合で、任意の `x, y` と `t in [0, 1]` について次を満たすとき凸です。
 
 ```
 f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y)
 ```
 
-Geometrically: the line segment between any two points on the graph lies above or on the graph.
+幾何学的には、グラフ上の二点を結ぶ線分がグラフの上または上側にある、という意味です。
 
-| Property | Convex function | Non-convex function |
+| 性質 | 凸関数 | 非凸関数 |
 |---|---|---|
-| **Line segment test** | The line between any two points on the graph lies **above or on** the curve | The line between some points on the graph dips **below** the curve |
-| **Shape** | Single bowl/valley curving upward | Multiple peaks and valleys with mixed curvature |
-| **Local minima** | Every local minimum is the global minimum | Multiple local minima may exist at different heights |
+| 線分テスト | 任意の二点を結ぶ線が曲線の上側にある | どこかで線が曲線の下に沈む |
+| 形 | 上に開いた一つの谷 | 複数の峰や谷 |
+| 局所最小 | すべて大域最小 | 高さの違う局所最小があり得る |
 
-Common convex functions:
-- f(x) = x^2 (parabola)
-- f(x) = |x| (absolute value)
-- f(x) = e^x (exponential)
-- f(x) = max(0, x) (ReLU, though piecewise linear)
-- f(x) = -log(x) for x > 0 (negative log)
-- Any linear function f(x) = a^T x + b (both convex and concave)
+### 凸性の判定
 
-### Testing for convexity
+**二階微分テスト (1D)。** すべての `x` で `f''(x) >= 0` なら凸です。
 
-Three practical tests, from easiest to most rigorous.
+**Hessian テスト (多変量)。** Hessian 行列 `H(x)` がすべての `x` で positive semidefinite なら凸です。
 
-**Test 1: Second derivative test (1D).** If f''(x) >= 0 for all x, then f is convex.
+**定義によるテスト。** `f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y)` を直接確認します。微分が扱いにくい関数に便利です。
 
-- f(x) = x^2: f''(x) = 2 >= 0. Convex.
-- f(x) = x^3: f''(x) = 6x. Negative for x < 0. Not convex.
-- f(x) = e^x: f''(x) = e^x > 0. Convex.
+凸関数では、すべての局所最小が大域最小です。したがって勾配降下法は悪い局所最小に閉じ込められません。
 
-**Test 2: Hessian test (multivariate).** If the Hessian matrix H(x) is positive semidefinite for all x, then f is convex. The Hessian is the matrix of second partial derivatives.
+### ML における凸と非凸
 
-**Test 3: Definition test.** Check the inequality f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y) directly. Useful for functions where derivatives are hard to compute.
+| 問題 | 凸か | 理由 |
+|---------|------|-----|
+| Linear regression (MSE) | はい | 重みに関して二次関数 |
+| Logistic regression | はい | log-loss が重みに関して凸 |
+| SVM (hinge loss) | はい | 線形関数の最大 |
+| LASSO | はい | 凸関数の和 |
+| Ridge regression | はい | 二次 + 二次 |
+| Neural network | いいえ | 非線形活性化で非凸になる |
+| k-means clustering | いいえ | 離散的な割り当てがある |
+| Matrix factorization | いいえ | 未知行列の積がある |
 
-### Why convexity matters
+### Hessian と Newton's method
 
-The central theorem of convex optimization:
-
-**For a convex function, every local minimum is a global minimum.**
-
-This means gradient descent cannot get trapped. Any downhill path leads to the same answer. The algorithm is guaranteed to converge to the optimal solution.
-
-```mermaid
-graph LR
-    subgraph "Convex: ONE answer"
-        direction TB
-        C1["Loss surface has a single valley"] --> C2["Gradient descent ALWAYS finds the global minimum"]
-    end
-    subgraph "Non-convex: MANY traps"
-        direction TB
-        N1["Loss surface has multiple valleys and peaks"] --> N2["Gradient descent may get stuck in a local minimum"]
-        N2 --> N3["Global minimum might be missed"]
-    end
-```
-
-Consequences:
-- No need for random restarts
-- No need for sophisticated learning rate schedules
-- Convergence proofs are possible (rate depends on function properties)
-- The solution is unique (up to flat regions)
-
-### Convex vs non-convex in ML
-
-| Problem | Convex? | Why |
-|---------|---------|-----|
-| Linear regression (MSE) | Yes | Loss is quadratic in weights |
-| Logistic regression | Yes | Log-loss is convex in weights |
-| SVM (hinge loss) | Yes | Maximum of linear functions |
-| LASSO (L1 regression) | Yes | Sum of convex functions is convex |
-| Ridge regression (L2) | Yes | Quadratic + quadratic = convex |
-| Neural network (any loss) | No | Nonlinear activations create non-convex landscape |
-| k-means clustering | No | Discrete assignment step |
-| Matrix factorization | No | Product of unknowns |
-
-Linear models with convex losses are convex. The moment you add hidden layers with nonlinear activations, convexity breaks.
-
-### The Hessian matrix
-
-The Hessian H of a function f: R^n -> R is the n x n matrix of second partial derivatives.
+Hessian は二階偏微分を並べた行列です。
 
 ```
 H[i][j] = d^2 f / (dx_i dx_j)
 ```
 
-For f(x, y) = x^2 + 3xy + y^2:
+固有値がすべて非負なら上向きの曲率、すべて非正なら下向き、符号が混ざれば鞍点です。凸性には Hessian が全域で positive semidefinite である必要があります。
 
-```
-df/dx = 2x + 3y       d^2f/dx^2 = 2      d^2f/dxdy = 3
-df/dy = 3x + 2y       d^2f/dydx = 3      d^2f/dy^2 = 2
-
-H = [ 2  3 ]
-    [ 3  2 ]
-```
-
-The Hessian tells you about curvature:
-- Eigenvalues all positive: the function curves upward in every direction (convex at that point)
-- Eigenvalues all negative: curves downward in every direction (concave, a local max)
-- Mixed signs: saddle point (curves up in some directions, down in others)
-- Zero eigenvalue: flat in that direction (degenerate)
-
-For convexity, the Hessian must be positive semidefinite (all eigenvalues >= 0) everywhere, not just at one point.
-
-### Newton's method
-
-Gradient descent uses first-order information (the gradient). Newton's method uses second-order information (the Hessian). It fits a quadratic approximation at the current point and jumps directly to the minimum of that quadratic.
+Newton's method は勾配だけでなく Hessian も使い、現在点の二次近似の最小点へ移動します。
 
 ```
 Update rule:
@@ -165,103 +85,21 @@ Compare to gradient descent:
   x_new = x - lr * gradient
 ```
 
-Newton's method replaces the scalar learning rate with the inverse Hessian. This automatically adjusts the step size and direction based on local curvature.
+二次関数では一ステップで解に到達します。ただし Hessian の計算は `O(n^2)` メモリ、逆行列は `O(n^3)` なので、大規模な深層学習にはそのまま使えません。
 
-```mermaid
-graph TD
-    subgraph "Gradient Descent"
-        GD1["Start"] --> GD2["Step 1"]
-        GD2 --> GD3["Step 2"]
-        GD3 --> GD4["..."]
-        GD4 --> GD5["Step ~500: Converged"]
-        GD_note["Follows gradient blindly — many small steps"]
-    end
-    subgraph "Newton's Method"
-        NM1["Start"] --> NM2["Step 1"]
-        NM2 --> NM3["..."]
-        NM3 --> NM4["Step ~5: Converged"]
-        NM_note["Uses curvature for optimal steps"]
-    end
-```
+### 制約付き最適化、Lagrange multipliers、KKT
 
-Advantages:
-- Quadratic convergence near the minimum (error squares each step)
-- No learning rate to tune
-- Scale-invariant (works regardless of how you parameterize the problem)
+制約なし最適化は全空間で `f(x)` を最小化します。制約付き最適化は、許容領域の中で最小化します。
 
-Disadvantages:
-- Computing the Hessian costs O(n^2) memory and O(n^3) to invert
-- For a neural network with 1 million weights, that is 10^12 entries and 10^18 operations
-- Not practical for deep learning
-
-### Constrained optimization
-
-Unconstrained optimization: minimize f(x) over all x.
-Constrained optimization: minimize f(x) subject to constraints.
-
-Real problems have constraints. You want to minimize cost but your budget is limited. You want to minimize error but your model complexity is bounded.
-
-```mermaid
-graph LR
-    subgraph "Unconstrained"
-        U1["Loss function"] --> U2["Free minimum: lowest point of the loss surface"]
-    end
-    subgraph "Constrained"
-        C1["Loss function"] --> C2["Constrained minimum: lowest point within the feasible region"]
-        C3["Constraint boundary limits the search space"]
-    end
-```
-
-### Lagrange multipliers
-
-The method of Lagrange multipliers converts a constrained problem into an unconstrained one.
-
-Problem: minimize f(x) subject to g(x) = 0.
-
-Solution: introduce a new variable (the Lagrange multiplier lambda) and solve the unconstrained problem:
+等式制約 `g(x) = 0` では、Lagrangian を作ります。
 
 ```
 L(x, lambda) = f(x) + lambda * g(x)
 ```
 
-At the solution, the gradient of L is zero:
+解では `L` の勾配がゼロになります。幾何学的には、目的関数の勾配と制約の勾配が平行になります。
 
-```
-dL/dx = df/dx + lambda * dg/dx = 0
-dL/dlambda = g(x) = 0
-```
-
-Geometric intuition: at the constrained minimum, the gradient of f must be parallel to the gradient of the constraint g. If they were not parallel, you could move along the constraint surface and reduce f further.
-
-```mermaid
-graph LR
-    A["Contours of f(x,y): concentric ellipses"] --- S["Solution point"]
-    B["Constraint curve g(x,y) = 0"] --- S
-    S --- C["At the solution, gradient of f is parallel to gradient of g"]
-```
-
-Example: minimize f(x,y) = x^2 + y^2 subject to x + y = 1.
-
-```
-L = x^2 + y^2 + lambda(x + y - 1)
-
-dL/dx = 2x + lambda = 0  =>  x = -lambda/2
-dL/dy = 2y + lambda = 0  =>  y = -lambda/2
-dL/dlambda = x + y - 1 = 0
-
-From first two: x = y
-Substituting: 2x = 1, so x = y = 0.5, lambda = -1
-```
-
-The closest point on the line x + y = 1 to the origin is (0.5, 0.5).
-
-### KKT conditions
-
-The Karush-Kuhn-Tucker conditions extend Lagrange multipliers to inequality constraints.
-
-Problem: minimize f(x) subject to g_i(x) <= 0 for i = 1, ..., m.
-
-The KKT conditions (necessary for optimality):
+不等式制約 `g_i(x) <= 0` では KKT conditions を使います。
 
 ```
 1. Stationarity:    df/dx + sum(lambda_i * dg_i/dx) = 0
@@ -270,122 +108,23 @@ The KKT conditions (necessary for optimality):
 4. Complementary slackness:  lambda_i * g_i(x) = 0  for all i
 ```
 
-Complementary slackness is the key insight: either the constraint is active (g_i = 0, the solution sits on the boundary) or the multiplier is zero (the constraint does not matter). A constraint that does not affect the solution has lambda = 0.
+相補性条件は、制約が効いて境界にいるか、制約の乗数がゼロで解に影響していないかのどちらかだ、という意味です。SVM では、乗数が正のデータ点だけが support vectors になります。
 
-KKT conditions are central to SVMs. The support vectors are the data points where the constraint is active (lambda > 0). All other data points have lambda = 0 and do not affect the decision boundary.
+### 正則化は制約付き最適化
 
-### Regularization as constrained optimization
+L2 正則化は `||w||^2 <= t` という球の中で損失を最小化する問題と等価です。L1 正則化は `||w||_1 <= t` というひし形の制約に対応します。L1 の制約領域には軸に沿った角があるため、解が角に当たりやすく、一部の重みがちょうどゼロになります。これが LASSO のスパース性です。
 
-L1 and L2 regularization are not arbitrary tricks. They are constrained optimization problems in disguise.
+### 双対性と SVM
 
-**L2 regularization (Ridge):**
+制約付き最適化には primal と dual があります。凸問題では、条件が満たされると primal と dual の最適値が一致します。SVM は dual で解くとデータ点同士の内積だけに依存する形になり、`x_i^T x_j` を `K(x_i, x_j)` に置き換えることで kernel trick が使えます。
 
-```
-minimize  Loss(w)  subject to  ||w||^2 <= t
+### 非凸な深層学習が動く理由
 
-Equivalent unconstrained form:
-minimize  Loss(w) + lambda * ||w||^2
-```
+ニューラルネットワークの損失は非凸ですが、高次元では悪い局所最小より鞍点のほうが圧倒的に多くなります。SGD のノイズは鞍点から抜ける助けになります。さらに過剰パラメータ化されたネットワークでは損失地形が滑らかで、低い谷がつながりやすくなります。SGD の確率的ノイズは鋭い最小より平坦な最小を選びやすく、汎化にも寄与します。
 
-The constraint ||w||^2 <= t defines a ball (circle in 2D, sphere in 3D). The solution is where the loss contours first touch this ball.
-
-**L1 regularization (LASSO):**
-
-```
-minimize  Loss(w)  subject to  ||w||_1 <= t
-
-Equivalent unconstrained form:
-minimize  Loss(w) + lambda * ||w||_1
-```
-
-The constraint ||w||_1 <= t defines a diamond (rotated square in 2D).
-
-| Property | L2 constraint (circle) | L1 constraint (diamond) |
-|---|---|---|
-| **Constraint shape** | Circle (sphere in higher dims) | Diamond (rotated square in 2D) |
-| **Where loss contour touches** | Smooth boundary — any point on the circle | Corner — aligned with an axis |
-| **Solution behavior** | Weights are small but nonzero | Some weights are exactly zero (sparse) |
-| **Result** | Weight shrinkage | Feature selection |
-
-This explains why L1 produces sparse models (feature selection) while L2 only shrinks weights. The diamond has corners aligned with axes. Loss contours are more likely to touch a corner, setting one or more weights exactly to zero.
-
-### Duality
-
-Every constrained optimization problem (the primal) has a companion problem (the dual). For convex problems, the primal and dual have the same optimal value. This is strong duality.
-
-The Lagrangian dual function:
-
-```
-Primal: minimize f(x) subject to g(x) <= 0
-Lagrangian: L(x, lambda) = f(x) + lambda * g(x)
-Dual function: d(lambda) = min_x L(x, lambda)
-Dual problem: maximize d(lambda) subject to lambda >= 0
-```
-
-Why duality matters:
-- The dual problem is sometimes easier to solve than the primal
-- SVMs are solved in their dual form, where the problem depends on dot products between data points (enabling the kernel trick)
-- The dual provides a lower bound on the primal optimum, useful for checking solution quality
-
-For SVMs specifically:
-
-```
-Primal: find w, b that maximize the margin 2/||w|| subject to
-        y_i(w^T x_i + b) >= 1 for all i
-
-Dual:   maximize sum(alpha_i) - 0.5 * sum_ij(alpha_i * alpha_j * y_i * y_j * x_i^T x_j)
-        subject to alpha_i >= 0 and sum(alpha_i * y_i) = 0
-
-The dual only involves dot products x_i^T x_j.
-Replace x_i^T x_j with K(x_i, x_j) to get the kernel trick.
-```
-
-### Why deep learning works despite non-convexity
-
-Neural network loss functions are wildly non-convex. By every classical measure, optimizing them should fail. Yet stochastic gradient descent finds good solutions reliably. Several factors explain this.
-
-**Most local minima are good enough.** In high-dimensional spaces, random critical points (where the gradient is zero) are overwhelmingly saddle points, not local minima. The few local minima that exist tend to have loss values close to the global minimum. Getting trapped in a terrible local minimum is extremely unlikely when the parameter space has millions of dimensions.
-
-**Saddle points, not local minima, are the real obstacle.** In a function with n parameters, a saddle point has a mix of positive and negative curvature directions. For a random critical point in high dimensions, the probability of all n eigenvalues being positive (local minimum) is roughly 2^(-n). Almost all critical points are saddle points. SGD's noise helps escape them.
-
-**Overparameterization smooths the landscape.** Networks with more parameters than training examples have smoother, more connected loss surfaces. Wider networks have fewer bad local minima. This is counterintuitive but empirically consistent.
-
-**Loss landscape structure:**
-
-| Property | Low-dimensional space | High-dimensional space |
-|---|---|---|
-| **Landscape** | Many isolated peaks and valleys | Smoothly connected valleys |
-| **Minima** | Many isolated local minima | Few bad local minima; most are near-optimal |
-| **Navigation** | Hard to find global minimum | Many paths lead to good solutions |
-| **Critical points** | Mix of local minima and saddle points | Overwhelmingly saddle points, not local minima |
-
-**Stochastic noise acts as implicit regularization.** Mini-batch SGD adds noise that prevents settling into sharp minima. Sharp minima overfit; flat minima generalize. The noise biases optimization toward flat regions of the loss landscape.
-
-### Second-order methods in practice
-
-Pure Newton's method is impractical for large models. Several approximations make second-order information usable.
-
-**L-BFGS (Limited-memory BFGS):** Approximates the inverse Hessian using the last m gradient differences. Requires O(mn) memory instead of O(n^2). Works well for problems with up to ~10,000 parameters. Used in classical ML (logistic regression, CRFs) but not deep learning.
-
-**Natural gradient:** Uses the Fisher information matrix (expected Hessian of the log-likelihood) instead of the standard Hessian. This accounts for the geometry of probability distributions. K-FAC (Kronecker-Factored Approximate Curvature) approximates the Fisher matrix as a Kronecker product, making it practical for neural networks.
-
-**Hessian-free optimization:** Uses conjugate gradient to solve Hx = g without ever forming H. Only requires Hessian-vector products, which can be computed in O(n) time via automatic differentiation.
-
-**Diagonal approximations:** Adam's second moment is a diagonal approximation of the Hessian's diagonal. AdaHessian extends this by using actual Hessian diagonal elements via Hutchinson's estimator.
-
-| Method | Memory | Per-step cost | When to use |
-|--------|--------|--------------|-------------|
-| Gradient descent | O(n) | O(n) | Baseline, large models |
-| Newton's method | O(n^2) | O(n^3) | Small convex problems |
-| L-BFGS | O(mn) | O(mn) | Medium convex problems |
-| Adam | O(n) | O(n) | Deep learning default |
-| K-FAC | O(n) | O(n) per layer | Research, large-batch training |
-
-## Build It
+## 実装
 
 ### Step 1: Convexity checker
-
-Build a function that tests convexity empirically by sampling points and checking the definition.
 
 ```python
 import random
@@ -406,8 +145,6 @@ def check_convexity(f, dim, bounds=(-5, 5), samples=1000):
 ```
 
 ### Step 2: Newton's method for 2D
-
-Implement Newton's method using an explicit Hessian. Compare convergence speed against gradient descent.
 
 ```python
 def newtons_method(f, grad_f, hessian_f, x0, steps=50, tol=1e-12):
@@ -436,8 +173,6 @@ def newtons_method(f, grad_f, hessian_f, x0, steps=50, tol=1e-12):
 
 ### Step 3: Lagrange multiplier solver
 
-Solve constrained optimization using gradient descent on the Lagrangian.
-
 ```python
 def lagrange_solve(f_grad, g_val, g_grad, x0, lr=0.01,
                    lr_lambda=0.01, steps=5000):
@@ -457,95 +192,36 @@ def lagrange_solve(f_grad, g_val, g_grad, x0, lr=0.01,
     return history
 ```
 
-### Step 4: Compare first-order vs second-order
-
-Run gradient descent and Newton's method on the same quadratic function. Count the steps to convergence.
-
-```python
-def quadratic(x):
-    return 5 * x[0] ** 2 + x[1] ** 2
-
-def quadratic_grad(x):
-    return [10 * x[0], 2 * x[1]]
-
-def quadratic_hessian(x):
-    return [[10, 0], [0, 2]]
-```
-
-Newton's method will converge in 1 step (it is exact for quadratics). Gradient descent will take hundreds of steps because the eigenvalues of the Hessian differ by a factor of 5, creating an elongated valley.
-
 ## Use It
 
-Convexity analysis applies directly when choosing ML models and solvers.
+凸問題では `liblinear`、CVXPY、`scipy.optimize.minimize(method='L-BFGS-B')` などの専用ソルバを使います。非凸問題では SGD や Adam を使い、初期値やノイズに依存することを受け入れます。大域最小を探すことより、汎化する良い解を安定して見つけることが重要です。
 
-For convex problems (logistic regression, SVMs, LASSO):
-- Use dedicated solvers (liblinear, CVXPY, scipy.optimize.minimize with method='L-BFGS-B')
-- Expect a unique global solution
-- Second-order methods are practical and fast
+## 演習
 
-For non-convex problems (neural networks):
-- Use first-order methods (SGD, Adam)
-- Accept that the solution depends on initialization and randomness
-- Use overparameterization, noise, and learning rate schedules as implicit regularization
-- Do not waste time searching for the global minimum. A good local minimum is sufficient.
+1. `x^4`, `sin(x)`, `x^2 + y^2`, `x*y`, `max(x, 0)` を凸性チェッカーで調べ、結果を説明してください。
+2. `50*x^2 + y^2` で Newton's method と勾配降下法の収束ステップ数を比較してください。
+3. `x + 2y = 4` の制約下で `(x-3)^2 + (y-3)^2` を最小化し、勾配が制約勾配と平行になることを確認してください。
+4. L1 制約 `|x| + |y| <= 1` で最小化し、解にゼロ座標が現れることを示してください。
+5. Rosenbrock 関数の Hessian 固有値を点 `(1,1)` と `(-1,1)` で比較してください。
 
-```python
-from scipy.optimize import minimize
+## 重要用語
 
-result = minimize(
-    fun=lambda w: sum((y - X @ w) ** 2) + 0.1 * sum(w ** 2),
-    x0=np.zeros(d),
-    method='L-BFGS-B',
-    jac=lambda w: -2 * X.T @ (y - X @ w) + 0.2 * w,
-)
-```
+| 用語 | 意味 |
+|------|------|
+| 凸集合 | 集合内の任意の二点を結ぶ線分が集合内に残る集合 |
+| 凸関数 | グラフ上の二点を結ぶ線がグラフの上側にある関数 |
+| 局所最小 | 近くの点より低い点。凸関数では大域最小でもある |
+| Hessian matrix | 二階偏微分の行列。曲率情報を持つ |
+| Positive semidefinite | 固有値がすべて非負の行列 |
+| Newton's method | 逆 Hessian を使う二階最適化法 |
+| Lagrange multiplier | 制約付き問題を扱うために導入する変数 |
+| KKT conditions | 不等式制約つき最適化の必要条件 |
+| Duality | 制約付き問題に対応する双対問題の関係 |
+| Saddle point | 勾配はゼロだが方向によって最小にも最大にも見える点 |
 
-For SVMs, the dual formulation lets you use the kernel trick:
+## 参考資料
 
-```python
-from sklearn.svm import SVC
-
-svm = SVC(kernel='rbf', C=1.0)
-svm.fit(X_train, y_train)
-print(f"Support vectors: {svm.n_support_}")
-```
-
-## Exercises
-
-1. **Convexity gallery.** Test these functions for convexity using the checker: f(x) = x^4, f(x) = sin(x), f(x,y) = x^2 + y^2, f(x,y) = x*y, f(x) = max(x, 0). Explain why each result makes sense.
-
-2. **Newton vs gradient descent race.** Run both methods on f(x,y) = 50*x^2 + y^2 from the starting point (10, 10). How many steps does each need to reach loss < 1e-10? What happens to gradient descent when the condition number (ratio of largest to smallest Hessian eigenvalue) increases?
-
-3. **Lagrange multiplier geometry.** Minimize f(x,y) = (x-3)^2 + (y-3)^2 subject to x + 2y = 4. Verify the solution by checking that the gradient of f is parallel to the gradient of g at the solution.
-
-4. **Regularization constraint.** Implement L1-constrained optimization: minimize (x-3)^2 + (y-2)^2 subject to |x| + |y| <= 1. Show that the solution has one coordinate equal to zero (sparsity from the diamond constraint).
-
-5. **Hessian eigenvalue analysis.** Compute the Hessian of the Rosenbrock function at (1,1) and at (-1,1). Compute eigenvalues at both points. What do the eigenvalues tell you about the curvature at the minimum versus far from it?
-
-## Key Terms
-
-| Term | What it means |
-|------|---------------|
-| Convex set | A set where the line segment between any two points in the set stays inside the set |
-| Convex function | A function where the line between any two points on its graph lies above or on the graph. Equivalently, Hessian is positive semidefinite everywhere |
-| Local minimum | A point lower than all nearby points. For convex functions, every local minimum is the global minimum |
-| Global minimum | The lowest point of a function over its entire domain |
-| Hessian matrix | The matrix of all second partial derivatives. Encodes curvature information |
-| Positive semidefinite | A matrix whose eigenvalues are all non-negative. The multidimensional analogue of "second derivative >= 0" |
-| Condition number | Ratio of largest to smallest eigenvalue of the Hessian. High condition number means elongated valleys and slow gradient descent |
-| Newton's method | Second-order optimizer that uses the inverse Hessian to determine step direction and size. Quadratic convergence near the minimum |
-| Lagrange multiplier | A variable introduced to convert a constrained optimization problem into an unconstrained one |
-| KKT conditions | Necessary conditions for optimality with inequality constraints. Generalize Lagrange multipliers |
-| Complementary slackness | At the solution, either a constraint is active or its multiplier is zero. Never both nonzero |
-| Duality | Every constrained problem has a companion dual problem. For convex problems, both have the same optimal value |
-| Strong duality | Primal and dual optimal values are equal. Holds for convex problems satisfying Slater's condition |
-| L-BFGS | Approximate second-order method that stores the last m gradient differences instead of the full Hessian |
-| Saddle point | A point where the gradient is zero but it is a minimum in some directions and a maximum in others |
-| Overparameterization | Using more parameters than training examples. Smooths the loss landscape and reduces bad local minima |
-
-## Further Reading
-
-- [Boyd & Vandenberghe: Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/) - the standard textbook, freely available online
-- [Bottou, Curtis, Nocedal: Optimization Methods for Large-Scale Machine Learning (2018)](https://arxiv.org/abs/1606.04838) - bridges convex optimization theory and deep learning practice
-- [Choromanska et al.: The Loss Surfaces of Multilayer Networks (2015)](https://arxiv.org/abs/1412.0233) - why non-convex neural network landscapes are not as bad as they seem
-- [Nocedal & Wright: Numerical Optimization](https://link.springer.com/book/10.1007/978-0-387-40065-5) - comprehensive reference for Newton's method, L-BFGS, and constrained optimization
+- [Boyd & Vandenberghe: Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/) - 凸最適化の標準教科書
+- [Bottou, Curtis, Nocedal: Optimization Methods for Large-Scale Machine Learning (2018)](https://arxiv.org/abs/1606.04838) - 大規模 ML と最適化理論の橋渡し
+- [Choromanska et al.: The Loss Surfaces of Multilayer Networks (2015)](https://arxiv.org/abs/1412.0233) - ニューラルネットワーク損失地形の分析
+- [Nocedal & Wright: Numerical Optimization](https://link.springer.com/book/10.1007/978-0-387-40065-5) - Newton's method、L-BFGS、制約付き最適化の総合参考書

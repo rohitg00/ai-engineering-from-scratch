@@ -1,4 +1,4 @@
-"""Tests for PlanExecuteAgent: linear, replan, replan exhaustion, step budget, diffs."""
+"""PlanExecuteAgent の tests: linear、replan、replan exhaustion、step budget、diff。"""
 
 from __future__ import annotations
 
@@ -54,11 +54,11 @@ class TestReplan(unittest.TestCase):
                 mode = args.get("mode")
                 if mode == "v1":
                     calls["transform_v1"] += 1
-                    raise ToolFailure("transform v1 down")
+                    raise ToolFailure("transform v1 が down")
                 if mode == "v2":
                     calls["transform_v2"] += 1
                     return "ok"
-                raise ToolFailure("transform unknown mode")
+                raise ToolFailure("未知の transform mode")
             return f"ok:{tool}"
 
         agent = PlanExecuteAgent(
@@ -75,7 +75,7 @@ class TestReplan(unittest.TestCase):
     def test_replan_diff_event_emitted(self) -> None:
         def executor(tool, args):
             if tool == "transform" and args.get("mode") == "v1":
-                raise ToolFailure("transform v1 boom")
+                raise ToolFailure("transform v1 が失敗")
             return "ok"
 
         agent = PlanExecuteAgent(
@@ -95,7 +95,7 @@ class TestReplan(unittest.TestCase):
     def test_replan_exhaustion_returns_failed(self) -> None:
         def always_bad(tool, args):
             if tool == "transform":
-                raise ToolFailure("nope")
+                raise ToolFailure("失敗")
             return "ok"
 
         def planner(g, h, e):

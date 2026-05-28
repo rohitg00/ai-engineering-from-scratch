@@ -1,38 +1,38 @@
 ---
 name: case-study-mapper
-description: Map a proposed multi-agent system design to the closest 2026 production reference (Anthropic Research, MetaGPT/ChatDev, or OpenClaw/Moltbook). Surface known trade-offs, recommended framework, and the specific design decisions already tested in production.
+description: 提案された multi-agent system design を、最も近い 2026 production reference（Anthropic Research、MetaGPT/ChatDev、OpenClaw/Moltbook）に map する。既知の trade-offs、recommended framework、本番で検証済みの specific design decisions を示す。
 version: 1.0.0
 phase: 16
 lesson: 25
 tags: [multi-agent, case-studies, production, framework-selection, reference-architectures]
 ---
 
-Given a proposed multi-agent system design, pick the closest canonical 2026 case study and adapt.
+提案された multi-agent system design が与えられたら、最も近い canonical 2026 case study を選び、適応する。
 
-Produce:
+作成するもの:
 
-1. **Design fingerprint.** Task type (research / engineering / population / automation), agent count, verification requirement, runtime duration, role distinctness, user-facing network exposure.
-2. **Closest case study.**
-   - **Anthropic Research** if: research or knowledge-retrieval task, verification mandatory, multi-hour runs, agents differ primarily by context and scope (fresh-context subagents win).
-   - **MetaGPT / ChatDev** if: engineering or structured workflow, roles are clearly distinguishable (planner / coder / reviewer / tester), handoff artifacts are well-typed.
-   - **OpenClaw / Moltbook** if: population-scale, user-facing agent network, prompt-injection is a meaningful threat, emergent economy matters.
-3. **Patterns to copy.** The specific design decisions from the chosen case study that apply: fresh-context subagents, rainbow deploy, communicative dehallucination, DAG routing, unwritable verifier, substrate-level security.
-4. **Framework recommendation.** LangGraph, CrewAI, AG2, Microsoft Agent Framework, OpenAI Agents SDK, Google ADK, Anthropic Claude Agent SDK, or custom. Default to the case study's typical framework; note if a better fit exists for the specific design.
-5. **Anti-patterns from the case.** Things the reference case found NOT to work. Avoid in the new design.
-6. **Cost projection.** Expected token multiplier (Anthropic Research: ~15x; MetaGPT: ~5x; OpenClaw: depends on network effects). Expected wall-clock and dollar cost range.
-7. **Evaluation approach.** Which benchmark (MARBLE, SWE-bench Pro, internal) is relevant; what delta over the case-study baseline is reasonable to target.
+1. **Design fingerprint。** Task type（research / engineering / population / automation）、agent count、verification requirement、runtime duration、role distinctness、user-facing network exposure。
+2. **Closest case study。**
+   - **Anthropic Research**: research または knowledge-retrieval task、verification mandatory、multi-hour runs、agents が主に context と scope で異なる（fresh-context subagents が勝つ）場合。
+   - **MetaGPT / ChatDev**: engineering または structured workflow、roles が明確に区別できる（planner / coder / reviewer / tester）、handoff artifacts が well-typed な場合。
+   - **OpenClaw / Moltbook**: population-scale、user-facing agent network、prompt-injection が意味のある threat、emergent economy が重要な場合。
+3. **Patterns to copy。** 選んだ case study から適用できる specific design decisions: fresh-context subagents、rainbow deploy、communicative dehallucination、DAG routing、unwritable verifier、substrate-level security。
+4. **Framework recommendation。** LangGraph、CrewAI、AG2、Microsoft Agent Framework、OpenAI Agents SDK、Google ADK、Anthropic Claude Agent SDK、または custom。case study の typical framework を default とし、specific design により良い fit があれば note する。
+5. **Anti-patterns from the case。** reference case でうまくいかなかったこと。new design では避ける。
+6. **Cost projection。** expected token multiplier（Anthropic Research: ~15x、MetaGPT: ~5x、OpenClaw: network effects に依存）。expected wall-clock and dollar cost range。
+7. **Evaluation approach。** 関連する benchmark（MARBLE、SWE-bench Pro、internal）。case-study baseline に対して目標とする delta はどの程度が妥当か。
 
 Hard rejects:
 
-- Designs that ignore verification when the task has correctness requirements. Every case study pays the verification tax.
-- Designs that claim a new substrate without acknowledging prompt-injection as an attack surface. OpenClaw/Moltbook case shows this is a production concern, not hypothetical.
-- "Revolutionary" claims that do not map to any case study. Multi-agent has been in production since 2024; novel claims need explicit comparison.
-- Designs that skip MCP or A2A adoption without justification. Protocol support is table stakes.
+- correctness requirements がある task で verification を無視する design。すべての case study は verification tax を払っている。
+- attack surface として prompt-injection を認めずに new substrate を主張する design。OpenClaw/Moltbook case は、これが hypothetical ではなく production concern であることを示している。
+- どの case study にも map しない「revolutionary」claim。multi-agent は 2024 年から production に入っているため、novel claims には explicit comparison が必要。
+- justification なしに MCP または A2A adoption を省く design。protocol support は table stakes。
 
 Refusal rules:
 
-- If the design has no clear task type, recommend scoping the task before picking a case study. "Multi-agent for everything" is not a design.
-- If the design claims production readiness but no failure-mode audit, recommend a MAST-style audit (Lesson 23) before reference mapping.
-- If the design is purely experimental / research, note which aspects would need hardening before adopting any case study's production patterns.
+- design に clear task type がない場合、case study を選ぶ前に task scoping を推奨する。「Multi-agent for everything」は design ではない。
+- design が production readiness を主張しているが failure-mode audit がない場合、reference mapping の前に MAST-style audit（Lesson 23）を推奨する。
+- design が purely experimental / research なら、case study の production patterns を採用する前に hardening が必要な点を note する。
 
-Output: a two-page brief. Start with a one-sentence summary ("Closest case study: MetaGPT / ChatDev. Adopt role-SOP decomposition, communicative dehallucination, and structured handoff artifacts; use CrewAI or custom."), then the seven sections above. End with a 90-day adaptation plan: what to copy from the reference, what to customize, and what to validate against benchmarks.
+Output: 2 ページの brief。1 文の summary（「Closest case study: MetaGPT / ChatDev. Adopt role-SOP decomposition, communicative dehallucination, and structured handoff artifacts; use CrewAI or custom.」）から始め、その後に上記 7 sections を続ける。最後に 90-day adaptation plan（reference から copy するもの、customize するもの、benchmark で validate するもの）を書く。

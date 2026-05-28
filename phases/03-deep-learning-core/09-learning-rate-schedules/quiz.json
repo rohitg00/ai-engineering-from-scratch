@@ -1,37 +1,37 @@
 [
   {
-    "question": "Why is a constant learning rate usually suboptimal for training neural networks?",
-    "options": ["It uses too much memory", "It's either too high for late training (causes oscillation) or too low for early training (wastes compute)", "Constant learning rates cause overfitting", "They only work with SGD"],
+    "question": "ニューラルネットワークの学習で constant learning rate がたいてい最適ではないのはなぜですか？",
+    "options": ["memory を使いすぎるから", "学習後半には高すぎて oscillation を起こすか、学習序盤には低すぎて compute を無駄にするから", "Constant learning rates は過学習を引き起こすから", "SGD でしか動かないから"],
     "correct": 1,
-    "explanation": "The optimal step size changes during training. Early on, large steps cover ground quickly. Late in training, small steps are needed to settle into a minimum. A constant rate can't serve both needs.",
+    "explanation": "最適な step size は学習中に変化します。序盤は大きな steps で素早く進み、後半は minimum に落ち着くために小さな steps が必要です。constant rate では両方の要求を満たせません。",
     "stage": "pre"
   },
   {
-    "question": "What is the purpose of learning rate warmup?",
-    "options": ["To prevent overfitting", "To let adaptive optimizer statistics (momentum, variance) stabilize before taking large steps", "To increase the batch size gradually", "To initialize weights properly"],
+    "question": "learning rate warmup の目的は何ですか？",
+    "options": ["過学習を防ぐこと", "大きな steps を取る前に adaptive optimizer statistics（momentum、variance）を安定させること", "batch size を徐々に増やすこと", "重みを適切に初期化すること"],
     "correct": 1,
-    "explanation": "Adam's moment estimates are initialized to zero. Early gradient updates are based on unreliable statistics. Warmup starts with a tiny LR and ramps up, giving Adam time to accumulate meaningful estimates.",
+    "explanation": "Adam の moment estimates はゼロで初期化されます。初期の gradient updates は信頼できない statistics に基づきます。Warmup は小さな LR から始めて徐々に上げ、Adam が意味のある estimates を蓄積する時間を与えます。",
     "stage": "pre"
   },
   {
-    "question": "What learning rate schedule do Llama 3, GPT-3, and most modern LLMs use?",
-    "options": ["Constant learning rate", "Step decay every 30 epochs", "Linear warmup followed by cosine decay", "Exponential decay"],
+    "question": "Llama 3、GPT-3、そして多くの現代的な LLMs はどの learning rate schedule を使っていますか？",
+    "options": ["Constant learning rate", "30 epochs ごとの step decay", "Linear warmup followed by cosine decay", "Exponential decay"],
     "correct": 2,
-    "explanation": "Linear warmup + cosine decay is the standard for transformer training. Llama 3 used 2000 warmup steps with cosine decay from 3e-4 to 3e-5. This schedule requires no milestone tuning.",
+    "explanation": "Linear warmup + cosine decay は transformer training の標準です。Llama 3 は 2000 warmup steps を使い、3e-4 から 3e-5 まで cosine decay しました。この schedule は milestone tuning を必要としません。",
     "stage": "post"
   },
   {
-    "question": "What makes the 1cycle policy different from other schedules?",
-    "options": ["It uses a constant learning rate", "It ramps the learning rate UP in the first half of training, then back down -- the high LR phase acts as regularization", "It only works with SGD", "It requires no hyperparameter tuning"],
+    "question": "1cycle policy は他の schedules と何が違いますか？",
+    "options": ["constant learning rate を使う", "学習の前半で learning rate を上げ、その後下げる。高い LR の期間が正則化として働く", "SGD でしか動かない", "hyperparameter tuning が不要である"],
     "correct": 1,
-    "explanation": "Leslie Smith's 1cycle ramps LR from low to high (first half) then high to very low (second half). The high-LR phase helps the model explore more of the loss landscape before settling into the best basin.",
+    "explanation": "Leslie Smith の 1cycle は、前半で LR を低い値から高い値へ ramp し、後半で高い値から非常に低い値へ下げます。高 LR の期間は、best basin に落ち着く前にモデルが loss landscape をより広く探索する助けになります。",
     "stage": "post"
   },
   {
-    "question": "If training loss suddenly spikes and diverges, what is the most likely learning rate issue?",
-    "options": ["Learning rate is too low", "Learning rate is too high, causing the optimizer to overshoot the minimum", "The warmup period is too long", "The schedule decays too slowly"],
+    "question": "training loss が突然 spike して発散する場合、最も可能性が高い learning rate の問題は何ですか？",
+    "options": ["learning rate が低すぎる", "learning rate が高すぎて、optimizer が minimum を overshoot している", "warmup period が長すぎる", "schedule の decay が遅すぎる"],
     "correct": 1,
-    "explanation": "A learning rate that's too high causes the optimizer to take steps larger than the loss basin, overshooting the minimum and causing the loss to increase. This manifests as sudden divergence.",
+    "explanation": "learning rate が高すぎると、optimizer は loss basin より大きい step を取り、minimum を飛び越えて loss を増加させます。これは突然の divergence として現れます。",
     "stage": "post"
   }
 ]

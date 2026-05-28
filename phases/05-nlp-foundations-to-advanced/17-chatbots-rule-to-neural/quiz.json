@@ -1,102 +1,102 @@
 {
   "lesson": "17-chatbots-rule-to-neural",
-  "title": "Chatbots — Rule-Based to Neural to LLM Agents",
+  "title": "チャットボット — ルールベースからニューラル、LLMエージェントへ",
   "questions": [
     {
       "stage": "pre",
-      "question": "What does a slot-filling state machine do in a rule-based chatbot?",
+      "question": "ルールベースのチャットボットで、スロットフィリング状態機械は何をしますか？",
       "options": [
-        "Detects sarcasm",
-        "Picks the most fluent reply",
-        "Embeds the user message",
-        "Tracks which required parameters (date, destination, amount) are still missing and asks for them in sequence"
+        "皮肉を検出する",
+        "最も流暢な返信を選ぶ",
+        "ユーザーメッセージを埋め込む",
+        "必要なパラメータ（日付、目的地、金額）のうち未入力のものを追跡し、順番に尋ねる"
       ],
       "correct": 3,
-      "explanation": "Slot filling iteratively collects the structured parameters a task handler needs."
+      "explanation": "スロットフィリングは、タスクハンドラーが必要とする構造化パラメータを反復的に収集します。"
     },
     {
       "stage": "pre",
-      "question": "Why is retrieval-based chat resistant to hallucination?",
+      "question": "検索ベースのチャットがハルシネーションに強いのはなぜですか？",
       "options": [
-        "It uses embeddings",
-        "It rejects all queries",
-        "It returns a canned response from a curated set rather than generating new text",
-        "It uses BM25"
+        "埋め込みを使うから",
+        "すべてのクエリを拒否するから",
+        "新しいテキストを生成せず、精選された集合から定型応答を返すから",
+        "BM25を使うから"
       ],
       "correct": 2,
-      "explanation": "Retrieval surfaces pre-written answers; no generation means no fabricated content."
+      "explanation": "検索は事前に書かれた回答を提示します。生成しないため、捏造された内容も生まれません。"
     },
     {
       "stage": "check",
-      "question": "What defines an LLM agent loop versus a single-shot LLM call?",
+      "question": "単発のLLM呼び出しと比べて、LLMエージェントループを定義するものは何ですか？",
       "options": [
-        "Use of greedy decoding",
-        "Use of softmax",
-        "A controller that interleaves LLM calls with tool invocations until the model returns a final answer or the step budget is hit",
-        "Bigger context window"
+        "貪欲デコードを使うこと",
+        "softmaxを使うこと",
+        "モデルが最終回答を返すかステップ予算に達するまで、LLM呼び出しとツール呼び出しを交互に実行するコントローラー",
+        "より大きなコンテキストウィンドウ"
       ],
       "correct": 2,
-      "explanation": "Agents add a plan-act-observe loop with tool calls and a termination condition."
+      "explanation": "エージェントは、ツール呼び出しと終了条件を持つ plan-act-observe ループを追加します。"
     },
     {
       "stage": "check",
-      "question": "Why is hybrid routing (rules + retrieval + LLM agent) the 2026 production default?",
+      "question": "ハイブリッドルーティング（ルール + 検索 + LLMエージェント）が2026年の本番デフォルトなのはなぜですか？",
       "options": [
-        "It is cheaper to maintain",
-        "It removes the need for evaluation",
-        "No single architecture handles every request well; rules cover destructive actions, retrieval covers FAQ, agents handle ambiguous open-ended queries",
-        "It avoids embeddings"
+        "保守コストが低いから",
+        "評価が不要になるから",
+        "すべてのリクエストをうまく扱える単一アーキテクチャはない。ルールは破壊的操作、検索はFAQ、エージェントは曖昧で自由度の高い問い合わせを担当するから",
+        "埋め込みを避けられるから"
       ],
       "correct": 2,
-      "explanation": "Hybrid systems use deterministic rules for risky actions and reserve LLM agents for open-ended queries."
+      "explanation": "ハイブリッドシステムは、リスクの高い操作に決定的ルールを使い、自由度の高い問い合わせにLLMエージェントを使います。"
     },
     {
       "stage": "check",
-      "question": "What is prompt injection?",
+      "question": "プロンプトインジェクションとは何ですか？",
       "options": [
-        "A SQL injection variant only",
-        "A type of tokenizer attack",
-        "Injecting tokens into embeddings",
-        "User-supplied (direct) or document-supplied (indirect) text that tries to override the system prompt or hijack the agent's behavior"
+        "SQLインジェクションの一種だけを指す",
+        "tokenizer攻撃の一種",
+        "埋め込みにトークンを注入すること",
+        "システムプロンプトを上書きしたりエージェントの振る舞いを乗っ取ったりしようとする、ユーザー由来（直接）または文書由来（間接）のテキスト"
       ],
       "correct": 3,
-      "explanation": "Prompt injection rewrites the agent's behavior via untrusted text in user input or tool outputs."
+      "explanation": "プロンプトインジェクションは、ユーザー入力やツール出力に含まれる信頼できないテキストを通じて、エージェントの振る舞いを書き換えます。"
     },
     {
       "stage": "post",
-      "question": "Which OWASP Top 10 (LLM Apps 2025) risk is ranked LLM01?",
+      "question": "OWASP Top 10（LLM Apps 2025）でLLM01にランクされているリスクはどれですか？",
       "options": [
-        "Prompt injection (direct and indirect)",
-        "Insecure deserialization",
-        "Broken access control",
-        "SQL injection"
+        "プロンプトインジェクション（直接および間接）",
+        "安全でないデシリアライゼーション",
+        "アクセス制御の不備",
+        "SQLインジェクション"
       ],
       "correct": 0,
-      "explanation": "Prompt injection is LLM01 in the OWASP LLM Apps Top 10 (2025)."
+      "explanation": "OWASP LLM Apps Top 10（2025）では、プロンプトインジェクションがLLM01です。"
     },
     {
       "stage": "post",
-      "question": "What mitigation pattern reduces indirect prompt injection by separating planning from execution?",
+      "question": "計画と実行を分離して間接プロンプトインジェクションを減らす緩和パターンはどれですか？",
       "options": [
-        "Shorter context",
-        "Plan-Verify-Execute: the agent plans first, verifies each action against the plan, then executes — preventing tool outputs from injecting new unplanned actions",
-        "Bigger model",
-        "Lower temperature"
+        "より短いコンテキスト",
+        "Plan-Verify-Execute: エージェントがまず計画し、各アクションを計画に照らして検証してから実行する。これにより、ツール出力が予定外の新しいアクションを注入するのを防ぐ",
+        "より大きなモデル",
+        "より低いtemperature"
       ],
       "correct": 1,
-      "explanation": "PVE checks each step against the agreed plan, so injected instructions from tool outputs are rejected."
+      "explanation": "PVEは各ステップを合意済みの計画と照合するため、ツール出力から注入された指示は拒否されます。"
     },
     {
       "stage": "post",
-      "question": "Why must destructive actions (payments, deletions) route through a structured flow even in an LLM-agent system?",
+      "question": "LLMエージェントシステムでも、破壊的操作（支払い、削除）を構造化フローに通す必要があるのはなぜですか？",
       "options": [
-        "LLMs are slow",
-        "Beam search is unsafe",
-        "Tools cannot be called",
-        "Confident fabrication, prompt injection, and scope creep mean the LLM cannot be the sole authority for irreversible side effects"
+        "LLMが遅いから",
+        "ビームサーチが安全でないから",
+        "ツールを呼び出せないから",
+        "自信ありげな捏造、プロンプトインジェクション、スコープクリープがあるため、不可逆な副作用についてLLMを唯一の権限にできないから"
       ],
       "correct": 3,
-      "explanation": "Hallucination and injection make irreversible actions through pure LLM agents unsafe; require deterministic confirmation flows."
+      "explanation": "ハルシネーションとインジェクションにより、純粋なLLMエージェント経由の不可逆操作は安全ではありません。決定的な確認フローが必要です。"
     }
   ]
 }

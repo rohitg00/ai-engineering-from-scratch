@@ -1,16 +1,14 @@
 # Capstone 19/03 — Realtime Voice Assistant (TypeScript)
 
-Multi-file TypeScript web-client harness for the streaming voice pipeline
-described in `../docs/en.md`. Offline state-machine simulation plus a live
-WebSocket server backed by the `ws` package.
+`../docs/en.md` で説明した streaming voice pipeline の multi-file TypeScript web-client harness です。offline state-machine simulation と、`ws` package を使う live WebSocket server を含みます。
 
 ## Layout
 
 ```text
 src/
-  index.ts        entry point; runs two offline sessions, probes the live ws, exits 0
-  server.ts       hono /healthz + ws upgrade via WebSocketServer
-  orchestrator.ts IDLE -> LISTENING -> WAITING -> THINKING -> SPEAKING with barge-in
+  index.ts        entry point。2つの offline session を走らせ、live ws を probe して exit 0
+  server.ts       WebSocketServer 経由の hono /healthz + ws upgrade
+  orchestrator.ts barge-in 付き IDLE -> LISTENING -> WAITING -> THINKING -> SPEAKING
   vad.ts          turn-completion scorer + synthetic 20ms-frame generator
   protocol.ts     zod-validated frame envelope (event / summary)
   types.ts        AudioChunk, Metrics, SessionOptions, SessionSummary
@@ -24,12 +22,10 @@ tests/
 
 ```bash
 npm install
-npm start                # runs two offline sessions + ws self-probe, exits 0
-npm start -- --serve     # keep ws server up; ctrl-c to stop
-npm test                 # node --test runner via tsx
+npm start                # 2つの offline session + ws self-probe を実行し、exit 0
+npm start -- --serve     # ws server を維持。停止は ctrl-c
+npm test                 # tsx 経由の node --test runner
 npm run typecheck        # tsc --noEmit
 ```
 
-The non-interactive `npm start` path asserts the clean session reaches
-`first_audio_out`, the barge-in session registers at least one barge-in event,
-and the live WebSocket probe receives a `summary` frame before close.
+non-interactive `npm start` path は clean session が `first_audio_out` に到達し、barge-in session が少なくとも1つの barge-in event を登録し、live WebSocket probe が close 前に `summary` frame を受け取ることを assert します。

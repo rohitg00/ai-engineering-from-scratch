@@ -1,39 +1,39 @@
 # Speculative Decoding and EAGLE
 
-> A frontier LLM generating one token requires a full forward pass over billions of parameters. That forward pass is massively over-provisioned: most of the time a much smaller model can guess the next 3-5 tokens correctly, and the big model only needs to *verify* the guess. When the guess is right you got 5 tokens for the price of one. Speculative decoding (Leviathan et al. 2023) made this exact, and EAGLE-3 (2025) pushed acceptance rates to ~4.5 tokens per verify — a 4-5x speedup at matched output distribution.
+> 最先端の LLM が 1 トークンを生成するには、数十億個のパラメータ全体に対する完全な forward pass が必要です。この forward pass は大幅に過剰です。多くの場合、はるかに小さなモデルが次の 3-5 トークンを正しく推測でき、大きなモデルはその推測を *verify* するだけで済みます。推測が正しければ、1 回分のコストで 5 トークンを得られます。Speculative decoding (Leviathan et al. 2023) はこれを厳密な手法にし、EAGLE-3 (2025) は acceptance rate を verify 1 回あたり約 4.5 トークンまで押し上げ、出力分布を一致させたまま 4-5x の高速化を実現しました。
 
-**Type:** Build
-**Languages:** Python (with numpy)
-**Prerequisites:** Phase 10 Lesson 12 (Inference Optimization), Phase 10 Lesson 04 (Pre-training Mini-GPT)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python (with numpy)
+**前提条件:** Phase 10 Lesson 12 (Inference Optimization), Phase 10 Lesson 04 (Pre-training Mini-GPT)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-Decode throughput for a 70B-class model on H100 is typically 40-80 tokens/second. Each token requires a full forward pass reading all model weights from HBM. You cannot make the model smaller without changing its output. You cannot increase batch size beyond memory. You're stuck — unless you can let the model output more than one token per forward pass.
+H100 上の 70B クラスモデルの decode throughput は、通常 40-80 tokens/second です。各トークンは、HBM からモデル重み全体を読む完全な forward pass を必要とします。出力を変えずにモデルを小さくすることはできません。メモリを超えて batch size を増やすこともできません。行き詰まります。ただし、1 回の forward pass で複数トークンを出せるようにできれば話は別です。
 
-Autoregressive generation looks inherently serial: `x_{t+1} = sample(p(· | x_{1:t}))`. But there is a concurrency opportunity. If you had a cheap predictor that said "the next 4 tokens are probably [a, b, c, d]" you could verify all 5 positions in a **single forward pass of the big model** and accept the longest matching prefix.
+Autoregressive generation は本質的に逐次的に見えます: `x_{t+1} = sample(p(· | x_{1:t}))`。しかし、ここには並行化の余地があります。安価な予測器が「次の 4 トークンはおそらく [a, b, c, d] だ」と言えれば、**大きなモデルの 1 回の forward pass** で 5 位置すべてを verify し、一致する最長 prefix を accept できます。
 
-Leviathan, Kalai, Matias (2023, "Fast Inference from Transformers via Speculative Decoding") made this exact via a clever accept/reject rule that preserves the target model's sampling distribution. The same output distribution, 2-4× faster.
+Leviathan, Kalai, Matias (2023, "Fast Inference from Transformers via Speculative Decoding") は、target model の sampling distribution を保つ巧妙な accept/reject ルールによって、これを厳密に成立させました。同じ出力分布のまま、2-4× 高速になります。
 
-## The Concept
+## コンセプト
 
-### The Two-Model Setup
+### 2 モデル構成
 
-- **Target model** `M_p`: the big, slow, high-quality model you actually want samples from. Distribution: `p(x)`.
-- **Draft model** `M_q`: a small, fast, lower-quality model. Distribution: `q(x)`. 5-30× smaller.
+- **Target model** `M_p`: 実際にサンプルを取りたい、大きく遅く高品質なモデル。Distribution: `p(x)`。
+- **Draft model** `M_q`: 小さく高速で、品質は低めのモデル。Distribution: `q(x)`。5-30× 小さい。
 
-Per step:
+各ステップでは次を行います。
 
-1. Draft model proposes `K` tokens autoregressively: `x_1, x_2, ..., x_K ~ q`.
-2. Target model runs ONE forward pass over all `K+1` positions in parallel, producing `p(x_k)` for each proposed token.
-3. Accept/reject each token left-to-right via the modified rejection-sampling rule below. Accept the longest matching prefix.
-4. If any token is rejected, sample the replacement from the corrected distribution and stop. Otherwise sample one bonus token from `p(· | x_1...x_K)`.
+1. Draft model が `K` トークンを autoregressive に提案する: `x_1, x_2, ..., x_K ~ q`。
+2. Target model がすべての `K+1` 位置を並列に 1 回の forward pass で処理し、提案トークンごとの `p(x_k)` を出す。
+3. 下の modified rejection-sampling rule で、左から右へ各トークンを accept/reject する。一致する最長 prefix を accept する。
+4. いずれかのトークンが reject されたら、補正後の分布から replacement を sample して停止する。すべて accept された場合は、`p(· | x_1...x_K)` から bonus token を 1 つ sample する。
 
-If the draft matches the target perfectly, you get K+1 tokens per target-forward. If the draft is wrong at position 1, you get only 1 token.
+Draft が target と完全に一致していれば、target-forward 1 回あたり K+1 トークンを得られます。Draft が位置 1 で間違えれば、得られるのは 1 トークンだけです。
 
-### The Exactness Rule
+### 厳密性のルール
 
-Speculative decoding is **provably equivalent in distribution to sampling from p**. The rejection rule:
+Speculative decoding は、**分布として p から sample することと証明可能に等価** です。Rejection rule は次の通りです。
 
 ```
 For each drafted token x_t:
@@ -45,51 +45,51 @@ For each drafted token x_t:
         stop
 ```
 
-where `(p - q)+` denotes the positive part of the pointwise difference. When the draft and target agree (`p ≈ q`) acceptance is nearly 1. When they disagree, the residual distribution is constructed so that the overall sample is still exactly `p`.
+ここで `(p - q)+` は pointwise difference の正の部分を表します。Draft と target が一致しているとき (`p ≈ q`)、acceptance はほぼ 1 です。一致しないときでも、全体の sample が厳密に `p` になるよう residual distribution が構成されます。
 
-**Greedy case.** For temperature=0 sampling just check `argmax(p) == x_t`. If yes, accept; if no, output `argmax(p)` and stop.
+**Greedy case.** temperature=0 sampling では、`argmax(p) == x_t` を確認するだけです。真なら accept、偽なら `argmax(p)` を出力して停止します。
 
-### Expected Speedup
+### 期待される高速化
 
-If the draft model's token-level acceptance rate is `α`, the expected tokens produced per target-forward pass is:
+Draft model の token-level acceptance rate が `α` のとき、target-forward pass 1 回あたりに生成される期待トークン数は次の通りです。
 
 ```
 E[tokens] = (1 - α^{K+1}) / (1 - α)        # K = draft length, α in [0, 1]
 ```
 
-At `α = 0.8, K = 4`: `(1 - 0.8^5)/(1 - 0.8) = 3.36` tokens per forward. A single target forward costs roughly `cost_q * K + cost_p` (K draft steps plus one target verify). If `cost_p >> cost_q * K` the speedup ratio is `3.36× / 1 = 3.36×` on throughput.
+`α = 0.8, K = 4` では、`(1 - 0.8^5)/(1 - 0.8) = 3.36` tokens per forward です。1 回の target forward のコストは、おおよそ `cost_q * K + cost_p` です (K 回の draft step と 1 回の target verify)。`cost_p >> cost_q * K` なら、throughput の speedup ratio は `3.36× / 1 = 3.36×` になります。
 
-The only real parameter is `α`, which depends entirely on the draft-target alignment. A good draft is everything.
+実質的な唯一のパラメータは `α` で、これは draft-target alignment に完全に依存します。良い draft がすべてです。
 
-### Training the Draft: Distillation
+### Draft の学習: Distillation
 
-A random small model makes a poor draft. The standard recipe is to distill from the target:
+ランダムな小型モデルは、良い draft にはなりません。標準的なレシピは target から distill することです。
 
-1. Pick a small architecture (~1B for a 70B target, ~500M for a 7B target).
-2. Run the target model on a large text corpus; store its next-token distributions.
-3. Train the draft with KL divergence against the target's distribution (not against ground-truth tokens).
+1. 小さな architecture を選ぶ (70B target なら約 1B、7B target なら約 500M)。
+2. 大規模テキストコーパス上で target model を実行し、その next-token distributions を保存する。
+3. Draft を ground-truth tokens ではなく target の distribution に対する KL divergence で学習する。
 
-The result: `α` typically 0.6-0.8 on coding, 0.7-0.85 on natural-language chat. Speedups 2-3× in production.
+結果として、`α` は通常 coding で 0.6-0.8、natural-language chat で 0.7-0.85 になります。本番環境では 2-3× の高速化が一般的です。
 
 ### EAGLE: Tree Drafting + Feature Reuse
 
-Li, Wei, Zhang, Zhang (2024, "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty") observed two inefficiencies in standard speculative decoding:
+Li, Wei, Zhang, Zhang (2024, "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty") は、標準的な speculative decoding に 2 つの非効率があることを指摘しました。
 
-1. The draft does K serial steps, each full-stack. But the draft could reuse the target's features (hidden states) from the most recent verify — the target already computed rich representations that the draft is re-deriving from scratch.
-2. The draft outputs a linear chain. If the draft could output a *tree* of candidates (each node multiple guesses), the target's single forward pass could verify multiple candidate paths in parallel via a tree attention mask, and pick the longest accepted branch.
+1. Draft は K 回の逐次 step を行い、それぞれ full-stack です。しかし draft は直近の verify で得られた target の features (hidden states) を再利用できます。target はすでに豊かな表現を計算しており、draft はそれをゼロから再計算しているだけです。
+2. Draft は線形 chain を出力します。もし draft が候補の *tree* を出力できれば (各 node に複数の推測)、target の 1 回の forward pass が tree attention mask によって複数の candidate paths を並列に verify し、最長の accepted branch を選べます。
 
-EAGLE-1 changes:
-- Draft input = target's final hidden state at position t, not raw tokens.
-- Draft architecture = 1 transformer decoder layer (not a separate small model).
-- Output = tree of K = 4-8 candidates per depth, depth 4-6.
+EAGLE-1 の変更点:
+- Draft input = 位置 t における target の final hidden state。raw tokens ではない。
+- Draft architecture = 1 transformer decoder layer。別個の小型モデルではない。
+- Output = depth ごとに K = 4-8 candidates、depth 4-6 の tree。
 
-EAGLE-2 (2024) adds dynamic tree topology: the tree grows wider where the draft is uncertain and stays narrow where it is confident. Raises `α_effective` without increasing verify cost.
+EAGLE-2 (2024) は dynamic tree topology を追加します。Draft が不確かな場所では tree を広げ、自信がある場所では狭く保ちます。Verify cost を増やさずに `α_effective` を高めます。
 
-EAGLE-3 (Li et al. 2025, "EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test") removes the fixed top-layer feature dependency and trains the draft with a new "test-time simulation" loss — the draft is trained on outputs that match the target's test-time distribution rather than teacher-forced training distribution. Acceptance rate rises from 0.75 (EAGLE-2) to 0.82 (EAGLE-3), and mean tokens/verify from 3.0 to 4.5.
+EAGLE-3 (Li et al. 2025, "EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test") は、固定された top-layer feature 依存を取り除き、新しい "test-time simulation" loss で draft を学習します。Draft は teacher-forced training distribution ではなく、target の test-time distribution に一致する出力で学習されます。Acceptance rate は 0.75 (EAGLE-2) から 0.82 (EAGLE-3) に、mean tokens/verify は 3.0 から 4.5 に上がります。
 
 ### Tree Attention Verification
 
-When the draft outputs a tree, the target model verifies it in a single forward pass using a **tree attention mask** — a causal mask that encodes the tree topology rather than a pure line. Each token attends only to its ancestors in the tree. The verify pass is still one forward, one matmul; the topological mask costs only a few extra KV entries.
+Draft が tree を出力するとき、target model は **tree attention mask** を使って 1 回の forward pass で verify します。これは純粋な line ではなく、tree topology を encode する causal mask です。各 token は tree 上の祖先だけに attend します。Verify pass は依然として 1 回の forward、1 回の matmul です。Topological mask のコストは、KV entries が少し増えるだけです。
 
 ```
         root
@@ -99,29 +99,29 @@ When the draft outputs a tree, the target model verifies it in a single forward 
     c  d   e   f
 ```
 
-If `a, b` are competing first-token candidates and `c, d, e, f` are second-token candidates, all six positions are verified in one forward pass. The output is the longest prefix along any accepted path.
+`a, b` が競合する first-token candidates で、`c, d, e, f` が second-token candidates なら、6 つの位置すべてを 1 回の forward pass で verify できます。出力は、accepted path の中で最長の prefix です。
 
-### When It Wins, When It Doesn't
+### 勝つ場合、勝てない場合
 
-**Wins:**
-- Chat / completion with predictable text (code, common English, structured output). `α` is high.
-- Settings with unused GPU compute during decode (memory-bound phase). Tree drafting uses the available FLOPs.
+**勝つ場合:**
+- 予測しやすいテキストの chat / completion (code、一般的な English、structured output)。`α` が高い。
+- Decode 中に未使用の GPU compute がある設定 (memory-bound phase)。Tree drafting が利用可能な FLOPs を使える。
 
-**Loses / no win:**
-- Highly stochastic outputs (creative writing at high temperature). `α` drops toward `1/|vocab|`.
-- Batch serving with very high concurrency — batching already fills the FLOPs, little room for tree verification.
-- Very small target models where the draft isn't much smaller.
+**負ける、または効果がない場合:**
+- 非常に stochastic な出力 (高 temperature の creative writing)。`α` は `1/|vocab|` に近づく。
+- 非常に高い concurrency の batch serving。Batching がすでに FLOPs を埋めており、tree verification の余地が小さい。
+- Draft がそれほど小さくない、ごく小さな target models。
 
-Production shops typically report 2-3× wall-clock speedup on chat, 3-5× on code generation, and near-zero on creative writing.
+本番環境では、chat で 2-3×、code generation で 3-5× の wall-clock speedup、creative writing ではほぼゼロ、という報告が一般的です。
 
-## Build It
+## 作るもの
 
 `code/main.py`:
 
-- A reference `speculative_decode(target, draft, prompt, K, temperature)` that implements the exact rejection rule and verifies it preserves the target's distribution (empirical KL < 0.01 vs plain target sampling).
-- An EAGLE-style tree drafter that builds a depth-K tree with top-p branching.
-- A tree attention mask builder that produces the right causal pattern for a verifier.
-- An acceptance-rate harness that runs both on a tiny LM (distill one GPT-2-small from a GPT-2-medium target).
+- 厳密な rejection rule を実装し、target の distribution を保つことを検証する reference `speculative_decode(target, draft, prompt, K, temperature)` (plain target sampling との empirical KL < 0.01)。
+- Top-p branching で depth-K tree を構築する EAGLE-style tree drafter。
+- Verifier 用に正しい causal pattern を生成する tree attention mask builder。
+- Tiny LM 上で両方を実行する acceptance-rate harness (GPT-2-medium target から GPT-2-small を 1 つ distill する)。
 
 ```python
 def speculative_step(p_target, q_draft, K, temperature=1.0):
@@ -156,51 +156,51 @@ def speculative_step(p_target, q_draft, K, temperature=1.0):
     return accepted
 ```
 
-## Use It
+## 使い方
 
-- **vLLM** and **SGLang** ship first-class speculative decoding. Flags: `--speculative_model`, `--num_speculative_tokens`. EAGLE-2/3 support via the `--spec_decoding_algorithm eagle` flag.
-- **NVIDIA TensorRT-LLM** supports Medusa and EAGLE trees natively.
-- **Reference draft models**: `Qwen/Qwen3-0.6B-spec` (drafts for Qwen3-32B), `meta-llama/Llama-3.2-1B-Instruct-spec` (drafts for 70B).
-- **Medusa heads** (Cai et al. 2024, "Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads"): instead of a draft model, add K parallel prediction heads to the target itself. Simpler to deploy, slightly lower acceptance than EAGLE.
+- **vLLM** と **SGLang** は first-class speculative decoding を提供しています。Flags: `--speculative_model`, `--num_speculative_tokens`。EAGLE-2/3 support は `--spec_decoding_algorithm eagle` flag で利用できます。
+- **NVIDIA TensorRT-LLM** は Medusa と EAGLE trees を native にサポートします。
+- **Reference draft models**: `Qwen/Qwen3-0.6B-spec` (Qwen3-32B 用 draft)、`meta-llama/Llama-3.2-1B-Instruct-spec` (70B 用 draft)。
+- **Medusa heads** (Cai et al. 2024, "Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads"): draft model の代わりに、target 自体へ K 個の parallel prediction heads を追加します。デプロイは簡単ですが、acceptance は EAGLE よりやや低めです。
 
 ## Ship It
 
-This lesson produces `outputs/skill-speculative-tuning.md` — a skill that profiles a target model's workload and chooses: draft model, K (draft length), tree width, temperature, and when to fall back to plain decode.
+この lesson は `outputs/skill-speculative-tuning.md` を生成します。これは target model の workload を profile し、draft model、K (draft length)、tree width、temperature、plain decode に fallback する条件を選ぶ skill です。
 
-## Exercises
+## 演習
 
-1. Implement the exact rejection rule and empirically verify it. Run 10K samples via `speculative_decode` and via plain target sampling; compute TV distance between the two output distributions. Should be < 0.01.
+1. 厳密な rejection rule を実装し、経験的に検証してください。`speculative_decode` と plain target sampling で 10K samples を実行し、2 つの output distributions の TV distance を計算します。0.01 未満になるはずです。
 
-2. Compute the speedup formula. Given fixed `α` and `K`, plot expected tokens per target-forward. Find the optimal K for α ∈ {0.5, 0.7, 0.9}.
+2. Speedup formula を計算してください。固定された `α` と `K` に対して、target-forward あたりの expected tokens を plot します。α ∈ {0.5, 0.7, 0.9} について optimal K を見つけます。
 
-3. Train a tiny draft. Take a 124M GPT-2 target and distill a 30M GPT-2 draft on 100M tokens with KL loss. Measure `α` on held-out text. Expected: 0.6-0.7.
+3. Tiny draft を学習してください。124M GPT-2 target を使い、100M tokens 上で 30M GPT-2 draft を KL loss で distill します。Held-out text 上で `α` を測定します。期待値: 0.6-0.7。
 
-4. Implement EAGLE-style tree drafting. Instead of a chain, have the draft output top-3 branches at each depth. Build the tree attention mask. Verify the target accepts the longest correct branch.
+4. EAGLE-style tree drafting を実装してください。Chain ではなく、draft が各 depth で top-3 branches を出力するようにします。Tree attention mask を構築します。Target が最長の correct branch を accept することを検証します。
 
-5. Measure failure modes. Run speculative decode at temperature=1.5 (high stochasticity). Show α collapses and the algorithm is slower than plain decode due to draft overhead.
+5. Failure modes を測定してください。temperature=1.5 (high stochasticity) で speculative decode を実行します。Draft overhead によって、α が崩れ、アルゴリズムが plain decode より遅くなることを示します。
 
-## Key Terms
+## 重要用語
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| Target model | "The big model" | The slow, high-quality model you want samples from (p distribution) |
-| Draft model | "The speculator" | The small, fast predictor (q distribution); 5-30x smaller |
-| K / draft length | "Look-ahead" | Number of speculated tokens per verify pass |
-| α / acceptance rate | "Hit rate" | Per-token probability that the draft's proposal is accepted |
-| Exact rejection rule | "The accept test" | r < p/q compare that preserves target's distribution |
-| Residual distribution | "Corrected p-q" | (p - q)+ / ||(p - q)+||_1, the distribution to sample from on rejection |
-| Tree drafting | "Branching speculation" | Draft outputs a tree of candidates, verified in one pass with tree-structured attention mask |
-| Tree attention mask | "Topological mask" | Causal mask encoding the tree topology so each node attends only to its ancestors |
-| Medusa heads | "Parallel heads" | K extra prediction heads on the target itself; no separate draft model |
-| EAGLE feature reuse | "Hidden-state draft" | Draft input is target's last hidden state, not raw tokens, shrinking the draft |
-| Test-time simulation loss | "EAGLE-3 training" | Train draft on outputs matching target's test-time distribution, not teacher forcing |
+| Target model | "The big model" | sample を取りたい、遅く高品質な大規模モデル (p distribution) |
+| Draft model | "The speculator" | 小さく高速な予測器 (q distribution)。5-30x 小さい |
+| K / draft length | "Look-ahead" | verify pass 1 回あたりに speculate するトークン数 |
+| α / acceptance rate | "Hit rate" | draft の proposal が accept される token あたり確率 |
+| Exact rejection rule | "The accept test" | target の distribution を保つ r < p/q の比較 |
+| Residual distribution | "Corrected p-q" | reject 時に sample する distribution、(p - q)+ / ||(p - q)+||_1 |
+| Tree drafting | "Branching speculation" | draft が候補 tree を出力し、tree-structured attention mask で 1 pass で verify する |
+| Tree attention mask | "Topological mask" | 各 node が祖先だけに attend するよう tree topology を encode する causal mask |
+| Medusa heads | "Parallel heads" | target 自体に追加する K 個の prediction heads。別の draft model は不要 |
+| EAGLE feature reuse | "Hidden-state draft" | draft input を raw tokens ではなく target の last hidden state にして、draft を小さくする |
+| Test-time simulation loss | "EAGLE-3 training" | teacher forcing ではなく target の test-time distribution に一致する出力で draft を学習する |
 
-## Further Reading
+## 参考資料
 
-- [Leviathan, Kalai, Matias, 2023 — "Fast Inference from Transformers via Speculative Decoding"](https://arxiv.org/abs/2211.17192) — the exact rejection rule and the theoretical speedup analysis
-- [Chen, Borgeaud, Irving et al., 2023 — "Accelerating Large Language Model Decoding with Speculative Sampling"](https://arxiv.org/abs/2302.01318) — concurrent speculative-sampling paper at DeepMind
-- [Cai, Li, Geng, Wang, Wang, Zhu, Dao, 2024 — "Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads"](https://arxiv.org/abs/2401.10774) — parallel-heads alternative to a draft model
-- [Li, Wei, Zhang, Zhang, 2024 — "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty"](https://arxiv.org/abs/2401.15077) — feature reuse and tree drafting
+- [Leviathan, Kalai, Matias, 2023 — "Fast Inference from Transformers via Speculative Decoding"](https://arxiv.org/abs/2211.17192) — 厳密な rejection rule と理論的な speedup analysis
+- [Chen, Borgeaud, Irving et al., 2023 — "Accelerating Large Language Model Decoding with Speculative Sampling"](https://arxiv.org/abs/2302.01318) — DeepMind による concurrent speculative-sampling paper
+- [Cai, Li, Geng, Wang, Wang, Zhu, Dao, 2024 — "Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads"](https://arxiv.org/abs/2401.10774) — draft model に対する parallel-heads alternative
+- [Li, Wei, Zhang, Zhang, 2024 — "EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty"](https://arxiv.org/abs/2401.15077) — feature reuse と tree drafting
 - [Li et al., 2024 — "EAGLE-2: Faster Inference of Language Models with Dynamic Draft Trees"](https://arxiv.org/abs/2406.16858) — dynamic tree topology
 - [Li et al., 2025 — "EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test"](https://arxiv.org/abs/2503.01840) — train-time test-time matching
-- [Fu, Haotian, Peng et al., 2024 — "Break the Sequential Dependency of LLM Inference Using Lookahead Decoding"](https://arxiv.org/abs/2402.02057) — Jacobi/lookahead decoding, a speculator-free alternative
+- [Fu, Haotian, Peng et al., 2024 — "Break the Sequential Dependency of LLM Inference Using Lookahead Decoding"](https://arxiv.org/abs/2402.02057) — Jacobi/lookahead decoding。speculator-free alternative

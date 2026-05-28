@@ -1,102 +1,102 @@
 {
   "lesson": "23-chunking-strategies-rag",
-  "title": "Chunking Strategies for RAG",
+  "title": "RAG のためのチャンキング戦略",
   "questions": [
     {
       "stage": "pre",
-      "question": "Why is chunking strategy as important as the embedding model in RAG?",
+      "question": "RAG で chunking strategy が embedding model と同じくらい重要なのはなぜですか。",
       "options": [
-        "Chunk boundaries determine whether the answer is even retrievable; bad chunks defeat any embedding",
-        "Chunking shrinks the model",
-        "Smaller chunks train faster",
-        "Chunking is required by FAISS"
+        "chunk boundaries によって答えがそもそも retrievable かどうかが決まり、悪い chunks はどんな embedding も台無しにするから",
+        "chunking が model を小さくするから",
+        "小さい chunks のほうが training が速いから",
+        "FAISS で chunking が必須だから"
       ],
       "correct": 0,
-      "explanation": "Vectara's 2025 study showed chunking quality matches or exceeds embedding-model impact on retrieval quality."
+      "explanation": "Vectara の 2025 年研究は、chunking quality が retrieval quality に対する embedding-model の影響に匹敵するか、それを上回ることを示しました。"
     },
     {
       "stage": "pre",
-      "question": "What does LangChain's RecursiveCharacterTextSplitter try in order?",
+      "question": "LangChain の RecursiveCharacterTextSplitter はどの順序で分割を試しますか。",
       "options": [
-        "Always split on character N",
-        "Split on token IDs",
-        "Try splitting on paragraph breaks, then newlines, then sentence boundaries, then spaces",
-        "Split on whitespace only"
+        "常に character N で分割する",
+        "token IDs で分割する",
+        "paragraph breaks、newlines、sentence boundaries、spaces の順に分割を試す",
+        "whitespace だけで分割する"
       ],
       "correct": 2,
-      "explanation": "Recursive splitting falls back through paragraph -> newline -> sentence -> space to preserve structure."
+      "explanation": "Recursive splitting は structure を保つため、paragraph -> newline -> sentence -> space の順に fallback します。"
     },
     {
       "stage": "check",
-      "question": "Why does the parent-document pattern improve answer quality?",
+      "question": "parent-document pattern が answer quality を改善するのはなぜですか。",
       "options": [
-        "Children give precise retrieval; returning the larger parent block preserves the surrounding context the reader needs",
-        "It removes embeddings",
-        "It avoids tokenization",
-        "It uses fewer GPU cycles"
+        "children が precise retrieval を与え、より大きな parent block を返すことで読者に必要な surrounding context を保てるから",
+        "embeddings を取り除くから",
+        "tokenization を避けるから",
+        "GPU cycles を減らすから"
       ],
       "correct": 0,
-      "explanation": "Retrieve by small child chunks for precision, then expand to the parent for context."
+      "explanation": "precision のために小さな child chunks で retrieve し、その後 context のために parent へ展開します。"
     },
     {
       "stage": "check",
-      "question": "What does Anthropic's 'contextual retrieval' add to each chunk before indexing?",
+      "question": "Anthropic の「contextual retrieval」は indexing 前に各 chunk に何を追加しますか。",
       "options": [
-        "A POS tag",
-        "A language code",
-        "An LLM-generated 50-100 word summary placing the chunk in the document's overall context",
-        "Random noise"
+        "POS tag",
+        "language code",
+        "chunk を document 全体の context に位置づける、LLM-generated の 50-100 word summary",
+        "random noise"
       ],
       "correct": 2,
-      "explanation": "Contextual retrieval prepends an LLM-written situating summary to each chunk; ~35-50% recall gain."
+      "explanation": "Contextual retrieval は、LLM が書いた位置づけ summary を各 chunk の先頭に付けます。recall gain は約 35-50% です。"
     },
     {
       "stage": "check",
-      "question": "Which 2026 finding contradicts the conventional wisdom about chunk overlap?",
+      "question": "chunk overlap に関する conventional wisdom と矛盾する 2026 年の知見はどれですか。",
       "options": [
-        "Overlap is required for BM25",
-        "Empirical 2026 benchmarks show overlap often provides zero measurable benefit while doubling index cost",
-        "Overlap improves contextual retrieval only",
-        "Overlap should be 50%"
+        "BM25 には overlap が必須である",
+        "2026 年の empirical benchmarks では、overlap は測定可能な利益を出さないことが多く、index cost を倍にする",
+        "overlap は contextual retrieval だけを改善する",
+        "overlap は 50% にすべきである"
       ],
       "correct": 1,
-      "explanation": "Newer studies (SPLADE+Mistral on NQ) show chunk overlap rarely helps and inflates index size."
+      "explanation": "新しい研究 (NQ 上の SPLADE+Mistral) は、chunk overlap がほとんど役に立たず、index size を膨らませることを示しています。"
     },
     {
       "stage": "post",
-      "question": "Which chunk size does NVIDIA's 2026 benchmark associate with factoid queries?",
+      "question": "NVIDIA の 2026 年 benchmark は factoid queries にどの chunk size を対応づけていますか。",
       "options": [
         "64 tokens",
-        "Roughly 256-512 tokens",
+        "おおよそ 256-512 tokens",
         "2048-4096 tokens",
         "8192 tokens"
       ],
       "correct": 1,
-      "explanation": "Factoid queries benefit from smaller chunks (256-512 tokens) that concentrate the answer signal."
+      "explanation": "Factoid queries は、answer signal を集中させる小さめの chunks (256-512 tokens) から恩恵を受けます。"
     },
     {
       "stage": "post",
-      "question": "Why is a min-token floor important when using semantic chunking?",
+      "question": "semantic chunking を使うときに min-token floor が重要なのはなぜですか。",
       "options": [
-        "Required by BERT",
-        "Without a floor, semantic chunking can produce tiny 40-token fragments that hurt retrieval",
-        "Floors speed up inference",
-        "Floors prevent overlap"
+        "BERT で必須だから",
+        "floor がないと、semantic chunking は retrieval を悪化させる小さな 40-token fragments を作ることがあるから",
+        "floors が inference を速くするから",
+        "floors が overlap を防ぐから"
       ],
       "correct": 1,
-      "explanation": "Semantic chunkers can over-segment; enforcing a min size prevents low-signal fragments."
+      "explanation": "Semantic chunkers は過剰に分割することがあります。min size を強制すると low-signal fragments を防げます。"
     },
     {
       "stage": "post",
-      "question": "What does 'late chunking' do differently from traditional chunking?",
+      "question": "「late chunking」は traditional chunking と何が違いますか。",
       "options": [
-        "Skips chunking entirely",
-        "Embeds the whole document at the token level first, then pools token embeddings into chunk vectors to preserve cross-chunk context",
-        "Chunks after retrieval",
-        "Uses BM25 instead"
+        "chunking を完全に省略する",
+        "まず document 全体を token level で embed し、その後 token embeddings を chunk vectors に pool して cross-chunk context を保つ",
+        "retrieval の後に chunk する",
+        "代わりに BM25 を使う"
       ],
       "correct": 1,
-      "explanation": "Late chunking embeds first and pools second, preserving contextual interactions across chunk boundaries."
+      "explanation": "Late chunking は先に embed し、後で pool することで、chunk boundaries をまたぐ contextual interactions を保ちます。"
     }
   ]
 }

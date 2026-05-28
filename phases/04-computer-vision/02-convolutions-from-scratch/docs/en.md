@@ -1,32 +1,32 @@
-# Convolutions from Scratch
+# 畳み込みをゼロから実装する
 
-> A convolution is a tiny dense layer you slide across an image, sharing the same weights at every location.
+> 畳み込みは、画像上をスライドさせる小さな dense layer です。すべての位置で同じ重みを共有します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 3 (Deep Learning Core), Phase 4 Lesson 01 (Image Fundamentals)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提条件:** Phase 3（Deep Learning Core）、Phase 4 Lesson 01（Image Fundamentals）
+**所要時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Implement 2D convolution from scratch using only NumPy, including the nested-loop version and a vectorised `im2col` version
-- Compute output spatial size for any combination of input size, kernel size, padding, and stride, and justify the `(H - K + 2P) / S + 1` formula
-- Hand-design kernels (edge, blur, sharpen, Sobel) and explain why each one produces the pattern of activations it does
-- Stack convolutions into a feature extractor and connect the depth-of-the-stack to the size of the receptive field
+- NumPy だけを使って、ネストしたループ版とベクトル化された `im2col` 版を含む 2D 畳み込みをゼロから実装する
+- 入力サイズ、カーネルサイズ、パディング、ストライドの任意の組み合わせについて出力の空間サイズを計算し、`(H - K + 2P) / S + 1` の式を説明する
+- カーネル（edge、blur、sharpen、Sobel）を手で設計し、それぞれがなぜその活性化パターンを生むのか説明する
+- 畳み込みを積み重ねて特徴抽出器を作り、スタックの深さと受容野の大きさを結び付ける
 
-## The Problem
+## 問題
 
-A fully connected layer on a 224x224 RGB image would need 224 * 224 * 3 = 150,528 input weights per neuron. A single hidden layer with 1,000 units is already 150 million parameters — before you have learnt anything useful. Worse, that layer has no notion that a dog in the top-left and a dog in the bottom-right are the same pattern. It treats every pixel position as independent, which is exactly wrong for images: translating a cat by three pixels should not force the network to relearn the concept.
+224x224 の RGB 画像に fully connected layer を適用すると、ニューロン 1 個あたり 224 * 224 * 3 = 150,528 個の入力重みが必要になります。1,000 ユニットの単一 hidden layer だけで、何か有用なことを学ぶ前から 1 億 5,000 万パラメータです。さらに悪いことに、そのレイヤーには左上の犬と右下の犬が同じパターンだという概念がありません。すべてのピクセル位置を独立に扱いますが、これは画像に対してはまさに間違っています。猫を 3 ピクセル平行移動しただけで、ネットワークがその概念を学び直す必要があってはいけません。
 
-The two properties an image model needs are **translation equivariance** (the output shifts when the input shifts) and **parameter sharing** (the same feature detector runs everywhere). Dense layers give you neither. Convolution gives you both for free.
+画像モデルに必要な 2 つの性質は、**平行移動同変性**（入力が移動すると出力も移動する）と **パラメータ共有**（同じ特徴検出器をどこでも使う）です。Dense layer はそのどちらも与えません。畳み込みはその両方を自然に与えます。
 
-Convolution was not invented for deep learning. It is the same operation that powers JPEG compression, Gaussian blur in Photoshop, edge detection in industrial vision, and every audio filter ever shipped. The reason CNNs dominated ImageNet from 2012 to 2020 is that convolution is the correct prior for data where nearby values are related and the same pattern can appear anywhere.
+畳み込みは deep learning のために発明されたものではありません。JPEG 圧縮、Photoshop の Gaussian blur、産業用ビジョンのエッジ検出、そしてあらゆる音声フィルタを支えてきた同じ操作です。CNN が 2012 年から 2020 年まで ImageNet を支配した理由は、畳み込みが、近くの値が関係し、同じパターンがどこにでも現れうるデータに対する正しい事前知識だからです。
 
-## The Concept
+## 概念
 
-### One kernel, sliding
+### 1 つのカーネルをスライドさせる
 
-A 2D convolution takes a small weight matrix called the kernel (or filter), slides it across the input, and at each location computes the sum of element-wise products. That sum becomes one output pixel.
+2D 畳み込みは、カーネル（またはフィルタ）と呼ばれる小さな重み行列を入力上でスライドさせ、各位置で要素ごとの積の和を計算します。その和が 1 つの出力ピクセルになります。
 
 ```mermaid
 flowchart LR
@@ -48,7 +48,7 @@ flowchart LR
     style OUT fill:#dcfce7,stroke:#16a34a
 ```
 
-A concrete 3x3 example on a 5x5 input (no padding, stride 1):
+5x5 入力に対する具体的な 3x3 の例（パディングなし、ストライド 1）です。
 
 ```
 Input X (5 x 5):                Kernel W (3 x 3):
@@ -68,31 +68,31 @@ The kernel slides across every valid 3 x 3 window. Output Y is 3 x 3:
  ... and so on
 ```
 
-That one formula — **shared weights, locality, sliding window** — is the entire idea. Everything else is bookkeeping.
+この 1 つの式、つまり **重み共有、局所性、スライディングウィンドウ** が考え方のすべてです。それ以外は帳尻合わせです。
 
-### Output size formula
+### 出力サイズの式
 
-Given input spatial size `H`, kernel size `K`, padding `P`, stride `S`:
+入力の空間サイズを `H`、カーネルサイズを `K`、パディングを `P`、ストライドを `S` とすると、次のようになります。
 
 ```
 H_out = floor( (H - K + 2P) / S ) + 1
 ```
 
-Memorise this. You will compute it dozens of times per architecture.
+これは覚えてください。アーキテクチャごとに何十回も計算することになります。
 
-| Scenario | H | K | P | S | H_out |
+| シナリオ | H | K | P | S | H_out |
 |----------|---|---|---|---|-------|
-| Valid conv, no padding | 32 | 3 | 0 | 1 | 30 |
-| Same conv (preserves size) | 32 | 3 | 1 | 1 | 32 |
-| Downsample by 2 | 32 | 3 | 1 | 2 | 16 |
-| Pool 2x2 | 32 | 2 | 0 | 2 | 16 |
-| Large receptive field | 32 | 7 | 3 | 2 | 16 |
+| Valid conv、パディングなし | 32 | 3 | 0 | 1 | 30 |
+| Same conv（サイズを保つ） | 32 | 3 | 1 | 1 | 32 |
+| 2 分の 1 にダウンサンプリング | 32 | 3 | 1 | 2 | 16 |
+| 2x2 pool | 32 | 2 | 0 | 2 | 16 |
+| 大きな受容野 | 32 | 7 | 3 | 2 | 16 |
 
-"Same padding" means pick P so that H_out == H when S == 1. For odd K, that is P = (K - 1) / 2. That is why 3x3 kernels dominate — they are the smallest odd kernel that still has a centre.
+"Same padding" は、`S == 1` のときに `H_out == H` になるように `P` を選ぶことです。奇数の `K` では `P = (K - 1) / 2` です。3x3 カーネルが主流なのはこのためです。中心を持つ最小の奇数カーネルだからです。
 
-### Padding
+### パディング
 
-Without padding, every convolution shrinks the feature map. Stack 20 of them and your 224x224 image becomes 184x184, which wastes compute on the border and complicates residual connections that need matching shapes.
+パディングなしでは、畳み込みのたびに feature map が小さくなります。20 個積み重ねると 224x224 の画像は 184x184 になり、境界の計算を無駄にし、形状一致が必要な residual connection も複雑になります。
 
 ```
 Zero padding (P = 1) on a 5 x 5 input:
@@ -106,11 +106,11 @@ Zero padding (P = 1) on a 5 x 5 input:
   0  0  0  0  0  0  0
 ```
 
-Modes you meet in practice: `zero` (most common), `reflect` (mirror the edge, avoids hard borders in generative models), `replicate` (copy the edge), `circular` (wrap around, used in toroidal problems).
+実務で出会うモードには、`zero`（最も一般的）、`reflect`（端を鏡映し、生成モデルで硬い境界を避ける）、`replicate`（端をコピーする）、`circular`（巻き戻す。トーラス状の問題で使う）があります。
 
-### Stride
+### ストライド
 
-Stride is the step size of the slide. `stride=1` is the default. `stride=2` halves the spatial dimensions and is the classic way to downsample inside a CNN without a separate pooling layer — every modern architecture (ResNet, ConvNeXt, MobileNet) uses strided convs in place of max-pool somewhere.
+ストライドはスライドのステップサイズです。`stride=1` がデフォルトです。`stride=2` は空間次元を半分にし、別の pooling layer を使わずに CNN 内でダウンサンプリングする古典的な方法です。現代的なアーキテクチャ（ResNet、ConvNeXt、MobileNet）はどれも、どこかで max-pool の代わりに strided conv を使っています。
 
 ```
 Stride 1 on a 5 x 5 input, 3 x 3 kernel:
@@ -129,9 +129,9 @@ Stride 2 on the same input:
   Output: 2 x 2
 ```
 
-### Multiple input channels
+### 複数の入力チャンネル
 
-Real images have three channels. A 3x3 convolution on an RGB input is actually a 3x3x3 volume: one 3x3 slice per input channel. At each spatial position, you multiply and sum across all three slices and add a bias.
+実際の画像には 3 つのチャンネルがあります。RGB 入力に対する 3x3 畳み込みは、実際には 3x3x3 の volume です。入力チャンネルごとに 1 枚の 3x3 slice があります。各空間位置で、3 つの slice すべてにわたって掛け算して合計し、bias を足します。
 
 ```
 Input:   (C_in,  H,  W)        3 x 5 x 5
@@ -146,11 +146,11 @@ Output:  (C_out, H', W')       64 x 3 x 3
 Parameter count: C_out * C_in * K * K + C_out   (the + C_out is biases)
 ```
 
-That last line is the one you will calculate when planning a model. A 64-channel 3x3 conv on a 3-channel input has `64 * 3 * 3 * 3 + 64 = 1,792` parameters. Cheap.
+最後の行は、モデルを設計するときに計算するものです。3 チャンネル入力に 64 チャンネルの 3x3 conv をかけると、パラメータ数は `64 * 3 * 3 * 3 + 64 = 1,792` です。安いものです。
 
-### The im2col trick
+### im2col のトリック
 
-Nested loops are easy to read but slow. GPUs want big matrix multiplies. The trick: flatten every receptive-field window of the input into one column of a big matrix, flatten the kernel into a row, and the whole convolution becomes a single matmul.
+ネストしたループは読みやすいものの遅いです。GPU が欲しいのは大きな行列積です。トリックは、入力の各 receptive-field window を大きな行列の 1 列に flatten し、カーネルを 1 行に flatten することです。すると畳み込み全体が 1 回の matmul になります。
 
 ```mermaid
 flowchart LR
@@ -166,11 +166,11 @@ flowchart LR
     style OUT fill:#dcfce7,stroke:#16a34a
 ```
 
-Every production conv implementation is some variant of this plus cache-tiling tricks (direct conv, Winograd, FFT conv for large kernels). Understand im2col and you understand the core.
+本番用の conv 実装は、これに cache tiling の工夫を足した何らかの変種です（direct conv、Winograd、大きなカーネル向けの FFT conv）。im2col を理解すれば、中心部分は理解できたことになります。
 
-### Receptive field
+### 受容野
 
-A single 3x3 conv looks at 9 input pixels. Stack two 3x3 convs and a neuron in the second layer looks at 5x5 input pixels. Three 3x3 convs give 7x7. In general:
+単一の 3x3 conv は 9 個の入力ピクセルを見ます。3x3 conv を 2 つ積むと、2 番目の層のニューロンは 5x5 の入力ピクセルを見ます。3 つの 3x3 conv では 7x7 です。一般に次のようになります。
 
 ```
 RF after L stacked K x K convs (stride 1) = 1 + L * (K - 1)
@@ -178,13 +178,13 @@ RF after L stacked K x K convs (stride 1) = 1 + L * (K - 1)
 With strides:   RF grows multiplicatively with stride along each layer.
 ```
 
-The entire reason "3x3 all the way down" works (VGG, ResNet, ConvNeXt) is that two 3x3 convs see the same input area as one 5x5 conv but with fewer parameters and an extra non-linearity in between.
+"3x3 を最後まで積む" 設計（VGG、ResNet、ConvNeXt）がうまくいく根本理由は、2 つの 3x3 conv が 1 つの 5x5 conv と同じ入力範囲を見ながら、パラメータ数を減らし、その間に追加の非線形性を入れられるからです。
 
-## Build It
+## 作る
 
-### Step 1: Pad an array
+### ステップ 1: 配列をパディングする
 
-Start with the smallest primitive: a function that pads with zeros around an H x W array.
+最小の primitive から始めます。H x W 配列の周囲をゼロで埋める関数です。
 
 ```python
 import numpy as np
@@ -203,11 +203,11 @@ print()
 print(pad2d(x, 1))
 ```
 
-The trailing-axes trick `x.shape[:-2]` means the same function works on `(H, W)`, `(C, H, W)`, or `(N, C, H, W)` without modification.
+末尾軸のトリック `x.shape[:-2]` により、同じ関数が `(H, W)`、`(C, H, W)`、`(N, C, H, W)` のどれにも変更なしで使えます。
 
-### Step 2: 2D convolution with nested loops
+### ステップ 2: ネストしたループによる 2D 畳み込み
 
-The reference implementation — slow, but unambiguous. This is what `torch.nn.functional.conv2d` does in principle.
+参照実装です。遅いですが曖昧さはありません。原理的には `torch.nn.functional.conv2d` が行っていることです。
 
 ```python
 def conv2d_naive(x, w, b=None, stride=1, padding=0):
@@ -232,11 +232,11 @@ def conv2d_naive(x, w, b=None, stride=1, padding=0):
     return out
 ```
 
-Four nested loops (output channel, row, column, plus the implicit sum over C_in, kh, kw). This is the ground truth you will check every faster implementation against.
+4 重のネストしたループ（出力チャンネル、行、列、そして `C_in`、`kh`、`kw` にわたる暗黙の和）です。これは、より速い実装すべてを照合する基準になります。
 
-### Step 3: Verify with a hand-designed kernel
+### ステップ 3: 手設計のカーネルで検証する
 
-Build a vertical Sobel kernel, apply it to a synthetic step image, and watch the vertical edge light up.
+縦方向の Sobel カーネルを作り、合成した step image に適用して、縦エッジが明るくなる様子を確認します。
 
 ```python
 def synthetic_step_image():
@@ -255,11 +255,11 @@ y = conv2d_naive(x, sobel_x, padding=1)
 print(y[0].round(1))
 ```
 
-Expect large positive values on column 7 (left-to-right brightness increase) and zeros everywhere else. That single print is your sanity check that the math is right.
+列 7（左から右への明るさの増加）に大きな正の値が出て、それ以外はゼロになるはずです。この 1 回の print が、数学が正しいことを確認する sanity check です。
 
-### Step 4: im2col
+### ステップ 4: im2col
 
-Convert every kernel-sized window in the input into a column of a matrix. For `C_in=3, K=3`, each column is 27 numbers.
+入力内のカーネルサイズの各 window を、行列の 1 列に変換します。`C_in=3, K=3` では、各列は 27 個の数値になります。
 
 ```python
 def im2col(x, kh, kw, stride=1, padding=0):
@@ -280,11 +280,11 @@ def im2col(x, kh, kw, stride=1, padding=0):
     return cols, h_out, w_out
 ```
 
-It is still a Python loop, but now the heavy lifting will be a single vectorised matmul.
+まだ Python loop ですが、重い処理はこのあと 1 回のベクトル化された matmul になります。
 
-### Step 5: Fast conv via im2col + matmul
+### ステップ 5: im2col + matmul による高速 conv
 
-Replace the quadruple loop with one matrix multiplication.
+4 重ループを 1 回の行列積に置き換えます。
 
 ```python
 def conv2d_im2col(x, w, b=None, stride=1, padding=0):
@@ -297,7 +297,7 @@ def conv2d_im2col(x, w, b=None, stride=1, padding=0):
     return out.reshape(c_out, h_out, w_out)
 ```
 
-Correctness check: run both implementations and compare.
+正しさの確認として、両方の実装を実行して比較します。
 
 ```python
 rng = np.random.default_rng(0)
@@ -311,11 +311,11 @@ y_im2col = conv2d_im2col(x, w, b, padding=1)
 print(f"max abs diff: {np.max(np.abs(y_naive - y_im2col)):.2e}")
 ```
 
-`max abs diff` should be around `1e-5` — the difference is floating-point accumulation order, not a bug.
+`max abs diff` はおよそ `1e-5` になるはずです。差は floating-point の累積順序によるもので、バグではありません。
 
-### Step 6: A bank of hand-designed kernels
+### ステップ 6: 手設計カーネルのバンク
 
-Five filters that show what a single conv layer can express before any training.
+学習前でも単一の conv layer が表現できるものを示す 5 つのフィルタです。
 
 ```python
 KERNELS = {
@@ -332,11 +332,11 @@ def apply_kernel(img2d, kernel):
     return conv2d_im2col(x, w, padding=1)[0]
 ```
 
-Applied to any grayscale image, blur softens, sharpen crisps up edges, Sobel-x lights up vertical edges, Sobel-y lights up horizontal edges. These are exactly the patterns that the *first* trained conv layer in AlexNet and VGG ended up learning — because a good image model needs edge and blob detectors no matter what task comes later.
+任意の grayscale image に適用すると、blur は柔らかくし、sharpen はエッジをくっきりさせ、Sobel-x は縦エッジを、Sobel-y は横エッジを明るくします。これらは AlexNet や VGG の *最初の* 学習済み conv layer が最終的に学んだパターンそのものです。後続のタスクが何であれ、優れた画像モデルにはエッジ検出器と blob 検出器が必要だからです。
 
-## Use It
+## 使う
 
-PyTorch's `nn.Conv2d` wraps the same operation with autograd, CUDA kernels, and cuDNN optimisation. Shape semantics are identical.
+PyTorch の `nn.Conv2d` は、同じ操作を autograd、CUDA kernels、cuDNN optimisation と一緒に包みます。形状の意味論は同じです。
 
 ```python
 import torch
@@ -354,37 +354,37 @@ print(f"\ninput  shape: {tuple(x.shape)}")
 print(f"output shape: {tuple(y.shape)}")
 ```
 
-Swap `padding=1` for `padding=0` and the output drops to 222x222. Swap `stride=1` for `stride=2` and it drops to 112x112. Same formula you memorised above.
+`padding=1` を `padding=0` に変えると、出力は 222x222 に落ちます。`stride=1` を `stride=2` に変えると、112x112 に落ちます。上で覚えたものと同じ式です。
 
-## Ship It
+## 出荷する
 
-This lesson produces:
+このレッスンが生み出すものは次のとおりです。
 
-- `outputs/prompt-cnn-architect.md` — a prompt that, given input size, parameter budget, and target receptive field, designs a stack of `Conv2d` layers with the right K/S/P at every step.
-- `outputs/skill-conv-shape-calculator.md` — a skill that walks a network spec layer by layer and returns the output shape, receptive field, and parameter count for every block.
+- `outputs/prompt-cnn-architect.md`：入力サイズ、パラメータ予算、目標受容野を与えると、各ステップで正しい K/S/P を持つ `Conv2d` layers の stack を設計するプロンプト。
+- `outputs/skill-conv-shape-calculator.md`：network spec を layer ごとにたどり、各 block の出力形状、受容野、パラメータ数を返す skill。
 
-## Exercises
+## 演習
 
-1. **(Easy)** Given a 128x128 grayscale input and a stack of `[Conv3x3(s=1,p=1), Conv3x3(s=2,p=1), Conv3x3(s=1,p=1), Conv3x3(s=2,p=1)]`, compute the output spatial size and the receptive field at each layer by hand. Verify with a PyTorch `nn.Sequential` of dummy convs.
-2. **(Medium)** Extend `conv2d_naive` and `conv2d_im2col` to accept a `groups` argument. Show that `groups=C_in=C_out` reproduces a depthwise convolution and that its parameter count is `C * K * K` instead of `C * C * K * K`.
-3. **(Hard)** Implement the backward pass of `conv2d_im2col` by hand: given the gradient of the output, compute the gradient of `x` and `w`. Verify against `torch.autograd.grad` on the same inputs and weights. The trick: the gradient of im2col is `col2im`, and it has to accumulate overlapping windows.
+1. **（易）** 128x128 の grayscale input と `[Conv3x3(s=1,p=1), Conv3x3(s=2,p=1), Conv3x3(s=1,p=1), Conv3x3(s=2,p=1)]` の stack があるとします。各 layer の出力空間サイズと受容野を手で計算してください。dummy conv の PyTorch `nn.Sequential` で検証してください。
+2. **（中）** `conv2d_naive` と `conv2d_im2col` を拡張し、`groups` 引数を受け取れるようにしてください。`groups=C_in=C_out` が depthwise convolution を再現し、そのパラメータ数が `C * C * K * K` ではなく `C * K * K` になることを示してください。
+3. **（難）** `conv2d_im2col` の backward pass を手で実装してください。出力の gradient が与えられたとき、`x` と `w` の gradient を計算します。同じ入力と重みで `torch.autograd.grad` と照合してください。トリックは、im2col の gradient が `col2im` であり、重なり合う window を累積しなければならないことです。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Convolution | "Sliding a filter" | A learnable dot product applied at every spatial location with shared weights; mathematically a cross-correlation, but everyone calls it convolution |
-| Kernel / filter | "The feature detector" | A small weight tensor of shape (C_in, K, K) whose dot product with a window of input produces one output pixel |
-| Stride | "How far you jump" | The step size between consecutive kernel placements; stride 2 halves each spatial dimension |
-| Padding | "Zeros on the edges" | Extra values added around the input so the kernel can centre on border pixels; `same` padding keeps output size equal to input size |
-| Receptive field | "How much the neuron sees" | The patch of original input that a given output activation depends on, growing with depth and stride |
-| im2col | "The GEMM trick" | Rearranging every receptive window into columns so convolution becomes one big matrix multiply — the core of every fast conv kernel |
-| Depthwise conv | "One kernel per channel" | A conv with `groups == C_in`, computing each output channel from only its matching input channel; the backbone of MobileNet and ConvNeXt |
-| Translation equivariance | "Shift in, shift out" | Property that shifting the input by k pixels shifts the output by k pixels; comes for free with shared weights |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| 畳み込み (Convolution) | "フィルタをスライドさせる" | 共有重みを使って、各空間位置に適用される学習可能な dot product。数学的には cross-correlation だが、誰もが convolution と呼ぶ |
+| カーネル / フィルタ (Kernel / filter) | "特徴検出器" | 形状 (C_in, K, K) の小さな weight tensor。入力 window との dot product により 1 つの出力ピクセルを作る |
+| ストライド (Stride) | "どれだけ飛ぶか" | 連続するカーネル配置の間の step size。stride 2 は各空間次元を半分にする |
+| パディング (Padding) | "端のゼロ" | カーネルが border pixel を中心に置けるように、入力の周囲に追加する値。`same` padding は出力サイズを入力サイズと等しく保つ |
+| 受容野 (Receptive field) | "ニューロンがどれだけ見ているか" | ある出力 activation が依存する元入力の patch。深さと stride によって広がる |
+| im2col | "GEMM のトリック" | すべての receptive window を列へ並べ替え、畳み込みを大きな行列積にすること。高速 conv kernel の中核 |
+| Depthwise conv | "チャンネルごとに 1 つのカーネル" | `groups == C_in` の conv。各出力チャンネルを対応する入力チャンネルだけから計算する。MobileNet と ConvNeXt の backbone |
+| 平行移動同変性 (Translation equivariance) | "入力をずらすと出力もずれる" | 入力を k ピクセルずらすと出力も k ピクセルずれる性質。共有重みによって自然に得られる |
 
-## Further Reading
+## 追加資料
 
-- [A guide to convolution arithmetic for deep learning (Dumoulin & Visin, 2016)](https://arxiv.org/abs/1603.07285) — the definitive diagrams of padding/stride/dilation that every course quietly copies
-- [CS231n: Convolutional Neural Networks for Visual Recognition](https://cs231n.github.io/convolutional-networks/) — the canonical lecture notes, including the original im2col explanation
-- [The Annotated ConvNet (fast.ai)](https://nbviewer.org/github/fastai/fastbook/blob/master/13_convolutions.ipynb) — a notebook that walks from manual convolution to a trained digit classifier
-- [Receptive Field Arithmetic for CNNs (Dang Ha The Hien)](https://distill.pub/2019/computing-receptive-fields/) — the paper-quality interactive explainer of receptive field calculations
+- [A guide to convolution arithmetic for deep learning (Dumoulin & Visin, 2016)](https://arxiv.org/abs/1603.07285)：padding、stride、dilation の決定版の図解。多くの講義が密かに参照している資料です。
+- [CS231n: Convolutional Neural Networks for Visual Recognition](https://cs231n.github.io/convolutional-networks/)：元祖 im2col の説明を含む定番の講義ノート。
+- [The Annotated ConvNet (fast.ai)](https://nbviewer.org/github/fastai/fastbook/blob/master/13_convolutions.ipynb)：手動畳み込みから学習済み digit classifier まで進む notebook。
+- [Receptive Field Arithmetic for CNNs (Dang Ha The Hien)](https://distill.pub/2019/computing-receptive-fields/)：受容野計算についての論文品質の interactive explainer。

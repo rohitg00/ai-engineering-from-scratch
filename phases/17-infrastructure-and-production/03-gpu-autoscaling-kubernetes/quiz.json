@@ -4,7 +4,7 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which signal does HPA typically scale on by default that the lesson calls broken for vLLM-style serving?",
+      "question": "このレッスンが vLLM-style serving では壊れているとする、HPA が通常 default で scale する signal はどれですか。",
       "options": [
         "Queue depth",
         "P99 TTFT",
@@ -16,11 +16,11 @@
     },
     {
       "stage": "check",
-      "question": "Which problem does gang scheduling in KAI Scheduler primarily prevent?",
+      "question": "KAI Scheduler の gang scheduling は主にどの問題を防ぎますか。",
       "options": [
         "GPU memory fragmentation",
         "Tokenizer GIL contention",
-        "The partial-allocation trap where 7 of 8 GPUs sit idle waiting on the eighth",
+        "8 GPU 中7 GPU が8つ目を待って idle になる partial-allocation trap",
         "Cold-start latency"
       ],
       "correct": 2,
@@ -28,48 +28,48 @@
     },
     {
       "stage": "check",
-      "question": "Why is Karpenter's default consolidationPolicy WhenEmptyOrUnderutilized dangerous for inference GPU pools?",
+      "question": "Karpenter の default consolidationPolicy WhenEmptyOrUnderutilized が inference GPU pools で危険な理由は何ですか。",
       "options": [
-        "It refuses to scale up under burst",
-        "It only consolidates spot instances",
-        "It terminates running GPU nodes to migrate pods, which evicts running requests and reloads weights",
-        "It prevents Karpenter from provisioning new nodes"
+        "burst 中の scale up を拒否するから",
+        "spot instances だけを consolidate するから",
+        "pods を移行するため running GPU nodes を terminate し、running requests を evict して weights を reload するから",
+        "Karpenter が新しい nodes を provision するのを妨げるから"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Roughly how much faster is Karpenter at provisioning a GPU node compared to Cluster Autoscaler?",
+      "question": "Cluster Autoscaler と比べて、Karpenter は GPU node の provisioning がどの程度速いですか。",
       "options": [
-        "Roughly 40% faster (~45-60s vs ~90-120s)",
-        "About 10x slower",
-        "The same",
-        "About 5% faster"
+        "およそ40%高速（~45-60s vs ~90-120s）",
+        "約10倍遅い",
+        "同じ",
+        "約5%高速"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "For disaggregated prefill / decode pods (Phase 17 · 17), which scaling signals does the lesson recommend?",
+      "question": "disaggregated prefill / decode pods（Phase 17 · 17）について、このレッスンはどの scaling signals を推奨していますか。",
       "options": [
-        "Manual scaling only",
-        "A single HPA on duty cycle covering both pod classes",
-        "Queue depth for prefill pods and KV cache pressure for decode pods, as separate per-role HPAs",
-        "Cluster Autoscaler for both"
+        "manual scaling のみ",
+        "両方の pod classes を覆う duty cycle 上の単一 HPA",
+        "prefill pods には queue depth、decode pods には KV cache pressure を使う separate per-role HPAs",
+        "両方に Cluster Autoscaler"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which Karpenter disruption setting does the lesson recommend for an inference GPU pool to avoid evicting running jobs?",
+      "question": "running jobs の eviction を避けるため、このレッスンが inference GPU pool に推奨する Karpenter disruption setting はどれですか。",
       "options": [
         "consolidationPolicy: WhenEmptyOrUnderutilized with consolidateAfter: 0s",
         "consolidationPolicy: WhenEmpty with consolidateAfter: 1h",
-        "Always run with spot instances and no consolidation",
-        "Disable Karpenter entirely"
+        "常に spot instances を使い consolidation なし",
+        "Karpenter を完全に無効化する"
       ],
       "correct": 1,
       "explanation": ""

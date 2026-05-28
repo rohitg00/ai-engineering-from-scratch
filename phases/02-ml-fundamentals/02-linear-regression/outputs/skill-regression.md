@@ -1,65 +1,65 @@
 ---
 name: skill-regression
-description: Choose the right regression approach based on data characteristics and problem constraints
+description: データ特性と問題制約にもとづいて適切な回帰手法を選ぶ
 version: 1.0.0
 phase: 2
 lesson: 2
 tags: [regression, linear-regression, polynomial-regression, ridge, regularization]
 ---
 
-# Regression Strategy Guide
+# 回帰戦略ガイド
 
-Regression predicts continuous values. The right approach depends on the relationship between features and target, the number of features, and the risk of overfitting.
+回帰は連続値を予測します。適切な手法は、特徴量とターゲットの関係、特徴量の数、過学習リスクによって変わります。
 
-## Decision Checklist
+## 判断チェックリスト
 
-1. Is the relationship between features and target approximately linear?
-   - Yes: start with ordinary linear regression
-   - No: try polynomial features or a nonlinear model
+1. 特徴量とターゲットの関係はおおむね線形ですか？
+   - はい: 通常の線形回帰から始める
+   - いいえ: 多項式特徴量または非線形モデルを試す
 
-2. How many features do you have relative to samples?
-   - Few features, many samples: ordinary linear regression works fine
-   - Many features, few samples: use regularization (Ridge or Lasso)
-   - More features than samples: Lasso (L1) to select features, or Ridge (L2) to shrink all weights
+2. サンプル数に対して特徴量はいくつありますか？
+   - 特徴量が少なく、サンプルが多い: 通常の線形回帰で十分
+   - 特徴量が多く、サンプルが少ない: 正則化（Ridge または Lasso）を使う
+   - サンプルより特徴量が多い: 特徴量選択には Lasso（L1）、すべての重みを縮小するには Ridge（L2）
 
-3. Do you need interpretability?
-   - Yes: linear regression with few features, or Lasso for automatic feature selection
-   - No: polynomial features, or move to tree-based models or neural networks
+3. 解釈性は必要ですか？
+   - はい: 少数特徴量の線形回帰、または自動特徴量選択のための Lasso
+   - いいえ: 多項式特徴量、または木ベースモデルやニューラルネットワークへ進む
 
-4. Is your dataset small (under 10,000 rows)?
-   - Use the normal equation (closed-form solution) for speed
-   - Cross-validation is essential for reliable evaluation
+4. データセットは小さいですか（10,000 行未満）？
+   - 速度のために正規方程式（閉形式解）を使う
+   - 信頼できる評価には交差検証が不可欠
 
-5. Is your dataset large (millions of rows)?
-   - Use stochastic gradient descent (SGD) or mini-batch gradient descent
-   - The normal equation is too slow due to O(n^3) matrix inversion
+5. データセットは大きいですか（数百万行）？
+   - 確率的勾配降下法（SGD）またはミニバッチ勾配降下法を使う
+   - 正規方程式は O(n^3) の行列反転が必要なため遅すぎる
 
-## When to use each approach
+## 各手法を使う場面
 
-**Ordinary Linear Regression**: baseline for any regression task. Start here. If R-squared is acceptable and the model is simple, stop here.
+**通常の線形回帰**: あらゆる回帰タスクのベースライン。ここから始めます。R-squared が許容範囲でモデルも単純なら、ここで止めます。
 
-**Polynomial Regression**: the scatter plot shows a curve, not a line. Start with degree 2. Increase only if justified by validation performance. Degree > 5 almost always overfits.
+**多項式回帰**: 散布図が直線ではなく曲線を示している場合。2 次から始めます。検証性能で正当化できる場合だけ次数を上げます。5 次を超えるとほぼ常に過学習します。
 
-**Ridge Regression (L2)**: many correlated features. All weights shrink toward zero but none become exactly zero. Good when you believe all features contribute.
+**Ridge 回帰（L2）**: 相関した特徴量が多い場合。すべての重みはゼロへ近づきますが、正確にゼロにはなりません。すべての特徴量が寄与すると考える場合に適しています。
 
-**Lasso Regression (L1)**: many features and you suspect only a few matter. Lasso drives irrelevant feature weights to exactly zero, performing automatic feature selection.
+**Lasso 回帰（L1）**: 特徴量が多く、そのうち重要なのは一部だけだと考える場合。Lasso は不要な特徴量の重みを正確にゼロにし、自動特徴量選択を行います。
 
-**Elastic Net**: combines L1 and L2 penalties. Use when you have many correlated features and want some feature selection.
+**Elastic Net**: L1 と L2 の罰則を組み合わせます。相関した特徴量が多く、ある程度の特徴量選択も行いたい場合に使います。
 
-## Common mistakes
+## よくある間違い
 
-- Skipping feature scaling before gradient descent (convergence becomes extremely slow)
-- Using test set performance to tune hyperparameters (use validation set or cross-validation)
-- Fitting high-degree polynomials without checking validation error (training R^2 always increases with degree)
-- Ignoring residual plots (R^2 can be misleading if residuals show patterns)
-- Treating R^2 as the only metric (check residual distribution, MAE, and domain-specific thresholds)
+- 勾配降下法の前に特徴量スケーリングを省略する（収束が非常に遅くなる）
+- ハイパーパラメータ調整にテストセット性能を使う（検証セットまたは交差検証を使う）
+- 検証誤差を確認せずに高次多項式を当てはめる（訓練 R^2 は次数とともに常に増える）
+- 残差プロットを無視する（残差にパターンがある場合、R^2 は誤解を招く）
+- R^2 だけを指標として扱う（残差分布、MAE、ドメイン固有のしきい値も確認する）
 
-## Quick reference
+## クイックリファレンス
 
-| Method | When to use | Regularization | Feature selection |
+| 手法 | 使う場面 | 正則化 | 特徴量選択 |
 |--------|------------|---------------|-------------------|
-| OLS | Baseline, few features | None | Manual |
-| Ridge | Many features, all relevant | L2 (shrink) | No |
-| Lasso | Many features, few relevant | L1 (zero out) | Automatic |
-| Elastic Net | Many correlated features | L1 + L2 | Partial |
-| Polynomial | Nonlinear relationship | Add Ridge/Lasso on top | Manual degree choice |
+| OLS | ベースライン、少数特徴量 | なし | 手動 |
+| Ridge | 特徴量が多く、すべてが関連 | L2（縮小） | なし |
+| Lasso | 特徴量が多く、一部だけが関連 | L1（ゼロ化） | 自動 |
+| Elastic Net | 相関した特徴量が多い | L1 + L2 | 部分的 |
+| Polynomial | 非線形の関係 | 必要に応じて Ridge/Lasso を追加 | 手動で次数を選択 |

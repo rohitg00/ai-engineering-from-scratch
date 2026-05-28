@@ -1,34 +1,34 @@
 ---
 name: handoff-designer
-description: Design a handoff topology for a Swarm/Agents-SDK-style system: which agents exist, which handoffs they can call, what context transfers.
+description: Swarm/Agents-SDK-style system の handoff topology を設計する。どの agent が存在し、どの handoff を呼べ、どの context を transfer するかを定義する。
 version: 1.0.0
 phase: 16
 lesson: 11
 tags: [multi-agent, swarm, handoff, openai-agents-sdk]
 ---
 
-Given a user-facing task (often triage or skill-based routing), produce a handoff topology ready to map onto OpenAI Swarm or the OpenAI Agents SDK.
+user-facing task (多くは triage または skill-based routing) を受け取り、OpenAI Swarm または OpenAI Agents SDK に map できる handoff topology を作る。
 
 Produce:
 
-1. **Agent roster.** Each agent: name, one-sentence purpose, tools, and which other agents it can hand off to.
-2. **Handoff functions.** The tool signatures per agent. Each handoff function returns a target Agent.
-3. **Context transfer policy.** On each handoff edge: full history, last N messages, or summarized snapshot. Justify.
-4. **Guardrails.** Input validation per agent (what prompts are allowed to trigger handoffs to sensitive specialists), authentication on handoff where needed.
-5. **Loop detection.** Rule to detect ping-pong (e.g., "A handed off to B; B handed off back to A" occurring more than once in a row).
-6. **Fallback behavior.** If a handoff target is missing (removed agent, auth failure), which agent handles the session.
-7. **Session / memory plan.** Whether to use Agents SDK sessions, caller-managed memory, or no memory at all.
+1. **Agent roster.** 各 agent: name、1文の purpose、tools、どの他 agent に hand off できるか。
+2. **Handoff functions.** agent ごとの tool signatures。各 handoff function は target Agent を返す。
+3. **Context transfer policy.** 各 handoff edge で full history、last N messages、summarized snapshot のどれを使うか。理由も書く。
+4. **Guardrails.** agent ごとの input validation (sensitive specialist への handoff を trigger してよい prompt)、必要な箇所の handoff authentication。
+5. **Loop detection.** ping-pong を検出する rule (例: "A handed off to B; B handed off back to A" が連続して複数回起きる)。
+6. **Fallback behavior.** handoff target が missing (removed agent、auth failure) のとき、どの agent が session を扱うか。
+7. **Session / memory plan.** Agents SDK sessions、caller-managed memory、または memory なしのどれを使うか。
 
 Hard rejects:
 
-- Any handoff design without loop detection.
-- Handoff functions that pass full history to specialists with different tool permissions (security risk).
-- Designs that assume Swarm's stateless behavior but then require multi-turn memory — use Agents SDK sessions instead.
+- loop detection がない handoff design。
+- 異なる tool permission を持つ specialist に full history を渡す handoff functions (security risk)。
+- Swarm の stateless behavior を仮定しながら multi-turn memory を必要とする design — 代わりに Agents SDK sessions を使う。
 
 Refusal rules:
 
-- If the task needs parallel execution, refuse Swarm and recommend supervisor (Lesson 05) instead.
-- If the task needs deterministic audit/replay, refuse and recommend LangGraph static graph.
-- If the task is a simple DAG of stages (research → code → review), recommend CrewAI Sequential instead.
+- task が parallel execution を必要とする場合、Swarm を拒否し supervisor (Lesson 05) を推奨する。
+- task が deterministic audit/replay を必要とする場合、拒否して LangGraph static graph を推奨する。
+- task が単純な stage DAG (research → code → review) の場合、CrewAI Sequential を推奨する。
 
-Output: a one-page handoff brief. Close with a security note on how prompt injection could trigger unwanted handoffs and what guardrails block it.
+Output: 1ページの handoff brief。最後に、prompt injection がどのように unwanted handoff を trigger し得るか、どの guardrail がそれを防ぐかという security note で締める。

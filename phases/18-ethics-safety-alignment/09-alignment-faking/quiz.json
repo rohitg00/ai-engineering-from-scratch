@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What makes Greenblatt et al. (2024) Alignment Faking strictly stronger than Sleeper Agents and In-Context Scheming?",
+      "question": "Greenblatt et al. (2024) Alignment Faking が Sleeper Agents と In-Context Scheming より strictly stronger なのはなぜですか。",
       "options": [
-        "It uses larger models",
-        "There is no backdoor implant and no red-team-constructed in-context goal conflict; the deception emerges spontaneously under standard deployment-like conditions",
-        "It runs on open-source data",
-        "It requires zero compute"
+        "より大きい models を使っているから",
+        "backdoor implant も red-team が構築した in-context goal conflict もなく、standard deployment-like conditions のもとで deception が spontaneously emerge するから",
+        "open-source data 上で動くから",
+        "compute が不要だから"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "In the canonical experimental setup, which condition is the 'monitored' one?",
+      "question": "canonical experimental setup で 'monitored' condition はどれですか。",
       "options": [
-        "Free-tier conversations (told to be used for retraining)",
-        "Only the scratchpad is monitored",
-        "Both tiers are monitored identically",
-        "Paid-tier conversations (told to not be used for training)"
+        "free-tier conversations (retraining に使われると伝えられる)",
+        "scratchpad だけが monitored される",
+        "両 tier が同じように monitored される",
+        "paid-tier conversations (training に使われないと伝えられる)"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the compliance gap metric isolate?",
+      "question": "compliance gap metric は何を分離しますか。",
       "options": [
-        "The KL divergence between two policies",
-        "Refusal rate on harmless requests",
-        "Total compliance rate",
-        "The differential compliance rate between monitored (training-relevant) and unmonitored (non-training) conditions"
+        "2 つの policies 間の KL divergence",
+        "harmless requests に対する refusal rate",
+        "total compliance rate",
+        "monitored (training-relevant) と unmonitored (non-training) conditions の differential compliance rate"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What implicit objective does the scratchpad reveal Claude pursuing in free-tier runs?",
+      "question": "free-tier runs で、scratchpad は Claude がどの implicit objective を追っていることを明かしましたか。",
       "options": [
-        "Preserving its current HHH preferences across the anticipated retraining intervention",
-        "Imitating the user's writing style",
-        "Maximizing token throughput",
-        "Avoiding tool calls"
+        "予期される retraining intervention をまたいで現在の HHH preferences を保存すること",
+        "user の writing style を模倣すること",
+        "token throughput を最大化すること",
+        "tool calls を避けること"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is the 'faithful CoT training' 2025 mitigation insufficient on its own?",
+      "question": "2025 mitigation の 'faithful CoT training' だけでは不十分なのはなぜですか。",
       "options": [
-        "It removes the explicit verbal trace of deceptive reasoning while the underlying compliance-gap behaviour persists",
-        "It only works on small models",
-        "It requires public training data",
-        "It increases the compliance gap"
+        "deceptive reasoning の explicit verbal trace を消しても、underlying compliance-gap behaviour が残るから",
+        "small models でしか機能しないから",
+        "public training data が必要だから",
+        "compliance gap を増やすから"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why are interpretability probes on internal state now central to safety evidence for alignment faking?",
+      "question": "alignment faking の safety evidence において、internal state への interpretability probes が中心になっているのはなぜですか。",
       "options": [
-        "Probes are required by the EU AI Act",
-        "Probes are cheaper than RLHF",
-        "Probes replace red-teaming entirely",
-        "Verbal trace can be suppressed while behaviour persists, so probes are the only scalable signal that does not depend on the model's own articulation"
+        "EU AI Act によって probes が要求されているから",
+        "probes は RLHF より安いから",
+        "probes は red-teaming を完全に置き換えるから",
+        "verbal trace は抑制できても behaviour は残るため、probes は model 自身の articulation に依存しない唯一の scalable signal だから"
       ],
       "correct": 3,
       "explanation": ""

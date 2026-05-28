@@ -1,36 +1,36 @@
 ---
 name: handoff-generator
-description: Generate end-of-session handoff packets from workbench artifacts, producing both human-readable Markdown and machine-readable JSON keyed to the seven canonical fields.
+description: workbench artifacts から session-end handoff packets を生成し、7つの canonical fields に対応する human-readable Markdown と machine-readable JSON の両方を作る。
 version: 1.0.0
 phase: 14
 lesson: 40
 tags: [handoff, generator, session-end, packet, next-action]
 ---
 
-Given a workbench (state, verdict, review, feedback log, diff), produce a session-end handoff generator wired into the agent runtime.
+workbench (state、verdict、review、feedback log、diff) を受け取り、agent runtime に接続された session-end handoff generator を作成してください。
 
-Produce:
+作成するもの:
 
-1. `tools/generate_handoff.py` exposing `generate_handoff(snapshot) -> (markdown, payload)`.
-2. `outputs/handoff/<session_id>/handoff.md` and `handoff.json`.
-3. `handoff.schema.json` covering the seven required fields and the feedback tail format.
-4. Session-end hook script that runs the generator and refuses to close the session if any field is missing.
-5. `docs/handoff.md` listing the seven fields, their sources, and the trimming policy.
+1. `generate_handoff(snapshot) -> (markdown, payload)` を公開する `tools/generate_handoff.py`。
+2. `outputs/handoff/<session_id>/handoff.md` と `handoff.json`。
+3. 7つの required fields と feedback tail format を cover する `handoff.schema.json`。
+4. generator を実行し、field が欠けていれば session close を拒否する session-end hook script。
+5. 7つの fields、それぞれの sources、trimming policy を列挙する `docs/handoff.md`。
 
-Hard rejects:
+ハード拒否条件:
 
-- A handoff without a `next_action`. Status reports masquerading as handoffs poison the next session.
-- A generator that hand-writes the summary. The agent's job is to leave the workbench in a generatable state.
-- A markdown packet that diverges from the JSON. JSON is the source; markdown is a render of JSON.
-- A feedback tail longer than 30 entries. The full log is in version control; the packet must stay small.
+- `next_action` のない handoff。handoff を装った status report は次 session を汚染する。
+- summary を手書きする generator。agent の仕事は workbench を生成可能な state に残すこと。
+- JSON と食い違う markdown packet。JSON が source で、markdown は JSON の render。
+- 30 entries を超える feedback tail。full log は version control にあり、packet は小さく保つ。
 
-Refusal rules:
+拒否ルール:
 
-- If the verification report is missing, refuse to generate the packet. A handoff without a verdict is a wish.
-- If the review report is missing and a human reviewer was expected, refuse and require the review pass first.
-- If the diff summary is empty but the session ran longer than 5 minutes, surface the anomaly before generating; suspect a wedged session rather than a real no-op.
+- verification report が欠けている場合、packet 生成を拒否する。verdict のない handoff は願望。
+- review report が欠けていて human reviewer が期待されていた場合、拒否して review pass を先に要求する。
+- diff summary が empty だが session が5分を超えていた場合、生成前に anomaly を surface する。real no-op ではなく wedged session を疑う。
 
-Output structure:
+出力構成:
 
 ```
 <repo>/
@@ -42,8 +42,8 @@ Output structure:
 └── docs/handoff.md
 ```
 
-End with "what to read next" pointing to:
+最後に "what to read next" として次を示してください。
 
-- Lesson 41 for end-to-end exercise on a real-style sample app.
-- Lesson 42 for packaging the generator into the capstone workbench pack.
-- Lesson 29 (Production Runtimes) for wiring session-end into queue, event, and cron triggers.
+- real-style sample app での end-to-end exercise は Lesson 41。
+- generator を capstone workbench pack に package する Lesson 42。
+- session-end を queue、event、cron triggers に接続する Lesson 29 (Production Runtimes)。

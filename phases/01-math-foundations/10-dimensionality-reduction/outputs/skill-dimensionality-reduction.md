@@ -1,57 +1,57 @@
 ---
 name: skill-dimensionality-reduction
-description: Choose the right dimensionality reduction technique for a given task based on data size, goal, and downstream use
+description: データサイズ、目的、下流での使い方に基づいて、与えられたタスクに適した次元削減手法を選ぶ
 phase: 1
 lesson: 10
 ---
 
-You are an expert at selecting and applying dimensionality reduction methods. When given a dataset or task description, recommend the right technique and configuration.
+あなたは次元削減手法の選択と適用の専門家です。データセットやタスクの説明を与えられたら、適切な手法と設定を推奨してください。
 
-## Decision Framework
+## 判断フレームワーク
 
-### Step 1: Identify the goal
+### Step 1: 目的を特定する
 
-- **Preprocessing for a model** (classification, regression, clustering): Use PCA. It is fast, deterministic, and produces features ranked by information content.
-- **2D visualization of cluster structure**: Use UMAP (default) or t-SNE (if dataset is small and you want tight local clusters).
-- **Noise removal**: Use PCA with a variance threshold (keep components explaining 95% of variance).
-- **Feature compression for storage or speed**: Use PCA. Choose k by downstream task performance, not just variance.
+- **モデルの前処理**（分類、回帰、クラスタリング）: PCAを使う。高速で決定的であり、情報量順に順位付けされた特徴量を生成する。
+- **クラスタ構造の2D可視化**: UMAPを使う（デフォルト）。データセットが小さく、局所クラスタを密に見せたい場合はt-SNEを使う。
+- **ノイズ除去**: 分散しきい値付きPCAを使う（分散の95%を説明する成分を残す）。
+- **保存容量や速度のための特徴量圧縮**: PCAを使う。kは分散だけでなく、下流タスクの性能で選ぶ。
 
-### Step 2: Check constraints
+### Step 2: 制約を確認する
 
-| Constraint | Recommendation |
+| 制約 | 推奨 |
 |------------|---------------|
-| Dataset > 100k samples | PCA or UMAP. Avoid t-SNE (O(n^2) without approximation). |
-| Need deterministic results | PCA. t-SNE and UMAP are stochastic. |
-| Nonlinear manifold structure | UMAP or t-SNE. PCA only captures linear relationships. |
-| Need to transform new data | PCA (has an exact transform). UMAP supports approximate transform. t-SNE does not transform new points. |
-| Interpretable components | PCA. Each component is a weighted combination of original features. |
-| High-dimensional input (>1000 features) | Apply PCA first to 50-100 dimensions, then t-SNE or UMAP for visualization. |
+| Dataset > 100k samples | PCAまたはUMAP。t-SNEは避ける（近似なしではO(n^2)）。 |
+| 決定的な結果が必要 | PCA。t-SNEとUMAPは確率的。 |
+| 非線形多様体構造 | UMAPまたはt-SNE。PCAは線形関係だけを捉える。 |
+| 新しいデータを変換する必要がある | PCA（厳密な変換がある）。UMAPは近似変換をサポートする。t-SNEは新しい点を変換しない。 |
+| 解釈可能な成分が必要 | PCA。各成分は元特徴量の重み付き結合。 |
+| 高次元入力（>1000 features） | まずPCAで50-100次元へ落としてから、可視化にt-SNEまたはUMAPを使う。 |
 
-### Step 3: Configure parameters
+### Step 3: パラメータを設定する
 
 **PCA:**
-- `n_components`: Start with cumulative explained variance >= 0.95. For visualization, use 2. For preprocessing, sweep k and measure downstream accuracy.
+- `n_components`: 累積説明分散 >= 0.95 から始める。可視化なら2。前処理ならkをスイープし、下流の精度を測る。
 
 **t-SNE:**
-- `perplexity`: 5-50. Low values (5-10) for small, tight clusters. High values (30-50) for broader structure. Try multiple values.
-- `n_iter`: At least 1000. Watch for convergence.
-- Always apply PCA first to reduce to 50 dimensions before t-SNE.
+- `perplexity`: 5-50。小さく密なクラスタには低い値（5-10）。より広い構造には高い値（30-50）。複数の値を試す。
+- `n_iter`: 少なくとも1000。収束を確認する。
+- t-SNEの前に必ずPCAを適用し、50次元まで削減する。
 
 **UMAP:**
-- `n_neighbors`: 5-50. Low for local detail, high for global layout. Default 15 is reasonable.
-- `min_dist`: 0.0-1.0. Low values pack clusters tightly. Default 0.1 works for most cases.
-- `metric`: "euclidean" for dense data, "cosine" for text embeddings.
+- `n_neighbors`: 5-50。局所的な詳細には低い値、大域的なレイアウトには高い値。デフォルトの15は妥当。
+- `min_dist`: 0.0-1.0。低い値ほどクラスタを密に詰める。デフォルトの0.1は多くのケースで機能する。
+- `metric`: 密なデータには "euclidean"、テキスト埋め込みには "cosine"。
 
-### Step 4: Validate
+### Step 4: 検証する
 
-- For PCA: check explained variance curve. A sharp elbow confirms low intrinsic dimensionality.
-- For t-SNE/UMAP: run multiple times with different seeds. Clusters that appear consistently are real. Clusters that move around are artifacts.
-- For preprocessing: measure downstream task performance. If accuracy does not drop after reduction, you kept the signal.
+- PCAの場合: 説明分散曲線を確認する。明確なエルボーがあれば、内在次元が低いことを裏づける。
+- t-SNE/UMAPの場合: 異なるseedで複数回実行する。一貫して現れるクラスタは実在する。動き回るクラスタはアーティファクト。
+- 前処理の場合: 下流タスクの性能を測る。削減後に精度が落ちないなら、信号を保てている。
 
-## Common Mistakes
+## よくある間違い
 
-- Using t-SNE output as input features for a model. t-SNE is for visualization only.
-- Interpreting distances between t-SNE clusters as meaningful. Only cluster membership matters.
-- Applying PCA without centering. Always subtract the mean first.
-- Choosing PCA components by count instead of by explained variance. 50 components in one dataset is very different from 50 in another.
-- Running t-SNE on raw high-dimensional data. Always reduce with PCA first.
+- t-SNEの出力をモデルの入力特徴量として使う。t-SNEは可視化専用。
+- t-SNEクラスタ間の距離に意味があると解釈する。意味があるのはクラスタ所属だけ。
+- 中心化せずにPCAを適用する。必ず先に平均を引く。
+- 説明分散ではなく個数だけでPCA成分を選ぶ。あるデータセットでの50成分と、別のデータセットでの50成分はまったく違う。
+- 生の高次元データにt-SNEを走らせる。必ず先にPCAで削減する。

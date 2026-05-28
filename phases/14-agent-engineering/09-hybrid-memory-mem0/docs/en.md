@@ -1,46 +1,46 @@
 # Hybrid Memory: Vector + Graph + KV (Mem0)
 
-> Mem0 (Chhikara et al., 2025) treats memory as three stores in parallel — vector for semantic similarity, KV for fast fact lookup, graph for entity-relationship reasoning. A scoring layer fuses the three on retrieval. This is the 2026 production standard for external memory.
+> Mem0 (Chhikara et al., 2025) は memory を 3 つの store の並列構成として扱います。Semantic similarity 用の vector、高速 fact lookup 用の KV、entity-relationship reasoning 用の graph です。Retrieval では scoring layer が 3 つを fusion します。これは 2026 年の external memory における production standard です。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python (stdlib)
+**前提条件:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
+**所要時間:** 約75分
 
 ## Learning Objectives
 
-- Explain why a single store (vector only, graph only, KV only) is insufficient for agent memory.
-- Name Mem0's three parallel stores and what each one optimizes for.
-- Describe Mem0's fusion scoring — relevance, importance, recency — and why it is a weighted sum, not a hierarchy.
-- Implement a toy three-store memory in stdlib with an `add()` that writes to all three and a `search()` that fuses results.
+- 単一 store (vector only, graph only, KV only) が agent memory に不十分な理由を説明する。
+- Mem0 の 3 つの parallel stores と、それぞれが何を最適化するかを述べる。
+- Mem0 の fusion scoring — relevance, importance, recency — と、それが hierarchy ではなく weighted sum である理由を説明する。
+- `add()` が 3 store すべてへ write し、`search()` が結果を fuse する toy three-store memory を stdlib で実装する。
 
-## The Problem
+## 問題
 
-One store is wrong for one of three query classes:
+1 つの store は、3 つの query class のうち 1 つで必ず間違います。
 
-- **Semantic similarity** — "what did we discuss about agent drift last week?" Vector wins; KV and graph miss.
-- **Fact lookup** — "what is the user's phone number?" KV wins; vector is wasteful, graph is overkill.
-- **Relationship reasoning** — "which customers share the same billing entity?" Graph wins; vector and KV cannot answer.
+- **Semantic similarity** — 「先週 agent drift について何を議論したか」。Vector が勝ち、KV と graph は取り逃がします。
+- **Fact lookup** — 「user の phone number は何か」。KV が勝ち、vector は無駄が多く、graph は overkill です。
+- **Relationship reasoning** — 「同じ billing entity を共有する customer はどれか」。Graph が勝ち、vector と KV では答えられません。
 
-Production agents issue all three in one session. A single-store memory is always wrong for two of them. Mem0's contribution is wiring all three behind a single `add`/`search` surface with a scoring function that fuses them.
+Production agents は 1 session の中で 3 つすべてを発行します。Single-store memory は常にそのうち 2 つで間違います。Mem0 の貢献は、3 つすべてを single `add`/`search` surface の裏に配線し、scoring function で fusion することです。
 
 ## The Concept
 
 ### Three stores in parallel
 
-Mem0 (arXiv:2504.19413, April 2025) on `add(text, user_id, metadata)`:
+Mem0 (arXiv:2504.19413, April 2025) は `add(text, user_id, metadata)` で次を行います。
 
-1. Extract candidate facts from the text (an LLM-driven step).
-2. Write each fact to the vector store (embedding) for semantic search.
-3. Write each fact to the KV store keyed on (user_id, fact_type, entity) for O(1) lookup.
-4. Write each fact to the graph store (Mem0g) as typed edges for relationship queries.
+1. Text から candidate facts を抽出する (LLM-driven step)。
+2. 各 fact を vector store (embedding) へ書き、semantic search に使う。
+3. 各 fact を (user_id, fact_type, entity) を key とする KV store に書き、O(1) lookup に使う。
+4. 各 fact を graph store (Mem0g) に typed edges として書き、relationship queries に使う。
 
-On `search(query, user_id)`:
+`search(query, user_id)` では次を行います。
 
-1. Vector store returns top-k by embedding cosine.
-2. KV store returns direct hits keyed on query-derived (user_id, type, entity).
-3. Graph store returns subgraph reachable from query entities.
-4. A scoring layer fuses the three.
+1. Vector store が embedding cosine による top-k を返す。
+2. KV store が query から導いた (user_id, type, entity) key の direct hits を返す。
+3. Graph store が query entities から reachable な subgraph を返す。
+4. Scoring layer が 3 つを fuse する。
 
 ### Fusion scoring
 
@@ -50,96 +50,96 @@ score = w_relevance * relevance(q, record)
       + w_recency * recency(record)
 ```
 
-- **Relevance** — vector cosine, KV exact match, graph path weight.
-- **Importance** — tagged at write time or learned (some facts matter more: names, IDs, policies).
-- **Recency** — exponential decay over time since last write or read.
+- **Relevance** — vector cosine、KV exact match、graph path weight。
+- **Importance** — write 時に tag するか learned にする (name, ID, policy など一部の facts はより重要)。
+- **Recency** — 最終 write または read からの経過時間に対する exponential decay。
 
-Weights are tuned per product. Higher `w_recency` for chat agents; higher `w_importance` for compliance agents; higher `w_relevance` for retrieval agents.
+Weights は product ごとに tune します。Chat agents では `w_recency` を高く、compliance agents では `w_importance` を高く、retrieval agents では `w_relevance` を高くします。
 
 ### Mem0g and temporal reasoning
 
-Mem0g adds a conflict detector. When a new fact contradicts an existing edge, the existing edge is marked invalid but not deleted. Temporal queries ("what was the user's city in March?") traverse the valid-at-time subgraph.
+Mem0g は conflict detector を追加します。新しい fact が既存 edge と矛盾する場合、既存 edge は delete されず invalid と mark されます。Temporal query (「3 月時点で user の city は何だったか」) は valid-at-time subgraph を traverse します。
 
-This is the compliance-grade behavior Letta's invalidation pattern generalizes.
+これは Letta の invalidation pattern を compliance-grade にした behavior です。
 
 ### Benchmark numbers
 
-The Mem0 paper reports (2025):
+Mem0 paper は 2025 年に次を報告しています。
 
 - **LoCoMo** (long-form conversation memory): 91.6
 - **LongMemEval** (long-horizon episodic memory): 93.4
 - **BEAM 1M** (1M-token memory benchmark): 64.1
 
-Comparison baselines (full-context 128k LLM, flat vector store, flat KV) all lose by 10+ points. Benchmarks alone don't justify choice — operational shape does — but the numbers show the fusion design is not a rounding error.
+Comparison baselines (full-context 128k LLM, flat vector store, flat KV) はすべて 10+ points 差で負けています。Benchmark だけで選定は正当化できません。Operational shape が決め手です。ただし、この数字は fusion design が誤差ではないことを示しています。
 
 ### Scope taxonomy
 
-Mem0 splits memory by scope:
+Mem0 は memory を scope で分けます。
 
-- **User memory** — persists across sessions, keyed on `user_id`.
-- **Session memory** — persists within one thread.
-- **Agent memory** — per-agent instance state.
+- **User memory** — session をまたいで persist し、`user_id` で key される。
+- **Session memory** — 1 つの thread 内で persist する。
+- **Agent memory** — agent instance ごとの state。
 
-Every write picks one scope. Retrieval can query across scopes with per-scope weights. Mixing scopes without thought is how you get "the assistant told Alice about Bob's project" incidents.
+すべての write は scope を 1 つ選びます。Retrieval は per-scope weights で scope 横断 query ができます。考えずに scope を混ぜると、「assistant が Alice に Bob の project を話してしまう」incident が起きます。
 
 ### Where this pattern goes wrong
 
-- **Embedding drift.** Vector results that look right on the first hundred queries degrade as the corpus grows. Add periodic re-embedding of the top-N-used records.
-- **KV schema creep.** `(user_id, type, entity)` looks simple until every team adds their own `type`. Audit the type set quarterly.
-- **Graph explosion.** One noisy extractor adds 50 edges per message. Cap graph writes per `add` call; drop low-confidence edges.
+- **Embedding drift.** 最初の 100 queries では正しく見えた vector results が corpus growth とともに劣化します。Top-N-used records を periodic re-embedding します。
+- **KV schema creep.** `(user_id, type, entity)` は simple に見えますが、team ごとに独自 `type` を追加し始めます。Type set を quarterly audit します。
+- **Graph explosion.** Noisy extractor が 1 message あたり 50 edges を追加します。`add` call ごとの graph writes を cap し、low-confidence edges を drop します。
 
-## Build It
+## 実装
 
-`code/main.py` implements the three-store pattern in stdlib:
+`code/main.py` は 3-store pattern を stdlib で実装します。
 
-- `VectorStore` — naive token-overlap similarity as an embedding stand-in.
-- `KVStore` — dict keyed on `(user_id, fact_type, entity)`.
-- `GraphStore` — typed edges (subject, relation, object, valid).
-- `Mem0` — top-level facade with `add()`, `search()`, fusion scoring, and scope-aware retrieval.
-- A worked trace on a multi-user, multi-session conversation.
+- `VectorStore` — embedding の stand-in として naive token-overlap similarity を使う。
+- `KVStore` — `(user_id, fact_type, entity)` を key とする dict。
+- `GraphStore` — typed edges (subject, relation, object, valid)。
+- `Mem0` — `add()`, `search()`, fusion scoring、scope-aware retrieval を持つ top-level facade。
+- Multi-user, multi-session conversation に対する worked trace。
 
-Run it:
+実行:
 
 ```
 python3 code/main.py
 ```
 
-The output shows three separate recall paths plus the fused top-k. Flip the scoring weights at the top of `main()` and watch the ranking change.
+Output は 3 つの separate recall paths と fused top-k を示します。`main()` 冒頭の scoring weights を変えると ranking がどう変わるかを見られます。
 
 ## Use It
 
-- **Mem0 (Apache 2.0)** — production-ready. Self-host with Postgres + Qdrant + Neo4j, or use the managed cloud.
-- **Letta** — three-tier core/recall/archival; bring your own vector and graph backends.
-- **Zep** — commercial alternative with temporal KG and fact extraction.
-- **Custom builds** — when you need exact control over the extractor (compliance) or fusion weights (voice agents where recency dominates).
+- **Mem0 (Apache 2.0)** — production-ready。Postgres + Qdrant + Neo4j で self-host するか managed cloud を使う。
+- **Letta** — 3-tier core/recall/archival。Vector backend と graph backend は持ち込む。
+- **Zep** — temporal KG と fact extraction を持つ commercial alternative。
+- **Custom builds** — extractor (compliance) や fusion weights (recency が支配的な voice agents) を厳密に制御したい場合。
 
 ## Ship It
 
-`outputs/skill-hybrid-memory.md` generates a three-store memory scaffold with a fusion scorer, scope taxonomy, and temporal invalidation wired in.
+`outputs/skill-hybrid-memory.md` は、fusion scorer、scope taxonomy、temporal invalidation を組み込んだ three-store memory scaffold を生成します。
 
 ## Exercises
 
-1. Replace the toy vector similarity with a real embedding model (sentence-transformers, Ollama, OpenAI embeddings). Measure recall@10 on a synthetic long conversation. Does the ranking drift over 1000 writes?
-2. Add a temporal query: `search(query, as_of=timestamp)`. Return only records valid at or before that time. Which store needs the most work?
-3. Implement a conflict detector: if an incoming fact contradicts a graph edge, invalidate the old edge and log both. Test on "user lives in Berlin" -> "user lives in Lisbon."
-4. Port the fusion scorer to include a `user_feedback` dimension (thumbs-up on retrieved records). How do you prevent gaming (the agent only returns records it already liked)?
-5. Read the Mem0 docs (`docs.mem0.ai`). Port the toy to `mem0` client calls. Compare retrieval quality on the same 20 test queries.
+1. Toy vector similarity を real embedding model (sentence-transformers, Ollama, OpenAI embeddings) に置き換える。Synthetic long conversation で recall@10 を測定する。1000 writes を超えると ranking は drift するか。
+2. Temporal query `search(query, as_of=timestamp)` を追加する。その時刻以前に valid な records だけを返す。最も手間がかかる store はどれか。
+3. Conflict detector を実装する。Incoming fact が graph edge と矛盾したら old edge を invalidate して両方を log する。「user lives in Berlin」->「user lives in Lisbon」で test する。
+4. Fusion scorer に `user_feedback` dimension (retrieved records への thumbs-up) を追加する。Gaming (agent が既に好きな records だけを返す) をどう防ぐか。
+5. Mem0 docs (`docs.mem0.ai`) を読む。Toy を `mem0` client calls に port する。同じ 20 test queries で retrieval quality を比較する。
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|------------------------|
-| Hybrid memory | "Vector plus graph plus KV" | Three stores written in parallel, fused on retrieval |
-| Fact extraction | "Memory ingestion" | LLM step that breaks text into (entity, relation, fact) tuples |
-| Fusion scoring | "Relevance ranking" | Weighted sum of relevance, importance, recency |
-| Scope | "Memory namespace" | user / session / agent — determines who sees what |
-| Mem0g | "Memory graph" | Typed edges with temporal validity for relationship queries |
-| Temporal invalidation | "Soft delete" | Mark contradicted edges invalid; never delete |
-| Embedding drift | "Retrieval rot" | Vector quality degrades as corpus grows; re-embed periodically |
+| Hybrid memory | 「Vector plus graph plus KV」 | 3 つの stores に parallel write し retrieval で fuse する |
+| Fact extraction | 「Memory ingestion」 | Text を (entity, relation, fact) tuples に分解する LLM step |
+| Fusion scoring | 「Relevance ranking」 | Relevance, importance, recency の weighted sum |
+| Scope | 「Memory namespace」 | user / session / agent。誰に何が見えるかを決める |
+| Mem0g | 「Memory graph」 | Relationship queries 用の temporal validity を持つ typed edges |
+| Temporal invalidation | 「Soft delete」 | 矛盾した edges を invalid と mark し、delete しない |
+| Embedding drift | 「Retrieval rot」 | Corpus growth で vector quality が劣化する。Periodic re-embed で緩和する |
 
-## Further Reading
+## 参考文献
 
-- [Chhikara et al., Mem0 (arXiv:2504.19413)](https://arxiv.org/abs/2504.19413) — the original paper
+- [Chhikara et al., Mem0 (arXiv:2504.19413)](https://arxiv.org/abs/2504.19413) — original paper
 - [Mem0 docs](https://docs.mem0.ai/platform/overview) — production API, SDKs, managed cloud
-- [Packer et al., MemGPT (arXiv:2310.08560)](https://arxiv.org/abs/2310.08560) — the virtual-context predecessor
-- [Letta, Memory Blocks blog](https://www.letta.com/blog/memory-blocks) — the three-tier sibling design
+- [Packer et al., MemGPT (arXiv:2310.08560)](https://arxiv.org/abs/2310.08560) — virtual-context predecessor
+- [Letta, Memory Blocks blog](https://www.letta.com/blog/memory-blocks) — three-tier sibling design

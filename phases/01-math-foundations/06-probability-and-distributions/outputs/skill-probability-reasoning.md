@@ -1,26 +1,26 @@
 ---
 name: skill-probability-reasoning
-description: Choose the right probability distribution for a given ML problem
+description: 与えられた機械学習問題に適した確率分布を選ぶ
 version: 1.0.0
 phase: 1
 lesson: 6
 tags: [probability, distributions, modeling]
 ---
 
-# Probability Distribution Selection
+# 確率分布の選択
 
-How to pick the right distribution when modeling data, designing loss functions, or setting priors.
+データをモデル化するとき、損失関数を設計するとき、または事前分布を設定するときに、適切な分布を選ぶためのガイドです。
 
-## Decision Checklist
+## 判断チェックリスト
 
-1. Is the outcome discrete (categories, counts) or continuous (measurements, scores)?
-2. Is the outcome bounded (e.g., [0, 1]) or unbounded?
-3. How many possible outcomes are there? Two? k? Infinite?
-4. Is the data symmetric or skewed?
-5. Are events independent or correlated?
-6. Are you modeling a rate, a count, a proportion, or a measurement?
+1. 結果は離散（カテゴリ、カウント）ですか、それとも連続（測定値、スコア）ですか。
+2. 結果には範囲の制約（例: [0, 1]）がありますか、それとも非有界ですか。
+3. 起こり得る結果はいくつありますか。2つですか。k 個ですか。無限ですか。
+4. データは対称ですか、それとも歪んでいますか。
+5. 事象は独立ですか、それとも相関していますか。
+6. 率、カウント、割合、測定値のどれをモデル化していますか。
 
-## Distribution decision tree
+## 分布の判断木
 
 ```
 Is the variable discrete?
@@ -41,49 +41,49 @@ Is the variable discrete?
      |   On a simplex (sums to 1)? --> Dirichlet (alpha)
 ```
 
-## Mapping real-world ML scenarios to distributions
+## 実世界の機械学習シナリオと分布の対応
 
-| Scenario | Distribution | Parameters |
+| シナリオ | 分布 | パラメータ |
 |---|---|---|
-| Binary classification output | Bernoulli | p = sigmoid(logit) |
-| Multi-class classification output | Categorical | p = softmax(logits) |
-| Token prediction in language models | Categorical over vocab | p from softmax |
-| Pixel intensity (normalized) | Beta or Uniform [0, 1] | Depends on image stats |
-| Word count in a document | Poisson | lambda = avg word count |
-| Time between user requests | Exponential | lambda = request rate |
-| Measurement error | Normal | mu = 0, sigma from data |
-| Weight initialization | Normal or Uniform | Kaiming/Xavier rules |
-| VAE latent space prior | Standard Normal | mu = 0, sigma = 1 |
-| Bayesian prior on proportions | Beta | alpha, beta from belief |
-| Bayesian prior on category weights | Dirichlet | alpha vector |
-| Noise in regression targets | Normal | mu = 0, sigma estimated |
-| Outlier-robust regression | Student's t | low degrees of freedom |
-| Duration/lifetime modeling | Weibull or Gamma | shape and scale |
-| Topic distribution per document (LDA) | Dirichlet | alpha < 1 for sparse |
+| 二値分類の出力 | Bernoulli | p = sigmoid(logit) |
+| 多クラス分類の出力 | Categorical | p = softmax(logits) |
+| 言語モデルのトークン予測 | 語彙上の Categorical | softmax から得た p |
+| ピクセル強度（正規化済み） | Beta または Uniform [0, 1] | 画像統計に依存 |
+| 文書内の単語数 | Poisson | lambda = 平均単語数 |
+| ユーザーリクエスト間の時間 | Exponential | lambda = リクエスト率 |
+| 測定誤差 | Normal | mu = 0、sigma はデータから |
+| 重み初期化 | Normal または Uniform | Kaiming/Xavier ルール |
+| VAE 潜在空間の事前分布 | Standard Normal | mu = 0、sigma = 1 |
+| 割合に対するベイズ事前分布 | Beta | 信念から決める alpha、beta |
+| カテゴリ重みに対するベイズ事前分布 | Dirichlet | alpha ベクトル |
+| 回帰ターゲットのノイズ | Normal | mu = 0、sigma を推定 |
+| 外れ値に頑健な回帰 | Student's t | 低い自由度 |
+| 期間・寿命モデリング | Weibull または Gamma | shape と scale |
+| 文書ごとのトピック分布（LDA） | Dirichlet | 疎にするなら alpha < 1 |
 
-## When distributions go wrong
+## 分布の選択を間違えるとき
 
-- Using Normal when data has a hard lower bound (e.g., prices, distances). The normal assigns nonzero probability to negative values. Use log-normal or gamma instead.
-- Using Poisson when the variance differs from the mean. Poisson assumes mean = variance. If variance > mean, use negative binomial.
-- Using Bernoulli for multi-class problems. Bernoulli is strictly binary. Use categorical for k > 2.
-- Assuming independence when observations are correlated. Time series, spatial data, and grouped data violate independence. Use autoregressive or hierarchical models.
+- データに明確な下限がある（例: 価格、距離）のに Normal を使う。正規分布は負の値にも非ゼロ確率を割り当てます。代わりに log-normal または gamma を使います。
+- 分散が平均と異なるのに Poisson を使う。Poisson は平均 = 分散を仮定します。分散 > 平均なら negative binomial を使います。
+- 多クラス問題に Bernoulli を使う。Bernoulli は厳密に二値です。k > 2 では categorical を使います。
+- 観測値が相関しているのに独立だと仮定する。時系列、空間データ、グループ化されたデータは独立性を破ります。自己回帰モデルや階層モデルを使います。
 
-## Common mistakes
+## よくある間違い
 
-- Confusing PDF values with probabilities. A PDF can exceed 1. Probability comes from integrating the PDF over an interval.
-- Forgetting that softmax outputs are categorical probabilities, not independent Bernoulli probabilities. They sum to 1 by construction.
-- Using a uniform prior when you have domain knowledge. Informative priors reduce variance without biasing the result if chosen well.
-- Treating log-probabilities as probabilities. Log-probs are always negative (or zero). They do not sum to 1.
+- PDF の値と確率を混同する。PDF は 1 を超えることがあります。確率は PDF を区間上で積分して得ます。
+- softmax 出力を独立な Bernoulli 確率だと思う。softmax 出力は categorical 確率であり、構成上合計が 1 になります。
+- ドメイン知識があるのに一様事前分布を使う。よく選ばれた情報的事前分布は、結果を偏らせずに分散を減らします。
+- 対数確率を確率として扱う。log-probs は常に負（またはゼロ）です。合計しても 1 にはなりません。
 
-## Quick reference: distribution properties
+## クイックリファレンス: 分布の性質
 
-| Distribution | Support | Mean | Variance | Key property |
+| 分布 | 台 | 平均 | 分散 | 重要な性質 |
 |---|---|---|---|---|
-| Bernoulli(p) | {0, 1} | p | p(1-p) | Simplest discrete |
-| Binomial(n, p) | {0..n} | np | np(1-p) | Sum of n Bernoulli |
-| Poisson(lam) | {0, 1, 2, ...} | lam | lam | Mean = variance |
-| Normal(mu, s^2) | (-inf, inf) | mu | s^2 | Max entropy for given mean/var |
-| Exponential(lam) | [0, inf) | 1/lam | 1/lam^2 | Memoryless |
-| Beta(a, b) | [0, 1] | a/(a+b) | ab/((a+b)^2(a+b+1)) | Conjugate to Binomial |
-| Gamma(a, b) | (0, inf) | a/b | a/b^2 | Conjugate to Poisson |
-| Dirichlet(alpha) | Simplex | alpha_i/sum | (see formula) | Conjugate to Categorical |
+| Bernoulli(p) | {0, 1} | p | p(1-p) | 最も単純な離散分布 |
+| Binomial(n, p) | {0..n} | np | np(1-p) | n 個の Bernoulli の和 |
+| Poisson(lam) | {0, 1, 2, ...} | lam | lam | 平均 = 分散 |
+| Normal(mu, s^2) | (-inf, inf) | mu | s^2 | 与えられた平均・分散で最大エントロピー |
+| Exponential(lam) | [0, inf) | 1/lam | 1/lam^2 | 無記憶性 |
+| Beta(a, b) | [0, 1] | a/(a+b) | ab/((a+b)^2(a+b+1)) | Binomial の共役事前分布 |
+| Gamma(a, b) | (0, inf) | a/b | a/b^2 | Poisson の共役事前分布 |
+| Dirichlet(alpha) | Simplex | alpha_i/sum | (see formula) | Categorical の共役事前分布 |

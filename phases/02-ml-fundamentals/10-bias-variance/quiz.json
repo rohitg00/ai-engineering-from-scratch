@@ -2,66 +2,66 @@
   {
     "id": "biasvar-pre-1",
     "stage": "pre",
-    "question": "A linear model is used to fit a clearly curved (quadratic) relationship. Which error component dominates?",
+    "question": "明らかに曲がった（二次の）関係に linear model を当てはめています。どの error component が支配的になりますか？",
     "options": [
-      "Variance: the model changes too much with different training data",
-      "Bias: the model is too rigid to capture the true nonlinear pattern",
-      "Irreducible noise: the data is too noisy",
-      "None: the model should fit perfectly"
+      "Variance: 異なる training data に対してモデルが変わりすぎる",
+      "Bias: モデルが硬すぎて真の非線形パターンを捉えられない",
+      "Irreducible noise: データのノイズが多すぎる",
+      "None: モデルは完全に fit するはず"
     ],
     "correct": 1,
-    "explanation": "A linear model cannot capture a quadratic curve no matter how much data it sees. This systematic error from wrong model assumptions is bias. The model underfits."
+    "explanation": "linear model は、どれだけ多くのデータを見ても二次曲線を捉えられません。誤ったモデル仮定から生じるこの系統的誤差が bias です。モデルは underfit しています。"
   },
   {
     "id": "biasvar-pre-2",
     "stage": "pre",
-    "question": "The bias-variance decomposition of expected error has three terms. Which one cannot be reduced by any model?",
+    "question": "期待誤差の bias-variance decomposition には 3 つの項があります。どの項はどんなモデルでも減らせませんか？",
     "options": [
       "Bias squared",
       "Variance",
       "Irreducible noise (sigma squared)",
-      "All three can be reduced to zero"
+      "3 つすべてをゼロまで減らせる"
     ],
     "correct": 2,
-    "explanation": "Irreducible noise comes from randomness in the data itself (measurement error, missing variables). No model can predict noise. Expected error = bias^2 + variance + irreducible noise."
+    "explanation": "Irreducible noise はデータ自体のランダム性（測定誤差、欠落変数）から来ます。どんなモデルもノイズを予測することはできません。Expected error = bias^2 + variance + irreducible noise です。"
   },
   {
     "id": "biasvar-post-1",
     "stage": "post",
-    "question": "Adding L2 regularization to a model increases bias and decreases variance. Why is this useful?",
+    "question": "モデルに L2 regularization を追加すると bias が増え、variance が減ります。なぜこれが役に立つのでしょうか？",
     "options": [
-      "It always improves both training and test accuracy",
-      "The reduction in variance can outweigh the increase in bias, lowering total error",
-      "L2 regularization eliminates irreducible noise",
-      "It makes the model faster to train"
+      "training accuracy と test accuracy の両方が常に改善するから",
+      "variance の減少が bias の増加を上回り、total error を下げられるから",
+      "L2 regularization は irreducible noise を消すから",
+      "モデルの学習が速くなるから"
     ],
     "correct": 1,
-    "explanation": "Regularization trades a small increase in bias for a larger decrease in variance. When a model is overfitting (high variance), this tradeoff reduces total error even though bias goes up slightly."
+    "explanation": "regularization は、bias の小さな増加と引き換えに variance をより大きく減らします。モデルが overfit（high variance）しているとき、このトレードオフは bias が少し上がっても total error を下げます。"
   },
   {
     "id": "biasvar-post-2",
     "stage": "post",
-    "question": "A model has training error = 2% and test error = 25%. What is the most likely diagnosis?",
+    "question": "あるモデルの training error = 2%、test error = 25% です。最も可能性の高い診断はどれですか？",
     "options": [
-      "High bias (underfitting): the model is too simple",
-      "High variance (overfitting): the model memorized training data and fails to generalize",
-      "High irreducible noise: the data is too noisy",
-      "The model is perfectly calibrated"
+      "High bias (underfitting): モデルが単純すぎる",
+      "High variance (overfitting): モデルが training data を暗記し、汎化に失敗している",
+      "High irreducible noise: データのノイズが多すぎる",
+      "モデルは完全に calibration されている"
     ],
     "correct": 1,
-    "explanation": "Low training error + high test error + large gap = high variance (overfitting). The model fits training-specific noise. Remedies: regularize, reduce complexity, get more data."
+    "explanation": "低い training error + 高い test error + 大きな gap = high variance（overfitting）です。モデルは training 固有のノイズに fit しています。対策は regularize、複雑度を下げる、データを増やすことです。"
   },
   {
     "id": "biasvar-post-3",
     "stage": "post",
-    "question": "You train the same model architecture on 50 different random training subsets and observe that predictions vary wildly between them. What does this indicate?",
+    "question": "同じ model architecture を 50 個の異なる random training subset で学習したところ、それらの間で予測が激しく変わりました。これは何を示していますか？",
     "options": [
-      "High bias: the model consistently misses the true pattern",
-      "High variance: the model is sensitive to which specific training data it sees",
-      "High irreducible noise: the target variable is random",
-      "The learning rate is too high"
+      "High bias: モデルが一貫して真のパターンを外している",
+      "High variance: モデルがどの training data を見るかに敏感である",
+      "High irreducible noise: target variable がランダムである",
+      "learning rate が高すぎる"
     ],
     "correct": 1,
-    "explanation": "Variance measures how much predictions change when trained on different data subsets. Wildly different predictions across subsets is the definition of high variance."
+    "explanation": "Variance は、異なる data subset で学習したときに予測がどれだけ変わるかを測ります。subset 間で予測が激しく異なることは high variance の定義そのものです。"
   }
 ]

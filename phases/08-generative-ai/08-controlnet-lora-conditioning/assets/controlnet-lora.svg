@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,29 +10,29 @@
       .frozen { fill: #ecece8; stroke: #666; stroke-width: 1; stroke-dasharray: 4,3; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
       .content { font-size: 12px; fill: #333; }
-      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="450" y="28" text-anchor="middle" class="title">ControlNet clones the encoder; LoRA adds a low-rank delta</text>
+  <text x="450" y="28" text-anchor="middle" class="title">ControlNetはエンコーダを複製し、LoRAは低ランク差分を足す</text>
 
   <!-- ControlNet -->
   <text x="100" y="70" class="label">ControlNet</text>
   <rect x="40" y="80" width="120" height="200" class="frozen"/>
   <text x="100" y="100" text-anchor="middle" class="caption">frozen SD U-Net</text>
   <rect x="55" y="115" width="90" height="35" class="box"/>
-  <text x="100" y="138" text-anchor="middle" class="content">encoder</text>
+  <text x="100" y="138" text-anchor="middle" class="content">エンコーダ</text>
   <rect x="55" y="155" width="90" height="35" class="box"/>
-  <text x="100" y="178" text-anchor="middle" class="content">bottleneck</text>
+  <text x="100" y="178" text-anchor="middle" class="content">ボトルネック</text>
   <rect x="55" y="195" width="90" height="35" class="box"/>
-  <text x="100" y="218" text-anchor="middle" class="content">decoder</text>
+  <text x="100" y="218" text-anchor="middle" class="content">デコーダ</text>
   <rect x="55" y="235" width="90" height="35" class="box"/>
-  <text x="100" y="258" text-anchor="middle" class="content">decoder</text>
+  <text x="100" y="258" text-anchor="middle" class="content">デコーダ</text>
 
   <rect x="200" y="80" width="140" height="200" class="cold"/>
-  <text x="270" y="100" text-anchor="middle" class="caption">ControlNet clone (trainable)</text>
+  <text x="270" y="100" text-anchor="middle" class="caption">ControlNet clone (学習可能)</text>
   <rect x="220" y="115" width="100" height="35" class="box"/>
   <text x="270" y="138" text-anchor="middle" class="content">enc copy</text>
   <rect x="220" y="155" width="100" height="35" class="box"/>
@@ -48,7 +48,7 @@
   <line x1="320" y1="130" x2="145" y2="215" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="3,3"/>
   <line x1="320" y1="170" x2="145" y2="255" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="3,3"/>
 
-  <text x="180" y="310" text-anchor="middle" class="caption">zero-conv init =&gt; starts as identity; learns a delta</text>
+  <text x="180" y="310" text-anchor="middle" class="caption">zero-conv init =&gt; identityから始まり、差分を学習</text>
 
   <!-- LoRA -->
   <text x="590" y="70" class="label">LoRA</text>
@@ -69,35 +69,35 @@
   <text x="770" y="175" text-anchor="middle" class="content">A</text>
   <text x="770" y="195" text-anchor="middle" class="caption">r &#215; d</text>
 
-  <text x="680" y="240" text-anchor="middle" class="caption">r = 4-16 typical; rank-r compression</text>
-  <text x="680" y="260" text-anchor="middle" class="caption">params: 2 &#183; d &#183; r instead of d&#178;</text>
+  <text x="680" y="240" text-anchor="middle" class="caption">r = 4-16が典型。rank-r圧縮</text>
+  <text x="680" y="260" text-anchor="middle" class="caption">params: d&#178;ではなく2 &#183; d &#183; r</text>
   <text x="680" y="280" text-anchor="middle" class="caption">runtime knob: &#945; &#8712; [0.5, 1.5]</text>
 
   <!-- composability -->
   <rect x="40" y="340" width="820" height="180" class="box"/>
-  <text x="450" y="365" text-anchor="middle" class="label">composability in 2026 pipelines</text>
+  <text x="450" y="365" text-anchor="middle" class="label">2026年パイプラインでの合成性</text>
 
   <rect x="60" y="380" width="180" height="120" class="cold"/>
   <text x="150" y="402" text-anchor="middle" class="content">ControlNet</text>
-  <text x="150" y="422" text-anchor="middle" class="caption">spatial (pose, depth,</text>
+  <text x="150" y="422" text-anchor="middle" class="caption">空間条件 (pose, depth,</text>
   <text x="150" y="438" text-anchor="middle" class="caption">edges, scribble, seg)</text>
-  <text x="150" y="470" text-anchor="middle" class="caption">70-360 MB per modality</text>
+  <text x="150" y="470" text-anchor="middle" class="caption">modalityごとに70-360 MB</text>
 
   <rect x="260" y="380" width="180" height="120" class="cold"/>
   <text x="350" y="402" text-anchor="middle" class="content">LoRA</text>
   <text x="350" y="422" text-anchor="middle" class="caption">style, subject, concept</text>
   <text x="350" y="438" text-anchor="middle" class="caption">20-200 MB</text>
-  <text x="350" y="470" text-anchor="middle" class="caption">stack multiple with &#945; scaling</text>
+  <text x="350" y="470" text-anchor="middle" class="caption">&#945; scalingで複数stack</text>
 
   <rect x="460" y="380" width="180" height="120" class="cold"/>
   <text x="550" y="402" text-anchor="middle" class="content">IP-Adapter</text>
-  <text x="550" y="422" text-anchor="middle" class="caption">reference image as condition</text>
-  <text x="550" y="438" text-anchor="middle" class="caption">via CLIP image tokens</text>
+  <text x="550" y="422" text-anchor="middle" class="caption">参照画像を条件にする</text>
+  <text x="550" y="438" text-anchor="middle" class="caption">CLIP image token経由</text>
   <text x="550" y="470" text-anchor="middle" class="caption">~20 MB</text>
 
   <rect x="660" y="380" width="180" height="120" class="cold"/>
   <text x="750" y="402" text-anchor="middle" class="content">DreamBooth</text>
-  <text x="750" y="422" text-anchor="middle" class="caption">full fine-tune of base</text>
-  <text x="750" y="438" text-anchor="middle" class="caption">strongest identity</text>
+  <text x="750" y="422" text-anchor="middle" class="caption">baseをfull fine-tune</text>
+  <text x="750" y="438" text-anchor="middle" class="caption">identity保持が最強</text>
   <text x="750" y="470" text-anchor="middle" class="caption">2-5 GB</text>
 </svg>

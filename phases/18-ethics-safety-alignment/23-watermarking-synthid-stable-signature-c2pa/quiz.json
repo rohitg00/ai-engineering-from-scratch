@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "How does Kirchenbauer-style (SynthID-text) token watermarking embed a signal?",
+      "question": "Kirchenbauer-style (SynthID-text) token watermarking はどのように signal を埋め込みますか？",
       "options": [
-        "By modifying the prompt template",
-        "By encrypting the output with a public key",
-        "At each decoding step, hash the previous K tokens to partition the vocabulary into green/red sets and bias sampling toward green; detection counts green tokens via a z-score",
-        "By inserting a hidden HTML comment"
+        "prompt template を変更する",
+        "public key で output を暗号化する",
+        "各 decoding step で直前 K tokens を hash し、vocabulary を green/red set に分割して green に sampling を bias する。detection は green tokens を z-score で数える",
+        "hidden HTML comment を挿入する"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the primary limitation of text watermarks against paraphrase?",
+      "question": "paraphrase に対する text watermark の主な limitation は何ですか？",
       "options": [
-        "Rewording or paraphrasing the text destroys the green-token statistical signal",
-        "Paraphrase only affects image watermarks",
-        "Paraphrase strengthens the watermark",
-        "They actually survive paraphrase"
+        "text の言い換えや paraphrase は green-token の統計 signal を壊す",
+        "paraphrase は image watermark にしか影響しない",
+        "paraphrase は watermark を強くする",
+        "実際には paraphrase に耐える"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does Stable Signature (Fernandez et al., ICCV 2023) do?",
+      "question": "Stable Signature (Fernandez et al., ICCV 2023) は何をしますか？",
       "options": [
-        "Uses C2PA to sign the image at upload",
-        "Adds a visible watermark in the corner of the image",
-        "Fine-tunes the latent diffusion decoder so every generated image carries a fixed embedded message detectable from the latent",
-        "Signs the metadata with a private key"
+        "upload 時に C2PA で image に署名する",
+        "image の隅に visible watermark を追加する",
+        "latent diffusion decoder を fine-tune し、生成されるすべての image に latent から detect 可能な固定 embedded message を持たせる",
+        "private key で metadata に署名する"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the May 2024 'Stable Signature is Unstable' result demonstrate?",
+      "question": "2024年5月の 'Stable Signature is Unstable' result は何を示しましたか？",
       "options": [
-        "The watermark is provably unforgeable",
-        "The watermark requires C2PA to function",
-        "The watermark fails only on JPEG compression",
-        "Post-generation fine-tuning of the decoder can remove the watermark while preserving image quality, undermining adversarial robustness"
+        "watermark は provably unforgeable である",
+        "watermark が機能するには C2PA が必要である",
+        "watermark は JPEG compression でのみ失敗する",
+        "post-generation の decoder fine-tuning は image quality を保ったまま watermark を除去でき、adversarial robustness を損なう"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How are C2PA metadata and watermarking complementary?",
+      "question": "C2PA metadata と watermarking はどのように complementary ですか？",
       "options": [
-        "They are interchangeable",
-        "Watermarks are signed by the same keys as C2PA",
-        "Metadata can be stripped but carries rich provenance chain; watermarks persist through transcoding but carry few bits; layered, they provide a usable provenance story",
-        "C2PA replaces watermarks entirely"
+        "両者は interchangeable である",
+        "watermarks は C2PA と同じ key で署名される",
+        "metadata は削除され得るが rich provenance chain を持つ。watermark は transcoding 後も残りやすいが少数の bits しか運ばない。layered に使うと実用的な provenance story になる",
+        "C2PA は watermark を完全に置き換える"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Why is 'no SynthID signal' NOT proof of authenticity (human origin)?",
+      "question": "なぜ「SynthID signal がない」ことは authenticity (human origin) の証明ではないのですか？",
       "options": [
-        "Because SynthID only watermarks generations from SynthID-enabled models; content from any model without SynthID is unwatermarked by default",
-        "Because SynthID is closed-source",
-        "Because SynthID always produces false positives on human text",
-        "Because SynthID only works on Gemini outputs"
+        "SynthID は SynthID-enabled models からの generations にだけ watermark を付けるため、SynthID のない model からの content は default で unwatermarked だから",
+        "SynthID が closed-source だから",
+        "SynthID は human text で常に false positive を出すから",
+        "SynthID は Gemini outputs にしか機能しないから"
       ],
       "correct": 0,
       "explanation": ""

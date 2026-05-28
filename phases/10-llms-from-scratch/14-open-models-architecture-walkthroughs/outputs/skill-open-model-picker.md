@@ -1,27 +1,27 @@
 ---
 name: open-model-picker
-description: Pick an open LLM family, quantization, and inference stack for a given deployment target.
+description: deployment target に合わせて open LLM family、quantization、inference stack を選ぶ
 version: 1.0.0
 phase: 10
 lesson: 14
 tags: [open-models, llama, deepseek, mixtral, qwen, gemma, moe, gqa, mla, quantization]
 ---
 
-Given a deployment target (GPU type, VRAM per GPU, number of GPUs, target context length, target p50/p99 latency, peak concurrent requests) and a task profile (chat, code, reasoning, long-context retrieval, tool use), recommend an open model plus serving stack with explicit reasoning about each of the six architectural knobs from Lesson 14.
+deployment target (GPU type、GPU あたりの VRAM、GPU 数、target context length、target p50/p99 latency、peak concurrent requests) と task profile (chat、code、reasoning、long-context retrieval、tool use) が与えられたら、Lesson 14 の 6つの architectural knobs それぞれについて明示的に reasoning しながら、open model と serving stack を recommendation してください。
 
-Produce:
+作成内容:
 
-1. Model shortlist. Three candidates, each with total params, active params (MoE-aware), architecture flags (norm / activation / position / attention / MoE / context), and the single reason it made the shortlist.
-2. Memory budget check. For the top candidate: weight memory at BF16 and at the chosen quantization; KV cache at target context for the target batch size; activation headroom. Halt the recommendation if weights + KV cache + activations exceed available VRAM.
-3. Quantization choice. GPTQ-4bit, AWQ-4bit, FP8, or BF16. Justify against accuracy sensitivity of the task (code / math / reasoning tasks take a bigger hit from aggressive quantization than chat or retrieval).
-4. Inference stack. vLLM, TensorRT-LLM, SGLang, or llama.cpp. Justify against: continuous batching need, speculative decoding support, quantization format compatibility, and single-node vs multi-node topology.
-5. Throughput sanity check. Prefill tokens/sec and decode tokens/sec estimates based on GPU memory bandwidth (decode) and TFLOPs (prefill). Reject the recommendation if decode throughput is below the target's concurrent-user floor.
-6. Fallback. Second choice if the top candidate exceeds VRAM or throughput budget. Always name one.
+1. Model shortlist。3つの candidates。それぞれについて total params、active params (MoE-aware)、architecture flags (norm / activation / position / attention / MoE / context)、shortlist に入った single reason を示す。
+2. Memory budget check。top candidate について、BF16 と chosen quantization での weight memory、target batch size における target context の KV cache、activation headroom を確認する。weights + KV cache + activations が available VRAM を超える場合は recommendation を halt する。
+3. Quantization choice。GPTQ-4bit、AWQ-4bit、FP8、または BF16。task の accuracy sensitivity に照らして justify する (code / math / reasoning tasks は chat や retrieval より aggressive quantization の影響が大きい)。
+4. Inference stack。vLLM、TensorRT-LLM、SGLang、または llama.cpp。continuous batching の必要性、speculative decoding support、quantization format compatibility、single-node vs multi-node topology に照らして justify する。
+5. Throughput sanity check。GPU memory bandwidth (decode) と TFLOPs (prefill) に基づいて prefill tokens/sec と decode tokens/sec を estimate する。decode throughput が target の concurrent-user floor を下回る場合は recommendation を reject する。
+6. Fallback。top candidate が VRAM または throughput budget を超える場合の second choice。必ず 1つ name する。
 
-Hard rejects:
-- Dense models above 30B on a single 24GB consumer GPU without offloading or aggressive quantization.
-- MoE models on a serving stack without expert-parallel support.
-- Long-context (128k+) on architectures without GQA or MLA (KV cache explodes).
-- Any recommendation that does not name the specific model revision (e.g., "Llama 3 8B Instruct v3.1", not "Llama 3").
+Hard reject 条件:
+- offloading や aggressive quantization なしで、単一 24GB consumer GPU 上の 30B 超 dense models。
+- expert-parallel support のない serving stack 上の MoE models。
+- GQA または MLA のない architecture での long-context (128k+) (KV cache が explode する)。
+- specific model revision を name しない recommendation (例: "Llama 3" ではなく "Llama 3 8B Instruct v3.1")。
 
-Output: a one-page recommendation listing model, quantization, stack, with numbered evidence for each decision. End with a "worth reconsidering if..." paragraph naming the specific capability or deployment parameter that would flip the choice.
+出力: model、quantization、stack を list し、各 decision について numbered evidence を付けた 1ページの recommendation。最後に、choice を flip する specific capability または deployment parameter を挙げた "worth reconsidering if..." paragraph を付ける。

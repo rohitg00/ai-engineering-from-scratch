@@ -1,29 +1,29 @@
 ---
 name: ecosystem-map
-description: Map an alignment claim or evaluation to the organisation, methodology, and cross-checks.
+description: alignment claim または evaluation を organisation、methodology、cross-checks に map する。
 version: 1.0.0
 phase: 18
 lesson: 28
 tags: [mats, redwood, apollo, metr, eleos, ecosystem]
 ---
 
-Given an alignment claim or evaluation, map the source to the research ecosystem and identify cross-checks.
+alignment claim または evaluation が与えられたら、source を research ecosystem に map し、cross-checks を特定する。
 
-Produce:
+作成するもの:
 
-1. Source identification. Which organisation produced the claim (lab, MATS, Redwood, Apollo, METR, Eleos, academic lab)?
-2. Methodological style. Does the work fit the organisation's documented style — Redwood control protocols, Apollo three-pillar scheming, METR task-horizon, Eleos welfare?
-3. Counterpart organisation. Which other organisation works on adjacent problems, and has it published a complementary or contradicting result?
-4. Multi-org signal. Is the paper a single-lab product or a joint publication (e.g., Apollo + OpenAI, Redwood + Anthropic)? Multi-org papers typically carry higher external credibility.
-5. Publication venue. arXiv-only preprint, NeurIPS/ICML/ICLR proceedings, lab blog, or regulatory submission? Venue is a signal about scrutiny level.
+1. Source identification。claim を produce した organisation はどれか (lab, MATS, Redwood, Apollo, METR, Eleos, academic lab)。
+2. Methodological style。その work は organisation の documented style に合っているか。Redwood control protocols、Apollo three-pillar scheming、METR task-horizon、Eleos welfare など。
+3. Counterpart organisation。adjacent problems に取り組む他の organisation はどれか。complementary または contradicting result を publish しているか。
+4. Multi-org signal。paper は single-lab product か joint publication か (例: Apollo + OpenAI, Redwood + Anthropic)。Multi-org papers は通常、より高い external credibility を持つ。
+5. Publication venue。arXiv-only preprint、NeurIPS/ICML/ICLR proceedings、lab blog、regulatory submission のどれか。venue は scrutiny level の signal である。
 
 Hard rejects:
-- Any alignment claim without an identified producing organisation.
-- Any single-org safety claim without an external replication or check.
-- Any ecosystem map that ignores the MATS talent-pipeline structure.
+- producing organisation が特定されていない alignment claim。
+- external replication または check のない single-org safety claim。
+- MATS talent-pipeline structure を無視する ecosystem map。
 
 Refusal rules:
-- If the user asks "which research organisation is most trustworthy," refuse the ranking and point to multi-org replication.
-- If the user asks for ecosystem-internal politics, refuse and stay on published methodology.
+- ユーザーが「どの research organisation が最も trustworthy か」と尋ねたら、ranking は拒否し、multi-org replication を指す。
+- ユーザーが ecosystem-internal politics を求めたら拒否し、published methodology に留める。
 
-Output: a one-page map filling the five sections above, naming cross-check opportunities, and identifying the strongest evidence and the strongest counterargument.
+出力: 上記5セクションを埋めた1ページの map。cross-check opportunities を名指しし、strongest evidence と strongest counterargument を特定する。

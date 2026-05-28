@@ -2,38 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does the '~' symbol represent in a Linux file path?",
-      "options": ["The root directory of the file system", "The current user's home directory", "The temporary files directory", "The directory where system programs are installed"],
+      "question": "Linux file path の `~` symbol は何を表しますか。",
+      "options": [
+        "file system の root directory",
+        "current user の home directory",
+        "temporary files directory",
+        "system program が install される directory"
+      ],
       "correct": 1,
-      "explanation": "The tilde (~) is a shortcut for the current user's home directory, typically /home/username on Linux. 'cd ~' takes you home from anywhere."
+      "explanation": "tilde (`~`) は current user の home directory の shortcut です。Linux では通常 `/home/username` です。`cd ~` はどこからでも home に移動します。"
     },
     {
       "stage": "pre",
-      "question": "What is the purpose of 'sudo' before a command?",
-      "options": ["It speeds up the command execution", "It runs the command with root (administrator) privileges", "It runs the command in a sandboxed environment", "It logs the command output to a system file"],
+      "question": "command の前に `sudo` を付ける目的は何ですか。",
+      "options": [
+        "command execution を速くする",
+        "root (administrator) privilege で command を実行する",
+        "sandboxed environment で command を実行する",
+        "command output を system file に log する"
+      ],
       "correct": 1,
-      "explanation": "sudo (superuser do) temporarily elevates your privileges to root level for a single command. Required for system-level operations like installing packages with apt."
+      "explanation": "sudo (superuser do) は single command のために一時的に privilege を root level へ上げます。apt で package を install するような system-level operation に必要です。"
     },
     {
       "stage": "post",
-      "question": "You get 'Permission denied' when trying to run a shell script. What command fixes this?",
-      "options": ["sudo rm script.sh", "chmod +x script.sh", "chown root script.sh", "mv script.sh /usr/bin/"],
+      "question": "shell script を実行しようとして 'Permission denied' が出ました。これを直す command はどれですか。",
+      "options": [
+        "sudo rm script.sh",
+        "chmod +x script.sh",
+        "chown root script.sh",
+        "mv script.sh /usr/bin/"
+      ],
       "correct": 1,
-      "explanation": "chmod +x adds execute permission to the file. Without the execute bit set, the shell refuses to run the script even if you own it."
+      "explanation": "`chmod +x` は file に execute permission を追加します。execute bit がないと、所有者であっても shell は script の実行を拒否します。"
     },
     {
       "stage": "post",
-      "question": "On a remote GPU box, your training data fills the disk. Which command shows the largest directories consuming space?",
-      "options": ["ls -la /", "du -h --max-depth=1 / | sort -hr | head -20", "cat /proc/meminfo", "free -h"],
+      "question": "remote GPU box で training data が disk を埋めました。space を消費している最大 directory を表示する command はどれですか。",
+      "options": [
+        "ls -la /",
+        "du -h --max-depth=1 / | sort -hr | head -20",
+        "cat /proc/meminfo",
+        "free -h"
+      ],
       "correct": 1,
-      "explanation": "du -h shows disk usage per directory, --max-depth=1 limits to top-level directories, and sort -hr sorts by size in descending order. This reveals which directories are consuming the most space."
+      "explanation": "`du -h` は directory ごとの disk usage を表示し、`--max-depth=1` は top-level directory に制限し、`sort -hr` は size の降順に sort します。どの directory が space を消費しているか分かります。"
     },
     {
       "stage": "post",
-      "question": "What is a key difference between the macOS and Linux versions of 'sed -i'?",
-      "options": ["Linux sed is faster than macOS sed", "macOS sed requires an empty string argument after -i ('sed -i \"\"'), while Linux does not", "Linux sed does not support regular expressions", "macOS sed cannot modify files in place"],
+      "question": "macOS と Linux の `sed -i` の重要な違いは何ですか。",
+      "options": [
+        "Linux sed は macOS sed より速い",
+        "macOS sed は `-i` の後に empty string argument (`sed -i \"\"`) が必要だが、Linux は不要",
+        "Linux sed は regular expression を support しない",
+        "macOS sed は file を in place に変更できない"
+      ],
       "correct": 1,
-      "explanation": "macOS uses BSD sed which requires 'sed -i \"\" pattern file', while Linux uses GNU sed which accepts 'sed -i pattern file'. This is a common gotcha when moving scripts between systems."
+      "explanation": "macOS は BSD sed を使い、`sed -i \"\" pattern file` が必要です。Linux は GNU sed を使い、`sed -i pattern file` を受け付けます。script を system 間で移すときの common gotcha です。"
     }
   ]
 }

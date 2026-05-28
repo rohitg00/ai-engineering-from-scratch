@@ -1,9 +1,9 @@
-"""Schema-first agent state with atomic writes.
+"""atomic writes を備えた schema-first agent state。
 
-Writes JSON Schema files for `agent_state.json` and `task_board.json`,
-implements a tiny stdlib validator that handles the subset we need
-(required, type, enum, pattern, items), and a StateManager with
-temp-and-rename writes so a partial failure cannot corrupt the file.
+`agent_state.json` と `task_board.json` の JSON Schema files を書き、
+必要な subset (required, type, enum, pattern, items) を扱う小さな stdlib
+validator と、partial failure が file を corrupt しないよう temp-and-rename
+writes を行う StateManager を実装する。
 
 Run: python3 code/main.py
 """
@@ -144,12 +144,12 @@ def main() -> None:
         "touched_files": [],
         "assumptions": [],
         "blockers": [],
-        "next_action": "pick next task",
+        "next_action": "次の task を選ぶ",
     }
     initial_board = [
         {
             "id": "T-001",
-            "goal": "validate /signup payloads",
+            "goal": "/signup payloads を validate する",
             "owner": "builder",
             "acceptance": ["pytest -x test_app.py::test_signup_rejects_short_password"],
             "status": "todo",
@@ -161,7 +161,7 @@ def main() -> None:
     state = mgr.load()
     board = board_mgr.load()
     state["active_task_id"] = board[0]["id"]
-    state["next_action"] = "read existing /signup handler"
+    state["next_action"] = "既存の /signup handler を読む"
     mgr.commit(state)
 
     print("state:", json.dumps(mgr.load(), indent=2))
@@ -172,7 +172,7 @@ def main() -> None:
     try:
         mgr.commit(bad)
     except SchemaError as exc:
-        print("rejected bad write:", exc)
+        print("bad write を拒否:", exc)
 
 
 if __name__ == "__main__":

@@ -1,37 +1,37 @@
-# Sequence-to-Sequence Models
+# Sequence-to-Sequence モデル
 
-> Two RNNs pretending to be a translator. The bottleneck they hit is the reason attention exists.
+> 2つのRNNが翻訳機のふりをする。この方式がぶつかったボトルネックこそ、attentionが生まれた理由です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-Classification maps a variable-length sequence to a single label. Translation maps a variable-length sequence to another variable-length sequence. The input and output live in different vocabularies, possibly different languages, with no guarantee of length parity.
+分類は、可変長の系列を1つのラベルへ対応づけます。翻訳は、可変長の系列を別の可変長の系列へ対応づけます。入力と出力は異なる語彙、場合によっては異なる言語に属し、長さが一致する保証もありません。
 
-The seq2seq architecture (Sutskever, Vinyals, Le, 2014) cracked this with a deliberately simple recipe. Two RNNs. One reads the source sentence and produces a fixed-size context vector. The other reads that vector and generates the target sentence token by token. Same code you wrote for lesson 08, glued together differently.
+seq2seqアーキテクチャ（Sutskever, Vinyals, Le, 2014）は、意図的に単純な手順でこれを解きました。2つのRNNです。片方がソース文を読み、固定サイズのcontext vectorを作ります。もう片方がそのベクトルを読み、ターゲット文をトークンごとに生成します。レッスン08で書いたのと同じコードを、違う形でつなぎ合わせただけです。
 
-This is worth studying for two reasons. First, the context-vector bottleneck is the most pedagogically useful failure in NLP. It motivates everything attention and transformers are good at. Second, the training recipe (teacher forcing, scheduled sampling, beam search at inference) still applies to every modern generation system including LLMs.
+これを学ぶ価値は2つあります。第一に、context vectorのボトルネックは、NLPで最も教育的に役立つ失敗例です。attentionとtransformerが何に強いのかを動機づけてくれます。第二に、学習のレシピ（teacher forcing、scheduled sampling、推論時のbeam search）は、LLMを含む現代のあらゆる生成システムにもまだ当てはまります。
 
-## The Concept
+## コンセプト
 
-**Encoder.** An RNN that reads the source sentence. Its final hidden state is the **context vector** — a fixed-size summary of the entire input. Lose nothing but the source, supposedly.
+**Encoder。** ソース文を読むRNNです。最後の隠れ状態が**context vector**、つまり入力全体の固定サイズ要約になります。ソース以外は何も失わない、という建前です。
 
-**Decoder.** Another RNN initialized from the context vector. At each step it takes the previously generated token as input and produces a distribution over the target vocabulary. Sample or argmax to pick the next token. Feed it back in. Repeat until an `<EOS>` token is produced or max length is hit.
+**Decoder。** context vectorから初期化される別のRNNです。各ステップで直前に生成されたトークンを入力として受け取り、ターゲット語彙上の分布を出力します。サンプリングまたはargmaxで次のトークンを選びます。それを再び入力に戻します。`<EOS>`トークンが生成されるか、最大長に達するまで繰り返します。
 
-**Training:** Cross-entropy loss at each decoder step, summed over the sequence. Standard backprop through time through both networks.
+**学習:** 各decoderステップでcross-entropy lossを計算し、系列全体で合計します。2つのネットワーク全体に対して、標準的なbackprop through timeを行います。
 
-**Teacher forcing.** During training, the decoder's input at step `t` is the *ground-truth* token at position `t-1`, not the decoder's own previous prediction. This stabilizes training; without it, early mistakes cascade and the model never learns. At inference, you have to use the model's own predictions, so there is always a train/inference distribution gap. That gap is called **exposure bias**.
+**Teacher forcing。** 学習中、ステップ`t`のdecoder入力には、decoder自身の直前予測ではなく、位置`t-1`の*正解*トークンを使います。これにより学習が安定します。使わない場合、序盤の誤りが連鎖してモデルは何も学べません。推論時にはモデル自身の予測を使う必要があるため、学習時と推論時の分布には必ずずれが生じます。このずれを**exposure bias**と呼びます。
 
-**The bottleneck.** Everything the encoder learned about the source must be squeezed into that one context vector. Long sentences lose detail. Rare words get blurred. Reordering (chat noir vs. black cat) has to be memorized, not computed.
+**ボトルネック。** encoderがソースについて学んだすべての情報を、1つのcontext vectorに押し込む必要があります。長い文では細部が失われます。まれな単語はぼやけます。語順の入れ替え（chat noir vs. black cat）は、計算されるのではなく記憶される必要があります。
 
-Attention (lesson 10) fixes this by letting the decoder look at *every* encoder hidden state, not just the last one. That is the whole pitch.
+attention（レッスン10）は、decoderが最後の状態だけでなく、*すべての*encoder隠れ状態を見られるようにすることで、これを解決します。要点はそれだけです。
 
-## Build It
+## 作ってみる
 
-### Step 1: an encoder
+### Step 1: encoder
 
 ```python
 import torch
@@ -50,9 +50,9 @@ class Encoder(nn.Module):
         return outputs, hidden
 ```
 
-`outputs` has shape `[batch, seq_len, hidden_dim]` — one hidden state per input position. `hidden` has shape `[1, batch, hidden_dim]` — the final step. Lesson 08 said "pool over outputs for classification." Here we keep the last hidden state as the context vector, and ignore the per-step outputs.
+`outputs`のshapeは`[batch, seq_len, hidden_dim]`です。入力位置ごとに1つの隠れ状態があります。`hidden`のshapeは`[1, batch, hidden_dim]`で、最後のステップです。レッスン08では「分類のためにoutputsをpoolする」と説明しました。ここでは最後の隠れ状態をcontext vectorとして保持し、各ステップのoutputsは無視します。
 
-### Step 2: a decoder
+### Step 2: decoder
 
 ```python
 class Decoder(nn.Module):
@@ -69,9 +69,9 @@ class Decoder(nn.Module):
         return logits, hidden
 ```
 
-Decoder is called one step at a time. Input: a batch of single tokens and the current hidden state. Output: vocabulary logits for the next token and the updated hidden state.
+decoderは1ステップずつ呼び出します。入力は、単一トークンのバッチと現在の隠れ状態です。出力は、次のトークンに対する語彙logitsと、更新された隠れ状態です。
 
-### Step 3: training loop with teacher forcing
+### Step 3: teacher forcingを使った学習ループ
 
 ```python
 def train_batch(encoder, decoder, src, tgt, bos_id, optimizer, teacher_forcing_ratio=0.9):
@@ -97,9 +97,9 @@ def train_batch(encoder, decoder, src, tgt, bos_id, optimizer, teacher_forcing_r
     return loss.item() / tgt_len
 ```
 
-Two knobs worth naming. `ignore_index=0` skips loss on padding tokens. `teacher_forcing_ratio` is the probability of using the true token vs. the model's prediction at each step. Start at 1.0 (full teacher forcing) and anneal down to ~0.5 over training to close the exposure-bias gap.
+名前を付けておくべきつまみが2つあります。`ignore_index=0`はpadding token上のlossを無視します。`teacher_forcing_ratio`は、各ステップで真のトークンを使うか、モデルの予測を使うかの確率です。1.0（完全なteacher forcing）から始め、学習中に~0.5まで下げていくと、exposure biasのギャップを縮められます。
 
-### Step 4: inference loop (greedy)
+### Step 4: 推論ループ（greedy）
 
 ```python
 @torch.no_grad()
@@ -118,11 +118,11 @@ def greedy_decode(encoder, decoder, src, bos_id, eos_id, max_len=50):
     return torch.cat(output_ids, dim=1)
 ```
 
-Greedy decoding picks the highest-probability token at every step. It can wander off: once you commit to a token, you cannot unsay it. **Beam search** keeps the top-`k` partial sequences alive and picks the highest-scoring complete one at the end. Beam width 3-5 is standard.
+Greedy decodingは、各ステップで最も確率の高いトークンを選びます。これは簡単に道を外れます。一度あるトークンに決めると、それを取り消せません。**Beam search**は上位`k`個の部分系列を残し続け、最後に最もスコアの高い完成系列を選びます。beam widthは3-5が標準です。
 
-### Step 5: the bottleneck, demonstrated
+### Step 5: ボトルネックを実演する
 
-Train the model on a toy copy task: source `[a, b, c, d, e]`, target `[a, b, c, d, e]`. Increase sequence length. Observe accuracy.
+おもちゃのcopy taskでモデルを学習します。source `[a, b, c, d, e]`、target `[a, b, c, d, e]`です。系列長を伸ばして、accuracyを観察します。
 
 ```
 seq_len=5   copy accuracy: 98%
@@ -131,11 +131,11 @@ seq_len=20  copy accuracy: 62%
 seq_len=40  copy accuracy: 23%
 ```
 
-A single GRU hidden state cannot losslessly memorize a 40-token input. The information is there at every encoder step, but the decoder only sees the last state. Attention fixes this directly.
+単一のGRU隠れ状態は、40トークンの入力を損失なく記憶できません。情報はencoderの各ステップにありますが、decoderが見るのは最後の状態だけです。attentionはこれを直接解決します。
 
-## Use It
+## 使ってみる
 
-PyTorch has `nn.Transformer` and `nn.LSTM`-based seq2seq templates. Hugging Face's `transformers` library ships full encoder-decoder models (BART, T5, mBART, NLLB) trained on billions of tokens.
+PyTorchには`nn.Transformer`と`nn.LSTM`ベースのseq2seqテンプレートがあります。Hugging Faceの`transformers`ライブラリには、数十億トークンで学習済みの完全なencoder-decoderモデル（BART、T5、mBART、NLLB）が含まれています。
 
 ```python
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -148,66 +148,66 @@ out = model.generate(**src, max_new_tokens=50, num_beams=4)
 print(tok.decode(out[0], skip_special_tokens=True))
 ```
 
-Modern encoder-decoders dropped RNNs for transformers. The high-level shape (encoder, decoder, generate-token-by-token) is identical to the 2014 seq2seq paper. The mechanism inside each block is different.
+現代のencoder-decoderは、RNNをtransformerに置き換えました。高レベルの形（encoder、decoder、トークンごとの生成）は、2014年のseq2seq論文と同じです。各ブロックの内側の仕組みが違うだけです。
 
-### When to still reach for RNN-based seq2seq
+### RNNベースのseq2seqをまだ使う場面
 
-Almost never, for new projects. Specific exceptions:
+新規プロジェクトでは、ほぼありません。具体的な例外は次の通りです。
 
-- Streaming translation where you consume input one token at a time with bounded memory.
-- On-device text generation where transformer memory cost is prohibitive.
-- Pedagogy. Understanding the encoder-decoder bottleneck is the fastest path to understanding why transformers won.
+- 入力を1トークンずつ消費し、メモリを制限したいstreaming translation。
+- transformerのメモリコストが許容できないon-device text generation。
+- 教育目的。encoder-decoderのボトルネックを理解することが、transformerが勝った理由を理解する最短経路です。
 
-### Exposure bias and its mitigations
+### Exposure biasとその緩和策
 
-- **Scheduled sampling.** Anneal teacher forcing ratio during training so the model learns to recover from its own mistakes.
-- **Minimum risk training.** Train on sentence-level BLEU score instead of token-level cross-entropy. Closer to what you actually want.
-- **Reinforcement learning fine-tuning.** Reward the sequence generator with a metric. Used in modern LLM RLHF.
+- **Scheduled sampling。** 学習中にteacher forcing ratioを下げ、モデルが自分の誤りから復帰できるようにします。
+- **Minimum risk training。** token-level cross-entropyではなく、sentence-level BLEU scoreで学習します。実際に欲しいものに近づきます。
+- **Reinforcement learning fine-tuning。** 系列生成器にmetricで報酬を与えます。現代のLLM RLHFでも使われます。
 
-All three still apply to transformer-based generation.
+この3つはすべて、transformerベースの生成にも当てはまります。
 
 ## Ship It
 
-Save as `outputs/prompt-seq2seq-design.md`:
+`outputs/prompt-seq2seq-design.md`として保存します。
 
 ```markdown
 ---
 name: seq2seq-design
-description: Design a sequence-to-sequence pipeline for a given task.
+description: 与えられたタスクに対してsequence-to-sequenceパイプラインを設計する。
 phase: 5
 lesson: 09
 ---
 
-Given a task (translation, summarization, paraphrase, question rewrite), output:
+タスク（translation、summarization、paraphrase、question rewrite）が与えられたら、次を出力してください。
 
-1. Architecture. Pretrained transformer encoder-decoder (BART, T5, mBART, NLLB) is the default. RNN-based seq2seq only for specific constraints.
-2. Starting checkpoint. Name it (`facebook/bart-base`, `google/flan-t5-base`, `facebook/nllb-200-distilled-600M`). Match the checkpoint to task and language coverage.
-3. Decoding strategy. Greedy for deterministic output, beam search (width 4-5) for quality, sampling with temperature for diversity. One sentence justification.
-4. One failure mode to verify before shipping. Exposure bias manifests as generation drift on longer outputs; sample 20 outputs at the 90th-percentile length and eyeball.
+1. Architecture。既定は事前学習済みtransformer encoder-decoder（BART、T5、mBART、NLLB）。RNNベースのseq2seqは、特定の制約がある場合だけ使う。
+2. Starting checkpoint。名前を挙げる（`facebook/bart-base`、`google/flan-t5-base`、`facebook/nllb-200-distilled-600M`）。checkpointをタスクと言語カバレッジに合わせる。
+3. Decoding strategy。決定的な出力にはgreedy、品質にはbeam search（width 4-5）、多様性にはtemperature付きsamplingを使う。1文で根拠を述べる。
+4. リリース前に検証すべきfailure modeを1つ。exposure biasは、長い出力でgeneration driftとして現れる。90th-percentile lengthの出力を20件サンプルし、目視で確認する。
 
-Refuse to recommend training a seq2seq from scratch for under a million parallel examples. Flag any pipeline that uses greedy decoding for user-facing content as fragile (greedy repeats and loops).
+100万未満のparallel examplesでseq2seqをゼロから学習する提案は拒否してください。user-facing contentにgreedy decodingを使うpipelineは壊れやすいと指摘してください（greedyは反復やloopを起こす）。
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement the toy copy task. Train a GRU seq2seq on input-output pairs where the target equals the source. Measure accuracy at lengths 5, 10, 20. Reproduce the bottleneck.
-2. **Medium.** Add beam search decoding with beam width 3. Measure BLEU on a small parallel corpus against greedy. Document where beam search wins (usually last tokens) and where it makes no difference.
-3. **Hard.** Fine-tune `facebook/bart-base` on a 10k-pair paraphrase dataset. Compare the fine-tuned model's beam-4 output to the base model's on held-out inputs. Report BLEU and pick 10 qualitative examples.
+1. **Easy。** おもちゃのcopy taskを実装してください。targetがsourceと等しいinput-output pairでGRU seq2seqを学習します。長さ5、10、20でaccuracyを測定し、ボトルネックを再現してください。
+2. **Medium。** beam width 3のbeam search decodingを追加してください。小さなparallel corpusでgreedyと比較してBLEUを測定します。beam searchが勝つ場所（たいてい最後のトークン）と、差が出ない場所を記録してください。
+3. **Hard。** `facebook/bart-base`を1万ペアのparaphrase datasetでfine-tuneしてください。held-out inputsに対して、fine-tuned modelのbeam-4出力とbase modelの出力を比較します。BLEUを報告し、定性的な例を10件選んでください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| Encoder | Input RNN | Reads source. Produces per-step hidden states and a final context vector. |
-| Decoder | Output RNN | Initialized from context vector. Generates target tokens one at a time. |
-| Context vector | The summary | Final encoder hidden state. Fixed size. The bottleneck attention solves. |
-| Teacher forcing | Use true tokens | Feed the ground-truth previous token at training time. Stabilizes learning. |
-| Exposure bias | Train/test gap | Model trained on true tokens never practiced recovering from its own mistakes. |
-| Beam search | Better decoding | Keep top-k partial sequences alive at each step instead of committing greedily. |
+| Term | よく言われる説明 | 実際の意味 |
+|------|-----------------|------------|
+| Encoder | 入力RNN | sourceを読む。各ステップの隠れ状態と最後のcontext vectorを生成する。 |
+| Decoder | 出力RNN | context vectorから初期化される。target tokensを1つずつ生成する。 |
+| Context vector | 要約 | 最後のencoder隠れ状態。固定サイズ。attentionが解決するボトルネック。 |
+| Teacher forcing | 真のトークンを使う | 学習時に正解の直前トークンを入力する。学習を安定させる。 |
+| Exposure bias | Train/test gap | 真のトークンで学習したモデルは、自分の誤りから復帰する練習をしていない。 |
+| Beam search | より良いdecoding | greedyに1つへ確定する代わりに、各ステップでtop-kの部分系列を残す。 |
 
-## Further Reading
+## 参考資料
 
-- [Sutskever, Vinyals, Le (2014). Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215) — the original seq2seq paper. Four pages.
-- [Cho et al. (2014). Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation](https://arxiv.org/abs/1406.1078) — introduced the GRU and the encoder-decoder framing.
-- [Bahdanau, Cho, Bengio (2014). Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473) — the attention paper. Read immediately after this lesson.
-- [PyTorch NLP from Scratch tutorial](https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html) — buildable seq2seq + attention code.
+- [Sutskever, Vinyals, Le (2014). Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215) — 元祖seq2seq論文。4ページです。
+- [Cho et al. (2014). Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation](https://arxiv.org/abs/1406.1078) — GRUとencoder-decoderという枠組みを導入しました。
+- [Bahdanau, Cho, Bengio (2014). Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473) — attention論文。このレッスンの直後に読んでください。
+- [PyTorch NLP from Scratch tutorial](https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html) — 実際に動かせるseq2seq + attentionコードです。

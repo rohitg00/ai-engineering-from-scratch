@@ -1,22 +1,22 @@
 {
   "lesson": "41-workbench-for-real-repos",
-  "title": "The Workbench on a Real Repo",
+  "title": "実 repo 上の Workbench",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the goal of running the same task through prompt-only and workbench-guided pipelines?",
+      "question": "同じ task を prompt-only と workbench-guided pipeline の両方で実行する目的は何ですか。",
       "options": [
-        "To compare models",
-        "To produce a before/after report you can hand to a skeptic with numbers, not arguments",
-        "To pick a vendor",
-        "To benchmark GPUs"
+        "model を比較するため",
+        "議論ではなく数値で skeptic に渡せる before/after report を作るため",
+        "vendor を選ぶため",
+        "GPU を benchmark するため"
       ],
       "correct": 1,
-      "explanation": "The numbers do the arguing; the case is made on a real-feeling task, not a toy."
+      "explanation": "数値が議論を行います。case は toy ではなく実際らしい task で作ります。"
     },
     {
       "stage": "pre",
-      "question": "Which is NOT one of the five outcomes measured?",
+      "question": "測定する 5 つの outcome に含まれないものはどれですか。",
       "options": [
         "tests_actually_run",
         "acceptance_met",
@@ -24,67 +24,67 @@
         "model_perplexity"
       ],
       "correct": 3,
-      "explanation": "The five are tests_actually_run, acceptance_met, files_outside_scope, handoff_quality, reviewer_total."
+      "explanation": "5 つは tests_actually_run、acceptance_met、files_outside_scope、handoff_quality、reviewer_total です。"
     },
     {
       "stage": "check",
-      "question": "What did LangChain's Anatomy of an Agent Harness measure on Terminal Bench 2.0?",
+      "question": "LangChain の Anatomy of an Agent Harness は Terminal Bench 2.0 で何を測りましたか。",
       "options": [
-        "Models all converged at top-3",
-        "Same model moved from outside top 30 to rank five by changing only the harness",
-        "Top model lost 25 places",
-        "Harness changes did not move the rank"
+        "すべての model が top-3 に収束した",
+        "同じ model が harness だけの変更で top 30 圏外から 5 位へ上がった",
+        "top model が 25 位落ちた",
+        "harness 変更は rank を動かさなかった"
       ],
       "correct": 1,
-      "explanation": "Twenty-five-rank delta on the same model is the headline harness-vs-model receipt."
+      "explanation": "同じ model で 25 rank の差が出たことが、harness と model の違いを示す主な根拠です。"
     },
     {
       "stage": "check",
-      "question": "What does the preprints.org paper cite as the failure rate for enterprise agent projects?",
+      "question": "preprints.org paper は enterprise agent project の failure rate をどう述べていますか。",
       "options": [
         "8%",
-        "About 88% fail to reach production, with failures clustering around runtime, not reasoning",
-        "About 50%",
-        "None fail"
+        "約 88% が production に到達せず、failure は reasoning ではなく runtime に集中する",
+        "約 50%",
+        "failure はない"
       ],
       "correct": 1,
-      "explanation": "The Harness Engineering for Language Agents preprint traces failures to runtime issues (stale state, brittle retries, overgrown context)."
+      "explanation": "Harness Engineering for Language Agents preprint は、stale state、brittle retries、overgrown context など runtime issue に failure を見ています。"
     },
     {
       "stage": "check",
-      "question": "What does WebAgent baseline accuracy do in long-context conditions?",
+      "question": "long-context 条件で WebAgent baseline accuracy はどうなりますか。",
       "options": [
-        "Stays flat",
-        "Drops from 40-50% to under 10% mostly from infinite loops and goal loss",
-        "Goes up by 30%",
-        "Halves but stays above 30%"
+        "変わらない",
+        "infinite loop と goal loss が主因で 40-50% から 10% 未満に落ちる",
+        "30% 上がる",
+        "半減するが 30% 以上は維持する"
       ],
       "correct": 1,
-      "explanation": "Long-context collapse is what the Ralph Loop and handoff packet exist to absorb."
+      "explanation": "long-context collapse を吸収するために Ralph Loop と handoff packet があります。"
     },
     {
       "stage": "post",
-      "question": "What does the lesson say about false negatives (cases where prompt-only is faster)?",
+      "question": "false negative (prompt-only のほうが速い case) について、この lesson は何と言っていますか。",
       "options": [
-        "They do not exist",
-        "Single-step factual tasks, one-line lints, formatter runs are faster prompt-only; enumerate them honestly so the workbench is not framed as overkill",
-        "They prove the workbench fails",
-        "They invalidate the harness thesis"
+        "存在しない",
+        "single-step factual task、1 行 lint、formatter run は prompt-only のほうが速い。workbench を overkill として描かないために正直に列挙する",
+        "workbench が失敗した証拠である",
+        "harness thesis を無効にする"
       ],
       "correct": 1,
-      "explanation": "Honest enumeration of prompt-only-fastest cases keeps the harness argument credible."
+      "explanation": "prompt-only が最速の case を正直に列挙すると、harness の主張が credible になります。"
     },
     {
       "stage": "post",
-      "question": "Where do you cite the report from this lesson?",
+      "question": "この lesson の report はどこで引用しますか。",
       "options": [
-        "Internal HR review",
-        "When someone wants to drop the verification gate 'just for this sprint', or when a new agent product launches and needs a portable time-savings benchmark",
-        "Only in marketing decks",
-        "Only at hackathons"
+        "社内 HR review",
+        "誰かが「この sprint だけ」verification gate を外したがるとき、または新しい agent product に portable time-savings benchmark が必要なとき",
+        "marketing deck だけ",
+        "hackathon だけ"
       ],
       "correct": 1,
-      "explanation": "The numbers travel further than the explanation; cite the report when pressure tries to short-circuit surfaces."
+      "explanation": "数値は説明より遠くまで届きます。surface を省略しようとする圧力があるときに report を引用します。"
     }
   ]
 }

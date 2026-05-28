@@ -1,53 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
       .hot { fill: #f3ece0; stroke: #1a1a1a; stroke-width: 1.5; }
       .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
-      .content { font-size: 13px; fill: #333; font-family: 'Menlo', monospace; }
+      .content { font-size: 13px; fill: #333; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; }
       .note { font-size: 11px; fill: #666; font-style: italic; }
       .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
     </style>
   </defs>
 
   <rect class="box" x="20" y="30" width="860" height="120" rx="4"/>
-  <text class="label" x="35" y="55">BIO tagging</text>
-  <text class="note" x="35" y="75">label each token with B-TYPE (begin), I-TYPE (inside), or O (outside)</text>
+  <text class="label" x="35" y="55">BIO タグ付け</text>
+  <text class="note" x="35" y="75">各トークンに B-TYPE(開始)、I-TYPE(内部)、O(外側) を付ける</text>
 
-  <text class="content" x="40" y="110">token:  Apple  sued  Google  over  its  iPhone  search  deal  in  the  US  .</text>
-  <text class="content" x="40" y="135">label:  B-ORG  O     B-ORG   O     O    B-PROD  O       O     O   O    B-GPE  O</text>
+  <text class="content" x="40" y="110">トークン: Apple が Google を iPhone 検索 契約 で 米国 で 提訴 。</text>
+  <text class="content" x="40" y="135">ラベル:  B-ORG O B-ORG O B-PROD O O O B-GPE O O</text>
 
   <rect class="box" x="20" y="180" width="200" height="160" rx="4"/>
-  <text class="label" x="120" y="205" text-anchor="middle">rule-based</text>
-  <text class="content" x="35" y="235">gazetteer match</text>
-  <text class="content" x="35" y="255">regex + dicts</text>
-  <text class="note" x="35" y="285">high precision</text>
-  <text class="note" x="35" y="305">zero OOV coverage</text>
-  <text class="note" x="35" y="325">no disambiguation</text>
+  <text class="label" x="120" y="205" text-anchor="middle">ルールベース</text>
+  <text class="content" x="35" y="235">ガゼティア照合</text>
+  <text class="content" x="35" y="255">正規表現 + 辞書</text>
+  <text class="note" x="35" y="285">高い適合率</text>
+  <text class="note" x="35" y="305">OOV は拾えない</text>
+  <text class="note" x="35" y="325">曖昧性は未解決</text>
 
   <rect class="box" x="240" y="180" width="200" height="160" rx="4"/>
   <text class="label" x="340" y="205" text-anchor="middle">CRF</text>
-  <text class="content" x="255" y="235">hand features:</text>
-  <text class="content" x="255" y="255">  shape, suffix,</text>
-  <text class="content" x="255" y="275">  neighbors, case</text>
-  <text class="note" x="255" y="305">enforces valid</text>
-  <text class="note" x="255" y="325">BIO transitions</text>
+  <text class="content" x="255" y="235">手作り特徴:</text>
+  <text class="content" x="255" y="255">  形状, 接尾辞,</text>
+  <text class="content" x="255" y="275">  前後語, 大小文字</text>
+  <text class="note" x="255" y="305">有効な</text>
+  <text class="note" x="255" y="325">BIO 遷移を強制</text>
 
   <rect class="box" x="460" y="180" width="200" height="160" rx="4"/>
   <text class="label" x="560" y="205" text-anchor="middle">BiLSTM-CRF</text>
-  <text class="content" x="475" y="235">learned features</text>
-  <text class="content" x="475" y="255">embed → BiLSTM</text>
-  <text class="content" x="475" y="275">  → CRF head</text>
-  <text class="note" x="475" y="305">no more hand</text>
-  <text class="note" x="475" y="325">engineering</text>
+  <text class="content" x="475" y="235">特徴を学習</text>
+  <text class="content" x="475" y="255">埋め込み → BiLSTM</text>
+  <text class="content" x="475" y="275">  → CRF ヘッド</text>
+  <text class="note" x="475" y="305">手作業の</text>
+  <text class="note" x="475" y="325">特徴設計を削減</text>
 
   <rect class="hot" x="680" y="180" width="200" height="160" rx="4"/>
-  <text class="label" x="780" y="205" text-anchor="middle">transformer NER</text>
-  <text class="content" x="695" y="235">fine-tune BERT</text>
-  <text class="content" x="695" y="255">token-classif head</text>
-  <text class="content" x="695" y="275">aggregate spans</text>
-  <text class="note" x="695" y="305">best accuracy</text>
-  <text class="note" x="695" y="325">most compute</text>
+  <text class="label" x="780" y="205" text-anchor="middle">Transformer NER</text>
+  <text class="content" x="695" y="235">BERT を微調整</text>
+  <text class="content" x="695" y="255">トークン分類ヘッド</text>
+  <text class="content" x="695" y="275">スパンを集約</text>
+  <text class="note" x="695" y="305">最高精度</text>
+  <text class="note" x="695" y="325">計算量は最大</text>
 
-  <text class="stage" x="450" y="370" text-anchor="middle">pick the cheapest method that hits your accuracy bar</text>
+  <text class="stage" x="450" y="370" text-anchor="middle">精度要件を満たす最安の方法を選ぶ</text>
 </svg>

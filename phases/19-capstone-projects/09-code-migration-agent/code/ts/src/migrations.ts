@@ -86,7 +86,7 @@ export function advanceFile(file: FileDiff, rng: () => number = Math.random): vo
   if (next === "building" && rng() < 0.15) {
     file.status = "failed";
     file.lastError =
-      "compile error: cannot find symbol javax.annotation.Nullable";
+      "compile error: symbol javax.annotation.Nullable が見つかりません";
   }
   if (next === "passed" && file.path.includes("test")) {
     file.testsTouched = 2 + Math.floor(rng() * 6);

@@ -66,9 +66,9 @@ export function renderDashboardHtml(store: ObservabilityStore): string {
     "</style></head><body>",
     "<h1>LLM observability dashboard</h1>",
     "<div class='stats'>",
-    `<div class='stat'><b>${counters.accepted}</b> spans accepted</div>`,
-    `<div class='stat'>${counters.held} in ring buffer</div>`,
-    `<div class='stat'>${counters.rejected} rejected</div>`,
+    `<div class='stat'><b>${counters.accepted}</b> span accepted</div>`,
+    `<div class='stat'>ring buffer 内 ${counters.held}</div>`,
+    `<div class='stat'>rejected ${counters.rejected}</div>`,
     "</div>",
     "<table><thead><tr>",
     "<th>model</th><th>spans</th><th>errors</th><th>input tok</th><th>output tok</th>",
@@ -76,7 +76,7 @@ export function renderDashboardHtml(store: ObservabilityStore): string {
     "</tr></thead><tbody>",
     rows,
     "</tbody></table>",
-    "<p><small>POST OTel-GenAI spans to /trace. JSON roll-up at /dashboard.json.</small></p>",
+    "<p><small>OTel-GenAI span は /trace に POST します。JSON roll-up は /dashboard.json です。</small></p>",
     "</body></html>",
   ].join("\n");
 }

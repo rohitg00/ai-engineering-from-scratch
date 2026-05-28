@@ -14,13 +14,13 @@ export function advanceJob(job: Job, nowOverride?: number): void {
     if (elapsed < dur) {
       slot.status = "running";
       slot.started_at = job.created_at + priorOffset;
-      slot.detail = `${Math.round((elapsed / dur) * 100)}% through ${slot.stage}`;
+      slot.detail = `${slot.stage} は ${Math.round((elapsed / dur) * 100)}% 進行中`;
       break;
     }
     slot.status = "done";
     slot.started_at = job.created_at + priorOffset;
     slot.finished_at = slot.started_at + dur;
-    slot.detail = `${slot.stage} complete in ${dur}ms`;
+    slot.detail = `${slot.stage} は ${dur}ms で完了`;
     priorOffset += dur;
     elapsed -= dur;
   }

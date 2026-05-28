@@ -1,195 +1,195 @@
-# Loss Functions
+# 損失関数
 
-> Your network makes a prediction. The ground truth says otherwise. How wrong is it? That number is the loss. Pick the wrong loss function and your model optimizes for the wrong thing entirely.
+> ネットワークが予測を出します。正解は違うと言っています。どれくらい間違っているのか。その数値が損失です。損失関数の選択を誤ると、モデルはまったく違うものを最適化します。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Lesson 03.04 (Activation Functions)
-**Time:** ~75 minutes
+**種類:** Build
+**言語:** Python
+**前提:** レッスン 03.04（Activation Functions）
+**時間:** 約75分
 
-## Learning Objectives
+## 学習目標
 
-- Implement MSE, binary cross-entropy, categorical cross-entropy, and contrastive loss (InfoNCE) from scratch with their gradients
-- Explain why MSE fails for classification by demonstrating the "predict 0.5 for everything" failure mode
-- Apply label smoothing to cross-entropy and describe how it prevents overconfident predictions
-- Choose the correct loss function for regression, binary classification, multi-class classification, and embedding learning tasks
+- MSE、binary cross-entropy、categorical cross-entropy、contrastive loss（InfoNCE）とそれぞれの勾配をゼロから実装する
+- 「すべてに 0.5 を予測する」故障モードを示し、分類で MSE が失敗する理由を説明する
+- cross-entropy に label smoothing を適用し、それが過信した予測を防ぐ仕組みを説明する
+- 回帰、二値分類、多クラス分類、embedding 学習タスクに対して正しい損失関数を選ぶ
 
-## The Problem
+## 問題
 
-A model minimizing MSE on a classification problem will confidently predict 0.5 for everything. It's minimizing loss. It's also useless.
+分類問題で MSE を最小化するモデルは、すべてに対して自信満々に 0.5 を予測することがあります。損失は最小化しています。同時に、まったく役に立ちません。
 
-The loss function is the only thing your model actually optimizes. Not accuracy. Not F1 score. Not whatever metric you report to your manager. The optimizer takes the gradient of the loss function and adjusts weights to make that number smaller. If the loss function doesn't capture what you care about, the model will find the mathematically cheapest way to satisfy it, and that way is almost never what you wanted.
+損失関数は、モデルが実際に最適化する唯一のものです。accuracy ではありません。F1 score でもありません。マネージャーに報告する何らかの指標でもありません。optimizer は損失関数の勾配を取り、その数値が小さくなるように重みを調整します。損失関数があなたの関心事を捉えていなければ、モデルはそれを満たすために数学的に最も安い方法を見つけます。そしてその方法は、ほぼ必ずあなたが望んだものではありません。
 
-Here is a concrete example. You have a binary classification task. Two classes, 50/50 split. You use MSE as your loss. The model predicts 0.5 for every single input. The average MSE is 0.25, which is the minimum possible without actually learning anything. The model has zero discriminative ability but it has technically minimized your loss function. Switch to cross-entropy and the same model is forced to push predictions toward 0 or 1, because -log(0.5) = 0.693 is a terrible loss, while -log(0.99) = 0.01 rewards confident correct predictions. The choice of loss function is the difference between a model that learns and a model that games the metric.
+具体例を見てみます。二値分類タスクがあります。2クラスで、50/50 の分布です。損失に MSE を使います。モデルはすべての入力に 0.5 を予測します。平均 MSE は 0.25 で、実際には何も学習しない場合に到達できる最小値です。モデルには識別能力がありませんが、技術的には損失関数を最小化しています。cross-entropy に切り替えると、同じモデルは予測を 0 または 1 に押し出すことを強制されます。なぜなら -log(0.5) = 0.693 はひどい損失で、-log(0.99) = 0.01 は自信のある正解予測に報酬を与えるからです。損失関数の選択は、学習するモデルと、指標をすり抜けるだけのモデルの違いです。
 
-It gets worse. In self-supervised learning, you don't even have labels. Contrastive loss defines the learning signal entirely: what counts as similar, what counts as different, and how hard the model should push them apart. Get contrastive loss wrong and your embeddings collapse to a single point -- every input maps to the same vector. Technically zero loss. Completely worthless.
+さらに悪いこともあります。自己教師あり学習では、ラベルすらありません。contrastive loss が学習信号のすべてを定義します。何を似ていると見なすか、何を違うと見なすか、どれくらい強く引き離すかです。contrastive loss を間違えると、embedding が1点に崩壊します。すべての入力が同じベクトルに写ります。技術的にはゼロ損失。完全に無価値です。
 
-## The Concept
+## 概念
 
-### Mean Squared Error (MSE)
+### Mean Squared Error（MSE）
 
-The default for regression. Compute the squared difference between prediction and target, average over all samples.
+回帰のデフォルトです。予測とターゲットの差を二乗し、全サンプルで平均します。
 
 ```
 MSE = (1/n) * sum((y_pred - y_true)^2)
 ```
 
-Why squaring matters: it penalizes large errors quadratically. An error of 2 costs 4x as much as an error of 1. An error of 10 costs 100x. This makes MSE sensitive to outliers -- a single wildly wrong prediction dominates the loss.
+二乗が重要な理由: 大きな誤差を二次的に罰します。誤差2は誤差1の4倍のコストです。誤差10は100倍です。そのため MSE は外れ値に敏感です。たった1つの極端に間違った予測が損失を支配します。
 
-Real numbers: if your model predicts housing prices and is off by $10,000 on most houses but off by $200,000 on one mansion, MSE will aggressively try to fix that one mansion, potentially hurting performance on the other 99 houses.
+具体的には、住宅価格を予測するモデルが、多くの家で $10,000 外す一方、1つの豪邸で $200,000 外したとします。MSE はその1つの豪邸を直そうと強く動き、ほかの99件の性能を悪化させる可能性があります。
 
-The gradient of MSE with respect to a prediction is:
+予測に対する MSE の勾配は次のとおりです。
 
 ```
 dMSE/dy_pred = (2/n) * (y_pred - y_true)
 ```
 
-Linear in the error. Bigger errors get bigger gradients. This is a feature for regression (large errors need large corrections) and a bug for classification (you want to penalize confident wrong answers exponentially, not linearly).
+誤差に対して線形です。大きな誤差ほど大きな勾配を持ちます。これは回帰では利点です（大きな誤差には大きな修正が必要）。しかし分類では欠点です（自信を持った誤答は線形ではなく指数的に罰したいからです）。
 
 ### Cross-Entropy Loss
 
-The loss function for classification. Rooted in information theory -- it measures the divergence between the predicted probability distribution and the true distribution.
+分類のための損失関数です。情報理論に根ざしており、予測された確率分布と真の分布の乖離を測ります。
 
-**Binary Cross-Entropy (BCE):**
+**Binary Cross-Entropy（BCE）:**
 
 ```
 BCE = -(y * log(p) + (1 - y) * log(1 - p))
 ```
 
-Where y is the true label (0 or 1) and p is the predicted probability.
+ここで y は真のラベル（0 または 1）、p は予測確率です。
 
-Why -log(p) works: when the true label is 1 and you predict p = 0.99, the loss is -log(0.99) = 0.01. When you predict p = 0.01, the loss is -log(0.01) = 4.6. That 460x difference is why cross-entropy works. It brutally punishes confident wrong predictions while barely penalizing confident correct ones.
+-log(p) が効く理由: 真のラベルが 1 で、p = 0.99 と予測すると、損失は -log(0.99) = 0.01 です。p = 0.01 と予測すると、損失は -log(0.01) = 4.6 です。この460倍の差が cross-entropy が効く理由です。自信を持った誤答を容赦なく罰し、自信を持った正答にはほとんど罰を与えません。
 
-The gradient tells the same story:
+勾配も同じことを語っています。
 
 ```
 dBCE/dp = -(y/p) + (1-y)/(1-p)
 ```
 
-When y = 1 and p is near zero, the gradient is -1/p which approaches negative infinity. The model gets an enormous signal to fix its mistake. When p is near 1, the gradient is tiny. Already correct, nothing to fix.
+y = 1 で p がゼロに近いと、勾配は -1/p になり、負の無限大へ近づきます。モデルは間違いを修正するための巨大な信号を受け取ります。p が 1 に近いと、勾配はごく小さくなります。すでに正しいので、直すものがないからです。
 
 **Categorical Cross-Entropy:**
 
-For multi-class classification with one-hot encoded targets.
+one-hot エンコードされたターゲットを持つ多クラス分類向けです。
 
 ```
 CCE = -sum(y_i * log(p_i))
 ```
 
-Only the true class contributes to the loss (because all other y_i are zero). If there are 10 classes and the correct class gets probability 0.1 (random guessing), the loss is -log(0.1) = 2.3. If the correct class gets probability 0.9, the loss is -log(0.9) = 0.105. The model learns to concentrate probability mass on the right answer.
+損失に寄与するのは真のクラスだけです（他の y_i はすべてゼロだからです）。10クラスあり、正解クラスの確率が 0.1（ランダム推測）なら、損失は -log(0.1) = 2.3 です。正解クラスの確率が 0.9 なら、損失は -log(0.9) = 0.105 です。モデルは正解に確率質量を集中させるように学習します。
 
-### Why MSE Fails for Classification
+### 分類で MSE が失敗する理由
 
 ```mermaid
 graph TD
-    subgraph "MSE on Classification"
-        P1["Predict 0.5 for class 1<br/>MSE = 0.25"]
-        P2["Predict 0.9 for class 1<br/>MSE = 0.01"]
-        P3["Predict 0.1 for class 1<br/>MSE = 0.81"]
+    subgraph "分類に MSE を使う"
+        P1["class 1 に 0.5 を予測<br/>MSE = 0.25"]
+        P2["class 1 に 0.9 を予測<br/>MSE = 0.01"]
+        P3["class 1 に 0.1 を予測<br/>MSE = 0.81"]
     end
-    subgraph "Cross-Entropy on Classification"
-        C1["Predict 0.5 for class 1<br/>CE = 0.693"]
-        C2["Predict 0.9 for class 1<br/>CE = 0.105"]
-        C3["Predict 0.1 for class 1<br/>CE = 2.303"]
+    subgraph "分類に Cross-Entropy を使う"
+        C1["class 1 に 0.5 を予測<br/>CE = 0.693"]
+        C2["class 1 に 0.9 を予測<br/>CE = 0.105"]
+        C3["class 1 に 0.1 を予測<br/>CE = 2.303"]
     end
-    P3 -->|"MSE gradient<br/>flattens near<br/>saturation"| Slow["Slow correction"]
-    C3 -->|"CE gradient<br/>explodes near<br/>wrong answer"| Fast["Fast correction"]
+    P3 -->|"MSE 勾配は<br/>飽和付近で<br/>平坦化する"| Slow["修正が遅い"]
+    C3 -->|"CE 勾配は<br/>誤答付近で<br/>爆発する"| Fast["修正が速い"]
 ```
 
-MSE gradients flatten when predictions are near 0 or 1 (due to sigmoid saturation). Cross-entropy gradients compensate for this -- the -log cancels the sigmoid's flat regions, giving strong gradients exactly where they are needed most.
+予測が 0 または 1 に近いとき、MSE の勾配は（sigmoid の飽和により）平坦になります。cross-entropy の勾配はこれを補償します。-log が sigmoid の平坦な領域を打ち消し、最も必要な場所で強い勾配を与えます。
 
 ### Label Smoothing
 
-Standard one-hot labels say "this is 100% class 3 and 0% everything else." That's a strong claim. Label smoothing softens it:
+標準的な one-hot ラベルは「これは100% class 3 で、それ以外は0%」と言います。かなり強い主張です。Label smoothing はそれを柔らかくします。
 
 ```
 smooth_label = (1 - alpha) * one_hot + alpha / num_classes
 ```
 
-With alpha = 0.1 and 10 classes: instead of [0, 0, 1, 0, ...], the target becomes [0.01, 0.01, 0.91, 0.01, ...]. The model targets 0.91 instead of 1.0.
+alpha = 0.1、10クラスなら、ターゲットは [0, 0, 1, 0, ...] ではなく [0.01, 0.01, 0.91, 0.01, ...] になります。モデルは 1.0 ではなく 0.91 を目標にします。
 
-Why this works: a model trying to output exactly 1.0 through a softmax needs to push logits to infinity. This causes overconfidence, hurts generalization, and makes the model brittle to distribution shift. Label smoothing caps the target at 0.9 (with alpha=0.1), keeping logits in a reasonable range. GPT and most modern models use label smoothing or its equivalent.
+これが効く理由: softmax を通して厳密に 1.0 を出そうとするモデルは、logits を無限大へ押し上げる必要があります。これは過信を引き起こし、汎化を悪化させ、分布シフトに対して脆くします。Label smoothing は（alpha=0.1 の場合）ターゲットを 0.9 に抑え、logits を妥当な範囲に保ちます。GPT を含む現代の多くのモデルは、label smoothing またはそれに相当するものを使っています。
 
 ### Contrastive Loss
 
-No labels. No classes. Just pairs of inputs and the question: are these similar or different?
+ラベルはありません。クラスもありません。入力ペアと、これらは似ているか違うか、という問いだけです。
 
-**SimCLR-style contrastive loss (NT-Xent / InfoNCE):**
+**SimCLR スタイルの contrastive loss（NT-Xent / InfoNCE）:**
 
-Take one image. Create two augmented views of it (crop, rotate, color jitter). These are the "positive pair" -- they should have similar embeddings. Every other image in the batch forms a "negative pair" -- they should have different embeddings.
+1枚の画像を取ります。それに2つの拡張ビュー（crop、rotate、color jitter）を作ります。これらが「positive pair」で、似た embedding を持つべきです。バッチ内の他のすべての画像は「negative pair」で、異なる embedding を持つべきです。
 
 ```
 L = -log(exp(sim(z_i, z_j) / tau) / sum(exp(sim(z_i, z_k) / tau)))
 ```
 
-Where sim() is cosine similarity, z_i and z_j are the positive pair, the sum is over all negatives, and tau (temperature) controls how sharp the distribution is. Lower temperature = harder negatives = more aggressive separation.
+ここで sim() は cosine similarity、z_i と z_j は positive pair、sum はすべての negatives にわたり、tau（temperature）は分布の鋭さを制御します。低い temperature = より難しい negatives = より強い分離です。
 
-Real numbers: batch size 256 means 255 negatives per positive pair. Temperature tau = 0.07 (SimCLR default). The loss looks like a softmax over similarities -- it wants the positive pair's similarity to be highest among all 256 options.
+具体的には、batch size 256 は positive pair ごとに255個の negatives があることを意味します。Temperature tau = 0.07（SimCLR のデフォルト）です。この損失は類似度に対する softmax のように見えます。256個の選択肢の中で、positive pair の類似度を最も高くしたいわけです。
 
 **Triplet Loss:**
 
-Takes three inputs: anchor, positive (same class), negative (different class).
+3つの入力を取ります。anchor、positive（同じクラス）、negative（異なるクラス）です。
 
 ```
 L = max(0, d(anchor, positive) - d(anchor, negative) + margin)
 ```
 
-The margin (typically 0.2-1.0) enforces a minimum gap between positive and negative distances. If the negative is already far enough away, the loss is zero -- no gradient, no update. This makes training efficient but requires careful triplet mining (choosing hard negatives that are close to the anchor).
+margin（通常 0.2-1.0）は、positive と negative の距離の間に最小ギャップを強制します。negative がすでに十分遠ければ、損失はゼロです。勾配も更新もありません。これにより訓練は効率的になりますが、慎重な triplet mining（anchor に近い hard negatives を選ぶこと）が必要です。
 
 ### Focal Loss
 
-For imbalanced datasets. Standard cross-entropy treats all correctly classified examples equally. Focal loss down-weights easy examples:
+不均衡データセット向けです。標準の cross-entropy は、正しく分類されたすべての例を同じように扱います。Focal loss は簡単な例の重みを下げます。
 
 ```
 FL = -alpha * (1 - p_t)^gamma * log(p_t)
 ```
 
-Where p_t is the predicted probability of the true class and gamma controls the focusing. With gamma = 0, this is standard cross-entropy. With gamma = 2 (the default):
+ここで p_t は真のクラスの予測確率で、gamma は focus の強さを制御します。gamma = 0 なら標準の cross-entropy です。gamma = 2（デフォルト）では次のようになります。
 
-- Easy example (p_t = 0.9): weight = (0.1)^2 = 0.01. Effectively ignored.
-- Hard example (p_t = 0.1): weight = (0.9)^2 = 0.81. Full gradient signal.
+- 簡単な例（p_t = 0.9）: weight = (0.1)^2 = 0.01。実質的に無視されます。
+- 難しい例（p_t = 0.1）: weight = (0.9)^2 = 0.81。十分な勾配信号があります。
 
-Focal loss was introduced by Lin et al. for object detection, where 99% of candidate regions are background (easy negatives). Without focal loss, the model drowns in easy background examples and never learns to detect objects. With it, the model focuses its capacity on the hard, ambiguous cases that matter.
+Focal loss は、候補領域の99%が background（簡単な負例）である物体検出のために Lin らが導入しました。focal loss がないと、モデルは簡単な background 例に埋もれ、物体を検出することを学べません。これを使うと、モデルは重要な hard で曖昧なケースに容量を集中できます。
 
-### Loss Function Decision Tree
+### 損失関数の決定木
 
 ```mermaid
 flowchart TD
-    Start["What is your task?"] --> Reg{"Regression?"}
-    Start --> Cls{"Classification?"}
-    Start --> Emb{"Learning embeddings?"}
+    Start["タスクは何ですか?"] --> Reg{"回帰?"}
+    Start --> Cls{"分類?"}
+    Start --> Emb{"Embedding を学習?"}
 
-    Reg -->|"Yes"| Outliers{"Outlier sensitive?"}
-    Outliers -->|"Yes, penalize outliers"| MSE["Use MSE"]
-    Outliers -->|"No, robust to outliers"| MAE["Use MAE / Huber"]
+    Reg -->|"はい"| Outliers{"外れ値に敏感?"}
+    Outliers -->|"はい、外れ値を罰したい"| MSE["MSE を使う"]
+    Outliers -->|"いいえ、外れ値に頑健にしたい"| MAE["MAE / Huber を使う"]
 
-    Cls -->|"Binary"| BCE["Use Binary CE"]
-    Cls -->|"Multi-class"| CCE["Use Categorical CE"]
-    Cls -->|"Imbalanced"| FL["Use Focal Loss"]
-    CCE -->|"Overconfident?"| LS["Add Label Smoothing"]
+    Cls -->|"二値"| BCE["Binary CE を使う"]
+    Cls -->|"多クラス"| CCE["Categorical CE を使う"]
+    Cls -->|"不均衡"| FL["Focal Loss を使う"]
+    CCE -->|"過信する?"| LS["Label Smoothing を追加"]
 
-    Emb -->|"Paired data"| CL["Use Contrastive Loss"]
-    Emb -->|"Triplets available"| TL["Use Triplet Loss"]
-    Emb -->|"Large batch self-supervised"| NCE["Use InfoNCE"]
+    Emb -->|"ペアデータ"| CL["Contrastive Loss を使う"]
+    Emb -->|"Triplet がある"| TL["Triplet Loss を使う"]
+    Emb -->|"大きなバッチの自己教師あり"| NCE["InfoNCE を使う"]
 ```
 
-### Loss Landscape
+### 損失地形
 
 ```mermaid
 graph LR
-    subgraph "Loss Surface Shape"
-        MSE_S["MSE<br/>Smooth parabola<br/>Single minimum<br/>Easy to optimize"]
-        CE_S["Cross-Entropy<br/>Steep near wrong answers<br/>Flat near correct answers<br/>Strong gradients where needed"]
-        CL_S["Contrastive<br/>Many local minima<br/>Depends on batch composition<br/>Temperature controls sharpness"]
+    subgraph "損失面の形"
+        MSE_S["MSE<br/>滑らかな放物線<br/>単一の最小値<br/>最適化しやすい"]
+        CE_S["Cross-Entropy<br/>誤答付近で急峻<br/>正答付近で平坦<br/>必要な場所で強い勾配"]
+        CL_S["Contrastive<br/>局所最小が多い<br/>バッチ構成に依存<br/>Temperature が鋭さを制御"]
     end
-    MSE_S -->|"Best for"| Reg2["Regression"]
-    CE_S -->|"Best for"| Cls2["Classification"]
-    CL_S -->|"Best for"| Emb2["Representation learning"]
+    MSE_S -->|"最適"| Reg2["回帰"]
+    CE_S -->|"最適"| Cls2["分類"]
+    CL_S -->|"最適"| Emb2["表現学習"]
 ```
 
-## Build It
+## 作ってみる
 
-### Step 1: MSE and Its Gradient
+### Step 1: MSE とその勾配
 
 ```python
 def mse(predictions, targets):
@@ -209,7 +209,7 @@ def mse_gradient(predictions, targets):
 
 ### Step 2: Binary Cross-Entropy
 
-The log(0) problem is real. If the model predicts exactly 0 for a positive example, log(0) = negative infinity. Clipping prevents this.
+log(0) 問題は現実に起きます。モデルが正例に対してちょうど 0 を予測すると、log(0) = 負の無限大 です。clipping はこれを防ぎます。
 
 ```python
 import math
@@ -230,9 +230,9 @@ def bce_gradient(predictions, targets, eps=1e-15):
     return grads
 ```
 
-### Step 3: Categorical Cross-Entropy with Softmax
+### Step 3: Softmax 付き Categorical Cross-Entropy
 
-Softmax converts raw logits to probabilities. Then we compute the cross-entropy against one-hot targets.
+Softmax は生の logits を確率へ変換します。その後、one-hot ターゲットに対して cross-entropy を計算します。
 
 ```python
 def softmax(logits):
@@ -253,7 +253,7 @@ def cce_gradient(logits, target_index):
     return grads
 ```
 
-The gradient of softmax + cross-entropy simplifies beautifully: it's just (predicted probability - 1) for the true class, and (predicted probability) for all other classes. This elegant simplification is not a coincidence -- it's why softmax and cross-entropy are paired.
+softmax + cross-entropy の勾配は美しく簡約されます。真のクラスでは（予測確率 - 1）、それ以外の全クラスでは（予測確率）だけです。この洗練された簡約は偶然ではありません。softmax と cross-entropy が組で使われる理由です。
 
 ### Step 4: Label Smoothing
 
@@ -271,7 +271,7 @@ def label_smoothed_cce(logits, target_index, num_classes, alpha=0.1, eps=1e-15):
     return loss
 ```
 
-### Step 5: Contrastive Loss (Simplified InfoNCE)
+### Step 5: Contrastive Loss（簡略化した InfoNCE）
 
 ```python
 def cosine_similarity(a, b):
@@ -294,9 +294,9 @@ def contrastive_loss(anchor, positive, negatives, temperature=0.07):
     return -math.log(max(1e-15, exp_pos / total_exp))
 ```
 
-### Step 6: MSE vs Cross-Entropy on Classification
+### Step 6: 分類における MSE vs Cross-Entropy
 
-Train the same network from lesson 04 (circle dataset) with both loss functions. Watch cross-entropy converge faster.
+レッスン04の同じネットワーク（円データセット）を、両方の損失関数で訓練します。cross-entropy のほうが速く収束する様子を観察します。
 
 ```python
 import random
@@ -388,9 +388,9 @@ class LossComparisonNetwork:
         return losses
 ```
 
-## Use It
+## 使ってみる
 
-PyTorch provides all standard loss functions with numerical stability built in:
+PyTorch は数値安定性を組み込んだ標準の損失関数をすべて提供しています。
 
 ```python
 import torch
@@ -409,46 +409,46 @@ ce_loss = F.cross_entropy(logits, labels)
 ce_smooth = F.cross_entropy(logits, labels, label_smoothing=0.1)
 ```
 
-Use `F.cross_entropy` (not `F.nll_loss` plus manual softmax). It combines log-softmax and negative log-likelihood in one numerically stable operation. Applying softmax separately then taking the log is less stable -- you lose precision in the subtraction of large exponentials.
+`F.cross_entropy` を使ってください（`F.nll_loss` と手動 softmax の組み合わせではありません）。これは log-softmax と negative log-likelihood を、数値的に安定した1つの操作にまとめています。softmax を別に適用してから log を取る方法は安定性が低く、大きな指数の引き算で精度を失います。
 
-For contrastive learning, most teams use custom implementations or libraries like `lightly` or `pytorch-metric-learning`. The core loop is always the same: compute pairwise similarities, create the softmax over positives and negatives, backpropagate.
+contrastive learning では、多くのチームが独自実装または `lightly` や `pytorch-metric-learning` のようなライブラリを使います。中核のループは常に同じです。ペアごとの類似度を計算し、positives と negatives に対する softmax を作り、バックプロパゲーションします。
 
-## Ship It
+## 成果物
 
-This lesson produces:
-- `outputs/prompt-loss-function-selector.md` -- a reusable prompt for choosing the right loss function
-- `outputs/prompt-loss-debugger.md` -- a diagnostic prompt for when your loss curve looks wrong
+このレッスンで作るもの:
+- `outputs/prompt-loss-function-selector.md` -- 正しい損失関数を選ぶための再利用可能なプロンプト
+- `outputs/prompt-loss-debugger.md` -- 損失曲線がおかしいときの診断プロンプト
 
-## Exercises
+## 演習
 
-1. Implement Huber loss (smooth L1 loss), which is MSE for small errors and MAE for large errors. Train a regression network predicting y = sin(x) with MSE vs Huber when 5% of training targets have random noise added (outliers). Compare final test error.
+1. Huber loss（smooth L1 loss）を実装してください。小さな誤差には MSE、大きな誤差には MAE として振る舞います。y = sin(x) を予測する回帰ネットワークを、訓練ターゲットの5%にランダムノイズ（外れ値）を加えた条件で MSE と Huber で訓練してください。最終的なテスト誤差を比較してください。
 
-2. Add focal loss to the binary classification training loop. Create an imbalanced dataset (90% class 0, 10% class 1). Compare standard BCE vs focal loss (gamma=2) on the minority class recall after 200 epochs.
+2. 二値分類の訓練ループに focal loss を追加してください。不均衡データセット（90% が class 0、10% が class 1）を作ります。200 epochs 後の少数クラス recall で、標準 BCE と focal loss（gamma=2）を比較してください。
 
-3. Implement triplet loss with semi-hard negative mining. Generate 2D embedding data for 5 classes. For each anchor, find the hardest negative that is still farther than the positive (semi-hard). Compare convergence to random triplet selection.
+3. semi-hard negative mining 付きの triplet loss を実装してください。5クラスの2D embedding データを生成します。各 anchor について、positive よりは遠いが最も難しい negative（semi-hard）を見つけます。ランダムな triplet 選択と収束を比較してください。
 
-4. Run the MSE vs cross-entropy comparison but track gradient magnitudes at each layer during training. Plot the average gradient norm per epoch. Verify that cross-entropy produces larger gradients in early epochs when the model is most uncertain.
+4. MSE vs cross-entropy 比較を実行しつつ、訓練中の各層の勾配の大きさを追跡してください。epoch ごとの平均勾配ノルムをプロットします。モデルが最も不確実な初期 epoch で、cross-entropy がより大きな勾配を生むことを確認してください。
 
-5. Implement KL divergence loss and verify that minimizing KL(true || predicted) gives the same gradients as cross-entropy when the true distribution is one-hot. Then try soft targets (like knowledge distillation) where the "true" distribution comes from a teacher model's softmax output.
+5. KL divergence loss を実装し、真の分布が one-hot のときに KL(true || predicted) を最小化すると cross-entropy と同じ勾配になることを確認してください。次に、teacher model の softmax 出力から来る「真の」分布のような soft targets（knowledge distillation）を試してください。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| Loss function | "How wrong the model is" | A differentiable function mapping predictions and targets to a scalar that the optimizer minimizes |
-| MSE | "Average squared error" | Mean of squared differences between predictions and targets; penalizes large errors quadratically |
-| Cross-entropy | "The classification loss" | Measures divergence between predicted probability distribution and true distribution using -log(p) |
-| Binary cross-entropy | "BCE" | Cross-entropy for two classes: -(y*log(p) + (1-y)*log(1-p)) |
-| Label smoothing | "Softening the targets" | Replacing hard 0/1 targets with soft values (e.g., 0.1/0.9) to prevent overconfidence and improve generalization |
-| Contrastive loss | "Pull together, push apart" | A loss that learns representations by making similar pairs close and dissimilar pairs far in embedding space |
-| InfoNCE | "The CLIP/SimCLR loss" | Normalized temperature-scaled cross-entropy over similarity scores; treats contrastive learning as classification |
-| Focal loss | "The imbalanced data fix" | Cross-entropy weighted by (1-p_t)^gamma to down-weight easy examples and focus on hard ones |
-| Triplet loss | "Anchor-positive-negative" | Pushes anchor closer to positive than negative by at least a margin in embedding space |
-| Temperature | "Sharpness knob" | A scalar divisor on logits/similarities that controls how peaked the resulting distribution is; lower = sharper |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Loss function | 「モデルがどれくらい間違っているか」 | 予測とターゲットを optimizer が最小化するスカラーへ写す微分可能な関数 |
+| MSE | 「平均二乗誤差」 | 予測とターゲットの差の二乗平均。大きな誤差を二次的に罰する |
+| Cross-entropy | 「分類の損失」 | -log(p) を使って、予測確率分布と真の分布の乖離を測る |
+| Binary cross-entropy | 「BCE」 | 2クラス用の cross-entropy: -(y*log(p) + (1-y)*log(1-p)) |
+| Label smoothing | 「ターゲットを柔らかくする」 | hard な 0/1 ターゲットを soft な値（例: 0.1/0.9）に置き換え、過信を防ぎ汎化を改善する |
+| Contrastive loss | 「近づけて、引き離す」 | embedding 空間で似たペアを近く、似ていないペアを遠くすることで表現を学習する損失 |
+| InfoNCE | 「CLIP/SimCLR の損失」 | 類似度スコアに対する正規化された temperature-scaled cross-entropy。contrastive learning を分類として扱う |
+| Focal loss | 「不均衡データ対策」 | (1-p_t)^gamma で重み付けされた cross-entropy。簡単な例の重みを下げ、難しい例に集中する |
+| Triplet loss | 「Anchor-positive-negative」 | embedding 空間で、anchor を negative より少なくとも margin 分だけ positive に近づける |
+| Temperature | 「鋭さのノブ」 | logits/類似度に対するスカラーの除数で、結果の分布の尖り具合を制御する。低いほど鋭い |
 
-## Further Reading
+## 参考資料
 
-- Lin et al., "Focal Loss for Dense Object Detection" (2017) -- introduced focal loss for handling extreme class imbalance in object detection (RetinaNet)
-- Chen et al., "A Simple Framework for Contrastive Learning of Visual Representations" (SimCLR, 2020) -- defined the modern contrastive learning pipeline with NT-Xent loss
-- Szegedy et al., "Rethinking the Inception Architecture" (2016) -- introduced label smoothing as a regularization technique, now standard in most large models
-- Hinton et al., "Distilling the Knowledge in a Neural Network" (2015) -- knowledge distillation using soft targets and KL divergence, foundational for model compression
+- Lin et al., "Focal Loss for Dense Object Detection" (2017) -- 物体検出（RetinaNet）における極端なクラス不均衡を扱うために focal loss を導入した論文
+- Chen et al., "A Simple Framework for Contrastive Learning of Visual Representations" (SimCLR, 2020) -- NT-Xent loss を伴う現代的な contrastive learning パイプラインを定義した論文
+- Szegedy et al., "Rethinking the Inception Architecture" (2016) -- 正則化技法として label smoothing を導入し、現在では多くの大規模モデルで標準になっている論文
+- Hinton et al., "Distilling the Knowledge in a Neural Network" (2015) -- soft targets と KL divergence を使う knowledge distillation。モデル圧縮の基礎となる論文

@@ -1,112 +1,112 @@
-# Long-Running Background Agents: Durable Execution
+# 長時間実行されるバックグラウンドエージェント：永続実行
 
-> Production long-horizon agents do not run in `while True`. Every LLM call becomes an activity with checkpoint, retry, and replay. Temporal's OpenAI Agents SDK integration went GA March 2026. Claude Code Routines (Anthropic) runs scheduled Claude Code invocations without a persistent local process. Sessions pause on human-input, survive deploys, and resume from the latest checkpoint keyed by `thread_id`. Behind the new ergonomics sits an old pattern — workflow orchestration — with one new input: LLM calls as non-deterministic activities that must be deterministically replayed on recovery.
+> 本番の長期ホライズンエージェントは、`while True`で走らない。すべてのLLM呼び出しは、チェックポイント、リトライ、リプレイを備えたactivityになる。TemporalのOpenAI Agents SDK統合は2026年3月にGAになった。Claude Code Routines（Anthropic）は、永続的なローカルプロセスなしで、スケジュールされたClaude Code呼び出しを実行する。セッションは人間入力で一時停止し、デプロイをまたいで生き残り、`thread_id`をキーにした最新チェックポイントから再開する。新しい使いやすさの背後にあるのは、古くからあるパターン、つまりworkflow orchestrationである。そこに1つ新しい入力が加わった。LLM呼び出しは非決定的なactivityであり、復旧時には決定的にリプレイされなければならない。
 
-**Type:** Learn
-**Languages:** Python (stdlib, minimal durable-execution state machine)
-**Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
-**Time:** ~60 minutes
+**タイプ:** Learn
+**言語:** Python（stdlib、最小限の永続実行ステートマシン）
+**前提条件:** Phase 15 · 10（Permission modes）、Phase 15 · 01（Long-horizon agents）
+**所要時間:** 約60分
 
-## The Problem
+## 問題
 
-Consider an agent that runs for four hours. It calls three tools, prompts the user twice, and makes forty LLM calls. Halfway through, the host it is running on reboots. What happens?
+4時間実行されるエージェントを考える。このエージェントは3つのツールを呼び出し、ユーザーに2回確認し、40回のLLM呼び出しを行う。途中で、実行中のホストが再起動した。何が起きるか。
 
-- In a naive `while True` loop: everything is lost. The run restarts from scratch. The three tool calls (with real side effects) execute again. The user is prompted again for things they already approved. Forty LLM calls are re-billed.
-- With durable execution: the run resumes from the most recent checkpoint. Already-completed activities are not re-executed; their results are replayed from the durable log. The user does not re-approve things they already approved. The LLM calls already made are not re-billed.
+- ナイーブな`while True`ループでは、すべてが失われる。実行は最初から再開する。3つのツール呼び出し（実際の副作用を持つ）がもう一度実行される。ユーザーは、すでに承認した内容についてもう一度確認される。40回のLLM呼び出しに対して再び課金される。
+- 永続実行では、実行は直近のチェックポイントから再開する。完了済みのactivityは再実行されない。その結果は永続ログからリプレイされる。ユーザーは、すでに承認した内容を再承認しない。すでに行われたLLM呼び出しに再課金されない。
 
-This is the same pattern workflow engines have shipped for a decade (Temporal, Cadence, Uber's Cherami). What's new is that LLM calls are now a kind of activity — non-deterministic, expensive, with side effects — and they fit this pattern cleanly.
+これは、workflow engineが10年にわたって提供してきたものと同じパターンである（Temporal、Cadence、UberのCherami）。新しいのは、LLM呼び出しがactivityの一種になったことだ。LLM呼び出しは非決定的で、高価で、副作用を持ち得る。そして、このパターンにきれいにはまる。
 
-The running theme of the lesson: long-horizon reliability decays (METR observes a "35-minute degradation" — success rate drops roughly quadratically with horizon). Durable execution enables runs that are longer than the reliability profile supports, which is a new way to fail safely if the design is right and unsafely if the design is wrong.
+このレッスンの通底テーマは、長期ホライズンの信頼性は劣化する、ということである（METRは「35-minute degradation」を観測しており、成功率はホライズンに対しておおむね二次的に低下する）。永続実行は、信頼性プロファイルが支えられる長さを超えた実行を可能にする。設計が正しければ安全に失敗する新しい方法になり、設計が間違っていれば危険に失敗する新しい方法になる。
 
-## The Concept
+## 概念
 
-### Activities, workflows, and replay
+### Activity、workflow、replay
 
-- **Workflow**: deterministic orchestration code. Defines the sequence of activities, the branches, the waits. Must be deterministic so it can be replayed from the event log without surprising divergence.
-- **Activity**: a non-deterministic, potentially failing unit of work. LLM call, tool call, file write, HTTP request. Each activity is logged with its inputs and (once complete) its outputs.
-- **Event log**: the durable backing store. Every activity start, complete, fail, retry, and every workflow decision is recorded.
-- **Replay**: on recovery, the workflow code re-runs from the start; every activity that already completed returns its logged result without re-executing. Only activities that had not completed are actually run.
+- **Workflow**: 決定的なオーケストレーションコード。activityの順序、分岐、待機を定義する。event logからリプレイしても予期しない分岐が起きないよう、決定的でなければならない。
+- **Activity**: 非決定的で、失敗し得る作業単位。LLM呼び出し、ツール呼び出し、ファイル書き込み、HTTPリクエストなど。各activityは、入力と、完了後には出力とともにログに記録される。
+- **Event log**: 永続的なバッキングストア。すべてのactivityの開始、完了、失敗、リトライ、およびすべてのworkflow decisionが記録される。
+- **Replay**: 復旧時にworkflowコードを最初から再実行する。すでに完了したactivityは、再実行せず、ログに記録された結果を返す。まだ完了していなかったactivityだけが実際に実行される。
 
-This is the same shape as React re-rendering against a virtual DOM, or Git rebuilding a working tree from commits. Determinism in the orchestrator is what makes durability cheap.
+これは、Reactがvirtual DOMに対して再レンダリングする形や、Gitがコミットから作業ツリーを再構築する形と同じである。オーケストレーターの決定性が、永続性を安くする。
 
-### Why LLM calls fit the pattern
+### なぜLLM呼び出しがこのパターンに合うのか
 
-LLM calls are:
-- Non-deterministic (temperature > 0; even temperature 0 drifts across model versions).
-- Expensive (money and latency).
-- Potentially failing (rate limits, timeouts).
-- Side-effectful (if they invoke tools).
+LLM呼び出しは次の性質を持つ。
+- 非決定的である（temperature > 0。temperature 0であっても、モデルバージョン間でドリフトする）。
+- 高価である（金銭面でもレイテンシ面でも）。
+- 失敗し得る（レート制限、タイムアウト）。
+- 副作用を持ち得る（ツールを呼び出す場合）。
 
-This is exactly the activity profile. Wrapping every LLM call as an activity gives you retry with exponential backoff, checkpointing across restarts, and a replayable trace for debugging.
+これはまさにactivityのプロファイルである。すべてのLLM呼び出しをactivityとして包むことで、指数バックオフ付きのリトライ、再起動をまたいだチェックポイント、デバッグ用のリプレイ可能なトレースが得られる。
 
-### Checkpoints keyed by `thread_id`
+### `thread_id`をキーにしたチェックポイント
 
-LangGraph, Microsoft Agent Framework, Cloudflare Durable Objects, and Claude Code Routines all converged on the same API shape: a `thread_id` (or equivalent) identifies the session; each state transition persists to a backend (PostgreSQL default, SQLite for dev, Redis for cache); resume reads the latest checkpoint.
+LangGraph、Microsoft Agent Framework、Cloudflare Durable Objects、Claude Code Routinesは、すべて同じAPI形状に収束している。`thread_id`（または同等のもの）がセッションを識別する。各状態遷移はバックエンドに永続化される（デフォルトはPostgreSQL、開発用にSQLite、キャッシュ用にRedis）。再開時には最新チェックポイントを読む。
 
-The backend choice matters:
+バックエンドの選択は重要である。
 
-- **PostgreSQL**: durable, queryable, survives deploys. Default for LangGraph.
-- **SQLite**: local-dev only; loses data across hosts.
-- **Redis**: fast but ephemeral unless AOF/snapshot configured.
-- **Cloudflare Durable Objects**: transparently distributed; scoped by a unique key; survives for hours to weeks.
+- **PostgreSQL**: 永続的で、クエリ可能で、デプロイをまたいで生き残る。LangGraphのデフォルト。
+- **SQLite**: ローカル開発専用。ホストをまたぐとデータを失う。
+- **Redis**: 高速だが、AOF/snapshotを設定しない限り揮発的。
+- **Cloudflare Durable Objects**: 透過的に分散される。一意なキーでスコープされる。数時間から数週間生き残る。
 
-### Human-input as a first-class state
+### 第一級の状態としての人間入力
 
-Propose-then-commit (Lesson 15) requires a durable "waiting on human" state. The workflow pauses, the external queue holds the pending request, and an approval resumes from exactly that point. Without durability this is best-effort; with it, an overnight approval arrives and the workflow picks up in the morning.
+Propose-then-commit（レッスン15）は、永続的な「人間待ち」状態を必要とする。workflowは一時停止し、外部キューが保留中のリクエストを保持し、承認が届くとまさにその地点から再開する。永続性がなければこれはベストエフォートでしかない。永続性があれば、夜間に届いた承認を受けて、朝にworkflowが続きから動き出す。
 
-### The 35-minute degradation
+### 35-minute degradation
 
-METR observed that every agent class measured shows reliability decay beyond ~35 minutes of continuous operation. Doubling the task duration roughly quadruples the failure rate. Durable execution does not fix this; it lets you run longer than the reliability profile supports. The safe pattern is to combine durability with checkpoints that require fresh HITL on re-entry, and with budget kill switches (Lesson 13) that cap total compute regardless of wall-clock time.
+METRは、測定したすべてのエージェントクラスで、約35分を超える連続稼働後に信頼性が劣化することを観測した。タスク時間が2倍になると、失敗率はおおむね4倍になる。永続実行はこれを修正しない。信頼性プロファイルが支えられる長さを超えて実行できるようにするだけである。安全なパターンは、永続性に加えて、再入時に新たなHITLを要求するチェックポイントと、壁時計時間に関係なく総計算量を制限する予算キルスイッチ（レッスン13）を組み合わせることである。
 
-### When durable execution is the wrong answer
+### 永続実行が不適切な場合
 
-- Runs shorter than a few minutes with no human input. Overhead > benefit.
-- Strictly read-only information retrieval.
-- Tasks where correctness requires end-to-end within one context window (some reasoning tasks; some one-shot generation).
+- 数分未満で終わり、人間入力がない実行。オーバーヘッドが便益を上回る。
+- 厳密に読み取り専用の情報取得。
+- 正しさのために、1つのコンテキストウィンドウ内でエンドツーエンドに完結する必要があるタスク（一部の推論タスク、一部のワンショット生成）。
 
-## Use It
+## 使ってみる
 
-`code/main.py` implements a minimal durable-execution engine in stdlib Python. It supports:
+`code/main.py` は、stdlib Pythonで最小限の永続実行エンジンを実装している。対応しているもの:
 
-- `@activity` decorator that logs inputs and outputs to a JSON event log.
-- A workflow function that sequences activities.
-- A `run_or_replay(workflow, event_log)` function that replays completed activities without re-executing them.
+- 入力と出力をJSON event logに記録する`@activity`デコレーター。
+- activityを順序付けるworkflow関数。
+- 完了済みactivityを再実行せずにリプレイする`run_or_replay(workflow, event_log)`関数。
 
-The driver simulates a three-activity workflow, crashes halfway through, and shows (a) a naive retry re-executing everything versus (b) a replay running only the missing activity.
+ドライバーは3つのactivityを持つworkflowをシミュレートし、途中でクラッシュさせ、(a) ナイーブなリトライではすべてが再実行されること、(b) リプレイでは不足しているactivityだけが実行されることを示す。
 
-## Ship It
+## 実務に持ち込む
 
-`outputs/skill-durable-execution-review.md` reviews a proposed long-running agent deployment for correct durable-execution shape: activities, determinism, checkpoint backend, human-input state, and HITL-on-resume policy.
+`outputs/skill-durable-execution-review.md` は、提案された長時間実行エージェントのデプロイについて、正しい永続実行の形になっているかをレビューする。activity、決定性、チェックポイントバックエンド、人間入力状態、HITL-on-resumeポリシーを確認する。
 
-## Exercises
+## 演習
 
-1. Run `code/main.py`. Observe the difference in activity-execution count between naive retry and replay. Change the crash point and show the replay count changes accordingly.
+1. `code/main.py` を実行する。ナイーブなリトライとリプレイで、activity実行回数がどう違うか観察する。クラッシュ地点を変え、リプレイ回数がそれに応じて変わることを示す。
 
-2. Convert the toy engine to use `thread_id` explicitly. Simulate two concurrent sessions sharing the engine and confirm their event logs do not collide.
+2. トイエンジンを、`thread_id`を明示的に使う形に変更する。同じエンジンを共有する2つの並行セッションをシミュレートし、それぞれのevent logが衝突しないことを確認する。
 
-3. Take one activity in the toy engine. Introduce a non-determinism (a wall-clock timestamp inside a workflow decision). Demonstrate the divergence on replay. Explain how real engines handle this (side-effect registration, `Workflow.now()` APIs).
+3. トイエンジン内のactivityを1つ選ぶ。非決定性（workflow decision内の壁時計タイムスタンプ）を導入する。リプレイ時の分岐を実演する。実際のエンジンがこれをどう扱うか説明する（side-effect登録、`Workflow.now()` API）。
 
-4. Read the LangChain "Runtime behind production deep agents" post. List every state that the runtime persists and name which failure mode each covers.
+4. LangChainの「Runtime behind production deep agents」記事を読む。ランタイムが永続化するすべての状態を列挙し、それぞれがどの失敗モードをカバーするかを示す。
 
-5. Design a checkpoint policy for a 6-hour autonomous coding task. Where do you checkpoint? What does resume-on-crash look like? What requires fresh HITL?
+5. 6時間の自律コーディングタスクのチェックポイントポリシーを設計する。どこでチェックポイントを取るか。クラッシュ後の再開はどう見えるか。何に新たなHITLが必要か。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |---|---|---|
-| Workflow | "Agent's script" | Deterministic orchestration code; replayable from event log |
-| Activity | "A step" | Non-deterministic unit (LLM call, tool call); logged before and after |
-| Event log | "The backing store" | Durable record of every state transition |
-| Replay | "Resume" | Re-run workflow; completed activities return logged results without re-execution |
-| Checkpoint | "Save point" | Persisted state keyed by thread_id; latest-wins on resume |
-| thread_id | "Session key" | Identifier that scopes durable state |
-| 35-minute degradation | "Reliability decay" | METR: success rate drops ~quadratically with horizon |
-| Non-determinism | "Drift on replay" | Wall clock, random, LLM output; must be registered as side effect |
+| Workflow | 「エージェントのスクリプト」 | 決定的なオーケストレーションコード。event logからリプレイ可能 |
+| Activity | 「1つのステップ」 | 非決定的な単位（LLM呼び出し、ツール呼び出し）。前後でログに記録される |
+| Event log | 「バッキングストア」 | すべての状態遷移の永続的な記録 |
+| Replay | 「再開」 | workflowを再実行する。完了済みactivityは再実行せず、ログ済み結果を返す |
+| Checkpoint | 「保存地点」 | `thread_id`をキーに永続化された状態。再開時は最新のものが使われる |
+| thread_id | 「セッションキー」 | 永続状態をスコープする識別子 |
+| 35-minute degradation | 「信頼性劣化」 | METR：成功率はホライズンに対しておおむね二次的に低下する |
+| Non-determinism | 「リプレイ時のドリフト」 | 壁時計、乱数、LLM出力。副作用として登録しなければならない |
 
-## Further Reading
+## 参考資料
 
-- [Anthropic — Claude Code Agent SDK: agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) — budget, turns, and resume semantics.
-- [Microsoft — Agent Framework: human-in-the-loop and checkpointing](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) — RequestInfoEvent shape.
-- [LangChain — The Runtime Behind Production Deep Agents](https://www.langchain.com/conceptual-guides/runtime-behind-production-deep-agents) — concrete runtime requirements.
-- [OpenAI Agents SDK + Temporal integration (Trigger.dev announcement)](https://trigger.dev) — activity shape for LLM calls.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — the 35-minute degradation reference.
+- [Anthropic — Claude Code Agent SDK: agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop) - 予算、ターン、再開セマンティクス。
+- [Microsoft — Agent Framework: human-in-the-loop and checkpointing](https://learn.microsoft.com/en-us/agent-framework/workflows/human-in-the-loop) - RequestInfoEventの形。
+- [LangChain — The Runtime Behind Production Deep Agents](https://www.langchain.com/conceptual-guides/runtime-behind-production-deep-agents) - 具体的なランタイム要件。
+- [OpenAI Agents SDK + Temporal integration (Trigger.dev announcement)](https://trigger.dev) - LLM呼び出しのactivity形状。
+- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) - 35-minute degradationの参照元。

@@ -1,10 +1,10 @@
 {
   "lesson": "05-self-refine-and-critic",
-  "title": "Self-Refine and CRITIC: Iterative Output Improvement",
+  "title": "Self-RefineとCRITIC: 反復的な出力改善",
   "questions": [
     {
       "stage": "pre",
-      "question": "What three prompts make up a Self-Refine loop?",
+      "question": "Self-Refine loopを構成する3つのpromptはどれですか？",
       "options": [
         "Plan, execute, solve",
         "Generate, feedback, refine",
@@ -12,35 +12,35 @@
         "Search, score, synthesize"
       ],
       "correct": 1,
-      "explanation": "Self-Refine uses one model in three roles: generate, feedback, refine."
+      "explanation": "Self-Refineは1つのmodelをgenerate、feedback、refineの3 roleで使います。"
     },
     {
       "stage": "pre",
-      "question": "Why does Self-Refine require history on the refine step?",
+      "question": "Self-Refineがrefine stepでhistoryを必要とするのはなぜですか？",
       "options": [
-        "Providers cache only on history",
-        "Without prior outputs and critiques the refine step repeats earlier mistakes; the ablation shows quality drops sharply",
-        "History is needed for billing",
-        "It speeds up token generation"
+        "providersがhistoryに対してのみcacheするから",
+        "prior outputsとcritiquesがないとrefine stepが以前のmistakeを繰り返し、ablationではqualityが大きく落ちるから",
+        "billingにhistoryが必要だから",
+        "token generationを高速化するから"
       ],
       "correct": 1,
-      "explanation": "The refine prompt conditions on the full history so the model does not repeat its earlier errors."
+      "explanation": "refine promptはfull historyに条件づけられるため、modelは以前のerrorを繰り返しません。"
     },
     {
       "stage": "check",
-      "question": "What does CRITIC change relative to Self-Refine?",
+      "question": "CRITICはSelf-Refineに対して何を変えますか？",
       "options": [
-        "It removes the refine step",
-        "It replaces the self-feedback step with an external tool-grounded verifier",
-        "It uses a larger model for generation",
-        "It runs the feedback step in parallel"
+        "refine stepを削除する",
+        "self-feedback stepを外部tool-grounded verifierに置き換える",
+        "generationにより大きなmodelを使う",
+        "feedback stepをparallelに実行する"
       ],
       "correct": 1,
-      "explanation": "CRITIC swaps self-critique for a verify step routed through search, code interpreter, calculator, or domain verifiers."
+      "explanation": "CRITICはself-critiqueを、search、code interpreter、calculator、domain verifiersを通るverify stepに置き換えます。"
     },
     {
       "stage": "check",
-      "question": "Which Anthropic workflow pattern matches Self-Refine and CRITIC in Claude-friendly language?",
+      "question": "Claude向けの言葉でSelf-RefineとCRITICに対応するAnthropic workflow patternはどれですか？",
       "options": [
         "Router",
         "Prompt chain",
@@ -48,43 +48,43 @@
         "Parallel sampling"
       ],
       "correct": 2,
-      "explanation": "Anthropic names this pattern Evaluator-Optimizer: an evaluator scores, an optimizer revises, loop until convergence."
+      "explanation": "AnthropicはこのpatternをEvaluator-Optimizerと呼びます。evaluatorが採点し、optimizerが修正し、convergenceまでloopします。"
     },
     {
       "stage": "check",
-      "question": "What is a rubber-stamp loop and how does the lesson recommend avoiding it?",
+      "question": "rubber-stamp loopとは何で、このlessonはどう避けることを勧めていますか？",
       "options": [
-        "A test that always passes; remove the test",
-        "Same model and same prompt critiquing its own output and approving it; use structurally different prompts or a separate smaller critic",
-        "A retry that always fails; raise the budget",
-        "A guardrail that times out; widen the timeout"
+        "常にpassするtest。testを削除する",
+        "同じmodelと同じpromptが自分のoutputをcritiqueしてapproveすること。構造的に異なるpromptsか別の小さいcriticを使う",
+        "常に失敗するretry。budgetを上げる",
+        "timeoutするguardrail。timeoutを広げる"
       ],
       "correct": 1,
-      "explanation": "Same-style self-critique converges on 'looks good to me'; differentiate the evaluator from the optimizer."
+      "explanation": "同じstyleのself-critiqueは「looks good to me」に収束します。evaluatorとoptimizerを差別化します。"
     },
     {
       "stage": "post",
-      "question": "Which SDK feature in OpenAI Agents SDK is CRITIC-shaped?",
+      "question": "OpenAI Agents SDKのどのfeatureがCRITIC-shapedですか？",
       "options": [
         "Handoffs",
         "Sessions",
-        "Output guardrails (which can call tools)",
+        "Output guardrails（toolsを呼べる）",
         "Tracing"
       ],
       "correct": 2,
-      "explanation": "Output guardrails validate the final agent output and can call tools, matching CRITIC's verifier role."
+      "explanation": "Output guardrailsはfinal agent outputをvalidateし、toolsを呼べるため、CRITICのverifier roleに対応します。"
     },
     {
       "stage": "post",
-      "question": "What stop condition does the lesson recommend for 2026 evaluator-optimizer loops?",
+      "question": "このlessonが2026年のevaluator-optimizer loopに推奨する停止条件は何ですか？",
       "options": [
-        "Stop only when the verifier passes",
-        "Stop only when the model says 'fine'",
-        "Combine: verifier passes OR (model says fine AND iterations >= 2) OR iterations >= max_iterations",
-        "Never stop; let the agent self-improve indefinitely"
+        "verifierがpassしたときだけ停止する",
+        "modelが「fine」と言ったときだけ停止する",
+        "組み合わせる: verifier passes OR（model says fine AND iterations >= 2）OR iterations >= max_iterations",
+        "停止しない。agentに無期限にself-improveさせる"
       ],
       "correct": 2,
-      "explanation": "A combined condition avoids single-condition failure modes."
+      "explanation": "組み合わせた条件は、単一条件のfailure modeを避けます。"
     }
   ]
 }

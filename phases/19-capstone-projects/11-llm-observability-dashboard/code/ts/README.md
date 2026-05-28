@@ -1,18 +1,18 @@
 # LLM observability dashboard (TypeScript skeleton)
 
-Multi-file TypeScript skeleton for the LLM observability dashboard capstone.
-A Hono server accepts OpenTelemetry GenAI spans, holds them in a 10k ring
-buffer, and renders p50/p95/p99 latency and per-model cost.
+LLM observability dashboard capstone 用の multi-file TypeScript skeleton。
+Hono server が OpenTelemetry GenAI span を受け取り、10k ring buffer に保持し、
+p50/p95/p99 latency と model ごとの cost を描画する。
 
-## Layout
+## 構成
 
-- `src/index.ts` — entry point, seeds synthetic spans and optionally serves HTTP.
-- `src/server.ts` — Hono routes for `/trace`, `/`, `/dashboard`, `/dashboard.json`, `/healthz`.
-- `src/spans.ts` — `RingBuffer` and `ObservabilityStore` (10k spans by default).
-- `src/rollup.ts` — `percentile` and `rollUpByModel`.
-- `src/pricing.ts` — 2026 per-model prices and cost helpers.
-- `src/types.ts` — shared types.
-- `tests/*.test.ts` — `node --test` style tests via `tsx`.
+- `src/index.ts` — entry point。Synthetic span を seed し、必要なら HTTP を serve する。
+- `src/server.ts` — `/trace`、`/`、`/dashboard`、`/dashboard.json`、`/healthz` 用 Hono routes。
+- `src/spans.ts` — `RingBuffer` と `ObservabilityStore` (default は 10k spans)。
+- `src/rollup.ts` — `percentile` と `rollUpByModel`。
+- `src/pricing.ts` — 2026 年の model ごとの price と cost helper。
+- `src/types.ts` — shared types。
+- `tests/*.test.ts` — `tsx` 経由の `node --test` style tests。
 
 ## Install
 
@@ -23,8 +23,8 @@ npm install
 ## Run
 
 ```bash
-npm start         # seeds 1200 synthetic spans and prints the rollup
-npm run serve     # also serves the HTTP ingest + dashboard on PORT (default 8011)
+npm start         # 1200 件の synthetic span を seed し、rollup を表示する
+npm run serve     # HTTP ingest + dashboard も PORT (default 8011) で serve する
 ```
 
 ## Verify

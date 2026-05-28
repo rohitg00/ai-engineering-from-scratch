@@ -1,28 +1,29 @@
 # Agent Harness Loop Contract
 
-> The harness is the agent. The model is a coprocessor. This lesson freezes the loop contract you can wire any model into.
+> Harness こそが agent である。Model は coprocessor である。この lesson では、任意の model を差し込める loop contract を固定する。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
-**Time:** ~90 minutes
+**種類:** Build
+**言語:** Python
+**前提:** Phase 13 lessons 01-07、Phase 14 lesson 01
+**時間:** 約 90 分
 
-## Learning Objectives
-- Specify an agent harness loop as a deterministic state machine with explicit transitions.
-- Implement ten lifecycle hook topics that operators wire policy, telemetry, and guardrails into.
-- Define two pull points where the loop yields control back to the caller and resumes on a fresh input.
-- Enforce per-session budgets (turns, tool calls, wall-clock) without leaking partial state on exceeding.
-- Emit a typed stream of eleven event types so downstream UIs and tracers can subscribe without inspecting the loop directly.
+## 学習目標
 
-## The frame
+- 明示的な transition を持つ deterministic state machine として agent harness loop を定義する。
+- Operator が policy、telemetry、guardrails を配線する 10 個の lifecycle hook topic を実装する。
+- Loop が caller に control を返し、新しい input で resume する 2 つの pull point を定義する。
+- Per-session budget (turns、tool calls、wall-clock) を、超過時に partial state を漏らさず enforce する。
+- Downstream UI や tracer が loop を直接 inspect せずに subscribe できるよう、11 種類の typed event stream を emit する。
 
-A coding agent that runs unattended for forty turns is not a chat loop. It is a state machine whose nodes the operator can intercept and whose edges the operator can audit. Once you write the contract down, swapping models, tools, or policies stops being a refactor. It becomes a registration call.
+## フレーム
 
-This lesson builds that contract. We name six states, ten hook topics, two pull points, eleven event types, and a budget envelope. Everything else in the harness (tool registry, JSON-RPC transport, dispatcher, planner) plugs into this shape.
+40 turn 無人で走る coding agent は chat loop ではない。Operator が node を intercept でき、edge を audit できる state machine である。Contract を書き下せば、model、tool、policy の差し替えは refactor ではなくなる。Registration call になる。
 
-## The states
+この lesson ではその contract を作る。6 つの state、10 個の hook topic、2 つの pull point、11 個の event type、budget envelope に名前を付ける。Harness の他の要素 (tool registry、JSON-RPC transport、dispatcher、planner) はすべてこの形に plug する。
 
-The loop has six states. Five are active. One is terminal.
+## State
+
+Loop には 6 つの state がある。5 つは active、1 つは terminal である。
 
 ```mermaid
 stateDiagram-v2
@@ -39,13 +40,13 @@ stateDiagram-v2
     DONE --> [*]
 ```
 
-`IDLE` is the only legal entry point. `DONE` is the only legal exit. `AWAITING_TOOL` is the only state that yields a pull point. Every other transition is internal.
+`IDLE` は唯一の legal entry point である。`DONE` は唯一の legal exit である。`AWAITING_TOOL` は pull point を yield する唯一の state である。その他の transition は内部 transition である。
 
-The state machine is deterministic. Given the same event log, the harness re-enters the same state. That property is what lets you replay sessions for debugging without re-calling the model.
+State machine は deterministic である。同じ event log を与えると、harness は同じ state に再入する。この性質により、model を再呼び出しせずに session を replay して debug できる。
 
-## The hook topics
+## Hook topic
 
-Hooks are the operator's seam into the loop. The harness fires ten topics. Each topic accepts any number of subscribers. Subscribers fire in registration order. A subscriber may mutate the payload, raise to abort the turn, or return a sentinel to skip the next step.
+Hook は operator が loop に差し込むための seam である。Harness は 10 個の topic を fire する。各 topic は任意個の subscriber を受け付ける。Subscriber は registration order で fire される。Subscriber は payload を mutate したり、raise して turn を abort したり、sentinel を返して次 step を skip したりできる。
 
 ```text
 before_plan         after_plan
@@ -57,52 +58,52 @@ on_budget_exceeded
 on_complete
 ```
 
-The shape mirrors what Claude Code, Cursor, and OpenCode all converged on by mid-2025. The names are functional, not branded. A hook that blocks `rm -rf` lives in `before_tool_call`. A hook that ships an OpenTelemetry span lives in `after_step`. A hook that resumes on a paused session lives in `on_pause`.
+この形は Claude Code、Cursor、OpenCode が 2025 年半ばまでに収束したものと対応している。名前は branded ではなく functional である。`rm -rf` を block する hook は `before_tool_call` に置く。OpenTelemetry span を送る hook は `after_step` に置く。Paused session の resume に関わる hook は `on_pause` に置く。
 
-## The pull points
+## Pull point
 
-The loop yields control twice. First on `AWAITING_TOOL` when it cannot make progress without a tool result. Second on `on_pause` when the budget is exhausted or a hook explicitly requests human review.
+Loop は 2 回 control を yield する。1 つ目は、tool result なしに進めない `AWAITING_TOOL` のとき。2 つ目は、budget が尽きた、または hook が明示的に human review を要求した `on_pause` のときである。
 
-A pull point is not an exception. It is a return. The caller inspects the harness state, fetches whatever the harness asked for, and calls `resume(payload)`. The harness picks up where it stopped. This is the same shape as a Python generator. The transport over the pull point is your choice. In a TUI it is keypress. Over MCP it is `tools/call`. Over a queue it is a job poll.
+Pull point は exception ではない。Return である。Caller は harness state を inspect し、harness が求めたものを fetch し、`resume(payload)` を呼ぶ。Harness は止まった場所から続行する。これは Python generator と同じ形である。Pull point 上の transport は選べる。TUI では keypress、MCP では `tools/call`、queue では job poll になる。
 
-## The event stream
+## Event stream
 
-The loop appends events to a typed stream at specific points in the contract. The stream is append-only and subscribers can replay from any offset. The eleven implemented event types are:
+Loop は contract 上の特定点で typed stream に event を append する。Stream は append-only で、subscriber は任意の offset から replay できる。実装される 11 個の event type は次の通り。
 
-- `session.start` — emitted once when `run(goal)` is called
-- `plan.draft` — emitted when the planner returns a draft plan
-- `plan.commit` — emitted after the draft is committed as the active plan
-- `step.start` — emitted at the start of each executing step
-- `step.end` — emitted at the end of each executing step
-- `tool.call` — emitted when a tool-requiring step yields control to the caller
-- `tool.result` — emitted on resume with a tool result
-- `tool.error` — emitted on resume with an error or when a hook aborts the call
-- `budget.warn` — emitted when a budget limit is reached
-- `session.pause` — emitted when the loop yields on a pause (budget or hook)
-- `session.complete` — emitted once when the loop reaches `DONE`
+- `session.start` — `run(goal)` が呼ばれたときに 1 回 emit
+- `plan.draft` — planner が draft plan を返したときに emit
+- `plan.commit` — draft が active plan として commit された後に emit
+- `step.start` — executing step の開始時に emit
+- `step.end` — executing step の終了時に emit
+- `tool.call` — tool を必要とする step が caller に control を yield したときに emit
+- `tool.result` — tool result とともに resume されたときに emit
+- `tool.error` — error とともに resume されたとき、または hook が call を abort したときに emit
+- `budget.warn` — budget limit に到達したときに emit
+- `session.pause` — loop が pause (budget または hook) で yield したときに emit
+- `session.complete` — loop が `DONE` に到達したときに 1 回 emit
 
-The events do not duplicate hook payloads. Hooks are imperative (mutate, abort). Events are observational (record, ship). Treat them as orthogonal.
+Event は hook payload を重複させない。Hook は imperative (mutate、abort) である。Event は observational (record、ship) である。両者は orthogonal に扱う。
 
-## The budget envelope
+## Budget envelope
 
-A session carries three limits. Turn count, tool call count, wall-clock seconds. Each turn increments turns by one. Each tool call increments tool calls by one. Wall-clock is checked on every state transition. When any limit is reached, the loop fires `on_budget_exceeded`, emits `budget.warn`, then transitions to `IDLE` with a budget-exceeded reason on the next pull point.
+Session は 3 つの limit を持つ。Turn count、tool call count、wall-clock seconds。各 turn は turns を 1 増やす。各 tool call は tool calls を 1 増やす。Wall-clock は state transition ごとに check する。いずれかの limit に達すると、loop は `on_budget_exceeded` を fire し、`budget.warn` を emit し、次の pull point で budget-exceeded reason を持って `IDLE` に transition する。
 
-The budget is not a kill switch. It is a yield. The caller decides whether to extend the budget and resume, or to close the session.
+Budget は kill switch ではない。Yield である。Caller が budget を延長して resume するか、session を close するかを決める。
 
-## What this lesson does not do
+## この lesson でやらないこと
 
-It does not call a model. It does not register real tools. It does not implement a transport. Those are the next four lessons. This lesson nails the contract so the next four can plug into it without rewriting.
+Model は呼ばない。Real tool は register しない。Transport も実装しない。それらは次の 4 lesson で扱う。この lesson は contract を固め、次の 4 つが書き直しなしに plug できるようにする。
 
-The deterministic planner in `main.py` is a stand-in. It returns a hardcoded plan of three steps, two of which require a tool result. The point is the loop, not the plan.
+`main.py` の deterministic planner は stand-in である。3 step の hardcoded plan を返し、そのうち 2 つは tool result を必要とする。重要なのは plan ではなく loop である。
 
-## How to read the code
+## Code の読み方
 
-`HarnessLoop` is the main class. It holds state, fires hooks, emits events. `Budget` tracks limits. `Event` is the typed envelope on the stream. `HookRegistry` is the dispatch table. `_transition` is the only function that changes state, so the state machine invariants live in one place.
+`HarnessLoop` が main class である。State を保持し、hook を fire し、event を emit する。`Budget` は limit を追跡する。`Event` は stream 上の typed envelope である。`HookRegistry` は dispatch table である。`_transition` だけが state を変更する function なので、state machine invariant は 1 か所に集まる。
 
-Read `main.py` top to bottom. Then read `code/tests/test_loop.py`. The tests pin every transition and every hook firing order.
+`main.py` を上から下まで読む。次に `code/tests/test_loop.py` を読む。Test はすべての transition と hook firing order を固定している。
 
-## Going further
+## さらに進める
 
-The hardest part of building a harness in production is not the state machine. It is making the contract enforceable. The contract has to survive a hot reload of the planner. It has to survive a tool that returns malformed JSON. It has to survive a hook that raises in `before_tool_call` two-thirds of the way through a forty-turn session. The tests in this lesson exercise those failure modes. Run them. Break them. Add cases.
+Production で harness を作るときに難しいのは state machine そのものではない。Contract を enforce 可能にすることだ。Contract は planner の hot reload に耐えなければならない。Malformed JSON を返す tool に耐えなければならない。40 turn session の 3 分の 2 まで進んだところで `before_tool_call` の hook が raise しても耐えなければならない。この lesson の test はそうした failure mode を exercise する。実行し、壊し、case を追加する。
 
-The next lesson adds the tool registry. After that, the JSON-RPC transport. After that, the dispatcher. By lesson twenty-four, the loop in this file will be running a real plan against real tools with real budgets enforced.
+次の lesson では tool registry を追加する。その次に JSON-RPC transport。その次に dispatcher。Lesson 24 までには、この file の loop が real tool に対して real plan を実行し、real budget を enforce している。

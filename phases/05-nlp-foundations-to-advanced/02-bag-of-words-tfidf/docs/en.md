@@ -1,40 +1,40 @@
-# Bag of Words, TF-IDF, and Text Representation
+# Bag of Words、TF-IDF、テキスト表現
 
-> Count first, think later. TF-IDF still beats embeddings on well-defined tasks in 2026.
+> まず数え、考えるのはその後です。2026 年でも、明確に定義されたタスクでは TF-IDF が埋め込みに勝つことがあります。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
-**Time:** ~75 minutes
+**種別:** 実装
+**言語:** Python
+**前提条件:** フェーズ 5 · 01 (テキスト処理)、フェーズ 2 · 02 (ゼロからの線形回帰)
+**所要時間:** 約 75 分
 
-## The Problem
+## 課題
 
-The model needs numbers. You have strings.
+モデルが必要とするのは数値です。手元にあるのは文字列です。
 
-Every NLP pipeline has to answer the same question. How do we turn a variable-length stream of tokens into a fixed-size vector that a classifier can consume. The first answer the field landed on was the dumbest one that works. Count the words. Make a vector.
+どの NLP パイプラインも同じ問いに答えなければなりません。可変長のトークン列を、分類器が消費できる固定長ベクトルへどう変換するか。この分野が最初にたどり着いた答えは、動くものの中で最も単純なものでした。単語を数える。ベクトルを作る。
 
-That vector has carried more production NLP than any embedding model. Spam filters, topic classifiers, log anomaly detection, search ranking (before BM25), the first wave of sentiment analysis, the first decade of academic NLP benchmarks. 2026 practitioners still reach for it first on narrow classification tasks. It is fast, interpretable, and often indistinguishable from a 400M-parameter embedding model on tasks where word presence is what matters.
+そのベクトルは、どの埋め込みモデルよりも多くの本番 NLP を支えてきました。スパムフィルタ、トピック分類器、ログ異常検知、検索ランキング (BM25 以前)、初期の感情分析、学術 NLP ベンチマークの最初の 10 年。2026 年の実務者も、狭い分類タスクではまずこれに手を伸ばします。高速で、解釈可能で、単語の有無が重要なタスクでは 4 億パラメータの埋め込みモデルと区別がつかないこともよくあります。
 
-This lesson builds bag of words, then TF-IDF, from scratch. Then shows scikit-learn doing the same in three lines. Then names the failure mode that makes you reach for embeddings.
+このレッスンでは、Bag of Words を作り、その後 TF-IDF をゼロから作ります。続いて scikit-learn が同じことを 3 行で行う様子を見ます。最後に、埋め込みへ切り替えるべき失敗モードを明確にします。
 
-## The Concept
+## 考え方
 
-**Bag of Words (BoW)** throws away order. For each document, count how many times each vocabulary word appears. Vector length is the vocabulary size. Position `i` is the count of word `i`.
+**Bag of Words (BoW)** は語順を捨てます。各文書について、語彙中の各単語が何回出現するかを数えます。ベクトル長は語彙サイズです。位置 `i` は単語 `i` の出現回数です。
 
-**TF-IDF** reweights BoW. A word that appears in every document is uninformative, so scale it down. A word rare across the corpus but frequent in a single document is signal, so scale it up.
+**TF-IDF** は BoW に重みを付け直します。すべての文書に現れる単語は情報量が低いので重みを下げます。コーパス全体では珍しいが、ある 1 文書では頻出する単語はシグナルなので重みを上げます。
 
 ```
 TF-IDF(w, d) = TF(w, d) * IDF(w)
              = count(w in d) / |d| * log(N / df(w))
 ```
 
-Where `TF` is term frequency in the document, `df` is document frequency (how many docs contain the word), `N` is total documents. The `log` keeps the weight bounded for ubiquitous words.
+ここで `TF` は文書内の語頻度、`df` は文書頻度 (その単語を含む文書数)、`N` は総文書数です。`log` は、どこにでも出る単語の重みを有界に保ちます。
 
-Key property: both produce sparse vectors with interpretable axes. You can look at a trained classifier's weights and read which words push a document toward each class. You cannot do this with a 768-dimensional BERT embedding.
+重要な性質は、どちらも解釈可能な軸を持つスパースベクトルを作ることです。学習済み分類器の重みを見れば、どの単語が文書をどのクラスへ押しているかを読めます。768 次元の BERT 埋め込みではこれはできません。
 
-## Build It
+## 作ってみる
 
-### Step 1: build the vocabulary
+### ステップ 1: 語彙を作る
 
 ```python
 def build_vocab(docs):
@@ -46,9 +46,9 @@ def build_vocab(docs):
     return vocab
 ```
 
-Input: list of tokenized documents (any word-level tokenizer will do; the `code/main.py` in this lesson uses a simplified lowercase variant). Output: `{word: index}` dict. Stable insertion order means word index 0 is the first word seen in the first document. Convention varies; scikit-learn sorts alphabetically.
+入力は、トークン化済み文書のリストです (単語レベルのトークナイザなら何でもかまいません。このレッスンの `code/main.py` は簡略化した小文字化版を使います)。出力は `{word: index}` の辞書です。安定した挿入順序により、単語インデックス 0 は最初の文書で最初に見つかった単語になります。慣習は実装によって異なり、scikit-learn はアルファベット順に並べます。
 
-### Step 2: bag of words
+### ステップ 2: Bag of Words
 
 ```python
 def bag_of_words(docs, vocab):
@@ -67,9 +67,9 @@ def bag_of_words(docs, vocab):
 [[1, 1, 1, 1, 0], [2, 0, 0, 0, 1]]
 ```
 
-Rows are documents. Columns are vocabulary indices. Entry `[i][j]` is "how many times word `j` appears in document `i`." Doc 1 has `cat` twice because it did. Doc 0 has `ran` zero times because it did not.
+行は文書です。列は語彙インデックスです。要素 `[i][j]` は「単語 `j` が文書 `i` に何回現れるか」です。文書 1 には `cat` が 2 回あります。実際に 2 回出ているからです。文書 0 では `ran` は 0 回です。出ていないからです。
 
-### Step 3: term frequency and document frequency
+### ステップ 3: 語頻度と文書頻度
 
 ```python
 import math
@@ -92,9 +92,9 @@ def inverse_document_frequency(df, n_docs):
     return [math.log((n_docs + 1) / (d + 1)) + 1 for d in df]
 ```
 
-Two smoothing tricks worth naming. The `(n+1)/(d+1)` avoids `log(x/0)`. The trailing `+1` ensures a word in every document still has IDF 1 (not 0), matching scikit-learn's default. Other implementations use raw `log(N/df)`. Both work; the smoothed version is friendlier.
+名前を付けておく価値のある平滑化の工夫が 2 つあります。`(n+1)/(d+1)` は `log(x/0)` を避けます。末尾の `+1` は、すべての文書に出る単語でも IDF が 0 ではなく 1 になることを保証し、scikit-learn のデフォルトに合わせます。他の実装では生の `log(N/df)` を使います。どちらも動きますが、平滑化版のほうが扱いやすいです。
 
-### Step 4: TF-IDF
+### ステップ 4: TF-IDF
 
 ```python
 def tfidf(bow_matrix):
@@ -120,9 +120,9 @@ def tfidf(bow_matrix):
 >>> tfidf(bow)
 ```
 
-Three documents, five vocab words (`the`, `cat`, `sat`, `dog`, `ran`). `the` appears in all three, so its IDF is low. `dog` appears in one, so its IDF is high. The vectors are sparse (most entries are small) and the discriminative words pop.
+3 文書、5 語彙 (`the`, `cat`, `sat`, `dog`, `ran`) です。`the` は 3 文書すべてに現れるため、IDF は低くなります。`dog` は 1 文書にしか現れないため、IDF は高くなります。ベクトルはスパースで (ほとんどの要素は小さい)、識別力のある単語が浮き上がります。
 
-### Step 5: L2-normalize rows
+### ステップ 5: 行を L2 正規化する
 
 ```python
 def l2_normalize(matrix):
@@ -133,11 +133,11 @@ def l2_normalize(matrix):
     return out
 ```
 
-Without normalization, a longer document gets a larger vector and dominates similarity scores. L2 normalization puts every document on the unit hypersphere. Cosine similarity between rows is now just a dot product.
+正規化しないと、長い文書ほど大きなベクトルになり、類似度スコアを支配します。L2 正規化はすべての文書を単位超球面上に置きます。行同士のコサイン類似度は、単なるドット積になります。
 
-## Use It
+## 使ってみる
 
-scikit-learn ships the production version.
+scikit-learn には本番向け実装が入っています。
 
 ```python
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
@@ -154,39 +154,39 @@ tfidf = tfidf_vectorizer.fit_transform(docs)
 print(tfidf.toarray().round(3))
 ```
 
-`CountVectorizer` does tokenization, vocabulary, and BoW in one call. `TfidfVectorizer` adds IDF weighting and L2 normalization. Both return sparse matrices. For 100k documents, the dense version does not fit in memory; stay sparse until the classifier demands dense.
+`CountVectorizer` は、トークン化、語彙作成、BoW を 1 回の呼び出しで行います。`TfidfVectorizer` は IDF 重み付けと L2 正規化を追加します。どちらもスパース行列を返します。10 万文書では、密行列表現はメモリに収まりません。分類器が密行列を要求するまではスパースのままにしてください。
 
-Knobs that change everything:
+すべてを変えるノブ:
 
-| Arg | Effect |
+| 引数 | 効果 |
 |-----|--------|
-| `ngram_range=(1, 2)` | Include bigrams. Usually boosts classification. |
-| `min_df=2` | Drop words in fewer than 2 docs. Trims vocabulary on noisy data. |
-| `max_df=0.95` | Drop words in more than 95% of docs. Approximates stopword removal without a hardcoded list. |
-| `stop_words="english"` | scikit-learn's builtin stopword list. Task-dependent — sentiment analysis should *not* drop negations. |
-| `sublinear_tf=True` | Use `1 + log(tf)` instead of raw `tf`. Helps when a term repeats many times in one doc. |
+| `ngram_range=(1, 2)` | バイグラムを含めます。通常は分類性能が上がります。 |
+| `min_df=2` | 2 文書未満にしか出ない単語を落とします。ノイズの多いデータで語彙を削ります。 |
+| `max_df=0.95` | 95% を超える文書に出る単語を落とします。固定リストなしでストップワード削除に近い効果を得ます。 |
+| `stop_words="english"` | scikit-learn 組み込みのストップワードリストです。タスク依存です。感情分析では否定語を落としてはいけません。 |
+| `sublinear_tf=True` | 生の `tf` ではなく `1 + log(tf)` を使います。1 文書内で同じ語が何度も繰り返されるときに有効です。 |
 
-### When TF-IDF still wins (as of 2026)
+### 2026 年時点でも TF-IDF が勝つ場面
 
-- Spam detection, topic labeling, log anomaly flagging. Word presence is what matters; semantic nuance does not.
-- Low-data regimes (hundreds of labeled examples). TF-IDF plus logistic regression has no pretraining cost.
-- Anywhere latency matters. TF-IDF plus a linear model answers in microseconds. Embedding a document through a transformer takes 10-100ms.
-- Systems that must explain their predictions. Inspect the classifier's coefficients. Top positive words are the reason.
+- スパム検出、トピックラベリング、ログ異常フラグ付け。重要なのは単語の有無であり、意味の微妙な違いではありません。
+- データが少ない状況 (ラベル付き例が数百件)。TF-IDF + ロジスティック回帰には事前学習コストがありません。
+- レイテンシが重要な場所。TF-IDF + 線形モデルはマイクロ秒で応答します。Transformer で文書を埋め込むには 10-100ms かかります。
+- 予測理由の説明が必要なシステム。分類器の係数を見ます。上位の正の単語が理由です。
 
-### When TF-IDF fails
+### TF-IDF が失敗する場面
 
-The semantic blindness failure. Consider these two documents:
+意味を見ないことによる失敗です。次の 2 文書を考えます。
 
 - "The movie was not good at all."
 - "The movie was excellent."
 
-One is a negative review. One is positive. Their TF-IDF overlap is exactly `{the, movie, was}`. A bag-of-words classifier has to memorize that the word `not` near `good` flips the label. It can learn this on enough data, but never as gracefully as a model that understands syntax.
+一方は否定的なレビューです。もう一方は肯定的です。TF-IDF 上での重なりは正確に `{the, movie, was}` です。Bag-of-Words 分類器は、`good` の近くにある `not` がラベルを反転させることを記憶しなければなりません。十分なデータがあれば学習できますが、構文を理解するモデルほど自然には扱えません。
 
-The other failure: out-of-vocabulary words at inference. A BoW model trained on IMDb reviews has no idea what to do with `Zoomer-approved` if that token never appeared in training. Subword embeddings (lesson 04) handle this. TF-IDF cannot.
+もう 1 つの失敗は、推論時の語彙外語です。IMDb レビューで学習した BoW モデルは、`Zoomer-approved` というトークンが学習時に一度も出ていなければ、どう扱えばよいかわかりません。サブワード埋め込み (レッスン 04) はこれを扱えます。TF-IDF にはできません。
 
-### Hybrid: TF-IDF weighted embeddings
+### ハイブリッド: TF-IDF 重み付き埋め込み
 
-The 2026 pragmatic default for medium-data classification: use TF-IDF weights as attention over word embeddings.
+2026 年の中規模データ分類における実務的デフォルトは、TF-IDF 重みを単語埋め込みへのアテンションとして使うことです。
 
 ```python
 def tfidf_weighted_embedding(doc, tfidf_scores, embedding_table, dim):
@@ -205,11 +205,11 @@ def tfidf_weighted_embedding(doc, tfidf_scores, embedding_table, dim):
     return [v / total_weight for v in vec]
 ```
 
-You get semantic capacity from embeddings, and rare-word emphasis from TF-IDF. Classifier trains on the pooled vector. This outperforms either on its own for sentiment, topic, and intent classification below about 50k labeled examples.
+埋め込みから意味的な表現力を得て、TF-IDF から希少語の強調を得ます。分類器はプール済みベクトルで学習します。ラベル付き例が約 5 万件未満の感情分類、トピック分類、意図分類では、どちらか単独より良いことがあります。
 
-## Ship It
+## 形にして届ける
 
-Save as `outputs/prompt-vectorization-picker.md`:
+`outputs/prompt-vectorization-picker.md` として保存します。
 
 ```markdown
 ---
@@ -236,25 +236,25 @@ Example output:
 - Failure to test: verify `min_df=3` does not drop rare category keywords. Run `get_feature_names_out` filtered by class and eyeball.
 ```
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement `cosine_similarity(doc_vec_a, doc_vec_b)` on the L2-normalized TF-IDF output. Verify that identical documents score 1.0 and disjoint-vocabulary documents score 0.0.
-2. **Medium.** Add `n-gram` support to `bag_of_words`. Parameter `n` produces counts over `n`-grams. Test that `n=2` on `["the", "cat", "sat"]` produces bigram counts for `["the cat", "cat sat"]`.
-3. **Hard.** Build the TF-IDF-weighted-embedding hybrid above using GloVe 100d vectors (download once, cache). Compare classification accuracy against plain TF-IDF and plain mean-pooled embeddings on the 20 Newsgroups dataset. Report which wins where.
+1. **易しい。** L2 正規化済み TF-IDF 出力に対して `cosine_similarity(doc_vec_a, doc_vec_b)` を実装してください。同一文書は 1.0、語彙が重ならない文書は 0.0 になることを確認します。
+2. **普通。** `bag_of_words` に `n-gram` サポートを追加してください。パラメータ `n` は `n`-gram のカウントを生成します。`["the", "cat", "sat"]` に対して `n=2` を指定すると、`["the cat", "cat sat"]` のバイグラムカウントが生成されることをテストします。
+3. **難しい。** 上の TF-IDF 重み付き埋め込みハイブリッドを、GloVe 100d ベクトルを使って作ってください (一度ダウンロードしてキャッシュします)。20 Newsgroups データセットで、素の TF-IDF、素の平均プール埋め込みと分類精度を比較してください。どこでどれが勝つかを報告します。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われる意味 | 実際の意味 |
 |------|-----------------|-----------------------|
-| BoW | Word frequency vector | Counts of vocabulary words in one document. Throws away order. |
-| TF | Term frequency | Count of a word in a document, optionally normalized by document length. |
-| DF | Document frequency | Count of documents containing the word at least once. |
-| IDF | Inverse document frequency | `log(N / df)` smoothed. Downweights words that appear everywhere. |
-| Sparse vector | Mostly zeros | Vocabulary is typically 10k-100k words; most are absent from any given document. |
-| Cosine similarity | Vector angle | Dot product of L2-normalized vectors. 1 is identical, 0 is orthogonal. |
+| BoW | 単語頻度ベクトル | 1 文書内の語彙単語のカウント。語順を捨てます。 |
+| TF | 語頻度 | 文書内の単語カウント。文書長で正規化することもあります。 |
+| DF | 文書頻度 | その単語を少なくとも 1 回含む文書数。 |
+| IDF | 逆文書頻度 | 平滑化された `log(N / df)`。どこにでも出る単語の重みを下げます。 |
+| スパースベクトル | ほとんどがゼロ | 語彙は通常 1 万から 10 万語で、特定の文書に出るものはその一部です。 |
+| コサイン類似度 | ベクトルの角度 | L2 正規化済みベクトルのドット積です。1 は同一、0 は直交を表します。 |
 
-## Further Reading
+## 参考資料
 
-- [scikit-learn — feature extraction from text](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) — the canonical API reference, plus notes on every knob.
-- [Salton, G., & Buckley, C. (1988). Term-weighting approaches in automatic text retrieval](https://www.sciencedirect.com/science/article/pii/0306457388900210) — the paper that made TF-IDF the default for a decade.
-- ["Why TF-IDF Still Beats Embeddings" — Ashfaque Thonikkadavan (Medium)](https://medium.com/@cmtwskb/why-tf-idf-still-beats-embeddings-ad85c123e1b2) — 2026 take on when the old method wins and why.
+- [scikit-learn — feature extraction from text](https://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction) — 標準的な API リファレンス。すべてのノブについての注記もあります。
+- [Salton, G., & Buckley, C. (1988). Term-weighting approaches in automatic text retrieval](https://www.sciencedirect.com/science/article/pii/0306457388900210) — TF-IDF を 10 年以上のデフォルトにした論文。
+- ["Why TF-IDF Still Beats Embeddings" — Ashfaque Thonikkadavan (Medium)](https://medium.com/@cmtwskb/why-tf-idf-still-beats-embeddings-ad85c123e1b2) — 古い手法がいつ、なぜ勝つのかについての 2026 年の見方。

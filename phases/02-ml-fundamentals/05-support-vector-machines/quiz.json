@@ -2,66 +2,66 @@
   {
     "id": "svm-pre-1",
     "stage": "pre",
-    "question": "What are support vectors in an SVM?",
+    "question": "SVMにおけるサポートベクトルとは何ですか？",
     "options": [
-      "All data points in the training set",
-      "The training points closest to the decision boundary that determine the hyperplane",
-      "The feature vectors after kernel transformation",
-      "The weight vectors learned during training"
+      "訓練セット内のすべてのデータ点",
+      "決定境界に最も近く、超平面を決める訓練点",
+      "kernel変換後の特徴量ベクトル",
+      "学習中に得られる重みベクトル"
     ],
     "correct": 1,
-    "explanation": "Support vectors are the training points that lie exactly on the margin boundaries. They are the only points that determine the decision hyperplane. Removing non-support-vector points does not change the boundary."
+    "explanation": "サポートベクトルは、マージン境界上にちょうど位置する訓練点です。決定超平面を決めるのはこれらの点だけです。サポートベクトルでない点を取り除いても境界は変わりません。"
   },
   {
     "id": "svm-pre-2",
     "stage": "pre",
-    "question": "What does the SVM maximize when finding the decision boundary?",
+    "question": "SVMは決定境界を見つけるとき、何を最大化しますか？",
     "options": [
-      "The number of correctly classified training points",
-      "The margin -- the distance between the decision boundary and the nearest points of each class",
-      "The total distance from all points to the boundary",
-      "The complexity of the decision boundary"
+      "正しく分類された訓練点の数",
+      "マージン、つまり決定境界と各クラスの最近傍点との距離",
+      "すべての点から境界までの総距離",
+      "決定境界の複雑さ"
     ],
     "correct": 1,
-    "explanation": "SVMs find the hyperplane that maximizes the margin between the two classes. A wider margin leads to better generalization on unseen data."
+    "explanation": "SVMは2つのクラス間のマージンを最大化する超平面を見つけます。より広いマージンは、未知データに対するよりよい汎化につながります。"
   },
   {
     "id": "svm-post-1",
     "stage": "post",
-    "question": "What happens when you increase the C parameter in an SVM?",
+    "question": "SVMでCパラメータを大きくすると何が起きますか？",
     "options": [
-      "The margin gets wider and more misclassifications are allowed",
-      "The margin gets narrower, fewer misclassifications are tolerated, and the model may overfit",
-      "The kernel function changes from linear to RBF",
-      "The number of support vectors always increases"
+      "マージンが広くなり、より多くの誤分類が許容される",
+      "マージンが狭くなり、許容される誤分類が減り、モデルが過学習する可能性がある",
+      "kernel関数が線形からRBFに変わる",
+      "サポートベクトルの数が常に増える"
     ],
     "correct": 1,
-    "explanation": "Large C penalizes misclassifications heavily, producing a narrow margin that closely fits the training data. This can lead to overfitting. Small C allows more violations for a wider, more regularized margin."
+    "explanation": "大きいCは誤分類を強く罰するため、訓練データに密着した狭いマージンを作ります。これは過学習につながることがあります。小さいCはより多くの違反を許し、より広く正則化されたマージンにします。"
   },
   {
     "id": "svm-post-2",
     "stage": "post",
-    "question": "How does the kernel trick enable SVMs to learn nonlinear boundaries?",
+    "question": "kernel trickは、SVMが非線形境界を学習することをどのように可能にしますか？",
     "options": [
-      "It replaces the SVM with a neural network",
-      "It computes dot products in a high-dimensional space without explicitly mapping data to that space",
-      "It removes outliers from the dataset before training",
-      "It adds polynomial features to the input data directly"
+      "SVMをニューラルネットワークに置き換える",
+      "データをその空間へ明示的に写像せずに、高次元空間での内積を計算する",
+      "学習前にデータセットから外れ値を取り除く",
+      "入力データに多項式特徴量を直接追加する"
     ],
     "correct": 1,
-    "explanation": "The kernel trick replaces every dot product x_i . x_j with K(x_i, x_j), computing the dot product in a high-dimensional (even infinite-dimensional for RBF) feature space without ever constructing it."
+    "explanation": "kernel trickは、すべての内積 x_i . x_j を K(x_i, x_j) に置き換えます。これにより、高次元（RBFでは無限次元）の特徴空間を構築することなく、その空間での内積を計算します。"
   },
   {
     "id": "svm-post-3",
     "stage": "post",
-    "question": "Hinge loss is zero when y * f(x) >= 1. What does this mean in terms of classification?",
+    "question": "ヒンジ損失は y * f(x) >= 1 のとき0です。これは分類の観点では何を意味しますか？",
     "options": [
-      "The point is misclassified",
-      "The point is correctly classified and lies outside the margin",
-      "The point is exactly on the decision boundary",
-      "The point is a noise sample that should be ignored"
+      "その点は誤分類されている",
+      "その点は正しく分類され、マージン外側にある",
+      "その点はちょうど決定境界上にある",
+      "その点は無視すべきノイズサンプルである"
     ],
     "correct": 1,
-    "explanation": "When y * f(x) >= 1, the point is correctly classified AND lies on or beyond the margin boundary. Only points inside the margin or misclassified (y * f(x) < 1) contribute to the hinge loss."
+    "explanation": "y * f(x) >= 1 のとき、その点は正しく分類され、かつマージン境界上またはそれを越えた位置にあります。ヒンジ損失に寄与するのは、マージン内の点または誤分類された点（y * f(x) < 1）だけです。"
   }
 ]

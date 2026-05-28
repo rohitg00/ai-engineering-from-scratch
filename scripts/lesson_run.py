@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
-"""Smoke-check every lesson's Python code.
+"""各レッスンのPythonコードをスモークチェックする。
 
-By default this script byte-compiles every `.py` file under
-`phases/**/[0-9][0-9]-*/code/` using `py_compile`. It does NOT execute the
-code — that would need API keys and heavy ML dependencies the curriculum
-does not pin. Syntax-only is enough to catch the regressions contributors
-introduce most often (bad indentation, broken f-strings, stray edits).
+デフォルトでは、`phases/**/[0-9][0-9]-*/code/` 配下のすべての `.py` を
+`py_compile` でバイトコンパイルする。コードは実行しない。実行にはAPIキーや、
+このカリキュラムが固定していない重いML依存が必要になるためである。構文チェック
+だけでも、コントリビューターが入れがちな回帰（悪いインデント、壊れたf-string、
+不用意な編集）を捕捉できる。
 
-Opt in to real execution with `--execute`. Each file runs with a 10-second
-timeout. Lessons whose entry file starts with a `# requires: pkg1, pkg2`
-comment listing imports outside the standard library are skipped with a
-"needs <deps>" reason so heavy lessons (torch, anthropic, etc.) do not blow
-up the run.
+実際に実行する場合は `--execute` を付ける。各ファイルは10秒のタイムアウトで
+走る。エントリファイルが標準ライブラリ外のimportを `# requires: pkg1, pkg2`
+コメントで宣言しているレッスンは、重いレッスン（torch、anthropicなど）で実行が
+破綻しないように、"needs <deps>" 理由付きでスキップする。
 
-Usage:
-    python3 scripts/lesson_run.py                      # syntax check, full curriculum
-    python3 scripts/lesson_run.py --phase 14           # one phase only
-    python3 scripts/lesson_run.py --strict             # exit 1 on any failure
-    python3 scripts/lesson_run.py --json               # JSON report on stdout
-    python3 scripts/lesson_run.py --execute            # actually run each lesson
+使い方:
+    python3 scripts/lesson_run.py                      # 全カリキュラムの構文チェック
+    python3 scripts/lesson_run.py --phase 14           # 1フェーズだけ
+    python3 scripts/lesson_run.py --strict             # 失敗があればexit 1
+    python3 scripts/lesson_run.py --json               # JSONレポートをstdoutへ
+    python3 scripts/lesson_run.py --execute            # 各レッスンを実際に実行
 
-Exit codes:
-    0 — clean, or non-strict run with failures reported
-    1 — `--strict` and at least one lesson failed
+終了コード:
+    0 — 問題なし、またはnon-strict実行で失敗を報告済み
+    1 — `--strict` かつ少なくとも1レッスンが失敗
 
-Stdlib only. Python 3.10+ syntax (PEP 604 unions).
+stdlibのみ。Python 3.10+ 構文（PEP 604 union）を使用。
 """
 
 from __future__ import annotations
@@ -148,7 +147,7 @@ def check_lesson(lesson: Path, execute: bool) -> LessonResult:
     )
     if not py_files:
         result.status = "skipped"
-        result.reason = "no python files"
+        result.reason = "pythonファイルなし"
         return result
 
     ok, msg = syntax_check(py_files)
@@ -161,7 +160,7 @@ def check_lesson(lesson: Path, execute: bool) -> LessonResult:
         entry = pick_entry_file(py_files)
         if entry is None:
             result.status = "skipped"
-            result.reason = "no entry file"
+            result.reason = "エントリファイルなし"
             return result
         deps = read_requires(entry)
         if deps:
@@ -183,18 +182,18 @@ def render_report(results: list[LessonResult], execute: bool) -> str:
     mode = "execute" if execute else "syntax"
     total_files = sum(len(r.files) for r in results)
     lines = [
-        f"lesson_run.py ({mode}) — {len(results)} lesson(s), "
-        f"{total_files} python file(s): "
+        f"lesson_run.py ({mode}) — {len(results)} レッスン、"
+        f"{total_files} 個のPythonファイル: "
         f"passed={len(passed)} failed={len(failed)} skipped={len(skipped)}",
     ]
     if failed:
         lines.append("")
-        lines.append("Failures:")
+        lines.append("失敗:")
         for r in failed:
             lines.append(f"  [FAIL] {r.lesson}: {r.reason}")
     if skipped and execute:
         lines.append("")
-        lines.append("Skipped:")
+        lines.append("スキップ:")
         for r in skipped:
             lines.append(f"  [SKIP] {r.lesson}: {r.reason}")
     return "\n".join(lines)
@@ -203,18 +202,18 @@ def render_report(results: list[LessonResult], execute: bool) -> str:
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--phase", type=int, default=None, help="restrict to a single phase number"
+        "--phase", type=int, default=None, help="指定したフェーズ番号だけに限定"
     )
     parser.add_argument(
-        "--json", action="store_true", help="emit JSON report on stdout"
+        "--json", action="store_true", help="JSONレポートをstdoutへ出力"
     )
     parser.add_argument(
-        "--strict", action="store_true", help="exit 1 if any lesson fails"
+        "--strict", action="store_true", help="失敗したレッスンがあればexit 1"
     )
     parser.add_argument(
         "--execute",
         action="store_true",
-        help=f"run each lesson's entry file with a {EXECUTE_TIMEOUT_SEC}s timeout",
+        help=f"各レッスンのエントリファイルを{EXECUTE_TIMEOUT_SEC}秒タイムアウトで実行",
     )
     args = parser.parse_args(argv)
 

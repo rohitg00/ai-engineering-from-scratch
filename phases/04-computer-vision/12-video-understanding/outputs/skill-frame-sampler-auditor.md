@@ -1,6 +1,6 @@
 ---
 name: skill-frame-sampler-auditor
-description: Audit a video pipeline's frame sampler for off-by-one, short-clip handling, and crop consistency
+description: video pipeline の frame sampler について、off-by-one、short-clip handling、crop consistency を監査する
 version: 1.0.0
 phase: 4
 lesson: 12
@@ -9,41 +9,41 @@ tags: [computer-vision, video, sampling, debugging]
 
 # Frame Sampler Auditor
 
-Frame sampling is where video pipelines break. Bugs here propagate into every downstream metric.
+Frame sampling は video pipelines が壊れやすい場所です。ここでのバグは、下流のすべての metric に伝播します。
 
-## When to use
+## 使う場面
 
-- Writing a new video data loader.
-- Reproducing numbers from a paper and training accuracy is lower than reported.
-- Debugging a video model whose eval accuracy is unstable across runs.
+- 新しい video data loader を書く。
+- 論文の数値を再現していて、training accuracy が報告値より低い。
+- eval accuracy が run ごとに不安定な video model を debugging する。
 
-## Inputs
+## 入力
 
-- `sampler_code`: Python function that takes (num_frames_total, T) and returns T indices.
-- `T`: target clip length.
-- Optional test cases: `num_frames_total` values to exercise (e.g. `[3, T-1, T, T+1, 30, 300, 3000]`).
+- `sampler_code`: (num_frames_total, T) を受け取り T 個の indices を返す Python function。
+- `T`: target clip length。
+- 任意の test cases: 試す `num_frames_total` の値（例: `[3, T-1, T, T+1, 30, 300, 3000]`）。
 
-## Checks
+## チェック
 
 ### 1. Short clip handling
-Feed `num_frames_total < T`. Every returned index must be in `[0, num_frames_total - 1]`. The standard padding policy is to repeat the last frame for the remaining positions.
+`num_frames_total < T` を入力する。返されたすべての index は `[0, num_frames_total - 1]` 内になければならない。標準的な padding policy は、残りの位置で最後の frame を繰り返すこと。
 
 ### 2. Boundary indices
-Feed `num_frames_total == T`. Returned indices should be `[0, 1, ..., T-1]` exactly.
+`num_frames_total == T` を入力する。返される indices は正確に `[0, 1, ..., T-1]` であるべき。
 
 ### 3. Uniform distribution
-Feed `num_frames_total == 10 * T`. Returned indices should be monotonically increasing and roughly evenly spaced.
+`num_frames_total == 10 * T` を入力する。返される indices は単調増加で、おおむね等間隔であるべき。
 
 ### 4. Dense window bounds
-For dense sampling, feed `num_frames_total == 3 * T`. Returned indices should form a contiguous window, never crossing the end of the clip.
+dense sampling の場合、`num_frames_total == 3 * T` を入力する。返される indices は連続 window を形成し、clip の終端をまたいではならない。
 
 ### 5. Determinism
-Call the sampler twice with the same inputs and (for deterministic samplers) the same RNG. Indices should match.
+同じ inputs と（deterministic samplers では）同じ RNG で sampler を 2 回呼ぶ。indices は一致すべき。
 
 ### 6. Crop consistency
-If the pipeline also returns a spatial crop per frame, run the sampler twice for the same clip with the same seed and confirm every frame uses the same crop box (same `(x, y, w, h)`). Different crops per frame inside one clip destroys temporal coherence and is a classic silent bug. Acceptable variation: augmentation applied *per clip*, consistent within a clip.
+pipeline が frame ごとの spatial crop も返す場合、同じ clip と同じ seed で sampler を 2 回実行し、すべての frame が同じ crop box（同じ `(x, y, w, h)`）を使うことを確認する。1 つの clip 内で frame ごとに crop が異なると temporal coherence が壊れ、典型的な silent bug になる。許容される変動: augmentation は *per clip* に適用され、clip 内では一貫している。
 
-## Report
+## レポート
 
 ```
 [sampler audit]
@@ -72,9 +72,9 @@ If the pipeline also returns a spatial crop per frame, run the sampler twice for
   ok | fix required
 ```
 
-## Rules
+## ルール
 
-- Never mark a sampler "ok" if short-clip handling returns out-of-range indices.
-- Dense samplers should never return a window that crosses `num_frames_total - 1`.
-- If the sampler is stochastic (dense), test determinism only with an explicit seeded RNG.
-- Suggest, but do not silently fix, the canonical policies: pad with last frame, clamp window to end, round half-open intervals.
+- short-clip handling が範囲外 indices を返す場合、sampler を "ok" と判定してはならない。
+- Dense samplers は `num_frames_total - 1` を越える window を返してはならない。
+- sampler が stochastic（dense）の場合、determinism は explicit seeded RNG でのみ test する。
+- canonical policies（最後の frame で pad、window を終端に clamp、half-open intervals を round）は提案するが、黙って修正しない。

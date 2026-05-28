@@ -2,46 +2,46 @@
   {
     "id": "trees-pre-1",
     "stage": "pre",
-    "question": "What does Gini impurity measure at a decision tree node?",
+    "question": "決定木のノードにおいて、Gini不純度は何を測りますか？",
     "options": [
-      "The depth of the node in the tree",
-      "The probability of misclassifying a randomly chosen sample given the class distribution at that node",
-      "The total number of samples at the node",
-      "The correlation between features"
+      "木の中でのノードの深さ",
+      "そのノードのクラス分布に基づいて、ランダムに選んだサンプルを誤分類する確率",
+      "そのノードにあるサンプルの総数",
+      "特徴量間の相関"
     ],
     "correct": 1,
-    "explanation": "Gini impurity = 1 - sum(p_k^2). It measures how often a randomly chosen sample would be misclassified if labeled according to the class distribution at that node. Pure node = 0."
+    "explanation": "Gini不純度 = 1 - sum(p_k^2) です。そのノードのクラス分布に従ってラベル付けした場合、ランダムに選んだサンプルがどれだけ誤分類されるかを測ります。純粋なノード = 0 です。"
   },
   {
     "id": "trees-pre-2",
     "stage": "pre",
-    "question": "What is the main advantage of tree-based models over neural networks for tabular data?",
+    "question": "表形式データにおいて、木ベースのモデルがニューラルネットワークより優れる主な利点は何ですか？",
     "options": [
-      "Trees can process images and text natively",
-      "Trees always have lower bias than neural networks",
-      "Trees handle mixed feature types, require less preprocessing, and are more interpretable",
-      "Trees train faster on GPU hardware"
+      "木は画像やテキストをネイティブに処理できる",
+      "木は常にニューラルネットワークよりバイアスが低い",
+      "木は混在した特徴量型を扱え、前処理が少なく、より解釈しやすい",
+      "木はGPUハードウェア上でより速く学習する"
     ],
     "correct": 2,
-    "explanation": "Trees natively handle numeric and categorical features without encoding, require minimal preprocessing, and produce interpretable rules. Neural networks excel at spatial/sequential data, not flat tables."
+    "explanation": "木は数値特徴量とカテゴリ特徴量をエンコーディングなしでネイティブに扱え、前処理が少なく、解釈しやすいルールを生成します。ニューラルネットワークが得意なのは空間データや系列データであり、平坦な表ではありません。"
   },
   {
     "id": "trees-post-1",
     "stage": "post",
-    "question": "Why does a random forest use both bootstrap sampling AND random feature subsets at each split?",
+    "question": "ランダムフォレストがブートストラップサンプリングと各分割でのランダムな特徴量部分集合の両方を使うのはなぜですか？",
     "options": [
-      "To speed up training by reducing the dataset size",
-      "To create diverse, decorrelated trees so that averaging reduces variance without increasing bias",
-      "To ensure each tree sees every data point at least once",
-      "To reduce the depth of individual trees"
+      "データセットサイズを減らして学習を高速化するため",
+      "多様で相関の低い木を作り、平均化によってバイアスを増やさずに分散を下げるため",
+      "各木がすべてのデータ点を少なくとも1回は見るようにするため",
+      "個々の木の深さを減らすため"
     ],
     "correct": 1,
-    "explanation": "Both sources of randomness make the trees diverse. Without feature randomization, all trees would split on the same dominant feature. Diversity is what makes averaging effective at reducing variance."
+    "explanation": "2つのランダム性が木を多様にします。特徴量のランダム化がなければ、すべての木が同じ支配的な特徴量で分割してしまいます。平均化による分散低減を有効にするのは、この多様性です。"
   },
   {
     "id": "trees-post-2",
     "stage": "post",
-    "question": "A node contains 8 dogs and 2 cats. What is its Gini impurity?",
+    "question": "あるノードに犬が8匹、猫が2匹含まれています。このノードのGini不純度はいくつですか？",
     "options": [
       "0.0",
       "0.20",
@@ -49,19 +49,19 @@
       "0.50"
     ],
     "correct": 2,
-    "explanation": "Gini = 1 - (0.8^2 + 0.2^2) = 1 - (0.64 + 0.04) = 0.32. The node is mostly dogs but not pure, so Gini is between 0 (pure) and 0.5 (max for binary)."
+    "explanation": "Gini = 1 - (0.8^2 + 0.2^2) = 1 - (0.64 + 0.04) = 0.32 です。このノードはほとんど犬ですが純粋ではないため、Giniは0（純粋）と0.5（2クラスで最大）の間になります。"
   },
   {
     "id": "trees-post-3",
     "stage": "post",
-    "question": "MDI (Mean Decrease in Impurity) feature importance is biased toward which type of feature?",
+    "question": "MDI（Mean Decrease in Impurity）特徴量重要度は、どの種類の特徴量に偏りますか？",
     "options": [
-      "Binary features with only two values",
-      "Features with low variance",
-      "High-cardinality features with many possible split points",
-      "Features that are highly correlated with the target"
+      "2つの値しか持たない二値特徴量",
+      "分散が低い特徴量",
+      "可能な分割点が多い高カーディナリティ特徴量",
+      "ターゲットと強く相関する特徴量"
     ],
     "correct": 2,
-    "explanation": "MDI is biased toward high-cardinality features because they offer more possible split points, giving them more chances to reduce impurity by luck. Permutation importance is more reliable."
+    "explanation": "高カーディナリティ特徴量は可能な分割点が多く、偶然に不純度を下げる機会が増えるため、MDIはそれらに偏ります。Permutation importanceの方が信頼性が高いです。"
   }
 ]

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { SessionStore } from "../src/session.js";
 
 describe("SessionStore", () => {
-  it("creates a fresh session on first lookup", () => {
+  it("first lookup で fresh session を作成する", () => {
     const store = new SessionStore();
     const s = store.getOrCreate("s-1", "analyst", "GDPR");
     assert.equal(s.id, "s-1");
@@ -13,7 +13,7 @@ describe("SessionStore", () => {
     assert.equal(store.size(), 1);
   });
 
-  it("returns the same session on subsequent lookups", () => {
+  it("subsequent lookup で同じ session を返す", () => {
     const store = new SessionStore();
     const a = store.getOrCreate("s-2", "analyst", "GDPR");
     a.turns.push({ role: "user", content: "hi", ts: 1 });
@@ -22,7 +22,7 @@ describe("SessionStore", () => {
     assert.equal(b.turns.length, 1);
   });
 
-  it("appendTurn extends the turn list", () => {
+  it("appendTurn は turn list を extend する", () => {
     const store = new SessionStore();
     store.getOrCreate("s-3", "analyst", "GDPR");
     store.appendTurn("s-3", { role: "user", content: "q", ts: 1 });
@@ -34,7 +34,7 @@ describe("SessionStore", () => {
     assert.equal(s.turns[1]?.role, "assistant");
   });
 
-  it("list returns every session", () => {
+  it("list はすべての session を返す", () => {
     const store = new SessionStore();
     store.getOrCreate("a", "r", "j");
     store.getOrCreate("b", "r", "j");
@@ -42,7 +42,7 @@ describe("SessionStore", () => {
     assert.deepEqual(ids, ["a", "b"]);
   });
 
-  it("appendTurn on unknown id is a no-op", () => {
+  it("unknown id の appendTurn は no-op", () => {
     const store = new SessionStore();
     store.appendTurn("missing", { role: "user", content: "x", ts: 1 });
     assert.equal(store.size(), 0);

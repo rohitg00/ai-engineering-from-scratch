@@ -9,40 +9,40 @@ tags: [sam3, open-vocab, prompt-engineering, segmentation]
 
 # Concept Prompt Designer
 
-SAM 3's accuracy depends heavily on how the concept prompt is phrased. This skill normalises free-form user utterances into prompts that SAM 3 handles well.
+SAM 3 の accuracy は concept prompt の phrasing に大きく依存する。この skill は free-form user utterances を、SAM 3 が扱いやすい prompts に normalise する。
 
-## When to use
+## 使う場面
 
-- Building a UI that accepts natural-language object queries.
-- Exposing SAM 3 through an API where upstream callers send sentences.
-- Debugging poor SAM 3 matches — often the prompt is malformed, not the model.
+- natural-language object queries を受け付ける UI を作るとき。
+- upstream callers が sentences を送る API 経由で SAM 3 を expose するとき。
+- SAM 3 の match が悪い原因を debug するとき。問題は model ではなく prompt の malformed であることが多い。
 
-## Inputs
+## 入力
 
-- `utterance`: raw user string.
-- `context`: optional domain hint (e.g. "surveillance", "medical", "retail").
-- `max_concepts`: maximum concepts to extract per utterance; default 5.
+- `utterance`: raw user string。
+- `context`: optional domain hint (例: "surveillance", "medical", "retail")。
+- `max_concepts`: utterance ごとに抽出する最大 concepts。default 5。
 
-## Rules SAM 3 prefers
+## SAM 3 が好むルール
 
-- **Short noun phrases, not sentences.** `"cat"` wins over `"there is a cat"`.
-- **Concrete nouns.** `"skateboard"` wins over `"thing to ride on"`.
-- **Modifiers immediately before the noun.** `"red car"` wins over `"car that is red"`.
-- **Lowercase.** SAM 3 is robust but empirically slightly better on lowercase inputs.
-- **Singular or plural.** Both work; plural helps when multiple instances are expected.
+- **Short noun phrases, not sentences.** `"there is a cat"` より `"cat"` が勝つ。
+- **Concrete nouns.** `"thing to ride on"` より `"skateboard"` が勝つ。
+- **Modifiers immediately before the noun.** `"car that is red"` より `"red car"` が勝つ。
+- **Lowercase.** SAM 3 は robust だが、経験的には lowercase inputs がわずかに良い。
+- **Singular or plural.** どちらも動く。multiple instances が期待される場合は plural が役立つ。
 
-## Steps
+## 手順
 
-1. **Tokenise by common separators** — comma, semicolon, "and", "or", "&".
-2. **Drop filler prefixes** — "find", "show me", "segment", "detect", "locate", "a", "an", "the".
-3. **Keep prepositional modifiers** only if they are visual — `"striped red umbrella"` yes, `"umbrella from yesterday"` no (the `"from yesterday"` is not in-image).
-4. **Disambiguate collisions** using the optional `context`:
-   - `"window"` in surveillance context -> `"building window"`.
-   - `"window"` in medical context -> often error; suggest user clarify.
-5. **Fallback** to the exact string if splitting yields zero concepts *and* the utterance contains at least one concrete noun. If no concrete noun can be extracted, do not emit a concept — return only warnings and ask the user to clarify (see Rules).
-6. **Cap at `max_concepts`.** If more concepts were extracted than the caller asked for, keep the first `max_concepts` in utterance order and emit the rest under `dropped` with reason `"exceeded max_concepts"`. This keeps latency bounded when a user pastes a long enumeration.
+1. **Tokenise by common separators** — comma、semicolon、"and"、"or"、"&"。
+2. **Drop filler prefixes** — "find", "show me", "segment", "detect", "locate", "a", "an", "the"。
+3. **Keep prepositional modifiers** は visual な場合だけにする。`"striped red umbrella"` は yes、`"umbrella from yesterday"` は no (`"from yesterday"` は in-image ではない)。
+4. optional `context` を使って **Disambiguate collisions** する:
+   - surveillance context の `"window"` -> `"building window"`。
+   - medical context の `"window"` -> 多くの場合 error。user に clarification を促す。
+5. splitting で concepts が 0 件になり、utterance に concrete noun が少なくとも 1 つ含まれる場合は exact string に **Fallback** する。concrete noun が抽出できない場合は concept を emit せず、warnings だけを返して user に clarification を求める (Rules 参照)。
+6. **Cap at `max_concepts`.** caller が求める数より多く抽出された場合、utterance order の先頭 `max_concepts` を保持し、残りは reason `"exceeded max_concepts"` 付きで `dropped` に入れる。これにより user が長い列挙を貼り付けても latency が bounded になる。
 
-## Output format
+## 出力形式
 
 ```
 [designed prompts]
@@ -56,7 +56,7 @@ SAM 3's accuracy depends heavily on how the concept prompt is phrased. This skil
   Merge outputs with distinct concept tags per detection.
 ```
 
-## Examples
+## 例
 
 ```
 in:  "can you find me a cat or two dogs?"
@@ -76,9 +76,9 @@ in:  "striped red umbrella, green hat, pink balloon"
 out: ["striped red umbrella", "green hat", "pink balloon"]
 ```
 
-## Rules
+## ルール
 
-- Never pass sentences longer than 8 words to SAM 3 — accuracy drops above that.
-- When an utterance contains no extractable concrete nouns, do not run SAM 3; return the warnings and ask for clarification.
-- Do not split on punctuation inside quoted strings; preserve `"black and white cat"` as one concept if it is quoted.
-- Always log the original utterance and the derived concepts for production debugging.
+- 8 words を超える sentences を SAM 3 に渡してはいけない。accuracy はそれ以上で落ちる。
+- utterance に抽出可能な concrete nouns がない場合、SAM 3 を実行しない。warnings を返し、clarification を求める。
+- quoted strings 内の punctuation で split してはいけない。quoted されている場合は `"black and white cat"` を 1 concept として preserve する。
+- production debugging のため、original utterance と derived concepts を必ず log する。

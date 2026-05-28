@@ -1,46 +1,46 @@
-# Autoencoders & Variational Autoencoders (VAE)
+# Autoencoders と Variational Autoencoders (VAE)
 
-> A plain autoencoder compresses then reconstructs. It memorizes. It does not generate. Add one trick — force the code to look Gaussian — and you get a sampler. That single trick, the reparameterization of `z = μ + σ·ε`, is why every latent-diffusion and flow-matching image model you use in 2026 has a VAE at the input.
+> 普通の autoencoder は圧縮してから再構成する。記憶はする。生成はしない。そこに1つの工夫、つまり code を Gaussian に見えるよう強制する仕掛けを加えると sampler が得られる。`z = μ + σ·ε` の reparameterization というこの1つの工夫こそ、2026年に使う latent-diffusion と flow-matching の画像モデルすべてが入力側に VAE を持つ理由である。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-Compress a 784-pixel MNIST digit to a 16-number code, then reconstruct. A plain autoencoder will ace reconstruction MSE but the code space is a lumpy mess. Pick a random point in the code space, decode it, and you get noise. It has no sampler. It is a compression model dressed up.
+784ピクセルの MNIST 数字を16個の数値からなる code に圧縮し、再構成する。普通の autoencoder は reconstruction MSE では高得点を取るが、code space はでこぼこの混沌になる。code space のランダムな点を選んで decode すると、ノイズが出る。sampler はない。これは生成モデルのふりをした圧縮モデルである。
 
-What you actually want is: (a) the code space is a clean, smooth distribution you can sample from — say an isotropic Gaussian `N(0, I)`, (b) decoding any sample produces a plausible digit, and (c) the encoder and decoder still compress well. Three goals, one architecture, one loss.
+本当に欲しいのは次の3つだ。(a) code space が、たとえば isotropic Gaussian `N(0, I)` のように、そこからサンプルできるきれいでなめらかな分布であること。(b) どんなサンプルを decode しても妥当な数字になること。(c) encoder と decoder が依然としてうまく圧縮すること。3つの目標、1つのアーキテクチャ、1つの loss。
 
-Kingma's 2013 VAE solves this by training the encoder to output a *distribution* `q(z|x) = N(μ(x), σ(x)²)`, pulling that distribution toward the prior `N(0, I)` via a KL penalty, and then sampling `z` from `q(z|x)` before decoding. At inference time, drop the encoder, sample `z ~ N(0, I)`, decode. The KL penalty is what forces the code space to be structured.
+Kingma の2013年の VAE は、encoder に *distribution* `q(z|x) = N(μ(x), σ(x)²)` を出力させ、KL penalty でその分布を prior `N(0, I)` に引き寄せ、decode 前に `q(z|x)` から `z` をサンプルすることでこれを解く。推論時には encoder を捨て、`z ~ N(0, I)` をサンプルして decode する。code space を構造化するのが KL penalty である。
 
-In 2026 VAEs rarely ship standalone — they have been outclassed by diffusion for raw image quality — but they are the encoder of choice for every latent-diffusion model (SD 1/2/XL/3, Flux, AudioCraft). Learn the VAE and you learn the invisible first layer of every image pipeline you use.
+2026年時点で VAE が単体で出荷されることは少ない。raw image quality では diffusion に抜かれたからだ。しかし、すべての latent-diffusion model（SD 1/2/XL/3、Flux、AudioCraft）にとって、VAE は選ばれる encoder である。VAE を学べば、普段使うあらゆる画像パイプラインの見えない最初の層を学ぶことになる。
 
-## The Concept
+## コンセプト
 
 ![Autoencoder vs VAE: the reparameterization trick](../assets/vae.svg)
 
-**Autoencoder.** `z = encoder(x)`, `x̂ = decoder(z)`, loss = `||x - x̂||²`. Code space unstructured.
+**Autoencoder。** `z = encoder(x)`, `x̂ = decoder(z)`, loss = `||x - x̂||²`。Code space は構造化されない。
 
-**VAE encoder.** Outputs two vectors: `μ(x)` and `log σ²(x)`. These define `q(z|x) = N(μ, diag(σ²))`.
+**VAE encoder。** 2つのベクトル `μ(x)` と `log σ²(x)` を出力する。これらが `q(z|x) = N(μ, diag(σ²))` を定義する。
 
-**Reparameterization trick.** Sampling from `q(z|x)` is not differentiable. Rewrite the sample as `z = μ + σ·ε` where `ε ~ N(0, I)`. Now `z` is a deterministic function of `(μ, σ)` plus a non-parameter noise — gradients flow through `μ` and `σ`.
+**Reparameterization trick。** `q(z|x)` からの sampling は微分できない。サンプルを `z = μ + σ·ε`、ただし `ε ~ N(0, I)` と書き換える。これで `z` は `(μ, σ)` と非パラメータな noise の deterministic function になり、勾配が `μ` と `σ` を通って流れる。
 
-**Loss.** Evidence Lower BOund (ELBO), two terms:
+**Loss。** Evidence Lower BOund（ELBO）は2項からなる。
 
 ```
 loss = reconstruction + β · KL[q(z|x) || N(0, I)]
      = ||x - x̂||²  + β · Σ_i ( σ_i² + μ_i² - log σ_i² - 1 ) / 2
 ```
 
-Reconstruction pushes `x̂` toward `x`. KL pushes `q(z|x)` toward the prior. They trade off. Small β (<1) = sharper samples, code space less Gaussian. Large β (>1) = cleaner code space, blurrier samples. β-VAE (Higgins 2017) made this knob famous and kicked off disentanglement research.
+Reconstruction は `x̂` を `x` に近づける。KL は `q(z|x)` を prior に近づける。両者はトレードオフする。小さい β（<1）= サンプルはシャープだが code space は Gaussian から遠い。大きい β（>1）= code space はきれいだがサンプルはぼやける。β-VAE（Higgins 2017）はこのつまみを有名にし、disentanglement 研究のきっかけになった。
 
-**Sampling.** At inference: draw `z ~ N(0, I)`, forward through decoder. One forward pass — no iterative sampling like diffusion.
+**Sampling。** 推論時は `z ~ N(0, I)` を引き、decoder に通す。1回の forward pass だけ。diffusion のような iterative sampling はない。
 
-## Build It
+## 実装
 
-`code/main.py` implements a tiny VAE without numpy or torch. Input is 8-dimensional synthetic data drawn from a 2-component Gaussian mixture in 8-D. Encoder and decoder are single hidden-layer MLPs. We implement tanh activation, forward pass, loss, and a hand-written backward pass. Not production — pedagogy.
+`code/main.py` は numpy も torch も使わずに小さな VAE を実装する。入力は8次元の synthetic data で、8-D の2成分 Gaussian mixture から生成される。Encoder と decoder は単一 hidden-layer MLP。tanh activation、forward pass、loss、手書きの backward pass を実装する。本番用ではなく、教育用である。
 
 ### Step 1: encoder forward
 
@@ -52,7 +52,7 @@ def encode(x, enc):
     return mu, log_sigma2
 ```
 
-`log σ²` instead of `σ` so the network output is unconstrained (softplus of σ is a trap — gradients die at σ ≈ 0).
+`σ` ではなく `log σ²` を使うので、network output は制約なしでよい（σ に softplus をかけるのは罠で、σ ≈ 0 で勾配が死ぬ）。
 
 ### Step 2: reparameterize and decode
 
@@ -76,7 +76,7 @@ def elbo(x, x_hat, mu, log_sigma2, beta=1.0):
     return recon + beta * kl, recon, kl
 ```
 
-Exact closed-form KL because both distributions are Gaussian. Do not integrate numerically. People still ship code with monte-carlo KL estimates in 2026 — it is 3x slower for no reason.
+両方の分布が Gaussian なので、KL は正確な closed-form で計算できる。数値積分してはいけない。2026年でも monte-carlo KL estimates のコードを出荷している人がいるが、理由なく3倍遅い。
 
 ### Step 4: generate
 
@@ -86,67 +86,67 @@ def sample(dec, z_dim, rng):
     return decode(z, dec)
 ```
 
-That is the generative model. Five lines.
+これが生成モデルである。5行。
 
-## Pitfalls
+## 落とし穴
 
-- **Posterior collapse.** KL term drives `q(z|x) → N(0, I)` so aggressively that `z` carries no info about `x`. Fix: β-annealing (start β=0, ramp to 1), free bits, or skip the KL on inactive dimensions.
-- **Blurry samples.** The Gaussian decoder likelihood implies MSE reconstruction, which is Bayes-optimal for L2 (the mean) — the mean of a set of plausible digits is a fuzzy digit. Fix: discrete decoder (VQ-VAE, NVAE), or use the VAE only as an encoder and stack diffusion on the latents (this is what Stable Diffusion does).
-- **β too large, too early.** See posterior collapse. Start at β≈0.01 and ramp.
-- **Latent dim too small.** 16-D works for MNIST, 256-D for ImageNet 256², 2048-D for ImageNet 1024². Stable Diffusion's VAE compresses 512×512×3 → 64×64×4 (32x downsample factor in spatial area, 32x in channels).
+- **Posterior collapse。** KL 項が `q(z|x) → N(0, I)` を強く押しすぎて、`z` が `x` の情報をまったく持たなくなる。対策: β-annealing（β=0 から始めて 1 まで上げる）、free bits、または inactive dimensions では KL をスキップする。
+- **ぼやけたサンプル。** Gaussian decoder likelihood は MSE reconstruction を意味し、これは L2 に対して Bayes-optimal（平均）である。妥当な数字の集合の平均はぼやけた数字になる。対策: discrete decoder（VQ-VAE、NVAE）、または VAE を encoder としてだけ使い、latents の上に diffusion を積む（Stable Diffusion がこれをしている）。
+- **β が大きすぎる、早すぎる。** Posterior collapse を参照。β≈0.01 から始めて ramp する。
+- **Latent dim が小さすぎる。** MNIST なら 16-D、ImageNet 256² なら 256-D、ImageNet 1024² なら 2048-D。Stable Diffusion の VAE は 512×512×3 → 64×64×4 に圧縮する（spatial area で32x、channels で32x の downsample factor）。
 
 ## Use It
 
-The 2026 VAE stack:
+2026年の VAE stack:
 
-| Situation | Pick |
+| 状況 | 選択 |
 |-----------|------|
-| Image-latent encoder for diffusion | Stable Diffusion VAE (`sd-vae-ft-ema`) or Flux VAE |
-| Audio-latent encoder | Encodec (Meta), SoundStream, or DAC (Descript) |
-| Video latents | Sora's spatiotemporal patches, Latte VAE, WAN VAE |
-| Disentangled representation learning | β-VAE, FactorVAE, TCVAE |
-| Discrete latents (for transformer modelling) | VQ-VAE, RVQ (ResidualVQ) |
-| Continuous latents for generation | Plain VAE, then condition a flow/diffusion model in that latent space |
+| diffusion 用の image-latent encoder | Stable Diffusion VAE (`sd-vae-ft-ema`) または Flux VAE |
+| Audio-latent encoder | Encodec (Meta)、SoundStream、または DAC (Descript) |
+| Video latents | Sora の spatiotemporal patches、Latte VAE、WAN VAE |
+| Disentangled representation learning | β-VAE、FactorVAE、TCVAE |
+| Discrete latents（transformer modelling 用） | VQ-VAE、RVQ (ResidualVQ) |
+| 生成用の continuous latents | Plain VAE、その後で latent space に flow / diffusion model を条件付けする |
 
-A latent-diffusion model is a VAE with a diffusion model living between encoder and decoder. The VAE does coarse compression, the diffusion model does the heavy lifting. Same pattern for video (VAE + video-diffusion DiT) and audio (Encodec + MusicGen transformer).
+Latent-diffusion model とは、encoder と decoder の間に diffusion model が住んでいる VAE である。VAE が粗い圧縮を行い、diffusion model が重い仕事をする。動画（VAE + video-diffusion DiT）でも音声（Encodec + MusicGen transformer）でも同じパターンである。
 
 ## Ship It
 
-Save `outputs/skill-vae-trainer.md`.
+`outputs/skill-vae-trainer.md` を保存する。
 
-Skill takes: dataset profile + latent-dim target + downstream use (reconstruction, sampling, or latent-diffusion input) and outputs: architecture choice (plain/β/VQ/RVQ), β schedule, latent dim, decoder likelihood (Gaussian vs categorical), and evaluation plan (recon MSE, KL per dim, Fréchet distance between `q(z|x)` and `N(0, I)`).
+Skill は dataset profile + latent-dim target + downstream use（reconstruction、sampling、または latent-diffusion input）を受け取り、architecture choice（plain/β/VQ/RVQ）、β schedule、latent dim、decoder likelihood（Gaussian vs categorical）、evaluation plan（recon MSE、KL per dim、`q(z|x)` と `N(0, I)` の Fréchet distance）を出力する。
 
-## Exercises
+## 演習
 
-1. **Easy.** Change `β` in `code/main.py` to `0.01`, `0.1`, `1.0`, `5.0`. Record the final reconstruction MSE and KL. Which β is Pareto-best for your synthetic data?
-2. **Medium.** Replace the Gaussian decoder likelihood with a Bernoulli likelihood (cross-entropy loss). Compare sample quality on a binarized version of the same synthetic data.
-3. **Hard.** Extend `code/main.py` into a mini VQ-VAE: replace the continuous `z` with a nearest-neighbour lookup in a codebook of K=32 entries. Compare reconstruction MSE and report how many codebook entries get used (codebook collapse is real).
+1. **Easy.** `code/main.py` の `β` を `0.01`、`0.1`、`1.0`、`5.0` に変える。最終的な reconstruction MSE と KL を記録する。自分の synthetic data に対して Pareto-best な β はどれか。
+2. **Medium.** Gaussian decoder likelihood を Bernoulli likelihood（cross-entropy loss）に置き換える。同じ synthetic data の binarized version で sample quality を比較する。
+3. **Hard.** `code/main.py` を mini VQ-VAE に拡張する。continuous `z` を K=32 entries の codebook に対する nearest-neighbour lookup に置き換える。reconstruction MSE を比較し、使用された codebook entries の数を報告する（codebook collapse は本当に起きる）。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よく言われること | 実際の意味 |
 |------|-----------------|-----------------------|
-| Autoencoder | Encode-decode network | `x → z → x̂`, learn MSE. Not generative. |
-| VAE | AE with a sampler | Encoder outputs a distribution, KL penalty shapes code space. |
-| ELBO | Evidence lower bound | `log p(x) ≥ recon - KL[q(z\|x) \|\| p(z)]`; tight when `q = p(z\|x)`. |
-| Reparameterization | `z = μ + σ·ε` | Rewrites stochastic node as deterministic + pure noise. Enables backprop through sampling. |
-| Prior | `p(z)` | Target distribution for the latent, typically `N(0, I)`. |
-| Posterior collapse | "KL term wins" | Encoder ignores `x`, outputs the prior; decoder must hallucinate. |
-| β-VAE | Tunable KL weight | `loss = recon + β·KL`. Higher β = more disentangled but blurrier. |
-| VQ-VAE | Discrete latent | Replace continuous `z` with nearest codebook vector; enables transformer modelling. |
+| Autoencoder | Encode-decode network | `x → z → x̂`、MSE を学習する。生成的ではない。 |
+| VAE | AE with a sampler | Encoder が distribution を出力し、KL penalty が code space を形作る。 |
+| ELBO | Evidence lower bound | `log p(x) ≥ recon - KL[q(z\|x) \|\| p(z)]`。`q = p(z\|x)` のとき tight。 |
+| Reparameterization | `z = μ + σ·ε` | stochastic node を deterministic + pure noise として書き直す。sampling を通じた backprop を可能にする。 |
+| Prior | `p(z)` | latent の target distribution。通常は `N(0, I)`。 |
+| Posterior collapse | "KL term wins" | Encoder が `x` を無視し、prior を出力する。decoder は幻覚で埋めるしかない。 |
+| β-VAE | Tunable KL weight | `loss = recon + β·KL`。β が高いほど disentangled だが、よりぼやける。 |
+| VQ-VAE | Discrete latent | Continuous `z` を最も近い codebook vector に置き換える。transformer modelling を可能にする。 |
 
-## Production note: the VAE is the hottest path in a diffusion server
+## 本番メモ: VAE は diffusion server の最も熱い経路である
 
-In a Stable Diffusion / Flux / SD3 pipeline the VAE is called twice per request — once to encode (if doing img2img / inpainting) and once to decode. At 1024² the decoder pass is often the single largest activation-memory peak in the whole pipeline because it upsamples `128×128×16` latents back to `1024×1024×3`. Two practical consequences:
+Stable Diffusion / Flux / SD3 pipeline では、VAE はリクエストごとに2回呼ばれる。img2img / inpainting の場合は encode に1回、decode に1回である。1024² では、decoder pass が pipeline 全体で最大の activation-memory peak になることが多い。`128×128×16` latents を `1024×1024×3` に upsample するからだ。実務上の帰結は2つある。
 
-- **Slice or tile the decode.** `diffusers` exposes `pipe.vae.enable_slicing()` and `pipe.vae.enable_tiling()`. Tiling trades a small seam artifact for `O(tile²)` memory instead of `O(H·W)`. Essential for 1024²+ on consumer GPUs.
-- **bf16 decoder, fp32 numerics for the final resize.** The SD 1.x VAE was released in fp32 and *silently produces NaNs* when cast to fp16 at 1024²+. SDXL ships `madebyollin/sdxl-vae-fp16-fix` — always prefer the fp16-fix variant or use bf16.
+- **decode を slice または tile する。** `diffusers` は `pipe.vae.enable_slicing()` と `pipe.vae.enable_tiling()` を公開している。Tiling は小さな seam artifact と引き換えに、メモリを `O(H·W)` ではなく `O(tile²)` にする。consumer GPUs で 1024²+ を扱うには必須である。
+- **bf16 decoder、final resize は fp32 numerics。** SD 1.x VAE は fp32 でリリースされ、1024²+ で fp16 に cast すると *silently produces NaNs*。SDXL には `madebyollin/sdxl-vae-fp16-fix` がある。常に fp16-fix variant を優先するか bf16 を使う。
 
-## Further Reading
+## 参考文献
 
-- [Kingma & Welling (2013). Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) — the VAE paper.
-- [Higgins et al. (2017). β-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework](https://openreview.net/forum?id=Sy2fzU9gl) — disentangled β-VAE.
-- [van den Oord et al. (2017). Neural Discrete Representation Learning](https://arxiv.org/abs/1711.00937) — VQ-VAE.
-- [Vahdat & Kautz (2021). NVAE: A Deep Hierarchical Variational Autoencoder](https://arxiv.org/abs/2007.03898) — state-of-the-art image VAE.
-- [Rombach et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752) — Stable Diffusion; VAE as encoder.
-- [Défossez et al. (2022). High Fidelity Neural Audio Compression](https://arxiv.org/abs/2210.13438) — Encodec, the audio VAE standard.
+- [Kingma & Welling (2013). Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) — VAE 論文。
+- [Higgins et al. (2017). β-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework](https://openreview.net/forum?id=Sy2fzU9gl) — disentangled β-VAE。
+- [van den Oord et al. (2017). Neural Discrete Representation Learning](https://arxiv.org/abs/1711.00937) — VQ-VAE。
+- [Vahdat & Kautz (2021). NVAE: A Deep Hierarchical Variational Autoencoder](https://arxiv.org/abs/2007.03898) — state-of-the-art image VAE。
+- [Rombach et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752) — Stable Diffusion。encoder としての VAE。
+- [Défossez et al. (2022). High Fidelity Neural Audio Compression](https://arxiv.org/abs/2210.13438) — Encodec、audio VAE の標準。

@@ -1,14 +1,12 @@
-"""Token and positional embeddings.
+"""token embedding と positional embedding。
 
-Builds three modules:
+以下の module を作ります。
 
 - TokenEmbedding: vocab_size x d_model lookup
 - LearnedPositionalEmbedding: max_context_length x d_model lookup
-- SinusoidalPositionalEmbedding: parameter-free sin/cos table
+- SinusoidalPositionalEmbedding: parameter-free な sin/cos table
 
-Composes them via EmbeddingComposer for the transformer input.
-
-Run: python3 code/main.py
+Run: Python3 code/main.py
 """
 
 from __future__ import annotations
@@ -24,13 +22,13 @@ DEFAULT_INIT_STD = 0.02
 
 
 def _init_normal(weight: torch.Tensor, std: float = DEFAULT_INIT_STD) -> None:
-    """Init a parameter tensor in place from a small Gaussian."""
+    """小さい Gaussian で parameter tensor を in-place 初期化します。"""
     with torch.no_grad():
         weight.normal_(mean=0.0, std=std)
 
 
 class TokenEmbedding(nn.Module):
-    """Vocabulary-id to vector lookup."""
+    """vocabulary id から vector への lookup。"""
 
     def __init__(self, vocab_size: int, d_model: int, init_std: float = DEFAULT_INIT_STD) -> None:
         super().__init__()
@@ -52,7 +50,7 @@ class TokenEmbedding(nn.Module):
 
 
 class LearnedPositionalEmbedding(nn.Module):
-    """Position-id to vector lookup with learned parameters."""
+    """learned parameters を持つ position id から vector への lookup。"""
 
     def __init__(
         self,
@@ -82,7 +80,7 @@ class LearnedPositionalEmbedding(nn.Module):
 
 
 class SinusoidalPositionalEmbedding(nn.Module):
-    """Parameter-free position-to-vector mapping.
+    """parameter-free な position-to-vector mapping。
 
     pe[p, 2k]     = sin(p / 10000^(2k/d_model))
     pe[p, 2k+1]   = cos(p / 10000^(2k/d_model))
@@ -124,9 +122,9 @@ class SinusoidalPositionalEmbedding(nn.Module):
 
 
 class EmbeddingComposer(nn.Module):
-    """Sums a token embedding with a positional embedding.
+    """token embedding と positional embedding を足します。
 
-    The positional embedding may be learned or sinusoidal.
+    positional embedding は learned または sinusoidal です。
     """
 
     def __init__(
@@ -167,9 +165,9 @@ def count_parameters(module: nn.Module) -> int:
 
 
 def neighbour_cosine_curve(table: torch.Tensor, max_offset: int = 8) -> list[float]:
-    """Average cosine similarity between row p and row p+k for k in 1..max_offset.
+    """k=1..max_offset について row p と row p+k の平均 cosine similarity を計算します。
 
-    Returns a list of length max_offset.
+    長さ max_offset の list を返します。
     """
     if table.dim() != 2:
         raise ValueError("table must be (L, D)")
@@ -219,7 +217,7 @@ def main() -> int:
 
     ids = torch.randint(0, cfg.vocab_size, (cfg.batch_size, cfg.seq_len), dtype=torch.long)
 
-    _print_section("Shapes")
+    _print_section("shape")
     out_learned = learned_composer(ids)
     out_sinusoidal = sinusoidal_composer(ids)
     print(f"token_emb output  : {tuple(token_emb(ids).shape)}")
@@ -228,7 +226,7 @@ def main() -> int:
     assert out_learned.shape == (cfg.batch_size, cfg.seq_len, cfg.d_model)
     assert out_sinusoidal.shape == (cfg.batch_size, cfg.seq_len, cfg.d_model)
 
-    _print_section("Parameter counts")
+    _print_section("parameter count")
     token_params = count_parameters(token_emb)
     learned_params = count_parameters(learned_pos)
     sinusoidal_params = count_parameters(sinusoidal_pos)
@@ -237,14 +235,14 @@ def main() -> int:
     print(f"sinusoidal positional   : {sinusoidal_params:>7}  (parameter-free)")
     assert sinusoidal_params == 0
 
-    _print_section("Neighbour cosine similarity")
+    _print_section("隣接位置の cosine similarity")
     learned_curve = neighbour_cosine_curve(learned_pos.embedding.weight, max_offset=6)
     sinusoidal_curve = neighbour_cosine_curve(sinusoidal_pos.pe, max_offset=6)
     print("offset k | learned cos | sinusoidal cos")
     for k, (a, b) in enumerate(zip(learned_curve, sinusoidal_curve), start=1):
         print(f"   {k:>4}  |   {a:>+7.4f}  |   {b:>+7.4f}")
 
-    _print_section("Sinusoidal property: smooth decay")
+    _print_section("sinusoidal の性質: 滑らかな減衰")
     monotone_count = sum(
         sinusoidal_curve[i] >= sinusoidal_curve[i + 1] - 1e-3
         for i in range(len(sinusoidal_curve) - 1)
@@ -253,20 +251,20 @@ def main() -> int:
         f"sinusoidal curve monotone steps: {monotone_count}/{len(sinusoidal_curve) - 1}"
     )
 
-    _print_section("Length extrapolation")
+    _print_section("長さ外挿")
     short = cfg.max_context_length // 2
     long = cfg.max_context_length
     print(f"sinusoidal at len {short:>3} : ok")
     _ = sinusoidal_pos(short)
     print(f"sinusoidal at len {long:>3} : ok")
     _ = sinusoidal_pos(long)
-    print("learned bounded by max_context_length: must error past max")
+    print("learned は max_context_length に縛られるため、上限超過で error になる必要があります")
     try:
         _ = learned_pos(long + 1)
     except ValueError as e:
-        print(f"  caught: {e}")
+        print(f"  捕捉: {e}")
 
-    print("\nDemo OK.")
+    print("\nデモ OK。")
     return 0
 
 

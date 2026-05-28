@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best describes the original Mitchell et al. (2019) Model Card?",
+      "question": "original Mitchell et al. (2019) Model Card の説明として最も適切なのはどれですか？",
       "options": [
-        "An OpenAPI specification",
-        "A 'nutrition label' for ML models: training data, intended use, factors, metrics, evaluation data, quantitative disaggregated analyses, ethical considerations, caveats",
-        "A model checkpoint manifest only",
-        "A regulatory legal contract"
+        "OpenAPI specification",
+        "ML models の「nutrition label」: training data、intended use、factors、metrics、evaluation data、quantitative disaggregated analyses、ethical considerations、caveats",
+        "model checkpoint manifest のみ",
+        "regulatory legal contract"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What did Oreamuno et al. (2023) find about ethical-considerations adoption in Hugging Face model cards?",
+      "question": "Oreamuno et al. (2023) は Hugging Face model cards における ethical-considerations adoption について何を発見しましたか？",
       "options": [
-        "Approximately 0.3% document ethical considerations",
-        "Approximately 80% document ethical considerations",
-        "No model card has any text at all",
-        "All model cards document them"
+        "約 0.3% が ethical considerations を document している",
+        "約 80% が ethical considerations を document している",
+        "どの model card にも text が一切ない",
+        "すべての model cards が document している"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does Pushkarna et al. (Google 2022) Data Cards' telescopic / periscopic / microscopic layering provide?",
+      "question": "Pushkarna et al. (Google 2022) Data Cards の telescopic / periscopic / microscopic layering は何を提供しますか？",
       "options": [
-        "A boundary-object framing where the same document serves different readers (non-experts, ML practitioners, auditors) via three zoom levels of detail",
-        "A pre-RLHF audit checklist",
-        "A telescope-themed visualization library",
-        "A privacy-preserving query interface"
+        "同じ document が異なる readers (non-experts, ML practitioners, auditors) に3段階の detail zoom level で役立つという boundary-object framing",
+        "pre-RLHF audit checklist",
+        "telescope-themed visualization library",
+        "privacy-preserving query interface"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What scope does a System Card cover that Model Cards do not?",
+      "question": "System Card が Model Cards とは異なり cover する scope は何ですか？",
       "options": [
-        "End-to-end AI system: model + safety stack + deployment context, including security capabilities, prompt-injection protection, data-exfiltration detection, alignment, and incident response",
-        "Only the dataset",
-        "Only the prompt template",
-        "Only the tokenizer"
+        "end-to-end AI system: model + safety stack + deployment context。security capabilities、prompt-injection protection、data-exfiltration detection、alignment、incident response を含む",
+        "dataset だけ",
+        "prompt template だけ",
+        "tokenizer だけ"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What did Liang et al. (2024) report about model-card detail and Hugging Face download rate?",
+      "question": "Liang et al. (2024) は model-card detail と Hugging Face download rate について何を報告しましたか？",
       "options": [
-        "Detailed model cards drive a +29.0% weekly download lift on HF for the treatment group vs control (diff-in-diff); adoption pressure is now market-driven, not only compliance-driven",
-        "Only ethical-considerations sections affected downloads",
-        "Detail had no effect on downloads",
-        "Detail decreased download rates"
+        "detailed model cards は treatment group vs control (diff-in-diff) で HF の weekly download を +29.0% 押し上げる。adoption pressure は compliance-driven だけでなく market-driven になっている",
+        "ethical-considerations sections だけが downloads に影響した",
+        "detail は downloads に影響しなかった",
+        "detail は download rates を下げた"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does Laminator (Duddu et al. 2024) contribute to documentation?",
+      "question": "Laminator (Duddu et al. 2024) は documentation に何をもたらしますか？",
       "options": [
-        "An automated benchmarking harness",
-        "Verifiable attestations via hardware TEE / cryptographic signatures, so the card can carry a proof-of-claim instead of just a claim",
-        "A replacement for the Datasheets standard",
-        "An LLM-based summary generator"
+        "automated benchmarking harness",
+        "hardware TEE / cryptographic signatures による verifiable attestations。card が単なる claim ではなく proof-of-claim を運べるようにする",
+        "Datasheets standard の replacement",
+        "LLM-based summary generator"
       ],
       "correct": 1,
       "explanation": ""

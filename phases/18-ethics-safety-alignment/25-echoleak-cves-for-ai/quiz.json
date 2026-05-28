@@ -4,31 +4,31 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which best describes EchoLeak (CVE-2025-32711)?",
+      "question": "EchoLeak (CVE-2025-32711) の説明として最も適切なのはどれですか？",
       "options": [
-        "A jailbreak via long-context shot stuffing",
-        "A supply-chain attack on PyPI",
-        "A hardware vulnerability in NPUs",
-        "A zero-click AI command-injection flaw in Microsoft 365 Copilot (CVE-2025-32711, CVSS 9.3) causing unauthorized network information disclosure, with exfiltration via a CSP allowlisted/trusted Microsoft domain"
+        "long-context shot stuffing による jailbreak",
+        "PyPI への supply-chain attack",
+        "NPU の hardware vulnerability",
+        "Microsoft 365 Copilot における zero-click AI command-injection flaw (CVE-2025-32711, CVSS 9.3)。unauthorized network information disclosure を引き起こし、CSP allowlisted/trusted Microsoft domain 経由で exfiltration する"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What makes EchoLeak 'zero-click'?",
+      "question": "EchoLeak が 'zero-click' である理由は何ですか？",
       "options": [
-        "The victim does not have to open the email; Copilot retrieves it as RAG context during routine queries and the injected instructions execute",
-        "It requires the user to click a link in a Teams chat",
-        "It runs in the operating-system kernel",
-        "It requires three clicks but no typing"
+        "victim は email を開く必要がない。Copilot が routine query 中にそれを RAG context として retrieve し、injected instructions が実行されるから",
+        "Teams chat の link を user が click する必要があるから",
+        "operating-system kernel で実行されるから",
+        "3回 click が必要だが typing は不要だから"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Aim Labs frames EchoLeak as 'LLM Scope Violation'. What three boundaries must each be controlled independently?",
+      "question": "Aim Labs は EchoLeak を 'LLM Scope Violation' として framing しています。独立に control すべき3つの boundaries は何ですか？",
       "options": [
         "Retrieval, scope, output",
         "Network, disk, memory",
@@ -40,36 +40,36 @@
     },
     {
       "stage": "check",
-      "question": "How did Microsoft/GitHub fix CamoLeak (CVSS 9.6, GitHub Copilot Chat)?",
+      "question": "Microsoft/GitHub は CamoLeak (CVSS 9.6, GitHub Copilot Chat) をどう修正しましたか？",
       "options": [
-        "Added an XPIA prompt-injection filter",
-        "Disabled image rendering entirely in Copilot Chat (cost: usability) because the alternative attack surface could not be bounded",
-        "Switched the model to Llama Guard",
-        "Increased context size"
+        "XPIA prompt-injection filter を追加した",
+        "代替 attack surface を bounded にできなかったため、Copilot Chat の image rendering を完全に disabled した (cost: usability)",
+        "model を Llama Guard に切り替えた",
+        "context size を増やした"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What pattern in severity calibration did the EchoLeak disclosure reveal?",
+      "question": "EchoLeak disclosure は severity calibration についてどの pattern を明らかにしましたか？",
       "options": [
-        "Vendors over-rated the initial CVSS score",
-        "Vendors initially rated EchoLeak low (information disclosure); Aim Labs's MFA-code exfiltration proof-of-concept escalated the rating to 9.3 — defenders must push for comprehensive PoC for AI-specific vulnerabilities",
-        "All AI CVEs are automatically rated 10.0",
-        "Severity ratings are decided by OWASP only"
+        "vendors は initial CVSS score を過大評価した",
+        "vendors は当初 EchoLeak を low (information disclosure) と評価した。Aim Labs の MFA-code exfiltration proof-of-concept により rating は 9.3 に escalate した。defenders は AI-specific vulnerabilities について comprehensive PoC を求める必要がある",
+        "すべての AI CVEs は自動的に 10.0 と評価される",
+        "severity ratings は OWASP だけが決める"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Where do NIST and OWASP rank prompt injection as of 2024/2025?",
+      "question": "2024/2025 時点で、NIST と OWASP は prompt injection をどのように位置付けていますか？",
       "options": [
-        "NIST AI SPD 2024 frames prompt injection as a major information-security risk for generative AI; OWASP 2025 ranks it LLM01 (top application-layer threat)",
-        "NIST: outside scope; OWASP: not listed",
-        "NIST: minor; OWASP: bottom of list",
-        "Both call it a Tier-2 risk only"
+        "NIST AI SPD 2024 は prompt injection を generative AI の major information-security risk とし、OWASP 2025 は LLM01 (top application-layer threat) に位置付けている",
+        "NIST: scope 外、OWASP: 掲載なし",
+        "NIST: minor、OWASP: list の最下位",
+        "どちらも Tier-2 risk のみと呼ぶ"
       ],
       "correct": 0,
       "explanation": ""

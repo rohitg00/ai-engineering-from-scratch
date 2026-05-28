@@ -1,6 +1,6 @@
-"""Gradient clipping and mixed-precision training step.
+"""gradient clipping と mixed-precision training step。
 
-Implements:
+実装内容:
 - clip_global_l2_norm, a wrapper around torch.nn.utils.clip_grad_norm_ that
   returns both the pre-clip norm and an explicit post-clip norm.
 - has_non_finite_grad, a helper that scans gradients for NaN and Inf.
@@ -27,7 +27,7 @@ try:
     from torch import nn
 except ImportError as exc:
     raise SystemExit(
-        "torch is required for this lesson. Install with: pip install torch"
+        "この lesson には torch が必要です。Install: pip install torch"
     ) from exc
 
 
@@ -38,7 +38,7 @@ NORM_TYPE = 2.0
 
 @dataclass
 class StepLog:
-    """One row of the per-step training log."""
+    """step ごとの training log の 1 行。"""
 
     step: int
     lr: float
@@ -64,7 +64,7 @@ class StepLog:
 
 @dataclass
 class SkipLog:
-    """Standalone record of a skipped step, for alerting and forensics."""
+    """alerting と forensics 用の skipped step record。"""
 
     step: int
     reason: str
@@ -74,7 +74,7 @@ class SkipLog:
 
 
 def has_non_finite_grad(parameters: Iterable[torch.nn.Parameter]) -> bool:
-    """Return True if any gradient contains a NaN or Inf."""
+    """NaN または Inf を含む gradient があれば True を返す。"""
 
     for param in parameters:
         if param.grad is None:
@@ -86,7 +86,7 @@ def has_non_finite_grad(parameters: Iterable[torch.nn.Parameter]) -> bool:
 
 
 def compute_global_l2_norm(parameters: Iterable[torch.nn.Parameter]) -> float:
-    """Compute the Euclidean norm over all gradients without clipping."""
+    """clipping せず全 gradient の Euclidean norm を計算する。"""
 
     squared_sum = 0.0
     for param in parameters:
@@ -101,7 +101,7 @@ def clip_global_l2_norm(
     parameters: list[torch.nn.Parameter],
     max_norm: float,
 ) -> tuple[float, float]:
-    """Clip gradients in place to max_norm and return (pre_clip, post_clip).
+    """gradient を max_norm に in-place clip し、(pre_clip, post_clip) を返す。
 
     Returns (pre_clip, post_clip). When pre_clip <= max_norm the gradients are
     untouched and post_clip == pre_clip. When pre_clip > max_norm the gradients
@@ -109,7 +109,7 @@ def clip_global_l2_norm(
     """
 
     if max_norm <= 0:
-        raise ValueError("max_norm must be positive")
+        raise ValueError("max_norm は正でなければなりません")
     pre_clip = compute_global_l2_norm(parameters)
     if not math.isfinite(pre_clip):
         return pre_clip, pre_clip
@@ -123,7 +123,7 @@ def clip_global_l2_norm(
 
 
 class AmpTrainState:
-    """Training step with mixed precision and gradient clipping.
+    """mixed precision と gradient clipping を使う training step。
 
     Wires together a model, an AdamW optimizer, a GradScaler, and an autocast
     device. Exposes step(inputs, targets) which:
@@ -147,7 +147,7 @@ class AmpTrainState:
         amp_dtype: torch.dtype | None = None,
     ) -> None:
         if max_norm <= 0:
-            raise ValueError("max_norm must be positive")
+            raise ValueError("max_norm は正でなければなりません")
         if device_type not in ("cpu", "cuda"):
             raise ValueError(f"device_type must be 'cpu' or 'cuda', got {device_type}")
         self.model = model
@@ -196,7 +196,7 @@ class AmpTrainState:
         targets: torch.Tensor,
         gradient_corruptor: Callable[[nn.Module], None] | None = None,
     ) -> StepLog:
-        """Run one training step with optional gradient corruption for testing.
+        """test 用に optional gradient corruption 付きで training step を 1 回実行する。
 
         `gradient_corruptor` lets the demo inject a non-finite gradient after
         backward and before the unscale step. Production callers leave it as
@@ -304,10 +304,10 @@ class AmpTrainState:
 
 
 def rolling_skip_rate(log: Iterable[StepLog], window: int = 1000) -> list[float]:
-    """Return the rolling skip rate over the last `window` steps for each step."""
+    """各 step について直近 `window` step の rolling skip rate を返す。"""
 
     if window <= 0:
-        raise ValueError("window must be positive")
+        raise ValueError("window は正でなければなりません")
     rows = list(log)
     rates: list[float] = []
     skipped: list[int] = []
@@ -320,7 +320,7 @@ def rolling_skip_rate(log: Iterable[StepLog], window: int = 1000) -> list[float]
 
 
 def write_step_log_csv(log: Iterable[StepLog], path: Path) -> None:
-    """Write the canonical training-step CSV.
+    """canonical training-step CSV を書く。
 
     Columns: step, lr, grad_l2_pre_clip, grad_l2_post_clip, loss, skipped,
     skip_reason, scaler_scale.
@@ -359,7 +359,7 @@ def build_toy_model(
 
 
 def inject_inf_into_first_grad(model: nn.Module) -> None:
-    """Test-only: write +Inf into the first parameter's gradient."""
+    """test 専用: 最初の parameter gradient に +Inf を書き込む。"""
 
     for param in model.parameters():
         if param.grad is not None:
@@ -368,7 +368,7 @@ def inject_inf_into_first_grad(model: nn.Module) -> None:
 
 
 def run_demo() -> int:
-    """Train for 20 steps and inject a non-finite gradient on a known step."""
+    """20 step 学習し、既知の step で non-finite gradient を注入する。"""
 
     model, inputs, targets = build_toy_model()
     state = AmpTrainState(model=model, lr=1e-2, max_norm=1.0, device_type="cpu")

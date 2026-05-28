@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "For matrix multiplication (m x n) @ (n x p), what must be true about the dimensions?",
-      "options": ["m must equal p", "The inner dimensions n must match", "All dimensions must be equal", "m must be greater than p"],
+      "question": "行列積 (m x n) @ (n x p) では、次元について何が成り立つ必要がありますか？",
+      "options": ["m が p と等しくなければならない", "内側の次元 n が一致しなければならない", "すべての次元が等しくなければならない", "m が p より大きくなければならない"],
       "correct": 1,
-      "explanation": "Matrix multiplication requires the number of columns in the first matrix (n) to equal the number of rows in the second matrix (n). The result has shape (m x p)."
+      "explanation": "行列積では、最初の行列の列数（n）が2番目の行列の行数（n）と等しい必要があります。結果のshapeは (m x p) になります。"
     },
     {
       "stage": "pre",
-      "question": "What is the identity matrix?",
-      "options": ["A matrix of all ones", "A square matrix with ones on the diagonal and zeros elsewhere that acts as the multiplicative identity", "A matrix where every element is unique", "The transpose of any given matrix"],
+      "question": "単位行列とは何ですか？",
+      "options": ["すべての要素が1の行列", "対角成分が1で、それ以外が0の正方行列で、乗法の単位元として働くもの", "すべての要素が一意である行列", "任意の行列の転置"],
       "correct": 1,
-      "explanation": "The identity matrix I has ones on the diagonal and zeros everywhere else. Multiplying any matrix by I returns the original matrix unchanged, like multiplying a number by 1."
+      "explanation": "単位行列 I は対角成分が1で、それ以外はすべて0です。任意の行列に I を掛けると、数に1を掛けるのと同じように、元の行列がそのまま返ります。"
     },
     {
       "stage": "post",
-      "question": "What is the key difference between element-wise multiplication and matrix multiplication?",
-      "options": ["Element-wise is faster while matrix multiplication is more accurate", "Element-wise multiplies matching positions (same shape required), matrix multiplication takes dot products of rows and columns (inner dimensions must match)", "They produce the same result but use different notation", "Element-wise only works on vectors while matrix multiplication works on matrices"],
+      "question": "要素ごとの積と行列積の重要な違いは何ですか？",
+      "options": ["要素ごとの積の方が速く、行列積の方が正確である", "要素ごとの積は対応する位置同士を掛ける（同じshapeが必要）。行列積は行と列の内積を取る（内側の次元が一致する必要がある）", "同じ結果を生むが、記法だけが異なる", "要素ごとの積はベクトルにしか使えず、行列積は行列に使える"],
       "correct": 1,
-      "explanation": "Element-wise (Hadamard) product multiplies corresponding elements and requires identical shapes. Matrix multiplication computes dot products between rows and columns with the rule (m,n)@(n,p)=(m,p)."
+      "explanation": "要素ごとの積（Hadamard積）は対応する要素同士を掛け、同一のshapeを必要とします。行列積は行と列の内積を計算し、(m,n)@(n,p)=(m,p) という規則に従います。"
     },
     {
       "stage": "post",
-      "question": "In the expression 'output = relu(W @ x + b)', what role does broadcasting play?",
-      "options": ["It broadcasts the computation across multiple GPUs", "It automatically stretches the bias vector b to match the shape of W @ x so they can be added", "It converts the data types of W and x to match", "It repeats the relu activation across all elements"],
+      "question": "式 'output = relu(W @ x + b)' において、ブロードキャストはどのような役割を果たしますか？",
+      "options": ["計算を複数GPUにブロードキャストする", "バイアスベクトル b を W @ x のshapeに合うよう自動的に伸ばし、足し合わせられるようにする", "W と x のデータ型を一致するよう変換する", "relu活性化をすべての要素に対して繰り返す"],
       "correct": 1,
-      "explanation": "W @ x produces a column vector, and b is also a vector. Broadcasting stretches b across the batch dimension if needed, allowing element-wise addition without explicit shape matching."
+      "explanation": "W @ x は列ベクトルを生成し、b もベクトルです。必要に応じてブロードキャストが b をバッチ次元方向に伸ばすため、明示的にshapeを合わせなくても要素ごとの加算ができます。"
     },
     {
       "stage": "post",
-      "question": "What does a determinant of zero for a matrix indicate?",
-      "options": ["The matrix has all zero entries", "The matrix is singular: it crushes at least one dimension, cannot be inverted, and has no unique solution", "The matrix is the identity matrix", "The matrix performs a rotation"],
+      "question": "行列の行列式が0であることは何を示しますか？",
+      "options": ["行列のすべての要素が0である", "行列が特異である。少なくとも1つの次元をつぶし、逆行列を持たず、一意解がない", "その行列が単位行列である", "その行列が回転を表している"],
       "correct": 1,
-      "explanation": "A zero determinant means the transformation collapses space by at least one dimension (e.g., mapping 2D to a line). The matrix has no inverse, and linear systems using it have either no solution or infinitely many."
+      "explanation": "行列式が0ということは、その変換が少なくとも1つの次元をつぶすことを意味します（例: 2Dを直線へ写す）。その行列には逆行列がなく、それを使う線形方程式系は解を持たないか、無限に多くの解を持ちます。"
     }
   ]
 }

@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why store the tokenized corpus in a resizable, chunked HDF5 dataset rather than JSONL?",
+      "question": "tokenized corpus を JSONL ではなく resizable/chunked HDF5 dataset に保存するのはなぜか。",
       "options": [
-        "HDF5 has a smaller logo",
-        "HDF5 offers chunked, integer-only, memory-mapped reads with O(1) random access; JSONL forces the parser onto every hot-path read",
-        "JSONL is deprecated",
-        "Random reasons"
+        "HDF5 の logo が小さいから。",
+        "HDF5 は chunked integer-only read と O(1) random access を提供し、JSONL parser を hot path から外せるから。",
+        "JSONL は deprecated だから。",
+        "なんとなく。"
       ],
       "correct": 1,
-      "explanation": "The dataloader wants a flat token stream with addressable slices; HDF5 supplies that natively."
+      "explanation": "dataloader は addressable な flat token stream を欲しがる。HDF5 はそれを自然に提供する。"
     },
     {
       "stage": "check",
-      "question": "What is the right rule for sizing the HDF5 chunk vs the trainer's window_size?",
+      "question": "HDF5 chunk と trainer の window_size の sizing rule として正しいものはどれか。",
       "options": [
-        "Always pick chunk=1",
-        "Set chunk to a multiple of window_size so each sample lands inside one or two chunks and reads stay page-cache aligned",
-        "Pick chunk equal to the document length",
-        "Pick the largest chunk that fits in RAM"
+        "常に chunk=1。",
+        "chunk を window_size の倍数にし、sample が 1 つか 2 つの chunk に収まるようにする。",
+        "chunk を document length と等しくする。",
+        "RAM に入る最大 chunk を選ぶ。"
       ],
       "correct": 1,
-      "explanation": "Mismatched chunks halve throughput because every sample straddles two chunks instead of one."
+      "explanation": "chunk が合わないと sample が不要に複数 chunk をまたぎ、throughput が落ちる。"
     },
     {
       "stage": "check",
-      "question": "Why is token_count stored as an HDF5 attribute and not implied from dataset shape?",
+      "question": "token_count を dataset shape から推測せず HDF5 attribute に保存するのはなぜか。",
       "options": [
-        "Attributes are pretty",
-        "The trailing chunk may be partially full; without the explicit attribute the reader walks past the real end into zero-padded tokens and the model learns to predict zero",
-        "Shapes are slow to read",
-        "Attributes are mandatory"
+        "attribute が見た目に良いから。",
+        "末尾 chunk が部分的にしか埋まらないことがあり、明示 token_count がないと zero padding まで読んでしまうから。",
+        "shape は読むのが遅いから。",
+        "attribute は必須だから。"
       ],
       "correct": 1,
-      "explanation": "The chunked layout sometimes leaves trailing slots; the attribute carries the truth."
+      "explanation": "chunked layout では末尾 slot が余る場合があり、attribute が真の終端を示す。"
     },
     {
       "stage": "check",
-      "question": "What does the writer accomplish by buffering tokens to chunk_size before each resize?",
+      "question": "writer が resize 前に chunk_size まで token を buffer する利点は何か。",
       "options": [
-        "Saves a few CPU cycles",
-        "Writes are contiguous and chunk-aligned, avoiding the fragmentation that follows one-token-at-a-time resizes",
-        "Reduces vocabulary size",
-        "Speeds up sha256"
+        "CPU cycle を少し節約する。",
+        "write が contiguous かつ chunk-aligned になり、1 token ずつ resize する fragmentation を避けられる。",
+        "vocabulary size を減らす。",
+        "sha256 を速くする。"
       ],
       "correct": 1,
-      "explanation": "Buffer-then-extend at chunk size is the only way to keep HDF5 chunks contiguous on disk."
+      "explanation": "chunk size で buffer して extend するのが disk 上の chunk を保つ基本である。"
     },
     {
       "stage": "post",
-      "question": "Why is swmr=True opened on the reader side, not on the writer side?",
+      "question": "`swmr=True` を writer 側ではなく reader 側で開くのはなぜか。",
       "options": [
-        "Random preference",
-        "Single-Writer-Multiple-Reader mode lets dataloader workers share the file safely; the writer needs no special mode because it writes one shard per process",
-        "Performance",
-        "Security"
+        "好み。",
+        "Single-Writer-Multiple-Reader mode は dataloader worker が file を安全に共有するための reader 側設定で、writer は shard ごとに単独で書くから。",
+        "性能のため。",
+        "security のため。"
       ],
       "correct": 1,
-      "explanation": "Mixing the two modes is the most common cause of 'file is locked' failures."
+      "explanation": "writer/read mode を混ぜることが file lock error の典型原因である。"
     },
     {
       "stage": "post",
-      "question": "What does the boundary token id exist to make explicit?",
+      "question": "boundary token id は何を明示するために存在するか。",
       "options": [
-        "Vocabulary size limits",
-        "Document boundaries within a packed window so the model is not silently trained on cross-document concatenation",
-        "Compression",
-        "Random data"
+        "vocabulary size limit。",
+        "packed window 内の document boundary。model が cross-document concatenation を暗黙に学習しないようにするため。",
+        "compression。",
+        "random data。"
       ],
       "correct": 1,
-      "explanation": "Without an explicit boundary the trainer learns boundaries as noise; with it the boundary becomes a usable separator."
+      "explanation": "boundary がなければ trainer は文書境界を noise として見る。明示すれば separator として使える。"
     }
   ]
 }

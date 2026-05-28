@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "What does temperature < 1.0 do to a language model's output distribution?",
+      "question": "temperature < 1.0 は language model の output distribution に何をしますか？",
       "options": [
-        "Makes the distribution more uniform (more random)",
-        "Sharpens the distribution, making the highest-probability token more likely",
-        "Removes all tokens except the top one",
-        "Has no effect on the output"
+        "分布をより uniform にする（より random）",
+        "分布を鋭くし、highest-probability token をより選ばれやすくする",
+        "top one 以外のすべての tokens を除去する",
+        "output に影響しない"
       ],
       "correct": 1,
-      "explanation": "Temperature < 1.0 divides logits by a number less than 1, which amplifies differences between logits. After softmax, the highest-probability token gets an even larger share. Temperature approaches 0 gives greedy (argmax) decoding."
+      "explanation": "Temperature < 1.0 は logits を 1 より小さい数で割るため、logits 間の差を拡大します。softmax 後、highest-probability token はさらに大きな確率を持ちます。temperature が 0 に近づくと greedy（argmax）decoding になります。"
     },
     {
       "stage": "pre",
-      "question": "What is the key difference between top-k and top-p (nucleus) sampling?",
+      "question": "top-k sampling と top-p（nucleus）sampling の主な違いは何ですか？",
       "options": [
-        "Top-k is faster than top-p",
-        "Top-k keeps a fixed number of tokens; top-p keeps a variable number based on cumulative probability",
-        "Top-p only works with temperature = 1.0",
-        "Top-k works on logits while top-p works on probabilities"
+        "Top-k は top-p より高速である",
+        "Top-k は固定数の tokens を残し、top-p は cumulative probability に基づいて可変数の tokens を残す",
+        "Top-p は temperature = 1.0 でしか動かない",
+        "Top-k は logits に対して動き、top-p は probabilities に対して動く"
       ],
       "correct": 1,
-      "explanation": "Top-k always keeps exactly k tokens regardless of the probability distribution. Top-p adaptively keeps the smallest set of tokens whose cumulative probability exceeds p. When the model is confident, top-p keeps few tokens; when uncertain, it keeps many."
+      "explanation": "Top-k は probability distribution に関係なく常に正確に k 個の tokens を残します。Top-p は cumulative probability が p を超える最小の token 集合を適応的に残します。model が確信しているとき top-p は少数の tokens を残し、不確かなときは多く残します。"
     },
     {
       "stage": "post",
-      "question": "Why can't you backpropagate through a standard sampling operation z ~ N(mu, sigma^2)?",
+      "question": "標準的な sampling operation z ~ N(mu, sigma^2) を通して backpropagate できないのはなぜですか？",
       "options": [
-        "Normal distributions don't have gradients",
-        "The sampling operation is non-deterministic and has no well-defined derivative with respect to mu and sigma",
-        "PyTorch doesn't support normal distributions",
-        "The gradient is always exactly zero"
+        "Normal distributions には gradients がないから",
+        "sampling operation は非決定的で、mu と sigma に関する well-defined derivative を持たないから",
+        "PyTorch は normal distributions をサポートしていないから",
+        "gradient が常に正確にゼロだから"
       ],
       "correct": 1,
-      "explanation": "Sampling introduces a stochastic discontinuity — you can't compute d(sample)/d(mu) for a random draw. The reparameterization trick solves this by writing z = mu + sigma * epsilon (where epsilon ~ N(0,1)), making z a deterministic, differentiable function of mu and sigma."
+      "explanation": "Sampling は stochastic discontinuity を導入するため、random draw に対して d(sample)/d(mu) を計算できません。reparameterization trick は z = mu + sigma * epsilon（epsilon ~ N(0,1)）と書き換え、z を mu と sigma の deterministic かつ differentiable な関数にすることで解決します。"
     },
     {
       "stage": "post",
-      "question": "In Metropolis-Hastings MCMC, what happens if the proposal standard deviation is set much too large?",
+      "question": "Metropolis-Hastings MCMC で proposal standard deviation を大きくしすぎると何が起きますか？",
       "options": [
-        "The chain converges faster because it takes bigger steps",
-        "Most proposals land in low-probability regions and are rejected, so the chain barely moves",
-        "The stationary distribution changes to a uniform distribution",
-        "The burn-in period becomes zero"
+        "大きな steps を取るため chain がより速く収束する",
+        "ほとんどの proposals が low-probability regions に落ちて reject され、chain がほとんど動かない",
+        "stationary distribution が uniform distribution に変わる",
+        "burn-in period がゼロになる"
       ],
       "correct": 1,
-      "explanation": "With a large proposal standard deviation, proposed points are far from the current position and likely land in low-probability regions. These are rejected, causing the chain to stay stuck at the current point. The optimal acceptance rate is about 23% for high-dimensional Gaussian proposals."
+      "explanation": "proposal standard deviation が大きいと、proposed points は現在位置から遠くなり、low-probability regions に落ちやすくなります。それらは reject され、chain は現在点に stuck します。高次元 Gaussian proposals での optimal acceptance rate は約 23% です。"
     },
     {
       "stage": "post",
-      "question": "In rejection sampling, what happens to the acceptance rate as the dimensionality of the target distribution increases?",
+      "question": "rejection sampling で、target distribution の dimensionality が増えると acceptance rate はどうなりますか？",
       "options": [
-        "It stays constant regardless of dimension",
-        "It increases because there are more dimensions to accept in",
-        "It drops exponentially because most of the proposal volume gets rejected",
-        "It approaches 50% in all cases"
+        "dimension に関係なく一定のまま",
+        "accept できる dimensions が増えるため上昇する",
+        "proposal volume の大半が reject されるため指数的に低下する",
+        "すべての場合で 50% に近づく"
       ],
       "correct": 2,
-      "explanation": "In high dimensions, the volume of the proposal distribution that overlaps with the target distribution shrinks exponentially. The bound M grows, and the acceptance rate (1/M) drops exponentially. This is the curse of dimensionality for rejection sampling."
+      "explanation": "高次元では、proposal distribution の volume のうち target distribution と重なる部分が指数的に小さくなります。bound M が大きくなり、acceptance rate（1/M）は指数的に低下します。これは rejection sampling における curse of dimensionality です。"
     }
   ]
 }

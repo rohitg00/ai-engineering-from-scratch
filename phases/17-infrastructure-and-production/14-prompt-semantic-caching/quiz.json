@@ -1,75 +1,75 @@
 {
   "lesson": "14-prompt-semantic-caching",
-  "title": "Prompt Caching and Semantic Caching Economics",
+  "title": "Prompt Caching と Semantic Caching の経済性",
   "questions": [
     {
       "stage": "pre",
-      "question": "What is the difference between L1 semantic caching and L2 prompt/prefix caching?",
+      "question": "L1 semantic caching と L2 prompt/prefix caching の違いは何ですか？",
       "options": [
-        "L1 skips the LLM entirely on embedding similarity hits; L2 reuses attention KV at the provider for repeated prefixes",
-        "L1 is provider-side and L2 is client-side",
-        "L2 stores embeddings; L1 stores attention KV",
-        "L1 and L2 are the same"
+        "L1 は embedding similarity hit 時に LLM を完全に skip し、L2 は repeated prefixes に対して provider 側で attention KV を再利用する",
+        "L1 は provider-side で L2 は client-side",
+        "L2 は embeddings を保存し、L1 は attention KV を保存する",
+        "L1 と L2 は同じ"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Which Anthropic mechanism marks blocks as cacheable for L2 prompt caching?",
+      "question": "L2 prompt caching で blocks を cacheable として mark する Anthropic の mechanism はどれですか？",
       "options": [
-        "Explicit cache_control attribute on the request blocks",
-        "A separate /caches endpoint",
-        "Filename suffixes in tool definitions",
-        "An implicit prompt-length threshold"
+        "Request blocks 上の explicit cache_control attribute",
+        "別の /caches endpoint",
+        "Tool definitions の filename suffixes",
+        "Implicit prompt-length threshold"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the parallelization anti-pattern inflate the bill?",
+      "question": "Parallelization anti-pattern はどのように bill を膨らませますか？",
       "options": [
-        "Parallel requests bypass batching",
-        "Parallelization triggers a per-request guardrail charge",
-        "All parallel requests share one cache entry automatically",
-        "N parallel requests with the same prefix arrive before the first cache write completes, so each pays a write premium and gets zero discount"
+        "Parallel requests が batching を bypass する",
+        "Parallelization が per-request guardrail charge を発生させる",
+        "すべての parallel requests が自動的に 1 つの cache entry を共有する",
+        "同じ prefix の N parallel requests が最初の cache write 完了前に到着し、それぞれが write premium を払い discount がゼロになる"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the dynamic-content anti-pattern in cacheable prefixes?",
+      "question": "Cacheable prefixes における dynamic-content anti-pattern とは何ですか？",
       "options": [
-        "Putting tool schemas in the prefix",
-        "Always streaming responses",
-        "Including content that changes every request (current time to the minute, request ID, randomized example order) inside the cacheable prefix, killing hit rate",
-        "Using too short a system prompt"
+        "Prefix に tool schemas を入れること",
+        "常に responses を stream すること",
+        "毎回変わる content（分単位の current time、request ID、randomized example order）を cacheable prefix 内に入れ、hit rate を壊すこと",
+        "System prompt が短すぎること"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How can batch + cached input stack overnight to cut cost?",
+      "question": "Overnight に batch + cached input を重ねると、どのように cost を下げられますか？",
       "options": [
-        "Batch only saves output cost",
-        "Batch APIs give 50% off; cached input adds another ~10x; combined, overnight pipelines drop to ~10% of synchronous-uncached cost",
-        "Batch is incompatible with caching",
-        "Caching disables batch eligibility"
+        "Batch は output cost だけを節約する",
+        "Batch APIs は 50% discount を与え、cached input はさらに約 10x を追加する。組み合わせると overnight pipelines は synchronous-uncached cost の約 10% まで下がる",
+        "Batch は caching と互換性がない",
+        "Caching は batch eligibility を無効化する"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "What does the lesson say about semantic cache \"95% accuracy\" claims?",
+      "question": "Semantic cache の「95% accuracy」claims について、このレッスンは何と言っていますか？",
       "options": [
-        "95% is the OpenAI default cache hit rate",
-        "95% refers to match correctness, not hit rate; reported production hit rates range from ~10% (open chat) up to ~70% (structured FAQ)",
-        "95% is a vendor-documented hit-rate baseline",
-        "95% means you should expect 95% cache hits"
+        "95% は OpenAI default cache hit rate である",
+        "95% は match correctness を指し、hit rate ではない。Reported production hit rates は約 10%（open chat）から約 70%（structured FAQ）まである",
+        "95% は vendor-documented hit-rate baseline である",
+        "95% は 95% cache hits を期待すべきという意味である"
       ],
       "correct": 1,
       "explanation": ""

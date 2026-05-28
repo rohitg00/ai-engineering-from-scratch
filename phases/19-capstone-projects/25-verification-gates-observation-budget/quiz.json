@@ -4,75 +4,75 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading the lesson: which of these is the strongest reason a harness needs a deterministic gate chain rather than a model-as-judge?",
+      "question": "lesson を読む前に: harness が model-as-judge ではなく deterministic gate chain を必要とする最も強い理由はどれですか？",
       "options": [
-        "Models are too slow to act as judges in production.",
-        "Determinism makes the deny reason auditable and the chain replayable.",
-        "A model-as-judge always produces hallucinated allow decisions.",
-        "Gate chains let the model write its own policy."
+        "model は production で judge として使うには遅すぎる。",
+        "determinism により deny reason が audit 可能になり、chain を replay できる。",
+        "model-as-judge は常に hallucinated allow decision を出す。",
+        "gate chain は model に自分の policy を書かせられる。"
       ],
       "correct": 1,
-      "explanation": "Audit trails and reproducibility are the practical wins. A judge model can also be wired in, but the structural gate needs to be deterministic so the decision can be reproduced and reviewed."
+      "explanation": "audit trail と reproducibility が実務上の利点です。judge model を組み込むこともできますが、structural gate は decision を再現し review できるよう deterministic である必要があります。"
     },
     {
       "stage": "check",
-      "question": "Why does the lesson run WhitelistGate before BudgetGate in the chain?",
+      "question": "lesson が chain 内で WhitelistGate を BudgetGate より先に走らせるのはなぜですか？",
       "options": [
-        "Whitelist denials are cheaper, so short-circuiting them avoids the expensive ledger sum.",
-        "BudgetGate cannot run until at least one tool has been called.",
-        "Whitelist must always be the last gate by convention.",
-        "Order does not matter because GateChain randomises evaluation order."
+        "Whitelist denial は安いので、short-circuit すると高価な ledger sum を避けられるから。",
+        "BudgetGate は少なくとも 1 つ tool が呼ばれるまで実行できないから。",
+        "Whitelist は convention として常に最後の gate でなければならないから。",
+        "GateChain は evaluation order を randomize するので order は関係ない。"
       ],
       "correct": 0,
-      "explanation": "Cheap denials run first. WhitelistGate is O(1) hash lookup. BudgetGate has to sum the ledger. Short-circuiting on whitelist avoids that work when the call is structurally illegal."
+      "explanation": "安い denial を先に走らせます。WhitelistGate は O(1) hash lookup です。BudgetGate は ledger を合計する必要があります。whitelist で short-circuit すれば、call が構造的に illegal なときその work を避けられます。"
     },
     {
       "stage": "check",
-      "question": "An ObservationLedger has recorded a 60-token observation from read_file. The harness then refuses a subsequent call. What does the ledger record about the refusal?",
+      "question": "ObservationLedger が read_file から 60-token observation を記録しました。その後 harness が次の call を拒否しました。ledger はその refusal について何を記録しますか？",
       "options": [
-        "A zero-token Observation row tagged refused.",
-        "Nothing. The ledger only records successful observations.",
-        "A negative-token Observation row representing the refusal cost.",
-        "The refusal is appended as a synthetic Observation with the refuser's name."
+        "refused と tag された zero-token Observation row。",
+        "何も記録しない。ledger は successful observation だけを記録する。",
+        "refusal cost を表す negative-token Observation row。",
+        "refuser 名つきの synthetic Observation として refusal を append する。"
       ],
       "correct": 1,
-      "explanation": "The ledger records observations the model has seen. A refusal produces a GateDecision, not an Observation. Refusal counts live alongside the ledger, not inside it."
+      "explanation": "ledger は model が見た observation を記録します。refusal は Observation ではなく GateDecision を生みます。refusal count は ledger の中ではなく、ledger の隣にあります。"
     },
     {
       "stage": "check",
-      "question": "RecencyGate.window is set to 3. The ledger's latest_turn is 5. A new ToolCall arrives on turn 10. What happens?",
+      "question": "RecencyGate.window が 3 です。ledger の latest_turn は 5 です。新しい ToolCall が turn 10 に届きました。何が起きますか？",
       "options": [
-        "The gate allows: the call is on the latest turn.",
-        "The gate denies: gap of 5 exceeds window of 3.",
-        "The gate allows: window applies to ledger size, not turn gap.",
-        "The gate raises an exception because the ledger is stale."
+        "gate は allow する。call は最新 turn にあるから。",
+        "gate は deny する。gap 5 が window 3 を超えるから。",
+        "gate は allow する。window は turn gap ではなく ledger size に適用されるから。",
+        "ledger が stale なので gate は exception を raise する。"
       ],
       "correct": 1,
-      "explanation": "RecencyGate compares (call.turn - ledger.latest_turn) against the window. 10 - 5 = 5, which is greater than 3, so the gate denies."
+      "explanation": "RecencyGate は (call.turn - ledger.latest_turn) を window と比較します。10 - 5 = 5 は 3 より大きいので deny します。"
     },
     {
       "stage": "post",
-      "question": "You want to add a per-call output cap (no single observation may exceed 8000 tokens). Where does this gate logically belong in the chain?",
+      "question": "per-call output cap（single observation は 8000 token を超えてはいけない）を追加したいとします。この gate は chain のどこに論理的に属しますか？",
       "options": [
-        "Before WhitelistGate, since size is the cheapest property to check.",
-        "After BudgetGate, since cumulative budget always dominates.",
-        "It cannot be a gate because the size is only known after the tool runs.",
-        "Inside the BudgetGate so the limits compose."
+        "WhitelistGate の前。size は最も安く check できる property だから。",
+        "BudgetGate の後。cumulative budget は常に支配的だから。",
+        "gate にはできない。size は tool 実行後にしか分からないから。",
+        "limit が compose されるよう BudgetGate の内部。"
       ],
       "correct": 2,
-      "explanation": "The output size is not known at gate-evaluation time. The harness applies the cap after the tool runs, by truncating the observation before the model sees it. Gates evaluate inputs, not outputs."
+      "explanation": "output size は gate evaluation 時点では分かりません。harness は tool 実行後、model が見る前に observation を truncate して cap を適用します。gate は output ではなく input を評価します。"
     },
     {
       "stage": "post",
-      "question": "A reviewer asks you to prove that the agent never fired a denied tool call during a session. Which artifact do you point them at?",
+      "question": "reviewer から、session 中に agent が denied tool call を一度も発火しなかったことを証明してほしいと言われました。どの artifact を示しますか？",
       "options": [
-        "The ObservationLedger snapshot, which only contains successful observations.",
-        "The list of ChainOutcome records, which contains every per-call decision with deny reasons.",
-        "The pytest output, which records test pass/fail.",
-        "The model's chat transcript, which contains its own self-report."
+        "successful observation だけを含む ObservationLedger snapshot。",
+        "per-call decision と deny reason をすべて含む ChainOutcome record の list。",
+        "test pass/fail を記録する pytest output。",
+        "model 自身の self-report を含む chat transcript。"
       ],
       "correct": 1,
-      "explanation": "ChainOutcome records carry per-call decisions and deny reasons. The ledger and transcript can support the claim, but the auditable artifact is the chain decisions."
+      "explanation": "ChainOutcome record は per-call decision と deny reason を保持します。ledger と transcript は claim を補助できますが、audit 可能な artifact は chain decision です。"
     }
   ]
 }

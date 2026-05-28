@@ -1,11 +1,11 @@
-"""GitHub issue-to-PR async cloud agent — dispatcher + budget + safety gates.
+"""GitHub issue-to-PR async cloud agent — dispatcher + budget + safety gates。
 
-The hard architectural primitive is the dispatcher that enforces per-repo
-budgets, scoped GitHub App credentials, and a sandbox lifecycle that never
-lets the agent force-push or escape the repo scope. This scaffold implements
-the dispatcher, budget ledger, sandbox state machine, and verification gates.
+重要な architecture primitive は dispatcher である。Dispatcher は repo ごとの
+budget、scoped GitHub App credential、agent に force-push や repo scope
+escape を許さない sandbox lifecycle を enforce する。この scaffold は
+dispatcher、budget ledger、sandbox state machine、verification gate を実装する。
 
-Run:  python main.py
+実行:  python main.py
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from enum import Enum, auto
 
 
 # ---------------------------------------------------------------------------
-# webhook -> task enqueue  --  label trigger and queue contract
+# webhook -> task enqueue  --  label trigger と queue contract
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -31,7 +31,7 @@ class Task:
 
 
 # ---------------------------------------------------------------------------
-# budget ledger  --  per-repo per-day $ and PR-count caps
+# budget ledger  --  repo ごとの daily $ と PR-count cap
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -45,11 +45,11 @@ class BudgetLedger:
     def permit(self, repo: str, estimated_cost: float) -> tuple[bool, str]:
         if estimated_cost > self.per_task_dollar_cap:
             return False, f"task estimate ${estimated_cost:.2f} > cap ${self.per_task_dollar_cap}"
-        # Reserve against the worst-case per-task spend, not the estimate. The
-        # agent loop in ``run_agent`` is allowed to run up to ``per_task_dollar_cap``
-        # before tripping ``dollar_cap``, so admitting on ``estimated`` lets a
-        # burst of cap-hitting runs overrun the daily ceiling. ``record`` still
-        # writes the actual spend so unused reservation auto-reconciles.
+        # Estimate ではなく per-task の worst-case spend に対して reserve する。
+        # ``run_agent`` の agent loop は ``dollar_cap`` に達するまで
+        # ``per_task_dollar_cap`` まで使えるため、``estimated`` だけで admit すると
+        # cap に張り付く run の burst が daily ceiling を超えうる。``record`` は
+        # actual spend を書くため、未使用 reservation は自動的に reconcile される。
         worst_case = self.per_task_dollar_cap
         if self.spent_today[repo] + worst_case > self.daily_dollar_cap:
             return False, f"daily $ cap for {repo} would be exceeded"
@@ -64,7 +64,7 @@ class BudgetLedger:
 
 
 # ---------------------------------------------------------------------------
-# GitHub App identity  --  short-lived installation token, scoped permissions
+# GitHub App identity  --  short-lived installation token と scoped permission
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -81,7 +81,7 @@ class InstallationToken:
                                 "contents": "rw", "workflows": "r"})
 
     def can(self, action: str) -> bool:
-        # hard policy: never force-push
+        # hard policy: force-push は絶対に許可しない
         if action == "force_push":
             return False
         if action.startswith("write:main"):
@@ -118,7 +118,7 @@ class SandboxRun:
 
 
 # ---------------------------------------------------------------------------
-# agent loop stub  --  uses per-turn probability weighted by difficulty
+# agent loop stub  --  difficulty で重み付けした per-turn probability を使う
 # ---------------------------------------------------------------------------
 
 def run_agent(run: SandboxRun, difficulty: float, rng: random.Random,
@@ -170,8 +170,8 @@ def run_verify(run: SandboxRun, difficulty: float, rng: random.Random) -> None:
 
 
 def open_pr(run: SandboxRun, token: InstallationToken) -> None:
-    # Explicit runtime checks -- never use `assert` for a safety gate. `python -O`
-    # strips asserts, which would let a denied or expired token still open a PR.
+    # 明示的な runtime check を使う。Safety gate に `assert` は使わない。
+    # `python -O` は assert を取り除くため、denied / expired token でも PR を開けてしまう。
     if time.time() >= token.expires_at:
         run.failure = "token_expired"
         run.state = SState.FAILED
@@ -185,7 +185,7 @@ def open_pr(run: SandboxRun, token: InstallationToken) -> None:
 
 
 # ---------------------------------------------------------------------------
-# dispatcher  --  pulls tasks, enforces budget, runs the sandbox flow
+# dispatcher  --  task を pull し、budget を enforce し、sandbox flow を実行する
 # ---------------------------------------------------------------------------
 
 def dispatch(task: Task, ledger: BudgetLedger, rng: random.Random) -> SandboxRun:
@@ -213,7 +213,7 @@ def dispatch(task: Task, ledger: BudgetLedger, rng: random.Random) -> SandboxRun
 
 
 # ---------------------------------------------------------------------------
-# demo  --  run 20 issues across 3 repos; some will hit budget cap
+# demo  --  3 repo にまたがる 20 issue を実行し、一部は budget cap に当たる
 # ---------------------------------------------------------------------------
 
 def main() -> None:
@@ -224,14 +224,14 @@ def main() -> None:
 
     for i in range(20):
         task = Task(task_id=i, repo=rng.choice(repos), issue_num=800 + i,
-                    title=f"fix NPE in module {i}")
+                    title=f"module {i} の NPE を修正")
         run = dispatch(task, ledger, rng)
         runs.append(run)
 
     opened = sum(1 for r in runs if r.pr_opened)
     failed = sum(1 for r in runs if r.state == SState.FAILED)
     print(f"=== dispatch result ({len(runs)} tasks) ===")
-    print(f"PRs opened : {opened}")
+    print(f"opened PRs : {opened}")
     print(f"failed     : {failed}")
 
     print("\nfailure reasons:")

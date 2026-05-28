@@ -1,26 +1,26 @@
-# Terminal & Shell
+# TerminalとShell
 
-> The terminal is where AI engineers live. Get comfortable here.
+> terminalはAIエンジニアが暮らす場所です。ここに慣れてください。
 
-**Type:** Learn
-**Languages:** --
-**Prerequisites:** Phase 0, Lesson 01
-**Time:** ~35 minutes
+**タイプ:** 学習
+**言語:** --
+**前提条件:** フェーズ0、レッスン01
+**時間:** 約35分
 
-## Learning Objectives
+## 学習目標
 
-- Use piping, redirects, and `grep` to filter and process training logs from the command line
-- Create persistent tmux sessions with multiple panes for concurrent training and GPU monitoring
-- Monitor system and GPU resources with `htop`, `nvtop`, and `nvidia-smi`
-- Transfer files between local and remote machines using SSH, `scp`, and `rsync`
+- pipe、redirect、`grep` を使って、command lineからtraining logをfilter・processする
+- 複数paneを持つ永続的なtmux sessionを作り、trainingとGPU monitoringを並行して行う
+- `htop`、`nvtop`、`nvidia-smi` でsystem resourceとGPU resourceを監視する
+- SSH、`scp`、`rsync` を使ってlocal machineとremote machineの間でfileを転送する
 
-## The Problem
+## 課題
 
-You will spend more time in the terminal than in any editor. Training runs, GPU monitoring, log tailing, remote SSH sessions, environment management. Every AI workflow touches the shell. If you're slow here, you're slow everywhere.
+あなたはどのエディタよりもterminalで多くの時間を過ごします。training run、GPU monitoring、log tailing、remote SSH session、environment management。すべてのAI workflowがshellに触れます。ここで遅ければ、すべてが遅くなります。
 
-This lesson covers the terminal skills that matter for AI work. No history of Unix. No deep-dive into Bash scripting. Just what you need.
+このレッスンでは、AI作業に重要なterminal skillだけを扱います。Unixの歴史は扱いません。Bash scriptingの深掘りもしません。必要なものだけです。
 
-## The Concept
+## 考え方
 
 ```mermaid
 graph TD
@@ -33,21 +33,21 @@ graph TD
     end
 ```
 
-Three things running at once. One terminal. You can detach, go home, SSH back in, and reattach. The training keeps running.
+3つのものが同時に動いています。terminalは1つです。detachして帰宅し、SSHで戻ってreattachできます。trainingは動き続けます。
 
-## Build It
+## 作ってみる
 
-### Step 1: Know your shell
+### ステップ1: 自分のshellを知る
 
-Check which shell you're running:
+実行中のshellを確認します。
 
 ```bash
 echo $SHELL
 ```
 
-Most systems use `bash` or `zsh`. Both work fine. The commands in this course work in either.
+ほとんどのsystemでは `bash` または `zsh` です。どちらでも問題ありません。このコースのcommandはどちらでも動きます。
 
-Key things to know:
+知っておくべき基本:
 
 ```bash
 # Move around
@@ -69,9 +69,9 @@ clear   # or Ctrl+L
 # Ctrl+Z
 ```
 
-### Step 2: Piping and redirects
+### ステップ2: pipeとredirect
 
-Piping connects commands together. This is how you process logs, filter output, and chain tools. You will use this constantly.
+pipeはcommand同士をつなぎます。logを処理し、outputをfilterし、toolをchainする方法です。これは頻繁に使います。
 
 ```bash
 # Count how many times "loss" appears in a log
@@ -93,19 +93,19 @@ python train.py > output.log 2> errors.log
 python train.py > train_full.log 2>&1
 ```
 
-The three redirects you need:
+必要なredirectは次の通りです。
 
-| Symbol | What it does |
+| 記号 | 動作 |
 |--------|-------------|
-| `>` | Write stdout to file (overwrite) |
-| `>>` | Append stdout to file |
-| `2>` | Write stderr to file |
-| `2>&1` | Send stderr to same place as stdout |
-| `\|` | Send stdout of one command as stdin to the next |
+| `>` | stdoutをfileへ書く（上書き） |
+| `>>` | stdoutをfileへ追記する |
+| `2>` | stderrをfileへ書く |
+| `2>&1` | stderrをstdoutと同じ場所へ送る |
+| `\|` | あるcommandのstdoutを次のcommandのstdinへ送る |
 
-### Step 3: Background processes
+### ステップ3: background process
 
-Training runs take hours. You don't want to keep your terminal open the whole time.
+training runは何時間もかかります。terminalをずっと開いておきたくはありません。
 
 ```bash
 # Run in background (output still goes to terminal)
@@ -127,19 +127,19 @@ kill %1
 kill $(pgrep -f "train.py")
 ```
 
-The difference between `&`, `nohup`, and `screen`/`tmux`:
+`&`、`nohup`、`screen`/`tmux` の違い:
 
-| Method | Survives terminal close? | Can reattach? |
+| 方法 | terminalを閉じても残るか | reattachできるか |
 |--------|-------------------------|---------------|
-| `command &` | No | No |
-| `nohup command &` | Yes | No (check log file) |
-| `screen` / `tmux` | Yes | Yes |
+| `command &` | いいえ | いいえ |
+| `nohup command &` | はい | いいえ（log fileを確認） |
+| `screen` / `tmux` | はい | はい |
 
-For anything longer than a few minutes, use tmux.
+数分を超えるものにはtmuxを使います。
 
-### Step 4: tmux
+### ステップ4: tmux
 
-tmux lets you create persistent terminal sessions with multiple panes. This is the single most useful tool for managing training runs.
+tmuxを使うと、複数paneを持つ永続terminal sessionを作成できます。training runを管理するうえで最も有用なtoolです。
 
 ```bash
 # Install
@@ -173,7 +173,7 @@ tmux ls
 tmux kill-session -t training
 ```
 
-A typical AI workflow session:
+典型的なAI workflow session:
 
 ```bash
 tmux new -s train
@@ -192,7 +192,7 @@ tail -f logs/experiment.log
 # tmux attach -t train
 ```
 
-### Step 5: Monitoring with htop and nvtop
+### ステップ5: htopとnvtopで監視する
 
 ```bash
 # System processes (better than top)
@@ -212,15 +212,15 @@ watch -n1 nvidia-smi
 nvidia-smi --query-compute-apps=pid,name,used_memory --format=csv
 ```
 
-`htop` keybindings you'll use:
-- `F6` or `>` to sort by column (sort by memory to find memory leaks)
-- `F5` to toggle tree view (see child processes)
-- `F9` to kill a process
-- `/` to search for a process name
+よく使う `htop` keybinding:
+- `F6` または `>` でcolumn sort（memory leakを探すにはmemoryでsort）
+- `F5` でtree viewを切り替える（child processを見る）
+- `F9` でprocessをkillする
+- `/` でprocess nameを検索する
 
-### Step 6: SSH for remote GPU boxes
+### ステップ6: remote GPU box用SSH
 
-When you rent a cloud GPU (Lambda, RunPod, Vast.ai), you connect via SSH.
+cloud GPU（Lambda、RunPod、Vast.ai）を借りる時はSSHで接続します。
 
 ```bash
 # Basic connection
@@ -253,15 +253,15 @@ ssh -L 8888:localhost:8888 user@gpu-box-ip
 # ssh gpu
 ```
 
-### Step 7: Useful aliases for AI work
+### ステップ7: AI作業に便利なalias
 
-Add these to your `~/.bashrc` or `~/.zshrc`:
+これを `~/.bashrc` または `~/.zshrc` に追加します。
 
 ```bash
 source phases/00-setup-and-tooling/10-terminal-and-shell/code/shell_aliases.sh
 ```
 
-Or copy the ones you want. The key aliases:
+または欲しいものだけをcopyします。重要なalias:
 
 ```bash
 # GPU status at a glance
@@ -277,11 +277,11 @@ alias ae='source .venv/bin/activate'
 alias watchloss='tail -f logs/*.log | grep --line-buffered "loss"'
 ```
 
-See `code/shell_aliases.sh` for the full set.
+完全な一覧は `code/shell_aliases.sh` を見てください。
 
-### Step 8: Common AI terminal patterns
+### ステップ8: AIでよく使うterminal pattern
 
-These come up repeatedly in practice:
+実務で繰り返し出てくるものです。
 
 ```bash
 # Run training, log everything, notify when done
@@ -311,34 +311,34 @@ env | grep -i cuda
 env | grep -i torch
 ```
 
-## Use It
+## 使ってみる
 
-Here's when each tool comes into play during this course:
+このコースの中で各toolが登場する場面:
 
-| Tool | When you use it |
+| Tool | 使う場面 |
 |------|----------------|
-| tmux | Every training run (Phases 3+) |
-| `tail -f` + `grep` | Monitoring training logs |
-| `nohup` / `&` | Quick background tasks |
-| `htop` / `nvtop` | Debugging slow training, OOM errors |
-| SSH + `rsync` | Working on cloud GPUs |
-| Piping + redirects | Processing experiment results |
-| Aliases | Saving time on repetitive commands |
+| tmux | すべてのtraining run（フェーズ3以降） |
+| `tail -f` + `grep` | training logの監視 |
+| `nohup` / `&` | 短いbackground task |
+| `htop` / `nvtop` | 遅いtrainingやOOM errorのdebug |
+| SSH + `rsync` | cloud GPU上で作業する時 |
+| Piping + redirects | experiment resultの処理 |
+| Aliases | 繰り返しcommandの時間短縮 |
 
-## Exercises
+## 演習
 
-1. Install tmux, create a session with three panes, and run `htop` in one, `watch -n1 date` in another, and a Python script in the third. Detach and reattach.
-2. Add the aliases from `code/shell_aliases.sh` to your shell config and reload with `source ~/.zshrc` (or `~/.bashrc`).
-3. Create a fake training log with `for i in $(seq 1 100); do echo "epoch $i loss: $(echo "scale=4; 1/$i" | bc)"; sleep 0.1; done > fake_train.log` and then use `grep`, `tail`, and `awk` to extract just the loss values.
-4. Set up an SSH config entry for a server you have access to (or use `localhost` to practice the syntax).
+1. tmuxをインストールし、3つのpaneを持つsessionを作り、1つで `htop`、別の1つで `watch -n1 date`、3つ目でPython scriptを実行する。detachしてからreattachする。
+2. `code/shell_aliases.sh` のaliasをshell configへ追加し、`source ~/.zshrc`（または `~/.bashrc`）で再読み込みする。
+3. `for i in $(seq 1 100); do echo "epoch $i loss: $(echo "scale=4; 1/$i" | bc)"; sleep 0.1; done > fake_train.log` でfake training logを作成し、`grep`、`tail`、`awk` を使ってloss値だけを抽出する。
+4. アクセスできるserver用のSSH config entryを設定する（または構文練習として `localhost` を使う）。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
+| 用語 | よくある言い方 | 実際の意味 |
 |------|----------------|----------------------|
-| Shell | "The terminal" | The program that interprets your commands (bash, zsh, fish) |
-| tmux | "Terminal multiplexer" | A program that lets you run multiple terminal sessions inside one window, and detach/reattach |
-| Pipe | "The bar thing" | The `\|` operator that sends one command's output as input to another |
-| PID | "Process ID" | A unique number assigned to every running process, used to monitor or kill it |
-| nohup | "No hangup" | Runs a command immune to the hangup signal, so closing the terminal won't kill it |
-| SSH | "Connecting to the server" | Secure Shell, an encrypted protocol for running commands on a remote machine |
+| Shell | 「terminal」 | commandを解釈するprogram（bash、zsh、fish） |
+| tmux | 「terminal multiplexer」 | 1つのwindow内で複数terminal sessionを動かし、detach/reattachできるprogram |
+| Pipe | 「barのやつ」 | あるcommandのoutputを別のcommandのinputへ送る `\|` operator |
+| PID | 「Process ID」 | 実行中processごとに割り当てられる一意の番号。監視やkillに使う |
+| nohup | 「No hangup」 | hangup signalの影響を受けずにcommandを実行する。terminalを閉じてもkillされない |
+| SSH | 「serverへ接続する」 | remote machine上でcommandを実行するための暗号化protocol、Secure Shell |

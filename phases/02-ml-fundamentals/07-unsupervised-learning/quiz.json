@@ -2,66 +2,66 @@
   {
     "id": "unsupervised-pre-1",
     "stage": "pre",
-    "question": "What distinguishes unsupervised learning from supervised learning?",
+    "question": "教師なし学習は教師あり学習と何が違いますか？",
     "options": [
-      "Unsupervised learning uses more data",
-      "Unsupervised learning has no labeled outputs -- the algorithm finds structure on its own",
-      "Unsupervised learning only works with text data",
-      "Unsupervised learning always produces better results"
+      "教師なし学習はより多くのデータを使う",
+      "教師なし学習にはラベル付き出力がなく、アルゴリズムが自力で構造を見つける",
+      "教師なし学習はテキストデータにしか使えない",
+      "教師なし学習は常により良い結果を出す"
     ],
     "correct": 1,
-    "explanation": "In unsupervised learning, there are no labels. The algorithm discovers patterns, groupings, or structure in the data without being told what the correct output should be."
+    "explanation": "教師なし学習にはラベルがありません。アルゴリズムは、正しい出力を教えられなくても、データ内のパターン、グループ、構造を発見します。"
   },
   {
     "id": "unsupervised-pre-2",
     "stage": "pre",
-    "question": "What does K-Means require you to specify before training?",
+    "question": "K-Means では学習前に何を指定する必要がありますか？",
     "options": [
-      "The exact cluster centers",
-      "The number of clusters K",
-      "The labels for each data point",
-      "The distance metric to use"
+      "正確なクラスタ中心",
+      "クラスタ数 K",
+      "各データ点のラベル",
+      "使用する距離尺度"
     ],
     "correct": 1,
-    "explanation": "K-Means requires the number of clusters K as input. It then iteratively assigns points to the nearest centroid and recomputes centroids until convergence."
+    "explanation": "K-Means はクラスタ数 K を入力として必要とします。その後、各点を最も近い centroid に割り当て、収束するまで centroid を再計算します。"
   },
   {
     "id": "unsupervised-post-1",
     "stage": "post",
-    "question": "K-Means fails on two interlocking half-moon shapes but DBSCAN succeeds. Why?",
+    "question": "2 つの絡み合った半月形データで K-Means は失敗し、DBSCAN は成功します。なぜですか？",
     "options": [
-      "DBSCAN uses more data than K-Means",
-      "DBSCAN finds clusters based on density, so it can discover arbitrary shapes, while K-Means assumes spherical clusters",
-      "DBSCAN always outperforms K-Means on every dataset",
-      "K-Means cannot handle 2D data"
+      "DBSCAN は K-Means より多くのデータを使うから",
+      "DBSCAN は密度に基づいてクラスタを見つけるため任意形状を発見できるが、K-Means は球状クラスタを仮定するから",
+      "DBSCAN はすべてのデータセットで常に K-Means より優れているから",
+      "K-Means は 2D データを扱えないから"
     ],
     "correct": 1,
-    "explanation": "K-Means assigns points to the nearest centroid, producing spherical (convex) clusters. DBSCAN grows clusters from dense regions, discovering any shape as long as the cluster is connected by density."
+    "explanation": "K-Means は点を最も近い centroid に割り当てるため、球状（凸）のクラスタを作ります。DBSCAN は密な領域からクラスタを広げるため、密度でつながっていれば任意の形状を発見できます。"
   },
   {
     "id": "unsupervised-post-2",
     "stage": "post",
-    "question": "What is the silhouette score measuring?",
+    "question": "silhouette score は何を測っていますか？",
     "options": [
-      "The total number of clusters found",
-      "How similar each point is to its own cluster compared to the nearest other cluster",
-      "The speed of the clustering algorithm",
-      "The percentage of outliers in the data"
+      "見つかったクラスタの総数",
+      "各点が最も近い別クラスタと比べて、自分のクラスタにどれだけ似ているか",
+      "クラスタリングアルゴリズムの速度",
+      "データ内の外れ値の割合"
     ],
     "correct": 1,
-    "explanation": "Silhouette score = (b - a) / max(a, b), where a is mean intra-cluster distance and b is mean nearest-cluster distance. It ranges from -1 (wrong cluster) to +1 (well-clustered)."
+    "explanation": "silhouette score = (b - a) / max(a, b) です。a はクラスタ内平均距離、b は最も近い別クラスタまでの平均距離です。値は -1（誤ったクラスタ）から +1（よくクラスタリングされている）までです。"
   },
   {
     "id": "unsupervised-post-3",
     "stage": "post",
-    "question": "How does a Gaussian Mixture Model differ from K-Means in its cluster assignments?",
+    "question": "Gaussian Mixture Model のクラスタ割り当ては K-Means とどう違いますか？",
     "options": [
-      "GMM uses hard assignments where each point belongs to exactly one cluster",
-      "GMM gives soft (probabilistic) assignments where each point has a probability of belonging to each cluster",
-      "GMM does not use centroids at all",
-      "GMM only works with one-dimensional data"
+      "GMM は各点が必ず 1 つのクラスタだけに属する hard assignment を使う",
+      "GMM は各点が各クラスタに属する確率を持つ soft（確率的）assignment を返す",
+      "GMM は centroid をまったく使わない",
+      "GMM は 1 次元データでしか使えない"
     ],
     "correct": 1,
-    "explanation": "K-Means assigns each point to exactly one cluster (hard). GMM computes the probability that each point belongs to each Gaussian component (soft), and can model elliptical, overlapping clusters."
+    "explanation": "K-Means は各点を必ず 1 つのクラスタに割り当てます（hard）。GMM は各点が各 Gaussian component に属する確率を計算します（soft）。そのため、楕円形や重なり合うクラスタをモデル化できます。"
   }
 ]

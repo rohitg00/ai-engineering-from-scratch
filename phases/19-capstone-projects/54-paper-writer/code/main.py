@@ -1,10 +1,10 @@
-"""LaTeX paper skeleton generator with figure injection and a mocked prose generator.
+"""figure injection と mocked prose generator を持つ LaTeX paper skeleton generator。
 
-Conceptual references:
-- ./docs/en.md (this lesson)
+概念参照:
+- ./docs/en.md (この lesson)
 - Phase 19 lessons 50-53 (earlier auto-research stages)
 
-Stdlib only. Run: python3 code/main.py
+stdlib のみ。実行: python3 code/main.py
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from typing import Callable, Iterable
 
 
 class PaperValidationError(Exception):
-    """Raised when the paper fails a structural gate before render."""
+    """render 前に paper が structural gate に失敗したときに raise されます。"""
 
 
 @dataclass
@@ -123,7 +123,7 @@ def _escape_latex(text: str) -> str:
 
 
 def render_latex(paper: Paper) -> str:
-    """Render a Paper to a full LaTeX document string."""
+    """Paper を full LaTeX document string に render します。"""
     _validate(paper)
 
     lines: list[str] = []
@@ -168,30 +168,30 @@ def render_bibtex(paper: Paper) -> str:
 
 
 class MockProseGenerator:
-    """Deterministic prose generator. Substitutes for a model in tests and demos."""
+    """決定的な prose generator。tests と demos で model の代役になります。"""
 
     def __init__(self, outlines: dict[str, str]) -> None:
         self.outlines = outlines
 
     def __call__(self, section: Section, paper: Paper) -> str:
         seed = self.outlines.get(section.id, section.title)
-        first = f"In this section we discuss {section.title.lower()}: {seed}."
+        first = f"この section では {section.title.lower()} について扱う: {seed}。"
         bits: list[str] = []
         for fid in section.figure_refs:
-            bits.append(f"Figure~\\ref{{fig:{fid}}} shows the relevant artifact.")
+            bits.append(f"Figure~\\ref{{fig:{fid}}} は関連 artifact を示す。")
         for c in section.cites:
-            bits.append(f"This builds on prior work~\\cite{{{c}}}.")
-        second = " ".join(bits) if bits else "We discuss implications below."
+            bits.append(f"これは prior work~\\cite{{{c}}} に基づく。")
+        second = " ".join(bits) if bits else "含意は以下で議論する。"
         return first + "\n\n" + second
 
 
 def read_experiment_manifest(manifests: Iterable[dict], paper_dir: str) -> list[Figure]:
-    """Convert experiment output manifests into Figure records.
+    """experiment output manifests を Figure records に変換します。
 
-    Each manifest is expected to be a dict of shape:
+    各 manifest は次の形の dict を想定します:
         {"name": str, "artifacts": [{"path": str, "caption": str}, ...]}
-    Paths in artifacts may be absolute or relative to the manifest's cwd; we
-    normalise them relative to paper_dir.
+    artifacts 内の path は absolute でも manifest の cwd からの relative でもよく、
+    paper_dir からの相対 path に正規化します。
     """
     figs: list[Figure] = []
     counter = 0
@@ -224,7 +224,7 @@ class PaperWriter:
         return paper
 
     def write(self, paper: Paper, out_dir: str) -> dict:
-        """Validate, fill prose, render, and write three files. Returns the manifest dict."""
+        """validate、prose 補完、render を行い三 file を書きます。manifest dict を返します。"""
         os.makedirs(out_dir, exist_ok=True)
         self.fill_prose(paper)
         tex = render_latex(paper)
@@ -261,46 +261,46 @@ class PaperWriter:
 
 
 def demo(out_dir: str | None = None) -> dict:
-    """Self-contained demo. Builds a small paper from two mocked experiments.
+    """self-contained demo。二つの mocked experiments から小さな paper を作ります。
 
-    Writes into a temp directory by default so the worktree stays clean.
+    worktree を汚さないよう、default では temp directory に書きます。
     """
     import tempfile as _tempfile
     if out_dir is None:
         out_dir = _tempfile.mkdtemp(prefix="paper-writer-demo-")
     experiments = [
         {"name": "loss-curve", "artifacts": [
-            {"path": "figs/loss.pdf", "caption": "Training loss across epochs"},
+            {"path": "figs/loss.pdf", "caption": "epoch ごとの training loss"},
         ]},
         {"name": "ablation", "artifacts": [
-            {"path": "figs/ablation.pdf", "caption": "Ablation over decoder width"},
+            {"path": "figs/ablation.pdf", "caption": "decoder width に関する ablation"},
         ]},
     ]
     figs = read_experiment_manifest(experiments, out_dir)
     paper = Paper(
-        title="Auto-Research Loop: Empirical Notes",
+        title="Auto-Research Loop: 実験ノート",
         authors=["Lab Bot"],
-        abstract="We describe a small experiment harness that emits LaTeX from structured outputs.",
+        abstract="structured outputs から LaTeX を出力する小さな experiment harness を説明する。",
         sections=[
-            Section(id="intro", title="Introduction", cites=["smith2020"],
+            Section(id="intro", title="導入", cites=["smith2020"],
                     figure_refs=[]),
-            Section(id="method", title="Method", cites=["jones2021"],
+            Section(id="method", title="方法", cites=["jones2021"],
                     figure_refs=[figs[0].id]),
-            Section(id="results", title="Results", cites=[],
+            Section(id="results", title="結果", cites=[],
                     figure_refs=[figs[1].id]),
         ],
         figures=figs,
         bibliography=[
             BibEntry(key="smith2020", entry_type="article",
-                     fields={"title": "On harnesses", "author": "Smith", "year": "2020"}),
+                     fields={"title": "harnesses について", "author": "Smith", "year": "2020"}),
             BibEntry(key="jones2021", entry_type="article",
-                     fields={"title": "On loops", "author": "Jones", "year": "2021"}),
+                     fields={"title": "loops について", "author": "Jones", "year": "2021"}),
         ],
     )
     prose = MockProseGenerator(outlines={
-        "intro": "we motivate the auto-research loop",
-        "method": "we describe the skeleton-first writer",
-        "results": "we present two ablations",
+        "intro": "auto-research loop の動機を述べる",
+        "method": "skeleton-first writer を説明する",
+        "results": "二つの ablation を示す",
     })
     writer = PaperWriter(prose=prose)
     return writer.write(paper, out_dir)

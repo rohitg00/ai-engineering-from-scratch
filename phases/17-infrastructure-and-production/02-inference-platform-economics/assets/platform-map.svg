@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <style>
       .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
@@ -7,74 +7,74 @@
       .api { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
     </style>
   </defs>
-  <text x="480" y="24" text-anchor="middle" class="title">Inference platform map — three segments, six vendors</text>
+  <text x="480" y="24" text-anchor="middle" class="title">推論基盤マップ — 3セグメント、6ベンダー</text>
 
   <rect x="40" y="50" width="280" height="460" class="box"/>
-  <text x="180" y="72" text-anchor="middle" class="head">custom silicon</text>
+  <text x="180" y="72" text-anchor="middle" class="head">専用シリコン</text>
   <rect x="60" y="90" width="240" height="60" class="silicon"/>
   <text x="180" y="110" text-anchor="middle" class="step">Groq (LPU)</text>
-  <text x="180" y="128" text-anchor="middle" class="small">voice agents, real-time translation</text>
-  <text x="180" y="144" text-anchor="middle" class="small">5-10x faster decode than GPU</text>
+  <text x="180" y="128" text-anchor="middle" class="small">音声エージェント、リアルタイム翻訳</text>
+  <text x="180" y="144" text-anchor="middle" class="small">GPUより5-10x 高速デコード</text>
   <rect x="60" y="160" width="240" height="60" class="silicon"/>
   <text x="180" y="180" text-anchor="middle" class="step">Cerebras (WSE)</text>
-  <text x="180" y="198" text-anchor="middle" class="small">wafer-scale engine</text>
-  <text x="180" y="214" text-anchor="middle" class="small">very large context decode</text>
+  <text x="180" y="198" text-anchor="middle" class="small">ウェハスケールエンジン</text>
+  <text x="180" y="214" text-anchor="middle" class="small">超長文脈デコード</text>
   <rect x="60" y="230" width="240" height="60" class="silicon"/>
   <text x="180" y="250" text-anchor="middle" class="step">SambaNova (RDU)</text>
-  <text x="180" y="268" text-anchor="middle" class="small">reconfigurable dataflow</text>
-  <text x="180" y="284" text-anchor="middle" class="small">enterprise regulated</text>
-  <text x="180" y="330" text-anchor="middle" class="caption">pay premium per-token</text>
-  <text x="180" y="346" text-anchor="middle" class="caption">win on latency SLAs</text>
+  <text x="180" y="268" text-anchor="middle" class="small">再構成可能データフロー</text>
+  <text x="180" y="284" text-anchor="middle" class="small">規制企業向け</text>
+  <text x="180" y="330" text-anchor="middle" class="caption">トークン単位の上乗せを払う</text>
+  <text x="180" y="346" text-anchor="middle" class="caption">レイテンシSLAで勝つ</text>
 
   <rect x="340" y="50" width="280" height="460" class="box"/>
-  <text x="480" y="72" text-anchor="middle" class="head">GPU platforms</text>
+  <text x="480" y="72" text-anchor="middle" class="head">GPU基盤</text>
   <rect x="360" y="90" width="240" height="60" class="gpu"/>
-  <text x="480" y="110" text-anchor="middle" class="step">Fireworks — latency</text>
-  <text x="480" y="128" text-anchor="middle" class="small">FireAttention, $4B valn</text>
-  <text x="480" y="144" text-anchor="middle" class="small">$1/hr GPU raise May 2026</text>
+  <text x="480" y="110" text-anchor="middle" class="step">Fireworks — レイテンシ</text>
+  <text x="480" y="128" text-anchor="middle" class="small">FireAttention, 評価額$4B</text>
+  <text x="480" y="144" text-anchor="middle" class="small">2026年5月に$1/hr GPU調達</text>
   <rect x="360" y="160" width="240" height="60" class="gpu"/>
-  <text x="480" y="180" text-anchor="middle" class="step">Together — breadth</text>
-  <text x="480" y="198" text-anchor="middle" class="small">200+ models, 50-70% under Replicate</text>
+  <text x="480" y="180" text-anchor="middle" class="step">Together — 幅広さ</text>
+  <text x="480" y="198" text-anchor="middle" class="small">200+ モデル, Replicate比50-70%安</text>
   <text x="480" y="214" text-anchor="middle" class="small">"AI Native Cloud"</text>
   <rect x="360" y="230" width="240" height="60" class="gpu"/>
-  <text x="480" y="250" text-anchor="middle" class="step">Baseten — enterprise</text>
-  <text x="480" y="268" text-anchor="middle" class="small">$5B valn Jan 2026, SOC2+HIPAA</text>
-  <text x="480" y="284" text-anchor="middle" class="small">Truss, per-min billing</text>
+  <text x="480" y="250" text-anchor="middle" class="step">Baseten — 企業向け</text>
+  <text x="480" y="268" text-anchor="middle" class="small">2026年1月 評価額$5B, SOC2+HIPAA</text>
+  <text x="480" y="284" text-anchor="middle" class="small">Truss, 分単位課金</text>
   <rect x="360" y="300" width="240" height="60" class="gpu"/>
   <text x="480" y="320" text-anchor="middle" class="step">Modal — Python DX</text>
-  <text x="480" y="338" text-anchor="middle" class="small">$1.1B valn, per-sec billing</text>
-  <text x="480" y="354" text-anchor="middle" class="small">infrastructure-as-Python</text>
+  <text x="480" y="338" text-anchor="middle" class="small">評価額$1.1B, 秒単位課金</text>
+  <text x="480" y="354" text-anchor="middle" class="small">Pythonによるインフラ</text>
   <rect x="360" y="370" width="240" height="60" class="gpu"/>
-  <text x="480" y="390" text-anchor="middle" class="step">Anyscale — Ray-native</text>
-  <text x="480" y="408" text-anchor="middle" class="small">RayTurbo inference engine</text>
-  <text x="480" y="424" text-anchor="middle" class="small">managed Ray clusters</text>
+  <text x="480" y="390" text-anchor="middle" class="step">Anyscale — Ray-ネイティブ</text>
+  <text x="480" y="408" text-anchor="middle" class="small">RayTurbo 推論エンジン</text>
+  <text x="480" y="424" text-anchor="middle" class="small">マネージドRayクラスタ</text>
 
   <rect x="640" y="50" width="280" height="460" class="box"/>
-  <text x="780" y="72" text-anchor="middle" class="head">API-first marketplaces</text>
+  <text x="780" y="72" text-anchor="middle" class="head">API優先マーケット</text>
   <rect x="660" y="90" width="240" height="60" class="api"/>
   <text x="780" y="110" text-anchor="middle" class="step">Replicate</text>
-  <text x="780" y="128" text-anchor="middle" class="small">pay-per-prediction</text>
-  <text x="780" y="144" text-anchor="middle" class="small">multimodal breadth default</text>
+  <text x="780" y="128" text-anchor="middle" class="small">予測ごと課金</text>
+  <text x="780" y="144" text-anchor="middle" class="small">マルチモーダル幅広さが標準</text>
   <rect x="660" y="160" width="240" height="60" class="api"/>
   <text x="780" y="180" text-anchor="middle" class="step">DeepInfra</text>
-  <text x="780" y="198" text-anchor="middle" class="small">aggressive per-token pricing</text>
-  <text x="780" y="214" text-anchor="middle" class="small">hobbyist and prototyping</text>
+  <text x="780" y="198" text-anchor="middle" class="small">積極的なトークン単価</text>
+  <text x="780" y="214" text-anchor="middle" class="small">趣味/プロトタイプ向け</text>
   <rect x="660" y="230" width="240" height="60" class="api"/>
   <text x="780" y="250" text-anchor="middle" class="step">OpenRouter</text>
-  <text x="780" y="268" text-anchor="middle" class="small">unified API over 100+ models</text>
-  <text x="780" y="284" text-anchor="middle" class="small">single credit for many providers</text>
+  <text x="780" y="268" text-anchor="middle" class="small">100+ モデルへの統一API</text>
+  <text x="780" y="284" text-anchor="middle" class="small">多数のプロバイダを単一クレジットで利用</text>
   <rect x="660" y="300" width="240" height="60" class="api"/>
   <text x="780" y="320" text-anchor="middle" class="step">Fal</text>
-  <text x="780" y="338" text-anchor="middle" class="small">image / video focus</text>
-  <text x="780" y="354" text-anchor="middle" class="small">serverless per-call</text>
-  <text x="780" y="420" text-anchor="middle" class="caption">time-to-first-call optimized</text>
-  <text x="780" y="436" text-anchor="middle" class="caption">cheapest for bursty and small-scale</text>
+  <text x="780" y="338" text-anchor="middle" class="small">画像/動画重視</text>
+  <text x="780" y="354" text-anchor="middle" class="small">呼び出し単位サーバレス</text>
+  <text x="780" y="420" text-anchor="middle" class="caption">初回呼び出しまでを最適化</text>
+  <text x="780" y="436" text-anchor="middle" class="caption">バースト/小規模で最安</text>
 
   <rect x="40" y="520" width="880" height="30" class="box"/>
-  <text x="480" y="538" text-anchor="middle" class="step">rule: per-minute beats per-token above ~30% sustained utilization of one GPU</text>
+  <text x="480" y="538" text-anchor="middle" class="step">ルール: 1 GPUの継続利用率が~30%超なら分単位課金がトークン単位に勝つ</text>
 </svg>

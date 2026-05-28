@@ -1,8 +1,8 @@
-"""PII scrubber with consistent tokenization + audit log — stdlib Python.
+"""consistent tokenization + audit log つき PII scrubber — 標準ライブラリのみの Python。
 
-Masks SSNs, emails, phone numbers; maps each distinct value to a stable
-placeholder so the LLM can still reason about relationships. Appends to an
-immutable audit log on every call.
+SSN、email、phone number を mask します。各 distinct value を安定した
+placeholder に map するため、LLM は relationships について推論できます。
+各 call で immutable audit log に追記します。
 """
 
 from __future__ import annotations
@@ -74,14 +74,14 @@ def audit_log_call(entry: AuditEntry) -> str:
 
 def main() -> None:
     print("=" * 80)
-    print("PII SCRUBBER + AUDIT LOG — consistent tokenization across calls")
+    print("PII SCRUBBER + AUDIT LOG — calls をまたいだ consistent tokenization")
     print("=" * 80)
     scrubber = Scrubber()
 
     prompts = [
-        "My SSN is 123-45-6789 and my email is jane.doe@example.com. Phone 415-555-0199.",
-        "Please contact 123-45-6789 regarding account jane.doe@example.com.",
-        "New user: bob@example.com, SSN 987-65-4321, phone (202) 555-0150.",
+        "私の SSN は 123-45-6789 で、email は jane.doe@example.com です。Phone 415-555-0199。",
+        "account jane.doe@example.com について 123-45-6789 に連絡してください。",
+        "New user: bob@example.com, SSN 987-65-4321, phone (202) 555-0150。",
     ]
 
     for i, raw in enumerate(prompts, 1):
@@ -96,11 +96,11 @@ def main() -> None:
         print(f"  {masked} → {placeholder}")
 
     print("\n" + "=" * 80)
-    print("AUDIT LOG — one entry per scrubbed call")
+    print("AUDIT LOG — scrubbed call ごとに 1 entry")
     print("=" * 80)
     for i, raw in enumerate(prompts, 1):
         scrubbed = scrubber.scrub(raw)
-        response = f"toy response for prompt {i}"
+        response = f"prompt {i} に対する toy response"
         entry = AuditEntry(
             timestamp=datetime.utcnow().isoformat() + "Z",
             user=f"user_{i:03}",

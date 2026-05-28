@@ -1,8 +1,8 @@
-"""Edge-inference bandwidth-bound decode simulator — stdlib Python.
+"""Edge-inference bandwidth-bound decode simulator — stdlib Python。
 
-Computes theoretical decode throughput from (weights_bytes / bandwidth_bytes_per_sec)
-for a range of edge targets. Compares to observed benchmarks. Demonstrates that
-decode is memory-bound, not compute-bound, on edge devices.
+複数の edge target について、(weights_bytes / bandwidth_bytes_per_sec) から
+theoretical decode throughput を計算します。Observed benchmarks と比較し、
+edge devices では decode が compute-bound ではなく memory-bound であることを示します。
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ def main() -> None:
     model_name = "Llama 3.1 8B Q4"
     model_gb = 4.7
     print("=" * 95)
-    print(f"EDGE DECODE CEILING — {model_name} ({model_gb:.1f} GB in HBM/DRAM)")
+    print(f"EDGE DECODE CEILING — {model_name}（HBM/DRAM 内 {model_gb:.1f} GB）")
     print("=" * 95)
     header = f"{'Target':26}  {'BW (GB/s)':>9}  {'ceiling (tok/s)':>16}  {'observed':>10}  {'efficiency':>11}  Notes"
     print(header)
@@ -59,10 +59,10 @@ def main() -> None:
         print(f"{t.name:26}  {t.bandwidth_gb_s:8.0f}   {c:15.1f}   {obs_display}{eff:>11}  {t.notes}")
 
     print()
-    print("Read: bandwidth sets the ceiling. Compute matters only when runtime is inefficient.")
+    print("Read: ceiling を決めるのは bandwidth です。Compute が重要なのは runtime が非効率な場合だけです。")
     print()
     print("=" * 95)
-    print("QUANTIZATION IMPACT — same target, different format")
+    print("QUANTIZATION IMPACT — 同じ target、異なる format")
     print("=" * 95)
     iphone_bw = 60.0
     for name, size in [("BF16", 18.8), ("INT8", 9.4), ("Q4 GGUF", 4.7), ("Q3 GGUF", 3.6)]:

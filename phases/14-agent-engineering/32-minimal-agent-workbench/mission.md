@@ -1,26 +1,26 @@
-# Mission - The Minimal Agent Workbench
+# Mission - 最小の Agent Workbench
 
 ## Goal
-Lay down the three-file minimum workbench (router, state, task board) into a fresh `workdir/` and prove a single agent turn can read state, pull a task, write to scope, and persist updated state.
+3 file の minimum workbench (router, state, task board) を fresh な `workdir/` に配置し、single agent turn が state を読み、task を pull し、scope に書き込み、更新済み state を永続化できることを証明する。
 
 ## Inputs
-- An empty `workdir/` directory next to the lesson code
-- Knowledge of the three files: `AGENTS.md`, `agent_state.json`, `task_board.json`
+- lesson code の横にある空の `workdir/` directory
+- 3 file (`AGENTS.md`, `agent_state.json`, `task_board.json`) に関する知識
 
-## Deliverables
-- `code/main.py` that creates the three files and runs one turn
-- `workdir/AGENTS.md` short router pointing at state, board, and the verification command
-- `workdir/agent_state.json` with active task id, touched files, next action
-- `workdir/task_board.json` with a small backlog and statuses
+## 成果物
+- 3 file を作成し 1 turn を実行する `code/main.py`
+- state、board、verification command を指す短い router `workdir/AGENTS.md`
+- active task id、touched files、next action を持つ `workdir/agent_state.json`
+- 小さな backlog と status を持つ `workdir/task_board.json`
 
 ## Acceptance
-- `python3 code/main.py` exits zero on first and second run
-- Second run picks up where the first left off, not from scratch
-- Diff printed by the script shows the one file the turn touched
+- `python3 code/main.py` が 1 回目と 2 回目の実行で exit zero
+- 2 回目の run がゼロからではなく 1 回目の停止地点から再開する
+- script が表示する diff に、その turn が触れた 1 file が示される
 
 ## Out of scope
-- Scope contracts, verification gates, reviewer agents. Those layer on top in later lessons.
-- Long monolithic `AGENTS.md`. The router stays short on purpose.
+- Scope contracts、verification gates、reviewer agents。これらは later lessons で上に重ねる。
+- 長い monolithic な `AGENTS.md`。router は意図的に短く保つ。
 
 ## References
 - `docs/en.md` - full lesson

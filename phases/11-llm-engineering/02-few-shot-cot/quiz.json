@@ -1,37 +1,62 @@
 [
   {
-    "question": "What is the key difference between zero-shot and few-shot prompting?",
-    "options": ["Zero-shot is faster", "Zero-shot gives only the instruction; few-shot includes example input-output demonstrations before the actual query", "Few-shot uses a different model", "Zero-shot doesn't use a system prompt"],
+    "question": "zero-shot prompting と few-shot prompting の主な違いは何ですか？",
+    "options": [
+      "Zero-shot のほうが速い",
+      "Zero-shot は指示だけを与え、few-shot は実際のクエリの前に入出力例を含める",
+      "Few-shot は別のモデルを使う",
+      "Zero-shot は system prompt を使わない"
+    ],
     "correct": 1,
-    "explanation": "Few-shot prompting includes worked examples (demonstrations) that show the model the expected pattern. This is like showing someone how to fill out a form before asking them to fill out their own.",
+    "explanation": "Few-shot prompting は、期待されるパターンをモデルに示す作業済み例 (demonstrations) を含みます。誰かに自分のフォームを書かせる前に、記入例を見せるようなものです。",
     "stage": "pre"
   },
   {
-    "question": "What does 'Chain of Thought' prompting do?",
-    "options": ["It chains multiple API calls together", "It instructs the model to show intermediate reasoning steps before giving the final answer, improving accuracy on multi-step problems", "It connects multiple models in sequence", "It generates longer responses"],
+    "question": "'Chain of Thought' prompting は何をしますか？",
+    "options": [
+      "複数の API 呼び出しを連結する",
+      "最終回答の前に中間推論ステップを示すようモデルに指示し、多段階問題の精度を改善する",
+      "複数のモデルを順につなぐ",
+      "より長い応答を生成する"
+    ],
     "correct": 1,
-    "explanation": "CoT prompting (e.g., 'Let's think step by step') gives the model 'scratch paper' to work through problems. On GSM8K math problems, this alone improved GPT-4o accuracy from 78% to 91%.",
+    "explanation": "CoT prompting (例: 'Let's think step by step') は、問題を解くための「下書き用紙」をモデルに与えます。GSM8K の数学問題では、これだけで GPT-4o の精度が 78% から 91% に改善しました。",
     "stage": "pre"
   },
   {
-    "question": "How does Tree-of-Thought differ from Chain-of-Thought?",
-    "options": ["It uses a tree data structure for storage", "It explores multiple reasoning paths in parallel and evaluates which path leads to the best answer", "It's just a longer chain of thought", "It uses a different model"],
+    "question": "Tree-of-Thought は Chain-of-Thought とどう違いますか？",
+    "options": [
+      "保存に木データ構造を使う",
+      "複数の推論経路を並行して探索し、どの経路が最良の答えにつながるか評価する",
+      "単に長い chain of thought である",
+      "別のモデルを使う"
+    ],
     "correct": 1,
-    "explanation": "CoT follows a single reasoning path. Tree-of-Thought generates multiple candidate paths, evaluates them (possibly with the LLM itself), and selects the best one. This helps on problems where the first reasoning path might be wrong.",
+    "explanation": "CoT は単一の推論経路をたどります。Tree-of-Thought は複数の候補経路を生成し、それらを (場合によっては LLM 自身で) 評価し、最良のものを選びます。最初の推論経路が間違う可能性がある問題で有効です。",
     "stage": "post"
   },
   {
-    "question": "When selecting few-shot examples, what matters most?",
-    "options": ["Using as many examples as possible", "Choosing diverse examples that cover different cases and demonstrate the exact format and reasoning pattern you want", "Using the shortest examples", "Using examples from the test set"],
+    "question": "few-shot 例を選ぶときに最も重要なことは何ですか？",
+    "options": [
+      "できるだけ多くの例を使うこと",
+      "さまざまなケースをカバーし、求める正確な形式と推論パターンを示す多様な例を選ぶこと",
+      "最も短い例を使うこと",
+      "テストセットから例を使うこと"
+    ],
     "correct": 1,
-    "explanation": "Example quality trumps quantity. 3-5 diverse, well-formatted examples that cover different edge cases teach the model the pattern better than 20 repetitive examples that waste context window tokens.",
+    "explanation": "例は量より質です。3-5 個の多様で整った例が異なるエッジケースをカバーしていれば、文脈ウィンドウを浪費する 20 個の反復的な例よりパターンをよく教えられます。",
     "stage": "post"
   },
   {
-    "question": "Why does CoT prompting improve accuracy even though the model has the same knowledge with or without it?",
-    "options": ["It activates hidden model capabilities", "Generating intermediate tokens creates a larger effective context for the final answer, allowing the model to condition on its own reasoning", "It uses more compute", "It changes the model weights"],
+    "question": "モデルの知識は CoT の有無で同じなのに、なぜ CoT prompting は精度を改善するのですか？",
+    "options": [
+      "隠れたモデル能力を活性化するから",
+      "中間トークンを生成することで最終回答のための有効な文脈が増え、モデルが自分の推論に条件付けできるから",
+      "より多くの計算を使うから",
+      "モデルの重みを変えるから"
+    ],
     "correct": 1,
-    "explanation": "Without CoT, the model must jump directly to the answer in one token. With CoT, each intermediate step is a token the model conditions on for the next step. The model essentially 'thinks out loud,' building up to the answer.",
+    "explanation": "CoT がない場合、モデルは 1 トークンで直接答えへ飛ぶ必要があります。CoT では各中間ステップが次のステップの条件となるトークンになります。モデルは本質的に「声に出して考え」、答えへ積み上げます。",
     "stage": "post"
   }
 ]

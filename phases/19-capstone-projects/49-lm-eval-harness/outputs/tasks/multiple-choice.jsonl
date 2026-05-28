@@ -1,5 +1,5 @@
-{"id": "mc-00", "prompt": "choose: A | mammal, B | reptile, C | bird", "targets": ["A"], "metric": "multiple_choice"}
-{"id": "mc-01", "prompt": "choose: A | apple, B | car, C | tree", "targets": ["A"], "metric": "multiple_choice"}
-{"id": "mc-02", "prompt": "choose: A | water, B | iron, C | wood", "targets": ["A"], "metric": "multiple_choice"}
-{"id": "mc-03", "prompt": "choose: A | square, B | triangle, C | circle", "targets": ["A"], "metric": "multiple_choice"}
-{"id": "mc-04", "prompt": "choose: A | bread, B | rock, C | leaf", "targets": ["A"], "metric": "multiple_choice"}
+{"id": "mc-00", "prompt": "選択: A | 哺乳類, B | 爬虫類, C | 鳥類", "targets": ["A"], "metric": "multiple_choice"}
+{"id": "mc-01", "prompt": "選択: A | りんご, B | 車, C | 木", "targets": ["A"], "metric": "multiple_choice"}
+{"id": "mc-02", "prompt": "選択: A | 水, B | 鉄, C | 木材", "targets": ["A"], "metric": "multiple_choice"}
+{"id": "mc-03", "prompt": "選択: A | 正方形, B | 三角形, C | 円", "targets": ["A"], "metric": "multiple_choice"}
+{"id": "mc-04", "prompt": "選択: A | パン, B | 岩, C | 葉", "targets": ["A"], "metric": "multiple_choice"}

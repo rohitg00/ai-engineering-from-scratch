@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow15" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -8,32 +8,32 @@
       .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
       .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
     </style>
   </defs>
 
-  <text x="480" y="24" text-anchor="middle" class="title">Indirect prompt injection: attacker moves second</text>
+  <text x="480" y="24" text-anchor="middle" class="title">Indirect prompt injection: attackerは後手で動く</text>
 
   <rect x="40" y="60" width="200" height="180" class="box"/>
   <text x="140" y="82" text-anchor="middle" class="head">attacker</text>
   <rect x="60" y="100" width="160" height="50" class="hot"/>
-  <text x="140" y="122" text-anchor="middle" class="step">publish payload</text>
-  <text x="140" y="140" text-anchor="middle" class="small">email, web page, ticket</text>
+  <text x="140" y="122" text-anchor="middle" class="step">payloadを公開</text>
+  <text x="140" y="140" text-anchor="middle" class="small">email、web page、ticket</text>
   <rect x="60" y="170" width="160" height="50" class="hot"/>
-  <text x="140" y="192" text-anchor="middle" class="step">contains instructions</text>
-  <text x="140" y="210" text-anchor="middle" class="small">looks benign to user</text>
+  <text x="140" y="192" text-anchor="middle" class="step">instructionsを含む</text>
+  <text x="140" y="210" text-anchor="middle" class="small">userにはbenignに見える</text>
 
   <rect x="280" y="60" width="200" height="180" class="box"/>
   <text x="380" y="82" text-anchor="middle" class="head">user</text>
   <rect x="300" y="100" width="160" height="50" class="cool"/>
-  <text x="380" y="122" text-anchor="middle" class="step">asks agent</text>
+  <text x="380" y="122" text-anchor="middle" class="step">agentに依頼</text>
   <text x="380" y="140" text-anchor="middle" class="small">benign request</text>
   <rect x="300" y="170" width="160" height="50" class="cool"/>
-  <text x="380" y="192" text-anchor="middle" class="step">no awareness</text>
+  <text x="380" y="192" text-anchor="middle" class="step">気づかない</text>
   <text x="380" y="210" text-anchor="middle" class="small">zero-click surface</text>
 
   <rect x="520" y="60" width="200" height="180" class="box"/>
@@ -42,16 +42,16 @@
   <text x="620" y="122" text-anchor="middle" class="step">retrieve + read</text>
   <text x="620" y="140" text-anchor="middle" class="small">tool output -&gt; prompt</text>
   <rect x="540" y="170" width="160" height="50" class="cold"/>
-  <text x="620" y="192" text-anchor="middle" class="step">follow instructions</text>
-  <text x="620" y="210" text-anchor="middle" class="small">execute attacker intent</text>
+  <text x="620" y="192" text-anchor="middle" class="step">instructionsに従う</text>
+  <text x="620" y="210" text-anchor="middle" class="small">attacker intentを実行</text>
 
   <rect x="760" y="60" width="160" height="180" class="box"/>
   <text x="840" y="82" text-anchor="middle" class="head">target</text>
   <rect x="780" y="100" width="120" height="50" class="hot"/>
   <text x="840" y="122" text-anchor="middle" class="step">exfil / misuse</text>
-  <text x="840" y="140" text-anchor="middle" class="small">out of scope</text>
+  <text x="840" y="140" text-anchor="middle" class="small">scope外</text>
   <rect x="780" y="170" width="120" height="50" class="hot"/>
-  <text x="840" y="192" text-anchor="middle" class="step">no breach log</text>
+  <text x="840" y="192" text-anchor="middle" class="step">breach logなし</text>
   <text x="840" y="210" text-anchor="middle" class="small">silent success</text>
 
   <path d="M 240 150 L 280 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow15)" fill="none"/>
@@ -60,12 +60,12 @@
 
   <rect x="40" y="270" width="880" height="220" class="box"/>
   <text x="480" y="295" text-anchor="middle" class="head">defense evolution 2023 -&gt; 2026</text>
-  <text x="60" y="325" class="small">2023: substring / keyword filtering on retrieved content. broken by any paraphrase.</text>
-  <text x="60" y="345" class="small">2024: perplexity, paraphrase, retokenization, and trained prompt-injection classifiers.</text>
-  <text x="60" y="365" class="small">2025 (Nasr et al. Oct 2025): adaptive attacks (gradient, RL, human) break &gt;90% of 12 published defenses.</text>
-  <text x="60" y="385" class="small">2026: information flow control. label each content source. untrusted content cannot invoke tools.</text>
-  <text x="60" y="405" class="small">real incidents: EchoLeak (CVE-2025-32711, M365 Copilot), CamoLeak (Copilot Chat), CVE-2025-53773.</text>
-  <text x="60" y="430" class="small">OWASP LLM01 (2025): prompt injection is the #1 application-layer LLM threat.</text>
+  <text x="60" y="325" class="small">2023: retrieved contentへのsubstring / keyword filtering。どんなparaphraseでも破られる。</text>
+  <text x="60" y="345" class="small">2024: perplexity、paraphrase、retokenization、trained prompt-injection classifiers。</text>
+  <text x="60" y="365" class="small">2025 (Nasr et al. Oct 2025): adaptive attacks (gradient, RL, human) が12 published defensesの&gt;90%を破る。</text>
+  <text x="60" y="385" class="small">2026: information flow control。各content sourceをlabel。untrusted contentはtoolsをinvoke不可。</text>
+  <text x="60" y="405" class="small">real incidents: EchoLeak (CVE-2025-32711, M365 Copilot)、CamoLeak (Copilot Chat)、CVE-2025-53773。</text>
+  <text x="60" y="430" class="small">OWASP LLM01 (2025): prompt injectionはapplication-layer LLM threatの#1。</text>
   <text x="60" y="450" class="small">NIST AI SPD (2024): "generative AI's greatest security flaw."</text>
-  <text x="60" y="470" class="small">field direction: containment, not prevention. code + data in same context window is the root cause.</text>
+  <text x="60" y="470" class="small">field direction: preventionではなくcontainment。code + dataが同じcontext windowにあるのが根本原因。</text>
 </svg>

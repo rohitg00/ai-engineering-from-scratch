@@ -2,66 +2,66 @@
   {
     "id": "feateng-pre-1",
     "stage": "pre",
-    "question": "Why is feature engineering often more impactful than choosing a fancier algorithm?",
+    "question": "特徴量エンジニアリングが、より凝ったアルゴリズムを選ぶより大きな影響を持つことが多いのはなぜですか？",
     "options": [
-      "Feature engineering makes the code run faster",
-      "Good features expose patterns to the model that raw data hides, making even simple models effective",
-      "Feature engineering eliminates the need for a test set",
-      "Fancy algorithms cannot process raw data"
+      "特徴量エンジニアリングによってコードの実行が速くなるから",
+      "よい特徴量は、生データでは隠れているパターンをモデルに見える形にし、単純なモデルでも有効にするから",
+      "特徴量エンジニアリングによって test set が不要になるから",
+      "凝ったアルゴリズムは生データを処理できないから"
     ],
     "correct": 1,
-    "explanation": "The representation of data matters more than the algorithm. A well-engineered feature like BMI (weight/height^2) directly exposes the relevant pattern, making even logistic regression competitive with complex ensembles."
+    "explanation": "データの表現はアルゴリズム以上に重要です。BMI (weight/height^2) のようによく設計された特徴量は、関連するパターンを直接表現するため、logistic regression でさえ複雑な ensemble と競えるようになります。"
   },
   {
     "id": "feateng-pre-2",
     "stage": "pre",
-    "question": "What is one-hot encoding?",
+    "question": "one-hot encoding とは何ですか？",
     "options": [
-      "Replacing each category with its frequency in the dataset",
-      "Creating one binary column per category, with exactly one column set to 1 per row",
-      "Converting all features to values between 0 and 1",
-      "Encoding the target variable as a probability"
+      "各カテゴリをデータセット内の頻度で置き換えること",
+      "カテゴリごとに二値列を 1 つ作り、各行でちょうど 1 列だけを 1 にすること",
+      "すべての特徴量を 0 から 1 の値に変換すること",
+      "target variable を確率として encoding すること"
     ],
     "correct": 1,
-    "explanation": "One-hot encoding creates a binary column for each unique category. For a color feature with values red/blue/green, it produces three columns: is_red, is_blue, is_green."
+    "explanation": "one-hot encoding は、一意なカテゴリごとに二値列を作ります。red/blue/green という値を持つ color 特徴量なら、is_red、is_blue、is_green の 3 列を生成します。"
   },
   {
     "id": "feateng-post-1",
     "stage": "post",
-    "question": "What is the data leakage risk with target encoding?",
+    "question": "target encoding にはどのような data leakage リスクがありますか？",
     "options": [
-      "It makes the model too slow to train",
-      "It replaces categories with the mean target value, which can leak information from the test set if not computed on training data only",
-      "It creates too many features",
-      "It only works with binary targets"
+      "モデルの学習が遅くなりすぎる",
+      "カテゴリを平均 target 値で置き換えるため、training data だけで計算しないと test set の情報が漏れる可能性がある",
+      "特徴量を作りすぎる",
+      "binary target でしか機能しない"
     ],
     "correct": 1,
-    "explanation": "Target encoding replaces each category with the mean target for that category. If computed on the full dataset (including test data), test labels leak into training features, inflating performance estimates."
+    "explanation": "target encoding は各カテゴリを、そのカテゴリの平均 target 値で置き換えます。test data を含む全データセットで計算すると、test label が training feature に漏れ、性能推定が過大になります。"
   },
   {
     "id": "feateng-post-2",
     "stage": "post",
-    "question": "TF-IDF weights a word by its inverse document frequency. What is the effect?",
+    "question": "TF-IDF は inverse document frequency によって単語を重み付けします。その効果は何ですか？",
     "options": [
-      "Common words like 'the' get high weight because they appear frequently",
-      "Rare, distinctive words get higher weight while common words get lower weight",
-      "All words get equal weight regardless of frequency",
-      "Only the most frequent word in each document is kept"
+      "'the' のような一般的な単語は頻繁に出現するため高い重みを得る",
+      "まれで識別力の高い単語は高い重みを得て、一般的な単語は低い重みになる",
+      "頻度に関係なくすべての単語が同じ重みを得る",
+      "各文書で最も頻度の高い単語だけが残る"
     ],
     "correct": 1,
-    "explanation": "IDF = log(total docs / docs containing word). Common words (appearing in many documents) get low IDF. Rare, distinctive words get high IDF, making them more influential in the representation."
+    "explanation": "IDF = log(total docs / docs containing word) です。多くの文書に現れる一般的な単語は低い IDF になります。まれで識別力の高い単語は高い IDF になり、表現内でより大きな影響を持ちます。"
   },
   {
     "id": "feateng-post-3",
     "stage": "post",
-    "question": "You have two features with correlation 0.98. Why might you remove one?",
+    "question": "相関が 0.98 の 2 つの特徴量があります。片方を削除することがあるのはなぜですか？",
     "options": [
-      "Highly correlated features always cause the model to crash",
-      "They are redundant -- both carry nearly the same information, and keeping both increases overfitting risk without adding signal",
-      "Correlated features make the data non-stationary",
-      "Correlation above 0.5 means the features are measuring different things"
+      "高く相関した特徴量は常にモデルをクラッシュさせるから",
+      "冗長だから。両方がほぼ同じ情報を持っており、両方残すとシグナルを増やさずに overfitting リスクが高まる",
+      "相関した特徴量はデータを非定常にするから",
+      "0.5 を超える相関は、特徴量が異なるものを測っていることを意味するから"
     ],
     "correct": 1,
-    "explanation": "Features with r=0.98 are nearly redundant. Keeping both adds a noisy duplicate that increases dimensionality, overfitting risk, and multicollinearity without providing new information about the target."
+    "explanation": "r=0.98 の特徴量はほぼ冗長です。両方残すと、target に関する新しい情報を提供せずに、次元数、overfitting リスク、多重共線性を増やすノイズの多い重複を追加することになります。"
   }
 ]

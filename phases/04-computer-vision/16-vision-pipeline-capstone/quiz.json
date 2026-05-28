@@ -2,38 +2,38 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Why do production vision pipelines use Pydantic models (or equivalent) at every stage boundary?",
-      "options": ["Pydantic is faster than dict access", "Typed schemas catch interface mismatches at the boundary; a detector returning (cx, cy, w, h) when the downstream expects (x1, y1, x2, y2) fails loudly with a validation error instead of silently producing empty crops", "Pydantic is required by FastAPI", "It helps with GPU allocation"],
+      "question": "本番のvision pipelineが各stage boundaryでPydantic model（または同等物）を使うのはなぜですか？",
+      "options": ["Pydanticはdict accessより速いから", "typed schemaはboundaryでinterface mismatchを捕捉する。downstreamが(x1, y1, x2, y2)を期待しているのにdetectorが(cx, cy, w, h)を返すと、空cropを黙って生成するのではなくvalidation errorで明確に失敗する", "PydanticはFastAPIで必須だから", "GPU allocationに役立つから"],
       "correct": 1,
-      "explanation": "Silent interface bugs are the defining pain of ML pipelines. Every boundary has a coordinate system, a channel order, a value range, and a shape. Validating at the boundary with Pydantic turns every mismatch into an immediate error. The cost is a few microseconds; the savings are hours of debugging."
+      "explanation": "ML pipelineで最もつらいのはsilent interface bugです。各boundaryにはcoordinate system、channel order、value range、shapeがあります。Pydanticでboundaryをvalidateすると、すべてのmismatchが即座にerrorになります。costは数microsecondsで、debug時間を何時間も節約できます。"
     },
     {
       "stage": "pre",
-      "question": "On a CPU-only vision pipeline, which stage is most often the biggest latency block?",
-      "options": ["The detector's final NMS", "Image preprocessing (JPEG decode, colour conversion, resize); it is CPU-bound and often dominates when no GPU is involved or when the GPU model is small", "Writing the JSON response", "Reading the HTTP request body"],
+      "question": "CPU-onlyのvision pipelineで、最も大きなlatency blockになりやすいstageはどれですか？",
+      "options": ["detectorの最後のNMS", "Image preprocessing（JPEG decode、colour conversion、resize）。CPU-boundで、GPUがない場合やGPU modelが小さい場合に支配的になりやすい", "JSON responseの書き込み", "HTTP request bodyの読み取り"],
       "correct": 1,
-      "explanation": "On CPU, preprocessing is frequently the biggest single cost. JPEG decode can take milliseconds, colour conversion more, resizing to model input another chunk. The rule is simple: profile before optimising. On GPU the detector typically dominates, but do not assume that on CPU."
+      "explanation": "CPUではpreprocessingが最大の単一costになることがよくあります。JPEG decodeに数ミリ秒、colour conversionにさらに時間、model inputへのresizeにも時間がかかります。ルールは単純で、最適化前にprofileすることです。GPUでは通常detectorが支配的ですが、CPUではそう決めつけないでください。"
     },
     {
       "stage": "post",
-      "question": "The pipeline classifier crashes when a detection has box size 3x4 pixels. What is the correct fix?",
-      "options": ["Add a global try/except and return empty classifications", "Set a min_crop threshold (e.g. 16 or 32 pixels) and skip classification for detections smaller than that; log the skip and include the detection in the response without a classification field", "Retrain the classifier on smaller images", "Increase batch size"],
+      "question": "box sizeが3x4 pixelのdetectionでpipeline classifierがcrashします。正しい修正は何ですか？",
+      "options": ["global try/exceptを追加してempty classificationsを返す", "min_crop threshold（例: 16または32 pixels）を設定し、それより小さいdetectionではclassificationをskipする。skipをlogし、classification fieldなしでdetectionをresponseに含める", "より小さい画像でclassifierを再学習する", "batch sizeを増やす"],
       "correct": 1,
-      "explanation": "Tiny crops are a legitimate failure mode: the classifier was trained on 224x224 inputs and cannot reliably classify 3-pixel patches. A threshold (min_crop) skips those, preserves the detection, and produces a complete, honest response. Generic try/except hides the condition; returning no classification at all hides real failures; the right move is a named, logged skip."
+      "explanation": "tiny cropは正当なfailure modeです。classifierは224x224入力で学習されており、3-pixel patchを信頼して分類できません。threshold（min_crop）でそれらをskipすれば、detectionは保持され、完全で正直なresponseを生成できます。generic try/exceptは状態を隠します。classificationを全部返さないのも実際のfailureを隠します。正しい対応は、名前付きでlogされるskipです。"
     },
     {
       "stage": "post",
-      "question": "You add batching to the classifier (wait up to 10 ms, batch all pending crops, one GPU forward). What is the expected effect?",
-      "options": ["Latency strictly decreases", "Throughput increases significantly, per-request latency increases by up to the batching window (~10ms) plus a smaller amount from larger tensor ops; the right answer depends on whether the service is throughput-bound or latency-bound", "Throughput decreases because of the wait", "No effect"],
+      "question": "classifierにbatchingを追加しました（最大10 ms待ち、pending cropsをまとめて1回のGPU forward）。期待される効果は何ですか？",
+      "options": ["latencyは必ず下がる", "throughputは大きく上がり、requestごとのlatencyはbatching window（約10ms）分と、大きなtensor opによる小さな増分だけ増える。正解はserviceがthroughput-boundかlatency-boundかに依存する", "待つためthroughputは下がる", "効果はない"],
       "correct": 1,
-      "explanation": "Batching is a throughput-latency trade. Each request waits up to the window, which adds latency. The batched forward pass is more efficient per image, so throughput scales with batch size. Use batching when QPS is high and individual latency has slack; avoid it when latency SLA is under 50ms."
+      "explanation": "batchingはthroughput-latency tradeoffです。各requestはwindowの分だけ待つためlatencyが増えます。一方、batched forward passは画像1枚あたりでは効率が高く、throughputはbatch sizeとともに伸びます。QPSが高く個別latencyに余裕があるときに使い、latency SLAが50ms未満なら避けます。"
     },
     {
       "stage": "post",
-      "question": "Your pipeline response is a 500 error when a user uploads a corrupted JPEG. How should you fix it?",
-      "options": ["Ignore it; the user will retry", "Catch image-decode failures early in preprocessing, return a 400 with a specific error code like 'image_decode_failed' so the client can retry with a different file instead of a 500 that implies server error", "Always return 200 with an empty result", "Move decoding to the classifier"],
+      "question": "userが壊れたJPEGをuploadするとpipeline responseが500 errorになります。どう修正すべきですか？",
+      "options": ["無視する。userがretryする", "preprocessingの早い段階でimage-decode failureをcatchし、'image_decode_failed' のような具体的error code付きの400を返す。server errorを示す500ではなく、clientが別ファイルでretryできるようにする", "常にempty resultの200を返す", "decodeをclassifierへ移す"],
       "correct": 1,
-      "explanation": "A 500 from corrupt user input is an API contract bug. Bad inputs should return 4xx so the client knows it is their problem; 5xx responses signal a server problem and trigger the client's retry logic with the same bad input, amplifying load. Named failure codes (image_decode_failed, image_too_large, unsupported_content_type) let clients react correctly."
+      "explanation": "壊れたuser inputで500を返すのはAPI contract bugです。不正な入力は4xxを返すべきです。clientは自分側の問題だと分かります。5xx responseはserver問題を示し、clientのretry logicが同じ悪いinputで再試行して負荷を増幅します。named failure code（image_decode_failed、image_too_large、unsupported_content_type）によりclientは正しく反応できます。"
     }
   ]
 }

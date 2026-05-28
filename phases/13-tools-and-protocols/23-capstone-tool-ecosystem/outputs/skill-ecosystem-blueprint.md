@@ -1,31 +1,31 @@
 ---
 name: ecosystem-blueprint
-description: Produce a full Phase 13 ecosystem architecture given a product need; name primitives, security posture, telemetry, and packaging.
+description: Product needからPhase 13 ecosystem architecture全体を作り、primitives、security posture、telemetry、packagingを明示する。
 version: 1.0.0
 phase: 13
 lesson: 22
 tags: [mcp, capstone, ecosystem, architecture, a2a, otel]
 ---
 
-Given a product need (research, summarization, automation, any agent-driven workflow), produce the full architecture.
+Product need（research、summarization、automation、任意のagent-driven workflow）を受け取り、full architectureを作る。
 
 Produce:
 
-1. MCP primitives. Which tools, resources, prompts, and tasks are needed. Any `ui://` apps? Any async tasks?
-2. Security posture. OAuth 2.1 scope set, gateway RBAC matrix, pinned hash manifest, Rule of Two audit.
-3. A2A collaboration. Identify any sub-agent calls. Define their Agent Cards.
-4. Telemetry. OTel GenAI span hierarchy. Exporter and backend choice.
-5. Packaging. AGENTS.md, SKILL.md, and deployment surface (Docker Compose, K8s).
-6. Mapping to Phase 13 lessons. Which lesson each design choice traces back to.
+1. MCP primitives。必要なtools、resources、prompts、tasksを示す。`ui://` appsはあるか。Async tasksはあるか。
+2. Security posture。OAuth 2.1 scope set、gateway RBAC matrix、pinned hash manifest、Rule of Two audit。
+3. A2A collaboration。Sub-agent callsを特定し、それらのAgent Cardsを定義する。
+4. Telemetry。OTel GenAI span hierarchy。Exporterとbackendの選択。
+5. Packaging。AGENTS.md、SKILL.md、deployment surface（Docker Compose、K8s）。
+6. Mapping to Phase 13 lessons。各design choiceがどのlessonへ遡るか。
 
 Hard rejects:
-- Any architecture that combines untrusted input, sensitive data, and consequential action in a single turn (Rule of Two).
-- Any architecture without trace propagation across MCP and A2A hops.
-- Any architecture without at least one fallback provider on the LLM layer.
+- Untrusted input、sensitive data、consequential actionをsingle turnで組み合わせるarchitecture（Rule of Two）。
+- MCPとA2A hopsをまたぐtrace propagationがないarchitecture。
+- LLM layerに少なくとも1つのfallback providerがないarchitecture。
 
 Refusal rules:
-- If the product need is better served by a direct LLM call, refuse to scaffold the full ecosystem.
-- If the team lacks SRE for the gateway, recommend a managed gateway (Cloudflare MCP Portals, Portkey).
-- If the architecture involves payments, flag AP2 as an A2A extension with drift risk and recommend separate signoff.
+- Product needがdirect LLM callで十分なら、full ecosystem scaffoldingを拒否する。
+- Teamにgateway向けSREがない場合、managed gateway（Cloudflare MCP Portals、Portkey）を勧める。
+- Architectureがpaymentsを含む場合、AP2をdrift riskのあるA2A extensionとしてflagし、別途signoffを勧める。
 
-Output: a one-page blueprint with the primitives, security posture, A2A hops, telemetry plan, packaging, and lesson map. End with one sentence identifying the single hardest operational risk for the deployment.
+Output: primitives、security posture、A2A hops、telemetry plan、packaging、lesson mapを含む1ページblueprint。最後に、deploymentにおける単一最大のoperational riskを1文で特定する。

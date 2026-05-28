@@ -1,12 +1,10 @@
-"""Tokenized dataset with sliding window for next-token training.
+"""next-token training 用の sliding window tokenized dataset。
 
-Wraps a tokenizer-encoded id stream in a PyTorch Dataset and DataLoader so a
-training loop can pull (B, T) input and (B, T) target batches.
+tokenizer で encode 済みの id stream を PyTorch Dataset と DataLoader で包み、training loop が (B, T) input と (B, T) target batch を取り出せるようにします。
 
-The tokenizer is the small byte-level BPE from lesson 30, inlined here so
-this lesson runs without inter-lesson imports.
+tokenizer は lesson 30 の小さな byte-level BPE をインライン化したものなので、lesson 間 import なしで動きます。
 
-Run: python3 code/main.py
+Run: Python3 code/main.py
 """
 
 from __future__ import annotations
@@ -27,7 +25,7 @@ WORD_SPLIT_RE = re.compile(r"\S+|\s+")
 
 @dataclass
 class MiniBPE:
-    """Inline byte-level BPE tokenizer (same contract as lesson 30)."""
+    """インライン byte-level BPE tokenizer（lesson 30 と同じ契約）。"""
 
     vocab: dict[int, bytes] = field(default_factory=dict)
     inv_vocab: dict[bytes, int] = field(default_factory=dict)
@@ -149,10 +147,10 @@ def encode_text(tokenizer: MiniBPE, text: str) -> list[int]:
 
 
 class SlidingWindowDataset(Dataset):
-    """PyTorch Dataset over a flat id stream.
+    """平坦な id stream 上の PyTorch Dataset。
 
-    Each example is a window of size T+1. __getitem__ returns
-    (input_ids, target_ids) where target = input shifted left by one.
+    各例は size T+1 の window です。__getitem__ は target = input を1つ左へずらした
+    (input_ids, target_ids) を返します。
     """
 
     def __init__(
@@ -202,7 +200,7 @@ def make_dataloader(
     epoch: int = 0,
     drop_last: bool = True,
 ) -> DataLoader:
-    """Build a DataLoader with a deterministic per-epoch shuffle."""
+    """epoch ごとに deterministic shuffle する DataLoader を作ります。"""
     generator = torch.Generator()
     generator.manual_seed(base_seed + epoch)
     return DataLoader(
@@ -221,24 +219,24 @@ def _encode_corpus_to_ids(tokenizer: MiniBPE, corpus: str, target_vocab: int) ->
 
 
 DEMO_CORPUS = """\
-the quick brown fox jumps over the lazy dog
-a journey of a thousand miles begins with a single step
-the only way to do great work is to love what you do
-the best time to plant a tree was twenty years ago
-the second best time is now
-practice is the bridge between intention and skill
-small daily actions compound into large outcomes
-read more than you write write more than you talk
-the map is not the territory and the menu is not the meal
-what gets measured gets managed if the measurement is honest
-the quick brown fox runs across the meadow at dawn
-a small step today is better than a perfect plan tomorrow
-courage is not the absence of fear it is action despite fear
-the lazy dog sleeps under the old oak tree
-every expert was once a beginner who refused to quit
-focus is saying no to a hundred good ideas
-the river that you cannot cross today will be easier tomorrow
-practice the basics until the basics become invisible
+素早い茶色の狐が怠けた犬を飛び越える
+千里の道も一歩から始まる
+よい仕事をする唯一の方法はその仕事を好きになることだ
+木を植える最良の時期は二十年前だった
+次に良い時期は今である
+練習は意図と技能をつなぐ橋である
+小さな日々の行動は大きな成果へ積み上がる
+書くより多く読み話すより多く書く
+地図は領土ではなくメニューは食事ではない
+測るものは管理されるが測定は誠実でなければならない
+素早い茶色の狐が夜明けの草地を走る
+今日の小さな一歩は明日の完璧な計画よりよい
+勇気とは恐れがないことではなく恐れても行動することだ
+怠けた犬は古い樫の木の下で眠る
+どの専門家もかつては諦めなかった初心者だった
+集中とは百のよい案にノーと言うことだ
+今日渡れない川も明日は渡りやすくなる
+基礎が見えなくなるまで基礎を練習する
 """ * 8
 
 
@@ -257,54 +255,54 @@ def main() -> int:
     tokenizer = MiniBPE()
     ids = _encode_corpus_to_ids(tokenizer, DEMO_CORPUS, target_vocab)
 
-    _print_section("Corpus and tokenizer")
-    print(f"corpus chars      : {len(DEMO_CORPUS)}")
-    print(f"vocab size        : {tokenizer.vocab_size}")
-    print(f"total ids         : {len(ids)}")
+    _print_section("コーパスと tokenizer")
+    print(f"コーパス文字数      : {len(DEMO_CORPUS)}")
+    print(f"語彙サイズ          : {tokenizer.vocab_size}")
+    print(f"総 id 数            : {len(ids)}")
 
     dataset = SlidingWindowDataset(ids, context_length=context_length, stride=stride)
-    print(f"context length    : {context_length}")
-    print(f"stride            : {stride}")
-    print(f"num windows       : {len(dataset)}")
+    print(f"context length     : {context_length}")
+    print(f"stride             : {stride}")
+    print(f"window 数          : {len(dataset)}")
     expected = SlidingWindowDataset.count_windows(len(ids), context_length, stride)
-    assert len(dataset) == expected, "len(dataset) must equal count_windows"
+    assert len(dataset) == expected, "len(dataset) は count_windows と一致する必要があります"
 
-    _print_section("Inspect one example")
+    _print_section("1例を確認")
     input_ids, target_ids = dataset[0]
-    print(f"input shape       : {tuple(input_ids.shape)}")
-    print(f"target shape      : {tuple(target_ids.shape)}")
-    assert input_ids.shape == target_ids.shape, "shapes must match"
-    assert torch.equal(input_ids[1:], target_ids[:-1]), "target must be input shifted by one"
+    print(f"input shape        : {tuple(input_ids.shape)}")
+    print(f"target shape       : {tuple(target_ids.shape)}")
+    assert input_ids.shape == target_ids.shape, "shape が一致する必要があります"
+    assert torch.equal(input_ids[1:], target_ids[:-1]), "target は input を1つずらしたものです"
 
-    _print_section("Pull a batch from the DataLoader")
+    _print_section("DataLoader から batch を取り出す")
     loader = make_dataloader(dataset, batch_size=batch_size, base_seed=base_seed, epoch=0)
     inputs, targets = next(iter(loader))
-    print(f"inputs            : {tuple(inputs.shape)}")
-    print(f"targets           : {tuple(targets.shape)}")
-    print(f"first input row   : {inputs[0].tolist()}")
-    print(f"first target row  : {targets[0].tolist()}")
+    print(f"inputs             : {tuple(inputs.shape)}")
+    print(f"targets            : {tuple(targets.shape)}")
+    print(f"最初の input row    : {inputs[0].tolist()}")
+    print(f"最初の target row   : {targets[0].tolist()}")
     assert inputs.shape == (batch_size, context_length)
     assert targets.shape == (batch_size, context_length)
 
-    _print_section("Shuffle is seeded")
+    _print_section("shuffle は seed 済み")
     loader_a = make_dataloader(dataset, batch_size=batch_size, base_seed=base_seed, epoch=0)
     loader_b = make_dataloader(dataset, batch_size=batch_size, base_seed=base_seed, epoch=0)
     batch_a = next(iter(loader_a))
     batch_b = next(iter(loader_b))
-    assert torch.equal(batch_a[0], batch_b[0]), "same seed must produce same first batch"
-    print("same seed -> same first batch: OK")
+    assert torch.equal(batch_a[0], batch_b[0]), "同じ seed は同じ first batch を生成する必要があります"
+    print("同じ seed -> 同じ first batch: OK")
 
     loader_c = make_dataloader(dataset, batch_size=batch_size, base_seed=base_seed, epoch=1)
     batch_c = next(iter(loader_c))
-    assert not torch.equal(batch_a[0], batch_c[0]), "different epoch must change order"
-    print("different epoch -> different order: OK")
+    assert not torch.equal(batch_a[0], batch_c[0]), "異なる epoch では順序が変わる必要があります"
+    print("異なる epoch -> 異なる順序: OK")
 
-    _print_section("Stride trade-off")
+    _print_section("stride の trade-off")
     for s in (4, 8, 16):
         ds = SlidingWindowDataset(ids, context_length=context_length, stride=s)
         print(f"  stride {s:>2}: {len(ds):>4} windows")
 
-    print("\nDemo OK.")
+    print("\nデモ OK。")
     return 0
 
 

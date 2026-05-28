@@ -1,6 +1,6 @@
 ---
 name: skill-fine-tuning-guide
-description: Decision tree for when and how to fine-tune LLMs with LoRA and QLoRA
+description: LoRAとQLoRAでLLMをいつ、どのようにfine-tuneするかの意思決定ツリー
 version: 1.0.0
 phase: 11
 lesson: 8
@@ -9,7 +9,7 @@ tags: [fine-tuning, lora, qlora, peft, llm-engineering]
 
 # Fine-Tuning Decision Guide
 
-Before fine-tuning, try these in order:
+fine-tuningの前に、この順で試します。
 
 ```
 1. Prompt engineering (minutes, $0)
@@ -19,79 +19,82 @@ Before fine-tuning, try these in order:
 5. Full fine-tuning (weeks, $100-10,000 per run)
 ```
 
-Only move to the next step if the previous one is measurably insufficient.
+前の手段が測定上不十分な場合だけ次へ進みます。
 
-## When to fine-tune
+## fine-tuneする場面
 
-- Model needs a consistent output style or format that prompting cannot achieve
-- You're distilling a larger model (GPT-4 quality from an 8B model)
-- Latency matters and few-shot examples add too many tokens
-- You need the model to reliably follow a complex reasoning pattern
-- You have 1,000+ high-quality examples of the desired input-output behavior
+- promptingだけでは実現できない一貫した出力スタイルや形式が必要
+- 大きなモデルを蒸留したい（8B modelでGPT-4品質など）
+- レイテンシが重要で、few-shot examplesの追加トークンを許容できない
+- 複雑な推論パターンを確実に守らせたい
+- 望ましいinput-output behaviorの高品質例が1,000件以上ある
 
-## When NOT to fine-tune
+## fine-tuneしない場面
 
-- The model already does what you want with the right prompt
-- You need the model to know facts (use RAG instead)
-- You have fewer than 500 training examples (likely to overfit)
-- The task changes frequently (retraining is expensive)
-- You need to audit which data influenced a specific output (fine-tuning is a black box)
+- 適切なpromptでモデルがすでに望むことをする
+- モデルに事実を知ってほしい（代わりにRAGを使う）
+- 学習例が500件未満（過学習しやすい）
+- タスクが頻繁に変わる（再学習は高い）
+- 特定出力にどのデータが影響したか監査する必要がある（fine-tuningはブラックボックス）
 
-## Method selection
+## 手法選択
 
 | GPU VRAM | 7B model | 13B model | 70B model |
 |----------|----------|-----------|-----------|
-| 16GB (T4) | QLoRA | Not feasible | Not feasible |
-| 24GB (3090/4090) | QLoRA or LoRA | QLoRA | Not feasible |
+| 16GB (T4) | QLoRA | 不可 | 不可 |
+| 24GB (3090/4090) | QLoRA or LoRA | QLoRA | 不可 |
 | 40GB (A100) | LoRA or Full | QLoRA or LoRA | QLoRA |
 | 80GB (A100/H100) | Full | LoRA or Full | QLoRA or LoRA |
 
-## LoRA configuration checklist
+## LoRA設定チェックリスト
 
-1. Start with r=16, alpha=32 (safe default for most tasks)
-2. Target q_proj and v_proj first (minimum viable LoRA)
-3. Use learning rate 2e-4 for QLoRA, 5e-5 for LoRA fp16
-4. Set lora_dropout=0.05
-5. Train for 1-3 epochs (more risks overfitting)
-6. Evaluate every 100 steps on a held-out set
-7. Save checkpoints and pick the best by eval loss
+1. r=16, alpha=32から始める（多くのタスクで安全なデフォルト）
+2. まずq_projとv_projを対象にする（最小構成のLoRA）
+3. QLoRAではlearning rate 2e-4、LoRA fp16では5e-5を使う
+4. lora_dropout=0.05を設定する
+5. 1-3 epochs学習する（多いと過学習リスク）
+6. held-out setで100 stepsごとに評価する
+7. checkpointsを保存し、eval lossで最良を選ぶ
 
-## Common mistakes
+## よくある間違い
 
-- Training for too many epochs (overfitting after epoch 2-3 on small datasets)
-- Using the same learning rate as full fine-tuning (LoRA needs higher LR)
-- Forgetting to set the pad token (causes NaN losses with Llama models)
-- Not freezing the base model (defeats the purpose of LoRA)
-- Evaluating only on training data (always hold out 10-20% for eval)
-- Skipping the prompt engineering baseline (fine-tuning a problem that prompting already solves)
+- epochを多くしすぎる（小規模データでは2-3 epoch後に過学習）
+- full fine-tuningと同じlearning rateを使う（LoRAにはより高いLRが必要）
+- pad tokenを設定し忘れる（LlamaモデルでNaN lossesの原因）
+- base modelをfreezeしない（LoRAの目的を失う）
+- training dataだけで評価する（必ず10-20%をeval用にhold outする）
+- prompt engineering baselineを飛ばす（promptで解ける問題をfine-tuneしてしまう）
 
-## Quality verification
+## 品質検証
 
-After training, compare on 200+ held-out examples:
-1. Base model with best prompt (baseline)
-2. Base model with LoRA adapter (your fine-tuned model)
-3. GPT-4 or Claude with same prompt (ceiling)
+学習後、200件以上のheld-out examplesで比較します。
 
-If the LoRA model does not beat the prompted baseline, your training data or configuration needs work, not more compute.
+1. 最良prompt付きBase model（baseline）
+2. LoRA adapter付きBase model（fine-tuned model）
+3. 同じpromptのGPT-4またはClaude（ceiling）
 
-## Adapter management
+LoRA modelがprompted baselineを上回らないなら、必要なのは追加computeではなく、学習データまたは設定の見直しです。
 
-- Keep adapters separate for multi-task serving (swap adapters per request)
-- Merge adapters into base weights for single-task deployment
-- Store adapters on Hugging Face Hub (10-100MB, easy to version and share)
-- Test merged model outputs match unmerged outputs before deploying
-- Use TIES-Merging or DARE to combine multiple adapters into one
+## Adapter管理
 
-## Debugging training
+- multi-task servingではadapterを分けて保持する（リクエストごとにswap）
+- single-task deploymentではadapterをbase weightsにmergeする
+- adapterをHugging Face Hubに保存する（10-100MBでversion/shareしやすい）
+- デプロイ前にmerged modelの出力がunmerged outputと一致することをテストする
+- 複数adapterを1つに統合するにはTIES-MergingまたはDAREを使う
 
-If loss does not decrease:
-1. Check learning rate (too low for LoRA, try 2e-4)
-2. Verify LoRA layers are actually receiving gradients
-3. Confirm base model weights are frozen
-4. Check data formatting (tokenizer must match model's expected format)
+## 学習デバッグ
 
-If loss decreases but eval quality is bad:
-1. Training data quality issue (garbage in, garbage out)
-2. Overfitting (reduce epochs, increase dropout, add more data)
-3. Wrong target modules (add MLP layers for complex tasks)
-4. Rank too low (try r=32 or r=64)
+lossが下がらない場合:
+
+1. learning rateを確認する（LoRAには低すぎる可能性。2e-4を試す）
+2. LoRA layersが実際にgradientを受けているか確認する
+3. base model weightsがfreezeされていることを確認する
+4. data formattingを確認する（tokenizerはモデル期待形式と一致している必要がある）
+
+lossは下がるがeval品質が悪い場合:
+
+1. 学習データ品質の問題（garbage in, garbage out）
+2. 過学習（epochsを減らし、dropoutを増やし、データを追加する）
+3. target modulesが不適切（複雑タスクではMLP layersを追加する）
+4. rankが低すぎる（r=32またはr=64を試す）

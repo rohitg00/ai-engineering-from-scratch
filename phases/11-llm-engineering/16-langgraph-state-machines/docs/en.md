@@ -1,68 +1,68 @@
-# LangGraph — State Machines for Agents
+# LangGraph — Agents のための State Machines
 
-> A ReAct loop written by hand is a `while True`. A ReAct loop written in LangGraph is a graph you can checkpoint, interrupt, branch, and time-travel through. The agent hasn't changed. The harness around it has.
+> 手書きの ReAct loop は `while True` です。LangGraph で書いた ReAct loop は、checkpoint でき、interrupt でき、branch でき、time-travel できる graph です。agent 自体は変わっていません。変わったのは、それを包む harness です。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 14 (Model Context Protocol)
-**Time:** ~75 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 11 · 09 (Function Calling), Phase 11 · 14 (Model Context Protocol)
+**所要時間:** 約75分
 
-## The Problem
+## 問題
 
-You ship a function-calling agent. It works for three turns, then something goes wrong: the model tries a tool that returns 500, the user changes their mind mid-task, or the agent decides to refund an order without a human signing off. The `while True:` loop has no hooks. You can't pause it, you can't rewind it, and you can't branch off into "what if the model had picked the other tool." The moment you ship this past a demo, the agent becomes a black box that either worked or didn't.
+function-calling agent を ship したとします。3 turns は動きます。その後、何かが壊れます。model が 500 を返す tool を試す、user が task の途中で気を変える、または agent が human sign-off なしに order を refund しようとする。`while True:` loop には hook がありません。pause できず、rewind できず、「もし model が別の tool を選んでいたら」を branch して試すこともできません。demo を超えて ship した瞬間、agent は「動いたか、動かなかったか」しかわからない black box になります。
 
-The next step is obvious once you see it. The agent is already a state machine — system prompt plus message history plus pending tool calls plus the next action. Make the state machine explicit: nodes for "the model thinks," "a tool runs," "a human approves," and edges for the conditional transitions between them. Once the graph is explicit, the harness gets four things for free: checkpointing (save state between steps), interrupts (pause for a human), streaming (stream tokens and intermediate events), and time-travel (rewind to a prior state and try a different branch).
+見方を変えると次の一手は明らかです。agent はすでに state machine です。system prompt、message history、pending tool calls、next action があります。その state machine を明示します。「model が考える」「tool が走る」「human が approve する」という node と、それらをつなぐ conditional transition の edge を作ります。graph が明示されると、harness は4つのものを手に入れます。checkpointing (step 間で state を保存)、interrupts (human のために pause)、streaming (token と intermediate event を stream)、time-travel (過去 state に巻き戻して別 branch を試す) です。
 
-LangGraph is the library that ships this abstraction. It is not an agent framework in the LangChain sense ("here is an AgentExecutor, good luck"). It is a graph runtime with first-class state, first-class persistence, and first-class interrupts. The agent loop is something you draw, not something you hand-write.
+LangGraph はこの abstraction を提供する library です。LangChain 的な意味での agent framework ("AgentExecutor です、あとは頑張って") ではありません。first-class state、first-class persistence、first-class interrupt を持つ graph runtime です。agent loop は手書きするものではなく、draw するものになります。
 
-## The Concept
+## 概念
 
 ![LangGraph StateGraph: nodes, edges, and the checkpointer](../assets/langgraph-stategraph.svg)
 
-A `StateGraph` has three things.
+`StateGraph` には3つの要素があります。
 
-1. **State.** A typed dict (TypedDict or Pydantic model) that flows through the graph. Every node receives the full state and returns a partial update, which LangGraph merges using a *reducer* per field — `operator.add` for lists that should accumulate, overwrite by default.
-2. **Nodes.** Python functions `state -> partial_state`. Each is a discrete step: "call the model," "run tools," "summarize."
-3. **Edges.** Transitions between nodes. Static edges go one place. Conditional edges take a router function `state -> next_node_name` so the graph can branch on model output.
+1. **State。** graph を流れる typed dict (TypedDict または Pydantic model)。各 node は full state を受け取り、partial update を返します。LangGraph は field ごとの *reducer* で merge します。accumulate したい list には `operator.add`、default は overwrite です。
+2. **Nodes。** Python function `state -> partial_state`。それぞれが discrete step です。"call the model"、"run tools"、"summarize" など。
+3. **Edges。** node 間の transition。static edge は1箇所へ進みます。conditional edge は router function `state -> next_node_name` を取り、model output に応じて branch します。
 
-You compile the graph. Compile binds the topology, attaches a checkpointer (optional but essential for production), and returns a runnable. You invoke it with an initial state and a `thread_id`. Every step of execution persists a checkpoint keyed on `(thread_id, checkpoint_id)`.
+graph を compile します。compile は topology を固定し、checkpointer (optional だが production では必須) を attach し、runnable を返します。initial state と `thread_id` で invoke します。execution の各 step は `(thread_id, checkpoint_id)` を key に checkpoint を persist します。
 
-### The four superpowers
+### 4つのsuperpower
 
-**Checkpointing.** Every node transition writes the new state to a store (in-memory for tests, Postgres/Redis/SQLite for prod). Resume by calling the graph again with the same `thread_id`. The graph picks up where it paused.
+**Checkpointing。** node transition ごとに新しい state を store に書き込みます (test では in-memory、prod では Postgres/Redis/SQLite)。同じ `thread_id` で graph を再度 call すると resume します。graph は pause した箇所から再開します。
 
-**Interrupts.** Mark a node with `interrupt_before=["human_review"]` and execution stops before that node runs. The state persists. Your API responds to the user with "awaiting approval." A later request to the same `thread_id` with `Command(resume=...)` resumes execution.
+**Interrupts。** node に `interrupt_before=["human_review"]` を指定すると、その node が run する前に execution が止まります。state は persist されています。API は user に "awaiting approval" と返せます。後の request で同じ `thread_id` に `Command(resume=...)` を渡すと再開します。
 
-**Streaming.** `graph.stream(state, mode="updates")` yields state deltas as they happen. `mode="messages"` streams the LLM tokens inside model nodes. `mode="values"` yields full snapshots. You pick what to surface in your UI.
+**Streaming。** `graph.stream(state, mode="updates")` は発生した state delta を yield します。`mode="messages"` は model node 内の LLM token を stream します。`mode="values"` は full snapshot を yield します。UI に出すものを選べます。
 
-**Time-travel.** `graph.get_state_history(thread_id)` returns the full checkpoint log. Pass any prior `checkpoint_id` to `graph.invoke` and you fork from that point. Great for debugging ("what if the model had picked tool B instead?") and for regression tests that replay production traces.
+**Time-travel。** `graph.get_state_history(thread_id)` は checkpoint log 全体を返します。過去の `checkpoint_id` を `graph.invoke` に渡すと、その点から fork します。debugging ("model が tool B を選んでいたら?") や production trace replay の regression test に向いています。
 
-### Reducers are the point
+### Reducerが要点
 
-Every state field has a reducer. Most defaults are fine — a new value overwrites the old. But message lists need `operator.add` so new messages append instead of replacing. Parallel edges merge their updates through the reducer. If two nodes both update `messages` and you forgot the `Annotated[list, add_messages]`, the second wins silently and you lose half the turn. The reducer is the only subtle thing in the library; get it right and the rest composes.
+すべての state field には reducer があります。多くの default は問題ありません。新しい value が古い value を上書きします。しかし message list には `operator.add` が必要です。新しい message を replace ではなく append するためです。parallel edge は reducer を通して update を merge します。2つの node が両方 `messages` を update し、`Annotated[list, add_messages]` を忘れていると、後勝ちになって半分の turn を失います。reducer は library で唯一 subtle な部分です。ここを正しくすると、残りは composable になります。
 
-### The ReAct graph in four nodes
+### 4 nodesのReAct graph
 
-A production ReAct agent is four nodes and two edges:
+production ReAct agent は4つの node と2つの edge です。
 
-1. `agent` — calls the LLM with the current message history. Returns the assistant message (which may contain tool_calls).
-2. `tools` — executes any tool_calls in the last assistant message, appends the tool results as tool messages.
-3. A conditional edge from `agent` that routes to `tools` if the last message has tool_calls, else to `END`.
-4. A static edge from `tools` back to `agent`.
+1. `agent` — current message history で LLM を call します。assistant message を返します (tool_calls を含むことがあります)。
+2. `tools` — 最後の assistant message にある tool_calls を実行し、tool result を tool message として append します。
+3. `agent` からの conditional edge。最後の message に tool_calls があれば `tools` へ、なければ `END` へ route します。
+4. `tools` から `agent` への static edge。
 
-That is it. You get the full ReAct loop (Thought → Action → Observation → Thought → …) with checkpointing, interrupts, and streaming, in roughly 40 lines of code.
+これだけです。checkpointing、interrupts、streaming 付きの full ReAct loop (Thought → Action → Observation → Thought → …) が約40行で手に入ります。
 
 ### StateGraph vs Send (fanout)
 
-`Send(node_name, state)` lets a node dispatch parallel subgraphs. Example: the agent decides to query three retrievers at once. Each `Send` spawns a parallel execution of the target node; their outputs merge through the state reducer. This is how LangGraph expresses the orchestrator-workers pattern without threading primitives.
+`Send(node_name, state)` を使うと、node から parallel subgraph を dispatch できます。例: agent が3つの retriever を同時に query すると決める。各 `Send` は target node の parallel execution を spawn し、output は state reducer を通して merge されます。LangGraph は threading primitive なしで orchestrator-workers pattern をこのように表現します。
 
 ### Subgraphs
 
-A compiled graph can be a node in another graph. The outer graph sees a single node; the inner graph has its own state and its own checkpoints. This is how teams build supervisor-worker agents: the supervisor graph routes user intent to a per-domain worker subgraph.
+compiled graph は別 graph の node になれます。outer graph からは single node に見えますが、inner graph は独自の state と checkpoint を持ちます。supervisor-worker agents を作るとき、supervisor graph が user intent を domain-specific worker subgraph に route する形で使います。
 
-## Build It
+## 実装
 
-### Step 1: state and nodes
+### Step 1: stateとnodes
 
 ```python
 from typing import Annotated, TypedDict
@@ -95,9 +95,9 @@ graph.add_edge("tools", "agent")
 app = graph.compile(checkpointer=MemorySaver())
 ```
 
-`add_messages` is the reducer that makes the message list accumulate instead of overwrite. Forgetting it is the most common LangGraph bug.
+`add_messages` は message list を overwrite ではなく accumulate させる reducer です。忘れるのが最もよくある LangGraph bug です。
 
-### Step 2: run with a thread
+### Step 2: thread付きで実行
 
 ```python
 config = {"configurable": {"thread_id": "user-42"}}
@@ -109,11 +109,11 @@ for event in app.stream(
     print(event)
 ```
 
-Every update is a dict `{node_name: state_delta}`. Your frontend can stream these to the UI so users see "agent is thinking… calling search_web… got result… answering."
+各 update は `{node_name: state_delta}` の dict です。frontend に stream すれば、user は "agent is thinking… calling search_web… got result… answering." という progress を見られます。
 
-### Step 3: add a human-in-the-loop interrupt
+### Step 3: human-in-the-loop interruptを追加
 
-Mark a node so execution pauses before it runs.
+node に mark すると、実行前に pause します。
 
 ```python
 app = graph.compile(
@@ -130,9 +130,9 @@ app.invoke(Command(resume=True), config)
 app.update_state(config, {"messages": [AIMessage("Blocked by human reviewer.")]})
 ```
 
-The state, the checkpoint, and the thread all persist across the interrupt. Nothing is in memory except during execution.
+state、checkpoint、thread は interrupt をまたいで persist します。execution 中以外、memory にだけ存在するものはありません。
 
-### Step 4: time-travel for debugging
+### Step 4: debugging用time-travel
 
 ```python
 history = list(app.get_state_history(config))
@@ -145,9 +145,9 @@ for event in app.stream(None, target, stream_mode="values"):
     pass  # replay from that point forward
 ```
 
-Passing `None` as the input replays from the given checkpoint; passing a value appends it as an update to that checkpoint's state before resuming. This is how you reproduce a bad agent run without re-running the whole conversation.
+input に `None` を渡すと、指定 checkpoint から replay します。value を渡すと、その checkpoint の state に update として append してから resume します。bad agent run を conversation 全体の再実行なしで reproduce する方法です。
 
-### Step 5: swap the checkpointer for production
+### Step 5: production用checkpointerへ差し替え
 
 ```python
 from langgraph.checkpoint.postgres import PostgresSaver
@@ -157,50 +157,50 @@ with PostgresSaver.from_conn_string("postgresql://...") as checkpointer:
     app = graph.compile(checkpointer=checkpointer)
 ```
 
-SQLite, Redis, and Postgres are shipped. `MemorySaver` is for tests. Anything that persists across restarts wants a real store.
+SQLite、Redis、Postgres が提供されています。`MemorySaver` は test 用です。restart をまたいで persist すべきものには real store が必要です。
 
-## The Skill
+## Skill
 
-> You build agents as graphs, not as `while True` loops.
+> agent は `while True` loop ではなく graph として作ります。
 
-Before you reach for LangGraph, do a 60-second design:
+LangGraph に手を伸ばす前に、60秒だけ design します。
 
-1. **Name the nodes.** Every discrete decision or side-effecting action is a node. "Agent thinks," "tool runs," "reviewer approves," "response streams." If you can't list them, the task is not agent-shaped yet.
-2. **Declare the state.** Minimal TypedDict with a reducer for every list field. Do not stuff everything into `messages`; hoist task-specific fields (a working `plan`, a `budget` counter, a `retrieved_docs` list) to the top level.
-3. **Draw the edges.** Static unless the next step depends on model output. Every conditional edge needs a router function with named branches.
-4. **Choose a checkpointer up front.** `MemorySaver` for tests, Postgres/Redis/SQLite for anything else. Do not ship without one — no checkpointer means no resume, no interrupt, no time-travel.
-5. **Decide interrupts before tools run, not after.** Approvals go on the edge into a side-effecting node so you can cancel before harm; validation goes on the edge out of the model so you can reject bad calls cheaply.
-6. **Stream by default.** `mode="updates"` for the UI, `mode="messages"` for token-level streaming inside model nodes, `mode="values"` for full snapshots during eval.
+1. **Name the nodes。** discrete decision や side-effecting action はすべて node です。"Agent thinks"、"tool runs"、"reviewer approves"、"response streams"。list できないなら、task はまだ agent-shaped ではありません。
+2. **Declare the state。** list field すべてに reducer を持つ minimal TypedDict。message log には必ず Annotated[list, add_messages] を付けます。task-specific field (working `plan`、`budget` counter、`retrieved_docs` list) は `messages` に詰めず top level に hoist します。
+3. **Draw the edges。** next step が deterministic なら static。model output に依存する場合だけ conditional edge。conditional edge には named branch を持つ router function が必要です。
+4. **Choose a checkpointer up front。** test では `MemorySaver`、それ以外は Postgres/Redis/SQLite。checkpointer なしで ship してはいけません。resume、interrupt、time-travel ができません。
+5. **Decide interrupts before tools run, not after。** approval は side-effecting node へ入る edge に置きます。害が出る前に cancel するためです。validation は model から出る edge に置くと、悪い call を安く reject できます。
+6. **Stream by default。** UI には `mode="updates"`、model node 内の token-level streaming には `mode="messages"`、eval 中の full snapshot には `mode="values"`。
 
-Refuse to ship a LangGraph agent that has no checkpointer. Refuse to ship one that interrupts *after* the side effect. Refuse to ship a `messages` field without `add_messages` as its reducer.
+checkpointer のない LangGraph agent は ship しない。side effect の後に interrupt する agent も ship しない。`add_messages` reducer のない `messages` field も ship しない。
 
-## Exercises
+## 演習
 
-1. **Easy.** Implement the four-node ReAct graph above with a calculator tool and a web-search tool. Verify that `list(app.get_state_history(config))` returns at least four checkpoints for a two-turn conversation.
-2. **Medium.** Add a `planner` node that runs before `agent` and writes a structured `plan: list[str]` into state. Have `agent` mark plan steps as done. Fail the test if `plan` is lost across a checkpoint resume (wrong reducer).
-3. **Hard.** Build a supervisor graph that routes between three subgraphs (`researcher`, `writer`, `reviewer`) using `Send`. Each subgraph has its own state and checkpointer. Add an `interrupt_before=["writer"]` on the outer graph so a human can approve the research brief. Confirm that time-travel from a prior checkpoint re-runs only the forked branch.
+1. **Easy。** calculator tool と web-search tool を持つ4-node ReAct graph を実装します。2-turn conversation で `list(app.get_state_history(config))` が少なくとも4つの checkpoint を返すことを確認します。
+2. **Medium。** `agent` の前に走る `planner` node を追加し、structured `plan: list[str]` を state に書きます。`agent` は plan step を done にします。checkpoint resume 後に `plan` が失われたら test を fail させます (wrong reducer)。
+3. **Hard。** `Send` を使って3つの subgraph (`researcher`, `writer`, `reviewer`) に route する supervisor graph を作ります。各 subgraph は独自 state と checkpointer を持ちます。outer graph に `interrupt_before=["writer"]` を追加し、human が research brief を approve できるようにします。過去 checkpoint から time-travel すると forked branch だけが再実行されることを確認します。
 
 ## Key Terms
 
-| Term | What people say | What it actually means |
-|------|-----------------|-----------------------|
-| StateGraph | "The LangGraph graph" | The builder object you add nodes and edges to before compile. |
-| Reducer | "How the field merges" | A function `(old, new) -> merged` applied when a node returns an update for that field; default is overwrite, `add_messages` appends. |
-| Thread | "A conversation ID" | A `thread_id` string that scopes all checkpoints for one session. |
-| Checkpoint | "A paused state" | A persisted snapshot of the full graph state after a node transition, keyed on `(thread_id, checkpoint_id)`. |
-| Interrupt | "Pause for a human" | `interrupt_before` / `interrupt_after` stop execution at a node boundary; resume with `Command(resume=...)`. |
-| Time-travel | "Fork from a prior step" | `graph.invoke(None, config_with_old_checkpoint_id)` replays from that checkpoint forward. |
-| Send | "Parallel subgraph dispatch" | A constructor a node can return to spawn N parallel executions of a target node. |
-| Subgraph | "A compiled graph as a node" | A compiled StateGraph used as a node in another graph; preserves its own state scope. |
+| Term | 俗に言うこと | 実際の意味 |
+|------|---------------|------------|
+| StateGraph | "LangGraph の graph" | compile 前に nodes と edges を追加する builder object。 |
+| Reducer | "field の merge 方法" | node がその field の update を返したときに適用される `(old, new) -> merged` function。default は overwrite、`add_messages` は append。 |
+| Thread | "conversation ID" | 1 session のすべての checkpoint を scope する `thread_id` string。 |
+| Checkpoint | "paused state" | node transition 後の full graph state の persisted snapshot。`(thread_id, checkpoint_id)` で key される。 |
+| Interrupt | "human のために pause" | `interrupt_before` / `interrupt_after` が node boundary で execution を止める。`Command(resume=...)` で resume する。 |
+| Time-travel | "過去 step から fork" | `graph.invoke(None, config_with_old_checkpoint_id)` がその checkpoint から先を replay する。 |
+| Send | "parallel subgraph dispatch" | node が返せる constructor。target node の N parallel executions を spawn する。 |
+| Subgraph | "node としての compiled graph" | 別 graph の node として使う compiled StateGraph。独自の state scope を保持する。 |
 
-## Further Reading
+## 参考文献
 
-- [LangGraph documentation](https://langchain-ai.github.io/langgraph/) — canonical reference for StateGraph, reducers, checkpointers, and interrupts.
-- [LangGraph concepts: state, reducers, checkpointers](https://langchain-ai.github.io/langgraph/concepts/low_level/) — the mental model this lesson uses, straight from the source.
-- [LangGraph Persistence and Checkpoints](https://langchain-ai.github.io/langgraph/concepts/persistence/) — the detail on Postgres/SQLite/Redis stores, checkpoint namespaces, and thread IDs.
-- [LangGraph Human-in-the-loop](https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/) — `interrupt_before`, `interrupt_after`, `Command(resume=...)`, and the edit-state pattern.
-- [Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023)](https://arxiv.org/abs/2210.03629) — the pattern every LangGraph agent implements; read it for the reasoning trace rationale.
-- [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — which graph shapes (chain, router, orchestrator-workers, evaluator-optimizer) to prefer and when.
-- Phase 11 · 09 (Function Calling) — the tool-call primitive every LangGraph agent node reuses.
-- Phase 11 · 14 (Model Context Protocol) — external tool discovery that plugs into a LangGraph `ToolNode` via the MCP adapter.
-- Phase 11 · 17 (Agent framework tradeoffs) — when to pick LangGraph over CrewAI, AutoGen, or Agno.
+- [LangGraph documentation](https://langchain-ai.github.io/langgraph/) — StateGraph、reducers、checkpointers、interrupts の canonical reference。
+- [LangGraph concepts: state, reducers, checkpointers](https://langchain-ai.github.io/langgraph/concepts/low_level/) — この lesson が使う mental model の source。
+- [LangGraph Persistence and Checkpoints](https://langchain-ai.github.io/langgraph/concepts/persistence/) — Postgres/SQLite/Redis store、checkpoint namespace、thread ID の詳細。
+- [LangGraph Human-in-the-loop](https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/) — `interrupt_before`、`interrupt_after`、`Command(resume=...)`、edit-state pattern。
+- [Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023)](https://arxiv.org/abs/2210.03629) — LangGraph agent が実装する pattern。reasoning trace の rationale を理解するために読む。
+- [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) — chain、router、orchestrator-workers、evaluator-optimizer など、どの graph shape をいつ選ぶべきか。
+- Phase 11 · 09 (Function Calling) — LangGraph agent node が再利用する tool-call primitive。
+- Phase 11 · 14 (Model Context Protocol) — MCP adapter 経由で LangGraph `ToolNode` に plug できる external tool discovery。
+- Phase 11 · 17 (Agent framework tradeoffs) — LangGraph を CrewAI、AutoGen、Agno より選ぶべき場面。

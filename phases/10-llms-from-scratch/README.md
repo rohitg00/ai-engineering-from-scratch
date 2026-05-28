@@ -1,5 +1,5 @@
-# Phase 10: LLMs from Scratch
+# Phase 10: LLMをゼロから作る
 
-> Build, train, and understand large language models.
+> 大規模言語モデルを構築し、訓練し、理解する。
 
-See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.
+全レッスン計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。

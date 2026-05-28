@@ -1,40 +1,40 @@
 ---
 name: agent-budget-audit
-description: Audit an agent deployment's cost-governor stack and flag missing layers before enabling unattended runs.
+description: 無人実行を有効化する前に、エージェントデプロイのコストガバナースタックを監査し、不足している層を指摘する。
 version: 1.0.0
 phase: 15
 lesson: 13
 tags: [cost-governors, denial-of-wallet, budgets, claude-code-sdk, agent-governance]
 ---
 
-Given a proposed agent deployment, audit its cost-governor stack against the twelve-layer reference and flag which layers are missing, under-tuned, or over-tuned.
+提案されたエージェントデプロイを受け取り、そのコストガバナースタックを12層のリファレンスに照らして監査し、不足している層、調整不足の層、過剰調整の層を指摘する。
 
-Produce:
+作成するもの:
 
-1. **Layer inventory.** For each of the twelve reference layers (per-request cap, per-task token budget, per-task dollar budget, per-tool cap, iteration cap, per-minute/hour/day/month rolling caps, velocity limit, tiered routing, prompt caching, context windowing, HITL checkpoints, kill switch), state whether it is configured, and at what value.
-2. **Failure-mode mapping.** For each time-scale failure (runaway loop, slow leak, bad release, legitimate surge), name the specific layer that catches it and how fast.
-3. **Tool-specific caps.** List every tool the agent can call. For each, name a per-session cap and a reason. Any tool without an explicit cap is an open loop.
-4. **Alert thresholds.** Separate from caps: at what spend rate does a human get paged? The observed e-commerce case ($1,200 → $4,800) was a week-over-week growth problem, not a monthly cap problem.
-5. **Kill-switch path.** When a cap fires, what happens? Clean abort, rollback, alert, re-enable procedure. Confirm the kill switch is external to the agent (the agent cannot edit its own cap).
+1. **層のインベントリ。** 12個のリファレンス層（リクエストごとの上限、タスクごとのトークン予算、タスクごとのドル予算、ツールごとの上限、反復上限、分/時間/日/月単位のローリング上限、ベロシティ制限、階層型ルーティング、プロンプトキャッシュ、コンテキストウィンドウ制御、HITLチェックポイント、キルスイッチ）それぞれについて、設定されているか、値はいくつかを述べる。
+2. **故障モードの対応付け。** 時間スケールごとの故障（暴走ループ、ゆっくりした漏れ、悪いリリース、正当な急増）それぞれについて、それを捕まえる具体的な層と、どれくらい速く捕まえるかを示す。
+3. **ツール固有の上限。** エージェントが呼び出せるすべてのツールを列挙する。それぞれについて、セッションごとの上限と理由を示す。明示的な上限がないツールは、すべて開いたループである。
+4. **アラートしきい値。** 上限とは別に、どの支出レートで人間にページングするかを示す。観測されたeコマース事例（$1,200 → $4,800）は、月次上限の問題ではなく、週次成長の問題だった。
+5. **キルスイッチ経路。** 上限が発火したときに何が起きるか。クリーンな中止、ロールバック、アラート、再有効化手順。キルスイッチがエージェントの外部にあることを確認する（エージェントは自分自身の上限を編集できない）。
 
-Hard rejects:
-- Any autonomous deployment without a per-task dollar budget.
-- Any unattended long-horizon run without a velocity limit.
-- Tool surfaces with no per-tool cap on a new (<30 days) tool addition.
-- Kill switches the agent itself can modify.
-- Monthly cap as the only cap (every other time scale is unguarded).
+強制却下:
+- タスクごとのドル予算がない自律デプロイ。
+- ベロシティ制限がない無人の長期ホライズン実行。
+- 新規（30日未満）に追加されたツールに対して、ツールごとの上限がないツールサーフェス。
+- エージェント自身が変更できるキルスイッチ。
+- 月次上限だけが存在する構成（他のすべての時間スケールが無防備である）。
 
-Refusal rules:
-- If the user cannot price a worst-case run on today's model prices, refuse and require a costed estimate.
-- If the proposed budget exceeds the organization's acceptable loss on a single mistake, refuse and require a lower cap.
-- If the user treats the Auto Mode classifier (Lesson 10) as a replacement for budgets, refuse. The classifier is orthogonal to cost; both layers are required.
+拒否ルール:
+- ユーザーが、今日のモデル価格で最悪ケース実行の費用を見積もれない場合は拒否し、費用付きの見積もりを要求する。
+- 提案された予算が、1回のミスで組織が許容できる損失を超える場合は拒否し、より低い上限を要求する。
+- ユーザーがAuto Mode分類器（レッスン10）を予算の代替として扱う場合は拒否する。分類器はコストとは直交する。両方の層が必要である。
 
-Output format:
+出力形式:
 
-Return a cost-governor audit with:
-- **Layer table** (layer name, configured y/n, value)
-- **Failure-mode coverage** (4 rows: loop / leak / release / surge)
-- **Per-tool caps** (tool, cap, reason)
-- **Alert thresholds** (rate, owner, channel)
-- **Kill-switch path** (trigger, action, re-enable procedure)
-- **Readiness** (production / staging / research-only)
+以下を含むコストガバナー監査を返す:
+- **層テーブル**（layer name、configured y/n、value）
+- **故障モードのカバレッジ**（4行: loop / leak / release / surge）
+- **ツールごとの上限**（tool、cap、reason）
+- **アラートしきい値**（rate、owner、channel）
+- **キルスイッチ経路**（trigger、action、re-enable procedure）
+- **準備状況**（production / staging / research-only）

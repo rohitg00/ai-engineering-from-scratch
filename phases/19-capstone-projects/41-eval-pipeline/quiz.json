@@ -1,78 +1,78 @@
 {
   "lesson": "phase-19/41-eval-pipeline",
-  "title": "Full Evaluation Pipeline",
+  "title": "完全な評価パイプライン",
   "questions": [
     {
       "stage": "pre",
-      "question": "Before reading: a colleague reports their model has perplexity 4.2 on the held-out set. They ask if the model is good. What is the most defensible response?",
+      "question": "読む前に: 同僚が「held-out set の perplexity が 4.2 だった。この model は良いか」と聞いてきた。最も defensible な返答はどれか。",
       "options": [
-        "Yes: perplexity below 5 means the model is good.",
-        "Perplexity tells you how well the model fits the language distribution. It says nothing about whether the model follows instructions or returns correct answers.",
-        "Perplexity is meaningless without an explicit prompt.",
-        "Only judge models can answer that question."
+        "はい。perplexity が 5 未満なら model は良い。",
+        "Perplexity は model が言語分布にどれだけ合うかを示す。instruction に従うか、正答を返すかは示さない。",
+        "Perplexity は明示的な prompt なしでは無意味である。",
+        "その質問に答えられるのは judge model だけである。"
       ],
       "correct": 1,
-      "explanation": "Perplexity is one dimension. A model can have low perplexity and still be wrong on factual tasks, or have decent perplexity and still produce bad-quality answers. You need multiple evals, each measuring a different dimension."
+      "explanation": "Perplexity は 1 つの側面でしかない。低 perplexity でも事実 task で間違うことがあり、複数の eval が必要である。"
     },
     {
       "stage": "check",
-      "question": "The perplexity eval sums per-token negative log-likelihood over non-pad positions and divides by the total non-pad token count. Why not average per-batch perplexities instead?",
+      "question": "Perplexity eval は non-pad token の negative log-likelihood を合計し、non-pad token 数で割る。なぜ batch ごとの perplexity を平均しないのか。",
       "options": [
-        "Averaging per-batch perplexities is mathematically equivalent.",
-        "Averaging per-batch perplexities under-weights short sequences (their per-batch ppl carries more variance) and produces a biased aggregate.",
-        "Batches contain padded tokens that must always be averaged.",
-        "Perplexity is undefined for batched data."
+        "batch ごとの perplexity 平均は数学的に等価である。",
+        "batch ごとの perplexity 平均は長さや batch size の bias を入れ、短い sequence を不適切に扱う。",
+        "batch には padding token があり、常に平均すべきである。",
+        "batched data では perplexity は定義されない。"
       ],
       "correct": 1,
-      "explanation": "Per-token aggregation is the textbook definition and avoids batch-size and length biases. Per-batch averaging is a common bug; on a fixture with varying sequence lengths it produces a different number from the correct one."
+      "explanation": "token 単位の集約が教科書的な定義であり、長さや batch size の bias を避けられる。"
     },
     {
       "stage": "check",
-      "question": "Token F1 returns 1.0 when both prediction and reference are empty. Which other case must return a specific value?",
+      "question": "Token F1 は prediction と reference が両方空なら 1.0 を返す。他に明確に決めるべき case はどれか。",
       "options": [
-        "When pred is empty but reference is non-empty, F1 must be 1.0.",
-        "When pred is non-empty but reference is empty, F1 must be undefined.",
-        "When only one of pred or reference is empty, F1 must be 0.0.",
-        "When pred contains exactly one matching token, F1 must be 0.5."
+        "pred が空で reference が非空なら F1 は 1.0。",
+        "pred が非空で reference が空なら F1 は未定義。",
+        "片方だけ空なら F1 は 0.0。",
+        "pred に一致 token が 1 つだけなら F1 は 0.5。"
       ],
       "correct": 2,
-      "explanation": "Empty-empty is a vacuous match. Mixed empty-non-empty is the unambiguous miss case: there is content on one side and nothing on the other. The SQuAD convention is F1 = 0 in that case."
+      "explanation": "空同士は vacuous match。片方だけ空は明確な miss なので F1 = 0 とする。"
     },
     {
       "stage": "check",
-      "question": "The aggregator normalises perplexity with `1 / (1 + log(max(ppl, 1.0)))`. What does this guarantee about the normalised score?",
+      "question": "Aggregator は perplexity を `1 / (1 + log(max(ppl, 1.0)))` で正規化する。これは何を保証するか。",
       "options": [
-        "It is always in [0, 1] and decreases monotonically as raw perplexity grows.",
-        "It is always in [0, 1] and increases monotonically as raw perplexity grows.",
-        "It is unbounded above.",
-        "It only returns 0 or 1 (binary)."
+        "score は常に [0, 1] に入り、raw perplexity が大きくなるほど単調に下がる。",
+        "score は常に [0, 1] に入り、raw perplexity が大きくなるほど単調に上がる。",
+        "上に非有界である。",
+        "0 または 1 だけを返す。"
       ],
       "correct": 0,
-      "explanation": "Perplexity 1 (theoretical floor) maps to 1.0. Infinity maps to 0. The score is in [0, 1] and lower perplexity is better, which matches the direction of the other normalised metrics."
+      "explanation": "perplexity 1 は 1.0 に写り、無限大は 0 に近づく。低 perplexity ほど良いという向きもそろう。"
     },
     {
       "stage": "post",
-      "question": "You swap the mock judge for a real frontier-model judge. What is the minimum change to the pipeline?",
+      "question": "mock judge を本物の frontier-model judge に差し替える。pipeline に必要な最小変更はどれか。",
       "options": [
-        "Rewrite the aggregator to accept a different score range.",
-        "Replace the `judge_fn` argument to `judge_eval` with a function that has the same signature: (instruction, prediction, reference) -> JudgeVerdict.",
-        "Add a new entry to DEFAULT_WEIGHTS.",
-        "Migrate the entire eval suite to async I/O."
+        "別の score range を受けるよう aggregator を書き直す。",
+        "`judge_eval` の `judge_fn` を同じ signature `(instruction, prediction, reference) -> JudgeVerdict` の関数に置き換える。",
+        "DEFAULT_WEIGHTS に新しい entry を足す。",
+        "eval suite 全体を async I/O に移行する。"
       ],
       "correct": 1,
-      "explanation": "The judge interface is `(instruction, prediction, reference) -> JudgeVerdict`. Any function with that signature drops in. The pipeline is decoupled from the judge implementation by that boundary, which is the point."
+      "explanation": "judge interface が境界になっているため、同じ signature の関数ならそのまま差し替えられる。"
     },
     {
       "stage": "post",
-      "question": "Your aggregate score is 0.72, but exact-match is 0.40 and judge is 4.5/5. Which trade-off is the model making?",
+      "question": "aggregate score は 0.72 だが exact-match は 0.40、judge は 4.5/5 だった。model はどんな trade-off をしているか。",
       "options": [
-        "The model is hitting the gold string exactly less often, but the judge thinks the open-form answers are decent.",
-        "The model is overfitting on the LM corpus.",
-        "The aggregate is mis-computed.",
-        "The judge is mis-aligned with exact-match by definition."
+        "gold string に完全一致する頻度は低いが、open-form answer は judge から見ると十分良い。",
+        "LM corpus に overfit している。",
+        "aggregate の計算が間違っている。",
+        "judge は定義上 exact-match と misaligned である。"
       ],
       "correct": 0,
-      "explanation": "Low EM with high judge suggests paraphrase: the answers are right in substance but not character-for-character with the gold. This is exactly the dimension that EM misses and judge captures. The trade-off is informative, not a bug."
+      "explanation": "低 EM と高 judge は paraphrase を示すことが多い。EM が見逃す側面を judge が捉えている。"
     }
   ]
 }

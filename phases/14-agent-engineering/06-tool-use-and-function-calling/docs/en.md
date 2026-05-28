@@ -1,52 +1,52 @@
-# Tool Use and Function Calling
+# Tool UseとFunction Calling
 
-> Toolformer (Schick et al., 2023) started self-supervised tool annotation. Berkeley Function Calling Leaderboard V4 (Patil et al., 2025) sets the 2026 bar: 40% agentic, 30% multi-turn, 10% live, 10% non-live, 10% hallucination. Single-turn is solved. Memory, dynamic decision-making, and long-horizon tool chains are not.
+> Toolformer（Schickら、2023）はself-supervised tool annotationを始めた。Berkeley Function Calling Leaderboard V4（Patilら、2025）は2026年の基準を設定する。40% agentic、30% multi-turn、10% live、10% non-live、10% hallucination。single-turnは解決済みである。memory、dynamic decision-making、long-horizon tool chainsはまだ解決していない。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 13 · 01 (Function Calling Deep Dive)
-**Time:** ~60 minutes
+**タイプ:** 構築
+**言語:** Python（stdlib）
+**前提条件:** フェーズ 14 · 01（Agent Loop）、フェーズ 13 · 01（Function Calling Deep Dive）
+**時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Explain Toolformer's self-supervised training signal: keep tool annotations only when execution reduces next-token loss.
-- Name BFCL V4's five evaluation categories and what each measures.
-- Implement a stdlib tool registry with schema validation, argument coercion, and execution sandboxing.
-- Diagnose the three 2026 open problems: long-horizon tool chaining, dynamic decision-making, and memory.
+- Toolformerのself-supervised training signalを説明する。executionによりnext-token lossが下がるtool annotationだけを残す。
+- BFCL V4の5つのevaluation categoriesと、それぞれが何を測るかを挙げる。
+- schema validation、argument coercion、execution sandboxingを備えたstdlib tool registryを実装する。
+- 2026年の3つのopen problems、long-horizon tool chaining、dynamic decision-making、memoryを診断する。
 
-## The Problem
+## 課題
 
-Early tool use asked: can the model predict a correct function call? Modern tool use asks: can the model chain tools across 40 steps, with memory, with partial observability, with recovery from tool failures, without hallucinating tools that do not exist?
+初期のtool useは「modelが正しいfunction callを予測できるか」を問うていた。現代のtool useはこう問う。modelは40 stepsにわたってtoolsをchainできるか。memoryを持ち、partial observabilityの中で動き、tool failureから回復し、存在しないtoolsをhallucinateせずに実行できるか。
 
-Toolformer established the baseline: models can learn when to call tools with self-supervision. BFCL V4 defines the 2026 evaluation target. The gap between them is the space production agents live in.
+Toolformerはbaselineを確立した。modelsはself-supervisionでいつtoolsを呼ぶかを学べる。BFCL V4は2026年のevaluation targetを定義する。その間のgapこそ、production agentsが生きる空間である。
 
-## The Concept
+## 考え方
 
-### Toolformer (Schick et al., NeurIPS 2023)
+### Toolformer（Schickら、NeurIPS 2023）
 
-Idea: let the model annotate its own pretraining corpus with candidate API calls. For each candidate, execute it. Keep the annotation only if including the tool result reduces loss on the next token. Fine-tune on the filtered corpus.
+ideaは、modelに自分のpretraining corpusへcandidate API callsをannotateさせることだ。各candidateを実行する。tool resultを含めることでnext tokenのlossが下がった場合だけannotationを残す。filtered corpusでfine-tuneする。
 
-Tools covered: calculator, QA system, search engines, translator, calendar. The self-supervision signal is purely about whether the tool helps predict text — no human labels.
+対象toolsはcalculator、QA system、search engines、translator、calendar。self-supervision signalは、そのtoolがtext predictionに役立つかどうかだけであり、人間labelはない。
 
-Scale result: tool use emerges at scale. Smaller models hurt from tool annotations; larger models gain. This is why 2026 frontier models have strong tool use baked in while most 7B models need explicit tool-use fine-tuning to be reliable.
+scale result: tool useはscaleでemergeする。小さいmodelsはtool annotationsで悪化するが、大きいmodelsはgainする。だから2026年のfrontier modelsは強いtool useを内蔵しており、多くの7B modelsは信頼できるようにするには明示的なtool-use fine-tuningが必要である。
 
-### Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025)
+### Berkeley Function Calling Leaderboard V4（Patilら、ICML 2025）
 
-BFCL is the 2026 de facto evaluation. V4 composition:
+BFCLは2026年のde facto evaluationである。V4の構成は次のとおり。
 
-- **Agentic (40%)** — full agent trajectories: memory, multi-turn, dynamic decisions.
-- **Multi-Turn (30%)** — interactive conversations with tool chains.
-- **Live (10%)** — user-submitted real prompts (harder distribution).
-- **Non-Live (10%)** — synthetic test cases.
-- **Hallucination (10%)** — detect when no tool should be called.
+- **Agentic (40%)** - full agent trajectories。memory、multi-turn、dynamic decisions。
+- **Multi-Turn (30%)** - tool chainsを含むinteractive conversations。
+- **Live (10%)** - user-submitted real prompts（より難しい分布）。
+- **Non-Live (10%)** - synthetic test cases。
+- **Hallucination (10%)** - toolを呼ぶべきでないときを検出する。
 
-V3 introduced state-based evaluation: after a tool sequence, check the API's actual state (e.g. "is the file created?") rather than match the AST of the tool calls. V4 added web search, memory, and format sensitivity categories.
+V3はstate-based evaluationを導入した。tool sequenceの後、tool callsのASTをmatchするのではなく、APIの実際のstate（例: 「fileは作成されたか？」）をcheckする。V4はweb search、memory、format sensitivity categoriesを追加した。
 
-Key 2026 finding: single-turn function calling is near-solved. Failures concentrate in memory (carrying context across turns), dynamic decision-making (choosing tools based on prior results), long-horizon chains (drift after 20+ steps), and hallucination detection (refusing to call when no tool fits).
+2026年の重要な発見: single-turn function callingはほぼ解決済みである。failureはmemory（turnsをまたいでcontextを運ぶ）、dynamic decision-making（prior resultsに基づいてtoolsを選ぶ）、long-horizon chains（20+ steps後のdrift）、hallucination detection（合うtoolがないときにcallを拒否する）に集中する。
 
 ### Tool schema
 
-Every provider has a schema. They differ in details but share the same shape:
+各providerにはschemaがある。detailは異なるが、shapeは共通している。
 
 ```
 name: string
@@ -54,83 +54,83 @@ description: string (what it does, when to use it)
 input_schema: JSON Schema (properties, required, types, enums)
 ```
 
-Anthropic uses `input_schema` directly. OpenAI uses `function.parameters`. Both accept JSON Schema. Descriptions are load-bearing — the model reads them to pick the right tool. Bad tool descriptions are the #1 root cause of wrong-tool-picked failures.
+Anthropicは`input_schema`を直接使う。OpenAIは`function.parameters`を使う。どちらもJSON Schemaを受け付ける。descriptionは不可欠である。modelはそれを読んで正しいtoolを選ぶ。悪いtool descriptionはwrong-tool-picked failureの最大のroot causeである。
 
 ### Argument validation
 
-Trust no tool call. Validate:
+tool callを信用しない。validateする。
 
-1. **Type coercion.** Model may return a string "5" where the schema says int. Coerce if unambiguous; reject if not.
-2. **Enum validation.** If the schema says `status in {"open", "closed"}` and model emits `"in_progress"`, reject with a descriptive error.
-3. **Required fields.** Missing required field -> immediate error observation back to the model, not a crash.
-4. **Format validation.** Dates, emails, URLs — validate with concrete parsers, not regex.
+1. **Type coercion。** modelはschemaがintと言う場所にstring `"5"`を返すかもしれない。曖昧でなければcoerceし、曖昧ならrejectする。
+2. **Enum validation。** schemaが`status in {"open", "closed"}`と言うのにmodelが`"in_progress"`を出したら、descriptive errorでrejectする。
+3. **Required fields。** required fieldが欠けている場合は、crashではなく即座にerror observationをmodelへ返す。
+4. **Format validation。** dates、emails、URLs。regexではなく具体的なparserでvalidateする。
 
-Every validation failure should return a structured observation so the model can retry with the correct shape.
+すべてのvalidation failureはstructured observationを返すべきである。modelが正しいshapeでretryできるようにするためだ。
 
 ### Parallel tool calls
 
-Modern providers support parallel tool calls in one assistant turn. The loop:
+現代のproviderは1つのassistant turn内でparallel tool callsをsupportする。loopはこうなる。
 
-1. Model emits 3 tool calls with distinct `tool_use_id`s.
-2. Runtime executes them (in parallel if independent).
-3. Each result goes back as a `tool_result` block correlated by `tool_use_id`.
+1. modelがdistinctな`tool_use_id`を持つ3つのtool callsを出す。
+2. runtimeがそれらを実行する（independentならparallelに）。
+3. 各resultを`tool_use_id`でcorrelateされた`tool_result` blockとして返す。
 
-Engineering rule: treat correlation IDs as load-bearing. Swap them and you get wrong-tool-to-wrong-result routing.
+engineering rule: correlation IDsは不可欠なものとして扱う。入れ替えると、wrong-tool-to-wrong-result routingになる。
 
 ### Sandboxing
 
-Tool execution is the sandbox boundary. See Lesson 09 for detail. Short version: every tool should specify read/write surface, network access, timeout, memory cap. Generic `run_shell(cmd)` is a red flag; specific `git_status()` is safer.
+tool executionはsandbox boundaryである。詳細はレッスン09を参照。短く言うと、各toolはread/write surface、network access、timeout、memory capを指定すべきである。genericな`run_shell(cmd)`はred flagであり、specificな`git_status()`の方が安全である。
 
-## Build It
+## 構築
 
-`code/main.py` implements a production-shape tool registry:
+`code/main.py`はproduction-shapeのtool registryを実装する。
 
-- JSON Schema subset validator (stdlib only).
-- Tool registration with description, input schema, timeout, and executor.
-- Argument coercion and enum validation.
-- Parallel tool dispatch with correlation IDs.
-- Error observations as structured strings.
+- JSON Schema subset validator（stdlibのみ）。
+- description、input schema、timeout、executorを持つtool registration。
+- Argument coercionとenum validation。
+- correlation IDs付きparallel tool dispatch。
+- structured stringsとしてのerror observations。
 
-Run it:
+実行する。
 
 ```
 python3 code/main.py
 ```
 
-The trace shows a mini agent calling three tools in one turn, with one deliberately malformed call that is rejected with a descriptive error the model can act on.
+traceは、mini agentが1 turnで3つのtoolsを呼ぶ様子を示す。うち1つは意図的にmalformed callであり、modelが対応できるdescriptive errorでrejectされる。
 
-## Use It
+## 使い方
 
-Every provider has its own tool schema — Anthropic, OpenAI, Gemini, Bedrock. Use a translation layer (OpenAI Agents SDK, Vercel AI SDK, LangChain tool adapter) if you need multi-provider. BFCL is the reference benchmark — run it against your agent before shipping if tool use is central to the product.
+Anthropic、OpenAI、Gemini、Bedrock。各providerには独自のtool schemaがある。multi-providerが必要ならtranslation layer（OpenAI Agents SDK、Vercel AI SDK、LangChain tool adapter）を使う。BFCLはreference benchmarkである。tool useがproductの中心なら、出荷前にagentに対して実行する。
 
-## Ship It
+## 出荷
 
-`outputs/skill-tool-registry.md` generates a tool catalog, schema, and registry for a given task domain. Includes description-quality checks (does each tool's description tell the model when to use it?).
+`outputs/skill-tool-registry.md`は、指定されたtask domain向けにtool catalog、schema、registryを生成する。description-quality checks（各toolのdescriptionは、modelにいつ使うべきかを伝えているか）を含む。
 
-## Exercises
+## 演習
 
-1. Add a "no-op" tool that lets the model explicitly refuse to use any other tool. Measure on a BFCL-like hallucination test.
-2. Implement argument coercion for int-as-string and float-as-string. Where does coercion start to hide real bugs?
-3. Add a per-tool timeout and a circuit breaker (refuse the tool for 60s after 3 consecutive failures). What does this change about how the model recovers?
-4. Read BFCL V4 description. Pick one category (e.g. "multi-turn") and run 10 example prompts through your agent. Report pass rate.
-5. Port the stdlib validator to Pydantic or Zod. What did Pydantic/Zod catch that the toy missed?
+1. modelが他のtoolを一切使わないことを明示的に選べる「no-op」toolを追加する。BFCL-like hallucination testで測定する。
+2. int-as-stringとfloat-as-stringのargument coercionを実装する。coercionはどこからreal bugsを隠し始めるか。
+3. per-tool timeoutとcircuit breaker（3 consecutive failures後に60秒そのtoolを拒否）を追加する。これによりmodelの回復の仕方はどう変わるか。
+4. BFCL V4 descriptionを読む。1 category（例: "multi-turn"）を選び、10 example promptsをagentに通す。pass rateを報告する。
+5. stdlib validatorをPydanticまたはZodへ移植する。toyが見逃したものをPydantic/Zodは何を捕まえたか。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Function calling | "Tool use" | Structured-output tool invocation with validated schema |
-| Toolformer | "Self-supervised tool annotation" | Schick 2023 — keep tool calls whose results reduce next-token loss |
-| BFCL | "Berkeley Function Calling Leaderboard" | 2026 benchmark: 40% agentic, 30% multi-turn, 10% live, 10% non-live, 10% hallucination |
-| Tool schema | "Function signature for the model" | name, description, JSON Schema of arguments |
-| tool_use_id | "Correlation ID" | Ties a tool call to its result; essential for parallel dispatch |
-| Hallucination detection | "Know when not to call" | V4 category: refuse to call when no tool fits |
-| Argument coercion | "String-to-int repair" | Narrow fixes for predictable schema-mismatch; reject if ambiguous |
-| Sandboxing | "Tool execution boundary" | Per-tool read/write surface, network, timeout, memory cap |
+| 用語 | よく言われること | 実際の意味 |
+|------|----------------|------------|
+| Function calling | 「Tool use」 | validated schemaを持つstructured-output tool invocation |
+| Toolformer | 「Self-supervised tool annotation」 | Schick 2023。next-token lossを下げるtool callsだけを残す |
+| BFCL | 「Berkeley Function Calling Leaderboard」 | 2026 benchmark: 40% agentic、30% multi-turn、10% live、10% non-live、10% hallucination |
+| Tool schema | 「model向けfunction signature」 | name、description、argumentsのJSON Schema |
+| tool_use_id | 「Correlation ID」 | tool callとresultを結びつける。parallel dispatchには不可欠 |
+| Hallucination detection | 「呼ばないときを知る」 | V4 category。合うtoolがないときにcallを拒否する |
+| Argument coercion | 「String-to-int repair」 | 予測可能なschema mismatchへの狭い修正。曖昧ならrejectする |
+| Sandboxing | 「Tool execution boundary」 | toolごとのread/write surface、network、timeout、memory cap |
 
-## Further Reading
+## 参考資料
 
-- [Schick et al., Toolformer (arXiv:2302.04761)](https://arxiv.org/abs/2302.04761) — self-supervised tool annotation
-- [Berkeley Function Calling Leaderboard (V4)](https://gorilla.cs.berkeley.edu/leaderboard.html) — 2026 eval benchmark
-- [Anthropic, Tool use documentation](https://platform.claude.com/docs/en/agent-sdk/overview) — production tool schema in the Claude Agent SDK
-- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — function tool type and Guardrails
+- [Schick et al., Toolformer (arXiv:2302.04761)](https://arxiv.org/abs/2302.04761) - self-supervised tool annotation
+- [Berkeley Function Calling Leaderboard (V4)](https://gorilla.cs.berkeley.edu/leaderboard.html) - 2026 eval benchmark
+- [Anthropic, Tool use documentation](https://platform.claude.com/docs/en/agent-sdk/overview) - Claude Agent SDKのproduction tool schema
+- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) - function tool typeとGuardrails

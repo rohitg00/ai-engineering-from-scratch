@@ -1,137 +1,137 @@
-# Production Runtimes: Queue, Event, Cron
+# 本番ランタイム: Queue, Event, Cron
 
-> Production agents run on six runtime shapes: request-response, streaming, durable execution, queue-based background, event-driven, and scheduled. Pick the shape before you pick the framework. Observability is load-bearing at every shape.
+> Production agents は 6 つの runtime shapes で動く: request-response、streaming、durable execution、queue-based background、event-driven、scheduled。framework を選ぶ前に shape を選ぶ。observability はどの shape でも load-bearing である。
 
-**Type:** Learn
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 22 (Voice)
-**Time:** ~60 minutes
+**種類:** 学習
+**言語:** Python (stdlib)
+**前提:** Phase 14 · 13 (LangGraph), Phase 14 · 22 (Voice)
+**時間:** 約60分
 
-## Learning Objectives
+## 学習目標
 
-- Name the six production runtime shapes and match each to a framework / product pattern.
-- Explain why durable execution (LangGraph) matters for long-horizon tasks.
-- Describe the event-driven runtime and when Claude Managed Agents fits.
-- Explain the observability-as-load-bearing claim for multi-step agents.
+- 6 つの production runtime shapes を挙げ、それぞれを framework / product pattern に対応づける。
+- 長期 task で durable execution (LangGraph) が重要な理由を説明する。
+- event-driven runtime と、Claude Managed Agents が合う場面を説明する。
+- multi-step agents において observability-as-load-bearing という主張を説明する。
 
-## The Problem
+## 問題
 
-Production agents fail in ways a Jupyter notebook doesn't surface: network timeouts at step 37, user hangs up mid-voice call, cron job dies on machine reboot, background worker runs out of memory. The runtime shape determines which failures are survivable.
+Production agents は、Jupyter notebook では表面化しない形で失敗する。step 37 の network timeouts、voice call 途中で user が切断、machine reboot で cron job が死ぬ、background worker が memory 不足になる。runtime shape が、どの失敗を生き残れるかを決める。
 
-## The Concept
+## コンセプト
 
 ### Request-response
 
-- Synchronous HTTP. User waits for completion.
-- Only viable for short tasks (<30s).
-- Stacks: Agno (Python + FastAPI), Mastra (TypeScript + Express/Hono/Fastify/Koa).
-- Observability: standard HTTP access logs + OTel spans.
+- Synchronous HTTP。user は完了を待つ。
+- 短い tasks (<30s) でのみ成立する。
+- Stacks: Agno (Python + FastAPI), Mastra (TypeScript + Express/Hono/Fastify/Koa)。
+- Observability: 標準的な HTTP access logs + OTel spans。
 
 ### Streaming
 
-- SSE or WebSocket for progressive output.
-- LiveKit extends this to WebRTC for voice/video (Lesson 22).
-- Stacks: any framework with streaming support + a frontend that handles SSE/WS.
-- Observability: per-chunk timing, first-token latency, tail latency.
+- progressive output のための SSE または WebSocket。
+- LiveKit はこれを voice/video 向け WebRTC に拡張する (Lesson 22)。
+- Stacks: streaming support を持つ任意の framework + SSE/WS を扱う frontend。
+- Observability: chunk ごとの timing、first-token latency、tail latency。
 
 ### Durable execution
 
-- State checkpointed after every step; auto-resumes on failure.
-- AutoGen v0.4 actor model isolates failures to one agent (Lesson 14).
-- LangGraph's core differentiator (Lesson 13).
-- Essential when step count is unknown and recovery cost is high.
+- すべての step 後に state を checkpoint し、failure 時に自動 resume する。
+- AutoGen v0.4 actor model は failure を 1 agent に隔離する (Lesson 14)。
+- LangGraph の core differentiator (Lesson 13)。
+- step count が不明で recovery cost が高い場合に必須。
 
 ### Queue-based / background
 
-- Job enters a queue, workers pick up, results flow back via webhooks or pub/sub.
-- Essential for long-horizon agents (dozens-to-hundreds of steps per task, per Anthropic's computer use announcement).
-- Stacks: Celery (Python), BullMQ (Node), SQS + Lambda (AWS), custom.
-- Observability: queue depth, per-job latency distribution, DLQ size.
+- job が queue に入り、workers が取り出し、results は webhooks または pub/sub で戻る。
+- long-horizon agents には必須 (Anthropic の computer use announcement によると、task ごとに dozens-to-hundreds of steps)。
+- Stacks: Celery (Python), BullMQ (Node), SQS + Lambda (AWS), custom。
+- Observability: queue depth、job ごとの latency distribution、DLQ size。
 
 ### Event-driven
 
-- Agents subscribe to triggers: new email, PR opened, cron fire.
-- Claude Managed Agents covers this out of the box (Lesson 17).
-- CrewAI Flows (Lesson 15) structures event-driven deterministic workflows.
-- Observability: trigger source, event-to-start latency, agent latency.
+- Agents が triggers を subscribe する: new email、PR opened、cron fire。
+- Claude Managed Agents はこれを out of the box でカバーする (Lesson 17)。
+- CrewAI Flows (Lesson 15) は event-driven deterministic workflows を構造化する。
+- Observability: trigger source、event-to-start latency、agent latency。
 
 ### Scheduled
 
-- Cron-shaped agents that run periodically.
-- Combine with durable execution so a failing nightly run resumes next tick.
-- Stacks: Kubernetes CronJob + a durable framework; hosted (Render cron, Vercel cron).
+- 定期実行される cron-shaped agents。
+- durable execution と組み合わせ、失敗した nightly run が次 tick で resume できるようにする。
+- Stacks: Kubernetes CronJob + durable framework、hosted (Render cron, Vercel cron)。
 
-### 2026 deployment patterns
+### 2026 年の deployment patterns
 
-- **CrewAI Flows** for event-driven production.
-- **Agno** stateless FastAPI for Python microservices.
-- **Mastra** server adapters (Express, Hono, Fastify, Koa) for embedding.
-- **Pipecat Cloud / LiveKit Cloud** for managed voice (Lesson 22).
-- **Claude Managed Agents** for hosted long-running async.
+- event-driven production には **CrewAI Flows**。
+- Python microservices には **Agno** stateless FastAPI。
+- embedding には **Mastra** server adapters (Express, Hono, Fastify, Koa)。
+- managed voice には **Pipecat Cloud / LiveKit Cloud** (Lesson 22)。
+- hosted long-running async には **Claude Managed Agents**。
 
 ### Observability is load-bearing
 
-Without OpenTelemetry GenAI spans (Lesson 23) plus a Langfuse/Phoenix/Opik backend (Lesson 24), you cannot debug a multi-step agent that failed at step 40. This is not optional for production. It's the difference between "we debug fast" and "we replay from scratch with more logging."
+OpenTelemetry GenAI spans (Lesson 23) と Langfuse/Phoenix/Opik backend (Lesson 24) がなければ、step 40 で失敗した multi-step agent は debug できない。production では optional ではない。「素早く debug できる」と「logging を増やして最初から replay する」の違いである。
 
-### Where production runtimes fail
+### production runtimes が失敗するところ
 
-- **Wrong shape choice.** Picking request-response for a 5-minute task. Users hang up; workers pile up; retries compound.
-- **No DLQ.** Queue workers without dead-letter. Failed jobs vanish.
-- **Opaque background work.** Background agent runs without trace export. Failures are invisible until the user reports them.
-- **Skipping durable state.** Any run > 30 seconds where you can't afford to restart needs durable execution.
+- **Wrong shape choice。** 5 分 task に request-response を選ぶ。users は切断し、workers は積み上がり、retries が重なる。
+- **DLQ がない。** dead-letter のない queue workers。failed jobs が消える。
+- **Opaque background work。** background agent が trace export なしで動く。user が報告するまで failures は見えない。
+- **durable state を省略する。** restart する余裕がない 30 秒超の run には durable execution が必要。
 
-## Build It
+## 構築
 
-`code/main.py` is a stdlib multi-shape demo:
+`code/main.py` は stdlib の multi-shape demo である。
 
-- Request-response endpoint (plain function).
-- Streaming handler (generator).
-- Queue-based worker with DLQ.
-- Event trigger registry.
-- Cron-shaped scheduler.
+- Request-response endpoint (plain function)。
+- Streaming handler (generator)。
+- DLQ 付き queue-based worker。
+- Event trigger registry。
+- Cron-shaped scheduler。
 
-Run it:
+実行:
 
 ```bash
 python3 code/main.py
 ```
 
-Output: five traces showing each shape's behavior on the same task. Same agent logic, different outer shells. Durable execution (the sixth shape) is intentionally covered in Lesson 13 with LangGraph checkpointing.
+出力: 同じ task に対する各 shape の behavior を示す 5 つの traces。同じ agent logic でも outer shells が異なる。6 つ目の shape である durable execution は、Lesson 13 の LangGraph checkpointing で意図的に扱っている。
 
-## Use It
+## 利用
 
-- **Request-response** for chat-style UX.
-- **Streaming** for progressive responses.
-- **Durable** for long-horizon tasks.
-- **Queue** for batch / async / long-running.
-- **Event** for agent reactivity.
-- **Cron** for housekeeping (memory consolidation, evals, cost reports).
+- chat-style UX には **Request-response**。
+- progressive responses には **Streaming**。
+- long-horizon tasks には **Durable**。
+- batch / async / long-running には **Queue**。
+- agent reactivity には **Event**。
+- housekeeping (memory consolidation, evals, cost reports) には **Cron**。
 
-## Ship It
+## 出荷
 
-`outputs/skill-runtime-shape.md` picks a runtime shape for a task and wires the observability requirements.
+`outputs/skill-runtime-shape.md` は task 向け runtime shape を選び、observability requirements を接続する。
 
-## Exercises
+## 演習
 
-1. Port your Lesson 01 ReAct loop to all six shapes in your stack. Which shape fits which product surface?
-2. Add a DLQ to the queue-based demo. Simulate 10% job failure; surface DLQ size.
-3. Write a cron-triggered eval agent that runs nightly against your top 20 traces from the day.
-4. Implement streaming with backpressure: if the client is slow, pause the agent. How does this interact with a turn budget?
-5. Read Claude Managed Agents docs. When would you move a self-hosted long-horizon agent to managed?
+1. Lesson 01 の ReAct loop を、自分の stack の 6 shapes すべてに port する。どの shape がどの product surface に合うか。
+2. queue-based demo に DLQ を追加する。10% の job failure を simulate し、DLQ size を表示する。
+3. その日の top 20 traces に対して nightly に走る cron-triggered eval agent を書く。
+4. backpressure 付き streaming を実装する。client が遅い場合、agent を pause する。これは turn budget とどう相互作用するか。
+5. Claude Managed Agents docs を読む。self-hosted long-horizon agent を managed に移すのはどのような場合か。
 
-## Key Terms
+## 重要用語
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Request-response | "Synchronous" | User waits; short tasks only |
-| Streaming | "SSE / WS" | Progressive output; better UX; latency observable per chunk |
-| Durable execution | "Resume from failure" | Checkpointed state; restart at last step |
-| Queue-based | "Background jobs" | Producer / worker pool / DLQ |
-| Event-driven | "Trigger-based" | Agent reacts to external events |
-| DLQ | "Dead-letter queue" | Parking lot for failed jobs |
-| Claude Managed Agents | "Hosted harness" | Anthropic-hosted long-running async with caching + compaction |
+| 用語 | よく言われる表現 | 実際の意味 |
+|------|----------------|------------|
+| Request-response | "Synchronous" | user が待つ。短い tasks 専用 |
+| Streaming | "SSE / WS" | progressive output。より良い UX。latency は chunk ごとに観測可能 |
+| Durable execution | "Resume from failure" | checkpointed state。最後の step から restart |
+| Queue-based | "Background jobs" | producer / worker pool / DLQ |
+| Event-driven | "Trigger-based" | agent が external events に反応する |
+| DLQ | "Dead-letter queue" | failed jobs の置き場 |
+| Claude Managed Agents | "Hosted harness" | caching + compaction を備えた Anthropic-hosted long-running async |
 
-## Further Reading
+## 参考文献
 
 - [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) — durable execution details
 - [Claude Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview) — hosted long-running async

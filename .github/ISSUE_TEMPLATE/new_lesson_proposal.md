@@ -1,30 +1,30 @@
 ---
-name: New lesson proposal
-about: Pitch a lesson before writing it
+name: 新規レッスン提案
+about: 書き始める前にレッスン案を提案する
 title: "[lesson] Phase NN · "
 labels: new-lesson
 ---
 
-## Lesson
+## レッスン
 
 - Phase: <!-- e.g. Phase 5 (NLP) -->
-- Proposed number: <!-- e.g. 03 (lessons are numbered within a phase) -->
-- Working title:
+- Proposed number: <!-- e.g. 03 (レッスン番号はフェーズ内で採番) -->
+- 仮タイトル:
 - Type: Build | Learn
 - Languages: <!-- Python, TypeScript, Rust, Julia -->
-- Estimated time: <!-- e.g. ~75 min -->
+- 推定時間: <!-- e.g. 約75分 -->
 
-## Why it belongs
+## 入れる理由
 
-<!-- Two or three sentences. What can't a learner do without this lesson? Why here in the sequence? -->
+<!-- 2-3文で書いてください。このレッスンがないと学習者は何ができませんか。なぜこの順番に置くべきですか。 -->
 
-## Prerequisites
+## 前提条件
 
-<!-- Which prior lessons does this depend on? -->
+<!-- どの既存レッスンに依存しますか。 -->
 
-## What the learner ships
+## 学習者が作るもの
 
-<!-- Every lesson produces a reusable artifact. Which one? -->
+<!-- 各レッスンは再利用可能な成果物を1つ作ります。どれですか。 -->
 
 - [ ] Prompt
 - [ ] Skill
@@ -32,15 +32,15 @@ labels: new-lesson
 - [ ] MCP server
 - [ ] Tool / script
 
-## Outline
+## アウトライン
 
-1. **The Problem** — what pain does this solve?
-2. **The Concept** — core mental model, no code yet
-3. **Build It** — from-scratch implementation plan
-4. **Use It** — which framework / library to show after
-5. **Ship It** — the artifact to produce
-6. **Exercises** — 3 proposed
+1. **The Problem** — どんな痛みを解決するか
+2. **The Concept** — 中核となるメンタルモデル。まだコードは書かない
+3. **Build It** — from-scratch の実装計画
+4. **Use It** — その後に示す framework / library
+5. **Ship It** — 作る成果物
+6. **Exercises** — 演習案を3つ
 
-## Open questions
+## 未解決の質問
 
-<!-- Anything you want input on before starting. -->
+<!-- 開始前に意見がほしい点を書いてください。 -->

@@ -9,43 +9,43 @@ tags: [3d-gaussian-splatting, export, glTF, OpenUSD, pipeline]
 
 # 3DGS Export Router
 
-Map a downstream target to the right 3DGS file format. Saves hours of "it does not load" debugging.
+downstream target を適切な 3DGS file format に map する。"it does not load" debugging の何時間も節約する。
 
-## When to use
+## 使う場面
 
-- After training a 3DGS scene, before sharing it with a content pipeline.
-- Choosing between research-grade (.ply) and production-grade (glTF / USD) formats.
-- Pipeline handoff: capture team -> 3DGS engineer -> game designer / VFX artist / web developer.
+- 3DGS scene を training した後、content pipeline と共有する前。
+- research-grade (.ply) と production-grade (glTF / USD) formats のどちらを選ぶか決めるとき。
+- Pipeline handoff: capture team -> 3DGS engineer -> game designer / VFX artist / web developer。
 
-## Inputs
+## 入力
 
 - `target_engine`: unreal | unity | omniverse | blender | vision_pro | three_js | babylon_js | cesium | playcanvas | supersplat
 - `priority`: portability | file_size | quality_preservation
 - `include_sh_degree`: 0 | 1 | 2 | 3
 
-## Format decision
+## format の判断
 
 | Target | Recommended format | Why |
 |--------|--------------------|-----|
 | Unreal Engine (virtual production) | Volinga plugin or glTF KHR_gaussian_splatting | Native Unreal SDK path |
 | Unity (XR / game) | .ply via Aras-P Unity-GaussianSplatting plugin | Community-standard Unity pipeline |
 | NVIDIA Omniverse, Pixar tools | OpenUSD 26.03 (UsdVolParticleField3DGaussianSplat) | Native USD prim type |
-| Apple Vision Pro | OpenUSD 26.03 | Native to visionOS 2.x |
-| Blender | .ply + KIRI Engine add-on | Community add-on reads raw splats |
-| Three.js web viewer | glTF KHR_gaussian_splatting or .splat | Browser-standard, works with `GaussianSplats3D` |
-| Babylon.js V9+ | glTF KHR_gaussian_splatting | V9 added native support |
-| Cesium (CesiumJS 1.139+, Cesium for Unreal 2.23+) | glTF KHR_gaussian_splatting | Shipped explicit support |
+| Apple Vision Pro | OpenUSD 26.03 | visionOS 2.x に native |
+| Blender | .ply + KIRI Engine add-on | Community add-on が raw splats を読む |
+| Three.js web viewer | glTF KHR_gaussian_splatting or .splat | Browser-standard、`GaussianSplats3D` で動作 |
+| Babylon.js V9+ | glTF KHR_gaussian_splatting | V9 で native support が追加 |
+| Cesium (CesiumJS 1.139+, Cesium for Unreal 2.23+) | glTF KHR_gaussian_splatting | explicit support が shipped |
 | PlayCanvas | .splat | PlayCanvas native quantised format |
 | SuperSplat (editor) | .ply or .splat | Import + export |
 
-## Quantisation trade-offs
+## quantisation の trade-off
 
-- `.ply` full-precision: largest file, lossless, any viewer.
-- `.splat`: 4x-8x smaller, slight quality loss on SH3 coefficients, PlayCanvas-ecosystem standard.
-- glTF KHR: configurable via EXT_meshopt_compression; smallest with highest compatibility.
-- USD: compressed by USDZ packaging; smallest for Apple pipelines.
+- `.ply` full-precision: 最大 file、lossless、任意 viewer。
+- `.splat`: 4x-8x 小さい。SH3 coefficients にわずかな quality loss。PlayCanvas-ecosystem standard。
+- glTF KHR: EXT_meshopt_compression で configurable。最小かつ互換性が高い。
+- USD: USDZ packaging で圧縮される。Apple pipelines で最小。
 
-## Output report
+## 出力レポート
 
 ```
 [export plan]
@@ -64,10 +64,10 @@ Map a downstream target to the right 3DGS file format. Saves hours of "it does n
   5. validate: <viewer sanity check>
 ```
 
-## Rules
+## ルール
 
-- Never strip SH3 coefficients silently — it visibly changes specular reflections.
-- If `priority == file_size`, recommend `.splat` or glTF with meshopt; warn about quality loss.
-- For Apple platforms, prefer USD / USDZ over glTF in 2026; USDZ has first-class visionOS support.
-- If the target viewer's 3DGS support is pre-standard (pre-Feb 2026), recommend `.ply` and the viewer's custom loader; Khronos-standard glTF will not yet be recognised.
-- Always validate the exported file in at least one viewer before handing off; silent corruption happens during quantisation.
+- SH3 coefficients を黙って strip してはいけない。specular reflections が見た目に変わる。
+- `priority == file_size` の場合は `.splat` または meshopt 付き glTF を推奨し、quality loss を警告する。
+- Apple platforms では 2026 年時点で glTF より USD / USDZ を優先する。USDZ は visionOS support が first-class である。
+- target viewer の 3DGS support が pre-standard (pre-Feb 2026) の場合、`.ply` と viewer の custom loader を推奨する。Khronos-standard glTF はまだ認識されない。
+- handoff 前に少なくとも 1 つの viewer で exported file を必ず validate する。quantisation 中に silent corruption が起きる。

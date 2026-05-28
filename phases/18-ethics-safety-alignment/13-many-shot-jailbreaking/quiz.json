@@ -4,72 +4,72 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "Which context-window property does many-shot jailbreaking (MSJ) exploit?",
+      "question": "many-shot jailbreaking (MSJ) は、context window のどの性質を利用しますか。",
       "options": [
-        "Position embeddings rotating beyond 2048 tokens",
-        "Sliding-window attention truncating the system prompt",
-        "Very long context windows that admit hundreds of faux user-assistant turns of harmful compliance before the target query",
-        "Tokenizer ambiguities on Unicode characters"
+        "position embeddings が 2048 tokens を超えて回転すること",
+        "sliding-window attention が system prompt を truncate すること",
+        "非常に長い context window により、target query の前に有害な compliance を示す偽 user-assistant turns を数百件入れられること",
+        "Unicode 文字に関する tokenizer ambiguity"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does attack success rate (ASR) scale with shot count in MSJ?",
+      "question": "MSJ における attack success rate (ASR) は shot count に対してどのように scale しますか。",
       "options": [
-        "Linear with negative slope",
-        "Power-law in shot count; does not plateau, keeps climbing",
-        "Step function at 100 shots",
-        "Logistic, plateauing at 50%"
+        "負の傾きを持つ linear",
+        "shot count に対する power-law。plateau せず上がり続ける",
+        "100 shots での step function",
+        "50% で plateau する logistic"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "Why does MSJ share a mechanism with benign in-context learning (ICL)?",
+      "question": "MSJ が benign in-context learning (ICL) と mechanism を共有するのはなぜですか。",
       "options": [
-        "Both depend on the model extracting task structure from in-context examples and executing it on the query",
-        "Both rely on RLHF",
-        "Both bypass tokenization",
-        "Both require a hidden scratchpad"
+        "どちらも model が in-context examples から task structure を抽出し、query に対して実行することに依存するから",
+        "どちらも RLHF に依存するから",
+        "どちらも tokenization を bypass するから",
+        "どちらも hidden scratchpad を必要とするから"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the central defense dilemma for MSJ?",
+      "question": "MSJ に対する中心的な defense dilemma は何ですか。",
       "options": [
-        "Defenses must be applied at sampling temperature zero",
-        "Defenses need GPU clusters",
-        "Suppressing pattern extraction from long contexts would also disable benign in-context learning; defenses must distinguish harmful from benign patterns",
-        "Defenses must run on every token of the response"
+        "defense は sampling temperature zero で適用しなければならない",
+        "defense には GPU cluster が必要である",
+        "長い context からの pattern extraction を抑えると benign in-context learning も無効になるため、defense は harmful pattern と benign pattern を区別しなければならない",
+        "defense は response の全 token で実行しなければならない"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Anthropic's classifier-based prompt modification defense reduces MSJ attack success from what to what on tested settings?",
+      "question": "Anthropic の classifier-based prompt modification defense は、テスト設定で MSJ attack success を何%から何%へ下げましたか。",
       "options": [
-        "From 99% to 50%",
-        "From 30% to 25%",
-        "From 61% to 2%",
-        "It increases ASR"
+        "99% から 50%",
+        "30% から 25%",
+        "61% から 2%",
+        "ASR を上げた"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How does MSJ interact with PAIR (Lesson 12)?",
+      "question": "MSJ は PAIR (Lesson 12) とどのように相互作用しますか。",
       "options": [
-        "PAIR neutralizes MSJ",
-        "PAIR only works on closed-source models",
-        "MSJ composes with PAIR; using PAIR to find an attack structure and then filling it with many shots can reach higher ASR than either alone",
-        "They are mutually exclusive"
+        "PAIR は MSJ を neutralize する",
+        "PAIR は closed-source model でしか機能しない",
+        "MSJ は PAIR と組み合わせられる。PAIR で attack structure を見つけ、それを many shots で埋めると、単独より高い ASR に達することがある",
+        "両者は互いに排他的である"
       ],
       "correct": 2,
       "explanation": ""

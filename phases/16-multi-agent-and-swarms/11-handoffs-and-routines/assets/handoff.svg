@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
@@ -10,57 +10,57 @@
       .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
       .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
       .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
-      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
-      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .step { font-size: 12px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Hiragino Sans', 'Yu Gothic', 'Menlo', monospace; fill: #555; }
       .caption { font-size: 11px; fill: #555; font-style: italic; }
       .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
     </style>
   </defs>
-  <text x="450" y="28" text-anchor="middle" class="title">Swarm — routines + handoffs (OpenAI, 2024; Agents SDK 2025)</text>
+  <text x="450" y="28" text-anchor="middle" class="title">Swarm — ルーチン + 引き継ぎ (OpenAI, 2024; Agents SDK 2025)</text>
 
   <rect x="320" y="60" width="260" height="100" class="hot"/>
-  <text x="450" y="82" text-anchor="middle" class="head">Triage Agent</text>
-  <text x="450" y="104" text-anchor="middle" class="small">instructions:</text>
-  <text x="450" y="120" text-anchor="middle" class="small">"route user to the right specialist"</text>
-  <text x="450" y="140" text-anchor="middle" class="small">functions: transfer_to_refunds, sales, support</text>
+  <text x="450" y="82" text-anchor="middle" class="head">Triage エージェント</text>
+  <text x="450" y="104" text-anchor="middle" class="small">指示:</text>
+  <text x="450" y="120" text-anchor="middle" class="small">「ユーザーを適切な専門家へルーティング」</text>
+  <text x="450" y="140" text-anchor="middle" class="small">関数: 返金・営業・サポートへ転送</text>
 
   <line x1="380" y1="160" x2="200" y2="220" class="edge" marker-end="url(#arrow)"/>
-  <text x="260" y="195" class="small">tool returns refund_agent</text>
+  <text x="260" y="195" class="small">ツールが返金エージェントを返す</text>
 
   <line x1="450" y1="160" x2="450" y2="220" class="edge" marker-end="url(#arrow)"/>
-  <text x="460" y="195" class="small">tool returns sales_agent</text>
+  <text x="460" y="195" class="small">ツールが営業エージェントを返す</text>
 
   <line x1="520" y1="160" x2="700" y2="220" class="edge" marker-end="url(#arrow)"/>
-  <text x="620" y="195" class="small">tool returns support_agent</text>
+  <text x="620" y="195" class="small">ツールがサポートエージェントを返す</text>
 
   <rect x="100" y="220" width="200" height="80" class="cool"/>
-  <text x="200" y="242" text-anchor="middle" class="head">Refund Agent</text>
-  <text x="200" y="262" text-anchor="middle" class="small">process_refund(order_id)</text>
-  <text x="200" y="282" text-anchor="middle" class="small">"refund processed for order 77"</text>
+  <text x="200" y="242" text-anchor="middle" class="head">返金エージェント</text>
+  <text x="200" y="262" text-anchor="middle" class="small">返金処理(order_id)</text>
+  <text x="200" y="282" text-anchor="middle" class="small">「注文77を返金処理済み」</text>
 
   <rect x="350" y="220" width="200" height="80" class="cool"/>
-  <text x="450" y="242" text-anchor="middle" class="head">Sales Agent</text>
-  <text x="450" y="262" text-anchor="middle" class="small">quote_product(product)</text>
-  <text x="450" y="282" text-anchor="middle" class="small">"quote: $99/mo"</text>
+  <text x="450" y="242" text-anchor="middle" class="head">営業エージェント</text>
+  <text x="450" y="262" text-anchor="middle" class="small">商品見積(product)</text>
+  <text x="450" y="282" text-anchor="middle" class="small">「見積: 月99ドル」</text>
 
   <rect x="600" y="220" width="200" height="80" class="cool"/>
-  <text x="700" y="242" text-anchor="middle" class="head">Support Agent</text>
-  <text x="700" y="262" text-anchor="middle" class="small">open_ticket(issue)</text>
-  <text x="700" y="282" text-anchor="middle" class="small">"ticket opened"</text>
+  <text x="700" y="242" text-anchor="middle" class="head">サポートエージェント</text>
+  <text x="700" y="262" text-anchor="middle" class="small">チケット作成(issue)</text>
+  <text x="700" y="282" text-anchor="middle" class="small">「チケット作成済み」</text>
 
   <rect x="60" y="340" width="380" height="150" class="box"/>
-  <text x="250" y="362" text-anchor="middle" class="head">how the primitives work</text>
-  <text x="250" y="384" text-anchor="middle" class="small">agent = (instructions, tools)</text>
-  <text x="250" y="404" text-anchor="middle" class="small">handoff = tool that returns Agent</text>
-  <text x="250" y="424" text-anchor="middle" class="small">runtime detects Agent-valued return</text>
-  <text x="250" y="444" text-anchor="middle" class="small">switches active agent for next turn</text>
-  <text x="250" y="470" text-anchor="middle" class="caption">no state machine, no DSL, just tool calls</text>
+  <text x="250" y="362" text-anchor="middle" class="head">基本要素の動き</text>
+  <text x="250" y="384" text-anchor="middle" class="small">エージェント = (指示, ツール)</text>
+  <text x="250" y="404" text-anchor="middle" class="small">handoff = エージェントを返すツール</text>
+  <text x="250" y="424" text-anchor="middle" class="small">ランタイムがエージェント値の戻りを検出</text>
+  <text x="250" y="444" text-anchor="middle" class="small">次ターンの有効エージェントを切替</text>
+  <text x="250" y="470" text-anchor="middle" class="caption">状態機械もDSLもなく、ただのツール呼出し</text>
 
   <rect x="460" y="340" width="380" height="150" class="box"/>
-  <text x="650" y="362" text-anchor="middle" class="head">stateless tradeoff</text>
-  <text x="650" y="384" text-anchor="middle" class="small">Swarm persists nothing between runs</text>
-  <text x="650" y="404" text-anchor="middle" class="small">memory is the caller's problem</text>
-  <text x="650" y="424" text-anchor="middle" class="small">Agents SDK (2025) adds: sessions, tracing</text>
-  <text x="650" y="444" text-anchor="middle" class="small">guardrails, handoff filters on top</text>
-  <text x="650" y="470" text-anchor="middle" class="caption">handoff primitive survives; production ergonomics added</text>
+  <text x="650" y="362" text-anchor="middle" class="head">状態なしのトレードオフ</text>
+  <text x="650" y="384" text-anchor="middle" class="small">Swarmは実行間で何も永続化しない</text>
+  <text x="650" y="404" text-anchor="middle" class="small">メモリは呼び出し元側の問題</text>
+  <text x="650" y="424" text-anchor="middle" class="small">Agents SDK (2025) 追加: セッション、トレース</text>
+  <text x="650" y="444" text-anchor="middle" class="small">ガードレール、引き継ぎフィルタを上乗せ</text>
+  <text x="650" y="470" text-anchor="middle" class="caption">引き継ぎ基本要素は残り、本番運用性が追加</text>
 </svg>

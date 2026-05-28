@@ -1,32 +1,32 @@
 ---
 name: mcp-apps-spec
-description: Produce the full MCP Apps contract for a tool that needs an interactive UI resource.
+description: Interactive UI resourceが必要なtool向けに、full MCP Apps contractを作る。
 version: 1.0.0
 phase: 13
 lesson: 14
 tags: [mcp, apps, ui-resources, csp, iframe-sandbox]
 ---
 
-Given a tool that would benefit from an interactive UI (timeline, form, dashboard, map, chart), produce the MCP Apps contract.
+Interactive UI（timeline、form、dashboard、map、chart）で価値が出るtoolを受け取り、MCP Apps contractを作る。
 
 Produce:
 
-1. `ui://` URI. One canonical name for the UI resource (e.g. `ui://notes/timeline`).
-2. Tool result shape. `content[]` with `text` preamble and `ui_resource` block; `_meta.ui` populated.
-3. CSP. Minimum allowlist for `default-src`, `script-src`, `connect-src`, `img-src`, `style-src`. Avoid `'unsafe-inline'` unless necessary.
-4. Permissions list. Camera / mic / geolocation / network if needed; empty if not.
-5. postMessage entry points. Which `host.*` calls the UI will make and what they return.
-6. Security checklist. Distinguish-from-host, no clickjacking, strict connect-src, HTML sanitization if any user content is rendered.
+1. `ui://` URI。UI resourceのcanonical nameを1つ（例: `ui://notes/timeline`）。
+2. Tool result shape。`text` preambleと`ui_resource` blockを含む`content[]`、設定済み`_meta.ui`。
+3. CSP。`default-src`、`script-src`、`connect-src`、`img-src`、`style-src`の最小allowlist。必要がない限り`'unsafe-inline'`は避ける。
+4. Permissions list。必要ならcamera / mic / geolocation / network。不要ならempty。
+5. postMessage entry points。UIが呼ぶ`host.*` callsと、そのreturn内容。
+6. Security checklist。Hostとの視覚的区別、clickjackingなし、strict connect-src、user contentをrenderする場合のHTML sanitization。
 
 Hard rejects:
-- CSP with `default-src *`. Wide-open security risk.
-- Any `permissions` request beyond what the UI actually uses. Minimum privilege.
-- Any ui:// resource that loads external scripts. Bundle or refuse.
-- Any UI that renders user-controlled HTML without sanitization. XSS vector.
+- `default-src *`を含むCSP。Wide-openなsecurity risk。
+- UIが実際に使う以上の`permissions` request。Minimum privilege。
+- External scriptsをloadする`ui://` resource。Bundleするか拒否する。
+- Sanitizationなしでuser-controlled HTMLをrenderするUI。XSS vector。
 
 Refusal rules:
-- If the UI is just a static result, refuse to scaffold an App; return text content.
-- If the tool would benefit from native host widgets (progress bars, confirmation dialogs), recommend those instead.
-- If the host does not yet support MCP Apps (VS Code stable, Zed, Windsurf as of 2026-04), flag fallback-to-text path.
+- UIがstatic resultにすぎない場合、App scaffoldingを拒否し、text contentを返す。
+- Native host widgets（progress bars、confirmation dialogs）の方が適しているtoolなら、それを勧める。
+- HostがまだMCP Appsをsupportしない場合（2026-04時点のVS Code stable、Zed、Windsurf）、fallback-to-text pathをflagする。
 
-Output: a one-page contract with the `ui://` URI, tool result JSON, CSP, permissions, postMessage entry points, and a security checklist. End with one sentence on the minimum host that will render this UI.
+Output: `ui://` URI、tool result JSON、CSP、permissions、postMessage entry points、security checklistを含む1ページcontract。最後に、このUIをrenderできるminimum hostを1文で示す。

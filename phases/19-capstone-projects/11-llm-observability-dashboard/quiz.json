@@ -1,87 +1,87 @@
 {
   "lesson": "11-llm-observability-dashboard",
-  "title": "Capstone 11 — LLM Observability & Eval Dashboard",
+  "title": "キャップストーン 11 — LLM Observability & Eval Dashboard",
   "questions": [
     {
       "stage": "pre",
-      "question": "Which ingest schema do Langfuse, Phoenix, and OpenLLMetry converge on?",
+      "question": "Langfuse、Phoenix、OpenLLMetry が収束している ingest schema はどれですか？",
       "options": [
-        "Proprietary JSON per vendor",
+        "Vendor ごとの proprietary JSON",
         "Prometheus exposition format",
-        "OpenTelemetry GenAI semantic conventions over OTLP HTTP",
-        "Plain CSV log files"
+        "OTLP HTTP 上の OpenTelemetry GenAI semantic conventions",
+        "単純な CSV log file"
       ],
       "correct": 2,
       "explanation": ""
     },
     {
       "stage": "pre",
-      "question": "Why separate ClickHouse and Postgres in the storage tier?",
+      "question": "Storage tier で ClickHouse と Postgres を分ける理由は何ですか？",
       "options": [
-        "They are interchangeable and one is chosen at random",
-        "Postgres is faster for span ingest",
-        "ClickHouse cannot store strings",
-        "ClickHouse handles columnar analytics over spans while Postgres holds users, sessions, and app metadata"
+        "両者は互換で、どちらかをランダムに選ぶため",
+        "Postgres の方が span ingest に速いため",
+        "ClickHouse は文字列を保存できないため",
+        "ClickHouse は span の columnar analytics を担当し、Postgres は users、sessions、app metadata を保持するため"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What does the tail-sampling processor in the OpenTelemetry Collector do?",
+      "question": "OpenTelemetry Collector の tail-sampling processor は何をしますか？",
       "options": [
-        "Decides whether to keep a trace after it completes, using rules like keep errors plus sample successes",
-        "Replays old traces into Postgres",
-        "Streams every byte unconditionally",
-        "Truncates spans below 100ms"
+        "trace 完了後に、error を保持し success を sample する rule などで trace を残すか決める",
+        "古い trace を Postgres に replay する",
+        "すべての byte を無条件に stream する",
+        "100ms 未満の span を truncate する"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "How does the dashboard detect drift across weeks?",
+      "question": "Dashboard は週をまたいだ drift をどのように検知しますか？",
       "options": [
-        "Computes PSI or KL divergence on pooled prompt embeddings and watches eval-score trends",
-        "Manual eyeballing of the dashboard",
-        "Reads the latest deploy timestamp",
-        "Counts unique trace IDs"
+        "Pooled prompt embedding に対する PSI または KL divergence を計算し、eval-score trend を監視する",
+        "Dashboard を目視で確認する",
+        "最新 deploy timestamp を読む",
+        "Unique trace ID を数える"
       ],
       "correct": 0,
       "explanation": ""
     },
     {
       "stage": "check",
-      "question": "What is the deliverable's MTTR target on an injected PII-leak regression?",
+      "question": "注入した PII-leak regression に対する提出物の MTTR 目標は何ですか？",
       "options": [
-        "Under 1 hour",
-        "Within 24 hours",
-        "Within the next on-call shift",
-        "Under 5 minutes from bug deployed to Slack alert"
+        "1 時間未満",
+        "24 時間以内",
+        "次の on-call shift 以内",
+        "bug deploy から Slack alert まで 5 分未満"
       ],
       "correct": 3,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "Which SDK families must produce canonical GenAI spans to meet the trace-coverage rubric?",
+      "question": "Trace-coverage rubric を満たすには、どの SDK family が canonical GenAI span を生成する必要がありますか？",
       "options": [
-        "Only vLLM",
-        "At least six: OpenAI, Anthropic, Google GenAI, LangChain, LlamaIndex, and vLLM",
-        "Any one SDK is enough",
-        "OpenAI and Anthropic only"
+        "vLLM のみ",
+        "少なくとも 6 つ: OpenAI、Anthropic、Google GenAI、LangChain、LlamaIndex、vLLM",
+        "任意の 1 SDK で十分",
+        "OpenAI と Anthropic のみ"
       ],
       "correct": 1,
       "explanation": ""
     },
     {
       "stage": "post",
-      "question": "How are evaluation results linked back to the original LLM call?",
+      "question": "評価結果は元の LLM call にどのように link されますか？",
       "options": [
-        "As a CSV emailed nightly",
-        "As Slack messages only",
-        "As a separate Postgres table with no trace ID",
-        "As eval spans written as children of the parent trace in ClickHouse"
+        "毎晩 email される CSV として",
+        "Slack message のみとして",
+        "trace ID を持たない別 Postgres table として",
+        "ClickHouse で parent trace の child として書き込まれる eval span として"
       ],
       "correct": 3,
       "explanation": ""

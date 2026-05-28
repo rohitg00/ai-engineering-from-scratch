@@ -1,516 +1,286 @@
-# Statistics for Machine Learning
+# 機械学習のための統計
 
-> Statistics is how you know if your model actually works or just got lucky.
+> 統計は、モデルが本当に機能しているのか、たまたま運がよかっただけなのかを知る方法です。
 
-**Type:** Build
-**Language:** Python
-**Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
-**Time:** ~120 minutes
+**種別:** 構築
+**言語:** Python
+**前提条件:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
+**所要時間:** 約120分
 
-## Learning Objectives
+## 学習目標
 
-- Compute descriptive statistics, Pearson/Spearman correlation, and covariance matrices from scratch
-- Perform hypothesis tests (t-test, chi-squared) and interpret p-values and confidence intervals correctly
-- Use bootstrap resampling to construct confidence intervals for any metric without distributional assumptions
-- Distinguish statistical significance from practical significance using effect size measures
+- descriptive statistics、Pearson/Spearman correlation、covariance matrices を一から計算する
+- hypothesis tests（t-test、chi-squared）を実行し、p-values と confidence intervals を正しく解釈する
+- bootstrap resampling を使い、distributional assumptions なしで任意 metric の confidence intervals を作る
+- effect size measures を使って statistical significance と practical significance を区別する
 
-## The Problem
+## 問題
 
-You trained two models. Model A scores 0.87 on your test set. Model B scores 0.89. You deploy Model B. Three weeks later, production metrics are worse than before. What happened?
+2 つのモデルを学習しました。Model A は test set で 0.87、Model B は 0.89 です。Model B を deploy したところ、3 週間後の production metrics は以前より悪化しました。何が起きたのでしょうか。
 
-Model B did not actually outperform Model A. The 0.02 difference was noise. Your test set was too small, or the variance too high, or both. You shipped randomness dressed up as improvement.
+Model B は実際には Model A を上回っていませんでした。0.02 の差は noise でした。test set が小さすぎた、variance が高すぎた、またはその両方です。あなたは改善ではなく、改善に見える randomness を出荷しました。
 
-This happens constantly. Kaggle leaderboard shakeups. Papers that fail to reproduce. A/B tests that declare winners based on a few hundred samples. The root cause is always the same: someone skipped the statistics.
+Kaggle leaderboard の揺れ、再現しない論文、数百 samples で勝者を決める A/B tests。根本原因は同じです。statistics を省略したのです。
 
-Statistics gives you the tools to distinguish signal from noise. It tells you when a difference is real, how confident you should be, and how much data you need before you can trust a result. Every ML pipeline, every model comparison, every experiment needs statistics. Without it, you are guessing.
+## 概念
 
-## The Concept
+### Descriptive Statistics
 
-### Descriptive Statistics: Summarizing Your Data
+modeling の前に、data の形を知る必要があります。descriptive statistics は dataset を少数の数値に圧縮します。
 
-Before you model anything, you need to know what your data looks like. Descriptive statistics compress a dataset into a few numbers that capture its shape.
+central tendency:
 
-**Measures of central tendency** answer "where is the middle?"
-
-```
+```text
 Mean:   sum of all values / count
-        mu = (1/n) * sum(x_i)
-
-Median: middle value when sorted
-        Robust to outliers. If you have [1, 2, 3, 4, 1000], the mean is 202
-        but the median is 3.
-
-Mode:   most frequent value
-        Useful for categorical data. For continuous data, rarely informative.
+Median: sorted data の中央。outliers に頑健
+Mode:   最頻値。categorical data で有用
 ```
 
-The mean is the balance point. The median is the halfway mark. When they diverge, your distribution is skewed. Income distributions have mean >> median (right skew from billionaires). Loss distributions during training often have mean << median (left skew from easy samples).
+mean は balance point、median は halfway mark です。両者が離れると distribution は skewed です。
 
-**Measures of spread** answer "how dispersed is the data?"
+spread:
 
-```
-Variance:   average squared deviation from the mean
-            sigma^2 = (1/n) * sum((x_i - mu)^2)
-
-Standard deviation:  square root of variance
-                     sigma = sqrt(sigma^2)
-                     Same units as the data, so more interpretable.
-
-Range:      max - min
-            Sensitive to outliers. Almost never useful alone.
-
-IQR:        Q3 - Q1 (interquartile range)
-            The range of the middle 50% of the data.
-            Robust to outliers. Used for box plots and outlier detection.
+```text
+Variance:            average squared deviation from the mean
+Standard deviation:  variance の平方根。元 data と同じ units
+Range:               max - min。outliers に弱い
+IQR:                 Q3 - Q1。中央 50% の幅
 ```
 
-**Percentiles** divide sorted data into 100 equal parts. The 25th percentile (Q1) means 25% of values fall below this point. The 50th percentile is the median. The 75th percentile is Q3.
+percentiles は sorted data を 100 等分します。latency monitoring では P50、P95、P99 が重要です。平均 error が低くても P99 error がひどい model は safety-critical applications では使えないかもしれません。
 
-```
-For latency monitoring:
-  P50 = median latency        (typical user experience)
-  P95 = 95th percentile       (bad but not worst case)
-  P99 = 99th percentile       (tail latency, often 10x the median)
-```
+sample variance では n ではなく (n-1) で割ります。これは Bessel's correction で、sample mean が true population mean ではないことによる過小推定を補正します。
 
-In ML, you care about percentiles for inference latency, prediction confidence distributions, and understanding error distributions. A model with low average error but terrible P99 error might be useless for safety-critical applications.
-
-**Sample vs population statistics.** When computing variance from a sample, divide by (n-1) instead of n. This is Bessel's correction. It compensates for the fact that your sample mean is not the true population mean. With n in the denominator, you systematically underestimate the true variance. With (n-1), the estimate is unbiased.
-
-```
+```text
 Population variance: sigma^2 = (1/N) * sum((x_i - mu)^2)
 Sample variance:     s^2     = (1/(n-1)) * sum((x_i - x_bar)^2)
 ```
 
-In practice: if n is large (thousands of samples), the difference is negligible. If n is small (dozens of samples), it matters.
+### Correlation
 
-### Correlation: How Variables Move Together
+correlation は 2 つの variables が一緒にどう動くかを測ります。
 
-Correlation measures the strength and direction of a linear relationship between two variables.
+Pearson correlation は linear association を測ります。
 
-**Pearson correlation coefficient** measures linear association:
-
-```
+```text
 r = sum((x_i - x_bar)(y_i - y_bar)) / (n * s_x * s_y)
-
-r = +1:  perfect positive linear relationship
-r = -1:  perfect negative linear relationship
-r =  0:  no linear relationship (but there might be a nonlinear one!)
-
-Range: [-1, 1]
+r = +1: perfect positive linear relationship
+r = -1: perfect negative linear relationship
+r =  0: no linear relationship
 ```
 
-Pearson assumes the relationship is linear and both variables are roughly normally distributed. It is sensitive to outliers. A single extreme point can drag r from 0.1 to 0.9.
+outliers に敏感で、linear relationship を仮定します。
 
-**Spearman rank correlation** measures monotonic association:
+Spearman rank correlation は values を ranks に置き換えて Pearson を計算します。linear でなくても monotonic relationship を捉えます。ordinal data、non-normal data、outliers がある場合に向きます。
 
-```
-1. Replace each value with its rank (1, 2, 3, ...)
-2. Compute Pearson correlation on the ranks
-
-Spearman catches any monotonic relationship, not just linear.
-If y = x^3, Pearson gives r < 1 but Spearman gives rho = 1.
-```
-
-**When to use each:**
-
-```
-Pearson:    Both variables are continuous and roughly normal.
-            You care about the linear relationship specifically.
-            No extreme outliers.
-
-Spearman:   Ordinal data (rankings, ratings).
-            Data is not normally distributed.
-            You suspect a monotonic but not linear relationship.
-            Outliers are present.
-```
-
-**The golden rule:** correlation does not imply causation. Ice cream sales and drowning deaths are correlated because both increase in summer. Your model's accuracy and the number of parameters are correlated, but adding parameters does not automatically improve accuracy (see: overfitting).
+黄金律: correlation does not imply causation。ice cream sales と drowning deaths は summer という confounder で相関します。
 
 ### Covariance Matrix
 
-The covariance between two variables measures how they vary together:
+covariance は 2 variables が一緒に変動する度合いです。
 
-```
+```text
 Cov(X, Y) = (1/n) * sum((x_i - x_bar)(y_i - y_bar))
-
-Cov(X, Y) > 0:  X and Y tend to increase together
-Cov(X, Y) < 0:  when X increases, Y tends to decrease
-Cov(X, Y) = 0:  no linear co-movement
 ```
 
-For d features, the covariance matrix C is a d x d matrix where C[i][j] = Cov(feature_i, feature_j). The diagonal entries C[i][i] are the variances of each feature.
+d features なら covariance matrix C は d x d matrix で、diagonal は variances、off-diagonal は covariances です。
 
-```
+```text
 C = | Var(x1)      Cov(x1,x2)  Cov(x1,x3) |
     | Cov(x2,x1)  Var(x2)      Cov(x2,x3) |
     | Cov(x3,x1)  Cov(x3,x2)  Var(x3)     |
-
-Properties:
-  - Symmetric: C[i][j] = C[j][i]
-  - Positive semi-definite: all eigenvalues >= 0
-  - Diagonal = variances
-  - Off-diagonal = covariances
 ```
 
-**Connection to PCA.** PCA eigendecomposes the covariance matrix. The eigenvectors are the principal components (directions of maximum variance). The eigenvalues tell you how much variance each component captures. This is exactly what Lesson 10 covered, but now you see why the covariance matrix is the right thing to decompose: it encodes all pairwise linear relationships in your data.
-
-**Connection to correlation.** The correlation matrix is the covariance matrix of standardized variables (each divided by its standard deviation). Correlation normalizes covariance so all values fall in [-1, 1].
+PCA は covariance matrix を eigendecompose します。eigenvectors は principal components、eigenvalues は各 component が捉える variance を表します。
 
 ### Hypothesis Testing
 
-Hypothesis testing is a framework for making decisions under uncertainty. You start with a claim, collect data, and determine if the data is consistent with the claim.
+hypothesis testing は uncertainty の下で判断する framework です。
 
-**The setup:**
-
-```
-Null hypothesis (H0):        the default assumption, usually "no effect"
-Alternative hypothesis (H1): what you are trying to show
+```text
+Null hypothesis (H0):        default assumption、通常は「効果なし」
+Alternative hypothesis (H1): 示したいこと
 
 Example:
   H0: Model A and Model B have the same accuracy
   H1: Model B has higher accuracy than Model A
 ```
 
-**The p-value** is the probability of seeing data as extreme as what you observed, assuming H0 is true. It is NOT the probability that H0 is true. This is the single most common misunderstanding in statistics.
+p-value は、H0 が真だと仮定したとき、観測した data と同じくらい extreme な data が得られる確率です。H0 が真である確率ではありません。
 
-```
+```text
 p-value = P(data this extreme | H0 is true)
 
-If p-value < alpha (typically 0.05):
-    Reject H0. The result is "statistically significant."
+If p-value < alpha:
+    Reject H0
 If p-value >= alpha:
-    Fail to reject H0. You do not have enough evidence.
-    This does NOT mean H0 is true.
+    Fail to reject H0
 ```
 
-**Confidence intervals** give a range of plausible values for a parameter:
+confidence interval は parameter の plausible values の範囲を与えます。95% CI は「同じ実験を何度も繰り返したとき、computed intervals の 95% が true mean を含む」という意味です。「この specific interval に true mean が 95% の確率で入る」という意味ではありません。
 
-```
-95% confidence interval for the mean:
-    x_bar +/- z * (s / sqrt(n))
+### t-test
 
-where z = 1.96 for 95% confidence
+t-test は means を比較します。
 
-Interpretation: if you repeated this experiment many times, 95% of the
-computed intervals would contain the true mean. It does NOT mean there
-is a 95% probability the true mean is in this specific interval.
-```
-
-The width of the confidence interval tells you about precision. Wide intervals mean high uncertainty. Narrow intervals mean your estimate is precise (but not necessarily accurate, if your data is biased).
-
-### The t-test
-
-The t-test compares means. There are several flavors.
-
-**One-sample t-test:** is the population mean different from a hypothesized value?
-
-```
+```text
+One-sample t-test:
 t = (x_bar - mu_0) / (s / sqrt(n))
 
-degrees of freedom = n - 1
-```
-
-**Two-sample t-test (independent):** are two group means different?
-
-```
+Two-sample Welch's t-test:
 t = (x_bar_1 - x_bar_2) / sqrt(s1^2/n1 + s2^2/n2)
-
-This is Welch's t-test, which does not assume equal variances.
-Always use Welch's unless you have a specific reason for equal variances.
 ```
 
-**Paired t-test:** when measurements come in pairs (same model evaluated on same data splits):
-
-```
-Compute d_i = x_i - y_i for each pair
-Then run a one-sample t-test on the d_i values against mu_0 = 0
-```
-
-In ML, the paired t-test is common: you run both models on the same 10 cross-validation folds and compare their scores pairwise.
+ML では paired t-test がよく使われます。同じ cross-validation folds で両モデルを評価し、各 fold の差分 `d_i = x_i - y_i` に対して one-sample t-test を行います。
 
 ### Chi-squared Test
 
-The chi-squared test checks if observed frequencies match expected frequencies. Useful for categorical data.
+chi-squared test は observed frequencies が expected frequencies と一致するかを調べます。
 
-```
+```text
 chi^2 = sum((observed - expected)^2 / expected)
-
-Example: does a language model's output distribution match the
-training distribution across categories?
-
-Category    Observed   Expected
-Positive       120        100
-Negative        80        100
-chi^2 = (120-100)^2/100 + (80-100)^2/100 = 4 + 4 = 8
-
-With 1 degree of freedom, chi^2 = 8 gives p < 0.005.
-The difference is significant.
 ```
+
+categorical data、class distributions、confusion matrices の比較に使います。
 
 ### A/B Testing for ML Models
 
-A/B testing in ML is not the same as web A/B testing. Model comparison has specific challenges:
+ML model comparison では、web A/B testing と違う注意点があります。
 
-```
-1. Same test set:    Both models must be evaluated on identical data.
-                     Different test sets make comparison meaningless.
-
-2. Multiple metrics: Accuracy alone is not enough. You need precision,
-                     recall, F1, latency, and fairness metrics.
-
-3. Variance:         Use cross-validation or bootstrap to estimate
-                     the variance of each metric, not just point estimates.
-
-4. Data leakage:     If the test set was used during model selection,
-                     your comparison is biased. Hold out a final test set.
+```text
+1. Same test set: 両モデルを同一 data で評価する
+2. Multiple metrics: accuracy だけでは不十分
+3. Variance: cross-validation や bootstrap で variance を推定する
+4. Data leakage: model selection に使った test set で最終評価しない
 ```
 
-**The procedure:**
+procedure:
 
-```
-1. Define your metric and significance level (alpha = 0.05)
-2. Run both models on the same k-fold cross-validation splits
-3. Collect paired scores: [(a1, b1), (a2, b2), ..., (ak, bk)]
-4. Compute differences: d_i = b_i - a_i
-5. Run a paired t-test on the differences
-6. Check: is the mean difference significantly different from 0?
-7. Compute a confidence interval for the mean difference
-8. Compute effect size (Cohen's d) to judge practical significance
+```text
+1. metric と alpha を決める
+2. 同じ k-fold splits で両モデルを評価する
+3. paired scores を集める
+4. differences d_i = b_i - a_i を計算する
+5. paired t-test または Wilcoxon を実行する
+6. confidence interval と effect size を報告する
 ```
 
 ### Statistical Significance vs Practical Significance
 
-A result can be statistically significant but practically meaningless. With enough data, even a trivial difference becomes statistically significant.
+data が十分大きいと、些細な差でも statistically significant になります。
 
-```
-Example:
-  Model A accuracy: 0.9234
-  Model B accuracy: 0.9237
-  n = 1,000,000 test samples
-  p-value = 0.001
-
-Statistically significant? Yes.
-Practically significant? A 0.03% improvement is not worth the
-engineering cost of deploying a new model.
+```text
+Model A accuracy: 0.9234
+Model B accuracy: 0.9237
+n = 1,000,000
+p-value = 0.001
 ```
 
-**Effect size** quantifies how big the difference is, independent of sample size:
+差は real かもしれませんが、0.03% improvement は deployment cost に見合わない可能性があります。p-value は差が real かを示し、effect size は意味のある大きさかを示します。
 
-```
+```text
 Cohen's d = (mean_1 - mean_2) / pooled_std
-
-d = 0.2:  small effect
-d = 0.5:  medium effect
-d = 0.8:  large effect
+d = 0.2: small effect
+d = 0.5: medium effect
+d = 0.8: large effect
 ```
-
-Always report both the p-value and the effect size. The p-value tells you if the difference is real. The effect size tells you if it matters.
 
 ### Multiple Comparison Problem
 
-When you test many hypotheses, some will be "significant" by chance. If you test 20 things at alpha = 0.05, you expect 1 false positive even when nothing is real.
+多くの hypotheses を検定すると、偶然 significant になるものが出ます。
 
-```
+```text
 P(at least one false positive) = 1 - (1 - alpha)^m
-
-m = 20 tests, alpha = 0.05:
+m = 20, alpha = 0.05:
 P(false positive) = 1 - 0.95^20 = 0.64
-
-You have a 64% chance of at least one false positive.
 ```
 
-**Bonferroni correction:** divide alpha by the number of tests.
+Bonferroni correction は alpha を tests 数で割ります。
 
-```
+```text
 Adjusted alpha = alpha / m = 0.05 / 20 = 0.0025
-
-Only reject H0 if p-value < 0.0025.
-Conservative but simple. Works when tests are independent.
 ```
-
-In ML, this matters when you compare a model across multiple metrics, test many hyperparameter configurations, or evaluate on multiple datasets.
 
 ### Bootstrap Methods
 
-Bootstrapping estimates the sampling distribution of a statistic by resampling your data with replacement. No assumptions about the underlying distribution required.
+bootstrap は data を replacement ありで resample し、statistic の sampling distribution を推定します。underlying distribution の仮定は不要です。
 
-**The algorithm:**
-
-```
-1. You have n data points
-2. Draw n samples WITH replacement (some points appear multiple times,
-   some not at all)
-3. Compute your statistic on this bootstrap sample
-4. Repeat B times (typically B = 1000 to 10000)
-5. The distribution of bootstrap statistics approximates the
-   sampling distribution
+```text
+1. n data points がある
+2. replacement ありで n samples を引く
+3. statistic を計算する
+4. B 回繰り返す
+5. bootstrap statistics の分布を sampling distribution とみなす
 ```
 
-**Bootstrap confidence interval (percentile method):**
+percentile method では、bootstrap statistics を sort し、2.5th percentile と 97.5th percentile を 95% CI にします。
 
-```
-Sort the B bootstrap statistics
-95% CI = [2.5th percentile, 97.5th percentile]
-```
-
-**Why bootstrap matters for ML:**
-
-```
-- Test set accuracy is a point estimate. Bootstrap gives you
-  confidence intervals.
-- You cannot assume metric distributions are normal (especially
-  for AUC, F1, precision at k).
-- Bootstrap works for ANY statistic: median, ratio of two means,
-  difference in AUC between two models.
-- No closed-form formula needed.
-```
-
-**Bootstrap for model comparison:**
-
-```
-1. You have predictions from Model A and Model B on the same test set
-2. For each bootstrap iteration:
-   a. Resample test indices with replacement
-   b. Compute metric_A and metric_B on the resampled set
-   c. Store diff = metric_B - metric_A
-3. 95% CI for the difference:
-   [2.5th percentile of diffs, 97.5th percentile of diffs]
-4. If the CI does not contain 0, the difference is significant
-```
-
-This is more robust than the paired t-test because it makes no distributional assumptions.
+model comparison では、test indices を resample し、metric_B - metric_A の分布を作ります。CI が 0 を含まなければ差は significant です。
 
 ### Parametric vs Non-parametric Tests
 
-**Parametric tests** assume a specific distribution (usually normal):
+parametric tests は distribution（通常 normal）を仮定します。non-parametric tests は distributional assumptions を置きません。
 
-```
-t-test:         assumes normally distributed data (or large n by CLT)
-ANOVA:          assumes normality and equal variances
-Pearson r:      assumes bivariate normality
-```
-
-**Non-parametric tests** make no distributional assumptions:
-
-```
-Mann-Whitney U:     compares two groups (replaces independent t-test)
-Wilcoxon signed-rank: compares paired data (replaces paired t-test)
-Spearman rho:       correlation on ranks (replaces Pearson)
-Kruskal-Wallis:     compares multiple groups (replaces ANOVA)
+```text
+t-test / ANOVA / Pearson r: parametric
+Mann-Whitney U / Wilcoxon / Spearman / Kruskal-Wallis: non-parametric
 ```
 
-**When to use non-parametric:**
+ML experiments は 5 または 10 cross-validation folds のように n が小さいことが多いため、Wilcoxon signed-rank のような non-parametric tests が適する場合があります。
 
-```
-- Small sample size (n < 30) and data is clearly non-normal
-- Ordinal data (ratings, rankings)
-- Heavy outliers you cannot remove
-- Skewed distributions
-```
+### Central Limit Theorem
 
-**When to use parametric:**
+CLT は、sample means の分布が n の増加とともに normal distribution に近づくことを述べます。data 自体を normal にするわけではありません。
 
-```
-- Large sample size (CLT makes the test statistic approximately normal)
-- Data is roughly symmetric without extreme outliers
-- More statistical power (better at detecting real differences)
-```
+ML では confidence intervals、t-tests、mini-batch gradients、ensembles の安定性の根拠になります。ただし heavy-tailed distributions や dependent data には注意が必要です。
 
-In ML experiments, you typically have small n (5 or 10 cross-validation folds), so non-parametric tests like Wilcoxon signed-rank are often more appropriate than t-tests.
+### ML 論文でよくある統計ミス
 
-### Central Limit Theorem: Practical Implications
-
-The CLT says the distribution of sample means approaches a normal distribution as n grows, regardless of the underlying population distribution.
-
-```
-If X_1, X_2, ..., X_n are iid with mean mu and variance sigma^2:
-
-    X_bar ~ Normal(mu, sigma^2 / n)    as n -> infinity
-
-Works for n >= 30 in most cases.
-For highly skewed distributions, you might need n >= 100.
-```
-
-**Why this matters for ML:**
-
-```
-1. Justifies confidence intervals and t-tests on aggregated metrics
-2. Explains why averaging over cross-validation folds gives stable
-   estimates even when individual folds vary wildly
-3. Mini-batch gradient descent works because the average gradient
-   over a batch approximates the true gradient (CLT in action)
-4. Ensemble methods: averaging predictions from many models gives
-   more stable output than any single model
-```
-
-**What CLT does NOT do:**
-
-```
-- Does NOT make your data normal. It makes the MEAN of samples normal.
-- Does NOT work for heavy-tailed distributions with infinite variance
-  (Cauchy distribution).
-- Does NOT apply to dependent data (time series without correction).
-```
-
-### Common Statistical Mistakes in ML Papers
-
-1. **Testing on the training set.** Guarantees overfitting. Always hold out data the model never sees during training.
-
-2. **No confidence intervals.** Reporting a single accuracy number without uncertainty makes results unreproducible and unverifiable.
-
-3. **Ignoring multiple comparisons.** Testing 50 configurations and reporting the best one without correction inflates false positive rates.
-
-4. **Confusing statistical and practical significance.** A p-value of 0.001 on a 0.01% accuracy improvement is not meaningful.
-
-5. **Using accuracy on imbalanced data.** 99% accuracy on a dataset with 99% negative class means the model learned nothing. Use precision, recall, F1, or AUC.
-
-6. **Cherry-picking metrics.** Reporting only the metric where your model wins. Honest evaluation reports all relevant metrics.
-
-7. **Leaking information across train/test splits.** Normalizing before splitting, or using future data to predict the past.
-
-8. **Small test sets with no variance estimates.** Evaluating on 100 samples and claiming 2% improvement is noise, not signal.
-
-9. **Assuming independence when data is not independent.** Medical images from the same patient, multiple sentences from the same document. Observations within a group are correlated.
-
-10. **P-hacking.** Trying different tests, subsets, or exclusion criteria until you get p < 0.05. The result is an artifact of the search.
+1. training set で test する
+2. confidence intervals を報告しない
+3. multiple comparisons を無視する
+4. statistical significance と practical significance を混同する
+5. imbalanced data に accuracy を使う
+6. 勝った metric だけを cherry-pick する
+7. train/test splits をまたいで information leakage する
+8. small test sets で variance estimates なしに改善を主張する
+9. independent でない observations を independent と仮定する
+10. p-hacking を行う
 
 ## Building It
 
-You will implement:
+`code/statistics.py` では、次を一から実装します。
 
-1. **Descriptive statistics from scratch** (mean, median, mode, standard deviation, percentiles, IQR)
-2. **Correlation functions** (Pearson and Spearman, with the covariance matrix)
-3. **Hypothesis tests** (one-sample t-test, two-sample t-test, chi-squared test)
-4. **Bootstrap confidence intervals** (for any statistic, no assumptions needed)
-5. **A/B test simulator** (generate data, test, check for Type I and Type II errors)
-6. **Statistical vs practical significance demo** (showing that large n makes everything "significant")
-
-All from scratch, using only `math` and `random`. No numpy, no scipy.
+1. descriptive statistics（mean、median、mode、standard deviation、percentiles、IQR）
+2. correlation functions（Pearson、Spearman、covariance matrix）
+3. hypothesis tests（one-sample t-test、two-sample t-test、chi-squared test）
+4. bootstrap confidence intervals
+5. A/B test simulator
+6. statistical vs practical significance demo
 
 ## Key Terms
 
 | Term | Definition |
 |---|---|
-| Mean | Sum of values divided by count. Sensitive to outliers. |
-| Median | Middle value of sorted data. Robust to outliers. |
-| Standard deviation | Square root of variance. Measures spread in original units. |
-| Percentile | Value below which a given percentage of data falls. |
-| IQR | Interquartile range. Q3 minus Q1. The spread of the middle 50%. |
-| Pearson correlation | Measures linear association between two variables. Range [-1, 1]. |
-| Spearman correlation | Measures monotonic association using ranks. |
-| Covariance matrix | Matrix of pairwise covariances between all features. |
-| Null hypothesis | Default assumption of no effect or no difference. |
-| p-value | Probability of data this extreme given the null hypothesis is true. |
-| Confidence interval | Range of plausible values for a parameter at a given confidence level. |
-| t-test | Tests whether means differ significantly. Uses the t-distribution. |
-| Chi-squared test | Tests whether observed frequencies differ from expected frequencies. |
-| Effect size | Magnitude of a difference, independent of sample size. Cohen's d is common. |
-| Bonferroni correction | Divides significance threshold by number of tests to control false positives. |
-| Bootstrap | Resampling with replacement to estimate sampling distributions. |
-| Type I error | False positive. Rejecting H0 when it is true. |
-| Type II error | False negative. Failing to reject H0 when it is false. |
-| Statistical power | Probability of correctly rejecting a false H0. Power = 1 minus Type II error rate. |
-| Central limit theorem | Sample means converge to a normal distribution as sample size grows. |
-| Parametric test | Assumes a specific distribution for the data (usually normal). |
-| Non-parametric test | Makes no distributional assumptions. Works on ranks or signs. |
+| Mean | values の合計を count で割ったもの。outliers に敏感 |
+| Median | sorted data の中央。outliers に頑健 |
+| Standard deviation | variance の平方根。spread を元の units で表す |
+| Percentile | data の指定割合がその下に入る値 |
+| IQR | Q3 - Q1。中央 50% の spread |
+| Pearson correlation | linear association を測る。range [-1, 1] |
+| Spearman correlation | ranks を使って monotonic association を測る |
+| Covariance matrix | 全 features 間の pairwise covariances の matrix |
+| Null hypothesis | no effect/no difference の default assumption |
+| p-value | H0 が真だとしたとき、この程度に extreme な data が出る確率 |
+| Confidence interval | parameter の plausible range |
+| t-test | means が有意に異なるかを検定する |
+| Chi-squared test | observed frequencies と expected frequencies の差を検定する |
+| Effect size | sample size と独立した差の大きさ |
+| Bonferroni correction | false positives を制御するため alpha を tests 数で割る |
+| Bootstrap | replacement あり resampling で sampling distributions を推定する |
+| Type I error | false positive |
+| Type II error | false negative |
+| Statistical power | false H0 を正しく reject する確率 |
+| Central limit theorem | sample means が normal distribution に近づく定理 |
+| Parametric test | data の distribution を仮定する検定 |
+| Non-parametric test | distributional assumptions を置かない検定 |

@@ -1,24 +1,24 @@
-# Phase 8: Generative AI
+# Phase 8: 生成AI
 
-> Create images, video, audio, 3D, and more.
+> 画像、動画、音声、3Dなどを生成する。
 
-14 lessons, ~14 hours total. Each lesson ships: a 180-230 line doc, a runnable stdlib Python demo, a diagram, and a named skill for your agent.
+全14レッスン、合計約14時間。各レッスンには、180-230行のドキュメント、実行可能なstdlib Pythonデモ、図解、エージェント用の名前付きスキルが含まれる。
 
-| # | Lesson | Time |
+| # | レッスン | 時間 |
 |---|--------|------|
-| 01 | [Generative Models — Taxonomy & History](01-generative-models-taxonomy-history/) | ~45 min |
-| 02 | [Autoencoders & VAE](02-autoencoders-vae/) | ~75 min |
-| 03 | [GANs — Generator vs Discriminator](03-gans-generator-discriminator/) | ~75 min |
-| 04 | [Conditional GANs & Pix2Pix](04-conditional-gans-pix2pix/) | ~75 min |
-| 05 | [StyleGAN](05-stylegan/) | ~45 min |
-| 06 | [Diffusion Models — DDPM from Scratch](06-diffusion-ddpm-from-scratch/) | ~75 min |
-| 07 | [Latent Diffusion & Stable Diffusion](07-latent-diffusion-stable-diffusion/) | ~75 min |
-| 08 | [ControlNet, LoRA & Conditioning](08-controlnet-lora-conditioning/) | ~75 min |
-| 09 | [Inpainting, Outpainting & Editing](09-inpainting-outpainting-editing/) | ~75 min |
-| 10 | [Video Generation](10-video-generation/) | ~45 min |
-| 11 | [Audio Generation](11-audio-generation/) | ~45 min |
-| 12 | [3D Generation](12-3d-generation/) | ~45 min |
-| 13 | [Flow Matching & Rectified Flows](13-flow-matching-rectified-flows/) | ~45 min |
-| 14 | [Evaluation — FID, CLIP Score, Human Preference](14-evaluation-fid-clip-score/) | ~45 min |
+| 01 | [生成モデル — 分類と歴史](01-generative-models-taxonomy-history/) | 約45分 |
+| 02 | [オートエンコーダとVAE](02-autoencoders-vae/) | 約75分 |
+| 03 | [GAN — Generator vs Discriminator](03-gans-generator-discriminator/) | 約75分 |
+| 04 | [Conditional GAN と Pix2Pix](04-conditional-gans-pix2pix/) | 約75分 |
+| 05 | [StyleGAN](05-stylegan/) | 約45分 |
+| 06 | [拡散モデル — DDPMをゼロから作る](06-diffusion-ddpm-from-scratch/) | 約75分 |
+| 07 | [Latent Diffusion と Stable Diffusion](07-latent-diffusion-stable-diffusion/) | 約75分 |
+| 08 | [ControlNet、LoRA、条件付け](08-controlnet-lora-conditioning/) | 約75分 |
+| 09 | [インペインティング、アウトペインティング、編集](09-inpainting-outpainting-editing/) | 約75分 |
+| 10 | [動画生成](10-video-generation/) | 約45分 |
+| 11 | [音声生成](11-audio-generation/) | 約45分 |
+| 12 | [3D生成](12-3d-generation/) | 約45分 |
+| 13 | [Flow Matching と Rectified Flow](13-flow-matching-rectified-flows/) | 約45分 |
+| 14 | [評価 — FID、CLIP Score、人間の選好](14-evaluation-fid-clip-score/) | 約45分 |
 
-See [ROADMAP.md](../../ROADMAP.md) for the full cross-phase plan.
+フェーズ横断の全体計画は [ROADMAP.md](../../ROADMAP.md) を参照してください。
