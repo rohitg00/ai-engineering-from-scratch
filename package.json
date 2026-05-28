@@ -1,0 +1,10 @@
+{
+  "name": "ai-engineering-from-scratch",
+  "version": "1.0.0",
+  "description": "AI Engineering from Scratch - PT-BR",
+  "scripts": {
+    "dev": "npx serve site -l 8000",
+    "build": "node site/build.js",
+    "preview": "npx serve site -l 8000 --open"
+  }
+}
